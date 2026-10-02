@@ -3,6 +3,7 @@ title: "Hover image trail"
 summary: "An editorial index of 6 project rows; dragging the cursor across a row spawns 180×124px gradient thumbnails every 48px that pop in, drift up and fade, never more than 6 alive."
 platform: web
 type: animation
+category: cursor
 tags: [portfolio, cursor, trail, list, hover, editorial]
 styles: [editorial, paper, minimal]
 motion: rich

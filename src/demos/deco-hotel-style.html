@@ -1,0 +1,191 @@
+<!-- Design Lounge piece: deco-hotel-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Deco hotel design language kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Josefin+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#f6efe0;--ivory-2:#ebe1cc;--lacquer:#0f1c18;--gold:#c4a35a;--gold-line:rgba(196,163,90,.45);--burgundy:#8b2a32;--ink:#0f1c18;--ink-2:#4a5648;
+  --display:"Italiana",Didot,serif;--text:"Josefin Sans",system-ui,sans-serif;
+  --hair:1px;--pad:20px;--ctl:44px;
+  --t-micro:180ms;--t-line:320ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--text);color:var(--lacquer);background:var(--lacquer);overflow-x:hidden;overflow-y:auto;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:var(--hair) solid var(--gold);outline-offset:4px}
+.top{height:64px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 28px;background:var(--ivory);border-bottom:var(--hair) solid var(--gold)}
+.top nav{display:flex;gap:22px}
+.top nav.r{justify-content:flex-end}
+.top nav a{font:600 11px var(--text);letter-spacing:.18em;text-transform:uppercase;text-decoration:none;padding:6px 0;color:var(--ink-2)}
+.top nav a:hover{color:var(--lacquer);border-bottom:var(--hair) solid var(--gold)}
+.brand{text-align:center;font:22px/1 var(--display);letter-spacing:.28em;text-transform:uppercase}
+.brand span{display:block;font:600 9px var(--text);letter-spacing:.22em;margin-top:4px;color:var(--gold)}
+.sheet{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--hair);background:var(--gold)}
+.cell{background:var(--ivory);padding:var(--pad);min-width:0}
+.lbl{margin:0 0 14px;font:600 10px/1 var(--text);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px}
+.lbl::before,.lbl::after{content:"";height:var(--hair);background:var(--gold-line);flex:1}
+.hero{grid-column:1/8;height:420px;padding:0;background:var(--ivory);position:relative;overflow:hidden;text-align:center}
+.step{position:absolute;left:50%;transform:translateX(-50%);background:var(--gold)}
+.step.s1{width:420px;height:8px;top:0}.step.s2{width:360px;height:8px;top:12px}.step.s3{width:300px;height:8px;top:24px}
+.fan{position:absolute;left:50%;top:48px;transform:translateX(-50%);width:220px;height:90px}
+.copy{position:absolute;left:0;right:0;top:148px;padding:0 40px}
+.eyebrow{font:600 11px var(--text);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.hero h1{font:56px/.95 var(--display);letter-spacing:.12em;text-transform:uppercase;margin:8px 0 6px}
+.hero p{margin:0 auto 16px;max-width:360px;color:var(--ink-2);font-size:14px}
+.tabs{display:inline-flex;justify-content:center;gap:0;margin-bottom:16px;border:var(--hair) solid var(--gold)}
+.tab{height:36px;padding:0 18px;border:0;background:transparent;font:600 11px var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--lacquer);color:var(--ivory)}
+.tab:hover{color:var(--lacquer)}
+.tab[aria-selected="true"]:hover{color:var(--ivory)}
+.reserve{display:flex;justify-content:center;gap:10px;align-items:center}
+.spec{grid-column:8/13;height:420px;display:flex;flex-direction:column}
+.aa{display:flex;align-items:flex-end;justify-content:center;gap:16px;border-bottom:var(--hair) solid var(--gold-line);padding-bottom:10px}
+.aa big{font:92px/.8 var(--display);letter-spacing:.04em}
+.fam{font-size:12px;color:var(--ink-2);text-align:left;line-height:1.4}
+.fam b{display:block;font:16px var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--lacquer);margin-bottom:4px}
+.scale{list-style:none;margin:12px 0 0;padding:0}
+.scale li{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-bottom:var(--hair) solid var(--ivory-2);overflow:hidden;white-space:nowrap}
+.scale em{font-style:normal;font:600 10px var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);width:88px;flex:none}
+.s1{font:24px/1 var(--display);letter-spacing:.1em;text-transform:uppercase}
+.s2{font:600 16px var(--text);letter-spacing:.04em}.s3{font:500 14px var(--text)}.s4{font:14px var(--text);color:var(--ink-2)}.s5{font:600 11px var(--text);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.pal{grid-column:1/4}
+.sw{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;height:42px;border-bottom:var(--hair) solid var(--gold-line)}
+.chip{width:40px;height:24px;border:var(--hair) solid var(--gold)}
+.sw b{display:block;font:600 13px var(--text);letter-spacing:.04em}.sw span,.sw code{font-size:11px;color:var(--ink-2)}
+.ctl{grid-column:4/7}
+.btn{height:var(--ctl);padding:0 20px;border:var(--hair) solid var(--lacquer);background:var(--lacquer);color:var(--ivory);font:600 12px var(--text);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background var(--t-micro),color var(--t-micro),border-color var(--t-micro)}
+.btn:hover{background:var(--gold);border-color:var(--gold);color:var(--lacquer)}
+.btn.ghost{background:transparent;color:var(--lacquer)}
+.btn.ghost:hover{background:var(--lacquer);color:var(--ivory)}
+.btn.gold{background:transparent;border-color:var(--gold);color:var(--gold)}
+.btn.gold:hover{background:var(--gold);color:var(--lacquer)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tag{height:26px;padding:0 12px;border:var(--hair) solid var(--gold);background:transparent;font:600 10px/24px var(--text);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;color:var(--ink-2)}
+.tag[aria-pressed="true"]{background:var(--burgundy);border-color:var(--burgundy);color:var(--ivory)}
+.inp{grid-column:7/10}
+.fld{display:block;margin-bottom:14px}
+.fld span{display:block;font:600 10px var(--text);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.fld input{width:100%;height:40px;border:0;border-bottom:var(--hair) solid var(--gold-line);background:transparent;font:18px var(--display);letter-spacing:.08em;color:var(--lacquer);padding:0}
+.fld input:focus{outline:none;border-bottom-color:var(--gold);box-shadow:0 1px 0 var(--gold)}
+.link{font:600 12px var(--text);letter-spacing:.12em;text-transform:uppercase;text-underline-offset:4px}
+.link:hover{color:var(--burgundy)}
+.sw-t{display:inline-flex;align-items:center;gap:12px;margin-top:8px;cursor:pointer;font:600 12px var(--text);letter-spacing:.08em;text-transform:uppercase}
+.sw-t button{width:44px;height:22px;border:var(--hair) solid var(--gold);background:transparent;padding:0;position:relative;cursor:pointer}
+.sw-t button::after{content:"";position:absolute;left:3px;top:3px;width:14px;height:14px;background:var(--gold);transition:transform 240ms var(--ease)}
+.sw-t button[aria-checked="true"]{background:var(--lacquer);border-color:var(--lacquer)}
+.sw-t button[aria-checked="true"]::after{transform:translateX(22px);background:var(--gold)}
+.surf{grid-column:10/13}
+.plates{display:grid;gap:10px}
+.plate{height:50px;display:flex;align-items:center;justify-content:center;font:600 11px var(--text);letter-spacing:.16em;text-transform:uppercase;border:var(--hair) solid var(--gold)}
+.plate.g{background:linear-gradient(180deg,transparent 0 8px,var(--gold) 8px 16px,transparent 16px 24px,var(--gold) 24px 32px,transparent 32px);border:0;border-top:var(--hair) solid var(--gold);border-bottom:var(--hair) solid var(--gold)}
+.plate.b{background:var(--burgundy);color:var(--ivory);border-color:var(--burgundy)}
+.plate.l{background:var(--lacquer);color:var(--gold)}
+.gram{grid-column:span 3;display:flex;gap:12px;align-items:flex-start}
+.glyph{width:56px;height:56px;flex:none}
+.gram h4{margin:4px 0;font:16px var(--display);letter-spacing:.1em;text-transform:uppercase}
+.gram p{margin:0;font-size:13px;color:var(--ink-2)}
+.foot{grid-column:1/-1;display:flex;justify-content:space-between;font:600 10px var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);background:var(--lacquer)}
+@media (max-width:1100px){.hero,.spec{grid-column:1/-1}.pal,.ctl,.inp,.surf,.gram{grid-column:span 6}.top nav{display:none}.hero h1{font-size:42px}}
+@media (max-width:700px){.pal,.ctl,.inp,.surf,.gram{grid-column:1/-1}.hero{height:480px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <nav aria-label="Kit sections"><a href="#type">Type</a><a href="#colour">Colour</a></nav>
+  <div class="brand">Vesper<span>Est. 1926 · Kit 05</span></div>
+  <nav class="r" aria-label="Kit more"><a href="#controls">Controls</a><a href="#surface">Surface</a></nav>
+</header>
+<main class="sheet">
+  <section class="cell hero" id="hero" aria-label="Composition: hotel identity and reservation">
+    <div class="step s1" aria-hidden="true"></div>
+    <div class="step s2" aria-hidden="true"></div>
+    <div class="step s3" aria-hidden="true"></div>
+    <svg class="fan" viewBox="0 0 220 90" aria-hidden="true" fill="none" stroke="#c4a35a" stroke-width="1.2">
+      <path d="M110 88 L20 10 L40 10 L110 88 L180 10 L200 10 L110 88"/>
+      <path d="M110 88 L70 10 M110 88 L110 10 M110 88 L150 10"/>
+      <rect x="96" y="0" width="28" height="8" fill="#c4a35a" stroke="none"/>
+    </svg>
+    <div class="copy">
+      <div class="eyebrow">The Vesper · Harbour rooms</div>
+      <h1>Vesper</h1>
+      <p id="room-copy">Twelve harbour suites. Brass rails, stepped cornices, a dining room that still serves at midnight.</p>
+      <div class="tabs" role="tablist" aria-label="Room type">
+        <button class="tab" role="tab" aria-selected="true" data-copy="Twelve harbour suites. Brass rails, stepped cornices, a dining room that still serves at midnight.">Suite</button>
+        <button class="tab" role="tab" aria-selected="false" data-copy="Four corner chambers on the sixth floor. A fanlight over each door, a writing desk facing the quay.">Chamber</button>
+        <button class="tab" role="tab" aria-selected="false" data-copy="The salon for a night. Gold hairline screens, a piano, service until two.">Salon</button>
+      </div>
+      <div class="reserve">
+        <button class="btn" id="book">Reserve the night</button>
+      </div>
+    </div>
+  </section>
+  <section class="cell spec" id="type" aria-labelledby="l-type">
+    <h2 class="lbl" id="l-type">01 Type specimen</h2>
+    <div class="aa"><big aria-hidden="true">Aa</big><div class="fam"><b>Italiana</b>display, 400, wide tracking<b>Josefin Sans</b>400–700 · labels, UI</div></div>
+    <ul class="scale">
+      <li><em>Display 56</em><span class="s1">Vesper</span></li>
+      <li><em>H2 · 24</em><span class="s1" style="font-size:20px">Harbour rooms</span></li>
+      <li><em>H3 · 16 / 600</em><span class="s2">Established 1926</span></li>
+      <li><em>Body · 14</em><span class="s4">Service until two, quay side.</span></li>
+      <li><em>Label · 11</em><span class="s5">Reserve the night</span></li>
+    </ul>
+  </section>
+  <section class="cell pal" id="colour" aria-labelledby="l-col">
+    <h2 class="lbl" id="l-col">02 Palette and roles</h2>
+    <div class="sw"><i class="chip" style="background:var(--ivory)"></i><div><b>Ivory</b><span>paper, 60 %</span></div><code>#F6EFE0</code></div>
+    <div class="sw"><i class="chip" style="background:var(--lacquer)"></i><div><b>Lacquer</b><span>ink, 25 %</span></div><code>#0F1C18</code></div>
+    <div class="sw"><i class="chip" style="background:var(--gold)"></i><div><b>Gold</b><span>hairline, 10 %</span></div><code>#C4A35A</code></div>
+    <div class="sw"><i class="chip" style="background:var(--burgundy)"></i><div><b>Burgundy</b><span>selected, once</span></div><code>#8B2A32</code></div>
+    <div class="sw"><i class="chip" style="background:var(--ivory-2)"></i><div><b>Stone</b><span>inner rule</span></div><code>#EBE1CC</code></div>
+  </section>
+  <section class="cell ctl" id="controls" aria-labelledby="l-btn">
+    <h2 class="lbl" id="l-btn">03 Buttons and chips</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn">Reserve</button><button class="btn ghost">Enquire</button><button class="btn gold">Menu</button></div>
+    <div class="tags">
+      <button class="tag" aria-pressed="true">Harbour</button>
+      <button class="tag" aria-pressed="false">Garden</button>
+      <button class="tag" aria-pressed="false">Roof</button>
+    </div>
+  </section>
+  <section class="cell inp" aria-labelledby="l-inp">
+    <h2 class="lbl" id="l-inp">04 Inputs and link</h2>
+    <label class="fld"><span>Arrival</span><input type="text" value="12 Oct 2026"></label>
+    <a class="link" href="#hero">Read house rules</a>
+    <label class="sw-t"><button type="button" role="switch" aria-checked="false" id="sw" aria-label="Late dining"></button>Late dining</label>
+  </section>
+  <section class="cell surf" id="surface" aria-labelledby="l-surf">
+    <h2 class="lbl" id="l-surf">05 Surface treatments</h2>
+    <div class="plates">
+      <div class="plate g">Stepped gold</div>
+      <div class="plate l">Lacquer panel</div>
+      <div class="plate b">Burgundy field</div>
+    </div>
+  </section>
+  <section class="cell gram" aria-label="Grammar: hairline"><div class="glyph" style="border:1px solid var(--gold);background:linear-gradient(var(--gold),var(--gold)) center/100% 1px no-repeat"></div><div><h4>Hairline</h4><p>1px gold rules divide regions. Never 2px. Never a drop shadow.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: step"><div class="glyph" style="background:linear-gradient(180deg,var(--gold) 0 6px,transparent 6px 12px,var(--gold) 12px 18px,transparent 18px 24px,var(--gold) 24px 30px,transparent 30px)"></div><div><h4>Step</h4><p>Ziggurat bars, 8px high, shrinking 60px each step. Always centred.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: fan"><div class="glyph"><svg viewBox="0 0 56 56" fill="none" stroke="#c4a35a" stroke-width="1.2"><path d="M28 52 L8 8 L16 8 L28 52 L40 8 L48 8 L28 52"/><path d="M28 52 L22 8 M28 52 L28 8 M28 52 L34 8"/></svg></div><div><h4>Fan</h4><p>A gold sunburst sits above the name. Stroke 1.2px, no fill.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: symmetry"><div class="glyph" style="display:grid;place-items:center;border:1px solid var(--gold);font:14px var(--display);letter-spacing:.2em">V</div><div><h4>Symmetry</h4><p>The brand is centred. Nav splits left and right. Tabs sit as a single bar.</p></div></section>
+  <div class="cell foot"><span>The Vesper language · 4 colours · 2 families · hairline + step</span><span>Room tabs rewrite the stay</span></div>
+</main>
+<script>
+  const copy=document.getElementById('room-copy');
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+    t.setAttribute('aria-selected','true');
+    copy.textContent=t.dataset.copy;
+  }));
+  document.querySelectorAll('.tag').forEach(tag=>tag.addEventListener('click',()=>{
+    tag.setAttribute('aria-pressed',String(tag.getAttribute('aria-pressed')!=='true'));
+  }));
+  const sw=document.getElementById('sw');
+  sw.addEventListener('click',()=>sw.setAttribute('aria-checked',String(sw.getAttribute('aria-checked')!=='true')));
+</script>
+</body>
+</html>

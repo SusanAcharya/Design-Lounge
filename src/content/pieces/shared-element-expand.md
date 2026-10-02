@@ -3,6 +3,7 @@ title: "Shared element expand"
 summary: "Six project cards; clicking one FLIP-animates it (transform + border-radius, 420ms expo-out) into a full detail dialog while the rest fade, and Esc reverses it."
 platform: web
 type: animation
+category: transitions
 tags: [flip, transition, cards, dialog, gallery]
 styles: [editorial, paper, soft]
 motion: rich

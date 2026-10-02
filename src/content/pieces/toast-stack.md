@@ -3,6 +3,7 @@ title: "Toast stack"
 summary: "Bottom-right toasts that stack like cards (scale .96/.92, 12px offsets), expand on hover, drain a 2px progress hairline over 5s and pause while you look at them."
 platform: web
 type: component
+category: feedback
 tags: [toast, notification, feedback, stack, hover]
 styles: [dark, soft]
 motion: rich

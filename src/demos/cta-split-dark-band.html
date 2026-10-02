@@ -1,0 +1,129 @@
+<!-- Design Lounge piece: cta-split-dark-band · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Volta Range — Order the pack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#cfc8b8;--page-ink:#2a271f;--page-2:#6a6456;--rule:#b4ad9c;
+  --bg:#121512;--ink:#ece7da;--ink-2:#9a9588;--ink-3:#6a6e66;--line:#2a2e2a;
+  --oxide:#e24a1a;--oxide-ink:#1a0804;--ok:#8fbf7a;
+  --display:"Unbounded",system-ui,sans-serif;--sans:"Onest",system-ui,sans-serif;
+  --t-fast:160ms;--t-state:280ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--page);color:var(--page-ink);font:14px/1.45 var(--sans);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+.page{height:196px;flex:none;padding:22px 64px 0;display:flex;flex-direction:column}
+.top{display:flex;align-items:baseline;justify-content:space-between;font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--page-2)}
+.top b{color:var(--page-ink);font-weight:600}
+.models{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:18px;border-top:1px solid var(--rule)}
+.models article{padding:16px 20px 0 0;border-right:1px solid var(--rule)}
+.models article:last-child{border-right:0;padding-right:0}
+.models h3{margin:0 0 6px;font:500 13px/1 var(--display);letter-spacing:.04em;text-transform:uppercase}
+.models p{margin:0;font-size:13px;color:var(--page-2);max-width:28ch}
+.models .n{font:700 28px/1 var(--display);letter-spacing:-.03em;margin-top:10px}
+.band{flex:1;background:var(--bg);color:var(--ink);display:grid;grid-template-columns:1.15fr .85fr;min-height:0;position:relative}
+.band::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--oxide)}
+.left{padding:48px 64px 40px;display:flex;flex-direction:column;border-right:1px solid var(--line)}
+.kick{font:500 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--oxide);margin:0 0 18px}
+h1{margin:0;font:700 88px/0.88 var(--display);letter-spacing:-.04em;text-transform:uppercase}
+h1 span{display:block}
+.left .note{margin-top:auto;font:12px/1.4 var(--sans);color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase}
+.right{padding:48px 64px 40px;display:flex;flex-direction:column}
+.right p{margin:0 0 28px;font:400 20px/1.4 var(--sans);color:var(--ink);max-width:28ch}
+.right p strong{font-weight:600;color:var(--ink)}
+form{display:flex;flex-direction:column;gap:0;margin-top:auto}
+label{font:500 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-bottom:10px}
+.row{display:flex;border:1px solid var(--line);height:56px}
+.row:focus-within{border-color:var(--ink)}
+.row.bad{border-color:var(--oxide)}
+.row.done{border-color:var(--ok)}
+input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:400 16px var(--sans);padding:0 16px;outline:none}
+input::placeholder{color:var(--ink-3)}
+button.go{height:56px;padding:0 22px;border:0;background:var(--oxide);color:#fff;font:600 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;flex:none;min-width:128px}
+button.go:hover{filter:brightness(1.08)}
+button.go:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+.msg{min-height:20px;margin:12px 0 0;font:13px var(--sans);color:var(--ink-2)}
+.msg.bad{color:var(--oxide)}
+.msg.ok{color:var(--ok)}
+.fine{margin-top:18px;font:12px/1.45 var(--sans);color:var(--ink-3)}
+:focus-visible{outline:2px solid var(--oxide);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){
+  .row,button.go{transition:none}
+}
+@media (max-width:1024px){
+  h1{font-size:64px}
+  .page,.left,.right{padding-left:36px;padding-right:36px}
+}
+@media (max-width:768px){
+  .band{grid-template-columns:1fr}
+  .left{border-right:0;border-bottom:1px solid var(--line);padding-bottom:28px}
+  h1{font-size:48px}
+  .models{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top"><span>Volta Range · Build book 04</span><b>Pack 2 / 48 V</b></div>
+  <div class="models">
+    <article><h3>Range S</h3><p>Field kit. 9.2 kg dry. One-day charge on a 16 A line.</p><div class="n">9.2</div></article>
+    <article><h3>Range M</h3><p>Shop pack. 14.6 kg. Two circuits, shared bus.</p><div class="n">14.6</div></article>
+    <article><h3>Range H</h3><p>Yard pack. 21.0 kg. Three-phase inlet, 48 V out.</p><div class="n">21.0</div></article>
+  </div>
+</div>
+<section class="band" aria-label="Order the range">
+  <div class="left">
+    <p class="kick">Build slot · Q4 2026</p>
+    <h1><span>Order</span><span>the</span><span>range.</span></h1>
+    <p class="note">Made to order · 14-day ship window · EU + UK</p>
+  </div>
+  <div class="right">
+    <p>The pack is cut when you take a slot. No catalogue stock. Leave a work email and we send the build sheet for Range S, M, or H.</p>
+    <form id="form" novalidate>
+      <label for="email">Work email</label>
+      <div class="row" id="row">
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="name@yard.co" required>
+        <button class="go" type="submit" id="go">Request slot</button>
+      </div>
+      <p class="msg" id="msg" role="status" aria-live="polite"></p>
+      <p class="fine">One slot per address. We reply within two working days with a 20-minute call, not a drip sequence.</p>
+    </form>
+  </div>
+</section>
+<script>
+(function(){
+  const form=document.getElementById('form');
+  const row=document.getElementById('row');
+  const email=document.getElementById('email');
+  const go=document.getElementById('go');
+  const msg=document.getElementById('msg');
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const v=email.value.trim();
+    const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    row.classList.remove('bad','done');
+    msg.className='msg';
+    if(!ok){
+      row.classList.add('bad');
+      msg.classList.add('bad');
+      msg.textContent='Use a full work address, not a first name.';
+      email.focus();
+      return;
+    }
+    row.classList.add('done');
+    msg.classList.add('ok');
+    msg.textContent='Slot held. Build sheet is on its way to '+v+'.';
+    email.disabled=true;
+    go.disabled=true;
+    go.textContent='Held';
+  });
+})();
+</script>
+</body>
+</html>

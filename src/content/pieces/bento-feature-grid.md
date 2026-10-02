@@ -3,6 +3,7 @@ title: "Bento feature grid"
 summary: "Six feature cells of varied spans on a 4-column grid, each with a small live CSS illustration; hover lifts a cell 2px and brightens its hairline."
 platform: web
 type: layout
+category: features
 tags: [marketing, grid, features, landing]
 styles: [minimal, soft, paper]
 motion: subtle

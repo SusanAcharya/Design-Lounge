@@ -3,6 +3,7 @@ title: "Split sign-in"
 summary: "45/55 sign-in screen: floating-label fields, a password visibility toggle and a magic-link button, beside a deep-green panel with testimonials crossfading every 5 seconds."
 platform: web
 type: screen
+category: auth
 tags: [auth, form, sign-in, testimonial, split]
 styles: [editorial, soft]
 motion: subtle

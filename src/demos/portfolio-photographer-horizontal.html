@@ -1,0 +1,153 @@
+<!-- Design Lounge piece: portfolio-photographer-horizontal · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Salt Year — Yuki Halloran, photographs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0d0b;--bg-2:#17150f;--ink:#ede6da;--ink-2:#a39a8c;--ink-3:#6e675d;--line:#2c2924;--accent:#c9a66b;
+  --serif:"Bodoni Moda",Didot,serif;--sans:"Tenor Sans",system-ui,sans-serif;
+  --ph:500px;--gap:72px;--head:72px;--foot:96px;
+  --t-micro:200ms;--t-in:900ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 13px/1.5 var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased;letter-spacing:.02em}
+a,button{color:inherit;font:inherit}
+:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
+header{position:fixed;inset:0 0 auto 0;height:var(--head);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 48px;z-index:3}
+header .me{font:italic 400 22px var(--serif);text-decoration:none;letter-spacing:0}
+header nav{display:flex;gap:34px;font-size:11px;letter-spacing:.22em;text-transform:uppercase}
+header nav a{text-decoration:none;color:var(--ink-2);padding:8px 0}
+header nav a[aria-current]{color:var(--ink)}
+header nav a:hover{color:var(--ink)}
+header .enq{justify-self:end;font-size:11px;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;border:1px solid var(--line);padding:11px 18px;transition:border-color var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+header .enq:hover{border-color:var(--accent);color:var(--accent)}
+.view{position:absolute;inset:var(--head) 0 var(--foot) 0;overflow:hidden;cursor:grab;outline:none}
+.view.drag{cursor:grabbing}
+.track{display:flex;align-items:center;gap:var(--gap);height:100%;padding:0 48px;width:max-content;will-change:transform}
+.intro{width:500px;flex:none;display:flex;flex-direction:column;justify-content:center;gap:28px}
+.intro small{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+.intro h1{margin:0;font:400 156px/.84 var(--serif);letter-spacing:-.035em}
+.intro h1 em{display:block;padding-left:96px}
+.intro p{margin:0;max-width:36ch;color:var(--ink-2);font-size:14px;line-height:1.7}
+.hint{display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
+.hint svg{width:44px;height:12px;stroke:var(--accent);fill:none;stroke-width:1.2;animation:nudge 2.4s var(--ease) infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+figure{margin:0;flex:none;display:flex;flex-direction:column;gap:14px;opacity:.5;transition:opacity 600ms var(--ease)}
+figure.on{opacity:1}
+.ph{height:var(--ph);position:relative;overflow:hidden;background:var(--bg-2)}
+.ph i{position:absolute;inset:0 -40px;display:block}
+figcaption{display:flex;justify-content:space-between;gap:24px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+figcaption b{font:italic 400 15px var(--serif);letter-spacing:0;text-transform:none;color:var(--ink);margin-left:10px}
+.w-l{width:720px}.w-m{width:560px}.w-p{width:380px}
+.p1{background:linear-gradient(180deg,#d9c3ae 0,#b9a596 38%,#8e8a86 49.6%,#3d3a36 50%,#6c655d 51%,#2a2723 70%,#14120f);}
+.p1::after{content:"";position:absolute;left:58%;top:22%;width:46px;height:46px;border-radius:50%;background:#f4e3cb;box-shadow:0 0 60px 30px rgba(244,227,203,.35)}
+.p2{background:radial-gradient(40% 30% at 70% 30%,rgba(230,190,130,.75),transparent 70%),linear-gradient(90deg,#120f0b 0 56%,#d8b682 56% 78%,#120f0b 78%) 0 0/100% 46% no-repeat,linear-gradient(170deg,#2a2016,#0d0b08 70%)}
+.p3{background:repeating-linear-gradient(90deg,transparent 0 120px,rgba(90,70,70,.35) 120px 123px),repeating-linear-gradient(0deg,transparent 0 90px,rgba(90,70,70,.35) 90px 93px),linear-gradient(180deg,#f1e1dc,#dcc0bb 50%,#b89a95)}
+.p4{background:linear-gradient(180deg,rgba(200,200,190,.0),rgba(200,200,190,.85) 80%),repeating-linear-gradient(90deg,#3b3d36 0 10px,transparent 10px 54px,#4a4c44 54px 60px,transparent 60px 130px),linear-gradient(180deg,#9fa39a,#d6d6cc)}
+.p5{background:radial-gradient(18% 13% at 50% 36%,#2a211b 0 96%,transparent 100%),radial-gradient(52% 32% at 50% 92%,#1e1813 0 96%,transparent 100%),radial-gradient(70% 60% at 30% 30%,#a8846a,#5a4334 60%,#2b211a)}
+.p6{background:radial-gradient(30% 8% at 30% 40%,rgba(220,240,235,.55),transparent 70%),radial-gradient(22% 6% at 70% 62%,rgba(220,240,235,.4),transparent 70%),radial-gradient(40% 10% at 50% 82%,rgba(220,240,235,.3),transparent 70%),linear-gradient(170deg,#1f4a48,#0c2422 60%,#061413)}
+.p7{background:repeating-linear-gradient(100deg,transparent 0 6px,rgba(40,32,18,.55) 6px 7px,transparent 7px 19px),repeating-linear-gradient(80deg,transparent 0 9px,rgba(60,48,24,.45) 9px 10px,transparent 10px 23px),linear-gradient(180deg,#e8d7b4 0 40%,#c9a66b 40%,#7a6038)}
+.p8{background:radial-gradient(3px 3px at 22% 58%,#ffd79a 60%,transparent),radial-gradient(3px 3px at 31% 58%,#ffd79a 60%,transparent),radial-gradient(2px 2px at 64% 57%,#ffe9c4 60%,transparent),radial-gradient(40% 6% at 27% 70%,rgba(255,200,120,.35),transparent 70%),linear-gradient(180deg,#0b1220 0,#1b2436 55%,#0a0c10 56%,#151a22)}
+.p9{background:conic-gradient(from 30deg at 40% 40%,#f4f0e8,#c9c4ba,#f8f6f0,#9f998e,#f4f0e8),radial-gradient(circle,#fff,#888);background-blend-mode:multiply}
+.p10{background:radial-gradient(60% 20% at 50% 52%,rgba(235,140,90,.7),transparent 70%),linear-gradient(180deg,#2a2440 0,#6f4d5a 34%,#d68a62 50%,#2e2420 50.4%,#4a3a34 60%,#120f0d)}
+.outro{width:520px;flex:none;display:flex;flex-direction:column;gap:22px;padding-right:48px}
+.outro h2{margin:0;font:italic 400 96px/.9 var(--serif);letter-spacing:-.03em}
+.outro p{margin:0;color:var(--ink-2);font-size:14px;line-height:1.7;max-width:38ch}
+.outro p b{color:var(--ink);font-weight:400}
+.outro a{align-self:flex-start;text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:14px 22px}
+footer{position:fixed;inset:auto 0 0 0;height:var(--foot);display:grid;grid-template-columns:200px 1fr 260px;gap:48px;align-items:center;padding:0 48px}
+.count{font:400 54px/1 var(--serif);letter-spacing:-.02em;font-variant-numeric:lining-nums;display:flex;align-items:baseline;gap:10px}
+.count span{font:400 13px var(--sans);color:var(--ink-3);letter-spacing:.1em}
+.ticks{position:relative;height:28px;display:flex;align-items:center;gap:0}
+.ticks::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
+.ticks .fill{position:absolute;left:0;top:50%;height:1px;background:var(--accent);width:0}
+.ticks button{flex:1;height:28px;background:none;border:0;padding:0;cursor:pointer;position:relative}
+.ticks button::after{content:"";position:absolute;left:50%;top:50%;width:1px;height:9px;margin:-4px 0 0;background:var(--ink-3);transition:height var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.ticks button:hover::after,.ticks button[aria-current="true"]::after{height:17px;margin-top:-8px;background:var(--accent)}
+.help{justify-self:end;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.12;mix-blend-mode:overlay;z-index:4}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <a class="me" href="#">Yuki Halloran</a>
+  <nav aria-label="Series"><a href="#" aria-current="page">Salt Year</a><a href="#">Interiors</a><a href="#">Portraits</a><a href="#">Index</a></nav>
+  <a class="enq" href="#">Enquiries</a>
+</header>
+<div class="view" id="view" tabindex="0" aria-label="Salt Year gallery. Use arrow keys to move between photographs." role="region">
+  <div class="track" id="track">
+    <div class="intro">
+      <small>Series · 2024–2026 · 10 plates</small>
+      <h1>Salt <em>Year</em></h1>
+      <p>Twelve months on the Wadden coast, from Rømø to Læsø, photographed only in the hour either side of low water.</p>
+      <div class="hint"><svg viewBox="0 0 44 12" aria-hidden="true"><path d="M0 6h42M36 1l6 5-6 5"/></svg>Scroll to wander</div>
+    </div>
+    <figure class="w-l"><div class="ph"><i class="p1"></i></div><figcaption><span>01<b>Low water, Rømø</b></span><span>05:12 · March</span></figcaption></figure>
+    <figure class="w-p"><div class="ph"><i class="p2"></i></div><figcaption><span>02<b>Net shed</b></span><span>Havneby</span></figcaption></figure>
+    <figure class="w-m"><div class="ph"><i class="p3"></i></div><figcaption><span>03<b>Salt pans</b></span><span>Læsø · June</span></figcaption></figure>
+    <figure class="w-p"><div class="ph"><i class="p4"></i></div><figcaption><span>04<b>Fog, 06:40</b></span><span>Tønder marsh</span></figcaption></figure>
+    <figure class="w-p"><div class="ph"><i class="p5"></i></div><figcaption><span>05<b>Kirsten, boatwright</b></span><span>Esbjerg</span></figcaption></figure>
+    <figure class="w-l"><div class="ph"><i class="p6"></i></div><figcaption><span>06<b>Brine</b></span><span>Lakolk · August</span></figcaption></figure>
+    <figure class="w-m"><div class="ph"><i class="p7"></i></div><figcaption><span>07<b>Marram</b></span><span>Fanø</span></figcaption></figure>
+    <figure class="w-l"><div class="ph"><i class="p8"></i></div><figcaption><span>08<b>Last ferry</b></span><span>Sønderho · 23:50</span></figcaption></figure>
+    <figure class="w-p"><div class="ph"><i class="p9"></i></div><figcaption><span>09<b>Fleur de sel</b></span><span>Byrum</span></figcaption></figure>
+    <figure class="w-l"><div class="ph"><i class="p10"></i></div><figcaption><span>10<b>Ebb, 21:04</b></span><span>Rømø · December</span></figcaption></figure>
+    <div class="outro">
+      <h2>Fin.</h2>
+      <p><b>Salt Year</b> is on show at Galleri Havn, Copenhagen, 14 November 2026 to 10 January 2027. Pigment prints in editions of 7, from DKK 9,800.</p>
+      <a href="#">Request the price list</a>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="count" aria-live="polite"><b id="n" style="font-weight:400">01</b><span>/ 10</span></div>
+  <div class="ticks" id="ticks"><span class="fill" id="fill"></span></div>
+  <div class="help">Scroll · Drag · ← →</div>
+</footer>
+<svg class="grain" aria-hidden="true"><filter id="gr"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#gr)"/></svg>
+<script>
+(function(){
+  const view=document.getElementById('view'),track=document.getElementById('track'),figs=[...track.querySelectorAll('figure')];
+  const n=document.getElementById('n'),fill=document.getElementById('fill'),ticks=document.getElementById('ticks');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let x=0,tx=0,max=0,raf=0,idx=-1;
+  figs.forEach((f,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Go to plate '+(i+1));b.onclick=()=>to(i);ticks.appendChild(b);});
+  const tb=[...ticks.querySelectorAll('button')];
+  function measure(){max=Math.max(0,track.scrollWidth-view.clientWidth);tx=Math.min(tx,max);}
+  function centreOf(i){const f=figs[i];return f.offsetLeft+f.offsetWidth/2-view.clientWidth/2;}
+  function to(i){tx=Math.max(0,Math.min(max,centreOf(i)));go();}
+  function render(){
+    track.style.transform=`translate3d(${-x}px,0,0)`;
+    const mid=x+view.clientWidth/2;let best=0,bd=1e9;
+    figs.forEach((f,i)=>{const c=f.offsetLeft+f.offsetWidth/2,d=c-mid;if(Math.abs(d)<bd){bd=Math.abs(d);best=i;}
+      f.firstChild.firstChild.style.transform=`translate3d(${(-d*.05).toFixed(1)}px,0,0)`;});
+    if(x<200)best=0;
+    if(best!==idx){idx=best;n.textContent=String(best+1).padStart(2,'0');figs.forEach((f,i)=>f.classList.toggle('on',i===best||(x<200&&i<2)));tb.forEach((b,i)=>b.setAttribute('aria-current',String(i===best)));}
+    fill.style.width=(max?x/max*100:0)+'%';
+  }
+  function tick(){x+=(tx-x)*(reduce?1:.09);if(Math.abs(tx-x)<.3)x=tx;render();raf=x!==tx?requestAnimationFrame(tick):0;}
+  function go(){if(!raf)raf=requestAnimationFrame(tick);}
+  view.addEventListener('wheel',e=>{e.preventDefault();tx=Math.max(0,Math.min(max,tx+(Math.abs(e.deltaY)>Math.abs(e.deltaX)?e.deltaY:e.deltaX)*1.1));go();},{passive:false});
+  let sx=0,st=0,down=false;
+  view.addEventListener('pointerdown',e=>{down=true;sx=e.clientX;st=tx;view.classList.add('drag');view.setPointerCapture(e.pointerId);});
+  view.addEventListener('pointermove',e=>{if(!down)return;tx=Math.max(0,Math.min(max,st-(e.clientX-sx)*1.4));go();});
+  const up=()=>{down=false;view.classList.remove('drag');};
+  view.addEventListener('pointerup',up);view.addEventListener('pointercancel',up);
+  view.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();to(Math.max(0,Math.min(figs.length-1,idx+(e.key==='ArrowRight'?1:-1))));}
+    if(e.key==='Home'){tx=0;go();}if(e.key==='End'){tx=max;go();}
+  });
+  addEventListener('resize',()=>{measure();go();});
+  measure();render();
+  if(document.fonts)document.fonts.ready.then(()=>{measure();render();});
+})();
+</script>
+</body>
+</html>

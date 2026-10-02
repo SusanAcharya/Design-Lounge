@@ -3,6 +3,7 @@ title: "Luxe serif design style"
 summary: "High-contrast Cormorant Garamond with Karla small caps, hairline gold rules, cream and charcoal surfaces and centre-out underlines; a nav, four buttons, a newsletter input, a product card and a quote."
 platform: web
 type: style
+category: design-language
 tags: [style-guide, luxe, serif, ecommerce, typography]
 styles: [luxe, editorial, minimal]
 motion: subtle

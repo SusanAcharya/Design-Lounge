@@ -3,6 +3,7 @@ title: "PWA app shell hydration"
 summary: "A cache-first app shell: fixed top bar and bottom nav render instantly, content cards show shimmering skeletons, then hydrate in with a 70ms stagger; a button replays the cold start."
 platform: pwa
 type: layout
+category: loaders
 tags: [pwa, app-shell, skeleton, loading, cache, transit]
 styles: [dark, industrial, minimal]
 motion: subtle

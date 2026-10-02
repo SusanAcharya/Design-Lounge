@@ -1,0 +1,135 @@
+<!-- Design Lounge piece: footer-newsletter-split · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Newsletter split footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f1ebdf;--paper:#f8f4ec;--sunk:#e8e0d0;--line:#d6ccb8;--line-2:#b9ad95;
+  --ink:#1e1b16;--ink-2:#544c40;--ink-3:#6f6656;--accent:#a3301c;--accent-2:#f3ddd5;--ok:#3d6b3a;
+  --serif:"Newsreader",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;
+  --pad:56px;--r:2px;
+  --t-micro:150ms;--t-state:280ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.end{max-width:640px;margin:0 auto;padding:28px 0 36px;font:21px/1.55 var(--serif);font-variation-settings:"opsz" 18}
+.end p{margin:0}
+.end p::after{content:"";display:inline-block;width:.55em;height:.55em;background:var(--accent);margin-left:.4em;vertical-align:.05em}
+.sign{display:flex;gap:14px;align-items:center;margin-top:20px;font:13px var(--sans);color:var(--ink-2)}
+.sign .av{width:32px;height:32px;border-radius:50%;background:#c9b48f;color:var(--ink);display:grid;place-items:center;font:500 13px var(--sans)}
+.sign b{color:var(--ink);font-weight:600}
+footer{border-top:1px solid var(--ink);box-shadow:0 -4px 0 -3px var(--ink) inset;display:grid;grid-template-columns:7fr 5fr;position:relative}
+footer::before{content:"";position:absolute;left:0;right:0;top:4px;border-top:1px solid var(--ink)}
+.sub{padding:44px var(--pad) 40px;border-right:1px solid var(--line-2);background:var(--paper)}
+.kick{font:600 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 14px;display:flex;gap:10px;align-items:center}
+.kick::before{content:"";width:24px;height:1px;background:var(--accent)}
+.sub h2{margin:0 0 24px;font:400 60px/1 var(--serif);font-variation-settings:"opsz" 72;letter-spacing:-.025em}
+.sub h2 em{color:var(--accent)}
+form{display:flex;gap:0;max-width:540px;border-bottom:1.5px solid var(--ink);transition:border-color var(--t-micro)}
+form.bad{border-color:var(--accent)}
+form.done{border-color:var(--ok)}
+label.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+input{flex:1;min-width:0;height:52px;border:0;background:none;font:400 22px var(--serif);font-style:italic;color:var(--ink);padding:0;outline:none}
+input::placeholder{color:var(--ink-3)}
+.go{height:52px;padding:0 4px 0 18px;border:0;background:none;font:600 14px var(--sans);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:10px}
+.go svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;transition:transform var(--t-state) var(--ease-out)}
+.go:hover svg{transform:translateX(5px)}
+.go:focus-visible{outline-offset:-2px}
+.msg{min-height:22px;margin:10px 0 0;font:13px var(--sans);color:var(--ink-2);display:flex;gap:8px;align-items:center}
+.msg.bad{color:var(--accent)}
+.msg.done{color:var(--ok)}
+.msg svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;flex:none}
+.issue{margin-top:26px;display:grid;grid-template-columns:168px 1fr;gap:22px;align-items:start;padding-top:22px;border-top:1px solid var(--line)}
+.ph{height:118px;border-radius:var(--r);position:relative;overflow:hidden;background:
+  radial-gradient(60px 40px at 72% 30%,#f6d7a6 0,#f6d7a600 70%),
+  linear-gradient(180deg,#dcb688 0 46%,#b98454 46% 58%,#7d5a3c 58% 100%)}
+.ph::before{content:"";position:absolute;left:18%;bottom:42%;width:14%;height:38%;background:#6b4a33;box-shadow:28px 10px 0 -2px #5a3d2a,62px -6px 0 2px #6b4a33,90px 6px 0 0 #5a3d2a}
+.ph::after{content:"No. 214";position:absolute;left:8px;bottom:6px;font:600 10px var(--sans);letter-spacing:.08em;color:#fff3e0}
+.issue small{font:600 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.issue h3{margin:6px 0 6px;font:500 24px/1.15 var(--serif);letter-spacing:-.01em}
+.issue h3 a{background:linear-gradient(var(--accent),var(--accent)) 0 100%/0 1px no-repeat;transition:background-size 360ms var(--ease-out)}
+.issue h3 a:hover,.issue h3 a:focus-visible{background-size:100% 1px}
+.issue p{margin:0;font:15px/1.5 var(--serif);color:var(--ink-2)}
+.issue .meta{margin-top:8px;font:12px var(--sans);color:var(--ink-3)}
+.side{padding:44px var(--pad) 32px 48px;display:flex;flex-direction:column}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.cols h4{margin:0 0 14px;font:600 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.cols ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.cols a{font:400 17px/1.3 var(--serif);transition:color var(--t-micro)}
+.cols a:hover{color:var(--accent);font-style:italic}
+.mast{margin-top:auto;padding-top:28px}
+.mast b{display:block;font:italic 400 84px/.9 var(--serif);font-variation-settings:"opsz" 72;letter-spacing:-.035em}
+.mast p{margin:12px 0 0;font:13px/1.5 var(--sans);color:var(--ink-2);max-width:340px}
+.legal{grid-column:1/-1;display:flex;gap:24px;padding:14px var(--pad);border-top:1px solid var(--line-2);font:12px var(--sans);color:var(--ink-2)}
+.legal .sp{flex:1}
+.legal a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:1023px){footer{grid-template-columns:1fr}.sub{border-right:0;border-bottom:1px solid var(--line-2)}.sub h2{font-size:48px}}
+@media (max-width:640px){.issue{grid-template-columns:1fr}.cols{grid-template-columns:1fr 1fr}.legal{flex-wrap:wrap}.end{padding:28px 20px}:root{--pad:20px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<article class="end" aria-label="End of essay">
+  <p>The street never widened. It narrowed, if anything, by the width of the benches the shopkeepers carried out each morning, and by the habit, now forty years old, of stopping there to argue about the weather.</p>
+  <div class="sign"><span class="av" aria-hidden="true">IV</span><span>Words by <b>Inês Valadares</b> · Filed from Porto · 18 min read</span></div>
+</article>
+<footer aria-label="Site footer">
+  <section class="sub" aria-labelledby="sub-h">
+    <p class="kick">The Sunday letter</p>
+    <h2 id="sub-h">Read us where you<br>read <em>slowly.</em></h2>
+    <form id="form" novalidate>
+      <label class="sr" for="email">Email address</label>
+      <input id="email" type="email" name="email" placeholder="your@address.com" autocomplete="email" aria-describedby="msg">
+      <button class="go" type="submit">Subscribe <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h17M14 6l6 6-6 6"/></svg></button>
+    </form>
+    <p class="msg" id="msg" aria-live="polite">Free, every Sunday at 07:00. 41,208 readers. One-click unsubscribe.</p>
+    <div class="issue">
+      <div class="ph" role="img" aria-label="Illustration: shopfronts at dusk on Rua das Flores"></div>
+      <div>
+        <small>Latest · No. 214 · 27 Sep 2026</small>
+        <h3><a href="#">The street that refused to widen</a></h3>
+        <p>How one Porto lane kept its benches, its argument and its 3.2-metre width through four mayors.</p>
+        <div class="meta">18 min read · with a letter from Dhaka</div>
+      </div>
+    </div>
+  </section>
+  <div class="side">
+    <nav class="cols" aria-label="Sitemap">
+      <div><h4>Read</h4><ul><li><a href="#">Essays</a></li><li><a href="#">Dispatches</a></li><li><a href="#">Interviews</a></li><li><a href="#">The Index</a></li><li><a href="#">Archive</a></li></ul></div>
+      <div><h4>About</h4><ul><li><a href="#">Masthead</a></li><li><a href="#">Write for us</a></li><li><a href="#">Corrections</a></li><li><a href="#">Advertise</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><h4>Elsewhere</h4><ul><li><a href="#">Print edition</a></li><li><a href="#">Podcast</a></li><li><a href="#">RSS feed</a></li><li><a href="#">Shop</a></li></ul></div>
+    </nav>
+    <div class="mast">
+      <b>The Margin</b>
+      <p>An independent quarterly and Sunday letter on cities, streets and the people who stay. Printed in Porto on 90gsm Munken.</p>
+    </div>
+  </div>
+  <div class="legal"><span>&copy; 2026 The Margin Editions, Lda.</span><a href="#">Privacy</a><a href="#">Terms</a><span class="sp"></span><span>Set in Newsreader &amp; Instrument Sans</span></div>
+</footer>
+<script>
+(()=>{
+  const f=document.getElementById('form'),i=document.getElementById('email'),m=document.getElementById('msg');
+  const base=m.innerHTML;
+  const ico={bad:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.5"/></svg>',done:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'};
+  function set(state,text){f.className=state;m.className='msg '+state;m.innerHTML=state?ico[state]+'<span></span>':'';
+    if(state)m.lastChild.textContent=text;else m.innerHTML=base;i.setAttribute('aria-invalid',String(state==='bad'));}
+  f.addEventListener('submit',e=>{
+    e.preventDefault();const v=i.value.trim();
+    if(!v){set('bad','Enter an email address to subscribe.');i.focus();return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){set('bad','That address is missing an @ or a domain, like name@studio.pt.');i.focus();return;}
+    set('done','Check your inbox. We sent a confirmation link to '+v+'.');
+  });
+  i.addEventListener('input',()=>{if(f.className==='bad')set('','');if(f.className==='done')set('','');});
+  requestAnimationFrame(()=>{const se=document.scrollingElement||document.documentElement;se.scrollTop=se.scrollHeight;});
+})();
+</script>
+</body>
+</html>

@@ -3,6 +3,7 @@ title: "iOS app switcher stack"
 summary: "Five app cards fanned in a perspective stack: drag to browse, swipe up to fling one away and reflow, tap to expand it to full screen in 420ms."
 platform: mobile-app
 type: animation
+category: transitions
 tags: [app-switcher, cards, gesture, multitasking, ios]
 styles: [dark, kinetic]
 motion: rich

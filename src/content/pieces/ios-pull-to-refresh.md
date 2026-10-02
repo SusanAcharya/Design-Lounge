@@ -3,6 +3,7 @@ title: "Pull to refresh with drawn ring"
 summary: "Dragging a deployments feed down draws a mint ring in proportion to the pull, spins it while loading for 1.2s, then inserts a new row at the top with a highlight that fades."
 platform: mobile-app
 type: animation
+category: loaders
 tags: [pull-to-refresh, list, gesture, loading, dark]
 styles: [dark, terminal, minimal]
 motion: rich

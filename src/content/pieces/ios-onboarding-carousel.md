@@ -3,6 +3,7 @@ title: "Onboarding carousel"
 summary: "Three snap-scrolled onboarding slides with CSS-drawn illustrations, page dots that stretch into a 24px pill, and a Continue button that becomes Get started on the last slide."
 platform: mobile-app
 type: screen
+category: onboarding
 tags: [onboarding, carousel, pagination, ios, dark]
 styles: [dark, editorial, soft]
 motion: subtle

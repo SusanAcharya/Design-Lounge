@@ -3,6 +3,7 @@ title: "Button state morph"
 summary: "A 220px 'Pay $48.00' button collapses to a 44px spinner in 200ms, draws a checkmark with stroke-dashoffset over 400ms, then expands to a green 140px 'Paid' pill; click again after 2s to replay."
 platform: web
 type: animation
+category: buttons
 tags: [button, checkout, loading, success, micro-interaction]
 styles: [minimal, soft]
 motion: subtle

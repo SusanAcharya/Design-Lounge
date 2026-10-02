@@ -1,53 +1,89 @@
 ---
-import { getPieces, TYPE_META, PLATFORM_META } from '../lib/pieces';
+import { getPieces, AUTHOR } from '../lib/pieces';
+import { SHELF_GROUPS } from '../data/collections';
 const pieces = await getPieces();
 const year = new Date().getFullYear();
 ---
 <footer class="ftr">
   <div class="wrap">
+    <div class="sign">
+      <p class="eyebrow">Curated, designed and built by</p>
+      <a class="who display" href="/about">{AUTHOR.name}<i>.</i></a>
+      <p class="role">{AUTHOR.role}, {AUTHOR.city}. Every piece, theme, pairing and icon in this lounge was picked and made with one question: would I ship this?</p>
+      <ul class="links mono">
+        {AUTHOR.links.map((l) => <li><a href={l.href} target="_blank" rel="noopener">{l.label} ↗</a></li>)}
+        <li><a href={`mailto:${AUTHOR.email}?subject=Design%20Lounge`}>Email ↗</a></li>
+      </ul>
+    </div>
     <div class="cols">
       <div>
-        <p class="eyebrow"><a href="/rooms">Rooms</a></p>
-        <ul>{Object.entries(TYPE_META).map(([k, v]) => <li><a href={`/rooms/${k}`}>{v.label}</a></li>)}</ul>
+        <p class="eyebrow"><a href="/system">System</a></p>
+        <ul>
+          <li><a href="/type">Type pairings</a></li>
+          <li><a href="/themes">Themes &amp; palettes</a></li>
+          <li><a href="/icons">Lounge Icons</a></li>
+          <li><a href="/motion">Motion &amp; easing</a></li>
+          <li><a href="/kit">Compose a kit</a></li>
+          <li><a href="/start">Start recipes</a></li>
+        </ul>
       </div>
       <div>
-        <p class="eyebrow"><a href="/platforms">Platforms</a></p>
-        <ul>{Object.entries(PLATFORM_META).map(([k, v]) => <li><a href={`/platforms/${k}`}>{v.label}</a></li>)}</ul>
+        <p class="eyebrow"><a href="/c">Index</a></p>
+        <ul>
+          <li><a href="/c/hero">Hero sections</a></li>
+          <li><a href="/c/footer">Footers</a></li>
+          <li><a href="/c/portfolio">Portfolio sites</a></li>
+          <li><a href="/c/landing">Landing pages</a></li>
+          <li><a href="/c/pricing">Pricing</a></li>
+          <li><a href="/c/contact">Contact</a></li>
+          <li><a href="/c/design-language">Design languages</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow"><a href="/collections">Shelves</a></p>
+        <ul>
+          {SHELF_GROUPS.map((g) => <li><a href={`/collections#${g.id}`}>{g.label}</a></li>)}
+          <li><a href="/browse">The floor</a></li>
+          <li><a href="/rooms">Rooms</a></li>
+        </ul>
       </div>
       <div>
         <p class="eyebrow">Lounge</p>
         <ul>
-          <li><a href="/browse">Browse everything</a></li>
-          <li><a href="/collections">Collections</a></li>
-          <li><a href="/styles">Styles</a></li>
-          <li><a href="/guide">Using briefs with an agent</a></li>
+          <li><a href="/agents">For AI agents</a></li>
+          <li><a href="/llms.txt">llms.txt</a></li>
+          <li><a href="/guide">Using briefs</a></li>
           <li><a href="/about">About</a></li>
-          <li><a href="/random">Surprise me</a></li>
+          <li><a href="/random" data-random>Surprise me</a></li>
         </ul>
-      </div>
-      <div class="colophon">
-        <p class="eyebrow">Colophon</p>
-        <p>Set in Fraunces, Instrument Sans and JetBrains Mono. Built as static HTML with Astro. Every piece is a single self-contained file; every brief is plain markdown.</p>
-        <p class="mono faint">{pieces.length} pieces · no trackers · no cookies except your theme</p>
       </div>
     </div>
     <div class="big display" aria-hidden="true">Design <i>Lounge</i></div>
     <div class="legal mono faint">
-      <span>© {year} Design Lounge</span>
-      <span>Interfaces worth sitting with.</span>
+      <span>© {year} {AUTHOR.name} · Design Lounge · {pieces.length} pieces</span>
+      <span>Free to use in your products. Credit appreciated: <a href={AUTHOR.site}>{AUTHOR.siteLabel}</a></span>
     </div>
   </div>
 </footer>
 
 <style>
-  .ftr { border-top: 1px solid var(--ink); margin-top: clamp(48px, 8vw, 120px); padding-top: 48px; position: relative; z-index: 1; }
+  .ftr { border-top: 1px solid var(--ink); margin-top: clamp(48px, 8vw, 120px); padding-top: 56px; position: relative; z-index: 1; }
+  .sign { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 8px 48px; align-items: end; padding-bottom: 48px; margin-bottom: 40px; border-bottom: 1px solid var(--line); }
+  .sign .eyebrow { grid-column: 1 / -1; }
+  .who { font-size: clamp(48px, 7vw, 104px); line-height: .9; letter-spacing: -0.035em; transition: color var(--t-med) var(--ease); }
+  .who i { color: var(--accent); }
+  .who:hover { color: var(--accent); }
+  .role { color: var(--ink-2); font-size: 15.5px; line-height: 1.55; max-width: 44ch; text-wrap: pretty; }
+  .links { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 18px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+  .links a { border-bottom: 1px solid var(--line-2); padding-bottom: 2px; transition: border-color var(--t-fast); }
+  .links a:hover { border-color: var(--ink); }
   .cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
   .cols .eyebrow { margin-bottom: 14px; }
   .cols li { padding: 5px 0; font-size: 14.5px; }
   .cols li a { border-bottom: 1px solid transparent; transition: border-color var(--t-fast); }
   .cols li a:hover { border-color: var(--ink); }
-  .colophon p { font-size: 13.5px; color: var(--ink-2); line-height: 1.5; margin-bottom: 12px; max-width: 34ch; }
   .big { font-size: clamp(64px, 14vw, 220px); line-height: 0.85; margin: 64px 0 24px; color: transparent; -webkit-text-stroke: 1px var(--ink-3); user-select: none; letter-spacing: -0.03em; }
-  .legal { display: flex; justify-content: space-between; padding: 16px 0 28px; border-top: 1px solid var(--line); }
-  @media (max-width: 860px) { .cols { grid-template-columns: 1fr 1fr; } .big { margin-top: 40px; } .legal { flex-direction: column; gap: 6px; } }
+  .legal { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0 28px; border-top: 1px solid var(--line); }
+  .legal a { text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 860px) { .sign { grid-template-columns: 1fr; } .cols { grid-template-columns: 1fr 1fr; } .big { margin-top: 40px; } .legal { flex-direction: column; gap: 6px; } }
 </style>

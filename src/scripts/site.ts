@@ -37,7 +37,7 @@ async function randomPiece() {
   try {
     const res = await fetch('/search.json'); const list = await res.json();
     const cur = location.pathname.replace(/^\/p\//, '');
-    const pool = list.filter((p: { id: string }) => p.id !== cur);
+    const pool = list.filter((p: { id: string; n?: string }) => p.n && p.id !== cur);
     const pick = pool[Math.floor(Math.random() * pool.length)];
     location.href = '/p/' + pick.id;
   } catch { location.href = '/browse'; }

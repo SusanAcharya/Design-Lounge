@@ -3,6 +3,7 @@ title: "M3 modal navigation drawer"
 summary: "A 360px Material 3 Expressive modal drawer that slides in under a scrim from a top-app-bar hamburger, with full-width tonal pill for the active item, section headers, dividers and badges."
 platform: mobile-app
 type: component
+category: navigation
 tags: [material, navigation, drawer, menu, app-bar]
 styles: [material, minimal, soft]
 motion: subtle

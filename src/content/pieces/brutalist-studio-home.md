@@ -3,6 +3,7 @@ title: "Brutalist studio home"
 summary: "Black-on-white studio homepage: 1px column grid, 96px uppercase Archivo Black statement, project rows that invert on hover and a 36-second marquee footer."
 platform: web
 type: screen
+category: portfolio
 tags: [homepage, studio, portfolio, list, marquee]
 styles: [brutalist, swiss]
 motion: subtle

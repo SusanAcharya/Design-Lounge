@@ -3,6 +3,7 @@ title: "Empty state with line illustration"
 summary: "An inbox empty state whose line-drawn SVG draws itself over 1.2s, with a heading, one line of guidance, two actions and a transition into a populated list."
 platform: web
 type: pattern
+category: feedback
 tags: [empty-state, inbox, illustration, onboarding]
 styles: [minimal, editorial, soft]
 motion: subtle

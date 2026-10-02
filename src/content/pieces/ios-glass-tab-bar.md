@@ -3,6 +3,7 @@ title: "Floating glass tab bar"
 summary: "An inset Liquid-glass tab capsule with four tabs and a separate round search island; a glass lens squashes and slides between tabs while content scrolls under it."
 platform: mobile-app
 type: component
+category: navigation
 tags: [navigation, tab-bar, glass, ios]
 styles: [glass, soft]
 motion: subtle

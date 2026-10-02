@@ -1,0 +1,89 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { ICONS, ICON_GROUPS, ICON_CREDIT, iconSvg, iconSprite } from '../../data/icons';
+import { AUTHOR } from '../../lib/pieces';
+
+const sprite = iconSprite();
+---
+<Base title="Lounge Icons" description={`A 24px stroke icon set by ${AUTHOR.name}. One weight, round caps, copy as SVG or as a sprite.`}>
+  <PageHead eyebrow="Library · Icons" title="Lounge <i>Icons</i>" blurb={`A single 24px stroke family: 1.75 weight, round caps, no fill except the lamp. ${ICONS.length} icons. Click one to copy the SVG. The sprite is one paste.`} count={ICONS.length} countLabel="icons" />
+  <div class="wrap page">
+    <div class="toolbar">
+      <label class="search">
+        <span class="sr-only">Filter icons</span>
+        <input type="search" id="q" placeholder="Filter icons…" autocomplete="off" />
+      </label>
+      <nav class="tags" aria-label="Icon groups">
+        <button class="chip on" type="button" data-group="all">all</button>
+        {ICON_GROUPS.map((g) => <button class="chip" type="button" data-group={g.id}>{g.label}</button>)}
+      </nav>
+      <div class="acts">
+        <button class="btn sm ghost" type="button" data-copy="#sprite-json"><span data-label>Copy sprite</span></button>
+        <button class="btn sm ghost" type="button" data-copy="#credit-json"><span data-label>Copy credit</span></button>
+      </div>
+    </div>
+    {ICON_GROUPS.map((g) => (
+      <section class="grp" data-grp={g.id}>
+        <h2 class="eyebrow">{g.label}</h2>
+        <ol class="grid">
+          {ICONS.filter((i) => i.group === g.id).map((icon) => (
+            <li>
+              <button type="button" class="ico" data-copy={`#svg-${icon.id}`} data-name={icon.name.toLowerCase()} data-id={icon.id} data-group={icon.group} title={`Copy ${icon.name}`}>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icon.d}></svg>
+                <span>{icon.name}</span>
+              </button>
+              <script type="application/json" id={`svg-${icon.id}`} set:html={JSON.stringify(iconSvg(icon))}></script>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+    <p class="credit mono faint">{ICON_CREDIT}</p>
+    <script type="application/json" id="sprite-json" set:html={JSON.stringify(sprite)}></script>
+    <script type="application/json" id="credit-json" set:html={JSON.stringify(`<!-- ${ICON_CREDIT} -->`)}></script>
+  </div>
+</Base>
+
+<script>
+  const q = document.getElementById('q') as HTMLInputElement;
+  const chips = document.querySelectorAll<HTMLButtonElement>('[data-group]');
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.ico');
+  const groups = document.querySelectorAll<HTMLElement>('[data-grp]');
+  let group = 'all';
+  function apply() {
+    const query = q.value.trim().toLowerCase();
+    buttons.forEach((b) => {
+      const matchG = group === 'all' || b.dataset.group === group;
+      const matchQ = !query || (b.dataset.name || '').includes(query) || (b.dataset.id || '').includes(query);
+      b.parentElement!.hidden = !(matchG && matchQ);
+    });
+    groups.forEach((g) => {
+      const visible = [...g.querySelectorAll('li')].some((li) => !li.hidden);
+      g.hidden = !visible;
+    });
+  }
+  q.addEventListener('input', apply);
+  chips.forEach((c) => c.addEventListener('click', () => {
+    chips.forEach((x) => x.classList.toggle('on', x === c));
+    group = c.dataset.group!;
+    apply();
+  }));
+</script>
+
+<style>
+  .page { margin-top: 28px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin-bottom: 28px; }
+  .search input { height: 40px; width: min(280px, 100%); padding: 0 12px; border: 1px solid var(--line-2); border-radius: var(--r); background: var(--paper); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .acts { margin-left: auto; display: flex; gap: 8px; }
+  .grp { margin-bottom: 40px; }
+  .grp .eyebrow { margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 8px; }
+  .ico { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; padding: 18px 8px 14px; border: 1px solid var(--line); border-radius: var(--r-lg); color: var(--ink); transition: border-color var(--t-fast), background var(--t-fast), color var(--t-fast); }
+  .ico:hover, .ico:focus-visible { border-color: var(--ink); background: var(--paper-2); }
+  .ico[data-done] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .ico span { font-family: var(--mono); font-size: 10px; letter-spacing: .04em; text-align: center; }
+  .credit { margin-top: 24px; }
+  @media (max-width: 700px) { .acts { margin-left: 0; } .search input { width: 100%; } }
+</style>

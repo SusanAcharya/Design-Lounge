@@ -3,6 +3,7 @@ title: "Tabs with morphing underline"
 summary: "Nine scrollable tabs whose 2px underline stretches to span old and new tab, then settles (180ms + 200ms), with a panel crossfade and fade masks at the strip's overflow edges."
 platform: web
 type: component
+category: navigation
 tags: [tabs, navigation, underline, overflow, publishing]
 styles: [editorial, dark]
 motion: subtle

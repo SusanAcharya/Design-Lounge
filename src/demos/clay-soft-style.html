@@ -1,0 +1,188 @@
+<!-- Design Lounge piece: clay-soft-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Clay soft design language kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#fff1e4;--cream-2:#ffe4cc;--coral:#ff7a59;--coral-deep:#e55a3c;--sky:#8ec5e8;--sky-deep:#5ea3d0;--butter:#ffd56a;--mint:#7bc47f;--ink:#3d2b24;--ink-2:#7a5c50;
+  --display:"Bagel Fat One",system-ui,sans-serif;--text:"Fredoka",system-ui,sans-serif;
+  --r:28px;--ctl:48px;--pad:18px;
+  --t-micro:160ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--text);color:var(--ink);background:#f3d7c4;overflow-x:hidden;overflow-y:auto;-webkit-font-smoothing:antialiased}
+a{color:var(--coral-deep)}
+:focus-visible{outline:3px solid var(--sky-deep);outline-offset:3px}
+.top{height:60px;display:flex;align-items:center;gap:14px;padding:0 20px;background:var(--cream);box-shadow:inset 0 4px 0 rgba(255,255,255,.8),0 8px 0 rgba(229,90,60,.18)}
+.mark{width:28px;height:28px;border-radius:50%;background:var(--coral);box-shadow:inset 0 4px 0 rgba(255,255,255,.5),0 4px 0 var(--coral-deep)}
+.brand{font:26px/1 var(--display)}
+.brand span{font:600 13px var(--text);color:var(--ink-2);margin-left:8px}
+.top nav{margin-left:auto;display:flex;gap:16px}
+.top nav a{font:600 14px var(--text);text-decoration:none;padding:8px 0}
+.top nav a:hover{color:var(--coral-deep)}
+.ver{font:500 12px var(--text);color:var(--ink-2)}
+.sheet{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;padding:14px;background:#f3d7c4}
+.cell{background:var(--cream);padding:var(--pad);min-width:0;border-radius:var(--r);box-shadow:inset 0 3px 0 rgba(255,255,255,.7),0 8px 0 rgba(61,43,36,.08)}
+.lbl{margin:0 0 12px;font:700 12px/1 var(--text);letter-spacing:.06em;text-transform:uppercase;color:var(--coral-deep)}
+.hero{grid-column:1/8;height:420px;padding:22px 24px;position:relative;overflow:hidden;background:linear-gradient(180deg,#fff7ee,var(--cream))}
+.blob{position:absolute;border-radius:50%;filter:none;pointer-events:none}
+.b1{width:180px;height:180px;background:var(--sky);right:-20px;top:-20px;box-shadow:inset 0 10px 0 rgba(255,255,255,.45),0 10px 0 var(--sky-deep)}
+.b2{width:110px;height:110px;background:var(--butter);right:80px;bottom:40px;box-shadow:inset 0 6px 0 rgba(255,255,255,.55),0 8px 0 #e0b84a}
+.eyebrow{font:700 12px var(--text);letter-spacing:.08em;text-transform:uppercase;color:var(--sky-deep)}
+.hero h1{font:44px/.95 var(--display);margin:8px 0 8px}
+.hero p{margin:0 0 14px;color:var(--ink-2);max-width:320px}
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+.tab{height:36px;padding:0 16px;border:0;border-radius:18px;background:var(--cream-2);color:var(--ink);font:600 14px var(--text);cursor:pointer;box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 3px 0 #e8c8ac}
+.tab[aria-selected="true"]{background:var(--coral);color:#fff;box-shadow:inset 0 3px 0 rgba(255,255,255,.4),0 3px 0 var(--coral-deep)}
+.habits{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:360px}
+.habit{border-radius:22px;padding:12px 14px;background:var(--cream);box-shadow:inset 0 3px 0 rgba(255,255,255,.8),0 6px 0 rgba(61,43,36,.1)}
+.habit b{display:block;font:18px var(--display);margin-bottom:4px}
+.habit span{font-size:13px;color:var(--ink-2)}
+.dot{width:18px;height:18px;border-radius:50%;float:right;box-shadow:inset 0 2px 0 rgba(255,255,255,.5)}
+.spec{grid-column:8/13;height:420px;display:flex;flex-direction:column}
+.aa{display:flex;align-items:flex-end;gap:12px;padding-bottom:8px;border-bottom:4px solid var(--cream-2)}
+.aa big{font:88px/.8 var(--display);color:var(--coral)}
+.fam{font-size:13px;color:var(--ink-2);line-height:1.4}
+.fam b{display:block;font:20px var(--display);color:var(--ink);margin-bottom:4px}
+.scale{list-style:none;margin:10px 0 0;padding:0}
+.scale li{display:flex;align-items:baseline;gap:8px;padding:7px 0;border-bottom:2px solid var(--cream-2);overflow:hidden;white-space:nowrap}
+.scale em{font-style:normal;font:600 11px var(--text);color:var(--ink-2);width:86px;flex:none}
+.s1{font:26px/1 var(--display)}.s2{font:700 18px var(--text)}.s3{font:600 15px var(--text)}.s4{font:15px var(--text);color:var(--ink-2)}.s5{font:700 12px var(--text);letter-spacing:.06em;text-transform:uppercase;color:var(--coral-deep)}
+.pal{grid-column:1/4}
+.sw{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;height:42px}
+.chip{width:40px;height:28px;border-radius:14px;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),0 3px 0 rgba(61,43,36,.12)}
+.sw b{display:block;font:600 14px var(--text)}.sw span,.sw code{font-size:12px;color:var(--ink-2)}
+.ctl{grid-column:4/7}
+.btn{height:var(--ctl);padding:0 18px;border:0;border-radius:24px;background:var(--coral);color:#fff;font:600 15px var(--text);cursor:pointer;box-shadow:inset 0 4px 0 rgba(255,255,255,.4),0 6px 0 var(--coral-deep);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro)}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(4px);box-shadow:inset 0 4px 0 rgba(255,255,255,.4),0 2px 0 var(--coral-deep)}
+.btn.sky{background:var(--sky);box-shadow:inset 0 4px 0 rgba(255,255,255,.5),0 6px 0 var(--sky-deep);color:var(--ink)}
+.btn.ghost{background:var(--cream-2);color:var(--ink);box-shadow:inset 0 3px 0 rgba(255,255,255,.8),0 5px 0 #e8c8ac}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tag{height:28px;padding:0 12px;border:0;border-radius:14px;background:var(--cream-2);font:600 13px var(--text);cursor:pointer;box-shadow:inset 0 2px 0 #fff,0 3px 0 #e8c8ac}
+.tag[aria-pressed="true"]{background:var(--mint);color:#214226;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),0 3px 0 #5aa05e}
+.inp{grid-column:7/10}
+.fld{display:block;margin-bottom:12px}
+.fld span{display:block;font:600 12px var(--text);margin-bottom:6px;color:var(--ink-2)}
+.fld input{width:100%;height:var(--ctl);border:0;border-radius:20px;background:var(--cream-2);padding:0 16px;font:16px var(--text);color:var(--ink);box-shadow:inset 0 4px 6px rgba(61,43,36,.08)}
+.fld input:focus{outline:none;box-shadow:inset 0 4px 6px rgba(61,43,36,.08),0 0 0 3px var(--sky)}
+.link{font-weight:600;text-underline-offset:3px}
+.link:hover{color:var(--sky-deep)}
+.sw-t{display:inline-flex;align-items:center;gap:10px;margin-top:8px;cursor:pointer;font-weight:600}
+.sw-t button{width:52px;height:30px;border:0;border-radius:15px;background:var(--cream-2);padding:0;position:relative;cursor:pointer;box-shadow:inset 0 3px 4px rgba(61,43,36,.12)}
+.sw-t button::after{content:"";position:absolute;left:3px;top:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:inset 0 3px 0 rgba(255,255,255,.9),0 3px 0 #e8c8ac;transition:transform 220ms var(--expo)}
+.sw-t button[aria-checked="true"]{background:var(--mint)}
+.sw-t button[aria-checked="true"]::after{transform:translateX(22px)}
+.surf{grid-column:10/13}
+.plates{display:grid;gap:10px}
+.plate{height:52px;border-radius:20px;display:flex;align-items:center;padding:0 14px;font:600 13px var(--text);color:#fff}
+.plate.a{background:var(--coral);box-shadow:inset 0 4px 0 rgba(255,255,255,.4),0 6px 0 var(--coral-deep)}
+.plate.b{background:var(--sky);color:var(--ink);box-shadow:inset 0 4px 0 rgba(255,255,255,.5),0 6px 0 var(--sky-deep)}
+.plate.c{background:var(--butter);color:var(--ink);box-shadow:inset 0 4px 0 rgba(255,255,255,.6),0 6px 0 #e0b84a}
+.gram{grid-column:span 3;display:flex;gap:12px}
+.glyph{width:56px;height:56px;flex:none;border-radius:20px}
+.gram h4{margin:2px 0 4px;font:20px var(--display)}
+.gram p{margin:0;font-size:13px;color:var(--ink-2)}
+.foot{grid-column:1/-1;display:flex;justify-content:space-between;font:600 12px var(--text);color:var(--ink-2);background:transparent;box-shadow:none;padding:4px 8px}
+@media (max-width:1100px){.hero,.spec{grid-column:1/-1;height:auto}.pal,.ctl,.inp,.surf,.gram{grid-column:span 6}.top nav{display:none}.habits{width:100%}}
+@media (max-width:700px){.pal,.ctl,.inp,.surf,.gram{grid-column:1/-1}.hero h1{font-size:34px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="mark" aria-hidden="true"></div>
+  <div class="brand">Pebble <span>/ clay kit 07</span></div>
+  <nav aria-label="Kit sections"><a href="#type">Type</a><a href="#colour">Colour</a><a href="#controls">Controls</a><a href="#surface">Surface</a></nav>
+  <span class="ver">Day 12 of 21</span>
+</header>
+<main class="sheet">
+  <section class="cell hero" id="hero" aria-label="Composition: kids habit app home">
+    <div class="blob b1" aria-hidden="true"></div>
+    <div class="blob b2" aria-hidden="true"></div>
+    <div class="eyebrow">Pebble Days · home</div>
+    <h1>Good morning,<br>Nico.</h1>
+    <p id="day-copy">Two pebbles left today. Water is done. Stretch is waiting.</p>
+    <div class="tabs" role="tablist" aria-label="Day range">
+      <button class="tab" role="tab" aria-selected="true" data-copy="Two pebbles left today. Water is done. Stretch is waiting.">Today</button>
+      <button class="tab" role="tab" aria-selected="false" data-copy="This week: 9 of 14 pebbles. Best day was Tuesday. Keep the streak to 13.">Week</button>
+    </div>
+    <div class="habits">
+      <div class="habit"><i class="dot" style="background:var(--mint)"></i><b>Water</b><span>6 of 6 cups</span></div>
+      <div class="habit" id="stretch"><i class="dot" id="sd" style="background:var(--cream-2)"></i><b>Stretch</b><span id="ss">not yet</span></div>
+    </div>
+  </section>
+  <section class="cell spec" id="type" aria-labelledby="l-type">
+    <h2 class="lbl" id="l-type">01 Type specimen</h2>
+    <div class="aa"><big aria-hidden="true">Aa</big><div class="fam"><b>Bagel Fat One</b>display, 400, puffy titles<b>Fredoka</b>400 · 500 · 600 · 700 · UI</div></div>
+    <ul class="scale">
+      <li><em>Display 44</em><span class="s1">Pebble Days</span></li>
+      <li><em>H2 · 26</em><span class="s1" style="font-size:22px">Good morning</span></li>
+      <li><em>H3 · 18 / 700</em><span class="s2">6 of 6 cups</span></li>
+      <li><em>Body · 15</em><span class="s4">Two pebbles left today.</span></li>
+      <li><em>Label · 12</em><span class="s5">Day 12 of 21</span></li>
+    </ul>
+  </section>
+  <section class="cell pal" id="colour" aria-labelledby="l-col">
+    <h2 class="lbl" id="l-col">02 Palette and roles</h2>
+    <div class="sw"><i class="chip" style="background:var(--cream)"></i><div><b>Cream</b><span>clay, 50 %</span></div><code>#FFF1E4</code></div>
+    <div class="sw"><i class="chip" style="background:var(--coral)"></i><div><b>Coral</b><span>primary</span></div><code>#FF7A59</code></div>
+    <div class="sw"><i class="chip" style="background:var(--sky)"></i><div><b>Sky</b><span>secondary</span></div><code>#8EC5E8</code></div>
+    <div class="sw"><i class="chip" style="background:var(--butter)"></i><div><b>Butter</b><span>highlight</span></div><code>#FFD56A</code></div>
+    <div class="sw"><i class="chip" style="background:var(--mint)"></i><div><b>Mint</b><span>done</span></div><code>#7BC47F</code></div>
+  </section>
+  <section class="cell ctl" id="controls" aria-labelledby="l-btn">
+    <h2 class="lbl" id="l-btn">03 Buttons and chips</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn">Add pebble</button><button class="btn sky">Skip</button><button class="btn ghost">Later</button></div>
+    <div class="tags">
+      <button class="tag" aria-pressed="true">Home</button>
+      <button class="tag" aria-pressed="false">Park</button>
+      <button class="tag" aria-pressed="false">Bed</button>
+    </div>
+  </section>
+  <section class="cell inp" aria-labelledby="l-inp">
+    <h2 class="lbl" id="l-inp">04 Inputs and link</h2>
+    <label class="fld"><span>Pebble name</span><input type="text" value="Brush teeth"></label>
+    <a class="link" href="#hero">See the week map</a>
+    <label class="sw-t"><button type="button" role="switch" aria-checked="false" id="sw" aria-label="Mark stretch done"></button>Stretch done</label>
+  </section>
+  <section class="cell surf" id="surface" aria-labelledby="l-surf">
+    <h2 class="lbl" id="l-surf">05 Surface treatments</h2>
+    <div class="plates">
+      <div class="plate a">Coral puff</div>
+      <div class="plate b">Sky puff</div>
+      <div class="plate c">Butter puff</div>
+    </div>
+  </section>
+  <section class="cell gram" aria-label="Grammar: puff"><div class="glyph" style="background:var(--coral);box-shadow:inset 0 6px 0 rgba(255,255,255,.4),0 8px 0 var(--coral-deep)"></div><div><h4>Puff</h4><p>Every surface has a white inner lip on top and a 6–8px deep colour shelf below.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: chunk"><div class="glyph" style="background:var(--sky);border-radius:28px;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),0 6px 0 var(--sky-deep)"></div><div><h4>Chunk</h4><p>Radii are 20–28px. Controls are 48px tall. Nothing is sharp.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: press"><div class="glyph" style="background:var(--coral);transform:translateY(4px);box-shadow:inset 0 4px 0 rgba(255,255,255,.4),0 2px 0 var(--coral-deep)"></div><div><h4>Press</h4><p>Active buttons drop 4px and shrink the shelf to 2px. They feel pressed in.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: done"><div class="glyph" style="background:var(--mint);border-radius:50%;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),0 4px 0 #5aa05e"></div><div><h4>Done</h4><p>Mint marks a finished habit. Coral is still to do. Never a tick icon.</p></div></section>
+  <div class="cell foot"><span>Pebble clay language · 5 colours · 2 families · puff + chunk</span><span>Today / Week tabs rewrite the home line</span></div>
+</main>
+<script>
+  const copy=document.getElementById('day-copy');
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+    t.setAttribute('aria-selected','true');
+    copy.textContent=t.dataset.copy;
+  }));
+  document.querySelectorAll('.tag').forEach(tag=>tag.addEventListener('click',()=>{
+    tag.setAttribute('aria-pressed',String(tag.getAttribute('aria-pressed')!=='true'));
+  }));
+  const sw=document.getElementById('sw'),sd=document.getElementById('sd'),ss=document.getElementById('ss');
+  sw.addEventListener('click',()=>{
+    const on=sw.getAttribute('aria-checked')!=='true';
+    sw.setAttribute('aria-checked',String(on));
+    sd.style.background=on?'var(--mint)':'var(--cream-2)';
+    ss.textContent=on?'done for today':'not yet';
+  });
+</script>
+</body>
+</html>

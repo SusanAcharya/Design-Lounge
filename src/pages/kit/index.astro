@@ -1,0 +1,435 @@
+---
+import Base from '../../layouts/Base.astro';
+import { AUTHOR, CREDIT_LINE } from '../../lib/pieces';
+import { KINDS, FAMILIES } from '../../data/kit';
+import { themeCss, themeById, ROLE_SWATCHES, ROLE_GROUPS } from '../../data/themes';
+import { PAIRINGS, pairingCss, fontHrefs, faceCss } from '../../data/type';
+
+const usedThemes = [...new Set(KINDS.flatMap((k) => k.palettes))].map((id) => themeById(id)).filter(Boolean);
+const usedPairings = [...new Set(KINDS.flatMap((k) => k.pairings))].map((id) => PAIRINGS.find((p) => p.id === id)).filter(Boolean);
+const hrefs = fontHrefs(usedPairings.flatMap((p) => [p!.display.spec, p!.text.spec]));
+
+const payload = {
+  kinds: KINDS,
+  families: FAMILIES,
+  themes: usedThemes.map((t) => ({ id: t!.id, name: t!.name, mood: t!.mood, tokens: t!.tokens, radius: t!.radius, shadow: t!.shadow, css: themeCss(t!), bestFor: t!.bestFor })),
+  pairings: usedPairings.map((p) => ({ id: p!.id, name: p!.name, mood: p!.mood, display: p!.display, text: p!.text, css: pairingCss(p!), faceDisplay: faceCss(p!.display), faceText: faceCss(p!.text) })),
+  roles: ROLE_SWATCHES,
+  groups: ROLE_GROUPS,
+  author: AUTHOR,
+  credit: CREDIT_LINE,
+};
+---
+<Base title="Compose a kit" description={`Pick a product kind, a researched palette, a type pairing and a component family. Design Lounge by ${AUTHOR.name} writes the brief your agent builds from.`}>
+  {hrefs.map((href) => <link rel="stylesheet" href={href} />)}
+  <div class="kit" data-kit>
+    <header class="kh wrap">
+      <p class="eyebrow">Compose</p>
+      <h1 class="display h2">Pick, see it, <i>go.</i></h1>
+      <p class="lede">You do not pick hex codes. You pick a researched palette, a pairing, and a component family. Both screens update. At the end you get a brief for your agent.</p>
+      <ol class="steps" role="list">
+        <li><button type="button" data-step="0" aria-current="step">01 Kind</button></li>
+        <li><button type="button" data-step="1">02 Palette</button></li>
+        <li><button type="button" data-step="2">03 Type</button></li>
+        <li><button type="button" data-step="3">04 Components</button></li>
+        <li><button type="button" data-step="4">05 Brief</button></li>
+      </ol>
+    </header>
+
+    <div class="body wrap">
+      <div class="pick" data-pane="pick">
+        <section data-panel="0">
+          <p class="eyebrow">What are you making?</p>
+          <ol class="kinds">
+            {KINDS.map((k) => (
+              <li>
+                <button type="button" class="kind" data-kind={k.id}>
+                  <span class="eyebrow">{k.kicker}</span>
+                  <span class="display h3">{k.title}</span>
+                  <span class="muted">{k.blurb}</span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section data-panel="1" hidden>
+          <p class="eyebrow">A complete palette</p>
+          <p class="hint muted">Primary, secondary, tertiary — plus success, warning, danger, info, and the surface stack. A role set, not four chips. Click one; both screens take it.</p>
+          <ol class="choices" data-list="themes"></ol>
+        </section>
+
+        <section data-panel="2" hidden>
+          <p class="eyebrow">A pairing that already works</p>
+          <p class="hint muted">Display plus text. One marriage, not a font drawer.</p>
+          <ol class="choices" data-list="pairings"></ol>
+        </section>
+
+        <section data-panel="3" hidden>
+          <p class="eyebrow">How things are built</p>
+          <p class="hint muted">Corners, buttons, density. A family, not a component dump.</p>
+          <ol class="choices" data-list="families"></ol>
+        </section>
+
+        <section data-panel="4" hidden>
+          <p class="eyebrow">Hand this to your agent</p>
+          <div class="brief-actions">
+            <button class="btn primary" type="button" data-copy="#kit-brief"><span data-label>Copy brief</span></button>
+            <a class="btn ghost" data-brief-href href="/kit/brief.md">Download .md</a>
+            <a class="btn ghost" href="/agents">How agents use this</a>
+          </div>
+          <pre class="brief" data-brief></pre>
+        </section>
+
+        <nav class="pager" data-pager hidden>
+          <button type="button" class="btn ghost" data-back>Back</button>
+          <button type="button" class="btn primary" data-next>Next</button>
+        </nav>
+      </div>
+
+      <aside class="stage" data-stage hidden>
+        <p class="eyebrow">Live on web and phone</p>
+        <div class="frames" data-preview>
+          <div class="web" aria-label="Website preview">
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="web-in">
+              <nav>
+                <b data-k="brand"></b>
+                <span class="links" data-k="nav"></span>
+                <button type="button" class="cta secondary">Tour</button>
+                <button type="button" class="cta" data-k="cta"></button>
+              </nav>
+              <div class="hero">
+                <h2 data-k="headline"></h2>
+                <p data-k="deck"></p>
+                <div class="acts">
+                  <button type="button" class="cta" data-k="cta"></button>
+                  <button type="button" class="cta secondary">Secondary</button>
+                  <span class="chip-t">Tertiary</span>
+                </div>
+              </div>
+              <ol class="cards">
+                <li><span class="lab">01</span><b data-card="0">The argument</b><span>One sitting. One CTA.</span></li>
+                <li class="proof"><span class="lab">02</span><b data-card="1">The proof</b><span>Numbers, not adjectives.</span></li>
+                <li><span class="lab">03</span><b data-card="2">The close</b><span>Ask once, clearly.</span></li>
+              </ol>
+            </div>
+          </div>
+          <div class="phone" aria-label="Mobile preview">
+            <div class="notch" aria-hidden="true"></div>
+            <div class="phone-in">
+              <header>
+                <span class="eyebrow" data-k="phoneTitle"></span>
+                <b data-k="brand"></b>
+              </header>
+              <article>
+                <h3 data-k="headline"></h3>
+                <p data-k="deck"></p>
+                <button type="button" class="cta" data-k="cta"></button>
+              </article>
+              <ul class="rows">
+                <li class="ok"><i></i><span>Today</span><b>On track</b></li>
+                <li class="warn"><i></i><span>Next</span><b>Review</b></li>
+                <li class="bad"><i></i><span>Hold</span><b>Blocked</b></li>
+              </ul>
+              <nav class="tabs">
+                <span class="on">Home</span><span>Inbox</span><span>You</span>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <ol class="legend" data-legend></ol>
+        <p class="mono faint chosen" data-chosen></p>
+      </aside>
+    </div>
+  </div>
+  <script type="application/json" id="kit-data" set:html={JSON.stringify(payload)}></script>
+  <script type="application/json" id="kit-brief"></script>
+</Base>
+
+<script>
+  import { kitBrief } from '../../data/kit';
+
+  type Kind = { id: string; title: string; palettes: string[]; pairings: string[]; families: string[]; copy: { brand: string; nav: string[]; headline: string; deck: string; cta: string; phoneTitle: string }; pieces: string[]; blurb: string; when: string; };
+  type Theme = { id: string; name: string; mood: string; tokens: Record<string, string>; radius: string; shadow: string; css: string; bestFor: string[] };
+  type Pair = { id: string; name: string; mood: string; display: { family: string; fallback: string; weight: number }; text: { family: string; fallback: string; weight: number }; css: string; faceDisplay: string; faceText: string };
+  type Family = { id: string; name: string; mood: string; radius: string; button: string; density: string; shadow: string; pieces: string[]; rules: string[] };
+  type Role = { key: string; label: string };
+
+  const data = JSON.parse(document.getElementById('kit-data')!.textContent || '{}') as {
+    kinds: Kind[]; themes: Theme[]; pairings: Pair[]; families: Family[]; roles: Role[];
+    author: { name: string; site: string; siteLabel: string }; credit: string;
+  };
+  const root = document.querySelector<HTMLElement>('[data-kit]')!;
+  const stage = root.querySelector<HTMLElement>('[data-stage]')!;
+  const preview = root.querySelector<HTMLElement>('[data-preview]')!;
+  const briefEl = root.querySelector<HTMLElement>('[data-brief]')!;
+  const briefJson = document.getElementById('kit-brief')!;
+  const chosen = root.querySelector<HTMLElement>('[data-chosen]')!;
+  const pager = root.querySelector<HTMLElement>('[data-pager]')!;
+  const nextBtn = root.querySelector<HTMLButtonElement>('[data-next]')!;
+  const briefHref = root.querySelector<HTMLAnchorElement>('[data-brief-href]');
+  const NEXT_LABEL = ['', 'Next: Type', 'Next: Components', 'Next: Brief', ''];
+
+  const state = { step: 0, kind: '', theme: '', pairing: '', family: '' };
+
+  function kind() { return data.kinds.find((k) => k.id === state.kind); }
+  function theme() { return data.themes.find((t) => t.id === state.theme); }
+  function pairing() { return data.pairings.find((p) => p.id === state.pairing); }
+  function family() { return data.families.find((f) => f.id === state.family); }
+
+  function applyUrl(push = true) {
+    const u = new URL(location.href);
+    (['kind', 'theme', 'pairing', 'family'] as const).forEach((k) => state[k] ? u.searchParams.set(k, state[k]) : u.searchParams.delete(k));
+    state.step ? u.searchParams.set('step', String(state.step)) : u.searchParams.delete('step');
+    if (push) history.replaceState(null, '', u);
+  }
+
+  function hydrate() {
+    const u = new URLSearchParams(location.search);
+    state.kind = u.get('kind') || '';
+    state.theme = u.get('theme') || '';
+    state.pairing = u.get('pairing') || '';
+    state.family = u.get('family') || '';
+    state.step = Number(u.get('step') || (state.kind ? 1 : 0));
+    if (state.kind && !kind()) { state.kind = ''; state.step = 0; }
+  }
+
+  function ensureDefaults() {
+    const k = kind();
+    if (!k) return;
+    if (!k.palettes.includes(state.theme)) state.theme = k.palettes[0];
+    if (!k.pairings.includes(state.pairing)) state.pairing = k.pairings[0];
+    if (!k.families.includes(state.family)) state.family = k.families[0];
+  }
+
+  function setStep(n: number) {
+    if (n > 0 && !state.kind) n = 0;
+    state.step = n;
+    root.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => { p.hidden = p.dataset.panel !== String(n); });
+    root.querySelectorAll<HTMLButtonElement>('[data-step]').forEach((b) => b.setAttribute('aria-current', b.dataset.step === String(n) ? 'step' : 'false'));
+    stage.hidden = n === 0;
+    pager.hidden = n === 0;
+    nextBtn.hidden = n >= 4;
+    nextBtn.textContent = NEXT_LABEL[n] || 'Next';
+    renderLists();
+    paint();
+    applyUrl();
+  }
+
+  function renderLists() {
+    const k = kind();
+    const themes = root.querySelector('[data-list="themes"]')!;
+    const pairs = root.querySelector('[data-list="pairings"]')!;
+    const fams = root.querySelector('[data-list="families"]')!;
+    if (k) {
+      themes.innerHTML = k.palettes.map((id) => {
+        const t = data.themes.find((x) => x.id === id);
+        if (!t) return '';
+        const roles = data.roles.map((r) => `<span><i style="background:${t.tokens[r.key]}"></i><em>${r.label}</em><code>${t.tokens[r.key]}</code></span>`).join('');
+        return `<li><button type="button" class="choice kit-pal" data-pick="theme" data-v="${t.id}" aria-pressed="${t.id === state.theme}">
+          <span class="roles" aria-hidden="true">${roles}</span>
+          <span class="strip" aria-hidden="true">${['bg','surface','ink','line','primarySoft','secondarySoft','tertiarySoft'].map((k) => `<i style="background:${t.tokens[k]}"></i>`).join('')}</span>
+          <span class="display h4">${t.name}</span>
+          <span class="muted">${t.mood}</span>
+        </button></li>`;
+      }).join('');
+      pairs.innerHTML = k.pairings.map((id) => {
+        const p = data.pairings.find((x) => x.id === id);
+        if (!p) return '';
+        return `<li><button type="button" class="choice" data-pick="pairing" data-v="${p.id}" aria-pressed="${p.id === state.pairing}">
+          <span class="display h4" style="${p.faceDisplay}">${p.name}</span>
+          <span class="muted" style="${p.faceText}">${p.display.family} + ${p.text.family}</span>
+          <span class="muted">${p.mood}</span>
+        </button></li>`;
+      }).join('');
+      fams.innerHTML = k.families.map((id) => {
+        const f = data.families.find((x) => x.id === id);
+        if (!f) return '';
+        return `<li><button type="button" class="choice" data-pick="family" data-v="${f.id}" aria-pressed="${f.id === state.family}">
+          <span class="display h4">${f.name}</span>
+          <span class="muted">${f.mood}</span>
+        </button></li>`;
+      }).join('');
+    }
+    root.querySelectorAll<HTMLButtonElement>('[data-kind]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.kind === state.kind)));
+  }
+
+  function paint() {
+    const k = kind(); const t = theme(); const p = pairing(); const f = family();
+    if (!k || !t || !p) { stage.hidden = true; return; }
+    stage.hidden = false;
+    const tok = t.tokens;
+    ([
+      'bg', 'surface', 'surface2', 'surface3', 'ink', 'ink2', 'ink3', 'line', 'lineStrong',
+      'primary', 'primaryInk', 'primarySoft', 'secondary', 'secondaryInk', 'secondarySoft',
+      'tertiary', 'tertiaryInk', 'tertiarySoft', 'success', 'successInk', 'successSoft',
+      'warning', 'warningInk', 'warningSoft', 'danger', 'dangerInk', 'dangerSoft',
+      'info', 'infoInk', 'infoSoft', 'focus', 'inverse', 'inverseInk',
+    ] as const).forEach((key) => preview.style.setProperty(`--k-${key}`, tok[key]));
+    preview.style.setProperty('--k-accent', tok.primary);
+    preview.style.setProperty('--k-accent-ink', tok.primaryInk);
+    const legend = root.querySelector('[data-legend]');
+    if (legend) {
+      legend.innerHTML = data.roles.map((r) => `<li><i style="background:${tok[r.key]}"></i><span>${r.label}</span><code>${tok[r.key]}</code></li>`).join('');
+    }
+    preview.style.setProperty('--k-display', `"${p.display.family}", ${p.display.fallback}`);
+    preview.style.setProperty('--k-text', `"${p.text.family}", ${p.text.fallback}`);
+    preview.style.setProperty('--k-radius', f?.radius || t.radius);
+    preview.style.setProperty('--k-shadow', f?.shadow || t.shadow);
+    preview.dataset.button = f?.button || 'solid';
+    preview.dataset.density = f?.density || 'regular';
+    preview.dataset.kind = k.id;
+    root.querySelectorAll('[data-k]').forEach((el) => {
+      const key = (el as HTMLElement).dataset.k!;
+      if (key === 'nav') el.textContent = k.copy.nav.join('   ');
+      else el.textContent = (k.copy as Record<string, string | string[]>)[key] as string;
+    });
+    chosen.textContent = `${k.title} · ${t.name} · ${p.name}${f ? ' · ' + f.name : ''} · ${data.author.name}`;
+    writeBrief();
+  }
+
+  function writeBrief() {
+    const k = kind(); const t = theme(); const p = pairing(); const f = family();
+    if (!k || !t || !p || !f) { briefEl.textContent = ''; briefJson.textContent = '""'; return; }
+    const md = kitBrief({
+      kind: k,
+      theme: { name: t.name, mood: t.mood, bestFor: t.bestFor, css: t.css },
+      pairing: { name: p.name, mood: p.mood, display: p.display.family, text: p.text.family, css: p.css },
+      family: f,
+      author: data.author,
+      credit: data.credit,
+    });
+    briefEl.textContent = md;
+    briefJson.textContent = JSON.stringify(md);
+    if (briefHref) briefHref.href = `/kit/brief/${k.id}/${t.id}/${p.id}/${f.id}.md`;
+  }
+
+  root.querySelectorAll<HTMLButtonElement>('[data-step]').forEach((b) => b.addEventListener('click', () => setStep(Number(b.dataset.step))));
+  nextBtn.addEventListener('click', () => setStep(Math.min(4, state.step + 1)));
+  root.querySelector<HTMLButtonElement>('[data-back]')!.addEventListener('click', () => setStep(Math.max(0, state.step - 1)));
+  root.addEventListener('click', (e) => {
+    const kindBtn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-kind]');
+    if (kindBtn) {
+      state.kind = kindBtn.dataset.kind!;
+      ensureDefaults();
+      setStep(1);
+      return;
+    }
+    const pick = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-pick]');
+    if (pick) {
+      const key = pick.dataset.pick as 'theme' | 'pairing' | 'family';
+      state[key] = pick.dataset.v!;
+      renderLists();
+      paint();
+      applyUrl();
+    }
+  });
+
+  hydrate();
+  if (state.kind) ensureDefaults();
+  setStep(state.step);
+</script>
+
+<style>
+  .kit { padding-bottom: 48px; }
+  .kh { padding: clamp(32px, 5vw, 64px) 0 0; display: flex; flex-direction: column; gap: 16px; }
+  .steps { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 12px; border-top: 1px solid var(--ink); }
+  .steps button { padding: 10px 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid transparent; }
+  .steps button[aria-current="step"] { color: var(--ink); border-color: var(--ink); }
+  .steps button:hover { color: var(--ink); }
+  .body { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(320px, 1.15fr); gap: 40px; margin-top: 36px; align-items: start; }
+  .pick { min-width: 0; }
+  .hint { font-size: 14px; max-width: 44ch; margin: 8px 0 18px; text-wrap: pretty; }
+  .kinds { display: flex; flex-direction: column; border-top: 1px solid var(--ink); margin-top: 16px; }
+  .kind { display: flex; flex-direction: column; gap: 8px; width: 100%; text-align: left; padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .kind:hover, .kind[aria-pressed="true"] { background: var(--paper-2); padding-inline: 12px; }
+  .kind .muted { max-width: 42ch; font-size: 14.5px; }
+  .choices { display: flex; flex-direction: column; gap: 8px; }
+  .kit :global(.choice) { display: flex; flex-direction: column; gap: 6px; width: 100%; text-align: left; padding: 16px; border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .kit :global(.choice:hover), .kit :global(.choice[aria-pressed="true"]) { border-color: var(--ink); }
+  .kit :global(.choice[aria-pressed="true"]) { background: var(--accent-soft); }
+  .kit :global(.choice.kit-pal) { gap: 10px; }
+  .kit :global(.roles) { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+  .kit :global(.roles span) { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .kit :global(.roles i) { height: 28px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .kit :global(.roles em) { font-style: normal; font-family: var(--mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .kit :global(.roles code) { display: none; }
+  .kit :global(.strip) { display: grid; grid-template-columns: repeat(7, 1fr); height: 8px; border-radius: 999px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+  .legend { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+  .legend li { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .legend i { height: 22px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .legend span { font-family: var(--mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .legend code { font-size: 10px; }
+  .pager { display: flex; justify-content: space-between; gap: 10px; margin-top: 28px; padding: 16px 0; border-top: 1px solid var(--line); }
+  .pager[hidden], .stage[hidden], [data-panel][hidden] { display: none; }
+  .brief-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+  .brief { max-height: 64vh; overflow: auto; padding: 18px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2); font-size: 12px; line-height: 1.55; white-space: pre-wrap; }
+
+  .stage { position: sticky; top: 80px; }
+  .frames { display: grid; grid-template-columns: 1.4fr .7fr; gap: 16px; align-items: start; margin-top: 12px; }
+  .web, .phone { background: var(--k-bg, var(--paper-2)); color: var(--k-ink, var(--ink)); font-family: var(--k-text, var(--sans)); border: 1px solid var(--line); overflow: hidden; }
+  .web { border-radius: 10px; }
+  .phone { border-radius: 28px; aspect-ratio: 9 / 17.5; position: relative; }
+  .chrome { display: flex; gap: 6px; padding: 10px 12px; background: color-mix(in srgb, var(--k-ink) 8%, var(--k-bg)); border-bottom: 1px solid var(--k-line); }
+  .chrome i { width: 8px; height: 8px; border-radius: 50%; background: var(--k-line); }
+  .web-in { padding: 16px 18px 20px; }
+  .web nav { display: flex; align-items: center; gap: 14px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 22px; }
+  .web nav b { font-family: var(--k-display); font-size: 16px; letter-spacing: -0.02em; text-transform: none; }
+  .web nav .links { color: var(--k-ink2); flex: 1; }
+  .web .hero h2 { font-family: var(--k-display); font-size: clamp(28px, 3.2vw, 44px); letter-spacing: -0.03em; line-height: 1; margin: 0 0 10px; }
+  .web .hero p { color: var(--k-ink2); font-size: 13.5px; max-width: 36ch; margin: 0 0 14px; }
+  .web .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .chip-t { height: 28px; padding: 0 10px; display: inline-flex; align-items: center; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; background: var(--k-tertiarySoft); color: var(--k-tertiary); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
+  .cards li { padding: 12px; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); display: flex; flex-direction: column; gap: 4px; }
+  .cards .proof { background: var(--k-secondarySoft); border-color: transparent; }
+  .cards .lab { font-family: var(--mono); font-size: 10px; color: var(--k-ink3); }
+  .cards b { font-size: 13px; }
+  .cards span { font-size: 11px; color: var(--k-ink2); }
+
+  .cta { height: 36px; padding: 0 14px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; border-radius: var(--k-radius); border: 1px solid var(--k-primary); background: var(--k-primary); color: var(--k-primaryInk); }
+  .cta.secondary { background: var(--k-secondarySoft); color: var(--k-secondary); border-color: transparent; }
+  [data-button="solid"] .cta:not(.secondary) { background: var(--k-primary); color: var(--k-primaryInk); border-color: var(--k-primary); }
+  [data-button="soft"] .cta:not(.secondary) { background: var(--k-primary); color: var(--k-primaryInk); border-color: var(--k-primary); border-radius: 999px; }
+  [data-button="outline"] .cta:not(.secondary) { background: transparent; color: var(--k-primary); border-color: var(--k-primary); }
+  [data-density="dense"] .cards { gap: 4px; }
+  [data-density="dense"] .web-in { padding: 12px 14px; }
+  [data-density="air"] .web-in { padding: 22px 22px 26px; }
+
+  .notch { position: absolute; left: 50%; top: 8px; transform: translateX(-50%); width: 38%; height: 14px; background: #111; border-radius: 10px; z-index: 2; }
+  .phone-in { padding: 36px 14px 12px; height: 100%; display: flex; flex-direction: column; gap: 12px; }
+  .phone-in header b { display: block; font-family: var(--k-display); font-size: 22px; letter-spacing: -0.03em; line-height: 1; }
+  .phone-in article { padding: 14px; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); flex: none; }
+  .phone-in article h3 { font-family: var(--k-display); font-size: 20px; line-height: 1.05; margin: 0 0 8px; }
+  .phone-in article p { font-size: 12px; color: var(--k-ink2); margin: 0 0 12px; }
+  .rows { display: flex; flex-direction: column; gap: 8px; }
+  .rows li { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid var(--k-line); border-radius: var(--k-radius); background: var(--k-surface); font-size: 12px; }
+  .rows i { width: 8px; height: 8px; border-radius: 50%; background: var(--k-info); }
+  .rows.ok i, .rows li.ok i { background: var(--k-success); }
+  .rows li.warn { background: var(--k-warningSoft); border-color: transparent; }
+  .rows li.warn i { background: var(--k-warning); }
+  .rows li.bad { background: var(--k-dangerSoft); border-color: transparent; }
+  .rows li.bad i { background: var(--k-danger); }
+  .rows li.ok { background: var(--k-successSoft); border-color: transparent; }
+  .rows b { margin-left: auto; }
+  .tabs { margin-top: auto; display: flex; justify-content: space-around; padding: 10px 0 6px; border-top: 1px solid var(--k-line); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--k-ink3); }
+  .tabs .on { color: var(--k-ink); }
+  .chosen { margin-top: 12px; }
+
+  @media (max-width: 960px) {
+    .body { grid-template-columns: 1fr; }
+    .stage { order: -1; position: static; background: var(--paper); padding: 8px 0 10px; }
+    .frames { grid-template-columns: 1fr 120px; }
+    .phone { max-height: 200px; }
+    .web .hero h2 { font-size: 22px; }
+    .cards { display: none; }
+    .kit :global(.roles) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .legend { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .chosen { display: none; }
+  }
+  @media (max-width: 640px) {
+    .frames { grid-template-columns: 1fr; }
+    .phone { max-width: 240px; }
+  }
+</style>

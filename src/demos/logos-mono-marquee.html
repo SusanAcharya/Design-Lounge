@@ -1,0 +1,133 @@
+<!-- Design Lounge piece: logos-mono-marquee · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tally — Teams on the book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f4f0;--ink:#111111;--ink-2:#6e6e6a;--ink-3:#9a9a94;--line:#d8d8d2;--mark:#3a3a38;
+  --sans:"Schibsted Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --nav-h:56px;--row-h:96px;
+  --t-fast:160ms;--ease:cubic-bezier(.2,.7,.2,1);
+  --dur-a:42s;--dur-b:54s;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+nav{height:var(--nav-h);flex:none;display:flex;align-items:center;padding:0 64px;border-bottom:1px solid var(--line);gap:32px}
+.brand{font:600 15px/1 var(--sans);letter-spacing:-.03em;text-decoration:none;color:inherit}
+.brand i{display:inline-block;width:7px;height:7px;background:var(--ink);margin-right:8px;vertical-align:2px}
+.links{display:flex;gap:24px}
+.links a{color:var(--ink-2);text-decoration:none;font:400 12px var(--mono)}
+.links a:hover{color:var(--ink)}
+.cta{margin-left:auto;height:32px;padding:0 12px;border:1px solid var(--ink);background:transparent;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);cursor:pointer}
+.cta:hover{background:var(--ink);color:var(--bg)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+section{flex:1;display:flex;flex-direction:column;min-height:0}
+.lead{padding:48px 64px 36px;display:flex;align-items:end;justify-content:space-between;gap:32px}
+.kicker{font:400 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin:0 0 12px}
+h1{margin:0;font:600 40px/1.1 var(--sans);letter-spacing:-.03em;max-width:16ch}
+.meta{font:400 12px/1.5 var(--mono);color:var(--ink-2);text-align:right}
+.meta b{color:var(--ink);font-weight:500}
+.rows{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.row{height:var(--row-h);display:flex;align-items:center;overflow:hidden;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row:hover .track,.row:focus-within .track{animation-play-state:paused}
+.track{display:flex;flex-wrap:nowrap;width:max-content;will-change:transform}
+.row.a .track{animation:marq var(--dur-a) linear infinite}
+.row.b .track{animation:marq-rev var(--dur-b) linear infinite}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes marq-rev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.set{display:flex;flex-wrap:nowrap;align-items:center;flex:none}
+.logo{display:flex;align-items:center;gap:8px;height:var(--row-h);padding:0 36px;color:var(--mark);white-space:nowrap;border-right:1px solid var(--line)}
+.logo .w{font:500 18px/1 var(--sans);letter-spacing:-.02em}
+.logo.caps .w{font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+.logo.mono .w{font:500 13px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.ico{width:14px;height:14px;flex:none;position:relative}
+.ico.sq{background:var(--mark)}
+.ico.ci{border:1.5px solid var(--mark);border-radius:50%}
+.ico.bars::before,.ico.bars::after{content:"";position:absolute;left:0;right:0;height:2px;background:var(--mark)}
+.ico.bars::before{top:3px}
+.ico.bars::after{bottom:3px}
+.ico.plus::before,.ico.plus::after{content:"";position:absolute;background:var(--mark)}
+.ico.plus::before{left:6px;top:0;bottom:0;width:2px}
+.ico.plus::after{top:6px;left:0;right:0;height:2px}
+.hint{padding:20px 64px;font:400 11px/1.4 var(--mono);color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;display:flex;justify-content:space-between}
+@media (prefers-reduced-motion:reduce){
+  .row.a .track,.row.b .track{animation:none;transform:none}
+  .set:last-child{display:none}
+}
+@media (max-width:1024px){
+  nav,.lead,.hint{padding-left:36px;padding-right:36px}
+  h1{font-size:32px}
+}
+@media (max-width:768px){
+  .links{display:none}
+  h1{font-size:28px}
+  .logo{padding:0 22px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="#"><i></i>Tally</a>
+  <div class="links"><a href="#">Payroll</a><a href="#">Tax</a><a href="#">Pricing</a></div>
+  <button class="cta" type="button">Open a book</button>
+</nav>
+<section aria-label="Customer wordmarks">
+  <div class="lead">
+    <div>
+      <p class="kicker">Used in 48 payrolls</p>
+      <h1>Teams that run the book on Tally</h1>
+    </div>
+    <p class="meta"><b>Two rows</b><br>Monochrome type<br>Hover a row to pause</p>
+  </div>
+  <div class="rows">
+    <div class="row a" tabindex="0" aria-label="Customer row one, scrolling left">
+      <div class="track">
+        <div class="set" id="set-a">
+          <span class="logo"><i class="ico sq" aria-hidden="true"></i><span class="w">Northline</span></span>
+          <span class="logo caps"><span class="w">Harbor &amp; Co</span></span>
+          <span class="logo mono"><i class="ico ci" aria-hidden="true"></i><span class="w">Vale Civic</span></span>
+          <span class="logo"><i class="ico bars" aria-hidden="true"></i><span class="w">Kiln Studio</span></span>
+          <span class="logo caps"><i class="ico plus" aria-hidden="true"></i><span class="w">Orchard</span></span>
+          <span class="logo"><span class="w">Pine Desk</span></span>
+          <span class="logo mono"><span class="w">Atlas Yard</span></span>
+          <span class="logo"><i class="ico sq" aria-hidden="true"></i><span class="w">Copper Mill</span></span>
+        </div>
+        <div class="set" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="row b" tabindex="0" aria-label="Customer row two, scrolling right">
+      <div class="track">
+        <div class="set" id="set-b">
+          <span class="logo caps"><span class="w">Westbound</span></span>
+          <span class="logo"><i class="ico ci" aria-hidden="true"></i><span class="w">Ledger &amp; Son</span></span>
+          <span class="logo mono"><i class="ico bars" aria-hidden="true"></i><span class="w">Moth House</span></span>
+          <span class="logo"><span class="w">Brine</span></span>
+          <span class="logo caps"><i class="ico plus" aria-hidden="true"></i><span class="w">Oak &amp; Hour</span></span>
+          <span class="logo"><span class="w">Second Shift</span></span>
+          <span class="logo mono"><i class="ico sq" aria-hidden="true"></i><span class="w">Quarry</span></span>
+          <span class="logo"><span class="w">Redoubt</span></span>
+        </div>
+        <div class="set" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+  <p class="hint"><span>Wordmarks set in type · no image files</span><span>42 s / 54 s · linear · paused on hover</span></p>
+</section>
+<script>
+(function(){
+  ['set-a','set-b'].forEach(id=>{
+    const src=document.getElementById(id);
+    const clone=src.nextElementSibling;
+    if(clone)clone.innerHTML=src.innerHTML;
+  });
+})();
+</script>
+</body>
+</html>

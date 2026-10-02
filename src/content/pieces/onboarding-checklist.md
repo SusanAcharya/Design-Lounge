@@ -3,6 +3,7 @@ title: "Onboarding checklist card"
 summary: "A 400px setup card with a 44px progress ring and five tasks; completing one draws a tick and collapses it, 100% dissolves into a calm 'You're set' state, and the card is dismissable."
 platform: web
 type: pattern
+category: onboarding
 tags: [onboarding, checklist, progress, activation, card]
 styles: [soft, minimal]
 motion: subtle

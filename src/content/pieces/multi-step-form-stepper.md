@@ -3,6 +3,7 @@ title: "Multi-step form stepper"
 summary: "A three-step workspace setup with a horizontal stepper whose connectors fill on completion, direction-aware 40px slide transitions, validation on Continue and a review step with Edit links."
 platform: web
 type: component
+category: inputs
 tags: [form, stepper, onboarding, validation, wizard]
 styles: [soft, minimal]
 motion: subtle

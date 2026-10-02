@@ -1,0 +1,140 @@
+<!-- Design Lounge piece: hero-editorial-name-rotator · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Isaura Venn — Independent designer, Lisbon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400;1,6..96,500&family=Tenor+Sans&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1c0a0d;--bg-2:#26100f;--cream:#f2e7d8;--cream-2:#c9b9a6;--cream-3:#8f7b70;--line:rgba(242,231,216,.16);
+  --gold:#c9a86a;--wine:#5a1a22;
+  --serif:"Bodoni Moda",Didot,"Times New Roman",serif;--sans:"Tenor Sans","Gill Sans",sans-serif;
+  --name:212px;--slot-h:1.26em;
+  --t-micro:180ms;--t-slot:700ms;--t-width:600ms;--t-plate:500ms;--dwell:2600ms;--lag:200ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--sans);color:var(--cream);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;position:relative;
+  background-image:radial-gradient(120% 80% at 80% 0%,#2b1114 0%,transparent 60%)}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+body>nav{height:72px;display:flex;align-items:center;padding:0 48px;gap:40px;border-bottom:1px solid var(--line);position:relative;z-index:3}
+.mono{font:italic 500 26px/1 var(--serif);letter-spacing:-.02em;margin-right:auto}
+.mono span{color:var(--gold)}
+body>nav ul{display:flex;gap:36px;list-style:none;margin:0;padding:0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-2)}
+body>nav ul a{transition:color var(--t-micro) var(--ease)}
+body>nav ul a:hover,body>nav ul a[aria-current]{color:var(--cream)}
+.avail{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.06em;color:var(--cream-2);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+.avail i{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.kick{position:absolute;left:48px;top:100px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-3);z-index:2}
+.kick b{font-weight:400;color:var(--gold)}
+h1{position:absolute;left:40px;top:150px;margin:0;font:italic 400 var(--name)/.86 var(--serif);letter-spacing:-.045em;z-index:2;pointer-events:none}
+h1 span{display:block}
+h1 span+span{padding-left:330px}
+h1 em{font-style:normal;color:var(--gold)}
+.plate{position:absolute;left:840px;top:100px;width:392px;height:384px;z-index:1;overflow:hidden;background:var(--bg-2)}
+.plate div{position:absolute;inset:0;opacity:0;transition:opacity var(--t-plate) var(--ease),transform 1200ms var(--expo);transform:scale(1.06)}
+.plate div.on{opacity:1;transform:scale(1)}
+.p0{background:radial-gradient(40% 30% at 62% 38%,#f6d9a8 0%,#d88a4e 40%,transparent 72%),linear-gradient(180deg,#e9a46a 0%,#8c3b2a 55%,#3a1414 100%)}
+.p0::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,#5a2a1c,#1f0b0b)}
+.p1{background:conic-gradient(from 210deg at 30% 70%,#0e2f2a,#2f6b5c,#c9d6b8,#0e2f2a);}
+.p1::after{content:"";position:absolute;inset:22% 18%;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f2e7d8,#c9a86a 60%,#5a3e1c)}
+.p2{background:linear-gradient(90deg,#f2e7d8 0 50%,#c43a3a 50% 100%)}
+.p2::after{content:"Rua";position:absolute;left:22px;bottom:16px;font:italic 400 132px/1 var(--serif);color:#1c0a0d;letter-spacing:-.05em}
+.p3{background:repeating-linear-gradient(0deg,#1d2a44 0 22px,#25365a 22px 44px),#1d2a44}
+.p3::after{content:"";position:absolute;left:50%;top:14%;width:4px;height:72%;background:#c9a86a;box-shadow:-60px 40px 0 #f2e7d8,60px 90px 0 #f2e7d8}
+.p4{background:radial-gradient(80% 60% at 50% 110%,#f0c8a8 0%,#b5717a 40%,#3b1a2a 80%)}
+.cap{position:absolute;left:840px;top:500px;width:392px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-3);z-index:2}
+.cap b{font-weight:400;color:var(--cream-2)}
+.line{position:absolute;left:48px;top:556px;margin:0;font:400 38px/1.1 var(--serif);letter-spacing:-.01em;color:var(--cream-2);z-index:2;white-space:nowrap}
+.slot{display:inline-block;vertical-align:bottom;height:var(--slot-h);overflow:hidden;position:relative;transition:width var(--t-width) var(--expo);color:var(--cream)}
+.reel{display:flex;flex-direction:column;align-items:flex-start;transition:transform var(--t-slot) var(--expo)}
+.reel span{display:block;height:var(--slot-h);line-height:var(--slot-h);font-style:italic;white-space:nowrap;padding-right:.08em}
+.slot.b{color:var(--gold)}
+.ctl{position:absolute;left:48px;top:628px;display:flex;gap:18px;align-items:center;z-index:2}
+.ctl button{background:none;border:1px solid var(--line);color:var(--cream-2);height:32px;padding:0 14px;border-radius:999px;font:12px var(--sans);letter-spacing:.08em;cursor:pointer;display:inline-flex;gap:8px;align-items:center;transition:border-color var(--t-micro),color var(--t-micro)}
+.ctl button:hover{border-color:var(--gold);color:var(--cream)}
+.ctl svg{width:10px;height:10px;fill:currentColor}
+.ticks{display:flex;gap:6px}.ticks i{width:18px;height:1px;background:var(--line);transition:background var(--t-micro)}.ticks i.on{background:var(--gold)}
+.idx{position:absolute;left:840px;right:48px;top:552px;list-style:none;margin:0;padding:0;z-index:2}
+.idx h2{margin:0 0 6px;font:11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--cream-3);display:flex;justify-content:space-between}
+.idx a{display:grid;grid-template-columns:30px 1fr auto;align-items:baseline;gap:8px;padding:7px 0;border-top:1px solid var(--line);font-size:13px;color:var(--cream-2);transition:color var(--t-micro) var(--ease),padding var(--t-slot) var(--expo)}
+.idx a span{font:italic 400 11px var(--serif);color:var(--cream-3)}
+.idx a small{font-size:11px;letter-spacing:.08em;color:var(--cream-3)}
+.idx a:hover,.idx a:focus-visible,.idx a.on{color:var(--cream);padding-left:10px}
+.idx a.on span{color:var(--gold)}
+.foot{position:absolute;left:48px;bottom:34px;display:flex;gap:32px;font-size:12px;letter-spacing:.06em;color:var(--cream-3);z-index:2}
+.foot a{color:var(--cream-2);border-bottom:1px solid var(--line);padding-bottom:2px}
+.foot a:hover{color:var(--cream);border-color:var(--gold)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<nav aria-label="Primary">
+  <a href="#" class="mono">I<span>.</span>V</a>
+  <ul><li><a href="#" aria-current="page">Work</a></li><li><a href="#">About</a></li><li><a href="#">Notes</a></li><li><a href="#">Contact</a></li></ul>
+  <span class="avail"><i></i>Booking from January 2027</span>
+</nav>
+<main>
+  <p class="kick">Independent designer <b>·</b> Lisbon <b>·</b> Since 2014</p>
+  <h1><span>Isaura</span><span>Venn<em>.</em></span></h1>
+  <div class="plate" id="plate" aria-hidden="true"><div class="p0 on"></div><div class="p1"></div><div class="p2"></div><div class="p3"></div><div class="p4"></div></div>
+  <div class="cap" id="cap"><span>Selected <b id="capn">01</b> / 05</span><span id="capt">Casa Alma, Comporta</span></div>
+  <p class="line"><span class="sr">Designs identities, interfaces, book jackets, wayfinding and packaging for independent hotels, fintech founders, small publishers, public museums and perfumers.</span><span aria-hidden="true">Designs <span class="slot a" id="sa"><span class="reel"></span></span> for <span class="slot b" id="sb"><span class="reel"></span></span></span></p>
+  <div class="ctl"><button type="button" id="pause" aria-pressed="false"><svg viewBox="0 0 10 10" id="pi"><rect x="1" y="1" width="3" height="8"/><rect x="6" y="1" width="3" height="8"/></svg><span>Pause</span></button><span class="ticks" id="ticks" aria-hidden="true"></span></div>
+  <section class="idx" aria-label="Selected work">
+    <h2><span>Selected work</span><span>2019–2026</span></h2>
+    <a href="#" class="on" data-i="0"><span>01</span>Casa Alma, hotel identity<small>2026</small></a>
+    <a href="#" data-i="1"><span>02</span>Verdello banking app<small>2025</small></a>
+    <a href="#" data-i="2"><span>03</span>Rua Editions, book covers<small>2024</small></a>
+    <a href="#" data-i="3"><span>04</span>Museu do Mar signage<small>2022</small></a>
+    <a href="#" data-i="4"><span>05</span>Oriel perfume packaging<small>2019</small></a>
+  </section>
+  <div class="foot"><a href="#">studio@isauravenn.pt</a><span>+351 912 480 117</span><span>Represented by Atelier Norte</span></div>
+</main>
+<script>
+(function(){
+  var A=['identities','interfaces','book jackets','wayfinding','packaging'],B=['independent hotels.','fintech founders.','small publishers.','public museums.','perfumers.'];
+  var T=['Casa Alma, Comporta','Verdello, Porto','Rua Editions, Lisbon','Museu do Mar, Cascais','Oriel, Paris'];
+  var sa=document.getElementById('sa'),sb=document.getElementById('sb');if(!sa||!sb)return;
+  var plates=[].slice.call(document.querySelectorAll('#plate div')),rows=[].slice.call(document.querySelectorAll('.idx a'));
+  var ticks=document.getElementById('ticks'),btn=document.getElementById('pause'),n=A.length,i=0,timer=0,paused=false;
+  for(var k=0;k<n;k++)ticks.appendChild(document.createElement('i'));
+  function build(slot,words){var reel=slot.firstChild;words.concat(words[0]).forEach(function(w){var s=document.createElement('span');s.textContent=w;reel.appendChild(s);});return reel;}
+  var ra=build(sa,A),rb=build(sb,B);
+  function widthOf(reel,j){return reel.children[j].offsetWidth;}
+  function move(slot,reel,j,instant){
+    reel.style.transition=instant?'none':'';reel.style.transform='translateY('+(-j*100/(n+1))+'%)';
+    slot.style.width=widthOf(reel,j)+'px';
+    if(j===n)setTimeout(function(){reel.style.transition='none';reel.style.transform='translateY(0)';void reel.offsetWidth;reel.style.transition='';},720);
+  }
+  function show(j){
+    var w=j%n;move(sa,ra,j);setTimeout(function(){move(sb,rb,j);},200);
+    plates.forEach(function(p,x){p.classList.toggle('on',x===w);});
+    rows.forEach(function(r,x){r.classList.toggle('on',x===w);});
+    [].forEach.call(ticks.children,function(t,x){t.classList.toggle('on',x===w);});
+    document.getElementById('capn').textContent='0'+(w+1);document.getElementById('capt').textContent=T[w];
+    i=w;
+  }
+  function next(){show(i+1);}
+  function run(){clearInterval(timer);if(!paused)timer=setInterval(next,2600);}
+  rows.forEach(function(r){
+    r.addEventListener('mouseenter',function(){show(+r.dataset.i);clearInterval(timer);});
+    r.addEventListener('focus',function(){show(+r.dataset.i);clearInterval(timer);});
+    r.addEventListener('mouseleave',run);r.addEventListener('blur',run);
+    r.addEventListener('click',function(e){e.preventDefault();});
+  });
+  btn.addEventListener('click',function(){paused=!paused;btn.setAttribute('aria-pressed',String(paused));btn.lastChild.textContent=paused?'Play':'Pause';
+    document.getElementById('pi').innerHTML=paused?'<path d="M2 1l7 4-7 4z"/>':'<rect x="1" y="1" width="3" height="8"/><rect x="6" y="1" width="3" height="8"/>';run();});
+  document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();});});
+  function init(){move(sa,ra,0,true);move(sb,rb,0,true);show(0);if(matchMedia('(prefers-reduced-motion: reduce)').matches){paused=true;btn.setAttribute('aria-pressed','true');btn.lastChild.textContent='Play';}run();}
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(init);
+})();
+</script>
+</body>
+</html>

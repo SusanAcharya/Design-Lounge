@@ -3,6 +3,7 @@ title: "Paper article reader"
 summary: "Long-form article page on warm paper: Newsreader body at 19px/1.6 on a 66ch measure, a four-line drop cap, a pull quote, floated margin notes at ≥1100px and a 2px sticky reading-progress hairline."
 platform: web
 type: screen
+category: reading
 tags: [article, reading, typography, sidenotes, progress]
 styles: [paper, editorial]
 motion: subtle

@@ -3,6 +3,7 @@ title: "M3 Expressive home feed"
 summary: "A warm-tonal Material 3 Expressive home: 36px greeting, morphing segmented group with a shape loader, 28px tonal cards, a floating 5-action toolbar and an extended FAB."
 platform: mobile-app
 type: screen
+category: dashboard
 tags: [material, home, feed, toolbar, fab, cards]
 styles: [material, soft, playful]
 motion: rich

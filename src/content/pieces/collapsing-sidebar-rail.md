@@ -3,6 +3,7 @@ title: "Collapsing sidebar rail"
 summary: "A 240px app sidebar that collapses to a 64px icon rail with hover tooltips, an accent active-route bar and a ⌘B shortcut."
 platform: web
 type: component
+category: navigation
 tags: [navigation, sidebar, dashboard, shell]
 styles: [minimal, dark]
 motion: subtle

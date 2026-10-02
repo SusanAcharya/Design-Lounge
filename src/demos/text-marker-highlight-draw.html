@@ -1,0 +1,111 @@
+<!-- Design Lounge piece: text-marker-highlight-draw · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Marker highlight draw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F1EC;--paper-2:#E8E6DE;--ink:#1B2333;--ink-2:#4A5163;--ink-3:#6E7383;--rule:#D3D0C6;
+  --marker:#FFD43B;--pen:#D9402A;
+  --serif:"Newsreader",Georgia,serif;--hand:"Caveat",cursive;
+  --fs-quote:58px;--fs-body:17px;--fs-label:12px;--fs-hand:30px;
+  --draw:650ms;--ease-pen:cubic-bezier(.65,0,.35,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font:400 var(--fs-body)/1.6 var(--serif);overflow:hidden;-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(90deg,transparent 55px,var(--rule) 55px,var(--rule) 56px,transparent 56px)}
+.page{height:100%;display:grid;grid-template-rows:68px 1fr auto;padding:0 56px 0 96px}
+header{display:flex;align-items:center;gap:28px;border-bottom:1px solid var(--ink)}
+.mast{font:italic 400 30px/1 var(--serif);letter-spacing:-.02em;margin-right:auto}
+header span{font:500 var(--fs-label)/1 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+header a{font:500 14px/1 var(--serif);color:var(--ink);padding:10px 16px;border:1px solid var(--ink);border-radius:999px;text-decoration:none}
+header a:hover{background:var(--ink);color:var(--paper)}
+main{display:grid;grid-template-columns:1fr 250px;gap:40px;align-items:center;padding-top:8px}
+.kicker{font:500 var(--fs-label)/1 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--pen);margin:0 0 22px;display:flex;gap:12px;align-items:center}
+.kicker::after{content:"";width:48px;height:1px;background:var(--pen)}
+blockquote{margin:0;font:400 var(--fs-quote)/1.16 var(--serif);letter-spacing:-.022em;font-variation-settings:"opsz" 72}
+blockquote em{font-style:italic}
+.mk{position:relative;white-space:nowrap;z-index:0;display:inline-block}
+.mk svg{position:absolute;pointer-events:none;overflow:visible;z-index:-1}
+.mk path{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0}
+.hl svg{left:-.1em;width:calc(100% + .2em);top:.3em;height:.66em}
+.hl path{stroke:var(--marker);stroke-width:9;opacity:.92}
+.hl{mix-blend-mode:multiply}
+.ul svg{left:0;width:100%;top:.98em;height:.26em}
+.ul path{stroke:var(--pen);stroke-width:2.2}
+.ci svg{left:-.3em;width:calc(100% + .6em);top:-.06em;height:1.34em;z-index:1}
+.ci path{stroke:var(--pen);stroke-width:2.4}
+.note{font:600 var(--fs-hand)/1.05 var(--hand);color:var(--pen);transform:rotate(-5deg);position:relative;margin:0}
+.note svg{display:block;width:150px;height:84px;margin:0 0 4px -40px;overflow:visible}
+.note path{fill:none;stroke:var(--pen);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1}
+.note span{display:block}
+.meta{display:flex;align-items:center;gap:14px;margin-top:40px;padding-top:20px;border-top:1px solid var(--rule);font-size:15px;color:var(--ink-2)}
+.av{width:36px;height:36px;border-radius:50%;background:#CBD5E8;color:var(--ink);display:grid;place-items:center;font:500 14px/1 var(--serif)}
+.meta b{color:var(--ink);font-weight:500}
+.meta i{width:3px;height:3px;border-radius:50%;background:var(--ink-3)}
+footer{display:flex;align-items:center;gap:20px;padding:22px 0 26px;font:500 var(--fs-label)/1 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.legend{display:flex;gap:18px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:18px;height:8px;border-radius:4px;background:var(--marker)}
+.legend i.r{height:2px;background:var(--pen)}
+.replay{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:500 14px/1 var(--serif);cursor:pointer}
+.replay:hover{border-color:var(--ink)}
+.replay svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round}
+:focus-visible{outline:2px solid var(--pen);outline-offset:3px}
+/* sequence */
+.run .mk path,.run .note path{animation:draw var(--draw) var(--ease-pen) backwards;animation-delay:var(--d)}
+.run .ci path{animation-duration:820ms}
+.run .note span{animation:write 700ms steps(14) backwards;animation-delay:calc(var(--d) + 380ms)}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes write{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){.run .mk path,.run .note path,.run .note span{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <span class="mast">The Margin</span>
+    <span>Essays</span><span>Issue 31 · Autumn 2026</span>
+    <a href="#">Subscribe — €48/yr</a>
+  </header>
+  <main id="stage" class="run">
+    <div>
+      <p class="kicker">Notes on slow software</p>
+      <blockquote>
+        <p style="margin:0">The best tools don’t ask for <span class="mk hl" style="--d:300ms"><svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6 C 25 4.6, 60 5.8, 99 4.2"/></svg>your attention.</span><br>
+        They <span class="mk ci" style="--d:900ms"><svg viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M62 5 C 24 1, 3 16, 5 32 C 7 50, 46 58, 80 52 C 99 47, 101 22, 86 11 C 72 3, 46 3, 30 9"/></svg><em>wait</em></span>, they <span class="mk ul" style="--d:1400ms"><svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 5 C 14 2, 26 8, 40 5 S 66 2, 80 5.5 S 94 6, 99 3"/></svg>remember where</span><br>
+        you left off, and then they <span class="mk hl" style="--d:1900ms"><svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 5.4 C 30 6.2, 64 4.4, 99 5.6"/></svg>get out</span><br>
+        <span class="mk hl" style="--d:2250ms"><svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 4.8 C 30 5.8, 70 4.2, 99 5.4"/></svg>of the way.</span></p>
+      </blockquote>
+      <div class="meta"><span class="av" aria-hidden="true">IO</span><span><b>Ines Okafor</b></span><i></i><span>11 min read</span><i></i><span>2 October 2026</span><i></i><span>Filed under Craft</span></div>
+    </div>
+    <p class="note" style="--d:2500ms"><svg viewBox="0 0 150 84" aria-hidden="true"><path pathLength="1" d="M140 80 C 120 40, 70 18, 12 22 M26 10 L 10 22 L 26 34"/></svg><span>the whole essay,</span><span>in one word</span></p>
+  </main>
+  <footer>
+    <div class="legend" aria-hidden="true"><span><i></i>Highlight</span><span><i class="r"></i>Pen</span></div>
+    <span>Hover a mark to redraw it</span>
+    <button class="replay" id="replay" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>Replay</button>
+  </footer>
+</div>
+<script>
+(function(){
+  var stage=document.getElementById('stage'),btn=document.getElementById('replay');
+  if(!stage||!btn)return;
+  function clear(){stage.querySelectorAll('path,.note span').forEach(function(p){p.style.animation='';});}
+  btn.addEventListener('click',function(){clear();stage.classList.remove('run');void stage.offsetWidth;stage.classList.add('run');});
+  stage.querySelectorAll('.mk').forEach(function(m){
+    m.addEventListener('mouseenter',function(){
+      var p=m.querySelector('path');if(!p)return;
+      p.style.animation='none';void p.getBBox();
+      p.style.animation='draw '+(m.classList.contains('ci')?820:650)+'ms cubic-bezier(.65,0,.35,1) 0ms backwards';
+    });
+  });
+})();
+</script>
+</body>
+</html>

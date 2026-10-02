@@ -3,6 +3,7 @@ title: "Filter chips product list"
 summary: "A 390px product list with a horizontally scrolling chip row (selected chip grows a check), a sort bottom sheet, a 2-column grid with SVG wishlist hearts, and a shimmer skeleton on every filter change."
 platform: mobile-web
 type: layout
+category: inputs
 tags: [ecommerce, filters, chips, bottom-sheet, grid, skeleton]
 styles: [minimal, soft]
 motion: subtle

@@ -1,0 +1,161 @@
+<!-- Design Lounge piece: navbar-floating-pill-shrink · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Floating pill navbar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#f3eee6;--ink:#13201a;--ink-2:#4b5a52;--ink-3:#7a857e;--line:rgba(19,32,26,.12);
+  --cream:#fbf6ee;--accent:#e8542a;--accent-ink:#fff7f0;
+  --glass:rgba(251,246,238,.58);--glass-line:rgba(255,255,255,.55);
+  --sans:"Bricolage Grotesque",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --bar-h:76px;--pill-h:56px;--pill-w:780px;--pill-top:16px;
+  --t-micro:160ms;--t-layout:420ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.5 var(--sans);color:var(--ink);background:var(--page);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:999px}
+
+/* nav */
+.nav-wrap{position:fixed;inset:0 0 auto 0;z-index:10;display:flex;justify-content:center;pointer-events:none;transition:padding var(--t-layout) var(--expo)}
+.bar{pointer-events:auto;width:100%;height:var(--bar-h);display:flex;align-items:center;gap:24px;padding:0 40px;color:var(--cream);border:1px solid transparent;border-bottom-color:rgba(251,246,238,.22);border-radius:0;background:transparent;
+  transition:width var(--t-layout) var(--expo),height var(--t-layout) var(--expo),padding var(--t-layout) var(--expo),border-radius var(--t-layout) var(--expo),background var(--t-layout) var(--ease),color var(--t-layout) var(--ease),box-shadow var(--t-layout) var(--ease),border-color var(--t-layout) var(--ease)}
+.pill .nav-wrap{padding-top:var(--pill-top)}
+.pill .bar{width:var(--pill-w);height:var(--pill-h);padding:0 8px 0 18px;border-radius:999px;color:var(--ink);background:var(--glass);border-color:var(--glass-line);
+  -webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 12px 32px -12px rgba(19,32,26,.35)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:19px;letter-spacing:-.02em;white-space:nowrap}
+.mark{width:28px;height:28px;flex:none;border-radius:50%;background:conic-gradient(from 200deg,var(--accent),#f6b26b,var(--accent));position:relative}
+.mark::after{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--ink)}
+.word{display:inline-block;max-width:90px;overflow:hidden;transition:max-width var(--t-layout) var(--expo),opacity var(--t-micro) var(--ease)}
+.pill .word{max-width:0;opacity:0}
+.links{position:relative;display:flex;list-style:none;margin:0 auto;padding:0}
+.links a{position:relative;z-index:1;display:block;padding:9px 16px;font-size:15px;font-weight:500;opacity:.78;transition:opacity var(--t-micro) var(--ease)}
+.links a:hover,.links a[aria-current="true"]{opacity:1}
+.ind{position:absolute;top:0;left:0;height:100%;border-radius:999px;background:rgba(251,246,238,.16);transition:transform var(--t-layout) var(--expo),width var(--t-layout) var(--expo),background var(--t-layout) var(--ease)}
+.pill .ind{background:rgba(19,32,26,.08)}
+.ind::after{content:"";position:absolute;left:50%;bottom:-9px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--accent);transition:bottom var(--t-layout) var(--expo)}
+.pill .ind::after{bottom:3px}
+.cta{display:flex;align-items:center;gap:8px;height:40px;padding:0 16px 0 18px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:14px;white-space:nowrap;transition:transform var(--t-micro) var(--ease)}
+.cta:hover{transform:translateY(-1px)}
+.cta svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.login{font-size:15px;font-weight:500;opacity:.78;white-space:nowrap;max-width:60px;overflow:hidden;transition:max-width var(--t-layout) var(--expo),opacity var(--t-micro) var(--ease)}
+.pill .login{max-width:0;opacity:0}
+
+/* hero photo */
+.hero{position:relative;height:680px;margin:0;overflow:hidden;background:linear-gradient(180deg,#24314a 0%,#5b4a68 30%,#c06e6e 56%,#f0a66e 72%,#f7c98d 80%)}
+.sun{position:absolute;left:62%;top:60%;width:180px;height:180px;margin:-90px;border-radius:50%;background:radial-gradient(circle,#fff1d2 0 38%,rgba(255,214,150,.55) 52%,transparent 70%)}
+.haze{position:absolute;inset:0;background:radial-gradient(900px 260px at 62% 74%,rgba(255,220,170,.45),transparent 70%),radial-gradient(600px 300px at 10% 20%,rgba(36,49,74,.6),transparent 70%)}
+.hero svg.land{position:absolute;left:0;right:0;bottom:0;width:100%;height:300px}
+.hero-copy{position:absolute;left:40px;right:40px;bottom:44px;color:var(--cream);display:grid;grid-template-columns:1fr 300px;align-items:end;gap:40px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin:0 0 18px}
+h1{margin:0;font-size:156px;line-height:.86;font-weight:600;letter-spacing:-.055em;font-variation-settings:"opsz" 96}
+h1 em{font-style:normal;color:#ffd7a8}
+.hero-side{font-size:16px;line-height:1.45;opacity:.92;padding-bottom:10px}
+.hero-side b{display:block;font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;opacity:.8}
+
+/* stats strip */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.stat{padding:28px 40px 32px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-size:56px;line-height:1;font-weight:500;letter-spacing:-.04em}
+.stat b sup{font-size:20px;letter-spacing:0;vertical-align:28px;margin-left:2px}
+.stat span{display:block;margin-top:10px;font:400 12px/1.4 var(--mono);color:var(--ink-2)}
+
+section.block{min-height:620px;padding:120px 40px 80px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:220px 1fr;gap:40px}
+.num{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.num i{font-style:normal;color:var(--accent)}
+h2{margin:0 0 20px;font-size:84px;line-height:.92;font-weight:600;letter-spacing:-.045em;max-width:900px}
+.lede{max-width:560px;color:var(--ink-2);font-size:19px;line-height:1.5;margin:0}
+.unit{margin-top:48px;height:240px;border-radius:20px;background:linear-gradient(90deg,#e6ded2,#efe8dd);display:flex;align-items:center;gap:28px;padding:0 40px;max-width:900px}
+.cell{width:84px;height:170px;border-radius:14px;background:linear-gradient(180deg,#1d2a23,#13201a);position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.cell::after{content:"";position:absolute;left:14px;right:14px;bottom:14px;height:var(--f);border-radius:6px;background:linear-gradient(180deg,#f6b26b,var(--accent))}
+.unit p{margin:0 0 0 auto;font:400 13px/1.6 var(--mono);color:var(--ink-2);text-align:right}
+.unit p b{display:block;font:600 40px/1 var(--sans);color:var(--ink);letter-spacing:-.03em;margin-bottom:6px}
+.tiers{margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;max-width:900px}
+.tier{background:var(--page);padding:24px}
+.tier b{font-size:40px;font-weight:500;letter-spacing:-.03em}
+.tier span{display:block;font:12px var(--mono);color:var(--ink-2);margin-top:6px}
+footer{padding:40px;font:12px var(--mono);color:var(--ink-3);display:flex;justify-content:space-between}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::after{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="nav-wrap">
+  <nav class="bar" aria-label="Primary">
+    <a class="logo" href="#overview" aria-label="Solenne home"><span class="mark" aria-hidden="true"></span><span class="word">Solenne</span></a>
+    <ul class="links" id="links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#battery">Battery</a></li>
+      <li><a href="#installers">Installers</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#journal">Journal</a></li>
+      <li aria-hidden="true" style="display:contents"><span class="ind" id="ind"></span></li>
+    </ul>
+    <a class="login" href="#pricing">Sign in</a>
+    <a class="cta" href="#pricing">Get a quote <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </nav>
+</div>
+
+<main>
+  <div id="overview">
+    <header class="hero">
+      <div class="sun"></div><div class="haze"></div>
+      <svg class="land" viewBox="0 0 1280 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <path d="M0 170 C180 120 320 150 470 130 S760 90 900 128 1160 110 1280 132V300H0Z" fill="#6a4d5e" opacity=".55"/>
+        <path d="M0 210 C200 170 380 200 560 186 S900 150 1080 178 1240 168 1280 172V300H0Z" fill="#2f3836"/>
+        <path d="M690 196h170l-85-60z" fill="#1c2421"/><rect x="702" y="196" width="146" height="64" fill="#1c2421"/>
+        <path d="M720 172l52-36 6 4-52 36zM736 182l52-36 6 4-52 36z" fill="#3c5a6e"/>
+        <rect x="798" y="214" width="26" height="22" fill="#ffc985"/>
+        <path d="M0 250 C240 228 520 246 760 240 S1120 226 1280 236V300H0Z" fill="#161d1a"/>
+      </svg>
+      <div class="hero-copy">
+        <div><p class="kicker">Solenne Home Cell · Series 2</p><h1>Store the<br><em>afternoon.</em></h1></div>
+        <p class="hero-side"><b>13.4 kWh · from €6,890</b>A wall battery that banks your midday sun and spends it after dark. Installed by certified crews in 11 days on average.</p>
+      </div>
+    </header>
+    <div class="strip">
+      <div class="stat"><b>13.4<sup>kWh</sup></b><span>usable capacity per cell</span></div>
+      <div class="stat"><b>92<sup>%</sup></b><span>round-trip efficiency, AC</span></div>
+      <div class="stat"><b>4,200</b><span>homes running after sunset</span></div>
+      <div class="stat"><b>15<sup>yr</sup></b><span>warranty, 70 % capacity floor</span></div>
+    </div>
+  </div>
+  <section class="block" id="battery"><div class="num"><i>02</i> / Battery</div><div><h2>Three cells. One quiet wall.</h2><p class="lede">Stack up to three Home Cells for 40.2 kWh. The app shows each cell's charge, so you know exactly how much evening you have left.</p>
+    <div class="unit"><div class="cell" style="--f:128px"></div><div class="cell" style="--f:96px"></div><div class="cell" style="--f:44px"></div><p><b>68 %</b>bank charge · 27.3 kWh<br>empty at 06:40 tomorrow</p></div></div></section>
+  <section class="block" id="installers"><div class="num"><i>03</i> / Installers</div><div><h2>312 crews across Austria, Bavaria and Slovenia.</h2><p class="lede">Every installer is trained in our Graz workshop and audited twice a year. Book a roof survey online; most visits happen within a week.</p></div></section>
+  <section class="block" id="pricing"><div class="num"><i>04</i> / Pricing</div><div><h2>One price, fitted.</h2><p class="lede">Hardware, installation, permits and the grid application. No subscription for the app.</p>
+    <div class="tiers"><div class="tier"><b>€6,890</b><span>1 cell · 13.4 kWh</span></div><div class="tier"><b>€12,450</b><span>2 cells · 26.8 kWh</span></div><div class="tier"><b>€17,600</b><span>3 cells · 40.2 kWh</span></div></div></div></section>
+  <section class="block" id="journal"><div class="num"><i>05</i> / Journal</div><div><h2>Notes from the longest night of the year.</h2><p class="lede">How 1,140 Solenne homes in Styria rode out the 21 December cold snap on stored daylight alone.</p></div></section>
+  <footer><span>Solenne Energie GmbH · Graz</span><span>© 2026</span></footer>
+</main>
+<script>
+(function(){
+  var root=document.documentElement,links=[].slice.call(document.querySelectorAll('#links a')),ind=document.getElementById('ind');
+  var ids=links.map(function(a){return a.getAttribute('href').slice(1)});
+  var secs=ids.map(function(id){return document.getElementById(id)});
+  var active=-1,ticking=false;
+  function place(i){var a=links[i];if(!a||!ind)return;ind.style.width=a.offsetWidth+'px';ind.style.transform='translateX('+a.offsetLeft+'px)';}
+  function setActive(i){if(i===active)return;active=i;links.forEach(function(a,k){a.setAttribute('aria-current',k===i?'true':'false')});place(i);}
+  function update(){
+    ticking=false;
+    root.classList.toggle('pill',scrollY>48);
+    var line=innerHeight*.4,cur=0;
+    secs.forEach(function(s,k){if(s&&s.getBoundingClientRect().top<=line)cur=k});
+    if(innerHeight+scrollY>=document.body.scrollHeight-2)cur=secs.length-1;
+    setActive(cur);
+  }
+  addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
+  addEventListener('resize',function(){place(active)});
+  update();
+  setTimeout(function(){scrollTo({top:72,behavior:'auto'})},60);
+})();
+</script>
+</body>
+</html>

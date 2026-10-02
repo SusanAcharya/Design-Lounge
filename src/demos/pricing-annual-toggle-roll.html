@@ -1,0 +1,157 @@
+<!-- Design Lounge piece: pricing-annual-toggle-roll · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Loomwork — Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#edeff2;--surface:#f8f9fb;--surface-hi:#ffffff;--line:#dde1e7;--line-2:#cfd4dc;
+  --ink:#161b26;--ink-2:#4d5566;--ink-3:#6b7384;--accent:#e2643a;--accent-ink:#ffffff;--accent-soft:#fbe3d7;--accent-deep:#a8411f;
+  --sans:"Figtree",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --price:96px;--r-row:28px;--r-pill:999px;
+  --shadow-hi:0 1px 0 rgba(22,27,38,.04),0 18px 40px -18px rgba(22,27,38,.22);
+  --t-micro:160ms;--t-thumb:320ms;--t-roll:900ms;--stagger-digit:70ms;--stagger-row:90ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+nav{height:68px;flex:none;display:flex;align-items:center;gap:32px;padding:0 48px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.02em}
+.logo svg{width:26px;height:26px}
+nav ul{display:flex;gap:4px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--ink-2)}
+nav ul a{padding:8px 12px;border-radius:var(--r-pill);display:block;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+nav ul a:hover{background:var(--surface);color:var(--ink)}
+nav ul a[aria-current]{color:var(--ink);background:var(--surface-hi)}
+.nav-r{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:14px}
+.btn{height:40px;padding:0 18px;border-radius:var(--r-pill);display:inline-flex;align-items:center;gap:8px;font:600 14px var(--sans);border:1px solid transparent;cursor:pointer;transition:background var(--t-micro) var(--ease),transform var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+.btn.dark{background:var(--ink);color:#fff}.btn.dark:hover{background:#2a3142}
+.btn.ghost{background:transparent;border-color:var(--line-2);color:var(--ink)}.btn.ghost:hover{background:var(--surface-hi);border-color:var(--ink-3)}
+.btn.hot{background:var(--accent);color:var(--accent-ink)}.btn.hot:hover{background:var(--accent-deep)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+main{flex:1;min-height:0;display:grid;grid-template-columns:360px 1fr;gap:48px;padding:20px 48px 40px}
+.intro{display:flex;flex-direction:column;padding-top:28px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:18px;height:1px;background:var(--ink-3)}
+h1{margin:20px 0 18px;font-size:58px;line-height:1.02;font-weight:600;letter-spacing:-.045em}
+h1 em{font-style:normal;font-weight:300;color:var(--ink-2)}
+.lede{margin:0;color:var(--ink-2);font-size:16px;line-height:1.55;max-width:34ch}
+.bill{margin-top:36px;display:flex;align-items:center;gap:14px;position:relative}
+.seg{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:var(--r-pill);background:var(--surface-hi);box-shadow:inset 0 0 0 1px var(--line)}
+.seg button{position:relative;z-index:1;height:44px;padding:0 22px;border:0;background:none;border-radius:var(--r-pill);font:600 14px var(--sans);color:var(--ink-2);cursor:pointer;transition:color var(--t-thumb) var(--ease)}
+.seg button[aria-pressed="true"]{color:#fff}
+.thumb{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:var(--r-pill);background:var(--ink);transition:transform var(--t-thumb) var(--expo)}
+[data-billing="annual"] .thumb{transform:translateX(100%)}
+.save{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:var(--r-pill);background:var(--accent);color:var(--accent-ink);font:600 13px var(--sans);opacity:0;transform:translate(-10px,6px) scale(.7) rotate(-10deg);transition:opacity 200ms var(--ease),transform 480ms var(--spring)}
+[data-billing="annual"] .save{opacity:1;transform:translate(0,0) scale(1) rotate(-4deg);transition-delay:180ms}
+.save svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.perks{list-style:none;margin:40px 0 0;padding:0;display:grid;gap:12px;font-size:14px;color:var(--ink-2)}
+.perks li{display:flex;gap:10px;align-items:center}
+.perks svg{width:18px;height:18px;flex:none;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fine{margin-top:auto;font:12px/1.5 var(--mono);color:var(--ink-3)}
+.plans{display:grid;grid-template-rows:repeat(3,1fr);gap:14px;min-height:0}
+.row{position:relative;display:grid;grid-template-columns:186px 1fr 140px;align-items:center;gap:24px;padding:0 28px 0 32px;border-radius:var(--r-row);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.row:hover{background:var(--surface-hi)}
+.row.pick{background:var(--surface-hi);box-shadow:inset 0 0 0 1.5px var(--ink),var(--shadow-hi)}
+.tag{position:absolute;top:-11px;left:32px;height:22px;padding:0 10px;border-radius:var(--r-pill);background:var(--ink);color:#fff;font:500 11px/22px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.name{font-size:22px;font-weight:600;letter-spacing:-.02em;margin:0}
+.desc{margin:6px 0 0;color:var(--ink-2);font-size:14px;line-height:1.45}
+.seats{margin-top:12px;font:12px var(--mono);color:var(--ink-3)}
+.price{display:flex;align-items:flex-start;gap:6px}
+.cur{font-size:34px;font-weight:500;margin-top:10px;color:var(--ink-2)}
+.odo{display:inline-flex;font-size:var(--price);font-weight:600;line-height:1;letter-spacing:-.05em;font-variant-numeric:tabular-nums;-webkit-mask-image:linear-gradient(transparent 0,#000 12%,#000 88%,transparent 100%);mask-image:linear-gradient(transparent 0,#000 12%,#000 88%,transparent 100%);padding:.06em 0}
+.col{display:block;height:1em;overflow:hidden}
+.strip{display:flex;flex-direction:column;transform:translateY(calc(var(--n,0) * -1em));transition:transform var(--t-roll) var(--expo);transition-delay:calc(var(--i) * var(--stagger-digit) + var(--r) * var(--stagger-row))}
+.strip span{height:1em;display:block;text-align:center}
+.per{display:flex;flex-direction:column;justify-content:center;margin-top:16px;gap:4px;width:140px;flex:none}
+.per b{font-size:14px;font-weight:500;color:var(--ink-2)}
+.billed{position:relative;height:18px;font:12px/18px var(--mono);color:var(--ink-3)}
+.billed span{position:absolute;inset:0;white-space:nowrap;transition:opacity 240ms var(--ease),transform 320ms var(--expo)}
+.billed .a,[data-billing="annual"] .billed .m{opacity:0;transform:translateY(6px)}
+[data-billing="annual"] .billed .a{opacity:1;transform:none}
+.chip{align-self:flex-start;margin-top:6px;height:22px;padding:0 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent-deep);font:500 12px/22px var(--mono);opacity:0;transform:scale(.8);transform-origin:left;transition:opacity 200ms var(--ease),transform 420ms var(--spring)}
+[data-billing="annual"] .chip{opacity:1;transform:none;transition-delay:calc(500ms + var(--r) * var(--stagger-row))}
+.cta{display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.cta .btn{justify-content:center}
+.cta small{text-align:center;font:11px var(--mono);color:var(--ink-3)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:1100px){main{grid-template-columns:1fr;overflow:auto}.row{grid-template-columns:1fr auto;padding:24px}.cta{grid-column:1/-1}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important;transition-delay:0ms!important}}
+</style>
+</head>
+<body data-billing="monthly">
+<nav aria-label="Main">
+  <a class="logo" href="#"><svg viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="8" fill="#161b26"/><path d="M7 9.5c3 0 3 7 6 7s3-7 6-7" stroke="#e2643a" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>Loomwork</a>
+  <ul><li><a href="#">Product</a></li><li><a href="#">For clinics</a></li><li><a href="#" aria-current="page">Pricing</a></li><li><a href="#">Changelog</a></li></ul>
+  <div class="nav-r"><a class="btn ghost" href="#">Sign in</a><a class="btn dark" href="#">Start free</a></div>
+</nav>
+<main>
+  <section class="intro" aria-labelledby="h">
+    <span class="eyebrow">Pricing · per practitioner</span>
+    <h1 id="h">Book more.<br><em>Chase</em> less.</h1>
+    <p class="lede">Online booking, SMS and email reminders, deposits and a client record on every plan. Change plans or billing whenever you like.</p>
+    <div class="bill">
+      <div class="seg" role="group" aria-label="Billing period"><span class="thumb" aria-hidden="true"></span>
+        <button type="button" data-b="monthly" aria-pressed="true">Monthly</button><button type="button" data-b="annual" aria-pressed="false">Annual</button></div>
+      <span class="save" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>2 months free</span>
+    </div>
+    <ul class="perks">
+      <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>14-day trial, no card needed</li>
+      <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>Import from Cliniko or Jane in one click</li>
+      <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>Cancel from settings, no phone call</li>
+    </ul>
+    <p class="fine">Prices in USD, excl. sales tax.<br>Registered charities: 30% off, just ask.</p>
+  </section>
+  <section class="plans" aria-label="Plans">
+    <article class="row" style="--r:0">
+      <div><h2 class="name">Solo</h2><p class="desc">One practitioner, one calendar, unlimited clients.</p><div class="seats">1 seat · 300 SMS / mo</div></div>
+      <div class="price"><span class="cur">$</span><span class="odo" data-m="19" data-a="15"></span><div class="per"><b>per month</b><div class="billed"><span class="m">billed monthly</span><span class="a">$180 billed yearly</span></div><span class="chip">save $48 / yr</span></div></div>
+      <div class="cta"><a class="btn ghost" href="#">Start Solo</a><small>no card for 14 days</small></div>
+    </article>
+    <article class="row pick" style="--r:1">
+      <span class="tag">Most booked</span>
+      <div><h2 class="name">Studio</h2><p class="desc">Shared rooms, staff rotas and deposits for small teams.</p><div class="seats">8 seats · 2,000 SMS</div></div>
+      <div class="price"><span class="cur">$</span><span class="odo" data-m="49" data-a="39"></span><div class="per"><b>per seat / month</b><div class="billed"><span class="m">billed monthly</span><span class="a">$468 / seat yearly</span></div><span class="chip">save $120 / seat</span></div></div>
+      <div class="cta"><a class="btn hot" href="#">Start Studio <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><small>most teams pick this</small></div>
+    </article>
+    <article class="row" style="--r:2">
+      <div><h2 class="name">Clinic</h2><p class="desc">Multi-site rota, insurer billing and audit logs.</p><div class="seats">any seats · SSO · 99.95%</div></div>
+      <div class="price"><span class="cur">$</span><span class="odo" data-m="129" data-a="103"></span><div class="per"><b>per site / month</b><div class="billed"><span class="m">billed monthly</span><span class="a">$1,236 / site yearly</span></div><span class="chip">save $312 / site</span></div></div>
+      <div class="cta"><a class="btn ghost" href="#">Talk to sales</a><small>reply within 4 hours</small></div>
+    </article>
+  </section>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+<script>
+(function(){
+  var body=document.body,live=document.getElementById('live'),odos=[].slice.call(document.querySelectorAll('.odo'));
+  odos.forEach(function(o){
+    var len=Math.max(o.dataset.m.length,o.dataset.a.length);o.setAttribute('aria-hidden','true');
+    for(var i=0;i<len;i++){var c=document.createElement('span'),s=document.createElement('span');c.className='col';s.className='strip';s.style.setProperty('--i',i);
+      for(var d=0;d<10;d++){var n=document.createElement('span');n.textContent=d;s.appendChild(n);}c.appendChild(s);o.appendChild(c);}
+  });
+  function set(mode){
+    body.dataset.billing=mode;
+    [].forEach.call(document.querySelectorAll('.seg button'),function(b){b.setAttribute('aria-pressed',String(b.dataset.b===mode));});
+    var said=[];
+    odos.forEach(function(o){
+      var v=mode==='annual'?o.dataset.a:o.dataset.m,strips=o.querySelectorAll('.strip');v=v.padStart(strips.length,'0');
+      [].forEach.call(strips,function(s,i){s.style.setProperty('--n',v[i]);});
+      said.push(o.closest('.row').querySelector('.name').textContent+' $'+(+v));
+    });
+    live.textContent=(mode==='annual'?'Annual billing, 2 months free: ':'Monthly billing: ')+said.join(', ')+' per month.';
+  }
+  document.querySelector('.seg').addEventListener('click',function(e){var b=e.target.closest('button');if(b)set(b.dataset.b);});
+  set('monthly');
+  setTimeout(function(){set('annual');},450);
+})();
+</script>
+</body>
+</html>

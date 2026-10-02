@@ -3,6 +3,7 @@ title: "Terminal UI style sheet"
 summary: "A monospace 1ch-grid style sheet for a terminal-style ops UI: box-drawing panel titles, bracketed buttons, key-value rows, an amber-highlighted list, a table, a status line and a : command input."
 platform: web
 type: style
+category: design-language
 tags: [terminal, monospace, style-guide, ops]
 styles: [terminal, dark]
 motion: none

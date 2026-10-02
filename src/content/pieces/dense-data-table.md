@@ -3,6 +3,7 @@ title: "Dense data table"
 summary: "A 40px-row invoice table with a sticky header, tri-state select-all, shift-click ranges, sortable columns and a dark action bar that slides up when rows are selected."
 platform: web
 type: component
+category: data
 tags: [table, data, selection, sorting, billing]
 styles: [minimal, swiss]
 motion: subtle

@@ -3,6 +3,7 @@ title: "Tablet mail split view"
 summary: "A 1180×820 three-pane mail client: a collapsible 72px folder rail, a 320px message list with a 3px accent selection bar, a reading pane with an action header and j/k keyboard navigation."
 platform: tablet
 type: layout
+category: messaging
 tags: [mail, split-view, three-pane, list-detail, keyboard]
 styles: [minimal, swiss]
 motion: subtle

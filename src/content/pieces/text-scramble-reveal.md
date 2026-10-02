@@ -3,6 +3,7 @@ title: "Text scramble reveal"
 summary: "A 64px monospace headline resolves from random glyphs to its final text left to right in 900ms; three headlines cycle every 4s with a progress dash per headline; click or Space skips."
 platform: web
 type: animation
+category: text-motion
 tags: [typography, text-effect, headline, monospace, hero]
 styles: [terminal, minimal, paper]
 motion: rich

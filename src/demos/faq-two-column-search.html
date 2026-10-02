@@ -1,0 +1,153 @@
+<!-- Design Lounge piece: faq-two-column-search · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Kestrel — Docs FAQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f6f4;--ink:#111111;--ink-2:#5a5a56;--ink-3:#8a8a84;--line:#e2e2dc;--line-2:#c8c8c2;
+  --navy:#1f4e79;--navy-soft:#e6eef4;
+  --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --nav-h:52px;--pad:56px;
+  --t-fast:160ms;--t-open:280ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+nav{height:var(--nav-h);flex:none;display:flex;align-items:center;padding:0 var(--pad);border-bottom:1px solid var(--line);gap:24px}
+.brand{font:600 14px/1 var(--sans);letter-spacing:-.02em;text-decoration:none;color:inherit;display:flex;align-items:center;gap:8px}
+.brand i{width:8px;height:8px;background:var(--navy);transform:rotate(45deg)}
+.links{display:flex;gap:18px}
+.links a{color:var(--ink-2);text-decoration:none;font:400 12px var(--mono)}
+.links a:hover{color:var(--ink)}
+.ver{margin-left:auto;font:400 11px var(--mono);color:var(--ink-3)}
+:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+section{flex:1;padding:28px var(--pad) 24px;display:flex;flex-direction:column;min-height:0}
+.lead{display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:end;margin-bottom:22px}
+.kicker{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--navy);margin:0 0 8px}
+h1{margin:0;font:600 32px/1.1 var(--sans);letter-spacing:-.03em}
+.search{position:relative}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--ink-3);fill:none;stroke-width:1.75;stroke-linecap:round;pointer-events:none}
+input[type="search"]{width:100%;height:44px;border:1px solid var(--line-2);background:#fff;padding:0 12px 0 36px;font:400 14px var(--sans);color:var(--ink);outline:none}
+input[type="search"]:focus{border-color:var(--navy)}
+input[type="search"]::placeholder{color:var(--ink-3)}
+.count{margin-top:8px;font:400 11px var(--mono);color:var(--ink-3)}
+.count b{color:var(--ink);font-weight:500}
+.grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0 48px;align-content:start;min-height:0;overflow:auto;border-top:1px solid var(--ink)}
+.item{border-bottom:1px solid var(--line)}
+.item[hidden]{display:none}
+.q{width:100%;display:flex;align-items:flex-start;gap:12px;background:none;border:0;padding:14px 0;font:500 15px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink);text-align:left;cursor:pointer}
+.q .n{font:400 11px/1.3 var(--mono);color:var(--ink-3);width:28px;flex:none;padding-top:2px}
+.q svg{margin-left:auto;flex:none;width:16px;height:16px;stroke:var(--ink-3);fill:none;stroke-width:1.75;stroke-linecap:round;transition:transform var(--t-open) var(--ease);margin-top:2px}
+.q[aria-expanded="true"]{color:var(--navy)}
+.q[aria-expanded="true"] svg{transform:rotate(45deg);stroke:var(--navy)}
+.q:hover{color:var(--navy)}
+.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--t-open) var(--ease)}
+.item.open .panel{grid-template-rows:1fr}
+.panel>div{overflow:hidden;min-height:0}
+.a{padding:0 0 16px 40px;color:var(--ink-2);font-size:14px;max-width:52ch}
+.a p{margin:0 0 8px}.a p:last-child{margin:0}
+.a code{font:400 12px var(--mono);background:var(--navy-soft);color:var(--navy);padding:1px 5px}
+.empty{display:none;grid-column:1/-1;padding:48px 0;text-align:left}
+.empty.show{display:block}
+.empty h2{margin:0 0 8px;font:600 22px/1.2 var(--sans);letter-spacing:-.02em}
+.empty p{margin:0;color:var(--ink-2);max-width:40ch}
+.empty button{margin-top:16px;height:36px;padding:0 12px;border:1px solid var(--ink);background:transparent;font:500 12px var(--mono);cursor:pointer}
+.empty button:hover{background:var(--ink);color:var(--bg)}
+@media (prefers-reduced-motion:reduce){
+  .panel,.q svg{transition-duration:1ms}
+}
+@media (max-width:1024px){
+  :root{--pad:28px}
+  .lead{grid-template-columns:1fr;gap:16px}
+  .grid{gap:0 24px}
+}
+@media (max-width:768px){
+  .links{display:none}
+  .grid{grid-template-columns:1fr}
+  h1{font-size:26px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="#"><i></i>Kestrel</a>
+  <div class="links"><a href="#">Guides</a><a href="#">API</a><a href="#">Changelog</a></div>
+  <span class="ver">docs 2.4.1</span>
+</nav>
+<section aria-label="Frequently asked questions">
+  <div class="lead">
+    <div>
+      <p class="kicker">Docs · FAQ</p>
+      <h1>Questions the API desk hears</h1>
+    </div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/></svg>
+      <label class="sr" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Filter questions</label>
+      <input id="q" type="search" placeholder="Filter by topic — auth, webhook, region…" autocomplete="off">
+      <p class="count"><b id="shown">8</b> of 8 topics</p>
+    </div>
+  </div>
+  <div class="grid" id="grid">
+    <div class="col" id="col-a"></div>
+    <div class="col" id="col-b"></div>
+    <div class="empty" id="empty">
+      <h2>No topics match that filter</h2>
+      <p>Try <code style="font:12px var(--mono);background:var(--navy-soft);color:var(--navy);padding:1px 5px">auth</code>, <code style="font:12px var(--mono);background:var(--navy-soft);color:var(--navy);padding:1px 5px">webhook</code>, or <code style="font:12px var(--mono);background:var(--navy-soft);color:var(--navy);padding:1px 5px">region</code>. The index is 8 questions.</p>
+      <button type="button" id="clear">Clear filter</button>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  const data=[
+    {n:'01',q:'How do I rotate an API key without dropping traffic?',a:'Create a second key in the same project, deploy it, then revoke the first after the 15-minute overlap window. Revoke is immediate; in-flight requests with the old key return <code>401 kestrel.auth.stale</code>.'},
+    {n:'02',q:'Why is my webhook retrying every 30 seconds?',a:'Kestrel retries on any non-2xx for 2 hours: 30s, 60s, then 5 minutes. Return <code>204</code> from the receiver even if you enqueue work. A <code>200</code> with a 12-second body still counts as success but will trip the 10-second budget.'},
+    {n:'03',q:'Which regions can a project live in?',a:'<code>eu-central</code>, <code>us-east</code>, <code>ap-south</code>. A project is pinned at create time. Moving later is a copy, not a rename — ids change, the old region stays readable for 30 days.'},
+    {n:'04',q:'What does the 429 burst window actually count?',a:'Per key, 120 requests / 10 seconds. The header <code>X-Kestrel-Remain</code> is the count left in the current window. Burst is not a daily cap; the daily cap is 250,000 and is a separate 429 with <code>kestrel.quota.day</code>.'},
+    {n:'05',q:'Can I replay a failed event from the dashboard?',a:'Yes, for 14 days. Open the event, click Replay, pick a receiver. The payload is the original body plus <code>x-kestrel-replay: 1</code>. Replays do not increment the daily quota.'},
+    {n:'06',q:'How do signed requests expire?',a:'The <code>X-Kestrel-Ts</code> header must be within 300 seconds of our clock. Clock skew past that returns <code>401 kestrel.auth.skew</code>. We publish an NTP pool in the status page if you cannot run your own.'},
+    {n:'07',q:'Is the sandbox key billed?',a:'No. Sandbox keys are capped at 1,000 calls a day and never touch live receivers. Promoting a project copies the routes and drops the sandbox flag; it does not keep the same key.'},
+    {n:'08',q:'Where do I file a region outage?',a:'status.kestrel.dev is the board. If a region is marked degraded, open a ticket with the request id from <code>X-Kestrel-Id</code>. Do not rotate keys as a first step — that doubles the incident.'}
+  ];
+  const cols=[document.getElementById('col-a'),document.getElementById('col-b')];
+  const empty=document.getElementById('empty');
+  const shown=document.getElementById('shown');
+  const input=document.getElementById('q');
+  data.forEach((d,i)=>{
+    const item=document.createElement('div');
+    item.className='item'+(i===0?' open':'');
+    item.dataset.hay=(d.q+' '+d.a).replace(/<[^>]+>/g,' ').toLowerCase();
+    const id='a'+d.n;
+    item.innerHTML='<h3 style="margin:0"><button class="q" aria-expanded="'+(i===0)+'" aria-controls="'+id+'" id="q'+d.n+'"><span class="n">'+d.n+'</span><span class="t">'+d.q+'</span><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3><div class="panel" id="'+id+'" role="region" aria-labelledby="q'+d.n+'"><div><div class="a">'+d.a+'</div></div></div>';
+    cols[i%2].appendChild(item);
+  });
+  function bind(item){
+    const btn=item.querySelector('.q');
+    btn.addEventListener('click',()=>{
+      const on=item.classList.toggle('open');
+      btn.setAttribute('aria-expanded',String(on));
+    });
+  }
+  [...document.querySelectorAll('.item')].forEach(bind);
+  function filter(){
+    const t=input.value.trim().toLowerCase();
+    let n=0;
+    document.querySelectorAll('.item').forEach(el=>{
+      const hit=!t||el.dataset.hay.includes(t);
+      el.hidden=!hit;
+      if(hit)n++;
+    });
+    shown.textContent=n;
+    empty.classList.toggle('show',n===0);
+  }
+  input.addEventListener('input',filter);
+  document.getElementById('clear').addEventListener('click',()=>{input.value='';filter();input.focus();});
+})();
+</script>
+</body>
+</html>

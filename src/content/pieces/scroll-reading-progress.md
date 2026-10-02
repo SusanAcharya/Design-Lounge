@@ -3,6 +3,7 @@ title: "Scroll reading progress"
 summary: "A long-form article with a 3px scroll-driven progress bar (CSS animation-timeline: scroll() with a JS fallback) and a sticky table of contents that marks the current section."
 platform: web
 type: animation
+category: scroll
 tags: [scroll, article, progress, table-of-contents, editorial]
 styles: [editorial, dark]
 motion: subtle

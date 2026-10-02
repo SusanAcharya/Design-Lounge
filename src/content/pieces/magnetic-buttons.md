@@ -3,6 +3,7 @@ title: "Magnetic buttons"
 summary: "Three CTAs and a nav row whose outlines and labels are pulled toward the cursor inside an 80px radius (up to 10px) and spring back over 500ms; keyboard focus works without the effect."
 platform: web
 type: animation
+category: cursor
 tags: [buttons, hover, cursor, navigation, microinteraction]
 styles: [dark, industrial, kinetic]
 motion: rich

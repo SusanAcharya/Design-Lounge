@@ -1,0 +1,90 @@
+<!-- Design Lounge piece: background-paper-grain · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Paper grain — two-ink blot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3ebd8;--ink:#2b1f18;--ink-2:#5e4e42;--ink-3:#8a7666;
+  --sienna:#6b2e1f;--prussian:#1a3352;--line:rgba(43,31,24,.16);
+  --serif:"Literata",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif;
+  --grain:.45;
+  --t-micro:160ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.5 var(--sans);color:var(--ink);background:var(--paper);overflow:hidden;-webkit-font-smoothing:antialiased;position:relative}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--prussian);outline-offset:3px}
+.bg{position:absolute;inset:0;pointer-events:none}
+.blot{position:absolute;filter:url(#spread);mix-blend-mode:multiply;opacity:.82}
+.b1{width:540px;height:420px;left:8%;top:18%;background:var(--sienna);border-radius:58% 42% 48% 52%/46% 54% 46% 54%;transform:rotate(-12deg)}
+.b2{width:480px;height:380px;right:6%;bottom:10%;background:var(--prussian);border-radius:42% 58% 52% 48%/54% 46% 54% 46%;transform:rotate(8deg)}
+.grain{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:var(--grain);mix-blend-mode:multiply}
+.page{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;padding:40px 64px 36px}
+.top{display:flex;align-items:center;gap:16px;font:500 11px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.top i{flex:1;height:1px;background:var(--line);display:block;font-style:normal}
+main{flex:1;display:flex;align-items:center;justify-content:center}
+blockquote{margin:0;max-width:22ch;text-align:center}
+blockquote p{margin:0 0 .35em;font:italic 400 42px/1.25 var(--serif);letter-spacing:-.02em;font-optical-sizing:auto}
+blockquote footer{margin-top:28px;font:500 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.ctl{display:flex;align-items:center;gap:16px;max-width:420px}
+.ctl label{font:500 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:2px;background:var(--ink);outline:none;border-radius:0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);cursor:pointer}
+.val{font:500 12px var(--sans);color:var(--ink-2);min-width:3ch;text-align:right;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){
+  .b1,.b2{transition:none}
+}
+</style>
+</head>
+<body>
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <filter id="spread" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency=".018" numOctaves="3" seed="4" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="42" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="grainF">
+    <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="4" seed="2" result="n"/>
+    <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+    <feComponentTransfer in="g"><feFuncA type="table" values="0 .55"/></feComponentTransfer>
+  </filter>
+</svg>
+<div class="bg">
+  <div class="blot b1"></div>
+  <div class="blot b2"></div>
+  <svg class="grain" id="grain" viewBox="0 0 1280 800" preserveAspectRatio="none" aria-hidden="true"><rect width="1280" height="800" filter="url(#grainF)"/></svg>
+</div>
+<div class="page">
+  <div class="top">Plate 07<i></i>Two inks on laid stock</div>
+  <main>
+    <blockquote>
+      <p>The grain remembers</p>
+      <p>every press of the plate.</p>
+      <p>Two inks, one afternoon.</p>
+      <footer>— from the bindery notes, 2026</footer>
+    </blockquote>
+  </main>
+  <div class="ctl">
+    <label for="g">Grain</label>
+    <input id="g" type="range" min="0" max="100" value="45" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45">
+    <span class="val" id="gv">45</span>
+  </div>
+</div>
+<script>
+const root=document.documentElement,inp=document.getElementById('g'),gv=document.getElementById('gv'),turb=document.querySelector('#grainF feTurbulence');
+inp.addEventListener('input',()=>{
+  const v=+inp.value;
+  root.style.setProperty('--grain',String(v/100));
+  gv.textContent=v;
+  inp.setAttribute('aria-valuenow',String(v));
+  if(turb) turb.setAttribute('baseFrequency', (0.45+v/100*0.7).toFixed(3));
+});
+</script>
+</body>
+</html>

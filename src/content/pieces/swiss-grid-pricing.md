@@ -3,6 +3,7 @@ title: "Swiss grid pricing"
 summary: "Pricing page on a visible 12-column hairline grid: three tiers in strict 4-column blocks, numbered features, red accent, and a monthly/yearly switch that tweens the prices."
 platform: web
 type: screen
+category: pricing
 tags: [pricing, grid, toggle, marketing, swiss]
 styles: [swiss, minimal]
 motion: subtle

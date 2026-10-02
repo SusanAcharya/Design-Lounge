@@ -25,7 +25,7 @@ The demo is rendered inside a sandboxed iframe (`sandbox="allow-scripts"`) at th
 6. **Interactive where it makes sense.** Buttons toggle, tabs switch, sidebars collapse, cards flip. If the piece is a one-shot animation (loader, transition), expose a way to replay it: clicking anywhere or a small "Replay" control in a corner.
 7. **Start in the hero state.** The first frame should already be the piece's best look. Don't make the viewer do something to see the point.
 8. **Accessible by default.** Semantic elements, visible focus rings, `aria-*` where state changes, contrast ≥ 4.5:1 for body text, hit targets ≥ 40px on mobile pieces.
-9. **Size.** Aim for 6–20 KB. Hard ceiling 30 KB.
+9. **Size.** Aim for 8–28 KB. Hard ceiling 40 KB.
 10. **No `alert`, no `console.log`, no `document.write`, no timers faster than 16ms, no infinite JS loops.** Use CSS animation where possible.
 11. **Do not read or write `localStorage`/cookies** (sandbox blocks it and it throws).
 12. First line of the file: `<!-- Design Lounge piece: <slug> · platform: <platform> · <W>x<H> -->`
@@ -65,7 +65,8 @@ The brief is the product. A visitor copies it, pastes it into their coding agent
 title: "Collapsing sidebar rail"          # ≤ 40 chars, sentence case, no trailing period
 summary: "A 240px sidebar that collapses to a 64px icon rail with tooltips and a spring-ish width transition."   # one sentence, ≤ 160 chars
 platform: web                             # web | mobile-web | mobile-app | pwa | tablet
-type: component                           # screen | component | animation | layout | pattern | style
+type: component                           # screen | section | component | animation | layout | pattern | style
+category: navigation                      # one value from the fixed category list below
 tags: [navigation, sidebar, dashboard]    # 2–6 lowercase, plain-word tags
 styles: [minimal, dark]                   # 1–3 from the fixed list below
 motion: subtle                            # none | subtle | rich
@@ -78,7 +79,19 @@ related: []                               # optional: other slugs
 ---
 ```
 
-Fixed `styles` list: `editorial`, `swiss`, `brutalist`, `glass`, `material`, `minimal`, `playful`, `retro`, `terminal`, `paper`, `luxe`, `dark`, `soft`, `industrial`, `kinetic`.
+Fixed `styles` list: `editorial`, `swiss`, `brutalist`, `glass`, `material`, `minimal`, `playful`, `retro`, `terminal`, `paper`, `luxe`, `dark`, `soft`, `industrial`, `kinetic`, `bauhaus`, `y2k`, `cyber`, `organic`, `riso`, `deco`, `pixel`, `clay`.
+
+`type: section` is for one block of a website (a hero, a footer, a pricing table, a contact block) shown on its own. `type: screen` is a whole page or app screen.
+
+Fixed `category` list (the single source of truth is `src/content.config.ts`):
+
+- Website sections: `hero`, `navbar`, `footer`, `features`, `pricing`, `testimonials`, `faq`, `cta`, `contact`, `logos`, `stats`, `team`, `newsletter`, `blog`, `gallery`
+- Pages & screens: `portfolio`, `landing`, `auth`, `ecommerce`, `dashboard`, `onboarding`, `settings`, `profile`, `messaging`, `media`, `reading`, `error`, `utility`
+- Components: `navigation`, `buttons`, `inputs`, `cards`, `overlays`, `feedback`, `data`, `pickers`, `charts`
+- Motion: `text-motion`, `scroll`, `cursor`, `transitions`, `loaders`, `micro`, `backgrounds`
+- Kits: `design-language`
+
+Attribution is added by the Lounge at serve time (a credit comment, `<meta name="author">`, and a small signature when the demo is opened full size). Do not add your own watermark to demos.
 
 ### Body — exact section order
 

@@ -1,0 +1,194 @@
+<!-- Design Lounge piece: contact-split-map-form · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Split map contact form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --land:#e4e8e1;--block:#d9ded5;--water:#c3d5da;--water-edge:#adc4cb;--park:#cfdcc4;--road:#fbfcfa;--road-edge:#cdd3ca;
+  --bg:#fafaf7;--field:#ffffff;--line:#e1e3dc;--line-2:#c9cdc3;--ink:#1d2320;--ink-2:#5b635d;--ink-3:#8a918b;
+  --accent:#e2553b;--accent-soft:#fbe4de;--ok:#2f7a57;
+  --sans:"Hanken Grotesk",system-ui,sans-serif;--mono:"DM Mono",ui-monospace,monospace;
+  --r:10px;--r-lg:18px;--field-h:56px;
+  --t-micro:160ms;--t-label:200ms;--t-pan:900ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-pan:cubic-bezier(.65,0,.15,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow-card:0 1px 0 rgba(29,35,32,.04),0 12px 32px -12px rgba(29,35,32,.22);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--bg);display:grid;grid-template-columns:minmax(0,1fr) 600px;overflow:hidden;-webkit-font-smoothing:antialiased}
+.map{position:relative;overflow:hidden;background:var(--land)}
+.world{position:absolute;left:0;top:0;width:1600px;height:1300px;transition:transform var(--t-pan) var(--ease-pan);will-change:transform}
+.world svg{display:block;width:100%;height:100%}
+.pin{position:absolute;width:0;height:0}
+.pin i{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;background:var(--ink-3);border:3px solid var(--road);box-shadow:0 2px 6px rgba(29,35,32,.25);transition:background var(--t-micro) var(--ease),transform var(--t-label) var(--ease-out)}
+.pin b{position:absolute;left:14px;top:-10px;font:500 11px/20px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap;background:rgba(250,250,247,.8);padding:0 6px;border-radius:4px}
+.pin.on i{background:var(--accent);transform:scale(1.35)}
+.pin.on b{color:var(--ink);font-weight:500}
+.pin.on::before{content:"";position:absolute;left:-26px;top:-26px;width:52px;height:52px;border-radius:50%;border:1.5px solid var(--accent);animation:pulse 2400ms var(--ease-out) infinite}
+@keyframes pulse{from{transform:scale(.3);opacity:.9}to{transform:scale(1.6);opacity:0}}
+.switch{position:absolute;left:32px;top:32px;display:flex;gap:4px;padding:4px;background:rgba(250,250,247,.92);border:1px solid var(--line);border-radius:999px;box-shadow:var(--shadow-card);z-index:2}
+.switch button{height:36px;padding:0 16px;border:0;border-radius:999px;background:transparent;font:500 13px var(--sans);color:var(--ink-2);cursor:pointer;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.switch button:hover{color:var(--ink)}
+.switch button[aria-selected=true]{background:var(--ink);color:var(--bg)}
+.switch button:focus-visible,.send:focus-visible,.again:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{position:absolute;left:32px;bottom:32px;width:300px;background:var(--bg);border-radius:var(--r-lg);padding:20px 22px;box-shadow:var(--shadow-card);z-index:2}
+.card small{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.card h3{margin:6px 0 2px;font-size:22px;font-weight:600;letter-spacing:-.02em}
+.card p{margin:0;color:var(--ink-2);font-size:14px}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:14px 0 0;padding-top:14px;border-top:1px solid var(--line);font:12px/1.6 var(--mono)}
+.card dt{color:var(--ink-3)}.card dd{margin:0;color:var(--ink)}
+.card .swap{transition:opacity var(--t-label) var(--ease)}
+.card.fade .swap{opacity:0}
+.coords{position:absolute;right:24px;bottom:28px;font:11px var(--mono);color:var(--ink-2);letter-spacing:.04em;z-index:2}
+.side{padding:56px 64px 48px;display:flex;flex-direction:column;border-left:1px solid var(--line);position:relative}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
+h1{margin:20px 0 14px;font-size:76px;line-height:.94;font-weight:600;letter-spacing:-.045em}
+h1 span{color:var(--accent)}
+.lead{margin:0 0 32px;color:var(--ink-2);max-width:400px;font-size:16px}
+.lead b{color:var(--ink);font-weight:600}
+form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f{position:relative}
+.f.full{grid-column:1/-1}
+.f input,.f textarea{width:100%;height:var(--field-h);padding:24px 16px 8px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--field);font:15px var(--sans);color:var(--ink);outline:none;resize:none;transition:border-color var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.f textarea{height:116px;padding-top:28px;line-height:1.45}
+.f label{position:absolute;left:17px;top:18px;font-size:15px;color:var(--ink-3);pointer-events:none;transform-origin:left top;transition:transform var(--t-label) var(--ease),color var(--t-label) var(--ease)}
+.f input:focus,.f textarea:focus{border-color:var(--ink);box-shadow:0 0 0 4px rgba(29,35,32,.07)}
+.f input:focus+label,.f input:not(:placeholder-shown)+label,.f textarea:focus+label,.f textarea:not(:placeholder-shown)+label{transform:translateY(-10px) scale(.75);color:var(--ink-2)}
+.f.bad input{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.f.bad label{color:var(--accent)}
+.row{grid-column:1/-1;display:flex;align-items:center;gap:16px;margin-top:6px}
+.send{height:52px;padding:0 22px 0 26px;border:0;border-radius:999px;background:var(--ink);color:var(--bg);font:600 15px var(--sans);display:inline-flex;align-items:center;gap:12px;cursor:pointer;transition:background var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.send:hover{background:#000}
+.send:active{transform:scale(.98)}
+.send svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t-label) var(--ease-out)}
+.send:hover svg{transform:translateX(3px)}
+.send[aria-busy=true]{pointer-events:none;background:var(--ink-2)}
+.send[aria-busy=true] svg{animation:spin 800ms linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.note{font:12px var(--mono);color:var(--ink-3)}
+.done{position:absolute;inset:0;padding:56px 64px;background:var(--bg);display:flex;flex-direction:column;justify-content:center;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity 400ms var(--ease),transform 400ms var(--ease-out),visibility 0s 400ms}
+.done.show{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.done .tick{width:64px;height:64px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:28px}
+.done .tick svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.done h2{margin:0 0 12px;font-size:48px;line-height:1;letter-spacing:-.04em;font-weight:600}
+.done p{margin:0 0 28px;color:var(--ink-2);max-width:380px}
+.again{align-self:flex-start;height:44px;padding:0 18px;border:1px solid var(--line-2);border-radius:999px;background:transparent;font:500 14px var(--sans);color:var(--ink);cursor:pointer}
+.again:hover{border-color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*,*::before{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<section class="map" aria-label="Studio locations">
+  <div class="world" id="world" aria-hidden="true">
+    <svg viewBox="0 0 1600 1300">
+      <defs>
+        <pattern id="grid" width="56" height="44" patternUnits="userSpaceOnUse" patternTransform="rotate(-14)">
+          <rect width="56" height="44" fill="var(--land)"/><rect x="4" y="4" width="48" height="36" rx="3" fill="var(--block)"/>
+        </pattern>
+        <pattern id="grid2" width="40" height="64" patternUnits="userSpaceOnUse" patternTransform="rotate(22)">
+          <rect width="40" height="64" fill="var(--land)"/><rect x="4" y="4" width="32" height="56" rx="3" fill="var(--block)"/>
+        </pattern>
+      </defs>
+      <rect width="1600" height="1300" fill="url(#grid)"/>
+      <path d="M900 0 L1600 0 L1600 1300 L1180 1300 C1120 1100 1260 980 1130 820 C1010 680 820 640 860 420 C880 300 960 160 900 0Z" fill="url(#grid2)"/>
+      <path d="M0 760 C220 700 380 800 560 760 C760 715 820 600 1000 610 C1180 620 1260 760 1600 720 L1600 860 C1300 900 1180 760 1010 760 C850 760 780 880 560 900 C360 920 220 840 0 900Z" fill="var(--water)" stroke="var(--water-edge)" stroke-width="2"/>
+      <path d="M1010 760 C1060 900 1020 1100 1080 1300 L1170 1300 C1120 1100 1150 900 1090 740Z" fill="var(--water)"/>
+      <path d="M180 260 L420 210 L470 420 L230 470Z" fill="var(--park)"/>
+      <path d="M1180 260 C1260 230 1380 250 1400 340 C1420 430 1300 470 1220 440 C1160 410 1130 300 1180 260Z" fill="var(--park)"/>
+      <path d="M620 980 L820 950 L860 1120 L650 1150Z" fill="var(--park)"/>
+      <g fill="none" stroke-linecap="round">
+        <path d="M-20 520 C300 470 640 560 900 480 S1400 380 1620 420" stroke="var(--road-edge)" stroke-width="20"/>
+        <path d="M-20 520 C300 470 640 560 900 480 S1400 380 1620 420" stroke="var(--road)" stroke-width="15"/>
+        <path d="M720 -20 C700 300 760 560 700 1320" stroke="var(--road-edge)" stroke-width="16"/>
+        <path d="M720 -20 C700 300 760 560 700 1320" stroke="var(--road)" stroke-width="11"/>
+        <path d="M300 1320 C380 1100 340 900 470 600 S560 200 520 -20" stroke="var(--road-edge)" stroke-width="12"/>
+        <path d="M300 1320 C380 1100 340 900 470 600 S560 200 520 -20" stroke="var(--road)" stroke-width="8"/>
+        <path d="M1000 1320 C1100 1000 1320 900 1620 1040" stroke="var(--road-edge)" stroke-width="12"/>
+        <path d="M1000 1320 C1100 1000 1320 900 1620 1040" stroke="var(--road)" stroke-width="8"/>
+        <path d="M400 770 L460 880 M960 600 L990 770" stroke="var(--road)" stroke-width="7"/>
+      </g>
+      <g font-family="DM Mono, monospace" font-size="13" letter-spacing="3" fill="#7d8a86">
+        <text x="300" y="840" transform="rotate(-6 300 840)">IJMOND CHANNEL</text>
+        <text x="1240" y="352">VONDEL HOF</text>
+        <text x="240" y="352" transform="rotate(-11 240 352)">STADSPARK</text>
+      </g>
+    </svg>
+    <div class="pin" data-i="0" style="left:612px;top:668px"><i></i><b>Harbour</b></div>
+    <div class="pin" data-i="1" style="left:330px;top:450px"><i></i><b>Old Town</b></div>
+    <div class="pin" data-i="2" style="left:1240px;top:560px"><i></i><b>North Yards</b></div>
+  </div>
+  <div class="switch" role="tablist" aria-label="Choose a studio">
+    <button role="tab" aria-selected="true" data-i="0">Harbour</button>
+    <button role="tab" aria-selected="false" data-i="1">Old Town</button>
+    <button role="tab" aria-selected="false" data-i="2">North Yards</button>
+  </div>
+  <div class="card" id="card" aria-live="polite">
+    <small class="swap" id="cTag">Studio 01 · HQ</small>
+    <h3 class="swap" id="cName">Kade 14, Harbour</h3>
+    <p class="swap" id="cAddr">3011 BH · ground floor, blue door</p>
+    <dl class="swap"><dt>Hours</dt><dd id="cHours">Mon–Fri 09:00–18:00</dd><dt>Phone</dt><dd id="cPhone">+31 10 744 2081</dd></dl>
+  </div>
+  <div class="coords" id="coords">51.9104° N, 4.4720° E</div>
+</section>
+<section class="side">
+  <div class="eyebrow"><span>Halden Studio</span><span>Contact / 03</span></div>
+  <h1>Come by,<br>or <span>write.</span></h1>
+  <p class="lead">We answer every note within one working day. This one goes to <b id="toStudio">the Harbour studio</b>.</p>
+  <form id="form" novalidate>
+    <div class="f"><input id="n" name="name" placeholder=" " autocomplete="name" required><label for="n">Your name</label></div>
+    <div class="f"><input id="e" name="email" type="email" placeholder=" " autocomplete="email" required><label for="e">Email</label></div>
+    <div class="f full"><input id="c" name="company" placeholder=" " value="Brink Ceramics" autocomplete="organization"><label for="c">Company (optional)</label></div>
+    <div class="f full"><textarea id="m" name="message" placeholder=" ">We're opening a second shop in Delfshaven and need a wayfinding system by March.</textarea><label for="m">What are you working on?</label></div>
+    <div class="row">
+      <button class="send" id="send" type="submit"><span id="sendTxt">Send message</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <span class="note" id="note" aria-live="polite">Avg. reply 4 h 12 min</span>
+    </div>
+  </form>
+  <div class="done" id="done" role="status">
+    <div class="tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h2>Message received.</h2>
+    <p id="doneTxt">Ines from the Harbour studio will reply by tomorrow, 11:00. A copy is on its way to your inbox.</p>
+    <button class="again" id="again" type="button">Send another</button>
+  </div>
+</section>
+<script>
+(()=>{
+  const S=[
+    {x:612,y:668,tag:'Studio 01 · HQ',name:'Kade 14, Harbour',addr:'3011 BH · ground floor, blue door',hours:'Mon–Fri 09:00–18:00',phone:'+31 10 744 2081',ll:'51.9104° N, 4.4720° E',who:'Ines',to:'the Harbour studio'},
+    {x:330,y:450,tag:'Studio 02 · Print lab',name:'Lindengracht 92',addr:'3012 KJ · first floor, ring twice',hours:'Tue–Sat 10:00–17:00',phone:'+31 10 744 2094',ll:'51.9231° N, 4.4602° E',who:'Pieter',to:'the Old Town print lab'},
+    {x:1240,y:560,tag:'Studio 03 · Workshop',name:'Nordwerf 3, Hall B',addr:'3045 AR · loading dock entrance',hours:'Mon–Thu 08:30–16:30',phone:'+31 10 744 2117',ll:'51.9177° N, 4.5013° E',who:'Saskia',to:'the North Yards workshop'}];
+  const $=id=>document.getElementById(id),world=$('world'),map=document.querySelector('.map'),card=$('card');
+  const tabs=[...document.querySelectorAll('.switch button')],pins=[...document.querySelectorAll('.pin')];
+  let cur=0;
+  function pan(){const r=map.getBoundingClientRect(),s=S[cur];world.style.transform=`translate(${Math.round(r.width*.58-s.x)}px,${Math.round(r.height*.44-s.y)}px)`;}
+  function go(i,focus){
+    if(i===cur&&world.style.transform)return;cur=i;const s=S[i];
+    tabs.forEach((t,k)=>{t.setAttribute('aria-selected',String(k===i));t.tabIndex=k===i?0:-1;});
+    if(focus)tabs[i].focus();
+    pins.forEach((p,k)=>p.classList.toggle('on',k===i));pan();
+    card.classList.add('fade');
+    setTimeout(()=>{$('cTag').textContent=s.tag;$('cName').textContent=s.name;$('cAddr').textContent=s.addr;$('cHours').textContent=s.hours;$('cPhone').textContent=s.phone;$('coords').textContent=s.ll;$('toStudio').textContent=s.to;card.classList.remove('fade');},200);
+  }
+  tabs.forEach((t,k)=>{t.addEventListener('click',()=>go(k));t.addEventListener('keydown',e=>{const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){e.preventDefault();go((cur+d+3)%3,true);}});});
+  pins.forEach((p,k)=>p.addEventListener('click',()=>go(k)));
+  pins[0].classList.add('on');tabs.forEach((t,k)=>t.tabIndex=k?-1:0);
+  world.style.transition='none';pan();requestAnimationFrame(()=>requestAnimationFrame(()=>world.style.transition=''));
+  addEventListener('resize',pan);
+  const form=$('form'),send=$('send');
+  form.addEventListener('submit',e=>{
+    e.preventDefault();let ok=true;
+    [['n',v=>v.trim().length>1],['e',v=>/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v)]].forEach(([id,t])=>{const el=$(id),bad=!t(el.value);el.parentNode.classList.toggle('bad',bad);el.setAttribute('aria-invalid',String(bad));if(bad&&ok){el.focus();ok=false;}});
+    if(!ok){$('note').textContent='Add your name and a valid email';return;}
+    send.setAttribute('aria-busy','true');$('sendTxt').textContent='Sending';
+    setTimeout(()=>{send.removeAttribute('aria-busy');$('sendTxt').textContent='Send message';$('doneTxt').textContent=`${S[cur].who} from ${S[cur].to} will reply by tomorrow, 11:00. A copy is on its way to your inbox.`;$('done').classList.add('show');$('again').focus();},1400);
+  });
+  form.addEventListener('input',e=>{const f=e.target.parentNode;if(f.classList.contains('bad')){f.classList.remove('bad');e.target.removeAttribute('aria-invalid');$('note').textContent='Avg. reply 4 h 12 min';}});
+  $('again').addEventListener('click',()=>{$('done').classList.remove('show');form.reset();$('n').focus();});
+})();
+</script>
+</body>
+</html>

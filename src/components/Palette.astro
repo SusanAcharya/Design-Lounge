@@ -43,8 +43,18 @@ import { TYPE_META, PLATFORM_META } from '../lib/pieces';
     ...rooms.map((r) => ({ kind: 'Room', title: r.label, href: '/rooms/' + r.k, hay: r.label.toLowerCase() })),
     ...platforms.map((p) => ({ kind: 'Platform', title: p.label, href: '/platforms/' + p.k, hay: p.label.toLowerCase() })),
     { kind: 'Go', title: 'Browse everything', href: '/browse', hay: 'browse all' },
-    { kind: 'Go', title: 'Collections', href: '/collections', hay: 'collections' },
+    { kind: 'Library', title: 'Type pairings', href: '/type', hay: 'type fonts typography pairings' },
+    { kind: 'Library', title: 'Themes & palettes', href: '/themes', hay: 'themes palettes colour tokens' },
+    { kind: 'Library', title: 'Lounge Icons', href: '/icons', hay: 'icons svg sprite' },
+    { kind: 'Library', title: 'Motion & easing', href: '/motion', hay: 'motion easing recipes animation' },
+    { kind: 'Go', title: 'The system', href: '/system', hay: 'system type themes icons motion grammar' },
+    { kind: 'Go', title: 'Compose a kit', href: '/kit', hay: 'kit compose palette font components start product' },
+    { kind: 'Go', title: 'Start recipes', href: '/start', hay: 'start product recipe design system marketing portfolio app' },
+    { kind: 'Go', title: 'Index by name', href: '/c', hay: 'index hero footer portfolio landing' },
+    { kind: 'Go', title: 'Shelves', href: '/collections', hay: 'collections shelves' },
+    { kind: 'Go', title: 'For AI agents', href: '/agents', hay: 'agents llms brief prompt skill' },
     { kind: 'Go', title: 'Guide: using briefs with an agent', href: '/guide', hay: 'guide how to agent prompt' },
+    { kind: 'Go', title: 'About Susan Acharya', href: '/about', hay: 'about susan acharya author' },
     { kind: 'Go', title: 'Surprise me', href: '/random', hay: 'random surprise' },
   ];
 
@@ -52,7 +62,7 @@ import { TYPE_META, PLATFORM_META } from '../lib/pieces';
     if (items) return items;
     const res = await fetch('/search.json');
     const pieces = await res.json();
-    items = pieces.map((p) => ({ kind: p.type, title: p.title, sub: p.summary, n: p.n, href: '/p/' + p.id, platform: p.platform,
+    items = pieces.map((p) => ({ kind: p.type, title: p.title, sub: p.summary, n: p.n, href: p.href || ('/p/' + p.id), platform: p.platform,
       hay: [p.title, p.summary, p.type, p.platform, ...(p.tags || []), ...(p.styles || [])].join(' ').toLowerCase() }));
     return items;
   }

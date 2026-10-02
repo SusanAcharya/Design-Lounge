@@ -1,0 +1,159 @@
+<!-- Design Lounge piece: footer-enterprise-sitemap · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Enterprise sitemap footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f7f5;--paper:#ffffff;--line:#e3e3df;--line-2:#cfcfca;
+  --ink:#121212;--ink-2:#55554f;--ink-3:#6c6c66;--accent:#1f3bff;--accent-2:#e8ecff;--ok:#12864a;--ok-2:#e3f4ea;--warn:#d98a00;
+  --font:"Hanken Grotesk",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --pad:48px;--r:6px;--shadow:0 1px 0 rgba(0,0,0,.04),0 12px 32px -8px rgba(18,18,18,.18);
+  --t-micro:140ms;--t-pop:220ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font:13px/1.45 var(--font);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.cta{display:flex;align-items:center;gap:24px;padding:40px var(--pad);background:var(--paper);border-bottom:1px solid var(--line)}
+.cta h2{margin:0;font-size:36px;font-weight:600;letter-spacing:-.03em;line-height:1.05;flex:1}
+.cta h2 span{color:var(--ink-3)}
+.btn{height:44px;padding:0 18px;border-radius:var(--r);display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;border:1px solid var(--line-2);transition:background var(--t-micro),border-color var(--t-micro)}
+.btn:hover{border-color:var(--ink)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.pri:hover{background:#1530d6}
+footer{position:relative;padding:36px var(--pad) 40px}
+.head{display:grid;grid-template-columns:2fr 4fr auto;gap:32px;align-items:center;padding-bottom:28px;border-bottom:2px solid var(--ink)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-.03em}
+.logo svg{width:28px;height:28px}
+.claim{font-size:30px;font-weight:500;letter-spacing:-.03em;line-height:1.1;margin:0}
+.claim b{font-weight:700;color:var(--accent)}
+.tools{display:flex;gap:10px;align-items:center}
+.status{position:relative;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 10px;border-radius:999px;background:var(--ok-2);color:var(--ok);font-weight:600;font-size:13px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(18,134,74,.45);animation:ping 2.4s var(--ease) infinite}
+@keyframes ping{70%{box-shadow:0 0 0 6px rgba(18,134,74,0)}100%{box-shadow:0 0 0 0 rgba(18,134,74,0)}}
+.status small{font:500 11px var(--mono);color:var(--ink-2);margin-left:4px}
+.uptime{position:absolute;right:0;bottom:calc(100% + 10px);width:340px;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:14px;color:var(--ink);opacity:0;transform:translateY(4px);pointer-events:none;transition:opacity var(--t-pop) var(--ease),transform var(--t-pop) var(--ease-out);font-weight:400}
+.status:hover .uptime,.status:focus-visible .uptime{opacity:1;transform:none}
+.uptime header{display:flex;justify-content:space-between;font:500 11px var(--mono);color:var(--ink-2);margin-bottom:10px}
+.bars{display:flex;gap:1.5px;height:28px}
+.bars span{flex:1;background:var(--ok);border-radius:1px;opacity:.85}
+.bars span.w{background:var(--warn)}
+.uptime footer{all:unset;display:flex;justify-content:space-between;font:11px var(--mono);color:var(--ink-3);margin-top:8px}
+.region{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--line-2);border-radius:999px;background:var(--paper);font-weight:500;transition:border-color var(--t-micro)}
+.region:hover,.region[aria-expanded="true"]{border-color:var(--ink)}
+.region svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6}
+.region .chev{width:12px;height:12px;transition:transform var(--t-pop) var(--ease)}
+.region[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.pop{position:absolute;right:var(--pad);top:96px;width:560px;background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px 16px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity var(--t-pop) var(--ease),transform var(--t-pop) var(--ease-out);z-index:10}
+.pop.open{opacity:1;transform:none;pointer-events:auto}
+.pop h4{margin:0 0 6px;font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.pop button{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;padding:7px 8px;border-radius:5px;margin-left:-8px;width:calc(100% + 8px)}
+.pop button:hover{background:var(--bg)}
+.pop button small{color:var(--ink-3);font-size:12px}
+.pop button[aria-checked="true"]{color:var(--accent);font-weight:600}
+.pop button[aria-checked="true"] small{color:var(--accent)}
+.pop .note{grid-column:1/-1;border-top:1px solid var(--line);margin-top:10px;padding-top:10px;font:11px var(--mono);color:var(--ink-3)}
+.map{display:grid;grid-template-columns:repeat(6,1fr);gap:24px;padding:32px 0 28px;border-bottom:1px solid var(--line)}
+.map h3{margin:0 0 14px;font-size:13px;font-weight:700;display:flex;flex-direction:column;gap:10px;padding-top:2px;border-top:1px solid var(--ink)}
+.map h3 span{font:700 64px/.9 var(--font);letter-spacing:-.06em;color:var(--accent);margin-top:10px}
+.map ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.map a{color:var(--ink-2);transition:color var(--t-micro);display:inline-flex;gap:6px;align-items:center}
+.map a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.tag{font:500 9.5px/1 var(--mono);padding:3px 5px;border-radius:3px;background:var(--accent-2);color:var(--accent);letter-spacing:.04em}
+.tag.b{background:var(--ink);color:var(--paper)}
+.certs{display:flex;gap:28px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font:500 11px var(--mono);color:var(--ink-2)}
+.certs span{display:inline-flex;gap:8px;align-items:center}
+.certs svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:1.5}
+.certs .sp{flex:1}
+.legal{display:flex;align-items:center;gap:20px;padding-top:18px;font-size:12px;color:var(--ink-2)}
+.legal a:hover{color:var(--ink);text-decoration:underline}
+.legal .sp{flex:1}
+.social{display:flex;gap:4px}
+.social a{width:34px;height:34px;display:grid;place-items:center;border-radius:6px;color:var(--ink);transition:background var(--t-micro),color var(--t-micro)}
+.social a:hover{background:var(--ink);color:var(--paper)}
+.social svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:1279px){.claim{font-size:26px}}
+@media (max-width:640px){.map h3 span{font-size:44px}}
+@media (max-width:1100px){.map{grid-template-columns:repeat(3,1fr)}.head{grid-template-columns:1fr auto}.claim{grid-column:1/-1;order:3}}
+@media (max-width:640px){.map{grid-template-columns:1fr 1fr}.legal,.certs{flex-wrap:wrap}.tools{flex-wrap:wrap}.pop{width:calc(100% - 32px);right:16px;grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<section class="cta" aria-labelledby="cta-h">
+  <h2 id="cta-h">Deploy your first service in 4 minutes. <span>No card required.</span></h2>
+  <a class="btn" href="#">Talk to sales</a>
+  <a class="btn pri" href="#">Start for free <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</section>
+<footer aria-label="Site footer">
+  <div class="head">
+    <a class="logo" href="#" aria-label="Corvane home"><svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="4" fill="#121212"/><path d="M7 21L21 7v14z" fill="#1f3bff"/></svg>Corvane</a>
+    <p class="claim">Cloud infrastructure for teams that <b>ship on Fridays.</b></p>
+    <div class="tools">
+      <a class="status" href="#" aria-describedby="uptime"><i aria-hidden="true"></i>All systems normal<small>99.998%</small>
+        <span class="uptime" id="uptime" role="tooltip"><header><span>Uptime · last 90 days</span><span>14 regions</span></header><span class="bars" id="bars"></span><footer><span>Jul 4</span><span>1 incident · 11 min, Aug 19</span><span>Today</span></footer></span>
+      </a>
+      <button class="region" id="regionBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><span id="regionLbl">United States · English</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    </div>
+  </div>
+  <div class="pop" id="pop" role="dialog" aria-label="Choose region and language">
+    <div role="radiogroup" aria-label="Americas"><h4>Americas</h4><button role="radio" aria-checked="true" data-l="United States · English">United States<small>English</small></button><button role="radio" aria-checked="false" data-l="Canada · Français">Canada<small>Français</small></button><button role="radio" aria-checked="false" data-l="Brasil · Português">Brasil<small>Português</small></button><button role="radio" aria-checked="false" data-l="México · Español">México<small>Español</small></button></div>
+    <div role="radiogroup" aria-label="Europe"><h4>Europe</h4><button role="radio" aria-checked="false" data-l="Deutschland · Deutsch">Deutschland<small>Deutsch</small></button><button role="radio" aria-checked="false" data-l="France · Français">France<small>Français</small></button><button role="radio" aria-checked="false" data-l="United Kingdom · English">United Kingdom<small>English</small></button><button role="radio" aria-checked="false" data-l="Nederland · Nederlands">Nederland<small>Nederlands</small></button></div>
+    <div role="radiogroup" aria-label="Asia Pacific"><h4>Asia Pacific</h4><button role="radio" aria-checked="false" data-l="Australia · English">Australia<small>English</small></button><button role="radio" aria-checked="false" data-l="India · English">India<small>English</small></button><button role="radio" aria-checked="false" data-l="Singapore · English">Singapore<small>English</small></button><button role="radio" aria-checked="false" data-l="Nepal · English">Nepal<small>English</small></button></div>
+    <p class="note">Prices shown in local currency. Data residency is set per project, not here.</p>
+  </div>
+  <nav class="map" aria-label="Sitemap">
+    <div><h3><span>01</span>Platform</h3><ul><li><a href="#">Compute</a></li><li><a href="#">Edge functions</a></li><li><a href="#">Postgres</a></li><li><a href="#">Object storage</a></li><li><a href="#">Queues <span class="tag">New</span></a></li><li><a href="#">Observability</a></li><li><a href="#">Secrets</a></li><li><a href="#">Pricing</a></li></ul></div>
+    <div><h3><span>02</span>Solutions</h3><ul><li><a href="#">Fintech</a></li><li><a href="#">Healthcare</a></li><li><a href="#">Gaming</a></li><li><a href="#">AI inference</a></li><li><a href="#">Public sector</a></li><li><a href="#">Startups</a></li><li><a href="#">Enterprise</a></li><li><a href="#">Customer stories</a></li></ul></div>
+    <div><h3><span>03</span>Developers</h3><ul><li><a href="#">Documentation</a></li><li><a href="#">API reference</a></li><li><a href="#">CLI</a></li><li><a href="#">Terraform provider</a></li><li><a href="#">Templates</a></li><li><a href="#">Changelog <span class="tag b">v4.12</span></a></li><li><a href="#">Open source</a></li><li><a href="#">Community</a></li></ul></div>
+    <div><h3><span>04</span>Resources</h3><ul><li><a href="#">Blog</a></li><li><a href="#">Guides</a></li><li><a href="#">Webinars</a></li><li><a href="#">Benchmarks</a></li><li><a href="#">Migration center</a></li><li><a href="#">Partners</a></li><li><a href="#">Events</a></li><li><a href="#">Brand kit</a></li></ul></div>
+    <div><h3><span>05</span>Company</h3><ul><li><a href="#">About</a></li><li><a href="#">Careers <span class="tag">41 open</span></a></li><li><a href="#">Press</a></li><li><a href="#">Investors</a></li><li><a href="#">Security</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div><h3><span>06</span>Support</h3><ul><li><a href="#">Help center</a></li><li><a href="#">System status</a></li><li><a href="#">Support plans</a></li><li><a href="#">Trust center</a></li><li><a href="#">Report abuse</a></li><li><a href="#">SLA</a></li><li><a href="#">+1 (415) 555 0132</a></li></ul></div>
+  </nav>
+  <div class="certs">
+    <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>SOC 2 Type II</span>
+    <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>ISO 27001</span>
+    <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>HIPAA ready</span>
+    <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>GDPR · DPA available</span>
+    <span class="sp"></span><span>14 regions · 212 edge locations</span>
+  </div>
+  <div class="legal">
+    <span>&copy; 2026 Corvane, Inc. 535 Mission St, San Francisco</span>
+    <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookie preferences</a><a href="#">Accessibility</a><a href="#">Do not sell my data</a>
+    <span class="sp"></span>
+    <div class="social">
+      <a href="#" aria-label="Corvane source code"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></a>
+      <a href="#" aria-label="Community forum"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg></a>
+      <a href="#" aria-label="Video channel"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg></a>
+      <a href="#" aria-label="Changelog RSS"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5a14 14 0 0114 14M5 11a8 8 0 018 8"/><circle cx="6" cy="18" r="1.5"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script>
+(()=>{
+  const bars=document.getElementById('bars');
+  for(let i=0;i<90;i++){const s=document.createElement('span');if(i===46||i===47)s.className='w';bars.appendChild(s);}
+  const btn=document.getElementById('regionBtn'),pop=document.getElementById('pop'),lbl=document.getElementById('regionLbl');
+  const opts=[...pop.querySelectorAll('[role=radio]')];
+  function setOpen(o,focus){pop.classList.toggle('open',o);btn.setAttribute('aria-expanded',String(o));
+    if(o&&focus){(opts.find(b=>b.getAttribute('aria-checked')==='true')||opts[0]).focus();}
+    if(!o&&focus)btn.focus();}
+  btn.addEventListener('click',e=>{e.stopPropagation();setOpen(!pop.classList.contains('open'),true);});
+  opts.forEach((b,i)=>{
+    b.addEventListener('click',()=>{opts.forEach(o=>o.setAttribute('aria-checked','false'));b.setAttribute('aria-checked','true');lbl.textContent=b.dataset.l;setOpen(false,true);});
+    b.addEventListener('keydown',e=>{const d={ArrowDown:1,ArrowUp:-1,ArrowRight:4,ArrowLeft:-4}[e.key];if(d){e.preventDefault();opts[(i+d+opts.length)%opts.length].focus();}});
+  });
+  document.addEventListener('click',e=>{if(!pop.contains(e.target)&&e.target!==btn)setOpen(false,false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&pop.classList.contains('open'))setOpen(false,true);});
+  requestAnimationFrame(()=>{const se=document.scrollingElement||document.documentElement;se.scrollTop=se.scrollHeight;});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!-- Design Lounge piece: hero-flashlight-reveal · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Nightjar — read what your alerts miss</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+@property --r{syntax:"<length>";inherits:true;initial-value:168px}
+:root{
+  --night:#0a0b0d;--night-2:#14161a;--line-d:#24272d;--ink-d:#eceae4;--ink-d2:#9a9ea6;--ok:#5fd38d;
+  --beam:#efece4;--ink-b:#0a0b0d;--ink-b2:#4b4a46;--line-b:rgba(10,11,13,.08);--alarm:#ff3b2f;
+  --display:"Anton",Impact,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --nav-h:64px;--torch:168px;--torch-full:1600px;
+  --t-micro:160ms;--t-reveal:700ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--mono);color:var(--ink-d);background:var(--night);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--ok);outline-offset:3px}
+nav{height:var(--nav-h);flex:none;display:flex;align-items:center;gap:32px;padding:0 64px;border-bottom:1px solid var(--line-d);position:relative;z-index:3;background:var(--night)}
+.logo{display:flex;align-items:center;gap:10px;font:20px/1 var(--display);letter-spacing:.04em;text-transform:uppercase;margin-right:auto}
+.logo svg{width:22px;height:22px}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:28px;font-size:13px;color:var(--ink-d2)}
+nav ul a:hover{color:var(--ink-d)}
+.signin{font-size:13px;color:var(--ink-d2)}
+.cta-s{font:500 13px var(--mono);background:var(--ink-d);color:var(--night);padding:9px 14px;border-radius:2px}
+.cta-s:hover{background:#fff}
+.stage{position:relative;flex:1;overflow:hidden;cursor:none;touch-action:none;outline:none}
+.stage:focus-visible{box-shadow:inset 0 0 0 2px var(--ok)}
+.layer{position:absolute;inset:0;padding:48px 64px 44px;display:flex;flex-direction:column}
+.base{background:var(--night)}
+.beam{background:linear-gradient(var(--line-b) 1px,transparent 1px) 0 0/40px 40px,linear-gradient(90deg,var(--line-b) 1px,transparent 1px) 0 0/40px 40px,var(--beam);color:var(--ink-b);pointer-events:none;
+  -webkit-mask-image:radial-gradient(circle at var(--x,62%) var(--y,46%),#000 calc(var(--r) - .5px),transparent calc(var(--r) + .5px));
+  mask-image:radial-gradient(circle at var(--x,62%) var(--y,46%),#000 calc(var(--r) - .5px),transparent calc(var(--r) + .5px));
+  transition:--r var(--t-reveal) var(--expo)}
+.stage.full{--r:var(--torch-full)}
+.pill{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.04em;border:1px solid var(--line-d);padding:6px 12px;border-radius:999px;align-self:flex-start;color:var(--ink-d2)}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.beam .pill{border-color:var(--ink-b);color:var(--ink-b)}.beam .pill i{background:var(--alarm)}
+h1,.h1{font:400 172px/.9 var(--display);text-transform:uppercase;letter-spacing:-.005em;margin:28px 0 0}
+.beam .h1 em{font-style:normal;color:var(--alarm)}
+.row{margin-top:auto;display:grid;grid-template-columns:420px 1fr;gap:72px;align-items:end}
+.lede{margin:0 0 22px;font-size:14px;line-height:1.6;color:var(--ink-d2);max-width:400px}
+.beam .lede{color:var(--ink-b2)}
+.btns{display:flex;gap:12px;align-items:center}
+.btn{height:44px;padding:0 18px;display:inline-flex;align-items:center;gap:10px;font:500 13px var(--mono);border-radius:2px;border:1px solid var(--ink-d);cursor:pointer;background:var(--ink-d);color:var(--night)}
+.btn.ghost{background:transparent;color:var(--ink-d);border-color:var(--line-d)}
+.btn.ghost:hover{border-color:var(--ink-d)}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75}
+.beam .btn{background:var(--ink-b);color:var(--beam);border-color:var(--ink-b)}.beam .btn.ghost{background:transparent;color:var(--ink-b)}
+.uptime h2{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-d2);margin:0 0 10px;display:flex;justify-content:space-between}
+.beam .uptime h2{color:var(--ink-b2)}
+.bars{display:flex;gap:3px;height:40px}
+.bars i{flex:1;background:#2c4a39;border-radius:1px}
+.beam .bars i{background:#c9c6bd}.beam .bars i.x{background:var(--alarm)}
+.note{position:absolute;font:500 11px/1.35 var(--mono);color:var(--ink-b);display:flex;gap:8px;align-items:flex-start;max-width:210px}
+.note::before{content:"";flex:none;width:44px;height:1px;background:var(--ink-b);margin-top:7px}
+.note b{display:block;color:var(--alarm);font-weight:500}
+.readout{position:absolute;left:0;top:0;font:500 10px var(--mono);letter-spacing:.08em;color:var(--ink-d2);pointer-events:none;transform:translate(calc(var(--px) + var(--r) * .72 + 8px),calc(var(--py) + var(--r) * .72 + 4px));white-space:nowrap;transition:opacity var(--t-micro)}
+.cross{position:absolute;left:-7px;top:-7px;width:14px;height:14px;pointer-events:none;transform:translate(var(--px),var(--py));background:linear-gradient(var(--alarm),var(--alarm)) 50% 0/1px 100% no-repeat,linear-gradient(var(--alarm),var(--alarm)) 0 50%/100% 1px no-repeat}
+.full .readout,.full .cross{opacity:0}
+.hint{position:absolute;right:64px;top:52px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-d2);z-index:2;display:flex;gap:12px;align-items:center}
+.toggle{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;height:40px;padding:0 14px;border:1px solid var(--line-d);background:var(--night-2);color:var(--ink-d);border-radius:2px;cursor:pointer}
+.toggle:hover{border-color:var(--ink-d)}
+.toggle[aria-pressed="true"]{background:var(--alarm);border-color:var(--alarm);color:var(--night)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (hover:none){.stage{cursor:auto}}
+@media (prefers-reduced-motion:reduce){.beam{transition:none}}
+</style>
+</head>
+<body>
+<nav aria-label="Main">
+  <a class="logo" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>Nightjar</a>
+  <ul><li><a href="#">Product</a></li><li><a href="#">Pricing</a></li><li><a href="#">Docs</a></li><li><a href="#">Changelog</a></li></ul>
+  <a class="signin" href="#">Sign in</a><a class="cta-s" href="#">Start free</a>
+</nav>
+<section class="stage" id="stage" tabindex="0" aria-label="Hero. Move the pointer, or use arrow keys, to shine the torch." aria-describedby="truth">
+  <div class="layer base">
+    <span class="pill"><i></i>All 214 services operational</span>
+    <h1>Everything<br>looks fine.</h1>
+    <div class="row">
+      <div>
+        <p class="lede">Your dashboards are green. Nightjar reads every log line, trace and swallowed exception your alerts were never told to look for.</p>
+        <div class="btns"><a class="btn" href="#">Start a 14-day trial <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="#">Book a demo</a></div>
+      </div>
+      <div class="uptime" aria-hidden="true"><h2><span>checkout-api · last 90 days</span><span>99.99%</span></h2><div class="bars" id="b1"></div></div>
+    </div>
+  </div>
+  <div class="layer beam" aria-hidden="true">
+    <span class="pill"><i></i>412 errors swallowed in the last 24h</span>
+    <div class="h1">412 things<br><em>aren't.</em></div>
+    <div class="row">
+      <div>
+        <p class="lede">Green only means nobody asked. 23 incidents this quarter never paged anyone, and three of them cost real orders.</p>
+        <div class="btns"><span class="btn">Start a 14-day trial <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="btn ghost">Book a demo</span></div>
+      </div>
+      <div class="uptime"><h2><span>checkout-api · last 90 days</span><span>23 silent incidents</span></h2><div class="bars" id="b2"></div></div>
+    </div>
+    <p class="note" style="left:860px;top:120px"><span><b>retry storm</b>checkout-api retried 9,140× at 02:14 UTC. No alert fired.</span></p>
+    <p class="note" style="left:880px;top:260px"><span><b>200 OK, empty body</b>/v2/cart returned nothing to 3.1% of iOS users.</span></p>
+    <p class="note" style="left:620px;top:420px"><span><b>cron skipped 6×</b>invoice-sweeper has not run since Tuesday.</span></p>
+  </div>
+  <span class="cross" aria-hidden="true"></span>
+  <span class="readout" id="readout" aria-hidden="true">X 0380 · Y 0330</span>
+  <div class="hint"><span id="hintText">Move to look closer</span><button class="toggle" id="toggle" aria-pressed="false">Reveal all · R</button></div>
+  <p class="sr" id="truth">Hidden layer: 412 things aren't fine. 412 errors swallowed in the last 24 hours, including a retry storm, empty 200 responses and a skipped cron job.</p>
+</section>
+<script>
+(()=>{
+  const st=document.getElementById('stage'),ro=document.getElementById('readout'),tg=document.getElementById('toggle');
+  const b1=document.getElementById('b1'),b2=document.getElementById('b2'),bad=[11,12,27,40,41,42,58,63,71,72,84];
+  for(let i=0;i<90;i++){b1.appendChild(document.createElement('i'));const x=document.createElement('i');if(bad.includes(i))x.className='x';b2.appendChild(x);}
+  let x=380,y=330,raf=0;
+  function paint(){raf=0;st.style.setProperty('--x',x+'px');st.style.setProperty('--y',y+'px');
+    st.style.setProperty('--px',x+'px');st.style.setProperty('--py',y+'px');
+    ro.textContent='X '+String(Math.round(x)).padStart(4,'0')+' · Y '+String(Math.round(y)).padStart(4,'0');}
+  function move(nx,ny){const r=st.getBoundingClientRect();x=Math.max(0,Math.min(r.width,nx));y=Math.max(0,Math.min(r.height,ny));if(!raf)raf=requestAnimationFrame(paint);}
+  st.addEventListener('pointermove',e=>{const r=st.getBoundingClientRect();move(e.clientX-r.left,e.clientY-r.top);});
+  st.addEventListener('keydown',e=>{const d=e.shiftKey?96:32,k={ArrowLeft:[-d,0],ArrowRight:[d,0],ArrowUp:[0,-d],ArrowDown:[0,d]}[e.key];
+    if(k){e.preventDefault();move(x+k[0],y+k[1]);}});
+  function setFull(on){st.classList.toggle('full',on);tg.setAttribute('aria-pressed',String(on));tg.textContent=on?'Torch mode · R':'Reveal all · R';
+    document.getElementById('hintText').textContent=on?'Everything, lit':'Move to look closer';}
+  tg.addEventListener('click',e=>{e.stopPropagation();setFull(!st.classList.contains('full'));});
+  addEventListener('keydown',e=>{if(e.key.toLowerCase()==='r'&&!e.metaKey&&!e.ctrlKey&&!e.altKey){setFull(!st.classList.contains('full'));}});
+  paint();
+})();
+</script>
+</body>
+</html>

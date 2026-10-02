@@ -3,6 +3,7 @@ title: "Sticky split scroll story"
 summary: "A two-column scrollytelling layout: four text chapters scroll on the left while a sticky sky illustration on the right crossfades and shifts colour as each chapter enters view."
 platform: web
 type: layout
+category: scroll
 tags: [storytelling, scroll, sticky, editorial]
 styles: [editorial, dark]
 motion: rich

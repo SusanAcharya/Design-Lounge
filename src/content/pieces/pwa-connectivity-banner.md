@@ -3,6 +3,7 @@ title: "PWA connectivity banner"
 summary: "A 40px offline banner with a pulsing dot slides under the status bar, cached rows get a tag while uncached rows grey out; reconnecting flips it green and retracts it after 2s."
 platform: pwa
 type: pattern
+category: feedback
 tags: [pwa, offline, banner, status, cache]
 styles: [minimal, swiss, soft]
 motion: subtle

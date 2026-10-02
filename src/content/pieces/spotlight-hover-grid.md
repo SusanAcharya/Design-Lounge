@@ -3,6 +3,7 @@ title: "Spotlight hover grid"
 summary: "A 4×3 grid of feature cards where a white radial light follows the pointer across card borders (1px mask-composited ring) and surfaces (6% wash); white-on-charcoal, no colour, no blur."
 platform: web
 type: animation
+category: cursor
 tags: [grid, hover, spotlight, cards, features]
 styles: [dark, minimal, industrial]
 motion: subtle

@@ -1,0 +1,210 @@
+<!-- Design Lounge piece: y2k-chrome-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Y2K chrome design language kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Michroma&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ice:#d8e2ec;--ice-2:#c4d0dc;--chrome:#8a96a3;--shine:#f7fbff;--ink:#1a2230;--ink-2:#3a4758;--ink-3:#6b7788;
+  --blue:#0078ff;--blue-deep:#0054c4;--pink:#ff2d7a;--on:#f7fbff;
+  --display:"Michroma",Verdana,sans-serif;--text:"Figtree",system-ui,sans-serif;
+  --r:10px;--ctl:44px;--pad:20px;
+  --bevel:linear-gradient(180deg,#f7fbff 0%,#d8e2ec 42%,#8a96a3 50%,#e8eef4 100%);
+  --t-micro:140ms;--t-tab:240ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--text);color:var(--ink);background:#9aa8b6;overflow-x:hidden;overflow-y:auto;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.top{height:54px;display:flex;align-items:center;gap:18px;padding:0 20px;background:var(--bevel);border-bottom:1px solid var(--chrome);box-shadow:inset 0 1px 0 #fff,0 1px 0 #6b7788}
+.mark{width:28px;height:28px;border-radius:50%;background:conic-gradient(#c8d2dc,#fff,#8a96a8,#dce4ee,#6b7788,#f7fbff,#c8d2dc);box-shadow:inset 0 0 0 3px rgba(255,255,255,.5),0 1px 2px #6b7788;position:relative}
+.mark::after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--ink)}
+.brand{font:12px/1 var(--display);letter-spacing:.08em;text-transform:uppercase}
+.brand span{font:600 12px var(--text);letter-spacing:.04em;color:var(--ink-2);text-transform:none;margin-left:8px}
+.top nav{display:flex;gap:18px;margin-left:auto}
+.top nav a{font:600 12px/1 var(--text);text-decoration:none;padding:8px 0;border-bottom:2px solid transparent}
+.top nav a:hover{border-color:var(--blue);color:var(--blue-deep)}
+.ver{font:500 11px var(--text);color:var(--ink-2)}
+.sheet{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;background:#6b7788}
+.cell{background:var(--ice);padding:var(--pad);min-width:0;position:relative}
+.lbl{margin:0 0 12px;font:600 10px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.lbl::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--bevel);box-shadow:inset 0 1px 0 #fff,0 0 0 1px var(--chrome)}
+.hero{grid-column:1/8;height:430px;padding:0;overflow:hidden;background:linear-gradient(180deg,#eef3f8,#c9d4e0)}
+.mini{height:44px;display:flex;align-items:center;gap:16px;padding:0 20px;background:var(--bevel);border-bottom:1px solid var(--chrome);font:600 12px var(--text);box-shadow:inset 0 1px 0 #fff}
+.mini b{font:10px/1 var(--display);letter-spacing:.1em;margin-right:auto}
+.mini a{text-decoration:none}.mini a:hover{color:var(--blue)}
+.copy{position:absolute;left:24px;top:68px;width:340px;z-index:2}
+.eyebrow{font:600 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--blue-deep)}
+.hero h1{font:28px/.95 var(--display);letter-spacing:.04em;margin:12px 0 10px;text-transform:uppercase}
+.hero p{margin:0 0 16px;font-size:15px;color:var(--ink-2);max-width:300px}
+.tabs{display:flex;gap:6px;margin-bottom:16px}
+.tab{height:32px;padding:0 12px;border:1px solid var(--chrome);border-radius:16px;background:linear-gradient(180deg,#f7fbff,#c4d0dc);font:600 12px var(--text);color:var(--ink);cursor:pointer;box-shadow:inset 0 1px 0 #fff}
+.tab:hover{color:var(--blue-deep)}
+.tab[aria-selected="true"]{background:linear-gradient(180deg,var(--blue),var(--blue-deep));color:var(--on);border-color:var(--blue-deep);box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.price{font:600 13px var(--text);color:var(--ink-2)}
+.disc{position:absolute;right:36px;top:86px;width:228px;height:228px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#1a2230 0 16%,transparent 17%),conic-gradient(from 20deg,#c8d2dc,#fff 12%,#8a96a8,#e8eef4,#6b7788,#f7fbff 70%,#9aa8b8,#c8d2dc);box-shadow:inset 0 0 0 10px rgba(255,255,255,.28),0 16px 28px rgba(26,34,48,.28);animation:spin 18s linear infinite}
+.disc i{position:absolute;inset:36%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#4a5a70,#1a2230);box-shadow:inset 0 2px 4px #000}
+.live{position:absolute;right:52px;top:62px;height:22px;padding:0 10px;border-radius:11px;background:var(--pink);color:#fff;font:700 10px/22px var(--text);letter-spacing:.12em;box-shadow:0 2px 0 #c01858,inset 0 1px 0 rgba(255,255,255,.4);z-index:3}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spec{grid-column:8/13;height:430px;display:flex;flex-direction:column;background:linear-gradient(180deg,#eef3f8,#d8e2ec)}
+.aa{display:flex;align-items:flex-end;gap:14px;border-bottom:1px solid var(--chrome);padding-bottom:8px}
+.aa big{font:72px/.8 var(--display);letter-spacing:-.04em}
+.fam{font-size:12px;line-height:1.4;color:var(--ink-2)}
+.fam b{display:block;font:12px/1.3 var(--display);color:var(--ink);margin-bottom:4px;letter-spacing:.04em}
+.scale{list-style:none;margin:10px 0 0;padding:0;flex:1}
+.scale li{display:flex;align-items:baseline;gap:10px;padding:6px 0;border-bottom:1px solid var(--ice-2);white-space:nowrap;overflow:hidden}
+.scale em{font:600 10px/1 var(--text);font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);width:88px;flex:none}
+.s1{font:18px/1.1 var(--display);letter-spacing:.04em;text-transform:uppercase}
+.s2{font:700 20px var(--text)}.s3{font:600 15px var(--text)}.s4{font:400 14px var(--text)}.s5{font:600 11px var(--text);letter-spacing:.14em;text-transform:uppercase}
+.pal{grid-column:1/4}
+.sw{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:10px;height:42px;border-bottom:1px solid var(--ice-2)}
+.chip{width:40px;height:28px;border-radius:6px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 0 0 1px var(--chrome)}
+.sw b{display:block;font:600 13px/1.1 var(--text)}.sw span{font-size:11px;color:var(--ink-2)}.sw code{font:500 11px var(--text);color:var(--ink-3)}
+.note{margin:10px 0 0;font-size:12px;color:var(--ink-2)}
+.ctl{grid-column:4/7}
+.btn{height:var(--ctl);padding:0 16px;border:1px solid var(--chrome);border-radius:22px;background:var(--bevel);color:var(--ink);font:600 14px var(--text);cursor:pointer;position:relative;box-shadow:inset 0 1px 0 #fff,0 2px 0 var(--chrome);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro)}
+.btn::after{content:"";position:absolute;left:12px;right:12px;top:4px;height:42%;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.7),transparent);pointer-events:none}
+.btn:hover{transform:translateY(-1px);box-shadow:inset 0 1px 0 #fff,0 3px 0 var(--chrome)}
+.btn:active{transform:translateY(1px);box-shadow:inset 0 1px 0 #fff,0 1px 0 var(--chrome)}
+.btn.pri{background:linear-gradient(180deg,#4da3ff,var(--blue) 48%,var(--blue-deep));color:var(--on);border-color:var(--blue-deep);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 2px 0 var(--blue-deep)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;margin-right:6px;vertical-align:-3px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tag{height:24px;padding:0 10px;border-radius:12px;border:1px solid var(--chrome);background:linear-gradient(180deg,#fff,var(--ice-2));font:600 11px/24px var(--text);letter-spacing:.04em}
+.tag[aria-pressed="true"]{background:linear-gradient(180deg,var(--blue),var(--blue-deep));color:#fff;border-color:var(--blue-deep)}
+.inp{grid-column:7/10}
+.fld{display:block;margin-bottom:12px}
+.fld span{display:block;font:600 10px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;color:var(--ink-2)}
+.fld input{width:100%;height:var(--ctl);border:1px solid var(--chrome);border-radius:10px;background:linear-gradient(180deg,#fff,#e8eef4);padding:0 12px;font:15px var(--text);color:var(--ink);box-shadow:inset 0 2px 3px rgba(26,34,48,.12)}
+.fld input:focus{outline:none;border-color:var(--blue);box-shadow:inset 0 2px 3px rgba(26,34,48,.12),0 0 0 3px rgba(0,120,255,.25)}
+.link{color:var(--blue-deep);font-weight:600;text-underline-offset:3px}
+.link:hover{color:var(--blue)}
+.sw-t{display:inline-flex;align-items:center;gap:10px;margin-top:8px;font-weight:500;cursor:pointer}
+.sw-t button{width:48px;height:26px;border-radius:13px;border:1px solid var(--chrome);background:linear-gradient(180deg,#c4d0dc,#8a96a3);padding:0;position:relative;cursor:pointer;box-shadow:inset 0 1px 2px rgba(0,0,0,.2)}
+.sw-t button::after{content:"";position:absolute;left:2px;top:2px;width:20px;height:20px;border-radius:50%;background:var(--bevel);box-shadow:inset 0 1px 0 #fff,0 1px 2px #6b7788;transition:transform 220ms var(--expo)}
+.sw-t button[aria-checked="true"]{background:linear-gradient(180deg,#4da3ff,var(--blue))}
+.sw-t button[aria-checked="true"]::after{transform:translateX(22px)}
+.surf{grid-column:10/13}
+.plates{display:grid;gap:10px}
+.plate{height:52px;border-radius:10px;display:flex;align-items:center;padding:0 12px;font:600 12px var(--text);border:1px solid var(--chrome)}
+.plate.b{background:var(--bevel);box-shadow:inset 0 1px 0 #fff,inset 0 -2px 0 var(--chrome)}
+.plate.i{background:linear-gradient(180deg,#8a96a3,#d8e2ec);box-shadow:inset 0 3px 6px rgba(26,34,48,.35)}
+.plate.g{background:radial-gradient(120px 40px at 30% 0,rgba(255,255,255,.85),transparent 60%),linear-gradient(180deg,#4da3ff,var(--blue-deep));color:#fff;border-color:var(--blue-deep)}
+.gram{grid-column:span 3;display:flex;gap:12px;align-items:flex-start}
+.glyph{width:56px;height:56px;flex:none;border-radius:12px}
+.gram h4{margin:2px 0 4px;font:12px/1.2 var(--display);letter-spacing:.04em;text-transform:uppercase}
+.gram p{margin:0;font-size:13px;color:var(--ink-2)}
+.foot{grid-column:1/-1;display:flex;justify-content:space-between;font:500 11px var(--text);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+@media (max-width:1100px){.hero,.spec{grid-column:1/-1}.pal,.ctl,.inp,.surf,.gram{grid-column:span 6}.top nav{display:none}.disc{right:16px}}
+@media (max-width:700px){.pal,.ctl,.inp,.surf,.gram{grid-column:1/-1}.hero{height:520px}.hero h1{font-size:22px}.disc{top:300px;width:160px;height:160px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}.disc{animation:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="mark" aria-hidden="true"></div>
+  <div class="brand">Helix kit <span>/ Y2K chrome 01</span></div>
+  <nav aria-label="Kit sections"><a href="#type">Type</a><a href="#colour">Colour</a><a href="#controls">Controls</a><a href="#surface">Surface</a></nav>
+  <span class="ver">Kit v1.0 · 31 Dec 1999</span>
+</header>
+<main class="sheet">
+  <section class="cell hero" id="hero" aria-label="Composition: music drop page">
+    <div class="mini"><b>Helix Records</b><a href="#hero">Drops</a><a href="#hero">Artists</a><a href="#hero">Cart 1</a></div>
+    <span class="live">Live</span>
+    <div class="disc" aria-hidden="true"><i></i></div>
+    <div class="copy">
+      <div class="eyebrow">Drop 07 · Pulse Circuit</div>
+      <h1>Aurora 7</h1>
+      <p id="fmt-copy">Eleven tracks, 48 minutes. Chrome-pressed CD ships 14 Jan 2000. MP3 pack is 128 kbps.</p>
+      <div class="tabs" role="tablist" aria-label="Format">
+        <button class="tab" role="tab" id="t1" aria-selected="true" data-copy="Eleven tracks, 48 minutes. Chrome-pressed CD ships 14 Jan 2000. Jewel case, 12-page booklet.">CD</button>
+        <button class="tab" role="tab" id="t2" aria-selected="false" data-copy="Eleven tracks, 48 minutes. MP3 pack is 128 kbps, 52 MB, ready at midnight GMT.">MP3</button>
+        <button class="tab" role="tab" id="t3" aria-selected="false" data-copy="Stream from Helix Radio starting 1 Jan 2000. No download, 56k friendly.">Stream</button>
+      </div>
+      <div class="row">
+        <button class="btn pri" id="play" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor" stroke="none"/></svg><span>Play preview</span></button>
+        <span class="price" id="price">Preorder $12.99</span>
+      </div>
+    </div>
+  </section>
+  <section class="cell spec" id="type" aria-labelledby="l-type">
+    <h2 class="lbl" id="l-type">01 Type specimen</h2>
+    <div class="aa"><big aria-hidden="true">Aa</big><div class="fam"><b>Michroma</b>display, 400 only, wide tracking<b>Figtree</b>400 · 500 · 600 · 700 · UI</div></div>
+    <ul class="scale">
+      <li><em>Display 28</em><span class="s1">Aurora 7</span></li>
+      <li><em>H2 · 20 / 700</em><span class="s2">Pulse Circuit, 11 tracks</span></li>
+      <li><em>H3 · 15 / 600</em><span class="s3">Jewel case, 12-page booklet</span></li>
+      <li><em>Body · 14 / 400</em><span class="s4">Ships 14 Jan 2000 from Helix Press.</span></li>
+      <li><em>Label · 11 / 600</em><span class="s5">Drop 07 · 31 Dec 1999</span></li>
+    </ul>
+  </section>
+  <section class="cell pal" id="colour" aria-labelledby="l-col">
+    <h2 class="lbl" id="l-col">02 Palette and roles</h2>
+    <div class="sw"><i class="chip" style="background:var(--ice)"></i><div><b>Ice silver</b><span>surface, 55 %</span></div><code>#D8E2EC</code></div>
+    <div class="sw"><i class="chip" style="background:var(--chrome)"></i><div><b>Chrome</b><span>bevel edge, 20 %</span></div><code>#8A96A3</code></div>
+    <div class="sw"><i class="chip" style="background:var(--ink)"></i><div><b>Ink</b><span>type, 15 %</span></div><code>#1A2230</code></div>
+    <div class="sw"><i class="chip" style="background:var(--blue)"></i><div><b>Electric blue</b><span>action, 9 %</span></div><code>#0078FF</code></div>
+    <div class="sw"><i class="chip" style="background:var(--pink)"></i><div><b>Hot pink</b><span>once only</span></div><code>#FF2D7A</code></div>
+    <p class="note">Pink appears on one LIVE badge. Never on type, never as a fill, never as a gradient.</p>
+  </section>
+  <section class="cell ctl" id="controls" aria-labelledby="l-btn">
+    <h2 class="lbl" id="l-btn">03 Buttons and chips</h2>
+    <div class="row"><button class="btn pri">Preorder</button><button class="btn">Wishlist</button></div>
+    <div class="tags">
+      <button class="tag" aria-pressed="true">CD</button>
+      <button class="tag" aria-pressed="false">MP3</button>
+      <button class="tag" aria-pressed="false">Stream</button>
+      <span class="tag">Helix</span>
+    </div>
+  </section>
+  <section class="cell inp" aria-labelledby="l-inp">
+    <h2 class="lbl" id="l-inp">04 Inputs and link</h2>
+    <label class="fld"><span>Email for drop alert</span><input type="email" value="mira@helix.fm"></label>
+    <a class="link" href="#hero">Read the Pulse Circuit notes</a>
+    <label class="sw-t"><button type="button" role="switch" aria-checked="true" id="sw" aria-label="Autoplay preview"></button>Autoplay preview</label>
+  </section>
+  <section class="cell surf" id="surface" aria-labelledby="l-surf">
+    <h2 class="lbl" id="l-surf">05 Surface treatments</h2>
+    <div class="plates">
+      <div class="plate b">Raised chrome bevel</div>
+      <div class="plate i">Inset well</div>
+      <div class="plate g">Bubble highlight</div>
+    </div>
+  </section>
+  <section class="cell gram" aria-label="Grammar: bevel"><div class="glyph" style="background:var(--bevel);box-shadow:inset 0 1px 0 #fff,0 2px 0 #6b7788"></div><div><h4>Bevel</h4><p>Every raised control is a 180deg silver gradient with a 1px white inset highlight.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: bubble"><div class="glyph" style="background:linear-gradient(180deg,#4da3ff,#0054c4);border-radius:28px;box-shadow:inset 0 8px 0 rgba(255,255,255,.28)"></div><div><h4>Bubble</h4><p>Primary actions get a glass cap: a white fade on the top 42 % of the pill.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: disc"><div class="glyph" style="border-radius:50%;background:conic-gradient(#c8d2dc,#fff,#8a96a8,#6b7788,#c8d2dc)"></div><div><h4>Disc</h4><p>Imagery is circular chrome, never a rectangle. Spin is ambient, 18s.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: pink once"><div class="glyph" style="background:#ff2d7a;border-radius:28px"></div><div><h4>Pink once</h4><p>Hot pink is a single LIVE chip. If you need a second accent, use electric blue.</p></div></section>
+  <div class="cell foot"><span>Helix chrome language · 5 colours · 2 families · bevel + bubble</span><span>Format tabs rewrite the drop copy</span></div>
+</main>
+<script>
+  const tabs=[...document.querySelectorAll('.tab')];
+  const copy=document.getElementById('fmt-copy');
+  const price=document.getElementById('price');
+  const prices={CD:'Preorder $12.99',MP3:'Download $8.99',Stream:'Included with Helix Radio'};
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected','false'));
+    t.setAttribute('aria-selected','true');
+    copy.textContent=t.dataset.copy;
+    price.textContent=prices[t.textContent];
+  }));
+  document.querySelectorAll('.tag[aria-pressed]').forEach(tag=>tag.addEventListener('click',()=>{
+    tag.setAttribute('aria-pressed',String(tag.getAttribute('aria-pressed')!=='true'));
+  }));
+  const play=document.getElementById('play');
+  play.addEventListener('click',()=>{
+    const on=play.getAttribute('aria-pressed')!=='true';
+    play.setAttribute('aria-pressed',String(on));
+    play.querySelector('span').textContent=on?'Pause preview':'Play preview';
+  });
+  const sw=document.getElementById('sw');
+  sw.addEventListener('click',()=>sw.setAttribute('aria-checked',String(sw.getAttribute('aria-checked')!=='true')));
+</script>
+</body>
+</html>

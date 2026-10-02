@@ -1,0 +1,92 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { AUTHOR, CATEGORY_META, getPieces } from '../../lib/pieces';
+import { STARTS } from '../../data/starts';
+import { PAIRINGS } from '../../data/type';
+import { THEMES } from '../../data/themes';
+import { COLLECTIONS } from '../../data/collections';
+
+const all = await getPieces();
+const titles = new Map(all.map((p) => [p.id, p.data.title]));
+const pairing = (id: string) => PAIRINGS.find((p) => p.id === id);
+const theme = (id: string) => THEMES.find((t) => t.id === id);
+const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
+---
+<Base title="Start a product" description={`Recipes from Design Lounge by ${AUTHOR.name}: a theme, a type pairing, a shelf of pieces — assembled for the thing you are making.`}>
+  <PageHead eyebrow="Start" title="What are you <i>making</i>?" blurb="Prefer to see it live? Compose a kit — pick a palette, a pairing and a family on a website and a phone. Or take a recipe below: theme, pairing, shelf, pieces." count={STARTS.length} countLabel="recipes" />
+  <p class="wrap kit-jump"><a class="btn primary" href="/kit">Compose a kit →</a></p>
+  <div class="wrap page">
+    <ol class="starts">
+      {STARTS.map((s, i) => {
+        const t = theme(s.theme);
+        const p = pairing(s.pairing);
+        const sh = shelf(s.shelf);
+        return (
+          <li class="card reveal" style={`--d:${i * 50}ms`} id={s.id}>
+            <header>
+              <span class="eyebrow">{s.kicker} · {String(i + 1).padStart(2, '0')}</span>
+              <h2 class="display h3">{s.title}</h2>
+              <p class="muted">{s.blurb}</p>
+              <p class="when">{s.when}</p>
+            </header>
+            <dl>
+              {t && (
+                <div>
+                  <dt>Theme</dt>
+                  <dd><a href={`/themes/${t.id}`}>{t.name}</a>
+                    <span class="swatches" aria-hidden="true"><i style={`background:${t.tokens.bg}`}></i><i style={`background:${t.tokens.ink}`}></i><i style={`background:${t.tokens.accent}`}></i></span>
+                  </dd>
+                </div>
+              )}
+              {p && (
+                <div>
+                  <dt>Type</dt>
+                  <dd><a href={`/type/${p.id}`}>{p.name}</a><span class="mono faint"> · {p.display.family} + {p.text.family}</span></dd>
+                </div>
+              )}
+              {sh && (
+                <div>
+                  <dt>Shelf</dt>
+                  <dd><a href={`/collections/${sh.slug}`}>{sh.title}</a></dd>
+                </div>
+              )}
+              <div>
+                <dt>Index</dt>
+                <dd class="cats">{s.categories.map((c) => <a class="chip" href={`/c/${c}`}>{CATEGORY_META[c as keyof typeof CATEGORY_META]?.label ?? c}</a>)}</dd>
+              </div>
+            </dl>
+            <div class="pieces">
+              <p class="eyebrow">Open first</p>
+              <ol>
+                {s.pieces.map((id) => (
+                  <li><a href={`/p/${id}`}>{titles.get(id) ?? id}</a></li>
+                ))}
+              </ol>
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+    <p class="mono faint">Recipes by {AUTHOR.name} · Design Lounge · {AUTHOR.siteLabel}. Agents: start at /llms.txt, then follow a recipe before inventing tokens.</p>
+  </div>
+</Base>
+
+<style>
+  .kit-jump { margin: 20px auto 0; }
+  .page { margin-top: 40px; display: flex; flex-direction: column; gap: 40px; }
+  .starts { display: flex; flex-direction: column; border-top: 1px solid var(--ink); }
+  .card { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, .9fr) minmax(200px, .8fr); gap: 32px; padding: 36px 0; border-bottom: 1px solid var(--line); }
+  .card header { display: flex; flex-direction: column; gap: 10px; }
+  .card .muted { max-width: 40ch; font-size: 15px; text-wrap: pretty; }
+  .when { color: var(--ink-3); font-size: 13.5px; max-width: 42ch; text-wrap: pretty; }
+  dl { display: flex; flex-direction: column; gap: 14px; }
+  dt { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+  dd { font-size: 15px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  dd a { text-decoration: underline; text-underline-offset: 3px; }
+  .cats { gap: 6px; }
+  .pieces ol { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .pieces a { font-size: 14px; text-transform: capitalize; border-bottom: 1px solid transparent; }
+  .pieces a:hover { border-color: var(--ink); }
+  @media (max-width: 900px) { .card { grid-template-columns: 1fr; gap: 20px; } }
+</style>

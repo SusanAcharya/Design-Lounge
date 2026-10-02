@@ -3,6 +3,7 @@ title: "PWA update toast"
 summary: "A 'New version available' toast rises above the bottom nav with a Reload action and a 10s countdown ring; Reload sweeps a lime panel over the screen showing v2.4.1, then reveals the updated app."
 platform: pwa
 type: component
+category: feedback
 tags: [pwa, toast, update, service-worker, countdown, dark]
 styles: [dark, kinetic, minimal]
 motion: rich

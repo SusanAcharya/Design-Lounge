@@ -1,0 +1,59 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { THEMES } from '../../data/themes';
+import { AUTHOR } from '../../lib/pieces';
+---
+<Base title="Themes & palettes" description={`Complete colour themes from Design Lounge by ${AUTHOR.name}. Tokens, type suggestions, copy-ready CSS.`}>
+  <PageHead eyebrow="Library · Themes" title="Moods you can <i>ship</i>" blurb="Thirty complete palettes — primary, secondary, tertiary, feedback, and the surface stack. Not a generator. Decisions, already made. Copy the tokens. Credit appreciated." count={THEMES.length} countLabel="themes" />
+  <div class="wrap">
+    <nav class="tags" aria-label="Filter themes">
+      {['dark', 'warm', 'cool', 'editorial', 'product', 'playful', 'luxe', 'industrial'].map((t) => <button class="chip" type="button" data-tag={t}>{t}</button>)}
+      <button class="chip on" type="button" data-tag="all">all</button>
+    </nav>
+    <ol class="grid">
+      {THEMES.map((t, i) => (
+        <li class="card reveal" style={`--d:${(i % 8) * 35}ms`} data-tags={t.tags.join(' ')}>
+          <a class="swatch" href={`/themes/${t.id}`} style={`background:${t.tokens.bg};color:${t.tokens.ink};border-color:${t.tokens.line}`}>
+            <span class="row">
+              {(['primary','secondary','tertiary','success','warning','danger','info'] as const).map((k) => <i title={k} style={`background:${t.tokens[k]}`}></i>)}
+            </span>
+            <span class="hl" style={`font-family:"${t.display}", Georgia, serif`}>{t.specimen}</span>
+            <span class="by mono" style={`color:${t.tokens.primary}`}>{t.display} · {t.text}</span>
+          </a>
+          <div class="meta">
+            <h2 class="display h4"><a href={`/themes/${t.id}`}>{t.name}</a></h2>
+            <p class="muted">{t.mood}</p>
+            <div class="jobs">{t.bestFor.map((b) => <span class="chip">{b}</span>)}</div>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="credit mono faint">Themes by {AUTHOR.name} · Design Lounge · {AUTHOR.siteLabel}</p>
+  </div>
+</Base>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('[data-tag]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-tags]');
+  chips.forEach((c) => c.addEventListener('click', () => {
+    chips.forEach((x) => x.classList.toggle('on', x === c));
+    const t = c.dataset.tag!;
+    cards.forEach((card) => { card.hidden = t !== 'all' && !card.dataset.tags!.includes(t); });
+  }));
+</script>
+
+<style>
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; margin-top: 20px; }
+  .card { display: flex; flex-direction: column; gap: 12px; }
+  .swatch { display: flex; flex-direction: column; gap: 16px; min-height: 200px; padding: 18px; border: 1px solid; border-radius: var(--r-lg); transition: transform var(--t-med) var(--ease), box-shadow var(--t-med); }
+  .card:hover .swatch { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .row { display: flex; gap: 6px; }
+  .row i { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+  .hl { font-size: 26px; line-height: 1.05; letter-spacing: -.02em; }
+  .by { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+  .muted { font-size: 14px; color: var(--ink-2); text-wrap: pretty; }
+  .jobs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .credit { margin-top: 48px; }
+</style>

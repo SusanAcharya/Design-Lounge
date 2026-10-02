@@ -3,6 +3,7 @@ title: "Logo draw site intro"
 summary: "A black-and-white site intro: an SVG monogram strokes itself in over 900ms, fills red, then two panels split to reveal a 100px headline whose letters stagger up; a Replay control re-runs it."
 platform: web
 type: animation
+category: transitions
 tags: [intro, preloader, svg, stagger, hero, reveal]
 styles: [swiss, brutalist, kinetic]
 motion: rich

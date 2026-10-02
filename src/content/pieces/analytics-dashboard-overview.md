@@ -3,6 +3,7 @@ title: "Analytics dashboard overview"
 summary: "Light analytics overview: four KPI tiles, a single-series area chart drawn as inline SVG with an animated stroke, a crosshair tooltip, a recent-events table and a sliding date-range segmented control."
 platform: web
 type: screen
+category: dashboard
 tags: [dashboard, analytics, chart, svg, table]
 styles: [minimal, soft]
 motion: subtle

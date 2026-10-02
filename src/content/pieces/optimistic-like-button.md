@@ -3,6 +3,7 @@ title: "Optimistic like button"
 summary: "A heart that fills with a scale bounce and an 8-particle CSS burst, increments the count instantly, and shows an undo toast with a 5s rollback when the fake request fails."
 platform: web
 type: animation
+category: micro
 tags: [like, optimistic-ui, toast, micro-interaction, social]
 styles: [dark, playful, minimal]
 motion: rich

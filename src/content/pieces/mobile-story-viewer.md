@@ -3,6 +3,7 @@ title: "Story viewer with hold to pause"
 summary: "A 390px story viewer: segmented 3px progress bars fill over 5s each, tap zones step forward and back, a 200ms hold pauses, and a pull-down of 120px closes the viewer over gradient scenes."
 platform: mobile-web
 type: animation
+category: media
 tags: [stories, gestures, progress, media, viewer]
 styles: [dark, kinetic]
 motion: rich

@@ -1,53 +1,52 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
-import DeviceFrame from '../../components/DeviceFrame.astro';
-import { COLLECTIONS } from '../../data/collections';
+import { COLLECTIONS, SHELF_GROUPS } from '../../data/collections';
 import { getPieces } from '../../lib/pieces';
 const all = await getPieces();
 const byId = new Map(all.map((p) => [p.id, p]));
 const cols = COLLECTIONS.map((c) => ({ ...c, items: c.pieces.map((s) => byId.get(s)).filter(Boolean) })).filter((c) => c.items.length);
+const groups = SHELF_GROUPS.map((g) => ({
+  ...g,
+  items: g.slugs.map((s) => cols.find((c) => c.slug === s)).filter(Boolean),
+})).filter((g) => g.items.length);
 ---
-<Base title="Collections" description="Curated shelves of pieces from the Design Lounge: navigation, loading states, motion, typography, sheets, forms, native feel, design languages and data.">
-  <PageHead eyebrow="Shelves" title="Collections, <i>curated</i>" blurb="Pieces grouped by the problem they solve, not by what they are. Each shelf is a reading list you can hand to an agent one piece at a time." count={cols.length} countLabel="shelves" />
+<Base title="Shelves" description="Curated shelves of pieces from the Design Lounge, grouped by the job: build a site, ship a product, taste and craft.">
+  <PageHead eyebrow="Shelves" title="Arranged by <i>problem</i>" blurb="Not by what a piece is — by the job it does. Build a site. Ship a product. Steal a language. Each shelf is a reading list you can hand to an agent one piece at a time." count={cols.length} countLabel="shelves" />
   <div class="wrap">
-    <ol class="shelves">
-      {cols.map((c, i) => (
-        <li class="shelf reveal" style={`--d:${i * 60}ms`}>
-          <a class="shelf-link" href={`/collections/${c.slug}`}>
-            <div class="shelf-text">
-              <span class="eyebrow">{c.kicker} · {c.items.length} pieces</span>
-              <h2 class="display h3">{c.title}</h2>
-              <p class="muted">{c.blurb}</p>
-              <span class="btn sm ghost">Open shelf</span>
-            </div>
-            <div class="shelf-wall" aria-hidden="true">
-              {c.items.slice(0, 4).map((p) => (
-                <div class="mini"><DeviceFrame slug={p!.id} platform={p!.data.platform} title={p!.data.title} /></div>
-              ))}
-            </div>
-          </a>
-        </li>
-      ))}
-    </ol>
+    {groups.map((g) => (
+      <section class="grp" id={g.id}>
+        <header>
+          <p class="eyebrow">{g.label}</p>
+          <h2 class="display h3">{g.blurb}</h2>
+        </header>
+        <ol class="shelves">
+          {g.items.map((c, i) => (
+            <li class="shelf reveal" style={`--d:${i * 50}ms`}>
+              <a href={`/collections/${c!.slug}`}>
+                <span class="kicker mono faint">{c!.kicker} · {c!.items.length}</span>
+                <span class="display h3">{c!.title}</span>
+                <span class="muted">{c!.blurb}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
   </div>
 </Base>
 
 <style>
-  .shelves { display: flex; flex-direction: column; border-top: 1px solid var(--ink); margin-top: 32px; }
-  .shelf { border-bottom: 1px solid var(--line); }
-  .shelf-link { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 1.4fr); gap: 32px; padding: 32px 0; align-items: center; }
-  .shelf-text { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
-  .shelf-text p { max-width: 44ch; font-size: 15px; text-wrap: pretty; }
-  .shelf-text .btn { margin-top: 6px; }
-  .shelf-wall { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .mini { aspect-ratio: 3 / 4; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); position: relative; overflow: hidden; transition: transform var(--t-med) var(--ease), border-color var(--t-med); }
-  .mini :global(lounge-frame) { position: absolute; inset: 8px; }
-  .shelf-link:hover .mini { border-color: var(--ink-3); }
-  .shelf-link:hover .mini:nth-child(1) { transform: translateY(-4px); }
-  .shelf-link:hover .mini:nth-child(2) { transform: translateY(-8px); }
-  .shelf-link:hover .mini:nth-child(3) { transform: translateY(-4px); }
-  .shelf-link:hover .mini:nth-child(4) { transform: translateY(-8px); }
-  .shelf-link:hover h2 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
-  @media (max-width: 860px) { .shelf-link { grid-template-columns: 1fr; } .shelf-wall { grid-template-columns: repeat(4, 1fr); gap: 8px; } }
+  .grp { margin-top: 56px; }
+  .grp header { max-width: 48ch; margin-bottom: 8px; }
+  .grp header .h3 { margin-top: 8px; font-size: clamp(22px, 2.4vw, 30px); }
+  .shelves { display: flex; flex-direction: column; border-top: 1px solid var(--ink); margin-top: 20px; }
+  .shelf a { display: grid; grid-template-columns: 88px minmax(200px, 1fr) minmax(0, 1.6fr); gap: 24px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .shelf a:hover { background: var(--paper-2); padding-inline: 12px; }
+  .shelf .muted { font-size: 14.5px; text-wrap: pretty; }
+  .shelf a:hover .h3 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+  @media (max-width: 800px) {
+    .shelf a { grid-template-columns: 1fr; gap: 6px; }
+    .kicker { order: -1; }
+  }
 </style>

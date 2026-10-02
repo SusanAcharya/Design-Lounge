@@ -1,0 +1,150 @@
+<!-- Design Lounge piece: hero-swiss-grid-wordmark · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Raster Atelier — Systems for public life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eeede7;--paper-2:#e4e3dc;--ink:#111110;--ink-2:#4a4a46;--ink-3:#85847d;
+  --hair:rgba(17,17,16,.14);--hair-strong:rgba(17,17,16,.32);
+  --blue:#1d33f0;--blue-tint:rgba(29,51,240,.07);--blue-ink:#f3f4ff;
+  --sans:"Familjen Grotesk",Helvetica,Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --m:40px;--gap:16px;--nav-h:56px;--word:304px;
+  --t-micro:160ms;--t-tint:200ms;--t-letter:820ms;--t-rule:900ms;--stagger:70ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--paper);overflow:hidden;-webkit-font-smoothing:antialiased;position:relative}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.g{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gap);padding:0 var(--m);position:relative;z-index:2}
+.cols{position:absolute;inset:0 var(--m);display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gap);z-index:1;pointer-events:none}
+.col{border-left:1px solid var(--hair);border-right:1px solid var(--hair);position:relative;transition:background var(--t-tint) var(--ease)}
+.col span{position:absolute;bottom:14px;left:6px;font:500 10px/1 var(--mono);color:var(--ink-3);letter-spacing:.04em;transition:color var(--t-tint) var(--ease)}
+.col.on{background:var(--blue-tint)}
+.col.on span{color:var(--blue)}
+nav{height:var(--nav-h);align-items:center;border-bottom:1px solid var(--hair-strong)}
+.mark{grid-column:1/3;display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:-.01em}
+.mark i{width:14px;height:14px;background:var(--blue);display:block}
+nav ul{grid-column:7/11;display:flex;justify-content:space-between;list-style:none;margin:0;padding:0}
+nav ul a{font-size:14px;color:var(--ink-2);padding:6px 0;border-bottom:1px solid transparent;transition:color var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+nav ul a:hover{color:var(--ink);border-color:var(--ink)}
+nav ul a[aria-current]{color:var(--ink)}
+.cta{grid-column:11/13;justify-self:end;display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;background:var(--ink);color:var(--paper);font-size:13px;font-weight:500;transition:background var(--t-micro) var(--ease)}
+.cta:hover{background:var(--blue);color:var(--blue-ink)}
+.cta svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.75}
+.meta{padding-top:22px;font:400 11px/1.5 var(--mono);color:var(--ink-2);letter-spacing:.02em}
+.meta b{display:block;font-weight:500;color:var(--ink);text-transform:uppercase;letter-spacing:.08em;font-size:10px;margin-bottom:2px}
+.meta>div:nth-child(1){grid-column:1/3}.meta>div:nth-child(2){grid-column:3/5}.meta>div:nth-child(3){grid-column:7/9}.meta>div:nth-child(4){grid-column:11/13;text-align:right}
+.word{margin-top:34px;height:calc(var(--word)*.78);position:relative}
+.cell{grid-column:span 2;overflow:hidden;height:100%;position:relative}
+.cell b{display:block;font:700 var(--word)/.78 var(--sans);letter-spacing:-.06em;margin-left:-.035em;transform:translateY(105%);transition:color var(--t-tint) var(--ease)}
+.cell.on b{color:var(--blue)}
+.play .cell b{animation:rise var(--t-letter) var(--expo) both;animation-delay:calc(var(--i)*var(--stagger) + 120ms)}
+@keyframes rise{from{transform:translateY(105%)}to{transform:translateY(0)}}
+.rule{height:0;position:relative}
+.rule::after{content:"";position:absolute;left:var(--m);right:var(--m);top:0;height:2px;background:var(--ink);transform-origin:left;transform:scaleX(0)}
+.play .rule::after{animation:draw var(--t-rule) var(--expo) 80ms both}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.lower{padding-top:24px}
+.lede{grid-column:1/6;margin:0;font:500 26px/1.18 var(--sans);letter-spacing:-.018em;text-wrap:balance}
+.lede em{font-style:normal;color:var(--blue)}
+.svc{grid-column:7/10;list-style:none;margin:0;padding:0;font-size:14px}
+.svc li{display:flex;gap:14px;padding:7px 0;border-top:1px solid var(--hair)}
+.svc li:last-child{border-bottom:1px solid var(--hair)}
+.svc span{font:400 11px/20px var(--mono);color:var(--ink-3);width:22px}
+.now{grid-column:10/13;display:flex;flex-direction:column;gap:10px}
+.now small{font:500 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.plate{height:96px;background:var(--ink);position:relative;overflow:hidden;color:var(--paper)}
+.plate::before{content:"";position:absolute;left:0;top:0;width:33.3%;height:100%;background:var(--blue)}
+.plate::after{content:"";position:absolute;right:18px;top:18px;width:44px;height:44px;border-radius:50%;border:2px solid var(--paper)}
+.plate p{position:absolute;left:calc(33.3% + 12px);bottom:10px;margin:0;font:500 12px/1.3 var(--sans)}
+.plate p span{display:block;font:400 10px var(--mono);color:#a8a7a0}
+.plate i{position:absolute;left:12px;bottom:10px;font:700 34px/1 var(--sans);font-style:normal;color:var(--blue-ink)}
+.now a{font-size:13px;display:flex;justify-content:space-between;border-bottom:1px solid var(--ink);padding-bottom:4px}
+.now a:hover{color:var(--blue);border-color:var(--blue)}
+.idx{position:absolute;left:0;right:0;bottom:44px;align-items:end}
+.idx a{grid-column:span 2;border-top:1px solid var(--ink);padding-top:8px;font-size:13px;line-height:1.3;transition:color var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+.idx a span{display:block;font:400 10px/1.6 var(--mono);color:var(--ink-3)}
+.idx a:hover{color:var(--blue);border-color:var(--blue)}
+.idx .lbl{grid-column:1/3;font:500 10px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);align-self:end}
+.replay{position:absolute;right:var(--m);bottom:118px;z-index:3;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border:1px solid var(--hair-strong);background:var(--paper);font:500 11px var(--mono);color:var(--ink-2);cursor:pointer}
+.replay:hover{border-color:var(--ink);color:var(--ink)}
+.replay svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
+.side{position:absolute;left:12px;top:50%;transform:rotate(-90deg) translateX(-50%);transform-origin:left top;font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);z-index:2;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.play .cell b,.play .rule::after{animation:none;transform:none}*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="cols" id="cols" aria-hidden="true"></div>
+<div class="side" aria-hidden="true">Raster Atelier — Index 2011–2026</div>
+<header>
+  <nav class="g" aria-label="Primary">
+    <a href="#" class="mark"><i></i>Raster</a>
+    <ul>
+      <li><a href="#" aria-current="page">Work</a></li>
+      <li><a href="#">Studio</a></li>
+      <li><a href="#">Index</a></li>
+      <li><a href="#">Journal</a></li>
+    </ul>
+    <a href="#" class="cta">Start a project <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </nav>
+</header>
+<main id="main">
+  <div class="g meta">
+    <div><b>Office</b>Zürich / Rotterdam</div>
+    <div><b>Since</b>2011, 14 people</div>
+    <div><b>Practice</b>Wayfinding, identity, interface</div>
+    <div><b>Coordinates</b>47.3769° N, 8.5417° E</div>
+  </div>
+  <h1 class="g word" id="word" aria-label="Raster"></h1>
+  <div class="rule"></div>
+  <div class="g lower">
+    <p class="lede">A design office for systems that have to hold up: signage for 41 stations, identities for <em>public institutions</em>, interfaces read by millions.</p>
+    <ol class="svc">
+      <li><span>01</span>Wayfinding &amp; signage</li>
+      <li><span>02</span>Visual identity systems</li>
+      <li><span>03</span>Product &amp; interface</li>
+      <li><span>04</span>Type &amp; editorial</li>
+    </ol>
+    <div class="now">
+      <small>Current — No. 148</small>
+      <div class="plate"><i>S4</i><p>Sihltal Line rebrand<span>SZU · 2026 · 23 stations</span></p></div>
+      <a href="#">See all 148 projects <span>→</span></a>
+    </div>
+  </div>
+  <div class="g idx" aria-label="Recent projects">
+    <span class="lbl">Recent<br>2025–2026</span>
+    <a href="#">Kunsthaus Aarau<span>No. 147 · Identity</span></a>
+    <a href="#">Port of Waalhaven<span>No. 146 · Wayfinding</span></a>
+    <a href="#">Stadtwerk Billing<span>No. 145 · Interface</span></a>
+    <a href="#">Grotesk Annual 09<span>No. 144 · Editorial</span></a>
+    <a href="#">Rheinufer Park<span>No. 143 · Signage</span></a>
+  </div>
+</main>
+<button class="replay" id="replay" type="button"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>Replay</button>
+<script>
+(function(){
+  var cols=document.getElementById('cols'),word=document.getElementById('word'),body=document.body;
+  var letters='RASTER'.split(''),colEls=[],cellEls=[];
+  for(var i=0;i<12;i++){var c=document.createElement('div');c.className='col';c.innerHTML='<span>'+String(i+1).padStart(2,'0')+'</span>';cols.appendChild(c);colEls.push(c);}
+  letters.forEach(function(l,i){var d=document.createElement('span');d.className='cell';d.setAttribute('aria-hidden','true');d.style.setProperty('--i',i);d.innerHTML='<b>'+l+'</b>';word.appendChild(d);cellEls.push(d);});
+  var cur=-1;
+  function setCol(n){if(n===cur)return;if(cur>-1){colEls[cur].classList.remove('on');cellEls[cur>>1].classList.remove('on');}cur=n;if(n>-1){colEls[n].classList.add('on');cellEls[n>>1].classList.add('on');}}
+  addEventListener('pointermove',function(e){
+    var hit=-1;for(var i=0;i<12;i++){var r=colEls[i].getBoundingClientRect();if(e.clientX>=r.left&&e.clientX<=r.right){hit=i;break;}}
+    setCol(hit);
+  });
+  document.addEventListener('pointerleave',function(){setCol(-1);});
+  function play(){body.classList.remove('play');void body.offsetWidth;body.classList.add('play');}
+  document.addEventListener('click',function(e){if(e.target.closest('a'))return e.preventDefault();play();});
+  play();
+})();
+</script>
+</body>
+</html>

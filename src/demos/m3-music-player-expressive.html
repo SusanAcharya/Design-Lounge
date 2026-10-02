@@ -1,0 +1,168 @@
+<!-- Design Lounge piece: m3-music-player-expressive · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lull — now playing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface:#2b1418;--surface-c:#3c1f24;--surface-high:#4a2a2f;
+  --on-surface:#ffdad4;--on-surface-v:#e0bfb8;--track:rgba(255,218,212,.24);
+  --primary:#ffb59e;--on-primary:#5c1a0b;--primary-c:#7a2e1e;--on-primary-c:#ffdbcf;
+  --display:"Unbounded",system-ui,sans-serif;--font:"Onest",system-ui,sans-serif;
+  --r-art:44px;--r-pill:999px;--r-tonal:20px;
+  --t-micro:160ms;--t-shape:500ms;--t-tone:600ms;--ease-emph:cubic-bezier(.2,0,0,1);
+}
+body.t2{--surface:#0f2224;--surface-c:#1b3234;--surface-high:#26403f;--on-surface:#d6f0ee;--on-surface-v:#a9c6c3;--track:rgba(214,240,238,.22);--primary:#80d5d0;--on-primary:#003735;--primary-c:#1f504d;--on-primary-c:#9ff2ec}
+body.t3{--surface:#24200b;--surface-c:#353016;--surface-high:#433d20;--on-surface:#f1ecd2;--on-surface-v:#cfc6a6;--track:rgba(241,236,210,.22);--primary:#e3c75b;--on-primary:#3a3000;--primary-c:#544810;--on-primary-c:#ffe98c}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--font);background:var(--surface);color:var(--on-surface);-webkit-font-smoothing:antialiased;overflow:hidden;transition:background-color var(--t-tone) var(--ease-emph),color var(--t-tone)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:transparent}
+.i{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.app{height:100%;padding:54px 24px 34px;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;justify-content:space-between;height:48px}
+.ib{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:var(--on-surface-v);transition:background-color var(--t-micro),color var(--t-tone)}
+.ib:hover{background:var(--surface-c)}
+.from{text-align:center;font-size:12px;line-height:1.3;color:var(--on-surface-v);transition:color var(--t-tone)}
+.from b{display:block;font-weight:600;font-size:14px;color:var(--on-surface);transition:color var(--t-tone)}
+.art{width:326px;height:326px;margin:18px auto 0;border-radius:var(--r-art);position:relative;overflow:hidden;flex:none;transition:transform 400ms var(--ease-emph),opacity 300ms var(--ease-emph),border-radius var(--t-shape) var(--ease-emph)}
+.art.out{transform:scale(.9) translateX(-24px);opacity:0}
+.art.go-r.out{transform:scale(.9) translateX(24px)}
+.art .lbl{position:absolute;left:22px;bottom:20px;font:700 13px/1.15 var(--display);letter-spacing:.02em;text-transform:uppercase}
+.art .no{position:absolute;right:22px;top:20px;font:500 11px var(--font);letter-spacing:.12em}
+.a1{background:radial-gradient(circle at 66% 38%,#ffe2c9 0 9%,#ff9d7c 9.5% 28%,transparent 28.5%),radial-gradient(circle at 28% 30%,#ffcf9f 0 6%,transparent 6.5%),radial-gradient(circle at 40% 54%,#f5755a 0 4%,transparent 4.5%),repeating-linear-gradient(180deg,transparent 0 12px,rgba(60,8,18,.45) 12px 24px) 0 210px/100% 120px no-repeat,linear-gradient(160deg,#9a3442,#5e1726)}
+.a1 .lbl,.a1 .no{color:#ffe2c9}
+.a2{background:radial-gradient(circle at 50% 100%,#c9f2ea 0 14%,transparent 14.5%),repeating-conic-gradient(from -90deg at 50% 100%,#1d5b58 0 7.5deg,#2f8580 7.5deg 15deg) 0 0/100% 72% no-repeat,linear-gradient(#103a3a,#0a2626)}
+.a2 .lbl,.a2 .no{color:#c9f2ea}
+.a3{background:radial-gradient(circle at 62% 46%,#2b2106 0 4%,#e9b13c 4.5% 6%,#2b2106 6.5% 30%,transparent 30.5%),repeating-radial-gradient(circle at 62% 46%,transparent 0 5px,rgba(233,177,60,.14) 5px 6px),linear-gradient(135deg,#f0c04d,#b5651d)}
+.a3 .lbl,.a3 .no{color:#2b2106}
+.meta{display:flex;align-items:center;gap:12px;margin-top:26px}
+.meta div{flex:1;min-width:0}
+h1{margin:0;font:700 26px/1.15 var(--display);letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.artist{margin:6px 0 0;font-size:16px;color:var(--on-surface-v);transition:color var(--t-tone)}
+.like{width:56px;height:56px;border-radius:var(--r-tonal);background:var(--surface-c);display:grid;place-items:center;color:var(--on-surface-v);transition:border-radius var(--t-shape) var(--ease-emph),background-color var(--t-tone),color var(--t-micro)}
+.like[aria-pressed="true"]{border-radius:50%;background:var(--primary-c);color:var(--on-primary-c)}
+.like[aria-pressed="true"] .i{fill:currentColor}
+.prog{position:relative;margin-top:22px;height:28px}
+.prog svg{display:block;width:100%;height:28px;overflow:visible}
+.wv{transform-origin:0 14px;transition:transform 400ms var(--ease-emph)}
+.paused .wv{transform:scaleY(0)}
+.wp{animation:phase 1.1s linear infinite}
+.paused .wp{animation-play-state:paused}
+@keyframes phase{to{transform:translateX(-30px)}}
+.prog input{position:absolute;inset:-8px 0;width:100%;height:44px;margin:0;opacity:0;cursor:pointer}
+.times{display:flex;justify-content:space-between;font-size:12px;font-weight:500;color:var(--on-surface-v);margin-top:4px;font-variant-numeric:tabular-nums;transition:color var(--t-tone)}
+.ctl{display:flex;align-items:center;justify-content:space-between;margin-top:22px}
+.skip{width:68px;height:56px;border-radius:var(--r-pill);background:var(--surface-c);display:grid;place-items:center;transition:border-radius var(--t-micro) var(--ease-emph),background-color var(--t-tone),width var(--t-micro) var(--ease-emph)}
+.skip:active{border-radius:16px;width:76px}
+.skip .i{fill:currentColor;stroke:none}
+.play{width:104px;height:104px;position:relative;display:grid;place-items:center;color:var(--on-primary);flex:none}
+.play .sh{position:absolute;inset:0;background:var(--primary);transition:clip-path var(--t-shape) var(--ease-emph),background-color var(--t-tone)}
+.play.on .sh{animation:spin 9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.play .i{position:relative;width:36px;height:36px;fill:currentColor;stroke:none;transition:color var(--t-tone)}
+.ib.tog[aria-pressed="true"]{color:var(--primary);background:var(--surface-c)}
+.dock{margin-top:auto;display:flex;gap:8px;justify-content:center}
+.dock button{height:40px;padding:0 16px;border-radius:12px;background:var(--surface-c);font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;white-space:nowrap;color:var(--on-surface);transition:background-color var(--t-tone),border-radius var(--t-micro) var(--ease-emph)}
+.dock button .i{width:18px;height:18px}
+.dock .cast{background:var(--primary-c);color:var(--on-primary-c);border-radius:var(--r-pill)}
+:focus-visible{outline:3px solid var(--primary);outline-offset:3px;border-radius:12px}
+.prog input:focus-visible{outline:none}
+.prog:focus-within{outline:3px solid var(--primary);outline-offset:4px;border-radius:12px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="app paused" id="app">
+  <div class="top">
+    <button class="ib" aria-label="Minimise player"><svg class="i" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+    <p class="from">Playing from album<b id="album">Late Bloom</b></p>
+    <button class="ib" aria-label="More options"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+  </div>
+  <div class="art a1" id="art" role="img" aria-label="Album art"><span class="no" id="no">LP · 03</span><span class="lbl" id="lbl">Low Tide<br>Choir</span></div>
+  <div class="meta">
+    <div><h1 id="title">Paper Lanterns</h1><p class="artist" id="artist">Low Tide Choir</p></div>
+    <button class="like" id="like" aria-pressed="true" aria-label="Like"><svg class="i" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z"/></svg></button>
+  </div>
+  <div class="prog">
+    <svg viewBox="0 0 342 28" preserveAspectRatio="none" aria-hidden="true">
+      <defs><clipPath id="cp"><rect id="cpr" x="0" y="0" height="28" width="120"/></clipPath></defs>
+      <line id="rest" x1="130" y1="14" x2="342" y2="14" style="stroke:var(--track)" stroke-width="4" stroke-linecap="round"/>
+      <g clip-path="url(#cp)"><g class="wv"><path class="wp" id="wave" fill="none" style="stroke:var(--primary)" stroke-width="4" stroke-linecap="round"/></g></g>
+      <rect id="thumb" x="122" y="2" width="4" height="24" rx="2" style="fill:var(--primary)"/>
+    </svg>
+    <input id="seek" type="range" min="0" max="238" value="102" aria-label="Seek" aria-valuetext="1:42 of 3:58">
+  </div>
+  <div class="times"><span id="cur">1:42</span><span id="dur">3:58</span></div>
+  <div class="ctl">
+    <button class="ib tog" aria-pressed="false" aria-label="Shuffle"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h3l10 10h3M4 17h3l3-3M14 10l3-3h3M18 4l3 3-3 3M18 14l3 3-3 3"/></svg></button>
+    <button class="skip" id="prev" aria-label="Previous track"><svg class="i" viewBox="0 0 24 24"><path d="M7 5h2v14H7zM20 5v14L10 12z"/></svg></button>
+    <button class="play" id="play" aria-label="Play" aria-pressed="false"><span class="sh" id="sh"></span><svg class="i" viewBox="0 0 24 24" id="pi"><path d="M8 5v14l11-7z"/></svg></button>
+    <button class="skip" id="next" aria-label="Next track"><svg class="i" viewBox="0 0 24 24"><path d="M15 5h2v14h-2zM4 5v14l10-7z"/></svg></button>
+    <button class="ib tog" aria-pressed="true" aria-label="Repeat"><svg class="i" viewBox="0 0 24 24"><path d="M17 3l3 3-3 3M4 11V9a3 3 0 013-3h13M7 21l-3-3 3-3M20 13v2a3 3 0 01-3 3H4"/></svg></button>
+  </div>
+  <div class="dock">
+    <button><svg class="i" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg>Lyrics</button>
+    <button><svg class="i" viewBox="0 0 24 24"><path d="M4 6h12M4 12h12M4 18h8M19 14v6M16 17h6"/></svg>Queue</button>
+    <button class="cast"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></svg>Studio speaker</button>
+  </div>
+</div>
+<script>
+(()=>{
+  const $=id=>document.getElementById(id), app=$('app'), play=$('play'), sh=$('sh'), seek=$('seek');
+  const N=72, W=342, L=30;
+  const poly=f=>'polygon('+Array.from({length:N},(_,i)=>{const a=i/N*2*Math.PI,r=f(a);return (50+r*Math.cos(a)).toFixed(2)+'% '+(50+r*Math.sin(a)).toFixed(2)+'%'}).join(',')+')';
+  const SH={
+    circle:poly(()=>48),
+    squircle:poly(a=>46/Math.pow(Math.pow(Math.abs(Math.cos(a)),4)+Math.pow(Math.abs(Math.sin(a)),4),.25)),
+    cookie:poly(a=>50*(.9+.1*Math.cos(9*a)))
+  };
+  sh.style.clipPath=SH.squircle;
+  let d='M'+(-L)+' 14';for(let x=-L;x<=W+L;x+=2)d+=' L'+x+' '+(14+3.2*Math.sin(x/L*2*Math.PI)).toFixed(2);
+  $('wave').setAttribute('d',d);
+  const T=[
+    {c:'',a:'a1',t:'Paper Lanterns',ar:'Low Tide Choir',al:'Late Bloom',no:'LP · 03',lb:'Low Tide<br>Choir',d:238},
+    {c:'t2',a:'a2',t:'Glasshouse',ar:'Mirelle Okafor',al:'Conservatory Sessions',no:'EP · 01',lb:'Mirelle<br>Okafor',d:201},
+    {c:'t3',a:'a3',t:'Saffron Hour',ar:'The Velvet Ferries',al:'Harbour Lights',no:'LP · 07',lb:'Velvet<br>Ferries',d:274}
+  ];
+  let k=0,t=102,on=false,timer=null;
+  const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+  function draw(){
+    const dur=T[k].d,p=Math.max(6,t/dur*W);
+    $('cpr').setAttribute('width',Math.max(0,p-6));$('thumb').setAttribute('x',p-2);
+    $('rest').setAttribute('x1',Math.min(W,p+8));
+    $('cur').textContent=fmt(t);$('dur').textContent=fmt(dur);
+    seek.max=dur;seek.value=t;seek.setAttribute('aria-valuetext',fmt(t)+' of '+fmt(dur));
+  }
+  function setPlay(v){
+    on=v;app.classList.toggle('paused',!on);play.classList.toggle('on',on);
+    play.setAttribute('aria-pressed',on);play.setAttribute('aria-label',on?'Pause':'Play');
+    $('pi').innerHTML=on?'<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>':'<path d="M8 5v14l11-7z"/>';
+    sh.style.clipPath=on?SH.cookie:SH.squircle;
+    clearInterval(timer);if(on)timer=setInterval(()=>{t++;if(t>=T[k].d)go(1);draw()},1000);
+  }
+  play.addEventListener('pointerdown',()=>{sh.style.clipPath=SH.circle});
+  play.addEventListener('pointerleave',()=>{sh.style.clipPath=on?SH.cookie:SH.squircle});
+  play.addEventListener('click',()=>setPlay(!on));
+  function go(dir){
+    k=(k+dir+T.length)%T.length;t=0;const x=T[k],art=$('art');
+    art.classList.toggle('go-r',dir<0);art.classList.add('out');
+    setTimeout(()=>{
+      document.body.className=x.c;art.className='art '+x.a+(dir<0?' go-r':'')+' out';
+      $('title').textContent=x.t;$('artist').textContent=x.ar;$('album').textContent=x.al;$('no').textContent=x.no;$('lbl').innerHTML=x.lb;
+      art.setAttribute('aria-label','Album art for '+x.al);draw();
+      requestAnimationFrame(()=>requestAnimationFrame(()=>art.classList.remove('out')));
+    },260);
+  }
+  $('next').addEventListener('click',()=>go(1));$('prev').addEventListener('click',()=>go(-1));
+  seek.addEventListener('input',()=>{t=+seek.value;draw()});
+  document.querySelectorAll('.tog,#like').forEach(b=>b.addEventListener('click',()=>b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'))));
+  draw();setTimeout(()=>setPlay(true),600);
+})();
+</script>
+</body>
+</html>

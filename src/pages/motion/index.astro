@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { EASINGS, DURATIONS, RECIPES, tokensCss, recipeCss } from '../../data/motion';
+import { AUTHOR } from '../../lib/pieces';
+
+const tokens = tokensCss();
+---
+<Base title="Motion & easing" description={`Easings, durations and motion recipes from Design Lounge by ${AUTHOR.name}. Numbers, not adjectives.`}>
+  <PageHead eyebrow="Library · Motion" title="Motion with a <i>reason</i>" blurb="Twelve curves, seven durations, sixteen recipes. Every piece in the Lounge uses these, or says why it doesn't. Copy the tokens. Honour reduced motion." count={RECIPES.length} countLabel="recipes" />
+  <div class="wrap page">
+    <section>
+      <div class="section-head"><div><span class="eyebrow">Curves</span><h2 class="display h3">Easings</h2></div>
+        <button class="btn sm ghost" type="button" data-copy="#tokens-json"><span data-label>Copy all tokens</span></button>
+      </div>
+      <ol class="eases">
+        {EASINGS.map((e) => (
+          <li>
+            <button type="button" class="ease" data-copy={`#ease-${e.id}`} style={`--curve:${e.css}`}>
+              <i class="dot" aria-hidden="true"></i>
+              <span class="name display h4">{e.name}</span>
+              <code>{e.css}</code>
+              <span class="feel">{e.feel}</span>
+              <span class="use muted">{e.use}</span>
+            </button>
+            <script type="application/json" id={`ease-${e.id}`} set:html={JSON.stringify(`/* ${e.name} · Design Lounge by ${AUTHOR.name} */\n--ease-${e.id}: ${e.css};`)}></script>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section>
+      <div class="section-head"><div><span class="eyebrow">Time</span><h2 class="display h3">Durations</h2></div></div>
+      <ol class="durs">
+        {DURATIONS.map((d) => (
+          <li>
+            <span class="display n">{d.ms}</span>
+            <span class="mono">{d.name}</span>
+            <span class="muted">{d.use}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section>
+      <div class="section-head"><div><span class="eyebrow">Recipes</span><h2 class="display h3">When to use what</h2></div></div>
+      <ol class="recipes">
+        {RECIPES.map((r) => (
+          <li>
+            <div class="rh">
+              <h3 class="display h4">{r.name}</h3>
+              <button class="btn sm ghost" type="button" data-copy={`#rec-${r.id}`}><span data-label>Copy</span></button>
+            </div>
+            <dl>
+              <div><dt>Trigger</dt><dd>{r.trigger}</dd></div>
+              <div><dt>Property</dt><dd>{r.property}</dd></div>
+              <div><dt>From → to</dt><dd>{r.from} → {r.to}</dd></div>
+              <div><dt>Time</dt><dd>{r.duration} · {r.easing}{r.delay ? ` · ${r.delay}` : ''}</dd></div>
+              <div><dt>Reduced</dt><dd>{r.reduced}</dd></div>
+            </dl>
+            <p class="muted">{r.note}</p>
+            <script type="application/json" id={`rec-${r.id}`} set:html={JSON.stringify(recipeCss(r))}></script>
+          </li>
+        ))}
+      </ol>
+    </section>
+    <p class="mono faint">Motion library by {AUTHOR.name} · Design Lounge · {AUTHOR.siteLabel}</p>
+    <script type="application/json" id="tokens-json" set:html={JSON.stringify(tokens)}></script>
+  </div>
+</Base>
+
+<style>
+  .page { display: flex; flex-direction: column; gap: 64px; margin-top: 40px; }
+  .eases { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+  .ease { display: flex; flex-direction: column; gap: 8px; width: 100%; text-align: left; padding: 18px; border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .ease:hover, .ease[data-done] { border-color: var(--ink); }
+  .ease[data-done] { background: var(--accent-soft); }
+  .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); animation: slide 1.4s var(--curve, cubic-bezier(.2,.7,.2,1)) infinite alternate; }
+  .ease code { font-size: 11.5px; color: var(--ink-2); }
+  .feel { font-size: 14.5px; }
+  .use { font-size: 13px; }
+  .durs { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; border-top: 1px solid var(--ink); }
+  .durs li { display: flex; flex-direction: column; gap: 6px; padding: 20px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .durs .n { font-size: 36px; line-height: 1; }
+  .recipes { display: flex; flex-direction: column; border-top: 1px solid var(--ink); }
+  .recipes > li { padding: 22px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+  .rh { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px 20px; }
+  dt { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  dd { margin: 3px 0 0; font-size: 14px; }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(40px); } }
+  @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+</style>

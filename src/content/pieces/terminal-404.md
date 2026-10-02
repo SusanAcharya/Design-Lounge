@@ -3,6 +3,7 @@ title: "Terminal 404"
 summary: "A 404 page styled as a terminal session: typewriter output at 22ms per character, a blinking block cursor, and a prompt that accepts home, back, search, help, ls and clear. Green on near-black."
 platform: web
 type: screen
+category: error
 tags: ["404", error, terminal, typewriter, command-line]
 styles: [terminal, dark]
 motion: rich

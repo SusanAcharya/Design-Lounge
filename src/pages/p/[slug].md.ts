@@ -1,11 +1,13 @@
 import type { APIRoute } from 'astro';
-import { getPieces } from '../../lib/pieces';
+import { getPieces, numberMap, creditedBrief, type Piece } from '../../lib/pieces';
 
 export async function getStaticPaths() {
   const pieces = await getPieces();
-  return pieces.map((p) => ({ params: { slug: p.id }, props: { body: p.body ?? '' } }));
+  const nums = numberMap(pieces);
+  return pieces.map((p) => ({ params: { slug: p.id }, props: { piece: p, n: nums.get(p.id) } }));
 }
 
 export const GET: APIRoute = async ({ props }) => {
-  return new Response((props as { body: string }).body, { headers: { 'Content-Type': 'text/markdown; charset=utf-8' } });
+  const { piece, n } = props as { piece: Piece; n?: string };
+  return new Response(creditedBrief(piece, n), { headers: { 'Content-Type': 'text/markdown; charset=utf-8' } });
 };

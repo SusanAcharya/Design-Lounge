@@ -1,0 +1,246 @@
+<!-- Design Lounge piece: bauhaus-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Bauhaus design language kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f0ebe0;--paper-2:#e4dccb;--ink:#151412;--ink-2:#4a463f;--ink-3:#6e685d;
+  --red:#d52b1e;--yellow:#f3b61f;--blue:#1d4f9c;--on-color:#f0ebe0;
+  --display:"Josefin Sans",Futura,"Century Gothic",sans-serif;--text:"Work Sans",system-ui,sans-serif;
+  --rule:3px;--line:2px;--pad:20px;--ctl:44px;
+  --t-micro:120ms;--t-shape:520ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--text);color:var(--ink);background:var(--ink);overflow-x:hidden;overflow-y:auto;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.top{height:56px;background:var(--paper);display:flex;align-items:center;gap:28px;padding:0 var(--pad);border-bottom:var(--rule) solid var(--ink)}
+.mark{display:flex;gap:4px;align-items:center}
+.mark i{display:block;width:16px;height:16px}
+.mark i:nth-child(1){background:var(--red);border-radius:50%}
+.mark i:nth-child(2){background:var(--blue)}
+.mark i:nth-child(3){background:var(--yellow);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.brand{font:700 19px/1 var(--display);letter-spacing:-.01em;padding-top:4px}
+.brand span{font-weight:400;color:var(--ink-2)}
+.top nav{display:flex;gap:22px;margin-left:auto}
+.top nav a{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:8px 0;border-bottom:2px solid transparent}
+.top nav a:hover{border-color:var(--red)}
+.ver{font:500 11px/1 var(--text);letter-spacing:.08em;color:var(--ink-2)}
+.sheet{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--rule);background:var(--ink)}
+.cell{background:var(--paper);padding:var(--pad);position:relative;min-width:0}
+.lbl{display:flex;align-items:center;gap:8px;margin:0 0 14px;font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase}
+.lbl::before{content:"";width:9px;height:9px;background:var(--ink)}
+.lbl.c::before{border-radius:50%;background:var(--red)}.lbl.s::before{background:var(--blue)}.lbl.t::before{background:var(--yellow);clip-path:polygon(50% 0,100% 100%,0 100%)}
+/* hero composition */
+.hero{grid-column:1/8;height:424px;overflow:hidden;padding:0}
+.mini{display:flex;align-items:center;gap:22px;padding:16px 24px;font:500 13px/1 var(--text);position:relative;z-index:2}
+.mini b{font:700 18px/1 var(--display);margin-right:auto;padding-top:3px}
+.mini a{text-decoration:none}.mini a:hover{color:var(--red)}
+.cart{border:2px solid var(--ink);padding:7px 10px;font-weight:600}
+.copy{position:absolute;left:24px;top:84px;width:400px;z-index:2}
+.eyebrow{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.hero h1{font:700 76px/.88 var(--display);letter-spacing:-.025em;margin:14px 0 16px;text-transform:lowercase}
+.hero p{margin:0 0 20px;font-size:15px;line-height:1.5;max-width:330px;color:var(--ink-2)}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.meta{margin-top:16px;font:500 12px/1 var(--text);color:var(--ink-2);letter-spacing:.02em}
+.shape{position:absolute;transition:transform var(--t-shape) var(--expo),border-radius var(--t-shape) var(--expo)}
+.sh-c{width:290px;height:290px;border-radius:50%;background:var(--red);right:-60px;top:72px}
+.sh-s{width:150px;height:150px;background:var(--blue);right:190px;top:236px}
+.sh-t{width:180px;height:156px;background:var(--yellow);clip-path:polygon(50% 0,100% 100%,0 100%);right:30px;top:268px}
+.sh-b{width:260px;height:14px;background:var(--ink);right:150px;top:206px;transform-origin:right center;transform:rotate(-24deg)}
+.sh-d{width:46px;height:46px;border-radius:50%;background:var(--ink);right:250px;top:96px}
+.hero[data-comp="2"] .sh-c{transform:translate(-230px,120px) scale(.62)}
+.hero[data-comp="2"] .sh-s{transform:translate(170px,-200px) rotate(90deg) scale(1.3)}
+.hero[data-comp="2"] .sh-t{transform:translate(-40px,-210px) rotate(180deg)}
+.hero[data-comp="2"] .sh-b{transform:rotate(0deg) translate(40px,150px)}
+.hero[data-comp="2"] .sh-d{transform:translate(200px,240px) scale(1.6)}
+.hero[data-comp="3"] .sh-c{transform:translate(20px,-90px) scale(1.25)}
+.hero[data-comp="3"] .sh-s{transform:translate(-30px,-30px) rotate(45deg)}
+.hero[data-comp="3"] .sh-t{transform:translate(-200px,0) rotate(-90deg) scale(.8)}
+.hero[data-comp="3"] .sh-b{transform:rotate(-90deg) translate(-40px,-40px)}
+.hero[data-comp="3"] .sh-d{transform:translate(-40px,190px)}
+.recomp{position:absolute;right:16px;bottom:16px;z-index:3}
+/* specimen */
+.spec{grid-column:8/13;height:424px;display:flex;flex-direction:column}
+.aa{display:flex;align-items:flex-end;gap:20px;margin-top:10px;border-bottom:var(--line) solid var(--ink);padding-bottom:10px}
+.aa big{font:700 150px/.8 var(--display);letter-spacing:-.04em;position:relative}
+.aa big::after{content:"";position:absolute;width:30px;height:30px;border-radius:50%;background:var(--red);right:-36px;top:6px}
+.fam{font-size:12px;line-height:1.45;color:var(--ink-2);padding-bottom:6px;margin-left:24px}
+.fam b{display:block;font:700 15px/1.2 var(--display);color:var(--ink);padding-top:2px}
+.scale{list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column}
+.scale li{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--paper-2);padding:7px 0;white-space:nowrap;overflow:hidden}
+.scale li:last-child{border:0}
+.scale em{font:500 10px/1 var(--text);font-style:normal;letter-spacing:.08em;color:var(--ink-3);width:92px;flex:none;text-transform:uppercase}
+.s1{font:700 40px/1 var(--display);letter-spacing:-.02em;text-transform:lowercase}
+.s2{font:700 26px/1.1 var(--display);letter-spacing:-.01em}
+.s3{font:600 18px/1.3 var(--display)}
+.s4{font:400 15px/1.5 var(--text)}
+.s5{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase}
+/* palette */
+.pal{grid-column:1/4}
+.sw{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;height:46px;border-bottom:1px solid var(--paper-2)}
+.sw:last-child{border:0}
+.chip{width:44px;height:34px;border:var(--line) solid var(--ink)}
+.sw b{display:block;font:700 15px/1.1 var(--display);padding-top:2px}
+.sw span{font-size:12px;color:var(--ink-2)}
+.sw code{font:500 11px/1 var(--text);letter-spacing:.06em;color:var(--ink-2)}
+.ratio{display:flex;height:10px;margin-top:10px;border:var(--line) solid var(--ink)}
+.ratio i{display:block}
+/* buttons */
+.ctl{grid-column:4/7}
+.btn{height:var(--ctl);padding:0 18px;border:var(--line) solid var(--ink);background:var(--paper);color:var(--ink);font:600 14px/1 var(--text);letter-spacing:.01em;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease),background var(--t-micro)}
+.btn:hover,.btn.is-hover{transform:translate(-3px,-3px);box-shadow:3px 3px 0 var(--ink)}
+.btn:active,.btn.is-active{transform:translate(0,0);box-shadow:0 0 0 var(--ink)}
+.btn.pri{background:var(--red);color:var(--on-color)}
+.btn.sec{background:var(--blue);color:var(--on-color)}
+.btn.rnd{width:var(--ctl);padding:0;justify-content:center;border-radius:50%;background:var(--yellow)}
+.btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:square}
+.btn[disabled]{background:var(--paper-2);color:var(--ink-3);border-color:var(--ink-3);cursor:not-allowed;transform:none;box-shadow:none}
+.states{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0 18px}
+.states div{display:flex;flex-direction:column;gap:6px;font:500 10px/1 var(--text);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.states .btn{padding:0;justify-content:center;width:100%;height:36px;font-size:12px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 10px;border:var(--line) solid var(--ink);font:600 10px/1 var(--text);letter-spacing:.14em;text-transform:uppercase}
+.tag::before{content:"";width:8px;height:8px;background:currentColor}
+.tag.y{background:var(--yellow)}.tag.r{background:var(--red);color:var(--on-color)}.tag.r::before{border-radius:50%}.tag.b{background:var(--blue);color:var(--on-color)}.tag.k{background:var(--ink);color:var(--paper)}.tag.k::before{clip-path:polygon(50% 0,100% 100%,0 100%)}
+/* inputs */
+.inp{grid-column:7/10}
+.fld{display:block;margin-bottom:14px}
+.fld span{display:block;font:600 10px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+.fld input,.fld select{width:100%;height:var(--ctl);border:var(--line) solid var(--ink);background:var(--paper);padding:0 12px;font:400 15px var(--text);color:var(--ink);border-radius:0;appearance:none;transition:box-shadow var(--t-micro) var(--ease)}
+.fld select{background:var(--paper) linear-gradient(135deg,transparent 50%,var(--ink) 50%) no-repeat right 14px center/10px 10px}
+.fld input:focus,.fld select:focus{outline:none;box-shadow:5px 5px 0 var(--yellow),5px 5px 0 2px var(--ink)}
+.fld.err input{border-color:var(--red);background:#f6ddd6}
+.fld small{display:block;font-size:12px;color:var(--red);margin-top:5px;font-weight:500}
+.opts{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.ck{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-weight:500}
+.ck input{position:absolute;opacity:0;width:1px;height:1px}
+.ck i{width:20px;height:20px;border:var(--line) solid var(--ink);display:grid;place-items:center;background:var(--paper)}
+.ck.rd i{border-radius:50%}
+.ck i::after{content:"";width:10px;height:10px;transform:scale(0);transition:transform var(--t-micro) var(--expo);background:var(--red)}
+.ck.rd i::after{border-radius:50%;background:var(--blue)}
+.ck input:checked+i::after{transform:scale(1)}
+.ck input:focus-visible+i{outline:3px solid var(--blue);outline-offset:3px}
+.sw-t{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-weight:500;margin-top:14px}
+.sw-t button{width:52px;height:28px;border:var(--line) solid var(--ink);background:var(--paper);padding:0;position:relative;cursor:pointer;transition:background var(--t-micro)}
+.sw-t button::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;background:var(--ink);transition:transform 240ms var(--expo),border-radius 240ms var(--expo),background 240ms}
+.sw-t button[aria-checked="true"]{background:var(--yellow)}
+.sw-t button[aria-checked="true"]::after{transform:translateX(24px);border-radius:50%;background:var(--red)}
+/* card */
+.crd{grid-column:10/13}
+.card{border:var(--line) solid var(--ink);background:var(--paper);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.card:hover{transform:translate(-4px,-4px);box-shadow:4px 4px 0 var(--ink)}
+.art{height:118px;background:var(--blue);position:relative;overflow:hidden;border-bottom:var(--line) solid var(--ink)}
+.art i{position:absolute;display:block}
+.art i:nth-child(1){width:96px;height:96px;border-radius:50%;background:var(--yellow);left:22px;top:40px}
+.art i:nth-child(2){width:120px;height:12px;background:var(--paper);left:100px;top:30px}
+.art i:nth-child(3){width:12px;height:80px;background:var(--paper);left:208px;top:30px}
+.art i:nth-child(4){width:56px;height:56px;background:var(--red);right:18px;bottom:-10px}
+.art .tag{position:absolute;left:10px;top:10px}
+.cbody{padding:12px 14px 14px}
+.cbody h3{margin:0;font:700 22px/1.1 var(--display);padding-top:2px}
+.cbody p{margin:4px 0 12px;font-size:12px;color:var(--ink-2)}
+.cfoot{display:flex;align-items:center;justify-content:space-between}
+.price{font:700 20px/1 var(--display);padding-top:3px}
+.cfoot .btn{height:36px;padding:0 12px;font-size:12px}
+/* grammar */
+.gram{grid-column:span 3;display:flex;gap:16px;align-items:flex-start}
+.glyph{width:64px;height:64px;flex:none}
+.gram h4{margin:2px 0 4px;font:700 18px/1.2 var(--display)}
+.gram p{margin:0;font-size:13px;color:var(--ink-2)}
+.foot{grid-column:1/-1;display:flex;justify-content:space-between;font:500 11px/1 var(--text);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+@media (max-width:1100px){.hero,.spec{grid-column:1/-1}.pal,.ctl,.inp,.crd{grid-column:span 6}.gram{grid-column:span 6}.top nav{display:none}}
+@media (max-width:700px){.pal,.ctl,.inp,.crd,.gram{grid-column:1/-1}.hero{height:520px}.hero h1{font-size:56px}.sh-c{opacity:.9;top:300px}.spec{height:auto}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="mark" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="brand">formhaus <span>/ design language 01</span></div>
+  <nav aria-label="Kit sections"><a href="#type">Type</a><a href="#colour">Colour</a><a href="#controls">Controls</a><a href="#grammar">Shape grammar</a></nav>
+  <span class="ver">Kit v1.4 · Weimar · Oct 2026</span>
+</header>
+<main class="sheet">
+  <section class="cell hero" id="hero" data-comp="1" aria-label="Composition: product landing hero">
+    <div class="shape sh-c" aria-hidden="true"></div><div class="shape sh-s" aria-hidden="true"></div><div class="shape sh-t" aria-hidden="true"></div><div class="shape sh-b" aria-hidden="true"></div><div class="shape sh-d" aria-hidden="true"></div>
+    <div class="mini"><b>formhaus möbel</b><a href="#hero">Kollektion</a><a href="#hero">Werkstatt</a><a href="#hero">Journal</a><span class="cart">Cart 2</span></div>
+    <div class="copy">
+      <div class="eyebrow">Regal 25 · modular shelving</div>
+      <h1>Build it<br>in squares.</h1>
+      <p>One module: a 40 cm cube of lacquered birch. Stack it, bolt it, turn it. Thirty-one configurations, zero tools beyond the key in the box.</p>
+      <div class="row"><button class="btn pri">Configure Regal 25 <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button class="btn">1925 drawings</button></div>
+      <div class="meta">From €640 · ships in 3 weeks · made in Dessau</div>
+    </div>
+    <button class="btn rnd recomp" id="recomp" aria-label="Recompose shapes (3 arrangements)" title="Recompose"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0114-5.3M20 4v5h-5M20 12a8 8 0 01-14 5.3M4 20v-5h5"/></svg></button>
+  </section>
+  <section class="cell spec" id="type" aria-labelledby="l-type">
+    <h2 class="lbl c" id="l-type">01 Type specimen</h2>
+    <div class="aa"><big aria-hidden="true">Aa</big><div class="fam"><b>Josefin Sans</b>700 · 600 · 400<br>display, lowercase headlines<b>Work Sans</b>400 · 500 · 600 · text and UI</div></div>
+    <ul class="scale">
+      <li><em>Display 76</em><span class="s1">form follows</span></li>
+      <li><em>H2 · 26 / 700</em><span class="s2">Thirty-one ways to stack</span></li>
+      <li><em>H3 · 18 / 600</em><span class="s3">Lacquered birch, 18 mm ply</span></li>
+      <li><em>Body · 15 / 400</em><span class="s4">Each cube carries 25 kg on any face.</span></li>
+      <li><em>Label · 11 / 600</em><span class="s5">Ships in 3 weeks</span></li>
+    </ul>
+  </section>
+  <section class="cell pal" id="colour" aria-labelledby="l-col">
+    <h2 class="lbl s" id="l-col">02 Palette and roles</h2>
+    <div class="sw"><i class="chip" style="background:var(--paper)"></i><div><b>Paper</b><span>surface, 60 %</span></div><code>#F0EBE0</code></div>
+    <div class="sw"><i class="chip" style="background:var(--ink)"></i><div><b>Ink</b><span>text, rules, 20 %</span></div><code>#151412</code></div>
+    <div class="sw"><i class="chip" style="background:var(--red)"></i><div><b>Red</b><span>action, circle</span></div><code>#D52B1E</code></div>
+    <div class="sw"><i class="chip" style="background:var(--yellow)"></i><div><b>Yellow</b><span>highlight, focus fill</span></div><code>#F3B61F</code></div>
+    <div class="sw"><i class="chip" style="background:var(--blue)"></i><div><b>Blue</b><span>info, link, focus ring</span></div><code>#1D4F9C</code></div>
+    <div class="ratio" aria-label="Colour ratio 60 20 8 7 5"><i style="flex:60;background:var(--paper)"></i><i style="flex:20;background:var(--ink)"></i><i style="flex:8;background:var(--red)"></i><i style="flex:7;background:var(--yellow)"></i><i style="flex:5;background:var(--blue)"></i></div>
+  </section>
+  <section class="cell ctl" id="controls" aria-labelledby="l-btn">
+    <h2 class="lbl t" id="l-btn">03 Buttons and tags</h2>
+    <div class="row"><button class="btn pri">Add to cart</button><button class="btn sec">Details</button><button class="btn rnd" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+    <div class="states">
+      <div><button class="btn pri" tabindex="-1" aria-hidden="true">Buy</button>Rest</div>
+      <div><button class="btn pri is-hover" tabindex="-1" aria-hidden="true">Buy</button>Hover</div>
+      <div><button class="btn pri is-active" tabindex="-1" aria-hidden="true">Buy</button>Pressed</div>
+      <div><button class="btn pri" disabled aria-hidden="true">Buy</button>Disabled</div>
+    </div>
+    <div class="tags"><span class="tag y">New</span><span class="tag r">Sale −15 %</span><span class="tag b">Info</span><span class="tag k">Last 3</span><span class="tag">Birch</span></div>
+  </section>
+  <section class="cell inp" aria-labelledby="l-inp">
+    <h2 class="lbl" id="l-inp">04 Inputs</h2>
+    <label class="fld"><span>Postcode</span><input type="text" value="06844" inputmode="numeric"></label>
+    <label class="fld err"><span>Email</span><input type="email" value="lene@formhaus" aria-invalid="true" aria-describedby="e1"><small id="e1">Add the domain, e.g. .de</small></label>
+    <div class="opts">
+      <label class="ck"><input type="checkbox" checked><i></i>Assembly</label>
+      <label class="ck rd"><input type="radio" name="f" checked><i></i>Birch</label>
+      <label class="ck rd"><input type="radio" name="f"><i></i>Black</label>
+    </div>
+    <label class="sw-t"><button type="button" role="switch" aria-checked="true" id="sw" aria-label="Express delivery"></button>Express delivery</label>
+  </section>
+  <section class="cell crd" aria-labelledby="l-crd">
+    <h2 class="lbl c" id="l-crd">05 Card</h2>
+    <article class="card">
+      <div class="art" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="tag y">New</span></div>
+      <div class="cbody"><h3>Stuhl B3</h3><p>Tubular steel, canvas sling · 7.2 kg</p>
+        <div class="cfoot"><span class="price">€1,180</span><button class="btn pri">Add</button></div></div>
+    </article>
+  </section>
+  <section class="cell gram" id="grammar" aria-label="Shape grammar: circle"><svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#d52b1e"/></svg><div><h4>Circle acts</h4><p>Primary actions, avatars, live status. Red by default; never decorates text.</p></div></section>
+  <section class="cell gram" aria-label="Shape grammar: square"><svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" fill="#1d4f9c"/></svg><div><h4>Square holds</h4><p>Containers, inputs, cards, images. 0 radius, 2px ink border, hard 4px shadow on hover.</p></div></section>
+  <section class="cell gram" aria-label="Shape grammar: triangle"><svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4l30 56H2z" fill="#f3b61f"/></svg><div><h4>Triangle points</h4><p>Direction, sort order, warnings. Yellow with an ink edge when it carries meaning.</p></div></section>
+  <section class="cell gram" aria-label="Shape grammar: rule"><svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="27" width="60" height="10" fill="#151412"/></svg><div><h4>Rule divides</h4><p>3px ink between regions, 2px around controls, 1px paper-2 inside lists.</p></div></section>
+  <div class="cell foot"><span>formhaus design language · 5 colours · 2 families · 3 shapes</span><span>Click the round button to recompose</span></div>
+</main>
+<script>
+  const hero=document.getElementById('hero'),rc=document.getElementById('recomp'),sw=document.getElementById('sw');
+  let c=1;
+  rc.addEventListener('click',()=>{c=c%3+1;hero.dataset.comp=c;rc.setAttribute('aria-label','Recompose shapes, arrangement '+c+' of 3');});
+  sw.addEventListener('click',()=>sw.setAttribute('aria-checked',String(sw.getAttribute('aria-checked')!=='true')));
+</script>
+</body>
+</html>

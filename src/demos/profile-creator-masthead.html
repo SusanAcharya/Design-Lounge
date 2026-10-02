@@ -1,0 +1,123 @@
+<!-- Design Lounge piece: profile-creator-masthead · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Mira Joshi — essays</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e6;--ink:#1c1914;--ink-2:#5c564c;--ink-3:#8a8376;--line:#d8d0c0;--olive:#3d4f3a;--olive-2:#2c3a2a;
+  --serif:"Literata",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif;
+  --pad:56px;--nav:54px;
+  --t:180ms;--t-swap:320ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font:400 15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--olive);outline-offset:3px}
+nav{height:var(--nav);display:flex;align-items:center;padding:0 var(--pad);border-bottom:1px solid var(--line);font-size:13px;gap:28px}
+.mk{font:italic 400 18px/1 var(--serif);margin-right:auto}
+nav a{color:var(--ink-2)}
+nav a:hover,nav a[aria-current]{color:var(--ink)}
+nav a[aria-current]{box-shadow:inset 0 -1px 0 var(--olive)}
+.mast{padding:36px var(--pad) 8px}
+.who{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--olive);font-weight:600;margin:0 0 10px}
+h1{margin:0 0 18px;font:400 104px/.82 var(--serif);letter-spacing:-.035em}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+.chip{height:32px;padding:0 12px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--ink-2);letter-spacing:.04em}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+.bio{margin:0;max-width:48ch;font:italic 400 20px/1.4 var(--serif);color:var(--ink-2)}
+.work{padding:28px var(--pad) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{display:block;border:1px solid var(--line);background:#fbf7ee;min-height:248px;padding:16px;transition:border-color var(--t) var(--ease),transform var(--t-swap) var(--expo)}
+.card:hover,.card:focus-visible{border-color:var(--ink);transform:translateY(-3px)}
+.plate{height:120px;margin-bottom:14px;position:relative;overflow:hidden}
+.p1{background:linear-gradient(165deg,#3d4f3a 0 38%,#d8d0c0 38% 40%,#f6f1e6 40%)}
+.p2{background:repeating-linear-gradient(90deg,transparent 0 18px,var(--line) 18px 19px),linear-gradient(#efe6d2,#f6f1e6);border-bottom:2px solid var(--olive)}
+.p3{background:radial-gradient(60% 80% at 80% 20%,#c4b49a,transparent 60%),linear-gradient(135deg,#2c3a2a,#5c564c)}
+.card small{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--olive);font-weight:600;margin-bottom:6px}
+.card h2{margin:0 0 8px;font:italic 400 22px/1.2 var(--serif)}
+.card p{margin:0;font-size:13px;color:var(--ink-2)}
+.sub{margin:36px var(--pad) 64px;padding:22px 24px;border-top:1px solid var(--ink);display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:center}
+.sub h3{margin:0 0 6px;font:italic 400 28px/1.15 var(--serif)}
+.sub p{margin:0;color:var(--ink-2);font-size:14px}
+form{display:flex;gap:8px}
+input[type=email]{flex:1;height:48px;border:1px solid var(--line);background:transparent;padding:0 14px;min-width:0}
+input:focus{outline:none;border-color:var(--olive)}
+form button{height:48px;padding:0 20px;background:var(--olive);color:var(--paper);font-weight:600;font-size:14px;transition:background var(--t) var(--ease)}
+form button:hover{background:var(--olive-2)}
+form button.ok{background:var(--ink)}
+.msg{grid-column:2;font-size:13px;color:var(--olive);min-height:18px}
+@media (max-width:900px){h1{font-size:72px}.work,.sub{grid-template-columns:1fr}form{grid-column:1}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}.card{transform:none!important}}
+</style>
+</head>
+<body>
+<nav aria-label="Primary">
+  <a class="mk" href="#">Mira Joshi</a>
+  <a href="#" aria-current="page">Essays</a>
+  <a href="#work">Index</a>
+  <a href="#sub">Subscribe</a>
+</nav>
+<header class="mast">
+  <p class="who">Kathmandu · Essays, 2019–2026</p>
+  <h1>Mira Joshi</h1>
+  <div class="chips" role="group" aria-label="Roles">
+    <button class="chip" aria-pressed="true">Essayist</button>
+    <button class="chip" aria-pressed="true">Editor</button>
+    <button class="chip" aria-pressed="false">Speaker</button>
+    <button class="chip" aria-pressed="false">Teacher</button>
+  </div>
+  <p class="bio">Long pieces on rooms, rivers and the week as a unit of attention. A letter on the first Sunday of the month.</p>
+</header>
+<section class="work" id="work" aria-label="Recent work">
+  <a class="card" href="#">
+    <div class="plate p1" aria-hidden="true"></div>
+    <small>Essay · 4 200 words</small>
+    <h2>A kitchen that faces west</h2>
+    <p>On cooking after four, and why the last light is a deadline.</p>
+  </a>
+  <a class="card" href="#">
+    <div class="plate p2" aria-hidden="true"></div>
+    <small>Letter · No. 41</small>
+    <h2>Keeping a week</h2>
+    <p>Seven days as a form, not a target. Written from Patan.</p>
+  </a>
+  <a class="card" href="#">
+    <div class="plate p3" aria-hidden="true"></div>
+    <small>Talk · 28 min</small>
+    <h2>The river as a sentence</h2>
+    <p>Notes from a reading at the municipal library, July 2026.</p>
+  </a>
+</section>
+<section class="sub" id="sub">
+  <div>
+    <h3>The Sunday letter</h3>
+    <p>One essay, no extracts. First Sunday, by mail. 4 800 readers.</p>
+  </div>
+  <form id="form" novalidate>
+    <input type="email" required placeholder="name@mail.com" aria-label="Email for the Sunday letter" autocomplete="off">
+    <button type="submit">Subscribe</button>
+    <p class="msg" id="msg" aria-live="polite"></p>
+  </form>
+</section>
+<script>
+const chips=[...document.querySelectorAll('.chip')];
+chips.forEach(c=>c.addEventListener('click',()=>c.setAttribute('aria-pressed',c.getAttribute('aria-pressed')==='true'?'false':'true')));
+document.getElementById('form').addEventListener('submit',e=>{
+  e.preventDefault();
+  const i=e.target.querySelector('input'),ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value);
+  const b=e.target.querySelector('button'),m=document.getElementById('msg');
+  if(!ok){m.textContent='Enter a full address.';i.focus();return;}
+  b.textContent='Subscribed';b.classList.add('ok');b.disabled=true;i.disabled=true;
+  m.textContent='Next letter: Sunday 4 Oct.';
+});
+</script>
+</body>
+</html>

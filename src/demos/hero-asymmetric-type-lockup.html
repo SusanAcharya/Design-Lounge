@@ -1,0 +1,100 @@
+<!-- Design Lounge piece: hero-asymmetric-type-lockup · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Quarto — a press for poems that take up space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3e4d2;--paper-2:#ead6c0;--ink:#27170f;--ink-2:#6a4e3e;--ink-3:#9a7d6a;
+  --line:rgba(39,23,15,.16);--accent:#a33a24;--accent-soft:#e8c4b4;
+  --serif:"Playfair Display",Georgia,"Times New Roman",serif;--sans:"Karla",system-ui,sans-serif;
+  --gutter:48px;--gap:16px;--nav-h:64px;--display:160px;
+  --t-micro:160ms;--t-letter:720ms;--t-copy:640ms;--stagger:70ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--paper);overflow:hidden;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+nav{height:var(--nav-h);flex:none;display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gap);align-items:center;padding:0 var(--gutter);border-bottom:1px solid var(--line)}
+.mark{grid-column:1/4;font:italic 500 22px/1 var(--serif);letter-spacing:-.02em}
+nav ul{grid-column:5/10;display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:13px;font-weight:500;letter-spacing:.04em}
+nav ul a{color:var(--ink-2);padding:6px 0;border-bottom:1px solid transparent;transition:color var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+nav ul a:hover,nav ul a[aria-current]{color:var(--ink);border-color:var(--ink)}
+.sub{grid-column:11/13;justify-self:end;font:500 13px var(--sans);color:var(--accent);letter-spacing:.02em}
+.sub:hover{border-bottom:1px solid var(--accent)}
+main{flex:1;display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gap);grid-template-rows:auto 1fr auto;padding:28px var(--gutter) 28px;min-height:0;position:relative}
+.kick{grid-column:1/6;font:500 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:12px}
+.kick i{width:28px;height:1px;background:var(--line);display:block;font-style:normal}
+.stage{grid-column:1/-1;display:grid;grid-template-columns:subgrid;align-content:center;position:relative}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.a,.b{margin:0;font:italic 700 var(--display)/.82 var(--serif);letter-spacing:-.045em;overflow:hidden}
+.a{grid-column:1/8;align-self:end}
+.b{grid-column:6/13;text-align:right;margin-top:-28px}
+.a span,.b span{display:inline-block;transform:translateY(108%);opacity:0}
+.play .a span,.play .b span{animation:rise var(--t-letter) var(--expo) forwards;animation-delay:calc(var(--i)*var(--stagger) + var(--base,0ms))}
+.b span{--base:240ms}
+@keyframes rise{to{transform:none;opacity:1}}
+.nest{grid-column:9/13;grid-row:1;align-self:end;padding:0 0 18px 8px;max-width:28ch;font:400 14px/1.55 var(--sans);color:var(--ink-2);opacity:0;transform:translateY(10px)}
+.play .nest{animation:fade var(--t-copy) var(--ease) forwards;animation-delay:620ms}
+@keyframes fade{to{opacity:1;transform:none}}
+.cta{grid-column:1/6;margin-top:8px;justify-self:start;font:500 15px var(--sans);color:var(--ink);display:inline-flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--ink);opacity:0;transform:translateY(8px)}
+.play .cta{animation:fade var(--t-copy) var(--ease) forwards;animation-delay:780ms}
+.cta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t-micro) var(--ease)}
+.cta:hover svg{transform:translateX(4px)}
+.cta:hover{color:var(--accent);border-color:var(--accent)}
+.meta{grid-column:1/-1;display:grid;grid-template-columns:subgrid;align-items:end;padding-top:18px;border-top:1px solid var(--line);font:500 12px/1.4 var(--sans);color:var(--ink-3);letter-spacing:.04em}
+.meta b{color:var(--ink);font-weight:500}
+.meta div:nth-child(1){grid-column:1/4}
+.meta div:nth-child(2){grid-column:5/8}
+.meta div:nth-child(3){grid-column:9/11}
+.meta div:nth-child(4){grid-column:12/13;text-align:right}
+.replay{position:absolute;right:var(--gutter);bottom:86px;font:500 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);padding:8px 12px;transition:color var(--t-micro),border-color var(--t-micro)}
+.replay:hover{color:var(--ink);border-color:var(--ink)}
+@media (prefers-reduced-motion:reduce){
+  .a span,.b span,.nest,.cta{transform:none;opacity:1;animation:none}
+}
+</style>
+</head>
+<body class="play">
+<nav aria-label="Primary">
+  <a class="mark" href="#">Quarto</a>
+  <ul>
+    <li><a href="#" aria-current="page">Catalogue</a></li>
+    <li><a href="#">Authors</a></li>
+    <li><a href="#">Events</a></li>
+  </ul>
+  <a class="sub" href="#">Subscribe</a>
+</nav>
+<main>
+  <p class="kick"><i></i>Poetry in print · Lisbon</p>
+  <div class="stage">
+    <h1 class="sr">Quarto</h1>
+    <div class="a" aria-hidden="true"><span style="--i:0">Q</span><span style="--i:1">U</span><span style="--i:2">A</span></div>
+    <p class="nest">Twelve poets on the weather of a city that keeps renaming its streets. Two inks, 140 gsm laid, sewn and numbered.</p>
+    <div class="b" aria-hidden="true"><span style="--i:0">R</span><span style="--i:1">T</span><span style="--i:2">O</span></div>
+    <a class="cta" href="#">Open the autumn list <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+  <div class="meta">
+    <div><b>Vol. XII</b><br>Autumn 2026</div>
+    <div><b>128 pages</b><br>Smyth-sewn</div>
+    <div><b>Edition of 800</b><br>Lisbon + mail</div>
+    <div><b>28 €</b><br>incl. post</div>
+  </div>
+  <button class="replay" type="button" id="replay">Replay</button>
+</main>
+<script>
+const body=document.body;
+function play(){body.classList.remove('play');void body.offsetWidth;body.classList.add('play');}
+document.getElementById('replay').addEventListener('click',play);
+document.querySelector('.stage').addEventListener('click',e=>{if(!e.target.closest('a'))play();});
+document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
+</script>
+</body>
+</html>

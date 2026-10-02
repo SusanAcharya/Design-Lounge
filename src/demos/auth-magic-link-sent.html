@@ -1,0 +1,165 @@
+<!-- Design Lounge piece: auth-magic-link-sent · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Magic link sent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff1e6;--tile:#ffd9c2;--tile-2:#ffc7a6;--paper:#fffdf9;--pocket:#fff6ee;
+  --ink:#2a1636;--ink-2:#6b5770;--ink-3:#8f7c90;--line:#f0d6c6;--line-2:#e6bfa9;
+  --accent:#ff5a36;--accent-ink:#fff;--sun:#ffc94d;--ok:#2f8f5b;
+  --font:"Bricolage Grotesque",system-ui,sans-serif;--hand:"Caveat",cursive;
+  --r-tile:36px;--r-pill:999px;--r-btn:16px;
+  --shadow:0 18px 40px -18px rgba(42,22,54,.35),0 2px 0 rgba(42,22,54,.06);
+  --t-micro:160ms;--t-move:600ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.5 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
+header{height:72px;display:flex;align-items:center;padding:0 48px;gap:12px;flex:none}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.03em}
+.logo i{width:30px;height:30px;border-radius:10px 10px 10px 2px;background:var(--ink);display:grid;place-items:center}
+.logo i::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--sun)}
+header nav{margin-left:auto;display:flex;gap:28px;font-size:14px;font-weight:500;color:var(--ink-2)}
+header nav a{text-decoration:none}header nav a:hover{color:var(--ink)}
+main{flex:1;display:grid;grid-template-columns:540px 1fr;gap:64px;padding:8px 48px 40px;min-height:0}
+.stage{position:relative;background:var(--tile);border-radius:var(--r-tile);overflow:hidden;cursor:pointer;border:0;padding:0;font:inherit;color:inherit}
+.stage::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 120%,var(--tile-2) 0 38%,transparent 38.2%),repeating-radial-gradient(circle at 50% 120%,transparent 0 46px,rgba(255,255,255,.35) 46px 47px)}
+.trail{position:absolute;inset:0;width:100%;height:100%}
+.trail path{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:2 9;stroke-linecap:round;opacity:.35}
+.note{position:absolute;left:52px;top:58px;font:700 30px/1 var(--hand);color:var(--ink);transform:rotate(-7deg)}
+.note svg{display:block;margin:6px 0 0 70px;width:60px;height:40px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.env-wrap{position:absolute;left:50%;top:54%;width:300px;height:196px;margin:-98px 0 0 -150px;perspective:900px}
+.play .env-wrap{animation:bob 4.8s var(--ease) 2.2s infinite}
+.env{position:absolute;inset:0;transform-style:preserve-3d}
+.back{position:absolute;inset:0;border-radius:14px;background:#f2b896;box-shadow:0 34px 40px -24px rgba(42,22,54,.45)}
+.letter{position:absolute;left:22px;right:22px;top:12px;height:160px;background:var(--paper);border-radius:10px;padding:20px 22px;box-shadow:0 1px 0 rgba(42,22,54,.08);transform:translateY(-120px);z-index:2}
+.letter b{display:block;font-size:13px;font-weight:700}
+.letter span{display:block;height:7px;border-radius:4px;background:#f1e2d8;margin-top:9px}
+.letter span:nth-of-type(2){width:72%}.letter span:nth-of-type(3){width:84%}
+.letter em{display:inline-block;margin-top:14px;font:600 11px var(--font);font-style:normal;background:var(--accent);color:#fff;padding:6px 12px;border-radius:var(--r-pill)}
+.pocket{position:absolute;inset:0;border-radius:14px;background:var(--pocket);clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%);z-index:3;box-shadow:inset 0 -1px 0 var(--line-2)}
+.pocket::after{content:"";position:absolute;inset:0;background:linear-gradient(to top right,transparent 49.6%,var(--line-2) 50%,transparent 50.4%) left/50% 100% no-repeat,linear-gradient(to top left,transparent 49.6%,var(--line-2) 50%,transparent 50.4%) right/50% 100% no-repeat}
+.flap{position:absolute;left:0;right:0;top:0;height:118px;background:#ffe6d6;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:50% 0;transform:rotateX(180deg);z-index:1;border-radius:14px 14px 0 0}
+.stamp{position:absolute;right:18px;bottom:16px;width:46px;height:54px;background:var(--accent);z-index:4;border-radius:4px;display:grid;place-items:center;transform:scale(0) rotate(-20deg);border:3px dotted var(--pocket);outline:2px solid var(--accent)}
+.stamp svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2}
+.play .letter{animation:slide var(--t-move) var(--ease-out) .25s forwards}
+.play .flap{animation:close 420ms var(--ease) .85s forwards}
+.play .stamp{animation:pop 380ms var(--spring) 1.3s forwards}
+.play .trail path{animation:dash 1.4s var(--ease) 1.4s both}
+@keyframes slide{to{transform:translateY(16px)}}
+@keyframes close{0%{transform:rotateX(180deg);z-index:1}49%{z-index:1}50%{z-index:5}100%{transform:rotateX(0);z-index:5}}
+@keyframes pop{to{transform:scale(1) rotate(8deg)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-8px) rotate(-1.5deg)}}
+@keyframes dash{from{stroke-dashoffset:120;opacity:0}to{stroke-dashoffset:0;opacity:.35}}
+.replay{position:absolute;right:20px;bottom:18px;font:700 22px var(--hand);color:var(--ink-2)}
+.copy{display:flex;flex-direction:column;justify-content:center;min-width:0;padding-right:16px}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(47,143,91,.16)}
+h1{margin:14px 0 18px;font-size:104px;line-height:.9;font-weight:800;letter-spacing:-.055em;font-variation-settings:"opsz" 96}
+h1 span{color:var(--accent)}
+.lede{margin:0;font-size:18px;color:var(--ink-2);max-width:470px}
+.who{margin:20px 0 28px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-height:52px}
+.chip{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 8px 0 18px;background:var(--paper);border:1.5px solid var(--line);border-radius:var(--r-pill);font-weight:600;font-size:17px;letter-spacing:-.01em;box-shadow:var(--shadow)}
+.chip button,.form button{height:34px;padding:0 14px;border-radius:var(--r-pill);border:0;background:var(--bg);color:var(--ink);font:600 14px var(--font);cursor:pointer;transition:background var(--t-micro) var(--ease)}
+.chip button:hover{background:var(--tile)}
+.form{display:none;align-items:center;gap:8px;height:48px;padding:0 6px 0 18px;background:var(--paper);border:1.5px solid var(--ink);border-radius:var(--r-pill)}
+.form input{border:0;background:none;font:600 17px var(--font);color:var(--ink);width:300px;outline:none}
+.form button{background:var(--ink);color:#fff}
+.editing .chip{display:none}.editing .form{display:inline-flex}
+.form.bad{border-color:var(--accent);animation:shake 300ms var(--ease)}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.apps{display:flex;gap:12px}
+.app{display:flex;align-items:center;gap:12px;height:60px;padding:0 20px 0 12px;border-radius:var(--r-btn);background:var(--paper);border:1.5px solid var(--line);text-decoration:none;font-weight:600;font-size:15px;transition:transform var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.app:hover{transform:translateY(-2px);border-color:var(--ink);box-shadow:var(--shadow)}
+.app i{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:none}
+.app i svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app small{display:block;font-size:12px;font-weight:500;color:var(--ink-3);line-height:1.1}
+.resend{margin-top:30px;display:flex;align-items:center;gap:14px;font-size:15px;color:var(--ink-2)}
+.ring{width:40px;height:40px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:3}.ring .bgc{stroke:var(--line)}.ring .fg{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:100.5;transition:stroke-dashoffset 1s linear}
+.tnum{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink)}
+#resendBtn{height:40px;padding:0 18px;border-radius:var(--r-pill);border:0;background:var(--accent);color:var(--accent-ink);font:700 15px var(--font);cursor:pointer;display:none;transition:transform var(--t-micro) var(--spring)}
+#resendBtn:hover{transform:scale(1.04)}
+.ready #resendBtn{display:inline-block}.ready .wait{display:none}
+.fine{margin-top:auto;padding-top:20px;font-size:13px;color:var(--ink-3);display:flex;gap:18px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,24px);opacity:0;background:var(--ink);color:#fff;padding:12px 20px;border-radius:var(--r-pill);font-weight:600;font-size:14px;display:flex;gap:10px;align-items:center;transition:opacity 240ms var(--ease),transform 240ms var(--ease-out);pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast svg{width:18px;height:18px;stroke:var(--sun);fill:none;stroke-width:2.5}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><i></i>Fernwork</div>
+  <nav><a href="#">Pricing</a><a href="#">Changelog</a><a href="#">Help centre</a></nav>
+</header>
+<main>
+  <button class="stage play" id="stage" aria-label="Replay the envelope animation">
+    <svg class="trail" viewBox="0 0 540 650" aria-hidden="true"><path d="M408 300c40-40 70-110 40-160s-90-30-80 20 80 40 120-30"/></svg>
+    <div class="note" aria-hidden="true">sealed &amp; sent!<svg viewBox="0 0 60 40"><path d="M4 4c10 22 28 30 50 30M54 34l-10-10M54 34l-14 2"/></svg></div>
+    <div class="env-wrap" aria-hidden="true"><div class="env">
+      <div class="back"></div>
+      <div class="flap"></div>
+      <div class="letter"><b>Your sign-in link</b><span></span><span></span><span></span><em>Sign in to Fernwork</em></div>
+      <div class="pocket"></div>
+      <div class="stamp"><svg viewBox="0 0 24 24"><path d="M12 3c4 4 6 8 0 18C6 11 8 7 12 3zM12 9v12"/></svg></div>
+    </div></div>
+    <span class="replay" aria-hidden="true">tap to send again</span>
+  </button>
+  <section class="copy" aria-labelledby="t">
+    <div class="eyebrow"><i></i>Link sent · expires in 15 min</div>
+    <h1 id="t">Check your<br>inbox<span>.</span></h1>
+    <p class="lede">We sent a one-tap sign-in link. Open it on this device and you'll land right back in your workspace. No password needed.</p>
+    <div class="who" id="who">
+      <span class="chip"><span id="addr">maya.okafor@tidepool.studio</span><button type="button" id="edit" aria-label="Edit email address">Edit</button></span>
+      <form class="form" id="form" novalidate><label for="inp" class="sr" hidden>Email address</label><input id="inp" type="email" autocomplete="email" aria-label="Email address"><button type="submit">Send link</button></form>
+    </div>
+    <div class="apps" role="group" aria-label="Open your mail app">
+      <a class="app" href="#"><i style="background:#ffe1a1;color:#7a4a00"><svg viewBox="0 0 24 24"><path d="M3 15c5-1 8-5 9-11 1 6 4 10 9 11-5 1-8 3-9 6-1-3-4-5-9-6z"/></svg></i><span>Larkmail<small>Desktop app</small></span></a>
+      <a class="app" href="#"><i style="background:#d9ccff;color:#3b2a8a"><svg viewBox="0 0 24 24"><path d="M4 7l8 6 8-6M4 6h16v12H4z"/></svg></i><span>Inkbox<small>Web</small></span></a>
+      <a class="app" href="#"><i style="background:#cdeedb;color:#1d5c3a"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i><span>Default app<small>mailto:</small></span></a>
+    </div>
+    <div class="resend" id="resend">
+      <svg class="ring" viewBox="0 0 40 40" aria-hidden="true"><circle class="bgc" cx="20" cy="20" r="16"/><circle class="fg" id="fg" cx="20" cy="20" r="16"/></svg>
+      <span class="wait">Didn't arrive? You can resend in <span class="tnum" id="count">0:30</span></span>
+      <button type="button" id="resendBtn">Resend link</button>
+    </div>
+    <div class="fine"><span>Check spam or Promotions first.</span><a href="#">Use a password instead</a></div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><span id="tmsg"></span></div>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const stage=$('stage'),who=$('who'),form=$('form'),inp=$('inp'),addr=$('addr'),fg=$('fg'),count=$('count'),resend=$('resend'),toast=$('toast');
+  const C=100.5,TOTAL=30;let left=TOTAL,timer=null,tt=null;
+  function fmt(s){return '0:'+String(s).padStart(2,'0');}
+  function tick(){
+    left=Math.max(0,left-1);count.textContent=fmt(left);fg.style.strokeDashoffset=String(C*(1-left/TOTAL));
+    if(left===0){clearInterval(timer);resend.classList.add('ready');}
+  }
+  function start(){clearInterval(timer);left=TOTAL;resend.classList.remove('ready');count.textContent=fmt(left);fg.style.strokeDashoffset='0';timer=setInterval(tick,1000);}
+  function replay(){stage.classList.remove('play');void stage.offsetWidth;stage.classList.add('play');}
+  function say(m){$('tmsg').textContent=m;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),2600);}
+  function send(){replay();start();say('New link sent to '+addr.textContent);}
+  stage.addEventListener('click',replay);
+  $('resendBtn').addEventListener('click',send);
+  $('edit').addEventListener('click',()=>{inp.value=addr.textContent;who.classList.add('editing');inp.focus();inp.select();});
+  form.addEventListener('submit',e=>{
+    e.preventDefault();const v=inp.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){form.classList.remove('bad');void form.offsetWidth;form.classList.add('bad');inp.setAttribute('aria-invalid','true');return;}
+    inp.removeAttribute('aria-invalid');form.classList.remove('bad');addr.textContent=v;who.classList.remove('editing');$('edit').focus();send();
+  });
+  inp.addEventListener('keydown',e=>{if(e.key==='Escape'){who.classList.remove('editing');$('edit').focus();}});
+  start();
+})();
+</script>
+</body>
+</html>

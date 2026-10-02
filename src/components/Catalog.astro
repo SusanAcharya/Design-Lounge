@@ -1,7 +1,7 @@
 ---
 /* Filterable, sortable catalogue of pieces. All pieces render; filtering happens client-side so URLs are shareable. */
 import PieceCard from './PieceCard.astro';
-import { PLATFORM_META, TYPE_META, STYLE_META, numberMap, type Piece } from '../lib/pieces';
+import { PLATFORM_META, TYPE_META, STYLE_META, CATEGORY_META, CATEGORY_GROUPS, numberMap, type Piece, type Category } from '../lib/pieces';
 
 interface Props {
   pieces: Piece[];          // the pieces to render (already scoped, e.g. a room)
@@ -14,6 +14,9 @@ const nums = numberMap(all);
 const list = [...pieces].reverse(); // newest first
 const count = (k: 'platform' | 'type', v: string) => pieces.filter((p) => p.data[k] === v).length;
 const styleCount = (s: string) => pieces.filter((p) => (p.data.styles as string[]).includes(s)).length;
+const catCount = (c: string) => pieces.filter((p) => p.data.category === c).length;
+const looking = (['hero', 'navbar', 'footer', 'pricing', 'contact', 'portfolio', 'landing', 'dashboard', 'navigation', 'text-motion', 'design-language'] as Category[]).filter((c) => catCount(c) > 0);
+const extraCats = CATEGORY_GROUPS.flatMap((g) => g.items).filter((c) => catCount(c) > 0 && !looking.includes(c));
 ---
 <section class="catalog" data-catalog>
   {showFilters && (
@@ -37,6 +40,14 @@ const styleCount = (s: string) => pieces.filter((p) => (p.data.styles as string[
           <button type="button" class="vbtn" data-view="list" aria-pressed="false" aria-label="List view"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
         </div>
       </div>
+      {looking.length > 0 && (
+        <div class="frow chips" data-group="category">
+          <span class="eyebrow">Called</span>
+          {looking.map((c) => (
+            <button type="button" class="chip" data-f="category" data-v={c} aria-pressed="false">{CATEGORY_META[c].label} <span class="cnt">{catCount(c)}</span></button>
+          ))}
+        </div>
+      )}
       {!lock.type && (
         <div class="frow chips" data-group="type">
           <span class="eyebrow">Room</span>
@@ -58,6 +69,14 @@ const styleCount = (s: string) => pieces.filter((p) => (p.data.styles as string[
         <span class="status mono faint" data-status aria-live="polite"></span>
         <button type="button" class="clear mono" data-clear hidden>Clear filters</button>
       </div>
+      {extraCats.length > 0 && (
+        <div class="frow chips extra" data-group="category-more" hidden>
+          <span class="eyebrow">Also</span>
+          {extraCats.map((c) => (
+            <button type="button" class="chip" data-f="category" data-v={c} aria-pressed="false">{CATEGORY_META[c].label} <span class="cnt">{catCount(c)}</span></button>
+          ))}
+        </div>
+      )}
       {!lock.style && (
         <div class="frow chips extra" data-group="style" hidden>
           <span class="eyebrow">Style</span>
@@ -91,7 +110,7 @@ const styleCount = (s: string) => pieces.filter((p) => (p.data.styles as string[
     const none = root.querySelector<HTMLElement>('[data-none]');
     const clears = root.querySelectorAll<HTMLButtonElement>('[data-clear]');
     const views = root.querySelectorAll<HTMLButtonElement>('[data-view]');
-    const state: Record<string, Set<string>> = { type: new Set(), platform: new Set(), style: new Set(), motion: new Set() };
+    const state: Record<string, Set<string>> = { type: new Set(), platform: new Set(), style: new Set(), motion: new Set(), category: new Set() };
 
     // hydrate from URL
     const sp = new URLSearchParams(location.search);
@@ -108,9 +127,10 @@ const styleCount = (s: string) => pieces.filter((p) => (p.data.styles as string[
         let ok = true;
         if (state.type.size && !state.type.has(d.type!)) ok = false;
         if (ok && state.platform.size && !state.platform.has(d.platform!)) ok = false;
+        if (ok && state.category.size && !state.category.has(d.category!)) ok = false;
         if (ok && state.motion.size && !state.motion.has(d.motion!)) ok = false;
         if (ok && state.style.size && ![...state.style].some((s) => d.styles!.split(' ').includes(s))) ok = false;
-        if (ok && words.length) { const hay = `${d.title} ${d.tags} ${d.styles} ${d.type} ${d.platform} ${c.querySelector('.summary')?.textContent?.toLowerCase()}`; ok = words.every((w) => hay.includes(w)); }
+        if (ok && words.length) { const hay = `${d.title} ${d.tags} ${d.styles} ${d.type} ${d.category?.replace('-', ' ')} ${d.platform} ${c.querySelector('.summary')?.textContent?.toLowerCase()}`; ok = words.every((w) => hay.includes(w)); }
         c.hidden = !ok; if (ok) shown++;
       }
       // sort
@@ -147,7 +167,8 @@ const styleCount = (s: string) => pieces.filter((p) => (p.data.styles as string[
     const extras = root.querySelectorAll<HTMLElement>('.extra');
     const openMore = (on: boolean) => { extras.forEach((e) => (e.hidden = !on)); more?.setAttribute('aria-expanded', String(on)); more?.setAttribute('aria-pressed', String(on)); };
     more?.addEventListener('click', () => openMore(more.getAttribute('aria-expanded') !== 'true'));
-    if (state.style.size || state.motion.size) openMore(true);
+    const extraCatVals = [...root.querySelectorAll<HTMLButtonElement>('.extra [data-f="category"]')].map((b) => b.dataset.v!);
+    if (state.style.size || state.motion.size || extraCatVals.some((v) => state.category.has(v))) openMore(true);
     apply(false);
   });
 </script>

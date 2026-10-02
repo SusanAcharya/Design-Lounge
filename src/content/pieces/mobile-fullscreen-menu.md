@@ -3,6 +3,7 @@ title: "Full-screen mobile menu"
 summary: "A hamburger that morphs into an X while the page fades, the background shifts from cream to navy and five 64px serif links rise in with a 55ms stagger, plus a small-links row and a language switch."
 platform: mobile-web
 type: component
+category: navbar
 tags: [navigation, menu, overlay, hamburger, editorial]
 styles: [editorial, paper, dark]
 motion: rich

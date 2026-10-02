@@ -1,0 +1,70 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { PAIRINGS, fontHref, faceCss, pairingCss } from '../../data/type';
+import { AUTHOR } from '../../lib/pieces';
+
+export function getStaticPaths() {
+  return PAIRINGS.map((p) => ({ params: { id: p.id }, props: { pairing: p } }));
+}
+const { pairing: p } = Astro.props;
+const css = pairingCss(p);
+const others = PAIRINGS.filter((x) => x.id !== p.id).filter((x) => x.tags.some((t) => p.tags.includes(t))).slice(0, 4);
+---
+<Base title={`${p.name} pairing`} description={`${p.name}: ${p.mood} A type pairing from Design Lounge by ${AUTHOR.name}.`}>
+  <link rel="stylesheet" href={fontHref([p.display.spec, p.text.spec])} />
+  <PageHead eyebrow="Library · Type" title={p.name} blurb={p.mood} />
+  <div class="wrap page">
+    <section class="hero" style={`background:${p.bg};color:${p.ink}`}>
+      <p class="label" style={`color:${p.accent}`}>{p.label}</p>
+      <h2 class="hl" style={faceCss(p.display)}>{p.headline}</h2>
+      <p class="bd" style={faceCss(p.text)}>{p.body}</p>
+      <div class="swatch" aria-hidden="true">
+        <i style={`background:${p.bg}`}></i><i style={`background:${p.ink}`}></i><i style={`background:${p.accent}`}></i>
+      </div>
+    </section>
+    <aside class="side">
+      <dl>
+        <div><dt>Display</dt><dd>{p.display.family} · {p.display.weight}{p.display.italic ? ' italic' : ''}</dd></div>
+        <div><dt>Text</dt><dd>{p.text.family} · {p.text.weight}</dd></div>
+        <div><dt>Best for</dt><dd>{p.bestFor.join(', ')}</dd></div>
+        <div><dt>Tags</dt><dd>{p.tags.join(', ')}</dd></div>
+      </dl>
+      <button class="btn primary" type="button" data-copy="#pairing-css"><span data-label>Copy CSS</span></button>
+      <p class="mono faint credit">Pairing by {AUTHOR.name}. Free to use; credit appreciated.</p>
+    </aside>
+    <script type="application/json" id="pairing-css" set:html={JSON.stringify(css)}></script>
+    <section class="css">
+      <div class="section-head"><div><span class="eyebrow">Tokens</span><h3 class="display h4">The pairing as CSS</h3></div></div>
+      <pre><code>{css}</code></pre>
+    </section>
+    {others.length > 0 && (
+      <nav class="more" aria-label="Related pairings">
+        <p class="eyebrow">Nearby pairings</p>
+        <ul>{others.map((o) => <li><a href={`/type/${o.id}`}>{o.name}</a></li>)}</ul>
+      </nav>
+    )}
+  </div>
+</Base>
+
+<style>
+  .page { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, .8fr); gap: 32px; margin-top: 36px; }
+  .hero { padding: clamp(32px, 5vw, 64px); border-radius: var(--r-lg); border: 1px solid var(--line); min-height: 360px; display: flex; flex-direction: column; gap: 18px; }
+  .label { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+  .hl { font-size: clamp(40px, 6vw, 72px); line-height: .98; margin: 0; }
+  .bd { font-size: 18px; line-height: 1.5; max-width: 42ch; opacity: .88; }
+  .swatch { display: flex; gap: 8px; margin-top: auto; }
+  .swatch i { width: 28px; height: 28px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .side { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+  dl { display: flex; flex-direction: column; gap: 14px; }
+  dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  dd { margin: 4px 0 0; font-size: 15px; }
+  .css { grid-column: 1 / -1; }
+  pre { background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px; overflow: auto; font-size: 12.5px; line-height: 1.55; }
+  .more { grid-column: 1 / -1; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; padding-top: 12px; border-top: 1px solid var(--line); }
+  .more ul { display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .more a { border-bottom: 1px solid var(--line-2); }
+  .more a:hover { border-color: var(--ink); }
+  .credit { max-width: 36ch; }
+  @media (max-width: 800px) { .page { grid-template-columns: 1fr; } }
+</style>

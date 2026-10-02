@@ -3,6 +3,7 @@ title: "Sidebar with overlay and pin modes"
 summary: "A 280px notes sidebar on a 1180×820 tablet that either overlays the page with a scrim and shadow or pins so the content reflows; a pin toggle switches modes with one 320ms transition."
 platform: tablet
 type: component
+category: navigation
 tags: [sidebar, navigation, notes, overlay, layout]
 styles: [minimal, soft, paper]
 motion: subtle

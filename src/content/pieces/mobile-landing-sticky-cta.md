@@ -3,6 +3,7 @@ title: "Mobile landing with sticky CTA"
 summary: "A 390px marketing landing page: Fraunces headline, scroll-snap feature carousel, social-proof block, FAQ accordion and a CTA bar that slides up once the hero scrolls away."
 platform: mobile-web
 type: screen
+category: landing
 tags: [landing, marketing, carousel, accordion, cta]
 styles: [editorial, paper, soft]
 motion: subtle

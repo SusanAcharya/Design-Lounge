@@ -3,6 +3,7 @@ title: "Now playing"
 summary: "A full-screen player: CSS-gradient album art with SVG grain, the same art blurred as the backdrop, a scrubber with a fat drag thumb, a path-morphing play/pause and time-synced lyrics."
 platform: mobile-app
 type: screen
+category: media
 tags: [music, player, scrubber, lyrics, ios, dark]
 styles: [dark, luxe, glass]
 motion: rich

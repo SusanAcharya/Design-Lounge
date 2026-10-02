@@ -3,6 +3,7 @@ title: "Editorial mega menu"
 summary: "A newspaper-style top nav whose full-width panel animates its height between sections, with a 2px underline that slides between labels and a featured story card."
 platform: web
 type: component
+category: navbar
 tags: [navigation, mega-menu, editorial, header, hover]
 styles: [editorial, paper]
 motion: subtle

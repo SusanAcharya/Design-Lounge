@@ -3,6 +3,7 @@ title: "Notification center panel"
 summary: "A bell with an unread dot opens a 380px top-right panel with All/Mentions/Following tabs, Today/Yesterday groups, unread dots that scale away on Mark all read, and an empty tab state."
 platform: web
 type: component
+category: overlays
 tags: [notifications, popover, tabs, dashboard, dark]
 styles: [dark, minimal, industrial]
 motion: subtle

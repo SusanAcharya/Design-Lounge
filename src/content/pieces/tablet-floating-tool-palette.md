@@ -3,6 +3,7 @@ title: "Floating tool palette"
 summary: "A draggable 56px tool palette for a 1180×820 canvas app: five tools with a sliding active indicator, a colour-and-size popover, undo and clear, over a dot-grid canvas you draw on."
 platform: tablet
 type: component
+category: utility
 tags: [toolbar, palette, canvas, drawing, popover, drag]
 styles: [dark, industrial, minimal]
 motion: subtle

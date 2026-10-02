@@ -3,6 +3,7 @@ title: "Magazine editorial grid"
 summary: "An asymmetric 12-column editorial front: a 7-column lead story, three sidebar stories, a numbered index that highlights its story on hover, and hairline rules throughout."
 platform: web
 type: layout
+category: blog
 tags: [editorial, magazine, grid, typography]
 styles: [editorial, paper]
 motion: subtle

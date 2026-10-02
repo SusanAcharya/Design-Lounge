@@ -3,6 +3,7 @@ title: "Tablet ops dashboard grid"
 summary: "A 1180×820 dark ops dashboard: 3×2 card grid with a crosshair-hover SVG line chart, a dash-offset gauge, a live event list that inserts a row every 4s, and a mono segmented time control."
 platform: tablet
 type: screen
+category: dashboard
 tags: [dashboard, chart, gauge, live-data, dark, ops]
 styles: [dark, terminal, industrial]
 motion: subtle

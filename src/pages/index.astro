@@ -2,8 +2,13 @@
 import Base from '../layouts/Base.astro';
 import DeviceFrame from '../components/DeviceFrame.astro';
 import PieceCard from '../components/PieceCard.astro';
-import { COLLECTIONS } from '../data/collections';
-import { getPieces, numberMap, TYPE_META } from '../lib/pieces';
+import { COLLECTIONS, SHELF_GROUPS } from '../data/collections';
+import { getPieces, numberMap, CATEGORY_GROUPS, CATEGORY_META, AUTHOR } from '../lib/pieces';
+import { PAIRINGS } from '../data/type';
+import { THEMES } from '../data/themes';
+import { ICONS } from '../data/icons';
+import { RECIPES } from '../data/motion';
+import { STARTS, MAP } from '../data/starts';
 
 const all = await getPieces();
 const nums = numberMap(all);
@@ -13,25 +18,41 @@ const pick = (platform: string) => featured.find((p) => p.data.platform === plat
 const heroWeb = pick('web') ?? newest[0];
 const heroPhone = pick('mobile-app') ?? pick('pwa') ?? pick('mobile-web');
 const heroTablet = pick('tablet');
-const fresh = newest.slice(0, 8);
+const fresh = newest.slice(0, 4);
 const byId = new Map(all.map((p) => [p.id, p]));
-const shelves = COLLECTIONS.map((c) => ({ ...c, items: c.pieces.map((s) => byId.get(s)).filter(Boolean) })).filter((c) => c.items.length >= 3).slice(0, 3);
+const catCount = (c: string) => all.filter((p) => p.data.category === c).length;
+const indexGroups = CATEGORY_GROUPS.map((g) => ({
+  ...g,
+  items: g.items.map((c) => ({ c, n: catCount(c), label: CATEGORY_META[c].label })).filter((i) => i.n > 0),
+})).filter((g) => g.items.length);
+const groupedShelves = SHELF_GROUPS.map((g) => ({
+  ...g,
+  items: g.slugs.map((s) => COLLECTIONS.find((c) => c.slug === s)).filter(Boolean),
+}));
+const libs = [
+  { href: '/type', kicker: 'Type', title: 'Pairings', n: PAIRINGS.length, blurb: 'Display and text marriages that already work.' },
+  { href: '/themes', kicker: 'Themes', title: 'Palettes', n: THEMES.length, blurb: 'Full token sets, not five hex chips.' },
+  { href: '/icons', kicker: 'Icons', title: 'Lounge Icons', n: ICONS.length, blurb: 'One 24px stroke family. Copy the SVG.' },
+  { href: '/motion', kicker: 'Motion', title: 'Recipes', n: RECIPES.length, blurb: 'Curves, durations, reduced-motion fallbacks.' },
+];
 ---
 <Base>
   <section class="hero wrap">
     <div class="hero-text">
-      <p class="eyebrow reveal">{String(all.length).padStart(3, '0')} live pieces · web, mobile, app, PWA, tablet</p>
+      <p class="eyebrow reveal">{String(all.length).padStart(3, '0')} live pieces · {PAIRINGS.length} pairings · {THEMES.length} themes</p>
       <h1 class="display h1"><span class="reveal" style="--d:60ms">Interfaces</span> <span class="reveal" style="--d:140ms">worth</span> <i class="reveal" style="--d:220ms">sitting with.</i></h1>
-      <p class="lede reveal" style="--d:300ms">Every piece runs live, is one readable file, and ships with a brief your coding agent can rebuild it from.</p>
+      <p class="lede reveal" style="--d:300ms">A design library by {AUTHOR.name}. System first — type, colour, icons, motion — then pieces arranged by name and by problem. Copy any of it. Hand the brief to your agent.</p>
       <div class="acts reveal" style="--d:380ms">
-        <a class="btn primary" href="/browse">Browse the floor</a>
-        <a class="btn ghost" href="/guide">How briefs work</a>
+        <a class="btn primary" href="/kit">Compose a kit</a>
+        <a class="btn ghost" href="/browse">Browse the floor</a>
       </div>
     </div>
     <div class="hero-wall reveal" style="--d:160ms" aria-label="Featured pieces">
+      {heroWeb && (
       <a class="wall-item web" href={`/p/${heroWeb.id}`} aria-label={heroWeb.data.title}>
         <DeviceFrame slug={heroWeb.id} platform={heroWeb.data.platform} title={heroWeb.data.title} eager />
       </a>
+      )}
       {heroPhone && (
         <a class="wall-item phone" href={`/p/${heroPhone.id}`} aria-label={heroPhone.data.title}>
           <DeviceFrame slug={heroPhone.id} platform={heroPhone.data.platform} title={heroPhone.data.title} eager />
@@ -45,22 +66,96 @@ const shelves = COLLECTIONS.map((c) => ({ ...c, items: c.pieces.map((s) => byId.
     </div>
   </section>
 
-  <section class="section wrap rooms">
+  <nav class="map wrap" aria-label="Library map">
+    {MAP.map((m) => (
+      <a href={m.href}>
+        <span class="eyebrow">{m.kicker}</span>
+        <span class="display h4">{m.title}</span>
+        <span class="muted">{m.blurb}</span>
+      </a>
+    ))}
+  </nav>
+
+  <section class="section wrap needs">
     <div class="section-head">
-      <div><span class="eyebrow">Rooms</span><h2 class="display h2">Six rooms</h2></div>
-      <a class="more" href="/browse">Everything →</a>
+      <div><span class="eyebrow">Start</span><h2 class="display h2">What are you <i>making</i>?</h2></div>
+      <a class="more" href="/start">All recipes →</a>
     </div>
-    <ol class="room-grid">
-      {Object.entries(TYPE_META).map(([k, v], i) => (
-        <li class="room reveal" style={`--d:${i * 50}ms`}>
-          <a href={`/rooms/${k}`}>
-            <span class="room-n mono num">{String(all.filter((p) => p.data.type === k).length).padStart(2, '0')}</span>
-            <span class="room-name display h3">{v.label}</span>
-            <span class="room-blurb">{v.blurb}</span>
+    <ol class="need-grid">
+      {STARTS.map((s, i) => (
+        <li class="reveal" style={`--d:${i * 40}ms`}>
+          <a href={`/start#${s.id}`}>
+            <span class="eyebrow">{s.kicker}</span>
+            <span class="display h4">{s.title}</span>
+            <span class="muted">{s.blurb}</span>
           </a>
         </li>
       ))}
     </ol>
+  </section>
+
+  <section class="section wrap libs">
+    <div class="section-head">
+      <div><span class="eyebrow">System</span><h2 class="display h2">Lock the <i>grammar</i> first.</h2></div>
+      <a class="more" href="/system">Open the system →</a>
+    </div>
+    <ol class="lib-grid">
+      {libs.map((l, i) => (
+        <li class="reveal" style={`--d:${i * 50}ms`}>
+          <a href={l.href}>
+            <span class="eyebrow">{l.kicker}</span>
+            <span class="display h3">{l.title}</span>
+            <span class="n mono num">{String(l.n).padStart(2, '0')}</span>
+            <span class="muted">{l.blurb}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="section wrap idx">
+    <div class="section-head">
+      <div><span class="eyebrow">Index</span><h2 class="display h2">Find it <i>by name.</i></h2></div>
+      <a class="more" href="/c">Full index →</a>
+    </div>
+    <div class="idx-cols">
+      {indexGroups.map((g) => (
+        <div>
+          <p class="eyebrow">{g.label}</p>
+          <ol>
+            {g.items.map((i) => (
+              <li><a href={`/c/${i.c}`}><span>{i.label}</span><span class="mono num faint">{String(i.n).padStart(2, '0')}</span></a></li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section wrap shelves-home">
+    <div class="section-head">
+      <div><span class="eyebrow">Shelves</span><h2 class="display h2">Arranged by <i>problem.</i></h2></div>
+      <a class="more" href="/collections">All {COLLECTIONS.length} →</a>
+    </div>
+    <div class="shelf-groups">
+      {groupedShelves.map((g) => (
+        <div>
+          <p class="eyebrow">{g.label}</p>
+          <p class="muted gblurb">{g.blurb}</p>
+          <ol>
+            {g.items.map((c) => (
+              <li>
+                <a href={`/collections/${c!.slug}`}>
+                  <span class="mono faint">{c!.kicker}</span>
+                  <span class="display h4">{c!.title}</span>
+                  <span class="mono num faint">{String(c!.pieces.filter((s) => byId.has(s)).length).padStart(2, '0')}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
   </section>
 
   <section class="section wrap fresh">
@@ -75,41 +170,23 @@ const shelves = COLLECTIONS.map((c) => ({ ...c, items: c.pieces.map((s) => byId.
 
   <section class="section wrap how">
     <ol class="how-row">
-      <li class="reveal"><span class="mono faint">01</span><h3 class="display h4">Find a piece</h3><p>Every card is the live demo. Open one, click into it.</p></li>
-      <li class="reveal" style="--d:60ms"><span class="mono faint">02</span><h3 class="display h4">Copy the brief</h3><p>Tokens, motion table, states, accessibility, checklist. One button.</p></li>
-      <li class="reveal" style="--d:120ms"><span class="mono faint">03</span><h3 class="display h4">Hand it to your agent</h3><p>Paste it with one line naming your stack. Hold the result to the checklist.</p></li>
+      <li class="reveal"><span class="mono faint">01</span><h3 class="display h4">Name the job</h3><p>Compose a kit — website, product, or platform. Or open the index. Don’t scroll 153 cards hoping one feels right.</p></li>
+      <li class="reveal" style="--d:60ms"><span class="mono faint">02</span><h3 class="display h4">Lock the system</h3><p>Pick a researched palette, a pairing, a component family. Both screens update. Then sit with the live pieces.</p></li>
+      <li class="reveal" style="--d:120ms"><span class="mono faint">03</span><h3 class="display h4">Copy the brief</h3><p>The kit writes the MD. Palette, type, components, pieces. Paste it into your agent.</p></li>
     </ol>
-  </section>
-
-  <section class="section wrap shelves-home">
-    <div class="section-head">
-      <div><span class="eyebrow">Shelves</span><h2 class="display h2">Collections</h2></div>
-      <a class="more" href="/collections">All {COLLECTIONS.length} →</a>
-    </div>
-    <div class="shelf-row">
-      {shelves.map((c, i) => (
-        <a class="shelf-card reveal" style={`--d:${i * 60}ms`} href={`/collections/${c.slug}`}>
-          <div class="shelf-wall" aria-hidden="true">
-            {c.items.slice(0, 3).map((p) => <div class="mini"><DeviceFrame slug={p!.id} platform={p!.data.platform} title={p!.data.title} /></div>)}
-          </div>
-          <span class="eyebrow">{c.kicker} · {c.items.length} pieces</span>
-          <span class="display h4">{c.title}</span>
-        </a>
-      ))}
-    </div>
   </section>
 
   <section class="section wrap seat">
     <h2 class="display h1">Take a <i>seat.</i></h2>
     <div class="acts">
       <a class="btn primary" href="/random" data-random>Show me something</a>
-      <a class="btn ghost" href="/browse">Browse the floor</a>
+      <a class="btn ghost" href="/agents">For agents</a>
     </div>
   </section>
 </Base>
 
 <style>
-  .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; padding: clamp(40px, 6vw, 80px) 0 clamp(32px, 5vw, 64px); min-height: calc(100vh - var(--header-h)); }
+  .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; padding: clamp(40px, 6vw, 80px) 0 clamp(32px, 5vw, 48px); min-height: calc(100vh - var(--header-h) - 120px); }
   .hero-text { display: flex; flex-direction: column; gap: 24px; }
   .hero .h1 span, .hero .h1 i { display: inline-block; }
   .hero .acts { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -122,35 +199,53 @@ const shelves = COLLECTIONS.map((c) => ({ ...c, items: c.pieces.map((s) => byId.
   .wall-item.phone :global(lounge-frame) { inset: 6px; }
   .wall-item.tablet { left: 10%; top: 57%; width: 54%; aspect-ratio: 16 / 11.3; }
 
-  .room-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-  .room a { display: flex; flex-direction: column; gap: 8px; padding: 26px 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 180px; transition: background-color var(--t-med) var(--ease); }
-  .room a:hover { background: var(--paper-2); }
-  .room-n { color: var(--ink-3); }
-  .room-blurb { color: var(--ink-2); font-size: 14px; max-width: 30ch; text-wrap: pretty; }
+  .map { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+  .map a { display: flex; flex-direction: column; gap: 8px; padding: 22px 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 140px; transition: background-color var(--t-med) var(--ease); }
+  .map a:hover { background: var(--paper-2); }
+  .map .muted { font-size: 13.5px; max-width: 28ch; text-wrap: pretty; }
+
+  .need-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+  .need-grid a { display: flex; flex-direction: column; gap: 8px; padding: 24px 20px; min-height: 168px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
+  .need-grid a:hover { background: var(--paper-2); }
+  .need-grid .muted { font-size: 13.5px; max-width: 28ch; text-wrap: pretty; }
+
+  .lib-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+  .lib-grid a { display: flex; flex-direction: column; gap: 10px; padding: 28px 24px; min-height: 200px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
+  .lib-grid a:hover { background: var(--paper-2); }
+  .lib-grid .n { font-size: 28px; color: var(--ink-3); margin-top: auto; }
+  .lib-grid .muted { font-size: 14px; max-width: 28ch; text-wrap: pretty; }
+
+  .idx-cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px 20px; }
+  .idx-cols .eyebrow { padding-bottom: 10px; border-bottom: 1px solid var(--ink); margin-bottom: 8px; }
+  .idx-cols a { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .idx-cols a:hover { color: var(--accent); }
+
+  .shelf-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .gblurb { font-size: 14px; max-width: 36ch; margin: 8px 0 16px; text-wrap: pretty; }
+  .shelf-groups .eyebrow { padding-bottom: 10px; border-bottom: 1px solid var(--ink); }
+  .shelf-groups li a { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .shelf-groups li a:hover .h4 { text-decoration: underline; text-underline-offset: 4px; }
 
   .how { padding-block: 0; }
   .how-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; border-top: 1px solid var(--ink); padding-top: 28px; }
   .how-row li { display: flex; flex-direction: column; gap: 8px; }
   .how-row p { color: var(--ink-2); font-size: 14.5px; max-width: 32ch; text-wrap: pretty; }
 
-  .shelf-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .shelf-card { display: flex; flex-direction: column; gap: 8px; padding: 14px; border: 1px solid var(--line); border-radius: var(--r-lg); transition: border-color var(--t-fast), transform var(--t-med) var(--ease); }
-  .shelf-card:hover { border-color: var(--ink-3); transform: translateY(-3px); }
-  .shelf-card .shelf-wall { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 6px; }
-  .mini { aspect-ratio: 3 / 4; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); position: relative; overflow: hidden; }
-  .mini :global(lounge-frame) { position: absolute; inset: 6px; }
-
   .seat { display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; padding-bottom: 0; }
   .seat .acts { display: flex; gap: 10px; }
 
+  @media (max-width: 1100px) {
+    .idx-cols { grid-template-columns: repeat(3, 1fr); }
+    .need-grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 960px) {
     .hero { grid-template-columns: 1fr; min-height: 0; }
-    .room-grid { grid-template-columns: repeat(2, 1fr); }
-    .how-row, .shelf-row { grid-template-columns: 1fr; }
+    .map, .lib-grid { grid-template-columns: repeat(2, 1fr); }
+    .shelf-groups { grid-template-columns: 1fr; gap: 32px; }
+    .how-row { grid-template-columns: 1fr; }
   }
   @media (max-width: 640px) {
-    .room-grid { grid-template-columns: 1fr; }
-    .room a { min-height: 0; }
+    .map, .lib-grid, .need-grid, .idx-cols { grid-template-columns: 1fr; }
     .wall-item.tablet { display: none; }
     .wall-item.web { width: 74%; top: 0; }
     .wall-item.phone { width: 34%; top: 20%; }

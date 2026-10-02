@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { AUTHOR } from '../../lib/pieces';
+import { PAIRINGS } from '../../data/type';
+import { THEMES } from '../../data/themes';
+import { ICONS, iconSvg } from '../../data/icons';
+import { RECIPES, EASINGS } from '../../data/motion';
+
+const previewIcons = ICONS.filter((i) => ['search', 'menu', 'heart', 'arrow-right', 'bell', 'image', 'cart', 'mail', 'file', 'check'].includes(i.id)).slice(0, 8);
+const previewThemes = THEMES.slice(0, 6);
+---
+<Base title="System" description={`Type, themes, icons and motion from Design Lounge by ${AUTHOR.name}. The ingredients of a design system, copyable.`}>
+  <PageHead eyebrow="The system" title="Ingredients, <i>not leftovers</i>" blurb="Before you draw a screen, lock the grammar: a pairing, a theme, an icon stroke, a motion recipe. This is what a future skill will hand your agent first." count={PAIRINGS.length + THEMES.length + ICONS.length + RECIPES.length} countLabel="tokens" />
+  <div class="wrap page">
+    <ol class="libs">
+      <li>
+        <a href="/type">
+          <span class="eyebrow">Type · {String(PAIRINGS.length).padStart(2, '0')}</span>
+          <h2 class="display h3">Pairings</h2>
+          <p class="muted">Display and text marriages that already work. Copy the CSS. Don’t invent a pairing if one here fits.</p>
+          <ol class="spec" aria-hidden="true">
+            {PAIRINGS.slice(0, 3).map((p) => (
+              <li>
+                <span class="display h4">{p.name}</span>
+                <span class="mono faint">{p.display.family} + {p.text.family}</span>
+              </li>
+            ))}
+          </ol>
+        </a>
+      </li>
+      <li>
+        <a href="/themes">
+          <span class="eyebrow">Themes · {String(THEMES.length).padStart(2, '0')}</span>
+          <h2 class="display h3">Palettes</h2>
+          <p class="muted">Full token sets — paper, ink, accent, radius, shadow — not five hex chips on a Dribbble shot.</p>
+          <ol class="swatch-rows" aria-hidden="true">
+            {previewThemes.map((t) => (
+              <li>
+                <span class="nm">{t.name}</span>
+                <span class="dots"><i style={`background:${t.tokens.bg}`}></i><i style={`background:${t.tokens.ink}`}></i><i style={`background:${t.tokens.accent}`}></i></span>
+              </li>
+            ))}
+          </ol>
+        </a>
+      </li>
+      <li>
+        <a href="/icons">
+          <span class="eyebrow">Icons · {String(ICONS.length).padStart(2, '0')}</span>
+          <h2 class="display h3">Lounge Icons</h2>
+          <p class="muted">One 24px stroke family. Copy a single SVG or the whole sprite. Same weight as the site chrome.</p>
+          <div class="icos" aria-hidden="true" set:html={previewIcons.map((i) => iconSvg(i, { size: 28 })).join('')} />
+        </a>
+      </li>
+      <li>
+        <a href="/motion">
+          <span class="eyebrow">Motion · {String(RECIPES.length).padStart(2, '0')}</span>
+          <h2 class="display h3">Recipes</h2>
+          <p class="muted">{EASINGS.length} curves, seven durations, {RECIPES.length} recipes. Numbers, not “make it smooth”.</p>
+          <div class="ease" aria-hidden="true"><i></i><span class="mono faint">lounge-standard · 320ms</span></div>
+        </a>
+      </li>
+    </ol>
+    <aside class="note">
+      <p class="eyebrow">For a new product</p>
+      <p>Pick a <a href="/start">start recipe</a>. It names a theme, a pairing, a shelf of pieces, and the categories to pull from. That is the skill, written as a page.</p>
+      <p class="mono faint">System by {AUTHOR.name} · Design Lounge · {AUTHOR.siteLabel}</p>
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .page { margin-top: 40px; display: flex; flex-direction: column; gap: 48px; }
+  .libs { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+  .libs a { display: flex; flex-direction: column; gap: 12px; padding: 32px 28px; min-height: 320px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
+  .libs a:hover { background: var(--paper-2); }
+  .libs p { max-width: 36ch; font-size: 14.5px; text-wrap: pretty; }
+  .spec { display: flex; flex-direction: column; gap: 10px; margin-top: auto; padding-top: 16px; }
+  .spec li { display: flex; flex-direction: column; gap: 2px; }
+  .swatch-rows { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 16px; }
+  .swatch-rows li { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .icos { display: flex; flex-wrap: wrap; gap: 14px; margin-top: auto; padding-top: 16px; color: var(--ink); }
+  .icos :global(svg) { stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .ease { display: flex; align-items: center; gap: 14px; margin-top: auto; padding-top: 16px; }
+  .ease i { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); animation: slide 1.4s cubic-bezier(.2,.7,.2,1) infinite alternate; }
+  .note { max-width: 56ch; display: flex; flex-direction: column; gap: 10px; }
+  .note a { text-decoration: underline; text-underline-offset: 3px; }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(48px); } }
+  @media (prefers-reduced-motion: reduce) { .ease i { animation: none; } }
+  @media (max-width: 800px) { .libs { grid-template-columns: 1fr; } .libs a { min-height: 0; } }
+</style>

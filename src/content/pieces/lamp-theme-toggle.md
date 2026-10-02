@@ -3,6 +3,7 @@ title: "Lamp pull-cord theme toggle"
 summary: "A hanging brass lamp with a pull cord that switches the whole page between day and night with a radial clip-path reveal starting at the bulb; reduced motion crossfades."
 platform: web
 type: component
+category: micro
 tags: [theme, dark-mode, toggle, view-transition, editorial]
 styles: [editorial, paper, dark]
 motion: rich

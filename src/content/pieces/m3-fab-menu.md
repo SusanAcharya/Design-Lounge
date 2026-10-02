@@ -3,6 +3,7 @@ title: "M3 expanding FAB menu"
 summary: "A dark-tonal Material 3 Expressive FAB that rotates its plus 45°, rounds to a circle and unfurls three labelled pill actions with a 40ms stagger behind a scrim."
 platform: mobile-app
 type: component
+category: buttons
 tags: [material, fab, menu, actions, dark]
 styles: [material, dark]
 motion: rich

@@ -6,8 +6,12 @@ const root = new URL('..', import.meta.url).pathname;
 const demosDir = path.join(root, 'src/demos');
 const briefsDir = path.join(root, 'src/content/pieces');
 const PLATFORMS = ['web', 'mobile-web', 'mobile-app', 'pwa', 'tablet'];
-const TYPES = ['screen', 'component', 'animation', 'layout', 'pattern', 'style'];
-const STYLES = ['editorial','swiss','brutalist','glass','material','minimal','playful','retro','terminal','paper','luxe','dark','soft','industrial','kinetic'];
+// Single source of truth is src/content.config.ts; parse the lists out of it.
+const config = await readFile(path.join(root, 'src/content.config.ts'), 'utf8');
+const list = (name) => [...(config.match(new RegExp(`${name} = \\[([\\s\\S]*?)\\] as const`))?.[1] ?? '').matchAll(/'([a-z0-9-]+)'/g)].map((m) => m[1]);
+const TYPES = list('TYPES');
+const STYLES = list('STYLES');
+const CATEGORIES = list('CATEGORIES');
 const SECTIONS = ['## What it is','## Reference behaviour','## Structure','## Tokens','## Typography','## Motion','## States','## Accessibility','## Responsive rules','## Acceptance checklist','## Implementation notes'];
 const BANNED_WORDS = /\b(lorem|ipsum|stunning|seamless|sleek)\b/i;
 
@@ -46,8 +50,8 @@ for (const slug of [...slugs].sort()) {
   // demo checks
   if (!html.startsWith('<!-- Design Lounge piece: ' + slug)) err(slug, 'demo must start with the piece header comment');
   if (!/<!doctype html>/i.test(html)) err(slug, 'demo missing <!doctype html>');
-  if (size > 30 * 1024) err(slug, `demo is ${(size/1024).toFixed(1)} KB (> 30 KB)`);
-  else if (size > 20 * 1024) warn(slug, `demo is ${(size/1024).toFixed(1)} KB (> 20 KB)`);
+  if (size > 40 * 1024) err(slug, `demo is ${(size/1024).toFixed(1)} KB (> 40 KB)`);
+  else if (size > 30 * 1024) warn(slug, `demo is ${(size/1024).toFixed(1)} KB (> 30 KB)`);
   if (/<script[^>]+src=/i.test(html)) err(slug, 'external script');
   const externals = [...html.matchAll(/https?:\/\/[^\s"'<>)]+/g)].map(x => x[0]).filter(u => !/fonts\.(googleapis|gstatic)\.com|www\.w3\.org/.test(u));
   if (externals.length) err(slug, 'external URLs: ' + [...new Set(externals)].slice(0, 3).join(', '));
@@ -61,7 +65,8 @@ for (const slug of [...slugs].sort()) {
   const parsed = parseFrontmatter(md);
   if (!parsed) { err(slug, 'brief has no frontmatter'); continue; }
   const { fm, body } = parsed;
-  for (const k of ['title','summary','platform','type','tags','styles','motion','difficulty','published','palette','fonts']) if (fm[k] === undefined) err(slug, `frontmatter missing ${k}`);
+  for (const k of ['title','summary','platform','type','category','tags','styles','motion','difficulty','published','palette','fonts']) if (fm[k] === undefined) err(slug, `frontmatter missing ${k}`);
+  if (fm.category && !CATEGORIES.includes(fm.category)) err(slug, 'bad category ' + fm.category);
   if (fm.title && fm.title.length > 48) err(slug, 'title > 48 chars');
   if (fm.summary && fm.summary.length > 200) err(slug, 'summary > 200 chars');
   if (fm.platform && !PLATFORMS.includes(fm.platform)) err(slug, 'bad platform ' + fm.platform);

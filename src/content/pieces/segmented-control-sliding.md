@@ -3,6 +3,7 @@ title: "Sliding segmented control"
 summary: "Segmented controls in 2, 3 and 5-segment variants: an ivory pill slides between options over 260ms with a mid-travel squash, arrow keys move selection, and each switches a content panel."
 platform: web
 type: component
+category: navigation
 tags: [segmented-control, tabs, toggle, radio, banking]
 styles: [luxe, dark]
 motion: subtle

@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "thumbs": "node scripts/thumbs.mjs",
-    "check:pieces": "node scripts/check-pieces.mjs"
+    "check:pieces": "node scripts/check-pieces.mjs",
+    "skill:install": "node skills/design-lounge/install.mjs"
   },
   "dependencies": {
     "astro": "^5.13.0"

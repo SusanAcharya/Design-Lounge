@@ -1,0 +1,183 @@
+<!-- Design Lounge piece: contact-conversational-form · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Conversational contact form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffd84d;--bg-2:#f6cb2f;--ink:#1b1a17;--ink-2:#4a4535;--ink-3:#7a6f45;--line:rgba(27,26,23,.18);--accent:#e5402a;--paper:#fff7dc;
+  --serif:"Young Serif",Georgia,serif;--sans:"Figtree",system-ui,sans-serif;
+  --r:12px;--t-micro:160ms;--t-step:520ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.5 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+header{height:72px;display:flex;align-items:center;gap:24px;padding:0 48px;position:relative}
+.logo{font:22px var(--serif);letter-spacing:-.01em}.logo i{font-style:normal;color:var(--accent)}
+.meta{font:600 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.count{margin-left:auto;font:600 13px var(--sans);font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--line)}
+.bar i{display:block;height:100%;width:0;background:var(--ink);transition:width var(--t-step) var(--ease-out)}
+main{flex:1;display:grid;grid-template-columns:300px 1fr;padding:0 48px;position:relative}
+.num{font:200px/1 var(--serif);color:var(--accent);letter-spacing:-.05em;padding-top:64px;position:relative}
+.num small{position:absolute;left:6px;top:290px;font:600 12px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);writing-mode:vertical-rl;transform:rotate(180deg)}
+.stage{position:relative;padding:92px 40px 0 0}
+.q{position:absolute;inset:92px 40px auto 0;opacity:0;visibility:hidden;transform:translateY(48px);transition:opacity var(--t-step) var(--ease),transform var(--t-step) var(--ease-out),visibility 0s var(--t-step)}
+.q.on{opacity:1;visibility:visible;transform:none;transition-delay:120ms,120ms,0s}
+.q.out{opacity:0;transform:translateY(-48px)}
+.q h2{margin:0 0 36px;font:400 64px/1.04 var(--serif);letter-spacing:-.025em;max-width:820px}
+.q h2 em{font-style:normal;color:var(--accent)}
+.q p.hint{margin:-20px 0 32px;color:var(--ink-2);font-size:17px}
+.inp{width:100%;max-width:760px;border:0;border-bottom:2px solid var(--ink);background:transparent;font:40px/1.2 var(--serif);color:var(--ink);padding:6px 0 14px;outline:none;caret-color:var(--accent)}
+.inp::placeholder{color:rgba(27,26,23,.35)}
+.inp:focus{border-bottom-color:var(--accent)}
+.err{display:block;height:24px;margin-top:10px;font:600 14px var(--sans);color:#a3200e}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,360px));gap:12px}
+.ch{display:flex;align-items:center;gap:14px;height:60px;padding:0 18px 0 12px;border:2px solid var(--ink);border-radius:var(--r);background:transparent;font:500 18px var(--sans);color:var(--ink);cursor:pointer;text-align:left;transition:background var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.ch kbd{width:28px;height:28px;flex:none;display:grid;place-items:center;border:1.5px solid var(--ink);border-radius:6px;font:700 13px var(--sans)}
+.ch:hover{background:var(--bg-2)}
+.ch:active{transform:scale(.98)}
+.ch[aria-checked=true]{background:var(--ink);color:var(--bg)}
+.ch[aria-checked=true] kbd{background:var(--bg);color:var(--ink);border-color:var(--bg)}
+.ch[aria-checked=true]::after{content:"";margin-left:auto;width:16px;height:9px;border-left:2.5px solid var(--bg);border-bottom:2.5px solid var(--bg);transform:rotate(-45deg) translate(2px,-2px)}
+.review{list-style:none;margin:0;padding:0;max-width:760px;border-top:2px solid var(--ink)}
+.review li{display:grid;grid-template-columns:140px 1fr auto;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.review span{font:600 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.review b{font:400 26px/1.2 var(--serif)}
+.edit{border:0;background:none;font:600 14px var(--sans);color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:8px}
+.edit:hover{color:var(--accent)}
+footer{height:104px;display:flex;align-items:center;gap:18px;padding:0 48px 0 348px}
+.ok{height:52px;padding:0 26px;border:0;border-radius:999px;background:var(--ink);color:var(--bg);font:700 16px var(--sans);display:inline-flex;align-items:center;gap:10px;cursor:pointer;transition:transform var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.ok:hover{background:var(--accent)}.ok:active{transform:scale(.97)}
+.ok svg,.back svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ok[aria-busy=true]{background:var(--ink-2);pointer-events:none}
+.press{font-size:14px;color:var(--ink-2)}.press kbd{font:700 12px var(--sans);border:1.5px solid var(--ink-2);border-radius:5px;padding:1px 6px;margin:0 2px}
+.back{margin-left:auto;width:52px;height:52px;border-radius:50%;border:2px solid var(--ink);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.back:hover{background:var(--bg-2)}.back[disabled]{opacity:.3;cursor:default}
+.ok:focus-visible,.back:focus-visible,.ch:focus-visible,.edit:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.steps{position:absolute;left:348px;right:88px;bottom:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;border-top:1px solid var(--line);padding:16px 0 0;margin:0;list-style:none}
+.steps li{font-size:14px;color:var(--ink-2);line-height:1.45}.steps b{display:block;font:400 22px var(--serif);color:var(--ink);margin-bottom:2px}
+.done{position:fixed;z-index:3;top:72px;left:0;right:0;bottom:0;background:var(--ink);color:var(--bg);display:grid;grid-template-columns:300px 1fr;padding:96px 48px 0;clip-path:circle(0 at 92% 90%);transition:clip-path 800ms var(--ease-out);visibility:hidden}
+.done.show{clip-path:circle(150% at 92% 90%);visibility:visible}
+.done .big{font:200px/1 var(--serif);color:var(--accent)}
+.done h2{margin:0 0 20px;font:400 72px/1.02 var(--serif);letter-spacing:-.03em}
+.done p{margin:0 0 32px;font-size:19px;max-width:520px;color:#d8d2bd}
+.done button{height:48px;padding:0 22px;border-radius:999px;border:2px solid var(--bg);background:transparent;color:var(--bg);font:700 15px var(--sans);cursor:pointer}
+.done button:hover{background:var(--bg);color:var(--ink)}
+.done button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;transition-delay:0s!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Odd<i>/</i>Hours</div><span class="meta">Film &amp; motion studio · New enquiry</span>
+  <span class="count" id="count" aria-live="polite">01 / 04</span>
+  <div class="bar" role="progressbar" aria-label="Form progress" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="bar"><i id="fill"></i></div>
+</header>
+<main>
+  <div class="num" aria-hidden="true"><span id="num">01</span><small id="numLbl">Introductions</small></div>
+  <form class="stage" id="form" novalidate>
+    <section class="q on" data-k="name">
+      <h2><label for="i-name">Hello. Who are we talking to?</label></h2>
+      <input class="inp" id="i-name" autocomplete="name" placeholder="Type your name" value="Maya Okafor">
+      <span class="err" aria-live="polite"></span>
+    </section>
+    <section class="q" data-k="type" role="radiogroup" aria-labelledby="h-type">
+      <h2 id="h-type">Nice to meet you, <em data-name>Maya</em>. What are we making?</h2>
+      <div class="choices">
+        <button type="button" class="ch" role="radio" aria-checked="false"><kbd>A</kbd>Brand film</button>
+        <button type="button" class="ch" role="radio" aria-checked="false"><kbd>B</kbd>Product launch spot</button>
+        <button type="button" class="ch" role="radio" aria-checked="false"><kbd>C</kbd>Title sequence</button>
+        <button type="button" class="ch" role="radio" aria-checked="false"><kbd>D</kbd>Motion identity</button>
+      </div><span class="err" aria-live="polite"></span>
+    </section>
+    <section class="q" data-k="budget" role="radiogroup" aria-labelledby="h-budget">
+      <h2 id="h-budget">Roughly what budget are we working with?</h2>
+      <p class="hint">Ballpark is fine. It helps us suggest the right crew.</p>
+      <div class="choices">
+        <button type="button" class="ch" role="radio" aria-checked="false"><kbd>A</kbd>Under €15k</button>
+        <button type="button" class="ch" role="radio" aria-checked="false"><kbd>B</kbd>€15k – €40k</button>
+        <button type="button" class="ch" role="radio" aria-checked="false"><kbd>C</kbd>€40k – €90k</button>
+        <button type="button" class="ch" role="radio" aria-checked="false"><kbd>D</kbd>€90k and up</button>
+      </div><span class="err" aria-live="polite"></span>
+    </section>
+    <section class="q" data-k="email">
+      <h2><label for="i-email">Last one. Where should we send the treatment?</label></h2>
+      <input class="inp" id="i-email" type="email" autocomplete="email" placeholder="name@company.com">
+      <span class="err" aria-live="polite"></span>
+    </section>
+    <section class="q" data-k="review">
+      <h2 id="h-review">Here's what you told us.</h2>
+      <ul class="review" id="review" aria-labelledby="h-review"></ul>
+    </section>
+  </form>
+  <ol class="steps" aria-label="What happens next"><li><b>Today</b>A producer reads it, usually before 17:00 CET.</li><li><b>Within 48 h</b>A one-page treatment and two call slots.</li><li><b>Week one</b>Fixed quote, crew and a shoot calendar.</li></ol>
+  <div class="done" id="done" role="status">
+    <div class="big" aria-hidden="true"><svg viewBox="0 0 24 24" width="168" height="168" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg></div>
+    <div><h2 id="doneH">Thanks, Maya.<br>Talk Thursday.</h2><p>Our producer Jonas will send a short treatment and two calendar slots within 48 hours.</p><button type="button" id="restart">Start a new enquiry</button></div>
+  </div>
+</main>
+<footer>
+  <button class="ok" id="ok" type="button"><span id="okTxt">OK</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  <span class="press" id="press">press <kbd>Enter</kbd></span>
+  <button class="back" id="back" type="button" aria-label="Previous question" disabled><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+</footer>
+<script>
+(()=>{
+  const $=id=>document.getElementById(id),qs=[...document.querySelectorAll('.q')];
+  const labels=['Introductions','The project','Budget','Contact','Review'],keys=['name','type','budget','email'];
+  const A={name:'Maya Okafor',type:'',budget:'',email:''};let i=0,busy=false;
+  function first(){return A.name.trim().split(/\s+/)[0]||'there';}
+  function valid(k){
+    if(k==='name')return A.name.trim().length>1||'Just a first name is fine.';
+    if(k==='email')return /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(A.email)||'That address looks incomplete.';
+    if(k==='type'||k==='budget')return !!A[k]||'Pick one, or press A to D.';return true;
+  }
+  function show(n,focus=true){
+    const prev=qs[i];prev.classList.remove('on');prev.classList.toggle('out',n>i);
+    setTimeout(()=>prev.classList.remove('out'),520);
+    i=n;const q=qs[i];q.classList.add('on');
+    document.querySelectorAll('[data-name]').forEach(e=>e.textContent=first());
+    $('num').textContent='0'+(i+1);$('numLbl').textContent=labels[i];
+    $('count').textContent=i<4?`0${i+1} / 04`:'Review';$('fill').style.width=(i/4*100)+'%';$('bar').setAttribute('aria-valuenow',i);
+    $('okTxt').textContent=i===4?'Send it over':'OK';$('back').disabled=i===0;
+    if(i===4)$('review').innerHTML=keys.map((k,j)=>`<li><span>${labels[j]}</span><b>${esc(A[k])}</b><button type="button" class="edit" data-j="${j}">Edit</button></li>`).join('');
+    if(focus)setTimeout(()=>{const t=q.querySelector('input,[aria-checked=true],.ch,.edit');t&&t.focus({preventScroll:true});},140);
+  }
+  function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+  function next(){
+    if(busy)return;if(i===4)return submit();
+    const k=keys[i],v=valid(k),err=qs[i].querySelector('.err');
+    if(v!==true){err.textContent=v;qs[i].querySelector('input,.ch').focus();return;}
+    err.textContent='';show(A.email&&i<3&&valid('email')===true&&A.type&&A.budget?4:i+1);
+  }
+  function submit(){
+    busy=true;$('ok').setAttribute('aria-busy','true');$('okTxt').textContent='Sending';
+    setTimeout(()=>{busy=false;$('ok').removeAttribute('aria-busy');$('okTxt').textContent='Send it over';$('fill').style.width='100%';$('count').textContent='Sent';$('doneH').innerHTML=`Thanks, ${esc(first())}.<br>Talk Thursday.`;$('done').classList.add('show');$('restart').focus();},1300);
+  }
+  qs.forEach(q=>q.querySelectorAll('.ch').forEach((b,j,all)=>b.addEventListener('click',()=>{
+    all.forEach(x=>x.setAttribute('aria-checked',String(x===b)));A[q.dataset.k]=b.textContent.slice(1);q.querySelector('.err').textContent='';setTimeout(next,260);
+  })));
+  $('i-name').addEventListener('input',e=>{A.name=e.target.value;qs[0].querySelector('.err').textContent='';});
+  $('i-email').addEventListener('input',e=>{A.email=e.target.value;qs[3].querySelector('.err').textContent='';});
+  $('review').addEventListener('click',e=>{const b=e.target.closest('.edit');if(b)show(+b.dataset.j);});
+  $('ok').addEventListener('click',next);
+  $('back').addEventListener('click',()=>i>0&&show(i-1));
+  $('form').addEventListener('submit',e=>e.preventDefault());
+  addEventListener('keydown',e=>{
+    if($('done').classList.contains('show'))return;
+    if(e.key==='Enter'&&e.target.classList.contains('ch')){e.preventDefault();e.target.click();return;}
+    if(e.key==='Enter'&&!e.shiftKey&&!e.target.closest('.edit,.back')){e.preventDefault();next();return;}
+    const q=qs[i],L=e.key.toUpperCase().charCodeAt(0)-65;
+    if(e.key.length===1&&L>=0&&L<4&&q.querySelector('.ch')&&!e.metaKey&&!e.ctrlKey){q.querySelectorAll('.ch')[L].click();}
+  });
+  $('restart').addEventListener('click',()=>{$('done').classList.remove('show');Object.assign(A,{name:'',type:'',budget:'',email:''});document.querySelectorAll('.inp').forEach(x=>x.value='');document.querySelectorAll('.ch').forEach(x=>x.setAttribute('aria-checked','false'));show(0);});
+  setTimeout(()=>$('i-name').focus({preventScroll:true}),400);
+})();
+</script>
+</body>
+</html>

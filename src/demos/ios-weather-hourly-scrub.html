@@ -1,0 +1,152 @@
+<!-- Design Lounge piece: ios-weather-hourly-scrub · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weather hourly scrub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+@property --sky-top{syntax:"<color>";inherits:true;initial-value:#36508f}
+@property --sky-mid{syntax:"<color>";inherits:true;initial-value:#9c7aa6}
+@property --sky-bot{syntax:"<color>";inherits:true;initial-value:#f3a77f}
+:root{
+  transition:--sky-top var(--t-sky) var(--ease),--sky-mid var(--t-sky) var(--ease),--sky-bot var(--t-sky) var(--ease);
+  --sky-top:#36508f;--sky-mid:#9c7aa6;--sky-bot:#f3a77f;
+  --ink:#ffffff;--ink-2:rgba(255,255,255,.82);--ink-3:rgba(255,255,255,.72);
+  --glass:rgba(255,255,255,.14);--glass-2:rgba(255,255,255,.22);--glass-line:rgba(255,255,255,.28);
+  --rain:#bfe3ff;--sun:#fff3d6;
+  --font:"Outfit",system-ui,-apple-system,sans-serif;
+  --r-card:20px;--r-pill:999px;
+  --t-micro:160ms;--t-sky:600ms;--spring:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--font);color:var(--ink);background:var(--sky-top);-webkit-font-smoothing:antialiased;overflow:hidden;user-select:none}
+.sky{position:fixed;inset:0;background:linear-gradient(180deg,var(--sky-top) 0%,var(--sky-mid) 55%,var(--sky-bot) 100%);}
+.orb{position:absolute;left:0;top:0;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:radial-gradient(circle,var(--sun) 0 38%,rgba(255,243,214,.35) 39%,rgba(255,243,214,0) 70%);transition:transform var(--t-sky) var(--spring),opacity var(--t-sky) var(--ease)}
+.orb.moon{background:radial-gradient(circle at 40% 40%,#f4f1ea 0 30%,rgba(244,241,234,.18) 31%,rgba(244,241,234,0) 66%)}
+.cloud{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);filter:blur(18px);transition:opacity var(--t-sky) var(--ease),transform 1.2s var(--ease)}
+.c1{width:220px;height:70px;left:-40px;top:250px}.c2{width:180px;height:56px;right:-50px;top:190px}.c3{width:140px;height:44px;left:150px;top:300px}
+main{position:relative;height:100%;overflow-y:auto;padding:70px 16px 48px}
+.place{display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;font-weight:500;color:var(--ink-2);letter-spacing:.01em}
+.place svg{width:14px;height:14px;fill:currentColor}
+h1{margin:4px 0 0;text-align:center;font-size:30px;font-weight:400;letter-spacing:-.01em}
+.temp{margin:0 auto;text-align:center;font-size:168px;font-weight:200;line-height:.9;letter-spacing:-.06em;font-variant-numeric:tabular-nums;padding-left:.12em;text-shadow:0 2px 24px rgba(20,30,60,.18)}
+.temp sup{font-size:.42em;font-weight:200;vertical-align:.95em;margin-left:-.04em}
+.cond{text-align:center;font-size:21px;font-weight:400;margin:6px 0 2px;min-height:29px}
+.hl{text-align:center;font-size:15px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.when{display:flex;justify-content:center;margin:14px 0 22px}
+.when span{height:28px;padding:0 12px;border-radius:var(--r-pill);background:var(--glass);border:1px solid var(--glass-line);display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;font-variant-numeric:tabular-nums;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.when i{width:6px;height:6px;border-radius:50%;background:var(--ink);opacity:0;transition:opacity var(--t-micro) var(--ease)}
+.when.live i{opacity:1}
+.card{background:var(--glass);border:1px solid var(--glass-line);border-radius:var(--r-card);-webkit-backdrop-filter:blur(26px) saturate(160%);backdrop-filter:blur(26px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 10px 30px rgba(20,30,60,.12)}
+.hourly{padding:12px 16px 12px}
+.hourly header{display:flex;justify-content:space-between;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.18)}
+.scrub{position:relative;height:150px;margin-top:6px;touch-action:none;cursor:ew-resize;border-radius:12px;outline:none}
+.scrub:focus-visible{box-shadow:0 0 0 2px var(--ink)}
+.scrub svg{position:absolute;left:0;top:30px;width:100%;height:84px;overflow:visible}
+.icons{position:absolute;left:0;right:0;top:0;height:24px}
+.icons svg,.ticks span{position:absolute;transform:translateX(-50%)}
+.icons svg{width:20px;height:20px;top:2px;fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+.ticks{position:absolute;left:0;right:0;bottom:0;height:18px;font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.head{position:absolute;top:22px;bottom:20px;width:0;border-left:1px solid rgba(255,255,255,.7);pointer-events:none;transition:transform var(--t-micro) var(--spring)}
+.head b{position:absolute;left:-8px;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 4px rgba(255,255,255,.28),0 2px 8px rgba(20,30,60,.3);transition:top var(--t-micro) var(--spring)}
+.scrub.drag .head b{transform:scale(1.18)}
+.now-dot{position:absolute;bottom:20px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--ink)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.tile{padding:12px 14px}
+.tile small{display:block;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.tile b{display:block;font-size:24px;font-weight:300;margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.tile em{font-style:normal;font-size:12px;color:var(--ink-2);font-weight:400}
+.note{margin:14px 0 0;text-align:center;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.note span{opacity:.5;margin:0 6px}
+.reset{appearance:none;border:0;background:none;color:inherit;font:inherit;cursor:pointer;padding:0;height:20px;letter-spacing:inherit;text-transform:inherit}
+.reset:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-pc" viewBox="0 0 24 24"><path d="M8 5.5a4 4 0 0 1 6.9 1.7M7 19h10a4 4 0 0 0 0-8 5 5 0 0 0-9.6 1.6A3.2 3.2 0 0 0 7 19z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-rain" viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 0-8 5 5 0 0 0-9.6 1.6A3.2 3.2 0 0 0 7 15zM9 18l-1 2.5M13 18l-1 2.5M17 18l-1 2.5"/></symbol>
+  <symbol id="i-mist" viewBox="0 0 24 24"><path d="M4 9h16M3 13h18M5 17h14"/></symbol>
+</svg>
+<div class="sky" id="sky" aria-hidden="true"><div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div><div class="orb" id="orb"></div></div>
+<main>
+  <div class="place"><svg viewBox="0 0 24 24"><path d="M3 11 21 3l-8 18-2-8z"/></svg>My location</div>
+  <h1>Porto</h1>
+  <p class="temp" id="temp" aria-live="polite">20<sup>°</sup></p>
+  <p class="cond" id="cond">Clear</p>
+  <p class="hl">H 21°&nbsp;&nbsp;L 12°</p>
+  <div class="when live" id="when"><span><i></i><b id="time" style="font-weight:500">Now · 17:00</b></span></div>
+  <section class="card hourly" aria-label="Hourly forecast">
+    <header><span>Today · Hourly</span><button class="reset" id="reset">Back to now</button></header>
+    <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Forecast hour" aria-valuemin="0" aria-valuemax="23">
+      <div class="icons" id="icons"></div>
+      <svg viewBox="0 0 326 84" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+        <g id="rain"></g>
+        <path id="area" fill="url(#fill)"/>
+        <path id="line" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <span class="now-dot" id="nowdot"></span>
+      <div class="head" id="head"><b id="knob"></b></div>
+      <div class="ticks" id="ticks"></div>
+    </div>
+  </section>
+  <div class="tiles">
+    <div class="card tile"><small>Rain</small><b id="pr">0<em>%</em></b></div>
+    <div class="card tile"><small>Wind</small><b id="wd">14<em> km/h</em></b></div>
+    <div class="card tile"><small>Feels</small><b id="fl">19°</b></div>
+  </div>
+  <p class="note">Sunrise 07:24<span>/</span>Sunset 19:12<span>/</span>Air quality 32, good</p>
+</main>
+<script>
+(function(){
+  const T=[12,12,13,14,16,17,18,19,20,21,21,21,20,19,17,16,15,15,14,14,13,13,12,12];
+  const R=[0,0,0,0,0,0,0,5,10,10,5,0,0,0,0,0,10,20,40,60,70,55,30,20];
+  const W=[6,6,8,10,12,13,14,15,16,16,15,14,12,10,9,8,9,11,14,18,20,17,13,10];
+  const NOW=11,W0=326,H0=84,el=id=>document.getElementById(id);
+  const hourOf=i=>(i+6)%24, lbl=i=>String(hourOf(i)).padStart(2,'0')+':00';
+  const cond=i=>{const h=hourOf(i);return h<6||h>=20?(R[i]>=40?['Light rain','rain']:R[i]>0?['Showers nearby','rain']:['Clear night','moon']):h<9?['Mist','mist']:h<14?['Sunny','sun']:h<17?['Partly cloudy','pc']:['Clear','sun'];};
+  const P={0:['#0d1630','#1b2547','#2b3560'],5:['#1a2246','#3a3f6e','#6d5d85'],7:['#5b78b8','#c79bb0','#f6c4a3'],10:['#3f86cf','#78aee0','#b9d7ef'],15:['#3a7fca','#6fa6dc','#c4dcef'],17:['#36508f','#9c7aa6','#f3a77f'],19:['#28305f','#6b4f7f','#e0896d'],20:['#141c3c','#2c2f5c','#4e4673'],24:['#0d1630','#1b2547','#2b3560']};
+  const keys=Object.keys(P).map(Number);
+  const hex=h=>[1,3,5].map(k=>parseInt(h.slice(k,k+2),16)),mix=(a,b,t)=>'rgb('+hex(a).map((v,k)=>Math.round(v+(hex(b)[k]-v)*t)).join(',')+')';
+  function sky(h){let a=0;while(keys[a+1]<=h)a++;const b=Math.min(a+1,keys.length-1),t=keys[b]===keys[a]?0:(h-keys[a])/(keys[b]-keys[a]);return P[keys[a]].map((c,k)=>mix(c,P[keys[b]][k],t));}
+  const x=i=>i*W0/23,y=t=>H0-12-(t-12)/9*(H0-26);
+  const pt=T.map((t,i)=>[x(i),y(t)]),g=i=>pt[Math.max(0,Math.min(23,i))];
+  let d='M0 '+pt[0][1];for(let i=0;i<23;i++){const a=g(i-1),b=g(i),c=g(i+1),e=g(i+2);d+=' C'+(b[0]+(c[0]-a[0])/6)+' '+(b[1]+(c[1]-a[1])/6)+' '+(c[0]-(e[0]-b[0])/6)+' '+(c[1]-(e[1]-b[1])/6)+' '+c[0]+' '+c[1];}
+  el('line').setAttribute('d',d);el('area').setAttribute('d',d+' L'+W0+' '+H0+' L0 '+H0+'Z');
+  el('rain').innerHTML=R.map((r,i)=>r?'<rect x="'+(x(i)-3)+'" y="'+(H0-r*.32)+'" width="6" height="'+r*.32+'" rx="2" fill="#bfe3ff" opacity=".7"/>':'').join('');
+  const scrub=el('scrub'),head=el('head'),knob=el('knob');
+  let ih='',th='';for(let i=0;i<24;i+=3){const p=(x(i)/W0*100)+'%';ih+='<svg style="left:'+p+'"><use href="#i-'+cond(i)[1]+'"/></svg>';th+='<span style="left:'+p+'">'+String(hourOf(i)).padStart(2,'0')+'</span>';}
+  el('icons').innerHTML=ih;el('ticks').innerHTML=th;el('nowdot').style.left=(x(NOW)/W0*100)+'%';
+  const orb=el('orb'),clouds=[...document.querySelectorAll('.cloud')];let cur=-1;
+  function set(i){
+    i=Math.max(0,Math.min(23,i));if(i===cur)return;cur=i;const h=hourOf(i),[c,ic]=cond(i);
+    const w=scrub.clientWidth;head.style.transform='translateX('+(x(i)/W0*w)+'px)';knob.style.top=(y(T[i])/H0*84+8)+'px';
+    el('temp').firstChild.nodeValue=T[i];el('cond').textContent=c;
+    el('time').textContent=(i===NOW?'Now · ':h<6?'Sat · ':'')+lbl(i);el('when').classList.toggle('live',i===NOW);
+    el('pr').firstChild.nodeValue=R[i];el('wd').firstChild.nodeValue=W[i];el('fl').textContent=(T[i]-(W[i]>14?2:1))+'°';
+    const s=sky(h),r=document.documentElement.style;r.setProperty('--sky-top',s[0]);r.setProperty('--sky-mid',s[1]);r.setProperty('--sky-bot',s[2]);
+    const day=h>=7&&h<20,f=day?(h-7)/12:((h-20+24)%24)/11,vw=innerWidth;
+    orb.className='orb'+(day?'':' moon');orb.style.transform='translate('+(30+f*(vw-60))+'px,'+(180-Math.sin(f*Math.PI)*136)+'px)';
+    const cl=ic==='pc'?.9:ic==='rain'?.75:ic==='mist'?.95:ic==='moon'?.12:.3;clouds.forEach((k,n)=>{k.style.opacity=cl;k.style.transform='translateX('+((i-NOW)*(n%2?-3:4))+'px)';});
+    scrub.setAttribute('aria-valuenow',i);scrub.setAttribute('aria-valuetext',lbl(i)+', '+T[i]+' degrees, '+c+', '+R[i]+' percent rain');
+  }
+  const at=e=>{const r=scrub.getBoundingClientRect();return Math.round((e.clientX-r.left)/r.width*23);};
+  scrub.addEventListener('pointerdown',e=>{scrub.setPointerCapture(e.pointerId);scrub.classList.add('drag');set(at(e));});
+  scrub.addEventListener('pointermove',e=>{if(scrub.classList.contains('drag'))set(at(e));});
+  const end=()=>scrub.classList.remove('drag');scrub.addEventListener('pointerup',end);scrub.addEventListener('pointercancel',end);
+  scrub.addEventListener('keydown',e=>{const k={ArrowRight:1,ArrowUp:1,ArrowLeft:-1,ArrowDown:-1}[e.key];if(k){e.preventDefault();set(cur+k);}if(e.key==='Home'){e.preventDefault();set(0);}if(e.key==='End'){e.preventDefault();set(23);}});
+  el('reset').addEventListener('click',()=>set(NOW));
+  addEventListener('resize',()=>{const c=cur;cur=-1;set(c);});
+  set(NOW);
+})();
+</script>
+</body>
+</html>

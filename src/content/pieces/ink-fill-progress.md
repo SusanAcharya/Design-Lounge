@@ -3,6 +3,7 @@ title: "Ink-fill upload progress"
 summary: "A full-screen upload state where a 168px outlined wordmark fills with ink from the bottom via clip-path as progress advances, with a mono percentage, ETA, speed and per-file checks; click replays."
 platform: web
 type: animation
+category: loaders
 tags: [progress, upload, loader, typography]
 styles: [paper, brutalist, minimal]
 motion: rich

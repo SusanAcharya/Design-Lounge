@@ -3,6 +3,7 @@ title: "Luxe product detail"
 summary: "Fragrance product page: CSS-only bottle with three glass variants, Cormorant serif name, a size radio with a sliding black indicator, and an Add to bag button that morphs to a gold Added state."
 platform: web
 type: screen
+category: ecommerce
 tags: [ecommerce, product, luxury, selector, button]
 styles: [luxe, editorial]
 motion: subtle

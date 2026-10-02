@@ -3,6 +3,7 @@ title: "Fintech home"
 summary: "A banking home screen: dark balance card with a 40px tabular amount and a blur-to-hide toggle, four circular quick actions, day-grouped transactions with initial avatars, under a glass top bar."
 platform: mobile-app
 type: screen
+category: dashboard
 tags: [fintech, banking, list, glass, ios]
 styles: [minimal, glass]
 motion: subtle

@@ -1,0 +1,134 @@
+<!-- Design Lounge piece: landing-fashion-atelier · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Atelier Lumen — Autumn 26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Tenor+Sans&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bone:#efe7da;--bone-2:#e4d9c8;--char:#2a2420;--char-2:#4a433c;--line:#d4c9b6;--wine:#7a2436;--wine-2:#5c1a28;
+  --serif:"Bodoni Moda",Didot,serif;--sans:"Tenor Sans",Georgia,sans-serif;
+  --pad:56px;--nav:60px;
+  --t:180ms;--t-swap:480ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bone);color:var(--char);font:400 15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--wine);outline-offset:3px}
+nav{height:var(--nav);display:flex;align-items:center;padding:0 var(--pad);border-bottom:1px solid var(--line);letter-spacing:.16em;text-transform:uppercase;font-size:12px}
+.logo{font:500 18px/1 var(--serif);letter-spacing:.22em}
+nav ul{list-style:none;margin:0 0 0 auto;padding:0;display:flex;gap:32px}
+nav a{color:var(--char-2);padding:8px 0}
+nav a:hover,nav a[aria-current]{color:var(--char)}
+nav a[aria-current]{box-shadow:inset 0 -1px 0 var(--wine)}
+.hero{display:grid;grid-template-columns:1fr 460px;gap:48px;min-height:560px;padding:48px var(--pad) 0;align-items:end}
+.kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--wine);margin:0 0 18px}
+h1{margin:0 0 28px;font:400 92px/.9 var(--serif);letter-spacing:-.03em;max-width:9ch}
+h1 em{font-style:italic;color:var(--wine)}
+.lede{margin:0 0 32px;max-width:34ch;color:var(--char-2);font-size:16px;line-height:1.5}
+.cta{display:inline-flex;align-items:center;gap:14px;height:52px;padding:0 26px;background:var(--char);color:var(--bone);letter-spacing:.14em;text-transform:uppercase;font-size:12px;transition:background var(--t) var(--ease),transform var(--t) var(--ease)}
+.cta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round}
+.cta:hover{background:var(--wine)}
+.cta:active{transform:scale(.98)}
+.garment{position:relative;height:520px;background:#cfc3b0;overflow:hidden}
+.drape{position:absolute;inset:28px 64px 0;clip-path:polygon(30% 7%,48% 2%,52% 2%,70% 7%,80% 18%,88% 100%,12% 100%,20% 18%);filter:drop-shadow(0 18px 28px rgba(42,36,32,.28))}
+.garment .fold{position:absolute;inset:0;transition:opacity var(--t-swap) var(--expo)}
+.g0{background:
+  linear-gradient(105deg,transparent 40%,rgba(239,231,218,.28) 46%,transparent 52%),
+  linear-gradient(78deg,transparent 48%,rgba(42,36,32,.22) 54%,transparent 60%),
+  linear-gradient(180deg,#3a2228 0 8%,#7a2436 22%,#a85a58 48%,#c9a08a 68%,#2a2420 100%)}
+.g1{background:
+  linear-gradient(95deg,transparent 42%,rgba(239,231,218,.3) 50%,transparent 58%),
+  linear-gradient(170deg,#1e1a18 0%,#5a4038 34%,#c4b09a 58%,#efe7da 74%,#7a2436 100%)}
+.g2{background:
+  linear-gradient(88deg,transparent 46%,rgba(239,231,218,.22) 50%,transparent 54%),
+  conic-gradient(from 210deg at 58% 36%,#2a2420,#7a2436 28%,#e4d9c8 52%,#4a433c 78%,#2a2420)}
+.g3{background:
+  linear-gradient(90deg,#1e1a18 0 36%,#7a2436 36% 64%,#c9b49a 64%)}
+.garment .fold.on{opacity:1}
+.garment .fold:not(.on){opacity:0}
+.neck{position:absolute;left:50%;top:28px;width:54px;height:28px;margin-left:-27px;border-radius:0 0 50% 50%;background:#cfc3b0;z-index:2}
+.seam{position:absolute;left:50%;top:56px;bottom:0;width:1px;margin-left:-.5px;background:linear-gradient(rgba(239,231,218,.15),rgba(239,231,218,.55) 40%,rgba(42,36,32,.35));z-index:2}
+.lbl{position:absolute;left:18px;bottom:16px;right:18px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--char);z-index:3}
+.looks{padding:28px var(--pad) 72px}
+.looks h2{margin:0 0 16px;font:400 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--char-2);display:flex;justify-content:space-between}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.look{height:168px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;color:var(--bone);letter-spacing:.12em;text-transform:uppercase;font-size:11px;position:relative;overflow:hidden;border:1px solid transparent;transition:border-color var(--t) var(--ease),transform var(--t) var(--ease)}
+.look i{position:absolute;inset:0;z-index:-1}
+.look:nth-child(1) i{background:linear-gradient(160deg,#4a2a30,#7a2436 40%,#c9a08a 70%,#2a2420)}
+.look:nth-child(2) i{background:linear-gradient(200deg,#2a2420,#5a4038 45%,#efe7da 70%,#7a2436)}
+.look:nth-child(3) i{background:conic-gradient(from 210deg at 60% 40%,#2a2420,#7a2436 30%,#e4d9c8 55%,#4a433c)}
+.look:nth-child(4) i{background:linear-gradient(90deg,#2a2420 0 40%,#7a2436 40% 62%,#c9b49a 62%)}
+.look[aria-pressed="true"]{border-color:var(--char);transform:translateY(-4px)}
+.look:hover{transform:translateY(-4px)}
+.atelier{padding:0 var(--pad) 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;border-top:1px solid var(--line);padding-top:64px}
+.atelier h2{margin:0;font:italic 400 56px/.95 var(--serif);letter-spacing:-.02em}
+.atelier p{margin:0 0 16px;color:var(--char-2);max-width:46ch}
+.atelier .hrs{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--char)}
+@media (max-width:1024px){h1{font-size:72px}.hero{grid-template-columns:1fr 380px;gap:28px}.garment{height:440px}}
+@media (max-width:768px){.hero,.atelier,.strip{grid-template-columns:1fr}nav ul{display:none}.garment{height:360px;margin-top:24px}h1{font-size:64px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:1ms!important}.look,[class]{transform:none!important}}
+</style>
+</head>
+<body>
+<nav aria-label="Primary">
+  <a class="logo" href="#">Atelier Lumen</a>
+  <ul>
+    <li><a href="#looks" aria-current="page">Lookbook</a></li>
+    <li><a href="#atelier">Atelier</a></li>
+    <li><a href="#atelier">Visit</a></li>
+  </ul>
+</nav>
+<section class="hero">
+  <div>
+    <p class="kicker">Autumn 26 · Eighteen looks</p>
+    <h1>Cloth that <em>holds</em> a room.</h1>
+    <p class="lede">Cut in the 4th arrondissement workshop. Bone wool, wine silk, one charcoal coat. Appointments in pairs.</p>
+    <a class="cta" href="#atelier">Request a sitting <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+  <figure class="garment" id="garment" aria-label="Look 01, wine silk column">
+    <div class="drape">
+      <div class="fold g0 on"></div>
+      <div class="fold g1"></div>
+      <div class="fold g2"></div>
+      <div class="fold g3"></div>
+    </div>
+    <div class="neck" aria-hidden="true"></div>
+    <div class="seam" aria-hidden="true"></div>
+    <figcaption class="lbl"><span id="gl">Look 01 · Column</span><span>Silk faille</span></figcaption>
+  </figure>
+</section>
+<section class="looks" id="looks">
+  <h2>The strip <span>01 — 04 of 18</span></h2>
+  <div class="strip" role="list">
+    <button class="look" role="listitem" aria-pressed="true" data-i="0"><i></i><span>01</span><span>Column</span></button>
+    <button class="look" role="listitem" aria-pressed="false" data-i="1"><i></i><span>02</span><span>Coat</span></button>
+    <button class="look" role="listitem" aria-pressed="false" data-i="2"><i></i><span>03</span><span>Bias</span></button>
+    <button class="look" role="listitem" aria-pressed="false" data-i="3"><i></i><span>04</span><span>Split</span></button>
+  </div>
+</section>
+<section class="atelier" id="atelier">
+  <h2>The room is the fitting.</h2>
+  <div>
+    <p>Atelier Lumen takes twelve sittings a week. Two people, one form, ninety minutes. We do not keep a shop floor; the work is shown here and cut downstairs.</p>
+    <p class="hrs">Tue–Sat · 11:00–18:00 · 14 Rue des Ciseaux · Write to sit</p>
+    <a class="cta" href="#">Write to sit <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</section>
+<script>
+const caps=['Look 01 · Column','Look 02 · Coat','Look 03 · Bias','Look 04 · Split'];
+const mats=['Silk faille','Bone wool','Wine chiffon','Charcoal grain'];
+const folds=[...document.querySelectorAll('.fold')];
+const looks=[...document.querySelectorAll('.look')];
+const gl=document.getElementById('gl'),mat=document.querySelector('.lbl span:last-child'),g=document.getElementById('garment');
+function set(i){folds.forEach((f,n)=>f.classList.toggle('on',n===i));looks.forEach((b,n)=>b.setAttribute('aria-pressed',String(n===i)));gl.textContent=caps[i];mat.textContent=mats[i];g.setAttribute('aria-label',caps[i]+', '+mats[i]);}
+looks.forEach(b=>b.addEventListener('click',()=>set(+b.dataset.i)));
+</script>
+</body>
+</html>

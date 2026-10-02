@@ -3,6 +3,7 @@ title: "Odometer counter"
 summary: "A 112px revenue figure whose digits roll vertically on 0–9 strips (700ms expo-out, 24ms cascade from the right), with comma grouping, four add/refund buttons and a 3s auto-tick."
 platform: web
 type: animation
+category: stats
 tags: [counter, odometer, numbers, dashboard, revenue]
 styles: [paper, editorial, minimal]
 motion: subtle

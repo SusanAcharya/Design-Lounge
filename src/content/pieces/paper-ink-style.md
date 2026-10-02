@@ -3,6 +3,7 @@ title: "Paper and ink design style"
 summary: "A warm off-white paper surface with SVG feTurbulence grain, ink-black type, Newsreader italics, a hand-drawn red underline, stamp-like tags and an approval stamp; buttons, inputs, a card and a table."
 platform: web
 type: style
+category: design-language
 tags: [style-guide, paper, editorial, typography, components]
 styles: [paper, editorial]
 motion: subtle

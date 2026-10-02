@@ -3,6 +3,7 @@ title: "Staggered list reveal"
 summary: "Twelve transaction rows slide up 14px and fade in with a 30ms stagger and expo-out easing on load; a filter input animates leaving rows out (180ms) before re-staggering the survivors."
 platform: web
 type: animation
+category: scroll
 tags: [list, stagger, filter, table, banking]
 styles: [minimal, swiss]
 motion: subtle

@@ -3,6 +3,7 @@ title: "iOS context menu lift"
 summary: "Press-and-hold a chat bubble for 350ms: it lifts to 1.04 with a shadow, the thread blurs, and a four-item menu springs in with a 40ms stagger."
 platform: mobile-app
 type: animation
+category: overlays
 tags: [context-menu, long-press, messaging, ios, haptics]
 styles: [minimal, soft]
 motion: rich

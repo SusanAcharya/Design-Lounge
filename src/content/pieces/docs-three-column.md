@@ -3,6 +3,7 @@ title: "Documentation three-column layout"
 summary: "A docs shell: 256px collapsible nav tree, 72ch prose column, sticky 'On this page' TOC with scroll-spy, ⌘K search and a code block with a copy button."
 platform: web
 type: layout
+category: reading
 tags: [documentation, navigation, layout, developer]
 styles: [minimal]
 motion: subtle

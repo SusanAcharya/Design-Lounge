@@ -3,6 +3,7 @@ title: "Variable font proximity headline"
 summary: "A 148px Fraunces headline where every letter's weight (300–900) follows cursor distance within a 260px radius, easing back on leave; keyboard and reduced motion get a static 800."
 platform: web
 type: animation
+category: text-motion
 tags: [typography, variable-font, hero, cursor, specimen]
 styles: [editorial, paper, kinetic]
 motion: rich

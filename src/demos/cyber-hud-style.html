@@ -1,0 +1,211 @@
+<!-- Design Lounge piece: cyber-hud-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Cyber HUD design language kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#070b0c;--panel:#0e171a;--panel-2:#122024;--line:#1a3a38;--teal:#2ee6c8;--teal-dim:#1a6b62;--teal-soft:rgba(46,230,200,.12);
+  --ink:#c8ede6;--ink-2:#7aa8a0;--ink-3:#4a6e68;--warn:#e8b84a;--cut:10px;
+  --display:"Chakra Petch",Impact,sans-serif;--mono:"Share Tech Mono",ui-monospace,monospace;
+  --ctl:40px;--pad:16px;
+  --t-micro:120ms;--t-scan:8s;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.45 var(--mono);color:var(--ink);background:var(--void);overflow-x:hidden;overflow-y:auto}
+a{color:var(--teal)}
+:focus-visible{outline:1px solid var(--teal);outline-offset:3px}
+body::before{content:"";pointer-events:none;position:fixed;inset:0;z-index:9;background:repeating-linear-gradient(180deg,transparent 0 2px,rgba(0,0,0,.18) 2px 3px);mix-blend-mode:multiply}
+.top{height:48px;display:flex;align-items:center;gap:16px;padding:0 16px;border-bottom:1px solid var(--line);background:var(--panel);clip-path:polygon(0 0,100% 0,100% 100%,12px 100%,0 calc(100% - 12px))}
+.mark{width:18px;height:18px;border:1px solid var(--teal);transform:rotate(45deg)}
+.brand{font:600 16px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.brand span{font:13px var(--mono);color:var(--ink-2);letter-spacing:.08em;margin-left:10px}
+.top nav{margin-left:auto;display:flex;gap:16px}
+.top nav a{color:var(--ink-2);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;font-size:11px;padding:6px 0;border-bottom:1px solid transparent}
+.top nav a:hover{color:var(--teal);border-color:var(--teal)}
+.ver{color:var(--ink-3);font-size:11px}
+.pulse{width:8px;height:8px;background:var(--teal);box-shadow:0 0 8px var(--teal);animation:blink 1.6s steps(2) infinite}
+@keyframes blink{50%{opacity:.2}}
+.sheet{display:grid;grid-template-columns:repeat(12,1fr);gap:2px;background:var(--line);padding:2px}
+.cell{background:var(--panel);padding:var(--pad);min-width:0;position:relative}
+.cell::after{content:"";position:absolute;right:0;bottom:0;width:8px;height:8px;border-right:1px solid var(--teal-dim);border-bottom:1px solid var(--teal-dim)}
+.lbl{margin:0 0 12px;font:600 11px/1 var(--display);letter-spacing:.18em;text-transform:uppercase;color:var(--teal)}
+.hero{grid-column:1/8;height:436px;padding:0;overflow:hidden;background:radial-gradient(ellipse at 70% 40%,rgba(46,230,200,.08),transparent 50%),var(--panel)}
+.hud{position:absolute;inset:12px;border:1px solid var(--line);clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut))}
+.hud::before,.hud::after{content:"";position:absolute;width:16px;height:16px;border:1px solid var(--teal)}
+.hud::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.hud::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.scan{position:absolute;left:0;right:0;height:40%;background:linear-gradient(180deg,transparent,rgba(46,230,200,.08),transparent);animation:scan var(--t-scan) linear infinite;pointer-events:none}
+@keyframes scan{from{top:-40%}to{top:100%}}
+.radar{position:absolute;right:28px;top:56px;width:210px;height:210px;border-radius:50%;border:1px solid var(--line);background:conic-gradient(from 90deg,rgba(46,230,200,.2),transparent 40%);box-shadow:inset 0 0 0 1px var(--teal-dim),inset 0 0 40px rgba(46,230,200,.08)}
+.radar::before,.radar::after{content:"";position:absolute;inset:24%;border:1px dashed var(--teal-dim);border-radius:50%}
+.radar::after{inset:42%}
+.blip{position:absolute;width:6px;height:6px;background:var(--teal);box-shadow:0 0 8px var(--teal)}
+.blip:nth-child(1){left:62%;top:38%}.blip:nth-child(2){left:30%;top:58%}.blip:nth-child(3){left:72%;top:70%}
+.copy{position:absolute;left:24px;top:28px;width:340px;z-index:2}
+.eyebrow{color:var(--teal);letter-spacing:.16em;text-transform:uppercase;font-size:11px}
+.hero h1{font:700 42px/.9 var(--display);letter-spacing:.04em;text-transform:uppercase;margin:10px 0 8px}
+.hero p{margin:0 0 14px;color:var(--ink-2);max-width:300px}
+.tabs{display:flex;gap:0;margin-bottom:14px;border:1px solid var(--line)}
+.tab{height:32px;padding:0 14px;background:transparent;border:0;color:var(--ink-2);font:600 12px var(--display);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;clip-path:polygon(6px 0,100% 0,100% 100%,0 100%,0 6px)}
+.tab:hover{color:var(--teal)}
+.tab[aria-selected="true"]{background:var(--teal-soft);color:var(--teal);box-shadow:inset 0 -1px 0 var(--teal)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;width:320px}
+.stats div{border:1px solid var(--line);padding:8px 10px}
+.stats b{display:block;font:600 18px/1 var(--display);color:var(--teal)}
+.stats span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.spec{grid-column:8/13;height:436px;display:flex;flex-direction:column}
+.aa{display:flex;align-items:flex-end;gap:12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.aa big{font:700 88px/.75 var(--display);color:var(--teal);letter-spacing:-.04em}
+.fam{font-size:12px;color:var(--ink-2);line-height:1.4}
+.fam b{display:block;font:600 14px var(--display);color:var(--ink);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.scale{list-style:none;margin:10px 0 0;padding:0}
+.scale li{display:flex;align-items:baseline;gap:10px;padding:6px 0;border-bottom:1px solid var(--panel-2);overflow:hidden;white-space:nowrap}
+.scale em{font-style:normal;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);width:92px;flex:none}
+.s1{font:700 22px/1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+.s2{font:600 16px var(--display)}.s3{font:500 14px var(--display)}.s4{font:13px var(--mono);color:var(--ink-2)}.s5{font:11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.pal{grid-column:1/4}
+.sw{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;height:40px;border-bottom:1px solid var(--panel-2)}
+.chip{width:36px;height:24px;border:1px solid var(--line)}
+.sw b{font:600 13px var(--display);display:block}.sw span,.sw code{font-size:11px;color:var(--ink-3)}
+.ctl{grid-column:4/7}
+.btn{height:var(--ctl);padding:0 14px;border:1px solid var(--teal);background:transparent;color:var(--teal);font:600 13px var(--display);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);transition:background var(--t-micro),color var(--t-micro)}
+.btn:hover{background:var(--teal);color:var(--void)}
+.btn:active{background:var(--teal-dim);color:var(--ink)}
+.btn.pri{background:var(--teal);color:var(--void)}
+.btn.pri:hover{background:var(--ink)}
+.btn[disabled]{border-color:var(--ink-3);color:var(--ink-3);cursor:not-allowed;background:transparent}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tag{height:22px;padding:0 8px;border:1px solid var(--line);color:var(--ink-2);font:11px/22px var(--mono);letter-spacing:.08em;text-transform:uppercase;background:none;cursor:pointer}
+.tag[aria-pressed="true"]{border-color:var(--teal);color:var(--teal);background:var(--teal-soft)}
+.inp{grid-column:7/10}
+.fld{display:block;margin-bottom:12px}
+.fld span{display:block;font:11px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.fld input{width:100%;height:var(--ctl);border:1px solid var(--line);background:var(--void);color:var(--ink);font:14px var(--mono);padding:0 10px;clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
+.fld input:focus{outline:none;border-color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal)}
+.link{color:var(--teal);text-underline-offset:3px}
+.link:hover{color:var(--ink)}
+.sw-t{display:inline-flex;align-items:center;gap:10px;margin-top:10px;cursor:pointer}
+.sw-t button{width:44px;height:22px;border:1px solid var(--line);background:var(--void);padding:0;position:relative;cursor:pointer;clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px)}
+.sw-t button::after{content:"";position:absolute;left:3px;top:3px;width:14px;height:14px;background:var(--ink-3);transition:transform 200ms var(--ease),background 200ms}
+.sw-t button[aria-checked="true"]{border-color:var(--teal);background:var(--teal-soft)}
+.sw-t button[aria-checked="true"]::after{transform:translateX(22px);background:var(--teal);box-shadow:0 0 6px var(--teal)}
+.surf{grid-column:10/13}
+.plates{display:grid;gap:8px}
+.plate{height:48px;border:1px solid var(--line);display:flex;align-items:center;padding:0 10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.plate.cut{clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+.plate.fill{background:var(--teal-soft);border-color:var(--teal);color:var(--teal)}
+.plate.warn{border-color:var(--warn);color:var(--warn)}
+.gram{grid-column:span 3;display:flex;gap:12px}
+.glyph{width:52px;height:52px;flex:none;border:1px solid var(--teal)}
+.gram h4{margin:0 0 4px;font:600 14px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.gram p{margin:0;font-size:12px;color:var(--ink-2)}
+.foot{grid-column:1/-1;display:flex;justify-content:space-between;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;font-size:11px}
+@media (max-width:1100px){.hero,.spec{grid-column:1/-1;height:auto}.pal,.ctl,.inp,.surf,.gram{grid-column:span 6}.top nav{display:none}.radar{position:relative;right:auto;top:auto;margin:16px auto}}
+@media (max-width:700px){.pal,.ctl,.inp,.surf,.gram{grid-column:1/-1}.hero h1{font-size:32px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="mark" aria-hidden="true"></div>
+  <div class="brand">Orbit Watch <span>/ HUD kit 03</span></div>
+  <nav aria-label="Kit sections"><a href="#type">Type</a><a href="#colour">Colour</a><a href="#controls">Controls</a><a href="#surface">Surface</a></nav>
+  <span class="pulse" aria-hidden="true"></span>
+  <span class="ver">UPLINK 04:12:08</span>
+</header>
+<main class="sheet">
+  <section class="cell hero" id="hero" aria-label="Composition: nav ops console">
+    <div class="hud">
+      <div class="scan" aria-hidden="true"></div>
+      <div class="radar" aria-hidden="true"><i class="blip"></i><i class="blip"></i><i class="blip"></i></div>
+      <div class="copy">
+        <div class="eyebrow">Sector 7-K · Nav / Ops</div>
+        <h1>Orbit<br>Watch</h1>
+        <p id="panel-copy">Three contacts in the inner ring. Relays 2 and 4 are green. Relay 6 is late by 4.2s.</p>
+        <div class="tabs" role="tablist" aria-label="Console mode">
+          <button class="tab" role="tab" aria-selected="true" data-copy="Three contacts in the inner ring. Relays 2 and 4 are green. Relay 6 is late by 4.2s.">Nav</button>
+          <button class="tab" role="tab" aria-selected="false" data-copy="Open channel to Relay 2. Last ping 00:04 ago. Encryption: lattice-7. Queue: 2 packets.">Comms</button>
+          <button class="tab" role="tab" aria-selected="false" data-copy="Power draw 61 %. Coolant loop B is open. Attitude thrusters armed, not firing.">Ops</button>
+        </div>
+        <div class="stats">
+          <div><b>3</b><span>Contacts</span></div>
+          <div><b>61%</b><span>Power</span></div>
+          <div><b>4.2s</b><span>Lag</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="cell spec" id="type" aria-labelledby="l-type">
+    <h2 class="lbl" id="l-type">01 Type specimen</h2>
+    <div class="aa"><big aria-hidden="true">Aa</big><div class="fam"><b>Chakra Petch</b>display, HUD titles 600–700<b>Share Tech Mono</b>readouts, body, labels</div></div>
+    <ul class="scale">
+      <li><em>Display 42</em><span class="s1">Orbit Watch</span></li>
+      <li><em>H2 · 22 / 700</em><span class="s2">Sector 7-K</span></li>
+      <li><em>H3 · 16 / 600</em><span class="s3">Relay 6 lag 4.2s</span></li>
+      <li><em>Body · 13</em><span class="s4">Uplink locked · lattice-7</span></li>
+      <li><em>Label · 11</em><span class="s5">Nav / Comms / Ops</span></li>
+    </ul>
+  </section>
+  <section class="cell pal" id="colour" aria-labelledby="l-col">
+    <h2 class="lbl" id="l-col">02 Palette and roles</h2>
+    <div class="sw"><i class="chip" style="background:var(--void)"></i><div><b>Void</b><span>field, 70 %</span></div><code>#070B0C</code></div>
+    <div class="sw"><i class="chip" style="background:var(--panel)"></i><div><b>Panel</b><span>cells, 15 %</span></div><code>#0E171A</code></div>
+    <div class="sw"><i class="chip" style="background:var(--teal)"></i><div><b>Signal teal</b><span>live, 10 %</span></div><code>#2EE6C8</code></div>
+    <div class="sw"><i class="chip" style="background:var(--ink)"></i><div><b>Readout</b><span>body</span></div><code>#C8EDE6</code></div>
+    <div class="sw"><i class="chip" style="background:var(--warn)"></i><div><b>Warn</b><span>late only</span></div><code>#E8B84A</code></div>
+  </section>
+  <section class="cell ctl" id="controls" aria-labelledby="l-btn">
+    <h2 class="lbl" id="l-btn">03 Buttons and chips</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri">Lock target</button><button class="btn">Ping</button></div>
+    <div class="tags">
+      <button class="tag" aria-pressed="true">Relay 2</button>
+      <button class="tag" aria-pressed="false">Relay 4</button>
+      <button class="tag" aria-pressed="false">Relay 6</button>
+    </div>
+  </section>
+  <section class="cell inp" aria-labelledby="l-inp">
+    <h2 class="lbl" id="l-inp">04 Inputs and link</h2>
+    <label class="fld"><span>Callsign</span><input type="text" value="WATCH-7K" spellcheck="false"></label>
+    <a class="link" href="#hero">Open flight log 04:12</a>
+    <label class="sw-t"><button type="button" role="switch" aria-checked="true" id="sw" aria-label="Scan sweep"></button>Scan sweep</label>
+  </section>
+  <section class="cell surf" id="surface" aria-labelledby="l-surf">
+    <h2 class="lbl" id="l-surf">05 Surface treatments</h2>
+    <div class="plates">
+      <div class="plate cut">Cut-corner panel</div>
+      <div class="plate fill">Teal signal fill</div>
+      <div class="plate warn">Warn hairline</div>
+    </div>
+  </section>
+  <section class="cell gram" aria-label="Grammar: cut"><div class="glyph" style="clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);background:var(--teal-soft)"></div><div><h4>Cut</h4><p>8–10px clipped corners on every panel and control. No radius.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: scan"><div class="glyph" style="background:repeating-linear-gradient(180deg,var(--teal-dim) 0 1px,transparent 1px 4px)"></div><div><h4>Scan</h4><p>A 3px repeating line overlay on the page; a moving band inside the HUD.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: bracket"><div class="glyph" style="border-color:transparent;background:linear-gradient(var(--teal),var(--teal)) top left/12px 1px no-repeat,linear-gradient(var(--teal),var(--teal)) top left/1px 12px no-repeat,linear-gradient(var(--teal),var(--teal)) bottom right/12px 1px no-repeat,linear-gradient(var(--teal),var(--teal)) bottom right/1px 12px no-repeat"></div><div><h4>Bracket</h4><p>Live frames use L-corners in teal, not a full box.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: signal"><div class="glyph" style="background:var(--teal);box-shadow:0 0 12px var(--teal)"></div><div><h4>Signal</h4><p>Teal is live. Dim teal is structure. Amber is late. Nothing else glows.</p></div></section>
+  <div class="cell foot"><span>Orbit Watch HUD · 5 colours · 2 families · cut + scan</span><span>Nav / Comms / Ops tabs swap the briefing</span></div>
+</main>
+<script>
+  const copy=document.getElementById('panel-copy');
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+    t.setAttribute('aria-selected','true');
+    copy.textContent=t.dataset.copy;
+  }));
+  document.querySelectorAll('.tag').forEach(tag=>tag.addEventListener('click',()=>{
+    tag.setAttribute('aria-pressed',String(tag.getAttribute('aria-pressed')!=='true'));
+  }));
+  const sw=document.getElementById('sw');
+  const scan=document.querySelector('.scan');
+  sw.addEventListener('click',()=>{
+    const on=sw.getAttribute('aria-checked')!=='true';
+    sw.setAttribute('aria-checked',String(on));
+    scan.style.animationPlayState=on?'running':'paused';
+  });
+</script>
+</body>
+</html>

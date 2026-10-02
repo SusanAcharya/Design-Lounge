@@ -3,6 +3,7 @@ title: "Inline form validation"
 summary: "A signup form that validates each field on blur with a 6px shake for errors, a stroke-drawn tick for success, a 4-segment password meter and a submit gated until everything passes."
 platform: web
 type: pattern
+category: inputs
 tags: [form, validation, signup, password, accessibility]
 styles: [editorial, soft, minimal]
 motion: subtle

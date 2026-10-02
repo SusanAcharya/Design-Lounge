@@ -1,0 +1,283 @@
+<!-- Design Lounge piece: landing-devtool-dark · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Kiln — the image API that renders at the edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0d;--panel:#111316;--panel-2:#171a1e;--line:#1f2329;--line-2:#2b3038;
+  --ink:#eceef1;--ink-2:#9aa1ab;--ink-3:#646b75;--accent:#c8f65a;--accent-ink:#0d1400;
+  --k-str:#f0b37e;--k-key:#8ab4ff;--k-fn:#c8f65a;--k-com:#5a616b;--k-num:#e58fb8;
+  --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --gutter:64px;--r:10px;--r-lg:14px;
+  --t-fast:160ms;--t-layout:280ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.55 var(--sans);color:var(--ink);background:var(--bg);overflow-y:auto;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--gutter)}
+.mono{font-family:var(--mono)}
+/* nav */
+nav{position:sticky;top:0;z-index:10;height:60px;display:flex;align-items:center;gap:32px;padding:0 var(--gutter);background:rgba(10,11,13,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:9px;font-weight:600;font-size:16px;letter-spacing:-.02em}
+.logo i{width:20px;height:20px;border-radius:5px;background:var(--accent);position:relative;display:block}
+.logo i::after{content:"";position:absolute;inset:5px 5px 9px;border-radius:2px;background:var(--bg)}
+.links{display:flex;gap:24px;font-size:14px;color:var(--ink-2)}
+.links a:hover{color:var(--ink)}
+.nav-r{margin-left:auto;display:flex;align-items:center;gap:16px;font-size:14px}
+.status{display:flex;align-items:center;gap:7px;font:12px var(--mono);color:var(--ink-3)}
+.status b{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(200,246,90,.15)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:8px;font-weight:500;font-size:14px;transition:background var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.btn-p{background:var(--accent);color:var(--accent-ink)}
+.btn-p:hover{background:#d8ff7a}
+.btn-g{border:1px solid var(--line-2);color:var(--ink)}
+.btn-g:hover{border-color:var(--ink-3);background:var(--panel)}
+/* hero */
+.hero{position:relative;padding:64px 0 56px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--line-2) 1px,transparent 1px);background-size:20px 20px;-webkit-mask:radial-gradient(70% 80% at 72% 40%,#000 0,transparent 75%);mask:radial-gradient(70% 80% at 72% 40%,#000 0,transparent 75%);opacity:.7}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1fr 560px;gap:56px;align-items:start}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:12px var(--mono);color:var(--ink-2);border:1px solid var(--line-2);border-radius:999px;padding:5px 12px 5px 6px}
+.eyebrow span{background:var(--panel-2);color:var(--accent);border-radius:999px;padding:1px 8px}
+h1{font-size:72px;line-height:.98;letter-spacing:-.045em;font-weight:600;margin:24px 0 22px}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{font-size:18px;line-height:1.5;color:var(--ink-2);max-width:470px;margin:0 0 30px}
+.ctas{display:flex;gap:12px;align-items:center}
+.install{margin-top:28px;display:inline-flex;align-items:center;gap:14px;height:44px;padding:0 6px 0 16px;border:1px dashed var(--line-2);border-radius:var(--r);font:14px var(--mono);color:var(--ink-2)}
+.install b{color:var(--ink);font-weight:400}
+.install .cp{width:32px;height:32px;display:grid;place-items:center;border-radius:6px;color:var(--ink-3)}
+.install .cp:hover{background:var(--panel-2);color:var(--ink)}
+.meta{display:flex;gap:28px;margin-top:40px;font:12px var(--mono);color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+.meta b{display:block;font:500 22px var(--sans);color:var(--ink);letter-spacing:-.02em;text-transform:none;margin-bottom:2px}
+/* code card */
+.code{background:var(--panel);border:1px solid var(--line-2);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.8),0 0 0 6px rgba(255,255,255,.015)}
+.tabs{display:flex;align-items:center;height:46px;border-bottom:1px solid var(--line);padding:0 8px 0 14px;gap:4px;position:relative}
+.dots{display:flex;gap:6px;margin-right:12px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line-2)}
+.tab{height:30px;padding:0 12px;border-radius:6px;font:13px var(--mono);color:var(--ink-3);transition:color var(--t-fast) var(--ease)}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);background:var(--panel-2)}
+.copy{margin-left:auto;display:flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:6px;font:12px var(--mono);color:var(--ink-2);border:1px solid var(--line)}
+.copy:hover{color:var(--ink);border-color:var(--line-2)}
+.copy.ok{color:var(--accent);border-color:rgba(200,246,90,.4)}
+pre{margin:0;padding:20px 22px;font:13px/1.75 var(--mono);color:var(--ink);min-height:236px;white-space:pre;overflow:hidden}
+pre[hidden]{display:none}
+.ln{display:inline-block;width:22px;color:var(--ink-3);user-select:none}
+.s{color:var(--k-str)}.k{color:var(--k-key)}.f{color:var(--k-fn)}.c{color:var(--k-com)}.n{color:var(--k-num)}
+.panel-in{animation:pin var(--t-layout) var(--ease-out)}
+@keyframes pin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.resp{display:grid;grid-template-columns:1fr 156px;border-top:1px solid var(--line);background:#0d0f12}
+.resp pre{min-height:0;padding:16px 22px;font-size:12px;line-height:1.7;color:var(--ink-2)}
+.thumb{margin:14px 14px 14px 0;border-radius:8px;border:1px solid var(--line-2);position:relative;overflow:hidden;background:
+ radial-gradient(60% 50% at 70% 30%,#ffd28a 0,transparent 60%),
+ radial-gradient(80% 60% at 20% 90%,#1f4d3f 0,transparent 70%),
+ linear-gradient(180deg,#e98a54,#5b2d4a 55%,#162a2c)}
+.thumb::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(170deg,transparent 30%,#0f1d1e 31%)}
+.thumb span{position:absolute;left:8px;bottom:8px;z-index:1;font:10px var(--mono);color:#dfe6dc;background:rgba(0,0,0,.45);padding:2px 6px;border-radius:4px}
+.timing{display:flex;align-items:center;gap:8px;padding:10px 22px;border-top:1px solid var(--line);font:12px var(--mono);color:var(--ink-3)}
+.timing b{color:var(--accent);font-weight:500}
+.bar{flex:1;height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:18%;background:var(--accent);animation:grow 700ms var(--ease-out) both}
+@keyframes grow{from{width:0}}
+/* logos */
+.logos{border-block:1px solid var(--line);padding:22px 0}
+.logos .wrap{display:flex;align-items:center;justify-content:space-between;color:var(--ink-3);font-size:17px;font-weight:600;letter-spacing:-.02em}
+.logos small{font:12px var(--mono);font-weight:400;letter-spacing:.04em;color:var(--ink-3)}
+/* section heads */
+section.blk{padding:96px 0}
+.kick{font:12px var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.12em}
+h2{font-size:48px;line-height:1.04;letter-spacing:-.035em;font-weight:600;margin:14px 0 0;max-width:640px}
+h2 span{color:var(--ink-3)}
+/* features */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:48px;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.cell{padding:28px 28px 32px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background var(--t-fast) var(--ease)}
+.cell:hover{background:var(--panel)}
+.cell svg{width:22px;height:22px;color:var(--accent)}
+.cell h3{font-size:17px;font-weight:600;letter-spacing:-.01em;margin:18px 0 6px}
+.cell p{margin:0;color:var(--ink-2);font-size:14px}
+.cell code{font:12px var(--mono);color:var(--ink);background:var(--panel-2);padding:1px 5px;border-radius:4px}
+/* latency */
+.lat{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end}
+.big{display:flex;gap:48px;margin-top:40px}
+.big div{font:12px var(--mono);color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+.big b{display:block;font:600 112px/0.9 var(--sans);letter-spacing:-.06em;color:var(--ink);text-transform:none}
+.big b sup{font-size:28px;letter-spacing:0;color:var(--accent);vertical-align:top;margin-left:4px}
+.regions{border:1px solid var(--line);border-radius:var(--r-lg);padding:8px 24px}
+.reg{display:grid;grid-template-columns:120px 1fr 64px;align-items:center;gap:16px;height:44px;border-bottom:1px solid var(--line);font:13px var(--mono);color:var(--ink-2)}
+.reg:last-child{border:0}
+.reg .t{height:6px;border-radius:3px;background:var(--panel-2);position:relative}
+.reg .t i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:linear-gradient(90deg,var(--line-2),var(--accent))}
+.reg b{text-align:right;color:var(--ink);font-weight:500}
+/* pricing */
+.price{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.tier{border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;background:var(--panel);display:flex;flex-direction:column;gap:6px}
+.tier.hot{border-color:rgba(200,246,90,.45);background:linear-gradient(180deg,rgba(200,246,90,.06),var(--panel) 40%)}
+.tier h3{margin:0;font:500 13px var(--mono);color:var(--ink-2);text-transform:uppercase;letter-spacing:.08em;display:flex;justify-content:space-between}
+.tier h3 em{font-style:normal;color:var(--accent)}
+.tier .p{font-size:44px;font-weight:600;letter-spacing:-.04em;margin:10px 0 0}
+.tier .p small{font-size:14px;color:var(--ink-3);font-weight:400;letter-spacing:0}
+.tier ul{list-style:none;padding:0;margin:14px 0 22px;color:var(--ink-2);font-size:14px;display:grid;gap:8px}
+.tier li{display:flex;gap:10px;align-items:center}.tier li svg{color:var(--accent);width:14px;height:14px}
+.tier .btn{margin-top:auto;justify-content:center}
+/* footer */
+footer{border-top:1px solid var(--line);padding:56px 0 40px}
+.fgrid{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:32px;font-size:14px}
+.fgrid h4{margin:0 0 14px;font:500 12px var(--mono);color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+.fgrid a{display:block;color:var(--ink-2);margin-bottom:8px}.fgrid a.logo{display:flex}.fgrid a:hover{color:var(--ink)}
+.fgrid p{color:var(--ink-3);max-width:260px;margin:14px 0 0}
+.fine{display:flex;justify-content:space-between;margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font:12px var(--mono);color:var(--ink-3)}
+.wordmark{font:700 228px/.8 var(--sans);letter-spacing:-.07em;color:var(--panel-2);margin:48px 0 -28px;user-select:none;text-align:center}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<nav aria-label="Main">
+  <a class="logo" href="#"><i></i>Kiln</a>
+  <div class="links"><a href="#docs">Docs</a><a href="#features">Product</a><a href="#latency">Network</a><a href="#pricing">Pricing</a><a href="#">Changelog</a></div>
+  <div class="nav-r">
+    <span class="status"><b></b>All systems normal</span>
+    <a href="#" class="links" style="color:var(--ink-2)">Sign in</a>
+    <a class="btn btn-p" href="#pricing">Get an API key</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><span>v3.2</span> AVIF encoding is now 2.4× faster</span>
+      <h1>Images,<br>rendered at<br>the edge in<br><em>18ms</em>.</h1>
+      <p class="lede">Kiln resizes, crops, compresses and caches images from one HTTP call. 312 points of presence, no buckets to babysit, no lambdas to warm.</p>
+      <div class="ctas">
+        <a class="btn btn-p" href="#pricing">Start free <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-g" id="docs" href="#">Read the docs</a>
+      </div>
+      <div class="install"><span>$</span><b>npm i @kiln/sdk</b><button class="cp" data-copy="npm i @kiln/sdk" aria-label="Copy install command"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/></svg></button></div>
+      <div class="meta"><div><b>41B</b>images / month</div><div><b>99.995%</b>uptime, 12 mo</div><div><b>SOC 2</b>type II</div></div>
+    </div>
+
+    <div class="code">
+      <div class="tabs" role="tablist" aria-label="Code sample language">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <button class="tab" role="tab" id="t-curl" aria-selected="true" aria-controls="p-curl">curl</button>
+        <button class="tab" role="tab" id="t-js" aria-selected="false" aria-controls="p-js" tabindex="-1">node.js</button>
+        <button class="tab" role="tab" id="t-py" aria-selected="false" aria-controls="p-py" tabindex="-1">python</button>
+        <button class="copy" id="copyCode" aria-live="polite"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/></svg><span>Copy</span></button>
+      </div>
+<pre id="p-curl" role="tabpanel" aria-labelledby="t-curl"><span class="ln">1</span><span class="f">curl</span> -X POST api.kiln.dev/v1/render \
+<span class="ln">2</span>  -H <span class="s">"Authorization: Bearer $KILN_KEY"</span> \
+<span class="ln">3</span>  -d <span class="s">'{</span>
+<span class="ln">4</span><span class="s">    "src": "s3://atlas-media/hero/dunes.jpg",</span>
+<span class="ln">5</span><span class="s">    "width": 1600, "fit": "cover",</span>
+<span class="ln">6</span><span class="s">    "format": "avif", "quality": 62,</span>
+<span class="ln">7</span><span class="s">    "focus": "auto"</span>
+<span class="ln">8</span><span class="s">  }'</span></pre>
+<pre id="p-js" role="tabpanel" aria-labelledby="t-js" hidden><span class="ln">1</span><span class="k">import</span> { Kiln } <span class="k">from</span> <span class="s">"@kiln/sdk"</span>;
+<span class="ln">2</span>
+<span class="ln">3</span><span class="k">const</span> kiln = <span class="k">new</span> <span class="f">Kiln</span>(process.env.KILN_KEY);
+<span class="ln">4</span>
+<span class="ln">5</span><span class="k">const</span> img = <span class="k">await</span> kiln.<span class="f">render</span>({
+<span class="ln">6</span>  src: <span class="s">"s3://atlas-media/hero/dunes.jpg"</span>,
+<span class="ln">7</span>  width: <span class="n">1600</span>, fit: <span class="s">"cover"</span>, format: <span class="s">"avif"</span>,
+<span class="ln">8</span>});  <span class="c">// img.url, img.bytes, img.timing</span></pre>
+<pre id="p-py" role="tabpanel" aria-labelledby="t-py" hidden><span class="ln">1</span><span class="k">from</span> kiln <span class="k">import</span> Kiln
+<span class="ln">2</span>
+<span class="ln">3</span>kiln = <span class="f">Kiln</span>(os.environ[<span class="s">"KILN_KEY"</span>])
+<span class="ln">4</span>
+<span class="ln">5</span>img = kiln.<span class="f">render</span>(
+<span class="ln">6</span>    src=<span class="s">"s3://atlas-media/hero/dunes.jpg"</span>,
+<span class="ln">7</span>    width=<span class="n">1600</span>, fit=<span class="s">"cover"</span>, format=<span class="s">"avif"</span>,
+<span class="ln">8</span>)  <span class="c"># img.url, img.bytes, img.timing</span></pre>
+      <div class="resp">
+<pre aria-label="Example response"><span class="c">// 200 OK · x-kiln-pop: fra-2</span>
+{ <span class="k">"url"</span>: <span class="s">"cdn.kiln.dev/r/8f2c…a1.avif"</span>,
+  <span class="k">"bytes"</span>: <span class="n">48213</span>, <span class="k">"saved"</span>: <span class="s">"91.4%"</span>,
+  <span class="k">"cache"</span>: <span class="s">"MISS"</span>, <span class="k">"ms"</span>: <span class="n">17.8</span> }</pre>
+        <div class="thumb" aria-hidden="true"><span>1600×900 · avif</span></div>
+      </div>
+      <div class="timing"><span>fetch 4.1</span><span>·</span><span>encode 11.2</span><span>·</span><span>edge 2.5</span><span class="bar"><i id="tbar"></i></span><b>17.8 ms</b></div>
+    </div>
+  </div>
+</header>
+
+<div class="logos" aria-label="Customers"><div class="wrap"><small>RENDERING FOR</small><span>Northwind</span><span>halcyon/</span><span>Mercer&amp;Co</span><span>OPAL</span><span>tidepool</span><span>Brightline</span></div></div>
+
+<section class="blk" id="features"><div class="wrap">
+  <div class="kick">// primitives</div>
+  <h2>One endpoint. <span>Six things you'd otherwise build yourself.</span></h2>
+  <div class="grid">
+    <div class="cell"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 14h6v6h-6zM10 7h4a3 3 0 013 3v4"/></svg><h3>Smart crop</h3><p>Saliency and face detection pick the focal point. Pass <code>focus:"auto"</code> and stop hand-tuning gravity.</p></div>
+    <div class="cell"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h6"/></svg><h3>Format negotiation</h3><p>AVIF, WebP or JPEG XL per <code>Accept</code> header. Median payload drops 74% against source JPEG.</p></div>
+    <div class="cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg><h3>Tiered edge cache</h3><p>Two-layer cache with 98.7% hit rate. Purge by tag in under 150ms, globally.</p></div>
+    <div class="cell"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 12l2 2 4-4"/></svg><h3>Signed URLs</h3><p>HMAC-signed transforms so nobody can request a 9000px render on your bill.</p></div>
+    <div class="cell"><svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg><h3>Bring any origin</h3><p>S3, R2, GCS, Azure Blob or a plain HTTP host. No migration, no copies.</p></div>
+    <div class="cell"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg><h3>Per-route analytics</h3><p>Bytes saved, cache ratio and p99 by path prefix, streamed to your warehouse.</p></div>
+  </div>
+</div></section>
+
+<section class="blk" id="latency" style="padding-top:0"><div class="wrap lat">
+  <div>
+    <div class="kick">// network, last 30 days</div>
+    <h2>Fast where your users actually are.</h2>
+    <div class="big"><div><b>18<sup>ms</sup></b>p50 render</div><div><b>61<sup>ms</sup></b>p99 render</div></div>
+  </div>
+  <div class="regions" aria-label="p50 latency by region">
+    <div class="reg"><span>fra · ams</span><span class="t"><i style="width:22%"></i></span><b>14 ms</b></div>
+    <div class="reg"><span>iad · ord</span><span class="t"><i style="width:26%"></i></span><b>16 ms</b></div>
+    <div class="reg"><span>sin · hkg</span><span class="t"><i style="width:34%"></i></span><b>21 ms</b></div>
+    <div class="reg"><span>gru · scl</span><span class="t"><i style="width:42%"></i></span><b>26 ms</b></div>
+    <div class="reg"><span>bom · del</span><span class="t"><i style="width:46%"></i></span><b>28 ms</b></div>
+    <div class="reg"><span>jnb · nbo</span><span class="t"><i style="width:58%"></i></span><b>35 ms</b></div>
+  </div>
+</div></section>
+
+<section class="blk" id="pricing" style="padding-top:0"><div class="wrap">
+  <div class="kick">// pricing</div>
+  <h2>Pay per thousand renders. <span>Cache hits are free.</span></h2>
+  <div class="price">
+    <div class="tier"><h3>Hobby</h3><div class="p">$0 <small>/ month</small></div><ul><li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>5,000 renders</li><li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>1 origin</li><li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Community support</li></ul><a class="btn btn-g" href="#">Start building</a></div>
+    <div class="tier hot"><h3>Pro <em>most teams</em></h3><div class="p">$0.40 <small>/ 1k renders</small></div><ul><li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Unlimited origins</li><li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Signed URLs and purge API</li><li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>99.99% SLA</li></ul><a class="btn btn-p" href="#">Get an API key</a></div>
+    <div class="tier"><h3>Scale</h3><div class="p">Custom</div><ul><li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Committed-use discounts</li><li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Dedicated PoP pinning</li><li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Named engineer on Slack</li></ul><a class="btn btn-g" href="#">Talk to us</a></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><a class="logo" href="#"><i></i>Kiln</a><p>Image infrastructure for teams who'd rather ship product. Made in Lisbon and Montréal.</p></div>
+    <div><h4>Product</h4><a href="#">Render API</a><a href="#">Edge cache</a><a href="#">Analytics</a><a href="#">Status</a></div>
+    <div><h4>Developers</h4><a href="#">Docs</a><a href="#">SDKs</a><a href="#">Changelog</a><a href="#">OpenAPI spec</a></div>
+    <div><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Blog</a></div>
+    <div><h4>Legal</h4><a href="#">Terms</a><a href="#">Privacy</a><a href="#">DPA</a></div>
+  </div>
+  <div class="wordmark" aria-hidden="true">kiln</div>
+  <div class="fine"><span>© 2026 Kiln Labs, Lda.</span><span>api.kiln.dev · v3.2.0 · fra-2</span></div>
+</div></footer>
+
+<script>
+(()=>{
+  const tabs=[...document.querySelectorAll('.tab')];
+  const select=t=>{
+    tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;
+      const p=document.getElementById(x.getAttribute('aria-controls'));if(p){p.hidden=!on;if(on){p.classList.remove('panel-in');void p.offsetWidth;p.classList.add('panel-in');}}});
+    const b=document.getElementById('tbar');if(b){b.style.animation='none';void b.offsetWidth;b.style.animation='';}
+  };
+  tabs.forEach((t,i)=>{
+    t.addEventListener('click',()=>select(t));
+    t.addEventListener('keydown',e=>{const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(!d)return;e.preventDefault();const n=tabs[(i+d+tabs.length)%tabs.length];n.focus();select(n);});
+  });
+  const flash=(btn,label)=>{btn.classList.add('ok');const s=btn.querySelector('span');const old=s&&s.textContent;if(s)s.textContent=label;
+    clearTimeout(btn._t);btn._t=setTimeout(()=>{btn.classList.remove('ok');if(s)s.textContent=old;},1400);};
+  const copy=async(text,btn)=>{try{await navigator.clipboard.writeText(text);}catch(e){}flash(btn,'Copied');};
+  const cc=document.getElementById('copyCode');
+  cc.addEventListener('click',()=>{const p=document.querySelector('pre[role=tabpanel]:not([hidden])');
+    const txt=p?[...p.childNodes].filter(n=>!(n.classList&&n.classList.contains('ln'))).map(n=>n.textContent).join(''):'';copy(txt,cc);});
+  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>copy(b.dataset.copy,b)));
+})();
+</script>
+</body>
+</html>

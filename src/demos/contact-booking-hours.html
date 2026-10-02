@@ -1,0 +1,140 @@
+<!-- Design Lounge piece: contact-booking-hours · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Clay &amp; Co — studio hours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --clay:#ebd8cc;--dust:#f4ece6;--ink:#2e2018;--ink-2:#6d5648;--ink-3:#9a8170;
+  --line:rgba(46,32,24,.14);--accent:#a34b38;--accent-ink:#f7efe9;--ok:#3f6b4e;
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Work Sans",system-ui,sans-serif;
+  --gutter:56px;--r:4px;
+  --t-micro:160ms;--t-dlg:280ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--clay);overflow:hidden;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+a,button{color:inherit;font:inherit}
+a{text-decoration:none}
+button{background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+nav{height:64px;flex:none;display:flex;align-items:center;padding:0 var(--gutter);gap:36px;border-bottom:1px solid var(--line)}
+.logo{font:italic 500 28px/1 var(--serif);letter-spacing:-.02em;margin-right:auto}
+nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font:500 13px var(--sans)}
+nav ul a{color:var(--ink-2);padding:6px 0}
+nav ul a:hover,nav ul a[aria-current]{color:var(--ink)}
+main{flex:1;display:grid;grid-template-columns:1.15fr .85fr;min-height:0;padding:0 var(--gutter)}
+.left{display:flex;flex-direction:column;justify-content:center;padding:36px 48px 36px 0;border-right:1px solid var(--line)}
+.kick{font:500 11px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+.mail{font:italic 500 64px/.92 var(--serif);letter-spacing:-.03em;color:var(--ink);display:block;background:linear-gradient(var(--accent),var(--accent)) 0 100%/0 2px no-repeat;padding-bottom:8px;transition:background-size 320ms var(--expo);margin:0 0 12px}
+.mail:hover,.mail:focus-visible{background-size:100% 2px}
+.hint{margin:0 0 36px;color:var(--ink-2);font-size:14px;max-width:36ch}
+.book{align-self:start;height:48px;padding:0 22px;background:var(--accent);color:var(--accent-ink);font:500 14px var(--sans);border-radius:var(--r);transition:background var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.book:hover{background:#8d3e2e}
+.book:active{transform:scale(.98)}
+.right{display:flex;flex-direction:column;justify-content:center;padding:36px 0 36px 56px}
+.right h2{margin:0 0 18px;font:italic 500 28px/1 var(--serif);letter-spacing:-.02em}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font:500 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:0 0 10px;font-weight:500}
+td{padding:11px 0;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+td.d{font-weight:500;width:42%}
+td.h{text-align:right;color:var(--ink-2)}
+tr.shut td.h{color:var(--ink-3);font-style:italic}
+.tz{margin:22px 0 0;font-size:13px;color:var(--ink-2);display:flex;gap:10px;align-items:flex-start}
+.tz svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;flex:none;margin-top:2px}
+dialog{border:0;padding:0;background:transparent;max-width:calc(100vw - 32px)}
+dialog::backdrop{background:rgba(46,32,24,.42);transition:opacity var(--t-dlg) var(--ease)}
+.dlg{width:420px;background:var(--dust);color:var(--ink);padding:28px 28px 24px;border-radius:8px;box-shadow:0 24px 48px -16px rgba(46,32,24,.35);transform:scale(.96);opacity:0;transition:transform var(--t-dlg) var(--expo),opacity var(--t-dlg) var(--ease)}
+dialog[open] .dlg{transform:none;opacity:1}
+.dlg header{display:flex;align-items:center;margin:0 0 8px}
+.dlg h2{margin:0;font:italic 500 28px/1 var(--serif);letter-spacing:-.02em}
+.x{margin-left:auto;width:40px;height:40px;display:grid;place-items:center;color:var(--ink-2);border-radius:var(--r)}
+.x:hover{color:var(--ink);background:rgba(46,32,24,.06)}
+.x svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75}
+.dlg p{margin:0 0 20px;color:var(--ink-2);font-size:14px}
+label{display:block;font:500 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 14px}
+input,textarea{display:block;width:100%;margin-top:6px;border:0;border-bottom:1px solid var(--line);background:transparent;font:16px/1.4 var(--sans);color:var(--ink);padding:8px 0;outline:none;resize:vertical;border-radius:0}
+input:focus,textarea:focus{border-color:var(--accent)}
+textarea{min-height:72px}
+.acts{display:flex;justify-content:flex-end;gap:10px;margin-top:8px}
+.cancel{height:40px;padding:0 14px;color:var(--ink-2);font:500 14px var(--sans)}
+.cancel:hover{color:var(--ink)}
+.send{height:40px;padding:0 16px;background:var(--accent);color:var(--accent-ink);font:500 14px var(--sans);border-radius:var(--r)}
+.send:hover{background:#8d3e2e}
+.done{display:none;padding:12px 0 4px;color:var(--ok);font:500 14px var(--sans)}
+form.ok .fields,form.ok .acts{display:none}
+form.ok .done{display:block}
+@media (prefers-reduced-motion:reduce){
+  .dlg,dialog::backdrop,.mail,.book{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+<nav aria-label="Primary">
+  <a class="logo" href="#">Clay &amp; Co</a>
+  <ul>
+    <li><a href="#">Work</a></li>
+    <li><a href="#">Studio</a></li>
+    <li><a href="#" aria-current="page">Visit</a></li>
+  </ul>
+</nav>
+<main>
+  <section class="left">
+    <p class="kick">Studio · appointments</p>
+    <a class="mail" href="mailto:hello@clayandco.studio">hello@<br>clayandco.studio</a>
+    <p class="hint">A ceramics studio in Alcântara. Write anytime; we answer within a working day. For a visit, book a half hour below.</p>
+    <button class="book" type="button" id="open">Book 30 min</button>
+  </section>
+  <section class="right" aria-labelledby="hours-h">
+    <h2 id="hours-h">Hours this week</h2>
+    <table>
+      <thead><tr><th>Day</th><th style="text-align:right">Open</th></tr></thead>
+      <tbody>
+        <tr><td class="d">Monday</td><td class="h">10:00 – 18:00</td></tr>
+        <tr><td class="d">Tuesday</td><td class="h">10:00 – 18:00</td></tr>
+        <tr><td class="d">Wednesday</td><td class="h">10:00 – 18:00</td></tr>
+        <tr><td class="d">Thursday</td><td class="h">10:00 – 18:00</td></tr>
+        <tr><td class="d">Friday</td><td class="h">10:00 – 16:00</td></tr>
+        <tr class="shut"><td class="d">Saturday</td><td class="h">Closed</td></tr>
+        <tr class="shut"><td class="d">Sunday</td><td class="h">Closed</td></tr>
+      </tbody>
+    </table>
+    <p class="tz"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Times in Lisbon, Europe/Lisbon (WEST, UTC+1). Kiln days may close the floor at 15:00; we will write if your slot moves.</span></p>
+  </section>
+</main>
+<dialog id="dlg" aria-labelledby="dlg-h">
+  <form class="dlg" method="dialog" id="form">
+    <header>
+      <h2 id="dlg-h">Book 30 min</h2>
+      <button class="x" type="button" id="close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </header>
+    <p>A short visit to the studio. We will reply with two times that week.</p>
+    <div class="fields">
+      <label>Name <input type="text" name="name" required autocomplete="name"></label>
+      <label>Email <input type="email" name="email" required autocomplete="email"></label>
+      <label>Note <textarea name="note" rows="3" placeholder="What you would like to see"></textarea></label>
+    </div>
+    <p class="done" role="status">Request sent. We will write within a working day.</p>
+    <div class="acts">
+      <button class="cancel" type="button" id="cancel">Cancel</button>
+      <button class="send" type="submit" value="send">Send request</button>
+    </div>
+  </form>
+</dialog>
+<script>
+const dlg=document.getElementById('dlg'),form=document.getElementById('form'),open=document.getElementById('open');
+function close(){dlg.close();}
+open.addEventListener('click',()=>{form.classList.remove('ok');form.reset();dlg.showModal();form.querySelector('input').focus();});
+document.getElementById('close').addEventListener('click',close);
+document.getElementById('cancel').addEventListener('click',close);
+dlg.addEventListener('click',e=>{if(e.target===dlg)close();});
+form.addEventListener('submit',e=>{e.preventDefault();form.classList.add('ok');setTimeout(close,1200);});
+dlg.addEventListener('close',()=>open.focus());
+document.querySelectorAll('nav a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
+</script>
+</body>
+</html>

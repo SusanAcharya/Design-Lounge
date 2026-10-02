@@ -3,6 +3,7 @@ title: "Avatar stack with presence"
 summary: "Overlapping initials avatars with a +N overflow chip, hover fans them apart, pulsing green presence dots, name/status tooltips, and a simulated join or leave every 4s."
 platform: web
 type: component
+category: micro
 tags: [avatars, presence, collaboration, tooltip, realtime]
 styles: [dark, minimal, soft]
 motion: subtle

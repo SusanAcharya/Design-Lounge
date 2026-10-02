@@ -3,6 +3,7 @@ title: "Command palette"
 summary: "A ⌘K command palette that opens with a 200ms scale-and-fade, fuzzy-filters 20 grouped commands, and is fully driven from the keyboard with shortcut hints on the right."
 platform: web
 type: component
+category: navigation
 tags: [command-palette, search, keyboard, navigation, dialog]
 styles: [minimal, dark]
 motion: subtle

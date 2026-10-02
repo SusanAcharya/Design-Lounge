@@ -3,6 +3,7 @@ title: "Large title collapse on scroll"
 summary: "A 34px serif large title shrinks and fades into a 17px centred toolbar title as the list scrolls; the glass toolbar's fill, blur and hairline scale with scroll and the search field collapses."
 platform: mobile-app
 type: animation
+category: scroll
 tags: [navigation, toolbar, scroll, glass, ios, editorial]
 styles: [paper, editorial, glass]
 motion: subtle

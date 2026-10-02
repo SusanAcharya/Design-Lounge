@@ -3,6 +3,7 @@ title: "Grid-rows FAQ accordion"
 summary: "A six-question FAQ whose answers animate open with grid-template-rows 0fr → 1fr over 320ms, one open at a time, chevron rotation and arrow-key movement between serif questions on a paper ground."
 platform: web
 type: component
+category: faq
 tags: [accordion, faq, disclosure, keyboard, grid]
 styles: [paper, editorial, minimal]
 motion: subtle

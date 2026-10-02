@@ -6,7 +6,7 @@ import Base from '../../layouts/Base.astro';
 import DeviceFrame from '../../components/DeviceFrame.astro';
 import PieceCard from '../../components/PieceCard.astro';
 import { COLLECTIONS } from '../../data/collections';
-import { getPieces, numberMap, demoSource, demoUrl, briefUrl, PLATFORM_META, TYPE_META, STYLE_META, MOTION_LABEL, DIFFICULTY_LABEL, bytes } from '../../lib/pieces';
+import { getPieces, numberMap, creditedSource, creditedBrief, demoUrl, briefUrl, PLATFORM_META, TYPE_META, STYLE_META, CATEGORY_META, MOTION_LABEL, DIFFICULTY_LABEL, AUTHOR, bytes } from '../../lib/pieces';
 
 export async function getStaticPaths() {
   const pieces = await getPieces();
@@ -18,8 +18,8 @@ const nums = numberMap(all);
 const n = nums.get(piece.id)!;
 const d = piece.data;
 const { Content } = await render(piece);
-const source = demoSource(piece.id);
-const brief = piece.body ?? '';
+const source = creditedSource(piece.id);
+const brief = creditedBrief(piece, n);
 const size = new TextEncoder().encode(source).length;
 const pm = PLATFORM_META[d.platform];
 const lines = source.split('\n').length;
@@ -45,7 +45,7 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
   <article class="piece wrap">
     <header class="phead">
       <nav class="crumbs mono" aria-label="Breadcrumb">
-        <a href="/browse">Floor</a><span>/</span><a href={`/rooms/${d.type}`}>{TYPE_META[d.type].label}</a><span>/</span><a href={`/platforms/${d.platform}`}>{pm.label}</a>
+        <a href="/browse">Floor</a><span>/</span><a href={`/rooms/${d.type}`}>{TYPE_META[d.type].label}</a><span>/</span><a href={`/c/${d.category}`}>{CATEGORY_META[d.category].label}</a>
       </nav>
       <div class="pnav">
         <span class="mono faint num">Nº {n} of {String(all.length).padStart(3, '0')}</span>
@@ -57,6 +57,7 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
       <div class="facts reveal" style="--d:120ms">
         <a class="chip" href={`/platforms/${d.platform}`}><span class="dot"></span>{pm.label}</a>
         <a class="chip" href={`/rooms/${d.type}`}>{TYPE_META[d.type].singular}</a>
+        <a class="chip" href={`/c/${d.category}`}>{CATEGORY_META[d.category].label}</a>
         {d.styles.map((s) => <a class="chip" href={`/styles/${s}`}>{STYLE_META[s].label}</a>)}
       </div>
     </header>
@@ -103,6 +104,10 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
       </div>
 
       <aside class="side">
+        <a class="box credit" href={AUTHOR.site} target="_blank" rel="noopener">
+          <span class="mono-badge" aria-hidden="true">SA</span>
+          <span class="credit-text"><span class="eyebrow">Designed by</span><span class="display h4">{AUTHOR.name}</span><span class="mono faint">{AUTHOR.role} · {AUTHOR.city}</span></span>
+        </a>
         <div class="box">
           <p class="eyebrow">Use it with an agent</p>
           <ol class="steps">
@@ -205,6 +210,11 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
   .brief :global(h1) { font-size: 30px; }
   .source :global(pre) { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px 20px; font-size: 12.5px; line-height: 1.55; overflow: auto; max-height: 80vh; background: var(--paper-2) !important; }
   .side { position: sticky; top: calc(var(--header-h) + 20px); display: flex; flex-direction: column; gap: 16px; }
+  .credit { display: flex; gap: 14px; align-items: center; transition: border-color var(--t-fast); }
+  .credit:hover { border-color: var(--ink); }
+  .credit-text { display: flex; flex-direction: column; gap: 4px; }
+  .credit-text .eyebrow { margin: 0; }
+  .mono-badge { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font: 700 13px/1 var(--mono); letter-spacing: 0; }
   .box { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px; background: var(--paper); }
   .box .eyebrow { margin-bottom: 10px; }
   .steps { list-style: decimal; padding-left: 18px; font-size: 14px; color: var(--ink-2); display: flex; flex-direction: column; gap: 6px; }

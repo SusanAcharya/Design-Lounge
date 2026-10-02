@@ -1,0 +1,123 @@
+<!-- Design Lounge piece: contact-giant-email-copy · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Giant email, click to copy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ff4f1a;--ink:#0d0d0d;--paper:#f2efe6;--line:rgba(13,13,13,.9);--ink-2:#3a1a0e;
+  --display:"Anton",Impact,sans-serif;--mono:"Space Mono",ui-monospace,monospace;
+  --pad:40px;--rule:2px;--t-micro:140ms;--t-wipe:420ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.5 var(--mono);color:var(--ink);background:var(--bg);overflow:hidden;display:grid;grid-template-rows:auto 1fr auto auto;-webkit-font-smoothing:antialiased;cursor:default}
+.top{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:var(--rule) solid var(--line);margin:0 var(--pad)}
+.top div{padding:18px 0 14px;text-transform:uppercase;letter-spacing:.04em}
+.top div+div{padding-left:16px;border-left:var(--rule) solid var(--line)}
+.top b{display:block;font-weight:700}
+.stage{position:relative;display:flex;flex-direction:column;justify-content:center;padding:0 var(--pad);min-height:0}
+.kick{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px;text-transform:uppercase;font-weight:700;letter-spacing:.04em}
+.kick span:last-child{font-weight:400}
+.mail{all:unset;display:block;position:relative;cursor:none;white-space:nowrap;line-height:.86;font-family:var(--display);font-size:200px;letter-spacing:-.01em;text-transform:uppercase;color:var(--ink);padding:14px 0 26px;overflow:hidden}
+.mail .t{display:inline-block;transform-origin:left bottom}
+.mail::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:14px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform var(--t-wipe) var(--ease-out)}
+.mail:hover::after,.mail:focus-visible::after{transform:scaleX(1)}
+.mail:focus-visible{outline:3px solid var(--ink);outline-offset:6px}
+.mail.copied{color:var(--paper)}
+.mail.copied::after{background:var(--paper)}
+body.flash{background:var(--ink);color:var(--paper)}
+body.flash .top,body.flash .top div+div,body.flash .grid,body.flash .grid div+div{border-color:var(--paper)}
+body{transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.chip{position:fixed;left:0;top:0;pointer-events:none;background:var(--ink);color:var(--bg);font:700 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:10px 12px;border-radius:999px;opacity:0;transform:translate(-50%,-50%) scale(.6);transition:opacity var(--t-micro) var(--ease),transform 200ms var(--ease-out);white-space:nowrap;z-index:5}
+.chip.on{opacity:1;transform:translate(14px,14px) scale(1)}
+body.flash .chip{background:var(--paper);color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:var(--rule) solid var(--line);margin:0 var(--pad)}
+.grid div{padding:16px 16px 22px 0}
+.grid div+div{padding-left:16px;border-left:var(--rule) solid var(--line)}
+.grid h4{margin:0 0 10px;font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.grid p{margin:0;font-size:13px}
+.grid a{color:inherit;text-decoration:none;border-bottom:2px solid currentColor}
+.grid a:hover{background:var(--ink);color:var(--bg)}
+body.flash .grid a:hover{background:var(--paper);color:var(--ink)}
+.grid a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.tick{background:var(--ink);color:var(--bg);overflow:hidden;white-space:nowrap;height:52px;display:flex;align-items:center}
+.tick div{display:inline-flex;gap:48px;padding-left:48px;font:28px/1 var(--display);text-transform:uppercase;letter-spacing:.02em;animation:roll 38s linear infinite}
+.tick span{display:inline-flex;align-items:center;gap:48px}
+.tick span::after{content:"";width:14px;height:14px;background:var(--bg);transform:rotate(45deg)}
+body.flash .tick{background:var(--bg);color:var(--ink)}
+body.flash .tick span::after{background:var(--ink)}
+@keyframes roll{to{transform:translateX(-50%)}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){*,*::after{transition-duration:1ms!important;animation:none!important}}
+@media (hover:none){.mail{cursor:pointer}.chip{display:none}}
+</style>
+</head>
+<body>
+<div class="top" aria-label="Studio details">
+  <div><b>Ferro Works</b>Sound + spatial design</div>
+  <div><b>Lisbon / Rotterdam</b><span id="clock">Lisbon 21:12</span></div>
+  <div><b>Now booking</b>Projects from Feb 2027</div>
+  <div><b>Response</b>Under 24 h, Mon–Fri</div>
+</div>
+<main class="stage">
+  <div class="kick"><span>Contact — the fastest way in</span><span>Click to copy</span></div>
+  <button class="mail" id="mail" type="button" aria-describedby="hint"><span class="t" id="t" aria-hidden="true">HI@FERRO.WORK</span><span class="sr">Copy email address hi@ferro.work</span></button>
+  <span class="sr" id="hint">Copies the address to your clipboard</span>
+  <span class="sr" id="live" aria-live="assertive"></span>
+</main>
+<section class="grid" aria-label="Other contacts">
+  <div><h4>New business</h4><p>Inês Prado<br><a href="#" data-copy="+351 21 340 8812">+351 21 340 8812</a></p></div>
+  <div><h4>Press</h4><p>Tom van Dijk<br><a href="#" data-copy="press@ferro.work">press@ferro.work</a></p></div>
+  <div><h4>Careers</h4><p>Two open roles<br><a href="#" data-copy="jobs@ferro.work">jobs@ferro.work</a></p></div>
+  <div><h4>Studio</h4><p>Rua do Açúcar 88, 3rd floor<br>1950-010 Lisboa</p></div>
+</section>
+<div class="tick" aria-hidden="true"><div><span>Write to us</span><span>Installations</span><span>Sonic branding</span><span>Spatial audio</span><span>Exhibitions</span><span>Write to us</span><span>Installations</span><span>Sonic branding</span><span>Spatial audio</span><span>Exhibitions</span></div></div>
+<div class="chip" id="chip" aria-hidden="true">Copy ↗</div>
+<script>
+(()=>{
+  const mail=document.getElementById('mail'),t=document.getElementById('t'),chip=document.getElementById('chip'),live=document.getElementById('live');
+  const EMAIL='HI@FERRO.WORK',DONE='COPIED TO CLIPBOARD',GLYPHS='#%&*+=/\\<>[]{}?!0123456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let raf=0,busy=false,hold=0;
+  const probe=t.cloneNode();probe.removeAttribute('id');probe.style.cssText='position:absolute;visibility:hidden;left:-9999px;font-size:200px';mail.appendChild(probe);
+  function sizeFor(str){probe.textContent=str;const w=probe.getBoundingClientRect().width||1;return Math.min(260,200*(mail.clientWidth/w));}
+  function fit(str){t.style.fontSize=sizeFor(str).toFixed(1)+'px';}
+  function scramble(to,dur,cb){
+    cancelAnimationFrame(raf);fit(to);
+    if(reduce){t.textContent=to;cb&&cb();return;}
+    const from=t.textContent,start=performance.now(),n=to.length,at=[...to].map((_,i)=>(i/n)*dur*.7+Math.random()*dur*.3);
+    let last=0;
+    (function frame(now){
+      const e=now-start;
+      if(now-last>=48){last=now;let s='';
+        for(let i=0;i<n;i++){const c=to[i];s+=(e>=at[i]||c===' ')?c:(e<at[i]*.4&&from[i]?from[i]:GLYPHS[(Math.random()*GLYPHS.length)|0]);}
+        t.textContent=s;}
+      if(e<dur)raf=requestAnimationFrame(frame);else{t.textContent=to;cb&&cb();}
+    })(start);
+  }
+  async function copyText(s){try{await navigator.clipboard.writeText(s);return true;}catch(_){try{const a=document.createElement('textarea');a.value=s;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();const ok=document.execCommand('copy');a.remove();return ok;}catch(__){return false;}}}
+  async function copy(){
+    if(busy){clearTimeout(hold);}busy=true;
+    const ok=await copyText(EMAIL.toLowerCase());
+    live.textContent=ok?'Copied hi@ferro.work to clipboard':'Copy failed. The address is hi@ferro.work';
+    mail.classList.add('copied');document.body.classList.add('flash');chip.textContent='Copied';
+    scramble(ok?DONE:'HI@FERRO.WORK',720,()=>{hold=setTimeout(()=>{mail.classList.remove('copied');document.body.classList.remove('flash');chip.textContent='Copy ↗';scramble(EMAIL,640,()=>{busy=false;});},1600);});
+  }
+  mail.addEventListener('click',copy);
+  mail.addEventListener('pointermove',e=>{chip.style.left=e.clientX+'px';chip.style.top=e.clientY+'px';chip.classList.add('on');});
+  mail.addEventListener('pointerleave',()=>chip.classList.remove('on'));
+  document.querySelectorAll('[data-copy]').forEach(a=>a.addEventListener('click',async e=>{e.preventDefault();const ok=await copyText(a.dataset.copy);const o=a.textContent;a.textContent=ok?'Copied':'Copy failed';live.textContent=ok?'Copied '+a.dataset.copy:'Copy failed';setTimeout(()=>a.textContent=o,1400);}));
+  const clock=document.getElementById('clock');
+  function tick(){try{clock.textContent='Lisbon '+new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Lisbon'}).format(new Date());}catch(_){}}
+  tick();setInterval(tick,30000);
+  (document.fonts&&document.fonts.ready||Promise.resolve()).then(()=>fit(t.textContent));
+  addEventListener('resize',()=>fit(t.textContent));
+})();
+</script>
+</body>
+</html>

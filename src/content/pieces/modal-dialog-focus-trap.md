@@ -3,6 +3,7 @@ title: "Modal dialog with focus trap"
 summary: "Native <dialog> modals that open with a 240ms scale .96→1 and scrim fade, trap focus, close on Esc or scrim click, plus a destructive variant gated by a type-to-confirm input."
 platform: web
 type: component
+category: overlays
 tags: [dialog, modal, confirm, destructive, focus]
 styles: [minimal, soft]
 motion: subtle

@@ -1,0 +1,167 @@
+<!-- Design Lounge piece: features-sticky-scroll-steps · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Sticky scroll steps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4efe6;--card:#fbf8f2;--ink:#23291f;--ink-2:#5b6152;--ink-3:#8d8f80;--line:#ddd5c6;--line-2:#cbc1ae;
+  --terra:#c65d3b;--sage:#a9b89a;--sage-d:#6f8460;--butter:#ebcb7a;--rose:#e9b8a6;--soil:#d9c6a8;
+  --serif:"Young Serif",Georgia,serif;--sans:"Figtree",system-ui,sans-serif;
+  --r:18px;--r-bed:10px;--shadow:0 1px 0 rgba(35,41,31,.04),0 30px 60px -30px rgba(70,50,20,.28);
+  --t-fast:180ms;--t-morph:560ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{display:grid;grid-template-columns:1fr 600px;gap:72px;padding:0 72px;max-width:1440px;margin:0 auto}
+.copy{padding-top:64px}
+.eyebrow{font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--terra);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor}
+h2{font:400 76px/.98 var(--serif);letter-spacing:-.03em;margin:20px 0 22px}
+h2 em{font-style:normal;color:var(--terra)}
+.lede{max-width:430px;color:var(--ink-2);font-size:17px;margin:0}
+.steps{list-style:none;margin:28px 0 0;padding:0;counter-reset:s}
+.step{min-height:62vh;padding:44px 0 0 64px;position:relative;opacity:.38;transition:opacity var(--t-morph) var(--ease)}
+.step:last-child{min-height:86vh}
+.step.on{opacity:1}
+.step::before{content:"";position:absolute;left:19px;top:0;bottom:0;width:1px;background:var(--line-2)}
+.step .num{all:unset;cursor:pointer;position:absolute;left:0;top:40px;width:40px;height:40px;border-radius:50%;background:var(--bg);border:1px solid var(--line-2);display:grid;place-items:center;font:400 15px var(--serif);transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),border-color var(--t-fast)}
+.step.on .num{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.step .num:focus-visible{outline:2px solid var(--terra);outline-offset:3px}
+.step small{font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.step h3{font:400 36px/1.08 var(--serif);letter-spacing:-.02em;margin:12px 0 14px;max-width:440px}
+.step p{margin:0;max-width:430px;color:var(--ink-2)}
+.step ul{list-style:none;padding:0;margin:22px 0 0;display:flex;gap:28px}
+.step li{font-size:14px;color:var(--ink-2);border-top:1px solid var(--line-2);padding-top:10px;min-width:150px}
+.step li b{display:block;font:400 26px/1.1 var(--serif);color:var(--ink);margin-bottom:2px}
+.aside{position:relative}
+.sticky{position:sticky;top:48px;height:704px;padding-top:16px}
+.viz{position:relative;height:100%;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:22px 24px;overflow:hidden}
+.vh{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:14px}
+.vh b{font:400 20px var(--serif)}
+.vh span{font-size:13px;color:var(--ink-3)}
+.plot{position:relative;margin-top:22px;height:336px;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:34px 18px;padding:16px;border-radius:14px;background:repeating-linear-gradient(45deg,transparent 0 9px,rgba(203,193,174,.25) 9px 10px)}
+.bed{position:relative;border-radius:var(--r-bed);border:1.5px dashed var(--line-2);background:transparent;transition:background var(--t-morph) var(--ease),border-color var(--t-morph) var(--ease),transform var(--t-morph) var(--ease-out);padding:10px 12px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.bed .dim{font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums;transition:opacity var(--t-fast)}
+.bed .crop{font:400 17px/1.1 var(--serif);opacity:0;transform:translateY(6px);transition:opacity var(--t-morph) var(--ease),transform var(--t-morph) var(--ease-out)}
+.bed .crop small{display:block;font:500 11px var(--sans);color:var(--ink-2);margin-top:3px}
+.bed .rows{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 14px,rgba(35,41,31,.13) 14px 16px);opacity:0;transition:opacity var(--t-morph) var(--ease)}
+.bed .kg{position:absolute;right:12px;top:10px;font:400 34px/1 var(--serif);opacity:0;transform:scale(.8);transform-origin:right top;transition:opacity var(--t-morph) var(--ease),transform var(--t-morph) var(--ease-out)}
+.bed .kg i{font:500 12px var(--sans);font-style:normal;margin-left:2px}
+.bed .tick{position:absolute;right:10px;top:10px;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--card);display:grid;place-items:center;opacity:0;transform:scale(.5);transition:opacity var(--t-fast),transform var(--t-morph) var(--ease-out)}
+.bed .tick svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.sun{position:absolute;left:-40px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(235,203,122,.55),rgba(235,203,122,0) 68%);transition:opacity var(--t-morph);pointer-events:none}
+.ruler{position:absolute;left:16px;right:16px;bottom:-24px;height:12px;border-left:1px solid var(--ink-3);border-right:1px solid var(--ink-3);transition:opacity var(--t-fast)}
+.ruler::before{content:"";position:absolute;left:0;right:0;top:6px;height:1px;background:var(--ink-3)}
+.ruler span{position:absolute;left:50%;top:-2px;transform:translateX(-50%);background:var(--card);padding:0 8px;font-size:11px;color:var(--ink-2)}
+.foot{position:absolute;left:24px;right:24px;bottom:22px;height:176px}
+.panel{position:absolute;inset:0;opacity:0;transform:translateY(12px);transition:opacity var(--t-morph) var(--ease),transform var(--t-morph) var(--ease-out)}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;padding-top:6px}
+.legend div{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink-2)}
+.legend i{width:14px;height:14px;border-radius:4px;flex:none}
+.legend b{font-weight:600;color:var(--ink)}
+.note{font-size:13px;color:var(--ink-3);border-top:1px solid var(--line);padding-top:12px;margin-top:16px}
+.cal{display:grid;grid-template-columns:70px repeat(12,1fr);gap:3px;font-size:11px;color:var(--ink-3);align-items:center}
+.cal{position:relative;padding-top:20px}
+.cal .m{text-align:center}
+.cal .lab{grid-column:1}
+.cal .lab{color:var(--ink-2);font-weight:500}
+.cal .b{height:16px;border-radius:4px;grid-column:var(--c)}
+.cal .now{position:absolute;top:18px;bottom:-4px;left:calc(70px + (100% - 70px) * .41);width:1.5px;background:var(--terra)}
+.cal .now::after{content:"Today · 2 Jun";position:absolute;top:-16px;left:6px;white-space:nowrap;font:600 11px var(--sans);color:var(--terra)}
+.tally{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.tally .big{font:400 92px/.9 var(--serif);letter-spacing:-.04em}
+.tally .big i{font:500 18px var(--sans);font-style:normal;margin-left:6px;color:var(--ink-2)}
+.tally p{margin:10px 0 0;font-size:14px;color:var(--ink-2)}
+.spark{display:flex;align-items:flex-end;gap:5px;height:96px}
+.spark i{width:12px;border-radius:3px 3px 0 0;background:var(--sage);transform-origin:bottom;transform:scaleY(0);transition:transform var(--t-morph) var(--ease-out)}
+.spark i:nth-child(n+9){background:var(--terra)}
+/* states */
+.viz[data-step="1"] .p1,.viz[data-step="2"] .p2,.viz[data-step="3"] .p3,.viz[data-step="4"] .p4{opacity:1;transform:none}
+.viz:not([data-step="1"]) .ruler{opacity:0}
+.viz:not([data-step="1"]) .bed{border-style:solid;border-color:transparent;background:var(--c)}
+.viz:not([data-step="1"]) .bed .crop,.viz:not([data-step="1"]) .bed .rows{opacity:1;transform:none}
+.viz:not([data-step="1"]) .bed .dim{opacity:0}
+.viz[data-step="1"] .sun{opacity:1}
+.viz[data-step="1"] .bed:nth-child(2){border:1.5px solid var(--terra);background:rgba(198,93,59,.06)}
+.viz[data-step="1"] .bed:nth-child(2) .dim{color:var(--terra);font-weight:600}
+.viz[data-step="1"] .bed:nth-child(2)::before,.viz[data-step="1"] .bed:nth-child(2)::after{content:"";position:absolute;width:9px;height:9px;background:var(--card);border:1.5px solid var(--terra);border-radius:2px}
+.bed:nth-child(2)::before{right:3px;top:3px}.bed:nth-child(2)::after{right:3px;bottom:3px}
+.sun{opacity:0}
+.viz[data-step="3"] .bed .tick{opacity:1;transform:none}
+.viz[data-step="3"] .bed:nth-child(n+4) .tick{opacity:0}
+.viz[data-step="4"] .bed .kg{opacity:1;transform:none}
+.viz[data-step="4"] .bed .rows{opacity:.35}
+.viz[data-step="4"] .spark i{transform:scaleY(1)}
+.viz[data-step="3"] .bed:nth-child(n+4){transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:1ms!important}}
+@media (max-width:1100px){.wrap{grid-template-columns:1fr 480px;gap:40px;padding:0 40px}h2{font-size:60px}.plot{height:300px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="copy">
+    <div class="eyebrow">How Loam works</div>
+    <h2>From bare soil to a <em>full basket.</em></h2>
+    <p class="lede">Loam plans a kitchen garden around your plot, your sun and your week. Four steps, one season, no spreadsheets.</p>
+    <ol class="steps" id="steps">
+      <li class="step on" data-s="1"><button class="num" aria-label="Go to step 1">1</button><small>Step one · Map</small><h3>Draw your plot to the centimetre.</h3><p>Trace beds on a grid, drag the corners, and Loam reads your postcode for sun hours and the last frost date.</p><ul><li><b>6.2 × 4.0 m</b>back garden, 6 beds</li><li><b>7 h 40 m</b>average June sun</li></ul></li>
+      <li class="step" data-s="2"><button class="num" aria-label="Go to step 2">2</button><small>Step two · Choose</small><h3>Pick what you’ll actually eat.</h3><p>Tell Loam what lands on your table. It fills each bed with companions that like the same soil and spacing, and keeps the brassicas away from the beans.</p><ul><li><b>14</b>crops suggested</li><li><b>3</b>companion pairs</li></ul></li>
+      <li class="step" data-s="3"><button class="num" aria-label="Go to step 3">3</button><small>Step three · Tend</small><h3>A calendar that knows your weather.</h3><p>Sowing, thinning and feeding dates shift with the forecast. One short list every Saturday morning, nothing more.</p><ul><li><b>12 min</b>a week, on average</li><li><b>Sat 08:00</b>your weekly list</li></ul></li>
+      <li class="step" data-s="4"><button class="num" aria-label="Go to step 4">4</button><small>Step four · Harvest</small><h3>Weigh it, log it, plan next year.</h3><p>Tap a bed to log a pick. By October you’ll know which bed earned its keep and Loam rotates the plan for spring.</p><ul><li><b>38.4 kg</b>first-season median</li><li><b>£212</b>saved at the greengrocer</li></ul></li>
+    </ol>
+  </div>
+  <div class="aside">
+    <div class="sticky">
+      <figure class="viz" id="viz" data-step="1" aria-label="Plot planner preview" style="margin:0">
+                <div class="vh"><b>Back garden</b><span>Plot · 6.2 × 4.0 m · faces SSW</span></div>
+        <div class="plot">
+          <div class="sun"></div>
+          <div class="bed" style="--c:#c9d3b9"><span class="rows"></span><span class="dim">2.0 × 1.2 m</span><span class="crop">Runner beans<small>with sweet peas</small></span><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="kg">9.2<i>kg</i></span></div>
+          <div class="bed" style="--c:#efd79c"><span class="rows"></span><span class="dim">2.0 × 1.2 m</span><span class="crop">Courgette<small>2 plants, 90 cm apart</small></span><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="kg">11.6<i>kg</i></span></div>
+          <div class="bed" style="--c:#efc3b2"><span class="rows"></span><span class="dim">1.6 × 1.2 m</span><span class="crop">Tomatoes<small>with basil</small></span><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="kg">7.8<i>kg</i></span></div>
+          <div class="bed" style="--c:#d6dcc8"><span class="rows"></span><span class="dim">2.0 × 1.0 m</span><span class="crop">Kale &amp; chard<small>cut and come again</small></span><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="kg">4.1<i>kg</i></span></div>
+          <div class="bed" style="--c:#e6d3b6"><span class="rows"></span><span class="dim">2.0 × 1.0 m</span><span class="crop">Carrots<small>with spring onion</small></span><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="kg">3.9<i>kg</i></span></div>
+          <div class="bed" style="--c:#dcc9d6"><span class="rows"></span><span class="dim">1.6 × 1.0 m</span><span class="crop">Beetroot<small>two sowings</small></span><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="kg">1.8<i>kg</i></span></div>
+          <div class="ruler"><span>6.20 m</span></div>
+        </div>
+        <div class="foot">
+          <div class="panel p1"><div class="legend"><div><i style="border:1.5px dashed var(--line-2)"></i><span><b>6 beds</b> · 13.2 m² growing</span></div><div><i style="background:var(--butter)"></i><span><b>7 h 40 m</b> sun, 21 Jun</span></div><div><i style="background:var(--soil)"></i><span><b>Loam, pH 6.8</b> from survey</span></div><div><i style="background:var(--rose)"></i><span>Last frost <b>12 May</b></span></div></div><p class="note">Drag a corner to resize. Beds snap to 10 cm.</p></div>
+          <div class="panel p2"><div class="legend"><div><i style="background:#c9d3b9"></i><span><b>Legumes</b> · fix nitrogen</span></div><div><i style="background:#efd79c"></i><span><b>Cucurbits</b> · hungry, sunny</span></div><div><i style="background:#efc3b2"></i><span><b>Nightshades</b> · back wall</span></div><div><i style="background:#e6d3b6"></i><span><b>Roots</b> · light, stone-free</span></div></div><p class="note">Companions: beans + sweet peas, tomato + basil, carrot + onion.</p></div>
+          <div class="panel p3"><div class="cal"><span></span><span class="m">Mar</span><span class="m">Apr</span><span class="m">May</span><span class="m">Jun</span><span class="m">Jul</span><span class="m">Aug</span><span class="m">Sep</span><span class="m">Oct</span><span class="m"></span><span class="m"></span><span class="m"></span><span class="m"></span>
+            <span class="lab">Sow</span><span class="b" style="--c:2/5;background:var(--sage)"></span>
+            <span class="lab">Thin</span><span class="b" style="--c:4/6;background:var(--butter)"></span>
+            <span class="lab">Feed</span><span class="b" style="--c:5/8;background:var(--rose)"></span>
+            <span class="lab">Harvest</span><span class="b" style="--c:6/10;background:var(--terra)"></span>
+            <span class="now" aria-hidden="true"></span>
+            </div><p class="note" style="position:relative">This Saturday: thin carrots to 5 cm, tie in beans, feed tomatoes.</p></div>
+          <div class="panel p4"><div class="tally"><div><div class="big">38.4<i>kg</i></div><p>Harvested May–Oct · courgettes led</p></div><div class="spark" aria-hidden="true"><i style="height:12%"></i><i style="height:18%"></i><i style="height:26%"></i><i style="height:40%"></i><i style="height:52%"></i><i style="height:70%"></i><i style="height:88%"></i><i style="height:100%"></i><i style="height:84%"></i><i style="height:61%"></i><i style="height:37%"></i><i style="height:20%"></i></div></div><p class="note">Next spring: beans move to bed 4, roots to bed 1.</p></div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</div>
+<script>
+(()=>{
+  const steps=[...document.querySelectorAll('.step')],viz=document.getElementById('viz');
+  const spark=[...document.querySelectorAll('.spark i')];spark.forEach((b,i)=>b.style.transitionDelay=(i*30)+'ms');
+  function set(n){
+    viz.dataset.step=n;
+    steps.forEach(s=>{const on=s.dataset.s===String(n);s.classList.toggle('on',on);s.querySelector('.num').setAttribute('aria-current',on?'step':'false');});
+  }
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)set(e.target.dataset.s);}),{rootMargin:'-45% 0px -50% 0px'});
+    steps.forEach(s=>io.observe(s));
+  }
+  steps.forEach(s=>s.querySelector('.num').addEventListener('click',()=>{s.scrollIntoView({block:'center'});set(s.dataset.s);}));
+  set(1);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { PAIRINGS, fontHrefs, faceCss } from '../../data/type';
+import { AUTHOR } from '../../lib/pieces';
+
+const hrefs = fontHrefs(PAIRINGS.flatMap((p) => [p.display.spec, p.text.spec]));
+---
+<Base title="Type pairings" description={`Display and text pairings from Design Lounge by ${AUTHOR.name}. Copy the CSS, keep the credit, ship the page.`}>
+  {hrefs.map((href) => <link rel="stylesheet" href={href} />)}
+  <PageHead eyebrow="Library · Type" title="Pairings that <i>already work</i>" blurb="Thirty-six display-and-text marriages, each with a mood, a job, and a CSS snippet an agent can paste. Free to use. A credit link is appreciated." count={PAIRINGS.length} countLabel="pairings" />
+  <div class="wrap">
+    <nav class="tags" aria-label="Filter by mood">
+      {['editorial', 'product', 'tech', 'luxe', 'playful', 'classic', 'loud'].map((t) => <button class="chip" type="button" data-tag={t}>{t}</button>)}
+      <button class="chip on" type="button" data-tag="all">all</button>
+    </nav>
+    <ol class="grid">
+      {PAIRINGS.map((p, i) => (
+        <li class="card reveal" style={`--d:${(i % 8) * 40}ms`} data-tags={p.tags.join(' ')}>
+          <a class="spec" href={`/type/${p.id}`} style={`background:${p.bg};color:${p.ink}`}>
+            <span class="label" style={`color:${p.accent}`}>{p.label}</span>
+            <span class="hl" style={faceCss(p.display)}>{p.headline}</span>
+            <span class="bd" style={faceCss(p.text)}>{p.body}</span>
+          </a>
+          <div class="meta">
+            <div>
+              <h2 class="display h4"><a href={`/type/${p.id}`}>{p.name}</a></h2>
+              <p class="muted">{p.mood}</p>
+            </div>
+            <div class="faces mono faint">{p.display.family} + {p.text.family}</div>
+            <div class="jobs">{p.bestFor.map((b) => <span class="chip">{b}</span>)}</div>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="credit mono faint">Type pairings by {AUTHOR.name} · Design Lounge · {AUTHOR.siteLabel}</p>
+  </div>
+</Base>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('[data-tag]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-tags]');
+  chips.forEach((c) => c.addEventListener('click', () => {
+    chips.forEach((x) => x.classList.toggle('on', x === c));
+    const t = c.dataset.tag!;
+    cards.forEach((card) => { card.hidden = t !== 'all' && !card.dataset.tags!.includes(t); });
+  }));
+</script>
+
+<style>
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 22px; margin-top: 20px; }
+  .card { display: flex; flex-direction: column; gap: 12px; }
+  .spec { display: flex; flex-direction: column; gap: 12px; min-height: 240px; padding: 22px 22px 26px; border-radius: var(--r-lg); border: 1px solid var(--line); transition: transform var(--t-med) var(--ease), box-shadow var(--t-med); }
+  .card:hover .spec { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .label { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+  .hl { font-size: clamp(28px, 3vw, 38px); line-height: 1.02; }
+  .bd { font-size: 14.5px; line-height: 1.5; opacity: .82; text-wrap: pretty; }
+  .meta { display: flex; flex-direction: column; gap: 8px; }
+  .muted { font-size: 14px; color: var(--ink-2); text-wrap: pretty; }
+  .jobs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .credit { margin: 48px 0 0; }
+</style>

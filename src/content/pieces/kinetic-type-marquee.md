@@ -3,6 +3,7 @@ title: "Kinetic type marquee"
 summary: "Three rows of 136px variable-font text scroll at different speeds and directions; hovering a row eases it to quarter speed; the middle row is outlined and the weight breathes 300–720."
 platform: web
 type: animation
+category: text-motion
 tags: [typography, marquee, variable-font, specimen, hero]
 styles: [kinetic, editorial, paper]
 motion: rich

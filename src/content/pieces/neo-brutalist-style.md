@@ -3,6 +3,7 @@ title: "Neo-brutalist design style"
 summary: "Thick 2.5px black borders, hard 4px 4px 0 offset shadows, flat yellow and blue fills, and hover that moves the element into its shadow; buttons, inputs, a card, toggles and tags."
 platform: web
 type: style
+category: design-language
 tags: [style-guide, brutalist, components, buttons, toggles]
 styles: [brutalist, playful]
 motion: subtle

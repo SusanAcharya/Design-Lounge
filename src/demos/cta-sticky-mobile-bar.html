@@ -1,0 +1,119 @@
+<!-- Design Lounge piece: cta-sticky-mobile-bar · platform: mobile-web · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sprout — starter kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f5f2;--surface:#fff;--sunk:#e8ebe4;--ink:#171c18;--ink-2:#5a635c;--ink-3:#8b928c;
+  --line:#d8ddd4;--accent:#d4533e;--accent-ink:#fff;--leaf:#3f6b48;
+  --sans:"Sora",system-ui,sans-serif;
+  --safe-top:54px;--safe-bot:34px;--gutter:20px;--r:12px;--r-pill:999px;
+  --bar-h:108px;
+  --t-fast:160ms;--t-bar:280ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{height:100%}
+html{scroll-behavior:smooth}
+body{min-height:100%;font:15px/1.5 var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;padding-top:var(--safe-top);padding-bottom:calc(var(--safe-bot) + var(--bar-h) + 8px)}
+a,button{color:inherit;font:inherit}
+a{text-decoration:none}
+button{background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.nav{position:sticky;top:var(--safe-top);z-index:4;height:52px;display:flex;align-items:center;padding:0 var(--gutter);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid transparent}
+.nav.stuck{border-color:var(--line)}
+.logo{font:600 16px/1 var(--sans);letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
+.logo i{width:8px;height:8px;border-radius:50%;background:var(--leaf)}
+.nav a{margin-left:auto;font:500 13px var(--sans);color:var(--ink-2);padding:8px 4px}
+.hero{padding:16px var(--gutter) 4px}
+.kicker{font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--leaf);margin:0 0 12px}
+h1{margin:0 0 10px;font:600 32px/1.12 var(--sans);letter-spacing:-.04em}
+.lede{margin:0 0 20px;color:var(--ink-2);font-size:15px;max-width:32ch}
+.mock{height:168px;border-radius:18px;background:
+  radial-gradient(80% 60% at 50% 80%,#cfe0c8 0%,transparent 70%),
+  linear-gradient(180deg,#dfe8d6 0%,#b7c9a8 100%);
+  border:1px solid var(--line);position:relative;overflow:hidden}
+.mock::before{content:"";position:absolute;left:50%;top:36px;width:120px;height:160px;margin-left:-60px;border-radius:24px 24px 8px 8px;background:linear-gradient(180deg,#4d8a52,#2d5a34);transform:rotate(-6deg)}
+.mock::after{content:"";position:absolute;left:50%;top:24px;width:86px;height:86px;margin-left:-20px;border-radius:50% 50% 48% 52%;background:#6aa85a;transform:rotate(12deg)}
+.price-hero{display:flex;align-items:baseline;gap:10px;margin:16px 0 0}
+.price-hero b{font:600 28px/1 var(--sans);letter-spacing:-.03em}
+.price-hero span{font-size:13px;color:var(--ink-3)}
+section{padding:22px var(--gutter) 0}
+section h2{margin:0 0 14px;font:600 13px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.feat{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.feat li{list-style:none;display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.feat svg{width:20px;height:20px;stroke:var(--leaf);fill:none;stroke-width:1.75;flex:none;margin-top:1px}
+.feat b{display:block;font-weight:600;font-size:14px;letter-spacing:-.02em}
+.feat span{display:block;font-size:13px;color:var(--ink-2);margin-top:2px}
+.rev{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.rev p{margin:0 0 8px;font-size:14px;color:var(--ink);line-height:1.45}
+.rev small{font:500 12px var(--sans);color:var(--ink-3)}
+.bar{position:fixed;left:0;right:0;bottom:var(--safe-bot);z-index:6;background:var(--surface);border-top:1px solid var(--line);padding:12px var(--gutter);display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:12px;row-gap:4px;align-items:center;box-shadow:0 -8px 24px rgba(23,28,24,.08);transition:padding var(--t-bar) var(--ease)}
+.bar .desc{grid-column:1/-1;font:500 12px var(--sans);color:var(--ink-2);max-height:20px;opacity:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:max-height var(--t-bar) var(--ease),opacity var(--t-fast) var(--ease),margin var(--t-bar) var(--ease)}
+.bar .amt{font:600 20px/1 var(--sans);letter-spacing:-.03em}
+.bar .amt small{display:block;font:400 11px var(--sans);color:var(--ink-3);letter-spacing:0;margin-top:3px;font-weight:400}
+.bar .add{height:48px;padding:0 20px;background:var(--accent);color:var(--accent-ink);font:600 14px var(--sans);border-radius:var(--r-pill);min-width:128px;transition:background var(--t-fast) var(--ease),transform var(--t-fast)}
+.bar .add:hover{background:#b84634}
+.bar .add:active{transform:scale(.98)}
+.bar.compact{padding:10px var(--gutter)}
+.bar.compact .desc{max-height:0;opacity:0;margin:0}
+.bar.compact .amt small{display:none}
+.toast{position:fixed;left:var(--gutter);right:var(--gutter);bottom:calc(var(--safe-bot) + 108px);background:var(--ink);color:var(--bg);font:500 13px var(--sans);padding:12px 14px;border-radius:10px;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity var(--t-fast),transform var(--t-bar) var(--expo);z-index:7}
+.toast.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .bar,.bar .desc,.toast,.bar .add{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <a class="logo" href="#"><i></i>Sprout</a>
+  <a href="#kit">Kit</a>
+</header>
+<div class="hero" id="top">
+  <p class="kicker">Houseplant kit · ships Thursday</p>
+  <h1>Starter kit for a first windowsill</h1>
+  <p class="lede">Soil, a 12-week seed tin, and a watering plan that does not assume you remember Tuesdays.</p>
+  <div class="mock" role="img" aria-label="Illustrated seedling in a pot"></div>
+  <div class="price-hero"><b>$48</b><span>one kit · free post over $40</span></div>
+</div>
+<section id="kit">
+  <h2>In the box</h2>
+  <ul class="feat">
+    <li><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a7 7 0 0114 0c0 5.6-7 10-7 10z"/><circle cx="12" cy="11" r="2.2"/></svg><div><b>2.4 L living soil</b><span>Peat-free mix bagged in kraft. Enough for one 18 cm pot.</span></div></li>
+    <li><svg viewBox="0 0 24 24"><path d="M12 3c2 4 2 6 0 10-2-4-2-6 0-10z"/><path d="M12 13v8M8 21h8"/></svg><div><b>Seed tin, 12 weeks</b><span>Basil, calendula, and a trailing pea. Dated packets, not a mystery mix.</span></div></li>
+    <li><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg><div><b>Watering plan</b><span>A folded card with three checks a week. Hang it on the fridge.</span></div></li>
+  </ul>
+</section>
+<section>
+  <h2>From a windowsill in Porto</h2>
+  <div class="rev"><p>The card is the whole product. I stopped guessing and the basil lived.</p><small>Ines P. · kit 1842</small></div>
+  <div class="rev"><p>Arrived Thursday as promised. Soil smelled like a wood after rain, which I did not expect from a bag.</p><small>Jonah K. · kit 1904</small></div>
+</section>
+<div class="bar" id="bar">
+  <p class="desc">Starter kit · 12 weeks of seed. Ships Thursday.</p>
+  <div class="amt">$48<small>incl. post</small></div>
+  <button class="add" type="button" id="add">Add to bag</button>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const bar=document.getElementById('bar'),nav=document.getElementById('nav'),toast=document.getElementById('toast');
+addEventListener('scroll',()=>{
+  bar.classList.toggle('compact',scrollY>72);
+  nav.classList.toggle('stuck',scrollY>8);
+},{passive:true});
+document.getElementById('add').addEventListener('click',()=>{
+  toast.textContent='Starter kit added · $48';
+  toast.classList.add('on');
+  setTimeout(()=>toast.classList.remove('on'),2200);
+});
+document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
+</script>
+</body>
+</html>

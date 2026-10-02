@@ -1,0 +1,224 @@
+<!-- Design Lounge piece: m3-container-transform · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wayfare — container transform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface:#f8f6ec;--surface-c:#eeecdc;--surface-high:#e7e4d1;--surface-highest:#dfdcc6;
+  --on-surface:#1c1c12;--on-surface-v:#4a4a38;--outline-v:#cbc8b0;
+  --primary:#4b6a14;--on-primary:#ffffff;--primary-c:#cdeb94;--on-primary-c:#132000;
+  --secondary-c:#dfe6c2;--on-secondary-c:#1a1e06;--tertiary-c:#ffdcc2;--on-tertiary-c:#2e1500;
+  --scrim:rgba(28,28,18,.32);
+  --font:"Figtree",system-ui,sans-serif;
+  --r-card:28px;--r-art:20px;--r-pill:999px;
+  --shadow-1:0 1px 2px rgba(28,28,18,.12),0 2px 6px rgba(28,28,18,.08);
+  --t-micro:160ms;--t-enter:500ms;--t-exit:400ms;--ease-emph:cubic-bezier(.2,0,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--font);background:var(--surface);color:var(--on-surface);-webkit-font-smoothing:antialiased;position:relative;overflow:hidden}
+button{font:inherit;color:inherit}
+.i{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.art{display:block;width:100%;height:100%}
+main{height:100%;overflow-y:auto;padding:54px 16px 130px;scrollbar-width:none}
+main::-webkit-scrollbar{display:none}
+.bar{display:flex;align-items:center;justify-content:space-between;height:56px}
+.ib{width:48px;height:48px;border-radius:50%;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--on-surface-v)}
+.ib:hover{background:rgba(28,28,18,.08)}
+.av{width:40px;height:40px;border-radius:50%;background:var(--tertiary-c);color:var(--on-tertiary-c);display:grid;place-items:center;font-weight:700;font-size:14px}
+.eyebrow{margin:6px 4px 0;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--primary)}
+h1{margin:0 4px;font-size:57px;line-height:1.02;font-weight:800;letter-spacing:-.035em}
+h1 span{color:var(--primary)}
+.chips{display:flex;gap:8px;margin:18px 0 16px;overflow-x:auto;scrollbar-width:none}
+.chips button{height:40px;padding:0 18px;border-radius:12px;border:1px solid var(--outline-v);background:transparent;font-weight:600;font-size:14px;color:var(--on-surface-v);cursor:pointer;white-space:nowrap;transition:border-radius var(--t-micro) var(--ease-emph),background var(--t-micro)}
+.chips button[aria-pressed="true"]{background:var(--secondary-c);color:var(--on-secondary-c);border-color:transparent;border-radius:var(--r-pill)}
+.list{display:flex;flex-direction:column;gap:10px;list-style:none;margin:0;padding:0}
+.card{display:block;width:100%;text-align:left;border:0;padding:10px;border-radius:var(--r-card);background:var(--surface-c);cursor:pointer;transition:background var(--t-micro),transform var(--t-micro) var(--ease-emph)}
+.card:hover{background:var(--surface-high)}
+.card:active{transform:scale(.985)}
+.card:focus-visible,.ib:focus-visible,.chips button:focus-visible,.go:focus-visible,.dl:focus-visible,.nav button:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.card .ph{display:block;height:176px;border-radius:var(--r-art);overflow:hidden;position:relative}
+.card .tag{position:absolute;left:12px;top:12px;height:28px;padding:0 12px;border-radius:var(--r-pill);background:var(--surface);font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px}
+.card .tag i{width:8px;height:8px;border-radius:50%;background:var(--primary)}
+.card .tx{display:block;padding:14px 10px 6px}
+.card b{display:block;font-size:22px;line-height:1.2;font-weight:700;letter-spacing:-.01em}
+.card small{display:block;font-size:14px;color:var(--on-surface-v);margin-top:4px}
+.row{display:flex !important;align-items:center;gap:14px}
+.row .ph{width:92px;height:92px;flex:none}
+.row .tx{padding:0;flex:1;min-width:0}
+.row b{font-size:18px}
+.row .ph.arch{border-radius:46px 46px 16px 16px}
+.row .ph.pill{border-radius:46px}
+.row .ph.sq{border-radius:30px 12px 30px 12px}
+.go-i{width:40px;height:40px;border-radius:50%;background:var(--surface);display:grid;place-items:center;flex:none;margin-right:4px;color:var(--on-surface-v)}
+.nav{position:absolute;left:0;right:0;bottom:0;height:114px;padding:12px 8px 34px;background:var(--surface-c);display:flex;z-index:2}
+.nav button{flex:1;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--on-surface-v);cursor:pointer;border-radius:16px}
+.nav .pip{width:64px;height:32px;border-radius:var(--r-pill);display:grid;place-items:center}
+.nav [aria-current] .pip{background:var(--secondary-c);color:var(--on-secondary-c)}
+.nav [aria-current]{color:var(--on-surface)}
+.scrim{position:absolute;inset:0;background:var(--scrim);opacity:0;pointer-events:none;z-index:3}
+.ct{position:absolute;overflow:hidden;background:var(--surface);z-index:4;will-change:top,left,width,height}
+.ct[hidden]{display:none}
+.ghost{position:absolute;left:0;top:0;pointer-events:none}
+.ghost .card{background:var(--surface-c)}
+.detail{position:absolute;left:0;top:0;width:390px;max-width:100vw;height:100vh;overflow-y:auto;scrollbar-width:none}
+.hero{height:372px;position:relative}
+.hero .top{position:absolute;left:12px;right:12px;top:62px;display:flex;justify-content:space-between}
+.hero .ib{background:rgba(248,246,236,.88);color:var(--on-surface)}
+.hero .ib:hover{background:var(--surface)}
+.hero .meta{position:absolute;left:20px;bottom:52px;display:flex;gap:8px}
+.hero .meta span{height:32px;padding:0 14px;border-radius:var(--r-pill);background:rgba(248,246,236,.9);font-size:13px;font-weight:700;display:flex;align-items:center}
+.sheet{position:relative;margin-top:-28px;background:var(--surface);border-radius:28px 28px 0 0;padding:26px 20px 150px}
+.sheet h2{margin:0;font-size:34px;line-height:1.08;font-weight:800;letter-spacing:-.03em}
+.sheet .sub{margin:6px 0 0;color:var(--on-surface-v);font-size:15px}
+.stats{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:8px;margin:20px 0}
+.stats div{background:var(--surface-c);border-radius:20px;padding:14px 14px 12px}
+.stats div:first-child{background:var(--primary-c);color:var(--on-primary-c);border-radius:28px 20px 20px 28px}
+.stats b{display:block;font-size:30px;line-height:1;font-weight:800;letter-spacing:-.03em}
+.stats b small{font-size:14px;font-weight:600;letter-spacing:0;margin-left:2px}
+.stats span{font-size:12px;font-weight:600;color:inherit;opacity:.75}
+.elev{background:var(--surface-c);border-radius:24px;padding:14px 16px 10px}
+.elev header{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
+.elev header span{color:var(--on-surface-v);font-weight:500}
+.elev svg{display:block;width:100%;height:76px;margin-top:8px}
+.sheet p.body{font-size:15px;line-height:1.55;color:var(--on-surface-v);margin:18px 2px 0}
+.act{position:absolute;left:0;right:0;bottom:0;padding:28px 16px 46px;display:flex;gap:8px;background:linear-gradient(rgba(248,246,236,0),var(--surface) 34%)}
+.go{flex:1;height:64px;border:0;border-radius:var(--r-pill);background:var(--primary);color:var(--on-primary);font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:var(--shadow-1);transition:border-radius var(--t-micro) var(--ease-emph)}
+.go:active{border-radius:20px}
+.dl{width:64px;height:64px;border:0;border-radius:22px;background:var(--primary-c);color:var(--on-primary-c);display:grid;place-items:center;cursor:pointer;transition:border-radius var(--t-micro) var(--ease-emph)}
+.dl[aria-pressed="true"]{border-radius:50%;background:var(--on-primary-c);color:var(--primary-c)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7dc9a"/><stop offset="1" stop-color="#ee9560"/></linearGradient>
+    <linearGradient id="skyB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9ece6"/><stop offset="1" stop-color="#9fc7bf"/></linearGradient>
+    <linearGradient id="skyC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef0d6"/><stop offset="1" stop-color="#cfd9a6"/></linearGradient>
+    <linearGradient id="skyD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f5e"/><stop offset="1" stop-color="#b9868a"/></linearGradient>
+  </defs>
+  <symbol id="artA" viewBox="0 0 390 300" preserveAspectRatio="xMidYMid slice"><rect width="390" height="300" fill="url(#skyA)"/><circle cx="268" cy="118" r="34" fill="#fff3d4"/><path d="M0 190 90 120 150 160 230 96 320 150 390 120V300H0z" fill="#c9714c" opacity=".55"/><path d="M0 220 70 176 140 206 210 150 290 200 390 168V300H0z" fill="#6b7f2e"/><path d="M0 262 110 222 200 250 300 214 390 240V300H0z" fill="#33461a"/></symbol>
+  <symbol id="artB" viewBox="0 0 390 300" preserveAspectRatio="xMidYMid slice"><rect width="390" height="300" fill="url(#skyB)"/><path d="M40 196 150 70 236 170 300 110 390 196z" fill="#6c8d90"/><path d="M150 70 176 100 160 98 146 112 128 96zM300 110 318 130 300 126 288 134z" fill="#f4f8f4"/><rect y="196" width="390" height="104" fill="#4f8088"/><path d="M60 216h120M200 232h140M90 252h90M230 270h110" stroke="#cfe6e2" stroke-width="3" stroke-linecap="round" opacity=".7"/></symbol>
+  <symbol id="artC" viewBox="0 0 390 300" preserveAspectRatio="xMidYMid slice"><rect width="390" height="300" fill="url(#skyC)"/><path d="M0 170q100-60 200-10t190-30V300H0z" fill="#a9ba76"/><path d="M0 220q120-50 230 0t160-20V300H0z" fill="#6e8a39"/><path d="M60 250l22-70 22 70zM120 260l26-84 26 84zM260 256l20-62 20 62zM310 262l24-76 24 76z" fill="#2f4614"/></symbol>
+  <symbol id="artD" viewBox="0 0 390 300" preserveAspectRatio="xMidYMid slice"><rect width="390" height="300" fill="url(#skyD)"/><circle cx="110" cy="96" r="22" fill="#f4e6cf"/><circle cx="121" cy="90" r="20" fill="#4c4f6c"/><path d="M0 210 120 130 200 190 280 140 390 200V300H0z" fill="#2b2d45"/><path d="M0 256 140 214 260 244 390 222V300H0z" fill="#161827"/></symbol>
+</svg>
+
+<main id="list">
+  <div class="bar">
+    <button class="ib" aria-label="Search trails"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></button>
+    <span class="av" aria-label="Signed in as Kiran Tamang">KT</span>
+  </div>
+  <p class="eyebrow">Annapurna foothills · 14 routes</p>
+  <h1>Trails<span>.</span></h1>
+  <div class="chips" role="group" aria-label="Filter">
+    <button aria-pressed="true">Day hikes</button><button aria-pressed="false">Overnight</button><button aria-pressed="false">Lakes</button><button aria-pressed="false">Family</button>
+  </div>
+  <ul class="list">
+    <li><button class="card" data-i="0" aria-haspopup="dialog"><span class="ph"><svg class="art" preserveAspectRatio="xMidYMid slice"><use href="#artA"/></svg><span class="tag"><i></i>Sunrise pick</span></span><span class="tx"><b>Australian Camp ridge</b><small>11.4 km · 640 m gain · 5h 10m</small></span></button></li>
+    <li><button class="card row" data-i="1" aria-haspopup="dialog"><span class="ph arch"><svg class="art" preserveAspectRatio="xMidYMid slice"><use href="#artB"/></svg></span><span class="tx"><b>Begnas lake shore</b><small>7.8 km · Easy · 2h 40m</small></span><span class="go-i" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span></button></li>
+    <li><button class="card row" data-i="2" aria-haspopup="dialog"><span class="ph pill"><svg class="art" preserveAspectRatio="xMidYMid slice"><use href="#artC"/></svg></span><span class="tx"><b>Raniban pine loop</b><small>5.2 km · Easy · 1h 50m</small></span><span class="go-i" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span></button></li>
+    <li><button class="card row" data-i="3" aria-haspopup="dialog"><span class="ph sq"><svg class="art" preserveAspectRatio="xMidYMid slice"><use href="#artD"/></svg></span><span class="tx"><b>Sarangkot night climb</b><small>4.6 km · Hard · 2h 05m</small></span><span class="go-i" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span></button></li>
+  </ul>
+</main>
+<nav class="nav" aria-label="Primary">
+  <button aria-current="page"><span class="pip"><svg class="i" viewBox="0 0 24 24"><path d="M3 19l6-12 4 7 3-4 5 9z"/></svg></span>Trails</button>
+  <button><span class="pip"><svg class="i" viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"/></svg></span>Saved</button>
+  <button><span class="pip"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span>Nearby</button>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<section class="ct" id="ct" role="dialog" aria-modal="true" aria-labelledby="dTitle" hidden>
+  <div class="detail" id="detail">
+    <div class="hero">
+      <svg class="art" preserveAspectRatio="xMidYMid slice"><use id="dArt" href="#artA"/></svg>
+      <div class="top">
+        <button class="ib" id="back" aria-label="Back to trails"><svg class="i" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button class="ib" aria-label="Save trail"><svg class="i" viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"/></svg></button>
+      </div>
+      <div class="meta"><span id="dLvl">Moderate</span><span id="dType">Loop</span></div>
+    </div>
+    <div class="sheet">
+      <h2 id="dTitle">Australian Camp ridge</h2>
+      <p class="sub" id="dSub">Starts at Kande trailhead, 26 km from Lakeside</p>
+      <div class="stats">
+        <div><b id="dKm">11.4<small>km</small></b><span>distance</span></div>
+        <div><b id="dGain">640<small>m</small></b><span>gain</span></div>
+        <div><b id="dTime">5h10</b><span>moving</span></div>
+      </div>
+      <div class="elev"><header>Elevation<span id="dRange">1,770 – 2,410 m</span></header><svg viewBox="0 0 320 76" preserveAspectRatio="none" aria-hidden="true"><path id="dArea" fill="#cdeb94"/><path id="dLine" fill="none" stroke="#4b6a14" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <p class="body" id="dBody"></p>
+    </div>
+  </div>
+  <div class="act">
+    <button class="go"><svg class="i" viewBox="0 0 24 24"><path d="M7 4l12 8-12 8z"/></svg>Start route</button>
+    <button class="dl" aria-pressed="false" aria-label="Download for offline"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></button>
+  </div>
+</section>
+<p class="vh" aria-live="polite" id="live"></p>
+
+<script>
+(()=>{
+  const $=id=>document.getElementById(id), ct=$('ct'), detail=$('detail'), scrim=$('scrim');
+  const E='cubic-bezier(.2,0,0,1)', reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const T=[
+    {t:'Australian Camp ridge',s:'Starts at Kande trailhead, 26 km from Lakeside',km:'11.4',g:'640',h:'5h10',l:'Moderate',y:'Loop',a:'A',r:'1,770 – 2,410 m',e:[20,28,40,52,49,62,70,66,58,44,36,30,22],b:'A steady climb through rhododendron forest to the camp meadow, then a ridge walk with Machhapuchhre straight ahead. Leave by 05:30 to catch first light on the summit.'},
+    {t:'Begnas lake shore',s:'Starts at Begnas bazaar, 14 km from Lakeside',km:'7.8',g:'120',h:'2h40',l:'Easy',y:'Out and back',a:'B',r:'650 – 770 m',e:[30,32,34,30,36,40,38,34,36,32,30],b:'Flat paddy-field paths along the north shore with two tea stops. Boats back across the lake run every 40 minutes until 17:00.'},
+    {t:'Raniban pine loop',s:'Starts at Peace Pagoda gate',km:'5.2',g:'210',h:'1h50',l:'Easy',y:'Loop',a:'C',r:'800 – 1,010 m',e:[24,30,38,46,50,44,40,34,28,24],b:'Shaded pine trail under the pagoda ridge. Well marked, dry in all seasons, and good for children over six.'},
+    {t:'Sarangkot night climb',s:'Starts at Bindhyabasini temple',km:'4.6',g:'790',h:'2h05',l:'Hard',y:'One way',a:'D',r:'820 – 1,610 m',e:[8,16,26,34,44,52,60,66,70,72],b:'Stone steps the whole way. Bring a headlamp and two layers; the viewpoint sits at 4 °C before dawn in October.'}
+  ];
+  let card=null, busy=false;
+  const rect=el=>{const r=el.getBoundingClientRect();return{top:r.top+'px',left:r.left+'px',width:r.width+'px',height:r.height+'px'}};
+  const full=()=>({top:'0px',left:'0px',width:innerWidth+'px',height:innerHeight+'px'});
+  function fill(d){
+    $('dArt').setAttribute('href','#art'+d.a);$('dTitle').textContent=d.t;$('dSub').textContent=d.s;
+    $('dKm').firstChild.nodeValue=d.km;$('dGain').firstChild.nodeValue=d.g;$('dTime').textContent=d.h;
+    $('dLvl').textContent=d.l;$('dType').textContent=d.y;$('dRange').textContent=d.r;$('dBody').textContent=d.b;
+    const n=d.e.length-1, pts=d.e.map((v,i)=>[(i/n*320).toFixed(1),(74-v).toFixed(1)]);
+    const line='M'+pts.map(p=>p.join(' ')).join(' L');
+    $('dLine').setAttribute('d',line);$('dArea').setAttribute('d',line+' L320 76 L0 76Z');
+  }
+  function open(c,user){
+    if(busy)return;busy=true;card=c;fill(T[+c.dataset.i]);
+    const ghost=document.createElement('div');ghost.className='ghost';ghost.style.width=c.offsetWidth+'px';
+    ghost.appendChild(c.cloneNode(true));ct.prepend(ghost);
+    ct.hidden=false;detail.scrollTop=0;c.style.visibility='hidden';
+    const o={duration:reduce?1:500,easing:E,fill:'both'};
+    ct.animate([{...rect(c),borderRadius:'28px'},{...full(),borderRadius:'0px'}],o);
+    scrim.animate([{opacity:0},{opacity:1}],o);
+    ghost.animate([{opacity:1},{opacity:0,offset:.3},{opacity:0}],{...o,easing:'linear'});
+    detail.animate([{opacity:0},{opacity:0,offset:.3},{opacity:1}],{...o,easing:'linear'});
+    const a=ct.querySelector('.act').animate([{opacity:0,transform:'translateY(24px)'},{opacity:0,offset:.4},{opacity:1,transform:'none'}],o);
+    a.onfinish=()=>{busy=false;ghost.remove();if(user)$('back').focus();$('live').textContent=T[+c.dataset.i].t+' opened';};
+  }
+  function close(user){
+    if(busy||ct.hidden)return;busy=true;
+    const ghost=document.createElement('div');ghost.className='ghost';ghost.style.width=card.offsetWidth+'px';
+    const k=card.cloneNode(true);k.style.visibility='';ghost.appendChild(k);ct.prepend(ghost);
+    const o={duration:reduce?1:400,easing:E,fill:'both'};
+    ct.animate([{...full(),borderRadius:'0px'},{...rect(card),borderRadius:'28px'}],o);
+    scrim.animate([{opacity:1},{opacity:0}],o);
+    ghost.animate([{opacity:0},{opacity:0,offset:.55},{opacity:1}],{...o,easing:'linear'});
+    detail.animate([{opacity:1},{opacity:0,offset:.45},{opacity:0}],{...o,easing:'linear'});
+    ct.querySelector('.act').animate([{opacity:1},{opacity:0,offset:.25},{opacity:0}],o).onfinish=()=>{
+      ct.hidden=true;ghost.remove();card.style.visibility='';if(user)card.focus();busy=false;
+      ct.getAnimations({subtree:true}).forEach(x=>x.cancel());scrim.getAnimations().forEach(x=>x.cancel());
+    };
+  }
+  document.querySelectorAll('#list .card').forEach(c=>c.addEventListener('click',()=>open(c,1)));
+  $('back').addEventListener('click',()=>close(1));
+  addEventListener('keydown',e=>{if(e.key==='Escape')close(1);});
+  document.querySelector('.chips').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;b.parentNode.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
+  const dl=ct.querySelector('.dl');dl.addEventListener('click',()=>dl.setAttribute('aria-pressed',String(dl.getAttribute('aria-pressed')!=='true')));
+  setTimeout(()=>open(document.querySelector('#list .card')),700);
+  setTimeout(()=>close(),2900);
+})();
+</script>
+</body>
+</html>

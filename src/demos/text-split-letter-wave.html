@@ -1,0 +1,116 @@
+<!-- Design Lounge piece: text-split-letter-wave · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Split letter wave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#2336E6;--bg-deep:#1726B8;--cream:#FFF3D6;--cream-2:#C9CDF7;--pink:#FF9EC4;--pink-ink:#3A0A22;--line:rgba(255,243,214,.22);
+  --display:"Bagel Fat One",system-ui,sans-serif;--body:"Figtree",system-ui,sans-serif;
+  --fs-display:192px;--fs-lede:20px;--fs-label:13px;
+  --r-pill:999px;
+  --rise:820ms;--hop:520ms;--stagger:34ms;
+  --ease-over:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--cream);font:400 16px/1.5 var(--body);overflow:hidden;-webkit-font-smoothing:antialiased;position:relative}
+body::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 520px at 88% 110%,var(--bg-deep),transparent 70%),radial-gradient(600px 400px at 0% 0%,rgba(255,255,255,.07),transparent 70%);pointer-events:none}
+.wrap{position:relative;height:100%;display:grid;grid-template-rows:76px 1fr 64px;padding:0 56px}
+nav{display:flex;align-items:center;gap:32px;border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font:24px/1 var(--display);color:var(--cream);text-decoration:none}
+.logo svg{width:28px;height:28px}
+nav ul{display:flex;gap:28px;list-style:none;margin:0 0 0 auto;padding:0}
+nav a{color:var(--cream);text-decoration:none;font-weight:500;font-size:15px;opacity:.86}
+nav a:hover{opacity:1}
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:var(--r-pill);background:var(--pink);color:var(--pink-ink);font:700 15px var(--body);border:0;cursor:pointer;text-decoration:none;transition:transform 160ms var(--ease)}
+.btn:hover{transform:translateY(-2px) rotate(-2deg)}
+.btn.ghost{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1.5px var(--cream)}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px;border-radius:12px}
+.hero{display:flex;flex-direction:column;justify-content:center;position:relative}
+.eyebrow{font:600 var(--fs-label)/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--cream-2);display:flex;gap:14px;align-items:center;margin-bottom:18px}
+.eyebrow i{width:40px;height:1.5px;background:var(--cream-2)}
+h1{font:400 var(--fs-display)/.92 var(--display);letter-spacing:-.02em;margin:0;max-width:1060px}
+.line{display:block;white-space:nowrap}
+.word{display:inline-block;cursor:default;outline:none;border-radius:16px}
+.word.hot{color:var(--pink)}
+.word:focus-visible{box-shadow:0 0 0 3px var(--pink)}
+.ch{display:inline-block;will-change:transform}
+.g{display:inline-block}
+h1.play .ch{animation:rise var(--rise) var(--ease-over) backwards;animation-delay:calc(var(--i) * var(--stagger) + 120ms)}
+.word.hop .g{animation:hop var(--hop) var(--ease) both;animation-delay:calc(var(--j) * 28ms)}
+@keyframes rise{0%{opacity:0;transform:translateY(.7em) rotate(10deg) scale(.9)}35%{opacity:1}70%{transform:translateY(-.1em) rotate(-3deg) scale(1.02)}100%{transform:none}}
+@keyframes hop{0%{transform:none}35%{transform:translateY(-.22em) rotate(-6deg)}65%{transform:translateY(.04em) rotate(2deg)}100%{transform:none}}
+.foot{display:flex;align-items:flex-end;justify-content:space-between;margin-top:48px;gap:40px}
+.lede{font-size:var(--fs-lede);line-height:1.45;max-width:440px;margin:0;color:var(--cream)}
+.lede b{font-weight:600}
+.cta{display:flex;gap:12px}
+.sticker{position:absolute;right:8px;top:22px;width:140px;height:140px;transform:rotate(12deg);z-index:2}
+.sticker svg{width:100%;height:100%;animation:spin 24s linear infinite}
+.sticker b{position:absolute;inset:0;display:grid;place-items:center;font:30px/1 var(--display);color:var(--pink-ink);text-align:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bar{display:flex;align-items:center;gap:28px;border-top:1px solid var(--line);font:500 var(--fs-label)/1 var(--body);color:var(--cream-2)}
+.bar span b{color:var(--cream);font-weight:600}
+.replay{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:var(--r-pill);border:1.5px solid var(--line);background:none;color:var(--cream);font:600 13px var(--body);cursor:pointer}
+.replay:hover{border-color:var(--cream)}
+.replay svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hint{color:var(--cream-2)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){h1.play .ch,.word.hop .g,.sticker svg{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="Main">
+    <a class="logo" href="#"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="#FF9EC4"/><path d="M7 15c2-4 4-4 7 0s5 4 7 0" fill="none" stroke="#3A0A22" stroke-width="2.6" stroke-linecap="round"/></svg>Sundae Club</a>
+    <ul><li><a href="#">Programme</a></li><li><a href="#">Mentors</a></li><li><a href="#">Venue</a></li><li><a href="#">FAQ</a></li></ul>
+    <a class="btn" href="#">Get tickets</a>
+  </nav>
+  <section class="hero">
+    <div class="sticker" aria-hidden="true"><svg viewBox="0 0 150 150"><path d="M75 4l9 13 15-6 4 16 16 0-3 16 14 8-9 13 9 13-14 8 3 16-16 0-4 16-15-6-9 13-9-13-15 6-4-16-16 0 3-16-14-8 9-13-9-13 14-8-3-16 16 0 4-16 15 6z" fill="#FFF3D6"/></svg><b>No.<br>04</b></div>
+    <p class="eyebrow"><i></i>Summer motion camp · Lisbon</p>
+    <h1 id="title" class="play" aria-label="Make things that wiggle."></h1>
+    <div class="foot">
+      <p class="lede">Five days of <b>animation, type and play</b> for designers who want their interfaces to feel alive. 40 seats, 6 mentors, one very large ice-cream budget.</p>
+      <div class="cta"><a class="btn" href="#">Apply by 30 May</a><a class="btn ghost" href="#">See the schedule</a></div>
+    </div>
+  </section>
+  <div class="bar">
+    <span><b>14–18 July 2026</b></span><span>LX Factory, Alcântara</span><span>€640 early bird</span>
+    <span class="hint">Hover a word to wave it again</span>
+    <button class="replay" id="replay" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Replay</button>
+  </div>
+</div>
+<script>
+(function(){
+  const h1=document.getElementById('title');
+  if(!h1)return;
+  const lines=[[['Make',0],['things',0]],[['that',0],['wiggle.',1]]];
+  let i=0;
+  lines.forEach(function(ln){
+    const l=document.createElement('span');l.className='line';l.setAttribute('aria-hidden','true');
+    ln.forEach(function(w,wi){
+      const word=document.createElement('span');word.className='word'+(w[1]?' hot':'');word.tabIndex=0;
+      [...w[0]].forEach(function(c,j){
+        const ch=document.createElement('span');ch.className='ch';ch.style.setProperty('--i',i++);
+        const g=document.createElement('span');g.className='g';g.style.setProperty('--j',j);g.textContent=c;
+        ch.appendChild(g);word.appendChild(ch);
+      });
+      const hop=function(){word.classList.remove('hop');void word.offsetWidth;word.classList.add('hop');};
+      word.addEventListener('mouseenter',hop);word.addEventListener('focus',hop);
+      word.addEventListener('animationend',function(e){if(e.animationName==='hop'&&e.target===word.lastChild.firstChild)word.classList.remove('hop');});
+      l.appendChild(word);
+      if(wi<ln.length-1)l.appendChild(document.createTextNode(' '));
+    });
+    h1.appendChild(l);
+  });
+  document.getElementById('replay').addEventListener('click',function(){h1.classList.remove('play');void h1.offsetWidth;h1.classList.add('play');});
+})();
+</script>
+</body>
+</html>

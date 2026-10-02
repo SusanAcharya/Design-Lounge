@@ -3,6 +3,7 @@ title: "Swipe-to-reveal row actions"
 summary: "Mail rows that swipe left to reveal 80px Archive and Delete buttons with rubber-band overshoot, commit on a 60% full swipe with a nudge, and swipe right to pin."
 platform: mobile-app
 type: pattern
+category: micro
 tags: [list, gesture, swipe, mail, ios]
 styles: [minimal, paper]
 motion: rich

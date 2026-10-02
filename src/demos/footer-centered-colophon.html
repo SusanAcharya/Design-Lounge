@@ -1,0 +1,84 @@
+<!-- Design Lounge piece: footer-centered-colophon · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Quarterly 41 — colophon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#e8e4d6;--paper-2:#ddd8c8;--ink:#1c1b18;--ink-2:#5c574e;--ink-3:#8a8478;
+  --line:rgba(28,27,24,.18);--pine:#2f4a3c;--pine-soft:#d5ddd6;
+  --serif:"EB Garamond","Palatino Linotype",Palatino,serif;--sans:"Hanken Grotesk",system-ui,sans-serif;
+  --measure:62ch;--pad:80px;
+  --t-micro:160ms;--t-fade:900ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{height:100%;margin:0}
+body{font:18px/1.6 var(--serif);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
+a,button{color:inherit;font:inherit}
+a{text-decoration:none}
+button{background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--pine);outline-offset:4px}
+.essay{max-width:var(--measure);margin:0 auto;padding:40px 32px 8px;width:100%;flex:1;min-height:0;overflow-y:auto}
+.kicker{font:500 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--pine);margin:0 0 18px}
+h1{font:500 42px/1.15 var(--serif);letter-spacing:-.02em;margin:0 0 28px;font-weight:500}
+.essay p{margin:0 0 1.1em}
+.essay p.drop::first-letter{font:italic 400 64px/0.8 var(--serif);float:left;margin:6px 10px 0 0;color:var(--pine)}
+.essay p.last{margin:0;mask-image:linear-gradient(180deg,#000 0%,transparent 92%);-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 92%);padding-bottom:8px}
+footer{flex:none;padding:56px 32px 40px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:0}
+.rule{width:48px;height:1px;background:var(--ink);margin:0 0 36px;opacity:.45}
+.mark{font:italic 400 52px/1 var(--serif);letter-spacing:-.03em;margin:0 0 6px}
+.issue{font:500 13px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin:0 0 28px}
+.links{display:flex;gap:28px;list-style:none;margin:0 0 28px;padding:0;font:500 14px var(--sans)}
+.links a{color:var(--ink-2);padding:6px 0;border-bottom:1px solid transparent;transition:color var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+.links a:hover{color:var(--ink);border-color:var(--ink)}
+.place{font:italic 400 16px/1.4 var(--serif);color:var(--ink-2);margin:0 0 36px}
+.top{display:inline-flex;flex-direction:column;align-items:center;gap:8px;font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:8px;min-width:40px;min-height:40px;transition:color var(--t-micro) var(--ease)}
+.top svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.top:hover{color:var(--pine)}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .essay p.last{mask-image:linear-gradient(180deg,#000 20%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 20%,transparent 100%)}
+}
+</style>
+</head>
+<body>
+<article class="essay" id="top">
+  <p class="kicker">Essay · Quarterly 41 · Autumn 2026</p>
+  <h1>The last light in the bindery</h1>
+  <p class="drop">By October the windows of the bindery on Rua da Madalena hold the afternoon a minute longer than the street. Marta keeps the kettle on the radiator and the radio on a station that still reads the shipping news. The issue on the bench is forty-one: a stack of sixteen-page signatures waiting for thread, a spine not yet a spine.</p>
+  <p>She says the work is mostly listening. Paper tells you when it will take glue and when it will cockle. A poem tells you whether it wants a wide margin or a tight one. The guest editors this season asked for more air around the short lyrics, so the trim is a centimetre taller than forty and the type sits a hair smaller. Nobody will measure it. Everybody will feel it.</p>
+  <p>The subscribers in Porto still get their copies by hand. A boy on a bicycle takes a canvas satchel down to the river and leaves the wrapped issues under the café awning before the first espresso is pulled. That route has not changed since issue eight, only the boy has.</p>
+  <p>Type was set in Lisbon, printed in Alcântara, and sewn in a room that still smells of hide glue. The errata card, this time, is a poem. It sits in the back, unnumbered, because nobody wanted to give a correction the dignity of a page.</p>
+  <p class="last">Outside, the tram still complains on the hill. Inside, the last gatherer clips a waste sheet, blows the dust off the brass, and starts the sewing. Forty-one will leave the building on a Thursday, wrapped in kraft, addressed in a hand that has not changed since issue twelve.</p>
+</article>
+<footer>
+  <div class="rule" aria-hidden="true"></div>
+  <p class="mark">Quarterly</p>
+  <p class="issue">Forty-one</p>
+  <ul class="links">
+    <li><a href="#">Index</a></li>
+    <li><a href="#">Masthead</a></li>
+    <li><a href="#">Submit</a></li>
+  </ul>
+  <p class="place">Lisbon · MMXXVI</p>
+  <button class="top" type="button" id="topbtn">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    Back to top
+  </button>
+</footer>
+<script>
+const essay=document.getElementById('top');
+essay.scrollTop=essay.scrollHeight;
+document.getElementById('topbtn').addEventListener('click',()=>{
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  essay.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+});
+document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
+</script>
+</body>
+</html>

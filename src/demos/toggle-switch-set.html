@@ -1,0 +1,189 @@
+<!-- Design Lounge piece: toggle-switch-set · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Toggle switch set</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7ede4;--card:#fffbf7;--tile:#fbe2d4;--off:#e6d6c9;--line:#ecdccf;
+  --ink:#2a1d17;--ink-2:#6b574b;--ink-3:#8c7466;--accent:#f0552e;--accent-soft:#ffd9cc;
+  --sky:#8fd0f0;--sky-2:#c9ecfb;--night:#1d2346;--sun:#ffc23a;--moon:#efe7d6;
+  --font:"Bricolage Grotesque",system-ui,sans-serif;--mono:"DM Mono",ui-monospace,monospace;
+  --r-card:24px;--r-tile:12px;
+  --t:240ms;--t-fast:160ms;--ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --shadow-thumb:0 3px 8px rgba(42,29,23,.18),0 1px 1px rgba(42,29,23,.1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--font);color:var(--ink);background:var(--bg);display:grid;grid-template-columns:minmax(0,1fr) 620px;gap:56px;padding:56px 64px;overflow:hidden;-webkit-font-smoothing:antialiased}
+.intro{display:flex;flex-direction:column;min-width:0}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:flex;gap:10px;align-items:center}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block}
+h1{font-size:128px;line-height:.86;font-weight:800;letter-spacing:-.055em;margin:24px 0 24px;font-variation-settings:"opsz" 96}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{max-width:400px;color:var(--ink-2);margin:0 0 auto;font-size:16px}
+.index{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid var(--line);font:400 12px/1 var(--mono);color:var(--ink-2)}
+.index li{display:flex;gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);transition:color var(--t-fast) var(--ease)}
+.index li b{font-weight:500;color:var(--ink-3);width:20px}
+.index li span{flex:1}
+.index li output{font-weight:500;letter-spacing:.08em;color:var(--ink-3)}
+.index li output.on{color:var(--accent)}
+.index li.hot{color:var(--ink)}
+.panel{background:var(--card);border-radius:var(--r-card);box-shadow:0 1px 0 var(--line),0 30px 60px -30px rgba(120,60,30,.25);align-self:center;overflow:hidden}
+.ph{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;border-bottom:1px solid var(--line)}
+.ph h2{margin:0;font-size:20px;font-weight:700;letter-spacing:-.02em}
+.ph small{font:12px var(--mono);color:var(--ink-3)}
+.row{display:flex;align-items:center;gap:16px;padding:16px 28px;border-bottom:1px solid var(--line);min-height:78px}
+.ico{width:44px;height:44px;border-radius:var(--r-tile);background:var(--tile);color:var(--accent);display:grid;place-items:center;flex:none}
+.ico svg,.k svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.txt{flex:1;min-width:0}
+.txt b{display:flex;gap:10px;align-items:baseline;font-weight:600;font-size:16px;letter-spacing:-.01em}
+.txt b small{font:500 10px var(--mono);color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase}
+.txt p{margin:2px 0 0;color:var(--ink-2);font-size:13.5px}
+.pf{display:flex;align-items:center;gap:8px;padding:16px 28px;font:12px var(--mono);color:var(--ink-3)}
+.pf .dot{width:6px;height:6px;border-radius:50%;background:#3fae6a}
+.pf output.flash{animation:flash 900ms var(--ease)}
+@keyframes flash{0%{color:var(--accent)}100%{color:var(--ink-3)}}
+:where(button.sw){appearance:none;border:0;padding:0;margin:0;cursor:pointer;position:relative;flex:none;font:inherit;color:inherit;transition:background-color var(--t) var(--ease),border-color var(--t) var(--ease)}
+.sw:focus-visible,.seg input:focus-visible+label{outline:2px solid var(--ink);outline-offset:3px}
+/* 01 classic */
+.ios{width:52px;height:32px;border-radius:16px;background:var(--off)}
+.ios::before{content:"";position:absolute;top:2px;left:2px;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:var(--shadow-thumb);transition:transform var(--t) var(--spring),width var(--t-fast) var(--ease)}
+.ios[aria-checked=true]{background:var(--accent)}
+.ios[aria-checked=true]::before{transform:translateX(20px)}
+/* 02 icon thumb */
+.m3{width:52px;height:32px;border-radius:16px;background:#f3e6db;border:2px solid var(--ink-3)}
+.m3 .k{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:var(--ink-3);color:#f3e6db;display:grid;place-items:center;transition:transform var(--t) var(--ease),background-color var(--t) var(--ease),width var(--t-fast),height var(--t-fast)}
+.m3 .k svg{width:14px;height:14px;stroke-width:2.6;position:absolute;transition:opacity var(--t-fast),transform var(--t) var(--ease)}
+.m3 .k .y{opacity:0;transform:scale(.4) rotate(-45deg)}
+.m3[aria-checked=true]{background:var(--accent);border-color:var(--accent)}
+.m3[aria-checked=true] .k{transform:translateX(20px);background:#fff;color:var(--accent)}
+.m3[aria-checked=true] .k .y{opacity:1;transform:none}
+.m3[aria-checked=true] .k .n{opacity:0;transform:scale(.4) rotate(45deg)}
+.m3:active .k{box-shadow:0 0 0 8px rgba(240,85,46,.16)}
+/* 03 day / night */
+.dn{width:76px;height:36px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,var(--sky),var(--sky-2))}
+.dn::before{content:"";position:absolute;inset:0;background:radial-gradient(1.2px 1.2px at 14px 10px,#fff 99%,transparent),radial-gradient(1px 1px at 26px 22px,#fff 99%,transparent),radial-gradient(1.4px 1.4px at 36px 9px,#fff 99%,transparent),radial-gradient(1px 1px at 20px 28px,#fff 99%,transparent),linear-gradient(180deg,#141a3a,var(--night));opacity:0;transition:opacity var(--t) var(--ease)}
+.dn .cloud{position:absolute;right:10px;top:16px;width:18px;height:8px;border-radius:8px;background:#fff;box-shadow:-9px 3px 0 -1px #fff,6px -4px 0 -1px #fff;transition:transform var(--t) var(--ease),opacity var(--t-fast)}
+.dn .k{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 4px rgba(255,194,58,.3),0 0 0 9px rgba(255,194,58,.14);transition:transform 420ms var(--spring),background-color var(--t),box-shadow var(--t)}
+.dn .k::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 9px 10px,#d8ccb3 3px,transparent 3.5px),radial-gradient(circle at 18px 18px,#d8ccb3 2.2px,transparent 2.7px),radial-gradient(circle at 17px 8px,#d8ccb3 1.5px,transparent 2px);opacity:0;transition:opacity var(--t)}
+.dn[aria-checked=true]::before{opacity:1}
+.dn[aria-checked=true] .cloud{transform:translateY(20px);opacity:0}
+.dn[aria-checked=true] .k{transform:translateX(40px);background:var(--moon);box-shadow:0 0 0 4px rgba(239,231,214,.12),0 0 0 9px rgba(239,231,214,.06)}
+.dn[aria-checked=true] .k::after{opacity:1}
+/* 04 squish */
+.sq{width:58px;height:32px;border-radius:16px;background:var(--off)}
+.sq .k{position:absolute;top:4px;bottom:4px;left:4px;right:30px;border-radius:12px;background:#fff;box-shadow:var(--shadow-thumb);transition:left 380ms var(--spring),right 380ms var(--spring)}
+.sq:active .k{right:20px}
+.sq[aria-checked=true]{background:var(--ink)}
+.sq[aria-checked=true] .k{left:30px;right:4px}
+.sq[aria-checked=true]:active .k{left:20px}
+/* 05 labelled */
+.lb{width:84px;height:34px;border-radius:9px;background:var(--card);border:1.5px solid var(--ink);font:500 11px/1 var(--mono);letter-spacing:.1em}
+.lb .on,.lb .of{position:absolute;top:50%;transform:translateY(-50%);transition:color var(--t)}
+.lb .on{left:11px;color:transparent}.lb .of{right:10px;color:var(--ink-2)}
+.lb .k{position:absolute;top:3px;left:3px;width:38px;height:25px;border-radius:6px;background:var(--ink);transition:transform var(--t) var(--ease),background-color var(--t)}
+.lb[aria-checked=true]{background:var(--accent);border-color:var(--accent)}
+.lb[aria-checked=true] .on{color:#fff}.lb[aria-checked=true] .of{color:transparent}
+.lb[aria-checked=true] .k{transform:translateX(38px);background:#fff}
+/* 06 segmented */
+.seg{border:0;margin:0;padding:3px;display:grid;grid-template-columns:repeat(3,64px);position:relative;background:#f0e1d4;border-radius:18px;flex:none}
+.seg legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{position:relative;z-index:1;height:30px;display:grid;place-items:center;font:500 12px var(--mono);color:var(--ink-2);border-radius:15px;cursor:pointer;transition:color var(--t-fast)}
+.seg input:checked+label{color:var(--ink)}
+.seg .pill{position:absolute;top:3px;left:3px;width:64px;height:30px;border-radius:15px;background:#fff;box-shadow:var(--shadow-thumb);transition:transform 320ms var(--spring)}
+.seg:has(#hm-1:checked) .pill{transform:translateX(64px)}
+.seg:has(#hm-2:checked) .pill{transform:translateX(128px);background:var(--accent)}
+.seg:has(#hm-2:checked) #hm-2+label{color:#fff}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important;animation:none!important}}
+@media (max-width:1100px){body{grid-template-columns:1fr;overflow:auto}h1{font-size:96px}.index{display:none}}
+</style>
+</head>
+<body>
+<section class="intro" aria-labelledby="t">
+  <div class="eyebrow"><i></i>Nook · 14 Elmstead Road</div>
+  <h1 id="t">Tune your <em>home.</em></h1>
+  <p class="lede">House rules for 11 devices. Every change applies instantly and syncs to Priya’s and Tom’s phones within a second.</p>
+  <ol class="index" aria-label="Switch styles">
+    <li data-i="0"><b>01</b><span>Classic</span><output>ON</output></li>
+    <li data-i="1"><b>02</b><span>Icon thumb</span><output>ON</output></li>
+    <li data-i="2"><b>03</b><span>Day / night</span><output>NIGHT</output></li>
+    <li data-i="3"><b>04</b><span>Squish</span><output>OFF</output></li>
+    <li data-i="4"><b>05</b><span>Labelled</span><output>ON</output></li>
+    <li data-i="5"><b>06</b><span>Segmented</span><output>AUTO</output></li>
+  </ol>
+</section>
+<section class="panel" aria-labelledby="ph">
+  <div class="ph"><h2 id="ph">Preferences</h2><small>Ground floor · 21.4°C</small></div>
+  <div class="row" data-i="0">
+    <div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg></div>
+    <div class="txt"><b id="l0">Away mode <small>01 Classic</small></b><p>Lock doors and dim lights when the last phone leaves.</p></div>
+    <button class="sw ios" role="switch" aria-checked="true" aria-labelledby="l0"></button>
+  </div>
+  <div class="row" data-i="1">
+    <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0112 0v5l2 2H4l2-2zM10 21h4"/></svg></div>
+    <div class="txt"><b id="l1">Doorbell alerts <small>02 Icon thumb</small></b><p>Push a snapshot to both phones when someone rings.</p></div>
+    <button class="sw m3" role="switch" aria-checked="true" aria-labelledby="l1"><span class="k"><svg class="y" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><svg class="n" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span></button>
+  </div>
+  <div class="row" data-i="2">
+    <div class="ico"><svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></svg></div>
+    <div class="txt"><b id="l2">Evening scene <small>03 Day / night</small></b><p>Shift every bulb to 2700K at sunset, today 18:02.</p></div>
+    <button class="sw dn" role="switch" aria-checked="true" aria-labelledby="l2"><span class="cloud"></span><span class="k"></span></button>
+  </div>
+  <div class="row" data-i="3">
+    <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0114 0"/></svg></div>
+    <div class="txt"><b id="l3">Child lock <small>04 Squish</small></b><p>Require a long press on the oven and thermostat.</p></div>
+    <button class="sw sq" role="switch" aria-checked="false" aria-labelledby="l3"><span class="k"></span></button>
+  </div>
+  <div class="row" data-i="4">
+    <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 6 6.5 6 10.5a6 6 0 01-12 0C6 10 9 8 12 3z"/></svg></div>
+    <div class="txt"><b id="l4">Eco heating <small>05 Labelled</small></b><p>Drop to 18°C overnight. Saves about €14 a month.</p></div>
+    <button class="sw lb" role="switch" aria-checked="true" aria-labelledby="l4"><span class="on">ON</span><span class="of">OFF</span><span class="k"></span></button>
+  </div>
+  <div class="row" data-i="5">
+    <div class="ico"><svg viewBox="0 0 24 24"><circle cx="13" cy="4.5" r="1.8"/><path d="M9 21l2.5-6 2.5 2v4M8 12l3-4 4 2 2 3M11.5 15L10 9"/></svg></div>
+    <div class="txt"><b id="l5">Hallway motion <small>06 Segmented</small></b><p>Auto follows the evening scene schedule.</p></div>
+    <fieldset class="seg" aria-labelledby="l5"><legend>Hallway motion</legend><span class="pill"></span>
+      <input type="radio" name="hm" id="hm-0" value="OFF"><label for="hm-0">Off</label>
+      <input type="radio" name="hm" id="hm-1" value="AUTO" checked><label for="hm-1">Auto</label>
+      <input type="radio" name="hm" id="hm-2" value="ON"><label for="hm-2">On</label>
+    </fieldset>
+  </div>
+  <div class="pf"><span class="dot"></span><output id="saved" aria-live="polite">All changes saved · 21:13</output></div>
+</section>
+<script>
+(function(){
+  const idx=[...document.querySelectorAll('.index li')];
+  const saved=document.getElementById('saved');
+  const names=['Away mode','Doorbell alerts','Evening scene','Child lock','Eco heating','Hallway motion'];
+  function report(i,val){
+    const o=idx[i]&&idx[i].querySelector('output');
+    if(o){o.textContent=val;o.classList.toggle('on',val!=='OFF'&&val!=='DAY');}
+    const d=new Date(),t=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+    saved.textContent='Saved '+t+' · '+names[i]+' '+val.toLowerCase();
+    saved.classList.remove('flash');void saved.offsetWidth;saved.classList.add('flash');
+  }
+  document.querySelectorAll('[role=switch]').forEach(function(b){
+    const i=+b.closest('.row').dataset.i;
+    b.addEventListener('click',function(){
+      const on=b.getAttribute('aria-checked')!=='true';
+      b.setAttribute('aria-checked',String(on));
+      report(i,i===2?(on?'NIGHT':'DAY'):(on?'ON':'OFF'));
+    });
+  });
+  document.querySelectorAll('.seg input').forEach(function(r){r.addEventListener('change',function(){report(5,r.value);});});
+  idx.forEach(function(o){o.querySelector('output').classList.toggle('on',o.textContent.indexOf('OFF')<0);});
+  document.querySelectorAll('.row').forEach(function(r){
+    const li=idx[+r.dataset.i];
+    r.addEventListener('pointerenter',function(){li&&li.classList.add('hot');});
+    r.addEventListener('pointerleave',function(){li&&li.classList.remove('hot');});
+  });
+})();
+</script>
+</body>
+</html>

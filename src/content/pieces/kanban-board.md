@@ -3,6 +3,7 @@ title: "Kanban board"
 summary: "Four 292px columns with live counts, labelled cards with avatars, pointer-event drag-and-drop with a 3° tilted ghost and a dashed drop placeholder, plus [ ] keyboard moves."
 platform: web
 type: layout
+category: dashboard
 tags: [kanban, board, drag-and-drop, project]
 styles: [minimal, soft]
 motion: subtle

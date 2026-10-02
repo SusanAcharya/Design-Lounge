@@ -3,6 +3,7 @@ title: "Date range picker"
 summary: "A two-month calendar popover with a presets column, start/end pills, hover-previewed ranges and full arrow-key navigation across month boundaries."
 platform: web
 type: component
+category: pickers
 tags: [date-picker, calendar, popover, analytics, keyboard]
 styles: [swiss, minimal]
 motion: subtle

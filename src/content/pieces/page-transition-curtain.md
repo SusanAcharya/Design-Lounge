@@ -3,6 +3,7 @@ title: "Page transition curtain"
 summary: "Clicking a nav link closes two 50%-wide panels over the page in 450ms, swaps the content behind them, reopens, then the 132px page title enters letter by letter with a 28ms stagger."
 platform: web
 type: animation
+category: transitions
 tags: [transition, navigation, curtain, typography, hotel]
 styles: [luxe, editorial, dark]
 motion: rich

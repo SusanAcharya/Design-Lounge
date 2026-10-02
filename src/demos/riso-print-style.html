@@ -1,0 +1,199 @@
+<!-- Design Lounge piece: riso-print-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Riso print design language kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e4;--paper-2:#efe6d0;--pink:#ff3d8a;--indigo:#1e2a6e;--over:#9a1858;--ink:#1a1420;
+  --display:"Rubik Mono One",Impact,sans-serif;--text:"Rubik",system-ui,sans-serif;
+  --pad:18px;--ctl:44px;
+  --t-micro:140ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--text);color:var(--indigo);background:var(--paper);overflow-x:hidden;overflow-y:auto;-webkit-font-smoothing:antialiased;position:relative}
+.grain{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:.18;mix-blend-mode:multiply;z-index:8}
+a{color:var(--indigo)}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.top{height:52px;display:flex;align-items:center;gap:14px;padding:0 18px;border-bottom:3px solid var(--indigo);background:var(--paper)}
+.mark{width:18px;height:18px;background:var(--pink);mix-blend-mode:multiply;transform:translate(2px,1px);position:relative}
+.mark::after{content:"";position:absolute;inset:0;background:var(--indigo);transform:translate(-3px,-2px);mix-blend-mode:multiply}
+.brand{font:14px/1 var(--display);letter-spacing:-.02em;color:var(--indigo)}
+.brand span{font:600 12px var(--text);margin-left:8px;color:var(--over)}
+.top nav{margin-left:auto;display:flex;gap:16px}
+.top nav a{font:700 11px var(--text);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:6px 0}
+.top nav a:hover{color:var(--pink)}
+.ver{font:500 11px var(--text)}
+.sheet{display:grid;grid-template-columns:repeat(12,1fr);gap:0;border-top:0}
+.cell{background:var(--paper);padding:var(--pad);min-width:0;border-right:2px solid var(--indigo);border-bottom:2px solid var(--indigo)}
+.lbl{margin:0 0 10px;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--indigo)}
+.hero{grid-column:1/8;height:432px;padding:0;overflow:hidden;position:relative;background:var(--paper)}
+.layer{position:absolute;inset:0;mix-blend-mode:multiply;pointer-events:none}
+.layer.pink{color:var(--pink);transform:translate(3px,2px)}
+.layer.indigo{color:var(--indigo);transform:translate(-2px,-1px)}
+.big{position:absolute;left:20px;top:28px;font:64px/.85 var(--display);letter-spacing:-.04em;text-transform:uppercase;width:420px}
+.sub{position:absolute;left:24px;top:200px;width:300px;font:16px/1.4 var(--text);font-weight:500}
+.stamp{position:absolute;right:36px;top:36px;width:160px;height:160px;border:8px solid currentColor;border-radius:50%;display:grid;place-items:center;font:18px/1 var(--display);text-align:center;transform:rotate(-12deg)}
+.dots{position:absolute;right:24px;bottom:24px;width:180px;height:120px;background:radial-gradient(circle,currentColor 1.4px,transparent 1.6px);background-size:8px 8px}
+.copy{position:absolute;left:24px;bottom:20px;z-index:2;pointer-events:auto}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tab{height:32px;padding:0 12px;border:2px solid var(--indigo);background:var(--paper);color:var(--indigo);font:700 12px var(--text);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--pink);color:#fff;border-color:var(--pink);mix-blend-mode:multiply}
+.tab:hover{background:var(--paper-2)}
+.tab[aria-selected="true"]:hover{background:var(--pink)}
+.spec{grid-column:8/13;height:432px;display:flex;flex-direction:column}
+.aa{display:flex;align-items:flex-end;gap:12px;border-bottom:2px solid var(--indigo);padding-bottom:8px;position:relative}
+.aa big{font:84px/.8 var(--display);color:var(--indigo);position:relative}
+.aa big::after{content:"Aa";position:absolute;left:3px;top:2px;color:var(--pink);mix-blend-mode:multiply;pointer-events:none}
+.fam{font-size:12px;line-height:1.4}
+.fam b{display:block;font:13px var(--display);margin-bottom:4px;letter-spacing:-.02em}
+.scale{list-style:none;margin:10px 0 0;padding:0}
+.scale li{display:flex;align-items:baseline;gap:8px;padding:6px 0;border-bottom:1px solid var(--paper-2);overflow:hidden;white-space:nowrap}
+.scale em{font-style:normal;font:700 10px var(--text);letter-spacing:.1em;text-transform:uppercase;width:86px;flex:none}
+.s1{font:22px/1 var(--display);letter-spacing:-.03em;text-transform:uppercase}
+.s2{font:700 18px var(--text)}.s3{font:600 15px var(--text)}.s4{font:14px var(--text)}.s5{font:700 11px var(--text);letter-spacing:.12em;text-transform:uppercase}
+.pal{grid-column:1/4}
+.sw{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;height:40px;border-bottom:1px dashed var(--indigo)}
+.chip{width:40px;height:26px;border:2px solid var(--indigo)}
+.sw b{display:block;font:700 13px var(--text)}.sw span,.sw code{font-size:11px}
+.ctl{grid-column:4/7}
+.btn{height:var(--ctl);padding:0 14px;border:2px solid var(--indigo);background:var(--indigo);color:var(--paper);font:700 13px var(--text);letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:transform var(--t-micro) var(--ease)}
+.btn:hover{transform:translate(-2px,-2px)}
+.btn.ghost{background:transparent;color:var(--indigo)}
+.btn.pink{background:var(--pink);border-color:var(--pink);color:#fff;mix-blend-mode:multiply}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tag{height:26px;padding:0 10px;border:2px solid var(--indigo);background:transparent;font:700 11px/22px var(--text);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;color:var(--indigo)}
+.tag[aria-pressed="true"]{background:var(--pink);color:#fff;border-color:var(--pink);mix-blend-mode:multiply}
+.inp{grid-column:7/10}
+.fld{display:block;margin-bottom:12px}
+.fld span{display:block;font:700 10px var(--text);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.fld input{width:100%;height:var(--ctl);border:2px solid var(--indigo);background:var(--paper);padding:0 10px;font:15px var(--text);color:var(--indigo)}
+.fld input:focus{outline:none;box-shadow:3px 3px 0 var(--pink)}
+.link{font-weight:700;text-underline-offset:3px}
+.link:hover{color:var(--pink)}
+.sw-t{display:inline-flex;align-items:center;gap:10px;margin-top:8px;cursor:pointer;font-weight:600}
+.sw-t button{width:46px;height:24px;border:2px solid var(--indigo);background:var(--paper);padding:0;position:relative;cursor:pointer}
+.sw-t button::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;background:var(--indigo);transition:transform 200ms var(--ease),background 200ms}
+.sw-t button[aria-checked="true"]{background:var(--pink);mix-blend-mode:multiply}
+.sw-t button[aria-checked="true"]::after{transform:translateX(22px);background:#fff}
+.surf{grid-column:10/13}
+.plates{display:grid;gap:8px}
+.plate{height:50px;display:flex;align-items:center;padding:0 10px;font:700 12px var(--text);letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--indigo);position:relative}
+.plate.p{background:var(--pink);color:#fff;mix-blend-mode:multiply}
+.plate.i{background:var(--indigo);color:var(--paper)}
+.plate.o{background:var(--pink);color:transparent}
+.plate.o::after{content:"Overprint";position:absolute;inset:0;display:flex;align-items:center;padding:0 10px;background:var(--indigo);mix-blend-mode:multiply;color:#fff}
+.gram{grid-column:span 3;display:flex;gap:12px;border-right:2px solid var(--indigo);border-bottom:2px solid var(--indigo)}
+.glyph{width:52px;height:52px;flex:none}
+.gram h4{margin:0 0 4px;font:13px var(--display);letter-spacing:-.02em;text-transform:uppercase}
+.gram p{margin:0;font-size:13px}
+.foot{grid-column:1/-1;display:flex;justify-content:space-between;font:700 11px var(--text);letter-spacing:.1em;text-transform:uppercase}
+@media (max-width:1100px){.hero,.spec{grid-column:1/-1;height:auto}.pal,.ctl,.inp,.surf,.gram{grid-column:span 6}.top nav{display:none}.big{font-size:48px}}
+@media (max-width:700px){.pal,.ctl,.inp,.surf,.gram{grid-column:1/-1}.stamp{width:110px;height:110px;right:12px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<svg class="grain" aria-hidden="true"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .12 0 0 0 0 .08 0 0 0 0 .2 0 0 0 1 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
+<header class="top">
+  <div class="mark" aria-hidden="true"></div>
+  <div class="brand">INK FAIR <span>/ riso kit 04</span></div>
+  <nav aria-label="Kit sections"><a href="#type">Type</a><a href="#colour">Colour</a><a href="#controls">Controls</a><a href="#surface">Surface</a></nav>
+  <span class="ver">Two inks · 11 Oct 2026</span>
+</header>
+<main class="sheet">
+  <section class="cell hero" id="hero" data-ink="both" aria-label="Composition: zine cover flyer">
+    <div class="layer pink" id="lp" aria-hidden="true">
+      <div class="big">Ink Fair 26</div>
+      <div class="stamp">Zine<br>03</div>
+      <div class="dots"></div>
+    </div>
+    <div class="layer indigo" id="li" aria-hidden="true">
+      <div class="big">Ink Fair 26</div>
+      <div class="stamp">Zine<br>03</div>
+      <div class="dots"></div>
+    </div>
+    <p class="sub" style="z-index:2;color:var(--indigo)">Canal warehouse, Bay 4. 11 Oct, noon to midnight. Two inks, one press, 400 copies.</p>
+    <div class="copy">
+      <div class="tabs" role="tablist" aria-label="Ink layers">
+        <button class="tab" role="tab" aria-selected="false" data-ink="pink">Pink</button>
+        <button class="tab" role="tab" aria-selected="false" data-ink="indigo">Indigo</button>
+        <button class="tab" role="tab" aria-selected="true" data-ink="both">Both</button>
+      </div>
+    </div>
+  </section>
+  <section class="cell spec" id="type" aria-labelledby="l-type">
+    <h2 class="lbl" id="l-type">01 Type specimen</h2>
+    <div class="aa"><big aria-hidden="true">Aa</big><div class="fam"><b>Rubik Mono One</b>display, one weight, overprinted<b>Rubik</b>400 · 500 · 600 · 700 · UI</div></div>
+    <ul class="scale">
+      <li><em>Display 64</em><span class="s1">Ink Fair</span></li>
+      <li><em>H2 · 22</em><span class="s1" style="font-size:18px">Zine 03</span></li>
+      <li><em>H3 · 18 / 700</em><span class="s2">Canal warehouse, Bay 4</span></li>
+      <li><em>Body · 14</em><span class="s4">400 copies. Two inks, one press.</span></li>
+      <li><em>Label · 11</em><span class="s5">11 Oct · Noon to midnight</span></li>
+    </ul>
+  </section>
+  <section class="cell pal" id="colour" aria-labelledby="l-col">
+    <h2 class="lbl" id="l-col">02 Palette and roles</h2>
+    <div class="sw"><i class="chip" style="background:var(--paper)"></i><div><b>Paper</b><span>stock, 70 %</span></div><code>#F6F1E4</code></div>
+    <div class="sw"><i class="chip" style="background:var(--pink)"></i><div><b>Fluoro pink</b><span>drum 1</span></div><code>#FF3D8A</code></div>
+    <div class="sw"><i class="chip" style="background:var(--indigo)"></i><div><b>Indigo</b><span>drum 2</span></div><code>#1E2A6E</code></div>
+    <div class="sw"><i class="chip" style="background:var(--over)"></i><div><b>Overprint</b><span>multiply mix</span></div><code>#9A1858</code></div>
+    <div class="sw"><i class="chip" style="background:var(--ink)"></i><div><b>Key</b><span>never a third drum</span></div><code>#1A1420</code></div>
+  </section>
+  <section class="cell ctl" id="controls" aria-labelledby="l-btn">
+    <h2 class="lbl" id="l-btn">03 Buttons and chips</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn">Get a copy</button><button class="btn ghost">Line-up</button><button class="btn pink">Sold out</button></div>
+    <div class="tags">
+      <button class="tag" aria-pressed="true">Zine</button>
+      <button class="tag" aria-pressed="false">Poster</button>
+      <button class="tag" aria-pressed="false">Tote</button>
+    </div>
+  </section>
+  <section class="cell inp" aria-labelledby="l-inp">
+    <h2 class="lbl" id="l-inp">04 Inputs and link</h2>
+    <label class="fld"><span>Workshop name</span><input type="text" value="Bay 4 press"></label>
+    <a class="link" href="#hero">Read the print schedule</a>
+    <label class="sw-t"><button type="button" role="switch" aria-checked="true" id="sw" aria-label="Show grain"></button>Show grain</label>
+  </section>
+  <section class="cell surf" id="surface" aria-labelledby="l-surf">
+    <h2 class="lbl" id="l-surf">05 Surface treatments</h2>
+    <div class="plates">
+      <div class="plate p">Fluoro flood</div>
+      <div class="plate i">Indigo flood</div>
+      <div class="plate o">Overprint</div>
+    </div>
+  </section>
+  <section class="cell gram" aria-label="Grammar: two inks"><div class="glyph" style="background:var(--pink);mix-blend-mode:multiply;box-shadow:8px 6px 0 var(--indigo)"></div><div><h4>Two inks</h4><p>Pink and indigo only. Where they overlap, multiply makes overprint.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: misreg"><div class="glyph" style="position:relative"><i style="position:absolute;inset:0;background:var(--pink);transform:translate(3px,2px)"></i><i style="position:absolute;inset:0;background:var(--indigo);mix-blend-mode:multiply;transform:translate(-2px,-1px)"></i></div><div><h4>Misreg</h4><p>Pink layer +3px +2px. Indigo −2px −1px. Never perfectly aligned.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: grain"><div class="glyph" style="background:radial-gradient(circle,var(--indigo) 1.2px,var(--paper) 1.4px);background-size:5px 5px"></div><div><h4>Grain</h4><p>A fixed noise overlay at 18 % multiply sits on the whole sheet.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: block"><div class="glyph" style="background:var(--indigo)"></div><div><h4>Block</h4><p>2px indigo rules, 0 radius. Buttons shift −2px on hover, no shadow.</p></div></section>
+  <div class="cell foot"><span>Ink Fair riso · 2 drums · 2 families · misreg + multiply</span><span>Pink / Indigo / Both tabs peel the cover</span></div>
+</main>
+<script>
+  const hero=document.getElementById('hero'),lp=document.getElementById('lp'),li=document.getElementById('li');
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+    t.setAttribute('aria-selected','true');
+    const ink=t.dataset.ink;
+    hero.dataset.ink=ink;
+    lp.style.display=ink==='indigo'?'none':'block';
+    li.style.display=ink==='pink'?'none':'block';
+  }));
+  document.querySelectorAll('.tag').forEach(tag=>tag.addEventListener('click',()=>{
+    tag.setAttribute('aria-pressed',String(tag.getAttribute('aria-pressed')!=='true'));
+  }));
+  const sw=document.getElementById('sw'),grain=document.querySelector('.grain');
+  sw.addEventListener('click',()=>{
+    const on=sw.getAttribute('aria-checked')!=='true';
+    sw.setAttribute('aria-checked',String(on));
+    grain.style.opacity=on?'.18':'0';
+  });
+</script>
+</body>
+</html>

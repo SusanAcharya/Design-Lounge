@@ -3,6 +3,7 @@ title: "Skeleton to content swap"
 summary: "A six-card feed shows shimmering skeletons whose bars match the final content geometry exactly, then content fades and rises in with a 40ms stagger; Reload replays."
 platform: web
 type: animation
+category: loaders
 tags: [loading, skeleton, feed, cards, stagger]
 styles: [minimal, soft, editorial]
 motion: subtle

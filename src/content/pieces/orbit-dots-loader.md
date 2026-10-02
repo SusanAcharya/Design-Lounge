@@ -3,6 +3,7 @@ title: "Orbit dots loader family"
 summary: "Three pure-CSS loading indicators side by side (orbit dots, staggered bars, morphing ring), each ≤ 3 DOM elements, driven by two custom properties with live duration and size sliders."
 platform: web
 type: animation
+category: loaders
 tags: [loader, spinner, animation, feedback]
 styles: [minimal, kinetic]
 motion: rich

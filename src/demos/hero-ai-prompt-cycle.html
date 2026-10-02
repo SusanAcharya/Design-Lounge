@@ -1,0 +1,151 @@
+<!-- Design Lounge piece: hero-ai-prompt-cycle · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — ask the whole company at once</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#edf1ee;--surface:#fbfcfb;--sunk:#e3e9e5;--ink:#17201b;--ink-2:#55605a;--ink-3:#7c8580;--line:#d5ddd8;
+  --accent:#e8643c;--accent-ink:#fff;--accent-soft:#fbe3d9;
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;
+  --r-box:22px;--r-chip:999px;--shadow:0 1px 2px rgba(23,32,27,.06),0 12px 32px -12px rgba(23,32,27,.18);
+  --t-micro:160ms;--t-card:420ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+nav{height:64px;flex:none;display:flex;align-items:center;gap:28px;padding:0 48px}
+.logo{display:flex;align-items:center;gap:8px;font:32px/1 var(--serif);letter-spacing:-.01em;margin-right:auto}
+.logo svg{width:20px;height:20px;color:var(--accent)}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:26px;font-size:14px;color:var(--ink-2)}
+nav ul a:hover,.login:hover{color:var(--ink)}
+.login{font-size:14px;color:var(--ink-2)}
+.get{font:500 14px var(--sans);background:var(--ink);color:var(--surface);padding:9px 16px;border-radius:999px}
+.get:hover{background:#2b3a32}
+main{flex:1;display:flex;flex-direction:column;align-items:center;padding:44px 48px 28px;min-height:0}
+.badge{display:inline-flex;align-items:center;gap:8px;font:500 13px var(--sans);color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 6px;margin-bottom:22px}
+.badge b{font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:999px}
+h1{font:400 96px/.98 var(--serif);letter-spacing:-.025em;text-align:center;margin:0 0 14px}
+h1 em{color:var(--ink-2)}
+.sub{margin:0 0 30px;color:var(--ink-2);font-size:17px;text-align:center;max-width:560px}
+.wrap{width:820px;position:relative}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-box);box-shadow:var(--shadow);padding:20px 20px 14px;transition:border-color var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.box:focus-within{border-color:#b7c3bc;box-shadow:var(--shadow),0 0 0 4px rgba(232,100,60,.14)}
+.field{position:relative;height:60px}
+textarea,.ghost{position:absolute;inset:0;margin:0;border:0;padding:0;font:400 21px/1.4 var(--sans);letter-spacing:-.01em;color:var(--ink);background:transparent;resize:none;outline:none;white-space:pre-wrap}
+.ghost{pointer-events:none}
+.ghost .caret{display:inline-block;width:2px;height:24px;background:var(--accent);vertical-align:-4px;margin-left:1px;animation:blink 1s steps(1) infinite}
+.box.typing textarea{color:transparent;caret-color:transparent}
+.box:not(.typing) .ghost{display:none}
+@keyframes blink{50%{opacity:0}}
+.tools{display:flex;align-items:center;gap:8px;margin-top:10px}
+.src{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;background:var(--sunk);font-size:13px;color:var(--ink-2)}
+.src svg,.model svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.75}
+.model{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2);height:32px;padding:0 10px}
+.send{width:40px;height:40px;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;cursor:pointer;transition:transform var(--t-micro) var(--ease),background var(--t-micro)}
+.send:hover{background:#d4532c}.send:active{transform:scale(.94)}
+.send:disabled{background:#c9d1cc;cursor:default}
+.send svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px;transition:opacity var(--t-micro) var(--ease)}
+.chip{height:36px;padding:0 14px;border-radius:var(--r-chip);border:1px solid var(--line);background:transparent;font:500 13px var(--sans);color:var(--ink-2);cursor:pointer;transition:background var(--t-micro),color var(--t-micro),border-color var(--t-micro)}
+.chip:hover{background:var(--surface);color:var(--ink);border-color:#b7c3bc}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.answer{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 22px 16px;display:none;opacity:0;transform:translateY(8px);transition:opacity var(--t-card) var(--expo),transform var(--t-card) var(--expo)}
+.answer.show{opacity:1;transform:none}
+.asked .chips{display:none}.asked .answer{display:block}
+.ahead{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink-3);margin-bottom:8px}
+.ahead i{width:18px;height:18px;border-radius:6px;background:var(--accent);display:grid;place-items:center;color:#fff;font:italic 14px/1 var(--serif)}
+.ahead button{margin-left:auto;font:500 12px var(--sans);color:var(--ink-2);background:none;border:1px solid var(--line);border-radius:999px;height:28px;padding:0 10px;cursor:pointer}
+.ahead button:hover{color:var(--ink);border-color:var(--ink-3)}
+.text{margin:0;font-size:15px;line-height:1.6;min-height:48px}
+.text .w{animation:in 240ms var(--ease) both}
+@keyframes in{from{opacity:0;filter:blur(2px)}}
+.cites{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.cite{font-size:12px;color:var(--ink-2);background:var(--sunk);border-radius:6px;padding:3px 8px;opacity:0;transition:opacity var(--t-card) var(--ease)}
+.done .cite{opacity:1}
+.cite b{font-weight:600;color:var(--accent);margin-right:4px}
+.think{display:inline-flex;gap:4px}.think span{width:6px;height:6px;border-radius:50%;background:var(--ink-3);animation:dot 900ms var(--ease) infinite}
+.think span:nth-child(2){animation-delay:150ms}.think span:nth-child(3){animation-delay:300ms}
+@keyframes dot{50%{opacity:.25;transform:translateY(-2px)}}
+.trust{margin-top:auto;display:flex;gap:28px;font-size:13px;color:var(--ink-3)}
+.trust span{display:inline-flex;align-items:center;gap:6px}
+.trust svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.75}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){.ghost .caret,.think span{animation:none}.text .w{animation:none}.answer{transition:none}}
+</style>
+</head>
+<body>
+<nav aria-label="Main">
+  <a class="logo" href="#"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 7.2L21 12l-7.2 1.8L12 21l-1.8-7.2L3 12l7.2-2.8z"/></svg>hollis</a>
+  <ul><li><a href="#">Product</a></li><li><a href="#">Customers</a></li><li><a href="#">Security</a></li><li><a href="#">Pricing</a></li></ul>
+  <a class="login" href="#">Log in</a><a class="get" href="#">Get Hollis</a>
+</nav>
+<main>
+  <span class="badge"><b>New</b>Hollis 3 now reads design comments and support tickets</span>
+  <h1>Ask the whole company<br><em>at once.</em></h1>
+  <p class="sub">One question box over every doc, thread and ticket your team has written. Answers come back with the sources attached.</p>
+  <div class="wrap" id="wrap">
+    <form class="box typing" id="box" autocomplete="off">
+      <label class="sr" for="q">Ask Hollis a question</label>
+      <div class="field"><textarea id="q" rows="2"></textarea><div class="ghost" id="ghost" aria-hidden="true"><span id="gt"></span><span class="caret"></span></div></div>
+      <div class="tools">
+        <span class="src"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Wiki · Drive · Chat · 4 more</span>
+        <span class="src"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Only what you can see</span>
+        <span class="model"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg>Hollis 3 · fast</span>
+        <button class="send" id="send" type="submit" aria-label="Ask"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+      </div>
+    </form>
+    <div class="chips" role="group" aria-label="Example questions" id="chips"></div>
+    <section class="answer" id="answer" aria-live="polite" aria-busy="false">
+      <div class="ahead"><i aria-hidden="true">h</i><span id="meta">Searched 1,284 documents</span><button type="button" id="reset">New question</button></div>
+      <p class="text" id="text"></p>
+      <div class="cites" id="cites"></div>
+    </section>
+  </div>
+  <div class="trust"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>SOC 2 Type II</span><span>Your data never trains models</span><span>Used by 1,900 teams</span></div>
+</main>
+<script>
+(()=>{
+  const P=[
+    {q:'What did we promise Larchmont in the renewal?',chip:'Larchmont renewal',a:'In the 12 September renewal we committed to SSO for all 340 seats by 1 November, a 99.9% uptime SLA with 10% service credits, and a dedicated success manager. Pricing is locked at $38 per seat for 24 months.',c:['Renewal memo · Sep 12','Order form v3','#acct-larchmont']},
+    {q:'Summarise Q3 churn by plan, with the top reason for each.',chip:'Q3 churn by plan',a:'Q3 logo churn was 2.1%. Starter lost 41 accounts, mostly to price after the July change; Team lost 9, citing missing audit logs; Business lost 2, both after mergers. Net revenue retention held at 112%.',c:['Q3 board deck','Churn survey export','Pricing retro']},
+    {q:'Draft the on-call handoff for this week.',chip:'On-call handoff',a:'Handoff for 28 Sep to 5 Oct: two open incidents (INC-482 queue lag, INC-485 flaky webhooks), the Postgres minor upgrade is scheduled Thursday 02:00 UTC, and the billing cron moved to every 15 minutes.',c:['Incident log','Runbook: upgrades','#eng-oncall']},
+    {q:'Which product specs mention offline mode?',chip:'Specs on offline mode',a:'Three specs mention offline mode: Mobile Sync v2 (approved, ships in 4.8), Field Notes (draft, owner Priya Nair) and the 2025 Kiosk proposal, which was shelved in March.',c:['Mobile Sync v2','Field Notes draft','Kiosk proposal']}
+  ];
+  const box=document.getElementById('box'),q=document.getElementById('q'),gt=document.getElementById('gt'),chips=document.getElementById('chips'),wrap=document.getElementById('wrap');
+  const ans=document.getElementById('answer'),text=document.getElementById('text'),cites=document.getElementById('cites'),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i=0,pos=0,dir=1,demo=true,t=0,s=0;
+  const btns=P.map((p,k)=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=p.chip;b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',()=>{stopDemo(p.q);mark(k);q.focus();});chips.appendChild(b);return b;});
+  function mark(k){btns.forEach((b,j)=>b.setAttribute('aria-pressed',String(j===k)));}
+  function tick(){if(!demo)return;const full=P[i].q;
+    if(dir>0){pos++;gt.textContent=full.slice(0,pos);mark(i);if(pos>=full.length){dir=-1;t=setTimeout(tick,1800);return;}t=setTimeout(tick,34+Math.random()*30);}
+    else{pos--;gt.textContent=full.slice(0,pos);if(pos<=0){dir=1;i=(i+1)%P.length;t=setTimeout(tick,420);return;}t=setTimeout(tick,16);}}
+  function stopDemo(v){if(!demo&&v===undefined)return;clearTimeout(t);demo=false;box.classList.remove('typing');if(v!==undefined)q.value=v;else if(!q.value)q.value=P[i].q;}
+  q.addEventListener('focus',()=>stopDemo());
+  q.addEventListener('input',()=>mark(-1));
+  q.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();box.requestSubmit();}});
+  box.addEventListener('submit',e=>{e.preventDefault();stopDemo();const v=q.value.trim();if(!v)return;
+    const p=P.find(x=>x.q===v)||{a:'I found 6 documents that touch on this. The most recent is from last Tuesday; the clearest answer is in the team wiki, which was updated by Jonah Weiss two weeks ago.',c:['Team wiki','#general','Weekly notes']};
+    stream(p);});
+  function stream(p){clearTimeout(s);wrap.classList.add('asked');ans.classList.remove('done');ans.setAttribute('aria-busy','true');
+    requestAnimationFrame(()=>ans.classList.add('show'));
+    text.innerHTML='<span class="think" aria-label="Thinking"><span></span><span></span><span></span></span>';
+    cites.innerHTML=p.c.map((c,k)=>`<span class="cite"><b>${k+1}</b>${c}</span>`).join('');
+    const words=p.a.split(' ');let k=0;
+    s=setTimeout(function next(){if(k===0)text.textContent='';
+      if(reduce){text.textContent=p.a;k=words.length;}
+      else{const w=document.createElement('span');w.className='w';w.textContent=(k?' ':'')+words[k++];text.appendChild(w);}
+      if(k<words.length)s=setTimeout(next,42);else{ans.classList.add('done');ans.setAttribute('aria-busy','false');}},reduce?0:650);}
+  document.getElementById('reset').addEventListener('click',()=>{clearTimeout(s);wrap.classList.remove('asked');ans.classList.remove('show','done');q.value='';mark(-1);q.focus();});
+  if(reduce){gt.textContent=P[0].q;mark(0);demo=false;q.value=P[0].q;box.classList.remove('typing');}else{pos=18;gt.textContent=P[0].q.slice(0,pos);t=setTimeout(tick,300);}
+})();
+</script>
+</body>
+</html>

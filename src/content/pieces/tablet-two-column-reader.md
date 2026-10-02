@@ -3,6 +3,7 @@ title: "Two-column tablet reader"
 summary: "A 1180×820 book reader that flows a chapter into two CSS columns, turns pages by sliding the column container, with a chapter overlay, a 16–22px size stepper and Libre Caslon body text."
 platform: tablet
 type: screen
+category: reading
 tags: [reader, typography, columns, pagination, editorial]
 styles: [paper, editorial]
 motion: subtle

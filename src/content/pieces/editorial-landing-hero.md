@@ -3,6 +3,7 @@ title: "Editorial landing hero"
 summary: "A paper-toned magazine landing hero: 104px Fraunces headline rising word by word, hairline nav, one-line manifesto, a single outlined pill CTA and a mono issue index."
 platform: web
 type: screen
+category: hero
 tags: [landing, hero, editorial, typography, reveal]
 styles: [editorial, paper]
 motion: rich

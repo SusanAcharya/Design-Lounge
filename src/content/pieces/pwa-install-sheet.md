@@ -3,6 +3,7 @@ title: "PWA install sheet"
 summary: "A bottom sheet that springs up to pitch installing a PWA — icon, three benefits, Install and Not now — then shows an inline progress bar and an 'Added to Home Screen' chip."
 platform: pwa
 type: pattern
+category: overlays
 tags: [pwa, install, bottom-sheet, onboarding, dialog]
 styles: [paper, editorial, soft]
 motion: rich

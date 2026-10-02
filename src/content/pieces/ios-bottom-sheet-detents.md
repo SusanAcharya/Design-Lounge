@@ -3,6 +3,7 @@ title: "Bottom sheet with three detents"
 summary: "A draggable places sheet over a CSS-drawn map that snaps to 120px, 430px and full-height detents with spring easing, a progress-linked scrim and velocity flicks."
 platform: mobile-app
 type: component
+category: overlays
 tags: [bottom-sheet, map, gesture, ios, list]
 styles: [minimal, soft]
 motion: rich

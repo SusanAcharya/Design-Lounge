@@ -3,6 +3,7 @@ title: "Masonry gallery with captions"
 summary: "A 4-column CSS-columns masonry of 14 CSS-painted tiles; hover slides a caption bar up from the bottom, and a chip row filters by series with a fade."
 platform: web
 type: layout
+category: gallery
 tags: [gallery, masonry, portfolio, filter]
 styles: [dark, minimal]
 motion: subtle

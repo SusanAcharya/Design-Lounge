@@ -3,6 +3,7 @@ title: "M3 search bar morph"
 summary: "A Material 3 Expressive container transform: a 56px pill search bar in a dark top app bar grows into a full-screen search view (radius 28→0) with suggestions fading in; the back arrow reverses it."
 platform: mobile-app
 type: animation
+category: inputs
 tags: [material, search, container-transform, app-bar, dark]
 styles: [material, dark, kinetic]
 motion: rich

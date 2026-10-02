@@ -1,0 +1,183 @@
+<!-- Design Lounge piece: pixel-arcade-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Pixel arcade design language kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crt:#12121a;--screen:#1c1c28;--white:#e8e4d4;--red:#e04020;--green:#40a848;--yellow:#f0c820;--blue:#2060c8;--dim:#6a6878;
+  --display:"Silkscreen",monospace;--mono:"Space Mono",ui-monospace,monospace;
+  --px:4px;--ctl:40px;--pad:16px;
+  --t-micro:80ms;--ease:steps(2);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.4 var(--mono);color:var(--white);background:var(--crt);overflow-x:hidden;overflow-y:auto;image-rendering:pixelated;-webkit-font-smoothing:none}
+a{color:var(--yellow)}
+:focus-visible{outline:var(--px) solid var(--yellow);outline-offset:4px}
+.top{height:48px;display:flex;align-items:center;gap:14px;padding:0 16px;background:var(--screen);border-bottom:var(--px) solid var(--blue)}
+.mark{width:16px;height:16px;background:var(--red);box-shadow:4px 0 0 var(--yellow),8px 0 0 var(--green),0 4px 0 var(--blue)}
+.brand{font:16px/1 var(--display);letter-spacing:.04em}
+.brand span{font:12px var(--mono);color:var(--dim);margin-left:10px}
+.top nav{margin-left:auto;display:flex;gap:16px}
+.top nav a{color:var(--white);text-decoration:none;font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.top nav a:hover{color:var(--yellow)}
+.ver{font:11px var(--mono);color:var(--dim)}
+.sheet{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--px);background:var(--blue);padding:var(--px)}
+.cell{background:var(--screen);padding:var(--pad);min-width:0}
+.lbl{margin:0 0 10px;font:12px/1 var(--display);color:var(--yellow);letter-spacing:.04em}
+.hero{grid-column:1/8;height:436px;padding:0;position:relative;overflow:hidden;background:repeating-linear-gradient(180deg,transparent 0 7px,rgba(0,0,0,.18) 7px 8px),var(--crt);text-align:center}
+.stars{position:absolute;inset:0;background-image:linear-gradient(var(--white),var(--white)),linear-gradient(var(--white),var(--white)),linear-gradient(var(--yellow),var(--yellow)),linear-gradient(var(--white),var(--white));background-size:4px 4px,4px 4px,4px 4px,4px 4px;background-position:12% 18%,78% 22%,40% 12%,88% 40%;background-repeat:no-repeat;opacity:.8}
+.ship{position:absolute;left:50%;top:56px;width:4px;height:4px;background:var(--red);transform:translateX(-50%) scale(2.4);transform-origin:center top;
+  box-shadow:
+    4px 0 0 var(--red),-4px 0 0 var(--red),0 -4px 0 var(--white),4px -4px 0 var(--white),-4px -4px 0 var(--white),
+    0 -8px 0 var(--yellow),8px 0 0 var(--blue),-8px 0 0 var(--blue),0 4px 0 var(--red),4px 4px 0 var(--red),-4px 4px 0 var(--red),
+    8px 4px 0 var(--white),-8px 4px 0 var(--white),0 8px 0 var(--blue),12px 8px 0 var(--yellow),-12px 8px 0 var(--yellow)}
+.copy{position:absolute;left:0;right:0;top:150px}
+.eyebrow{font:12px var(--display);color:var(--green);letter-spacing:.12em}
+.hero h1{font:40px/.95 var(--display);margin:10px 0 8px;color:var(--yellow);text-shadow:4px 4px 0 var(--red)}
+.hero p{margin:0 auto 16px;max-width:340px;color:var(--white)}
+.menu{display:flex;flex-direction:column;align-items:center;gap:8px}
+.menu button{min-width:220px;height:36px;border:var(--px) solid var(--white);background:transparent;color:var(--white);font:14px var(--display);cursor:pointer}
+.menu button:hover,.menu button[aria-selected="true"]{background:var(--yellow);color:var(--crt);border-color:var(--yellow)}
+.score{position:absolute;left:16px;top:12px;font:12px var(--display);color:var(--green);text-align:left}
+.spec{grid-column:8/13;height:436px;display:flex;flex-direction:column}
+.aa{display:flex;align-items:flex-end;gap:12px;border-bottom:var(--px) solid var(--blue);padding-bottom:8px}
+.aa big{font:64px/.8 var(--display);color:var(--yellow);text-shadow:4px 4px 0 var(--red)}
+.fam{font-size:12px;color:var(--dim);line-height:1.4}
+.fam b{display:block;font:14px var(--display);color:var(--white);margin-bottom:4px}
+.scale{list-style:none;margin:10px 0 0;padding:0}
+.scale li{display:flex;align-items:baseline;gap:8px;padding:6px 0;border-bottom:1px solid #2a2a3a;overflow:hidden;white-space:nowrap}
+.scale em{font-style:normal;font:11px var(--mono);color:var(--dim);width:88px;flex:none}
+.s1{font:20px/1 var(--display);color:var(--yellow)}.s2{font:16px var(--display)}.s3{font:700 14px var(--mono)}.s4{font:13px var(--mono);color:var(--dim)}.s5{font:11px var(--display);color:var(--green)}
+.pal{grid-column:1/4}
+.sw{display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;height:38px;border-bottom:var(--px) solid #2a2a3a}
+.chip{width:32px;height:24px}
+.sw b{display:block;font:12px var(--display)}.sw span,.sw code{font-size:11px;color:var(--dim)}
+.ctl{grid-column:4/7}
+.btn{height:var(--ctl);padding:0 12px;border:var(--px) solid var(--white);background:var(--white);color:var(--crt);font:13px var(--display);cursor:pointer;image-rendering:pixelated}
+.btn:hover{background:var(--yellow);border-color:var(--yellow)}
+.btn.red{background:var(--red);border-color:var(--red);color:var(--white)}
+.btn.ghost{background:transparent;color:var(--white)}
+.btn.ghost:hover{background:var(--blue);border-color:var(--blue)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tag{height:24px;padding:0 8px;border:var(--px) solid var(--blue);background:transparent;color:var(--white);font:11px var(--display);cursor:pointer}
+.tag[aria-pressed="true"]{background:var(--blue)}
+.inp{grid-column:7/10}
+.fld{display:block;margin-bottom:12px}
+.fld span{display:block;font:11px var(--display);color:var(--green);margin-bottom:6px}
+.fld input{width:100%;height:var(--ctl);border:var(--px) solid var(--white);background:var(--crt);color:var(--yellow);font:14px var(--mono);padding:0 8px}
+.fld input:focus{outline:none;border-color:var(--yellow)}
+.link{font:700 12px var(--mono);text-underline-offset:3px}
+.link:hover{color:var(--red)}
+.sw-t{display:inline-flex;align-items:center;gap:10px;margin-top:8px;cursor:pointer}
+.sw-t button{width:40px;height:20px;border:var(--px) solid var(--white);background:var(--crt);padding:0;position:relative;cursor:pointer}
+.sw-t button::after{content:"";position:absolute;left:2px;top:2px;width:12px;height:12px;background:var(--white);transition:transform 80ms var(--ease)}
+.sw-t button[aria-checked="true"]{background:var(--green);border-color:var(--green)}
+.sw-t button[aria-checked="true"]::after{transform:translateX(18px);background:var(--crt)}
+.surf{grid-column:10/13}
+.plates{display:grid;gap:8px}
+.plate{height:48px;display:flex;align-items:center;padding:0 10px;font:11px var(--display);border:var(--px) solid var(--white)}
+.plate.a{box-shadow:4px 4px 0 var(--red);border-color:var(--white)}
+.plate.b{background:var(--blue);border-color:var(--blue)}
+.plate.c{background:repeating-linear-gradient(90deg,var(--yellow) 0 4px,var(--red) 4px 8px,var(--green) 8px 12px,var(--blue) 12px 16px)}
+.gram{grid-column:span 3;display:flex;gap:12px}
+.glyph{width:52px;height:52px;flex:none;background:var(--crt);border:var(--px) solid var(--white)}
+.gram h4{margin:0 0 4px;font:14px var(--display)}
+.gram p{margin:0;font-size:12px;color:var(--dim)}
+.foot{grid-column:1/-1;display:flex;justify-content:space-between;font:11px var(--display);color:var(--yellow)}
+@media (max-width:1100px){.hero,.spec{grid-column:1/-1}.pal,.ctl,.inp,.surf,.gram{grid-column:span 6}.top nav{display:none}.hero h1{font-size:32px}}
+@media (max-width:700px){.pal,.ctl,.inp,.surf,.gram{grid-column:1/-1}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="mark" aria-hidden="true"></div>
+  <div class="brand">STARDRIFT <span>/ PIXEL KIT 06</span></div>
+  <nav aria-label="Kit sections"><a href="#type">Type</a><a href="#colour">Colour</a><a href="#controls">Controls</a><a href="#surface">Surface</a></nav>
+  <span class="ver">1UP 000420</span>
+</header>
+<main class="sheet">
+  <section class="cell hero" id="hero" aria-label="Composition: pause menu start screen">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="ship" aria-hidden="true"></div>
+    <div class="score">SCORE 000420<br>HI 009900</div>
+    <div class="copy">
+      <div class="eyebrow">STAGE 03 · PAUSED</div>
+      <h1>STARDRIFT</h1>
+      <p id="menu-copy">Continue from the last beacon. Sound is on. Three lives remain.</p>
+      <div class="menu" role="tablist" aria-label="Pause menu">
+        <button role="tab" aria-selected="true" data-copy="Continue from the last beacon. Sound is on. Three lives remain.">CONTINUE</button>
+        <button role="tab" aria-selected="false" data-copy="Restart stage 03 from the hangar. Progress since the last beacon is lost.">RESTART</button>
+        <button role="tab" aria-selected="false" data-copy="Options: CRT scan 8px, pixel snap on, sound on. Press the switch to mute.">OPTIONS</button>
+      </div>
+    </div>
+  </section>
+  <section class="cell spec" id="type" aria-labelledby="l-type">
+    <h2 class="lbl" id="l-type">01 TYPE SPECIMEN</h2>
+    <div class="aa"><big aria-hidden="true">Aa</big><div class="fam"><b>SILKSCREEN</b>display, 400 and 700, bitmap<b>SPACE MONO</b>400 · 700 · scores, UI</div></div>
+    <ul class="scale">
+      <li><em>DISPLAY 40</em><span class="s1">STARDRIFT</span></li>
+      <li><em>H2 · 20</em><span class="s1" style="font-size:16px">STAGE 03</span></li>
+      <li><em>H3 · 16</em><span class="s2">CONTINUE</span></li>
+      <li><em>BODY · 13</em><span class="s4">Three lives remain.</span></li>
+      <li><em>LABEL · 11</em><span class="s5">1UP 000420</span></li>
+    </ul>
+  </section>
+  <section class="cell pal" id="colour" aria-labelledby="l-col">
+    <h2 class="lbl" id="l-col">02 PALETTE AND ROLES</h2>
+    <div class="sw"><i class="chip" style="background:var(--crt)"></i><div><b>CRT</b><span>field, 60 %</span></div><code>#12121A</code></div>
+    <div class="sw"><i class="chip" style="background:var(--white)"></i><div><b>White</b><span>type, 15 %</span></div><code>#E8E4D4</code></div>
+    <div class="sw"><i class="chip" style="background:var(--red)"></i><div><b>Red</b><span>ship, shadow</span></div><code>#E04020</code></div>
+    <div class="sw"><i class="chip" style="background:var(--yellow)"></i><div><b>Yellow</b><span>title, select</span></div><code>#F0C820</code></div>
+    <div class="sw"><i class="chip" style="background:var(--green)"></i><div><b>Green</b><span>score, live</span></div><code>#40A848</code></div>
+  </section>
+  <section class="cell ctl" id="controls" aria-labelledby="l-btn">
+    <h2 class="lbl" id="l-btn">03 BUTTONS AND CHIPS</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn">START</button><button class="btn ghost">PAUSE</button><button class="btn red">QUIT</button></div>
+    <div class="tags">
+      <button class="tag" aria-pressed="true">1UP</button>
+      <button class="tag" aria-pressed="false">2UP</button>
+      <button class="tag" aria-pressed="false">HARD</button>
+    </div>
+  </section>
+  <section class="cell inp" aria-labelledby="l-inp">
+    <h2 class="lbl" id="l-inp">04 INPUTS AND LINK</h2>
+    <label class="fld"><span>CALLSIGN</span><input type="text" value="NOVA-7" maxlength="8" spellcheck="false"></label>
+    <a class="link" href="#hero">HIGH SCORE TABLE</a>
+    <label class="sw-t"><button type="button" role="switch" aria-checked="true" id="sw" aria-label="Sound"></button>SOUND</label>
+  </section>
+  <section class="cell surf" id="surface" aria-labelledby="l-surf">
+    <h2 class="lbl" id="l-surf">05 SURFACE TREATMENTS</h2>
+    <div class="plates">
+      <div class="plate a">HARD OFFSET</div>
+      <div class="plate b">BLUE FILL</div>
+      <div class="plate c">8-BIT BAR</div>
+    </div>
+  </section>
+  <section class="cell gram" aria-label="Grammar: pixel"><div class="glyph" style="box-shadow:inset 8px 8px 0 var(--yellow),inset 16px 8px 0 var(--red),inset 8px 16px 0 var(--blue)"></div><div><h4>PIXEL</h4><p>4px is the unit. Shadows, ships and stars are box-shadows or 4px rects. No images.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: snap"><div class="glyph" style="border-width:4px"></div><div><h4>SNAP</h4><p>Every edge lands on the 4px grid. Radii are 0. Easing is steps(2).</p></div></section>
+  <section class="cell gram" aria-label="Grammar: select"><div class="glyph" style="background:var(--yellow)"></div><div><h4>SELECT</h4><p>The active menu row is yellow on CRT. Inactive is a white 4px box.</p></div></section>
+  <section class="cell gram" aria-label="Grammar: score"><div class="glyph" style="display:grid;place-items:center;font:11px var(--display);color:var(--green);border-color:var(--green)">1UP</div><div><h4>SCORE</h4><p>Green Silkscreen, 6 digits, leading zeros. Never proportional lining figures.</p></div></section>
+  <div class="cell foot"><span>STARDRIFT PIXEL · 5 COLOURS · 2 FAMILIES · 4PX GRID</span><span>MENU TABS REWRITE THE BRIEF</span></div>
+</main>
+<script>
+  const copy=document.getElementById('menu-copy');
+  document.querySelectorAll('.menu button').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.menu button').forEach(x=>x.setAttribute('aria-selected','false'));
+    t.setAttribute('aria-selected','true');
+    copy.textContent=t.dataset.copy;
+  }));
+  document.querySelectorAll('.tag').forEach(tag=>tag.addEventListener('click',()=>{
+    tag.setAttribute('aria-pressed',String(tag.getAttribute('aria-pressed')!=='true'));
+  }));
+  const sw=document.getElementById('sw');
+  sw.addEventListener('click',()=>sw.setAttribute('aria-checked',String(sw.getAttribute('aria-checked')!=='true')));
+</script>
+</body>
+</html>

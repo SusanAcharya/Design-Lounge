@@ -3,6 +3,7 @@ title: "PWA news reader"
 summary: "A paper-toned news front with serif headlines: scrolling section chips, a lead card with a CSS-illustrated landscape, a story list with reading times and saved-for-offline marks, and a bottom nav."
 platform: pwa
 type: screen
+category: reading
 tags: [pwa, news, reading, offline, chips, list]
 styles: [editorial, paper]
 motion: subtle

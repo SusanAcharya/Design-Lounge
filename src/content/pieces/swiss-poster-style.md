@@ -3,6 +3,7 @@ title: "Swiss poster style"
 summary: "A Swiss-school exhibition poster: Archivo in red/black/off-white, a 130px word rotated −90°, a strict 12 × 8 grid with visible margins, and grid lines that reveal on hover."
 platform: web
 type: style
+category: design-language
 tags: [poster, swiss, typography, grid]
 styles: [swiss, brutalist]
 motion: subtle

@@ -1,0 +1,180 @@
+<!-- Design Lounge piece: portfolio-case-study-long · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ebb for Kelda Ferries — Noor Halabi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e8ede6;--surface:#f5f6f1;--sea-1:#bcd3cc;--sea-2:#6f9c94;--sea-3:#2f5a57;
+  --ink:#1c2a24;--ink-2:#4c5d55;--ink-3:#7d8b84;--line:#c9d3cb;--accent:#d9674f;--accent-soft:#f3d6cc;
+  --serif:"Literata",Georgia,serif;--sans:"Figtree",system-ui,sans-serif;
+  --pad:56px;--r:22px;--r-sm:12px;--shadow:0 24px 48px -24px rgba(28,42,36,.35);
+  --t-micro:180ms;--t-draw:1400ms;--t-count:1200ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.bar{position:sticky;top:0;z-index:5;height:60px;display:flex;align-items:center;gap:28px;padding:0 var(--pad);background:rgba(232,237,230,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);font-size:14px}
+.bar .me{font:500 18px var(--serif);text-decoration:none;margin-right:auto}
+.bar a{text-decoration:none;color:var(--ink-2)}.bar a:hover{color:var(--ink)}
+.bar .of{font-variant-numeric:tabular-nums;color:var(--ink-3)}
+.prog{position:absolute;left:0;bottom:-1px;height:2px;background:var(--accent);width:0}
+.hero{display:grid;grid-template-columns:7fr 5fr;gap:40px;padding:40px var(--pad) 0;min-height:540px}
+.eyebrow{display:flex;gap:10px;align-items:center;font-size:13px;font-weight:500;color:var(--ink-2);letter-spacing:.02em}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+h1{margin:22px 0 0 -8px;font:400 250px/.8 var(--serif);font-style:italic;letter-spacing:-.05em;color:var(--sea-3)}
+.lede{margin:26px 0 0;font:400 34px/1.18 var(--serif);letter-spacing:-.015em;max-width:17ch}
+.lede em{color:var(--accent);font-style:italic}
+.art{position:relative;border-radius:var(--r);overflow:hidden;background:radial-gradient(90% 60% at 80% 10%,#f6e6d4 0,transparent 60%),linear-gradient(180deg,#d7e4de 0,var(--sea-1) 45%,var(--sea-2) 78%,var(--sea-3));height:500px}
+.art::before{content:"";position:absolute;inset:auto 0 0 0;height:46%;background:repeating-linear-gradient(176deg,rgba(255,255,255,.18) 0 2px,transparent 2px 14px)}
+.sun{position:absolute;right:68px;top:56px;width:84px;height:84px;border-radius:50%;background:#f1b49c;box-shadow:0 0 0 18px rgba(241,180,156,.25)}
+.phone{position:absolute;left:50%;top:44px;width:236px;height:480px;margin-left:-118px;border-radius:38px;background:#16201c;padding:9px;box-shadow:var(--shadow);transform:rotate(-4deg)}
+.scr{height:100%;border-radius:30px;background:var(--surface);padding:34px 18px 18px;display:flex;flex-direction:column;gap:12px;font-size:12px}
+.scr .lbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.scr .rt{font:500 21px/1.1 var(--serif)}
+.scr .rt span{color:var(--ink-3);font-size:15px}
+.tk{background:#fff;border-radius:16px;padding:14px;display:grid;gap:10px;border:1px solid var(--line)}
+.qr{display:block;width:100%;aspect-ratio:1;fill:var(--ink)}
+.tk .row{display:flex;justify-content:space-between;color:var(--ink-2)}
+.tk b{color:var(--ink);font-weight:600}
+.tap{margin-top:auto;height:42px;border-radius:21px;background:var(--sea-3);color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px}
+.facts{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);margin-top:34px}
+.facts div{padding:16px 24px 22px 0;font-size:15px;line-height:1.45}
+.facts div+div{padding-left:24px;border-left:1px solid var(--line)}
+.facts dt{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.facts dd{margin:0}
+section.s{display:grid;grid-template-columns:3fr 9fr;gap:40px;padding:96px var(--pad) 0}
+.s h2{margin:0;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);position:sticky;top:84px;align-self:start}
+.s h2 b{display:block;font:400 64px/1 var(--serif);letter-spacing:-.03em;color:var(--accent);margin-bottom:8px}
+.s h3{margin:0 0 20px;font:400 44px/1.12 var(--serif);letter-spacing:-.02em;max-width:22ch}
+.s p{margin:0 0 16px;max-width:62ch;color:var(--ink-2);font-size:17px}
+.sk{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+figure{margin:0}
+.sk .pad{background:#f7f4ea;border-radius:var(--r-sm);aspect-ratio:4/5;border:1px solid #e3ddcb;background-image:linear-gradient(#e9e3d1 1px,transparent 1px);background-size:100% 24px;display:grid;place-items:center}
+.sk svg{width:78%;height:78%;fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.sk svg .hl{stroke:var(--accent);stroke-width:2.2}
+.sk svg path,.sk svg rect,.sk svg circle{stroke-dasharray:var(--len,600);stroke-dashoffset:var(--len,600);transition:stroke-dashoffset var(--t-draw) var(--ease)}
+.sk.drawn svg *{stroke-dashoffset:0}
+.sk.reset svg *{transition:none}
+.sk{cursor:pointer}
+figcaption{margin-top:10px;font:italic 400 15px/1.4 var(--serif);color:var(--ink-2)}
+figcaption b{font:600 12px var(--sans);letter-spacing:.08em;color:var(--accent);margin-right:8px;font-style:normal}
+.mx{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:30px;border-top:1px solid var(--ink)}
+.mx div{padding:18px 20px 0 0}
+.mx div+div{padding-left:20px;border-left:1px solid var(--line)}
+.mx .n{font:400 72px/1 var(--serif);letter-spacing:-.04em;color:var(--sea-3);font-variant-numeric:tabular-nums}
+.mx .n small{font-size:32px}
+.mx .k{font-size:14px;color:var(--ink-2);margin-top:8px;max-width:20ch}
+blockquote{margin:96px var(--pad) 0;padding:56px 64px;background:var(--accent-soft);border-radius:var(--r);display:grid;grid-template-columns:80px 1fr;gap:28px}
+blockquote svg{width:56px;height:56px;fill:var(--accent)}
+blockquote p{margin:0;font:400 36px/1.25 var(--serif);letter-spacing:-.015em;max-width:30ch}
+blockquote footer{margin-top:22px;font-size:14px;color:var(--ink-2)}
+blockquote footer b{color:var(--ink);font-weight:600}
+.next{display:grid;grid-template-columns:1fr auto;align-items:end;margin:96px var(--pad) 56px;padding:40px;border-radius:var(--r);text-decoration:none;color:#f6efe2;background:radial-gradient(70% 90% at 85% 20%,#e9b97a,transparent 60%),linear-gradient(120deg,#4a3a26,#8a6a3e);min-height:260px;position:relative;overflow:hidden}
+.next small{display:block;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.8;margin-bottom:14px}
+.next strong{font:400 64px/1 var(--serif);letter-spacing:-.03em}
+.next span.d{display:block;margin-top:10px;font-size:16px;opacity:.85}
+.next .go{width:72px;height:72px;border-radius:50%;background:#f6efe2;color:#4a3a26;display:grid;place-items:center;transition:transform 360ms var(--ease-out)}
+.next .go svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.next:hover .go{transform:translateX(-8px) rotate(-45deg)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="me" href="#">Noor Halabi</a>
+  <span class="of">Case study 04 / 06</span>
+  <a href="#">Work</a><a href="#">About</a><a href="#">Notes</a>
+  <a href="#next" style="color:var(--ink);font-weight:600">Next project</a>
+  <span class="prog" id="prog"></span>
+</header>
+<main>
+  <section class="hero">
+    <div>
+      <div class="eyebrow"><i></i>Kelda Ferries · iOS &amp; Android · 2025</div>
+      <h1>Ebb</h1>
+      <p class="lede">Making the 07:40 to Holm feel like a <em>habit</em>, not a hassle.</p>
+    </div>
+    <div class="art" aria-label="Ebb ticket screen on a phone over a stylised fjord">
+      <span class="sun"></span>
+      <div class="phone"><div class="scr">
+        <span class="lbl">Next sailing</span>
+        <span class="rt">Holm <span>→</span> Kelda Quay</span>
+        <div class="tk"><svg class="qr" id="qr" viewBox="0 0 25 25" aria-hidden="true"></svg><div class="row"><span>Departs</span><b>07:40</b></div><div class="row"><span>Pass</span><b>Monthly · 22 left</b></div></div>
+        <div class="tap">Hold to board</div>
+      </div></div>
+    </div>
+    <dl class="facts">
+      <div><dt>Role</dt><dd>Lead product designer, research to launch</dd></div>
+      <div><dt>Timeline</dt><dd>14 weeks · March–June 2025</dd></div>
+      <div><dt>Team</dt><dd>2 engineers, 1 PM, 1 researcher, me</dd></div>
+      <div><dt>Shipped</dt><dd>iOS, Android, 9 quayside kiosks</dd></div>
+    </dl>
+  </section>
+
+  <section class="s" id="problem"><h2><b>01</b>The problem</h2><div>
+    <h3>Commuters were buying the same ticket 44 times a month.</h3>
+    <p>Kelda's old app treated every crossing as a new purchase: pick a route, pick a fare, pay, wait for a PDF. On the Holm line, 71% of riders take the same two sailings every weekday. At the gangway, the median rider spent 38 seconds finding their ticket while the queue backed up the ramp.</p>
+    <p>The brief was "add monthly passes". The real job was to make the app disappear for people who already know where they're going.</p>
+  </div></section>
+
+  <section class="s" id="process"><h2><b>02</b>Process</h2><div>
+    <h3>Ride along first, draw second.</h3>
+    <p>We rode 31 crossings at 06:50, 07:40 and 17:15, timing every step from pocket to gangway. Three sketches survived the week.</p>
+    <div class="sk" id="sk">
+      <figure><div class="pad"><svg viewBox="0 0 200 250" aria-hidden="true"><rect x="55" y="20" width="90" height="190" rx="14" style="--len:560"/><path d="M70 50h46M70 62h30" style="--len:80"/><rect class="hl" x="68" y="82" width="64" height="64" rx="6" style="--len:260"/><path d="M68 166h64M68 180h40" style="--len:110"/><path d="M150 110c18 -6 30 4 34 18" style="--len:60"/><path d="M178 122l6 7 4-9" style="--len:30"/></svg></div><figcaption><b>A</b>Ticket is the home screen. No menu between you and the gate.</figcaption></figure>
+      <figure><div class="pad"><svg viewBox="0 0 200 250" aria-hidden="true"><rect x="55" y="20" width="90" height="190" rx="14" style="--len:560"/><circle class="hl" cx="100" cy="170" r="20" style="--len:130"/><circle cx="100" cy="170" r="32" style="--len:210"/><path d="M70 50h60M70 64h36M70 92h60M70 106h44" style="--len:220"/><path d="M30 200c10-30 30-34 46-30" style="--len:70"/></svg></div><figcaption><b>B</b>Hold to board: a 600ms press beats a scan you have to aim.</figcaption></figure>
+      <figure><div class="pad"><svg viewBox="0 0 200 250" aria-hidden="true"><path d="M24 190c30-18 60-18 90 0s60 18 70 4" style="--len:200"/><path d="M24 160c30-18 60-18 90 0s60 18 70 4" style="--len:200"/><rect class="hl" x="66" y="40" width="70" height="44" rx="8" style="--len:240"/><path d="M80 56h40M80 68h24" style="--len:70"/><path d="M100 84v52" style="--len:60"/><circle cx="100" cy="140" r="4" style="--len:30"/></svg></div><figcaption><b>C</b>Delay card floats above the route, not inside a notification.</figcaption></figure>
+    </div>
+  </div></section>
+
+  <section class="s" id="outcome"><h2><b>03</b>Outcome</h2><div>
+    <h3>Twelve weeks after launch, the ramp stopped backing up.</h3>
+    <div class="mx" id="mx">
+      <div><div class="n" data-to="38" data-pre="−" data-suf="%">−0%</div><div class="k">Median time from pocket to gangway</div></div>
+      <div><div class="n" data-to="61" data-suf="%">0%</div><div class="k">Holm riders now on a monthly pass</div></div>
+      <div><div class="n" data-to="4.8" data-dec="1">0.0</div><div class="k">App Store rating, up from 2.9</div></div>
+      <div><div class="n" data-to="212" data-suf="k">0k</div><div class="k">Monthly active riders across 6 routes</div></div>
+    </div>
+  </div></section>
+
+  <blockquote>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18v-5c0-4 2-7 6-8l1 2c-2 1-3 2-3 4h3v7H4zm9 0v-5c0-4 2-7 6-8l1 2c-2 1-3 2-3 4h3v7h-7z"/></svg>
+    <div><p>Noor spent her first week on our boats, not in our office. The app she shipped is the quietest thing we've ever launched, and the one riders mention most.</p>
+    <footer><b>Ingrid Solheim</b> · Head of Digital, Kelda Ferries</footer></div>
+  </blockquote>
+
+  <a class="next" id="next" href="#">
+    <div><small>Next case study · 05 / 06</small><strong>Fieldwork</strong><span class="d">A seed library for 40 primary schools in Leeds</span></div>
+    <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a>
+</main>
+<script>
+(function(){
+  const prog=document.getElementById('prog'),sk=document.getElementById('sk'),mx=document.getElementById('mx');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let s=7,q='';const rnd=()=>(s=(s*16807)%2147483647)/2147483647,fin=(x,y)=>x<8&&y<8||x>16&&y<8||x<8&&y>16;
+  for(let y=0;y<25;y++)for(let x=0;x<25;x++)if(!fin(x,y)&&rnd()>.52)q+=`<rect x="${x}" y="${y}" width="1" height="1"/>`;
+  [[0,0],[18,0],[0,18]].forEach(([x,y])=>q+=`<path fill-rule="evenodd" d="M${x} ${y}h7v7h-7zM${x+1} ${y+1}v5h5v-5zM${x+2} ${y+2}h3v3h-3z"/>`);
+  document.getElementById('qr').innerHTML=q;
+  addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/Math.max(1,h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
+  function count(el){
+    const to=+el.dataset.to,dec=+(el.dataset.dec||0),pre=el.dataset.pre||'',suf=el.dataset.suf||'',t0=performance.now(),D=reduce?1:1200;
+    (function f(t){const k=Math.min(1,(t-t0)/D),e=1-Math.pow(1-k,4);el.innerHTML=pre+(to*e).toFixed(dec)+(suf?'<small>'+suf+'</small>':'');if(k<1)requestAnimationFrame(f);})(t0);
+  }
+  if(!('IntersectionObserver' in window)){sk.classList.add('drawn');mx.querySelectorAll('.n').forEach(count);return;}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);
+    if(e.target===sk)sk.classList.add('drawn');else e.target.querySelectorAll('.n').forEach(count);}),{threshold:.35});
+  io.observe(sk);io.observe(mx);
+  sk.addEventListener('click',()=>{sk.classList.add('reset');sk.classList.remove('drawn');void sk.offsetWidth;sk.classList.remove('reset');requestAnimationFrame(()=>sk.classList.add('drawn'));});
+})();
+</script>
+</body>
+</html>

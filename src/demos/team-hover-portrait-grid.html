@@ -1,0 +1,187 @@
+<!-- Design Lounge piece: team-hover-portrait-grid · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Halden — The studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Tenor+Sans&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3ebe3;--ink:#1a1412;--ink-2:#6a5a52;--ink-3:#9a8a80;--line:#ddd2c6;
+  --wine:#5c2430;--gold:#b8954a;--cream:#f7f0e8;--veil:rgba(26,20,18,.78);
+  --serif:"Bodoni Moda",Georgia,serif;--sans:"Tenor Sans",Georgia,serif;
+  --nav-h:56px;--pad:56px;
+  --t-fast:180ms;--t-reveal:320ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.4 var(--sans);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+nav{height:var(--nav-h);flex:none;display:flex;align-items:center;padding:0 var(--pad);border-bottom:1px solid var(--line);gap:28px}
+.brand{font:500 22px/1 var(--serif);font-style:italic;letter-spacing:-.02em;text-decoration:none;color:inherit;font-variation-settings:"opsz" 22}
+.links{display:flex;gap:22px}
+.links a{color:var(--ink-2);text-decoration:none;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.links a:hover{color:var(--ink)}
+.cta{margin-left:auto;font:13px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--wine);text-decoration:none}
+:focus-visible{outline:2px solid var(--wine);outline-offset:3px}
+section{flex:1;padding:28px var(--pad) 32px;display:flex;flex-direction:column;min-height:0}
+.lead{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px}
+.kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--wine);margin:0 0 6px}
+h1{margin:0;font:500 36px/1 var(--serif);letter-spacing:-.02em;font-variation-settings:"opsz" 36}
+.meta{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:14px;min-height:0}
+.card{position:relative;overflow:hidden;background:var(--wine);isolation:isolate;min-height:0}
+.card svg{display:block;width:100%;height:100%;pointer-events:none}
+.card figcaption{position:absolute;left:0;right:0;bottom:0;padding:16px 18px 14px;color:var(--cream);z-index:2}
+.card h2{margin:0;font:500 22px/1 var(--serif);font-style:italic;letter-spacing:-.015em;font-variation-settings:"opsz" 22}
+.more{max-height:0;opacity:0;overflow:hidden;transition:max-height var(--t-reveal) var(--ease),opacity var(--t-fast) var(--ease),transform var(--t-reveal) var(--ease);transform:translateY(8px)}
+.card .role{margin:8px 0 0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.card .bio{margin:8px 0 0;font-size:13px;line-height:1.4;color:var(--cream);max-width:36ch}
+.card .mail{margin:10px 0 0;display:inline-block;font-size:13px;color:var(--cream);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--gold)}
+.card .mail:hover{color:var(--gold)}
+.veil{position:absolute;inset:0;background:var(--veil);opacity:0;transition:opacity var(--t-reveal) var(--ease);z-index:1}
+.card:hover .veil,.card:focus-within .veil{opacity:1}
+.card:hover .more,.card:focus-within .more{max-height:140px;opacity:1;transform:none}
+.card:focus-within{outline:2px solid var(--wine);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){
+  .veil,.more{transition-duration:1ms}
+  .more{transform:none}
+}
+@media (max-width:1024px){
+  :root{--pad:28px}
+  h1{font-size:28px}
+}
+@media (max-width:768px){
+  .links{display:none}
+  .grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="#">Halden</a>
+  <div class="links"><a href="#">Work</a><a href="#">Index</a><a href="#">Visit</a></div>
+  <a class="cta" href="mailto:studio@halden.studio">studio@halden.studio</a>
+</nav>
+<section aria-label="Studio team">
+  <div class="lead">
+    <div>
+      <p class="kicker">The studio · Oslo</p>
+      <h1>Six people, one room</h1>
+    </div>
+    <p class="meta">Hover a portrait</p>
+  </div>
+  <div class="grid">
+    <figure class="card" tabindex="0">
+      <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a3040"/><stop offset="1" stop-color="#2a1216"/></linearGradient>
+        <radialGradient id="r1" cx="32%" cy="28%" r="55%"><stop offset="0" stop-color="#d4b36a"/><stop offset="1" stop-color="#d4b36a00"/></radialGradient></defs>
+        <rect width="400" height="280" fill="url(#g1)"/>
+        <circle cx="128" cy="90" r="110" fill="url(#r1)"/>
+        <circle cx="280" cy="200" r="90" fill="#5c2430" opacity=".85"/>
+        <rect x="240" y="20" width="2" height="240" fill="#f3ebe3" opacity=".35"/>
+      </svg>
+      <div class="veil"></div>
+      <figcaption>
+        <h2>Mira Solberg</h2>
+        <div class="more">
+          <p class="role">Partner · type</p>
+          <p class="bio">Cuts the wordmarks. Taught letterpress at KHIO for six years.</p>
+          <a class="mail" href="mailto:mira@halden.studio">mira@halden.studio</a>
+        </div>
+      </figcaption>
+    </figure>
+    <figure class="card" tabindex="0">
+      <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1a1412"/><stop offset=".55" stop-color="#5c2430"/><stop offset="1" stop-color="#c4a46a"/></linearGradient></defs>
+        <rect width="400" height="280" fill="url(#g2)"/>
+        <polygon points="0,280 220,0 400,0 400,280" fill="#1a1412" opacity=".35"/>
+        <circle cx="300" cy="70" r="48" fill="#f3ebe3" opacity=".2"/>
+      </svg>
+      <div class="veil"></div>
+      <figcaption>
+        <h2>Jonas Keel</h2>
+        <div class="more">
+          <p class="role">Partner · space</p>
+          <p class="bio">Plans the rooms. Last year: a reading hall in Bergen with no hanging signs.</p>
+          <a class="mail" href="mailto:jonas@halden.studio">jonas@halden.studio</a>
+        </div>
+      </figcaption>
+    </figure>
+    <figure class="card" tabindex="0">
+      <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="400" height="280" fill="#2e1a20"/>
+        <rect x="48" y="36" width="200" height="200" fill="#5c2430"/>
+        <rect x="88" y="76" width="200" height="200" fill="#b8954a" opacity=".85"/>
+        <rect x="128" y="116" width="160" height="160" fill="#f3ebe3" opacity=".2"/>
+      </svg>
+      <div class="veil"></div>
+      <figcaption>
+        <h2>Amara Ndiaye</h2>
+        <div class="more">
+          <p class="role">Art direction</p>
+          <p class="bio">Holds the still-life days. Shoots on 4×5 when the budget allows.</p>
+          <a class="mail" href="mailto:amara@halden.studio">amara@halden.studio</a>
+        </div>
+      </figcaption>
+    </figure>
+    <figure class="card" tabindex="0">
+      <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><radialGradient id="r4" cx="50%" cy="60%" r="70%"><stop offset="0" stop-color="#d8c4a0"/><stop offset="1" stop-color="#3a2018"/></radialGradient></defs>
+        <rect width="400" height="280" fill="#3a2018"/>
+        <ellipse cx="200" cy="180" rx="180" ry="90" fill="url(#r4)"/>
+        <polygon points="200,20 260,160 140,160" fill="#5c2430"/>
+      </svg>
+      <div class="veil"></div>
+      <figcaption>
+        <h2>Piet Rask</h2>
+        <div class="more">
+          <p class="role">Print</p>
+          <p class="bio">Runs the Heidelberg on Thursdays. Keeps a book of every spoilage sheet.</p>
+          <a class="mail" href="mailto:piet@halden.studio">piet@halden.studio</a>
+        </div>
+      </figcaption>
+    </figure>
+    <figure class="card" tabindex="0">
+      <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="400" height="56" fill="#1a1412"/>
+        <rect y="56" width="400" height="56" fill="#5c2430"/>
+        <rect y="112" width="400" height="56" fill="#8a3040"/>
+        <rect y="168" width="400" height="56" fill="#b8954a"/>
+        <rect y="224" width="400" height="56" fill="#e8d8b8"/>
+        <circle cx="310" cy="140" r="64" fill="#f3ebe3" opacity=".25"/>
+      </svg>
+      <div class="veil"></div>
+      <figcaption>
+        <h2>Clara Voss</h2>
+        <div class="more">
+          <p class="role">Writing</p>
+          <p class="bio">Writes the long captions. Edited the Halden index for issues 11–18.</p>
+          <a class="mail" href="mailto:clara@halden.studio">clara@halden.studio</a>
+        </div>
+      </figcaption>
+    </figure>
+    <figure class="card" tabindex="0">
+      <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><linearGradient id="g6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c4a46a"/><stop offset="1" stop-color="#1a1412"/></linearGradient></defs>
+        <rect width="400" height="280" fill="url(#g6)"/>
+        <circle cx="80" cy="80" r="70" fill="#5c2430"/>
+        <circle cx="200" cy="200" r="40" fill="#f3ebe3" opacity=".3"/>
+        <rect x="240" y="40" width="120" height="2" fill="#f3ebe3" opacity=".5"/>
+        <rect x="240" y="52" width="80" height="2" fill="#f3ebe3" opacity=".4"/>
+      </svg>
+      <div class="veil"></div>
+      <figcaption>
+        <h2>Henrik Dahl</h2>
+        <div class="more">
+          <p class="role">Production</p>
+          <p class="bio">Schedules the press and the couriers. Answers the studio line after 16:00.</p>
+          <a class="mail" href="mailto:henrik@halden.studio">henrik@halden.studio</a>
+        </div>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+</body>
+</html>

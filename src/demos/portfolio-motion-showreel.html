@@ -1,0 +1,154 @@
+<!-- Design Lounge piece: portfolio-motion-showreel · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Asha V. — Showreel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Syne:ital,wght@0,500;0,700;1,700;1,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b10;--panel:#12121a;--ink:#f3f0ea;--ink-2:#8b8896;--line:#23232e;--acid:#ff4ec0;--acid-ink:#1a0012;
+  --display:"Syne",system-ui,sans-serif;--sans:"Manrope",system-ui,sans-serif;
+  --pad:48px;--nav:52px;--closed:88px;--open:328px;
+  --t:180ms;--t-morph:420ms;--ease:cubic-bezier(.2,.7,.2,1);--ios:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.45 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a,button{color:inherit;font:inherit}
+a{text-decoration:none}
+button{background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--acid);outline-offset:3px}
+nav{height:var(--nav);display:flex;align-items:center;padding:0 var(--pad);border-bottom:1px solid var(--line);font:500 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase}
+nav .mk{font:700 16px/1 var(--display);letter-spacing:-.03em;text-transform:none;margin-right:auto}
+nav a{color:var(--ink-2);margin-left:28px}
+nav a:hover,nav a[aria-current]{color:var(--ink)}
+nav a[aria-current]{box-shadow:inset 0 -2px 0 var(--acid)}
+.mast{padding:28px var(--pad) 8px;display:flex;align-items:end;justify-content:space-between;gap:32px}
+h1{margin:0;font:italic 800 118px/.8 var(--display);letter-spacing:-.05em}
+h1 span{color:var(--acid)}
+.mast p{margin:0 0 14px;max-width:28ch;color:var(--ink-2);font-size:14px}
+.reel{padding:12px var(--pad) 56px;display:flex;flex-direction:column}
+.case{position:relative;height:var(--closed);overflow:hidden;border-top:1px solid var(--line);transition:height var(--t-morph) var(--ios);background:transparent}
+.case:last-child{border-bottom:1px solid var(--line)}
+.case[aria-expanded="true"]{height:var(--open);background:var(--panel)}
+.head{height:var(--closed);display:grid;grid-template-columns:72px 1fr 180px 120px 40px;align-items:center;padding:0 16px;width:100%;text-align:left}
+.head .no{font:700 18px var(--display);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.case[aria-expanded="true"] .no{color:var(--acid)}
+.head .ttl{font:700 28px/1 var(--display);letter-spacing:-.03em}
+.head .meta{font-size:12px;color:var(--ink-2);letter-spacing:.04em}
+.head .yr{font:600 13px var(--sans);text-align:right}
+.chev{width:28px;height:28px;display:grid;place-items:center}
+.chev svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;transition:transform var(--t-morph) var(--ios)}
+.case[aria-expanded="true"] .chev svg{transform:rotate(45deg)}
+.body{display:grid;grid-template-columns:72px 1fr 320px;gap:20px;padding:0 16px 20px;opacity:0;transform:translateY(8px);transition:opacity 240ms var(--ease) 80ms,transform 240ms var(--ease) 80ms;pointer-events:none}
+.case[aria-expanded="true"] .body{opacity:1;transform:none;pointer-events:auto}
+.body p{margin:0;max-width:42ch;color:var(--ink-2);font-size:14px}
+.body .tags{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.body .tags i{font-style:normal;font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);padding:4px 8px;color:var(--ink)}
+.still{height:200px;border:1px solid var(--line);background:#0a0a0e;position:relative;overflow:hidden}
+/* 1 pulse rings */
+.s1{display:grid;place-items:center}
+.s1::before{content:"";width:92px;height:92px;border:1px solid rgba(255,78,192,.35);border-radius:50%;position:absolute}
+.s1::after{content:"";width:52px;height:52px;border:1px solid rgba(255,78,192,.55);border-radius:50%;position:absolute}
+.s1 i{position:absolute;width:40px;height:40px;border:1.5px solid var(--acid);border-radius:50%;opacity:.7;animation:pulse 2.4s var(--ease) infinite}
+.s1 i:nth-child(2){animation-delay:.6s}.s1 i:nth-child(3){animation-delay:1.2s}
+.s1 b{width:10px;height:10px;border-radius:50%;background:var(--acid);box-shadow:0 0 0 6px rgba(255,78,192,.18)}
+@keyframes pulse{0%{transform:scale(.6);opacity:.85}100%{transform:scale(5.2);opacity:0}}
+/* 2 type trail */
+.s2{display:flex;align-items:center;justify-content:center;font:italic 800 72px/1 var(--display);letter-spacing:-.04em}
+.s2 span{display:inline-block;background:linear-gradient(90deg,transparent,var(--acid) 40%,var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent;animation:trail 2.8s var(--ios) infinite}
+@keyframes trail{0%,100%{transform:translateX(-12px);filter:blur(0)}50%{transform:translateX(12px);filter:blur(1.2px)}}
+/* 3 light streaks */
+.s3{background:linear-gradient(180deg,#0d1018,#151018)}
+.s3 i{position:absolute;height:2px;left:-40%;background:linear-gradient(90deg,transparent,var(--acid),#fff);animation:streak 1.8s linear infinite}
+.s3 i:nth-child(1){top:28%;width:55%;animation-duration:2.1s}
+.s3 i:nth-child(2){top:46%;width:80%;opacity:.7;animation-duration:1.5s;animation-delay:.3s}
+.s3 i:nth-child(3){top:64%;width:42%;animation-duration:2.4s;animation-delay:.6s}
+.s3 i:nth-child(4){top:78%;width:68%;opacity:.5;animation-duration:1.9s}
+@keyframes streak{to{transform:translateX(220%)}}
+/* 4 orbit */
+.s4{display:grid;place-items:center}
+.s4 .orb{width:120px;height:120px;border:1px solid var(--line);border-radius:50%;position:relative;animation:spin 8s linear infinite}
+.s4 .orb::before,.s4 .orb::after{content:"";position:absolute;width:12px;height:12px;border-radius:50%;background:var(--acid)}
+.s4 .orb::before{top:-6px;left:54px}
+.s4 .orb::after{bottom:18px;right:-4px;width:8px;height:8px;background:var(--ink)}
+.s4 em{position:absolute;width:36px;height:36px;border-radius:8px;background:var(--ink);transform:rotate(18deg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (max-width:900px){:root{--open:420px}h1{font-size:72px}.head{grid-template-columns:48px 1fr 40px}.head .meta,.head .yr{display:none}.body{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  .case{transition:height 1ms}
+  .s1 i,.s2 span,.s3 i,.s4 .orb{animation:none}
+  .s1 i{opacity:.45;transform:scale(2)}
+  .s2 span{color:var(--acid);background:none;-webkit-background-clip:unset;background-clip:unset}
+  .s3 i{transform:none}
+  *{transition-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<nav aria-label="Primary">
+  <a class="mk" href="#">Asha V.</a>
+  <a href="#" aria-current="page">Showreel</a>
+  <a href="#">About</a>
+  <a href="#">Book</a>
+</nav>
+<header class="mast">
+  <h1>Asha <span>V.</span></h1>
+  <p>Motion direction for brands that need a first frame, not a deck. Four cases, 2023–2026.</p>
+</header>
+<section class="reel" id="reel" aria-label="Showreel">
+  <article class="case" aria-expanded="true">
+    <button class="head" aria-controls="c1" id="h1"><span class="no">01</span><span class="ttl">Pulse</span><span class="meta">Brand film · 0:32</span><span class="yr">2026</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+    <div class="body" id="c1">
+      <div></div>
+      <div>
+        <p>Identity film for a clinic network. A single radial pulse becomes the cut language: every shot starts from centre and releases to the edge.</p>
+        <div class="tags"><i>Direction</i><i>Edit</i><i>Sound</i></div>
+      </div>
+      <div class="still s1" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
+    </div>
+  </article>
+  <article class="case" aria-expanded="false">
+    <button class="head" aria-controls="c2" id="h2"><span class="no">02</span><span class="ttl">Afterimage</span><span class="meta">Type titles · 0:18</span><span class="yr">2025</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+    <div class="body" id="c2">
+      <div></div>
+      <div>
+        <p>End titles for a two-hander. The name holds, then the last letter leaves a 12-frame smear so the cut feels like a blink.</p>
+        <div class="tags"><i>Titles</i><i>Type</i></div>
+      </div>
+      <div class="still s2" aria-hidden="true"><span>ASHA</span></div>
+    </div>
+  </article>
+  <article class="case" aria-expanded="false">
+    <button class="head" aria-controls="c3" id="h3"><span class="no">03</span><span class="ttl">Night Bus</span><span class="meta">Main titles · 0:41</span><span class="yr">2025</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+    <div class="body" id="c3">
+      <div></div>
+      <div>
+        <p>Open for a night-route documentary. Streaks are timed to the 24 fps shutter so street lamps read as dashes, not blur.</p>
+        <div class="tags"><i>Titles</i><i>Compositing</i></div>
+      </div>
+      <div class="still s3" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </div>
+  </article>
+  <article class="case" aria-expanded="false">
+    <button class="head" aria-controls="c4" id="h4"><span class="no">04</span><span class="ttl">Kernel</span><span class="meta">Product loop · 0:08</span><span class="yr">2023</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+    <div class="body" id="c4">
+      <div></div>
+      <div>
+        <p>Eight-second loop for a chip company. One square orbits; the mark never leaves the safe centre of a 1:1 master.</p>
+        <div class="tags"><i>Loop</i><i>3D grade</i></div>
+      </div>
+      <div class="still s4" aria-hidden="true"><div class="orb"></div><em></em></div>
+    </div>
+  </article>
+</section>
+<script>
+const cases=[...document.querySelectorAll('.case')];
+function open(el){cases.forEach(c=>{const on=c===el;c.setAttribute('aria-expanded',String(on));c.querySelector('.head').setAttribute('aria-expanded',String(on));});}
+cases.forEach(c=>{const b=c.querySelector('.head');b.setAttribute('aria-expanded',c.getAttribute('aria-expanded'));b.addEventListener('click',()=>open(c));});
+</script>
+</body>
+</html>

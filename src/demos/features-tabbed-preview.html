@@ -1,0 +1,214 @@
+<!-- Design Lounge piece: features-tabbed-preview · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tabbed feature preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0d;--panel:#111317;--panel-2:#16191e;--panel-3:#1c2026;--line:#1f2329;--line-2:#2b3038;
+  --ink:#eceef1;--ink-2:#9aa1ac;--ink-3:#646b76;--accent:#86e1b0;--accent-dim:rgba(134,225,176,.12);--warn:#f2c46d;--red:#ef8b7a;
+  --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --dwell:6000ms;--t-fast:160ms;--t-pane:420ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --r:10px;--r-lg:14px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+section{height:100%;display:grid;grid-template-columns:392px 1fr;grid-template-rows:auto 1fr;gap:0 48px;padding:56px 64px 56px;position:relative}
+.head{grid-column:1/-1;display:grid;grid-template-columns:1fr 340px;align-items:end;gap:48px;margin-bottom:40px}
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:flex;gap:10px;align-items:center;margin-bottom:18px}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-dim)}
+h2{margin:0;font-weight:500;font-size:60px;line-height:.98;letter-spacing:-.045em}
+h2 span{color:var(--ink-3)}
+.head p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.55}
+.tabs{display:flex;flex-direction:column;border-top:1px solid var(--line);align-self:start}
+.tab{all:unset;cursor:pointer;display:grid;grid-template-columns:36px 1fr;padding:18px 4px 20px 0;border-bottom:1px solid var(--line);position:relative}
+.tab .n{font:500 11px/22px var(--mono);color:var(--ink-3)}
+.tab h3{margin:0;font-size:17px;font-weight:500;letter-spacing:-.015em;line-height:22px;color:var(--ink-2);transition:color var(--t-fast) var(--ease)}
+.tab .d{grid-column:2;display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--t-pane) var(--ease-out)}
+.tab .d>p{overflow:hidden;margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.55}
+.tab .d>p span{display:block;padding-top:8px}
+.tab:hover h3{color:var(--ink)}
+.tab[aria-selected="true"] h3{color:var(--ink)}
+.tab[aria-selected="true"] .n{color:var(--accent)}
+.tab[aria-selected="true"] .d{grid-template-rows:1fr}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+.bar{position:absolute;left:36px;right:0;bottom:-1px;height:1px;background:transparent;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);transform-origin:left;transform:scaleX(0)}
+.tab[aria-selected="true"] .bar i{animation:fill var(--dwell) linear forwards}
+section:hover .bar i,section.paused .bar i{animation-play-state:paused}
+@keyframes fill{to{transform:scaleX(1)}}
+.stage{position:relative;border:1px solid var(--line);border-radius:var(--r-lg);background:radial-gradient(120% 80% at 80% 0%,#141a1a 0%,var(--panel) 55%);overflow:hidden;min-height:0}
+.big{position:absolute;left:58px;bottom:22px;font:500 200px/.8 var(--sans);letter-spacing:-.07em;color:transparent;-webkit-text-stroke:1px var(--ink-3);opacity:.55;pointer-events:none;user-select:none}
+.big::after{content:"/04";font:500 12px var(--mono);letter-spacing:.1em;-webkit-text-stroke:0;color:var(--ink-3);margin-left:14px;vertical-align:top}
+.pane{position:absolute;inset:28px;display:grid;align-content:center;opacity:0;transform:translateY(10px) scale(.985);filter:blur(4px);transition:opacity var(--t-pane) var(--ease),transform var(--t-pane) var(--ease-out),filter var(--t-pane) var(--ease);pointer-events:none}
+.pane.on{opacity:1;transform:none;filter:none;pointer-events:auto}
+.win{background:var(--panel-2);border:1px solid var(--line-2);border-radius:var(--r);box-shadow:0 24px 60px -24px rgba(0,0,0,.7)}
+.wh{height:40px;display:flex;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid var(--line);font:500 12px var(--mono);color:var(--ink-3)}
+.wh b{color:var(--ink);font-weight:500}
+.wh .sp{flex:1}
+.chip{font:500 10.5px/1 var(--mono);padding:4px 7px;border-radius:5px;border:1px solid var(--line-2);color:var(--ink-2);white-space:nowrap}
+.chip.g{color:var(--accent);border-color:rgba(134,225,176,.3);background:var(--accent-dim)}
+.chip.y{color:var(--warn);border-color:rgba(242,196,109,.3)}
+.chip.r{color:var(--red);border-color:rgba(239,139,122,.3)}
+/* triage */
+.row{display:grid;grid-template-columns:22px 1fr auto auto;gap:12px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line);font-size:13px}
+.row:last-child{border-bottom:0}
+.row .av{width:22px;height:22px;border-radius:50%;font:600 10px/22px var(--sans);text-align:center;color:#0a0b0d}
+.row b{font-weight:500;display:block}.row small{color:var(--ink-3);font-size:12px}
+.row .t{font:12px var(--mono);color:var(--ink-3)}
+.row.hl{background:var(--panel-3);box-shadow:inset 2px 0 0 var(--accent)}
+.draft{margin:12px 14px 14px;padding:12px 14px;border:1px dashed rgba(134,225,176,.35);border-radius:8px;color:var(--ink-2);font-size:13px}
+.draft em{font-style:normal;font:500 10.5px var(--mono);color:var(--accent);display:block;margin-bottom:6px;letter-spacing:.06em;text-transform:uppercase}
+.caret{display:inline-block;width:7px;height:14px;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+/* views */
+.filters{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+td:first-child{color:var(--ink)}
+td.m{font-family:var(--mono);font-size:12px}
+.meter{width:90px;height:4px;border-radius:2px;background:var(--line-2);overflow:hidden}.meter i{display:block;height:100%;background:var(--accent)}
+.cursors{position:absolute;inset:0;pointer-events:none}
+.cur{position:absolute;font:500 10.5px var(--mono);color:#0a0b0d;padding:3px 6px;border-radius:0 6px 6px 6px}
+/* flow */
+.flow{padding:26px 22px 24px;display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr;align-items:center}
+.node{border:1px solid var(--line-2);border-radius:9px;padding:12px;background:var(--panel)}
+.node em{font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-style:normal}
+.node b{display:block;font-weight:500;font-size:13px;margin:6px 0 8px}
+.node.live{border-color:rgba(134,225,176,.45);box-shadow:0 0 0 4px var(--accent-dim)}
+.wire{height:1px;background:linear-gradient(90deg,var(--line-2) 50%,transparent 0) 0/8px 1px;animation:dash 900ms linear infinite}
+@keyframes dash{to{background-position:8px 0}}
+.runs{border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr)}
+.runs div{padding:14px;border-right:1px solid var(--line)}.runs div:last-child{border-right:0}
+.runs small{font:500 10.5px var(--mono);color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+.runs b{display:block;font-size:22px;font-weight:500;letter-spacing:-.03em;margin-top:4px}
+/* audit */
+.log{list-style:none;margin:0;padding:6px 0}
+.log li{display:grid;grid-template-columns:96px 14px 1fr auto;gap:12px;align-items:start;padding:10px 14px;font-size:13px;color:var(--ink-2)}
+.log time{font:12px var(--mono);color:var(--ink-3)}
+.log .dot{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink-3);margin-top:5px;position:relative}
+.log li:not(:last-child) .dot::after{content:"";position:absolute;left:2.5px;top:10px;width:1px;height:30px;background:var(--line-2)}
+.log .dot.g{border-color:var(--accent);background:var(--accent)}
+.log b{color:var(--ink);font-weight:500}
+.log code{font:12px var(--mono);color:var(--ink);background:var(--panel-3);padding:1px 5px;border-radius:4px}
+.ctrl{position:absolute;right:64px;top:62px;display:flex;gap:8px;align-items:center;font:500 11px var(--mono);color:var(--ink-3)}
+.ctrl button{all:unset;cursor:pointer;width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:8px;color:var(--ink-2)}
+.ctrl button:hover{color:var(--ink);border-color:var(--ink-3)}
+.ctrl button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ctrl svg{width:14px;height:14px;fill:currentColor}
+@media (prefers-reduced-motion:reduce){.pane{transition:opacity 1ms;transform:none;filter:none}.tab[aria-selected="true"] .bar i{animation:none;transform:scaleX(1)}.wire,.caret{animation:none}.tab .d{transition:none}}
+@media (max-width:1060px){section{grid-template-columns:320px 1fr;padding:40px}.head{grid-template-columns:1fr}.head p{display:none}h2{font-size:48px}}
+</style>
+</head>
+<body>
+<section id="s" aria-labelledby="h">
+  <div class="head">
+    <div>
+      <div class="eyebrow"><i></i>Northdesk · Platform</div>
+      <h2 id="h">Every ticket arrives<br><span>already half-solved.</span></h2>
+    </div>
+    <p>Northdesk reads, routes and drafts before a human opens the thread. Teams at 2,400 companies close 38% more conversations in the first hour.</p>
+  </div>
+  <div class="ctrl"><span id="st">Autoplay</span><button id="pp" aria-label="Pause autoplay" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button></div>
+  <div class="tabs" role="tablist" aria-label="Capabilities" aria-orientation="vertical">
+    <button class="tab" role="tab" id="t0" aria-controls="p0" aria-selected="true"><span class="n">01</span><h3>Triage that reads first</h3><div class="d"><p><span>Intent, sentiment and plan tier are tagged on arrival. A reply is drafted in your tone before anyone is assigned.</span></p></div><span class="bar"><i></i></span></button>
+    <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="false" tabindex="-1"><span class="n">02</span><h3>Shared views, live</h3><div class="d"><p><span>Saved filters update in real time for the whole team. See who is looking at what, and never double-reply.</span></p></div><span class="bar"><i></i></span></button>
+    <button class="tab" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1"><span class="n">03</span><h3>Automations without code</h3><div class="d"><p><span>Chain a trigger, a condition and an action. Every run is logged and every rule can be dry-run on last week's tickets.</span></p></div><span class="bar"><i></i></span></button>
+    <button class="tab" role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1"><span class="n">04</span><h3>An audit trail you can read</h3><div class="d"><p><span>Every edit, macro and permission change, in plain sentences with exact timestamps. Export to CSV or stream to your SIEM.</span></p></div><span class="bar"><i></i></span></button>
+  </div>
+  <div class="big" id="big" aria-hidden="true">01</div>
+  <div class="stage">
+    <div class="pane on" id="p0" role="tabpanel" aria-labelledby="t0">
+      <div class="win">
+        <div class="wh"><b>Inbox</b> · 18 open<span class="sp"></span><span class="chip g">auto-triage on</span></div>
+        <div class="row hl"><span class="av" style="background:#86e1b0">KO</span><div><b>Refund for duplicate charge on order 48-2231</b><small>Kemi Okafor · Pro plan</small></div><span class="chip r">billing · upset</span><span class="t">2m</span></div>
+        <div class="draft"><em>Suggested reply · 94% match to your tone</em>Hi Kemi, you're right, we charged you twice on 14 Sep. I've refunded $129.00 to the card ending 4417; it lands in 3–5 days.<span class="caret"></span></div>
+        <div class="row"><span class="av" style="background:#f2c46d">LM</span><div><b>SSO login loops after domain change</b><small>Lars Meyer · Enterprise</small></div><span class="chip y">auth · urgent</span><span class="t">9m</span></div>
+        <div class="row"><span class="av" style="background:#9ab8ef">AN</span><div><b>Can we export views to Sheets?</b><small>Ana Nunes · Starter</small></div><span class="chip">question</span><span class="t">14m</span></div>
+        <div class="row"><span class="av" style="background:#d8a8e8">RT</span><div><b>Love the new macros, small request</b><small>Rui Tanaka · Pro</small></div><span class="chip g">feedback · happy</span><span class="t">21m</span></div>
+      </div>
+    </div>
+    <div class="pane" id="p1" role="tabpanel" aria-labelledby="t1">
+      <div class="win" style="position:relative">
+        <div class="wh"><b>Enterprise · breaching SLA</b><span class="sp"></span><span class="chip">3 viewing</span></div>
+        <div class="filters"><span class="chip g">plan = Enterprise</span><span class="chip g">SLA &lt; 1h</span><span class="chip">status ≠ snoozed</span><span class="chip">+ filter</span></div>
+        <table><thead><tr><th>Account</th><th>Owner</th><th>Open</th><th>SLA left</th><th>Health</th></tr></thead>
+        <tbody>
+          <tr><td>Halden Freight</td><td>Priya S.</td><td class="m">7</td><td class="m" style="color:var(--red)">00:12</td><td><div class="meter"><i style="width:34%;background:var(--red)"></i></div></td></tr>
+          <tr><td>Ostra Clinics</td><td>Jonas B.</td><td class="m">4</td><td class="m" style="color:var(--warn)">00:31</td><td><div class="meter"><i style="width:58%;background:var(--warn)"></i></div></td></tr>
+          <tr><td>Mirelle Studio</td><td>Priya S.</td><td class="m">3</td><td class="m">00:44</td><td><div class="meter"><i style="width:72%"></i></div></td></tr>
+          <tr><td>Quarry &amp; Vale</td><td>Dana W.</td><td class="m">2</td><td class="m">00:52</td><td><div class="meter"><i style="width:81%"></i></div></td></tr>
+          <tr><td>Tessaro Bank</td><td>Jonas B.</td><td class="m">2</td><td class="m">00:58</td><td><div class="meter"><i style="width:90%"></i></div></td></tr>
+        </tbody></table>
+        <div class="cursors" aria-hidden="true">
+          <span class="cur" style="left:170px;top:134px;background:#f2c46d">Priya</span>
+          <span class="cur" style="left:470px;top:206px;background:#9ab8ef">Jonas</span>
+        </div>
+      </div>
+    </div>
+    <div class="pane" id="p2" role="tabpanel" aria-labelledby="t2">
+      <div class="win">
+        <div class="wh"><b>Rule · Route angry billing to Tier 2</b><span class="sp"></span><span class="chip g">active</span></div>
+        <div class="flow">
+          <div class="node"><em>When</em><b>Ticket created</b><span class="chip">email · chat</span></div>
+          <div class="wire"></div>
+          <div class="node"><em>If</em><b>Topic is billing and sentiment ≤ −0.4</b><span class="chip r">2 conditions</span></div>
+          <div class="wire"></div>
+          <div class="node live"><em>Then</em><b>Assign Tier 2, priority high</b><span class="chip g">notify #billing</span></div>
+        </div>
+        <div class="runs"><div><small>Runs · 7d</small><b>1,284</b></div><div><small>Matched</small><b>212</b></div><div><small>Time saved</small><b>31 h</b></div><div><small>Errors</small><b>0</b></div></div>
+      </div>
+    </div>
+    <div class="pane" id="p3" role="tabpanel" aria-labelledby="t3">
+      <div class="win">
+        <div class="wh"><b>Audit log</b> · workspace northdesk-eu<span class="sp"></span><span class="chip">export CSV</span></div>
+        <ul class="log">
+          <li><time>14:02:51</time><span class="dot g"></span><span><b>Priya Shah</b> merged two tickets from <b>Halden Freight</b> into <code>#48812</code></span><span class="chip">merge</span></li>
+          <li><time>13:58:07</time><span class="dot"></span><span><b>Rule</b> “Route angry billing” assigned <code>#48809</code> to Tier 2</span><span class="chip g">auto</span></li>
+          <li><time>13:41:33</time><span class="dot"></span><span><b>Dana Wu</b> changed role of <b>Jonas Berg</b> from Agent to Lead</span><span class="chip y">permission</span></li>
+          <li><time>13:20:10</time><span class="dot"></span><span><b>Jonas Berg</b> edited macro <code>refund-duplicate</code> (3 lines)</span><span class="chip">macro</span></li>
+          <li><time>12:47:02</time><span class="dot"></span><span><b>API key</b> <code>nd_live_••••41c</code> rotated by <b>Dana Wu</b></span><span class="chip r">security</span></li>
+          <li><time>12:15:44</time><span class="dot"></span><span><b>Ana Nunes</b> exported view “Starter churn risk” (212 rows)</span><span class="chip">export</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(()=>{
+  const s=document.getElementById('s'),tabs=[...document.querySelectorAll('.tab')],panes=[...document.querySelectorAll('.pane')],big=document.getElementById('big'),pp=document.getElementById('pp'),st=document.getElementById('st');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur=0,paused=reduce;
+  function show(i,focus){
+    cur=(i+tabs.length)%tabs.length;
+    tabs.forEach((t,k)=>{const on=k===cur;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;const b=t.querySelector('.bar i');b.style.animation='none';void b.offsetWidth;b.style.animation='';});
+    panes.forEach((p,k)=>p.classList.toggle('on',k===cur));
+    big.textContent=String(cur+1).padStart(2,'0');
+    if(focus)tabs[cur].focus();
+  }
+  tabs.forEach((t,k)=>{
+    t.addEventListener('click',()=>show(k));
+    t.querySelector('.bar i').addEventListener('animationend',()=>{if(!paused&&k===cur)show(cur+1);});
+    t.addEventListener('keydown',e=>{
+      const m={ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1}[e.key];
+      if(m){e.preventDefault();show(cur+m,true);}
+      if(e.key==='Home'){e.preventDefault();show(0,true);}
+      if(e.key==='End'){e.preventDefault();show(tabs.length-1,true);}
+    });
+  });
+  function setPaused(p){paused=p;s.classList.toggle('paused',p);pp.setAttribute('aria-pressed',p);pp.setAttribute('aria-label',p?'Resume autoplay':'Pause autoplay');st.textContent=p?'Paused':'Autoplay';
+    pp.innerHTML=p?'<svg viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z"/></svg>':'<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';}
+  pp.addEventListener('click',()=>setPaused(!paused));
+  s.addEventListener('focusin',e=>{if(e.target.classList.contains('tab'))s.classList.add('paused');});
+  s.addEventListener('focusout',()=>{if(!paused)s.classList.remove('paused');});
+  if(reduce)setPaused(true);
+})();
+</script>
+</body>
+</html>

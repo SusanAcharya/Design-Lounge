@@ -3,6 +3,7 @@ title: "Hover tilt cards"
 summary: "Three pricing cards tilt up to 8° toward the pointer with a cursor-following specular highlight and a lifted shadow, then spring back with an overshoot curve on leave."
 platform: web
 type: animation
+category: cards
 tags: [cards, pricing, hover, 3d, tilt]
 styles: [dark, minimal]
 motion: rich

@@ -1,48 +1,79 @@
 # Design Lounge
 
-Interfaces worth sitting with. A catalogue of live web and mobile design pieces, each one a single self-contained HTML file, each one shipped with a markdown brief a coding agent can rebuild it from.
+A design library by [Susan Acharya](https://acharyasusan.com.np). Live pieces for the web, phone, and tablet — each one a self-contained demo and a markdown brief. Palettes, type pairings, icons, and motion sit beside them. Pick a system, or hand the repo to an agent and let it pick.
 
-```
+Free to use in products. Keep the credit. Do not republish the catalogue as a catalogue.
+
+## Run it
+
+```bash
 pnpm install
-pnpm dev          # http://localhost:4321
-pnpm build        # static site in dist/
+pnpm dev            # http://localhost:4321
+pnpm build          # static site in dist/
 pnpm preview
-pnpm check:pieces # validate every piece against docs/PIECE-SPEC.md
+pnpm check:pieces   # every piece against docs/PIECE-SPEC.md
 ```
+
+## What’s in it
+
+- **Pieces** — heroes, footers, landings, portfolios, dashboards, native-feel phone screens, motion. Browse by name (`/c`), by problem (`/collections`), or the whole floor (`/browse`).
+- **System** — type pairings, full colour roles (primary, secondary, tertiary, feedback, surfaces), Lounge Icons, motion recipes.
+- **Kit** — `/kit`. Choose a website, a product, or a platform. Pick a researched palette, a pairing, and a component family. Both a website frame and a phone update. The last step is a brief.
+- **Start** — `/start`. Eight recipes (marketing site, portfolio, landing, app, design system, dashboard, shop, editorial) that already name a theme, a pairing, and the pieces to open.
+- **Agents** — `/llms.txt`, `/api/pieces.json`, and `/p/<slug>.md`. The brief is the spec. The demo is the acceptance test.
+
+## For an agent
+
+Feed it this repo. It should read `AGENTS.md`, then `skills/design-lounge/SKILL.md`.
+
+Or install the skill into the product you are building, not into this library:
+
+```bash
+npx skills add SusanAcharya/Design-Lounge
+```
+
+From a local clone:
+
+```bash
+node /path/to/Design-Lounge/skills/design-lounge/install.mjs
+```
+
+That copies the skill into `.cursor/skills`, `.agents/skills`, and `.claude/skills`. The agent locks a palette, a pairing, and a component family from this library, then rebuilds the named pieces in your stack. It does not invent hex codes.
+
+When the site has a public URL, set `site` in `astro.config.mjs` and `base` in `skills/design-lounge/lounge.json` to that host.
 
 ## Layout
 
 ```
-src/demos/<slug>.html          live demo, one file, no dependencies
-src/content/pieces/<slug>.md   frontmatter + agent brief
-src/data/collections.ts        curated shelves
-src/lib/pieces.ts              catalogue helpers, platform / room / style metadata
-src/components/DeviceFrame     scales a demo inside browser / phone / tablet chrome
-src/components/Catalog         client-side filters with shareable URLs
-src/components/Palette         ⌘K search over /search.json
-src/pages/p/[slug].astro       piece page: stage, brief, source, related
-src/pages/p/[slug].md.ts       raw brief endpoint
-src/pages/demo/[slug].html.ts  raw demo endpoint (what the iframes load)
-docs/PIECE-SPEC.md             the contract every piece follows
-scripts/check-pieces.mjs       validator
-scripts/shot.mjs               screenshot helper (Playwright)
+src/demos/<slug>.html           live demo, one file
+src/content/pieces/<slug>.md    frontmatter + agent brief
+src/data/                       themes, type, icons, motion, kit, shelves, start recipes
+src/pages/p/[slug].astro        piece page
+src/pages/p/[slug].md.ts        raw brief
+src/pages/kit/                  composer and brief endpoint
+skills/design-lounge/           the agent skill
+docs/PIECE-SPEC.md              the contract every piece follows
 ```
 
 ## Adding a piece
 
 1. Read `docs/PIECE-SPEC.md`.
-2. Create `src/demos/<slug>.html` and `src/content/pieces/<slug>.md`.
-3. Run `pnpm check:pieces` until it reports zero errors for your slug.
-4. Optionally add the slug to a shelf in `src/data/collections.ts`.
+2. Add `src/demos/<slug>.html` and `src/content/pieces/<slug>.md`.
+3. Run `pnpm check:pieces` until your slug is clean.
+4. Add the slug to a shelf in `src/data/collections.ts` if it belongs on one.
 
-Pieces are numbered by publish date, then title. The number is stable once a piece is published; don't backdate.
+Pieces are numbered by publish date, then title. Don’t backdate.
 
 ## Keyboard
 
-| Key       | Does                         |
-|-----------|------------------------------|
-| `⌘K` `/`  | search                       |
-| `r`       | random piece                 |
-| `t`       | toggle day / night           |
-| `[` `]`   | previous / next piece        |
-| `c`       | copy the brief (piece page)  |
+| Key | Does |
+| --- | --- |
+| `⌘K` `/` | search |
+| `r` | random piece |
+| `t` | day / night |
+| `[` `]` | previous / next piece |
+| `c` | copy the brief |
+
+## Credit
+
+Susan Acharya · Kathmandu · [acharyasusan.com.np](https://acharyasusan.com.np)

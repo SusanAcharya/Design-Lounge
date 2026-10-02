@@ -1,0 +1,160 @@
+<!-- Design Lounge piece: ios-health-activity-rings · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activity rings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0c;--surface:#161618;--surface-2:#1f1f22;--line:#2a2a2e;
+  --ink:#f4f4f1;--ink-2:#a4a4a9;--ink-3:#727278;
+  --move:#ff3b5c;--move-track:rgba(255,59,92,.18);
+  --ex:#a8f53a;--ex-track:rgba(168,245,58,.16);
+  --stand:#34e3e0;--stand-track:rgba(52,227,224,.16);
+  --glass:rgba(32,32,36,.62);--glass-line:rgba(255,255,255,.09);
+  --font:"Geist",system-ui,-apple-system,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --r-card:20px;--r-bar:4px;--ring-w:22px;
+  --t-micro:160ms;--t-layout:320ms;--t-ring:1200ms;
+  --spring:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow:hidden}
+main{height:100%;overflow-y:auto;padding:62px 16px 48px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px}
+.eyebrow{margin:0;font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+h1{margin:6px 0 0;font-size:34px;line-height:1.05;font-weight:700;letter-spacing:-.03em}
+.me{width:40px;height:40px;border-radius:50%;border:0;background:linear-gradient(140deg,#3a3a40,#1c1c20);color:var(--ink);font:600 13px var(--font);cursor:pointer}
+.me:focus-visible,.day:focus-visible,.replay:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.hero{background:var(--surface);border-radius:var(--r-card);padding:18px 18px 20px;position:relative}
+.hero-top{display:flex;justify-content:space-between;align-items:center}
+.hero-top b{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.replay{appearance:none;border:0;background:var(--surface-2);color:var(--ink-2);height:32px;padding:0 12px;border-radius:16px;font:500 12px var(--font);display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.replay svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rings{display:block;width:232px;height:232px;margin:10px auto 18px;transform:rotate(-90deg);overflow:visible}
+.rings circle{fill:none;stroke-width:var(--ring-w);stroke-linecap:round}
+.arc{stroke-dasharray:0 100;transition:stroke-dasharray var(--t-ring) var(--expo)}
+.lap{stroke-dasharray:0 100;transition:stroke-dasharray 700ms var(--expo);filter:drop-shadow(0 0 3px rgba(0,0,0,.9))}
+.rings .r2 .arc,.rings .r2 .lap{transition-delay:90ms}.rings .r3 .arc,.rings .r3 .lap{transition-delay:180ms}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;border-top:1px solid var(--line);padding-top:14px}
+.stat small{display:block;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px}
+.stat .v{font-size:30px;font-weight:600;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.stat .g{font-size:14px;font-weight:500;color:var(--ink-3);letter-spacing:-.01em}
+.stat .u{display:block;font:500 11px var(--mono);color:var(--ink-3);margin-top:6px;letter-spacing:.04em}
+.m .v{color:var(--move)}.e .v{color:var(--ex)}.s .v{color:var(--stand)}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin:22px 4px 10px}
+.sec h2{margin:0;font-size:20px;font-weight:600;letter-spacing:-.02em}
+.sec span{font:500 12px var(--mono);color:var(--ink-3)}
+.week{background:var(--surface);border-radius:var(--r-card);padding:16px 10px 10px}
+.chart{display:grid;grid-template-columns:repeat(7,1fr);height:150px;position:relative}
+.chart::before{content:"";position:absolute;left:6px;right:6px;top:40px;border-top:1px dashed #3a3a40}
+.goal{position:absolute;right:8px;top:26px;font:500 10px var(--mono);color:var(--ink-3);letter-spacing:.06em}
+.day{appearance:none;border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;cursor:pointer;color:var(--ink-2);border-radius:12px;position:relative;z-index:1}
+.day[disabled]{cursor:default}
+.bars{display:flex;gap:3px;align-items:flex-end;height:110px}
+.bars i{width:6px;border-radius:var(--r-bar);height:calc(var(--h)*.85%);min-height:4px;transition:height var(--t-layout) var(--spring),opacity var(--t-micro) var(--ease);opacity:.42}
+.bars i:nth-child(1){background:var(--move)}.bars i:nth-child(2){background:var(--ex)}.bars i:nth-child(3){background:var(--stand)}
+.day[disabled] .bars i{background:var(--surface-2);opacity:1}
+.day:hover:not([disabled]) .bars i{opacity:.7}
+.day[aria-pressed="true"] .bars i{opacity:1}
+.lbl{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:500 13px var(--font);transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.day[aria-pressed="true"] .lbl{background:var(--ink);color:var(--bg);font-weight:600}
+.day.today .lbl{box-shadow:inset 0 0 0 1.5px var(--move)}
+.day.today[aria-pressed="true"] .lbl{box-shadow:none;background:var(--move);color:#fff}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.tile{background:var(--surface);border-radius:var(--r-card);padding:14px 16px}
+.tile small{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.tile b{display:block;font-size:26px;font-weight:600;letter-spacing:-.035em;margin-top:8px;font-variant-numeric:tabular-nums}
+.tile b em{font-style:normal;font-size:14px;color:var(--ink-3);font-weight:500;margin-left:3px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;transition-delay:0ms!important}}
+</style>
+</head>
+<body>
+<main>
+  <header class="head">
+    <div><p class="eyebrow" id="date">Friday, 2 October</p><h1>Summary</h1></div>
+    <button class="me" aria-label="Profile, Noor Haddad">NH</button>
+  </header>
+  <section class="hero" aria-labelledby="rt">
+    <div class="hero-top"><b id="rt">Activity</b><button class="replay" id="replay" aria-label="Replay ring animation"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg>Replay</button></div>
+    <svg class="rings" viewBox="0 0 240 240" aria-hidden="true">
+      <g class="r1"><circle cx="120" cy="120" r="105" stroke="var(--move-track)"/><circle class="arc" cx="120" cy="120" r="105" stroke="var(--move)" pathLength="100"/><circle class="lap" cx="120" cy="120" r="105" stroke="var(--move)" pathLength="100"/></g>
+      <g class="r2"><circle cx="120" cy="120" r="77" stroke="var(--ex-track)"/><circle class="arc" cx="120" cy="120" r="77" stroke="var(--ex)" pathLength="100"/><circle class="lap" cx="120" cy="120" r="77" stroke="var(--ex)" pathLength="100"/></g>
+      <g class="r3"><circle cx="120" cy="120" r="49" stroke="var(--stand-track)"/><circle class="arc" cx="120" cy="120" r="49" stroke="var(--stand)" pathLength="100"/><circle class="lap" cx="120" cy="120" r="49" stroke="var(--stand)" pathLength="100"/></g>
+    </svg>
+    <div class="stats" aria-live="polite" id="stats">
+      <div class="stat m"><small>Move</small><span class="v" data-k="0">0</span><span class="g">/520</span><span class="u">KCAL</span></div>
+      <div class="stat e"><small>Exercise</small><span class="v" data-k="1">0</span><span class="g">/30</span><span class="u">MIN</span></div>
+      <div class="stat s"><small>Stand</small><span class="v" data-k="2">0</span><span class="g">/12</span><span class="u">HRS</span></div>
+    </div>
+  </section>
+  <div class="sec"><h2>This week</h2><span>28 SEP – 4 OCT</span></div>
+  <section class="week" aria-label="Choose a day">
+    <div class="chart" id="chart"><span class="goal">GOAL</span></div>
+  </section>
+  <div class="tiles">
+    <div class="tile"><small>Steps</small><b id="steps">0</b></div>
+    <div class="tile"><small>Distance</small><b><span id="km">0</span><em>km</em></b></div>
+  </div>
+</main>
+<script>
+(function(){
+  const goals=[520,30,12];
+  const days=[
+    {d:'M',n:'Monday, 28 September',v:[612,48,12],st:11204,km:8.3},
+    {d:'T',n:'Tuesday, 29 September',v:[431,22,10],st:7380,km:5.4},
+    {d:'W',n:'Wednesday, 30 September',v:[538,31,11],st:9615,km:7.1},
+    {d:'T',n:'Thursday, 1 October',v:[287,12,7],st:4102,km:2.9},
+    {d:'F',n:'Friday, 2 October',v:[556,38,11],st:10488,km:7.8,today:1},
+    {d:'S',n:'Saturday, 3 October'},{d:'S',n:'Sunday, 4 October'}];
+  const chart=document.getElementById('chart'),groups=[...document.querySelectorAll('.rings g')];
+  const vals=[...document.querySelectorAll('.stat .v')],dateEl=document.getElementById('date');
+  const stepsEl=document.getElementById('steps'),kmEl=document.getElementById('km');
+  let cur=-1,shown=[0,0,0,0,0],raf=0;
+  const btns=days.map((x,i)=>{
+    const b=document.createElement('button');b.className='day'+(x.today?' today':'');
+    const h=x.v?x.v.map((v,k)=>Math.min(v/goals[k],1.3)/1.3*100):[4,4,4];
+    b.innerHTML='<span class="bars">'+h.map(p=>'<i style="--h:'+p.toFixed(1)+'"></i>').join('')+'</span><span class="lbl">'+x.d+'</span>';
+    if(!x.v){b.disabled=true;b.setAttribute('aria-label',x.n+', no data yet');}
+    else{b.setAttribute('aria-label',x.n+': move '+x.v[0]+' of 520 kilocalories, exercise '+x.v[1]+' of 30 minutes, stand '+x.v[2]+' of 12 hours');b.addEventListener('click',()=>pick(i));}
+    b.setAttribute('aria-pressed','false');chart.appendChild(b);return b;
+  });
+  function setRings(v){
+    groups.forEach((g,k)=>{
+      const p=v?v[k]/goals[k]*100:0,arc=g.querySelector('.arc'),lap=g.querySelector('.lap');
+      arc.style.strokeDasharray=Math.min(p,99.99)+' 100';arc.style.opacity=p>0?1:0;
+      const o=Math.max(0,Math.min(p-100,99));
+      lap.style.transitionDelay=o?(1000+k*90)+'ms':'0ms';
+      lap.style.strokeDasharray=o+' 100';lap.style.opacity=o?1:0;
+    });
+  }
+  function tween(to){
+    cancelAnimationFrame(raf);const from=shown.slice(),t0=performance.now(),D=900;
+    const fmt=[n=>Math.round(n),n=>Math.round(n),n=>Math.round(n),n=>Math.round(n).toLocaleString('en-GB'),n=>n.toFixed(1)];
+    const els=[...vals,stepsEl,kmEl];
+    (function step(t){
+      const q=Math.min(1,(t-t0)/D),e=1-Math.pow(1-q,4);
+      shown=from.map((f,k)=>f+(to[k]-f)*e);els.forEach((el,k)=>el.textContent=fmt[k](shown[k]));
+      if(q<1)raf=requestAnimationFrame(step);
+    })(t0);
+  }
+  function pick(i,force){
+    if(i===cur&&!force)return;cur=i;const x=days[i];
+    btns.forEach((b,k)=>b.setAttribute('aria-pressed',String(k===i)));
+    dateEl.textContent=x.today?'Today, 2 October':x.n;
+    setRings(x.v);tween([...x.v,x.st,x.km]);
+  }
+  document.getElementById('replay').addEventListener('click',()=>{
+    setRings(null);shown=[0,0,0,0,0];void document.body.offsetWidth;
+    groups.forEach(g=>g.querySelectorAll('circle').forEach(c=>c.getBoundingClientRect()));
+    setTimeout(()=>pick(cur,true),60);
+  });
+  btns.forEach(b=>b.setAttribute('aria-pressed','false'));
+  requestAnimationFrame(()=>requestAnimationFrame(()=>pick(4)));
+})();
+</script>
+</body>
+</html>

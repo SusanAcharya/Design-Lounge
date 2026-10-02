@@ -3,6 +3,7 @@ title: "3D card flip trio"
 summary: "Three wallet cards (debit card, ticket, advisor profile) that flip on click or Enter with 1200px perspective, a 600ms rotate and a 14px mid-flip lift; every back face carries real content."
 platform: web
 type: animation
+category: cards
 tags: [card, flip, 3d, wallet, transform]
 styles: [luxe, dark]
 motion: rich

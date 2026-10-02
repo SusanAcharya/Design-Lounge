@@ -3,6 +3,7 @@ title: "One-page mobile checkout"
 summary: "A 390px single-page checkout: collapsible order summary, address form with correct input types and autocomplete, payment radio cards, inline validation and a sticky Pay button carrying the total."
 platform: mobile-web
 type: screen
+category: ecommerce
 tags: [checkout, form, ecommerce, validation, payment]
 styles: [minimal, soft]
 motion: subtle

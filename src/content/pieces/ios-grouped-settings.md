@@ -3,6 +3,7 @@ title: "Grouped settings list"
 summary: "An iOS-style settings screen: inset grouped sections with 44px rows, coloured icon squares, 51×31 spring toggles with a stretching knob, chevron rows with values, footers and a profile row."
 platform: mobile-app
 type: screen
+category: settings
 tags: [settings, list, toggle, forms, ios]
 styles: [minimal, soft]
 motion: subtle

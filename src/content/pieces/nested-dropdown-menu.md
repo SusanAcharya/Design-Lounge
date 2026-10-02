@@ -3,6 +3,7 @@ title: "Nested dropdown menu"
 summary: "An application menubar with click-to-open menus, hover submenus guarded by a safe-triangle delay, check and radio items, a shortcuts column and complete keyboard support including typeahead."
 platform: web
 type: component
+category: navigation
 tags: [menu, dropdown, submenu, menubar, keyboard]
 styles: [industrial, dark]
 motion: subtle

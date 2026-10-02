@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { getPieces, AUTHOR, CATEGORY_META, TYPE_META } from '../lib/pieces';
+import { PAIRINGS } from '../data/type';
+import { THEMES } from '../data/themes';
+import { ICONS } from '../data/icons';
+import { RECIPES } from '../data/motion';
+import { STARTS } from '../data/starts';
+
+const pieces = await getPieces();
+---
+<Base title="For AI agents" description={`How coding agents should use Design Lounge by ${AUTHOR.name}: briefs, tokens, type, themes, icons and motion.`}>
+  <PageHead eyebrow="Lounge · Agents" title="This library is for <i>you</i>, too" blurb="Design Lounge is a machine-readable design library. Humans browse. Agents rebuild. Both should start here. A skill will wrap this; until then, follow the map." />
+  <div class="wrap ag">
+    <section class="g">
+      <div class="gn display">00</div>
+      <div>
+        <h2 class="display h3">The map</h2>
+        <p>The Lounge has four doors. Do not dump the human a random hero.</p>
+        <ul class="links">
+          <li><a href="/system"><code>/system</code> — type, themes, icons, motion. Lock these first.</a></li>
+          <li><a href="/c"><code>/c</code> — index by the name a designer would use (hero, footer, portfolio).</a></li>
+          <li><a href="/collections"><code>/collections</code> — shelves by problem, not by type.</a></li>
+          <li><a href="/kit"><code>/kit</code> — compose: kind → palette → type → components. Live web + phone. Ends in a brief.</a></li>
+          <li><a href="/start"><code>/start</code> — eight recipes for a new product. Pick one, then assemble.</a></li>
+        </ul>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">01</div>
+      <div>
+        <h2 class="display h3">Read the catalogue first</h2>
+        <p>Do not invent a hero, a footer, a pairing or an easing if one already lives here. Fetch the machine index, pick the closest piece or token set, then adapt tokens — not structure.</p>
+        <ul class="links">
+          <li><a href="/llms.txt"><code>/llms.txt</code> — plain-text map of the whole library</a></li>
+          <li><a href="/api/pieces.json"><code>/api/pieces.json</code> — every piece with urls, tokens, tags</a></li>
+          <li><a href="/search.json"><code>/search.json</code> — compact search index</a></li>
+        </ul>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">02</div>
+      <div>
+        <h2 class="display h3">Rebuild from the brief, not the screenshot</h2>
+        <p>Every piece at <code>/p/&lt;slug&gt;</code> ships a live demo, the source, and a brief at <code>/p/&lt;slug&gt;.md</code>. The brief is the spec: tokens, motion table, states, a11y, checklist. The demo is the acceptance test. Match the numbers. Do not “improve” them unless the human asked.</p>
+        <p>Prompt the human once for the stack if they have not named it, then default to semantic HTML + CSS + a little vanilla JS.</p>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">03</div>
+      <div>
+        <h2 class="display h3">Steal tokens from the libraries</h2>
+        <p>Type, themes, icons and motion are first-class, not leftovers. When a human says “make it feel like a hotel” or “use a quiet grotesk”, open these before inventing a palette.</p>
+        <ul class="links">
+          <li><a href="/type">{PAIRINGS.length} type pairings</a> — display + text, with copy-ready CSS</li>
+          <li><a href="/themes">{THEMES.length} themes</a> — full token sets, not five hex chips</li>
+          <li><a href="/icons">{ICONS.length} Lounge Icons</a> — 24px stroke, sprite or single SVG</li>
+          <li><a href="/motion">{RECIPES.length} motion recipes</a> — curves, durations, reduced-motion fallbacks</li>
+        </ul>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">04</div>
+      <div>
+        <h2 class="display h3">Credit the lounge</h2>
+        <p>Pieces, pairings, themes, icons and recipes are free to use in products. Keep the credit comment that ships with copied CSS, or add a line: designed after Design Lounge by {AUTHOR.name} ({AUTHOR.siteLabel}). Do not republish the catalogue as a catalogue.</p>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">05</div>
+      <div>
+        <h2 class="display h3">What is on the floor</h2>
+        <p>{pieces.length} live pieces across {Object.keys(TYPE_META).length} rooms and {Object.keys(CATEGORY_META).length} named categories, plus the four libraries above. {STARTS.length} start recipes. If a category is empty, say so — do not hallucinate a piece that is not here.</p>
+        <p class="mono faint">Library of {AUTHOR.name} · {AUTHOR.role} · {AUTHOR.city}</p>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">06</div>
+      <div>
+        <h2 class="display h3">Install the skill</h2>
+        <p>The skill is the procedure. The Lounge stays the source. Feed an agent this repo, or install the skill into the product:</p>
+        <pre class="ex"><code>npx skills add SusanAcharya/Design-Lounge</code></pre>
+        <p>From a local clone, run <code>skills/design-lounge/install.mjs</code> inside the product repo. It copies the skill into Cursor, Claude, and the agents folder. Then ask for a design. The agent fetches <code>/llms.txt</code>, locks a kit, and rebuilds from piece briefs.</p>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .ag { margin-top: 40px; }
+  .g { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 32px; padding: 36px 0; border-top: 1px solid var(--line); }
+  .g:first-child { border-top-color: var(--ink); }
+  .gn { font-size: 48px; color: var(--ink-3); line-height: 1; }
+  .g p, .g li { max-width: 68ch; color: var(--ink-2); font-size: 16px; line-height: 1.6; }
+  .g p + p, .g ul { margin-top: 12px; }
+  .g a { text-decoration: underline; text-underline-offset: 3px; color: var(--ink); }
+  .g code { background: var(--paper-2); border: 1px solid var(--line); padding: .05em .35em; border-radius: 4px; }
+  .links { display: flex; flex-direction: column; gap: 8px; }
+  .ex { margin-top: 12px; padding: 14px 16px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); font-size: 13px; overflow: auto; }
+  @media (max-width: 800px) { .g { grid-template-columns: 1fr; gap: 8px; } .gn { font-size: 32px; } }
+</style>

@@ -1,0 +1,178 @@
+<!-- Design Lounge piece: stacking-cards-scroll · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Stacking cards on scroll</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3eee7;--ink:#2a2420;--ink-2:#62574f;--line:#ddd3c8;--accent:#b4532a;
+  --c1:#f1d9cf;--a1:#e5bfae;--c2:#dce3d3;--a2:#c3d0b6;--c3:#f2e6c2;--a3:#e4d095;--c4:#d9e1e8;--a4:#bccad7;--c5:#ebcdb8;--a5:#dbae90;
+  --sans:"Onest",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --n:5;--top:40px;--step:16px;--card-h:580px;--r:28px;
+  --shadow:0 -1px 0 rgba(255,255,255,.6) inset,0 30px 60px -36px rgba(74,48,32,.45);
+  --t-micro:180ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.nav{height:72px;display:flex;align-items:center;gap:36px;padding:0 80px;font-size:14px}
+.logo{font-weight:600;font-size:19px;letter-spacing:-.02em;display:flex;align-items:center;gap:9px;text-decoration:none}
+.logo i{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f6d2c0,var(--accent))}
+.nav nav{display:flex;gap:28px;color:var(--ink-2)}.nav nav a{text-decoration:none}.nav nav a:hover{color:var(--ink)}
+.bag{margin-left:auto;font:500 12px var(--mono);letter-spacing:.04em;border:1px solid var(--ink);border-radius:999px;padding:8px 14px;text-decoration:none}
+.hero{display:grid;grid-template-columns:1fr 300px;align-items:end;gap:40px;padding:18px 80px 0;height:238px}
+.hero h1{margin:0;font-weight:400;font-size:96px;line-height:.96;letter-spacing:-.045em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{margin:0 0 10px;color:var(--ink-2);font-size:15px}
+.cue{display:flex;align-items:center;gap:10px;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;margin-top:14px}
+.cue svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;animation:bob 1.8s var(--ease) infinite}
+@keyframes bob{50%{transform:translateY(4px)}}
+.stack{list-style:none;margin:0;padding:0 80px;view-timeline:--stack block}
+.stack>li{position:sticky;top:0;padding-top:calc(var(--top) + var(--i) * var(--step))}
+.card{height:var(--card-h);border-radius:var(--r);background:var(--c);box-shadow:var(--shadow);display:grid;grid-template-columns:500px 1fr;gap:16px;padding:16px;position:relative;transform-origin:50% 0;
+  animation:recede linear both;animation-timeline:--stack;animation-range:exit-crossing calc(var(--i) / var(--n) * 100%) exit-crossing calc((var(--i) + 1) / var(--n) * 100%)}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;background:#2a2420;opacity:var(--dim,0);pointer-events:none}
+@keyframes recede{to{transform:scale(calc(1 - (var(--n) - 1 - var(--i)) * .035));--dim:.16}}
+@property --dim{syntax:"<number>";inherits:true;initial-value:0}
+.stack>li:last-child .card{animation:none}
+.txt{padding:28px 24px 24px 40px;display:flex;flex-direction:column}
+.num{font:500 12px var(--mono);letter-spacing:.12em;display:flex;justify-content:space-between;color:var(--ink-2)}
+.num b{color:var(--ink);font-weight:500}
+.card h2{margin:auto 0 14px;font-weight:300;font-size:112px;line-height:.9;letter-spacing:-.055em}
+.card h2 span{display:block;font-size:13px;font-family:var(--mono);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.card p{margin:0 0 26px;max-width:38ch;color:var(--ink-2)}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(42,36,32,.16);margin:0 0 22px}
+.meta div{padding:12px 0 0}.meta dt{font:500 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}.meta dd{margin:4px 0 0;font-size:15px;font-weight:500}
+.buy{display:flex;align-items:center;gap:16px}
+.buy strong{font-weight:500}.buy small{display:block;color:var(--ink-2);font:12px var(--mono)}
+.add{margin-left:auto;height:44px;padding:0 20px;border-radius:999px;border:1px solid var(--ink);background:transparent;color:var(--ink);font:500 14px var(--sans);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.add svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.add:hover,.add[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.add[aria-pressed="true"] .plus{display:none}.add:not([aria-pressed="true"]) .tick{display:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.art{border-radius:18px;background:radial-gradient(120% 90% at 78% 12%,rgba(255,250,240,.9),transparent 55%),var(--a);position:relative;overflow:hidden;display:grid;place-items:end center;padding-bottom:96px}
+.art::before{content:"";position:absolute;width:300px;height:380px;left:50%;bottom:0;transform:translateX(-50%);border-radius:150px 150px 0 0;background:linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.08))}
+.art::after{content:"";position:absolute;left:0;right:0;bottom:0;height:96px;background:linear-gradient(rgba(42,36,32,.06),rgba(42,36,32,.12));border-top:1px solid rgba(255,255,255,.5)}
+.tag{position:absolute;top:22px;left:24px;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);z-index:1}
+.obj{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;filter:drop-shadow(0 18px 18px rgba(74,48,32,.22))}
+.cap{width:var(--cw);height:var(--chh);background:var(--capc,#2a2420);border-radius:var(--cr,6px 6px 2px 2px);position:relative}
+.body{width:var(--bw);height:var(--bh);border-radius:var(--br);background:linear-gradient(90deg,rgba(0,0,0,.12),rgba(255,255,255,.55) 28%,rgba(255,255,255,0) 52%,rgba(0,0,0,.1)),var(--bc);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(42,36,32,.8)}
+.body b{font-weight:600;font-size:13px;letter-spacing:.02em;text-transform:none}
+.o1{--cw:22px;--chh:46px;--bw:128px;--bh:236px;--br:22px;--bc:#fbf3ee}
+.o1 .cap::before{content:"";position:absolute;right:16px;top:6px;width:44px;height:10px;border-radius:5px;background:#2a2420}
+.o1 .cap::after{content:"";position:absolute;left:-17px;bottom:-4px;width:56px;height:16px;border-radius:5px;background:#2a2420}
+.o2{--cw:76px;--chh:44px;--bw:104px;--bh:252px;--br:10px 10px 18px 18px;--bc:#eef3e8;--capc:#7d8c6c}
+.o3{--cw:30px;--chh:84px;--cr:15px 15px 4px 4px;--bw:96px;--bh:150px;--br:16px;--bc:#d79b3a;--capc:#2a2420}
+.o3 .body{color:rgba(42,20,0,.75)}
+.o4{--cw:214px;--chh:52px;--cr:14px;--bw:200px;--bh:118px;--br:8px 8px 24px 24px;--bc:#f5f8fb;--capc:#8aa0b5}
+.o5{--cw:62px;--chh:34px;--cr:3px 3px 10px 10px;--bw:110px;--bh:250px;--br:4px 4px 14px 14px;--bc:#fff8f1;--capc:#b4532a;flex-direction:column-reverse}
+.o5 .body{clip-path:polygon(0 0,100% 0,88% 100%,12% 100%)}
+.rail{position:fixed;right:28px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:5}
+.rail button{all:unset;cursor:pointer;font:500 11px var(--mono);color:var(--ink-2);display:flex;align-items:center;gap:6px;height:22px;justify-content:flex-end}
+.rail button::after{content:"";width:8px;height:1px;background:currentColor;transition:width var(--t-micro) var(--ease)}
+.rail button[aria-current="step"]{color:var(--ink)}.rail button[aria-current="step"]::after{width:20px;background:var(--accent)}
+.rail button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sum{padding:120px 80px 140px;display:grid;grid-template-columns:1fr auto;align-items:end;gap:40px;border-bottom:1px solid var(--line)}
+.sum h3{margin:0;font-weight:300;font-size:72px;line-height:1;letter-spacing:-.04em}
+.sum dl{display:flex;gap:48px;margin:0}.sum dt{font:500 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}.sum dd{margin:4px 0 0;font-size:28px;letter-spacing:-.02em}
+footer{padding:28px 80px;font:12px var(--mono);color:var(--ink-2);display:flex;justify-content:space-between}
+@media (prefers-reduced-motion:reduce){.card{animation:none!important}.cue svg{animation:none}*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="#"><i></i>Ondine</a>
+  <nav aria-label="Main"><a href="#">Routines</a><a href="#">Skin quiz</a><a href="#">Ingredients</a><a href="#">Journal</a></nav>
+  <a class="bag" href="#">Bag · 2</a>
+</header>
+<section class="hero">
+  <h1>Five steps.<br>One <em>slow</em> morning.</h1>
+  <div><p>The routine our formulators actually use: four and a half minutes, five bottles, nothing you have to read the back of twice.</p>
+  <div class="cue"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg>Scroll to build it</div></div>
+</section>
+<ol class="stack" id="stack">
+  <li style="--i:0"><article class="card" style="--c:var(--c1);--a:var(--a1)" aria-labelledby="s1">
+    <div class="txt"><div class="num"><b>Step 01 / 05</b><span>07:02</span></div>
+      <h2 id="s1"><span>Cleanse</span>Milk</h2>
+      <p>A low-foam oat milk that lifts sunscreen and sleep without the squeak. Massage into dry skin, then rinse with lukewarm water.</p>
+      <dl class="meta"><div><dt>Time</dt><dd>60 s</dd></div><div><dt>Amount</dt><dd>2 pumps</dd></div><div><dt>Key</dt><dd>Oat lipids</dd></div></dl>
+      <div class="buy"><div><strong>Milk Cleanser</strong><small>150 ml · €24</small></div><button class="add" aria-pressed="true"><svg class="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>In routine</button></div></div>
+    <div class="art"><span class="tag">Pump · 150 ml</span><div class="obj o1"><i class="cap"></i><i class="body"><b>Ondine</b>Milk</i></div></div>
+  </article></li>
+  <li style="--i:1"><article class="card" style="--c:var(--c2);--a:var(--a2)" aria-labelledby="s2">
+    <div class="txt"><div class="num"><b>Step 02 / 05</b><span>07:03</span></div>
+      <h2 id="s2"><span>Tone</span>Mist</h2>
+      <p>Green tea and birch water, pressed onto damp skin with the palms. It resets the pH so the serum has somewhere to go.</p>
+      <dl class="meta"><div><dt>Time</dt><dd>20 s</dd></div><div><dt>Amount</dt><dd>4 sprays</dd></div><div><dt>Key</dt><dd>Birch sap</dd></div></dl>
+      <div class="buy"><div><strong>Birch Mist</strong><small>120 ml · €22</small></div><button class="add" aria-pressed="true"><svg class="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>In routine</button></div></div>
+    <div class="art"><span class="tag">Atomiser · 120 ml</span><div class="obj o2"><i class="cap"></i><i class="body"><b>Ondine</b>Mist</i></div></div>
+  </article></li>
+  <li style="--i:2"><article class="card" style="--c:var(--c3);--a:var(--a3)" aria-labelledby="s3">
+    <div class="txt"><div class="num"><b>Step 03 / 05</b><span>07:04</span></div>
+      <h2 id="s3"><span>Treat</span>Serum</h2>
+      <p>Ten per cent niacinamide in a sea-buckthorn base. Three drops, warmed between fingertips, pressed rather than rubbed.</p>
+      <dl class="meta"><div><dt>Time</dt><dd>45 s</dd></div><div><dt>Amount</dt><dd>3 drops</dd></div><div><dt>Key</dt><dd>Niacinamide</dd></div></dl>
+      <div class="buy"><div><strong>Amber Serum</strong><small>30 ml · €38</small></div><button class="add" aria-pressed="false"><svg class="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Add to routine</button></div></div>
+    <div class="art"><span class="tag">Dropper · 30 ml</span><div class="obj o3"><i class="cap"></i><i class="body"><b>Ondine</b>Serum</i></div></div>
+  </article></li>
+  <li style="--i:3"><article class="card" style="--c:var(--c4);--a:var(--a4)" aria-labelledby="s4">
+    <div class="txt"><div class="num"><b>Step 04 / 05</b><span>07:05</span></div>
+      <h2 id="s4"><span>Moisturise</span>Cloud</h2>
+      <p>A whipped squalane cream that sinks in before your coffee is ready. A pea-sized amount covers face and neck.</p>
+      <dl class="meta"><div><dt>Time</dt><dd>60 s</dd></div><div><dt>Amount</dt><dd>1 pea</dd></div><div><dt>Key</dt><dd>Squalane</dd></div></dl>
+      <div class="buy"><div><strong>Cloud Cream</strong><small>50 ml · €34</small></div><button class="add" aria-pressed="false"><svg class="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Add to routine</button></div></div>
+    <div class="art"><span class="tag">Jar · 50 ml</span><div class="obj o4"><i class="cap"></i><i class="body"><b>Ondine</b>Cloud</i></div></div>
+  </article></li>
+  <li style="--i:4"><article class="card" style="--c:var(--c5);--a:var(--a5)" aria-labelledby="s5">
+    <div class="txt"><div class="num"><b>Step 05 / 05</b><span>07:06</span></div>
+      <h2 id="s5"><span>Protect</span>SPF 50</h2>
+      <p>A mineral fluid with no white cast on any skin tone we tested, 41 of them. Two finger-lengths, last, every day.</p>
+      <dl class="meta"><div><dt>Time</dt><dd>90 s</dd></div><div><dt>Amount</dt><dd>2 fingers</dd></div><div><dt>Key</dt><dd>Zinc oxide</dd></div></dl>
+      <div class="buy"><div><strong>Daylight Fluid</strong><small>50 ml · €24</small></div><button class="add" aria-pressed="false"><svg class="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Add to routine</button></div></div>
+    <div class="art"><span class="tag">Tube · 50 ml</span><div class="obj o5"><i class="cap"></i><i class="body"><b>Ondine</b>SPF 50</i></div></div>
+  </article></li>
+</ol>
+<section class="sum">
+  <h3>Your routine,<br>stacked.</h3>
+  <dl><div><dt>Steps</dt><dd id="cnt">2 of 5</dd></div><div><dt>Time</dt><dd>4 min 35 s</dd></div><div><dt>Total</dt><dd id="tot">€46</dd></div></dl>
+</section>
+<footer><span>Ondine Skin Studio · Lisbon</span><span>Free returns within 30 days</span></footer>
+<nav class="rail" aria-label="Steps" id="rail"></nav>
+<script>
+(() => {
+  const lis = [...document.querySelectorAll('.stack>li')], cards = lis.map(l => l.firstElementChild), stack = document.getElementById('stack'), rail = document.getElementById('rail');
+  const names = ['Cleanse', 'Tone', 'Treat', 'Moisturise', 'Protect'], prices = [24, 22, 38, 34, 24];
+  const btns = names.map((n, i) => { const b = document.createElement('button'); b.textContent = '0' + (i + 1); b.setAttribute('aria-label', 'Step ' + (i + 1) + ': ' + n); rail.appendChild(b); return b; });
+  const offsets = () => { let y = stack.offsetTop; return lis.map(l => { const s = y; y += l.offsetHeight; return s; }); };
+  btns.forEach((b, i) => b.addEventListener('click', () => scrollTo({ top: offsets()[i] + (i ? 1 : 0), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })));
+  const native = CSS.supports('animation-timeline: view()');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!native && !reduce) cards.slice(0, -1).forEach(c => { c.style.animation = 'recede 1s linear both paused'; });
+  let raf = 0;
+  function update() {
+    raf = 0;
+    const o = offsets(), y = scrollY + 1;
+    let a = 0; o.forEach((v, i) => { if (y >= v - 200) a = i; });
+    btns.forEach((b, i) => i === a ? b.setAttribute('aria-current', 'step') : b.removeAttribute('aria-current'));
+    if (native || reduce) return;
+    const p = (scrollY - stack.offsetTop) / stack.offsetHeight, n = cards.length;
+    cards.slice(0, -1).forEach((c, i) => { const t = Math.min(1, Math.max(0, p * n - i)); c.style.animationDelay = -t + 's'; });
+  }
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+  addEventListener('resize', update); update();
+  document.querySelectorAll('.add').forEach(b => b.addEventListener('click', () => {
+    const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', String(on));
+    b.lastChild.textContent = on ? 'In routine' : 'Add to routine';
+    const sel = [...document.querySelectorAll('.add')].map(x => x.getAttribute('aria-pressed') === 'true');
+    document.getElementById('cnt').textContent = sel.filter(Boolean).length + ' of 5';
+    document.getElementById('tot').textContent = '€' + sel.reduce((s, v, i) => s + (v ? prices[i] : 0), 0);
+  }));
+})();
+</script>
+</body>
+</html>

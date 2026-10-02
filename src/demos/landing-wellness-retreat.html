@@ -1,0 +1,146 @@
+<!-- Design Lounge piece: landing-wellness-retreat · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Loam House — stays above the river</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#f1eadc;--clay:#e4d4bc;--soil:#3a2e24;--soil-2:#6a5a48;--moss:#3f5340;--leaf:#6d8a62;--terra:#b86a42;--line:#d7c9b0;
+  --serif:"Young Serif",Georgia,serif;--sans:"Hanken Grotesk",system-ui,sans-serif;
+  --pad:52px;--nav:58px;--r:18px;
+  --t:180ms;--t-card:280ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--sand);color:var(--soil);font:400 15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--moss);outline-offset:3px}
+nav{height:var(--nav);display:flex;align-items:center;padding:0 var(--pad);gap:28px}
+.logo{display:flex;align-items:center;gap:10px;font:400 22px/1 var(--serif)}
+.logo i{width:18px;height:18px;border-radius:50%;background:var(--moss);display:block;position:relative}
+.logo i::after{content:"";position:absolute;inset:5px 4px 3px;border-radius:50% 50% 50% 0;background:var(--sand);transform:rotate(-20deg)}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:22px;font-size:14px;color:var(--soil-2)}
+nav a:hover{color:var(--soil)}
+.book{margin-left:auto;height:40px;padding:0 18px;border-radius:999px;background:var(--moss);color:var(--sand);font-weight:500;font-size:14px;display:grid;place-items:center;transition:background var(--t) var(--ease)}
+.book:hover{background:var(--soil)}
+.hero{padding:18px var(--pad) 0}
+.kicker{margin:0 0 12px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--terra);font-weight:600}
+h1{margin:0 0 16px;font:400 76px/.96 var(--serif);letter-spacing:-.025em;max-width:16ch}
+.lede{margin:0 0 28px;max-width:46ch;color:var(--soil-2);font-size:17px}
+.strip{display:grid;grid-template-columns:1fr 1fr 140px 180px;gap:10px;background:var(--clay);padding:10px;border-radius:999px;max-width:840px}
+.field{background:var(--sand);border-radius:999px;padding:10px 16px;display:flex;flex-direction:column;gap:2px;min-height:64px;justify-content:center}
+.field label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--soil-2);font-weight:600}
+.field .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.field b{font-weight:600;font-size:16px}
+.step{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:16px;line-height:1}
+.step:hover{background:var(--moss);color:var(--sand);border-color:var(--moss)}
+.go{border-radius:999px;background:var(--soil);color:var(--sand);font-weight:600;font-size:15px;transition:background var(--t) var(--ease)}
+.go:hover{background:var(--terra)}
+.go:disabled{opacity:.55;cursor:default}
+.note{margin:12px 0 0;font-size:13px;color:var(--moss);min-height:20px;font-weight:500}
+.stays{padding:22px var(--pad) 72px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:#f7f2e8;border:1px solid var(--line);border-radius:var(--r);padding:16px 18px 18px;text-align:left;transition:border-color var(--t) var(--ease),transform var(--t-card) var(--expo);min-height:232px;display:flex;flex-direction:column}
+.card:hover,.card[aria-pressed="true"]{border-color:var(--moss);transform:translateY(-3px)}
+.card[aria-pressed="true"]{box-shadow:inset 0 0 0 1px var(--moss)}
+.bot{height:64px;margin:0 0 10px;display:grid;place-items:center}
+.bot svg{width:120px;height:80px;stroke:var(--moss);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.bot .hl{stroke:var(--terra)}
+.card h3{margin:0 0 6px;font:400 28px/1.1 var(--serif)}
+.card p{margin:0 0 12px;color:var(--soil-2);font-size:14px;flex:1}
+.card .pr{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--soil-2)}
+.card .pr b{font:400 22px var(--serif);color:var(--soil)}
+@media (max-width:1024px){h1{font-size:60px}.strip{grid-template-columns:1fr 1fr;border-radius:24px}.go{min-height:52px}}
+@media (max-width:768px){h1{font-size:48px}.stays,.strip{grid-template-columns:1fr}nav ul{display:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:1ms!important}.card{transform:none!important}}
+</style>
+</head>
+<body>
+<nav aria-label="Primary">
+  <a class="logo" href="#"><i></i>Loam House</a>
+  <ul>
+    <li><a href="#stays">Stays</a></li>
+    <li><a href="#stays">Baths</a></li>
+    <li><a href="#stays">Table</a></li>
+  </ul>
+  <a class="book" href="#strip">Book</a>
+</nav>
+<section class="hero">
+  <p class="kicker">Fold of land · 11 rooms · River Usk</p>
+  <h1>Come back to the ground.</h1>
+  <p class="lede">Three nights in earth plaster and linen. Walk the ridge at dusk; eat from the kitchen garden. We hold twelve guests at a time.</p>
+  <form class="strip" id="strip" aria-label="Booking dates">
+    <div class="field">
+      <label>Arrive</label>
+      <div class="row"><b id="arr">12 Oct</b>
+        <span><button type="button" class="step" data-k="a" data-d="-1" aria-label="Earlier arrival">−</button>
+        <button type="button" class="step" data-k="a" data-d="1" aria-label="Later arrival">+</button></span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Depart</label>
+      <div class="row"><b id="dep">15 Oct</b>
+        <span><button type="button" class="step" data-k="d" data-d="-1" aria-label="Earlier departure">−</button>
+        <button type="button" class="step" data-k="d" data-d="1" aria-label="Later departure">+</button></span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Guests</label>
+      <div class="row"><b id="gu">2</b>
+        <span><button type="button" class="step" data-k="g" data-d="-1" aria-label="Fewer guests">−</button>
+        <button type="button" class="step" data-k="g" data-d="1" aria-label="More guests">+</button></span>
+      </div>
+    </div>
+    <button type="submit" class="go" id="go">Check dates</button>
+  </form>
+  <p class="note" id="note" aria-live="polite"></p>
+</section>
+<section class="stays" id="stays" aria-label="Stays">
+  <button class="card" aria-pressed="true">
+    <div class="bot" aria-hidden="true"><svg viewBox="0 0 120 80"><path d="M60 72V28"/><path class="hl" d="M60 28c-14-2-24-14-22-24 12 4 18 14 22 24 4-10 10-20 22-24 2 10-8 22-22 24z"/><path d="M40 58c8-8 14-8 20 0M80 58c-8-8-14-8-20 0"/><path d="M28 70h64"/></svg></div>
+    <h3>The Loft</h3>
+    <p>West window, one oak bed, a desk that faces the copse. Sleeps two.</p>
+    <div class="pr"><b>186</b><span>a night · 28 m²</span></div>
+  </button>
+  <button class="card" aria-pressed="false">
+    <div class="bot" aria-hidden="true"><svg viewBox="0 0 120 80"><ellipse cx="60" cy="62" rx="36" ry="8"/><path d="M36 62c2-22 8-40 24-50 16 10 22 28 24 50"/><path class="hl" d="M60 18c-6 10-8 22-8 34h16c0-12-2-24-8-34z"/><path d="M48 40h24"/></svg></div>
+    <h3>Field Room</h3>
+    <p>Ground floor onto the meadow. Lime wash, a copper tub behind a linen screen.</p>
+    <div class="pr"><b>214</b><span>a night · 36 m²</span></div>
+  </button>
+  <button class="card" aria-pressed="false">
+    <div class="bot" aria-hidden="true"><svg viewBox="0 0 120 80"><path d="M20 66c16-6 28-22 28-38 0-8-4-16-12-20"/><path d="M100 66c-16-6-28-22-28-38 0-8 4-16 12-20"/><path class="hl" d="M48 44c4 10 20 10 24 0"/><circle cx="44" cy="28" r="3"/><circle cx="76" cy="28" r="3"/></svg></div>
+    <h3>Bath House</h3>
+    <p>Shared stone bath, private sleeping loft above. Cedar steam at 18:00.</p>
+    <div class="pr"><b>248</b><span>a night · 22 m²</span></div>
+  </button>
+</section>
+<script>
+let a=12,d=15,g=2;
+const arr=document.getElementById('arr'),dep=document.getElementById('dep'),gu=document.getElementById('gu'),note=document.getElementById('note'),go=document.getElementById('go');
+function fmt(n){return n<=31?n+' Oct':(n-31)+' Nov';}
+function draw(){arr.textContent=fmt(a);dep.textContent=fmt(d);gu.textContent=g;go.disabled=d<=a;}
+document.getElementById('strip').addEventListener('click',e=>{
+  const b=e.target.closest('.step');if(!b)return;
+  const n=+b.dataset.d;
+  if(b.dataset.k==='a')a=Math.min(28,Math.max(8,a+n));
+  if(b.dataset.k==='d')d=Math.min(35,Math.max(9,d+n));
+  if(b.dataset.k==='g')g=Math.min(4,Math.max(1,g+n));
+  draw();note.textContent='';
+});
+document.getElementById('strip').addEventListener('submit',e=>{
+  e.preventDefault();
+  const n=d-a;
+  note.textContent=go.disabled?'Depart after you arrive.':n+' nights · The Loft and Field Room are held for those dates.';
+});
+const cards=[...document.querySelectorAll('.card')];
+cards.forEach(c=>c.addEventListener('click',()=>{cards.forEach(x=>x.setAttribute('aria-pressed',String(x===c)));}));
+draw();
+</script>
+</body>
+</html>

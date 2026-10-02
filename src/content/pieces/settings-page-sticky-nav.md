@@ -3,6 +3,7 @@ title: "Settings page with sticky nav"
 summary: "Account settings: a 220px sticky section nav with scroll-spy highlight beside a 720px column of grouped setting cards with switches, selects, text inputs and an armed danger zone."
 platform: web
 type: screen
+category: settings
 tags: [settings, navigation, forms, scroll-spy, toggle]
 styles: [minimal, soft]
 motion: subtle

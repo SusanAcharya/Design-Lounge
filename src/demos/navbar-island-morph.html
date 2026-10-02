@@ -1,0 +1,190 @@
+<!-- Design Lounge piece: navbar-island-morph · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Island morph navbar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0d;--surface:#141417;--surface-2:#1c1c21;--line:#26262c;--ink:#f4f2ee;--ink-2:#a3a1a9;--ink-3:#6b6a72;
+  --island:#000;--accent:#d4ff3a;--accent-ink:#141a00;--rose:#ff6b8b;
+  --sans:"Sora",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --spring:cubic-bezier(.34,1.32,.5,1);--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+  --t-morph:520ms;--t-fade:220ms;--t-micro:160ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;position:relative}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+header{height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;position:relative;z-index:5}
+.logo{font:800 20px var(--sans);letter-spacing:-.04em;display:flex;align-items:center;gap:8px}
+.logo i{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(212,255,58,.15)}
+.right{display:flex;align-items:center;gap:14px}
+.golive{height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line);font:500 13px var(--sans);color:var(--ink-2)}
+.golive:hover{color:var(--ink);border-color:var(--ink-3)}
+.me{width:38px;height:38px;border-radius:50%;background:#3a2a55;display:grid;place-items:center;font:600 13px var(--sans);color:#e8dcff}
+
+/* island */
+.island{position:absolute;left:50%;top:18px;z-index:10;width:var(--w);height:var(--h);margin-left:calc(var(--w) / -2);border-radius:calc(var(--r));background:var(--island);
+  box-shadow:0 0 0 1px rgba(255,255,255,.07),0 18px 40px -16px rgba(0,0,0,.9);overflow:hidden;
+  transition:width var(--t-morph) var(--spring),height var(--t-morph) var(--spring),margin-left var(--t-morph) var(--spring),border-radius var(--t-morph) var(--spring)}
+.island[data-s="idle"]{--w:184px;--h:44px;--r:22px;cursor:pointer}
+.island[data-s="playing"]{--w:392px;--h:60px;--r:30px}
+.island[data-s="notify"]{--w:480px;--h:84px;--r:32px}
+.island[data-s="search"]{--w:540px;--h:var(--sh,60px);--r:26px}
+.layer{position:absolute;top:0;left:50%;width:var(--lw);transform:translateX(-50%) scale(.94);opacity:0;filter:blur(6px);pointer-events:none;
+  transition:opacity var(--t-fade) var(--ease),filter var(--t-fade) var(--ease),transform var(--t-morph) var(--spring)}
+.island[data-s="idle"] .l-idle,.island[data-s="playing"] .l-play,.island[data-s="notify"] .l-note,.island[data-s="search"] .l-search{opacity:1;filter:none;transform:translateX(-50%);pointer-events:auto;transition-delay:110ms}
+.l-idle{--lw:184px;height:44px;display:flex;align-items:center;justify-content:center;gap:10px;font:500 12px var(--mono);color:var(--ink-2)}
+.l-idle .dot{width:8px;height:8px;border-radius:50%;background:var(--rose);animation:pulse 1.8s var(--ease) infinite}
+.l-idle b{color:var(--ink);font-weight:500}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,139,.5)}60%{box-shadow:0 0 0 6px rgba(255,107,139,0)}}
+.l-play{--lw:392px;height:60px;display:flex;align-items:center;gap:12px;padding:0 18px 0 10px}
+.art{width:40px;height:40px;border-radius:12px;flex:none;background:conic-gradient(from 120deg at 30% 70%,#d4ff3a,#2c6b5e,#0f1f3a,#ff6b8b,#d4ff3a)}
+.meta{min-width:0;flex:1;line-height:1.25}
+.meta b{display:block;font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta span{font:400 11px var(--mono);color:var(--ink-3)}
+.eq{display:flex;align-items:flex-end;gap:3px;height:20px}
+.eq i{width:3px;height:100%;border-radius:2px;background:var(--accent);transform-origin:bottom;animation:eq 900ms var(--ease) infinite alternate}
+.eq i:nth-child(2){animation-delay:-300ms}.eq i:nth-child(3){animation-delay:-600ms}.eq i:nth-child(4){animation-delay:-150ms}.eq i:nth-child(5){animation-delay:-450ms}
+.paused .eq i{animation-play-state:paused}
+@keyframes eq{from{transform:scaleY(.25)}to{transform:scaleY(1)}}
+.pp{width:32px;height:32px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;flex:none}
+.pp svg{width:14px;height:14px;fill:currentColor}
+.prog{position:absolute;left:62px;right:18px;bottom:7px;height:2px;border-radius:2px;background:#26262c;overflow:hidden}
+.prog i{display:block;height:100%;width:38%;background:var(--ink-2);animation:prog 60s linear infinite}
+@keyframes prog{to{width:100%}}
+.l-note{--lw:480px;height:84px;display:flex;align-items:center;gap:14px;padding:0 14px 0 14px}
+.av{width:52px;height:52px;border-radius:50%;flex:none;background:#2c6b5e;display:grid;place-items:center;font:700 16px var(--sans);color:#d9fff3}
+.note-t{flex:1;min-width:0;line-height:1.35}
+.note-t b{font-weight:600;font-size:13px}
+.note-t p{margin:2px 0 0;font-size:13px;color:var(--ink-2)}
+.note-t span{font:400 11px var(--mono);color:var(--ink-3)}
+.btn{height:36px;padding:0 14px;border-radius:999px;font-weight:600;font-size:12px;background:var(--surface-2);color:var(--ink)}
+.btn.pri{background:var(--accent);color:var(--accent-ink)}
+.l-search{--lw:540px}
+.sbar{height:60px;display:flex;align-items:center;gap:12px;padding:0 16px 0 20px;color:var(--ink-3)}
+.sbar svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;flex:none}
+.sbar input{flex:1;background:none;border:0;outline:none;color:var(--ink);font:500 15px var(--sans)}
+.sbar input::placeholder{color:var(--ink-3)}
+kbd{font:500 11px var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.res{list-style:none;margin:0;padding:0 8px 8px;border-top:1px solid var(--line)}
+.res li{height:46px;display:flex;align-items:center;gap:12px;padding:0 12px;border-radius:12px;cursor:pointer}
+.res li[aria-selected="true"]{background:var(--surface-2)}
+.res li i{width:28px;height:28px;border-radius:8px;flex:none}
+.res li b{font-weight:500;font-size:13px;flex:1}
+.res li span{font:11px var(--mono);color:var(--ink-3)}
+
+/* page */
+main{position:absolute;inset:80px 0 0 0;display:grid;grid-template-columns:1fr 420px;gap:0;padding:28px 36px 0}
+.kick{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:24px 0 40px}
+.kick b{color:var(--accent);font-weight:500}
+h1{margin:0;font-weight:800;font-size:224px;line-height:.8;letter-spacing:-.07em}
+h1 span{display:block;color:transparent;-webkit-text-stroke:1.5px var(--ink-3)}
+.blurb{max-width:440px;margin:28px 0 0;color:var(--ink-2);font-size:15px}
+.list{border-left:1px solid var(--line);padding-left:28px;align-self:start;margin-top:24px}
+.list h2{margin:0 0 12px;font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
+.row{width:100%;display:flex;align-items:center;gap:14px;padding:12px 10px;border-radius:14px;text-align:left;transition:background var(--t-micro) var(--ease)}
+.row:hover{background:var(--surface)}
+.row i{width:44px;height:44px;border-radius:12px;flex:none}
+.row b{display:block;font-weight:600;font-size:14px}
+.row small{font:11px var(--mono);color:var(--ink-3)}
+.row em{margin-left:auto;font:normal 12px var(--mono);color:var(--ink-3)}
+.row[aria-pressed="true"] b{color:var(--accent)}
+.marq{position:absolute;left:0;right:0;bottom:0;height:56px;border-top:1px solid var(--line);overflow:hidden;display:flex;align-items:center}
+.marq div{display:flex;gap:48px;white-space:nowrap;font:600 15px var(--sans);color:var(--ink-3);animation:marq 40s linear infinite;padding-left:48px}
+.marq div span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:48px;vertical-align:middle}
+@keyframes marq{to{transform:translateX(-50%)}}
+.hint{position:absolute;left:36px;bottom:76px;display:flex;gap:8px;align-items:center;font:12px var(--mono);color:var(--ink-3)}
+.hint button{height:32px;padding:0 12px;border:1px solid var(--line);border-radius:999px;font:500 12px var(--mono);color:var(--ink-2)}
+.hint button:hover{color:var(--ink);border-color:var(--ink-3)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;transition-delay:0ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><i></i>halcyon</div>
+  <div class="right"><button class="golive">Go live</button><span class="me" aria-label="Signed in as Rhea Castell">RC</span></div>
+</header>
+
+<div class="island" id="island" data-s="playing" role="region" aria-label="Activity island">
+  <div class="layer l-idle" id="idle" role="button" tabindex="0" aria-label="Open search"><span class="dot"></span><b>Live</b> 2,418 listening</div>
+  <div class="layer l-play" id="play">
+    <span class="art" aria-hidden="true"></span>
+    <div class="meta"><b id="pt">Low Tide Signal</b><span id="pa">Mira Okonkwo · 48:12</span></div>
+    <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <button class="pp" id="pp" aria-label="Pause"><svg viewBox="0 0 24 24" id="ppi"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+    <span class="prog"><i></i></span>
+  </div>
+  <div class="layer l-note" role="status" aria-live="polite">
+    <span class="av" aria-hidden="true">JA</span>
+    <div class="note-t"><b>Juno Arteaga</b> <span>· now</span><p id="nmsg">invited you to co-host Sunday Slow</p></div>
+    <button class="btn" id="later">Later</button><button class="btn pri" id="join">Join</button>
+  </div>
+  <div class="layer l-search">
+    <label class="sbar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="q" placeholder="Search mixes, hosts, rooms" aria-label="Search" aria-controls="res" autocomplete="off"><kbd>esc</kbd></label>
+    <ul class="res" id="res" role="listbox" aria-label="Results"></ul>
+  </div>
+</div>
+
+<main>
+  <section>
+    <p class="kick"><b>On air</b> · Tonight on Halcyon · 21:00–02:00 CET</p>
+    <h1>Night<span>shift.</span></h1>
+    <p class="blurb">Six hosts, five hours, one room. Low-light radio for people still at their desks, streaming from Lisbon, Split and Tallinn.</p>
+  </section>
+  <aside class="list"><h2><span>Up next</span><span>6 mixes</span></h2><div id="rows"></div></aside>
+</main>
+<div class="hint">Try <button data-go="search">⌘K search</button><button data-go="notify">Ping</button><button data-go="idle">Collapse</button></div>
+<div class="marq" aria-hidden="true"><div id="mq"></div></div>
+
+<script>
+(function(){
+  var mixes=[["Low Tide Signal","Mira Okonkwo","48:12","#2c6b5e"],["Sodium Hours","Teo Varga","52:40","#7a4a1f"],["Glass Orchard","Ines Halloran","41:05","#3a2a55"],["Night Ferry to Split","Duro Collective","63:18","#1f3a5a"],["Ultramarine Static","Kaito Brandt","39:47","#5a1f33"],["Paper Moons","Aya Lindqvist","45:30","#4b5a1f"]];
+  var isl=document.getElementById('island'),q=document.getElementById('q'),res=document.getElementById('res'),rows=document.getElementById('rows');
+  var prev='playing',playing=true,cur=0,sel=0,hits=[],timer=0;
+  function set(s){
+    if(s===isl.dataset.s)return;
+    if(s!=='notify'&&s!=='search')prev=s;
+    clearTimeout(timer);isl.dataset.s=s;
+    if(s==='search'){q.value='';filter();setTimeout(function(){q.focus()},120)}
+    if(s==='notify')timer=setTimeout(function(){set(prev)},5200);
+  }
+  function back(){set(playing?'playing':'idle')}
+  function play(i){cur=i;playing=true;document.getElementById('pt').textContent=mixes[i][0];document.getElementById('pa').textContent=mixes[i][1]+' · '+mixes[i][2];
+    isl.classList.remove('paused');setPP();[].forEach.call(rows.children,function(r,k){r.setAttribute('aria-pressed',String(k===i))});prev='playing';set('playing');}
+  function setPP(){var p=isl.classList.contains('paused');document.getElementById('pp').setAttribute('aria-label',p?'Play':'Pause');
+    document.getElementById('ppi').innerHTML=p?'<path d="M8 5l11 7-11 7z"/>':'<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>';}
+  function filter(){var t=q.value.trim().toLowerCase();hits=[];mixes.forEach(function(m,i){if(!t||(m[0]+' '+m[1]).toLowerCase().indexOf(t)>-1)hits.push(i)});hits=hits.slice(0,4);sel=0;
+    res.innerHTML=hits.map(function(i,k){var m=mixes[i];return '<li role="option" aria-selected="'+(k===0)+'" data-i="'+i+'"><i style="background:'+m[3]+'"></i><b>'+m[0]+'</b><span>'+m[1]+'</span></li>'}).join('')||'<li aria-disabled="true"><b>No mixes match</b><span>try “orchard”</span></li>';
+    isl.style.setProperty('--sh',(60+Math.max(1,hits.length)*46+9)+'px');}
+  function mark(){[].forEach.call(res.children,function(li,k){li.setAttribute('aria-selected',String(k===sel))})}
+  rows.innerHTML=mixes.map(function(m,i){return '<button class="row" aria-pressed="'+(i===0)+'" data-i="'+i+'"><i style="background:linear-gradient(135deg,'+m[3]+',#0b0b0d)"></i><span><b>'+m[0]+'</b><small>'+m[1]+'</small></span><em>'+m[2]+'</em></button>'}).join('');
+  rows.addEventListener('click',function(e){var r=e.target.closest('.row');if(r)play(+r.dataset.i)});
+  document.getElementById('mq').innerHTML=Array(2).fill(mixes.map(function(m){return '<span>'+m[0]+' — '+m[1]+'</span>'}).join('')).join('');
+  document.getElementById('idle').addEventListener('click',function(){set('search')});
+  document.getElementById('idle').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();set('search')}});
+  document.getElementById('pp').addEventListener('click',function(){isl.classList.toggle('paused');setPP()});
+  document.getElementById('later').addEventListener('click',back);
+  document.getElementById('join').addEventListener('click',function(){document.getElementById('nmsg').textContent='You joined Sunday Slow as co-host';clearTimeout(timer);timer=setTimeout(back,1600)});
+  q.addEventListener('input',filter);
+  q.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!hits.length)return;sel=(sel+(e.key==='ArrowDown'?1:-1)+hits.length)%hits.length;mark()}
+    else if(e.key==='Enter'&&hits.length){play(hits[sel])}
+  });
+  res.addEventListener('click',function(e){var li=e.target.closest('li[data-i]');if(li)play(+li.dataset.i)});
+  document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){var s=b.dataset.go;if(s==='idle'){playing=false;prev='idle'}set(s)})});
+  addEventListener('keydown',function(e){
+    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();set('search')}
+    else if(e.key==='Escape'&&isl.dataset.s!=='idle'&&isl.dataset.s!=='playing'){back()}
+  });
+  document.addEventListener('pointerdown',function(e){if(isl.dataset.s==='search'&&!isl.contains(e.target)&&!e.target.closest('[data-go]'))back()});
+  filter();
+})();
+</script>
+</body>
+</html>

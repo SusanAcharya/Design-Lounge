@@ -3,11 +3,25 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Catalog from '../components/Catalog.astro';
 import { getPieces } from '../lib/pieces';
+import { MAP } from '../data/starts';
 const pieces = await getPieces();
 ---
-<Base title="Browse the floor" description="Every piece in the Lounge: screens, components, animations, layouts, patterns and styles for web, mobile, tablet, app and PWA.">
-  <PageHead eyebrow="The floor" title="Everything, <i>arranged</i>" blurb="Every piece in the Lounge, filterable by room, platform, style and motion. Open any of them for the live demo, the source, and the brief your agent builds from." count={pieces.length} />
+<Base title="The floor" description="Every piece in the Lounge: screens, components, animations, layouts, patterns and styles for web, mobile, tablet, app and PWA.">
+  <PageHead eyebrow="The floor" title="Everything, <i>live</i>" blurb="All pieces, filterable by what they’re called, which room they’re in, and which platform they live on. Prefer a map? Use the index or a shelf. Prefer a recipe? Start a product." count={pieces.length} />
+  <nav class="map wrap" aria-label="Other ways in">
+    {MAP.filter((m) => m.href !== '/browse').map((m) => (
+      <a href={m.href}><span class="eyebrow">{m.kicker}</span><span>{m.title}</span></a>
+    ))}
+  </nav>
   <div class="wrap">
     <Catalog pieces={pieces} all={pieces} />
   </div>
 </Base>
+
+<style>
+  .map { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); margin-top: 28px; }
+  .map a { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .map a + a { padding-left: 20px; }
+  .map a:hover { color: var(--accent); }
+  @media (max-width: 640px) { .map { grid-template-columns: 1fr; } .map a + a { padding-left: 0; } }
+</style>
