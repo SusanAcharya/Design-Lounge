@@ -12,7 +12,9 @@ Run this in the project you want designed. It works in Cursor, Claude, Codex, an
 npx skills add SusanAcharya/Design-Lounge
 ```
 
-Then ask the agent for a site, an app, a palette, or a screen. It reads the installed library and designs from that. It does not invent its own colours or fonts.
+Then describe the product, who it is for, and the job of this pass. The agent locks one palette, one type pairing, one component family, and the pieces that fit, and it keeps later screens on that same sheet. It does not invent a second set of colours or fonts.
+
+That is the design system. It is not a person reviewing the finished screens. When the library has no piece for the job, the agent is supposed to say so.
 
 Install it once for every project:
 

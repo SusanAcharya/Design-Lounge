@@ -39,6 +39,14 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 
 Ask for the stack once if they have not named it. Then keep it. Good stack lines are boring: "Next.js, Tailwind", "plain HTML + CSS", "SwiftUI", "Flutter". The briefs are stack-agnostic. You translate.
 
+## Before you write UI
+
+Read [practice.md](practice.md) and follow it. Do not skip ahead to code.
+
+Write the system sheet in your reply first. One theme, one pairing, one family, Lounge icons, one density, and the piece ids you will actually open. Then build. Then run the finish checklist and report each line as pass or fail.
+
+You keep one system consistent across the product. You do not become a second designer with a second palette halfway through. If the index has no piece, say so and build from the sheet. Do not claim the interface is finished only because the code runs. A person still has to look at the screens.
+
 An internal tool, admin, ops screen, or dashboard is kind `platform`, then the `dashboard` recipe in `starts`. Search `dashboard`, `data`, `charts`, `navigation`, `settings`, `overlays`, `feedback`, `inputs`, and `pickers`. Do not decide the library is only marketing because most pieces are.
 
 ## Adopt flow
@@ -117,4 +125,4 @@ Map the brief's paint onto tokens. Do not mix a new hex for hover or selected.
 
 ## Examples
 
-See [examples.md](examples.md). Paths and the kind map: [reference.md](reference.md).
+See [examples.md](examples.md). Paths and the kind map: [reference.md](reference.md). The working method: [practice.md](practice.md).

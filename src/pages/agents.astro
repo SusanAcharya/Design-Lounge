@@ -11,7 +11,7 @@ import { STARTS } from '../data/starts';
 const pieces = await getPieces();
 ---
 <Base title="For AI agents" description={`How coding agents should use Design Lounge by ${AUTHOR.name}: briefs, tokens, type, themes, icons and motion.`}>
-  <PageHead eyebrow="Lounge · Agents" title="This library is for <i>you</i>, too" blurb="Design Lounge is a machine-readable design library. Humans browse. Agents rebuild. Both should start here. A skill will wrap this; until then, follow the map." />
+  <PageHead eyebrow="Lounge · Agents" title="This library is for <i>you</i>, too" blurb="Design Lounge is a design library an agent can install. Humans browse. The skill locks one palette, one pairing, one component family, and the pieces that fit, then keeps every later screen on that sheet." />
   <div class="wrap ag">
     <section class="g">
       <div class="gn display">00</div>
@@ -82,6 +82,14 @@ const pieces = await getPieces();
         <p>Install the skill into the product. The catalogue travels with it, into the agent's skill folder. Then ask for a design. The agent reads the installed palettes, type, and piece briefs.</p>
         <pre class="ex"><code>npx skills add SusanAcharya/Design-Lounge</code></pre>
         <p>Or point the agent at this repo. From a local clone, run <code>skills/design-lounge/install.mjs</code> inside the product repo. It copies the skill into Cursor, Claude, and the agents folder.</p>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">07</div>
+      <div>
+        <h2 class="display h3">What it will do</h2>
+        <p>Give the agent the product, the people, and the job. It should lock one system and build from the pieces that match: colour, type, icons, radius, spacing, motion, and components that agree with each other. A later screen stays on that sheet. A revamp keeps the system you already have, unless you asked for a new look.</p>
+        <p>That is a high floor. It is not a person looking at the finished product. The library is references and rules. When no piece fits, the skill tells the agent to say so and design only from the locked sheet. Custom illustration, a brand that has not been chosen, and a product with no brief are still your job. Update an installed skill with <code>npx skills update</code>.</p>
       </div>
     </section>
   </div>

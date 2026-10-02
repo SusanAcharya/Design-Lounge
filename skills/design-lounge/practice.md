@@ -1,0 +1,109 @@
+# Practice
+
+This is how you design with the library. Read it before you write UI. The catalogue is the material. This file is the discipline.
+
+The aim is one product that feels designed: same palette, type, icons, radius, spacing, motion, and components on every screen. A new screen extends the sheet. It does not start a second system.
+
+## Before code
+
+1. Write one sentence: who it is for, and the one job of this pass. If you cannot, you are not ready to pick a hero.
+2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
+3. Write the system sheet below in your reply before any code. If the project has no DESIGN.md, add the sheet as `DESIGN.md`. If one exists, do not overwrite it. Follow it.
+4. Name the pieces you will rebuild. If the index has no piece, say so, and build only from this sheet. Do not import another library's look.
+5. Build the shell first (nav, tab bar, or frame), then the primary screen, then the next screen on the same sheet.
+6. Run the finish checklist. Fix failures. Report each line as pass or fail.
+
+## System sheet
+
+```
+Product:
+Job of this pass:
+Kind: website | product | platform
+Mode: new kit | adopt existing
+Theme: id (pair: id or none)
+Pairing: id
+Family: id
+Icons: Lounge Icons, 24px, stroke 1.75
+Motion: cubic-bezier(0.2, 0.7, 0.2, 1) · UI 200ms · layout 320ms · sheets 400ms
+Density: air | regular | dense
+Pieces:
+Kept from their system:
+```
+
+For a new product, the matching recipe in `starts` names the first pieces. Build those before you invent a screen the recipe did not name.
+
+For a revamp, name three visual problems. Fix those inside the adopted system. Do not reskin the whole product unless they asked.
+
+## Spacing
+
+Base unit 4px. Use the locked family's density. Do not invent a third gap on the same screen.
+
+| Density | Page padding | Stack gap | Card padding | Control height, web / phone |
+| --- | --- | --- | --- | --- |
+| air | 28–40 | 24 | 20 | 44 / 48 |
+| regular | 20–32 | 16 | 16 | 40 / 44 |
+| dense | 16–24 | 12 | 12 | 36 / 44 |
+
+Phone margin 20. Web content width 1120 unless a piece brief sets a stage. Reading measure 58–66ch.
+
+## Type
+
+One display face, one text face, one mono for numbers and code. No fourth family.
+
+| Role | Use |
+| --- | --- |
+| display | one headline per view |
+| title | section titles |
+| body | prose, 16px web / 17px phone, line-height 1.5 |
+| label | 11–12px with tracking, never a sentence |
+| caption | secondary, `--ink-2` |
+| num | `--font-mono`, tabular numbers |
+
+Body stays on `--font-text`. Do not set a paragraph in the display face. Do not set body in mono unless that pairing's `caution` says the body is mono on purpose.
+
+## Layout
+
+One primary action per view. Secondary and tertiary follow the family.
+
+Web is a 12-column grid with a 16px gutter, or the grid in the piece brief. Phone is one column. The primary action sits in the thumb zone or in the sticky bar the piece specifies.
+
+One navigation system. A header and a tab bar on the same phone screen is two systems.
+
+The header, the button, and the text field look the same on every screen of this pass.
+
+## Components
+
+Icons are Lounge Icons only. One size, one stroke. Do not mix in another set.
+
+Buttons take their shape from the family: solid, outline, or soft. One height per platform.
+
+Inputs match that height and radius. Label above the field. Error under it, in `--danger`.
+
+Empty, loading, and error ship with the screen. A list without an empty state is unfinished.
+
+Feedback colours are for live state only.
+
+## Finish checklist
+
+- One theme, or a theme plus its `pair`. No third palette.
+- One pairing. Display, body, and mono match the sheet.
+- One family. Radius, shadow, button, and density match on every new screen.
+- Icons are Lounge Icons.
+- One primary button on each view.
+- Hover and selected use the token map in SKILL.md, not a hex from a brief.
+- Spacing uses the density scale.
+- Type uses the six roles. No extra font.
+- Motion uses the sheet, or the piece's motion table, and reduced motion is handled.
+- The piece's structure and hit targets survived.
+- Empty, error, and loading exist where the screen can be empty or fail.
+- The credit line is on the token block.
+- Every piece you named is in the index.
+
+## Say so
+
+Say it in the reply when any of these are true.
+
+- The library has no piece for this interaction. You built from the sheet only.
+- The theme has no dark or light pair.
+- The pairing has a caution.
+- A person still needs to look at the built screens. You cannot judge the product the way someone using it can.
