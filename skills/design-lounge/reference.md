@@ -9,7 +9,11 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Catalogue, palettes, type, kit, motion | `library/index.json` |
 | One piece spec | `library/briefs/<id>.md` |
 | Icons | `library/icons.json` |
-| HTML demo | `demo` field on that piece in the index (GitHub raw) |
+| HTML demo | `demo` field on that piece in the index |
+| Theme page | `{site}/themes/<id>` |
+| Type page | `{site}/type/<id>` |
+
+`site` is the field on `library/index.json`. Use these links when you show a pick. Do not paste a brief into the chat.
 
 `kind` is `website`, `product`, or `platform`. Theme, pairing, and family ids must be in that kind's lists inside `kit.kinds`.
 

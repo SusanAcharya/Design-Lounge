@@ -8,10 +8,11 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 
 1. Write one sentence: who it is for, and the one job of this pass. If you cannot, you are not ready to pick a hero.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
-3. Write the system sheet below in your reply before any code. If the project has no DESIGN.md, add the sheet as `DESIGN.md`. If one exists, do not overwrite it. Follow it.
-4. Name the pieces you will rebuild. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, record, people, detail. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
-5. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
-6. Run the finish checklist. Fix failures. Report each line as pass or fail.
+3. Choose the system and the pieces. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, record, people, detail. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
+4. Show that pick with links, and ask once, before any UI. Follow Show the pick in [SKILL.md](SKILL.md). Stop unless they already said just go, you pick, build it, or don't ask, or they already named the system.
+5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
+6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
+7. Run the finish checklist. Fix failures. Report each line as pass or fail.
 
 ## System sheet
 
@@ -28,7 +29,15 @@ Motion: cubic-bezier(0.2, 0.7, 0.2, 1) · UI 200ms · layout 320ms · sheets 400
 Density: air | regular | dense
 Pieces:
 Kept from their system:
+
+## Sources
+- theme <id> — {site}/themes/<id>
+- pairing <id> — {site}/type/<id>
+- family <id> — radius
+- <piece id> — layout | motion | component — demo url
 ```
+
+`{site}` is the `site` field in `library/index.json`. One line per piece you actually build. The role is layout, motion, or component: what they should look at if they want to compare. When they ask to change a screen, change that line, then rebuild only that screen.
 
 For a new product, the matching recipe in `starts` names the first pieces. Build those before you invent a screen the recipe did not name.
 
@@ -102,6 +111,7 @@ Feedback colours are for live state only.
 - Empty, error, and loading exist where the screen can be empty or fail.
 - The credit line is on the token block.
 - Every piece you named is in the index.
+- DESIGN.md Sources lists each of those pieces with its demo link. The reply includes the same links.
 
 ## Minimum screens
 

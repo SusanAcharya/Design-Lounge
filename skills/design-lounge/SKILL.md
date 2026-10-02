@@ -43,7 +43,26 @@ Ask for the stack once if they have not named it. Then keep it. Good stack lines
 
 Read [practice.md](practice.md) and follow it. Do not skip ahead to code.
 
-Write the system sheet in your reply first. One theme, one pairing, one family, Lounge icons, one density, and the piece ids you will actually open. Then build. Then run the finish checklist and report each line as pass or fail.
+Pick one theme, one pairing, one family, and the pieces for this pass. Show that pick before you paint, unless they already told you to build. Then run the finish checklist and report each line as pass or fail.
+
+## Show the pick, then ask once
+
+People go back and forth. Do not paint a first draft of their product so they can see the look. The library already has the look. Choose it, link it, and ask.
+
+Use `site` from `library/index.json`.
+
+- Theme: name, one-line mood, `{site}/themes/<id>`
+- Pairing: name, `{site}/type/<id>`
+- Family: name, and the radius it locks
+- Each screen: piece title, whether it supplies layout, motion, or a component, and that piece's `demo` field
+
+One question, then stop: "Build this, or swap the palette or one of these screens?"
+
+Do not offer a menu of palettes unless they asked to see options. You choose. They correct.
+
+Skip the question and build when their message already says just go, you pick, build it, or don't ask, or when they already named the theme or the piece. Still put the same links in the reply, and write them into `DESIGN.md` as Sources, so a later message can say "change the table" and you know which demo it came from.
+
+If they ask for a change, edit that one source line and rebuild that screen on the same sheet. Do not open a second palette.
 
 Every button, field, card, row, badge, and nav item comes from [components.md](components.md). Piece briefs do not get a private control style. If the product already has a brand colour, keep the theme's surfaces and feedback, and set `--primary` to that brand colour. Choose `--primary-ink` as `#141210` or `#fffdf8`, whichever contrasts at least 4.5 with the brand. Do not build a second palette around the brand.
 
@@ -59,19 +78,20 @@ Use this when a design system is already in the project.
 
 1. Keep their colours, type, radius, and shadow. Do not lock a second Lounge palette on top.
 2. Take structure, states, motion, and hit targets from the piece brief.
-3. Do not stop to ask how far to go. Say what you kept and what you took from the brief.
+3. Show the piece demos you will take structure from, with their colours named as the ones you are keeping. Ask once, unless they already said to build. Do not ask how far to go.
 4. Restyle onto a Lounge kit only when they asked for a new look. Then follow Kit flow.
 
 ## Kit flow
 
 1. Pick a kind: `website`, `product`, or `platform`. Map their words with [reference.md](reference.md). A shop, magazine, portfolio, or phone app still starts here, then take the matching recipe from `starts` in the index.
 2. Use `kit.kinds` for that kind: `palettes`, `pairings`, `families`, `pieces`.
-3. If they already chose, lock those ids. If they said "just go", lock the first palette, first pairing, and first family, and say the names before you write code.
-4. If they want to choose, offer three palettes and two pairings from that kind's lists. Names and moods only. They pick a whole palette, never a hex.
-5. The locked system is the theme's `css`, the pairing's `css`, and the family's `rules`, `radius`, `button`, and `density` in the index. Match those numbers. Do not fetch a kit URL.
-6. If the pairing has a `caution`, say it before you write. Mono on `code`, `.num`, and captions comes from `--font-mono`. Body text uses `--font-text`.
-7. A theme is one mode (`light` or `dark`). If the product needs both and `pair` is set, use that other theme as the second mode. Same pairing, same family. If `pair` is null, stay in the one mode and say so. Do not borrow an unpaired palette. Night Desk pairs with Paper & Ink. Harbour Ledger has no twin.
-8. Implement in their stack. Open `library/briefs/<id>.md` for the pieces named on the kind and the family before you invent a hero, nav, table, or footer.
+3. If they already chose, lock those ids. If they said just go, you pick, build it, or don't ask, lock the first palette, first pairing, and first family.
+4. Otherwise show the pick (Show the pick, then ask once) and stop. Do not write UI in that turn.
+5. If they ask to see options, name three palettes and two pairings from that kind's lists, each with its page link. Names and moods only. They pick a whole palette, never a hex.
+6. The locked system is the theme's `css`, the pairing's `css`, and the family's `rules`, `radius`, `button`, and `density` in the index. Match those numbers. Do not fetch a kit URL.
+7. If the pairing has a `caution`, say it before you write. Mono on `code`, `.num`, and captions comes from `--font-mono`. Body text uses `--font-text`.
+8. A theme is one mode (`light` or `dark`). If the product needs both and `pair` is set, use that other theme as the second mode. Same pairing, same family. If `pair` is null, stay in the one mode and say so. Do not borrow an unpaired palette. Night Desk pairs with Paper & Ink. Harbour Ledger has no twin.
+9. Implement in their stack. Open `library/briefs/<id>.md` for the pieces named on the kind and the family before you invent a hero, nav, table, or footer. Write each piece into Sources in `DESIGN.md` with its demo link.
 
 ## Piece flow
 
