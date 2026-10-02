@@ -83,7 +83,7 @@ export const STARTS: Start[] = [
     pairing: 'developer-docs',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'data', 'charts', 'navigation'],
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'kanban-board'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'kanban-board'],
   },
   {
     id: 'commerce',

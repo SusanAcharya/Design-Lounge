@@ -112,6 +112,14 @@ Icons are Lounge Icons from `library/icons.json`. 24px viewport, stroke 1.75, ro
 
 A nav item is a row or a 40px pill. The current item uses `--primary-soft` and `aria-current="page"`. One nav system per screen.
 
+## Chart, empty, failed load
+
+A chart is one series. Bars and sparks use `--primary` for the active mark and `--line` or `--surface-2` for the rest. Numbers are `--font-mono`. Grid lines are `--line`. Do not import a chart library's palette, legend, or tooltip.
+
+An empty list is a heading, one sentence, and one primary button. No illustration unless the named piece is the illustrated empty.
+
+A failed load is a banner in `--danger-soft` with `--danger` text and a retry button. It is not a toast, and it is not the empty state. Empty means zero rows. Failure means the load did not arrive.
+
 ## What you do not add
 
 A gradient button. A second radius. A shadow on a family whose shadow is `none`. A purple focus ring. An emoji as an icon. A control whose height is not `--control`.

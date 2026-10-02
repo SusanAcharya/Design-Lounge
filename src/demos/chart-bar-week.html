@@ -1,0 +1,66 @@
+<!-- Design Lounge piece: chart-bar-week · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Runs this week</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--ink-3:#8a847a;
+  --line:#e4dfd4;--bar:#d9d3c7;--primary:#1f4d3a;--primary-ink:#f6f4ef;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+h1{margin:0;font-size:28px;font-weight:500;letter-spacing:-.03em}
+.sub{margin:6px 0 28px;color:var(--ink-2);font-size:13px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:24px 24px 16px;max-width:880px}
+.plot{display:grid;grid-template-columns:36px 1fr;gap:8px;height:280px}
+.axis{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;color:var(--ink-3);font-family:var(--mono);font-size:11px;padding-bottom:28px}
+.days{display:flex;align-items:flex-end;gap:12px;border-bottom:1px solid var(--line);height:100%}
+.days button{flex:1;height:100%;border:0;background:transparent;padding:0 0 8px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;cursor:pointer;color:var(--ink-3);font:500 12px/1 var(--sans)}
+.bar{display:block;width:100%;max-width:48px;background:var(--bar);border-radius:2px 2px 0 0;transform-origin:bottom;animation:rise 420ms cubic-bezier(0.2,0.7,0.2,1) both}
+button[aria-pressed="true"] .bar,button:hover .bar{background:var(--primary)}
+button[aria-pressed="true"]{color:var(--ink);font-weight:600}
+.read{margin:16px 0 0;font-family:var(--mono);font-size:13px}
+@media (prefers-reduced-motion:reduce){.bar{animation:none}}
+@keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+</style>
+</head>
+<body>
+<h1>Runs this week</h1>
+<p class="sub">Bay totals · 28 Sep – 4 Oct</p>
+<div class="card">
+  <div class="plot">
+    <div class="axis" aria-hidden="true"><span>60</span><span>30</span><span>0</span></div>
+    <div class="days" role="group" aria-label="Runs by day">
+      <button type="button" aria-pressed="false" data-day="Monday" data-n="42"><i class="bar" style="height:70%"></i>Mon</button>
+      <button type="button" aria-pressed="false" data-day="Tuesday" data-n="38"><i class="bar" style="height:63%"></i>Tue</button>
+      <button type="button" aria-pressed="true" data-day="Wednesday" data-n="51"><i class="bar" style="height:85%"></i>Wed</button>
+      <button type="button" aria-pressed="false" data-day="Thursday" data-n="29"><i class="bar" style="height:48%"></i>Thu</button>
+      <button type="button" aria-pressed="false" data-day="Friday" data-n="46"><i class="bar" style="height:77%"></i>Fri</button>
+      <button type="button" aria-pressed="false" data-day="Saturday" data-n="18"><i class="bar" style="height:30%"></i>Sat</button>
+      <button type="button" aria-pressed="false" data-day="Sunday" data-n="12"><i class="bar" style="height:20%"></i>Sun</button>
+    </div>
+  </div>
+  <p class="read" id="read">Wednesday · 51 runs</p>
+</div>
+<script>
+const buttons = [...document.querySelectorAll('.days button')];
+const read = document.getElementById('read');
+function select(b){
+  buttons.forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+  read.textContent = b.dataset.day + ' · ' + b.dataset.n + ' runs';
+}
+buttons.forEach(b => {
+  b.addEventListener('click', () => select(b));
+  b.addEventListener('mouseenter', () => select(b));
+});
+</script>
+</body>
+</html>

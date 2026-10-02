@@ -1,0 +1,47 @@
+<!-- Design Lounge piece: list-empty-plain · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>No runs today</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;
+  --primary:#1f4d3a;--primary-ink:#f6f4ef;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);background:var(--bg);color:var(--ink);display:flex;flex-direction:column}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+header{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;border-bottom:1px solid var(--line);background:var(--surface)}
+h1{margin:0;font-size:20px;font-weight:500}
+.well{flex:1;display:grid;place-items:center;padding:32px}
+.empty{text-align:center;max-width:360px}
+.empty h2{margin:0 0 8px;font-size:22px;font-weight:500;letter-spacing:-.02em}
+.empty p{margin:0 0 18px;color:var(--ink-2)}
+.btn{height:36px;padding:0 14px;border-radius:2px;border:0;background:var(--primary);color:var(--primary-ink);font-weight:500}
+.btn:disabled{opacity:.55}
+</style>
+</head>
+<body>
+<header><h1>Runs</h1></header>
+<div class="well">
+  <div class="empty">
+    <h2>No runs today</h2>
+    <p>The yard is clear. A new load shows up in this list.</p>
+    <button class="btn" id="go">New run</button>
+  </div>
+</div>
+<script>
+document.getElementById('go').addEventListener('click', e => {
+  e.currentTarget.textContent = 'Run opened';
+  e.currentTarget.disabled = true;
+});
+</script>
+</body>
+</html>

@@ -8,7 +8,7 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 
 1. Write one sentence: who it is for, and the one job of this pass. If you cannot, you are not ready to pick a hero.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
-3. Choose the system and the pieces. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, record, people, detail. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
+3. Choose the system and the pieces. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, record, people, detail, chart, empty, error. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
 4. Show that pick with links, and ask once, before any UI. Follow Show the pick in [SKILL.md](SKILL.md). Stop unless they already said just go, you pick, build it, or don't ask, or they already named the system.
 5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
 6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
