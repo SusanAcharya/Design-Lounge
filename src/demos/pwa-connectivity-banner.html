@@ -1,0 +1,88 @@
+<!-- Design Lounge piece: pwa-connectivity-banner · platform: pwa · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marrow — connectivity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f5f7;--card:#ffffff;--line:#dfe4e9;--ink:#15191d;--ink-2:#5b6670;--ink-3:#8b959e;
+  --offline:#8a5a00;--offline-bg:#fff1cf;--offline-dot:#e39a00;
+  --online:#1c6b3c;--online-bg:#dcf3e3;--online-dot:#25a35a;
+  --accent:#d4553b;
+  --font:"Space Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --banner-h:40px;--r-card:16px;--r-thumb:12px;
+  --t-micro:160ms;--t-banner:320ms;--t-hold:2000ms;--ease-std:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-in:cubic-bezier(.4,0,1,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--font);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;position:relative;overflow:hidden}
+svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.banner{position:absolute;top:54px;left:0;right:0;height:var(--banner-h);display:flex;align-items:center;gap:10px;padding:0 16px;font:500 12px var(--mono);white-space:nowrap;transform:translateY(-100%);opacity:0;transition:transform var(--t-banner) var(--ease-in),opacity var(--t-banner) var(--ease-in),background var(--t-micro),color var(--t-micro);z-index:3}
+.banner.on{transform:none;opacity:1;transition:transform var(--t-banner) var(--ease-out),opacity var(--t-banner) var(--ease-out),background var(--t-micro),color var(--t-micro)}
+.banner.off{background:var(--offline-bg);color:var(--offline)}
+.banner.back{background:var(--online-bg);color:var(--online)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--offline-dot);position:relative;flex:none}
+.off .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--offline-dot);animation:pulse 1.6s var(--ease-std) infinite}
+.back .dot{background:var(--online-dot)}
+@keyframes pulse{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.4);opacity:0}}
+.banner .r{margin-left:auto;font-size:11px;opacity:.75;flex:none}
+#msg{overflow:hidden;text-overflow:ellipsis;min-width:0}
+main{height:100%;overflow:auto;padding:0 16px 40px;transition:padding-top var(--t-banner) var(--ease-out);padding-top:54px;scrollbar-width:none}
+body.offline main,body.reconnect main{padding-top:calc(54px + var(--banner-h))}
+header{padding:18px 4px 12px;display:flex;align-items:baseline;justify-content:space-between}
+h1{margin:0;font-size:28px;font-weight:700;letter-spacing:-.02em}
+header span{font:400 12px var(--mono);color:var(--ink-3)}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.item{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:12px;min-height:88px;transition:opacity var(--t-banner) var(--ease-std),filter var(--t-banner) var(--ease-std)}
+.thumb{width:64px;height:64px;border-radius:var(--r-thumb);flex:none;position:relative;overflow:hidden;background:var(--t1)}
+.thumb::before{content:"";position:absolute;left:12px;right:12px;top:14px;height:20px;border-radius:50%;background:var(--t2)}
+.thumb::after{content:"";position:absolute;left:8px;right:8px;bottom:10px;height:14px;border-radius:0 0 8px 8px;background:var(--t3)}
+.item b{display:block;font-weight:600;font-size:15px;line-height:1.3}
+.item small{display:block;font:400 12px var(--mono);color:var(--ink-2);margin-top:4px}
+.tag{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font:500 11px var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:6px;padding:2px 7px;opacity:0;transform:translateY(4px);transition:opacity var(--t-micro),transform var(--t-micro) var(--ease-std)}
+.tag svg{width:12px;height:12px}
+body.offline .item.cached .tag{opacity:1;transform:none;transition-delay:var(--t-banner)}
+body.offline .item:not(.cached){opacity:.4;filter:grayscale(1)}
+body.offline .item.cached{opacity:.85}
+.item:not(.cached) .tag{border-style:dashed}
+.toggle{position:absolute;right:16px;bottom:46px;display:flex;align-items:center;gap:10px;height:44px;padding:0 6px 0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink-2);font:500 12px var(--mono);cursor:pointer;box-shadow:0 4px 16px rgba(21,25,29,.08);z-index:3}
+.toggle:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.sw{width:40px;height:24px;border-radius:12px;background:var(--online-dot);position:relative;transition:background var(--t-micro)}
+.sw::after{content:"";position:absolute;top:3px;left:19px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left var(--t-micro) var(--ease-std)}
+.toggle[aria-checked="false"] .sw{background:var(--ink-3)}
+.toggle[aria-checked="false"] .sw::after{left:3px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body class="offline">
+<div class="banner on off" id="banner" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="msg">You're offline — showing saved items</span><span class="r" id="ago">5 saved</span></div>
+<main>
+  <header><h1>Marrow</h1><span>12 recipes · 5 offline</span></header>
+  <ul class="list" id="list">
+    <li class="item cached" style="--t1:#f2d9c9;--t2:#e28c5a;--t3:#b85a30"><div class="thumb" aria-hidden="true"></div><div><b>Roast squash with brown butter</b><small>45 min · 4 servings</small><span class="tag"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>cached</span></div></li>
+    <li class="item" style="--t1:#dfe9d3;--t2:#8fb06b;--t3:#557a3b"><div class="thumb" aria-hidden="true"></div><div><b>Green shakshuka</b><small>30 min · 2 servings</small><span class="tag">not saved</span></div></li>
+    <li class="item cached" style="--t1:#f5e4c8;--t2:#d9a441;--t3:#8f6a20"><div class="thumb" aria-hidden="true"></div><div><b>Saffron rice, crisped bottom</b><small>55 min · 6 servings</small><span class="tag"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>cached</span></div></li>
+    <li class="item" style="--t1:#e2dcf0;--t2:#8f7cc4;--t3:#5a4a8c"><div class="thumb" aria-hidden="true"></div><div><b>Blackberry galette</b><small>1 h 10 · 8 servings</small><span class="tag">not saved</span></div></li>
+    <li class="item cached" style="--t1:#d8e8ea;--t2:#5f9ea8;--t3:#2f6b76"><div class="thumb" aria-hidden="true"></div><div><b>Miso-glazed aubergine</b><small>35 min · 2 servings</small><span class="tag"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>cached</span></div></li>
+    <li class="item" style="--t1:#f0dada;--t2:#c95e5e;--t3:#8a3232"><div class="thumb" aria-hidden="true"></div><div><b>Tomato and bread soup</b><small>40 min · 4 servings</small><span class="tag">not saved</span></div></li>
+    <li class="item cached" style="--t1:#e8e3d3;--t2:#a89a6a;--t3:#6d6040"><div class="thumb" aria-hidden="true"></div><div><b>Overnight oats, three ways</b><small>10 min · 1 serving</small><span class="tag"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>cached</span></div></li>
+  </ul>
+</main>
+<button class="toggle" id="toggle" role="switch" aria-checked="false" aria-label="Simulate connectivity"><span id="tl">offline</span><span class="sw" aria-hidden="true"></span></button>
+<script>
+  const body=document.body,banner=document.getElementById('banner'),msg=document.getElementById('msg'),ago=document.getElementById('ago'),toggle=document.getElementById('toggle'),tl=document.getElementById('tl');
+  let hide=null;
+  function setOnline(on){
+    toggle.setAttribute('aria-checked',String(on));tl.textContent=on?'online':'offline';clearTimeout(hide);
+    if(!on){body.classList.add('offline');body.classList.remove('reconnect');banner.className='banner on off';msg.textContent="You're offline — showing saved items";ago.textContent='5 saved';}
+    else{if(!body.classList.contains('offline')){banner.className='banner';return;}body.classList.remove('offline');body.classList.add('reconnect');banner.className='banner on back';msg.textContent='Back online';ago.textContent='synced';
+      hide=setTimeout(()=>{banner.className='banner back';body.classList.remove('reconnect');},2000);}
+  }
+  toggle.addEventListener('click',()=>setOnline(toggle.getAttribute('aria-checked')!=='true'));
+</script>
+</body>
+</html>

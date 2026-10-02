@@ -1,0 +1,36 @@
+---
+import DeviceFrame from './DeviceFrame.astro';
+import type { Piece } from '../lib/pieces';
+
+interface Props {
+  items: { key: string; label: string; blurb: string; href: string; count: number; sample?: Piece }[];
+}
+const { items } = Astro.props;
+---
+<ol class="tiles">
+  {items.map((it, i) => (
+    <li class="tile reveal" style={`--d:${i * 40}ms`}>
+      <a href={it.href}>
+        <div class="tile-pre" aria-hidden="true">
+          {it.sample && <DeviceFrame slug={it.sample.id} platform={it.sample.data.platform} title={it.sample.data.title} />}
+        </div>
+        <div class="tile-text">
+          <span class="display n num">{String(it.count).padStart(2, '0')}</span>
+          <span class="display h4">{it.label}</span>
+          <span class="muted">{it.blurb}</span>
+        </div>
+      </a>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 32px; }
+  .tile a { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; height: 100%; transition: border-color var(--t-fast), transform var(--t-med) var(--ease), box-shadow var(--t-med); }
+  .tile a:hover { border-color: var(--ink-3); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .tile-pre { aspect-ratio: 16 / 10; background: var(--paper-2); background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 14px 14px; position: relative; border-bottom: 1px solid var(--line); }
+  .tile-pre :global(lounge-frame) { position: absolute; inset: 12px; }
+  .tile-text { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px 18px; }
+  .tile-text .n { font-size: 30px; line-height: 1; color: var(--ink-3); }
+  .tile-text .muted { font-size: 14px; text-wrap: pretty; }
+</style>

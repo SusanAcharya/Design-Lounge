@@ -1,0 +1,89 @@
+<!-- Design Lounge piece: terminal-404 · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>404 — kestrel.sh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f0c;--panel:#0e1410;--line:#1c2a20;--green:#5ef08a;--green-2:#3d9a5c;--green-3:#25553a;--ink:#d7e3da;--ink-2:#8fa596;--amber:#e3b04b;
+  --mono:"Chivo Mono",ui-monospace,monospace;
+  --fs:15px;--lh:1.7;--pad:48px;--chrome-h:40px;--char-ms:22ms;
+  --t-micro:140ms;--blink:1000ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:var(--fs)/var(--lh) var(--mono);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:1px solid var(--green);outline-offset:3px}
+.chrome{height:var(--chrome-h);flex:none;display:flex;align-items:center;padding:0 20px;gap:14px;border-bottom:1px solid var(--line);color:var(--ink-2);font-size:12px}
+.chrome .dots{display:flex;gap:6px}.chrome .dots i{width:10px;height:10px;border-radius:50%;border:1px solid var(--green-3)}
+.chrome .title{margin:0 auto;letter-spacing:.04em}
+.chrome button{background:transparent;border:1px solid var(--line);color:var(--ink-2);font:12px var(--mono);padding:4px 10px;border-radius:4px;cursor:pointer;transition:color var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+.chrome button:hover{color:var(--green);border-color:var(--green-2)}
+.term{flex:1;min-height:0;overflow-y:auto;padding:var(--pad);cursor:text}
+.out{margin:0;white-space:pre-wrap;word-break:break-word}
+.out .d{color:var(--ink-2)}.out .g{color:var(--green)}.out .a{color:var(--amber)}.out .k{color:var(--green);font-weight:500}
+.big{font-size:88px;line-height:1;font-weight:500;color:var(--green);letter-spacing:-.04em;margin:8px 0 18px;display:block}
+.line{display:flex;align-items:baseline;gap:0;margin-top:4px}
+.ps{color:var(--green-2);white-space:pre}
+.in{position:relative;flex:1;display:flex;align-items:baseline}
+.in input{flex:1;background:transparent;border:0;outline:none;color:var(--ink);font:inherit;padding:0;margin:0;caret-color:transparent;min-width:0}
+.in .m{position:absolute;left:0;top:0;visibility:hidden;white-space:pre;pointer-events:none}
+.cur{position:absolute;top:.18em;left:0;width:.62em;height:1.15em;background:var(--green);animation:blink var(--blink) steps(1) infinite;pointer-events:none;transform:translateX(var(--x,0))}
+.term:not(:focus-within) .cur{animation:none;background:transparent;outline:1px solid var(--green-2)}
+@keyframes blink{50%{opacity:0}}
+.typing .cur{animation:none}
+@media (max-width:820px){:root{--pad:24px;--fs:14px}.big{font-size:56px}}
+@media (prefers-reduced-motion:reduce){.cur{animation:none}*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="chrome"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="title">visitor@kestrel.sh — 96×28</span><button type="button" id="replay">replay</button></div>
+<div class="term" id="term" role="log" aria-live="polite" aria-label="Terminal">
+  <pre class="out" id="out"></pre>
+  <form class="line" id="line" autocomplete="off"><label class="ps" for="cmd">visitor@kestrel:~$ </label><span class="in"><input id="cmd" type="text" spellcheck="false" autocapitalize="off" aria-label="Command"><span class="m" id="m"></span><span class="cur" id="cur" aria-hidden="true"></span></span></form>
+</div>
+<script>
+  const out=document.getElementById('out'),term=document.getElementById('term'),cmd=document.getElementById('cmd'),m=document.getElementById('m'),cur=document.getElementById('cur');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const INTRO=[['d','$ GET /docs/v2/webhooks/retries'],['g','HTTP/1.1 404 Not Found'],['big','404'],['','The page you asked for is not on this server.'],['','It may have moved when the docs were reorganised on 14 Sep 2026,'],['','or the link you followed was typed from memory.'],[''],['d','Try one of these:'],['k','  home     go to the start page'],['k','  back     return to the previous page'],['k','  search   search the documentation'],['k','  help     list all commands'],['']];
+  const HELP=[['k','home'],['','     start page'],['k','back'],['','     previous page'],['k','search <query>'],['','   search docs'],['k','ls'],['','       list top-level sections'],['k','clear'],['','    clear the screen'],['']];
+  const LS=[['g','getting-started/  api/  webhooks/  cli/  billing/  changelog/'],['']];
+  let token=0;
+  function span(c,t){const s=document.createElement('span');if(c==='big'){s.className='big';s.textContent=t;return s;}if(c)s.className=c;s.textContent=t;return s;}
+  function type(lines,done){
+    const my=++token;term.classList.add('typing');let li=0;
+    function next(){
+      if(my!==token)return;
+      if(li>=lines.length){term.classList.remove('typing');done&&done();return;}
+      const [c,text='']=lines[li++];const s=span(c,'');out.appendChild(s);
+      if(reduce||c==='big'){s.textContent=text;out.appendChild(document.createTextNode(c==='big'?'':'\n'));term.scrollTop=term.scrollHeight;return next();}
+      let ci=0;const id=setInterval(()=>{if(my!==token){clearInterval(id);return;}s.textContent=text.slice(0,++ci);term.scrollTop=term.scrollHeight;if(ci>=text.length){clearInterval(id);out.appendChild(document.createTextNode('\n'));next();}},22);
+    }
+    next();
+  }
+  function echo(c){const l=span('d','visitor@kestrel:~$ '+c);out.appendChild(l);out.appendChild(document.createTextNode('\n'));}
+  function run(raw){
+    const c=raw.trim(),[w,...rest]=c.split(/\s+/);echo(c);
+    if(!c)return;
+    if(w==='help')return type(HELP);
+    if(w==='ls')return type(LS);
+    if(w==='clear'){out.textContent='';return;}
+    if(w==='home')return type([['g','→ redirecting to /  (demo: navigation disabled)'],['']]);
+    if(w==='back')return type([['g','→ history.back()  (demo: navigation disabled)'],['']]);
+    if(w==='search')return type([['g','→ /search?q='+encodeURIComponent(rest.join(' ')||'')+'  (demo: navigation disabled)'],['']]);
+    type([['a','command not found: '+w],['d','type help for a list of commands'],['']]);
+  }
+  document.getElementById('line').addEventListener('submit',e=>{e.preventDefault();const v=cmd.value;cmd.value='';sync();run(v);});
+  function sync(){m.textContent=cmd.value;cur.style.setProperty('--x',m.offsetWidth+'px');}
+  cmd.addEventListener('input',sync);
+  term.addEventListener('click',e=>{if(!e.target.closest('input'))cmd.focus();});
+  function replay(){out.textContent='';cmd.value='';sync();type(INTRO,()=>cmd.focus());}
+  document.getElementById('replay').addEventListener('click',replay);
+  replay();
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import IndexTiles from '../../components/IndexTiles.astro';
+import { getPieces, TYPE_META } from '../../lib/pieces';
+const all = await getPieces();
+const newest = [...all].reverse();
+const items = Object.entries(TYPE_META).map(([k, v]) => ({ key: k, label: v.label, blurb: v.blurb, href: `/rooms/${k}`, count: all.filter((p) => p.data.type === k).length, sample: newest.find((p) => p.data.type === k) }));
+---
+<Base title="Rooms" description="The six rooms of the Design Lounge: screens, components, animations, layouts, patterns and styles.">
+  <PageHead eyebrow="Rooms" title="Six rooms, <i>one floor</i>" blurb="Pieces are sorted by what they are. Walk into a room to see everything of that kind, across every platform." count={items.length} countLabel="rooms" />
+  <div class="wrap"><IndexTiles items={items} /></div>
+</Base>

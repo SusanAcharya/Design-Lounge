@@ -1,0 +1,173 @@
+<!-- Design Lounge piece: card-flip-3d · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Fjord — Cards that flip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1f18;--bg-2:#10281f;--surface:#153428;--surface-2:#1b4032;--line:#245244;--line-strong:#2f6656;
+  --ink:#eef3ea;--ink-2:#a9c2b3;--ink-3:#6f8f7f;--accent:#c9e26a;--accent-ink:#13230a;--paper:#f2efe4;--paper-ink:#1b2a22;--paper-2:#d9d4c2;
+  --serif:"Fraunces",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --card-w:340px;--card-h:214px;--r:16px;--persp:1200px;--t-flip:600ms;--t-fast:160ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-flip:cubic-bezier(.32,.72,0,1);
+  --shadow:0 20px 40px -18px rgba(0,0,0,.7),0 2px 0 rgba(255,255,255,.04) inset;--shadow-lift:0 36px 56px -20px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(120% 80% at 50% 0%,var(--bg-2),var(--bg) 60%);color:var(--ink);font:400 14px/1.45 var(--serif);display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.brand i{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:600 13px var(--mono);font-style:normal}
+.hint{font:400 12px var(--mono);color:var(--ink-3);letter-spacing:.02em}
+.hint kbd{border:1px solid var(--line-strong);border-radius:4px;padding:1px 6px;color:var(--ink-2)}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 48px 24px}
+h1{font:400 40px/1.1 var(--serif);letter-spacing:-.02em;margin:0 0 6px;font-variation-settings:"opsz" 144}
+h1 em{font-style:italic;color:var(--accent)}
+.sub{color:var(--ink-2);margin:0 0 40px;font-size:15px}
+.deck{display:grid;grid-template-columns:repeat(3,var(--card-w));gap:40px;justify-content:start}
+.scene{perspective:var(--persp);width:var(--card-w);height:var(--card-h)}
+.card{position:relative;width:100%;height:100%;padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer;border-radius:var(--r);transform-style:preserve-3d;transition:transform var(--t-flip) var(--ease-flip);display:block}
+.card.flipped{transform:rotateY(180deg)}
+.card.lift{animation:lift var(--t-flip) var(--ease-flip)}
+@keyframes lift{0%,100%{translate:0 0}50%{translate:0 -14px}}
+.card:focus-visible{outline:0}
+.card:focus-visible .face{box-shadow:var(--shadow),0 0 0 2px var(--bg),0 0 0 4px var(--accent)}
+.face{position:absolute;inset:0;border-radius:var(--r);padding:22px 24px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:box-shadow var(--t-fast) var(--ease)}
+.card:hover .face{box-shadow:var(--shadow-lift)}
+.back{transform:rotateY(180deg)}
+.meta{display:flex;justify-content:space-between;align-items:flex-start;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.num{font:400 20px/1 var(--mono);letter-spacing:.12em;margin-top:auto;font-variant-numeric:tabular-nums}
+.row{display:flex;gap:28px;margin-top:14px;font:400 11px var(--mono);color:var(--ink-2)}
+.row b{display:block;font-weight:500;color:var(--ink);font-size:13px;letter-spacing:.06em;margin-top:2px}
+.lbl{font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+/* credit card */
+.credit .face{background:linear-gradient(135deg,var(--surface-2),var(--surface) 60%,#122b22);border:1px solid var(--line)}
+.chip{width:38px;height:28px;border-radius:6px;background:linear-gradient(135deg,#e2cf82,#a98d3c);margin-top:18px;position:relative}
+.chip::before{content:"";position:absolute;inset:6px 4px;border:1px solid rgba(0,0,0,.35);border-radius:3px}
+.credit .back{background:var(--surface);border:1px solid var(--line);padding:0}
+.stripe{height:44px;background:#0a1712;margin-top:24px}
+.sig{margin:18px 24px 0;height:38px;background:repeating-linear-gradient(0deg,var(--paper) 0 6px,var(--paper-2) 6px 7px);border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding:0 10px;color:var(--paper-ink);font:500 14px var(--mono);letter-spacing:.1em}
+.fine{margin:14px 24px 0;font:400 10px/1.5 var(--mono);color:var(--ink-3)}
+/* ticket */
+.ticket .face{background:var(--paper);color:var(--paper-ink);border:1px solid var(--paper-2)}
+.ticket .meta{color:#6b6a5d}
+.ticket .face::before,.ticket .face::after{content:"";position:absolute;top:50%;width:22px;height:22px;border-radius:50%;background:var(--bg);margin-top:-11px}
+.ticket .face::before{left:-11px}.ticket .face::after{right:-11px}
+.ticket .stub{position:absolute;left:24px;right:24px;top:50%;border-top:2px dashed var(--paper-2)}
+.ticket h3{font:600 22px/1.1 var(--serif);letter-spacing:-.01em;margin:16px 0 0;font-variation-settings:"opsz" 72}
+.ticket .row{color:#6b6a5d;margin-top:auto}
+.ticket .row b{color:var(--paper-ink)}
+.qr{width:120px;height:120px;margin:16px auto 0;background:
+ repeating-linear-gradient(90deg,var(--paper-ink) 0 6px,transparent 6px 12px),
+ repeating-linear-gradient(0deg,var(--paper-ink) 0 6px,transparent 6px 12px);
+ background-blend-mode:multiply;opacity:.85;position:relative}
+.qr::before,.qr::after{content:"";position:absolute;width:30px;height:30px;border:6px solid var(--paper-ink);background:var(--paper)}
+.qr::before{top:0;left:0}.qr::after{top:0;right:0}
+.ticket .fine{color:#6b6a5d;margin:auto 0 0}
+/* profile */
+.profile .face{background:var(--surface);border:1px solid var(--line)}
+.avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(160deg,var(--accent),#5f8f3a);display:grid;place-items:center;color:var(--accent-ink);font:600 20px var(--serif);margin-top:14px}
+.profile h3{font:600 24px/1.1 var(--serif);margin:14px 0 2px;letter-spacing:-.01em;font-variation-settings:"opsz" 72}
+.profile .role{color:var(--ink-2);font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.stats div{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.stats b{display:block;font:500 20px/1 var(--mono);font-variant-numeric:tabular-nums}
+.contact{margin-top:auto;font:400 12px/1.7 var(--mono);color:var(--ink-2)}
+.contact span{color:var(--ink-3)}
+.pip{position:absolute;right:20px;bottom:18px;width:22px;height:22px;color:var(--ink-3)}
+.ticket .pip{color:#6b6a5d}
+footer{padding:0 48px 28px;display:flex;gap:24px;font:400 12px var(--mono);color:var(--ink-3)}
+footer button{background:none;border:1px solid var(--line-strong);color:var(--ink-2);font:inherit;padding:6px 12px;border-radius:999px;cursor:pointer;transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+footer button:hover{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+footer button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.card{transition-duration:1ms}.card.lift{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><i>F</i>Fjord Bank · Wallet</div>
+  <div class="hint">Click a card or press <kbd>Enter</kbd> to flip</div>
+</header>
+<main>
+  <h1>Three things in your <em>wallet</em>.</h1>
+  <p class="sub">Each card has a real back. Flip them to see the details that usually hide.</p>
+  <div class="deck">
+    <div class="scene">
+      <button class="card credit" aria-pressed="false" aria-label="Fjord Bank debit card, flip to see the back">
+        <div class="face front">
+          <div class="meta"><span>Fjord Bank</span><span>Debit · Visa-style</span></div>
+          <div class="chip"></div>
+          <div class="num">5412 7731 0094 8830</div>
+          <div class="row"><span><span class="lbl">Holder</span><b>Ingrid Solheim</b></span><span><span class="lbl">Expires</span><b>09 / 29</b></span></div>
+        </div>
+        <div class="face back">
+          <div class="stripe"></div>
+          <div class="sig">CVV 417</div>
+          <p class="fine">Issued by Fjord Bank ASA, Oslo. This card remains property of the issuer. If found, call +47 22 00 88 30. Not valid without signature.</p>
+          <svg class="pip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+        </div>
+      </button>
+    </div>
+    <div class="scene">
+      <button class="card ticket" aria-pressed="false" aria-label="Halden Sessions concert ticket, flip to see the code">
+        <div class="face front">
+          <div class="meta"><span>Halden Sessions</span><span>Night 02</span></div>
+          <h3>Ørjan Lien Quartet</h3>
+          <div class="stub"></div>
+          <div class="row"><span><span class="lbl">Date</span><b>14 OCT</b></span><span><span class="lbl">Door</span><b>19:30</b></span><span><span class="lbl">Seat</span><b>C 14</b></span><span><span class="lbl">Price</span><b>kr 420</b></span></div>
+        </div>
+        <div class="face back">
+          <div class="meta"><span>Admit one</span><span>No. 002 - 1187</span></div>
+          <div class="qr" role="img" aria-label="Entry code"></div>
+          <p class="fine">Scan at Gate B. Re-entry not permitted after 22:00.</p>
+        </div>
+      </button>
+    </div>
+    <div class="scene">
+      <button class="card profile" aria-pressed="false" aria-label="Profile card for Mateo Ferrand, flip to see contact details">
+        <div class="face front">
+          <div class="meta"><span>Mira · Team</span><span>Advisor</span></div>
+          <div class="avatar">MF</div>
+          <h3>Mateo Ferrand</h3>
+          <div class="role">Private banking, Bergen desk</div>
+          <div class="stats"><div><span class="lbl">Clients</span><b>128</b></div><div><span class="lbl">Tenure</span><b>6y</b></div><div><span class="lbl">Rating</span><b>4.9</b></div></div>
+        </div>
+        <div class="face back">
+          <div class="meta"><span>Contact</span><span>Mon – Fri · 08 – 17</span></div>
+          <div class="contact"><span>tel </span>+47 55 21 40 18<br><span>mail </span>mateo@fjordbank.no<br><span>desk </span>Torgallmenningen 2, 5014 Bergen<br><span>next </span>Thu 2 Oct · 10:30</div>
+          <svg class="pip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+        </div>
+      </button>
+    </div>
+  </div>
+</main>
+<footer>
+  <button type="button" id="all">Flip all</button>
+  <span>perspective 1200px · 600ms · cubic-bezier(.32,.72,0,1)</span>
+</footer>
+<script>
+(function(){
+  var cards=Array.prototype.slice.call(document.querySelectorAll('.card'));
+  function flip(c){
+    var on=!c.classList.contains('flipped');
+    c.classList.toggle('flipped',on);
+    c.setAttribute('aria-pressed',String(on));
+    c.classList.remove('lift'); void c.offsetWidth; c.classList.add('lift');
+  }
+  cards.forEach(function(c){
+    c.addEventListener('click',function(){flip(c);});
+    c.addEventListener('animationend',function(){c.classList.remove('lift');});
+  });
+  var all=document.getElementById('all');
+  if(all) all.addEventListener('click',function(){
+    var any=cards.some(function(c){return !c.classList.contains('flipped');});
+    cards.forEach(function(c,i){ if(c.classList.contains('flipped')!==any) setTimeout(function(){flip(c);},i*80); });
+  });
+})();
+</script>
+</body>
+</html>

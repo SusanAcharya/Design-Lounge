@@ -1,0 +1,140 @@
+<!-- Design Lounge piece: tablet-sidebar-overlay-pin · platform: tablet · 1180x820 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sedge — Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfbf9;--side:#f1f0ec;--hover:#e8e6e0;--selected:#e3e0f7;--line:#e4e2dc;--line-strong:#cfcbc2;
+  --ink:#1c1b19;--ink-2:#5f5c55;--ink-3:#8f8b82;--accent:#5b4fcf;--accent-ink:#ffffff;--scrim:rgba(28,27,25,.32);
+  --serif:"DM Serif Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif;
+  --w-side:280px;--h-top:56px;--r:8px;--r-pill:999px;--shadow-side:12px 0 40px rgba(28,27,25,.14);
+  --t-fast:160ms;--t-layout:320ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;position:relative;-webkit-font-smoothing:antialiased}
+svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button{font:inherit;color:inherit;cursor:pointer;background:transparent;border:0}
+.ib{width:36px;height:36px;border-radius:var(--r);display:grid;place-items:center;color:var(--ink-2)}
+.ib:hover{background:var(--hover);color:var(--ink)}
+.ib:focus-visible,.note:focus-visible,.pin:focus-visible,.mode button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.side{position:absolute;left:0;top:0;bottom:0;width:var(--w-side);background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:10;transform:translateX(-100%);transition:transform var(--t-layout) var(--ease),box-shadow var(--t-layout) var(--ease);visibility:hidden}
+body.open .side{transform:none;visibility:visible}
+body.open:not(.pinned) .side{box-shadow:var(--shadow-side)}
+.side.moving{transition:transform var(--t-layout) var(--ease),box-shadow var(--t-layout) var(--ease),visibility 0s linear var(--t-layout)}
+.shead{height:var(--h-top);display:flex;align-items:center;gap:8px;padding:0 10px 0 16px;border-bottom:1px solid var(--line)}
+.shead b{font:400 20px var(--serif);letter-spacing:-.01em;margin-right:auto}
+.pin{height:32px;padding:0 10px 0 8px;border-radius:var(--r-pill);border:1px solid var(--line-strong);display:inline-flex;align-items:center;gap:6px;font:500 12px var(--sans);color:var(--ink-2);transition:background var(--t-fast),color var(--t-fast),border-color var(--t-fast)}
+.pin svg{width:15px;height:15px;transition:transform var(--t-layout) var(--ease-out)}
+.pin[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.pin[aria-pressed="true"] svg{transform:rotate(-45deg)}
+.pin:hover:not([aria-pressed="true"]){background:var(--hover);color:var(--ink)}
+.search{margin:12px 12px 4px;height:36px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg);display:flex;align-items:center;gap:8px;padding:0 10px;color:var(--ink-3);font-size:13px}
+.group{padding:12px 8px 2px}
+.group h6{margin:0 4px 6px;font:500 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
+.notes{list-style:none;margin:0;padding:0;overflow-y:auto;flex:1}
+.note{display:block;width:100%;text-align:left;padding:8px 10px;border-radius:var(--r);margin-bottom:2px}
+.note:hover{background:var(--hover)}
+.note[aria-current="true"]{background:var(--selected)}
+.note b{display:block;font-weight:500;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.note span{display:block;font-size:12px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.note small{font-size:11px;color:var(--ink-3);float:right;margin-left:8px}
+.sfoot{border-top:1px solid var(--line);padding:10px 12px;font-size:12px;color:var(--ink-3);display:flex;justify-content:space-between}
+.scrim{position:absolute;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity var(--t-layout) var(--ease);z-index:5}
+body.open:not(.pinned) .scrim{opacity:1;pointer-events:auto}
+main{position:absolute;inset:0;display:flex;flex-direction:column;margin-left:0;transition:margin-left var(--t-layout) var(--ease);min-width:0}
+body.open.pinned main{margin-left:var(--w-side)}
+.top{height:var(--h-top);display:flex;align-items:center;gap:6px;padding:0 16px;border-bottom:1px solid var(--line);background:var(--bg)}
+.top .crumb{font-size:13px;color:var(--ink-3);margin-left:4px}.top .crumb b{color:var(--ink);font-weight:500}
+.mode{margin-left:auto;display:flex;gap:2px;border:1px solid var(--line);border-radius:var(--r-pill);padding:2px}
+.mode button{height:28px;padding:0 12px;border-radius:var(--r-pill);font:500 12px var(--sans);color:var(--ink-2)}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.doc{flex:1;overflow-y:auto;padding:44px 64px 64px}
+.doc article{max-width:640px;margin:0 auto}
+.meta{font-size:12px;color:var(--ink-3);display:flex;gap:14px;margin-bottom:12px}
+.doc h1{font:400 40px/1.1 var(--serif);letter-spacing:-.015em;margin:0 0 20px}
+.doc p{margin:0 0 14px;font-size:16px;line-height:1.65;color:var(--ink)}
+.doc ul{margin:0 0 14px;padding-left:22px;font-size:16px;line-height:1.65}
+.doc li::marker{color:var(--accent)}
+.doc .tasks{list-style:none;padding:0}
+.doc .tasks li{display:flex;gap:10px;align-items:flex-start}
+.doc .tasks li i{width:18px;height:18px;border:1.5px solid var(--line-strong);border-radius:5px;margin-top:4px;flex:none;display:grid;place-items:center}
+.doc .tasks li.done i{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.doc .tasks li.done{color:var(--ink-3);text-decoration:line-through}
+.doc .tasks li i svg{width:12px;height:12px;stroke-width:2.5}
+.hint{position:absolute;right:16px;bottom:16px;font-size:12px;color:var(--ink-3);background:var(--side);border:1px solid var(--line);border-radius:var(--r-pill);padding:6px 12px}
+.hint b{font-weight:500;color:var(--ink-2);border:1px solid var(--line-strong);border-radius:4px;padding:0 5px;font-size:11px;background:var(--bg)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body class="open pinned">
+<aside class="side" id="side" aria-label="Notebooks">
+  <div class="shead"><b>Sedge</b>
+    <button class="pin" id="pin" aria-pressed="true" title="Pinned: content reflows. Unpin to overlay."><svg viewBox="0 0 24 24"><path d="M9 4h6l-1 6 4 3v2H6v-2l4-3zM12 15v6"/></svg><span id="pinlbl">Pinned</span></button>
+    <button class="ib" id="close" aria-label="Close sidebar"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+  </div>
+  <div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg>Search notes</div>
+  <ul class="notes" id="notes">
+    <li class="group"><h6>Work<span>6</span></h6></li>
+    <li><button class="note" aria-current="true"><b>Halden rebrand · kickoff notes<small>Today</small></b><span>Decisions, owners, and the three things we said no to.</span></button></li>
+    <li><button class="note"><b>Q4 print run<small>Tue</small></b><span>Munken 120gsm confirmed, proof due Tuesday.</span></button></li>
+    <li><button class="note"><b>Interview loop: senior designer<small>Mon</small></b><span>Portfolio review rubric, panel, timing.</span></button></li>
+    <li><button class="note"><b>1:1 · Tomas<small>Mon</small></b><span>Wordmark aperture at small sizes.</span></button></li>
+    <li class="group"><h6>Personal<span>4</span></h6></li>
+    <li><button class="note"><b>Hardanger in May<small>Sun</small></b><span>Blossom week, cider farm, the goat.</span></button></li>
+    <li><button class="note"><b>Sauna list<small>Sat</small></b><span>Thermos, towel, kiosk closes at five.</span></button></li>
+    <li><button class="note"><b>Books to lend<small>12 Sep</small></b><span>Two to Ada, one back from Eirik.</span></button></li>
+  </ul>
+  <div class="sfoot"><span>10 notes</span><span>Synced 14:32</span></div>
+</aside>
+<div class="scrim" id="scrim"></div>
+<main id="main">
+  <div class="top">
+    <button class="ib" id="menu" aria-label="Open sidebar" aria-expanded="true" aria-controls="side"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <span class="crumb">Work / <b>Halden rebrand · kickoff notes</b></span>
+    <div class="mode" role="group" aria-label="Sidebar mode" id="mode"><button data-m="pinned" aria-pressed="true">Pin</button><button data-m="overlay" aria-pressed="false">Overlay</button></div>
+  </div>
+  <div class="doc"><article>
+    <div class="meta"><span>Edited today, 11:08</span><span>1,240 words</span><span>Shared with 3</span></div>
+    <h1>Halden rebrand · kickoff notes</h1>
+    <p>Forty minutes, six people, one decision that mattered: the wordmark stays, everything around it changes. Tomas will open the aperture on the lowercase a for sizes under 16px; the display cut is untouched.</p>
+    <p>We agreed the palette will be two neutrals and one accent, and that the accent is chosen last, after the type is set. Ingrid pushed back on the warm grey; we are keeping it for the print stock only.</p>
+    <ul class="tasks">
+      <li class="done"><i><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></i>Share the board with Fjord Bank by Friday</li>
+      <li class="done"><i><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></i>Book the second review for the 14th</li>
+      <li><i></i>Write the rationale for dropping the secondary mark</li>
+      <li><i></i>Price the 40,000-sheet run at both mills</li>
+    </ul>
+    <p>Things we said no to: a motion identity for launch (later, if at all), a third typeface, and a colour-per-product system. Marta will write these up so we stop relitigating them.</p>
+    <p>Next: Tomas shares the aperture study on Monday; Ingrid confirms the stock; I draft the one-page rationale for the board.</p>
+  </article></div>
+  <div class="hint" aria-hidden="true"><b>[</b> toggles the sidebar · <b>P</b> toggles pin</div>
+</main>
+<script>
+  const body=document.body,side=document.getElementById('side'),pin=document.getElementById('pin'),menu=document.getElementById('menu'),modeBtns=[...document.querySelectorAll('#mode button')];
+  function sync(){const open=body.classList.contains('open'),pinned=body.classList.contains('pinned');
+    menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close sidebar':'Open sidebar');
+    pin.setAttribute('aria-pressed',String(pinned));document.getElementById('pinlbl').textContent=pinned?'Pinned':'Pin';
+    pin.title=pinned?'Pinned: content reflows. Unpin to overlay.':'Overlay: floats over content. Pin to reflow.';
+    modeBtns.forEach(b=>b.setAttribute('aria-pressed',String((b.dataset.m==='pinned')===pinned)));
+    side.toggleAttribute('inert',!open);}
+  function setOpen(o){side.classList.toggle('moving',!o);body.classList.toggle('open',o);sync();if(!o)menu.focus();}
+  function setPinned(p){body.classList.toggle('pinned',p);if(!body.classList.contains('open'))body.classList.add('open');sync();}
+  side.addEventListener('transitionend',e=>{if(e.propertyName==='transform')side.classList.remove('moving');});
+  menu.addEventListener('click',()=>setOpen(!body.classList.contains('open')));
+  document.getElementById('close').addEventListener('click',()=>setOpen(false));
+  document.getElementById('scrim').addEventListener('click',()=>setOpen(false));
+  pin.addEventListener('click',()=>setPinned(!body.classList.contains('pinned')));
+  modeBtns.forEach(b=>b.addEventListener('click',()=>setPinned(b.dataset.m==='pinned')));
+  addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;if(e.key==='[')menu.click();else if(e.key.toLowerCase()==='p')pin.click();else if(e.key==='Escape'&&body.classList.contains('open')&&!body.classList.contains('pinned'))setOpen(false);});
+  document.getElementById('notes').addEventListener('click',e=>{const n=e.target.closest('.note');if(!n)return;document.querySelectorAll('.note').forEach(x=>x.setAttribute('aria-current',String(x===n)));
+    const t=n.querySelector('b').firstChild.textContent;document.querySelector('.crumb b').textContent=t;document.querySelector('.doc h1').textContent=t;if(!body.classList.contains('pinned'))setOpen(false);});
+  sync();
+</script>
+</body>
+</html>

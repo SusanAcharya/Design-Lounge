@@ -1,0 +1,153 @@
+---
+import { TYPE_META, PLATFORM_META } from '../lib/pieces';
+---
+<div class="pal" id="palette" hidden>
+  <div class="pal-scrim" data-pal-close></div>
+  <div class="pal-box" role="dialog" aria-modal="true" aria-label="Search the Lounge">
+    <div class="pal-field">
+      <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="pal-input" type="text" placeholder="Search pieces, rooms, styles…" autocomplete="off" spellcheck="false" aria-controls="pal-list" aria-expanded="true" role="combobox" />
+      <kbd>esc</kbd>
+    </div>
+    <ul class="pal-list" id="pal-list" role="listbox"></ul>
+    <div class="pal-foot mono faint">
+      <span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>r</kbd> random</span><span><kbd>t</kbd> theme</span>
+    </div>
+  </div>
+</div>
+
+<div class="keys" id="keys" hidden>
+  <div class="pal-scrim" data-keys-close></div>
+  <div class="keys-box" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+    <p class="eyebrow">Keyboard</p>
+    <h2 class="display h4">Get around the Lounge</h2>
+    <dl>
+      <div><dt><kbd>⌘K</kbd> <kbd>/</kbd></dt><dd>Search pieces, rooms, platforms</dd></div>
+      <div><dt><kbd>r</kbd></dt><dd>Open a random piece</dd></div>
+      <div><dt><kbd>t</kbd></dt><dd>Toggle day / night</dd></div>
+      <div><dt><kbd>[</kbd> <kbd>]</kbd></dt><dd>Previous / next piece</dd></div>
+      <div><dt><kbd>c</kbd></dt><dd>Copy the brief on a piece page</dd></div>
+      <div><dt><kbd>?</kbd></dt><dd>This list</dd></div>
+      <div><dt><kbd>esc</kbd></dt><dd>Close anything</dd></div>
+    </dl>
+  </div>
+</div>
+
+<script define:vars={{ rooms: Object.entries(TYPE_META).map(([k, v]) => ({ k, label: v.label })), platforms: Object.entries(PLATFORM_META).map(([k, v]) => ({ k, label: v.label })) }}>
+  const pal = document.getElementById('palette');
+  const input = document.getElementById('pal-input');
+  const list = document.getElementById('pal-list');
+  let items = null, results = [], active = 0;
+
+  const statics = [
+    ...rooms.map((r) => ({ kind: 'Room', title: r.label, href: '/rooms/' + r.k, hay: r.label.toLowerCase() })),
+    ...platforms.map((p) => ({ kind: 'Platform', title: p.label, href: '/platforms/' + p.k, hay: p.label.toLowerCase() })),
+    { kind: 'Go', title: 'Browse everything', href: '/browse', hay: 'browse all' },
+    { kind: 'Go', title: 'Collections', href: '/collections', hay: 'collections' },
+    { kind: 'Go', title: 'Guide: using briefs with an agent', href: '/guide', hay: 'guide how to agent prompt' },
+    { kind: 'Go', title: 'Surprise me', href: '/random', hay: 'random surprise' },
+  ];
+
+  async function load() {
+    if (items) return items;
+    const res = await fetch('/search.json');
+    const pieces = await res.json();
+    items = pieces.map((p) => ({ kind: p.type, title: p.title, sub: p.summary, n: p.n, href: '/p/' + p.id, platform: p.platform,
+      hay: [p.title, p.summary, p.type, p.platform, ...(p.tags || []), ...(p.styles || [])].join(' ').toLowerCase() }));
+    return items;
+  }
+
+  function score(item, q) {
+    if (!q) return 1;
+    const t = item.title.toLowerCase();
+    if (t.startsWith(q)) return 100;
+    if (t.includes(q)) return 60;
+    const words = q.split(/\s+/).filter(Boolean);
+    let s = 0;
+    for (const w of words) { if (!item.hay.includes(w)) return 0; s += 10; }
+    return s;
+  }
+
+  function render() {
+    list.innerHTML = '';
+    if (!results.length) { list.innerHTML = '<li class="pal-empty">Nothing on the floor matches. Try a room, a platform, or a word like “sidebar”.</li>'; return; }
+    results.forEach((r, i) => {
+      const li = document.createElement('li');
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', String(i === active));
+      li.className = 'pal-item' + (i === active ? ' active' : '');
+      li.innerHTML = `<span class="k">${r.n ? 'Nº ' + r.n : r.kind}</span><span class="t">${r.title}</span>${r.sub ? `<span class="s">${r.sub}</span>` : ''}<span class="p">${r.platform ? r.platform : r.kind}</span>`;
+      li.addEventListener('mousemove', () => { if (active !== i) { active = i; render(); } });
+      li.addEventListener('click', () => go());
+      list.appendChild(li);
+    });
+    list.querySelector('.active')?.scrollIntoView({ block: 'nearest' });
+  }
+
+  async function search() {
+    const q = input.value.trim().toLowerCase();
+    const all = await load();
+    const pool = [...statics, ...all];
+    results = pool.map((it) => ({ it, s: score(it, q) })).filter((x) => x.s > 0).sort((a, b) => b.s - a.s).slice(0, q ? 14 : 10).map((x) => x.it);
+    if (!q) results = [...all.slice(-6).reverse(), ...statics.slice(0, 4)];
+    active = 0; render();
+  }
+
+  function open() { pal.hidden = false; document.body.style.overflow = 'hidden'; input.value = ''; search(); requestAnimationFrame(() => input.focus()); }
+  function close() { pal.hidden = true; document.body.style.overflow = ''; }
+  function go() { const r = results[active]; if (r) location.href = r.href; }
+
+  document.addEventListener('palette:open', open);
+  document.addEventListener('palette:toggle', () => (pal.hidden ? open() : close()));
+  document.querySelectorAll('[data-open-palette]').forEach((b) => b.addEventListener('click', open));
+  pal.querySelector('[data-pal-close]').addEventListener('click', close);
+  input.addEventListener('input', search);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); active = (active + 1) % Math.max(results.length, 1); render(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); active = (active - 1 + results.length) % Math.max(results.length, 1); render(); }
+    else if (e.key === 'Enter') { e.preventDefault(); go(); }
+    else if (e.key === 'Escape') { close(); }
+  });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pal.hidden) close(); });
+  const keys = document.getElementById('keys');
+  const keysOpen = () => { keys.hidden = false; };
+  const keysClose = () => { keys.hidden = true; };
+  keys.querySelector('[data-keys-close]').addEventListener('click', keysClose);
+  addEventListener('keydown', (e) => {
+    const tag = e.target.tagName; if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if (e.key === '?' ) { e.preventDefault(); keys.hidden ? keysOpen() : keysClose(); }
+    else if (e.key === 'Escape' && !keys.hidden) keysClose();
+  });
+</script>
+
+<style is:global>
+  .pal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: start center; padding-top: 12vh; }
+  .pal[hidden] { display: none; }
+  .pal-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--ink) 40%, transparent); backdrop-filter: blur(4px); animation: fade 160ms var(--ease); }
+  .pal-box { position: relative; width: min(640px, calc(100% - 32px)); background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden; animation: pop 200ms var(--ease-out); }
+  @keyframes pop { from { opacity: 0; transform: translateY(-6px) scale(.985); } }
+  @keyframes fade { from { opacity: 0; } }
+  .pal-field { display: flex; align-items: center; gap: 12px; padding: 0 16px; height: 56px; border-bottom: 1px solid var(--line); }
+  .pal-field svg { stroke: var(--ink-3); fill: none; stroke-width: 1.75; stroke-linecap: round; }
+  .pal-field input { flex: 1; height: 100%; border: 0; background: none; font-size: 16px; outline: none; }
+  .pal-field input::placeholder { color: var(--ink-3); }
+  .pal-list { max-height: 52vh; overflow: auto; padding: 6px; }
+  .pal-item { display: grid; grid-template-columns: 64px 1fr auto; grid-template-areas: "k t p" "k s p"; column-gap: 12px; padding: 9px 10px; border-radius: 6px; cursor: pointer; align-items: center; }
+  .pal-item.active { background: var(--paper-2); }
+  .pal-item .k { grid-area: k; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .pal-item .t { grid-area: t; font-family: var(--display); font-size: 17px; letter-spacing: -0.01em; font-variation-settings: "opsz" 18; }
+  .pal-item .s { grid-area: s; font-size: 12.5px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pal-item .p { grid-area: p; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--line); padding: 3px 7px; border-radius: 999px; }
+  .pal-empty { padding: 24px 12px; color: var(--ink-2); font-size: 14px; text-align: center; }
+  .pal-foot { display: flex; gap: 18px; padding: 10px 16px; border-top: 1px solid var(--line); }
+  .pal-foot kbd { margin-right: 4px; }
+  .keys { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; }
+  .keys[hidden] { display: none; }
+  .keys-box { position: relative; width: min(440px, calc(100% - 32px)); background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 22px 24px 24px; animation: pop 200ms var(--ease-out); }
+  .keys-box .eyebrow { margin-bottom: 8px; }
+  .keys-box dl { margin: 18px 0 0; display: flex; flex-direction: column; }
+  .keys-box dl div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); align-items: center; font-size: 14px; color: var(--ink-2); }
+  .keys-box dt { display: flex; gap: 4px; }
+  .keys-box dd { margin: 0; }
+  @media (max-width: 640px) { .pal { padding-top: 8px; } .pal-item { grid-template-columns: 1fr auto; grid-template-areas: "t p" "s p"; } .pal-item .k { display: none; } .pal-foot { display: none; } }
+</style>

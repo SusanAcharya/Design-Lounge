@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import PieceCard from '../../components/PieceCard.astro';
+import { COLLECTIONS } from '../../data/collections';
+import { getPieces, numberMap } from '../../lib/pieces';
+
+export async function getStaticPaths() {
+  return COLLECTIONS.map((c) => ({ params: { slug: c.slug }, props: { collection: c } }));
+}
+const { collection } = Astro.props;
+const all = await getPieces();
+const nums = numberMap(all);
+const byId = new Map(all.map((p) => [p.id, p]));
+const items = collection.pieces.map((s) => byId.get(s)).filter(Boolean);
+const i = COLLECTIONS.findIndex((c) => c.slug === collection.slug);
+const prev = COLLECTIONS[(i - 1 + COLLECTIONS.length) % COLLECTIONS.length];
+const next = COLLECTIONS[(i + 1) % COLLECTIONS.length];
+---
+<Base title={collection.title} description={collection.blurb}>
+  <PageHead eyebrow={`Shelf ${collection.kicker}`} title={collection.title} blurb={collection.blurb} count={items.length} />
+  <div class="wrap">
+    <div class="grid" style="margin-top:32px">
+      {items.map((p, idx) => <PieceCard piece={p!} n={nums.get(p!.id) || '000'} index={idx} />)}
+    </div>
+    <nav class="pn" aria-label="Other shelves">
+      <a href={`/collections/${prev.slug}`} data-prev><span class="eyebrow">← Previous shelf</span><span class="display h4">{prev.title}</span></a>
+      <a href={`/collections/${next.slug}`} data-next class="r"><span class="eyebrow">Next shelf →</span><span class="display h4">{next.title}</span></a>
+    </nav>
+  </div>
+</Base>
+
+<style>
+  .pn { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 64px; border-top: 1px solid var(--ink); padding-top: 24px; }
+  .pn a { display: flex; flex-direction: column; gap: 8px; }
+  .pn a.r { text-align: right; align-items: flex-end; }
+  .pn a:hover .h4 { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+</style>

@@ -1,0 +1,119 @@
+<!-- Design Lounge piece: ios-swipe-row-actions · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swipe-to-reveal row actions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf7;--surface:#ffffff;--ink:#1a1916;--ink-2:#66625a;--ink-3:#9b968c;--line:#ebe8e1;
+  --unread:#2b6be4;--archive:#2f8f5b;--delete:#d93b2b;--pin:#e0862b;
+  --font:"Schibsted Grotesk",system-ui,-apple-system,sans-serif;
+  --act-w:80px;--commit:.6;--rubber:.45;
+  --t-micro:140ms;--t-snap:360ms;--t-collapse:320ms;--spring:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+header{padding:58px 20px 10px;display:flex;align-items:flex-end;justify-content:space-between;flex:none}
+h1{margin:0;font-size:30px;font-weight:700;letter-spacing:-.025em;line-height:1}
+h1 small{display:block;font-size:13px;font-weight:500;color:var(--ink-2);letter-spacing:0;margin-bottom:6px}
+.reset{appearance:none;background:none;border:1px solid var(--line);border-radius:999px;height:36px;padding:0 14px;font:500 13px var(--font);color:var(--ink-2);cursor:pointer;transition:background var(--t-micro) var(--ease)}
+.reset:hover{background:var(--surface)}
+.reset:focus-visible{outline:2px solid var(--unread);outline-offset:2px}
+.hint{margin:0 20px 10px;font-size:12px;color:var(--ink-3);flex:none}
+main{flex:1;min-height:0;overflow-y:auto;padding:0 0 40px}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.row{position:relative;overflow:hidden;background:var(--surface);touch-action:pan-y}
+.wrap{display:grid;grid-template-rows:1fr;transition:grid-template-rows var(--t-collapse) var(--ease),opacity var(--t-collapse) var(--ease)}
+.row.gone .wrap{grid-template-rows:0fr;opacity:0}
+.inner{min-height:0;overflow:hidden;position:relative}
+.acts{position:absolute;inset:0;display:flex;visibility:hidden}
+.acts.r{justify-content:flex-end}.acts.l{justify-content:flex-start}
+.row[data-dir="l"] .acts.r,.row[data-dir="r"] .acts.l{visibility:visible}
+.act{appearance:none;border:0;width:var(--act-w);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#fff;font:600 11px var(--font);letter-spacing:.02em;cursor:pointer;transition:width 200ms var(--ease),opacity 160ms var(--ease);overflow:hidden;white-space:nowrap;padding:0}
+.act svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t-micro) var(--ease)}
+.act:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+.archive{background:var(--archive)}.delete{background:var(--delete)}.pin{background:var(--pin)}
+.row.commit .delete,.row.commit .pin{width:100%}
+.row.commit .archive{width:0;opacity:0}
+.row.commit .act svg{transform:scale(1.15)}
+.front{position:relative;background:var(--surface);padding:12px 20px 12px 30px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:2px 10px;cursor:grab;user-select:none;-webkit-user-select:none;will-change:transform;outline:none}
+.front:active{cursor:grabbing}
+.row.snap .front{transition:transform var(--t-snap) var(--spring)}
+.row.nudge .front{animation:nudge 120ms var(--ease)}
+@keyframes nudge{40%{transform:translateX(calc(var(--x) - 3px))}100%{transform:translateX(var(--x))}}
+.front:focus-visible{box-shadow:inset 0 0 0 2px var(--unread)}
+.dot{position:absolute;left:12px;top:19px;width:9px;height:9px;border-radius:50%;background:var(--unread);opacity:0}
+.row.unread .dot{opacity:1}
+.from{font-weight:600;font-size:15px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px}
+.from svg{width:14px;height:14px;stroke:var(--pin);fill:var(--pin);stroke-width:1.5;flex:none;display:none}
+.row.pinned .from svg{display:block}
+.time{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;line-height:1.35;padding-top:2px}
+.subj{grid-column:1/-1;font-weight:500;font-size:14px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prev{grid-column:1/-1;font-size:13px;color:var(--ink-2);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.empty{padding:60px 20px;text-align:center;color:var(--ink-3);font-size:14px;display:none}
+.list:empty+.empty{display:block}
+@media (prefers-reduced-motion:reduce){.row.snap .front,.wrap,.act{transition-duration:1ms!important}.row.nudge .front{animation:none}}
+</style>
+</head>
+<body>
+<header><h1><small>Nord Post</small>Inbox</h1><button class="reset" id="reset">Reset</button></header>
+<p class="hint">Swipe left for Archive and Delete, right to Pin. Past 60% commits.</p>
+<main>
+<ul class="list" id="list"></ul>
+<p class="empty">Inbox zero. Nothing to swipe.</p>
+</main>
+<template id="tpl">
+  <li class="row"><div class="wrap"><div class="inner">
+    <div class="acts l"><button class="act pin" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M12 17v5M8 3h8l-1 6 3 4H6l3-4z"/></svg>Pin</button></div>
+    <div class="acts r"><button class="act archive" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M3 7h18v3H3zM5 10v10h14V10M10 14h4"/></svg>Archive</button><button class="act delete" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>Delete</button></div>
+    <div class="front" tabindex="0"><span class="dot"></span><span class="from"><svg viewBox="0 0 24 24"><path d="M12 17v5M8 3h8l-1 6 3 4H6l3-4z"/></svg><span class="n"></span></span><span class="time"></span><span class="subj"></span><span class="prev"></span></div>
+  </div></div></li>
+</template>
+<script>
+  const data=[
+    ['Elin Aasen','09:41','Re: Cabin weekend, final headcount','We are twelve now. Jonas is bringing the boat, so bring layers and something that is not a hoodie.',1],
+    ['Halden Kaffebar','08:55','Your loyalty card is full','Ten stamps. The next flat white is on us; show this email at the counter before Sunday.',1],
+    ['Tessel Studio','Yesterday','Invoice 2026-091 is paid','Payment of €2,300.00 landed on 28 Sep. Thanks for the quick turnaround on the icon set.',0],
+    ['Orbital Cloud','Yesterday','Maintenance window, 2 Oct 01:00 UTC','The eu-1 region will be read-only for up to 20 minutes. No action needed on your side.',0],
+    ['Marrow Wine','Mon','New arrivals: Jura and a Loire cabernet franc','Six bottles landed on Friday. We kept two of the Ganevat back for members.',0],
+    ['Ruter Transit','Mon','Your monthly pass renews on 1 October','Zone 1, €72.50. Payment card ending 4901. Change or pause any time before midnight.',0],
+    ['Loam Market','Sun','Order #48213 is on its way','Arriving Thursday between 08:00 and 12:00. The peat-free mix shipped separately.',0],
+    ['Mira','Sat','Your week in sleep','Average 7h 12m, deep sleep up 9%. Your best night was Wednesday. Tap to see stages.',0]
+  ];
+  const list=document.getElementById('list'),tpl=document.getElementById('tpl');
+  function build(){list.innerHTML='';data.forEach(d=>{const n=tpl.content.firstElementChild.cloneNode(true);n.querySelector('.n').textContent=d[0];n.querySelector('.time').textContent=d[1];n.querySelector('.subj').textContent=d[2];n.querySelector('.prev').textContent=d[3];n.classList.toggle('unread',!!d[4]);list.appendChild(n);});}
+  build();document.getElementById('reset').addEventListener('click',build);
+  const W=()=>list.clientWidth,AW=80;let openRow=null;
+  function setX(row,x,snap){row.classList.toggle('snap',!!snap);row.style.setProperty('--x',x+'px');row.querySelector('.front').style.transform=`translateX(${x}px)`;row.dataset.dir=x<0?'l':x>0?'r':'';row.querySelectorAll('.act').forEach(b=>b.tabIndex=x?0:-1);}
+  function close(row){if(row){setX(row,0,true);row.classList.remove('commit');}if(openRow===row)openRow=null;}
+  function remove(row){row.classList.add('commit');setX(row,row.dataset.dir==='l'?-W():W(),true);setTimeout(()=>{row.classList.add('gone');row.addEventListener('transitionend',()=>row.remove(),{once:true});},200);if(openRow===row)openRow=null;}
+  function togglePin(row){row.classList.toggle('pinned');close(row);if(row.classList.contains('pinned'))list.prepend(row);}
+  list.addEventListener('pointerdown',e=>{
+    const front=e.target.closest('.front');if(!front)return;const row=front.parentElement.parentElement.parentElement;
+    if(openRow&&openRow!==row)close(openRow);
+    const startX=e.clientX,base=parseFloat(row.style.getPropertyValue('--x'))||0;let moved=false,x=base;front.setPointerCapture(e.pointerId);
+    const move=ev=>{let dx=ev.clientX-startX+base;moved=moved||Math.abs(dx)>4;const lim=dx<0?2*AW:AW;const over=Math.abs(dx)-lim;
+      x=over>0?Math.sign(dx)*(lim+over*.45):dx;
+      const commit=Math.abs(dx)>W()*.6;if(commit!==row.classList.contains('commit')){row.classList.toggle('commit',commit);row.classList.remove('nudge');void row.offsetWidth;row.classList.add('nudge');}
+      setX(row,x,false);};
+    const up=ev=>{front.removeEventListener('pointermove',move);front.removeEventListener('pointerup',up);front.removeEventListener('pointercancel',up);
+      const dx=ev.clientX-startX+base;
+      if(Math.abs(dx)>W()*.6){dx<0?remove(row):togglePin(row);return;}
+      row.classList.remove('commit');
+      if(dx<-AW*.5){setX(row,-2*AW,true);openRow=row;}else if(dx>AW*.5){setX(row,AW,true);openRow=row;}else close(row);
+      if(!moved)front.focus();};
+    front.addEventListener('pointermove',move);front.addEventListener('pointerup',up);front.addEventListener('pointercancel',up);
+  });
+  list.addEventListener('click',e=>{const b=e.target.closest('.act');if(!b)return;const row=b.closest('.row');row.dataset.dir=b.classList.contains('pin')?'r':'l';b.classList.contains('pin')?togglePin(row):remove(row);});
+  list.addEventListener('keydown',e=>{const front=e.target.closest('.front');if(!front)return;const row=front.closest('.row');
+    if(e.key==='ArrowLeft'){e.preventDefault();if(openRow&&openRow!==row)close(openRow);setX(row,-2*AW,true);openRow=row;}
+    if(e.key==='ArrowRight'){e.preventDefault();if(openRow&&openRow!==row)close(openRow);setX(row,AW,true);openRow=row;}
+    if(e.key==='Escape')close(row);});
+</script>
+</body>
+</html>

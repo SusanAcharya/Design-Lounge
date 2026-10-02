@@ -1,0 +1,95 @@
+<!-- Design Lounge piece: text-scramble-reveal · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Text scramble reveal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f0eb;--ink:#141414;--ink-2:#5c5a55;--ink-3:#9b9891;--line:#dcd9d1;--accent:#e4572e;
+  --mono:"Chivo Mono",ui-monospace,monospace;
+  --head:64px;--head-lh:1.15;--measure:30ch;
+  --t-scramble:900ms;--t-dwell:4000ms;--glyph-hold:3;--t-micro:160ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--mono);overflow:hidden;display:flex;flex-direction:column;padding:40px 48px;cursor:pointer;-webkit-font-smoothing:antialiased;user-select:none}
+.top,.bottom{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-2)}
+.top b{font-weight:500;color:var(--ink)}
+.top .idx{font-variant-numeric:tabular-nums}
+.top .idx b{color:var(--accent)}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;gap:28px;padding:0 0 24px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+h1{margin:0;font:400 var(--head)/var(--head-lh) var(--mono);letter-spacing:-.02em;max-width:var(--measure);min-height:calc(var(--head)*var(--head-lh)*3);white-space:pre-wrap;word-break:normal}
+h1 .g{color:var(--ink-3);font-weight:300}
+h1 .c{display:inline-block;width:.6ch;height:.9em;background:var(--accent);vertical-align:-.1em;margin-left:.1ch;animation:blink 1s steps(2,end) infinite}
+.sub{max-width:62ch;color:var(--ink-2);font-size:15px;line-height:1.6;margin:0}
+.bottom{padding-top:20px;border-top:1px solid var(--line)}
+.dots{display:flex;gap:10px}
+.dot{width:56px;height:2px;background:var(--line);position:relative;overflow:hidden}
+.dot i{position:absolute;inset:0;background:var(--ink);transform:scaleX(0);transform-origin:left}
+.dot.done i{transform:scaleX(1)}
+.dot.on i{animation:fill var(--t-dwell) linear forwards}
+.hint{display:flex;align-items:center;gap:8px;color:var(--ink-3)}
+.hint svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.skip{background:none;border:1px solid var(--line);color:var(--ink);font:13px var(--mono);padding:6px 12px;border-radius:4px;cursor:pointer;transition:border-color var(--t-micro),background var(--t-micro)}
+.skip:hover{border-color:var(--ink-3)}
+.skip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@keyframes fill{to{transform:scaleX(1)}}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){h1 .c{animation:none}.dot.on i{animation:none;transform:scaleX(1)}h1{transition:opacity 200ms}}
+</style>
+</head>
+<body>
+<div class="top"><span><b>Mira</b> · Release notes 3.2</span><span class="idx"><b id="n">01</b> / 03</span></div>
+<main>
+  <div class="sr" role="status" id="sr"></div>
+  <h1 id="h" aria-hidden="true"></h1>
+  <p class="sub" id="sub"></p>
+</main>
+<div class="bottom">
+  <div class="dots" id="dots" aria-hidden="true"><span class="dot"><i></i></span><span class="dot"><i></i></span><span class="dot"><i></i></span></div>
+  <span class="hint"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Resolves left to right in 900 ms · next in 4 s</span>
+  <button class="skip" id="skip" type="button">Next headline</button>
+</div>
+<script>
+  const lines=[
+    ['Search that reads your schema, not your strings.','Mira 3.2 indexes column types and foreign keys, so "orders last week" becomes a real query instead of a guess.'],
+    ['Ship the migration. Keep the weekend.','Dry runs now diff the live schema against your branch and estimate lock time per table before anything touches production.'],
+    ['Latency budgets, enforced at merge.','Set a p95 target per endpoint. Pull requests that would blow it get a red check and the query plan that caused it.'],
+  ];
+  const GLYPHS='<>-_\\/[]{}=+*^?#%&@!;:~',ESC={'<':'&lt;','>':'&gt;','&':'&amp;'},esc=c=>ESC[c]||c,h=document.getElementById('h'),sub=document.getElementById('sub'),sr=document.getElementById('sr'),n=document.getElementById('n'),dots=[...document.querySelectorAll('.dot')];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let idx=-1,timer,raf,frame=0;
+  function play(i){
+    cancelAnimationFrame(raf);clearTimeout(timer);idx=i;
+    const text=lines[i][0],chars=[...text],len=chars.length;
+    sub.textContent=lines[i][1];sr.textContent=text;n.textContent='0'+(i+1);
+    dots.forEach((d,j)=>{d.classList.remove('on','done');if(j<i)d.classList.add('done');});
+    void dots[i].offsetWidth;dots[i].classList.add('on');
+    timer=setTimeout(()=>play((i+1)%lines.length),4000);
+    if(reduce){h.textContent=text;return;}
+    const at=chars.map((c,k)=>c===' '?0:150+(k/len)*600+Math.random()*150),glyph=chars.map(()=>GLYPHS[Math.floor(Math.random()*GLYPHS.length)]);
+    const start=performance.now();
+    function step(now){
+      const t=now-start;frame++;let done=true,out='';
+      for(let k=0;k<len;k++){
+        if(t>=at[k]){out+=esc(chars[k]);}
+        else{done=false;if(frame%3===0)glyph[k]=GLYPHS[Math.floor(Math.random()*GLYPHS.length)];out+=`<span class="g">${esc(glyph[k])}</span>`;}
+      }
+      h.innerHTML=out+(done?'':'<span class="c"></span>');
+      if(!done)raf=requestAnimationFrame(step);
+    }
+    raf=requestAnimationFrame(step);
+  }
+  const next=()=>play((idx+1)%lines.length);
+  document.body.addEventListener('click',e=>{if(!e.target.closest('.skip'))next();});
+  document.getElementById('skip').addEventListener('click',next);
+  addEventListener('keydown',e=>{if((e.key==='ArrowRight'||e.key===' ')&&e.target===document.body){e.preventDefault();next();}});
+  play(0);
+</script>
+</body>
+</html>

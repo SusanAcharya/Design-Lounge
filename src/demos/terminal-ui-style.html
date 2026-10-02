@@ -1,0 +1,163 @@
+<!-- Design Lounge piece: terminal-ui-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Terminal UI style sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c1210;--panel:#0f1614;--line:#243029;--line-2:#37473d;--ink:#d7e3d5;--ink-2:#8fa394;--ink-3:#5c6f63;
+  --amber:#f0b429;--amber-ink:#1a1200;--green:#7fd18a;--red:#f07f6a;--blue:#7cc4f0;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --fs:14px;--lh:20px;--ch:1ch;
+  --t-micro:100ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:var(--fs)/var(--lh) var(--mono);color:var(--ink);background:var(--bg);display:grid;grid-template-rows:var(--lh) 1fr calc(var(--lh)*2);padding:var(--lh) 3ch;gap:var(--lh) 0;overflow:hidden;-webkit-font-smoothing:antialiased;font-variant-ligatures:none}
+::selection{background:var(--amber);color:var(--amber-ink)}
+.top{display:flex;justify-content:space-between;color:var(--ink-2);white-space:pre}
+.top b{color:var(--ink);font-weight:600}
+.top i{font-style:normal;color:var(--amber)}
+.grid{display:grid;grid-template-columns:36ch 1fr 42ch;gap:var(--lh) 3ch;min-height:0}
+.col{display:flex;flex-direction:column;gap:var(--lh);min-height:0}
+.box{border:1px solid var(--line);position:relative;padding:calc(var(--lh)/2 + 4px) 2ch calc(var(--lh)/2);background:var(--panel);min-height:0}
+.box>h2{position:absolute;top:calc(var(--lh)/-2);left:1ch;margin:0;padding:0 1ch;font:500 var(--fs)/var(--lh) var(--mono);color:var(--ink-2);background:var(--panel);letter-spacing:0}
+.box>h2::before{content:"┤ ";color:var(--line-2)}.box>h2::after{content:" ├";color:var(--line-2)}
+.box.fill{flex:1;display:flex;flex-direction:column}
+.btns{display:flex;gap:2ch;flex-wrap:wrap}
+.btn{font:inherit;background:none;border:1px solid var(--line-2);color:var(--ink);padding:0 1ch;height:calc(var(--lh)+4px);cursor:pointer;white-space:pre;transition:background var(--t-micro),color var(--t-micro),border-color var(--t-micro)}
+.btn::before{content:"[ "}.btn::after{content:" ]"}
+.btn:hover{border-color:var(--ink-2)}
+.btn.primary{background:var(--amber);color:var(--amber-ink);border-color:var(--amber);font-weight:600}
+.btn.primary:hover{background:#f7c454}
+.btn:active,.btn.primary:active{transform:translateY(1px)}
+.btn[disabled]{color:var(--ink-3);border-color:var(--line);cursor:not-allowed}
+.btn:focus-visible,.field:focus-within,.chk:focus-visible,.list li:focus-visible,.cmd:focus-within{outline:1px dashed var(--amber);outline-offset:2px}
+.field{display:flex;gap:1ch;border:1px solid var(--line-2);padding:2px 1ch;margin-top:var(--lh);color:var(--ink-2)}
+.field input{flex:1;background:none;border:0;color:var(--ink);font:inherit;outline:none;min-width:0;caret-color:var(--amber)}
+.field input::placeholder{color:var(--ink-3)}
+.field .k{color:var(--ink-3)}
+.chk{display:flex;gap:1ch;cursor:pointer;margin-top:calc(var(--lh)/2);user-select:none}
+.chk input{position:absolute;opacity:0;width:0;height:0}
+.chk .bx::before{content:"[ ]";color:var(--ink-2);white-space:pre}
+.chk input:checked~.bx::before{content:"[x]";color:var(--amber)}
+.chk input:focus-visible~.bx{outline:1px dashed var(--amber);outline-offset:2px}
+.list{list-style:none;margin:0;padding:0;flex:1;overflow:auto;min-height:0}
+.list li{display:grid;grid-template-columns:2ch 2ch 8ch minmax(0,1fr) 8ch 8ch;gap:1ch;padding:0 1ch;cursor:pointer;white-space:pre;outline-offset:-1px}
+.list li:hover{background:var(--line)}
+.list li[aria-selected="true"]{background:var(--amber);color:var(--amber-ink)}
+.list li[aria-selected="true"] .dim,.list li[aria-selected="true"] .ok,.list li[aria-selected="true"] .err,.list li[aria-selected="true"] .inf{color:inherit}
+.list li::before{content:"  "}.list li[aria-selected="true"]::before{content:"> "}
+.list .dim{color:var(--ink-3)}.ok{color:var(--green)}.err{color:var(--red)}.inf{color:var(--blue)}
+.list .r{text-align:right}
+.list .c{overflow:hidden;text-overflow:ellipsis}
+.hint{color:var(--ink-3);margin-top:calc(var(--lh)/2);white-space:pre-line}
+.kv{margin:0;display:grid;grid-template-columns:12ch 1fr;gap:0 2ch}
+.kv dt{color:var(--ink-2);margin:0}.kv dt::after{content:" ·";color:var(--line-2)}
+.kv dd{margin:0;white-space:pre;overflow:hidden;text-overflow:ellipsis}
+.kv .b{display:inline-block;width:10ch;color:var(--ink-3);letter-spacing:0}
+table{border-collapse:collapse;width:100%;white-space:pre}
+th{text-align:left;font-weight:500;color:var(--ink-2);border-bottom:1px solid var(--line-2);padding:0 1ch 0 0}
+td{padding:0 1ch 0 0;color:var(--ink)}
+th.r,td.r{text-align:right}
+tr:hover td{background:var(--line)}
+.bar{display:inline-block;color:var(--ink-3)}.bar b{color:var(--amber);font-weight:400}
+.status{display:grid;grid-template-columns:auto auto 1fr auto auto;gap:0;white-space:pre;color:var(--ink-2)}
+.status span{padding:0 1ch}
+.status .mode{background:var(--amber);color:var(--amber-ink);font-weight:600}
+.status .br{background:var(--line)}
+.status .right{text-align:right}
+.cmd{display:flex;gap:0;background:var(--panel);border-top:1px solid var(--line);color:var(--ink)}
+.cmd .p{color:var(--amber);padding:0 0 0 1ch}
+.cmd input{flex:1;background:none;border:0;color:var(--ink);font:inherit;outline:none;padding:0 1ch;caret-color:var(--amber)}
+.cmd .out{color:var(--ink-2);padding:0 1ch;white-space:pre}
+@media (max-width:1100px){.grid{grid-template-columns:1fr 1fr}.col:last-child{grid-column:1/-1}body{overflow:auto}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top"><span><b>halden-ctl</b> v0.9.3  ·  <i>prod-eu-1</i>  ·  3 nodes</span><span>j/k move   enter select   : command   ? help</span></header>
+<main class="grid">
+  <div class="col">
+    <section class="box"><h2>Buttons</h2>
+      <div class="btns"><button class="btn primary">Deploy</button><button class="btn">Cancel</button><button class="btn" disabled>Roll back</button></div>
+      <p class="hint">primary · secondary · disabled
+focus = dashed amber outline</p>
+    </section>
+    <section class="box"><h2>Inputs</h2>
+      <label class="field"><span class="k">host</span><input type="text" value="api-3.halden.internal" aria-label="Host"></label>
+      <label class="field"><span class="k">port</span><input type="text" placeholder="8080" aria-label="Port"></label>
+      <label class="chk"><input type="checkbox" checked><span class="bx"></span>Follow logs</label>
+      <label class="chk"><input type="checkbox"><span class="bx"></span>Verbose output</label>
+    </section>
+    <section class="box fill"><h2>Key / value</h2>
+      <dl class="kv">
+        <dt>region</dt><dd>eu-north-1</dd>
+        <dt>uptime</dt><dd>41d 06:12:55</dd>
+        <dt>load</dt><dd><span class="bar"><b>████</b>░░░░░░</span> 0.42</dd>
+        <dt>memory</dt><dd><span class="bar"><b>███████</b>░░░</span> 68 %</dd>
+        <dt>disk</dt><dd><span class="bar"><b>██</b>░░░░░░░░</span> 23 %</dd>
+        <dt>last deploy</dt><dd>2026-09-28 22:14</dd>
+        <dt>commit</dt><dd class="inf">a41f9c2</dd>
+      </dl>
+    </section>
+  </div>
+  <div class="col">
+    <section class="box fill"><h2>Processes</h2>
+      <ul class="list" id="list" role="listbox" aria-label="Processes" tabindex="0">
+        <li role="option" aria-selected="true"><span class="dim">01</span><span>api</span><span class="c">api --port 8080</span><span class="ok">running</span><span class="r">12m 04s</span></li>
+        <li role="option" aria-selected="false"><span class="dim">02</span><span>worker</span><span class="c">worker --queue jobs</span><span class="ok">running</span><span class="r">12m 03s</span></li>
+        <li role="option" aria-selected="false"><span class="dim">03</span><span>cron</span><span class="c">cron --every 5m</span><span class="ok">running</span><span class="r">12m 03s</span></li>
+        <li role="option" aria-selected="false"><span class="dim">04</span><span>indexer</span><span class="c">index --rebuild</span><span class="inf">waiting</span><span class="r">—</span></li>
+        <li role="option" aria-selected="false"><span class="dim">05</span><span>mailer</span><span class="c">mail --smtp relay-2</span><span class="err">exit 137</span><span class="r">00m 41s</span></li>
+        <li role="option" aria-selected="false"><span class="dim">06</span><span>metrics</span><span class="c">metrics --push 15s</span><span class="ok">running</span><span class="r">11m 58s</span></li>
+        <li role="option" aria-selected="false"><span class="dim">07</span><span>gateway</span><span class="c">gw --tls --http2</span><span class="ok">running</span><span class="r">12m 04s</span></li>
+        <li role="option" aria-selected="false"><span class="dim">08</span><span>backup</span><span class="c">backup --nightly</span><span class="dim">idle</span><span class="r">—</span></li>
+      </ul>
+      <p class="hint" id="sel">selected: 01 api  ·  enter to inspect, r to restart</p>
+    </section>
+  </div>
+  <div class="col">
+    <section class="box fill"><h2>Table</h2>
+      <table><thead><tr><th>PID</th><th>Name</th><th class="r">CPU</th><th class="r">MEM</th><th class="r">RSS</th></tr></thead><tbody>
+        <tr><td>2201</td><td>halden-api</td><td class="r">12.4</td><td class="r">3.1</td><td class="r">412M</td></tr>
+        <tr><td>2214</td><td>halden-worker</td><td class="r">41.0</td><td class="r">8.7</td><td class="r">1.2G</td></tr>
+        <tr><td>2230</td><td>halden-cron</td><td class="r">0.2</td><td class="r">0.4</td><td class="r">58M</td></tr>
+        <tr><td>2258</td><td>halden-index</td><td class="r">0.0</td><td class="r">2.0</td><td class="r">266M</td></tr>
+        <tr><td>2291</td><td>halden-metrics</td><td class="r">1.1</td><td class="r">0.6</td><td class="r">80M</td></tr>
+        <tr><td>2302</td><td>halden-gw</td><td class="r">6.8</td><td class="r">1.9</td><td class="r">251M</td></tr>
+        <tr><td>2310</td><td>postgres</td><td class="r">9.3</td><td class="r">14.2</td><td class="r">1.9G</td></tr>
+        <tr><td>2331</td><td>redis-server</td><td class="r">2.0</td><td class="r">1.1</td><td class="r">146M</td></tr>
+      </tbody></table>
+      <p class="hint">sorted by PID · 8 of 41 rows</p>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="status"><span class="mode" id="mode">NORMAL</span><span class="br"> main *2</span><span> halden-ctl · 8 processes · 1 failed</span><span>utf-8</span><span class="right">22:41:07</span></div>
+  <div class="cmd"><span class="p">:</span><input id="cmd" type="text" aria-label="Command" autocomplete="off" spellcheck="false"><span class="out" id="out">type help</span></div>
+</footer>
+<script>
+  const list=document.getElementById('list'),items=[...list.children],sel=document.getElementById('sel'),cmd=document.getElementById('cmd'),out=document.getElementById('out'),mode=document.getElementById('mode');
+  let i=0;
+  function select(n){i=(n+items.length)%items.length;items.forEach((li,k)=>li.setAttribute('aria-selected',String(k===i)));
+    const c=items[i].children;sel.textContent='selected: '+c[0].textContent+' '+c[1].textContent+'  ·  enter to inspect, r to restart';items[i].scrollIntoView({block:'nearest'});}
+  items.forEach((li,k)=>li.addEventListener('click',()=>{select(k);list.focus();}));
+  addEventListener('keydown',e=>{if(e.target===cmd){if(e.key==='Escape'){cmd.blur();mode.textContent='NORMAL';}return;}
+    if(e.target.matches('input'))return;
+    if(e.key==='j'||e.key==='ArrowDown'){e.preventDefault();select(i+1);}else if(e.key==='k'||e.key==='ArrowUp'){e.preventDefault();select(i-1);}
+    else if(e.key===':'){e.preventDefault();cmd.focus();mode.textContent='COMMAND';}
+    else if(e.key==='r'){out.textContent='restarted '+items[i].children[1].textContent;}
+    else if(e.key==='Enter'){out.textContent='inspect '+items[i].children[1].textContent+' → pid '+(2201+i*13);}
+    else if(e.key==='?'){out.textContent='j/k move · enter inspect · r restart · : command · esc normal';}});
+  cmd.addEventListener('focus',()=>mode.textContent='COMMAND');cmd.addEventListener('blur',()=>mode.textContent='NORMAL');
+  cmd.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const v=cmd.value.trim();cmd.value='';
+    const m={help:'commands: help · status · restart <name> · clear',status:'3 nodes healthy · 8 processes · 1 failed (mailer)',clear:''};
+    out.textContent=v in m?m[v]:v.startsWith('restart ')?'restarting '+v.slice(8)+' …':v?'unknown command: '+v:'';});
+</script>
+</body>
+</html>

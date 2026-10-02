@@ -1,0 +1,88 @@
+<!-- Design Lounge piece: swiss-poster-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Swiss poster style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4f3ef;--ink:#121212;--red:#e1251b;--grid:rgba(18,18,18,.18);
+  --bg:var(--paper);--fg:var(--ink);--ac:var(--red);
+  --font:"Archivo",Helvetica,Arial,sans-serif;
+  --m:48px;--cols:12;--gap:16px;
+  --t-micro:160ms;--t-grid:240ms;--t-scheme:360ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+[data-scheme="2"]{--bg:var(--red);--fg:var(--paper);--ac:var(--ink);--grid:rgba(244,243,239,.28)}
+[data-scheme="3"]{--bg:var(--ink);--fg:var(--paper);--ac:var(--red);--grid:rgba(244,243,239,.22)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--font);color:var(--fg);background:var(--bg);overflow:hidden;cursor:pointer;-webkit-font-smoothing:antialiased;transition:background var(--t-scheme) var(--ease),color var(--t-scheme) var(--ease);user-select:none;-webkit-user-select:none}
+.poster{position:absolute;inset:var(--m);display:grid;grid-template-columns:repeat(var(--cols),1fr);grid-template-rows:repeat(8,1fr);gap:var(--gap);border:1px solid var(--fg);overflow:hidden;transition:border-color var(--t-scheme) var(--ease)}
+.lines{position:absolute;inset:0;pointer-events:none;display:grid;grid-template-columns:repeat(var(--cols),1fr);gap:var(--gap);opacity:0;transition:opacity var(--t-grid) var(--ease)}
+.lines i{border-left:1px solid var(--grid);border-right:1px solid var(--grid)}
+.rows{position:absolute;inset:0;pointer-events:none;display:grid;grid-template-rows:repeat(8,1fr);gap:var(--gap);opacity:0;transition:opacity var(--t-grid) var(--ease)}
+.rows i{border-top:1px solid var(--grid);border-bottom:1px solid var(--grid)}
+body:hover .lines,body:hover .rows,body.grid-on .lines,body.grid-on .rows{opacity:1}
+.marg{position:absolute;font:500 10px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.marg.t{top:18px;left:var(--m)}.marg.b{bottom:18px;left:var(--m)}.marg.r{top:var(--m);right:18px;writing-mode:vertical-rl}.marg.tr{top:18px;right:var(--m)}
+.big{grid-column:1/4;grid-row:1/9;position:relative}
+.big span{position:absolute;left:0;bottom:0;transform-origin:left bottom;transform:rotate(-90deg) translate(0,100%);font:900 130px/.8 var(--font);letter-spacing:-.06em;text-transform:uppercase;white-space:nowrap;color:var(--fg);transition:color var(--t-scheme) var(--ease)}
+.big span b{color:var(--ac);font-weight:900;transition:color var(--t-scheme) var(--ease)}
+.block{grid-column:4/13;grid-row:1/5;background:var(--ac);transition:background var(--t-scheme) var(--ease);position:relative}
+.block h1{position:absolute;left:24px;top:20px;margin:0;font:900 96px/.85 var(--font);letter-spacing:-.05em;text-transform:uppercase;color:var(--bg);transition:color var(--t-scheme) var(--ease)}
+.block .n{position:absolute;right:24px;bottom:18px;font:700 22px/1 var(--font);letter-spacing:-.02em;color:var(--bg);transition:color var(--t-scheme) var(--ease)}
+.rule{grid-column:4/13;grid-row:5;border-top:2px solid var(--fg);align-self:start;transition:border-color var(--t-scheme) var(--ease)}
+.lead{grid-column:4/8;grid-row:5/7;font:700 26px/1.1 var(--font);letter-spacing:-.03em;margin:0;align-self:start;padding-top:22px;text-wrap:balance}
+.info{grid-column:4/13;grid-row:7/9;display:grid;grid-template-columns:repeat(9,1fr);gap:var(--gap);align-self:end}
+.info dl{margin:0;grid-column:span 3}
+.info dt{font:500 10px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;opacity:.65;margin:0 0 6px}
+.info dd{margin:0;font:500 14px/1.35 var(--font)}
+.info dd b{font-weight:700}
+.dot{grid-column:10/13;grid-row:5/7;align-self:start;justify-self:end;width:112px;height:112px;border-radius:50%;background:var(--fg);margin-top:22px;transition:background var(--t-scheme) var(--ease)}
+.ctl{position:absolute;right:var(--m);bottom:14px;display:flex;gap:8px}
+.ctl button{font:500 10px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;background:none;border:1px solid currentColor;color:inherit;padding:6px 10px;cursor:pointer;opacity:.75;transition:opacity var(--t-micro)}
+.ctl button:hover{opacity:1}
+.ctl button:focus-visible{outline:2px solid var(--ac);outline-offset:2px;opacity:1}
+.ctl button[aria-pressed="true"]{background:var(--fg);color:var(--bg);opacity:1}
+@media (max-width:1023px){.big span{font-size:96px}.block h1{font-size:64px}.lead{font-size:20px}}
+@media (max-width:767px){:root{--m:24px}.poster{grid-template-rows:repeat(10,1fr)}.big{grid-column:1/13;grid-row:1/4}.big span{transform:none;position:static;font-size:72px;line-height:.9}.block{grid-column:1/13;grid-row:4/7}.rule,.lead,.info,.dot{grid-column:1/13}.lead{grid-row:7/9}.dot{display:none}.info{grid-row:9/11;grid-template-columns:1fr 1fr}.info dl:last-child{grid-column:span 2}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body data-scheme="1" id="body">
+<span class="marg t">Plakat 07 / 12 · 1280 × 800 · 12 Spalten</span>
+<span class="marg tr">Kunsthalle Sørvik</span>
+<span class="marg r">Neue Ordnung — 100 Jahre Raster · 12.10 – 28.11.2026</span>
+<span class="marg b">Archivo 900 / 700 / 500 · Rot 0 84 88 0 · Schwarz</span>
+<main class="poster" aria-label="Exhibition poster">
+  <div class="lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="rows" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="big" aria-hidden="true"><span>Ord<b>nung</b></span></div>
+  <section class="block"><h1>Neue<br>Ord-<br>nung</h1><span class="n">1926 — 2026</span></section>
+  <div class="rule" aria-hidden="true"></div>
+  <p class="lead">One hundred years of the grid: 340 posters, 12 columns, one red.</p>
+  <div class="dot" aria-hidden="true"></div>
+  <div class="info">
+    <dl><dt>Dates</dt><dd><b>12 Oct – 28 Nov</b><br>2026</dd></dl>
+    <dl><dt>Venue</dt><dd><b>Kunsthalle Sørvik</b><br>Halle 4, Kaigata 12</dd></dl>
+    <dl><dt>Hours · Entry</dt><dd><b>Tue – Sun 10 – 18</b><br>Thu until 21 · 120 NOK · under 18 free</dd></dl>
+  </div>
+</main>
+<div class="ctl">
+  <button id="grid" aria-pressed="false">Grid</button>
+  <button id="scheme">Scheme 1 / 3</button>
+</div>
+<script>
+  const body=document.getElementById('body'),grid=document.getElementById('grid'),scheme=document.getElementById('scheme');
+  let s=1;
+  function cycle(){s=s%3+1;body.dataset.scheme=s;scheme.textContent='Scheme '+s+' / 3';}
+  body.addEventListener('click',e=>{if(e.target.closest('.ctl'))return;cycle();});
+  scheme.addEventListener('click',cycle);
+  grid.addEventListener('click',()=>{const on=grid.getAttribute('aria-pressed')!=='true';grid.setAttribute('aria-pressed',String(on));body.classList.toggle('grid-on',on);});
+  addEventListener('keydown',e=>{if(e.key==='g'||e.key==='G')grid.click();if(e.key===' '||e.key==='Enter'){if(e.target.tagName!=='BUTTON'){e.preventDefault();cycle();}}});
+</script>
+</body>
+</html>

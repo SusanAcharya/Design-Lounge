@@ -1,0 +1,112 @@
+<!-- Design Lounge piece: collapsing-sidebar-rail · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Collapsing sidebar rail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0f0e;--panel:#161615;--panel-2:#1d1d1b;--line:#2a2a27;--line-strong:#3a3a36;
+  --ink:#f2f0ea;--ink-2:#a8a69e;--ink-3:#6f6e68;--accent:#e0a34b;--accent-ink:#1a1400;
+  --font:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --w-open:240px;--w-rail:64px;--r:8px;
+  --t-fast:160ms;--t-layout:320ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--font);color:var(--ink);background:var(--bg);display:flex;overflow:hidden;-webkit-font-smoothing:antialiased}
+.side{width:var(--w-open);flex:none;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;transition:width var(--t-layout) var(--ease);position:relative}
+.side.rail{width:var(--w-rail)}
+.brand{height:56px;display:flex;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap}
+.mark{width:28px;height:28px;border-radius:7px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none;font:600 13px var(--mono)}
+.brand b{font-weight:600;font-size:14px;letter-spacing:-.01em}
+.brand small{display:block;color:var(--ink-3);font:11px var(--mono)}
+.label{transition:opacity var(--t-fast) var(--ease),transform var(--t-fast) var(--ease);transform-origin:left}
+.rail .label{opacity:0;transform:translateX(-6px);pointer-events:none}
+.group{padding:12px 10px 4px}
+.group h6{margin:0 0 6px;padding:0 6px;font:500 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);height:10px;white-space:nowrap;overflow:hidden}
+.rail .group h6{opacity:0}
+.nav{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;gap:12px;height:36px;padding:0 10px;border-radius:var(--r);color:var(--ink-2);text-decoration:none;position:relative;white-space:nowrap;outline:none}
+.nav a svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.nav a:hover{background:var(--panel-2);color:var(--ink)}
+.nav a:focus-visible{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent)}
+.nav a[aria-current="page"]{color:var(--ink);background:var(--panel-2)}
+.nav a[aria-current="page"]::before{content:"";position:absolute;left:-10px;top:8px;bottom:8px;width:2px;background:var(--accent);border-radius:2px}
+.nav .count{margin-left:auto;font:500 11px var(--mono);color:var(--ink-3);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:1px 7px}
+.rail .count{display:none}
+.tip{position:absolute;left:calc(100% + 10px);top:50%;transform:translate(-4px,-50%);background:var(--ink);color:var(--bg);font:500 12px var(--font);padding:5px 8px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity var(--t-fast) var(--ease),transform var(--t-fast) var(--ease);white-space:nowrap;z-index:5}
+.tip::before{content:"";position:absolute;right:100%;top:50%;margin-top:-4px;border:4px solid transparent;border-right-color:var(--ink)}
+.rail .nav a:hover .tip,.rail .nav a:focus-visible .tip{opacity:1;transform:translate(0,-50%)}
+.spacer{flex:1}
+.foot{border-top:1px solid var(--line);padding:10px}
+.user{display:flex;align-items:center;gap:10px;padding:6px;border-radius:var(--r);white-space:nowrap;overflow:hidden}
+.avatar{width:28px;height:28px;border-radius:50%;flex:none;background:linear-gradient(135deg,#6b7a5a,#c2b28a)}
+.user b{font-weight:500;display:block;font-size:13px}
+.user span{font:11px var(--mono);color:var(--ink-3)}
+.toggle{position:absolute;right:-12px;top:66px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line-strong);background:var(--panel-2);color:var(--ink-2);display:grid;place-items:center;cursor:pointer;z-index:6;transition:transform var(--t-layout) var(--ease),background var(--t-fast),color var(--t-fast);padding:0}
+.toggle:hover{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.toggle svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t-layout) var(--ease)}
+.rail .toggle svg{transform:rotate(180deg)}
+main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{height:56px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 24px;gap:16px}
+.crumb{font:12px var(--mono);color:var(--ink-3)}.crumb b{color:var(--ink);font-weight:500}
+.kbd{margin-left:auto;font:11px var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:5px;padding:3px 7px}
+.content{padding:28px 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-content:start}
+h1{grid-column:1/-1;margin:0 0 4px;font-size:22px;font-weight:600;letter-spacing:-.02em}
+.sub{grid-column:1/-1;color:var(--ink-2);margin:0 0 12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;min-height:120px}
+.card h3{margin:0 0 8px;font:500 12px var(--mono);color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase}
+.card .v{font-size:28px;font-weight:600;letter-spacing:-.03em}
+.card .d{font:12px var(--mono);color:var(--ink-3);margin-top:6px}
+.card .d i{font-style:normal;color:#8fbf7a}
+.wide{grid-column:1/-1;min-height:230px;display:flex;align-items:flex-end;gap:6px;padding:24px}
+.bar{flex:1;background:var(--panel-2);border-radius:4px 4px 0 0;position:relative;transition:background var(--t-fast)}
+.bar:hover{background:var(--accent)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<aside class="side" id="side" aria-label="Primary">
+  <div class="brand"><div class="mark">Ø</div><div class="label"><b>Orbital</b><small>workspace · eu-1</small></div></div>
+  <button class="toggle" id="toggle" aria-expanded="true" aria-controls="side" title="Collapse sidebar (⌘B)"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <div class="group"><h6>Overview</h6>
+  <ul class="nav">
+    <li><a href="#" aria-current="page"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg><span class="label">Dashboard</span><span class="tip">Dashboard</span></a></li>
+    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 15l5-5 4 4 7-8"/></svg><span class="label">Analytics</span><span class="tip">Analytics</span></a></li>
+    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 12l9 5 9-5M3 16l9 5 9-5"/></svg><span class="label">Deployments</span><span class="count">12</span><span class="tip">Deployments</span></a></li>
+  </ul></div>
+  <div class="group"><h6>Manage</h6>
+  <ul class="nav">
+    <li><a href="#"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0M16 4a3.5 3.5 0 010 7M21.5 20a6.5 6.5 0 00-5-6.3"/></svg><span class="label">Members</span><span class="count">48</span><span class="tip">Members</span></a></li>
+    <li><a href="#"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span class="label">Billing</span><span class="tip">Billing</span></a></li>
+    <li><a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg><span class="label">Settings</span><span class="tip">Settings</span></a></li>
+  </ul></div>
+  <div class="spacer"></div>
+  <div class="foot"><div class="user"><div class="avatar"></div><div class="label"><b>Mara Lindqvist</b><span>admin</span></div></div></div>
+</aside>
+<main>
+  <div class="top"><span class="crumb">orbital / <b>dashboard</b></span><span class="kbd">⌘B toggles the rail</span></div>
+  <section class="content">
+    <h1>Good evening, Mara</h1>
+    <p class="sub">3 deployments finished while you were away. Error budget is at 92 %.</p>
+    <div class="card"><h3>Requests / 24h</h3><div class="v">4.82 M</div><div class="d"><i>+6.1 %</i> vs. yesterday</div></div>
+    <div class="card"><h3>p95 latency</h3><div class="v">184 ms</div><div class="d"><i>−12 ms</i> after v2.14</div></div>
+    <div class="card"><h3>Error rate</h3><div class="v">0.07 %</div><div class="d">budget 0.10 %</div></div>
+    <div class="card wide" id="bars"></div>
+  </section>
+</main>
+<script>
+  const side=document.getElementById('side'),btn=document.getElementById('toggle');
+  function setRail(r){side.classList.toggle('rail',r);btn.setAttribute('aria-expanded',String(!r));btn.title=(r?'Expand':'Collapse')+' sidebar (⌘B)';}
+  btn.addEventListener('click',()=>setRail(!side.classList.contains('rail')));
+  addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='b'){e.preventDefault();btn.click();}});
+  const bars=document.getElementById('bars');
+  for(let i=0;i<48;i++){const b=document.createElement('div');b.className='bar';b.style.height=(20+Math.abs(Math.sin(i/4))*70+ (i%7)*3)+'%';b.title=`${(3.4+Math.sin(i/4)*1.1).toFixed(2)} M req`;bars.appendChild(b);}
+</script>
+</body>
+</html>

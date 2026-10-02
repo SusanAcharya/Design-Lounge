@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import { getPieces } from '../lib/pieces';
+const ids = (await getPieces()).map((p) => p.id);
+---
+<Base title="Surprise me">
+  <div class="wrap" style="padding:120px 0;text-align:center">
+    <p class="eyebrow">Picking a piece</p>
+    <h1 class="display h2">One moment.</h1>
+    <noscript><p class="lede" style="margin:24px auto">Scripts are off, so here is the floor instead: <a href="/browse">browse everything</a>.</p></noscript>
+  </div>
+  <script define:vars={{ ids }}>
+    const cur = document.referrer.match(/\/p\/([a-z0-9-]+)/)?.[1];
+    const pool = ids.filter((i) => i !== cur);
+    location.replace('/p/' + pool[Math.floor(Math.random() * pool.length)]);
+  </script>
+</Base>

@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { getPieces } from '../lib/pieces';
+const pieces = await getPieces();
+const sample = pieces.find((p) => p.id === 'collapsing-sidebar-rail') ?? pieces[0];
+const excerpt = (sample.body ?? '').split('\n').slice(0, 26).join('\n');
+---
+<Base title="Guide: briefs and agents" description="How to take a Design Lounge brief and get a coding agent to rebuild the piece in your stack, faithfully.">
+  <PageHead eyebrow="Guide" title="From brief to <i>build</i>" blurb="Every piece ships with a brief: a markdown document written for a coding agent, not for a human skimming. Here is how to get the most out of one." />
+  <div class="wrap guide">
+    <section class="g">
+      <div class="gn display">01</div>
+      <div>
+        <h2 class="display h3">Copy the whole brief</h2>
+        <p>Use the “Copy brief for your agent” button on any piece, or download the <code>.md</code>. Don’t trim it. The Tokens, Motion and Acceptance sections are the parts agents most often need and humans most often cut.</p>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">02</div>
+      <div>
+        <h2 class="display h3">Say the stack, once</h2>
+        <p>Put one line above the brief. Name the framework, the styling approach, and where the code should go. Everything else is already in the brief.</p>
+        <pre class="ex"><code>Build this exactly as specified in the brief below.
+Stack: Next.js 15 app router, Tailwind v4, TypeScript. Put it in components/AppSidebar.tsx.
+Don't improvise on numbers. Ask me only if the brief is contradictory.
+
+# Collapsing sidebar rail
+…</code></pre>
+        <p>Good stack lines are boring: <em>“SwiftUI, iOS 17+”</em>, <em>“React Native with Reanimated 3”</em>, <em>“plain HTML + CSS, one file”</em>, <em>“Flutter 3, Material 3”</em>. The brief is framework-agnostic; the agent does the translation.</p>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">03</div>
+      <div>
+        <h2 class="display h3">Hold it to the checklist</h2>
+        <p>Every brief ends with an acceptance checklist. After the first build, paste it back: <em>“Go through this checklist and tell me which items pass, then fix the rest.”</em> Agents are much better at verifying a numbered list than at judging “does it feel right”.</p>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">04</div>
+      <div>
+        <h2 class="display h3">Change tokens, not the spec</h2>
+        <p>Want it in your brand? Edit the <code>:root</code> block in the Tokens section before you paste. Swap the accent hex, the font families, the radii. Leave the durations, easings and structure alone; that’s where the quality lives.</p>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">05</div>
+      <div>
+        <h2 class="display h3">Combine pieces deliberately</h2>
+        <p>Briefs compose. Hand an agent a shell (a layout piece), then a navigation piece, then a pattern piece, one at a time, each with the same stack line. The <a href="/collections">collections</a> are ordered with this in mind.</p>
+      </div>
+    </section>
+
+    <section class="anatomy">
+      <div class="section-head">
+        <div><span class="eyebrow">Anatomy</span><h2 class="display h3">What’s in a brief</h2></div>
+      </div>
+      <div class="cols">
+        <ol class="parts">
+          <li><b>What it is</b> — the piece in four sentences, including the feeling it should give.</li>
+          <li><b>Reference behaviour</b> — numbered, testable, in order.</li>
+          <li><b>Structure</b> — an ASCII wireframe plus a map to semantic elements.</li>
+          <li><b>Tokens</b> — a <code>:root</code> block of every colour, font, size, radius, shadow and motion value.</li>
+          <li><b>Typography</b> — role by role: family, size, weight, leading, tracking, case.</li>
+          <li><b>Motion</b> — trigger, property, from → to, duration, easing, reduced-motion fallback.</li>
+          <li><b>States</b> — hover, focus, active, selected, loading, empty, error.</li>
+          <li><b>Accessibility</b> — roles, keys, focus order, contrast, hit targets.</li>
+          <li><b>Responsive rules</b> — what changes at each width.</li>
+          <li><b>Acceptance checklist</b> — 8 to 15 things to verify.</li>
+          <li><b>Implementation notes</b> — the tricky bits, with code an agent can lift.</li>
+        </ol>
+        <div class="excerpt">
+          <div class="excerpt-bar mono faint">{sample.id}.md · first lines</div>
+          <pre><code>{excerpt}</code></pre>
+          <a class="btn sm" href={`/p/${sample.id}`}>See the piece</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .guide { display: flex; flex-direction: column; gap: 0; margin-top: 40px; }
+  .g { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 32px; padding: 36px 0; border-top: 1px solid var(--line); }
+  .g:first-child { border-top: 1px solid var(--ink); }
+  .gn { font-size: 48px; color: var(--ink-3); line-height: 1; }
+  .g p { margin-top: 12px; max-width: 64ch; color: var(--ink-2); font-size: 16px; line-height: 1.6; text-wrap: pretty; }
+  .g p a { text-decoration: underline; text-underline-offset: 3px; }
+  .g code { background: var(--paper-2); border: 1px solid var(--line); padding: .05em .35em; border-radius: 4px; }
+  .ex { margin: 16px 0; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px 18px; font-size: 13px; line-height: 1.55; overflow: auto; }
+  .anatomy { margin-top: 48px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .parts { list-style: decimal; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: var(--ink-2); }
+  .parts b { color: var(--ink); font-weight: 600; }
+  .excerpt { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; display: flex; flex-direction: column; }
+  .excerpt-bar { padding: 8px 14px; border-bottom: 1px solid var(--line); background: var(--paper-2); }
+  .excerpt pre { margin: 0; padding: 16px; font-size: 11.5px; line-height: 1.5; overflow: auto; max-height: 420px; flex: 1; }
+  .excerpt .btn { margin: 12px; align-self: flex-start; }
+  @media (max-width: 860px) { .g { grid-template-columns: 1fr; gap: 8px; } .gn { font-size: 32px; } .cols { grid-template-columns: 1fr; } }
+</style>

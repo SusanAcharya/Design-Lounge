@@ -1,0 +1,113 @@
+<!-- Design Lounge piece: pwa-update-toast · platform: pwa · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel — update toast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#191a1c;--panel:#212326;--panel-2:#2a2d31;--line:#33373c;--ink:#f1f0ec;--ink-2:#a9aaa4;--ink-3:#6f716c;
+  --lime:#c8f04c;--lime-ink:#1b2400;--toast:#f1f0ec;--toast-ink:#191a1c;
+  --font:"Bricolage Grotesque",system-ui,sans-serif;
+  --nav-h:64px;--r-toast:16px;--r-btn:10px;
+  --t-micro:160ms;--t-toast:420ms;--t-exit:240ms;--t-count:10s;--t-wipe:520ms;--t-hold:900ms;
+  --ease-out:cubic-bezier(.16,1,.3,1);--ease-std:cubic-bezier(.2,.7,.2,1);--ease-in:cubic-bezier(.4,0,1,1);--ease-emph:cubic-bezier(.2,0,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--font);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;position:relative;overflow:hidden}
+svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.top{padding:62px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.top h1{margin:0;font-size:28px;font-weight:800;letter-spacing:-.02em}
+.ver{font-size:12px;font-weight:600;color:var(--ink-3);border:1px solid var(--line);border-radius:999px;padding:4px 10px;transition:color var(--t-micro),border-color var(--t-micro)}
+.ver.new{color:var(--lime);border-color:var(--lime)}
+.sub{margin:6px 20px 0;color:var(--ink-2);font-size:14px}
+.tasks{list-style:none;margin:18px 16px 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.tasks button{display:flex;align-items:center;gap:14px;width:100%;min-height:56px;padding:8px 12px;border:0;border-radius:14px;background:var(--panel);color:var(--ink);font:400 15px var(--font);text-align:left;cursor:pointer}
+.tasks button:hover{background:var(--panel-2)}
+.tasks button:focus-visible,.act:focus-visible,.dis:focus-visible,.nav button:focus-visible,.again:focus-visible{outline:3px solid var(--lime);outline-offset:2px}
+.box{width:22px;height:22px;border-radius:7px;border:2px solid var(--ink-3);flex:none;display:grid;place-items:center;transition:background var(--t-micro),border-color var(--t-micro)}
+.box svg{width:14px;height:14px;stroke-width:3;color:var(--lime-ink);opacity:0}
+[aria-checked="true"] .box{background:var(--lime);border-color:var(--lime)}
+[aria-checked="true"] .box svg{opacity:1}
+[aria-checked="true"] span{text-decoration:line-through;color:var(--ink-3)}
+.tasks small{margin-left:auto;font-size:12px;color:var(--ink-3);font-weight:600;flex:none}
+.again{position:absolute;left:16px;bottom:112px;height:40px;padding:0 14px;border:1px solid var(--line);border-radius:var(--r-btn);background:transparent;color:var(--ink-2);font:600 13px var(--font);cursor:pointer}
+.again:hover{background:var(--panel)}
+.toast{position:absolute;left:16px;right:16px;bottom:112px;background:var(--toast);color:var(--toast-ink);border-radius:var(--r-toast);padding:12px 6px 12px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 12px 32px rgba(0,0,0,.45);transform:translateY(24px);opacity:0;pointer-events:none;transition:transform var(--t-exit) var(--ease-in),opacity var(--t-exit) var(--ease-in);z-index:3}
+.toast.on{transform:none;opacity:1;pointer-events:auto;transition:transform var(--t-toast) var(--ease-out),opacity 200ms linear}
+.toast .ic{width:36px;height:36px;border-radius:10px;background:var(--lime);color:var(--lime-ink);display:grid;place-items:center;flex:none}
+.toast b{display:block;font-size:14px;font-weight:600;line-height:1.2;white-space:nowrap}
+.toast small{font-size:12px;color:#5f615c}
+.toast .txt{flex:1;min-width:0}
+.act{height:36px;padding:0 12px;border:0;border-radius:var(--r-btn);background:var(--toast-ink);color:var(--toast);font:600 13px var(--font);cursor:pointer;flex:none}
+.act:active{transform:scale(.97)}
+.dis{width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:#5f615c;display:grid;place-items:center;cursor:pointer;position:relative;flex:none}
+.dis svg{width:14px;height:14px;stroke-width:2.4}
+.ring{position:absolute;inset:0;width:36px;height:36px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:2}
+.ring .tr{stroke:rgba(25,26,28,.12)}
+.ring .pr{stroke:var(--toast-ink);stroke-dasharray:100.5;stroke-dashoffset:0;stroke-linecap:round}
+.toast.on .ring .pr{animation:count var(--t-count) linear forwards}
+@keyframes count{to{stroke-dashoffset:100.5}}
+.wipe{position:absolute;inset:0;background:var(--lime);color:var(--lime-ink);display:grid;place-items:center;transform:translateY(100%);z-index:5;pointer-events:none}
+.wipe b{font-size:56px;font-weight:800;letter-spacing:-.04em;opacity:0;transform:translateY(10px);transition:opacity 200ms,transform 300ms var(--ease-out)}
+.wipe small{position:absolute;bottom:70px;font-size:13px;font-weight:600;opacity:0;transition:opacity 200ms 100ms}
+.wiping .wipe{animation:wipe var(--t-wipe) var(--ease-emph) forwards}
+.wiping .wipe b,.wiping .wipe small{opacity:1;transform:none;transition-delay:300ms}
+.unwiping .wipe{transform:none;animation:unwipe var(--t-wipe) var(--ease-in) forwards}
+@keyframes wipe{to{transform:none}}
+@keyframes unwipe{to{transform:translateY(-100%)}}
+.nav{position:absolute;left:0;right:0;bottom:0;height:calc(var(--nav-h) + 34px);padding:0 8px 34px;background:var(--panel);border-top:1px solid var(--line);display:flex}
+.nav button{flex:1;border:0;background:transparent;color:var(--ink-3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font:600 11px var(--font);cursor:pointer;border-radius:12px;margin:6px 2px}
+.nav button[aria-current="page"]{color:var(--lime)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}.toast.on .ring .pr{animation:none;stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<header class="top"><h1>Kestrel</h1><span class="ver" id="ver">v2.4.0</span></header>
+<p class="sub">Tuesday · 5 open, 2 done</p>
+<ul class="tasks" id="tasks">
+  <li><button role="checkbox" aria-checked="true"><i class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span>Ship release notes for 2.4.1</span><small>done</small></button></li>
+  <li><button role="checkbox" aria-checked="true"><i class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span>Reply to Loam Studio invoice</span><small>done</small></button></li>
+  <li><button role="checkbox" aria-checked="false"><i class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span>Review the drawer scrim opacity</span><small>10:30</small></button></li>
+  <li><button role="checkbox" aria-checked="false"><i class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span>Book dentist for Thursday</span><small>today</small></button></li>
+  <li><button role="checkbox" aria-checked="false"><i class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span>Water the monstera</span><small>today</small></button></li>
+  <li><button role="checkbox" aria-checked="false"><i class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span>Draft Halden onboarding copy</span><small>Wed</small></button></li>
+  <li><button role="checkbox" aria-checked="false"><i class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span>Renew Nord Post locker</span><small>Fri</small></button></li>
+</ul>
+<button class="again" id="again">Simulate update</button>
+<div class="toast on" id="toast" role="status" aria-live="polite">
+  <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg></span>
+  <div class="txt"><b>New version available</b><small>v2.4.1 · fixes offline sync</small></div>
+  <button class="act" id="reload">Reload</button>
+  <button class="dis" id="dis" aria-label="Dismiss, auto-closes in 10 seconds"><svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="tr" cx="18" cy="18" r="16"/><circle class="pr" cx="18" cy="18" r="16"/></svg><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+<div class="wipe" id="wipe" aria-hidden="true"><b>v2.4.1</b><small>Kestrel · updated</small></div>
+<nav class="nav" aria-label="Primary">
+  <button aria-current="page"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg>Today</button>
+  <button><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Upcoming</button>
+  <button><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Lists</button>
+  <button><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/></svg>Settings</button>
+</nav>
+<script>
+  const body=document.body,toast=document.getElementById('toast'),ver=document.getElementById('ver');let auto=null,w1=null,w2=null;
+  function show(){clearTimeout(auto);toast.classList.remove('on');void toast.offsetWidth;toast.classList.add('on');auto=setTimeout(hide,10000);}
+  function hide(){clearTimeout(auto);toast.classList.remove('on');}
+  document.getElementById('dis').addEventListener('click',hide);
+  document.getElementById('reload').addEventListener('click',()=>{
+    hide();clearTimeout(w1);clearTimeout(w2);body.classList.remove('unwiping');body.classList.add('wiping');
+    w1=setTimeout(()=>{ver.textContent='v2.4.1';ver.classList.add('new');body.classList.remove('wiping');body.classList.add('unwiping');},1420);
+    w2=setTimeout(()=>body.classList.remove('unwiping'),2000);
+  });
+  document.getElementById('again').addEventListener('click',()=>{ver.textContent='v2.4.0';ver.classList.remove('new');show();});
+  document.getElementById('tasks').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const on=b.getAttribute('aria-checked')!=='true';b.setAttribute('aria-checked',String(on));b.querySelector('small').textContent=on?'done':'today';});
+  document.querySelector('.nav').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('.nav button').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','page');});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&toast.classList.contains('on'))hide();});
+  auto=setTimeout(hide,10000);
+</script>
+</body>
+</html>

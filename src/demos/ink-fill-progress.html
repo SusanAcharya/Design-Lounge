@@ -1,0 +1,94 @@
+<!-- Design Lounge piece: ink-fill-progress · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ink-fill upload progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4efe6;--paper-2:#eae3d6;--ink:#101a2e;--ink-2:#4e5566;--ink-3:#8b8f99;--line:#d8d1c4;--accent:#101a2e;--done:#1f6f4a;
+  --display:"Unbounded",system-ui,sans-serif;--mono:"DM Mono",ui-monospace,monospace;
+  --p:0;--word-size:168px;
+  --t-micro:160ms;--t-fill:120ms;--t-done:600ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--mono);color:var(--ink);background:var(--paper);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;cursor:pointer;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none}
+.top,.bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 40px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.top b{color:var(--ink);font-weight:500}
+.status{display:flex;align-items:center;gap:10px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--ink);animation:pulse 1.6s var(--ease) infinite}
+.done .status i{background:var(--done);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.stage{position:relative;display:grid;grid-template-columns:260px 1fr 180px;align-items:center;min-height:0;padding:0 40px}
+.word{position:relative;display:grid;justify-self:center;font:900 var(--word-size)/1 var(--display);letter-spacing:-.04em;line-height:.95;text-align:center;white-space:nowrap}
+.word>span{grid-area:1/1}
+.word .hollow{color:transparent;-webkit-text-stroke:2px var(--ink);text-stroke:2px var(--ink)}
+.word .fill{color:var(--ink);-webkit-text-stroke:2px var(--ink);clip-path:inset(calc((100 - var(--p)) * 1%) -8px -4px -8px);transition:clip-path var(--t-fill) linear}
+.word .line{position:absolute;left:-6%;right:-6%;top:calc((100 - var(--p)) * 1%);height:2px;background:var(--ink);opacity:.25;transition:top var(--t-fill) linear}
+.done .word .line{opacity:0}
+.pct{text-align:right;justify-self:end}
+.pct b{display:block;font:500 56px/1 var(--mono);letter-spacing:-.04em;color:var(--ink);font-variant-numeric:tabular-nums}
+.pct b::after{content:"%";font-size:22px;margin-left:4px;color:var(--ink-3);letter-spacing:0}
+.pct span{display:block;margin-top:8px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.meta{font-size:12px;line-height:1.9;letter-spacing:.04em;color:var(--ink-2)}
+.meta b{color:var(--ink);font-weight:500}
+.meta .row{display:flex;gap:14px;align-items:center}
+.meta .row i{width:14px;height:14px;border:1.5px solid var(--line);border-radius:3px;display:inline-grid;place-items:center;flex:none;transition:background var(--t-micro),border-color var(--t-micro)}
+.meta .row i svg{width:9px;height:9px;stroke:var(--paper);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.meta .row.ok i{background:var(--done);border-color:var(--done)}
+.meta .row.ok i svg{opacity:1}
+.meta .row.live i{border-color:var(--ink)}
+.bar{grid-column:1/-1;height:1px;background:var(--line);position:relative;margin:0 40px}
+.bar::after{content:"";position:absolute;left:0;top:-1px;height:3px;width:calc(var(--p) * 1%);background:var(--ink);transition:width var(--t-fill) linear}
+.done .bar::after{background:var(--done)}
+.bottom .replay{display:flex;align-items:center;gap:8px;color:var(--ink-3);transition:color var(--t-micro)}
+.bottom .replay svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+body:hover .replay{color:var(--ink)}
+.toast{position:absolute;left:50%;bottom:24px;transform:translate(-50%,12px);opacity:0;background:var(--ink);color:var(--paper);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:10px 16px;border-radius:999px;transition:opacity var(--t-done) var(--ease-out),transform var(--t-done) var(--ease-out);display:flex;align-items:center;gap:8px;pointer-events:none}
+.toast svg{width:14px;height:14px;stroke:var(--done);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.done .toast{opacity:1;transform:translate(-50%,0)}
+button.sr{position:absolute;left:-9999px}
+button.sr:focus{left:40px;bottom:24px;background:var(--ink);color:var(--paper);border:0;padding:8px 12px;font:inherit}
+@media (max-width:1100px){:root{--word-size:120px}.stage{grid-template-columns:220px 1fr 140px}.pct b{font-size:40px}}
+@media (max-width:767px){:root{--word-size:72px}.stage{grid-template-columns:1fr;gap:20px;padding:0 24px}.pct{text-align:left;justify-self:start}}
+@media (prefers-reduced-motion:reduce){.status i{animation:none}.word .fill,.word .line,.bar::after,.toast{transition-duration:1ms}}
+</style>
+</head>
+<body id="body" aria-live="off">
+<div class="top"><span><b>Anvil</b> · Uploads</span><span class="status"><i aria-hidden="true"></i><span id="state">Uploading</span></span></div>
+<main class="stage" aria-label="Upload progress">
+  <div class="meta" id="files">
+    <div class="row" data-at="0"><i><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></i><span><b>site-footage-01.mov</b> · 142 MB</span></div>
+    <div class="row" data-at="57"><i><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></i><span><b>site-footage-02.mov</b> · 88 MB</span></div>
+    <div class="row" data-at="92"><i><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></i><span><b>captions-en.srt</b> · 18 KB</span></div>
+    <div style="margin-top:10px;color:var(--ink-3)">3 files · 230 MB · to eu-north-1</div>
+  </div>
+  <div class="word" aria-hidden="true"><span class="hollow">ANVIL</span><span class="fill">ANVIL</span><span class="line"></span></div>
+  <div class="pct" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Upload progress" id="pb"><b id="num">0</b><span id="eta">calculating</span></div>
+  <div class="toast" id="toast"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>All files uploaded</div>
+  <button class="sr" id="replayBtn">Replay upload</button>
+</main>
+<div class="bar" aria-hidden="true"></div>
+<div class="bottom"><span id="speed">— MB/s</span><span class="replay" id="hint"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Click anywhere to replay</span></div>
+<script>
+  const body=document.getElementById('body'),num=document.getElementById('num'),eta=document.getElementById('eta'),speed=document.getElementById('speed'),state=document.getElementById('state'),pb=document.getElementById('pb');
+  const rows=[...document.querySelectorAll('#files .row')];
+  const total=230,dur=7200;let start=0,raf=0;
+  const curve=t=>{const e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;return Math.min(1,e*(1-.06*Math.sin(t*9)*Math.max(0,1-t*1.2)))};
+  function frame(now){const t=Math.min(1,(now-start)/dur),p=Math.round(curve(t)*100);
+    body.style.setProperty('--p',p);num.textContent=p;pb.setAttribute('aria-valuenow',p);
+    const left=Math.max(0,Math.round((dur-(now-start))/1000));eta.textContent=t<1?(left+' s remaining'):'done';
+    speed.textContent=t<1?((total/(dur/1000))*(0.7+0.6*Math.abs(Math.sin(now/700)))).toFixed(1)+' MB/s':'230 MB sent';
+    rows.forEach(r=>{const at=+r.dataset.at;r.classList.toggle('ok',p>=at&&(p>=(rows[rows.indexOf(r)+1]?.dataset.at??101)));r.classList.toggle('live',p>=at&&!r.classList.contains('ok'));});
+    if(t<1)raf=requestAnimationFrame(frame);else{body.classList.add('done');state.textContent='Complete';rows.forEach(r=>{r.classList.add('ok');r.classList.remove('live');});}}
+  function play(){cancelAnimationFrame(raf);body.classList.remove('done');state.textContent='Uploading';rows.forEach(r=>r.classList.remove('ok','live'));start=performance.now();raf=requestAnimationFrame(frame);}
+  body.addEventListener('click',play);document.getElementById('replayBtn').addEventListener('click',e=>{e.stopPropagation();play();});
+  addEventListener('keydown',e=>{if(e.key==='r'||e.key==='R')play();});
+  play();
+</script>
+</body>
+</html>

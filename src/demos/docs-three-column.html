@@ -1,0 +1,167 @@
+<!-- Design Lounge piece: docs-three-column · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Documentation layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Chivo+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--side:#f7f8fa;--line:#e6e8ec;--line-2:#d5d9e0;--ink:#17191c;--ink-2:#5a6270;--ink-3:#8b93a1;
+  --accent:#2457d6;--accent-soft:#e8eefc;--code-bg:#0f1419;--code-ink:#e6edf3;--code-2:#7ee787;--code-3:#79c0ff;--code-4:#ffa657;--note:#fff7e0;--note-line:#f0c96a;
+  --sans:"Public Sans",system-ui,sans-serif;--mono:"Chivo Mono",ui-monospace,monospace;
+  --w-nav:256px;--w-toc:220px;--h-top:56px;--r:6px;
+  --t-micro:140ms;--t-layout:260ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.6 var(--sans);color:var(--ink);background:var(--bg);display:grid;grid-template-rows:var(--h-top) 1fr;overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{display:grid;grid-template-columns:var(--w-nav) 1fr auto;align-items:center;border-bottom:1px solid var(--line);padding:0 20px 0 0}
+.logo{display:flex;align-items:center;gap:10px;padding:0 20px;font-weight:700;font-size:15px;letter-spacing:-.01em;border-right:1px solid var(--line);height:100%}
+.logo i{width:22px;height:22px;border-radius:6px;background:var(--ink);display:grid;place-items:center}
+.logo i svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round}
+.logo span{font:400 12px var(--mono);color:var(--ink-3);margin-left:2px}
+.search{margin-left:24px;width:380px;height:36px;border:1px solid var(--line-2);border-radius:8px;background:var(--side);display:flex;align-items:center;gap:8px;padding:0 10px;color:var(--ink-3);transition:border-color var(--t-micro),box-shadow var(--t-micro)}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--bg)}
+.search svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;flex:none}
+.search input{flex:1;border:0;background:none;font:14px var(--sans);color:var(--ink);outline:none;min-width:0}
+.search input::placeholder{color:var(--ink-3)}
+.kbd{font:500 11px/1 var(--mono);color:var(--ink-2);border:1px solid var(--line-2);border-radius:4px;padding:3px 5px;background:var(--bg)}
+.tools{display:flex;gap:14px;align-items:center;font-size:13px;color:var(--ink-2)}
+.tools .ver{font:500 12px var(--mono);border:1px solid var(--line-2);border-radius:999px;padding:3px 9px}
+.shell{display:grid;grid-template-columns:var(--w-nav) 1fr var(--w-toc);min-height:0}
+nav.side{background:var(--side);border-right:1px solid var(--line);overflow:auto;padding:16px 12px 24px}
+.grp{margin-bottom:6px}
+.grp>button{all:unset;display:flex;align-items:center;justify-content:space-between;width:100%;box-sizing:border-box;padding:6px 8px;font:600 12px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);cursor:pointer;border-radius:var(--r)}
+.grp>button:hover{color:var(--ink)}
+.grp>button:focus-visible{outline:2px solid var(--accent)}
+.grp>button svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t-micro) var(--ease)}
+.grp.closed>button svg{transform:rotate(-90deg)}
+.grp .list{display:grid;grid-template-rows:1fr;transition:grid-template-rows var(--t-layout) var(--ease)}
+.grp.closed .list{grid-template-rows:0fr}
+.grp .list>ul{list-style:none;margin:2px 0 0 10px;padding:0 0 0 8px;border-left:1px solid var(--line-2);min-height:0;overflow:hidden}
+.grp li a{display:block;padding:5px 10px;margin:1px 0 1px -9px;border-left:1px solid transparent;font-size:13.5px;color:var(--ink-2);border-radius:0 var(--r) var(--r) 0;position:relative}
+.grp li a:hover{color:var(--ink);background:rgba(23,25,28,.04)}
+.grp li a[aria-current="page"]{color:var(--accent);font-weight:500;border-left-color:var(--accent);background:var(--accent-soft)}
+main{overflow:auto;scroll-behavior:smooth;padding:40px 48px 120px;scroll-padding-top:24px}
+.prose{max-width:72ch;margin:0}
+.crumbs{font:500 12px var(--mono);color:var(--ink-3);margin:0 0 14px}
+.crumbs b{color:var(--accent);font-weight:500}
+h1{font-size:34px;line-height:1.15;letter-spacing:-.025em;font-weight:700;margin:0 0 12px}
+.lede{font-size:17px;color:var(--ink-2);margin:0 0 28px}
+h2{font-size:22px;letter-spacing:-.015em;font-weight:600;margin:40px 0 10px;padding-top:12px;border-top:1px solid var(--line);scroll-margin-top:16px}
+h2 a{color:var(--ink-3);font-weight:400;margin-left:8px;opacity:0;transition:opacity var(--t-micro)}
+h2:hover a{opacity:1}
+p{margin:0 0 14px}
+p code,li code{font:13px var(--mono);background:var(--side);border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+.note{border-left:3px solid var(--note-line);background:var(--note);padding:12px 16px;border-radius:0 var(--r) var(--r) 0;margin:0 0 18px;font-size:14px}
+.note b{font-weight:600}
+pre{position:relative;background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:18px 20px;margin:0 0 18px;font:13px/1.65 var(--mono);overflow:auto;tab-size:2}
+pre .k{color:var(--code-4)}pre .s{color:var(--code-2)}pre .f{color:var(--code-3)}pre .c{color:#8b949e}
+.copy{position:absolute;top:10px;right:10px;height:28px;padding:0 10px;border:1px solid rgba(255,255,255,.14);border-radius:6px;background:rgba(255,255,255,.06);color:var(--code-ink);font:500 12px var(--sans);display:flex;align-items:center;gap:6px;cursor:pointer;transition:background var(--t-micro),border-color var(--t-micro)}
+.copy:hover{background:rgba(255,255,255,.12)}
+.copy:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.copy svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.copy.ok{color:var(--code-2);border-color:var(--code-2)}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:0 0 18px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2)}
+td:first-child{font:13px var(--mono)}
+aside.toc{border-left:1px solid var(--line);padding:40px 20px 0 24px;position:sticky;top:0;align-self:start;font-size:13px}
+.toc h6{margin:0 0 10px;font:600 11px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.toc .wrap{position:relative}
+.toc ul{list-style:none;margin:0;padding:0;border-left:1px solid var(--line-2)}
+.toc li a{display:block;padding:5px 0 5px 14px;color:var(--ink-2);margin-left:-1px;border-left:1px solid transparent;transition:color var(--t-micro),border-color var(--t-micro)}
+.toc li a:hover{color:var(--ink)}
+.toc li a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+.toc .ind{position:absolute;left:-1px;width:2px;background:var(--accent);height:29px;top:0;transition:top var(--t-layout) var(--ease)}
+.pager{display:flex;justify-content:space-between;gap:16px;margin-top:48px;max-width:72ch}
+.pager a{flex:1;border:1px solid var(--line);border-radius:10px;padding:12px 16px;font-size:14px;transition:border-color var(--t-micro)}
+.pager a:hover{border-color:var(--accent)}
+.pager a small{display:block;font:500 11px/1.6 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.pager a:last-child{text-align:right}
+@media (max-width:1023px){.shell{grid-template-columns:var(--w-nav) 1fr}aside.toc{display:none}}
+@media (max-width:767px){.shell{grid-template-columns:1fr}nav.side{display:none}.search{width:auto;flex:1}.top{grid-template-columns:auto 1fr auto}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}main{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="#"><i><svg viewBox="0 0 24 24"><path d="M4 18c4-2 4-10 8-12 4 2 4 10 8 12"/></svg></i>Loam<span>docs</span></a>
+  <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search the docs" aria-label="Search the docs"><span class="kbd" aria-hidden="true">⌘K</span></label>
+  <div class="tools"><span class="ver">v3.2</span><a href="#">Changelog</a><a href="#">Support</a></div>
+</header>
+<div class="shell">
+  <nav class="side" aria-label="Docs">
+    <div class="grp"><button aria-expanded="true" aria-controls="g1">Getting started<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="list" id="g1"><ul><li><a href="#">Installation</a></li><li><a href="#">Your first migration</a></li><li><a href="#" aria-current="page">Configuration</a></li><li><a href="#">CLI reference</a></li></ul></div></div>
+    <div class="grp"><button aria-expanded="true" aria-controls="g2">Schemas<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="list" id="g2"><ul><li><a href="#">Defining tables</a></li><li><a href="#">Relations</a></li><li><a href="#">Indexes</a></li><li><a href="#">Enums and domains</a></li></ul></div></div>
+    <div class="grp closed"><button aria-expanded="false" aria-controls="g3">Migrations<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="list" id="g3"><ul><li><a href="#">Generating</a></li><li><a href="#">Applying</a></li><li><a href="#">Rollback</a></li><li><a href="#">Squashing</a></li></ul></div></div>
+    <div class="grp closed"><button aria-expanded="false" aria-controls="g4">Deploy<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="list" id="g4"><ul><li><a href="#">CI pipelines</a></li><li><a href="#">Zero-downtime</a></li><li><a href="#">Environments</a></li></ul></div></div>
+  </nav>
+  <main id="main">
+    <article class="prose">
+      <p class="crumbs">Getting started / <b>Configuration</b></p>
+      <h1>Configuration</h1>
+      <p class="lede">Loam reads a single <code>loam.config.ts</code> at the project root. Everything below has a sensible default; most projects set three fields.</p>
+      <h2 id="file">The config file<a href="#file" aria-label="Link to this section">#</a></h2>
+      <p>Create the file with <code>loam init</code>, or write it by hand. The <code>defineConfig</code> helper gives you types and validates unknown keys at load time, so a typo fails fast instead of silently using a default.</p>
+      <pre><button class="copy" id="copy" aria-live="polite"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg><span>Copy</span></button><code id="code"><span class="c">// loam.config.ts</span>
+<span class="k">import</span> { defineConfig } <span class="k">from</span> <span class="s">"loam"</span>;
+
+<span class="k">export default</span> <span class="f">defineConfig</span>({
+  dialect: <span class="s">"postgres"</span>,
+  url: process.env.DATABASE_URL,
+  migrations: { dir: <span class="s">"./db/migrations"</span>, table: <span class="s">"_loam"</span> },
+  strict: <span class="k">true</span>,
+});</code></pre>
+      <div class="note"><b>Environment variables</b> are read after the file is evaluated, so <code>process.env</code> is safe to use here. Loam never loads a <code>.env</code> file for you.</div>
+      <h2 id="fields">Fields<a href="#fields" aria-label="Link to this section">#</a></h2>
+      <table><thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead><tbody>
+        <tr><td>dialect</td><td>"postgres" | "sqlite" | "mysql"</td><td>—</td><td>Required.</td></tr>
+        <tr><td>url</td><td>string</td><td>—</td><td>Connection string; required unless a <code>pool</code> is passed.</td></tr>
+        <tr><td>migrations.dir</td><td>string</td><td>./migrations</td><td>Relative to the config file.</td></tr>
+        <tr><td>migrations.table</td><td>string</td><td>_loam_migrations</td><td>Created on first run.</td></tr>
+        <tr><td>strict</td><td>boolean</td><td>false</td><td>Refuse to run with drift between schema and database.</td></tr>
+        <tr><td>timeoutMs</td><td>number</td><td>30000</td><td>Per-statement timeout.</td></tr>
+      </tbody></table>
+      <h2 id="env">Environments<a href="#env" aria-label="Link to this section">#</a></h2>
+      <p>Pass a function instead of an object to branch on <code>LOAM_ENV</code>. The function runs once per CLI invocation and its return value is cached for the process. Return the same shape in every branch; Loam diffs environments at <code>loam check</code> time and warns when a key exists in one and not another.</p>
+      <p>Typical splits: a local SQLite file for tests, a pooled Postgres URL in production, and a read-only replica URL for <code>loam inspect</code>. Keep secrets out of the file itself; reference them through <code>process.env</code>.</p>
+      <h2 id="strict">Strict mode<a href="#strict" aria-label="Link to this section">#</a></h2>
+      <p>With <code>strict: true</code>, every command first compares the live database with the schema files. Any drift (a column added by hand, a missing index, a differing default) aborts the command with a diff. This is the recommended setting for CI and production; local development usually leaves it off so you can experiment in a database console.</p>
+      <p>Drift checks take about 40 ms on a 200-table schema and are cached for 60 seconds per connection string.</p>
+      <h2 id="ts">TypeScript<a href="#ts" aria-label="Link to this section">#</a></h2>
+      <p>The config file is loaded with a lightweight transpiler, so you can import shared modules and use top-level <code>await</code>. Path aliases from <code>tsconfig.json</code> are honoured. If the file throws, the CLI prints the stack with source maps and exits with code 2.</p>
+      <p>To type the config without the helper, annotate the export as <code>LoamConfig</code>, exported from the package root.</p>
+    </article>
+    <nav class="pager" aria-label="Pagination"><a href="#"><small>Previous</small>Your first migration</a><a href="#"><small>Next</small>CLI reference</a></nav>
+  </main>
+  <aside class="toc" aria-label="On this page">
+    <h6>On this page</h6>
+    <div class="wrap"><span class="ind" aria-hidden="true"></span><ul id="toc">
+      <li><a href="#file" class="on">The config file</a></li><li><a href="#fields">Fields</a></li><li><a href="#env">Environments</a></li><li><a href="#strict">Strict mode</a></li><li><a href="#ts">TypeScript</a></li>
+    </ul></div>
+  </aside>
+</div>
+<script>
+  document.querySelectorAll('.grp>button').forEach(b=>b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));b.parentElement.classList.toggle('closed',!open);}));
+  const q=document.getElementById('q');
+  addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();q.focus();q.select();}
+    if(e.key==='Escape'&&document.activeElement===q)q.blur();});
+  const links=[...document.querySelectorAll('#toc a')],ind=document.querySelector('.ind'),main=document.getElementById('main');
+  const heads=links.map(a=>document.getElementById(a.getAttribute('href').slice(1)));
+  function spy(){const y=main.scrollTop+120;let i=0;heads.forEach((h,k)=>{if(h&&h.offsetTop<=y)i=k;});
+    links.forEach((a,k)=>a.classList.toggle('on',k===i));ind.style.top=links[i].offsetTop+'px';}
+  main.addEventListener('scroll',spy,{passive:true});spy();
+  links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const h=document.getElementById(a.getAttribute('href').slice(1));if(h)main.scrollTo({top:h.offsetTop-16,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}));
+  const copy=document.getElementById('copy'),lab=copy.querySelector('span'),code=document.getElementById('code');
+  copy.addEventListener('click',async()=>{const t=code.textContent;let ok=false;
+    try{await navigator.clipboard.writeText(t);ok=true;}catch(_){try{const r=document.createRange();r.selectNodeContents(code);const s=getSelection();s.removeAllRanges();s.addRange(r);ok=document.execCommand('copy');}catch(__){}}
+    lab.textContent=ok?'Copied':'Select all';copy.classList.toggle('ok',ok);setTimeout(()=>{lab.textContent='Copy';copy.classList.remove('ok');},1600);});
+</script>
+</body>
+</html>

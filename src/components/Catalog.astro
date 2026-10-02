@@ -1,0 +1,179 @@
+---
+/* Filterable, sortable catalogue of pieces. All pieces render; filtering happens client-side so URLs are shareable. */
+import PieceCard from './PieceCard.astro';
+import { PLATFORM_META, TYPE_META, STYLE_META, numberMap, type Piece } from '../lib/pieces';
+
+interface Props {
+  pieces: Piece[];          // the pieces to render (already scoped, e.g. a room)
+  all: Piece[];             // full catalogue (for numbering)
+  lock?: { platform?: string; type?: string; style?: string }; // filters fixed by the page (hidden from UI)
+  showFilters?: boolean;
+}
+const { pieces, all, lock = {}, showFilters = true } = Astro.props;
+const nums = numberMap(all);
+const list = [...pieces].reverse(); // newest first
+const count = (k: 'platform' | 'type', v: string) => pieces.filter((p) => p.data[k] === v).length;
+const styleCount = (s: string) => pieces.filter((p) => (p.data.styles as string[]).includes(s)).length;
+---
+<section class="catalog" data-catalog>
+  {showFilters && (
+    <div class="filters" data-filters>
+      <div class="frow frow-top">
+        <label class="q">
+          <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="search" name="q" placeholder="Filter by word…" data-q aria-label="Filter pieces" />
+        </label>
+        <div class="fgroup" data-group="sort">
+          <span class="eyebrow">Sort</span>
+          <select data-sort aria-label="Sort">
+            <option value="new">Newest</option>
+            <option value="old">Oldest</option>
+            <option value="az">A → Z</option>
+            <option value="difficulty">Easiest build</option>
+          </select>
+        </div>
+        <div class="fgroup views" role="group" aria-label="View">
+          <button type="button" class="vbtn" data-view="grid" aria-pressed="true" aria-label="Grid view"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></button>
+          <button type="button" class="vbtn" data-view="list" aria-pressed="false" aria-label="List view"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        </div>
+      </div>
+      {!lock.type && (
+        <div class="frow chips" data-group="type">
+          <span class="eyebrow">Room</span>
+          {Object.entries(TYPE_META).map(([k, v]) => count('type', k) > 0 && (
+            <button type="button" class="chip" data-f="type" data-v={k} aria-pressed="false">{v.label} <span class="cnt">{count('type', k)}</span></button>
+          ))}
+        </div>
+      )}
+      {!lock.platform && (
+        <div class="frow chips" data-group="platform">
+          <span class="eyebrow">Platform</span>
+          {Object.entries(PLATFORM_META).map(([k, v]) => count('platform', k) > 0 && (
+            <button type="button" class="chip" data-f="platform" data-v={k} aria-pressed="false">{v.label} <span class="cnt">{count('platform', k)}</span></button>
+          ))}
+        </div>
+      )}
+      <div class="frow chips morerow">
+        <button type="button" class="chip" data-more aria-expanded="false">More filters</button>
+        <span class="status mono faint" data-status aria-live="polite"></span>
+        <button type="button" class="clear mono" data-clear hidden>Clear filters</button>
+      </div>
+      {!lock.style && (
+        <div class="frow chips extra" data-group="style" hidden>
+          <span class="eyebrow">Style</span>
+          {Object.entries(STYLE_META).map(([k, v]) => styleCount(k) > 0 && (
+            <button type="button" class="chip" data-f="style" data-v={k} aria-pressed="false">{v.label} <span class="cnt">{styleCount(k)}</span></button>
+          ))}
+        </div>
+      )}
+      <div class="frow chips extra" data-group="motion" hidden>
+        <span class="eyebrow">Motion</span>
+        <button type="button" class="chip" data-f="motion" data-v="none" aria-pressed="false">Static</button>
+        <button type="button" class="chip" data-f="motion" data-v="subtle" aria-pressed="false">Subtle</button>
+        <button type="button" class="chip" data-f="motion" data-v="rich" aria-pressed="false">Rich</button>
+      </div>
+    </div>
+  )}
+  <div class="grid" data-grid>
+    {list.map((p, i) => <PieceCard piece={p} n={nums.get(p.id) || '000'} index={i} />)}
+  </div>
+  <p class="none" data-none hidden>No pieces match those filters. <button type="button" class="linkish" data-clear>Clear them</button> and try again.</p>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-catalog]').forEach((root) => {
+    const grid = root.querySelector<HTMLElement>('[data-grid]')!;
+    const cards = [...grid.querySelectorAll<HTMLElement>('.card')];
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('.chip[data-f]')];
+    const q = root.querySelector<HTMLInputElement>('[data-q]');
+    const sort = root.querySelector<HTMLSelectElement>('[data-sort]');
+    const status = root.querySelector<HTMLElement>('[data-status]');
+    const none = root.querySelector<HTMLElement>('[data-none]');
+    const clears = root.querySelectorAll<HTMLButtonElement>('[data-clear]');
+    const views = root.querySelectorAll<HTMLButtonElement>('[data-view]');
+    const state: Record<string, Set<string>> = { type: new Set(), platform: new Set(), style: new Set(), motion: new Set() };
+
+    // hydrate from URL
+    const sp = new URLSearchParams(location.search);
+    for (const k of Object.keys(state)) (sp.get(k) || '').split(',').filter(Boolean).forEach((v) => state[k].add(v));
+    if (q && sp.get('q')) q.value = sp.get('q')!;
+    if (sort && sp.get('sort')) sort.value = sp.get('sort')!;
+    let view = sp.get('view') || (localStorage.getItem('dl-view') ?? 'grid');
+
+    function apply(push = true) {
+      const words = (q?.value || '').toLowerCase().split(/\s+/).filter(Boolean);
+      let shown = 0;
+      for (const c of cards) {
+        const d = c.dataset;
+        let ok = true;
+        if (state.type.size && !state.type.has(d.type!)) ok = false;
+        if (ok && state.platform.size && !state.platform.has(d.platform!)) ok = false;
+        if (ok && state.motion.size && !state.motion.has(d.motion!)) ok = false;
+        if (ok && state.style.size && ![...state.style].some((s) => d.styles!.split(' ').includes(s))) ok = false;
+        if (ok && words.length) { const hay = `${d.title} ${d.tags} ${d.styles} ${d.type} ${d.platform} ${c.querySelector('.summary')?.textContent?.toLowerCase()}`; ok = words.every((w) => hay.includes(w)); }
+        c.hidden = !ok; if (ok) shown++;
+      }
+      // sort
+      const mode = sort?.value || 'new';
+      const sorted = [...cards].sort((a, b) => {
+        if (mode === 'az') return a.dataset.title!.localeCompare(b.dataset.title!);
+        if (mode === 'difficulty') return Number(a.dataset.difficulty) - Number(b.dataset.difficulty) || a.dataset.title!.localeCompare(b.dataset.title!);
+        const cmp = a.dataset.n!.localeCompare(b.dataset.n!);
+        return mode === 'old' ? cmp : -cmp;
+      });
+      sorted.forEach((c, i) => { grid.appendChild(c); c.style.setProperty('--d', `${Math.min(i, 12) * 30}ms`); });
+      chips.forEach((ch) => ch.setAttribute('aria-pressed', String(state[ch.dataset.f!].has(ch.dataset.v!))));
+      const active = Object.values(state).some((s) => s.size) || words.length;
+      if (status) status.textContent = `${shown} of ${cards.length}`;
+      clears.forEach((b) => (b.hidden = !active));
+      if (none) none.hidden = shown > 0;
+      grid.classList.toggle('list', view === 'list');
+      views.forEach((v) => v.setAttribute('aria-pressed', String(v.dataset.view === view)));
+      if (push) {
+        const u = new URL(location.href);
+        for (const k of Object.keys(state)) state[k].size ? u.searchParams.set(k, [...state[k]].join(',')) : u.searchParams.delete(k);
+        words.length ? u.searchParams.set('q', q!.value) : u.searchParams.delete('q');
+        mode !== 'new' ? u.searchParams.set('sort', mode) : u.searchParams.delete('sort');
+        view !== 'grid' ? u.searchParams.set('view', view) : u.searchParams.delete('view');
+        history.replaceState(null, '', u);
+      }
+    }
+    chips.forEach((ch) => ch.addEventListener('click', () => { const s = state[ch.dataset.f!]; s.has(ch.dataset.v!) ? s.delete(ch.dataset.v!) : s.add(ch.dataset.v!); apply(); }));
+    q?.addEventListener('input', () => apply());
+    sort?.addEventListener('change', () => apply());
+    clears.forEach((b) => b.addEventListener('click', () => { Object.values(state).forEach((s) => s.clear()); if (q) q.value = ''; apply(); }));
+    views.forEach((v) => v.addEventListener('click', () => { view = v.dataset.view!; try { localStorage.setItem('dl-view', view); } catch {} apply(); }));
+    const more = root.querySelector<HTMLButtonElement>('[data-more]');
+    const extras = root.querySelectorAll<HTMLElement>('.extra');
+    const openMore = (on: boolean) => { extras.forEach((e) => (e.hidden = !on)); more?.setAttribute('aria-expanded', String(on)); more?.setAttribute('aria-pressed', String(on)); };
+    more?.addEventListener('click', () => openMore(more.getAttribute('aria-expanded') !== 'true'));
+    if (state.style.size || state.motion.size) openMore(true);
+    apply(false);
+  });
+</script>
+
+<style>
+  .filters { display: flex; flex-direction: column; gap: 10px; padding: 18px 0 22px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+  .frow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .frow[hidden] { display: none; }
+  .morerow { padding-top: 4px; }
+  .frow .eyebrow { width: 72px; flex: none; }
+  .q { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: var(--r); flex: 1; min-width: 200px; max-width: 420px; background: var(--paper); }
+  .q:focus-within { border-color: var(--ink); }
+  .q svg { stroke: var(--ink-3); fill: none; stroke-width: 1.75; stroke-linecap: round; }
+  .q input { border: 0; background: none; outline: none; flex: 1; font-size: 14px; min-width: 0; }
+  .q input::-webkit-search-cancel-button { -webkit-appearance: none; }
+  .fgroup { display: flex; align-items: center; gap: 10px; }
+  .fgroup .eyebrow { width: auto; }
+  select { height: 40px; border: 1px solid var(--line-2); border-radius: var(--r); background: var(--paper); padding: 0 32px 0 12px; font-size: 13px; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238c867b' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>"); background-repeat: no-repeat; background-position: right 10px center; }
+  .views { margin-left: auto; border: 1px solid var(--line-2); border-radius: var(--r); overflow: hidden; }
+  .vbtn { width: 40px; height: 38px; display: grid; place-items: center; color: var(--ink-3); }
+  .vbtn svg { stroke: currentColor; fill: none; stroke-width: 1.75; }
+  .vbtn[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .chip .cnt { opacity: .55; margin-left: 2px; }
+  .status { margin-left: auto; }
+  .clear { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 3px; color: var(--ink-2); }
+  .none { padding: 48px 0; color: var(--ink-2); text-align: center; }
+  .linkish { text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 640px) { .frow .eyebrow { width: 100%; } .frow-top .eyebrow { width: auto; } .frow-top .q { flex-basis: 100%; max-width: none; } .fgroup select { width: 150px; } }
+</style>

@@ -1,0 +1,120 @@
+<!-- Design Lounge piece: ios-fintech-home · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fintech home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f4f6;--surface:#ffffff;--ink:#111318;--ink-2:#5c6270;--ink-3:#8d92a0;--line:#e5e6ea;
+  --card:#111318;--card-2:#1c2028;--card-ink:#f7f7f9;--card-ink-2:#9aa0ad;
+  --accent:#0a66ff;--accent-soft:#e6efff;--positive:#1d9a5b;--negative:#111318;
+  --glass:rgba(244,244,246,.72);--glass-line:rgba(17,19,24,.08);
+  --font:"Onest",system-ui,-apple-system,sans-serif;
+  --r-card:22px;--r-row:14px;--r-avatar:14px;--qa:56px;
+  --t-micro:160ms;--t-layout:320ms;--spring:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+.top{position:fixed;left:0;right:0;top:0;height:102px;padding:54px 20px 0;display:flex;align-items:center;justify-content:space-between;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid var(--glass-line);box-shadow:inset 0 1px 0 rgba(255,255,255,.6);z-index:10}
+.top h1{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.top .who{font-size:12px;color:var(--ink-2);display:block;font-weight:500}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#6f8fb8,#2d4a75);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:600;border:0;cursor:pointer;padding:0}
+.avatar:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{height:100%;overflow-y:auto;padding:118px 20px 50px}
+.bal{background:linear-gradient(160deg,var(--card),var(--card-2));color:var(--card-ink);border-radius:var(--r-card);padding:22px 22px 20px;position:relative;overflow:hidden;box-shadow:0 12px 32px rgba(17,19,24,.18)}
+.bal::before{content:"";position:absolute;right:-60px;top:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(10,102,255,.45),transparent 65%)}
+.bal .lbl{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--card-ink-2);font-weight:500}
+.eye{appearance:none;background:rgba(255,255,255,.08);border:0;color:var(--card-ink);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;cursor:pointer;margin:-8px -8px -8px 0;transition:background var(--t-micro) var(--ease)}
+.eye:hover{background:rgba(255,255,255,.14)}
+.eye:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.eye svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.eye .off{display:none}
+.bal.hidden .eye .on{display:none}.bal.hidden .eye .off{display:block}
+.amt{margin:10px 0 4px;font-size:40px;font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:2px;transition:filter var(--t-layout) var(--ease),opacity var(--t-layout) var(--ease)}
+.amt .cur{font-size:22px;font-weight:500;color:var(--card-ink-2);margin-right:4px}
+.amt .dec{font-size:24px;font-weight:500;color:var(--card-ink-2)}
+.bal.hidden .amt{filter:blur(12px);opacity:.7}
+.acct{font-size:12px;color:var(--card-ink-2);font-variant-numeric:tabular-nums;letter-spacing:.04em;transition:filter var(--t-layout) var(--ease)}
+.bal.hidden .acct{filter:blur(6px)}
+.delta{display:inline-flex;align-items:center;gap:4px;margin-top:14px;font-size:12px;font-weight:600;color:#7ed3a4;background:rgba(29,154,91,.18);padding:4px 9px;border-radius:999px}
+.delta svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
+.qa{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 26px}
+.qa button{appearance:none;background:none;border:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:8px;font:500 12px var(--font);color:var(--ink-2);cursor:pointer;border-radius:12px}
+.qa i{width:var(--qa);height:var(--qa);border-radius:50%;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;color:var(--ink);transition:transform var(--t-micro) var(--ease),background var(--t-micro) var(--ease),color var(--t-micro) var(--ease);box-shadow:0 1px 2px rgba(17,19,24,.04)}
+.qa button:first-child i{background:var(--accent);border-color:var(--accent);color:#fff}
+.qa svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.qa button:active i{transform:scale(.9)}
+.qa button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 8px}
+.sec h2{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.sec a{font-size:13px;color:var(--accent);text-decoration:none;font-weight:500}
+.day{font-size:12px;font-weight:600;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;margin:18px 0 6px;display:flex;justify-content:space-between}
+.day span{font-variant-numeric:tabular-nums;font-weight:500;text-transform:none;letter-spacing:0}
+.group{background:var(--surface);border-radius:var(--r-row);border:1px solid var(--line);overflow:hidden}
+.tx{display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;font:inherit;color:inherit;cursor:pointer;transition:background var(--t-micro) var(--ease)}
+.tx:last-child{border-bottom:0}
+.tx:active{background:var(--bg)}
+.tx:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.av{width:40px;height:40px;border-radius:var(--r-avatar);display:grid;place-items:center;font-size:13px;font-weight:600;flex:none;letter-spacing:.02em}
+.a1{background:#e8eefc;color:#2d4a9e}.a2{background:#fdebd9;color:#a4581a}.a3{background:#e4f5ea;color:#1c6b40}.a4{background:#f3e8f7;color:#6e3b87}.a5{background:#fbe6e6;color:#a03030}.a6{background:#e7f0f4;color:#2a5f75}
+.tx .t{flex:1;min-width:0}
+.tx b{display:block;font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx small{display:block;font-size:12px;color:var(--ink-2);margin-top:1px}
+.tx .v{font-variant-numeric:tabular-nums;font-weight:600;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+.tx .v.in{color:var(--positive)}
+.pending .av{opacity:.55}.pending .v{color:var(--ink-3);font-weight:500}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top"><div><h1>Fjord Bank</h1><span class="who">Personal · EUR</span></div><button class="avatar" aria-label="Profile, Sofie Hval">SH</button></header>
+<main>
+  <section class="bal" id="bal" aria-live="polite">
+    <div class="lbl"><span>Everyday account</span><button class="eye" id="eye" aria-pressed="false" aria-label="Hide balance"><svg class="on" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M3 3l18 18M10 10a3 3 0 004 4M9.9 5.2A10 10 0 0112 5c6 0 10 7 10 7a17 17 0 01-3.2 3.9M6.6 6.6C3.8 8.5 2 12 2 12s4 7 10 7c1.5 0 2.8-.3 4-.9"/></svg></button></div>
+    <div class="amt" id="amt"><span class="cur">€</span>12,480<span class="dec">.55</span></div>
+    <div class="acct">NO71 3000 1284 4901 · Everyday</div>
+    <div class="delta"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg>+€1,240.00 this month</div>
+  </section>
+  <div class="qa" role="group" aria-label="Quick actions">
+    <button><i><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i>Send</button>
+    <button><i><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i>Request</button>
+    <button><i><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></i>Top up</button>
+    <button><i><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M7 15h3"/></svg></i>Cards</button>
+  </div>
+  <div class="sec"><h2>Activity</h2><a href="#">Statements</a></div>
+  <div class="day">Today<span>−€63.30</span></div>
+  <div class="group">
+    <button class="tx pending"><span class="av a1">NP</span><span class="t"><b>Nord Post</b><small>Pending · Card 4901</small></span><span class="v">−€8.90</span></button>
+    <button class="tx"><span class="av a2">BB</span><span class="t"><b>Brød &amp; Bønner</b><small>08:12 · Bakery</small></span><span class="v">−€6.40</span></button>
+    <button class="tx"><span class="av a3">LM</span><span class="t"><b>Loam Market</b><small>07:48 · Groceries</small></span><span class="v">−€48.00</span></button>
+  </div>
+  <div class="day">Yesterday, 28 Sep<span>+€2,176.20</span></div>
+  <div class="group">
+    <button class="tx"><span class="av a4">TS</span><span class="t"><b>Tessel Studio</b><small>Salary · Ref 2026-09</small></span><span class="v in">+€2,300.00</span></button>
+    <button class="tx"><span class="av a5">OR</span><span class="t"><b>Orbital Cloud</b><small>Subscription · Monthly</small></span><span class="v">−€24.00</span></button>
+    <button class="tx"><span class="av a6">HK</span><span class="t"><b>Halden Kaffebar</b><small>15:20 · Coffee</small></span><span class="v">−€4.80</span></button>
+    <button class="tx"><span class="av a1">MW</span><span class="t"><b>Marrow Wine</b><small>19:41 · Dining</small></span><span class="v">−€95.00</span></button>
+  </div>
+  <div class="day">Saturday, 27 Sep<span>−€131.50</span></div>
+  <div class="group">
+    <button class="tx"><span class="av a2">MR</span><span class="t"><b>Mira Sleep</b><small>Annual plan</small></span><span class="v">−€39.00</span></button>
+    <button class="tx"><span class="av a6">RY</span><span class="t"><b>Ruter Transit</b><small>Monthly pass</small></span><span class="v">−€72.50</span></button>
+    <button class="tx"><span class="av a3">EL</span><span class="t"><b>Elin Aasen</b><small>Split · Dinner Friday</small></span><span class="v">−€20.00</span></button>
+  </div>
+</main>
+<script>
+  const bal=document.getElementById('bal'),eye=document.getElementById('eye');
+  eye.addEventListener('click',()=>{
+    const hide=!bal.classList.contains('hidden');
+    bal.classList.toggle('hidden',hide);
+    eye.setAttribute('aria-pressed',String(hide));
+    eye.setAttribute('aria-label',hide?'Show balance':'Hide balance');
+  });
+</script>
+</body>
+</html>

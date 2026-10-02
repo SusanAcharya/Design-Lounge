@@ -1,0 +1,38 @@
+---
+import DeviceFrame from './DeviceFrame.astro';
+import { PLATFORM_META, TYPE_META, pieceUrl, type Piece } from '../lib/pieces';
+
+interface Props { piece: Piece; n: string; index?: number; }
+const { piece, n, index = 0 } = Astro.props;
+const d = piece.data;
+---
+<article
+  class="card reveal"
+  data-slug={piece.id}
+  data-platform={d.platform}
+  data-type={d.type}
+  data-styles={d.styles.join(' ')}
+  data-motion={d.motion}
+  data-difficulty={d.difficulty}
+  data-tags={d.tags.join(' ')}
+  data-title={d.title.toLowerCase()}
+  data-published={d.published.toISOString().slice(0, 10)}
+  data-n={n}
+  style={`--d:${Math.min(index, 12) * 40}ms`}
+>
+  <div class="stage">
+    <DeviceFrame slug={piece.id} platform={d.platform} title={d.title} />
+    <a class="cover" href={pieceUrl(piece.id)} aria-label={`Open ${d.title}`} tabindex="-1"></a>
+  </div>
+  <div class="body">
+    <div class="meta"><span class="n num">Nº {n}</span><span class="n">{TYPE_META[d.type].singular} · {PLATFORM_META[d.platform].label}</span><span class="swatches" aria-hidden="true">{d.palette.slice(0, 3).map((c) => <i style={`background:${c}`}></i>)}</span></div>
+    <h3 class="title"><a href={pieceUrl(piece.id)}>{d.title}</a></h3>
+    <p class="summary">{d.summary}</p>
+  </div>
+</article>
+
+<style>
+  .body { display: flex; flex-direction: column; gap: 5px; }
+  .meta { justify-content: space-between; }
+  .meta .swatches { margin-left: auto; }
+</style>

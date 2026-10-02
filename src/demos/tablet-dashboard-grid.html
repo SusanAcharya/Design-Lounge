@@ -1,0 +1,148 @@
+<!-- Design Lounge piece: tablet-dashboard-grid · platform: tablet · 1180x820 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halden Ops — Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;700&family=Chivo+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c1117;--panel:#131a22;--panel-2:#1a232d;--line:#1f2933;--line-strong:#2c3843;--grid:#1a232d;
+  --ink:#e8edf2;--ink-2:#9aa5b1;--ink-3:#66717d;--series:#5ad1b3;--series-soft:rgba(90,209,179,.14);
+  --good:#7ccf6a;--warn:#f0b429;--crit:#ef6a6a;--seg-on:#e8edf2;--seg-on-ink:#0c1117;
+  --sans:"Chivo",system-ui,sans-serif;--mono:"Chivo Mono",ui-monospace,monospace;
+  --gap:16px;--pad:20px;--h-top:60px;--r:12px;--r-pill:999px;
+  --t-fast:160ms;--t-layout:300ms;--t-path:400ms;--t-row:360ms;--tick:4000ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.45 var(--sans);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+svg{stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.top{height:var(--h-top);flex:none;display:flex;align-items:center;gap:16px;padding:0 24px;border-bottom:1px solid var(--line)}
+.top h1{margin:0;font:700 16px var(--sans);letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.top h1 i{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px rgba(124,207,106,.18)}
+.top .env{font:400 12px var(--mono);color:var(--ink-3)}
+.seg{margin-left:auto;display:flex;gap:2px;padding:3px;border:1px solid var(--line-strong);border-radius:var(--r-pill);position:relative}
+.seg button{height:28px;padding:0 14px;border:0;background:transparent;color:var(--ink-2);font:500 12px var(--mono);border-radius:var(--r-pill);cursor:pointer;transition:color var(--t-fast),background var(--t-fast)}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--seg-on);color:var(--seg-on-ink)}
+.seg button:focus-visible,.card:focus-visible{outline:2px solid var(--series);outline-offset:2px}
+.clock{font:400 12px var(--mono);color:var(--ink-3);min-width:64px;text-align:right}
+.grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:var(--gap);padding:var(--gap) 24px 24px;min-height:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);display:flex;flex-direction:column;min-height:0;position:relative}
+.card.wide{grid-column:span 2}
+.card h2{margin:0;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between;align-items:center}
+.card h2 span{font:400 11px var(--mono);letter-spacing:0;text-transform:none}
+.big{font:700 34px/1 var(--sans);letter-spacing:-.03em;margin:12px 0 4px;font-variant-numeric:tabular-nums}
+.big small{font:400 14px var(--mono);color:var(--ink-3);letter-spacing:0;margin-left:6px}
+.delta{font:400 12px var(--mono);color:var(--ink-2)}
+.delta b{font-weight:500;color:var(--good)}
+.chart{flex:1;min-height:0;position:relative;margin-top:8px}
+.chart svg{width:100%;height:100%;overflow:visible;display:block}
+.chart .gl{stroke:var(--grid);stroke-width:1}
+.chart .ax{font:400 10px var(--mono);fill:var(--ink-3);stroke:none}
+.chart .area{fill:var(--series-soft);stroke:none;transition:d var(--t-path) var(--ease)}
+.chart .ln{stroke:var(--series);stroke-width:2;transition:d var(--t-path) var(--ease)}
+.chart .xh{stroke:var(--line-strong);stroke-width:1;stroke-dasharray:3 3;opacity:0}
+.chart .pt{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--series);border:2px solid var(--panel);transform:translate(-50%,-50%);opacity:0;pointer-events:none;transition:opacity var(--t-fast)}
+.chart .ln,.chart .xh,.chart .gl{vector-effect:non-scaling-stroke}
+.chart.hover .xh,.chart.hover .pt{opacity:1}
+.tip{position:absolute;top:0;transform:translate(-50%,-110%);background:var(--ink);color:var(--bg);font:500 11px var(--mono);padding:5px 8px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--t-fast)}
+.chart.hover .tip{opacity:1}
+.gauge{flex:1;display:grid;place-items:center;position:relative;min-height:0}
+.gauge svg{width:180px;height:110px;overflow:visible}
+.gauge .track{stroke:var(--panel-2);stroke-width:12}
+.gauge .arc{stroke:var(--good);stroke-width:12;stroke-dasharray:236;stroke-dashoffset:236;transition:stroke-dashoffset 800ms var(--ease-out),stroke var(--t-fast)}
+.gauge .val{position:absolute;bottom:8px;text-align:center}
+.gauge .val b{display:block;font:700 30px/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.gauge .val span{font:400 11px var(--mono);color:var(--ink-3)}
+.status{display:inline-flex;align-items:center;gap:6px;font:500 11px var(--mono);color:var(--good);margin-top:8px}
+.status svg{width:14px;height:14px}
+.feed{list-style:none;margin:10px 0 0;padding:0;overflow:hidden;flex:1;min-height:0}
+.feed li{display:grid;grid-template-columns:8px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line);animation:slide var(--t-row) var(--ease-out)}
+.feed li:first-child{border-top:0}
+@keyframes slide{from{opacity:0;transform:translateX(-10px);max-height:0;padding:0}to{opacity:1;transform:none;max-height:40px}}
+.feed i{width:8px;height:8px;border-radius:50%;background:var(--good)}
+.feed i.warn{background:var(--warn)}.feed i.crit{background:var(--crit)}
+.feed .t{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feed .t small{display:block;font:400 10px var(--mono);color:var(--ink-3);margin-top:1px}
+.feed time{font:400 11px var(--mono);color:var(--ink-3)}
+.bars{display:flex;align-items:flex-end;gap:4px;flex:1;min-height:0;margin-top:14px}
+.bars span{flex:1;background:var(--panel-2);border-radius:3px 3px 0 0;transition:background var(--t-fast);position:relative}
+.bars span:hover,.bars span:last-child{background:var(--series)}
+.regions{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;flex:1}
+.regions li{display:grid;grid-template-columns:52px 1fr 48px;gap:10px;align-items:center;font:400 12px var(--mono)}
+.regions .lbl{color:var(--ink-2)}
+.regions .bar{height:6px;border-radius:3px;background:var(--panel-2);overflow:hidden}
+.regions .bar i{display:block;height:100%;background:var(--series);border-radius:3px}
+.regions .bar i.warn{background:var(--warn)}
+.regions .v{text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1><i></i>Halden Ops</h1><span class="env">prod · eu-north-1</span>
+  <div class="seg" role="group" aria-label="Time range" id="seg"><button aria-pressed="true">1h</button><button aria-pressed="false">6h</button><button aria-pressed="false">24h</button><button aria-pressed="false">7d</button></div>
+  <span class="clock" id="clock" aria-live="off">14:32:08</span>
+</header>
+<main class="grid">
+  <section class="card wide" aria-labelledby="c1">
+    <h2 id="c1">Requests per minute<span id="range">last 1h</span></h2>
+    <div class="big" id="big">48.2k</div><div class="delta"><b id="delta">+6.1%</b> vs. previous period</div>
+    <div class="chart" id="chart"><svg viewBox="0 0 640 200" preserveAspectRatio="none" aria-hidden="true"><g id="glines"></g><path class="area" id="area"/><path class="ln" id="line"/><line class="xh" id="xh" y1="0" y2="200"/></svg><div class="pt" id="pt"></div><div class="tip" id="tip"></div></div>
+  </section>
+  <section class="card" aria-labelledby="c2">
+    <h2 id="c2">Error budget<span>30-day window</span></h2>
+    <div class="gauge"><svg viewBox="0 0 180 110" aria-hidden="true"><path class="track" d="M15 100A75 75 0 0 1 165 100"/><path class="arc" id="arc" d="M15 100A75 75 0 0 1 165 100"/></svg><div class="val"><b id="gv">92%</b><span>remaining · 0.07% error rate</span></div></div>
+    <div class="status"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>Within SLO</div>
+  </section>
+  <section class="card" aria-labelledby="c3">
+    <h2 id="c3">Live events<span>every 4s</span></h2>
+    <ul class="feed" id="feed" aria-live="off"></ul>
+  </section>
+  <section class="card" aria-labelledby="c4">
+    <h2 id="c4">p95 latency<span>per 5 min</span></h2>
+    <div class="big">184<small>ms</small></div><div class="delta"><b>−12ms</b> after v2.14</div>
+    <div class="bars" id="bars" aria-label="p95 latency, last 24 buckets"></div>
+  </section>
+  <section class="card" aria-labelledby="c5">
+    <h2 id="c5">Region health<span>availability</span></h2>
+    <ul class="regions">
+      <li><span class="lbl">eu-n1</span><span class="bar"><i style="width:99.98%"></i></span><span class="v">99.98</span></li>
+      <li><span class="lbl">eu-w2</span><span class="bar"><i style="width:99.95%"></i></span><span class="v">99.95</span></li>
+      <li><span class="lbl">us-e1</span><span class="bar"><i class="warn" style="width:97.4%"></i></span><span class="v">97.40</span></li>
+      <li><span class="lbl">ap-s1</span><span class="bar"><i style="width:99.91%"></i></span><span class="v">99.91</span></li>
+    </ul>
+    <div class="status" style="color:var(--warn)"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9L2.6 17a2 2 0 001.7 3h15.4a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>us-e1 degraded since 13:50</div>
+  </section>
+</main>
+<script>
+  const W=640,H=200,N=24;
+  const series={ '1h':[41,42,44,43,46,47,45,48,50,49,52,51,53,50,48,49,51,54,55,53,52,50,49,48],'6h':[30,32,35,38,41,44,46,45,47,50,53,55,54,52,50,49,51,53,56,58,57,55,52,48],'24h':[18,16,15,17,22,28,34,40,46,50,52,54,53,55,57,56,52,47,42,38,34,30,26,22],'7d':[36,38,40,39,42,44,45,47,44,46,48,50,49,51,53,52,54,56,55,57,58,56,54,52]};
+  const totals={'1h':['48.2k','+6.1%'],'6h':['46.9k','+3.4%'],'24h':['39.1k','−1.2%'],'7d':['47.7k','+8.0%']};
+  const chart=document.getElementById('chart'),line=document.getElementById('line'),area=document.getElementById('area'),xh=document.getElementById('xh'),pt=document.getElementById('pt'),tip=document.getElementById('tip');
+  document.getElementById('glines').innerHTML=[0,50,100,150,200].map(y=>`<line class="gl" x1="0" x2="${W}" y1="${y}" y2="${y}"/>`).join('');
+  let cur='1h',pts=[];
+  const y=v=>H-(v-10)/52*H,x=i=>i*(W/(N-1));
+  function draw(k){cur=k;const d=series[k];pts=d.map((v,i)=>[x(i),y(v),v]);const p=pts.map(([a,b],i)=>(i?'L':'M')+a.toFixed(1)+' '+b.toFixed(1)).join(' ');
+    line.setAttribute('d',p);area.setAttribute('d',p+` L${W} ${H} L0 ${H} Z`);
+    document.getElementById('big').textContent=totals[k][0];document.getElementById('delta').textContent=totals[k][1];document.getElementById('range').textContent='last '+k;}
+  draw('1h');
+  document.querySelectorAll('#seg button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#seg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));draw(b.textContent);}));
+  chart.addEventListener('pointermove',e=>{const r=chart.getBoundingClientRect();const i=Math.round((e.clientX-r.left)/r.width*(N-1));const [px,py,v]=pts[Math.max(0,Math.min(N-1,i))];
+    xh.setAttribute('x1',px);xh.setAttribute('x2',px);pt.style.left=(px/W*100)+'%';pt.style.top=(py/H*100)+'%';
+    tip.style.left=(px/W*100)+'%';tip.style.top=(py/H*100)+'%';tip.textContent=(v*1000).toLocaleString('en-GB')+' rpm';chart.classList.add('hover');});
+  chart.addEventListener('pointerleave',()=>chart.classList.remove('hover'));
+  requestAnimationFrame(()=>{document.getElementById('arc').style.strokeDashoffset=236*(1-.92);});
+  const bars=document.getElementById('bars');for(let i=0;i<24;i++){const s=document.createElement('span');const v=150+Math.round(Math.abs(Math.sin(i/2.3))*60+(i%5)*4);s.style.height=(v/260*100)+'%';s.title=v+' ms';bars.appendChild(s);}
+  const EV=[["Deploy finished","api · v2.14.3","ok"],["Autoscaled to 14 pods","workers · cpu 71%","ok"],["Latency spike cleared","us-e1 · 412ms → 190ms","ok"],["Queue depth over 5k","billing-jobs","warn"],["Certificate renewed","edge · 90 days","ok"],["5xx burst","checkout · 38 in 60s","crit"],["Cache warmed","catalog · 2.1M keys","ok"],["Node drained","eu-n1 · ip-10-4-2-17","warn"]];
+  const feed=document.getElementById('feed');let n=0;
+  function tick(){const [t,m,s]=EV[n++%EV.length];const d=new Date();const li=document.createElement('li');li.innerHTML=`<i class="${s==='ok'?'':s}"></i><span class="t">${t}<small>${m}</small></span><time>${d.toTimeString().slice(0,8)}</time>`;feed.prepend(li);while(feed.children.length>6)feed.lastChild.remove();}
+  tick();tick();tick();setInterval(tick,4000);
+  const clock=document.getElementById('clock');setInterval(()=>clock.textContent=new Date().toTimeString().slice(0,8),1000);clock.textContent=new Date().toTimeString().slice(0,8);
+</script>
+</body>
+</html>

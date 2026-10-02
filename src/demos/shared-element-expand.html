@@ -1,0 +1,141 @@
+<!-- Design Lounge piece: shared-element-expand · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Halden Studio — Six houses</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f1e8; --card:#fffbf4; --line:#e6dccb; --ink:#221d18; --ink-2:#6b5f52; --ink-3:#9a8d7d;
+  --accent:#c4552d; --accent-ink:#fff6ef;
+  --serif:"Fraunces",Georgia,serif; --sans:"Instrument Sans",system-ui,sans-serif;
+  --r-card:14px; --r-detail:20px; --gap:20px;
+  --t-flip:420ms; --t-fade:320ms; --t-micro:160ms;
+  --ease-out:cubic-bezier(.16,1,.3,1); --ease:cubic-bezier(.2,.7,.2,1);
+  --shadow:0 24px 60px -20px rgba(60,40,20,.35), 0 1px 0 rgba(60,40,20,.06);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+header{height:72px;padding:0 48px;display:flex;align-items:center;gap:32px;border-bottom:1px solid var(--line);transition:opacity var(--t-fade) var(--ease)}
+.brand{font:500 20px/1 var(--serif);letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.brand svg{width:22px;height:22px;color:var(--accent)}
+nav{display:flex;gap:22px;font-weight:500;color:var(--ink-2)}
+nav a{color:inherit;text-decoration:none;padding:6px 2px;border-radius:4px}
+nav a[aria-current]{color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent)}
+nav a:focus-visible,.card:focus-visible,.close:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.meta-line{margin-left:auto;color:var(--ink-3);font-size:13px;letter-spacing:.02em}
+main{padding:28px 48px 0}
+.lede{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;transition:opacity var(--t-fade) var(--ease)}
+h1{font:300 34px/1.05 var(--serif);letter-spacing:-.02em;margin:0}
+h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+.lede p{margin:0;color:var(--ink-2);max-width:380px;font-size:13.5px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+.card{appearance:none;border:1px solid var(--line);background:var(--card);border-radius:var(--r-card);padding:0;text-align:left;cursor:pointer;color:inherit;font:inherit;overflow:hidden;display:flex;flex-direction:column;transition:opacity var(--t-fade) var(--ease),transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 24px -14px rgba(60,40,20,.4)}
+.swatch{height:172px;background:var(--c);position:relative}
+.swatch::after{content:"";position:absolute;inset:auto 0 0 0;height:36%;background:linear-gradient(to top,rgba(0,0,0,.14),transparent)}
+.swatch b{position:absolute;left:14px;top:12px;font:500 11px/1 var(--sans);letter-spacing:.08em;color:rgba(255,255,255,.85);text-transform:uppercase}
+.meta{padding:14px 16px 16px}
+.meta h2{font:500 21px/1.15 var(--serif);letter-spacing:-.015em;margin:0 0 4px}
+.meta span{color:var(--ink-2);font-size:13px}
+.is-open .card:not(.src){opacity:.18}
+.is-open header,.is-open .lede{opacity:.35}
+.card.src{visibility:hidden}
+.detail{position:fixed;inset:56px 120px;background:var(--card);border-radius:var(--r-detail);box-shadow:var(--shadow);transform-origin:0 0;overflow:hidden;display:flex;flex-direction:column;z-index:2;will-change:transform}
+.detail[hidden]{display:none}
+.hero{height:300px;background:var(--c);position:relative;padding:36px 40px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;flex:none}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.42),transparent 60%)}
+.hero>*{position:relative}
+.hero b{font:500 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.hero h2{font:300 46px/1 var(--serif);letter-spacing:-.025em;margin:8px 0 0}
+.close{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:background var(--t-micro) var(--ease)}
+.close:hover{background:#fff}
+.close svg{width:18px;height:18px}
+.body{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;padding:32px 40px;opacity:0;transition:opacity 120ms var(--ease)}
+.is-open .body{opacity:1;transition:opacity 260ms var(--ease) 200ms}
+.body p{margin:0 0 12px;font-size:15px;line-height:1.6;color:var(--ink-2);max-width:56ch}
+.body p:first-child{font:300 22px/1.35 var(--serif);color:var(--ink);letter-spacing:-.01em}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font-size:13.5px;align-content:start;border-top:1px solid var(--line);padding-top:16px}
+dt{color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;font-size:11px;font-weight:600;padding-top:2px}
+dd{margin:0;color:var(--ink)}
+.cta{margin-top:16px;font-weight:600;font-size:13px;color:var(--accent-ink);background:var(--accent);border:0;border-radius:999px;padding:10px 16px;cursor:pointer}
+.cta:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.hint{position:fixed;left:48px;bottom:18px;color:var(--ink-3);font-size:12px;letter-spacing:.02em}
+.hint kbd{font:inherit;border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:var(--card)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg>Halden Studio</div>
+  <nav aria-label="Primary"><a href="#" aria-current="page">Projects</a><a href="#">Studio</a><a href="#">Journal</a><a href="#">Contact</a></nav>
+  <div class="meta-line">Six houses · 2019 – 2026</div>
+</header>
+<main>
+  <div class="lede">
+    <h1>Houses we <em>finished</em></h1>
+    <p>Each one drawn for its site: light first, plan second, material last. Select a house to open its record.</p>
+  </div>
+  <div class="grid" id="grid">
+    <button class="card" style="--c:#b8623f" data-tag="Coastal" data-loc="Vik, south coast" data-year="2019" data-area="184 m²" data-mat="Larch, poured concrete" data-lede="A long, low house set behind the dune line, opened to the sea only along one 14-metre glass wall." data-body="The plan is a single bar with bedrooms at the sheltered end and the kitchen facing the water. Larch cladding was left untreated and has silvered evenly on the seaward face."><div class="swatch"><b>Coastal</b></div><div class="meta"><h2>Sandvik House</h2><span>Vik, south coast · 2019</span></div></button>
+    <button class="card" style="--c:#6e7d5a" data-tag="Forest" data-loc="Nesbyen valley" data-year="2020" data-area="142 m²" data-mat="Spruce frame, clay plaster" data-lede="A two-storey cabin on a steep pine slope, entered from the roof level via a timber bridge." data-body="The lower floor is dug into the hillside and stays cool in summer. Clay plaster walls take the afternoon light without glare; the stair is one folded steel plate."><div class="swatch"><b>Forest</b></div><div class="meta"><h2>Brenna Cabin</h2><span>Nesbyen valley · 2020</span></div></button>
+    <button class="card" style="--c:#c99a4a" data-tag="Courtyard" data-loc="Oslo, Grünerløkka" data-year="2021" data-area="210 m²" data-mat="Brick, oak, zinc" data-lede="An infill house on a 7-metre plot, wrapped around a 4 × 6 m courtyard that every room borrows light from." data-body="Street elevation is closed brick with a single 2.4-metre door. Inside, the plan spirals upward around the court, ending in a rooftop study with a zinc-clad monitor light."><div class="swatch"><b>Courtyard</b></div><div class="meta"><h2>Thorvald Infill</h2><span>Oslo, Grünerløkka · 2021</span></div></button>
+    <button class="card" style="--c:#7a6b8f" data-tag="Alpine" data-loc="Hemsedal" data-year="2023" data-area="96 m²" data-mat="Slate, pine, wool felt" data-lede="A weekend house for two, sized to what a small wood stove can heat." data-body="One room, three levels. Slate roof pitched at 42° carries the snow load without heating cables; the felt-lined sleeping loft is the warmest place in the building."><div class="swatch"><b>Alpine</b></div><div class="meta"><h2>Lien Refuge</h2><span>Hemsedal · 2023</span></div></button>
+    <button class="card" style="--c:#4f7a86" data-tag="Lakeside" data-loc="Mjøsa, east shore" data-year="2024" data-area="228 m²" data-mat="Cross-laminated timber, lime render" data-lede="A family house on a lakeside meadow, split into three pavilions joined by a glazed gallery." data-body="Each pavilion has its own roof pitch, so the composition reads as a small hamlet from the water. The gallery doubles as a winter garden and stays above 12 °C unheated."><div class="swatch"><b>Lakeside</b></div><div class="meta"><h2>Furnes Pavilions</h2><span>Mjøsa, east shore · 2024</span></div></button>
+    <button class="card" style="--c:#a04a3e" data-tag="Urban" data-loc="Bergen, Sandviken" data-year="2026" data-area="165 m²" data-mat="Painted timber, copper" data-lede="A vertical townhouse rebuilt within the shell of an 1890s warehouse, three metres wide." data-body="Floors are staggered by half a level to open long diagonal views through the narrow plan. The copper rain screen on the west face is already darkening toward the colour of the neighbouring roofs."><div class="swatch"><b>Urban</b></div><div class="meta"><h2>Skuteviken Rebuild</h2><span>Bergen, Sandviken · 2026</span></div></button>
+  </div>
+</main>
+<div class="hint">Click a house to expand · <kbd>Esc</kbd> to close</div>
+<section class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="dtitle" hidden>
+  <div class="hero"><b id="dtag"></b><h2 id="dtitle"></h2>
+    <button class="close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="body">
+    <div><p id="dlede"></p><p id="dbody"></p></div>
+    <div class="facts"><dl><dt>Site</dt><dd id="dloc"></dd><dt>Completed</dt><dd id="dyear"></dd><dt>Floor area</dt><dd id="darea"></dd><dt>Materials</dt><dd id="dmat"></dd></dl><button class="cta" type="button">Request drawings</button></div>
+  </div>
+</section>
+<script>
+(function(){
+  var detail=document.getElementById('detail'),closeBtn=detail.querySelector('.close'),body=document.body;
+  var EASE='cubic-bezier(.16,1,.3,1)',reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DUR=reduce?1:420,src=null,anim=null;
+  function fill(card){
+    var d=card.dataset;detail.style.setProperty('--c',card.style.getPropertyValue('--c'));
+    document.getElementById('dtag').textContent=d.tag;document.getElementById('dtitle').textContent=card.querySelector('h2').textContent;
+    document.getElementById('dlede').textContent=d.lede;document.getElementById('dbody').textContent=d.body;
+    document.getElementById('dloc').textContent=d.loc;document.getElementById('dyear').textContent=d.year;
+    document.getElementById('darea').textContent=d.area;document.getElementById('dmat').textContent=d.mat;
+  }
+  function frames(from,to){
+    var sx=from.width/to.width,sy=from.height/to.height;
+    return [{transform:'translate('+(from.left-to.left)+'px,'+(from.top-to.top)+'px) scale('+sx+','+sy+')',borderRadius:(14/sx)+'px / '+(14/sy)+'px'},
+            {transform:'none',borderRadius:'20px'}];
+  }
+  function open(card){
+    if(src||anim)return;src=card;fill(card);
+    var first=card.getBoundingClientRect();
+    detail.hidden=false;card.classList.add('src');body.classList.add('is-open');
+    var last=detail.getBoundingClientRect();
+    anim=detail.animate(frames(first,last),{duration:DUR,easing:EASE,fill:'forwards'});
+    anim.onfinish=function(){anim=null;closeBtn.focus();};
+  }
+  function close(){
+    if(!src||anim)return;
+    var last=detail.getBoundingClientRect(),first=src.getBoundingClientRect();
+    body.classList.remove('is-open');
+    anim=detail.animate(frames(first,last).reverse(),{duration:DUR,easing:EASE,fill:'forwards'});
+    anim.onfinish=function(){detail.hidden=true;src.classList.remove('src');src.focus();src=null;anim=null;};
+  }
+  document.getElementById('grid').addEventListener('click',function(e){var c=e.target.closest('.card');if(c)open(c);});
+  closeBtn.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  document.addEventListener('click',function(e){if(src&&!detail.contains(e.target)&&!e.target.closest('.card'))close();});
+})();
+</script>
+</body>
+</html>

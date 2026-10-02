@@ -1,0 +1,128 @@
+<!-- Design Lounge piece: swiss-grid-pricing · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tessel — Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf8;--ink:#111111;--ink-2:#5c5c58;--ink-3:#8a8a85;--line:#dcdcd7;--line-2:#c3c3bd;--red:#e2001a;--red-ink:#ffffff;
+  --sans:"Schibsted Grotesk",Helvetica,Arial,sans-serif;
+  --margin:40px;--cols:12;--head-h:64px;--price:96px;
+  --t-micro:140ms;--t-toggle:260ms;--t-count:420ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.page{flex:1;margin:0 var(--margin);display:flex;flex-direction:column;position:relative;min-height:0}
+.page::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,var(--line) 1px,transparent 1px) 0 0/calc(100%/var(--cols)) 100% repeat-x;border-right:1px solid var(--line)}
+header{height:var(--head-h);display:grid;grid-template-columns:repeat(12,1fr);align-items:center;border-bottom:1px solid var(--line-2);position:relative;font-size:13px;font-weight:500}
+header>*{padding:0 12px}
+.brand{grid-column:1/3;font-weight:700;letter-spacing:-.01em;font-size:15px;display:flex;align-items:center;gap:8px}
+.brand i{width:10px;height:10px;background:var(--red);display:inline-block}
+.crumb{grid-column:3/7;color:var(--ink-3)}
+.crumb b{color:var(--ink);font-weight:500}
+nav{grid-column:9/13;display:flex;justify-content:flex-end;gap:24px}
+nav a{color:var(--ink-2);text-decoration:none}nav a:hover{color:var(--ink)}
+.intro{display:grid;grid-template-columns:repeat(12,1fr);padding:36px 0 28px;border-bottom:1px solid var(--line-2);position:relative;align-items:end}
+.intro>*{padding:0 12px}
+h1{grid-column:1/7;margin:0;font-size:64px;line-height:.95;font-weight:700;letter-spacing:-.03em}
+h1 span{color:var(--red)}
+.lede{grid-column:7/10;margin:0;color:var(--ink-2);font-size:14px;max-width:30ch}
+.switch{grid-column:10/13;display:flex;justify-content:flex-end;align-items:center;gap:12px;font-size:13px;font-weight:500}
+.switch .save{color:var(--red);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.tog{width:200px;height:36px;border:1px solid var(--ink);border-radius:0;display:grid;grid-template-columns:1fr 1fr;position:relative;background:var(--bg);padding:0;cursor:pointer;font:inherit}
+.tog::before{content:"";position:absolute;top:0;left:0;width:50%;height:100%;background:var(--ink);transition:transform var(--t-toggle) var(--expo)}
+.tog[aria-checked="true"]::before{transform:translateX(100%)}
+.tog span{position:relative;z-index:1;display:grid;place-items:center;color:var(--ink);transition:color var(--t-micro) var(--ease)}
+.tog[aria-checked="false"] span:first-child,.tog[aria-checked="true"] span:last-child{color:var(--bg)}
+.tiers{flex:1;display:grid;grid-template-columns:repeat(12,1fr);position:relative;min-height:0}
+.tier{grid-column:span 4;display:flex;flex-direction:column;padding:28px 12px 24px;border-right:1px solid var(--line-2);position:relative}
+.tier:last-child{border-right:0}
+.tier.hi{background:#ffffff}
+.tier.hi::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--red)}
+.tier .no{font-size:12px;color:var(--ink-3);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.tier h2{margin:6px 0 0;font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.tier .for{margin:4px 0 0;color:var(--ink-2);font-size:13px;min-height:38px}
+.price{margin:22px 0 0;display:flex;align-items:flex-start;gap:6px;line-height:1}
+.price .cur{font-size:24px;font-weight:500;margin-top:10px;color:var(--ink-2)}
+.price .amt{font-size:var(--price);font-weight:700;letter-spacing:-.05em;font-variant-numeric:tabular-nums;min-width:2ch}
+.price .per{font-size:13px;color:var(--ink-3);margin-top:auto;padding-bottom:12px}
+.billed{margin:8px 0 0;font-size:12px;color:var(--ink-3);height:16px;font-variant-numeric:tabular-nums}
+.billed b{color:var(--ink);font-weight:500}
+.feat{list-style:none;margin:24px 0 0;padding:0;border-top:1px solid var(--line);flex:1}
+.feat li{display:grid;grid-template-columns:32px 1fr;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.35}
+.feat li b{font-weight:400;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.feat li i{font-style:normal;color:var(--ink-3)}
+.cta{margin-top:20px;height:48px;border:1px solid var(--ink);background:transparent;color:var(--ink);font:500 14px var(--sans);letter-spacing:.01em;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0 16px;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+.cta svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:square}
+.cta:hover{background:var(--ink);color:var(--bg)}
+.hi .cta{background:var(--red);border-color:var(--red);color:var(--red-ink)}
+.hi .cta:hover{background:var(--ink);border-color:var(--ink)}
+@media (max-width:1100px){:root{--price:72px;--margin:24px}h1{font-size:52px}}
+@media (max-width:820px){.tiers{grid-template-columns:1fr;overflow:auto}.tier{grid-column:auto;border-right:0;border-bottom:1px solid var(--line-2)}h1{grid-column:1/13}.lede{grid-column:1/13;margin-top:12px}.switch{grid-column:1/13;justify-content:flex-start;margin-top:16px}nav,.crumb{display:none}.page::before{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <a class="brand" href="#" aria-label="Tessel home"><i></i>Tessel</a>
+    <span class="crumb">Product / <b>Pricing</b></span>
+    <nav aria-label="Primary"><a href="#">Docs</a><a href="#">Changelog</a><a href="#">Sign in</a></nav>
+  </header>
+  <section class="intro">
+    <h1>Pricing<span>.</span></h1>
+    <p class="lede">Three plans, one grid engine. Every plan includes unlimited viewers and the full layout API.</p>
+    <div class="switch">
+      <span class="save" id="save">Save 20 %</span>
+      <button class="tog" id="tog" role="switch" aria-checked="false" aria-label="Bill yearly"><span>Monthly</span><span>Yearly</span></button>
+    </div>
+  </section>
+  <section class="tiers" id="tiers" aria-live="polite">
+    <article class="tier">
+      <span class="no">01</span><h2>Starter</h2><p class="for">For one person shipping one product.</p>
+      <p class="price"><span class="cur">$</span><span class="amt" data-m="12" data-y="9">12</span><span class="per">/ seat / mo</span></p>
+      <p class="billed" data-m="Billed monthly" data-y="Billed <b>$108</b> yearly">Billed monthly</p>
+      <ol class="feat"><li><b>01</b>3 projects</li><li><b>02</b>Layout API, 50k calls / mo</li><li><b>03</b>Community support</li><li><b>04</b>Version history, 30 days</li></ol>
+      <button class="cta" type="button">Start free<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </article>
+    <article class="tier hi">
+      <span class="no">02</span><h2>Team</h2><p class="for">For product teams with a shared design system.</p>
+      <p class="price"><span class="cur">$</span><span class="amt" data-m="32" data-y="26">32</span><span class="per">/ seat / mo</span></p>
+      <p class="billed" data-m="Billed monthly" data-y="Billed <b>$312</b> yearly">Billed monthly</p>
+      <ol class="feat"><li><b>01</b>Unlimited projects</li><li><b>02</b>Layout API, 2M calls / mo</li><li><b>03</b>Shared tokens &amp; components</li><li><b>04</b>Priority support, 4h</li><li><b>05</b>SSO via SAML</li></ol>
+      <button class="cta" type="button">Start 14-day trial<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </article>
+    <article class="tier">
+      <span class="no">03</span><h2>Scale</h2><p class="for">For organisations that need audit and residency.</p>
+      <p class="price"><span class="cur">$</span><span class="amt" data-m="84" data-y="68">84</span><span class="per">/ seat / mo</span></p>
+      <p class="billed" data-m="Billed monthly" data-y="Billed <b>$816</b> yearly">Billed monthly</p>
+      <ol class="feat"><li><b>01</b>Everything in Team</li><li><b>02</b>Unlimited API calls</li><li><b>03</b>EU / US data residency</li><li><b>04</b>Audit log, 2 years</li><li><b>05</b>Dedicated engineer</li></ol>
+      <button class="cta" type="button">Talk to sales<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </article>
+  </section>
+</div>
+<script>
+  const tog=document.getElementById('tog'),amts=document.querySelectorAll('.amt'),billed=document.querySelectorAll('.billed');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const easeOut=t=>1-Math.pow(1-t,3);
+  function tween(el,to){
+    const from=Number(el.textContent)||0;if(from===to||reduce){el.textContent=to;return;}
+    const t0=performance.now(),d=420;
+    (function step(now){const p=Math.min(1,(now-t0)/d);el.textContent=Math.round(from+(to-from)*easeOut(p));if(p<1)requestAnimationFrame(step);})(t0);
+  }
+  tog.addEventListener('click',()=>{
+    const yearly=tog.getAttribute('aria-checked')!=='true';
+    tog.setAttribute('aria-checked',String(yearly));
+    amts.forEach(a=>tween(a,Number(yearly?a.dataset.y:a.dataset.m)));
+    billed.forEach(b=>{b.innerHTML=yearly?b.dataset.y:b.dataset.m;});
+  });
+</script>
+</body>
+</html>

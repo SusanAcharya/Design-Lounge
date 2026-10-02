@@ -1,0 +1,102 @@
+<!-- Design Lounge piece: staggered-list-reveal · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Staggered list reveal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf9f6;--surface:#ffffff;--line:#e8e5de;--line-2:#f1efe9;--ink:#1a1917;--ink-2:#6b675f;--ink-3:#9c978d;
+  --accent:#2a5bd7;--accent-soft:#e8eefc;--pos:#1f7a4d;--neg:#1a1917;
+  --sans:"Space Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --row-h:48px;--r:10px;--t-in:500ms;--t-out:180ms;--stagger:30ms;--t-micro:140ms;
+  --ease-out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans);overflow:hidden;display:flex;justify-content:center;-webkit-font-smoothing:antialiased}
+.wrap{width:880px;padding:32px 0;display:flex;flex-direction:column}
+.head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px}
+.head h1{margin:0;font-size:24px;font-weight:600;letter-spacing:-.02em}
+.head p{margin:4px 0 0;color:var(--ink-2);font-size:13px}
+.head p b{font:500 13px var(--mono);color:var(--ink)}
+.search{position:relative;width:300px}
+.search svg{position:absolute;left:12px;top:50%;width:16px;height:16px;transform:translateY(-50%);stroke:var(--ink-3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.search input{width:100%;height:40px;padding:0 36px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);font:14px var(--sans);color:var(--ink);outline:none;transition:border-color var(--t-micro),box-shadow var(--t-micro)}
+.search input::placeholder{color:var(--ink-3)}
+.search input:focus-visible{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.search kbd{position:absolute;right:10px;top:50%;transform:translateY(-50%);font:11px var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:var(--bg)}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.cols,.row{display:grid;grid-template-columns:110px 1fr 160px 130px;align-items:center;padding:0 20px;gap:16px}
+.cols{height:40px;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line)}
+.cols span:last-child,.row .amt{text-align:right}
+ul{list-style:none;margin:0;padding:0}
+.row{height:var(--row-h);border-bottom:1px solid var(--line-2);opacity:0;transform:translateY(14px)}
+.row.in{animation:in var(--t-in) var(--ease-out) forwards;animation-delay:calc(var(--i)*var(--stagger))}
+.row.out{animation:out var(--t-out) var(--ease) forwards}
+.row[hidden]{display:none}
+.row:last-child{border-bottom:0}
+.row:hover{background:var(--bg)}
+.date{font:13px var(--mono);color:var(--ink-2)}
+.payee{display:flex;align-items:center;gap:12px;font-weight:500;min-width:0}
+.payee i{width:28px;height:28px;border-radius:7px;flex:none;display:grid;place-items:center;font:500 11px var(--mono);color:var(--ink-2);background:var(--line-2)}
+.payee small{display:block;font-weight:400;color:var(--ink-3);font-size:12px}
+.tag{justify-self:start;font:500 11px var(--mono);letter-spacing:.04em;padding:3px 8px;border:1px solid var(--line);border-radius:999px;color:var(--ink-2);background:var(--bg)}
+.amt{font:500 15px var(--mono);letter-spacing:-.01em}
+.amt.pos{color:var(--pos)}
+.empty{display:none;padding:48px 20px;text-align:center;color:var(--ink-2)}
+.empty.show{display:block;animation:in var(--t-in) var(--ease-out)}
+.empty b{font-weight:500;color:var(--ink)}
+.foot{margin-top:14px;font:12px var(--mono);color:var(--ink-3);display:flex;justify-content:space-between}
+@keyframes in{to{opacity:1;transform:none}}
+@keyframes out{to{opacity:0;transform:translateY(-8px)}}
+@media (prefers-reduced-motion:reduce){.row.in,.row.out,.empty.show{animation-duration:1ms;animation-delay:0ms}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div><h1>Transactions</h1><p><b id="count">12</b> of 12 · September 2026 · Fjord Bank current account</p></div>
+    <label class="search"><span hidden>Filter transactions</span><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Filter by payee or category" autocomplete="off"><kbd>/</kbd></label>
+  </div>
+  <div class="list">
+    <div class="cols" aria-hidden="true"><span>Date</span><span>Payee</span><span>Category</span><span>Amount</span></div>
+    <ul id="rows" aria-live="polite" aria-label="Transactions"></ul>
+    <div class="empty" id="empty">No transactions match <b id="qq"></b>. Try a payee name or a category like “Groceries”.</div>
+  </div>
+  <div class="foot"><span id="sum"></span><span>Rows animate in with a 30 ms stagger</span></div>
+</div>
+<script>
+  const data=[
+    ['28 Sep','Nord Post','Subscription','Newsletters',-49],['27 Sep','Meny Grünerløkka','Groceries','Card 4471',-612.4],
+    ['26 Sep','Halden Hotel','Travel','Two nights',-4800],['25 Sep','Loam Studio AS','Salary','Sept payroll',42350],
+    ['24 Sep','Vy Tog','Travel','Oslo → Bergen',-899],['23 Sep','Tessel Type','Software','Font licence',-540],
+    ['22 Sep','Kaffebrenneriet','Groceries','Card 4471',-58],['21 Sep','Orbital Cloud','Software','eu-1 usage',-1240.2],
+    ['20 Sep','Marrow','Software','Team plan',-480],['19 Sep','Mira Refund','Refund','Order 8813',360],
+    ['18 Sep','Rema 1000','Groceries','Card 4471',-1123],['17 Sep','Fjord Bank','Fees','Card fee',-320],
+  ];
+  const ul=document.getElementById('rows'),q=document.getElementById('q'),count=document.getElementById('count'),empty=document.getElementById('empty'),qq=document.getElementById('qq');
+  const nok=v=>(v<0?'−':'+')+'NOK '+Math.abs(v).toLocaleString('en',{minimumFractionDigits:2});
+  ul.innerHTML=data.map(d=>`<li class="row"><span class="date">${d[0]}</span><span class="payee"><i>${d[1].slice(0,2).toUpperCase()}</i><span>${d[1]}<small>${d[3]}</small></span></span><span><span class="tag">${d[2]}</span></span><span class="amt ${d[4]>0?'pos':''}">${nok(d[4])}</span></li>`).join('');
+  const rows=[...ul.children];
+  function reveal(list){list.forEach((r,i)=>{r.hidden=false;r.classList.remove('out','in');r.style.setProperty('--i',i);void r.offsetWidth;r.classList.add('in');});}
+  let pending;
+  function filter(){
+    const s=q.value.trim().toLowerCase();
+    const keep=rows.filter((r,i)=>!s||(data[i][1]+' '+data[i][2]+' '+data[i][3]).toLowerCase().includes(s));
+    const leaving=rows.filter(r=>!r.hidden&&!keep.includes(r));
+    leaving.forEach(r=>{r.classList.remove('in');r.classList.add('out');});
+    count.textContent=keep.length;qq.textContent='“'+q.value.trim()+'”';
+    clearTimeout(pending);
+    pending=setTimeout(()=>{rows.forEach(r=>{if(!keep.includes(r))r.hidden=true});reveal(keep);empty.classList.toggle('show',keep.length===0);},leaving.length?180:0);
+  }
+  q.addEventListener('input',filter);
+  addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==q){e.preventDefault();q.focus();}if(e.key==='Escape'&&q.value){q.value='';filter();}});
+  document.getElementById('sum').textContent='Net '+nok(data.reduce((a,d)=>a+d[4],0))+' this month';
+  reveal(rows);
+</script>
+</body>
+</html>

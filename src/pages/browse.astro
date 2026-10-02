@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Catalog from '../components/Catalog.astro';
+import { getPieces } from '../lib/pieces';
+const pieces = await getPieces();
+---
+<Base title="Browse the floor" description="Every piece in the Lounge: screens, components, animations, layouts, patterns and styles for web, mobile, tablet, app and PWA.">
+  <PageHead eyebrow="The floor" title="Everything, <i>arranged</i>" blurb="Every piece in the Lounge, filterable by room, platform, style and motion. Open any of them for the live demo, the source, and the brief your agent builds from." count={pieces.length} />
+  <div class="wrap">
+    <Catalog pieces={pieces} all={pieces} />
+  </div>
+</Base>

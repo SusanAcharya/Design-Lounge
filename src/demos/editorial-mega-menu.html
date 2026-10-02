@@ -1,0 +1,171 @@
+<!-- Design Lounge piece: editorial-mega-menu · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Editorial mega menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ec;--panel:#fbf8f3;--tint:#efe4d8;--line:#e2d9cc;--line-2:#cdc2b2;
+  --ink:#1a1714;--ink-2:#5c554d;--ink-3:#8d857a;--accent:#8b2e2e;--accent-ink:#fff6f0;--scrim:rgba(26,23,20,.18);
+  --serif:"Fraunces",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;
+  --nav-h:64px;--gutter:48px;--card-w:300px;
+  --t-fast:120ms;--t-ind:240ms;--t-panel:280ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+header{position:relative;z-index:3;background:var(--bg)}
+.bar{height:var(--nav-h);display:flex;align-items:center;padding:0 var(--gutter);border-bottom:1px solid var(--line);gap:36px}
+.mast{font:600 26px/1 var(--serif);letter-spacing:-.02em;font-variation-settings:"opsz" 144}
+.mast small{display:block;font:500 10px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
+.nav{display:flex;height:100%;position:relative;margin:0;padding:0;list-style:none}
+.nav button{height:100%;padding:0 14px;border:0;background:none;font:500 15px var(--sans);color:var(--ink-2);cursor:pointer;letter-spacing:-.005em}
+.nav button:hover,.nav button[aria-expanded="true"]{color:var(--ink)}
+.nav button:focus-visible{outline:2px solid var(--accent);outline-offset:-6px;border-radius:4px}
+.ind{position:absolute;bottom:-1px;height:2px;background:var(--accent);left:0;width:0;opacity:0;transition:left var(--t-ind) var(--ease),width var(--t-ind) var(--ease),opacity var(--t-fast)}
+.ind.on{opacity:1}
+.tools{margin-left:auto;display:flex;align-items:center;gap:8px}
+.icon{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:0;background:none;color:var(--ink-2);cursor:pointer}
+.icon:hover{background:var(--tint);color:var(--ink)}
+.icon:focus-visible,.sub:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sub{height:36px;padding:0 16px;border-radius:999px;background:var(--ink);color:var(--bg);font:500 13px var(--sans);border:0;cursor:pointer;letter-spacing:.01em}
+.sub:hover{background:var(--accent)}
+.panel{position:absolute;left:0;right:0;top:var(--nav-h);background:var(--panel);border-bottom:1px solid var(--line);box-shadow:0 20px 40px -24px rgba(26,23,20,.35);overflow:hidden;height:0;transition:height var(--t-panel) var(--ease-out),opacity var(--t-fast) var(--ease);opacity:0}
+.panel.open{opacity:1}
+.sheet{display:grid}
+.sec{grid-area:1/1;display:grid;grid-template-columns:repeat(4,1fr) var(--card-w);gap:32px;padding:32px var(--gutter) 40px;opacity:0;visibility:hidden;transition:opacity 160ms var(--ease),visibility 0s 160ms}
+.sec.on{opacity:1;visibility:visible;transition-delay:0s,0s}
+.col h4{margin:0 0 12px;font:500 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.col ul{list-style:none;margin:0;padding:0}
+.col li a{display:block;padding:5px 0;font-size:15px;color:var(--ink-2);text-decoration:underline transparent;text-underline-offset:4px;transition:color var(--t-fast),text-decoration-color var(--t-fast)}
+.col li a:hover{color:var(--ink);text-decoration-color:var(--accent)}
+.col li a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.col li a.live::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:1px}
+.card{background:var(--tint);border-radius:4px;padding:22px 24px;display:flex;flex-direction:column;min-height:200px;position:relative}
+.card .tag{font:600 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.card h3{margin:10px 0 8px;font:400 24px/1.15 var(--serif);letter-spacing:-.01em;font-variation-settings:"opsz" 60}
+.card h3 i{font-style:italic}
+.card p{margin:0;color:var(--ink-2);font-size:14px;line-height:1.45}
+.card .by{margin-top:auto;padding-top:14px;font:500 12px var(--sans);color:var(--ink-3)}
+.card svg{position:absolute;right:20px;bottom:20px;color:var(--accent)}
+main{padding:36px var(--gutter);position:relative}
+main::after{content:"";position:absolute;inset:0;background:var(--scrim);opacity:0;transition:opacity var(--t-panel) var(--ease);pointer-events:none}
+body.menu main::after{opacity:1}
+.kick{font:500 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{margin:10px 0 14px;font:400 52px/1.05 var(--serif);letter-spacing:-.025em;max-width:820px;font-variation-settings:"opsz" 144}
+.deck{font:400 19px/1.4 var(--serif);color:var(--ink-2);max-width:640px;margin:0 0 32px;font-variation-settings:"opsz" 20}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;border-top:1px solid var(--line);padding-top:24px}
+.grid h2{margin:0 0 6px;font:600 20px/1.2 var(--serif);letter-spacing:-.01em}
+.grid p{margin:0;color:var(--ink-2);font-size:14px}
+.grid .m{font:500 12px var(--sans);color:var(--ink-3);margin-top:8px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body class="menu">
+<header id="hdr">
+  <div class="bar">
+    <a class="mast" href="#">Nord Post<small>Bergen · Tuesday 29 September</small></a>
+    <ul class="nav" id="nav" aria-label="Sections">
+      <li><button aria-expanded="false" aria-controls="s-world" data-s="world">World</button></li>
+      <li><button aria-expanded="false" aria-controls="s-business" data-s="business">Business</button></li>
+      <li><button aria-expanded="false" aria-controls="s-culture" data-s="culture">Culture</button></li>
+      <li><button aria-expanded="false" aria-controls="s-science" data-s="science">Science</button></li>
+      <li><button aria-expanded="false" aria-controls="s-opinion" data-s="opinion">Opinion</button></li>
+      <li class="ind" id="ind" aria-hidden="true"></li>
+    </ul>
+    <div class="tools"><button class="icon" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button class="sub">Subscribe</button></div>
+  </div>
+  <div class="panel" id="panel"><div class="sheet" id="sheet">
+    <section class="sec" id="s-world" aria-label="World">
+      <div class="col"><h4>Regions</h4><ul><li><a href="#">Europe</a></li><li><a href="#">Americas</a></li><li><a href="#">Asia-Pacific</a></li><li><a href="#">Middle East</a></li><li><a href="#">Africa</a></li></ul></div>
+      <div class="col"><h4>Coverage</h4><ul><li><a href="#" class="live">Norway votes: live</a></li><li><a href="#">Climate desk</a></li><li><a href="#">Migration</a></li><li><a href="#">Conflict monitor</a></li></ul></div>
+      <div class="col"><h4>Series</h4><ul><li><a href="#">The Long Read</a></li><li><a href="#">Dispatches</a></li><li><a href="#">Fjord Letters</a></li></ul></div>
+      <div class="col"><h4>Newsletters</h4><ul><li><a href="#">Morning Post</a></li><li><a href="#">Evening Brief</a></li></ul></div>
+      <a class="card" href="#"><span class="tag">From Narvik</span><h3>The port that <i>stopped waiting</i> for ships</h3><p>Iron ore, a rail line and a town rewriting its own timetable.</p><span class="by">Sigrid Aune · 14 min read</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </section>
+    <section class="sec" id="s-business" aria-label="Business">
+      <div class="col"><h4>Markets</h4><ul><li><a href="#">Stocks</a></li><li><a href="#">Bonds</a></li><li><a href="#">Currencies</a></li><li><a href="#">Commodities</a></li><li><a href="#">Funds</a></li><li><a href="#">Crypto</a></li></ul></div>
+      <div class="col"><h4>Companies</h4><ul><li><a href="#">Energy</a></li><li><a href="#">Shipping</a></li><li><a href="#">Retail</a></li><li><a href="#">Technology</a></li><li><a href="#">Banks</a></li><li><a href="#">Aquaculture</a></li></ul></div>
+      <div class="col"><h4>Economy</h4><ul><li><a href="#">Norges Bank watch</a></li><li><a href="#">Inflation tracker</a></li><li><a href="#">Housing</a></li><li><a href="#">Jobs</a></li></ul></div>
+      <div class="col"><h4>Tools</h4><ul><li><a href="#">Portfolio</a></li><li><a href="#">Screener</a></li><li><a href="#">Earnings calendar</a></li></ul></div>
+      <a class="card" href="#"><span class="tag">Analysis</span><h3>Why the krone <i>won't sit still</i></h3><p>Three rate decisions, one oil price and a currency that reacts to all of them.</p><span class="by">Henrik Dahl · 9 min read</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </section>
+    <section class="sec on" id="s-culture" aria-label="Culture">
+      <div class="col"><h4>Sections</h4><ul><li><a href="#">Books</a></li><li><a href="#">Film</a></li><li><a href="#">Music</a></li><li><a href="#">Art &amp; Design</a></li><li><a href="#">Theatre</a></li></ul></div>
+      <div class="col"><h4>Columns</h4><ul><li><a href="#">The Critic's Notebook</a></li><li><a href="#">Second Reading</a></li><li><a href="#">On Screen</a></li></ul></div>
+      <div class="col"><h4>Guides</h4><ul><li><a href="#">What to see this week</a></li><li><a href="#">Bergen listings</a></li><li><a href="#">Oslo listings</a></li><li><a href="#">Tromsø listings</a></li></ul></div>
+      <div class="col"><h4>Podcasts</h4><ul><li><a href="#">Nord Post Culture</a></li><li><a href="#">Reading Group</a></li></ul></div>
+      <a class="card" href="#"><span class="tag">Film · Autumn preview</span><h3>A season of small, <i>stubborn</i> films</h3><p>Twelve premieres from Bergen to Tromsø that refuse to explain themselves.</p><span class="by">Liv Marstrand · 11 min read</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </section>
+    <section class="sec" id="s-science" aria-label="Science">
+      <div class="col"><h4>Fields</h4><ul><li><a href="#">Climate</a></li><li><a href="#">Health</a></li><li><a href="#">Space</a></li><li><a href="#">Physics</a></li><li><a href="#">Biology</a></li><li><a href="#">Oceans</a></li></ul></div>
+      <div class="col"><h4>Desk</h4><ul><li><a href="#">Explainers</a></li><li><a href="#">Data</a></li><li><a href="#">Field notes</a></li></ul></div>
+      <div class="col"><h4>Series</h4><ul><li><a href="#">Arctic Journal</a></li><li><a href="#">The Body</a></li><li><a href="#">Deep Time</a></li></ul></div>
+      <div class="col"><h4>Events</h4><ul><li><a href="#">Nord Post Science Live</a></li></ul></div>
+      <a class="card" href="#"><span class="tag">Arctic Journal</span><h3>Counting the cod <i>by ear</i></h3><p>A hydrophone array off Lofoten is hearing what the nets no longer catch.</p><span class="by">Eirik Solheim · 12 min read</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </section>
+    <section class="sec" id="s-opinion" aria-label="Opinion">
+      <div class="col"><h4>Columnists</h4><ul><li><a href="#">Anne Kristin Berg</a></li><li><a href="#">Oskar Lindgren</a></li><li><a href="#">Maja Røed</a></li><li><a href="#">Per Haugland</a></li></ul></div>
+      <div class="col"><h4>Editorials</h4><ul><li><a href="#">The view from Bergen</a></li><li><a href="#">Weekend editorial</a></li></ul></div>
+      <div class="col"><h4>Letters</h4><ul><li><a href="#">Letters to the editor</a></li><li><a href="#">Write to us</a></li></ul></div>
+      <div class="col"><h4>Cartoons</h4><ul><li><a href="#">This week's cartoon</a></li></ul></div>
+      <a class="card" href="#"><span class="tag">Editorial</span><h3>Bergen deserves a <i>quieter</i> harbour</h3><p>The cruise schedule was written for 2014. The city was not.</p><span class="by">The Editorial Board · 6 min read</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </section>
+  </div></div>
+</header>
+<main>
+  <div class="kick">Front page</div>
+  <h1>The ferry timetable that became a referendum on the whole coast</h1>
+  <p class="deck">When Fjord Line cut the 06:40 crossing, four municipalities discovered they had been running on it. A story about what a schedule is for.</p>
+  <div class="grid">
+    <article><h2>Oslo's new library is a year old. Nobody has left.</h2><p>Attendance at Deichman Bjørvika has settled at 11,000 a day, and the building is quietly rearranging the city around it.</p><div class="m">Culture · 8 min</div></article>
+    <article><h2>The salmon farms are moving out to sea</h2><p>Offshore pens promise fewer lice and calmer fjords. The engineers are less sure about the winter.</p><div class="m">Business · 10 min</div></article>
+    <article><h2>How a Tromsø school stopped grading homework</h2><p>Two years in, the results are in and they are not what either side predicted.</p><div class="m">Science · 7 min</div></article>
+  </div>
+</main>
+<script>
+const hdr=document.getElementById('hdr'),panel=document.getElementById('panel'),ind=document.getElementById('ind'),btns=[...document.querySelectorAll('.nav button')];
+const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur=null,openT,closeT;
+function show(key){
+  clearTimeout(closeT);cur=key;
+  btns.forEach(b=>b.setAttribute('aria-expanded',String(b.dataset.s===key)));
+  const b=btns.find(x=>x.dataset.s===key),nav=b.parentElement.parentElement;
+  const r=b.getBoundingClientRect(),nr=nav.getBoundingClientRect();
+  ind.style.left=(r.left-nr.left)+'px';ind.style.width=r.width+'px';ind.classList.add('on');
+  document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('on',s.id==='s-'+key));
+  const h=document.getElementById('s-'+key).offsetHeight;
+  panel.style.height=h+'px';panel.classList.add('open');document.body.classList.add('menu');
+}
+function hide(){
+  clearTimeout(openT);cur=null;btns.forEach(b=>b.setAttribute('aria-expanded','false'));
+  ind.classList.remove('on');panel.style.height='0px';panel.classList.remove('open');document.body.classList.remove('menu');
+}
+btns.forEach(b=>{
+  b.addEventListener('mouseenter',()=>{clearTimeout(closeT);openT=setTimeout(()=>show(b.dataset.s),cur?0:80);});
+  b.addEventListener('click',()=>cur===b.dataset.s?hide():show(b.dataset.s));
+  b.addEventListener('focus',()=>{if(b.matches(':focus-visible'))show(b.dataset.s);});
+});
+hdr.addEventListener('mouseleave',()=>{clearTimeout(openT);closeT=setTimeout(hide,150);});
+hdr.addEventListener('mouseenter',()=>clearTimeout(closeT));
+hdr.addEventListener('focusout',e=>{if(!hdr.contains(e.relatedTarget))hide();});
+addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&cur){const b=btns.find(x=>x.dataset.s===cur);hide();b.focus();}
+  if(!cur||!btns.includes(document.activeElement))return;
+  const i=btns.indexOf(document.activeElement);
+  if(e.key==='ArrowRight'){e.preventDefault();btns[(i+1)%btns.length].focus();}
+  if(e.key==='ArrowLeft'){e.preventDefault();btns[(i-1+btns.length)%btns.length].focus();}
+  if(e.key==='ArrowDown'){e.preventDefault();document.querySelector('.sec.on a').focus();}
+});
+addEventListener('resize',()=>{if(cur)show(cur);});
+if(rm)panel.style.transition='none';
+show('culture');
+</script>
+</body>
+</html>

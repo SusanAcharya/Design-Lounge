@@ -1,0 +1,111 @@
+<!-- Design Lounge piece: m3-search-bar-morph · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fjord Bank — search morph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface:#0f1512;--surface-low:#161d19;--surface-c:#1b2320;--surface-high:#252e2a;--surface-highest:#303935;
+  --on-surface:#dfe4df;--on-surface-v:#b6c4b9;--outline:#7f8d82;--outline-v:#3b4641;
+  --primary:#9ad6a8;--on-primary:#003919;--primary-c:#1f4d2f;--on-primary-c:#b5f2c3;
+  --error:#ffb4ab;
+  --font:"Gabarito",system-ui,sans-serif;
+  --bar-h:56px;--r-bar:28px;--inset:16px;--top:62px;
+  --t-micro:150ms;--t-big:500ms;--t-exit:300ms;--ease-emph:cubic-bezier(.2,0,0,1);--ease-exit:cubic-bezier(.3,0,.8,.15);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--font);background:var(--surface);color:var(--on-surface);-webkit-font-smoothing:antialiased;position:relative;overflow:hidden}
+svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+main{height:100%;overflow:auto;padding:134px 16px 40px;scrollbar-width:none}
+.bal{background:var(--primary-c);color:var(--on-primary-c);border-radius:28px;padding:22px 24px 20px}
+.bal small{font-size:13px;font-weight:500;opacity:.8}
+.bal b{display:block;font-size:40px;font-weight:600;letter-spacing:-.03em;line-height:1.05;margin-top:4px}
+.bal span{font-size:13px;opacity:.8}
+h2{margin:26px 4px 10px;font-size:14px;font-weight:600;color:var(--on-surface-v);text-transform:uppercase;letter-spacing:.06em}
+.tx{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.tx li{display:flex;align-items:center;gap:14px;min-height:64px;padding:8px 10px;border-radius:16px;transition:opacity var(--t-micro)}
+.tx li:hover{background:var(--surface-low)}
+.ic{width:40px;height:40px;border-radius:12px;background:var(--surface-high);display:grid;place-items:center;color:var(--on-surface-v);flex:none;font-size:12px;font-weight:700}
+.tx b{display:block;font-weight:500}
+.tx small{font-size:13px;color:var(--on-surface-v)}
+.tx em{margin-left:auto;font-style:normal;font-weight:600;font-variant-numeric:tabular-nums}
+.tx em.in{color:var(--primary)}
+.sv{position:absolute;top:var(--top);left:var(--inset);right:var(--inset);height:var(--bar-h);background:var(--surface-high);border-radius:var(--r-bar);overflow:hidden;transition:top var(--t-exit) var(--ease-exit),left var(--t-exit) var(--ease-exit),right var(--t-exit) var(--ease-exit),height var(--t-exit) var(--ease-exit),border-radius var(--t-exit) var(--ease-exit),background var(--t-exit);z-index:2}
+.open .sv{top:0;left:0;right:0;height:100%;border-radius:0;background:var(--surface-c);transition:top var(--t-big) var(--ease-emph),left var(--t-big) var(--ease-emph),right var(--t-big) var(--ease-emph),height var(--t-big) var(--ease-emph),border-radius var(--t-big) var(--ease-emph),background var(--t-big)}
+.row{position:relative;height:var(--bar-h);display:flex;align-items:center;gap:4px;padding:0 8px 0 4px;transition:margin-top var(--t-big) var(--ease-emph)}
+.open .row{margin-top:54px}
+.ib{width:48px;height:48px;border:0;border-radius:50%;background:transparent;color:var(--on-surface-v);display:grid;place-items:center;cursor:pointer;flex:none;position:relative}
+.ib svg{position:absolute;transition:opacity var(--t-micro),transform var(--t-big) var(--ease-emph)}
+.ib .back{opacity:0;transform:rotate(-90deg)}
+.open .ib .back{opacity:1;transform:none}
+.open .ib .lens{opacity:0;transform:rotate(90deg)}
+.ib:focus-visible,.chip:focus-visible,.hit:focus-visible,.res li:focus-visible{outline:3px solid var(--primary);outline-offset:-3px}
+input{flex:1;min-width:0;height:48px;border:0;background:transparent;color:var(--on-surface);font:400 17px var(--font);outline:none}
+input::placeholder{color:var(--on-surface-v)}
+.av{width:32px;height:32px;border-radius:50%;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font-size:12px;font-weight:700;margin:0 6px;transition:opacity var(--t-micro),transform var(--t-micro)}
+.open .av{opacity:0;transform:scale(.6);pointer-events:none}
+.clr{opacity:0;pointer-events:none;position:absolute;right:8px}
+.open .has .clr,.has .clr{opacity:1;pointer-events:auto}
+.hit{position:absolute;inset:0;border:0;background:transparent;cursor:text;border-radius:inherit}
+.open .hit{display:none}
+.body{padding:8px 16px 0;opacity:0;transform:translateY(8px);transition:opacity var(--t-micro) var(--ease-exit),transform var(--t-micro) var(--ease-exit)}
+.open .body{opacity:1;transform:none;transition:opacity 300ms var(--ease-emph) 200ms,transform 400ms var(--ease-emph) 200ms}
+.body h3{margin:12px 4px 8px;font-size:13px;font-weight:600;color:var(--on-surface-v);text-transform:uppercase;letter-spacing:.06em}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--outline-v);background:transparent;color:var(--on-surface);font:500 14px var(--font);display:flex;align-items:center;gap:6px;cursor:pointer}
+.chip svg{width:16px;height:16px}
+.res{list-style:none;margin:0;padding:0}
+.res li{display:flex;align-items:center;gap:14px;min-height:56px;padding:6px 8px;border-radius:14px;cursor:pointer}
+.res li:hover{background:var(--surface-high)}
+.res li mark{background:transparent;color:var(--primary);font-weight:600}
+.empty{padding:20px 8px;color:var(--on-surface-v);display:none}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;transition-delay:0ms!important}}
+</style>
+</head>
+<body>
+<main aria-hidden="false" id="main">
+  <section class="bal"><small>Everyday · SEK</small><b>24 318,40</b><span>Available · payday in 4 days</span></section>
+  <h2>Recent</h2>
+  <ul class="tx" id="tx"></ul>
+</main>
+<div class="sv" id="sv" role="search">
+  <div class="row" id="row">
+    <button class="ib" id="lead" aria-label="Search" tabindex="-1"><svg class="lens" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg><svg class="back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+    <input id="q" type="search" placeholder="Search transactions" aria-label="Search transactions" autocomplete="off" tabindex="-1">
+    <div class="av" aria-hidden="true">LN</div>
+    <button class="ib clr" id="clr" aria-label="Clear"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="hit" id="hit" aria-label="Open search"></button>
+  </div>
+  <div class="body">
+    <h3>Recent searches</h3>
+    <div class="chips" id="chips">
+      <button class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Halden Ceramics</button>
+      <button class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>rent</button>
+      <button class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>coffee</button>
+    </div>
+    <h3 id="rh">Suggestions</h3>
+    <ul class="res" id="res" aria-live="polite"></ul>
+    <p class="empty" id="empty"></p>
+  </div>
+</div>
+<script>
+  const data=[['Halden Ceramics','Card · 27 Sep','-1 240,00','HC'],['Salary · Loam Studio','Transfer · 25 Sep','+38 900,00','LS'],['Nord Post','Postage · 24 Sep','-84,00','NP'],['Marrow Coffee','Card · 24 Sep','-46,00','MC'],['Rent · Brf Tessel','Standing order · 1 Sep','-11 250,00','BT'],['Mira Pharmacy','Card · 22 Sep','-312,50','MP']];
+  const body=document.body,lead=document.getElementById('lead'),q=document.getElementById('q'),row=document.getElementById('row'),res=document.getElementById('res'),empty=document.getElementById('empty'),main=document.getElementById('main');
+  const item=(d,h)=>{const li=document.createElement('li');li.tabIndex=0;li.innerHTML='<span class="ic"></span><div><b></b><small></small></div><em></em>';li.querySelector('.ic').textContent=d[3];li.querySelector('small').textContent=d[1];const e=li.querySelector('em');e.textContent=d[2];if(d[2][0]==='+')e.classList.add('in');const b=li.querySelector('b');if(h){const i=d[0].toLowerCase().indexOf(h.toLowerCase());b.append(d[0].slice(0,i));const m=document.createElement('mark');m.textContent=d[0].slice(i,i+h.length);b.append(m,d[0].slice(i+h.length));}else b.textContent=d[0];return li;};
+  const tx=document.getElementById('tx');data.forEach(d=>tx.append(item(d)));
+  function render(){const v=q.value.trim();row.classList.toggle('has',!!v);const hits=v?data.filter(d=>d[0].toLowerCase().includes(v.toLowerCase())):data.slice(0,4);res.replaceChildren(...hits.map(d=>item(d,v)));document.getElementById('rh').textContent=v?hits.length+' result'+(hits.length===1?'':'s'):'Suggestions';empty.style.display=hits.length?'none':'block';empty.textContent=hits.length?'':'No transactions match "'+v+'".';}
+  function setOpen(o){body.classList.toggle('open',o);main.setAttribute('aria-hidden',String(o));q.tabIndex=o?0:-1;lead.tabIndex=o?0:-1;lead.setAttribute('aria-label',o?'Back':'Search');if(o){render();setTimeout(()=>q.focus(),120);}else{q.value='';row.classList.remove('has');document.getElementById('hit').focus();}}
+  document.getElementById('hit').addEventListener('click',()=>setOpen(true));
+  lead.addEventListener('click',()=>setOpen(!body.classList.contains('open')));
+  document.getElementById('clr').addEventListener('click',()=>{q.value='';render();q.focus();});
+  q.addEventListener('input',render);
+  document.getElementById('chips').addEventListener('click',e=>{const c=e.target.closest('.chip');if(c){q.value=c.textContent.trim();render();q.focus();}});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&body.classList.contains('open')){e.preventDefault();setOpen(false);}});
+</script>
+</body>
+</html>

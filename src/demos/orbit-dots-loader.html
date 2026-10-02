@@ -1,0 +1,105 @@
+<!-- Design Lounge piece: orbit-dots-loader · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Orbit dots loader family</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f4f7;--card:#ffffff;--line:#dfe3ea;--line-2:#c7cdd8;--ink:#0f172a;--ink-2:#4b5565;--ink-3:#8a94a6;--accent:#0055ff;--accent-soft:#e0eaff;--track:#e6e9ef;
+  --font:"Space Grotesk",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --dur:1200ms;--size:64px;--r:14px;
+  --t-micro:140ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-loader:cubic-bezier(.45,0,.55,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--font);color:var(--ink);background:var(--bg);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;-webkit-font-smoothing:antialiased}
+header{padding:40px 56px 8px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+h1{margin:0;font-size:28px;font-weight:600;letter-spacing:-.02em}
+h1 span{color:var(--accent)}
+header p{margin:4px 0 0;color:var(--ink-2);font-size:14px}
+.badge{font:500 12px var(--mono);color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:6px 10px;white-space:nowrap}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:24px 56px;min-height:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;min-height:0;transition:border-color var(--t-micro)}
+.card:hover{border-color:var(--line-2)}
+.stage{flex:1;display:grid;place-items:center;min-height:0;border-bottom:1px solid var(--line);border-radius:var(--r) var(--r) 0 0;background:radial-gradient(circle at 50% 50%,#fff 55%,#f7f9fc 100%)}
+.card.paused .stage *{animation-play-state:paused}
+.info{padding:16px 20px 18px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.info h2{margin:0;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.info p{margin:4px 0 0;font:12px/1.5 var(--mono);color:var(--ink-3)}
+.info p b{font-weight:500;color:var(--ink-2)}
+.n{font:500 11px var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:6px;padding:3px 6px;white-space:nowrap}
+/* 1 — orbit dots: one div (rotates) + one span; three dots from ::before, ::after and the span */
+.orbit{width:var(--size);height:var(--size);position:relative;animation:spin var(--dur) linear infinite}
+.orbit::before,.orbit::after,.orbit span{content:"";position:absolute;left:50%;top:50%;width:calc(var(--size)*.18);height:calc(var(--size)*.18);margin:calc(var(--size)*-.09) 0 0 calc(var(--size)*-.09);border-radius:50%;background:var(--accent)}
+.orbit::before{transform:rotate(0deg) translate(calc(var(--size)*.42))}
+.orbit::after{transform:rotate(120deg) translate(calc(var(--size)*.42));opacity:.65}
+.orbit span{transform:rotate(240deg) translate(calc(var(--size)*.42));opacity:.3}
+/* 2 — staggered bars: a single div; ::before and ::after are the outer bars */
+.bars{width:calc(var(--size)*.16);height:var(--size);position:relative;background:var(--accent);border-radius:calc(var(--size)*.08);animation:bar var(--dur) var(--ease-loader) calc(var(--dur)*-.16) infinite;transform-origin:center}
+.bars::before,.bars::after{content:"";position:absolute;top:0;width:100%;height:100%;border-radius:inherit;background:var(--accent);animation:bar var(--dur) var(--ease-loader) infinite}
+.bars::before{left:calc(var(--size)*-.28);animation-delay:calc(var(--dur)*-.32)}
+.bars::after{left:calc(var(--size)*.28);animation-delay:0ms}
+/* 3 — morphing ring: a single div with a border; ::before is the inner counter-shape */
+.ring{width:var(--size);height:var(--size);border:calc(var(--size)*.11) solid var(--accent);border-right-color:var(--track);border-radius:50%;animation:morph var(--dur) var(--ease-loader) infinite,spin calc(var(--dur)*2) linear infinite;position:relative}
+.ring::before{content:"";position:absolute;inset:18%;border-radius:50%;background:var(--accent);opacity:0;animation:core var(--dur) var(--ease-loader) infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bar{0%,100%{transform:scaleY(.35);opacity:.45}40%{transform:scaleY(1);opacity:1}}
+@keyframes morph{0%,100%{border-radius:50%}50%{border-radius:22%}}
+@keyframes core{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:.2;transform:scale(1)}}
+.controls{border-top:1px solid var(--line);background:var(--card);padding:18px 56px 24px;display:grid;grid-template-columns:1fr 1fr auto auto;gap:28px;align-items:center}
+.ctl{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;font-size:13px;font-weight:500}
+.ctl label{color:var(--ink-2)}
+.ctl output{font:500 12px var(--mono);color:var(--ink);min-width:6ch;text-align:right}
+input[type=range]{appearance:none;width:100%;height:24px;background:none;cursor:pointer;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--track);border-radius:2px}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--card);border:2px solid var(--accent);margin-top:-7.5px;transition:transform var(--t-micro) var(--ease)}
+input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.15)}
+input[type=range]::-moz-range-track{height:3px;background:var(--track);border-radius:2px}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--card);border:2px solid var(--accent)}
+input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+.btn{height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--line-2);background:var(--card);font:500 13px var(--font);color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn svg{width:14px;height:14px;fill:currentColor}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.code{font:12px var(--mono);color:var(--ink-3)}
+.code b{color:var(--ink-2);font-weight:500}
+@media (max-width:1023px){.row{grid-template-columns:1fr 1fr 1fr;padding:20px 32px}header,.controls{padding-left:32px;padding-right:32px}.controls{grid-template-columns:1fr 1fr;gap:16px}}
+@media (max-width:767px){.row{grid-template-columns:1fr;overflow:auto}body{overflow:auto}}
+@media (prefers-reduced-motion:reduce){.orbit,.bars,.bars::before,.bars::after,.ring,.ring::before{animation:calm 2.4s ease-in-out infinite}.ring{transform:none}@keyframes calm{0%,100%{opacity:.45}50%{opacity:1}}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Mira <span>loaders</span></h1><p>Three indicators, one accent, no more than three DOM elements each. Tune duration and size below; the CSS reads two custom properties.</p></div>
+  <span class="badge" id="badge">--dur: 1200ms · --size: 64px</span>
+</header>
+<section class="row" aria-label="Loader gallery">
+  <article class="card" id="c1"><div class="stage"><div class="orbit" role="status" aria-label="Loading"><span></span></div></div>
+    <div class="info"><div><h2>Orbit dots</h2><p>1 div + 1 span · <b>linear</b> · 3 dots at 0°, 120°, 240°</p></div><span class="n">2 elements</span></div></article>
+  <article class="card" id="c2"><div class="stage"><div class="bars" role="status" aria-label="Loading"></div></div>
+    <div class="info"><div><h2>Staggered bars</h2><p>1 div · <b>ease-in-out</b> · delays −32 %, −16 %, 0</p></div><span class="n">1 element</span></div></article>
+  <article class="card" id="c3"><div class="stage"><div class="ring" role="status" aria-label="Loading"></div></div>
+    <div class="info"><div><h2>Morphing ring</h2><p>1 div · radius 50 % ↔ 22 % while spinning at <b>2×</b> duration</p></div><span class="n">1 element</span></div></article>
+</section>
+<footer class="controls">
+  <div class="ctl"><label for="dur">Duration</label><input id="dur" type="range" min="600" max="2400" step="100" value="1200"><output id="durOut">1200 ms</output></div>
+  <div class="ctl"><label for="size">Size</label><input id="size" type="range" min="32" max="96" step="4" value="64"><output id="sizeOut">64 px</output></div>
+  <button class="btn" id="pause" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>Pause</button>
+  <span class="code">.orbit { animation: spin <b>var(--dur)</b> linear infinite; width: <b>var(--size)</b> }</span>
+</footer>
+<script>
+  const root=document.documentElement,dur=document.getElementById('dur'),size=document.getElementById('size'),badge=document.getElementById('badge');
+  function apply(){root.style.setProperty('--dur',dur.value+'ms');root.style.setProperty('--size',size.value+'px');
+    document.getElementById('durOut').value=dur.value+' ms';document.getElementById('sizeOut').value=size.value+' px';badge.textContent='--dur: '+dur.value+'ms · --size: '+size.value+'px';}
+  dur.addEventListener('input',apply);size.addEventListener('input',apply);
+  const pause=document.getElementById('pause');
+  pause.addEventListener('click',()=>{const on=pause.getAttribute('aria-pressed')!=='true';pause.setAttribute('aria-pressed',String(on));
+    document.querySelectorAll('.card').forEach(c=>c.classList.toggle('paused',on));pause.lastChild.textContent=on?'Resume':'Pause';});
+</script>
+</body>
+</html>

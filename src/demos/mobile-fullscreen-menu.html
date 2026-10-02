@@ -1,0 +1,111 @@
+<!-- Design Lounge piece: mobile-fullscreen-menu · platform: mobile-web · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marrow — Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#efe9df;--bg-menu:#14213d;--ink:#1c1a17;--ink-2:#6b655b;--ink-menu:#efe9df;--ink-menu-2:#8d9ab8;--line:#d9d1c3;--line-menu:#2b3a5c;--accent:#e4572e;
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Schibsted Grotesk",system-ui,sans-serif;
+  --safe-top:54px;--safe-bottom:80px;--gutter:24px;--bar-h:60px;--r-pill:999px;
+  --t-fast:160ms;--t-morph:240ms;--t-bg:420ms;--t-link:520ms;--stagger:55ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow:hidden;transition:background var(--t-bg) var(--ease),color var(--t-bg) var(--ease)}
+body.open{background:var(--bg-menu);color:var(--ink-menu)}
+.bar{position:fixed;top:var(--safe-top);left:0;right:0;height:var(--bar-h);z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter)}
+.wordmark{font:400 30px/1 var(--serif);letter-spacing:-.01em;text-decoration:none;color:inherit;transition:color var(--t-bg) var(--ease)}
+.burger{width:44px;height:44px;margin-right:-10px;border:0;background:transparent;color:inherit;cursor:pointer;position:relative;padding:0;border-radius:50%}
+.burger:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.burger span{position:absolute;left:11px;width:22px;height:2px;background:currentColor;border-radius:1px;transition:transform var(--t-morph) var(--ease),opacity var(--t-fast) var(--ease),top var(--t-morph) var(--ease)}
+.burger span:nth-child(1){top:15px}.burger span:nth-child(2){top:21px}.burger span:nth-child(3){top:27px}
+.open .burger span:nth-child(1){top:21px;transform:rotate(45deg)}
+.open .burger span:nth-child(2){opacity:0;transform:scaleX(.2)}
+.open .burger span:nth-child(3){top:21px;transform:rotate(-45deg)}
+.page{position:absolute;inset:0;padding:calc(var(--safe-top) + var(--bar-h) + 24px) var(--gutter) var(--safe-bottom);transition:opacity var(--t-bg) var(--ease),transform var(--t-bg) var(--ease)}
+.open .page{opacity:0;transform:scale(.98);pointer-events:none}
+.kicker{font:500 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin:0 0 18px}
+h1{font:400 52px/1 var(--serif);letter-spacing:-.02em;margin:0 0 22px;max-width:9ch}
+h1 em{font-style:italic;color:var(--accent)}
+.page p{color:var(--ink-2);max-width:30ch;margin:0 0 28px;font-size:16px}
+.work{border-top:1px solid var(--line);padding-top:18px;display:grid;gap:14px}
+.work a{display:flex;justify-content:space-between;text-decoration:none;color:inherit;font-size:15px}
+.work a span{color:var(--ink-2);font-size:13px}
+.work a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.menu{position:fixed;inset:0;z-index:10;padding:calc(var(--safe-top) + var(--bar-h) + 28px) var(--gutter) var(--safe-bottom);display:flex;flex-direction:column;visibility:hidden;transition:visibility 0s linear var(--t-link)}
+.open .menu{visibility:visible;transition-delay:0s}
+.links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.links li{overflow:hidden}
+.links a{display:flex;align-items:baseline;gap:12px;font:400 64px/1.08 var(--serif);letter-spacing:-.025em;color:var(--ink-menu);text-decoration:none;transform:translateY(110%);opacity:0;transition:transform var(--t-link) var(--ease-out),opacity var(--t-fast) linear,color var(--t-fast);padding:2px 0;min-height:44px}
+.links a sup{font:500 12px/1 var(--sans);color:var(--ink-menu-2);letter-spacing:.06em}
+.links a:hover,.links a:focus-visible{color:var(--accent);outline:none}
+.links a:focus-visible{text-decoration:underline;text-underline-offset:8px;text-decoration-thickness:2px}
+.open .links a{transform:translateY(0);opacity:1}
+.open .links li:nth-child(1) a{transition-delay:calc(var(--stagger)*1)}
+.open .links li:nth-child(2) a{transition-delay:calc(var(--stagger)*2)}
+.open .links li:nth-child(3) a{transition-delay:calc(var(--stagger)*3)}
+.open .links li:nth-child(4) a{transition-delay:calc(var(--stagger)*4)}
+.open .links li:nth-child(5) a{transition-delay:calc(var(--stagger)*5)}
+.foot{margin-top:auto;border-top:1px solid var(--line-menu);padding-top:18px;display:flex;flex-direction:column;gap:16px;opacity:0;transform:translateY(12px);transition:opacity var(--t-bg) var(--ease),transform var(--t-bg) var(--ease-out)}
+.open .foot{opacity:1;transform:none;transition-delay:calc(var(--stagger)*6)}
+.small{display:flex;flex-wrap:wrap;gap:6px 22px}
+.small a{color:var(--ink-menu-2);text-decoration:none;font-size:14px;padding:8px 0;min-height:40px;display:inline-flex;align-items:center}
+.small a:hover,.small a:focus-visible{color:var(--ink-menu);outline:none;text-decoration:underline;text-underline-offset:4px}
+.lang{display:flex;align-items:center;justify-content:space-between}
+.lang span{font-size:12px;color:var(--ink-menu-2);letter-spacing:.1em;text-transform:uppercase}
+.seg{display:flex;border:1px solid var(--line-menu);border-radius:var(--r-pill);padding:3px;position:relative;isolation:isolate}
+.seg button{position:relative;width:52px;height:34px;border:0;background:transparent;color:var(--ink-menu-2);font:500 13px var(--sans);border-radius:var(--r-pill);cursor:pointer;transition:color var(--t-fast);z-index:1}
+.seg button[aria-pressed="true"]{color:var(--bg-menu)}
+.seg button:focus-visible{outline:2px solid var(--ink-menu);outline-offset:2px}
+.seg .thumb{position:absolute;top:3px;left:3px;width:52px;height:34px;border-radius:var(--r-pill);background:var(--ink-menu);transition:transform var(--t-morph) var(--ease-sheet)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;transition-delay:0s!important}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="wordmark" href="#">Marrow</a>
+  <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span><span></span><span></span></button>
+</header>
+<main class="page" id="page">
+  <p class="kicker">Design studio · Bergen</p>
+  <h1>Objects that <em>outlast</em> their trend.</h1>
+  <p>Furniture, lighting and brand systems for companies that intend to be around in forty years. Currently taking two projects for spring.</p>
+  <nav class="work" aria-label="Selected work">
+    <a href="#">Halden Chair, 2025<span>Furniture</span></a>
+    <a href="#">Fjord Bank identity<span>Brand</span></a>
+    <a href="#">Nord Post lamp series<span>Lighting</span></a>
+  </nav>
+</main>
+<nav class="menu" id="menu" aria-label="Main menu">
+  <ul class="links">
+    <li><a href="#">Work<sup>24</sup></a></li>
+    <li><a href="#">Studio</a></li>
+    <li><a href="#">Journal<sup>03</sup></a></li>
+    <li><a href="#">Shop</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="foot">
+    <div class="small"><a href="#">Careers</a><a href="#">Press kit</a><a href="#">Newsletter</a><a href="#">Privacy</a></div>
+    <div class="lang"><span>Language</span>
+      <div class="seg" id="seg" role="group" aria-label="Language"><div class="thumb" id="thumb"></div><button aria-pressed="true" lang="en">EN</button><button aria-pressed="false" lang="no">NO</button><button aria-pressed="false" lang="de">DE</button></div>
+    </div>
+  </div>
+</nav>
+<script>
+  const body=document.body,burger=document.getElementById('burger'),menu=document.getElementById('menu'),page=document.getElementById('page');
+  function setOpen(o){body.classList.toggle('open',o);burger.setAttribute('aria-expanded',String(o));burger.setAttribute('aria-label',o?'Close menu':'Open menu');page.toggleAttribute('inert',o);
+    if(o)setTimeout(()=>menu.querySelector('a').focus({preventScroll:true}),120);else burger.focus({preventScroll:true});}
+  burger.addEventListener('click',()=>setOpen(!body.classList.contains('open')));
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&body.classList.contains('open'))setOpen(false);});
+  menu.querySelectorAll('.links a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();setOpen(false);}));
+  const seg=document.getElementById('seg'),thumb=document.getElementById('thumb'),btns=[...seg.querySelectorAll('button')];
+  btns.forEach((b,i)=>b.addEventListener('click',()=>{btns.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));thumb.style.transform='translateX('+(i*52)+'px)';}));
+</script>
+</body>
+</html>

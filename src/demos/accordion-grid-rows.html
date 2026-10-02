@@ -1,0 +1,112 @@
+<!-- Design Lounge piece: accordion-grid-rows · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Loam — Questions people ask</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f0e8;--panel:#faf7f1;--line:#ddd5c6;--line-strong:#b8ad98;--ink:#221d17;--ink-2:#5c5449;--ink-3:#8c8272;--accent:#b5472a;--accent-soft:#f1e2dc;
+  --serif:"Newsreader",Georgia,serif;--sans:"Inter",system-ui,sans-serif;
+  --t-open:320ms;--t-fast:160ms;--ease:cubic-bezier(.2,.7,.2,1);--r:6px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--sans);display:grid;grid-template-columns:400px 1fr;-webkit-font-smoothing:antialiased}
+aside{padding:64px 48px;border-right:1px solid var(--line);display:flex;flex-direction:column}
+.kicker{font:500 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+aside h1{font:400 44px/1.05 var(--serif);letter-spacing:-.015em;margin:0 0 18px;font-variation-settings:"opsz" 72}
+aside p{color:var(--ink-2);margin:0 0 28px;max-width:30ch}
+.contact{margin-top:auto;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+.contact a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-strong)}
+.contact a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+main{padding:64px 72px 48px 64px;overflow:auto}
+.count{font:500 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 12px;display:flex;justify-content:space-between}
+.count kbd{font:inherit;border:1px solid var(--line);border-radius:4px;padding:1px 5px;letter-spacing:0;text-transform:none}
+.faq{border-top:1px solid var(--line-strong);margin:0;padding:0;list-style:none}
+.item{border-bottom:1px solid var(--line)}
+.q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;background:none;border:0;padding:18px 4px 18px 0;font:400 22px/1.25 var(--serif);letter-spacing:-.005em;color:var(--ink);text-align:left;cursor:pointer;border-radius:var(--r);transition:color var(--t-fast) var(--ease);font-variation-settings:"opsz" 30}
+.q:hover{color:var(--accent)}
+.q:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.q[aria-expanded="true"]{color:var(--accent)}
+.q .n{font:400 12px var(--sans);color:var(--ink-3);letter-spacing:.06em;width:28px;flex:none;font-variant-numeric:tabular-nums}
+.q .t{flex:1}
+.q svg{flex:none;width:20px;height:20px;color:var(--ink-3);transition:transform var(--t-open) var(--ease),color var(--t-fast) var(--ease)}
+.q[aria-expanded="true"] svg{transform:rotate(180deg);color:var(--accent)}
+.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--t-open) var(--ease)}
+.item.open .panel{grid-template-rows:1fr}
+.panel>div{overflow:hidden;min-height:0}
+.a{padding:0 60px 22px 28px;color:var(--ink-2);max-width:62ch;opacity:0;transform:translateY(-4px);transition:opacity var(--t-open) var(--ease),transform var(--t-open) var(--ease)}
+.item.open .a{opacity:1;transform:none}
+.a p{margin:0 0 10px}.a p:last-child{margin:0}
+.a em{font:italic 400 17px/1.5 var(--serif);color:var(--ink);font-variation-settings:"opsz" 18}
+.a strong{font-weight:500;color:var(--ink)}
+.tag{display:inline-block;font:500 11px var(--sans);letter-spacing:.06em;color:var(--accent);background:var(--accent-soft);padding:3px 8px;border-radius:999px;margin-top:8px}
+@media (prefers-reduced-motion:reduce){.panel,.q svg,.a{transition-duration:1ms}}
+</style>
+</head>
+<body>
+<aside>
+  <div class="kicker">Loam · Help</div>
+  <h1>Questions people ask before they plant.</h1>
+  <p>Short answers about our soil subscription, deliveries and what happens when a bag arrives torn.</p>
+  <div class="contact">Still stuck? Write to <a href="#">hello@loam.garden</a> — a person answers within a working day.</div>
+</aside>
+<main>
+  <p class="count"><span>6 questions</span><span>Use <kbd>↑</kbd> <kbd>↓</kbd> <kbd>Home</kbd> <kbd>End</kbd> between questions</span></p>
+  <ul class="faq" id="faq">
+    <li class="item open">
+      <h3 style="margin:0"><button class="q" aria-expanded="true" aria-controls="a1" id="q1"><span class="n">01</span><span class="t">How much soil does one bag actually cover?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+      <div class="panel" id="a1" role="region" aria-labelledby="q1"><div><div class="a"><p>One 40-litre bag fills a <strong>60 × 40 × 17 cm</strong> raised bed, or tops up roughly 2 m² of border to a depth of 2 cm.</p><p>Most subscribers on the Balcony plan use two bags a season; the Allotment plan sends six.</p><span class="tag">Sizing</span></div></div></div>
+    </li>
+    <li class="item">
+      <h3 style="margin:0"><button class="q" aria-expanded="false" aria-controls="a2" id="q2"><span class="n">02</span><span class="t">When do deliveries go out, and can I pause them?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+      <div class="panel" id="a2" role="region" aria-labelledby="q2"><div><div class="a"><p>Bags leave the yard every <strong>second Tuesday</strong> and arrive within three working days. You can pause for up to 90 days from your account; the next bag simply shifts.</p><em>"We don't ship in a frost. The soil is happier and so is the courier."</em></div></div></div>
+    </li>
+    <li class="item">
+      <h3 style="margin:0"><button class="q" aria-expanded="false" aria-controls="a3" id="q3"><span class="n">03</span><span class="t">What is in the mix?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+      <div class="panel" id="a3" role="region" aria-labelledby="q3"><div><div class="a"><p>Composted bark 40%, green-waste compost 30%, coir 20%, worm castings 10%. No peat. <strong>pH 6.4</strong>, tested every batch, and the batch number is printed on the seam of every bag.</p></div></div></div>
+    </li>
+    <li class="item">
+      <h3 style="margin:0"><button class="q" aria-expanded="false" aria-controls="a4" id="q4"><span class="n">04</span><span class="t">A bag arrived torn. What now?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+      <div class="panel" id="a4" role="region" aria-labelledby="q4"><div><div class="a"><p>Keep it — it is still good soil. Send a photo from your orders page and we add a <strong>replacement bag</strong> to your next delivery at no charge. No form, no returns.</p><span class="tag">Delivery</span></div></div></div>
+    </li>
+    <li class="item">
+      <h3 style="margin:0"><button class="q" aria-expanded="false" aria-controls="a5" id="q5"><span class="n">05</span><span class="t">Can I change plan mid-season?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+      <div class="panel" id="a5" role="region" aria-labelledby="q5"><div><div class="a"><p>Yes. Moving from Balcony (£14/month) to Allotment (£32/month) takes effect on the next Tuesday run; moving down is prorated to the day.</p></div></div></div>
+    </li>
+    <li class="item">
+      <h3 style="margin:0"><button class="q" aria-expanded="false" aria-controls="a6" id="q6"><span class="n">06</span><span class="t">Do you deliver outside the mainland?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></h3>
+      <div class="panel" id="a6" role="region" aria-labelledby="q6"><div><div class="a"><p>Not yet. Islands and Northern Ireland are on the list for spring 2027; leave your postcode on the waitlist and we write when the route opens.</p><span class="tag">Coverage</span></div></div></div>
+    </li>
+  </ul>
+</main>
+<script>
+(function(){
+  var items=Array.prototype.slice.call(document.querySelectorAll('.item'));
+  var btns=items.map(function(i){return i.querySelector('.q');});
+  function setOpen(idx){
+    items.forEach(function(it,i){
+      var on=i===idx;
+      it.classList.toggle('open',on);
+      btns[i].setAttribute('aria-expanded',String(on));
+    });
+  }
+  btns.forEach(function(b,i){
+    b.addEventListener('click',function(){
+      setOpen(items[i].classList.contains('open')?-1:i);
+    });
+    b.addEventListener('keydown',function(e){
+      var n=btns.length,j=i;
+      if(e.key==='ArrowDown')j=(i+1)%n;else if(e.key==='ArrowUp')j=(i-1+n)%n;
+      else if(e.key==='Home')j=0;else if(e.key==='End')j=n-1;else return;
+      e.preventDefault();btns[j].focus();
+    });
+  });
+})();
+</script>
+</body>
+</html>

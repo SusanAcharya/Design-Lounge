@@ -1,0 +1,148 @@
+<!-- Design Lounge piece: settings-page-sticky-nav · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Halden Post — Account settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f5f4;--surface:#ffffff;--line:#e6e5e2;--line-2:#d4d3cf;--ink:#1c1c1a;--ink-2:#5f5e5a;--ink-3:#8b8a85;
+  --accent:#0f766e;--accent-soft:#e2f1ef;--danger:#b42318;--danger-soft:#fdf1f0;--danger-line:#f0c4bf;
+  --sans:"Onest",system-ui,sans-serif;
+  --top-h:56px;--nav-w:220px;--content-w:720px;--r:10px;--r-sm:6px;--shadow:0 1px 2px rgba(28,28,26,.04);
+  --t-micro:150ms;--t-switch:200ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--sans);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{height:var(--top-h);flex:none;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 32px;gap:12px;font-weight:500}
+.top .logo{width:24px;height:24px;border-radius:6px;background:var(--ink)}
+.top .sep{color:var(--ink-3);font-weight:400}
+.top .saved{margin-left:auto;font-size:13px;color:var(--ink-3);display:flex;align-items:center;gap:6px;font-weight:400}
+.top .saved i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.scroll{flex:1;overflow-y:auto;min-height:0;scroll-behavior:smooth}
+.wrap{max-width:calc(var(--nav-w) + 48px + var(--content-w));margin:0 auto;padding:40px 32px 80px;display:grid;grid-template-columns:var(--nav-w) 1fr;gap:48px;align-items:start}
+.side{position:sticky;top:0}
+.side h1{margin:0 0 18px;font-size:22px;font-weight:600;letter-spacing:-.02em}
+.side ul{list-style:none;margin:0;padding:0;border-left:1px solid var(--line)}
+.side a{display:block;padding:7px 14px;margin-left:-1px;border-left:2px solid transparent;color:var(--ink-2);text-decoration:none;transition:color var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+.side a:hover{color:var(--ink)}
+.side a[aria-current="true"]{color:var(--ink);border-left-color:var(--accent);font-weight:500}
+.side a.dz{color:var(--danger)}
+.side .meta{margin-top:24px;font-size:12px;color:var(--ink-3);line-height:1.6}
+section{margin-bottom:40px;scroll-margin-top:24px}
+section>h2{margin:0 0 4px;font-size:17px;font-weight:600;letter-spacing:-.01em}
+section>p{margin:0 0 14px;color:var(--ink-2)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.row{display:flex;align-items:center;gap:20px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .t{flex:1;min-width:0}
+.row .t b{display:block;font-weight:500}
+.row .t span{display:block;font-size:13px;color:var(--ink-2)}
+.sw{position:relative;width:40px;height:24px;flex:none}
+.sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;width:100%;height:100%}
+.sw i{position:absolute;inset:0;border-radius:999px;background:var(--line-2);transition:background var(--t-switch) var(--ease)}
+.sw i::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform var(--t-switch) var(--expo)}
+.sw input:checked+i{background:var(--accent)}
+.sw input:checked+i::after{transform:translateX(16px)}
+.sw input:focus-visible+i{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=text]{height:36px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--surface);font:14px var(--sans);color:var(--ink);padding:0 12px;min-width:180px;transition:border-color var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+select{appearance:none;padding-right:32px}
+.sel{position:relative;display:inline-flex}
+.sel::after{content:"";position:absolute;right:13px;top:12px;width:7px;height:7px;border-right:1.5px solid var(--ink-2);border-bottom:1.5px solid var(--ink-2);transform:rotate(45deg);pointer-events:none}
+select:hover,input[type=text]:hover{border-color:var(--ink-3)}
+select:focus,input[type=text]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.btn{height:36px;padding:0 14px;border-radius:var(--r-sm);border:1px solid var(--line-2);background:var(--surface);font:500 13px var(--sans);color:var(--ink);cursor:pointer;transition:background var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.btn:hover{background:var(--bg);border-color:var(--ink-3)}
+.btn.danger{color:var(--danger);border-color:var(--danger-line)}
+.btn.danger:hover{background:var(--danger);border-color:var(--danger);color:#fff}
+.card.danger{border-color:var(--danger-line)}
+.card.danger .row{border-color:var(--danger-line)}
+.confirm{display:none;gap:10px;padding:0 20px 16px;align-items:center}
+.card.danger.armed .confirm{display:flex}
+.confirm input{flex:1;min-width:0}
+.confirm .btn.solid{background:var(--danger);border-color:var(--danger);color:#fff}
+.confirm .btn.solid:disabled{opacity:.45;cursor:not-allowed}
+.tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 8px;margin-left:8px;vertical-align:1px}
+@media (max-width:1000px){.wrap{grid-template-columns:1fr;gap:24px}.side{position:static}.side ul{display:flex;flex-wrap:wrap;border-left:0;gap:4px}.side a{border-left:0;border-bottom:2px solid transparent;padding:6px 10px}.side a[aria-current="true"]{border-bottom-color:var(--accent)}.side .meta{display:none}}
+@media (prefers-reduced-motion:reduce){.scroll{scroll-behavior:auto}*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top"><span class="logo" aria-hidden="true"></span>Halden Post<span class="sep">/</span>Settings<span class="saved"><i></i>All changes saved</span></header>
+<div class="scroll" id="scroll">
+  <div class="wrap">
+    <aside class="side">
+      <h1>Account settings</h1>
+      <ul id="nav">
+        <li><a href="#profile" aria-current="true">Profile</a></li>
+        <li><a href="#notifications">Notifications</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#billing">Billing</a></li>
+        <li><a href="#integrations">Integrations</a></li>
+        <li><a href="#danger" class="dz">Danger zone</a></li>
+      </ul>
+      <p class="meta">Signed in as Mara Lindqvist<br>Workspace: halden-post · Owner<br>Member since 12 Feb 2024</p>
+    </aside>
+    <main id="main">
+      <section id="profile"><h2>Profile</h2><p>How you appear to teammates and in outgoing mail.</p>
+        <div class="card">
+          <div class="row"><div class="t"><b>Display name</b><span>Shown on comments and shipment notes.</span></div><input type="text" value="Mara Lindqvist" aria-label="Display name"></div>
+          <div class="row"><div class="t"><b>Language</b><span>Interface language for this account.</span></div><span class="sel"><select aria-label="Language"><option>English (UK)</option><option>Norsk bokmål</option><option>Svenska</option><option>Deutsch</option></select></span></div>
+          <div class="row"><div class="t"><b>Time zone</b><span>Used for delivery windows and reports.</span></div><span class="sel"><select aria-label="Time zone"><option>Europe/Oslo (UTC+2)</option><option>Europe/London (UTC+1)</option><option>Europe/Berlin (UTC+2)</option></select></span></div>
+        </div></section>
+      <section id="notifications"><h2>Notifications</h2><p>Choose what reaches your inbox and what stays in the app.</p>
+        <div class="card">
+          <div class="row"><div class="t"><b>Delivery exceptions</b><span>Email me when a parcel misses its window.</span></div><label class="sw"><input type="checkbox" checked aria-label="Delivery exceptions by email"><i></i></label></div>
+          <div class="row"><div class="t"><b>Daily digest</b><span>One summary at 08:00 local time.</span></div><label class="sw"><input type="checkbox" checked aria-label="Daily digest"><i></i></label></div>
+          <div class="row"><div class="t"><b>Mentions</b><span>Notify when someone @mentions me on a shipment.</span></div><label class="sw"><input type="checkbox" aria-label="Mentions"><i></i></label></div>
+          <div class="row"><div class="t"><b>Product updates</b><span>Occasional release notes, at most twice a month.</span></div><label class="sw"><input type="checkbox" aria-label="Product updates"><i></i></label></div>
+        </div></section>
+      <section id="security"><h2>Security</h2><p>Sessions, second factors and recovery.</p>
+        <div class="card">
+          <div class="row"><div class="t"><b>Two-factor authentication<span class="tag">Enabled</span></b><span>Authenticator app, added 3 Jun 2026.</span></div><button class="btn" type="button">Manage</button></div>
+          <div class="row"><div class="t"><b>Require 2FA for sign-in on new devices</b><span>Recommended for owners.</span></div><label class="sw"><input type="checkbox" checked aria-label="Require 2FA on new devices"><i></i></label></div>
+          <div class="row"><div class="t"><b>Active sessions</b><span>3 devices · last activity 4 minutes ago.</span></div><button class="btn" type="button">Sign out others</button></div>
+        </div></section>
+      <section id="billing"><h2>Billing</h2><p>Plan, invoices and who receives them.</p>
+        <div class="card">
+          <div class="row"><div class="t"><b>Plan</b><span>Team · 12 seats · renews 1 Nov 2026.</span></div><button class="btn" type="button">Change plan</button></div>
+          <div class="row"><div class="t"><b>Invoice recipient</b><span>Where monthly PDFs are sent.</span></div><input type="text" value="finance@haldenpost.no" aria-label="Invoice recipient"></div>
+          <div class="row"><div class="t"><b>Currency</b><span>Applied to new invoices only.</span></div><span class="sel"><select aria-label="Currency"><option>NOK</option><option>EUR</option><option>SEK</option></select></span></div>
+        </div></section>
+      <section id="integrations"><h2>Integrations</h2><p>Connected services that can read shipment data.</p>
+        <div class="card">
+          <div class="row"><div class="t"><b>Fjord Bank payouts</b><span>Connected · syncs nightly.</span></div><label class="sw"><input type="checkbox" checked aria-label="Fjord Bank payouts"><i></i></label></div>
+          <div class="row"><div class="t"><b>Tessel warehouse API</b><span>Read-only key · rotated 30 days ago.</span></div><label class="sw"><input type="checkbox" checked aria-label="Tessel warehouse API"><i></i></label></div>
+          <div class="row"><div class="t"><b>Webhook: shipment.updated</b><span>POST to hooks.haldenpost.no/ship</span></div><label class="sw"><input type="checkbox" aria-label="Webhook shipment.updated"><i></i></label></div>
+        </div></section>
+      <section id="danger"><h2>Danger zone</h2><p>These actions are permanent and affect every member.</p>
+        <div class="card danger" id="dz">
+          <div class="row"><div class="t"><b>Transfer ownership</b><span>Hand this workspace to another owner.</span></div><button class="btn danger" type="button">Transfer</button></div>
+          <div class="row"><div class="t"><b>Delete workspace</b><span>Removes halden-post, its 2,318 shipments and all members.</span></div><button class="btn danger" id="arm" type="button" aria-expanded="false" aria-controls="confirm">Delete workspace</button></div>
+          <div class="confirm" id="confirm"><input type="text" id="typed" placeholder="Type halden-post to confirm" aria-label="Type the workspace name to confirm"><button class="btn solid" id="del" type="button" disabled>Permanently delete</button><button class="btn" id="cancel" type="button">Cancel</button></div>
+        </div></section>
+    </main>
+  </div>
+</div>
+<script>
+  const sc=document.getElementById('scroll'),links=[...document.querySelectorAll('#nav a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function spy(){
+    const y=sc.scrollTop+120;let i=0;
+    secs.forEach((s,k)=>{if(s.offsetTop<=y)i=k;});
+    if(sc.scrollTop+sc.clientHeight>=sc.scrollHeight-2)i=secs.length-1;
+    links.forEach((a,k)=>{if(k===i)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+  }
+  sc.addEventListener('scroll',spy,{passive:true});spy();
+  links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const s=document.querySelector(a.getAttribute('href'));sc.scrollTo({top:s.offsetTop-24,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}));
+  const dz=document.getElementById('dz'),arm=document.getElementById('arm'),typed=document.getElementById('typed'),del=document.getElementById('del');
+  arm.addEventListener('click',()=>{const on=!dz.classList.contains('armed');dz.classList.toggle('armed',on);arm.setAttribute('aria-expanded',String(on));if(on)typed.focus();});
+  document.getElementById('cancel').addEventListener('click',()=>{dz.classList.remove('armed');arm.setAttribute('aria-expanded','false');typed.value='';del.disabled=true;arm.focus();});
+  typed.addEventListener('input',()=>{del.disabled=typed.value.trim()!=='halden-post';});
+</script>
+</body>
+</html>

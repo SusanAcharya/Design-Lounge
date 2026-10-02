@@ -1,0 +1,126 @@
+<!-- Design Lounge piece: neo-brutalist-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Neo-brutalist design style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f5f0;--white:#ffffff;--black:#111111;--yellow:#ffd23f;--blue:#3a86ff;--blue-ink:#ffffff;--grey:#d9d9d2;--ink-2:#4a4a46;
+  --display:"Archivo Black",Impact,sans-serif;--sans:"Archivo",system-ui,sans-serif;
+  --bw:2.5px;--off:4px;--shadow:var(--off) var(--off) 0 0 var(--black);--r:0px;
+  --t-micro:120ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--black);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+.top{display:flex;align-items:center;gap:20px;padding:28px 48px 0}
+.top h1{margin:0;font:400 44px/1 var(--display);letter-spacing:-.01em;text-transform:uppercase}
+.top h1 span{background:var(--yellow);padding:0 8px;border:var(--bw) solid var(--black);box-shadow:var(--shadow);display:inline-block;line-height:1.1}
+.top p{margin:0;font-weight:500;color:var(--ink-2)}
+.top .v{margin-left:auto;font:700 13px var(--sans);letter-spacing:.06em;text-transform:uppercase;border:var(--bw) solid var(--black);background:var(--white);padding:6px 10px;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:330px 330px 1fr;gap:36px;padding:28px 48px 0}
+h6{margin:0 0 14px;font:700 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+h6::after{content:"";flex:1;height:var(--bw);background:var(--black)}
+section+section{margin-top:26px}
+.btns{display:flex;flex-wrap:wrap;gap:14px}
+.btn{height:44px;padding:0 18px;border:var(--bw) solid var(--black);background:var(--white);color:var(--black);font:700 15px var(--sans);text-transform:uppercase;letter-spacing:.02em;cursor:pointer;box-shadow:var(--shadow);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease);border-radius:var(--r)}
+.btn:hover{transform:translate(var(--off),var(--off));box-shadow:0 0 0 0 var(--black)}
+.btn:active{transform:translate(var(--off),var(--off));box-shadow:0 0 0 0 var(--black);background:var(--grey)}
+.btn:focus-visible{outline:var(--bw) solid var(--blue);outline-offset:3px}
+.btn.y{background:var(--yellow)}
+.btn.b{background:var(--blue);color:var(--blue-ink)}
+.btn[aria-pressed="true"]{background:var(--black);color:var(--white)}
+.fld{margin-bottom:16px}
+.fld label{display:block;font:700 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.fld input,.fld select{width:100%;height:44px;border:var(--bw) solid var(--black);background:var(--white);font:15px var(--sans);color:var(--black);padding:0 12px;outline:none;border-radius:var(--r);transition:box-shadow var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.fld input::placeholder{color:#8a8a84}
+.fld input:focus-visible,.fld select:focus-visible{box-shadow:var(--off) var(--off) 0 0 var(--blue);transform:translate(calc(var(--off) * -1),calc(var(--off) * -1))}
+.fld small{display:block;margin-top:6px;font-size:12.5px;font-weight:500;color:var(--ink-2)}
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tag{font:700 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:8px 10px;border:var(--bw) solid var(--black);background:var(--white);cursor:pointer;box-shadow:3px 3px 0 0 var(--black);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.tag:hover{transform:translate(3px,3px);box-shadow:0 0 0 0 var(--black)}
+.tag[aria-pressed="true"]{background:var(--blue);color:var(--blue-ink)}
+.tag:focus-visible{outline:var(--bw) solid var(--blue);outline-offset:3px}
+.toggles{display:flex;flex-direction:column;gap:12px}
+.tg{display:flex;align-items:center;justify-content:space-between;gap:14px;font-weight:500}
+.sw{width:64px;height:32px;border:var(--bw) solid var(--black);background:var(--white);position:relative;cursor:pointer;padding:0;box-shadow:3px 3px 0 0 var(--black);transition:background var(--t-micro) var(--ease)}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:24px;height:24px;background:var(--black);transition:transform 160ms var(--ease)}
+.sw[aria-checked="true"]{background:var(--yellow)}
+.sw[aria-checked="true"]::after{transform:translateX(32px)}
+.sw:focus-visible{outline:var(--bw) solid var(--blue);outline-offset:3px}
+.card{border:var(--bw) solid var(--black);background:var(--white);box-shadow:6px 6px 0 0 var(--black);padding:0;transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.card:hover{transform:translate(2px,2px);box-shadow:4px 4px 0 0 var(--black)}
+.card .band{background:var(--blue);color:var(--blue-ink);padding:18px 20px;border-bottom:var(--bw) solid var(--black);font:400 30px/1 var(--display);text-transform:uppercase;letter-spacing:-.01em}
+.card .band small{display:block;font:700 12px var(--sans);letter-spacing:.1em;margin-bottom:8px;opacity:.85}
+.card .body{padding:18px 20px}
+.card p{margin:0 0 14px;color:var(--ink-2);font-weight:500}
+.card .row{display:flex;justify-content:space-between;padding:10px 0;border-top:var(--bw) solid var(--black);font-weight:700;text-transform:uppercase;font-size:13px;letter-spacing:.04em}
+.card .row span:last-child{font-family:var(--display);font-size:16px}
+.card .act{display:flex;gap:12px;margin-top:16px}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.stat div{border:var(--bw) solid var(--black);background:var(--yellow);padding:14px 16px;box-shadow:var(--shadow)}
+.stat div:last-child{background:var(--white)}
+.stat b{display:block;font:400 32px/1 var(--display);letter-spacing:-.02em}
+.stat span{font:700 11px var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.note{margin-top:20px;font-size:13px;font-weight:500;color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1><span>Blok</span></h1>
+  <p>Link shortener. Style sheet, rev. 3.</p>
+  <span class="v">2.5px · 4px 4px 0</span>
+</header>
+<div class="grid">
+  <div>
+    <section><h6>Buttons</h6>
+      <div class="btns"><button class="btn y">Shorten link</button><button class="btn b">Copy</button><button class="btn" id="watch" aria-pressed="false">Watch clicks</button></div>
+    </section>
+    <section><h6>Inputs</h6>
+      <div class="fld"><label for="u">Long URL</label><input id="u" type="text" value="halden.se/reports/2026/q3-retention-review"></div>
+      <div class="fld"><label for="s">Custom slug</label><input id="s" type="text" placeholder="q3-retention"><small>blok.to/ + your slug. Letters, numbers, dashes.</small></div>
+      <div class="fld"><label for="e">Expires</label><select id="e"><option>Never</option><option selected>In 30 days</option><option>In 7 days</option></select></div>
+    </section>
+  </div>
+  <div>
+    <section><h6>Card</h6>
+      <article class="card">
+        <div class="band"><small>Link · created today</small>blok.to/q3-ret</div>
+        <div class="body">
+          <p>Points to halden.se/reports/2026/q3-retention-review. Public, expires 29 Oct 2026.</p>
+          <div class="row"><span>Clicks</span><span>1,482</span></div>
+          <div class="row"><span>Unique</span><span>1,106</span></div>
+          <div class="row"><span>Top referrer</span><span>Nord Post</span></div>
+          <div class="act"><button class="btn y">Open</button><button class="btn">QR code</button></div>
+        </div>
+      </article>
+    </section>
+  </div>
+  <div>
+    <section><h6>Toggles</h6>
+      <div class="toggles">
+        <div class="tg"><label for="t1">Public stats page</label><button class="sw" id="t1" role="switch" aria-checked="true"></button></div>
+        <div class="tg"><label for="t2">Strip UTM parameters</label><button class="sw" id="t2" role="switch" aria-checked="false"></button></div>
+        <div class="tg"><label for="t3">Password required</label><button class="sw" id="t3" role="switch" aria-checked="false"></button></div>
+      </div>
+    </section>
+    <section><h6>Tags</h6>
+      <div class="tags"><button class="tag" aria-pressed="true">Reports</button><button class="tag" aria-pressed="false">Q3</button><button class="tag" aria-pressed="false">Internal</button><button class="tag" aria-pressed="false">Marketing</button><button class="tag" aria-pressed="false">Archive</button></div>
+    </section>
+    <section><h6>Numbers</h6>
+      <div class="stat"><div><b>38</b><span>Links this week</span></div><div><b>9.2k</b><span>Clicks this week</span></div></div>
+      <p class="note">Hover anything with a shadow: it moves into the shadow, never lifts.</p>
+    </section>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('[aria-pressed]').forEach(b=>b.addEventListener('click',()=>b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'))));
+  document.querySelectorAll('[role="switch"]').forEach(s=>s.addEventListener('click',()=>s.setAttribute('aria-checked',String(s.getAttribute('aria-checked')!=='true'))));
+</script>
+</body>
+</html>

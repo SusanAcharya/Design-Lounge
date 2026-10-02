@@ -1,0 +1,110 @@
+<!-- Design Lounge piece: lamp-theme-toggle · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en" data-theme="day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Lamp pull-cord theme toggle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3ebdd;--surface:#fbf6ec;--line:#ddd2bf;--ink:#2b2620;--ink-2:#6e655a;--ink-3:#9a8f80;--accent:#b4552d;
+  --brass:#8a6a3b;--brass-2:#5d4626;--bulb:#d9cfbd;--glow:rgba(242,185,79,0);--lamp-ink:#3b3128;
+  --serif:"Libre Caslon Text",Georgia,serif;--sans:"Work Sans",system-ui,sans-serif;
+  --measure:640px;--r:4px;
+  --t-micro:160ms;--t-pull:140ms;--t-theme:400ms;--t-reveal:640ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --x:1180px;--y:146px;
+}
+:root[data-theme="night"]{
+  --bg:#14161e;--surface:#1c1f2a;--line:#2c3040;--ink:#ece6da;--ink-2:#a29b8e;--ink-3:#6f6a60;--accent:#f2b94f;
+  --brass:#c9a35f;--brass-2:#8a6a3b;--bulb:#ffe9b0;--glow:rgba(242,185,79,.55);--lamp-ink:#ece6da;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.6 var(--serif);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;position:relative}
+.theme-fade,.theme-fade *{transition:background-color var(--t-theme) var(--ease),color var(--t-theme) var(--ease),border-color var(--t-theme) var(--ease),fill var(--t-theme) var(--ease),stroke var(--t-theme) var(--ease)!important}
+.mast{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;border-bottom:1px solid var(--line);font:500 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.mast b{font:700 20px var(--serif);letter-spacing:0;text-transform:none;color:var(--ink)}
+.mast span{width:160px}
+.mast .ctr{text-align:center;flex:1}
+article{padding:56px 64px 0;max-width:calc(var(--measure) + 128px)}
+.kicker{font:500 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+h1{margin:0 0 18px;font:400 44px/1.12 var(--serif);letter-spacing:-.01em;max-width:var(--measure)}
+h1 em{font-style:italic}
+.deck{margin:0 0 28px;font-size:20px;line-height:1.45;color:var(--ink-2);max-width:var(--measure)}
+.byline{display:flex;gap:18px;font:14px var(--sans);color:var(--ink-3);margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--line);max-width:var(--measure)}
+.byline b{color:var(--ink);font-weight:500}
+p{margin:0 0 20px;max-width:var(--measure)}
+p.body:first-of-type::first-letter{font-size:56px;line-height:.85;float:left;padding:6px 10px 0 0;color:var(--accent)}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.lamp{position:absolute;top:0;left:1080px;width:200px;height:300px;border:0;background:none;padding:0;cursor:pointer;color:var(--lamp-ink)}
+.lamp:focus-visible{outline:2px solid var(--accent);outline-offset:-8px;border-radius:12px}
+.lamp svg{width:200px;height:300px;overflow:visible;display:block}
+.lamp .shade{fill:var(--brass);stroke:var(--brass-2);stroke-width:1.5}
+.lamp .cord{stroke:var(--ink-2);stroke-width:2;fill:none}
+.lamp .bulb{fill:var(--bulb)}
+.lamp .glow{fill:var(--glow)}
+.lamp .pull{transition:transform var(--t-pull) var(--ease-spring)}
+.lamp.pulling .pull{transform:translateY(14px)}
+.lamp .bead{fill:var(--brass);stroke:var(--brass-2)}
+.label{position:absolute;left:1080px;top:306px;width:200px;text-align:center;font:500 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);pointer-events:none}
+.also{position:absolute;left:820px;top:440px;width:230px;font:14px var(--sans);color:var(--ink-2)}
+.also h6{margin:0 0 10px;font:500 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.also a{display:block;color:var(--ink);text-decoration:none;padding:9px 0;border-top:1px solid var(--line);font-family:var(--serif);font-size:15px;line-height:1.35}
+.also a:hover{color:var(--accent)}
+.also small{display:block;font:12px var(--sans);color:var(--ink-3);margin-top:2px}
+.foot{position:absolute;left:64px;bottom:40px;font:13px var(--sans);color:var(--ink-3)}
+.foot b{color:var(--ink-2);font-weight:500}
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-new(root){animation:reveal var(--t-reveal) var(--ease-out)}
+@keyframes reveal{from{clip-path:circle(0px at var(--x) var(--y))}to{clip-path:circle(1500px at var(--x) var(--y))}}
+@media (prefers-reduced-motion:reduce){
+  ::view-transition-new(root){animation:fade var(--t-theme) var(--ease)}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .lamp .pull{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+<header class="mast"><span>Vol. 12 · No. 4</span><span class="ctr"><b>Halden Review</b></span><span style="text-align:right">Evening edition</span></header>
+<article>
+  <p class="kicker">Field notes · Lighting</p>
+  <h1>The case for a lamp you have to <em>reach</em> for</h1>
+  <p class="deck">Smart bulbs promised effortless light. What we lost was the small ceremony of a cord, a click, and a room that changes because you asked it to.</p>
+  <div class="byline"><b>Ingrid Solheim</b><span>29 September 2026</span><span>7 min read</span></div>
+  <p class="body">There is a brass lamp in the corner of my study that has outlived three apartments and two marriages, and its only trick is a cord. Pull it once and the room warms; pull it again and the evening goes quiet. It does nothing on a schedule and it has never once needed a firmware update.</p>
+  <p class="body">Designers talk about "reducing friction" as if friction were always a tax. But the cord is a promise: the light will change <em>exactly</em> when you act, and it will tell you so with a sound. Compare that with an app that fades the bulbs at 21:00 because a rule said so, and you'll understand why so many people keep a physical switch within reach. <a href="#">Read the follow-up on switches</a>.</p>
+</article>
+<button class="lamp" id="lamp" aria-pressed="false" aria-label="Turn the lamp on and switch to night mode">
+  <svg viewBox="0 0 200 300" aria-hidden="true">
+    <line class="cord" x1="100" y1="0" x2="100" y2="88"/>
+    <ellipse class="glow" cx="100" cy="150" rx="90" ry="36"/>
+    <path class="shade" d="M100 88 L52 148 H148 Z"/>
+    <path class="shade" d="M92 84h16v6H92z"/>
+    <circle class="bulb" cx="100" cy="146" r="11"/>
+    <g class="pull"><line class="cord" x1="140" y1="132" x2="140" y2="196"/><circle class="bead" cx="140" cy="202" r="6"/></g>
+  </svg>
+</button>
+<div class="label" id="lbl">Pull the cord</div>
+<nav class="also" aria-label="Also in this issue"><h6>Also in this issue</h6><a href="#">Why every good kitchen has one bad drawer<small>Objects · 5 min</small></a><a href="#">The slow return of the paper timetable<small>Transit · 9 min</small></a><a href="#">A short history of the dimmer switch<small>Lighting · 6 min</small></a></nav>
+<div class="foot">Theme reveal starts at the bulb · <b id="mode">Day</b></div>
+<script>
+  const root=document.documentElement,lamp=document.getElementById('lamp'),mode=document.getElementById('mode'),lbl=document.getElementById('lbl');
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let busy=false;
+  function apply(next){root.dataset.theme=next;const night=next==='night';lamp.setAttribute('aria-pressed',String(night));lamp.setAttribute('aria-label',night?'Turn the lamp off and switch to day mode':'Turn the lamp on and switch to night mode');mode.textContent=night?'Night':'Day';lbl.textContent=night?'Pull again for day':'Pull the cord';}
+  lamp.addEventListener('click',()=>{
+    if(busy)return;busy=true;
+    lamp.classList.add('pulling');setTimeout(()=>lamp.classList.remove('pulling'),140);
+    const next=root.dataset.theme==='night'?'day':'night';
+    const b=lamp.querySelector('.bulb').getBoundingClientRect();
+    root.style.setProperty('--x',(b.left+b.width/2)+'px');root.style.setProperty('--y',(b.top+b.height/2)+'px');
+    const done=()=>{busy=false;};
+    if(document.startViewTransition&&!reduced){document.startViewTransition(()=>apply(next)).finished.then(done,done);}
+    else{document.body.classList.add('theme-fade');apply(next);setTimeout(()=>{document.body.classList.remove('theme-fade');done();},400);}
+  });
+</script>
+</body>
+</html>

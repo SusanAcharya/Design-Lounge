@@ -1,0 +1,114 @@
+<!-- Design Lounge piece: mobile-story-viewer · platform: mobile-web · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mira — Stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0d;--surface:#17171b;--line:#2a2a30;--ink:#f4f2ee;--ink-2:#a9a7a1;--ink-3:#6c6b67;--accent:#ffb454;
+  --track:rgba(255,255,255,.28);--fill:#f4f2ee;--scrim-top:linear-gradient(180deg,rgba(0,0,0,.55),transparent 140px);--scrim-bottom:linear-gradient(0deg,rgba(0,0,0,.6),transparent 220px);
+  --font:"Bricolage Grotesque",system-ui,sans-serif;
+  --safe-top:54px;--safe-bottom:80px;--gutter:16px;--r:18px;--r-pill:999px;
+  --t-story:5000ms;--t-fast:160ms;--t-layout:320ms;--t-close:380ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow:hidden}
+svg{stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.home{position:absolute;inset:0;padding:calc(var(--safe-top) + 20px) var(--gutter) var(--safe-bottom);display:flex;flex-direction:column;gap:18px}
+.home h1{margin:0;font:700 28px/1.05 var(--font);font-variation-settings:"opsz" 96;letter-spacing:-.02em}
+.home p{margin:0;color:var(--ink-2);max-width:30ch}
+.rings{display:flex;gap:14px}
+.ring{width:72px;height:72px;border-radius:50%;padding:3px;border:0;background:conic-gradient(var(--accent) 0 100%);cursor:pointer;position:relative}
+.ring i{display:block;width:100%;height:100%;border-radius:50%;border:3px solid var(--bg);background:var(--g)}
+.ring.seen{background:var(--line)}
+.ring:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.rings span{display:block;text-align:center;font-size:12px;color:var(--ink-2);margin-top:6px}
+.hint{margin-top:auto;font-size:13px;color:var(--ink-3);border-top:1px solid var(--line);padding-top:14px}
+.viewer{position:absolute;inset:0;background:var(--bg);transform:translateY(100%);transition:transform var(--t-close) var(--ease-sheet),border-radius var(--t-close) var(--ease-sheet);touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden;border-radius:0}
+.viewer.on{transform:none}
+.viewer.drag{transition:none;border-radius:var(--r)}
+.scene{position:absolute;inset:0;background:var(--g);opacity:0;transition:opacity var(--t-layout) var(--ease)}
+.scene.cur{opacity:1}
+.scene::before{content:"";position:absolute;inset:0;background:var(--scrim-top)}
+.scene::after{content:"";position:absolute;inset:0;background:var(--scrim-bottom)}
+.bars{position:absolute;left:var(--gutter);right:var(--gutter);top:calc(var(--safe-top) + 10px);display:flex;gap:4px;z-index:2}
+.bar{flex:1;height:3px;border-radius:2px;background:var(--track);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--fill);border-radius:2px}
+.bar.done i{width:100%}
+.bar.cur i{animation:fill var(--t-story) linear forwards}
+.paused .bar.cur i{animation-play-state:paused}
+@keyframes fill{from{width:0}to{width:100%}}
+.meta{position:absolute;left:var(--gutter);right:var(--gutter);top:calc(var(--safe-top) + 24px);display:flex;align-items:center;gap:10px;z-index:2}
+.meta .av{width:32px;height:32px;border-radius:50%;background:var(--accent);display:grid;place-items:center;color:#2a1a00;font-weight:700;font-size:13px}
+.meta b{font-weight:500;font-size:14px}.meta span{font-size:13px;color:var(--ink-2)}
+.meta .x{margin-left:auto;width:40px;height:40px;border:0;background:transparent;color:var(--ink);border-radius:50%;cursor:pointer;display:grid;place-items:center}
+.meta .x:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.meta .x svg{width:22px;height:22px}
+.cap{position:absolute;left:var(--gutter);right:var(--gutter);bottom:calc(var(--safe-bottom) + 20px);z-index:2}
+.cap .loc{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 8px;font-weight:500}
+.cap h2{margin:0 0 6px;font:700 30px/1.05 var(--font);font-variation-settings:"opsz" 96;letter-spacing:-.02em;max-width:12ch}
+.cap p{margin:0;color:var(--ink-2);font-size:14px;max-width:34ch}
+.pause{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,.45);display:grid;place-items:center;opacity:0;transition:opacity var(--t-fast),transform var(--t-fast) var(--ease-out);z-index:2;pointer-events:none}
+.paused .pause{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.pause svg{width:22px;height:22px;stroke-width:2.5}
+.zones{position:absolute;inset:0;z-index:3;display:grid;grid-template-columns:30% 1fr}
+.zones button{border:0;background:transparent;padding:0;cursor:pointer;color:transparent;touch-action:none}
+.zones button:focus-visible{outline:2px solid var(--ink);outline-offset:-6px;border-radius:12px}
+@media (prefers-reduced-motion:reduce){.viewer{transition-duration:1ms}.scene{transition-duration:1ms}.pause{transition-duration:1ms}}
+</style>
+</head>
+<body>
+<main class="home" id="home">
+  <h1>Stories from the road</h1>
+  <p>Four scenes from this week's Mira itineraries. Tap a ring to watch; hold to pause; pull down to leave.</p>
+  <div class="rings" id="rings"></div>
+  <p class="hint">Each story runs 5 seconds. Tap the left 30% to go back, the right 70% to skip ahead.</p>
+</main>
+<section class="viewer" id="viewer" aria-label="Story viewer" aria-hidden="true" role="dialog" aria-modal="true">
+  <div id="scenes"></div>
+  <div class="bars" id="bars" aria-hidden="true"></div>
+  <div class="meta"><div class="av">M</div><div><b>Mira Journeys</b><br><span id="when">2h ago</span></div><button class="x" id="close" aria-label="Close stories"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="cap" id="cap" aria-live="polite"></div>
+  <div class="pause" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg></div>
+  <div class="zones"><button id="prev" aria-label="Previous story"></button><button id="next" aria-label="Next story"></button></div>
+</section>
+<script>
+  const S=[
+    {g:"linear-gradient(160deg,#f2994a 0%,#c2553a 55%,#4a1f2b 100%)",loc:"Lofoten · 06:12",t:"First light on Reine",c:"Twelve hours of golden hour. The ferry leaves at seven, nobody is on it.",w:"2h ago"},
+    {g:"linear-gradient(200deg,#8fd3f4 0%,#2f6f9f 50%,#0d2a44 100%)",loc:"Bergen · 14:40",t:"Rain, then the fish market",c:"Order the shrimp sandwich. Ask for extra dill. Sit under the awning.",w:"5h ago"},
+    {g:"linear-gradient(170deg,#c7e5b3 0%,#4f8a5b 45%,#16302a 100%)",loc:"Hardanger · 09:05",t:"Orchards along the fjord",c:"The cider farm at Ulvik does tastings until four. Bring a jumper.",w:"8h ago"},
+    {g:"linear-gradient(160deg,#3b2f6b 0%,#20304f 50%,#0a1024 100%)",loc:"Tromsø · 23:50",t:"Waiting for the lights",c:"Kp index 5 tonight. Coffee in a thermos, camera on a rock, patience.",w:"12h ago"}];
+  const viewer=document.getElementById('viewer'),scenes=document.getElementById('scenes'),bars=document.getElementById('bars'),cap=document.getElementById('cap'),when=document.getElementById('when'),rings=document.getElementById('rings'),home=document.getElementById('home');
+  S.forEach((s,i)=>{scenes.insertAdjacentHTML('beforeend',`<div class="scene" style="--g:${s.g}"></div>`);bars.insertAdjacentHTML('beforeend','<div class="bar"><i></i></div>');
+    rings.insertAdjacentHTML('beforeend',`<div><button class="ring" style="--g:${s.g}" aria-label="Open story ${i+1}: ${s.t}"><i></i></button><span>${s.loc.split(' ·')[0]}</span></div>`);});
+  const sc=[...scenes.children],br=[...bars.children],rg=[...rings.querySelectorAll('.ring')];
+  let cur=0,open=false;
+  function show(i){cur=i;sc.forEach((s,j)=>s.classList.toggle('cur',j===i));
+    br.forEach((b,j)=>{b.classList.toggle('done',j<i);b.classList.remove('cur');void b.offsetWidth;b.classList.toggle('cur',j===i);});
+    cap.innerHTML=`<p class="loc">${S[i].loc}</p><h2>${S[i].t}</h2><p>${S[i].c}</p>`;when.textContent=S[i].w;rg[i].classList.add('seen');}
+  function openAt(i,f){open=true;viewer.classList.add('on');viewer.setAttribute('aria-hidden','false');home.setAttribute('inert','');show(i);if(f)document.getElementById('close').focus({preventScroll:true});}
+  function close(){open=false;viewer.classList.remove('on','paused');viewer.setAttribute('aria-hidden','true');home.removeAttribute('inert');br.forEach(b=>b.classList.remove('cur'));rg[Math.min(cur,S.length-1)].focus({preventScroll:true});}
+  function next(){cur+1<S.length?show(cur+1):close();}function prev(){show(Math.max(0,cur-1));}
+  bars.addEventListener('animationend',e=>{if(open&&!viewer.classList.contains('paused'))next();});
+  rg.forEach((r,i)=>r.addEventListener('click',()=>openAt(i,true)));
+  document.getElementById('close').addEventListener('click',close);
+  let hold=0,held=false,y0=0,dy=0,x0=0;
+  viewer.querySelectorAll('.zones button').forEach(b=>{
+    b.addEventListener('pointerdown',e=>{b.setPointerCapture(e.pointerId);held=false;y0=e.clientY;x0=e.clientX;dy=0;hold=setTimeout(()=>{held=true;viewer.classList.add('paused');},200);});
+    b.addEventListener('pointermove',e=>{if(!e.buttons)return;dy=Math.max(0,e.clientY-y0);if(dy>8){clearTimeout(hold);viewer.classList.add('drag','paused');viewer.style.transform=`translateY(${dy}px) scale(${1-dy/1600})`;}});
+    b.addEventListener('pointerup',e=>{clearTimeout(hold);viewer.classList.remove('drag');viewer.style.transform='';
+      if(dy>120){close();return;}
+      viewer.classList.remove('paused');if(!held&&dy<8&&Math.abs(e.clientX-x0)<8)(b.id==='prev'?prev:next)();});
+    b.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();(b.id==='prev'?prev:next)();}});
+    b.addEventListener('pointercancel',()=>{clearTimeout(hold);viewer.classList.remove('drag','paused');viewer.style.transform='';});
+  });
+  addEventListener('keydown',e=>{if(!open)return;if(e.key==='ArrowRight')next();else if(e.key==='ArrowLeft')prev();else if(e.key==='Escape')close();else if(e.key===' '){e.preventDefault();viewer.classList.toggle('paused');}});
+  openAt(0);
+</script>
+</body>
+</html>

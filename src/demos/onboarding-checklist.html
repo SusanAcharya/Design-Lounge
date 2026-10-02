@@ -1,0 +1,152 @@
+<!-- Design Lounge piece: onboarding-checklist · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Onboarding checklist card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6f2;--card:#ffffff;--card-2:#f7f9f5;--line:#e1e6de;--line-2:#cdd5ca;
+  --ink:#1c231d;--ink-2:#5e6a60;--ink-3:#8d978f;--accent:#2e7d4f;--accent-hover:#256841;--accent-soft:#e3f0e7;--on-accent:#ffffff;
+  --font:"Bricolage Grotesque",system-ui,sans-serif;
+  --card-w:400px;--ring:44px;--ring-w:4px;--r:8px;--r-lg:16px;--shadow:0 1px 2px rgba(28,35,29,.06),0 12px 32px rgba(28,35,29,.08);
+  --t-micro:160ms;--t-tick:280ms;--t-collapse:320ms;--t-ring:480ms;--t-celebrate:520ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--font);color:var(--ink);background:var(--bg);display:grid;grid-template-columns:1fr var(--card-w);gap:48px;padding:56px 72px;align-items:start;overflow:hidden;-webkit-font-smoothing:antialiased}
+.home h1{margin:0 0 6px;font:600 30px/1.15 var(--font);font-variation-settings:"opsz" 96;letter-spacing:-.02em}
+.home>p{margin:0 0 28px;color:var(--ink-2);font-size:15px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:640px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.tile h3{margin:0 0 10px;font:500 12px/1 var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.tile .v{font:600 26px/1 var(--font);letter-spacing:-.02em;font-variation-settings:"opsz" 96}
+.tile .d{margin-top:6px;font-size:12.5px;color:var(--ink-3)}
+.recent{margin-top:24px;max-width:640px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.recent h3{margin:0;padding:12px 18px;font:500 12px/1 var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line)}
+.recent div{display:flex;justify-content:space-between;padding:11px 18px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.recent div:last-child{border:0}
+.recent b{color:var(--ink);font-weight:500}
+.card{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);position:relative;overflow:hidden;transition:opacity var(--t-collapse) var(--ease),transform var(--t-collapse) var(--ease)}
+.card.gone{opacity:0;transform:translateY(8px) scale(.98);pointer-events:none}
+.head{display:flex;align-items:center;gap:14px;padding:20px 20px 16px}
+.ring{width:var(--ring);height:var(--ring);flex:none;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:var(--ring-w)}
+.ring .tr{stroke:var(--line)}
+.ring .pr{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p));transition:stroke-dashoffset var(--t-ring) var(--ease-out)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font:600 11px var(--font);color:var(--ink)}
+.head h2{margin:0;font:600 17px/1.2 var(--font);letter-spacing:-.01em}
+.head p{margin:2px 0 0;color:var(--ink-2);font-size:13px}
+.x{margin-left:auto;align-self:flex-start;width:30px;height:30px;border:0;background:none;border-radius:6px;color:var(--ink-3);cursor:pointer;display:grid;place-items:center;padding:0}
+.x:hover{background:var(--card-2);color:var(--ink)}
+.x:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.x svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.tasks{list-style:none;margin:0;padding:0 8px 8px;transition:opacity var(--t-celebrate) var(--ease)}
+.task{border-top:1px solid var(--line);margin:0 12px}
+.task:first-child{border:0}
+.trow{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:center;padding:12px 0;min-height:46px}
+.chk{width:22px;height:22px;position:relative}
+.chk svg{width:22px;height:22px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.chk .c{stroke:var(--line-2);transition:stroke var(--t-micro) var(--ease),fill var(--t-micro) var(--ease)}
+.chk .t{stroke:var(--on-accent);stroke-dasharray:1;stroke-dashoffset:1}
+.task.done .chk .c{stroke:var(--accent);fill:var(--accent)}
+.task.done .chk .t{animation:tick var(--t-tick) var(--ease-out) forwards;animation-delay:80ms}
+@keyframes tick{to{stroke-dashoffset:0}}
+.task .title{font-weight:500;transition:color var(--t-micro) var(--ease)}
+.task.done .title{color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--line-2)}
+.body{display:grid;grid-template-rows:1fr;transition:grid-template-rows var(--t-collapse) var(--ease),opacity var(--t-collapse) var(--ease);padding-left:34px}
+.body>div{overflow:hidden}
+.body p{margin:0 0 10px;color:var(--ink-2);font-size:13px}
+.task.done .body,.task.next .body{grid-template-rows:0fr;opacity:0}
+.task.open .body{grid-template-rows:1fr;opacity:1}
+.btn{height:34px;padding:0 14px;border-radius:var(--r);border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);font:500 13px var(--font);cursor:pointer;margin-bottom:14px;transition:background var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.btn:hover{background:var(--accent-hover)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.ghost{background:none;color:var(--accent);margin:0}
+.btn.ghost:hover{background:var(--accent-soft)}
+.done-state{position:absolute;inset:0;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px;opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity var(--t-celebrate) var(--ease-out),transform var(--t-celebrate) var(--ease-out)}
+.card.complete .done-state{opacity:1;transform:none;pointer-events:auto;transition-delay:320ms}
+.card.complete .tasks,.card.complete .head{opacity:0;transition:opacity var(--t-collapse) var(--ease)}
+.done-state .big{width:64px;height:64px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:16px}
+.done-state .big svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.card.complete .done-state .big svg{animation:tick 360ms var(--ease-out) forwards;animation-delay:520ms}
+.done-state h2{margin:0 0 6px;font:600 24px/1.15 var(--font);font-variation-settings:"opsz" 96;letter-spacing:-.02em}
+.done-state p{margin:0 0 18px;color:var(--ink-2);max-width:280px}
+.replay{grid-column:2;font-size:13px;color:var(--ink-3)}
+.replay button{border:0;background:none;color:var(--accent);font:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:2px}
+.replay button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.replay[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){
+  .task.done .chk .t,.card.complete .done-state .big svg{animation-duration:1ms;animation-delay:0ms}
+  *{transition-duration:1ms!important;transition-delay:0ms!important}
+}
+</style>
+</head>
+<body>
+<main class="home">
+  <h1>Good morning, Leah</h1>
+  <p>Tarn is watching 3 sources. Your workspace has been live for 2 days.</p>
+  <div class="tiles">
+    <div class="tile"><h3>Rows synced</h3><div class="v">1.2 M</div><div class="d">last sync 06:40</div></div>
+    <div class="tile"><h3>Charts</h3><div class="v">0</div><div class="d">none built yet</div></div>
+    <div class="tile"><h3>Teammates</h3><div class="v">3</div><div class="d">2 invited, 1 joined</div></div>
+  </div>
+  <div class="recent"><h3>Recent activity</h3>
+    <div><b>Workspace created</b><span>2 days ago</span></div>
+    <div><b>Priya Natarajan joined</b><span>yesterday</span></div>
+    <div><b>Invite sent to marcus@halden.se</b><span>yesterday</span></div>
+  </div>
+</main>
+<aside>
+  <section class="card" id="card" aria-labelledby="ct">
+    <div class="head">
+      <div class="ring" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="2" aria-label="Setup progress" style="--p:.4"><svg viewBox="0 0 44 44"><circle class="tr" cx="22" cy="22" r="19"/><circle class="pr" cx="22" cy="22" r="19" pathLength="1"/></svg><b id="rn">2/5</b></div>
+      <div><h2 id="ct">Get set up with Tarn</h2><p id="cp">3 steps left · about 6 minutes</p></div>
+      <button class="x" id="dismiss" aria-label="Dismiss checklist"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <ol class="tasks" id="tasks">
+      <li class="task done"><div class="trow"><span class="chk" aria-hidden="true"><svg viewBox="0 0 24 24"><circle class="c" cx="12" cy="12" r="10"/><path class="t" pathLength="1" d="M7.5 12.5l3 3 6-6.5"/></svg></span><span class="title">Create your workspace</span></div><div class="body"><div><p></p></div></div></li>
+      <li class="task done"><div class="trow"><span class="chk" aria-hidden="true"><svg viewBox="0 0 24 24"><circle class="c" cx="12" cy="12" r="10"/><path class="t" pathLength="1" d="M7.5 12.5l3 3 6-6.5"/></svg></span><span class="title">Invite two teammates</span></div><div class="body"><div><p></p></div></div></li>
+      <li class="task open"><div class="trow"><span class="chk" aria-hidden="true"><svg viewBox="0 0 24 24"><circle class="c" cx="12" cy="12" r="10"/><path class="t" pathLength="1" d="M7.5 12.5l3 3 6-6.5"/></svg></span><span class="title">Connect a data source</span></div><div class="body"><div><p>Link Postgres, BigQuery or a CSV. Tarn keeps it in sync every 15 minutes.</p><button class="btn" data-done>Connect a source</button></div></div></li>
+      <li class="task next"><div class="trow"><span class="chk" aria-hidden="true"><svg viewBox="0 0 24 24"><circle class="c" cx="12" cy="12" r="10"/><path class="t" pathLength="1" d="M7.5 12.5l3 3 6-6.5"/></svg></span><span class="title">Build your first chart</span></div><div class="body"><div><p>Pick a table, choose a measure, and Tarn suggests the chart type.</p><button class="btn" data-done>Open the editor</button></div></div></li>
+      <li class="task next"><div class="trow"><span class="chk" aria-hidden="true"><svg viewBox="0 0 24 24"><circle class="c" cx="12" cy="12" r="10"/><path class="t" pathLength="1" d="M7.5 12.5l3 3 6-6.5"/></svg></span><span class="title">Schedule a weekly digest</span></div><div class="body"><div><p>A summary of every chart lands in your inbox on the day you choose.</p><button class="btn" data-done>Choose a day</button></div></div></li>
+    </ol>
+    <div class="done-state" aria-live="polite">
+      <div class="big"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h2>You're set</h2>
+      <p>Tarn is connected, charting and reporting. This card won't show again.</p>
+      <button class="btn ghost" id="finish">Go to my dashboard</button>
+    </div>
+  </section>
+  <p class="replay" id="replay" hidden>Demo: <button id="reset">bring the checklist back</button></p>
+</aside>
+<script>
+  const card=document.getElementById('card'),tasks=[...document.querySelectorAll('.task')],ring=document.querySelector('.ring'),rn=document.getElementById('rn'),cp=document.getElementById('cp'),replay=document.getElementById('replay');
+  const mins=[0,0,2,3,1];
+  function update(){
+    const done=tasks.filter(t=>t.classList.contains('done')).length,left=tasks.length-done;
+    ring.style.setProperty('--p',done/tasks.length);ring.setAttribute('aria-valuenow',done);rn.textContent=done+'/'+tasks.length;
+    const m=tasks.reduce((s,t,i)=>s+(t.classList.contains('done')?0:mins[i]),0);
+    cp.textContent=left?`${left} step${left>1?'s':''} left · about ${m} minute${m>1?'s':''}`:'All steps complete';
+    const next=tasks.find(t=>!t.classList.contains('done'));
+    tasks.forEach(t=>{t.classList.toggle('open',t===next);t.classList.toggle('next',t!==next&&!t.classList.contains('done'));});
+    if(!left)setTimeout(()=>card.classList.add('complete'),320);
+  }
+  document.querySelectorAll('[data-done]').forEach(b=>b.addEventListener('click',()=>{b.closest('.task').classList.add('done');setTimeout(update,300);}));
+  function hide(){card.classList.add('gone');replay.hidden=false;}
+  document.getElementById('dismiss').addEventListener('click',hide);
+  document.getElementById('finish').addEventListener('click',hide);
+  document.getElementById('reset').addEventListener('click',()=>{
+    card.classList.remove('gone','complete');replay.hidden=true;
+    tasks.forEach((t,i)=>{t.classList.toggle('done',i<2);t.classList.remove('open','next');const p=t.querySelector('.t');p.style.animation='none';void p.offsetWidth;p.style.animation='';});
+    update();
+  });
+  update();
+</script>
+</body>
+</html>

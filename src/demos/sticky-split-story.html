@@ -1,0 +1,123 @@
+<!-- Design Lounge piece: sticky-split-story · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Sticky split scroll story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#14110f;--ink:#efe9df;--ink-2:#b7ae9f;--ink-3:#77705f;--line:#2b2622;
+  --c1:#d9a441;--c2:#8fa7c9;--c3:#e28a5a;--c4:#8fae8b;--accent:var(--c1);
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Karla",system-ui,sans-serif;
+  --t-micro:160ms;--t-fade:800ms;--t-move:1000ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+[data-ch="2"]{--accent:var(--c2)}[data-ch="3"]{--accent:var(--c3)}[data-ch="4"]{--accent:var(--c4)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.6 var(--sans);color:var(--ink);background:var(--bg);overflow:auto;-webkit-font-smoothing:antialiased;transition:background var(--t-fade) var(--ease)}
+.wrap{display:grid;grid-template-columns:1fr 1fr;min-height:100%}
+.text{padding:0 72px 0 96px;position:relative}
+.rail{position:sticky;top:0;height:0;z-index:2}
+.rail ol{list-style:none;margin:0;padding:0;position:absolute;left:-60px;top:44px;display:flex;flex-direction:column;gap:14px}
+.rail a{display:block;width:32px;font:500 12px/1 var(--sans);letter-spacing:.08em;color:var(--ink-3);text-decoration:none;padding:4px 0;border-left:2px solid transparent;padding-left:8px;transition:color var(--t-micro),border-color var(--t-micro)}
+.rail a:hover{color:var(--ink-2)}
+.rail a.on{color:var(--accent);border-color:var(--accent)}
+.rail a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ch{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:96px 0;border-bottom:1px solid var(--line);scroll-margin-top:0}
+.ch:last-child{border-bottom:0}
+.ch .k{font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 20px;transition:color var(--t-fade) var(--ease)}
+.ch h2{margin:0 0 20px;font:500 52px/1.02 var(--serif);letter-spacing:-.015em;max-width:14ch;text-wrap:balance}
+.ch h2 em{font-style:italic;color:var(--accent);transition:color var(--t-fade) var(--ease)}
+.ch p{margin:0 0 14px;max-width:44ch;color:var(--ink-2);font-size:16px}
+.ch .fig{margin-top:22px;display:flex;gap:28px}
+.ch .fig div{font:600 30px/1 var(--serif);color:var(--ink)}
+.ch .fig div small{display:block;font:500 11px/1.6 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-top:6px}
+.intro{padding:48px 0 0;font:500 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.intro b{color:var(--ink);font-weight:500}
+.visual{position:sticky;top:0;height:100vh;overflow:hidden;border-left:1px solid var(--line)}
+.layer{position:absolute;inset:0;opacity:0;transition:opacity var(--t-fade) var(--ease)}
+.l1{background:linear-gradient(180deg,#3a2b3f 0,#8a4a3a 55%,#d9a441 100%)}
+.l2{background:linear-gradient(180deg,#05070f 0,#101a2e 60%,#1d2b45 100%)}
+.l3{background:linear-gradient(180deg,#2c3a55 0,#b06a4a 60%,#f0c28a 100%)}
+.l4{background:linear-gradient(180deg,#6f9fc9 0,#a9c9dc 60%,#dfe6d0 100%)}
+[data-ch="1"] .l1,[data-ch="2"] .l2,[data-ch="3"] .l3,[data-ch="4"] .l4{opacity:1}
+.stars{position:absolute;inset:0;opacity:0;transition:opacity var(--t-fade) var(--ease);background:
+  radial-gradient(1px 1px at 12% 18%,#fff 50%,transparent 60%),radial-gradient(1.5px 1.5px at 30% 40%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 52% 22%,#fff 50%,transparent 60%),
+  radial-gradient(1px 1px at 70% 12%,#fff 50%,transparent 60%),radial-gradient(1.5px 1.5px at 84% 34%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 40% 8%,#fff 50%,transparent 60%),
+  radial-gradient(1px 1px at 62% 46%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 22% 52%,#fff 50%,transparent 60%),radial-gradient(1.5px 1.5px at 90% 56%,#fff 50%,transparent 60%)}
+[data-ch="2"] .stars{opacity:.9}
+.disc{position:absolute;left:50%;top:50%;width:180px;height:180px;margin:-90px 0 0 -90px;border-radius:50%;background:var(--accent);transition:transform var(--t-move) var(--ease-out),background var(--t-fade) var(--ease),box-shadow var(--t-fade) var(--ease);box-shadow:0 0 80px 10px rgba(217,164,65,.25)}
+[data-ch="1"] .disc{transform:translate(120px,150px) scale(1)}
+[data-ch="2"] .disc{transform:translate(-160px,-180px) scale(.45);background:#e9e4d6;box-shadow:0 0 60px 6px rgba(233,228,214,.25)}
+[data-ch="3"] .disc{transform:translate(-40px,120px) scale(.8);box-shadow:0 0 90px 20px rgba(226,138,90,.35)}
+[data-ch="4"] .disc{transform:translate(90px,-220px) scale(.6);background:#fff5d6;box-shadow:0 0 100px 30px rgba(255,245,214,.45)}
+.ground{position:absolute;left:0;right:0;bottom:0;height:34%;background:#0f0d0b;clip-path:polygon(0 38%,18% 30%,34% 40%,52% 24%,68% 36%,84% 22%,100% 34%,100% 100%,0 100%)}
+.dome{position:absolute;left:52%;bottom:26%;width:64px;height:40px;background:#0f0d0b;border-radius:40px 40px 0 0}
+.dome::after{content:"";position:absolute;left:30px;top:-2px;width:3px;height:28px;background:var(--accent);transform:rotate(-40deg);transform-origin:bottom;transition:transform var(--t-move) var(--ease),background var(--t-fade)}
+[data-ch="2"] .dome::after{transform:rotate(-70deg)}[data-ch="3"] .dome::after{transform:rotate(-20deg)}[data-ch="4"] .dome::after{transform:rotate(0)}
+.hud{position:absolute;left:32px;bottom:28px;right:32px;display:flex;justify-content:space-between;font:500 12px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);mix-blend-mode:screen}
+.hud b{color:var(--ink);font-weight:500}
+.hud span{transition:opacity var(--t-micro)}
+@media (max-width:1023px){.wrap{grid-template-columns:1fr}.visual{height:44vh;position:sticky;top:0;border-left:0;border-bottom:1px solid var(--line);order:-1}.text{padding:0 24px 0 48px}.rail ol{left:-36px;top:calc(44vh + 24px)}.ch{min-height:auto;padding:64px 0}.ch h2{font-size:38px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body data-ch="1">
+<div class="wrap">
+  <div class="text">
+    <div class="rail"><ol>
+      <li><a href="#c1" class="on" data-n="1">01</a></li><li><a href="#c2" data-n="2">02</a></li><li><a href="#c3" data-n="3">03</a></li><li><a href="#c4" data-n="4">04</a></li>
+    </ol></div>
+    <p class="intro"><b>Aster Observatory</b> · One night on Skarvfjell · Scroll</p>
+    <section class="ch" id="c1" data-n="1">
+      <p class="k">Chapter one · Dusk</p>
+      <h2>The dome opens <em>at 19:42.</em></h2>
+      <p>The shutter takes four minutes to roll back. In that time the sky above the ridge goes from copper to a bruised violet, and the 1.2-metre mirror begins to cool toward the outside air. Nothing is observed yet; the optics need to lose eleven degrees.</p>
+      <p>Two operators check the humidity line. At 78 % they close again. Tonight it holds at 61.</p>
+      <div class="fig"><div>19:42<small>Shutter open</small></div><div>−3.4 °C<small>Mirror delta</small></div><div>61 %<small>Humidity</small></div></div>
+    </section>
+    <section class="ch" id="c2" data-n="2">
+      <p class="k">Chapter two · Midnight</p>
+      <h2>Four hundred frames of <em>one square degree.</em></h2>
+      <p>By 00:10 the telescope has settled on a field near Perseus and stays there for three hours, taking 30-second exposures back to back. The moon is a thin sliver low in the west, bright enough to matter, not bright enough to stop.</p>
+      <p>Each frame is 62 megabytes. Each one is compared to the last, looking for anything that moved.</p>
+      <div class="fig"><div>412<small>Frames</small></div><div>30 s<small>Exposure</small></div><div>25.6 GB<small>Written</small></div></div>
+    </section>
+    <section class="ch" id="c3" data-n="3">
+      <p class="k">Chapter three · Dawn</p>
+      <h2>Something moved <em>between frames.</em></h2>
+      <p>At 04:20 the pipeline flags a point source that shifted 3.1 arcseconds between two exposures an hour apart. The operators look at it for a long time. It is faint, magnitude 21.3, and it is exactly where nothing was catalogued.</p>
+      <p>The sky is already turning. They get eleven more frames before the background swallows it.</p>
+      <div class="fig"><div>3.1″<small>Motion / hour</small></div><div>21.3<small>Magnitude</small></div><div>11<small>Confirming frames</small></div></div>
+    </section>
+    <section class="ch" id="c4" data-n="4">
+      <p class="k">Chapter four · Noon</p>
+      <h2>A provisional name, <em>and sleep.</em></h2>
+      <p>The report goes out at 09:15. By noon three other stations have found the object in their own archives, and it has a designation: 2026 SK<sub>4</sub>. It is about 140 metres across and will pass at nine lunar distances in March.</p>
+      <p>The dome is closed. The mirror is warming back up. The operators drive down the ridge in daylight.</p>
+      <div class="fig"><div>2026 SK<sub>4</sub><small>Designation</small></div><div>~140 m<small>Diameter</small></div><div>9 LD<small>Closest approach</small></div></div>
+    </section>
+  </div>
+  <aside class="visual" aria-label="Sky above the observatory, changing with each chapter">
+    <div class="layer l1"></div><div class="layer l2"></div><div class="layer l3"></div><div class="layer l4"></div>
+    <div class="stars"></div>
+    <div class="disc"></div>
+    <div class="ground"></div><div class="dome"></div>
+    <div class="hud"><span><b id="hudTime">19:42</b> local</span><span id="hudLabel">Dusk · Sun setting</span></div>
+  </aside>
+</div>
+<script>
+  const body=document.body,links=[...document.querySelectorAll('.rail a')],chs=[...document.querySelectorAll('.ch')];
+  const meta={1:['19:42','Dusk · Sun setting'],2:['00:10','Midnight · Moon in the west'],3:['04:20','Dawn · Field low in the east'],4:['12:00','Noon · Dome closed']};
+  function set(n){if(body.dataset.ch===String(n))return;body.dataset.ch=n;links.forEach(a=>a.classList.toggle('on',a.dataset.n===String(n)));
+    document.getElementById('hudTime').textContent=meta[n][0];document.getElementById('hudLabel').textContent=meta[n][1];}
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)set(e.target.dataset.n);});},{rootMargin:'-45% 0px -45% 0px',threshold:0});
+  chs.forEach(c=>io.observe(c));
+  links.forEach(a=>a.addEventListener('click',()=>set(a.dataset.n)));
+</script>
+</body>
+</html>

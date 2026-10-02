@@ -1,0 +1,115 @@
+<!-- Design Lounge piece: mobile-filter-chips-list · platform: mobile-web · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fjell — Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f4f1;--surface:#ffffff;--surface-2:#e6e8e2;--line:#dcdfd7;--ink:#16201a;--ink-2:#5c665f;--ink-3:#8b948d;
+  --accent:#e2523a;--accent-ink:#ffffff;--chip-on:#16201a;--chip-on-ink:#f3f4f1;--scrim:rgba(22,32,26,.45);
+  --display:"Syne",system-ui,sans-serif;--sans:"Manrope",system-ui,sans-serif;
+  --safe-top:54px;--safe-bottom:80px;--gutter:16px;--gap:12px;--r:14px;--r-chip:999px;--r-sheet:20px;
+  --shadow-sheet:0 -12px 40px rgba(22,32,26,.18);
+  --t-fast:160ms;--t-layout:300ms;--t-sheet:380ms;--t-skeleton:1200ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-y:auto}
+svg{stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.head{position:sticky;top:0;z-index:5;background:var(--bg);margin-top:var(--safe-top);padding:8px 0 10px;border-bottom:1px solid var(--line)}
+.title{display:flex;align-items:baseline;justify-content:space-between;padding:0 var(--gutter) 10px}
+h1{margin:0;font:700 26px/1 var(--display);letter-spacing:-.02em}
+.count{font-size:13px;color:var(--ink-3)}
+.tools{display:flex;align-items:center;gap:8px;padding-left:var(--gutter)}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-right:var(--gutter);flex:1;scroll-snap-type:x proximity}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:40px;padding:0 14px 0 12px;border:1px solid var(--line);border-radius:var(--r-chip);background:var(--surface);color:var(--ink);font:500 14px var(--sans);display:inline-flex;align-items:center;gap:0;cursor:pointer;scroll-snap-align:start;transition:background var(--t-fast) var(--ease),color var(--t-fast),border-color var(--t-fast),padding var(--t-fast) var(--ease)}
+.chip svg{width:0;height:16px;opacity:0;transition:width var(--t-fast) var(--ease),opacity var(--t-fast),margin var(--t-fast)}
+.chip[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink);border-color:var(--chip-on)}
+.chip[aria-pressed="true"] svg{width:16px;opacity:1;margin-right:6px}
+.chip:focus-visible,.sortbtn:focus-visible,.wish:focus-visible,.opt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sortbtn{flex:none;height:40px;width:40px;margin-right:var(--gutter);border:1px solid var(--line);background:var(--surface);border-radius:var(--r-chip);display:grid;place-items:center;cursor:pointer;color:var(--ink);position:relative}
+.sortbtn svg{width:18px;height:18px}
+.sortbtn i{position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--accent);opacity:0;transition:opacity var(--t-fast)}
+.sortbtn.dirty i{opacity:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);padding:14px var(--gutter) calc(var(--safe-bottom) + 24px)}
+.card{background:var(--surface);border-radius:var(--r);overflow:hidden;position:relative;animation:in var(--t-layout) var(--ease-out) both}
+.card:nth-child(2n){animation-delay:40ms}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.img{aspect-ratio:1/1.1;position:relative;background:var(--surface-2)}
+.img::after{content:"";position:absolute;inset:0;background:var(--tint,#c9cfc5);border-radius:0 0 0 46%;opacity:.9}
+.img .badge{position:absolute;left:10px;top:10px;z-index:1;font:700 10px/1 var(--display);letter-spacing:.08em;color:var(--accent-ink);background:var(--accent);padding:5px 7px;border-radius:4px}
+.wish{position:absolute;right:6px;top:6px;z-index:1;width:40px;height:40px;border:0;background:transparent;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+.wish svg{width:22px;height:22px;transition:transform var(--t-fast) var(--ease-out),fill var(--t-fast),color var(--t-fast)}
+.wish[aria-pressed="true"] svg{fill:var(--accent);color:var(--accent);animation:pop 300ms var(--ease-out)}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+.info{padding:10px 12px 12px}
+.name{font-weight:600;font-size:14px;line-height:1.3;margin:0 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta{font-size:12px;color:var(--ink-3);margin:0 0 8px}
+.row{display:flex;align-items:center;justify-content:space-between}
+.price{font:700 15px var(--display);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.price s{color:var(--ink-3);font:500 12px var(--sans);margin-left:5px}
+.rating{display:flex;align-items:center;gap:3px;font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.rating svg{width:13px;height:13px;fill:var(--ink);stroke:none}
+.sk{background:var(--surface);border-radius:var(--r);overflow:hidden}
+.sk div{background:linear-gradient(90deg,var(--surface-2) 25%,#eef0ea 50%,var(--surface-2) 75%);background-size:200% 100%;animation:sh var(--t-skeleton) linear infinite}
+.sk .a{aspect-ratio:1/1.1}.sk .b{height:12px;margin:12px 12px 6px;border-radius:4px;width:70%}.sk .c{height:10px;margin:0 12px 14px;border-radius:4px;width:45%}
+@keyframes sh{from{background-position:200% 0}to{background-position:-200% 0}}
+.empty{grid-column:1/-1;text-align:center;padding:48px 16px;color:var(--ink-2)}
+.empty b{display:block;font:700 18px var(--display);color:var(--ink);margin-bottom:6px}
+.scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity var(--t-layout) var(--ease);z-index:20}
+.sheet{position:fixed;left:0;right:0;bottom:var(--safe-bottom);z-index:21;background:var(--surface);border-radius:var(--r-sheet) var(--r-sheet) 0 0;box-shadow:var(--shadow-sheet);padding:8px var(--gutter) 16px;transform:translateY(calc(100% + var(--safe-bottom)));transition:transform var(--t-sheet) var(--ease-sheet);visibility:hidden}
+.sheet.on,.scrim.on{visibility:visible}
+.sheet.on{transform:none}.scrim.on{opacity:1;pointer-events:auto}
+.grab{width:36px;height:4px;border-radius:2px;background:var(--line);margin:4px auto 14px}
+.sheet h2{margin:0 0 6px;font:700 18px var(--display);letter-spacing:-.01em}
+.opt{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:52px;padding:0 4px;border:0;background:transparent;font:500 15px var(--sans);color:var(--ink);cursor:pointer;border-radius:8px;text-align:left}
+.opt+.opt{border-top:1px solid var(--line)}
+.opt svg{width:20px;height:20px;color:var(--accent);opacity:0;transform:scale(.6);transition:opacity var(--t-fast),transform var(--t-fast) var(--ease-out)}
+.opt[aria-checked="true"] svg{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}.sk div{animation:none}}
+</style>
+</head>
+<body>
+<header class="head">
+  <div class="title"><h1>Shell jackets &amp; more</h1><span class="count" id="count" aria-live="polite">8 items</span></div>
+  <div class="tools">
+    <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+    <button class="sortbtn" id="sortbtn" aria-haspopup="dialog" aria-expanded="false" aria-label="Sort"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/></svg><i></i></button>
+  </div>
+</header>
+<main class="grid" id="grid" aria-live="polite" aria-busy="false"></main>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh" aria-hidden="true">
+  <div class="grab"></div><h2 id="sh">Sort by</h2>
+  <div role="radiogroup" id="opts" aria-label="Sort order"></div>
+</div>
+<script>
+  const P=[["Ridge 3L shell jacket","Jackets",289,4.8,412,"#8ea3b8",0],["Kvist down parka","Jackets",349,4.6,187,"#b8a48e",299],["Tind trail boot","Boots",179,4.7,655,"#8e8b7e",0],["Skar approach shoe","Boots",139,4.4,230,"#a4b19b",119],["Bre 38L pack","Packs",159,4.9,921,"#c7b6a1",0],["Vidde 22L daypack","Packs",89,4.5,304,"#9fb3b4",0],["Hei 2-person tent","Tents",429,4.7,142,"#b39c9c",379],["Lyng tarp shelter","Tents",119,4.3,88,"#a9a58d",0]];
+  const CATS=["All","Jackets","Boots","Packs","Tents","Sale"],SORTS=["Featured","Price: low to high","Price: high to low","Top rated"];
+  let cat="All",sort=0;const wished=new Set([4]);
+  const chips=document.getElementById('chips'),grid=document.getElementById('grid'),count=document.getElementById('count'),sortbtn=document.getElementById('sortbtn'),sheet=document.getElementById('sheet'),scrim=document.getElementById('scrim'),opts=document.getElementById('opts');
+  const chk='<svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>';
+  CATS.forEach(c=>{const b=document.createElement('button');b.className='chip';b.type='button';b.setAttribute('aria-pressed',String(c===cat));b.innerHTML=chk+c;b.addEventListener('click',()=>{if(cat===c)return;cat=c;[...chips.children].forEach(x=>x.setAttribute('aria-pressed',String(x===b)));b.scrollIntoView({inline:'nearest',block:'nearest',behavior:'smooth'});refresh();});chips.appendChild(b);});
+  SORTS.forEach((s,i)=>{const b=document.createElement('button');b.className='opt';b.type='button';b.setAttribute('role','radio');b.setAttribute('aria-checked',String(i===sort));b.innerHTML=s+chk;b.addEventListener('click',()=>{sort=i;[...opts.children].forEach((x,j)=>x.setAttribute('aria-checked',String(j===i)));sortbtn.classList.toggle('dirty',i!==0);openSheet(false);refresh();});opts.appendChild(b);});
+  function list(){let l=P.map((p,i)=>({p,i})).filter(({p})=>cat==="All"||(cat==="Sale"?p[6]>0:p[1]===cat));
+    if(sort===1)l.sort((a,b)=>price(a.p)-price(b.p));if(sort===2)l.sort((a,b)=>price(b.p)-price(a.p));if(sort===3)l.sort((a,b)=>b.p[3]-a.p[3]);return l;}
+  const price=p=>p[6]||p[2];
+  const star='<svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg>';
+  const heart='<svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0112 8a4.3 4.3 0 017.5 2.5c0 5.4-7.5 10-7.5 10z"/></svg>';
+  function render(){const l=list();count.textContent=l.length+(l.length===1?' item':' items');grid.setAttribute('aria-busy','false');
+    if(!l.length){grid.innerHTML='<div class="empty"><b>Nothing here yet</b>Try another category or clear the sort.</div>';return;}
+    grid.innerHTML=l.map(({p,i})=>`<article class="card"><div class="img" style="--tint:${p[5]}">${p[6]?'<span class="badge">SALE</span>':''}<button class="wish" data-i="${i}" aria-pressed="${wished.has(i)}" aria-label="Save ${p[0]}">${heart}</button></div><div class="info"><p class="name">${p[0]}</p><p class="meta">${p[1]} · ${p[4]} reviews</p><div class="row"><span class="price">£${price(p)}${p[6]?`<s>£${p[2]}</s>`:''}</span><span class="rating">${star}${p[3].toFixed(1)}</span></div></div></article>`).join('');}
+  let t;function refresh(){clearTimeout(t);grid.setAttribute('aria-busy','true');grid.innerHTML='<div class="sk"><div class="a"></div><div class="b"></div><div class="c"></div></div>'.repeat(4);t=setTimeout(render,550);}
+  grid.addEventListener('click',e=>{const w=e.target.closest('.wish');if(!w)return;const i=+w.dataset.i;const on=!wished.has(i);on?wished.add(i):wished.delete(i);w.setAttribute('aria-pressed',String(on));});
+  function openSheet(o){sheet.classList.toggle('on',o);scrim.classList.toggle('on',o);sheet.setAttribute('aria-hidden',String(!o));sortbtn.setAttribute('aria-expanded',String(o));if(o)opts.querySelector('[aria-checked="true"]').focus();else sortbtn.focus();}
+  sortbtn.addEventListener('click',()=>openSheet(true));scrim.addEventListener('click',()=>openSheet(false));
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet.classList.contains('on'))openSheet(false);});
+  render();
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!-- Design Lounge piece: modal-dialog-focus-trap · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Modal dialog with focus trap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f4f2;--panel:#ffffff;--hover:#ececea;--line:#e3e3df;--line-2:#cfcfca;
+  --ink:#1b1b1a;--ink-2:#5b5b58;--ink-3:#8a8a86;--accent:#2f5bea;--accent-ink:#ffffff;
+  --danger:#c62828;--danger-hover:#a51f1f;--danger-soft:#fbe9e7;--danger-ink:#ffffff;--scrim:rgba(27,27,26,.4);
+  --font:"Bricolage Grotesque",system-ui,sans-serif;
+  --w:440px;--r:14px;--r-btn:8px;--t-fast:120ms;--t-open:240ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow:0 2px 4px rgba(27,27,26,.06),0 32px 64px -24px rgba(27,27,26,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;font-variation-settings:"opsz" 14}
+svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.top{height:56px;border-bottom:1px solid var(--line);background:var(--panel);display:flex;align-items:center;gap:20px;padding:0 28px}
+.top b{font-weight:700;font-size:17px;letter-spacing:-.02em}
+.top nav{display:flex;gap:16px;color:var(--ink-3);font-size:13px}.top nav span:last-child{color:var(--ink)}
+main{max-width:720px;padding:36px 28px}
+h1{margin:0 0 4px;font-size:28px;font-weight:600;letter-spacing:-.025em;font-variation-settings:"opsz" 96}
+h1 code{font:500 20px ui-monospace,monospace;color:var(--ink-2);background:var(--hover);padding:2px 8px;border-radius:6px;vertical-align:2px}
+.sub{margin:0 0 28px;color:var(--ink-3)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.card h2{margin:0 0 4px;font-size:15px;font-weight:600}
+.card p{margin:0;color:var(--ink-2);font-size:13px}
+.rowc{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.card.danger{border-color:#f1c9c5}
+.card.danger h2{color:var(--danger)}
+.btn{height:36px;padding:0 14px;border-radius:var(--r-btn);border:1px solid var(--line-2);background:var(--panel);font:500 13px var(--font);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn:hover{background:var(--hover)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:#2449c2}
+.btn.danger{background:var(--danger);border-color:var(--danger);color:var(--danger-ink)}
+.btn.danger:hover{background:var(--danger-hover)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,input:focus-visible,.x:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.status{margin-top:8px;font-size:13px;color:var(--ink-2);min-height:20px}
+.status b{color:var(--ink);font-weight:600}
+/* dialog */
+dialog{width:min(var(--w),calc(100vw - 32px));border:0;padding:0;border-radius:var(--r);background:var(--panel);color:var(--ink);box-shadow:var(--shadow);opacity:0;transform:scale(.96);transition:opacity var(--t-open) var(--ease),transform var(--t-open) var(--ease-out),overlay var(--t-open) allow-discrete,display var(--t-open) allow-discrete}
+dialog[open]{opacity:1;transform:none}
+@starting-style{dialog[open]{opacity:0;transform:scale(.96)}}
+dialog::backdrop{background:rgba(27,27,26,0);transition:background var(--t-open) var(--ease),overlay var(--t-open) allow-discrete,display var(--t-open) allow-discrete}
+dialog[open]::backdrop{background:var(--scrim)}
+@starting-style{dialog[open]::backdrop{background:rgba(27,27,26,0)}}
+.dlg{padding:22px 24px 20px;display:flex;flex-direction:column;gap:14px}
+.dlg header{display:flex;align-items:flex-start;gap:12px}
+.dlg h2{margin:0;font-size:18px;font-weight:600;letter-spacing:-.02em;font-variation-settings:"opsz" 40;flex:1}
+.dlg .x{all:unset;width:28px;height:28px;border-radius:6px;display:grid;place-items:center;color:var(--ink-3);cursor:pointer;margin:-4px -6px 0 0}
+.dlg .x:hover{background:var(--hover);color:var(--ink)}
+.dlg p{margin:0;color:var(--ink-2)}
+.dlg p code{font:500 13px ui-monospace,monospace;background:var(--hover);padding:1px 6px;border-radius:4px;color:var(--ink)}
+.warn{display:flex;gap:10px;padding:10px 12px;border-radius:8px;background:var(--danger-soft);color:#7a1f1f;font-size:13px}
+.warn svg{margin-top:2px}
+label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:var(--ink-2)}
+input{height:38px;border:1px solid var(--line-2);border-radius:var(--r-btn);padding:0 12px;font:14px var(--font);color:var(--ink);background:var(--panel)}
+input:hover{border-color:var(--ink-3)}
+.confirm input{font-family:ui-monospace,monospace;font-size:13px}
+.confirm input.ok{border-color:var(--danger)}
+.acts{display:flex;justify-content:flex-end;gap:8px;padding-top:4px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top"><b>Quill</b><nav><span>Docs</span><span>Members</span><span>Settings</span></nav></header>
+<main>
+  <h1>Project settings · <code id="pname">halden-docs</code></h1>
+  <p class="sub">Created 14 Mar 2026 · 312 documents · 9 members</p>
+  <div class="card"><div class="rowc"><div><h2>Project name</h2><p>Used in URLs and mentions. Changing it redirects the old address for 30 days.</p></div><button class="btn" id="openRename">Rename project</button></div></div>
+  <div class="card"><div class="rowc"><div><h2>Default visibility</h2><p>New documents are visible to all members unless marked private.</p></div><button class="btn">Change</button></div></div>
+  <div class="card danger"><div class="rowc"><div><h2>Delete this project</h2><p>Removes all 312 documents, comments and share links. This cannot be undone.</p></div><button class="btn danger" id="openDelete">Delete project</button></div></div>
+  <p class="status" id="status" aria-live="polite"></p>
+</main>
+
+<dialog id="rename" aria-labelledby="rt">
+  <form method="dialog" class="dlg">
+    <header><h2 id="rt">Rename project</h2><button type="button" class="x" aria-label="Close" data-close><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
+    <p>Lowercase letters, numbers and hyphens. The old name keeps redirecting for 30 days.</p>
+    <label>New name<input id="newName" value="halden-docs" autofocus autocomplete="off" pattern="[a-z0-9-]+" required></label>
+    <div class="acts"><button type="button" class="btn" data-close>Cancel</button><button type="submit" class="btn primary" value="save">Save name</button></div>
+  </form>
+</dialog>
+
+<dialog id="delete" aria-labelledby="dt" aria-describedby="dd">
+  <form method="dialog" class="dlg confirm">
+    <header><h2 id="dt">Delete halden-docs?</h2><button type="button" class="x" aria-label="Close" data-close><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
+    <div class="warn" id="dd"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9L2.5 17.5A2 2 0 004.2 20.5h15.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span>This permanently deletes 312 documents, 1,048 comments and every share link. Members lose access immediately.</span></div>
+    <p>Type <code>halden-docs</code> to confirm.</p>
+    <label>Project name<input id="confirmName" autofocus autocomplete="off" spellcheck="false" placeholder="halden-docs" aria-describedby="dd"></label>
+    <div class="acts"><button type="button" class="btn" data-close>Cancel</button><button type="submit" class="btn danger" id="doDelete" value="delete" disabled>Delete project</button></div>
+  </form>
+</dialog>
+<script>
+const rename=document.getElementById('rename'),del=document.getElementById('delete'),status=document.getElementById('status');
+const confirmName=document.getElementById('confirmName'),doDelete=document.getElementById('doDelete');
+document.getElementById('openRename').addEventListener('click',()=>{document.getElementById('newName').value=document.getElementById('pname').textContent;rename.showModal();});
+document.getElementById('openDelete').addEventListener('click',()=>{confirmName.value='';doDelete.disabled=true;confirmName.classList.remove('ok');del.showModal();});
+document.querySelectorAll('dialog').forEach(d=>{
+  d.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>d.close('cancel')));
+  d.addEventListener('click',e=>{if(e.target===d)d.close('cancel');});
+});
+rename.addEventListener('close',()=>{if(rename.returnValue==='save'){const v=document.getElementById('newName').value.trim();if(v){document.getElementById('pname').textContent=v;status.innerHTML='Renamed to <b>'+v.replace(/[<>&]/g,'')+'</b>. The old address redirects until 29 Oct 2026.';}}});
+confirmName.addEventListener('input',()=>{const ok=confirmName.value.trim()===document.getElementById('pname').textContent;doDelete.disabled=!ok;confirmName.classList.toggle('ok',ok);});
+del.addEventListener('close',()=>{if(del.returnValue==='delete'){status.innerHTML='<b>'+document.getElementById('pname').textContent+'</b> was deleted. It can be restored from the trash for 14 days.';}});
+del.querySelector('form').addEventListener('submit',e=>{if(doDelete.disabled)e.preventDefault();});
+del.showModal();
+</script>
+</body>
+</html>

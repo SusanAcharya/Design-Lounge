@@ -1,0 +1,104 @@
+<!-- Design Lounge piece: hover-image-trail · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tessel Studio — Selected work</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--ink:#17161a;--ink-2:#6f6c66;--ink-3:#a5a199;--line:#dedad1;--accent:#2f4bd8;
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Hanken Grotesk",system-ui,sans-serif;
+  --card-w:180px;--card-h:124px;--r:4px;--shadow:0 12px 32px rgba(23,22,26,.18);
+  --t-micro:160ms;--t-in:260ms;--t-out:720ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --g1:linear-gradient(135deg,#d9c7b2,#8f6b4d 60%,#3d2a1e);
+  --g2:linear-gradient(160deg,#c9d6e2,#5b7a94 55%,#1f2f3f);
+  --g3:linear-gradient(120deg,#e6dcc3,#b7a26a 50%,#5a4a22);
+  --g4:linear-gradient(150deg,#e2c9cf,#a86b7c 55%,#3f1f2b);
+  --g5:linear-gradient(140deg,#cfd9cd,#6e8a6a 55%,#24331f);
+  --g6:linear-gradient(130deg,#d6d6d8,#7d7f8a 55%,#26272e);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+.wrap{height:100%;display:flex;flex-direction:column;padding:0 64px}
+header{height:76px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:500}
+header a{color:var(--ink-2);text-decoration:none;margin-left:28px;border-radius:3px}
+header a:hover{color:var(--ink)}
+.brand{font:400 22px/1 var(--serif);letter-spacing:-.01em}
+.brand i{font-style:italic;color:var(--accent)}
+h1{margin:36px 0 22px;font:400 40px/1.05 var(--serif);letter-spacing:-.015em}
+h1 em{font-style:italic;color:var(--ink-2)}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);flex:1;display:flex;flex-direction:column}
+.row{flex:1;display:grid;grid-template-columns:48px 1fr 220px 120px 40px;align-items:center;gap:24px;border-bottom:1px solid var(--line);color:inherit;text-decoration:none;padding:0 8px;border-radius:var(--r);position:relative;transition:color var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.row:hover,.row:focus-visible{color:var(--accent)}
+.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.n{font:400 13px/1 var(--sans);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.t{font:400 44px/1 var(--serif);letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t i{font-style:italic}
+.m{font-size:14px;color:var(--ink-2)}
+.y{font-size:14px;color:var(--ink-3);font-variant-numeric:tabular-nums;text-align:right}
+.a{width:22px;height:22px;color:var(--ink-3);justify-self:end;transition:transform var(--t-micro) var(--ease),color var(--t-micro)}
+.row:hover .a,.row:focus-visible .a{transform:translateX(4px);color:var(--accent)}
+.foot{height:48px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--ink-3)}
+/* trail */
+.trail{position:fixed;inset:0;pointer-events:none;z-index:5}
+.img{position:absolute;width:var(--card-w);height:var(--card-h);border-radius:var(--r);box-shadow:var(--shadow);background:var(--g,var(--g1));transform:translate(-50%,-50%) scale(.6) rotate(var(--rot,0deg));opacity:0;animation:pop var(--t-in) var(--ease-out) forwards,gone var(--t-out) var(--ease) forwards var(--t-in)}
+.img::after{content:attr(data-cap);position:absolute;left:10px;bottom:8px;font:500 10px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+@keyframes pop{to{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(var(--rot,0deg))}}
+@keyframes gone{to{opacity:0;transform:translate(-50%,calc(-50% - 24px)) scale(.94) rotate(var(--rot,0deg))}}
+/* keyboard / reduced-motion thumbnail */
+.thumb{position:absolute;right:56px;top:50%;width:140px;height:96px;border-radius:var(--r);background:var(--g,var(--g1));box-shadow:var(--shadow);transform:translateY(-50%) scale(.9);opacity:0;transition:opacity var(--t-micro) var(--ease),transform var(--t-micro) var(--ease);pointer-events:none}
+.row:focus-visible .thumb,.static .row:hover .thumb{opacity:1;transform:translateY(-50%) scale(1)}
+@media (prefers-reduced-motion:reduce){.img{animation:none;display:none}.a{transition:none}}
+@media (max-width:1100px){.t{font-size:36px}.row{grid-template-columns:40px 1fr 160px 90px 32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">Tessel <i>Studio</i></div>
+    <nav aria-label="Primary"><a href="#">Work</a><a href="#">Studio</a><a href="#">Journal</a><a href="#">Contact</a></nav>
+  </header>
+  <h1>Selected work <em>2021–2026</em></h1>
+  <ul class="list" id="list">
+    <li><a class="row" href="#" style="--g:var(--g1)" data-cap="Fjord Bank · 01"><span class="n">01</span><span class="t">Fjord Bank <i>rebrand</i></span><span class="m">Identity, signage, motion</span><span class="y">2026</span><svg class="a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17 17 7M9 7h8v8"/></svg><span class="thumb" aria-hidden="true"></span></a></li>
+    <li><a class="row" href="#" style="--g:var(--g2)" data-cap="Halden · 02"><span class="n">02</span><span class="t">Halden ferry <i>wayfinding</i></span><span class="m">Environmental, pictograms</span><span class="y">2025</span><svg class="a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17 17 7M9 7h8v8"/></svg><span class="thumb" aria-hidden="true"></span></a></li>
+    <li><a class="row" href="#" style="--g:var(--g3)" data-cap="Marrow · 03"><span class="n">03</span><span class="t">Marrow <i>editions</i></span><span class="m">Book series, 14 volumes</span><span class="y">2025</span><svg class="a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17 17 7M9 7h8v8"/></svg><span class="thumb" aria-hidden="true"></span></a></li>
+    <li><a class="row" href="#" style="--g:var(--g4)" data-cap="Orbital · 04"><span class="n">04</span><span class="t">Orbital <i>annual report</i></span><span class="m">Print, 96 pages, data</span><span class="y">2024</span><svg class="a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17 17 7M9 7h8v8"/></svg><span class="thumb" aria-hidden="true"></span></a></li>
+    <li><a class="row" href="#" style="--g:var(--g5)" data-cap="Loam · 05"><span class="n">05</span><span class="t">Loam <i>packaging</i></span><span class="m">Range of 18 SKUs</span><span class="y">2023</span><svg class="a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17 17 7M9 7h8v8"/></svg><span class="thumb" aria-hidden="true"></span></a></li>
+    <li><a class="row" href="#" style="--g:var(--g6)" data-cap="Nord Post · 06"><span class="n">06</span><span class="t">Nord Post <i>fleet livery</i></span><span class="m">Vehicles, uniforms</span><span class="y">2021</span><svg class="a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17 17 7M9 7h8v8"/></svg><span class="thumb" aria-hidden="true"></span></a></li>
+  </ul>
+  <div class="foot"><span>Move across a row to preview it · 6 of 41 projects</span><span>Tessel Studio, Gothenburg</span></div>
+</div>
+<div class="trail" id="trail" aria-hidden="true"></div>
+<script>
+(function(){
+  var trail=document.getElementById('trail'),list=document.getElementById('list');
+  var MAX=6,STEP=48,alive=[],lastX=0,lastY=0,k=0;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){document.body.classList.add('static');return;}
+  function spawn(row,x,y){
+    var el=document.createElement('div');el.className='img';
+    el.style.left=x+'px';el.style.top=y+'px';
+    el.style.setProperty('--g',getComputedStyle(row).getPropertyValue('--g'));
+    el.style.setProperty('--rot',((k++%3)-1)*3+'deg');
+    el.setAttribute('data-cap',row.getAttribute('data-cap')||'');
+    trail.appendChild(el);alive.push(el);
+    if(alive.length>MAX){var old=alive.shift();if(old.parentNode)old.remove();}
+    el.addEventListener('animationend',function(e){if(e.animationName!=='gone')return;var i=alive.indexOf(el);if(i>-1)alive.splice(i,1);el.remove();});
+  }
+  list.addEventListener('pointerenter',function(e){lastX=e.clientX;lastY=e.clientY;},true);
+  list.addEventListener('pointermove',function(e){
+    var row=e.target.closest('.row');if(!row)return;
+    var dx=e.clientX-lastX,dy=e.clientY-lastY;
+    if(dx*dx+dy*dy<STEP*STEP)return;
+    lastX=e.clientX;lastY=e.clientY;spawn(row,e.clientX,e.clientY);
+  });
+  list.addEventListener('pointerleave',function(){lastX=-9999;});
+  list.addEventListener('click',function(e){if(e.target.closest('.row'))e.preventDefault();});
+})();
+</script>
+</body>
+</html>

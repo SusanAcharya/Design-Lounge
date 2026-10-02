@@ -1,0 +1,128 @@
+<!-- Design Lounge piece: luxe-product-detail · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Maison Aurel — Vetiver No. 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f4efe6;--cream-2:#e9e2d4;--cream-3:#ddd4c2;--ink:#141210;--ink-2:#5b554c;--ink-3:#8f887c;--line:#d6cdbc;--gold:#b8945a;--gold-2:#8f7140;
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Karla",system-ui,sans-serif;
+  --split:55%;--pad:56px;--btn-h:56px;--seg-h:44px;
+  --t-micro:160ms;--t-seg:280ms;--t-morph:360ms;--t-swap:500ms;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.6 var(--sans);color:var(--ink);background:var(--cream);display:grid;grid-template-columns:var(--split) 1fr;overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:1px solid var(--ink);outline-offset:4px}
+.stage{position:relative;background:linear-gradient(180deg,var(--cream-2),var(--cream-3));display:grid;place-items:center;overflow:hidden}
+.stage .brand{position:absolute;left:var(--pad);top:36px;font:500 12px var(--sans);letter-spacing:.22em;text-transform:uppercase}
+.stage .idx{position:absolute;right:40px;top:36px;font:12px var(--sans);letter-spacing:.1em;color:var(--ink-3)}
+.bottle{position:relative;width:200px;height:320px;--c1:#d9c39c;--c2:#7d6236;transition:filter var(--t-swap) var(--ease)}
+.bottle .body{position:absolute;inset:44px 0 0;border-radius:18px 18px 26px 26px;background:linear-gradient(160deg,var(--c1) 0%,var(--c2) 70%,#3a2c17 100%);box-shadow:inset 8px 0 18px rgba(255,255,255,.28),inset -10px 0 22px rgba(0,0,0,.28);transition:background var(--t-swap) var(--ease)}
+.bottle .body::before{content:"";position:absolute;left:22px;top:18px;width:10px;height:70%;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,0))}
+.bottle .cap{position:absolute;left:62px;top:0;width:76px;height:58px;border-radius:6px 6px 3px 3px;background:linear-gradient(90deg,#1a1714,#3a342d 45%,#141210);box-shadow:inset 0 -6px 0 rgba(0,0,0,.35)}
+.bottle .label{position:absolute;left:34px;bottom:54px;width:132px;height:74px;background:var(--cream);display:grid;place-content:center;text-align:center;box-shadow:0 1px 0 rgba(0,0,0,.15)}
+.bottle .label b{font:500 22px/1 var(--serif);letter-spacing:.02em}
+.bottle .label small{font:10px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);margin-top:6px}
+.shadow{position:absolute;left:50%;bottom:-38px;width:280px;height:34px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse at center,rgba(20,18,16,.32),rgba(20,18,16,0) 70%)}
+.thumbs{position:absolute;left:var(--pad);bottom:40px;display:flex;gap:10px}
+.thumbs button{width:52px;height:52px;border:1px solid transparent;background:transparent;padding:4px;cursor:pointer;transition:border-color var(--t-micro) var(--ease)}
+.thumbs button i{display:block;width:100%;height:100%;background:linear-gradient(160deg,var(--c1),var(--c2))}
+.thumbs button[aria-pressed="true"]{border-color:var(--ink)}
+.thumbs button:hover{border-color:var(--ink-3)}
+.info{padding:36px var(--pad) 40px;display:flex;flex-direction:column;min-width:0}
+.crumb{font:12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:flex;gap:10px}
+.crumb a:hover{color:var(--ink)}
+.bag{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--ink);letter-spacing:.08em}
+.bag svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.bag b{font-weight:500;min-width:1ch}
+.prod{margin:auto 0;max-width:420px}
+.eyebrow{font:12px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);margin:0 0 14px}
+h1{margin:0 0 8px;font:400 54px/1 var(--serif);letter-spacing:-.01em}
+h1 em{font-style:italic;font-weight:400}
+.price{font:400 26px/1 var(--serif);margin:0 0 22px;display:flex;align-items:baseline;gap:12px}
+.price small{font:12px var(--sans);color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase}
+.desc{margin:0 0 28px;color:var(--ink-2);font-size:15px;line-height:1.65;max-width:38ch}
+.seglabel{display:flex;justify-content:space-between;font:12px var(--sans);letter-spacing:.14em;text-transform:uppercase;margin:0 0 10px;color:var(--ink-2)}
+.seglabel a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line);color:var(--ink-3);text-transform:none;letter-spacing:0}
+.seg{position:relative;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink);height:var(--seg-h);margin-bottom:22px}
+.seg::before{content:"";position:absolute;top:0;bottom:0;left:0;width:calc(100%/3);background:var(--ink);transform:translateX(calc(var(--i,0) * 100%));transition:transform var(--t-seg) var(--expo)}
+.seg button{position:relative;background:transparent;border:0;font:500 13px var(--sans);letter-spacing:.06em;color:var(--ink);cursor:pointer;transition:color var(--t-micro) var(--ease);padding:0}
+.seg button[aria-checked="true"]{color:var(--cream)}
+.seg button:focus-visible{outline-offset:-5px;outline-color:var(--cream)}
+.add{height:var(--btn-h);width:100%;border:1px solid var(--ink);background:var(--ink);color:var(--cream);font:500 13px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;display:grid;place-items:center;position:relative;overflow:hidden;transition:background var(--t-morph) var(--ease),border-color var(--t-morph) var(--ease),color var(--t-morph) var(--ease)}
+.add span{grid-area:1/1;display:flex;align-items:center;gap:10px;transition:opacity var(--t-morph) var(--ease),transform var(--t-morph) var(--expo)}
+.add .done{opacity:0;transform:translateY(10px)}
+.add .done svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset 300ms var(--expo) 200ms}
+.add:hover{background:#2a2622}
+.add.added{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.add.added .idle{opacity:0;transform:translateY(-10px)}
+.add.added .done{opacity:1;transform:none}
+.add.added .done svg{stroke-dashoffset:0}
+.notes{list-style:none;margin:26px 0 0;padding:0;border-top:1px solid var(--line)}
+.notes li{display:grid;grid-template-columns:72px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+.notes li b{font:500 11px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-2);padding-top:3px}
+.notes li span{font:italic 16px/1.4 var(--serif);color:var(--ink)}
+.ship{margin:18px 0 0;font-size:12px;color:var(--ink-3);letter-spacing:.04em}
+@media (max-width:1100px){:root{--pad:36px}h1{font-size:44px}.bottle{transform:scale(.85)}}
+@media (max-width:820px){body{grid-template-columns:1fr;overflow:auto}.stage{min-height:420px}.prod{margin:24px 0 0}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;transition-delay:0ms!important}}
+</style>
+</head>
+<body>
+<section class="stage" aria-label="Product images">
+  <span class="brand">Maison Aurel</span>
+  <span class="idx" id="idx">01 / 03</span>
+  <div class="bottle" id="bottle" role="img" aria-label="Vetiver No. 7, 50 ml bottle in amber glass">
+    <div class="cap"></div>
+    <div class="body"></div>
+    <div class="label"><b>No. 7</b><small>Vetiver · Aurel</small></div>
+    <div class="shadow"></div>
+  </div>
+  <div class="thumbs" id="thumbs" role="group" aria-label="Variant">
+    <button type="button" aria-pressed="true" aria-label="Amber glass" data-c1="#d9c39c" data-c2="#7d6236" style="--c1:#d9c39c;--c2:#7d6236"><i></i></button>
+    <button type="button" aria-pressed="false" aria-label="Smoke glass" data-c1="#9a9490" data-c2="#2e2a26" style="--c1:#9a9490;--c2:#2e2a26"><i></i></button>
+    <button type="button" aria-pressed="false" aria-label="Moss glass" data-c1="#b9bf9a" data-c2="#3f4a2f" style="--c1:#b9bf9a;--c2:#3f4a2f"><i></i></button>
+  </div>
+</section>
+<section class="info">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="#">Fragrance</a><span>/</span><a href="#">Eau de parfum</a><a class="bag" href="#" aria-label="Bag, 0 items"><svg viewBox="0 0 24 24"><path d="M6 8h12l1 13H5L6 8zM9 8V6a3 3 0 016 0v2"/></svg><b id="count">0</b></a></nav>
+  <div class="prod">
+    <p class="eyebrow">Eau de parfum · Unisex</p>
+    <h1>Vetiver <em>No. 7</em></h1>
+    <p class="price"><span id="price">€148</span><small id="per">50 ml · €2.96 / ml</small></p>
+    <p class="desc">Haitian vetiver root steeped for eleven days, lifted with bergamot and a dry cedar base. Bottled in Grasse in batches of four hundred; the number on each label is the batch.</p>
+    <p class="seglabel"><span>Size</span><a href="#">Size guide</a></p>
+    <div class="seg" id="seg" role="radiogroup" aria-label="Size" style="--i:1">
+      <button type="button" role="radio" aria-checked="false" data-p="92" data-ml="30">30 ml</button>
+      <button type="button" role="radio" aria-checked="true" data-p="148" data-ml="50">50 ml</button>
+      <button type="button" role="radio" aria-checked="false" data-p="236" data-ml="100">100 ml</button>
+    </div>
+    <button class="add" id="add" type="button"><span class="idle">Add to bag — <span id="bp">€148</span></span><span class="done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Added to bag</span></button>
+    <ul class="notes">
+      <li><b>Top</b><span>Bergamot, pink pepper, sea salt</span></li>
+      <li><b>Heart</b><span>Haitian vetiver, iris, clary sage</span></li>
+      <li><b>Base</b><span>Atlas cedar, ambrette, vetiver root</span></li>
+    </ul>
+    <p class="ship">Complimentary shipping over €120 · Returns within 30 days · Batch 0412</p>
+  </div>
+</section>
+<script>
+  const seg=document.getElementById('seg'),btns=[...seg.querySelectorAll('button')],price=document.getElementById('price'),per=document.getElementById('per'),bp=document.getElementById('bp'),add=document.getElementById('add'),count=document.getElementById('count'),bottle=document.getElementById('bottle');
+  function pick(i){btns.forEach((b,k)=>{b.setAttribute('aria-checked',String(k===i));b.tabIndex=k===i?0:-1;});seg.style.setProperty('--i',i);
+    const b=btns[i],p=Number(b.dataset.p),ml=Number(b.dataset.ml);price.textContent='€'+p;bp.textContent='€'+p;per.textContent=ml+' ml · €'+(p/ml).toFixed(2)+' / ml';
+    bottle.setAttribute('aria-label','Vetiver No. 7, '+ml+' ml bottle');add.classList.remove('added');}
+  btns.forEach((b,i)=>{b.addEventListener('click',()=>{pick(i);b.focus();});b.addEventListener('keydown',e=>{const d=e.key==='ArrowRight'||e.key==='ArrowDown'?1:e.key==='ArrowLeft'||e.key==='ArrowUp'?-1:0;if(!d)return;e.preventDefault();const n=(i+d+btns.length)%btns.length;pick(n);btns[n].focus();});});
+  pick(1);
+  let n=0;
+  add.addEventListener('click',()=>{if(add.classList.contains('added'))return;add.classList.add('added');n++;count.textContent=n;count.parentNode.setAttribute('aria-label','Bag, '+n+(n===1?' item':' items'));});
+  const thumbs=[...document.querySelectorAll('#thumbs button')],idx=document.getElementById('idx');
+  thumbs.forEach((t,i)=>t.addEventListener('click',()=>{thumbs.forEach((x,k)=>x.setAttribute('aria-pressed',String(k===i)));bottle.style.setProperty('--c1',t.dataset.c1);bottle.style.setProperty('--c2',t.dataset.c2);idx.textContent='0'+(i+1)+' / 03';}));
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+---
+interface Props { eyebrow: string; title: string; blurb?: string; count?: number; countLabel?: string; }
+const { eyebrow, title, blurb, count, countLabel = 'pieces' } = Astro.props;
+---
+<header class="ph wrap">
+  <p class="eyebrow reveal">{eyebrow}</p>
+  <div class="row">
+    <h1 class="display h2 reveal" style="--d:60ms" set:html={title}></h1>
+    {typeof count === 'number' && <span class="count mono reveal" style="--d:120ms"><b class="num">{String(count).padStart(3, '0')}</b> {countLabel}</span>}
+  </div>
+  {blurb && <p class="lede reveal" style="--d:140ms">{blurb}</p>}
+  <slot />
+</header>
+
+<style>
+  .ph { padding: clamp(32px, 6vw, 72px) 0 0; display: flex; flex-direction: column; gap: 14px; }
+  .row { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .count { color: var(--ink-3); letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
+  .count b { font-size: 14px; color: var(--ink); font-weight: 500; }
+</style>

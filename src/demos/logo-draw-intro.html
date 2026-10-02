@@ -1,0 +1,116 @@
+<!-- Design Lounge piece: logo-draw-intro · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Nord Post — intro</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--ink:#000000;--ink-2:#5c5c5c;--line:#e3e3e3;--red:#e0261a;--panel:#000000;--mark:#ffffff;
+  --display:"Archivo Black",Impact,sans-serif;--sans:"Archivo",system-ui,sans-serif;
+  --t-draw:900ms;--t-fill:250ms;--t-split:700ms;--t-letter:640ms;--stagger:45ms;--d-split:1250ms;--d-letters:1500ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-draw:cubic-bezier(.65,0,.35,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+.page{height:100%;display:flex;flex-direction:column;padding:0 56px}
+header{height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.wordmark{font:400 18px/1 var(--display);letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+.wordmark i{width:10px;height:10px;background:var(--red);display:inline-block}
+nav{display:flex;gap:32px;font-size:14px;font-weight:500}
+nav a{color:var(--ink);text-decoration:none;border-radius:3px;padding:4px 2px}
+nav a:hover{color:var(--red)}
+main{flex:1;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:0 0 20px}
+h1{margin:0;font:400 100px/.94 var(--display);letter-spacing:-.035em;text-transform:uppercase;max-width:1160px}
+h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.06em;margin-bottom:-.06em;padding-right:.02em}
+h1 .c{display:inline-block;transform:translateY(110%);opacity:0}
+.play h1 .c{animation:rise var(--t-letter) var(--ease-out) forwards;animation-delay:calc(var(--d-letters) + var(--i) * var(--stagger))}
+.row{display:flex;justify-content:space-between;align-items:flex-end;margin-top:40px;padding-top:24px;border-top:1px solid var(--line);opacity:0}
+.play .row{animation:fade 500ms var(--ease) forwards;animation-delay:calc(var(--d-letters) + 900ms)}
+.stats{display:flex;gap:56px}
+.stats b{display:block;font:400 28px/1 var(--display);letter-spacing:-.02em}
+.stats span{display:block;font-size:13px;color:var(--ink-2);margin-top:8px}
+.btn{font:500 14px/1 var(--sans);color:var(--bg);background:var(--ink);border:0;padding:16px 22px;cursor:pointer;display:inline-flex;gap:10px;align-items:center}
+.btn:hover{background:var(--red)}
+.btn svg{width:16px;height:16px}
+/* intro */
+.intro{position:fixed;inset:0;z-index:10;pointer-events:none}
+.panel{position:absolute;left:0;right:0;height:50%;background:var(--panel)}
+.panel.t{top:0}.panel.b{bottom:0}
+.play .panel.t{animation:up var(--t-split) var(--ease-out) forwards var(--d-split)}
+.play .panel.b{animation:down var(--t-split) var(--ease-out) forwards var(--d-split)}
+.mark{position:absolute;left:50%;top:50%;width:140px;height:140px;margin:-70px 0 0 -70px;color:var(--mark)}
+.mark path{fill:var(--red);fill-opacity:0;stroke:currentColor;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:640;stroke-dashoffset:640}
+.play .mark path{animation:draw var(--t-draw) var(--ease-draw) forwards,fill var(--t-fill) var(--ease) forwards var(--t-draw)}
+.play .mark{animation:markout 300ms var(--ease) forwards var(--d-split)}
+.replay{position:fixed;right:20px;bottom:20px;z-index:20;font:500 12px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;background:var(--bg);color:var(--ink);border:1px solid var(--ink);padding:10px 14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.replay:hover{background:var(--ink);color:var(--bg)}
+.replay svg{width:14px;height:14px}
+:where(a,button):focus-visible{outline:2px solid var(--red);outline-offset:3px}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fill{to{fill-opacity:1}}
+@keyframes markout{to{opacity:0;transform:scale(.9)}}
+@keyframes up{to{transform:translateY(-100%)}}
+@keyframes down{to{transform:translateY(100%)}}
+@keyframes rise{to{transform:translateY(0);opacity:1}}
+@keyframes fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .play .panel.t,.play .panel.b{animation-duration:1ms;animation-delay:400ms}
+  .play .mark path{animation-duration:1ms,1ms;animation-delay:0ms,1ms}
+  .play .mark{animation-duration:1ms;animation-delay:400ms}
+  .play h1 .c{animation:none;transform:none;opacity:1}
+  .play .row{animation:none;opacity:1}
+}
+@media (max-width:1100px){h1{font-size:96px}}
+</style>
+</head>
+<body class="play">
+<div class="page">
+  <header>
+    <div class="wordmark"><i></i>Nord Post</div>
+    <nav aria-label="Primary"><a href="#">Send</a><a href="#">Track</a><a href="#">Business</a><a href="#">Depots</a></nav>
+  </header>
+  <main>
+    <p class="eyebrow">Same-day courier · Oslo, Bergen, Trondheim</p>
+    <h1 id="hl">Delivered before the coffee cools</h1>
+    <div class="row">
+      <div class="stats">
+        <div><b>94 min</b><span>median door to door</span></div>
+        <div><b>3,120</b><span>parcels moved yesterday</span></div>
+        <div><b>NOK 79</b><span>flat rate under 5 kg</span></div>
+      </div>
+      <button class="btn" type="button">Book a pickup<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </main>
+</div>
+<div class="intro" aria-hidden="true">
+  <div class="panel t"></div>
+  <div class="panel b"></div>
+  <svg class="mark" viewBox="0 0 100 100"><path d="M18 82V18l32 40V18M62 82V18h14a20 20 0 0 1 0 40H62"/></svg>
+</div>
+<button class="replay" type="button" id="replay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>Replay intro</button>
+<script>
+(function(){
+  var h=document.getElementById('hl'),btn=document.getElementById('replay'),body=document.body;
+  var text=h.textContent,i=0;h.textContent='';h.setAttribute('aria-label',text);
+  text.split(' ').forEach(function(word,wi){
+    var w=document.createElement('span');w.className='w';w.setAttribute('aria-hidden','true');
+    word.split('').forEach(function(ch){var c=document.createElement('span');c.className='c';c.textContent=ch;c.style.setProperty('--i',i++);w.appendChild(c);});
+    h.appendChild(w);if(wi<4)h.appendChild(document.createTextNode(' '));
+  });
+  function replay(){
+    body.classList.remove('play');
+    void body.offsetWidth;
+    body.classList.add('play');
+  }
+  btn.addEventListener('click',replay);
+  document.querySelector('.page').addEventListener('click',function(e){if(e.target.closest('a,button'))return;replay();});
+})();
+</script>
+</body>
+</html>

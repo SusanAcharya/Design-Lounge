@@ -1,0 +1,109 @@
+<!-- Design Lounge piece: skeleton-to-content-swap · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Skeleton to content swap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f5f7;--card:#ffffff;--line:#e2e6ea;--bone:#e9edf0;--bone-hi:#f6f8fa;
+  --ink:#151a20;--ink-2:#5b6570;--ink-3:#8a939c;--accent:#0f766e;--accent-ink:#ffffff;
+  --serif:"DM Serif Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif;
+  --avatar:40px;--lh-meta:18px;--lh-title:26px;--lh-body:20px;--r:12px;--r-s:6px;
+  --t-out:160ms;--t-in:360ms;--t-shimmer:1.6s;--stagger:40ms;--ease-out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans);overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header{height:64px;flex:none;display:flex;align-items:center;gap:20px;padding:0 32px;border-bottom:1px solid var(--line);background:var(--card)}
+header h1{font:400 22px/1 var(--serif);margin:0;letter-spacing:-.01em}
+header .tabs{display:flex;gap:4px;margin-left:12px}
+header .tabs a{padding:6px 10px;border-radius:999px;color:var(--ink-2);text-decoration:none;font-weight:500;font-size:13px}
+header .tabs a[aria-current]{background:var(--bg);color:var(--ink)}
+header .tabs a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.status{margin-left:auto;font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:8px;min-width:150px;justify-content:flex-end}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--ink-3);display:inline-block;transition:background var(--t-out)}
+.status.done i{background:var(--accent)}
+.reload{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 13px var(--sans);cursor:pointer}
+.reload:hover{border-color:var(--ink-3)}
+.reload:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.reload:disabled{color:var(--ink-3);cursor:default}
+.reload svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform 600ms var(--ease)}
+.reload:active svg{transform:rotate(180deg)}
+.feed{flex:1;padding:24px 32px;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:min-content;gap:16px;align-content:start}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.top{display:flex;align-items:center;gap:12px;height:var(--avatar);margin-bottom:16px}
+.av{width:var(--avatar);height:var(--avatar);border-radius:50%;flex:none;display:grid;place-items:center;font:600 13px var(--sans);color:#fff}
+.who{display:flex;flex-direction:column;justify-content:center;gap:2px}
+.who b{font-weight:600;line-height:var(--lh-meta);height:var(--lh-meta);font-size:14px}
+.who span{line-height:var(--lh-meta);height:var(--lh-meta);font-size:12px;color:var(--ink-3)}
+.card h2{font:400 21px/var(--lh-title) var(--serif);margin:0 0 10px;height:calc(var(--lh-title)*2);overflow:hidden;letter-spacing:-.01em}
+.card p{margin:0 0 18px;color:var(--ink-2);line-height:var(--lh-body);height:calc(var(--lh-body)*3);overflow:hidden}
+.foot{display:flex;gap:8px;align-items:center}
+.foot a{height:30px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border-radius:var(--r-s);font-size:12px;font-weight:500;color:var(--ink-2);text-decoration:none;border:1px solid var(--line)}
+.foot a:hover{color:var(--ink);border-color:var(--ink-3)}
+.foot a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.foot a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.foot .t{margin-left:auto;font-size:12px;color:var(--ink-3)}
+/* skeleton layer: same geometry, same padding, drawn on top */
+.sk{position:absolute;inset:0;padding:20px;display:flex;flex-direction:column;border-radius:var(--r);background:var(--card);transition:opacity var(--t-out) var(--ease);z-index:1}
+.b{background:var(--bone);border-radius:4px;position:relative;overflow:hidden}
+.b::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0,var(--bone-hi) 50%,transparent 100%);transform:translateX(-100%);animation:shimmer var(--t-shimmer) linear infinite}
+.sk .top .b{width:var(--avatar);height:var(--avatar);border-radius:50%}
+.sk .who .b{height:12px;margin:3px 0}
+.sk .who .b:first-child{width:118px}.sk .who .b:last-child{width:84px}
+.sk .h{height:16px;margin:5px 0}
+.sk .h + .h{width:62%;margin-bottom:15px}
+.sk .l{height:12px;margin:4px 0}
+.sk .l:nth-child(2){width:92%}.sk .l:nth-child(3){width:74%;margin-bottom:22px}
+.sk .foot .b{width:78px;height:30px;border-radius:var(--r-s)}
+.sk .foot .b + .b{width:64px}
+.sk .foot .b:last-child{width:40px;height:12px;margin-left:auto;border-radius:4px}
+.ct{opacity:0;transform:translateY(10px);transition:opacity var(--t-in) var(--ease-out),transform var(--t-in) var(--ease-out)}
+.card.on .sk{opacity:0;pointer-events:none;transition-delay:calc(var(--i)*var(--stagger))}
+.card.on .ct{opacity:1;transform:none;transition-delay:calc(var(--i)*var(--stagger) + 80ms)}
+@keyframes shimmer{to{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){.b::after{animation:none}.ct{transform:none;transition-duration:1ms}.sk{transition-duration:1ms}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Nord Post</h1>
+  <nav class="tabs" aria-label="Feed"><a href="#" aria-current="page">Latest</a><a href="#">Engineering</a><a href="#">Product</a><a href="#">Ops</a></nav>
+  <span class="status" id="status" aria-live="polite"><i></i><span id="stxt">Loading feed…</span></span>
+  <button class="reload" id="reload" type="button"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg>Reload</button>
+</header>
+<main class="feed" id="feed" aria-busy="true"></main>
+<script>
+  const posts=[
+    ['IV','#0f766e','Ines Varga','Product · 2h','Why we moved billing off cron and onto a queue','Cron gave us one retry a night. The queue gives us 14, with backoff, and a dashboard that says which invoice is stuck instead of a log line.','9 replies','Save','3 min'],
+    ['TL','#3b5b8c','Tomas Leary','Engineering · 4h','Partitioning the events table at 410 M rows','We split by month, kept the last 90 days hot and let the rest age onto cheaper disks. p95 on the feed query went from 640 ms to 71 ms.','23 replies','Save','6 min'],
+    ['AK','#8c5a3b','Anya Kessler','Ops · 5h','What the on-call handover looks like now','A single page: three open incidents, the one flaky check we agreed to ignore until Thursday, and the phone number of whoever knows the payment gateway.','4 replies','Save','2 min'],
+    ['RM','#5b3b8c','Rafael Moreno','Product · 7h','Removing the pricing page FAQ cut support tickets 18 %','Turns out the FAQ answered questions nobody asked and hid the one they did. We put the seat price in the headline and the tickets went away.','31 replies','Save','4 min'],
+    ['HB','#3b8c6b','Hanna Berg','Engineering · 9h','A 40 ms stagger is the difference between loading and arriving','Cards that appear together feel dumped. Cards that appear 40 ms apart feel delivered. This post is the numbers behind that claim.','12 replies','Save','5 min'],
+    ['JO','#8c3b4d','Jonas Ohlin','Ops · 12h','Rotating 1,200 API keys in one afternoon','We announced a deadline, shipped a one-click rotate button, and watched the graph. 1,140 keys rotated themselves; we phoned the other 60.','7 replies','Save','3 min'],
+  ];
+  const feed=document.getElementById('feed'),btn=document.getElementById('reload'),status=document.getElementById('status'),stxt=document.getElementById('stxt');
+  const icon='<svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-12 7l-5 1 1-4.5A8 8 0 1 1 21 12z"/></svg>';
+  const save='<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>';
+  feed.innerHTML=posts.map((p,i)=>`<article class="card" style="--i:${i}">
+    <div class="sk" aria-hidden="true"><div class="top"><div class="b"></div><div class="who"><div class="b"></div><div class="b"></div></div></div><div class="b h"></div><div class="b h"></div><div class="b l"></div><div class="b l"></div><div class="b l"></div><div class="foot"><div class="b"></div><div class="b"></div><div class="b"></div></div></div>
+    <div class="ct"><div class="top"><div class="av" style="background:${p[1]}">${p[0]}</div><div class="who"><b>${p[2]}</b><span>${p[3]}</span></div></div><h2>${p[4]}</h2><p>${p[5]}</p><div class="foot"><a href="#">${icon}${p[6]}</a><a href="#">${save}${p[7]}</a><span class="t">${p[8]} read</span></div></div>
+  </article>`).join('');
+  const cards=[...feed.children];let t1,t2;
+  function load(){
+    clearTimeout(t1);clearTimeout(t2);btn.disabled=true;status.classList.remove('done');stxt.textContent='Loading feed…';feed.setAttribute('aria-busy','true');
+    cards.forEach(c=>c.classList.remove('on'));
+    const started=performance.now();
+    t1=setTimeout(()=>{cards.forEach(c=>c.classList.add('on'));feed.setAttribute('aria-busy','false');
+      t2=setTimeout(()=>{status.classList.add('done');stxt.textContent=`6 posts · ${((performance.now()-started)/1000).toFixed(1)} s`;btn.disabled=false;},cards.length*40+360);
+    },1400);
+  }
+  btn.addEventListener('click',load);
+  load();
+</script>
+</body>
+</html>

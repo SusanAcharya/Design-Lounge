@@ -1,0 +1,101 @@
+<!-- Design Lounge piece: m3-fab-menu · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tessel — FAB menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface:#101413;--surface-low:#181c1b;--surface-c:#1c2120;--surface-high:#262b2a;--surface-highest:#313635;
+  --on-surface:#e0e3e1;--on-surface-v:#a9b4b0;--outline:#6f7a77;
+  --primary:#7fd8c6;--on-primary:#003730;--primary-c:#00504a;--on-primary-c:#9ff3e1;
+  --tertiary-c:#4b3f5c;--on-tertiary-c:#e8dcff;
+  --scrim:rgba(6,20,18,.66);
+  --font:"Manrope",system-ui,sans-serif;
+  --fab:56px;--r-fab:16px;--r-card:20px;--r-pill:999px;
+  --shadow-3:0 8px 20px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.3);
+  --t-micro:160ms;--t-big:500ms;--t-exit:220ms;--ease-emph:cubic-bezier(.2,0,0,1);--ease-exit:cubic-bezier(.3,0,.8,.15);--stagger:40ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--font);background:var(--surface);color:var(--on-surface);-webkit-font-smoothing:antialiased;position:relative;overflow:hidden}
+svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.top{padding:54px 20px 0;display:flex;align-items:flex-end;justify-content:space-between;height:120px}
+.top h1{margin:0;font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.top span{font-size:13px;color:var(--on-surface-v);font-weight:500}
+.top button{width:44px;height:44px;border:0;border-radius:50%;background:var(--surface-high);color:var(--on-surface);display:grid;place-items:center;cursor:pointer}
+.chips{display:flex;gap:8px;padding:18px 20px 6px}
+.chips span{height:32px;padding:0 14px;border-radius:8px;border:1px solid var(--outline);display:flex;align-items:center;font-size:13px;font-weight:600;color:var(--on-surface-v)}
+.chips span.on{background:var(--primary-c);color:var(--on-primary-c);border-color:transparent}
+main{padding:8px 16px 120px;display:flex;flex-direction:column;gap:10px;height:calc(100% - 176px);overflow:auto;scrollbar-width:none}
+.note{background:var(--surface-c);border-radius:var(--r-card);padding:16px 18px;transition:transform var(--t-big) var(--ease-emph),opacity var(--t-big) var(--ease-emph)}
+.note.new{animation:drop var(--t-big) var(--ease-emph)}
+@keyframes drop{from{opacity:0;transform:translateY(-12px) scale(.98)}}
+.note h2{margin:0 0 4px;font-size:16px;font-weight:700;letter-spacing:-.01em}
+.note p{margin:0;font-size:14px;color:var(--on-surface-v);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.note time{display:block;margin-top:10px;font-size:12px;font-weight:600;color:var(--outline)}
+.note.pin{background:var(--tertiary-c);color:var(--on-tertiary-c)}.note.pin p{color:inherit;opacity:.8}.note.pin time{color:inherit;opacity:.6}
+.scrim{position:absolute;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity var(--t-exit) var(--ease-exit);border:0;padding:0;width:100%}
+.open .scrim{opacity:1;pointer-events:auto;transition:opacity var(--t-big) var(--ease-emph)}
+.fabwrap{position:absolute;right:16px;bottom:50px;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.menu{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.menu button{display:flex;align-items:center;gap:12px;height:56px;padding:0 20px;border:0;border-radius:var(--r-pill);background:var(--primary-c);color:var(--on-primary-c);font:600 15px var(--font);cursor:pointer;opacity:0;transform:translateY(20px) scale(.9);transform-origin:right bottom;pointer-events:none;transition:opacity var(--t-exit) var(--ease-exit),transform var(--t-exit) var(--ease-exit)}
+.open .menu button{opacity:1;transform:none;pointer-events:auto;transition:opacity 350ms var(--ease-emph),transform var(--t-big) var(--ease-emph)}
+.open .menu li:nth-child(3) button{transition-delay:0ms}.open .menu li:nth-child(2) button{transition-delay:var(--stagger)}.open .menu li:nth-child(1) button{transition-delay:calc(var(--stagger)*2)}
+.menu li:nth-child(1) button{transition-delay:0ms}.menu li:nth-child(2) button{transition-delay:var(--stagger)}.menu li:nth-child(3) button{transition-delay:calc(var(--stagger)*2)}
+.menu button:hover{background:#0a5f58}
+.fab{width:var(--fab);height:var(--fab);border:0;border-radius:var(--r-fab);background:var(--primary);color:var(--on-primary);display:grid;place-items:center;box-shadow:var(--shadow-3);cursor:pointer;transition:border-radius var(--t-big) var(--ease-emph),background var(--t-micro),transform var(--t-micro) var(--ease-emph)}
+.fab svg{transition:transform var(--t-big) var(--ease-emph)}
+.fab:active{transform:scale(.94)}
+.open .fab{border-radius:50%;background:var(--surface-highest);color:var(--on-surface)}
+.open .fab svg{transform:rotate(45deg)}
+.fab:focus-visible,.menu button:focus-visible,.top button:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.hint{position:absolute;left:16px;bottom:62px;height:32px;padding:0 12px;border-radius:999px;background:var(--surface-high);color:var(--on-surface-v);font-size:12px;font-weight:600;display:flex;align-items:center;transition:opacity var(--t-micro)}
+.open .hint{opacity:0}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;transition-delay:0ms!important;animation-duration:1ms!important}}
+</style>
+</head>
+<body class="open">
+<header class="top"><div><span>All notes · 27</span><h1>Notes</h1></div><button aria-label="Search notes"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg></button></header>
+<div class="chips" aria-hidden="true"><span class="on">Recent</span><span>Pinned</span><span>Shared</span><span>Archive</span></div>
+<main id="list" aria-live="polite">
+  <article class="note pin"><h2>Kitchen renovation budget</h2><p>Tiles from Halden Ceramics: 1,240 SEK per m². Ask Teo about the sink delivery window before Friday.</p><time>Pinned · edited 08:41</time></article>
+  <article class="note"><h2>Standup, 29 Sep</h2><p>Bea shipped the offline sync fix. I own the release notes for 2.4.1 and the migration warning copy.</p><time>Today, 09:20</time></article>
+  <article class="note"><h2>Reading list</h2><p>The Peregrine (Baker). Ways of Seeing. That essay on tonal palettes Mara sent — find the link.</p><time>Yesterday</time></article>
+  <article class="note"><h2>Voice memo · 0:42</h2><p>Transcript: remember the rail card needs a badge state, and check the drawer's scrim opacity against the spec.</p><time>Sunday</time></article>
+  <article class="note"><h2>Grocery</h2><p>Oat milk, cardamom, 2 kg flour, batteries for the smoke alarm, coffee filters.</p><time>Saturday</time></article>
+</main>
+<button class="scrim" id="scrim" tabindex="-1" aria-label="Close menu"></button>
+<p class="hint" aria-hidden="true">Tap + or press N</p>
+<div class="fabwrap" id="wrap">
+  <ul class="menu" id="menu" role="menu" aria-label="Create">
+    <li role="none"><button role="menuitem" data-kind="Scanned page"><svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3M4 12h16"/></svg>Scan page</button></li>
+    <li role="none"><button role="menuitem" data-kind="Voice memo"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg>Voice memo</button></li>
+    <li role="none"><button role="menuitem" data-kind="Untitled note"><svg viewBox="0 0 24 24"><path d="M5 20h14M14 4l4 4-9 9H5v-4z"/></svg>New note</button></li>
+  </ul>
+  <button class="fab" id="fab" aria-haspopup="menu" aria-expanded="true" aria-controls="menu" aria-label="Create"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+</div>
+<script>
+  const body=document.body,fab=document.getElementById('fab'),menu=document.getElementById('menu'),list=document.getElementById('list');
+  const items=[...menu.querySelectorAll('button')];
+  function setOpen(o){body.classList.toggle('open',o);fab.setAttribute('aria-expanded',String(o));if(o)items[items.length-1].focus();else fab.focus();}
+  fab.addEventListener('click',()=>setOpen(!body.classList.contains('open')));
+  document.getElementById('scrim').addEventListener('click',()=>setOpen(false));
+  addEventListener('keydown',e=>{
+    const open=body.classList.contains('open');
+    if(e.key==='Escape'&&open){e.preventDefault();setOpen(false);}
+    if((e.key==='n'||e.key==='N')&&!open){e.preventDefault();setOpen(true);}
+    if(open&&(e.key==='ArrowUp'||e.key==='ArrowDown')){e.preventDefault();const i=items.indexOf(document.activeElement);const n=e.key==='ArrowUp'?(i<=0?items.length-1:i-1):(i>=items.length-1?0:i+1);items[n].focus();}
+  });
+  menu.addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    const a=document.createElement('article');a.className='note new';
+    a.innerHTML='<h2></h2><p>Created from the FAB menu. Start typing to replace this line.</p><time>Just now</time>';
+    a.querySelector('h2').textContent=b.dataset.kind;list.prepend(a);setOpen(false);
+  });
+</script>
+</body>
+</html>

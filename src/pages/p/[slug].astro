@@ -1,0 +1,236 @@
+---
+import { render } from 'astro:content';
+import { existsSync } from 'node:fs';
+import { Code } from 'astro:components';
+import Base from '../../layouts/Base.astro';
+import DeviceFrame from '../../components/DeviceFrame.astro';
+import PieceCard from '../../components/PieceCard.astro';
+import { COLLECTIONS } from '../../data/collections';
+import { getPieces, numberMap, demoSource, demoUrl, briefUrl, PLATFORM_META, TYPE_META, STYLE_META, MOTION_LABEL, DIFFICULTY_LABEL, bytes } from '../../lib/pieces';
+
+export async function getStaticPaths() {
+  const pieces = await getPieces();
+  return pieces.map((p, i) => ({ params: { slug: p.id }, props: { piece: p, prev: pieces[(i - 1 + pieces.length) % pieces.length], next: pieces[(i + 1) % pieces.length] } }));
+}
+const { piece, prev, next } = Astro.props;
+const all = await getPieces();
+const nums = numberMap(all);
+const n = nums.get(piece.id)!;
+const d = piece.data;
+const { Content } = await render(piece);
+const source = demoSource(piece.id);
+const brief = piece.body ?? '';
+const size = new TextEncoder().encode(source).length;
+const pm = PLATFORM_META[d.platform];
+const lines = source.split('\n').length;
+const briefLines = brief.split('\n').length;
+const inCollections = COLLECTIONS.filter((c) => c.pieces.includes(piece.id));
+const related = (() => {
+  const explicit = d.related.map((s) => all.find((p) => p.id === s)).filter(Boolean);
+  const scored = all.filter((p) => p.id !== piece.id && !explicit.includes(p)).map((p) => {
+    let s = 0;
+    if (p.data.type === d.type) s += 3;
+    if (p.data.platform === d.platform) s += 2;
+    s += p.data.styles.filter((x) => (d.styles as string[]).includes(x)).length * 2;
+    s += p.data.tags.filter((x) => d.tags.includes(x)).length * 2;
+    return { p, s };
+  }).sort((a, b) => b.s - a.s).map((x) => x.p);
+  return [...explicit, ...scored].slice(0, 3);
+})();
+const og = existsSync(new URL(`../../../public/og/${piece.id}.jpg`, import.meta.url)) ? new URL(`/og/${piece.id}.jpg`, Astro.site).toString() : undefined;
+const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
+const agentLine = `Build this exactly as specified in the brief below. Stack: <your stack>. Don't improvise on numbers.`;
+---
+<Base title={d.title} description={d.summary} ogImage={og}>
+  <article class="piece wrap">
+    <header class="phead">
+      <nav class="crumbs mono" aria-label="Breadcrumb">
+        <a href="/browse">Floor</a><span>/</span><a href={`/rooms/${d.type}`}>{TYPE_META[d.type].label}</a><span>/</span><a href={`/platforms/${d.platform}`}>{pm.label}</a>
+      </nav>
+      <div class="pnav">
+        <span class="mono faint num">Nº {n} of {String(all.length).padStart(3, '0')}</span>
+        <a class="pn-link" href={`/p/${prev.id}`} data-prev title={prev.data.title} aria-label={`Previous: ${prev.data.title}`}><kbd>[</kbd> prev</a>
+        <a class="pn-link" href={`/p/${next.id}`} data-next title={next.data.title} aria-label={`Next: ${next.data.title}`}>next <kbd>]</kbd></a>
+      </div>
+      <h1 class="display h2 reveal">{d.title}</h1>
+      <p class="lede reveal" style="--d:60ms">{d.summary}</p>
+      <div class="facts reveal" style="--d:120ms">
+        <a class="chip" href={`/platforms/${d.platform}`}><span class="dot"></span>{pm.label}</a>
+        <a class="chip" href={`/rooms/${d.type}`}>{TYPE_META[d.type].singular}</a>
+        {d.styles.map((s) => <a class="chip" href={`/styles/${s}`}>{STYLE_META[s].label}</a>)}
+      </div>
+    </header>
+
+    <section class="stage-wrap reveal" style="--d:160ms" aria-label="Live demo">
+      <div class="stage-bar">
+        <div class="l">
+          <button class="btn sm ghost" type="button" data-replay><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg><span data-label>Replay</span></button>
+          <a class="btn sm ghost" href={demoUrl(piece.id)} target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Open full size</span></a>
+          <button class="btn sm ghost" type="button" data-stage-tall aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Taller stage</span></button>
+        </div>
+        <div class="r mono faint num">{pm.w} × {pm.h} · {bytes(size)} · {lines} lines</div>
+      </div>
+      <div class="stage" data-stage>
+        <DeviceFrame slug={piece.id} platform={d.platform} title={d.title} interactive eager />
+      </div>
+      <p class="hint mono faint">Live demo: click into it, tab through it. <kbd>c</kbd> copies the brief · <kbd>?</kbd> all keys</p>
+    </section>
+
+    <div class="body">
+      <div class="main">
+        <div class="tabs" role="tablist" aria-label="Piece contents">
+          <button role="tab" aria-selected="true" aria-controls="tab-brief" id="t-brief" data-tab="brief">Brief <span class="mono faint">{briefLines} lines</span></button>
+          <button role="tab" aria-selected="false" aria-controls="tab-source" id="t-source" data-tab="source">Source <span class="mono faint">{bytes(size)}</span></button>
+        </div>
+
+        <div id="tab-brief" role="tabpanel" aria-labelledby="t-brief" data-panel="brief">
+          <div class="toolbar">
+            <button class="btn primary" type="button" data-copy="#brief-src" data-copy-brief data-done-label="Copied to clipboard"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg><span data-label>Copy brief for your agent</span></button>
+            <a class="btn" href={briefUrl(piece.id)} download={`${piece.id}.md`}>Download .md</a>
+            <a class="btn ghost" href={briefUrl(piece.id)} target="_blank" rel="noopener">Raw</a>
+          </div>
+          <div class="prose brief"><Content /></div>
+        </div>
+
+        <div id="tab-source" role="tabpanel" aria-labelledby="t-source" data-panel="source" hidden>
+          <div class="toolbar">
+            <button class="btn primary" type="button" data-copy="#source-src" data-done-label="Copied source"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg><span data-label>Copy source</span></button>
+            <a class="btn" href={demoUrl(piece.id)} download={`${piece.id}.html`}>Download .html</a>
+            <span class="mono faint">One self-contained file. No build step, no dependencies beyond Google Fonts.</span>
+          </div>
+          <div class="source"><Code code={source} lang="html" themes={{ light: 'github-light', dark: 'github-dark-dimmed' }} defaultColor={false} /></div>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="box">
+          <p class="eyebrow">Use it with an agent</p>
+          <ol class="steps">
+            <li>Copy the brief.</li>
+            <li>Paste it into Claude Code, Cursor, Codex, or whichever agent you use, with one line on top:</li>
+          </ol>
+          <div class="agentline"><code>{agentLine}</code><button class="btn sm ghost" type="button" data-copy="#agent-line" data-done-label="Copied"><span data-label>Copy line</span></button></div>
+          <ol class="steps" start="3">
+            <li>Check the result against the acceptance checklist at the end of the brief.</li>
+          </ol>
+          <a class="more mono" href="/guide">Full guide →</a>
+        </div>
+
+        <div class="box details">
+          <p class="eyebrow">Details</p>
+          <dl>
+            <div><dt>Palette</dt><dd class="swl">{d.palette.map((c) => <button type="button" class="sw" data-copy-hex={c} title={`Copy ${c}`}><i style={`background:${c}`}></i><span class="mono">{c}</span></button>)}</dd></div>
+            <div><dt>Type</dt><dd>{d.fonts.join(' · ')}</dd></div>
+            <div><dt>Motion</dt><dd>{MOTION_LABEL[d.motion]}</dd></div>
+            <div><dt>Build</dt><dd>{DIFFICULTY_LABEL[d.difficulty as 1 | 2 | 3]}</dd></div>
+            <div><dt>Tags</dt><dd class="tags">{d.tags.map((t) => <a href={`/browse?q=${encodeURIComponent(t)}`}>{t}</a>)}</dd></div>
+          </dl>
+        </div>
+
+        {inCollections.length > 0 && (
+          <div class="box">
+            <p class="eyebrow">On the shelves</p>
+            <ul class="shelf-list">{inCollections.map((c) => <li><a href={`/collections/${c.slug}`}><span class="mono faint">{c.kicker}</span> {c.title}</a></li>)}</ul>
+          </div>
+        )}
+      </aside>
+    </div>
+
+    <section class="related">
+      <div class="section-head">
+        <div><span class="eyebrow">Nearby</span><h2 class="display h3">Related pieces</h2></div>
+        <a class="more" href={`/rooms/${d.type}`}>All {TYPE_META[d.type].label.toLowerCase()} →</a>
+      </div>
+      <div class="grid">
+        {related.map((p, i) => <PieceCard piece={p!} n={nums.get(p!.id) || '000'} index={i} />)}
+      </div>
+    </section>
+
+    <nav class="pn-big" aria-label="Previous and next piece">
+      <a href={`/p/${prev.id}`}><span class="eyebrow">← Nº {nums.get(prev.id)}</span><span class="display h4">{prev.data.title}</span></a>
+      <a href={`/p/${next.id}`} class="r"><span class="eyebrow">Nº {nums.get(next.id)} →</span><span class="display h4">{next.data.title}</span></a>
+    </nav>
+  </article>
+
+  <script type="application/json" id="brief-src" set:html={json(brief)}></script>
+  <script type="application/json" id="source-src" set:html={json(source)}></script>
+  <script type="application/json" id="agent-line" set:html={json(agentLine)}></script>
+
+  <script>
+    // tabs
+    const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-tab]')];
+    const panels = [...document.querySelectorAll<HTMLElement>('[data-panel]')];
+    function show(name: string) {
+      tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === name)));
+      panels.forEach((p) => (p.hidden = p.dataset.panel !== name));
+      history.replaceState(null, '', name === 'brief' ? location.pathname : '#source');
+    }
+    tabs.forEach((t) => t.addEventListener('click', () => show(t.dataset.tab!)));
+    if (location.hash === '#source') show('source');
+    // stage controls
+    const frame = document.querySelector('[data-stage] lounge-frame') as HTMLElement & { reload?: () => void };
+    document.querySelector('[data-replay]')?.addEventListener('click', () => frame?.reload?.());
+    const tall = document.querySelector<HTMLButtonElement>('[data-stage-tall]');
+    tall?.addEventListener('click', () => { const on = tall.getAttribute('aria-pressed') !== 'true'; tall.setAttribute('aria-pressed', String(on)); document.querySelector('[data-stage]')?.classList.toggle('tall', on); });
+    // hex copy
+    document.querySelectorAll<HTMLButtonElement>('[data-copy-hex]').forEach((b) => b.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(b.dataset.copyHex!); } catch {}
+      b.classList.add('done'); setTimeout(() => b.classList.remove('done'), 1200);
+    }));
+  </script>
+</Base>
+
+<style>
+  .piece { padding-top: 28px; }
+  .phead { display: flex; flex-direction: column; gap: 14px; position: relative; padding-bottom: 28px; }
+  .crumbs { display: flex; gap: 10px; color: var(--ink-3); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  .crumbs a:hover { color: var(--ink); }
+  .pnav { position: absolute; right: 0; top: 0; display: flex; align-items: center; gap: 14px; }
+  .pn-link { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); display: inline-flex; gap: 6px; align-items: center; }
+  .pn-link:hover { color: var(--ink); }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .stage-wrap { display: flex; flex-direction: column; gap: 10px; }
+  .stage-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .stage-bar .l { display: flex; gap: 8px; flex-wrap: wrap; }
+  .stage { height: min(72vh, 820px); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2); background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 16px 16px; background-position: center; position: relative; transition: height var(--t-slow) var(--ease); }
+  .stage.tall { height: max(90vh, 900px); }
+  .stage :global(lounge-frame) { position: absolute; inset: 24px; }
+  .hint { font-size: 11px; }
+  .body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 48px; margin-top: 56px; align-items: start; }
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--ink); }
+  .tabs button { padding: 12px 18px 12px 0; margin-right: 18px; font-family: var(--display); font-size: 22px; letter-spacing: -0.015em; color: var(--ink-3); border-bottom: 2px solid transparent; margin-bottom: -1px; display: inline-flex; gap: 10px; align-items: baseline; font-variation-settings: "opsz" 24; }
+  .tabs button[aria-selected="true"] { color: var(--ink); border-color: var(--ink); }
+  .tabs button span { font-size: 11px; }
+  .toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 20px 0; position: sticky; top: var(--header-h); z-index: 5; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+  .brief :global(h1) { font-size: 30px; }
+  .source :global(pre) { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px 20px; font-size: 12.5px; line-height: 1.55; overflow: auto; max-height: 80vh; background: var(--paper-2) !important; }
+  .side { position: sticky; top: calc(var(--header-h) + 20px); display: flex; flex-direction: column; gap: 16px; }
+  .box { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px; background: var(--paper); }
+  .box .eyebrow { margin-bottom: 10px; }
+  .steps { list-style: decimal; padding-left: 18px; font-size: 14px; color: var(--ink-2); display: flex; flex-direction: column; gap: 6px; }
+  .agentline { margin: 12px 0; padding: 10px 12px; border: 1px dashed var(--line-2); border-radius: var(--r); display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .agentline code { font-size: 12px; line-height: 1.5; color: var(--ink); white-space: pre-wrap; }
+  .box .more { display: inline-block; margin-top: 12px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  .details dl { margin: 0; display: flex; flex-direction: column; }
+  .details dl div { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 13.5px; align-items: start; }
+  .details dt { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
+  .details dd { margin: 0; color: var(--ink-2); }
+  .swl { display: flex; flex-wrap: wrap; gap: 4px; }
+  .sw { display: inline-flex; align-items: center; gap: 6px; padding: 2px 6px 2px 2px; border-radius: 6px; }
+  .sw:hover { background: var(--paper-2); }
+  .sw i { width: 18px; height: 18px; border-radius: 5px; border: 1px solid rgba(0,0,0,.15); flex: none; }
+  .sw span { font-size: 11px; }
+  .sw.done span::after { content: " ✓"; color: var(--accent); }
+  .tags { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+  .tags a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+  .tags a:hover { color: var(--ink); text-decoration-color: var(--ink); }
+  .shelf-list li { padding: 5px 0; font-size: 14px; }
+  .shelf-list a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .related { margin-top: 80px; }
+  .pn-big { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 64px; border-top: 1px solid var(--ink); padding-top: 24px; }
+  .pn-big a { display: flex; flex-direction: column; gap: 8px; }
+  .pn-big a.r { text-align: right; align-items: flex-end; }
+  .pn-big a:hover .h4 { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+  @media (max-width: 1024px) { .body { grid-template-columns: 1fr; } .side { position: static; } }
+  @media (max-width: 640px) { .pnav { position: static; } .stage { height: 62vh; } .stage :global(lounge-frame) { inset: 12px; } .tabs button { font-size: 18px; } }
+</style>

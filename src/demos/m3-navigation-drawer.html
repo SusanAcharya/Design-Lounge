@@ -1,0 +1,132 @@
+<!-- Design Lounge piece: m3-navigation-drawer · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nord Post — navigation drawer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface:#fbf8ff;--surface-low:#f4f1fb;--surface-c:#ede9f6;--surface-high:#e7e3f0;--surface-highest:#e1ddea;
+  --on-surface:#1b1b22;--on-surface-v:#484556;--outline:#787487;--outline-v:#c8c4d5;
+  --primary:#4a4ab8;--on-primary:#fff;--secondary-c:#dfe1ff;--on-secondary-c:#121a5c;
+  --tertiary:#7a4f7d;--tertiary-c:#fed6ff;
+  --scrim:rgba(27,27,34,.4);
+  --font:"Roboto Flex",system-ui,sans-serif;
+  --drawer-w:360px;--r-drawer:0 16px 16px 0;--r-item:999px;--item-h:56px;
+  --shadow-1:0 1px 3px rgba(27,27,34,.12),0 6px 24px rgba(27,27,34,.10);
+  --t-micro:160ms;--t-open:400ms;--t-close:250ms;--ease-emph:cubic-bezier(.2,0,0,1);--ease-exit:cubic-bezier(.3,0,.8,.15);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--font);background:var(--surface);color:var(--on-surface);-webkit-font-smoothing:antialiased;position:relative;overflow:hidden}
+svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.appbar{padding:54px 8px 0;height:118px;display:flex;align-items:center;gap:4px;background:var(--surface-low)}
+.appbar h1{margin:0;flex:1;font-size:22px;font-weight:500;letter-spacing:-.01em}
+.icon{width:48px;height:48px;border:0;border-radius:50%;background:transparent;color:var(--on-surface-v);display:grid;place-items:center;cursor:pointer;transition:background var(--t-micro)}
+.icon:hover{background:var(--surface-high)}
+.icon:focus-visible,.drawer a:focus-visible,.row:focus-visible{outline:3px solid var(--primary);outline-offset:-3px}
+main{padding:12px 16px 40px;height:calc(100% - 118px);overflow:auto;scrollbar-width:none}
+.eyebrow{margin:8px 4px 10px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--on-surface-v)}
+.rows{display:flex;flex-direction:column;gap:2px;background:var(--surface-low);border-radius:20px;padding:6px}
+.row{display:flex;align-items:center;gap:14px;padding:12px 12px;border-radius:14px;background:transparent;border:0;text-align:left;font:inherit;color:inherit;width:100%;cursor:pointer;min-height:64px}
+.row:hover{background:var(--surface-high)}
+.badge{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:11px;font-weight:700;letter-spacing:.04em;flex:none;background:var(--secondary-c);color:var(--on-secondary-c)}
+.badge.t{background:var(--tertiary-c);color:#3d1a42}
+.row b{display:block;font-weight:500;font-size:15px}
+.row span{font-size:13px;color:var(--on-surface-v)}
+.row time{margin-left:auto;font-size:12px;color:var(--outline);flex:none}
+.scrim{position:absolute;inset:0;background:var(--scrim);opacity:0;pointer-events:none;border:0;padding:0;width:100%;transition:opacity var(--t-close) var(--ease-exit)}
+.open .scrim{opacity:1;pointer-events:auto;transition:opacity var(--t-open) var(--ease-emph)}
+.drawer{position:absolute;top:0;bottom:0;left:0;width:var(--drawer-w);background:var(--surface-low);border-radius:var(--r-drawer);padding:54px 12px 34px;overflow-y:auto;transform:translateX(-100%);transition:transform var(--t-close) var(--ease-exit);box-shadow:none;scrollbar-width:none;visibility:hidden}
+.open .drawer{transform:none;transition:transform var(--t-open) var(--ease-emph);box-shadow:var(--shadow-1);visibility:visible}
+.head{display:flex;align-items:center;gap:12px;padding:16px 16px 12px}
+.mark{width:36px;height:36px;border-radius:10px;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+.head b{font-size:18px;font-weight:600;display:block;line-height:1.1}
+.head small{font-size:12px;color:var(--on-surface-v)}
+.head .icon{margin-left:auto}
+.drawer h2{margin:14px 16px 6px;font-size:14px;font-weight:600;color:var(--on-surface-v)}
+.drawer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.drawer a{display:flex;align-items:center;gap:12px;height:var(--item-h);padding:0 16px 0 16px;border-radius:var(--r-item);color:var(--on-surface-v);font-weight:500;text-decoration:none;position:relative;overflow:hidden;transition:background var(--t-micro),color var(--t-micro)}
+.drawer a::before{content:"";position:absolute;inset:0;background:var(--on-surface);opacity:0;transition:opacity var(--t-micro)}
+.drawer a:hover::before{opacity:.06}
+.drawer a:active::before{opacity:.12}
+.drawer a[aria-current="page"]{background:var(--secondary-c);color:var(--on-secondary-c);font-weight:600}
+.drawer a[aria-current="page"] svg{stroke-width:2.2}
+.drawer a .n{margin-left:auto;font-size:13px;font-weight:600;color:var(--on-surface-v)}
+.drawer a[aria-current="page"] .n{color:var(--on-secondary-c)}
+.drawer a .pill{margin-left:auto;font-size:11px;font-weight:700;background:var(--tertiary);color:#fff;padding:2px 8px;border-radius:999px}
+.drawer hr{border:0;border-top:1px solid var(--outline-v);margin:10px 16px}
+.pop{position:absolute;left:16px;right:16px;bottom:44px;background:var(--on-surface);color:var(--surface);border-radius:12px;padding:12px 16px;font-size:14px;font-weight:500;transform:translateY(12px);opacity:0;pointer-events:none;transition:opacity var(--t-micro),transform var(--t-micro) var(--ease-emph)}
+.pop.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body class="open">
+<header class="appbar">
+  <button class="icon" id="menu" aria-label="Open navigation" aria-expanded="true" aria-controls="drawer"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <h1 id="title">Inbox</h1>
+  <button class="icon" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg></button>
+  <button class="icon" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg></button>
+</header>
+<main>
+  <p class="eyebrow">Today</p>
+  <div class="rows">
+    <button class="row"><span class="badge">PKG</span><div><b>Parcel from Halden Ceramics</b><span>Out for delivery · 2 stops away</span></div><time>09:12</time></button>
+    <button class="row"><span class="badge t">LTR</span><div><b>Skatteverket</b><span>Registered letter, sign on delivery</span></div><time>08:30</time></button>
+    <button class="row"><span class="badge">PKG</span><div><b>Return label · order 48213</b><span>Drop at any Nord Post locker by 3 Oct</span></div><time>07:55</time></button>
+  </div>
+  <p class="eyebrow">Yesterday</p>
+  <div class="rows">
+    <button class="row"><span class="badge">PKG</span><div><b>Books from Marrow & Co.</b><span>Delivered to locker 14B</span></div><time>18:20</time></button>
+    <button class="row"><span class="badge t">LTR</span><div><b>Fjord Bank statement</b><span>Digital copy available</span></div><time>11:04</time></button>
+    <button class="row"><span class="badge">PKG</span><div><b>Bike parts · Tessel Cycles</b><span>Delivered, left with neighbour</span></div><time>10:41</time></button>
+  </div>
+</main>
+<button class="scrim" id="scrim" tabindex="-1" aria-label="Close navigation"></button>
+<nav class="drawer" id="drawer" aria-label="Main">
+  <div class="head"><div class="mark">NP</div><div><b>Nord Post</b><small>Karin Ekdahl · Malmö</small></div><button class="icon" id="close" aria-label="Close navigation"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <h2>Mail</h2>
+  <ul>
+    <li><a href="#" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 13h5l2 3h4l2-3h5M5 5h14l2 8v6H3v-6z"/></svg>Inbox<span class="n">24</span></a></li>
+    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M12 3v13M6 10l6 6 6-6M4 20h16"/></svg>Deliveries<span class="pill">3 today</span></a></li>
+    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM4 9h16"/></svg>Lockers</a></li>
+    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M5 20h14M14 4l4 4-9 9H5v-4z"/></svg>Drafts<span class="n">2</span></a></li>
+  </ul>
+  <hr>
+  <h2>Sending</h2>
+  <ul>
+    <li><a href="#"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 14h4"/></svg>Buy postage</a></li>
+    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M12 22s7-6 7-12a7 7 0 10-14 0c0 6 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Find a drop-off</a></li>
+    <li><a href="#"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 4v16M4 9h4"/></svg>Address book<span class="n">118</span></a></li>
+  </ul>
+  <hr>
+  <ul>
+    <li><a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/></svg>Settings</a></li>
+    <li><a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 0c0 1.5-2.5 2-2.5 3.5M12 17h.01"/></svg>Help &amp; feedback</a></li>
+  </ul>
+</nav>
+<div class="pop" id="pop" role="status" aria-live="polite"></div>
+<script>
+  const body=document.body,menu=document.getElementById('menu'),drawer=document.getElementById('drawer'),pop=document.getElementById('pop'),title=document.getElementById('title');
+  const links=[...drawer.querySelectorAll('a')];let last=menu,popT=null;
+  function setOpen(o){body.classList.toggle('open',o);menu.setAttribute('aria-expanded',String(o));if(o){last=document.activeElement;(links.find(a=>a.getAttribute('aria-current'))||links[0]).focus();}else if(last)last.focus();}
+  menu.addEventListener('click',()=>setOpen(true));
+  document.getElementById('close').addEventListener('click',()=>setOpen(false));
+  document.getElementById('scrim').addEventListener('click',()=>setOpen(false));
+  addEventListener('keydown',e=>{
+    if(!body.classList.contains('open'))return;
+    if(e.key==='Escape'){e.preventDefault();setOpen(false);return;}
+    if(e.key==='Tab'){const f=[document.getElementById('close'),...links];const i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus();}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus();}}
+  });
+  drawer.addEventListener('click',e=>{
+    const a=e.target.closest('a');if(!a)return;e.preventDefault();
+    links.forEach(x=>x.removeAttribute('aria-current'));a.setAttribute('aria-current','page');
+    const name=a.childNodes[1].textContent.trim();title.textContent=name;
+    setOpen(false);pop.textContent='Opened '+name;pop.classList.add('on');clearTimeout(popT);popT=setTimeout(()=>pop.classList.remove('on'),1600);
+  });
+</script>
+</body>
+</html>

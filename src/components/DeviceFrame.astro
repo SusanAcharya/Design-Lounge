@@ -1,0 +1,57 @@
+---
+import { existsSync } from 'node:fs';
+import { PLATFORM_META, demoUrl, type Platform } from '../lib/pieces';
+
+interface Props {
+  slug: string;
+  platform: Platform;
+  title: string;
+  interactive?: boolean;
+  eager?: boolean;
+  class?: string;
+}
+const { slug, platform, title, interactive = false, eager = false, class: cls } = Astro.props;
+const meta = PLATFORM_META[platform];
+const frame = meta.frame;
+const devW = frame === 'web' ? 1280 : frame === 'phone' ? 414 : 1216;
+const devH = frame === 'web' ? 840 : frame === 'phone' ? 868 : 856;
+const poster = existsSync(new URL(`../../public/thumbs/${slug}.jpg`, import.meta.url)) ? `/thumbs/${slug}.jpg` : null;
+---
+<lounge-frame
+  class:list={['lf', `lf-${frame}`, `lf-${platform}`, { interactive }, cls]}
+  data-src={demoUrl(slug)}
+  data-dw={devW}
+  data-dh={devH}
+  data-lazy={eager ? 'false' : 'true'}
+>
+  <div class="lf-poster" aria-hidden="true">loading piece</div>
+  <div class="lf-device" style={`width:${devW}px;height:${devH}px`}>
+    {frame === 'web' && (
+      <div class="lf-chrome" aria-hidden="true">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="url">lounge.design/{slug}</span>
+      </div>
+    )}
+    {frame === 'phone' && (
+      <>
+        <div class="lf-status" aria-hidden="true">
+          <span class="time">9:41</span>
+          <span class="icons">
+            <i style="width:4px;height:5px"></i><i style="width:4px;height:8px"></i><i style="width:4px;height:11px"></i><i style="width:4px;height:14px;margin-right:4px"></i>
+            <i style="width:22px;height:11px;border-radius:3px;opacity:.95"></i>
+          </span>
+        </div>
+        <div class="lf-island" aria-hidden="true"></div>
+        {platform === 'mobile-web' && (
+          <div class="lf-urlbar" aria-hidden="true"><div class="field"><b>lounge.design</b>/{slug}</div></div>
+        )}
+        <div class="lf-home" aria-hidden="true"></div>
+      </>
+    )}
+    {frame === 'tablet' && (
+      <div class="lf-status" aria-hidden="true"><span>9:41 · Tue 29 Sep</span><span>⌁ 100%</span></div>
+    )}
+    {poster && <img class="lf-poster-img" src={poster} alt="" aria-hidden="true" loading={eager ? "eager" : "lazy"} decoding="async" />}
+    <iframe title={`Live preview: ${title}`} sandbox="allow-scripts" loading={eager ? 'eager' : 'lazy'} tabindex={interactive ? undefined : -1} inert={interactive ? undefined : true}></iframe>
+  </div>
+</lounge-frame>

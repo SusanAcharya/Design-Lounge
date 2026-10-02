@@ -1,0 +1,53 @@
+---
+import { getPieces, TYPE_META, PLATFORM_META } from '../lib/pieces';
+const pieces = await getPieces();
+const year = new Date().getFullYear();
+---
+<footer class="ftr">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <p class="eyebrow"><a href="/rooms">Rooms</a></p>
+        <ul>{Object.entries(TYPE_META).map(([k, v]) => <li><a href={`/rooms/${k}`}>{v.label}</a></li>)}</ul>
+      </div>
+      <div>
+        <p class="eyebrow"><a href="/platforms">Platforms</a></p>
+        <ul>{Object.entries(PLATFORM_META).map(([k, v]) => <li><a href={`/platforms/${k}`}>{v.label}</a></li>)}</ul>
+      </div>
+      <div>
+        <p class="eyebrow">Lounge</p>
+        <ul>
+          <li><a href="/browse">Browse everything</a></li>
+          <li><a href="/collections">Collections</a></li>
+          <li><a href="/styles">Styles</a></li>
+          <li><a href="/guide">Using briefs with an agent</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/random">Surprise me</a></li>
+        </ul>
+      </div>
+      <div class="colophon">
+        <p class="eyebrow">Colophon</p>
+        <p>Set in Fraunces, Instrument Sans and JetBrains Mono. Built as static HTML with Astro. Every piece is a single self-contained file; every brief is plain markdown.</p>
+        <p class="mono faint">{pieces.length} pieces · no trackers · no cookies except your theme</p>
+      </div>
+    </div>
+    <div class="big display" aria-hidden="true">Design <i>Lounge</i></div>
+    <div class="legal mono faint">
+      <span>© {year} Design Lounge</span>
+      <span>Interfaces worth sitting with.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ftr { border-top: 1px solid var(--ink); margin-top: clamp(48px, 8vw, 120px); padding-top: 48px; position: relative; z-index: 1; }
+  .cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .cols .eyebrow { margin-bottom: 14px; }
+  .cols li { padding: 5px 0; font-size: 14.5px; }
+  .cols li a { border-bottom: 1px solid transparent; transition: border-color var(--t-fast); }
+  .cols li a:hover { border-color: var(--ink); }
+  .colophon p { font-size: 13.5px; color: var(--ink-2); line-height: 1.5; margin-bottom: 12px; max-width: 34ch; }
+  .big { font-size: clamp(64px, 14vw, 220px); line-height: 0.85; margin: 64px 0 24px; color: transparent; -webkit-text-stroke: 1px var(--ink-3); user-select: none; letter-spacing: -0.03em; }
+  .legal { display: flex; justify-content: space-between; padding: 16px 0 28px; border-top: 1px solid var(--line); }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr 1fr; } .big { margin-top: 40px; } .legal { flex-direction: column; gap: 6px; } }
+</style>

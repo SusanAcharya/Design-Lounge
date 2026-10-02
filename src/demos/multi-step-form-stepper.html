@@ -1,0 +1,174 @@
+<!-- Design Lounge piece: multi-step-form-stepper · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Multi-step form stepper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf8f4;--panel:#ffffff;--field:#fdfcfa;--line:#e8e1d8;--line-2:#d3c9bc;
+  --ink:#221e1b;--ink-2:#5f5750;--ink-3:#948a80;--accent:#d2603a;--accent-ink:#fff8f3;--accent-soft:#fbe9e1;--err:#b8321f;--ok:#2f7a4a;
+  --display:"Syne",system-ui,sans-serif;--font:"Manrope",system-ui,sans-serif;
+  --w:640px;--r:10px;--r-card:16px;--dot:28px;--panel-h:344px;
+  --t-fast:140ms;--t-slide:320ms;--t-fill:320ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow:0 1px 2px rgba(34,30,27,.04),0 24px 48px -24px rgba(34,30,27,.18);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;align-items:center;padding-top:64px}
+svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.brand{font:700 18px var(--display);letter-spacing:-.02em;margin-bottom:6px}
+.brand i{display:inline-block;width:8px;height:8px;background:var(--accent);border-radius:2px;margin-right:8px;transform:rotate(45deg)}
+.lead{color:var(--ink-3);margin:0 0 28px;font-size:14px}
+.card{width:var(--w);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--shadow);overflow:hidden}
+/* stepper */
+.steps{display:flex;align-items:flex-start;padding:28px 32px 24px;list-style:none;margin:0;border-bottom:1px solid var(--line)}
+.step{display:flex;flex-direction:column;align-items:center;gap:8px;width:96px;flex:none;position:relative}
+.dot{width:var(--dot);height:var(--dot);border-radius:50%;border:1.5px solid var(--line-2);display:grid;place-items:center;font:600 12px var(--font);color:var(--ink-3);background:var(--panel);transition:background var(--t-fast) var(--ease),border-color var(--t-fast),color var(--t-fast),box-shadow var(--t-fast)}
+.dot svg{display:none}
+.step.current .dot{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.step.done .dot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.step.done .dot span{display:none}.step.done .dot svg{display:block}
+.step b{font:600 12px var(--font);color:var(--ink-3);white-space:nowrap}
+.step.current b{color:var(--ink)}.step.done b{color:var(--ink-2)}
+.conn{flex:1;height:2px;background:var(--line);margin-top:13px;position:relative;overflow:hidden;border-radius:2px}
+.conn i{position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform var(--t-fill) var(--ease)}
+.conn.done i{transform:scaleX(1)}
+/* panels */
+.panels{position:relative;height:var(--panel-h);overflow:hidden}
+.panel{position:absolute;inset:0;padding:28px 32px;display:flex;flex-direction:column;gap:16px;transition:transform var(--t-slide) var(--ease-out),opacity var(--t-slide) var(--ease);opacity:0;visibility:hidden}
+.panel[data-pos="left"]{transform:translateX(-40px)}
+.panel[data-pos="right"]{transform:translateX(40px)}
+.panel[data-pos="on"]{transform:none;opacity:1;visibility:visible}
+.panel h2{margin:0;font:700 22px/1.2 var(--display);letter-spacing:-.02em}
+.panel h2+p{margin:-8px 0 0;color:var(--ink-3)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:12px;color:var(--ink-2)}
+.f input,.f select{height:40px;border:1px solid var(--line-2);border-radius:var(--r);padding:0 12px;font:14px var(--font);color:var(--ink);background:var(--field);outline:none;transition:border-color var(--t-fast),box-shadow var(--t-fast)}
+.f input:hover,.f select:hover{border-color:var(--ink-3)}
+.f input:focus-visible,.f select:focus-visible{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.f input[aria-invalid="true"]{border-color:var(--err);box-shadow:0 0 0 3px #f6e0dc}
+.f .msg{font-weight:500;color:var(--err);min-height:16px;font-size:12px}
+.f .msg:empty{display:none}
+fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+legend{font-weight:600;font-size:12px;color:var(--ink-2);padding:0;margin-bottom:6px}
+.seg{display:flex;gap:8px}
+.seg label{flex:1;height:40px;border:1px solid var(--line-2);border-radius:var(--r);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:500;color:var(--ink-2);background:var(--field)}
+.seg input{position:absolute;opacity:0;width:1px;height:1px}
+.seg input:checked+label{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.seg input:focus-visible+label{box-shadow:0 0 0 3px var(--accent-soft);border-color:var(--accent)}
+.review{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:var(--r)}
+.review li{display:grid;grid-template-columns:140px 1fr auto;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13px}
+.review li:last-child{border:0}
+.review li span{color:var(--ink-3);font-weight:600;font-size:12px}
+.review li a{color:var(--accent);font-weight:600;font-size:12px;text-decoration:none;border-radius:4px}
+.review li a:hover{text-decoration:underline}
+.review li a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.finish{text-align:center;justify-content:center;align-items:center}
+.finish .big{width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center}
+.finish .big svg{width:26px;height:26px}
+.finish a{color:var(--accent);font-weight:600}
+/* footer */
+.foot{display:flex;align-items:center;gap:10px;padding:18px 32px;border-top:1px solid var(--line);background:var(--bg)}
+.foot .n{font:600 12px var(--font);color:var(--ink-3);letter-spacing:.04em}
+.btn{height:40px;padding:0 18px;border-radius:var(--r);border:1px solid var(--line-2);background:var(--panel);font:600 14px var(--font);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{margin-left:auto;background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:#b9502c}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn[disabled]{opacity:.45;cursor:default}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="brand"><i></i>Mira</div>
+<p class="lead">Set up your workspace in three short steps.</p>
+<form class="card" id="form" novalidate>
+  <ol class="steps" id="steps" aria-label="Progress">
+    <li class="step current" data-i="0"><div class="dot" aria-hidden="true"><span>1</span><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4L18 8"/></svg></div><b>Account</b></li>
+    <li class="conn" aria-hidden="true"><i></i></li>
+    <li class="step" data-i="1"><div class="dot" aria-hidden="true"><span>2</span><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4L18 8"/></svg></div><b>Workspace</b></li>
+    <li class="conn" aria-hidden="true"><i></i></li>
+    <li class="step" data-i="2"><div class="dot" aria-hidden="true"><span>3</span><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4L18 8"/></svg></div><b>Review</b></li>
+  </ol>
+  <div class="panels" id="panels">
+    <section class="panel" data-pos="on" aria-labelledby="h0">
+      <h2 id="h0">Your account</h2><p>We'll send a confirmation to this address.</p>
+      <div class="two">
+        <label class="f">Full name<input name="name" value="Ines Okafor" autocomplete="name" required><span class="msg" aria-live="polite"></span></label>
+        <label class="f">Company<input name="company" placeholder="Marrow Studio" autocomplete="organization" required><span class="msg" aria-live="polite"></span></label>
+      </div>
+      <label class="f">Work email<input name="email" type="email" placeholder="ines@marrow.studio" autocomplete="email" required><span class="msg" aria-live="polite"></span></label>
+    </section>
+    <section class="panel" data-pos="right" aria-labelledby="h1">
+      <h2 id="h1">Your workspace</h2><p>You can rename it later; the region is permanent.</p>
+      <div class="two">
+        <label class="f">Workspace name<input name="ws" value="marrow" required><span class="msg" aria-live="polite"></span></label>
+        <label class="f">Data region<select name="region"><option>Frankfurt (eu-central)</option><option>Dublin (eu-west)</option><option>Oregon (us-west)</option><option>Singapore (ap-south)</option></select><span class="msg"></span></label>
+      </div>
+      <fieldset><legend>Team size</legend><div class="seg">
+        <input type="radio" name="size" id="s1" value="Just me"><label for="s1">Just me</label>
+        <input type="radio" name="size" id="s2" value="2–10" checked><label for="s2">2–10</label>
+        <input type="radio" name="size" id="s3" value="11–50"><label for="s3">11–50</label>
+        <input type="radio" name="size" id="s4" value="50+"><label for="s4">50+</label>
+      </div></fieldset>
+    </section>
+    <section class="panel" data-pos="right" aria-labelledby="h2">
+      <h2 id="h2">Review</h2><p>Check the details, then create the workspace.</p>
+      <ul class="review" id="review"></ul>
+    </section>
+    <section class="panel finish" data-pos="right" aria-labelledby="h3">
+      <div class="big"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4L18 8"/></svg></div>
+      <h2 id="h3">Workspace created</h2><p id="doneMsg"></p>
+      <a href="#" id="restart">Start over</a>
+    </section>
+  </div>
+  <div class="foot">
+    <button type="button" class="btn" id="back" disabled><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>Back</button>
+    <span class="n" id="count">Step 1 of 3</span>
+    <button type="submit" class="btn primary" id="next">Continue<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+  </div>
+</form>
+<script>
+const panels=[...document.querySelectorAll('.panel')],steps=[...document.querySelectorAll('.step')],conns=[...document.querySelectorAll('.conn')];
+const form=document.getElementById('form'),back=document.getElementById('back'),next=document.getElementById('next'),count=document.getElementById('count');
+const LABEL={name:'Full name',company:'Company',email:'Work email',ws:'Workspace name',region:'Data region',size:'Team size'};
+let cur=0;
+function validate(i){
+  let first=null;
+  panels[i].querySelectorAll('input[required]').forEach(el=>{
+    let m='';const v=el.value.trim();
+    if(!v)m=LABEL[el.name]+' is required.';else if(el.type==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))m='Enter a valid email address.';
+    el.setAttribute('aria-invalid',String(!!m));el.parentElement.querySelector('.msg').textContent=m;if(m&&!first)first=el;
+  });
+  if(first)first.focus();return!first;
+}
+function go(i){
+  cur=i;
+  panels.forEach((p,k)=>p.dataset.pos=k<i?'left':k>i?'right':'on');
+  steps.forEach((s,k)=>{s.classList.toggle('done',k<i);s.classList.toggle('current',k===i);s.setAttribute('aria-current',k===i?'step':'false');});
+  conns.forEach((c,k)=>c.classList.toggle('done',k<i));
+  back.disabled=i===0;count.textContent='Step '+Math.min(i+1,3)+' of 3';
+  next.innerHTML=i===2?'Create workspace':'Continue<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>';
+  document.querySelector('.foot').style.visibility=i===3?'hidden':'visible';
+  if(i===2)fill();
+  setTimeout(()=>{const f=panels[i].querySelector('input:not([type=radio]),select,a');if(f&&i<3)f.focus();},330);
+}
+function fill(){
+  const d=new FormData(form),rev=document.getElementById('review');rev.innerHTML='';
+  [['name',0],['company',0],['email',0],['ws',1],['region',1],['size',1]].forEach(([k,step])=>{
+    const li=document.createElement('li');li.innerHTML='<span>'+LABEL[k]+'</span><div></div><a href="#">Edit</a>';
+    li.querySelector('div').textContent=d.get(k)||'—';li.querySelector('a').setAttribute('aria-label','Edit '+LABEL[k].toLowerCase());
+    li.querySelector('a').addEventListener('click',e=>{e.preventDefault();go(step);});rev.appendChild(li);
+  });
+}
+form.addEventListener('submit',e=>{e.preventDefault();if(cur<2){if(validate(cur))go(cur+1);}else{document.getElementById('doneMsg').textContent=new FormData(form).get('ws')+'.mira.app is ready in '+new FormData(form).get('region').split(' ')[0]+'.';go(3);}});
+back.addEventListener('click',()=>go(cur-1));
+document.getElementById('restart').addEventListener('click',e=>{e.preventDefault();go(0);});
+form.addEventListener('input',e=>{if(e.target.getAttribute('aria-invalid')==='true'){e.target.setAttribute('aria-invalid','false');e.target.parentElement.querySelector('.msg').textContent='';}});
+</script>
+</body>
+</html>

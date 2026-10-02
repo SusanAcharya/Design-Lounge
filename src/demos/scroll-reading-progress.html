@@ -1,0 +1,115 @@
+<!-- Design Lounge piece: scroll-reading-progress · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Scroll reading progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#18171a;--bg-2:#1e1d21;--line:#2c2b30;--ink:#ece6da;--ink-2:#a09a8f;--ink-3:#6c675f;--accent:#8fc1a9;
+  --serif:"Newsreader",Georgia,serif;--sans:"Inter",system-ui,sans-serif;
+  --bar-h:3px;--top-h:56px;--toc-w:240px;--measure:640px;
+  --t-micro:160ms;--t-toc:240ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--top-h) + 24px)}
+body{background:var(--bg);color:var(--ink);font:19px/1.6 var(--serif);font-variation-settings:"opsz" 18;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.bar{position:fixed;top:0;left:0;width:100%;height:var(--bar-h);background:var(--accent);transform-origin:left;transform:scaleX(0);z-index:20}
+@supports (animation-timeline: scroll()){.bar{animation:grow linear both;animation-timeline:scroll(root)}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.top{position:sticky;top:0;height:var(--top-h);display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10;font:13px var(--sans);color:var(--ink-2)}
+.top b{font:500 15px var(--serif);color:var(--ink);letter-spacing:.02em}
+.top span i{font-style:normal;color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+.page{display:grid;grid-template-columns:var(--toc-w) var(--measure);gap:80px;justify-content:center;padding:56px 40px 120px}
+.toc{position:sticky;top:calc(var(--top-h) + 56px);align-self:start;font:13px/1.5 var(--sans)}
+.toc h2{margin:0 0 14px;font:500 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.toc ol{list-style:none;margin:0;padding:0;border-left:1px solid var(--line)}
+.toc a{display:block;padding:7px 0 7px 16px;margin-left:-1px;border-left:1px solid transparent;color:var(--ink-2);text-decoration:none;transition:color var(--t-toc) var(--ease),border-color var(--t-toc) var(--ease)}
+.toc a:hover{color:var(--ink)}
+.toc a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:2px}
+.toc a[aria-current="true"]{color:var(--ink);border-left-color:var(--accent)}
+.toc .stat{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.toc .stat b{color:var(--ink-2);font-weight:500}
+article header{margin-bottom:40px}
+.kicker{font:500 12px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+h1{margin:0 0 16px;font:400 46px/1.12 var(--serif);font-variation-settings:"opsz" 72;letter-spacing:-.015em}
+.dek{margin:0 0 20px;font-style:italic;font-size:22px;color:var(--ink-2)}
+.by{font:13px var(--sans);color:var(--ink-3)}
+.by b{color:var(--ink-2);font-weight:500}
+article h2{margin:48px 0 14px;font:500 27px/1.25 var(--serif);font-variation-settings:"opsz" 36;letter-spacing:-.01em;scroll-margin-top:calc(var(--top-h) + 24px)}
+article p{margin:0 0 20px}
+article p:first-of-type::first-letter{font-size:1.15em;font-weight:500}
+blockquote{margin:28px 0;padding:4px 0 4px 20px;border-left:2px solid var(--accent);font-style:italic;font-size:23px;line-height:1.4;color:var(--ink)}
+.end{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font:13px var(--sans);color:var(--ink-3)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toc a{transition:none}.top{backdrop-filter:none}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+<div class="top"><b>Loam Journal</b><span>Issue 12 · Field notes · <i id="pct">0 %</i> read</span></div>
+<div class="page">
+  <nav class="toc" aria-label="Contents">
+    <h2>In this piece</h2>
+    <ol id="toc">
+      <li><a href="#s1">The dry spring</a></li>
+      <li><a href="#s2">What the soil test said</a></li>
+      <li><a href="#s3">Cover crops, not compost</a></li>
+      <li><a href="#s4">Where the water went</a></li>
+      <li><a href="#s5">Counting worms in August</a></li>
+      <li><a href="#s6">Next year's plan</a></li>
+    </ol>
+    <div class="stat"><b id="left">7 min</b> left · 1,140 words</div>
+  </nav>
+  <article>
+    <header>
+      <div class="kicker">Soil · Season report</div>
+      <h1>On rebuilding soil in a dry year</h1>
+      <p class="dek">We lost 38 % of the spring rain, kept 90 % of the crop, and learned which of our habits were the ones doing the work.</p>
+      <div class="by">By <b>Ida Strand</b> · Loam Farm, Jæren · 21 September 2026</div>
+    </header>
+    <h2 id="s1">The dry spring</h2>
+    <p>The rain gauge on the barn read 41 mm for April. The ten-year average for the same month is 66 mm, and the two Aprils before that had both been above 80. By the second week of May the top four centimetres of the market garden beds had gone the colour of cardboard, and the tilled field across the road — not ours — was lifting into the air every time a lorry passed.</p>
+    <p>We had two choices that we could actually afford. Irrigate from the pond, which holds about six days of water for the beds if we are careful, or leave the beds alone and trust the mulch. We chose the mulch, mostly because the pump had failed twice the previous summer and we did not want to find out on the third try.</p>
+    <h2 id="s2">What the soil test said</h2>
+    <p>The lab report came back on 3 June. Organic matter was 5.8 %, up from 4.1 % when we took the farm over in 2021. Cation exchange capacity had moved from 11 to 17 meq/100 g. Neither number is dramatic on its own, but together they explain why the beds held water that the field across the road could not.</p>
+    <p>The part we had not expected was the phosphorus. It had dropped from 34 to 22 ppm in three years, which is what happens when you sell vegetables and do not buy fertiliser. We had been treating the soil as a bank and only ever making withdrawals of one particular kind.</p>
+    <blockquote>Organic matter is not the goal. It is the receipt for something else going right.</blockquote>
+    <h2 id="s3">Cover crops, not compost</h2>
+    <p>We make about 40 m³ of compost a year and had assumed that was where the organic matter came from. The maths does not support it. Spread over 1.2 hectares it is a layer roughly 3 mm thick, most of which is gone by autumn. The rye and vetch we sow in September, on the other hand, put down roots to 60 cm and leave them there.</p>
+    <p>So the compost goes on the beds that get the hungriest crops — brassicas, squash, the second planting of leeks — and everything else gets a cover crop the day it is cleared. We keep a bag of seed in the tractor so there is no excuse for a bed to sit bare over a weekend.</p>
+    <h2 id="s4">Where the water went</h2>
+    <p>In the third week of June we dug a pit at the edge of the carrots. Moist soil to 35 cm, then a dry band, then moist again below 50 cm where the old roots had gone. The pit in the neighbouring field was dry to 20 cm and then compacted enough that the spade bounced.</p>
+    <p>That dry band is the thing we are trying to close. It is where last year's roots stopped and this year's had not yet reached. A deeper-rooting cover crop mix — we are trying tillage radish and chicory — should bridge it, if the seed germinates in a dry September.</p>
+    <h2 id="s5">Counting worms in August</h2>
+    <p>Twenty by twenty by twenty centimetres, four spots per bed, count what moves. In 2021 the average was six worms per block. This August it was nineteen, with one block at thirty-one under the potatoes. The field across the road came in at two.</p>
+    <p>We do not know precisely what the worms are worth in litres of water or kilos of carrots, and we have stopped pretending to. The count is a habit that tells us, early, whether a bed is heading the right way.</p>
+    <h2 id="s6">Next year's plan</h2>
+    <p>Buy phosphorus — rock phosphate, 400 kg, applied with the autumn cover crop so the roots take it down. Fix the pump properly, or replace it. Keep the mulch. Add the radish and chicory mix to a third of the beds and compare pits again in June.</p>
+    <p>And keep writing this down. The dry spring was a bad year for carrots and a good year for finding out what we were actually relying on. Most of it turned out to be roots we could not see.</p>
+    <div class="end">End of piece · Next in Issue 12: "A wind fence made of willow"</div>
+  </article>
+</div>
+<script>
+  const bar=document.getElementById('bar'),pct=document.getElementById('pct'),left=document.getElementById('left');
+  const links=[...document.querySelectorAll('#toc a')],heads=links.map(a=>document.querySelector(a.getAttribute('href')));
+  const native=CSS.supports('animation-timeline: scroll()');
+  function onScroll(){
+    const max=document.documentElement.scrollHeight-innerHeight,p=max>0?Math.min(1,scrollY/max):1;
+    if(!native)bar.style.transform=`scaleX(${p})`;
+    bar.setAttribute('aria-valuenow',Math.round(p*100));
+    pct.textContent=Math.round(p*100)+' %';
+    left.textContent=Math.max(0,Math.ceil(7*(1-p)))+' min';
+  }
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+  let current=-1;
+  function setCurrent(i){if(i===current)return;current=i;links.forEach((a,j)=>{if(j===i)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});}
+  function track(){let i=0;heads.forEach((h,j)=>{if(h.getBoundingClientRect().top<=innerHeight*.3)i=j;});setCurrent(i);}
+  addEventListener('scroll',track,{passive:true});
+  track();
+</script>
+</body>
+</html>

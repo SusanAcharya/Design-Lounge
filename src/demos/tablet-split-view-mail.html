@@ -1,0 +1,130 @@
+<!-- Design Lounge piece: tablet-split-view-mail · platform: tablet · 1180x820 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nord Post — Inbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f7f8;--panel:#ffffff;--rail:#eef0f3;--hover:#f1f2f5;--selected:#e8ecfb;--line:#e3e5ea;--line-strong:#cfd3db;
+  --ink:#1a1c1e;--ink-2:#5c616b;--ink-3:#8b909a;--accent:#3b5bdb;--accent-ink:#ffffff;--accent-soft:#dfe5f7;--unread:#3b5bdb;--star:#e0a34b;
+  --sans:"Inter",system-ui,sans-serif;--serif:"Newsreader",Georgia,serif;
+  --w-rail:72px;--w-list:320px;--h-head:52px;--r:8px;--r-pill:999px;
+  --t-fast:140ms;--t-layout:280ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.45 var(--sans);color:var(--ink);background:var(--bg);display:flex;overflow:hidden;-webkit-font-smoothing:antialiased}
+svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button{font:inherit;color:inherit;cursor:pointer}
+.rail{width:var(--w-rail);flex:none;background:var(--rail);border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:4px;transition:width var(--t-layout) var(--ease),opacity var(--t-layout);overflow:hidden}
+.rail.hidden{width:0;opacity:0;border-right-width:0}
+.rail .mark{width:36px;height:36px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:600 14px var(--serif);margin-bottom:10px;flex:none}
+.rail a{width:56px;height:56px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--ink-2);text-decoration:none;font-size:10px;font-weight:500;position:relative;flex:none}
+.rail a:hover{background:var(--hover);color:var(--ink)}
+.rail a[aria-current="page"]{background:var(--panel);color:var(--accent);box-shadow:0 1px 2px rgba(26,28,30,.08)}
+.rail a:focus-visible,.hbtn:focus-visible,.row:focus-visible,.act:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.rail a .n{position:absolute;top:6px;right:6px;font-size:9px;font-weight:600;background:var(--accent);color:var(--accent-ink);border-radius:var(--r-pill);padding:1px 5px}
+.list{width:var(--w-list);flex:none;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+.lhead{height:var(--h-head);display:flex;align-items:center;gap:6px;padding:0 8px 0 10px;border-bottom:1px solid var(--line)}
+.lhead h1{font:600 15px var(--sans);letter-spacing:-.01em;margin:0 auto 0 4px}
+.lhead .cnt{font-size:12px;color:var(--ink-3);margin-right:6px}
+.hbtn{width:32px;height:32px;border:0;background:transparent;border-radius:var(--r);display:grid;place-items:center;color:var(--ink-2)}
+.hbtn:hover{background:var(--hover);color:var(--ink)}
+.rows{list-style:none;margin:0;padding:0;overflow-y:auto;flex:1}
+.row{display:grid;grid-template-columns:8px 1fr auto;gap:0 10px;align-items:start;padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);cursor:pointer;position:relative;transition:background var(--t-fast)}
+.row:hover{background:var(--hover)}
+.row[aria-selected="true"]{background:var(--selected)}
+.row[aria-selected="true"]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent)}
+.dot{width:8px;height:8px;border-radius:50%;margin-top:6px;background:transparent}
+.row.unread .dot{background:var(--unread)}
+.row .from{font-weight:500;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row.unread .from,.row.unread .subj{font-weight:600}
+.row .subj{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.row .snip{font-size:12px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.row .time{font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums;padding-top:2px}
+.row .time.star{color:var(--star)}
+.read{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--bg)}
+.rhead{height:var(--h-head);display:flex;align-items:center;gap:4px;padding:0 16px;border-bottom:1px solid var(--line);background:var(--panel)}
+.rhead .subject{font:500 15px var(--sans);letter-spacing:-.01em;margin:0 auto 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.act{height:34px;padding:0 10px;border:0;background:transparent;border-radius:var(--r);display:inline-flex;align-items:center;gap:6px;color:var(--ink-2);font-size:12px;font-weight:500}
+.act:hover{background:var(--hover);color:var(--ink)}
+.act.primary{background:var(--accent);color:var(--accent-ink);margin-left:6px}
+.act.primary:hover{background:#2f4bc0}
+.sep{width:1px;height:20px;background:var(--line);margin:0 6px}
+.msg{flex:1;overflow-y:auto;padding:28px 40px 40px;max-width:760px}
+.msg h2{font:500 30px/1.15 var(--serif);font-variation-settings:"opsz" 72;letter-spacing:-.01em;margin:0 0 18px}
+.who{display:flex;align-items:center;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.av{width:40px;height:40px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:600;font-size:14px}
+.who b{font-weight:500;display:block;font-size:14px}.who span{font-size:12px;color:var(--ink-3)}
+.who .when{margin-left:auto;font-size:12px;color:var(--ink-3)}
+.body{font:400 17px/1.6 var(--serif);font-variation-settings:"opsz" 16;color:var(--ink);max-width:62ch}
+.body p{margin:0 0 16px}
+.body .sig{color:var(--ink-2);font-style:italic;font-size:16px}
+.kbd{margin-left:auto;font-size:11px;color:var(--ink-3);display:flex;gap:4px;align-items:center}
+.kbd b{font-weight:500;border:1px solid var(--line-strong);border-radius:4px;padding:0 5px;line-height:18px;background:var(--panel);font-size:10px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<nav class="rail" id="rail" aria-label="Folders">
+  <div class="mark">N</div>
+  <a href="#" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 12l3-7h12l3 7v7H3z"/><path d="M3 12h5l2 3h4l2-3h5"/></svg>Inbox<span class="n" id="unread">4</span></a>
+  <a href="#"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.3.9-4.5 4.4 1 6.1-5.5-2.9-5.5 2.9 1-6.1L3 9.5l6.3-.9z"/></svg>Starred</a>
+  <a href="#"><svg viewBox="0 0 24 24"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></svg>Sent</a>
+  <a href="#"><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4zM8 7V4h8v3"/></svg>Archive</a>
+  <a href="#"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>Trash</a>
+</nav>
+<section class="list" aria-label="Messages">
+  <div class="lhead">
+    <button class="hbtn" id="railbtn" aria-pressed="true" aria-label="Hide folders" title="Toggle folders"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+    <h1>Inbox</h1><span class="cnt" id="cnt"></span>
+    <button class="hbtn" aria-label="Filter"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg></button>
+  </div>
+  <ul class="rows" id="rows" role="listbox" aria-label="Inbox messages" tabindex="0"></ul>
+</section>
+<section class="read" aria-label="Reading pane">
+  <div class="rhead">
+    <h2 class="subject" id="subj"></h2>
+    <button class="act" id="star" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.3.9-4.5 4.4 1 6.1-5.5-2.9-5.5 2.9 1-6.1L3 9.5l6.3-.9z"/></svg>Star</button>
+    <button class="act" id="archive"><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4zM8 7V4h8v3"/></svg>Archive</button>
+    <button class="act" id="del"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>Delete</button>
+    <span class="sep"></span>
+    <button class="act primary"><svg viewBox="0 0 24 24"><path d="M9 14L4 9l5-5M4 9h9a7 7 0 017 7v4"/></svg>Reply</button>
+  </div>
+  <article class="msg" id="msg"></article>
+</section>
+<script>
+  const M=[
+    ["Ingrid Solheim","Q4 print run: paper stock decision","We need to lock the uncoated stock by Friday or the mill slips us to November.",true,"09:41",false,["We need to lock the uncoated stock by Friday or the mill slips us to November. The 120gsm Munken sample felt right in hand and the ink held without ghosting.","If you are happy, I will confirm 40,000 sheets and ask for the proof on Tuesday."]],
+    ["Fjord Bank","Your statement for September is ready","Balance on 30 Sep: 12,480.20. Three direct debits scheduled this week.",true,"08:15",false,["Your September statement is available in the app. Closing balance was 12,480.20 with three direct debits scheduled for 2, 4 and 7 October.","No action is needed unless a payment looks unfamiliar."]],
+    ["Tomas Berg","Re: Halden brand review — notes from Thursday","Attached are the marked-up boards. The wordmark at 12px still loses the counter in the 'a'.",false,"Yesterday",true,["Attached are the marked-up boards. The wordmark at 12px still loses the counter in the 'a', so I have proposed a slightly opened aperture for sizes under 16px.","Everything else is minor: two spacing fixes and one colour that does not pass contrast on the grey card.","Can we get thirty minutes on Monday to walk through it?"]],
+    ["Loam Savings","Interest paid: 42.18 added to Emergency pot","Your monthly interest has been paid at 4.35% AER variable.",true,"Yesterday",false,["Your monthly interest of 42.18 has been paid into the Emergency pot at 4.35% AER variable.","Round-ups this month added a further 31.60."]],
+    ["Marta Kowalczyk","Offsite: menu and dietary notes","Two vegans, one coeliac, one who 'does not eat green things'. Chef is unbothered.",false,"Mon",false,["Two vegans, one coeliac, and one person who 'does not eat green things'. Chef says this is fine and would like to know about wine by Wednesday.","I have pencilled the tasting menu at 62 per head; say if that is too much."]],
+    ["Nord Post","Two-factor sign-in was enabled","A new device was added to your account from Bergen, Norway.",true,"Mon",false,["Two-factor sign-in was enabled on your account from a new device in Bergen, Norway, at 17:02.","If this was not you, remove the device from Settings and change your password."]],
+    ["Eirik Dahl","Sauna booking Saturday 18:00","Six of us so far. Bring the thermos; the kiosk closes at five.",false,"Sun",false,["Six of us so far for Saturday at 18:00. The kiosk closes at five so bring your own thermos.","I will book the larger room if two more confirm."]],
+    ["Tessel","Order 48117 is on its way","Ridge stoneware bowls and the Fjord platter left our studio this morning.",false,"Sat",false,["Your order 48117 left the studio this morning with the courier and should be with you in two to three days.","Everything is packed in moulded pulp, so please keep the box for returns."]],
+    ["Halden Studio","Invoice 2025-081 — 30 days","Brand system phase two, 18,500 excl. VAT, due 24 October.",false,"Fri",true,["Please find invoice 2025-081 for phase two of the brand system: 18,500 excluding VAT, due 24 October.","Bank details are unchanged from the last invoice."]],
+    ["Ada Lindqvist","Photos from Hardanger","Orchards, cider, and one very photogenic goat. Album link inside.",false,"Thu",false,["Orchards, cider, and one very photogenic goat. I have put the album in the shared folder.","We should go back in May when the trees are in blossom."]]];
+  const rows=document.getElementById('rows'),msg=document.getElementById('msg'),subj=document.getElementById('subj'),star=document.getElementById('star'),cnt=document.getElementById('cnt'),unread=document.getElementById('unread');
+  let sel=0;
+  function render(){rows.innerHTML=M.map((m,i)=>`<li class="row${m[3]?' unread':''}" role="option" id="r${i}" aria-selected="${i===sel}" tabindex="-1"><span class="dot"></span><div><div class="from">${m[0]}</div><div class="subj">${m[1]}</div><div class="snip">${m[2]}</div></div><span class="time${m[5]?' star':''}">${m[4]}</span></li>`).join('');
+    cnt.textContent=M.length+' messages';unread.textContent=M.filter(m=>m[3]).length;rows.setAttribute('aria-activedescendant','r'+sel);}
+  function open(i){sel=Math.max(0,Math.min(M.length-1,i));const m=M[sel];if(!m){render();subj.textContent='';msg.innerHTML='<h2>Inbox zero</h2><div class="body"><p>Nothing left to read. Reload the piece to bring the messages back.</p></div>';return;}m[3]=false;render();
+    rows.children[sel].scrollIntoView({block:'nearest'});subj.textContent=m[1];star.setAttribute('aria-pressed',String(m[5]));
+    msg.innerHTML=`<h2>${m[1]}</h2><div class="who"><div class="av">${m[0][0]}</div><div><b>${m[0]}</b><span>to me</span></div><span class="when">${m[4]}</span></div><div class="body">${m[6].map(p=>`<p>${p}</p>`).join('')}<p class="sig">— ${m[0].split(' ')[0]}</p></div>`;}
+  rows.addEventListener('click',e=>{const r=e.target.closest('.row');if(r)open(+r.id.slice(1));});
+  rows.addEventListener('keydown',e=>{if(e.key==='j'||e.key==='ArrowDown'){e.preventDefault();open(sel+1);}else if(e.key==='k'||e.key==='ArrowUp'){e.preventDefault();open(sel-1);}});
+  addEventListener('keydown',e=>{if(e.target===rows||e.target.closest('input'))return;if(e.key==='j')open(sel+1);if(e.key==='k')open(sel-1);if(e.key==='s')star.click();if(e.key==='e')document.getElementById('archive').click();});
+  star.addEventListener('click',()=>{M[sel][5]=!M[sel][5];open(sel);});
+  const remove=()=>{M.splice(sel,1);open(Math.min(sel,M.length-1));};
+  document.getElementById('archive').addEventListener('click',remove);document.getElementById('del').addEventListener('click',remove);
+  const rail=document.getElementById('rail'),rb=document.getElementById('railbtn');
+  rb.addEventListener('click',()=>{const h=rail.classList.toggle('hidden');rb.setAttribute('aria-pressed',String(!h));rb.setAttribute('aria-label',h?'Show folders':'Hide folders');});
+  open(0);
+</script>
+</body>
+</html>

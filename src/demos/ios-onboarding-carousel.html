@@ -1,0 +1,122 @@
+<!-- Design Lounge piece: ios-onboarding-carousel · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1220;--surface:#161b2e;--surface-2:#1f2540;--ink:#f3efe6;--ink-2:#a9adbd;--ink-3:#6c7188;--line:#262c45;
+  --accent:#f0c27b;--accent-ink:#2b1d05;--moon:#f6e7c6;--glow:rgba(240,194,123,.22);
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Manrope",system-ui,-apple-system,sans-serif;
+  --r-btn:16px;--r-card:24px;--dot:8px;--dot-active:24px;
+  --t-micro:160ms;--t-dot:320ms;--t-hero:700ms;--spring:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header{height:98px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 24px 8px}
+.brand{font:italic 22px var(--serif);color:var(--ink);letter-spacing:-.01em}
+.skip{background:none;border:0;color:var(--ink-2);font:600 14px var(--sans);padding:8px 4px;cursor:pointer;min-height:40px;border-radius:8px;transition:opacity var(--t-micro) var(--ease)}
+.skip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.skip[hidden]{display:none}
+.track{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;width:100%;scroll-snap-align:center;scroll-snap-stop:always;display:flex;flex-direction:column;padding:8px 28px 0}
+.art{height:380px;border-radius:var(--r-card);background:var(--surface);border:1px solid var(--line);position:relative;overflow:hidden;margin-bottom:34px}
+.art::after{content:"";position:absolute;inset:0;background:radial-gradient(240px 160px at 50% 110%,var(--glow),transparent 70%)}
+/* slide 1: moon over hills */
+.halo,.moon{position:absolute;left:50%;top:78px;width:120px;height:120px;margin-left:-60px;border-radius:50%}
+.halo{box-shadow:0 0 0 24px rgba(246,231,198,.06),0 0 0 52px rgba(246,231,198,.035),0 0 60px rgba(246,231,198,.35)}
+.moon{background:radial-gradient(circle at 35% 35%,#fff7e3,var(--moon) 55%,#d9c49a);-webkit-mask:radial-gradient(circle at 30% 24%,transparent 56px,#000 57px);mask:radial-gradient(circle at 30% 24%,transparent 56px,#000 57px)}
+
+.hill{position:absolute;bottom:-80px;height:200px;border-radius:50%;background:var(--surface-2)}
+.h1{left:-40px;width:260px}.h2{right:-60px;width:300px;bottom:-110px;background:#1a2038}
+.star{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--ink);opacity:.7}
+/* slide 2: sleep stages */
+.bars{position:absolute;left:32px;right:32px;bottom:64px;height:200px;display:flex;align-items:flex-end;gap:5px}
+.bar{flex:1;border-radius:3px 3px 0 0;background:var(--surface-2);position:relative;transform-origin:bottom;animation:rise var(--t-hero) var(--expo) both;animation-delay:var(--d,0ms)}
+.bar.d{background:var(--accent);opacity:.9}.bar.r{background:#8fa3d9}
+@keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.axis{position:absolute;left:32px;right:32px;bottom:40px;display:flex;justify-content:space-between;font:500 11px var(--sans);color:var(--ink-3);letter-spacing:.06em}
+.stat{position:absolute;left:32px;top:36px}
+.stat b{display:block;font:56px/1 var(--serif);letter-spacing:-.02em}
+.stat span{font:500 12px var(--sans);color:var(--ink-2);letter-spacing:.08em;text-transform:uppercase}
+/* slide 3: sunrise ring */
+.ring{position:absolute;left:50%;top:70px;width:200px;height:200px;margin-left:-100px;border-radius:50%;background:conic-gradient(var(--accent) 0 var(--p,72%),var(--line) var(--p,72%) 100%);-webkit-mask:radial-gradient(circle,transparent 78px,#000 79px);mask:radial-gradient(circle,transparent 78px,#000 79px);animation:sweep 1.2s var(--expo) both}
+@keyframes sweep{from{--p:0%}to{--p:72%}}
+@property --p{syntax:"<percentage>";inherits:false;initial-value:0%}
+.ring-c{position:absolute;left:50%;top:70px;width:200px;height:200px;margin-left:-100px;display:grid;place-items:center;text-align:center}
+.ring-c b{font:48px/1 var(--serif);display:block}
+.ring-c span{font:500 12px var(--sans);color:var(--ink-2);letter-spacing:.08em;text-transform:uppercase}
+.sun{position:absolute;left:50%;bottom:36px;width:280px;height:60px;margin-left:-140px;border-radius:140px 140px 0 0;background:linear-gradient(180deg,rgba(240,194,123,.55),transparent)}
+h2{margin:0 0 10px;font:36px/1.1 var(--serif);letter-spacing:-.015em}
+h2 i{color:var(--accent)}
+.slide p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.55;max-width:300px}
+footer{flex:none;padding:12px 24px 44px;display:flex;flex-direction:column;align-items:center;gap:20px}
+.dots{display:flex;gap:6px;height:8px}
+.dots i{display:block;width:var(--dot);height:var(--dot);border-radius:4px;background:var(--ink-3);transition:width var(--t-dot) var(--spring),background var(--t-dot) var(--ease)}
+.dots i.on{width:var(--dot-active);background:var(--accent)}
+.cta{width:100%;height:56px;border:0;border-radius:var(--r-btn);background:var(--accent);color:var(--accent-ink);font:700 16px var(--sans);letter-spacing:-.01em;cursor:pointer;display:grid;place-items:center;transition:transform var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.cta:active{transform:scale(.97)}
+.cta:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.cta span{display:inline-block;transition:opacity var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.cta.swap span{opacity:0;transform:translateY(6px)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}.track{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><span class="brand">Mira</span><button class="skip" id="skip">Skip</button></header>
+<div class="track" id="track" aria-roledescription="carousel" aria-label="Introduction">
+  <section class="slide" role="group" aria-label="1 of 3">
+    <div class="art" aria-hidden="true">
+      <span class="star" style="left:40px;top:50px"></span><span class="star" style="left:290px;top:40px;width:2px;height:2px"></span><span class="star" style="left:250px;top:120px"></span><span class="star" style="left:70px;top:150px;width:2px;height:2px"></span><span class="star" style="left:310px;top:190px"></span>
+      <div class="halo"></div><div class="moon"></div><div class="hill h1"></div><div class="hill h2"></div>
+    </div>
+    <h2>Fall asleep <i>on purpose</i></h2>
+    <p>Mira builds a wind-down for the hour before bed from your own patterns, not a generic checklist.</p>
+  </section>
+  <section class="slide" role="group" aria-label="2 of 3">
+    <div class="art" aria-hidden="true">
+      <div class="stat"><b>7h 42m</b><span>Last night</span></div>
+      <div class="bars" id="bars"></div>
+      <div class="axis"><span>23:10</span><span>01:00</span><span>03:00</span><span>05:00</span><span>06:52</span></div>
+    </div>
+    <h2>See every <i>stage</i></h2>
+    <p>Light, deep and REM from your watch or the phone's mic, charted without a subscription.</p>
+  </section>
+  <section class="slide" role="group" aria-label="3 of 3">
+    <div class="art" aria-hidden="true"><div class="sun"></div><div class="ring"></div><div class="ring-c"><b>72</b><span>Readiness</span></div></div>
+    <h2>Wake in a <i>light phase</i></h2>
+    <p>Set a 30-minute window. Mira picks the moment you are already surfacing, so the alarm feels like a nudge.</p>
+  </section>
+</div>
+<footer>
+  <div class="dots" id="dots" role="tablist" aria-label="Slide"><i class="on"></i><i></i><i></i></div>
+  <button class="cta" id="cta"><span id="ctaText">Continue</span></button>
+</footer>
+<script>
+  const track=document.getElementById('track'),dots=[...document.querySelectorAll('#dots i')],cta=document.getElementById('cta'),ctaText=document.getElementById('ctaText'),skip=document.getElementById('skip');
+  const bars=document.getElementById('bars'),stages=['l','l','d','d','d','l','r','r','l','d','d','l','r','r','l','l','r','l'];
+  stages.forEach((s,i)=>{const b=document.createElement('div');b.className='bar '+(s==='l'?'':s);b.style.height=(s==='d'?95:s==='r'?60:35)+'%';b.style.setProperty('--d',(i*40)+'ms');bars.appendChild(b);});
+  let idx=0,pending=null;
+  function setIdx(i){
+    if(i===idx)return;idx=i;
+    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+    const last=i===2,label=last?'Get started':'Continue';
+    if(ctaText.textContent!==label){cta.classList.add('swap');clearTimeout(pending);pending=setTimeout(()=>{ctaText.textContent=label;cta.classList.remove('swap');},160);}
+    skip.hidden=last;track.querySelectorAll('.slide').forEach((s,k)=>s.setAttribute('aria-current',k===i?'true':'false'));
+    track.children[i].querySelectorAll('.bar,.ring').forEach(el=>{el.style.animation='none';void el.offsetWidth;el.style.animation='';});
+  }
+  track.addEventListener('scroll',()=>setIdx(Math.round(track.scrollLeft/track.clientWidth)));
+  function go(i){track.scrollTo({left:i*track.clientWidth,behavior:'smooth'});}
+  cta.addEventListener('click',()=>{if(idx<2)go(idx+1);else{go(0);}});
+  skip.addEventListener('click',()=>go(2));
+  addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(Math.min(2,idx+1));if(e.key==='ArrowLeft')go(Math.max(0,idx-1));});
+  addEventListener('resize',()=>track.scrollTo({left:idx*track.clientWidth}));
+</script>
+</body>
+</html>

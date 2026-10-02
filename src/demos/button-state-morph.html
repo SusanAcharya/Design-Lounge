@@ -1,0 +1,103 @@
+<!-- Design Lounge piece: button-state-morph · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Button state morph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;600&family=Onest:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1ec;--card:#ffffff;--line:#dce2db;--line-2:#eef1ec;--ink:#14201a;--ink-2:#5f6b64;--ink-3:#8f9a93;--btn:#14201a;--btn-ink:#ffffff;--ok:#1e8a5a;--ok-soft:#e3f2ea;
+  --display:"Gabarito",system-ui,sans-serif;--sans:"Onest",system-ui,sans-serif;
+  --w-idle:220px;--w-busy:44px;--w-paid:140px;--h:44px;--r-card:16px;
+  --t-collapse:200ms;--t-expand:300ms;--t-label:120ms;--t-draw:400ms;--t-spin:900ms;--spin-for:1400ms;--hold:600ms;--reset:350ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);overflow:hidden;display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+.card{width:420px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:28px 28px 24px;box-shadow:0 1px 2px rgba(20,32,26,.04),0 12px 32px -16px rgba(20,32,26,.18)}
+.head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px}
+.head h1{margin:0;font:600 20px var(--display);letter-spacing:-.01em}
+.head span{font-size:12px;color:var(--ink-3)}
+.items{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-2)}
+.items li{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line-2)}
+.items li span:first-child{color:var(--ink)}
+.items li small{display:block;color:var(--ink-3);font-size:12px}
+.items li b{font-weight:500;font-variant-numeric:tabular-nums}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0 20px}
+.total span{color:var(--ink-2)}
+.total b{font:600 22px var(--display);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.row{display:flex;flex-direction:column;align-items:center;gap:14px;padding-top:4px}
+.pay{position:relative;height:var(--h);width:var(--w-idle);border:0;border-radius:calc(var(--h)/2);background:var(--btn);color:var(--btn-ink);font:600 15px var(--display);cursor:pointer;overflow:hidden;
+  transition:width var(--t-collapse) var(--ease),background-color 240ms var(--ease),transform 120ms var(--ease);will-change:width}
+.pay:hover{transform:translateY(-1px)}
+.pay:active{transform:scale(.98)}
+.pay:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.pay[data-state="loading"],.pay[data-state="success"]{width:var(--w-busy);cursor:progress}
+.pay[data-state="paid"]{width:var(--w-paid);background:var(--ok);transition:width var(--t-expand) var(--ease-out),background-color 240ms var(--ease),transform 120ms var(--ease)}
+.pay[data-state="paid"]:focus-visible{outline-color:var(--ok)}
+.lbl{position:absolute;inset:0;display:grid;place-items:center;white-space:nowrap;transition:opacity var(--t-label) var(--ease),transform var(--t-label) var(--ease)}
+.lbl.paid{opacity:0;transform:translateX(10px)}
+.pay[data-state="loading"] .lbl,.pay[data-state="success"] .lbl,.pay[data-state="paid"] .lbl.idle{opacity:0;transform:translateX(-6px)}
+.pay[data-state="paid"] .lbl.paid{opacity:1;transform:translateX(12px);transition-delay:120ms}
+.ico{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;fill:none;stroke:var(--btn-ink);stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity var(--t-label) var(--ease),transform var(--t-expand) var(--ease-out)}
+.spin circle{stroke-dasharray:38 60;transform-origin:center;animation:rot var(--t-spin) linear infinite;animation-play-state:paused}
+.pay[data-state="loading"] .spin{opacity:1}
+.pay[data-state="loading"] .spin circle{animation-play-state:running}
+.check path{stroke-dasharray:24;stroke-dashoffset:24}
+.pay[data-state="success"] .check,.pay[data-state="paid"] .check{opacity:1}
+.pay[data-state="success"] .check path,.pay[data-state="paid"] .check path{stroke-dashoffset:0;transition:stroke-dashoffset var(--t-draw) var(--ease-out) 60ms}
+.pay[data-state="paid"] .check{transform:translateX(-30px)}
+.status{font-size:13px;color:var(--ink-2);min-height:20px;display:flex;align-items:center;gap:8px}
+.status i{width:6px;height:6px;border-radius:50%;background:var(--ok);display:none}
+.status.ok{color:var(--ok)}
+.status.ok i{display:inline-block}
+.hint{font-size:12px;color:var(--ink-3);opacity:0;transition:opacity 240ms var(--ease)}
+.hint.show{opacity:1}
+@keyframes rot{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.pay,.lbl,.ico,.check path,.hint{transition-duration:1ms!important}.spin circle{animation-duration:2s}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <div class="head"><h1 id="t">Order 2418</h1><span>Halden · pickup 18:30</span></div>
+  <ul class="items">
+    <li><span>Sourdough, seeded<small>1 × 800 g</small></span><b>$9.00</b></li>
+    <li><span>Cardamom buns<small>4 × $4.25</small></span><b>$17.00</b></li>
+    <li><span>Coffee beans, Loam blend<small>1 × 250 g</small></span><b>$22.00</b></li>
+  </ul>
+  <div class="total"><span>Total, incl. tax</span><b>$48.00</b></div>
+  <div class="row">
+    <button class="pay" id="pay" type="button" data-state="idle">
+      <span class="lbl idle">Pay $48.00</span>
+      <span class="lbl paid">Paid</span>
+      <svg class="ico spin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
+      <svg class="ico check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    </button>
+    <div class="status" id="status" role="status"><i></i><span id="stxt">Card ending 4471 · no charge until you confirm</span></div>
+    <div class="hint" id="hint">Click the button again to replay</div>
+  </div>
+</section>
+<script>
+  const btn=document.getElementById('pay'),status=document.getElementById('status'),stxt=document.getElementById('stxt'),hint=document.getElementById('hint');
+  let timers=[],ready=false;
+  const later=(fn,ms)=>timers.push(setTimeout(fn,ms));
+  const set=s=>{btn.dataset.state=s;btn.setAttribute('aria-label',{idle:'Pay $48.00',loading:'Processing payment',success:'Payment confirmed',paid:'Paid'}[s]);btn.setAttribute('aria-disabled',String(s==='loading'||s==='success'));};
+  function run(){
+    timers.forEach(clearTimeout);timers=[];ready=false;hint.classList.remove('show');status.classList.remove('ok');
+    set('loading');stxt.textContent='Contacting Fjord Bank…';
+    later(()=>{set('success');stxt.textContent='Confirmed';},200+1400);
+    later(()=>{set('paid');status.classList.add('ok');stxt.textContent='Paid · receipt sent to mara@halden.no';},200+1400+600);
+    later(()=>{ready=true;hint.classList.add('show');},200+1400+600+2000);
+  }
+  btn.addEventListener('click',()=>{
+    const s=btn.dataset.state;
+    if(s==='idle')return run();
+    if(s==='paid'&&ready){timers.forEach(clearTimeout);timers=[];ready=false;hint.classList.remove('show');set('idle');status.classList.remove('ok');stxt.textContent='Card ending 4471 · no charge until you confirm';later(run,350);}
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!-- Design Lounge piece: page-transition-curtain · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Page transition curtain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1b17;--panel:#17302a;--line:#24403a;--ink:#efe9dd;--ink-2:#a29b8b;--ink-3:#6f6a5e;--accent:#c58b4a;
+  --serif:"Playfair Display",Georgia,serif;--sans:"Inter",system-ui,sans-serif;
+  --title:132px;--t-curtain:450ms;--t-letter:600ms;--stagger:28ms;--t-micro:160ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header{height:80px;flex:none;display:flex;align-items:center;padding:0 48px;gap:40px;border-bottom:1px solid var(--line)}
+.brand{font:400 22px var(--serif);letter-spacing:.04em;text-transform:uppercase}
+nav{display:flex;gap:4px;margin-left:24px}
+nav a{position:relative;padding:8px 12px;color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:500;letter-spacing:.01em;border-radius:4px;transition:color var(--t-micro) var(--ease)}
+nav a:hover{color:var(--ink)}
+nav a::after{content:"";position:absolute;left:12px;right:12px;bottom:4px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 240ms var(--ease)}
+nav a[aria-current="page"]{color:var(--ink)}
+nav a[aria-current="page"]::after{transform:scaleX(1)}
+nav a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.book{margin-left:auto;height:40px;padding:0 18px;border:1px solid var(--accent);color:var(--accent);background:none;border-radius:999px;font:500 13px var(--sans);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.book:hover{background:var(--accent);color:var(--bg)}
+.book:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+main{flex:1;display:grid;grid-template-columns:1fr 320px;gap:64px;padding:56px 48px 48px;position:relative}
+.idx{font:400 13px var(--sans);color:var(--ink-3);letter-spacing:.12em;margin-bottom:28px}
+.idx b{color:var(--accent);font-weight:500}
+h1{margin:0 0 28px;font:400 var(--title)/1 var(--serif);letter-spacing:-.02em;display:flex;flex-wrap:wrap}
+h1 span{display:inline-block;overflow:hidden;line-height:1.05;padding-bottom:.06em;margin-bottom:-.06em}
+h1 i{display:inline-block;font-style:normal;transform:translateY(110%);transition:transform var(--t-letter) var(--ease-out);transition-delay:calc(var(--i)*var(--stagger) + 120ms)}
+h1.in i{transform:none}
+h1:not(.in) i,h1:not(.in) ~ .lede,h1:not(.in) ~ .more,dl:not(.in) div{transition:none}
+h1 i.it{font-style:italic;color:var(--accent)}
+.lede{max-width:560px;margin:0 0 32px;font-size:18px;line-height:1.6;color:var(--ink-2);opacity:0;transform:translateY(8px);transition:opacity 400ms var(--ease) 320ms,transform 400ms var(--ease-out) 320ms}
+.in ~ .lede,.in ~ .more{opacity:1;transform:none}
+.more{display:inline-flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-weight:500;font-size:14px;opacity:0;transform:translateY(8px);transition:opacity 400ms var(--ease) 420ms,transform 400ms var(--ease-out) 420ms}
+.more svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t-micro) var(--ease)}
+.more:hover svg{transform:translateX(4px)}
+.more:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+aside{border-left:1px solid var(--line);padding-left:32px;align-self:end}
+aside h2{margin:0 0 18px;font:400 13px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+dl{margin:0}
+dl div{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line);opacity:0;transform:translateY(6px);transition:opacity 360ms var(--ease),transform 360ms var(--ease-out);transition-delay:calc(360ms + var(--i)*60ms)}
+dl.in div{opacity:1;transform:none}
+dt{color:var(--ink-2);font-size:13px}dd{margin:0;font:400 17px var(--serif);color:var(--ink)}
+.foot{position:absolute;left:48px;bottom:40px;font-size:12px;color:var(--ink-3);letter-spacing:.06em}
+.curtain{position:fixed;inset:0;pointer-events:none;z-index:10}
+.panel{position:absolute;top:0;bottom:0;width:50%;background:var(--panel);transition:transform var(--t-curtain) var(--ease);will-change:transform}
+.panel.l{left:0;transform:translateX(-100.5%);border-right:1px solid var(--accent)}
+.panel.r{right:0;transform:translateX(100.5%);border-left:1px solid var(--accent)}
+.curtain.closed .panel{transform:none}
+@media (prefers-reduced-motion:reduce){.panel{transition-duration:1ms}h1 i,.lede,.more,dl div{transition-duration:1ms;transition-delay:0ms}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Halden</div>
+  <nav aria-label="Primary" id="nav">
+    <a href="#rooms" data-page="rooms" aria-current="page">Rooms</a>
+    <a href="#dining" data-page="dining">Dining</a>
+    <a href="#spa" data-page="spa">Spa</a>
+    <a href="#journal" data-page="journal">Journal</a>
+  </nav>
+  <button class="book" type="button">Book a stay</button>
+</header>
+<main id="main" aria-live="polite">
+  <section>
+    <div class="idx" id="idx"><b>01</b> — 04</div>
+    <h1 id="title" aria-label="Rooms"></h1>
+    <p class="lede" id="lede"></p>
+    <a class="more" href="#" id="more">Explore <svg viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+  </section>
+  <aside><h2>At a glance</h2><dl id="facts"></dl></aside>
+  <div class="foot">Halden, Hardangerfjord · 60.06° N</div>
+</main>
+<div class="curtain" id="curtain" aria-hidden="true"><div class="panel l"></div><div class="panel r"></div></div>
+<script>
+  const pages={
+    rooms:{n:'01',t:'Rooms',it:0,p:'Forty-two rooms on three floors, each facing the water. Oak floors, wool blankets from Røros, and a window seat wide enough to sleep in.',m:'See all rooms',f:[['From','NOK 2,400 / night'],['Check-in','15:00'],['Sea view','38 of 42']]},
+    dining:{n:'02',t:'Dining',it:1,p:'One sitting at 19:30. Seven courses from whatever the boats and the garden brought in that morning, served at a single long table.',m:'Tonight’s menu',f:[['Seats','24'],['Tasting menu','NOK 1,650'],['Wine pairing','NOK 890']]},
+    spa:{n:'03',t:'Spa',it:0,p:'A sauna on the jetty, a cold plunge into the fjord, and a stone room warmed to 42 °C. Towels are on the hook; the rest is up to you.',m:'Book a slot',f:[['Open','06:00 – 22:00'],['Water today','9 °C'],['Sauna','85 °C']]},
+    journal:{n:'04',t:'Journal',it:3,p:'Notes from the kitchen, the boathouse and the mountain behind us. Updated most Sundays, weather permitting.',m:'Latest entry',f:[['Entries','31'],['Latest','21 Sep'],['Read time','4 min']]},
+  };
+  const nav=document.getElementById('nav'),title=document.getElementById('title'),lede=document.getElementById('lede'),more=document.getElementById('more'),facts=document.getElementById('facts'),idx=document.getElementById('idx'),curtain=document.getElementById('curtain');
+  let busy=false,current='rooms';
+  function render(key){
+    const p=pages[key];
+    title.classList.remove('in');facts.classList.remove('in');
+    title.setAttribute('aria-label',p.t);
+    title.innerHTML=[...p.t].map((c,i)=>`<span aria-hidden="true"><i class="${i===p.it?'it':''}" style="--i:${i}">${c}</i></span>`).join('');
+    idx.innerHTML=`<b>${p.n}</b> — 04`;
+    lede.textContent=p.p;more.firstChild.textContent=p.m+' ';
+    facts.innerHTML=p.f.map((f,i)=>`<div style="--i:${i}"><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('');
+    void title.offsetWidth;
+    title.classList.add('in');facts.classList.add('in');
+  }
+  function go(key){
+    if(busy||!pages[key])return;busy=true;
+    nav.querySelectorAll('a').forEach(a=>a.toggleAttribute('aria-current',false));
+    nav.querySelector(`[data-page="${key}"]`).setAttribute('aria-current','page');
+    curtain.classList.add('closed');
+    setTimeout(()=>{render(key);current=key;curtain.classList.remove('closed');},490);
+    setTimeout(()=>{busy=false},940);
+  }
+  nav.addEventListener('click',e=>{const a=e.target.closest('a');if(!a)return;e.preventDefault();if(a.dataset.page!==current)go(a.dataset.page);});
+  more.addEventListener('click',e=>e.preventDefault());
+  render('rooms');
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!-- Design Lounge piece: mobile-one-page-checkout · platform: mobile-web · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tessel — Checkout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf9;--surface:#ffffff;--surface-2:#f4f4f2;--line:#e4e3df;--line-strong:#c8c6bf;
+  --ink:#18181b;--ink-2:#5b5b60;--ink-3:#8a8a90;--accent:#c2410c;--accent-2:#a3360a;--accent-ink:#ffffff;--accent-soft:#fdeee6;
+  --error:#b42318;--error-soft:#fdecea;--ok:#1f7a4d;
+  --font:"Public Sans",system-ui,sans-serif;
+  --safe-top:54px;--safe-bottom:80px;--gutter:16px;--r:10px;--r-sm:6px;--r-pill:999px;
+  --shadow-bar:0 -6px 20px rgba(24,24,27,.08);
+  --t-fast:160ms;--t-layout:280ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-y:auto}
+header{margin-top:var(--safe-top);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);border-bottom:1px solid var(--line);background:var(--surface)}
+.brand{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:14px}
+.lock{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3)}
+svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+main{padding:0 0 calc(var(--safe-bottom) + 92px)}
+.summary{background:var(--surface);border-bottom:1px solid var(--line)}
+.summary summary{list-style:none;display:flex;align-items:center;justify-content:space-between;min-height:56px;padding:12px var(--gutter);cursor:pointer;font-weight:500}
+.summary summary::-webkit-details-marker{display:none}
+.summary summary .chev{transition:transform var(--t-layout) var(--ease-out);color:var(--ink-3)}
+.summary[open] summary .chev{transform:rotate(180deg)}
+.summary summary b{font-weight:600;font-variant-numeric:tabular-nums}
+.summary .body{padding:0 var(--gutter) 16px;animation:fade var(--t-layout) var(--ease-out)}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.item{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.thumb{width:52px;height:52px;border-radius:var(--r-sm);background:linear-gradient(160deg,#d8c7b6,#a8917c)}
+.thumb.b{background:linear-gradient(160deg,#9aa6a0,#5f6f69)}
+.item .n{font-weight:500;font-size:14px}.item .d{font-size:12px;color:var(--ink-3)}
+.item .p{font-variant-numeric:tabular-nums;font-weight:500}
+.totals{border-top:1px solid var(--line);margin-top:6px;padding-top:10px;display:grid;gap:6px;font-size:14px;color:var(--ink-2)}
+.totals div{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.totals .t{color:var(--ink);font-weight:600;font-size:15px}
+fieldset{border:0;margin:0;padding:20px var(--gutter) 8px}
+legend{font-weight:600;font-size:17px;letter-spacing:-.01em;padding:0;margin-bottom:12px}
+legend small{font-weight:400;color:var(--ink-3);font-size:13px;margin-left:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f.full{grid-column:1/-1}
+label{font-size:13px;font-weight:500;color:var(--ink-2)}
+input,select{height:48px;width:100%;padding:0 12px;border:1px solid var(--line-strong);border-radius:var(--r);background:var(--surface);font:15px var(--font);color:var(--ink);transition:border-color var(--t-fast),box-shadow var(--t-fast);appearance:none;-webkit-appearance:none}
+.sel{position:relative}.sel svg{position:absolute;right:12px;top:15px;pointer-events:none;color:var(--ink-2)}select{padding-right:36px}
+input:focus,select:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(24,24,27,.10)}
+input::placeholder{color:var(--ink-3)}
+.f.invalid input{border-color:var(--error);background:var(--error-soft)}
+.f.invalid input:focus{box-shadow:0 0 0 3px rgba(180,35,24,.15)}
+.f.valid input{border-color:var(--ok)}
+.msg{font-size:12px;color:var(--error);display:none;align-items:center;gap:4px;min-height:16px}
+.msg svg{width:14px;height:14px;flex:none}
+.f.invalid .msg{display:flex;animation:fade var(--t-fast) var(--ease)}
+.pay{display:grid;gap:8px}
+.card{position:relative}
+.card input{position:absolute;opacity:0;width:1px;height:1px;inset:0}
+.card label{display:flex;align-items:center;gap:12px;min-height:56px;padding:10px 14px;border:1px solid var(--line-strong);border-radius:var(--r);background:var(--surface);cursor:pointer;color:var(--ink);font-size:15px;transition:border-color var(--t-fast),background var(--t-fast),box-shadow var(--t-fast)}
+.card label .radio{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line-strong);flex:none;display:grid;place-items:center;transition:border-color var(--t-fast)}
+.card label .radio::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform var(--t-fast) var(--ease-out)}
+.card label .ic{width:36px;height:24px;border-radius:4px;border:1px solid var(--line);display:grid;place-items:center;font-size:9px;font-weight:700;letter-spacing:.06em;color:var(--ink-2);background:var(--surface-2);flex:none}
+.card label .txt{flex:1}.card label .txt small{display:block;font-size:12px;color:var(--ink-3)}
+.card input:checked+label{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.card input:checked+label .radio{border-color:var(--accent)}
+.card input:checked+label .radio::after{transform:scale(1)}
+.card input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
+.cardfields{display:none;gap:12px;grid-template-columns:1fr 1fr;padding:12px 0 4px}
+.cardfields.on{display:grid;animation:fade var(--t-layout) var(--ease-out)}
+.bar{position:fixed;left:0;right:0;bottom:var(--safe-bottom);z-index:10;padding:12px var(--gutter);background:var(--surface);border-top:1px solid var(--line);box-shadow:var(--shadow-bar)}
+.paybtn{width:100%;height:52px;border:0;border-radius:var(--r-pill);background:var(--accent);color:var(--accent-ink);font:600 16px var(--font);display:flex;align-items:center;justify-content:space-between;padding:0 22px;cursor:pointer;transition:background var(--t-fast),transform var(--t-fast) var(--ease)}
+.paybtn:hover{background:var(--accent-2)}.paybtn:active{transform:scale(.985)}
+.paybtn:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.paybtn b{font-variant-numeric:tabular-nums;font-weight:600}
+.paybtn.busy{background:var(--ink);pointer-events:none}
+.paybtn.done{background:var(--ok)}
+.bar .note{text-align:center;font-size:11px;color:var(--ink-3);margin:8px 0 0}
+.toast{position:fixed;left:var(--gutter);right:var(--gutter);top:calc(var(--safe-top) + 8px);z-index:20;background:var(--error);color:#fff;font-size:13px;font-weight:500;padding:10px 14px;border-radius:var(--r);transform:translateY(-12px);opacity:0;pointer-events:none;transition:opacity var(--t-fast),transform var(--t-layout) var(--ease-out)}
+.toast.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header><span class="brand">Tessel</span><span class="lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Secure checkout</span></header>
+<main>
+<details class="summary" id="summary" open>
+  <summary><span>Order summary <span style="color:var(--ink-3);font-weight:400">· 2 items</span></span><span style="display:flex;align-items:center;gap:10px"><b>£148.00</b><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+  <div class="body">
+    <div class="item"><div class="thumb"></div><div><div class="n">Ridge stoneware bowl, set of 4</div><div class="d">Oat glaze · 18 cm</div></div><div class="p">£96.00</div></div>
+    <div class="item"><div class="thumb b"></div><div><div class="n">Fjord serving platter</div><div class="d">Slate · 32 cm</div></div><div class="p">£48.00</div></div>
+    <div class="totals"><div><span>Subtotal</span><span>£144.00</span></div><div><span>Delivery (tracked, 2–3 days)</span><span>£4.00</span></div><div class="t"><span>Total</span><span>£148.00</span></div></div>
+  </div>
+</details>
+<form id="form" novalidate>
+  <fieldset><legend>Contact</legend>
+    <div class="grid">
+      <div class="f full"><label for="email">Email</label><input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required><span class="msg" role="alert"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter a valid email address</span></div>
+    </div>
+  </fieldset>
+  <fieldset><legend>Delivery address</legend>
+    <div class="grid">
+      <div class="f"><label for="fn">First name</label><input id="fn" name="given-name" autocomplete="shipping given-name" required><span class="msg" role="alert"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Required</span></div>
+      <div class="f"><label for="ln">Last name</label><input id="ln" name="family-name" autocomplete="shipping family-name" required><span class="msg" role="alert"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Required</span></div>
+      <div class="f full"><label for="a1">Address</label><input id="a1" name="address-line1" autocomplete="shipping address-line1" placeholder="House number and street" required><span class="msg" role="alert"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter your street address</span></div>
+      <div class="f"><label for="city">Town or city</label><input id="city" name="address-level2" autocomplete="shipping address-level2" required><span class="msg" role="alert"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Required</span></div>
+      <div class="f"><label for="pc">Postcode</label><input id="pc" name="postal-code" autocomplete="shipping postal-code" inputmode="text" autocapitalize="characters" pattern="[A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}" required><span class="msg" role="alert"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter a UK postcode</span></div>
+      <div class="f full"><label for="country">Country</label><div class="sel"><select id="country" name="country" autocomplete="shipping country"><option value="GB">United Kingdom</option><option value="IE">Ireland</option><option value="NL">Netherlands</option><option value="DK">Denmark</option></select><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      <div class="f full"><label for="tel">Phone <span style="font-weight:400;color:var(--ink-3)">(for the courier)</span></label><input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="+44"></div>
+    </div>
+  </fieldset>
+  <fieldset><legend>Payment</legend>
+    <div class="pay" role="radiogroup" aria-label="Payment method">
+      <div class="card"><input type="radio" name="pay" id="p1" value="card" checked><label for="p1"><span class="radio"></span><span class="ic">CARD</span><span class="txt">Debit or credit card<small>Visa, Mastercard, Amex</small></span></label></div>
+      <div class="card"><input type="radio" name="pay" id="p2" value="wallet"><label for="p2"><span class="radio"></span><span class="ic">PAY</span><span class="txt">Device wallet<small>Confirm with your fingerprint or face</small></span></label></div>
+      <div class="card"><input type="radio" name="pay" id="p3" value="bank"><label for="p3"><span class="radio"></span><span class="ic">BANK</span><span class="txt">Pay by bank<small>Approve in your banking app</small></span></label></div>
+    </div>
+    <div class="cardfields on" id="cardfields">
+      <div class="f full"><label for="cc">Card number</label><input id="cc" name="cc-number" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456" pattern="[\d ]{16,19}" required><span class="msg" role="alert"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter the 16-digit card number</span></div>
+      <div class="f"><label for="exp">Expiry</label><input id="exp" name="cc-exp" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / YY" pattern="(0[1-9]|1[0-2]) ?/ ?\d{2}" required><span class="msg" role="alert"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>MM / YY</span></div>
+      <div class="f"><label for="cvc">Security code</label><input id="cvc" name="cc-csc" inputmode="numeric" autocomplete="cc-csc" placeholder="123" pattern="\d{3,4}" maxlength="4" required><span class="msg" role="alert"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>3 or 4 digits</span></div>
+    </div>
+  </fieldset>
+</form>
+</main>
+<div class="bar">
+  <button class="paybtn" id="paybtn" type="submit" form="form"><span id="paylabel">Pay now</span><b>£148.00</b></button>
+  <p class="note">By paying you agree to Tessel's terms. Returns within 30 days.</p>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+  const form=document.getElementById('form'),btn=document.getElementById('paybtn'),label=document.getElementById('paylabel'),toast=document.getElementById('toast'),cf=document.getElementById('cardfields');
+  const fields=()=>[...form.querySelectorAll('input[required]')].filter(i=>i.offsetParent!==null);
+  function check(i,show){const ok=i.checkValidity();const f=i.closest('.f');if(show||f.classList.contains('invalid')){f.classList.toggle('invalid',!ok);}f.classList.toggle('valid',ok&&i.value.length>0);i.setAttribute('aria-invalid',String(!ok));return ok;}
+  form.addEventListener('focusout',e=>{if(e.target.matches('input[required]'))check(e.target,true);});
+  form.addEventListener('input',e=>{if(e.target.matches('input[required]'))check(e.target,false);});
+  form.addEventListener('change',e=>{if(e.target.name==='pay'){const on=e.target.value==='card';cf.classList.toggle('on',on);cf.querySelectorAll('input').forEach(i=>i.required=on);}});
+  let t;function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(t);t=setTimeout(()=>toast.classList.remove('on'),2600);}
+  form.addEventListener('submit',e=>{e.preventDefault();if(btn.classList.contains('done')){reset();return;}
+    const bad=fields().filter(i=>!check(i,true));
+    if(bad.length){say(bad.length+(bad.length===1?' field needs':' fields need')+' attention');bad[0].focus({preventScroll:false});bad[0].scrollIntoView({block:'center',behavior:'smooth'});return;}
+    btn.classList.add('busy');label.textContent='Processing';
+    setTimeout(()=>{btn.classList.remove('busy');btn.classList.add('done');label.textContent='Order placed · tap to reset';},1200);});
+  function reset(){form.reset();btn.classList.remove('done');label.textContent='Pay now';cf.classList.add('on');form.querySelectorAll('.f').forEach(f=>f.classList.remove('invalid','valid'));form.querySelectorAll('[aria-invalid]').forEach(i=>i.removeAttribute('aria-invalid'));}
+</script>
+</body>
+</html>

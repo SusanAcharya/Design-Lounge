@@ -1,0 +1,118 @@
+<!-- Design Lounge piece: odometer-counter · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Odometer counter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f1e8;--surface:#fffdf9;--line:#e4dccf;--line-2:#efe8dc;--ink:#2b241b;--ink-2:#7d7263;--ink-3:#a89c8b;--accent:#2e7d5b;--accent-soft:#e2efe7;--neg:#b4462f;
+  --serif:"Fraunces",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;
+  --digit:112px;--digit-w:.62em;--r:12px;
+  --t-roll:700ms;--t-micro:160ms;--cascade:24ms;--tick:3s;--ease-out:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header{height:64px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid var(--line)}
+.brand{font:600 18px var(--serif);font-variation-settings:"opsz" 18;letter-spacing:-.01em}
+.brand span{color:var(--ink-3);font:400 13px var(--sans);margin-left:10px}
+.live{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2);letter-spacing:.06em;text-transform:uppercase}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 3s var(--ease) infinite}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 40px 48px}
+.label{font-size:13px;color:var(--ink-2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;display:flex;gap:16px;align-items:center}
+.label b{font-weight:500;color:var(--ink)}
+.odo{display:flex;align-items:baseline;font:600 var(--digit)/1 var(--serif);font-variation-settings:"opsz" 144;letter-spacing:-.03em;font-variant-numeric:tabular-nums;height:1.05em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cur{font-size:.55em;color:var(--ink-2);margin-right:.08em;align-self:flex-start;padding-top:.1em}
+.cell{display:inline-block;height:1em;overflow:hidden;position:relative;line-height:1}
+.cell.d{width:var(--digit-w)}
+.cell.c{width:.28em}
+.strip{display:flex;flex-direction:column;transition:transform var(--t-roll) var(--ease-out);transition-delay:var(--d,0ms);will-change:transform}
+.strip span{display:block;height:1em;text-align:center}
+.cell.new{animation:widen 400ms var(--ease-out)}
+.meta{display:flex;gap:40px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+.meta div{font-size:13px;color:var(--ink-2)}
+.meta b{display:block;font:500 22px var(--serif);font-variation-settings:"opsz" 22;color:var(--ink);margin-top:2px;font-variant-numeric:tabular-nums}
+.meta b.up{color:var(--accent)}
+.actions{display:flex;gap:10px;margin-top:36px;flex-wrap:wrap}
+.btn{height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 14px var(--sans);cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:border-color var(--t-micro),background var(--t-micro),transform var(--t-micro) var(--ease)}
+.btn:hover{border-color:var(--ink-3)}
+.btn:active{transform:scale(.97)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:#286f51}
+.btn.neg{color:var(--neg)}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn kbd{font:11px var(--sans);color:inherit;opacity:.6;border:1px solid currentColor;border-radius:4px;padding:0 5px;line-height:16px}
+.log{margin-top:auto;font-size:12px;color:var(--ink-3);display:flex;gap:12px;align-items:center}
+.log span{color:var(--ink-2)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes widen{from{width:0;opacity:0}}
+@media (prefers-reduced-motion:reduce){.strip{transition:none}.cell.new{animation:none}.live i{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Marrow<span>Revenue · September</span></div>
+  <div class="live"><i></i>Live · auto-tick every 3 s</div>
+</header>
+<main>
+  <div class="label"><span>Gross revenue, month to date</span><b id="upd">updated just now</b></div>
+  <div class="odo" id="odo"><span class="sr" id="sr" role="status" aria-live="polite" aria-atomic="true">$1,284,930</span><span class="cur" aria-hidden="true">$</span><span id="cells" aria-hidden="true"></span></div>
+  <div class="meta">
+    <div>Today<b class="up" id="today">+$4,120</b></div>
+    <div>Transactions<b id="tx">14</b></div>
+    <div>Avg. order<b id="avg">$294</b></div>
+    <div>Last event<b id="last">Subscription</b></div>
+  </div>
+  <div class="actions">
+    <button class="btn primary" type="button" data-add="1250" data-kind="Invoice"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add invoice $1,250 <kbd>1</kbd></button>
+    <button class="btn" type="button" data-add="49" data-kind="Subscription"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add subscription $49 <kbd>2</kbd></button>
+    <button class="btn" type="button" data-add="8900" data-kind="Annual plan"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add annual plan $8,900 <kbd>3</kbd></button>
+    <button class="btn neg" type="button" data-add="-120" data-kind="Refund"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg>Refund $120 <kbd>4</kbd></button>
+  </div>
+  <div class="log">Each digit column is a 0–9 strip that translates vertically · 700 ms · <span id="rolls">0 rolls</span></div>
+</main>
+<script>
+  const cells=document.getElementById('cells');
+  let value=1284930,today=4120,tx=14,rolls=0,list=[];
+  const fmt=n=>Math.abs(Math.round(n)).toLocaleString('en');
+  function makeCell(ch){const c=document.createElement('span');c.className='cell '+(ch===','?'c':'d');
+    if(ch===','){c.textContent=',';}else{const s=document.createElement('span');s.className='strip';s.innerHTML='0123456789'.split('').map(d=>`<span>${d}</span>`).join('');c.appendChild(s);c.dataset.v='0';}
+    return c;}
+  function render(){
+    const str=fmt(value),chars=[...str];
+    while(list.length<chars.length){const c=makeCell(chars[chars.length-1-list.length]);c.classList.add('new');list.push(c);cells.prepend(c);}
+    while(list.length>chars.length){list.pop().remove();}
+    for(let i=0;i<chars.length;i++){
+      const ch=chars[i],c=list[chars.length-1-i],col=chars.length-1-i;
+      if(ch===','){if(!c.classList.contains('c')){list[chars.length-1-i]=makeCell(',');c.replaceWith(list[chars.length-1-i]);}continue;}
+      if(c.classList.contains('c')){const n=makeCell(ch);list[chars.length-1-i]=n;c.replaceWith(n);}
+      const cell=list[chars.length-1-i],strip=cell.firstChild;
+      if(cell.dataset.v!==ch){cell.dataset.v=ch;strip.style.setProperty('--d',(col*24)+'ms');strip.style.transform=`translateY(-${ch}em)`;}
+    }
+    document.getElementById('sr').textContent='$'+str;
+  }
+  function add(n,kind){
+    value=Math.max(0,value+n);today+=n;tx++;rolls++;
+    document.getElementById('today').textContent=(today<0?'−':'+')+'$'+fmt(today);
+    document.getElementById('tx').textContent=tx;
+    document.getElementById('avg').textContent='$'+fmt(Math.abs(today)/tx);
+    document.getElementById('last').textContent=kind;
+    document.getElementById('rolls').textContent=rolls+(rolls===1?' roll':' rolls');
+    document.getElementById('upd').textContent='updated '+new Date().toLocaleTimeString('en-GB');
+    render();
+  }
+  const btns=[...document.querySelectorAll('.btn')];
+  btns.forEach(b=>b.addEventListener('click',()=>add(+b.dataset.add,b.dataset.kind)));
+  addEventListener('keydown',e=>{const i=+e.key-1;if(btns[i]&&!e.metaKey&&!e.ctrlKey)btns[i].click();});
+  const kinds=[['Card payment',[19,29,49,89,120,240]],['Invoice',[340,780,1250]],['Subscription',[49,49,99]]];
+  setInterval(()=>{const k=kinds[Math.floor(Math.random()*kinds.length)];add(k[1][Math.floor(Math.random()*k[1].length)],k[0]);},3000);
+  render();
+</script>
+</body>
+</html>

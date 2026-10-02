@@ -1,0 +1,93 @@
+<!-- Design Lounge piece: kinetic-type-marquee · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Kinetic type marquee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#efebe3;--bg-2:#e6e1d7;--ink:#15140f;--ink-2:#5f5b52;--ink-3:#8f8a7f;--line:#d4cec2;--accent:#d8432b;
+  --font:"Bricolage Grotesque",system-ui,sans-serif;
+  --row-h:176px;--type:136px;--stroke:1.5px;--gap:.5em;
+  --t-micro:160ms;--t-breathe:7s;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.4 var(--font);font-variation-settings:"opsz" 14;overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header{height:72px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 32px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15px;letter-spacing:-.01em}
+.brand i{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block}
+.meta{display:flex;gap:28px;font-size:12px;color:var(--ink-2);letter-spacing:.02em}
+.meta b{font-weight:500;color:var(--ink)}
+.stage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:0;padding:8px 0}
+.row{height:var(--row-h);display:flex;align-items:center;overflow:hidden;white-space:nowrap;cursor:ew-resize;position:relative;border-top:1px solid var(--line);outline:none}
+.row:last-child{border-bottom:1px solid var(--line)}
+.row:focus-visible::after{content:"";position:absolute;inset:4px;border:2px solid var(--accent);pointer-events:none}
+.track{display:flex;will-change:transform}
+.copy{display:flex;flex:none;padding-right:var(--gap);font-size:var(--type);line-height:1;font-variation-settings:"opsz" 96,"wght" 420;letter-spacing:-.03em;text-transform:uppercase;animation:breathe var(--t-breathe) ease-in-out infinite alternate}
+.copy em{font-style:normal;color:var(--accent);padding:0 .22em}
+.row[data-dir="-1"] .copy{animation-delay:-2.3s}
+.row.outline .copy{color:transparent;-webkit-text-stroke:var(--stroke) var(--ink);animation-delay:-4.6s}
+.row.outline .copy em{-webkit-text-stroke:0;color:var(--accent)}
+.row .speed{position:absolute;right:20px;top:12px;font-size:11px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;opacity:0;transition:opacity var(--t-micro) var(--ease);background:var(--bg);padding:2px 6px}
+.row:hover .speed,.row:focus-visible .speed{opacity:1}
+footer{height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 32px;font-size:12px;color:var(--ink-2)}
+footer .hint{display:flex;align-items:center;gap:8px}
+footer svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+@keyframes breathe{from{font-variation-settings:"opsz" 96,"wght" 300}to{font-variation-settings:"opsz" 96,"wght" 720}}
+@media (prefers-reduced-motion:reduce){.copy{animation:none}.track{transform:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><i></i>Tessel Type</div>
+  <div class="meta"><span>Specimen <b>No. 04</b></span><span>Tessel Grotesk <b>Variable</b></span><span>wght <b>200–800</b></span><span>opsz <b>12–96</b></span></div>
+</header>
+<section class="stage" aria-label="Type specimen marquee">
+  <div class="row" data-dir="1" data-speed="80" tabindex="0" aria-label="Row one, scrolling left">
+    <div class="track"><div class="copy">Tessel Grotesk<em>·</em>Twelve styles<em>·</em>Now shipping<em>·</em></div><div class="copy" aria-hidden="true">Tessel Grotesk<em>·</em>Twelve styles<em>·</em>Now shipping<em>·</em></div></div>
+    <span class="speed">80 px/s</span>
+  </div>
+  <div class="row outline" data-dir="-1" data-speed="56" tabindex="0" aria-label="Row two, outlined, scrolling right">
+    <div class="track"><div class="copy">Optical sizes 12 & 96<em>·</em>Latin Extended<em>·</em>Cyrillic<em>·</em></div><div class="copy" aria-hidden="true">Optical sizes 12 & 96<em>·</em>Latin Extended<em>·</em>Cyrillic<em>·</em></div></div>
+    <span class="speed">56 px/s</span>
+  </div>
+  <div class="row" data-dir="1" data-speed="112" tabindex="0" aria-label="Row three, scrolling left">
+    <div class="track"><div class="copy">Web, app & print<em>·</em>From €48<em>·</em>Trial free for 30 days<em>·</em></div><div class="copy" aria-hidden="true">Web, app & print<em>·</em>From €48<em>·</em>Trial free for 30 days<em>·</em></div></div>
+    <span class="speed">112 px/s</span>
+  </div>
+</section>
+<footer>
+  <span class="hint"><svg viewBox="0 0 24 24"><path d="M3 12h18M15 6l6 6-6 6"/></svg>Hover or focus a row to slow it to a quarter speed</span>
+  <span>Weight breathes 300 → 720 every 7 s</span>
+</footer>
+<script>
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rows=[...document.querySelectorAll('.row')].map(el=>{
+    const track=el.querySelector('.track'),copy=el.querySelector('.copy');
+    const r={el,track,copy,dir:+el.dataset.dir,base:+el.dataset.speed,v:+el.dataset.speed,x:0,w:copy.offsetWidth,slow:false};
+    const set=s=>{r.slow=s};
+    el.addEventListener('pointerenter',()=>set(true));el.addEventListener('pointerleave',()=>set(false));
+    el.addEventListener('focus',()=>set(true));el.addEventListener('blur',()=>set(false));
+    new ResizeObserver(()=>{r.w=copy.offsetWidth})?.observe(copy);
+    return r;
+  });
+  let last=performance.now();
+  function frame(now){
+    const dt=Math.min(48,now-last)/1000;last=now;
+    for(const r of rows){
+      const target=r.slow?r.base*.25:r.base;
+      r.v+=(target-r.v)*.06;
+      r.x-=r.dir*r.v*dt;
+      if(r.w>0){r.x=((r.x%r.w)+r.w)%r.w-r.w}
+      r.track.style.transform=`translate3d(${r.x.toFixed(2)}px,0,0)`;
+    }
+    requestAnimationFrame(frame);
+  }
+  if(!reduce)requestAnimationFrame(frame);
+</script>
+</body>
+</html>

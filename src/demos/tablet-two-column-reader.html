@@ -1,0 +1,120 @@
+<!-- Design Lounge piece: tablet-two-column-reader · platform: tablet · 1180x820 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Cartographer's Tide — Reader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4efe6;--paper:#faf6ee;--line:#e2d9c8;--line-strong:#c8bca4;--ink:#2a2620;--ink-2:#6b6256;--ink-3:#9a9080;--accent:#8b3a2f;--accent-ink:#faf6ee;--scrim:rgba(42,38,32,.4);
+  --serif:"Libre Caslon Text",Georgia,serif;--sans:"Work Sans",system-ui,sans-serif;
+  --fs:18px;--lh:1.62;--gutter:56px;--col-gap:48px;--h-bar:56px;--r:10px;--r-pill:999px;
+  --shadow-sheet:0 24px 60px rgba(42,38,32,.25);
+  --t-fast:160ms;--t-turn:420ms;--t-sheet:320ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:var(--fs)/var(--lh) var(--serif);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+button{font:500 13px var(--sans);color:inherit;cursor:pointer;background:transparent;border:0}
+.bar{height:var(--h-bar);flex:none;display:flex;align-items:center;gap:8px;padding:0 24px;border-bottom:1px solid var(--line)}
+.bar .title{font:400 15px var(--sans);color:var(--ink-2);margin-right:auto;display:flex;align-items:baseline;gap:10px}
+.bar .title b{font:400 17px var(--serif);color:var(--ink);letter-spacing:-.005em}
+.bar .title span{font-style:italic;font-family:var(--serif);font-size:14px}
+.ib{height:36px;min-width:36px;padding:0 10px;border-radius:var(--r);display:inline-flex;align-items:center;gap:6px;color:var(--ink-2)}
+.ib:hover{background:var(--line);color:var(--ink)}
+.ib:focus-visible,.chap:focus-visible,.turn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ib[aria-pressed="true"]{color:var(--accent)}
+.size{display:flex;align-items:center;border:1px solid var(--line);border-radius:var(--r-pill);padding:2px}
+.size button{height:30px;width:38px;border-radius:var(--r-pill);font-family:var(--serif);color:var(--ink-2)}
+.size button:hover{background:var(--line);color:var(--ink)}
+.size button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.size button:disabled{opacity:.35;cursor:default;background:transparent}
+.size .s{font-size:13px}.size .l{font-size:19px}
+.size output{font:400 12px var(--sans);color:var(--ink-3);width:44px;text-align:center}
+.stage{flex:1;min-height:0;position:relative;display:flex;align-items:stretch}
+.turn{width:var(--gutter);flex:none;display:grid;place-items:center;color:var(--ink-3);border-radius:0}
+.turn:hover{color:var(--accent)}
+.turn:disabled{opacity:.25;cursor:default;color:var(--ink-3)}
+.turn svg{width:28px;height:28px}
+.book{flex:1;min-width:0;position:relative;overflow:hidden;margin:32px 0 28px}
+.book::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line);pointer-events:none}
+.flow{height:100%;columns:2;column-gap:var(--col-gap);column-fill:auto;transition:transform var(--t-turn) var(--ease);will-change:transform}
+.flow h2{font:400 13px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 6px;break-after:avoid}
+.flow h3{font:400 calc(var(--fs) * 1.7)/1.15 var(--serif);letter-spacing:-.01em;margin:0 0 .9em;break-after:avoid}
+.flow p{margin:0 0 0;text-indent:1.6em;hyphens:auto;text-align:justify;widows:2;orphans:2}
+.flow h3+p{text-indent:0}
+.flow h3+p::first-letter{font-size:2.9em;float:left;line-height:.85;padding:.06em .08em 0 0;color:var(--accent)}
+.flow .sec{margin-top:2.2em;break-before:column}
+.flow .sec:first-child{margin-top:0;break-before:auto}
+.foot{height:36px;flex:none;display:flex;align-items:center;justify-content:center;gap:16px;font:400 12px var(--sans);color:var(--ink-3);border-top:1px solid var(--line)}
+.foot .prog{width:220px;height:2px;background:var(--line);border-radius:1px;overflow:hidden}
+.foot .prog i{display:block;height:100%;background:var(--accent);transition:width var(--t-turn) var(--ease)}
+.scrim{position:absolute;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity var(--t-sheet) var(--ease);z-index:5}
+.sheet{position:absolute;left:50%;top:50%;width:520px;transform:translate(-50%,-46%) scale(.98);opacity:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sheet);padding:22px 24px;z-index:6;visibility:hidden;transition:opacity var(--t-sheet) var(--ease),transform var(--t-sheet) var(--ease-sheet),visibility 0s linear var(--t-sheet)}
+.open .scrim{opacity:1;pointer-events:auto}
+.open .sheet{opacity:1;transform:translate(-50%,-50%) scale(1);visibility:visible;transition-delay:0s}
+.sheet h4{margin:0 0 12px;font:400 20px var(--serif)}
+.chap{display:flex;align-items:baseline;justify-content:space-between;width:100%;text-align:left;padding:12px 8px;border-top:1px solid var(--line);font:400 var(--fs) var(--serif);color:var(--ink);border-radius:6px}
+.chap:hover{background:var(--bg)}
+.chap small{font:400 12px var(--sans);color:var(--ink-3)}
+.chap[aria-current="true"]{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="title"><b>The Cartographer's Tide</b><span>Hedda Fosse</span></div>
+  <button class="ib" id="toc" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Chapters</button>
+  <div class="size" role="group" aria-label="Text size"><button class="s" id="dec" aria-label="Smaller text">A</button><output id="fsout" aria-live="polite">18 px</output><button class="l" id="inc" aria-label="Larger text">A</button></div>
+</header>
+<div class="stage" id="stage">
+  <button class="turn" id="prev" aria-label="Previous page"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div class="book" id="book">
+    <div class="flow" id="flow">
+      <section class="sec"><h2>Chapter one</h2><h3>The Sounding Line</h3>
+      <p>Maren Aske had measured the harbour at Vik eleven times, and each time the sea had refused to agree with itself. The lead came up with grey mud one morning and shingle the next; the depth by the mole was nine fathoms in April and seven in June, as if the seabed breathed. Her father, who had held the survey before her, had written in the margin of his last chart a single word in pencil: patience. She had inherited the pencil along with the word, and both were nearly used up.</p>
+      <p>The customs house lent her its upper room in exchange for a fair copy of the soundings, and it was there, under a window that faced the wrong way for light, that she laid out the sheets each evening and tried to make one coastline out of eleven. The town below went about its business without much interest in being drawn. Boats came in low with herring and went out high and empty. Someone was always mending a net on the quay, and it was never the same person twice.</p>
+      <p>It was the boy from the lighthouse who told her about the tide. He came up the stairs two at a time with a message from the keeper and stopped in the doorway, looking at the sheets pinned along the wall. He said his grandfather used to say that Vik had two seas, a summer one and a winter one, and that the winter one kept a different floor. Maren asked him whether his grandfather had ever written anything down. The boy laughed at that, the way people laugh at a question they have never thought to ask, and said no, but the keeper's log went back sixty years and nobody had read it.</p>
+      <p>She walked out to the light that same afternoon along the causeway, the wind coming off the water in flat, patient shoves. The keeper was a narrow man named Solvang who kept his log in a cupboard with the lamp oil and treated both as equally flammable. He let her take the volumes one at a time and only after she had signed for them. The first one smelled of paraffin and salt and opened, on its third page, to a drawing of the harbour done in a hand she recognised at once as her father's.</p>
+      </section>
+      <section class="sec"><h2>Chapter two</h2><h3>Winter Floor</h3>
+      <p>The logs were not soundings, but they were something. Solvang's predecessors had recorded, each day at dusk, the height of the water against the third step of the light, and whether the mole was showing. Read across sixty winters the numbers made a shape, and the shape was not the one on any chart. Maren copied them out in columns until her fingers ached and then, because she could not think of a better way, drew them, week by week, as a line that rose and fell across the year like a long slow breath.</p>
+      <p>It was Solvang who noticed that the line had a second line hidden in it. He stood behind her chair, smelling of oil, and said that every ninth year or so the winter water sat a hand higher than it ought to and stayed there through to March. He said it as if it were a fact about the weather, which to him it was. Maren, who had been trained to believe that the sea was a surface and the land a floor, found that she had to sit very still for a moment while the two ideas changed places.</p>
+      <p>She wrote to the survey office in the capital and received, six weeks later, a letter that thanked her for her diligence and reminded her that the chart was due at midsummer. She read it twice, folded it into the log where her father's drawing was, and went back to the columns. Whatever the office wanted, the fishermen of Vik would go out on the winter sea, and the winter sea kept a different floor.</p>
+      <p>By February she had a theory and a cough. The theory was that a bar of gravel moved in from the outer sound on the big winter tides and lay across the harbour mouth until the spring run-off pushed it back, and that in the ninth years it came in further and stayed. The cough was from the upper room. Solvang, when she told him, nodded once and said that his grandfather had called it the doorstep, and that nobody had known what he meant.</p>
+      </section>
+      <section class="sec"><h2>Chapter three</h2><h3>Fair Copy</h3>
+      <p>The chart she sent to the capital at midsummer had two harbours on it. The first was drawn in the customary way, in ink, with the soundings of April and the mole and the light and a compass rose that she had allowed herself to make slightly too handsome. The second was drawn over it in a fine red line, a floor that came and went, with a note in the margin in her own hand. She did not use the word patience. She wrote, instead, what the keeper's grandfather had called it, and gave the years.</p>
+      <p>The office did not reply for a long time, and when it did the reply was addressed to her father. She kept it anyway. The chart itself went into the great flat drawers in the capital where charts go, and she supposed that would be the end of it, until a letter came from a skipper in the north who had seen a copy and wanted to know whether the doorstep was likely to be in this year, because he had a cargo and a shallow keel and a wife who worried.</p>
+      <p>Maren wrote back the same day. She told him the year, and the height, and what the third step would look like at dusk if the bar was in. Then she went down to the quay, where someone she had not met before was mending a net, and stood for a while watching the water do what it had always done, which was to keep its own counsel and, very occasionally, to let someone in on it.</p>
+      </section>
+    </div>
+  </div>
+  <button class="turn" id="next" aria-label="Next page"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  <div class="scrim" id="scrim"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh" aria-hidden="true"><h4 id="sh">Chapters</h4><div id="chaps"></div></div>
+</div>
+<footer class="foot"><span id="pg">Page 1 of 3</span><div class="prog"><i id="prog"></i></div><span>Chapter one</span></footer>
+<script>
+  const book=document.getElementById('book'),flow=document.getElementById('flow'),prev=document.getElementById('prev'),next=document.getElementById('next'),pg=document.getElementById('pg'),prog=document.getElementById('prog'),stage=document.getElementById('stage'),chaps=document.getElementById('chaps'),toc=document.getElementById('toc'),fsout=document.getElementById('fsout');
+  const SIZES=[16,18,20,22];let si=1,page=0,pages=1;
+  const step=()=>book.clientWidth+parseFloat(getComputedStyle(flow).columnGap),left=el=>el.getBoundingClientRect().left-flow.getBoundingClientRect().left;
+  function layout(){pages=Math.max(1,Math.round(flow.scrollWidth/step()));page=Math.min(page,pages-1);go(page);}
+  function go(p){page=Math.max(0,Math.min(pages-1,p));flow.style.transform=`translateX(${-page*step()}px)`;pg.textContent=`Page ${page+1} of ${pages}`;prog.style.width=((page+1)/pages*100)+'%';prev.disabled=page===0;next.disabled=page===pages-1;
+    const secs=[...flow.querySelectorAll('.sec')];let cur=0;secs.forEach((s,i)=>{if(left(s)<=page*step()+book.clientWidth/2)cur=i;});document.querySelector('.foot span:last-child').textContent=secs[cur].querySelector('h2').textContent;
+    [...chaps.children].forEach((c,i)=>c.setAttribute('aria-current',String(i===cur)));}
+  prev.addEventListener('click',()=>go(page-1));next.addEventListener('click',()=>go(page+1));
+  addEventListener('keydown',e=>{if(stage.classList.contains('open')){if(e.key==='Escape')openToc(false);return;}if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(page+1);}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(page-1);}});
+  function setSize(i){si=Math.max(0,Math.min(SIZES.length-1,i));document.documentElement.style.setProperty('--fs',SIZES[si]+'px');fsout.textContent=SIZES[si]+' px';document.getElementById('dec').disabled=si===0;document.getElementById('inc').disabled=si===SIZES.length-1;layout();}
+  document.getElementById('dec').addEventListener('click',()=>setSize(si-1));document.getElementById('inc').addEventListener('click',()=>setSize(si+1));
+  flow.querySelectorAll('.sec').forEach((s,i)=>{const b=document.createElement('button');b.className='chap';b.innerHTML=`<span>${s.querySelector('h3').textContent}</span><small>${s.querySelector('h2').textContent}</small>`;b.addEventListener('click',()=>{go(Math.floor((left(s)+8)/step()));openToc(false);});chaps.appendChild(b);});
+  function openToc(o){stage.classList.toggle('open',o);toc.setAttribute('aria-expanded',String(o));document.getElementById('sheet').setAttribute('aria-hidden',String(!o));if(o)chaps.querySelector('[aria-current="true"]').focus();else toc.focus();}
+  toc.addEventListener('click',()=>openToc(!stage.classList.contains('open')));document.getElementById('scrim').addEventListener('click',()=>openToc(false));
+  addEventListener('resize',layout);document.fonts?document.fonts.ready.then(layout):layout();setSize(1);
+</script>
+</body>
+</html>

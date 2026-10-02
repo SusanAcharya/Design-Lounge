@@ -1,0 +1,159 @@
+---
+import Base from '../layouts/Base.astro';
+import DeviceFrame from '../components/DeviceFrame.astro';
+import PieceCard from '../components/PieceCard.astro';
+import { COLLECTIONS } from '../data/collections';
+import { getPieces, numberMap, TYPE_META } from '../lib/pieces';
+
+const all = await getPieces();
+const nums = numberMap(all);
+const newest = [...all].reverse();
+const featured = all.filter((p) => p.data.featured);
+const pick = (platform: string) => featured.find((p) => p.data.platform === platform) ?? newest.find((p) => p.data.platform === platform);
+const heroWeb = pick('web') ?? newest[0];
+const heroPhone = pick('mobile-app') ?? pick('pwa') ?? pick('mobile-web');
+const heroTablet = pick('tablet');
+const fresh = newest.slice(0, 8);
+const byId = new Map(all.map((p) => [p.id, p]));
+const shelves = COLLECTIONS.map((c) => ({ ...c, items: c.pieces.map((s) => byId.get(s)).filter(Boolean) })).filter((c) => c.items.length >= 3).slice(0, 3);
+---
+<Base>
+  <section class="hero wrap">
+    <div class="hero-text">
+      <p class="eyebrow reveal">{String(all.length).padStart(3, '0')} live pieces · web, mobile, app, PWA, tablet</p>
+      <h1 class="display h1"><span class="reveal" style="--d:60ms">Interfaces</span> <span class="reveal" style="--d:140ms">worth</span> <i class="reveal" style="--d:220ms">sitting with.</i></h1>
+      <p class="lede reveal" style="--d:300ms">Every piece runs live, is one readable file, and ships with a brief your coding agent can rebuild it from.</p>
+      <div class="acts reveal" style="--d:380ms">
+        <a class="btn primary" href="/browse">Browse the floor</a>
+        <a class="btn ghost" href="/guide">How briefs work</a>
+      </div>
+    </div>
+    <div class="hero-wall reveal" style="--d:160ms" aria-label="Featured pieces">
+      <a class="wall-item web" href={`/p/${heroWeb.id}`} aria-label={heroWeb.data.title}>
+        <DeviceFrame slug={heroWeb.id} platform={heroWeb.data.platform} title={heroWeb.data.title} eager />
+      </a>
+      {heroPhone && (
+        <a class="wall-item phone" href={`/p/${heroPhone.id}`} aria-label={heroPhone.data.title}>
+          <DeviceFrame slug={heroPhone.id} platform={heroPhone.data.platform} title={heroPhone.data.title} eager />
+        </a>
+      )}
+      {heroTablet && (
+        <a class="wall-item tablet" href={`/p/${heroTablet.id}`} aria-label={heroTablet.data.title}>
+          <DeviceFrame slug={heroTablet.id} platform={heroTablet.data.platform} title={heroTablet.data.title} />
+        </a>
+      )}
+    </div>
+  </section>
+
+  <section class="section wrap rooms">
+    <div class="section-head">
+      <div><span class="eyebrow">Rooms</span><h2 class="display h2">Six rooms</h2></div>
+      <a class="more" href="/browse">Everything →</a>
+    </div>
+    <ol class="room-grid">
+      {Object.entries(TYPE_META).map(([k, v], i) => (
+        <li class="room reveal" style={`--d:${i * 50}ms`}>
+          <a href={`/rooms/${k}`}>
+            <span class="room-n mono num">{String(all.filter((p) => p.data.type === k).length).padStart(2, '0')}</span>
+            <span class="room-name display h3">{v.label}</span>
+            <span class="room-blurb">{v.blurb}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="section wrap fresh">
+    <div class="section-head">
+      <div><span class="eyebrow">Fresh on the floor</span><h2 class="display h2">Latest <i>pieces</i></h2></div>
+      <a class="more" href="/browse">All {all.length} →</a>
+    </div>
+    <div class="grid">
+      {fresh.map((p, i) => <PieceCard piece={p} n={nums.get(p.id) || '000'} index={i} />)}
+    </div>
+  </section>
+
+  <section class="section wrap how">
+    <ol class="how-row">
+      <li class="reveal"><span class="mono faint">01</span><h3 class="display h4">Find a piece</h3><p>Every card is the live demo. Open one, click into it.</p></li>
+      <li class="reveal" style="--d:60ms"><span class="mono faint">02</span><h3 class="display h4">Copy the brief</h3><p>Tokens, motion table, states, accessibility, checklist. One button.</p></li>
+      <li class="reveal" style="--d:120ms"><span class="mono faint">03</span><h3 class="display h4">Hand it to your agent</h3><p>Paste it with one line naming your stack. Hold the result to the checklist.</p></li>
+    </ol>
+  </section>
+
+  <section class="section wrap shelves-home">
+    <div class="section-head">
+      <div><span class="eyebrow">Shelves</span><h2 class="display h2">Collections</h2></div>
+      <a class="more" href="/collections">All {COLLECTIONS.length} →</a>
+    </div>
+    <div class="shelf-row">
+      {shelves.map((c, i) => (
+        <a class="shelf-card reveal" style={`--d:${i * 60}ms`} href={`/collections/${c.slug}`}>
+          <div class="shelf-wall" aria-hidden="true">
+            {c.items.slice(0, 3).map((p) => <div class="mini"><DeviceFrame slug={p!.id} platform={p!.data.platform} title={p!.data.title} /></div>)}
+          </div>
+          <span class="eyebrow">{c.kicker} · {c.items.length} pieces</span>
+          <span class="display h4">{c.title}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section wrap seat">
+    <h2 class="display h1">Take a <i>seat.</i></h2>
+    <div class="acts">
+      <a class="btn primary" href="/random" data-random>Show me something</a>
+      <a class="btn ghost" href="/browse">Browse the floor</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; padding: clamp(40px, 6vw, 80px) 0 clamp(32px, 5vw, 64px); min-height: calc(100vh - var(--header-h)); }
+  .hero-text { display: flex; flex-direction: column; gap: 24px; }
+  .hero .h1 span, .hero .h1 i { display: inline-block; }
+  .hero .acts { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hero-wall { position: relative; aspect-ratio: 1 / 0.96; }
+  .wall-item { position: absolute; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2); overflow: hidden; transition: transform var(--t-slow) var(--ease-out), border-color var(--t-med), box-shadow var(--t-med); }
+  .wall-item :global(lounge-frame) { position: absolute; inset: 12px; }
+  .wall-item:hover { border-color: var(--ink-3); box-shadow: var(--shadow); z-index: 5; transform: translateY(-6px); }
+  .wall-item.web { left: 0; top: 0; width: 76%; aspect-ratio: 16 / 10.5; }
+  .wall-item.phone { right: 0; top: 16%; width: 28%; aspect-ratio: 9 / 19; }
+  .wall-item.phone :global(lounge-frame) { inset: 6px; }
+  .wall-item.tablet { left: 10%; top: 57%; width: 54%; aspect-ratio: 16 / 11.3; }
+
+  .room-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .room a { display: flex; flex-direction: column; gap: 8px; padding: 26px 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 180px; transition: background-color var(--t-med) var(--ease); }
+  .room a:hover { background: var(--paper-2); }
+  .room-n { color: var(--ink-3); }
+  .room-blurb { color: var(--ink-2); font-size: 14px; max-width: 30ch; text-wrap: pretty; }
+
+  .how { padding-block: 0; }
+  .how-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; border-top: 1px solid var(--ink); padding-top: 28px; }
+  .how-row li { display: flex; flex-direction: column; gap: 8px; }
+  .how-row p { color: var(--ink-2); font-size: 14.5px; max-width: 32ch; text-wrap: pretty; }
+
+  .shelf-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .shelf-card { display: flex; flex-direction: column; gap: 8px; padding: 14px; border: 1px solid var(--line); border-radius: var(--r-lg); transition: border-color var(--t-fast), transform var(--t-med) var(--ease); }
+  .shelf-card:hover { border-color: var(--ink-3); transform: translateY(-3px); }
+  .shelf-card .shelf-wall { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 6px; }
+  .mini { aspect-ratio: 3 / 4; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); position: relative; overflow: hidden; }
+  .mini :global(lounge-frame) { position: absolute; inset: 6px; }
+
+  .seat { display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; padding-bottom: 0; }
+  .seat .acts { display: flex; gap: 10px; }
+
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; min-height: 0; }
+    .room-grid { grid-template-columns: repeat(2, 1fr); }
+    .how-row, .shelf-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .room-grid { grid-template-columns: 1fr; }
+    .room a { min-height: 0; }
+    .wall-item.tablet { display: none; }
+    .wall-item.web { width: 74%; top: 0; }
+    .wall-item.phone { width: 34%; top: 20%; }
+    .hero-wall { aspect-ratio: 4 / 3; }
+  }
+</style>

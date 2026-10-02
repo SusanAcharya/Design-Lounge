@@ -1,0 +1,159 @@
+<!-- Design Lounge piece: inline-form-validation · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Inline form validation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf7;--panel:#efe7da;--surface:#ffffff;--line:#e2dbd0;--line-2:#cbc2b4;
+  --ink:#221e1a;--ink-2:#6b6259;--ink-3:#9a9188;--accent:#2f5d50;--accent-hover:#25493f;--accent-soft:#e4efe9;--on-accent:#ffffff;
+  --error:#b4432a;--error-soft:#f9e9e4;--weak:#c9532f;--fair:#d9962b;--good:#7f9a3a;--strong:#2f5d50;
+  --serif:"DM Serif Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif;
+  --r:6px;--r-lg:14px;--field-h:44px;
+  --t-micro:160ms;--t-shake:320ms;--t-tick:280ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--sans);color:var(--ink);background:var(--bg);display:grid;grid-template-columns:520px 1fr;-webkit-font-smoothing:antialiased;overflow:hidden}
+.side{background:var(--panel);padding:56px 56px 48px;display:flex;flex-direction:column}
+.logo{font:24px var(--serif);letter-spacing:-.01em}
+.logo i{font-style:italic;color:var(--accent)}
+.side h1{margin:auto 0 16px;font:400 46px/1.08 var(--serif);letter-spacing:-.015em}
+.side h1 em{font-style:italic;color:var(--accent)}
+.side p{margin:0;color:var(--ink-2);font-size:16px;max-width:380px}
+.quote{margin-top:auto;padding-top:28px;border-top:1px solid var(--line-2);font-size:14px;color:var(--ink-2)}
+.quote b{display:block;color:var(--ink);font-weight:500;margin-top:8px}
+.wrap{display:grid;place-items:center;padding:32px}
+form{width:420px}
+form h2{margin:0 0 4px;font:400 30px/1.15 var(--serif);letter-spacing:-.01em}
+.lead{margin:0 0 26px;color:var(--ink-2)}
+.field{margin-bottom:18px;position:relative}
+label{display:block;font-weight:500;margin-bottom:6px;font-size:13px}
+.ctl{position:relative}
+input[type=text],input[type=email],input[type=password]{width:100%;height:var(--field-h);padding:0 40px 0 12px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);font:15px var(--sans);color:var(--ink);outline:none;transition:border-color var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+input::placeholder{color:var(--ink-3)}
+input:focus-visible{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field.error input{border-color:var(--error);box-shadow:0 0 0 3px var(--error-soft)}
+.field.ok input{border-color:var(--accent)}
+.field.shake .ctl{animation:shake var(--t-shake) var(--ease)}
+@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.mark{position:absolute;right:12px;top:50%;width:20px;height:20px;margin-top:-10px;pointer-events:none}
+.mark svg{width:20px;height:20px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.mark .tick{stroke:var(--accent);stroke-dasharray:1;stroke-dashoffset:1}
+.mark .x{stroke:var(--error)}
+.field.ok .tick{opacity:1;animation:tick var(--t-tick) var(--ease-out) forwards}
+.field.error .x{opacity:1}
+@keyframes tick{to{stroke-dashoffset:0}}
+.msg{display:block;min-height:18px;margin-top:6px;font-size:12.5px;color:var(--ink-3);transition:color var(--t-micro)}
+.field.error .msg{color:var(--error)}
+.field.ok .msg{color:var(--accent)}
+.meter{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px}
+.meter i{height:4px;border-radius:2px;background:var(--line);transition:background var(--t-micro) var(--ease)}
+.meter[data-s="1"] i:nth-child(-n+1){background:var(--weak)}
+.meter[data-s="2"] i:nth-child(-n+2){background:var(--fair)}
+.meter[data-s="3"] i:nth-child(-n+3){background:var(--good)}
+.meter[data-s="4"] i{background:var(--strong)}
+.eye{position:absolute;right:38px;top:50%;margin-top:-14px;width:28px;height:28px;border:0;background:none;color:var(--ink-3);cursor:pointer;border-radius:4px;padding:0;display:grid;place-items:center}
+.eye:hover{color:var(--ink)}
+.eye:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.eye svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2);margin:4px 0 22px;cursor:pointer}
+.check input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--accent);flex:none}
+.check input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.check a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+button.submit{width:100%;height:46px;border:0;border-radius:var(--r);background:var(--accent);color:var(--on-accent);font:500 15px var(--sans);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background var(--t-micro) var(--ease),opacity var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+button.submit:hover{background:var(--accent-hover)}
+button.submit:active{transform:translateY(1px)}
+button.submit:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+button.submit:disabled{background:var(--line);color:var(--ink-3);cursor:not-allowed;transform:none}
+button.submit svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.live{margin-top:14px;min-height:18px;font-size:12.5px;color:var(--ink-3);display:flex;gap:6px;align-items:center}
+.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--line-2);flex:none}
+form.done .field,form.done .check{opacity:.5;pointer-events:none}
+form.done button.submit{background:var(--accent)}
+.reset{margin-top:12px;font-size:12.5px;color:var(--ink-3);text-align:center}
+.reset button{border:0;background:none;color:var(--accent);font:inherit;text-decoration:underline;cursor:pointer;padding:2px}
+.reset button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){
+  .field.shake .ctl{animation:none}
+  .field.ok .tick{animation-duration:1ms}
+  *{transition-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<aside class="side">
+  <div class="logo">Tessel<i>.</i></div>
+  <h1>Ship the schedule, <em>not</em> the spreadsheet.</h1>
+  <p>Tessel plans shifts for 2,400 teams across retail, hospitality and care. Free for 14 days, no card needed.</p>
+  <div class="quote">"We cut roster admin from six hours a week to forty minutes."<b>Anneli Voss, Ops lead at Fjord Bakeries</b></div>
+</aside>
+<div class="wrap">
+  <form id="f" novalidate>
+    <h2>Create your account</h2>
+    <p class="lead">Fields check themselves when you leave them.</p>
+
+    <div class="field" data-k="name">
+      <label for="name">Full name</label>
+      <div class="ctl"><input id="name" type="text" autocomplete="name" placeholder="Anneli Voss" aria-describedby="name-msg"><span class="mark"><svg viewBox="0 0 24 24"><path class="tick" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/><path class="x" d="M7 7l10 10M17 7L7 17"/></svg></span></div>
+      <span class="msg" id="name-msg">First and last name</span>
+    </div>
+
+    <div class="field" data-k="email">
+      <label for="email">Work email</label>
+      <div class="ctl"><input id="email" type="email" autocomplete="email" placeholder="anneli@fjordbakeries.no" aria-describedby="email-msg"><span class="mark"><svg viewBox="0 0 24 24"><path class="tick" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/><path class="x" d="M7 7l10 10M17 7L7 17"/></svg></span></div>
+      <span class="msg" id="email-msg">We send the invite link here</span>
+    </div>
+
+    <div class="field" data-k="pass">
+      <label for="pass">Password</label>
+      <div class="ctl"><input id="pass" type="password" autocomplete="new-password" placeholder="At least 8 characters" aria-describedby="pass-msg"><button type="button" class="eye" id="eye" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button><span class="mark"><svg viewBox="0 0 24 24"><path class="tick" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/><path class="x" d="M7 7l10 10M17 7L7 17"/></svg></span></div>
+      <div class="meter" id="meter" data-s="0" role="meter" aria-label="Password strength" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><i></i><i></i><i></i><i></i></div>
+      <span class="msg" id="pass-msg">8+ characters with a number and a symbol</span>
+    </div>
+
+    <label class="check"><input type="checkbox" id="terms"><span>I agree to the <a href="#">terms</a> and the <a href="#">data processing agreement</a>.</span></label>
+
+    <button class="submit" id="submit" type="submit" disabled><span id="sl">Create account</span></button>
+    <div class="live" id="live" aria-live="polite" role="status">Fill in the three fields to continue</div>
+    <div class="reset">Demo: <button type="button" id="reset">reset the form</button></div>
+  </form>
+</div>
+<script>
+  const f=document.getElementById('f'),live=document.getElementById('live'),submit=document.getElementById('submit'),sl=document.getElementById('sl'),meter=document.getElementById('meter');
+  const hints={name:'First and last name',email:'We send the invite link here',pass:'8+ characters with a number and a symbol'};
+  const rules={
+    name:v=>v.trim().split(/\s+/).filter(Boolean).length>=2?'':'Enter your first and last name',
+    email:v=>/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v)?'':'That doesn’t look like an email address',
+    pass:v=>score(v)>=3?'':(v.length<8?'Use at least 8 characters':'Add a number or a symbol')
+  };
+  const okText={name:'Nice to meet you',email:'Looks good',pass:'Strong enough'};
+  const valid={name:false,email:false,pass:false};
+  function score(v){let s=0;if(v.length>=8)s++;if(/[a-z]/.test(v)&&/[A-Z]/.test(v))s++;if(/\d/.test(v))s++;if(/[^\w\s]/.test(v))s++;return v.length<8?Math.min(s,1):s;}
+  function say(t){live.textContent=t;}
+  function check(field,announce){
+    const k=field.dataset.k,input=field.querySelector('input'),msg=field.querySelector('.msg'),err=rules[k](input.value);
+    field.classList.remove('shake');
+    if(!input.value){field.classList.remove('ok','error');msg.textContent=hints[k];valid[k]=false;input.removeAttribute('aria-invalid');}
+    else if(err){field.classList.remove('ok');field.classList.add('error');msg.textContent=err;valid[k]=false;input.setAttribute('aria-invalid','true');if(announce){void field.offsetWidth;field.classList.add('shake');say(input.labels[0].textContent+': '+err);}}
+    else{field.classList.remove('error');field.classList.add('ok');msg.textContent=okText[k];valid[k]=true;input.removeAttribute('aria-invalid');if(announce)say(input.labels[0].textContent+' accepted');}
+    gate();
+  }
+  function gate(){const all=valid.name&&valid.email&&valid.pass&&terms.checked;submit.disabled=!all;if(all)say('All set — press Create account');}
+  f.querySelectorAll('.field').forEach(field=>{
+    const input=field.querySelector('input');
+    input.addEventListener('blur',()=>check(field,true));
+    input.addEventListener('input',()=>{if(field.classList.contains('error')||field.classList.contains('ok'))check(field,false);if(field.dataset.k==='pass'){const s=score(input.value);meter.dataset.s=s;meter.setAttribute('aria-valuenow',s);}});
+  });
+  terms.addEventListener('change',gate);
+  eye.addEventListener('click',()=>{const show=pass.type==='password';pass.type=show?'text':'password';eye.setAttribute('aria-pressed',String(show));eye.setAttribute('aria-label',(show?'Hide':'Show')+' password');});
+  f.addEventListener('submit',e=>{e.preventDefault();if(submit.disabled)return;f.classList.add('done');sl.textContent='Creating account…';submit.disabled=true;
+    setTimeout(()=>{sl.innerHTML='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Account created';say('Account created. Check your inbox for the invite link.');},900);});
+  document.getElementById('reset').addEventListener('click',()=>{f.reset();f.classList.remove('done');f.querySelectorAll('.field').forEach(x=>{x.classList.remove('ok','error','shake');x.querySelector('.msg').textContent=hints[x.dataset.k];});Object.keys(valid).forEach(k=>valid[k]=false);meter.dataset.s=0;sl.textContent='Create account';submit.disabled=true;say('Form reset');});
+</script>
+</body>
+</html>

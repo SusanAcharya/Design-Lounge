@@ -1,0 +1,111 @@
+<!-- Design Lounge piece: paper-article-reader · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tidewater Review — The paper timetable comes back</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f7f2e8;--paper-2:#efe8da;--ink:#2a2420;--ink-2:#6b625a;--ink-3:#9a9086;--line:#dcd3c3;--accent:#4a6b45;--accent-soft:#e4e9df;
+  --serif:"Newsreader",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif;
+  --measure:66ch;--body-size:19px;--body-lh:1.6;--note-w:220px;--note-gap:40px;--bar-h:52px;--progress-h:2px;
+  --t-micro:160ms;--t-progress:80ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:var(--body-size)/var(--body-lh) var(--serif);font-variation-settings:"opsz" 18;color:var(--ink);background:var(--paper);overflow:hidden;-webkit-font-smoothing:antialiased}
+.scroll{height:100%;overflow-y:auto;scroll-behavior:smooth}
+.bar{position:sticky;top:0;z-index:5;height:var(--bar-h);background:rgba(247,242,232,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 40px;font:13px var(--sans);color:var(--ink-2);gap:24px}
+.bar b{font:500 15px var(--serif);color:var(--ink);letter-spacing:-.01em;margin-right:auto}
+.bar a{color:inherit;text-decoration:none}.bar a:hover{color:var(--ink)}
+.bar .pct{font-variant-numeric:tabular-nums;min-width:5ch;text-align:right;color:var(--ink-3)}
+.progress{position:absolute;left:0;bottom:-1px;height:var(--progress-h);width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform var(--t-progress) linear}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+article{width:min(var(--measure),100% - 80px);margin:0 auto;padding:64px 0 96px;position:relative}
+@media (min-width:1100px){article{margin-left:calc(50% - var(--measure)/2 - (var(--note-w) + var(--note-gap))/2)}}
+.kicker{font:500 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 18px;display:flex;gap:12px;align-items:center}
+.kicker i{width:24px;height:1px;background:var(--accent)}
+h1{margin:0 0 20px;font:400 56px/1.05 var(--serif);font-variation-settings:"opsz" 72;letter-spacing:-.02em;text-wrap:balance}
+.dek{margin:0 0 28px;font:italic 400 24px/1.35 var(--serif);color:var(--ink-2)}
+.byline{display:flex;gap:16px;align-items:center;font:13px var(--sans);color:var(--ink-2);padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:44px}
+.byline b{font-weight:500;color:var(--ink)}
+.byline span+span::before{content:"·";margin-right:16px;color:var(--ink-3)}
+p{margin:0 0 1.35em}
+p.first::first-letter{float:left;font:400 92px/.78 var(--serif);font-variation-settings:"opsz" 72;margin:6px 10px 0 -2px;color:var(--ink)}
+h2{margin:2.2em 0 .7em;font:500 26px/1.2 var(--serif);font-variation-settings:"opsz" 36;letter-spacing:-.01em}
+a.ref{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;text-decoration-thickness:1px;transition:text-decoration-color var(--t-micro) var(--ease)}
+a.ref:hover{text-decoration-color:var(--accent)}
+sup{font:500 11px var(--sans);color:var(--accent);vertical-align:top;line-height:1;margin-left:2px}
+.note{display:block;font:14px/1.45 var(--sans);color:var(--ink-2);margin:14px 0;padding-left:14px;border-left:2px solid var(--line)}
+.note b{font-weight:500;color:var(--accent);margin-right:6px}
+@media (min-width:1100px){.note{float:right;clear:right;width:var(--note-w);margin:2px calc(-1 * (var(--note-w) + var(--note-gap))) 0 0;padding-left:0;border-left:0}}
+.pull{margin:44px 0;padding:8px 0 8px 28px;border-left:2px solid var(--accent);font:italic 400 30px/1.3 var(--serif);font-variation-settings:"opsz" 36;color:var(--ink);letter-spacing:-.01em;text-wrap:balance}
+.pull small{display:block;margin-top:12px;font:13px var(--sans);font-style:normal;color:var(--ink-3)}
+figure.tbl{margin:36px 0;font:14px var(--sans)}
+figure.tbl table{width:100%;border-collapse:collapse}
+figure.tbl th{text-align:left;font-weight:500;color:var(--ink-3);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:8px 0;border-bottom:1px solid var(--ink)}
+figure.tbl td{padding:9px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+figure.tbl td:last-child,figure.tbl th:last-child{text-align:right}
+figure.tbl figcaption{margin-top:10px;font-size:12px;color:var(--ink-3)}
+.end{display:flex;justify-content:center;margin:56px 0 0}
+.end i{width:8px;height:8px;background:var(--accent);transform:rotate(45deg)}
+@media (max-width:820px){:root{--body-size:17px}h1{font-size:40px}.bar{padding:0 20px}.bar nav{display:none}}
+@media (prefers-reduced-motion:reduce){.scroll{scroll-behavior:auto}*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="scroll" id="scroll">
+  <header class="bar">
+    <b>Tidewater Review</b>
+    <nav aria-label="Sections" style="display:flex;gap:20px"><a href="#">Transit</a><a href="#">Cities</a><a href="#">Craft</a></nav>
+    <span class="pct" id="pct" aria-live="off">0 %</span>
+    <div class="progress" id="progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+  </header>
+  <article>
+    <p class="kicker"><i></i>Transit · Long read</p>
+    <h1>The paper timetable comes back, one ferry line at a time</h1>
+    <p class="dek">Screens were meant to retire the printed schedule. On the Kystlinje coastal route, riders quietly voted the other way.</p>
+    <div class="byline"><b>Ines Halvorsen</b><span>Bergen</span><span>21 September 2026</span><span>14 min read</span></div>
+
+    <p class="first">The first thing you notice at the Halsnøy quay is what is missing. There is no screen. Two years ago a 42-inch display hung above the shelter, cycling through departures, weather and a loop of safety notices. It was removed in March, and in its place is a sheet of A3 paper behind glass, printed in two colours, folded once so the return trips sit on the back.<sup>1</sup><span class="note" role="note"><b>1</b>The current sheet is the 14th revision since March. Each revision is dated in the bottom corner, and the old ones are kept in a folder in the ticket office.</span></p>
+    <p>The sheet was not a cost decision, or not only one. Kystlinje's operations lead, Teodor Marsh, describes a winter of complaints that had nothing to do with the boats. "The screen was correct," he says. "It was just never correct at the moment you looked at it." Departures scrolled past every eight seconds. Riders photographed it and then zoomed into the photograph.</p>
+    <p>So the company ran an experiment on three quays. One kept its screen. One got the paper sheet. One got both. After twelve weeks, the paper-only quay had the fewest calls to the helpline and the highest share of riders who could state the next two departures from memory when asked at the gangway.<sup>2</sup><span class="note" role="note"><b>2</b>Surveyed at boarding, n = 412 across the three quays. The question was "When are the next two departures?" and answers were scored against the live schedule.</span> The quay with both did no better than the screen alone.</p>
+
+    <h2>What a sheet can do that a screen cannot</h2>
+    <p>A printed timetable is a spatial object. The morning is at the top, the evening at the bottom, and the eye learns where 07:40 lives on the page. A screen that scrolls destroys that map every few seconds; a screen that does not scroll has to choose what to omit. Paper omits nothing and moves nothing. It can be read from three metres away in low sun, and it can be read by two people at once who are looking at different rows.</p>
+    <blockquote class="pull">"The screen was correct. It was just never correct at the moment you looked at it."<small>Teodor Marsh, operations lead, Kystlinje</small></blockquote>
+    <p>The redesign of the sheet itself took longer than removing the screens. Marsh brought in a small studio from Oslo, and their first version was rejected by the crews for using a typeface whose 3 and 8 were too alike at a distance.<sup>3</sup><span class="note" role="note"><b>3</b>The final sheet uses tabular figures at 14pt for times and 9pt for footnotes. Hours are separated by 0.5pt rules; weekends are set on a tinted band.</span> The second version set every time in a heavier weight, added a hairline between hours, and printed the return direction on the reverse so no one would read the wrong column.</p>
+    <p>What the studio kept from the screen era was the QR code. It sits in the bottom right, small, and opens the live status page for that quay only. "We stopped trying to make one thing do both jobs," the studio's lead told me. "Paper for the plan, the phone for the exception."</p>
+
+    <figure class="tbl">
+      <table>
+        <thead><tr><th>Quay</th><th>Format</th><th>Helpline calls / week</th><th>Recall of next two</th></tr></thead>
+        <tbody>
+          <tr><td>Halsnøy</td><td>Paper only</td><td>3.1</td><td>71 %</td></tr>
+          <tr><td>Fjelberg</td><td>Screen only</td><td>9.4</td><td>38 %</td></tr>
+          <tr><td>Skånevik</td><td>Both</td><td>8.7</td><td>41 %</td></tr>
+        </tbody>
+      </table>
+      <figcaption>Twelve-week trial, January to March 2026. Source: Kystlinje internal report, shared with the Review.</figcaption>
+    </figure>
+
+    <h2>The cost of being right</h2>
+    <p>None of this means the screens were a mistake everywhere. In the city terminal, where six lines interleave and delays cascade, the live board still earns its power draw. The lesson from the coast is narrower and more useful: a schedule that changes twice a year does not need a device that can change twice a second. Matching the medium to the rate of change is the whole design problem, and it is one that <a class="ref" href="#">most transit agencies have never been asked to solve</a>.</p>
+    <p>Kystlinje will print the winter sheet in November. It will be the fifteenth revision, and it will be wrong, eventually, in the way paper is always eventually wrong. Someone will take a pen to it. That, Marsh says, is fine. "A correction in pen is still a timetable. A frozen screen is a mirror."</p>
+    <div class="end" aria-hidden="true"><i></i></div>
+  </article>
+</div>
+<script>
+  const sc=document.getElementById('scroll'),bar=document.getElementById('progress'),pct=document.getElementById('pct');
+  function update(){
+    const max=sc.scrollHeight-sc.clientHeight,p=max>0?Math.min(1,sc.scrollTop/max):0;
+    bar.style.transform='scaleX('+p.toFixed(4)+')';
+    const n=Math.round(p*100);bar.setAttribute('aria-valuenow',n);pct.textContent=n+' %';
+  }
+  sc.addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+</script>
+</body>
+</html>

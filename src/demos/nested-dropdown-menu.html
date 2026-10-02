@@ -1,0 +1,178 @@
+<!-- Design Lounge piece: nested-dropdown-menu · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Nested dropdown menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1c1f24;--canvas:#22262c;--panel:#262a31;--panel-2:#30353e;--line:#363c46;--line-2:#454c58;
+  --ink:#e6e9ee;--ink-2:#a5adba;--ink-3:#6f7886;--accent:#5ab0ff;--accent-ink:#06192b;
+  --display:"Archivo Black",system-ui,sans-serif;--font:"Archivo",system-ui,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;
+  --menu-w:236px;--item-h:32px;--r:8px;--r-item:5px;--sub-delay:120ms;--safe-delay:300ms;
+  --t-fast:120ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow:0 0 0 1px var(--line),0 12px 32px -8px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.4 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.bar{height:44px;display:flex;align-items:center;gap:2px;padding:0 12px;border-bottom:1px solid var(--line);background:var(--panel)}
+.bar .logo{font:12px var(--display);letter-spacing:.06em;color:var(--accent);margin-right:12px}
+.mb{position:relative}
+.mb-btn{all:unset;height:28px;padding:0 10px;border-radius:6px;color:var(--ink-2);cursor:pointer;font:500 13px var(--font)}
+.mb-btn:hover,.mb.open>.mb-btn{background:var(--panel-2);color:var(--ink)}
+.mb-btn:focus-visible{box-shadow:0 0 0 2px var(--accent)}
+.bar .doc{margin-left:auto;font:11px var(--font);color:var(--ink-3)}
+.bar .doc b{font:12px var(--display);color:var(--ink);letter-spacing:.02em;margin-right:8px}
+.status{position:absolute;right:20px;top:60px;font:12px var(--font);color:var(--ink-3)}
+.status b{color:var(--ink-2);font-weight:500}
+.canvas{flex:1;background:var(--canvas);background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:20px 20px;position:relative}
+.canvas svg{position:absolute;inset:0;width:100%;height:100%;stroke-width:1.5}
+/* menus */
+.menu{display:none;position:absolute;min-width:var(--menu-w);background:var(--panel);border-radius:var(--r);box-shadow:var(--shadow);padding:6px;z-index:20;transform-origin:top left}
+.mb>.menu{top:calc(100% + 4px);left:0}
+.sub{position:relative}
+.sub>.menu{left:calc(100% - 4px);top:-6px}
+.open>.menu{display:block;animation:pop var(--t-fast) var(--ease-out)}
+@keyframes pop{from{opacity:0;transform:scale(.98) translateY(-2px)}to{opacity:1;transform:none}}
+.it{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;height:var(--item-h);padding:0 8px 0 8px;border-radius:var(--r-item);width:100%;cursor:default;color:var(--ink)}
+.it:hover,.it:focus-visible,.sub.open>.it{background:var(--accent);color:var(--accent-ink)}
+.it .chk{width:14px;height:14px;display:grid;place-items:center;flex:none;visibility:hidden}
+.it[aria-checked="true"] .chk{visibility:visible}
+.it[role="menuitemradio"] .chk::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.it .lb{flex:1;white-space:nowrap}
+.it kbd{font:11px var(--mono);color:var(--ink-3);letter-spacing:.04em}
+.it:hover kbd,.it:focus-visible kbd,.sub.open>.it kbd{color:var(--accent-ink);opacity:.8}
+.it[aria-disabled="true"]{color:var(--ink-3)}
+.it[aria-disabled="true"]:hover{background:none;color:var(--ink-3)}
+.sep{height:1px;background:var(--line);margin:5px 4px}
+.hd{font:500 10px var(--font);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);padding:6px 8px 3px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar" role="menubar" aria-label="Application">
+  <span class="logo">FERRO</span>
+  <div class="mb"><button class="mb-btn" role="menuitem" aria-haspopup="menu" aria-expanded="false">File</button>
+    <div class="menu" role="menu" aria-label="File">
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">New board</span><kbd>⌘N</kbd></button>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Open recent…</span><kbd>⌘O</kbd></button>
+      <div class="sep" role="separator"></div>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Export as PNG</span><kbd>⇧⌘E</kbd></button>
+      <button class="it" role="menuitem" aria-disabled="true"><span class="chk"></span><span class="lb">Print</span><kbd>⌘P</kbd></button>
+    </div></div>
+  <div class="mb open"><button class="mb-btn" role="menuitem" aria-haspopup="menu" aria-expanded="true">Edit</button>
+    <div class="menu" role="menu" aria-label="Edit">
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Undo move</span><kbd>⌘Z</kbd></button>
+      <button class="it" role="menuitem" aria-disabled="true"><span class="chk"></span><span class="lb">Redo</span><kbd>⇧⌘Z</kbd></button>
+      <div class="sep" role="separator"></div>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Cut</span><kbd>⌘X</kbd></button>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Copy</span><kbd>⌘C</kbd></button>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Paste</span><kbd>⌘V</kbd></button>
+      <div class="sub"><button class="it" role="menuitem" aria-haspopup="menu" aria-expanded="false"><span class="chk"></span><span class="lb">Paste special</span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        <div class="menu" role="menu" aria-label="Paste special">
+          <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Paste to replace</span><kbd>⇧⌘R</kbd></button>
+          <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Paste over selection</span></button>
+          <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Paste as plain text</span><kbd>⇧⌥⌘V</kbd></button>
+          <div class="sep" role="separator"></div>
+          <div class="sub"><button class="it" role="menuitem" aria-haspopup="menu" aria-expanded="false"><span class="chk"></span><span class="lb">Paste properties</span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+            <div class="menu" role="menu" aria-label="Paste properties">
+              <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Fill only</span></button>
+              <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Stroke only</span></button>
+              <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Effects only</span></button>
+            </div></div>
+        </div></div>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Duplicate</span><kbd>⌘D</kbd></button>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Delete</span><kbd>⌫</kbd></button>
+      <div class="sep" role="separator"></div>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Select all</span><kbd>⌘A</kbd></button>
+      <div class="sub"><button class="it" role="menuitem" aria-haspopup="menu" aria-expanded="false"><span class="chk"></span><span class="lb">Select same</span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        <div class="menu" role="menu" aria-label="Select same">
+          <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Fill</span></button>
+          <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Stroke</span></button>
+          <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Font</span></button>
+        </div></div>
+      <div class="sep" role="separator"></div>
+      <div class="hd">View</div>
+      <button class="it" role="menuitemcheckbox" aria-checked="true"><span class="chk"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="lb">Show rulers</span><kbd>⇧R</kbd></button>
+      <button class="it" role="menuitemcheckbox" aria-checked="true"><span class="chk"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="lb">Snap to grid</span></button>
+      <button class="it" role="menuitemcheckbox" aria-checked="false"><span class="chk"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="lb">Pixel grid</span><kbd>⌘'</kbd></button>
+      <div class="sep" role="separator"></div>
+      <div class="hd">Zoom</div>
+      <button class="it" role="menuitemradio" aria-checked="false" data-group="zoom"><span class="chk"></span><span class="lb">50 %</span></button>
+      <button class="it" role="menuitemradio" aria-checked="true" data-group="zoom"><span class="chk"></span><span class="lb">100 %</span><kbd>⌘0</kbd></button>
+      <button class="it" role="menuitemradio" aria-checked="false" data-group="zoom"><span class="chk"></span><span class="lb">200 %</span></button>
+      <div class="sep" role="separator"></div>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Preferences…</span><kbd>⌘,</kbd></button>
+    </div></div>
+  <div class="mb"><button class="mb-btn" role="menuitem" aria-haspopup="menu" aria-expanded="false">Arrange</button>
+    <div class="menu" role="menu" aria-label="Arrange">
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Bring forward</span><kbd>⌘]</kbd></button>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Send backward</span><kbd>⌘[</kbd></button>
+      <div class="sep" role="separator"></div>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Group</span><kbd>⌘G</kbd></button>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Tidy up</span><kbd>⌃⌥T</kbd></button>
+    </div></div>
+  <div class="mb"><button class="mb-btn" role="menuitem" aria-haspopup="menu" aria-expanded="false">Help</button>
+    <div class="menu" role="menu" aria-label="Help">
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Keyboard shortcuts</span><kbd>⌘/</kbd></button>
+      <button class="it" role="menuitem"><span class="chk"></span><span class="lb">Release notes</span></button>
+    </div></div>
+  <span class="doc"><b>Onboarding flow v3</b>Saved 2 min ago</span>
+</div>
+<div class="canvas" aria-hidden="true">
+  <svg viewBox="0 0 1280 756" preserveAspectRatio="xMidYMid slice"><g fill="var(--panel)" stroke="var(--line-2)"><rect x="420" y="120" width="360" height="240" rx="12"/><rect x="820" y="120" width="220" height="140" rx="12"/><rect x="820" y="300" width="220" height="60" rx="8"/><rect x="420" y="400" width="620" height="200" rx="12"/></g><g stroke="var(--accent)" fill="none"><rect x="418" y="118" width="364" height="244" rx="13" stroke-dasharray="4 4"/></g><g fill="var(--ink-3)" font-family="Archivo" font-size="12"><text x="440" y="150">Welcome screen</text><text x="840" y="150">Sign in</text><text x="840" y="336">Continue</text><text x="440" y="430">Frame 4 · Notifications</text></g></svg>
+</div>
+<p class="status" id="status" aria-live="polite">Last action: <b>—</b></p>
+<script>
+const bar=document.getElementById('bar'),tops=[...bar.querySelectorAll(':scope>.mb')],status=document.querySelector('#status b');
+let openTop=tops[1],subT=null,prev={x:0,y:0},last={x:0,y:0},buf='',bufT=null;
+const items=m=>[...m.querySelectorAll(':scope>.it,:scope>.sub>.it')];
+const btn=mb=>mb.querySelector(':scope>.mb-btn');
+function openMenu(mb,focusFirst){if(openTop&&openTop!==mb)closeAll();openTop=mb;mb.classList.add('open');btn(mb).setAttribute('aria-expanded','true');if(focusFirst)items(mb.querySelector(':scope>.menu'))[0].focus();}
+function closeAll(){if(!openTop)return;openTop.classList.remove('open');btn(openTop).setAttribute('aria-expanded','false');openTop.querySelectorAll('.sub.open').forEach(closeSub);openTop=null;}
+function openSub(sub){[...sub.parentElement.querySelectorAll(':scope>.sub.open')].forEach(s=>s!==sub&&closeSub(s));sub.classList.add('open');sub.firstElementChild.setAttribute('aria-expanded','true');}
+function closeSub(sub){sub.classList.remove('open');sub.firstElementChild.setAttribute('aria-expanded','false');sub.querySelectorAll('.sub.open').forEach(closeSub);}
+const sign=(p,a,b)=>(p.x-b.x)*(a.y-b.y)-(a.x-b.x)*(p.y-b.y);
+function towardSub(menu){const s=menu.querySelector(':scope>.sub.open>.menu');if(!s)return false;const r=s.getBoundingClientRect(),a=prev,b={x:r.left,y:r.top},c={x:r.left,y:r.bottom},d1=sign(last,a,b),d2=sign(last,b,c),d3=sign(last,c,a);return!((d1<0||d2<0||d3<0)&&(d1>0||d2>0||d3>0));}
+function activate(it){
+  const role=it.getAttribute('role');if(it.getAttribute('aria-disabled')==='true')return;
+  if(it.parentElement.classList.contains('sub')){openSub(it.parentElement);items(it.nextElementSibling)[0].focus();return;}
+  if(role==='menuitemcheckbox')it.setAttribute('aria-checked',String(it.getAttribute('aria-checked')!=='true'));
+  else if(role==='menuitemradio')it.parentElement.querySelectorAll(`[data-group="${it.dataset.group}"]`).forEach(r=>r.setAttribute('aria-checked',String(r===it)));
+  const path=[];let m=it.closest('.menu');while(m){path.unshift(m.getAttribute('aria-label'));m=m.parentElement.closest('.menu');}
+  status.textContent=path.join(' › ')+' › '+it.querySelector('.lb').textContent+(role!=='menuitem'?' ('+(it.getAttribute('aria-checked')==='true'?'on':'off')+')':'');
+  if(role==='menuitem'){const b=btn(openTop);closeAll();b.focus();}
+}
+addEventListener('mousemove',e=>{prev=last;last={x:e.clientX,y:e.clientY};});
+document.querySelectorAll('.menu').forEach(menu=>{
+  menu.addEventListener('mouseover',e=>{const it=e.target.closest('.it');if(!it||!items(menu).includes(it))return;
+    const mySub=it.parentElement.classList.contains('sub')?it.parentElement:null;clearTimeout(subT);
+    const go=()=>{[...menu.querySelectorAll(':scope>.sub.open')].forEach(s=>s!==mySub&&closeSub(s));it.focus();if(mySub&&!mySub.classList.contains('open'))subT=setTimeout(()=>openSub(mySub),120);};
+    if(towardSub(menu)&&(!mySub||!mySub.classList.contains('open')))subT=setTimeout(go,300);else go();});
+  menu.addEventListener('keydown',e=>{
+    const list=items(menu),i=list.indexOf(document.activeElement);if(i<0)return;const k=e.key,n=list.length,parentSub=menu.parentElement.classList.contains('sub')?menu.parentElement:null;let j=null;
+    if(k==='ArrowDown')j=(i+1)%n;else if(k==='ArrowUp')j=(i-1+n)%n;else if(k==='Home')j=0;else if(k==='End')j=n-1;
+    else if(k==='ArrowRight'){if(list[i].parentElement.classList.contains('sub'))activate(list[i]);else if(!parentSub)switchTop(1);}
+    else if(k==='ArrowLeft'){if(parentSub){closeSub(parentSub);parentSub.firstElementChild.focus();}else switchTop(-1);}
+    else if(k==='Escape'){if(parentSub){closeSub(parentSub);parentSub.firstElementChild.focus();}else{const b=btn(openTop);closeAll();b.focus();}}
+    else if(k==='Enter'||k===' ')activate(list[i]);
+    else if(k==='Tab'){closeAll();return;}
+    else if(k.length===1&&/\S/.test(k)){buf+=k.toLowerCase();clearTimeout(bufT);bufT=setTimeout(()=>buf='',700);const from=buf.length>1?i:i+1;for(let q=0;q<n;q++){const c=list[(from+q)%n];if(c.querySelector('.lb').textContent.toLowerCase().startsWith(buf)){c.focus();break;}}}
+    else return;
+    e.preventDefault();e.stopPropagation();if(j!==null)list[j].focus();});
+});
+function switchTop(d){const i=tops.indexOf(openTop);openMenu(tops[(i+d+tops.length)%tops.length],true);}
+tops.forEach(mb=>{const b=btn(mb);
+  b.addEventListener('click',()=>openTop===mb?closeAll():openMenu(mb,false));
+  b.addEventListener('mouseenter',()=>{if(openTop&&openTop!==mb)openMenu(mb,false);});
+  b.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='Enter'||e.key===' '){e.preventDefault();openMenu(mb,true);}else if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const i=tops.indexOf(mb),t=tops[(i+(e.key==='ArrowRight'?1:-1)+tops.length)%tops.length];openTop?openMenu(t,true):btn(t).focus();}});
+});
+document.addEventListener('mousedown',e=>{if(!bar.contains(e.target))closeAll();});
+</script>
+</body>
+</html>

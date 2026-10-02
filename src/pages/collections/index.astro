@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import DeviceFrame from '../../components/DeviceFrame.astro';
+import { COLLECTIONS } from '../../data/collections';
+import { getPieces } from '../../lib/pieces';
+const all = await getPieces();
+const byId = new Map(all.map((p) => [p.id, p]));
+const cols = COLLECTIONS.map((c) => ({ ...c, items: c.pieces.map((s) => byId.get(s)).filter(Boolean) })).filter((c) => c.items.length);
+---
+<Base title="Collections" description="Curated shelves of pieces from the Design Lounge: navigation, loading states, motion, typography, sheets, forms, native feel, design languages and data.">
+  <PageHead eyebrow="Shelves" title="Collections, <i>curated</i>" blurb="Pieces grouped by the problem they solve, not by what they are. Each shelf is a reading list you can hand to an agent one piece at a time." count={cols.length} countLabel="shelves" />
+  <div class="wrap">
+    <ol class="shelves">
+      {cols.map((c, i) => (
+        <li class="shelf reveal" style={`--d:${i * 60}ms`}>
+          <a class="shelf-link" href={`/collections/${c.slug}`}>
+            <div class="shelf-text">
+              <span class="eyebrow">{c.kicker} · {c.items.length} pieces</span>
+              <h2 class="display h3">{c.title}</h2>
+              <p class="muted">{c.blurb}</p>
+              <span class="btn sm ghost">Open shelf</span>
+            </div>
+            <div class="shelf-wall" aria-hidden="true">
+              {c.items.slice(0, 4).map((p) => (
+                <div class="mini"><DeviceFrame slug={p!.id} platform={p!.data.platform} title={p!.data.title} /></div>
+              ))}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Base>
+
+<style>
+  .shelves { display: flex; flex-direction: column; border-top: 1px solid var(--ink); margin-top: 32px; }
+  .shelf { border-bottom: 1px solid var(--line); }
+  .shelf-link { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 1.4fr); gap: 32px; padding: 32px 0; align-items: center; }
+  .shelf-text { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .shelf-text p { max-width: 44ch; font-size: 15px; text-wrap: pretty; }
+  .shelf-text .btn { margin-top: 6px; }
+  .shelf-wall { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .mini { aspect-ratio: 3 / 4; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); position: relative; overflow: hidden; transition: transform var(--t-med) var(--ease), border-color var(--t-med); }
+  .mini :global(lounge-frame) { position: absolute; inset: 8px; }
+  .shelf-link:hover .mini { border-color: var(--ink-3); }
+  .shelf-link:hover .mini:nth-child(1) { transform: translateY(-4px); }
+  .shelf-link:hover .mini:nth-child(2) { transform: translateY(-8px); }
+  .shelf-link:hover .mini:nth-child(3) { transform: translateY(-4px); }
+  .shelf-link:hover .mini:nth-child(4) { transform: translateY(-8px); }
+  .shelf-link:hover h2 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+  @media (max-width: 860px) { .shelf-link { grid-template-columns: 1fr; } .shelf-wall { grid-template-columns: repeat(4, 1fr); gap: 8px; } }
+</style>

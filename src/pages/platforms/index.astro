@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import IndexTiles from '../../components/IndexTiles.astro';
+import { getPieces, PLATFORM_META } from '../../lib/pieces';
+const all = await getPieces();
+const newest = [...all].reverse();
+const items = Object.entries(PLATFORM_META).map(([k, v]) => ({ key: k, label: v.label, blurb: v.blurb, href: `/platforms/${k}`, count: all.filter((p) => p.data.platform === k).length, sample: newest.find((p) => p.data.platform === k) }));
+---
+<Base title="Platforms" description="Design Lounge pieces by platform: web, mobile web, mobile app, PWA and tablet.">
+  <PageHead eyebrow="Platforms" title="Every screen <i>size</i>" blurb="Each platform has its own frame, its own conventions and its own pieces. Web at 1280 wide, phones at 390, tablets at 1180 landscape." count={items.length} countLabel="platforms" />
+  <div class="wrap"><IndexTiles items={items} /></div>
+</Base>

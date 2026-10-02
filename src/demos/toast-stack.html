@@ -1,0 +1,113 @@
+<!-- Design Lounge piece: toast-stack · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Toast stack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1411;--panel:#16201a;--panel-2:#1c2821;--line:#26332b;--line-2:#34443a;
+  --ink:#edf3ee;--ink-2:#a3b3a8;--ink-3:#6b7d70;
+  --success:#9be38c;--error:#ff8a78;--info:#8fc2ff;--accent:#9be38c;--accent-ink:#0b1a0e;
+  --serif:"DM Serif Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif;
+  --toast-w:360px;--gap:8px;--edge:24px;--r:12px;--life:5000ms;
+  --t-fast:160ms;--t-stack:260ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow:0 16px 40px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.top{height:56px;display:flex;align-items:center;gap:12px;padding:0 28px;border-bottom:1px solid var(--line)}
+.top .brand{font:22px var(--serif);letter-spacing:-.01em}
+.top .brand i{color:var(--accent);font-style:normal}
+.top nav{display:flex;gap:20px;margin-left:24px;color:var(--ink-3);font-size:13px}
+.top nav b{color:var(--ink);font-weight:500}
+main{padding:56px 28px;max-width:720px}
+h1{margin:0 0 8px;font:400 40px/1.1 var(--serif);letter-spacing:-.015em}
+.sub{margin:0 0 32px;color:var(--ink-2);font-size:15px;max-width:520px}
+.field{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h3{margin:0 0 4px;font:500 13px var(--sans);color:var(--ink-3)}
+.card .v{font:26px var(--serif);letter-spacing:-.01em}
+.card .v small{font:13px var(--sans);color:var(--ink-3);margin-left:6px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--line-2);background:var(--panel);color:var(--ink);font:500 13px var(--sans);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:var(--panel-2);border-color:var(--ink-3)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.btn.s i{background:var(--success)}.btn.e i{background:var(--error)}.btn.i i{background:var(--info)}
+.hint{margin-top:16px;font-size:12px;color:var(--ink-3)}
+/* stack */
+.stack{position:fixed;right:var(--edge);bottom:var(--edge);width:var(--toast-w);z-index:10}
+.toast{position:absolute;right:0;bottom:0;width:100%;transform:translateY(calc(-1*var(--yc,0px))) scale(var(--s,1));transform-origin:bottom center;transition:transform var(--t-stack) var(--ease-out),opacity var(--t-stack) var(--ease);opacity:var(--o,1)}
+.stack.expanded .toast{transform:translateY(calc(-1*var(--ye,0px))) scale(1);opacity:1}
+.toast[data-i="3"],.toast[data-i="4"]{opacity:0;pointer-events:none}
+.stack.expanded .toast[data-i="3"],.stack.expanded .toast[data-i="4"]{opacity:1;pointer-events:auto}
+.t{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 40px 16px 16px;display:flex;gap:12px;box-shadow:var(--shadow);overflow:hidden;animation:enter 240ms var(--ease-out)}
+.toast.out .t{animation:leave var(--t-fast) var(--ease) forwards}
+.t .ic{color:var(--tone)}
+.t b{display:block;font-weight:600;font-size:14px;margin-bottom:2px}
+.t p{margin:0;color:var(--ink-2);font-size:13px}
+.t .x{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:6px;border:0;background:none;color:var(--ink-3);display:grid;place-items:center;cursor:pointer}
+.t .x svg{width:16px;height:16px}
+.t .x:hover{background:var(--panel-2);color:var(--ink)}
+.t .x:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.prog{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--tone);transform-origin:left;animation:drain var(--life) linear forwards}
+.stack.expanded .prog,.toast.hold .prog{animation-play-state:paused}
+@keyframes drain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@keyframes enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes leave{to{opacity:0;transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}.t,.toast.out .t{animation-duration:1ms}}
+</style>
+</head>
+<body>
+<header class="top"><span class="brand">Loam<i>.</i></span><nav><b>Field log</b><span>Rigs</span><span>Blocks</span><span>Weather</span><span>Reports</span></nav></header>
+<main>
+  <h1>Block 7 · Winter barley</h1>
+  <p class="sub">Notes, sprayer runs and sync status for the east field. Each action below reports back through a toast.</p>
+  <div class="field">
+    <div class="card"><h3>Area</h3><div class="v">14.2<small>ha</small></div></div>
+    <div class="card"><h3>Last sprayed</h3><div class="v">3<small>days ago</small></div></div>
+    <div class="card"><h3>Soil moisture</h3><div class="v">31<small>%</small></div></div>
+  </div>
+  <div class="row">
+    <button class="btn s" data-k="success"><i></i>Save field note</button>
+    <button class="btn e" data-k="error"><i></i>Sync telemetry</button>
+    <button class="btn i" data-k="info"><i></i>Schedule sprayer</button>
+  </div>
+  <p class="hint">Hover the stack to expand it. Toasts dismiss themselves 5 s after they arrive unless you're hovering; the first three wait for your first click.</p>
+</main>
+<div class="stack" id="stack" role="region" aria-label="Notifications"></div>
+<script>
+const ICON={success:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>',error:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>',info:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>'};
+const TONE={success:'var(--success)',error:'var(--error)',info:'var(--info)'};
+const MSG={success:['Field note saved','Block 7 · 14 rows · synced to Loam cloud'],error:['Sync failed','Rig 2 telemetry could not reach the gateway. Retrying in 30 s.'],info:['Sprayer scheduled','Rig 2 · Block 3 · tomorrow 05:30 · 420 L/ha']};
+const stack=document.getElementById('stack');let seq=0;
+function layout(){
+  const list=[...stack.querySelectorAll('.toast:not(.out)')].reverse();let ye=0;
+  list.forEach((t,i)=>{t.dataset.i=i;t.style.setProperty('--yc',(i*12)+'px');t.style.setProperty('--s',String(1-i*.04));t.style.setProperty('--ye',ye+'px');ye+=t.offsetHeight+8;});
+  stack.style.height=(stack.classList.contains('expanded')?ye:(list[0]?list[0].offsetHeight:0))+'px';
+  while(list.length>5){dismiss(list.pop());}
+}
+function dismiss(t){if(t.classList.contains('out'))return;t.classList.add('out');t.addEventListener('animationend',()=>{t.remove();layout();},{once:true});}
+function toast(kind,hold){
+  const t=document.createElement('div');t.className='toast'+(hold?' hold':'');t.style.setProperty('--tone',TONE[kind]);t.setAttribute('role','status');
+  const n=++seq;const [title,body]=MSG[kind];
+  t.innerHTML=`<div class="t"><span class="ic">${ICON[kind]}</span><div><b>${title}</b><p>${body.replace('Block 7','Block '+(6+n%4))}</p></div><button class="x" aria-label="Dismiss">${'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>'}</button><span class="prog"></span></div>`;
+  t.querySelector('.x').addEventListener('click',()=>dismiss(t));
+  t.querySelector('.prog').addEventListener('animationend',()=>dismiss(t));
+  stack.appendChild(t);layout();
+}
+document.querySelectorAll('[data-k]').forEach(b=>b.addEventListener('click',()=>{stack.querySelectorAll('.hold').forEach(t=>t.classList.remove('hold'));toast(b.dataset.k);}));
+stack.addEventListener('mouseenter',()=>{stack.classList.add('expanded');layout();});
+stack.addEventListener('mouseleave',()=>{stack.classList.remove('expanded');layout();});
+stack.addEventListener('focusin',()=>{stack.classList.add('expanded');layout();});
+stack.addEventListener('focusout',e=>{if(!stack.contains(e.relatedTarget)){stack.classList.remove('expanded');layout();}});
+toast('info',1);toast('success',1);toast('error',1);
+</script>
+</body>
+</html>

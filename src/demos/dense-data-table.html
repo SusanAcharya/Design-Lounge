@@ -1,0 +1,139 @@
+<!-- Design Lounge piece: dense-data-table · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Dense data table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f6f8;--panel:#ffffff;--hover:#f3f5f9;--sel:#e9f0fd;--line:#e3e6ec;--line-2:#cfd4dd;
+  --ink:#12161d;--ink-2:#4c5563;--ink-3:#7b8494;--accent:#1d5fd6;--accent-ink:#ffffff;--bar:#12161d;--bar-ink:#f5f6f8;
+  --ok:#1f7a4d;--ok-bg:#e3f4ea;--due:#a85c0a;--due-bg:#fbeedb;--late:#b3261e;--late-bg:#fbe5e3;--draft:#5c6470;--draft-bg:#eceef2;
+  --font:"Chivo",system-ui,sans-serif;--mono:"Chivo Mono",ui-monospace,monospace;
+  --row:40px;--r:6px;--t-fast:120ms;--t-bar:240ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.4 var(--font);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.top{height:56px;display:flex;align-items:center;gap:16px;padding:0 24px;border-bottom:1px solid var(--line);background:var(--panel)}
+.top h1{margin:0;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.top .n{font:12px var(--mono);color:var(--ink-3)}
+.top .crumb{font:12px var(--mono);color:var(--ink-3)}
+.btn{height:32px;padding:0 12px;border-radius:var(--r);border:1px solid var(--line-2);background:var(--panel);font:500 13px var(--font);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--hover)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);margin-left:auto}
+.btn.primary:hover{background:#174dad}
+.btn:focus-visible,th button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap.sel table{margin-bottom:72px}
+.wrap{flex:1;overflow:auto;background:var(--panel);margin:16px 24px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1000px}
+thead th{position:sticky;top:0;z-index:2;background:var(--panel);height:var(--row);padding:0;border-bottom:1px solid var(--line-2);text-align:left;font:500 11px var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+thead th::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--line-2)}
+th button{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:6px;height:var(--row);padding:0 12px;width:100%;cursor:pointer;font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit}
+th button:hover{color:var(--ink)}
+th.num button{justify-content:flex-end}
+th .arr{opacity:0;transition:opacity var(--t-fast),transform var(--t-fast) var(--ease)}
+th button:hover .arr{opacity:.4}
+th[aria-sort] .arr{opacity:1;color:var(--accent)}
+th[aria-sort="descending"] .arr{transform:rotate(180deg)}
+th[aria-sort] button{color:var(--ink)}
+td{height:var(--row);padding:0 12px;border-bottom:1px solid var(--line);white-space:nowrap;color:var(--ink-2)}
+td.num,td.mono{font:13px var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
+td.num{text-align:right}
+td.cust{color:var(--ink);font-weight:500}
+tr:hover td{background:var(--hover)}
+tr[aria-selected="true"] td{background:var(--sel)}
+tr[aria-selected="true"]:hover td{background:#dfe8fb}
+.chk{width:44px;text-align:center;padding:0}
+input[type=checkbox]{appearance:none;width:16px;height:16px;border:1.5px solid var(--line-2);border-radius:4px;margin:0;vertical-align:middle;background:var(--panel);cursor:pointer;position:relative;display:inline-grid;place-items:center}
+input[type=checkbox]:hover{border-color:var(--ink-3)}
+input[type=checkbox]:checked,input[type=checkbox]:indeterminate{background:var(--accent);border-color:var(--accent)}
+input[type=checkbox]:checked::after{content:"";width:9px;height:5px;border:2px solid #fff;border-top:0;border-right:0;transform:translateY(-1px) rotate(-45deg)}
+input[type=checkbox]:indeterminate::after{content:"";width:8px;height:2px;background:#fff;border-radius:1px}
+.pill{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;font:500 11px var(--font);letter-spacing:.02em}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.paid{color:var(--ok);background:var(--ok-bg)}.due{color:var(--due);background:var(--due-bg)}.overdue{color:var(--late);background:var(--late-bg)}.draft{color:var(--draft);background:var(--draft-bg)}
+.actions{position:fixed;left:50%;bottom:24px;transform:translate(-50%,calc(100% + 32px));background:var(--bar);color:var(--bar-ink);border-radius:10px;padding:8px 8px 8px 16px;display:flex;align-items:center;gap:8px;box-shadow:0 12px 32px -8px rgba(18,22,29,.45);transition:transform var(--t-bar) var(--ease-out);z-index:5;white-space:nowrap}
+.actions.show{transform:translate(-50%,0)}
+.actions b{font-weight:600;margin-right:4px}
+.actions .sum{font:12px var(--mono);color:#a7afbd;margin-right:12px}
+.actions button{all:unset;height:32px;padding:0 12px;border-radius:6px;font:500 13px var(--font);cursor:pointer;color:var(--bar-ink)}
+.actions button:hover{background:rgba(255,255,255,.12)}
+.actions button:focus-visible{outline:2px solid #8fb3f5;outline-offset:-2px}
+.actions .x{width:32px;padding:0;display:grid;place-items:center;margin-left:4px;border-left:1px solid rgba(255,255,255,.14);border-radius:0 6px 6px 0}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="crumb">tessel / billing</span>
+  <h1>Invoices</h1><span class="n" id="count">32 invoices</span>
+  <button class="btn"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filter</button>
+  <button class="btn primary"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New invoice</button>
+</header>
+<div class="wrap" tabindex="0" aria-label="Invoice table scroll region">
+<table id="t" aria-label="Invoices">
+  <thead><tr>
+    <th class="chk"><input type="checkbox" id="all" aria-label="Select all invoices"></th>
+    <th data-k="id" aria-sort="ascending"><button>Invoice <svg class="arr" viewBox="0 0 24 24"><path d="M12 5v14M6 11l6-6 6 6"/></svg></button></th>
+    <th data-k="cust"><button>Customer <svg class="arr" viewBox="0 0 24 24"><path d="M12 5v14M6 11l6-6 6 6"/></svg></button></th>
+    <th data-k="status"><button>Status <svg class="arr" viewBox="0 0 24 24"><path d="M12 5v14M6 11l6-6 6 6"/></svg></button></th>
+    <th data-k="issued"><button>Issued <svg class="arr" viewBox="0 0 24 24"><path d="M12 5v14M6 11l6-6 6 6"/></svg></button></th>
+    <th data-k="due"><button>Due <svg class="arr" viewBox="0 0 24 24"><path d="M12 5v14M6 11l6-6 6 6"/></svg></button></th>
+    <th data-k="items" class="num"><button>Items <svg class="arr" viewBox="0 0 24 24"><path d="M12 5v14M6 11l6-6 6 6"/></svg></button></th>
+    <th data-k="amount" class="num"><button>Amount <svg class="arr" viewBox="0 0 24 24"><path d="M12 5v14M6 11l6-6 6 6"/></svg></button></th>
+  </tr></thead>
+  <tbody id="body"></tbody>
+</table>
+</div>
+<div class="actions" id="actions" role="region" aria-label="Selection actions" aria-live="polite">
+  <b id="selN">0 selected</b><span class="sum" id="selSum"></span>
+  <button>Mark as paid</button><button>Send reminder</button><button>Export CSV</button>
+  <button class="x" id="clear" aria-label="Clear selection"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+<script>
+const CUST=['Halden Logistics','Marrow Studio','Fjord Bank','Nord Post','Loam Farms','Orbital Labs','Tessel Interiors','Mira Health','Kestrel Air','Alder & Finch','Oxbow Energy','Wren Books'];
+const ST=['paid','paid','due','paid','overdue','draft','paid','due'];
+const rows=[];
+for(let i=0;i<32;i++){const d=new Date(2026,7,4+i*1.6|0);const due=new Date(d);due.setDate(d.getDate()+30);
+  rows.push({id:'INV-'+(2418-i),cust:CUST[(i*5)%CUST.length],status:ST[(i*3)%ST.length],issued:d,due,items:1+(i*7)%9,amount:Math.round((640+((i*9301+49297)%233280)/233280*11800)*4)/4});}
+const fmtD=d=>d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+const fmtM=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const body=document.getElementById('body'),all=document.getElementById('all'),bar=document.getElementById('actions');
+const selected=new Set();let sortK='id',sortDir=1,lastIdx=-1;
+function sorted(){return[...rows].sort((a,b)=>{let x=a[sortK],y=b[sortK];if(x instanceof Date){x=+x;y=+y;}return(x>y?1:x<y?-1:0)*sortDir;});}
+function render(){
+  body.innerHTML='';
+  sorted().forEach((r,i)=>{const tr=document.createElement('tr');tr.dataset.id=r.id;tr.setAttribute('aria-selected',String(selected.has(r.id)));
+    tr.innerHTML=`<td class="chk"><input type="checkbox" aria-label="Select ${r.id}" ${selected.has(r.id)?'checked':''}></td><td class="mono">${r.id}</td><td class="cust">${r.cust}</td><td><span class="pill ${r.status}">${r.status}</span></td><td>${fmtD(r.issued)}</td><td>${fmtD(r.due)}</td><td class="num">${r.items}</td><td class="num">${fmtM(r.amount)}</td>`;
+    tr.querySelector('input').addEventListener('click',e=>{
+      if(e.shiftKey&&lastIdx>=0){const list=sorted();const[a,b]=[Math.min(lastIdx,i),Math.max(lastIdx,i)];for(let k=a;k<=b;k++)selected.add(list[k].id);}
+      else selected.has(r.id)?selected.delete(r.id):selected.add(r.id);
+      lastIdx=i;sync();});
+    body.appendChild(tr);});
+  sync();
+}
+function sync(){
+  body.querySelectorAll('tr').forEach(tr=>{const on=selected.has(tr.dataset.id);tr.setAttribute('aria-selected',String(on));tr.querySelector('input').checked=on;});
+  const n=selected.size;all.checked=n===rows.length;all.indeterminate=n>0&&n<rows.length;
+  const sum=rows.filter(r=>selected.has(r.id)).reduce((s,r)=>s+r.amount,0);
+  document.getElementById('selN').textContent=n+' selected';document.getElementById('selSum').textContent=n?'total '+fmtM(sum):'';
+  bar.classList.toggle('show',n>0);bar.setAttribute('aria-hidden',String(!n));document.querySelector('.wrap').classList.toggle('sel',n>0);
+}
+all.addEventListener('change',()=>{all.checked?rows.forEach(r=>selected.add(r.id)):selected.clear();sync();});
+document.getElementById('clear').addEventListener('click',()=>{selected.clear();sync();all.focus();});
+document.querySelectorAll('th[data-k]').forEach(th=>th.querySelector('button').addEventListener('click',()=>{
+  const k=th.dataset.k;sortDir=(sortK===k)?-sortDir:1;sortK=k;
+  document.querySelectorAll('th[data-k]').forEach(h=>h.removeAttribute('aria-sort'));
+  th.setAttribute('aria-sort',sortDir>0?'ascending':'descending');lastIdx=-1;render();
+}));
+addEventListener('keydown',e=>{if(e.key==='Escape'&&selected.size){selected.clear();sync();}});
+render();
+['INV-2416','INV-2414','INV-2411'].forEach(id=>selected.add(id));sync();
+</script>
+</body>
+</html>

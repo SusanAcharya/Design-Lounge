@@ -1,0 +1,79 @@
+<!-- Design Lounge piece: spotlight-hover-grid · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Spotlight hover grid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1a1a1a;--card:#1f1f1f;--line:#2c2c2c;--ink:#f2f2f2;--ink-2:#a3a3a3;--ink-3:#6b6b6b;
+  --glow-border:rgba(255,255,255,.55);--glow-surface:rgba(255,255,255,.06);
+  --sans:"Schibsted Grotesk",system-ui,sans-serif;
+  --card-h:164px;--gap:12px;--r:10px;--spot-border:420px;--spot-surface:640px;
+  --t-glow:320ms;--t-micro:160ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);overflow:hidden;padding:44px 48px;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+.head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px}
+.head h1{margin:0 0 6px;font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1.15}
+.head p{margin:0;color:var(--ink-2);font-size:15px;max-width:520px}
+.head .tag{font-size:12px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;padding-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:var(--card-h);gap:var(--gap)}
+.card{position:relative;display:block;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;color:inherit;text-decoration:none;outline:none}
+.card::before,.card::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity var(--t-glow) var(--ease)}
+.card::before{padding:1px;background:radial-gradient(var(--spot-border) circle at var(--mx,-999px) var(--my,-999px),var(--glow-border),transparent 60%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+.card::after{background:radial-gradient(var(--spot-surface) circle at var(--mx,-999px) var(--my,-999px),var(--glow-surface),transparent 50%)}
+.grid.lit .card::before,.grid.lit .card::after,.card:focus-visible::before,.card:focus-visible::after{opacity:1}
+.card:focus-visible{border-color:var(--ink-2)}
+.card svg{width:24px;height:24px;stroke:var(--ink);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:22px;display:block;transition:transform var(--t-micro) var(--ease)}
+.card:hover svg{transform:translateY(-2px)}
+.card h2{margin:0 0 6px;font-size:16px;font-weight:500;letter-spacing:-.01em}
+.card p{margin:0;color:var(--ink-2);font-size:13px;line-height:1.45}
+.foot{margin-top:auto;padding-top:20px;font-size:12px;color:var(--ink-3);display:flex;justify-content:space-between}
+@media (prefers-reduced-motion:reduce){.card::before,.card::after{transition:none}.card svg{transition:none}}
+</style>
+</head>
+<body>
+<div class="head">
+  <div><h1>Everything Orbital does for a deploy</h1><p>Twelve things that happen between <code>git push</code> and a URL. Move the pointer across the grid.</p></div>
+  <span class="tag">Platform · v2.14</span>
+</div>
+<div class="grid" id="grid">
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg><h2>Edge routing</h2><p>Requests land on the nearest of 34 regions, with failover in 200 ms.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg><h2>Zero-config TLS</h2><p>Certificates issued at first deploy and rotated 30 days before expiry.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><path d="M6 3v12a4 4 0 004 4h8"/><circle cx="6" cy="3" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 9l6-3"/></svg><h2>Preview deploys</h2><p>Every branch gets its own URL and a copy-on-write fork of the database.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><path d="M13 3L4 14h7l-1 7 9-11h-7z"/></svg><h2>Query cache</h2><p>Repeated reads answered in 4 ms from the edge; invalidated on write.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM9 9h6M9 13h6M9 17h3"/></svg><h2>Audit log</h2><p>Every change signed by its author and searchable for 400 days.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h2>Cron jobs</h2><p>Schedules in your timezone, three retries with backoff, logs per run.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><circle cx="8" cy="14" r="4"/><path d="M11 11l9-9M16 6l2 2M13 9l2 2"/></svg><h2>Secrets</h2><p>Scoped per environment, encrypted at rest, never written to your repo.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 15l4-4 4 3 4-6 4 3"/></svg><h2>Metrics</h2><p>p50, p95 and p99 per route, without installing an agent.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 018-8h1M4 12l3-3M4 12l3 3M12 20a8 8 0 008-8"/></svg><h2>Rollbacks</h2><p>One click back to any of the last 50 builds. Median rollback: 9 s.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0M16 4a3.5 3.5 0 010 7M21.5 20a6.5 6.5 0 00-5-6.3"/></svg><h2>Team roles</h2><p>Owner, deployer, viewer. That is the whole permissions model.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></svg><h2>Webhooks</h2><p>Signed payloads, delivery receipts, and a 7-day replay window.</p></a>
+  <a class="card" href="#"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg><h2>SSO</h2><p>SAML and OIDC on every plan, including the free one.</p></a>
+</div>
+<div class="foot"><span>A white radial light follows the pointer across borders and surfaces; no colour, no blur.</span><span>Orbital · eu-1</span></div>
+<script>
+  const grid=document.getElementById('grid'),cards=[...grid.querySelectorAll('.card')],reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let rects=[],raf=0,ev=null;
+  const measure=()=>{rects=cards.map(c=>c.getBoundingClientRect());};
+  function apply(){
+    raf=0;if(!ev)return;
+    cards.forEach((c,i)=>{const r=rects[i];c.style.setProperty('--mx',(ev.clientX-r.left)+'px');c.style.setProperty('--my',(ev.clientY-r.top)+'px');});
+  }
+  grid.addEventListener('pointerenter',()=>{measure();grid.classList.add('lit');});
+  grid.addEventListener('pointermove',e=>{ev=e;if(!raf)raf=requestAnimationFrame(apply);});
+  grid.addEventListener('pointerleave',()=>{ev=null;grid.classList.remove('lit');});
+  addEventListener('resize',measure);
+  cards.forEach(c=>{
+    c.addEventListener('focus',()=>{if(reduce)return;c.style.setProperty('--mx','50%');c.style.setProperty('--my','50%');});
+    c.addEventListener('click',e=>e.preventDefault());
+  });
+</script>
+</body>
+</html>

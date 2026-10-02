@@ -1,0 +1,125 @@
+<!-- Design Lounge piece: avatar-stack-presence · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Avatar stack with presence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#17131d;--surface:#201a29;--surface-2:#2a2335;--line:#2f2739;--line-2:#3d3449;
+  --ink:#f1ecf7;--ink-2:#a79db6;--ink-3:#6f6580;--live:#3ddc84;--idle:#d9a441;--away:#6f6580;
+  --t1:#5b4b8a;--t2:#8a4b6b;--t3:#3f6f7a;--t4:#7a6a3f;--t5:#4b6f52;--t6:#8a5a3f;--t7:#4b5b8a;
+  --display:"Syne",system-ui,sans-serif;--font:"Manrope",system-ui,sans-serif;
+  --av:36px;--overlap:-10px;--fan:6px;--dot:10px;--r:8px;--r-lg:14px;
+  --t-micro:160ms;--t-fan:240ms;--t-pop:280ms;--t-pulse:2000ms;--t-sim:4000ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.55 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;padding:0 72px}
+.head{display:flex;align-items:center;gap:20px;height:104px;border-bottom:1px solid var(--line)}
+.head h1{margin:0;font:700 26px/1.1 var(--display);letter-spacing:-.02em}
+.head p{margin:4px 0 0;color:var(--ink-3);font-size:13px}
+.right{margin-left:auto;display:flex;align-items:center;gap:18px}
+.stack{display:flex;align-items:center;padding:4px;border-radius:999px}
+.av{width:var(--av);height:var(--av);border-radius:50%;border:2px solid var(--bg);margin-left:var(--overlap);position:relative;display:grid;place-items:center;font:600 12px var(--font);color:var(--ink);background:var(--tint);cursor:default;padding:0;transition:margin var(--t-fan) var(--ease),transform var(--t-fan) var(--ease)}
+.av:first-child{margin-left:0}
+.stack:hover .av,.stack:focus-within .av{margin-left:var(--fan)}
+.stack:hover .av:first-child,.stack:focus-within .av:first-child{margin-left:0}
+.av:hover,.av:focus-visible{transform:translateY(-2px);z-index:3}
+.av:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.av.more{background:var(--surface-2);color:var(--ink-2);font-size:11px;font-weight:500}
+.av.in{animation:pop var(--t-pop) var(--ease-spring)}
+.av.out{animation:shrink var(--t-fan) var(--ease) forwards}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+@keyframes shrink{to{transform:scale(0);opacity:0;width:0;margin-left:0;border-width:0}}
+.pd{position:absolute;right:-2px;bottom:-2px;width:var(--dot);height:var(--dot);border-radius:50%;border:2px solid var(--bg);background:var(--away)}
+.pd[data-s="active"]{background:var(--live)}
+.pd[data-s="idle"]{background:var(--idle)}
+.pd[data-s="active"]::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:1.5px solid var(--live);animation:pulse var(--t-pulse) var(--ease-out) infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(2);opacity:0}}
+.tip{position:absolute;top:calc(100% + 10px);left:50%;transform:translate(-50%,-4px);background:var(--ink);color:var(--bg);padding:6px 9px;border-radius:6px;white-space:nowrap;font:500 12px var(--font);opacity:0;pointer-events:none;transition:opacity var(--t-micro) var(--ease),transform var(--t-micro) var(--ease);z-index:5}
+.tip small{display:block;font-weight:400;color:#5a5266;font-size:11px}
+.tip::before{content:"";position:absolute;bottom:100%;left:50%;margin-left:-4px;border:4px solid transparent;border-bottom-color:var(--ink)}
+.av:hover .tip,.av:focus-visible .tip{opacity:1;transform:translate(-50%,0)}
+.btn{height:36px;padding:0 14px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);color:var(--ink);font:600 13px var(--font);cursor:pointer}
+.btn:hover{background:var(--surface-2)}
+.btn:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.body{display:grid;grid-template-columns:1fr 340px;gap:56px;padding-top:36px}
+.doc h2{margin:0 0 10px;font:600 18px var(--display)}
+.doc p{margin:0 0 16px;color:var(--ink-2);max-width:620px;font-size:15px}
+.doc p b{color:var(--ink);font-weight:600}
+.cursor{display:inline-block;width:2px;height:16px;background:var(--live);vertical-align:-3px;margin-left:2px;position:relative}
+.cursor::after{content:"Ivo";position:absolute;left:0;top:-16px;font:600 10px var(--font);color:var(--bg);background:var(--live);padding:1px 5px;border-radius:3px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px 18px}
+.panel h3{margin:0 0 12px;font:600 11px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
+.panel h3 span{color:var(--live)}
+.people{list-style:none;margin:0 0 16px;padding:0}
+.people li{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+.people .av{width:26px;height:26px;font-size:10px;margin:0}
+.people .n{flex:1}
+.people .s{font-size:12px;color:var(--ink-3)}
+.log{list-style:none;margin:0;padding:0;font-size:12.5px;color:var(--ink-2)}
+.log li{padding:5px 0;display:flex;gap:10px}
+.log time{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.ctl{margin-top:14px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--ink-3)}
+@media (prefers-reduced-motion:reduce){.pd[data-s="active"]::after{animation:none;opacity:.5}.av.in,.av.out{animation-duration:1ms}*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="head">
+  <div><h1>Q4 planning</h1><p>Rift · Product · edited 2 minutes ago by Ivo Marchetti</p></div>
+  <div class="right">
+    <div class="stack" id="stack" role="group" aria-label="People in this document"></div>
+    <button class="btn">Comments</button>
+    <button class="btn primary">Share</button>
+  </div>
+</header>
+<div class="body">
+  <main class="doc">
+    <h2>Goals for the quarter</h2>
+    <p>Ship the shared-cursor beta to every workspace on the Team plan by <b>14 November</b>, keep p95 sync latency under 120 ms, and reduce the "who changed this?" support tickets by a third.</p>
+    <p>Presence has to be honest. A green dot means the person is <b>here, right now</b>, not that they opened the tab this morning. Idle after 5 minutes without input; away after 20.<span class="cursor" aria-hidden="true"></span></p>
+    <p>Open questions: do we show viewers who are not on the document's ACL, and how do we fan the stack when fifteen people join a review?</p>
+  </main>
+  <aside class="panel" aria-label="Presence">
+    <h3>In this document <span id="count">5 now</span></h3>
+    <ul class="people" id="people"></ul>
+    <h3>Activity</h3>
+    <ul class="log" id="log" aria-live="polite"></ul>
+    <div class="ctl"><span>Simulated join / leave every 4s</span><button class="btn" id="pause" aria-pressed="false" style="height:30px;padding:0 10px;font-size:12px">Pause</button></div>
+  </aside>
+</div>
+<script>
+  const pool=[
+    {n:'Ivo Marchetti',i:'IM',t:1,s:'active',r:'Editing'},{n:'Sana Iqbal',i:'SI',t:2,s:'active',r:'Viewing'},{n:'Tomas Reyes',i:'TR',t:3,s:'idle',r:'Idle · 6 min'},
+    {n:'Mei Lindqvist',i:'ML',t:4,s:'active',r:'Commenting'},{n:'Anneli Voss',i:'AV',t:5,s:'idle',r:'Idle · 12 min'},{n:'Jonas Weber',i:'JW',t:6,s:'active',r:'Viewing'},
+    {n:'Priya Natarajan',i:'PN',t:7,s:'active',r:'Viewing'},{n:'Elin Marsh',i:'EM',t:2,s:'idle',r:'Idle · 3 min'},{n:'Marcus Hale',i:'MH',t:3,s:'active',r:'Viewing'}
+  ];
+  let present=pool.slice(0,7),away=pool.slice(7),paused=false,tick=0;
+  const stack=document.getElementById('stack'),people=document.getElementById('people'),log=document.getElementById('log'),count=document.getElementById('count'),MAX=5;
+  const clock=()=>{const d=new Date(Date.now()+tick*4000);return d.toTimeString().slice(0,8);};
+  function avatar(p,extra){const b=document.createElement('button');b.className='av'+(extra||'');b.style.setProperty('--tint','var(--t'+p.t+')');b.setAttribute('aria-label',p.n+', '+p.r);b.innerHTML=`${p.i}<span class="pd" data-s="${p.s}"></span><span class="tip" aria-hidden="true">${p.n}<small>${p.r}</small></span>`;return b;}
+  function render(joined){
+    stack.innerHTML='';present.slice(0,MAX).forEach(p=>stack.appendChild(avatar(p,joined===p?' in':'')));
+    if(present.length>MAX){const m=document.createElement('button');m.className='av more';m.textContent='+'+(present.length-MAX);m.setAttribute('aria-label',(present.length-MAX)+' more people: '+present.slice(MAX).map(p=>p.n).join(', '));m.innerHTML+=`<span class="tip" aria-hidden="true">${present.slice(MAX).map(p=>p.n).join('<br>')}</span>`;stack.appendChild(m);}
+    people.innerHTML='';present.forEach(p=>{const li=document.createElement('li');li.innerHTML=`<span class="av" style="--tint:var(--t${p.t})">${p.i}<span class="pd" data-s="${p.s}"></span></span><span class="n">${p.n}</span><span class="s">${p.r}</span>`;people.appendChild(li);});
+    count.textContent=present.length+' now';
+  }
+  function note(t){const li=document.createElement('li');li.innerHTML=`<time>${clock()}</time><span>${t}</span>`;log.prepend(li);while(log.children.length>5)log.lastChild.remove();}
+  function step(){
+    if(paused)return;tick++;
+    if(away.length&&(tick%2||present.length<=2)){const p=away.shift();present.unshift(p);render(p);note(`<b>${p.n}</b> joined`);}
+    else{const i=1+Math.floor(Math.random()*(present.length-1)),p=present[i];const el=stack.children[i];
+      if(el&&i<MAX){el.classList.add('out');setTimeout(()=>{present.splice(i,1);away.push(p);render();},240);}else{present.splice(i,1);away.push(p);render();}
+      note(`${p.n} left`);}
+  }
+  render();note('<b>Mei Lindqvist</b> joined');
+  setInterval(step,4000);
+  const pause=document.getElementById('pause');pause.addEventListener('click',()=>{paused=!paused;pause.setAttribute('aria-pressed',String(paused));pause.textContent=paused?'Resume':'Pause';});
+</script>
+</body>
+</html>

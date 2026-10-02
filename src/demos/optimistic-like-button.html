@@ -1,0 +1,135 @@
+<!-- Design Lounge piece: optimistic-like-button · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Optimistic like button</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#10141c;--card:#171c26;--card-2:#1e2532;--line:#242b38;--line-2:#303a4a;
+  --ink:#eef1f6;--ink-2:#98a2b3;--ink-3:#66717f;--heart:#ff4d6d;--heart-soft:rgba(255,77,109,.14);--ok:#4fc38a;--warn:#f2b544;
+  --font:"Sora",system-ui,sans-serif;
+  --r:10px;--r-lg:16px;--card-w:560px;
+  --t-micro:160ms;--t-pop:420ms;--t-burst:520ms;--t-toast:280ms;--t-request:700ms;--t-undo:5000ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-bounce:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.55 var(--font);color:var(--ink);background:var(--bg);display:grid;grid-template-columns:var(--card-w) 300px;gap:32px;align-items:center;justify-content:center;padding:0 48px;-webkit-font-smoothing:antialiased;overflow:hidden}
+.card{width:var(--card-w);background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px 26px 18px}
+.who{display:flex;align-items:center;gap:12px}
+.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#3c5a8a,#7b5ea7);display:grid;place-items:center;font:600 13px var(--font)}
+.who b{font-weight:600;display:block}
+.who span{font-size:12.5px;color:var(--ink-3)}
+.who time{margin-left:auto;font-size:12.5px;color:var(--ink-3)}
+.body{margin:18px 0 8px;font-size:17px;line-height:1.5;letter-spacing:-.005em}
+.body em{font-style:normal;color:var(--ink-2)}
+.tag{display:inline-block;margin:6px 6px 0 0;padding:3px 9px;border-radius:999px;background:var(--card-2);color:var(--ink-2);font-size:12px}
+.actions{display:flex;align-items:center;gap:6px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.act{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:0;border-radius:var(--r);background:none;color:var(--ink-2);font:500 13.5px var(--font);cursor:pointer;position:relative;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.act:hover{background:var(--card-2);color:var(--ink)}
+.act:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.act svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.like{color:var(--ink-2)}
+.like:hover{background:var(--heart-soft);color:var(--heart)}
+.like .h{position:relative;width:20px;height:20px;display:grid;place-items:center}
+.like .h svg{transition:fill var(--t-micro) var(--ease),stroke var(--t-micro) var(--ease)}
+.like[aria-pressed="true"]{color:var(--heart)}
+.like[aria-pressed="true"] .h svg{fill:var(--heart);stroke:var(--heart)}
+.like.pop .h svg{animation:pop var(--t-pop) var(--ease-bounce)}
+@keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.35)}60%{transform:scale(.9)}80%{transform:scale(1.08)}100%{transform:scale(1)}}
+.burst{position:absolute;inset:0;pointer-events:none}
+.burst i{position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px 0 0 -2px;border-radius:50%;background:var(--heart);opacity:0;transform:rotate(calc(var(--i) * 45deg)) translateY(0) scale(0)}
+.burst i:nth-child(even){background:var(--warn);width:3px;height:3px}
+.like.pop .burst i{animation:burst var(--t-burst) var(--ease-out) forwards}
+@keyframes burst{0%{opacity:1;transform:rotate(calc(var(--i) * 45deg)) translateY(-4px) scale(1)}100%{opacity:0;transform:rotate(calc(var(--i) * 45deg)) translateY(-26px) scale(.2)}}
+.n{min-width:22px;text-align:left;font-variant-numeric:tabular-nums;display:inline-block}
+.n.tick{animation:tick 240ms var(--ease-out)}
+@keyframes tick{0%{transform:translateY(6px);opacity:0}100%{transform:none;opacity:1}}
+.spacer{flex:1}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 18px 14px;font-size:12.5px}
+.panel h6{margin:0 0 12px;font:600 11px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--ink-2);margin-bottom:14px}
+.switch{width:40px;height:22px;border-radius:11px;background:var(--line-2);border:0;padding:0;position:relative;cursor:pointer;flex:none;transition:background var(--t-micro) var(--ease)}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform var(--t-micro) var(--ease)}
+.switch[aria-checked="true"]{background:var(--heart)}
+.switch[aria-checked="true"]::after{transform:translateX(18px)}
+.switch:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.log{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);max-height:200px;overflow:hidden}
+.log li{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.log li b{font-weight:500;min-width:36px;color:var(--ink-3)}
+.log li .s{margin-left:auto;font-weight:600}
+.log .ok{color:var(--ok)}.log .bad{color:var(--heart)}.log .pend{color:var(--warn)}
+.toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:12px;padding:12px 12px 12px 16px;display:flex;align-items:center;gap:14px;font-size:13.5px;box-shadow:0 12px 32px rgba(0,0,0,.45);transition:opacity var(--t-toast) var(--ease),transform var(--t-toast) var(--ease);overflow:hidden;min-width:360px}
+.toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast b{font-weight:600;display:block}
+.toast span{color:#4a5262;font-size:12.5px}
+.toast button{margin-left:auto;height:32px;padding:0 12px;border:0;border-radius:8px;background:var(--heart);color:#fff;font:600 13px var(--font);cursor:pointer}
+.toast button:hover{filter:brightness(1.1)}
+.toast button:focus-visible{outline:2px solid var(--bg);outline-offset:-4px}
+.toast .x{background:none;color:#4a5262;padding:0;width:32px;margin-left:0}
+.toast .x svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.toast::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--heart);transform-origin:left;transform:scaleX(0)}
+.toast.show::after{animation:drain var(--t-undo) linear forwards}
+@keyframes drain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){
+  .like.pop .h svg,.like.pop .burst i,.n.tick{animation:none}
+  .toast.show::after{animation-duration:var(--t-undo)}
+  *{transition-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<article class="card" aria-label="Post by Priya Natarajan">
+  <div class="who"><div class="av">PN</div><div><b>Priya Natarajan</b><span>@priya · Marrow Kitchen</span></div><time datetime="2026-09-29T08:12">2h</time></div>
+  <p class="body">Finally moved our whole prep board onto Marrow this week. Sunday batch cook went from a 3-hour scramble to 90 minutes, and nobody asked me where the tahini was. <em>Small wins.</em></p>
+  <div><span class="tag">batch cooking</span><span class="tag">week 38</span><span class="tag">kitchen ops</span></div>
+  <div class="actions">
+    <button class="act like" id="like" aria-pressed="false" aria-label="Like, 1,284 likes"><span class="h"><svg viewBox="0 0 24 24"><path d="M12 20.5l-7.4-7.3a4.6 4.6 0 016.5-6.5l.9.9.9-.9a4.6 4.6 0 116.5 6.5z"/></svg><span class="burst" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i></span></span><span class="n" id="n">1,284</span></button>
+    <button class="act"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-11.6 7.1L4 20l1.1-4.2A8 8 0 1121 12z"/></svg>96</button>
+    <button class="act"><svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M12 15V3M7 8l5-5 5 5"/></svg>Share</button>
+    <span class="spacer"></span>
+    <button class="act" aria-label="Save"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+  </div>
+</article>
+<aside class="panel" aria-label="Demo controls">
+  <h6>Demo controls</h6>
+  <div class="row"><label for="fail">Simulate request failure</label><button class="switch" id="fail" role="switch" aria-checked="false"></button></div>
+  <h6>Requests</h6>
+  <ul class="log" id="log" aria-live="polite"></ul>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="assertive">
+  <div><b>Couldn't save your like</b><span>Kept it for now. Undo, or it rolls back in 5s.</span></div>
+  <button id="undo">Undo</button>
+  <button class="x" id="close" aria-label="Dismiss"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+<script>
+  const like=document.getElementById('like'),n=document.getElementById('n'),fail=document.getElementById('fail'),log=document.getElementById('log'),toast=document.getElementById('toast');
+  let count=1284,liked=false,seq=0,pending=null,revertTimer=null;
+  const fmt=v=>v.toLocaleString('en-US');
+  function paint(){n.textContent=fmt(count);n.classList.remove('tick');void n.offsetWidth;n.classList.add('tick');like.setAttribute('aria-pressed',String(liked));like.setAttribute('aria-label',(liked?'Unlike, ':'Like, ')+fmt(count)+' likes');}
+  function entry(method,status,cls){const li=document.createElement('li');li.innerHTML=`<b>${String(++seq).padStart(2,'0')}</b>${method} /posts/8123/like<span class="s ${cls}">${status}</span>`;log.prepend(li);while(log.children.length>6)log.lastChild.remove();return li;}
+  function setLiked(v){liked=v;count+=v?1:-1;like.classList.remove('pop');if(v){void like.offsetWidth;like.classList.add('pop');}paint();}
+  function hideToast(){toast.classList.remove('show');clearTimeout(revertTimer);revertTimer=null;}
+  like.addEventListener('click',()=>{
+    if(revertTimer)hideToast();
+    setLiked(!liked);
+    const li=entry(liked?'POST':'DELETE','pending','pend'),want=liked;
+    clearTimeout(pending);
+    pending=setTimeout(()=>{
+      const s=li.querySelector('.s');
+      if(fail.getAttribute('aria-checked')==='true'){s.textContent='503';s.className='s bad';
+        if(want){toast.classList.add('show');revertTimer=setTimeout(()=>{setLiked(false);hideToast();entry('rollback','local','pend');},5000);}
+      }else{s.textContent=want?'201':'204';s.className='s ok';}
+    },700);
+  });
+  document.getElementById('undo').addEventListener('click',()=>{setLiked(false);hideToast();entry('rollback','local','pend');});
+  document.getElementById('close').addEventListener('click',hideToast);
+  fail.addEventListener('click',()=>fail.setAttribute('aria-checked',String(fail.getAttribute('aria-checked')!=='true')));
+  entry('GET','200','ok');
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!-- Design Lounge piece: ios-bottom-sheet-detents · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bottom sheet with detents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --map:#e9ece4;--road:#ffffff;--road-2:#f5f6f1;--water:#c9dce6;--park:#d3e3c8;--block:#e0e3da;
+  --sheet:#ffffff;--ink:#17191c;--ink-2:#5f646b;--ink-3:#9198a1;--line:#e6e8eb;--accent:#e2553b;--accent-soft:#fbe7e2;--star:#e0a12b;
+  --scrim:#17191c;--grab:#d3d6da;
+  --font:"Public Sans",system-ui,-apple-system,sans-serif;
+  --peek:120px;--half:430px;--full:782px;
+  --r-sheet:22px;--r-icon:12px;
+  --t-micro:160ms;--t-snap:480ms;--spring:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--font);color:var(--ink);background:var(--map);overflow:hidden;-webkit-font-smoothing:antialiased;position:relative;touch-action:none}
+.map{position:absolute;inset:0;overflow:hidden;
+  background:
+    linear-gradient(var(--road) 0 0) 0 300px/100% 14px no-repeat,
+    linear-gradient(var(--road) 0 0) 0 520px/100% 10px no-repeat,
+    linear-gradient(var(--road) 0 0) 118px 0/12px 100% no-repeat,
+    linear-gradient(var(--road) 0 0) 262px 0/8px 100% no-repeat,
+    repeating-linear-gradient(0deg,transparent 0 60px,var(--road-2) 60px 64px),
+    repeating-linear-gradient(90deg,transparent 0 60px,var(--road-2) 60px 64px),
+    var(--map)}
+.water{position:absolute;left:-80px;top:560px;width:420px;height:420px;border-radius:48% 52% 40% 60%;background:var(--water);transform:rotate(-14deg)}
+.park{position:absolute;border-radius:30px;background:var(--park)}
+.p1{left:140px;top:120px;width:110px;height:150px}.p2{left:290px;top:340px;width:140px;height:120px;border-radius:60px}
+.blk{position:absolute;background:var(--block);border-radius:4px}
+.lbl{position:absolute;font-size:11px;font-weight:500;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase}
+.pin{position:absolute;width:44px;height:44px;margin:-44px 0 0 -22px;background:none;border:0;padding:0;cursor:pointer;display:grid;place-items:end center;color:var(--accent);transition:transform var(--t-micro) var(--ease)}
+.pin svg{width:30px;height:38px;filter:drop-shadow(0 3px 4px rgba(23,25,28,.25))}
+.pin[aria-pressed="true"]{transform:scale(1.18)}
+.pin:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:50%}
+.top{position:absolute;left:16px;right:16px;top:62px;height:48px;border-radius:24px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);border:1px solid rgba(255,255,255,.8);box-shadow:0 6px 24px rgba(23,25,28,.10),inset 0 1px 0 rgba(255,255,255,.9);display:flex;align-items:center;padding:0 14px;gap:10px;font-weight:500;color:var(--ink-2)}
+.top svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.top b{color:var(--ink);font-weight:600}
+.scrim{position:absolute;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity var(--t-snap) var(--spring)}
+.sheet{position:absolute;left:0;right:0;top:0;height:100%;background:var(--sheet);border-radius:var(--r-sheet) var(--r-sheet) 0 0;box-shadow:0 -1px 0 rgba(23,25,28,.06),0 -12px 40px rgba(23,25,28,.14);transform:translateY(calc(100% - var(--peek)));transition:transform var(--t-snap) var(--spring);display:flex;flex-direction:column;will-change:transform}
+.sheet.dragging,.scrim.dragging{transition:none}
+.head{padding:8px 20px 12px;cursor:grab;user-select:none;flex:none}
+.head:active{cursor:grabbing}
+.grab{width:36px;height:5px;border-radius:3px;background:var(--grab);margin:0 auto 12px}
+.head h2{margin:0;font-size:22px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:baseline;justify-content:space-between}
+.head h2 small{font-size:13px;font-weight:500;color:var(--ink-2);letter-spacing:0}
+.chips{display:flex;gap:8px;margin-top:12px;overflow:hidden}
+.chip{height:32px;padding:0 14px;border-radius:16px;border:1px solid var(--line);background:#fff;font:500 13px var(--font);color:var(--ink-2);display:flex;align-items:center;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.list{list-style:none;margin:0;padding:0 20px 60px;overflow-y:auto;flex:1;border-top:1px solid var(--line)}
+.row{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:8px}
+.row.sel .name{color:var(--accent)}
+.ic{width:44px;height:44px;border-radius:var(--r-icon);display:grid;place-items:center;flex:none;color:#fff}
+.ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.c1{background:#5b8a4c}.c2{background:#c56a2c}.c3{background:#3b6f9e}.c4{background:#8a5b9c}.c5{background:#b8433a}.c6{background:#2d8b7f}
+.row .txt{flex:1;min-width:0}
+.name{font-weight:600;font-size:15px;line-height:1.3;transition:color var(--t-micro)}
+.meta{font-size:13px;color:var(--ink-2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta b{color:var(--star);font-weight:600}
+.dist{font-size:13px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums;flex:none}
+.open{font-size:12px;color:#2d8b7f;font-weight:600}
+@media (prefers-reduced-motion:reduce){.sheet,.scrim,.pin{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="map" aria-hidden="true">
+  <div class="park p1"></div><div class="park p2"></div><div class="water"></div>
+  <div class="blk" style="left:20px;top:80px;width:80px;height:180px"></div>
+  <div class="blk" style="left:140px;top:330px;width:110px;height:170px"></div>
+  <div class="blk" style="left:290px;top:90px;width:90px;height:190px"></div>
+  <span class="lbl" style="left:160px;top:150px">Vollen park</span>
+  <span class="lbl" style="left:40px;top:640px;transform:rotate(-14deg)">Lake Ry</span>
+  <span class="lbl" style="left:150px;top:284px">Kirkegata</span>
+</div>
+<button class="pin" style="left:214px;top:220px" data-i="0" aria-label="Show Brød & Bønner" aria-pressed="true"><svg viewBox="0 0 30 38"><path d="M15 37C15 37 3 22 3 14a12 12 0 0124 0c0 8-12 23-12 23z" fill="currentColor"/><circle cx="15" cy="14" r="5" fill="#fff"/></svg></button>
+<button class="pin" style="left:96px;top:440px" data-i="2" aria-label="Show Halden Kaffebar" aria-pressed="false"><svg viewBox="0 0 30 38"><path d="M15 37C15 37 3 22 3 14a12 12 0 0124 0c0 8-12 23-12 23z" fill="currentColor"/><circle cx="15" cy="14" r="5" fill="#fff"/></svg></button>
+<button class="pin" style="left:330px;top:320px" data-i="4" aria-label="Show Nordre Bad" aria-pressed="false"><svg viewBox="0 0 30 38"><path d="M15 37C15 37 3 22 3 14a12 12 0 0124 0c0 8-12 23-12 23z" fill="currentColor"/><circle cx="15" cy="14" r="5" fill="#fff"/></svg></button>
+<div class="top"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>Near <b>Grünerløkka, Oslo</b></span></div>
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="sheet" role="dialog" aria-label="Places nearby" aria-modal="false">
+  <div class="head" id="head"><div class="grab" role="presentation"></div>
+    <h2>Nearby <small>18 places · 400 m</small></h2>
+    <div class="chips"><button class="chip" aria-pressed="true">All</button><button class="chip" aria-pressed="false">Coffee</button><button class="chip" aria-pressed="false">Bakeries</button><button class="chip" aria-pressed="false">Open now</button><button class="chip" aria-pressed="false">Top rated</button></div>
+  </div>
+  <ul class="list" id="list">
+    <li class="row sel" tabindex="0"><div class="ic c2"><svg viewBox="0 0 24 24"><path d="M4 10c0-3 4-6 8-6s8 3 8 6-2 10-8 10-8-7-8-10z"/><path d="M9 13c1 2 5 2 6 0"/></svg></div><div class="txt"><div class="name">Brød &amp; Bønner</div><div class="meta"><b>4.8</b> · Bakery · <span class="open">Open</span> until 17:00</div></div><div class="dist">120 m</div></li>
+    <li class="row" tabindex="0"><div class="ic c1"><svg viewBox="0 0 24 24"><path d="M12 3c-3 5-6 8-6 12a6 6 0 0012 0c0-4-3-7-6-12z"/></svg></div><div class="txt"><div class="name">Vollen Park Kiosk</div><div class="meta"><b>4.3</b> · Snacks · <span class="open">Open</span> until 20:00</div></div><div class="dist">160 m</div></li>
+    <li class="row" tabindex="0"><div class="ic c5"><svg viewBox="0 0 24 24"><path d="M5 8h11v7a4 4 0 01-4 4H9a4 4 0 01-4-4zM16 10h2a2 2 0 010 4h-2"/></svg></div><div class="txt"><div class="name">Halden Kaffebar</div><div class="meta"><b>4.7</b> · Coffee · <span class="open">Open</span> until 18:30</div></div><div class="dist">210 m</div></li>
+    <li class="row" tabindex="0"><div class="ic c3"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11M9 20v-6h6v6"/></svg></div><div class="txt"><div class="name">Tessel Books</div><div class="meta"><b>4.6</b> · Bookshop · Closes 19:00</div></div><div class="dist">260 m</div></li>
+    <li class="row" tabindex="0"><div class="ic c6"><svg viewBox="0 0 24 24"><path d="M3 15c3-2 6 2 9 0s6-2 9 0M3 19c3-2 6 2 9 0s6-2 9 0M12 4v7"/></svg></div><div class="txt"><div class="name">Nordre Bad</div><div class="meta"><b>4.4</b> · Public pool · Lanes until 21:00</div></div><div class="dist">310 m</div></li>
+    <li class="row" tabindex="0"><div class="ic c4"><svg viewBox="0 0 24 24"><path d="M6 4h12v16l-6-4-6 4z"/></svg></div><div class="txt"><div class="name">Marrow Wine</div><div class="meta"><b>4.9</b> · Wine bar · Opens 16:00</div></div><div class="dist">340 m</div></li>
+    <li class="row" tabindex="0"><div class="ic c2"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><div class="txt"><div class="name">Loam Deli</div><div class="meta"><b>4.2</b> · Deli · <span class="open">Open</span> until 22:00</div></div><div class="dist">380 m</div></li>
+    <li class="row" tabindex="0"><div class="ic c3"><svg viewBox="0 0 24 24"><path d="M4 17l4-9 4 6 3-4 5 7z"/></svg></div><div class="txt"><div class="name">Fjord Viewpoint</div><div class="meta"><b>4.5</b> · Landmark · Always open</div></div><div class="dist">400 m</div></li>
+  </ul>
+</section>
+<script>
+  const sheet=document.getElementById('sheet'),scrim=document.getElementById('scrim'),head=document.getElementById('head'),list=document.getElementById('list');
+  const H=()=>innerHeight,det=()=>[120,430,Math.min(782,H()-62)];
+  let vis=120,startY=0,startVis=0,drag=false,lastY=0,lastT=0,vel=0;
+  function apply(v,animate){
+    const [pk,hf,fu]=det();
+    sheet.classList.toggle('dragging',!animate);scrim.classList.toggle('dragging',!animate);
+    sheet.style.transform=`translateY(${H()-v}px)`;
+    scrim.style.opacity=(Math.max(0,(v-hf)/(fu-hf))*.38).toFixed(3);
+    scrim.style.pointerEvents=v>hf+10?'auto':'none';
+    sheet.dataset.detent=v>=fu-1?'full':v>=hf-1?'half':'peek';
+  }
+  function snap(target){vis=target;apply(vis,true);}
+  head.addEventListener('pointerdown',e=>{drag=true;startY=lastY=e.clientY;startVis=vis;lastT=e.timeStamp;vel=0;head.setPointerCapture(e.pointerId);});
+  head.addEventListener('pointermove',e=>{
+    if(!drag)return;const dy=startY-e.clientY;const [pk,,fu]=det();let v=startVis+dy;
+    if(v>fu)v=fu+(v-fu)*.25;if(v<pk)v=pk-(pk-v)*.25;
+    vel=(e.clientY-lastY)/Math.max(1,e.timeStamp-lastT);lastY=e.clientY;lastT=e.timeStamp;apply(v,false);
+  });
+  const end=()=>{if(!drag)return;drag=false;const d=det();let v=vis+(startY-lastY);
+    if(Math.abs(vel)>.4){const i=d.indexOf(vis)>=0?d.indexOf(vis):d.reduce((b,x,i)=>Math.abs(x-v)<Math.abs(d[b]-v)?i:b,0);snap(d[Math.max(0,Math.min(2,i+(vel<0?1:-1)))]);}
+    else snap(d.reduce((b,x)=>Math.abs(x-v)<Math.abs(b-v)?x:b));};
+  head.addEventListener('pointerup',end);head.addEventListener('pointercancel',end);
+  head.addEventListener('keydown',e=>{const d=det(),i=d.indexOf(vis);if(e.key==='ArrowUp'&&i<2){e.preventDefault();snap(d[i+1]);}if(e.key==='ArrowDown'&&i>0){e.preventDefault();snap(d[i-1]);}});
+  head.tabIndex=0;head.setAttribute('role','button');head.setAttribute('aria-label','Drag to resize places sheet');
+  scrim.addEventListener('click',()=>snap(det()[1]));
+  const rows=[...list.querySelectorAll('.row')],pins=[...document.querySelectorAll('.pin')];
+  function pick(i){rows.forEach((r,k)=>r.classList.toggle('sel',k===i));pins.forEach(p=>p.setAttribute('aria-pressed',String(+p.dataset.i===i)));}
+  pins.forEach(p=>p.addEventListener('click',()=>{pick(+p.dataset.i);snap(det()[1]);rows[+p.dataset.i].scrollIntoView({block:'nearest'});}));
+  rows.forEach((r,i)=>{r.addEventListener('click',()=>pick(i));r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(i);}});});
+  document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));c.setAttribute('aria-pressed','true');}));
+  apply(vis,true);addEventListener('resize',()=>apply(vis,true));
+</script>
+</body>
+</html>

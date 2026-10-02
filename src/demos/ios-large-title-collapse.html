@@ -1,0 +1,87 @@
+<!-- Design Lounge piece: ios-large-title-collapse · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Large title collapse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf8f3;--surface:#ffffff;--ink:#221f1b;--ink-2:#6d675e;--ink-3:#a39c91;--line:#e9e3d8;
+  --accent:#b5442f;--accent-soft:#f6e6e1;
+  --glass:251,248,243;--glass-line:rgba(34,31,27,.08);
+  --serif:"Playfair Display",Georgia,serif;--sans:"Inter",system-ui,-apple-system,sans-serif;
+  --bar-h:44px;--status:54px;--title-lg:34px;--title-sm:17px;--search-h:36px;--range:52px;
+  --r-cover:6px;--r-search:10px;
+  --t-micro:160ms;--ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;--p:0}
+.bar{position:fixed;left:0;right:0;top:0;height:calc(var(--status) + var(--bar-h));padding-top:var(--status);z-index:10;display:flex;align-items:center;justify-content:space-between;padding-left:16px;padding-right:16px;
+  background:rgba(var(--glass),calc(.78*var(--p)));-webkit-backdrop-filter:blur(calc(20px*var(--p))) saturate(160%);backdrop-filter:blur(calc(20px*var(--p))) saturate(160%);
+  border-bottom:1px solid rgba(34,31,27,calc(.08*var(--p)));box-shadow:inset 0 1px 0 rgba(255,255,255,calc(.6*var(--p)))}
+.bar .mid{position:absolute;left:0;right:0;top:var(--status);height:var(--bar-h);display:grid;place-items:center;font:600 var(--title-sm) var(--sans);letter-spacing:-.01em;color:var(--ink);opacity:clamp(0,calc((var(--p) - .55)/.45),1);transform:translateY(calc(6px*(1 - var(--p))));pointer-events:none}
+.bar button{appearance:none;background:none;border:0;font:500 15px var(--sans);color:var(--accent);padding:0 4px;height:40px;cursor:pointer;border-radius:8px;display:flex;align-items:center;gap:2px;position:relative;z-index:1}
+.bar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bar button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+main{height:100%;overflow-y:auto;padding:calc(var(--status) + var(--bar-h)) 16px 40px;overscroll-behavior:contain}
+.head{padding:4px 0 10px}
+h1{margin:0;font:600 var(--title-lg)/1.15 var(--serif);letter-spacing:-.01em;transform-origin:left bottom;opacity:calc(1 - var(--p)*1.4);transform:scale(calc(1 - .18*var(--p))) translateY(calc(-4px*var(--p)));transition:none}
+h1 small{display:block;font:500 13px var(--sans);color:var(--ink-2);letter-spacing:0;margin-top:2px}
+.search{height:calc(var(--search-h)*(1 - var(--p)));opacity:calc(1 - var(--p)*1.6);overflow:hidden;margin-top:calc(12px*(1 - var(--p)));transform:scale(calc(1 - .06*var(--p)));transform-origin:top}
+.search label{display:flex;align-items:center;gap:8px;height:var(--search-h);border-radius:var(--r-search);background:rgba(34,31,27,.06);padding:0 12px;color:var(--ink-3)}
+.search svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.search input{flex:1;border:0;background:none;font:15px var(--sans);color:var(--ink);outline:none;min-width:0}
+.search input::placeholder{color:var(--ink-3)}
+.search input:focus-visible{box-shadow:0 0 0 2px var(--accent);border-radius:4px}
+.sec{font:600 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:22px 0 8px}
+.book{display:grid;grid-template-columns:44px 1fr auto;gap:0 14px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center;text-decoration:none;color:inherit;outline:none;border-radius:8px}
+.book:focus-visible{box-shadow:0 0 0 2px var(--accent)}
+.cover{width:44px;height:62px;border-radius:var(--r-cover);box-shadow:inset -3px 0 0 rgba(0,0,0,.12),0 1px 2px rgba(34,31,27,.15);position:relative;overflow:hidden}
+.cover::after{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:rgba(255,255,255,.35)}
+.c1{background:#3f5f7a}.c2{background:#b5442f}.c3{background:#5a7a4f}.c4{background:#d9a441}.c5{background:#2f2d2a}.c6{background:#8a6a9c}.c7{background:#c97c5d}.c8{background:#4f6f8a}
+.book b{font:500 15px/1.3 var(--sans);display:block;letter-spacing:-.01em}
+.book span{font-size:13px;color:var(--ink-2)}
+.pct{font:500 12px var(--sans);color:var(--ink-3);font-variant-numeric:tabular-nums;text-align:right}
+.pct i{display:block;width:44px;height:3px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden}
+.pct i::after{content:"";display:block;height:100%;width:var(--w);background:var(--accent)}
+@media (prefers-reduced-motion:reduce){h1,.search,.bar .mid{transition:none}}
+</style>
+</head>
+<body>
+<header class="bar" id="bar">
+  <button><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>Shelves</button>
+  <div class="mid" aria-hidden="true">Library</div>
+  <button>Edit</button>
+</header>
+<main id="main">
+  <div class="head"><h1 id="title">Library<small>Tessel · 24 titles, 6 in progress</small></h1>
+    <div class="search"><label><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" placeholder="Search titles, authors, notes" aria-label="Search library"></label></div>
+  </div>
+  <div class="sec">Reading now</div>
+  <a class="book" href="#"><span class="cover c1"></span><span><b>The Quiet Harbour</b><span>Ingrid Solheim · 412 pages</span></span><span class="pct" style="--w:62%">62 %<i></i></span></a>
+  <a class="book" href="#"><span class="cover c2"></span><span><b>Salt and Cinder</b><span>Tomas Reine · 298 pages</span></span><span class="pct" style="--w:18%">18 %<i></i></span></a>
+  <a class="book" href="#"><span class="cover c3"></span><span><b>Field Notes on Lichen</b><span>Aud Kvam · 176 pages</span></span><span class="pct" style="--w:87%">87 %<i></i></span></a>
+  <div class="sec">Up next</div>
+  <a class="book" href="#"><span class="cover c4"></span><span><b>A Grammar of Weather</b><span>Priya Halvorsen · 340 pages</span></span><span class="pct" style="--w:0%">New<i></i></span></a>
+  <a class="book" href="#"><span class="cover c5"></span><span><b>Nightshift Letters</b><span>Ola Brekke · 221 pages</span></span><span class="pct" style="--w:0%">New<i></i></span></a>
+  <a class="book" href="#"><span class="cover c6"></span><span><b>The Cartographer's Daughter</b><span>Mette Ryen · 388 pages</span></span><span class="pct" style="--w:0%">New<i></i></span></a>
+  <div class="sec">Finished this year</div>
+  <a class="book" href="#"><span class="cover c7"></span><span><b>Small Engines</b><span>Jonas Lie Aas · 264 pages</span></span><span class="pct" style="--w:100%">Done<i></i></span></a>
+  <a class="book" href="#"><span class="cover c8"></span><span><b>Fjord Light</b><span>Sunniva Moe · 310 pages</span></span><span class="pct" style="--w:100%">Done<i></i></span></a>
+  <a class="book" href="#"><span class="cover c1"></span><span><b>Winter Ledger</b><span>Erik Vinje · 452 pages</span></span><span class="pct" style="--w:100%">Done<i></i></span></a>
+  <a class="book" href="#"><span class="cover c3"></span><span><b>On Tidal Flats</b><span>Aud Kvam · 198 pages</span></span><span class="pct" style="--w:100%">Done<i></i></span></a>
+  <a class="book" href="#"><span class="cover c2"></span><span><b>The Copper Room</b><span>Ingrid Solheim · 366 pages</span></span><span class="pct" style="--w:100%">Done<i></i></span></a>
+  <a class="book" href="#"><span class="cover c6"></span><span><b>Loam</b><span>Hedda Storm · 240 pages</span></span><span class="pct" style="--w:100%">Done<i></i></span></a>
+</main>
+<script>
+  const main=document.getElementById('main'),RANGE=52;let ticking=false;
+  function update(){ticking=false;const p=Math.min(1,Math.max(0,main.scrollTop/RANGE));document.body.style.setProperty('--p',p.toFixed(3));document.getElementById('bar').classList.toggle('collapsed',p>=.55);}
+  main.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
+  update();
+</script>
+</body>
+</html>

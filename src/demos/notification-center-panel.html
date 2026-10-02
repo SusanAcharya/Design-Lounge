@@ -1,0 +1,156 @@
+<!-- Design Lounge piece: notification-center-panel · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Notification center panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1116;--surface:#12161c;--panel:#161b22;--panel-2:#1c222b;--line:#262d37;--line-2:#333c48;
+  --ink:#e6eaf0;--ink-2:#8b95a5;--ink-3:#5f6975;--accent:#4c8dff;--accent-soft:rgba(76,141,255,.14);--on-accent:#06101f;
+  --font:"Space Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --panel-w:380px;--h-top:56px;--r:8px;--r-lg:14px;--shadow:0 20px 48px rgba(0,0,0,.5),0 0 0 1px var(--line);
+  --t-micro:160ms;--t-open:200ms;--t-dot:240ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+.top{height:var(--h-top);display:flex;align-items:center;gap:28px;padding:0 24px;background:var(--surface);border-bottom:1px solid var(--line);position:relative;z-index:2}
+.brand{font-weight:600;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.brand i{width:24px;height:24px;border-radius:6px;background:var(--accent);display:grid;place-items:center;color:var(--on-accent);font:600 12px var(--mono);font-style:normal}
+.top nav{display:flex;gap:4px}
+.top nav a{color:var(--ink-2);text-decoration:none;padding:6px 10px;border-radius:6px}
+.top nav a:hover{color:var(--ink);background:var(--panel-2)}
+.top nav a[aria-current]{color:var(--ink);background:var(--panel-2)}
+.top nav a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.ibtn{width:36px;height:36px;border:0;background:none;border-radius:var(--r);color:var(--ink-2);display:grid;place-items:center;cursor:pointer;position:relative;padding:0}
+.ibtn:hover,.ibtn[aria-expanded="true"]{background:var(--panel-2);color:var(--ink)}
+.ibtn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.ibtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ibtn .dot{position:absolute;top:7px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px var(--surface);transition:transform var(--t-dot) var(--ease),opacity var(--t-dot) var(--ease)}
+.ibtn .dot[hidden]{display:block;transform:scale(0);opacity:0}
+.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#3f6fd1,#8b5fb8);font:600 11px var(--font);display:grid;place-items:center}
+.page{padding:36px 40px;opacity:.9}
+.page h1{margin:0 0 4px;font:600 24px/1.2 var(--font);letter-spacing:-.02em}
+.page p{margin:0 0 28px;color:var(--ink-2)}
+table{width:720px;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:0 12px 10px 0;border-bottom:1px solid var(--line)}
+td{padding:12px 12px 12px 0;border-bottom:1px solid var(--line);color:var(--ink-2)}
+td:first-child{color:var(--ink);font-weight:500}
+td.m{font-family:var(--mono);font-size:12.5px}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font:500 11.5px var(--mono);background:var(--panel-2);color:var(--ink-2)}
+.pill.ok{color:#5fd39a;background:rgba(95,211,154,.12)}
+.panel{position:absolute;top:calc(var(--h-top) + 8px);right:24px;width:var(--panel-w);max-height:640px;background:var(--panel);border-radius:var(--r-lg);box-shadow:var(--shadow);display:flex;flex-direction:column;transform-origin:top right;transition:opacity var(--t-open) var(--ease-out),transform var(--t-open) var(--ease-out);z-index:3}
+.panel[hidden]{display:flex;opacity:0;transform:scale(.96) translateY(-4px);pointer-events:none}
+.ph{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 10px}
+.ph h2{margin:0;font:600 16px/1 var(--font)}
+.ph h2 span{margin-left:8px;font:500 11.5px var(--mono);color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:999px;vertical-align:2px}
+.link{border:0;background:none;color:var(--ink-2);font:500 12.5px var(--font);cursor:pointer;padding:6px 8px;border-radius:6px}
+.link:hover{color:var(--ink);background:var(--panel-2)}
+.link:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.link:disabled{color:var(--ink-3);cursor:default;background:none}
+.tabs{display:flex;position:relative;padding:0 16px;border-bottom:1px solid var(--line)}
+.tab{border:0;background:none;color:var(--ink-2);font:500 13px var(--font);padding:8px 10px 10px;cursor:pointer;position:relative}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab:hover{color:var(--ink)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:6px}
+.tab .c{margin-left:6px;font:400 11px var(--mono);color:var(--ink-3)}
+.ind{position:absolute;bottom:-1px;left:0;height:2px;background:var(--accent);transition:transform var(--t-open) var(--ease),width var(--t-open) var(--ease)}
+.list{overflow:auto;padding:4px 0 8px;flex:1;min-height:0}
+.grp{margin:10px 16px 4px;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.row{display:grid;grid-template-columns:32px 1fr 14px;gap:12px;align-items:start;padding:10px 16px;text-align:left;border:0;background:none;width:100%;color:var(--ink);font:inherit;cursor:pointer}
+.row:hover{background:var(--panel-2)}
+.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:6px}
+.row .av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:600 11px var(--font);background:var(--panel-2);color:var(--ink-2)}
+.row .av.sys{color:var(--accent);background:var(--accent-soft)}
+.row .av svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.row .t{font-size:13.5px;line-height:1.4;color:var(--ink-2)}
+.row .t b{font-weight:600;color:var(--ink)}
+.row .t q{display:block;margin-top:4px;color:var(--ink-3);font-size:12.5px;quotes:"“" "”"}
+.row time{display:block;margin-top:4px;font:11.5px var(--mono);color:var(--ink-3)}
+.row .u{width:8px;height:8px;margin-top:6px;border-radius:50%;background:var(--accent);transition:transform var(--t-dot) var(--ease),opacity var(--t-dot) var(--ease);transition-delay:var(--d,0ms)}
+.row[data-read="true"] .u{transform:scale(0);opacity:0}
+.row[data-read="true"] .t b{font-weight:500}
+.empty{padding:44px 24px 40px;text-align:center;color:var(--ink-2)}
+.empty svg{width:36px;height:36px;fill:none;stroke:var(--ink-3);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:12px}
+.empty b{display:block;color:var(--ink);font-weight:600;margin-bottom:4px}
+.empty p{margin:0;font-size:13px}
+.pf{padding:10px 16px;border-top:1px solid var(--line);text-align:center}
+.pf a{color:var(--ink-2);font-size:12.5px;text-decoration:none}
+.pf a:hover{color:var(--ink)}
+.pf a:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><i>L</i>Loam</div>
+  <nav aria-label="Primary"><a href="#">Inbox</a><a href="#" aria-current="page">Projects</a><a href="#">Reports</a><a href="#">People</a></nav>
+  <div class="right">
+    <button class="ibtn" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+    <button class="ibtn" id="bell" aria-label="Notifications, 4 unread" aria-expanded="true" aria-controls="panel" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 1112 0v5l2 2H4z"/><path d="M10 20a2 2 0 004 0"/></svg><span class="dot" id="dot"></span></button>
+    <div class="avatar" aria-hidden="true">RK</div>
+  </div>
+</header>
+<main class="page">
+  <h1>Projects</h1>
+  <p>6 active · 2 in review · updated 4 minutes ago</p>
+  <table><thead><tr><th>Project</th><th>Owner</th><th>Status</th><th>Due</th><th>Issues</th></tr></thead><tbody>
+    <tr><td>Q4 launch checklist</td><td>Sana Iqbal</td><td><span class="pill ok">On track</span></td><td class="m">2026-10-14</td><td class="m">12 / 31</td></tr>
+    <tr><td>Design system audit</td><td>Jonas Weber</td><td><span class="pill">In review</span></td><td class="m">2026-10-02</td><td class="m">4 / 9</td></tr>
+    <tr><td>Billing entities rename</td><td>Mira Hoang</td><td><span class="pill">Planned</span></td><td class="m">2026-11-20</td><td class="m">0 / 17</td></tr>
+    <tr><td>Retention notes</td><td>Elin Marsh</td><td><span class="pill ok">On track</span></td><td class="m">2026-10-08</td><td class="m">7 / 7</td></tr>
+  </tbody></table>
+</main>
+<section class="panel" id="panel" role="dialog" aria-label="Notifications">
+  <div class="ph"><h2>Notifications<span id="badge">4 new</span></h2><button class="link" id="markall">Mark all read</button></div>
+  <div class="tabs" role="tablist" aria-label="Filter notifications">
+    <button class="tab" role="tab" aria-selected="true" data-f="all" id="t-all">All<span class="c">7</span></button>
+    <button class="tab" role="tab" aria-selected="false" data-f="mention" id="t-m">Mentions<span class="c">3</span></button>
+    <button class="tab" role="tab" aria-selected="false" data-f="follow" id="t-f">Following<span class="c">0</span></button>
+    <span class="ind" id="ind"></span>
+  </div>
+  <div class="list" id="list" role="tabpanel" aria-live="polite"></div>
+  <div class="pf"><a href="#">Notification settings</a></div>
+</section>
+<script>
+  const items=[
+    {g:'Today',k:'mention',av:'SI',who:'Sana Iqbal',t:'mentioned you in <b>Q4 launch checklist</b>',q:'@rk can you review the pricing table before Thursday?',when:'12m',read:false},
+    {g:'Today',k:'system',av:'',who:'',t:'Deploy of <b>loam-web v3.8.0</b> finished in 4m 12s',when:'41m',read:false},
+    {g:'Today',k:'mention',av:'JW',who:'Jonas Weber',t:'replied to your comment in <b>Design system audit</b>',q:'Agreed, let’s keep the 8px grid and drop the 6px exception.',when:'1h',read:false},
+    {g:'Yesterday',k:'task',av:'MH',who:'Mira Hoang',t:'assigned you <b>Rename billing entities</b>',when:'18h',read:false},
+    {g:'Yesterday',k:'system',av:'',who:'',t:'Invoice <b>#10432</b> was paid by Fjord Bank',when:'21h',read:true},
+    {g:'Yesterday',k:'mention',av:'EM',who:'Elin Marsh',t:'mentioned you in <b>Retention notes</b>',when:'22h',read:true},
+    {g:'Yesterday',k:'system',av:'',who:'',t:'Weekly digest: <b>14 issues closed</b>, 3 opened',when:'1d',read:true}
+  ];
+  const list=document.getElementById('list'),badge=document.getElementById('badge'),dot=document.getElementById('dot'),bell=document.getElementById('bell'),panel=document.getElementById('panel'),ind=document.getElementById('ind'),markall=document.getElementById('markall');
+  const sys='<svg viewBox="0 0 24 24"><path d="M4 12l4 4 12-12"/></svg>';
+  let filter='all';
+  function unread(){return items.filter(i=>!i.read).length;}
+  function render(){
+    const rows=items.filter(i=>filter==='all'||i.k===filter);list.innerHTML='';
+    if(!rows.length){list.innerHTML='<div class="empty"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 1112 0v5l2 2H4z"/><path d="M10 20a2 2 0 004 0"/></svg><b>Nothing from threads you follow</b><p>Follow a project or a thread and its updates land here.</p></div>';return;}
+    let g='';rows.forEach((i,n)=>{
+      if(i.g!==g){g=i.g;const h=document.createElement('div');h.className='grp';h.textContent=g;list.appendChild(h);}
+      const b=document.createElement('button');b.className='row';b.dataset.read=i.read;b.style.setProperty('--d',(n*30)+'ms');b.setAttribute('aria-label',(i.read?'':'Unread. ')+(i.who?i.who+' ':'')+i.t.replace(/<[^>]+>/g,'')+', '+i.when+' ago');
+      b.innerHTML=`<span class="av${i.av?'':' sys'}">${i.av||sys}</span><span class="t">${i.who?'<b>'+i.who+'</b> ':''}${i.t}${i.q?'<q>'+i.q+'</q>':''}<time>${i.when} ago</time></span><span class="u"></span>`;
+      b.addEventListener('click',()=>{i.read=true;b.dataset.read='true';sync();});list.appendChild(b);
+    });
+  }
+  function sync(){const u=unread();badge.textContent=u?u+' new':'All read';dot.hidden=!u;markall.disabled=!u;bell.setAttribute('aria-label','Notifications, '+u+' unread');}
+  function moveInd(tab){ind.style.width=tab.offsetWidth+'px';ind.style.transform='translateX('+tab.offsetLeft+'px)';}
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',String(x===t)));filter=t.dataset.f;moveInd(t);render();}));
+  markall.addEventListener('click',()=>{list.querySelectorAll('.row').forEach(r=>r.dataset.read='true');items.forEach(i=>i.read=true);sync();});
+  function setOpen(o){panel.hidden=!o;bell.setAttribute('aria-expanded',String(o));}
+  bell.addEventListener('click',()=>setOpen(panel.hidden));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){setOpen(false);bell.focus();}});
+  document.addEventListener('click',e=>{if(!panel.hidden&&!panel.contains(e.target)&&!bell.contains(e.target))setOpen(false);});
+  render();sync();moveInd(document.getElementById('t-all'));
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>moveInd(document.querySelector('.tab[aria-selected="true"]')));
+</script>
+</body>
+</html>

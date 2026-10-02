@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import IndexTiles from '../../components/IndexTiles.astro';
+import { getPieces, STYLE_META } from '../../lib/pieces';
+const all = await getPieces();
+const newest = [...all].reverse();
+const items = Object.entries(STYLE_META)
+  .map(([k, v]) => ({ key: k, label: v.label, blurb: v.blurb, href: `/styles/${k}`, count: all.filter((p) => (p.data.styles as string[]).includes(k)).length, sample: newest.find((p) => (p.data.styles as string[]).includes(k)) }))
+  .filter((i) => i.count > 0)
+  .sort((a, b) => b.count - a.count);
+---
+<Base title="Styles" description="Design Lounge pieces by aesthetic: editorial, swiss, brutalist, glass, material, minimal, terminal, paper, luxe and more.">
+  <PageHead eyebrow="Styles" title="Aesthetics, <i>named</i>" blurb="Every piece carries one to three style tags. Use them to find a whole mood, then hand your agent two or three pieces that share it." count={items.length} countLabel="styles" />
+  <div class="wrap"><IndexTiles items={items} /></div>
+</Base>

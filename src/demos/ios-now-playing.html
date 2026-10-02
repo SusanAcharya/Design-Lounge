@@ -1,0 +1,117 @@
+<!-- Design Lounge piece: ios-now-playing · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Now playing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --art-a:#f2683b;--art-b:#8e1f4a;--art-c:#2a1230;--art-d:#f7b955;
+  --bg:#1a0f16;--ink:#fff5ee;--ink-2:rgba(255,245,238,.66);--ink-3:rgba(255,245,238,.38);--track:rgba(255,245,238,.22);
+  --accent:#ffb28a;--glass:rgba(255,245,238,.10);--glass-line:rgba(255,245,238,.16);
+  --font:"Familjen Grotesk",system-ui,-apple-system,sans-serif;
+  --art:326px;--r-art:14px;--thumb:6px;--thumb-drag:18px;--track-h:6px;--track-h-drag:10px;
+  --t-micro:160ms;--t-morph:280ms;--t-art:520ms;--spring:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--font);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;position:relative}
+.bgart{position:absolute;inset:-40px;background:linear-gradient(150deg,var(--art-a),var(--art-b) 55%,var(--art-c));filter:blur(48px) saturate(140%);opacity:.85;transform:scale(1.1)}
+.bgart::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,15,22,.15),rgba(26,15,22,.7))}
+.screen{position:relative;height:100%;display:flex;flex-direction:column;padding:60px 32px 44px}
+.grab{width:36px;height:5px;border-radius:3px;background:var(--track);margin:0 auto 26px}
+.art{width:var(--art);height:var(--art);margin:0 auto;border-radius:var(--r-art);position:relative;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.3);transform:scale(.86);transition:transform var(--t-art) var(--spring),box-shadow var(--t-art) var(--spring)}
+.playing .art{transform:scale(1)}
+.art::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 20% 15%,var(--art-d),transparent 45%),linear-gradient(150deg,var(--art-a),var(--art-b) 58%,var(--art-c))}
+.grain{position:absolute;inset:0;width:100%;height:100%;opacity:.28;mix-blend-mode:soft-light;pointer-events:none}
+.art b{position:absolute;left:22px;bottom:20px;font:700 13px var(--font);letter-spacing:.18em;text-transform:uppercase;color:rgba(255,245,238,.85);z-index:1}
+.art i{position:absolute;right:22px;top:20px;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,245,238,.6);z-index:1}
+.art i::after{content:"";position:absolute;inset:16px;border-radius:50%;background:rgba(255,245,238,.6)}
+.meta{margin:30px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.meta h1{margin:0;font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1.2}
+.meta p{margin:2px 0 0;color:var(--ink-2);font-size:16px}
+.icon{appearance:none;background:var(--glass);border:1px solid var(--glass-line);color:var(--ink);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;cursor:pointer;padding:0;flex:none;transition:background var(--t-micro) var(--ease)}
+.icon:hover{background:rgba(255,245,238,.18)}
+.icon:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.icon svg,.ctl svg{stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon svg{width:18px;height:18px}
+.scrub{position:relative;height:36px;display:flex;align-items:center;cursor:pointer;touch-action:none;outline:none}
+.scrub:focus-visible .bar{box-shadow:0 0 0 2px var(--accent)}
+.bar{position:relative;width:100%;height:var(--track-h);border-radius:5px;background:var(--track);transition:height var(--t-micro) var(--ease)}
+.scrub.drag .bar{height:var(--track-h-drag)}
+.fill{position:absolute;left:0;top:0;bottom:0;width:var(--pct,32%);background:var(--ink);border-radius:5px}
+.thumb{position:absolute;left:var(--pct,32%);top:50%;width:var(--thumb);height:var(--thumb);margin:-3px 0 0 -3px;border-radius:50%;background:var(--ink);transition:width var(--t-micro) var(--ease),height var(--t-micro) var(--ease),margin var(--t-micro) var(--ease)}
+.scrub.drag .thumb{width:var(--thumb-drag);height:var(--thumb-drag);margin:-9px 0 0 -9px;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.times{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;margin-top:-4px;font-weight:500}
+.ctls{display:flex;align-items:center;justify-content:center;gap:40px;margin:22px 0 26px}
+.ctl{appearance:none;background:none;border:0;color:var(--ink);cursor:pointer;padding:0;display:grid;place-items:center;border-radius:50%;transition:transform var(--t-micro) var(--ease)}
+.ctl:active{transform:scale(.9)}
+.ctl:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.ctl.skip svg{width:34px;height:34px;fill:currentColor;stroke:none}
+.ctl.play{width:72px;height:72px}
+.ctl.play svg{width:40px;height:40px;fill:currentColor;stroke:none}
+.ctl.play path{transition:d var(--t-morph) var(--spring)}
+.vol{display:flex;align-items:center;gap:12px;color:var(--ink-3)}
+.vol svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.vol input{flex:1;appearance:none;height:28px;background:linear-gradient(to right,var(--ink) var(--v,62%),var(--track) var(--v,62%)) center/100% 6px no-repeat;border-radius:3px;outline:none;margin:0;cursor:pointer}
+.vol input::-webkit-slider-thumb{appearance:none;width:0;height:0}
+.vol input::-moz-range-thumb{width:0;height:0;border:0}
+.vol input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lyrics{margin-top:auto;padding:18px 0 0;border-top:1px solid var(--glass-line);height:90px;overflow:hidden;position:relative}
+.lyrics p{margin:0;font-size:17px;line-height:1.35;color:var(--ink-3);transition:color var(--t-morph) var(--ease),transform var(--t-morph) var(--ease);font-weight:500;transform:translateY(0)}
+.lyrics p.on{color:var(--ink)}
+.lyrics p.past{color:var(--ink-3);opacity:.5}
+.lyrics p:not(.on):not(.past){opacity:.7}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="bgart" aria-hidden="true"></div>
+<div class="screen playing" id="screen">
+  <div class="grab" role="presentation"></div>
+  <div class="art" aria-label="Album art: Marrow, Low Tide Radio"><svg class="grain" aria-hidden="true"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#grain)"/></svg><b>Marrow</b><i></i></div>
+  <div class="meta"><div><h1 id="song">Copper Wire</h1><p>Marrow · Low Tide Radio</p></div><button class="icon" aria-label="More options"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></svg></button></div>
+  <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Playback position" aria-valuemin="0" aria-valuemax="214" aria-valuenow="68" aria-valuetext="1:08 of 3:34" style="--pct:31.8%"><div class="bar"><div class="fill"></div><div class="thumb"></div></div></div>
+  <div class="times"><span id="cur">1:08</span><span id="rem">−2:26</span></div>
+  <div class="ctls">
+    <button class="ctl skip" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 6v12L9 12z"/></svg></button>
+    <button class="ctl play" id="play" aria-label="Pause" aria-pressed="true"><svg viewBox="0 0 24 24"><path id="pp" d="M6 4L10 4L10 20L6 20ZM14 4L18 4L18 20L14 20Z"/></svg></button>
+    <button class="ctl skip" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 6v12l11-6z"/></svg></button>
+  </div>
+  <div class="vol"><svg viewBox="0 0 24 24"><path d="M4 10v4h3l4 4V6l-4 4z"/></svg><input type="range" min="0" max="100" value="62" id="vol" aria-label="Volume" style="--v:62%"><svg viewBox="0 0 24 24"><path d="M4 10v4h3l4 4V6l-4 4zM15 9a4 4 0 010 6M18 6a8 8 0 010 12"/></svg></div>
+  <div class="lyrics" id="lyrics" aria-live="off">
+    <p class="past" data-t="60">Salt on the window, the kettle gone cold</p>
+    <p class="on" data-t="66">Copper wire humming a song we were told</p>
+    <p data-t="73">The tide keeps its hours, it never asks why</p>
+    <p data-t="80">We fold up the morning and leave it to dry</p>
+  </div>
+</div>
+<script>
+  const DUR=214,scrub=document.getElementById('scrub'),play=document.getElementById('play'),pp=document.getElementById('pp'),screen=document.getElementById('screen');
+  const cur=document.getElementById('cur'),rem=document.getElementById('rem'),lines=[...document.querySelectorAll('#lyrics p')],vol=document.getElementById('vol');
+  const PAUSE="M6 4L10 4L10 20L6 20ZM14 4L18 4L18 20L14 20Z",PLAY="M7 4L13 8L13 16L7 20ZM13 8L19 12L19 12L13 16Z";
+  let t=68,playing=false,drag=false,last=0;
+  const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+  function render(){
+    scrub.style.setProperty('--pct',(t/DUR*100).toFixed(2)+'%');scrub.setAttribute('aria-valuenow',Math.round(t));scrub.setAttribute('aria-valuetext',fmt(t)+' of '+fmt(DUR));
+    cur.textContent=fmt(t);rem.textContent='\u2212'+fmt(DUR-t);
+    let on=-1;lines.forEach((l,i)=>{if(t>=+l.dataset.t)on=i;});
+    lines.forEach((l,i)=>{l.classList.toggle('on',i===on);l.classList.toggle('past',i<on);l.style.transform='translateY('+(-Math.max(0,on-1)*23)+'px)';});
+  }
+  function tick(now){if(!playing)return;if(last)t=Math.min(DUR,t+(now-last)/1000);last=now;if(!drag)render();if(t>=DUR){setPlaying(false);return;}requestAnimationFrame(tick);}
+  function setPlaying(p){if(p===playing)return;playing=p;last=0;const d=p?PAUSE:PLAY;pp.style.d='path("'+d+'")';pp.setAttribute('d',d);play.setAttribute('aria-label',p?'Pause':'Play');play.setAttribute('aria-pressed',String(p));screen.classList.toggle('playing',p);if(p)requestAnimationFrame(tick);}
+  play.addEventListener('click',()=>setPlaying(!playing));
+  const pos=e=>{const r=scrub.getBoundingClientRect();return Math.min(DUR,Math.max(0,(e.clientX-r.left)/r.width*DUR));};
+  scrub.addEventListener('pointerdown',e=>{drag=true;scrub.classList.add('drag');scrub.setPointerCapture(e.pointerId);t=pos(e);render();});
+  scrub.addEventListener('pointermove',e=>{if(drag){t=pos(e);render();}});
+  const up=()=>{drag=false;scrub.classList.remove('drag');};
+  scrub.addEventListener('pointerup',up);scrub.addEventListener('pointercancel',up);
+  scrub.addEventListener('keydown',e=>{const d=e.key==='ArrowRight'?5:e.key==='ArrowLeft'?-5:0;if(d){e.preventDefault();t=Math.min(DUR,Math.max(0,t+d));render();}});
+  vol.addEventListener('input',()=>vol.style.setProperty('--v',vol.value+'%'));
+  render();setPlaying(true);
+</script>
+</body>
+</html>
