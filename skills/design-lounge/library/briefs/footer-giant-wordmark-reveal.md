@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 113 · "Giant wordmark reveal footer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 115 · "Giant wordmark reveal footer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Giant wordmark reveal footer
 

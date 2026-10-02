@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 102 · "Cyber HUD design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 104 · "Cyber HUD design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Cyber HUD design language kit
 

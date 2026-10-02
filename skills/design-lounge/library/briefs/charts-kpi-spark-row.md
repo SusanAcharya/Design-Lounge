@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 116 · "KPI row with sparklines" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 118 · "KPI row with sparklines" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # KPI row with sparklines
 

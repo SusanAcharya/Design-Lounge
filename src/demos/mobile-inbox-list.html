@@ -1,0 +1,84 @@
+<!-- Design Lounge piece: mobile-inbox-list · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea;--surface:#fffdf8;--surface-2:#efeae0;--ink:#1b1814;--ink-2:#5e574e;--ink-3:#8d857a;
+  --line:#e3dbcf;--primary:#8a4b12;--primary-soft:#f4e4d4;--focus:#8a4b12;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.35 var(--sans);background:var(--bg);color:var(--ink);display:flex;flex-direction:column;padding-top:54px}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.head{padding:0 20px 8px;display:flex;justify-content:space-between;align-items:flex-end}
+h1{margin:0;font-size:32px;font-weight:600;letter-spacing:-.03em}
+.find{margin:8px 20px 12px;height:40px;border-radius:10px;border:0;background:var(--surface-2);padding:0 12px}
+.list{flex:1;overflow:auto;background:var(--surface)}
+.row{display:grid;grid-template-columns:44px 1fr auto;gap:10px;padding:12px 20px;border-bottom:1px solid var(--line);min-height:72px;width:100%;text-align:left;background:transparent;border-left:0;border-right:0;border-top:0;cursor:pointer}
+.row.unread{background:var(--primary-soft)}
+.ava{width:44px;height:44px;border-radius:50%;background:#2c241c;color:#f4efe6;display:grid;place-items:center;font-size:13px;font-weight:600}
+b{display:block;font-size:15px}
+.preview{color:var(--ink-2);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+time{font-size:12px;color:var(--ink-3)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--primary);justify-self:end;margin-top:8px}
+.row:not(.unread) .dot{visibility:hidden}
+.tabs{height:64px;padding-bottom:18px;display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-top:1px solid var(--line)}
+.tabs button{border:0;background:transparent;font-size:11px;color:var(--ink-3);font-weight:500}
+.tabs button[aria-current="page"]{color:var(--primary);font-weight:600}
+.sheet{position:fixed;left:0;right:0;bottom:64px;top:54px;background:var(--bg);padding:20px;display:none}
+.sheet.open{display:block}
+.sheet h2{margin:8px 0;font-size:28px;letter-spacing:-.03em}
+.back{height:40px;border:0;background:transparent;color:var(--primary);font-weight:600;padding:0}
+</style>
+</head>
+<body>
+<div class="head"><h1>Inbox</h1></div>
+<input class="find" type="search" placeholder="Search threads" aria-label="Search threads" id="q" />
+<div class="list" id="list">
+  <button class="row unread" data-name="Mira" data-body="Bay 14 is clear. Inspection stays with the driver."><span class="ava">ML</span><span><b>Mira Lama</b><span class="preview">Bay 14 is clear. Inspection stays with the driver.</span></span><span><time>09:41</time><i class="dot"></i></span></button>
+  <button class="row unread" data-name="Yard" data-body="Load revised to 2,400 kg. Please confirm before 06:40."><span class="ava">YD</span><span><b>Yard desk</b><span class="preview">Load revised to 2,400 kg. Please confirm before 06:40.</span></span><span><time>08:12</time><i class="dot"></i></span></button>
+  <button class="row" data-name="Asha" data-body="Payroll CSV is with finance. Nothing needed from you."><span class="ava">AK</span><span><b>Asha Karki</b><span class="preview">Payroll CSV is with finance. Nothing needed from you.</span></span><span><time>Yesterday</time><i class="dot"></i></span></button>
+  <button class="row" data-name="Rajan" data-body="Staging key rotated. Old one fails after Friday."><span class="ava">RS</span><span><b>Rajan Shrestha</b><span class="preview">Staging key rotated. Old one fails after Friday.</span></span><span><time>Mon</time><i class="dot"></i></span></button>
+</div>
+<nav class="tabs" aria-label="Sections">
+  <button aria-current="page">Inbox</button>
+  <button>Runs</button>
+  <button>People</button>
+  <button>You</button>
+</nav>
+<section class="sheet" id="sheet" hidden>
+  <button class="back" id="back">Back</button>
+  <h2 id="who">Mira Lama</h2>
+  <p id="body"></p>
+</section>
+<script>
+const q = document.getElementById('q');
+const rows = [...document.querySelectorAll('.row')];
+const sheet = document.getElementById('sheet');
+q.addEventListener('input', () => {
+  const t = q.value.trim().toLowerCase();
+  rows.forEach(r => r.style.display = !t || r.innerText.toLowerCase().includes(t) ? '' : 'none');
+});
+rows.forEach(r => r.addEventListener('click', () => {
+  r.classList.remove('unread');
+  document.getElementById('who').textContent = r.querySelector('b').textContent;
+  document.getElementById('body').textContent = r.dataset.body;
+  sheet.hidden = false;
+  sheet.classList.add('open');
+}));
+document.getElementById('back').addEventListener('click', () => { sheet.hidden = true; sheet.classList.remove('open'); });
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.removeAttribute('aria-current'));
+  b.setAttribute('aria-current','page');
+}));
+</script>
+</body>
+</html>

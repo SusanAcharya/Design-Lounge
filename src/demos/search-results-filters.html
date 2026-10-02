@@ -1,0 +1,127 @@
+<!-- Design Lounge piece: search-results-filters · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Search results with filters</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3efe6;--surface:#fffdf8;--surface-2:#e7e1d4;--ink:#171512;--ink-2:#5c564c;--ink-3:#8a8378;
+  --line:#ddd6c8;--line-strong:#c9c0b0;--primary:#8a4b12;--primary-ink:#fffdf8;--primary-soft:#f0e2d2;
+  --focus:#8a4b12;--danger:#8d2f2f;
+  --serif:"Fraunces",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--bg);display:flex;flex-direction:column}
+svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+header{height:64px;display:flex;align-items:center;gap:16px;padding:0 28px;border-bottom:1px solid var(--line);background:var(--surface)}
+.mark{font:500 22px/1 var(--serif);letter-spacing:-.02em}
+form.search{flex:1;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid var(--line-strong);border-radius:6px;background:var(--bg)}
+form.search input{flex:1;border:0;background:transparent;outline:none;font-size:14px}
+form.search kbd{font:500 11px/1 var(--sans);color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:3px 5px}
+.layout{flex:1;display:grid;grid-template-columns:240px 1fr;min-height:0}
+aside{padding:20px 18px;border-right:1px solid var(--line);overflow:auto}
+aside h2{margin:18px 0 8px;font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+aside h2:first-child{margin-top:0}
+.opt{display:flex;align-items:center;gap:8px;min-height:32px;font-size:13px}
+.opt input{width:16px;height:16px;accent-color:var(--primary)}
+main{padding:22px 28px;overflow:auto}
+.meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.meta p{margin:0;color:var(--ink-2);font-size:13px}
+.meta p b{color:var(--ink);font-weight:600}
+article{display:grid;grid-template-columns:72px 1fr auto;gap:16px;align-items:center;padding:14px 0;border-top:1px solid var(--line);background:transparent}
+article.hide{display:none}
+.swatch{width:72px;height:56px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line)}
+article h3{margin:0 0 4px;font:500 18px/1.15 var(--serif)}
+article p{margin:0;color:var(--ink-2);font-size:13px}
+.price{font:600 14px/1 var(--sans)}
+.tag{display:inline-block;margin-top:6px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.empty{display:none;padding:48px 0;color:var(--ink-2)}
+.empty.show{display:block}
+.empty h3{margin:0 0 6px;font:500 28px/1.1 var(--serif);color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="mark">Index</div>
+  <form class="search" role="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input id="q" type="search" value="wool" aria-label="Search the catalogue" />
+    <kbd>/</kbd>
+  </form>
+</header>
+<div class="layout">
+  <aside aria-label="Filters">
+    <h2>Cloth</h2>
+    <label class="opt"><input type="checkbox" data-cloth="wool" checked /> Wool</label>
+    <label class="opt"><input type="checkbox" data-cloth="linen" checked /> Linen</label>
+    <label class="opt"><input type="checkbox" data-cloth="cotton" checked /> Cotton</label>
+    <h2>Price</h2>
+    <label class="opt"><input type="radio" name="price" value="all" checked /> Any</label>
+    <label class="opt"><input type="radio" name="price" value="under" /> Under $180</label>
+  </aside>
+  <main>
+    <div class="meta"><p><b id="count">4</b> pieces</p><p>Kathmandu atelier</p></div>
+    <div id="list">
+      <article data-cloth="wool" data-price="240">
+        <div class="swatch" style="background:#c4b39a"></div>
+        <div><h3>Field coat</h3><p>Undyed wool, horn buttons, a pocket that fits a notebook.</p><span class="tag">Wool</span></div>
+        <div class="price">$240</div>
+      </article>
+      <article data-cloth="linen" data-price="96">
+        <div class="swatch" style="background:#e4d7c4"></div>
+        <div><h3>Market shirt</h3><p>Washed linen, cut long, meant to be rolled.</p><span class="tag">Linen</span></div>
+        <div class="price">$96</div>
+      </article>
+      <article data-cloth="wool" data-price="64">
+        <div class="swatch" style="background:#8d7358"></div>
+        <div><h3>Watch cap</h3><p>Ribbed wool, one size, the colour of wet bark.</p><span class="tag">Wool</span></div>
+        <div class="price">$64</div>
+      </article>
+      <article data-cloth="cotton" data-price="48">
+        <div class="swatch" style="background:#f2efe6"></div>
+        <div><h3>Drawstring bag</h3><p>Heavy cotton, holds a loaf or a pair of shoes.</p><span class="tag">Cotton</span></div>
+        <div class="price">$48</div>
+      </article>
+    </div>
+    <div class="empty" id="empty">
+      <h3>Nothing in that cut.</h3>
+      <p>Clear a cloth filter, or search a shorter word.</p>
+    </div>
+  </main>
+</div>
+<script>
+const q = document.getElementById('q');
+const rows = [...document.querySelectorAll('article')];
+function apply(){
+  const term = q.value.trim().toLowerCase();
+  const cloth = [...document.querySelectorAll('[data-cloth]')].filter(i => i.checked).map(i => i.dataset.cloth);
+  const under = document.querySelector('input[value="under"]').checked;
+  let n = 0;
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    const okCloth = cloth.includes(row.dataset.cloth);
+    const okPrice = !under || Number(row.dataset.price) < 180;
+    const okTerm = !term || text.includes(term);
+    const show = okCloth && okPrice && okTerm;
+    row.classList.toggle('hide', !show);
+    if (show) n++;
+  });
+  document.getElementById('count').textContent = n;
+  document.getElementById('empty').classList.toggle('show', n === 0);
+}
+q.addEventListener('input', apply);
+document.querySelectorAll('aside input').forEach(i => i.addEventListener('change', apply));
+document.addEventListener('keydown', e => { if (e.key === '/' && document.activeElement !== q){ e.preventDefault(); q.focus(); q.select(); }});
+</script>
+</body>
+</html>

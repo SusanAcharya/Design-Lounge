@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 095 · "Bauhaus design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 097 · "Bauhaus design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Bauhaus design language kit
 

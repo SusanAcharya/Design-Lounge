@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 117 · "Light fintech landing with tilting card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 119 · "Light fintech landing with tilting card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Light fintech landing with tilting card
 

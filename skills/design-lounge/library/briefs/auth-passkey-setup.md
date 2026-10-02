@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 130 · "Passkey setup with face-scan ring" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 133 · "Passkey setup with face-scan ring" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Passkey setup with face-scan ring
 

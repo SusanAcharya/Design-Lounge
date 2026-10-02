@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 129 · "Paper grain and ink blots" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 132 · "Paper grain and ink blots" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Paper grain and ink blots
 

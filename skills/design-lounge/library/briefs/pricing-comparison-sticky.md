@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 140 · "Sticky comparison table" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 144 · "Sticky comparison table" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Sticky comparison table
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 139 · "Stats ticker band" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 143 · "Stats ticker band" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Stats ticker band
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 126 · "Newsletter fold inline" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 129 · "Newsletter fold inline" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Newsletter fold inline
 

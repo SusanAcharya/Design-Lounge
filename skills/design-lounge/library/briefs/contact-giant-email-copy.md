@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 112 · "Giant email, click to copy" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 114 · "Giant email, click to copy" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Giant email, click to copy
 

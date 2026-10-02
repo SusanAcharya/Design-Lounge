@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 108 · "FAQ two-column search" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 110 · "FAQ two-column search" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # FAQ two-column search
 

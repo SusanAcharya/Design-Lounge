@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 152 · "Wellness retreat booking landing" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 157 · "Wellness retreat booking landing" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Wellness retreat booking landing
 

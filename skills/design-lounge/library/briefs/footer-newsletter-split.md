@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 127 · "Newsletter split footer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 130 · "Newsletter split footer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Newsletter split footer
 

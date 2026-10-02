@@ -59,7 +59,7 @@ export const STARTS: Start[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['navigation', 'overlays', 'media', 'onboarding', 'settings'],
-    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'm3-expressive-home', 'm3-music-player-expressive', 'ios-onboarding-carousel', 'pwa-install-sheet'],
+    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet'],
   },
   {
     id: 'design-system',
@@ -83,7 +83,7 @@ export const STARTS: Start[] = [
     pairing: 'developer-docs',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'data', 'charts', 'navigation'],
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'collapsing-sidebar-rail', 'tablet-dashboard-grid', 'kanban-board'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'kanban-board'],
   },
   {
     id: 'commerce',

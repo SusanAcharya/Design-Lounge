@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 091 · "Annual toggle with rolling prices" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 092 · "Annual toggle with rolling prices" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Annual toggle with rolling prices
 

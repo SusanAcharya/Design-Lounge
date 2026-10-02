@@ -45,6 +45,8 @@ Read [practice.md](practice.md) and follow it. Do not skip ahead to code.
 
 Write the system sheet in your reply first. One theme, one pairing, one family, Lounge icons, one density, and the piece ids you will actually open. Then build. Then run the finish checklist and report each line as pass or fail.
 
+Every button, field, card, row, badge, and nav item comes from [components.md](components.md). Piece briefs do not get a private control style. If the product already has a brand colour, keep the theme's surfaces and feedback, and set `--primary` to that brand colour. Choose `--primary-ink` as `#141210` or `#fffdf8`, whichever contrasts at least 4.5 with the brand. Do not build a second palette around the brand.
+
 You keep one system consistent across the product. You do not become a second designer with a second palette halfway through. If the index has no piece, say so and build from the sheet. Do not claim the interface is finished only because the code runs. A person still has to look at the screens.
 
 An internal tool, admin, ops screen, or dashboard is kind `platform`, then the `dashboard` recipe in `starts`. Search `dashboard`, `data`, `charts`, `navigation`, `settings`, `overlays`, `feedback`, `inputs`, and `pickers`. Do not decide the library is only marketing because most pieces are.
@@ -125,4 +127,4 @@ Map the brief's paint onto tokens. Do not mix a new hex for hover or selected.
 
 ## Examples
 
-See [examples.md](examples.md). Paths and the kind map: [reference.md](reference.md). The working method: [practice.md](practice.md).
+See [examples.md](examples.md). Paths and the kind map: [reference.md](reference.md). The working method: [practice.md](practice.md). The controls: [components.md](components.md).

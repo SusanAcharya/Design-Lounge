@@ -83,7 +83,7 @@ export const KINDS: Kind[] = [
       cta: 'Open run',
       phoneTitle: 'Today’s runs',
     },
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'collapsing-sidebar-rail', 'charts-kpi-spark-row', 'kanban-board'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'collapsing-sidebar-rail', 'charts-kpi-spark-row', 'kanban-board', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel'],
   },
 ];
 

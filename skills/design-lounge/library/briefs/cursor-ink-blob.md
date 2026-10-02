@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 114 · "Ink blob cursor" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 116 · "Ink blob cursor" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Ink blob cursor
 

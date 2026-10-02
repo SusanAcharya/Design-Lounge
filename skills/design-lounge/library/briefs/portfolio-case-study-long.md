@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 119 · "Long-form product case study" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 121 · "Long-form product case study" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Long-form product case study
 

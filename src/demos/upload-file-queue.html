@@ -1,0 +1,92 @@
+<!-- Design Lounge piece: upload-file-queue · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Upload queue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea;--surface:#fffdf8;--surface-2:#efeae0;--ink:#1c1915;--ink-2:#5e574e;--ink-3:#8a8176;
+  --line:#e0d8cc;--line-strong:#cfc4b4;--primary:#8a4b12;--primary-ink:#fffdf8;--primary-soft:#f3e6d8;
+  --success:#2f6b45;--success-soft:#e5f2ea;--danger:#8d2f2f;--danger-soft:#f8e6e4;--focus:#8a4b12;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--bg);padding:36px 48px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+h1{margin:0 0 6px;font-size:28px;font-weight:500;letter-spacing:-.03em}
+.sub{margin:0 0 22px;color:var(--ink-2)}
+.drop{height:160px;border:1.5px dashed var(--line-strong);border-radius:8px;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;margin-bottom:18px}
+.drop.over{background:var(--primary-soft);border-color:var(--primary)}
+.drop b{font-weight:600}
+.drop span{color:var(--ink-2);font-size:13px}
+button.add{height:36px;padding:0 12px;border-radius:6px;border:1px solid var(--line-strong);background:var(--surface);font:500 13px var(--sans);cursor:pointer}
+ul{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+li{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:12px 14px;border-top:1px solid var(--line);align-items:center}
+li:first-child{border-top:0}
+.name{font-weight:500}
+.meta{font:12px/1.4 var(--mono);color:var(--ink-3)}
+.bar{grid-column:1 / -1;height:4px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--primary);width:0}
+li.done .bar i{width:100%;background:var(--success)}
+li.bad .bar i{width:40%;background:var(--danger)}
+.state{font-size:12px;font-weight:600}
+li.done .state{color:var(--success)}
+li.bad .state{color:var(--danger)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+.bar i{transition:width .4s var(--ease)}
+</style>
+</head>
+<body>
+<h1>Drawings</h1>
+<p class="sub">PDF or PNG, up to 20 MB. The queue stays on this page until every file settles.</p>
+<div class="drop" id="drop" tabindex="0" role="button" aria-label="Add files">
+  <b>Drop files here</b>
+  <span>or press Enter to add a sample sheet</span>
+</div>
+<ul id="list" aria-live="polite">
+  <li class="done"><div><div class="name">plan-level-2.pdf</div><div class="meta">2.4 MB</div></div><div class="state">Sent</div><div class="bar"><i></i></div></li>
+  <li class="run" data-p="62"><div><div class="name">section-aa.png</div><div class="meta">860 KB</div></div><div class="state">62%</div><div class="bar"><i style="width:62%"></i></div></li>
+  <li class="bad"><div><div class="name">site-notes.heic</div><div class="meta">HEIC is not accepted</div></div><div class="state">Rejected</div><div class="bar"><i></i></div></li>
+</ul>
+<script>
+const drop = document.getElementById('drop');
+const list = document.getElementById('list');
+let n = 3;
+function add(){
+  n++;
+  const li = document.createElement('li');
+  li.className = 'run';
+  li.dataset.p = '8';
+  li.innerHTML = `<div><div class="name">sheet-0${n}.pdf</div><div class="meta">1.1 MB</div></div><div class="state">8%</div><div class="bar"><i style="width:8%"></i></div>`;
+  list.appendChild(li);
+  setTimeout(loop, 700);
+}
+function tick(){
+  document.querySelectorAll('li.run').forEach(li => {
+    let p = Math.min(100, Number(li.dataset.p) + 12);
+    li.dataset.p = p;
+    li.querySelector('.bar i').style.width = p + '%';
+    li.querySelector('.state').textContent = p >= 100 ? 'Sent' : p + '%';
+    if (p >= 100){ li.classList.remove('run'); li.classList.add('done'); }
+  });
+}
+drop.addEventListener('click', add);
+drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); add(); }});
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('over'); add(); });
+function loop(){
+  if (!document.querySelector('li.run')) return;
+  tick();
+  setTimeout(loop, 700);
+}
+setTimeout(loop, 700);
+</script>
+</body>
+</html>

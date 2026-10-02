@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 093 · "Asymmetric type lockup hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 094 · "Asymmetric type lockup hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Asymmetric type lockup hero
 

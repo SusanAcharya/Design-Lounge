@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 088 · "Activity rings with weekly picker" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 089 · "Activity rings with weekly picker" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Activity rings with weekly picker
 

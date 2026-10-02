@@ -9,7 +9,7 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 1. Write one sentence: who it is for, and the one job of this pass. If you cannot, you are not ready to pick a hero.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
 3. Write the system sheet below in your reply before any code. If the project has no DESIGN.md, add the sheet as `DESIGN.md`. If one exists, do not overwrite it. Follow it.
-4. Name the pieces you will rebuild. If the index has no piece, say so, and build only from this sheet. Do not import another library's look.
+4. Name the pieces you will rebuild. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
 5. Build the shell first (nav, tab bar, or frame), then the primary screen, then the next screen on the same sheet.
 6. Run the finish checklist. Fix failures. Report each line as pass or fail.
 
@@ -71,9 +71,13 @@ One navigation system. A header and a tab bar on the same phone screen is two sy
 
 The header, the button, and the text field look the same on every screen of this pass.
 
+## Brand
+
+If they already have a brand colour, the theme still supplies surfaces, ink, lines, and feedback. Their brand becomes `--primary` only. `--primary-ink` is `#141210` or `#fffdf8`, whichever reaches contrast 4.5 against that brand. `--link` is the brand walked darker on a light background, or lighter on a dark one, until it reaches 4.5 against `--bg`. Secondary and tertiary stay the theme's, unless they named those too.
+
 ## Components
 
-Icons are Lounge Icons only. One size, one stroke. Do not mix in another set.
+Read [components.md](components.md) and use it for every control. Icons are Lounge Icons only. One size, one stroke. Do not mix in another set.
 
 Buttons take their shape from the family: solid, outline, or soft. One height per platform.
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 092 · "Architect index with plan drawings" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 093 · "Architect index with plan drawings" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Architect index with plan drawings
 

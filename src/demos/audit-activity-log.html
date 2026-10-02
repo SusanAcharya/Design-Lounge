@@ -1,0 +1,71 @@
+<!-- Design Lounge piece: audit-activity-log · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Audit log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--surface-2:#efece4;--ink:#161513;--ink-2:#5a554c;--ink-3:#8a847a;
+  --line:#e4dfd4;--primary:#1f4d3a;--primary-soft:#e7f2ec;--danger:#8d2f2f;--danger-soft:#f8e8e6;
+  --warning:#8a5a10;--warning-soft:#f8efd8;--info:#1e4f78;--info-soft:#e7f0f7;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);background:var(--bg);color:var(--ink);display:flex;flex-direction:column}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+header{padding:22px 32px 12px;display:flex;justify-content:space-between;align-items:flex-end}
+h1{margin:0;font-size:28px;font-weight:500;letter-spacing:-.03em}
+.filters{display:flex;gap:8px}
+.filters button{height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font-size:12px;font-weight:500}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+ol{list-style:none;margin:0;padding:0 32px 32px;overflow:auto}
+li{display:grid;grid-template-columns:148px 16px 1fr auto;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+li.hide{display:none}
+time{font:12px/1.4 var(--mono);color:var(--ink-3);padding-top:2px}
+.dot{width:8px;height:8px;border-radius:50%;margin-top:6px;background:var(--ink-3)}
+li[data-kind="danger"] .dot{background:var(--danger)}
+li[data-kind="warning"] .dot{background:var(--warning)}
+li[data-kind="info"] .dot{background:var(--info)}
+b{font-weight:600}
+.who{color:var(--ink-2)}
+.badge{height:22px;padding:0 8px;border-radius:99px;font-size:11px;font-weight:600;display:inline-flex;align-items:center}
+.badge.info{background:var(--info-soft);color:var(--info)}
+.badge.warning{background:var(--warning-soft);color:var(--warning)}
+.badge.danger{background:var(--danger-soft);color:var(--danger)}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Activity</h1></div>
+  <div class="filters" role="group" aria-label="Filter events">
+    <button aria-pressed="true" data-f="all">All</button>
+    <button aria-pressed="false" data-f="info">Access</button>
+    <button aria-pressed="false" data-f="warning">Changes</button>
+    <button aria-pressed="false" data-f="danger">Denied</button>
+  </div>
+</header>
+<ol id="log">
+  <li data-kind="info"><time>09:41:12</time><i class="dot"></i><div><b>Signed in</b> <span class="who">from Patan, desk 4</span></div><span class="badge info">Access</span></li>
+  <li data-kind="warning"><time>09:44:03</time><i class="dot"></i><div><b>Rate changed</b> <span class="who">Mira edited bay 14 from 2,200 to 2,400 kg</span></div><span class="badge warning">Change</span></li>
+  <li data-kind="danger"><time>09:51:40</time><i class="dot"></i><div><b>Export denied</b> <span class="who">Asha requested payroll CSV without the finance role</span></div><span class="badge danger">Denied</span></li>
+  <li data-kind="info"><time>10:02:18</time><i class="dot"></i><div><b>Key copied</b> <span class="who">Rajan copied the staging API key</span></div><span class="badge info">Access</span></li>
+  <li data-kind="warning"><time>10:16:55</time><i class="dot"></i><div><b>Member invited</b> <span class="who">Susan invited nima@yard.test as dispatcher</span></div><span class="badge warning">Change</span></li>
+  <li data-kind="danger"><time>10:22:07</time><i class="dot"></i><div><b>Password failed</b> <span class="who">Four attempts on ops@northledger.test</span></div><span class="badge danger">Denied</span></li>
+</ol>
+<script>
+const buttons = [...document.querySelectorAll('.filters button')];
+const rows = [...document.querySelectorAll('#log li')];
+buttons.forEach(btn => btn.addEventListener('click', () => {
+  buttons.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+  const f = btn.dataset.f;
+  rows.forEach(row => row.classList.toggle('hide', f !== 'all' && row.dataset.kind !== f));
+}));
+</script>
+</body>
+</html>

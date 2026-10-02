@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 142 · "Sticky scroll feature steps" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 146 · "Sticky scroll feature steps" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Sticky scroll feature steps
 

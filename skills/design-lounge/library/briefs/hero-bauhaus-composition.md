@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 094 · "Bauhaus composition hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 096 · "Bauhaus composition hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Bauhaus composition hero
 

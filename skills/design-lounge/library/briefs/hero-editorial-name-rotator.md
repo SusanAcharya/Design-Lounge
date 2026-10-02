@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 106 · "Editorial name rotator hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 108 · "Editorial name rotator hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Editorial name rotator hero
 
