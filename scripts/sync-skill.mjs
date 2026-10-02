@@ -21,6 +21,7 @@ const piecesDir = path.join(root, 'src/content/pieces');
 const skillLib = path.join(root, 'skills/design-lounge/library');
 const briefsDir = path.join(skillLib, 'briefs');
 const repo = 'https://github.com/SusanAcharya/Design-Lounge';
+const lounge = 'https://designlounge.vercel.app';
 const raw = 'https://raw.githubusercontent.com/SusanAcharya/Design-Lounge/main';
 const author = { name: 'Susan Acharya', site: 'https://acharyasusan.com.np' };
 const credit = 'Designed by Susan Acharya · Design Lounge · acharyasusan.com.np';
@@ -74,8 +75,9 @@ const index = {
   credit,
   license: 'Free to use in products. Credit appreciated. Do not republish as a catalogue.',
   repo,
+  site: lounge,
   raw,
-  readme: 'This file ships inside the skill. Read it when the skill is invoked. Briefs are briefs/<id>.md next to this file. HTML demos are on GitHub at raw/src/demos/<id>.html.',
+  readme: 'This file ships inside the skill. Read it when the skill is invoked. Briefs are briefs/<id>.md next to this file. HTML demos are on the live site at demo.',
   counts: {
     pieces: pieces.length,
     themes: THEMES.length,
@@ -153,7 +155,7 @@ const index = {
     featured: p.data.featured,
     published: p.data.published,
     brief: `briefs/${p.id}.md`,
-    demo: `${raw}/src/demos/${p.id}.html`,
+    demo: `${lounge}/demo/${p.id}.html`,
   })),
 };
 

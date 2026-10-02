@@ -8,7 +8,7 @@ import { COLLECTIONS, SHELF_GROUPS } from '../data/collections';
 import { STARTS, MAP } from '../data/starts';
 
 export const GET: APIRoute = async ({ site }) => {
-  const base = (site?.toString() || 'https://designlounge.example').replace(/\/$/, '');
+  const base = (site?.toString() || 'https://designlounge.vercel.app').replace(/\/$/, '');
   const pieces = await getPieces();
   const lines = [
     `# Design Lounge`,

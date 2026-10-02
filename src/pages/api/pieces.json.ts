@@ -9,7 +9,7 @@ import { STARTS, MAP } from '../../data/starts';
 import { KINDS, FAMILIES } from '../../data/kit';
 
 export const GET: APIRoute = async ({ site }) => {
-  const base = (site?.toString() || 'https://designlounge.example').replace(/\/$/, '');
+  const base = (site?.toString() || 'https://designlounge.vercel.app').replace(/\/$/, '');
   const pieces = await getPieces();
   const nums = numberMap(pieces);
   const body = {

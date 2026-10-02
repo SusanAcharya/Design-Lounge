@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://designlounge.example',
+  site: 'https://designlounge.vercel.app',
   output: 'static',
   devToolbar: { enabled: false },
   trailingSlash: 'never',

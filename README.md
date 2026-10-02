@@ -1,6 +1,6 @@
 # Design Lounge
 
-A design library by [Susan Acharya](https://acharyasusan.com.np). Live pieces for the web, phone, and tablet — each one a self-contained demo and a markdown brief. Palettes, type pairings, icons, and motion sit beside them. Pick a system, or hand the repo to an agent and let it pick.
+A design library by [Susan Acharya](https://acharyasusan.com.np). Live at [designlounge.vercel.app](https://designlounge.vercel.app). Pieces for the web, phone, and tablet — each one a self-contained demo and a markdown brief. Palettes, type pairings, icons, and motion sit beside them. Pick a system, or hand the repo to an agent and let it pick.
 
 Free to use in products. Keep the credit. Do not republish the catalogue as a catalogue.
 

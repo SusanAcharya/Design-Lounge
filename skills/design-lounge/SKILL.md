@@ -13,7 +13,7 @@ description: >-
 
 The library is already in this skill folder. Read it. Do not invent a palette, a type pairing, a radius, an easing, or a component language, and do not wait for a website.
 
-Design Lounge is the design library of Susan Acharya. This skill shipped with the catalogue when it was installed.
+Design Lounge is the design library of Susan Acharya. This skill shipped with the catalogue when it was installed. Humans can browse the same library at https://designlounge.vercel.app.
 
 ## Read the library
 

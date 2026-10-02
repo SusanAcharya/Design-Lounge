@@ -32,6 +32,7 @@ const out = {
   icons: ok ? path.join(skillDir, 'library', 'icons.json') : '',
   counts,
   repo: lounge.repo,
+  lounge: lounge.lounge || '',
   author: lounge.author,
   credit: lounge.credit,
   next: ok ? ['library/index.json', 'library/briefs/<id>.md', 'library/icons.json'] : [],
