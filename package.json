@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "thumbs": "node scripts/thumbs.mjs",
     "check:pieces": "node scripts/check-pieces.mjs",
+    "skill:sync": "node --experimental-strip-types scripts/sync-skill.mjs",
     "skill:install": "node skills/design-lounge/install.mjs"
   },
   "dependencies": {

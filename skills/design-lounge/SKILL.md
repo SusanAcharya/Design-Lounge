@@ -11,18 +11,19 @@ description: >-
 
 # Design Lounge
 
-You build from a locked library. You do not invent a palette, a type pairing, a radius, an easing, or a component language.
+The library is already in this skill folder. Read it. Do not invent a palette, a type pairing, a radius, an easing, or a component language, and do not wait for a website.
 
-Design Lounge is the design library of Susan Acharya. Humans pick on the site. You fetch the same decisions and rebuild them in the user's stack.
+Design Lounge is the design library of Susan Acharya. This skill shipped with the catalogue when it was installed.
 
-## Resolve the library
+## Read the library
 
-Read [lounge.json](lounge.json) in this skill folder. `base` is the public site, with no trailing slash.
+Everything you need is next to this file.
 
-1. Run `node skills/design-lounge/resolve.mjs` from the Design Lounge repo, or `node <this-skill-dir>/resolve.mjs` after install. It prints JSON: `mode`, `base`, `ok`.
-2. `mode: "remote"` and `ok: true` — use HTTP. Start at `{base}/llms.txt`, then `{base}/api/pieces.json`.
-3. `mode: "local"` — you are in the Design Lounge repo. Prefer HTTP if `ok` is true. If the host does not answer, read the source files in [reference.md](reference.md). Do not invent substitutes.
-4. `ok: false` and not local — stop. Tell the user the library host did not answer. Ask for a reachable base URL or the repo. Do not design from memory.
+1. `library/index.json` — kinds, palettes (full CSS), pairings (full CSS), families, motion, and the piece index.
+2. `library/briefs/<id>.md` — the spec for one piece. Open only the pieces you will build.
+3. `library/icons.json` — Lounge Icons, only when the screen needs icons.
+
+`node <this-skill-dir>/resolve.mjs` prints those paths. If `ok` is false, the skill was installed without its library. Say so. Do not design from memory.
 
 If the open project is the Design Lounge repo itself (`src/demos` and `src/content/pieces` exist) and the user is editing the library, stop using this skill for that edit. Follow `docs/PIECE-SPEC.md` instead.
 
@@ -39,31 +40,31 @@ Ask for the stack once if they have not named it. Then keep it. Good stack lines
 
 ## Kit flow
 
-1. Pick a kind: `website`, `product`, or `platform`. Map their words with [reference.md](reference.md). A shop, magazine, portfolio, or phone app still starts here, then take the matching recipe from `/start` (field `starts` in the JSON).
-2. Fetch `{base}/api/pieces.json`. Use `kit.kinds` for that kind: `palettes`, `pairings`, `families`, `pieces`.
+1. Pick a kind: `website`, `product`, or `platform`. Map their words with [reference.md](reference.md). A shop, magazine, portfolio, or phone app still starts here, then take the matching recipe from `starts` in the index.
+2. Use `kit.kinds` for that kind: `palettes`, `pairings`, `families`, `pieces`.
 3. If they already chose, lock those ids. If they said "just go", lock the first palette, first pairing, and first family, and say the names before you write code.
 4. If they want to choose, offer three palettes and two pairings from that kind's lists. Names and moods only. They pick a whole palette, never a hex.
-5. Fetch the brief: `{base}/kit/brief/{kind}/{theme}/{pairing}/{family}.md`. That markdown is the system. Match it.
-6. Implement in their stack. Open the piece briefs named in the kit before you invent a hero, nav, table, or footer.
+5. The locked system is the theme's `css`, the pairing's `css`, and the family's `rules`, `radius`, `button`, and `density` in the index. Match those numbers. Do not fetch a kit URL.
+6. Implement in their stack. Open `library/briefs/<id>.md` for the pieces named on the kind and the family before you invent a hero, nav, table, or footer.
 
 ## Piece flow
 
-1. Search `pieces` in the JSON by `category`, `platform`, `tags`, and `summary`. Platforms: `web`, `mobile-web`, `mobile-app`, `pwa`, `tablet`.
-2. Fetch `{base}/p/{id}.md`. The brief is the spec. The demo (`{base}/demo/{id}.html`) is the acceptance test.
+1. Search `pieces` in the index by `category`, `platform`, `tags`, and `summary`. Platforms: `web`, `mobile-web`, `mobile-app`, `pwa`, `tablet`.
+2. Read `library/briefs/<id>.md`. The brief is the spec. `demo` on the piece is the HTML acceptance file on GitHub, if you need to see the motion.
 3. Rebuild the numbers: structure, type roles, motion table, states, hit targets, reduced motion. Do not "improve" them.
 4. If a kit is already locked, replace the piece's colour and font tokens with the kit's. Keep the piece's layout, motion, and behaviour.
 5. Hold the result to the brief's acceptance checklist. Fix what fails.
 
-If the JSON has no piece for that job, say so. Do not hallucinate a slug.
+If the index has no piece for that job, say so. Do not hallucinate a slug.
 
 ## Library flow
 
-Fetch only what you need:
+Read only the part of the index you need:
 
-- Theme CSS and roles: `{base}/themes/{id}` or the `themes` array (`tokens` includes primary, secondary, tertiary, success, warning, danger, info, surfaces, `link`).
-- Pairing: `{base}/type/{id}`.
-- Icons: `{base}/icons`. 24px stroke, 1.75. Do not mix in another icon set.
-- Motion: `{base}/motion`. Default easing `cubic-bezier(0.2, 0.7, 0.2, 1)`. UI 200ms, layout 320ms, sheets 400ms. Honour `prefers-reduced-motion`.
+- Theme: `themes[]`. `tokens` includes primary, secondary, tertiary, success, warning, danger, info, surfaces, `link`. Copy `css`.
+- Pairing: `pairings[]`. Copy `css`.
+- Icons: `library/icons.json`. 24px stroke, 1.75. Do not mix in another icon set.
+- Motion: `motion`. Default easing `cubic-bezier(0.2, 0.7, 0.2, 1)`. UI 200ms, layout 320ms, sheets 400ms. Honour `prefers-reduced-motion`.
 
 `link` is the brand colour that passes as text on the background. Buttons use `primary` fill + `primaryInk`. Do not put a loud fill colour on body text.
 
@@ -76,4 +77,4 @@ Fetch only what you need:
 
 ## Examples
 
-See [examples.md](examples.md). Endpoint paths and local files: [reference.md](reference.md).
+See [examples.md](examples.md). Paths and the kind map: [reference.md](reference.md).

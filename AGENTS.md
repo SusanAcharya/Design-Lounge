@@ -4,7 +4,7 @@ This repository is the design library of Susan Acharya. It is not the product yo
 
 ## If you were sent here to design a product
 
-Read `skills/design-lounge/SKILL.md` and follow it. Run `node skills/design-lounge/resolve.mjs` first. Use the live site when it answers. When it does not, read the source files listed in `skills/design-lounge/reference.md`. Do not invent a palette, a pairing, or a component language.
+Read `skills/design-lounge/SKILL.md` and follow it. Run `node skills/design-lounge/resolve.mjs` first. The catalogue is in `skills/design-lounge/library`. Do not invent a palette, a pairing, or a component language.
 
 ## If you were asked to change this library
 

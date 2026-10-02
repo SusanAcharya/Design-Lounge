@@ -24,23 +24,23 @@ pnpm check:pieces   # every piece against docs/PIECE-SPEC.md
 
 ## For an agent
 
-Feed it this repo. It should read `AGENTS.md`, then `skills/design-lounge/SKILL.md`.
-
-Or install the skill into the product you are building, not into this library:
+Install the skill into the product you are building, not into this library. It lands in the agent's skill folder with the catalogue inside it: palettes, type, icons, motion, and every piece brief. After that, ask for a design. The agent reads the installed library on its own.
 
 ```bash
 npx skills add SusanAcharya/Design-Lounge
 ```
 
-From a local clone:
+Or give the agent this repo: [github.com/SusanAcharya/Design-Lounge](https://github.com/SusanAcharya/Design-Lounge). It should read `AGENTS.md`, then `skills/design-lounge/SKILL.md`.
+
+From a local clone, in the product repo:
 
 ```bash
 node /path/to/Design-Lounge/skills/design-lounge/install.mjs
 ```
 
-That copies the skill into `.cursor/skills`, `.agents/skills`, and `.claude/skills`. The agent locks a palette, a pairing, and a component family from this library, then rebuilds the named pieces in your stack. It does not invent hex codes.
+That copies the skill into `.cursor/skills`, `.agents/skills`, and `.claude/skills`. The agent locks a palette, a pairing, and a component family, then rebuilds the named pieces in your stack. It does not invent hex codes.
 
-When the site has a public URL, set `site` in `astro.config.mjs` and `base` in `skills/design-lounge/lounge.json` to that host.
+When the catalogue changes, run `pnpm skill:sync` here and commit `skills/design-lounge/library` so the next install picks it up.
 
 ## Layout
 
