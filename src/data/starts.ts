@@ -80,7 +80,7 @@ export const STARTS: Start[] = [
     blurb: 'Dense tables, KPI sparks, a collapsing rail, a board. Density without noise.',
     when: 'An internal tool, analytics home, or ops screen people will live in all day.',
     theme: 'harbour-ledger',
-    pairing: 'swiss-precision',
+    pairing: 'developer-docs',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'data', 'charts', 'navigation'],
     pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'collapsing-sidebar-rail', 'tablet-dashboard-grid', 'kanban-board'],

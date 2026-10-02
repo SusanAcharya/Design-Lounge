@@ -23,7 +23,7 @@ Everything you need is next to this file.
 2. `library/briefs/<id>.md` — the spec for one piece. Open only the pieces you will build.
 3. `library/icons.json` — Lounge Icons, only when the screen needs icons.
 
-`node <this-skill-dir>/resolve.mjs` prints those paths. If `ok` is false, the skill was installed without its library. Say so. Do not design from memory.
+Read those files. Do not run scripts from this skill. If `library/index.json` is missing, the install is broken. Say so. Do not design from memory.
 
 If the open project is the Design Lounge repo itself (`src/demos` and `src/content/pieces` exist) and the user is editing the library, stop using this skill for that edit. Follow `docs/PIECE-SPEC.md` instead.
 
@@ -31,12 +31,24 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 
 | They want | Do |
 | --- | --- |
+| The project already has a design system, DESIGN.md, tokens, or styled screens | Adopt flow |
 | A new product, site, app, or design system | Kit flow |
 | One screen, section, or component | Piece flow, inside the locked kit if one exists |
 | Only a palette, font, icon, or motion | Library flow |
 | "Make it look good" with no kind | Kit flow. Infer the kind. Say what you assumed. |
 
 Ask for the stack once if they have not named it. Then keep it. Good stack lines are boring: "Next.js, Tailwind", "plain HTML + CSS", "SwiftUI", "Flutter". The briefs are stack-agnostic. You translate.
+
+An internal tool, admin, ops screen, or dashboard is kind `platform`, then the `dashboard` recipe in `starts`. Search `dashboard`, `data`, `charts`, `navigation`, `settings`, `overlays`, `feedback`, `inputs`, and `pickers`. Do not decide the library is only marketing because most pieces are.
+
+## Adopt flow
+
+Use this when a design system is already in the project.
+
+1. Keep their colours, type, radius, and shadow. Do not lock a second Lounge palette on top.
+2. Take structure, states, motion, and hit targets from the piece brief.
+3. Do not stop to ask how far to go. Say what you kept and what you took from the brief.
+4. Restyle onto a Lounge kit only when they asked for a new look. Then follow Kit flow.
 
 ## Kit flow
 
@@ -45,14 +57,16 @@ Ask for the stack once if they have not named it. Then keep it. Good stack lines
 3. If they already chose, lock those ids. If they said "just go", lock the first palette, first pairing, and first family, and say the names before you write code.
 4. If they want to choose, offer three palettes and two pairings from that kind's lists. Names and moods only. They pick a whole palette, never a hex.
 5. The locked system is the theme's `css`, the pairing's `css`, and the family's `rules`, `radius`, `button`, and `density` in the index. Match those numbers. Do not fetch a kit URL.
-6. Implement in their stack. Open `library/briefs/<id>.md` for the pieces named on the kind and the family before you invent a hero, nav, table, or footer.
+6. If the pairing has a `caution`, say it before you write. Mono on `code`, `.num`, and captions comes from `--font-mono`. Body text uses `--font-text`.
+7. A theme is one mode (`light` or `dark`). If the product needs both and `pair` is set, use that other theme as the second mode. Same pairing, same family. If `pair` is null, stay in the one mode and say so. Do not borrow an unpaired palette. Night Desk pairs with Paper & Ink. Harbour Ledger has no twin.
+8. Implement in their stack. Open `library/briefs/<id>.md` for the pieces named on the kind and the family before you invent a hero, nav, table, or footer.
 
 ## Piece flow
 
 1. Search `pieces` in the index by `category`, `platform`, `tags`, and `summary`. Platforms: `web`, `mobile-web`, `mobile-app`, `pwa`, `tablet`.
 2. Read `library/briefs/<id>.md`. The brief is the spec. `demo` on the piece is the HTML acceptance file on GitHub, if you need to see the motion.
 3. Rebuild the numbers: structure, type roles, motion table, states, hit targets, reduced motion. Do not "improve" them.
-4. If a kit is already locked, replace the piece's colour and font tokens with the kit's. Keep the piece's layout, motion, and behaviour.
+4. When a kit or an existing system is locked, follow the precedence below. Do not copy hex values out of the brief.
 5. Hold the result to the brief's acceptance checklist. Fix what fails.
 
 If the index has no piece for that job, say so. Do not hallucinate a slug.
@@ -68,12 +82,38 @@ Read only the part of the index you need:
 
 `link` is the brand colour that passes as text on the background. Buttons use `primary` fill + `primaryInk`. Do not put a loud fill colour on body text.
 
+## When numbers disagree
+
+This order wins. Do not pick a middle.
+
+1. An existing design system they asked you to keep.
+2. The locked family, for radius, shadow, button style, and density. A table brief that asks for 8px corners loses to Industrial's 2px and no shadow.
+3. The locked theme, for every colour. The locked pairing, for fonts.
+4. The piece brief, for structure, regions, motion, interactions, states, and hit targets.
+
+Map the brief's paint onto tokens. Do not mix a new hex for hover or selected.
+
+| Brief role | Token |
+| --- | --- |
+| Page | `--bg` |
+| Card or row | `--surface` |
+| Hover | `--surface-2` |
+| Pressed or selected | `--primary-soft` |
+| Selected and hovered | `--surface-3` |
+| Hairline | `--line` |
+| Strong border | `--line-strong` |
+| Body text | `--ink` |
+| Secondary text | `--ink-2` |
+| Muted text | `--ink-3` |
+| Text button or link | `--link` |
+| Primary button | `--primary` fill, `--primary-ink` label |
+
 ## Rules
 
 - One primary button per view. Secondary and tertiary come from the kit family.
 - Feedback colours (success, warning, danger, info) are for live state, not decoration.
 - Credit every copied token block and every rebuilt piece: `Designed by Susan Acharya · Design Lounge · acharyasusan.com.np`. Free to use in products. Do not republish the catalogue as a catalogue.
-- Do not add a second palette, a random Google font, or a default Tailwind theme on top.
+- Do not add a second palette, a random Google font, or a default Tailwind theme on top. A second mode is the theme's `pair` only.
 
 ## Examples
 

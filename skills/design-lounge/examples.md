@@ -22,6 +22,23 @@ User: "Company site. Show me palettes."
 3. After they pick, do the same for two pairings, then lock a family (default Editorial for a public site unless they say otherwise).
 4. Copy the locked CSS and rules, read the named briefs, and implement.
 
+## They already have a design system
+
+User: "Add a bench table to this admin. We have a DESIGN.md."
+
+1. Adopt flow. Keep their colours, type, radius, and shadow. Do not lock Night Desk beside Harbour Ledger.
+2. Read `library/briefs/dense-data-table.md` for structure, states, motion, and hit targets.
+3. Their radius wins over the brief. If they have no radius and a Lounge family is locked, the family wins.
+4. Hover and selected colours come from their tokens, mapped as in SKILL.md. Do not copy `#f3f5f9` out of the brief.
+
+## Both modes
+
+User: "Same product, day and night."
+
+1. Lock one theme. Read its `pair`.
+2. Paper & Ink pairs with Night Desk. Use both CSS blocks. Same pairing, same family.
+3. Harbour Ledger's `pair` is null. Build the one mode and say it has no twin.
+
 ## One component, kit already locked
 
 User: "Add the pricing section."

@@ -8,6 +8,10 @@ export interface Pairing {
   tags: string[];
   display: Face;
   text: Face;
+  /** Numbers, code, and captions. Not body copy. */
+  mono?: Face;
+  /** Say this before using the pairing for long prose. */
+  caution?: string;
   headline: string;
   body: string;
   label: string;
@@ -35,7 +39,8 @@ export const PAIRINGS: Pairing[] = [
     headline: 'The river that moved a border', body: 'For forty years the Mechi has drifted west. Two villages, one survey stone and a dispute nobody filed.', label: 'Long read · 14 min', bg: '#f7f4ee', ink: '#1b1a17', accent: '#a3121f' },
   { id: 'swiss-precision', name: 'Swiss Precision', mood: 'Grid-first. Tight grotesk, mono for data and captions.', bestFor: ['Dashboards', 'Wayfinding', 'Data products'], tags: ['swiss', 'product'],
     display: { family: 'Schibsted Grotesk', spec: 'Schibsted+Grotesk:wght@400;600;800', weight: 800, tracking: '-0.04em', fallback: sans },
-    text: { family: 'IBM Plex Mono', spec: 'IBM+Plex+Mono:wght@400;500;600', weight: 400, fallback: mono },
+    text: { family: 'Schibsted Grotesk', spec: 'Schibsted+Grotesk:wght@400;600;800', weight: 400, fallback: sans },
+    mono: { family: 'IBM Plex Mono', spec: 'IBM+Plex+Mono:wght@400;500;600', weight: 400, fallback: mono },
     headline: 'Platform 4, 08:12', body: 'Departures are printed on the half minute. Delays over two minutes change colour; delays over ten change the route.', label: 'Wayfinding system', bg: '#f4f4f0', ink: '#111111', accent: '#e2231a' },
   { id: 'brutal-grotesk', name: 'Brutal Grotesk', mood: 'Loud headlines, plain body, nothing in between.', bestFor: ['Agencies', 'Launches', 'Posters'], tags: ['brutalist', 'loud'],
     display: { family: 'Archivo Black', spec: 'Archivo+Black', weight: 400, tracking: '-0.03em', upper: true, fallback: sans },
@@ -51,7 +56,8 @@ export const PAIRINGS: Pairing[] = [
     headline: 'Open studio, 14–16 May', body: 'Three floors of prints, prototypes and the furniture we built when the budget ran out.', label: 'Fieldwork', bg: '#e9ecef', ink: '#101418', accent: '#3d5afe' },
   { id: 'developer-docs', name: 'Developer Docs', mood: 'Neutral, technical, legible at 13px. Built for code next to prose.', bestFor: ['Docs', 'Dev tools', 'APIs'], tags: ['product', 'tech'],
     display: { family: 'Geist', spec: 'Geist:wght@400;500;700', weight: 600, tracking: '-0.035em', fallback: sans },
-    text: { family: 'Geist Mono', spec: 'Geist+Mono:wght@400;500', weight: 400, fallback: mono },
+    text: { family: 'Geist', spec: 'Geist:wght@400;500;700', weight: 400, fallback: sans },
+    mono: { family: 'Geist Mono', spec: 'Geist+Mono:wght@400;500', weight: 400, fallback: mono },
     headline: 'Ship the edge function', body: 'npx kestrel deploy --region bom1. Cold starts under 40ms, logs streamed to your terminal.', label: 'Kestrel CLI v3.2', bg: '#0b0b0c', ink: '#ededed', accent: '#3ddc97' },
   { id: 'bookish', name: 'Bookish', mood: 'Old-style serif reading comfort with a friendly grotesk for UI.', bestFor: ['Reading apps', 'Book shops', 'Journals'], tags: ['editorial', 'reading'],
     display: { family: 'Libre Caslon Text', spec: 'Libre+Caslon+Text:ital,wght@0,400;0,700;1,400', weight: 400, italic: true, tracking: '-0.01em', fallback: serif },
@@ -69,11 +75,11 @@ export const PAIRINGS: Pairing[] = [
     display: { family: 'Gloock', spec: 'Gloock', weight: 400, tracking: '-0.025em', fallback: serif },
     text: { family: 'Figtree', spec: 'Figtree:wght@400;600;800', weight: 400, fallback: sans },
     headline: 'The linen edit', body: 'Twelve pieces cut from Lithuanian flax, washed twice so they arrive already soft.', label: 'Spring 26', bg: '#efe7dc', ink: '#2a211b', accent: '#9d4b2c' },
-  { id: 'arcade', name: 'Arcade', mood: 'Bitmap caps over a mono body. Insert coin.', bestFor: ['Games', 'Hackathons', 'Retro products'], tags: ['pixel', 'retro'],
+  { id: 'arcade', name: 'Arcade', mood: 'Bitmap caps over a mono body. Insert coin.', bestFor: ['Games', 'Hackathons', 'Retro products'], tags: ['pixel', 'retro'], caution: 'Body text is Space Mono on purpose. Keep it for the game. Do not use this pairing for reports or long prose.',
     display: { family: 'Silkscreen', spec: 'Silkscreen:wght@400;700', weight: 700, tracking: '0.02em', upper: true, fallback: mono },
     text: { family: 'Space Mono', spec: 'Space+Mono:ital,wght@0,400;0,700;1,400', weight: 400, fallback: mono },
     headline: 'Level 3 unlocked', body: 'High score 048,200. Two lives left. The boss has a weak point and it is always the left hand.', label: 'Press start', bg: '#1b1b2f', ink: '#f4f4f4', accent: '#ffd23f' },
-  { id: 'hud', name: 'HUD', mood: 'Angular, technical, cockpit-adjacent. Pairs with cut corners and scanlines.', bestFor: ['Gaming', 'Security', 'Mission control'], tags: ['cyber', 'tech'],
+  { id: 'hud', name: 'HUD', mood: 'Angular, technical, cockpit-adjacent. Pairs with cut corners and scanlines.', bestFor: ['Gaming', 'Security', 'Mission control'], tags: ['cyber', 'tech'], caution: 'Body text is Share Tech Mono on purpose. Cockpit and status screens only. Do not use it for reports.',
     display: { family: 'Chakra Petch', spec: 'Chakra+Petch:wght@400;500;700', weight: 700, tracking: '0.02em', upper: true, fallback: sans },
     text: { family: 'Share Tech Mono', spec: 'Share+Tech+Mono', weight: 400, fallback: mono },
     headline: 'Signal acquired', body: 'Uplink 98.2%. Three nodes degraded over the Arabian Sea. Rerouting through Muscat in 00:04.', label: 'SYS / NAV-02', bg: '#07090d', ink: '#d6e2f0', accent: '#19e6c1' },
@@ -83,7 +89,8 @@ export const PAIRINGS: Pairing[] = [
     headline: 'Seven days in a row!', body: 'Your streak is safe. Water the plant tomorrow before nine and it grows a new leaf.', label: 'Sprout', bg: '#fde8e4', ink: '#3a2430', accent: '#ff7a59' },
   { id: 'friendly-saas', name: 'Friendly SaaS', mood: 'Modern product sans with a mono for numbers and keys.', bestFor: ['SaaS', 'Fintech', 'Startups'], tags: ['product', 'saas'],
     display: { family: 'Plus Jakarta Sans', spec: 'Plus+Jakarta+Sans:wght@400;600;800', weight: 800, tracking: '-0.035em', fallback: sans },
-    text: { family: 'JetBrains Mono', spec: 'JetBrains+Mono:wght@400;500;700', weight: 400, fallback: mono },
+    text: { family: 'Plus Jakarta Sans', spec: 'Plus+Jakarta+Sans:wght@400;600;800', weight: 400, fallback: sans },
+    mono: { family: 'JetBrains Mono', spec: 'JetBrains+Mono:wght@400;500;700', weight: 400, fallback: mono },
     headline: 'Payroll in four minutes', body: '₹ 18,42,000 across 46 people, paid Friday 09:00. Tax filed, payslips sent, nobody chased.', label: 'Tally · Payroll', bg: '#f6f7fb', ink: '#11131a', accent: '#4f46e5' },
   { id: 'bauhaus-school', name: 'Bauhaus School', mood: 'Geometric heavyweight with a mono for the rules.', bestFor: ['Education', 'Exhibitions', 'Architecture'], tags: ['bauhaus', 'geometric'],
     display: { family: 'Outfit', spec: 'Outfit:wght@400;600;800', weight: 800, tracking: '-0.04em', fallback: sans },
@@ -127,7 +134,8 @@ export const PAIRINGS: Pairing[] = [
     headline: 'Millennium mixtape', body: 'Fourteen tracks, limited chrome cassette, ships in a jelly case. Pre-save before Friday midnight.', label: 'Drop 002', bg: '#e8ecf2', ink: '#10131a', accent: '#2f6bff' },
   { id: 'signal-mono', name: 'Signal Mono', mood: 'Space-age grotesk and its mono sibling. Tech without coldness.', bestFor: ['Startups', 'AI tools', 'Hardware'], tags: ['tech', 'product'],
     display: { family: 'Space Grotesk', spec: 'Space+Grotesk:wght@300..700', weight: 600, tracking: '-0.04em', fallback: sans },
-    text: { family: 'Space Mono', spec: 'Space+Mono:ital,wght@0,400;0,700;1,400', weight: 400, fallback: mono },
+    text: { family: 'Space Grotesk', spec: 'Space+Grotesk:wght@300..700', weight: 400, fallback: sans },
+    mono: { family: 'Space Mono', spec: 'Space+Mono:ital,wght@0,400;0,700;1,400', weight: 400, fallback: mono },
     headline: 'Launch window opens', body: 'T-minus 14:00. Weather go, range go, payload go. Live telemetry at 10 Hz from the pad.', label: 'Orbital', bg: '#0c0d10', ink: '#e8e9ec', accent: '#c6f135' },
   { id: 'playground', name: 'Playground', mood: 'Round and bouncy with a sturdy, readable body.', bestFor: ['Kids', 'Learning', 'Community'], tags: ['playful', 'friendly'],
     display: { family: 'Baloo 2', spec: 'Baloo+2:wght@400;600;800', weight: 800, tracking: '-0.02em', fallback: sans },
@@ -139,7 +147,8 @@ export const PAIRINGS: Pairing[] = [
     headline: 'Dinner at the long table', body: 'Twelve seats, one menu, whatever came off the boat at Kalk Bay this morning. Thursdays only.', label: 'Supper club', bg: '#f6efe6', ink: '#1f1a17', accent: '#b23a48' },
   { id: 'neo-grotesk-mono', name: 'Neo Grotesk Mono', mood: 'Scandinavian grotesk with a characterful mono.', bestFor: ['Agencies', 'Product sites', 'Annual reports'], tags: ['swiss', 'product'],
     display: { family: 'Familjen Grotesk', spec: 'Familjen+Grotesk:wght@400;600;700', weight: 700, tracking: '-0.035em', fallback: sans },
-    text: { family: 'Chivo Mono', spec: 'Chivo+Mono:wght@400;500', weight: 400, fallback: mono },
+    text: { family: 'Familjen Grotesk', spec: 'Familjen+Grotesk:wght@400;600;700', weight: 400, fallback: sans },
+    mono: { family: 'Chivo Mono', spec: 'Chivo+Mono:wght@400;500', weight: 400, fallback: mono },
     headline: 'Annual report 2025', body: 'Revenue up 31%. Headcount flat. Carbon down 18% after the move to the Bergen data hall.', label: 'Fjord Group', bg: '#eef1f3', ink: '#0f1418', accent: '#0f6fff' },
   { id: 'variable-expressive', name: 'Variable Expressive', mood: 'A width-and-weight variable display with a crisp body. Begs to animate.', bestFor: ['Kinetic type', 'Music', 'Campaigns'], tags: ['kinetic', 'variable'],
     display: { family: 'Anybody', spec: 'Anybody:wdth,wght@50..150,400..900', weight: 900, tracking: '-0.02em', upper: true, fallback: sans },
@@ -208,12 +217,17 @@ export function faceCss(f: Face) {
 }
 
 export function pairingCss(p: Pairing) {
+  const specs = [p.display.spec, p.text.spec, p.mono?.spec].filter((spec): spec is string => Boolean(spec));
+  const monoVar = p.mono ? `\n  --font-mono: "${p.mono.family}", ${p.mono.fallback};` : '';
+  const monoRule = p.mono
+    ? `\ncode, kbd, samp, .mono, .num {\n  font-family: var(--font-mono);\n  font-weight: ${p.mono.weight};\n}`
+    : '';
   return `/* ${p.name} · type pairing from Design Lounge by Susan Acharya (acharyasusan.com.np) */
-@import url("${fontHref([p.display.spec, p.text.spec])}");
+@import url("${fontHref(specs)}");
 
 :root {
   --font-display: "${p.display.family}", ${p.display.fallback};
-  --font-text: "${p.text.family}", ${p.text.fallback};
+  --font-text: "${p.text.family}", ${p.text.fallback};${monoVar}
 }
 h1, h2, h3, .display {
   font-family: var(--font-display);
@@ -225,7 +239,7 @@ body {
   font-family: var(--font-text);
   font-weight: ${p.text.weight};
   line-height: 1.55;${p.text.tracking ? `\n  letter-spacing: ${p.text.tracking};` : ''}
-}`;
+}${monoRule}`;
 }
 
 export const SCALES = [

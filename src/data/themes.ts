@@ -354,6 +354,40 @@ body {
 h1, h2, h3, .display { font-family: var(--font-display); }`;
 }
 
+/** Day/night twins. A null pair means this palette has no other mode. Do not borrow a second theme. */
+export const THEME_PAIRS: Record<string, { mode: 'light' | 'dark'; pair: string | null }> = {
+  'paper-ink': { mode: 'light', pair: 'night-desk' },
+  'night-desk': { mode: 'dark', pair: 'paper-ink' },
+  'linen-shop': { mode: 'light', pair: 'atelier-noir' },
+  'atelier-noir': { mode: 'dark', pair: 'linen-shop' },
+  'kiln': { mode: 'light', pair: 'copper-works' },
+  'copper-works': { mode: 'dark', pair: 'kiln' },
+  'alpine-clinic': { mode: 'light', pair: null },
+  'harbour-ledger': { mode: 'light', pair: null },
+  'signal-green': { mode: 'dark', pair: null },
+  'loam': { mode: 'light', pair: null },
+  'ice-station': { mode: 'light', pair: null },
+  'press-room': { mode: 'light', pair: null },
+  'velvet-club': { mode: 'dark', pair: null },
+  'greenhouse': { mode: 'light', pair: null },
+  'circuit': { mode: 'dark', pair: null },
+  'marble-hall': { mode: 'light', pair: null },
+  'cinder': { mode: 'light', pair: null },
+  'sakura-desk': { mode: 'light', pair: null },
+  'observatory': { mode: 'dark', pair: null },
+  'market-stall': { mode: 'light', pair: null },
+  'fog-city': { mode: 'light', pair: null },
+  'archive': { mode: 'light', pair: null },
+  'neon-alley': { mode: 'dark', pair: null },
+  'glacier': { mode: 'light', pair: null },
+  'festival': { mode: 'light', pair: null },
+  'courtroom': { mode: 'light', pair: null },
+  'playroom': { mode: 'light', pair: null },
+  'oxide': { mode: 'light', pair: null },
+  'y2k-chrome': { mode: 'light', pair: null },
+  'hud-teal': { mode: 'dark', pair: null },
+};
+
 export function themeById(id: string) {
   return THEMES.find((t) => t.id === id);
 }

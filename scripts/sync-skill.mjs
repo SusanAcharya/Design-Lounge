@@ -8,7 +8,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { THEMES, themeCss } from '../src/data/themes.ts';
+import { THEMES, THEME_PAIRS, themeCss } from '../src/data/themes.ts';
 import { PAIRINGS, pairingCss, SCALES } from '../src/data/type.ts';
 import { KINDS, FAMILIES } from '../src/data/kit.ts';
 import { ICONS, ICON_CREDIT, ICON_GROUPS, iconSvg } from '../src/data/icons.ts';
@@ -111,18 +111,24 @@ const index = {
   },
   starts: STARTS,
   collections: COLLECTIONS.map((c) => ({ slug: c.slug, title: c.title, blurb: c.blurb, pieces: c.pieces })),
-  themes: THEMES.map((t) => ({
-    id: t.id,
-    name: t.name,
-    mood: t.mood,
-    bestFor: t.bestFor,
-    tags: t.tags,
-    display: t.display,
-    text: t.text,
-    radius: t.radius,
-    tokens: t.tokens,
-    css: themeCss(t),
-  })),
+  themes: THEMES.map((t) => {
+    const pair = THEME_PAIRS[t.id];
+    if (!pair) throw new Error(`THEME_PAIRS missing ${t.id}`);
+    return {
+      id: t.id,
+      name: t.name,
+      mood: t.mood,
+      bestFor: t.bestFor,
+      tags: t.tags,
+      mode: pair.mode,
+      pair: pair.pair,
+      display: t.display,
+      text: t.text,
+      radius: t.radius,
+      tokens: t.tokens,
+      css: themeCss(t),
+    };
+  }),
   pairings: PAIRINGS.map((p) => ({
     id: p.id,
     name: p.name,
@@ -131,6 +137,8 @@ const index = {
     tags: p.tags,
     display: p.display.family,
     text: p.text.family,
+    mono: p.mono?.family ?? '',
+    caution: p.caution ?? '',
     css: pairingCss(p),
   })),
   scales: SCALES,

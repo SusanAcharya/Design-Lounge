@@ -73,7 +73,7 @@ export const KINDS: Kind[] = [
     blurb: 'The thing staff live in: ops, admin, a dense home. Density without noise.',
     when: 'People open this every morning. Taste has to survive eight hours.',
     palettes: ['harbour-ledger', 'fog-city', 'signal-green', 'circuit', 'cinder', 'hud-teal', 'courtroom', 'night-desk'],
-    pairings: ['swiss-precision', 'developer-docs', 'slab-ledger', 'red-hat', 'neo-grotesk-mono', 'academic'],
+    pairings: ['developer-docs', 'swiss-precision', 'slab-ledger', 'red-hat', 'neo-grotesk-mono', 'academic'],
     families: ['sharp', 'quiet', 'industrial', 'glass'],
     copy: {
       brand: 'Ledger',
