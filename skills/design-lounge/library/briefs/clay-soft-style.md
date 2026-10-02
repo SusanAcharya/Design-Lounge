@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 100 · "Clay soft design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 101 · "Clay soft design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Clay soft design language kit
 

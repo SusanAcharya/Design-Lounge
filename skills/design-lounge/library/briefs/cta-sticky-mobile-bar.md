@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 145 · "Sticky mobile CTA bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 149 · "Sticky mobile CTA bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Sticky mobile CTA bar
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 138 · "Riso print design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 142 · "Riso print design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Riso print design language kit
 

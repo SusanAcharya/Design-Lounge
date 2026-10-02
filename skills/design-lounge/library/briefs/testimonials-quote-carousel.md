@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 151 · "Testimonials quote carousel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 155 · "Testimonials quote carousel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Testimonials quote carousel
 

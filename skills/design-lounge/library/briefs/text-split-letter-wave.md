@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 140 · "Split letter wave" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 144 · "Split letter wave" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Split letter wave
 

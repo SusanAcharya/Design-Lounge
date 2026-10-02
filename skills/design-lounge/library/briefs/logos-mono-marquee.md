@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 120 · "Logos mono marquee" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 121 · "Logos mono marquee" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Logos mono marquee
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 106 · "Deco hotel design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 107 · "Deco hotel design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Deco hotel design language kit
 

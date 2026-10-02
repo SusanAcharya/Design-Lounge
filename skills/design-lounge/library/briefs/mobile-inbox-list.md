@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 127 · "Mobile inbox list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 128 · "Mobile inbox list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Mobile inbox list
 

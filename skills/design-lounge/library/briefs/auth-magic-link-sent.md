@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 124 · "Magic link sent" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 125 · "Magic link sent" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Magic link sent
 

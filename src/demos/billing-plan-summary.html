@@ -1,0 +1,63 @@
+<!-- Design Lounge piece: billing-plan-summary · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Billing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4efe4;--surface:#fffaf0;--surface-2:#efe6d4;--ink:#152033;--ink-2:#4a5568;--ink-3:#7a8494;
+  --line:#e4dcc8;--primary:#8a6230;--primary-ink:#fffaf0;--focus:#8a6230;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);background:var(--bg);color:var(--ink);padding:32px 48px}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+h1{margin:0 0 18px;font-size:28px;font-weight:500;letter-spacing:-.03em}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;max-width:880px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:20px}
+.kicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.plan{margin:8px 0 4px;font-size:22px;font-weight:500}
+.price{font-family:var(--mono);font-size:13px;color:var(--ink-2);margin-bottom:16px}
+.track{height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.track i{display:block;height:100%;width:72%;background:var(--primary)}
+.use{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--ink-2)}
+.use b{color:var(--ink);font-family:var(--mono);font-weight:500}
+.btn{height:36px;margin-top:16px;padding:0 14px;border-radius:2px;border:1px solid var(--ink);background:transparent;font-weight:500}
+.btn.primary{background:var(--primary);color:var(--primary-ink);border-color:transparent}
+ul{list-style:none;margin:12px 0 0;padding:0}
+li{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line);font-size:13px}
+li span{font-family:var(--mono)}
+</style>
+</head>
+<body>
+<h1>Billing</h1>
+<div class="grid">
+  <section class="card">
+    <div class="kicker">Current plan</div>
+    <div class="plan">Yard desk</div>
+    <div class="price">$48 / month · renews 1 Nov</div>
+    <div class="track" aria-hidden="true"><i></i></div>
+    <div class="use"><span>Runs this month</span><b>720 / 1,000</b></div>
+    <button class="btn primary" id="change">Change plan</button>
+  </section>
+  <section class="card">
+    <div class="kicker">Invoices</div>
+    <ul>
+      <li>1 Oct <span>$48.00</span></li>
+      <li>1 Sep <span>$48.00</span></li>
+      <li>1 Aug <span>$48.00</span></li>
+    </ul>
+    <button class="btn">Download October</button>
+  </section>
+</div>
+<script>
+document.getElementById('change').addEventListener('click', e => { e.currentTarget.textContent = 'Request sent'; e.currentTarget.disabled = true; });
+</script>
+</body>
+</html>

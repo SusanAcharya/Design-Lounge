@@ -1,0 +1,95 @@
+<!-- Design Lounge piece: record-detail-header · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Record detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--surface-2:#efece4;--ink:#161513;--ink-2:#5a554c;--ink-3:#8a847a;
+  --line:#e4dfd4;--primary:#1f4d3a;--primary-ink:#f6f4ef;--primary-soft:#e7f2ec;
+  --warning:#8a5a10;--warning-soft:#f8efd8;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);background:var(--bg);color:var(--ink);display:flex;flex-direction:column}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.crumb{height:48px;display:flex;align-items:center;gap:8px;padding:0 32px;color:var(--ink-3);font-size:13px;border-bottom:1px solid var(--line);background:var(--surface)}
+.crumb b{color:var(--ink);font-weight:500}
+.head{display:flex;justify-content:space-between;align-items:flex-end;padding:22px 32px 16px;gap:24px}
+h1{margin:0 0 8px;font-size:32px;font-weight:500;letter-spacing:-.03em}
+.badge{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:99px;background:var(--warning-soft);color:var(--warning);font-size:11px;font-weight:600}
+.actions{display:flex;gap:8px}
+.btn{height:36px;padding:0 14px;border-radius:2px;border:1px solid var(--ink);background:transparent;font-weight:500}
+.btn.primary{background:var(--primary);color:var(--primary-ink);border-color:transparent}
+.tabs{display:flex;gap:18px;padding:0 32px;border-bottom:1px solid var(--line)}
+.tabs button{height:40px;border:0;background:none;color:var(--ink-3);border-bottom:2px solid transparent;padding:0}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+.body{flex:1;display:grid;grid-template-columns:1fr 300px;min-height:0}
+.main{padding:20px 32px}
+dl{display:grid;grid-template-columns:140px 1fr;gap:10px 16px;margin:0}
+dt{color:var(--ink-3);font-size:12px}
+dd{margin:0;font-family:var(--mono);font-size:13px}
+.panel{border-left:1px solid var(--line);background:var(--surface);padding:20px}
+.panel h2{margin:0 0 8px;font-size:14px;font-weight:600}
+.panel p{margin:0 0 16px;color:var(--ink-2);font-size:13px}
+.note{display:none}
+.note.show{display:block;color:var(--ink-2);max-width:52ch}
+</style>
+</head>
+<body>
+<div class="crumb">Runs / <b>Bay 14</b></div>
+<div class="head">
+  <div>
+    <h1>Bay 14</h1>
+    <span class="badge">Waiting on driver</span>
+  </div>
+  <div class="actions">
+    <button class="btn">Hold</button>
+    <button class="btn primary">Confirm load</button>
+  </div>
+</div>
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" id="t1" aria-controls="p1">Overview</button>
+  <button role="tab" aria-selected="false" id="t2" aria-controls="p2">Notes</button>
+</div>
+<div class="body">
+  <div class="main">
+    <dl id="p1">
+      <dt>Weight</dt><dd>2,400 kg</dd>
+      <dt>Driver</dt><dd>Mira Lama</dd>
+      <dt>Slot</dt><dd>06:40</dd>
+      <dt>Gate</dt><dd>North 2</dd>
+      <dt>Reference</dt><dd>RUN-1844</dd>
+    </dl>
+    <p class="note" id="p2">Inspection stays with the driver. Do not retag the pallet. The next slot is only held until 06:40.</p>
+  </div>
+  <aside class="panel">
+    <h2>Next</h2>
+    <p>Confirm the load before the slot drops. Holding it pages the yard desk.</p>
+    <button class="btn primary" id="confirm">Confirm load</button>
+  </aside>
+</div>
+<script>
+const tabs = [...document.querySelectorAll('[role="tab"]')];
+const panels = { t1: document.getElementById('p1'), t2: document.getElementById('p2') };
+tabs.forEach(tab => tab.addEventListener('click', () => {
+  tabs.forEach(t => t.setAttribute('aria-selected', t === tab ? 'true' : 'false'));
+  panels.t1.style.display = tab.id === 't1' ? '' : 'none';
+  panels.t2.classList.toggle('show', tab.id === 't2');
+}));
+document.getElementById('confirm').addEventListener('click', e => {
+  e.currentTarget.textContent = 'Confirmed';
+  e.currentTarget.disabled = true;
+  document.querySelector('.badge').textContent = 'Confirmed';
+  document.querySelector('.badge').style.background = '#e7f2ec';
+  document.querySelector('.badge').style.color = '#1f4d3a';
+});
+</script>
+</body>
+</html>

@@ -49,7 +49,9 @@ Every button, field, card, row, badge, and nav item comes from [components.md](c
 
 You keep one system consistent across the product. You do not become a second designer with a second palette halfway through. If the index has no piece, say so and build from the sheet. Do not claim the interface is finished only because the code runs. A person still has to look at the screens.
 
-An internal tool, admin, ops screen, or dashboard is kind `platform`, then the `dashboard` recipe in `starts`. Search `dashboard`, `data`, `charts`, `navigation`, `settings`, `overlays`, `feedback`, `inputs`, and `pickers`. Do not decide the library is only marketing because most pieces are.
+An internal tool, admin, ops screen, or dashboard is kind `platform`, then the `dashboard` recipe in `starts`. Search `dashboard`, `data`, `charts`, `navigation`, `settings`, `overlays`, `feedback`, `inputs`, `pickers`, `team`, and `utility`. Do not decide the library is only marketing because most pieces are.
+
+A pass is more than the first screen. Follow Minimum screens in [practice.md](practice.md). A website includes nav, a hero, one proof block, and a footer. An app includes the shell, a list, one detail, an empty state, and account or settings. A platform includes the shell, a table or board, one record, and the account menu. Add people and billing when the product has staff or a plan.
 
 ## Adopt flow
 

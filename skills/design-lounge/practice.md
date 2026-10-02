@@ -9,8 +9,8 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 1. Write one sentence: who it is for, and the one job of this pass. If you cannot, you are not ready to pick a hero.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
 3. Write the system sheet below in your reply before any code. If the project has no DESIGN.md, add the sheet as `DESIGN.md`. If one exists, do not overwrite it. Follow it.
-4. Name the pieces you will rebuild. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
-5. Build the shell first (nav, tab bar, or frame), then the primary screen, then the next screen on the same sheet.
+4. Name the pieces you will rebuild. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, record, people, detail. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
+5. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
 6. Run the finish checklist. Fix failures. Report each line as pass or fail.
 
 ## System sheet
@@ -102,6 +102,16 @@ Feedback colours are for live state only.
 - Empty, error, and loading exist where the screen can be empty or fail.
 - The credit line is on the token block.
 - Every piece you named is in the index.
+
+## Minimum screens
+
+A pass that only ships a hero, a landing, or a dashboard home is unfinished. Cover this set before you call the UI done. Reuse the locked sheet on every one.
+
+- Website: nav, hero, one proof block, footer. Take them from the website recipe.
+- App: shell (tab bar or nav), the primary list, one detail, an empty state, and settings or account.
+- Platform: shell, a table or a board, one record, and the account menu. Add people and billing when the product has staff or a plan.
+
+If they asked for one component, build that component inside the locked system. Say that the rest of the set is still open. Do not invent a second palette to fill the gaps.
 
 ## Say so
 

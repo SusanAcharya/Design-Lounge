@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 148 · "Swiss grid wordmark hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 152 · "Swiss grid wordmark hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Swiss grid wordmark hero
 

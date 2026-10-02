@@ -1,0 +1,84 @@
+<!-- Design Lounge piece: people-role-list · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>People</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea;--surface:#fffdf8;--surface-2:#efeae0;--ink:#1c1915;--ink-2:#5e574e;--ink-3:#8a8176;
+  --line:#e0d8cc;--primary:#8a4b12;--primary-ink:#fffdf8;--primary-soft:#f3e6d8;--focus:#8a4b12;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);background:var(--bg);color:var(--ink);display:flex;flex-direction:column}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px 8px}
+h1{margin:0;font-size:28px;font-weight:500;letter-spacing:-.03em}
+.btn{height:36px;padding:0 14px;border-radius:6px;border:0;background:var(--primary);color:var(--primary-ink);font-weight:500}
+.tools{display:flex;gap:8px;padding:0 32px 14px}
+.tools input{height:36px;width:240px;border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:0 12px}
+.tools button{height:32px;padding:0 12px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font-size:12px}
+.tools button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+ul{list-style:none;margin:0 32px;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:auto}
+li{display:grid;grid-template-columns:40px 1fr auto auto;gap:14px;align-items:center;min-height:64px;padding:0 16px;border-top:1px solid var(--line)}
+li:first-child{border-top:0}
+li.hide{display:none}
+.ava{width:40px;height:40px;border-radius:50%;background:#2c241c;color:#f4efe6;display:grid;place-items:center;font-size:12px;font-weight:600}
+b{display:block;font-weight:600}
+span.mail{color:var(--ink-2);font-size:12px}
+.role{height:22px;padding:0 8px;border-radius:99px;background:var(--primary-soft);color:var(--ink);font-size:11px;font-weight:600;display:inline-flex;align-items:center}
+.seen{color:var(--ink-3);font-size:12px}
+.empty{display:none;padding:28px 32px;color:var(--ink-2)}
+.empty.show{display:block}
+</style>
+</head>
+<body>
+<header><h1>People</h1><button class="btn" id="invite">Invite</button></header>
+<div class="tools">
+  <input id="q" type="search" placeholder="Search by name" aria-label="Search by name" />
+  <button aria-pressed="true" data-role="all">All</button>
+  <button aria-pressed="false" data-role="Dispatch">Dispatch</button>
+  <button aria-pressed="false" data-role="Finance">Finance</button>
+  <button aria-pressed="false" data-role="Yard">Yard</button>
+</div>
+<ul id="list">
+  <li data-role="Dispatch"><span class="ava">ML</span><span><b>Mira Lama</b><span class="mail">mira@yard.test</span></span><span class="role">Dispatch</span><span class="seen">Today</span></li>
+  <li data-role="Finance"><span class="ava">AK</span><span><b>Asha Karki</b><span class="mail">asha@yard.test</span></span><span class="role">Finance</span><span class="seen">Yesterday</span></li>
+  <li data-role="Yard"><span class="ava">RS</span><span><b>Rajan Shrestha</b><span class="mail">rajan@yard.test</span></span><span class="role">Yard</span><span class="seen">Mon</span></li>
+  <li data-role="Dispatch"><span class="ava">NP</span><span><b>Nima Gurung</b><span class="mail">nima@yard.test</span></span><span class="role">Dispatch</span><span class="seen">Invited</span></li>
+</ul>
+<p class="empty" id="empty">No one in that role. Clear the filter.</p>
+<script>
+const q = document.getElementById('q');
+const rows = [...document.querySelectorAll('#list li')];
+const pills = [...document.querySelectorAll('.tools button')];
+let role = 'all';
+function apply(){
+  const t = q.value.trim().toLowerCase();
+  let n = 0;
+  rows.forEach(r => {
+    const okR = role === 'all' || r.dataset.role === role;
+    const okT = !t || r.innerText.toLowerCase().includes(t);
+    const show = okR && okT;
+    r.classList.toggle('hide', !show);
+    if (show) n++;
+  });
+  document.getElementById('empty').classList.toggle('show', n === 0);
+}
+q.addEventListener('input', apply);
+pills.forEach(p => p.addEventListener('click', () => {
+  pills.forEach(x => x.setAttribute('aria-pressed', x === p ? 'true' : 'false'));
+  role = p.dataset.role;
+  apply();
+}));
+document.getElementById('invite').addEventListener('click', () => { document.getElementById('invite').textContent = 'Invite sent'; });
+</script>
+</body>
+</html>

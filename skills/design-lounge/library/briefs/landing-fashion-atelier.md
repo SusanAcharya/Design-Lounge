@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 111 · "Fashion atelier landing page" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 112 · "Fashion atelier landing page" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Fashion atelier landing page
 

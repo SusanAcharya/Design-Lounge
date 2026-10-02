@@ -1,0 +1,57 @@
+<!-- Design Lounge piece: mobile-run-detail · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Run detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea;--surface:#fffdf8;--ink:#1b1814;--ink-2:#5e574e;--ink-3:#8d857a;
+  --line:#e3dbcf;--primary:#8a4b12;--primary-ink:#fffdf8;--warning:#8a5a10;--warning-soft:#f8efd8;--focus:#8a4b12;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:54px 0 96px;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.back{height:44px;border:0;background:transparent;color:var(--primary);font-weight:600;padding:0 20px;text-align:left}
+h1{margin:4px 20px 8px;font-size:32px;font-weight:600;letter-spacing:-.03em}
+.badge{margin-left:20px;display:inline-flex;height:22px;align-items:center;padding:0 8px;border-radius:99px;background:var(--warning-soft);color:var(--warning);font-size:11px;font-weight:600}
+dl{margin:20px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+div.pair{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-top:1px solid var(--line);font-size:14px}
+div.pair:first-child{border-top:0}
+dt{color:var(--ink-2)}
+dd{margin:0;font-family:var(--mono);font-size:13px}
+.bar{position:fixed;left:0;right:0;bottom:0;height:84px;padding:12px 20px 28px;background:var(--surface);border-top:1px solid var(--line)}
+.bar button{width:100%;height:44px;border:0;border-radius:10px;background:var(--primary);color:var(--primary-ink);font-weight:600}
+.bar button:disabled{opacity:.55}
+</style>
+</head>
+<body>
+<button class="back">Runs</button>
+<h1>Bay 14</h1>
+<span class="badge" id="badge">Waiting on driver</span>
+<dl>
+  <div class="pair"><dt>Weight</dt><dd>2,400 kg</dd></div>
+  <div class="pair"><dt>Driver</dt><dd>Mira Lama</dd></div>
+  <div class="pair"><dt>Slot</dt><dd>06:40</dd></div>
+  <div class="pair"><dt>Gate</dt><dd>North 2</dd></div>
+  <div class="pair"><dt>Reference</dt><dd>RUN-1844</dd></div>
+</dl>
+<div class="bar"><button id="go">Confirm load</button></div>
+<script>
+document.getElementById('go').addEventListener('click', e => {
+  e.currentTarget.textContent = 'Confirmed';
+  e.currentTarget.disabled = true;
+  const b = document.getElementById('badge');
+  b.textContent = 'Confirmed';
+  b.style.background = '#e7f2ec';
+  b.style.color = '#1f4d3a';
+});
+</script>
+</body>
+</html>

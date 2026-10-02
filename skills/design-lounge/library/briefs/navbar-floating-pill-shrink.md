@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 113 · "Floating pill navbar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 114 · "Floating pill navbar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Floating pill navbar
 
