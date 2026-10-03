@@ -1,0 +1,238 @@
+<!-- Design Lounge piece: profile-editorial-staff · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Idris Penhallow · The Wexcombe Courier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9e3d5;--paper:#f8f4ea;--ink:#1c1a16;--ink-2:#4b463d;--ink-3:#6b6558;--rule:#cfc6b3;
+  --blue:#2340a8;--blue-soft:#e3e6f2;
+  --serif:"Old Standard TT",Georgia,serif;--sans:"Libre Franklin",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{height:auto;min-height:100%;display:grid;place-items:center;padding:32px 16px;background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+.card{width:min(1020px,100%);background:var(--paper);border-top:6px solid var(--ink);box-shadow:0 30px 60px -40px rgba(28,26,22,.45);padding:28px 36px 30px}
+.mast{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;font:600 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.mast b{font:700 italic 20px var(--serif);letter-spacing:0;text-transform:none;color:var(--ink)}
+.grid{display:grid;grid-template-columns:260px 1fr 300px;gap:0;margin-top:22px}
+.grid>*{padding:0 26px}
+.grid>*:first-child{padding-left:0}
+.grid>*:last-child{padding-right:0;border-left:1px solid var(--rule)}
+.grid>*:nth-child(2){border-left:1px solid var(--rule)}
+
+/* stipple portrait */
+.portrait{position:relative;aspect-ratio:13/16;background:#efe9db;border:1px solid var(--rule);overflow:hidden}
+.portrait .ink{position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 41% 41%,transparent 0 5.2%,var(--ink) 5.3% 6.4%,transparent 6.5%),
+    radial-gradient(circle at 59% 41%,transparent 0 5.2%,var(--ink) 5.3% 6.4%,transparent 6.5%),
+    radial-gradient(ellipse 9% 1.6% at 50% 55%,rgba(28,26,22,.8) 0 70%,transparent 74%),
+    radial-gradient(ellipse 25% 15% at 49% 27%,var(--ink) 0 72%,transparent 74%),
+    radial-gradient(ellipse 4% 7% at 30% 44%,rgba(28,26,22,.4) 0 70%,transparent 74%),
+    radial-gradient(ellipse 4% 7% at 70% 44%,rgba(28,26,22,.25) 0 70%,transparent 74%),
+    radial-gradient(ellipse 22% 27% at 44% 40%,rgba(28,26,22,.14) 0 35%,rgba(28,26,22,.46) 85%,transparent 87%),
+    radial-gradient(ellipse 22% 27% at 50% 42%,rgba(28,26,22,.2) 0 86%,transparent 88%),
+    linear-gradient(90deg,transparent 41%,rgba(28,26,22,.55) 41% 59%,transparent 59%) 0 67.5%/100% 20% no-repeat,
+    linear-gradient(90deg,transparent 44%,#efe9db 44% 56%,transparent 56%) 0 80%/100% 12% no-repeat,
+    radial-gradient(ellipse 54% 28% at 50% 100%,var(--ink) 0 84%,transparent 86%),
+    linear-gradient(100deg,rgba(28,26,22,.14),transparent 50%);
+  -webkit-mask:radial-gradient(circle,#000 1.15px,transparent 1.45px) 0 0/4px 4px;
+          mask:radial-gradient(circle,#000 1.15px,transparent 1.45px) 0 0/4px 4px;
+  transition:-webkit-mask-size .6s var(--expo),mask-size .6s var(--expo)}
+.portrait:hover .ink{-webkit-mask-size:3px 3px;mask-size:3px 3px}
+.cap{font:italic 400 13px/1.4 var(--serif);color:var(--ink-3);margin:8px 0 0}
+.facts{list-style:none;padding:0;margin:18px 0 0;border-top:1px solid var(--rule)}
+.facts li{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:13px;color:var(--ink-2)}
+.facts b{color:var(--ink);font-weight:600}
+
+.kicker{font:700 11px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+h1{font:400 52px/.98 var(--serif);letter-spacing:-.015em;margin:8px 0 10px}
+.role{font:italic 400 19px/1.35 var(--serif);color:var(--ink-2);margin:0 0 16px}
+.bio{margin:0 0 18px;color:var(--ink);max-width:400px;font-size:15px}
+.bio::first-letter{float:left;font:700 54px/.82 var(--serif);margin:5px 8px 0 0;color:var(--ink)}
+.count{display:flex;align-items:flex-end;gap:20px;border-top:3px double var(--ink);border-bottom:1px solid var(--rule);padding:12px 0}
+.count div{display:flex;flex-direction:column}
+.count strong{font:700 40px/1 var(--serif);font-variant-numeric:tabular-nums lining-nums}
+.count span{font:600 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
+.count .sm strong{font-size:28px}
+.row{display:flex;gap:10px;align-items:center;margin-top:18px;flex-wrap:wrap}
+.follow{height:42px;padding:0 18px;display:inline-flex;align-items:center;gap:8px;font:600 14px var(--sans);background:var(--ink);color:var(--paper);transition:background .16s var(--ease),color .16s var(--ease),box-shadow .16s var(--ease)}
+.follow:hover{background:#34302a}
+.follow[aria-pressed="true"]{background:var(--blue-soft);color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue)}
+.mail{height:42px;padding:0 4px;display:inline-flex;align-items:center;gap:8px;font:500 14px var(--sans);color:var(--ink);border-bottom:1px solid var(--ink)}
+.mail:hover{color:var(--blue);border-color:var(--blue)}
+
+.tabs{display:flex;gap:18px;border-bottom:1px solid var(--ink)}
+.tab{height:40px;font:600 12px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);border-bottom:3px solid transparent;margin-bottom:-1px;transition:color .16s var(--ease),border-color .16s var(--ease)}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--blue)}
+.list{list-style:none;margin:0;padding:0;counter-reset:n}
+.list[hidden]{display:none}
+.list li{border-bottom:1px solid var(--rule);animation:rise .4s var(--expo) both}
+.list li:nth-child(2){animation-delay:40ms}.list li:nth-child(3){animation-delay:80ms}.list li:nth-child(4){animation-delay:120ms}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}}
+.list a{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:12px 0;color:inherit;text-decoration:none}
+.list .sec{grid-column:1/-1;font:700 10.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.list .hd{font:700 17px/1.22 var(--serif);background:linear-gradient(var(--ink),var(--ink)) 0 100%/0 1px no-repeat;transition:background-size .3s var(--expo);justify-self:start}
+.list a:hover .hd,.list a:focus-visible .hd{background-size:100% 1px}
+.list .arrow{align-self:center;opacity:0;transform:translateX(-4px);transition:opacity .2s var(--ease),transform .2s var(--ease);color:var(--blue)}
+.list a:hover .arrow,.list a:focus-visible .arrow{opacity:1;transform:none}
+.list .m{grid-column:1/-1;font-size:12px;color:var(--ink-3)}
+.list.ranked a{grid-template-columns:28px 1fr auto}
+.list.ranked .sec,.list.ranked .m{grid-column:2/-1}
+.list.ranked a::before{counter-increment:n;content:counter(n);grid-row:1/4;font:700 26px/1 var(--serif);color:var(--rule)}
+
+.sign{margin-top:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.sign .sig{width:190px;height:60px;color:var(--blue);flex:none}
+.sig path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.2s .5s cubic-bezier(.45,.05,.35,1) forwards}
+.sig path+path{animation-delay:1.9s;animation-duration:.6s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.replay{font:500 12px var(--sans);color:var(--ink-3);display:inline-flex;gap:6px;align-items:center;height:40px}
+.replay:hover{color:var(--blue)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:1000px){
+  .grid{grid-template-columns:220px 1fr}
+  .grid>*:last-child{grid-column:1/-1;border-left:0;padding:24px 0 0;margin-top:24px;border-top:1px solid var(--ink)}
+}
+@media (max-width:640px){
+  .card{padding:20px 18px 22px}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .mast span{display:none}
+  .mail span{overflow-wrap:anywhere;text-align:left}
+  .mail{height:auto;min-height:42px}
+  .grid>*{padding:0!important;border-left:0!important}
+  .portrait-col{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:start;margin-bottom:18px}
+  .facts{margin:0}
+  .cap{display:none}
+  h1{font-size:40px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
+  .sig path{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+<article class="card" aria-labelledby="name">
+  <header class="mast"><b>The Wexcombe Courier</b><span>Staff &amp; contributors</span><span>Climate desk</span></header>
+  <div class="grid">
+    <div class="portrait-col">
+      <figure style="margin:0">
+        <div class="portrait" role="img" aria-label="Stipple portrait of Idris Penhallow, short dark hair, round glasses"><div class="ink"></div></div>
+        <figcaption class="cap">Idris Penhallow at the Tamar estuary, 2026.</figcaption>
+      </figure>
+      <ul class="facts">
+        <li>Based in <b>Plymouth</b></li>
+        <li>On staff since <b>2014</b></li>
+        <li>Languages <b>EN, CY, PT</b></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="kicker">Senior Climate Correspondent</div>
+      <h1 id="name">Idris Penhallow</h1>
+      <p class="role">Covers coastlines, flood defence and the people who live behind them.</p>
+      <p class="bio">Idris joined the Courier from a regional desk in Swansea and has reported from 31 countries. His series on managed retreat in the Somerset Levels won the 2024 Harker Prize for environmental reporting. He answers every reader letter, eventually.</p>
+      <div class="count" aria-label="Byline statistics">
+        <div><strong id="bylines" data-to="1284">1,284</strong><span>Bylines</span></div>
+        <div class="sm"><strong>31</strong><span>Countries</span></div>
+        <div class="sm"><strong>3</strong><span>Awards</span></div>
+      </div>
+      <div class="row">
+        <button class="follow" id="follow" type="button" aria-pressed="false">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Follow Idris</span>
+        </button>
+        <button class="mail" id="mail" type="button" aria-label="Copy Idris's email address">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg><span>idris.penhallow@wexcourier.co.uk</span>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <div class="tabs" role="tablist" aria-label="Articles by Idris">
+        <button class="tab" role="tab" id="t-recent" aria-selected="true" aria-controls="l-recent" tabindex="0">Recent</button>
+        <button class="tab" role="tab" id="t-read" aria-selected="false" aria-controls="l-read" tabindex="-1">Most read</button>
+      </div>
+      <ol class="list" id="l-recent" role="tabpanel" aria-labelledby="t-recent">
+        <li><a href="#"><span class="sec">Coasts</span><span class="hd">The village that voted to let the sea in</span><svg class="i arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="m">2 Oct 2026 · 9 min read</span></a></li>
+        <li><a href="#"><span class="sec">Analysis</span><span class="hd">Why flood maps are always a year late</span><svg class="i arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="m">27 Sep 2026 · 6 min read</span></a></li>
+        <li><a href="#"><span class="sec">Dispatch</span><span class="hd">Salt in the orchards of the Tamar valley</span><svg class="i arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="m">19 Sep 2026 · 12 min read</span></a></li>
+      </ol>
+      <ol class="list ranked" id="l-read" role="tabpanel" aria-labelledby="t-read" hidden>
+        <li><a href="#"><span class="sec">Investigation</span><span class="hd">Who pays when the sea wall is sold</span><svg class="i arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="m">412k readers · 14 min read</span></a></li>
+        <li><a href="#"><span class="sec">Coasts</span><span class="hd">The village that voted to let the sea in</span><svg class="i arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="m">288k readers · 9 min read</span></a></li>
+        <li><a href="#"><span class="sec">Explainer</span><span class="hd">A plain guide to managed retreat</span><svg class="i arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="m">201k readers · 7 min read</span></a></li>
+      </ol>
+      <div class="sign">
+        <svg class="sig" viewBox="0 0 190 60" role="img" aria-label="Signature of Idris Penhallow"><path pathLength="1" d="M10 44c5-12 11-28 15-28s-2 24-6 32c6-10 12-17 16-15s-4 13 0 13 9-11 13-11-2 9 2 9 8-8 11-13c-2 8 0 13 6 11s6-9 11-15c-4 12-4 21 2 21s9-10 11-19c2 8 6 10 11 5M104 46c9-23 21-31 25-25s-6 19-19 23c9 0 15 4 13 11M132 44c3 0 6-3 9-6-2 5 0 8 3 7s5-6 8-9c-1 6 1 9 4 8"/><path pathLength="1" d="M14 54c46-5 104-8 168-5"/></svg>
+        <button class="replay" id="replay" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5M4 4v4.5h4.5"/></svg>Replay</button>
+      </div>
+    </div>
+  </div>
+  <p class="sr" id="live" aria-live="polite"></p>
+</article>
+<script>
+const $ = id => document.getElementById(id), live = $('live');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const by = $('bylines'), to = +by.dataset.to;
+if (!reduce) {
+  const t0 = performance.now(), from = to - 60;
+  const tick = t => {
+    const p = Math.min(1, (t - t0) / 1400), e = 1 - Math.pow(1 - p, 4);
+    by.textContent = Math.round(from + (to - from) * e).toLocaleString('en-GB');
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+const follow = $('follow');
+follow.addEventListener('click', () => {
+  const on = follow.getAttribute('aria-pressed') !== 'true';
+  follow.setAttribute('aria-pressed', on);
+  follow.querySelector('span').textContent = on ? 'Following Idris' : 'Follow Idris';
+  follow.querySelector('path').setAttribute('d', on ? 'M5 12.5 10 17 19 7' : 'M12 5v14M5 12h14');
+  live.textContent = on ? 'You will get new stories by Idris Penhallow.' : 'Stopped following Idris Penhallow.';
+});
+const mail = $('mail'), addr = mail.querySelector('span').textContent;
+mail.addEventListener('click', async () => {
+  let ok = false;
+  try { await navigator.clipboard.writeText(addr); ok = true; } catch (e) {
+    const ta = document.createElement('textarea'); ta.value = addr; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); try { ok = document.execCommand('copy'); } catch (e2) {} ta.remove();
+  }
+  mail.querySelector('span').textContent = ok ? 'Address copied' : addr;
+  live.textContent = ok ? 'Email address copied.' : 'Copy unavailable. Address shown.';
+  setTimeout(() => mail.querySelector('span').textContent = addr, 1600);
+});
+const tabs = [...document.querySelectorAll('[role=tab]')];
+function select(t, focus) {
+  tabs.forEach(x => {
+    const on = x === t;
+    x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1;
+    $(x.getAttribute('aria-controls')).hidden = !on;
+  });
+  if (focus) t.focus();
+}
+tabs.forEach((t, i) => {
+  t.addEventListener('click', () => select(t));
+  t.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); select(tabs[(i + 1) % 2], true); }
+  });
+});
+$('replay').addEventListener('click', () => {
+  document.querySelectorAll('.sig path').forEach(p => { p.style.animation = 'none'; p.getBoundingClientRect(); p.style.animation = ''; });
+});
+document.querySelectorAll('.list a').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+</script>
+</body>
+</html>

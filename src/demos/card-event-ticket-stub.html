@@ -1,0 +1,186 @@
+<!-- Design Lounge piece: card-event-ticket-stub · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Static Bloom · Foundry Hall · 3 tickets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#22201d;--bg-2:#2c2925;--stock:#f6efe0;--ink:#1b1a17;--ink-2:#5d574d;--pink:#ff4f8b;--blue:#3255ff;--text:#ece5d6;--text-2:#a39b8c;
+  --display:"Dela Gothic One",Impact,sans-serif;--mono:"Martian Mono",ui-monospace,monospace;
+  --expo:cubic-bezier(0.16,1,0.3,1);--std:cubic-bezier(0.2,0.7,0.2,1);
+  --mx:.5;--my:.5;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:13px/1.4 var(--mono);color:var(--text);overflow:hidden;
+  display:grid;place-items:center;align-content:center;gap:10px;padding:20px 16px;
+  background:radial-gradient(ellipse 60% 50% at 50% 45%,var(--bg-2),transparent 75%),var(--bg);
+}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;text-align:left}
+:focus-visible{outline:2px solid var(--pink);outline-offset:4px}
+.head{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;justify-content:center;margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2)}
+.head b{color:var(--text);font-weight:600}
+.fit{position:relative;width:min(943px,100%)}
+.stage{position:absolute;left:0;top:0;width:820px;height:470px;transform-origin:0 0}
+.tk{
+  position:absolute;left:110px;top:120px;width:600px;height:230px;border-radius:10px;color:var(--ink);background:var(--stock);
+  display:grid;grid-template-columns:150px 1fr 150px;transform-origin:50% 380%;
+  box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 18px 30px -12px rgba(0,0,0,.55),0 2px 4px rgba(0,0,0,.3);
+  transition:transform 560ms var(--expo),box-shadow 300ms var(--std);
+  -webkit-mask:radial-gradient(circle at 450px 0,#0000 11px,#000 11.5px) top/100% 51% no-repeat,radial-gradient(circle at 450px 100%,#0000 11px,#000 11.5px) bottom/100% 51% no-repeat;
+          mask:radial-gradient(circle at 450px 0,#0000 11px,#000 11.5px) top/100% 51% no-repeat,radial-gradient(circle at 450px 100%,#0000 11px,#000 11.5px) bottom/100% 51% no-repeat;
+}
+.tk:focus-visible{outline:none}
+.tk:focus-visible .ring{opacity:1}
+.ring{position:absolute;inset:4px;border:2px dashed var(--pink);border-radius:8px;opacity:0;pointer-events:none}
+.tk[data-tint="b"]{--stock:#f4e2e4}
+.tk[data-tint="c"]{--stock:#e0e7ee}
+.art{position:relative;overflow:hidden;border-radius:10px 0 0 10px;background:var(--stock)}
+.art::before{content:"";position:absolute;inset:0;mix-blend-mode:multiply;
+  background:radial-gradient(circle,var(--pink) 1.6px,transparent 1.9px) 0 0/6px 6px;
+  -webkit-mask:radial-gradient(circle at 40% 42%,#000 46px,transparent 47px),linear-gradient(#000,#000) 0 160px/100% 18px no-repeat;
+          mask:radial-gradient(circle at 40% 42%,#000 46px,transparent 47px),linear-gradient(#000,#000) 0 160px/100% 18px no-repeat}
+.art::after{content:"";position:absolute;inset:0;mix-blend-mode:multiply;opacity:.9;
+  background:radial-gradient(circle,var(--blue) 1.3px,transparent 1.6px) 3px 3px/6px 6px;
+  -webkit-mask:radial-gradient(circle at 62% 52%,#000 40px,transparent 41px),linear-gradient(#000,#000) 0 186px/70% 12px no-repeat;
+          mask:radial-gradient(circle at 62% 52%,#000 40px,transparent 41px),linear-gradient(#000,#000) 0 186px/70% 12px no-repeat}
+.art span{position:absolute;left:14px;bottom:12px;font:600 9px/1 var(--mono);letter-spacing:.2em;color:var(--ink-2);writing-mode:vertical-rl;transform:rotate(180deg)}
+.body{padding:18px 18px 16px 18px;display:flex;flex-direction:column;border-left:1px solid rgba(27,26,23,.12)}
+.kick{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--pink);font-weight:600}
+.band{display:block;margin:6px 0 0;font:400 34px/0.95 var(--display);letter-spacing:-.01em;text-transform:uppercase}
+.tour{display:block;margin:6px 0 0;font-size:10px;color:var(--ink-2)}
+.grid{margin:auto 0 0;display:grid;grid-template-columns:1.4fr 1fr .7fr .7fr .7fr;border-top:1.5px solid var(--ink);padding-top:8px}
+.grid .dt{display:block;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2)}
+.grid .dd{display:block;margin:3px 0 0;font:600 14px/1 var(--mono)}
+.stub{position:relative;display:grid;grid-template-columns:30px 1fr;border-left:2px dotted rgba(27,26,23,.35)}
+.foil{
+  position:relative;overflow:hidden;
+  background:
+    linear-gradient(115deg,transparent calc(var(--mx)*100% - 40%),rgba(255,255,255,.95) calc(var(--mx)*100% - 4%),transparent calc(var(--mx)*100% + 30%)),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.28) 0 1px,transparent 1px 3px),
+    linear-gradient(180deg,#ff9ec7,#8fe3f5,#f7ea8a,#b9a6ff,#93ecc0,#ff9ec7,#8fe3f5) 50% calc(var(--my)*100% + var(--h,0%))/100% 400%;
+  box-shadow:inset 1px 0 0 rgba(255,255,255,.6),inset -1px 0 0 rgba(0,0,0,.12);
+}
+.foil b{position:absolute;inset:0;display:grid;place-items:center;writing-mode:vertical-rl;font:600 8px/1 var(--mono);letter-spacing:.4em;color:rgba(27,26,23,.38)}
+.side{padding:14px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.side .kick{color:var(--ink)}
+.map{width:100%;height:auto;display:block}
+.serial{margin-top:auto;font:600 13px/1 var(--mono);color:#d02b2b;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.serial small{display:block;font-size:8px;letter-spacing:.2em;color:var(--ink-2);margin-bottom:4px;font-weight:400}
+
+.tk[aria-current="true"]{box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 30px 44px -14px rgba(0,0,0,.7),0 2px 4px rgba(0,0,0,.3)}
+.controls{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.btn{min-height:44px;padding:0 18px;border-radius:99px;display:inline-flex;align-items:center;gap:10px;font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;box-shadow:inset 0 0 0 1.5px rgba(236,229,214,.35);transition:background 160ms var(--std)}
+.btn:hover{background:rgba(236,229,214,.08)}
+.btn[aria-pressed="true"]{background:var(--pink);color:var(--ink);box-shadow:none}
+.btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.hint{margin:0;color:var(--text-2);font-size:11px;letter-spacing:.04em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.tk,.btn{transition:none}}
+</style>
+</head>
+<body>
+<p class="head"><span>Your tickets <b>×3</b></span><span>Foundry Hall · <b>Fri 23 Oct</b></span></p>
+<div class="fit" id="fit">
+  <div class="stage" id="stage" role="group" aria-label="Ticket stack">
+    <!-- three tickets injected from data below -->
+  </div>
+</div>
+<div class="controls">
+  <button class="btn" id="fan" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20 6 6M12 20V4M12 20l6-14"/></svg><span>Fan out</span></button>
+  <p class="hint" id="hint">Move the pointer to tilt the light across the foil · <span id="mode-hint">click the top ticket to shuffle</span></p>
+</div>
+<p class="sr" aria-live="polite" id="live"></p>
+<template id="tpl">
+  <button class="tk" type="button">
+    <span class="art" aria-hidden="true"><span>LOW ORBIT · 26</span></span>
+    <span class="body">
+      <span class="kick">Foundry Hall presents</span>
+      <span class="band">Static<br>Bloom</span>
+      <span class="tour">Low Orbit Tour · with Moth Radio</span>
+      <span class="grid">
+        <span><span class="dt">Date</span><span class="dd">FRI 23·10</span></span>
+        <span><span class="dt">Doors</span><span class="dd">19:00</span></span>
+        <span><span class="dt">Sec</span><span class="dd">B</span></span>
+        <span><span class="dt">Row</span><span class="dd">4</span></span>
+        <span><span class="dt">Seat</span><span class="dd seat"></span></span>
+      </span>
+    </span>
+    <span class="stub">
+      <span class="foil" aria-hidden="true"><b>GENUINE · FH</b></span>
+      <span class="side">
+        <span class="kick">Admit one</span>
+        <svg class="map" viewBox="0 0 100 64" aria-hidden="true">
+          <rect x="30" y="4" width="40" height="8" rx="1" fill="#1b1a17"/>
+          <path d="M14 22q36-14 72 0l-6 10q-30-11-60 0z" fill="none" stroke="#1b1a17" stroke-width="1.2"/>
+          <path d="M20 36q30-11 60 0l-6 11q-24-8-48 0z" fill="#ff4f8b"/>
+          <path d="M26 51q24-8 48 0l-5 10q-19-6-38 0z" fill="none" stroke="#1b1a17" stroke-width="1.2"/>
+          <circle class="dot" cy="40" r="2.6" fill="#1b1a17"/>
+          <text x="50" y="10.5" text-anchor="middle" font-size="5" fill="#f6efe0" font-family="Martian Mono,monospace">STAGE</text>
+        </svg>
+        <span class="serial"><small>Serial Nº</small><span class="no"></span></span>
+      </span>
+    </span>
+    <span class="ring" aria-hidden="true"></span>
+  </button>
+</template>
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const data=[{name:'12',tint:'a',no:'FH-004417',x:44,h:'0%'},{name:'13',tint:'b',no:'FH-004418',x:50,h:'35%'},{name:'14',tint:'c',no:'FH-004419',x:56,h:'70%'}];
+const stage=document.getElementById('stage'),tpl=document.getElementById('tpl'),fit=document.getElementById('fit'),live=document.getElementById('live');
+const tks=data.map((d,i)=>{
+  const t=tpl.content.firstElementChild.cloneNode(true);
+  t.dataset.name=d.name;t.dataset.tint=d.tint;t.style.setProperty('--h',d.h);
+  t.querySelector('.seat').textContent=d.name;t.querySelector('.no').textContent=d.no;t.querySelector('.dot').setAttribute('cx',d.x);
+  t.setAttribute('aria-label',`Ticket ${i+1} of 3. Static Bloom, Foundry Hall, Friday 23 October, doors 19:00. Section B, row 4, seat ${d.name}. Serial ${d.no}.`);
+  stage.append(t);return t;
+});
+let order=[2,1,0],fanned=false;        /* last index is the top of the pile */
+let k=1;
+function size(){k=Math.min(innerWidth>1000?1.15:1,fit.clientWidth/820);stage.style.transform=`scale(${k})`;fit.style.height=470*k+'px'}
+addEventListener('resize',size);size();
+function layout(){
+  const top=order[order.length-1];
+  order.forEach((ti,pos)=>{
+    const t=tks[ti],depth=order.length-1-pos;
+    t.style.zIndex=pos+1;
+    t.setAttribute('aria-current',ti===top);t.tabIndex=ti===top?0:-1;
+    if(fanned){
+      const slot=ti-1,lift=ti===top?-26:0;
+      t.style.transform=`translate(${slot*34}px,${lift}px) rotate(${slot*9}deg)`;
+    }else{
+      const r=[0,-3.5,3][depth];t.style.transform=`translate(${depth*10}px,${-depth*12}px) rotate(${r}deg)`;
+    }
+  });
+}
+layout();
+function select(ti,announce=true){order=order.filter(x=>x!==ti).concat(ti);layout();if(announce)live.textContent=`Seat ${data[ti].name} on top.`}
+tks.forEach((t,ti)=>t.addEventListener('click',()=>{
+  const top=order[order.length-1];
+  if(!fanned&&ti===top){order=[ti].concat(order.filter(x=>x!==ti));layout();const n=order[order.length-1];live.textContent=`Seat ${data[n].name} on top.`;if(t===document.activeElement)tks[n].focus({preventScroll:true});return}
+  select(ti);t.focus({preventScroll:true});
+}));
+stage.addEventListener('keydown',e=>{
+  if(!/Arrow(Left|Right|Up|Down)/.test(e.key))return;e.preventDefault();
+  const top=order[order.length-1],dir=/Left|Up/.test(e.key)?-1:1,n=(top+dir+3)%3;
+  select(n);tks[n].focus({preventScroll:true});
+});
+const fanBtn=document.getElementById('fan');
+fanBtn.addEventListener('click',()=>{
+  fanned=!fanned;fanBtn.setAttribute('aria-pressed',fanned);fanBtn.querySelector('span').textContent=fanned?'Stack':'Fan out';
+  document.getElementById('mode-hint').textContent=fanned?'click a ticket to lift it':'click the top ticket to shuffle';
+  layout();live.textContent=fanned?'Tickets fanned out.':'Tickets stacked.';
+});
+let raf=0,px=.5,py=.5;
+addEventListener('pointermove',e=>{
+  px=e.clientX/innerWidth;py=e.clientY/innerHeight;
+  if(!raf)raf=requestAnimationFrame(()=>{raf=0;document.documentElement.style.setProperty('--mx',px.toFixed(3));document.documentElement.style.setProperty('--my',py.toFixed(3))});
+});
+</script>
+</body>
+</html>

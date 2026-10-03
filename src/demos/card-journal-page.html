@@ -1,0 +1,232 @@
+<!-- Design Lounge piece: card-journal-page · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Journal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#b89f7b;--desk-2:#a98f6a;--paper:#fbf6e9;--paper-2:#f2ead8;--card:#fffdf6;
+  --rule:#b9cde0;--margin:#e2908c;--label:#5e5243;--label-2:#6f6353;
+  --ink:#233067;
+  --hand:"Caveat","Bradley Hand",cursive;--type:"Courier Prime","Courier New",monospace;
+  --lh:34px;--rule-at:29px;--margin-x:88px;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--stick:cubic-bezier(.34,1.4,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:13px/1.5 var(--type);color:var(--label);overflow-x:hidden;
+  background:var(--desk);
+  background-image:repeating-linear-gradient(87deg,rgba(255,255,255,.035) 0 2px,transparent 2px 7px),repeating-linear-gradient(3deg,rgba(0,0,0,.03) 0 1px,transparent 1px 5px);
+  display:grid;place-items:center;padding:40px;
+}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.desk{display:grid;grid-template-columns:minmax(0,720px) 210px;gap:40px;align-items:start;width:100%;max-width:970px}
+
+/* page */
+.page{position:relative;height:700px;background:var(--paper);display:flex;flex-direction:column;
+  box-shadow:0 1px 2px rgba(60,40,10,.18),0 22px 34px -16px rgba(60,40,10,.5);transition:box-shadow 200ms var(--ease)}
+.page::before{content:"";position:absolute;inset:0;background:var(--paper-2);transform:rotate(1.6deg) translate(6px,4px);z-index:-1;box-shadow:0 10px 20px -10px rgba(60,40,10,.4)}
+.page::after{content:"";position:absolute;top:0;bottom:0;left:var(--margin-x);width:1.5px;background:var(--margin);pointer-events:none}
+.page:focus-within{box-shadow:0 1px 2px rgba(60,40,10,.18),0 22px 34px -16px rgba(60,40,10,.5),0 0 0 3px var(--ink)}
+.holes{position:absolute;left:30px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:90px 0;pointer-events:none}
+.holes i{width:22px;height:22px;border-radius:50%;background:var(--desk);box-shadow:inset 1px 2px 3px rgba(0,0,0,.35)}
+.head{position:relative;height:124px;padding:26px 132px 0 calc(var(--margin-x) + 20px);border-bottom:3px double var(--margin)}
+.no{margin:0;font:700 11px/1 var(--type);letter-spacing:.18em;text-transform:uppercase;color:var(--label-2)}
+.date{display:flex;align-items:center;gap:4px;margin-top:6px}
+.date h1{margin:0 6px 0 0;font:600 44px/1.05 var(--hand);color:#2a2620;white-space:nowrap}
+.day{all:unset;cursor:pointer;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;color:var(--label);transition:background 150ms var(--ease)}
+.day svg{width:18px;height:18px}
+.day:hover{background:rgba(94,82,67,.1)}
+.day:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.day:disabled{opacity:.3;cursor:default;background:none}
+.placed{position:absolute;right:30px;top:20px;width:88px;height:88px}
+.placed .sticker{width:88px;height:88px;transform:rotate(var(--r,6deg));animation:stick 420ms var(--stick) both}
+@keyframes stick{from{opacity:0;transform:rotate(calc(var(--r,6deg) - 14deg)) scale(1.35)}}
+textarea{
+  flex:1;display:block;width:100%;resize:none;border:0;outline:0;margin:0;
+  padding:0 36px 0 calc(var(--margin-x) + 20px);
+  font:400 27px/var(--lh) var(--hand);color:var(--ink);caret-color:var(--ink);
+  background:transparent repeating-linear-gradient(to bottom,transparent 0 var(--rule-at),var(--rule) var(--rule-at) calc(var(--rule-at) + 1px),transparent calc(var(--rule-at) + 1px) var(--lh));
+  background-attachment:local;transition:color 240ms var(--ease);
+  scrollbar-width:thin;scrollbar-color:var(--rule) transparent;
+}
+textarea:focus-visible{outline:none}
+textarea::placeholder{color:#766b59}
+.foot{height:46px;display:flex;justify-content:space-between;align-items:center;padding:0 28px 0 calc(var(--margin-x) + 20px);border-top:1px solid var(--rule);font-size:12px;color:var(--label-2)}
+.status{display:inline-flex;gap:6px;align-items:center}
+.status svg{width:14px;height:14px}
+.status.saving{color:var(--label)}
+
+/* tray */
+.tray{display:grid;gap:24px}
+.slip{background:var(--card);padding:16px 16px 18px;box-shadow:0 1px 2px rgba(60,40,10,.2),0 10px 18px -12px rgba(60,40,10,.45)}
+.slip:nth-child(1){transform:rotate(-1.2deg)}
+.slip:nth-child(2){transform:rotate(.8deg)}
+.slip h2{margin:0 0 12px;font:700 11px/1 var(--type);letter-spacing:.18em;text-transform:uppercase;color:var(--label)}
+.moods{display:grid;grid-template-columns:repeat(3,52px);gap:10px 12px;justify-content:start}
+.mood{all:unset;cursor:pointer;display:grid;justify-items:center;gap:4px;border-radius:50%}
+.mood .sticker{width:52px;height:52px;transition:transform 200ms var(--stick),opacity 200ms var(--ease)}
+.mood:hover .sticker{transform:rotate(-8deg) scale(1.06)}
+.mood[aria-checked="true"] .sticker{opacity:.35;transform:scale(.9)}
+.mood:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.mood small{font:400 11px/1 var(--type);color:var(--label-2)}
+.sticker{display:grid;place-items:center;border-radius:50%;background:var(--s);border:4px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.25),0 4px 8px -4px rgba(0,0,0,.3);color:#2a2620}
+.sticker svg{width:56%;height:56%}
+.inks{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.inkb{all:unset;cursor:pointer;display:grid;justify-items:center;gap:6px;padding:4px 0;border-radius:6px}
+.inkb .nib{width:34px;height:34px;border-radius:50%;background:var(--c);box-shadow:inset 0 -3px 0 rgba(0,0,0,.2);position:relative;transition:transform 160ms var(--ease)}
+.inkb[aria-checked="true"] .nib{box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--c)}
+.inkb:hover .nib{transform:translateY(-2px)}
+.inkb small{font:400 11px/1.1 var(--type);color:var(--label-2);text-align:center}
+.inkb:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.tip{margin:0;font:400 12px/1.5 var(--type);color:#3a3125;padding:0 4px}
+
+@media (max-width:1000px){
+  body{padding:20px;place-items:start center}
+  .desk{grid-template-columns:minmax(0,1fr);gap:24px}
+  .tray{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .tip{display:none}
+}
+@media (max-width:640px){
+  :root{--margin-x:44px}
+  .holes{display:none}
+  .page{height:600px}
+  .head{padding:20px 84px 8px calc(var(--margin-x) + 14px);height:auto}
+  .no{letter-spacing:.1em}
+  .date{flex-wrap:wrap;margin-left:-8px}
+  .date h1{font-size:32px;flex-basis:100%;margin-left:8px}
+  .placed{right:14px;top:18px;width:64px;height:64px}
+  .placed .sticker{width:64px;height:64px}
+  textarea{padding:0 16px 0 calc(var(--margin-x) + 14px)}
+  .foot{padding:0 16px 0 calc(var(--margin-x) + 14px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .placed .sticker{animation:none}
+  .mood .sticker,.inkb .nib,textarea,.page{transition:none}
+}
+</style>
+</head>
+<body>
+<main class="desk">
+  <section class="page" aria-labelledby="date">
+    <div class="holes" aria-hidden="true"><i></i><i></i><i></i></div>
+    <header class="head">
+      <p class="no" id="no"></p>
+      <div class="date">
+        <h1 id="date"></h1>
+        <button class="day" id="prev" aria-label="Previous day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="day" id="next" aria-label="Next day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="placed" id="placed"></div>
+    </header>
+    <label class="sr" for="entry" id="entry-l">Journal entry</label>
+    <textarea id="entry" spellcheck="false" placeholder="Nothing written on this day yet."></textarea>
+    <footer class="foot"><span id="words"></span><span class="status" id="status" role="status"></span></footer>
+  </section>
+  <aside class="tray" aria-label="Page tools">
+    <div class="slip">
+      <h2 id="mood-l">Mood sticker</h2>
+      <div class="moods" id="moods" role="radiogroup" aria-labelledby="mood-l"></div>
+    </div>
+    <div class="slip">
+      <h2 id="ink-l">Ink</h2>
+      <div class="inks" id="inks" role="radiogroup" aria-labelledby="ink-l"></div>
+    </div>
+    <p class="tip">Saved as you write. Each day keeps its own page.</p>
+  </aside>
+</main>
+<script>
+const MOODS=[
+  {id:"bright",name:"Bright",c:"#f6c945",d:"M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"},
+  {id:"calm",name:"Calm",c:"#9ccb9a",d:"M5 19c0-8 5-13 14-14 0 9-5 14-13 14zM5 19l7-7"},
+  {id:"meh",name:"Meh",c:"#cfd6dc",d:"M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 11a3.5 3.5 0 0 0 1 7z"},
+  {id:"low",name:"Low",c:"#8fb3d9",d:"M7 14h10a3.5 3.5 0 0 0 .4-7A5.5 5.5 0 0 0 6.6 8 3 3 0 0 0 7 14zM9 17l-1 3M13 17l-1 3M17 17l-1 3"},
+  {id:"wired",name:"Wired",c:"#f08a5d",d:"M13 2L5 13h6l-1 9 8-11h-6z"}
+];
+const INKS=[
+  {id:"blue",name:"Indigo",c:"#233067"},
+  {id:"sepia",name:"Sepia",c:"#6b4226"},
+  {id:"forest",name:"Forest",c:"#2f5b3a"},
+  {id:"oxblood",name:"Oxblood",c:"#8a2432"}
+];
+const SAMPLE="Walked the long way to the bakery. The fog hadn’t lifted off the river and everything sounded closer than it was.\nFinished the second draft of the letter to Gran. Kept the bit about the plum tree.\nTomorrow: call the landlord about the window, buy stamps, water the fern before it stops forgiving me.";
+const store=(()=>{
+  const mem={};
+  return{get:k=>mem[k]??null,set:(k,v)=>{mem[k]=v},durable:false};
+})();
+const $=id=>document.getElementById(id);
+const ta=$("entry"),statusEl=$("status");
+const RM=matchMedia("(prefers-reduced-motion: reduce)");
+const TODAY=new Date();TODAY.setHours(12,0,0,0);
+let day=new Date(TODAY),entry,saveT;
+const key=d=>"journal:"+d.toISOString().slice(0,10);
+const icon=(d,w=1.75)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+const sticker=m=>`<span class="sticker" style="--s:${m.c}">${icon(m.d,2)}</span>`;
+function load(){
+  const raw=store.get(key(day));
+  const isToday=+day===+TODAY;
+  entry=raw?JSON.parse(raw):{text:isToday?SAMPLE:"",mood:isToday?"calm":null,ink:"blue",at:null};
+  const long=day.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
+  $("date").textContent=long;
+  const doy=Math.round((day-new Date(day.getFullYear(),0,0))/864e5);
+  $("no").textContent=`Entry ${doy} · ${day.getFullYear()}${isToday?" · today":""}`;
+  ta.setAttribute("aria-label",`Journal entry for ${long}`);
+  ta.value=entry.text;
+  $("next").disabled=isToday;
+  render(false);
+  words();
+  setStatus(entry.at?"saved":"idle");
+}
+function render(animate){
+  const ink=INKS.find(i=>i.id===entry.ink)||INKS[0];
+  document.documentElement.style.setProperty("--ink",ink.c);
+  [...$("inks").children].forEach((b,k)=>{const on=INKS[k].id===ink.id;b.setAttribute("aria-checked",on);b.tabIndex=on?0:-1});
+  const m=MOODS.find(x=>x.id===entry.mood);
+  const kids=[...$("moods").children];
+  kids.forEach((b,k)=>{const on=MOODS[k].id===entry.mood;b.setAttribute("aria-checked",on);b.tabIndex=on||(!m&&k===0)?0:-1});
+  const p=$("placed");
+  if(!m){p.innerHTML="";return}
+  if(animate||!p.firstChild||p.dataset.id!==m.id){
+    p.dataset.id=m.id;
+    p.innerHTML=`<span role="img" aria-label="Mood: ${m.name}">${sticker(m)}</span>`;
+    p.querySelector(".sticker").style.setProperty("--r",(((m.id.length*37)%17)-6)+"deg");
+    if(!animate||RM.matches)p.querySelector(".sticker").style.animation="none";
+  }
+}
+function words(){const n=(ta.value.trim().match(/\S+/g)||[]).length;$("words").textContent=n+(n===1?" word":" words")}
+function setStatus(s){
+  const t=entry.at?new Date(entry.at).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}):"";
+  const where=store.durable?"on this device":"for this session";
+  statusEl.className="status"+(s==="saving"?" saving":"");
+  statusEl.innerHTML=s==="saving"?"Saving…":s==="saved"?`${icon("M5 12l4 4 10-10",2)}Saved ${where} · ${t}`:"Not saved yet";
+}
+function save(){entry.at=Date.now();store.set(key(day),JSON.stringify(entry));setStatus("saved")}
+function queue(){setStatus("saving");clearTimeout(saveT);saveT=setTimeout(save,600)}
+ta.addEventListener("input",()=>{entry.text=ta.value;words();queue()});
+function shift(n){
+  clearTimeout(saveT);if(statusEl.classList.contains("saving"))save();
+  const d=new Date(day);d.setDate(d.getDate()+n);if(d>TODAY)return;day=d;load();
+}
+$("prev").addEventListener("click",()=>shift(-1));
+$("next").addEventListener("click",()=>shift(1));
+function group(el,items,mk,pick){
+  items.forEach((it,k)=>{const b=document.createElement("button");b.setAttribute("role","radio");mk(b,it);b.addEventListener("click",()=>pick(k));el.appendChild(b)});
+  el.addEventListener("keydown",e=>{
+    const m={ArrowRight:1,ArrowDown:1,ArrowLeft:-1,ArrowUp:-1}[e.key];if(!m)return;e.preventDefault();
+    const kids=[...el.children];const i=(kids.indexOf(document.activeElement)+m+kids.length)%kids.length;pick(i,true);kids[i].focus();
+  });
+}
+group($("moods"),MOODS,(b,m)=>{b.className="mood";b.setAttribute("aria-label",m.name);b.innerHTML=sticker(m)+`<small aria-hidden="true">${m.name}</small>`},
+  (k,viaKey)=>{const id=MOODS[k].id;entry.mood=entry.mood===id&&!viaKey?null:id;render(true);queue()});
+group($("inks"),INKS,(b,i)=>{b.className="inkb";b.style.setProperty("--c",i.c);b.setAttribute("aria-label",i.name+" ink");b.innerHTML=`<span class="nib" aria-hidden="true"></span><small aria-hidden="true">${i.name}</small>`},
+  k=>{entry.ink=INKS[k].id;render(false);queue()});
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!-- Design Lounge piece: card-glass-credit · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Vantor — cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&family=Sometype+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1513;--text:#eef2ec;--text-2:#a9b8b1;--line:rgba(238,242,236,.14);
+  --s1:#c9733f;--s2:#2fa39a;--s3:#e8d9b5;--tint:rgba(240,246,242,.10);
+  --disp:"Unbounded",system-ui,sans-serif;--mono:"Sometype Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+  --cw:470px;
+}
+body[data-c="1"]{--s1:#f07457;--s2:#1f6fb2;--s3:#f2e3c6;--tint:rgba(236,244,255,.10)}
+body[data-c="2"]{--s1:#d9b45a;--s2:#3a4340;--s3:#ede6d6;--tint:rgba(20,22,21,.28)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.5 var(--mono);color:var(--text);background:var(--bg);display:grid;place-items:center;min-height:100%;padding:24px;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--s3);outline-offset:3px}
+svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{display:flex;flex-direction:column;align-items:center;gap:28px;width:100%;overflow-x:clip}
+.head{text-align:center;margin-bottom:24px}
+.head p{margin:0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2)}
+.head h1{margin:6px 0 0;font:600 22px/1.2 var(--disp);letter-spacing:-.01em}
+.head h1 span{color:var(--text-2);font-weight:400}
+/* stage + shapes behind the glass */
+.stage{position:relative;width:var(--cw);aspect-ratio:1.586;max-width:100%}
+.sh{position:absolute;transition:transform .7s var(--expo),background .7s var(--ease),border-color .7s var(--ease)}
+.sh.a{width:62%;aspect-ratio:1;border-radius:50%;background:var(--s1);left:-14%;top:-16%}
+.sh.b{width:46%;aspect-ratio:1;border-radius:50%;border:22px solid var(--s2);right:-12%;bottom:-26%}
+.sh.c{width:30%;height:18%;background:var(--s3);right:10%;top:-10%;transform:rotate(-12deg)}
+body[data-c="1"] .sh.a{transform:translate(70%,30%) scale(.8)}
+body[data-c="1"] .sh.c{transform:translate(-140%,420%) rotate(18deg)}
+body[data-c="2"] .sh.a{transform:translate(110%,-6%) scale(.7)}
+body[data-c="2"] .sh.b{transform:translate(-150%,-10%) scale(1.1)}
+body[data-c="2"] .sh.c{transform:translate(-20%,520%) rotate(-4deg)}
+/* the card */
+.card{position:absolute;inset:0;border-radius:20px;transform:perspective(1200px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.04)),var(--tint);
+  -webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 30px 60px -20px rgba(0,0,0,.55);cursor:pointer;outline-offset:6px;
+  transition:opacity .3s var(--ease),translate .3s var(--ease)}
+.card.out{opacity:0;translate:0 24px}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:conic-gradient(from var(--a,210deg),rgba(255,255,255,.14) 0deg,#fbe3b5 30deg,#a8f0de 60deg,#f7b8c8 90deg,rgba(255,255,255,.14) 130deg,rgba(255,255,255,.14) 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:soft-light;
+  background:radial-gradient(circle at var(--gx,30%) var(--gy,20%),rgba(255,255,255,.55),transparent 45%)}
+.face{position:absolute;inset:0;padding:24px 26px;display:flex;flex-direction:column;text-shadow:0 1px 3px rgba(5,10,9,.35)}
+.back-f{display:none;padding:0}
+.card.flipped .front-f{display:none}
+.card.flipped .back-f{display:flex;transform:scaleX(-1)}
+/* front */
+.row{display:flex;justify-content:space-between;align-items:center}
+.brand{font:700 20px/1 var(--disp);letter-spacing:-.02em}
+.brand small{font:400 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;opacity:.85;margin-left:8px;vertical-align:3px}
+.contactless{width:24px;height:24px;color:var(--text-2)}
+.chip{width:46px;height:34px;border-radius:7px;margin-top:26px;background:linear-gradient(135deg,#e9cf8f,#b8904a 60%,#e2c27b);position:relative;overflow:hidden}
+.chip::before{content:"";position:absolute;inset:8px 14px;border:1px solid rgba(60,40,10,.45);border-radius:3px}
+.chip::after{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px solid rgba(60,40,10,.45)}
+.num{margin-top:auto;font:500 21px/1 var(--mono);letter-spacing:.12em;white-space:nowrap}
+.num span{opacity:.75}
+.meta{display:flex;align-items:flex-end;gap:28px;margin-top:16px}
+.meta div{font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.meta b{display:block;font-weight:400;font-size:9px;letter-spacing:.18em;opacity:.75;margin-bottom:3px}
+.net{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.net i{display:block;height:5px;border-radius:3px;background:var(--text)}
+.net i:nth-child(1){width:34px;opacity:.95}.net i:nth-child(2){width:26px;opacity:.7}.net i:nth-child(3){width:18px;opacity:.45}
+/* back */
+.stripe{height:46px;margin-top:26px;background:rgba(5,9,8,.82)}
+.sig{display:flex;align-items:center;gap:14px;margin:20px 26px 0}
+.sig .pad{flex:1;height:40px;border-radius:4px;background:repeating-linear-gradient(-30deg,rgba(255,255,255,.75) 0 6px,rgba(255,255,255,.6) 6px 12px);color:#1b2420;font:italic 400 13px/40px var(--mono);padding-left:12px;white-space:nowrap;overflow:hidden}
+.cvv{min-width:64px;height:40px;border-radius:4px;background:#fff;color:#111;display:grid;place-items:center;font:500 16px/1 var(--mono);letter-spacing:.14em}
+.cvv-l{font-size:9px;letter-spacing:.18em;color:var(--text-2);text-transform:uppercase;margin:6px 26px 0;text-align:right}
+.hold{position:relative;align-self:flex-start;margin:14px 26px 0;display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 16px 0 6px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid var(--line);font-size:12px;letter-spacing:.04em;touch-action:none;user-select:none;-webkit-user-select:none}
+.hold:hover{background:rgba(255,255,255,.18)}
+.ring{width:28px;height:28px;transform:rotate(-90deg)}
+.ring circle{stroke-width:2.5}
+.ring .p{stroke:var(--s3);stroke-dasharray:69.1;stroke-dashoffset:69.1}
+.hold.holding .ring .p{stroke-dashoffset:0;transition:stroke-dashoffset .5s linear}
+.fine{margin:auto 26px 18px;font-size:9px;line-height:1.5;color:var(--text-2);letter-spacing:.04em}
+/* controls */
+.ctrls{display:flex;flex-direction:column;align-items:center;gap:18px;width:100%}
+.flipbtn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 18px;border-radius:999px;border:1px solid var(--line);font-size:12px;letter-spacing:.06em;transition:background .16s var(--ease)}
+.flipbtn:hover{background:rgba(255,255,255,.08)}
+.tabs{display:flex;gap:8px;padding:6px;border-radius:16px;border:1px solid var(--line);max-width:100%}
+.tab{display:flex;align-items:center;gap:10px;min-height:48px;padding:6px 14px 6px 8px;border-radius:11px;color:var(--text-2);text-align:left;transition:background .2s var(--ease),color .2s var(--ease)}
+.tab:hover{color:var(--text)}
+.tab[aria-selected=true]{background:rgba(255,255,255,.1);color:var(--text)}
+.mini{width:36px;height:24px;border-radius:5px;flex:none;border:1px solid rgba(255,255,255,.25)}
+.tab b{display:block;font:600 12px/1.2 var(--disp)}
+.tab span span{font-size:11px;letter-spacing:.06em}
+.bal{margin:0;font-size:12px;color:var(--text-2);letter-spacing:.04em;text-align:center;min-height:18px}
+.bal b{color:var(--text);font-weight:500}
+@media (max-width:520px){
+  :root{--cw:330px}
+  .face{padding:16px 18px}.chip{margin-top:12px;width:38px;height:28px}
+  .num{font-size:16px}.meta{gap:16px;margin-top:10px}.brand{font-size:16px}
+  .stripe{margin-top:16px;height:36px}.sig{margin:12px 18px 0}.hold{margin:10px 18px 0}.cvv-l{margin:4px 18px 0}.fine{display:none}
+  .tabs{flex-direction:column;width:min(330px,100%)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body data-c="0">
+<main class="wrap">
+  <header class="head"><p>Vantor · Wallet</p><h1>Your cards <span>· 3 active</span></h1></header>
+  <div class="stage" id="stage">
+    <i class="sh a" aria-hidden="true"></i><i class="sh b" aria-hidden="true"></i><i class="sh c" aria-hidden="true"></i>
+    <div class="card" id="card" role="group" tabindex="0" aria-roledescription="payment card" aria-label="Everyday debit card ending 4821, front. Press Enter to flip.">
+      <div class="face front-f">
+        <div class="row"><span class="brand">vantor<small id="kind">Everyday</small></span>
+          <svg class="contactless" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></div>
+        <div class="chip" aria-hidden="true"></div>
+        <div class="num" aria-hidden="true"><span>•••• •••• ••••</span> <b id="last" style="font-weight:500">4821</b></div>
+        <div class="meta">
+          <div><b>Card holder</b>Anika Rai</div>
+          <div><b>Valid thru</b><span id="exp">09/29</span></div>
+          <div class="net" aria-hidden="true"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="face back-f">
+        <div class="stripe" aria-hidden="true"></div>
+        <div class="sig"><span class="pad" aria-hidden="true">Anika Rai</span><span class="cvv" id="cvv" aria-live="polite" aria-label="Security code hidden">•••</span></div>
+        <p class="cvv-l" aria-hidden="true">CVV</p>
+        <button class="hold" id="reveal" type="button" aria-describedby="holdHint">
+          <svg class="ring" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="11" stroke="rgba(255,255,255,.2)"/><circle class="p" cx="14" cy="14" r="11"/></svg>
+          <span id="holdTxt">Hold to reveal CVV</span>
+        </button>
+        <span class="sr" id="holdHint">Press and hold. The code hides again when you let go.</span>
+        <p class="fine">Issued by Vantor Bank Ltd. under licence. If found, return to any Vantor branch or call +977 1 4400 210.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ctrls">
+    <button class="flipbtn" id="flip" type="button" aria-controls="card">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5"/></svg>
+      <span id="flipTxt">Show back</span>
+    </button>
+    <p class="bal" id="bal" aria-live="polite"></p>
+    <div class="tabs" role="tablist" aria-label="Choose card">
+      <button class="tab" role="tab" type="button" aria-selected="true" aria-controls="card" data-i="0"><i class="mini" style="background:linear-gradient(135deg,#c9733f,#2fa39a)"></i><span><b>Everyday</b><span>•• 4821</span></span></button>
+      <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="card" data-i="1" tabindex="-1"><i class="mini" style="background:linear-gradient(135deg,#f07457,#1f6fb2)"></i><span><b>Travel</b><span>•• 0937</span></span></button>
+      <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="card" data-i="2" tabindex="-1"><i class="mini" style="background:linear-gradient(135deg,#d9b45a,#3a4340)"></i><span><b>Vault</b><span>•• 5560</span></span></button>
+    </div>
+  </div>
+  <p class="sr" role="status" id="live"></p>
+</main>
+<script>
+const CARDS = [
+  { kind: 'Everyday', type: 'debit', last: '4821', exp: '09/29', cvv: '382', bal: 'Available <b>NPR 84,210.50</b>' },
+  { kind: 'Travel', type: 'credit', last: '0937', exp: '03/28', cvv: '715', bal: 'Limit left <b>USD 2,640.00</b> · no FX fee' },
+  { kind: 'Vault', type: 'credit', last: '5560', exp: '11/30', cvv: '049', bal: 'Limit left <b>NPR 412,000.00</b> · metal' },
+];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const card = $('card'), stage = $('stage'), live = $('live');
+let ci = 0, flipped = false, flipA = 0, rx = 6, ry = -12, trx = 6, try_ = -12, anim = null, raf = 0;
+
+function apply() {
+  card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+  card.style.setProperty('--ry', (ry + flipA).toFixed(2) + 'deg');
+  const show = flipA > 90;
+  if (show !== card.classList.contains('flipped')) card.classList.toggle('flipped', show);
+}
+function loop() {
+  rx += (trx - rx) * .12; ry += (try_ - ry) * .12;
+  if (anim) {
+    const t = Math.min(1, (performance.now() - anim.t0) / 700), e = 1 - Math.pow(1 - t, 4);
+    flipA = anim.from + (anim.to - anim.from) * e;
+    if (t === 1) anim = null;
+  }
+  apply();
+  if (anim || Math.abs(trx - rx) > .05 || Math.abs(try_ - ry) > .05) raf = requestAnimationFrame(loop); else raf = 0;
+}
+const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
+apply();
+
+stage.parentElement.addEventListener('pointermove', e => {
+  if (reduce || e.pointerType === 'touch') return;
+  const r = stage.getBoundingClientRect();
+  const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+  const cx = Math.max(-1, Math.min(1, px * 2 - 1)), cy = Math.max(-1, Math.min(1, py * 2 - 1));
+  trx = -cy * 12; try_ = cx * 14 * (flipped ? -1 : 1);
+  card.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+  card.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+  card.style.setProperty('--a', (Math.atan2(cy, cx) * 180 / Math.PI + 30).toFixed(1) + 'deg');
+  kick();
+});
+document.addEventListener('pointerleave', () => { trx = 6; try_ = flipped ? 12 : -12; kick(); });
+
+function flip() {
+  flipped = !flipped;
+  try_ = -try_;
+  if (reduce) flipA = flipped ? 180 : 0, apply();
+  else { anim = { from: flipA, to: flipped ? 180 : 0, t0: performance.now() }; kick(); }
+  $('flipTxt').textContent = flipped ? 'Show front' : 'Show back';
+  label(); live.textContent = flipped ? 'Showing back of card' : 'Showing front of card';
+}
+function label() {
+  const c = CARDS[ci];
+  card.setAttribute('aria-label', `${c.kind} ${c.type} card ending ${c.last}, ${flipped ? 'back' : 'front'}. Press Enter to flip.`);
+}
+$('flip').onclick = flip;
+card.addEventListener('click', e => { if (!e.target.closest('.hold')) flip(); });
+card.addEventListener('keydown', e => {
+  if (e.target !== card) return;
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+  const k = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[e.key];
+  if (k && !reduce) { e.preventDefault(); trx = Math.max(-12, Math.min(12, trx - k[0] * 4)); try_ = Math.max(-14, Math.min(14, try_ + k[1] * 4)); kick(); }
+});
+
+/* hold to reveal */
+const hold = $('reveal'), cvv = $('cvv');
+let ht = 0;
+function down(e) {
+  if (e.type === 'keydown' && (e.repeat || (e.key !== ' ' && e.key !== 'Enter'))) return;
+  e.preventDefault(); e.stopPropagation();
+  hold.classList.add('holding'); $('holdTxt').textContent = 'Keep holding…';
+  ht = setTimeout(() => { cvv.textContent = CARDS[ci].cvv; cvv.setAttribute('aria-label', 'Security code ' + CARDS[ci].cvv.split('').join(' ')); $('holdTxt').textContent = 'Release to hide'; }, reduce ? 0 : 500);
+}
+function up() {
+  if (!hold.classList.contains('holding')) return;
+  clearTimeout(ht); hold.classList.remove('holding');
+  cvv.textContent = '•••'; cvv.setAttribute('aria-label', 'Security code hidden'); $('holdTxt').textContent = 'Hold to reveal CVV';
+}
+hold.addEventListener('pointerdown', e => { hold.setPointerCapture(e.pointerId); down(e); });
+hold.addEventListener('keydown', down);
+['pointerup', 'pointercancel', 'lostpointercapture', 'keyup', 'blur'].forEach(t => hold.addEventListener(t, up));
+hold.addEventListener('click', e => e.stopPropagation());
+
+/* switcher */
+const tabs = [...document.querySelectorAll('[role=tab]')];
+function pick(i) {
+  if (i === ci) return;
+  tabs.forEach((t, j) => { t.setAttribute('aria-selected', j === i); t.tabIndex = j === i ? 0 : -1; });
+  const swap = () => {
+    ci = i; const c = CARDS[i];
+    document.body.dataset.c = i;
+    $('kind').textContent = c.kind; $('last').textContent = c.last; $('exp').textContent = c.exp;
+    $('bal').innerHTML = c.bal; up();
+    if (flipped) { flipped = false; flipA = 0; try_ = -12; $('flipTxt').textContent = 'Show back'; apply(); }
+    label(); card.classList.remove('out');
+    live.textContent = `${c.kind} card ending ${c.last} selected`;
+  };
+  if (reduce) return swap();
+  card.classList.add('out'); setTimeout(swap, 300);
+}
+tabs.forEach((t, i) => {
+  t.onclick = () => pick(i);
+  t.addEventListener('keydown', e => {
+    const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (!d) return; e.preventDefault();
+    const n = (i + d + tabs.length) % tabs.length; tabs[n].focus(); pick(n);
+  });
+});
+$('bal').innerHTML = CARDS[0].bal;
+</script>
+</body>
+</html>

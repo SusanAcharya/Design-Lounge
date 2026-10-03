@@ -1,0 +1,220 @@
+<!-- Design Lounge piece: card-boarding-pass · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Cirrus Air · Boarding pass CA 417</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#dce5ea;--paper:#fbfbf8;--paper-2:#f2f3ef;--ink:#0f2130;--ink-2:#4f6170;--line:#d3dadf;
+  --accent:#ff5a1f;--ok:#1f7a55;
+  --sans:"Familjen Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:18px;--std:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--sans);color:var(--ink);background:var(--bg);display:grid;place-items:center;padding:32px 20px;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{width:min(800px,100%)}
+.label{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.pass{position:relative;display:grid;grid-template-columns:1fr 240px;background:var(--paper);border-radius:var(--r);box-shadow:0 1px 0 rgba(15,33,48,.06),0 24px 48px -24px rgba(15,33,48,.35)}
+.pass::before,.pass::after{content:"";position:absolute;left:calc(100% - 240px);width:28px;height:28px;margin-left:-14px;border-radius:50%;background:var(--bg)}
+.pass::before{top:-14px}.pass::after{bottom:-14px}
+.main{padding:24px 30px 26px;display:grid;gap:22px;border-right:2px dashed var(--line)}
+.top{display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px;letter-spacing:-.01em}
+.brand svg{width:26px;height:26px;color:var(--accent)}
+.top .label{margin-left:auto}
+.chip{display:inline-flex;align-items:center;gap:6px;font:500 12px/1 var(--mono);padding:6px 10px;border-radius:99px;background:#e3f1ea;color:var(--ok)}
+.chip i{width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 2.4s var(--std) infinite}
+@keyframes blink{50%{opacity:.25}}
+.route{display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:18px}
+.city b{display:block;font:700 64px/0.9 var(--sans);letter-spacing:-.04em}
+.city span{display:block;margin-top:8px;font-size:14px;color:var(--ink-2)}
+.city span em{font:500 14px var(--mono);font-style:normal;color:var(--ink)}
+.city.to{text-align:right}
+.arc{position:relative;height:78px;align-self:center}
+.arc svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.arc .track{fill:none;stroke:var(--line);stroke-width:2;stroke-dasharray:2 6;stroke-linecap:round}
+.arc .done{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.arc svg.plane{position:absolute;inset:auto;left:0;top:0;width:26px;height:26px;margin:-13px 0 0 -13px;color:var(--accent);will-change:transform}
+.arc .dur{position:absolute;left:0;right:0;bottom:-6px;text-align:center;font:500 12px var(--mono);color:var(--ink-2)}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);padding-top:16px}
+.facts div+div{padding-left:16px;border-left:1px solid var(--line)}
+.facts dd{margin:6px 0 0;font:600 28px/1 var(--sans);letter-spacing:-.02em}
+.facts .hot dd{color:var(--accent)}
+.stub{padding:24px 26px;display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.who{font:700 18px/1.15 var(--sans);text-transform:uppercase;letter-spacing:.02em;margin-top:6px}
+.qr{width:136px;height:136px;padding:8px;background:#fff;border:1px solid var(--line);border-radius:10px}
+.qr svg{display:block;width:100%;height:100%}
+.seq{font:500 12px/1.5 var(--mono);color:var(--ink-2)}
+
+.fold{display:grid;grid-template-rows:0fr;transition:grid-template-rows 420ms var(--expo);perspective:1100px;margin:0 14px}
+.fold.open{grid-template-rows:1fr}
+.fold > div{overflow:hidden}
+.sheet{
+  background:var(--paper-2);border-radius:0 0 14px 14px;padding:20px 26px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px 20px;
+  transform-origin:50% 0;transform:rotateX(-88deg);transition:transform 520ms var(--expo),box-shadow 520ms var(--expo);
+  background-image:linear-gradient(rgba(15,33,48,.08),transparent 22px);box-shadow:inset 0 0 0 rgba(0,0,0,0)
+}
+.open .sheet{transform:none;box-shadow:0 18px 30px -22px rgba(15,33,48,.4)}
+.sheet dd{margin:6px 0 0;font:500 15px/1.35 var(--sans)}
+.sheet dd small{display:block;color:var(--ink-2);font-size:13px}
+.sheet .mono{font-family:var(--mono);font-size:14px}
+
+.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}
+.btn{min-height:44px;display:inline-flex;align-items:center;gap:10px;padding:0 18px;border-radius:12px;font-weight:600;transition:background 160ms var(--std),transform 120ms var(--std)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.ghost{color:var(--ink);box-shadow:inset 0 0 0 1px rgba(15,33,48,.22)}
+.ghost:hover{background:rgba(255,255,255,.55)}
+.ghost svg{transition:transform 320ms var(--expo)}
+.ghost[aria-expanded="true"] svg{transform:rotate(180deg)}
+.wallet{background:var(--ink);color:#fbfbf8;min-width:208px;justify-content:center}
+.wallet:hover{background:#1c3448}
+.wallet[aria-pressed="true"]{background:var(--ok)}
+.wallet .spin{display:none;width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin 700ms linear infinite}
+.wallet.busy .spin{display:block}.wallet.busy svg{display:none}
+@keyframes spin{to{transform:rotate(1turn)}}
+.pass.saved{animation:dip 620ms var(--expo)}
+@keyframes dip{40%{transform:translateY(10px) scale(.985)}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:720px){
+  .pass{grid-template-columns:1fr}
+  .pass::before,.pass::after{left:auto;top:auto;bottom:254px;margin:0 0 -14px}
+  .pass::before{left:-14px}.pass::after{right:-14px}
+  .main{border-right:0;border-bottom:2px dashed var(--line);padding:20px 20px 22px;gap:18px}
+  .city b{font-size:40px}
+  .city span{font-size:13px}
+  .arc{height:56px}
+  .arc .dur{display:none}
+  .route{gap:10px}
+  .facts{grid-template-columns:repeat(2,1fr);gap:14px 0}
+  .facts div:nth-child(3){padding-left:0;border-left:0}
+  .stub{height:254px;display:grid;grid-template-columns:1fr auto;align-content:start;padding:20px}
+  .stub .qr{grid-row:1/4;grid-column:2}
+  .sheet{grid-template-columns:1fr 1fr;padding:18px 20px}
+  .top .label{display:none}
+  .chip{margin-left:auto}
+  .wallet{flex:1}
+}
+@media (prefers-reduced-motion:reduce){
+  .fold,.sheet,.ghost svg{transition:none}
+  .chip i,.pass.saved{animation:none}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <article class="pass" id="pass" aria-label="Boarding pass, Cirrus Air flight CA 417, Kathmandu to Bangkok">
+    <section class="main">
+      <div class="top">
+        <span class="brand"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 15c4-1 7-4 9-8 1 4 4 6 9 6"/><path d="M5 19c4 0 8-2 10-5"/></svg>Cirrus Air</span>
+        <span class="label">Boarding pass · CA 417 · Sun 18 Oct</span>
+        <span class="chip"><i aria-hidden="true"></i>On time</span>
+      </div>
+      <div class="route">
+        <div class="city"><b>KTM</b><span>Kathmandu <em>08:10</em></span></div>
+        <div class="arc" id="arc" aria-hidden="true">
+          <svg viewBox="0 0 300 78" preserveAspectRatio="none"><path class="track" id="track" d="M6 66 C 80 -6, 220 -6, 294 66"/><path class="done" id="done" d="M6 66 C 80 -6, 220 -6, 294 66"/></svg>
+          <svg class="plane" id="plane" viewBox="0 0 24 24"><path fill="currentColor" d="M21 12.6v-1.2l-8-4.6V3.5a1 1 0 0 0-2 0v3.3l-8 4.6v1.2l8-2v4.9l-2.3 1.7V19l3.3-1 3.3 1v-1.8L13 15.5v-4.9z"/></svg>
+          <span class="dur">3h 15m · nonstop</span>
+        </div>
+        <div class="city to"><b>BKK</b><span>Bangkok <em>12:55</em></span></div>
+      </div>
+      <dl class="facts">
+        <div><dt class="label">Gate</dt><dd>14B</dd></div>
+        <div><dt class="label">Boards</dt><dd>07:35</dd></div>
+        <div class="hot"><dt class="label">Group</dt><dd>3</dd></div>
+        <div><dt class="label">Seat</dt><dd>23A</dd></div>
+      </dl>
+    </section>
+    <section class="stub" aria-label="Scan at the gate">
+      <div><span class="label">Passenger</span><div class="who">Anjali Rai</div></div>
+      <div class="qr" role="img" aria-label="Boarding QR code"><svg id="qr" viewBox="0 0 25 25" shape-rendering="crispEdges"></svg></div>
+      <span class="seq">Zone 3 · Economy Light<br>SEQ 087 · QX7RLM</span>
+    </section>
+  </article>
+  <div class="fold" id="fold-panel">
+    <div><dl class="sheet" aria-label="Flight details">
+      <div><dt class="label">Terminal</dt><dd>1 International<small>Security opens 05:40</small></dd></div>
+      <div><dt class="label">Gate closes</dt><dd>07:55<small>20 min before departure</small></dd></div>
+      <div><dt class="label">Baggage</dt><dd>1 × 23 kg checked<small>7 kg cabin</small></dd></div>
+      <div><dt class="label">Meal</dt><dd>Vegetarian<small>Pre-ordered</small></dd></div>
+      <div><dt class="label">Ticket</dt><dd class="mono">217 4402 938156</dd></div>
+      <div><dt class="label">Booking</dt><dd class="mono">QX7RLM</dd></div>
+      <div><dt class="label">Aircraft</dt><dd>A321neo<small>Window, left side</small></dd></div>
+      <div><dt class="label">Loyalty</dt><dd>Stratus Silver<small>Priority bag tag</small></dd></div>
+    </dl></div>
+  </div>
+  <div class="actions">
+    <button class="btn ghost" id="fold" type="button" aria-expanded="false" aria-controls="fold-panel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><span>Unfold details</span>
+    </button>
+    <button class="btn wallet" id="wallet" type="button" aria-pressed="false">
+      <span class="spin" aria-hidden="true"></span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/></svg>
+      <span id="wallet-txt">Add to Wallet</span>
+    </button>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</main>
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=id=>document.getElementById(id);
+/* QR-like matrix: three finder squares plus seeded modules */
+(function(){
+  const n=25,on=new Set();let s=417;
+  const finder=(x,y)=>{for(let i=0;i<7;i++)for(let j=0;j<7;j++){const e=i==0||j==0||i==6||j==6,c=i>1&&i<5&&j>1&&j<5;if(e||c)on.add((y+i)*n+x+j)}};
+  const reserved=(x,y)=>(x<8&&y<8)||(x>16&&y<8)||(x<8&&y>16);
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++){if(reserved(x,y))continue;s=(s*1103515245+12345)%2147483648;if(s/2147483648<.48)on.add(y*n+x)}
+  finder(0,0);finder(18,0);finder(0,18);
+  let d='';on.forEach(i=>{d+=`M${i%n} ${Math.floor(i/n)}h1v1h-1z`});
+  $('qr').innerHTML=`<path fill="#0f2130" d="${d}"/>`;
+})();
+/* plane along the arc */
+const track=$('track'),done=$('done'),plane=$('plane'),arc=$('arc'),L=track.getTotalLength();
+done.style.strokeDasharray=L;
+function place(t){
+  const p=track.getPointAtLength(L*t),q=track.getPointAtLength(Math.min(L,L*t+1)),r=arc.getBoundingClientRect();
+  const sx=r.width/300,sy=r.height/78,a=Math.atan2((q.y-p.y)*sy,(q.x-p.x)*sx)*180/Math.PI;
+  plane.style.transform=`translate(${p.x*sx}px,${p.y*sy}px) rotate(${a+90}deg)`;done.style.strokeDashoffset=L*(1-t);
+}
+let raf;
+function fly(to=.5,ms=1600){
+  cancelAnimationFrame(raf);if(reduce){place(to);return}
+  const t0=performance.now();
+  const step=now=>{const k=Math.min(1,(now-t0)/ms),e=1-Math.pow(1-k,4);place(e*to);if(k<1)raf=requestAnimationFrame(step)};
+  raf=requestAnimationFrame(step);
+}
+place(0);fly();addEventListener('resize',()=>place(.5));
+$('pass').addEventListener('pointerenter',()=>fly(.5,1200));
+/* fold out */
+$('fold').addEventListener('click',e=>{
+  const b=e.currentTarget,open=b.getAttribute('aria-expanded')!=='true';
+  b.setAttribute('aria-expanded',open);$('fold-panel').classList.toggle('open',open);
+  b.querySelector('span').textContent=open?'Fold details':'Unfold details';
+});
+/* wallet */
+$('wallet').addEventListener('click',e=>{
+  const b=e.currentTarget;if(b.classList.contains('busy'))return;
+  if(b.getAttribute('aria-pressed')==='true'){b.setAttribute('aria-pressed','false');$('wallet-txt').textContent='Add to Wallet';$('live').textContent='Removed from Wallet.';return}
+  b.classList.add('busy');$('wallet-txt').textContent='Adding…';
+  setTimeout(()=>{
+    b.classList.remove('busy');b.setAttribute('aria-pressed','true');$('wallet-txt').textContent='In Wallet · Remove';
+    b.querySelector('svg').innerHTML='<path d="m5 12.5 4.5 4.5L19 7.5"/>';
+    const p=$('pass');p.classList.remove('saved');void p.offsetWidth;p.classList.add('saved');
+    $('live').textContent='Boarding pass added to Wallet. It will surface at Kathmandu airport.';
+  },reduce?0:700);
+});
+$('wallet').addEventListener('click',e=>{
+  if(e.currentTarget.getAttribute('aria-pressed')==='false')e.currentTarget.querySelector('svg').innerHTML='<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/>';
+});
+</script>
+</body>
+</html>

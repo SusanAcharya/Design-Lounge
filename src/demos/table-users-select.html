@@ -1,0 +1,241 @@
+<!-- Design Lounge piece: table-users-select · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Keystone members</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef0f3;--surface:#fdfdfe;--sunk:#f6f7f9;--ink:#0d0f14;--ink-2:#454b57;--ink-3:#626977;--line:#e3e6eb;--line-2:#cfd3da;
+  --accent:#1747e5;--accent-soft:#edf1ff;--accent-line:#c4d0fb;--ok:#127a4a;--warn:#9a5b00;--bad:#b42318;
+  --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --r:6px;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.4 var(--sans);display:grid;place-items:center;padding:28px;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{width:100%;max-width:1100px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 2px rgba(13,15,20,.05)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.crumb{font:400 12px var(--mono);color:var(--ink-3);margin:0 0 4px}
+h1{font:600 20px/1.2 var(--sans);letter-spacing:-.015em;margin:0}
+h1 span{font:500 12px var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:2px 6px;margin-left:8px;vertical-align:3px}
+.selbar{display:flex;align-items:center;gap:8px;height:36px;font-size:13px;color:var(--ink-2)}
+.selbar b{color:var(--ink);font-weight:600}
+.hint{font:400 12px var(--mono);color:var(--ink-3)}
+.hint kbd{font:inherit;border:1px solid var(--line-2);border-radius:3px;padding:0 4px;background:var(--sunk)}
+.btn{height:32px;padding:0 12px;border-radius:var(--r);border:1px solid var(--line-2);background:var(--surface);font-weight:500;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{background:var(--sunk)}
+.btn.danger{color:var(--bad)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.btn.primary:hover{background:#262a33}
+.btn svg{width:14px;height:14px}
+table{width:100%;border-collapse:collapse}
+th{height:38px;padding:0 14px;text-align:left;font:500 12px var(--sans);color:var(--ink-3);background:var(--sunk);border-bottom:1px solid var(--line);white-space:nowrap}
+.sort{background:none;border:0;padding:4px;margin:0 -4px;font:inherit;color:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:4px;border-radius:4px}
+.sort:hover{color:var(--ink)}
+.sort svg{width:14px;height:14px;opacity:.4}
+th[aria-sort="ascending"] .sort,th[aria-sort="descending"] .sort{color:var(--ink)}
+th[aria-sort="ascending"] .sort svg,th[aria-sort="descending"] .sort svg{opacity:1;color:var(--accent)}
+th[aria-sort="ascending"] .sort .dn,th[aria-sort="descending"] .sort .up{opacity:.25}
+td{height:52px;padding:0 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+.c-sel{width:48px;padding-right:0}
+.chk{appearance:none;width:16px;height:16px;margin:0;border:1.5px solid var(--line-2);border-radius:4px;background:var(--surface);display:grid;place-items:center;cursor:pointer;transition:background .12s,border-color .12s}
+.chk:hover{border-color:var(--ink-3)}
+.chk:checked,.chk:indeterminate{background:var(--accent);border-color:var(--accent)}
+.chk:checked::after{content:"";width:8px;height:4px;border:2px solid #fff;border-top:0;border-right:0;transform:translateY(-1px) rotate(-45deg)}
+.chk:indeterminate::after{content:"";width:8px;height:2px;background:#fff}
+tr.u:hover{background:var(--sunk)}
+tr.u.sel{background:var(--accent-soft)}
+tr.u.sel td{border-bottom-color:var(--accent-line)}
+tr.u.flash{animation:flash 1.2s var(--ease)}
+@keyframes flash{from{background:#fff6d6}}
+.who{display:flex;align-items:center;gap:10px;min-width:0}
+.av{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;font:500 11px var(--mono);color:var(--ink);flex:none}
+.who b{display:block;font-weight:500}
+.who small{display:block;font:400 12px var(--mono);color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.role{position:relative;display:inline-flex;align-items:center}
+.role select{appearance:none;height:30px;padding:0 28px 0 10px;border:1px solid transparent;border-radius:var(--r);background:transparent;font-weight:500;cursor:pointer}
+.role select:hover{border-color:var(--line-2);background:var(--surface)}
+.role select:focus-visible{border-color:var(--accent);outline-offset:0}
+.role select:disabled{cursor:default;color:var(--ink-3)}
+.role svg{position:absolute;right:8px;width:14px;height:14px;pointer-events:none;color:var(--ink-3)}
+.role select:disabled+svg{display:none}
+.saved{font:400 11px var(--mono);color:var(--ok);margin-left:6px;opacity:0;transition:opacity .2s}
+.saved.on{opacity:1}
+.st{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2)}
+.st::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.st.invited::before{background:transparent;border:1.5px solid var(--warn);width:5px;height:5px}
+.st.invited{color:var(--warn)}
+.st.suspended::before{background:var(--bad)}
+.mono{font:400 12px var(--mono);color:var(--ink-3);white-space:nowrap}
+tr.invite td{background:var(--surface);height:56px}
+.inv{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.inv .plus{width:28px;height:28px;border-radius:6px;border:1px dashed var(--line-2);display:grid;place-items:center;color:var(--ink-3);flex:none}
+.inv .plus svg{width:14px;height:14px}
+.inv input{flex:1 1 220px;height:32px;border:1px solid var(--line-2);border-radius:var(--r);padding:0 10px;background:var(--surface);min-width:0}
+.inv input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+.inv input[aria-invalid="true"]{border-color:var(--bad)}
+.inv .role select{border-color:var(--line-2)}
+.err{flex-basis:100%;font:400 12px var(--mono);color:var(--bad);padding-left:36px}
+.err:empty{display:none}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;flex-wrap:wrap}
+.range{font:400 12px var(--mono);color:var(--ink-3)}
+.pager{display:flex;gap:4px}
+.pg{min-width:32px;height:32px;padding:0 8px;border-radius:var(--r);border:1px solid transparent;background:none;font:500 13px var(--mono);cursor:pointer;display:grid;place-items:center}
+.pg:hover:not(:disabled){background:var(--sunk);border-color:var(--line)}
+.pg[aria-current="page"]{border-color:var(--ink);color:var(--ink)}
+.pg:disabled{color:var(--line-2);cursor:default}
+.pg svg{width:16px;height:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:760px){
+  body{padding:10px;place-items:start center}
+  .top{padding:14px}
+  thead tr{display:flex;align-items:center;gap:4px 12px;flex-wrap:wrap;padding:8px 14px;background:var(--sunk);border-bottom:1px solid var(--line)}
+  th{height:auto;padding:0;border:0;background:none}
+  th.c-sel{width:auto;padding-right:6px}
+  th.hide-m{display:none}
+  tbody,td{display:block}
+  tr.u{display:grid;grid-template-columns:28px 1fr auto;grid-template-areas:"sel who role" "sel meta st";gap:6px 8px;padding:12px 14px;border-bottom:1px solid var(--line)}
+  tr.u.sel{border-bottom-color:var(--accent-line)}
+  td{height:auto;padding:0;border:0}
+  td.c-sel{grid-area:sel;width:auto;padding:6px 0 0}
+  td.c-who{grid-area:who;min-width:0}
+  td.c-role{grid-area:role;justify-self:end}
+  td.c-team{display:none}
+  td.c-st{grid-area:st;justify-self:end}
+  td.c-last{grid-area:meta;padding-left:38px}
+  tr.invite{display:block;padding:12px 14px;border-bottom:1px solid var(--line)}
+  tr.invite td{height:auto}
+  .err{padding-left:0}
+  .foot{padding:12px 14px}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="panel" aria-labelledby="t">
+  <header class="top">
+    <div>
+      <p class="crumb">keystone / settings / members</p>
+      <h1 id="t">Members<span id="total"></span></h1>
+    </div>
+    <div class="selbar" id="selbar"></div>
+  </header>
+  <table aria-labelledby="t">
+    <caption class="sr">Workspace members. Shift-click or Shift-Space selects a range. Role menus save on change.</caption>
+    <thead><tr>
+      <th class="c-sel" scope="col"><input type="checkbox" class="chk" id="all" aria-label="Select all on this page"></th>
+      <th scope="col" data-k="name" aria-sort="ascending"><button class="sort" type="button">Name<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="up" d="M8 10l4-4 4 4"/><path class="dn" d="M8 14l4 4 4-4"/></svg></button></th>
+      <th scope="col" data-k="role" aria-sort="none"><button class="sort" type="button">Role<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="up" d="M8 10l4-4 4 4"/><path class="dn" d="M8 14l4 4 4-4"/></svg></button></th>
+      <th scope="col" class="hide-m">Team</th>
+      <th scope="col" data-k="status" aria-sort="none"><button class="sort" type="button">Status<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="up" d="M8 10l4-4 4 4"/><path class="dn" d="M8 14l4 4 4-4"/></svg></button></th>
+      <th scope="col" data-k="last" aria-sort="none"><button class="sort" type="button">Last active<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="up" d="M8 10l4-4 4 4"/><path class="dn" d="M8 14l4 4 4-4"/></svg></button></th>
+    </tr></thead>
+    <tbody id="tb"></tbody>
+  </table>
+  <footer class="foot">
+    <span class="range" id="range"></span>
+    <nav class="pager" id="pager" aria-label="Pages"></nav>
+  </footer>
+  <p class="sr" aria-live="polite" id="live"></p>
+</main>
+<script>
+const ROLES=["Owner","Admin","Editor","Viewer","Billing"];
+const N="Ada Brennan,Bilal Haddad,Chloe Varga,Dario Monti,Elif Aydin,Felix Strand,Grace Mwangi,Hugo Laurent,Isla Navarro,Jun Takeda,Kofi Asante,Lara Novak,Mateo Ruiz,Nadia Petrov,Owen Gallagher,Pia Lindgren,Quentin Moreau,Rhea Kapoor,Soren Holm,Tara Quinn,Umar Siddiqui,Vera Kowalski,Wes Okonkwo,Yara Haddad".split(",");
+const TEAMS=["Platform","Design","Growth","Support","Finance"];
+const AVC=["#dfe6ff","#e3f1e8","#fbe9d0","#f3e0ea","#e4e7ec","#dff2f4"];
+const users=N.map((n,i)=>({id:i+1,name:n,email:n.toLowerCase().normalize("NFD").replace(/[^a-z ]/g,"").replace(" ",".")+"@keystone.co",role:i===0?"Owner":ROLES[1+(i*7)%4],team:TEAMS[(i*3)%5],status:i%9===4?"suspended":i%7===5?"invited":"active",last:i%7===5?99999:(i*37)%4000+3,c:AVC[i%6]}));
+const ago=m=>m>=99999?"never":m<60?m+"m ago":m<1440?Math.floor(m/60)+"h ago":Math.floor(m/1440)+"d ago";
+const sel=new Set([3,4,5]);let anchor=5,page=1,sortK="name",sortD=1;const PER=8;
+const tb=document.getElementById("tb"),all=document.getElementById("all"),live=document.getElementById("live");
+let inviteErr="",inviteVal="",inviteRole="Editor";
+const chev='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg>';
+const say=t=>{live.textContent="";requestAnimationFrame(()=>live.textContent=t)};
+const sorted=()=>[...users].sort((a,b)=>{const A=sortK==="role"?ROLES.indexOf(a.role):a[sortK],B=sortK==="role"?ROLES.indexOf(b.role):b[sortK];return (typeof A==="string"?A.localeCompare(B):A-B)*sortD||a.name.localeCompare(b.name)});
+let view=[];
+function render(focusKey){
+  const f=focusKey||(document.activeElement&&document.activeElement.dataset.f);
+  const list=sorted(),pages=Math.ceil(list.length/PER);page=Math.min(page,pages);
+  view=list.slice((page-1)*PER,page*PER);
+  const roleSel=(v,dis,f,lbl)=>`<span class="role"><select data-f="${f}" aria-label="${lbl}" ${dis?"disabled":""}>${ROLES.filter(r=>dis||r!=="Owner").map(r=>`<option${r===v?" selected":""}>${r}</option>`).join("")}</select>${chev}</span>`;
+  tb.innerHTML=`<tr class="invite"><td colspan="6"><form class="inv" id="inv" novalidate><span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><label class="sr" for="em">Invite by email</label><input id="em" data-f="em" type="email" placeholder="Invite by email, e.g. sam@keystone.co" value="${inviteVal}" aria-invalid="${!!inviteErr}" aria-describedby="em-err">${roleSel(inviteRole,false,"ir","Role for invite")}<button class="btn primary" type="submit" data-f="send">Send invite</button><span class="err" id="em-err">${inviteErr}</span></form></td></tr>`+
+  view.map(u=>{const s=sel.has(u.id);return `<tr class="u${s?" sel":""}" data-id="${u.id}">
+<td class="c-sel"><input type="checkbox" class="chk" data-f="c${u.id}" ${s?"checked":""} aria-label="Select ${u.name}"></td>
+<td class="c-who"><div class="who"><span class="av" style="background:${u.c}" aria-hidden="true">${u.name.split(" ").map(w=>w[0]).join("")}</span><span style="min-width:0"><b>${u.name}</b><small>${u.email}</small></span></div></td>
+<td class="c-role">${roleSel(u.role,u.role==="Owner",`r${u.id}`,`Role for ${u.name}`)}<span class="saved" id="s${u.id}" aria-hidden="true">saved</span></td>
+<td class="c-team">${u.team}</td>
+<td class="c-st"><span class="st ${u.status}">${u.status[0].toUpperCase()+u.status.slice(1)}</span></td>
+<td class="c-last mono">${ago(u.last)}</td></tr>`}).join("");
+  document.querySelectorAll("th[data-k]").forEach(th=>th.setAttribute("aria-sort",th.dataset.k===sortK?(sortD>0?"ascending":"descending"):"none"));
+  const onPage=view.filter(u=>sel.has(u.id)).length;
+  all.checked=onPage===view.length;all.indeterminate=onPage>0&&onPage<view.length;
+  document.getElementById("total").textContent=users.length;
+  const a=(page-1)*PER+1,b=Math.min(page*PER,users.length);
+  document.getElementById("range").textContent=`${a}\u2013${b} of ${users.length}`;
+  const pg=document.getElementById("pager");
+  const arrow=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+  pg.innerHTML=`<button class="pg" type="button" data-p="${page-1}" data-f="pp" aria-label="Previous page" ${page===1?"disabled":""}>${arrow("M14 6l-6 6 6 6")}</button>`+
+    Array.from({length:pages},(_,i)=>`<button class="pg" type="button" data-p="${i+1}" data-f="p${i+1}" aria-label="Page ${i+1}" ${i+1===page?'aria-current="page"':""}>${i+1}</button>`).join("")+
+    `<button class="pg" type="button" data-p="${page+1}" data-f="pn" aria-label="Next page" ${page===pages?"disabled":""}>${arrow("M10 6l6 6-6 6")}</button>`;
+  const sb=document.getElementById("selbar"),n=sel.size;
+  sb.innerHTML=n?`<span><b>${n}</b> selected</span>${n<users.length?`<button class="btn" type="button" data-f="sa" id="sa">Select all ${users.length}</button>`:""}<button class="btn" type="button" data-f="sc" id="sc">Clear</button><button class="btn danger" type="button" data-f="rm" id="rm">Remove</button>`
+    :`<span class="hint"><kbd>Shift</kbd> + click selects a range</span>`;
+  if(f){const el=document.querySelector(`[data-f="${f}"]`);if(el&&!el.disabled)el.focus();else if(f.startsWith("p"))document.querySelector('[aria-current="page"]').focus()}
+}
+function toggle(id,shift,on){
+  if(shift&&anchor!=null){
+    const ids=view.map(u=>u.id),i=ids.indexOf(anchor),j=ids.indexOf(id);
+    if(i>-1){const [x,y]=i<j?[i,j]:[j,i];ids.slice(x,y+1).forEach(k=>on?sel.add(k):sel.delete(k));say(`${y-x+1} rows ${on?"selected":"cleared"}. ${sel.size} selected.`);anchor=id;return}
+  }
+  on?sel.add(id):sel.delete(id);anchor=id;
+}
+tb.addEventListener("click",e=>{
+  const c=e.target.closest("tr.u .chk");if(!c)return;
+  toggle(+c.closest("tr").dataset.id,e.shiftKey,c.checked);render();
+});
+tb.addEventListener("keydown",e=>{
+  const c=e.target.closest("tr.u .chk");if(!c)return;
+  const id=+c.closest("tr").dataset.id,i=view.findIndex(u=>u.id===id);
+  if(e.key===" "&&e.shiftKey){e.preventDefault();toggle(id,true,!sel.has(id));render()}
+  else if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();const n=view[i+(e.key==="ArrowDown"?1:-1)];if(n){if(e.shiftKey){sel.add(id);sel.add(n.id);anchor=n.id;render(`c${n.id}`);say(`${sel.size} selected`)}else tb.querySelector(`[data-f="c${n.id}"]`).focus()}}
+});
+tb.addEventListener("change",e=>{
+  const s=e.target.closest("select");if(!s)return;
+  if(s.dataset.f==="ir"){inviteRole=s.value;return}
+  const u=users.find(u=>u.id==s.closest("tr").dataset.id);u.role=s.value;
+  const tag=document.getElementById("s"+u.id);tag.classList.add("on");setTimeout(()=>tag.classList.remove("on"),1400);
+  say(`${u.name} is now ${u.role}`);
+});
+tb.addEventListener("input",e=>{if(e.target.id==="em"){inviteVal=e.target.value;if(inviteErr){inviteErr="";e.target.setAttribute("aria-invalid","false");document.getElementById("em-err").textContent=""}}});
+tb.addEventListener("submit",e=>{
+  e.preventDefault();const v=inviteVal.trim().toLowerCase();
+  if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/.test(v)){inviteErr="Enter a full email address, like sam@keystone.co";render("em");return}
+  if(users.some(u=>u.email===v)){inviteErr="That person is already a member";render("em");return}
+  const nm=v.split("@")[0].split(/[._-]/).map(w=>w[0].toUpperCase()+w.slice(1)).join(" ");
+  const u={id:Date.now(),name:nm,email:v,role:inviteRole,team:"Platform",status:"invited",last:99999+users.length,c:AVC[users.length%6]};
+  users.push(u);inviteVal="";sortK="last";sortD=-1;page=1;render("em");
+  const row=tb.querySelector(`tr[data-id="${u.id}"]`);row&&row.classList.add("flash");
+  say(`Invite sent to ${v} as ${inviteRole}`);
+});
+all.addEventListener("change",()=>{view.forEach(u=>all.checked?sel.add(u.id):sel.delete(u.id));render()});
+document.getElementById("selbar").addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.id==="sa"){users.forEach(u=>sel.add(u.id));say(`All ${users.length} members selected`);render("sc")}
+  if(b.id==="sc"){sel.clear();say("Selection cleared");render();all.focus()}
+  if(b.id==="rm"){const n=[...sel].filter(id=>users.find(u=>u.id===id).role!=="Owner");for(const id of n)users.splice(users.findIndex(u=>u.id===id),1);sel.clear();say(`${n.length} member${n.length===1?"":"s"} removed`);render();all.focus()}
+});
+document.getElementById("pager").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.disabled)return;page=+b.dataset.p;render(b.dataset.f)});
+document.querySelectorAll("th[data-k] .sort").forEach(b=>b.addEventListener("click",()=>{
+  const k=b.closest("th").dataset.k;if(sortK===k)sortD*=-1;else{sortK=k;sortD=1}page=1;render();
+  say(`Sorted by ${b.textContent.trim()}, ${sortD>0?"ascending":"descending"}`);
+}));
+render();
+</script>
+</body>
+</html>

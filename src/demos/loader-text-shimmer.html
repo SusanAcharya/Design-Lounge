@@ -1,0 +1,252 @@
+<!-- Design Lounge piece: loader-text-shimmer · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Verdure — Text loaders for slow answers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;1,400&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eceee6;--card:#f6f7f1;--line:#d3d8cc;--line-2:#b9c0b2;
+  --ink:#1e2a22;--ink-2:#4c5a50;--ink-3:#6f7b72;--ghost:#a3ada4;
+  --accent:#b5562a;--accent-soft:#f1dfd3;--focus:#b5562a;
+  --serif:"Spectral",Georgia,serif;--mono:"Spline Sans Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --sweep:2.2s;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--mono);display:flex;flex-direction:column;padding:32px 40px 40px;gap:24px;min-height:100%}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.brand svg{width:18px;height:18px;fill:none;stroke:var(--accent);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+h1{margin:10px 0 0;font:400 44px/1.02 var(--serif);letter-spacing:-.02em}
+h1 i{color:var(--ink-3)}
+.all{display:flex;align-items:center;gap:8px;height:40px;padding:0 18px;border-radius:999px;background:var(--ink);color:var(--card);font-size:13px;font-weight:500;transition:background .16s var(--ease)}
+.all:hover{background:#33443a}
+.all svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+.grid{flex:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:16px;min-height:0}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px 24px 16px;min-width:0}
+.top{display:flex;justify-content:space-between;gap:12px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.top b{font-weight:500;color:var(--ink)}
+.line{flex:1;display:flex;align-items:center;gap:14px;min-height:96px;font:400 32px/1.15 var(--serif);letter-spacing:-.01em}
+.line .lead{flex:none;width:28px;height:28px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;transition:background .3s var(--ease),border-color .3s var(--ease)}
+.line .lead svg{width:14px;height:14px;fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.line .lead .ck{display:none;stroke:var(--card)}
+.card[data-state=done] .lead{background:var(--accent);border-color:var(--accent)}
+.card[data-state=done] .lead .ck{display:block}
+.card[data-state=done] .lead .ld{display:none}
+.txt{min-width:0;overflow-wrap:anywhere}
+.cap{margin:0 0 14px;color:var(--ink-2);font-size:12px;max-width:52ch;min-height:54px}
+.foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px;font-size:12px;color:var(--ink-3)}
+.act{height:32px;padding:0 12px;border:1px solid var(--line-2);border-radius:999px;font-size:12px;color:var(--ink);transition:border-color .16s var(--ease),background .16s var(--ease)}
+.act:hover{border-color:var(--ink-2);background:var(--bg)}
+
+/* 1 shimmer */
+.shim{background:linear-gradient(100deg,var(--ghost) 0%,var(--ghost) 40%,var(--ink) 50%,var(--ghost) 60%,var(--ghost) 100%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep var(--sweep) linear infinite}
+@keyframes sweep{from{background-position:100% 0}to{background-position:0 0}}
+
+/* 2 thinking */
+.dots i{display:inline-block;font-style:normal;animation:blink 1.2s var(--ease) infinite;opacity:.2}
+.dots i:nth-child(2){animation-delay:.2s}.dots i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.2}30%{opacity:1}}
+.secs{font:400 13px/1 var(--mono);color:var(--ink-3);margin-left:6px;font-variant-numeric:tabular-nums}
+
+/* 3 typewriter */
+.caret{display:inline-block;width:.08em;min-width:2px;height:.9em;background:var(--accent);vertical-align:-.08em;margin-left:2px;animation:caret 1s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+.card[data-state=done] .caret{display:none}
+
+/* 4 scramble */
+.scr{font:400 26px/1.2 var(--mono);letter-spacing:-.01em}
+.scr .u{color:var(--ghost)}
+.scr .r{color:var(--ink)}
+.scr .ar{color:var(--accent)}
+
+.in{animation:rise .5s var(--ease-out) both}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){
+  .shim{animation:none;background:none;color:var(--ink-2)}
+  .dots i{animation:none;opacity:1}
+  .caret{animation:none}
+  .in{animation:none}
+  .lead,.act,.all{transition:none}
+}
+@media (max-width:1100px){h1{font-size:36px}.line{font-size:28px}.scr{font-size:22px}}
+@media (max-width:820px){.grid{grid-template-columns:1fr;grid-auto-rows:auto}}
+@media (max-width:640px){
+  body{padding:20px 16px 24px;gap:16px}
+  header{flex-direction:column;align-items:flex-start}
+  h1{font-size:28px}
+  .card{padding:16px}
+  .line{font-size:24px;min-height:80px}
+  .scr{font-size:17px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>Verdure · tenancy research</div>
+    <h1>Four ways to say <i>“still working”</i></h1>
+  </div>
+  <button class="all" id="resolveAll" type="button">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Resolve all</span>
+  </button>
+</header>
+
+<main class="grid">
+  <section class="card" id="c1" data-state="loading" aria-labelledby="t1">
+    <div class="top"><span id="t1"><b>01</b> Shimmer sweep</span><span>search</span></div>
+    <div class="line"><span class="lead" aria-hidden="true"><svg class="ld" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="txt"></span></div>
+    <p class="cap">A sweep of light crosses the words. Use when the work is known and the wait is under ten seconds.</p>
+    <div class="foot"><span class="st">Running</span><button class="act" type="button">Resolve</button></div>
+  </section>
+
+  <section class="card" id="c2" data-state="loading" aria-labelledby="t2">
+    <div class="top"><span id="t2"><b>02</b> Thinking ellipsis</span><span>reasoning</span></div>
+    <div class="line"><span class="lead" aria-hidden="true"><svg class="ld" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="txt"></span></div>
+    <p class="cap">Three dots breathe in turn, with honest elapsed seconds. Use when the model is reasoning and the length is unknown.</p>
+    <div class="foot"><span class="st">Running</span><button class="act" type="button">Resolve</button></div>
+  </section>
+
+  <section class="card" id="c3" data-state="loading" aria-labelledby="t3">
+    <div class="top"><span id="t3"><b>03</b> Typewriter status</span><span>multi-step</span></div>
+    <div class="line"><span class="lead" aria-hidden="true"><svg class="ld" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="txt"><span class="tw"></span><span class="caret"></span></span></div>
+    <p class="cap">Each step types itself, holds, and backs out for the next. Use when the job has named stages worth reading.</p>
+    <div class="foot"><span class="st">Step 1 of 4</span><button class="act" type="button">Resolve</button></div>
+  </section>
+
+  <section class="card" id="c4" data-state="loading" aria-labelledby="t4">
+    <div class="top"><span id="t4"><b>04</b> Scramble to resolve</span><span>matching</span></div>
+    <div class="line"><span class="lead" aria-hidden="true"><svg class="ld" viewBox="0 0 24 24"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="txt scr"></span></div>
+    <p class="cap">Noise settles into the record, left to right. Use when a value is being looked up and the answer is short.</p>
+    <div class="foot"><span class="st">Record 1 of 3</span><button class="act" type="button">Resolve</button></div>
+  </section>
+</main>
+<p class="sr" id="live" aria-live="polite"></p>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const live = document.getElementById('live');
+const say = t => { live.textContent = ''; setTimeout(() => live.textContent = t, 30); };
+const $ = (c, s) => c.querySelector(s);
+const cards = {};
+
+function card(id, start, finish) {
+  const el = document.getElementById(id), btn = $(el, '.act');
+  const c = cards[id] = { el, timers: [], start, finish,
+    clear() { this.timers.forEach(t => { clearTimeout(t); clearInterval(t); }); this.timers = []; },
+    run() { this.clear(); el.dataset.state = 'loading'; btn.textContent = 'Resolve'; start(c); },
+    done(quiet) { this.clear(); el.dataset.state = 'done'; btn.textContent = 'Replay'; finish(c); if (!quiet) say(el.querySelector('.txt').textContent.trim()); }
+  };
+  btn.addEventListener('click', () => el.dataset.state === 'done' ? c.run() : c.done());
+  return c;
+}
+
+/* 01 shimmer */
+card('c1', c => {
+  const t = $(c.el, '.txt'); t.className = 'txt shim'; t.textContent = 'Searching 2,418 case files';
+  $(c.el, '.st').textContent = 'Running';
+  t.setAttribute('aria-label', 'Loading: searching 2,418 case files');
+}, c => {
+  const t = $(c.el, '.txt'); t.className = 'txt in'; t.removeAttribute('aria-label');
+  t.textContent = 'Found 37 filings that cite clause 4.2';
+  $(c.el, '.st').textContent = 'Done in 3.8 s';
+});
+
+/* 02 thinking */
+card('c2', c => {
+  const t = $(c.el, '.txt'); let s = 0;
+  t.className = 'txt'; t.innerHTML = 'Thinking<span class="dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span><span class="secs">0s</span>';
+  $(c.el, '.st').textContent = 'Running';
+  c.secs = 0;
+  c.timers.push(setInterval(() => { c.secs++; $(t, '.secs').textContent = c.secs + 's'; }, 1000));
+}, c => {
+  const t = $(c.el, '.txt'), n = Math.max(c.secs || 0, 2); t.className = 'txt in';
+  t.textContent = `Thought for ${n} seconds`;
+  $(c.el, '.st').textContent = 'Reasoning hidden · expand';
+});
+
+/* 03 typewriter */
+const STEPS = ['Reading 14 sources', 'Comparing deposit clauses', 'Checking dates against the 2024 act', 'Drafting a summary'];
+card('c3', c => {
+  const tw = $(c.el, '.tw'), st = $(c.el, '.st'); let i = 0;
+  $(c.el, '.txt').className = 'txt';
+  tw.textContent = '';
+  if (!$(c.el, '.caret')) $(c.el, '.txt').insertAdjacentHTML('beforeend', '<span class="caret"></span>');
+  const type = () => {
+    const w = STEPS[i % STEPS.length] + '…'; let k = 0;
+    st.textContent = `Step ${i % STEPS.length + 1} of ${STEPS.length}`;
+    if (reduce) { tw.textContent = w; c.timers.push(setTimeout(() => { i++; type(); }, 2200)); return; }
+    const add = () => { tw.textContent = w.slice(0, ++k); if (k < w.length) c.timers.push(setTimeout(add, 38)); else c.timers.push(setTimeout(del, 1400)); };
+    const del = () => { tw.textContent = w.slice(0, --k); if (k > 0) c.timers.push(setTimeout(del, 18)); else { i++; c.timers.push(setTimeout(type, 220)); } };
+    add();
+  };
+  type();
+}, c => {
+  const t = $(c.el, '.txt'); t.className = 'txt in';
+  t.innerHTML = '<span class="tw">Summary ready · 312 words</span><span class="caret"></span>';
+  $(c.el, '.st').textContent = '4 of 4 steps';
+});
+
+/* 04 scramble */
+const RECS = [['INV-20931', 'Harbour Joinery'], ['INV-20944', 'Pellow & Daughters'], ['INV-20958', 'Marlow Glazing']];
+const GL = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%/';
+const rnd = () => GL[Math.random() * GL.length | 0];
+function paint(t, target, fixed) {
+  let h = '';
+  for (let j = 0; j < target.length; j++) {
+    const ch = target[j];
+    if (ch === ' ') { h += ' '; continue; }
+    if (j < fixed) h += ch === '→' ? '<span class="ar">→</span>' : `<span class="r">${ch === '&' ? '&amp;' : ch}</span>`;
+    else h += `<span class="u">${rnd()}</span>`;
+  }
+  t.innerHTML = h;
+}
+card('c4', c => {
+  const t = $(c.el, '.txt'), st = $(c.el, '.st'); let r = 0;
+  t.className = 'txt scr';
+  const go = () => {
+    const [a, b] = RECS[r % RECS.length], target = `${a} → ${b}`; let f = 0, tick = 0;
+    st.textContent = `Record ${r % RECS.length + 1} of ${RECS.length}`;
+    t.setAttribute('aria-label', 'Matching invoice');
+    if (reduce) { t.textContent = target; c.timers.push(setTimeout(() => { r++; go(); }, 2400)); return; }
+    const iv = setInterval(() => {
+      tick++; if (tick > 8 && tick % 2 === 0) f++;
+      paint(t, target, f);
+      if (f >= target.length) { clearInterval(iv); c.timers.push(setTimeout(() => { r++; go(); }, 1600)); }
+    }, 45);
+    c.timers.push(iv);
+  };
+  go();
+}, c => {
+  const t = $(c.el, '.txt'); t.className = 'txt scr in'; t.removeAttribute('aria-label');
+  t.innerHTML = '<span class="r">INV-20931</span> <span class="ar">→</span> <span class="r">Harbour Joinery</span>';
+  $(c.el, '.st').textContent = 'Matched · 98% confidence';
+});
+
+const all = document.getElementById('resolveAll');
+all.addEventListener('click', () => {
+  const list = Object.values(cards), anyLoading = list.some(c => c.el.dataset.state === 'loading');
+  list.forEach(c => anyLoading ? (c.el.dataset.state === 'loading' && c.done(true)) : c.run());
+  say(anyLoading ? 'All four resolved' : 'All four running again');
+  sync();
+});
+function sync() {
+  const anyLoading = Object.values(cards).some(c => c.el.dataset.state === 'loading');
+  $(all, 'span').textContent = anyLoading ? 'Resolve all' : 'Replay all';
+}
+document.querySelector('.grid').addEventListener('click', e => { if (e.target.closest('.act')) sync(); });
+Object.values(cards).forEach(c => c.run());
+</script>
+</body>
+</html>

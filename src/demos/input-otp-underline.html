@@ -1,0 +1,244 @@
+<!-- Design Lounge piece: input-otp-underline · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Quaystone Private — Verify it's you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Albert+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e2622;--bg-2:#123029;--line:#2a4a42;
+  --ink:#f2ebdd;--ink-2:#c3c0b2;--ink-3:#93a198;
+  --gold:#d9b26f;--err:#f08a6c;--focus:#d9b26f;
+  --serif:"Prata",Georgia,serif;--sans:"Albert Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --cell-w:64px;--cell-h:88px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg) radial-gradient(120% 90% at 50% 0%,var(--bg-2),var(--bg) 70%);color:var(--ink);font:15px/1.5 var(--sans);display:grid;place-items:center;padding:24px;min-height:100%;overflow-x:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+
+.frame{position:fixed;inset:24px;border:1px solid var(--line);pointer-events:none}
+.corner{position:fixed;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);background:var(--bg);padding:0 10px;line-height:1}
+.tl{top:19px;left:48px;color:var(--ink)}.tr{top:19px;right:48px}.bl{bottom:19px;left:48px}.br{bottom:19px;right:48px}
+
+.panel{width:min(520px,100%);position:relative}
+.eyebrow{display:flex;align-items:center;gap:10px;margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.eyebrow::before{content:"";width:24px;height:1px;background:var(--gold)}
+h1{margin:18px 0 0;font:400 40px/1.12 var(--serif);letter-spacing:-.01em}
+.sub{margin:14px 0 0;color:var(--ink-2);max-width:42ch}
+.sub b{color:var(--ink);font-weight:500;letter-spacing:.04em}
+
+.otp{display:flex;align-items:flex-end;gap:16px;margin:44px 0 0}
+.otp .sep{width:10px;height:1px;background:var(--ink-3);margin:0 2px 40px}
+.cell{position:relative;width:var(--cell-w);height:var(--cell-h)}
+.cell input{width:100%;height:100%;border:0;background:none;text-align:center;font:400 54px/1 var(--serif);color:var(--ink);caret-color:transparent;padding:0 0 12px;outline:none;border-radius:0}
+.cell::before,.cell::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px}
+.cell::before{background:rgba(242,235,221,.22);transition:background .2s var(--ease)}
+.cell::after{background:var(--gold);height:3px;transform:scaleX(0);transition:transform .28s var(--ease-out),background .2s var(--ease)}
+.cell.filled::before{background:var(--ink-2)}
+.cell:focus-within::after{transform:scaleX(1)}
+.cell:focus-within input:placeholder-shown{color:var(--ink-3)}
+.cell .blink{position:absolute;left:50%;top:20px;width:2px;height:46px;margin-left:-1px;background:var(--gold);opacity:0;pointer-events:none}
+.cell:focus-within input:placeholder-shown + .blink{animation:blink 1s steps(1) infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.cell input:focus-visible{outline:none}
+
+.otp.checking .cell::before{animation:pulse 0.9s var(--ease) infinite;animation-delay:calc(var(--i) * 80ms)}
+@keyframes pulse{0%,100%{background:rgba(242,235,221,.22)}50%{background:var(--gold)}}
+.otp.error .cell::before,.otp.error .cell::after{background:var(--err)}
+.otp.error .cell input{color:var(--err)}
+.otp.shake{animation:shake .42s var(--ease)}
+@keyframes shake{0%,100%{transform:none}15%{transform:translateX(-10px)}35%{transform:translateX(8px)}55%{transform:translateX(-6px)}75%{transform:translateX(3px)}}
+.otp.ok .cell::before{background:var(--gold)}
+.otp.ok .cell::after{transform:scaleX(0)}
+.otp.ok .cell input{color:var(--gold);animation:lift .5s var(--ease-out) both;animation-delay:calc(var(--i) * 60ms)}
+@keyframes lift{0%{transform:none}40%{transform:translateY(-8px)}100%{transform:none}}
+
+.msg{display:flex;align-items:center;gap:10px;min-height:24px;margin:22px 0 0;font-size:14px;color:var(--ink-2)}
+.msg svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.msg.err{color:var(--err)}
+.msg.ok{color:var(--gold)}
+.msg.ok path{stroke-dasharray:24;stroke-dashoffset:24;animation:draw .5s var(--ease-out) .15s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:36px;padding-top:20px;border-top:1px solid var(--line);font-size:14px}
+.resend{color:var(--ink-3);font-variant-numeric:tabular-nums;min-height:40px;display:flex;align-items:center}
+.resend button{color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:5px;min-height:40px}
+.resend button:hover{color:var(--gold)}
+.alt{color:var(--ink-2);min-height:40px}
+.alt:hover{color:var(--ink)}
+.hint{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:12px;color:var(--ink-3)}
+.hint b{font:400 14px/1 var(--serif);letter-spacing:.18em;color:var(--ink-2)}
+.replay{margin-left:auto;font-size:13px;color:var(--gold);min-height:40px;display:none}
+.done .replay{display:inline-block}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){
+  .otp.shake,.otp.ok .cell input,.otp.checking .cell::before,.cell:focus-within input:placeholder-shown + .blink{animation:none}
+  .cell:focus-within input:placeholder-shown + .blink{opacity:1}
+  .otp.checking .cell::before{background:var(--gold)}
+  .cell::after,.cell::before{transition:none}
+  .msg.ok path{animation:none;stroke-dashoffset:0}
+}
+@media (max-width:640px){
+  :root{--cell-w:40px;--cell-h:60px}
+  body{padding:56px 20px}
+  .frame{inset:12px}.corner{display:none}.tl{display:block;top:7px;left:28px}
+  h1{font-size:30px}
+  .otp{gap:8px;margin-top:32px}
+  .otp .sep{width:6px;margin:0 0 30px}
+  .cell input{font-size:34px;padding-bottom:10px}
+  .cell .blink{top:14px;height:28px}
+  .row{flex-direction:column;align-items:flex-start;gap:4px}
+}
+</style>
+</head>
+<body>
+<div class="frame" aria-hidden="true"></div>
+<span class="corner tl" aria-hidden="true">Quaystone Private</span>
+<span class="corner tr" aria-hidden="true">Secure sign-in</span>
+<span class="corner bl" aria-hidden="true">Session 7F-22A · Lisbon</span>
+<span class="corner br" aria-hidden="true">Desk +351 210 000 418</span>
+
+<main class="panel" id="panel">
+  <p class="eyebrow">Step 2 of 2</p>
+  <h1>Enter the code we sent to your phone</h1>
+  <p class="sub">Six digits, sent by text to <b>+351 ••• ••• 417</b>. It expires in ten minutes.</p>
+
+  <form id="form" autocomplete="off" novalidate>
+    <fieldset style="border:0;margin:0;padding:0;min-width:0">
+      <legend class="sr">Verification code, 6 digits</legend>
+      <div class="otp" id="otp"></div>
+    </fieldset>
+  </form>
+
+  <p class="msg" id="msg" role="status" aria-live="polite"></p>
+
+  <div class="row">
+    <span class="resend" id="resend"></span>
+    <button class="alt" type="button" id="alt">Call me instead</button>
+  </div>
+  <div style="display:flex;align-items:center">
+    <span class="hint">Demo code <b id="code">482916</b></span>
+    <button class="replay" type="button" id="replay">Start again</button>
+  </div>
+</main>
+
+<script>
+const N = 6, WAIT = 30;
+let CODE = '482916', attempts = 3, left = WAIT, timer = null, busy = false;
+const otp = document.getElementById('otp'), msg = document.getElementById('msg'), panel = document.getElementById('panel');
+const resend = document.getElementById('resend'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ICON = {
+  err: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>',
+  ok: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+};
+
+otp.innerHTML = Array.from({ length: N }, (_, i) =>
+  (i === 3 ? '<span class="sep" aria-hidden="true"></span>' : '') +
+  `<div class="cell" style="--i:${i}"><input inputmode="numeric" pattern="[0-9]*" maxlength="1" placeholder=" " ${i === 0 ? 'autocomplete="one-time-code"' : 'autocomplete="off"'} aria-label="Digit ${i + 1} of ${N}"><span class="blink"></span></div>`
+).join('');
+const ins = [...otp.querySelectorAll('input')];
+
+function setMsg(kind, text) { msg.className = 'msg ' + (kind || ''); msg.innerHTML = (ICON[kind] || '') + `<span>${text}</span>`; }
+function sync() { ins.forEach(x => x.parentElement.classList.toggle('filled', !!x.value)); }
+function value() { return ins.map(x => x.value).join(''); }
+function clearState() { otp.classList.remove('error', 'shake'); if (msg.classList.contains('err')) setMsg('', ''); }
+
+function fillFrom(start, digits) {
+  let i = start;
+  for (const d of digits) { if (i >= N) break; ins[i++].value = d; }
+  sync();
+  (ins[Math.min(i, N - 1)]).focus();
+  if (value().length === N) check();
+}
+
+ins.forEach((inp, i) => {
+  inp.addEventListener('focus', () => inp.select());
+  inp.addEventListener('input', () => {
+    if (busy) return;
+    clearState();
+    const d = inp.value.replace(/\D/g, '');
+    inp.value = '';
+    if (d) fillFrom(i, d); else sync();
+  });
+  inp.addEventListener('keydown', e => {
+    if (busy) { if (e.key !== 'Tab') e.preventDefault(); return; }
+    if (e.key === 'Backspace') {
+      e.preventDefault(); clearState();
+      if (inp.value) inp.value = ''; else if (i > 0) { ins[i - 1].value = ''; ins[i - 1].focus(); }
+      sync();
+    } else if (e.key === 'Delete') { e.preventDefault(); inp.value = ''; sync(); }
+    else if (e.key === 'ArrowLeft' && i > 0) { e.preventDefault(); ins[i - 1].focus(); }
+    else if (e.key === 'ArrowRight' && i < N - 1) { e.preventDefault(); ins[i + 1].focus(); }
+    else if (e.key === 'Home') { e.preventDefault(); ins[0].focus(); }
+    else if (e.key === 'End') { e.preventDefault(); ins[N - 1].focus(); }
+    else if (e.key.length === 1 && !/\d/.test(e.key) && !e.metaKey && !e.ctrlKey) e.preventDefault();
+  });
+  inp.addEventListener('paste', e => {
+    e.preventDefault(); if (busy) return;
+    const d = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, N);
+    if (!d) return;
+    clearState();
+    if (d.length === N) { ins.forEach(x => x.value = ''); fillFrom(0, d); } else fillFrom(i, d);
+  });
+});
+
+function check() {
+  busy = true; otp.classList.add('checking'); setMsg('', 'Checking code…');
+  setTimeout(() => {
+    otp.classList.remove('checking');
+    if (value() === CODE) return success();
+    attempts--; busy = false;
+    otp.classList.add('error');
+    if (!reduce) { otp.classList.remove('shake'); void otp.offsetWidth; otp.classList.add('shake'); }
+    if (attempts > 0) setMsg('err', `That code doesn't match. ${attempts} ${attempts === 1 ? 'attempt' : 'attempts'} left.`);
+    else { setMsg('err', 'Too many tries. We sent you a fresh code.'); newCode(); }
+    setTimeout(() => { ins.forEach(x => x.value = ''); sync(); ins[0].focus(); }, reduce ? 0 : 520);
+  }, reduce ? 200 : 700);
+}
+
+function success() {
+  otp.classList.add('ok'); panel.classList.add('done');
+  ins.forEach(x => x.readOnly = true);
+  setMsg('ok', 'Verified. Opening your accounts…');
+  clearInterval(timer); resend.textContent = 'Code accepted';
+  document.getElementById('replay').focus({ preventScroll: true });
+}
+
+function tick() {
+  if (left > 0) resend.textContent = `Resend code in 0:${String(left).padStart(2, '0')}`;
+  else { resend.innerHTML = '<button type="button" id="again">Resend code</button>'; clearInterval(timer); }
+}
+function startTimer() { left = WAIT; tick(); clearInterval(timer); timer = setInterval(() => { left--; tick(); }, 1000); }
+function newCode() {
+  CODE = String(100000 + Math.floor(Math.random() * 900000));
+  document.getElementById('code').textContent = CODE;
+  attempts = 3; startTimer();
+}
+resend.addEventListener('click', e => {
+  if (!e.target.closest('#again')) return;
+  newCode(); clearState(); setMsg('', 'New code sent to +351 ••• ••• 417.');
+  ins.forEach(x => x.value = ''); sync(); ins[0].focus();
+});
+document.getElementById('alt').addEventListener('click', () => setMsg('', 'Calling +351 ••• ••• 417 now. The voice will read six digits twice.'));
+document.getElementById('replay').addEventListener('click', () => {
+  otp.classList.remove('ok'); panel.classList.remove('done'); busy = false;
+  ins.forEach(x => { x.value = ''; x.readOnly = false; }); sync();
+  CODE = '482916'; document.getElementById('code').textContent = CODE;
+  attempts = 3; setMsg('', ''); startTimer(); ins[0].focus();
+});
+
+ins[0].value = '4'; ins[1].value = '8'; sync();
+startTimer();
+ins[2].focus({ preventScroll: true });
+</script>
+</body>
+</html>

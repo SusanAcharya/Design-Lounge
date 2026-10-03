@@ -1,0 +1,321 @@
+<!-- Design Lounge piece: notif-incoming-call · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Incoming call</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Rethink+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --app:#f2ede4;--app-2:#e8e0d3;--app-ink:#221d18;--app-ink-2:#5e554b;--app-line:#d6cbbb;
+  --night:#120f0d;--night-2:#1d1915;--night-3:#2a241f;--glass:rgba(29,25,21,.9);
+  --text:#f4eee6;--text-2:#b9ada0;--text-3:#8d8276;
+  --accept:#3bd07f;--decline:#f0524a;--caller:#d9734e;--focus:#f6c48f;
+  --serif:"Gloock",Georgia,serif;--sans:"Rethink Sans",system-ui,sans-serif;
+  --sheet:cubic-bezier(.32,.72,0,1);--expo:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{position:relative;overflow:hidden;font:15px/1.4 var(--sans);color:var(--app-ink);background:var(--app)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* app behind */
+.app{padding:150px 20px 40px;transition:filter .46s var(--ease),transform .46s var(--sheet)}
+body.is-full .app{transform:scale(.94);filter:brightness(.6)}
+.app small{display:block;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--app-ink-2)}
+.app h1{margin:4px 0 20px;font:400 38px/1 var(--serif);letter-spacing:-.01em}
+.slot{display:grid;grid-template-columns:56px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--app-line)}
+.slot time{font-size:13px;font-weight:600;color:var(--app-ink-2);font-variant-numeric:tabular-nums}
+.slot b{display:block;font-weight:600}
+.slot span{font-size:13px;color:var(--app-ink-2)}
+.slot.now b::after{content:"";display:inline-block;width:7px;height:7px;margin-left:8px;border-radius:50%;background:var(--caller);vertical-align:2px}
+.toast{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 12px 16px;border-radius:16px;background:var(--app-2);font-size:14px;opacity:0;transform:translateY(8px);transition:opacity .24s var(--ease),transform .24s var(--ease);pointer-events:none}
+.toast.on{opacity:1;transform:none;pointer-events:auto}
+.again{min-height:40px;padding:0 16px;border-radius:20px;background:var(--app-ink);color:var(--app);font-weight:600;font-size:14px;white-space:nowrap}
+
+/* the call surface */
+.call{position:absolute;z-index:5;top:54px;left:12px;right:12px;height:78px;border-radius:30px;background:var(--glass);color:var(--text);
+  -webkit-backdrop-filter:blur(24px) saturate(1.4);backdrop-filter:blur(24px) saturate(1.4);
+  box-shadow:0 18px 40px -12px rgba(18,15,13,.55),inset 0 0 0 1px rgba(255,255,255,.07);overflow:hidden;
+  transition:top .46s var(--sheet),left .46s var(--sheet),right .46s var(--sheet),height .46s var(--sheet),border-radius .46s var(--sheet),background .46s var(--ease),transform .5s var(--expo),opacity .3s var(--ease)}
+.call.arrive{transform:translateY(-150%)}
+.call.gone{transform:translateY(-150%);opacity:0;pointer-events:none}
+.call[data-state="full"],.call[data-state="live"]{top:0;left:0;right:0;height:100%;border-radius:0;
+  background:radial-gradient(120% 60% at 50% 22%,#4a2a1c 0%,var(--night-2) 55%,var(--night) 100%)}
+.call[data-state="pill"]{left:118px;right:118px;height:40px;border-radius:20px;background:var(--night)}
+.layer{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .22s var(--ease),visibility 0s .22s}
+.call[data-state="banner"] .l-banner,.call[data-state="missed"] .l-banner,.call[data-state="ended"] .l-banner,
+.call[data-state="full"] .l-full,.call[data-state="live"] .l-live,.call[data-state="pill"] .l-pill{opacity:1;visibility:visible;transition:opacity .3s var(--ease) .14s,visibility 0s}
+
+/* banner */
+.l-banner{display:flex;align-items:center;gap:12px;padding:0 14px}
+.av{position:relative;flex:none;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;background:var(--caller);color:#2a130a;font:400 20px/1 var(--serif)}
+.av::before,.av::after{content:"";position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--caller);animation:ring 2.4s var(--ease) infinite}
+.av::after{animation-delay:1.2s}
+.call:not([data-state="banner"]) .l-banner .av::before,.call:not([data-state="banner"]) .l-banner .av::after{animation:none;opacity:0}
+@keyframes ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.6);opacity:0}}
+.who{flex:1;min-width:0;text-align:left;min-height:56px;display:flex;flex-direction:column;justify-content:center;border-radius:14px}
+.who b{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who span{font-size:13px;color:var(--text-2)}
+.rb{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;transition:transform .14s var(--ease),filter .14s var(--ease)}
+.rb:hover{filter:brightness(1.08)}.rb:active{transform:scale(.92)}
+.rb.no{background:var(--decline);color:#fff}.rb.no svg{transform:rotate(135deg)}
+.rb.yes{background:var(--accept);color:#06240f}
+.rb.yes svg{animation:wiggle 2.4s var(--ease) infinite}
+@keyframes wiggle{0%,70%,100%{transform:rotate(0)}76%{transform:rotate(-14deg)}82%{transform:rotate(12deg)}88%{transform:rotate(-8deg)}94%{transform:rotate(4deg)}}
+.call[data-state="missed"] .rb,.call[data-state="ended"] .rb{display:none}
+.cb{display:none;min-height:40px;padding:0 16px;border-radius:20px;background:var(--accept);color:#06240f;font-weight:600;font-size:14px}
+.call[data-state="missed"] .cb{display:block}
+
+/* full ringing */
+.l-full,.l-live{display:flex;flex-direction:column;align-items:center;padding:54px 24px 34px}
+.top{align-self:stretch;display:flex;justify-content:space-between;align-items:center;height:44px}
+.ghost{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;color:var(--text-2);background:rgba(255,255,255,.06)}
+.ghost:hover{color:var(--text)}
+.top span{font-size:13px;font-weight:500;letter-spacing:.04em;color:var(--text-3)}
+.big{position:relative;margin-top:40px;display:grid;place-items:center;width:128px;height:128px;border-radius:50%;background:var(--caller);color:#2a130a;font:400 52px/1 var(--serif)}
+.big i{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(217,115,78,.8);animation:ring2 3s var(--ease) infinite}
+.big i:nth-child(2){animation-delay:1s}.big i:nth-child(3){animation-delay:2s}
+@keyframes ring2{0%{transform:scale(1);opacity:.8}100%{transform:scale(2.1);opacity:0}}
+.name{margin:44px 0 6px;font:400 40px/1.05 var(--serif);letter-spacing:-.01em;text-align:center}
+.meta{margin:0;font-size:15px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.chips{display:flex;gap:12px;margin-top:auto}
+.chip{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:22px;background:rgba(255,255,255,.08);color:var(--text);font-size:14px;font-weight:500}
+.chip:hover{background:rgba(255,255,255,.13)}
+.chip svg{width:18px;height:18px}
+.track{position:relative;width:100%;max-width:330px;height:76px;margin-top:20px;border-radius:38px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.track p{position:absolute;inset:0;margin:0;display:grid;place-items:center;padding-left:56px;font-size:17px;font-weight:500;color:transparent;
+  background:linear-gradient(90deg,var(--text-3) 0%,var(--text-3) 40%,var(--text) 50%,var(--text-3) 60%,var(--text-3) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;animation:shine 2.8s linear infinite;transition:opacity .14s}
+@keyframes shine{from{background-position:100% 0}to{background-position:-50% 0}}
+.knob{position:absolute;left:6px;top:6px;display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:var(--accept);color:#06240f;touch-action:none;cursor:grab;box-shadow:0 6px 18px -6px rgba(59,208,127,.7)}
+.knob.back{transition:transform .32s var(--sheet)}
+.knob:active{cursor:grabbing}
+.knob svg{width:26px;height:26px}
+.decl{margin-top:16px;min-height:44px;padding:0 24px;border-radius:22px;color:var(--decline);font-weight:600;font-size:15px}
+.decl:hover{background:rgba(240,82,74,.12)}
+.replies{position:absolute;left:12px;right:12px;bottom:12px;padding:8px;border-radius:26px;background:var(--night-3);box-shadow:0 -10px 30px rgba(0,0,0,.4);transform:translateY(120%);transition:transform .36s var(--sheet)}
+.replies.open{transform:none}
+.replies h2{margin:8px 12px 6px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+.replies button{display:block;width:100%;min-height:48px;padding:0 14px;border-radius:16px;text-align:left;font-size:15px}
+.replies button:hover{background:rgba(255,255,255,.07)}
+.replies .x{color:var(--text-2);text-align:center}
+
+/* connected */
+.l-live .big{margin-top:28px;width:96px;height:96px;font-size:40px}
+.l-live .name{margin-top:22px;font-size:34px}
+.l-live .meta{color:var(--accept)}
+.pad{display:grid;grid-template-columns:repeat(3,76px);gap:22px 30px;margin-top:auto}
+.tg{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;color:var(--text-2)}
+.tg span{display:grid;place-items:center;width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.1);color:var(--text);transition:background .16s var(--ease),color .16s var(--ease)}
+.tg:hover span{background:rgba(255,255,255,.16)}
+.tg[aria-pressed="true"] span{background:var(--text);color:var(--night)}
+.tg svg{width:26px;height:26px}
+.end{margin-top:30px;display:grid;place-items:center;width:76px;height:76px;border-radius:50%;background:var(--decline);color:#fff}
+.end svg{width:30px;height:30px;transform:rotate(135deg)}
+.end:active{transform:scale(.94)}
+
+/* pill */
+.l-pill{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;color:var(--accept);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums}
+.l-pill svg{width:16px;height:16px}
+.l-pill i{width:3px;height:12px;border-radius:2px;background:var(--accept);animation:eq 1s var(--ease) infinite alternate}
+.l-pill i:nth-of-type(2){animation-delay:.3s}.l-pill i:nth-of-type(3){animation-delay:.6s}
+@keyframes eq{to{transform:scaleY(.35)}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:1ms!important;transition-delay:0s!important}
+  .track p{color:var(--text-2);background:none}
+}
+@media (max-width:370px){.pad{grid-template-columns:repeat(3,72px);gap:18px 22px}.name{font-size:34px}}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <small>Daybook · Thursday</small>
+  <h1>8 October</h1>
+  <div class="slot"><time>09:30</time><div><b>Studio walkthrough</b><span>Room 3 · 45 min</span></div></div>
+  <div class="slot now"><time>11:00</time><div><b>Call Inés re: tile samples</b><span>She is calling you</span></div></div>
+  <div class="slot"><time>13:15</time><div><b>Lunch with Teo</b><span>Bàrbara's, Carrer Verdi</span></div></div>
+  <div class="slot"><time>16:00</time><div><b>Pick up prints</b><span>Order 2214 · ready</span></div></div>
+  <div class="toast" id="toast" aria-hidden="true"><span id="toastText">Call ended</span><button class="again" id="again" type="button" tabindex="-1">Ring again</button></div>
+</main>
+
+<section class="call arrive" id="call" data-state="banner" aria-labelledby="callTitle">
+  <h2 class="sr" id="callTitle">Incoming call from Inés Calderón</h2>
+
+  <div class="layer l-banner">
+    <div class="av" aria-hidden="true">IC</div>
+    <button class="who" id="expand" type="button" aria-label="Open call screen">
+      <b>Inés Calderón</b><span id="bannerSub">mobile · ringing</span>
+    </button>
+    <button class="rb no" id="bDecline" type="button" aria-label="Decline call">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+    </button>
+    <button class="rb yes" id="bAccept" type="button" aria-label="Accept call">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+    </button>
+    <button class="cb" id="callBack" type="button">Call back</button>
+  </div>
+
+  <div class="layer l-full" role="group" aria-label="Call screen">
+    <div class="top">
+      <button class="ghost" id="shrink" type="button" aria-label="Back to banner">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <span>MOBILE · +34 612 48 09 31</span>
+      <span style="width:44px"></span>
+    </div>
+    <div class="big" aria-hidden="true"><i></i><i></i><i></i>IC</div>
+    <p class="name">Inés Calderón</p>
+    <p class="meta" id="ringMeta">Ringing · 0:00</p>
+    <div class="chips">
+      <button class="chip" id="remind" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 1.5M9 3h6"/></svg>Remind me</button>
+      <button class="chip" id="msg" type="button" aria-expanded="false" aria-controls="replies"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>Message</button>
+    </div>
+    <div class="track" id="track">
+      <p aria-hidden="true">slide to answer</p>
+      <button class="knob" id="knob" type="button" aria-label="Slide to answer. Press Enter to answer.">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+      </button>
+    </div>
+    <button class="decl" id="fDecline" type="button">Decline</button>
+    <div class="replies" id="replies" role="group" aria-label="Decline with a message">
+      <h2>Reply and decline</h2>
+      <button type="button" data-r="Can't talk now. Call you at 1?" tabindex="-1">Can't talk now. Call you at 1?</button>
+      <button type="button" data-r="In the studio. Text me the tile codes." tabindex="-1">In the studio. Text me the tile codes.</button>
+      <button type="button" data-r="On my way to you." tabindex="-1">On my way to you.</button>
+      <button type="button" class="x" id="rClose" tabindex="-1">Cancel</button>
+    </div>
+  </div>
+
+  <div class="layer l-live" role="group" aria-label="Call in progress">
+    <div class="top">
+      <button class="ghost" id="mini" type="button" aria-label="Minimise call">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <span>HD VOICE</span>
+      <span style="width:44px"></span>
+    </div>
+    <div class="big" aria-hidden="true">IC</div>
+    <p class="name">Inés Calderón</p>
+    <p class="meta" id="liveMeta">0:00</p>
+    <div class="pad">
+      <button class="tg" type="button" aria-pressed="false"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>Mute</button>
+      <button class="tg" type="button" aria-pressed="false"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h.01M12 6h.01M18 6h.01M6 12h.01M12 12h.01M18 12h.01M6 18h.01M12 18h.01M18 18h.01" stroke-width="3"/></svg></span>Keypad</button>
+      <button class="tg" type="button" aria-pressed="false"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></span>Speaker</button>
+      <button class="tg" type="button" aria-pressed="false"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>Add call</button>
+      <button class="tg" type="button" aria-pressed="false"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="12" height="10" rx="2"/><path d="m15 11 6-3v8l-6-3"/></svg></span>Video</button>
+      <button class="tg" type="button" aria-pressed="false"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg></span>Hold</button>
+    </div>
+    <button class="end" id="end" type="button" aria-label="End call">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+    </button>
+  </div>
+
+  <button class="layer l-pill" id="pill" type="button" aria-label="Return to call">
+    <i></i><i></i><i></i><span id="pillTime">0:00</span>
+  </button>
+</section>
+<p class="sr" id="live" aria-live="polite" aria-atomic="true"></p>
+
+<script>
+const $=id=>document.getElementById(id);
+const call=$('call'),knob=$('knob'),track=$('track'),replies=$('replies'),toast=$('toast');
+let ringT=0,liveT=0,ringI=0,liveI=0,hideT=0;
+const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+const say=t=>{$('live').textContent='';requestAnimationFrame(()=>$('live').textContent=t)};
+
+function setState(s){
+  call.dataset.state=s;
+  document.body.classList.toggle('is-full',s==='full'||s==='live');
+  call.setAttribute('role',s==='full'||s==='live'?'dialog':'region');
+  if(s==='full'||s==='live')call.setAttribute('aria-modal','true');else call.removeAttribute('aria-modal');
+  $('app').inert=(s==='full'||s==='live');
+  const layer='.l-'+(['missed','ended'].includes(s)?'banner':s);
+  call.querySelectorAll('.layer').forEach(l=>l.inert=!l.matches(layer));
+}
+function ring(){
+  clearInterval(ringI);ringT=0;$('ringMeta').textContent='Ringing · 0:00';
+  ringI=setInterval(()=>{ringT++;$('ringMeta').textContent='Ringing · '+fmt(ringT);if(ringT>=30)missed()},1000);
+}
+function start(){
+  clearTimeout(hideT);clearInterval(liveI);
+  toast.classList.remove('on');toast.setAttribute('aria-hidden','true');$('again').tabIndex=-1;
+  $('bannerSub').textContent='mobile · ringing';
+  closeReplies();resetKnob();
+  call.inert=false;call.classList.remove('gone');call.classList.add('arrive');setState('banner');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>call.classList.remove('arrive')));
+  ring();say('Incoming call from Inés Calderón.');
+}
+function leave(msg,announce){
+  clearInterval(ringI);clearInterval(liveI);
+  call.classList.add('gone');
+  if(call.dataset.state==='full'||call.dataset.state==='live')setState('banner');
+  call.inert=true;
+  $('toastText').textContent=msg;
+  setTimeout(()=>{toast.classList.add('on');toast.setAttribute('aria-hidden','false');$('again').tabIndex=0;$('again').focus({preventScroll:true})},380);
+  say(announce||msg);
+}
+function decline(msg){leave(msg||'Declined. Inés hears busy.')}
+function answer(){
+  clearInterval(ringI);closeReplies();liveT=0;$('liveMeta').textContent='0:00';$('pillTime').textContent='0:00';
+  setState('live');
+  liveI=setInterval(()=>{liveT++;$('liveMeta').textContent=fmt(liveT);$('pillTime').textContent=fmt(liveT)},1000);
+  say('Call connected with Inés Calderón.');
+  setTimeout(()=>$('mini').focus({preventScroll:true}),320);
+}
+function missed(){
+  clearInterval(ringI);closeReplies();setState('missed');
+  $('bannerSub').textContent='Missed call · 11:02';say('Missed call from Inés Calderón.');
+}
+function end(){
+  clearInterval(liveI);const d=fmt(liveT);setState('ended');
+  call.querySelectorAll('.tg').forEach(t=>t.setAttribute('aria-pressed','false'));
+  $('bannerSub').textContent='Call ended · '+d;say('Call ended. '+d+'.');
+  hideT=setTimeout(()=>leave('Call with Inés · '+d,' '),1800);
+}
+function expand(){setState('full');setTimeout(()=>knob.focus({preventScroll:true}),320)}
+function closeReplies(){replies.classList.remove('open');$('msg').setAttribute('aria-expanded','false');replies.querySelectorAll('button').forEach(b=>b.tabIndex=-1)}
+
+$('expand').onclick=expand;
+$('bAccept').onclick=answer;
+$('bDecline').onclick=()=>decline();
+$('fDecline').onclick=()=>decline();
+$('shrink').onclick=()=>{closeReplies();setState('banner');$('expand').focus({preventScroll:true})};
+$('remind').onclick=()=>decline('Reminder set for 12:00.');
+$('msg').onclick=()=>{const o=!replies.classList.contains('open');replies.classList.toggle('open',o);$('msg').setAttribute('aria-expanded',o);replies.querySelectorAll('button').forEach(b=>b.tabIndex=o?0:-1);if(o)setTimeout(()=>replies.querySelector('button').focus(),200)};
+$('rClose').onclick=()=>{closeReplies();$('msg').focus()};
+replies.addEventListener('click',e=>{const r=e.target.closest('[data-r]');if(r)decline('Sent: “'+r.dataset.r+'”')});
+$('mini').onclick=()=>{setState('pill');setTimeout(()=>$('pill').focus({preventScroll:true}),300)};
+$('pill').onclick=()=>{setState('live');setTimeout(()=>$('mini').focus({preventScroll:true}),320)};
+$('end').onclick=end;
+$('callBack').onclick=()=>{answer()};
+$('again').onclick=start;
+call.querySelectorAll('.tg').forEach(t=>t.onclick=()=>t.setAttribute('aria-pressed',t.getAttribute('aria-pressed')!=='true'));
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  const s=call.dataset.state;
+  if(replies.classList.contains('open')){closeReplies();$('msg').focus()}
+  else if(s==='full'){setState('banner');$('expand').focus()}
+  else if(s==='live')$('mini').click();
+});
+
+/* slide to answer */
+let dx=0,x0=0,drag=false;
+const max=()=>track.clientWidth-knob.offsetWidth-12;
+function resetKnob(){knob.classList.add('back');knob.style.transform='';track.querySelector('p').style.opacity=''}
+knob.addEventListener('pointerdown',e=>{drag=true;x0=e.clientX;knob.classList.remove('back');knob.setPointerCapture(e.pointerId)});
+knob.addEventListener('pointermove',e=>{if(!drag)return;dx=Math.max(0,Math.min(max(),e.clientX-x0));knob.style.transform=`translateX(${dx}px)`;track.querySelector('p').style.opacity=1-dx/max()*1.6});
+knob.addEventListener('pointerup',()=>{if(!drag)return;drag=false;if(dx>max()*.85){knob.style.transform=`translateX(${max()}px)`;setTimeout(()=>{answer();resetKnob()},140)}else resetKnob();dx=0});
+knob.addEventListener('click',e=>{if(e.detail===0)answer()});
+knob.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();answer()}});
+
+setState('banner');
+setTimeout(start,250);
+</script>
+</body>
+</html>

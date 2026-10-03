@@ -1,0 +1,226 @@
+<!-- Design Lounge piece: card-cafe-menu-board · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Juniper &amp; Ash · Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#cdbba0;--wood:#6b4528;--wood-2:#8a5d39;--oak:#b98a57;--oak-2:#d2a874;
+  --slate:#1f2a26;--chalk:#ece8df;--chalk-2:#b9b8ae;--yellow:#f2d57e;--pink:#e9a6a0;
+  --felt:#161616;--letter:#f4f1ea;--letter-2:#a9a59c;--red:#d9452b;
+  --hand:"Caveat",cursive;--block:"Antonio","Arial Narrow",sans-serif;
+  --std:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:16px/1.3 var(--block);color:var(--slate);overflow-x:hidden;
+  display:grid;place-items:center;align-content:center;gap:20px;padding:24px 16px;
+  background:radial-gradient(ellipse 70% 60% at 50% 35%,#ddcdb2,transparent 70%),var(--wall);
+}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--slate);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.frame{
+  width:min(600px,100%);padding:16px;border-radius:8px;position:relative;
+  background:repeating-linear-gradient(92deg,rgba(0,0,0,.12) 0 2px,transparent 2px 9px,rgba(255,255,255,.05) 9px 11px,transparent 11px 23px),linear-gradient(var(--wood-2),var(--wood));
+  box-shadow:0 2px 0 rgba(255,255,255,.18) inset,0 30px 40px -24px rgba(60,35,15,.6),0 6px 10px rgba(60,35,15,.25);
+  transition:background 400ms var(--std);
+}
+.board{
+  position:relative;overflow:hidden;border-radius:3px;padding:30px 36px 26px;min-height:560px;
+  background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.07),transparent 50%),radial-gradient(ellipse at 75% 80%,rgba(255,255,255,.05),transparent 45%),var(--slate);
+  box-shadow:inset 0 0 40px rgba(0,0,0,.55);color:var(--chalk);
+}
+.dust{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.16;mix-blend-mode:screen}
+.ink{position:relative;filter:url(#chalk)}
+.head{text-align:center}
+.name{margin:0;font:700 58px/0.95 var(--hand);letter-spacing:.01em}
+.sub{margin:4px 0 0;font:500 22px/1 var(--hand);color:var(--chalk-2)}
+.special{position:relative;margin:20px auto 22px;padding:12px 18px 14px;text-align:center;max-width:420px}
+.special svg.box{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.special svg.box path{fill:none;stroke:var(--yellow);stroke-width:2;stroke-linecap:round;opacity:.85}
+.tag{display:block;font:700 20px/1 var(--hand);color:var(--pink);letter-spacing:.04em}
+.write{position:relative;display:inline-block;margin-top:4px;font:700 34px/1.1 var(--hand);color:var(--yellow);clip-path:inset(-10px 0 -10px 0)}
+.write.go{animation:write 1900ms cubic-bezier(.45,.05,.55,.95) both}
+.write.erase{animation:erase 380ms var(--std) both}
+@keyframes write{from{clip-path:inset(-10px 100% -10px 0)}to{clip-path:inset(-10px 0 -10px 0)}}
+@keyframes erase{to{opacity:0;filter:blur(4px);transform:translateX(10px)}}
+.stick{position:absolute;top:50%;width:22px;height:8px;border-radius:2px;background:#f7f4ec;box-shadow:0 1px 0 rgba(0,0,0,.4);opacity:0;transform:translate(-2px,-4px) rotate(-28deg)}
+.write.go + .stick{animation:stick 1900ms cubic-bezier(.45,.05,.55,.95) both}
+@keyframes stick{0%{left:var(--x0);opacity:1}92%{opacity:1}100%{left:var(--x1);opacity:0}}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:6px 36px}
+.cols h2{margin:0 0 6px;font:700 30px/1 var(--hand);color:var(--chalk);border-bottom:2px solid rgba(236,232,223,.35);padding-bottom:4px}
+.cols ul{list-style:none;margin:0;padding:0}
+.cols li{display:flex;align-items:baseline;gap:6px;font:500 26px/1.45 var(--hand);padding:0 4px;margin:0 -4px;border-radius:4px;transition:background 160ms var(--std)}
+.cols li:hover{background:rgba(255,255,255,.05)}
+.cols li .dots{flex:1;border-bottom:2px dotted rgba(236,232,223,.28);transform:translateY(-6px)}
+.cols li .p{color:var(--yellow);font-weight:700}
+.cols li small{display:block;font-size:18px;color:var(--chalk-2);line-height:1}
+.foot{margin:18px 0 0;text-align:center;font:500 21px/1.2 var(--hand);color:var(--chalk-2)}
+.doodle{position:absolute;right:30px;top:26px;width:54px;height:54px;color:var(--chalk-2)}
+
+/* letterboard */
+[data-mode="letter"] .frame{background:repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0 1px,transparent 1px 7px),linear-gradient(var(--oak-2),var(--oak))}
+[data-mode="letter"] .board{
+  color:var(--letter);
+  background:repeating-linear-gradient(180deg,#0c0c0c 0 2px,#1d1d1d 2px 3px,var(--felt) 3px 12px);
+  box-shadow:inset 0 0 30px rgba(0,0,0,.8);
+}
+[data-mode="letter"] .dust,[data-mode="letter"] .doodle,[data-mode="letter"] .special svg.box{display:none}
+[data-mode="letter"] .ink{filter:none}
+[data-mode="letter"] .ink *{font-family:var(--block)!important;text-transform:uppercase;letter-spacing:.08em;font-weight:400!important}
+[data-mode="letter"] .name{font-size:44px;letter-spacing:.14em}
+[data-mode="letter"] .sub{font-size:15px;color:var(--letter-2);margin-top:8px;letter-spacing:.3em}
+[data-mode="letter"] .special{border-block:1px solid rgba(244,241,234,.25);margin:20px auto}
+[data-mode="letter"] .tag{font-size:14px;color:var(--red);letter-spacing:.3em}
+[data-mode="letter"] .write{font-size:24px;color:var(--letter);clip-path:none;margin-top:8px}
+[data-mode="letter"] .stick{display:none}
+[data-mode="letter"] .cols h2{font-size:18px;letter-spacing:.3em;border-bottom:0;color:var(--red);margin-bottom:8px}
+[data-mode="letter"] .cols li{font-size:19px;line-height:2.1}
+[data-mode="letter"] .cols li .dots{border:0}
+[data-mode="letter"] .cols li .p{color:var(--letter)}
+[data-mode="letter"] .cols li small{font-size:12px;color:var(--letter-2);line-height:1.2;margin-bottom:4px}
+[data-mode="letter"] .foot{font-size:13px;color:var(--letter-2);letter-spacing:.2em}
+.w{white-space:nowrap}
+.c{display:inline-block}
+[data-mode="letter"] .c{transform:translateY(var(--y)) rotate(var(--r));text-shadow:0 1px 0 rgba(0,0,0,.6);animation:pop 360ms var(--expo) both;animation-delay:var(--d)}
+@keyframes pop{from{opacity:0;transform:translateY(-8px) rotate(var(--r))}}
+
+.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center}
+.seg{display:inline-flex;padding:4px;border-radius:99px;background:rgba(31,42,38,.12)}
+.seg button{min-height:40px;padding:0 18px;border-radius:99px;font:600 14px/1 var(--block);letter-spacing:.14em;text-transform:uppercase;color:#4a3f33;transition:background 200ms var(--std),color 200ms var(--std)}
+.seg button[aria-checked="true"]{background:var(--slate);color:var(--chalk)}
+.next{min-height:44px;padding:0 18px;border-radius:99px;font:600 14px/1 var(--block);letter-spacing:.14em;text-transform:uppercase;box-shadow:inset 0 0 0 1.5px rgba(31,42,38,.5);display:inline-flex;align-items:center;gap:8px}
+.next:hover{background:rgba(255,255,255,.3)}
+.next svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:560px){
+  .board{padding:24px 20px 20px;min-height:0}
+  .name{font-size:46px}
+  .cols{grid-template-columns:1fr;gap:14px}
+  .doodle{display:none}
+  [data-mode="letter"] .name{font-size:32px}
+}
+@media (prefers-reduced-motion:reduce){
+  .write.go,.write.go + .stick,.write.erase,[data-mode="letter"] .c{animation:none}
+  .frame,.cols li,.seg button{transition:none}
+}
+</style>
+</head>
+<body data-mode="chalk">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="chalk" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -2.2 0 0 0 1.75" result="m"/>
+    <feComposite in="SourceGraphic" in2="m" operator="in" result="t"/>
+    <feDisplacementMap in="t" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="speck"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="3" seed="9"/><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 -3 1.6"/></filter>
+</svg>
+<div class="frame">
+  <section class="board" aria-labelledby="cafe">
+    <svg class="dust" aria-hidden="true"><rect width="100%" height="100%" filter="url(#speck)"/></svg>
+    <div class="ink">
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 20h24v8a10 10 0 0 1-10 10h-4a10 10 0 0 1-10-10z"/><path d="M34 23h3a4 4 0 0 1 0 8h-4"/><path d="M17 8c-2 3 2 5 0 8M24 6c-2 3 2 5 0 8"/></svg>
+      <header class="head">
+        <h1 class="name" id="cafe" data-t>Juniper &amp; Ash</h1>
+        <p class="sub" data-t>coffee · bakes · since 2019</p>
+      </header>
+      <div class="special" id="special">
+        <svg class="box" viewBox="0 0 420 100" preserveAspectRatio="none" aria-hidden="true"><path d="M6 8c80-4 300-6 408-1 3 30 2 60 0 86-120 4-300 4-410 0C2 64 3 34 6 8"/></svg>
+        <span class="tag" data-t>Today's special</span>
+        <span class="write" id="write" aria-live="polite"></span><span class="stick" aria-hidden="true"></span>
+      </div>
+      <div class="cols">
+        <div>
+          <h2 data-t>Coffee</h2>
+          <ul>
+            <li><span data-t>Espresso</span><span class="dots"></span><span class="p" data-t>3.00</span></li>
+            <li><span data-t>Cortado</span><span class="dots"></span><span class="p" data-t>3.80</span></li>
+            <li><span data-t>Flat white</span><span class="dots"></span><span class="p" data-t>4.20</span></li>
+            <li><span data-t>Cardamom latte</span><span class="dots"></span><span class="p" data-t>4.80</span></li>
+            <li><span><span data-t>Pour-over</span><small data-t>Guji, washed</small></span><span class="dots"></span><span class="p" data-t>5.50</span></li>
+          </ul>
+        </div>
+        <div>
+          <h2 data-t>Bakes</h2>
+          <ul>
+            <li><span data-t>Morning bun</span><span class="dots"></span><span class="p" data-t>3.60</span></li>
+            <li><span data-t>Brown butter cookie</span><span class="dots"></span><span class="p" data-t>2.80</span></li>
+            <li><span data-t>Rye banana loaf</span><span class="dots"></span><span class="p" data-t>3.40</span></li>
+            <li><span><span data-t>Fig toast</span><small data-t>ricotta, honey</small></span><span class="dots"></span><span class="p" data-t>6.20</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="foot" data-t>oat or almond +0.50 · ask us about the beans</p>
+    </div>
+  </section>
+</div>
+<div class="controls">
+  <div class="seg" role="radiogroup" aria-label="Board style">
+    <button type="button" role="radio" aria-checked="true" data-mode="chalk">Chalkboard</button>
+    <button type="button" role="radio" aria-checked="false" data-mode="letter" tabindex="-1">Letterboard</button>
+  </div>
+  <button class="next" id="next" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13 7 4 4"/></svg>Next special</button>
+</div>
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const specials=[['Smoked maple oat latte','5.20'],['Pear & ginger galette','4.40'],['Miso caramel cortado','4.60']];
+let si=0;
+const write=document.getElementById('write'),stick=write.nextElementSibling;
+function wrap(el,text){
+  el.textContent='';
+  const sr=document.createElement('span');sr.className='sr';sr.textContent=text;el.append(sr);
+  const vis=document.createElement('span');vis.setAttribute('aria-hidden','true');
+  let i=0;
+  text.split(' ').forEach((word,w)=>{
+    if(w)vis.append(' ');
+    const wd=document.createElement('span');wd.className='w';
+    [...word].forEach(ch=>{
+      const c=document.createElement('span');c.className='c';c.dataset.ch=ch;
+      c.textContent=document.body.dataset.mode==='letter'?ch.toUpperCase():ch;
+      const h=(i*7919+text.length*31)%100;
+      c.style.setProperty('--r',((h%5)-2)*.3+'deg');c.style.setProperty('--y',((h%3)-1)*.5+'px');c.style.setProperty('--d',(i*14)+'ms');
+      wd.append(c);i++;
+    });
+    vis.append(wd);
+  });
+  el.append(vis);
+}
+document.querySelectorAll('[data-t]').forEach(el=>wrap(el,el.textContent));
+function showSpecial(){
+  const [n,p]=specials[si];
+  wrap(write,`${n} — ${p}`);
+  write.classList.remove('go','erase');void write.offsetWidth;
+  if(document.body.dataset.mode==='chalk'&&!reduce){
+    stick.style.setProperty('--x0',write.offsetLeft+'px');stick.style.setProperty('--x1',write.offsetLeft+write.offsetWidth+'px');
+    write.classList.add('go');
+  }
+}
+showSpecial();
+document.getElementById('next').addEventListener('click',()=>{
+  si=(si+1)%specials.length;
+  if(reduce){showSpecial();return}
+  write.classList.remove('go');write.classList.add('erase');
+  setTimeout(showSpecial,380);
+});
+const radios=[...document.querySelectorAll('.seg [role=radio]')];
+function setMode(m,focus){
+  document.body.dataset.mode=m;
+  radios.forEach(r=>{const on=r.dataset.mode===m;r.setAttribute('aria-checked',on);r.tabIndex=on?0:-1;if(on&&focus)r.focus()});
+  document.querySelectorAll('.c').forEach(c=>{c.textContent=m==='letter'?c.dataset.ch.toUpperCase():c.dataset.ch;c.style.animation='none';void c.offsetWidth;c.style.animation=''});
+  if(m==='chalk')showSpecial();
+}
+radios.forEach(r=>{
+  r.addEventListener('click',()=>setMode(r.dataset.mode));
+  r.addEventListener('keydown',e=>{if(/Arrow(Left|Right|Up|Down)/.test(e.key)){e.preventDefault();setMode(document.body.dataset.mode==='chalk'?'letter':'chalk',true)}});
+});
+</script>
+</body>
+</html>

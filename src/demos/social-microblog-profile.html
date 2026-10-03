@@ -1,0 +1,230 @@
+<!-- Design Lounge piece: social-microblog-profile · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Saoirse Dunleavy (@dunleavy.maps)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0f0c;--col:#141611;--raise:#1b1e17;--line:#2a2e24;--ink:#eeede4;--ink-2:#b0b2a4;--ink-3:#8b8e80;
+  --lime:#c8f23a;--lime-ink:#151a05;--danger:#ff6b5a;
+  --sans:"Bricolage Grotesque",system-ui,sans-serif;--mono:"DM Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{height:auto;min-height:100%;background:var(--bg);color:var(--ink);font:15px/1.45 var(--sans);overflow-x:hidden;
+  background-image:radial-gradient(rgba(200,242,58,.05) 1px,transparent 1px);background-size:22px 22px}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a{color:var(--lime);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--lime);outline-offset:2px;border-radius:6px}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+.col{width:min(620px,100%);margin:0 auto;min-height:100vh;background:var(--col);border-inline:1px solid var(--line)}
+.banner{height:190px;position:relative;overflow:hidden;background:
+  radial-gradient(circle at 72% 58%,rgba(200,242,58,.0) 0 40px,transparent 41px),
+  repeating-radial-gradient(circle at 70% 60%,transparent 0 11px,rgba(200,242,58,.32) 11px 12px),
+  repeating-radial-gradient(circle at 22% 110%,transparent 0 15px,rgba(200,242,58,.18) 15px 16px),
+  linear-gradient(160deg,#25321a,#121a0c 70%)}
+.banner::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(14,15,12,.9) 1.1px,transparent 1.3px) 0 0/5px 5px;mix-blend-mode:multiply;opacity:.55}
+.banner .coord{position:absolute;left:16px;top:14px;z-index:1;font:500 11px var(--mono);letter-spacing:.06em;color:var(--lime);background:rgba(14,15,12,.7);padding:3px 7px;border-radius:4px}
+.banner .pin{position:absolute;left:70%;top:60%;width:14px;height:14px;margin:-7px;border-radius:50%;background:var(--lime);z-index:1;box-shadow:0 0 0 6px rgba(200,242,58,.22)}
+
+.head{padding:0 20px 0;position:relative}
+.row1{display:flex;justify-content:space-between;align-items:flex-end;height:72px}
+.avatar{width:128px;height:128px;border-radius:50%;border:4px solid var(--col);margin-top:-64px;align-self:flex-start;flex:none;
+  background:radial-gradient(circle at 50% 40%,#f0c9a6 0 20%,transparent 20.5%),radial-gradient(ellipse at 50% 102%,#c8f23a 0 42%,transparent 42.5%),radial-gradient(circle at 46% 34%,#b5532b 0 31%,transparent 31.5%),#2b3a20}
+.acts{display:flex;gap:8px;align-items:center;padding-bottom:4px}
+.icon-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);transition:background .16s var(--ease),color .16s var(--ease),opacity .2s var(--ease)}
+.icon-btn:hover{background:var(--raise)}
+.icon-btn[aria-pressed="true"]{color:var(--lime);box-shadow:inset 0 0 0 1px var(--lime)}
+.icon-btn:disabled{opacity:.35;cursor:not-allowed}
+.follow{height:40px;min-width:112px;padding:0 20px;border-radius:999px;font-weight:700;background:var(--lime);color:var(--lime-ink);transition:background .16s var(--ease),color .16s var(--ease),box-shadow .16s var(--ease),transform .12s var(--ease)}
+.follow:active{transform:scale(.96)}
+.follow[aria-pressed="true"]{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink-3)}
+.follow[aria-pressed="true"]:hover{color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger);background:rgba(255,107,90,.08)}
+
+h1{font:800 26px/1.1 var(--sans);letter-spacing:-.02em;margin:10px 0 0;display:flex;align-items:center;gap:6px;font-variation-settings:"opsz" 48}
+h1 svg{width:20px;height:20px;color:var(--lime)}
+.handle{font:400 14px var(--mono);color:var(--ink-3);display:flex;align-items:center;gap:8px;margin-top:2px}
+.fy{font:500 11px var(--mono);background:var(--raise);color:var(--ink-2);padding:2px 6px;border-radius:4px}
+.bio{margin:12px 0 0;max-width:540px}
+.meta{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:12px;color:var(--ink-3);font-size:14px}
+.meta span{display:inline-flex;align-items:center;gap:5px}
+.meta svg{width:17px;height:17px}
+.counts{display:flex;gap:20px;margin-top:12px;font-size:14px;color:var(--ink-3)}
+.counts b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;margin-right:4px}
+.counts button:hover span{text-decoration:underline}
+
+.tabs{display:flex;position:relative;margin-top:16px;border-bottom:1px solid var(--line)}
+.tab{flex:1;height:53px;font-weight:500;color:var(--ink-3);transition:color .16s var(--ease),background .16s var(--ease)}
+.tab:hover{background:var(--raise);color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);font-weight:700}
+.tab:focus-visible{outline-offset:-3px}
+.ink{position:absolute;bottom:-1px;left:0;height:4px;width:56px;border-radius:4px 4px 0 0;background:var(--lime);transition:transform .36s var(--expo),width .36s var(--expo)}
+
+.panel{animation:in .32s var(--expo)}
+.panel[hidden]{display:none}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.post{display:flex;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.post:hover{background:#171a13}
+.mini{width:40px;height:40px;border-radius:50%;flex:none;background:radial-gradient(circle at 50% 40%,#f0c9a6 0 20%,transparent 20.5%),radial-gradient(ellipse at 50% 102%,#c8f23a 0 42%,transparent 42.5%),radial-gradient(circle at 46% 34%,#b5532b 0 31%,transparent 31.5%),#2b3a20}
+.mini.b{background:radial-gradient(circle at 50% 40%,#d9a57f 0 20%,transparent 20.5%),radial-gradient(ellipse at 50% 102%,#7f8fa8 0 42%,transparent 42.5%),#3a3f4a}
+.pm{font-size:14px;color:var(--ink-3)}
+.pm b{color:var(--ink);font-weight:700;margin-right:4px}
+.pm .mono{font-family:var(--mono);font-size:13px}
+.post p{margin:2px 0 0}
+.rep{font-size:13.5px;color:var(--ink-3);margin:2px 0 0}
+.stats{display:flex;gap:28px;margin-top:8px;font:400 12.5px var(--mono);color:var(--ink-3)}
+.stats span{display:inline-flex;align-items:center;gap:5px}
+.stats svg{width:16px;height:16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px}
+.tile{aspect-ratio:1;border:0;border-radius:2px;position:relative;overflow:hidden;transition:filter .2s var(--ease)}
+.tile:hover{filter:brightness(1.15)}
+.tile span{position:absolute;left:8px;bottom:8px;font:500 11px var(--mono);color:var(--ink);background:rgba(14,15,12,.7);padding:2px 6px;border-radius:3px}
+.t1{background:repeating-radial-gradient(circle at 30% 70%,#1f2a16 0 9px,#c8f23a 9px 10px)}
+.t2{background:repeating-linear-gradient(35deg,#2b3a20 0 14px,#3d5230 14px 16px),#2b3a20}
+.t3{background:radial-gradient(circle at 60% 40%,#c8f23a 0 14%,transparent 15%),repeating-radial-gradient(circle at 60% 40%,#141611 0 7px,#2e3b23 7px 8px)}
+.t4{background:linear-gradient(180deg,#b5532b 0 38%,#e8d9b5 38% 41%,#1f3a4a 41%)}
+.t5{background:repeating-conic-gradient(from 10deg at 40% 60%,#141611 0 12deg,#3d5230 12deg 14deg)}
+.t6{background:radial-gradient(ellipse at 50% 120%,#c8f23a 0 30%,transparent 31%),linear-gradient(#1b2b33,#0e1418)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:520px){
+  .avatar{width:96px;height:96px;margin-top:-48px}
+  .banner{height:140px}
+  .row1{height:56px}
+  .stats{gap:18px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="col">
+  <div class="banner" aria-hidden="true"><span class="coord">53.2707° N, 9.0568° W</span><span class="pin"></span></div>
+  <section class="head" aria-labelledby="name">
+    <div class="row1">
+      <div class="avatar" role="img" aria-label="Avatar of Saoirse Dunleavy"></div>
+      <div class="acts">
+        <button class="icon-btn" type="button" aria-label="More options"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01" stroke-width="3"/></svg></button>
+        <button class="icon-btn" id="bell" type="button" aria-pressed="false" aria-label="Notify me when Saoirse posts" disabled><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20h4"/></svg></button>
+        <button class="follow" id="follow" type="button" aria-pressed="false">Follow</button>
+      </div>
+    </div>
+    <h1 id="name">Saoirse Dunleavy <svg viewBox="0 0 24 24" role="img" aria-label="Verified"><path fill="currentColor" d="M12 2l2.4 2.1 3.2-.3.9 3.1 2.8 1.6-1.2 3 1.2 3-2.8 1.6-.9 3.1-3.2-.3L12 22l-2.4-2.1-3.2.3-.9-3.1-2.8-1.6 1.2-3-1.2-3 2.8-1.6.9-3.1 3.2.3z"/><path d="m8.5 12 2.5 2.5 4.5-5" fill="none" stroke="#151a05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
+    <div class="handle">@dunleavy.maps <span class="fy">Follows you</span></div>
+    <p class="bio">Cartographer. Drawing the Atlantic coast one townland at a time. Making a hand-inked atlas of every pier in Connacht <a href="#">#PierAtlas</a>. Type nerd at <a href="#">@inkandcontour</a>.</p>
+    <div class="meta">
+      <span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg>Galway, Ireland</span>
+      <span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><a href="#">dunleavy.ie/atlas</a></span>
+      <span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Joined March 2019</span>
+    </div>
+    <div class="counts">
+      <button type="button"><b>482</b><span>Following</span></button>
+      <button type="button"><b id="fcount">21,438</b><span>Followers</span></button>
+    </div>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="Profile timeline">
+    <button class="tab" role="tab" id="t-posts" aria-selected="true" aria-controls="p-posts" tabindex="0"><span>Posts</span></button>
+    <button class="tab" role="tab" id="t-replies" aria-selected="false" aria-controls="p-replies" tabindex="-1"><span>Replies</span></button>
+    <button class="tab" role="tab" id="t-media" aria-selected="false" aria-controls="p-media" tabindex="-1"><span>Media</span></button>
+    <span class="ink" aria-hidden="true"></span>
+  </div>
+
+  <section class="panel" role="tabpanel" id="p-posts" aria-labelledby="t-posts" tabindex="0">
+    <article class="post"><div class="mini" aria-hidden="true"></div><div>
+      <div class="pm"><b>Saoirse Dunleavy</b><span class="mono">@dunleavy.maps · 2h</span></div>
+      <p>Pier 41 of 118: Rossaveel. Re-inked the slipway three times because the tide tables disagreed with the 1898 survey. The survey was right.</p>
+      <div class="stats"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>38</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h11v5M17 17H6v-5M15 4l3 3-3 3M9 20l-3-3 3-3"/></svg>112</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>1,204</span></div>
+    </div></article>
+    <article class="post"><div class="mini" aria-hidden="true"></div><div>
+      <div class="pm"><b>Saoirse Dunleavy</b><span class="mono">@dunleavy.maps · 1d</span></div>
+      <p>Reminder that "Inis" on a map is not decoration. It is the island telling you who named it first.</p>
+      <div class="stats"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>91</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h11v5M17 17H6v-5M15 4l3 3-3 3M9 20l-3-3 3-3"/></svg>640</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>4,872</span></div>
+    </div></article>
+  </section>
+
+  <section class="panel" role="tabpanel" id="p-replies" aria-labelledby="t-replies" tabindex="0" hidden>
+    <article class="post"><div class="mini" aria-hidden="true"></div><div>
+      <div class="pm"><b>Saoirse Dunleavy</b><span class="mono">@dunleavy.maps · 5h</span></div>
+      <p class="rep">Replying to <a href="#">@tidetables_ie</a></p>
+      <p>Spring tide on the 17th, so I am out at Spiddal at 06:10 with the plane table. Bring a flask.</p>
+      <div class="stats"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>4</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>57</span></div>
+    </div></article>
+    <article class="post"><div class="mini" aria-hidden="true"></div><div>
+      <div class="pm"><b>Saoirse Dunleavy</b><span class="mono">@dunleavy.maps · 2d</span></div>
+      <p class="rep">Replying to <a href="#">@ferrolhart</a></p>
+      <p>Yes, the contour interval changes at the county line. Two surveyors, two pens, one very confused hill.</p>
+      <div class="stats"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>12</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>310</span></div>
+    </div></article>
+  </section>
+
+  <section class="panel" role="tabpanel" id="p-media" aria-labelledby="t-media" tabindex="0" hidden>
+    <div class="grid">
+      <button class="tile t1" type="button" aria-label="Rossaveel contour study"><span>Rossaveel</span></button>
+      <button class="tile t2" type="button" aria-label="Hatching test sheet"><span>Hatching</span></button>
+      <button class="tile t3" type="button" aria-label="Inis Meáin survey"><span>Inis Meáin</span></button>
+      <button class="tile t4" type="button" aria-label="Spiddal pier at dawn"><span>Spiddal</span></button>
+      <button class="tile t5" type="button" aria-label="Compass rose draft"><span>Rose</span></button>
+      <button class="tile t6" type="button" aria-label="Night tide sketch"><span>Night tide</span></button>
+    </div>
+  </section>
+  <p class="sr" id="live" aria-live="polite"></p>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const follow = $('follow'), bell = $('bell'), fcount = $('fcount'), live = $('live');
+let n = 21438;
+follow.addEventListener('click', () => {
+  const on = follow.getAttribute('aria-pressed') !== 'true';
+  follow.setAttribute('aria-pressed', on);
+  follow.textContent = on ? 'Following' : 'Follow';
+  n += on ? 1 : -1;
+  fcount.textContent = n.toLocaleString('en-US');
+  bell.disabled = !on;
+  if (!on) bell.setAttribute('aria-pressed', 'false');
+  live.textContent = on ? 'You are following Saoirse Dunleavy.' : 'Unfollowed Saoirse Dunleavy.';
+});
+follow.addEventListener('mouseenter', () => { if (follow.getAttribute('aria-pressed') === 'true') follow.textContent = 'Unfollow'; });
+follow.addEventListener('mouseleave', () => { if (follow.getAttribute('aria-pressed') === 'true') follow.textContent = 'Following'; });
+bell.addEventListener('click', () => {
+  const on = bell.getAttribute('aria-pressed') !== 'true';
+  bell.setAttribute('aria-pressed', on);
+  live.textContent = on ? 'Notifications on for new posts.' : 'Notifications off.';
+});
+
+const tabs = [...document.querySelectorAll('[role=tab]')], ink = document.querySelector('.ink');
+function placeInk(t) {
+  const w = t.firstElementChild.offsetWidth + 8;
+  ink.style.width = w + 'px';
+  ink.style.transform = `translateX(${t.offsetLeft + (t.offsetWidth - w) / 2}px)`;
+}
+function select(t, focus) {
+  tabs.forEach(x => {
+    const on = x === t;
+    x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1;
+    $(x.getAttribute('aria-controls')).hidden = !on;
+  });
+  placeInk(t);
+  if (focus) t.focus();
+}
+tabs.forEach((t, i) => {
+  t.addEventListener('click', () => select(t));
+  t.addEventListener('keydown', e => {
+    const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (k) { e.preventDefault(); select(tabs[(i + k + tabs.length) % tabs.length], true); }
+    if (e.key === 'Home') { e.preventDefault(); select(tabs[0], true); }
+    if (e.key === 'End') { e.preventDefault(); select(tabs[tabs.length - 1], true); }
+  });
+});
+ink.style.transition = 'none'; placeInk(tabs[0]); ink.offsetWidth; ink.style.transition = '';
+addEventListener('resize', () => placeInk(tabs.find(t => t.getAttribute('aria-selected') === 'true')));
+document.querySelectorAll('a[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+</script>
+</body>
+</html>

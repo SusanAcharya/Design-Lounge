@@ -1,0 +1,301 @@
+<!-- Design Lounge piece: card-event-countdown · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Lowtide Sessions 04 — countdown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,500..900&family=Reddit+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0f1633;--night-2:#18214a;--paper:#f1e9d8;--paper-2:#e6dcc6;
+  --ink:#141a33;--ink-2:#4a4f66;--line:#cdbfa3;--tang:#ff6a2b;--tang-ink:#b8410f;
+  --tile:#141a33;--tile-2:#1d2547;--digit:#f1e9d8;
+  --disp:"Anybody","Arial Narrow",sans-serif;--mono:"Reddit Mono",ui-monospace,monospace;
+  --fw:48px;--fh:72px;--fs:60px;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:14px/1.5 var(--mono);color:var(--ink);background:var(--night);
+  background-image:radial-gradient(rgba(241,233,216,.06) 1px,transparent 1.2px);background-size:6px 6px;
+  display:grid;place-items:center;padding:32px;min-height:100%;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--tang);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.ticket{display:grid;grid-template-columns:340px minmax(0,1fr);width:min(960px,100%);background:var(--paper);border-radius:6px;position:relative;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+/* poster */
+.poster{position:relative;overflow:hidden;background:var(--tang);color:var(--night);padding:28px;border-radius:6px 0 0 6px;display:flex;flex-direction:column;justify-content:space-between;min-height:520px}
+.poster::before{content:"";position:absolute;inset:0;background:radial-gradient(rgba(15,22,51,.22) 1px,transparent 1.4px);background-size:5px 5px;mix-blend-mode:multiply}
+.poster>*{position:relative}
+.kicker{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;display:flex;justify-content:space-between}
+.sun{position:absolute;left:-40px;right:-40px;top:44px;height:200px}
+.sun svg{width:100%;height:100%}
+.title{font:900 108px/.78 var(--disp);font-stretch:62%;letter-spacing:-.01em;text-transform:uppercase;margin:0}
+.title span{display:block}
+.title .vol{font-stretch:140%;font-size:40px;line-height:1;margin-top:10px;color:var(--paper)}
+.lineup{font:600 12px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;margin:16px 0 0}
+/* perforation */
+.ticket::after{content:"";position:absolute;left:340px;top:14px;bottom:14px;border-left:2px dashed var(--line)}
+.notch{position:absolute;left:328px;width:24px;height:24px;border-radius:50%;background:var(--night)}
+.notch.t{top:-12px}.notch.b{bottom:-12px}
+/* stub */
+.stub{padding:26px 34px 26px 42px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.when{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}
+.when h1{margin:0;font:800 30px/1 var(--disp);font-stretch:110%;text-transform:uppercase;letter-spacing:.01em}
+.when p{margin:0;color:var(--ink-2);font-size:12px;letter-spacing:.04em}
+.label{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin:0 0 12px}
+/* flip clock */
+.clock{display:flex;gap:10px;flex-wrap:wrap}
+.unit{display:flex;flex-direction:column;gap:8px}
+.pair{display:flex;gap:4px}
+.unit small{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.colon{font:800 36px/var(--fh) var(--disp);width:14px;text-align:center;color:var(--tang-ink);align-self:flex-start;height:var(--fh);line-height:var(--fh)}
+.flip{position:relative;width:var(--fw);height:var(--fh);perspective:320px;font:800 var(--fs)/var(--fh) var(--disp);font-stretch:80%;color:var(--digit)}
+.flip>span{position:absolute;left:0;right:0;height:50%;overflow:hidden;background:var(--tile)}
+.flip>.t,.flip>.ft{top:0;border-radius:6px 6px 0 0;transform-origin:50% 100%;background:var(--tile-2)}
+.flip>.b,.flip>.fb{bottom:0;border-radius:0 0 6px 6px;transform-origin:50% 0}
+.flip i{display:block;height:var(--fh);text-align:center;font-style:normal}
+.flip>.b i,.flip>.fb i{transform:translateY(-50%)}
+.flip>.ft,.flip>.fb{backface-visibility:hidden;z-index:2}
+.flip>.fb{transform:rotateX(90deg)}
+.flip::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.55);z-index:3}
+.flip.go>.ft{animation:ft .26s cubic-bezier(.55,0,.9,.4) forwards}
+.flip.go>.fb{animation:fb .3s .26s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes ft{to{transform:rotateX(-90deg);filter:brightness(.6)}}
+@keyframes fb{from{filter:brightness(1.4)}to{transform:rotateX(0)}}
+.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--tang);margin-right:8px;vertical-align:1px;animation:pulse 2s var(--ease) infinite}
+@keyframes pulse{50%{opacity:.25}}
+/* venue */
+.venue{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:start;border-top:1px solid var(--line);padding-top:18px}
+.venue h2{margin:0 0 4px;font:800 22px/1.1 var(--disp);font-stretch:100%;text-transform:uppercase}
+.venue p{margin:0;color:var(--ink-2);font-size:13px}
+.times{display:flex;gap:18px;margin-top:10px;font-size:12px}
+.times b{display:block;font:600 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.cal{position:relative}
+.btn-o{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border:1.5px solid var(--ink);border-radius:999px;font-weight:600;font-size:12px;letter-spacing:.04em;transition:background .16s var(--ease),color .16s var(--ease)}
+.btn-o:hover{background:var(--ink);color:var(--paper)}
+.btn-o svg,.menu svg,.cta svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.cal.done .btn-o{background:var(--ink);color:var(--paper)}
+.menu{position:absolute;right:0;top:48px;z-index:5;min-width:220px;background:var(--paper);border:1.5px solid var(--ink);border-radius:10px;padding:6px;margin:0;list-style:none;box-shadow:6px 6px 0 var(--ink);transform-origin:top right;transform:scale(.96) translateY(-4px);opacity:0;visibility:hidden;transition:transform .2s var(--expo),opacity .16s var(--ease),visibility 0s .2s}
+.menu.open{transform:none;opacity:1;visibility:visible;transition:transform .24s var(--expo),opacity .16s var(--ease)}
+.menu [role=menuitem]{display:flex;gap:10px;align-items:center;width:100%;min-height:40px;padding:0 10px;border-radius:6px;font-size:12px;text-align:left;color:var(--ink);text-decoration:none}
+.menu [role=menuitem]:hover,.menu [role=menuitem]:focus-visible{background:var(--paper-2);outline-offset:-2px}
+/* tickets */
+.buy{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 16px;align-items:end;border-top:1px solid var(--line);padding-top:18px}
+.tiers{display:flex;gap:8px;flex-wrap:wrap;border:0;margin:0;padding:0;min-width:0}
+.tiers legend{padding:0}
+.tier{position:relative}
+.tier input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.tier span{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border:1.5px solid var(--line);border-radius:8px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);transition:border-color .16s var(--ease),background .16s var(--ease)}
+.tier span b{font:800 18px/1.1 var(--disp);font-stretch:100%;color:var(--ink);text-transform:none;letter-spacing:0}
+.tier input:checked+span{border-color:var(--ink);background:#fff8ea;box-shadow:inset 0 0 0 1px var(--ink)}
+.tier input:focus-visible+span{outline:2px solid var(--tang);outline-offset:3px}
+.tier input:disabled+span{opacity:.5;text-decoration:line-through}
+.qty{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:8px;height:56px}
+.qty button{width:40px;height:100%;font-size:20px;color:var(--ink)}
+.qty button:disabled{color:var(--line);cursor:not-allowed}
+.qty output{width:28px;text-align:center;font:800 20px/1 var(--disp)}
+.cta{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;height:56px;padding:0 22px;border-radius:8px;background:var(--tang);color:var(--night);font:800 18px/1 var(--disp);font-stretch:115%;text-transform:uppercase;letter-spacing:.02em;transition:transform .12s var(--ease),background .16s var(--ease);box-shadow:0 4px 0 var(--tang-ink)}
+.cta:hover{background:#ff7d45}
+.cta:active{transform:translateY(3px);box-shadow:0 1px 0 var(--tang-ink)}
+.cta[aria-busy=true]{cursor:progress}
+.cta.held{background:var(--ink);color:var(--paper);box-shadow:0 4px 0 #000}
+.cta .price{white-space:nowrap;font:600 14px/1 var(--mono);letter-spacing:0;text-transform:none}
+.meter{grid-column:1/-1;display:flex;align-items:center;gap:12px;font-size:11px;color:var(--ink-2);letter-spacing:.04em}
+.meter i{flex:1;height:4px;background:var(--paper-2);border-radius:2px;overflow:hidden}
+.meter i::before{content:"";display:block;height:100%;width:var(--sold);background:var(--ink)}
+@media (max-width:860px){
+  .ticket{grid-template-columns:minmax(0,1fr)}
+  .poster{min-height:300px;border-radius:6px 6px 0 0}
+  .sun{top:40px;height:170px;left:30%;right:-60px}
+  .title{font-size:84px}
+  .ticket::after,.notch{display:none}
+  .stub{padding:24px}
+}
+@media (max-width:480px){
+  body{padding:12px}
+  :root{--fw:32px;--fh:50px;--fs:40px}
+  .stub{padding:22px 20px}
+  .poster{min-height:340px}
+  .cta{font-size:15px;padding:0 16px}
+  .clock{gap:10px}.colon{display:none}
+  .venue,.buy{grid-template-columns:minmax(0,1fr)}
+  .menu{left:0;right:auto;transform-origin:top left}
+  .title{font-size:68px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<article class="ticket" aria-labelledby="ev">
+  <span class="notch t" aria-hidden="true"></span><span class="notch b" aria-hidden="true"></span>
+  <div class="poster" aria-hidden="true">
+    <div class="kicker"><span>Tape &amp; synth night</span><span>No. 04</span></div>
+    <div class="sun"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMax slice"><circle cx="200" cy="180" r="120" fill="#f1e9d8"/><g fill="#ff6a2b"><rect x="0" y="150" width="400" height="7"/><rect x="0" y="170" width="400" height="9"/><rect x="0" y="192" width="400" height="11"/><rect x="0" y="216" width="400" height="14"/><rect x="0" y="242" width="400" height="18"/></g><path d="M0 238q50-14 100 0t100 0 100 0 100 0" fill="none" stroke="#0f1633" stroke-width="3"/></svg></div>
+    <div>
+      <p class="title"><span>Low</span><span>tide</span><span class="vol">Sessions</span></p>
+      <p class="lineup">Dhoon Collective · Ruslan Tamang<br>Ama Khadka (live tape loops)</p>
+    </div>
+  </div>
+  <div class="stub">
+    <header class="when">
+      <h1 id="ev">Lowtide Sessions 04</h1>
+      <p><time datetime="2026-11-21T19:30+05:45">Sat 21 Nov 2026 · 19:30 NPT</time></p>
+    </header>
+    <section aria-labelledby="cl">
+      <p class="label" id="cl"><span class="live-dot" aria-hidden="true"></span>Doors open in</p>
+      <div class="clock" id="clock" role="timer" aria-hidden="true">
+        <div class="unit"><div class="pair" data-u="d"></div><small>Days</small></div>
+        <span class="colon">:</span>
+        <div class="unit"><div class="pair" data-u="h"></div><small>Hours</small></div>
+        <span class="colon">:</span>
+        <div class="unit"><div class="pair" data-u="m"></div><small>Minutes</small></div>
+        <span class="colon">:</span>
+        <div class="unit"><div class="pair" data-u="s"></div><small>Seconds</small></div>
+      </div>
+      <p class="sr" id="clockText" aria-live="off"></p>
+    </section>
+    <section class="venue" aria-labelledby="vn">
+      <div>
+        <h2 id="vn">Kiln Hall</h2>
+        <p>Ward 3, Jhamsikhel Road, Lalitpur 44700</p>
+        <div class="times"><span><b>Doors</b>19:30</span><span><b>First set</b>20:15</span><span><b>Curfew</b>23:30</span></div>
+      </div>
+      <div class="cal" id="cal">
+        <button class="btn-o" id="calBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="calMenu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path id="calIco" d="M12 13v5M9.5 15.5h5"/></svg>
+          <span id="calTxt">Add to calendar</span>
+        </button>
+        <ul class="menu" id="calMenu" role="menu" aria-label="Add to calendar">
+          <li role="none"><a role="menuitem" tabindex="-1" id="ics" href="#" download="lowtide-sessions-04.ics"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download calendar file (.ics)</a></li>
+          <li role="none"><button role="menuitem" tabindex="-1" type="button" id="copy"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>Copy date and venue</button></li>
+        </ul>
+      </div>
+    </section>
+    <form class="buy" id="buy" aria-label="Tickets">
+      <fieldset class="tiers">
+        <legend class="label">Ticket</legend>
+        <label class="tier"><input type="radio" name="tier" value="1800" data-n="Standing" checked><span>Standing<b>NPR 1,800</b></span></label>
+        <label class="tier"><input type="radio" name="tier" value="2600" data-n="Balcony"><span>Balcony<b>NPR 2,600</b></span></label>
+        <label class="tier"><input type="radio" name="tier" value="0" disabled><span>Early bird<b>Sold out</b></span></label>
+      </fieldset>
+      <div>
+        <p class="label" id="ql">Qty</p>
+        <div class="qty" role="group" aria-labelledby="ql">
+          <button type="button" id="minus" aria-label="One fewer ticket">−</button>
+          <output id="q" aria-live="polite">2</output>
+          <button type="button" id="plus" aria-label="One more ticket">+</button>
+        </div>
+      </div>
+      <button class="cta" id="cta" type="submit"><span id="ctaL">Get 2 tickets</span><span class="price" id="ctaP">NPR 3,600</span></button>
+      <p class="meter" style="--sold:85%"><i aria-hidden="true"></i><span>212 of 250 sold · max 6 per order</span></p>
+    </form>
+    <p class="sr" role="status" id="live"></p>
+  </div>
+</article>
+<script>
+const TARGET = new Date('2026-11-21T19:30:00+05:45').getTime();
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pairs = {};
+document.querySelectorAll('.pair').forEach(p => {
+  pairs[p.dataset.u] = [];
+  for (let i = 0; i < 2; i++) {
+    const f = document.createElement('span');
+    f.className = 'flip';
+    f.innerHTML = '<span class="t"><i>0</i></span><span class="b"><i>0</i></span><span class="ft"><i>0</i></span><span class="fb"><i>0</i></span>';
+    f.v = '0'; p.appendChild(f); pairs[p.dataset.u].push(f);
+  }
+});
+function setFlip(f, v, animate) {
+  if (f.v === v) return;
+  const [t, b, ft, fb] = f.querySelectorAll('i');
+  const old = f.v; f.v = v;
+  if (!animate || reduce) { t.textContent = b.textContent = ft.textContent = fb.textContent = v; return; }
+  t.textContent = v; fb.textContent = v; ft.textContent = old; b.textContent = old;
+  f.classList.remove('go'); void f.offsetWidth; f.classList.add('go');
+  clearTimeout(f.tm);
+  f.tm = setTimeout(() => { b.textContent = ft.textContent = v; f.classList.remove('go'); }, 600);
+}
+function render(animate) {
+  let s = Math.max(0, Math.floor((TARGET - Date.now()) / 1000));
+  const parts = { d: Math.floor(s / 86400), h: Math.floor(s % 86400 / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 };
+  for (const u in parts) {
+    const str = String(parts[u]).padStart(2, '0').slice(-2);
+    pairs[u].forEach((f, i) => setFlip(f, str[i], animate));
+  }
+  document.getElementById('clockText').textContent = `${parts.d} days, ${parts.h} hours, ${parts.m} minutes until doors open.`;
+  if (s === 0) document.getElementById('cl').lastChild.textContent = 'Doors are open';
+}
+render(false);
+document.querySelector('[role=timer]').removeAttribute('aria-hidden');
+document.getElementById('clock').setAttribute('aria-label', 'Countdown to doors');
+(function tick() { render(true); setTimeout(tick, 1000 - (Date.now() % 1000) + 5); })();
+
+/* calendar menu */
+const cal = document.getElementById('cal'), calBtn = document.getElementById('calBtn'), menu = document.getElementById('calMenu');
+const items = [...menu.querySelectorAll('[role=menuitem]')], live = document.getElementById('live');
+const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Lowtide//Sessions//EN','BEGIN:VEVENT','UID:lowtide-04@kilnhall','DTSTAMP:20261004T000000Z','DTSTART:20261121T134500Z','DTEND:20261121T174500Z','SUMMARY:Lowtide Sessions 04','LOCATION:Kiln Hall\\, Ward 3\\, Jhamsikhel Road\\, Lalitpur','END:VEVENT','END:VCALENDAR'].join('\r\n');
+document.getElementById('ics').href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+function openMenu(o, focusFirst) {
+  menu.classList.toggle('open', o); calBtn.setAttribute('aria-expanded', o);
+  if (o && focusFirst) items[0].focus();
+}
+calBtn.addEventListener('click', () => openMenu(!menu.classList.contains('open'), true));
+calBtn.addEventListener('keydown', e => { if (e.key === 'ArrowDown') { e.preventDefault(); openMenu(true, true); } });
+menu.addEventListener('keydown', e => {
+  const i = items.indexOf(document.activeElement);
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); items[(i + (e.key === 'ArrowDown' ? 1 : items.length - 1)) % items.length].focus(); }
+  if (e.key === 'Escape' || e.key === 'Tab') { openMenu(false); if (e.key === 'Escape') calBtn.focus(); }
+});
+document.addEventListener('click', e => { if (!cal.contains(e.target)) openMenu(false); });
+function saved(msg) {
+  cal.classList.add('done');
+  document.getElementById('calTxt').textContent = 'Saved · Sat 21 Nov';
+  document.getElementById('calIco').setAttribute('d', 'M9 15l2 2 4-4');
+  openMenu(false); calBtn.focus(); live.textContent = msg;
+}
+items[0].addEventListener('click', () => saved('Calendar file downloaded.'));
+items[1].addEventListener('click', async () => {
+  const t = 'Lowtide Sessions 04 · Sat 21 Nov 2026, doors 19:30 · Kiln Hall, Jhamsikhel Road, Lalitpur';
+  try { await navigator.clipboard.writeText(t); saved('Date and venue copied.'); }
+  catch { saved('Copy blocked here. ' + t); }
+});
+
+/* tickets */
+let qty = 2, held = null;
+const q = document.getElementById('q'), minus = document.getElementById('minus'), plus = document.getElementById('plus');
+const cta = document.getElementById('cta'), ctaL = document.getElementById('ctaL'), ctaP = document.getElementById('ctaP');
+const fmt = n => 'NPR ' + n.toLocaleString('en-US');
+function price() {
+  const r = document.querySelector('input[name=tier]:checked');
+  q.textContent = qty; minus.disabled = qty <= 1; plus.disabled = qty >= 6;
+  if (held) return;
+  ctaL.textContent = `Get ${qty} ${r.dataset.n.toLowerCase()} ticket${qty > 1 ? 's' : ''}`;
+  ctaP.textContent = fmt(qty * +r.value);
+}
+minus.onclick = () => { qty = Math.max(1, qty - 1); price(); };
+plus.onclick = () => { qty = Math.min(6, qty + 1); price(); };
+document.querySelectorAll('input[name=tier]').forEach(r => r.addEventListener('change', price));
+document.getElementById('buy').addEventListener('submit', e => {
+  e.preventDefault();
+  if (held) { clearInterval(held.iv); held = null; cta.classList.remove('held'); price(); live.textContent = 'Seats released.'; return; }
+  cta.setAttribute('aria-busy', 'true'); ctaL.textContent = 'Holding seats…';
+  setTimeout(() => {
+    cta.removeAttribute('aria-busy'); cta.classList.add('held');
+    held = { left: 600 };
+    const show = () => { const m = Math.floor(held.left / 60), s = String(held.left % 60).padStart(2, '0'); ctaL.textContent = `Held · ${m}:${s} to pay`; ctaP.textContent = 'Release'; };
+    show(); live.textContent = `${qty} seats held for 10 minutes.`;
+    held.iv = setInterval(() => { held.left--; if (held.left <= 0) { clearInterval(held.iv); held = null; cta.classList.remove('held'); price(); } else show(); }, 1000);
+  }, 700);
+});
+price();
+</script>
+</body>
+</html>

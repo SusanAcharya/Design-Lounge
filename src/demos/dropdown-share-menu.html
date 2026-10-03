@@ -1,0 +1,318 @@
+<!-- Design Lounge piece: dropdown-share-menu · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Share menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f1e8d6;--paper:#fffaf0;--ink:#1f2a55;--ink-2:#4d5577;--ink-3:#69708f;--line:#d9cdb4;--line-2:#e8dfcc;
+  --pink:#c8264f;--pink-soft:#fbdde3;--pink-ink:#a3173c;--ok:#1f6e5a;
+  --display:"Gloock",Georgia,serif;--sans:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --r:4px;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans);overflow-x:hidden;
+  background-image:radial-gradient(rgba(31,42,85,.07) 1px,transparent 1.2px);background-size:6px 6px}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+.bar{height:60px;display:flex;align-items:center;gap:14px;padding:0 24px;border-bottom:1.5px solid var(--ink);background:var(--paper)}
+.logo{font-family:var(--display);font-size:22px;letter-spacing:-.01em}
+.logo b{color:var(--pink);font-weight:400}
+.crumb{color:var(--ink-2);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.crumb strong{color:var(--ink)}
+.saved{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.sp{flex:1}
+.faces{display:flex}
+.faces span{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--paper);margin-left:-8px;display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--paper)}
+.share-btn{height:38px;padding:0 16px 0 12px;display:flex;align-items:center;gap:8px;border:1.5px solid var(--ink);border-radius:var(--r);background:var(--pink);color:#fff;font-weight:700;cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform 120ms var(--ease),box-shadow 120ms var(--ease)}
+.share-btn:active,.share-btn[aria-expanded="true"]{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.share-btn svg{width:18px;height:18px}
+.stage{display:grid;place-items:start center;padding:40px 24px}
+.page{width:min(640px,100%);background:var(--paper);border:1.5px solid var(--ink);padding:48px 56px;box-shadow:8px 8px 0 var(--pink-soft)}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--pink-ink);font-weight:700}
+.page h1{font-family:var(--display);font-weight:400;font-size:64px;line-height:.95;letter-spacing:-.02em;margin:10px 0 18px}
+.page .lede{font-size:17px;line-height:1.55;color:var(--ink-2);margin:0 0 20px;max-width:48ch}
+.cols{columns:2;column-gap:28px;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.cols p{margin:0 0 10px}
+
+/* panel */
+.panel{position:fixed;z-index:20;width:400px;overflow:auto;overscroll-behavior:contain;max-width:calc(100vw - 16px);background:var(--paper);border:1.5px solid var(--ink);border-radius:var(--r);box-shadow:6px 6px 0 var(--pink);
+  opacity:0;transform:translateY(-6px);transition:opacity 120ms var(--ease),transform 120ms var(--ease);pointer-events:none}
+.panel.on{opacity:1;transform:none;pointer-events:auto;transition-duration:220ms;transition-timing-function:var(--expo)}
+.panel[hidden]{display:none}
+.ph{display:flex;align-items:baseline;gap:8px;padding:14px 18px 10px;border-bottom:1px solid var(--line)}
+.ph h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0;letter-spacing:-.01em}
+.ph span{font-size:12px;color:var(--ink-3)}
+.sec{padding:10px 18px;border-bottom:1px solid var(--line-2)}
+.lbl{display:block;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.invite{display:flex;gap:8px;align-items:flex-start}
+.chips{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:40px;padding:5px 6px;border:1.5px solid var(--ink);border-radius:var(--r);background:#fff;cursor:text}
+.chips:focus-within{box-shadow:0 0 0 3px var(--pink-soft)}
+.chips.bad{animation:nope 260ms var(--ease)}
+@keyframes nope{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.chip{display:inline-flex;align-items:center;gap:2px;height:26px;padding:0 2px 0 9px;background:var(--pink-soft);color:var(--pink-ink);border-radius:13px;font-size:12.5px;font-weight:700;max-width:100%}
+.chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip button{width:22px;height:22px;border:0;background:none;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:inherit}
+.chip button:hover{background:rgba(163,23,60,.12)}
+.chip button svg{width:12px;height:12px}
+.chips input{flex:1;min-width:110px;border:0;outline:0;background:transparent;height:28px;padding:0 4px}
+.err{font-size:12px;color:var(--pink-ink);margin:6px 0 0;min-height:0}
+.sel{height:40px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border:1.5px solid var(--ink);border-radius:var(--r);background:#fff;cursor:pointer;white-space:nowrap;font-size:13px;font-weight:700}
+.sel svg{width:14px;height:14px}
+.sel.quiet{border-color:transparent;background:transparent;height:34px;color:var(--ink-2);font-weight:400}
+.sel.quiet:hover,.sel.quiet[aria-expanded="true"]{border-color:var(--line);background:#fff}
+.go{height:40px;padding:0 14px;border:1.5px solid var(--ink);border-radius:var(--r);background:var(--ink);color:var(--paper);font-weight:700;cursor:pointer;white-space:nowrap}
+.go:disabled{opacity:.45;cursor:default}
+.people{list-style:none;margin:0;padding:0}
+.people li{display:flex;align-items:center;gap:10px;min-height:44px}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff;flex:none}
+.people .nm{flex:1;min-width:0;line-height:1.25}
+.people .nm b{display:block;font-size:13.5px}
+.people .nm small{color:var(--ink-3);font-size:12px}
+.people .owner{font-size:12.5px;color:var(--ink-3);padding-right:10px}
+.link{display:flex;gap:8px}
+.link output{flex:1;min-width:0;height:40px;display:flex;align-items:center;gap:8px;padding:0 10px;border:1.5px dashed var(--line);border-radius:var(--r);font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden}
+.link output svg{width:15px;height:15px;flex:none}
+.copy{height:40px;min-width:104px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1.5px solid var(--ink);border-radius:var(--r);background:#fff;font-weight:700;cursor:pointer;transition:background 160ms var(--ease),color 160ms var(--ease)}
+.copy svg{width:16px;height:16px}
+.copy[data-copied]{background:var(--ok);border-color:var(--ok);color:#fff}
+.copy .ck{display:none}.copy[data-copied] .ck{display:block}.copy[data-copied] .cp{display:none}
+.targets{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.targets button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px 8px;border:1.5px solid transparent;border-radius:var(--r);background:transparent;cursor:pointer;font-size:12px;color:var(--ink-2)}
+.targets button i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--ink);background:#fff;color:var(--ink);transition:transform 160ms var(--ease),background 160ms var(--ease)}
+.targets button svg{width:18px;height:18px}
+.targets button:hover i,.targets button:focus-visible i{background:var(--pink-soft);transform:translateY(-2px)}
+.targets button:focus-visible{outline:none;border-color:var(--pink)}
+.qrrow{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
+.qrrow label{font-weight:700;font-size:13.5px;cursor:pointer}
+.qrrow small{display:block;font-weight:400;color:var(--ink-3);font-size:12px}
+.sw{position:relative;width:44px;height:26px;border:1.5px solid var(--ink);border-radius:13px;background:#fff;cursor:pointer;flex:none;padding:0}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;background:var(--ink);transition:transform 180ms var(--ease)}
+.sw[aria-checked="true"]{background:var(--pink)}
+.sw[aria-checked="true"]::after{transform:translateX(18px);background:#fff}
+.qr{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;padding:4px 0 6px}
+.qr[hidden]{display:none}
+.qr svg{width:92px;height:92px;background:#fff;border:1.5px solid var(--ink);padding:6px;border-radius:var(--r)}
+.qr p{margin:0;font-size:12.5px;color:var(--ink-2)}
+.qr p b{display:block;font-family:var(--display);font-weight:400;font-size:18px;color:var(--ink);margin-bottom:4px}
+.lrow{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+#status{font-size:12px;color:var(--ok);font-weight:700;text-align:right;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* access menu */
+.menu{position:fixed;z-index:30;width:236px;background:var(--paper);border:1.5px solid var(--ink);border-radius:var(--r);box-shadow:4px 4px 0 var(--ink);padding:4px;outline:none}
+.menu[hidden]{display:none}
+.menu [role="menuitemradio"]{display:grid;grid-template-columns:18px 1fr;gap:2px 8px;align-items:start;padding:8px 10px;border-radius:3px;cursor:pointer;outline:none}
+.menu [role="menuitemradio"] svg{width:16px;height:16px;margin-top:2px;visibility:hidden;color:var(--pink-ink)}
+.menu [aria-checked="true"] svg{visibility:visible}
+.menu b{font-size:13.5px}
+.menu small{grid-column:2;color:var(--ink-3);font-size:12px;line-height:1.3}
+.menu [role="menuitemradio"]:focus{background:var(--pink-soft)}
+.menu [role="menuitemradio"]:focus-visible{box-shadow:inset 0 0 0 2px var(--pink)}
+.menu [role="separator"]{height:1px;background:var(--line);margin:4px -4px}
+.menu .rm{grid-template-columns:18px 1fr;color:var(--pink-ink)}
+.menu .rm svg{visibility:visible}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:760px){.crumb,.saved,.faces{display:none}.page{padding:28px 22px}.page h1{font-size:40px}.cols{columns:1}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important;animation:none!important}.panel{transform:none}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <span class="logo">Press<b>leaf</b></span>
+  <span class="crumb">Issues / <strong>14 · The Allotment Letter</strong></span>
+  <span class="saved">Saved 2 min ago</span>
+  <span class="sp"></span>
+  <span class="faces" aria-label="3 people editing"><span style="background:#2e8c74">RA</span><span style="background:#c4682b">TB</span><span style="background:#1f2a55">NS</span></span>
+  <button class="share-btn" id="shareBtn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="panel">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4m-4 4 4-4 4 4M5 13v6h14v-6"/></svg>Share</button>
+</header>
+<main class="stage">
+  <article class="page">
+    <div class="kicker">Issue 14 · Early autumn</div>
+    <h1>The Allotment Letter</h1>
+    <p class="lede">Plot 22 is giving up its last beans, the shed roof finally holds, and Nell has opinions about leeks.</p>
+    <div class="cols">
+      <p>We cleared the north beds on Saturday and found the onions we lost in June, small, sweet and entirely intact. Tomas wants them pickled. The committee wants them on the swap table.</p>
+      <p>The seed library reopens on the 12th. Bring envelopes, labels and anything that came true from last year's saved heads of chard.</p>
+      <p>Water butts get drained before the first frost. Rhea will post the rota on the gate.</p>
+    </div>
+  </article>
+</main>
+
+<section class="panel" id="panel" role="dialog" aria-labelledby="ph" hidden>
+  <div class="ph"><h2 id="ph">Share issue 14</h2><span>The Allotment Letter</span></div>
+  <div class="sec">
+    <label class="lbl" for="email">Invite by email</label>
+    <div class="invite">
+      <div class="chips" id="chips"><input id="email" type="email" autocomplete="off" placeholder="Add people" aria-describedby="err"></div>
+      <button class="sel" type="button" id="inviteRole" aria-haspopup="menu" aria-expanded="false" aria-label="Invite access: Can edit"><span>Can edit</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+    </div>
+    <p class="err" id="err" aria-live="polite"></p>
+    <ul class="people" aria-label="People with access">
+      <li><span class="av" style="background:#1f2a55">NS</span><span class="nm"><b>Nell Sarpong (you)</b><small>nell@plot22.club</small></span><span class="owner">Owner</span></li>
+      <li><span class="av" style="background:#c4682b">TB</span><span class="nm"><b>Tomas Bell</b><small>tomas.bell@mailbox.org</small></span>
+        <button class="sel quiet" type="button" data-person="Tomas Bell" aria-haspopup="menu" aria-expanded="false" aria-label="Tomas Bell access: Can comment"><span>Can comment</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></li>
+    </ul>
+    <div style="display:flex;justify-content:flex-end;margin-top:4px"><button class="go" id="go" type="button">Send 2 invites</button></div>
+  </div>
+  <div class="sec">
+    <span class="lbl" id="lnk">Anyone with the link can view</span>
+    <div class="link">
+      <output aria-labelledby="lnk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7L12 6.3M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span id="url">pressleaf.page/plot22/allotment-14</span></output>
+      <button class="copy" id="copy" type="button"><svg class="cp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span id="copyT">Copy link</span></button>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="lrow"><span class="lbl" id="tg">Send to</span><span id="status" role="status" aria-live="polite"></span></div>
+    <div class="targets" role="toolbar" aria-labelledby="tg">
+      <button type="button" tabindex="0" data-t="Email draft opened"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></i>Email</button>
+      <button type="button" tabindex="-1" data-t="Message composer opened"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 18V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8l-3 3Z"/></svg></i>Message</button>
+      <button type="button" tabindex="-1" data-t="Post composer opened"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 16.2a6 6 0 0 0 0-8.4M5 5a10 10 0 0 0 0 14M19 19a10 10 0 0 0 0-14"/></svg></i>Broadcast</button>
+      <button type="button" tabindex="-1" data-t="Embed code copied"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 8-4 4 4 4M15 8l4 4-4 4"/></svg></i>Embed</button>
+    </div>
+  </div>
+  <div class="sec" style="border-bottom:0">
+    <div class="qrrow"><label id="qrl" for="qrsw">QR code<small>For the noticeboard on the gate</small></label>
+      <button class="sw" id="qrsw" type="button" role="switch" aria-checked="true" aria-controls="qr"></button></div>
+    <div class="qr" id="qr"><svg id="qrsvg" viewBox="0 0 25 25" role="img" aria-label="QR code for pressleaf.page/plot22/allotment-14" shape-rendering="crispEdges"></svg>
+      <p><b>Scan to read</b>Prints sharp at 3 cm and up. Downloads as SVG for the risograph master.</p></div>
+  </div>
+</section>
+
+<div class="menu" id="menu" role="menu" aria-label="Access level" hidden>
+  <div role="menuitemradio" tabindex="-1" aria-checked="false" data-v="Can view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><b>Can view</b><small>Read the issue, no notes</small></div>
+  <div role="menuitemradio" tabindex="-1" aria-checked="false" data-v="Can comment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><b>Can comment</b><small>Leave margin notes</small></div>
+  <div role="menuitemradio" tabindex="-1" aria-checked="true" data-v="Can edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><b>Can edit</b><small>Change layout and copy</small></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const btn=$("shareBtn"),panel=$("panel"),menu=$("menu"),chips=$("chips"),email=$("email"),err=$("err"),go=$("go"),status=$("status");
+const reduce=matchMedia("(prefers-reduced-motion: reduce)");
+let menuAnchor=null,buf="",bufT=0,copyT=0;
+const emails=["rhea@tidepool.org","jun@fieldpost.net"];
+const xSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+
+function clampPlace(el,a,{align="end",gap=8}={}){
+  el.style.maxHeight="";
+  const r=a.getBoundingClientRect(),m=el.getBoundingClientRect(),pad=8,vw=innerWidth,vh=innerHeight;
+  const below=vh-pad-r.bottom-gap,above=r.top-gap-pad;
+  let top=r.bottom+gap,side="bottom";
+  if(m.height>below&&m.height<=above){top=r.top-gap-m.height;side="top"}
+  else if(m.height>below){el.style.maxHeight=below+"px"}
+  let left=align==="end"?r.right-m.width:r.left;
+  left=Math.max(pad,Math.min(left,vw-pad-m.width));
+  el.style.top=top+"px";el.style.left=left+"px";el.dataset.side=side;
+}
+/* panel */
+function openPanel(focus=true){
+  panel.hidden=false;btn.setAttribute("aria-expanded","true");clampPlace(panel,btn);
+  requestAnimationFrame(()=>panel.classList.add("on"));
+  if(focus)email.focus({preventScroll:true});
+}
+function closePanel(ret=true){
+  closeMenu(false);panel.classList.remove("on");btn.setAttribute("aria-expanded","false");
+  setTimeout(()=>{if(btn.getAttribute("aria-expanded")==="false")panel.hidden=true},reduce.matches?0:120);
+  if(ret)btn.focus({preventScroll:true});
+}
+btn.onclick=()=>btn.getAttribute("aria-expanded")==="true"?closePanel():openPanel();
+/* chips */
+function renderChips(){
+  chips.querySelectorAll(".chip").forEach(c=>c.remove());
+  emails.forEach((m,i)=>{const c=document.createElement("span");c.className="chip";
+    c.innerHTML=`<span>${m}</span><button type="button" aria-label="Remove ${m}">${xSVG}</button>`;
+    c.querySelector("button").onclick=()=>{emails.splice(i,1);renderChips();email.focus();say(m+" removed")};
+    chips.insertBefore(c,email)});
+  go.disabled=!emails.length;go.textContent=emails.length?`Send ${emails.length} invite${emails.length>1?"s":""}`:"Send invites";
+}
+function addEmail(){
+  const v=email.value.trim().replace(/[,;]$/,"");if(!v)return true;
+  if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v)){err.textContent=`“${v}” is not an email address`;chips.classList.remove("bad");void chips.offsetWidth;chips.classList.add("bad");return false}
+  if(emails.includes(v.toLowerCase())){err.textContent=v+" is already on the list";return false}
+  emails.push(v.toLowerCase());email.value="";err.textContent="";renderChips();return true;
+}
+email.addEventListener("keydown",e=>{
+  if(e.key==="Enter"||e.key===","||e.key===";"||(e.key===" "&&email.value.trim())){if(email.value.trim()){e.preventDefault();addEmail()}}
+  else if(e.key==="Backspace"&&!email.value&&emails.length){const m=emails.pop();renderChips();say(m+" removed")}
+});
+email.addEventListener("blur",()=>{if(email.value.trim())addEmail()});
+email.addEventListener("input",()=>err.textContent="");
+chips.addEventListener("click",e=>{if(e.target===chips)email.focus()});
+go.onclick=()=>{if(email.value.trim()&&!addEmail())return;const n=emails.length;const role=$("inviteRole").textContent.trim().toLowerCase();emails.length=0;renderChips();say(`${n} invite${n>1?"s":""} sent · ${role}`)};
+function say(t){status.textContent="";requestAnimationFrame(()=>status.textContent=t)}
+/* copy */
+$("copy").onclick=()=>{
+  const c=$("copy"),url="https://"+$("url").textContent;
+  try{navigator.clipboard&&navigator.clipboard.writeText(url).catch(()=>{})}catch(_){}
+  c.dataset.copied="";$("copyT").textContent="Copied";say("Link copied to clipboard");
+  clearTimeout(copyT);copyT=setTimeout(()=>{delete c.dataset.copied;$("copyT").textContent="Copy link"},2000);
+};
+/* toolbar */
+const tbs=[...document.querySelectorAll(".targets button")];
+tbs.forEach((b,i)=>{b.onclick=()=>say(b.dataset.t);b.onkeydown=e=>{
+  let j=null;if(e.key==="ArrowRight")j=(i+1)%tbs.length;if(e.key==="ArrowLeft")j=(i-1+tbs.length)%tbs.length;if(e.key==="Home")j=0;if(e.key==="End")j=tbs.length-1;
+  if(j!==null){e.preventDefault();tbs.forEach(x=>x.tabIndex=-1);tbs[j].tabIndex=0;tbs[j].focus()}}});
+/* qr */
+function drawQR(s){
+  let h=2166136261;for(const ch of s){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)>>>0}
+  const rnd=()=>(h=Math.imul(h^h>>>15,2246822507)>>>0,h/4294967296);
+  const N=25,fin=(x,y)=>[[0,0],[N-7,0],[0,N-7]].some(([a,b])=>x>=a-1&&x<a+8&&y>=b-1&&y<b+8);
+  let d="";
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(fin(x,y))continue;if(x===6||y===6){if((x+y)%2===0)d+=`M${x} ${y}h1v1h-1z`;continue}if(rnd()<.48)d+=`M${x} ${y}h1v1h-1z`}
+  const f=(a,b)=>`M${a} ${b}h7v7h-7zM${a+1} ${b+1}v5h5v-5zM${a+2} ${b+2}h3v3h-3z`;
+  $("qrsvg").innerHTML=`<path fill="#1f2a55" fill-rule="evenodd" d="${d}${f(0,0)}${f(N-7,0)}${f(0,N-7)}"/>`;
+}
+drawQR($("url").textContent);
+$("qrsw").onclick=()=>{const on=$("qrsw").getAttribute("aria-checked")!=="true";$("qrsw").setAttribute("aria-checked",on);$("qr").hidden=!on;clampPlace(panel,btn)};
+/* access menu */
+const radios=()=>[...menu.querySelectorAll('[role="menuitemradio"]')];
+function openMenu(a,last){
+  menuAnchor=a;const cur=a.querySelector("span").textContent;
+  radios().forEach(r=>r.setAttribute("aria-checked",r.dataset.v===cur));
+  menu.setAttribute("aria-label",a.dataset.person?a.dataset.person+" access":"Invite access");
+  menu.hidden=false;a.setAttribute("aria-expanded","true");clampPlace(menu,a,{align:"end",gap:4});
+  const rs=radios();focusR(last?rs.length-1:Math.max(0,rs.findIndex(r=>r.dataset.v===cur)));
+}
+function closeMenu(ret=true){if(!menuAnchor)return;menu.hidden=true;menuAnchor.setAttribute("aria-expanded","false");const a=menuAnchor;menuAnchor=null;if(ret)a.focus({preventScroll:true})}
+function focusR(i){const rs=radios();rs.forEach(r=>r.tabIndex=-1);const t=rs[(i+rs.length)%rs.length];t.tabIndex=0;t.focus({preventScroll:true})}
+function choose(r){
+  const v=r.dataset.v,a=menuAnchor;a.querySelector("span").textContent=v;
+  a.setAttribute("aria-label",(a.dataset.person||"Invite")+" access: "+v);
+  say((a.dataset.person?a.dataset.person+" now ":"Invites ")+v.toLowerCase());closeMenu();
+}
+panel.querySelectorAll(".sel").forEach(s=>{
+  s.onclick=()=>menuAnchor===s?closeMenu():openMenu(s);
+  s.onkeydown=e=>{if(e.key==="ArrowDown"){e.preventDefault();openMenu(s)}else if(e.key==="ArrowUp"){e.preventDefault();openMenu(s,true)}};
+});
+menu.addEventListener("click",e=>{const r=e.target.closest('[role="menuitemradio"]');if(r)choose(r)});
+menu.addEventListener("mousemove",e=>{const r=e.target.closest('[role="menuitemradio"]');if(r&&r!==document.activeElement)focusR(radios().indexOf(r))});
+menu.addEventListener("keydown",e=>{
+  const rs=radios(),i=rs.indexOf(document.activeElement);
+  if(e.key==="ArrowDown"){e.preventDefault();focusR(i+1)}
+  else if(e.key==="ArrowUp"){e.preventDefault();focusR(i-1)}
+  else if(e.key==="Home"){e.preventDefault();focusR(0)}
+  else if(e.key==="End"){e.preventDefault();focusR(rs.length-1)}
+  else if(e.key==="Enter"||e.key===" "){e.preventDefault();choose(rs[i])}
+  else if(e.key==="Escape"){e.preventDefault();e.stopPropagation();closeMenu()}
+  else if(e.key==="Tab"){e.preventDefault();closeMenu()}
+  else if(e.key.length===1&&/\S/.test(e.key)){clearTimeout(bufT);buf+=e.key.toLowerCase();bufT=setTimeout(()=>buf="",500);
+    const order=[...rs.slice(i+1),...rs.slice(0,i+1)],hit=order.find(r=>r.dataset.v.toLowerCase().startsWith(buf))||order.find(r=>r.dataset.v.toLowerCase().split(" ")[1].startsWith(buf));if(hit)focusR(rs.indexOf(hit))}
+});
+/* global close */
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!panel.hidden&&!menuAnchor){e.preventDefault();closePanel()}});
+document.addEventListener("pointerdown",e=>{
+  if(menuAnchor&&!menu.contains(e.target)&&!menuAnchor.contains(e.target))closeMenu(false);
+  if(!panel.hidden&&!panel.contains(e.target)&&!btn.contains(e.target)&&!menu.contains(e.target))closePanel(false);
+});
+panel.addEventListener("focusout",e=>{const t=e.relatedTarget;if(t&&!panel.contains(t)&&!menu.contains(t)&&t!==btn)closePanel(false)});
+addEventListener("resize",()=>{if(!panel.hidden)clampPlace(panel,btn);if(menuAnchor)clampPlace(menu,menuAnchor,{align:"end",gap:4})});
+renderChips();openPanel(false);
+</script>
+</body>
+</html>

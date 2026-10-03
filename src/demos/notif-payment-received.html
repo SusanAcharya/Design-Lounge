@@ -1,0 +1,325 @@
+<!-- Design Lounge piece: notif-payment-received · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pocketful · payment received</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;600;700;800&family=Funnel+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface:#f4f5fb;--s-low:#eceef8;--s-high:#e2e5f3;--s-top:#ffffff;
+  --on:#161a2e;--on-2:#454b66;--on-3:#6a7090;--outline:#c7cbe0;
+  --primary:#2341d9;--on-primary:#ffffff;--p-cont:#dce1ff;--on-p-cont:#0a1a6e;
+  --tert:#ffb23f;--on-tert:#3d2500;--t-cont:#ffe2b8;--good:#0e7a4a;--focus:#2341d9;
+  --display:"Funnel Display",system-ui,sans-serif;--sans:"Funnel Sans",system-ui,sans-serif;
+  --emph:cubic-bezier(.2,0,0,1);--spring:cubic-bezier(.34,1.45,.64,1);--sheet:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{position:relative;overflow:hidden;font:15px/1.4 var(--sans);color:var(--on);background:var(--surface)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.num{font-variant-numeric:tabular-nums}
+
+/* app */
+.app{padding:16px 16px 34px;transition:filter .3s var(--ease)}
+body.dim .app{filter:brightness(.82) saturate(.8)}
+.bal{padding:22px 22px 20px;border-radius:32px;background:var(--primary);color:var(--on-primary)}
+.bal small{font-size:13px;font-weight:600;letter-spacing:.02em;opacity:.8}
+.bal p{margin:6px 0 0;font:700 44px/1 var(--display);letter-spacing:-.02em}
+.bal span{display:inline-block;margin-top:10px;padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.16);font-size:13px;font-weight:600;transition:background .3s var(--ease)}
+.bal span.up{background:var(--tert);color:var(--on-tert)}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.quick div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--on-2)}
+.quick i{display:grid;place-items:center;width:64px;height:52px;border-radius:20px;background:var(--s-high);color:var(--on)}
+.quick div:nth-child(2) i{border-radius:26px;background:var(--t-cont);color:var(--on-tert)}
+.quick i svg{width:22px;height:22px}
+.act{margin-top:18px}
+.act h2{margin:0 4px 6px;font:600 14px var(--display);color:var(--on-2)}
+.act li{display:flex;align-items:center;gap:12px;padding:8px 4px;list-style:none}
+.act ul{margin:0;padding:0}
+.act b{display:block;font-weight:600}
+.act li span{font-size:13px;color:var(--on-3)}
+.act li[id]{animation:rowIn .5s var(--spring)}
+@keyframes rowIn{from{opacity:0;transform:translateY(-8px)}}
+.act em{margin-left:auto;font-style:normal;font-weight:600}
+.dotav{display:grid;place-items:center;width:40px;height:40px;border-radius:14px;background:var(--s-high);font:700 14px var(--display);color:var(--on-2)}
+
+/* overlay */
+.ov{position:relative;z-index:2}
+.bw{display:grid;grid-template-rows:1fr;transition:grid-template-rows .42s var(--emph)}
+.bw.shut{grid-template-rows:0fr}
+.bw>div{min-height:0;overflow:hidden}
+.pad{padding:54px 10px 16px}
+.sw{padding:0 10px;transition:padding .42s var(--emph)}
+.bw.shut+.sw{padding-top:54px}
+.scrim{position:absolute;inset:0;z-index:3;background:rgba(22,26,46,.28);opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+body.dim .scrim{opacity:1;pointer-events:auto}
+.ov,.app{position:relative}
+
+.ban{position:relative;z-index:2;padding:16px 16px 16px;border-radius:32px;background:var(--s-top);box-shadow:0 1px 0 var(--outline),0 18px 40px -14px rgba(22,26,46,.35);
+  transform:translateY(-130%) scale(.9);opacity:0;transition:transform .62s var(--spring),opacity .25s var(--ease)}
+.ban.in{transform:none;opacity:1}
+.ban.out{transform:translateY(-130%) scale(.94);opacity:0;transition:transform .34s var(--emph),opacity .25s var(--ease)}
+.bh{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--on-2)}
+.shape{display:grid;place-items:center;width:40px;height:40px;background:var(--p-cont);color:var(--on-p-cont);border-radius:12px;transition:border-radius .6s var(--spring),transform .6s var(--spring);transform:rotate(-45deg)}
+.ban.in .shape{border-radius:50% 50% 50% 14px;transform:none}
+.shape svg{width:20px;height:20px;stroke-width:2.4}
+.bh time{font-weight:500;color:var(--on-3)}
+.x{margin-left:auto;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;color:var(--on-3)}
+.x:hover{background:var(--s-low);color:var(--on)}
+.amt{margin:6px 0 0;font:800 46px/1.05 var(--display);letter-spacing:-.03em;color:var(--on)}
+.amt sup{font-size:.5em;vertical-align:.7em;margin-right:2px;color:var(--good)}
+.amt .c{color:var(--on-3);font-size:.62em;font-weight:700;letter-spacing:-.01em}
+.from{display:flex;align-items:center;gap:10px;margin-top:8px}
+.av{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--tert);color:var(--on-tert);font:700 13px var(--display)}
+.from b{font-weight:600}
+.from div span{display:block;font-size:13px;color:var(--on-3)}
+.acts{display:flex;gap:8px;margin-top:14px}
+.btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 18px;border-radius:24px;font-weight:600;font-size:15px;transition:border-radius .25s var(--spring),background .15s var(--ease),transform .12s var(--ease)}
+.btn svg{width:18px;height:18px}
+.btn:active{border-radius:14px}
+.btn.fill{background:var(--primary);color:var(--on-primary)}
+.btn.fill:hover{background:#1a35bf}
+.btn.ton{background:var(--p-cont);color:var(--on-p-cont)}
+.btn.ton:hover{background:#cbd2ff}
+.btn[aria-expanded="true"]{border-radius:14px}
+.rc{display:grid;grid-template-rows:0fr;transition:grid-template-rows .42s var(--emph)}
+.rc.open{grid-template-rows:1fr}
+.rc>div{min-height:0;overflow:hidden}
+.rcin{position:relative;margin-top:14px;padding:16px 16px 10px;border-radius:20px;background:var(--s-low)}
+.rcin::before{content:"";position:absolute;left:12px;right:12px;top:-5px;height:10px;background:radial-gradient(circle at 5px 5px,var(--s-top) 4px,transparent 4.5px) 0 0/14px 10px repeat-x}
+.rcin dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 12px;font-size:14px}
+.rcin dt{color:var(--on-3)}
+.rcin dd{margin:0;text-align:right;font-weight:600}
+.rcin dd code{font:600 12.5px ui-monospace,monospace;letter-spacing:.02em}
+.split-note{display:none;margin-top:12px;padding:10px 14px;border-radius:16px;background:var(--t-cont);color:var(--on-tert);font-size:14px;font-weight:600}
+.split-note.on{display:block}
+
+/* grouped stack */
+.stack{position:relative;margin:0 6px;transition:height .45s var(--emph)}
+.stack .head{position:absolute;left:0;right:0;top:-2px;display:flex;align-items:center;justify-content:space-between;height:36px;padding:0 6px;opacity:0;pointer-events:none;transition:opacity .2s var(--ease)}
+.stack.open .head{opacity:1;pointer-events:auto}
+.head b{font:600 13px var(--display);color:var(--on-2)}
+.less{display:flex;align-items:center;gap:4px;min-height:36px;padding:0 12px;border-radius:18px;background:var(--s-top);font-size:13px;font-weight:600;color:var(--primary);box-shadow:0 1px 0 var(--outline)}
+.card{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:10px 14px;border-radius:22px;background:var(--s-top);text-align:left;
+  box-shadow:0 1px 0 var(--outline),0 10px 24px -14px rgba(22,26,46,.4);transform-origin:50% 0;transition:transform .5s var(--spring),opacity .3s var(--ease),border-radius .3s var(--ease)}
+.card .dotav{width:36px;height:36px;border-radius:12px;font-size:13px}
+.card .t{flex:1;min-width:0}
+.card b{display:block;font-weight:600;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .t span{display:block;font-size:13px;color:var(--on-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card em{font-style:normal;font-weight:700;font-size:14px}
+.card em.g{color:var(--good)}
+.card .new{position:absolute;right:12px;top:10px;width:8px;height:8px;border-radius:50%;background:var(--primary)}
+.card.read .new{display:none}
+.count{position:absolute;right:14px;bottom:-11px;padding:2px 9px;border-radius:10px;background:var(--on);color:var(--surface);font-size:11.5px;font-weight:700;transition:opacity .2s var(--ease)}
+.stack.open .count{opacity:0}
+.stack:not(.open) .card:not(:first-of-type){pointer-events:none}
+
+/* split sheet */
+.sheet{position:absolute;z-index:6;left:0;right:0;bottom:0;padding:10px 20px max(34px,env(safe-area-inset-bottom));border-radius:32px 32px 0 0;background:var(--s-top);transform:translateY(105%);transition:transform .42s var(--sheet);box-shadow:0 -20px 40px -20px rgba(22,26,46,.4)}
+.sheet.open{transform:none}
+.grab{width:36px;height:4px;margin:0 auto 14px;border-radius:2px;background:var(--outline)}
+.sheet h2{margin:0;font:700 24px/1.1 var(--display);letter-spacing:-.01em}
+.sheet p{margin:4px 0 14px;color:var(--on-3);font-size:14px}
+.people{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:flex;align-items:center;gap:8px;height:44px;padding:0 16px 0 6px;border-radius:14px;border:1px solid var(--outline);font-weight:600;transition:background .15s var(--ease),border-radius .25s var(--spring)}
+.chip .av{width:30px;height:30px;font-size:12px}
+.chip[aria-pressed="true"]{background:var(--p-cont);border-color:transparent;color:var(--on-p-cont);border-radius:22px}
+.chip[aria-pressed="true"] .av{background:var(--primary);color:var(--on-primary)}
+.chip.me{opacity:.7;cursor:default}
+.each{display:flex;align-items:baseline;justify-content:space-between;margin:18px 0 14px;padding-top:14px;border-top:1px solid var(--outline)}
+.each span{color:var(--on-2);font-weight:600}
+.each b{font:800 32px var(--display);letter-spacing:-.02em}
+.sheet .row{display:flex;gap:8px}
+.btn.txt{flex:0 0 auto;color:var(--primary)}
+.btn.txt:hover{background:var(--s-low)}
+.btn:disabled{background:var(--s-high);color:var(--on-3);cursor:not-allowed}
+
+.replay{position:absolute;z-index:5;bottom:40px;left:50%;transform:translateX(-50%);min-height:40px;padding:0 18px;border-radius:20px;background:var(--on);color:var(--surface);font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.replay.on{opacity:1;pointer-events:auto}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:1ms!important;transition-delay:0s!important}}
+@media (max-width:370px){.amt{font-size:40px}.quick i{width:56px}}
+</style>
+</head>
+<body>
+<div class="ov" id="ov">
+  <div class="bw" id="bw"><div><div class="pad">
+  <section class="ban" id="ban" aria-labelledby="banT" role="region">
+    <div class="bh">
+      <span class="shape" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+      <span id="banT">Payment received</span><time>· now</time>
+      <button class="x" id="x" type="button" aria-label="Dismiss"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <p class="amt num" id="amt" aria-label="Plus 1,240 euros"><sup>+</sup>€<span id="whole">0</span><span class="c">.<span id="cents">00</span></span></p>
+    <div class="from">
+      <span class="av" aria-hidden="true">AV</span>
+      <div><b>Anouk de Vries</b><span>“Lisbon flat, October share”</span></div>
+    </div>
+    <div class="split-note" id="splitNote" role="status"></div>
+    <div class="acts">
+      <button class="btn fill" id="rcBtn" type="button" aria-expanded="false" aria-controls="rc"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>View receipt</button>
+      <button class="btn ton" id="splitBtn" type="button" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><path d="M12 4v16M5 8h4M5 16h4M15 8h4M15 16h4"/></svg>Split</button>
+    </div>
+    <div class="rc" id="rc"><div>
+      <div class="rcin">
+        <dl>
+          <dt>Date</dt><dd>Thu 8 Oct, 11:42</dd>
+          <dt>Method</dt><dd>Instant transfer</dd>
+          <dt>Fee</dt><dd class="num">€0.00</dd>
+          <dt>Into</dt><dd>Everyday ··4471</dd>
+          <dt>Reference</dt><dd><code>PKF-8Q2M-7701</code></dd>
+        </dl>
+      </div>
+    </div></div>
+  </section>
+  </div></div></div>
+
+  <div class="sw"><div class="stack" id="stack">
+    <div class="head"><b>Earlier · Pocketful</b><button class="less" id="less" type="button" tabindex="-1">Show less<svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m6 15 6-6 6 6"/></svg></button></div>
+    <button class="card" type="button" aria-label="Earlier notifications, 3. Show all" id="c0"><span class="dotav">HS</span><span class="t"><b>Salary from Harrowgate Studio</b><span>Yesterday · move 10% to Savings?</span></span><em class="num g">+€2,850</em><i class="new"></i></button>
+    <button class="card" type="button" tabindex="-1"><span class="dotav">TC</span><span class="t"><b>Tilde Café</b><span>Card ··4471 · 08:12</span></span><em class="num">−€4.20</em><i class="new"></i></button>
+    <button class="card" type="button" tabindex="-1"><span class="dotav">WK</span><span class="t"><b>Your week in money</b><span>Spent €212, 18% less than usual</span></span><em class="num"></em><i class="new"></i></button>
+    <span class="count" aria-hidden="true">+2</span>
+  </div></div>
+</div>
+
+<main class="app" id="app">
+  <section class="bal" aria-label="Balance">
+    <small>Everyday · EUR</small>
+    <p class="num" id="balance">€3,182.40</p>
+    <span id="balNote">+€0.00 today</span>
+  </section>
+  <div class="quick" aria-hidden="true">
+    <div><i><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i>Send</div>
+    <div><i><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i>Request</div>
+    <div><i><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></i>Top up</div>
+    <div><i><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M3 10h18"/></svg></i>Cards</div>
+  </div>
+  <section class="act" aria-label="Recent">
+    <h2>Recent</h2>
+    <ul>
+      <li id="newRow" hidden><span class="dotav" style="background:var(--tert);color:var(--on-tert)">AV</span><div><b>Anouk de Vries</b><span>Transfer · now</span></div><em class="num" style="color:var(--good)">+€1,240.00</em></li>
+      <li><span class="dotav">TC</span><div><b>Tilde Café</b><span>Card · 08:12</span></div><em class="num">−€4.20</em></li>
+      <li><span class="dotav">HS</span><div><b>Harrowgate Studio</b><span>Salary · Yesterday</span></div><em class="num" style="color:var(--good)">+€2,850.00</em></li>
+    </ul>
+  </section>
+</main>
+<div class="scrim" id="scrim"></div>
+<button class="replay" id="replay" type="button" tabindex="-1">Replay payment</button>
+
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT" aria-hidden="true">
+  <div class="grab" aria-hidden="true"></div>
+  <h2 id="shT">Split €1,240.00</h2>
+  <p>Who shares the Lisbon flat with you?</p>
+  <div class="people" id="people">
+    <button class="chip me" type="button" aria-pressed="true" aria-disabled="true" tabindex="-1"><span class="av">You</span>You</button>
+    <button class="chip" type="button" aria-pressed="true" data-n="Mireille"><span class="av">MB</span>Mireille</button>
+    <button class="chip" type="button" aria-pressed="true" data-n="Kofi"><span class="av">KA</span>Kofi</button>
+    <button class="chip" type="button" aria-pressed="false" data-n="Sander"><span class="av">SL</span>Sander</button>
+  </div>
+  <div class="each"><span id="eachL">Each of 3 pays</span><b class="num" id="each">€413.33</b></div>
+  <div class="row">
+    <button class="btn txt" id="shCancel" type="button">Cancel</button>
+    <button class="btn fill" id="shGo" type="button">Request from 2</button>
+  </div>
+</section>
+<p class="sr" id="live" aria-live="polite" aria-atomic="true"></p>
+
+<script>
+const $=id=>document.getElementById(id);
+const ban=$('ban'),stack=$('stack'),cards=[...stack.querySelectorAll('.card')],sheet=$('sheet');
+const AMT=1240,BAL=3182.40,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const eur=n=>'€'+n.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const say=t=>{$('live').textContent='';setTimeout(()=>$('live').textContent=t,30)};
+let open=false,lastFocus=null;
+
+function countUp(dur,from,to,draw){
+  if(reduce){draw(to);return}
+  const t0=performance.now();
+  (function f(now){const k=Math.min(1,(now-t0)/dur),e=1-Math.pow(2,-10*k);draw(from+(to-from)*(k===1?1:e));if(k<1)requestAnimationFrame(f)})(t0);
+}
+function layout(){
+  const H=cards[0].offsetHeight,G=8,TOP=open?44:0;
+  cards.forEach((c,i)=>{
+    c.style.zIndex=cards.length-i;
+    c.style.transitionDelay=open?(i*45)+'ms':((cards.length-1-i)*30)+'ms';
+    c.style.transform=open?`translateY(${TOP+i*(H+G)}px)`:`translateY(${i*9}px) scale(${1-i*.05})`;
+    c.style.opacity=open||i<3?1:0;
+    c.tabIndex=open||i===0?0:-1;
+  });
+  stack.style.height=(open?TOP+cards.length*(H+G):H+18)+'px';
+  stack.classList.toggle('open',open);
+  $('less').tabIndex=open?0:-1;
+  cards[0].setAttribute('aria-label',open?'Salary from Harrowgate Studio, plus 2,850 euros':'Earlier notifications, 3. Show all');
+  if(open)cards[0].removeAttribute('aria-expanded');
+  dim();
+}
+function dim(){document.body.classList.toggle('dim',sheet.classList.contains('open'))}
+function arrive(){
+  ban.classList.remove('out');ban.inert=false;$('bw').classList.remove('shut');$('replay').classList.remove('on');$('replay').tabIndex=-1;
+  $('splitNote').classList.remove('on');$('rc').classList.remove('open');$('rcBtn').setAttribute('aria-expanded','false');
+  $('whole').textContent='0';$('cents').textContent='00';
+  $('splitBtn').lastChild.textContent='Split';$('rcBtn').lastChild.textContent='View receipt';
+  $('balance').textContent=eur(BAL);$('balNote').textContent='+€0.00 today';$('balNote').classList.remove('up');$('newRow').hidden=true;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>ban.classList.add('in')));
+  setTimeout(()=>countUp(900,0,AMT,v=>{const s=v.toFixed(2).split('.');$('whole').textContent=(+s[0]).toLocaleString('en-GB');$('cents').textContent=s[1]}),120);
+  setTimeout(()=>{countUp(900,BAL,BAL+AMT,v=>$('balance').textContent=eur(v));$('balNote').textContent='+€1,240.00 today';$('balNote').classList.add('up');$('newRow').hidden=false},900);
+  say('Payment received. 1,240 euros from Anouk de Vries.');
+}
+$('x').onclick=()=>{
+  ban.classList.remove('in');ban.classList.add('out');ban.inert=true;
+  setTimeout(()=>$('bw').classList.add('shut'),260);
+  setTimeout(()=>{$('replay').classList.add('on');$('replay').tabIndex=0;$('replay').focus()},350);
+};
+$('replay').onclick=()=>{ban.classList.remove('in');ban.style.transition='none';ban.classList.remove('out');void ban.offsetWidth;ban.style.transition='';$('bw').classList.remove('shut');setTimeout(()=>{arrive();setTimeout(()=>$('rcBtn').focus({preventScroll:true}),700)},300)};
+$('rcBtn').onclick=()=>{
+  const o=!$('rc').classList.contains('open');$('rc').classList.toggle('open',o);$('rcBtn').setAttribute('aria-expanded',o);
+  $('rcBtn').lastChild.textContent=o?'Hide receipt':'View receipt';
+  if(o&&open){open=false;layout()}dim();
+};
+cards.forEach((c,i)=>c.onclick=()=>{
+  if(!open){open=true;if($('rc').classList.contains('open'))$('rcBtn').click();layout();say('3 earlier notifications shown.');setTimeout(()=>cards[0].focus({preventScroll:true}),60);return}
+  c.classList.add('read');say(c.querySelector('b').textContent+', marked read.');
+});
+$('less').onclick=()=>{open=false;layout();cards[0].focus({preventScroll:true})};
+$('scrim').onclick=()=>{if(sheet.classList.contains('open'))closeSheet();else{open=false;layout();if($('rc').classList.contains('open'))$('rcBtn').click()}};
+
+/* split */
+function calc(){
+  const on=[...$('people').querySelectorAll('.chip')].filter(c=>c.getAttribute('aria-pressed')==='true');
+  const n=on.length,others=n-1;
+  $('each').textContent=eur(Math.floor(AMT/n*100)/100);$('eachL').textContent=n===1?'Only you':'Each of '+n+' pays';
+  $('shGo').disabled=others===0;$('shGo').textContent=others===0?'Pick someone':'Request from '+others;
+  return on.filter(c=>c.dataset.n).map(c=>c.dataset.n);
+}
+function openSheet(){lastFocus=document.activeElement;sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');sheet.inert=false;$('ov').inert=true;$('app').inert=true;dim();calc();setTimeout(()=>$('people').querySelector('[data-n]').focus(),300)}
+function closeSheet(){sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');sheet.inert=true;$('ov').inert=false;$('app').inert=false;dim();(lastFocus||$('splitBtn')).focus({preventScroll:true})}
+$('splitBtn').onclick=openSheet;
+$('shCancel').onclick=closeSheet;
+$('people').addEventListener('click',e=>{const c=e.target.closest('[data-n]');if(!c)return;c.setAttribute('aria-pressed',c.getAttribute('aria-pressed')!=='true');calc()});
+$('shGo').onclick=()=>{
+  const names=calc(),each=$('each').textContent;
+  const who=names.length>1?names.slice(0,-1).join(', ')+' and '+names.at(-1):names[0];
+  $('splitNote').textContent='Requested '+each+' each from '+who;$('splitNote').classList.add('on');
+  $('splitBtn').lastChild.textContent='Split sent';
+  closeSheet();say('Requests sent to '+who+'. '+each+' each.');
+};
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  if(sheet.classList.contains('open'))closeSheet();
+  else if(open){open=false;layout();cards[0].focus()}
+  else if($('rc').classList.contains('open'))$('rcBtn').click();
+});
+sheet.inert=true;
+layout();
+setTimeout(arrive,200);
+addEventListener('resize',layout);
+</script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!-- Design Lounge piece: text-annotated-underlines · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Marginalia — Read with a pen in your hand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3ecdf;--paper-2:#ebe2d1;--ink:#1f1d1a;--ink-2:#5d574d;--line:#d8cdb8;
+  --blue:#2346b8;--red:#cf3a25;--mint:#7fd9ad;
+  --serif:"Literata",Georgia,serif;--hand:"Kalam","Comic Sans MS",cursive;
+  --ease:cubic-bezier(.2,.7,.2,1);--draw:cubic-bezier(.45,.05,.25,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font:400 19px/1.65 var(--serif);color:var(--ink);background:var(--paper);
+  background-image:radial-gradient(rgba(31,29,26,.05) .7px,transparent .8px);background-size:4px 4px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mast{display:flex;justify-content:space-between;align-items:baseline;gap:16px;max-width:1160px;margin:0 auto;padding:22px 40px 14px;border-bottom:1px solid var(--line)}
+.mast b{font:italic 400 26px/1 var(--serif);letter-spacing:-.01em}
+.mast span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.grid{display:grid;grid-template-columns:200px minmax(0,620px) 200px;gap:56px;justify-content:center;max-width:1160px;margin:0 auto;padding:36px 40px 56px}
+/* picker */
+.picker{position:sticky;top:24px;align-self:start}
+.picker h2{margin:0 0 10px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.picker ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.pick{display:flex;align-items:center;gap:12px;width:100%;min-height:40px;padding:4px 10px 4px 6px;border-radius:8px;font:400 17px/1 var(--hand);text-align:left;transition:background .16s var(--ease)}
+.pick:hover,.pick:focus-visible{background:var(--paper-2)}
+.pick svg{width:40px;height:24px;flex:none;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2}
+.pick kbd{margin-left:auto;font:600 11px/1 var(--serif);color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:3px 6px}
+.replay{display:flex;align-items:center;gap:8px;margin-top:14px;height:40px;padding:0 14px;border:1.5px solid var(--ink);border-radius:999px;font-size:13px;font-weight:600;transition:background .16s var(--ease),color .16s var(--ease)}
+.replay:hover{background:var(--ink);color:var(--paper)}
+.replay svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* article */
+article{position:relative}
+.kicker{margin:0;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+h1{margin:8px 0 14px;font:400 50px/1.04 var(--serif);letter-spacing:-.02em}
+.stand{margin:0 0 26px;font-size:21px;line-height:1.45;color:var(--ink-2);font-style:italic}
+article p.body{margin:0 0 20px;max-width:62ch}
+.an{white-space:nowrap}
+blockquote{margin:26px 0 22px;padding:0 0 0 6px;font-size:24px;line-height:1.4;font-style:italic;max-width:30ch}
+blockquote cite{display:block;margin-top:8px;font:normal 600 12px/1 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.byline{font-size:13px;color:var(--ink-2);margin:0;border-top:1px solid var(--line);padding-top:14px;max-width:62ch}
+/* notes + overlay */
+.note{position:absolute;left:calc(100% + 40px);width:190px;margin:0;font:400 19px/1.25 var(--hand);transform:rotate(-3deg);transform-origin:left top}
+.note.n-arrow{color:var(--red)}
+.note.n-strike{color:var(--blue);transform:rotate(2deg)}
+.ink{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.ink path{fill:none;stroke-linecap:round;stroke-linejoin:round;transition:opacity .2s var(--ease)}
+.ink .k-highlight{mix-blend-mode:multiply;stroke-linecap:butt}
+.ink.dim path:not(.on){opacity:.18}
+@media (max-width:1180px){
+  .grid{grid-template-columns:180px minmax(0,620px);gap:40px}
+  .note{position:static;width:auto;margin:-6px 0 18px auto;max-width:240px;text-align:right}
+  .note.n-arrow{margin-right:8px}
+}
+@media (max-width:860px){
+  .grid{grid-template-columns:minmax(0,1fr);gap:24px;padding:24px 20px 48px}
+  .mast{padding:18px 20px 12px}.mast span{display:none}
+  .picker{position:static}
+  .picker ul{flex-direction:row;flex-wrap:wrap;gap:6px}
+  .pick{width:auto;border:1px solid var(--line);padding-right:12px}
+  .pick kbd{display:none}
+  h1{font-size:38px}
+  body{font-size:18px}
+  blockquote{font-size:21px;margin-left:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="mast"><b>Marginalia</b><span>Issue 12 · On reading slowly</span></header>
+<div class="grid">
+  <nav class="picker" aria-label="Annotation picker">
+    <h2>Replay a mark</h2>
+    <ul>
+      <li><button class="pick" type="button" data-k="underline" aria-label="Replay underline"><svg viewBox="0 0 40 24" aria-hidden="true" stroke="#2346b8"><path d="M4 16q16-3 32 0"/></svg>Underline<kbd>1</kbd></button></li>
+      <li><button class="pick" type="button" data-k="circle" aria-label="Replay circle"><svg viewBox="0 0 40 24" aria-hidden="true" stroke="#cf3a25"><path d="M30 6C22 2 6 4 5 12s14 10 24 7 8-11-6-13"/></svg>Circle<kbd>2</kbd></button></li>
+      <li><button class="pick" type="button" data-k="highlight" aria-label="Replay highlight"><svg viewBox="0 0 40 24" aria-hidden="true" stroke="#7fd9ad" style="stroke-width:10;stroke-linecap:butt"><path d="M3 13l34-1"/></svg>Highlight<kbd>3</kbd></button></li>
+      <li><button class="pick" type="button" data-k="strike" aria-label="Replay strike-through"><svg viewBox="0 0 40 24" aria-hidden="true" stroke="#cf3a25"><path d="M4 13l32-2M8 14l26-3"/></svg>Strike<kbd>4</kbd></button></li>
+      <li><button class="pick" type="button" data-k="bracket" aria-label="Replay bracket"><svg viewBox="0 0 40 24" aria-hidden="true" stroke="#2346b8"><path d="M22 3q-7 0-7 4v10q0 4 7 4"/></svg>Bracket<kbd>5</kbd></button></li>
+      <li><button class="pick" type="button" data-k="arrow" aria-label="Replay arrow"><svg viewBox="0 0 40 24" aria-hidden="true" stroke="#cf3a25"><path d="M4 18q14-14 30-8M28 6l6 4-5 5"/></svg>Arrow<kbd>6</kbd></button></li>
+    </ul>
+    <button class="replay" id="all" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5M4 4v4.5h4.5"/></svg>Replay all</button>
+  </nav>
+  <article id="page" aria-labelledby="t">
+    <p class="kicker">Essay</p>
+    <h1 id="t">Read with a pen in your hand</h1>
+    <p class="stand">The page is not a screen. It can take a mark, and it remembers it.</p>
+    <p class="body">Most of what we read slides past. We nod, turn the page, and by evening the argument has <span class="an" data-k="underline">left no mark at all</span>. The fix is old and almost <span class="an" data-k="circle">embarrassingly</span> simple: <span class="an" data-k="highlight">write back to the page</span>.</p>
+    <p class="body">A margin is a conversation. You <span class="an" data-k="strike">nod along politely</span> argue. You circle the word you will look up on the bus. You draw a line from a doubt in paragraph two to its <span class="an" data-k="arrow">answer</span> six lines down, and the book becomes a map of your attention.</p>
+    <p class="note n-strike" aria-hidden="true">ha. guilty.</p>
+    <blockquote class="an-block" data-k="bracket">A book you have written in is a book you have actually read.<cite>Dorothea Venn, 1931</cite></blockquote>
+    <p class="note n-arrow" aria-hidden="true">this is the whole essay</p>
+    <p class="byline">Words by Tomas Ilve · 6 min read · Pencil recommended, pen preferred</p>
+    <svg class="ink" id="ink" aria-hidden="true"></svg>
+  </article>
+</div>
+<p class="sr" role="status" id="live"></p>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const page = document.getElementById('page'), ink = document.getElementById('ink'), live = document.getElementById('live');
+const ORDER = ['underline', 'circle', 'highlight', 'strike', 'arrow', 'bracket'];
+const STYLE = {
+  underline: { c: '#2346b8', w: 2.4, d: 620 }, circle: { c: '#cf3a25', w: 2.2, d: 820 },
+  highlight: { c: '#7fd9ad', w: 0, d: 520 }, strike: { c: '#cf3a25', w: 2.4, d: 460 },
+  bracket: { c: '#2346b8', w: 2.4, d: 700 }, arrow: { c: '#cf3a25', w: 2.2, d: 720 },
+};
+const marks = {};
+let hovered = null;
+const rnd = seed => () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+const f = n => n.toFixed(1);
+
+function rectOf(el) {
+  const p = page.getBoundingClientRect(), r = el.getBoundingClientRect();
+  return { x: r.left - p.left, y: r.top - p.top, w: r.width, h: r.height };
+}
+function textRect(el) {
+  const range = document.createRange(); range.selectNodeContents(el);
+  const p = page.getBoundingClientRect(), r = range.getBoundingClientRect();
+  return { x: r.left - p.left, y: r.top - p.top, w: r.width, h: r.height };
+}
+function smooth(pts) {
+  let d = `M${f(pts[0][0])} ${f(pts[0][1])}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+    d += `C${f(p1[0] + (p2[0] - p0[0]) / 6)} ${f(p1[1] + (p2[1] - p0[1]) / 6)} ${f(p2[0] - (p3[0] - p1[0]) / 6)} ${f(p2[1] - (p3[1] - p1[1]) / 6)} ${f(p2[0])} ${f(p2[1])}`;
+  }
+  return d;
+}
+const SHAPES = {
+  underline(r, j) {
+    const y = r.y + r.h - 1, a = `M${f(r.x - 4)} ${f(y + j() * 2)}Q${f(r.x + r.w * .5)} ${f(y + 3 + j() * 3)} ${f(r.x + r.w + 6)} ${f(y - 1 + j() * 2)}`;
+    return [a + `M${f(r.x + r.w - 6)} ${f(y + 5)}Q${f(r.x + r.w * .45)} ${f(y + 7 + j() * 2)} ${f(r.x + r.w * .12)} ${f(y + 8)}`];
+  },
+  circle(r, j) {
+    const cx = r.x + r.w / 2, cy = r.y + r.h / 2, rx = r.w / 2 + 9, ry = r.h / 2 + 5, pts = [];
+    for (let a = -200; a <= 185; a += 30) {
+      const t = a * Math.PI / 180, k = 1 + (j() - .5) * .08 + (a > 150 ? .06 : 0);
+      pts.push([cx + Math.cos(t) * rx * k, cy + Math.sin(t) * ry * k - (a > 120 ? 3 : 0)]);
+    }
+    return [smooth(pts)];
+  },
+  highlight(r, j) {
+    const y = r.y + r.h * .58;
+    return [`M${f(r.x - 5)} ${f(y + j() * 2)}L${f(r.x + r.w * .5)} ${f(y - 1 + j())}L${f(r.x + r.w + 6)} ${f(y - 2 + j() * 2)}`];
+  },
+  strike(r, j) {
+    const y = r.y + r.h * .56;
+    return [`M${f(r.x - 3)} ${f(y + 2)}L${f(r.x + r.w + 4)} ${f(y - 3 + j() * 2)}M${f(r.x + r.w)} ${f(y + 1)}L${f(r.x + 4)} ${f(y + 4 + j() * 2)}`];
+  },
+  bracket(r, j) {
+    const x = r.x - 14, t = r.y + 2, b = r.y + r.h - 4;
+    return [`M${f(x + 12)} ${f(t)}Q${f(x - 1)} ${f(t - 1)} ${f(x + j() * 2)} ${f(t + 14)}L${f(x - 1 + j() * 2)} ${f(b - 14)}Q${f(x - 1)} ${f(b + 1)} ${f(x + 12)} ${f(b + 2)}`];
+  },
+  arrow(r, j) {
+    const n = rectOf(document.querySelector('.n-arrow'));
+    const side = n.x > r.x + r.w;
+    const sx = side ? n.x - 8 : n.x + n.w * .55, sy = side ? n.y + 12 : n.y - 4;
+    const ex = r.x + r.w * .72, ey = r.y + r.h + 1;
+    const c1x = side ? sx - 60 : sx + 30, c1y = side ? sy - 50 : sy - 60;
+    const c2x = ex + 40 + j() * 10, c2y = ey + 40;
+    const ang = Math.atan2(ey - c2y, ex - c2x), L = 12;
+    const h1 = [ex - L * Math.cos(ang - .5), ey - L * Math.sin(ang - .5)], h2 = [ex - L * Math.cos(ang + .5), ey - L * Math.sin(ang + .5)];
+    return [`M${f(sx)} ${f(sy)}C${f(c1x)} ${f(c1y)} ${f(c2x)} ${f(c2y)} ${f(ex)} ${f(ey)}`, `M${f(h1[0])} ${f(h1[1])}L${f(ex)} ${f(ey)}L${f(h2[0])} ${f(h2[1])}`];
+  },
+};
+function build(k, animate, delay = 0) {
+  const m = marks[k], s = STYLE[k];
+  m.seed = animate ? (m.seed * 48271) % 2147483647 : m.seed;
+  const r = k === 'bracket' ? rectOf(m.el) : textRect(m.el);
+  const ds = SHAPES[k](r, rnd(m.seed));
+  m.paths.forEach(p => p.remove()); m.paths = [];
+  let t = delay;
+  ds.forEach((d, i) => {
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', d); p.setAttribute('class', 'k-' + k + (hovered === k ? ' on' : ''));
+    p.setAttribute('stroke', s.c);
+    p.setAttribute('stroke-width', k === 'highlight' ? f(r.h * .78) : s.w);
+    ink.appendChild(p); m.paths.push(p);
+    if (!animate || reduce) return;
+    const len = p.getTotalLength() + 2, dur = i ? 180 : s.d;
+    p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
+    p.getBoundingClientRect();
+    p.style.transition = `stroke-dashoffset ${dur}ms var(--draw) ${t}ms, opacity .2s`;
+    p.style.strokeDashoffset = 0;
+    t += dur;
+  });
+  if (k === 'highlight') ink.insertBefore(m.paths[0], ink.firstChild);
+  m.drawn = true;
+}
+document.querySelectorAll('[data-k]').forEach(el => {
+  if (el.classList.contains('pick')) return;
+  marks[el.dataset.k] = { el, paths: [], seed: 1000 + ORDER.indexOf(el.dataset.k) * 7919, drawn: false };
+});
+
+const wide = matchMedia('(min-width: 1181px)');
+function placeNotes() {
+  const pin = (sel, k, dy) => { const n = document.querySelector(sel); n.style.top = wide.matches ? f(textRect(marks[k].el).y + dy) + 'px' : ''; };
+  pin('.n-strike', 'strike', -4); pin('.n-arrow', 'arrow', 64);
+}
+placeNotes();
+function replay(k) { build(k, true); live.textContent = 'Redrawing ' + k; }
+document.querySelectorAll('.pick').forEach(b => {
+  const k = b.dataset.k;
+  b.addEventListener('click', () => replay(k));
+  const on = () => { hovered = k; ink.classList.add('dim'); marks[k].paths.forEach(p => p.classList.add('on')); };
+  const off = () => { hovered = null; ink.classList.remove('dim'); ink.querySelectorAll('.on').forEach(p => p.classList.remove('on')); };
+  b.addEventListener('pointerenter', on); b.addEventListener('focus', on);
+  b.addEventListener('pointerleave', off); b.addEventListener('blur', off);
+});
+document.getElementById('all').addEventListener('click', () => {
+  ORDER.forEach((k, i) => build(k, true, i * 380)); live.textContent = 'Redrawing all six marks';
+});
+document.addEventListener('keydown', e => {
+  const k = ['underline', 'circle', 'highlight', 'strike', 'bracket', 'arrow'][+e.key - 1];
+  if (k && !e.metaKey && !e.ctrlKey && !e.altKey && !/INPUT|TEXTAREA/.test(e.target.tagName)) replay(k);
+});
+
+/* draw on scroll, in reading order */
+let queue = 0;
+const io = new IntersectionObserver(es => {
+  const vis = es.filter(e => e.isIntersecting).map(e => e.target.dataset.k).sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b));
+  vis.forEach(k => { if (marks[k].drawn) return; build(k, true, 250 + queue++ * 380); io.unobserve(marks[k].el); });
+  setTimeout(() => { queue = 0; }, 400);
+}, { rootMargin: '0px 0px -12% 0px' });
+document.fonts.ready.then(() => placeNotes() || Object.values(marks).forEach(m => io.observe(m.el)));
+new ResizeObserver(() => placeNotes() || Object.keys(marks).forEach(k => { if (marks[k].drawn) build(k, false); })).observe(page);
+</script>
+</body>
+</html>

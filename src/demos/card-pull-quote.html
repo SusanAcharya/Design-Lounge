@@ -1,0 +1,168 @@
+<!-- Design Lounge piece: card-pull-quote · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tallybook · Field notes from owners</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Albert+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stage:#141611;--card:#1d2019;--line:#323729;--ink:#edeadf;--ink-2:#b4b5a3;--ink-3:#8d8f7c;
+  --marker:#d4ee4e;--marker-ink:#191b16;--ghost:#3b4130;
+  --serif:"Gloock",Georgia,serif;--sans:"Albert Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+  --t-out:200ms;--t-in:460ms;--t-draw:720ms;--d-draw:260ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:15px/1.5 var(--sans);color:var(--ink);background:var(--stage);overflow-x:hidden;
+  background-image:radial-gradient(120% 80% at 50% 0%,#1b1e17 0%,transparent 60%);
+  display:grid;place-items:center;padding:56px 48px;
+}
+:focus-visible{outline:2px solid var(--marker);outline-offset:3px}
+.card{
+  position:relative;width:100%;max-width:980px;background:var(--card);border:1px solid var(--line);
+  padding:64px 72px 40px 152px;
+}
+.card:focus-visible{outline-offset:6px}
+.open{
+  position:absolute;left:28px;top:-58px;font:400 300px/1 var(--serif);color:var(--marker);pointer-events:none;
+  user-select:none;transition:transform var(--t-in) var(--expo)
+}
+.close{
+  position:absolute;right:40px;bottom:96px;font:400 220px/.6 var(--serif);color:transparent;-webkit-text-stroke:1.5px var(--ghost);
+  pointer-events:none;user-select:none
+}
+.top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px;font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.top{gap:16px}
+.count{font-variant-numeric:tabular-nums;color:var(--ink-2);white-space:nowrap}
+.count b{color:var(--marker);font-weight:600}
+.slide{min-height:360px;display:flex;flex-direction:column;justify-content:space-between;gap:36px}
+.slide.out{opacity:0;transform:translateY(-10px);transition:opacity var(--t-out) var(--ease),transform var(--t-out) var(--ease)}
+.slide.in{animation:in var(--t-in) var(--expo) both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}}
+blockquote{margin:0}
+blockquote p{margin:0;max-width:22ch;font:400 46px/1.16 var(--serif);letter-spacing:-.01em;text-wrap:pretty}
+mark{
+  color:inherit;background:linear-gradient(var(--marker),var(--marker)) no-repeat 0 60%/0% 82%;
+  padding:0 .08em;margin:0 -.04em;
+}
+.drawn mark{
+  background-size:100% 82%;color:var(--marker-ink);
+  transition:background-size var(--t-draw) var(--expo) var(--d-draw),color 240ms var(--ease) calc(var(--d-draw) + 120ms);
+}
+.who{display:flex;align-items:center;gap:16px}
+.mono{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--marker);color:var(--marker);font:400 19px/1 var(--serif);flex:none}
+.who b{display:block;font:600 16px/1.3 var(--sans)}
+.who span{font-size:14px;color:var(--ink-2)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:40px;padding-top:24px;border-top:1px solid var(--line)}
+.segs{display:flex;gap:6px;flex:1;max-width:260px}
+.seg{all:unset;cursor:pointer;flex:1;height:24px;position:relative}
+.seg::before{content:"";position:absolute;left:0;right:0;top:11px;height:2px;background:var(--line);transition:background var(--t-out) var(--ease)}
+.seg[aria-current="true"]::before{background:var(--marker)}
+.seg:hover::before{background:var(--ink-3)}
+.seg[aria-current="true"]:hover::before{background:var(--marker)}
+.seg:focus-visible{outline:2px solid var(--marker);outline-offset:2px}
+.nav{display:flex;gap:10px}
+.btn{
+  all:unset;cursor:pointer;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid var(--line);color:var(--ink);transition:background 160ms var(--ease),border-color 160ms var(--ease),color 160ms var(--ease),transform 120ms var(--ease)
+}
+.btn svg{width:20px;height:20px}
+.btn:hover{border-color:var(--marker);color:var(--marker)}
+.btn:active{transform:scale(.94);background:var(--marker);color:var(--marker-ink)}
+.btn:focus-visible{outline:2px solid var(--marker);outline-offset:3px}
+.hint{font-size:12px;color:var(--ink-3)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+@media (max-width:900px){
+  body{padding:72px 20px 32px;place-items:start center}
+  .card{padding:72px 24px 28px}
+  .open{left:12px;top:-44px;font-size:200px}
+  .close{display:none}
+  blockquote p{font-size:30px}
+  .slide{min-height:300px}
+  .hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .slide.out,.slide.in,.drawn mark,.btn,.open{transition:none;animation:none}
+}
+</style>
+</head>
+<body>
+<section class="card" id="card" tabindex="0" aria-roledescription="carousel" aria-label="Testimonials from Tallybook customers">
+  <span class="open" aria-hidden="true">&ldquo;</span>
+  <span class="close" aria-hidden="true">&rdquo;</span>
+  <div class="top"><span>Tallybook · field notes from owners</span><span class="count" id="count" aria-hidden="true"></span></div>
+  <div id="live" aria-live="polite" aria-atomic="true">
+    <figure class="slide" id="slide" aria-roledescription="slide" style="margin:0">
+      <blockquote><p id="q"></p></blockquote>
+      <figcaption class="who"><span class="mono" id="mono" aria-hidden="true"></span><span><b id="name"></b><span id="role"></span></span></figcaption>
+    </figure>
+  </div>
+  <div class="bar">
+    <div class="segs" id="segs" role="group" aria-label="Choose a testimonial"></div>
+    <span class="hint">Use ← → to move</span>
+    <div class="nav">
+      <button class="btn" id="prev" aria-label="Previous testimonial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button class="btn" id="next" aria-label="Next testimonial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</section>
+<script>
+const Q=[
+  {q:"We stopped losing Fridays to invoicing. <mark>The books close themselves by Thursday lunch,</mark> and I finally trust the number at the bottom.",n:"Priya Raman",r:"Founder, Oak & Ember Joinery"},
+  {q:"I’ve tried four of these. This is the first one my accountant asked the name of, <mark>then quietly started using herself.</mark>",n:"Tomás Ferreira",r:"Owner, Ferreira Tile Co."},
+  {q:"Our crew logs hours from the van now. <mark>Payroll went from a weekend to twenty minutes,</mark> and nobody chases timesheets.",n:"Hanna Lindqvist",r:"Operations lead, Stonecrop Builders"},
+  {q:"It reads like someone who has run a small business wrote it. <mark>Every screen assumes I’m busy,</mark> because I am.",n:"Desmond Okafor",r:"Director, Okafor Landscapes"},
+  {q:"<mark>We found £4,200 in unbilled hours</mark> in the first month. It paid for itself before the trial ended.",n:"Mei Tanaka",r:"Partner, Tanaka & Bell Architects"}
+];
+const $=id=>document.getElementById(id);
+const slide=$("slide"),segs=$("segs");
+const RM=matchMedia("(prefers-reduced-motion: reduce)");
+let cur=0,t1,t2;
+const pad=n=>String(n).padStart(2,"0");
+function fill(i){
+  const d=Q[i];
+  $("q").innerHTML=d.q;$("name").textContent=d.n;$("role").textContent=d.r;
+  $("mono").textContent=d.n.split(" ").map(w=>w[0]).join("");
+  $("count").innerHTML=`<b>${pad(i+1)}</b> / ${pad(Q.length)}`;
+  slide.setAttribute("aria-label",`${i+1} of ${Q.length}`);
+  [...segs.children].forEach((s,k)=>s.setAttribute("aria-current",k===i));
+}
+function draw(){
+  slide.classList.remove("drawn");void slide.offsetWidth;
+  requestAnimationFrame(()=>slide.classList.add("drawn"));
+}
+function go(i){
+  i=(i+Q.length)%Q.length;
+  if(i===cur)return;
+  cur=i;clearTimeout(t1);clearTimeout(t2);
+  if(RM.matches){fill(i);slide.classList.add("drawn");return}
+  slide.classList.remove("in");slide.classList.add("out");
+  t1=setTimeout(()=>{
+    fill(i);slide.classList.remove("out","drawn");void slide.offsetWidth;slide.classList.add("in");
+    requestAnimationFrame(()=>slide.classList.add("drawn"));
+    t2=setTimeout(()=>slide.classList.remove("in"),480);
+  },200);
+}
+Q.forEach((d,k)=>{
+  const b=document.createElement("button");
+  b.className="seg";b.setAttribute("aria-label",`Testimonial ${k+1}: ${d.n}`);
+  b.addEventListener("click",()=>go(k));
+  segs.appendChild(b);
+});
+$("prev").addEventListener("click",()=>go(cur-1));
+$("next").addEventListener("click",()=>go(cur+1));
+$("card").addEventListener("keydown",e=>{
+  if(e.key==="ArrowLeft"){e.preventDefault();go(cur-1)}
+  if(e.key==="ArrowRight"){e.preventDefault();go(cur+1)}
+});
+fill(0);
+if(RM.matches)slide.classList.add("drawn");else draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!-- Design Lounge piece: card-progress-goals · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Autumn goals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#d5e3d8;--card:#fbfcf7;--ink:#1c2923;--ink-2:#47554e;--ink-3:#5f6c65;--line:#dfe6dc;--track:#e8ede4;
+  --tomato:#d9512f;--marigold:#c98a12;--teal:#1f7a74;
+  --focus:#1c2923;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;--mono:"Azeret Mono",ui-monospace,monospace;
+  --expo:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+  --r-card:28px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:40px 32px;background:var(--bg);color:var(--ink);font:15px/1.45 var(--display);overflow-x:hidden;
+  background-image:radial-gradient(circle at 18% 12%,rgba(255,255,255,.55),transparent 38%),radial-gradient(circle at 85% 90%,rgba(31,122,116,.10),transparent 40%)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+
+.card{width:100%;max-width:920px;background:var(--card);border-radius:var(--r-card);padding:36px 40px 28px;box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 30px 60px -30px rgba(28,41,35,.35),0 2px 6px rgba(28,41,35,.06)}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px}
+.eyebrow{margin:0 0 6px;font:500 11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+h1{margin:0;font:800 40px/1 var(--display);font-variation-settings:"opsz" 96;letter-spacing:-.03em}
+.left{text-align:right;font:500 12px/1.5 var(--mono);color:var(--ink-3)}
+.left b{display:block;font:700 22px/1.1 var(--display);color:var(--ink);letter-spacing:-.01em}
+
+.goals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none}
+.goal{--c:var(--teal);position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px 16px 20px;border-radius:20px;background:color-mix(in srgb,var(--c) 5%,var(--card));border:1px solid color-mix(in srgb,var(--c) 14%,var(--line));transition:background .4s var(--ease),border-color .4s var(--ease)}
+.goal.done{background:color-mix(in srgb,var(--c) 11%,var(--card));border-color:color-mix(in srgb,var(--c) 35%,var(--line))}
+.ring{position:relative;width:156px;height:156px}
+.ring>svg{width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
+.ring circle{fill:none;stroke-width:13}
+.ring .tr{stroke:var(--track)}
+.ring .pr{stroke:var(--c);stroke-linecap:round;transition:stroke-dashoffset .8s var(--expo)}
+.ring .fill{fill:var(--ink);stroke:none;transform-origin:78px 78px;transform:scale(0);transition:transform .5s var(--expo)}
+.goal.done .ring .fill{transform:scale(1)}
+.center{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:2px}
+.pct{font:800 38px/1 var(--display);font-variation-settings:"opsz" 72;letter-spacing:-.03em;font-variant-numeric:tabular-nums;transition:color .3s var(--ease)}
+.pct small{font-size:18px;font-weight:700;margin-left:1px}
+.sub{font:500 10px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.goal.done .pct,.goal.done .sub{color:#fff}
+.check{width:34px;height:34px;fill:none;stroke:color-mix(in srgb,var(--c) 70%,#fff);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:none}
+.goal.done .check{display:block}
+.goal.done .sub{opacity:.9}
+
+h2{margin:18px 0 2px;font:700 20px/1.2 var(--display);letter-spacing:-.015em}
+.amt{display:flex;align-items:center;justify-content:center;gap:6px;min-height:40px;white-space:nowrap;font:500 13px/1 var(--mono);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.amt .now{color:var(--ink);font-weight:500}
+.target{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px;margin-left:-2px;border-radius:8px;border:1px dashed color-mix(in srgb,var(--c) 45%,transparent);color:var(--ink);transition:background .15s var(--ease)}
+.target:hover{background:color-mix(in srgb,var(--c) 10%,transparent)}
+.target svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.65}
+.edit{display:inline-flex;align-items:center;gap:6px}
+.edit input{width:84px;height:32px;padding:0 8px;border-radius:8px;border:1.5px solid var(--c);background:#fff;font:500 13px/1 var(--mono);text-align:right;-moz-appearance:textfield}
+.edit input::-webkit-inner-spin-button{display:none}
+.edit input:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.edit input[aria-invalid="true"]{border-color:#b3261e}
+.err{min-height:16px;margin:2px 0 0;font:500 11px/1.4 var(--mono);color:#b3261e}
+
+.steps{display:flex;gap:8px;margin-top:10px}
+.step{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;min-width:40px;padding:0 14px;border-radius:99px;font:600 14px/1 var(--display);border:1px solid color-mix(in srgb,var(--c) 30%,var(--line));background:var(--card);transition:transform .15s var(--ease),background .15s var(--ease)}
+.step.plus{background:color-mix(in srgb,var(--c) 70%,var(--ink));color:#fff;border-color:transparent}
+.step:hover{transform:translateY(-1px)}
+.step:active{transform:translateY(1px) scale(.97)}
+.step:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.step svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+
+.foot{display:flex;align-items:center;gap:20px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.bar{flex:1;height:10px;border-radius:99px;background:var(--track);overflow:hidden;display:flex;gap:3px}
+.bar i{display:block;height:100%;background:var(--c);border-radius:99px;transition:flex-basis .8s var(--expo)}
+.overall{font:500 12px/1.4 var(--mono);color:var(--ink-2);white-space:nowrap}
+.overall b{font:700 16px/1 var(--display);color:var(--ink)}
+.reset{font:500 12px/1 var(--mono);color:var(--ink-3);text-decoration:underline;text-underline-offset:3px;height:40px;padding:0 4px}
+.reset:hover{color:var(--ink)}
+
+.confetti{position:absolute;left:50%;top:102px;width:0;height:0;pointer-events:none;z-index:3}
+.confetti i{position:absolute;left:-4px;top:-6px;width:8px;height:12px;border-radius:2px}
+.confetti i.o{width:9px;height:9px;border-radius:50%}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:760px){
+  body{padding:20px 14px;place-items:start center}
+  .card{padding:24px 18px 20px;border-radius:22px}
+  .top{flex-direction:column;align-items:flex-start;gap:12px}
+  .left{text-align:left}
+  h1{font-size:32px}
+  .goals{grid-template-columns:minmax(0,1fr)}
+  .goal{display:grid;grid-template-columns:104px minmax(0,1fr);grid-template-areas:"ring name" "ring amt" "ring steps";column-gap:16px;text-align:left;align-items:center;padding:16px}
+  .ring{grid-area:ring;width:104px;height:104px}
+  .pct{font-size:26px}.pct small{font-size:13px}.check{width:24px;height:24px}
+  .goal:not(.done) .sub{display:none}
+  .sub{font-size:9px}
+  .confetti{left:68px;top:68px}
+  h2{grid-area:name;margin:0}
+  .amtwrap{grid-area:amt;min-width:0}.amt{justify-content:flex-start;font-size:12px;gap:4px}
+  .target{padding:0 6px}
+  .steps{grid-area:steps;margin-top:4px}
+  .foot{flex-wrap:wrap;gap:10px 16px}
+  .bar{flex-basis:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .ring .pr,.ring .fill,.bar i,.goal,.pct,.step{transition:none}
+}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="ttl">
+  <div class="top">
+    <div>
+      <p class="eyebrow">Mira Okafor · Oct 1 – Dec 31</p>
+      <h1 id="ttl">Autumn goals</h1>
+    </div>
+    <p class="left"><b>88 days</b>left in the quarter</p>
+  </div>
+
+  <ul class="goals" id="goals"></ul>
+
+  <div class="foot">
+    <p class="overall"><b id="ovPct">0%</b> overall · <span id="ovDone">0 of 3</span> done</p>
+    <div class="bar" id="bar" role="img" aria-label=""></div>
+    <button class="reset" id="reset" type="button">Reset goals</button>
+  </div>
+  <p class="vh" id="announce" aria-live="polite"></p>
+</section>
+
+<template id="tpl">
+  <li class="goal">
+    <div class="ring">
+      <svg viewBox="0 0 156 156" aria-hidden="true"><circle class="tr" cx="78" cy="78" r="62"/><circle class="fill" cx="78" cy="78" r="50"/><circle class="pr" cx="78" cy="78" r="62"/></svg>
+      <div class="center"><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span class="pct"></span><span class="sub"></span></div>
+      <div class="confetti" aria-hidden="true"></div>
+    </div>
+    <h2></h2>
+    <div class="amtwrap"><div class="amt"></div><p class="err" aria-live="polite"></p></div>
+    <div class="steps">
+      <button class="step minus" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></button>
+      <button class="step plus" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg><span></span></button>
+    </div>
+  </li>
+</template>
+
+<script>
+(() => {
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const START = [
+  { id: 'run', name: 'Run 60 km', noun: 'Run', c: 'tomato', now: 52, target: 60, step: 4, unit: 'km', pre: '', label: 'run' },
+  { id: 'read', name: 'Read 6 books', noun: 'Read', c: 'marigold', now: 6, target: 6, step: 1, unit: 'books', pre: '', label: 'read' },
+  { id: 'save', name: 'Save $1,200', noun: 'Save', c: 'teal', now: 780, target: 1200, step: 60, unit: '', pre: '$', label: 'saved' }
+];
+let goals = START.map(g => ({ ...g }));
+const list = document.getElementById('goals'), tpl = document.getElementById('tpl'), announce = document.getElementById('announce');
+const C = 2 * Math.PI * 62;
+const fmt = (g, v) => g.pre + v.toLocaleString('en-US') + (g.unit ? ' ' + (v === 1 && g.unit === 'books' ? 'book' : g.unit) : '');
+const pct = g => Math.min(100, Math.round(g.now / g.target * 100));
+const PENCIL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg>';
+
+function title(g) {
+  return g.id === 'run' ? `Run ${g.target} km` : g.id === 'read' ? `Read ${g.target} book${g.target === 1 ? '' : 's'}` : `Save $${g.target.toLocaleString('en-US')}`;
+}
+
+function build() {
+  list.innerHTML = '';
+  goals.forEach(g => {
+    const n = tpl.content.firstElementChild.cloneNode(true);
+    n.style.setProperty('--c', `var(--${g.c})`);
+    n.dataset.id = g.id;
+    const pr = n.querySelector('.pr');
+    pr.style.strokeDasharray = C;
+    pr.style.strokeDashoffset = C;
+    n.querySelector('.minus').setAttribute('aria-label', `Remove ${fmt(g, g.step)} from ${g.noun}`);
+    n.querySelector('.plus span').textContent = fmt(g, g.step);
+    n.querySelector('.plus').setAttribute('aria-label', `Log ${fmt(g, g.step)} toward ${g.noun}`);
+    n.querySelector('.minus').addEventListener('click', () => change(g, -g.step));
+    n.querySelector('.plus').addEventListener('click', () => change(g, g.step));
+    g.el = n;
+    list.appendChild(n);
+    renderAmt(g);
+  });
+  requestAnimationFrame(() => requestAnimationFrame(() => goals.forEach(g => paint(g, false))));
+}
+
+function renderAmt(g) {
+  const amt = g.el.querySelector('.amt');
+  amt.innerHTML = `<span class="now">${fmt(g, g.now)}</span><span aria-hidden="true">/</span><span class="vh">of</span><button class="target" type="button" aria-label="Target ${fmt(g, g.target)}. Edit target">${fmt(g, g.target)}${PENCIL}</button>`;
+  amt.querySelector('.target').addEventListener('click', () => startEdit(g));
+}
+
+function startEdit(g) {
+  const amt = g.el.querySelector('.amt'), err = g.el.querySelector('.err');
+  const t = amt.querySelector('.target');
+  const wrap = document.createElement('span');
+  wrap.className = 'edit';
+  wrap.innerHTML = `${g.pre ? `<span aria-hidden="true">${g.pre}</span>` : ''}<input type="number" inputmode="numeric" min="1" max="99999" step="1" value="${g.target}" aria-label="New target for ${g.noun}${g.unit ? ', in ' + g.unit : ', in dollars'}" aria-describedby="err-${g.id}">${g.unit ? `<span aria-hidden="true">${g.unit}</span>` : ''}`;
+  err.id = 'err-' + g.id;
+  t.replaceWith(wrap);
+  const inp = wrap.querySelector('input');
+  inp.focus(); inp.select();
+  let done = false;
+  const finish = save => {
+    if (done) return;
+    if (save) {
+      const v = Math.round(Number(inp.value));
+      if (!Number.isFinite(v) || v < 1 || v > 99999) {
+        inp.setAttribute('aria-invalid', 'true');
+        err.textContent = 'Use a whole number, 1–99,999.';
+        inp.focus();
+        return;
+      }
+      done = true;
+      const was = pct(g);
+      g.target = v;
+      err.textContent = '';
+      renderAmt(g);
+      g.el.querySelector('h2').textContent = title(g);
+      paint(g, was < 100);
+    } else {
+      done = true;
+      err.textContent = '';
+      renderAmt(g);
+    }
+    g.el.querySelector('.target').focus();
+  };
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); finish(true); }
+    else if (e.key === 'Escape') { e.preventDefault(); finish(false); }
+  });
+  inp.addEventListener('input', () => { inp.removeAttribute('aria-invalid'); err.textContent = ''; });
+  inp.addEventListener('blur', () => setTimeout(() => { if (!done && document.activeElement !== inp) finish(inp.value.trim() !== '' && Number(inp.value) >= 1 ? true : false); }, 0));
+}
+
+function change(g, d) {
+  const was = pct(g);
+  g.now = Math.max(0, g.now + d);
+  renderAmt(g);
+  paint(g, was < 100);
+}
+
+function paint(g, canCelebrate) {
+  const p = pct(g), done = p >= 100;
+  const el = g.el;
+  el.querySelector('h2').textContent = title(g);
+  el.querySelector('.pr').style.strokeDashoffset = C * (1 - p / 100);
+  el.querySelector('.pct').innerHTML = done ? '' : `${p}<small>%</small>`;
+  el.querySelector('.sub').textContent = done ? 'Done' : `${fmt(g, Math.max(0, g.target - g.now))} to go`;
+  el.querySelector('.minus').disabled = g.now <= 0;
+  const wasDone = el.classList.contains('done');
+  el.classList.toggle('done', done);
+  el.setAttribute('aria-label', `${title(g)}: ${fmt(g, g.now)} of ${fmt(g, g.target)}, ${done ? 'complete' : p + ' percent'}`);
+  if (done && !wasDone && canCelebrate) {
+    announce.textContent = `${title(g)} complete. Nice work.`;
+    if (!reduce) burst(el.querySelector('.confetti'));
+  }
+  overall();
+}
+
+function burst(host) {
+  host.innerHTML = '';
+  const cols = ['#d9512f', '#c98a12', '#1f7a74', '#1c2923', '#f2c14e', '#e8a08a'];
+  for (let i = 0; i < 34; i++) {
+    const s = document.createElement('i');
+    if (i % 3 === 0) s.className = 'o';
+    s.style.background = cols[i % cols.length];
+    host.appendChild(s);
+    const a = (-90 + (Math.random() - .5) * 150) * Math.PI / 180;
+    const v = 90 + Math.random() * 110;
+    const x = Math.cos(a) * v, y = Math.sin(a) * v;
+    const rot = (Math.random() - .5) * 720;
+    s.animate([
+      { transform: 'translate(0,0) rotate(0) scale(.6)', opacity: 1 },
+      { transform: `translate(${x}px,${y}px) rotate(${rot / 2}deg) scale(1)`, opacity: 1, offset: .45 },
+      { transform: `translate(${x * 1.25}px,${y + 160}px) rotate(${rot}deg) scale(.9)`, opacity: 0 }
+    ], { duration: 1200 + Math.random() * 500, easing: 'cubic-bezier(.2,.7,.4,1)', fill: 'forwards' });
+  }
+  setTimeout(() => { host.innerHTML = ''; }, 1900);
+}
+
+function overall() {
+  const ps = goals.map(pct);
+  const avg = Math.round(ps.reduce((a, b) => a + b, 0) / ps.length);
+  const done = ps.filter(p => p >= 100).length;
+  document.getElementById('ovPct').textContent = avg + '%';
+  document.getElementById('ovDone').textContent = `${done} of ${goals.length}`;
+  const bar = document.getElementById('bar');
+  if (!bar.children.length) goals.forEach(g => { const i = document.createElement('i'); i.style.setProperty('--c', `var(--${g.c})`); bar.appendChild(i); });
+  [...bar.children].forEach((i, k) => { i.style.flex = `0 0 calc(${ps[k] / goals.length}% - 2px)`; });
+  bar.setAttribute('aria-label', `Overall ${avg} percent: ` + goals.map((g, k) => `${g.noun} ${ps[k]} percent`).join(', '));
+}
+
+document.getElementById('reset').addEventListener('click', () => {
+  goals = START.map(g => ({ ...g }));
+  build();
+  announce.textContent = 'Goals reset.';
+});
+build();
+})();
+</script>
+</body>
+</html>

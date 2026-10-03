@@ -1,0 +1,194 @@
+<!-- Design Lounge piece: card-magazine-cover · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Saltgrass · Back issues</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Rethink+Sans:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+@property --c{syntax:"<length>";inherits:true;initial-value:18px}
+:root{
+  --stage:#d8d1c3;--stage-2:#cbc3b2;--ink:#1c1a17;--ink-2:#4a453d;--line:rgba(28,26,23,.18);
+  --paper:#fbf8f1;--fold-1:#cfc5b1;--fold-2:#f3eee3;
+  --display:"Anton",Impact,sans-serif;--sans:"Rethink Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+  --t-lift:320ms;--t-out:180ms;--t-in:420ms;
+  --curl-rest:18px;--curl-hover:68px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:15px/1.55 var(--sans);color:var(--ink);background:var(--stage);overflow-x:hidden;
+  background-image:radial-gradient(rgba(28,26,23,.05) 1px,transparent 1.2px);background-size:5px 5px;
+  display:grid;place-items:center;padding:40px 48px;
+}
+:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.wrap{width:100%;max-width:1040px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:80px;align-items:center}
+.eyebrow{margin:0 0 16px;font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:0;font:400 88px/.9 var(--display);letter-spacing:-.005em;text-transform:uppercase}
+.lede{margin:24px 0 32px;max-width:40ch;color:var(--ink-2);font-size:16px}
+.picker{display:grid;gap:8px;max-width:400px}
+.pick{
+  all:unset;cursor:pointer;display:grid;grid-template-columns:40px 1fr auto;gap:16px;align-items:center;
+  padding:10px 14px 10px 10px;border-top:1px solid var(--line);transition:background var(--t-out) var(--ease);
+}
+.pick:last-child{border-bottom:1px solid var(--line)}
+.pick:hover{background:rgba(28,26,23,.05)}
+.pick:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.pick .sw{width:40px;height:52px;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);transition:transform var(--t-lift) var(--expo)}
+.pick b{display:block;font:400 20px/1.1 var(--display);text-transform:uppercase;letter-spacing:.01em}
+.pick small{font-size:13px;color:var(--ink-2)}
+.pick .no{font:600 12px/1 var(--sans);letter-spacing:.12em;color:var(--ink-2)}
+.pick[aria-checked="true"]{background:rgba(28,26,23,.08)}
+.pick[aria-checked="true"] .sw{transform:translateY(-4px) rotate(-4deg)}
+.pick[aria-checked="true"] .no{color:var(--ink)}
+.hint{margin:16px 0 0;font-size:12px;color:var(--ink-2)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0}
+
+/* cover */
+.stack{position:relative;width:100%;max-width:440px;justify-self:center}
+.sheet{position:absolute;inset:0;background:var(--sheet);box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.sheet.s1{transform:translate(14px,10px) rotate(3.5deg)}
+.sheet.s2{transform:translate(-12px,14px) rotate(-2.5deg)}
+.issue{
+  position:relative;display:block;color:inherit;text-decoration:none;outline:none;
+  filter:drop-shadow(0 10px 14px rgba(40,30,15,.22));
+  transition:transform var(--t-lift) var(--expo),filter var(--t-lift) var(--expo),--c var(--t-lift) var(--expo);
+}
+.issue:hover,.issue:focus-visible{--c:var(--curl-hover);transform:translateY(-10px) rotate(-.6deg);filter:drop-shadow(0 26px 30px rgba(40,30,15,.3))}
+.issue:focus-visible .cover{box-shadow:inset 0 0 0 3px var(--ink)}
+.cover{
+  container-type:inline-size;position:relative;aspect-ratio:3/4;overflow:hidden;
+  background:var(--bg);color:var(--fg);
+  clip-path:polygon(0 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%);
+}
+.cover::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,rgba(255,255,255,.14),transparent 28%,transparent 70%,rgba(0,0,0,.1));mix-blend-mode:soft-light}
+.fold{
+  position:absolute;right:0;bottom:0;width:var(--c);height:var(--c);pointer-events:none;
+  background:linear-gradient(to top left,transparent 50%,var(--fold-1) 50%,var(--fold-2) 78%,var(--paper));
+  filter:drop-shadow(-3px -3px 4px rgba(0,0,0,.22));
+}
+.content{position:absolute;inset:0}
+.content.out{animation:out var(--t-out) var(--ease) forwards}
+.content.in{animation:in var(--t-in) var(--expo)}
+@keyframes out{to{opacity:0;transform:translateX(-4%) scale(.98)}}
+@keyframes in{from{opacity:0;transform:translateX(5%) scale(1.02)}}
+.top{position:absolute;left:5.5cqw;right:5.5cqw;top:4cqw;display:flex;justify-content:space-between;font:600 2.7cqw/1 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+.mast{position:absolute;left:4cqw;right:4cqw;top:8cqw;margin:0;font:400 22.4cqw/.84 var(--display);letter-spacing:-.01em;text-transform:uppercase;color:var(--mast);z-index:1}
+.art{position:absolute;left:0;right:0;top:16cqw;width:100%;height:auto;z-index:2}
+.lines{position:absolute;left:5.5cqw;bottom:6cqw;width:60cqw;z-index:3}
+.kicker{font:600 2.8cqw/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--kick)}
+.main{margin:1.6cqw 0 1.4cqw;font:400 9.6cqw/.9 var(--display);text-transform:uppercase}
+.sub{margin:0;font:italic 400 3.2cqw/1.3 var(--sans);max-width:54cqw}
+.side{position:absolute;right:5.5cqw;top:34cqw;width:30cqw;text-align:right;z-index:3;display:grid;gap:2.4cqw}
+.side p{margin:0;font:600 3cqw/1.2 var(--sans)}
+.side p span{display:block;font:400 4.6cqw/1 var(--display);text-transform:uppercase;color:var(--accent);margin-bottom:.6cqw}
+.bar{position:absolute;right:5.5cqw;bottom:5cqw;z-index:3;background:var(--paper);color:#1c1a17;padding:1.6cqw 2cqw 1.2cqw;display:grid;gap:.6cqw;justify-items:center}
+.bar svg{display:block;width:20cqw;height:9cqw}
+.bar small{font:600 1.9cqw/1 var(--sans);letter-spacing:.12em}
+.right .bar{right:auto;left:5.5cqw}
+.right .lines{left:auto;right:5.5cqw;text-align:right}
+.right .sub{margin-left:auto}
+.right .side{display:none}
+
+@media (max-width:860px){
+  body{padding:32px 20px;place-items:start center}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:48px}
+  h1{font-size:60px}
+  .stack{max-width:300px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+  .issue:hover,.issue:focus-visible{transform:none}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section>
+    <p class="eyebrow">Saltgrass · coast &amp; craft quarterly</p>
+    <h1>Back<br>issues</h1>
+    <p class="lede">Every cover is drawn by hand for the issue. Pick one up from the stack, then lift the corner to see the paper stock.</p>
+    <div class="picker" role="radiogroup" aria-label="Choose an issue" id="picker"></div>
+    <p class="hint">Arrow keys switch issues · hover or focus the cover to lift it</p>
+  </section>
+  <div class="stack">
+    <div class="sheet s1" id="s1" aria-hidden="true"></div>
+    <div class="sheet s2" id="s2" aria-hidden="true"></div>
+    <p class="sr" id="live" aria-live="polite"></p>
+    <a class="issue" id="issue" href="#issue">
+      <div class="cover" id="cover"><div class="content" id="content"></div></div>
+      <span class="fold" aria-hidden="true"></span>
+    </a>
+  </div>
+</main>
+<script>
+const ISSUES=[
+  {no:41,name:"The Heat Issue",month:"June 2026",price:"£9",bg:"#e84f2f",fg:"#141210",mast:"#f6ebd9",accent:"#f6ebd9",kick:"#141210",
+   kicker:"Summer special",main:"The long heat",sub:"Forty days on the salt flats with the last rakers of Brennock.",
+   side:[["Ice houses","of the north coast"],["Shade","a field guide"],["Cold soup","hot stones"]],
+   art:`<circle cx="150" cy="150" r="92" fill="#f6ebd9"/><g fill="#e84f2f"><rect x="50" y="150" width="200" height="7"/><rect x="50" y="170" width="200" height="10"/><rect x="50" y="194" width="200" height="13"/><rect x="50" y="222" width="200" height="16"/></g><path d="M0 250q50-22 100 0t100 0 100 0 100 0V300H0z" fill="#1c1a17"/><path d="M0 274q50-18 100 0t100 0 100 0 100 0" fill="none" stroke="#e84f2f" stroke-width="4"/>`},
+  {no:42,name:"Night Swimming",month:"August 2026",price:"£9",bg:"#1e3bb3",fg:"#f2e9d8",mast:"#f2e9d8",accent:"#f2c14e",right:1,
+   kicker:"After dark",main:"Night swimming",sub:"The lido keepers who open the gates at midnight, and why.",
+   art:`<circle cx="292" cy="96" r="52" fill="#f2c14e"/><circle cx="314" cy="80" r="46" fill="#1e3bb3"/><g fill="none" stroke="#f2e9d8" stroke-width="3" stroke-linecap="round" opacity=".85"><path d="M30 214h120M180 214h190M60 236h90M190 236h150M20 258h200M250 258h110"/></g><circle cx="148" cy="188" r="11" fill="#f2e9d8"/><g fill="none" stroke="#f2c14e" stroke-width="3"><ellipse cx="148" cy="200" rx="30" ry="6"/><ellipse cx="148" cy="200" rx="54" ry="11" opacity=".5"/></g>`},
+  {no:43,name:"Harvest",month:"October 2026",price:"£9",bg:"#e8a722",fg:"#1f2a1e",mast:"#1f2a1e",accent:"#6e2810",
+   kicker:"The autumn table",main:"What the field gives",sub:"Pear growers, cider cellars and a week of bringing it in.",
+   side:[["Orchards","grafted by hand"],["Rye","an essay"],["Pickling","twelve jars"]],
+   art:`<circle cx="70" cy="62" r="30" fill="#6e2810"/><path d="M0 170q90-50 200-10t200 50V300H0z" fill="#2f5d3a"/><path d="M0 240q120-40 240 0t160-10V300H0z" fill="#1f2a1e"/><g fill="none" stroke="#e8a722" stroke-width="3" opacity=".7"><path d="M20 268q110-36 220 0t160-6M40 288q110-30 210 0t150-4"/></g><path d="M160 96c-26 0-34 26-34 48 0 26 16 46 34 46s34-20 34-46c0-22-8-48-34-48z" fill="#c9d26a"/><path d="M160 98v-16l14-10" fill="none" stroke="#1f2a1e" stroke-width="5" stroke-linecap="round"/><path d="M146 120c-6 8-8 18-6 30" fill="none" stroke="#f3eee3" stroke-width="5" stroke-linecap="round" opacity=".7"/>`}
+];
+const $=id=>document.getElementById(id);
+const picker=$("picker"),content=$("content"),cover=$("cover"),issueEl=$("issue");
+let cur=0,busy=false;
+const RM=matchMedia("(prefers-reduced-motion: reduce)");
+
+function barcode(no){
+  let x=0,s="";
+  const seed=String(977203141+no*7919);
+  for(let i=0;i<28;i++){const w=1+(+seed[i%seed.length]+i)%3;if(i%2===0)s+=`<rect x="${x}" y="0" width="${w}" height="${i%9===0?40:36}"/>`;x+=w+.6}
+  return `<svg viewBox="0 0 ${x.toFixed(1)} 40" preserveAspectRatio="none" aria-hidden="true">${s}</svg><small>9 772031 ${String(410+no).padStart(4,"0")} ${no}</small>`;
+}
+function render(i){
+  const d=ISSUES[i];
+  cover.style.setProperty("--bg",d.bg);cover.style.setProperty("--fg",d.fg);
+  cover.style.setProperty("--mast",d.mast);cover.style.setProperty("--accent",d.accent);cover.style.setProperty("--kick",d.kick||d.accent);
+  cover.classList.toggle("right",!!d.right);
+  content.innerHTML=`<div class="top"><span>No. ${d.no}</span><span>${d.month}</span><span>${d.price}</span></div>
+  <p class="mast" aria-hidden="true">Saltgrass</p>
+  <svg class="art" viewBox="0 0 400 300" aria-hidden="true">${d.art}</svg>
+  <div class="lines"><div class="kicker">${d.kicker}</div><h2 class="main">${d.main}</h2><p class="sub">${d.sub}</p></div>
+  ${d.side?`<div class="side">${d.side.map(s=>`<p><span>${s[0]}</span>${s[1]}</p>`).join("")}</div>`:""}
+  <div class="bar">${barcode(d.no)}</div>`;
+  issueEl.setAttribute("aria-label",`Saltgrass number ${d.no}, ${d.name}, ${d.month}`);
+  const others=ISSUES.filter((_,k)=>k!==i);
+  $("s1").style.setProperty("--sheet",others[0].bg);$("s2").style.setProperty("--sheet",others[1].bg);
+  [...picker.children].forEach((b,k)=>{b.setAttribute("aria-checked",k===i);b.tabIndex=k===i?0:-1});
+}
+function go(i,focus){
+  i=(i+ISSUES.length)%ISSUES.length;
+  if(i===cur||busy){if(focus)picker.children[i].focus();return}
+  cur=i;
+  if(focus)picker.children[i].focus();
+  $("live").textContent=`Showing number ${ISSUES[i].no}, ${ISSUES[i].name}`;
+  if(RM.matches){render(i);return}
+  busy=true;content.className="content out";
+  setTimeout(()=>{render(i);content.className="content in";busy=false;setTimeout(()=>content.className="content",440)},180);
+}
+ISSUES.forEach((d,k)=>{
+  const b=document.createElement("button");
+  b.className="pick";b.setAttribute("role","radio");b.style.setProperty("--sw",d.bg);
+  b.innerHTML=`<span class="sw" aria-hidden="true"></span><span><b>${d.name}</b><small>${d.month}</small></span><span class="no">No. ${d.no}</span>`;
+  b.addEventListener("click",()=>go(k));
+  picker.appendChild(b);
+});
+picker.addEventListener("keydown",e=>{
+  const m={ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1}[e.key];
+  if(m){e.preventDefault();go(cur+m,true)}
+});
+issueEl.addEventListener("click",e=>e.preventDefault());
+render(0);
+</script>
+</body>
+</html>

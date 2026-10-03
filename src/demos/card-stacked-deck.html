@@ -1,0 +1,335 @@
+<!-- Design Lounge piece: card-stacked-deck · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Farfield · Weekend deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#22302a;--bg-2:#2b3a33;--paper:#f6eedf;--paper-2:#ece1cc;--ink:#1f2a24;--ink-2:#4d564f;
+  --on-bg:#efe7d6;--on-bg-2:#b9bfae;--line:rgba(239,231,214,.14);
+  --save:#e2643a;--pass:#8fa39a;--focus:#f2b38f;
+  --serif:"Gloock",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;
+  --expo:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+  --cw:360px;--ch:500px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--on-bg);font:15px/1.5 var(--sans);display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:40px 48px;overflow-x:hidden;
+  background-image:radial-gradient(ellipse at 70% 40%,var(--bg-2),transparent 60%)}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+
+.wrap{width:100%;max-width:1040px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:72px;align-items:center}
+.brand{display:flex;align-items:center;gap:10px;margin:0 0 28px;font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--on-bg-2)}
+.brand svg{width:22px;height:22px;fill:none;stroke:var(--save);stroke-width:1.75}
+h1{margin:0;font:400 64px/1 var(--serif);letter-spacing:-.01em;max-width:9ch}
+.lede{margin:20px 0 0;max-width:38ch;color:var(--on-bg-2);font-size:16px}
+.saved{margin-top:36px;border-top:1px solid var(--line);padding-top:20px}
+.saved h2{margin:0 0 12px;font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--on-bg-2);display:flex;justify-content:space-between;max-width:420px}
+.saved ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;min-height:36px;max-width:440px}
+.saved li{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 10px;border-radius:99px;background:rgba(226,100,58,.14);color:#f7c9b5;font-weight:500;font-size:14px;animation:pop .4s var(--expo)}
+.saved li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--save)}
+.saved .none{background:none;color:var(--on-bg-2);padding:0;font-weight:400;animation:none}
+.saved .none::before{display:none}
+@keyframes pop{from{transform:scale(.7);opacity:0}}
+.keys{margin:28px 0 0;font-size:13px;color:var(--on-bg-2)}
+.keys kbd{font:600 11px/1 var(--sans);display:inline-block;min-width:22px;padding:4px 6px;margin:0 2px;border:1px solid var(--line);border-radius:5px;text-align:center;color:var(--on-bg)}
+
+.right{display:grid;justify-items:center;gap:24px}
+.deck{position:relative;width:var(--cw);height:calc(var(--ch) + 36px);border-radius:22px;touch-action:none}
+.deck:focus-visible{outline-offset:8px}
+.card{position:absolute;left:0;top:0;width:var(--cw);height:var(--ch);border-radius:20px;background:var(--paper);color:var(--ink);overflow:hidden;display:grid;grid-template-rows:56% minmax(0,1fr);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 24px 50px -24px rgba(0,0,0,.55);transform-origin:50% 100%;
+  transition:transform .42s var(--expo),opacity .42s var(--expo);user-select:none;-webkit-user-select:none;will-change:transform}
+.card[data-depth="0"]{z-index:4;cursor:grab}
+.card[data-depth="1"]{z-index:3;transform:translateY(18px) scale(.95)}
+.card[data-depth="2"]{z-index:2;transform:translateY(36px) scale(.90)}
+.card[data-depth="3"]{z-index:1;transform:translateY(36px) scale(.90);opacity:0}
+.card[data-depth="gone"]{display:none}
+.card[data-depth="1"]::after,.card[data-depth="2"]::after{content:"";position:absolute;inset:0;background:var(--bg);opacity:.18;pointer-events:none}
+.card[data-depth="2"]::after{opacity:.34}
+.deck.dragging .card[data-depth="0"]{transition:none;cursor:grabbing}
+
+.scene{position:relative;overflow:hidden;background:linear-gradient(var(--sky1),var(--sky2))}
+.scene .sun{position:absolute;width:76px;height:76px;border-radius:50%;background:var(--sun);left:var(--sx);top:var(--sy)}
+.scene .far,.scene .near,.scene .sea{position:absolute;left:0;right:0;bottom:0}
+.scene .far{height:62%;background:var(--far);clip-path:var(--farp)}
+.scene .near{height:42%;background:var(--near);clip-path:var(--nearp)}
+.scene .sea{height:var(--seah,0);background:repeating-linear-gradient(180deg,var(--sea) 0 7px,color-mix(in srgb,var(--sea) 80%,#fff) 7px 8px)}
+.tag{position:absolute;left:16px;top:16px;height:28px;display:inline-flex;align-items:center;padding:0 12px;border-radius:99px;background:rgba(246,238,223,.92);font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.stamp{position:absolute;top:26px;padding:6px 12px;border:3px solid currentColor;border-radius:8px;font:400 30px/1 var(--serif);letter-spacing:.04em;text-transform:uppercase;opacity:0;pointer-events:none}
+.stamp.s{right:20px;color:var(--save);transform:rotate(12deg);background:rgba(246,238,223,.9)}
+.stamp.p{left:20px;color:#3d4d45;transform:rotate(-12deg);background:rgba(246,238,223,.9)}
+.info{padding:20px 22px 20px;display:flex;flex-direction:column;min-height:0}
+.info h3{margin:0;font:400 34px/1.02 var(--serif);letter-spacing:-.01em}
+.info .where{margin:4px 0 0;color:var(--ink-2);font-size:14px}
+.info p.pitch{margin:12px 0 0;font-size:14.5px;line-height:1.5;color:var(--ink)}
+.facts{margin:auto 0 0;padding:14px 0 0;border-top:1px solid #dccfb6;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;list-style:none}
+.facts{transition:opacity .3s var(--ease)}
+.card[data-depth="1"] .facts,.card[data-depth="2"] .facts,.card[data-depth="3"] .facts{opacity:0}
+.deck.dragging .card[data-depth="1"] .facts{opacity:1}
+.facts li{font-size:12px;color:var(--ink-2);line-height:1.3}
+.facts b{display:block;font-weight:600;color:var(--ink);font-size:14px}
+
+.end{position:absolute;inset:0 0 36px;border-radius:20px;border:1.5px dashed var(--line);display:grid;place-content:center;justify-items:center;gap:12px;text-align:center;padding:32px;color:var(--on-bg-2)}
+.end h3{margin:0;font:400 30px/1.1 var(--serif);color:var(--on-bg)}
+.end p{margin:0;max-width:26ch}
+.end[hidden]{display:none}
+.again{margin-top:8px;height:44px;padding:0 20px;border-radius:99px;border:1.5px solid var(--line);color:var(--on-bg);font-weight:600}
+.again:hover{border-color:var(--on-bg-2)}
+
+.controls{display:flex;align-items:center;gap:18px}
+.ctl{display:grid;place-items:center;border-radius:50%;transition:transform .16s var(--ease),background .16s var(--ease),border-color .16s}
+.ctl svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ctl.big{width:64px;height:64px;border:1.5px solid var(--line)}
+.ctl.big svg{width:26px;height:26px}
+.ctl.pass{color:var(--on-bg)}
+.ctl.pass:hover{border-color:var(--on-bg-2);background:rgba(239,231,214,.06)}
+.ctl.save{background:var(--save);border-color:var(--save);color:#2a140b}
+.ctl.save:hover{background:#ec7650}
+.ctl.undo{width:44px;height:44px;color:var(--on-bg-2);border:1.5px solid var(--line)}
+.ctl.undo svg{width:18px;height:18px}
+.ctl.undo:hover{color:var(--on-bg)}
+.ctl:active{transform:scale(.92)}
+.ctl:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.count{font:500 13px/1 var(--sans);color:var(--on-bg-2);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:980px){
+  .wrap{gap:40px}
+  h1{font-size:48px}
+}
+@media (max-width:760px){
+  body{padding:24px 16px;place-items:start center}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:24px}
+  .brand{margin-bottom:12px}
+  h1{font-size:38px;max-width:none}
+  .lede,.keys{display:none}
+  .saved{margin-top:0;order:3}
+  :root{--cw:min(330px,calc(100vw - 32px));--ch:440px}
+  .info h3{font-size:28px}
+  .info p.pitch{font-size:13.5px}
+  .left{display:contents}
+  .left>header{order:1}
+  .right{order:2}
+}
+@media (prefers-reduced-motion:reduce){
+  .card,.ctl{transition:none}
+  .saved li{animation:none}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="left">
+    <header>
+      <p class="brand"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m15 9-2 4-4 2 2-4z"/></svg>Farfield · Weekend deck</p>
+      <h1>Where next, Inês?</h1>
+      <p class="lede">Seven short trips from Lisbon, picked for late October. Drag a card right to keep it, left to pass. Nothing is booked until you say so.</p>
+      <p class="keys"><kbd>←</kbd> pass <kbd>→</kbd> save <kbd>U</kbd> undo</p>
+    </header>
+    <section class="saved" aria-labelledby="savedH">
+      <h2 id="savedH"><span>Saved trips</span><span id="savedN">0</span></h2>
+      <ul id="savedList"><li class="none">Nothing yet. Save a card to start a shortlist.</li></ul>
+    </section>
+  </div>
+
+  <div class="right">
+    <div class="deck" id="deck" tabindex="0" role="group" aria-roledescription="card deck" aria-label="Weekend trips. Left arrow passes, right arrow saves, U undoes." aria-describedby="count">
+      <div class="end" id="end" hidden>
+        <h3>That's the deck</h3>
+        <p id="endTxt">You saved 0 trips.</p>
+        <button class="again" id="again" type="button">Deal again</button>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="ctl big pass" id="bPass" type="button" aria-label="Pass">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <button class="ctl undo" id="bUndo" type="button" aria-label="Undo last choice" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>
+      </button>
+      <button class="ctl big save" id="bSave" type="button" aria-label="Save">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+      </button>
+    </div>
+    <p class="count" id="count">1 of 7</p>
+  </div>
+</main>
+<p class="vh" id="live" aria-live="polite"></p>
+
+<script>
+(() => {
+const PEAKS = 'polygon(0 100%,0 46%,14% 18%,26% 40%,42% 4%,58% 36%,70% 20%,86% 44%,100% 26%,100% 100%)';
+const HILLS = 'polygon(0 100%,0 40%,18% 22%,36% 34%,54% 16%,74% 30%,100% 12%,100% 100%)';
+const ROLL = 'polygon(0 100%,0 30%,20% 10%,45% 26%,70% 6%,100% 24%,100% 100%)';
+const FLAT = 'polygon(0 100%,0 60%,30% 54%,60% 62%,100% 50%,100% 100%)';
+const CLIFF = 'polygon(0 100%,0 20%,22% 14%,30% 40%,38% 100%)';
+const TERR = 'polygon(0 100%,0 30%,25% 30%,25% 50%,50% 50%,50% 68%,75% 68%,75% 84%,100% 84%,100% 100%)';
+const TRIPS = [
+  { name: 'Sintra', where: 'Lisbon district · Portugal', tag: 'Hills', pitch: 'Palaces in the fog, fern-lined trails up to the Moorish walls, and custard pastries at the station.', facts: [['40 min', 'by train'], ['May–Oct', 'best months'], ['€60', 'per night']],
+    s: { sky1: '#c9d6cf', sky2: '#eef0e4', sun: '#f4e9c8', sx: '68%', sy: '20%', far: '#7f9a88', farp: PEAKS, near: '#3f5b4b', nearp: HILLS } },
+  { name: 'Comporta', where: 'Alentejo coast · Portugal', tag: 'Dunes', pitch: 'Rice fields, stilt-house piers, and a beach that runs for twelve kilometres without a single tower.', facts: [['1 h 15', 'by car'], ['Sep–Oct', 'best months'], ['€95', 'per night']],
+    s: { sky1: '#f2c79a', sky2: '#f8e6cc', sun: '#e2643a', sx: '22%', sy: '30%', far: '#d9b27c', farp: ROLL, near: '#b88a52', nearp: FLAT } },
+  { name: 'Douro Valley', where: 'Vila Real · Portugal', tag: 'Vineyards', pitch: 'Terraced slopes at harvest, a slow river boat to Pinhão, and port tasted where it is made.', facts: [['3 h 30', 'by train'], ['Oct', 'harvest'], ['€80', 'per night']],
+    s: { sky1: '#e8cfa8', sky2: '#f4e7cf', sun: '#f6d78e', sx: '58%', sy: '14%', far: '#9a7a4a', farp: HILLS, near: '#6b5a2e', nearp: TERR } },
+  { name: 'Berlengas', where: 'Off Peniche · Portugal', tag: 'Island', pitch: 'A forty-minute boat to a granite island with a sea fort, clear coves, and nesting gulls.', facts: [['2 h', 'car + boat'], ['Jun–Sep', 'boats run'], ['€45', 'per night']],
+    s: { sky1: '#b9d3d6', sky2: '#e6efea', sun: '#f6efd6', sx: '74%', sy: '18%', far: '#6f8a86', farp: CLIFF, near: 'transparent', nearp: FLAT, sea: '#4f8a92', seah: '30%' } },
+  { name: 'Monsaraz', where: 'Évora district · Portugal', tag: 'Village', pitch: 'A walled hilltop village of whitewash and schist, over a lake that holds the darkest skies in Iberia.', facts: [['2 h', 'by car'], ['Oct–Apr', 'star season'], ['€70', 'per night']],
+    s: { sky1: '#2e3b55', sky2: '#6b6f86', sun: '#efe7cf', sx: '70%', sy: '16%', far: '#4b4a5c', farp: ROLL, near: '#2a2c3a', nearp: FLAT } },
+  { name: 'Serra da Estrela', where: 'Guarda · Portugal', tag: 'Peaks', pitch: 'Granite boulders, glacial valleys, and sheep-milk cheese at the top of mainland Portugal.', facts: [['3 h 30', 'by car'], ['Oct–Nov', 'best months'], ['€65', 'per night']],
+    s: { sky1: '#c4cfdb', sky2: '#eceff1', sun: '#fdf6e4', sx: '18%', sy: '22%', far: '#8b98a6', farp: PEAKS, near: '#55606b', nearp: ROLL } },
+  { name: 'Tavira', where: 'Algarve · Portugal', tag: 'Coast', pitch: 'A Roman bridge, salt pans gone pink, and a ferry to a sandbar island with no cars at all.', facts: [['2 h 45', 'by train'], ['Sep–Nov', 'best months'], ['€75', 'per night']],
+    s: { sky1: '#f3c3b0', sky2: '#fbe9dc', sun: '#e2643a', sx: '40%', sy: '34%', far: '#d99c86', farp: FLAT, near: 'transparent', nearp: FLAT, sea: '#c97c6a', seah: '36%' } }
+];
+const deck = document.getElementById('deck'), end = document.getElementById('end'), live = document.getElementById('live');
+const bPass = document.getElementById('bPass'), bSave = document.getElementById('bSave'), bUndo = document.getElementById('bUndo');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const THRESH = 110, FLY = 380;
+let top = 0, busy = false;
+const history = [];
+
+const cards = TRIPS.map((t, i) => {
+  const el = document.createElement('article');
+  el.className = 'card';
+  el.setAttribute('aria-label', `${t.name}, ${t.where}`);
+  const s = t.s;
+  el.innerHTML = `<div class="scene" style="--sky1:${s.sky1};--sky2:${s.sky2};--sun:${s.sun};--sx:${s.sx};--sy:${s.sy};--far:${s.far};--farp:${s.farp};--near:${s.near};--nearp:${s.nearp};--sea:${s.sea || 'transparent'};--seah:${s.seah || '0'}" aria-hidden="true">
+      <span class="sun"></span><span class="far"></span><span class="sea"></span><span class="near"></span>
+      <span class="tag">${t.tag}</span><span class="stamp s">Save</span><span class="stamp p">Pass</span></div>
+    <div class="info"><h3>${t.name}</h3><p class="where">${t.where}</p><p class="pitch">${t.pitch}</p>
+      <ul class="facts">${t.facts.map(f => `<li><b>${f[0]}</b>${f[1]}</li>`).join('')}</ul></div>`;
+  deck.appendChild(el);
+  return el;
+});
+
+function layout() {
+  cards.forEach((el, i) => {
+    const d = i - top;
+    if (d < 0) return;
+    el.dataset.depth = d > 3 ? 'gone' : String(d);
+    if (d > 0) { el.style.transform = ''; el.setAttribute('aria-hidden', 'true'); }
+    else { el.removeAttribute('aria-hidden'); }
+  });
+  end.hidden = top < cards.length;
+  document.getElementById('count').textContent = top < cards.length ? `${top + 1} of ${cards.length}` : `${cards.length} of ${cards.length} seen`;
+  bPass.disabled = bSave.disabled = top >= cards.length;
+  bUndo.disabled = !history.length;
+  renderSaved();
+}
+
+function renderSaved() {
+  const saved = history.filter(h => h.dir > 0).map(h => TRIPS[h.i].name);
+  const ul = document.getElementById('savedList');
+  const have = [...ul.querySelectorAll('li:not(.none)')].map(li => li.textContent);
+  if (have.join() !== saved.join()) {
+    ul.innerHTML = saved.length ? saved.map(n => `<li>${n}</li>`).join('') : '<li class="none">Nothing yet. Save a card to start a shortlist.</li>';
+    if (reduce || have.length >= saved.length) ul.querySelectorAll('li').forEach(li => li.style.animation = 'none');
+    else [...ul.children].slice(0, have.length).forEach(li => li.style.animation = 'none');
+  }
+  document.getElementById('savedN').textContent = saved.length;
+  document.getElementById('endTxt').textContent = `You saved ${saved.length} of ${cards.length} trips. Undo to look again.`;
+}
+
+function stamps(el, x) {
+  const k = Math.min(1, Math.abs(x) / THRESH);
+  el.querySelector('.stamp.s').style.opacity = x > 0 ? k : 0;
+  el.querySelector('.stamp.p').style.opacity = x < 0 ? k : 0;
+}
+
+function decide(dir) {
+  if (busy || top >= cards.length) return;
+  busy = true;
+  const el = cards[top];
+  const w = deck.offsetWidth;
+  stamps(el, dir * THRESH);
+  el.style.transition = reduce ? 'none' : `transform ${FLY}ms cubic-bezier(.3,.6,.4,1), opacity ${FLY}ms ease-out`;
+  el.style.transform = `translate(${dir * (w + 260)}px, ${parseFloat(el.dataset.y || 0) + 40}px) rotate(${dir * 24}deg)`;
+  el.style.opacity = '0';
+  history.push({ i: top, dir });
+  top++;
+  live.textContent = `${dir > 0 ? 'Saved' : 'Passed'} ${TRIPS[top - 1].name}. ${top < cards.length ? `Next: ${TRIPS[top].name}.` : 'That was the last card.'}`;
+  layout();
+  setTimeout(() => {
+    el.dataset.depth = 'gone'; el.style.transition = ''; el.style.opacity = '';
+    busy = false;
+  }, reduce ? 0 : FLY);
+}
+
+function undo() {
+  if (busy || !history.length) return;
+  busy = true;
+  const h = history.pop();
+  const el = cards[h.i];
+  const w = deck.offsetWidth;
+  el.style.transition = 'none';
+  el.dataset.depth = '0';
+  el.style.opacity = '0';
+  el.style.transform = `translate(${h.dir * (w + 260)}px, 40px) rotate(${h.dir * 24}deg)`;
+  el.getBoundingClientRect();
+  top = h.i;
+  el.style.transition = reduce ? 'none' : '';
+  el.style.opacity = '';
+  el.style.transform = '';
+  stamps(el, 0);
+  live.textContent = `Back to ${TRIPS[h.i].name}. ${h.dir > 0 ? 'Removed from saved.' : ''}`;
+  layout();
+  setTimeout(() => { busy = false; }, reduce ? 0 : 420);
+}
+
+let drag = null;
+deck.addEventListener('pointerdown', e => {
+  const el = cards[top];
+  if (busy || !el || !el.contains(e.target) || e.button > 0) return;
+  drag = { el, x0: e.clientX, y0: e.clientY, x: 0, y: 0, t: performance.now(), vx: 0, lx: e.clientX, lt: performance.now() };
+  deck.setPointerCapture(e.pointerId);
+  deck.classList.add('dragging');
+});
+deck.addEventListener('pointermove', e => {
+  if (!drag) return;
+  drag.x = e.clientX - drag.x0;
+  drag.y = (e.clientY - drag.y0) * .4;
+  const now = performance.now();
+  drag.vx = (e.clientX - drag.lx) / Math.max(1, now - drag.lt);
+  drag.lx = e.clientX; drag.lt = now;
+  drag.el.style.transform = `translate(${drag.x}px, ${drag.y}px) rotate(${drag.x / 18}deg)`;
+  drag.el.dataset.y = drag.y;
+  stamps(drag.el, drag.x);
+});
+function release() {
+  if (!drag) return;
+  const { el, x, vx } = drag;
+  drag = null;
+  deck.classList.remove('dragging');
+  if (Math.abs(x) > THRESH || (Math.abs(vx) > .6 && Math.abs(x) > 30)) decide(x > 0 ? 1 : -1);
+  else { el.style.transform = ''; el.dataset.y = 0; stamps(el, 0); }
+}
+deck.addEventListener('pointerup', release);
+deck.addEventListener('pointercancel', release);
+
+bPass.addEventListener('click', () => decide(-1));
+bSave.addEventListener('click', () => decide(1));
+bUndo.addEventListener('click', undo);
+document.getElementById('again').addEventListener('click', () => {
+  history.length = 0; top = 0;
+  cards.forEach(el => { el.style.transition = 'none'; el.style.transform = ''; el.style.opacity = ''; el.dataset.y = 0; stamps(el, 0); });
+  layout();
+  requestAnimationFrame(() => cards.forEach(el => { el.style.transition = ''; }));
+  live.textContent = `Deck dealt again. ${TRIPS[0].name} is on top.`;
+  deck.focus();
+});
+deck.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') { e.preventDefault(); decide(-1); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); decide(1); }
+  else if (e.key === 'u' || e.key === 'U' || e.key === 'Backspace' || ((e.metaKey || e.ctrlKey) && e.key === 'z')) { e.preventDefault(); undo(); }
+});
+
+layout();
+})();
+</script>
+</body>
+</html>
