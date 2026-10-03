@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 206 · "Layered parallax landscape hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 209 · "Layered parallax landscape hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Layered parallax landscape hero
 

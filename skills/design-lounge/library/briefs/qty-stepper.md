@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 249 · "Quantity stepper" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 254 · "Quantity stepper" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Quantity stepper
 

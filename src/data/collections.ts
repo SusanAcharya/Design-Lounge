@@ -40,7 +40,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'A website, in parts',
     kicker: 'Nº 02',
     blurb: 'Heroes, navs, features, pricing, proof, contact and the sign-off. Assemble a marketing site from pieces that already agree with each other.',
-    pieces: ['hero-asymmetric-type-lockup', 'hero-swiss-grid-wordmark', 'hero-editorial-name-rotator', 'navbar-island-morph', 'features-tabbed-preview', 'bento-feature-grid', 'integrations-connect', 'link-orbit', 'gooey-nav', 'changelog-timeline', 'careers-role-list', 'testimonials-quote-carousel', 'logos-mono-marquee', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'cta-split-dark-band', 'card-product-quick-add', 'card-article-mix', 'card-holo-foil'],
+    pieces: ['hero-asymmetric-type-lockup', 'hero-swiss-grid-wordmark', 'hero-editorial-name-rotator', 'navbar-island-morph', 'features-tabbed-preview', 'bento-feature-grid', 'integrations-connect', 'link-orbit', 'gooey-nav', 'changelog-timeline', 'careers-role-list', 'testimonials-quote-carousel', 'logos-mono-marquee', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'cta-split-dark-band', 'card-product-quick-add', 'card-article-mix', 'card-holo-foil', 'hero-split-ui-stack', 'hero-search-marketplace', 'features-alternating-rows', 'faq-category-accordion', 'footer-sitemap-columns'],
   },
   {
     slug: 'portfolio-sites',
@@ -61,7 +61,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'Proof, and the close',
     kicker: 'Nº 05',
     blurb: 'Testimonials, logos, FAQs, stats and the last ask. The blocks that turn a visitor into a customer without raising their voice.',
-    pieces: ['testimonials-quote-carousel', 'testimonials-wall-grid', 'logos-mono-marquee', 'faq-two-column-search', 'stats-ticker-band', 'cta-split-dark-band', 'cta-sticky-mobile-bar', 'newsletter-fold-inline', 'newsletter-close-band', 'team-hover-portrait-grid'],
+    pieces: ['testimonials-quote-carousel', 'testimonials-wall-grid', 'logos-mono-marquee', 'faq-two-column-search', 'stats-ticker-band', 'cta-split-dark-band', 'cta-sticky-mobile-bar', 'newsletter-fold-inline', 'newsletter-close-band', 'team-hover-portrait-grid', 'testimonials-masonry-wall', 'testimonials-metric-tabs', 'logos-grid-case-hover', 'stats-count-up-band', 'cta-giant-email-band', 'pricing-usage-slider', 'contact-project-brief-steps'],
   },
   {
     slug: 'navigation-sorted',

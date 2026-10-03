@@ -1,0 +1,191 @@
+<!-- Design Lounge piece: testimonials-masonry-wall · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Letters to Pressroom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f2ead9;--card:#fbf6ea;--ink:#16130f;--ink-2:#4a443b;--ink-3:#6b6457;
+  --line:#16130f;--rule:#d8ccb4;--coral:#ff5b4a;--coral-ink:#16130f;--focus:#ff5b4a;
+  --serif:"Instrument Serif",Georgia,serif;--mono:"DM Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:15px/1.45 var(--mono);color:var(--ink);background-color:var(--paper);
+  background-image:radial-gradient(rgba(22,19,15,.09) .7px,transparent .8px),radial-gradient(rgba(255,91,74,.07) .7px,transparent .8px);
+  background-size:4px 4px,7px 7px;background-position:0 0,2px 3px;
+  overflow-x:hidden;
+}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.sec{max-width:1280px;margin:0 auto;padding:40px 56px 32px}
+.head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px;padding-bottom:20px;border-bottom:1.5px solid var(--line);margin-bottom:24px}
+.kick{margin:0 0 10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);display:flex;align-items:center;gap:10px}
+.kick i{width:10px;height:10px;background:var(--coral);border-radius:50%;display:inline-block}
+h2{margin:0;font:400 56px/0.98 var(--serif);letter-spacing:-.015em}
+h2 em{font-style:italic;color:var(--ink);background:linear-gradient(transparent 62%,var(--coral) 62%,var(--coral) 92%,transparent 92%);padding:0 4px}
+.tally{margin:0;text-align:right;font-size:12px;line-height:1.7;color:var(--ink-2);letter-spacing:.04em}
+.tally b{display:block;font:400 40px/1 var(--serif);color:var(--ink);letter-spacing:0}
+
+.wall{max-height:calc(100vh - 262px);min-height:420px;overflow:hidden;padding:0 8px 0 0;margin-right:-8px;
+  -webkit-mask-image:linear-gradient(#000 calc(100% - 220px),transparent calc(100% - 24px));mask-image:linear-gradient(#000 calc(100% - 220px),transparent calc(100% - 24px));
+  transition:max-height 560ms var(--expo)}
+.wall.open{max-height:3200px;-webkit-mask-image:none;mask-image:none}
+.cols{columns:3;column-gap:20px}
+.card{break-inside:avoid;margin:0 0 20px;padding:20px 22px 18px;background:var(--card);border:1.5px solid var(--line);position:relative}
+.card blockquote{margin:0}
+.card p.q{margin:0;font:400 21px/1.22 var(--serif);letter-spacing:-.005em}
+mark{background:var(--coral);color:var(--coral-ink);padding:0 3px;box-shadow:2px 1px 0 rgba(22,19,15,.85)}
+.who{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px dashed var(--rule)}
+.av{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:500;letter-spacing:.02em;background:var(--paper)}
+.av.c{background:var(--coral)}
+.name{display:block;font-size:13px;font-weight:500;color:var(--ink)}
+.role{display:block;font-size:12px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.feat{background:var(--coral);padding:26px 24px 22px;box-shadow:6px 6px 0 var(--ink)}
+.feat .mk{display:block;font:400 112px/0.6 var(--serif);height:46px;margin:6px 0 0 -4px}
+.feat p.q{font-size:34px;line-height:1.06;letter-spacing:-.015em}
+.feat .who{border-top-color:rgba(22,19,15,.4)}
+.feat .av{background:var(--card)}
+.feat .role{color:var(--ink-2)}
+.feat .tag{position:absolute;top:18px;right:20px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+
+.post{padding-top:16px}
+.post header{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:center;margin-bottom:12px}
+.post .h{display:block;font-size:12px;color:var(--ink-3)}
+.post p.q{font-size:19px;line-height:1.28}
+.post footer{display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--rule);font-size:12px;color:var(--ink-3)}
+.post footer span{display:inline-flex;align-items:center;gap:6px}
+.post footer svg{width:14px;height:14px}
+.stars{display:flex;gap:3px;margin-bottom:10px}
+.stars svg{width:14px;height:14px;fill:var(--ink)}
+
+.more{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:-28px;position:relative;z-index:1}
+.more::before,.more::after{content:"";flex:1;height:1.5px;background:var(--line)}
+.btn{font:500 13px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--card);border:1.5px solid var(--line);min-height:44px;padding:0 22px;display:inline-flex;align-items:center;gap:10px;cursor:pointer;box-shadow:4px 4px 0 var(--coral);transition:transform 160ms var(--ease),box-shadow 160ms var(--ease)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--coral)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--coral)}
+.btn svg{width:16px;height:16px;transition:transform 240ms var(--ease)}
+.btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.open + .more{margin-top:8px}
+svg.i{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:1023px){.sec{padding:32px 32px}.cols{columns:2}h2{font-size:46px}}
+@media (max-width:639px){
+  .sec{padding:28px 20px}
+  .head{grid-template-columns:minmax(0,1fr);gap:16px}
+  .tally{text-align:left}
+  .tally b{display:inline;font-size:32px;margin-right:8px}
+  h2{font-size:38px}
+  .cols{columns:1}.wall{max-height:calc(100vh - 300px)}
+  .feat p.q{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){
+  .wall,.btn,.btn svg{transition:none}
+  .btn:hover,.btn:active{transform:none}
+}
+</style>
+</head>
+<body>
+<section class="sec" aria-labelledby="t">
+  <div class="head">
+    <div>
+      <p class="kick"><i aria-hidden="true"></i>Letters to Pressroom</p>
+      <h2 id="t">Proofed on Thursday, <em>printed</em> on Friday.</h2>
+    </div>
+    <p class="tally"><b>212</b>studios writing back<br>Avg. 4.8 / 5 · since 2023</p>
+  </div>
+
+  <div class="wall" id="wall"><div class="cols">
+    <figure class="card feat">
+      <span class="tag">Studio of the year</span>
+      <span class="mk" aria-hidden="true">&ldquo;</span>
+      <blockquote><p class="q">We used to send nine PDFs a job. Now we send one link, and the printer stops calling at 7am.</p></blockquote>
+      <figcaption class="who"><span class="av" aria-hidden="true">HV</span><span><span class="name">Hana Vlasák</span><span class="role">Founder · Kopf &amp; Vlasák Press</span></span></figcaption>
+    </figure>
+
+    <article class="card post" aria-label="Post by Mira Duensing">
+      <header><span class="av c" aria-hidden="true">MD</span><span><span class="name">Mira Duensing</span><span class="h">@mira.prints</span></span></header>
+      <p class="q">Approved a 64-page catalogue from a train with one bar of signal. The overprint preview caught a rich black I would have missed.</p>
+      <footer><span>14 Mar 2026</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>18 replies</span></footer>
+    </article>
+
+    <figure class="card">
+      <blockquote><p class="q">Our zine collective has eleven editors and no office. Pressroom is the office.</p></blockquote>
+      <figcaption class="who"><span class="av" aria-hidden="true">OB</span><span><span class="name">Oyelaran Bello</span><span class="role">Editor · Second Pressing</span></span></figcaption>
+    </figure>
+
+    <figure class="card">
+      <div class="stars" role="img" aria-label="5 out of 5"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.9 6.3.6-4.8 4.2 1.4 6.3L12 16.8 6.4 20l1.4-6.3L3 9.5l6.3-.6z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.9 6.3.6-4.8 4.2 1.4 6.3L12 16.8 6.4 20l1.4-6.3L3 9.5l6.3-.6z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.9 6.3.6-4.8 4.2 1.4 6.3L12 16.8 6.4 20l1.4-6.3L3 9.5l6.3-.6z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.9 6.3.6-4.8 4.2 1.4 6.3L12 16.8 6.4 20l1.4-6.3L3 9.5l6.3-.6z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.9 6.3.6-4.8 4.2 1.4 6.3L12 16.8 6.4 20l1.4-6.3L3 9.5l6.3-.6z"/></svg></div>
+      <blockquote><p class="q">Clients mark up the proof <mark>right on the spread</mark>. No more screenshots with red circles.</p></blockquote>
+      <figcaption class="who"><span class="av" aria-hidden="true">TA</span><span><span class="name">Tomás Arriaga</span><span class="role">Art director · Casa Lumbre</span></span></figcaption>
+    </figure>
+
+    <figure class="card">
+      <blockquote><p class="q">The ink-limit warning paid for the year in one job. We would have reprinted 3,000 covers.</p></blockquote>
+      <figcaption class="who"><span class="av" aria-hidden="true">KS</span><span><span class="name">Kirsi Salo</span><span class="role">Production · Halla Books</span></span></figcaption>
+    </figure>
+
+    <figure class="card">
+      <blockquote><p class="q">I teach print at a college. My students learn <mark>what a bleed is</mark> before they learn what a deadline is, and that is the right order.</p></blockquote>
+      <figcaption class="who"><span class="av c" aria-hidden="true">RN</span><span><span class="name">Ruth Nakagawa</span><span class="role">Lecturer · Westmoor School of Art</span></span></figcaption>
+    </figure>
+
+    <article class="card post" aria-label="Post by Dele Adeyemi">
+      <header><span class="av" aria-hidden="true">DA</span><span><span class="name">Dele Adeyemi</span><span class="h">@dele.makes.books</span></span></header>
+      <p class="q">Two-colour riso job, fluoro pink and black. Pressroom split the layers and named them. The printer said thank you. Out loud.</p>
+      <footer><span>2 Feb 2026</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>41 replies</span></footer>
+    </article>
+
+    <figure class="card">
+      <blockquote><p class="q">Version history means I can stop naming files final_final_v7.</p></blockquote>
+      <figcaption class="who"><span class="av" aria-hidden="true">LP</span><span><span class="name">Lena Petrov</span><span class="role">Designer · Ostrova Studio</span></span></figcaption>
+    </figure>
+
+    <figure class="card">
+      <blockquote><p class="q">We print 40 menus a season. Sign-off went from <mark>a week to an afternoon</mark>, and the chef can do it from his phone.</p></blockquote>
+      <figcaption class="who"><span class="av" aria-hidden="true">JM</span><span><span class="name">Jonah Mercer</span><span class="role">Owner · Tallow &amp; Rye</span></span></figcaption>
+    </figure>
+
+    <figure class="card">
+      <blockquote><p class="q">Quiet software. It shows the paper, then gets out of the way.</p></blockquote>
+      <figcaption class="who"><span class="av c" aria-hidden="true">AF</span><span><span class="name">Amara Fofanah</span><span class="role">Type designer · Fofanah Type</span></span></figcaption>
+    </figure>
+
+    <article class="card post" aria-label="Post by Sol Herrán">
+      <header><span class="av" aria-hidden="true">SH</span><span><span class="name">Sol Herrán</span><span class="h">@solherran</span></span></header>
+      <p class="q">Small press tip: put the printer in the Pressroom thread on day one. Our last run had zero surprises.</p>
+      <footer><span>27 Jan 2026</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>9 replies</span></footer>
+    </article>
+
+    <figure class="card">
+      <blockquote><p class="q">Every proof has a paper stock attached. Nobody asks "which uncoated?" any more.</p></blockquote>
+      <figcaption class="who"><span class="av" aria-hidden="true">BE</span><span><span class="name">Björn Ekdahl</span><span class="role">Print buyer · Nordvik Museum</span></span></figcaption>
+    </figure>
+  </div></div>
+
+  <div class="more">
+    <button class="btn" type="button" aria-expanded="false" aria-controls="wall">
+      <span>Show more letters</span>
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </div>
+</section>
+<script>
+const wall = document.getElementById('wall');
+const btn = document.querySelector('.btn');
+btn.addEventListener('click', () => {
+  const open = btn.getAttribute('aria-expanded') !== 'true';
+  btn.setAttribute('aria-expanded', String(open));
+  wall.classList.toggle('open', open);
+  btn.querySelector('span').textContent = open ? 'Show fewer' : 'Show more letters';
+  if (!open) wall.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+});
+</script>
+</body>
+</html>

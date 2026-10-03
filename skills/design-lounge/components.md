@@ -146,6 +146,16 @@ Website navigation. Pick one header per site, by the brand, not by habit:
 - On a phone the header becomes a menu button. A studio or brand site uses `hamburger-circle-reveal`. A shop or a site with many sections uses `hamburger-drawer-accordion`. A site people come back to every week, like a gym, a restaurant or a PWA, may use `mobile-web-bottom-nav` instead. A marketing page does not.
 - An app shell: `sidebar-workspace-switcher`, or `collapsing-sidebar-rail` when the work needs room. Docs: `sidebar-docs-toc` or `docs-three-column`.
 
+Website sections. Each block below has a piece. Use it, restyled onto the theme, before you build a generic block:
+
+- Hero: a tool with a real interface uses `hero-split-ui-stack`. A marketplace, travel, or booking site leads with search, `hero-search-marketplace`.
+- Features: `features-alternating-rows`, `features-tabbed-preview`, or `bento-feature-grid`. Never three equal icon cards.
+- Proof: many short voices go in `testimonials-masonry-wall`. Customers with numbers go in `testimonials-metric-tabs`. Client names go in `logos-grid-case-hover` or `logos-mono-marquee`. Figures go in `stats-count-up-band`.
+- Price: a price that grows with use is `pricing-usage-slider`. Fixed plans are `pricing-annual-toggle-roll`.
+- Questions: more than eight questions use `faq-category-accordion`.
+- Close: a signup ask is `cta-giant-email-band`. An agency or freelancer inquiry is `contact-project-brief-steps`.
+- Footer: a product with many pages uses `footer-sitemap-columns`. A portfolio uses `footer-giant-wordmark-reveal`.
+
 Cards. A shop grid is `card-product-quick-add`. A blog or news grid is `card-article-mix`: one lead, then smaller cards, never six equal boxes. A pass, membership or ticket is `card-holo-foil`.
 
 On Android, or when the family is Material, the tab bar is `m3-navigation-bar`. It is the same job as `phone-tab-plain`. Use one of the three, never two.

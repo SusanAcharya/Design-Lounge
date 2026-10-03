@@ -1,0 +1,288 @@
+<!-- Design Lounge piece: footer-sitemap-columns · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Corvel · Footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1a1918;--surface:#222120;--field:#2a2826;--line:#34322f;--line-2:#45423e;
+  --text:#ece7df;--text-2:#b0a99f;--text-3:#8f897f;
+  --accent:#f0a63a;--ok:#6cc488;--danger:#ff8a70;
+  --sans:"Space Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;
+  --r:4px;--ease:cubic-bezier(0.2,0.7,0.2,1);--fast:160ms;--layout:260ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:14px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+footer{min-height:100%;display:flex;flex-direction:column;padding:var(--s8) var(--s8) var(--s6);border-top:1px solid var(--line)}
+.pre{display:flex;align-items:center;justify-content:space-between;gap:var(--s6);padding-bottom:var(--s7);margin-bottom:var(--s7);border-bottom:1px solid var(--line)}
+.pre p{margin:0;font-size:36px;line-height:1.15;font-weight:500;letter-spacing:-.02em;max-width:22ch}
+.pre p em{font-style:normal;color:var(--accent)}
+.pre div{display:flex;gap:var(--s3);flex-shrink:0}
+.ghost{display:inline-flex;align-items:center;height:40px;padding:0 var(--s4);border:1px solid var(--line-2);border-radius:var(--r);font-weight:500;transition:border-color var(--fast) var(--ease)}
+.ghost:hover{border-color:var(--text-2)}
+a.btn{display:inline-flex;align-items:center}
+.top{display:grid;grid-template-columns:minmax(0,2.1fr) repeat(5,minmax(0,1fr));gap:var(--s6)}
+.brand{padding-right:var(--s6)}
+.logo{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:20px;letter-spacing:-.01em}
+.logo svg{width:28px;height:28px}
+.mission{margin:var(--s4) 0 0;color:var(--text-2);font-size:15px;line-height:1.5;max-width:34ch}
+.news{margin-top:var(--s6)}
+.news label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:var(--s2)}
+.row{display:flex;gap:var(--s2);max-width:360px}
+.row input{flex:1;min-width:0;height:40px;padding:0 var(--s3);background:var(--field);border:1px solid var(--line-2);border-radius:var(--r);transition:border-color var(--fast) var(--ease)}
+.row input::placeholder{color:var(--text-3)}
+.row input:hover{border-color:#5a564f}
+.row input:focus-visible{outline-offset:1px;border-color:var(--accent)}
+.row input[aria-invalid="true"]{border-color:var(--danger)}
+.btn{height:40px;padding:0 var(--s4);border:0;border-radius:var(--r);background:var(--accent);color:#1a1205;font-weight:600;cursor:pointer;transition:filter var(--fast) var(--ease),transform var(--fast) var(--ease)}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.hint{margin:var(--s2) 0 0;font-size:12px;color:var(--text-3);min-height:18px}
+.hint.err{color:var(--danger)}
+.hint.ok{color:var(--ok)}
+.col h2{margin:0;font-size:12px;font-family:var(--mono);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+.col h2 button{all:unset;display:flex;width:100%;align-items:center;justify-content:space-between;cursor:default}
+.col h2 svg{display:none;width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;transition:transform var(--layout) var(--ease)}
+.panel{display:grid;grid-template-rows:1fr}
+.panel>div{min-height:0}
+.col ul{list-style:none;margin:var(--s4) 0 0;padding:0;display:grid;gap:12px}
+.col a{white-space:nowrap}
+.col a{color:var(--text-2);transition:color var(--fast) var(--ease)}
+.col a:hover{color:var(--text)}
+.col a:hover span.u{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line-2)}
+.badge{display:inline-block;margin-left:var(--s2);padding:1px 6px;border:1px solid var(--accent);border-radius:3px;font:500 10px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);vertical-align:1px}
+.mid{margin-top:auto;padding-top:var(--s7);display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:var(--s6);align-items:end;border-bottom:1px solid var(--line);padding-bottom:var(--s5)}
+.status{display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:0 var(--s4) 0 var(--s3);border:1px solid var(--line);border-radius:999px;color:var(--text);transition:border-color var(--fast) var(--ease);justify-self:start}
+.status:hover{border-color:var(--line-2)}
+.dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--ok);animation:pulse 2.8s var(--ease) infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(2.6);opacity:0}}
+.status small{font:12px var(--mono);color:var(--text-3)}
+.locale{display:flex;gap:var(--s3)}
+.sel{display:grid;gap:6px}
+.sel label{font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+.sel span{position:relative;display:block}
+.sel select{appearance:none;height:40px;min-width:168px;padding:0 36px 0 var(--s3);background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r);cursor:pointer}
+.sel span svg{position:absolute;right:12px;top:12px;width:16px;height:16px;stroke:var(--text-3);fill:none;stroke-width:1.75;pointer-events:none}
+.social{display:flex;gap:var(--s5);font-size:13px;padding-bottom:10px}
+.social a{color:var(--text-2);display:inline-flex;align-items:center;gap:4px;transition:color var(--fast) var(--ease)}
+.social a:hover{color:var(--accent)}
+.social svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
+.legal{display:flex;justify-content:space-between;gap:var(--s5);padding-top:var(--s5);font:12px/1.6 var(--mono);color:var(--text-3)}
+.legal p{margin:0}
+.legal nav{display:flex;gap:var(--s5);white-space:nowrap}
+.status{white-space:nowrap}
+.legal a:hover{color:var(--text)}
+@media (max-width:1100px){
+  footer{padding:var(--s7) var(--s7) var(--s6)}
+  .top{grid-template-columns:repeat(5,minmax(0,1fr));row-gap:var(--s7)}
+  .brand{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s6);padding:0}
+  .news{margin:0}
+  .mid{grid-template-columns:minmax(0,1fr) auto;row-gap:var(--s5)}
+  .social{grid-column:1/-1;padding:0}
+}
+@media (max-width:900px){
+  .pre p{font-size:26px}
+  .top{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:639px){
+  footer{padding:var(--s6) 20px var(--s5)}
+  .pre{flex-direction:column;align-items:stretch;gap:var(--s5);padding-bottom:var(--s6);margin-bottom:var(--s6)}
+  .pre p{font-size:24px}
+  .pre div>*{flex:1;justify-content:center;padding:0 var(--s2)}
+  .top{grid-template-columns:minmax(0,1fr);gap:0}
+  .brand{display:block;margin-bottom:var(--s6)}
+  .news{margin-top:var(--s5)}
+  .row{max-width:none}
+  .col{border-top:1px solid var(--line)}
+  .col:last-of-type{border-bottom:1px solid var(--line)}
+  .col h2 button{cursor:pointer;min-height:52px;color:var(--text);font-size:12px}
+  .col h2 svg{display:block}
+  .col h2 button[aria-expanded="true"] svg{transform:rotate(180deg)}
+  .panel{grid-template-rows:0fr;transition:grid-template-rows var(--layout) var(--ease)}
+  .panel.open{grid-template-rows:1fr}
+  .panel>div{overflow:hidden}
+  .col ul{margin:0;padding:0 0 var(--s4);gap:0}
+  .col li a{display:flex;align-items:center;min-height:40px}
+  .mid{grid-template-columns:minmax(0,1fr);gap:var(--s5);padding-top:var(--s6)}
+  .status{white-space:normal;padding-block:8px}
+  .locale{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .sel select{min-width:0;width:100%}
+  .social{flex-wrap:wrap;gap:var(--s3) var(--s5);padding:0}
+  .legal{flex-direction:column;gap:var(--s3)}
+  .legal nav{flex-wrap:wrap;gap:var(--s2) var(--s4)}
+}
+@media (prefers-reduced-motion:reduce){
+  .dot::after{animation:none}
+  *,*::before,*::after{transition-duration:0ms!important}
+}
+</style>
+</head>
+<body>
+<footer aria-label="Site footer">
+  <div class="pre">
+    <p>Find the slow query <em>before</em> the pager finds you.</p>
+    <div><a class="ghost" href="#">Book a demo</a><a class="btn" href="#">Start free for 14 days</a></div>
+  </div>
+  <div class="top">
+    <div class="brand">
+      <div>
+        <a class="logo" href="#" aria-label="Corvel home">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="6" fill="none" stroke="#f0a63a" stroke-width="2"/><path d="M8 18l4-5 3 3 5-7" fill="none" stroke="#ece7df" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Corvel
+        </a>
+        <p class="mission">Logs, metrics and traces for teams who would rather be asleep at 3am.</p>
+      </div>
+      <form class="news" id="news" novalidate>
+        <label for="email">Monthly changelog</label>
+        <div class="row">
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@team.dev" aria-describedby="news-hint" required>
+          <button class="btn" type="submit">Subscribe</button>
+        </div>
+        <p class="hint" id="news-hint" aria-live="polite">One email a month. Unsubscribe in one click.</p>
+      </form>
+    </div>
+
+    <nav class="col" aria-labelledby="h-product">
+      <h2 id="h-product"><button type="button" aria-controls="p-product">Product<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+      <div class="panel" id="p-product"><div><ul>
+        <li><a href="#"><span class="u">Logs</span></a></li>
+        <li><a href="#"><span class="u">Metrics</span></a></li>
+        <li><a href="#"><span class="u">Traces</span></a></li>
+        <li><a href="#"><span class="u">Alerting</span></a></li>
+        <li><a href="#"><span class="u">Incidents</span><span class="badge">New</span></a></li>
+        <li><a href="#"><span class="u">Pricing</span></a></li>
+      </ul></div></div>
+    </nav>
+    <nav class="col" aria-labelledby="h-solutions">
+      <h2 id="h-solutions"><button type="button" aria-controls="p-solutions">Solutions<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+      <div class="panel" id="p-solutions"><div><ul>
+        <li><a href="#"><span class="u">Platform teams</span></a></li>
+        <li><a href="#"><span class="u">Startups</span></a></li>
+        <li><a href="#"><span class="u">Fintech</span></a></li>
+        <li><a href="#"><span class="u">Healthcare</span></a></li>
+        <li><a href="#"><span class="u">Game studios</span></a></li>
+      </ul></div></div>
+    </nav>
+    <nav class="col" aria-labelledby="h-resources">
+      <h2 id="h-resources"><button type="button" aria-controls="p-resources">Resources<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+      <div class="panel" id="p-resources"><div><ul>
+        <li><a href="#"><span class="u">Documentation</span></a></li>
+        <li><a href="#"><span class="u">API reference</span></a></li>
+        <li><a href="#"><span class="u">Changelog</span></a></li>
+        <li><a href="#"><span class="u">Runbook library</span></a></li>
+        <li><a href="#"><span class="u">Community forum</span></a></li>
+        <li><a href="#"><span class="u">Webinars</span></a></li>
+      </ul></div></div>
+    </nav>
+    <nav class="col" aria-labelledby="h-company">
+      <h2 id="h-company"><button type="button" aria-controls="p-company">Company<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+      <div class="panel" id="p-company"><div><ul>
+        <li><a href="#"><span class="u">About</span></a></li>
+        <li><a href="#"><span class="u">Customers</span></a></li>
+        <li><a href="#"><span class="u">Careers</span></a></li>
+        <li><a href="#"><span class="u">Press kit</span></a></li>
+        <li><a href="#"><span class="u">Contact</span></a></li>
+      </ul></div></div>
+    </nav>
+    <nav class="col" aria-labelledby="h-legal">
+      <h2 id="h-legal"><button type="button" aria-controls="p-legal">Legal<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+      <div class="panel" id="p-legal"><div><ul>
+        <li><a href="#"><span class="u">Terms of service</span></a></li>
+        <li><a href="#"><span class="u">Privacy notice</span></a></li>
+        <li><a href="#"><span class="u">Data processing</span></a></li>
+        <li><a href="#"><span class="u">Subprocessors</span></a></li>
+        <li><a href="#"><span class="u">Security</span></a></li>
+      </ul></div></div>
+    </nav>
+  </div>
+
+  <div class="mid">
+    <a class="status" href="#"><span class="dot" aria-hidden="true"></span>All systems normal <small>· checked 2 min ago</small></a>
+    <div class="locale">
+      <div class="sel">
+        <label for="lang">Language</label>
+        <span><select id="lang"><option>English</option><option>Deutsch</option><option>Français</option><option>Español</option><option>日本語</option></select><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+      </div>
+      <div class="sel">
+        <label for="region">Data region</label>
+        <span><select id="region"><option>EU · Frankfurt</option><option>UK · London</option><option>US · Virginia</option><option>APAC · Sydney</option></select><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+      </div>
+    </div>
+    <nav class="social" aria-label="Social">
+      <a href="#">GitHub<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
+      <a href="#">Mastodon<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
+      <a href="#">LinkedIn<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
+      <a href="#">YouTube<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
+    </nav>
+  </div>
+
+  <div class="legal">
+    <p>© 2026 Corvel Systems Ltd. Registered in Scotland, SC614072. 9 Commercial Quay, Leith.</p>
+    <nav aria-label="Legal shortcuts"><a href="#">Cookie settings</a><a href="#">Accessibility</a><a href="#">Sitemap</a></nav>
+  </div>
+</footer>
+<script>
+const mq = matchMedia('(max-width: 639px)');
+const heads = [...document.querySelectorAll('.col h2 button')];
+function mode() {
+  heads.forEach(b => {
+    const panel = document.getElementById(b.getAttribute('aria-controls'));
+    if (mq.matches) {
+      b.removeAttribute('tabindex');
+      b.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('open');
+      panel.inert = true;
+    } else {
+      b.setAttribute('tabindex', '-1');
+      b.removeAttribute('aria-expanded');
+      panel.classList.add('open');
+      panel.inert = false;
+    }
+  });
+}
+heads.forEach(b => b.addEventListener('click', () => {
+  if (!mq.matches) return;
+  const panel = document.getElementById(b.getAttribute('aria-controls'));
+  const open = b.getAttribute('aria-expanded') !== 'true';
+  b.setAttribute('aria-expanded', String(open));
+  panel.classList.toggle('open', open);
+  panel.inert = !open;
+}));
+mq.addEventListener('change', mode);
+mode();
+
+const form = document.getElementById('news');
+const email = document.getElementById('email');
+const hint = document.getElementById('news-hint');
+const base = hint.textContent;
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const v = email.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+    email.setAttribute('aria-invalid', 'true');
+    hint.className = 'hint err';
+    hint.textContent = v ? 'That address is missing something. Try name@company.com.' : 'Enter your email to get the changelog.';
+    email.focus();
+    return;
+  }
+  email.removeAttribute('aria-invalid');
+  hint.className = 'hint ok';
+  hint.textContent = 'Subscribed. The next changelog lands on 1 November.';
+  email.value = '';
+});
+email.addEventListener('input', () => {
+  if (email.getAttribute('aria-invalid')) { email.removeAttribute('aria-invalid'); hint.className = 'hint'; hint.textContent = base; }
+});
+</script>
+</body>
+</html>

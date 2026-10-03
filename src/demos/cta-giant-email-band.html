@@ -1,0 +1,231 @@
+<!-- Design Lounge piece: cta-giant-email-band · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tallyhook · Start your trial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffe600;--ink:#0a0a0a;--ink-2:#2b2a1f;--paper:#fffbe0;--error:#b3001b;--focus:#0a0a0a;
+  --sans:"Archivo","Helvetica Neue",Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+  --micro:160ms;--layout:320ms;--hero:700ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:500 17px/1.45 var(--sans);display:flex;flex-direction:column;overflow-x:hidden}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.band{flex:1;display:grid;grid-template-rows:auto 1fr auto;padding:40px 64px 0;max-width:1280px;width:100%;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;font:700 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;border-bottom:2px solid var(--ink);padding-bottom:14px}
+.top b{display:inline-flex;align-items:center;gap:8px}
+.top b svg{width:18px;height:18px}
+
+.main{align-self:center;padding:40px 0 32px;position:relative}
+.stamp{position:absolute;right:0;top:28px;width:200px;height:200px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center}
+.ring{position:absolute;inset:0;width:100%;height:100%;animation:turn 24s linear infinite}
+.ring text{fill:currentColor;font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.stamp b{font:900 64px/.8 var(--sans);letter-spacing:-.04em;text-align:center}
+.stamp small{display:block;font:700 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;margin-top:8px}
+.won .stamp b{animation:pop 500ms var(--expo)}
+@keyframes turn{to{transform:rotate(360deg)}}
+@keyframes pop{40%{transform:scale(1.12)}}
+h2{margin:0;font-weight:900;font-size:clamp(46px,9.4vw,120px);line-height:.9;letter-spacing:-.045em;text-transform:uppercase}
+h2 span{display:block}
+.out{color:transparent;-webkit-text-stroke:3px var(--ink);background:linear-gradient(var(--ink),var(--ink)) 0 0/0% 100% no-repeat;-webkit-background-clip:text;background-clip:text;transition:background-size var(--hero) var(--expo)}
+.won .out{background-size:100% 100%}
+
+.row{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:48px;align-items:start;margin-top:40px}
+.lede{margin:6px 0 0;font-size:20px;line-height:1.4;max-width:30ch;color:var(--ink-2)}
+.lede strong{color:var(--ink)}
+
+form{display:grid}
+.field{display:grid;grid-template-columns:minmax(0,1fr) auto;border:3px solid var(--ink);background:var(--paper);height:68px;transition:border-color var(--micro) var(--ease),box-shadow var(--micro) var(--ease)}
+.field:focus-within{box-shadow:6px 6px 0 var(--ink)}
+.field.bad{border-color:var(--error);box-shadow:6px 6px 0 var(--error)}
+input{border:0;background:transparent;padding:0 20px;font-size:19px;font-weight:500;min-width:0}
+input::placeholder{color:#6b6850}
+input:focus{outline:none}
+.go{display:inline-flex;align-items:center;gap:10px;border:0;background:var(--ink);color:var(--bg);font-weight:900;font-size:17px;letter-spacing:.01em;padding:0 26px;cursor:pointer;text-transform:uppercase;transition:gap var(--micro) var(--ease)}
+.go:hover{gap:16px}
+.go:focus-visible{outline-offset:-7px;outline-color:var(--bg)}
+.go svg{width:20px;height:20px;flex:none}
+.go[aria-disabled="true"]{cursor:progress}
+.spin{display:none;width:18px;height:18px;border:2.5px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+.busy .spin{display:block}
+.busy .arrow{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.msg{min-height:22px;margin:10px 0 0;font:700 13px/1.5 var(--mono);letter-spacing:.02em}
+.msg.err{color:var(--error)}
+.msg.err::before{content:"";display:inline-block;width:8px;height:8px;background:var(--error);margin-right:8px;vertical-align:1px}
+
+.done{display:none;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;border:3px solid var(--ink);background:var(--ink);color:var(--bg);padding:16px 24px 16px 18px;min-height:68px}
+.won .done{display:grid;animation:rise var(--layout) var(--expo) both}
+.won form{display:none}
+.won .msg{position:absolute;width:1px;height:1px;min-height:0;overflow:hidden;clip:rect(0 0 0 0)}
+.done svg{width:52px;height:52px;flex:none}
+.done circle{stroke-dasharray:139;stroke-dashoffset:139;animation:draw 520ms var(--ease) 80ms forwards}
+.done path{stroke-dasharray:30;stroke-dashoffset:30;animation:draw 360ms var(--expo) 520ms forwards}
+.done h3{margin:0;font-size:24px;font-weight:900;line-height:1.1;text-transform:uppercase;letter-spacing:-.01em}
+.done h3:focus{outline:none}
+.done p{margin:4px 0 0;font:500 13px/1.5 var(--mono);color:#fff6b3}
+.done button{background:none;border:0;padding:0;color:var(--bg);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit}
+.done button:focus-visible{outline-color:var(--bg)}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}}
+
+.assure{display:flex;flex-wrap:wrap;gap:8px 28px;list-style:none;margin:18px 0 0;padding:0;font:700 13px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase}
+.assure li{display:inline-flex;align-items:center;gap:8px}
+.assure svg{width:18px;height:18px;flex:none}
+
+.tick{overflow:hidden;background:var(--ink);color:var(--bg);border-top:2px solid var(--ink);margin:0 -64px;white-space:nowrap}
+.tick div{display:inline-flex;gap:40px;padding:14px 0;font:900 15px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;animation:slide 48s linear infinite}
+.tick span{display:inline-flex;align-items:center;gap:40px}
+.tick span::after{content:"";width:8px;height:8px;background:var(--bg);transform:rotate(45deg)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+@media (max-width:1023px){.band{padding:32px 40px 0}.tick{margin:0 -40px}.row{gap:32px}.stamp{width:152px;height:152px;top:20px}.stamp b{font-size:48px}}
+@media (max-width:900px){
+  .row{grid-template-columns:minmax(0,1fr);gap:24px;margin-top:28px}
+  .lede{font-size:18px}
+}
+@media (max-width:639px){
+  .band{padding:24px 20px 0}.tick{margin:0 -20px}
+  .top span{display:none}
+  .main{padding:32px 0 24px}
+  h2{font-size:clamp(44px,15.5vw,92px)}
+  .out{-webkit-text-stroke-width:2px}
+  .stamp{display:none}
+  .field{grid-template-columns:minmax(0,1fr);height:auto}
+  input{height:56px}
+  .go{height:56px;justify-content:center}
+  .assure{flex-direction:column;gap:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:1ms!important;animation-delay:0ms!important;transition-duration:1ms!important}
+  .tick div,.ring{animation:none}
+  .spin{animation:none;border-right-color:currentColor;opacity:.6}
+}
+</style>
+</head>
+<body>
+<section class="band" aria-labelledby="cta-title">
+  <div class="top">
+    <b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" aria-hidden="true"><path d="M5 4v16M19 4v16M5 12h14"/></svg>Tallyhook</b>
+    <span>Invoicing for people who bill by the hour</span>
+    <span>Trial · 14 days</span>
+  </div>
+
+  <div class="main">
+    <div class="stamp" aria-hidden="true">
+      <svg class="ring" viewBox="0 0 200 200"><defs><path id="c" d="M100 100m-78 0a78 78 0 1 1 156 0a78 78 0 1 1-156 0"/></defs><text><textPath href="#c" textLength="486" lengthAdjust="spacing">Free for 14 days · No card · Free for 14 days · No card ·</textPath></text></svg>
+      <b>14<small>days</small></b>
+    </div>
+    <h2 id="cta-title"><span>Get paid</span><span>by <em class="out" style="font-style:normal">Friday.</em></span></h2>
+
+    <div class="row">
+      <p class="lede">Send the invoice from your phone, chase it automatically, and see the money land. <strong>4,200 freelancers</strong> stopped writing reminder emails this year.</p>
+
+      <div>
+        <form id="f" novalidate>
+          <label class="sr" for="email">Work email</label>
+          <div class="field" id="field">
+            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@studio.co" aria-describedby="msg">
+            <button class="go" id="go" type="submit">
+              <span class="label">Start free trial</span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+              <i class="spin" aria-hidden="true"></i>
+            </button>
+          </div>
+        </form>
+        <p class="msg" id="msg" role="status" aria-live="polite"></p>
+
+        <div class="done" id="done">
+          <svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><circle cx="26" cy="26" r="22"/><path d="M16 27l7 7 13-15"/></svg>
+          <div>
+            <h3 id="done-title" tabindex="-1">You are in.</h3>
+            <p>Your login link went to <span id="sent-to">you@studio.co</span>. <button type="button" id="again">Use another email</button></p>
+          </div>
+        </div>
+
+        <ul class="assure" aria-label="Trial terms">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No card needed</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Cancel anytime</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>14-day trial</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tick" aria-hidden="true"><div>
+    <span>Paid in 3 days, not 30</span><span>Reminders that sound like you</span><span>Bank payouts in 14 currencies</span><span>VAT done for you</span>
+    <span>Paid in 3 days, not 30</span><span>Reminders that sound like you</span><span>Bank payouts in 14 currencies</span><span>VAT done for you</span>
+  </div></div>
+</section>
+<script>
+const band = document.querySelector('.band');
+const form = document.getElementById('f');
+const input = document.getElementById('email');
+const field = document.getElementById('field');
+const msg = document.getElementById('msg');
+const go = document.getElementById('go');
+const label = go.querySelector('.label');
+const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+let sending = false;
+
+function setError(text) {
+  field.classList.add('bad');
+  input.setAttribute('aria-invalid', 'true');
+  msg.className = 'msg err';
+  msg.textContent = text;
+  input.focus();
+}
+function clearError() {
+  field.classList.remove('bad');
+  input.removeAttribute('aria-invalid');
+  msg.className = 'msg';
+  msg.textContent = '';
+}
+
+input.addEventListener('input', () => { if (field.classList.contains('bad')) clearError(); });
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  if (sending) return;
+  const v = input.value.trim();
+  if (!v) return setError('Type your email so we can send the login link.');
+  if (!ok.test(v)) return setError('That address is missing something. Try name@domain.com.');
+  clearError();
+  sending = true;
+  go.classList.add('busy');
+  go.setAttribute('aria-disabled', 'true');
+  input.readOnly = true;
+  label.textContent = 'Sending';
+  msg.textContent = 'Sending your login link.';
+  setTimeout(() => {
+    document.getElementById('sent-to').textContent = v;
+    band.classList.add('won');
+    msg.textContent = 'You are in. Login link sent to ' + v + '.';
+    document.getElementById('done-title').focus();
+    sending = false;
+  }, 1100);
+});
+
+document.getElementById('again').addEventListener('click', () => {
+  band.classList.remove('won');
+  go.classList.remove('busy');
+  go.removeAttribute('aria-disabled');
+  input.readOnly = false;
+  input.value = '';
+  label.textContent = 'Start free trial';
+  input.focus();
+});
+</script>
+</body>
+</html>

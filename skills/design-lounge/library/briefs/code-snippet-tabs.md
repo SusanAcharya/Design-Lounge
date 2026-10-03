@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 176 · "Code snippet tabs" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 177 · "Code snippet tabs" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Code snippet tabs
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 204 · "Issue index" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 207 · "Issue index" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Issue index
 

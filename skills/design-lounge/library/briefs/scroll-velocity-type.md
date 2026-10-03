@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 258 · "Scroll velocity type" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 263 · "Scroll velocity type" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Scroll velocity type
 

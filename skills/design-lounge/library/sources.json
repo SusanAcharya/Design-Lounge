@@ -75,12 +75,14 @@
         "shop-collection",
         "shop-product",
         "spend-list",
+        "stats-count-up-band",
         "status-badge",
         "switch-row",
         "text-field",
         "textarea-field",
         "time-field",
         "tree-nav",
+        "pricing-usage-slider",
         "navbar-vertical-rail",
         "chart-bar-week"
       ]
@@ -159,6 +161,7 @@
         "team-hover-portrait-grid",
         "upload-file-queue",
         "y2k-chrome-style",
+        "features-alternating-rows",
         "analog-stick",
         "budget-meter",
         "checkbox-group",
@@ -167,6 +170,7 @@
         "content-card",
         "dial-knob",
         "drag-to-confirm",
+        "faq-category-accordion",
         "gooey-nav",
         "navbar-hide-on-scroll",
         "inline-alert",
@@ -183,9 +187,11 @@
         "hamburger-drawer-accordion",
         "shred-button",
         "sidebar-workspace-switcher",
+        "footer-sitemap-columns",
         "slider-field",
         "split-button",
         "spring-deck",
+        "contact-project-brief-steps",
         "stretch-switch",
         "token-field",
         "undo-toast",
@@ -265,8 +271,10 @@
         "hero-product-window-tilt",
         "gallery-contact-sheet",
         "grow-grid",
+        "logos-grid-case-hover",
         "careers-role-list",
-        "pan-canvas"
+        "pan-canvas",
+        "hero-split-ui-stack"
       ]
     },
     {
@@ -367,6 +375,8 @@
         "corner-player",
         "coverflow-strip",
         "overlap-slider",
+        "testimonials-masonry-wall",
+        "testimonials-metric-tabs",
         "webgl-shader-hero"
       ]
     },
@@ -387,7 +397,9 @@
         "text-mask-line-reveal",
         "text-split-letter-wave",
         "hero-video-loop",
+        "cta-giant-email-band",
         "glitch-text",
+        "hero-search-marketplace",
         "scroll-word-highlight",
         "split-flap-board",
         "trail-type"

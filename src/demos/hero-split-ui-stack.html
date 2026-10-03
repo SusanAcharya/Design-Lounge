@@ -1,0 +1,223 @@
+<!-- Design Lounge piece: hero-split-ui-stack · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tendwell — Every open slot, filled by morning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf8f2;--surface:#ffffff;--sunk:#f3eee4;
+  --ink:#16302e;--ink-2:#4a5b58;--ink-3:#6f7d7a;--line:#e6dfd1;
+  --teal:#0f4c4a;--teal-2:#0b3a38;--teal-soft:#e2eeec;
+  --butter:#f6d97a;--butter-soft:#fbefc4;
+  --focus:#0f4c4a;
+  --sans:"Hanken Grotesk",system-ui,sans-serif;
+  --r:14px;--r-sm:10px;--r-pill:999px;
+  --shadow:0 1px 0 rgba(22,48,46,.04),0 12px 32px -12px rgba(22,48,46,.22);
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.5 var(--sans);color:var(--ink);background:var(--bg);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:6px}
+svg{display:block}
+
+.nav{height:72px;display:flex;align-items:center;gap:40px;padding:0 72px;max-width:1440px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.02em}
+.logo i{width:28px;height:28px;border-radius:9px;background:var(--teal);display:grid;place-items:center}
+.links{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:15px;font-weight:500;color:var(--ink-2)}
+.links a:hover{color:var(--ink)}
+.nav-r{margin-left:auto;display:flex;gap:12px;align-items:center;font-size:15px;font-weight:600}
+
+.btn{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 22px;border-radius:var(--r);font-weight:700;font-size:16px;transition:background-color .16s var(--ease),transform .16s var(--ease)}
+.btn:active{transform:translateY(1px)}
+.btn-p{background:var(--teal);color:#fbf8f2}
+.btn-p:hover{background:var(--teal-2)}
+.btn-s{border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn-s:hover{background:var(--sunk)}
+.btn-sm{height:40px;padding:0 16px;font-size:15px;border-radius:12px}
+
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.04fr);gap:48px;align-items:center;padding:24px 72px 40px;max-width:1440px;margin:0 auto;min-height:calc(100% - 72px)}
+.pill{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px 0 6px;border-radius:var(--r-pill);background:var(--teal-soft);color:var(--teal);font-size:14px;font-weight:600}
+.pill b{background:var(--teal);color:#fbf8f2;font-size:12px;padding:3px 9px;border-radius:var(--r-pill);font-weight:700}
+h1{font-size:62px;line-height:1.02;letter-spacing:-.035em;font-weight:800;margin:22px 0 0;max-width:13ch}
+mark{background:linear-gradient(transparent 52%,var(--butter) 52%,var(--butter) 92%,transparent 92%);color:inherit;padding:0 .06em;margin:0 -.06em}
+.sub{font-size:19px;line-height:1.55;color:var(--ink-2);margin:22px 0 0;max-width:30em}
+.ctas{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.trust{display:flex;align-items:center;gap:14px;margin-top:36px;font-size:15px;color:var(--ink-2)}
+.trust strong{color:var(--ink);font-weight:700}
+.faces{display:flex}
+.faces span{width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);margin-left:-8px;display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--ink)}
+.faces span:first-child{margin-left:0}
+
+/* stack */
+.stage{position:relative;height:540px}
+.slot{position:absolute;transition:transform .7s var(--expo);will-change:transform}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);opacity:0;transform:translateY(28px) scale(.96);animation:settle .8s var(--expo) forwards}
+@keyframes settle{to{opacity:1;transform:none}}
+.s-sched{left:0;top:10px;width:76%}
+.s-msg{right:0;top:186px;width:58%}
+.s-metric{left:6%;top:330px;width:44%}
+.s-sched .card{animation-delay:.15s}
+.s-msg .card{animation-delay:.3s}
+.s-metric .card{animation-delay:.45s}
+
+.c-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+.c-title{font-weight:700;font-size:15px}
+.c-meta{font-size:13px;color:var(--ink-3);font-weight:500}
+.days{display:flex;gap:4px}
+.days span{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--ink-3)}
+.days .on{background:var(--teal);color:#fbf8f2}
+.appts{list-style:none;margin:0;padding:8px 10px 12px}
+.appt{display:grid;grid-template-columns:52px 4px minmax(0,1fr) auto;gap:12px;align-items:center;padding:9px 8px;border-radius:var(--r-sm);font-size:14px}
+.appt time{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:600;font-size:13px}
+.appt .bar{height:32px;border-radius:2px;background:var(--teal)}
+.appt .who{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.appt .who small{display:block;font-weight:500;color:var(--ink-3);font-size:12px}
+.appt .tag{font-size:12px;font-weight:600;color:var(--ink-2);background:var(--sunk);border-radius:var(--r-pill);padding:3px 10px}
+.appt.new{background:var(--butter-soft)}
+.appt.new .bar{background:#d9a92b}
+.appt.new .tag{background:var(--butter);color:#4a3a06}
+
+.msg{padding:16px 18px 18px;display:grid;gap:10px}
+.msg-top{display:flex;align-items:center;gap:10px}
+.av{width:34px;height:34px;border-radius:50%;background:var(--butter);display:grid;place-items:center;font-weight:700;font-size:13px}
+.msg-top div{font-size:14px;font-weight:700;line-height:1.2}
+.msg-top small{display:block;font-weight:500;color:var(--ink-3);font-size:12px}
+.bub{font-size:14px;line-height:1.45;padding:10px 13px;border-radius:14px;max-width:88%}
+.bub.out{background:var(--teal);color:#fbf8f2;border-bottom-left-radius:4px}
+.bub.in{background:var(--sunk);justify-self:end;border-bottom-right-radius:4px;font-weight:700}
+.ok{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--teal);justify-self:end}
+
+.metric{padding:16px 18px 18px}
+.metric .c-meta{display:block}
+.big{display:flex;align-items:baseline;gap:8px;margin-top:4px}
+.big b{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.delta{font-size:13px;font-weight:700;color:var(--teal);background:var(--teal-soft);padding:2px 8px;border-radius:var(--r-pill)}
+.bars{display:flex;align-items:flex-end;gap:6px;height:56px;margin-top:14px}
+.bars i{flex:1;background:var(--teal-soft);border-radius:4px 4px 2px 2px}
+.bars i.hi{background:var(--teal)}
+.bars-x{display:flex;gap:6px;margin-top:6px;font-size:11px;color:var(--ink-3);font-weight:600}
+.bars-x span{flex:1;text-align:center}
+
+@media (max-width:1100px){
+  .nav,.hero{padding-left:40px;padding-right:40px}
+  .links{gap:20px}
+  h1{font-size:52px}
+  .sub{font-size:17px}
+}
+@media (max-width:900px){
+  .links{display:none}
+  .hero{grid-template-columns:minmax(0,1fr);gap:40px;padding-top:32px}
+  h1{max-width:14ch}
+  .stage{max-width:560px;width:100%;margin:0 auto}
+}
+@media (max-width:640px){
+  .nav{padding:0 20px;height:64px}
+  .nav-r .signin{display:none}
+  .hero{padding:16px 20px 40px;gap:36px}
+  h1{font-size:40px;letter-spacing:-.03em}
+  .sub{font-size:16px;margin-top:16px}
+  .ctas{margin-top:24px}
+  .ctas .btn{flex:1 1 100%;justify-content:center}
+  .trust{margin-top:24px;font-size:14px}
+  .stage{height:600px}
+  .s-sched{width:92%;top:0}
+  .s-msg{width:80%;top:250px}
+  .s-metric{width:58%;left:0;top:430px}
+  .appt{grid-template-columns:44px 4px minmax(0,1fr);gap:10px}
+  .appt .tag{display:none}
+  .days span:nth-child(n+4){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .card{animation:none;opacity:1;transform:none}
+  .slot{transition:none}
+  .btn{transition:none}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="#" aria-label="Tendwell home"><i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f6d97a" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12.5 10 17l9-10"/></svg></i>Tendwell</a>
+  <nav aria-label="Primary"><ul class="links">
+    <li><a href="#">Scheduling</a></li><li><a href="#">Reminders</a></li><li><a href="#">Waitlist</a></li><li><a href="#">Pricing</a></li><li><a href="#">Customers</a></li>
+  </ul></nav>
+  <div class="nav-r"><a class="signin" href="#">Sign in</a><a class="btn btn-p btn-sm" href="#">Book a demo</a></div>
+</header>
+
+<main class="hero">
+  <div class="copy">
+    <span class="pill"><b>New</b>Waitlist autofill for group practices</span>
+    <h1>Every open slot, <mark>filled</mark> by morning.</h1>
+    <p class="sub">Tendwell texts your waitlist the moment someone cancels, books the first yes, and moves the rest of the day around it. Your front desk stops playing phone tag.</p>
+    <div class="ctas">
+      <a class="btn btn-p" href="#">Start free for 30 days
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-s" href="#">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l5.5-3.5z" fill="currentColor"/></svg>
+        Watch the 3-minute tour</a>
+    </div>
+    <p class="trust">
+      <span class="faces" aria-hidden="true"><span style="background:#f6d97a">BH</span><span style="background:#cfe3e0">NP</span><span style="background:#f1d3c2">AO</span><span style="background:#e3dccb">+</span></span>
+      <span><strong>Used by 2,400 clinics</strong> across 11 countries</span>
+    </p>
+  </div>
+
+  <div class="stage" id="stage" aria-label="Product preview: schedule, patient message and weekly fill rate" role="img">
+    <div class="slot s-sched" data-depth="2"><div class="card">
+      <div class="c-head">
+        <div><div class="c-title">Thursday, 8 Oct</div><div class="c-meta">Dr. Ama Osei · Room 2</div></div>
+        <div class="days" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span class="on">T</span><span>F</span></div>
+      </div>
+      <ul class="appts">
+        <li class="appt"><time>09:00</time><i class="bar"></i><span class="who">Ruth Mbeki<small>Check-up, 30 min</small></span><span class="tag">Arrived</span></li>
+        <li class="appt"><time>09:45</time><i class="bar"></i><span class="who">Tomás Ferreira<small>Physio follow-up</small></span><span class="tag">Confirmed</span></li>
+        <li class="appt new"><time>10:30</time><i class="bar"></i><span class="who">Priya Raman<small>Moved up from waitlist</small></span><span class="tag">Autofilled</span></li>
+        <li class="appt"><time>11:15</time><i class="bar"></i><span class="who">Jonah Albers<small>New patient, 45 min</small></span><span class="tag">Confirmed</span></li>
+      </ul>
+    </div></div>
+
+    <div class="slot s-msg" data-depth="4"><div class="card msg">
+      <div class="msg-top"><span class="av">PR</span><div>Priya Raman<small>SMS · 10:29</small></div></div>
+      <p class="bub out" style="margin:0">Hi Priya, a 10:30 slot opened with Dr. Osei tomorrow. Reply YES to take it.</p>
+      <p class="bub in" style="margin:0">YES</p>
+      <span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17l9-10"/></svg>Booked in 41 seconds</span>
+    </div></div>
+
+    <div class="slot s-metric" data-depth="6"><div class="card metric">
+      <span class="c-meta">Chairs filled this week</span>
+      <div class="big"><b>96%</b><span class="delta">+14 pts</span></div>
+      <div class="bars" aria-hidden="true"><i style="height:62%"></i><i style="height:74%"></i><i style="height:70%"></i><i style="height:88%"></i><i class="hi" style="height:96%"></i><i style="height:40%"></i></div>
+      <div class="bars-x" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+    </div></div>
+  </div>
+</main>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const slots = [...stage.querySelectorAll('.slot')];
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let raf = 0, nx = 0, ny = 0;
+  const apply = () => {
+    raf = 0;
+    for (const s of slots) {
+      const d = +s.dataset.depth;
+      s.style.transform = `translate3d(${(nx * d).toFixed(2)}px,${(ny * d).toFixed(2)}px,0)`;
+    }
+  };
+  addEventListener('pointermove', e => {
+    nx = Math.max(-1, Math.min(1, e.clientX / innerWidth * 2 - 1));
+    ny = Math.max(-1, Math.min(1, e.clientY / innerHeight * 2 - 1));
+    if (!raf) raf = requestAnimationFrame(apply);
+  });
+  document.addEventListener('pointerleave', () => { nx = ny = 0; if (!raf) raf = requestAnimationFrame(apply); });
+  document.addEventListener('click', e => { if (e.target.closest('a[href="#"]')) e.preventDefault(); });
+})();
+</script>
+</body>
+</html>

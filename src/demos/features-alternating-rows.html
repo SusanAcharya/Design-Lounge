@@ -1,0 +1,231 @@
+<!-- Design Lounge piece: features-alternating-rows · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ferrous — Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e8e8e5;--panel:#f5f5f2;--ink:#111111;--ink-2:#45453f;--ink-3:#6b6b64;--line:#bdbdb6;--rule:#111111;
+  --signal:#ff5b1a;--signal-ink:#a83300;--focus:#ff5b1a;
+  --cond:"Barlow Condensed","Arial Narrow",sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:2px;--expo:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font:500 19px/1.4 var(--cond);color:var(--ink);background:var(--bg);overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+svg{display:block}
+.sec{max-width:1280px;margin:0 auto;padding:56px 80px 24px}
+.mono{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+
+.head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:40px;align-items:end;padding-bottom:28px;border-bottom:2px solid var(--rule)}
+.head .mono{color:var(--ink-2);margin:0 0 14px;display:flex;gap:10px;align-items:center}
+.sq{width:10px;height:10px;background:var(--signal);display:inline-block}
+h2{font-size:72px;line-height:.92;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;margin:0}
+.head-r{text-align:right;color:var(--ink-2);line-height:1.7}
+
+.row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:72px;align-items:center;padding:56px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row.flip .txt{order:2}
+.eb{display:flex;align-items:center;gap:12px;color:var(--ink-2)}
+.eb b{font-weight:700;color:var(--ink);background:var(--panel);border:1px solid var(--ink);padding:3px 7px;border-radius:var(--r)}
+h3{font-size:44px;line-height:.98;font-weight:700;text-transform:uppercase;margin:18px 0 0;letter-spacing:-.005em}
+.txt p{margin:16px 0 0;color:var(--ink-2);max-width:34ch;font-size:20px}
+.checks{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px}
+.checks li{position:relative;padding-left:30px;font-size:18px;font-weight:600}
+.checks li::before{content:"";position:absolute;left:0;top:50%;width:18px;height:18px;margin-top:-9px;background:var(--ink);border-radius:var(--r)}
+.checks li::after{content:"";position:absolute;left:6px;top:50%;width:5px;height:9px;margin-top:-7px;border:solid var(--signal);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.more{display:inline-flex;align-items:center;gap:8px;margin-top:26px;min-height:40px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-bottom:2px solid var(--signal);padding-top:4px}
+.more svg{transition:transform .16s var(--ease)}
+.more:hover svg{transform:translateX(4px)}
+
+.ill{background:var(--panel);border:1px solid var(--ink);border-radius:var(--r);overflow:hidden}
+.js .ill{opacity:0;transform:translateX(24px);transition:opacity .7s var(--expo),transform .7s var(--expo)}
+.js .flip .ill{transform:translateX(-24px)}
+.js .ill.in{opacity:1;transform:none}
+.bar{display:flex;justify-content:space-between;gap:16px;padding:10px 14px;border-bottom:1px solid var(--ink);background:var(--ink);color:var(--panel)}
+.bar span:last-child{color:#c9c9c2}
+.live{display:inline-flex;align-items:center;gap:8px}
+.live::before{content:"";width:8px;height:8px;background:var(--signal)}
+.foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--ink)}
+.foot div{padding:10px 14px}
+.foot div + div{border-left:1px solid var(--line)}
+.foot .mono{color:var(--ink-3);display:block;font-size:11px}
+.foot b{font-family:var(--mono);font-size:20px;font-weight:700;letter-spacing:-.02em}
+.foot .hot b{color:var(--signal-ink)}
+.wave{padding:8px 10px 4px}
+.wave svg{width:100%;height:auto}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:14px}
+.m{border:1px solid var(--ink);border-radius:var(--r);padding:9px 10px 10px;font-family:var(--mono);font-size:11px;background:#fff}
+.m .id{display:flex;justify-content:space-between;font-weight:700;font-size:12px}
+.m .st{margin-top:12px;letter-spacing:.06em}
+.m .u{height:4px;background:#dcdcd6;margin-top:6px}
+.m .u i{display:block;height:100%;background:var(--ink)}
+.m.idle{background:var(--panel);color:var(--ink-3);border-color:var(--line)}
+.m.idle .u i{background:var(--ink-3)}
+.m.alarm{background:var(--signal);border-color:var(--signal);color:var(--ink)}
+.m.alarm .u{background:rgba(17,17,17,.2)}
+.tools{display:grid;grid-template-columns:minmax(0,1fr) 172px}
+.tl{list-style:none;margin:0;padding:10px 14px;font-family:var(--mono);font-size:12px}
+.tl li{display:grid;grid-template-columns:34px minmax(0,1fr) 90px 40px;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--line)}
+.tl li:last-child{border-bottom:0}
+.tl .nm{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl .tr{height:8px;background:#dcdcd6;position:relative}
+.tl .tr i{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.tl .tr::after{content:"";position:absolute;left:85%;top:-3px;bottom:-3px;width:1px;background:var(--ink)}
+.tl .hot .tr i{background:var(--signal)}
+.tl .hot{font-weight:700}
+.tl .pc{text-align:right}
+.read{border-left:1px solid var(--ink);padding:14px;display:flex;flex-direction:column;justify-content:space-between;background:#fff}
+.read .big{font-size:76px;font-weight:700;line-height:.85;letter-spacing:-.02em}
+.read .big small{font-size:32px}
+.read p{margin:8px 0 0;font-size:16px;line-height:1.25}
+
+@media (max-width:1100px){
+  .sec{padding:48px 48px 24px}
+  .row{gap:48px}
+  h2{font-size:60px}
+  h3{font-size:38px}
+}
+@media (max-width:820px){
+  .row,.row.flip{grid-template-columns:minmax(0,1fr);gap:32px;padding:48px 0}
+  .row.flip .txt{order:0}
+  .js .ill,.js .flip .ill{transform:translateY(24px)}
+  .head{grid-template-columns:minmax(0,1fr)}
+  .head-r{text-align:left}
+}
+@media (max-width:640px){
+  .sec{padding:32px 20px 16px}
+  h2{font-size:44px}
+  h3{font-size:34px}
+  .txt p{font-size:18px}
+  .head .head-r{display:none}
+  .board{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .board .m:nth-child(n+10){display:none}
+  .tools{grid-template-columns:minmax(0,1fr)}
+  .read{border-left:0;border-top:1px solid var(--ink);gap:10px}
+  .read .big{font-size:56px}
+  .tl li{grid-template-columns:30px minmax(0,1fr) 60px 36px;gap:8px}
+  .bar span:last-child{display:none}
+  .foot b{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  .js .ill,.js .flip .ill{opacity:1;transform:none;transition:none}
+  .more svg{transition:none}
+}
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<main class="sec">
+  <header class="head">
+    <div>
+      <p class="mono"><span class="sq" aria-hidden="true"></span>Ferrous platform / 03 modules</p>
+      <h2>Your machines already know.<br>Now you will.</h2>
+    </div>
+    <p class="mono head-r">Fig. 01–03<br>Live data, Plant 4, Floor B</p>
+  </header>
+
+  <section class="row" aria-labelledby="h-1">
+    <div class="txt">
+      <div class="eb mono"><b>01</b>Spindle health</div>
+      <h3 id="h-1">Hear a bearing fail three weeks early.</h3>
+      <p>A clip-on sensor listens to every spindle. Ferrous flags the drift long before the scrap pile does.</p>
+      <ul class="checks">
+        <li>Vibration sampled at 25.6 kHz</li>
+        <li>Alert limits tuned per machine, not per fleet</li>
+        <li>Fits 40 controller families in under an hour</li>
+      </ul>
+      <a class="more" href="#">Read the sensor spec<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <figure class="ill" style="margin:0" aria-label="Spindle vibration chart for SP-04 crossing its alert limit">
+      <div class="bar mono"><span class="live">SP-04 · VMC-2 · vibration RMS</span><span>Last 30 days</span></div>
+      <div class="wave"><svg viewBox="0 0 600 250" aria-hidden="true">
+        <g stroke="#d4d4cd" stroke-width="1"><path d="M0 50h600M0 100h600M0 150h600M0 200h600"/><path d="M100 0v232M200 0v232M300 0v232M400 0v232M500 0v232"/></g>
+        <path d="M0 74h600" stroke="#ff5b1a" stroke-width="2" stroke-dasharray="8 6"/>
+        <text x="6" y="66" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#a83300">ALERT 4.5 MM/S</text>
+        <path id="wv" fill="none" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/>
+        <g transform="translate(468 58)"><circle r="7" fill="none" stroke="#ff5b1a" stroke-width="2"/><circle r="2.5" fill="#111"/></g>
+        <g transform="translate(330 14)"><rect width="122" height="24" fill="#111" rx="2"/><text x="61" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#f5f5f2">+21 DAYS WARNING</text></g>
+        <g font-family="JetBrains Mono" font-size="10" fill="#6b6b64"><text x="0" y="246">SEP 03</text><text x="290" y="246">SEP 18</text><text x="556" y="246">OCT 03</text></g>
+      </svg></div>
+      <div class="foot"><div><span class="mono">RMS now</span><b>2.8</b></div><div class="hot"><span class="mono">Peak 24 h</span><b>4.9</b></div><div><span class="mono">Bearing temp</span><b>41 °C</b></div></div>
+    </figure>
+  </section>
+
+  <section class="row flip" aria-labelledby="h-2">
+    <div class="txt">
+      <div class="eb mono"><b>02</b>Shift board</div>
+      <h3 id="h-2">One board for every machine on the floor.</h3>
+      <p>Run, idle and alarm states for the whole floor, on the screen by the coffee machine and in your pocket.</p>
+      <ul class="checks">
+        <li>Updates every 2 seconds</li>
+        <li>Idle reasons logged in two taps</li>
+        <li>OEE per shift, per cell, per part number</li>
+      </ul>
+      <a class="more" href="#">See a live floor<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <figure class="ill" style="margin:0" aria-label="Shift board with 12 machines, one in alarm">
+      <div class="bar mono"><span class="live">Floor B · Shift 2</span><span>14:20:06</span></div>
+      <div class="board" id="board"></div>
+      <div class="foot"><div><span class="mono">OEE shift</span><b>78.4%</b></div><div><span class="mono">Running</span><b>9 / 12</b></div><div class="hot"><span class="mono">Alarms</span><b>1</b></div></div>
+    </figure>
+  </section>
+
+  <section class="row" aria-labelledby="h-3">
+    <div class="txt">
+      <div class="eb mono"><b>03</b>Tool life</div>
+      <h3 id="h-3">Change tools on data, not on a calendar.</h3>
+      <p>Ferrous counts real cutting time for every pocket in the magazine and tells the operator what to swap next.</p>
+      <ul class="checks">
+        <li>Wear tracked from spindle load</li>
+        <li>Change limit set at 85% by default</li>
+        <li>Saves 18% on carbide in the first year</li>
+      </ul>
+      <a class="more" href="#">How we measure wear<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <figure class="ill" style="margin:0" aria-label="Tool wear for eight tools, T07 at 92 percent">
+      <div class="bar mono"><span class="live">Magazine · HMC-1</span><span>Limit 85%</span></div>
+      <div class="tools">
+        <ul class="tl" id="tl"></ul>
+        <div class="read"><span class="mono">Change next</span><div><div class="big">T07<br>92<small>%</small></div><p>Ø10 drill. Swap at the end of this cycle, 6 min.</p></div></div>
+      </div>
+    </figure>
+  </section>
+</main>
+
+<script>
+(() => {
+  let d = 'M0 190', s = 7;
+  const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  for (let x = 6; x <= 600; x += 6) {
+    const base = 196 - Math.pow(x / 600, 3) * 90;
+    const y = x === 468 ? 58 : base - rnd() * 26 + (rnd() > .9 ? -12 : 0);
+    d += 'L' + x + ' ' + y.toFixed(1);
+  }
+  document.getElementById('wv').setAttribute('d', d);
+
+  const ms = [['M-01','run',86],['M-02','run',92],['M-03','idle',12],['M-04','run',74],['M-05','alarm',41],['M-06','run',88],['M-07','run',69],['M-08','idle',8],['M-09','run',95],['M-10','run',81],['M-11','idle',22],['M-12','run',77]];
+  document.getElementById('board').innerHTML = ms.map(([id, st, u]) =>
+    `<div class="m ${st}"><div class="id"><span>${id}</span><span>${u}%</span></div><div class="st">${st.toUpperCase()}</div><div class="u"><i style="width:${u}%"></i></div></div>`).join('');
+
+  const ts = [['T01','Ø12 end mill',54],['T02','Ø6 ball nose',31],['T03','Face mill 50',67],['T04','M8 tap',22],['T05','Ø8 spot drill',48],['T06','Chamfer 90°',12],['T07','Ø10 drill',92],['T08','Ø20 rougher',73]];
+  document.getElementById('tl').innerHTML = ts.map(([t, n, p]) =>
+    `<li class="${p > 85 ? 'hot' : ''}"><span>${t}</span><span class="nm">${n}</span><span class="tr"><i style="width:${p}%"></i></span><span class="pc">${p}%</span></li>`).join('');
+
+  const ills = document.querySelectorAll('.ill');
+  if (!('IntersectionObserver' in window)) { ills.forEach(i => i.classList.add('in')); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: .25, rootMargin: '0px 0px -40px 0px' });
+  ills.forEach(i => io.observe(i));
+  document.addEventListener('click', e => { if (e.target.closest('a[href="#"]')) e.preventDefault(); });
+})();
+</script>
+</body>
+</html>

@@ -234,7 +234,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'the-lounge',
     shelf: 'website-in-parts',
     categories: ['hero', 'navbar', 'features', 'pricing', 'testimonials', 'faq', 'contact', 'footer'],
-    pieces: ['hero-asymmetric-type-lockup', 'navbar-island-morph', 'features-tabbed-preview', 'testimonials-quote-carousel', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'navbar-hide-on-scroll', 'hamburger-circle-reveal'],
+    pieces: ['hero-asymmetric-type-lockup', 'navbar-island-morph', 'features-tabbed-preview', 'testimonials-quote-carousel', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'navbar-hide-on-scroll', 'hamburger-circle-reveal', 'features-alternating-rows', 'testimonials-masonry-wall', 'stats-count-up-band', 'cta-giant-email-band', 'footer-sitemap-columns'],
   },
   {
     id: 'saas',
@@ -247,7 +247,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'friendly-saas',
     shelf: 'website-in-parts',
     categories: ['landing', 'hero', 'features', 'pricing', 'faq'],
-    pieces: ['landing-devtool-dark', 'hero-product-window-tilt', 'features-tabbed-preview', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'integrations-connect', 'mega-menu-product-grid', 'navbar-hide-on-scroll', 'hamburger-circle-reveal'],
+    pieces: ['landing-devtool-dark', 'hero-product-window-tilt', 'features-tabbed-preview', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'integrations-connect', 'mega-menu-product-grid', 'navbar-hide-on-scroll', 'hamburger-circle-reveal', 'hero-split-ui-stack', 'testimonials-metric-tabs', 'logos-grid-case-hover', 'pricing-usage-slider', 'faq-category-accordion', 'footer-sitemap-columns'],
   },
   {
     id: 'portfolio',
@@ -273,7 +273,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'indie-maker',
     shelf: 'portfolio-sites',
     categories: ['portfolio', 'features', 'hero', 'scroll'],
-    pieces: ['hero-product-window-tilt', 'bento-feature-grid', 'stacking-cards-scroll', 'portfolio-case-study-long', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'navbar-vertical-rail', 'hamburger-circle-reveal', 'card-article-mix'],
+    pieces: ['hero-product-window-tilt', 'bento-feature-grid', 'stacking-cards-scroll', 'portfolio-case-study-long', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'navbar-vertical-rail', 'hamburger-circle-reveal', 'card-article-mix', 'contact-project-brief-steps'],
   },
   {
     id: 'fintech',
@@ -286,7 +286,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'friendly-saas',
     shelf: 'landing-pages',
     categories: ['landing', 'pricing', 'charts', 'auth'],
-    pieces: ['landing-fintech-light', 'swiss-grid-pricing', 'pricing-comparison-sticky', 'charts-kpi-spark-row', 'kpi-delta', 'split-sign-in', 'mega-menu-product-grid', 'navbar-hide-on-scroll'],
+    pieces: ['landing-fintech-light', 'swiss-grid-pricing', 'pricing-comparison-sticky', 'charts-kpi-spark-row', 'kpi-delta', 'split-sign-in', 'mega-menu-product-grid', 'navbar-hide-on-scroll', 'stats-count-up-band', 'testimonials-metric-tabs', 'faq-category-accordion'],
   },
   {
     id: 'fashion',
@@ -312,7 +312,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'garden-journal',
     shelf: 'first-impressions',
     categories: ['ecommerce', 'contact', 'utility'],
-    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'week-schedule', 'contact-booking-hours', 'card-product-quick-add', 'mobile-web-bottom-nav', 'navbar-split-centered-logo'],
+    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'week-schedule', 'contact-booking-hours', 'card-product-quick-add', 'mobile-web-bottom-nav', 'navbar-split-centered-logo', 'testimonials-masonry-wall'],
   },
   {
     id: 'wellness',
@@ -325,7 +325,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'garden-journal',
     shelf: 'landing-pages',
     categories: ['landing', 'contact', 'newsletter'],
-    pieces: ['landing-wellness-retreat', 'contact-booking-hours', 'calendar-month', 'newsletter-fold-inline', 'navbar-split-centered-logo', 'mobile-web-bottom-nav'],
+    pieces: ['landing-wellness-retreat', 'contact-booking-hours', 'calendar-month', 'newsletter-fold-inline', 'navbar-split-centered-logo', 'mobile-web-bottom-nav', 'testimonials-masonry-wall', 'faq-category-accordion'],
   },
   {
     id: 'hotel',
@@ -338,7 +338,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'maison',
     shelf: 'landing-pages',
     categories: ['contact', 'gallery', 'pickers'],
-    pieces: ['contact-booking-hours', 'contact-split-map-form', 'gallery-contact-sheet', 'calendar-month', 'masonry-gallery-captions', 'navbar-split-centered-logo', 'hamburger-drawer-accordion'],
+    pieces: ['contact-booking-hours', 'contact-split-map-form', 'gallery-contact-sheet', 'calendar-month', 'masonry-gallery-captions', 'navbar-split-centered-logo', 'hamburger-drawer-accordion', 'hero-search-marketplace'],
   },
   {
     id: 'agency',
@@ -351,7 +351,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'brutal-grotesk',
     shelf: 'portfolio-sites',
     categories: ['landing', 'portfolio', 'team'],
-    pieces: ['landing-agency-case-wall', 'brutalist-studio-home', 'team-hover-portrait-grid', 'portfolio-case-study-long', 'careers-role-list', 'navbar-vertical-rail', 'hamburger-circle-reveal'],
+    pieces: ['landing-agency-case-wall', 'brutalist-studio-home', 'team-hover-portrait-grid', 'portfolio-case-study-long', 'careers-role-list', 'navbar-vertical-rail', 'hamburger-circle-reveal', 'contact-project-brief-steps', 'logos-grid-case-hover', 'testimonials-masonry-wall'],
   },
   {
     id: 'docs',
@@ -364,7 +364,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'developer-docs',
     shelf: 'typography-first',
     categories: ['reading', 'navigation', 'utility'],
-    pieces: ['docs-three-column', 'code-snippet-tabs', 'command-palette', 'search-results-filters', 'tree-nav', 'sidebar-docs-toc', 'navbar-hide-on-scroll'],
+    pieces: ['docs-three-column', 'code-snippet-tabs', 'command-palette', 'search-results-filters', 'tree-nav', 'sidebar-docs-toc', 'navbar-hide-on-scroll', 'faq-category-accordion'],
   },
   {
     id: 'music',
@@ -403,7 +403,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'poster-condensed',
     shelf: 'first-impressions',
     categories: ['utility', 'text-motion', 'stats', 'cta'],
-    pieces: ['week-schedule', 'split-flap-board', 'kinetic-type-marquee', 'stats-ticker-band', 'cta-split-dark-band', 'card-holo-foil', 'mobile-web-bottom-nav'],
+    pieces: ['week-schedule', 'split-flap-board', 'kinetic-type-marquee', 'stats-ticker-band', 'cta-split-dark-band', 'card-holo-foil', 'mobile-web-bottom-nav', 'stats-count-up-band', 'faq-category-accordion'],
   },
   {
     id: 'museum',
@@ -429,7 +429,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'maison',
     shelf: 'landing-pages',
     categories: ['landing', 'hero', 'cta'],
-    pieces: ['landing-fashion-atelier', 'landing-wellness-retreat', 'landing-fintech-light', 'landing-devtool-dark', 'landing-agency-case-wall', 'editorial-landing-hero'],
+    pieces: ['landing-fashion-atelier', 'landing-wellness-retreat', 'landing-fintech-light', 'landing-devtool-dark', 'landing-agency-case-wall', 'editorial-landing-hero', 'hero-split-ui-stack', 'cta-giant-email-band', 'stats-count-up-band'],
   },
   {
     id: 'mobile-app',
@@ -481,7 +481,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'atelier',
     shelf: 'first-impressions',
     categories: ['ecommerce', 'pricing', 'cta'],
-    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'luxe-product-detail', 'select-field', 'card-product-quick-add', 'hamburger-drawer-accordion', 'mega-menu-product-grid'],
+    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'luxe-product-detail', 'select-field', 'card-product-quick-add', 'hamburger-drawer-accordion', 'mega-menu-product-grid', 'faq-category-accordion', 'footer-sitemap-columns'],
   },
   {
     id: 'tablet',

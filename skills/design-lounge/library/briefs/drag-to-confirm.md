@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 186 · "Drag to confirm" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 188 · "Drag to confirm" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Drag to confirm
 

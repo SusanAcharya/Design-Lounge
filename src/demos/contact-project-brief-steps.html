@@ -1,0 +1,387 @@
+<!-- Design Lounge piece: contact-project-brief-steps · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Okaro Studio · Start a project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=Big+Shoulders+Display:wght@800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2e8d5;--card:#fbf5ea;--ink:#141210;--ink-2:#4a443c;--line:#141210;
+  --accent:#e5432a;--accent-ink:#141210;--error:#a8240f;
+  --display:"Big Shoulders Display",Impact,sans-serif;--sans:"Archivo",system-ui,sans-serif;
+  --b:2px;--ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);--fast:140ms;--layout:300ms;
+}
+*{box-sizing:border-box;border-radius:0}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 var(--sans);overflow-x:hidden}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{min-height:100%;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;padding:40px 56px}
+aside{display:flex;flex-direction:column}
+.mark{font:700 13px var(--sans);letter-spacing:.14em;text-transform:uppercase}
+.mark i{font-style:normal;color:var(--accent)}
+h1{margin:40px 0 0;font:900 136px/.84 var(--display);text-transform:uppercase;letter-spacing:-.01em}
+h1 span{display:block;color:var(--accent)}
+.steps{list-style:none;margin:auto 0 0;padding:0;border-top:var(--b) solid var(--line)}
+.steps li{display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:var(--b) solid var(--line);font:800 22px/1 var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--ink-2)}
+.steps b{display:inline-grid;place-items:center;width:34px;height:34px;border:var(--b) solid var(--line);font:700 13px var(--sans);transition:background var(--fast) var(--ease)}
+.steps li.done b{background:var(--ink);color:var(--card)}
+.steps li.now{color:var(--ink)}
+.steps li.now b{background:var(--accent)}
+.contact{margin:16px 0 0;font-size:13px;color:var(--ink-2)}
+.card{display:flex;flex-direction:column;background:var(--card);border:var(--b) solid var(--line);box-shadow:8px 8px 0 var(--ink);min-height:0}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 28px;border-bottom:var(--b) solid var(--line)}
+.label{margin:0;font:700 13px var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.prog{display:grid;grid-template-columns:repeat(4,40px);gap:6px}
+.prog i{height:12px;border:var(--b) solid var(--line);background:transparent;transition:background var(--layout) var(--ease)}
+.prog i.on{background:var(--ink)}
+.prog i.now{background:var(--accent)}
+form{flex:1;display:flex;flex-direction:column}
+form[hidden]{display:none}
+.step{flex:1;padding:28px 28px 8px;animation:in var(--layout) var(--expo)}
+.step[hidden]{display:none}
+@keyframes in{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+fieldset{margin:0;padding:0;border:0;min-width:0}
+legend{padding:0;margin:0}
+h2{margin:0;font:900 64px/.9 var(--display);text-transform:uppercase;letter-spacing:-.005em}
+h2:focus{outline:none}
+.hint{margin:10px 0 22px;color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{position:relative}
+.chip input,.seg input,.rc input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chip span{display:inline-flex;align-items:center;gap:8px;height:56px;padding:0 22px;font-size:16px;border:var(--b) solid var(--line);font-weight:500;cursor:pointer;transition:background var(--fast) var(--ease),transform var(--fast) var(--ease)}
+.chip span svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;display:none}
+.chip input:checked+span{background:var(--accent);font-weight:700}
+.chip input:checked+span svg{display:block}
+.chip:hover span,.seg label:hover,.rc:hover{background:#efe3cc}
+.chip input:checked:hover+span{background:var(--accent)}
+.chip input:focus-visible+span,.seg input:focus-visible+span,.rc input:focus-visible~*{outline:3px solid var(--accent);outline-offset:2px}
+.chip input:active+span{transform:translate(2px,2px)}
+.seg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:var(--b) solid var(--line)}
+.seg label{position:relative;display:block;cursor:pointer}
+.seg label+label{border-left:var(--b) solid var(--line)}
+.seg span{display:grid;place-items:center;height:64px;font:800 24px var(--display);letter-spacing:.02em}
+.seg input:checked+span{background:var(--ink);color:var(--card)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rc{position:relative;display:grid;grid-template-columns:24px minmax(0,1fr);gap:4px 14px;padding:16px 18px;border:var(--b) solid var(--line);cursor:pointer}
+.rc .dot{grid-row:span 2;width:24px;height:24px;border:var(--b) solid var(--line);display:grid;place-items:center}
+.rc .dot::after{content:"";width:10px;height:10px;background:var(--ink);transform:scale(0);transition:transform var(--fast) var(--ease)}
+.rc strong{font:800 26px/1 var(--display);text-transform:uppercase}
+.rc small{font-size:13px;color:var(--ink-2)}
+.rc:has(input:checked){background:var(--accent)}
+.rc:has(input:checked) small{color:var(--ink)}
+.rc input:checked~.dot::after{transform:scale(1)}
+.err{display:none;align-items:center;gap:8px;margin:14px 0 0;font-weight:700;font-size:14px;color:var(--error)}
+.err.show{display:flex}
+.err svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.25;flex-shrink:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+.f{display:grid;gap:6px;min-width:0}
+.f.full{grid-column:1/-1}
+.f label{font:700 12px var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.f label em{font-style:normal;font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink-2)}
+.f input,.f textarea{width:100%;min-width:0;height:46px;padding:0 14px;background:#fff;border:var(--b) solid var(--line);transition:box-shadow var(--fast) var(--ease)}
+.f textarea{height:96px;padding:10px 14px;resize:vertical;line-height:1.45}
+.f input:focus-visible,.f textarea:focus-visible{outline:none;box-shadow:4px 4px 0 var(--accent)}
+.f [aria-invalid="true"]{border-color:var(--error);box-shadow:4px 4px 0 var(--error)}
+.f .err{margin:0;font-size:13px}
+.count{font-size:12px;color:var(--ink-2);justify-self:end;margin-top:-2px}
+.review{margin:0;border-top:var(--b) solid var(--line)}
+.review div{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:12px 0;border-bottom:var(--b) solid var(--line)}
+.review dt{font:700 12px var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.review dd{margin:0;font-weight:500;overflow-wrap:anywhere}
+.edit{background:none;border:0;padding:6px 0;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:40px}
+.edit:hover{color:var(--accent)}
+.nav{display:flex;justify-content:space-between;gap:12px;padding:16px 28px 22px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border:var(--b) solid var(--line);background:transparent;font:800 22px var(--display);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;transition:transform var(--fast) var(--ease),box-shadow var(--fast) var(--ease),background var(--fast) var(--ease)}
+.btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.5}
+.btn.go{background:var(--ink);color:var(--card);box-shadow:4px 4px 0 var(--accent)}
+.btn.go:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--accent)}
+.btn.go:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--accent)}
+.btn:not(.go):hover{background:#efe3cc}
+.btn[hidden]{display:none}
+.btn.go[aria-busy="true"]{opacity:.7;cursor:progress}
+.sent{flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px}
+.sent[hidden]{display:none}
+.sent h2{font-size:104px}
+.sent h2 span{color:var(--accent)}
+.sent .big{margin:18px 0 0;font:800 30px/1.1 var(--display);text-transform:uppercase}
+.sent .ref{margin:8px 0 28px;color:var(--ink-2)}
+.sent ol{margin:0 0 28px;padding:0;list-style:none;border-top:var(--b) solid var(--line)}
+.sent li{padding:10px 0;border-bottom:var(--b) solid var(--line)}
+.sent li b{display:inline-block;width:36px}
+@media (max-width:1100px){h1{font-size:104px}.wrap{padding:32px 40px;gap:36px}}
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr)}
+  h1{font-size:96px;margin-top:20px}
+  .steps{display:none}
+  .contact{margin-top:12px}
+}
+@media (max-width:639px){
+  .wrap{padding:20px 16px 32px;gap:24px;align-content:start}
+  .chip span{height:48px;padding:0 16px;font-size:15px}
+  h1{font-size:68px}
+  .bar{padding:12px 16px}
+  .prog{grid-template-columns:repeat(4,24px)}
+  .step{padding:22px 16px 4px}
+  h2{font-size:46px}
+  .seg{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .seg label+label{border-left:0}
+  .seg label{border-bottom:var(--b) solid var(--line)}
+  .seg label:nth-child(even){border-left:var(--b) solid var(--line)}
+  .seg label:last-child{grid-column:1/-1;border-bottom:0}
+  .seg span{height:56px}
+  .cards,.grid{grid-template-columns:minmax(0,1fr)}
+  .review div{grid-template-columns:minmax(0,1fr) auto;gap:4px 12px}
+  .review dd{grid-column:1;grid-row:2}
+  .review .edit{grid-row:1/3;grid-column:2}
+  .nav{padding:14px 16px 18px}
+  .btn{padding:0 18px}
+  .sent{padding:28px 16px}
+  .sent h2{font-size:64px}
+  .card{box-shadow:6px 6px 0 var(--ink)}
+}
+@media (prefers-reduced-motion:reduce){
+  .step{animation:none}
+  *,*::before,*::after{transition-duration:0ms!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside>
+    <div class="mark">Okaro<i>/</i>Studio</div>
+    <h1>Start a<span>project.</span></h1>
+    <ol class="steps" id="rail" aria-label="Brief steps">
+      <li><b>01</b>What you need</li>
+      <li><b>02</b>Budget</li>
+      <li><b>03</b>Timeline</li>
+      <li><b>04</b>About you</li>
+    </ol>
+    <p class="contact">Rather talk? Call Ines on 0113 496 0721, weekdays 9 to 6.</p>
+  </aside>
+
+  <section class="card" aria-labelledby="label">
+    <div class="bar">
+      <p class="label" id="label" aria-live="polite">Step 1 of 4</p>
+      <div class="prog" id="prog" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </div>
+
+    <form id="brief" novalidate>
+      <div class="step" data-step="1">
+        <fieldset aria-describedby="e-svc">
+          <legend><h2 tabindex="-1">What do you need?</h2></legend>
+          <p class="hint">Pick everything that applies. We often do two or three together.</p>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="svc" value="Brand identity" checked><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Brand identity</span></label>
+            <label class="chip"><input type="checkbox" name="svc" value="Website" checked><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Website</span></label>
+            <label class="chip"><input type="checkbox" name="svc" value="Product design"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Product design</span></label>
+            <label class="chip"><input type="checkbox" name="svc" value="Design system"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Design system</span></label>
+            <label class="chip"><input type="checkbox" name="svc" value="Motion"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Motion</span></label>
+            <label class="chip"><input type="checkbox" name="svc" value="Copywriting"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Copywriting</span></label>
+            <label class="chip"><input type="checkbox" name="svc" value="Illustration"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Illustration</span></label>
+            <label class="chip"><input type="checkbox" name="svc" value="Not sure yet"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Not sure yet</span></label>
+          </div>
+          <p class="err" id="e-svc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v6M12 17v.5"/><path d="M3 21h18L12 3z"/></svg><span></span></p>
+        </fieldset>
+      </div>
+
+      <div class="step" data-step="2" hidden>
+        <fieldset aria-describedby="e-budget">
+          <legend><h2 tabindex="-1">What is the budget?</h2></legend>
+          <p class="hint">A range is fine. It tells us which team to put on it, not what to charge.</p>
+          <div class="seg">
+            <label><input type="radio" name="budget" value="Under £15k"><span>Under £15k</span></label>
+            <label><input type="radio" name="budget" value="£15k to £30k"><span>£15–30k</span></label>
+            <label><input type="radio" name="budget" value="£30k to £60k"><span>£30–60k</span></label>
+            <label><input type="radio" name="budget" value="£60k to £120k"><span>£60–120k</span></label>
+            <label><input type="radio" name="budget" value="Over £120k"><span>£120k+</span></label>
+          </div>
+          <p class="err" id="e-budget"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v6M12 17v.5"/><path d="M3 21h18L12 3z"/></svg><span></span></p>
+        </fieldset>
+      </div>
+
+      <div class="step" data-step="3" hidden>
+        <fieldset aria-describedby="e-time">
+          <legend><h2 tabindex="-1">When should we start?</h2></legend>
+          <p class="hint">Most brand and web projects run 8 to 14 weeks once we start.</p>
+          <div class="cards">
+            <label class="rc"><input type="radio" name="time" value="As soon as possible"><span class="dot" aria-hidden="true"></span><strong>As soon as possible</strong><small>Start within 2 weeks</small></label>
+            <label class="rc"><input type="radio" name="time" value="Next month"><span class="dot" aria-hidden="true"></span><strong>Next month</strong><small>Start in 3 to 6 weeks</small></label>
+            <label class="rc"><input type="radio" name="time" value="This quarter"><span class="dot" aria-hidden="true"></span><strong>This quarter</strong><small>Start in 2 to 3 months</small></label>
+            <label class="rc"><input type="radio" name="time" value="Flexible"><span class="dot" aria-hidden="true"></span><strong>Flexible</strong><small>No fixed date yet</small></label>
+          </div>
+          <p class="err" id="e-time"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v6M12 17v.5"/><path d="M3 21h18L12 3z"/></svg><span></span></p>
+        </fieldset>
+      </div>
+
+      <div class="step" data-step="4" hidden>
+        <fieldset>
+          <legend><h2 tabindex="-1">Who are you?</h2></legend>
+          <p class="hint">Everything here stays with us. No newsletter.</p>
+          <div class="grid">
+            <div class="f"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required aria-describedby="e-name"><p class="err" id="e-name"><span></span></p></div>
+            <div class="f"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required aria-describedby="e-email"><p class="err" id="e-email"><span></span></p></div>
+            <div class="f full"><label for="company">Company <em>(optional)</em></label><input id="company" name="company" autocomplete="organization"></div>
+            <div class="f full"><label for="msg">Tell us about it</label><textarea id="msg" name="msg" required aria-describedby="msg-count e-msg" maxlength="800"></textarea><span class="count" id="msg-count">0 / 800 · at least 20 characters</span><p class="err" id="e-msg"><span></span></p></div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="step" data-step="5" hidden>
+        <h2 tabindex="-1">Check your brief.</h2>
+        <p class="hint">Edit anything before it lands in our inbox.</p>
+        <dl class="review" id="review"></dl>
+      </div>
+
+      <div class="nav" id="nav">
+        <button class="btn" type="button" id="back" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Back</button>
+        <button class="btn go" type="submit" id="next">Next<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </form>
+
+    <div class="sent" id="done" hidden>
+      <h2 tabindex="-1">Brief <span>received.</span></h2>
+      <p class="big">We reply within 1 working day.</p>
+      <p class="ref">Reference OK-2610-047. A copy is on its way to <b id="done-email"></b>.</p>
+      <ol>
+        <li><b>01</b>Ines reads it and checks who is free.</li>
+        <li><b>02</b>You get a reply with two times for a 30 minute call.</li>
+        <li><b>03</b>After the call, a written proposal within 5 working days.</li>
+      </ol>
+      <div><button class="btn" type="button" id="again">Start another brief</button></div>
+    </div>
+  </section>
+</div>
+<script>
+const form = document.getElementById('brief');
+const steps = [...form.querySelectorAll('.step')];
+const label = document.getElementById('label');
+const prog = [...document.querySelectorAll('#prog i')];
+const rail = [...document.querySelectorAll('#rail li')];
+const back = document.getElementById('back');
+const next = document.getElementById('next');
+const done = document.getElementById('done');
+const msg = document.getElementById('msg');
+const count = document.getElementById('msg-count');
+const NAMES = ['What you need', 'Budget', 'Timeline', 'About you'];
+let cur = 1;
+
+function show(n, focus = true) {
+  cur = n;
+  steps.forEach(s => { s.hidden = +s.dataset.step !== n; });
+  label.textContent = n <= 4 ? `Step ${n} of 4` : 'Review';
+  prog.forEach((p, i) => { p.className = i + 1 < n ? 'on' : i + 1 === n ? 'now' : ''; });
+  rail.forEach((r, i) => {
+    r.className = i + 1 < n ? 'done' : i + 1 === n ? 'now' : '';
+    if (i + 1 === n) r.setAttribute('aria-current', 'step'); else r.removeAttribute('aria-current');
+  });
+  back.hidden = n === 1;
+  next.firstChild.textContent = n === 4 ? 'Review' : n === 5 ? 'Send brief' : 'Next';
+  if (n === 5) buildReview();
+  if (focus) steps[n - 1].querySelector('h2').focus();
+}
+
+function setErr(id, text) {
+  const e = document.getElementById(id);
+  e.querySelector('span').textContent = text;
+  e.classList.toggle('show', !!text);
+}
+
+function groupCheck(name, errId, text) {
+  const ok = !!form.querySelector(`input[name=${name}]:checked`);
+  setErr(errId, ok ? '' : text);
+  return ok ? null : form.querySelector(`input[name=${name}]`);
+}
+
+function fieldCheck(input, errId, test, text) {
+  const bad = !test(input.value.trim());
+  input.setAttribute('aria-invalid', String(bad));
+  setErr(errId, bad ? text : '');
+  return bad ? input : null;
+}
+
+function validate(n) {
+  if (n === 1) return groupCheck('svc', 'e-svc', 'Pick at least one service, or choose Not sure yet.');
+  if (n === 2) return groupCheck('budget', 'e-budget', 'Choose a budget range to continue.');
+  if (n === 3) return groupCheck('time', 'e-time', 'Choose when you would like to start.');
+  if (n === 4) {
+    const bad = [
+      fieldCheck(document.getElementById('name'), 'e-name', v => v.length > 1, 'Enter your name.'),
+      fieldCheck(document.getElementById('email'), 'e-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), 'Enter an email like ines@company.com.'),
+      fieldCheck(msg, 'e-msg', v => v.length >= 20, 'Write at least 20 characters so we know where to start.')
+    ].filter(Boolean);
+    return bad[0] || null;
+  }
+  return null;
+}
+
+function val(name) { return [...form.querySelectorAll(`input[name=${name}]:checked`)].map(i => i.value).join(', '); }
+
+function buildReview() {
+  const f = id => document.getElementById(id).value.trim();
+  const who = [f('name'), f('email'), f('company')].filter(Boolean).join(' · ');
+  const rows = [[val('svc')], [val('budget')], [val('time')], [who + ' — ' + f('msg')]];
+  const review = document.getElementById('review');
+  review.innerHTML = '';
+  rows.forEach((r, i) => {
+    const d = document.createElement('div');
+    d.innerHTML = `<dt>${NAMES[i]}</dt><dd></dd><button type="button" class="edit" data-go="${i + 1}">Edit<span class="sr"> ${NAMES[i]}</span></button>`;
+    d.querySelector('dd').textContent = r[0];
+    review.appendChild(d);
+  });
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  if (cur < 5) {
+    const bad = validate(cur);
+    if (bad) { bad.focus(); return; }
+    show(cur + 1);
+    return;
+  }
+  next.setAttribute('aria-busy', 'true');
+  next.firstChild.textContent = 'Sending';
+  setTimeout(() => {
+    next.removeAttribute('aria-busy');
+    document.getElementById('done-email').textContent = document.getElementById('email').value.trim();
+    form.hidden = true;
+    done.hidden = false;
+    label.textContent = 'Sent';
+    prog.forEach(p => { p.className = 'on'; });
+    rail.forEach(r => { r.className = 'done'; r.removeAttribute('aria-current'); });
+    done.querySelector('h2').focus();
+  }, 700);
+});
+
+form.addEventListener('change', e => {
+  const map = { svc: 'e-svc', budget: 'e-budget', time: 'e-time' };
+  if (map[e.target.name]) setErr(map[e.target.name], '');
+});
+form.addEventListener('input', e => {
+  if (e.target.getAttribute('aria-invalid') === 'true') {
+    e.target.setAttribute('aria-invalid', 'false');
+    setErr('e-' + e.target.id, '');
+  }
+});
+form.addEventListener('click', e => {
+  const go = e.target.closest('.edit');
+  if (go) show(+go.dataset.go);
+});
+back.addEventListener('click', () => show(cur - 1));
+msg.addEventListener('input', () => { count.textContent = `${msg.value.length} / 800 · at least 20 characters`; });
+document.getElementById('again').addEventListener('click', () => {
+  form.reset();
+  form.querySelectorAll('[aria-invalid]').forEach(i => i.removeAttribute('aria-invalid'));
+  count.textContent = '0 / 800 · at least 20 characters';
+  done.hidden = true;
+  form.hidden = false;
+  show(1);
+});
+show(1, false);
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 276 · "Split-flap board" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 283 · "Split-flap board" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Split-flap board
 

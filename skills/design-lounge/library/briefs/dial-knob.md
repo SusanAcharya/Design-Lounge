@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 185 · "Dial knob" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 187 · "Dial knob" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Dial knob
 

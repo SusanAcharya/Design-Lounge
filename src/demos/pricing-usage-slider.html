@@ -1,0 +1,255 @@
+<!-- Design Lounge piece: pricing-usage-slider · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Meterly · Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--ink:#0b0b0c;--ink-2:#4a4a4f;--ink-3:#6b6b70;--line:#dcdcdf;--soft:#f4f4f5;
+  --accent:#1f4fe0;--accent-ink:#ffffff;--accent-soft:#eaf0ff;
+  --sans:"Inter Tight",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:6px;--ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);--fast:160ms;--layout:260ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+main{max-width:1280px;margin:0 auto;padding:32px 64px 32px}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:32px}
+.eyebrow{margin:0 0 10px;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+h1{margin:0;font-size:44px;line-height:1.02;font-weight:700;letter-spacing:-.035em}
+.bill{display:inline-flex;padding:3px;margin:0;border:1px solid var(--line);border-radius:var(--r);background:var(--soft)}
+.bill label{position:relative;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 16px;border-radius:4px;font-weight:600;cursor:pointer;color:var(--ink-2);transition:background var(--fast) var(--ease),color var(--fast) var(--ease)}
+.bill input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.bill label:has(input:checked){background:var(--ink);color:#fff}
+.bill label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.save{font:500 11px var(--mono);color:var(--accent);padding:1px 5px;border-radius:3px;background:var(--accent-soft)}
+.bill label:has(input:checked) .save{background:#fff;color:var(--accent)}
+.meter{margin-top:24px;padding-top:18px;border-top:2px solid var(--ink);display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px;align-items:start}
+.meter label{display:block;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.read{margin:6px 0 0;display:flex;align-items:baseline;gap:10px;font-family:var(--mono)}
+.read b{font-size:48px;font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.read span{font-size:13px;color:var(--ink-2)}
+.track{position:relative;padding-top:14px}
+input[type=range]{--p:50%;-webkit-appearance:none;appearance:none;display:block;width:100%;height:40px;margin:0;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--p),var(--line) var(--p))}
+input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--p),var(--line) var(--p))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-10px;border-radius:var(--r);background:#fff;border:2px solid var(--ink);transition:transform var(--fast) var(--ease)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:var(--r);background:#fff;border:2px solid var(--ink)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.12)}
+input[type=range]:focus-visible{outline:none}
+input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--accent)}
+input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--accent)}
+.ticks{position:relative;height:30px;margin:0 12px}
+.ticks span{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px;font:400 11px var(--mono);color:var(--ink-3);cursor:pointer;white-space:nowrap}
+.ticks span::before{content:"";width:1px;height:6px;background:var(--line)}
+.ticks span.on{color:var(--ink);font-weight:700}
+.ticks span.on::before{background:var(--ink)}
+.ticks span.sales{color:var(--accent)}
+.plans{margin-top:24px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.plan{position:relative;display:flex;flex-direction:column;padding:22px 24px 20px;border:1px solid var(--line);border-radius:var(--r);transition:border-color var(--layout) var(--ease),box-shadow var(--layout) var(--ease)}
+.plan.rec{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.tag{position:absolute;top:-11px;left:22px;padding:2px 8px;border-radius:4px;background:var(--accent);color:var(--accent-ink);font:500 11px/18px var(--mono);letter-spacing:.02em;opacity:0;transform:translateY(4px);transition:opacity var(--fast) var(--ease),transform var(--layout) var(--expo)}
+.plan.rec .tag{opacity:1;transform:none}
+.plan h2{margin:0;font-size:18px;font-weight:700;letter-spacing:-.01em}
+.desc{margin:4px 0 0;color:var(--ink-2);font-size:13px}
+.price{margin:16px 0 0;display:flex;align-items:baseline;gap:6px;font-family:var(--mono);min-height:52px}
+.price b{font-size:44px;font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.price span{font-size:13px;color:var(--ink-2)}
+.plan.off .price b{color:var(--ink-3);font-size:22px;letter-spacing:-.01em}
+.sub{margin:6px 0 0;font:12px/1.5 var(--mono);color:var(--ink-3);min-height:36px}
+.cta{margin-top:14px;height:42px;border-radius:var(--r);border:1px solid var(--ink);background:#fff;font-weight:600;cursor:pointer;transition:background var(--fast) var(--ease),color var(--fast) var(--ease),border-color var(--fast) var(--ease)}
+.cta:hover{background:var(--ink);color:#fff}
+.plan.rec .cta{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.plan.rec .cta:hover{background:#163cb3}
+.cta:disabled{border-color:var(--line);color:var(--ink-3);background:var(--soft);cursor:not-allowed}
+dl{margin:16px 0 0;border-top:1px solid var(--line)}
+dl div{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
+dt{color:var(--ink-2)}
+dd{margin:0;font:500 12px var(--mono);text-align:right}
+dd.no{color:var(--ink-3)}
+.foot{margin:14px 0 0;font:12px var(--mono);color:var(--ink-3)}
+@media (max-width:1100px){main{padding:36px 40px 40px}.meter{gap:32px}}
+@media (max-width:900px){
+  .meter{grid-template-columns:minmax(0,1fr);gap:8px}
+  .plans{grid-template-columns:minmax(0,1fr);gap:20px}
+  h1{font-size:38px}
+  h1 br{display:none}
+}
+@media (max-width:639px){
+  main{padding:28px 20px 32px}
+  header{flex-direction:column;align-items:stretch;gap:20px}
+  h1{font-size:34px}
+  .bill{align-self:flex-start}
+  .read b{font-size:40px}
+  .ticks span{font-size:10px}
+  .ticks span:nth-child(even):not(.on){display:none}
+  h1 br{display:none}
+  .plans{grid-template-columns:minmax(0,1fr);gap:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0ms!important}
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <p class="eyebrow">Meterly pricing</p>
+      <h1>Pay for the events you send.<br>Nothing for seats you forget.</h1>
+    </div>
+    <fieldset class="bill">
+      <legend class="sr">Billing period</legend>
+      <label><input type="radio" name="bill" value="month" checked>Monthly</label>
+      <label><input type="radio" name="bill" value="year">Yearly <span class="save">-20%</span></label>
+    </fieldset>
+  </header>
+
+  <section class="meter" aria-label="Monthly volume">
+    <div>
+      <label for="vol">Monthly volume</label>
+      <p class="read" aria-hidden="true"><b id="readout">500,000</b><span>events / month</span></p>
+    </div>
+    <div class="track">
+      <input id="vol" type="range" min="0" max="10" step="1" value="5" aria-describedby="vol-note">
+      <div class="ticks" id="ticks" aria-hidden="true"></div>
+      <p class="sr" id="vol-note">Ten steps from 10 thousand to 10 million events. The last step is for volumes above 10 million.</p>
+    </div>
+  </section>
+
+  <div class="plans" id="plans"></div>
+  <p class="foot">Prices in USD, excluding tax. Overage is billed per 1,000 events at the end of the month.</p>
+</main>
+<script>
+const STEPS = [1e4, 2.5e4, 5e4, 1e5, 2.5e5, 5e5, 1e6, 2.5e6, 5e6, 1e7, Infinity];
+const PLANS = [
+  { id: 'starter', name: 'Starter', desc: 'For a side project that just found users.', base: 19, inc: 1e5, rate: 0.30, max: 1e6, ret: '7 days', seats: '3', sso: null },
+  { id: 'growth', name: 'Growth', desc: 'For a product team with a weekly release.', base: 79, inc: 5e5, rate: 0.22, max: 5e6, ret: '30 days', seats: '10', sso: 'Google' },
+  { id: 'scale', name: 'Scale', desc: 'For a company with an on-call rota.', base: 349, inc: 2.5e6, rate: 0.11, max: 1e7, ret: '90 days', seats: 'Unlimited', sso: 'SAML' }
+];
+const YEARLY = 0.8;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const vol = document.getElementById('vol');
+const readout = document.getElementById('readout');
+const ticks = document.getElementById('ticks');
+const plansEl = document.getElementById('plans');
+const fmt = n => n.toLocaleString('en-US');
+const short = n => n === Infinity ? '10M+' : n >= 1e6 ? n / 1e6 + 'M' : n / 1e3 + 'k';
+const words = n => n >= 1e6 ? n / 1e6 + ' million' : fmt(n);
+
+STEPS.forEach((s, i) => {
+  const t = document.createElement('span');
+  t.textContent = short(s);
+  t.style.left = (i * 10) + '%';
+  if (s === Infinity) t.classList.add('sales');
+  t.addEventListener('click', () => { vol.value = i; update(); });
+  ticks.appendChild(t);
+});
+
+plansEl.innerHTML = PLANS.map(p => `
+  <article class="plan" id="${p.id}" aria-labelledby="${p.id}-h">
+    <span class="tag" aria-hidden="true"></span>
+    <h2 id="${p.id}-h">${p.name}</h2>
+    <p class="desc">${p.desc}</p>
+    <p class="price"><b>$${p.base}</b><span class="per">/ month</span></p>
+    <p class="sub"></p>
+    <button class="cta" type="button">Start with ${p.name}</button>
+    <dl>
+      <div><dt>Included events</dt><dd>${short(p.inc)} / mo</dd></div>
+      <div><dt>Then, per 1,000</dt><dd>$${p.rate.toFixed(2)}</dd></div>
+      <div><dt>Data retention</dt><dd>${p.ret}</dd></div>
+      <div><dt>Seats</dt><dd>${p.seats}</dd></div>
+      <div><dt>Single sign-on</dt><dd class="${p.sso ? '' : 'no'}">${p.sso || 'Not included'}</dd></div>
+    </dl>
+  </article>`).join('');
+
+const shown = new Map();
+function roll(el, to) {
+  const from = shown.get(el) ?? to;
+  shown.set(el, to);
+  if (reduce.matches || from === to) { el.textContent = '$' + fmt(to); return; }
+  const t0 = performance.now(), dur = 420;
+  const step = now => {
+    if (shown.get(el) !== to) return;
+    const k = Math.min(1, (now - t0) / dur);
+    const e = 1 - Math.pow(2, -10 * k);
+    el.textContent = '$' + fmt(Math.round(from + (to - from) * (k === 1 ? 1 : e)));
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function cost(p, v) { return p.base + Math.max(0, v - p.inc) / 1000 * p.rate; }
+
+function update() {
+  const i = +vol.value;
+  const v = STEPS[i];
+  const yearly = document.querySelector('input[name=bill]:checked').value === 'year';
+  const sales = v === Infinity;
+  vol.style.setProperty('--p', (i * 10) + '%');
+  readout.textContent = sales ? '10M+' : fmt(v);
+  [...ticks.children].forEach((t, k) => t.classList.toggle('on', k === i));
+
+  let best = null, bestCost = Infinity;
+  PLANS.forEach(p => {
+    if (!sales && v <= p.max && cost(p, v) < bestCost) { best = p.id; bestCost = cost(p, v); }
+  });
+  if (sales) best = 'scale';
+
+  PLANS.forEach(p => {
+    const card = document.getElementById(p.id);
+    const b = card.querySelector('.price b'), per = card.querySelector('.per');
+    const sub = card.querySelector('.sub'), cta = card.querySelector('.cta'), tag = card.querySelector('.tag');
+    const rec = p.id === best;
+    card.classList.toggle('rec', rec);
+    tag.textContent = sales ? 'Recommended above 10M' : 'Recommended for ' + short(v);
+    tag.setAttribute('aria-hidden', String(!rec));
+    const off = sales ? p.id !== 'scale' : v > p.max;
+    card.classList.toggle('off', off);
+    if (sales && p.id === 'scale') {
+      shown.delete(b);
+      b.textContent = 'Custom';
+      per.textContent = '';
+      sub.textContent = 'Volume pricing from 10M events, annual contract.';
+      cta.disabled = false;
+      cta.textContent = 'Talk to sales';
+      return;
+    }
+    if (off) {
+      shown.delete(b);
+      b.textContent = 'Above plan limit';
+      per.textContent = '';
+      sub.textContent = p.name + ' tops out at ' + short(p.max) + ' events a month.';
+      cta.disabled = true;
+      cta.textContent = 'Up to ' + short(p.max) + ' events';
+      return;
+    }
+    const month = Math.round(cost(p, v) * (yearly ? YEARLY : 1));
+    if (!shown.has(b)) shown.set(b, month);
+    roll(b, month);
+    per.textContent = '/ month';
+    const over = Math.max(0, v - p.inc);
+    const parts = '$' + p.base + ' base' + (over ? ' + ' + short(over) + ' × $' + p.rate.toFixed(2) + '/1k' : ', all included');
+    sub.textContent = parts + (yearly ? ' · billed $' + fmt(month * 12) + ' yearly' : ' · billed monthly');
+    cta.disabled = false;
+    cta.textContent = 'Start with ' + p.name;
+  });
+  const recName = PLANS.find(p => p.id === best).name;
+  vol.setAttribute('aria-valuetext', sales
+    ? 'More than 10 million events per month. Talk to sales.'
+    : words(v) + ' events per month. ' + recName + ' recommended.');
+}
+
+vol.addEventListener('input', update);
+document.querySelectorAll('input[name=bill]').forEach(r => r.addEventListener('change', update));
+update();
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!-- Design Lounge piece: testimonials-metric-tabs · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Keel customer results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c1222;--panel:#111a2e;--ink:#f3f5f9;--ink-2:#b4bccb;--ink-3:#8590a6;
+  --line:#22304a;--line-2:#2e3f5f;--mint:#5ee3b1;--mint-ink:#0c1222;--focus:#5ee3b1;
+  --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--dwell:7s;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.5 var(--sans);color:var(--ink);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.sec{max-width:1280px;margin:0 auto;padding:56px 64px 48px;min-height:100%;display:flex;flex-direction:column}
+.head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;margin-bottom:36px}
+.kick{margin:0 0 14px;font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mint)}
+h2{margin:0;font-weight:600;font-size:44px;line-height:1.05;letter-spacing:-.025em;max-width:22ch}
+h2 span{color:var(--ink-3)}
+.ctl{display:flex;align-items:center;gap:12px;font:400 12px/1 var(--mono);color:var(--ink-3)}
+.pp{width:40px;height:40px;border-radius:8px;border:1px solid var(--line-2);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:border-color 160ms var(--ease),background 160ms var(--ease)}
+.pp:hover{border-color:var(--ink-3);background:var(--panel)}
+.pp svg{width:16px;height:16px}
+
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:12px 12px 0 0;overflow:hidden}
+.tab{position:relative;min-height:84px;padding:0 24px;background:transparent;border:0;border-left:1px solid var(--line);color:var(--ink-3);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;font:inherit;text-align:left;transition:color 200ms var(--ease),background 200ms var(--ease)}
+.tab:first-child{border-left:0}
+.tab:hover{color:var(--ink-2);background:rgba(255,255,255,.02)}
+.tab[aria-selected="true"]{color:var(--ink);background:var(--panel)}
+.tab:focus-visible{outline-offset:-4px;border-radius:12px}
+.tab .n{font:400 11px/1 var(--mono);color:var(--ink-3)}
+.bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:transparent}
+.tab[aria-selected="true"] .bar{background:var(--line-2)}
+.tab[aria-selected="true"] .bar::after{content:"";position:absolute;inset:0;background:var(--mint);transform-origin:left;animation:fill var(--dwell) linear forwards}
+.sec:hover .bar::after,.sec:focus-within .bar::after,.sec[data-paused] .bar::after{animation-play-state:paused}
+@keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* wordmarks */
+.wm{font-size:22px;line-height:1;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
+.wm-nv{font-weight:700;letter-spacing:-.04em}
+.wm-nv i{width:9px;height:9px;border-radius:50%;background:currentColor;display:inline-block;margin-left:-6px;transform:translateY(5px)}
+.wm-ok{font:500 16px/1 var(--mono);letter-spacing:.32em;text-transform:uppercase}
+.wm-ok b{width:14px;height:14px;border:2px solid currentColor;display:inline-block;transform:rotate(45deg);margin-right:4px}
+.wm-fh{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:25px;letter-spacing:-.01em}
+.wm-bl{font-weight:500;letter-spacing:-.01em;font-size:21px}
+.wm-bl svg{width:22px;height:22px}
+
+.panels{border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;background:var(--panel);flex:1;min-height:440px;position:relative;display:flex}
+.panel{flex:1;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);min-height:440px}
+.panel[hidden]{display:none}
+.panel.in .metric,.panel.in .story{animation:rise 360ms var(--ease) both}
+.panel.in .story{animation-delay:60ms}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.metric{padding:44px 40px;border-right:1px solid var(--line);display:flex;flex-direction:column}
+.big{font:500 112px/0.9 var(--mono);letter-spacing:-.06em;color:var(--ink);margin:0;font-variant-numeric:tabular-nums}
+.big em{font-style:normal;color:var(--mint)}
+.what{margin:16px 0 0;font-size:20px;line-height:1.3;color:var(--ink-2);max-width:22ch}
+.sub{margin-top:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line);padding-top:20px;gap:16px}
+.sub dt{font:400 11px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.sub dd{margin:6px 0 0;font:500 22px/1 var(--mono);letter-spacing:-.02em}
+.story{padding:44px 48px;display:flex;flex-direction:column}
+.story blockquote{margin:0}
+.story p{margin:0;font-size:25px;line-height:1.38;letter-spacing:-.012em;font-weight:400;text-wrap:pretty}
+.story p::before{content:"\201C";color:var(--mint)}
+.story p::after{content:"\201D";color:var(--mint)}
+.person{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:14px;margin-top:auto;padding-top:24px;border-top:1px solid var(--line)}
+.av{width:44px;height:44px;border-radius:50%;background:#1b2740;border:1px solid var(--line-2);display:grid;place-items:center;font:500 13px/1 var(--mono);color:var(--ink)}
+.nm{display:block;font-weight:500;font-size:15px}
+.rl{display:block;font-size:13px;color:var(--ink-3)}
+.read{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;color:var(--mint-ink);background:var(--mint);font-weight:600;font-size:14px;text-decoration:none;transition:gap 200ms var(--ease)}
+.read:hover{gap:12px}
+.read svg{width:16px;height:16px}
+svg.i{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:1023px){
+  .panels{flex:none}
+  .sec{padding:40px 32px}
+  .tab{padding:0 16px}.tab .n{display:none}
+  .big{font-size:88px}.story p{font-size:21px}
+  .metric{padding:36px 28px}.story{padding:36px 32px}
+}
+@media (max-width:767px){
+  .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tab:nth-child(3){border-left:0}
+  .tab:nth-child(n+3){border-top:1px solid var(--line)}
+  .panel{grid-template-columns:minmax(0,1fr)}
+  .metric{border-right:0;border-bottom:1px solid var(--line)}
+  .sub{margin-top:28px}
+}
+@media (max-width:639px){
+  .sec{padding:32px 16px}
+  .head{grid-template-columns:minmax(0,1fr);gap:20px;margin-bottom:24px}
+  h2{font-size:32px}
+  .tab{min-height:64px;padding:0 14px}
+  .wm{font-size:18px}.wm-fh{font-size:20px}.wm-ok{font-size:13px;letter-spacing:.24em}
+  .big{font-size:72px}.what{font-size:17px}
+  .metric{padding:28px 20px}.story{padding:28px 20px}
+  .story p{font-size:19px}
+  .person{grid-template-columns:44px minmax(0,1fr)}
+  .read{grid-column:1/-1;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .tab[aria-selected="true"] .bar::after{animation-name:hold}
+  @keyframes hold{from,to{transform:none}}
+  .panel.in .metric,.panel.in .story{animation:none}
+  .tab,.pp,.read{transition:none}
+}
+</style>
+</head>
+<body>
+<section class="sec" aria-labelledby="t">
+  <div class="head">
+    <div>
+      <p class="kick">Customer results</p>
+      <h2 id="t">Billing teams that moved to Keel. <span>In their numbers.</span></h2>
+    </div>
+    <div class="ctl">
+      <span id="ctl-l">Auto-advance · 7s</span>
+      <button class="pp" type="button" aria-pressed="false" aria-label="Pause auto-advance">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Customer stories">
+    <button class="tab" role="tab" id="t-nv" aria-controls="p-nv" aria-selected="true" tabindex="0">
+      <span class="wm wm-nv">northvane<i></i></span><span class="n" aria-hidden="true">01</span><span class="bar"></span>
+    </button>
+    <button class="tab" role="tab" id="t-ok" aria-controls="p-ok" aria-selected="false" tabindex="-1">
+      <span class="wm wm-ok"><b></b>Okapi</span><span class="n" aria-hidden="true">02</span><span class="bar"></span>
+    </button>
+    <button class="tab" role="tab" id="t-fh" aria-controls="p-fh" aria-selected="false" tabindex="-1">
+      <span class="wm wm-fh">Fernhouse</span><span class="n" aria-hidden="true">03</span><span class="bar"></span>
+    </button>
+    <button class="tab" role="tab" id="t-bl" aria-controls="p-bl" aria-selected="false" tabindex="-1">
+      <span class="wm wm-bl"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg>Brightloop</span><span class="n" aria-hidden="true">04</span><span class="bar"></span>
+    </button>
+  </div>
+
+  <div class="panels">
+    <div class="panel" role="tabpanel" id="p-nv" aria-labelledby="t-nv" tabindex="0">
+      <div class="metric">
+        <p class="big"><em>&minus;</em>38%</p>
+        <p class="what">voluntary churn in two quarters after switching dunning to Keel</p>
+        <dl class="sub"><div><dt>Cards recovered</dt><dd>11,420</dd></div><div><dt>Live in</dt><dd>9 days</dd></div></dl>
+      </div>
+      <div class="story">
+        <blockquote><p>We moved retries and card updates to Keel on a Tuesday. By the end of the month we had stopped losing customers to expired cards, and finance stopped exporting CSVs on Fridays.</p></blockquote>
+        <div class="person"><span class="av" aria-hidden="true">IO</span><span><span class="nm">Ines Okafor</span><span class="rl">VP Finance, Northvane Freight</span></span>
+          <a class="read" href="#case-northvane">Read the case <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+    </div>
+    <div class="panel" role="tabpanel" id="p-ok" aria-labelledby="t-ok" tabindex="0" hidden>
+      <div class="metric">
+        <p class="big">4.2<em>&times;</em></p>
+        <p class="what">faster month-end close across three entities and two currencies</p>
+        <dl class="sub"><div><dt>Close, before</dt><dd>9 days</dd></div><div><dt>Close, after</dt><dd>2 days</dd></div></dl>
+      </div>
+      <div class="story">
+        <blockquote><p>Close used to eat the first week of every month. Now revenue is reconciled the night the invoices go out. My team plans the quarter instead of chasing it.</p></blockquote>
+        <div class="person"><span class="av" aria-hidden="true">DK</span><span><span class="nm">Daniel Kowalczyk</span><span class="rl">Controller, Okapi Robotics</span></span>
+          <a class="read" href="#case-okapi">Read the case <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+    </div>
+    <div class="panel" role="tabpanel" id="p-fh" aria-labelledby="t-fh" tabindex="0" hidden>
+      <div class="metric">
+        <p class="big"><em>$</em>1.9M</p>
+        <p class="what">failed payments recovered in 2025 without a single new hire</p>
+        <dl class="sub"><div><dt>Recovery rate</dt><dd>71%</dd></div><div><dt>Plans</dt><dd>14</dd></div></dl>
+      </div>
+      <div class="story">
+        <blockquote><p>We sell plant subscriptions to people who forget their card expired. Keel emails them before it fails, in our voice, and the money simply arrives.</p></blockquote>
+        <div class="person"><span class="av" aria-hidden="true">PR</span><span><span class="nm">Priya Raman</span><span class="rl">Head of Growth, Fernhouse</span></span>
+          <a class="read" href="#case-fernhouse">Read the case <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+    </div>
+    <div class="panel" role="tabpanel" id="p-bl" aria-labelledby="t-bl" tabindex="0" hidden>
+      <div class="metric">
+        <p class="big">11<em>d</em></p>
+        <p class="what">to migrate 40,000 live subscriptions with zero double charges</p>
+        <dl class="sub"><div><dt>Subscriptions</dt><dd>40,212</dd></div><div><dt>Failed moves</dt><dd>0</dd></div></dl>
+      </div>
+      <div class="story">
+        <blockquote><p>Migrations are where billing projects go to die. Keel gave us a dry run, a diff of every invoice, and a button. We pressed it on a Sunday and went to lunch.</p></blockquote>
+        <div class="person"><span class="av" aria-hidden="true">MS</span><span><span class="nm">Mateo Silva</span><span class="rl">Staff Engineer, Brightloop</span></span>
+          <a class="read" href="#case-brightloop">Read the case <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+const sec = document.querySelector('.sec');
+const tabs = [...document.querySelectorAll('[role="tab"]')];
+const pp = document.querySelector('.pp');
+const label = document.getElementById('ctl-l');
+function select(i, focus) {
+  i = (i + tabs.length) % tabs.length;
+  tabs.forEach((t, j) => {
+    const on = j === i;
+    t.setAttribute('aria-selected', String(on));
+    t.tabIndex = on ? 0 : -1;
+    const p = document.getElementById(t.getAttribute('aria-controls'));
+    p.hidden = !on;
+    p.classList.toggle('in', on);
+  });
+  if (focus) tabs[i].focus();
+}
+
+function setPaused(on) {
+  if (on) sec.dataset.paused = ''; else delete sec.dataset.paused;
+  pp.setAttribute('aria-pressed', String(on));
+  pp.setAttribute('aria-label', on ? 'Resume auto-advance' : 'Pause auto-advance');
+  pp.innerHTML = on
+    ? '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>'
+    : '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>';
+  label.textContent = on ? 'Paused' : 'Auto-advance · 7s';
+}
+
+tabs.forEach((t, i) => {
+  t.addEventListener('click', () => select(i));
+  t.querySelector('.bar').addEventListener('animationend', () => select(i + 1));
+  t.addEventListener('keydown', e => {
+    const k = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (k === undefined) return;
+    e.preventDefault();
+    select(k, true);
+  });
+});
+pp.addEventListener('click', () => setPaused(!('paused' in sec.dataset)));
+</script>
+</body>
+</html>

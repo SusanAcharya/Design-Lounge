@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 293 · "Week schedule" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 305 · "Week schedule" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Week schedule
 
