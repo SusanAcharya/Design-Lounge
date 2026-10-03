@@ -14,8 +14,8 @@ const theme = (id: string) => THEMES.find((t) => t.id === id);
 const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
 ---
 <Base title="Start a product" description={`Recipes from Design Lounge by ${AUTHOR.name}: a theme, a type pairing, a shelf of pieces — assembled for the thing you are making.`}>
-  <PageHead eyebrow="Start" title="Start" count={STARTS.length} countLabel="recipes" />
-  <p class="wrap kit-jump"><a class="btn primary" href="/kit">Kit</a></p>
+  <PageHead eyebrow="Start" title="Start" count={STARTS.length} countLabel="recipes" blurb="Find what you are making. Each one comes with colours, type, and the screens to open first." />
+  <p class="wrap kit-jump"><a href="#web">Websites</a> · <a href="#app">Apps</a> · <a href="/kit">Or build your own kit</a></p>
   <div class="wrap page">
     {SURFACES.map((group) => (
       <section id={group.id}>
@@ -79,7 +79,9 @@ const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
 </Base>
 
 <style>
-  .kit-jump { margin: 20px auto 0; }
+  .kit-jump { margin: 20px auto 0; font-size: 15px; color: var(--ink-3); }
+  .kit-jump a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .kit-jump a:hover { color: var(--accent); }
   .page { margin-top: 40px; display: flex; flex-direction: column; gap: 64px; }
   .group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
   .group .h2 { font-size: clamp(32px, 3vw, 48px); }

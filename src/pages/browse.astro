@@ -7,7 +7,7 @@ import { MAP } from '../data/starts';
 const pieces = await getPieces();
 ---
 <Base title="The floor" description="Every piece in the Lounge: screens, components, animations, layouts, patterns and styles for web, mobile, tablet, app and PWA.">
-  <PageHead eyebrow="Browse" title="Browse" count={pieces.length} />
+  <PageHead eyebrow="Browse" title="Browse" count={pieces.length} blurb="Every piece. Search, or use Filter. Open one to see it live and copy its brief." />
   <nav class="map wrap" aria-label="Other ways in">
     {MAP.filter((m) => m.href !== '/browse').map((m) => (
       <a href={m.href}>{m.kicker}</a>

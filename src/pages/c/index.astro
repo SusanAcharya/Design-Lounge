@@ -11,7 +11,7 @@ const groups = CATEGORY_GROUPS.map((g) => ({
 const total = groups.reduce((a, g) => a + g.items.length, 0);
 ---
 <Base title="Index" description="Every kind of interface in Design Lounge: hero sections, footers, pricing, contact, portfolios, landing pages, components and motion.">
-  <PageHead eyebrow="Index" title="Index" count={total} countLabel="categories" />
+  <PageHead eyebrow="Sections" title="Sections" count={total} countLabel="categories" blurb="Every kind of piece, by name. Hero, footer, chart, loader." />
   <div class="wrap idx">
     {groups.map((g, gi) => (
       <section class="grp reveal" style={`--d:${gi * 60}ms`}>

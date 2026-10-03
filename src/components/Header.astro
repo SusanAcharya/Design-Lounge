@@ -1,15 +1,15 @@
 ---
 const path = Astro.url.pathname;
 const nav = [
-  { href: '/browse', label: 'Floor', match: /^\/(browse|p\/|rooms|platforms|styles)/ },
+  { href: '/start', label: 'Start', match: /^\/(start|kit)/ },
+  { href: '/browse', label: 'Browse', match: /^\/(browse|p\/|rooms|platforms|styles|collections)/ },
+  { href: '/c', label: 'Sections', match: /^\/c(\/|$)/ },
   { href: '/system', label: 'System', match: /^\/(system|type|themes|icons|motion)/ },
-  { href: '/c', label: 'Index', match: /^\/c(\/|$)/ },
-  { href: '/collections', label: 'Shelves', match: /^\/collections/ },
 ];
 const extra = [
+  { href: '/agents', label: 'Use with AI' },
+  { href: '/collections', label: 'Shelves' },
   { href: '/kit', label: 'Kit' },
-  { href: '/start', label: 'Start' },
-  { href: '/agents', label: 'Agents' },
   { href: '/sources', label: 'Sources' },
   { href: '/about', label: 'About' },
   { href: '/random', label: 'Surprise' },
@@ -29,7 +29,7 @@ const extra = [
       ))}
     </nav>
     <div class="tools">
-      <a class="tool start" href="/kit" aria-current={path.startsWith('/kit') ? 'page' : undefined}>Start</a>
+      <a class="tool start" href="/agents" aria-current={path.startsWith('/agents') ? 'page' : undefined}>Use with AI</a>
       <button class="tool search" type="button" data-open-palette aria-label="Search pieces (⌘K)">
         <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
         <span>Search</span><kbd>⌘K</kbd>

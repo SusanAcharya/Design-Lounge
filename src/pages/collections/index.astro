@@ -12,7 +12,7 @@ const groups = SHELF_GROUPS.map((g) => ({
 })).filter((g) => g.items.length);
 ---
 <Base title="Shelves" description="Curated shelves of pieces from the Design Lounge, grouped by the job: build a site, ship a product, taste and craft.">
-  <PageHead eyebrow="Shelves" title="Shelves" count={cols.length} countLabel="shelves" />
+  <PageHead eyebrow="Shelves" title="Shelves" count={cols.length} countLabel="shelves" blurb="Pieces grouped by the problem they solve." />
   <div class="wrap">
     {groups.map((g) => (
       <section class="grp" id={g.id}>
