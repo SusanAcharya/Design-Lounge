@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 227 · "Mobile website bottom bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 235 · "Mobile website bottom bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Mobile website bottom bar
 

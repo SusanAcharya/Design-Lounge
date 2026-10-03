@@ -1,0 +1,330 @@
+<!-- Design Lounge piece: law-firm-home · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Thorne Aldridge · Commercial disputes and advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#f6f1e7;--paper:#fbf8f1;--ink:#14213a;--ink-2:#46506a;--ink-3:#6c7385;--rule:#d9d0bf;--rule-2:#14213a;
+  --ox:#6e1f24;--ox-2:#8a2a30;
+  --serif:"Bodoni Moda",Didot,Georgia,serif;--sans:"Schibsted Grotesk",system-ui,sans-serif;
+  --pad:64px;--r:2px;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--t:200ms;--t-open:320ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.6 var(--sans);color:var(--ink);background:var(--ivory);overflow-x:hidden}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ox);outline-offset:3px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--pad)}
+.ico{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex:none}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.01em}
+.lab{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0}
+.lab.ox{color:var(--ox)}
+.link{display:inline-flex;align-items:center;gap:8px;font-weight:500;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+.link:hover{color:var(--ox)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 24px;border:1px solid var(--ink);border-radius:var(--r);background:var(--ink);color:var(--paper);font-weight:500;text-decoration:none;cursor:pointer;transition:background var(--t) var(--ease),border-color var(--t) var(--ease)}
+.btn:hover{background:var(--ox);border-color:var(--ox)}
+
+/* header */
+.top{border-bottom:1px solid var(--rule);background:var(--ivory);position:sticky;top:0;z-index:5}
+.top .wrap{display:flex;align-items:center;gap:40px;height:72px}
+.logo{text-decoration:none;font:500 24px/1 var(--serif);letter-spacing:.01em}
+.logo em{font-style:italic;color:var(--ox)}
+.nav{display:flex;gap:30px;font-size:15px}
+.nav a{text-decoration:none;color:var(--ink-2)}
+.nav a:hover{color:var(--ink)}
+.top .btn{margin-left:auto;min-height:42px;padding:0 18px;font-size:14px}
+.menu{display:none;margin-left:auto;width:44px;height:44px;border:1px solid var(--rule);border-radius:var(--r);background:none;place-items:center;cursor:pointer}
+
+/* hero */
+.hero .wrap{padding-top:56px;padding-bottom:48px;display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:64px;align-items:end}
+.hero h1{font-size:88px;line-height:1;letter-spacing:-.025em;max-width:15ch;margin-top:22px}
+.hero h1 em{color:var(--ox)}
+.hero aside{border-top:1px solid var(--rule-2);padding-top:18px;display:grid;gap:18px}
+.hero aside p{margin:0;color:var(--ink-2);font-size:15px}
+.hero aside .link{justify-self:start}
+.since{display:flex;gap:28px;border-top:1px solid var(--rule);margin-top:32px;padding-top:16px;font-size:14px;color:var(--ink-2);grid-column:1/-1}
+.since b{color:var(--ink);font-weight:600}
+
+section.band{padding:88px 0;border-top:1px solid var(--rule)}
+.band.dark{background:var(--ink);color:var(--paper);border:0}
+.band.dark .lab{color:#a9b0c2}
+.sh{display:grid;grid-template-columns:280px minmax(0,1fr);gap:64px;margin-bottom:40px;align-items:start}
+.sh h2{font-size:52px;line-height:1.05}
+
+/* practice */
+.areas{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule-2);counter-reset:a}
+.area{border-bottom:1px solid var(--rule)}
+.area a{display:grid;grid-template-columns:80px minmax(0,1fr) minmax(0,1fr) 40px;gap:24px;align-items:baseline;padding:22px 0;text-decoration:none;position:relative}
+.area .n{font:italic 400 20px/1 var(--serif);color:var(--ox)}
+.area h3{font-size:34px;line-height:1.1;transition:transform var(--t-open) var(--expo)}
+.area .rev{opacity:0;transform:translateY(6px);transition:transform var(--t-open) var(--expo),opacity var(--t) var(--ease);color:var(--ink-2);font-size:15px;line-height:1.5}
+.area .arr{justify-self:end;transition:transform var(--t-open) var(--expo),color var(--t) var(--ease)}
+.area a::before{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:0;background:var(--ox);transition:width var(--t-open) var(--expo)}
+.area a:hover .rev,.area a:focus-visible .rev{opacity:1;transform:none}
+.area a:hover h3,.area a:focus-visible h3{transform:translateX(8px)}
+.area a:hover .arr,.area a:focus-visible .arr{transform:rotate(-45deg);color:var(--ox)}
+.area a:hover::before,.area a:focus-visible::before{width:100%}
+.area a:focus-visible{outline-offset:-2px}
+
+/* results */
+.res{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(251,248,241,.35)}
+.res article{padding:28px 28px 8px 0;border-right:1px solid rgba(251,248,241,.18);display:grid;gap:12px;align-content:start}
+.res article+article{padding-left:28px}
+.res article:last-child{border-right:0}
+.res b{font:400 64px/1 var(--serif);letter-spacing:-.02em}
+.res b small{font-size:.5em;margin-left:2px}
+.res p{margin:0;color:#c9cdd8;font-size:15px}
+.res .lab{color:#d9a2a5}
+.fine{margin:36px 0 0;font-size:13px;color:#a9b0c2;max-width:80ch}
+
+/* partners */
+.partners{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.p{display:grid;gap:14px;align-content:start}
+.mono{aspect-ratio:4/5;border:1px solid var(--rule);background:var(--paper);display:grid;place-items:center;position:relative;border-radius:var(--r)}
+.mono span{font:italic 400 96px/1 var(--serif);color:var(--ink)}
+.mono::after{content:"";position:absolute;inset:14px;border:1px solid var(--rule)}
+.p h3{font-size:28px}
+.p .role{color:var(--ink-2);font-size:15px;margin:0}
+.p dl{margin:4px 0 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;font-size:14px;border-top:1px solid var(--rule);padding-top:12px}
+.p dt{color:var(--ink-3)}
+.p dd{margin:0}
+
+/* insights */
+.ins{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule-2)}
+.ins li a{display:grid;grid-template-columns:140px minmax(0,1fr) 160px 100px;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--rule);text-decoration:none}
+.ins li a:hover h3{color:var(--ox)}
+.ins time,.ins .rt{font-size:14px;color:var(--ink-3)}
+.ins h3{font-size:24px;line-height:1.25;transition:color var(--t) var(--ease)}
+.ins .rt{text-align:right}
+
+/* consult */
+.consult .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:72px}
+.consult h2{font-size:52px;line-height:1.05;margin:14px 0 18px}
+.consult .intro p{color:var(--ink-2);max-width:40ch}
+.privacy{display:flex;gap:14px;border:1px solid var(--rule);background:var(--paper);padding:18px;margin-top:28px;font-size:14px;color:var(--ink-2);border-radius:var(--r)}
+.privacy svg{color:var(--ox);margin-top:2px}
+.privacy b{color:var(--ink);font-weight:600}
+form.cf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px 24px;align-content:start}
+.fl{display:grid;gap:6px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.fl.w{grid-column:1/-1}
+.fl input,.fl select,.fl textarea{border:0;border-bottom:1px solid var(--ink);background:transparent;padding:8px 0;min-height:44px;font-size:16px;font-weight:400;color:var(--ink);border-radius:0}
+.fl textarea{resize:vertical;min-height:110px}
+.fl input:focus-visible,.fl select:focus-visible,.fl textarea:focus-visible{outline:none;border-bottom:2px solid var(--ox)}
+fieldset.pc{grid-column:1/-1;border:0;margin:0;padding:0;display:flex;gap:28px;flex-wrap:wrap}
+fieldset.pc legend{font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:8px;padding:0;width:100%}
+.pc label{display:flex;gap:10px;align-items:center;min-height:40px;cursor:pointer}
+.pc input{width:18px;height:18px;margin:0;accent-color:var(--ox)}
+.hint{font-weight:400;color:var(--ink-3);font-size:13px}
+.send{grid-column:1/-1;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.ok{margin:0;font-size:15px;color:var(--ox);font-weight:500}
+.fl [aria-invalid=true]{border-bottom-color:var(--ox)}
+
+/* offices */
+.offices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--rule-2)}
+.office{padding:24px 24px 0 0;display:grid;gap:10px;align-content:start}
+.office+.office{padding-left:24px;border-left:1px solid var(--rule)}
+.office h3{font-size:30px}
+.office address{font-style:normal;color:var(--ink-2)}
+.office a{text-decoration:none;font-weight:500}
+.office a:hover{color:var(--ox)}
+
+.foot{border-top:1px solid var(--rule);padding:32px 0 44px;font-size:13px;color:var(--ink-3)}
+.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+.foot nav{display:flex;gap:20px}
+
+@media (max-width:1180px){
+  :root{--pad:48px}
+  .hero h1{font-size:72px}
+  .sh{grid-template-columns:200px minmax(0,1fr);gap:40px}
+  .ins li a{grid-template-columns:120px minmax(0,1fr) 90px}
+  .ins .cat{display:none}
+}
+@media (max-width:1023px){
+  .nav{display:none}
+  .menu{display:grid;margin-left:0}
+  .top .btn{margin-left:auto}
+  .top.open .nav{display:grid;position:absolute;left:0;right:0;top:72px;background:var(--ivory);border-bottom:1px solid var(--rule);padding:8px var(--pad) 16px;gap:0}
+  .top.open .nav a{padding:12px 0;border-bottom:1px solid var(--rule)}
+  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:32px}
+  .sh{grid-template-columns:minmax(0,1fr);gap:12px}
+  .area a{grid-template-columns:56px minmax(0,1fr) 32px}
+  .area .rev{grid-column:2/3;opacity:1;transform:none}
+  .res{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .res article:nth-child(2){border-right:0}
+  .res article:nth-child(3){padding-left:0}
+  .partners{gap:24px}
+  .consult .wrap{grid-template-columns:minmax(0,1fr);gap:40px}
+}
+@media (max-width:640px){
+  :root{--pad:20px}
+  .top .btn{display:none}
+  .menu{margin-left:auto}
+  .hero .wrap{padding-top:40px}
+  .hero h1{font-size:44px}
+  .since{flex-direction:column;gap:6px}
+  section.band{padding:56px 0}
+  .sh h2,.consult h2{font-size:36px}
+  .area a{grid-template-columns:40px minmax(0,1fr) 24px;gap:12px}
+  .area h3{font-size:26px}
+  .res{grid-template-columns:minmax(0,1fr)}
+  .res article,.res article+article{padding:22px 0;border-right:0;border-bottom:1px solid rgba(251,248,241,.18)}
+  .res b{font-size:52px}
+  .partners,.offices{grid-template-columns:minmax(0,1fr)}
+  .mono{aspect-ratio:16/9}
+  .ins li a{grid-template-columns:minmax(0,1fr);gap:4px}
+  .ins .rt{text-align:left}
+  form.cf{grid-template-columns:minmax(0,1fr)}
+  .office,.office+.office{padding:20px 0;border-left:0;border-bottom:1px solid var(--rule)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before{transition-duration:1ms!important}
+  .area a:hover h3,.area a:focus-visible h3{transform:none}
+}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#top">Thorne <em>&amp;</em> Aldridge</a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#practice">Practice</a><a href="#results">Results</a><a href="#partners">Partners</a><a href="#insights">Insights</a><a href="#offices">Offices</a>
+    </nav>
+    <a class="btn" href="#consult">Confidential consultation</a>
+    <button class="menu" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="h">
+  <div class="wrap">
+    <div>
+      <p class="lab ox">Commercial disputes · Corporate advisory · Est. 1998</p>
+      <h1 id="h">We are the firm you call when the outcome <em>cannot</em> be undone.</h1>
+    </div>
+    <aside>
+      <p>Eleven lawyers. No juniors billing for learning time. A partner reads every file on the day it arrives.</p>
+      <a class="link" href="#consult">Speak to a partner today <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </aside>
+    <div class="since"><span><b>27 years</b> in practice</span><span><b>Three offices</b> London, Edinburgh, Bristol</span><span><b>Ranked tier 1</b> mid-market disputes, 2026 Legal Index</span></div>
+  </div>
+</section>
+
+<section class="band" id="practice" aria-labelledby="pr-h">
+  <div class="wrap">
+    <div class="sh"><p class="lab">Practice areas</p><h2 id="pr-h">Six areas, each led by a partner who still argues the cases.</h2></div>
+    <ol class="areas">
+      <li class="area"><a href="#consult"><span class="n">01</span><h3>Commercial litigation</h3><span class="rev">Contract, fraud and shareholder claims in the High Court and Court of Session.</span><svg class="ico arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li class="area"><a href="#consult"><span class="n">02</span><h3>International arbitration</h3><span class="rev">Seated in London, Geneva and Singapore. Energy, shipping and construction.</span><svg class="ico arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li class="area"><a href="#consult"><span class="n">03</span><h3>Employment and partnership</h3><span class="rev">Senior exits, restrictive covenants and partner disputes, kept out of the press.</span><svg class="ico arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li class="area"><a href="#consult"><span class="n">04</span><h3>Corporate and M&amp;A</h3><span class="rev">Owner-managed sales up to £250m, with the disputes team on the warranty schedule.</span><svg class="ico arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li class="area"><a href="#consult"><span class="n">05</span><h3>Regulatory investigations</h3><span class="rev">Dawn raids, regulator interviews and the internal review that comes first.</span><svg class="ico arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li class="area"><a href="#consult"><span class="n">06</span><h3>Insolvency and recovery</h3><span class="rev">Asset tracing, director claims and freezing orders, often within 48 hours.</span><svg class="ico arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band dark" id="results" aria-labelledby="rs-h">
+  <div class="wrap">
+    <div class="sh"><p class="lab">Case results</p><h2 id="rs-h">Recent outcomes, reported with client consent.</h2></div>
+    <div class="res">
+      <article><p class="lab">Arbitration · 2025</p><b>£41.2<small>m</small></b><p>Award for a North Sea contractor against a vessel operator, plus 92% of costs.</p></article>
+      <article><p class="lab">Fraud · 2025</p><b>48<small>hrs</small></b><p>From first call to a worldwide freezing order over a former finance director.</p></article>
+      <article><p class="lab">Partnership · 2024</p><b>0</b><p>Days in court. A six-partner exit settled at mediation on the second day.</p></article>
+      <article><p class="lab">Regulatory · 2024</p><b>No<small> action</small></b><p>Two-year market abuse inquiry into a fund manager closed with no finding.</p></article>
+    </div>
+    <p class="fine">Past results do not guarantee a similar outcome. Each matter turns on its own facts.</p>
+  </div>
+</section>
+
+<section class="band" id="partners" aria-labelledby="pa-h">
+  <div class="wrap">
+    <div class="sh"><p class="lab">Partners</p><h2 id="pa-h">Three names on the door, one on every file.</h2></div>
+    <div class="partners">
+      <article class="p"><div class="mono" aria-hidden="true"><span>ET</span></div><p class="lab ox">Managing partner</p><h3>Eleanor Thorne KC</h3><p class="role">Commercial litigation and arbitration. Called 1994, silk 2011.</p><dl><dt>Office</dt><dd>London</dd><dt>Bar</dt><dd>England and Wales</dd></dl></article>
+      <article class="p"><div class="mono" aria-hidden="true"><span>JA</span></div><p class="lab ox">Partner</p><h3>James Aldridge</h3><p class="role">Corporate and M&amp;A. Thirty years of founder exits and family holdings.</p><dl><dt>Office</dt><dd>Edinburgh</dd><dt>Admitted</dt><dd>Scotland, 1996</dd></dl></article>
+      <article class="p"><div class="mono" aria-hidden="true"><span>NO</span></div><p class="lab ox">Partner</p><h3>Nadia Okafor</h3><p class="role">Regulatory and fraud. Formerly senior counsel at a national enforcement agency.</p><dl><dt>Office</dt><dd>Bristol</dd><dt>Admitted</dt><dd>England and Wales, 2006</dd></dl></article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="insights" aria-labelledby="in-h">
+  <div class="wrap">
+    <div class="sh"><p class="lab">Insights</p><h2 id="in-h">Notes from the file room.</h2></div>
+    <ul class="ins">
+      <li><a href="#insights"><time datetime="2026-09-24">24 Sept 2026</time><h3>Warranty claims after a sale: the twelve-month notice trap</h3><span class="lab cat">Corporate</span><span class="rt">6 min read</span></a></li>
+      <li><a href="#insights"><time datetime="2026-09-11">11 Sept 2026</time><h3>What a freezing order can and cannot reach overseas</h3><span class="lab cat">Fraud</span><span class="rt">8 min read</span></a></li>
+      <li><a href="#insights"><time datetime="2026-08-28">28 Aug 2026</time><h3>Leaving the partnership: five clauses to read before you resign</h3><span class="lab cat">Employment</span><span class="rt">5 min read</span></a></li>
+      <li><a href="#insights"><time datetime="2026-08-06">6 Aug 2026</time><h3>Regulator interviews under caution, explained for directors</h3><span class="lab cat">Regulatory</span><span class="rt">7 min read</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="band consult" id="consult" aria-labelledby="co-h">
+  <div class="wrap">
+    <div class="intro">
+      <p class="lab ox">Confidential consultation</p>
+      <h2 id="co-h">Tell us what happened. A partner replies within one working day.</h2>
+      <p>The first 45-minute conversation is without charge and without obligation. Do not send documents yet; we will ask for what we need.</p>
+      <div class="privacy"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><p style="margin:0"><b>Privileged from the first message.</b> What you write here is read only by a partner and our conflicts clerk. It is never shared, never used for marketing, and deleted after 90 days if you do not instruct us.</p></div>
+    </div>
+    <form class="cf" id="cf" novalidate aria-describedby="priv-n">
+      <label class="fl">Full name<input name="fullname" autocomplete="name" required></label>
+      <label class="fl">Company <span class="hint">(optional)</span><input name="org" autocomplete="organization"></label>
+      <label class="fl">Email<input name="email" type="email" autocomplete="email" required></label>
+      <label class="fl">Phone<input name="tel" type="tel" autocomplete="tel"></label>
+      <label class="fl w">Type of matter<select name="matter"><option>Commercial litigation</option><option>International arbitration</option><option>Employment or partnership</option><option>Corporate or M&amp;A</option><option>Regulatory investigation</option><option>Insolvency or recovery</option><option>Not sure yet</option></select></label>
+      <label class="fl w">A short outline <span class="hint">No names of other parties needed at this stage.</span><textarea name="outline" required rows="4"></textarea></label>
+      <fieldset class="pc"><legend>How should we reply?</legend>
+        <label><input type="radio" name="via" value="email" checked>Email</label>
+        <label><input type="radio" name="via" value="phone">Phone call</label>
+        <label><input type="radio" name="via" value="meet">Meeting in an office</label>
+      </fieldset>
+      <div class="send">
+        <button class="btn" type="submit">Send in confidence</button>
+        <p class="hint" id="priv-n" style="margin:0">Encrypted in transit. Read by a partner only.</p>
+      </div>
+      <p class="ok w" id="ok" role="status" style="grid-column:1/-1"></p>
+    </form>
+  </div>
+</section>
+
+<section class="band" id="offices" aria-labelledby="of-h">
+  <div class="wrap">
+    <div class="sh"><p class="lab">Offices</p><h2 id="of-h">Three cities, one partnership.</h2></div>
+    <div class="offices">
+      <div class="office"><p class="lab">Head office</p><h3>London</h3><address>4 Kingsbridge Court<br>Fleet Lane, London EC4A 2BN</address><a href="tel:+442079460318">020 7946 0318</a></div>
+      <div class="office"><p class="lab">Scotland</p><h3>Edinburgh</h3><address>19 Albyn Row<br>Edinburgh EH2 4QX</address><a href="tel:+441314960527">0131 496 0527</a></div>
+      <div class="office"><p class="lab">South West</p><h3>Bristol</h3><address>Quay House, 7 Redcliffe Wharf<br>Bristol BS1 6SU</address><a href="tel:+441174960744">0117 496 0744</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Thorne &amp; Aldridge LLP · a limited liability partnership registered in England, no. OC419027</span>
+    <nav aria-label="Footer"><a href="#top">Privacy</a><a href="#top">Complaints</a><a href="#top">Fees</a></nav>
+  </div>
+</footer>
+
+<script>
+const top_=document.getElementById('top'),menu=top_.querySelector('.menu');
+menu.addEventListener('click',()=>{const o=top_.classList.toggle('open');menu.setAttribute('aria-expanded',o)});
+document.getElementById('nav').addEventListener('click',e=>{if(e.target.closest('a')){top_.classList.remove('open');menu.setAttribute('aria-expanded','false')}});
+const cf=document.getElementById('cf'),ok=document.getElementById('ok');
+cf.addEventListener('submit',e=>{e.preventDefault();const F=cf.elements;let first=null;
+  [F.fullname,F.email,F.outline].forEach(el=>{const bad=el===F.email?!/^\S+@\S+\.\S+$/.test(el.value):!el.value.trim();el.setAttribute('aria-invalid',bad);if(bad&&!first)first=el});
+  if(first){ok.textContent='Please complete your name, a valid email and a short outline.';first.focus();return}
+  const via={email:'by email',phone:'by phone',meet:'to arrange a meeting'}[F.via.value];
+  ok.textContent='Received. A partner will contact you '+via+' by the end of the next working day.';cf.querySelector('[type=submit]').disabled=true});
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 302 · "Status badge" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 313 · "Status badge" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Status badge
 

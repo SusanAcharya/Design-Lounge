@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 205 · "Gooey nav" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 211 · "Gooey nav" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Gooey nav
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 329 · "Word-bank lesson card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 341 · "Word-bank lesson card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Word-bank lesson card
 

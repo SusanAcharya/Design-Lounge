@@ -1,0 +1,301 @@
+<!-- Design Lounge piece: job-board-search · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Placard — Jobs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--soft:#f5f5f4;--ink:#0b0b0b;--ink-2:#454545;--ink-3:#6b6b6b;--line:#e6e6e6;--line-2:#d0d0d0;
+  --green:#0b7a3e;--green-tint:#e8f3ec;--focus:#0b7a3e;
+  --sans:"Inter Tight",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:6px;--ease:cubic-bezier(0.2,0.7,0.2,1);--fast:140ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top */
+.top{display:grid;grid-template-columns:232px minmax(0,1fr);align-items:center;gap:24px;padding:12px 24px;border-bottom:1px solid var(--line)}
+.brand{font-weight:700;font-size:18px;letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
+.brand i{width:10px;height:10px;background:var(--green);border-radius:2px}
+.search{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto auto;border:1px solid var(--line-2);border-radius:var(--r);height:44px}
+.field{display:flex;align-items:center;gap:8px;padding:0 12px;min-width:0;color:var(--ink-3)}
+.field+.field{border-left:1px solid var(--line)}
+.field input{border:0;outline:0;background:none;width:100%;min-width:0;color:var(--ink);height:100%}
+.field:focus-within{box-shadow:inset 0 -2px 0 var(--green)}
+.remote{display:flex;align-items:center;gap:10px;padding:0 14px;border-left:1px solid var(--line);font-weight:500;white-space:nowrap}
+.sw{width:34px;height:20px;border-radius:10px;background:var(--line-2);position:relative;transition:background var(--fast) var(--ease)}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform var(--fast) var(--ease)}
+.remote[aria-checked="true"] .sw{background:var(--green)}
+.remote[aria-checked="true"] .sw::after{transform:translateX(14px)}
+.go{background:var(--ink);color:#fff;font-weight:600;padding:0 18px;border-radius:0 5px 5px 0}
+
+/* layout */
+.app{flex:1;min-height:0;display:grid;grid-template-columns:232px minmax(0,1fr) 440px}
+.app>*{min-height:0;overflow:auto}
+.filters{padding:20px 24px;border-right:1px solid var(--line)}
+.filters details{border:0}
+.filters summary{display:none}
+fieldset{border:0;margin:0 0 22px;padding:0}
+legend{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;padding:0}
+.opt{display:flex;align-items:center;gap:10px;min-height:30px;cursor:pointer}
+.opt input{appearance:none;width:16px;height:16px;border:1.5px solid var(--line-2);border-radius:4px;margin:0;display:grid;place-items:center;flex:none}
+.opt input[type=radio]{border-radius:50%}
+.opt input:checked{border-color:var(--ink);background:var(--ink)}
+.opt input[type=radio]:checked{background:#fff;box-shadow:inset 0 0 0 3.5px var(--ink)}
+.opt input[type=checkbox]:checked::after{content:"";width:8px;height:4px;border:solid #fff;border-width:0 0 2px 2px;transform:translateY(-1px) rotate(-45deg)}
+.opt span{flex:1}
+.opt small{font:12px var(--mono);color:var(--ink-3)}
+.range-val{font:500 13px var(--mono);margin-bottom:12px}
+.dual{position:relative;height:24px}
+.dual .track,.dual .fill{position:absolute;top:11px;height:2px;border-radius:1px}
+.dual .track{left:0;right:0;background:var(--line)}
+.dual .fill{background:var(--green)}
+.dual input{position:absolute;inset:0;width:100%;margin:0;appearance:none;background:none;pointer-events:none;height:24px}
+.dual input::-webkit-slider-thumb{appearance:none;pointer-events:auto;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--ink);cursor:grab}
+.dual input::-moz-range-thumb{pointer-events:auto;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid var(--ink);cursor:grab}
+.dual input:focus-visible{outline:0}
+.dual input:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--focus)}
+.dual input:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--focus)}
+.ticks{display:flex;justify-content:space-between;font:11px var(--mono);color:var(--ink-3);margin-top:4px}
+.clear{font-weight:500;text-decoration:underline;text-underline-offset:3px;color:var(--ink-2)}
+
+/* results */
+.results{padding:0}
+.rhead{position:sticky;top:0;background:var(--bg);display:flex;align-items:baseline;justify-content:space-between;padding:20px 24px 12px;border-bottom:1px solid var(--line);z-index:2}
+.rhead h1{margin:0;font-size:22px;font-weight:600;letter-spacing:-.025em}
+.rhead h1 b{font-family:var(--mono);font-weight:500;font-size:20px;letter-spacing:-.02em}
+.rhead p{margin:0;color:var(--ink-3);font-size:13px}
+ol{list-style:none;margin:0;padding:0}
+.job{position:relative;display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:14px;padding:16px 24px;border-bottom:1px solid var(--line);transition:background var(--fast) var(--ease)}
+.job:hover{background:var(--soft)}
+.job.on{background:var(--soft);box-shadow:inset 3px 0 0 var(--ink)}
+.tile{width:40px;height:40px;border-radius:var(--r);display:grid;place-items:center;font-weight:700;font-size:13px;letter-spacing:-.02em;background:var(--soft);border:1px solid var(--line)}
+.job.on .tile,.job:hover .tile{background:#fff}
+.tl{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.pick{text-align:left;font-weight:600;font-size:15px;letter-spacing:-.01em}
+.pick::after{content:"";position:absolute;inset:0}
+.pick:focus-visible{outline:0}
+.pick:focus-visible::after{outline:2px solid var(--focus);outline-offset:-2px}
+.meta{color:var(--ink-2);font-size:13px;margin-top:2px}
+.sal{font:500 13px var(--mono);margin-top:6px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{font-size:12px;padding:2px 8px;border:1px solid var(--line);border-radius:4px;color:var(--ink-2);background:#fff}
+.new{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--green);background:var(--green-tint);padding:2px 6px;border-radius:4px}
+.side{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.age{font:12px var(--mono);color:var(--ink-3);white-space:nowrap}
+.save{position:relative;z-index:1;width:36px;height:36px;display:grid;place-items:center;border-radius:var(--r);color:var(--ink-3);border:1px solid transparent}
+.save:hover{border-color:var(--line-2);color:var(--ink);background:#fff}
+.save[aria-pressed="true"]{color:var(--green)}
+.save[aria-pressed="true"] svg{fill:currentColor}
+.empty{padding:72px 24px;text-align:center;color:var(--ink-2)}
+.empty svg{width:40px;height:40px;stroke-width:1.25;color:var(--ink-3)}
+.empty h2{font-size:18px;color:var(--ink);margin:12px 0 4px;letter-spacing:-.02em}
+.empty p{margin:0 0 16px}
+.btn-o{border:1px solid var(--ink);border-radius:var(--r);padding:0 16px;height:40px;font-weight:600}
+
+/* detail */
+.detail{border-left:1px solid var(--line);padding:24px 28px 32px}
+.dh{display:flex;gap:14px;align-items:flex-start}
+.dh .tile{width:52px;height:52px;font-size:16px}
+.detail h2{margin:0;font-size:24px;line-height:1.15;letter-spacing:-.03em;font-weight:600}
+.detail .meta{font-size:14px;margin-top:4px}
+.dsal{font:500 18px var(--mono);margin:18px 0 4px;letter-spacing:-.02em}
+.dsal small{font-size:12px;color:var(--ink-3)}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:16px 0}
+.facts div{padding:10px 0}
+.facts div+div{padding-left:12px;border-left:1px solid var(--line)}
+.facts dt{font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+.facts dd{margin:2px 0 0;font-weight:500}
+.acts{display:flex;gap:8px}
+.apply{flex:1;height:44px;background:var(--green);color:#fff;font-weight:600;border-radius:var(--r);display:flex;align-items:center;justify-content:center;gap:8px;transition:background var(--fast) var(--ease)}
+.apply:hover{background:#086332}
+.apply[data-done]{background:var(--ink)}
+.acts .save{width:44px;height:44px;border-color:var(--line-2)}
+.detail h3{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:24px 0 8px}
+.detail p,.detail li{color:var(--ink-2);max-width:60ch}
+.detail p{margin:0}
+.detail ul{margin:0;padding-left:18px}
+.detail li{margin:4px 0}
+.sim{display:grid;gap:0;border-top:1px solid var(--line)}
+.sim button{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;padding:10px 0;border-bottom:1px solid var(--line)}
+.sim button:hover b{text-decoration:underline;text-underline-offset:3px}
+.sim .tile{width:32px;height:32px;font-size:11px}
+.sim b{font-weight:600;display:block}
+.sim span{color:var(--ink-3);font-size:12px}
+.sim em{font:normal 12px var(--mono);color:var(--ink-2)}
+.blank{color:var(--ink-3);padding-top:80px;text-align:center}
+
+@media (max-width:1180px){.app{grid-template-columns:208px minmax(0,1fr) 380px}.top{grid-template-columns:208px minmax(0,1fr)}}
+@media (max-width:1024px){
+  .app{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .top{grid-template-columns:minmax(0,1fr)}
+  .filters{grid-column:1/-1;border-right:0;border-bottom:1px solid var(--line);padding:0 24px;overflow:visible}
+  .filters summary{display:flex;align-items:center;justify-content:space-between;min-height:48px;font-weight:600;cursor:pointer;list-style:none}
+  .filters summary::-webkit-details-marker{display:none}
+  .filters .fs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0 24px;padding-bottom:12px}
+  .app{grid-template-rows:auto minmax(0,1fr)}
+}
+@media (max-width:640px){
+  body{overflow:auto;height:auto;display:block}
+  .app{display:block}
+  .app>*{overflow:visible}
+  .top{padding:12px 16px;gap:12px}
+  .search{grid-template-columns:minmax(0,1fr) auto;height:auto}
+  .field{height:44px}
+  .field+.field{border-left:0;border-top:1px solid var(--line)}
+  .field:first-child{grid-column:1/-1}
+  .remote{border-top:1px solid var(--line);border-left:0;grid-column:1/-1;height:44px;justify-content:space-between}
+  .go{grid-row:2;grid-column:2;border-radius:0}
+  .filters{padding:0 16px}
+  .rhead{padding:16px;position:static}
+  .job{padding:14px 16px;grid-template-columns:40px minmax(0,1fr) 36px}
+  .age{display:none}
+  .detail{border-left:0;border-top:8px solid var(--soft);padding:20px 16px 40px}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .facts div:nth-child(3){padding-left:0;border-left:0}
+  .facts div:nth-child(n+3){border-top:1px solid var(--line)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><i aria-hidden="true"></i>Placard</div>
+  <form class="search" role="search" onsubmit="return false">
+    <label class="field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg><span class="sr">Role or keyword</span><input id="q" type="search" placeholder="Role, skill or company" value="designer" autocomplete="off"></label>
+    <label class="field"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-11a6 6 0 0 1 12 0c0 5.7-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg><span class="sr">Location</span><input id="loc" type="search" placeholder="City or country" autocomplete="off"></label>
+    <button type="button" class="remote" id="remote" role="switch" aria-checked="false"><span class="sw" aria-hidden="true"></span>Remote only</button>
+    <button type="submit" class="go">Search</button>
+  </form>
+</header>
+<main class="app">
+  <aside class="filters" aria-label="Filters">
+    <details id="fd" open>
+      <summary>Filters <span id="fcount" class="age"></span></summary>
+      <div class="fs">
+        <fieldset><legend>Job type</legend><div id="f-type"></div></fieldset>
+        <fieldset>
+          <legend>Salary range</legend>
+          <div class="range-val" id="salv" aria-hidden="true"></div>
+          <div class="dual">
+            <div class="track"></div><div class="fill" id="fill"></div>
+            <input type="range" id="smin" min="40" max="220" step="5" value="60" aria-label="Minimum salary">
+            <input type="range" id="smax" min="40" max="220" step="5" value="200" aria-label="Maximum salary">
+          </div>
+          <div class="ticks" aria-hidden="true"><span>$40k</span><span>$220k</span></div>
+        </fieldset>
+        <fieldset><legend>Experience</legend><div id="f-exp"></div></fieldset>
+        <fieldset><legend>Posted within</legend><div id="f-age"></div></fieldset>
+        <button type="button" class="clear" id="clear">Clear all filters</button>
+      </div>
+    </details>
+  </aside>
+  <section class="results" aria-labelledby="rh">
+    <div class="rhead"><h1 id="rh"><b id="count">0</b> roles</h1><p id="sort">Newest first</p></div>
+    <p class="sr" aria-live="polite" id="live"></p>
+    <ol id="list"></ol>
+  </section>
+  <section class="detail" id="detail" aria-label="Job details" tabindex="-1"></section>
+</main>
+<script>
+const J=[
+ ["Senior Product Designer","Northline Freight","NF","Berlin","Hybrid","Full-time","Senior",95,125,0,["Figma","Design systems","Logistics"]],
+ ["Product Designer, Payments","Copperleaf Bank","CB","Remote, EU","Remote","Full-time","Mid",80,105,1,["Fintech","Prototyping"]],
+ ["Lead Designer","Atlas & Rowe","AR","London","On-site","Full-time","Lead",140,175,2,["Leadership","Research"]],
+ ["UX Designer, Field Tools","Greywater Labs","GL","Lisbon","Hybrid","Contract","Mid",70,90,3,["Mobile","Offline-first"]],
+ ["Junior Visual Designer","Ferrous Studio","FS","Remote, worldwide","Remote","Full-time","Junior",48,62,0,["Brand","Illustration"]],
+ ["Design Systems Designer","Quillworks","QW","Amsterdam","Remote","Full-time","Senior",105,135,5,["Tokens","Accessibility"]],
+ ["Interaction Designer","Mapleton Health","MH","Toronto","Hybrid","Part-time","Mid",60,78,9,["Healthcare","Motion"]],
+ ["Staff Product Designer","Brightwell Energy","BE","Remote, US","Remote","Full-time","Lead",170,210,4,["Climate","Strategy"]],
+ ["Content Designer","Sablewood Press","SP","Dublin","On-site","Full-time","Mid",65,82,12,["Writing","Editorial"]],
+ ["Product Designer, Growth","Tidemark","TM","Remote, EU","Remote","Contract","Senior",110,140,1,["Experiments","Analytics"]],
+ ["Service Designer","City of Harrowgate","CH","Manchester","Hybrid","Full-time","Mid",58,70,20,["Public sector","Research"]],
+ ["Motion Designer","Lumen Yard","LY","Copenhagen","On-site","Part-time","Junior",44,56,6,["After Effects","Brand"]]
+].map((r,i)=>({id:i,title:r[0],co:r[1],ini:r[2],city:r[3],mode:r[4],type:r[5],exp:r[6],lo:r[7],hi:r[8],age:r[9],tags:r[10],saved:i===5}));
+const TYPES=["Full-time","Part-time","Contract"],EXPS=["Junior","Mid","Senior","Lead"],AGES=[["Any time",999],["Past 24 hours",1],["Past 3 days",3],["Past week",7],["Past month",30]];
+const $=s=>document.querySelector(s),list=$("#list"),detail=$("#detail");
+const st={types:new Set(TYPES),exps:new Set(["Mid","Senior","Lead"]),age:999,remote:false,sel:0};
+const ic={bm:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v16l-5-4-5 4z"/></svg>',empty:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5M8.5 11h5"/></svg>',arrow:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',check:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg>'};
+const k=n=>"$"+n+"k",band=j=>k(j.lo)+"–"+j.hi+"k",ago=d=>d===0?"Today":d===1?"1d ago":d+"d ago";
+function opts(el,name,items,type,isOn){el.innerHTML=items.map(([v,lab])=>`<label class="opt"><input type="${type}" name="${name}" value="${v}"${isOn(v)?" checked":""}><span>${lab}</span><small data-c="${name}:${v}"></small></label>`).join("")}
+opts($("#f-type"),"type",TYPES.map(t=>[t,t]),"checkbox",v=>st.types.has(v));
+opts($("#f-exp"),"exp",EXPS.map(t=>[t,t]),"checkbox",v=>st.exps.has(v));
+opts($("#f-age"),"age",AGES.map(([l,v])=>[v,l]),"radio",v=>+v===st.age);
+const smin=$("#smin"),smax=$("#smax");
+function match(j,skip){
+  const q=$("#q").value.trim().toLowerCase(),l=$("#loc").value.trim().toLowerCase();
+  if(q&&!(j.title+" "+j.co+" "+j.tags.join(" ")).toLowerCase().includes(q))return false;
+  if(l&&!j.city.toLowerCase().includes(l))return false;
+  if(st.remote&&j.mode!=="Remote")return false;
+  if(skip!=="type"&&!st.types.has(j.type))return false;
+  if(skip!=="exp"&&!st.exps.has(j.exp))return false;
+  if(skip!=="age"&&j.age>st.age)return false;
+  if(j.hi<+smin.value||j.lo>+smax.value)return false;
+  return true;
+}
+function slider(){
+  let a=+smin.value,b=+smax.value;
+  if(a>b-10){if(document.activeElement===smin)smin.value=a=b-10;else smax.value=b=a+10}
+  const p=v=>(v-40)/180*100;
+  $("#fill").style.left=p(a)+"%";$("#fill").style.right=(100-p(b))+"%";
+  $("#salv").textContent=k(a)+" – "+k(b)+(b>=220?"+":"");
+  smin.setAttribute("aria-valuetext",k(a));smax.setAttribute("aria-valuetext",k(b)+(b>=220?" or more":""));
+}
+function row(j){
+  return `<li class="job${j.id===st.sel?" on":""}" data-id="${j.id}"><div class="tile" aria-hidden="true">${j.ini}</div><div><div class="tl"><button type="button" class="pick"${j.id===st.sel?' aria-current="true"':""}>${j.title}</button>${j.age<=1?'<span class="new">New</span>':""}</div><div class="meta">${j.co} · ${j.city} · ${j.mode}</div><div class="sal">${band(j)}</div><div class="tags">${[j.type,...j.tags].map(t=>`<span class="tag">${t}</span>`).join("")}</div></div><div class="side"><span class="age">${ago(j.age)}</span><button type="button" class="save" aria-pressed="${j.saved}" aria-label="Save ${j.title} at ${j.co}">${ic.bm}</button></div></li>`;
+}
+function render(){
+  slider();
+  const hits=J.filter(j=>match(j)).sort((a,b)=>a.age-b.age);
+  $("#count").textContent=hits.length;
+  $("#rh").lastChild.textContent=hits.length===1?" role":" roles";
+  $("#live").textContent=hits.length+(hits.length===1?" role":" roles")+" match";
+  document.querySelectorAll("[data-c]").forEach(e=>{const[n,v]=e.dataset.c.split(":"),key={type:"type",exp:"exp",age:"age"}[n];e.textContent=J.filter(j=>match(j,key)&&(n==="type"?j.type===v:n==="exp"?j.exp===v:j.age<=+v)).length});
+  const active=(3-st.types.size)+(4-st.exps.size)+(st.age<999)+(+smin.value>40||+smax.value<220);
+  $("#fcount").textContent=active?active+" active":"";
+  if(!hits.some(j=>j.id===st.sel))st.sel=hits.length?hits[0].id:-1;
+  list.innerHTML=hits.length?hits.map(row).join(""):`<li class="empty">${ic.empty}<h2>No roles match these filters</h2><p>Widen the salary range or include more experience levels.</p><button type="button" class="btn-o" id="reset">Clear filters</button></li>`;
+  show();
+}
+function show(){
+  const j=J[st.sel];
+  if(!j){detail.innerHTML='<p class="blank">Pick a role to see the details.</p>';return}
+  const sim=J.filter(x=>x.id!==j.id&&(x.exp===j.exp||x.tags.some(t=>j.tags.includes(t))||x.mode===j.mode)).slice(0,3);
+  detail.innerHTML=`<div class="dh"><div class="tile" aria-hidden="true">${j.ini}</div><div><h2>${j.title}</h2><div class="meta">${j.co} · ${j.city}</div></div></div>
+<div class="dsal">${band(j)} <small>per year, before tax</small></div>
+<dl class="facts"><div><dt>Type</dt><dd>${j.type}</dd></div><div><dt>Level</dt><dd>${j.exp}</dd></div><div><dt>Where</dt><dd>${j.mode}</dd></div><div><dt>Posted</dt><dd>${ago(j.age)}</dd></div></dl>
+<div class="acts"><button type="button" class="apply" id="apply">Apply on ${j.co.split(" ")[0]} ${ic.arrow}</button><button type="button" class="save" aria-pressed="${j.saved}" aria-label="Save ${j.title} at ${j.co}" data-id="${j.id}">${ic.bm}</button></div>
+<h3>About the role</h3><p>${j.co} is hiring a ${j.title.toLowerCase()} to own the ${j.tags[0]} side of the product end to end. You will join a team of six and report to the head of design. Interviews are three rounds over two weeks.</p>
+<h3>What you will do</h3><ul><li>Ship two to three features a quarter, from first sketch to release notes.</li><li>Run a research session with customers every other week.</li><li>Keep the shared component library honest with engineering.</li></ul>
+<h3>What you bring</h3><ul><li>${{Junior:"1+ year",Mid:"3+ years",Senior:"5+ years",Lead:"8+ years"}[j.exp]} designing shipped product.</li><li>A portfolio with one project you can walk through in 20 minutes.</li></ul>
+<h3>Similar jobs</h3><div class="sim">${sim.map(x=>`<button type="button" data-go="${x.id}"><span class="tile" aria-hidden="true">${x.ini}</span><span><b>${x.title}</b><span>${x.co} · ${x.mode}</span></span><em>${band(x)}</em></button>`).join("")}</div>`;
+}
+document.addEventListener("click",e=>{
+  const t=e.target;
+  const sv=t.closest(".save");
+  if(sv){const id=+(sv.dataset.id??sv.closest(".job").dataset.id);J[id].saved=!J[id].saved;document.querySelectorAll(".save").forEach(b=>{const bid=+(b.dataset.id??b.closest(".job")?.dataset.id);if(bid===id)b.setAttribute("aria-pressed",J[id].saved)});return}
+  const pk=t.closest(".pick");
+  if(pk){st.sel=+pk.closest(".job").dataset.id;document.querySelectorAll(".job").forEach(r=>{const on=+r.dataset.id===st.sel;r.classList.toggle("on",on);const b=r.querySelector(".pick");on?b.setAttribute("aria-current","true"):b.removeAttribute("aria-current")});show();if(innerWidth<641)detail.scrollIntoView({block:"start"});return}
+  const go=t.closest("[data-go]");
+  if(go){st.sel=+go.dataset.go;render();detail.scrollTop=0;detail.focus({preventScroll:true});return}
+  if(t.closest("#apply")){const a=t.closest("#apply");a.dataset.done="";a.innerHTML=ic.check+" Application started";return}
+  if(t.closest("#reset")||t.closest("#clear")){st.types=new Set(TYPES);st.exps=new Set(EXPS);st.age=999;smin.value=40;smax.value=220;document.querySelectorAll(".filters input[type=checkbox]").forEach(c=>c.checked=true);document.querySelectorAll("input[name=age]").forEach(r=>r.checked=r.value==="999");render()}
+});
+$("#remote").addEventListener("click",e=>{st.remote=!st.remote;e.currentTarget.setAttribute("aria-checked",st.remote);render()});
+$(".filters").addEventListener("change",e=>{const i=e.target;if(i.name==="type"||i.name==="exp"){const s=i.name==="type"?st.types:st.exps;i.checked?s.add(i.value):s.delete(i.value)}else if(i.name==="age")st.age=+i.value;render()});
+[smin,smax,$("#q"),$("#loc")].forEach(i=>i.addEventListener("input",render));
+if(innerWidth<=1024)$("#fd").open=false;
+render();
+</script>
+</body>
+</html>

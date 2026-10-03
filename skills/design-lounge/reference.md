@@ -30,8 +30,17 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Portfolio of a visual designer, photographer, architect, or studio; a showreel | `website` | Also recipe `portfolio`. Scroll, hover, or a cursor is one piece from Register, not a second theme. |
 | Personal site, a journal, not a showreel | `website` | Also recipe `personal-site` |
 | Fashion, a lookbook, a luxury good | `website` | Also recipe `fashion` |
-| Food, a local shop, a menu | `website` | Also recipe `food` |
+| Food, a local shop that sells or ships | `website` | Also recipe `food` |
+| Restaurant, cafe, bar, a menu people come in for | `website` | Also recipe `restaurant` |
 | Wellness, a retreat, a class | `website` | Also recipe `wellness` |
+| Clinic, dentist, physio, vet, a doctor people book | `website` | Also recipe `clinic`. The phone app is `health`. |
+| Gym, boxing, yoga or spin studio with a timetable | `website` | Also recipe `gym` |
+| Real estate, a listing, an agent, rentals | `website` | Also recipe `real-estate` |
+| School, college, an online course, a bootcamp | `website` | Also recipe `education` |
+| Job board, many open roles, hiring marketplace | `product` | Also recipe `jobs`. One company's few roles stay `careers-role-list` on its own site. |
+| Charity, nonprofit, fundraiser, donations | `website` | Also recipe `nonprofit` |
+| Law firm, accountant, consultant, advisory | `website` | Also recipe `professional` |
+| Crypto, trading, an exchange | `product` | Also recipe `fintech`. The trading screen is `crypto-exchange-trade`. |
 | Hotel, a house, a reservation | `website` | Also recipe `hotel` |
 | Agency, a studio site | `website` | Also recipe `agency` |
 | Magazine, journal | `website` | Also recipe `editorial` |

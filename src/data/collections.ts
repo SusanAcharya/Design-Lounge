@@ -54,7 +54,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'Landing pages with a point of view',
     kicker: 'Nº 04',
     blurb: 'Full first pages for fashion, wellness, fintech, a dev tool and an agency. Each one is a complete argument, not a template.',
-    pieces: ['landing-fashion-atelier', 'landing-wellness-retreat', 'landing-fintech-light', 'landing-devtool-dark', 'landing-agency-case-wall', 'editorial-landing-hero', 'mobile-landing-sticky-cta'],
+    pieces: ['landing-fashion-atelier', 'landing-wellness-retreat', 'landing-fintech-light', 'landing-devtool-dark', 'landing-agency-case-wall', 'editorial-landing-hero', 'mobile-landing-sticky-cta', 'realestate-listing-detail', 'restaurant-menu-page', 'course-landing-curriculum', 'job-board-search', 'event-ticket-checkout', 'donation-page-impact', 'clinic-home-booking', 'gym-membership-home', 'law-firm-home', 'crypto-exchange-trade', 'school-admissions-home', 'architecture-studio-index'],
   },
   {
     slug: 'proof-and-close',

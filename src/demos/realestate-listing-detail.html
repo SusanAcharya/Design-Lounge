@@ -1,0 +1,337 @@
+<!-- Design Lounge piece: realestate-listing-detail · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>7 Corbel Row, Clifton · Ashlar &amp; Vane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stone:#ebe6de;--surface:#f5f2ec;--wall:#d9d2c6;--line:#d2cabd;
+  --ink:#22201e;--ink-2:#55504a;--ink-3:#6e675f;--bronze:#8a5a2b;--bronze-t:#e6d6c3;
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Schibsted Grotesk",system-ui,sans-serif;
+  --r:2px;--pad:48px;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--stone);color:var(--ink);font:15px/1.55 var(--sans)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--pad)}
+header.top{display:flex;align-items:center;gap:32px;height:64px;border-bottom:1px solid var(--line)}
+.brand{font:600 22px/1 var(--serif);letter-spacing:.02em;display:flex;gap:10px;align-items:center;color:var(--ink);text-decoration:none}
+.brand svg{width:22px;height:22px}
+.top nav{display:flex;gap:24px;font-size:14px}
+.top nav a{color:var(--ink-2);text-decoration:none}
+.top nav a[aria-current]{color:var(--ink);border-bottom:1px solid var(--ink)}
+.save{margin-left:auto;display:flex;gap:8px;align-items:center;background:none;border:1px solid var(--line);border-radius:var(--r);height:36px;padding:0 14px;font-size:14px}
+.save svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75}
+.save[aria-pressed=true] svg{fill:var(--bronze);stroke:var(--bronze)}
+.head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px;padding:24px 0 18px}
+.crumb{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+h1{font:500 40px/1.05 var(--serif);margin:0;letter-spacing:-.01em}
+.price{text-align:right}
+.price b{display:block;font:600 34px/1 var(--serif)}
+.price span{font-size:13px;color:var(--ink-3)}
+.gallery{position:relative;display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);grid-template-rows:180px 180px;gap:6px}
+.gallery .ph:first-child{grid-row:span 2}
+.ph{position:relative;overflow:hidden;border-radius:var(--r);background:var(--wall)}
+.ph::before,.ph::after{content:"";position:absolute}
+.living{background:linear-gradient(#cfc7ba 0 70%,#a88f73 70%) }
+.living::before{left:14%;top:14%;width:34%;height:50%;background:linear-gradient(90deg,transparent 49%,#8c8378 49% 51%,transparent 51%),linear-gradient(transparent 48%,#8c8378 48% 50%,transparent 50%),linear-gradient(160deg,#f3efe7,#dcd6cb);outline:6px solid #e9e4db}
+.living::after{left:52%;bottom:16%;width:38%;height:17%;background:#3b3632;border-radius:var(--r);box-shadow:-30px 14px 0 -6px #6b5a48}
+.kitchen{background:linear-gradient(#d4cdc1 0 62%,#bdb3a4 62%)}
+.kitchen::before{left:0;right:0;top:30%;height:6%;background:repeating-linear-gradient(90deg,#9e958a 0 1px,transparent 1px 22px),#c6bdb0}
+.kitchen::after{left:22%;bottom:18%;width:56%;height:24%;background:#2c2926;border-top:5px solid #e8e3da}
+.bed{background:linear-gradient(#cbc3b6 0 64%,#8f7a64 64%)}
+.bed::before{left:18%;bottom:20%;width:64%;height:26%;background:linear-gradient(#f1ede6 0 34%,#b9ad9c 34%);border-radius:var(--r)}
+.bed::after{left:12%;top:22%;width:20%;height:36%;background:linear-gradient(#efe9df,#d6cfc3);outline:4px solid #e6e0d6}
+.bath{background:repeating-linear-gradient(90deg,transparent 0 23px,#c3bcb1 23px 24px),repeating-linear-gradient(transparent 0 23px,#c3bcb1 23px 24px),#e2ddd4}
+.bath::before{left:15%;bottom:16%;width:62%;height:24%;background:#f6f3ee;border-radius:var(--r) var(--r) 18px 18px;box-shadow:0 0 0 1px #b9b1a5}
+.bath::after{left:66%;top:20%;width:3px;height:36%;background:#8a5a2b;box-shadow:-8px 0 0 #8a5a2b}
+.garden{background:linear-gradient(#dfe1dc 0 46%,#5f6a58 46% 62%,#b8ad9d 62%)}
+.garden::before{left:0;right:0;bottom:0;height:38%;background:repeating-linear-gradient(90deg,transparent 0 38px,#a19582 38px 40px)}
+.garden::after{left:58%;top:22%;width:22%;height:30%;background:#47513f;border-radius:50% 50% var(--r) var(--r)}
+.garden figcaption{bottom:auto!important;top:8px}
+.ph figcaption{position:absolute;left:10px;bottom:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#f5f2ec;background:rgba(34,32,30,.62);padding:2px 6px;border-radius:var(--r);z-index:1}
+.all{position:absolute;right:14px;bottom:14px;z-index:2;display:flex;gap:8px;align-items:center;height:38px;padding:0 14px;background:var(--surface);border:1px solid var(--ink);border-radius:var(--r);font-size:14px;font-weight:500}
+.all svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:56px;padding:28px 0 72px;align-items:start}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.facts div{padding:14px 0 14px 16px;border-left:1px solid var(--line)}
+.facts div:first-child{border-left:0;padding-left:0}
+.facts dt{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.facts dd{margin:2px 0 0;font:600 28px/1.1 var(--serif)}
+section.blk{padding-top:36px}
+h2{font:500 28px/1.15 var(--serif);margin:0 0 12px}
+.lede{max-width:62ch;color:var(--ink-2);margin:0 0 10px}
+.plan{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:24px;align-items:start}
+.plan svg{width:100%;height:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.room rect{fill:var(--surface);stroke:var(--ink);stroke-width:3;transition:fill .18s var(--ease)}
+.room text{font:500 13px var(--sans);fill:var(--ink-2);pointer-events:none}
+.room{cursor:pointer;outline:none}
+.room:hover rect{fill:#ede6dc}
+.room[aria-pressed=true] rect{fill:var(--bronze-t)}
+.room[aria-pressed=true] text{fill:var(--ink)}
+.room:focus-visible rect{stroke:var(--bronze);stroke-width:5}
+.readout{border-top:1px solid var(--ink);padding-top:12px}
+.readout small{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.readout b{display:block;font:600 26px/1.1 var(--serif);margin:4px 0}
+.readout p{margin:0;color:var(--ink-2);font-size:14px}
+.amen{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
+.amen li{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.amen svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--bronze);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}
+.fields label{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.fields .wide{grid-column:1/-1}
+.in{width:100%;height:40px;border:1px solid var(--line);border-radius:var(--r);background:var(--stone);padding:0 10px}
+input[type=range]{width:100%;accent-color:var(--bronze);height:24px}
+.dep{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2)}
+.month{border-left:1px solid var(--line);padding-left:24px;display:flex;flex-direction:column;justify-content:center}
+.month small{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.month output{font:600 44px/1 var(--serif);margin:6px 0}
+.month p{margin:0;font-size:13px;color:var(--ink-2)}
+.map{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:24px}
+.map svg{width:100%;height:auto;border:1px solid var(--line);border-radius:var(--r)}
+.poi{list-style:none;margin:0;padding:0;font-size:14px}
+.poi li{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.poi i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--surface);font-size:11px;display:grid;place-items:center}
+.poi span{color:var(--ink-3)}
+aside{position:sticky;top:24px}
+.card{background:var(--surface);border:1px solid var(--ink);border-radius:var(--r);padding:22px}
+.card h2{font-size:26px;margin-bottom:4px}
+.card .sub{font-size:13px;color:var(--ink-3);margin:0 0 16px}
+.lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:0 0 8px}
+fieldset{border:0;margin:0 0 16px;padding:0}
+.chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.chips input{position:absolute;opacity:0;width:1px;height:1px}
+.chips label{display:flex;flex-direction:column;align-items:center;justify-content:center;height:56px;border:1px solid var(--line);border-radius:var(--r);font-size:12px;color:var(--ink-2);cursor:pointer;transition:background .15s var(--ease),border-color .15s var(--ease)}
+.chips label b{font:600 20px/1 var(--serif);color:var(--ink)}
+.chips label:hover{border-color:var(--ink-3)}
+.chips input:checked+label{background:var(--ink);border-color:var(--ink);color:#d9d2c6}
+.chips input:checked+label b{color:var(--surface)}
+.chips input:focus-visible+label{outline:2px solid var(--bronze);outline-offset:2px}
+.card select{margin-bottom:16px}
+.go{width:100%;height:46px;background:var(--bronze);color:#fbf8f3;border:0;border-radius:var(--r);font-weight:600;letter-spacing:.02em;transition:background .15s var(--ease)}
+.go:hover{background:#6f4720}
+.note{min-height:20px;font-size:13px;color:var(--ink-2);margin:10px 0 0}
+.agent{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+.av{width:44px;height:44px;border-radius:50%;background:var(--wall);display:grid;place-items:center;font:600 18px var(--serif)}
+.agent p{margin:0;font-size:14px;line-height:1.3}
+.agent p span{font-size:12px;color:var(--ink-3)}
+.call{margin-left:auto;width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:var(--r);background:none}
+.call svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75}
+dialog{border:1px solid var(--ink);border-radius:var(--r);background:var(--surface);padding:24px;width:min(880px,calc(100vw - 32px))}
+dialog::backdrop{background:rgba(34,32,30,.55)}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.dh h2{margin:0}
+.x{width:40px;height:40px;border:1px solid var(--line);background:none;border-radius:var(--r);font-size:18px}
+.sheet{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.sheet .ph{height:130px}
+.price b,.facts dd,.month output,.chips label b,.readout b{font-variant-numeric:lining-nums}
+@media (max-width:1100px){:root{--pad:32px}.cols{grid-template-columns:minmax(0,1fr) 320px;gap:32px}.plan,.map,.calc{grid-template-columns:minmax(0,1fr)}.month{border-left:0;border-top:1px solid var(--line);padding:16px 0 0}}
+@media (max-width:820px){.cols{grid-template-columns:minmax(0,1fr)}aside{position:static;order:-1}.top nav{display:none}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:240px 140px 140px}.gallery .ph:first-child{grid-column:1/-1;grid-row:auto}}
+@media (max-width:640px){:root{--pad:16px}.head{grid-template-columns:minmax(0,1fr)}.price{text-align:left}h1{font-size:32px}.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.facts div:nth-child(3){border-left:0;padding-left:0}.facts div:nth-child(n+3){border-top:1px solid var(--line)}.amen,.fields{grid-template-columns:minmax(0,1fr)}.gallery{grid-template-rows:220px 110px 110px}.sheet{grid-template-columns:repeat(2,minmax(0,1fr))}.save span{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg>Ashlar &amp; Vane</a>
+  <nav aria-label="Primary"><a href="#" aria-current="page">Buy</a><a href="#">Rent</a><a href="#">Sell</a><a href="#">Journal</a></nav>
+  <button class="save" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Save</span></button>
+</header>
+
+<div class="head">
+  <div><p class="crumb">Clifton, Bristol · Freehold townhouse</p><h1>7 Corbel Row, BS8 4QE</h1></div>
+  <div class="price"><b>£845,000</b><span>Guide price · Listed 21 Sep</span></div>
+</div>
+
+<div class="gallery">
+  <figure class="ph living" style="margin:0"><figcaption>Living room</figcaption></figure>
+  <figure class="ph kitchen" style="margin:0"><figcaption>Kitchen</figcaption></figure>
+  <figure class="ph bed" style="margin:0"><figcaption>Main bedroom</figcaption></figure>
+  <figure class="ph bath" style="margin:0"><figcaption>Bathroom</figcaption></figure>
+  <figure class="ph garden" style="margin:0"><figcaption>Rear garden</figcaption></figure>
+  <button class="all" type="button" id="openAll" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>Show all 24 photos</button>
+</div>
+
+<div class="cols">
+<main>
+  <dl class="facts">
+    <div><dt>Bedrooms</dt><dd>3</dd></div>
+    <div><dt>Bathrooms</dt><dd>2</dd></div>
+    <div><dt>Floor area</dt><dd>128 m²</dd></div>
+    <div><dt>Built</dt><dd>1891</dd></div>
+  </dl>
+
+  <section class="blk" aria-labelledby="h-about">
+    <h2 id="h-about">A stone terrace, opened to the light</h2>
+    <p class="lede">Bath stone front, sash windows on the street side and a steel-framed rear wall added in 2019. The ground floor runs front to back as one room, with oak boards and a lime-plastered chimney breast.</p>
+    <p class="lede">Three bedrooms upstairs, a study over the hall, and a south-west garden paved in reclaimed Pennant stone. Clifton Village is a four-minute walk.</p>
+  </section>
+
+  <section class="blk" aria-labelledby="h-plan">
+    <h2 id="h-plan">Floor plan</h2>
+    <div class="plan">
+      <svg viewBox="0 0 640 420" role="group" aria-label="Floor plan. Select a room to see its size.">
+        <g class="room" tabindex="0" role="button" aria-pressed="true" data-n="Living room" data-d="6.0 × 4.6 m" data-a="27.6"><rect x="20" y="20" width="300" height="230"/><text x="40" y="50">Living</text></g>
+        <g class="room" tabindex="0" role="button" aria-pressed="false" data-n="Kitchen and dining" data-d="6.0 × 3.4 m" data-a="20.4"><rect x="320" y="20" width="300" height="170"/><text x="340" y="50">Kitchen</text></g>
+        <rect x="320" y="190" width="300" height="60" fill="none" stroke="#22201e" stroke-width="3"/>
+        <text x="440" y="226" font-size="12" fill="#6e675f" font-family="Schibsted Grotesk,sans-serif">Hall</text>
+        <g class="room" tabindex="0" role="button" aria-pressed="false" data-n="Main bedroom" data-d="4.2 × 3.0 m" data-a="12.6"><rect x="20" y="250" width="210" height="150"/><text x="40" y="280">Bed 1</text></g>
+        <g class="room" tabindex="0" role="button" aria-pressed="false" data-n="Bathroom" data-d="2.2 × 3.0 m" data-a="6.6"><rect x="230" y="250" width="110" height="150"/><text x="246" y="280">Bath</text></g>
+        <g class="room" tabindex="0" role="button" aria-pressed="false" data-n="Second bedroom" data-d="3.6 × 3.0 m" data-a="10.8"><rect x="340" y="250" width="180" height="150"/><text x="356" y="280">Bed 2</text></g>
+        <g class="room" tabindex="0" role="button" aria-pressed="false" data-n="Study" data-d="2.0 × 3.0 m" data-a="6.0"><rect x="520" y="250" width="100" height="150"/><text x="534" y="280">Study</text></g>
+        <path d="M120 250h40M260 250h40M380 250h40M545 250h40M320 70v40" stroke="#f5f2ec" stroke-width="5"/>
+        <path d="M160 250a40 40 0 0 1-40 40M300 250a40 40 0 0 1-40 40M420 250a40 40 0 0 1-40 40" fill="none" stroke="#8a5a2b" stroke-width="1"/>
+      </svg>
+      <div class="readout" aria-live="polite">
+        <small>Selected room</small>
+        <b id="rName">Living room</b>
+        <p id="rDim">6.0 × 4.6 m · 27.6 m²</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-am">
+    <h2 id="h-am">What's here</h2>
+    <ul class="amen">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10l8-6 8 6v10"/><path d="M9 20v-5h6v5"/></svg>Original cornicing and shutters</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 8c3 0 7 1 7 4M19 8c-3 0-7 1-7 4"/></svg>South-west garden, 14 m</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20V4h12v16M10 12h1"/></svg>Steel-framed glazed rear wall</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 4 5 6.5 5 9.5a5 5 0 0 1-10 0C7 9.5 9 7 12 3z"/></svg>Underfloor heating, ground floor</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h12"/></svg>Fitted oak joinery throughout</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17h14l-2-6H7zM8 17v2M16 17v2"/></svg>Residents' parking permit</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14l4-8 4 6 3-3 5 5"/><path d="M4 18h16"/></svg>EPC rating C, 71</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="16"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>Council tax band F</li>
+    </ul>
+  </section>
+
+  <section class="blk" aria-labelledby="h-mort">
+    <h2 id="h-mort">Mortgage estimate</h2>
+    <form class="calc" id="calc" onsubmit="return false">
+      <div class="fields">
+        <div><label for="mPrice">Price (£)</label><input class="in" id="mPrice" inputmode="numeric" value="845,000"></div>
+        <div><label for="mRate">Rate (%)</label><input class="in" id="mRate" inputmode="decimal" value="4.35"></div>
+        <div class="wide"><label for="mDep">Deposit</label><input type="range" id="mDep" min="5" max="50" step="1" value="20" aria-valuetext="20 percent"><div class="dep"><span id="depPct">20%</span><span id="depAmt">£169,000</span></div></div>
+        <div class="wide"><label for="mTerm">Term</label><select class="in" id="mTerm"><option value="20">20 years</option><option value="25" selected>25 years</option><option value="30">30 years</option><option value="35">35 years</option></select></div>
+      </div>
+      <div class="month">
+        <small>Monthly repayment</small>
+        <output id="mOut" for="mPrice mRate mDep mTerm" aria-live="polite">£3,700</output>
+        <p id="mLoan">On a £676,000 loan. Estimate only, not an offer.</p>
+      </div>
+    </form>
+  </section>
+
+  <section class="blk" aria-labelledby="h-map">
+    <h2 id="h-map">Neighbourhood</h2>
+    <div class="map">
+      <svg viewBox="0 0 600 320" role="img" aria-label="Map of Clifton showing the house, the village, the downs, a school and the station.">
+        <rect width="600" height="320" fill="#e2ddd4"/>
+        <path d="M0 40C120 60 160 10 300 0H0z" fill="#c9cbbf"/>
+        <path d="M380 320c20-80 80-120 220-130v130z" fill="#c9cbbf"/>
+        <path d="M-10 250C120 220 210 300 330 270S520 300 610 280" fill="none" stroke="#b9c2c4" stroke-width="22"/>
+        <g fill="none" stroke="#f7f5f0" stroke-linecap="round">
+          <path d="M0 120H600M0 190H600M150 0V320M330 0V320M470 0V230" stroke-width="12"/>
+          <path d="M60 0V250M240 0V320M400 120l60 70M0 80l150 40M520 0v120" stroke-width="6"/>
+        </g>
+        <g font-family="Schibsted Grotesk,sans-serif" font-size="11" fill="#6e675f"><text x="20" y="22">The Downs</text><text x="470" y="260">Brandon Hill</text><text x="20" y="246">Floating Harbour</text></g>
+        <g font-family="Schibsted Grotesk,sans-serif" font-size="11" fill="#f5f2ec" text-anchor="middle">
+          <circle cx="90" cy="100" r="11" fill="#22201e"/><text x="90" y="104">1</text>
+          <circle cx="380" cy="80" r="11" fill="#22201e"/><text x="380" y="84">2</text>
+          <circle cx="510" cy="160" r="11" fill="#22201e"/><text x="510" y="164">3</text>
+          <circle cx="200" cy="290" r="11" fill="#22201e"/><text x="200" y="294">4</text>
+        </g>
+        <circle cx="270" cy="155" r="26" fill="#8a5a2b" opacity=".16"/>
+        <path d="M270 168c-10-12-15-19-15-26a15 15 0 0 1 30 0c0 7-5 14-15 26z" fill="#8a5a2b"/><circle cx="270" cy="142" r="5" fill="#f5f2ec"/>
+      </svg>
+      <ol class="poi">
+        <li><i>1</i>Clifton Village<span>4 min</span></li>
+        <li><i>2</i>Christ Church Primary<span>7 min</span></li>
+        <li><i>3</i>Clifton Down station<span>11 min</span></li>
+        <li><i>4</i>Harbourside<span>14 min</span></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<aside aria-labelledby="h-view">
+  <form class="card" id="book">
+    <h2 id="h-view">Book a viewing</h2>
+    <p class="sub">Thirty minutes, with the agent on site.</p>
+    <fieldset>
+      <legend class="lab">Day</legend>
+      <div class="chips">
+        <input type="radio" name="day" id="d1" value="Tue 6 Oct" checked><label for="d1">Tue<b>6</b></label>
+        <input type="radio" name="day" id="d2" value="Wed 7 Oct"><label for="d2">Wed<b>7</b></label>
+        <input type="radio" name="day" id="d3" value="Thu 8 Oct"><label for="d3">Thu<b>8</b></label>
+        <input type="radio" name="day" id="d4" value="Sat 10 Oct"><label for="d4">Sat<b>10</b></label>
+      </div>
+    </fieldset>
+    <label class="lab" for="time" style="display:block">Time</label>
+    <select class="in" id="time"><option>09:30</option><option>11:00</option><option selected>12:30</option><option>16:00</option><option>17:30</option></select>
+    <button class="go" type="submit">Request viewing</button>
+    <p class="note" id="bNote" aria-live="polite"></p>
+    <div class="agent">
+      <div class="av" aria-hidden="true">IR</div>
+      <p>Imogen Reyes<br><span>Ashlar &amp; Vane, Clifton</span></p>
+      <button class="call" type="button" aria-label="Call Imogen Reyes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg></button>
+    </div>
+  </form>
+</aside>
+</div>
+</div>
+
+<dialog id="photos" aria-labelledby="h-ph">
+  <div class="dh"><h2 id="h-ph">24 photos · 7 Corbel Row</h2><button class="x" type="button" id="closeAll" aria-label="Close photos">×</button></div>
+  <div class="sheet">
+    <div class="ph living"></div><div class="ph kitchen"></div><div class="ph bed"></div><div class="ph bath"></div>
+    <div class="ph garden"></div><div class="ph bed"></div><div class="ph living"></div><div class="ph kitchen"></div>
+  </div>
+</dialog>
+
+<script>
+const $=s=>document.querySelector(s);
+const gbp=n=>'£'+Math.round(n).toLocaleString('en-GB');
+document.querySelectorAll('.room').forEach(r=>{
+  const pick=()=>{
+    document.querySelectorAll('.room').forEach(o=>o.setAttribute('aria-pressed','false'));
+    r.setAttribute('aria-pressed','true');
+    $('#rName').textContent=r.dataset.n;
+    $('#rDim').textContent=r.dataset.d+' · '+r.dataset.a+' m²';
+  };
+  r.addEventListener('click',pick);
+  r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick()}});
+});
+function calc(){
+  const price=parseFloat($('#mPrice').value.replace(/[^\d.]/g,''))||0;
+  const pct=+$('#mDep').value,rate=parseFloat($('#mRate').value)||0,n=$('#mTerm').value*12;
+  const dep=price*pct/100,loan=price-dep,r=rate/1200;
+  const m=r?loan*r/(1-Math.pow(1+r,-n)):loan/n;
+  $('#depPct').textContent=pct+'%';$('#depAmt').textContent=gbp(dep);
+  $('#mDep').setAttribute('aria-valuetext',pct+' percent, '+gbp(dep));
+  $('#mOut').textContent=gbp(m);
+  $('#mLoan').textContent='On a '+gbp(loan)+' loan. Estimate only, not an offer.';
+}
+$('#calc').addEventListener('input',calc);calc();
+$('#book').addEventListener('submit',e=>{
+  e.preventDefault();
+  const d=document.querySelector('[name=day]:checked').value;
+  $('#bNote').textContent='Requested '+d+' at '+$('#time').value+'. Imogen will confirm by email.';
+});
+document.querySelector('#book').addEventListener('change',()=>{$('#bNote').textContent=''});
+const save=$('.save');save.addEventListener('click',()=>save.setAttribute('aria-pressed',save.getAttribute('aria-pressed')!=='true'));
+const dlg=$('#photos');
+$('#openAll').addEventListener('click',()=>dlg.showModal());
+$('#closeAll').addEventListener('click',()=>dlg.close());
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+</script>
+</body>
+</html>

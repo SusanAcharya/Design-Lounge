@@ -1,0 +1,343 @@
+<!-- Design Lounge piece: gym-membership-home · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Graftworks Boxing and Strength</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0c0c0c;--black-2:#161616;--white:#f3f1ec;--grey:#a19d95;--grey-2:#6f6c66;--line:#2c2c2c;--line-l:#d6d2ca;
+  --orange:#ff4b1f;--orange-ink:#0c0c0c;
+  --display:"Anton",Impact,"Arial Narrow",sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --pad:48px;--ease:cubic-bezier(.2,.7,.2,1);--t:140ms;
+}
+*{box-sizing:border-box;border-radius:0}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{font:14px/1.55 var(--mono);color:var(--white);background:var(--black);overflow-x:hidden}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--pad)}
+.d{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.005em;line-height:.88;margin:0}
+.lab{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:square;flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border:2px solid var(--white);background:none;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:13px;text-decoration:none;cursor:pointer;transition:background var(--t) var(--ease),color var(--t) var(--ease),transform var(--t) var(--ease)}
+.btn:hover{background:var(--white);color:var(--black)}
+.btn-o{background:var(--orange);border-color:var(--orange);color:var(--orange-ink)}
+.btn-o:hover{background:var(--white);border-color:var(--white)}
+.btn:active{transform:translate(2px,2px)}
+
+/* header */
+.top{position:sticky;top:0;z-index:6;background:var(--black);border-bottom:2px solid var(--white)}
+.top .wrap{display:flex;align-items:center;gap:28px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:28px/1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.logo i{width:16px;height:28px;background:var(--orange);transform:skewX(-14deg)}
+.nav{display:flex;gap:24px;font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+.nav a{text-decoration:none;padding:6px 0;border-bottom:2px solid transparent}
+.nav a:hover{border-color:var(--orange)}
+.top .addr{margin-left:auto;color:var(--grey);font-size:12px}
+.menu{display:none;margin-left:auto;width:44px;height:44px;border:2px solid var(--white);background:none;place-items:center;cursor:pointer}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:2px solid var(--white);min-height:560px}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;padding-top:40px;padding-bottom:44px;align-items:end;min-height:560px}
+.hero h1{font-size:190px;letter-spacing:-.005em}
+.hero h1 span{display:block}
+.hero h1 .o{color:var(--orange)}
+.stripe{position:absolute;z-index:1;left:-10%;right:-10%;top:58%;height:96px;background:var(--orange);transform:rotate(-7deg);display:flex;align-items:center;overflow:hidden}
+.stripe p{margin:0;white-space:nowrap;font:44px/1 var(--display);text-transform:uppercase;color:var(--black);letter-spacing:.02em;animation:run 38s linear infinite}
+@keyframes run{to{transform:translateX(-50%)}}
+.hero .side{background:var(--black);border:2px solid var(--white);padding:20px;display:grid;gap:14px}
+.hero .side p{margin:0}
+.big{font:64px/.9 var(--display);color:var(--orange)}
+.meta{display:flex;gap:28px;position:absolute;left:var(--pad);top:24px;z-index:2}
+
+/* sections */
+section.band{padding:80px 0;border-bottom:2px solid var(--white)}
+.band.light{background:var(--white);color:var(--black)}
+.band.light .lab{color:var(--grey-2)}
+.shead{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:32px}
+.shead h2{font-size:88px}
+
+/* timetable */
+.days{display:flex;border:2px solid var(--black)}
+.days button{flex:1;min-height:48px;border:0;border-right:2px solid var(--black);background:none;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer}
+.days button:last-child{border-right:0}
+.days button:hover{background:#e4e0d8}
+.days button[aria-selected=true]{background:var(--black);color:var(--white)}
+.filters{display:flex;gap:12px;align-items:end;margin:16px 0}
+.filters label{display:grid;gap:4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-2)}
+.filters select{min-height:44px;min-width:200px;border:2px solid var(--black);background:var(--white);padding:0 12px;color:var(--black);font-weight:700;text-transform:none;letter-spacing:0}
+.count{margin-left:auto;font-weight:700}
+.tt{width:100%;border-collapse:collapse;border-top:2px solid var(--black)}
+.tt td{padding:14px 12px;border-bottom:1px solid var(--line-l);vertical-align:middle}
+.tt td:first-child{font:30px/1 var(--display);width:120px;padding-left:0}
+.tt .cls{font:26px/1 var(--display);text-transform:uppercase}
+.tt .lvl{display:inline-block;padding:3px 8px;border:1.5px solid var(--black);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.tt .lvl.a{background:var(--black);color:var(--white)}
+.tt .sp{font-size:13px;color:var(--grey-2)}
+.tt .sp b{color:var(--black)}
+.tt .full{color:var(--orange);font-weight:700}
+.tt td:last-child{text-align:right;padding-right:0}
+.tt .btn{min-height:40px;border-color:var(--black);font-size:12px;padding:0 14px}
+.tt .btn:hover{background:var(--black);color:var(--white)}
+.empty{padding:32px 0;font-weight:700;border-bottom:1px solid var(--line-l)}
+
+/* tiers */
+.toggle{display:inline-flex;border:2px solid var(--white)}
+.toggle button{min-height:44px;padding:0 18px;border:0;background:none;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:12px;cursor:pointer}
+.toggle button[aria-pressed=true]{background:var(--white);color:var(--black)}
+.toggle em{font-style:normal;color:var(--orange);margin-left:6px}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:2px solid var(--white)}
+.tier{padding:28px;border-right:2px solid var(--white);display:grid;gap:16px;align-content:start}
+.tier:last-child{border-right:0}
+.tier.hot{background:var(--orange);color:var(--black)}
+.tier.hot .lab{color:var(--black)}
+.tier h3{font-size:44px}
+.amt{display:flex;align-items:baseline;gap:8px}
+.amt b{font:84px/.85 var(--display)}
+.amt span{font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.tier ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13px}
+.tier li{display:flex;gap:10px}
+.tier li::before{content:"";width:10px;height:2px;background:currentColor;margin-top:10px;flex:none}
+.tier .btn{margin-top:8px}
+.tier.hot .btn{border-color:var(--black);background:var(--black);color:var(--white)}
+.tier.hot .btn:hover{background:var(--white);color:var(--black);border-color:var(--white)}
+
+/* coaches */
+.coaches{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:2px solid var(--black)}
+.coach{border-right:2px solid var(--black);display:grid}
+.coach:last-child{border-right:0}
+.port{height:220px;background:repeating-linear-gradient(-55deg,var(--black) 0 14px,#1f1f1f 14px 28px);display:grid;place-items:center;position:relative;border-bottom:2px solid var(--black)}
+.port b{font:110px/1 var(--display);color:var(--white)}
+.port i{position:absolute;left:0;bottom:18px;width:60%;height:14px;background:var(--orange)}
+.coach div.t{padding:18px;display:grid;gap:6px}
+.coach h3{font-size:34px}
+.coach p{margin:0;font-size:13px;color:var(--grey-2)}
+
+/* trial */
+.trial .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px}
+.trial h2{font-size:120px}
+.trial h2 span{color:var(--orange)}
+.form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-content:start}
+.form .f{display:grid;gap:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
+.form .full{grid-column:1/-1}
+.form input,.form select{min-height:50px;border:2px solid var(--white);background:var(--black);padding:0 14px;color:var(--white);font-size:15px;letter-spacing:0;text-transform:none}
+.form input::placeholder{color:var(--grey-2)}
+.form input[aria-invalid=true]{border-color:var(--orange)}
+.err{color:var(--orange);font-size:12px;letter-spacing:0;text-transform:none;min-height:0}
+.chk{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--grey);line-height:1.5}
+.chk input{width:22px;height:22px;min-height:0;margin:0;accent-color:var(--orange);flex:none}
+.done{font-weight:700;color:var(--orange);margin:0}
+
+.foot{padding:40px 0 96px;color:var(--grey);font-size:12px}
+.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+.foot b{font:48px/1 var(--display);color:var(--white);text-transform:uppercase;display:block;margin-bottom:8px}
+
+.sticky{position:fixed;right:24px;bottom:24px;z-index:7;min-height:56px;padding:0 24px;font-size:14px;box-shadow:6px 6px 0 var(--white)}
+.sticky:hover{box-shadow:6px 6px 0 var(--orange)}
+.sticky{transition:transform 240ms var(--ease),opacity 240ms var(--ease)}
+.sticky.off{transform:translateY(140%);opacity:0;pointer-events:none}
+
+@media (max-width:1180px){
+  .hero h1{font-size:150px}
+  .shead h2{font-size:72px}
+  .trial h2{font-size:96px}
+}
+@media (max-width:960px){
+  .nav,.top .addr{display:none}
+  .menu{display:grid}
+  .top.open .nav{display:grid;position:absolute;left:0;right:0;top:64px;background:var(--black);border-bottom:2px solid var(--white);padding:8px var(--pad) 16px;gap:0}
+  .top.open .nav a{padding:14px 0;border-bottom:1px solid var(--line)}
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .hero h1{font-size:120px}
+  .tiers{grid-template-columns:minmax(0,1fr)}
+  .tier{border-right:0;border-bottom:2px solid var(--white)}
+  .tier:last-child{border-bottom:0}
+  .coaches{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .coach:nth-child(2){border-right:0}
+  .coach:nth-child(-n+2){border-bottom:2px solid var(--black)}
+  .trial .wrap{grid-template-columns:minmax(0,1fr);gap:32px}
+}
+@media (max-width:640px){
+  :root{--pad:20px}
+  .hero,.hero .wrap{min-height:0}
+  .hero .wrap{padding-top:72px}
+  .hero h1{font-size:84px}
+  .stripe{top:30%;height:60px}
+  .stripe p{font-size:28px}
+  .big{font-size:48px}
+  .meta{gap:16px;font-size:11px}
+  .meta span:first-child{display:none}
+  section.band{padding:56px 0}
+  .shead{display:grid;gap:16px}
+  .shead h2,.trial h2{font-size:60px}
+  .days button{font-size:11px;letter-spacing:.02em}
+  .filters{flex-wrap:wrap}
+  .filters label{flex:1 1 140px}
+  .filters select{min-width:0;width:100%}
+  .count{margin-left:0;width:100%}
+  .tt td{padding:12px 6px}
+  .tt td:first-child{font-size:22px;width:64px}
+  .tt .cls{font-size:20px}
+  .tt .sp,.tt .hide{display:none}
+  .amt b{font-size:64px}
+  .coaches{grid-template-columns:minmax(0,1fr)}
+  .coach{border-right:0;border-bottom:2px solid var(--black)}
+  .coach:last-child{border-bottom:0}
+  .port{height:160px}
+  .form{grid-template-columns:minmax(0,1fr)}
+  .sticky{left:20px;right:20px;bottom:16px;box-shadow:none;border:2px solid var(--black)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .stripe p{animation:none}
+  *{transition-duration:1ms!important}
+  .btn:active{transform:none}
+}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#top"><i aria-hidden="true"></i>Graftworks</a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#timetable">Timetable</a><a href="#join">Membership</a><a href="#coaches">Coaches</a><a href="#trial">Free class</a>
+    </nav>
+    <span class="addr">Arch 9, Mill Road · Open 06:00–22:00</span>
+    <button class="menu" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="h">
+  <div class="meta lab" aria-hidden="true"><span>Est. 2016</span><span>Boxing / Strength / Conditioning</span></div>
+  <div class="stripe" aria-hidden="true"><p>No mirrors · No contracts · Gloves on the house · First class free · No mirrors · No contracts · Gloves on the house · First class free · No mirrors · No contracts · Gloves on the house · First class free ·&nbsp;</p></div>
+  <div class="wrap">
+    <h1 class="d" id="h"><span>Hit</span><span class="o">harder.</span><span>Lift heavy.</span></h1>
+    <div class="side">
+      <p class="lab">Under a railway arch since 2016</p>
+      <p class="big">41 classes<br>a week</p>
+      <p>Boxing from your first jab to sparring. Barbell strength coached in groups of eight.</p>
+      <a class="btn btn-o" href="#trial">Book free class</a>
+      <a class="btn" href="#timetable">See timetable</a>
+    </div>
+  </div>
+</section>
+
+<section class="band light" id="timetable" aria-labelledby="tt-h">
+  <div class="wrap">
+    <div class="shead"><h2 class="d" id="tt-h">Timetable</h2><p class="lab">Week of 5 October · 60 min unless marked</p></div>
+    <div class="days" role="tablist" aria-label="Day">
+      <button role="tab" aria-selected="true" aria-controls="tt-panel" data-d="0">Mon</button><button role="tab" aria-selected="false" aria-controls="tt-panel" data-d="1" tabindex="-1">Tue</button><button role="tab" aria-selected="false" aria-controls="tt-panel" data-d="2" tabindex="-1">Wed</button><button role="tab" aria-selected="false" aria-controls="tt-panel" data-d="3" tabindex="-1">Thu</button><button role="tab" aria-selected="false" aria-controls="tt-panel" data-d="4" tabindex="-1">Fri</button><button role="tab" aria-selected="false" aria-controls="tt-panel" data-d="5" tabindex="-1">Sat</button><button role="tab" aria-selected="false" aria-controls="tt-panel" data-d="6" tabindex="-1">Sun</button>
+    </div>
+    <div class="filters">
+      <label>Level<select id="f-lvl"><option value="">All levels</option><option>Beginner</option><option>Mixed</option><option>Advanced</option></select></label>
+      <label>Coach<select id="f-coach"><option value="">All coaches</option><option>Dee</option><option>Marcus</option><option>Ines</option><option>Rob</option></select></label>
+      <span class="count" id="count" aria-live="polite"></span>
+    </div>
+    <div id="tt-panel" role="tabpanel" aria-label="Classes"><table class="tt"><tbody id="rows"></tbody></table></div>
+  </div>
+</section>
+
+<section class="band" id="join" aria-labelledby="j-h">
+  <div class="wrap">
+    <div class="shead"><h2 class="d" id="j-h">Membership</h2>
+      <div class="toggle" role="group" aria-label="Billing"><button type="button" aria-pressed="true" data-b="m">Monthly</button><button type="button" aria-pressed="false" data-b="y">Annual<em>2 months free</em></button></div>
+    </div>
+    <div class="tiers">
+      <article class="tier"><p class="lab">Off-peak</p><h3 class="d">Day shift</h3><div class="amt"><b data-m="39" data-y="390">£39</b><span data-per>/ month</span></div><ul><li>Classes before 16:00 weekdays</li><li>Open gym 10:00–16:00</li><li>Gloves and wraps to borrow</li></ul><a class="btn" href="#trial">Start with a free class</a></article>
+      <article class="tier hot"><p class="lab">Most members</p><h3 class="d">Unlimited</h3><div class="amt"><b data-m="69" data-y="690">£69</b><span data-per>/ month</span></div><ul><li>Every class, every day</li><li>Open gym 06:00–22:00</li><li>Quarterly strength test with a coach</li><li>Bring a friend once a month</li></ul><a class="btn" href="#trial">Start with a free class</a></article>
+      <article class="tier"><p class="lab">Fight team</p><h3 class="d">Fight camp</h3><div class="amt"><b data-m="119" data-y="1,190">£119</b><span data-per>/ month</span></div><ul><li>Unlimited plus sparring nights</li><li>Two 1:1 pad sessions a month</li><li>Fight-week plan and cornering</li></ul><a class="btn" href="#trial">Talk to a coach</a></article>
+    </div>
+  </div>
+</section>
+
+<section class="band light" id="coaches" aria-labelledby="c-h">
+  <div class="wrap">
+    <div class="shead"><h2 class="d" id="c-h">Coaches</h2><p class="lab">4 coaches · 52 years on the floor</p></div>
+    <div class="coaches">
+      <article class="coach"><div class="port" aria-hidden="true"><b>DA</b><i></i></div><div class="t"><p class="lab">Head coach · Boxing</p><h3 class="d">Dee Achebe</h3><p>Former national amateur finalist. Runs sparring nights and the fight team.</p></div></article>
+      <article class="coach"><div class="port" aria-hidden="true"><b>MV</b><i></i></div><div class="t"><p class="lab">Strength</p><h3 class="d">Marcus Vale</h3><p>Barbell coach, 14 years. Programmes every strength block in cycles of six weeks.</p></div></article>
+      <article class="coach"><div class="port" aria-hidden="true"><b>IR</b><i></i></div><div class="t"><p class="lab">Boxing · Beginners</p><h3 class="d">Ines Roca</h3><p>Takes every first-timer class. Teaches the stance before the punch.</p></div></article>
+      <article class="coach"><div class="port" aria-hidden="true"><b>RK</b><i></i></div><div class="t"><p class="lab">Conditioning</p><h3 class="d">Rob Keane</h3><p>Circuits, sled and rower. Keeps the 06:30 crowd honest.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="band trial" id="trial" aria-labelledby="tr-h">
+  <div class="wrap">
+    <div>
+      <h2 class="d" id="tr-h">First class<br><span>is free.</span></h2>
+      <p style="max-width:42ch;color:var(--grey)">Pick a class, turn up ten minutes early in trainers. We lend gloves and wraps. No card needed, no sales talk after.</p>
+    </div>
+    <form class="form" id="form" novalidate>
+      <label class="f">First name<input name="name" autocomplete="given-name" required aria-describedby="e-name"><span class="err" id="e-name"></span></label>
+      <label class="f">Phone<input name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="07700 900418"></label>
+      <label class="f full">Email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com" aria-describedby="e-email"><span class="err" id="e-email"></span></label>
+      <label class="f full">Class<select name="cls"><option>Boxing Fundamentals · Mon 18:30</option><option>Strength Base · Tue 07:00</option><option>Open Boxing · Wed 19:30</option><option>Conditioning · Sat 09:00</option></select></label>
+      <label class="chk full"><input type="checkbox" name="ok" required aria-describedby="e-ok">I have no injury a coach should know about, or I will mention it on arrival.</label>
+      <span class="err full" id="e-ok"></span>
+      <button class="btn btn-o full" type="submit">Book free class</button>
+      <p class="done full" id="done" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><b>Graftworks</b>Arch 9, Mill Road, Leeds LS9 8DT · 0113 496 0185</div>
+    <div>Mon–Fri 06:00–22:00 · Sat–Sun 08:00–16:00</div>
+  </div>
+</footer>
+
+<a class="btn btn-o sticky off" id="sticky" href="#trial">Book free class</a>
+
+<script>
+const top_=document.getElementById('top'),menu=top_.querySelector('.menu');
+menu.addEventListener('click',()=>{const o=top_.classList.toggle('open');menu.setAttribute('aria-expanded',o)});
+document.getElementById('nav').addEventListener('click',e=>{if(e.target.closest('a')){top_.classList.remove('open');menu.setAttribute('aria-expanded','false')}});
+
+const C=[
+['06:30','Conditioning','Mixed','Rob',[0,2,4]],['07:00','Strength Base','Beginner','Marcus',[1,3]],
+['12:15','Boxing Fundamentals','Beginner','Ines',[0,1,2,3,4]],['17:30','Barbell Club','Advanced','Marcus',[0,2,4]],
+['18:30','Boxing Fundamentals','Beginner','Ines',[0,1,3]],['18:30','Pads and Bags','Mixed','Dee',[2,4]],
+['19:30','Open Boxing','Mixed','Dee',[0,2]],['19:30','Sparring Night','Advanced','Dee',[1,3]],
+['09:00','Conditioning','Mixed','Rob',[5]],['10:00','Boxing Fundamentals','Beginner','Ines',[5,6]],['11:00','Strength Base','Mixed','Marcus',[5]],['12:00','Open Gym Drills','Mixed','Rob',[6]]
+];
+const spaces=[4,9,0,6,2,11,3,7,5,1,8,10];
+let day=0;const rows=document.getElementById('rows'),count=document.getElementById('count'),lv=document.getElementById('f-lvl'),co=document.getElementById('f-coach');
+function draw(){
+  const list=C.map((c,i)=>[...c,spaces[(i+day)%12]]).filter(c=>c[4].includes(day)&&(!lv.value||c[2]===lv.value)&&(!co.value||c[3]===co.value)).sort((a,b)=>a[0]<b[0]?-1:1);
+  rows.innerHTML=list.length?list.map(c=>`<tr><td>${c[0]}</td><td><span class="cls">${c[1]}</span></td><td class="hide"><span class="lvl${c[2]==='Advanced'?' a':''}">${c[2]}</span></td><td class="sp">Coach <b>${c[3]}</b></td><td class="sp">${c[5]?c[5]+' of 14 spaces':'<span class="full">Waitlist</span>'}</td><td><a class="btn" href="#trial">${c[5]?'Book':'Join list'}</a></td></tr>`).join(''):'<tr><td colspan="6" class="empty">No classes match. Clear a filter or pick another day.</td></tr>';
+  count.textContent=list.length+(list.length===1?' class':' classes');
+}
+const tabs=[...document.querySelectorAll('[role=tab]')];
+function sel(t){tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1});day=+t.dataset.d;draw()}
+tabs.forEach((t,i)=>{t.addEventListener('click',()=>sel(t));t.addEventListener('keydown',e=>{const k={ArrowRight:1,ArrowLeft:-1}[e.key];if(k){const n=tabs[(i+k+7)%7];sel(n);n.focus()}})});
+lv.onchange=co.onchange=draw;draw();
+
+document.querySelector('.toggle').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('.toggle button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  const y=b.dataset.b==='y';document.querySelectorAll('.amt b').forEach(a=>a.textContent='£'+(y?a.dataset.y:a.dataset.m));
+  document.querySelectorAll('[data-per]').forEach(p=>p.textContent=y?'/ year':'/ month')});
+
+const st=document.getElementById('sticky'),seen=new Map();
+const io=new IntersectionObserver(es=>{es.forEach(x=>seen.set(x.target.id,x.isIntersecting));const off=seen.get('h')||seen.get('trial');st.classList.toggle('off',!!off);st.setAttribute('aria-hidden',!!off);off?st.setAttribute('tabindex','-1'):st.removeAttribute('tabindex')});
+io.observe(document.getElementById('h'));io.observe(document.getElementById('trial'));
+const f=document.getElementById('form');
+f.addEventListener('submit',e=>{e.preventDefault();let ok=true;const F=f.elements;
+  const set=(el,id,msg)=>{el.setAttribute('aria-invalid',!!msg);document.getElementById(id).textContent=msg;if(msg&&ok){el.focus();ok=false}};
+  set(F.name,'e-name',F.name.value.trim()?'':'Enter your first name.');
+  set(F.email,'e-email',/^\S+@\S+\.\S+$/.test(F.email.value)?'':'Enter an email we can send the booking to.');
+  set(F.ok,'e-ok',F.ok.checked?'':'Tick to confirm before booking.');
+  document.getElementById('done').textContent=ok?'Booked, '+F.name.value.trim()+'. '+F.cls.value+'. Check your email for the door code.':'';
+});
+</script>
+</body>
+</html>

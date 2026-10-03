@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 187 · "Corner player" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 189 · "Corner player" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Corner player
 

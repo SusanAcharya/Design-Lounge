@@ -205,6 +205,46 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['cobalt-tablet', 'Cobalt tablet', 'Neutral, work', 'fog-city', 'geometric-modern', 'quiet', undefined, null],
     ['night-tablet', 'Night tablet', 'Dark, technical', 'night-desk', 'developer-docs', 'sharp', undefined, null],
   ]),
+  'real-estate': d([
+    ['stone-listing', 'Stone listing', 'Quiet, architectural, high price', 'marble-hall', 'gallery-wall', 'editorial', 'realestate-listing-detail', 'parallax-layered-hero'],
+    ['harbour-homes', 'Harbour homes', 'Navy, brass, a trusted agent', 'harbour-ledger', 'magazine-contrast', 'quiet', 'realestate-listing-detail', 'scroll-word-highlight'],
+    ['fog-flats', 'Fog flats', 'Cool, plain, city rentals', 'fog-city', 'neo-grotesk-mono', 'sharp', 'hero-search-marketplace', 'staggered-list-reveal'],
+  ]),
+  restaurant: d([
+    ['bistro-riso', 'Bistro riso', 'Printed menu, oxblood, a corner bistro', 'velvet-club', 'riso-zine', 'editorial', 'restaurant-menu-page', 'text-marker-highlight-draw'],
+    ['market-kitchen', 'Market kitchen', 'Turmeric, tomato, loud and busy', 'market-stall', 'poster-condensed', 'industrial', 'restaurant-menu-page', 'kinetic-type-marquee'],
+    ['garden-supper', 'Garden supper', 'Olive, cream, slow food', 'loam', 'garden-journal', 'soft', 'restaurant-menu-page', 'hero-video-loop'],
+  ]),
+  education: d([
+    ['lecture-hall', 'Lecture hall', 'Academic, calm, one green', 'paper-ink', 'academic', 'editorial', 'course-landing-curriculum', 'scroll-reading-progress'],
+    ['bauhaus-campus', 'Bauhaus campus', 'Cream, navy, shapes, a school', 'archive', 'bauhaus-school', 'soft', 'school-admissions-home', 'staggered-list-reveal'],
+    ['play-lesson', 'Play lesson', 'Bright, friendly, for learners', 'playroom', 'playground', 'soft', 'course-landing-curriculum', 'spring-deck'],
+  ]),
+  jobs: d([
+    ['swiss-board', 'Swiss board', 'White, black, one green, fast to scan', 'fog-city', 'swiss-precision', 'quiet', 'job-board-search', null],
+    ['night-roles', 'Night roles', 'Dark, technical, for engineers', 'night-desk', 'developer-docs', 'sharp', 'job-board-search', 'text-scramble-reveal'],
+    ['press-hiring', 'Press hiring', 'Newsprint and one red', 'press-room', 'newsroom', 'editorial', 'careers-role-list', 'text-mask-line-reveal'],
+  ]),
+  nonprofit: d([
+    ['warm-lunch', 'Warm lunch', 'Terracotta, cream, a real cause', 'kiln', 'garden-journal', 'soft', 'donation-page-impact', 'scroll-word-highlight'],
+    ['greenhouse-fund', 'Greenhouse fund', 'Leaf green, soft, hopeful', 'greenhouse', 'the-lounge', 'soft', 'donation-page-impact', 'parallax-layered-hero'],
+    ['lokta-seva', 'Lokta seva', 'Nepali paper, crimson, community', 'lokta', 'devanagari', 'editorial', 'donation-page-impact', 'text-marker-highlight-draw'],
+  ]),
+  clinic: d([
+    ['aqua-care', 'Aqua care', 'Calm, clear, trusted', 'alpine-clinic', 'friendly-saas', 'soft', 'clinic-home-booking', 'staggered-list-reveal'],
+    ['glacier-physio', 'Glacier physio', 'Pale, precise, sports care', 'glacier', 'geometric-modern', 'quiet', 'clinic-home-booking', 'features-sticky-scroll-steps'],
+    ['linen-practice', 'Linen practice', 'Warm, small, a family doctor', 'linen-shop', 'bookish', 'soft', 'clinic-home-booking', 'scroll-word-highlight'],
+  ]),
+  gym: d([
+    ['blood-orange', 'Blood orange', 'Black, loud, a fight gym', 'cinder', 'poster-condensed', 'industrial', 'gym-membership-home', 'kinetic-type-marquee'],
+    ['volt-studio', 'Volt studio', 'Dark, neon, a spin or HIIT studio', 'neon-alley', 'wide-tech', 'sharp', 'gym-membership-home', 'preloader-counter-intro'],
+    ['oxide-yard', 'Oxide yard', 'Rust, bone, a strength barn', 'oxide', 'industrial-label', 'industrial', 'gym-membership-home', 'scroll-velocity-type'],
+  ]),
+  professional: d([
+    ['courtroom', 'Courtroom', 'Green leather, cream, serious', 'courtroom', 'maison', 'editorial', 'law-firm-home', 'scroll-word-highlight'],
+    ['ivory-counsel', 'Ivory counsel', 'Ivory, navy, oxblood, quiet money', 'marble-hall', 'lettera', 'editorial', 'law-firm-home', 'text-mask-line-reveal'],
+    ['harbour-advisors', 'Harbour advisors', 'Navy and brass, an accounting or consulting firm', 'harbour-ledger', 'slab-ledger', 'quiet', 'law-firm-home', 'stats-count-up-band'],
+  ]),
 };
 
 export const SURFACES: { id: Surface; title: string; blurb: string }[] = [
@@ -213,7 +253,7 @@ export const SURFACES: { id: Surface; title: string; blurb: string }[] = [
 ];
 
 const ORDER = [
-  'marketing-site', 'saas', 'portfolio', 'portfolio-builder', 'commerce', 'fintech', 'fashion', 'food', 'wellness', 'hotel', 'agency', 'editorial', 'docs', 'music', 'personal-site', 'event', 'museum', 'landing', 'dashboard', 'design-system',
+  'marketing-site', 'saas', 'portfolio', 'portfolio-builder', 'commerce', 'fintech', 'fashion', 'food', 'wellness', 'hotel', 'agency', 'editorial', 'docs', 'music', 'personal-site', 'event', 'museum', 'landing', 'real-estate', 'restaurant', 'education', 'jobs', 'nonprofit', 'clinic', 'gym', 'professional', 'dashboard', 'design-system',
   'mobile-app', 'personal', 'bank', 'health', 'messages', 'music-app', 'news', 'shop-app', 'social', 'weather', 'field', 'tablet',
 ];
 
@@ -223,6 +263,62 @@ export function startsOn(surface: Surface) {
 }
 
 const BASE: Omit<Start, 'directions'>[] = [
+  {
+    id: 'real-estate', surface: 'web', title: 'Real estate', kicker: 'Live',
+    blurb: 'One home, its plan, a viewing, the monthly cost.',
+    when: 'A property listing, an agent, or a rental site. Marble Hall for a high price, Fog City for city rentals.',
+    theme: 'marble-hall', pairing: 'gallery-wall', shelf: 'website-in-parts', categories: ['ecommerce', 'contact', 'gallery'],
+    pieces: ['realestate-listing-detail', 'hero-search-marketplace', 'phone-map-listings', 'contact-split-map-form', 'faq-category-accordion', 'navbar-split-centered-logo'],
+  },
+  {
+    id: 'restaurant', surface: 'web', title: 'A restaurant', kicker: 'Eat',
+    blurb: 'Hours today, the menu with prices, a table.',
+    when: 'A restaurant, a cafe, or a bar people visit. Not a food shop that ships; that is food.',
+    theme: 'velvet-club', pairing: 'riso-zine', shelf: 'website-in-parts', categories: ['landing', 'contact', 'pickers'],
+    pieces: ['restaurant-menu-page', 'contact-booking-hours', 'navbar-split-centered-logo', 'mobile-web-bottom-nav', 'hero-video-loop', 'testimonials-masonry-wall', 'tablet-pos-register'],
+  },
+  {
+    id: 'education', surface: 'web', title: 'A school or course', kicker: 'Learn',
+    blurb: 'What you learn, the lessons, the dates, how to apply.',
+    when: 'An online course, a school, a college, or a bootcamp.',
+    theme: 'paper-ink', pairing: 'academic', shelf: 'website-in-parts', categories: ['landing', 'faq', 'inputs'],
+    pieces: ['course-landing-curriculum', 'school-admissions-home', 'faq-category-accordion', 'pricing-annual-toggle-roll', 'testimonials-metric-tabs', 'phone-lesson-quiz'],
+  },
+  {
+    id: 'jobs', surface: 'web', title: 'A job board', kicker: 'Work',
+    blurb: 'Search, filters, one job beside the list.',
+    when: 'A job board, a careers page with many roles, or a hiring marketplace.',
+    theme: 'fog-city', pairing: 'swiss-precision', shelf: 'website-in-parts', categories: ['utility', 'inputs', 'data'],
+    pieces: ['job-board-search', 'careers-role-list', 'search-results-filters', 'file-upload-manager', 'phone-search-results'],
+  },
+  {
+    id: 'nonprofit', surface: 'web', title: 'A nonprofit', kicker: 'Give',
+    blurb: 'The story, what each amount does, the goal.',
+    when: 'A charity, a fundraiser, or a community group asking for money or time.',
+    theme: 'kiln', pairing: 'garden-journal', shelf: 'website-in-parts', categories: ['landing', 'stats', 'cta'],
+    pieces: ['donation-page-impact', 'stats-count-up-band', 'scroll-word-highlight', 'testimonials-masonry-wall', 'newsletter-fold-inline'],
+  },
+  {
+    id: 'clinic', surface: 'web', title: 'A clinic', kicker: 'Care',
+    blurb: 'The next free slot, the doctors, the hours, the map.',
+    when: 'A dental, physio, vet, or doctor clinic people book. A retreat is wellness.',
+    theme: 'alpine-clinic', pairing: 'friendly-saas', shelf: 'website-in-parts', categories: ['landing', 'contact', 'pickers'],
+    pieces: ['clinic-home-booking', 'calendar-week-planner', 'phone-booking-slots', 'faq-category-accordion', 'tablet-kiosk-checkin'],
+  },
+  {
+    id: 'gym', surface: 'web', title: 'A gym', kicker: 'Train',
+    blurb: 'A loud poster, the timetable, the price, a free class.',
+    when: 'A gym, a boxing club, a yoga or spin studio with a timetable.',
+    theme: 'cinder', pairing: 'poster-condensed', shelf: 'website-in-parts', categories: ['landing', 'pricing', 'utility'],
+    pieces: ['gym-membership-home', 'mobile-web-bottom-nav', 'phone-workout-timer', 'pricing-annual-toggle-roll', 'phone-booking-slots'],
+  },
+  {
+    id: 'professional', surface: 'web', title: 'A firm', kicker: 'Advise',
+    blurb: 'One serious sentence, the practice areas, a private form.',
+    when: 'A law firm, an accountant, a consultant, or an advisory practice.',
+    theme: 'courtroom', pairing: 'maison', shelf: 'website-in-parts', categories: ['landing', 'team', 'contact'],
+    pieces: ['law-firm-home', 'people-role-list', 'stats-count-up-band', 'contact-project-brief-steps', 'card-article-mix'],
+  },
   {
     id: 'marketing-site',
     surface: 'web',
@@ -260,7 +356,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'gallery-wall',
     shelf: 'portfolio-sites',
     categories: ['portfolio', 'profile', 'gallery', 'hero'],
-    pieces: ['portfolio-architect-index', 'portfolio-index-hover-preview', 'portfolio-photographer-horizontal', 'portfolio-case-study-long', 'portfolio-motion-showreel', 'profile-creator-masthead', 'navbar-vertical-rail', 'hamburger-circle-reveal'],
+    pieces: ['portfolio-architect-index', 'portfolio-index-hover-preview', 'portfolio-photographer-horizontal', 'portfolio-case-study-long', 'portfolio-motion-showreel', 'profile-creator-masthead', 'navbar-vertical-rail', 'hamburger-circle-reveal', 'architecture-studio-index'],
   },
   {
     id: 'portfolio-builder',
@@ -286,7 +382,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'friendly-saas',
     shelf: 'landing-pages',
     categories: ['landing', 'pricing', 'charts', 'auth'],
-    pieces: ['landing-fintech-light', 'swiss-grid-pricing', 'pricing-comparison-sticky', 'charts-kpi-spark-row', 'kpi-delta', 'split-sign-in', 'mega-menu-product-grid', 'navbar-hide-on-scroll', 'stats-count-up-band', 'testimonials-metric-tabs', 'faq-category-accordion'],
+    pieces: ['landing-fintech-light', 'swiss-grid-pricing', 'pricing-comparison-sticky', 'charts-kpi-spark-row', 'kpi-delta', 'split-sign-in', 'mega-menu-product-grid', 'navbar-hide-on-scroll', 'stats-count-up-band', 'testimonials-metric-tabs', 'faq-category-accordion', 'crypto-exchange-trade'],
   },
   {
     id: 'fashion',
@@ -351,7 +447,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'brutal-grotesk',
     shelf: 'portfolio-sites',
     categories: ['landing', 'portfolio', 'team'],
-    pieces: ['landing-agency-case-wall', 'brutalist-studio-home', 'team-hover-portrait-grid', 'portfolio-case-study-long', 'careers-role-list', 'navbar-vertical-rail', 'hamburger-circle-reveal', 'contact-project-brief-steps', 'logos-grid-case-hover', 'testimonials-masonry-wall'],
+    pieces: ['landing-agency-case-wall', 'brutalist-studio-home', 'team-hover-portrait-grid', 'portfolio-case-study-long', 'careers-role-list', 'navbar-vertical-rail', 'hamburger-circle-reveal', 'contact-project-brief-steps', 'logos-grid-case-hover', 'testimonials-masonry-wall', 'architecture-studio-index'],
   },
   {
     id: 'docs',
@@ -377,7 +473,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'y2k-chrome',
     shelf: 'portfolio-sites',
     categories: ['portfolio', 'text-motion', 'media'],
-    pieces: ['portfolio-motion-showreel', 'kinetic-type-marquee', 'corner-player', 'coverflow-strip', 'logos-mono-marquee'],
+    pieces: ['portfolio-motion-showreel', 'kinetic-type-marquee', 'corner-player', 'coverflow-strip', 'logos-mono-marquee', 'event-ticket-checkout'],
   },
   {
     id: 'personal-site',
@@ -403,7 +499,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'poster-condensed',
     shelf: 'first-impressions',
     categories: ['utility', 'text-motion', 'stats', 'cta'],
-    pieces: ['week-schedule', 'split-flap-board', 'kinetic-type-marquee', 'stats-ticker-band', 'cta-split-dark-band', 'card-holo-foil', 'mobile-web-bottom-nav', 'stats-count-up-band', 'faq-category-accordion'],
+    pieces: ['week-schedule', 'split-flap-board', 'kinetic-type-marquee', 'stats-ticker-band', 'cta-split-dark-band', 'card-holo-foil', 'mobile-web-bottom-nav', 'stats-count-up-band', 'faq-category-accordion', 'event-ticket-checkout'],
   },
   {
     id: 'museum',
@@ -468,7 +564,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'swiss-precision',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'data', 'charts', 'navigation'],
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'kanban-board', 'sidebar-workspace-switcher', 'ai-chat-workspace', 'settings-team-members', 'file-upload-manager', 'calendar-week-planner', 'onboarding-workspace-setup'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'kanban-board', 'sidebar-workspace-switcher', 'ai-chat-workspace', 'settings-team-members', 'file-upload-manager', 'calendar-week-planner', 'onboarding-workspace-setup', 'crypto-exchange-trade'],
   },
   {
     id: 'commerce',

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 326 · "WebGL shader hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 338 · "WebGL shader hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # WebGL shader hero
 

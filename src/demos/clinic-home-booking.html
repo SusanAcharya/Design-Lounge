@@ -1,0 +1,378 @@
+<!-- Design Lounge piece: clinic-home-booking · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Larkfield Dental Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f9f8;--surface:#fff;--aqua:#d6efec;--aqua-2:#b7e2dd;--teal:#0e4f55;--teal-2:#1d6b70;
+  --ink:#12302f;--ink-2:#45605f;--ink-3:#6a8180;--line:#d5e6e3;--warm:#d98a3d;--ok:#1f8a6d;
+  --display:"Nunito",system-ui,sans-serif;--sans:"Nunito Sans",system-ui,sans-serif;
+  --r:12px;--r-lg:18px;--pad:56px;--max:1168px;
+  --ease:cubic-bezier(.2,.7,.2,1);--t:180ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.55 var(--sans);color:var(--ink);background:var(--bg);overflow-x:hidden}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+svg{display:block}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.015em}
+h2{font-size:34px;line-height:1.15;font-weight:800}
+.kick{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-2);margin:0 0 10px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:var(--r);border:0;font-weight:700;text-decoration:none;cursor:pointer;transition:background var(--t) var(--ease),transform var(--t) var(--ease)}
+.btn-p{background:var(--teal);color:#fff}
+.btn-p:hover{background:var(--teal-2)}
+.btn-p:active{transform:translateY(1px)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn-g{background:var(--surface);color:var(--teal);box-shadow:inset 0 0 0 1px var(--aqua-2)}
+.btn-g:hover{background:var(--aqua)}
+
+/* header */
+.top{position:sticky;top:0;z-index:5;background:rgba(242,249,248,.94);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:32px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font:800 19px/1 var(--display);color:var(--teal);text-decoration:none}
+.logo span{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--teal);color:#fff}
+.nav{display:flex;gap:26px;font-size:15px;font-weight:600}
+.nav a{text-decoration:none;color:var(--ink-2)}
+.nav a:hover{color:var(--teal)}
+.top .tel{margin-left:auto;display:flex;align-items:center;gap:8px;font-weight:700;color:var(--teal);text-decoration:none;font-size:15px}
+.top .btn{min-height:42px;padding:0 18px;font-size:15px}
+.menu{display:none;margin-left:auto;width:44px;height:44px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);place-items:center;cursor:pointer}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;padding-top:52px;padding-bottom:56px;align-items:start}
+.hero h1{font-size:54px;line-height:1.06;font-weight:800;color:var(--teal);max-width:13ch}
+.lede{font-size:18px;color:var(--ink-2);max-width:46ch;margin:18px 0 28px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.trust{display:flex;gap:28px;margin-top:34px;padding-top:22px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+.trust b{display:block;font:800 22px/1.1 var(--display);color:var(--ink)}
+.stars{display:flex;gap:2px;color:var(--warm)}
+.stars svg{width:16px;height:16px;fill:currentColor}
+
+.slot{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--line);padding:26px;box-shadow:0 1px 0 var(--line),0 18px 40px -28px rgba(14,79,85,.35)}
+.slot-h{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+.live{display:inline-flex;align-items:center;gap:8px;color:var(--ok);text-transform:none;letter-spacing:0;font-size:13px}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 2.4s var(--ease) infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,138,109,.45)}70%,100%{box-shadow:0 0 0 8px rgba(31,138,109,0)}}
+.next{font:800 30px/1.15 var(--display);color:var(--teal);margin:14px 0 4px}
+.who{margin:0 0 18px;color:var(--ink-2);font-size:15px}
+.times{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 18px;padding:0;border:0}
+.times legend{font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:8px;padding:0}
+.times label{position:relative}
+.times input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.times span{display:grid;place-items:center;min-height:44px;border-radius:10px;border:1px solid var(--line);font-weight:700;font-size:15px;transition:background var(--t) var(--ease),border-color var(--t) var(--ease)}
+.times input:hover+span{border-color:var(--teal-2)}
+.times input:checked+span{background:var(--teal);border-color:var(--teal);color:#fff}
+.times input:focus-visible+span{outline:2px solid var(--teal);outline-offset:2px}
+.times input:disabled+span{color:var(--ink-3);text-decoration:line-through;background:var(--bg)}
+.field{display:grid;gap:6px;margin-bottom:16px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.field select{min-height:46px;border-radius:10px;border:1px solid var(--line);background:var(--bg);padding:0 12px;font-weight:600;color:var(--ink)}
+.slot .btn{width:100%;justify-content:center}
+.note{min-height:22px;margin:12px 0 0;font-size:14px;color:var(--ok);font-weight:600}
+
+/* sections */
+section.band{padding:72px 0}
+.band.alt{background:var(--surface);border-block:1px solid var(--line)}
+.head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:32px}
+.head p{margin:0;color:var(--ink-2);max-width:40ch}
+.svc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:8px;transition:border-color var(--t) var(--ease),transform var(--t) var(--ease)}
+.card:hover{border-color:var(--aqua-2);transform:translateY(-2px)}
+.card .ic{width:44px;height:44px;border-radius:12px;background:var(--aqua);color:var(--teal);display:grid;place-items:center}
+.card h3{font-size:19px;font-weight:800}
+.card p{margin:0;color:var(--ink-2);font-size:15px}
+.price{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;padding-top:12px;border-top:1px dashed var(--line);font-size:14px;color:var(--ink-3)}
+.price b{font:800 20px/1 var(--display);color:var(--teal)}
+
+.docs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.doc{border:1px solid var(--line);border-radius:var(--r);padding:20px;background:var(--bg)}
+.av{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font:800 22px/1 var(--display);color:var(--teal);background:var(--aqua);box-shadow:inset 0 0 0 4px var(--surface),0 0 0 1px var(--aqua-2);margin-bottom:14px}
+.doc h3{font-size:18px;font-weight:800}
+.doc .role{margin:2px 0 10px;color:var(--ink-2);font-size:14px}
+.creds{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.creds li{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--teal-2)}
+
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px}
+.ins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:20px 0 0;padding:0;list-style:none}
+.ins li{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);font-weight:700;font-size:15px}
+.ins li svg{color:var(--ok)}
+.small{font-size:14px;color:var(--ink-3);margin:14px 0 0}
+table{width:100%;border-collapse:collapse;margin-top:20px;background:var(--surface);border-radius:var(--r);overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+th,td{text-align:left;padding:11px 16px;font-size:15px;border-bottom:1px solid var(--line)}
+tr:last-child th,tr:last-child td{border-bottom:0}
+th{font-weight:600;color:var(--ink-2)}
+td{text-align:right;font-weight:700}
+tr.today{background:var(--aqua)}
+tr.today th{color:var(--teal);font-weight:800}
+tr.today th::after{content:"Today";margin-left:10px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:var(--teal);color:#fff;padding:2px 8px;border-radius:999px;vertical-align:2px}
+td.shut{color:var(--ink-3);font-weight:600}
+
+.loc{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;align-items:stretch}
+.map{border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);background:#e6f3f1;min-height:300px}
+.map svg{width:100%;height:100%}
+.addr{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;display:grid;gap:14px;align-content:start}
+.addr p{margin:0;color:var(--ink-2)}
+.addr .row{display:flex;gap:12px;align-items:flex-start}
+.addr .row svg{color:var(--teal);margin-top:3px}
+
+.rev{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr) minmax(0,1.2fr);gap:16px}
+.score{background:var(--teal);color:#fff;border-radius:var(--r-lg);padding:26px}
+.score b{display:block;font:800 56px/1 var(--display)}
+.score .stars{color:#f3c27e;margin:10px 0}
+.bars{display:grid;gap:6px;margin-top:16px;font-size:13px}
+.bars div{display:grid;grid-template-columns:14px minmax(0,1fr) 34px;gap:8px;align-items:center}
+.bars i{height:6px;border-radius:3px;background:rgba(255,255,255,.2);position:relative;overflow:hidden}
+.bars i::before{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:#fff;border-radius:3px}
+blockquote{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;display:grid;gap:14px;align-content:space-between}
+blockquote p{margin:0;font-size:17px;line-height:1.6}
+blockquote footer{font-size:14px;color:var(--ink-3)}
+blockquote footer b{color:var(--ink);font-weight:700}
+
+.foot{padding:40px 0 48px;font-size:14px;color:var(--ink-2)}
+.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+.foot nav{display:flex;gap:20px}
+
+@media (max-width:1100px){
+  :root{--pad:40px}
+  .nav{gap:18px}
+  .hero h1{font-size:46px}
+  .docs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rev{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .score{grid-column:1/-1}
+}
+@media (max-width:900px){
+  .nav,.top .tel{display:none}
+  .top .btn{margin-left:auto}
+  .menu{display:grid;margin-left:0}
+  .top.open .nav{display:grid;position:absolute;top:68px;left:0;right:0;gap:0;background:var(--surface);border-bottom:1px solid var(--line);padding:8px var(--pad) 16px}
+  .top.open .nav a{padding:12px 0;border-bottom:1px solid var(--line)}
+  .hero .wrap,.split,.loc{grid-template-columns:minmax(0,1fr)}
+  .svc{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  :root{--pad:20px}
+  .top .btn{display:none}
+  .menu{margin-left:auto}
+  .hero .wrap{padding-top:32px;gap:32px}
+  .hero h1{font-size:38px}
+  .lede{font-size:17px}
+  .trust{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;font-size:13px}
+  .trust b{font-size:18px}
+  h2{font-size:28px}
+  section.band{padding:52px 0}
+  .head{display:block}
+  .head p{margin-top:10px}
+  .svc,.docs,.rev,.ins{grid-template-columns:minmax(0,1fr)}
+  .times{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .map{min-height:220px}
+  .cta .btn{flex:1 1 100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:1ms!important;animation:none!important}
+  .card:hover{transform:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="st" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></symbol></svg>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#top"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4c-2.5 0-4 2-4 4.5 0 3 1.5 4 2 7S7 20 8.5 20s1.5-4 3.5-4 2 4 3.5 4 2-1.5 2.5-4.5 2-4 2-7C20 6 18.5 4 16 4c-1.6 0-2.5 1-4 1S9.6 4 8 4z"/></svg></span>Larkfield Dental</a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#services">Treatments</a><a href="#team">Our dentists</a><a href="#hours">Hours</a><a href="#visit">Find us</a><a href="#reviews">Reviews</a>
+    </nav>
+    <a class="tel" href="tel:+441614960732"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>0161 496 0732</a>
+    <a class="btn btn-p" href="#book">Book</a>
+    <button class="menu" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="kick">Family and nervous-patient dentistry · Larkfield, Manchester</p>
+      <h1>Unhurried dental care, close to home.</h1>
+      <p class="lede">Thirty-minute appointments as standard, a dentist who explains every step, and prices on the wall before anyone picks up a mirror.</p>
+      <div class="cta">
+        <a class="btn btn-p" href="#book">Book an appointment</a>
+        <a class="btn btn-g" href="tel:+441614960732"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>0161 496 0732</a>
+      </div>
+      <div class="trust">
+        <div><b>4.9</b><span class="stars" aria-hidden="true"><svg><use href="#st"/></svg><svg><use href="#st"/></svg><svg><use href="#st"/></svg><svg><use href="#st"/></svg><svg><use href="#st"/></svg></span>612 reviews</div>
+        <div><b>Since 2009</b>on Briar Lane</div>
+        <div><b>Same week</b>emergency slots</div>
+      </div>
+    </div>
+
+    <form class="slot" id="book" aria-labelledby="slot-t">
+      <div class="slot-h"><span id="slot-t">Next available</span><span class="live"><i aria-hidden="true"></i>Live</span></div>
+      <p class="next" id="next" aria-live="polite">Today 16:30</p>
+      <p class="who">Check-up and polish with Dr Amara Osei · 30 min</p>
+      <fieldset class="times">
+        <legend>Pick a time today</legend>
+        <label><input type="radio" name="t" value="14:10" disabled><span>14:10</span></label>
+        <label><input type="radio" name="t" value="16:30" checked><span>16:30</span></label>
+        <label><input type="radio" name="t" value="17:00"><span>17:00</span></label>
+        <label><input type="radio" name="t" value="17:40"><span>17:40</span></label>
+      </fieldset>
+      <label class="field">Treatment
+        <select name="svc">
+          <option>Check-up and polish</option><option>Hygienist visit</option><option>Toothache or emergency</option><option>Whitening consultation</option><option>Invisible aligners consultation</option>
+        </select>
+      </label>
+      <button class="btn btn-p" type="submit">Hold this slot</button>
+      <p class="note" id="note" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<section class="band alt" id="services" aria-labelledby="svc-t">
+  <div class="wrap">
+    <div class="head"><div><p class="kick">Treatments</p><h2 id="svc-t">Prices you can see first</h2></div><p>Every price is the starting fee for an adult. Your dentist confirms the full plan in writing before treatment.</p></div>
+    <div class="svc">
+      <article class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4c-2.5 0-4 2-4 4.5 0 3 1.5 4 2 7S7 20 8.5 20s1.5-4 3.5-4 2 4 3.5 4 2-1.5 2.5-4.5 2-4 2-7C20 6 18.5 4 16 4c-1.6 0-2.5 1-4 1S9.6 4 8 4z"/></svg></div><h3>Check-up and polish</h3><p>Exam, scale and polish, and X-rays when they are due.</p><div class="price">from <b>£65</b></div></article>
+      <article class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="4"/></svg></div><h3>Emergency visit</h3><p>Pain relief the same day, held back for patients in pain.</p><div class="price">from <b>£80</b></div></article>
+      <article class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12c3-5 13-5 16 0-3 5-13 5-16 0z"/><path d="M8 12h8"/></svg></div><h3>Hygienist</h3><p>Forty minutes of gum care with a dedicated hygienist.</p><div class="price">from <b>£55</b></div></article>
+      <article class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v6a7 7 0 0 1-14 0z"/><path d="M9 9h6"/></svg></div><h3>White fillings</h3><p>Tooth-coloured composite, matched under daylight lamps.</p><div class="price">from <b>£120</b></div></article>
+      <article class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16M4 15h16"/><path d="M7 6v12M12 6v12M17 6v12"/></svg></div><h3>Clear aligners</h3><p>Scan, plan and a preview of the result at the first visit.</p><div class="price">from <b>£1,950</b></div></article>
+      <article class="card"><div class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5 5 .5-4 3.5 1.5 5L12 14l-4.5 3L9 12 5 8.5 10 8z"/></svg></div><h3>Whitening</h3><p>Custom trays and a two-week home course, reviewed in clinic.</p><div class="price">from <b>£295</b></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="team" aria-labelledby="team-t">
+  <div class="wrap">
+    <div class="head"><div><p class="kick">Our dentists</p><h2 id="team-t">The same faces each visit</h2></div><p>All clinicians are registered with the national dental council and renew training every year.</p></div>
+    <div class="docs">
+      <article class="doc"><div class="av" aria-hidden="true">AO</div><h3>Dr Amara Osei</h3><p class="role">Principal dentist · 16 years</p><ul class="creds"><li>BDS</li><li>MFDS</li><li>Sedation</li></ul></article>
+      <article class="doc"><div class="av" aria-hidden="true">TL</div><h3>Dr Tomasz Lewicki</h3><p class="role">Restorative dentist · 11 years</p><ul class="creds"><li>BDS</li><li>MSc Restorative</li></ul></article>
+      <article class="doc"><div class="av" aria-hidden="true">PR</div><h3>Dr Priya Raman</h3><p class="role">Orthodontic care · 8 years</p><ul class="creds"><li>BDS</li><li>Aligner certified</li></ul></article>
+      <article class="doc"><div class="av" aria-hidden="true">HB</div><h3>Hannah Brook</h3><p class="role">Hygienist · 9 years</p><ul class="creds"><li>Dip DH</li><li>Children</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="hours" aria-labelledby="ins-t">
+  <div class="wrap split">
+    <div>
+      <p class="kick">Insurance and plans</p>
+      <h2 id="ins-t">We claim for you</h2>
+      <ul class="ins">
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg>Northvale Health</li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg>Cobalt Dental Plan</li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg>Harbourside Mutual</li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg>Pennine Care Cover</li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg>Fairway Employee Plan</li>
+        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg>Larkfield Smile Plan</li>
+      </ul>
+      <p class="small">Not listed? Bring your policy number. We check cover before your visit, free.</p>
+    </div>
+    <div>
+      <p class="kick">Opening hours</p>
+      <h2>Early, late and Saturdays</h2>
+      <table aria-label="Opening hours">
+        <tbody id="hrs">
+          <tr data-d="1"><th scope="row">Monday</th><td>08:00 – 18:00</td></tr>
+          <tr data-d="2"><th scope="row">Tuesday</th><td>08:00 – 20:00</td></tr>
+          <tr data-d="3"><th scope="row">Wednesday</th><td>08:00 – 18:00</td></tr>
+          <tr data-d="4"><th scope="row">Thursday</th><td>08:00 – 20:00</td></tr>
+          <tr data-d="5"><th scope="row">Friday</th><td>08:00 – 17:00</td></tr>
+          <tr data-d="6" class="today"><th scope="row">Saturday</th><td>09:00 – 18:00</td></tr>
+          <tr data-d="0"><th scope="row">Sunday</th><td class="shut">Closed</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="visit" aria-labelledby="visit-t">
+  <div class="wrap">
+    <div class="head"><div><p class="kick">Find us</p><h2 id="visit-t">Two minutes from Larkfield tram stop</h2></div></div>
+    <div class="loc">
+      <div class="map" role="img" aria-label="Map: the clinic sits on Briar Lane, east of Larkfield tram stop and north of the park">
+        <svg viewBox="0 0 640 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="640" height="320" fill="#e6f3f1"/>
+          <path d="M380 200h260v120H360z" fill="#cfe8d9"/>
+          <path d="M0 250C120 230 210 290 330 270" stroke="#b7e2dd" stroke-width="22" fill="none"/>
+          <g stroke="#fff" stroke-linecap="round" fill="none">
+            <path d="M0 120h640M0 188h640" stroke-width="16"/>
+            <path d="M150 0v320M300 0v320M470 0v320" stroke-width="12"/>
+            <path d="M40 0l90 320M540 0l-60 190" stroke-width="7"/>
+          </g>
+          <path d="M0 154h640" stroke="#1d6b70" stroke-width="3" stroke-dasharray="10 8"/>
+          <circle cx="220" cy="154" r="9" fill="#fff" stroke="#1d6b70" stroke-width="3"/>
+          <text x="205" y="140" font-family="Nunito Sans,sans-serif" font-size="13" font-weight="700" fill="#45605f" text-anchor="end">Larkfield stop</text>
+          <text x="560" y="262" font-family="Nunito Sans,sans-serif" font-size="13" font-weight="700" fill="#4c7a62" text-anchor="middle">Briar Park</text>
+          <text x="388" y="112" font-family="Nunito Sans,sans-serif" font-size="12" font-weight="600" fill="#6a8180">Briar Lane</text>
+          <g transform="translate(372 160)"><path d="M0 0c-14-16-22-26-22-38a22 22 0 0 1 44 0C22-26 14-16 0 0z" fill="#0e4f55"/><circle cy="-38" r="8" fill="#fff"/></g>
+        </svg>
+      </div>
+      <div class="addr">
+        <div class="row"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div><b>Larkfield Dental Studio</b><p>14 Briar Lane, Larkfield<br>Manchester M19 4LD</p></div></div>
+        <div class="row"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 17h12M8 17l-2 4M16 17l2 4"/><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14"/></svg><p>Tram: Larkfield stop, 180 m. Buses 42 and 50 stop outside.</p></div>
+        <div class="row"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg><p>Four free patient bays behind the building. Step-free entrance and a ground-floor surgery.</p></div>
+        <a class="btn btn-g" href="#book">Get directions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="reviews" aria-labelledby="rev-t">
+  <div class="wrap">
+    <div class="head"><div><p class="kick">Reviews</p><h2 id="rev-t">What patients say after</h2></div></div>
+    <div class="rev">
+      <div class="score">
+        <b>4.9</b>
+        <span class="stars" aria-hidden="true"><svg><use href="#st"/></svg><svg><use href="#st"/></svg><svg><use href="#st"/></svg><svg><use href="#st"/></svg><svg><use href="#st"/></svg></span>
+        <span>Average of 612 verified reviews</span>
+        <div class="bars" aria-label="Rating breakdown: 5 stars 91 percent, 4 stars 7 percent, 3 stars or fewer 2 percent">
+          <div><span>5</span><i style="--w:91%"></i><span>91%</span></div>
+          <div><span>4</span><i style="--w:7%"></i><span>7%</span></div>
+          <div><span>3</span><i style="--w:2%"></i><span>2%</span></div>
+        </div>
+      </div>
+      <blockquote><p>"I had not been to a dentist in eleven years. Dr Osei talked me through each step and stopped every time I raised a hand. I booked my next visit before I left."</p><footer><b>Rachel M.</b> · check-up, August</footer></blockquote>
+      <blockquote><p>"Cracked a molar on a Saturday morning and was seen at half eleven. The price matched the website to the pound."</p><footer><b>Daniel K.</b> · emergency visit, September</footer></blockquote>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Larkfield Dental Studio · 14 Briar Lane, Manchester M19 4LD · 0161 496 0732</span>
+    <nav aria-label="Footer"><a href="#services">Fees</a><a href="#hours">Hours</a><a href="#top">Accessibility</a><a href="#top">Privacy</a></nav>
+  </div>
+</footer>
+
+<script>
+const top_=document.getElementById('top'),menu=top_.querySelector('.menu');
+menu.addEventListener('click',()=>{const o=top_.classList.toggle('open');menu.setAttribute('aria-expanded',o)});
+document.getElementById('nav').addEventListener('click',e=>{if(e.target.closest('a')){top_.classList.remove('open');menu.setAttribute('aria-expanded','false')}});
+const day=new Date().getDay();
+document.querySelectorAll('#hrs tr').forEach(r=>{const t=+r.dataset.d===day;r.classList.toggle('today',t);t?r.setAttribute('aria-current','date'):r.removeAttribute('aria-current')});
+const form=document.getElementById('book'),next=document.getElementById('next'),note=document.getElementById('note');
+const free=()=>[...form.querySelectorAll('input[name=t]:not(:disabled)')];
+form.addEventListener('change',e=>{if(e.target.name==='t')note.textContent=''});
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const c=form.querySelector('input[name=t]:checked');if(!c)return;
+  c.disabled=true;c.checked=false;
+  note.textContent='Held: today '+c.value+'. We will text you to confirm within 10 minutes.';
+  const f=free();
+  if(f.length){f[0].checked=true;next.textContent='Today '+f[0].value}else{next.textContent='Tomorrow 08:20';form.querySelector('[type=submit]').disabled=true}
+});
+</script>
+</body>
+</html>

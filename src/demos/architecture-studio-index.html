@@ -1,0 +1,343 @@
+<!-- Design Lounge piece: architecture-studio-index · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Index · Lindqvist Nakamura Architects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff;--ink:#0a0a0a;--ink-2:#555;--ink-3:#6e6e6e;--line:#d9d9d9;--line-2:#0a0a0a;--tint:#f3f3f1;
+  --blue:#1d4ed8;--blue-bg:#eef2fd;
+  --sans:"Inter Tight",Helvetica,Arial,sans-serif;--mono:"Spline Sans Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 var(--sans)}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;border-radius:0}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.02em}
+
+.top{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:40px;align-items:center;height:56px;padding:0 32px;border-bottom:1px solid var(--line-2)}
+.wm{font-weight:600;letter-spacing:-.01em;text-decoration:none}
+.top nav{display:flex;gap:28px}
+.top nav a{text-decoration:none;color:var(--ink-2)}
+.top nav a[aria-current]{color:var(--ink);box-shadow:0 1px 0 var(--ink)}
+.top nav a:hover{color:var(--ink)}
+
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:0 40px;padding:0 32px}
+.idx{min-width:0}
+.title{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:28px 0 20px}
+h1{margin:0;font-weight:500;font-size:96px;line-height:.86;letter-spacing:-.045em}
+h1 sup{font:400 14px/1 var(--mono);letter-spacing:0;vertical-align:top;margin-left:8px;color:var(--blue)}
+.ctl{display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--line-2)}
+.chips{display:flex;flex-wrap:wrap;gap:4px 18px}
+.chips button{height:32px;color:var(--ink-3)}
+.chips button sup{font:400 10px var(--mono);margin-left:3px}
+.chips button:hover{color:var(--ink)}
+.chips button[aria-pressed=true]{color:var(--ink);box-shadow:inset 0 -2px 0 var(--ink)}
+.view{display:flex;border:1px solid var(--line-2)}
+.view button{height:30px;padding:0 14px;font-family:var(--mono);font-size:12px}
+.view button[aria-pressed=true]{background:var(--ink);color:#fff}
+
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th{font-weight:400;text-align:left;border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);padding:0}
+th button{display:flex;align-items:center;gap:6px;width:100%;height:32px;padding:0 8px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+th button:hover,th[aria-sort] button{color:var(--ink)}
+th button svg{width:9px;height:9px;opacity:0}
+th[aria-sort] button svg{opacity:1}
+th[aria-sort=descending] button svg{transform:rotate(180deg)}
+td{padding:0 8px 0 0;height:44px;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+tbody tr{cursor:pointer;transition:background .2s var(--ease)}
+tbody tr:hover{background:var(--tint)}
+tbody tr.on{background:var(--blue-bg)}
+tbody tr.on td:first-child{color:var(--blue);box-shadow:inset 3px 0 0 var(--blue)}
+td:first-child{padding-left:12px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+td.p button{font-size:19px;font-weight:500;letter-spacing:-.015em;text-align:left;width:100%;overflow:hidden;text-overflow:ellipsis}
+td.p button::after{content:"";position:absolute;inset:0}
+tbody tr{position:relative}
+td.p small{display:none}
+td.m{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.st{display:inline-flex;align-items:center;gap:7px}
+.st i{width:7px;height:7px;border:1px solid var(--ink)}
+.st[data-s=Built] i{background:var(--ink)}
+.st[data-s="On site"] i{background:linear-gradient(135deg,var(--ink) 50%,transparent 50%)}
+.st[data-s=Competition] i{border-color:var(--blue);background:var(--blue)}
+.empty{padding:40px 0;color:var(--ink-3)}
+
+.map{display:none;border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}
+.map svg{display:block;width:100%;height:auto}
+.map .gl{stroke:var(--line);stroke-width:1}
+.map .coast{fill:var(--tint);stroke:var(--ink);stroke-width:1}
+.map .c{cursor:pointer;outline:0}
+.map .c circle.d{fill:var(--ink)}
+.map .c circle.r{fill:transparent;stroke:transparent;stroke-width:1}
+.map .c text{font:400 11px var(--mono);fill:var(--ink)}
+.map .c:hover circle.r,.map .c:focus-visible circle.r{stroke:var(--blue);stroke-width:2}
+.map .c.on circle.d{fill:var(--blue)}
+.map .c.on text{fill:var(--blue)}
+.map .c.off{opacity:.25}
+body.as-map .map{display:block}
+body.as-map table{display:none}
+
+.pv{position:relative;min-width:0}
+.panel{position:absolute;left:0;right:0;top:0;transition:transform .42s var(--ease);will-change:transform}
+.panel .sheet{border:1px solid var(--line-2);background:#fff}
+.panel svg{display:block;width:100%;height:auto;transition:opacity .16s linear}
+.panel svg.swap{opacity:0}
+.pv .ln{stroke:var(--ink);stroke-width:1.5;fill:#fff}
+.pv .hl{stroke:var(--ink);stroke-width:.6;opacity:.45}
+.pv .wn{fill:var(--ink)}
+.pv .dm{stroke:var(--blue);stroke-width:1;fill:none}
+.pv .dt{fill:var(--blue);font:400 10px var(--mono)}
+.pv .lb{fill:var(--ink-3);font:400 10px var(--mono);letter-spacing:.06em}
+.cap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:14px 16px;border-top:1px solid var(--line-2)}
+.cap h2{margin:0;font-size:22px;font-weight:500;letter-spacing:-.02em;line-height:1.15}
+.cap dl{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:10px 0 0;border-top:1px solid var(--line)}
+.cap dl div{padding-top:8px}
+.cap dt{font:400 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.cap dd{margin:0;font:400 13px var(--mono)}
+.cap p{grid-column:1/-1;margin:10px 0 0;color:var(--ink-2);font-size:14px}
+
+.about{display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr));gap:40px;margin:72px 32px 0;padding:24px 0 48px;border-top:1px solid var(--line-2)}
+.about h2{margin:0;font-weight:500;font-size:28px;line-height:1.15;letter-spacing:-.02em;max-width:22em}
+.about h3{margin:0 0 8px;font:400 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.about p{margin:0;font-size:14px}
+.about b{font-weight:500;font-size:40px;letter-spacing:-.03em;line-height:1;display:block}
+.contact{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px;padding:24px 32px 40px;background:var(--ink);color:#fff;font-size:14px}
+.contact h3{margin:0 0 8px;font:400 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#9a9a9a}
+.contact p{margin:0}
+.contact a{color:#fff}
+.contact :focus-visible{outline-color:#fff}
+
+@media (prefers-reduced-motion:reduce){
+  .panel,.panel svg,tbody tr{transition:none}
+}
+@media (max-width:1180px){
+  .layout{grid-template-columns:minmax(0,1fr) 360px;gap:0 28px}
+  h1{font-size:80px}
+  .c-type{display:none}
+}
+@media (max-width:1023px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .idx{display:contents}
+  .title{order:-2}.ctl{order:-1}
+  .pv{order:0;margin:4px 0 20px}
+  table,.map{order:1}
+  .panel{position:relative;transform:none!important;max-width:560px}
+  .about{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .about>div:first-child{grid-column:1/-1}
+  .contact{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+}
+@media (max-width:767px){
+  .top{grid-template-columns:minmax(0,1fr) auto;padding:0 20px;gap:16px}
+  .top .mono{display:none}
+  .top nav{gap:16px}
+  .layout{padding:0 20px}
+  h1{font-size:64px}
+  .c-city,.c-st{display:none}
+  td.p small{display:block;font:400 11px var(--mono);color:var(--ink-3);margin-top:2px}
+  td{height:58px}
+  td.p button{font-size:17px}
+  .cap dl{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .about{margin:48px 20px 0;grid-template-columns:minmax(0,1fr);gap:24px}
+  .contact{grid-template-columns:minmax(0,1fr);padding:24px 20px 32px;gap:20px}
+  .map .c text{font-size:14px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="wm" href="#">Lindqvist Nakamura Architects</a>
+  <nav aria-label="Main"><a href="#" aria-current="page">Index</a><a href="#about">Studio</a><a href="#contact">Contact</a></nav>
+  <span class="mono">Rotterdam / Lisbon</span>
+</header>
+
+<main class="layout">
+  <div class="idx">
+    <div class="title">
+      <h1>Index<sup id="n">12</sup></h1>
+      <p class="mono" style="margin:0;color:var(--ink-3);text-align:right">Built, on site and unbuilt work<br>2020 – 2028</p>
+    </div>
+    <div class="ctl">
+      <div class="chips" role="group" aria-label="Filter by type" id="chips"></div>
+      <div class="view" role="group" aria-label="View">
+        <button type="button" data-v="list" aria-pressed="true">List</button>
+        <button type="button" data-v="map" aria-pressed="false">Map</button>
+      </div>
+    </div>
+    <table>
+      <caption class="mono" style="position:absolute;left:-9999px">Projects. Column headers sort the list.</caption>
+      <colgroup><col style="width:64px"><col><col class="c-city" style="width:130px"><col style="width:72px"><col class="c-type" style="width:110px"><col class="c-st" style="width:120px"></colgroup>
+      <thead><tr>
+        <th scope="col" aria-sort="ascending"><button type="button" data-k="no" style="padding-left:12px">No.<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v8M1.5 5.5 5 9l3.5-3.5" stroke="currentColor" fill="none" stroke-width="1.4"/></svg></button></th>
+        <th scope="col"><button type="button" data-k="name">Project<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v8M1.5 5.5 5 9l3.5-3.5" stroke="currentColor" fill="none" stroke-width="1.4"/></svg></button></th>
+        <th scope="col" class="c-city"><button type="button" data-k="city">City<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v8M1.5 5.5 5 9l3.5-3.5" stroke="currentColor" fill="none" stroke-width="1.4"/></svg></button></th>
+        <th scope="col"><button type="button" data-k="year">Year<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v8M1.5 5.5 5 9l3.5-3.5" stroke="currentColor" fill="none" stroke-width="1.4"/></svg></button></th>
+        <th scope="col" class="c-type"><button type="button" data-k="type">Type<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v8M1.5 5.5 5 9l3.5-3.5" stroke="currentColor" fill="none" stroke-width="1.4"/></svg></button></th>
+        <th scope="col" class="c-st"><button type="button" data-k="status">Status<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v8M1.5 5.5 5 9l3.5-3.5" stroke="currentColor" fill="none" stroke-width="1.4"/></svg></button></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="map" id="map"></div>
+  </div>
+
+  <aside class="pv" id="pv" aria-label="Selected project">
+    <div class="panel" id="panel">
+      <div class="sheet">
+        <svg id="elev" viewBox="0 0 440 262" role="img" aria-label=""></svg>
+        <div class="cap" aria-live="polite">
+          <h2 id="pname"></h2><span class="mono" id="pno"></span>
+          <dl id="pmeta"></dl>
+          <p id="pnote"></p>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<section class="about" id="about" aria-labelledby="ab-h">
+  <div><h3>Studio</h3><h2 id="ab-h">We draw buildings that are cheap to run and easy to change, then stay on site until they are.</h2></div>
+  <div><h3>People</h3><b>31</b><p>architects, engineers and two model makers</p></div>
+  <div><h3>Offices</h3><b>2</b><p>Rotterdam since 2011, Lisbon since 2019</p></div>
+  <div><h3>Built</h3><b>48 400</b><p>square metres completed to date</p></div>
+</section>
+<footer class="contact" id="contact">
+  <div><h3>New work</h3><p><a href="mailto:work@lindqvistnakamura.nl">work@lindqvistnakamura.nl</a></p></div>
+  <div><h3>Rotterdam</h3><p>Schiehaven 14<br>3024 EC Rotterdam</p></div>
+  <div><h3>Lisbon</h3><p>Rua do Açúcar 88<br>1950-010 Lisboa</p></div>
+  <div><h3>Phone</h3><p>+31 10 555 0187<br>+351 21 555 0144</p></div>
+</footer>
+
+<script>
+const P=[
+ [1,'Rhine Pump Hall','Basel',2021,'Cultural','Built',3,6,'vault','tall','A 1930s pump hall turned into a 400-seat concert room.'],
+ [2,'Rua Alegre Courtyard Flats','Porto',2022,'Housing','Built',5,7,'flat','punch','38 flats around a shared courtyard with deck access.'],
+ [3,'North Quay Offices','Copenhagen',2023,'Workplace','Built',9,8,'flat','band','Timber frame offices with ribbon windows on every floor.'],
+ [4,'Amager Gymnasium','Copenhagen',2024,'Education','Built',3,9,'saw','grid','A sports and teaching hall lit from a north-facing sawtooth roof.'],
+ [5,'Lindenhof Housing','Zurich',2024,'Housing','Built',7,6,'gable','punch','Cooperative housing, 54 homes, a bakery on the ground floor.'],
+ [6,'Harbour Archive','Rotterdam',2025,'Cultural','Built',6,5,'flat','tall','Climate-stable stores for 40 km of shelving behind a brick skin.'],
+ [7,'Liesing Housing','Vienna',2025,'Housing','On site',11,7,'flat','punch','Social housing with a roof garden on all three towers.'],
+ [8,'Tejo Ferry Terminal','Lisbon',2026,'Civic','On site',2,10,'saw','grid','A long shed over four berths, open at both ends to the river.'],
+ [9,'Via Tortona Studios','Milan',2026,'Workplace','On site',4,8,'saw','grid','Workshops and studios reusing a 1950s print works.'],
+ [10,'Fjell Primary School','Oslo',2027,'Education','In design',3,8,'gable','punch','Eighteen classrooms under three pitched roofs.'],
+ [11,'Westhaven Library','Rotterdam',2027,'Cultural','In design',5,6,'vault','band','A library stacked over a covered market hall.'],
+ [12,'Prater Lido Baths','Vienna',2028,'Civic','Competition',2,9,'vault','grid','Public baths with a 50m pool under a single concrete shell.']
+].map(([no,name,city,year,type,status,f,b,roof,win,note])=>({no,name,city,year,type,status,f,b,roof,win,note}));
+const CITY={Lisbon:[60,268],Porto:[66,236],Basel:[246,162],Zurich:[268,180],Milan:[272,204],Rotterdam:[212,110],Copenhagen:[300,66],Oslo:[282,30],Vienna:[352,158]};
+const TYPES=['All','Housing','Cultural','Civic','Workplace','Education'];
+const $=s=>document.querySelector(s);
+const rm=matchMedia('(prefers-reduced-motion: reduce)');
+let sortK='no', dir=1, filter='All', sel=P[0], view='list';
+const rows=$('#rows'), panel=$('#panel'), pv=$('#pv'), elev=$('#elev');
+
+$('#chips').innerHTML=TYPES.map(t=>`<button type="button" data-t="${t}" aria-pressed="${t==='All'}">${t}<sup>${t==='All'?P.length:P.filter(p=>p.type===t).length}</sup></button>`).join('');
+const visible=()=>P.filter(p=>filter==='All'||p.type===filter);
+
+function renderRows(){
+  const list=visible().sort((a,b)=>(a[sortK]>b[sortK]?1:a[sortK]<b[sortK]?-1:0)*dir);
+  rows.innerHTML=list.length?list.map(p=>`<tr data-no="${p.no}"${p===sel?' class="on"':''}><td>${String(p.no).padStart(2,'0')}</td><td class="p"><button type="button" aria-pressed="${p===sel}">${p.name}</button><small>${p.city} · ${p.type} · ${p.status}</small></td><td class="c-city">${p.city}</td><td class="m">${p.year}</td><td class="c-type">${p.type}</td><td class="c-st"><span class="st" data-s="${p.status}"><i aria-hidden="true"></i>${p.status}</span></td></tr>`).join(''):'';
+  $('#n').textContent=list.length;
+  if(!list.includes(sel)&&list.length) select(list[0],false);
+  else place();
+  renderMap();
+}
+
+function elevation(p){
+  const W=440,G=200,k=Math.min(290/(p.b*7.5),158/(p.f*3.4+4)),bw=7.5*k,fh=3.4*k,w=p.b*bw,h=p.f*fh,x=(W-w)/2-14,top=G-h;
+  const nG=p.b>7?3:p.b>4?2:1,rise={flat:.8*k,gable:Math.min(w/nG*.36,5*k),vault:Math.min(w*.22,6*k),saw:Math.max(10,2.6*k)}[p.roof];
+  const mH=(p.f*3.4+rise/k).toFixed(1),mW=(p.b*7.5).toFixed(1),f1=v=>v.toFixed(1);
+  let s=`<defs><pattern id="ht" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#0a0a0a" stroke-width=".6"/></pattern></defs>`;
+  s+=`<text class="lb" x="16" y="22">SOUTH ELEVATION</text><text class="lb" x="${W-16}" y="22" text-anchor="end">${String(p.no).padStart(2,'0')} / ${p.city.toUpperCase()}</text>`;
+  if(p.roof==='gable'){const sw=w/nG;for(let i=0;i<nG;i++)s+=`<path class="ln" d="M${f1(x+i*sw)} ${f1(top)}L${f1(x+i*sw+sw/2)} ${f1(top-rise)}L${f1(x+(i+1)*sw)} ${f1(top)}"/>`}
+  else if(p.roof==='vault')s+=`<path class="ln" d="M${f1(x)} ${f1(top)}Q${f1(x+w/2)} ${f1(top-rise*2)} ${f1(x+w)} ${f1(top)}"/>`;
+  else if(p.roof==='saw'){const n=Math.max(3,Math.round(p.b/2)),sw=w/n;let d=`M${f1(x)} ${f1(top)}`;for(let i=0;i<n;i++)d+=`L${f1(x+i*sw)} ${f1(top-rise)}L${f1(x+(i+1)*sw)} ${f1(top)}`;s+=`<path class="ln" d="${d}"/>`}
+  else s+=`<rect class="ln" x="${f1(x-3)}" y="${f1(top-rise)}" width="${f1(w+6)}" height="${f1(rise)}"/>`;
+  s+=`<rect class="ln" x="${f1(x)}" y="${f1(top)}" width="${f1(w)}" height="${f1(h)}"/>`;
+  for(let i=1;i<p.f;i++)s+=`<line class="hl" x1="${f1(x)}" x2="${f1(x+w)}" y1="${f1(G-i*fh)}" y2="${f1(G-i*fh)}"/>`;
+  for(let fl=0;fl<p.f;fl++){
+    const y0=G-(fl+1)*fh;
+    if(p.win==='band'&&fl>0){s+=`<rect class="wn" x="${f1(x+bw*.2)}" y="${f1(y0+fh*.3)}" width="${f1(w-bw*.4)}" height="${f1(fh*.4)}"/>`;continue}
+    for(let b=0;b<p.b;b++){
+      const bx=x+b*bw;
+      if(fl===0&&b===Math.floor(p.b/2)){s+=`<rect class="wn" x="${f1(bx+bw*.25)}" y="${f1(y0+fh*.18)}" width="${f1(bw*.5)}" height="${f1(fh*.82)}"/>`;continue}
+      if(p.win==='punch'||p.win==='band')s+=`<rect class="wn" x="${f1(bx+bw*.32)}" y="${f1(y0+fh*.28)}" width="${f1(bw*.36)}" height="${f1(fh*.46)}"/>`;
+      else if(p.win==='tall')s+=`<rect class="wn" x="${f1(bx+bw*.43)}" y="${f1(y0+fh*.14)}" width="${f1(bw*.14)}" height="${f1(fh*.72)}"/>`;
+      else s+=`<line class="hl" x1="${f1(bx)}" x2="${f1(bx)}" y1="${f1(y0)}" y2="${f1(y0+fh)}" style="opacity:.8"/><line class="hl" x1="${f1(bx+bw/2)}" x2="${f1(bx+bw/2)}" y1="${f1(y0+fh*.15)}" y2="${f1(y0+fh)}" style="opacity:.35"/>`;
+    }
+  }
+  s+=`<rect x="16" y="${G}" width="${W-32}" height="10" fill="url(#ht)"/><line class="ln" x1="16" x2="${W-16}" y1="${G}" y2="${G}"/>`;
+  const m=1.8*k,hx=x-Math.max(10,bw*.6);
+  s+=`<g class="ln" style="fill:none;stroke-width:1"><circle cx="${f1(hx)}" cy="${f1(G-m*.88)}" r="${f1(m*.1)}"/><path d="M${f1(hx)} ${f1(G-m*.76)}V${f1(G-m*.42)}L${f1(hx-m*.13)} ${G}M${f1(hx)} ${f1(G-m*.42)}L${f1(hx+m*.13)} ${G}M${f1(hx-m*.2)} ${f1(G-m*.62)}h${f1(m*.4)}"/></g>`;
+  const dx=x+w+20,ty=top-(p.roof==='vault'?rise*1:rise);
+  s+=`<path class="dm" d="M${f1(dx)} ${G}V${f1(ty)}M${f1(dx-4)} ${G}h8M${f1(dx-4)} ${f1(ty)}h8"/><text class="dt" x="${f1(dx+8)}" y="${f1((G+ty)/2+3)}">+${mH} m</text>`;
+  const dy=G+30;s+=`<path class="dm" d="M${f1(x)} ${dy}H${f1(x+w)}"/>`;
+  for(let b=0;b<=p.b;b++)s+=`<path class="dm" d="M${f1(x+b*bw)} ${dy-4}v8"/>`;
+  s+=`<text class="dt" x="${f1(x+w/2)}" y="${dy+17}" text-anchor="middle">${mW} m · ${p.b} bays at 7.5 m</text>`;
+  return {s,mH,mW};
+}
+
+function select(p,focus){
+  sel=p;
+  rows.querySelectorAll('tr').forEach(r=>{const on=+r.dataset.no===p.no;r.classList.toggle('on',on);r.querySelector('button').setAttribute('aria-pressed',on)});
+  const draw=()=>{
+    const e=elevation(p);elev.innerHTML=e.s;
+    elev.setAttribute('aria-label',`South elevation of ${p.name}: ${p.f} floors, ${e.mH} metres high, ${e.mW} metres wide`);
+    $('#pname').textContent=p.name;$('#pno').textContent=String(p.no).padStart(2,'0');
+    $('#pmeta').innerHTML=`<div><dt>City</dt><dd>${p.city}</dd></div><div><dt>Year</dt><dd>${p.year}</dd></div><div><dt>Floors</dt><dd>${p.f}</dd></div><div><dt>Status</dt><dd>${p.status}</dd></div>`;
+    $('#pnote').textContent=p.note;elev.classList.remove('swap');
+  };
+  if(rm.matches||!elev.innerHTML)draw();else{elev.classList.add('swap');setTimeout(draw,160)}
+  place();renderMap();
+}
+
+function place(){
+  if(innerWidth<1024){panel.style.transform='';return}
+  const pr=pv.getBoundingClientRect(),ph=panel.offsetHeight;
+  if(view==='map'){panel.style.transform=`translateY(${$('#map').getBoundingClientRect().top-pr.top}px)`;return}
+  const r=rows.querySelector(`tr[data-no="${sel.no}"]`);if(!r)return;
+  const rr=r.getBoundingClientRect();
+  let y=rr.top-pr.top-40;
+  y=Math.max(0,Math.min(y,rows.getBoundingClientRect().bottom-pr.top-ph));
+  panel.style.transform=`translateY(${Math.max(0,y)}px)`;
+}
+
+function renderMap(){
+  if(view!=='map')return;
+  const vis=visible(),by={};vis.forEach(p=>(by[p.city]=by[p.city]||[]).push(p));
+  let s=`<svg viewBox="0 0 440 300" role="group" aria-label="Map of projects by city">`;
+  for(let i=1;i<11;i++)s+=`<line class="gl" x1="${i*40}" x2="${i*40}" y1="0" y2="300"/>`;
+  for(let i=1;i<8;i++)s+=`<line class="gl" x1="0" x2="440" y1="${i*40}" y2="${i*40}"/>`;
+  s+=`<path class="coast" d="M40 300 46 230 90 200 120 170 160 150 196 120 210 96 240 90 262 70 286 82 300 50 286 20 320 10 360 40 380 30 440 40 440 300z"/>`;
+  Object.keys(CITY).forEach(c=>{
+    const [x,y]=CITY[c],ps=by[c]||[],on=ps.includes(sel),L=c==='Basel';
+    s+=`<g class="c${on?' on':''}${ps.length?'':' off'}" ${ps.length?`tabindex="0" role="button" aria-label="${c}, ${ps.length} project${ps.length>1?'s':''}" data-c="${c}"`:'aria-hidden="true"'}><circle class="r" cx="${x}" cy="${y}" r="11"/><circle class="d" cx="${x}" cy="${y}" r="${3+ps.length*1.6}"/><text x="${L?x-12:x+12}" y="${y+4}"${L?' text-anchor="end"':''}>${c} ${ps.length||''}</text></g>`;
+  });
+  $('#map').innerHTML=s+'</svg>';
+}
+
+rows.addEventListener('mouseover',e=>{const r=e.target.closest('tr');if(r&&+r.dataset.no!==sel.no)select(P.find(p=>p.no===+r.dataset.no))});
+rows.addEventListener('focusin',e=>{const r=e.target.closest('tr');if(r&&+r.dataset.no!==sel.no)select(P.find(p=>p.no===+r.dataset.no))});
+rows.addEventListener('click',e=>{const r=e.target.closest('tr');if(!r)return;select(P.find(p=>p.no===+r.dataset.no));if(innerWidth<1024)panel.scrollIntoView({block:'start',behavior:rm.matches?'auto':'smooth'})});
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;filter=b.dataset.t;document.querySelectorAll('#chips button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderRows()});
+document.querySelectorAll('th button').forEach(b=>b.addEventListener('click',()=>{
+  const k=b.dataset.k;dir=sortK===k?-dir:1;sortK=k;
+  document.querySelectorAll('th').forEach(th=>th.removeAttribute('aria-sort'));
+  b.parentElement.setAttribute('aria-sort',dir>0?'ascending':'descending');renderRows();
+}));
+document.querySelectorAll('.view button').forEach(b=>b.addEventListener('click',()=>{
+  view=b.dataset.v;document.querySelectorAll('.view button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  document.body.classList.toggle('as-map',view==='map');renderMap();place();
+}));
+const pickCity=g=>{const ps=visible().filter(p=>p.city===g.dataset.c);if(!ps.length)return;const i=ps.indexOf(sel);select(ps[(i+1)%ps.length]);requestAnimationFrame(()=>$(`[data-c="${g.dataset.c}"]`)?.focus())};
+$('#map').addEventListener('click',e=>{const g=e.target.closest('.c[data-c]');if(g)pickCity(g)});
+$('#map').addEventListener('keydown',e=>{const g=e.target.closest('.c[data-c]');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pickCity(g)}});
+addEventListener('resize',place);
+renderRows();select(sel);
+</script>
+</body>
+</html>

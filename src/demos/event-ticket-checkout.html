@@ -1,0 +1,336 @@
+<!-- Design Lounge piece: event-ticket-checkout · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Chrome Heart — Halle Null — Tickets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,400;100,500;100,600;125,700;125,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070708;--panel:#0e0e10;--raise:#161619;--line:#25252a;--line-2:#3a3a41;
+  --ink:#f2f2f4;--ink-2:#b4b5bb;--ink-3:#8a8b92;--sold:#1d1d21;
+  --pink:#ff2e93;--pink-ink:#140008;--focus:#ffffff;
+  --chrome:linear-gradient(180deg,#fbfbfc 0%,#b9bbc2 38%,#f0f1f4 50%,#6c6e76 78%,#d9dade 100%);
+  --wide:"Archivo",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:4px;--ease:cubic-bezier(0.2,0.7,0.2,1);--fast:150ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--wide);font-stretch:100%;color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--mono)}
+.wide{font-stretch:125%;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
+
+.top{display:flex;align-items:center;gap:24px;height:56px;padding:0 24px;border-bottom:1px solid var(--line);flex:none}
+.logo{font-stretch:125%;font-weight:800;font-size:15px;letter-spacing:.06em}
+.logo span{color:var(--ink-3)}
+.steps{display:flex;gap:6px;list-style:none;margin:0 auto 0 16px;padding:0;font:12px var(--mono);color:var(--ink-3)}
+.steps li{padding:4px 10px;border:1px solid var(--line);border-radius:999px}
+.steps li[aria-current]{color:var(--ink);border-color:var(--ink-2)}
+.hold{display:flex;align-items:center;gap:10px;font:12px var(--mono);color:var(--ink-2)}
+.clock{font:500 20px var(--mono);color:var(--ink);letter-spacing:.02em;min-width:66px;text-align:right}
+.hold.low .clock,.hold.out .clock{color:var(--pink)}
+.bar{width:96px;height:2px;background:var(--line);position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0;background:var(--ink-2);transform-origin:left;transition:transform 1s linear}
+.hold.low .bar i,.hold.out .bar i{background:var(--pink)}
+
+.app{flex:1;min-height:0;display:grid;grid-template-columns:372px minmax(0,1fr) 328px}
+.app>*{min-height:0;overflow:auto;padding:20px 24px}
+.app>*+*{border-left:1px solid var(--line)}
+
+.poster{position:relative;height:208px;border-radius:var(--r);overflow:hidden;background:
+  repeating-radial-gradient(circle at 100% 112%,transparent 0 13px,rgba(220,222,228,.16) 13px 14px),
+  radial-gradient(circle at 100% 112%,#26262c 0,#0a0a0c 62%);border:1px solid var(--line)}
+.poster .disc{position:absolute;right:-24px;bottom:-62px;width:150px;height:150px;border-radius:50%;background:conic-gradient(from 200deg,#5e6068,#f6f6f8,#8d8f97,#fdfdfe,#55575e,#c9cad0,#5e6068);opacity:.92}
+.poster .disc::after{content:"";position:absolute;inset:62px;border-radius:50%;background:var(--pink)}
+.poster h1{position:absolute;left:18px;top:16px;margin:0;font-size:38px;line-height:.9;font-stretch:125%;font-weight:800;letter-spacing:-.01em;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}
+.poster .by{position:absolute;left:18px;bottom:16px;max-width:74%;font:11px/1.5 var(--mono);color:var(--ink-2)}
+.poster .by b{display:block;color:var(--ink);font:600 13px var(--wide);font-stretch:125%;letter-spacing:.02em;text-transform:uppercase}
+.poster .tag{position:absolute;right:14px;top:14px;font:600 10px var(--mono);letter-spacing:.1em;padding:4px 7px;border:1px solid var(--pink);color:var(--pink);border-radius:2px;transform:rotate(4deg)}
+.when{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);margin:12px 0 22px;overflow:hidden}
+.when div{background:var(--bg);padding:10px 12px}
+.when dt{font:11px var(--mono);color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+.when dd{margin:2px 0 0;font-weight:600}
+h2{font-size:12px;font-stretch:125%;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin:0 0 10px;color:var(--ink-2)}
+.tix{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.tk{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.tk b{font-weight:600;font-size:15px}
+.tk p{margin:0;color:var(--ink-3);font-size:12px;grid-column:1}
+.tk .pr{font:13px var(--mono);color:var(--ink-2)}
+.tk.off b,.tk.off .pr{color:var(--ink-3)}
+.tk.off .pr s{margin-right:6px}
+.soldout{font:600 10px var(--mono);letter-spacing:.1em;padding:3px 6px;border:1px solid var(--line-2);color:var(--ink-3);border-radius:2px}
+.step{grid-row:1/3;grid-column:2;display:flex;align-items:center;border:1px solid var(--line-2);border-radius:var(--r);height:40px}
+.step button{width:40px;height:38px;display:grid;place-items:center;color:var(--ink)}
+.step button:disabled{color:var(--line-2);cursor:not-allowed}
+.step output{min-width:28px;text-align:center;font:500 15px var(--mono)}
+.limit{font:11px var(--mono);color:var(--ink-3);margin-top:10px}
+
+.maphead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:8px}
+.need{font:12px var(--mono);color:var(--ink-2)}
+.need b{color:var(--pink);font-weight:500}
+.map{overflow-x:auto}
+.map svg{display:block;width:100%;min-width:500px;height:auto;max-height:calc(100vh - 220px)}
+.seat{cursor:pointer;outline:none}
+.seat rect{fill:#1b1b1f;stroke:#6e6f77;stroke-width:1;transition:fill var(--fast) var(--ease),stroke var(--fast) var(--ease)}
+.seat.v rect{stroke:url(#chr)}
+.seat text{fill:var(--pink-ink);font:600 9px var(--mono);text-anchor:middle;pointer-events:none;opacity:0}
+.seat:hover rect{stroke:var(--ink);fill:#222227}
+.seat[aria-pressed="true"] rect{fill:var(--pink);stroke:var(--pink)}
+.seat[aria-pressed="true"] text{opacity:1}
+.seat[aria-disabled="true"]{cursor:not-allowed}
+.seat[aria-disabled="true"] rect{fill:var(--sold);stroke:none}
+.seat[aria-disabled="true"] path{stroke:#45454c;stroke-width:1.2}
+.seat:focus-visible rect{stroke:var(--focus);stroke-width:2.5}
+.rowl{fill:var(--ink-3);font:10px var(--mono);text-anchor:middle}
+.secl{fill:var(--ink-3);font:9px var(--mono);letter-spacing:.14em}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none;margin:10px 0 0;padding:0;font:11px var(--mono);color:var(--ink-2)}
+.legend i{display:inline-block;width:14px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:#1b1b1f;border:1px solid #6e6f77}
+.legend .lv{border:1.5px solid #c9cad0}
+.legend .ls{background:var(--sold);border-color:var(--sold);background-image:linear-gradient(135deg,transparent 45%,#3c3c43 45% 55%,transparent 55%)}
+.legend .lp{background:var(--pink);border-color:var(--pink)}
+.msg{min-height:20px;margin:8px 0 0;font:12px var(--mono);color:var(--pink)}
+.swipe{display:none;font:11px var(--mono);color:var(--ink-3);margin:6px 0 0}
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);margin:12px 0 0;overflow:hidden}
+.notes div{background:var(--bg);padding:12px}
+.notes dt{font:11px var(--mono);color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+.notes dd{margin:4px 0 0;font-size:13px;color:var(--ink-2)}
+
+.sum h2{margin-bottom:14px}
+.lines{margin:0;border-top:1px solid var(--line)}
+.ln{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.ln dt{color:var(--ink-2)}
+.ln dt small{display:block;font:11px var(--mono);color:var(--ink-3);margin-top:2px}
+.ln dd{margin:0;font:13px var(--mono);white-space:nowrap}
+.ln.fee dt,.ln.fee dd{color:var(--ink-3)}
+.seats{font:12px var(--mono);color:var(--ink-2);margin:12px 0 0;min-height:18px}
+.seats b{color:var(--ink);font-weight:500}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin:18px 0 4px}
+.total span{font-stretch:125%;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:12px}
+.total output{font:500 28px var(--mono);letter-spacing:-.02em}
+.note{font-size:12px;color:var(--ink-3);margin:0 0 16px}
+.go{width:100%;height:52px;border-radius:var(--r);background:var(--pink);color:var(--pink-ink);font-stretch:125%;font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;transition:filter var(--fast) var(--ease)}
+.go:hover:not(:disabled){filter:brightness(1.1)}
+.go:disabled{background:var(--raise);color:var(--ink-3);cursor:not-allowed}
+.expired{display:none;margin-top:14px;padding:12px;border:1px solid var(--pink);border-radius:var(--r);font-size:13px;color:var(--ink-2)}
+.expired b{color:var(--ink);display:block;margin-bottom:2px}
+.expired button{margin-top:10px;height:40px;padding:0 14px;border:1px solid var(--ink-2);border-radius:var(--r);font-weight:600}
+.out .expired{display:block}
+.fine{margin-top:18px;font:11px/1.6 var(--mono);color:var(--ink-3)}
+
+@media (max-width:1180px){.app{grid-template-columns:330px minmax(0,1fr) 300px}.app>*{padding:18px}}
+@media (max-width:1024px){
+  body{overflow:auto;height:auto;display:block}
+  .app{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .app>*{overflow:visible}
+  .seatcol{grid-column:1/-1;grid-row:1;border-left:0!important;border-bottom:1px solid var(--line)}
+  .app>.evt{border-left:0}
+  .map svg{max-height:none;max-width:720px;margin:0 auto}
+}
+@media (max-width:640px){
+  .top{gap:12px;padding:0 16px;position:sticky;top:0;background:var(--bg);z-index:3}
+  .steps,.bar{display:none}
+  .logo{margin-right:auto}
+  .app{display:block}
+  .app>*{padding:16px;border-left:0!important}
+  .seatcol{border-bottom:1px solid var(--line)}
+  .evt{border-bottom:1px solid var(--line)}
+  .poster{height:180px}
+  .poster h1{font-size:32px}
+  .swipe{display:block}
+  .notes{grid-template-columns:minmax(0,1fr)}
+  .sum{padding-bottom:24px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo">HALLE<span>/</span>NULL</div>
+  <ol class="steps" aria-label="Checkout steps"><li aria-current="step">1 Tickets &amp; seats</li><li>2 Details</li><li>3 Pay</li></ol>
+  <div class="hold" id="hold">
+    <span>Seats held for</span>
+    <span class="bar" aria-hidden="true"><i id="barfill"></i></span>
+    <span class="clock" id="clock" role="timer" aria-label="Time left on your seat hold">10:00</span>
+  </div>
+</header>
+<p class="sr" aria-live="assertive" id="holdlive"></p>
+<main class="app">
+  <section class="evt" aria-labelledby="evt-t">
+    <div class="poster" aria-hidden="true">
+      <div class="disc"></div>
+      <h1>Chrome<br>Heart</h1>
+      <span class="tag">ALL NIGHT</span>
+      <div class="by"><b>Mira Okon b2b Lux Vane</b>with Dela Sorn &middot; Tovi 3000</div>
+    </div>
+    <h1 class="sr" id="evt-t">Chrome Heart, Mira Okon b2b Lux Vane</h1>
+    <dl class="when">
+      <div><dt>Date</dt><dd>Sat 17 Oct 2026</dd></div>
+      <div><dt>Doors</dt><dd>22:00 – 06:00</dd></div>
+      <div><dt>Venue</dt><dd>Halle Null, Berlin</dd></div>
+      <div><dt>Entry</dt><dd>18+, ID at door</dd></div>
+    </dl>
+    <h2>Tickets</h2>
+    <ul class="tix" id="tix"></ul>
+    <p class="limit">Max 6 tickets per order. One seat per ticket.</p>
+  </section>
+  <section class="seatcol" aria-labelledby="map-t">
+    <div class="maphead"><h2 id="map-t">Choose seats</h2><span class="need" id="need" aria-live="polite"></span></div>
+    <div class="map"><svg id="svg" viewBox="0 0 524 352" role="group" aria-label="Seat map. Stage at the top. Rows A to H. Use arrow keys to move between seats."><defs><linearGradient id="chr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbfbfc"/><stop offset=".45" stop-color="#8e9098"/><stop offset=".55" stop-color="#eeeff2"/><stop offset="1" stop-color="#6c6e76"/></linearGradient></defs>
+      <path d="M92 40 Q262 6 432 40 L432 50 Q262 18 92 50 Z" fill="url(#chr)" opacity=".85"/>
+      <text x="262" y="20" class="secl" text-anchor="middle">STAGE</text>
+      <g id="seats"></g>
+    </svg></div>
+    <ul class="legend" aria-hidden="true"><li><i></i>Stalls</li><li><i class="lv"></i>VIP, rows A–B</li><li><i class="lp"></i>Your seats</li><li><i class="ls"></i>Sold</li></ul>
+    <p class="swipe" aria-hidden="true">Swipe the map to see the full row.</p>
+    <p class="msg" id="msg" role="status"></p>
+    <dl class="notes">
+      <div><dt>Rows A–B</dt><dd>VIP. Mezzanine bar and cloakroom included.</dd></div>
+      <div><dt>Row E</dt><dd>Level with the sound desk. Best mix in the room.</dd></div>
+      <div><dt>Seats 1, 16</dt><dd>Next to the side exits. Step-free from the lift.</dd></div>
+    </dl>
+  </section>
+  <aside class="sum" aria-labelledby="sum-t" id="sum">
+    <h2 id="sum-t">Order summary</h2>
+    <dl class="lines" id="lines"></dl>
+    <p class="seats" id="seatlist"></p>
+    <div class="total"><span>Total</span><output id="total" aria-live="polite">€0.00</output></div>
+    <p class="note">All fees are shown. VAT included. Nothing is added at payment.</p>
+    <button type="button" class="go" id="go" disabled>Continue <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    <div class="expired" role="alert" id="expired"><b>Your hold ran out.</b><span id="exptext">Your seats were released and are back on sale.</span><br><button type="button" id="rehold">Start a new 10:00 hold</button></div>
+    <p class="fine">Tickets are sent as a QR code. Resale only through Halle Null at face value. Refunds if the event is cancelled.</p>
+  </aside>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const T=[
+ {id:"ga",name:"General",note:"Stalls, rows C–H",price:28,fee:2.5,levy:1,max:6,qty:2},
+ {id:"eb",name:"Early bird",note:"Stalls. Released 1 Sep.",price:20,fee:2,levy:1,max:0,qty:0,out:true},
+ {id:"vip",name:"VIP",note:"Rows A–B, mezzanine bar, cloakroom",price:65,fee:4,levy:1,max:4,qty:0}
+];
+const MAX=6,ROWS="ABCDEFGH",PER=16,HOLD=600;
+const eur=n=>"€"+n.toFixed(2);
+const seats=[];
+for(let r=0;r<8;r++)for(let s=1;s<=PER;s++){
+  const h=(r*31+s*17+(r*s)%7)%11;
+  seats.push({r,s,id:ROWS[r]+s,tier:r<2?"vip":"ga",sold:(h<3||(r<2&&h<5))&&!(r===4&&(s===7||s===8)),sel:r===4&&(s===7||s===8)});
+}
+let deadline=Date.now()+HOLD*1000,expired=false,focusIdx=seats.findIndex(x=>x.sel);
+const g=$("#seats"),NS="http://www.w3.org/2000/svg";
+const xOf=s=>28+(s-1)*27+(s>4?18:0)+(s>12?18:0),yOf=r=>62+r*30+(r>1?16:0);
+seats.forEach((st,i)=>{
+  const el=document.createElementNS(NS,"g");
+  el.setAttribute("class","seat"+(st.tier==="vip"?" v":""));
+  el.setAttribute("role","button");
+  el.dataset.i=i;
+  const x=xOf(st.s),y=yOf(st.r);
+  el.innerHTML=`<rect x="${x}" y="${y}" width="22" height="20" rx="4"/>`+(st.sold?`<path d="M${x+6} ${y+14} L${x+16} ${y+6}"/>`:"")+`<text x="${x+11}" y="${y+13.5}">${st.s}</text>`;
+  st.el=el;g.appendChild(el);
+});
+for(let r=0;r<8;r++){
+  for(const x of [12,512]){const t=document.createElementNS(NS,"text");t.setAttribute("x",x);t.setAttribute("y",yOf(r)+14);t.setAttribute("class","rowl");t.textContent=ROWS[r];g.appendChild(t)}
+}
+const lab=(txt,y)=>{const t=document.createElementNS(NS,"text");t.setAttribute("x",28);t.setAttribute("y",y);t.setAttribute("class","secl");t.textContent=txt;g.appendChild(t)};
+lab("VIP",58);lab("STALLS",134);
+function paintSeat(st,i){
+  const el=st.el;
+  el.setAttribute("aria-label",`Row ${ROWS[st.r]} seat ${st.s}, ${st.sold?"sold":st.sel?"selected":"available"}${st.tier==="vip"?", VIP":""}`);
+  if(st.sold){el.setAttribute("aria-disabled","true");el.removeAttribute("aria-pressed")}
+  else el.setAttribute("aria-pressed",st.sel);
+  el.setAttribute("tabindex",i===focusIdx?"0":"-1");
+}
+const tq=id=>T.find(t=>t.id===id).qty,placed=id=>seats.filter(x=>x.sel&&x.tier===id).length,total=()=>T.reduce((a,t)=>a+t.qty,0);
+function renderTix(){
+  $("#tix").innerHTML=T.map(t=>{
+    const capAll=total()>=MAX,plusOff=t.out||t.qty>=t.max||capAll;
+    return `<li class="tk${t.out?" off":""}"><b>${t.name} ${t.out?'<span class="soldout">SOLD OUT</span>':""}</b>
+<div class="step" role="group" aria-label="${t.name} tickets"><button type="button" data-d="-1" data-t="${t.id}" aria-label="Remove one ${t.name} ticket"${t.qty<=0||t.out?" disabled":""}><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></button><output aria-live="polite" aria-label="${t.name} quantity">${t.qty}</output><button type="button" data-d="1" data-t="${t.id}" aria-label="Add one ${t.name} ticket"${plusOff?" disabled":""}><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg></button></div>
+<span class="pr">${t.out?"<s>"+eur(t.price)+"</s>":eur(t.price)+" + "+eur(t.fee+t.levy)+" fees"}</span><p>${t.note}${t.max&&!t.out?" · max "+t.max:""}</p></li>`}).join("");
+}
+function render(){
+  renderTix();
+  seats.forEach(paintSeat);
+  const n=total(),p=seats.filter(x=>x.sel).length;
+  const left=T.filter(t=>t.qty>placed(t.id)).map(t=>`${t.qty-placed(t.id)} ${t.name}`);
+  $("#need").innerHTML=n===0?"Add a ticket to pick seats":left.length?`Pick <b>${left.join(" + ")}</b> seat${n-p>1?"s":""}`:`All ${n} seat${n>1?"s":""} placed`;
+  let sub=0,lines="",fees=0,levy=0;
+  T.filter(t=>t.qty).forEach(t=>{sub+=t.qty*t.price;fees+=t.qty*t.fee;levy+=t.qty*t.levy;lines+=`<div class="ln"><dt>${t.qty} × ${t.name}<small>${eur(t.price)} each</small></dt><dd>${eur(t.qty*t.price)}</dd></div>`});
+  if(n){lines+=`<div class="ln fee"><dt>Service fee<small>${T.filter(t=>t.qty).map(t=>eur(t.fee)+" × "+t.qty).join(" + ")}</small></dt><dd>${eur(fees)}</dd></div><div class="ln fee"><dt>Venue levy<small>€1.00 per ticket, goes to Halle Null</small></dt><dd>${eur(levy)}</dd></div>`}
+  else lines=`<div class="ln"><dt>No tickets yet</dt><dd>€0.00</dd></div>`;
+  $("#lines").innerHTML=lines;
+  const sel=seats.filter(x=>x.sel).map(x=>x.id);
+  $("#seatlist").innerHTML=sel.length?`Seats <b>${sel.join(", ")}</b>`:expired?"No seats held":"No seats chosen";
+  $("#total").textContent=eur(sub+fees+levy);
+  const ok=n>0&&p===n&&!expired;
+  $("#go").disabled=!ok;
+  $("#go").firstChild.textContent=ok?`Continue · ${eur(sub+fees+levy)} `:"Continue ";
+}
+function say(t){$("#msg").textContent=t}
+function toggle(i){
+  const st=seats[i];
+  if(st.sold){say(`Row ${ROWS[st.r]} seat ${st.s} is sold.`);return}
+  if(expired)restart();
+  if(st.sel){st.sel=false;say("");render();return}
+  const t=T.find(x=>x.id===st.tier);
+  if(placed(t.id)>=t.qty){
+    say(t.qty===0?`Add a ${t.name} ticket to pick row ${ROWS[st.r]}.`:`All ${t.qty} ${t.name} seat${t.qty>1?"s are":" is"} placed. Remove one or add a ticket.`);return}
+  st.sel=true;say("");render();
+}
+g.addEventListener("click",e=>{const s=e.target.closest(".seat");if(!s)return;focusIdx=+s.dataset.i;toggle(focusIdx);seats[focusIdx].el.focus()});
+g.addEventListener("keydown",e=>{
+  const s=e.target.closest(".seat");if(!s)return;
+  let i=+s.dataset.i,r=Math.floor(i/PER),c=i%PER;
+  const k=e.key;
+  if(k===" "||k==="Enter"){e.preventDefault();toggle(i);seats[i].el.focus();return}
+  if(k==="ArrowRight")c=Math.min(PER-1,c+1);else if(k==="ArrowLeft")c=Math.max(0,c-1);
+  else if(k==="ArrowDown")r=Math.min(7,r+1);else if(k==="ArrowUp")r=Math.max(0,r-1);
+  else if(k==="Home")c=0;else if(k==="End")c=PER-1;else return;
+  e.preventDefault();focusIdx=r*PER+c;seats.forEach(paintSeat);seats[focusIdx].el.focus();
+});
+$("#tix").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-t]");if(!b||b.disabled)return;
+  const t=T.find(x=>x.id===b.dataset.t),d=+b.dataset.d;
+  t.qty=Math.max(0,Math.min(t.max,t.qty+d));
+  if(total()>MAX)t.qty--;
+  while(placed(t.id)>t.qty){const last=seats.filter(x=>x.sel&&x.tier===t.id).pop();last.sel=false;say(`Seat ${last.id} released.`)}
+  render();
+  const again=document.querySelector(`button[data-t="${t.id}"][data-d="${d}"]`);
+  (again.disabled?document.querySelector(`button[data-t="${t.id}"][data-d="${-d}"]`):again).focus();
+});
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+let lastSaid="";
+function tick(){
+  if(expired)return;
+  const left=Math.max(0,Math.ceil((deadline-Date.now())/1000));
+  $("#clock").textContent=fmt(left);
+  $("#barfill").style.transform=`scaleX(${left/HOLD})`;
+  $("#hold").classList.toggle("low",left<=120);
+  const mark={300:"5 minutes left on your seat hold.",120:"2 minutes left on your seat hold.",60:"1 minute left on your seat hold."}[left];
+  if(mark&&mark!==lastSaid){$("#holdlive").textContent=mark;lastSaid=mark}
+  if(left===0)expire();
+}
+function expire(){
+  expired=true;
+  const freed=seats.filter(x=>x.sel);
+  freed.forEach(x=>x.sel=false);
+  $("#exptext").textContent=freed.length?`Seats ${freed.map(x=>x.id).join(", ")} were released and are back on sale. Your ticket choice is kept.`:"No seats were held. Your ticket choice is kept.";
+  $("#hold").classList.add("out");$("#sum").classList.add("out");
+  $("#holdlive").textContent="Your hold ran out. Your seats were released.";
+  render();
+}
+function restart(){
+  expired=false;deadline=Date.now()+HOLD*1000;lastSaid="";
+  $("#hold").classList.remove("out","low");$("#sum").classList.remove("out");
+  tick();render();
+}
+$("#rehold").addEventListener("click",()=>{restart();seats[focusIdx].el.focus()});
+$("#go").addEventListener("click",()=>{$("#go").firstChild.textContent="Seats confirmed · going to details ";say("")});
+render();tick();setInterval(tick,1000);
+</script>
+</body>
+</html>

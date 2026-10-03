@@ -1,0 +1,307 @@
+<!-- Design Lounge piece: course-landing-curriculum · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Data Journalism: Spreadsheet to Story · Lectern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf7f1;--surface:#fffdf8;--navy:#15234a;--navy-2:#24356a;--ink-2:#4a5068;--ink-3:#6b7086;
+  --line:#e3ddd0;--green:#2e6b4e;--green-t:#e3efe7;--gold:#b7862c;
+  --serif:"Newsreader",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif;
+  --r:8px;--pad:56px;--ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{height:auto;min-height:100%;background:var(--bg);color:var(--navy);font:15px/1.6 var(--sans)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--pad)}
+.top{border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:28px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font:600 22px/1 var(--serif);color:var(--navy);text-decoration:none}
+.logo svg{width:24px;height:24px}
+.top nav{display:flex;gap:22px;font-size:14px}
+.top nav a{color:var(--ink-2);text-decoration:none}
+.sign{margin-left:auto;font-size:14px;color:var(--navy);font-weight:500;text-decoration:none}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:56px;align-items:start}
+.hero{padding:36px 0 40px}
+.crumb{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);font-weight:600;margin:0 0 12px}
+h1{font:500 52px/1.04 var(--serif);letter-spacing:-.015em;margin:0;max-width:16ch}
+.sub{font:500 21px/1.45 var(--serif);color:var(--ink-2);margin:16px 0 22px;max-width:44ch}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px;font-size:14px;color:var(--ink-2)}
+.by{display:flex;align-items:center;gap:10px;color:var(--navy);font-weight:500}
+.av{width:36px;height:36px;border-radius:50%;background:var(--navy);color:var(--bg);display:grid;place-items:center;font:600 14px var(--serif);flex:none}
+.stars{display:flex;align-items:center;gap:6px}
+.stars b{color:var(--navy)}
+.stars svg{width:84px;height:16px}
+.ctas{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 24px;border-radius:var(--r);font-weight:600;font-size:15px;border:1px solid var(--navy);transition:background .16s var(--ease),color .16s var(--ease)}
+.enroll{background:var(--navy);color:var(--bg)}
+.enroll:hover{background:var(--navy-2)}
+.ghost{background:transparent}
+.ghost:hover{background:var(--surface)}
+.btn svg{width:18px;height:18px}
+.glance{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:44px 0 0;border-top:2px solid var(--navy);max-width:640px}
+.glance div{padding:12px 16px 0 0}
+.glance dt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.glance dd{margin:4px 0 0;font:500 17px/1.3 var(--serif)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.poster{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;background:var(--navy);overflow:hidden}
+.poster::before{content:"";position:absolute;inset:14% 10% 26%;background:repeating-linear-gradient(90deg,rgba(250,247,241,.14) 0 1px,transparent 1px 16.66%),repeating-linear-gradient(rgba(250,247,241,.14) 0 1px,transparent 1px 25%)}
+.bars{position:absolute;left:14%;right:14%;bottom:26%;height:46%;display:flex;align-items:flex-end;gap:6%}
+.bars i{flex:1;background:rgba(250,247,241,.28);border-radius:2px 2px 0 0}
+.bars i.hi{background:#8fc2a6}
+.play{position:absolute;left:50%;top:44%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:var(--bg);display:grid;place-items:center;transition:transform .2s var(--out)}
+.play svg{width:22px;height:22px;margin-left:3px;fill:var(--navy)}
+.poster:hover .play{transform:scale(1.06)}
+.cap{position:absolute;left:14px;right:14px;bottom:12px;display:flex;justify-content:space-between;font-size:12px;color:#d7dcea}
+.cbody{padding:22px}
+.price{display:flex;align-items:baseline;gap:12px}
+.price b{font:600 40px/1 var(--serif)}
+.price s{color:var(--ink-3);font-size:17px}
+.save{display:inline-block;margin-left:auto;background:var(--green-t);color:var(--green);font-size:12px;font-weight:600;padding:3px 8px;border-radius:999px}
+.why{font-size:13px;color:var(--ink-2);margin:8px 0 18px}
+.cbody .btn{width:100%}
+.cbody .ghost{margin-top:10px}
+.inc{list-style:none;margin:18px 0 0;padding:16px 0 0;border-top:1px solid var(--line);font-size:14px;color:var(--ink-2);display:grid;gap:8px}
+.inc li{display:flex;gap:10px;align-items:center}
+.inc svg{width:18px;height:18px;flex:none;fill:none;stroke:var(--navy);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.lower{padding:8px 0 120px}
+section.blk{margin-bottom:48px}
+h2{font:500 32px/1.15 var(--serif);margin:0 0 16px}
+.learn{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:24px 28px}
+.learn ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 32px}
+.learn li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:12px;font-size:15px}
+.learn svg,.ok{width:20px;height:20px;fill:none;stroke:var(--green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.chead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:12px}
+.chead p{margin:0;font-size:14px;color:var(--ink-2)}
+.link{background:none;border:0;color:var(--green);font-weight:600;font-size:14px;padding:6px 0}
+.acc{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.mod+.mod{border-top:1px solid var(--line)}
+.mod h3{margin:0}
+.mbtn{width:100%;display:grid;grid-template-columns:44px minmax(0,1fr) auto 20px;gap:12px;align-items:center;text-align:left;background:none;border:0;padding:16px 20px;min-height:64px}
+.mbtn:hover{background:var(--bg)}
+.num{font:600 15px var(--serif);color:var(--ink-3)}
+.mt{font:600 19px/1.3 var(--serif)}
+.mm{font-size:13px;color:var(--ink-2);white-space:nowrap}
+.chev{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;transition:transform .28s var(--ease)}
+.mbtn[aria-expanded=true] .chev{transform:rotate(180deg)}
+.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease)}
+.panel>div{overflow:hidden}
+.panel.open{grid-template-rows:1fr}
+.panel ol{list-style:none;margin:0;padding:0 20px 12px 76px}
+.les{display:grid;grid-template-columns:20px minmax(0,1fr) auto 52px;gap:12px;align-items:center;padding:9px 0;border-top:1px dashed var(--line);font-size:14px}
+.les svg{width:18px;height:18px;fill:none;stroke:var(--ink-3);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.les.free svg{stroke:var(--green)}
+.les .d{color:var(--ink-3);font-variant-numeric:tabular-nums;text-align:right}
+.pv{background:none;border:0;color:var(--green);font-weight:600;font-size:13px;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
+.les .lk{font-size:12px;color:var(--ink-3)}
+aside.rail{position:sticky;top:24px}
+.bio{padding:24px}
+.bio .av{width:72px;height:72px;font-size:26px;margin-bottom:14px}
+.bio h3{font:600 22px/1.2 var(--serif);margin:0}
+.bio .role{font-size:13px;color:var(--ink-2);margin:2px 0 14px}
+.bio p{font-size:14px;color:var(--ink-2);margin:0 0 14px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);padding-top:14px;text-align:center}
+.facts b{display:block;font:600 22px/1.1 var(--serif)}
+.facts span{font-size:12px;color:var(--ink-3)}
+.faq .q{border-bottom:1px solid var(--line)}
+.faq h3{margin:0}
+.qb{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;text-align:left;background:none;border:0;padding:18px 0;font:500 18px/1.35 var(--serif);min-height:56px}
+.qb .chev{flex:none}
+.faq p{margin:0 0 18px;color:var(--ink-2);max-width:62ch}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--navy);color:var(--bg);transform:translateY(100%);visibility:hidden;transition:transform .34s var(--out),visibility 0s .34s}
+.bar.on{transform:none;visibility:visible;transition:transform .34s var(--out)}
+.bar .wrap{display:flex;align-items:center;gap:20px;height:72px}
+.bar p{margin:0;font:500 18px/1.2 var(--serif);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar small{display:block;font:400 12px var(--sans);color:#b9c1d9}
+.bar .bp{margin-left:auto;font:600 24px var(--serif);white-space:nowrap}
+.bar .bp s{font:400 14px var(--sans);color:#9aa3bf;margin-left:6px}
+.bar .btn{background:var(--bg);color:var(--navy);border-color:var(--bg);flex:none}
+.bar .btn:hover{background:#fff}
+.bar :focus-visible{outline-color:#8fc2a6}
+dialog{border:0;border-radius:var(--r);padding:0;width:min(820px,calc(100vw - 32px));background:var(--surface);color:var(--navy)}
+dialog::backdrop{background:rgba(21,35,74,.6)}
+dialog[open]{animation:rise .32s var(--out)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
+.dh{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px}
+.dh h2{font-size:22px;margin:0}
+.dh small{display:block;font:400 13px var(--sans);color:var(--ink-2)}
+.x{width:40px;height:40px;border-radius:var(--r);border:1px solid var(--line);background:none;display:grid;place-items:center;flex:none}
+.x svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75}
+dialog .poster{cursor:default}
+.prog{position:absolute;left:14px;right:14px;bottom:36px;height:3px;background:rgba(250,247,241,.25);border-radius:2px}
+.prog::after{content:"";position:absolute;left:0;top:0;bottom:0;width:18%;background:#8fc2a6;border-radius:2px}
+@media (max-width:1100px){:root{--pad:36px}.grid{grid-template-columns:minmax(0,1fr) 340px;gap:36px}h1{font-size:46px}}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}aside.rail{position:static}.top nav{display:none}.hero .card{max-width:520px}}
+@media (max-width:640px){:root{--pad:18px}h1{font-size:36px}.glance{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:12px;margin-top:28px}.sub{font-size:18px}.learn{padding:20px}.learn ul{grid-template-columns:minmax(0,1fr)}.mbtn{grid-template-columns:minmax(0,1fr) 20px;padding:14px 16px}.num{display:none}.mm{grid-column:1;grid-row:2;white-space:normal}.chev{grid-column:2;grid-row:1/3}.panel ol{padding:0 16px 12px}.les{grid-template-columns:20px minmax(0,1fr) auto}.les .d{display:none}.bar p{display:none}.bar .bp{margin-left:0}.bar .btn{margin-left:auto}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 20h16M7 20l2-12h6l2 12M8 8l4-4 4 4"/></svg>Lectern</a>
+    <nav aria-label="Primary"><a href="#">Courses</a><a href="#">Teachers</a><a href="#">For teams</a></nav>
+    <a class="sign" href="#">Sign in</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="grid hero">
+    <div>
+      <p class="crumb">Journalism · Intermediate</p>
+      <h1>Data journalism: from spreadsheet to story</h1>
+      <p class="sub">Six modules on finding, cleaning, checking and writing up numbers, taught through real council budgets and court records.</p>
+      <div class="meta">
+        <span class="by"><span class="av" aria-hidden="true">AO</span>Dr Amara Okonjo</span>
+        <span class="stars"><b>4.8</b><svg viewBox="0 0 84 16" aria-hidden="true"><defs><linearGradient id="part"><stop offset="80%" stop-color="#b7862c"/><stop offset="80%" stop-color="#e3ddd0"/></linearGradient><path id="st" d="M8 1l2.1 4.6 5 .5-3.8 3.4 1.1 4.9L8 11.9 3.6 14.4l1.1-4.9L.9 6.1l5-.5z"/></defs><use href="#st" fill="#b7862c"/><use href="#st" x="17" fill="#b7862c"/><use href="#st" x="34" fill="#b7862c"/><use href="#st" x="51" fill="#b7862c"/><use href="#st" x="68" fill="url(#part)"/></svg><span>2,316 ratings</span></span>
+        <span>18,402 students</span>
+        <span>Updated September 2026</span>
+      </div>
+      <div class="ctas">
+        <button class="btn enroll" type="button" id="enrollTop">Enroll for $129</button>
+        <button class="btn ghost" type="button" data-preview="Finding the story in a column of numbers" data-len="07:42"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l5.5-3.5z"/></svg>Preview lesson</button>
+      </div>
+      <dl class="glance">
+        <div><dt>Level</dt><dd>Intermediate</dd></div>
+        <div><dt>Pace</dt><dd>4–6 weeks</dd></div>
+        <div><dt>Format</dt><dd>Video and exercises</dd></div>
+        <div><dt>Captions</dt><dd>English, Spanish</dd></div>
+      </dl>
+    </div>
+    <div class="card">
+      <button class="poster" type="button" data-preview="Finding the story in a column of numbers" data-len="07:42" aria-label="Preview lesson 1.2, Finding the story in a column of numbers, 7 minutes">
+        <span class="bars" aria-hidden="true"><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i class="hi" style="height:96%"></i><i style="height:55%"></i><i style="height:34%"></i></span>
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span>
+        <span class="cap" aria-hidden="true"><span>Lesson 1.2 · Free preview</span><span>07:42</span></span>
+      </button>
+      <div class="cbody">
+        <div class="price"><b>$129</b><s>$189</s><span class="save">Save $60</span></div>
+        <p class="why">Autumn term price, the same for everyone until 31 October. After that it returns to $189.</p>
+        <button class="btn enroll" type="button">Enroll now</button>
+        <button class="btn ghost" type="button">Add to my list</button>
+        <ul class="inc">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M10 9v5l4-2.5z"/></svg><span id="incVid">5 h of video, 31 lessons</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 4v16"/></svg>9 exercises with real datasets</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="10" r="5"/><path d="M9 14l-1 7 4-2 4 2-1-7"/></svg>Certificate of completion</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>Lifetime access, 30-day refund</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid lower">
+    <main>
+      <section class="blk" aria-labelledby="h-learn">
+        <h2 id="h-learn">What you'll learn</h2>
+        <div class="learn"><ul>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Turn a vague tip into a question a dataset can answer</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Find and request public data, and know when to stop</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Tidy messy columns without changing what they mean</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Use rates, medians and per-capita figures correctly</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Draw a chart that makes one point and survives an edit</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Write the numbers into a story a reader will finish</li>
+        </ul></div>
+      </section>
+
+      <section class="blk" aria-labelledby="h-cur">
+        <div class="chead"><h2 id="h-cur" style="margin:0">Curriculum</h2><p><span id="sum"></span> · <button class="link" type="button" id="all">Expand all</button></p></div>
+        <div class="acc" id="acc"></div>
+      </section>
+
+      <section class="blk faq" aria-labelledby="h-faq">
+        <h2 id="h-faq">Questions</h2>
+        <div id="faq"></div>
+      </section>
+    </main>
+
+    <aside class="rail" aria-labelledby="h-bio">
+      <div class="card bio">
+        <div class="av" aria-hidden="true">AO</div>
+        <h3 id="h-bio">Dr Amara Okonjo</h3>
+        <p class="role">Data editor, The Northgate Ledger</p>
+        <p>Amara has led the data desk at a regional daily for eleven years. Her team's work on care-home inspections changed two council policies. She teaches the way a newsroom works: on deadline, with real files.</p>
+        <p>Before journalism she was a statistician in public health, which is why module five exists.</p>
+        <div class="facts"><div><b>4.8</b><span>Rating</span></div><div><b>3</b><span>Courses</span></div><div><b>41k</b><span>Students</span></div></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="bar" id="bar" role="region" aria-label="Enroll">
+  <div class="wrap">
+    <p>Data journalism: from spreadsheet to story<small>Dr Amara Okonjo · 4.8 rating</small></p>
+    <span class="bp">$129<s>$189</s></span>
+    <button class="btn" type="button">Enroll now</button>
+  </div>
+</div>
+
+<dialog id="dlg" aria-labelledby="dT">
+  <div class="dh"><h2 id="dT">Lesson preview<small id="dS"></small></h2><button class="x" type="button" id="dX" aria-label="Close preview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="poster" role="img" aria-label="Video poster: a bar chart over a spreadsheet grid">
+    <span class="bars"><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i class="hi" style="height:96%"></i><i style="height:55%"></i><i style="height:34%"></i></span>
+    <span class="play"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span>
+    <span class="prog"></span>
+    <span class="cap"><span>01:23</span><span id="dL">07:42</span></span>
+  </div>
+</dialog>
+
+<script>
+const C=[
+ ["Finding the story",[["Welcome and how this course works","04:10",1],["Finding the story in a column of numbers","07:42",1],["Asking a dataset one question","09:05"],["Where public data lives","11:20"],["Exercise: choose your first dataset","10:00"]]],
+ ["Cleaning without lying",[["What a column actually says","08:15"],["Dates, names and other traps","12:40",1],["Merging two sources","11:05"],["Keeping a cleaning log","06:30"],["Outliers: errors or the story?","09:50"],["Exercise: the council budget","10:00"]]],
+ ["Arithmetic for reporters",[["Percent change versus points","09:30"],["Rates and per-capita figures","11:10"],["Mean, median and why it matters","10:20"],["Inflation-adjusting money","08:45"],["Exercise: court fines by ward","11:00"]]],
+ ["Charts that say one thing",[["Pick the one point","07:55"],["Bars, lines and nothing else","12:30"],["Labels that do the work","10:15"],["Maps and when to avoid them","11:40"],["Colour for print and screen","09:20"],["Exercise: redraw a bad chart","12:00"]]],
+ ["Checking your numbers",[["The second-pair-of-eyes routine","10:30"],["Calling the source back","09:15"],["Writing a methods box","08:05"],["Exercise: break a colleague's sheet","10:00"]]],
+ ["Writing the piece",[["The number in the first line","08:40"],["One figure per paragraph","09:25"],["Quotes that explain the data","10:10"],["Answering the right of reply","07:45"],["Final project: file your story","11:00"]]]
+];
+const sec=t=>{const[m,s]=t.split(':');return +m*60+ +s};
+const fmt=s=>{const t=Math.round(s/60),h=Math.floor(t/60),m=t%60;return h?h+' h'+(m?' '+m+' min':''):m+' min'};
+const ic={free:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l5.5-3.5z"/></svg>',lock:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'};
+const chev='<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+let total=0,count=0;
+document.getElementById('acc').innerHTML=C.map(([t,ls],i)=>{
+  const d=ls.reduce((a,l)=>a+sec(l[1]),0);total+=d;count+=ls.length;
+  return `<div class="mod"><h3><button class="mbtn" type="button" id="mb${i}" aria-expanded="${i===0}" aria-controls="mp${i}"><span class="num">${String(i+1).padStart(2,'0')}</span><span class="mt">${t}</span><span class="mm">${ls.length} lessons · ${fmt(d)}</span>${chev}</button></h3><div class="panel${i===0?' open':''}" id="mp${i}" role="region" aria-labelledby="mb${i}"><div${i===0?'':' inert'}><ol>${ls.map(([n,l,f],j)=>`<li class="les${f?' free':''}">${f?ic.free:ic.lock}<span>${i+1}.${j+1} ${n}</span>${f?`<button class="pv" type="button" data-preview="${n}" data-len="${l}">Preview</button>`:'<span class="lk">Locked</span>'}<span class="d">${l}</span></li>`).join('')}</ol></div></div></div>`;
+}).join('');
+document.getElementById('sum').textContent=C.length+' modules · '+count+' lessons · '+fmt(total);
+document.getElementById('incVid').textContent=fmt(total)+' of video, '+count+' lessons';
+const F=[
+ ["Do I need to know how to code?","No. Everything is done in a spreadsheet. Module four shows one optional charting tool, and the exercises have spreadsheet versions too."],
+ ["How long does it take?","Most students finish in four to six weeks at two evenings a week. There are no deadlines and no live sessions to miss."],
+ ["Is the discount real?","Yes. The autumn term price is $129 for everyone until 31 October, then it goes back to $189. There is no timer and no hidden fee."],
+ ["Can I get a refund?","Within 30 days, for any reason, from your account page. You keep the free preview lessons either way."]
+];
+document.getElementById('faq').innerHTML=F.map(([q,a],i)=>`<div class="q"><h3><button class="qb" type="button" id="qb${i}" aria-expanded="false" aria-controls="qp${i}">${q}${chev}</button></h3><div class="panel" id="qp${i}" role="region" aria-labelledby="qb${i}"><div inert><p>${a}</p></div></div></div>`).join('');
+function toggle(b,open){
+  const p=document.getElementById(b.getAttribute('aria-controls'));
+  open=open??b.getAttribute('aria-expanded')!=='true';
+  b.setAttribute('aria-expanded',open);p.classList.toggle('open',open);p.firstElementChild.inert=!open;
+}
+const mbs=[...document.querySelectorAll('.mbtn')],all=document.getElementById('all');
+const syncAll=()=>{all.textContent=mbs.every(b=>b.getAttribute('aria-expanded')==='true')?'Collapse all':'Expand all'};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.mbtn,.qb');
+  if(b){toggle(b);syncAll();return}
+  const p=e.target.closest('[data-preview]');
+  if(p)openPreview(p);
+});
+all.addEventListener('click',()=>{const o=all.textContent==='Expand all';mbs.forEach(b=>toggle(b,o));syncAll()});
+const dlg=document.getElementById('dlg');
+function openPreview(p){
+  document.getElementById('dS').textContent=p.dataset.preview+' · '+p.dataset.len;
+  document.getElementById('dL').textContent=p.dataset.len;
+  dlg.showModal();
+}
+document.getElementById('dX').addEventListener('click',()=>dlg.close());
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+const bar=document.getElementById('bar');
+new IntersectionObserver(([e])=>{const on=!e.isIntersecting&&e.boundingClientRect.top<0;bar.classList.toggle('on',on)}).observe(document.getElementById('enrollTop'));
+</script>
+</body>
+</html>

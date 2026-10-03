@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 294 · "Social feed with stories and posts" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 305 · "Social feed with stories and posts" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Social feed with stories and posts
 

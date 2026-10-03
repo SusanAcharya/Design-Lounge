@@ -1,0 +1,266 @@
+<!-- Design Lounge piece: donation-page-impact · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Saathi Lunch Fund — Donate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400..600,100&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6eedf;--card:#fffbf3;--ink:#2b2118;--ink-2:#5b4a3c;--ink-3:#76614f;--line:#e4d5bf;
+  --terra:#b4502c;--terra-dk:#94401f;--terra-tint:#f5e1d2;--forest:#2f5d46;--forest-tint:#dfe9dc;--sun:#e2a35a;
+  --focus:#2f5d46;
+  --serif:"Fraunces",Georgia,serif;--sans:"Source Sans 3",system-ui,sans-serif;
+  --r:12px;--r-sm:8px;--ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font:16px/1.5 var(--sans);color:var(--ink);background:var(--bg)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.serif{font-family:var(--serif);font-variation-settings:"SOFT" 100}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.nav{display:flex;align-items:center;gap:28px;max-width:1200px;margin:0 auto;padding:18px 40px}
+.logo{display:flex;align-items:center;gap:10px;font:600 19px var(--serif);font-variation-settings:"SOFT" 100;letter-spacing:-.01em;margin-right:auto;color:var(--ink);text-decoration:none}
+.logo svg{width:28px;height:28px}
+.nav a.l{color:var(--ink-2);text-decoration:none;font-weight:500;font-size:15px}
+.nav a.l:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+
+.wrap{max-width:1200px;margin:0 auto;padding:8px 40px 48px;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:48px;align-items:start}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--forest);margin:12px 0 14px}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--forest)}
+h1{font:500 50px/1.04 var(--serif);font-variation-settings:"SOFT" 100,"opsz" 120;letter-spacing:-.025em;margin:0;max-width:15ch}
+h1 em{font-style:italic;color:var(--terra)}
+.lede{font-size:18px;line-height:1.55;color:var(--ink-2);max-width:52ch;margin:16px 0 22px}
+.art{border-radius:var(--r);overflow:hidden;background:#f1e3cb;line-height:0}
+.art svg{width:100%;height:auto;display:block}
+.cap{display:flex;justify-content:space-between;gap:16px;font-size:13px;color:var(--ink-3);margin-top:10px}
+.trust{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+.trust div{display:flex;gap:10px;align-items:flex-start}
+.trust svg{color:var(--forest);margin-top:1px}
+.trust b{display:block;color:var(--ink);font-weight:600;font-size:14px}
+.trust a{color:var(--forest);font-weight:600;text-underline-offset:3px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:0 1px 0 #e9dcc7,0 18px 40px -28px rgba(80,48,20,.35)}
+.raised{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.raised b{font:600 30px var(--serif);font-variation-settings:"SOFT" 100;letter-spacing:-.02em}
+.raised span{font-size:14px;color:var(--ink-3)}
+.prog{height:10px;border-radius:5px;background:var(--forest-tint);margin:10px 0 8px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--forest);border-radius:5px;transition:width 700ms var(--expo)}
+.pmeta{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-2)}
+.pmeta b{color:var(--ink)}
+.rule{height:1px;background:var(--line);margin:20px 0}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:#f1e7d6;border-radius:var(--r-sm);padding:4px;position:relative;border:0;margin:0 0 16px}
+.seg label{position:relative;z-index:1;text-align:center;height:40px;display:grid;place-items:center;font-weight:600;font-size:15px;color:var(--ink-2);cursor:pointer;border-radius:6px;transition:color 200ms var(--ease)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg input:checked+span{color:var(--ink)}
+.seg .knob{position:absolute;top:4px;left:4px;width:calc(50% - 4px);height:40px;background:var(--card);border-radius:6px;box-shadow:0 1px 2px rgba(60,40,20,.14);transition:transform 260ms var(--ease)}
+.seg.m .knob{transform:translateX(100%)}
+.seg label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:-2px}
+.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;border:0;margin:0;padding:0}
+.chip{position:relative;display:block;padding:12px 14px;border:1.5px solid var(--line);border-radius:var(--r);background:#fff;cursor:pointer;transition:border-color 160ms var(--ease),background 160ms var(--ease)}
+.chip:hover{border-color:#cdb89b}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip .amt{display:block;font:600 22px/1.2 var(--serif);font-variation-settings:"SOFT" 100;letter-spacing:-.01em}
+.chip .imp{display:block;font-size:13px;color:var(--ink-3);margin-top:2px}
+.chip:has(input:checked){border-color:var(--terra);background:var(--terra-tint)}
+.chip:has(input:checked) .imp{color:var(--terra-dk)}
+.chip:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:2px}
+.other{display:none;margin-top:10px}
+.other.on{display:block}
+.other label{font-size:14px;font-weight:600;display:block;margin-bottom:6px}
+.money{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:var(--r);background:#fff;height:48px;padding:0 14px;gap:8px}
+.money:focus-within{border-color:var(--forest)}
+.money span{color:var(--ink-3);font-weight:600}
+.money input{border:0;outline:0;background:none;flex:1;min-width:0;font:600 20px var(--serif);font-variation-settings:"SOFT" 100}
+.money[aria-invalid="true"]{border-color:var(--terra)}
+.err{color:var(--terra-dk);font-size:13px;margin:6px 0 0;min-height:0}
+.impact{display:flex;gap:12px;align-items:center;margin:16px 0 0;padding:12px 14px;background:var(--forest-tint);border-radius:var(--r);color:var(--forest);font-size:15px}
+.impact b{font-weight:700}
+.impact svg{width:28px;height:28px;flex:none}
+.fee{display:flex;gap:10px;align-items:flex-start;margin:16px 0;font-size:14px;color:var(--ink-2);cursor:pointer}
+.fee input{appearance:none;width:20px;height:20px;border:1.5px solid #bfa98b;border-radius:6px;margin:1px 0 0;flex:none;display:grid;place-items:center;background:#fff;cursor:pointer}
+.fee input:checked{background:var(--forest);border-color:var(--forest)}
+.fee input:checked::after{content:"";width:9px;height:5px;border:solid #fff;border-width:0 0 2px 2px;transform:translateY(-1px) rotate(-45deg)}
+.give{width:100%;height:54px;border:0;border-radius:var(--r);background:var(--terra);color:#fffbf3;font:600 18px var(--sans);display:flex;align-items:center;justify-content:center;gap:10px;transition:background 160ms var(--ease),transform 160ms var(--ease)}
+.give:hover{background:var(--terra-dk)}
+.give:active{transform:scale(.985)}
+.secure{display:flex;justify-content:center;align-items:center;gap:6px;font-size:13px;color:var(--ink-3);margin:10px 0 0}
+.secure svg{width:14px;height:14px}
+
+.donors{margin-top:20px}
+.donors h2{font:600 15px var(--sans);margin:0 0 8px;display:flex;justify-content:space-between}
+.donors h2 span{font-weight:400;color:var(--ink-3);font-size:13px}
+.donors ul{list-style:none;margin:0;padding:0}
+.donors li{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line);font-size:14px}
+.av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;background:var(--terra-tint);color:var(--terra-dk)}
+.donors li:nth-child(even) .av{background:var(--forest-tint);color:var(--forest)}
+.donors small{display:block;color:var(--ink-3);font-size:12px}
+.donors .am{font:600 15px var(--serif);font-variation-settings:"SOFT" 100;text-align:right}
+.donors li.new{animation:in 500ms var(--expo)}
+@keyframes in{from{opacity:0;transform:translateY(-6px)}}
+
+.thanks{display:none;text-align:center;padding:8px 4px 4px}
+.card.done form{display:none}
+.card.done .thanks{display:block;animation:in 500ms var(--expo)}
+.thanks svg.bowl{width:120px;height:96px}
+.thanks h2{font:500 28px/1.12 var(--serif);font-variation-settings:"SOFT" 100;letter-spacing:-.02em;margin:8px 0 8px}
+.thanks h2:focus{outline:0}
+.thanks p{color:var(--ink-2);margin:0 auto 18px;max-width:34ch}
+.receipt{text-align:left;border:1px dashed #cdb89b;border-radius:var(--r);padding:12px 14px;font-size:14px;margin-bottom:18px}
+.receipt div{display:flex;justify-content:space-between;padding:3px 0}
+.receipt div:last-child{font-weight:700;border-top:1px solid var(--line);margin-top:4px;padding-top:7px}
+.again{height:44px;padding:0 18px;border:1.5px solid var(--ink);border-radius:var(--r);background:none;font-weight:600}
+
+@media (max-width:1100px){.wrap{grid-template-columns:minmax(0,1fr) 400px;gap:32px}h1{font-size:44px}}
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  .story{display:contents}
+  .art,.cap,.trust{order:3}
+  .side{order:2;max-width:560px;width:100%;margin:4px 0 32px}
+  .nav a.l{display:none}
+}
+@media (max-width:640px){
+  .nav{padding:14px 20px}
+  .wrap{padding:4px 20px 40px}
+  h1{font-size:36px}
+  .lede{font-size:16px}
+  .trust{grid-template-columns:minmax(0,1fr)}
+  .card{padding:18px}
+  .cap{flex-direction:column;gap:2px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <a class="logo" href="#top"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#2f5d46"/><path d="M7 15h14a7 7 0 0 1-14 0z" fill="#fffbf3"/><path d="M11 11c0-2 2-2 2-4M15 11c0-2 2-2 2-4" stroke="#e2a35a" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>Saathi Lunch Fund</a>
+  <a class="l" href="#kitchens">Our kitchens</a>
+  <a class="l" href="#reports">Reports</a>
+  <a class="l" href="#about">About</a>
+</nav>
+<main class="wrap" id="top">
+  <section class="story" aria-labelledby="h">
+    <p class="eyebrow"><i aria-hidden="true"></i>Sindhupalchok · Autumn 2026 appeal</p>
+    <h1 id="h">A warm lunch keeps a child in class <em>all afternoon.</em></h1>
+    <p class="lede">In 46 hill schools, the nearest meal after breakfast is a two-hour walk home. Our kitchens cook dal, rice and seasonal greens on site, for Rs 125 a plate. When lunch arrives, attendance after midday goes up by a third.</p>
+    <figure class="art" style="margin:0">
+      <svg viewBox="0 0 640 250" role="img" aria-label="Terraced green hills under a low sun, a small school with a red roof, and a steaming bowl of dal and rice in front.">
+        <rect width="640" height="250" fill="#f1e3cb"/>
+        <circle cx="500" cy="92" r="46" fill="#e2a35a"/>
+        <path d="M0 150 Q120 92 250 128 T470 112 T640 124 V250 H0Z" fill="#9db58f"/>
+        <path d="M0 176 Q150 128 300 160 T640 150 V250 H0Z" fill="#5f8a68"/>
+        <path d="M0 176 Q150 128 300 160 T640 150" fill="none" stroke="#f1e3cb" stroke-width="2" stroke-dasharray="2 9" opacity=".7"/>
+        <path d="M0 206 Q170 170 340 196 T640 188 V250 H0Z" fill="#2f5d46"/>
+        <g transform="translate(116 118)"><path d="M0 22 L28 2 L56 22Z" fill="#b4502c"/><rect x="6" y="22" width="44" height="28" fill="#fffbf3"/><rect x="22" y="32" width="12" height="18" fill="#94401f"/><rect x="10" y="28" width="8" height="8" fill="#e2a35a"/><rect x="38" y="28" width="8" height="8" fill="#e2a35a"/></g>
+        <g transform="translate(372 150)">
+          <path d="M18 0c-6 8 6 12 0 20M34 -4c-6 8 6 12 0 20M50 0c-6 8 6 12 0 20" fill="none" stroke="#fffbf3" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+          <ellipse cx="34" cy="34" rx="58" ry="12" fill="#e9c27d"/>
+          <path d="M-24 34 Q34 104 92 34Z" fill="#b4502c"/>
+          <path d="M-14 44 Q34 92 82 44" fill="none" stroke="#94401f" stroke-width="2"/>
+          <circle cx="16" cy="30" r="5" fill="#fffbf3"/><circle cx="28" cy="27" r="5" fill="#fffbf3"/><circle cx="22" cy="33" r="4" fill="#fffbf3"/><path d="M44 28h20" stroke="#5f8a68" stroke-width="5" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </figure>
+    <div class="cap"><span>Lunch at Shree Bhimeshwor School, Melamchi. 212 children, one kitchen.</span><span>Rs 125 = one plate</span></div>
+    <div class="trust" id="reports">
+      <div><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg><span><b>Reg. 41372/079</b>Social Welfare Council, Nepal. PAN 609 448 213.</span></div>
+      <div><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 13h5M10 17h5"/></svg><span><b>Audited 2025/26</b><a href="#reports">Read the audited report</a> (PDF, 1.2 MB)</span></div>
+      <div><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l6 3"/></svg><span><b>91 paise in every rupee</b>goes to food and cooks. The rest runs the office.</span></div>
+    </div>
+  </section>
+
+  <div class="side">
+    <div class="card" id="card">
+      <div class="raised"><b id="raised">Rs 12,46,500</b><span>of Rs 18,00,000</span></div>
+      <div class="prog" role="progressbar" aria-label="Raised toward goal" aria-valuemin="0" aria-valuemax="100" id="prog"><i id="bar"></i></div>
+      <div class="pmeta"><span><b id="donors">1,284</b> donors</span><span><b>11</b> days left</span></div>
+      <div class="rule"></div>
+      <form id="f" novalidate>
+        <fieldset class="seg" id="seg"><legend class="sr">How often</legend><span class="knob" aria-hidden="true"></span>
+          <label><input type="radio" name="freq" value="once" checked><span>One-time</span></label>
+          <label><input type="radio" name="freq" value="month"><span>Monthly</span></label>
+        </fieldset>
+        <fieldset class="chips" id="chips"><legend class="sr">Amount</legend></fieldset>
+        <div class="other" id="other">
+          <label for="amt">Your amount</label>
+          <div class="money" id="money"><span aria-hidden="true">Rs</span><input id="amt" inputmode="numeric" autocomplete="off" value="1500" aria-describedby="err"></div>
+          <p class="err" id="err" aria-live="polite"></p>
+        </div>
+        <p class="impact" aria-live="polite"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 14h22a11 9 0 0 1-22 0z" fill="currentColor"/><path d="M10 10c0-2 2-2 2-4M16 10c0-2 2-2 2-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span id="impact"></span></p>
+        <label class="fee"><input type="checkbox" id="fee"><span id="feetxt"></span></label>
+        <button class="give" type="submit" id="give"></button>
+        <p class="secure"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Card, eSewa or Khalti. Cancel monthly gifts any time.</p>
+      </form>
+      <div class="thanks" id="thanks">
+        <svg class="bowl" viewBox="0 0 120 96" aria-hidden="true"><path d="M44 8c-6 8 6 12 0 20M60 4c-6 8 6 12 0 20M76 8c-6 8 6 12 0 20" fill="none" stroke="#e2a35a" stroke-width="3" stroke-linecap="round"/><ellipse cx="60" cy="44" rx="50" ry="10" fill="#e9c27d"/><path d="M10 44 Q60 108 110 44Z" fill="#b4502c"/></svg>
+        <h2 id="thx" tabindex="-1"></h2>
+        <p id="thxp"></p>
+        <div class="receipt" id="receipt"></div>
+        <button type="button" class="again" id="again">Make another gift</button>
+      </div>
+    </div>
+    <section class="donors" aria-labelledby="dh">
+      <h2 id="dh">Recent donors <span>Updated just now</span></h2>
+      <ul id="dlist">
+        <li><span class="av" aria-hidden="true">AR</span><span>Anisha Rai<small>Lalitpur · 4 min ago</small></span><span class="am">Rs 2,500</span></li>
+        <li><span class="av" aria-hidden="true">BT</span><span>Bikram Thapa<small>Monthly · 18 min ago</small></span><span class="am">Rs 1,000</span></li>
+        <li><span class="av" aria-hidden="true">SH</span><span>Sushila and Hari<small>Pokhara · 1 hr ago</small></span><span class="am">Rs 5,000</span></li>
+      </ul>
+    </section>
+  </div>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const PLATE=125,GOAL=1800000;
+let raised=1246500,donors=1284;
+const A=[500,1000,2500];
+const nf=n=>n.toLocaleString("en-IN"),rs=n=>"Rs "+nf(n);
+const st={freq:"once",pick:"1000"};
+const plates=n=>Math.floor(n/PLATE);
+const impactOf=(n,m)=>{const p=plates(n);return p<1?"less than one lunch":p+" school lunch"+(p>1?"es":"")+(m?" every month":"")};
+$("#chips").insertAdjacentHTML("beforeend",A.map(a=>`<label class="chip"><input type="radio" name="amt" value="${a}"${String(a)===st.pick?" checked":""}><span class="amt">${rs(a)}</span><span class="imp" data-a="${a}"></span></label>`).join("")+`<label class="chip"><input type="radio" name="amt" value="other"><span class="amt">Other</span><span class="imp">Choose any amount</span></label>`);
+function amount(){return st.pick==="other"?parseInt($("#amt").value.replace(/\D/g,""),10)||0:+st.pick}
+function paint(){
+  const m=st.freq==="month",a=amount(),fee=Math.round(a*.03),tot=a+($("#fee").checked?fee:0);
+  $("#seg").classList.toggle("m",m);
+  document.querySelectorAll(".imp[data-a]").forEach(e=>e.textContent="= "+impactOf(+e.dataset.a,m));
+  $("#other").classList.toggle("on",st.pick==="other");
+  $("#impact").innerHTML=a>=100?`${rs(a)}${m?" a month":""} = <b>${impactOf(a,m)}</b>${a>=2500&&!m?", a month of lunches for one child":""}.`:"Enter at least Rs 100.";
+  $("#feetxt").textContent=`Add ${rs(fee)} to cover the 3% card fee, so all of your ${rs(a)} reaches the kitchen.`;
+  $("#give").textContent=`Donate ${rs(tot)}${m?" monthly":""}`;
+  const pct=Math.round(raised/GOAL*100);
+  $("#bar").style.width=pct+"%";$("#prog").setAttribute("aria-valuenow",pct);$("#prog").setAttribute("aria-valuetext",`${rs(raised)} of ${rs(GOAL)}, ${pct} percent`);
+  $("#raised").textContent=rs(raised);$("#donors").textContent=nf(donors);
+}
+$("#f").addEventListener("change",e=>{
+  if(e.target.name==="freq")st.freq=e.target.value;
+  if(e.target.name==="amt"){st.pick=e.target.value;if(st.pick==="other")setTimeout(()=>$("#amt").focus(),0)}
+  paint();
+});
+$("#amt").addEventListener("input",()=>{$("#money").removeAttribute("aria-invalid");$("#err").textContent="";paint()});
+$("#f").addEventListener("submit",e=>{
+  e.preventDefault();
+  const a=amount(),m=st.freq==="month";
+  if(a<100){$("#money").setAttribute("aria-invalid","true");$("#err").textContent="The smallest gift is Rs 100.";$("#amt").focus();return}
+  const fee=$("#fee").checked?Math.round(a*.03):0;
+  raised+=a;donors+=1;
+  $("#thx").textContent=`Thank you. That is ${impactOf(a,m)}.`;
+  $("#thxp").textContent=m?"Your first gift goes out today. The next one is on the same date each month.":"Your gift reaches the Melamchi kitchen with next week's rice order.";
+  $("#receipt").innerHTML=`<div><span>Gift${m?", monthly":""}</span><span>${rs(a)}</span></div><div><span>Card fee covered</span><span>${rs(fee)}</span></div><div><span>Charged today</span><span>${rs(a+fee)}</span></div>`;
+  $("#card").classList.add("done");
+  $("#dlist").insertAdjacentHTML("afterbegin",`<li class="new"><span class="av" aria-hidden="true">You</span><span>You<small>${m?"Monthly · ":""}just now</small></span><span class="am">${rs(a)}</span></li>`);
+  if($("#dlist").children.length>3)$("#dlist").lastElementChild.remove();
+  paint();
+  $("#thx").focus();
+});
+$("#again").addEventListener("click",()=>{$("#card").classList.remove("done");$("#give").focus()});
+paint();
+</script>
+</body>
+</html>

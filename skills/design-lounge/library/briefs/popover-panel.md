@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 259 · "Popover panel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 267 · "Popover panel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Popover panel
 

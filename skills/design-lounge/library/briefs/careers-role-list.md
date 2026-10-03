@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 232 · "Open roles" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 240 · "Open roles" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Open roles
 
