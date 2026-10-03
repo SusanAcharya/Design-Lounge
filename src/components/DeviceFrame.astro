@@ -14,7 +14,14 @@ const { slug, platform, title, interactive = false, eager = false, class: cls } 
 const meta = PLATFORM_META[platform];
 const frame = meta.frame;
 const devW = frame === 'web' ? 1280 : frame === 'phone' ? 414 : 1216;
-const devH = frame === 'web' ? 840 : frame === 'phone' ? 868 : 856;
+const devH = frame === 'web' ? 878 : frame === 'phone' ? 868 : 856;
+const nativeView = frame === 'web' ? 'desktop' : frame;
+const switchable = platform === 'web';
+const views = switchable ? 'desktop,tablet,phone' : nativeView;
+const hasWeb = frame === 'web';
+const hasPhone = frame === 'phone' || switchable;
+const hasTablet = frame === 'tablet' || switchable;
+const hasUrlbar = platform === 'mobile-web' || switchable;
 const poster = existsSync(new URL(`../../public/thumbs/${slug}.jpg`, import.meta.url)) ? `/thumbs/${slug}.jpg` : null;
 ---
 <lounge-frame
@@ -23,34 +30,76 @@ const poster = existsSync(new URL(`../../public/thumbs/${slug}.jpg`, import.meta
   data-dw={devW}
   data-dh={devH}
   data-lazy={eager ? 'false' : 'true'}
+  data-platform={platform}
+  data-frame={frame}
+  data-orient={frame === 'tablet' ? 'landscape' : undefined}
+  data-native={nativeView}
+  data-views={views}
 >
   <div class="lf-poster" aria-hidden="true">loading piece</div>
-  <div class="lf-device" style={`width:${devW}px;height:${devH}px`}>
-    {frame === 'web' && (
-      <div class="lf-chrome" aria-hidden="true">
-        <span class="dots"><i></i><i></i><i></i></span>
-        <span class="url">lounge.design/{slug}</span>
+  <div class="lf-device">
+    {hasWeb && (
+      <div class="lf-chrome" data-for="web" aria-hidden="true">
+        <div class="lf-tabs">
+          <span class="lf-lights"><i></i><i></i><i></i></span>
+          <span class="lf-tab"><b class="fav"></b><span class="t">{title}</span><span class="x"></span></span>
+          <span class="lf-newtab"></span>
+        </div>
+        <div class="lf-bar">
+          <span class="lf-nav">
+            <svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg>
+            <svg viewBox="0 0 16 16" class="off"><path d="m6 3 5 5-5 5"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.5-3.6"/><path d="M13 2.5v3h-3"/></svg>
+          </span>
+          <span class="lf-url">
+            <svg viewBox="0 0 16 16" class="lock"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>
+            <span class="host">lounge.design/</span><span class="path">{slug}</span>
+          </span>
+          <span class="lf-tools">
+            <svg viewBox="0 0 16 16"><path d="M8 2v8M5 5l3-3 3 3"/><path d="M4 9v4h8V9"/></svg>
+            <b class="me">SA</b>
+          </span>
+        </div>
       </div>
     )}
-    {frame === 'phone' && (
+    {hasPhone && (
       <>
-        <div class="lf-status" aria-hidden="true">
+        <i class="lf-btn act" data-for="phone" aria-hidden="true"></i>
+        <i class="lf-btn vup" data-for="phone" aria-hidden="true"></i>
+        <i class="lf-btn vdn" data-for="phone" aria-hidden="true"></i>
+        <i class="lf-btn pwr" data-for="phone" aria-hidden="true"></i>
+        <div class="lf-status lf-sb-phone" data-for="phone" aria-hidden="true">
           <span class="time">9:41</span>
           <span class="icons">
             <i style="width:4px;height:5px"></i><i style="width:4px;height:8px"></i><i style="width:4px;height:11px"></i><i style="width:4px;height:14px;margin-right:4px"></i>
             <i style="width:22px;height:11px;border-radius:3px;opacity:.95"></i>
           </span>
         </div>
-        <div class="lf-island" aria-hidden="true"></div>
-        {platform === 'mobile-web' && (
-          <div class="lf-urlbar" aria-hidden="true"><div class="field"><b>lounge.design</b>/{slug}</div></div>
+        <div class="lf-island" data-for="phone" aria-hidden="true"></div>
+        {hasUrlbar && (
+          <div class="lf-urlbar" data-for="phone" aria-hidden="true"><div class="field"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg><span><b>lounge.design</b>/{slug}</span></div></div>
         )}
-        <div class="lf-home" aria-hidden="true"></div>
+        <div class="lf-home" data-for="phone" aria-hidden="true"></div>
       </>
     )}
-    {frame === 'tablet' && (
-      <div class="lf-status" aria-hidden="true"><span>9:41 · Tue 29 Sep</span><span>⌁ 100%</span></div>
+    {hasTablet && (
+      <>
+        <i class="lf-cam" data-for="tablet" aria-hidden="true"></i>
+        {switchable ? (
+          <div class="lf-ipadbar" data-for="tablet" aria-hidden="true">
+            <div class="sb"><span>9:41 Tue 29 Sep</span><span>100%</span></div>
+            <div class="row">
+              <span class="side"><i></i><i></i></span>
+              <span class="pill"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>lounge.design</span>
+              <span class="side r"><i></i><i></i></span>
+            </div>
+          </div>
+        ) : (
+          <div class="lf-status lf-sb-tablet" data-for="tablet" aria-hidden="true"><span>9:41 · Tue 29 Sep</span><span>⌁ 100%</span></div>
+        )}
+      </>
     )}
+    <i class="lf-glass" aria-hidden="true"></i>
     {poster && <img class="lf-poster-img" src={poster} alt="" aria-hidden="true" loading={eager ? "eager" : "lazy"} decoding="async" />}
     <iframe title={`Live preview: ${title}`} sandbox="allow-scripts" loading={eager ? 'eager' : 'lazy'} tabindex={interactive ? undefined : -1} inert={interactive ? undefined : true}></iframe>
   </div>

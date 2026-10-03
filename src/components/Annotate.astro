@@ -1,0 +1,125 @@
+---
+interface Props {
+  type?: 'underline' | 'circle' | 'highlight' | 'scribble';
+  delay?: number;
+}
+const { type = 'underline', delay = 0 } = Astro.props;
+---
+<span class:list={['ann', `ann-${type}`]} data-ann={type} style={`--ann-d:${delay}ms`}><span class="ann-t"><slot /></span><svg class="ann-svg" aria-hidden="true" focusable="false"></svg></span>
+
+<script>
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Small deterministic wobble so each mark looks hand-drawn but stays put across redraws.
+  function rand(seed: number) {
+    let s = seed % 2147483647 || 1;
+    return () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646;
+  }
+
+  function paths(type: string, w: number, h: number, r: () => number): string[] {
+    const j = (n: number) => (r() - 0.5) * n;
+    if (type === 'underline') {
+      return [
+        `M ${w * 0.01} ${h * 0.5 + j(2)} C ${w * 0.3} ${h * 0.15}, ${w * 0.62} ${h * 0.85}, ${w * 0.99} ${h * 0.35 + j(2)}`,
+        `M ${w * 0.12} ${h * 0.85} Q ${w * 0.5} ${h * 0.55 + j(2)}, ${w * 0.9} ${h * 0.72}`,
+      ];
+    }
+    if (type === 'scribble') {
+      const step = Math.max(10, Math.min(16, w / 14));
+      const n = Math.max(4, Math.round(w / step));
+      const dx = w / n;
+      let d = `M 1 ${h * 0.55}`;
+      for (let i = 0; i < n; i++) {
+        const x = (i + 1) * dx;
+        const y = i % 2 ? h * 0.75 : h * 0.25;
+        d += ` Q ${x - dx / 2} ${y + j(2)}, ${x} ${h * 0.5 + j(2)}`;
+      }
+      return [d];
+    }
+    if (type === 'highlight') {
+      return [`M 2 ${h * 0.6} L ${w - 2} ${h * 0.52 + j(2)}`];
+    }
+    // circle: a loose loop that overshoots its start
+    const cx = w / 2, cy = h / 2, rx = w / 2 - 3, ry = h / 2 - 3;
+    const start = -Math.PI * 0.62;
+    const sweep = Math.PI * 2.18;
+    const steps = 56;
+    const pts: [number, number][] = [];
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const a = start + sweep * t;
+      const k = 1 - 0.07 * t + 0.025 * Math.sin(a * 3);
+      pts.push([cx + Math.cos(a) * rx * k, cy + Math.sin(a) * ry * (k + 0.04 * t)]);
+    }
+    let d = `M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+    for (let i = 1; i < pts.length - 1; i++) {
+      const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2;
+      d += ` Q ${pts[i][0].toFixed(1)} ${pts[i][1].toFixed(1)}, ${mx.toFixed(1)} ${my.toFixed(1)}`;
+    }
+    return [d];
+  }
+
+  function draw(el: HTMLElement) {
+    const svg = el.querySelector('svg') as SVGSVGElement;
+    const { width: w, height: h } = svg.getBoundingClientRect();
+    if (!w || !h) return;
+    const key = `${Math.round(w)}x${Math.round(h)}`;
+    if (svg.dataset.key === key) return;
+    svg.dataset.key = key;
+    svg.setAttribute('viewBox', `0 0 ${w.toFixed(1)} ${h.toFixed(1)}`);
+    svg.replaceChildren();
+    const type = el.dataset.ann || 'underline';
+    const r = rand([...(el.textContent || '')].reduce((a, c) => a + c.charCodeAt(0), 7));
+    paths(type, w, h, r).forEach((d, i) => {
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', d);
+      p.setAttribute('pathLength', '1');
+      p.style.setProperty('--i', String(i));
+      svg.appendChild(p);
+    });
+  }
+
+  const els = [...document.querySelectorAll<HTMLElement>('[data-ann]')];
+  els.forEach(draw);
+  const ro = new ResizeObserver((entries) => entries.forEach((e) => draw(e.target as HTMLElement)));
+  els.forEach((el) => ro.observe(el));
+
+  if (reduce.matches || !('IntersectionObserver' in window)) {
+    els.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { rootMargin: '0px 0px -15% 0px', threshold: 0.5 });
+    els.forEach((el) => io.observe(el));
+  }
+</script>
+
+<style>
+  .ann { position: relative; display: inline-block; white-space: nowrap; isolation: isolate; }
+  .ann-t { position: relative; z-index: 1; }
+  .ann-svg { position: absolute; max-width: none; overflow: visible; pointer-events: none; z-index: 2; }
+  .ann-svg :global(path) {
+    fill: none; stroke: var(--accent); stroke-width: 2.4px; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 1; stroke-dashoffset: 1;
+    transition: stroke-dashoffset 900ms cubic-bezier(.65, .05, .25, 1);
+    transition-delay: calc(var(--ann-d, 0ms) + 260ms + var(--i, 0) * 420ms);
+  }
+  .ann.in .ann-svg :global(path) { stroke-dashoffset: 0; }
+
+  .ann-underline .ann-svg { left: -2%; right: -2%; width: 104%; top: 86%; height: .26em; }
+  .ann-underline .ann-svg :global(path:nth-child(2)) { stroke-width: 1.6px; opacity: .7; }
+  .ann-scribble .ann-svg { left: 0; width: 100%; top: 88%; height: .22em; }
+  .ann-scribble .ann-svg :global(path) { stroke-width: 2px; transition-duration: 1200ms; }
+  .ann-circle .ann-svg { left: -.4em; top: -.06em; width: calc(100% + .7em); height: calc(100% + .14em); }
+  .ann-circle .ann-svg :global(path) { transition-duration: 1100ms; }
+  .ann-highlight .ann-svg { left: -.08em; width: calc(100% + .16em); top: 8%; height: 92%; z-index: 0; }
+  .ann-highlight .ann-svg :global(path) {
+    stroke: color-mix(in oklab, var(--accent) 30%, transparent);
+    stroke-width: .5em; stroke-linecap: butt; transition-duration: 700ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ann-svg :global(path) { transition: none; stroke-dashoffset: 0; }
+  }
+</style>

@@ -80,7 +80,7 @@ document.addEventListener('click', async (e) => {
 });
 
 document.addEventListener('pointerenter', (e) => {
-  const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="/p/"], a[href^="/c/"]');
+  const a = (e.target as HTMLElement).closest?.<HTMLAnchorElement>('a[href^="/p/"], a[href^="/c/"]');
   if (!a || a.dataset.prefetched) return;
   a.dataset.prefetched = '1';
   const link = document.createElement('link');

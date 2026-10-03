@@ -1,0 +1,144 @@
+---
+import { Code } from 'astro:components';
+import { briefUrl, demoUrl, bytes } from '../lib/pieces';
+
+interface Props { slug: string; title: string; brief: string; source: string }
+const { slug, title, brief, source } = Astro.props;
+const install = 'npx skills add SusanAcharya/Design-Lounge';
+const prompt = `Using the Design Lounge skill, build "${title}" (piece ${slug}) in my stack. Match its brief; restyle it onto my product's theme.`;
+const briefAll = brief.split('\n');
+const briefHead = briefAll.slice(0, 40).join('\n').trimEnd();
+const more = Math.max(0, briefAll.length - 40);
+const size = bytes(new TextEncoder().encode(source).length);
+const tabs = [
+  { id: 'agent', label: 'Ask your agent' },
+  { id: 'brief', label: 'Brief', meta: `${briefAll.length} lines` },
+  { id: 'html', label: 'HTML', meta: size },
+];
+const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg>';
+---
+<div class="ui" data-useit>
+  <div class="ui-bar">
+    <div class="ui-tabs" role="tablist" aria-label="Ways to use this piece">
+      {tabs.map((t, i) => (
+        <button type="button" role="tab" id={`ui-t-${t.id}`} aria-controls={`ui-p-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-ui-tab={t.id}>
+          {t.label}{t.meta && <span class="meta">{t.meta}</span>}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="ui-panel" role="tabpanel" id="ui-p-agent" aria-labelledby="ui-t-agent" data-ui-panel="agent">
+    <div class="step">
+      <p class="step-l"><span class="n">1</span> Once, in your project</p>
+      <div class="line">
+        <code id="ui-install"><span class="pr" aria-hidden="true">$</span>{install}</code>
+        <button class="btn sm ghost" type="button" data-copy="#ui-install-src" aria-label="Copy install command"><Fragment set:html={copyIcon} /><span data-label>Copy</span></button>
+      </div>
+    </div>
+    <div class="step">
+      <p class="step-l"><span class="n">2</span> Then ask</p>
+      <div class="line prompt">
+        <p id="ui-prompt">{prompt}</p>
+        <button class="btn sm primary" type="button" data-copy="#ui-prompt" aria-label="Copy prompt"><Fragment set:html={copyIcon} /><span data-label>Copy prompt</span></button>
+      </div>
+    </div>
+    <p class="note mono faint">No skill? Paste the brief instead. It carries the numbers, tokens and behaviour.</p>
+  </div>
+
+  <div class="ui-panel" role="tabpanel" id="ui-p-brief" aria-labelledby="ui-t-brief" data-ui-panel="brief" hidden>
+    <div class="tools">
+      <button class="btn sm primary" type="button" data-copy="#brief-src" data-copy-brief data-done-label="Copied"><Fragment set:html={copyIcon} /><span data-label>Copy brief</span></button>
+      <a class="btn sm" href={briefUrl(slug)} download={`${slug}.md`}>Download .md</a>
+      <a class="btn sm ghost" href={briefUrl(slug)} target="_blank" rel="noopener">Raw</a>
+      <span class="hint mono faint"><kbd>c</kbd> copies</span>
+    </div>
+    <pre class="peek" tabindex="0" aria-label="First 40 lines of the brief">{briefHead}{more > 0 && <span class="more">{`\n\n… ${more} more lines. Copy or download for the full brief.`}</span>}</pre>
+  </div>
+
+  <div class="ui-panel" role="tabpanel" id="ui-p-html" aria-labelledby="ui-t-html" data-ui-panel="html" hidden>
+    <div class="tools">
+      <button class="btn sm primary" type="button" data-copy="#source-src" data-done-label="Copied"><Fragment set:html={copyIcon} /><span data-label>Copy source</span></button>
+      <a class="btn sm" href={demoUrl(slug)} download={`${slug}.html`}>Download .html</a>
+      <span class="hint mono faint">Single file · {size}</span>
+    </div>
+    <div class="src"><Code code={source} lang="html" themes={{ light: 'github-light', dark: 'github-dark-dimmed' }} defaultColor={false} /></div>
+  </div>
+</div>
+<script type="application/json" id="ui-install-src" set:html={JSON.stringify(install)}></script>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-useit]');
+  if (root) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-ui-tab]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-ui-panel]')];
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+      panels.forEach((p) => (p.hidden = p.dataset.uiPanel !== tabs[i].dataset.uiTab));
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const n = tabs.length;
+        const k = e.key === 'ArrowRight' ? (i + 1) % n : e.key === 'ArrowLeft' ? (i - 1 + n) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
+        if (k < 0) return;
+        e.preventDefault();
+        select(k, true);
+      });
+    });
+    const fromHash: Record<string, string> = { '#source': 'html', '#html': 'html', '#brief-text': 'brief' };
+    const want = fromHash[location.hash];
+    if (want) {
+      select(tabs.findIndex((t) => t.dataset.uiTab === want));
+      requestAnimationFrame(() => document.getElementById('use-it')?.scrollIntoView());
+    }
+  }
+</script>
+
+<style>
+  .ui { border: 1px solid var(--line-2); border-radius: var(--r-lg); background: var(--paper); overflow: hidden; min-width: 0; }
+  .ui-bar { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); background: var(--paper-2); overflow-x: auto; scrollbar-width: none; }
+  .ui-bar::-webkit-scrollbar { display: none; }
+  .ui-tabs { display: flex; padding: 0 8px; }
+  .ui-tabs button { position: relative; display: inline-flex; align-items: baseline; gap: 8px; padding: 13px 12px 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; transition: color var(--t-fast); }
+  .ui-tabs button:hover { color: var(--ink); }
+  .ui-tabs button[aria-selected="true"] { color: var(--ink); }
+  .ui-tabs button[aria-selected="true"]::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: -1px; height: 2px; background: var(--ink); }
+  .ui-tabs button:focus-visible { outline-offset: -4px; }
+  .meta { font-size: 10px; letter-spacing: .04em; text-transform: none; color: var(--ink-3); }
+
+  .ui-panel { padding: 20px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .ui-panel[hidden] { display: none; }
+  .step { display: flex; flex-direction: column; gap: 8px; }
+  .step-l { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .n { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line-2); font-size: 10px; letter-spacing: 0; color: var(--ink-2); }
+  .line { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 14px; border: 1px solid var(--line); border-radius: var(--r); background: var(--paper-2); min-width: 0; }
+  .line code { font-size: 13px; color: var(--ink); overflow-x: auto; white-space: nowrap; scrollbar-width: none; min-width: 0; }
+  .line code::-webkit-scrollbar { display: none; }
+  .pr { color: var(--accent); margin-right: 10px; user-select: none; }
+  .line.prompt { align-items: flex-start; }
+  .line.prompt p { font-family: var(--mono); font-size: 13px; line-height: 1.6; color: var(--ink); min-width: 0; text-wrap: pretty; padding: 3px 0; }
+  .line .btn { flex: none; }
+  .note { font-size: 11px; }
+
+  .tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .hint { margin-left: auto; font-size: 11px; }
+  .peek, .src :global(pre) { margin: 0; max-height: 420px; overflow: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--paper-2) !important; font-size: 12.5px; line-height: 1.6; scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
+  .peek { padding: 14px 16px; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink-2); }
+  .peek .more { color: var(--ink-3); font-style: italic; }
+  .src { min-width: 0; border-radius: var(--r); }
+  .src :global(pre) { padding: 14px 16px; max-height: 520px; }
+  .src:focus-visible, .peek:focus-visible { outline-offset: 2px; }
+
+  @media (max-width: 640px) {
+    .ui-panel { padding: 14px; }
+    .line.prompt { flex-direction: column; align-items: stretch; }
+    .line.prompt .btn { align-self: flex-start; }
+    .hint { display: none; }
+    .line:not(.prompt) .btn [data-label] { display: none; }
+    .line:not(.prompt) .btn { width: 32px; padding: 0; }
+    .ui-tabs button { padding-inline: 9px; }
+    .ui-tabs button[aria-selected="true"]::after { left: 9px; right: 9px; }
+  }
+</style>

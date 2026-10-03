@@ -1,0 +1,52 @@
+---
+interface Item { id: string; label: string; depth: number }
+interface Props { items: Item[] }
+const { items } = Astro.props;
+---
+<nav class="otp" aria-label="On this page" data-otp>
+  <p class="eyebrow">On this page</p>
+  <ol>
+    {items.map((it) => (
+      <li class={`d${it.depth}`}><a href={`#${it.id}`} data-otp-link={it.id}>{it.label}</a></li>
+    ))}
+  </ol>
+</nav>
+
+<script>
+  const otp = document.querySelector<HTMLElement>('[data-otp]');
+  if (otp) {
+    const links = [...otp.querySelectorAll<HTMLAnchorElement>('[data-otp-link]')];
+    const targets = links.map((a) => document.getElementById(a.dataset.otpLink!)).filter((t): t is HTMLElement => !!t);
+    let raf = 0, active = '';
+    const stick = () => parseFloat(getComputedStyle(otp).getPropertyValue('--stick')) || 111;
+    function update() {
+      raf = 0;
+      if (!otp!.offsetParent) return;
+      const line = stick() + 96;
+      let id = targets[0]?.id ?? '';
+      for (const t of targets) { if (t.getBoundingClientRect().top <= line) id = t.id; else break; }
+      if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) {
+        const lastVisible = [...targets].reverse().find((t) => t.getBoundingClientRect().top < innerHeight);
+        if (lastVisible) id = lastVisible.id;
+      }
+      if (id === active) return;
+      active = id;
+      links.forEach((a) => { const on = a.dataset.otpLink === id; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    }
+    const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
+    addEventListener('scroll', queue, { passive: true });
+    addEventListener('resize', queue);
+    update();
+  }
+</script>
+
+<style>
+  .otp .eyebrow { margin-bottom: 12px; }
+  .otp ol { border-left: 1px solid var(--line); display: flex; flex-direction: column; }
+  .otp a { display: block; margin-left: -1px; padding: 4px 0 4px 13px; border-left: 1px solid transparent; font-size: 13px; line-height: 1.4; color: var(--ink-3); transition: color var(--t-fast), border-color var(--t-fast); }
+  .otp .d3 a { padding-left: 25px; font-size: 12.5px; }
+  .otp a:hover { color: var(--ink); }
+  .otp a.on { color: var(--ink); border-left: 2px solid var(--accent); padding-left: 12px; }
+  .otp .d3 a.on { padding-left: 24px; }
+  .otp a:focus-visible { outline-offset: -2px; }
+</style>

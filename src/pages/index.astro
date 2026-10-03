@@ -2,13 +2,16 @@
 import Base from '../layouts/Base.astro';
 import DeviceFrame from '../components/DeviceFrame.astro';
 import PieceCard from '../components/PieceCard.astro';
+import Showcase from '../components/Showcase.astro';
+import Annotate from '../components/Annotate.astro';
+import AgentTerminal from '../components/AgentTerminal.astro';
 import { COLLECTIONS, SHELF_GROUPS } from '../data/collections';
 import { getPieces, numberMap, CATEGORY_GROUPS, CATEGORY_META, AUTHOR } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
 import { RECIPES } from '../data/motion';
-import { SURFACES, startsOn } from '../data/starts';
+import { SURFACES, STARTS, startsOn } from '../data/starts';
 import { SOURCES } from '../data/website-list';
 
 const all = await getPieces();
@@ -20,6 +23,9 @@ const heroWeb = pick('web') ?? newest[0];
 const heroPhone = pick('mobile-app') ?? pick('pwa') ?? pick('mobile-web');
 const heroTablet = pick('tablet');
 const fresh = newest.slice(0, 4);
+const saas = STARTS.find((s) => s.id === 'saas');
+const lime = saas?.directions.find((d) => d.id === 'lime-engine');
+const agentHero = all.find((p) => p.id === (lime?.hero ?? 'hero-split-ui-stack')) ?? all.find((p) => p.id === 'hero-split-ui-stack');
 const byId = new Map(all.map((p) => [p.id, p]));
 const catCount = (c: string) => all.filter((p) => p.data.category === c).length;
 const indexGroups = CATEGORY_GROUPS.map((g) => ({
@@ -75,42 +81,108 @@ const libs = [
     </div>
   </section>
 
-  <section class="wrap ways" aria-labelledby="ways-title">
-    <h2 id="ways-title" class="eyebrow">How it works</h2>
-    <ol class="ways-grid">
-      <li>
-        <div>
-          <span class="mono faint">01</span>
-          <span class="display h3">Install once</span>
-          <span class="muted">One command. The whole library goes into your agent's skills.</span>
-          <span class="cmd">
-            <code id="install-cmd">npx skills add SusanAcharya/Design-Lounge</code>
-            <button class="copy" type="button" data-copy="#install-cmd"><span data-label>Copy</span></button>
-          </span>
+  <section class="wrap agent" id="agent" aria-labelledby="agent-h">
+    <div class="agent-head">
+      <p class="sc-n mono"><span>Nº 01</span><span class="rule" aria-hidden="true"></span><span>Agent at work</span></p>
+      <h2 class="display agent-h" id="agent-h">Say what you're making. Get a site that <Annotate type="underline">stands out.</Annotate></h2>
+      <div class="agent-side">
+        <p class="agent-copy">Install once, then ask the way you would ask a designer. The skill picks one recipe, one direction, one palette and one type pairing, then checks its own work for anything generic.</p>
+        <ol class="agent-steps mono">
+          <li><span>01</span>Install once</li>
+          <li><span>02</span>Ask in plain words</li>
+          <li><span>03</span><a href="/start">See what it picks</a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="agent-grid">
+      <AgentTerminal pieces={all.length} pairings={PAIRINGS.length} themes={THEMES.length} />
+      <div class="agent-result">
+        <div class="agent-stage">
+          <span class="sc-live mono" aria-hidden="true"><i></i>The result · live</span>
+          {agentHero && <DeviceFrame slug={agentHero.id} platform={agentHero.data.platform} title={agentHero.data.title} interactive />}
         </div>
-      </li>
-      <li>
-        <div>
-          <span class="mono faint">02</span>
-          <span class="display h3">Ask like you would a designer</span>
-          <ul class="asks">
-            <li>“Build a SaaS landing page.”</li>
-            <li>“A portfolio with a cool scroll.”</li>
-            <li>“A shop for my ceramics.”</li>
-            <li>“A bank app.”</li>
-          </ul>
-        </div>
-      </li>
-      <li>
-        <a href="/start">
-          <span class="mono faint">03</span>
-          <span class="display h3">Get a design that stands out</span>
-          <span class="muted">It picks one palette, one type pairing, and the screens that fit. Then it checks its own work for anything generic.</span>
-          <span class="go">See what it picks</span>
-        </a>
-      </li>
-    </ol>
+        {agentHero && (
+          <p class="agent-cap mono faint">
+            <span>Hero: {agentHero.data.title}</span>
+            <a href={`/p/${agentHero.id}`}>Open piece <span aria-hidden="true">→</span></a>
+          </p>
+        )}
+      </div>
+    </div>
   </section>
+
+  <Showcase
+    id="phones"
+    n="02"
+    kicker="Phone apps"
+    more={{ href: '/platforms/mobile-app', label: 'All phone screens' }}
+    slugs={[
+      { slug: 'phone-wallet-cards', label: 'Wallet cards' },
+      { slug: 'phone-workout-timer', label: 'Workout timer' },
+      { slug: 'phone-lesson-quiz', label: 'Lesson quiz' },
+      { slug: 'phone-feed-posts', label: 'Social feed' },
+      { slug: 'phone-order-tracking', label: 'Order tracking' },
+    ]}
+  >
+    <Fragment slot="title">Phone screens you can actually <Annotate type="circle">tap.</Annotate></Fragment>
+    Native-feel app screens at 390 × 844. Lift a card, run the timer, answer the quiz. Each one ships with a brief your agent builds from.
+  </Showcase>
+
+  <Showcase
+    id="websites"
+    n="03"
+    kicker="Websites"
+    flip
+    more={{ href: '/platforms/web', label: 'All web pieces' }}
+    slugs={[
+      { slug: 'navbar-split-centered-logo', label: 'Split navbar' },
+      { slug: 'hero-search-marketplace', label: 'Marketplace search' },
+      { slug: 'testimonials-masonry-wall', label: 'Testimonial wall' },
+      { slug: 'pricing-usage-slider', label: 'Usage pricing' },
+      { slug: 'restaurant-menu-page', label: 'Restaurant menu' },
+    ]}
+  >
+    <Fragment slot="title">Sections with a <Annotate type="highlight">point of view.</Annotate></Fragment>
+    Navbars, heroes, pricing, menus. Each one commits to a palette and a type pairing, and every control in the frame works.
+  </Showcase>
+
+  <Showcase
+    id="motion"
+    n="04"
+    kicker="Motion"
+    more={{ href: '/motion', label: 'All motion' }}
+    note="Scroll inside the frame"
+    slugs={[
+      { slug: 'webgl-shader-hero', label: 'Shader hero' },
+      { slug: 'scroll-scrub-product-sequence', label: 'Scroll teardown' },
+      { slug: 'parallax-layered-hero', label: 'Layered parallax' },
+      { slug: 'page-transition-tile-wipe', label: 'Tile wipe' },
+      { slug: 'preloader-counter-intro', label: 'Counter preloader' },
+    ]}
+  >
+    <Fragment slot="title">Motion that <Annotate type="scribble">earns its place.</Annotate></Fragment>
+    Shaders, scroll scrubs, parallax, transitions and preloaders. Each moves for a reason and has a reduced-motion fallback.
+  </Showcase>
+
+  <Showcase
+    id="tablets"
+    n="05"
+    kicker="Tablet"
+    flip
+    more={{ href: '/platforms/tablet', label: 'All tablet screens' }}
+    slugs={[
+      { slug: 'tablet-pos-register', label: 'Cafe register' },
+      { slug: 'tablet-cook-mode', label: 'Cook mode' },
+      { slug: 'tablet-kiosk-checkin', label: 'Kiosk check-in' },
+    ]}
+  >
+    <Fragment slot="title">Big screens for <Annotate type="underline">busy hands.</Annotate></Fragment>
+    Registers, kitchens and front desks. Large targets, type you can read at arm's length, and flows that survive a queue.
+  </Showcase>
+
+  <div class="wrap lib-intro">
+    <p class="sc-n mono"><span>Nº 06</span><span class="rule" aria-hidden="true"></span><span>The library</span></p>
+  </div>
 
   <section class="section wrap needs">
     <div class="section-head">
@@ -259,17 +331,32 @@ const libs = [
   .section-head .h2 { font-size: clamp(28px, 2.4vw, 40px); }
   .section-head .sub { margin-top: 6px; color: var(--ink-2); font-size: 15px; }
 
-  .ways { padding-block: clamp(8px, 2vw, 20px) clamp(28px, 4vw, 48px); }
-  .ways > .eyebrow { margin-bottom: 14px; }
-  .ways-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
-  .ways-grid > li > a, .ways-grid > li > div { display: flex; flex-direction: column; gap: 10px; height: 100%; padding: 24px 22px 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .ways-grid > li > a { transition: background-color var(--t-med) var(--ease); }
-  .ways-grid > li > a:hover { background: var(--paper-2); }
-  .ways-grid .h3 { font-size: clamp(24px, 2vw, 30px); }
-  .ways-grid .muted { color: var(--ink-2); font-size: 15px; max-width: 34ch; text-wrap: pretty; }
-  .ways-grid .go { margin-top: auto; padding-top: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
-  .ways-grid .go::after { content: " →"; }
-  .ways-grid a.go:hover, .ways-grid > li > a:hover .go { color: var(--accent); }
+  .sc-n { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+  .sc-n .rule { width: 36px; height: 1px; background: var(--ink-3); }
+  .sc-live { position: absolute; left: 14px; top: 6px; z-index: 2; display: inline-flex; align-items: center; gap: 7px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+  .sc-live i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: live-pulse 2.4s var(--ease) infinite; }
+  @keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+  .agent { padding-block: clamp(48px, 6.5vw, 96px) clamp(36px, 5vw, 64px); border-top: 1px solid var(--line); }
+  .agent-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px clamp(32px, 5vw, 80px); align-items: end; margin-bottom: clamp(28px, 4vw, 48px); }
+  .agent-head .sc-n { grid-column: 1 / -1; }
+  .agent-h { font-size: clamp(36px, 4.2vw, 64px); line-height: 1.03; letter-spacing: -.02em; text-wrap: balance; max-width: 16ch; }
+  .agent-side { display: flex; flex-direction: column; gap: 18px; padding-bottom: 6px; }
+  .agent-copy { color: var(--ink-2); font-size: 16.5px; line-height: 1.55; max-width: 44ch; text-wrap: pretty; }
+  .agent-steps { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+  .agent-steps span { margin-right: 8px; color: var(--accent); }
+  .agent-steps a { border-bottom: 1px solid var(--ink-3); }
+  .agent-steps a:hover { color: var(--accent); border-color: var(--accent); }
+  .agent-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(16px, 2vw, 28px); align-items: stretch; }
+  .agent-result { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .agent-stage { position: relative; flex: 1; min-height: 420px; aspect-ratio: 1280 / 900; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; overflow: hidden; }
+  .agent-stage :global(lounge-frame) { position: absolute; inset: 26px 22px 20px; }
+  .agent-cap { display: flex; justify-content: space-between; gap: 12px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  .agent-cap a { color: var(--ink); border-bottom: 1px solid var(--ink-3); }
+  .agent-cap a:hover { color: var(--accent); border-color: var(--accent); }
+  .lib-intro { padding-top: clamp(40px, 6vw, 72px); border-top: 1px solid var(--line); }
+  .lib-intro + .needs { padding-top: 12px; }
+  @media (prefers-reduced-motion: reduce) { .sc-live i { animation: none; } }
   .cmd { display: flex; align-items: center; gap: 8px; margin-top: 4px; padding: 6px 6px 6px 12px; border: 1px solid var(--line); border-radius: var(--r); background: var(--paper-2); min-width: 0; }
   .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 12.5px; }
   .cmd .copy { flex: none; height: 30px; padding: 0 12px; border: 1px solid var(--line-strong, var(--line)); border-radius: var(--r); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); background: var(--paper); }
@@ -282,8 +369,6 @@ const libs = [
   .cmd.big .copy:hover { opacity: .88; }
   .works { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
   .works a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-  .asks { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
-  .asks li { font-family: var(--display); font-style: italic; font-size: 18px; color: var(--ink); }
   .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; padding: clamp(40px, 6vw, 80px) 0 clamp(32px, 5vw, 48px); min-height: calc(100vh - var(--header-h) - 200px); }
   .hero-text { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
   .hero .h1 span, .hero .h1 i { display: inline-block; }
@@ -333,7 +418,9 @@ const libs = [
     .need-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 960px) {
-    .ways-grid { grid-template-columns: minmax(0, 1fr); }
+    .agent-head, .agent-grid { grid-template-columns: minmax(0, 1fr); }
+    .agent-stage { min-height: 0; }
+    .agent-cap { flex-direction: column; gap: 6px; }
     .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
     .map, .lib-grid { grid-template-columns: repeat(2, 1fr); }
     .shelf-groups { grid-template-columns: minmax(0, 1fr); gap: 32px; }

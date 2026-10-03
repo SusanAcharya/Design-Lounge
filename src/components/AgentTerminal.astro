@@ -1,0 +1,154 @@
+---
+import { STARTS } from '../data/starts';
+
+interface Props {
+  pieces: number;
+  pairings: number;
+  themes: number;
+}
+const { pieces, pairings, themes } = Astro.props;
+const recipe = STARTS.find((s) => s.id === 'saas');
+const dir = recipe?.directions.find((d) => d.id === 'lime-engine') ?? recipe?.directions[0];
+const hero = dir?.hero ?? recipe?.pieces[0] ?? '';
+
+type Line = { k: 'cmd' | 'ask' | 'out' | 'ok' | 'pick' | 'gap'; text?: string; key?: string };
+const lines: Line[] = [
+  { k: 'cmd', text: 'npx skills add SusanAcharya/Design-Lounge' },
+  { k: 'ok', text: `installed design-lounge · ${pieces} pieces · ${pairings} pairings · ${themes} themes` },
+  { k: 'gap' },
+  { k: 'ask', text: 'build me a SaaS company page' },
+  { k: 'out', text: 'reading skills/design-lounge/SKILL.md' },
+  { k: 'pick', key: 'Recipe', text: recipe?.id ?? 'saas' },
+  { k: 'pick', key: 'Direction', text: dir?.id },
+  { k: 'pick', key: 'Theme', text: dir?.theme },
+  { k: 'pick', key: 'Type', text: dir?.pairing },
+  { k: 'pick', key: 'Effect', text: dir?.effect ?? 'none' },
+  { k: 'pick', key: 'Hero', text: hero },
+  { k: 'ok', text: 'wrote app/page.tsx · checked for anything generic' },
+];
+const transcript = lines
+  .filter((l) => l.k !== 'gap')
+  .map((l) => (l.k === 'cmd' ? `$ ${l.text}` : l.k === 'ask' ? `> ${l.text}` : l.k === 'pick' ? `${l.key}: ${l.text}` : l.text))
+  .join('. ');
+---
+<figure class="term" data-term>
+  <div class="term-bar">
+    <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="term-name mono">~/my-saas · agent</span>
+    <span class="term-ctl">
+      <button type="button" class="term-btn mono" data-term-toggle aria-pressed="false">Pause</button>
+      <button type="button" class="term-btn mono" data-term-replay>Replay</button>
+    </span>
+  </div>
+  <figcaption class="sr-only">Agent session transcript: {transcript}</figcaption>
+  <ol class="term-body" aria-hidden="true" aria-live="off">
+    {lines.map((l) => (
+      <li class={`tl tl-${l.k}`} data-k={l.k}>
+        {l.k === 'cmd' && <span class="p">$</span>}
+        {l.k === 'ask' && <span class="p">&gt;</span>}
+        {l.k === 'ok' && <span class="p">✓</span>}
+        {l.k === 'pick' && <span class="key">{l.key}</span>}
+        {l.text && <span class="tx" data-text={l.text}>{l.text}</span>}
+      </li>
+    ))}
+    <li class="tl tl-caret"><span class="caret"></span></li>
+  </ol>
+</figure>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+  document.querySelectorAll<HTMLElement>('[data-term]').forEach((term) => {
+    const rows = [...term.querySelectorAll<HTMLElement>('.term-body > .tl:not(.tl-caret)')];
+    const caret = term.querySelector<HTMLElement>('.tl-caret')!;
+    const toggle = term.querySelector<HTMLButtonElement>('[data-term-toggle]')!;
+    const replay = term.querySelector<HTMLButtonElement>('[data-term-replay]')!;
+    let paused = false, visible = false, run = 0;
+
+    const showAll = () => { rows.forEach((r) => { r.classList.add('on'); const t = r.querySelector<HTMLElement>('.tx'); if (t) t.textContent = t.dataset.text!; }); caret.classList.add('on'); };
+    if (reduce.matches) { showAll(); toggle.hidden = true; replay.hidden = true; return; }
+
+    const gate = async (id: number) => { while ((paused || !visible) && id === run) await sleep(120); return id === run; };
+
+    async function play() {
+      const id = ++run;
+      rows.forEach((r) => { r.classList.remove('on', 'typing'); const t = r.querySelector<HTMLElement>('.tx'); if (t) t.textContent = ''; });
+      caret.classList.remove('on');
+      for (const r of rows) {
+        if (!(await gate(id))) return;
+        const k = r.dataset.k;
+        const t = r.querySelector<HTMLElement>('.tx');
+        r.classList.add('on');
+        if (t && (k === 'cmd' || k === 'ask')) {
+          r.classList.add('typing');
+          await sleep(380);
+          const full = t.dataset.text!;
+          for (let i = 1; i <= full.length; i++) {
+            if (!(await gate(id))) { r.classList.remove('typing'); return; }
+            t.textContent = full.slice(0, i);
+            await sleep(26 + Math.random() * 46);
+          }
+          await sleep(k === 'cmd' ? 700 : 520);
+          r.classList.remove('typing');
+        } else {
+          if (t) t.textContent = t.dataset.text!;
+          await sleep(k === 'pick' ? 300 : k === 'gap' ? 160 : 520);
+        }
+      }
+      caret.classList.add('on');
+      for (let w = 0; w < 50; w++) { if (!(await gate(id))) return; await sleep(100); }
+      if (id === run) play();
+    }
+
+    toggle.addEventListener('click', () => {
+      paused = !paused;
+      toggle.setAttribute('aria-pressed', String(paused));
+      toggle.textContent = paused ? 'Play' : 'Pause';
+    });
+    replay.addEventListener('click', () => { paused = false; toggle.setAttribute('aria-pressed', 'false'); toggle.textContent = 'Pause'; play(); });
+
+    new IntersectionObserver((es) => { visible = es[0].isIntersecting; }, { threshold: 0.35 }).observe(term);
+    play();
+  });
+</script>
+
+<style>
+  .term {
+    --t-bg: #16140f; --t-ink: #ece7dc; --t-dim: #8c867b; --t-acc: #e0a34b; --t-line: #2b2925;
+    display: flex; flex-direction: column; min-width: 0; margin: 0;
+    background: var(--t-bg); color: var(--t-ink); border: 1px solid var(--t-line); border-radius: var(--r-lg);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  :global([data-theme="night"]) .term { --t-bg: #0d0c0a; border-color: var(--line-2); }
+  .term-bar { display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 8px 0 14px; border-bottom: 1px solid var(--t-line); }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 9px; height: 9px; border-radius: 50%; background: #3a3731; }
+  .term-name { flex: 1; min-width: 0; font-size: 11px; letter-spacing: .06em; color: var(--t-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .term-ctl { display: flex; gap: 4px; }
+  .term-btn { height: 26px; padding: 0 10px; border: 1px solid var(--t-line); border-radius: var(--r); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--t-dim); background: transparent; transition: color var(--t-fast), border-color var(--t-fast); }
+  .term-btn:hover, .term-btn:focus-visible { color: var(--t-ink); border-color: var(--t-dim); }
+  .term-body { flex: 1; display: flex; flex-direction: column; gap: 3px; padding: 20px 20px 22px; font-family: var(--mono); font-size: 13px; line-height: 1.6; min-height: 380px; }
+  .tl { display: flex; gap: 10px; min-width: 0; opacity: 0; transform: translateY(3px); transition: opacity 220ms var(--ease), transform 220ms var(--ease); }
+  .tl.on { opacity: 1; transform: none; }
+  .tl .tx { min-width: 0; overflow-wrap: anywhere; }
+  .p { flex: none; width: 1ch; color: var(--t-acc); }
+  .tl-ok .p { color: #9bbf7a; }
+  .tl-out, .tl-ok { color: var(--t-dim); }
+  .tl-ask { margin-top: 2px; }
+  .tl-ask .tx { color: #fff4e0; }
+  .tl-gap { height: 10px; }
+  .tl-pick { padding-left: calc(1ch + 10px); }
+  .tl-pick .key { flex: none; width: 10ch; color: var(--t-dim); }
+  .tl-pick .tx { color: var(--t-acc); }
+  .tl-pick + .tl-ok { margin-top: 8px; }
+  .tl.typing .tx::after { content: ""; display: inline-block; width: .6em; height: 1.1em; margin-left: 1px; vertical-align: -.2em; background: var(--t-ink); }
+  .tl-caret { margin-top: 4px; }
+  .caret { display: inline-block; width: .6em; height: 1.1em; background: var(--t-ink); animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (max-width: 760px) {
+    .term-body { font-size: 12px; padding: 16px 14px 18px; min-height: 340px; }
+    .tl-pick .key { width: 9ch; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tl { transition: none; } .caret { animation: none; } }
+</style>
