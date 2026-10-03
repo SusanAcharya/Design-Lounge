@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 328 · "Plain phone tabs" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 347 · "Plain phone tabs" · designlounge.vercel.app -->
 
 # Plain phone tabs
 

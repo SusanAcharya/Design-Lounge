@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 327 · "Plain list empty" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 346 · "Plain list empty" · designlounge.vercel.app -->
 
 # Plain list empty
 

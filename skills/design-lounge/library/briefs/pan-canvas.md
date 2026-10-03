@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 301 · "Pan canvas" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 320 · "Pan canvas" · designlounge.vercel.app -->
 
 # Pan canvas
 

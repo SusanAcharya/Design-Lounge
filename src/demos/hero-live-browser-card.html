@@ -1,0 +1,208 @@
+<!-- Design Lounge piece: hero-live-browser-card · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ovenlight — your recipe blog, cooking itself</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef3ea; --surface:#fcfdf9; --ink:#0f1e19; --ink-2:#44524c; --ink-3:#6b7871; --rule:#d7e0d4;
+  --primary:#2443f0; --primary-ink:#ffffff; --mark:#ffe14d; --live:#15a05c; --live-soft:#d6f2e2;
+  --sans:"Familjen Grotesk",system-ui,sans-serif; --mono:"Fragment Mono",ui-monospace,monospace;
+  --hard:5px 5px 0 var(--ink); --hard-sm:3px 3px 0 var(--ink); --hard-lg:8px 8px 0 var(--ink);
+  --micro:150ms; --ease:cubic-bezier(.2,.7,.2,1); --expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);background-image:radial-gradient(circle at 1px 1px,#d3ddd0 1px,transparent 1.4px);background-size:24px 24px;color:var(--ink);font:16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,a{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.nav{max-width:1180px;margin:0 auto;padding:20px 40px;display:flex;align-items:center;gap:32px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:21px;letter-spacing:-.02em;text-decoration:none}
+.logo svg{width:32px;height:32px}
+.links{display:flex;gap:28px;margin-left:auto;font-weight:500;font-size:15px}
+.links a{text-decoration:none;color:var(--ink-2)}
+.links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border:2px solid var(--ink);border-radius:10px;font-weight:700;text-decoration:none;cursor:pointer;background:var(--surface);box-shadow:var(--hard-sm);transition:transform var(--micro) var(--ease),box-shadow var(--micro) var(--ease)}
+.btn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:none}
+.btn.pri{background:var(--primary);color:var(--primary-ink)}
+.btn svg{width:16px;height:16px}
+.hero{max-width:1180px;margin:0 auto;padding:28px 40px 48px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);gap:56px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:10px;font:12px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:8px 14px 8px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--live);color:#fff;box-shadow:var(--hard-sm)}
+.pulse{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 2s var(--ease) infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-size:64px;line-height:.98;font-weight:700;letter-spacing:-.035em;margin:22px 0 20px}
+h1 .hl{color:var(--primary);background:linear-gradient(transparent 62%,var(--mark) 62% 90%,transparent 90%);padding:0 2px}
+.lede{font-size:19px;line-height:1.55;color:var(--ink-2);max-width:46ch;margin:0 0 28px}
+.lede b{color:var(--ink);font-weight:600}
+.ctas{display:flex;gap:14px;flex-wrap:wrap}
+.ctas .btn{min-height:56px;padding:0 24px;font-size:17px;border-radius:12px;box-shadow:var(--hard)}
+.ctas .btn:hover{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ctas .btn:active{transform:translate(5px,5px);box-shadow:none}
+.feats{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 10px;padding:0;list-style:none}
+.feats li{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;padding:8px 12px;border:2px solid var(--ink);border-radius:9px;background:var(--surface)}
+.feats svg{width:16px;height:16px;color:var(--primary)}
+.fine{font:12px var(--mono);color:var(--ink-3);margin:0}
+/* browser */
+.stage{position:relative;padding:18px 18px 0 0}
+.win{border:2px solid var(--ink);border-radius:14px;background:var(--surface);box-shadow:var(--hard-lg);overflow:hidden}
+.chrome{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:2px solid var(--ink);background:#f4f7f1}
+.chrome i{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--ink)}
+.chrome i:nth-child(1){background:#ff6b5b}.chrome i:nth-child(2){background:#ffc94d}.chrome i:nth-child(3){background:#3ccf7a}
+.url{margin-left:12px;flex:1;font:12px var(--mono);color:var(--ink-3);background:var(--surface);border:1.5px solid var(--rule);border-radius:6px;padding:4px 10px;text-align:center}
+.pane{padding:18px;background:linear-gradient(#f8faf5,#f8faf5)}
+.sched{border:2px solid var(--ink);border-radius:12px;background:var(--surface);padding:16px 18px;box-shadow:var(--hard-sm)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.live{display:inline-flex;align-items:center;gap:6px;font:11px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:#0d6b3c;background:var(--live-soft);border:1.5px solid var(--live);border-radius:999px;padding:5px 9px}
+.live .pulse{background:var(--live)}
+.live.paused{color:var(--ink-3);background:#eef0ec;border-color:var(--rule)}
+.live.paused .pulse{background:var(--ink-3);animation:none}
+.ctl{display:flex;gap:6px}
+.ib{width:34px;height:34px;border:1.5px solid var(--ink);border-radius:8px;background:var(--surface);display:grid;place-items:center;cursor:pointer}
+.ib svg{width:14px;height:14px}
+.ib.dark{background:var(--ink);color:#fff;width:auto;padding:0 12px;font-size:12px;font-weight:700}
+.sched h2{font-size:22px;font-weight:700;letter-spacing:-.02em;margin:12px 0 0}
+.dom{font:12px var(--mono);color:var(--ink-3)}
+.ph{display:flex;justify-content:space-between;align-items:baseline;margin:16px 0 6px;font:11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
+.ph b{font:700 15px var(--sans);color:var(--ink);letter-spacing:0;text-transform:none}
+.bar{height:10px;border-radius:6px;background:#e4eae1;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--live);border-radius:6px;transition:width 500ms var(--expo)}
+.pf{display:flex;justify-content:space-between;font:11px var(--mono);color:var(--ink-3);margin-top:6px}
+.pf b{color:#0d6b3c;font-weight:400}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.stats div{border:1.5px solid var(--rule);border-radius:9px;padding:9px;text-align:center}
+.stats b{display:block;font-size:20px;line-height:1.1}
+.stats span{font:11px var(--mono);color:var(--ink-3)}
+.runs{margin-top:14px;border:1.5px solid var(--rule);border-radius:12px;background:var(--surface);padding:12px 16px}
+.runs ol{list-style:none;margin:6px 0 0;padding:0;height:120px;overflow:hidden}
+.runs li{display:flex;align-items:center;gap:10px;height:30px;font-size:13.5px;font-weight:500}
+.runs li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--live);flex:none}
+.runs li span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.runs li time{font:11px var(--mono);color:var(--ink-3);white-space:nowrap}
+.runs li.in{animation:in 500ms var(--expo)}
+@keyframes in{from{opacity:0;transform:translateY(-14px)}}
+.sticker{position:absolute;top:0;right:-6px;transform:rotate(9deg);background:var(--mark);border:2px solid var(--ink);border-radius:10px;padding:8px 12px;font-weight:700;font-size:13px;box-shadow:var(--hard-sm);transition:transform 300ms var(--expo);z-index:2}
+.sticker:hover{transform:rotate(-3deg) scale(1.06)}
+.toast{position:absolute;left:-28px;bottom:26px;display:flex;align-items:center;gap:10px;background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:10px 14px 10px 10px;box-shadow:var(--hard-sm);opacity:0;transform:translateY(10px) scale(.96);transition:opacity 300ms var(--ease),transform 400ms var(--expo)}
+.toast.show{opacity:1;transform:none}
+.toast .ok{width:30px;height:30px;border-radius:8px;background:var(--live);color:#fff;display:grid;place-items:center}
+.toast .ok svg{width:16px;height:16px}
+.toast b{display:block;font:700 13px/1.2 var(--sans);color:var(--ink)}
+.toast span span{font:11px var(--mono);color:var(--ink-3)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:1100px){.hero{grid-template-columns:minmax(0,1fr)}.stage{max-width:560px}}
+@media (max-width:720px){.links{display:none}.nav{padding:16px 20px}.nav .btn{margin-left:auto}.hero{padding:16px 20px 40px;gap:40px}h1{font-size:44px}.lede{font-size:17px}.toast{left:8px}.sticker{right:0}}
+@media (max-width:420px){.nav .btn span{display:none}.ctas .btn{width:100%}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="#" aria-label="Ovenlight home"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="9" fill="#2443f0" stroke="#0f1e19" stroke-width="2"/><path d="M9 19h14M11 19c0-4 2.2-7 5-7s5 3 5 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="9" r="1.6" fill="#ffe14d"/></svg>Ovenlight</a>
+  <nav class="links" aria-label="Main"><a href="#">How it works</a><a href="#">Formats</a><a href="#">Pricing</a><a href="#">Journal</a></nav>
+  <a class="btn pri" href="#" aria-label="Start a kitchen"><span>Start a kitchen</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</header>
+<main class="hero">
+  <div>
+    <span class="badge"><span class="pulse" aria-hidden="true"></span>Recipe autopublish · live</span>
+    <h1>Your recipe blog, <span class="hl">cooking itself.</span> Fresh every morning.</h1>
+    <p class="lede">Choose your cuisines and a schedule. Ovenlight writes <b>tested-sounding, step-by-step recipe posts every day</b>, with your photos, your measurements and your affiliate pans linked. One setup, a season of posts.</p>
+    <div class="ctas">
+      <a class="btn pri" href="#">Start a 14-day kitchen</a>
+      <a class="btn" href="#">Watch a post get made</a>
+    </div>
+    <ul class="feats">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Daily at 7:00</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h9"/></svg>11 recipe formats</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>9 languages</li>
+    </ul>
+    <p class="fine">No card for the trial · Metric or cups · Cancel in one click</p>
+  </div>
+
+  <div class="stage">
+    <span class="sticker" aria-hidden="true">Set it, then go eat</span>
+    <div class="win" role="region" aria-label="Product preview: a running recipe schedule">
+      <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span class="url">app.ovenlight.co/schedules</span></div>
+      <div class="pane">
+        <div class="sched">
+          <div class="row">
+            <span class="live" id="live"><span class="pulse" aria-hidden="true"></span><span id="live-t">Live</span></span>
+            <div class="ctl">
+              <button class="ib" id="pause" type="button" aria-pressed="false" aria-label="Pause the live preview"><svg viewBox="0 0 24 24" fill="currentColor" id="pi"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+              <button class="ib dark" type="button">Edit</button>
+            </div>
+          </div>
+          <h2>Weeknight Suppers</h2>
+          <div class="dom">weeknightsuppers.blog</div>
+          <div class="ph"><span>Progress</span><b id="count">18 / 40 posts</b></div>
+          <div class="bar" role="progressbar" aria-label="Posts published" aria-valuemin="0" aria-valuemax="40" aria-valuenow="18" id="bar"><i id="fill" style="width:45%"></i></div>
+          <div class="pf"><span>Started 16 Sep</span><b id="pct">45% complete</b></div>
+          <div class="stats">
+            <div><b>6</b><span>formats</span></div>
+            <div><b>14</b><span>pans linked</span></div>
+            <div><b>1/d</b><span>for 40 days</span></div>
+          </div>
+        </div>
+        <div class="runs">
+          <div class="row" style="font:11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)"><span>Recent posts</span><span style="color:#0d6b3c">All published</span></div>
+          <ol id="runs" aria-live="polite" aria-relevant="additions">
+            <li><span>One-pan lemon orzo with charred peas</span><time>1d ago</time></li>
+            <li><span>Miso butter noodles in 15 minutes</span><time>2d ago</time></li>
+            <li><span>Sheet-tray gnocchi, tomatoes and feta</span><time>3d ago</time></li>
+            <li><span>The weeknight dal we keep making</span><time>4d ago</time></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="toast" id="toast" aria-hidden="true"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5 9-10"/></svg></span><span><b>New post live</b><span>Email sent · just now</span></span></div>
+  </div>
+</main>
+<script>
+(() => {
+  const queue = ['Crispy rice salad with herbs and lime', 'Ten-minute garlic chilli prawns', 'Baked feta pasta, the honest version', 'Smoky black bean tacos for four', 'Coconut chickpea curry, one pot', 'Leek and potato soup with a crust', 'Brown butter sage gnocchi', 'Harissa chicken thighs and couscous'];
+  const total = 40, base = 18;
+  let n = base, qi = 0, paused = false, timer = null, toastT = null;
+  const $ = (id) => document.getElementById(id);
+  const runs = $('runs');
+  function set(v) {
+    const p = Math.round((v / total) * 100);
+    $('count').textContent = `${v} / ${total} posts`;
+    $('fill').style.width = p + '%';
+    $('pct').textContent = p + '% complete';
+    $('bar').setAttribute('aria-valuenow', v);
+  }
+  function tick() {
+    n = n >= total ? base : n + 1;
+    set(n);
+    runs.querySelectorAll('time').forEach((t, i) => { t.textContent = (i + 1) + 'd ago'; });
+    const li = document.createElement('li');
+    li.className = 'in';
+    li.innerHTML = `<span>${queue[qi++ % queue.length]}</span><time>just now</time>`;
+    runs.prepend(li);
+    while (runs.children.length > 4) runs.lastElementChild.remove();
+    $('toast').classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(() => $('toast').classList.remove('show'), 2200);
+  }
+  const start = () => { timer = setInterval(tick, 4200); };
+  $('pause').addEventListener('click', () => {
+    paused = !paused;
+    $('pause').setAttribute('aria-pressed', paused);
+    $('pause').setAttribute('aria-label', paused ? 'Resume the live preview' : 'Pause the live preview');
+    $('pi').innerHTML = paused ? '<path d="M7 5l12 7-12 7z"/>' : '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
+    $('live').classList.toggle('paused', paused);
+    $('live-t').textContent = paused ? 'Paused' : 'Live';
+    if (paused) clearInterval(timer); else start();
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) clearInterval(timer); else if (!paused) { clearInterval(timer); start(); } });
+  setTimeout(tick, 1600);
+  start();
+})();
+</script>
+</body>
+</html>

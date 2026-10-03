@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 304 · "Paper hydration tumbler" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 323 · "Paper hydration tumbler" · designlounge.vercel.app -->
 
 # Paper hydration tumbler
 

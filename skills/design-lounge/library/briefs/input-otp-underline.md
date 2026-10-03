@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 424 · "Underline OTP input" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 450 · "Underline OTP input" · designlounge.vercel.app -->
 
 # Underline OTP input
 

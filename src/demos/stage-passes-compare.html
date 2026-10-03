@@ -1,0 +1,336 @@
+<!-- Design Lounge piece: stage-passes-compare · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Siltworks — Three passes, one frame</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Literata:ital,opsz,wght@1,7..72,400;1,7..72,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ece7dc;--paper:#f6f2ea;--ink:#1d211c;--ink-2:#474d45;--ink-3:#6a7067;
+  --line:#d3ccbe;--line-2:#b9b1a1;--accent:#2f6b4f;--accent-2:#e3b45a;
+  --sans:"Hanken Grotesk",system-ui,sans-serif;--serif:"Literata",Georgia,serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--dwell:6000ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,a{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+a{text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.wrap{min-height:100%;display:grid;grid-template-rows:auto 1fr auto;padding:0 56px}
+.head{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84px;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+.label{display:flex;align-items:center;gap:14px;font-weight:600;color:var(--accent)}
+.label::before{content:"";width:28px;height:1px;background:var(--accent)}
+.skip{justify-self:end;display:flex;align-items:center;gap:6px;font-weight:500;color:var(--ink)}
+.skip svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;transition:transform 300ms var(--expo)}
+.skip:hover svg{transform:translate(2px,2px)}
+
+.body{display:grid;grid-template-columns:minmax(0,520px) 1fr;gap:56px;align-items:center;padding:28px 0}
+h2{margin:0;font-size:60px;line-height:1.02;font-weight:500;letter-spacing:-.035em}
+h2 em{font-family:var(--serif);font-weight:400;font-style:italic;letter-spacing:-.02em;color:var(--accent)}
+.intro{margin:18px 0 26px;max-width:430px;color:var(--ink-2)}
+.step{border-top:1px solid var(--line);padding-top:20px;min-height:228px}
+.count{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--ink-3)}
+.step h3{margin:6px 0 10px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:34px;line-height:1.1;letter-spacing:-.015em}
+.step p{margin:0 0 18px;max-width:440px;color:var(--ink-2)}
+.more{display:inline-flex;align-items:center;gap:10px;font-weight:600;padding-bottom:6px;border-bottom:1px solid var(--line-2);transition:border-color 160ms var(--ease)}
+.more:hover{border-color:var(--ink)}
+.more svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.fadein{animation:fadein 420ms var(--ease)}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}}
+
+.stage{display:flex;justify-content:center}
+.frame{position:relative;width:400px;height:520px;background:var(--paper);box-shadow:0 0 0 1px var(--line-2),0 30px 60px -30px rgba(29,33,28,.35);overflow:hidden;touch-action:pan-y}
+.frame svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#under,#over{position:absolute;inset:0}
+.over{clip-path:inset(0 0 0 var(--x,0%))}
+.chip{position:absolute;top:14px;right:14px;z-index:3;background:var(--ink);color:var(--paper);font-size:12px;font-weight:600;padding:7px 10px;letter-spacing:.02em}
+.chip.prev{right:auto;left:14px;background:var(--paper);color:var(--ink);box-shadow:0 0 0 1px var(--line-2)}
+.rec{position:absolute;bottom:14px;right:14px;z-index:3;display:none;align-items:center;gap:8px;font:600 12px/1 var(--sans);letter-spacing:.08em;color:var(--paper);font-variant-numeric:tabular-nums;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.rec::before{content:"";width:8px;height:8px;border-radius:50%;background:#e2553b;animation:blink 1.2s steps(1) infinite}
+@keyframes blink{50%{opacity:.2}}
+.frame[data-pass="2"] .rec{display:flex}
+.divider{position:absolute;top:0;bottom:0;left:var(--x,0%);width:0;z-index:4;display:none}
+.divider::before{content:"";position:absolute;top:0;bottom:0;left:-.5px;width:1px;background:var(--paper);box-shadow:0 0 0 .5px rgba(29,33,28,.25)}
+.has-prev .divider{display:block}
+.has-prev .chip.prev{display:block}
+.chip.prev{display:none}
+.knob{position:absolute;top:50%;left:0;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--paper);color:var(--ink);box-shadow:0 4px 14px rgba(29,33,28,.25);display:grid;place-items:center;cursor:ew-resize;transition:transform 160ms var(--ease)}
+.knob:hover{transform:scale(1.06)}
+.knob:active{transform:scale(.96)}
+.knob svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+/* scene passes */
+.f{transition:fill 400ms var(--ease)}
+.sk .f{fill:var(--paper);stroke:var(--ink);stroke-width:1.1;stroke-linejoin:round}
+.sk .sky,.sk .lake{fill:var(--paper)}
+.sk .glass{fill:#e8e2d6}
+.sk .shade,.sk .anim,.sk .grade,.sk .glow{display:none}
+.sk .cons{display:block}
+.cons,.grid{display:none}
+.sk .grid{display:block}
+.lt .anim,.lt .grade,.lt .glow{display:none}
+.mo .grade{display:block}
+.mo .scene-in{animation:push 6s cubic-bezier(.25,.6,.3,1) both}
+@keyframes push{from{transform:scale(1)}to{transform:scale(1.04)}}
+.scene-in{transform-origin:55% 60%}
+.cloud{animation:drift 26s linear infinite alternate}
+.cloud.b{animation-duration:34s;animation-direction:alternate-reverse}
+@keyframes drift{from{transform:translateX(-24px)}to{transform:translateX(30px)}}
+.bird{animation:fly 9s linear infinite}
+@keyframes fly{from{transform:translate(-60px,10px)}to{transform:translate(460px,-30px)}}
+.shim line{animation:shim 2.8s ease-in-out infinite alternate}
+.shim line:nth-child(2n){animation-delay:-1.4s}
+@keyframes shim{from{opacity:.15;transform:translateX(-4px)}to{opacity:.7;transform:translateX(4px)}}
+.glow{animation:lamp 4s ease-in-out infinite alternate}
+@keyframes lamp{from{opacity:.55}to{opacity:1}}
+
+/* tabs */
+.tabsrow{border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:24px;align-items:start;padding:18px 0 26px}
+.tab{text-align:left;display:flex;align-items:baseline;gap:12px;padding:6px 0 16px;position:relative;color:var(--ink-3);transition:color 200ms var(--ease)}
+.tab .n{font-size:26px;font-weight:400;letter-spacing:-.02em}
+.tab .t{font-size:14px;font-weight:600}
+.tab::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--line)}
+.tab .bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;z-index:1}
+.tab:hover{color:var(--ink-2)}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab[aria-selected="true"] .n{color:var(--accent)}
+.tab[aria-selected="true"] .bar{animation:fill var(--dwell) linear forwards}
+.tab.done .bar{transform:scaleX(1);background:var(--line-2)}
+.held .tab[aria-selected="true"] .bar{animation-play-state:paused}
+.static .tab[aria-selected="true"] .bar{animation:none;transform:scaleX(1)}
+@keyframes fill{to{transform:scaleX(1)}}
+.hold{height:40px;padding:0 14px;border:1px solid var(--line-2);border-radius:999px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;margin-top:2px;transition:background 160ms var(--ease)}
+.hold:hover{background:var(--paper)}
+.hold svg{width:12px;height:12px}
+.hold .pl{display:none}
+.hold[aria-pressed="true"] .pl{display:block}
+.hold[aria-pressed="true"] .pa{display:none}
+
+@media (prefers-reduced-motion:reduce){
+  .cloud,.bird,.shim line,.glow,.rec::before,.mo .scene-in,.fadein{animation:none}
+  .f,.knob,.skip svg{transition:none}
+}
+@media (max-width:1000px){.body{grid-template-columns:1fr 400px;gap:32px}h2{font-size:48px}}
+@media (max-width:760px){
+  .wrap{padding:0 20px}
+  .head{grid-template-columns:1fr auto;height:64px}.head .mid{display:none}
+  .body{grid-template-columns:1fr;gap:28px}
+  h2{font-size:40px}.step{min-height:0}
+  .frame{width:min(100%,400px);height:auto;aspect-ratio:400/520}
+  .tabsrow{grid-template-columns:1fr 1fr 1fr;gap:12px}.hold{grid-column:1/-1;justify-self:start}
+  .tab{flex-direction:column;gap:0}.tab .n{font-size:20px}
+}
+</style>
+</head>
+<body>
+<main class="wrap" id="wrap">
+  <div class="head">
+    <span class="label">03 / Method</span>
+    <span class="mid">Sketch, light and motion, in one frame.</span>
+    <a class="skip" href="#">Skip to projects<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 9v8H9"/></svg></a>
+  </div>
+
+  <div class="body">
+    <section aria-labelledby="h">
+      <h2 id="h">From a sketch<br>to a <em>moving frame.</em></h2>
+      <p class="intro">Every Siltworks film is built in three passes on the same camera. Drag the line in the frame to compare a pass with the one before it.</p>
+      <div class="step" id="panel" role="tabpanel" aria-labelledby="tab0" tabindex="0">
+        <div class="count" id="count">01 / 03</div>
+        <h3 id="stitle">Massing and line</h3>
+        <p id="sdesc"></p>
+        <a class="more" href="#" id="smore">See the full sketch set<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+    </section>
+
+    <div class="stage">
+      <figure class="frame" id="frame" data-pass="0" style="margin:0" aria-label="Pavilion at Lake Orta, shown at the current pass">
+        <span class="chip" id="chip">Pass 01 · Sketch</span>
+        <span class="chip prev" id="chipPrev">Pass 01</span>
+        <div id="under"></div>
+        <div id="over" class="over"></div>
+        <div class="divider" id="divider">
+          <button class="knob" id="knob" role="slider" aria-label="Compare with previous pass" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50 percent previous pass">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <span class="rec" id="rec">REC 00:00:00</span>
+      </figure>
+    </div>
+  </div>
+
+  <div class="tabsrow">
+    <div role="tablist" aria-label="Passes" id="tabs" style="display:contents"></div>
+    <button class="hold" id="hold" type="button" aria-pressed="false">
+      <svg class="pa" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="2.5" height="9" fill="currentColor"/><rect x="7.5" y="1.5" width="2.5" height="9" fill="currentColor"/></svg>
+      <svg class="pl" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5l7 4.5-7 4.5z" fill="currentColor"/></svg>
+      <span id="holdtxt">Pause</span>
+    </button>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</main>
+
+<template id="scene">
+  <svg viewBox="0 0 400 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="SKY" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fb7bd"/><stop offset="1" stop-color="#efd9b0"/></linearGradient>
+      <linearGradient id="LAKE" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7f9c9c"/><stop offset="1" stop-color="#3f5f5e"/></linearGradient>
+      <linearGradient id="GRADE" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2d4a" stop-opacity=".45"/><stop offset=".55" stop-color="#e3b45a" stop-opacity=".22"/><stop offset="1" stop-color="#1d211c" stop-opacity=".5"/></linearGradient>
+      <pattern id="GRID" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#d3ccbe" stroke-width=".6"/></pattern>
+    </defs>
+    <g class="scene-in">
+      <rect class="f sky" width="400" height="300" fill="url(#SKY)"/>
+      <rect class="grid" width="400" height="520" fill="url(#GRID)"/>
+      <circle class="f" cx="300" cy="120" r="26" fill="#f6e2b0"/>
+      <g class="cloud anim"><ellipse cx="90" cy="90" rx="46" ry="12" fill="#f6f2ea" opacity=".85"/><ellipse cx="120" cy="82" rx="30" ry="10" fill="#f6f2ea" opacity=".85"/></g>
+      <g class="cloud b anim"><ellipse cx="250" cy="60" rx="38" ry="9" fill="#f6f2ea" opacity=".7"/></g>
+      <path class="f" d="M0 250 Q 80 190 160 230 T 300 215 T 400 228 V 300 H 0 Z" fill="#8a9e86"/>
+      <path class="f" d="M0 275 Q 120 240 230 268 T 400 262 V 310 H 0 Z" fill="#6e8a68"/>
+      <rect class="f" y="300" width="400" height="70" fill="#a7a66f"/>
+      <rect class="f lake" y="370" width="400" height="150" fill="url(#LAKE)"/>
+      <path class="cons" d="M40 300 L 300 120 M360 300 L 300 120 M0 300 H400" stroke="#2f6b4f" stroke-width=".8" stroke-dasharray="4 4" fill="none"/>
+      <rect class="f" x="120" y="250" width="190" height="72" fill="#e9e2d2"/>
+      <rect class="f" x="104" y="242" width="222" height="10" fill="#c9c0ac"/>
+      <rect class="f glass" x="134" y="264" width="120" height="44" fill="#41545a"/>
+      <rect class="glow" x="134" y="264" width="120" height="44" fill="#f3c776" opacity=".8"/>
+      <rect class="f" x="190" y="264" width="3" height="44" fill="#e9e2d2"/>
+      <rect class="f" x="266" y="264" width="30" height="58" fill="#b9ad94"/>
+      <rect class="shade" x="120" y="252" width="190" height="10" fill="#1d211c" opacity=".18"/>
+      <path class="shade" d="M310 322 L 360 340 L 170 340 L 120 322 Z" fill="#1d211c" opacity=".16"/>
+      <rect class="f" x="100" y="322" width="230" height="8" fill="#b7ad97"/>
+      <rect class="f" x="74" y="270" width="5" height="54" fill="#5a4b3a"/>
+      <circle class="f" cx="76" cy="252" r="30" fill="#4d6b4a"/>
+      <circle class="f" cx="352" cy="262" r="22" fill="#59775a"/>
+      <rect class="f" x="350" y="280" width="4" height="40" fill="#5a4b3a"/>
+      <rect class="shade" x="120" y="372" width="190" height="40" fill="#f6f2ea" opacity=".14"/>
+      <g class="shim anim" stroke="#f6f2ea" stroke-width="1.4" stroke-linecap="round"><line x1="60" y1="400" x2="120" y2="400"/><line x1="200" y1="418" x2="270" y2="418"/><line x1="130" y1="440" x2="170" y2="440"/><line x1="280" y1="460" x2="350" y2="460"/><line x1="40" y1="478" x2="90" y2="478"/></g>
+      <g class="bird anim" fill="none" stroke="#1d211c" stroke-width="1.4" stroke-linecap="round"><path d="M0 150 q 6 -6 12 0 q 6 -6 12 0"/><path d="M30 166 q 5 -5 10 0 q 5 -5 10 0"/></g>
+      <rect class="grade" width="400" height="520" fill="url(#GRADE)"/>
+      <rect class="glow" x="134" y="372" width="120" height="30" fill="#f3c776" opacity=".35"/>
+    </g>
+  </svg>
+</template>
+
+<script>
+(() => {
+  const passes = [
+    { n: 'Sketch', title: 'Massing and line', more: 'See the full sketch set', cls: 'sk',
+      d: 'We start from the architect\'s plans, sections and a site survey. One camera, one line weight, nothing lit. Everyone signs off the frame before anything gets a colour.' },
+    { n: 'Light', title: 'Light and weather', more: 'Read the light study', cls: 'lt',
+      d: 'Same frame, now with a sun position, a season and a material on every surface. Shadows fall where they will fall on the real site at 17:40 in late May.' },
+    { n: 'Motion', title: 'The moving frame', more: 'Watch the six-second cut', cls: 'mo',
+      d: 'The camera pushes in four percent. Water moves, birds cross, the lamps come up. Six seconds, cut to music, ready for the sales suite.' },
+  ];
+  const $ = id => document.getElementById(id);
+  const wrap = $('wrap'), frame = $('frame'), under = $('under'), over = $('over'), knob = $('knob');
+  const tpl = $('scene').innerHTML;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let uid = 0;
+  const render = (host, cls) => {
+    const k = 'p' + (uid++);
+    host.innerHTML = tpl.replace(/\b(SKY|LAKE|GRADE|GRID)\b/g, m => m + k);
+    host.firstElementChild.setAttribute('class', cls);
+  };
+
+  const tablist = $('tabs');
+  const tabs = passes.map((p, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'tab'; b.id = 'tab' + i;
+    b.setAttribute('role', 'tab'); b.setAttribute('aria-controls', 'panel');
+    b.innerHTML = `<span class="n">0${i + 1}</span><span class="t">${p.n}</span><span class="bar"></span>`;
+    b.addEventListener('click', () => go(i, true));
+    b.querySelector('.bar').addEventListener('animationend', () => { if (!held && !hovering) go((cur + 1) % passes.length); });
+    tablist.appendChild(b); return b;
+  });
+
+  let cur = -1, x = 50, held = false, hovering = false, raf = 0;
+  const setX = v => {
+    x = Math.max(0, Math.min(100, v));
+    frame.style.setProperty('--x', x + '%');
+    knob.setAttribute('aria-valuenow', Math.round(x));
+    knob.setAttribute('aria-valuetext', `${Math.round(x)} percent previous pass`);
+  };
+  function wipe() {
+    cancelAnimationFrame(raf);
+    if (reduce) { setX(50); return; }
+    const t0 = performance.now(), from = 100, to = 50, dur = 700;
+    const step = t => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 4); setX(from + (to - from) * e); if (k < 1) raf = requestAnimationFrame(step); };
+    raf = requestAnimationFrame(step);
+  }
+  function go(i, focus) {
+    if (i === cur) return;
+    cur = i;
+    tabs.forEach((t, j) => {
+      t.setAttribute('aria-selected', String(j === i)); t.tabIndex = j === i ? 0 : -1;
+      t.classList.toggle('done', j < i);
+      const bar = t.querySelector('.bar'); bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
+    });
+    if (focus) tabs[i].focus();
+    $('panel').setAttribute('aria-labelledby', 'tab' + i);
+    const p = passes[i];
+    render(over, p.cls);
+    frame.dataset.pass = i;
+    $('chip').textContent = `Pass 0${i + 1} · ${p.n}`;
+    if (i > 0) {
+      render(under, passes[i - 1].cls);
+      $('chipPrev').textContent = `Pass 0${i}`;
+      frame.classList.add('has-prev'); wipe();
+    } else { under.innerHTML = ''; frame.classList.remove('has-prev'); cancelAnimationFrame(raf); setX(0); }
+    $('count').textContent = `0${i + 1} / 03`;
+    $('stitle').textContent = p.title; $('sdesc').textContent = p.d;
+    $('smore').firstChild.textContent = p.more;
+    const panel = $('panel'); panel.classList.remove('fadein'); void panel.offsetWidth; if (!reduce) panel.classList.add('fadein');
+    $('live').textContent = `Pass ${i + 1} of 3: ${p.title}`;
+    tc = 0;
+  }
+
+  function setHeld(h) {
+    held = h; wrap.classList.toggle('held', held || hovering);
+    $('hold').setAttribute('aria-pressed', String(h)); $('holdtxt').textContent = h ? 'Play' : 'Pause';
+  }
+  $('hold').addEventListener('click', () => setHeld(!held));
+  frame.addEventListener('pointerenter', () => { hovering = true; wrap.classList.add('held'); });
+  frame.addEventListener('pointerleave', () => { hovering = false; wrap.classList.toggle('held', held); });
+
+  tablist.addEventListener('keydown', e => {
+    let n = null;
+    if (e.key === 'ArrowRight') n = (cur + 1) % 3; if (e.key === 'ArrowLeft') n = (cur + 2) % 3;
+    if (e.key === 'Home') n = 0; if (e.key === 'End') n = 2;
+    if (n !== null) { e.preventDefault(); go(n, true); }
+  });
+
+  let drag = false;
+  const fromEvent = e => { const r = frame.getBoundingClientRect(); setX((e.clientX - r.left) / r.width * 100); };
+  knob.addEventListener('pointerdown', e => { drag = true; knob.setPointerCapture(e.pointerId); cancelAnimationFrame(raf); setHeld(true); });
+  knob.addEventListener('pointermove', e => { if (drag) fromEvent(e); });
+  knob.addEventListener('pointerup', () => { drag = false; });
+  frame.addEventListener('click', e => {
+    if (!frame.classList.contains('has-prev') || e.target.closest('.knob')) return;
+    cancelAnimationFrame(raf); fromEvent(e);
+  });
+  knob.addEventListener('keydown', e => {
+    const m = { ArrowLeft: -5, ArrowRight: 5, PageDown: -20, PageUp: 20 };
+    if (e.key in m) { e.preventDefault(); cancelAnimationFrame(raf); setX(x + m[e.key]); setHeld(true); }
+    if (e.key === 'Home') { e.preventDefault(); setX(0); } if (e.key === 'End') { e.preventDefault(); setX(100); }
+  });
+
+  let tc = 0;
+  const rec = $('rec');
+  setInterval(() => {
+    if (cur !== 2) return; tc += 1;
+    const f = tc % 24, s = Math.floor(tc / 24) % 60;
+    rec.textContent = `REC 00:${String(s).padStart(2, '0')}:${String(f).padStart(2, '0')}`;
+  }, 1000 / 24);
+
+  if (reduce) { wrap.classList.add('static'); setHeld(true); }
+  go(1);
+})();
+</script>
+</body>
+</html>

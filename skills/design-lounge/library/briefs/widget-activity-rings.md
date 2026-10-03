@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 394 · "Sticker activity rings" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 417 · "Sticker activity rings" · designlounge.vercel.app -->
 
 # Sticker activity rings
 

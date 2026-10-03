@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 225 · "Event countdown ticket card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 232 · "Event countdown ticket card" · designlounge.vercel.app -->
 
 # Event countdown ticket card
 

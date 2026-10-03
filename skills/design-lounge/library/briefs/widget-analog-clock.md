@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 218 · "Dress-watch analog clock widget" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 225 · "Dress-watch analog clock widget" · designlounge.vercel.app -->
 
 # Dress-watch analog clock widget
 

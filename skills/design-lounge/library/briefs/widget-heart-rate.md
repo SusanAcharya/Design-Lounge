@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 273 · "Live heart-rate tile" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 288 · "Live heart-rate tile" · designlounge.vercel.app -->
 
 # Live heart-rate tile
 

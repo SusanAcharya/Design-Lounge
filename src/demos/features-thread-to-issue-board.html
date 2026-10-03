@@ -1,0 +1,277 @@
+<!-- Design Lounge piece: features-thread-to-issue-board · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tracewell — intake that files itself</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D0F12; --panel:#15181D; --raised:#1B1F25; --card:#171A1F; --line:#262B33; --line-2:#1F242B;
+  --text:#EEF0F3; --text-2:#A3ABB7; --text-3:#6C7480; --mint:#5BE3B0; --mint-ink:#0B2A1F; --mint-tint:rgba(91,227,176,.12);
+  --bug:#EF6F6C; --design:#6FA8FF; --backend:#E6B450; --perf:#8BD3E6; --feature:#B79CFF; --android:#A4D96C;
+  --sans:"Onest",system-ui,sans-serif; --mono:"Fragment Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(0.2,0.7,0.2,1); --expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:400 14px/1.45 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--mono)}
+
+section{max-width:1200px;margin:0 auto;padding:56px 40px 0;min-height:100%;display:flex;flex-direction:column}
+.head{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+h2{margin:0;font-size:46px;line-height:1.04;font-weight:500;letter-spacing:-0.035em}
+.lede{margin:4px 0 0;font-size:18px;line-height:1.45;color:var(--text-2);max-width:470px}
+.lede b{color:var(--text);font-weight:500}
+.more{display:inline-flex;gap:6px;align-items:center;margin-top:16px;color:var(--text-2);text-decoration:none;font-size:14px;transition:color .15s var(--ease)}
+.more:hover{color:var(--text)}
+.more svg{width:12px;height:12px;transition:transform .18s var(--ease)}
+.more:hover svg{transform:translateX(3px)}
+
+.scene{position:relative;flex:1;min-height:500px;margin-top:40px;overflow:hidden;margin-inline:-40px;padding-inline:40px}
+.board{position:absolute;left:260px;top:28px;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,252px);gap:12px;opacity:.9;
+  -webkit-mask-image:linear-gradient(90deg,#000 62%,transparent 98%),linear-gradient(180deg,#000 58%,transparent 96%);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,#000 62%,transparent 98%),linear-gradient(180deg,#000 58%,transparent 96%);mask-composite:intersect}
+.col{display:flex;flex-direction:column;gap:8px;min-width:0}
+.col-h{display:flex;align-items:center;gap:8px;height:30px;font-size:13px;font-weight:500;color:var(--text)}
+.col-h svg{width:14px;height:14px}
+.col-h .n{color:var(--text-3);font-family:var(--mono);font-size:12px;transition:color .3s var(--ease)}
+.col-h .n.bump{color:var(--mint)}
+.issue{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+.issue .top{display:flex;justify-content:space-between;align-items:center;font:12px var(--mono);color:var(--text-3)}
+.issue .av{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font:600 8px var(--sans);color:var(--bg)}
+.issue .t{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tags{display:flex;gap:6px;align-items:center}
+.pri{width:20px;height:20px;border:1px solid var(--line);border-radius:5px;display:grid;place-items:center;color:var(--text-2)}
+.pri svg{width:12px;height:12px}
+.tag{display:inline-flex;align-items:center;gap:6px;height:20px;padding:0 8px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--text-2)}
+.tag i{width:7px;height:7px;border-radius:50%}
+.issue.new{animation:drop .6s var(--expo) both;border-color:var(--mint);box-shadow:0 0 0 3px var(--mint-tint)}
+.issue.new.settled{border-color:var(--line);box-shadow:none}
+.issue.hl{border-color:var(--mint)!important;box-shadow:0 0 0 3px var(--mint-tint)!important}
+@keyframes drop{from{opacity:0;transform:translateY(-10px) scale(.97)}}
+.slot{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--expo)}
+.slot.open{grid-template-rows:1fr}
+.slot>div{overflow:hidden;min-height:0}
+
+.thread{position:absolute;left:40px;top:0;width:392px;bottom:28px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7),0 0 0 1px rgba(0,0,0,.4);display:flex;flex-direction:column;z-index:2;overflow:hidden}
+.th-h{height:46px;flex:none;display:flex;align-items:center;gap:8px;padding:0 14px;border-bottom:1px solid var(--line-2);font-weight:600;font-size:14px}
+.th-h svg{width:16px;height:16px;color:var(--text-2)}
+.th-h small{color:var(--text-3);font-weight:400;font-size:13px}
+.reset{margin-left:auto;height:28px;padding:0 10px;border-radius:6px;border:1px solid var(--line);background:var(--raised);font-size:12px;color:var(--text-2);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s var(--ease)}
+.reset.show{opacity:1;pointer-events:auto}
+.reset:hover{color:var(--text)}
+.msgs{flex:1;overflow:hidden;padding:16px 16px 8px;display:flex;flex-direction:column;justify-content:flex-end;gap:16px;list-style:none;margin:0}
+.msg{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px}
+.msg .face{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-weight:600;font-size:12px;color:var(--bg)}
+.msg .who{font-size:13px;font-weight:600}
+.msg .who time{font-weight:400;color:var(--text-3);font-size:12px;margin-left:6px}
+.msg p{margin:2px 0 0;color:var(--text-2);font-size:13.5px;line-height:1.45}
+.msg.in{animation:msgin .4s var(--expo) both}
+@keyframes msgin{from{opacity:0;transform:translateY(8px)}}
+.bot .face{background:var(--mint);color:var(--mint-ink)}
+.thinking{background:linear-gradient(90deg,var(--text-3) 0%,var(--text) 40%,var(--text-3) 80%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 1.2s linear infinite}
+@keyframes shimmer{from{background-position:100% 0}to{background-position:-100% 0}}
+.filed{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.chip{display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--raised);font-size:12.5px;color:var(--text);text-align:left;cursor:pointer;transition:border-color .15s var(--ease)}
+.chip:hover,.chip:focus-visible{border-color:var(--mint)}
+.chip .id{font-family:var(--mono);color:var(--text-3);font-size:11.5px;white-space:nowrap;flex:none}
+.chip .ct{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.chip svg{width:13px;height:13px;color:var(--mint);flex:none}
+.mention{color:var(--mint);background:var(--mint-tint);border-radius:4px;padding:0 3px}
+
+.composer{flex:none;margin:8px 12px 12px;border:1px solid var(--line);border-radius:10px;background:var(--raised);padding:12px;display:flex;flex-direction:column;gap:14px;transition:border-color .2s var(--ease)}
+.composer:focus-within{border-color:#3A414C}
+.draft{font-size:13.5px;min-height:20px;color:var(--text)}
+.draft.empty{color:var(--text-3)}
+.tools{display:flex;align-items:center;gap:12px;color:var(--text-3)}
+.tools svg{width:16px;height:16px}
+.send{margin-left:auto;height:32px;padding:0 12px 0 10px;border:0;border-radius:7px;background:var(--mint);color:var(--mint-ink);font-weight:600;font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer;transition:transform .12s var(--ease),filter .15s var(--ease)}
+.send svg{width:14px;height:14px;color:currentColor}
+.send:hover{filter:brightness(1.08)}
+.send:active{transform:scale(.97)}
+.send:disabled{background:var(--line);color:var(--text-3);cursor:default}
+.send.pulse{animation:pulse 2.2s var(--ease) infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(91,227,176,.45)}70%,100%{box-shadow:0 0 0 8px rgba(91,227,176,0)}}
+
+@media (max-width:980px){
+  .head{grid-template-columns:1fr;gap:16px}
+  h2{font-size:38px}
+  .board{left:220px}
+  .thread{width:340px}
+}
+@media (max-width:640px){
+  section{padding:36px 16px 0}
+  h2{font-size:32px}.lede{font-size:16px}
+  .scene{min-height:640px}
+  .scene{margin-inline:-16px;padding-inline:16px}
+  .thread{position:relative;left:0;width:100%;height:470px;bottom:auto}
+  .board{left:16px;top:490px;right:auto;grid-template-columns:repeat(4,240px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .msg.in,.issue.new{animation:none}
+  .thinking{animation:none;color:var(--text-2);background:none}
+  .send.pulse{animation:none}
+  .slot,.issue,.reset,.col-h .n{transition:none}
+}
+</style>
+</head>
+<body>
+<section aria-labelledby="t">
+  <div class="head">
+    <h2 id="t">Intake that<br>files itself</h2>
+    <div>
+      <p class="lede"><b>Mention Tracewell in any thread.</b> It reads the conversation, splits it into issues, picks labels and owners, and drops them on the right team's board before the thread goes cold.</p>
+      <a class="more" href="#">How intake works <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 6h9M6.5 2.5L10 6l-3.5 3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="board" id="board" aria-label="Mobile team board" role="region">
+      <div class="col">
+        <div class="col-h"><svg viewBox="0 0 14 14" fill="none" stroke="#6C7480" stroke-width="1.4" stroke-dasharray="2 2"><circle cx="7" cy="7" r="5.5"/></svg>Backlog <span class="n">12</span></div>
+        <article class="issue"><div class="top">TRW-377<span class="av" style="background:#B79CFF">AN</span></div><div class="t">Audit empty states in settings</div><div class="tags"><span class="pri"><svg viewBox="0 0 12 12" fill="currentColor"><rect x="1" y="7" width="2" height="4" rx=".5"/><rect x="5" y="4" width="2" height="7" rx=".5" opacity=".35"/><rect x="9" y="1" width="2" height="10" rx=".5" opacity=".35"/></svg></span><span class="tag"><i style="background:var(--design)"></i>Design</span></div></article>
+        <article class="issue"><div class="top">TRW-365<span class="av" style="background:#E6B450">RK</span></div><div class="t">Rate-limit invite emails</div><div class="tags"><span class="pri"><svg viewBox="0 0 12 12" fill="currentColor"><rect x="1" y="7" width="2" height="4" rx=".5"/><rect x="5" y="4" width="2" height="7" rx=".5"/><rect x="9" y="1" width="2" height="10" rx=".5" opacity=".35"/></svg></span><span class="tag"><i style="background:var(--backend)"></i>Backend</span></div></article>
+        <article class="issue"><div class="top">TRW-358<span class="av" style="background:#8BD3E6">SL</span></div><div class="t">Dark mode for PDF exports</div><div class="tags"><span class="pri"><svg viewBox="0 0 12 12" fill="currentColor"><rect x="1" y="7" width="2" height="4" rx=".5"/><rect x="5" y="4" width="2" height="7" rx=".5" opacity=".35"/><rect x="9" y="1" width="2" height="10" rx=".5" opacity=".35"/></svg></span><span class="tag"><i style="background:var(--feature)"></i>Feature</span></div></article>
+        <article class="issue"><div class="top">TRW-351<span class="av" style="background:#A4D96C">JO</span></div><div class="t">Trim onboarding to three steps</div><div class="tags"><span class="tag"><i style="background:var(--design)"></i>Design</span></div></article>
+      </div>
+      <div class="col">
+        <div class="col-h"><svg viewBox="0 0 14 14" fill="none" stroke="#A3ABB7" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/></svg>Todo <span class="n" id="todoN">7</span></div>
+        <div id="todo" style="display:flex;flex-direction:column;gap:8px">
+          <article class="issue"><div class="top">TRW-401<span class="av" style="background:#6FA8FF">MO</span></div><div class="t">Paginate the activity feed</div><div class="tags"><span class="pri"><svg viewBox="0 0 12 12" fill="currentColor"><rect x="1" y="7" width="2" height="4" rx=".5"/><rect x="5" y="4" width="2" height="7" rx=".5"/><rect x="9" y="1" width="2" height="10" rx=".5" opacity=".35"/></svg></span><span class="tag"><i style="background:var(--perf)"></i>Performance</span></div></article>
+          <article class="issue"><div class="top">TRW-398<span class="av" style="background:#EF6F6C">DP</span></div><div class="t">TypeError in date picker on Safari</div><div class="tags"><span class="pri"><svg viewBox="0 0 12 12" fill="currentColor"><rect x="1" y="7" width="2" height="4" rx=".5"/><rect x="5" y="4" width="2" height="7" rx=".5"/><rect x="9" y="1" width="2" height="10" rx=".5"/></svg></span><span class="tag"><i style="background:var(--bug)"></i>Bug</span></div></article>
+          <article class="issue"><div class="top">TRW-395<span class="av" style="background:#E6B450">RK</span></div><div class="t">Move billing to the new price table</div><div class="tags"><span class="tag"><i style="background:var(--backend)"></i>Backend</span></div></article>
+          <article class="issue"><div class="top">TRW-392<span class="av" style="background:#B79CFF">AN</span></div><div class="t">Tighten list row density</div><div class="tags"><span class="tag"><i style="background:var(--design)"></i>Design</span></div></article>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-h"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#E6B450" stroke-width="1.4"/><path d="M7 3.5a3.5 3.5 0 0 1 0 7z" fill="#E6B450"/></svg>In progress <span class="n">3</span></div>
+        <article class="issue"><div class="top">TRW-389<span class="av" style="background:#8BD3E6">SL</span></div><div class="t">Cache project icons at the edge</div><div class="tags"><span class="pri"><svg viewBox="0 0 12 12" fill="currentColor"><rect x="1" y="7" width="2" height="4" rx=".5"/><rect x="5" y="4" width="2" height="7" rx=".5"/><rect x="9" y="1" width="2" height="10" rx=".5" opacity=".35"/></svg></span><span class="tag"><i style="background:var(--perf)"></i>Performance</span></div></article>
+        <article class="issue"><div class="top">TRW-386<span class="av" style="background:#6FA8FF">MO</span></div><div class="t">Keyboard shortcuts sheet</div><div class="tags"><span class="tag"><i style="background:var(--feature)"></i>Feature</span></div></article>
+        <article class="issue"><div class="top">TRW-383<span class="av" style="background:#A4D96C">JO</span></div><div class="t">Retry queue for failed syncs</div><div class="tags"><span class="tag"><i style="background:var(--backend)"></i>Backend</span></div></article>
+      </div>
+      <div class="col">
+        <div class="col-h"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#5BE3B0" stroke-width="1.4"/><path d="M7 1.5a5.5 5.5 0 1 1-5.5 5.5H7z" fill="#5BE3B0"/></svg>In review <span class="n">2</span></div>
+        <article class="issue"><div class="top">TRW-380<span class="av" style="background:#E6B450">RK</span></div><div class="t">Remove legacy webhooks v1</div><div class="tags"><span class="tag"><i style="background:var(--backend)"></i>Backend</span></div></article>
+        <article class="issue"><div class="top">TRW-374<span class="av" style="background:#EF6F6C">DP</span></div><div class="t">Crash when rotating on camera screen</div><div class="tags"><span class="tag"><i style="background:var(--bug)"></i>Bug</span></div></article>
+      </div>
+    </div>
+
+    <div class="thread" role="region" aria-label="Thread in studio-feedback">
+      <div class="th-h">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 5.5h10M3 10.5h10M6.5 2.5l-1.5 11M11 2.5l-1.5 11" stroke-linecap="round"/></svg>
+        Thread <small>#mobile-feedback</small>
+        <button class="reset" id="reset" type="button">Reset demo</button>
+      </div>
+      <ol class="msgs" id="msgs" aria-live="polite" aria-relevant="additions">
+        <li class="msg"><span class="face" style="background:#B79CFF" aria-hidden="true">MO</span><div><div class="who">Maya Okafor<time>10:42</time></div><p>The offline banner never clears after reconnecting on Android. Two customers flagged it this morning.</p></div></li>
+        <li class="msg"><span class="face" style="background:#EF6F6C" aria-hidden="true">DP</span><div><div class="who">Dev Patel<time>10:44</time></div><p>Same on iPad. Also, retry on a failed upload does nothing until you relaunch the app.</p></div></li>
+        <li class="msg"><span class="face" style="background:#8BD3E6" aria-hidden="true">LC</span><div><div class="who">Lu Chen<time>10:45</time></div><p>Sounds like two separate problems. Can someone file them for this cycle?</p></div></li>
+      </ol>
+      <form class="composer" id="composer">
+        <div class="draft" id="draft"><span class="mention">@Tracewell</span> file these and assign to me</div>
+        <div class="tools" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5 8h6" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6"/><path d="M5.5 9.5c1.3 1.4 3.7 1.4 5 0" stroke-linecap="round"/><circle cx="6" cy="6.5" r=".6" fill="currentColor"/><circle cx="10" cy="6.5" r=".6" fill="currentColor"/></svg>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="2.6"/><path d="M10.6 8v1.2a1.9 1.9 0 0 0 3.4 0V8A6 6 0 1 0 11 13.2" stroke-linecap="round"/></svg>
+          <button class="send pulse" id="send" type="submit" aria-label="Send: @Tracewell file these and assign to me">Send <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h9M7.5 3.5L11 7l-3.5 3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<template id="tpl-issue">
+  <div class="slot"><div><article class="issue new"><div class="top"><span class="id"></span><span class="av" style="background:#5BE3B0">YO</span></div><div class="t"></div><div class="tags"><span class="pri"><svg viewBox="0 0 12 12" fill="currentColor"><rect x="1" y="7" width="2" height="4" rx=".5"/><rect x="5" y="4" width="2" height="7" rx=".5"/><rect x="9" y="1" width="2" height="10" rx=".5"/></svg></span><span class="tag"><i style="background:var(--bug)"></i>Bug</span><span class="tag second"><i></i><b style="font-weight:400"></b></span></div></article></div></div>
+</template>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = ms => new Promise(r => setTimeout(r, reduce ? Math.min(ms, 120) : ms));
+  const msgs = $('msgs'), todo = $('todo'), todoN = $('todoN'), send = $('send'), draft = $('draft'), reset = $('reset');
+  const initialMsgs = msgs.innerHTML, initialTodo = todo.innerHTML, initialDraft = draft.innerHTML;
+  const ISSUES = [
+    { id: 'TRW-412', title: 'Offline banner persists after reconnect', tag: 'Android', color: 'var(--android)' },
+    { id: 'TRW-413', title: 'Upload retry is inert until relaunch', tag: 'Uploads', color: 'var(--perf)' },
+  ];
+  let running = false;
+
+  function add(html, cls = '') {
+    const li = document.createElement('li');
+    li.className = 'msg in ' + cls;
+    li.innerHTML = html;
+    msgs.append(li);
+    while (msgs.children.length > 4) msgs.firstElementChild.remove();
+    return li;
+  }
+
+  $('composer').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (running || send.disabled) return;
+    running = true;
+    send.disabled = true; send.classList.remove('pulse');
+    const text = draft.innerHTML;
+    draft.textContent = 'Message #mobile-feedback'; draft.classList.add('empty');
+    add(`<span class="face" style="background:#5BE3B0;color:#0B2A1F" aria-hidden="true">YO</span><div><div class="who">You<time>10:46</time></div><p>${text}</p></div>`);
+    await wait(500);
+    const bot = add(`<span class="face" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M8 3v10" stroke-linecap="round"/></svg></span><div><div class="who">Tracewell<time>10:46</time></div><p class="thinking">Reading 3 messages…</p></div>`, 'bot');
+    await wait(1100);
+    const p = bot.querySelector('p');
+    p.className = '';
+    p.textContent = 'Filed 2 issues in Mobile, assigned to you, labelled Bug.';
+    const list = document.createElement('div');
+    list.className = 'filed';
+    p.after(list);
+
+    for (const it of ISSUES) {
+      const chip = document.createElement('button');
+      chip.type = 'button'; chip.className = 'chip'; chip.dataset.id = it.id;
+      chip.innerHTML = `<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/></svg><span class="id">${it.id}</span><span class="ct">${it.title}</span>`;
+      list.append(chip);
+
+      const node = $('tpl-issue').content.firstElementChild.cloneNode(true);
+      const card = node.querySelector('.issue');
+      card.dataset.id = it.id;
+      card.querySelector('.id').textContent = it.id;
+      card.querySelector('.t').textContent = it.title;
+      card.querySelector('.second i').style.background = it.color;
+      card.querySelector('.second b').textContent = it.tag;
+      todo.prepend(node);
+      requestAnimationFrame(() => requestAnimationFrame(() => node.classList.add('open')));
+      todoN.textContent = String(+todoN.textContent + 1);
+      todoN.classList.add('bump');
+
+      const hl = on => card.classList.toggle('hl', on);
+      chip.addEventListener('mouseenter', () => hl(true));
+      chip.addEventListener('mouseleave', () => hl(false));
+      chip.addEventListener('focus', () => hl(true));
+      chip.addEventListener('blur', () => hl(false));
+      chip.addEventListener('click', () => { hl(true); setTimeout(() => hl(false), 900); });
+      await wait(320);
+    }
+    await wait(1600);
+    todo.querySelectorAll('.issue.new').forEach(c => c.classList.add('settled'));
+    todoN.classList.remove('bump');
+    reset.classList.add('show');
+    running = false;
+  });
+
+  reset.addEventListener('click', () => {
+    msgs.innerHTML = initialMsgs; todo.innerHTML = initialTodo; todoN.textContent = '7';
+    draft.innerHTML = initialDraft; draft.classList.remove('empty');
+    send.disabled = false; send.classList.add('pulse');
+    reset.classList.remove('show');
+    send.focus();
+  });
+})();
+</script>
+</body>
+</html>

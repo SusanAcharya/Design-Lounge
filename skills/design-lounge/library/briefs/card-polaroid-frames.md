@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 331 · "Polaroid frames, three ways" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 350 · "Polaroid frames, three ways" · designlounge.vercel.app -->
 
 # Polaroid frames, three ways
 

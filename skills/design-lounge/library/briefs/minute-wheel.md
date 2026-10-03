@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 286 · "Minute wheel" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 303 · "Minute wheel" · designlounge.vercel.app -->
 
 # Minute wheel
 

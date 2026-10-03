@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 285 · "Microblog profile header" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 302 · "Microblog profile header" · designlounge.vercel.app -->
 
 # Microblog profile header
 

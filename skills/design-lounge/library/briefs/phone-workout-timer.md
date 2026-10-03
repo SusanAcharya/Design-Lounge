@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 260 · "Interval workout timer" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 271 · "Interval workout timer" · designlounge.vercel.app -->
 
 # Interval workout timer
 

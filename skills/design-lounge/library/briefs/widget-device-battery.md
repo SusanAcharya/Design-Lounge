@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 211 · "Device battery widget" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 214 · "Device battery widget" · designlounge.vercel.app -->
 
 # Device battery widget
 

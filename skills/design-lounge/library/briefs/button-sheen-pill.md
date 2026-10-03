@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 368 · "Sheen pill buttons" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 390 · "Sheen pill buttons" · designlounge.vercel.app -->
 
 # Sheen pill buttons
 

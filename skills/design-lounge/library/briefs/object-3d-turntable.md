@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 265 · "Kraft box 3D turntable" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 277 · "Kraft box 3D turntable" · designlounge.vercel.app -->
 
 # Kraft box 3D turntable
 

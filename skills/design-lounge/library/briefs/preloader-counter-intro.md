@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 334 · "Preloader counter intro" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 353 · "Preloader counter intro" · designlounge.vercel.app -->
 
 # Preloader counter intro
 

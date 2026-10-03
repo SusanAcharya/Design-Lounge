@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 290 · "Museum wall with placards" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 307 · "Museum wall with placards" · designlounge.vercel.app -->
 
 # Museum wall with placards
 

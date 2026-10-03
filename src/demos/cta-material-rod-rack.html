@@ -1,0 +1,208 @@
+<!-- Design Lounge piece: cta-material-rod-rack · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ostlund Materials · Pick a bar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;800&family=Red+Hat+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page: #e3e7e8;
+    --page-2: #d3d9db;
+    --card: #0f1a24;
+    --card-line: rgba(226, 233, 236, 0.14);
+    --ink: #0f1a24;
+    --ink-2: #4b5862;
+    --ink-3: #6f7b84;
+    --on-card: #e8eef0;
+    --on-card-2: #93a1ab;
+    --signal: #ff5a36;
+    --cond: "Saira Condensed", "Arial Narrow", sans-serif;
+    --mono: "Red Hat Mono", ui-monospace, monospace;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: var(--page); color: var(--ink); font: 400 14px/1.5 var(--mono); overflow-x: hidden; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+
+  header { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 80px; border-bottom: 1px solid var(--page-2); }
+  .mark { display: flex; align-items: center; gap: 10px; font: 800 20px/1 var(--cond); letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+  .mark i { width: 18px; height: 18px; border-radius: 50%; background: conic-gradient(var(--ink) 0 25%, transparent 0 50%, var(--ink) 0 75%, transparent 0); box-shadow: inset 0 0 0 2px var(--ink); }
+  header p { margin: 0; font-size: 12px; color: var(--ink-2); letter-spacing: .04em; }
+
+  .intro { text-align: center; padding-top: 26px; }
+  .eyebrow { display: flex; align-items: center; gap: 18px; justify-content: center; font: 500 12px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
+  .eyebrow::before, .eyebrow::after { content: ""; width: 120px; height: 1px; background: var(--ink-3); opacity: .5; }
+  h1 { margin: 14px 0 6px; font: 800 44px/1 var(--cond); letter-spacing: .01em; text-transform: uppercase; }
+  .intro .sub { margin: 0; padding: 0 20px; font-size: 13px; color: var(--ink-2); }
+
+  .rack { position: relative; z-index: 1; display: flex; justify-content: center; align-items: flex-end; gap: 30px; height: 330px; margin-top: 8px; padding: 0; list-style: none; }
+  .rod { --w: 112px; position: relative; width: var(--w); height: 298px; padding: 0; border: 0; background: none; cursor: pointer; transform: translateY(30px); transition: transform .45s var(--expo); font: inherit; color: inherit; }
+  .rod .lab { position: absolute; left: 50%; top: -30px; transform: translateX(-50%); white-space: nowrap; font: 500 12px/1 var(--mono); letter-spacing: .06em; color: var(--ink-2); transition: color .2s var(--ease); }
+  .rod .lab b { font-weight: 500; color: var(--ink-2); }
+  .rod .body { position: absolute; left: 0; right: 0; top: 18px; bottom: 0; border-radius: 0 0 4px 4px;
+    background: linear-gradient(90deg, var(--c3) 0%, var(--c1) 14%, var(--c2) 32%, var(--c1) 52%, var(--c3) 88%, var(--c4) 100%); }
+  .rod .cap { position: absolute; left: 0; right: 0; top: 0; height: 36px; border-radius: 50%;
+    background: radial-gradient(ellipse 70% 60% at 40% 40%, var(--c2), var(--c1) 70%); box-shadow: inset 0 -3px 0 var(--c3), inset 0 0 0 3px color-mix(in srgb, var(--c2) 60%, transparent); }
+  .rod .cap::after { content: ""; position: absolute; inset: 7px 9px; border-radius: 50%; box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
+  .rod:hover { transform: translateY(20px); }
+  .rod[aria-checked="true"] { transform: translateY(0); }
+  .rod[aria-checked="true"] .lab { color: var(--ink); }
+  .rod[aria-checked="true"] .lab b { color: var(--signal); }
+  .rod:focus-visible { outline-offset: 6px; border-radius: 6px; }
+
+  .r1 { --w: 116px; --c1: #e7e1d1; --c2: #fbf8ef; --c3: #c2baa6; --c4: #a59d89; }
+  .r2 { --w: 96px;  --c1: #5d7246; --c2: #8ea472; --c3: #3d4c2d; --c4: #2d3922; }
+  .r3 { --w: 136px; --c1: #c49d66; --c2: #e4c799; --c3: #9c7745; --c4: #7d5e34; }
+  .r4 { --w: 84px;  --c1: #b5653a; --c2: #f0b48c; --c3: #7e3f1d; --c4: #5d2c12; }
+  .r5 { --w: 104px; --c1: #8b9198; --c2: #e1e6eb; --c3: #5b6168; --c4: #42474d; }
+
+  .card { position: relative; z-index: 2; margin: -32px 80px 0; height: 270px; padding: 38px 48px; background: var(--card); color: var(--on-card); border-radius: 16px;
+    display: grid; grid-template-columns: 1.25fr 1fr 0.9fr; gap: 48px; align-items: start; }
+  .kick { font: 500 12px/1 var(--mono); letter-spacing: .08em; color: var(--on-card-2); text-transform: uppercase; }
+  .kick b { color: var(--signal); font-weight: 500; }
+  h2 { margin: 14px 0 12px; font: 800 52px/.94 var(--cond); text-transform: uppercase; letter-spacing: .005em; }
+  .use { margin: 0; font-size: 13px; color: var(--on-card-2); max-width: 36ch; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 28px; margin: 4px 0 0; }
+  .stats div { border-top: 1px solid var(--card-line); padding-top: 10px; }
+  .stats dt { font: 500 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--on-card-2); }
+  .stats dd { margin: 8px 0 0; font: 600 32px/1 var(--cond); font-variant-numeric: tabular-nums; }
+  .stats dd small { font: 500 14px/1 var(--cond); color: var(--on-card-2); margin-left: 4px; letter-spacing: .04em; }
+  .cta { display: flex; flex-direction: column; gap: 14px; padding-top: 26px; }
+  .btn { display: inline-flex; align-items: center; justify-content: space-between; gap: 14px; height: 54px; padding: 0 20px; background: var(--signal); color: #1a0a05; border-radius: 6px; text-decoration: none;
+    font: 600 18px/1 var(--cond); letter-spacing: .08em; text-transform: uppercase; transition: background .16s var(--ease), transform .16s var(--ease); }
+  .btn svg { width: 18px; height: 18px; transition: transform .2s var(--ease); }
+  .btn:hover { background: #ff7656; }
+  .btn:hover svg { transform: translateX(3px); }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline-color: var(--on-card); }
+  .cta p { margin: 0; font-size: 12px; color: var(--on-card-2); line-height: 1.6; }
+  .cta p strong { color: var(--on-card); font-weight: 500; font-size: 15px; letter-spacing: .04em; }
+
+  .swap { transition: opacity .18s var(--ease), transform .32s var(--expo); }
+  .out { opacity: 0; transform: translateY(10px); }
+
+  @media (max-width: 1100px) {
+    header, .card { padding-left: 32px; padding-right: 32px; }
+    .card { margin-left: 24px; margin-right: 24px; grid-template-columns: 1fr 1fr; height: auto; }
+    .cta { grid-column: 1 / -1; flex-direction: row; align-items: center; padding-top: 0; }
+  }
+  @media (max-width: 700px) {
+    header { padding: 0 20px; } header p { display: none; }
+    h1 { font-size: 30px; padding: 0 20px; }
+    .eyebrow::before, .eyebrow::after { width: 32px; }
+    .rack { gap: 10px; height: 230px; }
+    .rod { height: 200px; width: calc(var(--w) * .52); }
+    .rod .cap { height: 22px; } .rod .body { top: 11px; }
+    .rod .lab { font-size: 10px; letter-spacing: 0; }
+    .rod .lab b { display: none; }
+    .card { margin: -32px 12px 24px; padding: 28px 22px; grid-template-columns: 1fr; gap: 24px; }
+    h2 { font-size: 40px; }
+    .cta { flex-direction: column; align-items: stretch; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rod, .swap, .btn, .btn svg { transition: none !important; }
+    .out { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <a class="mark" href="#" aria-label="Ostlund Materials, home"><i aria-hidden="true"></i>Ostlund</a>
+  <p>Bar &amp; rod stock · cut to length · ships from Gävle in 24 h</p>
+</header>
+
+<main>
+  <section class="intro" aria-labelledby="t">
+    <div class="eyebrow">Pick a material</div>
+    <h1 id="t">Five bars we keep on the rack</h1>
+    <p class="sub">Tap a bar to see what it holds up to. Every one is cut, faced and chamfered here.</p>
+  </section>
+
+  <div class="rack" role="radiogroup" aria-label="Material">
+    <button class="rod r1" role="radio" aria-checked="true" data-i="0"><span class="lab"><b>01</b> ZrO₂</span><span class="body"></span><span class="cap"></span></button>
+    <button class="rod r2" role="radio" aria-checked="false" data-i="1" tabindex="-1"><span class="lab"><b>02</b> G-10</span><span class="body"></span><span class="cap"></span></button>
+    <button class="rod r3" role="radio" aria-checked="false" data-i="2" tabindex="-1"><span class="lab"><b>03</b> PEEK</span><span class="body"></span><span class="cap"></span></button>
+    <button class="rod r4" role="radio" aria-checked="false" data-i="3" tabindex="-1"><span class="lab"><b>04</b> C110</span><span class="body"></span><span class="cap"></span></button>
+    <button class="rod r5" role="radio" aria-checked="false" data-i="4" tabindex="-1"><span class="lab"><b>05</b> Ti Gr 5</span><span class="body"></span><span class="cap"></span></button>
+  </div>
+
+  <section class="card" aria-labelledby="mat" aria-live="polite">
+    <div class="swap" id="a">
+      <div class="kick"><b id="num">01</b> / 05 · <span id="grade">Y-TZP ceramic · Ø 40 mm</span></div>
+      <h2 id="mat">Zirconia, cut to your length</h2>
+      <p class="use" id="use">Pump plungers, wear sleeves and surgical guides that must not chip.</p>
+    </div>
+    <dl class="stats swap" id="b">
+      <div><dt>Service temp</dt><dd id="s1">1000<small>°C</small></dd></div>
+      <div><dt>Density</dt><dd id="s2">6.05<small>g/cm³</small></dd></div>
+      <div><dt>Hardness</dt><dd id="s3">1250<small>HV</small></dd></div>
+      <div><dt>Lead time</dt><dd id="s4">5<small>days</small></dd></div>
+    </dl>
+    <div class="cta">
+      <a class="btn" href="#" id="btn"><span id="btnt">Quote a zirconia bar</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <p>Or call the rack direct<br><strong>0800 412 377</strong><br>Replies within one working day.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(() => {
+  const M = [
+    { g: 'Y-TZP ceramic · Ø 40 mm', n: 'Zirconia, cut to your length', u: 'Pump plungers, wear sleeves and surgical guides that must not chip.', s: [['1000', '°C'], ['6.05', 'g/cm³'], ['1250', 'HV'], ['5', 'days']], b: 'zirconia' },
+    { g: 'Glass epoxy laminate · Ø 32 mm', n: 'G-10, for things that must not conduct', u: 'Insulator bushings, test fixtures and PCB jigs that stay flat.', s: [['140', '°C'], ['1.85', 'g/cm³'], ['M110', 'Rockwell'], ['2', 'days']], b: 'G-10' },
+    { g: 'Unfilled natural PEEK · Ø 50 mm', n: 'PEEK, hot and clean', u: 'Valve seats, wafer clamps and food-line parts that see steam every shift.', s: [['260', '°C'], ['1.31', 'g/cm³'], ['M99', 'Rockwell'], ['3', 'days']], b: 'PEEK' },
+    { g: 'Oxygen-free copper · Ø 25 mm', n: 'C110 copper, for current and heat', u: 'Bus bars, RF contacts and heat spreaders. 101 % IACS conductivity.', s: [['200', '°C'], ['8.94', 'g/cm³'], ['95', 'HV'], ['1', 'day']], b: 'copper' },
+    { g: 'Ti-6Al-4V titanium · Ø 30 mm', n: 'Titanium grade 5, light and stubborn', u: 'Flight brackets, implant trials and anything salt water will try to eat.', s: [['400', '°C'], ['4.43', 'g/cm³'], ['349', 'HV'], ['2', 'days']], b: 'titanium' },
+  ];
+  const rods = [...document.querySelectorAll('.rod')];
+  const a = document.getElementById('a'), b = document.getElementById('b');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const $ = id => document.getElementById(id);
+  let cur = 0, t1 = 0, t2 = 0;
+
+  function fill(i) {
+    const m = M[i];
+    $('num').textContent = String(i + 1).padStart(2, '0');
+    $('grade').textContent = m.g;
+    $('mat').textContent = m.n;
+    $('use').textContent = m.u;
+    m.s.forEach(([v, u], k) => { const dd = $('s' + (k + 1)); dd.firstChild.nodeValue = v; dd.lastChild.textContent = u; });
+    $('btnt').textContent = 'Quote a ' + m.b + ' bar';
+  }
+
+  function select(i, focus) {
+    if (i === cur) return;
+    cur = i;
+    rods.forEach((r, k) => { r.setAttribute('aria-checked', String(k === i)); r.tabIndex = k === i ? 0 : -1; });
+    if (focus) rods[i].focus();
+    clearTimeout(t1); clearTimeout(t2);
+    if (reduce.matches) { fill(i); return; }
+    a.classList.add('out');
+    t1 = setTimeout(() => b.classList.add('out'), 40);
+    t2 = setTimeout(() => {
+      fill(i);
+      a.classList.remove('out');
+      setTimeout(() => b.classList.remove('out'), 60);
+    }, 190);
+  }
+
+  rods.forEach((r, k) => {
+    r.addEventListener('click', () => select(k));
+    r.addEventListener('keydown', e => {
+      const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (d) { e.preventDefault(); select((cur + d + rods.length) % rods.length, true); }
+      if (e.key === 'Home') { e.preventDefault(); select(0, true); }
+      if (e.key === 'End') { e.preventDefault(); select(rods.length - 1, true); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

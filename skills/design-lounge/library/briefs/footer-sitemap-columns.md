@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 376 · "Sitemap columns footer" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 399 · "Sitemap columns footer" · designlounge.vercel.app -->
 
 # Sitemap columns footer
 

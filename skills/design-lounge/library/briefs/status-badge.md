@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 392 · "Status badge" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 415 · "Status badge" · designlounge.vercel.app -->
 
 # Status badge
 

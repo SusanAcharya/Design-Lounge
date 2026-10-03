@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 303 · "Paper docs with scrollspy TOC" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 322 · "Paper docs with scrollspy TOC" · designlounge.vercel.app -->
 
 # Paper docs with scrollspy TOC
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 315 · "Phone paywall with two plans" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 334 · "Phone paywall with two plans" · designlounge.vercel.app -->
 
 # Phone paywall with two plans
 

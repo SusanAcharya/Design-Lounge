@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 318 · "Phone product page" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 337 · "Phone product page" · designlounge.vercel.app -->
 
 # Phone product page
 

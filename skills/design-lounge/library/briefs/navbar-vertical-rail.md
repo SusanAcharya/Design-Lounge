@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 427 · "Vertical rail navbar" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 454 · "Vertical rail navbar" · designlounge.vercel.app -->
 
 # Vertical rail navbar
 

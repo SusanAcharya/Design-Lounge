@@ -1,0 +1,256 @@
+<!-- Design Lounge piece: winding-ribbon-scroll-story · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Winding ribbon scroll story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e4efe6;--card:#fffdf8;--ink:#1d2b26;--ink-2:#4a5a53;--line:#c6d6ca;
+  --road:#f05a28;--road-mark:#fff3e6;--cobalt:#2f4bd8;--sun:#ffc93c;--kraft:#d9a066;--leaf:#3e9b5f;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;--hand:"Caveat",cursive;
+  --road-w:96px;--r-card:24px;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--display);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px;border-radius:12px}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;height:72px;padding:0 40px;background:var(--bg);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;letter-spacing:-0.03em;color:var(--ink);text-decoration:none}
+.brand svg{color:var(--road)}
+.nav a.cta{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;background:var(--ink);color:var(--card);font-weight:600;font-size:15px;text-decoration:none;transition:background-color .16s var(--ease)}
+.nav a.cta:hover{background:var(--cobalt)}
+
+.hero{padding:128px 40px 0;height:440px;text-align:center}
+.hero .hand{display:inline-block;font-family:var(--hand);font-size:28px;color:var(--road);margin:0;transform:rotate(-3deg)}
+.hero h1{margin:4px 0 0;font-size:104px;line-height:.92;font-weight:800;letter-spacing:-0.045em;font-variation-settings:"opsz" 96}
+.hero p{margin:18px auto 0;max-width:440px;color:var(--ink-2)}
+
+.story{position:relative;padding-bottom:40px}
+.route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.guide{fill:none;stroke:var(--ink);stroke-opacity:.28;stroke-width:3;stroke-linecap:round;stroke-dasharray:1 12}
+.road{fill:none;stroke:var(--road);stroke-width:var(--road-w);stroke-linecap:round}
+.mark{fill:none;stroke:var(--road-mark);stroke-width:4;stroke-dasharray:18 22;stroke-linecap:round}
+.mask-path{fill:none;stroke:#fff;stroke-width:calc(var(--road-w) + 8px);stroke-linecap:round}
+.van{transition:none}
+
+.row{position:relative;height:560px;display:flex;align-items:center;padding:0 8%}
+.row.right{justify-content:flex-end}
+.card{position:relative;z-index:2;width:420px;background:var(--card);border-radius:var(--r-card);padding:32px 36px 28px;border:1px solid var(--line);opacity:0;transform:translateY(32px) rotate(var(--tilt,0deg));transition:opacity .5s var(--expo),transform .6s var(--expo)}
+.row.left .card{--tilt:-1.2deg}
+.row.right .card{--tilt:1deg}
+.card.in{opacity:1;transform:translateY(0) rotate(var(--tilt))}
+.card .day{font-family:var(--hand);font-size:26px;line-height:1;color:var(--road);margin:0 0 6px}
+.card h2{margin:0;font-size:44px;line-height:1;font-weight:800;letter-spacing:-0.035em}
+.card p{margin:14px 0 0;color:var(--ink-2)}
+.card .meta{display:flex;gap:16px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;font-weight:600}
+.card .meta span{display:flex;align-items:center;gap:6px}
+
+.pin{position:absolute;z-index:3;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;border:3px solid var(--ink);background:var(--card);color:var(--ink);font:800 18px var(--display);cursor:pointer;display:grid;place-items:center;transition:background-color .24s var(--ease),transform .24s var(--expo)}
+.pin:hover{transform:scale(1.08)}
+.pin[data-reached="true"]{background:var(--sun)}
+
+.deco{position:absolute;z-index:1;pointer-events:none;transform:scale(.6) translateY(16px);opacity:0;transition:transform .7s var(--expo),opacity .4s var(--ease)}
+.deco.in{transform:none;opacity:1}
+
+.end{position:relative;z-index:2;text-align:center;padding:96px 24px 120px}
+.end .hand{font-family:var(--hand);font-size:28px;color:var(--road);margin:0}
+.end h2{margin:0;font-size:88px;line-height:.95;font-weight:800;letter-spacing:-0.045em}
+.end a{display:inline-flex;margin-top:28px;height:52px;align-items:center;padding:0 28px;border-radius:999px;background:var(--road);color:var(--ink);font-size:19px;font-weight:800;text-decoration:none;transition:transform .18s var(--expo)}
+.end a:hover{transform:translateY(-2px)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:900px){
+  :root{--road-w:36px}
+  .nav{padding:0 16px}
+  .hero{padding:112px 20px 0;height:380px}
+  .hero h1{font-size:54px}
+  .row,.row.right{height:auto;padding:48px 16px 48px 76px;justify-content:flex-start}
+  .card{width:100%;padding:24px}
+  .card h2{font-size:34px}
+  .deco{display:none}
+  .end h2{font-size:48px}
+}
+@media (prefers-reduced-motion:reduce){
+  .card,.deco,.pin,.end a,.nav a.cta{transition:none}
+  .card{transform:rotate(var(--tilt))}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="#top"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 21c0-6 14-6 14-12S9 3 9 3"/></svg>Overlook</a>
+  <a class="cta" href="#quote">Get a moving quote</a>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-h">
+    <p class="hand">door to door, 38 countries</p>
+    <h1 id="hero-h">One crew.<br>One long road.</h1>
+    <p>International home moves run by a single coordinator, from the first box count to the last shelf.</p>
+  </section>
+
+  <section class="story" id="story" aria-label="How a move works">
+    <svg class="route" id="route" aria-hidden="true">
+      <defs><mask id="drawn" maskUnits="userSpaceOnUse"><path class="mask-path" id="maskPath"/></mask></defs>
+      <path class="guide" id="guide"/>
+      <g mask="url(#drawn)"><path class="road" id="road"/><path class="mark" id="mark"/></g>
+      <g class="van" id="van"><g transform="translate(-34,-20)">
+        <rect x="0" y="4" width="46" height="30" rx="4" fill="#2f4bd8"/>
+        <path d="M46 12h12l10 11v11H46z" fill="#2f4bd8"/>
+        <path d="M50 15h7l7 8H50z" fill="#fff3e6"/>
+        <rect x="6" y="11" width="32" height="4" rx="2" fill="#ffc93c"/>
+        <circle cx="14" cy="35" r="6" fill="#1d2b26"/><circle cx="56" cy="35" r="6" fill="#1d2b26"/>
+        <circle cx="14" cy="35" r="2.2" fill="#fff3e6"/><circle cx="56" cy="35" r="2.2" fill="#fff3e6"/>
+      </g></g>
+    </svg>
+
+    <div class="row left" data-stop="1">
+      <article class="card">
+        <p class="day">Day 1</p>
+        <h2>Survey</h2>
+        <p>We walk your home with you on a video call and count every box before we put a number on the quote.</p>
+        <div class="meta"><span>1 coordinator</span><span>40 minutes</span></div>
+      </article>
+    </div>
+    <div class="row right" data-stop="2">
+      <article class="card">
+        <p class="day">Day 9</p>
+        <h2>Pack</h2>
+        <p>Two packers per room. The fragile things get their own crate, their own label and their own photo.</p>
+        <div class="meta"><span>4 packers</span><span>212 boxes</span></div>
+      </article>
+    </div>
+    <div class="row left" data-stop="3">
+      <article class="card">
+        <p class="day">Day 12</p>
+        <h2>Cross</h2>
+        <p>Customs forms, insurance and the shipping slot, all filed by the same person who answers your texts.</p>
+        <div class="meta"><span>3 borders</span><span>1 phone number</span></div>
+      </article>
+    </div>
+    <div class="row right" data-stop="4">
+      <article class="card">
+        <p class="day">Day 31</p>
+        <h2>Unpack</h2>
+        <p>The beds go up first. Then the kettle. Then everything else, room by room, until the boxes are gone.</p>
+        <div class="meta"><span>1 day</span><span>0 boxes left</span></div>
+      </article>
+    </div>
+
+    <svg class="deco" data-for="1" width="150" height="130" viewBox="0 0 150 130" aria-hidden="true"><rect x="10" y="62" width="70" height="60" rx="4" fill="#d9a066"/><rect x="40" y="18" width="62" height="46" rx="4" fill="#c98d52"/><rect x="74" y="74" width="66" height="48" rx="4" fill="#d9a066"/><path d="M45 62v60M71 18v46M107 74v48" stroke="#fff3e6" stroke-width="6"/></svg>
+    <svg class="deco" data-for="2" width="120" height="150" viewBox="0 0 120 150" aria-hidden="true"><path d="M60 90C30 80 18 50 26 22c18 10 30 34 34 68zM60 90c28-12 40-40 34-70-18 12-32 36-34 70zM60 92c-4-30 0-60 0-84 8 26 6 56 0 84z" fill="#3e9b5f"/><path d="M30 92h60l-8 52H38z" fill="#2f4bd8"/></svg>
+    <svg class="deco" data-for="3" width="140" height="120" viewBox="0 0 140 120" aria-hidden="true"><rect x="20" y="30" width="100" height="76" rx="12" fill="#f05a28"/><path d="M52 30V18a6 6 0 0 1 6-6h24a6 6 0 0 1 6 6v12" fill="none" stroke="#1d2b26" stroke-width="6"/><path d="M20 62h100" stroke="#fff3e6" stroke-width="6"/><circle cx="40" cy="110" r="6" fill="#1d2b26"/><circle cx="100" cy="110" r="6" fill="#1d2b26"/></svg>
+    <svg class="deco" data-for="4" width="160" height="120" viewBox="0 0 160 120" aria-hidden="true"><rect x="22" y="20" width="116" height="56" rx="18" fill="#ffc93c"/><rect x="8" y="50" width="144" height="40" rx="14" fill="#f2b51f"/><rect x="18" y="88" width="10" height="24" rx="3" fill="#1d2b26"/><rect x="132" y="88" width="10" height="24" rx="3" fill="#1d2b26"/></svg>
+
+    <div class="end" id="quote">
+      <p class="hand">keys in hand</p>
+      <h2>Home, again.</h2>
+      <a href="#top">Get a moving quote</a>
+    </div>
+  </section>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const story = document.getElementById('story');
+  const svg = document.getElementById('route');
+  const paths = ['guide', 'road', 'mark', 'maskPath'].map(id => document.getElementById(id));
+  const road = paths[1], maskPath = paths[3], van = document.getElementById('van');
+  const rows = [...story.querySelectorAll('.row')];
+  const decos = [...story.querySelectorAll('.deco')];
+  const live = document.getElementById('live');
+  const pins = [];
+  let total = 0, samples = [], anchors = [], reachedMax = 0;
+
+  rows.forEach((row, i) => {
+    const b = document.createElement('button');
+    b.className = 'pin'; b.type = 'button'; b.textContent = i + 1;
+    b.setAttribute('aria-label', 'Go to stop ' + (i + 1) + ': ' + row.querySelector('h2').textContent);
+    b.dataset.reached = 'false';
+    b.addEventListener('click', () => {
+      const y = story.offsetTop + anchors[i + 1].y - innerHeight * 0.72 + 56;
+      scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+    });
+    story.appendChild(b); pins.push(b);
+  });
+
+  function build() {
+    const W = story.clientWidth, H = story.clientHeight, narrow = W < 900;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    anchors = [{ x: narrow ? 38 : W / 2, y: 40 }];
+    rows.forEach(r => {
+      const left = r.classList.contains('left');
+      const x = narrow ? (left ? 34 : 46) : W * (left ? 0.7 : 0.3);
+      anchors.push({ x, y: r.offsetTop + r.offsetHeight / 2 });
+    });
+    const end = story.querySelector('.end');
+    anchors.push({ x: narrow ? 38 : W / 2, y: end.offsetTop + 16 });
+    let d = `M${anchors[0].x} ${anchors[0].y}`;
+    for (let i = 1; i < anchors.length; i++) {
+      const a = anchors[i - 1], b = anchors[i], k = (b.y - a.y) * 0.55;
+      d += ` C${a.x} ${a.y + k} ${b.x} ${b.y - k} ${b.x} ${b.y}`;
+    }
+    paths.forEach(p => p.setAttribute('d', d));
+    total = road.getTotalLength();
+    samples = [];
+    for (let l = 0; l <= total; l += 6) samples.push([l, road.getPointAtLength(l).y]);
+    pins.forEach((p, i) => { p.style.left = anchors[i + 1].x + 'px'; p.style.top = anchors[i + 1].y + 'px'; });
+    decos.forEach(dc => {
+      const i = +dc.dataset.for, a = anchors[i], left = rows[i - 1].classList.contains('left');
+      dc.style.left = (a.x + (left ? 104 : -104 - dc.width.baseVal.value)) + 'px';
+      dc.style.top = (a.y - dc.height.baseVal.value / 2) + 'px';
+    });
+    render();
+  }
+
+  function lengthAtY(y) {
+    if (y <= 0) return 0;
+    let lo = 0, hi = samples.length - 1;
+    if (y >= samples[hi][1]) return total;
+    while (hi - lo > 1) { const m = (lo + hi) >> 1; if (samples[m][1] < y) lo = m; else hi = m; }
+    const [l0, y0] = samples[lo], [l1, y1] = samples[hi];
+    return l0 + (l1 - l0) * ((y - y0) / ((y1 - y0) || 1));
+  }
+
+  function render() {
+    const target = scrollY + innerHeight * 0.72 - story.offsetTop;
+    const len = Math.max(28, lengthAtY(target));
+    maskPath.style.strokeDasharray = `${len} ${total + 200}`;
+    const p = road.getPointAtLength(len), q = road.getPointAtLength(Math.min(total, len + 2));
+    let ang = Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI;
+    const s = story.clientWidth < 900 ? 0.6 : 1;
+    const flip = ` scale(${s},${Math.abs(ang) > 90 ? -s : s})`;
+    van.setAttribute('transform', `translate(${p.x.toFixed(1)},${p.y.toFixed(1)}) rotate(${ang.toFixed(1)})${flip}`);
+    let reached = 0;
+    rows.forEach((r, i) => {
+      const a = anchors[i + 1];
+      const on = target > a.y - 260;
+      r.querySelector('.card').classList.toggle('in', on);
+      const hit = p.y >= a.y - 2;
+      pins[i].dataset.reached = hit ? 'true' : 'false';
+      if (hit) reached = i + 1;
+    });
+    decos.forEach(dc => dc.classList.toggle('in', target > anchors[+dc.dataset.for].y - 200));
+    if (reached !== reachedMax) {
+      reachedMax = reached;
+      if (reached) live.textContent = 'Stop ' + reached + ' of 4: ' + rows[reached - 1].querySelector('h2').textContent;
+    }
+  }
+
+  let queued = false;
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; render(); }); } }, { passive: true });
+  addEventListener('resize', build);
+  build();
+  if (document.fonts) document.fonts.ready.then(build);
+})();
+</script>
+</body>
+</html>

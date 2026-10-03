@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 408 · "Terrazzo background" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 431 · "Terrazzo background" · designlounge.vercel.app -->
 
 # Terrazzo background
 

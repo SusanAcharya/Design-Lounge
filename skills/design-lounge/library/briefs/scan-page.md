@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 358 · "Scan page" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 379 · "Scan page" · designlounge.vercel.app -->
 
 # Scan page
 

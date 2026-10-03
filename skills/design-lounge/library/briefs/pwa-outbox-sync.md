@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 346 · "PWA outbox sync" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 366 · "PWA outbox sync" · designlounge.vercel.app -->
 
 # PWA outbox sync
 

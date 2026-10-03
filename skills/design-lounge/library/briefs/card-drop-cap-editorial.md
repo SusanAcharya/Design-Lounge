@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 219 · "Drop-cap editorial card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 226 · "Drop-cap editorial card" · designlounge.vercel.app -->
 
 # Drop-cap editorial card
 

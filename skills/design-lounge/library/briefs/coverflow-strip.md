@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 201 · "Coverflow strip" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 204 · "Coverflow strip" · designlounge.vercel.app -->
 
 # Coverflow strip
 

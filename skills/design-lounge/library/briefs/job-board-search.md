@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 262 · "Job board search" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 274 · "Job board search" · designlounge.vercel.app -->
 
 # Job board search
 

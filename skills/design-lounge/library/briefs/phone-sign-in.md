@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 223 · "Editorial phone sign-in" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 230 · "Editorial phone sign-in" · designlounge.vercel.app -->
 
 # Editorial phone sign-in
 

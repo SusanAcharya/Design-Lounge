@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 275 · "Lock screen delivery live update" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 290 · "Lock screen delivery live update" · designlounge.vercel.app -->
 
 # Lock screen delivery live update
 

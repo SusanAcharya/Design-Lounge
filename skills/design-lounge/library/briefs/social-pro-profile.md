@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 340 · "Professional network profile card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 360 · "Professional network profile card" · designlounge.vercel.app -->
 
 # Professional network profile card
 

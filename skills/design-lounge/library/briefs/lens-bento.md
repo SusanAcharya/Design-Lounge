@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 269 · "Lens bento" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 282 · "Lens bento" · designlounge.vercel.app -->
 
 # Lens bento
 

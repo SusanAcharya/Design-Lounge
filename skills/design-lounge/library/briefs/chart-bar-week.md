@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 434 · "Weekly bar chart" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 461 · "Weekly bar chart" · designlounge.vercel.app -->
 
 # Weekly bar chart
 

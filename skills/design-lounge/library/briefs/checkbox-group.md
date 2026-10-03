@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 184 · "Checkbox group" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 187 · "Checkbox group" · designlounge.vercel.app -->
 
 # Checkbox group
 

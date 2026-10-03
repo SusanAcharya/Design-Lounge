@@ -1,0 +1,213 @@
+<!-- Design Lounge piece: docs-install-steps · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Get started with Wrenpack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0; --ink:#1d1f1b; --ink-2:#55584f; --ink-3:#7a7d73; --rule:#e2ded3; --rule-2:#d2cdc0;
+  --accent:#0e7c66; --accent-soft:#dcefe9;
+  --code-frame:#101214; --code-bg:#181b1e; --code-ink:#e6e3da; --code-dim:#8b9086; --code-line:#2a2f33;
+  --t-key:#f28b6b; --t-str:#b4dc8f; --t-fn:#86cbe6; --t-tag:#f28b6b; --t-attr:#e7c87a;
+  --hl-bg:rgba(134,203,230,.11); --hl-bar:#86cbe6;
+  --sans:"Geist",system-ui,sans-serif; --mono:"Geist Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.7 var(--sans);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.page{max-width:1000px;margin:0 auto;padding:56px 48px 96px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin:0 0 14px}
+h1{font-size:32px;line-height:1.15;font-weight:600;letter-spacing:-.025em;margin:0 0 18px}
+.lede{font-size:16.5px;line-height:1.7;color:var(--ink-2);max-width:70ch;margin:0 0 10px}
+h2{font-size:19px;font-weight:600;letter-spacing:-.015em;margin:40px 0 14px}
+.tabs{display:flex;gap:26px;border-bottom:1px solid var(--rule);margin-bottom:22px;overflow-x:auto;scrollbar-width:none}
+.tab{position:relative;background:none;border:0;padding:10px 0 12px;font-size:14.5px;font-weight:500;color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected=true]{color:var(--ink)}
+.tab[aria-selected=true]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink)}
+.intro{color:var(--ink-2);font-size:14.5px;max-width:66ch;margin:0 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center;font:400 12px var(--mono);color:var(--ink-3);margin:0 0 28px}
+.meter{display:flex;align-items:center;gap:10px}
+.meter i{display:block;width:120px;height:4px;border-radius:2px;background:var(--rule);overflow:hidden}
+.meter i b{display:block;height:100%;width:0;background:var(--accent);transition:width 300ms var(--ease)}
+ol.steps{list-style:none;margin:0;padding:0}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(0,400px);gap:0 28px;padding-bottom:40px;position:relative}
+.step:not(:last-child)::before{content:"";position:absolute;left:15px;top:38px;bottom:4px;width:1px;background:var(--rule-2)}
+.num{width:31px;height:31px;display:grid;place-items:center;font:500 11px var(--mono);color:var(--ink);background:var(--bg);border:1px solid var(--rule-2);border-radius:6px;cursor:pointer;position:relative;padding:0;transition:background 160ms var(--ease),border-color 160ms var(--ease),color 160ms var(--ease)}
+.num::before,.num::after{content:"";position:absolute;left:-1px;width:6px;height:6px;border-left:1px solid var(--ink);}
+.num::before{top:-1px;border-top:1px solid var(--ink);border-top-left-radius:6px}
+.num::after{bottom:-1px;border-bottom:1px solid var(--ink);border-bottom-left-radius:6px}
+.num:hover{border-color:var(--ink-3)}
+.num svg{width:14px;height:14px;display:none}
+.num[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.num[aria-pressed=true]::before,.num[aria-pressed=true]::after{border-color:var(--accent)}
+.num[aria-pressed=true] span{display:none}
+.num[aria-pressed=true] svg{display:block}
+.txt h3{font-size:15px;font-weight:600;margin:3px 0 6px;letter-spacing:-.005em}
+.txt p{margin:0;color:var(--ink-2);font-size:14.5px;line-height:1.75}
+.txt code{font:500 13px var(--mono);color:var(--ink);background:#ece8de;border-radius:4px;padding:1px 5px}
+.txt a{color:var(--ink);font-weight:500;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1.5px}
+.step.done .txt h3{color:var(--ink-2)}
+.code{background:var(--code-frame);border-radius:12px;padding:0 4px 4px;align-self:start;box-shadow:0 0 0 1px #000 inset}
+.code-h{display:flex;justify-content:space-between;align-items:center;padding:7px 8px 7px 10px;font:400 12px var(--sans);color:var(--code-dim)}
+.copy{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:0 8px;border:0;border-radius:6px;background:none;color:var(--code-dim);font:400 12px var(--sans);cursor:pointer}
+.copy:hover{color:var(--code-ink);background:#1f2327}
+.copy svg{width:14px;height:14px}
+.copy[data-state] {color:var(--t-str)}
+.copy:focus-visible{outline-color:var(--hl-bar)}
+pre{margin:0;background:var(--code-bg);border-radius:9px;padding:16px 0;overflow-x:auto;font:400 13px/1.7 var(--mono);color:var(--code-ink);box-shadow:0 0 0 1px var(--code-line) inset}
+pre .ln{display:block;padding:0 18px;min-height:1.7em;white-space:pre}
+pre .ln.hl{background:var(--hl-bg);box-shadow:inset 2px 0 0 var(--hl-bar)}
+.k{color:var(--t-key)}.s{color:var(--t-str)}.f{color:var(--t-fn)}.c{color:var(--code-dim)}.a{color:var(--t-attr)}
+.panel{animation:fade 260ms var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+.note{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--rule);border-radius:12px;padding:18px 20px;background:#fbfaf6;margin-top:8px}
+.note svg{width:20px;height:20px;color:var(--ink-3);flex:none;margin-top:2px}
+.note p{margin:0;font-size:14px;color:var(--ink-2)}
+.note b{color:var(--ink)}
+.note .btn{margin-left:auto;flex:none;min-height:34px;padding:0 14px;border:0;border-radius:999px;background:#ebe7dc;font-size:13.5px;font-weight:500;cursor:pointer}
+.note .btn:hover{background:#e2ddd0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:900px){.step{grid-template-columns:44px minmax(0,1fr)}.code{grid-column:2;margin-top:14px}}
+@media (max-width:560px){.page{padding:32px 18px 64px}h1{font-size:27px}.step{grid-template-columns:38px minmax(0,1fr);gap:0 14px}.note{flex-wrap:wrap}.note .btn{margin-left:34px}.meter i{width:72px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="page">
+  <p class="eyebrow">Installation</p>
+  <h1>Get started with Wrenpack</h1>
+  <p class="lede">Wrenpack finds every image your templates reference, resizes it to the widths you actually render, and writes modern formats next to the originals at build time.</p>
+  <p class="lede">No runtime script, no image server, nothing to keep warm.</p>
+
+  <h2 id="inst">Installation</h2>
+  <div class="tabs" role="tablist" aria-labelledby="inst" id="tabs"></div>
+  <div id="panel" class="panel" role="tabpanel"></div>
+
+  <div class="note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+    <p><b>Stuck on a step?</b> Every build tool resolves plugins a little differently. The setup guides cover eleven tools with the exact config file for each.</p>
+    <button class="btn" type="button">Browse setup guides</button>
+  </div>
+</main>
+<script>
+(() => {
+  const guides = [
+    { id: 'plugin', label: 'Build plugin', intro: 'Adding Wrenpack as a build plugin is the shortest path. It hooks into the asset step your bundler already runs, so images are processed with everything else.', steps: [
+      { t: 'Create your project', p: 'Start a new site if you don\u2019t have one yet. Any starter that produces an HTML build works. See <a href="#">supported starters</a>.', file: 'Terminal', lang: 'sh', code: 'npm create site@latest harbour-shop\ncd harbour-shop' },
+      { t: 'Install Wrenpack', p: 'Install <code>wrenpack</code> and <code>@wrenpack/bundler</code> as dev dependencies.', file: 'Terminal', lang: 'sh', code: 'npm install -D wrenpack @wrenpack/bundler' },
+      { t: 'Register the plugin', p: 'Add the plugin to your build config. The two highlighted lines are all that changes.', file: 'build.config.ts', lang: 'js', code: "import { defineConfig } from './build'\n+import wrenpack from '@wrenpack/bundler'\n\nexport default defineConfig({\n  plugins: [\n+    wrenpack({ widths: [480, 960, 1600] }),\n  ],\n})" },
+      { t: 'Mark your images', p: 'Add <code>data-wren</code> to any image you want processed. Keep the <code>width</code> you render at; Wrenpack reads it.', file: 'index.html', lang: 'html', code: '<main>\n+  <img data-wren src="/boats/hero.jpg"\n+       width="1600" alt="Boats at low tide">\n</main>' },
+      { t: 'Run the build', p: 'Run <code>npm run build</code>. Processed files land in <code>dist/_wren</code> and the HTML is rewritten to point at them.', file: 'Terminal', lang: 'sh', code: 'npm run build\n# wrenpack  14 images  \u2192  42 files  (-71%)' }
+    ]},
+    { id: 'cli', label: 'Standalone CLI', intro: 'Use the CLI when you don\u2019t have a build step, or want to process a folder once and commit the output.', steps: [
+      { t: 'Install the CLI', p: 'Install it globally, or run it with <code>npx</code> each time.', file: 'Terminal', lang: 'sh', code: 'npm install -g @wrenpack/cli' },
+      { t: 'Create a config', p: 'Run <code>wren init</code> in your project. It writes a small JSON file you can edit.', file: 'wren.json', lang: 'js', code: '{\n+  "input": "./public",\n+  "output": "./public/_wren",\n  "widths": [480, 960, 1600],\n  "formats": ["avif", "webp"]\n}' },
+      { t: 'Watch the folder', p: 'Leave <code>wren watch</code> running while you work. New and changed images are processed in place.', file: 'Terminal', lang: 'sh', code: 'wren watch\n# watching ./public  (14 images)' },
+      { t: 'Use the output', p: 'Point your markup at the generated <code>srcset</code>. The CLI prints a snippet for each image.', file: 'index.html', lang: 'html', code: '<img src="/_wren/hero-960.webp"\n+     srcset="/_wren/hero-480.webp 480w,\n+             /_wren/hero-1600.webp 1600w"\n     alt="Boats at low tide">' }
+    ]},
+    { id: 'tag', label: 'Script tag', intro: 'For a quick prototype, load the browser build. It resizes on the visitor\u2019s device, so do not ship this to production.', steps: [
+      { t: 'Add the script', p: 'Place the tag before the closing <code>&lt;/body&gt;</code>. It is 9 KB gzipped.', file: 'index.html', lang: 'html', code: '<body>\n  ...\n+  \x3cscript src="/vendor/wrenpack.min.js" defer><\/script>\n<\/body>' },
+      { t: 'Mark your images', p: 'The same <code>data-wren</code> attribute works here.', file: 'index.html', lang: 'html', code: '+<img data-wren src="/boats/hero.jpg" width="1600"\n     alt="Boats at low tide">' },
+      { t: 'Check the console', p: 'Open devtools. Wrenpack logs each image it swapped and the bytes saved.', file: 'Console', lang: 'sh', code: '# wrenpack  hero.jpg  1.8 MB \u2192 212 KB' }
+    ]}
+  ];
+  const done = { plugin: new Set([0]), cli: new Set(), tag: new Set() };
+  let cur = 0;
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const span = (c, t) => `<span class="${c}">${esc(t)}</span>`;
+  function hi(line, lang) {
+    if (lang === 'sh') {
+      if (/^#/.test(line)) return span('c', line);
+      return line.split(/( +)/).map((w, i) => !w.trim() ? w : span(i === 0 ? 'k' : /^-/.test(w) ? 'c' : 'f', w)).join('');
+    }
+    const re = lang === 'html'
+      ? /("[^"]*")|(<\/?)([a-z]+)|([a-z-]+)(?==)|([\s\S])/g
+      : /('[^']*'|"[^"]*")|\b(import|from|export|default)\b|\b([a-zA-Z]+)(?=\()|([\s\S])/g;
+    return line.replace(re, (m, a, b, c, d, e) => {
+      if (a) return span('s', a);
+      if (lang === 'html') return b ? esc(b) + span('k', c) : d ? span('a', d) : esc(m);
+      return b ? span('k', b) : c ? span('f', c) : esc(m);
+    });
+  }
+  const copyIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>';
+  const tick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5 9-10"/></svg>';
+
+  const tabsEl = document.getElementById('tabs');
+  const panel = document.getElementById('panel');
+  tabsEl.innerHTML = guides.map((g, i) => `<button class="tab" role="tab" id="tab-${g.id}" aria-controls="panel" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${g.label}</button>`).join('');
+  const tabs = [...tabsEl.children];
+
+  function meter() {
+    const g = guides[cur], n = done[g.id].size;
+    panel.querySelector('.meter b').style.width = (n / g.steps.length) * 100 + '%';
+    panel.querySelector('.meter span').textContent = `${n} of ${g.steps.length} done`;
+  }
+  function render() {
+    const g = guides[cur];
+    panel.setAttribute('aria-labelledby', 'tab-' + g.id);
+    panel.innerHTML = `<p class="intro">${g.intro}</p><div class="meta"><span>${g.steps.length} steps \u00b7 about ${g.steps.length + 1} minutes</span><span class="meter"><span aria-live="polite"></span><i aria-hidden="true"><b></b></i></span></div><ol class="steps">${g.steps.map((s, i) => {
+      const lines = s.code.split('\n');
+      const raw = lines.map((l) => l.replace(/^\+/, '')).join('\n');
+      const isDone = done[g.id].has(i);
+      return `<li class="step${isDone ? ' done' : ''}">
+        <button class="num" aria-pressed="${isDone}" aria-label="Step ${i + 1}: mark ${isDone ? 'not done' : 'done'}" data-i="${i}"><span>${String(i + 1).padStart(2, '0')}</span>${tick}</button>
+        <div class="txt"><h3>${s.t}</h3><p>${s.p}</p></div>
+        <div class="code"><div class="code-h"><span>${s.file}</span><button class="copy" type="button" aria-label="Copy ${s.file} snippet for step ${i + 1}">${copyIcon}<span>Copy</span></button></div><pre data-raw="${esc(raw).replace(/"/g, '&quot;')}"><code>${lines.map((l) => `<span class="ln${l.startsWith('+') ? ' hl' : ''}">${hi(l.replace(/^\+/, ''), s.lang) || ' '}</span>`).join('')}</code></pre></div>
+      </li>`;
+    }).join('')}</ol>`;
+    panel.classList.remove('panel'); void panel.offsetWidth; panel.classList.add('panel');
+    meter();
+  }
+  function select(i, focus) {
+    cur = i;
+    tabs.forEach((t, j) => { t.setAttribute('aria-selected', j === i); t.tabIndex = j === i ? 0 : -1; });
+    if (focus) tabs[i].focus();
+    render();
+  }
+  tabs.forEach((t, i) => t.addEventListener('click', () => select(i)));
+  tabsEl.addEventListener('keydown', (e) => {
+    const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (k) { e.preventDefault(); select((cur + k + tabs.length) % tabs.length, true); }
+    if (e.key === 'Home') { e.preventDefault(); select(0, true); }
+    if (e.key === 'End') { e.preventDefault(); select(tabs.length - 1, true); }
+  });
+
+  panel.addEventListener('click', async (e) => {
+    const num = e.target.closest('.num');
+    if (num) {
+      const set = done[guides[cur].id], i = +num.dataset.i;
+      set.has(i) ? set.delete(i) : set.add(i);
+      const on = set.has(i);
+      num.setAttribute('aria-pressed', on);
+      num.setAttribute('aria-label', `Step ${i + 1}: mark ${on ? 'not done' : 'done'}`);
+      num.closest('.step').classList.toggle('done', on);
+      meter();
+      return;
+    }
+    const btn = e.target.closest('.copy');
+    if (!btn) return;
+    const pre = btn.closest('.code').querySelector('pre');
+    const txt = pre.dataset.raw.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+    let label = 'Copied';
+    try { await navigator.clipboard.writeText(txt); } catch (err) {
+      const r = document.createRange(); r.selectNodeContents(pre); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); label = 'Selected';
+    }
+    btn.dataset.state = label;
+    btn.querySelector('span').textContent = label;
+    clearTimeout(btn._t);
+    btn._t = setTimeout(() => { delete btn.dataset.state; btn.querySelector('span').textContent = 'Copy'; }, 1600);
+  });
+  render();
+})();
+</script>
+</body>
+</html>

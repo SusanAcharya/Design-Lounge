@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 354 · "Restaurant menu page" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 375 · "Restaurant menu page" · designlounge.vercel.app -->
 
 # Restaurant menu page
 

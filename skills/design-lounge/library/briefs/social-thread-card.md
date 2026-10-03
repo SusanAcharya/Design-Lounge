@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 415 · "Threaded conversation card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 439 · "Threaded conversation card" · designlounge.vercel.app -->
 
 # Threaded conversation card
 

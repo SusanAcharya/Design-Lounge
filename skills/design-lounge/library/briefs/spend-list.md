@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 382 · "Spend list" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 405 · "Spend list" · designlounge.vercel.app -->
 
 # Spend list
 

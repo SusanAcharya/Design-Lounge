@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 235 · "Focus dim" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 242 · "Focus dim" · designlounge.vercel.app -->
 
 # Focus dim
 

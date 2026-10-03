@@ -1,0 +1,184 @@
+<!-- Design Lounge piece: case-file-horizontal-scroll · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Wrexley Harbour Lantern Walk · case files</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0a1220; --night-2:#111c30; --deep:#060b14;
+  --bone:#ece6d8; --bone-2:#b9b7ae; --bone-3:#8d9099; --line:rgba(236,230,216,.18);
+  --fog:#9fb4c4; --lamp:#e8873a; --lamp-2:#f2b27a; --focus:#f2b27a;
+  --display:"Anton",Impact,"Arial Narrow",sans-serif; --mono:"DM Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1); --expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{background:var(--night);scroll-behavior:auto}
+body{color:var(--bone);font:400 15px/1.55 var(--mono);overflow-x:hidden}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.bar{position:fixed;top:0;left:0;height:3px;width:100%;background:var(--lamp);transform-origin:0 50%;transform:scaleX(0);z-index:20}
+.top{position:fixed;top:0;left:0;right:0;z-index:15;display:flex;justify-content:space-between;align-items:center;padding:22px 48px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.top .brand{font:400 20px/1 var(--display);letter-spacing:.04em}
+.top .brand em{font-style:normal;color:var(--lamp)}
+.book{display:inline-flex;align-items:center;gap:14px;background:var(--lamp);color:var(--deep);font:500 13px/1 var(--mono);letter-spacing:.02em;text-transform:none;text-decoration:none;padding:13px 16px 13px 18px;transition:background .16s var(--ease)}
+.book:hover{background:var(--lamp-2)}
+.book svg{transition:transform .2s var(--expo)}
+.book:hover svg{transform:translate(2px,-2px)}
+.wrap{position:relative;height:340vh}
+.pin{position:sticky;top:0;height:100vh;overflow:hidden}
+.meta{position:absolute;top:74px;left:48px;right:48px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-2);z-index:5}
+.meta span:last-child{color:var(--lamp-2)}
+.track{display:flex;height:100%;will-change:transform}
+.panel{position:relative;flex:0 0 78vw;height:100%;overflow:hidden;border-right:1px solid var(--line)}
+.panel:last-child{flex-basis:100vw}
+.sky{position:absolute;inset:0;background:var(--sky)}
+.scene{position:absolute;left:0;right:0;bottom:0;width:100%;height:62%;color:var(--deep)}
+.moon{position:absolute;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 38% 36%,#f3ecd9,#c9c3ae 70%);box-shadow:0 0 60px 10px rgba(243,236,217,.18);top:var(--my);left:var(--mx)}
+.fog{position:absolute;left:-30%;width:160%;height:46%;bottom:-6%;background:radial-gradient(40% 50% at 30% 60%,rgba(159,180,196,.34),transparent 70%),radial-gradient(35% 45% at 70% 50%,rgba(159,180,196,.26),transparent 70%),radial-gradient(30% 40% at 50% 80%,rgba(159,180,196,.3),transparent 70%);animation:drift 38s linear infinite alternate;pointer-events:none}
+.fog.b{bottom:12%;opacity:.6;animation-duration:54s;animation-direction:alternate-reverse}
+@keyframes drift{from{transform:translateX(-6%)}to{transform:translateX(8%)}}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,11,20,.88) 0,rgba(6,11,20,.55) 46%,rgba(6,11,20,.1) 80%)}
+.num{position:absolute;right:6%;bottom:6%;font:400 min(40vh,330px)/.8 var(--display);color:transparent;-webkit-text-stroke:1.5px rgba(236,230,216,.22);pointer-events:none}
+.copy{position:absolute;left:48px;top:50%;transform:translateY(-46%);max-width:min(560px,70vw);transition:opacity .5s var(--ease),transform .7s var(--expo)}
+.panel:not(.on) .copy{opacity:.35}
+.k{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);margin:0 0 18px}
+.k b{font-weight:500;color:var(--lamp-2)}
+h2{font:400 clamp(44px,min(11vh,13vw),104px)/.92 var(--display);text-transform:uppercase;margin:0 0 24px;letter-spacing:.005em}
+h2 .hl{color:var(--lamp)}
+.copy p{margin:0 0 22px;max-width:420px;color:var(--bone-2);font-size:14.5px}
+.tag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3)}
+.foot{position:absolute;left:48px;right:48px;bottom:30px;display:flex;justify-content:space-between;align-items:end;z-index:5}
+.tabs{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+.tabs button{all:unset;cursor:pointer;position:relative;width:150px;padding:14px 0 4px;font-size:13px;color:var(--bone-2);border-top:1px solid var(--line)}
+.tabs button span{color:var(--bone-3);margin-right:10px}
+.tabs button i{position:absolute;top:-1px;left:0;height:1px;width:100%;background:var(--lamp);transform-origin:0 50%;transform:scaleX(var(--f,0))}
+.tabs button[aria-current="true"]{color:var(--lamp-2)}
+.tabs button[aria-current="true"] span{color:var(--lamp)}
+.tabs button:hover{color:var(--bone)}
+.tabs button:focus-visible{outline:2px solid var(--focus);outline-offset:6px}
+.count{font-size:12px;letter-spacing:.2em;color:var(--bone-2);font-variant-numeric:tabular-nums}
+.count b{color:var(--bone);font-weight:500}
+.after{min-height:70vh;display:grid;place-items:center;text-align:center;padding:96px 24px;background:linear-gradient(var(--night),var(--night-2))}
+.after h3{font:400 clamp(48px,9vw,96px)/.95 var(--display);text-transform:uppercase;margin:0 0 18px}
+.after p{color:var(--bone-2);margin:0 0 28px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:760px){.top{padding:16px 18px}.top .brand{font-size:16px}.book{padding:11px 12px;font-size:12px}.meta{left:18px;right:18px;top:64px}.meta span:last-child{display:none}.panel{flex-basis:88vw}.copy{left:18px;max-width:78vw}.copy p{font-size:13.5px}.foot{left:18px;right:18px;bottom:22px}.tabs{gap:10px}.tabs button{width:auto;min-width:64px;font-size:12px;padding-top:12px}.tabs .w{display:none}.num{font-size:34vh}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar" aria-hidden="true"></div>
+<header class="top">
+  <span class="brand">Wrexley <em>Lantern</em> Walk</span>
+  <a class="book" href="#book">Book a lantern <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+</header>
+<main>
+<section class="wrap" id="wrap" aria-label="Case files">
+  <div class="pin">
+    <div class="meta" aria-hidden="true"><span>02 / The harbour files</span><span>Keep scrolling. It gets colder. &rarr;</span></div>
+    <div class="track" id="track">
+      <article class="panel on" style="--sky:linear-gradient(180deg,#0d1a2e 0,#1b2c44 55%,#2a3a52 100%)" aria-labelledby="c1">
+        <div class="sky"></div>
+        <span class="moon" style="--mx:62%;--my:14%" aria-hidden="true"></span>
+        <svg class="scene" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path fill="currentColor" d="M0 420 Q160 380 300 410 L540 400 L600 340 L640 360 L700 330 L760 380 L1000 400 V500 H0Z"/><path fill="currentColor" d="M646 340 L656 150 H690 L700 340Z"/><rect x="650" y="122" width="46" height="30" fill="currentColor"/><path fill="currentColor" d="M646 122 L673 98 L700 122Z"/><rect x="658" y="128" width="30" height="18" fill="#f2b27a"/><path d="M688 136 L1000 70 V200Z" fill="rgba(242,178,122,.12)"/></svg>
+        <div class="fog" aria-hidden="true"></div><div class="fog b" aria-hidden="true"></div>
+        <div class="shade" aria-hidden="true"></div>
+        <span class="num" aria-hidden="true">01</span>
+        <div class="copy">
+          <p class="k"><b>Case file 01</b> / The keeper</p>
+          <h2 id="c1">The light<br>stayed on<br><span class="hl">for nobody.</span></h2>
+          <p>For eleven winters after the last keeper left, someone kept the lamp on Gull Rock trimmed. The logbook has handwriting in it through 1931.</p>
+          <span class="tag">Keepers &amp; logbooks</span>
+        </div>
+      </article>
+      <article class="panel" style="--sky:linear-gradient(180deg,#081322 0,#12253a 50%,#1e3a4a 100%)" aria-labelledby="c2">
+        <div class="sky"></div>
+        <span class="moon" style="--mx:18%;--my:10%" aria-hidden="true"></span>
+        <svg class="scene" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path fill="currentColor" d="M0 430 Q250 410 500 425 T1000 420 V500 H0Z"/><path fill="currentColor" d="M420 430 L470 380 L760 372 L800 420Z"/><path d="M560 380 L540 150 M600 376 L640 190 M540 200 L640 230" stroke="currentColor" stroke-width="8" fill="none"/><path d="M548 170 L600 300 L560 300Z" fill="currentColor" opacity=".7"/></svg>
+        <div class="fog" aria-hidden="true"></div><div class="fog b" aria-hidden="true"></div>
+        <div class="shade" aria-hidden="true"></div>
+        <span class="num" aria-hidden="true">02</span>
+        <div class="copy">
+          <p class="k"><b>Case file 02</b> / Below the line</p>
+          <h2 id="c2">The tide<br>gives things<br><span class="hl">back.</span></h2>
+          <p>The schooner Marrow Bell went down in 1887 with a cargo of church bells. On still nights at low water, fishermen swear they hear one.</p>
+          <span class="tag">Wrecks &amp; salvage</span>
+        </div>
+      </article>
+      <article class="panel" style="--sky:linear-gradient(180deg,#05101d 0,#0f2033 60%,#1a2e45 100%)" aria-labelledby="c3">
+        <div class="sky"></div>
+        <svg class="scene" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path fill="currentColor" d="M0 360 L120 330 L220 350 L330 300 L420 320 L520 280 L640 310 L760 290 L1000 330 V500 H0Z"/><rect x="560" y="246" width="18" height="40" fill="currentColor"/><path fill="currentColor" d="M556 248 L569 222 L582 248Z"/><g fill="#f2b27a"><circle cx="700" cy="150" r="5"/><circle cx="752" cy="126" r="4"/><circle cx="810" cy="138" r="5"/></g><g fill="rgba(242,178,122,.3)" style="filter:blur(6px)"><circle cx="700" cy="150" r="18"/><circle cx="752" cy="126" r="15"/><circle cx="810" cy="138" r="18"/></g></svg>
+        <div class="fog" aria-hidden="true"></div><div class="fog b" aria-hidden="true"></div>
+        <div class="shade" aria-hidden="true"></div>
+        <span class="num" aria-hidden="true">03</span>
+        <div class="copy">
+          <p class="k"><b>Case file 03</b> / Over the headland</p>
+          <h2 id="c3">Three lights.<br>No boat.<br><span class="hl">No answer.</span></h2>
+          <p>Since 1962 the coastguard has logged the same three lights over Crane Head forty-one times. The walk ends where you can see the spot.</p>
+          <span class="tag">Lights &amp; sightings</span>
+        </div>
+      </article>
+    </div>
+    <div class="foot">
+      <ol class="tabs" aria-label="Case files">
+        <li><button type="button" data-i="0" aria-current="true"><i></i><span>01</span><b class="w" style="font-weight:400">Keepers</b></button></li>
+        <li><button type="button" data-i="1" aria-current="false"><i></i><span>02</span><b class="w" style="font-weight:400">Wrecks</b></button></li>
+        <li><button type="button" data-i="2" aria-current="false"><i></i><span>03</span><b class="w" style="font-weight:400">Lights</b></button></li>
+      </ol>
+      <span class="count" aria-hidden="true"><b id="ci">01</b> / 03</span>
+    </div>
+  </div>
+</section>
+<section class="after" id="book" aria-labelledby="bk">
+  <div>
+    <h3 id="bk">Pick a<br>foggy night.</h3>
+    <p>75 minutes. One lantern each. Meet at the Anchor Steps, 8:30 pm.</p>
+    <a class="book" href="#top">See dates <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+  </div>
+</section>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+<script>
+const wrap=document.getElementById("wrap"),track=document.getElementById("track"),bar=document.getElementById("bar"),ci=document.getElementById("ci"),live=document.getElementById("live");
+const panels=[...track.children],tabs=[...document.querySelectorAll(".tabs button")],n=panels.length;
+const rm=matchMedia("(prefers-reduced-motion: reduce)");
+let active=0,ticking=false;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function range(){return wrap.offsetHeight-innerHeight}
+function update(){
+  ticking=false;
+  const p=clamp((scrollY-wrap.offsetTop)/range(),0,1);
+  const max=track.scrollWidth-innerWidth;
+  track.style.transform=`translate3d(${(-p*max).toFixed(1)}px,0,0)`;
+  bar.style.transform=`scaleX(${(scrollY/(document.documentElement.scrollHeight-innerHeight)).toFixed(4)})`;
+  const f=p*(n-1);
+  tabs.forEach((t,i)=>t.style.setProperty("--f",clamp(f-i+1,0,1).toFixed(3)));
+  const a=Math.round(f);
+  if(a!==active){active=a;
+    panels.forEach((el,i)=>el.classList.toggle("on",i===a));
+    tabs.forEach((t,i)=>t.setAttribute("aria-current",String(i===a)));
+    ci.textContent=String(a+1).padStart(2,"0");
+    live.textContent="Case file "+(a+1)+" of "+n;
+  }
+}
+function go(i){
+  i=clamp(i,0,n-1);
+  scrollTo({top:wrap.offsetTop+range()*i/(n-1),behavior:rm.matches?"auto":"smooth"});
+}
+addEventListener("scroll",()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
+addEventListener("resize",update);
+tabs.forEach(t=>t.addEventListener("click",()=>go(+t.dataset.i)));
+document.addEventListener("keydown",e=>{
+  if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;
+  const r=wrap.getBoundingClientRect();if(r.top>1||r.bottom<innerHeight-1)return;
+  e.preventDefault();go(active+(e.key==="ArrowRight"?1:-1));
+});
+update();
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 407 · "Terminal crypto trading screen" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 430 · "Terminal crypto trading screen" · designlounge.vercel.app -->
 
 # Terminal crypto trading screen
 

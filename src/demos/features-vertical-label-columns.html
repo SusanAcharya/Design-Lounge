@@ -1,0 +1,212 @@
+<!-- Design Lounge piece: features-vertical-label-columns · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Quillon · Four disciplines, one desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page: #e4e9e2;
+    --open: #d4ddd2;
+    --line: #bfcabd;
+    --ink: #13201a;
+    --ink-2: #44524a;
+    --ink-3: #57645c;
+    --accent: #d8432a;
+    --sans: "Bricolage Grotesque", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --t-grow: 640ms;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: var(--page); color: var(--ink); font: 400 16px/1.5 var(--sans); overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  header { display: flex; align-items: center; justify-content: space-between; height: 76px; padding: 0 64px; }
+  .word { font: 700 22px/1 var(--sans); letter-spacing: .26em; text-transform: uppercase; font-variation-settings: "opsz" 24; }
+  .word sup { font-size: 10px; letter-spacing: 0; vertical-align: 10px; margin-left: 2px; font-weight: 500; }
+  .right { display: flex; align-items: center; gap: 28px; font: 500 15px/1 var(--sans); }
+  .right .lang { font: 500 11px/1 var(--mono); letter-spacing: .1em; }
+  .menu { display: inline-flex; align-items: center; gap: 12px; min-height: 40px; background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+  .menu i { display: grid; gap: 5px; width: 28px; }
+  .menu i::before, .menu i::after { content: ""; height: 1.5px; background: currentColor; }
+  .menu i::after { width: 70%; justify-self: end; }
+
+  .intro { padding: 30px 64px 0; }
+  .eyebrow { font: 500 11px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); }
+  h1 { margin: 16px 0 0; font: 700 50px/1.04 var(--sans); letter-spacing: -.035em; font-variation-settings: "opsz" 96; }
+
+  .cols { display: flex; margin: 40px 64px 0; height: 476px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .col { position: relative; flex: 1 1 0; min-width: 0; border-left: 1px solid var(--line); transition: flex-grow var(--t-grow) var(--expo), background-color .3s var(--ease); }
+  .col:first-child { border-left: 0; }
+  .col.open { flex-grow: 2.6; background: var(--open); }
+
+  .tab { position: absolute; inset: 0; width: 100%; border: 0; padding: 0 0 30px; background: none; color: inherit; font: inherit; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 26px; text-align: left; }
+  .tab:focus-visible { outline-offset: -6px; border-radius: 10px; }
+  .vlabel { writing-mode: vertical-rl; transform: rotate(180deg); font: 700 40px/1 var(--sans); letter-spacing: -.03em; font-variation-settings: "opsz" 72; white-space: nowrap; transition: opacity .25s var(--ease), transform .4s var(--expo); }
+  .num { font: 400 13px/1 var(--mono); color: var(--ink-3); writing-mode: vertical-rl; transform: rotate(180deg); transition: opacity .25s var(--ease); }
+  .col:not(.open) .tab:hover .vlabel { transform: rotate(180deg) translateY(6px); }
+  .col.open .tab { pointer-events: none; }
+  .col.open .vlabel, .col.open .num { opacity: 0; }
+
+  .panel { position: absolute; inset: 0; padding: 28px 34px 30px; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transition: opacity .2s var(--ease), visibility 0s .2s; min-width: 400px; }
+  .col.open .panel { opacity: 1; visibility: visible; transition: opacity .38s var(--ease) .2s, visibility 0s .2s; }
+  .panel h2 { display: flex; align-items: baseline; gap: 14px; margin: 0; font: 700 38px/1 var(--sans); letter-spacing: -.03em; font-variation-settings: "opsz" 72; transform: translateY(10px); transition: transform .5s var(--expo) .2s; }
+  .col.open .panel h2 { transform: none; }
+  .panel h2 small { font: 400 12px/1 var(--mono); letter-spacing: .04em; color: var(--ink-3); }
+  .panel ul { list-style: none; margin: 30px 0 0; padding: 0; border-bottom: 1px solid var(--line); }
+  .panel li a { display: flex; align-items: center; justify-content: space-between; height: 54px; border-top: 1px solid var(--line); font: 600 18px/1 var(--sans); letter-spacing: -.01em; }
+  .panel li a span { transition: transform .25s var(--expo); }
+  .panel li a svg { width: 18px; height: 18px; color: var(--ink-3); transition: transform .25s var(--expo), color .16s var(--ease); }
+  .panel li a:hover span, .panel li a:focus-visible span { transform: translateX(6px); }
+  .panel li a:hover svg, .panel li a:focus-visible svg { color: var(--accent); transform: translate(2px, -2px); }
+  .panel li a:focus-visible { outline-offset: -2px; }
+  .desc { margin: 22px 0 0; max-width: 40ch; font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
+  .foot { margin-top: auto; display: flex; justify-content: space-between; gap: 16px; font: 400 12px/1.5 var(--mono); color: var(--ink-2); }
+  .foot b { font-weight: 500; color: var(--ink); }
+
+  @media (max-width: 1100px) {
+    header, .intro { padding-left: 32px; padding-right: 32px; }
+    .cols { margin-left: 32px; margin-right: 32px; }
+    .vlabel { font-size: 32px; }
+  }
+  @media (max-width: 760px) {
+    header, .intro { padding-left: 20px; padding-right: 20px; }
+    .right .lang { display: none; }
+    h1 { font-size: 34px; }
+    .cols { flex-direction: column; height: auto; margin: 28px 20px 32px; }
+    .col { flex: none; border-left: 0; border-top: 1px solid var(--line); }
+    .col:first-child { border-top: 0; }
+    .tab { position: relative; inset: auto; height: 64px; padding: 0 20px; flex-direction: row-reverse; justify-content: flex-end; gap: 14px; }
+    .vlabel, .num { writing-mode: horizontal-tb; transform: none; }
+    .vlabel { font-size: 24px; }
+    .col:not(.open) .tab:hover .vlabel { transform: none; }
+    .col.open .tab { display: none; }
+    .panel { position: relative; min-width: 0; padding: 20px; display: none; }
+    .col.open .panel { display: flex; }
+    .panel h2 { font-size: 26px; }
+    .panel li a { font-size: 16px; height: 48px; }
+    .desc { font-size: 14px; }
+    .foot { margin-top: 20px; flex-direction: column; gap: 4px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .col, .vlabel, .num, .panel, .panel h2, .panel li a span, .panel li a svg { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <a class="word" href="#" aria-label="Quillon, home">Quillon</a>
+  <div class="right">
+    <span class="lang" aria-label="Language: English">EN</span>
+    <button class="menu" type="button" aria-label="Open menu">Menu <i aria-hidden="true"></i></button>
+  </div>
+</header>
+
+<main>
+  <section class="intro" aria-labelledby="t">
+    <div class="eyebrow">Services</div>
+    <h1 id="t">Four disciplines.<br>One desk.</h1>
+  </section>
+
+  <div class="cols" id="cols">
+    <article class="col">
+      <button class="tab" type="button" aria-expanded="false" aria-controls="p1"><span class="vlabel">Strategy</span><span class="num">01</span></button>
+      <div class="panel" id="p1" role="region" aria-label="Strategy" inert>
+        <h2><small>01</small>Strategy</h2>
+        <ul>
+          <li><a href="#"><span>Positioning workshops</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Naming &amp; brand architecture</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Content strategy</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Search &amp; answer-engine visibility</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+        </ul>
+        <p class="desc">We find the one sentence your company can own, then write it down so every team uses it.</p>
+        <p class="foot"><span><b>2–4 weeks</b> · ends in a written brief</span><span>3 people on this desk</span></p>
+      </div>
+    </article>
+    <article class="col open">
+      <button class="tab" type="button" aria-expanded="true" aria-controls="p2"><span class="vlabel">Identity</span><span class="num">02</span></button>
+      <div class="panel" id="p2" role="region" aria-label="Identity">
+        <h2><small>02</small>Identity</h2>
+        <ul>
+          <li><a href="#"><span>Brand identity</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Type &amp; colour systems</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Campaign concepts</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Interface design</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+        </ul>
+        <p class="desc">A mark, a voice and a set of rules that still hold on the hundredth page, not just the first.</p>
+        <p class="foot"><span><b>6–10 weeks</b> · ends in a brand book</span><span>5 people on this desk</span></p>
+      </div>
+    </article>
+    <article class="col">
+      <button class="tab" type="button" aria-expanded="false" aria-controls="p3"><span class="vlabel">Build</span><span class="num">03</span></button>
+      <div class="panel" id="p3" role="region" aria-label="Build" inert>
+        <h2><small>03</small>Build</h2>
+        <ul>
+          <li><a href="#"><span>Websites on a headless CMS</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Shops &amp; product catalogues</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Portals &amp; web apps</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Accessibility audits</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+        </ul>
+        <p class="desc">Fast, accessible sites your editors can run without calling us. We stay on for the first year.</p>
+        <p class="foot"><span><b>8–16 weeks</b> · ends in a live site</span><span>7 people on this desk</span></p>
+      </div>
+    </article>
+    <article class="col">
+      <button class="tab" type="button" aria-expanded="false" aria-controls="p4"><span class="vlabel">Intelligence</span><span class="num">04</span></button>
+      <div class="panel" id="p4" role="region" aria-label="Intelligence" inert>
+        <h2><small>04</small>Intelligence</h2>
+        <ul>
+          <li><a href="#"><span>Assistants trained on your docs</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Workflow automation</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Site search that understands</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+          <li><a href="#"><span>Measurement &amp; dashboards</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></a></li>
+        </ul>
+        <p class="desc">Small, useful tools on top of what you already have. Measured before and after, in plain numbers.</p>
+        <p class="foot"><span><b>4–8 weeks</b> · ends in a running pilot</span><span>2 people on this desk</span></p>
+      </div>
+    </article>
+  </div>
+</main>
+
+<script>
+(() => {
+  const cols = [...document.querySelectorAll('.col')];
+  const fine = matchMedia('(hover: hover) and (pointer: fine)');
+  let hoverT = 0;
+
+  function open(col, focusPanel) {
+    cols.forEach(c => {
+      const on = c === col;
+      c.classList.toggle('open', on);
+      c.querySelector('.tab').setAttribute('aria-expanded', String(on));
+      c.querySelector('.panel').inert = !on;
+    });
+    if (focusPanel) col.querySelector('.panel a').focus({ preventScroll: true });
+  }
+
+  cols.forEach((c, i) => {
+    const tab = c.querySelector('.tab');
+    tab.addEventListener('click', () => open(c, false));
+    tab.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(c, true); }
+    });
+    c.addEventListener('mouseenter', () => {
+      if (!fine.matches || c.classList.contains('open')) return;
+      clearTimeout(hoverT);
+      hoverT = setTimeout(() => open(c, false), 90);
+    });
+    c.addEventListener('mouseleave', () => clearTimeout(hoverT));
+  });
+})();
+</script>
+</body>
+</html>

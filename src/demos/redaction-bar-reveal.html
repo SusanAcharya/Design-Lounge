@@ -1,0 +1,233 @@
+<!-- Design Lounge piece: redaction-bar-reveal · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Redaction bar reveal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#dcdfd6;--paper-2:#e8eae3;--ink:#111111;--ink-2:#3d403a;--line:#b9bdb2;
+  --bar:#0d0d0d;--bar-hover:#2b2b2b;--stamp:#d7261e;--focus:#d7261e;
+  --cond:"Antonio","Arial Narrow",sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+  --lift:520ms;--stagger:90ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+
+.strip{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px;padding:0 56px;border-bottom:1px solid var(--line);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.strip .file b{font-weight:600;color:var(--stamp)}
+.controls{display:flex;align-items:center;gap:8px}
+.controls output{margin-right:12px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.btn{height:40px;padding:0 16px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background-color .16s var(--ease),color .16s var(--ease)}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{background:var(--stamp);border-color:var(--stamp)}
+.btn:disabled{opacity:.4;cursor:default;background:transparent;color:var(--ink)}
+
+.doc{flex:1;display:grid;grid-template-columns:340px 1fr;grid-template-rows:1fr auto;gap:0 72px;padding:56px 56px 40px;min-height:0}
+.side{grid-row:1 / 3}
+.sources{grid-column:2;display:flex;flex-wrap:wrap;gap:8px 28px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;letter-spacing:.04em;color:var(--ink-2)}
+.sources span::before{content:"";display:inline-block;width:6px;height:6px;margin-right:8px;background:var(--ink);vertical-align:1px}
+.side{position:relative;display:flex;flex-direction:column}
+.side h2{margin:0;font-family:var(--cond);font-size:68px;line-height:.95;font-weight:700;letter-spacing:-0.01em;text-transform:uppercase}
+.meta{margin:32px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.meta li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+.meta span{color:var(--ink-2)}
+.hint{margin-top:auto;font-size:12px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.stamp{position:absolute;left:4px;bottom:64px;padding:8px 14px;border:4px double var(--stamp);color:var(--stamp);font:700 28px var(--cond);letter-spacing:.08em;text-transform:uppercase;transform:rotate(-8deg) scale(1.6);opacity:0;pointer-events:none;transition:transform .32s var(--expo),opacity .2s var(--ease);mix-blend-mode:multiply}
+.stamp.on{transform:rotate(-8deg) scale(1);opacity:.9}
+
+.text{position:relative;max-width:760px}
+.text p{margin:0 0 26px;font-family:var(--cond);font-size:34px;line-height:1.2;font-weight:500;letter-spacing:-0.005em}
+.text p:last-child{margin:0}
+.withheld{outline-offset:4px}
+.bars{position:absolute;inset:0;pointer-events:none}
+.bar{position:absolute;background:var(--bar);transform-origin:100% 50%;pointer-events:auto;cursor:pointer;transition:transform var(--lift) var(--expo),background-color .16s var(--ease)}
+.bar:hover{background:var(--bar-hover)}
+.bar.lifted{transform:scaleX(0);pointer-events:none}
+.bar.cover{transform-origin:0 50%}
+.perm{position:absolute;background:var(--bar);pointer-events:auto;cursor:help;z-index:2}
+.perm::after{content:"Withheld pending legal review";position:absolute;left:0;bottom:calc(100% + 10px);transform:translate(0,4px);white-space:nowrap;padding:6px 10px;background:var(--stamp);color:#fff;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;opacity:0;transition:opacity .16s var(--ease),transform .16s var(--ease);pointer-events:none}
+.perm:hover::after,.perm.show::after{opacity:1;transform:translate(0,0)}
+.perm.cont::after{display:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:1000px){.doc{grid-template-columns:1fr;grid-template-rows:none;gap:28px;padding:32px 24px}.side,.sources{grid-row:auto;grid-column:auto}.side h2{font-size:48px}.meta{margin-top:20px}.hint{margin-top:16px}.stamp{left:auto;right:28px;bottom:auto;top:0;transform:rotate(-8deg) scale(1.15)}}
+@media (max-width:640px){
+  .strip{height:auto;flex-wrap:wrap;padding:12px 20px}
+  .controls{flex-wrap:wrap}
+  .controls output{width:100%;margin:0 0 4px}
+  .btn{padding:0 10px}
+  .doc{padding:24px 20px}
+  .side h2{font-size:40px}
+  .text p{font-size:24px}
+  .stamp{font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .bar{transition:opacity .01s}
+  .bar.lifted{transform:none;opacity:0}
+  .stamp{transition:none}
+  .btn,.perm::after{transition:none}
+}
+</style>
+</head>
+<body>
+<header class="strip">
+  <span class="file">Blackline Desk · File <b>07</b> / 2026</span>
+  <div class="controls">
+    <output id="count" aria-live="polite">0 / 0 lines declassified</output>
+    <button class="btn solid" type="button" id="next">Declassify next line</button>
+    <button class="btn" type="button" id="all">Declassify all</button>
+    <button class="btn" type="button" id="cover">Redact all</button>
+  </div>
+</header>
+
+<main class="doc">
+  <aside class="side">
+    <h2 id="doc-h">What the filings show</h2>
+    <ul class="meta">
+      <li><span>Source</span>Public lobbying registers</li>
+      <li><span>Period</span>2019 – 2026</li>
+      <li><span>Pages reviewed</span>3,412</li>
+      <li><span>Status</span>Partly withheld</li>
+    </ul>
+    <div class="stamp" id="stamp" aria-hidden="true">Declassified</div>
+    <p class="hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11V5a2 2 0 0 1 4 0v5M13 10V8a2 2 0 0 1 4 0v4M17 11a2 2 0 0 1 4 0v3a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3l-3-5a2 2 0 0 1 3-2l2 2"/></svg>Click any bar to lift it</p>
+  </aside>
+
+  <article class="text" id="text" aria-labelledby="doc-h">
+    <p>Eleven packaging firms spent a combined 14.6 million on lobbying against bottle-deposit laws in four states, while their own reports promised to collect more than they sold.</p>
+    <p>None of this appears in their sustainability pages. We found it in registration forms, committee testimony and the expense lines of two industry associations, all from public records.</p>
+    <p>One association paid a former regulator, <span class="withheld" id="wh" tabindex="0" aria-describedby="wh-note">a name we are not yet allowed to print</span>, to write the model bill that three of those states later adopted almost word for word.</p>
+    <div class="bars" id="bars"></div>
+    <span class="sr" id="wh-note">Withheld pending legal review.</span>
+  </article>
+  <footer class="sources">
+    <span>41 registration filings</span><span>6 committee hearings</span><span>2 association ledgers</span><span>Last checked 28 Sep 2026</span>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const text = document.getElementById('text');
+  const barsEl = document.getElementById('bars');
+  const wh = document.getElementById('wh');
+  const count = document.getElementById('count');
+  const stamp = document.getElementById('stamp');
+  const btnNext = document.getElementById('next'), btnAll = document.getElementById('all'), btnCover = document.getElementById('cover');
+  const stagger = 90;
+  let bars = [], lifted = [], timers = [], perm = null;
+
+  text.querySelectorAll('p').forEach(p => {
+    [...p.childNodes].forEach(n => {
+      if (n.nodeType !== 3) return;
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach(tok => {
+        if (!tok) return;
+        if (/^\s+$/.test(tok)) frag.appendChild(document.createTextNode(tok));
+        else { const s = document.createElement('span'); s.className = 'w'; s.textContent = tok; frag.appendChild(s); }
+      });
+      p.replaceChild(frag, n);
+    });
+  });
+
+  const lineBox = () => parseFloat(getComputedStyle(text.querySelector('p')).lineHeight);
+
+  function measure() {
+    const box = text.getBoundingClientRect();
+    const lines = [];
+    text.querySelectorAll('.w, .withheld').forEach(el => {
+      for (const r of el.getClientRects()) {
+        const top = Math.round(r.top - box.top);
+        let line = lines.find(l => Math.abs(l.top - top) < 8);
+        if (!line) { line = { top, h: r.height, l: Infinity, r: -Infinity }; lines.push(line); }
+        line.l = Math.min(line.l, r.left - box.left);
+        line.r = Math.max(line.r, r.right - box.left);
+      }
+    });
+    lines.sort((a, b) => a.top - b.top);
+    return lines;
+  }
+
+  function build() {
+    const prev = lifted.slice();
+    const lines = measure();
+    barsEl.innerHTML = '';
+    bars = lines.map((ln, i) => {
+      const b = document.createElement('div');
+      b.className = 'bar';
+      const lh = lineBox(), y = ln.top + (ln.h - lh) / 2 + lh * 0.11;
+      b.style.cssText = `left:${ln.l - 4}px;top:${y}px;width:${ln.r - ln.l + 8 + (i * 37 % 13)}px;height:${lh * 0.95}px`;
+      b.addEventListener('click', () => { setLine(i, true); announce(); });
+      barsEl.appendChild(b);
+      return b;
+    });
+    lifted = bars.map((_, i) => prev[i] || false);
+    bars.forEach((b, i) => b.classList.toggle('lifted', lifted[i]));
+    const box = text.getBoundingClientRect();
+    perm = [...wh.getClientRects()].map((r, k) => {
+      const d = document.createElement('div');
+      d.className = 'perm';
+      d.setAttribute('aria-hidden', 'true');
+      const lh = lineBox();
+      d.style.cssText = `left:${r.left - box.left - 3}px;top:${r.top - box.top + (r.height - lh) / 2 + lh * 0.11}px;width:${r.width + 6}px;height:${lh * 0.95}px`;
+      if (k) d.classList.add('cont');
+      barsEl.appendChild(d);
+      return d;
+    });
+    update();
+  }
+
+  function setLine(i, on) {
+    lifted[i] = on;
+    const b = bars[i];
+    b.classList.toggle('cover', !on);
+    b.classList.toggle('lifted', on);
+    update();
+  }
+
+  function update() {
+    const n = lifted.filter(Boolean).length;
+    count.dataset.text = `${n} / ${bars.length} lines declassified`;
+    if (!count.textContent || count.textContent.startsWith('0 / 0')) count.textContent = count.dataset.text;
+    const all = n === bars.length;
+    stamp.classList.toggle('on', all);
+    btnNext.disabled = all; btnAll.disabled = all; btnCover.disabled = n === 0;
+  }
+  const announce = () => { count.textContent = count.dataset.text; };
+
+  function clear() { timers.forEach(clearTimeout); timers = []; }
+  function run(indices, on, done) {
+    clear();
+    indices.forEach((i, k) => timers.push(setTimeout(() => setLine(i, on), reduce ? 0 : k * stagger)));
+    timers.push(setTimeout(() => { announce(); done && done(); }, reduce ? 0 : indices.length * stagger + 520));
+  }
+
+  btnNext.addEventListener('click', () => { const i = lifted.indexOf(false); if (i > -1) { setLine(i, true); announce(); } });
+  btnAll.addEventListener('click', () => run(bars.map((_, i) => i).filter(i => !lifted[i]), true));
+  btnCover.addEventListener('click', () => run(bars.map((_, i) => i).filter(i => lifted[i]).reverse(), false));
+  wh.addEventListener('focus', () => perm && perm[0].classList.add('show'));
+  wh.addEventListener('blur', () => perm && perm[0].classList.remove('show'));
+
+  let rz;
+  new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(build, 60); }).observe(text);
+  const start = () => {
+    build();
+    const firstTwo = [...text.querySelectorAll('p')].slice(0, 2);
+    const cut = firstTwo[1].getBoundingClientRect().bottom - text.getBoundingClientRect().top;
+    const idx = bars.map((b, i) => i).filter(i => parseFloat(bars[i].style.top) < cut);
+    if (reduce) idx.forEach(i => setLine(i, true)), announce();
+    else timers.push(setTimeout(() => run(idx, true), 450));
+  };
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(start);
+})();
+</script>
+</body>
+</html>

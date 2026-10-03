@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 172 · "Boarding pass with fold-out details" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 173 · "Boarding pass with fold-out details" · designlounge.vercel.app -->
 
 # Boarding pass with fold-out details
 

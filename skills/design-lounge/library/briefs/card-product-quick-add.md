@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 337 · "Product cards with quick add" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 357 · "Product cards with quick add" · designlounge.vercel.app -->
 
 # Product cards with quick add
 

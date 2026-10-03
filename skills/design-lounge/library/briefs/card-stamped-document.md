@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 390 · "Stamped document" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 413 · "Stamped document" · designlounge.vercel.app -->
 
 # Stamped document
 

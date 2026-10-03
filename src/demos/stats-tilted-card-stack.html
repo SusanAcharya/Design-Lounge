@@ -1,0 +1,231 @@
+<!-- Design Lounge piece: stats-tilted-card-stack · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tilted stat card stack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e8eef2;--surface:#ffffff;--ink:#13202b;--ink-2:#465462;--line:#cfd9e0;
+  --ochre:#e3a21a;--teal:#1f7a6d;--brick:#c2452d;--focus:#13202b;
+  --sans:"Schibsted Grotesk",system-ui,sans-serif;
+  --r-card:32px;--r-pill:14px;
+  --peek:44px;--card-h:480px;--stage-w:420px;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:8px}
+
+.top{position:fixed;inset:16px 24px auto;z-index:20;display:flex;gap:12px;pointer-events:none}
+.top>*{pointer-events:auto}
+.bar{flex:1;display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 10px 0 20px;background:var(--surface);border-radius:var(--r-pill)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:19px;letter-spacing:-0.02em;text-decoration:none}
+.brand svg{color:var(--teal)}
+.links{display:flex;gap:28px;font-size:15px;font-weight:500;color:var(--ink-2)}
+.links a{text-decoration:none}
+.links a:hover{color:var(--ink)}
+.quote{display:flex;align-items:center;gap:12px;height:56px;padding:0 8px 0 20px;background:var(--surface);border-radius:var(--r-pill);font-weight:600;font-size:15px;text-decoration:none}
+.quote i{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--ochre);transition:transform .18s var(--ease)}
+.quote:hover i{transform:translateX(3px)}
+
+.stats{position:relative;height:calc(100vh + 3 * 80vh)}
+.pin{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;grid-template-columns:1fr var(--stage-w);gap:64px;padding:120px 96px 48px}
+.copy{display:flex;flex-direction:column;min-height:0}
+.eyebrow{margin:0 0 20px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+h2{margin:0;font-size:76px;line-height:.98;font-weight:500;letter-spacing:-0.05em;max-width:9.5em}
+.wavy{position:relative;display:inline-block}
+.wavy svg{position:absolute;left:-2px;right:-2px;bottom:-14px;width:calc(100% + 4px);height:16px;overflow:visible}
+.wavy path{fill:none;stroke:var(--ochre);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw .8s var(--expo) .3s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.lede{margin:40px 0 0;max-width:300px;font-size:16px;color:var(--ink-2)}
+.steps{margin-top:auto;display:flex;align-items:center;gap:20px}
+.count{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.02em;min-width:58px}
+.dots{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.dots button{width:40px;height:40px;border:0;background:none;padding:0;cursor:pointer;display:grid;place-items:center}
+.dots button::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);transition:width .24s var(--ease),background-color .24s var(--ease),border-radius .24s var(--ease)}
+.dots button[aria-current="true"]::before{width:28px;border-radius:6px;background:var(--ink)}
+.next{display:flex;align-items:center;gap:10px;height:44px;padding:0 18px;border:1px solid var(--ink);border-radius:var(--r-pill);background:none;font:600 14px var(--sans);color:var(--ink);cursor:pointer;transition:background-color .16s var(--ease),color .16s var(--ease)}
+.next:hover{background:var(--ink);color:var(--surface)}
+
+.stage{position:relative;width:var(--stage-w);height:calc(var(--card-h) + 3 * var(--peek))}
+.card{position:absolute;left:0;right:0;height:var(--card-h);border-radius:var(--r-card);padding:24px 28px 28px;display:flex;flex-direction:column;transform-origin:50% 100%;will-change:transform}
+.card header{display:flex;align-items:center;justify-content:space-between;height:44px;margin:-6px 0 0}
+.card .label{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.card .ico{display:grid;place-items:center;width:48px;height:48px;border-radius:50%}
+.num{margin:28px 0 0;font-size:112px;line-height:1;font-weight:500;letter-spacing:-0.055em;font-variant-numeric:lining-nums;transition:opacity .24s var(--ease)}
+.num small{font-size:44px;letter-spacing:-0.03em;margin-left:6px}
+.card p{margin:auto 0 0;font-size:17px;line-height:1.4;max-width:300px;transition:opacity .24s var(--ease)}
+.card.under .num,.card.under p{opacity:.35}
+.c0{background:var(--surface);color:var(--teal);top:0}
+.c0 .ico{background:var(--teal);color:#fff}
+.c1{background:var(--ochre);color:var(--ink);top:var(--peek)}
+.c1 .ico{background:var(--surface);color:var(--ink)}
+.c2{background:var(--teal);color:#fff;top:calc(2 * var(--peek))}
+.c2 .ico{background:var(--surface);color:var(--teal)}
+.c3{background:var(--brick);color:#fff;top:calc(3 * var(--peek))}
+.c3 .ico{background:var(--surface);color:var(--brick)}
+
+.after{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px 24px;background:var(--ochre)}
+.after h3{margin:0;font-size:88px;line-height:.95;font-weight:500;letter-spacing:-0.05em}
+.after p{margin:24px 0 32px;max-width:420px;font-size:18px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:1100px){.pin{padding:112px 48px 40px;gap:40px}h2{font-size:60px}.links{display:none}}
+@media (max-width:900px){
+  :root{--card-h:340px;--peek:34px}
+  .pin{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;padding:96px 20px 24px;gap:20px}
+  .stage{width:100%;max-width:340px;justify-self:center}
+  h2{font-size:38px}
+  .lede{display:none}
+  .steps{margin-top:16px;gap:8px}
+  .count{min-width:0}
+  .dots{gap:0}
+  .dots button{width:32px}
+  .num{font-size:76px;margin-top:16px}
+  .num small{font-size:30px}
+  .card p{font-size:15px}
+  .after h3{font-size:48px}
+  .top{inset:12px 12px auto}
+  .quote span{display:none}
+  .quote{padding:0 8px}
+}
+@media (prefers-reduced-motion:reduce){
+  .wavy path{animation:none;stroke-dashoffset:0}
+  .dots button::before,.num,.card p,.quote i,.next{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <nav class="bar" aria-label="Main">
+    <a class="brand" href="#stats"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 15c2-6 4-6 6 0s4 6 6 0 4-6 6 0"/></svg>Fieldwise</a>
+    <div class="links"><a href="#stats">Recruiting</a><a href="#stats">Moderation</a><a href="#stats">Markets</a><a href="#stats">Pricing</a></div>
+  </nav>
+  <a class="quote" href="#book"><span>Book a call</span><i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></i></a>
+</div>
+
+<main>
+<section class="stats" id="stats" aria-labelledby="stats-h">
+  <div class="pin">
+    <div class="copy">
+      <p class="eyebrow">By the numbers</p>
+      <h2 id="stats-h">The numbers behind every <span class="wavy">interview<svg viewBox="0 0 100 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 8 Q 6.25 0 12.5 8 T 25 8 T 37.5 8 T 50 8 T 62.5 8 T 75 8 T 87.5 8 T 100 8"/></svg></span> we run</h2>
+      <p class="lede">Four figures from our last twelve months of recruiting and moderating real people, in their own language, on their own schedule.</p>
+      <div class="steps">
+        <span class="count" aria-hidden="true"><b id="cur">01</b> / 04</span>
+        <ol class="dots" aria-label="Stats">
+          <li><button type="button" aria-label="Stat 1: languages" aria-current="true"></button></li>
+          <li><button type="button" aria-label="Stat 2: interviews"></button></li>
+          <li><button type="button" aria-label="Stat 3: days to first session"></button></li>
+          <li><button type="button" aria-label="Stat 4: returning clients"></button></li>
+        </ol>
+        <button class="next" type="button" id="next">Next <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>
+      </div>
+    </div>
+    <div class="stage" role="list">
+      <article class="card c0" role="listitem" aria-label="41 languages moderated">
+        <header><span class="label">Languages</span><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h9M8.5 4v2c0 4-2 7-4.5 8.5M6.5 10c1.5 2.5 3.5 4 6 5M13 20l4-9 4 9M14.3 17h5.4"/></svg></span></header>
+        <div class="num" data-to="41">41</div>
+        <p>Native-speaking moderators in 41 languages, from Tagalog to Twi.</p>
+      </article>
+      <article class="card c1" role="listitem" aria-label="2,380 interviews this year">
+        <header><span class="label">Interviews this year</span><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span></header>
+        <div class="num" data-to="2380">2,380</div>
+        <p>Every session recorded, transcribed and tagged within 48 hours.</p>
+      </article>
+      <article class="card c2" role="listitem" aria-label="6 days from brief to first session">
+        <header><span class="label">Brief to first session</span><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4"/></svg></span></header>
+        <div class="num" data-to="6" data-suffix="days">6<small>days</small></div>
+        <p>Screeners out on day one. First real participant on camera by day six.</p>
+      </article>
+      <article class="card c3" role="listitem" aria-label="93 percent of clients return">
+        <header><span class="label">Clients who return</span><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 4v4h-4M20 12a8 8 0 0 1-14 5.3M4 20v-4h4"/></svg></span></header>
+        <div class="num" data-to="93" data-suffix="%">93<small>%</small></div>
+        <p>Most teams book a second round with us inside the same quarter.</p>
+      </article>
+    </div>
+  </div>
+</section>
+<section class="after" id="book" aria-labelledby="book-h">
+  <h3 id="book-h">Ready when<br>your users are</h3>
+  <p>Tell us who you need to hear from. We will find them, book them and sit in the room.</p>
+  <a class="quote" href="#stats"><span>Book a call</span><i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></i></a>
+</section>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.getElementById('stats');
+  const cards = [...document.querySelectorAll('.card')];
+  const dots = [...document.querySelectorAll('.dots button')];
+  const cur = document.getElementById('cur');
+  const live = document.getElementById('live');
+  const tilt = [0, -2, 1.5, -1];
+  const enter = [0, 9, -8, 7];
+  const landed = cards.map((_, i) => i === 0);
+  const fmt = n => n.toLocaleString('en-US');
+  const step = () => innerHeight * 0.8;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  let active = 0;
+
+  function countUp(card) {
+    const el = card.querySelector('.num');
+    const to = +el.dataset.to, suf = el.dataset.suffix;
+    const tail = suf ? '<small>' + suf + '</small>' : '';
+    if (reduce) { el.innerHTML = fmt(to) + tail; return; }
+    const t0 = performance.now(), dur = 700;
+    const tick = now => {
+      const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 4);
+      el.innerHTML = fmt(Math.round(to * e)) + tail;
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  function render() {
+    const p = clamp((scrollY - section.offsetTop) / step(), 0, 3);
+    const rise = cards[0].offsetHeight * 0.75;
+    cards.forEach((c, i) => {
+      if (i === 0) { c.classList.toggle('under', p > 0.6); return; }
+      const t = clamp(p - (i - 1), 0, 1);
+      const queued = clamp((i - 1) - p, 0, 3) * (rise + 200);
+      const y = (1 - t) * rise + queued;
+      const r = reduce ? 0 : tilt[i] + (1 - t) * enter[i];
+      c.style.transform = `translateY(${y.toFixed(1)}px) rotate(${r.toFixed(2)}deg)`;
+      c.classList.toggle('under', p - i > 0.6);
+      if (t > 0.97 && !landed[i]) { landed[i] = true; countUp(c); }
+      if (t < 0.3) landed[i] = false;
+    });
+    const a = Math.round(p);
+    if (a !== active) {
+      active = a;
+      cur.textContent = '0' + (a + 1);
+      dots.forEach((d, i) => d.setAttribute('aria-current', i === a ? 'true' : 'false'));
+      live.textContent = cards[a].getAttribute('aria-label');
+    }
+  }
+
+  const go = i => scrollTo({ top: section.offsetTop + i * step() + 2, behavior: reduce ? 'auto' : 'smooth' });
+  dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+  document.getElementById('next').addEventListener('click', () => {
+    if (active < 3) go(active + 1);
+    else document.getElementById('book').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  let queued = false;
+  const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; render(); }); } };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  render();
+})();
+</script>
+</body>
+</html>

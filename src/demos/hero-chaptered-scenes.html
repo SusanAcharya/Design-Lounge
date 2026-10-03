@@ -1,0 +1,348 @@
+<!-- Design Lounge piece: hero-chaptered-scenes · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Brasswell Films — Unbuilt. Already lit.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#110e0b;--bg-2:#1a1510;--ink:#f1e8da;--ink-2:#c9bca9;--ink-3:#8f8272;
+  --line:rgba(241,232,218,.14);--line-2:rgba(241,232,218,.28);
+  --accent:#e9a15b;--accent-ink:#1d130a;--glow:#f2b66a;
+  --sans:"Familjen Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+  --dwell:6500ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+button,a{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;padding:0}
+a{text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.hero{position:relative;height:100%;min-height:640px;overflow:hidden}
+
+/* scenes */
+.scenes{position:absolute;inset:0 0 0 34%;overflow:hidden}
+.scene{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity 900ms var(--ease)}
+.scene svg{width:100%;height:100%;display:block;transform:scale(1.07);transform-origin:60% 55%}
+.scene.on{opacity:1}
+.scene.on svg{transform:scale(1);transition:transform 7400ms cubic-bezier(.25,.6,.3,1)}
+.scenes::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,var(--bg) 0%,rgba(17,14,11,.82) 18%,rgba(17,14,11,0) 52%),
+             linear-gradient(270deg,rgba(17,14,11,.86) 0%,rgba(17,14,11,.6) 26%,rgba(17,14,11,0) 44%),
+             linear-gradient(0deg,var(--bg) 0%,rgba(17,14,11,0) 26%),
+             linear-gradient(180deg,rgba(17,14,11,.7) 0%,rgba(17,14,11,0) 18%)}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;
+  background-image:radial-gradient(rgba(255,255,255,.35) .5px,transparent .6px);background-size:3px 3px}
+.win{fill:var(--glow)}
+.flick{animation:flick 7s steps(1) infinite}
+@keyframes flick{0%,100%{opacity:1}46%{opacity:.15}52%{opacity:1}}
+.twinkle{animation:tw 3.6s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.35}to{opacity:1}}
+
+/* header */
+header{position:absolute;inset:0 0 auto;height:76px;display:flex;align-items:center;gap:28px;padding:0 56px;z-index:5;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:600;letter-spacing:.16em;margin-right:auto}
+.brand svg{width:30px;height:30px}
+.nav{display:flex;gap:26px;font-size:14px;font-weight:500}
+.nav a{padding:8px 0;color:var(--ink-2);transition:color 160ms var(--ease)}
+.nav a:hover{color:var(--ink)}
+.pause{width:40px;height:40px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--accent);transition:background 160ms var(--ease)}
+.pause:hover{background:rgba(233,161,91,.1)}
+.pause svg{width:16px;height:16px}
+.pause .play{display:none}
+.pause[aria-pressed="true"] .play{display:block}
+.pause[aria-pressed="true"] .bars{display:none}
+.talk{display:flex;align-items:center;gap:14px;font-size:14px;font-weight:500}
+.talk i{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;transition:background 200ms var(--ease),color 200ms var(--ease)}
+.talk:hover i{background:var(--ink);color:var(--bg)}
+.talk svg,.cta svg,.ghost svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+/* copy */
+.copy{position:absolute;left:56px;top:50%;transform:translateY(-44%);width:600px;z-index:3}
+.kicker{display:flex;align-items:center;gap:16px;font-size:14px;color:var(--ink-2);margin:0 0 22px}
+.kicker::before{content:"";width:40px;height:1px;background:var(--ink-3)}
+h1{margin:0;font-size:108px;line-height:.98;font-weight:500;letter-spacing:-.058em}
+h1 span{display:block}
+h1 .lit{color:var(--accent)}
+.lede{margin:26px 0 34px;max-width:440px;font-size:17px;line-height:1.55;color:var(--ink-2)}
+.actions{display:flex;align-items:center;gap:28px}
+.cta{display:flex;align-items:center;gap:18px;height:56px;padding:0 6px 0 26px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:15px;transition:transform 200ms var(--ease),background 200ms var(--ease)}
+.cta i{width:44px;height:44px;border-radius:50%;background:var(--accent-ink);color:var(--accent);display:grid;place-items:center;transition:transform 300ms var(--expo)}
+.cta:hover{background:#f0b06f}
+.cta:hover i{transform:rotate(45deg)}
+.cta:active{transform:scale(.98)}
+.ghost{display:flex;align-items:center;gap:14px;font-weight:500;font-size:15px}
+.ghost i{width:40px;height:40px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;transition:transform 300ms var(--expo)}
+.ghost:hover i{transform:translateY(3px)}
+
+/* index */
+.index{position:absolute;right:56px;top:50%;transform:translateY(-50%);width:236px;z-index:4;list-style:none;margin:0;padding:0}
+.chap{position:relative;display:flex;align-items:center;gap:18px;width:100%;height:54px;text-align:left;border-bottom:1px solid var(--line);color:var(--ink-2);transition:color 200ms var(--ease)}
+.chap .n{font-size:26px;font-weight:400;letter-spacing:-.02em;width:34px;color:var(--ink-3);transition:color 200ms var(--ease)}
+.chap .l{font-size:14px;font-weight:500;flex:1}
+.chap svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;opacity:0;transform:translate(-6px,6px);transition:opacity 200ms var(--ease),transform 300ms var(--expo)}
+.chap .bar{position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left}
+.chap:hover{color:var(--ink)}
+.chap:hover .n{color:var(--ink-2)}
+.chap[aria-selected="true"]{color:var(--accent)}
+.chap[aria-selected="true"] .n{color:var(--accent)}
+.chap[aria-selected="true"] svg{opacity:1;transform:none}
+.chap[aria-selected="true"] .bar{animation:fill var(--dwell) linear forwards}
+.paused .chap[aria-selected="true"] .bar{animation-play-state:paused}
+.static .chap[aria-selected="true"] .bar{animation:none;transform:scaleX(1)}
+@keyframes fill{to{transform:scaleX(1)}}
+
+/* footer strip */
+.strip{position:absolute;left:56px;right:56px;bottom:30px;display:flex;align-items:center;gap:20px;z-index:4;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.meta{margin-right:auto}
+.pair{display:flex;align-items:center;gap:16px;color:var(--ink-2)}
+.pair .rule{width:120px;height:1px;background:var(--line-2)}
+.swap{display:inline-block;transition:opacity 260ms var(--ease),transform 400ms var(--expo)}
+.swap.out{opacity:0;transform:translateY(6px)}
+
+/* entrance */
+.rise{opacity:0;transform:translateY(18px);animation:rise 800ms var(--expo) forwards}
+h1 .rise:nth-child(2){animation-delay:90ms}
+.lede.rise{animation-delay:200ms}.actions.rise{animation-delay:280ms}
+@keyframes rise{to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .scene,.scene.on svg,.swap{transition:none}
+  .scene svg,.scene.on svg{transform:none}
+  .flick,.twinkle,.rise{animation:none;opacity:1;transform:none}
+}
+@media (max-width:1100px){h1{font-size:88px}.copy{width:520px}.nav{display:none}}
+@media (max-width:760px){
+  header{padding:0 20px;gap:12px}.talk span{display:none}
+  .scenes{inset:0}
+  .scenes::after{background:linear-gradient(0deg,var(--bg) 8%,rgba(17,14,11,.72) 60%,rgba(17,14,11,.85) 100%)}
+  .copy{left:20px;right:20px;width:auto;top:120px;transform:none}
+  h1{font-size:60px}.lede{font-size:16px;margin:20px 0 26px}
+  .actions{flex-wrap:wrap;gap:16px}
+  .index{left:20px;right:20px;top:auto;bottom:64px;width:auto;transform:none;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .chap{flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;height:64px}
+  .chap .n{font-size:20px}.chap .l{font-size:12px}.chap svg{display:none}
+  .strip{left:20px;right:20px;bottom:22px}.pair .rule{width:40px}.meta{display:none}
+}
+</style>
+</head>
+<body>
+<div class="hero" id="hero">
+  <div class="scenes" aria-hidden="true" id="scenes">
+    <!-- 01 Facade -->
+    <div class="scene on" data-i="0">
+      <svg viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="s1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d0b0a"/><stop offset=".62" stop-color="#2a1f17"/><stop offset=".8" stop-color="#4a3221"/><stop offset="1" stop-color="#1a130d"/></linearGradient>
+          <linearGradient id="t1" x1="0" x2="1"><stop offset="0" stop-color="#241c15"/><stop offset=".55" stop-color="#31261c"/><stop offset="1" stop-color="#16110d"/></linearGradient>
+          <radialGradient id="h1g" cx=".55" cy=".95" r=".6"><stop offset="0" stop-color="#e9a15b" stop-opacity=".35"/><stop offset="1" stop-color="#e9a15b" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1000" height="800" fill="url(#s1)"/>
+        <rect width="1000" height="800" fill="url(#h1g)"/>
+        <g fill="#1c1611" opacity=".9"><rect x="40" y="560" width="70" height="200"/><rect x="120" y="610" width="50" height="150"/><rect x="180" y="530" width="60" height="230"/><rect x="800" y="580" width="60" height="180"/><rect x="870" y="540" width="80" height="220"/><rect x="955" y="600" width="45" height="160"/></g>
+        <rect x="420" y="70" width="300" height="690" fill="url(#t1)"/>
+        <rect x="420" y="70" width="300" height="10" fill="#3b2e22"/>
+        <rect x="610" y="70" width="110" height="690" fill="#000" opacity=".22"/>
+        <g id="w1"></g>
+        <rect x="0" y="740" width="1000" height="60" fill="#0e0b08"/>
+        <g fill="#0b0907"><circle cx="330" cy="720" r="60"/><circle cx="380" cy="740" r="46"/><circle cx="770" cy="715" r="64"/><circle cx="830" cy="738" r="48"/><circle cx="260" cy="745" r="40"/></g>
+      </svg>
+    </div>
+    <!-- 02 Courtyard -->
+    <div class="scene" data-i="1">
+      <svg viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="s2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14100d"/><stop offset=".5" stop-color="#2b2019"/><stop offset="1" stop-color="#120e0a"/></linearGradient>
+          <radialGradient id="g2" cx=".5" cy=".6" r=".5"><stop offset="0" stop-color="#f2b66a" stop-opacity=".28"/><stop offset="1" stop-color="#f2b66a" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1000" height="800" fill="url(#s2)"/>
+        <rect x="140" y="300" width="760" height="300" fill="#241b14"/>
+        <rect x="140" y="290" width="760" height="14" fill="#3a2c20"/>
+        <g id="arches"></g>
+        <rect width="1000" height="800" fill="url(#g2)"/>
+        <rect x="0" y="600" width="1000" height="200" fill="#16110c"/>
+        <rect x="260" y="640" width="520" height="70" fill="#1f2a2a"/>
+        <g id="ripples" stroke="#f2b66a" stroke-width="2" opacity=".5"></g>
+        <path d="M60 230 Q 500 360 960 230" fill="none" stroke="#3a2c20" stroke-width="1.5"/>
+        <g id="lights"></g>
+        <g fill="#0b0907"><circle cx="70" cy="560" r="90"/><circle cx="140" cy="610" r="60"/><circle cx="950" cy="550" r="96"/><circle cx="880" cy="620" r="56"/></g>
+      </svg>
+    </div>
+    <!-- 03 Rooms -->
+    <div class="scene" data-i="2">
+      <svg viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="s3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2230"/><stop offset=".7" stop-color="#3b3340"/><stop offset="1" stop-color="#6b4a3a"/></linearGradient>
+          <radialGradient id="lamp" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#f2b66a" stop-opacity=".55"/><stop offset="1" stop-color="#f2b66a" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1000" height="800" fill="#1b1612"/>
+        <rect x="300" y="110" width="660" height="440" fill="url(#s3)"/>
+        <g id="city"></g>
+        <g fill="#1b1612"><rect x="520" y="110" width="8" height="440"/><rect x="740" y="110" width="8" height="440"/></g>
+        <path d="M0 800 L 0 610 L 1000 560 L 1000 800 Z" fill="#2a2018"/>
+        <ellipse cx="560" cy="690" rx="330" ry="58" fill="#3a2b20"/>
+        <rect x="380" y="560" width="400" height="90" rx="18" fill="#cfc0a8"/>
+        <rect x="380" y="520" width="400" height="60" rx="18" fill="#bfae94"/>
+        <rect x="460" y="620" width="240" height="44" rx="6" fill="#2b221b"/>
+        <circle cx="210" cy="430" r="200" fill="url(#lamp)"/>
+        <rect x="207" y="440" width="5" height="230" fill="#0d0a08"/>
+        <path d="M168 400 L 252 400 L 238 450 L 182 450 Z" fill="#f4dfbd"/>
+        <rect x="0" y="0" width="1000" height="110" fill="#14110e"/>
+      </svg>
+    </div>
+    <!-- 04 Shoreline -->
+    <div class="scene" data-i="3">
+      <svg viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="s4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15121a"/><stop offset=".45" stop-color="#4a2f2a"/><stop offset=".56" stop-color="#d0864c"/><stop offset=".57" stop-color="#1d2226"/><stop offset="1" stop-color="#0e1012"/></linearGradient>
+        </defs>
+        <rect width="1000" height="800" fill="url(#s4)"/>
+        <circle cx="430" cy="440" r="34" fill="#f0b070" opacity=".85"/>
+        <g id="sea" stroke="#e9a15b" stroke-linecap="round"></g>
+        <path d="M560 460 L 640 380 L 1000 330 L 1000 800 L 520 800 Z" fill="#17120e"/>
+        <rect x="660" y="360" width="140" height="54" fill="#2a2119"/><rect x="820" y="340" width="160" height="60" fill="#2a2119"/>
+        <rect x="640" y="356" width="180" height="6" fill="#3d3025"/><rect x="800" y="334" width="200" height="6" fill="#3d3025"/>
+        <g class="win"><rect x="676" y="376" width="38" height="22" opacity=".9"/><rect x="740" y="376" width="38" height="22" opacity=".6"/><rect x="836" y="356" width="44" height="26" opacity=".85"/><rect x="900" y="356" width="44" height="26" class="flick" style="animation-delay:-3s"/></g>
+        <path d="M600 500 L 1000 470 L 1000 520 L 590 540 Z" fill="#221a14"/>
+      </svg>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <header>
+    <a class="brand" href="#" aria-label="Brasswell Films, home">
+      <svg viewBox="0 0 30 30" aria-hidden="true"><rect x=".75" y=".75" width="28.5" height="28.5" fill="none" stroke="#e9a15b" stroke-width="1.5"/><path d="M10 8h6.5a3.5 3.5 0 0 1 0 7H10zM10 15h7.5a3.5 3.5 0 0 1 0 7H10z" fill="none" stroke="#f1e8da" stroke-width="1.6"/></svg>
+      BRASSWELL FILMS
+    </a>
+    <button class="pause" id="pause" type="button" aria-pressed="false" aria-label="Pause scene autoplay">
+      <svg class="bars" viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="3" width="2" height="10" fill="currentColor"/><rect x="10" y="3" width="2" height="10" fill="currentColor"/></svg>
+      <svg class="play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3l8 5-8 5z" fill="currentColor"/></svg>
+    </button>
+    <nav class="nav" aria-label="Primary"><a href="#">Films</a><a href="#">Method</a><a href="#">Studio</a><a href="#">Journal</a></nav>
+    <a class="talk" href="#"><span>Book a call</span><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></i></a>
+  </header>
+
+  <section class="copy" aria-labelledby="title">
+    <p class="kicker rise">Hotels and residences, filmed before they open.</p>
+    <h1 id="title"><span class="rise">Unbuilt.</span><span class="lit rise">Already lit.</span></h1>
+    <p class="lede rise">Launch films, still frames and sales-suite screens for buildings that are still drawings. We light the facade first, then the evening around it.</p>
+    <div class="actions rise">
+      <a class="cta" href="#">Plan a launch film<i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></i></a>
+      <a class="ghost" href="#">See the reel<i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></i></a>
+    </div>
+  </section>
+
+  <div class="index" role="tablist" aria-label="Scenes" id="index"></div>
+
+  <div class="strip">
+    <span class="meta"><span class="swap" id="meta">Scene 01 · 35mm · 19:42 · Lisbon</span></span>
+    <span class="pair"><span id="num">01</span><span class="rule"></span><span class="swap" id="pairtxt">Site → Skyline</span></span>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</div>
+
+<script>
+(() => {
+  const chapters = [
+    { l: 'Facade', meta: 'Scene 01 · 35mm · 19:42 · Lisbon', pair: 'Site → Skyline' },
+    { l: 'Courtyard', meta: 'Scene 02 · 28mm · 20:15 · Seville', pair: 'Path → Gathering' },
+    { l: 'Rooms', meta: 'Scene 03 · 24mm · 21:05 · Porto', pair: 'Space → Stay' },
+    { l: 'Shoreline', meta: 'Scene 04 · 50mm · 18:58 · Tavira', pair: 'Tide → Terrace' },
+  ];
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); parent.appendChild(n); return n; };
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+  const w1 = document.getElementById('w1');
+  for (let r = 0; r < 34; r++) for (let c = 0; c < 10; c++) {
+    const v = rnd(); if (v < .5 + r * .006) continue;
+    const n = el('rect', { x: 436 + c * 28, y: 96 + r * 19, width: 16, height: 9, class: 'win', opacity: (.2 + (v - .5) * 1.6).toFixed(2) }, w1);
+    if (v > .965) { n.classList.add('flick'); n.style.animationDelay = (-rnd() * 7).toFixed(2) + 's'; }
+  }
+  const arches = document.getElementById('arches');
+  for (let i = 0; i < 8; i++) {
+    const x = 175 + i * 90;
+    el('path', { d: `M${x} 590 V 400 a32 32 0 0 1 64 0 V 590 Z`, fill: '#f2b66a', opacity: (.45 + rnd() * .45).toFixed(2) }, arches);
+    el('rect', { x: x + 8, y: 320, width: 48, height: 30, fill: '#f2b66a', opacity: (rnd() * .5 + .1).toFixed(2) }, arches);
+  }
+  const ripples = document.getElementById('ripples');
+  for (let i = 0; i < 6; i++) el('line', { x1: 300 + rnd() * 300, x2: 360 + rnd() * 380, y1: 655 + i * 9, y2: 655 + i * 9, opacity: (.3 + rnd() * .6).toFixed(2) }, ripples);
+  const lights = document.getElementById('lights');
+  for (let i = 0; i <= 22; i++) {
+    const t = i / 22, x = 60 + t * 900, y = (1 - t) * (1 - t) * 230 + 2 * (1 - t) * t * 360 + t * t * 230;
+    const c = el('circle', { cx: x, cy: y + 4, r: 3.5, fill: '#ffd59a', class: 'twinkle' }, lights);
+    c.style.animationDelay = (-rnd() * 3.6).toFixed(2) + 's';
+  }
+  const city = document.getElementById('city');
+  for (let i = 0; i < 70; i++) el('rect', { x: 310 + rnd() * 640, y: 420 + rnd() * 120, width: 3, height: 3, fill: '#ffd59a', opacity: (.3 + rnd() * .7).toFixed(2) }, city);
+  const sea = document.getElementById('sea');
+  for (let i = 0; i < 26; i++) {
+    const y = 470 + i * 12 + rnd() * 6, w = 20 + rnd() * 90 * (1 - i / 40), x = 430 - w / 2 + (rnd() - .5) * (40 + i * 10);
+    el('line', { x1: x, x2: x + w, y1: y, y2: y, 'stroke-width': 1.5 + i * .08, opacity: (.75 - i * .025).toFixed(2) }, sea);
+  }
+
+  const hero = document.getElementById('hero');
+  const index = document.getElementById('index');
+  const scenes = [...document.querySelectorAll('.scene')];
+  const pauseBtn = document.getElementById('pause');
+  const meta = document.getElementById('meta'), pairtxt = document.getElementById('pairtxt'), num = document.getElementById('num'), live = document.getElementById('live');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const arrow = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+
+  const tabs = chapters.map((c, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'chap'; b.setAttribute('role', 'tab'); b.id = 'chap' + i;
+    b.setAttribute('aria-selected', i === 0 ? 'true' : 'false'); b.tabIndex = i === 0 ? 0 : -1;
+    b.innerHTML = `<span class="n">${String(i + 1).padStart(2, '0')}</span><span class="l">${c.l}</span>${arrow}<span class="bar"></span>`;
+    b.addEventListener('click', () => go(i, true));
+    b.querySelector('.bar').addEventListener('animationend', () => { if (!paused) go((cur + 1) % chapters.length); });
+    index.appendChild(b); return b;
+  });
+
+  let cur = 0, paused = false;
+  function swapText(node, text) {
+    if (reduce) { node.textContent = text; return; }
+    node.classList.add('out');
+    setTimeout(() => { node.textContent = text; node.classList.remove('out'); }, 220);
+  }
+  function go(i, focus) {
+    if (i === cur) return;
+    tabs[cur].setAttribute('aria-selected', 'false'); tabs[cur].tabIndex = -1;
+    scenes[cur].classList.remove('on');
+    cur = i;
+    const t = tabs[i];
+    t.setAttribute('aria-selected', 'true'); t.tabIndex = 0;
+    const bar = t.querySelector('.bar'); bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
+    scenes[i].classList.add('on');
+    if (focus) t.focus();
+    num.textContent = String(i + 1).padStart(2, '0');
+    swapText(meta, chapters[i].meta); swapText(pairtxt, chapters[i].pair);
+    live.textContent = `Scene ${i + 1} of ${chapters.length}: ${chapters[i].l}`;
+  }
+  function setPaused(p) {
+    paused = p; hero.classList.toggle('paused', p);
+    pauseBtn.setAttribute('aria-pressed', String(p));
+    pauseBtn.setAttribute('aria-label', p ? 'Play scene autoplay' : 'Pause scene autoplay');
+  }
+  pauseBtn.addEventListener('click', () => setPaused(!paused));
+  index.addEventListener('keydown', e => {
+    const k = e.key; let n = null;
+    if (k === 'ArrowDown' || k === 'ArrowRight') n = (cur + 1) % tabs.length;
+    if (k === 'ArrowUp' || k === 'ArrowLeft') n = (cur - 1 + tabs.length) % tabs.length;
+    if (k === 'Home') n = 0; if (k === 'End') n = tabs.length - 1;
+    if (n !== null) { e.preventDefault(); go(n, true); }
+  });
+  index.addEventListener('mouseenter', () => hero.classList.add('paused'));
+  index.addEventListener('mouseleave', () => { if (!paused) hero.classList.remove('paused'); });
+  if (reduce) { hero.classList.add('static'); setPaused(true); }
+})();
+</script>
+</body>
+</html>

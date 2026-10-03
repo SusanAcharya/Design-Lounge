@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 419 · "Tomato pomodoro timer widget" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 445 · "Tomato pomodoro timer widget" · designlounge.vercel.app -->
 
 # Tomato pomodoro timer widget
 

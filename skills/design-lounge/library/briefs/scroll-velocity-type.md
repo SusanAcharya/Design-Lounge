@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 361 · "Scroll velocity type" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 382 · "Scroll velocity type" · designlounge.vercel.app -->
 
 # Scroll velocity type
 

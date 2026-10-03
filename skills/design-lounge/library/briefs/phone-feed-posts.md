@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 380 · "Social feed with stories and posts" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 403 · "Social feed with stories and posts" · designlounge.vercel.app -->
 
 # Social feed with stories and posts
 

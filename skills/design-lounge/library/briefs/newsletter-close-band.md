@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 291 · "Newsletter close" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 308 · "Newsletter close" · designlounge.vercel.app -->
 
 # Newsletter close
 

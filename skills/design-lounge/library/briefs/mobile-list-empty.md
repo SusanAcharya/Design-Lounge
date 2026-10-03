@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 308 · "Phone empty list" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 327 · "Phone empty list" · designlounge.vercel.app -->
 
 # Phone empty list
 

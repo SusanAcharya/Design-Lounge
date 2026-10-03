@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 386 · "Split navbar with centred wordmark" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 409 · "Split navbar with centred wordmark" · designlounge.vercel.app -->
 
 # Split navbar with centred wordmark
 

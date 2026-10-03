@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 241 · "Glitch text" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 248 · "Glitch text" · designlounge.vercel.app -->
 
 # Glitch text
 

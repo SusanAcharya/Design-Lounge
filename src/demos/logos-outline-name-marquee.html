@@ -1,0 +1,187 @@
+<!-- Design Lounge piece: logos-outline-name-marquee · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ombra · Some of the people we have made things with</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #191517;
+    --bg-2: #241e21;
+    --cream: #eadfcb;
+    --cream-2: #b3a895;
+    --stroke: rgba(234, 223, 203, 0.62);
+    --line: rgba(234, 223, 203, 0.14);
+    --apricot: #ff9f6b;
+    --sans: "Hanken Grotesk", system-ui, sans-serif;
+    --serif: "Instrument Serif", Georgia, serif;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: var(--bg); color: var(--cream); font: 400 16px/1.5 var(--sans); overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--apricot); outline-offset: 4px; }
+
+  .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; padding: 44px 64px 0; }
+  .eyebrow { font: 600 11px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--cream-2); }
+  h2 { margin: 16px 0 0; font: 400 52px/1.02 var(--serif); letter-spacing: -.01em; max-width: 20ch; }
+  h2 em { color: var(--apricot); }
+  .top p { margin: 0 0 6px; max-width: 30ch; font-size: 15px; color: var(--cream-2); }
+  .top p b { color: var(--cream); font-weight: 600; }
+
+  .rows { margin-top: 30px; }
+  .row { position: relative; height: 92px; overflow: hidden; display: flex; align-items: center; }
+  .row:focus-visible { outline-offset: -2px; }
+  .track { display: flex; width: max-content; animation: marq var(--d) linear infinite; }
+  .row.rev .track { animation-direction: reverse; }
+  .row:hover .track, .row:focus-within .track, .row:focus .track { animation-play-state: paused; }
+  .set { display: flex; align-items: center; }
+  .name { font: 800 70px/1 var(--sans); letter-spacing: -.035em; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px var(--stroke); cursor: default; transition: color .2s var(--ease), -webkit-text-stroke-color .2s var(--ease); }
+  .name.on { color: var(--apricot); -webkit-text-stroke-color: var(--apricot); }
+  .dot { flex: none; width: 10px; height: 10px; margin: 0 34px; border-radius: 50%; border: 1.5px solid var(--stroke); }
+  @keyframes marq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .bottom { display: flex; justify-content: space-between; align-items: center; gap: 32px; margin: 26px 64px 0; padding-top: 22px; border-top: 1px solid var(--line); }
+  .now .k { font: 600 11px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--cream-2); }
+  .now .k span { color: var(--apricot); }
+  .now .v { margin-top: 10px; font: italic 400 28px/1.2 var(--serif); min-height: 34px; }
+  .now .v b { font-style: normal; font-weight: 400; }
+  .now .y { margin-top: 4px; font-size: 14px; color: var(--cream-2); }
+
+  .badge { position: relative; flex: none; width: 124px; height: 124px; border-radius: 50%; display: grid; place-items: center; }
+  .badge svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 22s linear infinite; }
+  .badge text { font: 600 10.5px/1 var(--sans); letter-spacing: .32em; fill: var(--cream); text-transform: uppercase; transition: fill .2s var(--ease); }
+  .badge .arrow { width: 30px; height: 30px; transition: transform .35s var(--expo), color .2s var(--ease); }
+  .badge:hover .arrow, .badge:focus-visible .arrow { transform: rotate(45deg); color: var(--apricot); }
+  .badge:hover text { fill: var(--apricot); }
+  .badge:focus-visible { outline-offset: 2px; border-radius: 50%; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (max-width: 1100px) {
+    .top, .bottom { padding-left: 32px; padding-right: 32px; margin-left: 0; margin-right: 0; }
+    h2 { font-size: 44px; }
+  }
+  @media (max-width: 760px) {
+    .top { flex-direction: column; align-items: flex-start; gap: 16px; padding: 36px 20px 0; }
+    h2 { font-size: 36px; }
+    .rows { margin-top: 28px; }
+    .row { height: 64px; }
+    .name { font-size: 46px; }
+    .dot { margin: 0 20px; width: 8px; height: 8px; }
+    .bottom { padding: 20px 20px 32px; }
+    .now .v { font-size: 22px; }
+    .badge { width: 96px; height: 96px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .track, .badge svg.ring { animation: none; }
+    .set + .set { display: none; }
+    .name, .badge .arrow, .badge text { transition: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section aria-labelledby="t">
+    <div class="top">
+      <div>
+        <div class="eyebrow">Selected clients · 2014–2026</div>
+        <h2 id="t">Some of the people we have <em>made things</em> with</h2>
+      </div>
+      <p><b>64 companies, twelve years.</b> Most of them came back for a second project. Hover a name, or focus a row and use the arrow keys.</p>
+    </div>
+
+    <div class="rows" id="rows"></div>
+
+    <div class="bottom">
+      <div class="now" aria-live="polite">
+        <div class="k"><span>●</span>&nbsp; Now showing</div>
+        <div class="v" id="v"></div>
+        <div class="y" id="y"></div>
+      </div>
+      <a class="badge" href="#" aria-label="See all work">
+        <svg class="ring" viewBox="0 0 124 124" aria-hidden="true">
+          <defs><path id="circ" d="M62 62 m-48 0 a48 48 0 1 1 96 0 a48 48 0 1 1 -96 0"/></defs>
+          <text><textPath href="#circ">All work · All work · All work ·</textPath></text>
+        </svg>
+        <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <ul class="sr" id="sr" aria-label="Client list"></ul>
+  </section>
+</main>
+
+<script>
+(() => {
+  const ROWS = [
+    { d: 64, items: [['Bremmer Opera', 'Season identity and ticketing site', 2019], ['Pellucid Optics', 'Product launch film and store', 2022], ['Wendle Dairy', 'Packaging for forty-one cheeses', 2016], ['Grey Heron Press', 'A book series and its website', 2021], ['Kaarna Bank', 'Mobile banking interface', 2024], ['Dunmore Mills', 'Wayfinding for a restored mill', 2018]] },
+    { d: 76, rev: true, items: [['Ivelle Ferries', 'Timetables, booking and onboard signs', 2021], ['Mossgiel Hotels', 'Brand refresh across nine hotels', 2017], ['Oberland Rail', 'Accessible journey planner', 2023], ['Ferro & Daughters', 'Name, mark and trade catalogue', 2015], ['Quietwater', 'Meditation app, first release', 2020], ['Atelier Brume', 'Lookbook site and shop', 2025]] },
+    { d: 58, items: [['Lathe & Linden', 'Furniture catalogue on a headless CMS', 2022], ['Ostwick Coffee', 'Café identity and roastery tours', 2014], ['Pelham Clinics', 'Patient portal and booking', 2024], ['Copperhill', 'Annual report, print and web', 2019], ['Galloway Mutual', 'Plain-language policy pages', 2023], ['Kiruna Outdoor', 'Campaign for a winter range', 2026]] },
+    { d: 70, rev: true, items: [['The Glass Archive', 'Collection search for 30,000 objects', 2020], ['Stillwell Trust', 'Fundraising site and donor reports', 2018], ['Oaklore', 'Children’s audio app', 2025], ['Pinecrest Schools', 'Admissions site for six campuses', 2021], ['Avery & Finch', 'Law firm identity', 2016], ['Solway Energy', 'Tariff explainer and assistant', 2026]] },
+  ];
+  const rowsEl = document.getElementById('rows');
+  const sr = document.getElementById('sr');
+  const v = document.getElementById('v'), y = document.getElementById('y');
+  let cur = null;
+
+  function show(r, i) {
+    const [n, what, yr] = ROWS[r].items[i];
+    document.querySelectorAll('.name.on').forEach(e => e.classList.remove('on'));
+    document.querySelectorAll(`.name[data-k="${r}-${i}"]`).forEach(e => e.classList.add('on'));
+    v.innerHTML = '';
+    const b = document.createElement('b'); b.textContent = n;
+    v.append(b, document.createTextNode(' — ' + what));
+    y.textContent = 'Since ' + yr + ' · row ' + (r + 1) + ' of 4';
+    cur = { r, i };
+  }
+
+  ROWS.forEach((row, r) => {
+    const el = document.createElement('div');
+    el.className = 'row' + (row.rev ? ' rev' : '');
+    el.tabIndex = 0;
+    el.setAttribute('role', 'group');
+    el.setAttribute('aria-label', `Client row ${r + 1} of 4, scrolling ${row.rev ? 'right' : 'left'}. Arrow keys read names.`);
+    const track = document.createElement('div');
+    track.className = 'track';
+    track.style.setProperty('--d', row.d + 's');
+    const set = document.createElement('div');
+    set.className = 'set';
+    row.items.forEach(([n, what, yr], i) => {
+      const s = document.createElement('span');
+      s.className = 'name'; s.textContent = n; s.dataset.k = `${r}-${i}`;
+      const dot = document.createElement('span'); dot.className = 'dot';
+      set.append(s, dot);
+      const li = document.createElement('li'); li.textContent = `${n}: ${what}, since ${yr}`; sr.append(li);
+    });
+    set.setAttribute('aria-hidden', 'true');
+    const clone = set.cloneNode(true);
+    track.append(set, clone);
+    el.append(track);
+    rowsEl.append(el);
+
+    track.addEventListener('mouseover', e => {
+      const t = e.target.closest('.name');
+      if (t) { const [rr, ii] = t.dataset.k.split('-').map(Number); show(rr, ii); }
+    });
+    el.addEventListener('focus', () => { if (!cur || cur.r !== r) show(r, 0); });
+    el.addEventListener('keydown', e => {
+      const n = row.items.length;
+      const i = cur && cur.r === r ? cur.i : 0;
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(r, (i + 1) % n); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(r, (i + n - 1) % n); }
+      if (e.key === 'Home') { e.preventDefault(); show(r, 0); }
+      if (e.key === 'End') { e.preventDefault(); show(r, n - 1); }
+    });
+  });
+  show(1, 0);
+})();
+</script>
+</body>
+</html>

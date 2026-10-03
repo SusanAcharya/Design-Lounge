@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 436 · "Word-bank lesson card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 464 · "Word-bank lesson card" · designlounge.vercel.app -->
 
 # Word-bank lesson card
 

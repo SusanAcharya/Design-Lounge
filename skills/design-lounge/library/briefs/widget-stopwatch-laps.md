@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 256 · "Industrial stopwatch with lap log" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 267 · "Industrial stopwatch with lap log" · designlounge.vercel.app -->
 
 # Industrial stopwatch with lap log
 

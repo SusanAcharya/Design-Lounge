@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 243 · "Gooey menu" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 250 · "Gooey menu" · designlounge.vercel.app -->
 
 # Gooey menu
 

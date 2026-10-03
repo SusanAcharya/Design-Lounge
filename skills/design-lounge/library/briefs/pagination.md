@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 300 · "Pagination" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 319 · "Pagination" · designlounge.vercel.app -->
 
 # Pagination
 

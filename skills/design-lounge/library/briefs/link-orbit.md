@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 272 · "Link orbit" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 286 · "Link orbit" · designlounge.vercel.app -->
 
 # Link orbit
 

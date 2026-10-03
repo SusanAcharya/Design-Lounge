@@ -1,0 +1,248 @@
+<!-- Design Lounge piece: process-step-dossier · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Fennick — Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500&family=Bai+Jamjuree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#151517;--panel:#1c1c1f;--panel-2:#222226;--line:#2d2d32;--line-2:#3d3d44;
+  --ink:#ece6da;--ink-2:#bdb6aa;--dim:#8f8a81;--accent:#ff5b2e;--accent-soft:rgba(255,91,46,.08);
+  --sans:"Bai Jamjuree",system-ui,sans-serif;--mono:"Azeret Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink-2);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,a{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+a{text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.top{height:56px;display:flex;align-items:center;gap:32px;padding:0 84px;border-bottom:1px solid var(--line)}
+.logo{font-weight:600;font-size:15px;letter-spacing:.14em;color:var(--ink);margin-right:auto}
+.logo span{color:var(--accent)}
+.top nav{display:flex;gap:28px}
+.top nav a{color:var(--dim);padding:8px 0;transition:color 160ms var(--ease)}
+.top nav a:hover,.top nav a[aria-current]{color:var(--ink)}
+.avail{display:flex;align-items:center;gap:8px;color:var(--ink-2)}
+.avail::before{content:"";width:6px;height:6px;background:var(--accent)}
+
+main{padding:26px 84px 0}
+.sec{display:flex;align-items:center;gap:14px;margin:0 0 20px}
+.sec .n{color:var(--accent)}
+.sec h1{margin:0;font-size:30px;font-weight:600;letter-spacing:.18em;color:var(--ink)}
+.sec::after{content:"";flex:1;height:1px;background:var(--line);margin-left:10px}
+
+.panel{border:1px solid var(--line-2);background:var(--panel)}
+.phead{height:38px;display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid var(--line);background:var(--panel-2);color:var(--dim)}
+.phead .sq{width:6px;height:6px;background:var(--accent)}
+.phead .hint{margin-left:auto;color:var(--accent)}
+.stage{height:372px;display:flex;align-items:center;justify-content:center;gap:28px;padding:0 24px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:24px 24px;opacity:.35;pointer-events:none}
+
+.step{position:relative;display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid transparent;opacity:.5;transform:scale(.96);transition:opacity 240ms var(--ease),transform 320ms var(--expo),border-color 200ms var(--ease),background 200ms var(--ease)}
+.step .lab{display:flex;justify-content:space-between;gap:14px;color:var(--dim);font-size:9px}
+.step[aria-selected="true"]{opacity:1;transform:none;border-color:var(--accent);background:var(--accent-soft)}
+.step[aria-selected="true"] .lab{color:var(--accent)}
+.step:hover{opacity:.8}
+.step[aria-selected="true"]:hover{opacity:1}
+.enter{animation:enter 480ms var(--expo) both}
+@keyframes enter{from{opacity:0;transform:translateY(14px) scale(.96)}}
+
+.art{position:relative;overflow:hidden}
+.art i{position:absolute;display:block}
+.k-mob{width:136px;height:286px}.k-dsh{width:288px;height:180px}.k-pst{width:184px;height:260px}
+.f0{border:1px dashed var(--dim)}
+.f0 i{border:1px dashed var(--dim)}
+.f0 i.t{border:0;border-top:1px dashed var(--dim);height:0!important}
+.f1{background:#26262b;border:1px solid var(--line-2)}
+.f1 i{background:#3a3a41}
+.f1 i.t{background:#33333a}
+.f2,.f3{background:var(--c3);border:1px solid var(--line-2)}
+.f2 i.m,.f3 i.m{background:var(--c1)}
+.f2 i.b,.f3 i.b{background:var(--c2)}
+.f2 i.r,.f3 i.r{background:var(--c1);opacity:.85}
+.f2 i.t,.f3 i.t{background:var(--c4)}
+.f2 i.s,.f3 i.s{background:var(--c1)}
+.f3{box-shadow:0 0 0 3px #0e0e10,0 0 0 4px var(--line-2),0 18px 30px -12px rgba(0,0,0,.6)}
+.k-mob.f3{border-radius:14px}
+.live{position:absolute;right:6px;bottom:6px;font:500 8px/1 var(--mono);letter-spacing:.14em;color:#0e0e10;background:var(--accent);padding:4px 5px}
+
+.lower{display:grid;grid-template-columns:250px 1fr;gap:0;min-height:150px}
+.who{padding:22px 20px;border-right:1px solid var(--line)}
+.who h2{margin:0;font-size:21px;font-weight:600;letter-spacing:.16em;line-height:1.35;color:var(--ink);text-transform:uppercase}
+.dashes{display:flex;gap:5px;margin-top:12px}
+.dashes i{width:12px;height:2px;background:var(--line-2);transition:background 200ms var(--ease),width 300ms var(--expo)}
+.dashes i.on{background:var(--accent);width:22px}
+.story{margin:16px 20px 0;padding:12px 18px 14px;border-left:2px solid var(--accent);background:linear-gradient(90deg,var(--accent-soft),transparent 70%)}
+.story .meta{color:var(--accent);margin-bottom:6px}
+.story p{margin:0;max-width:620px;color:var(--ink-2);font-size:14.5px}
+.swap{animation:swap 320ms var(--ease)}
+@keyframes swap{from{opacity:0;transform:translateX(-6px)}}
+.tags{display:flex;flex-wrap:wrap;gap:6px;padding:0 20px 16px;grid-column:1/-1}
+.tags span{border:1px solid var(--line-2);padding:4px 8px;color:var(--dim);font-size:9.5px}
+
+.foot{display:flex;align-items:center;gap:18px;padding:18px 0 24px}
+.count{color:var(--ink-2);font-variant-numeric:tabular-nums}
+.prog{width:220px;height:2px;background:var(--line)}
+.prog i{display:block;height:100%;background:var(--accent);transform-origin:left;transition:transform 500ms var(--expo)}
+.nav{margin-left:auto;display:flex;gap:10px}
+.nav button{height:40px;padding:0 16px;border:1px solid var(--line-2);color:var(--ink-2);display:flex;align-items:center;gap:8px;transition:border-color 160ms var(--ease),color 160ms var(--ease)}
+.nav button:hover{border-color:var(--accent);color:var(--ink)}
+.nav svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+@media (prefers-reduced-motion:reduce){
+  .step,.dashes i,.prog i,.nav button{transition:none}
+  .enter,.swap{animation:none}
+}
+@media (max-width:1100px){.top,main{padding-left:40px;padding-right:40px}.stage{gap:16px}.k-dsh{width:210px;height:132px}.k-mob{width:116px;height:244px}.k-pst{width:150px;height:212px}}
+@media (max-width:760px){
+  .top{padding:0 16px}.top nav{display:none}
+  main{padding:20px 16px 0}.sec h1{font-size:22px}
+  .phead .hint{display:none}
+  .stage{height:auto;justify-content:flex-start;overflow-x:auto;padding:20px 16px;scroll-snap-type:x mandatory}
+  .step{flex:none;scroll-snap-align:center}
+  .lower{grid-template-columns:1fr}.who{border-right:0;border-bottom:1px solid var(--line)}
+  .story{margin:14px 16px 0}.tags{padding:12px 16px 16px}
+  .prog{width:80px}.nav .t{display:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="#">FENNICK<span>/</span></a>
+  <nav aria-label="Primary" class="mono"><a href="#">Index</a><a href="#" aria-current="page">Work</a><a href="#">Notes</a><a href="#">Contact</a></nav>
+  <span class="avail mono">Booking Nov 2026</span>
+</header>
+<main>
+  <div class="sec"><span class="n mono">02</span><h1>WORK</h1></div>
+  <section class="panel" aria-labelledby="ptitle">
+    <div class="phead mono"><i class="sq"></i><span id="pcode">PRJ.001 · MOB</span><span class="hint">Hover a step for its story</span></div>
+    <div class="stage" id="stage" role="tablist" aria-label="Process steps"></div>
+    <div class="lower">
+      <div class="who">
+        <h2 id="ptitle">Transit pass</h2>
+        <div class="dashes" id="dashes" aria-hidden="true"></div>
+      </div>
+      <div id="storyWrap">
+        <div class="story" id="story" role="tabpanel" tabindex="0">
+          <div class="meta mono" id="smeta"></div>
+          <p id="stext"></p>
+        </div>
+      </div>
+      <div class="tags mono" id="tags"></div>
+    </div>
+  </section>
+  <div class="foot">
+    <span class="count mono" id="count">01 / 03</span>
+    <span class="prog" aria-hidden="true"><i id="prog"></i></span>
+    <div class="nav mono">
+      <button type="button" id="prev" aria-label="Previous project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span class="t">Prev</span></button>
+      <button type="button" id="next" aria-label="Next project"><span class="t">Next project</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</main>
+
+<script>
+(() => {
+  const L = {
+    mob: [['m',8,5,84,6],['m',8,16,84,42],['t',8,63,60,3],['t',8,70,44,3],['b',8,84,84,9]],
+    dsh: [['s',0,0,15,100],['m',20,9,24,24],['m',47,9,24,24],['b',74,9,22,24],['r',20,42,76,7],['t',20,55,76,4],['t',20,65,70,4],['t',20,75,76,4],['t',20,85,60,4]],
+    pst: [['m',9,7,82,30],['r',9,43,70,8],['t',9,57,48,3],['b',9,66,40,26],['t',55,70,36,3],['t',55,78,28,3]],
+  };
+  const P = [
+    { code: 'PRJ.001 · MOB', title: 'Transit pass', kind: 'mob', start: 2, c: ['#1f3a5f', '#ffd166', '#f4efe6', 'rgba(31,58,95,.35)'],
+      tags: ['iOS', 'Ticketing', 'Field research', 'Prototype'],
+      steps: [
+        ['Sketch', 'Paper', 'Six paper screens from a morning on the 28 tram. The only question: can you show a ticket with one hand, holding a rail, in under two seconds?'],
+        ['Wireframe', '390', 'Greyboxes at phone width. The ticket moved to the first screen and the code took the top half. Everything else went one tap deeper.'],
+        ['Visual', '390', 'Night-blue base so the code reads in sun and in tunnels. The zone colour runs as a band across the ticket, so an inspector can check it from a metre away.'],
+        ['Shipped', 'iOS 18', 'Live in two cities. Median time to show a ticket fell from 7.4s to 1.9s. The lock-screen widget does most of the work now.'],
+      ] },
+    { code: 'PRJ.002 · DSH', title: 'Grain ledger', kind: 'dsh', start: 1, c: ['#c44536', '#e9c46a', '#f2e8d5', 'rgba(60,40,30,.28)'],
+      tags: ['Dashboard', 'Co-op', 'Data tables', 'Print'],
+      steps: [
+        ['Audit', '41 files', 'Forty-one spreadsheets from twelve co-op silos. We counted what people actually opened: three numbers, every morning.'],
+        ['Layout', '1440', 'Those three numbers became the top row. Everything else sits in one table that sorts by the column you last looked at.'],
+        ['Final', '1440', 'Rust for anything under contract, cream for open stock. The table prints on one A4 sheet, because the silo office still faxes it.'],
+      ] },
+    { code: 'PRJ.003 · PRN', title: 'Harbour posters', kind: 'pst', start: 2, c: ['#0f4c5c', '#f4d35e', '#ece6da', 'rgba(15,76,92,.4)'],
+      tags: ['Poster set', 'Type', 'Riso', 'Wayfinding'],
+      steps: [
+        ['Grid', 'A2', 'A nine-column grid taken from the harbour\'s own tide tables. Every poster in the set shares it.'],
+        ['Type', 'A2', 'One condensed face at three sizes. The date is always the biggest thing, because people only need to know when.'],
+        ['Colour', 'A2', 'Two inks per poster: teal plus one season colour. Cheap to print, easy to spot across a quay.'],
+        ['Print', 'A2 · Riso', 'Four hundred copies on the riso in the harbour office. The misregistration stayed in.'],
+      ] },
+  ];
+  const $ = id => document.getElementById(id);
+  const stage = $('stage'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let pi = 0, si = 0, steps = [];
+
+  function art(p, f) {
+    const n = p.steps.length;
+    const lvl = n === 3 ? [0, 1, 3][f] : f;
+    const d = document.createElement('div');
+    d.className = `art k-${p.kind} f${lvl}`;
+    d.style.cssText = `--c1:${p.c[0]};--c2:${p.c[1]};--c3:${p.c[2]};--c4:${p.c[3]}`;
+    d.innerHTML = L[p.kind].map(([k, x, y, w, h]) => `<i class="${k}" style="left:${x}%;top:${y}%;width:${w}%;height:${h}%"></i>`).join('') + (lvl === 3 ? '<span class="live">LIVE</span>' : '');
+    return d;
+  }
+  function renderProject(dir) {
+    const p = P[pi];
+    stage.innerHTML = '';
+    steps = p.steps.map((s, i) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'step'; b.setAttribute('role', 'tab'); b.id = 'st' + i;
+      b.setAttribute('aria-controls', 'story');
+      b.setAttribute('aria-label', `Step ${i + 1} of ${p.steps.length}: ${s[0]}`);
+      b.innerHTML = `<span class="lab mono"><span>${String(i + 1).padStart(2, '0')} · ${s[0]}</span><span>${s[1]}</span></span>`;
+      b.appendChild(art(p, i));
+      if (!reduce && dir !== undefined) { b.classList.add('enter'); b.style.animationDelay = (i * 50) + 'ms'; }
+      b.addEventListener('mouseenter', () => select(i));
+      b.addEventListener('focus', () => select(i));
+      b.addEventListener('click', () => select(i));
+      stage.appendChild(b); return b;
+    });
+    $('pcode').textContent = p.code;
+    $('ptitle').textContent = p.title;
+    $('tags').innerHTML = p.tags.map(t => `<span>${t}</span>`).join('');
+    $('dashes').innerHTML = p.steps.map(() => '<i></i>').join('');
+    $('count').textContent = `0${pi + 1} / 0${P.length}`;
+    $('prog').style.transform = `scaleX(${(pi + 1) / P.length})`;
+    si = -1; select(p.start, true);
+    if (dir !== undefined) $('live').textContent = `Project ${pi + 1} of ${P.length}: ${p.title}`;
+  }
+  function select(i, quiet) {
+    if (i === si) return;
+    si = i;
+    const p = P[pi], s = p.steps[i];
+    steps.forEach((b, j) => { b.setAttribute('aria-selected', String(j === i)); b.tabIndex = j === i ? 0 : -1; });
+    [...$('dashes').children].forEach((d, j) => d.classList.toggle('on', j === i));
+    $('story').setAttribute('aria-labelledby', 'st' + i);
+    $('smeta').textContent = `Step 0${i + 1} / 0${p.steps.length} · ${s[0]} · ${s[1]}`;
+    $('stext').textContent = s[2];
+    const b = steps[i];
+    if (stage.scrollWidth > stage.clientWidth) stage.scrollTo({ left: b.offsetLeft - (stage.clientWidth - b.offsetWidth) / 2, behavior: reduce || quiet ? 'auto' : 'smooth' });
+    const st = $('story'); st.classList.remove('swap'); void st.offsetWidth; if (!reduce && !quiet) st.classList.add('swap');
+  }
+  stage.addEventListener('keydown', e => {
+    const n = steps.length; let k = null;
+    if (e.key === 'ArrowRight') k = (si + 1) % n; if (e.key === 'ArrowLeft') k = (si - 1 + n) % n;
+    if (e.key === 'Home') k = 0; if (e.key === 'End') k = n - 1;
+    if (k !== null) { e.preventDefault(); steps[k].focus(); }
+  });
+  $('next').addEventListener('click', () => { pi = (pi + 1) % P.length; renderProject(1); });
+  $('prev').addEventListener('click', () => { pi = (pi - 1 + P.length) % P.length; renderProject(-1); });
+  renderProject();
+})();
+</script>
+</body>
+</html>

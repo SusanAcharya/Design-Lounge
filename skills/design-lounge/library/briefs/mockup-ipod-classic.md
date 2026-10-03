@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 189 · "Click-wheel player mockup" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 192 · "Click-wheel player mockup" · designlounge.vercel.app -->
 
 # Click-wheel player mockup
 

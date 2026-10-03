@@ -1,0 +1,277 @@
+<!-- Design Lounge piece: docs-hatched-gutter-shell · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Theming and dark mode — Rookery docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf9; --surface:#ffffff; --ink:#121417; --ink-2:#4b5058; --ink-3:#737881;
+  --line:#e4e5e8; --hatch:#e3e4e7; --accent:#c8402a; --accent-soft:#fbe9e5; --chip:#f0f0ee;
+  --sans:"Schibsted Grotesk",system-ui,sans-serif; --mono:"Martian Mono",ui-monospace,monospace;
+  --top:56px; --side:256px; --col:760px; --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+[data-theme=dark]{
+  --bg:#0f1113; --surface:#15181b; --ink:#eceded; --ink-2:#a9adb3; --ink-3:#868b93;
+  --line:#25292e; --hatch:#21252a; --accent:#ff7a59; --accent-soft:#2a1914; --chip:#1d2125;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.7 var(--sans);-webkit-font-smoothing:antialiased;transition:background 240ms var(--ease),color 240ms var(--ease)}
+button,a{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.top{position:sticky;top:0;z-index:20;height:var(--top);display:flex;align-items:center;gap:14px;padding:0 24px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:18px;letter-spacing:-.02em;text-decoration:none}
+.logo svg{width:24px;height:24px;color:var(--accent)}
+.ver{position:relative}
+.ver>button{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 8px 0 10px;border:0;border-radius:999px;background:var(--chip);font:500 11px var(--mono);cursor:pointer}
+.ver>button svg{width:12px;height:12px;transition:transform 200ms var(--ease)}
+.ver>button[aria-expanded=true] svg{transform:rotate(180deg)}
+.menu{position:absolute;top:34px;left:0;min-width:200px;margin:0;padding:6px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px -12px rgba(0,0,0,.25);opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity 160ms var(--ease),transform 200ms var(--ease)}
+.menu.open{opacity:1;transform:none;pointer-events:auto}
+.menu button{display:flex;width:100%;justify-content:space-between;align-items:center;gap:12px;min-height:36px;padding:0 10px;border:0;border-radius:6px;background:none;text-align:left;font-size:14px;cursor:pointer}
+.menu button:hover,.menu button:focus-visible{background:var(--chip);outline:none}
+.menu small{font:400 10px var(--mono);color:var(--ink-3)}
+.menu button[aria-checked=true]{font-weight:600}
+.menu button[aria-checked=true] small{color:var(--accent)}
+.links{margin-left:auto;display:flex;gap:24px;font-size:14px;font-weight:500}
+.links a{text-decoration:none;color:var(--ink-2)}
+.links a:hover,.links a[aria-current]{color:var(--ink)}
+.search{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink-3);font-size:13px}
+.search svg{width:14px;height:14px}
+.search kbd{font:400 10px var(--mono)}
+.crumb{display:none}
+.shell{display:grid;grid-template-columns:var(--side) minmax(0,1fr)}
+.side{position:sticky;top:var(--top);height:calc(100vh - var(--top));overflow-y:auto;padding:28px 20px 40px 24px;border-right:1px solid var(--line);scrollbar-width:thin}
+.side h3{font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 12px}
+.side ul{list-style:none;margin:0 0 28px;padding:0;border-left:1px solid var(--line)}
+.side a{display:block;padding:4px 0 4px 14px;margin-left:-1px;border-left:1px solid transparent;font-size:14px;color:var(--ink-2);text-decoration:none;transition:color 120ms var(--ease),border-color 120ms var(--ease)}
+.side a:hover{color:var(--ink);border-left-color:var(--ink-3)}
+.side a[aria-current=page]{color:var(--ink);font-weight:600;border-left-color:var(--ink)}
+.main{background:repeating-linear-gradient(-45deg,var(--hatch) 0 1px,transparent 1px 9px);background-attachment:fixed;min-width:0}
+.band{border-bottom:1px solid var(--line)}
+.col{position:relative;max-width:var(--col);margin:0 auto;background:var(--bg);border-left:1px solid var(--line);border-right:1px solid var(--line);padding:40px 48px;transition:background 240ms var(--ease)}
+.col::before,.col::after{content:"";position:absolute;bottom:-5px;width:9px;height:9px;background:linear-gradient(var(--ink-3),var(--ink-3)) center/9px 1px no-repeat,linear-gradient(var(--ink-3),var(--ink-3)) center/1px 9px no-repeat;z-index:1}
+.col::before{left:-5px}.col::after{right:-5px}
+.notice{display:none}
+.notice .col{padding:12px 48px;font-size:13.5px;background:var(--accent-soft);color:var(--ink)}
+.notice button{border:0;background:none;padding:0;font-weight:600;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+[data-old] .notice{display:block}
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+h1{font-size:34px;line-height:1.12;letter-spacing:-.03em;font-weight:600;margin:0 0 14px}
+.lede{font-size:17px;color:var(--ink-2);margin:0;max-width:62ch}
+h2{font-size:20px;font-weight:600;letter-spacing:-.015em;margin:0 0 10px}
+p{margin:0 0 12px;color:var(--ink-2)}
+p:last-child{margin-bottom:0}
+code{font:400 12.5px var(--mono);background:var(--chip);border-radius:4px;padding:1px 5px;color:var(--ink)}
+pre{margin:16px 0 0;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font:400 12.5px/1.75 var(--mono);overflow-x:auto;color:var(--ink-2)}
+pre b{color:var(--accent);font-weight:400}
+table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13.5px}
+th{text-align:left;font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:0 0 10px;border-bottom:1px solid var(--line)}
+th.on{color:var(--accent)}
+td{padding:10px 0;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:middle}
+td:first-child code{background:none;padding:0}
+.sw{display:inline-flex;align-items:center;gap:8px;font:400 12px var(--mono)}
+.sw i{width:16px;height:16px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+td.on{color:var(--ink)}
+.try{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--ink-2)}
+.try svg{width:18px;height:18px;color:var(--accent);flex:none}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr)}
+.foot .col{padding:0}
+.fgrid div{padding:32px 32px 36px}
+.fgrid div+div{border-left:1px solid var(--line)}
+.fgrid h4{font-size:14px;font-weight:600;margin:0 0 14px}
+.fgrid a{display:block;font-size:14px;color:var(--ink-2);text-decoration:none;padding:5px 0}
+.fgrid a:hover{color:var(--ink)}
+.base .col{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 32px;flex-wrap:wrap}
+.base small{font-size:13px;color:var(--ink-3)}
+.theme{display:inline-flex;gap:2px;padding:3px;border-radius:999px;background:var(--chip)}
+.theme button{width:32px;height:28px;border:0;border-radius:999px;background:none;display:grid;place-items:center;color:var(--ink-3);cursor:pointer;transition:background 160ms var(--ease),color 160ms var(--ease)}
+.theme button svg{width:16px;height:16px}
+.theme button:hover{color:var(--ink)}
+.theme button[aria-checked=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12),0 0 0 1px var(--line)}
+.scrim{display:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:1100px){.links{display:none}.search{margin-left:auto}}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .crumb{display:flex;position:sticky;top:var(--top);z-index:15;align-items:center;gap:12px;height:48px;padding:0 16px;background:var(--bg);border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+  .crumb button{width:40px;height:40px;margin-left:-8px;border:0;background:none;display:grid;place-items:center;cursor:pointer}
+  .crumb svg{width:18px;height:18px}
+  .crumb b{color:var(--ink);font-weight:500}
+  .side{position:fixed;top:0;left:0;bottom:0;height:auto;z-index:40;width:280px;background:var(--bg);transform:translateX(-100%);transition:transform 300ms cubic-bezier(.32,.72,0,1);visibility:hidden}
+  .nav-open .side{transform:none;visibility:visible}
+  .scrim{display:block;position:fixed;inset:0;z-index:35;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity 240ms var(--ease)}
+  .nav-open .scrim{opacity:1;pointer-events:auto}
+}
+@media (max-width:640px){
+  .top{padding:0 16px}.search span,.search kbd{display:none}
+  .col{margin:0 12px;padding:28px 20px}
+  .notice .col{padding:12px 20px}
+  h1{font-size:28px}
+  .fgrid{grid-template-columns:1fr}.fgrid div+div{border-left:0;border-top:1px solid var(--line)}.fgrid div{padding:24px 20px}
+  .base .col{padding:16px 20px}
+  table{font-size:12.5px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="#" aria-label="Rookery home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg>rookery</a>
+  <div class="ver">
+    <button type="button" id="ver-btn" aria-haspopup="true" aria-expanded="false" aria-controls="ver-menu" aria-label="Docs version, v2.4"><span id="ver-t">v2.4</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <ul class="menu" id="ver-menu" role="menu" aria-label="Docs version">
+      <li role="none"><button role="menuitemradio" aria-checked="true" data-v="v2.4">v2.4 <small>latest</small></button></li>
+      <li role="none"><button role="menuitemradio" aria-checked="false" data-v="v2.3">v2.3 <small>Jun 2026</small></button></li>
+      <li role="none"><button role="menuitemradio" aria-checked="false" data-v="v1.9">v1.9 <small>legacy</small></button></li>
+    </ul>
+  </div>
+  <button class="search" type="button" aria-label="Search docs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><span>Search docs</span><kbd>⌘K</kbd></button>
+  <nav class="links" aria-label="Site"><a href="#" aria-current="page">Docs</a><a href="#">Components</a><a href="#">Changelog</a><a href="#">Showcase</a></nav>
+</header>
+<div class="crumb"><button type="button" id="nav-btn" aria-label="Open navigation" aria-expanded="false" aria-controls="side"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg></button><span id="crumb-g">Foundations</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><b id="crumb-p">Theming</b></div>
+<div class="shell">
+  <nav class="side" id="side" aria-label="Documentation">
+    <h3>Getting started</h3>
+    <ul><li><a href="#">Introduction</a></li><li><a href="#">Installation</a></li><li><a href="#">Editor setup</a></li><li><a href="#">Upgrading to v2</a></li></ul>
+    <h3>Foundations</h3>
+    <ul><li><a href="#" aria-current="page">Theming</a></li><li><a href="#">Typography</a></li><li><a href="#">Spacing and layout</a></li><li><a href="#">Motion</a></li><li><a href="#">Focus and states</a></li></ul>
+    <h3>Components</h3>
+    <ul><li><a href="#">Accordion</a></li><li><a href="#">Dialog</a></li><li><a href="#">Menu</a></li><li><a href="#">Popover</a></li><li><a href="#">Tabs</a></li><li><a href="#">Toast</a></li><li><a href="#">Tooltip</a></li></ul>
+    <h3>Patterns</h3>
+    <ul><li><a href="#">Forms</a></li><li><a href="#">Data tables</a></li><li><a href="#">Empty states</a></li></ul>
+  </nav>
+  <div class="scrim" id="scrim"></div>
+  <main class="main" id="main">
+    <div class="band notice" role="status"><div class="col">You are reading the <b id="old-v">v1.9</b> docs. <button type="button" id="to-latest">Go to v2.4</button></div></div>
+    <div class="band"><div class="col">
+      <p class="eyebrow" id="eyebrow">Foundations</p>
+      <h1 id="title">Theming and dark mode</h1>
+      <p class="lede">Every Rookery component reads its colours from five tokens. Change the tokens, or flip one attribute on the root, and the whole interface follows.</p>
+    </div></div>
+    <div class="band"><div class="col">
+      <h2>How a theme is applied</h2>
+      <p>Rookery sets <code>data-theme</code> on the <code>html</code> element. Components never ask which theme is on; they only read tokens, so a third theme is one more block of variables.</p>
+      <p>Leave the attribute off to follow the visitor's system setting.</p>
+<pre>&lt;html <b>data-theme="dark"</b>&gt;
+  &lt;!-- every component below reads --rk-* tokens --&gt;
+&lt;/html&gt;</pre>
+    </div></div>
+    <div class="band"><div class="col">
+      <h2>Colour tokens</h2>
+      <p>These are the only colours components use. The column marked in use is the theme on this page right now.</p>
+      <table>
+        <thead><tr><th scope="col">Token</th><th scope="col" id="th-l">Light</th><th scope="col" id="th-d">Dark</th></tr></thead>
+        <tbody>
+          <tr><td><code>--rk-bg</code></td><td><span class="sw"><i style="background:#fafaf9"></i>#fafaf9</span></td><td><span class="sw"><i style="background:#0f1113"></i>#0f1113</span></td></tr>
+          <tr><td><code>--rk-surface</code></td><td><span class="sw"><i style="background:#ffffff"></i>#ffffff</span></td><td><span class="sw"><i style="background:#15181b"></i>#15181b</span></td></tr>
+          <tr><td><code>--rk-ink</code></td><td><span class="sw"><i style="background:#121417"></i>#121417</span></td><td><span class="sw"><i style="background:#eceded"></i>#eceded</span></td></tr>
+          <tr><td><code>--rk-line</code></td><td><span class="sw"><i style="background:#e4e5e8"></i>#e4e5e8</span></td><td><span class="sw"><i style="background:#25292e"></i>#25292e</span></td></tr>
+          <tr><td><code>--rk-accent</code></td><td><span class="sw"><i style="background:#c8402a"></i>#c8402a</span></td><td><span class="sw"><i style="background:#ff7a59"></i>#ff7a59</span></td></tr>
+        </tbody>
+      </table>
+    </div></div>
+    <div class="band"><div class="col try"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg><span>Try it: the switch at the bottom of this page changes these docs, and the table follows.</span></div></div>
+    <footer>
+      <div class="band foot"><div class="col"><div class="fgrid">
+        <div><h4>Rookery</h4><a href="#">Documentation</a><a href="#">Components</a><a href="#">Changelog</a><a href="#">Roadmap</a></div>
+        <div><h4>Resources</h4><a href="#">Design kit</a><a href="#">Icon set</a><a href="#">Examples</a><a href="#">Accessibility notes</a></div>
+        <div><h4>Community</h4><a href="#">Discussions</a><a href="#">Newsletter</a><a href="#">Sponsors</a></div>
+      </div></div></div>
+      <div class="band base"><div class="col">
+        <div class="theme" role="radiogroup" aria-label="Colour theme" id="theme">
+          <button role="radio" aria-checked="false" aria-label="System" data-t="system"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></button>
+          <button role="radio" aria-checked="true" aria-label="Light" data-t="light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+          <button role="radio" aria-checked="false" aria-label="Dark" data-t="dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+        </div>
+        <small>© 2026 Rookery Works · MIT licence</small>
+      </div></div>
+    </footer>
+  </main>
+</div>
+<script>
+(() => {
+  const root = document.documentElement;
+  const $ = (id) => document.getElementById(id);
+  const mq = matchMedia('(prefers-color-scheme: dark)');
+  let mode = 'light';
+  function apply() {
+    const t = mode === 'system' ? (mq.matches ? 'dark' : 'light') : mode;
+    root.dataset.theme = t;
+    $('th-l').className = t === 'light' ? 'on' : '';
+    $('th-d').className = t === 'dark' ? 'on' : '';
+    $('th-l').textContent = t === 'light' ? 'Light · in use' : 'Light';
+    $('th-d').textContent = t === 'dark' ? 'Dark · in use' : 'Dark';
+    document.querySelectorAll('tbody tr').forEach((r) => { r.cells[1].className = t === 'light' ? 'on' : ''; r.cells[2].className = t === 'dark' ? 'on' : ''; });
+  }
+  mq.addEventListener('change', () => mode === 'system' && apply());
+  const radios = [...$('theme').children];
+  const pickTheme = (b, focus) => {
+    radios.forEach((r) => { r.setAttribute('aria-checked', r === b); r.tabIndex = r === b ? 0 : -1; });
+    if (focus) b.focus();
+    mode = b.dataset.t; apply();
+  };
+  radios.forEach((r, i) => {
+    r.tabIndex = r.getAttribute('aria-checked') === 'true' ? 0 : -1;
+    r.addEventListener('click', () => pickTheme(r));
+    r.addEventListener('keydown', (e) => {
+      const k = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (k) { e.preventDefault(); pickTheme(radios[(i + k + 3) % 3], true); }
+    });
+  });
+
+  const vb = $('ver-btn'), vm = $('ver-menu');
+  const items = [...vm.querySelectorAll('button')];
+  const openMenu = (o, focusFirst) => {
+    vm.classList.toggle('open', o); vb.setAttribute('aria-expanded', o);
+    if (o && focusFirst) (items.find((x) => x.getAttribute('aria-checked') === 'true') || items[0]).focus();
+  };
+  const setVer = (v) => {
+    items.forEach((x) => x.setAttribute('aria-checked', x.dataset.v === v));
+    $('ver-t').textContent = v; vb.setAttribute('aria-label', 'Docs version, ' + v);
+    if (v === 'v2.4') delete root.dataset.old; else { root.dataset.old = ''; $('old-v').textContent = v; }
+  };
+  vb.addEventListener('click', () => openMenu(vb.getAttribute('aria-expanded') !== 'true', true));
+  vb.addEventListener('keydown', (e) => { if (e.key === 'ArrowDown') { e.preventDefault(); openMenu(true, true); } });
+  vm.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; setVer(b.dataset.v); openMenu(false); vb.focus(); });
+  vm.addEventListener('keydown', (e) => {
+    const i = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); items[(i + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length].focus(); }
+    if (e.key === 'Escape' || e.key === 'Tab') { openMenu(false); if (e.key === 'Escape') vb.focus(); }
+  });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.ver')) openMenu(false); });
+  $('to-latest').addEventListener('click', () => setVer('v2.4'));
+
+  const side = $('side');
+  const groupOf = (a) => { let h = a.closest('ul').previousElementSibling; return h.textContent; };
+  side.addEventListener('click', (e) => {
+    const a = e.target.closest('a'); if (!a) return;
+    e.preventDefault();
+    side.querySelectorAll('a[aria-current]').forEach((x) => x.removeAttribute('aria-current'));
+    a.setAttribute('aria-current', 'page');
+    $('crumb-g').textContent = groupOf(a); $('crumb-p').textContent = a.textContent;
+    $('eyebrow').textContent = groupOf(a);
+    setNav(false);
+  });
+  const nb = $('nav-btn');
+  function setNav(o) {
+    document.body.classList.toggle('nav-open', o);
+    nb.setAttribute('aria-expanded', o);
+    nb.setAttribute('aria-label', o ? 'Close navigation' : 'Open navigation');
+    if (o) side.querySelector('a[aria-current]').focus();
+  }
+  nb.addEventListener('click', () => setNav(!document.body.classList.contains('nav-open')));
+  $('scrim').addEventListener('click', () => { setNav(false); nb.focus(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && document.body.classList.contains('nav-open')) { setNav(false); nb.focus(); } });
+  apply();
+})();
+</script>
+</body>
+</html>

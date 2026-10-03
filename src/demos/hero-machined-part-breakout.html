@@ -1,0 +1,280 @@
+<!-- Design Lounge piece: hero-machined-part-breakout · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Kestrom Precision · Machined to the last micron</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,300;112,800;112,900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page: #e9e6df;
+    --card: #1d1e20;
+    --card-2: #26282b;
+    --bone: #f1eee7;
+    --ink: #1d1e20;
+    --ink-2: #55575b;
+    --on-card: #f1eee7;
+    --on-card-2: #a9aaa6;
+    --line-card: rgba(241, 238, 231, 0.14);
+    --line: #cfcbc2;
+    --amber: #f2a900;
+    --display: "Archivo", "Arial Narrow", sans-serif;
+    --sans: "Barlow", system-ui, sans-serif;
+    --r-card: 18px;
+    --r-btn: 5px;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: var(--page); color: var(--ink); font: 400 17px/1.45 var(--sans); overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+
+  .hero { position: relative; min-height: 100%; padding: 16px; }
+  .card { position: relative; height: 620px; background: var(--card); color: var(--on-card); border-radius: var(--r-card); overflow: hidden; }
+  .lines { position: absolute; left: -60px; top: 40px; width: 620px; height: 560px; color: var(--on-card); opacity: .13; transition: transform .6s var(--expo); pointer-events: none; }
+
+  nav { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; height: 76px; padding: 0 40px; }
+  .brand { display: flex; align-items: center; gap: 12px; font: 900 22px/1 var(--display); letter-spacing: .02em; }
+  .brand svg { width: 34px; height: 34px; }
+  .menu { display: flex; gap: 34px; list-style: none; margin: 0; padding: 0; }
+  .menu a { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; font: 600 13px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--on-card); opacity: .86; transition: opacity .16s var(--ease); }
+  .menu a:hover { opacity: 1; }
+  .menu svg { width: 10px; height: 10px; }
+
+  h1 { position: relative; z-index: 2; margin: 58px 0 0 64px; font: 300 84px/.94 var(--display); letter-spacing: .01em; text-transform: uppercase; }
+  h1 b { display: block; font-weight: 900; }
+
+  .lede { position: absolute; z-index: 2; left: 760px; top: 330px; width: 440px; }
+  .lede p { margin: 0 0 28px; font-size: 19px; line-height: 1.38; color: var(--on-card); }
+  .lede p strong { font-weight: 600; }
+  .actions { display: flex; align-items: center; gap: 28px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; height: 50px; padding: 0 22px; background: var(--bone); color: var(--ink); border-radius: var(--r-btn); font: 600 15px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; transition: background .16s var(--ease), transform .16s var(--ease); }
+  .btn svg { width: 16px; height: 16px; transition: transform .2s var(--ease); }
+  .btn:hover { background: #fff; }
+  .btn:hover svg { transform: translateX(3px); }
+  .btn:active { transform: translateY(1px); }
+  .link { font: 600 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; padding: 12px 0; border-bottom: 1px solid transparent; transition: border-color .16s var(--ease); }
+  .link:hover { border-bottom-color: var(--on-card); }
+
+  .specs { position: absolute; z-index: 2; left: 760px; top: 520px; width: 440px; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-card); }
+  .specs div { padding: 14px 0 0; }
+  .specs dt { font: 900 22px/1 var(--display); font-variant-numeric: tabular-nums; }
+  .specs dd { margin: 6px 0 0; font-size: 13px; color: var(--on-card-2); letter-spacing: .02em; }
+
+  .stage { position: absolute; z-index: 4; left: 72px; top: 336px; width: 640px; height: 460px; perspective: 1400px; }
+  .part { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .5s var(--expo); }
+  .part > svg.block { position: absolute; left: 0; top: 0; width: 440px; height: 440px; filter: drop-shadow(0 26px 22px rgba(20, 20, 22, .28)); }
+  .floor { position: absolute; left: 70px; top: 420px; width: 300px; height: 40px; border-radius: 50%; background: radial-gradient(closest-side, rgba(29, 30, 32, .32), transparent); z-index: -1; }
+
+  .hot { position: absolute; width: 40px; height: 40px; margin: -20px 0 0 -20px; border: 0; padding: 0; border-radius: 50%; background: transparent; cursor: pointer; display: grid; place-items: center; }
+  .hot span { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: rgba(29, 30, 32, .82); color: var(--on-card); font: 600 11px/1 var(--sans); box-shadow: 0 0 0 1.5px var(--on-card); transition: background .16s var(--ease), color .16s var(--ease), transform .2s var(--expo); }
+  .hot:hover span { transform: scale(1.12); }
+  .hot[aria-pressed="true"] span { background: var(--amber); color: var(--ink); box-shadow: 0 0 0 1.5px var(--amber), 0 0 0 6px rgba(242, 169, 0, .22); }
+  .hot:focus-visible { outline-offset: 0; border-radius: 50%; }
+
+  .leader { position: absolute; left: 0; top: 0; width: 640px; height: 460px; pointer-events: none; overflow: visible; }
+  .leader polyline { fill: none; stroke: var(--amber); stroke-width: 1.25; stroke-dasharray: 360; stroke-dashoffset: 0; transition: stroke-dashoffset .5s var(--expo); }
+  .leader circle { fill: var(--amber); }
+  .leader.draw polyline { stroke-dashoffset: 360; transition: none; }
+
+  .callout { position: absolute; left: 452px; width: 196px; padding: 14px 16px 14px; background: rgba(29, 30, 32, .94); color: var(--on-card); border-left: 2px solid var(--amber); border-radius: 0 6px 6px 0; transition: top .45s var(--expo), opacity .2s var(--ease); }
+  .callout .k { font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--on-card-2); }
+  .callout .v { margin-top: 8px; font: 800 28px/1 var(--display); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  .callout .t { margin-top: 6px; font-size: 13px; color: var(--on-card-2); font-variant-numeric: tabular-nums; }
+  .callout.swap { opacity: 0; }
+
+  .below { position: absolute; left: 776px; top: 668px; right: 56px; display: flex; flex-wrap: wrap; gap: 6px 22px; font: 600 12px/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+  .below em { font-style: normal; color: var(--ink); width: 100%; letter-spacing: .02em; text-transform: none; font-weight: 500; font-size: 15px; }
+
+  @media (max-width: 1100px) {
+    .menu { display: none; }
+    h1 { font-size: 64px; margin-left: 40px; }
+    .lede, .specs { left: auto; right: 40px; width: 380px; }
+    .below { display: none; }
+  }
+  @media (max-width: 760px) {
+    .card { height: auto; padding-bottom: 300px; }
+    h1 { font-size: 42px; margin: 24px 24px 0; }
+    nav { padding: 0 24px; }
+    .lede, .specs { position: relative; left: 0; right: 0; top: 0; width: auto; margin: 28px 24px 0; }
+    .lede p { font-size: 17px; }
+    .actions { flex-wrap: wrap; gap: 12px 24px; }
+    .stage { left: 50%; top: auto; bottom: -40px; width: 300px; height: 320px; margin-left: -150px; }
+    .part > svg.block { width: 300px; height: 300px; }
+    .floor { left: 40px; top: 290px; width: 220px; }
+    .callout, .leader, .hot { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .part, .lines, .leader polyline, .callout, .btn svg, .hot span { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<main class="hero">
+  <section class="card" aria-labelledby="h">
+    <svg class="lines" viewBox="0 0 620 560" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M150 30 L470 30 L600 250 L470 470 L150 470 L20 250 Z"/>
+        <path d="M200 110 L420 110 L510 250 L420 390 L200 390 L110 250 Z"/>
+        <path d="M200 110 L310 250 L200 390 M420 110 L310 250 L420 390"/>
+        <path d="M20 250 L110 250 M510 250 L600 250"/>
+      </g>
+    </svg>
+    <nav aria-label="Primary">
+      <a class="brand" href="#" aria-label="Kestrom Precision, home">
+        <svg viewBox="0 0 34 34" aria-hidden="true"><path d="M9 3h16l8 14-8 14H9L1 17z" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M11 10l6 7-6 7M23 10l-6 7 6 7" fill="none" stroke="#f2a900" stroke-width="2.4" stroke-linejoin="round"/></svg>
+        KESTROM
+      </a>
+      <ul class="menu">
+        <li><a href="#">Capabilities <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+        <li><a href="#">Industries <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+        <li><a href="#">Materials <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+        <li><a href="#">Shop floor</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+
+    <h1 id="h">Machined to the <b>last micron</b></h1>
+
+    <div class="lede">
+      <p><strong>Kestrom</strong> takes a part from one prototype to ten thousand: 5-axis milling, Swiss turning and wire EDM for flight hardware, wafer tools and surgical steel.</p>
+      <div class="actions">
+        <a class="btn" href="#">Request a quote <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="link" href="#">Or upload a STEP file</a>
+      </div>
+    </div>
+
+    <dl class="specs">
+      <div><dt>±0.003</dt><dd>mm held on bores</dd></div>
+      <div><dt>48 h</dt><dd>first article</dd></div>
+      <div><dt>AS9100</dt><dd>rev D certified</dd></div>
+    </dl>
+  </section>
+
+  <div class="stage" id="stage">
+    <div class="part" id="part">
+      <div class="floor" aria-hidden="true"></div>
+      <svg class="block" viewBox="0 0 440 440" role="img" aria-label="A machined steel manifold block with a centre bore, a flanged side port and a milled pocket">
+        <defs>
+          <linearGradient id="gt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3f3f1"/><stop offset=".55" stop-color="#cfd1d2"/><stop offset="1" stop-color="#b3b6b9"/></linearGradient>
+          <linearGradient id="gl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d9196"/><stop offset=".5" stop-color="#b9bcbf"/><stop offset="1" stop-color="#9a9ea2"/></linearGradient>
+          <linearGradient id="gr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4c5157"/><stop offset=".6" stop-color="#6c7176"/><stop offset="1" stop-color="#3b3f44"/></linearGradient>
+          <radialGradient id="hole" cx=".42" cy=".38" r=".7"><stop offset="0" stop-color="#15171a"/><stop offset=".7" stop-color="#2b2e32"/><stop offset="1" stop-color="#5d6166"/></radialGradient>
+          <pattern id="brush" width="200" height="6" patternUnits="userSpaceOnUse"><path d="M0 1h200M0 4h200" stroke="#fff" stroke-opacity=".07" stroke-width=".6"/></pattern>
+        </defs>
+        <polygon points="220,20 393.2,120 220,220 46.8,120" fill="url(#gt)"/>
+        <polygon points="46.8,120 220,220 220,420 46.8,320" fill="url(#gl)"/>
+        <polygon points="393.2,120 220,220 220,420 393.2,320" fill="url(#gr)"/>
+        <g transform="matrix(.866 .5 -.866 .5 220 20)">
+          <rect width="200" height="200" fill="url(#brush)"/>
+          <circle cx="100" cy="100" r="44" fill="#9ea2a6"/>
+          <circle cx="100" cy="100" r="34" fill="url(#hole)"/>
+          <circle cx="100" cy="100" r="44" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <g fill="url(#hole)" stroke="#e7e8e8" stroke-width="1" vector-effect="non-scaling-stroke">
+            <circle cx="28" cy="28" r="10"/><circle cx="172" cy="28" r="10"/><circle cx="28" cy="172" r="10"/><circle cx="172" cy="172" r="10"/>
+          </g>
+          <path d="M0 0H200V200" fill="none" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+        </g>
+        <g transform="matrix(.866 .5 0 -1 46.8 320)">
+          <rect width="200" height="200" fill="url(#brush)"/>
+          <circle cx="100" cy="100" r="62" fill="#a6aaae" stroke="#d9dbdc" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <circle cx="100" cy="100" r="40" fill="url(#hole)"/>
+          <circle cx="100" cy="100" r="31" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <g fill="url(#hole)">
+            <circle cx="152" cy="100" r="6"/><circle cx="126" cy="145" r="6"/><circle cx="74" cy="145" r="6"/><circle cx="48" cy="100" r="6"/><circle cx="74" cy="55" r="6"/><circle cx="126" cy="55" r="6"/>
+          </g>
+        </g>
+        <g transform="matrix(-.866 .5 0 -1 393.2 320)">
+          <rect width="200" height="200" fill="url(#brush)"/>
+          <rect x="44" y="40" width="112" height="56" rx="20" fill="#2b2e32" stroke="#8b8f94" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <rect x="54" y="48" width="92" height="40" rx="14" fill="#1b1d20"/>
+          <circle cx="62" cy="146" r="14" fill="url(#hole)" stroke="#8b8f94" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <circle cx="138" cy="146" r="14" fill="url(#hole)" stroke="#8b8f94" stroke-width="1" vector-effect="non-scaling-stroke"/>
+        </g>
+        <path d="M46.8 120 L220 220 L393.2 120 M220 220 V420" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.2"/>
+      </svg>
+
+      <svg class="leader" id="leader" viewBox="0 0 640 460" aria-hidden="true"><polyline id="lp" points=""/><circle id="ld" r="3"/></svg>
+
+      <button class="hot" style="left:220px;top:120px" data-k="01 · Centre bore" data-v="Ø 24.000" data-t="H7 · +0.021 / −0.000 mm" data-y="40" aria-pressed="true" aria-label="Centre bore"><span>1</span></button>
+      <button class="hot" style="left:133px;top:270px" data-k="02 · Flange port" data-v="Ø 46.000" data-t="6 × M5 on a 60 mm PCD" data-y="196" aria-pressed="false" aria-label="Flange port"><span>2</span></button>
+      <button class="hot" style="left:307px;top:228px" data-k="03 · Milled pocket" data-v="Ra 0.4" data-t="µm finish · flat to 0.004" data-y="284" aria-pressed="false" aria-label="Milled pocket"><span>3</span></button>
+
+      <div class="callout" id="callout" role="status" aria-live="polite" style="top:40px">
+        <div class="k" id="ck">01 · Centre bore</div>
+        <div class="v" id="cv">Ø 24.000</div>
+        <div class="t" id="ct">H7 · +0.021 / −0.000 mm</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="below" aria-label="Industries served"><em>Parts in service with 140 teams in</em>Semiconductor <span>Aerospace</span> <span>Medical</span> <span>Energy</span> <span>Food-grade</span></p>
+</main>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const part = document.getElementById('part');
+  const lines = document.querySelector('.lines');
+  const hots = [...document.querySelectorAll('.hot')];
+  const callout = document.getElementById('callout');
+  const leader = document.getElementById('leader');
+  const lp = document.getElementById('lp');
+  const ld = document.getElementById('ld');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+  function draw(btn) {
+    const x = parseFloat(btn.style.left), y = parseFloat(btn.style.top);
+    const cy = +btn.dataset.y + 30;
+    lp.setAttribute('points', `${x + 12},${y} ${x + 40},${y} ${420},${cy} 452,${cy}`);
+    ld.setAttribute('cx', x); ld.setAttribute('cy', y);
+  }
+
+  function select(btn) {
+    hots.forEach(h => h.setAttribute('aria-pressed', String(h === btn)));
+    const apply = () => {
+      document.getElementById('ck').textContent = btn.dataset.k;
+      document.getElementById('cv').textContent = btn.dataset.v;
+      document.getElementById('ct').textContent = btn.dataset.t;
+      callout.style.top = btn.dataset.y + 'px';
+      callout.classList.remove('swap');
+    };
+    draw(btn);
+    if (reduce.matches) { apply(); return; }
+    leader.classList.add('draw');
+    callout.classList.add('swap');
+    leader.getBoundingClientRect();
+    leader.classList.remove('draw');
+    setTimeout(apply, 140);
+  }
+
+  hots.forEach((h, i) => {
+    h.addEventListener('click', () => select(h));
+    h.addEventListener('mouseenter', () => { if (h.getAttribute('aria-pressed') !== 'true') select(h); });
+    h.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); hots[(i + 1) % hots.length].focus(); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); hots[(i + hots.length - 1) % hots.length].focus(); }
+    });
+  });
+  draw(hots[0]);
+
+  let raf = 0;
+  document.addEventListener('pointermove', e => {
+    if (reduce.matches || e.pointerType === 'touch') return;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      const nx = e.clientX / innerWidth - 0.5, ny = e.clientY / innerHeight - 0.5;
+      part.style.transform = `rotateY(${(nx * 10).toFixed(2)}deg) rotateX(${(-ny * 7).toFixed(2)}deg)`;
+      lines.style.transform = `translate(${(nx * -18).toFixed(1)}px, ${(ny * -12).toFixed(1)}px)`;
+    });
+  });
+  document.addEventListener('pointerleave', () => { part.style.transform = ''; lines.style.transform = ''; });
+})();
+</script>
+</body>
+</html>

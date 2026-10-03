@@ -1,0 +1,231 @@
+<!-- Design Lounge piece: hero-layered-letter-swap · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Brisa — Money, unfolded</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF7EF; --ink:#0F3D2E; --ink-2:#3F5E52; --line:#E8E0D0;
+  --coral:#FF6B4A; --butter:#FFC94D; --mint:#BFE6D3; --card:#FFFFFF;
+  --display:"Unbounded",system-ui,sans-serif; --sans:"Figtree",system-ui,sans-serif;
+  --s1:4px; --s2:8px; --s3:16px; --s4:24px; --s5:40px; --s6:64px;
+  --r-pill:999px; --r-card:14px;
+  --ease:cubic-bezier(.2,.7,.2,1); --expo:cubic-bezier(.16,1,.3,1);
+  --t-scatter:420ms; --t-gather:620ms; --stagger:38ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--coral);outline-offset:3px;border-radius:6px}
+
+.top{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:28px 48px}
+.brand{display:flex;align-items:center;gap:10px;font:700 20px/1 var(--display);letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+.brand svg{width:26px;height:26px}
+.links{display:flex;align-items:center;gap:36px;font-weight:600;font-size:15px}
+.links a{color:var(--ink);text-decoration:none;padding:8px 0;background:linear-gradient(var(--coral),var(--coral)) 0 100%/0 2px no-repeat;transition:background-size 240ms var(--ease)}
+.links a:hover{background-size:100% 2px}
+
+/* ticker pill */
+.pill{position:relative;overflow:hidden;height:44px;width:148px;border-radius:var(--r-pill);background:var(--mint);font-weight:700;font-size:15px;isolation:isolate}
+.pill::before{content:"";position:absolute;inset:0;background:var(--ink);border-radius:inherit;transform:scale(0);transform-origin:var(--px,50%) var(--py,50%);transition:transform 360ms var(--expo);z-index:-1}
+.pill:hover::before,.pill:focus-visible::before{transform:scale(1.6)}
+.pill .run{display:flex;gap:24px;white-space:nowrap;position:absolute;left:0;top:50%;transform:translateY(-50%);padding-left:30px;transition:color 200ms}
+.pill .run span+span{visibility:hidden}
+.pill:hover .run,.pill:focus-visible .run{color:var(--bg);animation:tick 2.4s linear infinite;padding-left:0}
+.pill:hover .run span,.pill:focus-visible .run span{visibility:visible}
+@keyframes tick{from{transform:translate(0,-50%)}to{transform:translate(calc(-50% - 12px),-50%)}}
+
+.stage{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.eyebrow{font:600 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin:0 0 var(--s4)}
+h1{margin:0;font:700 112px/.98 var(--display);letter-spacing:-.055em}
+h1 .line{display:block;white-space:nowrap}
+.w{display:inline-block}
+.ch{position:relative;display:inline-block;color:var(--ink);transition:color 180ms var(--ease) calc(var(--i)*var(--stagger))}
+.ch::before,.ch::after{content:attr(data-c);position:absolute;left:0;top:0;pointer-events:none;opacity:0;
+  transition:transform var(--t-gather) var(--expo) calc(var(--i)*var(--stagger)),opacity 300ms var(--ease) calc(var(--i)*var(--stagger))}
+.ch::before{color:var(--coral)}
+.ch::after{color:var(--butter);mix-blend-mode:multiply}
+.w.out .ch{color:transparent}
+.w.out .ch::before{opacity:1;transform:translate(var(--dx1),var(--dy1))}
+.w.out .ch::after{opacity:1;transform:translate(var(--dx2),var(--dy2))}
+.w.out .ch::before,.w.out .ch::after{transition-duration:var(--t-scatter),160ms}
+
+.lede{max-width:440px;margin:var(--s4) auto 0;color:var(--ink-2);font-size:18px;line-height:1.5}
+.swap{display:inline-flex;gap:var(--s2);margin-top:var(--s4);padding:4px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card)}
+.swap button{height:40px;padding:0 18px;border-radius:var(--r-pill);font-weight:600;font-size:14px;color:var(--ink-2);transition:background 200ms var(--ease),color 200ms var(--ease)}
+.swap button:hover{color:var(--ink)}
+.swap button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+/* floaters */
+.float{position:absolute;pointer-events:none;transition:transform 900ms var(--expo);will-change:transform}
+.dot{border-radius:50%}
+.mini{width:58px;height:82px;border-radius:9px;background:var(--mint);box-shadow:0 12px 24px -12px rgba(15,61,46,.35);display:grid;place-items:end start;padding:8px}
+.mini i{display:block;width:14px;height:10px;border-radius:2px;background:var(--butter)}
+.mini.c{background:#FFD9CF}
+.mini.c i{background:var(--coral)}
+
+/* phone peek */
+.phone{position:absolute;left:50%;bottom:-210px;width:270px;height:330px;margin-left:-135px;border-radius:36px;background:var(--card);border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(15,61,46,.35);padding:22px 18px;text-align:left;transition:transform 900ms var(--expo)}
+.phone small{display:block;font-size:11px;color:var(--ink-2);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.phone b{display:block;font:700 30px/1.1 var(--display);letter-spacing:-.04em;margin-top:6px}
+.cards{display:flex;gap:8px;margin-top:16px}
+.cards span{flex:1;height:64px;border-radius:10px;background:var(--ink);position:relative}
+.cards span:nth-child(2){background:var(--coral)}
+.cards span:nth-child(3){background:var(--butter)}
+.cards span::after{content:"";position:absolute;left:8px;bottom:8px;width:16px;height:11px;border-radius:2px;background:rgba(255,255,255,.55)}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+@media (max-width:900px){
+  h1{font-size:64px}
+  .links a{display:none}
+  .top{padding:20px 20px}
+  .lede{font-size:16px;padding:0 20px}
+}
+@media (max-width:480px){
+  h1{font-size:42px}
+  .swap button{padding:0 12px}
+  .mini{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .ch,.ch::before,.ch::after,.float,.phone,.pill::before{transition:none!important}
+  .pill:hover .run,.pill:focus-visible .run{animation:none;padding-left:30px}
+  .pill:hover .run span+span,.pill:focus-visible .run span+span{visibility:hidden}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#" aria-label="Brisa home">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="12" r="7" fill="#0F3D2E"/><circle cx="15" cy="12" r="7" fill="#FF6B4A" style="mix-blend-mode:multiply"/></svg>
+    Brisa
+  </a>
+  <nav class="links" aria-label="Main">
+    <a href="#">Cards</a>
+    <a href="#">Travel</a>
+    <a href="#">Security</a>
+    <button class="pill" type="button" id="pill" aria-label="Get the app">
+      <span class="run" aria-hidden="true"><span>Get the app</span><span>Get the app</span><span>Get the app</span><span>Get the app</span></span>
+    </button>
+  </nav>
+</header>
+
+<div class="float dot" data-d="18" style="left:17%;top:15%;width:12px;height:12px;background:var(--ink)"></div>
+<div class="float dot" data-d="-26" style="left:88%;top:18%;width:14px;height:14px;background:var(--coral)"></div>
+<div class="float dot" data-d="30" style="left:12%;top:58%;width:9px;height:9px;background:var(--butter)"></div>
+<div class="float dot" data-d="-14" style="left:79%;top:54%;width:34px;height:34px;background:#FFE3DA"></div>
+<div class="float dot" data-d="22" style="left:70%;top:82%;width:10px;height:10px;background:var(--mint)"></div>
+<div class="float dot" data-d="-20" style="left:26%;top:84%;width:11px;height:11px;background:var(--ink)"></div>
+<div class="float mini" data-d="34" data-r="-14" style="left:10%;top:30%"><i></i></div>
+<div class="float mini c" data-d="-30" data-r="16" style="left:84%;top:68%"><i></i></div>
+<div class="float mini" data-d="16" data-r="22" style="left:92%;top:36%;transform:scale(.6)"><i></i></div>
+
+<main class="stage">
+  <div>
+    <p class="eyebrow">One card · 38 currencies</p>
+    <h1 aria-describedby="live">
+      <span class="line">Money,</span>
+      <span class="line"><span class="w" id="word"></span></span>
+    </h1>
+    <p class="lede">Spend abroad at the rate you see. No conversion fee, no surprise line on the statement.</p>
+    <div class="swap" role="group" aria-label="Headline word">
+      <button type="button" data-w="unfolded" aria-pressed="true">Unfolded</button>
+      <button type="button" data-w="unstuck" aria-pressed="false">Unstuck</button>
+      <button type="button" data-w="unhurried" aria-pressed="false">Unhurried</button>
+    </div>
+    <p class="sr" id="live" aria-live="polite">Money, unfolded</p>
+  </div>
+</main>
+
+<div class="phone" id="phone" aria-hidden="true">
+  <small>Total balance</small>
+  <b>€4,812.60</b>
+  <div class="cards"><span></span><span></span><span></span></div>
+</div>
+
+<script>
+(() => {
+  const word = document.getElementById('word');
+  const live = document.getElementById('live');
+  const btns = [...document.querySelectorAll('.swap button')];
+  const words = btns.map(b => b.dataset.w);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let idx = 0, busy = false, timer = null;
+
+  const rnd = (a, b) => (a + Math.random() * (b - a)).toFixed(3) + 'em';
+  function build(w) {
+    word.textContent = '';
+    [...(w[0].toUpperCase() + w.slice(1))].forEach((c, i) => {
+      const s = document.createElement('span');
+      s.className = 'ch'; s.dataset.c = c; s.textContent = c;
+      s.style.setProperty('--i', i);
+      s.style.setProperty('--dx1', rnd(-.14, -.04)); s.style.setProperty('--dy1', rnd(-.16, -.04));
+      s.style.setProperty('--dx2', rnd(.04, .14));   s.style.setProperty('--dy2', rnd(.04, .16));
+      word.appendChild(s);
+    });
+  }
+  function setPressed(i) { btns.forEach((b, j) => b.setAttribute('aria-pressed', String(i === j))); }
+  function go(i) {
+    if (busy || i === idx) return;
+    idx = i; setPressed(i);
+    live.textContent = 'Money, ' + words[i];
+    if (reduce) { build(words[i]); return; }
+    busy = true;
+    word.classList.add('out');
+    const n = word.children.length;
+    setTimeout(() => {
+      build(words[i]);
+      word.classList.add('out');
+      word.offsetWidth;
+      requestAnimationFrame(() => word.classList.remove('out'));
+      setTimeout(() => { busy = false; }, 620 + word.children.length * 38);
+    }, 260 + n * 38);
+  }
+  build(words[0]);
+  // first frame: letters gather in from the scattered state
+  if (!reduce) { word.classList.add('out'); word.offsetWidth; setTimeout(() => word.classList.remove('out'), 250); }
+
+  btns.forEach((b, i) => b.addEventListener('click', () => { go(i); restart(); }));
+  function restart() {
+    clearInterval(timer);
+    if (!reduce) timer = setInterval(() => go((idx + 1) % words.length), 3600);
+  }
+  restart();
+  document.addEventListener('visibilitychange', () => document.hidden ? clearInterval(timer) : restart());
+
+  // pointer parallax
+  const floats = [...document.querySelectorAll('.float')];
+  const phone = document.getElementById('phone');
+  if (!reduce) {
+    addEventListener('pointermove', e => {
+      const x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+      floats.forEach(f => {
+        const d = +f.dataset.d, r = +(f.dataset.r || 0);
+        const sc = f.style.transform.includes('scale') ? ' scale(.6)' : '';
+        f.style.transform = `translate(${x * d}px,${y * d}px) rotate(${r + x * 8}deg)${sc}`;
+      });
+      phone.style.transform = `translate(${x * -10}px,${-24 - y * 14}px)`;
+    });
+    document.addEventListener('pointerleave', () => {
+      floats.forEach(f => { const r = +(f.dataset.r || 0); f.style.transform = `rotate(${r}deg)` + (f.style.transform.includes('scale') ? ' scale(.6)' : ''); });
+      phone.style.transform = '';
+    });
+  }
+  floats.forEach(f => { const r = +(f.dataset.r || 0); if (r) f.style.transform = `rotate(${r}deg)` + (f.style.transform.includes('scale') ? ' scale(.6)' : ''); });
+
+  // pill fill grows from the pointer's entry point
+  const pill = document.getElementById('pill');
+  pill.addEventListener('pointerenter', e => {
+    const r = pill.getBoundingClientRect();
+    pill.style.setProperty('--px', (e.clientX - r.left) + 'px');
+    pill.style.setProperty('--py', (e.clientY - r.top) + 'px');
+  });
+})();
+</script>
+</body>
+</html>

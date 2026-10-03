@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 431 · "Weather glance widget, three sizes" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 458 · "Weather glance widget, three sizes" · designlounge.vercel.app -->
 
 # Weather glance widget, three sizes
 

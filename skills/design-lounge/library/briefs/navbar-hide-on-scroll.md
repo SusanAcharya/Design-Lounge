@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 251 · "Hide-on-scroll navbar" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 261 · "Hide-on-scroll navbar" · designlounge.vercel.app -->
 
 # Hide-on-scroll navbar
 

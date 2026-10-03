@@ -1,0 +1,142 @@
+<!-- Design Lounge piece: outline-fill-topic-list · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollinsmoor After Dark · what you'll hear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ash:#140d0e; --ash-2:#1d1415; --bone:#eae0cf; --bone-2:#bfb5a6; --bone-3:#8f8579;
+  --stroke:rgba(234,224,207,.5); --line:rgba(234,224,207,.14);
+  --mint:#7fd1c3; --mint-2:#b5e6dc; --focus:#7fd1c3;
+  --display:"Big Shoulders Display",Impact,"Arial Narrow",sans-serif; --mono:"Spline Sans Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1); --expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{background:var(--ash)}
+body{color:var(--bone);font:400 15px/1.6 var(--mono);overflow-x:hidden}
+:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+@property --w{syntax:"<color>";inherits:true;initial-value:#3a2226}
+.sec{position:relative}
+.back{position:sticky;top:0;height:100vh;margin-bottom:-100vh;overflow:hidden;pointer-events:none}
+.wash{position:absolute;inset:0;background:radial-gradient(60% 70% at 72% 50%,var(--w),transparent 70%),linear-gradient(180deg,var(--ash),var(--ash-2));transition:--w .8s var(--ease)}
+.glyphs{position:absolute;right:6%;top:50%;width:min(42vw,520px);aspect-ratio:1;transform:translateY(-50%)}
+.glyphs svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--bone);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.94);transition:opacity .7s var(--ease),transform 1s var(--expo)}
+.glyphs svg.on{opacity:.2;transform:scale(1)}
+.grain{position:absolute;inset:0;background:repeating-radial-gradient(circle at 30% 20%,rgba(255,255,255,.018) 0 1px,transparent 1px 3px)}
+.hud{position:absolute;right:48px;bottom:36px;text-align:right;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3)}
+.hud b{display:block;font:900 64px/1 var(--display);letter-spacing:0;color:var(--bone);margin-bottom:6px;font-variant-numeric:tabular-nums}
+.hud b span{color:var(--bone-3);font-weight:700;font-size:28px}
+header{position:relative;padding:56px 48px 0;max-width:1180px}
+.k{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3);display:flex;gap:28px;margin:0 0 22px}
+.k b{color:var(--mint);font-weight:500}
+h2{font:900 clamp(56px,8vw,112px)/.88 var(--display);text-transform:uppercase;margin:0;letter-spacing:.005em}
+h2 em{font-style:normal;color:transparent;-webkit-text-stroke:1.5px var(--bone)}
+.list{position:relative;list-style:none;margin:0;padding:64px 48px 30vh;max-width:1180px}
+.item{position:relative;padding:22px 0 22px 22px;max-width:760px;transform:translateX(0);transition:transform .6s var(--expo)}
+.item::before{content:"";position:absolute;left:0;top:22px;bottom:22px;width:2px;background:var(--mint);transform:scaleY(0);transform-origin:50% 0;transition:transform .5s var(--expo)}
+.item .n{font-size:11px;letter-spacing:.16em;color:var(--bone-3);margin:0 0 6px;transition:color .3s var(--ease)}
+.item h3{margin:0;font:700 clamp(48px,6.4vw,88px)/.9 var(--display);text-transform:uppercase;letter-spacing:.01em;color:transparent;-webkit-text-stroke:1px var(--stroke);transition:color .45s var(--ease),-webkit-text-stroke-color .45s var(--ease)}
+.item h3 a{color:inherit;text-decoration:none}
+.item p{margin:10px 0 0;max-width:440px;color:var(--bone-2);opacity:.55;font-size:14.5px;transition:opacity .45s var(--ease)}
+.item.on{transform:translateX(160px)}
+.item.on::before{transform:scaleY(1)}
+.item.on .n{color:var(--mint)}
+.item.on h3{color:var(--bone);-webkit-text-stroke-color:var(--bone)}
+.item.on p{opacity:1}
+.item h3 a:hover{-webkit-text-stroke-color:var(--bone)}
+.item h3 a:focus-visible{outline-offset:6px}
+.rail{position:fixed;left:18px;top:50%;transform:translateY(-50%);display:grid;gap:6px;list-style:none;margin:0;padding:0;z-index:5}
+.rail a{display:block;width:14px;height:22px;position:relative}
+.rail a::after{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line);transition:background .3s var(--ease),transform .3s var(--expo)}
+.rail a[aria-current="true"]::after{background:var(--mint);transform:scaleY(1.4)}
+.rail a:hover::after{background:var(--bone-2)}
+.end{position:relative;padding:72px 48px 96px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;background:var(--ash)}
+.end p{margin:0;color:var(--bone-2)}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--mint);color:var(--ash);text-decoration:none;font:500 14px/1 var(--mono);padding:15px 18px 15px 20px;transition:background .16s var(--ease)}
+.btn:hover{background:var(--mint-2)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:900px){.item.on{transform:translateX(48px)}.glyphs{width:70vw;right:-10vw;opacity:.7}}
+@media (max-width:560px){header{padding:40px 22px 0}.k{gap:14px}.list{padding:40px 22px 30vh 30px}.item{padding-left:16px}.item.on{transform:translateX(14px)}.item p{font-size:13.5px}.hud{display:none}.k span:last-child{display:none}.rail{left:6px}.end{padding:56px 22px 72px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}.item.on{transform:none}}
+</style>
+</head>
+<body>
+<section class="sec" aria-labelledby="h">
+  <div class="back" aria-hidden="true">
+    <div class="wash" id="wash"></div>
+    <div class="glyphs" id="glyphs">
+      <svg viewBox="0 0 200 200" class="on"><path d="M40 180V70M160 180V70M40 70Q100 20 160 70M65 180V60M90 180V48M110 180V48M135 180V60M40 120H160M92 120q8 -10 16 0"/></svg>
+      <svg viewBox="0 0 200 200"><path d="M100 30v14M70 130V90a30 30 0 0 1 60 0v40l12 14H58zM90 150a10 10 0 0 0 20 0M100 44v-4M150 60c20 20 20 60 0 80"/></svg>
+      <svg viewBox="0 0 200 200"><path d="M40 170V90a14 14 0 0 1 28 0v80M86 170V80a14 14 0 0 1 28 0v90M132 170V90a14 14 0 0 1 28 0v80M30 170h140M48 104h12M94 94h12M140 104h12"/></svg>
+      <svg viewBox="0 0 200 200"><path d="M60 40l80 120M128 150l20-6 6 20-20 6zM40 170h120M70 60l-14 10M100 170c0-20 20-30 40-30"/></svg>
+      <svg viewBox="0 0 200 200"><path d="M80 50h40l10 20H70zM74 70h52v70H74zM70 140h60l-6 14H76zM100 30v20M100 90v24M92 100h16"/><circle cx="100" cy="102" r="26" opacity=".5"/></svg>
+      <svg viewBox="0 0 200 200"><path d="M20 150c40-10 120-10 160 0M30 150l6-20M50 148l4-24M72 146l3-18M96 146l2-26M120 146l-2-20M144 148l-4-24M166 150l-6-18M30 170h140"/></svg>
+      <svg viewBox="0 0 200 200"><path d="M50 120c20-40 70-50 100-30l20-6-14 16c0 30-30 50-70 40l-30 20 10-24c-10-4-16-10-16-16zM146 96h0M120 152l-6 24M100 150l-10 24"/><circle cx="148" cy="98" r="3"/></svg>
+      <svg viewBox="0 0 200 200"><path d="M40 70h120v80H40zM40 100h120M60 76h20v18H60zM90 76h20v18H90zM120 76h20v18h-20zM60 150v14M140 150v14M30 170h140M100 70V40M80 40h40"/></svg>
+    </div>
+    <div class="grain"></div>
+    <div class="hud"><b id="num">01<span>/08</span></b><span id="cap">The iron gate</span></div>
+  </div>
+  <header>
+    <p class="k"><span><b>04</b> / On the walk</span><span>90 minutes · 1.2 km · lanterns provided</span></p>
+    <h2 id="h">You'll hear<br><em>about...</em></h2>
+  </header>
+  <ol class="list" id="list">
+    <li class="item on" id="t1" data-w="#3a2226" data-c="The iron gate"><p class="n">01 /</p><h3><a href="#t1">The iron gate</a></h3><p>Why the north gate was welded shut in 1904, and who keeps opening it.</p></li>
+    <li class="item" id="t2" data-w="#1f3134" data-c="The bell grave"><p class="n">02 /</p><h3><a href="#t2">The bell grave</a></h3><p>Safety coffins, a pull cord to the surface, and the night the bell rang.</p></li>
+    <li class="item" id="t3" data-w="#3a2c1f" data-c="The stone choir"><p class="n">03 /</p><h3><a href="#t3">The stone choir</a></h3><p>Seven carved singers on the chapel wall. Count them on the way in, and again on the way out.</p></li>
+    <li class="item" id="t4" data-w="#2a2238" data-c="Resurrection men"><p class="n">04 /</p><h3><a href="#t4">Resurrection men</a></h3><p>The body snatchers of 1820 and the watch house built to stop them.</p></li>
+    <li class="item" id="t5" data-w="#3a3020" data-c="The lantern woman"><p class="n">05 /</p><h3><a href="#t5">The lantern woman</a></h3><p>A figure with a lamp, seen on the east path by three groundskeepers since 1911.</p></li>
+    <li class="item" id="t6" data-w="#22301f" data-c="The quiet field"><p class="n">06 /</p><h3><a href="#t6">The quiet field</a></h3><p>The 1849 cholera ground. Nobody mows it. Nothing grows taller than your ankle.</p></li>
+    <li class="item" id="t7" data-w="#1a2a36" data-c="The raven count"><p class="n">07 /</p><h3><a href="#t7">The raven count</a></h3><p>Why the staff still count the ravens at dusk, and what happened the year they stopped.</p></li>
+    <li class="item" id="t8" data-w="#34212a" data-c="The last tram"><p class="n">08 /</p><h3><a href="#t8">The last tram</a></h3><p>The 11:52 to Hollinsmoor stopped running in 1958. Mostly.</p></li>
+  </ol>
+  <ol class="rail" id="rail" aria-label="Topics"></ol>
+</section>
+<section class="end" aria-label="Book">
+  <p>Thursdays to Sundays, 9 pm. Twelve people a night.</p>
+  <a class="btn" href="#book">Find a night <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+</section>
+<p class="sr" aria-live="polite" id="live"></p>
+<script>
+const items=[...document.querySelectorAll(".item")],glyphs=[...document.querySelectorAll("#glyphs svg")],rail=document.getElementById("rail");
+const wash=document.getElementById("wash"),num=document.getElementById("num"),cap=document.getElementById("cap"),live=document.getElementById("live");
+const rm=matchMedia("(prefers-reduced-motion: reduce)");
+rail.innerHTML=items.map((it,i)=>`<li><a href="#${it.id}" aria-label="${String(i+1).padStart(2,"0")} ${it.dataset.c}" aria-current="${i?"false":"true"}"></a></li>`).join("");
+const dots=[...rail.querySelectorAll("a")];
+let active=0,ticking=false;
+function set(i){
+  if(i===active)return;active=i;
+  items.forEach((el,k)=>el.classList.toggle("on",k===i));
+  glyphs.forEach((g,k)=>g.classList.toggle("on",k===i));
+  dots.forEach((d,k)=>d.setAttribute("aria-current",String(k===i)));
+  wash.style.setProperty("--w",items[i].dataset.w);
+  num.innerHTML=String(i+1).padStart(2,"0")+"<span>/08</span>";
+  cap.textContent=items[i].dataset.c;
+  live.textContent="Topic "+(i+1)+": "+items[i].dataset.c;
+}
+function update(){
+  ticking=false;
+  const mid=innerHeight*.5;let best=0,bd=Infinity;
+  items.forEach((el,i)=>{const r=el.getBoundingClientRect();const d=Math.abs(r.top+r.height/2-mid);if(d<bd){bd=d;best=i}});
+  set(best);
+}
+addEventListener("scroll",()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
+addEventListener("resize",update);
+document.addEventListener("click",e=>{
+  const a=e.target.closest('a[href^="#t"]');if(!a)return;
+  e.preventDefault();
+  const el=document.querySelector(a.getAttribute("href"));
+  el.scrollIntoView({block:"center",behavior:rm.matches?"auto":"smooth"});
+});
+document.addEventListener("focusin",e=>{const it=e.target.closest(".item");if(it)it.scrollIntoView({block:"center",behavior:rm.matches?"auto":"smooth"})});
+update();
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 226 · "Event ticket checkout" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 233 · "Event ticket checkout" · designlounge.vercel.app -->
 
 # Event ticket checkout
 

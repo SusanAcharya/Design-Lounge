@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 246 · "Greeting loader" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 254 · "Greeting loader" · designlounge.vercel.app -->
 
 # Greeting loader
 

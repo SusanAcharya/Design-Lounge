@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 242 · "Goals card with rings and confetti" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 249 · "Goals card with rings and confetti" · designlounge.vercel.app -->
 
 # Goals card with rings and confetti
 

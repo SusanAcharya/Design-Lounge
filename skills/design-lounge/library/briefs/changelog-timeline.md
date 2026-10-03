@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 182 · "Changelog timeline" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 184 · "Changelog timeline" · designlounge.vercel.app -->
 
 # Changelog timeline
 

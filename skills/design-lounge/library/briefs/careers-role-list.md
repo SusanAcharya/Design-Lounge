@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 295 · "Open roles" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 312 · "Open roles" · designlounge.vercel.app -->
 
 # Open roles
 

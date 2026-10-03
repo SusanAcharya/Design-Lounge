@@ -1,0 +1,194 @@
+<!-- Design Lounge piece: diamond-badge-rail · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Diamond badge rail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1316;--surface:#161b1f;--surface-on:#1c2412;--ink:#eef1ea;--ink-2:#9aa39c;--line:#2c343a;
+  --lime:#c5f04a;--lime-ink:#11160a;--focus:#c5f04a;
+  --display:"Big Shoulders Display",Impact,sans-serif;--sans:"Space Grotesk",system-ui,sans-serif;
+  --card-w:264px;--card-h:300px;--gap:20px;--dia:56px;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+
+.wrap{min-height:100%;display:flex;flex-direction:column;padding:60px 56px 44px}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+.head h2{margin:0;font-family:var(--display);font-size:76px;line-height:.9;font-weight:800;letter-spacing:-0.005em}
+.head h2 em{font-style:normal;color:var(--lime)}
+.head p{margin:16px 0 0;max-width:520px;color:var(--ink-2);font-size:16px}
+.view{flex:none;display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 22px;border:2px solid var(--ink);color:var(--ink);font:700 18px var(--display);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;box-shadow:4px 4px 0 var(--ink);transition:transform .16s var(--ease),box-shadow .16s var(--ease)}
+.view:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+
+.status{display:flex;align-items:center;gap:12px;margin-top:28px;min-height:36px;font-size:14px;color:var(--ink-2)}
+.status b{color:var(--ink);font-weight:600}
+.clear{flex:none;white-space:nowrap;height:32px;padding:0 12px;border:1px solid var(--line);background:none;color:var(--ink);font:500 13px var(--sans);cursor:pointer;display:none}
+.clear.on{display:inline-block}
+.clear:hover{border-color:var(--ink)}
+
+.rail{display:flex;gap:var(--gap);list-style:none;margin:0 -56px 0 0;padding:44px 56px 8px 0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth;outline-offset:-2px}
+.rail::-webkit-scrollbar{display:none}
+.rail li{flex:none;scroll-snap-align:start}
+.card{position:relative;width:var(--card-w);height:var(--card-h);padding:52px 24px 22px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-align:left;font:inherit;cursor:pointer;display:flex;flex-direction:column;transition:border-color .2s var(--ease),transform .24s var(--expo),background-color .2s var(--ease)}
+.dia{position:absolute;top:calc(var(--dia) / -2 - 6px);left:24px;width:var(--dia);height:var(--dia);display:grid;place-items:center}
+.dia::before{content:"";position:absolute;inset:0;transform:rotate(45deg);background:var(--bg);border:2px solid var(--ink-2);transition:background-color .2s var(--ease),border-color .2s var(--ease),transform .4s var(--expo)}
+.dia svg{position:relative;color:var(--ink);transition:color .2s var(--ease),transform .4s var(--expo)}
+.card h3{margin:0;font-family:var(--display);font-size:30px;line-height:.95;font-weight:700;letter-spacing:.01em;text-transform:uppercase}
+.card p{margin:12px 0 0;font-size:15px;line-height:1.45;color:var(--ink-2)}
+.card .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--line);font-size:13px;font-weight:600}
+.card .foot i{font-style:normal;color:var(--ink-2);font-weight:500}
+.card:hover,.card:focus-visible{border-color:var(--lime);transform:translateY(-4px)}
+.card:hover .dia::before,.card:focus-visible .dia::before{background:var(--lime);border-color:var(--lime);transform:rotate(135deg)}
+.card:hover .dia svg,.card:focus-visible .dia svg{color:var(--lime-ink);transform:scale(1.08)}
+.card[aria-pressed="true"]{background:var(--surface-on);border-color:var(--lime);box-shadow:inset 0 0 0 1px var(--lime)}
+.card[aria-pressed="true"] .dia::before{background:var(--lime);border-color:var(--lime)}
+.card[aria-pressed="true"] .dia svg{color:var(--lime-ink)}
+.card[aria-pressed="true"] .foot i{color:var(--lime)}
+
+.scrub{display:flex;align-items:center;gap:20px;margin-top:20px}
+.track{position:relative;flex:1;height:24px;cursor:pointer;touch-action:none}
+.track::before{content:"";position:absolute;left:0;right:0;top:9px;height:6px;background:var(--line)}
+.thumb{position:absolute;top:9px;left:0;height:6px;background:var(--lime);transition:height .16s var(--ease),top .16s var(--ease)}
+.track:hover .thumb,.track:focus-visible .thumb,.track.drag .thumb{top:7px;height:10px}
+.arrows{display:flex;gap:8px}
+.arrows button{width:44px;height:44px;border:1.5px solid var(--ink);background:none;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:background-color .16s var(--ease),color .16s var(--ease)}
+.arrows button:hover:not(:disabled){background:var(--ink);color:var(--bg)}
+.arrows button:disabled{opacity:.3;cursor:default}
+
+@media (max-width:900px){
+  .wrap{padding:40px 20px 32px}
+  .head{flex-direction:column;align-items:flex-start;gap:20px}
+  .head h2{font-size:48px}
+  .rail{margin-right:-20px;padding-right:20px}
+  :root{--card-w:236px;--card-h:290px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rail{scroll-behavior:auto}
+  .card,.dia::before,.dia svg,.thumb,.view,.arrows button{transition:none}
+  .card:hover,.card:focus-visible{transform:none}
+  .card:hover .dia::before,.card:focus-visible .dia::before{transform:rotate(45deg)}
+}
+</style>
+</head>
+<body>
+<section class="wrap" aria-labelledby="h">
+  <div class="head">
+    <div>
+      <h2 id="h">Every broker<br>earns its <em>badges</em></h2>
+      <p>Plainsight's Tracker Index tags each data broker with the habits we can prove from public filings. Pick a badge to filter the index.</p>
+    </div>
+    <a class="view" href="#rail">View the index <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
+  </div>
+
+  <div class="status"><span id="status" aria-live="polite">Showing all <b>214</b> brokers</span><button class="clear" type="button" id="clear">Clear filter</button></div>
+
+  <ul class="rail" id="rail" tabindex="0" aria-label="Badges">
+    <li><button class="card" type="button" aria-pressed="false" data-n="61"><span class="dia"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2l3 3-3 3M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3M20 13v2a4 4 0 0 1-4 4H4"/></svg></span><h3>Repeat seller</h3><p>Sold the same profile to five or more buyers in a single year.</p><span class="foot">61 brokers <i>Filter</i></span></button></li>
+    <li><button class="card" type="button" aria-pressed="false" data-n="48"><span class="dia"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4V8h12v8H8v-4h4"/></svg></span><h3>Opt-out maze</h3><p>Takes more than six screens, or a posted letter, to remove yourself.</p><span class="foot">48 brokers <i>Filter</i></span></button></li>
+    <li><button class="card" type="button" aria-pressed="false" data-n="37"><span class="dia"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><h3>Location hoarder</h3><p>Keeps precise location history for longer than 24 months.</p><span class="foot">37 brokers <i>Filter</i></span></button></li>
+    <li><button class="card" type="button" aria-pressed="false" data-n="22"><span class="dia"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM13 7l-3 5h4l-3 5"/></svg></span><h3>Breach veteran</h3><p>Two or more disclosed breaches since 2020, and still collecting.</p><span class="foot">22 brokers <i>Filter</i></span></button></li>
+    <li><button class="card" type="button" aria-pressed="false" data-n="74"><span class="dia"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.5-2-2.3 2-2.2-2-2.2 2-2.3-2z"/><path d="M9.5 10h.01M14.5 10h.01"/></svg></span><h3>Shadow profile</h3><p>Builds files on people who never signed up for anything.</p><span class="foot">74 brokers <i>Filter</i></span></button></li>
+    <li><button class="card" type="button" aria-pressed="false" data-n="9"><span class="dia"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="6" r="3"/><path d="M8 21v-6l-2-3 4-2h4l4 2-2 3v6"/></svg></span><h3>Minors' data</h3><p>Caught buying or selling records of users under sixteen.</p><span class="foot">9 brokers <i>Filter</i></span></button></li>
+    <li><button class="card" type="button" aria-pressed="false" data-n="31"><span class="dia"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg></span><h3>Index debut</h3><p>First listed this year, after a filing we could finally match.</p><span class="foot">31 brokers <i>Filter</i></span></button></li>
+    <li><button class="card" type="button" aria-pressed="false" data-n="18"><span class="dia"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><h3>On the rise</h3><p>Picked up three or more new badges since last year's index.</p><span class="foot">18 brokers <i>Filter</i></span></button></li>
+  </ul>
+
+  <div class="scrub">
+    <div class="track" id="track" role="slider" tabindex="0" aria-label="Scroll badges" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Start of list"><div class="thumb" id="thumb"></div></div>
+    <div class="arrows">
+      <button type="button" id="prev" aria-label="Previous badges" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <button type="button" id="nextb" aria-label="Next badges"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rail = document.getElementById('rail');
+  const track = document.getElementById('track'), thumb = document.getElementById('thumb');
+  const prev = document.getElementById('prev'), next = document.getElementById('nextb');
+  const status = document.getElementById('status'), clear = document.getElementById('clear');
+  const cards = [...rail.querySelectorAll('.card')];
+  const stepW = () => cards[0].offsetWidth + parseFloat(getComputedStyle(rail).columnGap || 20);
+  const maxScroll = () => rail.scrollWidth - rail.clientWidth;
+
+  function sync() {
+    const tw = track.clientWidth, ratio = Math.min(1, rail.clientWidth / rail.scrollWidth);
+    const w = Math.max(48, tw * ratio), m = maxScroll();
+    const f = m > 0 ? rail.scrollLeft / m : 0;
+    thumb.style.width = w + 'px';
+    thumb.style.transform = `translateX(${(tw - w) * f}px)`;
+    const pct = Math.round(f * 100);
+    track.setAttribute('aria-valuenow', pct);
+    track.setAttribute('aria-valuetext', pct < 2 ? 'Start of list' : pct > 98 ? 'End of list' : pct + '% through the list');
+    prev.disabled = rail.scrollLeft < 4;
+    next.disabled = rail.scrollLeft > m - 4;
+  }
+  const by = n => rail.scrollBy({ left: n * stepW(), behavior: reduce ? 'auto' : 'smooth' });
+  prev.addEventListener('click', () => by(-2));
+  next.addEventListener('click', () => by(2));
+
+  function seek(clientX) {
+    const r = track.getBoundingClientRect(), w = thumb.offsetWidth;
+    const f = Math.min(1, Math.max(0, (clientX - r.left - w / 2) / (r.width - w)));
+    rail.style.scrollSnapType = 'none';
+    rail.style.scrollBehavior = 'auto';
+    rail.scrollLeft = f * maxScroll();
+  }
+  track.addEventListener('pointerdown', e => {
+    track.setPointerCapture(e.pointerId); track.classList.add('drag'); seek(e.clientX);
+    const move = ev => seek(ev.clientX);
+    const up = () => {
+      track.classList.remove('drag');
+      track.removeEventListener('pointermove', move);
+      rail.style.scrollBehavior = ''; rail.style.scrollSnapType = '';
+    };
+    track.addEventListener('pointermove', move);
+    track.addEventListener('pointerup', up, { once: true });
+    track.addEventListener('pointercancel', up, { once: true });
+  });
+  track.addEventListener('keydown', e => {
+    const k = e.key;
+    if (k === 'ArrowRight' || k === 'ArrowDown') by(1);
+    else if (k === 'ArrowLeft' || k === 'ArrowUp') by(-1);
+    else if (k === 'Home') rail.scrollTo({ left: 0, behavior: reduce ? 'auto' : 'smooth' });
+    else if (k === 'End') rail.scrollTo({ left: maxScroll(), behavior: reduce ? 'auto' : 'smooth' });
+    else return;
+    e.preventDefault();
+  });
+
+  function setFilter(card) {
+    cards.forEach(c => {
+      const on = c === card;
+      c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      c.querySelector('.foot i').textContent = on ? 'Filtering' : 'Filter';
+    });
+    if (card) {
+      status.innerHTML = `Showing <b>${card.dataset.n}</b> brokers with <b>${card.querySelector('h3').textContent}</b>`;
+      clear.classList.add('on');
+    } else {
+      status.innerHTML = 'Showing all <b>214</b> brokers';
+      clear.classList.remove('on');
+    }
+  }
+  cards.forEach(c => c.addEventListener('click', () => setFilter(c.getAttribute('aria-pressed') === 'true' ? null : c)));
+  clear.addEventListener('click', () => { setFilter(null); rail.focus(); });
+
+  rail.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+  addEventListener('resize', sync);
+  setFilter(cards[1]);
+  sync();
+  if (document.fonts) document.fonts.ready.then(sync);
+})();
+</script>
+</body>
+</html>

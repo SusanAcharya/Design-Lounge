@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 405 · "Tasks table with inline editing" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 428 · "Tasks table with inline editing" · designlounge.vercel.app -->
 
 # Tasks table with inline editing
 
