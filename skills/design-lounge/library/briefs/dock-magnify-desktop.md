@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 295 · "Magnifying desktop dock" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 299 · "Magnifying desktop dock" · designlounge.vercel.app -->
 
 # Magnifying desktop dock
 

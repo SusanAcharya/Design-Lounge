@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 281 · "Layered parallax landscape hero" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 285 · "Layered parallax landscape hero" · designlounge.vercel.app -->
 
 # Layered parallax landscape hero
 

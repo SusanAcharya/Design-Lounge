@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 456 · "Wallet card stack" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 460 · "Wallet card stack" · designlounge.vercel.app -->
 
 # Wallet card stack
 

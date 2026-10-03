@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 438 · "Thread to issue board" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 442 · "Thread to issue board" · designlounge.vercel.app -->
 
 # Thread to issue board
 

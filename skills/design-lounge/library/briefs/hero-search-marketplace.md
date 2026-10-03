@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 298 · "Marketplace search hero" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 302 · "Marketplace search hero" · designlounge.vercel.app -->
 
 # Marketplace search hero
 

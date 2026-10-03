@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 452 · "Usage pricing slider" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 456 · "Usage pricing slider" · designlounge.vercel.app -->
 
 # Usage pricing slider
 

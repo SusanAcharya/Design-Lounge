@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 246 · "Gamer community chat card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 249 · "Gamer community chat card" · designlounge.vercel.app -->
 
 # Gamer community chat card
 

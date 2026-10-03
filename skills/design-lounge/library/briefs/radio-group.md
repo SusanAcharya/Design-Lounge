@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 369 · "Radio group" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 373 · "Radio group" · designlounge.vercel.app -->
 
 # Radio group
 

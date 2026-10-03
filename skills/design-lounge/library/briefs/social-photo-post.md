@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 345 · "Photo post with carousel" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 349 · "Photo post with carousel" · designlounge.vercel.app -->
 
 # Photo post with carousel
 

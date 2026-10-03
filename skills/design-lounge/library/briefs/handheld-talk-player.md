@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 259 · "Handheld talk player" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 262 · "Handheld talk player" · designlounge.vercel.app -->
 
 # Handheld talk player
 

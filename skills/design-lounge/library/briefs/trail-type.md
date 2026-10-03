@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 447 · "Trail type" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 451 · "Trail type" · designlounge.vercel.app -->
 
 # Trail type
 

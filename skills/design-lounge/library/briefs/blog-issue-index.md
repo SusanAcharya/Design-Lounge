@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 273 · "Issue index" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 277 · "Issue index" · designlounge.vercel.app -->
 
 # Issue index
 

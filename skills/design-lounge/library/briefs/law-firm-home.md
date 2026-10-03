@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 279 · "Law firm home, editorial" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 283 · "Law firm home, editorial" · designlounge.vercel.app -->
 
 # Law firm home, editorial
 

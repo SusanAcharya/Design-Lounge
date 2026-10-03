@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 305 · "Mobile scroll story" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 309 · "Mobile scroll story" · designlounge.vercel.app -->
 
 # Mobile scroll story
 

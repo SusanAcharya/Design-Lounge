@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 402 · "Smooth scroll with inertia" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 406 · "Smooth scroll with inertia" · designlounge.vercel.app -->
 
 # Smooth scroll with inertia
 

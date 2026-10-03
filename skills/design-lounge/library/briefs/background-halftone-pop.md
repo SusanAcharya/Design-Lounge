@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 256 · "Halftone pop background" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 259 · "Halftone pop background" · designlounge.vercel.app -->
 
 # Halftone pop background
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 395 · "Shortcut sheet" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 399 · "Shortcut sheet" · designlounge.vercel.app -->
 
 # Shortcut sheet
 

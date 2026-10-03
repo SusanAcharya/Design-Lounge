@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 377 · "Salon wall planner" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 381 · "Salon wall planner" · designlounge.vercel.app -->
 
 # Salon wall planner
 

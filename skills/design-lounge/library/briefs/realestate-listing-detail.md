@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 372 · "Real estate listing detail" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 376 · "Real estate listing detail" · designlounge.vercel.app -->
 
 # Real estate listing detail
 

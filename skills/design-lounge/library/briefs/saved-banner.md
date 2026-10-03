@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 378 · "Saved banner" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 382 · "Saved banner" · designlounge.vercel.app -->
 
 # Saved banner
 

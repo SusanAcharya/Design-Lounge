@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 287 · "Live checkout bento" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 291 · "Live checkout bento" · designlounge.vercel.app -->
 
 # Live checkout bento
 

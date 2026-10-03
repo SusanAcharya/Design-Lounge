@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 247 · "Glass credit card with flip" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 250 · "Glass credit card with flip" · designlounge.vercel.app -->
 
 # Glass credit card with flip
 

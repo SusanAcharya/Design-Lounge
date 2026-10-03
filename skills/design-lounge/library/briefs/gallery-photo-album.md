@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 344 · "Photo album with page turns" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 348 · "Photo album with page turns" · designlounge.vercel.app -->
 
 # Photo album with page turns
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 384 · "Scroll zoom portal" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 388 · "Scroll zoom portal" · designlounge.vercel.app -->
 
 # Scroll zoom portal
 

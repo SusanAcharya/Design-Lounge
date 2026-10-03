@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 441 · "Three-step phone sign-up" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 445 · "Three-step phone sign-up" · designlounge.vercel.app -->
 
 # Three-step phone sign-up
 

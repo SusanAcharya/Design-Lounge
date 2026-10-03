@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 391 · "Shop cart" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 395 · "Shop cart" · designlounge.vercel.app -->
 
 # Shop cart
 

@@ -1,0 +1,297 @@
+<!-- Design Lounge piece: throw-loop-engraved-strip · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Fenmoor Disc Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#dfe7e2;--sky-2:#e9eee9;--ground:#f1ece0;--ink:#22312c;--ink-2:#4d5b55;--ink-3:#7a8680;
+  --line:rgba(34,49,44,.16);--accent:#d6336c;--accent-dk:#a3204f;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;--mono:"Spline Sans Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);--t:14s;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{display:flex;flex-direction:column;font:15px/1.5 var(--display);color:var(--ink);background:var(--sky);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(20px,4vw,48px);height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.01em}
+.logo svg{width:26px;height:26px}
+.when{font:500 12px/1 var(--mono);color:var(--ink-2);letter-spacing:.02em}
+
+.stage{position:relative;flex:1;min-height:0;overflow:hidden;background:linear-gradient(180deg,var(--sky-2),var(--sky) 60%)}
+.copy{position:absolute;z-index:2;left:clamp(20px,4vw,48px);top:clamp(16px,4vh,40px);max-width:34rem}
+h1{font-weight:700;font-size:clamp(36px,5.4vw,68px);line-height:.98;letter-spacing:-.035em}
+h1 span{color:var(--accent)}
+.copy p{margin-top:14px;max-width:26rem;font-size:16px;color:var(--ink-2)}
+.scene{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+
+/* ambient */
+.sun{animation:sunup 1.6s var(--ease) both}
+@keyframes sunup{from{transform:translateY(60px);opacity:0}to{transform:none;opacity:1}}
+.cloud{animation:drift 110s linear infinite}
+.cloud-2{animation-duration:150s;animation-delay:-70s}
+@keyframes drift{from{translate:-300px 0}to{translate:1900px 0}}
+.sway{transform-box:fill-box;transform-origin:bottom center;animation:sway 5.5s ease-in-out infinite alternate}
+@keyframes sway{from{transform:skewX(-3deg)}to{transform:skewX(3deg)}}
+.flag{transform-box:fill-box;transform-origin:center top;animation:flutter 1.4s ease-in-out var(--d,0s) infinite alternate}
+@keyframes flutter{from{transform:skewX(-8deg)}to{transform:skewX(8deg) scaleY(.9)}}
+
+/* the throw: one clock (--t) drives every part */
+.arm{transform-box:fill-box;transform-origin:0 0;animation:arm var(--t) infinite}
+.p-b .arm{animation-delay:calc(var(--t)/-2)}
+.held{animation:held var(--t) infinite}
+.p-b .held{animation-delay:calc(var(--t)/-2)}
+.fly{opacity:0;offset-path:path("M452 574C540 470 660 420 780 430C880 438 940 470 1010 456C1080 444 1120 500 1148 574");offset-rotate:0deg;animation:fly var(--t) infinite}
+.tilt{animation:tilt var(--t) ease-in-out infinite}
+.shine{animation:shine .35s linear infinite}
+.trail{fill:none;stroke:var(--accent);stroke-linecap:round;stroke-dasharray:var(--len) 300;opacity:0;animation:trail var(--t) infinite}
+.trail-soft{--len:16;stroke-width:5;stroke-opacity:.16}
+.trail-core{--len:7;stroke-width:1.6;stroke-opacity:.55}
+@keyframes arm{
+  0%,6%{transform:rotate(0);animation-timing-function:ease-in-out}
+  12%{transform:rotate(115deg);animation-timing-function:cubic-bezier(.6,0,.9,.5)}
+  14%{transform:rotate(-60deg);animation-timing-function:ease-in-out}
+  22%,84%{transform:rotate(0);animation-timing-function:ease-out}
+  90%{transform:rotate(-80deg);animation-timing-function:ease-out}
+  93%{transform:rotate(-70deg);animation-timing-function:ease-in-out}
+  100%{transform:rotate(0)}
+}
+@keyframes held{0%,13.9%{opacity:1}14%,89.9%{opacity:0}90%,100%{opacity:1}}
+@keyframes fly{
+  0%,13.9%{offset-distance:0%;opacity:0}
+  14%{offset-distance:0%;opacity:1;animation-timing-function:cubic-bezier(.3,.55,.55,1)}
+  40%{offset-distance:100%;opacity:1}
+  40.1%,63.9%{offset-distance:100%;opacity:0}
+  64%{offset-distance:100%;opacity:1;animation-timing-function:cubic-bezier(.3,.55,.55,1)}
+  90%{offset-distance:0%;opacity:1}
+  90.1%,100%{offset-distance:0%;opacity:0}
+}
+@keyframes trail{
+  0%,13.9%{stroke-dashoffset:var(--len);opacity:0}
+  14%{stroke-dashoffset:var(--len);opacity:1;animation-timing-function:cubic-bezier(.3,.55,.55,1)}
+  40%{stroke-dashoffset:calc(var(--len) - 100);opacity:1}
+  42%,63.9%{stroke-dashoffset:-100;opacity:0}
+  64%{stroke-dashoffset:-100;opacity:1;animation-timing-function:cubic-bezier(.3,.55,.55,1)}
+  90%{stroke-dashoffset:0;opacity:1}
+  92%,100%{stroke-dashoffset:0;opacity:0}
+}
+@keyframes tilt{
+  0%,14%{transform:rotate(-18deg)}19%{transform:rotate(6deg)}24%{transform:rotate(-8deg)}31%{transform:rotate(-24deg)}36%{transform:rotate(12deg)}
+  40%,64%{transform:rotate(0)}69%{transform:rotate(16deg)}74%{transform:rotate(-20deg)}81%{transform:rotate(8deg)}86%{transform:rotate(-6deg)}90%,100%{transform:rotate(-18deg)}
+}
+@keyframes shine{from{transform:translateX(-4px);opacity:0}50%{opacity:.9}to{transform:translateX(4px);opacity:0}}
+.guide{opacity:0;transition:opacity .3s var(--ease)}
+.show-path .guide{opacity:1}
+
+/* controls */
+.bar{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;padding:14px clamp(20px,4vw,48px);background:var(--ground);border-top:1px solid var(--line)}
+.btn{height:44px;min-width:44px;padding:0 16px;border-radius:12px;border:1.5px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:14px;transition:background .2s,color .2s,transform .2s var(--ease)}
+.btn svg{width:16px;height:16px;fill:currentColor}
+.btn:hover{background:var(--ink);color:var(--ground)}
+.btn:active{transform:scale(.96)}
+.seg{display:flex;border:1.5px solid var(--ink);border-radius:12px;overflow:hidden}
+.seg button{height:41px;padding:0 13px;font:500 13px/1 var(--mono);transition:background .2s,color .2s}
+.seg button+button{border-left:1.5px solid var(--ink)}
+.seg button[aria-checked="true"]{background:var(--ink);color:var(--ground)}
+.seg button:hover:not([aria-checked="true"]){background:rgba(34,49,44,.08)}
+.toggle{display:inline-flex;align-items:center;gap:10px;height:44px;font-size:14px;font-weight:500}
+.toggle i{width:38px;height:22px;border-radius:999px;background:rgba(34,49,44,.2);position:relative;transition:background .2s}
+.toggle i::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .25s var(--ease)}
+.toggle[aria-pressed="true"] i{background:var(--accent)}
+.toggle[aria-pressed="true"] i::after{transform:translateX(16px)}
+.read{margin-left:auto;display:flex;gap:18px;font:500 12px/1.3 var(--mono);color:var(--ink-2)}
+.read b{display:block;font-weight:500;color:var(--ink);font-size:13px}
+.read .phase b{min-width:15ch}
+
+@media (max-width:760px){
+  .when{display:none}
+  .read{margin-left:0;width:100%;justify-content:space-between}
+  .copy p{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .fly{opacity:1;offset-distance:55%}
+  .held{opacity:0}
+  .p-b .held{opacity:0}
+  .trail{opacity:1;stroke-dashoffset:calc(var(--len) - 55)}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="13" rx="10" ry="4.5" fill="#a3204f"/><ellipse cx="12" cy="11.5" rx="10" ry="4.5" fill="#d6336c"/><ellipse cx="12" cy="11.5" rx="5.5" ry="2.2" fill="none" stroke="#f1ece0" stroke-width="1"/></svg>Fenmoor Disc Club</span>
+  <span class="when">SUN 10:00 · FENMOOR COMMON · FREE</span>
+</header>
+
+<section class="stage" id="stage" aria-labelledby="h">
+  <div class="copy">
+    <h1 id="h">Throw it long.<br>Catch it <span>late.</span></h1>
+    <p>Sunday pickup for every level. Discs are on us, the hill is free, and we stay until the light goes.</p>
+  </div>
+  <svg class="scene" id="scene" viewBox="160 180 1280 520" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Two players on a hillside trade a pink flying disc back and forth">
+    <defs>
+      <pattern id="hf" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-62)"><line y2="5" stroke="#22312c" stroke-width=".9" opacity=".45"/></pattern>
+      <pattern id="hm" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><line y2="7" stroke="#22312c" stroke-width="1.1" opacity=".45"/></pattern>
+      <pattern id="hn" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(18)"><line y2="9" stroke="#22312c" stroke-width=".8" opacity=".2"/></pattern>
+      <pattern id="hs" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line y2="6" stroke="#22312c" stroke-width="1" opacity=".3"/></pattern>
+      <symbol id="disc" overflow="visible"><ellipse cy="1.2" rx="9" ry="3" fill="#a3204f"/><ellipse rx="9" ry="3" fill="#d6336c"/><ellipse rx="5.2" ry="1.5" fill="none" stroke="#f1ece0" stroke-width=".7" opacity=".6"/></symbol>
+      <symbol id="tuft" overflow="visible"><g fill="none" stroke="#22312c" stroke-width="1.2" stroke-linecap="round"><path d="M0 0C-1-5-4-8-7-11"/><path d="M0 0C0-6-1-10-2-13"/><path d="M0 0C1-5 3-9 6-12"/></g></symbol>
+    </defs>
+    <g class="sun"><circle cx="1150" cy="300" r="78" fill="#f6ead2" stroke="#22312c" stroke-width="1.4"/><circle cx="1150" cy="300" r="78" fill="url(#hs)"/></g>
+    <g fill="var(--sky-2)" stroke="#22312c" stroke-width="1.5" opacity=".75" transform="translate(0 110)">
+      <path class="cloud" d="M150 150c-22 0-34-12-34-26s14-26 32-24c6-20 24-30 44-28 18 2 30 14 34 30 18-4 34 8 34 24 0 14-12 24-30 24z"/>
+      <path class="cloud cloud-2" d="M60 230c-16 0-26-9-26-20s10-19 24-18c4-15 18-22 33-21 14 1 23 11 26 23 14-3 26 6 26 18 0 11-9 18-23 18z"/>
+    </g>
+    <path id="r-far" fill="#a7b7ad"/><path id="r-far-h" fill="url(#hf)"/>
+    <path id="r-mid" fill="#cdd6cd"/><path id="r-mid-h" fill="url(#hm)"/>
+    <path id="r-near" fill="#f1ece0"/><path id="r-near-h" fill="url(#hn)"/>
+    <g id="tufts"></g>
+    <g transform="translate(-540 0)">
+    <g fill="#22312c">
+      <path d="M1320 612l46-52 46 52z"/><path d="M1352 612l14-20 14 20z" fill="#f1ece0"/>
+      <path d="M1250 612v-70M1480 612v-62" stroke="#22312c" stroke-width="2.4"/>
+    </g>
+    <path d="M1250 546Q1365 580 1480 552" fill="none" stroke="#22312c" stroke-width="1"/>
+    <g id="flags"></g>
+    </g>
+    <!-- flight guide -->
+    <g class="guide" aria-hidden="true">
+      <path d="M452 574C540 470 660 420 780 430C880 438 940 470 1010 456C1080 444 1120 500 1148 574" fill="none" stroke="#22312c" stroke-width="1.2" stroke-dasharray="3 7"/>
+      <circle cx="452" cy="574" r="5" fill="#d6336c"/><circle cx="1148" cy="574" r="5" fill="none" stroke="#d6336c" stroke-width="2"/>
+      <text x="452" y="604" font-family="Spline Sans Mono" font-size="15" fill="#22312c" text-anchor="middle">release 14%</text>
+      <text x="1148" y="604" font-family="Spline Sans Mono" font-size="15" fill="#22312c" text-anchor="middle">catch 40%</text>
+    </g>
+    <!-- players -->
+    <g class="p-a" fill="none" stroke="#22312c" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="424" cy="530" r="8" fill="#22312c" stroke="none"/>
+      <path d="M424 540l4 40M428 580l-12 30M428 580l10 30M426 556l-14 18"/>
+      <g class="arm"><path d="M432 556l18 16"/><use class="held" href="#disc" x="452" y="574" stroke="none"/></g>
+    </g>
+    <g class="p-b" fill="none" stroke="#22312c" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+      <g transform="translate(1600 0) scale(-1 1)">
+        <circle cx="424" cy="530" r="8" fill="#22312c" stroke="none"/>
+        <path d="M424 540l4 40M428 580l-12 30M428 580l10 30M426 556l-14 18"/>
+        <g class="arm"><path d="M432 556l18 16"/><use class="held" href="#disc" x="452" y="574" stroke="none"/></g>
+      </g>
+    </g>
+    <path class="trail trail-soft" pathLength="100" d="M452 574C540 470 660 420 780 430C880 438 940 470 1010 456C1080 444 1120 500 1148 574"/>
+    <path class="trail trail-core" pathLength="100" d="M452 574C540 470 660 420 780 430C880 438 940 470 1010 456C1080 444 1120 500 1148 574"/>
+    <g class="fly"><g class="tilt"><use href="#disc"/><path class="shine" d="M-4-1h8" stroke="#f1ece0" stroke-width="1.2" stroke-linecap="round"/></g></g>
+  </svg>
+</section>
+
+<div class="bar" role="group" aria-label="Throw controls">
+  <button class="btn" id="play" type="button" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true" id="ico"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+  <div class="seg" role="radiogroup" aria-label="Speed">
+    <button type="button" role="radio" aria-checked="false" data-r=".5" tabindex="-1">0.5×</button>
+    <button type="button" role="radio" aria-checked="true" data-r="1">1×</button>
+    <button type="button" role="radio" aria-checked="false" data-r="2" tabindex="-1">2×</button>
+  </div>
+  <button class="toggle" id="path" type="button" aria-pressed="false"><i aria-hidden="true"></i>Show flight path</button>
+  <div class="read" aria-live="off">
+    <span class="phase">Now<b id="phase">Ada winds up</b></span>
+    <span>Throws<b id="count">0</b></span>
+  </div>
+</div>
+
+<script>
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  let s = 5;
+  const rnd = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  const hills = (base, amp, step) => {
+    let d = `M0 700L0 ${base}`;
+    for (let x = 0; x <= 1600 + step; x += step) d += `Q${x - step / 2} ${(base - amp * (.4 + rnd() * .6)).toFixed(0)} ${x} ${(base - rnd() * amp * .3).toFixed(0)}`;
+    return d + 'L1600 700Z';
+  };
+  const set = (id, d) => ['', '-h'].forEach(k => document.getElementById(id + k).setAttribute('d', d));
+  set('r-far', hills(470, 140, 260));
+  set('r-mid', hills(540, 80, 220));
+  set('r-near', hills(612, 16, 400));
+  const add = (p, tag, a) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const tufts = document.getElementById('tufts');
+  for (let i = 0; i < 44; i++) {
+    const y = 624 + rnd() * 72, k = .7 + (y - 624) / 50;
+    const g = add(tufts, 'g', { transform: `translate(${(rnd() * 1600).toFixed(0)} ${y.toFixed(0)}) scale(${k.toFixed(2)})` });
+    add(g, 'use', { href: '#tuft', class: i % 3 ? '' : 'sway' });
+  }
+  const flags = document.getElementById('flags');
+  for (let i = 0; i < 9; i++) {
+    const x = 1264 + i * 24, t = (x - 1250) / 230, y = (1 - t) * (1 - t) * 546 + 2 * (1 - t) * t * 580 + t * t * 552;
+    const f = add(flags, 'path', { d: `M${x} ${y.toFixed(1)}h12l-6 13z`, fill: i % 2 ? '#22312c' : '#d6336c', class: 'flag' });
+    f.style.setProperty('--d', `-${(i * .17).toFixed(2)}s`);
+  }
+
+  const scene = document.getElementById('scene');
+  const fit = () => {
+    const narrow = innerWidth < 760;
+    scene.setAttribute('viewBox', narrow ? '390 380 820 260' : '160 180 1280 520');
+    scene.setAttribute('preserveAspectRatio', narrow ? 'xMidYMax meet' : 'xMidYMax slice');
+  };
+  fit(); addEventListener('resize', fit);
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const anims = () => document.getAnimations().filter(a => a.animationName);
+  const playBtn = document.getElementById('play'), ico = document.getElementById('ico');
+  const phaseEl = document.getElementById('phase'), countEl = document.getElementById('count');
+  const PAUSE = 'M7 5h3.5v14H7zM13.5 5H17v14h-3.5z', PLAY = 'M8 5l11 7-11 7z';
+  let paused = false, rate = 1;
+  const setPaused = p => {
+    paused = p;
+    anims().forEach(a => p ? a.pause() : a.play());
+    playBtn.setAttribute('aria-label', p ? 'Play' : 'Pause');
+    ico.firstElementChild.setAttribute('d', p ? PLAY : PAUSE);
+  };
+  playBtn.addEventListener('click', () => setPaused(!paused));
+  const radios = [...document.querySelectorAll('.seg button')];
+  const pick = (r, focus) => {
+    radios.forEach(x => { const on = x === r; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; });
+    if (focus) r.focus();
+    rate = +r.dataset.r;
+    anims().forEach(a => { a.playbackRate = rate; });
+  };
+  radios.forEach(r => {
+    r.addEventListener('click', () => pick(r));
+    r.addEventListener('keydown', e => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      pick(radios[(radios.indexOf(r) + d + radios.length) % radios.length], true);
+    });
+  });
+  const pathBtn = document.getElementById('path'), stage = document.getElementById('stage');
+  pathBtn.addEventListener('click', () => {
+    const on = pathBtn.getAttribute('aria-pressed') !== 'true';
+    pathBtn.setAttribute('aria-pressed', String(on));
+    stage.classList.toggle('show-path', on);
+  });
+
+  if (reduce) {
+    phaseEl.textContent = 'Held mid-flight';
+    playBtn.disabled = true; playBtn.style.opacity = .4;
+    return;
+  }
+  const phases = [[.06, 'Ada holds'], [.14, 'Ada winds up'], [.40, 'Disc in flight'], [.56, 'Jun has it'], [.64, 'Jun winds up'], [.90, 'Disc coming back'], [1.01, 'Ada catches']];
+  let last = -1, count = 0;
+  const loop = () => {
+    const fly = document.getAnimations().find(a => a.animationName === 'fly');
+    if (fly) {
+      const dur = fly.effect.getTiming().duration;
+      const p = (fly.currentTime % dur) / dur;
+      phaseEl.textContent = phases.find(([e]) => p < e)[1];
+      if (last >= 0 && ((last < .14 && p >= .14) || (last < .64 && p >= .64))) countEl.textContent = ++count;
+      last = p;
+    }
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

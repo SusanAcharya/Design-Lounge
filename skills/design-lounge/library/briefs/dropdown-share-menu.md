@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 389 · "Share menu with invites and QR" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 393 · "Share menu with invites and QR" · designlounge.vercel.app -->
 
 # Share menu with invites and QR
 

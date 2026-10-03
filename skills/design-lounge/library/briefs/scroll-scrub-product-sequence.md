@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 385 · "Scroll-scrubbed product teardown" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 389 · "Scroll-scrubbed product teardown" · designlounge.vercel.app -->
 
 # Scroll-scrubbed product teardown
 

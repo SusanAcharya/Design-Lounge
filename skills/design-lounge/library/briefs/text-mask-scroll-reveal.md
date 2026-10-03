@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 436 · "Text mask scroll reveal" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 440 · "Text mask scroll reveal" · designlounge.vercel.app -->
 
 # Text mask scroll reveal
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 304 · "Mixed article cards" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 308 · "Mixed article cards" · designlounge.vercel.app -->
 
 # Mixed article cards
 

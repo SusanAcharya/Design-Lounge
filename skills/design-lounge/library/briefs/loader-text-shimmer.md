@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 435 · "Text loaders for AI states" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 439 · "Text loaders for AI states" · designlounge.vercel.app -->
 
 # Text loaders for AI states
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 253 · "Graph paper homepage" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 256 · "Graph paper homepage" · designlounge.vercel.app -->
 
 # Graph paper homepage
 

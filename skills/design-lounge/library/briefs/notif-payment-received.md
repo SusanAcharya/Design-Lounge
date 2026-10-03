@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 325 · "Payment received banner" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 329 · "Payment received banner" · designlounge.vercel.app -->
 
 # Payment received banner
 

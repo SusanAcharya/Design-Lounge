@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 421 · "Swinging kraft hang tag" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 425 · "Swinging kraft hang tag" · designlounge.vercel.app -->
 
 # Swinging kraft hang tag
 

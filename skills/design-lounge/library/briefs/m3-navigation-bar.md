@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 292 · "M3 navigation bar" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 296 · "M3 navigation bar" · designlounge.vercel.app -->
 
 # M3 navigation bar
 

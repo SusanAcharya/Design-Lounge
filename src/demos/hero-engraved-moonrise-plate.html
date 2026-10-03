@@ -1,0 +1,281 @@
+<!-- Design Lounge piece: hero-engraved-moonrise-plate · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Sigrun Tollefsen, cartographer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0e1a1c;--night-2:#152427;--bone:#e9e4d4;--bone-dim:rgba(233,228,212,.72);
+  --bone-faint:rgba(233,228,212,.2);--accent:#f2a93b;--accent-soft:rgba(242,169,59,.14);
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Manrope",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);--wrap:1080px;--pad:clamp(20px,4.5vw,36px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:16px/1.6 var(--sans);color:var(--bone);background:var(--night);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{width:min(100% - var(--pad)*2,var(--wrap));margin-inline:auto}
+
+/* header */
+.top{position:absolute;inset:0 0 auto;z-index:10}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{font:400 28px/1 var(--serif);letter-spacing:-.02em}
+.logo i{font-style:normal;color:var(--accent)}
+.links{display:flex;gap:26px;font-size:14px;font-weight:500}
+.links a{position:relative;padding:6px 0;color:var(--bone-dim);transition:color .2s}
+.links a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1.5px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.links a:hover{color:var(--bone)}
+.links a:hover::after{transform:scaleX(1)}
+.burger{display:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--bone-faint);place-items:center}
+.burger svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round}
+
+/* hero */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;isolation:isolate;padding:96px 0 clamp(150px,22vh,210px)}
+.scene{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(90deg,rgba(14,26,28,.84) 0%,rgba(14,26,28,.5) 40%,rgba(14,26,28,0) 64%),
+  linear-gradient(180deg,rgba(14,26,28,.4),transparent 30%)}
+.hero .wrap{position:relative;z-index:3}
+.grid{display:grid;grid-template-columns:minmax(0,40rem) minmax(0,1fr);align-items:end;gap:48px}
+.name{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;font:400 24px/1.2 var(--serif)}
+.name span{font:700 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+h1{font:400 clamp(46px,7.4vw,92px)/.95 var(--serif);letter-spacing:-.025em;margin:14px 0 20px;text-shadow:0 2px 30px rgba(14,26,28,.6)}
+h1 .line{display:block}
+h1 .line>span{display:block;opacity:0;transform:translateY(.35em);animation:lineup .9s var(--ease) forwards}
+h1 .line:nth-child(2)>span{animation-delay:.16s}
+h1 em{font-style:italic;color:var(--accent)}
+@keyframes lineup{to{opacity:1;transform:none}}
+.ul{position:relative;display:inline-block}
+.ul svg{position:absolute;left:-3%;bottom:-.04em;width:106%;height:.18em;overflow:visible}
+.ul path{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;stroke-dasharray:220;stroke-dashoffset:220;animation:draw .8s var(--ease) 1s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.sub{max-width:30rem;margin-bottom:28px;font-size:16.5px;color:var(--bone-dim)}
+.sub b{color:var(--bone);font-weight:700}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 26px;border-radius:999px;font-size:14.5px;font-weight:700;border:1px solid var(--bone-faint);transition:transform .25s var(--ease),background .2s,color .2s,border-color .2s}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn-main{background:var(--bone);color:var(--night);border-color:var(--bone)}
+.btn-main:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+.btn-ghost:hover{border-color:var(--bone);background:rgba(233,228,212,.06);transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.98)}
+.socials{display:flex;gap:8px;margin-left:14px;padding-left:20px;border-left:1px solid var(--bone-faint)}
+.socials a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--bone-faint);color:var(--bone-dim);transition:color .2s,border-color .2s,background .2s}
+.socials a:hover{color:var(--bone);border-color:var(--accent);background:var(--accent-soft)}
+.socials svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.note{justify-self:end;max-width:19rem;padding-top:14px;border-top:1px solid rgba(242,169,59,.4);font:italic 17px/1.5 var(--serif);color:rgba(233,228,212,.3);text-shadow:0 1px 12px rgba(14,26,28,.9);transition:color .5s ease,border-color .5s ease;cursor:default}
+.note:hover,.note:focus-visible{color:rgba(233,228,212,.94);border-color:var(--accent)}
+@media (hover:none){.note{color:rgba(233,228,212,.64)}}
+
+/* scene */
+.s-layer{will-change:transform}
+.s-sky{transform:translateY(calc(var(--sy,0)*.35px))}
+.s-far{transform:translateY(calc(var(--sy,0)*.22px))}
+.s-mid{transform:translateY(calc(var(--sy,0)*.12px))}
+.s-near{transform:translateY(calc(var(--sy,0)*.04px))}
+.moon{animation:moonrise 1.8s var(--ease) both}
+@keyframes moonrise{from{transform:translateY(70px);opacity:0}to{transform:none;opacity:1}}
+.tw{animation:twinkle var(--p,4s) ease-in-out var(--d,0s) infinite}
+@keyframes twinkle{0%,100%{opacity:.25}50%{opacity:.95}}
+.shoot{opacity:0;animation:shoot 11s ease-in 2.4s infinite}
+@keyframes shoot{0%{opacity:0;transform:translate(260px,80px)}2%{opacity:1}8%{opacity:0;transform:translate(640px,230px)}100%{opacity:0;transform:translate(640px,230px)}}
+.cloud{animation:drift 95s linear infinite}
+.cloud-2{animation-duration:130s;animation-delay:-55s}
+@keyframes drift{from{translate:-320px 0}to{translate:1900px 0}}
+.lamp{animation:flicker 2.4s ease-in-out infinite}
+@keyframes flicker{0%,100%{opacity:.85}35%{opacity:1}60%{opacity:.65}}
+.beam{transform-origin:1396px 655px;animation:sweep 7s ease-in-out infinite alternate}
+@keyframes sweep{from{transform:rotate(-14deg)}to{transform:rotate(10deg)}}
+.kite{transform-origin:778px 736px;animation:kite 4.6s ease-in-out infinite alternate}
+@keyframes kite{0%{transform:rotate(-3deg)}50%{transform:rotate(2.5deg)}100%{transform:rotate(-1deg)}}
+.tail{transform-box:fill-box;transform-origin:0 0;animation:tail 1.2s ease-in-out infinite alternate}
+@keyframes tail{from{transform:skewX(-14deg)}to{transform:skewX(12deg)}}
+.sway{transform-box:fill-box;transform-origin:bottom center;animation:sway 5.5s ease-in-out infinite alternate}
+@keyframes sway{from{transform:skewX(-3deg)}to{transform:skewX(3deg)}}
+
+/* next section, so scroll parallax has somewhere to go */
+.next{background:#efe9da;color:var(--night);padding:72px 0 120px}
+.next p{font:700 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:#8d6418;display:flex;align-items:center;gap:12px}
+.next p::before{content:"";width:26px;height:1.5px;background:currentColor}
+.next h2{font:400 clamp(36px,4.6vw,52px)/1.05 var(--serif);letter-spacing:-.02em;margin-top:12px}
+
+@media (max-width:980px){.note{display:none}.grid{grid-template-columns:1fr}}
+@media (max-width:760px){
+  .links{display:none;position:absolute;top:72px;left:var(--pad);right:var(--pad);flex-direction:column;gap:0;padding:8px 20px;background:var(--night-2);border:1px solid var(--bone-faint);border-radius:16px}
+  .links.open{display:flex}
+  .links a{padding:12px 0;font-size:16px}
+  .burger{display:grid}
+  .hero{text-align:center;align-items:flex-start;padding-top:120px}
+  .shade{background:linear-gradient(180deg,rgba(14,26,28,.7),rgba(14,26,28,.35) 60%,transparent)}
+  .name,.actions{justify-content:center}
+  .sub{margin-inline:auto}
+  .btn{flex:1 1 140px;justify-content:center;padding:0 16px;white-space:nowrap}
+  .socials{margin:6px 0 0;padding:0;border:0;flex-basis:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  h1 .line>span{opacity:1;transform:none}
+  .ul path{stroke-dashoffset:0}
+  .s-layer{transform:none!important}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Sigrun Tollefsen, home">Sigrun<i>.</i></a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="links" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+    </button>
+    <nav class="links" id="links" aria-label="Main">
+      <a href="#routes">Routes</a><a href="#prints">Print shop</a><a href="#notes">Field notes</a><a href="#talks">Talks</a><a href="#hello">Hello</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" aria-labelledby="h">
+  <svg class="scene" id="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="hatch-far" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-62)"><line y2="5" stroke="#0e1a1c" stroke-width=".9" opacity=".5"/></pattern>
+      <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><line y2="7" stroke="#0e1a1c" stroke-width="1.1" opacity=".55"/></pattern>
+      <pattern id="hatch-near" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(18)"><line y2="9" stroke="#0e1a1c" stroke-width=".8" opacity=".22"/></pattern>
+      <pattern id="hatch-moon" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line y2="6" stroke="#0e1a1c" stroke-width="1" opacity=".28"/></pattern>
+      <radialGradient id="glow"><stop offset="0" stop-color="#e9e4d4" stop-opacity=".3"/><stop offset=".5" stop-color="#e9e4d4" stop-opacity=".07"/><stop offset="1" stop-color="#e9e4d4" stop-opacity="0"/></radialGradient>
+      <linearGradient id="beam" x1="0" x2="1"><stop offset="0" stop-color="#f2a93b" stop-opacity=".22"/><stop offset="1" stop-color="#f2a93b" stop-opacity="0"/></linearGradient>
+      <symbol id="tuft" overflow="visible"><g fill="none" stroke="#0e1a1c" stroke-width="1.2" stroke-linecap="round"><path d="M0 0C-1-5-4-8-7-11"/><path d="M0 0C0-6-1-10-2-13"/><path d="M0 0C1-5 3-9 6-12"/></g></symbol>
+    </defs>
+    <g class="s-layer s-sky">
+      <g id="stars" fill="#e9e4d4"></g>
+      <line class="shoot" x1="0" y1="0" x2="-70" y2="-26" stroke="#e9e4d4" stroke-width="1.4" stroke-linecap="round"/>
+      <g class="moon">
+        <circle cx="1080" cy="250" r="260" fill="url(#glow)"/>
+        <circle cx="1080" cy="250" r="150" fill="#e9e4d4"/>
+        <circle cx="1080" cy="250" r="150" fill="url(#hatch-moon)"/>
+        <g fill="#0e1a1c" opacity=".12"><circle cx="1030" cy="205" r="22"/><circle cx="1128" cy="300" r="34"/><circle cx="1040" cy="320" r="13"/><circle cx="1150" cy="190" r="11"/></g>
+      </g>
+      <g fill="#0e1a1c" stroke="#e9e4d4" stroke-width="1.6" opacity=".85">
+        <path class="cloud" d="M120 240c-22 0-34-12-34-26s14-26 32-24c6-20 24-30 44-28 18 2 30 14 34 30 18-4 34 8 34 24 0 14-12 24-30 24z"/>
+        <path class="cloud cloud-2" d="M40 140c-16 0-26-9-26-20s10-19 24-18c4-15 18-22 33-21 14 1 23 11 26 23 14-3 26 6 26 18 0 11-9 18-23 18z"/>
+      </g>
+    </g>
+    <g class="s-layer s-far"><path id="r-far" fill="#e9e4d4" opacity=".3"/><path id="r-far-h" fill="url(#hatch-far)"/></g>
+    <g class="s-layer s-mid"><path id="r-mid" fill="#e9e4d4" opacity=".6"/><path id="r-mid-h" fill="url(#hatch)"/></g>
+    <g class="s-layer s-near">
+      <path class="beam" d="M1396 655L1700 560L1700 700Z" fill="url(#beam)"/>
+      <path id="r-near" fill="#e9e4d4"/><path id="r-near-h" fill="url(#hatch-near)"/>
+      <g id="tufts"></g>
+      <!-- lighthouse -->
+      <g fill="#0e1a1c">
+        <path d="M1380 760l6-96h20l6 96z"/><rect x="1382" y="646" width="28" height="18"/><path d="M1380 646l16-14 16 14z"/>
+        <circle class="lamp" cx="1396" cy="655" r="5" fill="#f2a93b"/>
+        <path d="M1356 760h80v8h-80z"/>
+      </g>
+      <g fill="#e9e4d4" opacity=".9"><rect x="1389" y="690" width="14" height="5"/><rect x="1389" y="720" width="14" height="5"/></g>
+      <!-- kite flyer -->
+      <g fill="none" stroke="#0e1a1c" stroke-width="3.2" stroke-linecap="round">
+        <circle cx="760" cy="726" r="6" fill="#0e1a1c" stroke="none"/>
+        <path d="M760 734v24M760 758l-8 18M760 758l9 18M760 742l18-6M760 742l-12 10"/>
+      </g>
+      <g class="kite">
+        <path d="M778 736Q850 680 880 590" fill="none" stroke="#e9e4d4" stroke-width="1" opacity=".55"/>
+        <path d="M880 562l18 28-18 28-18-28z" fill="#f2a93b"/><path d="M880 562v56M862 590h36" stroke="#0e1a1c" stroke-width="1.2"/>
+        <path class="tail" d="M880 618q-8 14 0 26q8 12 0 26q-8 12 0 22" fill="none" stroke="#e9e4d4" stroke-width="1.4" opacity=".8"/>
+      </g>
+    </g>
+  </svg>
+  <div class="shade"></div>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="name">Sigrun Tollefsen <span>Cartographer, Ålesund</span></p>
+        <h1 id="h"><span class="line"><span>I draw maps that</span></span><span class="line"><span><span class="ul"><em>still</em><svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 13C40 5 90 4 130 9s52 6 66 1"/></svg></span> work in the rain.</span></span></h1>
+        <p class="sub">Wayfinding, trail apps and folded paper guides. <b>42</b> routes charted, <b>1.2M</b> hikers kept on the path.</p>
+        <div class="actions">
+          <a class="btn btn-main" href="#routes"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>See the routes</a>
+          <a class="btn btn-ghost" href="#hello">Write to me</a>
+          <div class="socials">
+            <a href="#notes" aria-label="Field journal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg></a>
+            <a href="#prints" aria-label="Print shop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6l5-2 6 2 5-2v14l-5 2-6-2-5 2z"/><path d="M9 4v14M15 6v14"/></svg></a>
+            <a href="#hello" aria-label="Monthly letter"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <p class="note" tabindex="0">Most maps fail at the trailhead, not on the summit. I start where people first get lost, and I walk it twice.</p>
+    </div>
+  </div>
+</section>
+<section class="next" id="routes" aria-label="Routes">
+  <div class="wrap"><p>01 Routes in use</p><h2>Selected charts</h2></div>
+</section>
+</main>
+
+<script>
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  let s = 7;
+  const rnd = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  const ridge = (base, amp, step) => {
+    let d = `M0 900L0 ${base}`, i = 0;
+    for (let x = 0; x <= 1600 + step; x += step * (.6 + rnd() * .8), i++) {
+      const y = base - (i % 2 ? (.45 + rnd() * .55) * amp : rnd() * amp * .25);
+      d += `L${x.toFixed(0)} ${y.toFixed(0)}`;
+    }
+    return d + 'L1600 900Z';
+  };
+  const set = (id, d) => { document.getElementById(id).setAttribute('d', d); document.getElementById(id + '-h').setAttribute('d', d); };
+  set('r-far', ridge(600, 210, 70));
+  set('r-mid', ridge(690, 110, 80));
+  set('r-near', ridge(776, 22, 130));
+  const stars = document.getElementById('stars');
+  for (let i = 0; i < 70; i++) {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', (rnd() * 1600).toFixed(0));
+    c.setAttribute('cy', (rnd() * 480).toFixed(0));
+    c.setAttribute('r', (0.8 + rnd() * 1.1).toFixed(1));
+    c.setAttribute('class', 'tw');
+    c.style.cssText = `--d:${(rnd() * 3).toFixed(1)}s;--p:${(3 + rnd() * 2.5).toFixed(1)}s`;
+    stars.appendChild(c);
+  }
+  const tufts = document.getElementById('tufts');
+  for (let i = 0; i < 46; i++) {
+    const g = document.createElementNS(NS, 'g'), u = document.createElementNS(NS, 'use');
+    const x = rnd() * 1600, y = 790 + rnd() * 105, k = .7 + (y - 790) / 70;
+    g.setAttribute('transform', `translate(${x.toFixed(0)} ${y.toFixed(0)}) scale(${k.toFixed(2)})`);
+    u.setAttribute('href', '#tuft');
+    if (i % 3 === 0) u.setAttribute('class', 'sway');
+    g.appendChild(u);
+    tufts.appendChild(g);
+  }
+
+  const burger = document.querySelector('.burger'), links = document.getElementById('links');
+  const close = () => { burger.setAttribute('aria-expanded', 'false'); links.classList.remove('open'); };
+  burger.addEventListener('click', () => {
+    const open = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!open));
+    links.classList.toggle('open', !open);
+  });
+  links.addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const hero = document.querySelector('.hero'), scene = document.getElementById('scene');
+  let tick = false;
+  addEventListener('scroll', () => {
+    if (tick) return;
+    tick = true;
+    requestAnimationFrame(() => {
+      tick = false;
+      const y = scrollY;
+      if (y <= hero.offsetHeight) scene.style.setProperty('--sy', y);
+    });
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>

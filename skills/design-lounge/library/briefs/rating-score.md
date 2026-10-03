@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 371 · "Rating score" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 375 · "Rating score" · designlounge.vercel.app -->
 
 # Rating score
 

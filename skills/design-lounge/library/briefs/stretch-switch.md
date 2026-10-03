@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 419 · "Stretch switch" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 423 · "Stretch switch" · designlounge.vercel.app -->
 
 # Stretch switch
 

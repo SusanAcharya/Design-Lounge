@@ -1,0 +1,267 @@
+<!-- Design Lounge piece: footer-engraved-caravan-strip · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Páramo Post, footer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;650&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --moss:#17211b;--moss-2:#1e2a22;--oat:#ebe3cc;--oat-2:rgba(235,227,204,.84);--oat-3:rgba(235,227,204,.6);
+  --line:rgba(235,227,204,.16);--accent:#e0623e;--page:#efe8d6;--ink:#17211b;
+  --serif:"Newsreader",Georgia,serif;--sans:"Figtree",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);--wrap:1080px;--pad:clamp(20px,4.5vw,36px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font:16px/1.6 var(--sans);color:var(--ink);background:var(--page);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{width:min(100% - var(--pad)*2,var(--wrap));margin-inline:auto}
+
+/* end of the page above the footer */
+.ask{padding:72px 0 64px;text-align:center}
+.ask p{font:650 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#a6432a}
+.ask h2{font:400 clamp(30px,4vw,44px)/1.1 var(--serif);letter-spacing:-.02em;margin:14px auto 0;max-width:22ch}
+.ask h2 em{color:#a6432a}
+
+footer{position:relative;background:var(--moss);color:var(--oat);overflow:hidden;isolation:isolate}
+footer::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 60% 70% at 85% 0%,rgba(224,98,62,.12),transparent 60%)}
+.fgrid{display:grid;grid-template-columns:1.45fr .85fr .85fr .85fr 1.3fr;gap:36px 30px;padding:64px 0 36px}
+.logo{display:inline-flex;align-items:center;gap:10px;font:500 30px/1 var(--serif);letter-spacing:-.025em}
+.logo svg{width:22px;height:22px}
+.tag{font:italic 17px/1.5 var(--serif);color:var(--oat-2);max-width:18rem;margin:16px 0 22px}
+.contact{list-style:none;display:grid;gap:10px;font-size:14.5px;color:var(--oat-2)}
+.contact li{display:flex;align-items:center;gap:11px}
+.contact svg,.social svg,.go svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.contact a:hover{color:var(--oat);text-decoration:underline;text-underline-offset:3px}
+.time{font-weight:650;color:var(--oat);font-variant-numeric:tabular-nums}
+.time .c{animation:blink 2s steps(1) infinite}
+@keyframes blink{50%{opacity:.25}}
+.social{display:flex;gap:6px;margin-top:20px;margin-left:-10px}
+.social a{width:40px;height:40px;display:grid;place-items:center;color:var(--oat-2);transition:color .2s,transform .25s var(--ease)}
+.social a:hover{color:var(--accent);transform:translateY(-2px)}
+.col{display:grid;gap:10px;align-content:start}
+.col h3{position:relative;font:650 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;padding-bottom:12px;margin-bottom:8px}
+.col h3::after{content:"";position:absolute;left:0;bottom:0;width:38px;height:1.5px;background:var(--accent)}
+.col a{font:400 16.5px/1.35 var(--serif);color:var(--oat-2);width:fit-content;transition:color .2s,transform .25s var(--ease)}
+.col a:hover{color:var(--oat);transform:translateX(3px)}
+.say p{font:italic 16px/1.5 var(--serif);color:var(--oat-2);margin-bottom:12px}
+.form{display:flex;border:1.5px solid rgba(235,227,204,.9);background:rgba(235,227,204,.04);transition:box-shadow .2s,border-color .2s}
+.form:focus-within{border-color:var(--oat);box-shadow:0 0 0 3px rgba(224,98,62,.35)}
+.form input{flex:1;min-width:0;padding:12px 14px;background:transparent;border:0;color:var(--oat);font:italic 16px/1.2 var(--serif)}
+.form input::placeholder{color:var(--oat-3)}
+.form input:focus{outline:none}
+.go{width:48px;border:0;display:grid;place-items:center;background:var(--oat);color:var(--moss);cursor:pointer;transition:background .2s,color .2s}
+.go svg{transition:transform .25s var(--ease)}
+.go:hover{background:var(--accent);color:var(--oat)}
+.go:hover svg{transform:translateX(3px)}
+.status{min-height:22px;margin-top:8px;font-size:13px;color:var(--oat-3)}
+.status.ok{color:#f0a184}
+.status.bad{color:#f4b9a6}
+.legal{display:flex;justify-content:space-between;align-items:center;gap:12px 20px;flex-wrap:wrap;padding-bottom:6px;font:italic 15px/1.4 var(--serif);color:var(--oat-2)}
+.legal nav{display:flex;gap:14px;align-items:center}
+.legal nav span{opacity:.45}
+.legal nav a:hover{color:var(--oat);text-decoration:underline;text-underline-offset:3px}
+
+/* the plain */
+.art{display:block;width:100%;height:clamp(200px,27vw,360px);margin-top:-6px}
+.layer{will-change:transform;transition:transform .15s linear}
+.tw{animation:tw var(--p,4s) ease-in-out var(--d,0s) infinite}
+@keyframes tw{0%,100%{opacity:.2}50%{opacity:.9}}
+.bird-track{animation:fly var(--p,60s) linear var(--d,0s) infinite}
+@keyframes fly{from{transform:translate(-80px,var(--y,60px))}to{transform:translate(1700px,calc(var(--y,60px) - 22px))}}
+.wing{transform-box:fill-box;transform-origin:center;animation:flap 1.3s ease-in-out infinite alternate}
+@keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.4)}}
+.sway{transform-box:fill-box;transform-origin:bottom center;animation:sway 5.5s ease-in-out infinite alternate}
+.sway-2{animation-duration:7s;animation-delay:-3s}
+@keyframes sway{from{transform:skewX(-3deg)}to{transform:skewX(3deg)}}
+.flag{transform-box:fill-box;transform-origin:left center;animation:flutter 1.4s ease-in-out var(--d,0s) infinite alternate}
+@keyframes flutter{from{transform:skewY(-7deg) scaleX(1)}to{transform:skewY(7deg) scaleX(.88)}}
+.walk{animation:walk 95s linear -52s infinite}
+@keyframes walk{from{transform:translateX(-220px)}to{transform:translateX(1820px)}}
+.bob{animation:bob .55s ease-in-out var(--dl,0s) infinite alternate}
+@keyframes bob{to{transform:translateY(-1.4px)}}
+.leg{transform-box:fill-box;transform-origin:50% 0;animation:step .55s ease-in-out var(--dl,0s) infinite alternate}
+.leg.b{animation-direction:alternate-reverse}
+@keyframes step{from{transform:rotate(-16deg)}to{transform:rotate(16deg)}}
+.neck{transform-box:fill-box;transform-origin:50% 100%;animation:nod 1.1s ease-in-out infinite alternate}
+@keyframes nod{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.tail{transform-box:fill-box;transform-origin:100% 0;animation:swish 1.6s ease-in-out infinite alternate}
+@keyframes swish{from{transform:rotate(-10deg)}to{transform:rotate(12deg)}}
+
+@media (max-width:1000px){.fgrid{grid-template-columns:1fr 1fr 1fr}.brand,.say{grid-column:1/-1}}
+@media (max-width:600px){.fgrid{grid-template-columns:1fr 1fr;gap:32px 20px;padding-top:52px}.ask{padding:56px 0 48px}.legal{flex-direction:column;align-items:flex-start}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .walk{transform:translateX(980px)}
+  .bird-track{transform:translate(var(--x,400px),var(--y,60px))}
+}
+</style>
+</head>
+<body>
+<section class="ask" aria-label="Last word">
+  <div class="wrap">
+    <p>Letter no. 38 is packed</p>
+    <h2>The next one leaves Sajama on <em>the first</em>. Walk along?</h2>
+  </div>
+</section>
+
+<footer aria-labelledby="ft">
+  <h2 id="ft" hidden>Site footer</h2>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="brand">
+        <a class="logo" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="#e0623e"/><path d="M2 17h20" stroke="#ebe3cc" stroke-width="1.6"/></svg>Páramo Post</a>
+        <p class="tag">Slow letters from the high plains, written on foot and posted when the mules stop.</p>
+        <ul class="contact">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><a href="#write">desk@paramo.post</a></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Sajama, Bolivia</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>On the trail at <span class="time" id="time" aria-live="off">--:--</span></li>
+        </ul>
+        <div class="social">
+          <a href="#rss" aria-label="Feed"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5a14 14 0 0 1 14 14M5 11a8 8 0 0 1 8 8"/><circle cx="6" cy="18" r="1.2"/></svg></a>
+          <a href="#photos" aria-label="Photo log"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></a>
+          <a href="#audio" aria-label="Audio letters"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></a>
+        </div>
+      </div>
+      <nav class="col" aria-label="Letters"><h3>Letters</h3><a href="#a">Salt flat issue</a><a href="#a">Condor season</a><a href="#a">Market days</a><a href="#a">Back issues</a></nav>
+      <nav class="col" aria-label="Route"><h3>Route</h3><a href="#a">Altiplano map</a><a href="#a">Huts and hosts</a><a href="#a">Walking calendar</a><a href="#a">Pack list</a></nav>
+      <nav class="col" aria-label="Desk"><h3>Desk</h3><a href="#a">About the post</a><a href="#a">Contributors</a><a href="#a">Photo rules</a></nav>
+      <div class="col say">
+        <h3>Say hola</h3>
+        <p>One letter a month, never more. Leave an address and it finds you.</p>
+        <form class="form" id="form" novalidate>
+          <label for="email" hidden>Email address</label>
+          <input id="email" type="email" placeholder="Your email" autocomplete="email" required>
+          <button class="go" type="submit" aria-label="Subscribe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </form>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Páramo Post, carried on foot.</span>
+      <nav aria-label="Legal"><a href="#c">Colophon</a><span>/</span><a href="#p">Privacy</a><span>/</span><a href="#t">Plain-text edition</a></nav>
+    </div>
+  </div>
+
+  <svg class="art" id="art" viewBox="0 0 1600 380" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="hf" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-62)"><line y2="5" stroke="#17211b" stroke-width=".9" opacity=".5"/></pattern>
+      <pattern id="hm" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><line y2="7" stroke="#17211b" stroke-width="1.1" opacity=".5"/></pattern>
+      <pattern id="hn" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(18)"><line y2="9" stroke="#17211b" stroke-width=".8" opacity=".2"/></pattern>
+      <symbol id="ichu" overflow="visible"><g fill="none" stroke="#17211b" stroke-width="1.2" stroke-linecap="round"><path d="M0 0L-6-16M0 0L-2-20M0 0L2-19M0 0L6-15M0 0L9-9"/></g></symbol>
+      <symbol id="llama" overflow="visible">
+        <g class="bob">
+          <path class="tail" d="M-22-37q-7 1-6 9" fill="none" stroke="#17211b" stroke-width="3" stroke-linecap="round"/>
+          <path d="M-23-31q0-11 12-11h22q11 0 11 10v5q0 6-8 6h-29q-8 0-8-6z" fill="#17211b"/>
+          <g class="neck"><path d="M13-36l3-28q1-4 5-4h3q4 0 3 4l-2 30z" fill="#17211b"/><path d="M18-71h11q5 0 5 4t-5 4H18z" fill="#17211b"/><path d="M19-70l1-6 2 6zM23-70l1-6 2 6z" fill="#17211b"/></g>
+          <rect x="-12" y="-50" width="20" height="9" fill="#17211b"/><path d="M-12-46h20" stroke="#e0623e" stroke-width="2"/>
+        </g>
+        <rect class="leg" x="-19" y="-26" width="4" height="26" rx="1.5" fill="#17211b"/>
+        <rect class="leg b" x="-13" y="-26" width="4" height="26" rx="1.5" fill="#17211b"/>
+        <rect class="leg b" x="10" y="-26" width="4" height="26" rx="1.5" fill="#17211b"/>
+        <rect class="leg" x="16" y="-26" width="4" height="26" rx="1.5" fill="#17211b"/>
+      </symbol>
+    </defs>
+    <g id="stars" fill="#ebe3cc"></g>
+    <g class="bird-track" style="--y:70px;--p:64s;--d:-20s;--x:420px"><path class="wing" d="M-12 0q6-6 12 0q6-6 12 0" fill="none" stroke="#ebe3cc" stroke-width="1.6" stroke-linecap="round"/></g>
+    <g class="bird-track" style="--y:44px;--p:80s;--d:-58s;--x:1150px"><path class="wing" d="M-9 0q4.5-5 9 0q4.5-5 9 0" fill="none" stroke="#ebe3cc" stroke-width="1.4" stroke-linecap="round" style="animation-delay:-.6s"/></g>
+    <g class="layer" id="far"><path id="r-far" fill="#ebe3cc" opacity=".3"/><path id="r-far-h" fill="url(#hf)"/></g>
+    <g class="layer" id="mid"><path id="r-mid" fill="#ebe3cc" opacity=".62"/><path id="r-mid-h" fill="url(#hm)"/></g>
+    <g><path id="r-near" fill="#ebe3cc"/><path id="r-near-h" fill="url(#hn)"/>
+      <g id="tufts"></g>
+      <g transform="translate(330 300)">
+        <path d="M0 0v-70M160 6v-64" stroke="#17211b" stroke-width="2.4"/>
+        <path d="M0-66Q80-46 160-56" fill="none" stroke="#17211b" stroke-width="1"/>
+        <g id="flags"></g>
+        <path d="M-14 0h28l-6-10h-16z" fill="#17211b"/><path d="M-9-10h18l-5-9h-8z" fill="#17211b"/><path d="M-5-19h10l-5-8z" fill="#17211b"/>
+      </g>
+      <g class="walk">
+        <g transform="translate(0 324) scale(1.22)">
+          <g class="herder">
+            <g class="bob"><circle cx="0" cy="-56" r="5.5" fill="#17211b"/><path d="M-10-60h20v2h-20zM-5-60l1-7h8l1 7z" fill="#17211b"/><path d="M-12-32l12-20 12 20z" fill="#17211b"/><path d="M8-47l10 47" stroke="#17211b" stroke-width="2" stroke-linecap="round"/></g>
+            <rect class="leg" x="-4" y="-34" width="3.2" height="34" rx="1.5" fill="#17211b"/>
+            <rect class="leg b" x="1" y="-34" width="3.2" height="34" rx="1.5" fill="#17211b"/>
+          </g>
+          <g transform="translate(-70 0)"><use href="#llama"/></g>
+          <g transform="translate(-150 1) scale(.92)" style="--dl:-.2s"><use href="#llama"/></g>
+          <path d="M-40-64Q-24-52-8-44" fill="none" stroke="#17211b" stroke-width="1"/>
+        </g>
+      </g>
+    </g>
+  </svg>
+</footer>
+
+<script>
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  let s = 11;
+  const rnd = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  const ridge = (base, amp, step) => {
+    let d = `M0 380L0 ${base}`, i = 0;
+    for (let x = 0; x <= 1600 + step; x += step * (.6 + rnd() * .8), i++) {
+      const y = base - (i % 2 ? (.45 + rnd() * .55) * amp : rnd() * amp * .25);
+      d += `L${x.toFixed(0)} ${y.toFixed(0)}`;
+    }
+    return d + 'L1600 380Z';
+  };
+  const set = (id, d) => ['', '-h'].forEach(k => document.getElementById(id + k).setAttribute('d', d));
+  set('r-far', ridge(230, 140, 80));
+  set('r-mid', ridge(275, 70, 90));
+  set('r-near', ridge(312, 14, 140));
+  const add = (parent, tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+  const stars = document.getElementById('stars');
+  for (let i = 0; i < 46; i++) {
+    const c = add(stars, 'circle', { cx: (rnd() * 1600).toFixed(0), cy: (rnd() * 150).toFixed(0), r: (.7 + rnd()).toFixed(1), class: 'tw' });
+    c.style.cssText = `--d:${(rnd() * 3).toFixed(1)}s;--p:${(3 + rnd() * 3).toFixed(1)}s`;
+  }
+  const tufts = document.getElementById('tufts');
+  for (let i = 0; i < 52; i++) {
+    const y = 322 + rnd() * 56, k = .7 + (y - 322) / 40;
+    const g = add(tufts, 'g', { transform: `translate(${(rnd() * 1600).toFixed(0)} ${y.toFixed(0)}) scale(${k.toFixed(2)})` });
+    add(g, 'use', { href: '#ichu', class: i % 2 ? 'sway' : 'sway sway-2' });
+  }
+  const flags = document.getElementById('flags'), cols = ['#e0623e', '#ebe3cc', '#17211b', '#e0623e', '#ebe3cc', '#17211b', '#e0623e'];
+  cols.forEach((c, i) => {
+    const x = 12 + i * 21, y = -64 + Math.sin((i + 1) / 8 * Math.PI) * 12;
+    const f = add(flags, 'rect', { x, y, width: 10, height: 12, fill: c, class: 'flag' });
+    if (c === '#17211b') f.setAttribute('stroke', '#ebe3cc'), f.setAttribute('stroke-width', '.6');
+    f.style.setProperty('--d', `-${(i * .2).toFixed(1)}s`);
+  });
+
+  const tEl = document.getElementById('time');
+  const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/La_Paz', hour: '2-digit', minute: '2-digit' });
+  const tick = () => { const [h, m] = fmt.format(new Date()).split(':'); tEl.innerHTML = `${h}<span class="c">:</span>${m}`; };
+  tick(); setInterval(tick, 30000);
+
+  const form = document.getElementById('form'), input = document.getElementById('email'), status = document.getElementById('status');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const v = input.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { status.className = 'status bad'; status.textContent = 'That address looks short a letter or two.'; input.focus(); return; }
+    status.className = 'status ok'; status.textContent = 'Added. Letter no. 38 leaves on the first.'; input.value = '';
+  });
+
+  addEventListener('load', () => scrollTo(0, document.documentElement.scrollHeight));
+  scrollTo(0, document.documentElement.scrollHeight);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const art = document.getElementById('art'), far = document.getElementById('far'), mid = document.getElementById('mid');
+  let ticking = false;
+  const par = () => {
+    ticking = false;
+    const r = art.getBoundingClientRect(), vh = innerHeight || 1;
+    if (r.top > vh || r.bottom < 0) return;
+    const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+    far.style.transform = `translateY(${((1 - p) * 40).toFixed(1)}px)`;
+    mid.style.transform = `translateY(${((1 - p) * 18).toFixed(1)}px)`;
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(par); } }, { passive: true });
+  par();
+})();
+</script>
+</body>
+</html>

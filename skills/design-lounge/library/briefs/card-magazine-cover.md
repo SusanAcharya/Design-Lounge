@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 294 · "Magazine cover card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 298 · "Magazine cover card" · designlounge.vercel.app -->
 
 # Magazine cover card
 

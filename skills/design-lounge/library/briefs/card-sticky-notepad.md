@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 418 · "Sticky notes board" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 422 · "Sticky notes board" · designlounge.vercel.app -->
 
 # Sticky notes board
 

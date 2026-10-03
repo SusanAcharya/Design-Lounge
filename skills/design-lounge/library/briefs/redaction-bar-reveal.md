@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 374 · "Redaction bar reveal" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 378 · "Redaction bar reveal" · designlounge.vercel.app -->
 
 # Redaction bar reveal
 

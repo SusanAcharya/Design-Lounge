@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 234 · "Failed load with retry" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 237 · "Failed load with retry" · designlounge.vercel.app -->
 
 # Failed load with retry
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 270 · "Inline edit" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 274 · "Inline edit" · designlounge.vercel.app -->
 
 # Inline edit
 

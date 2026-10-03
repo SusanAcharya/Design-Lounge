@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 269 · "Inline alert" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 273 · "Inline alert" · designlounge.vercel.app -->
 
 # Inline alert
 
