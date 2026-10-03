@@ -35,7 +35,7 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | A new product, site, app, or design system | Kit flow |
 | One screen, section, or component | Piece flow, inside the locked kit if one exists |
 | Only a palette, font, icon, or motion | Library flow |
-| "Make it look good" with no kind | Kit flow. Infer the kind. Say what you assumed. |
+| "Make it look good" with no kind | Kit flow. Infer the kind, the job, and the register from their sentence. Say what you assumed. |
 
 Ask for the stack once if they have not named it. Then keep it. Good stack lines are boring: "Next.js, Tailwind", "plain HTML + CSS", "SwiftUI", "Flutter". The briefs are stack-agnostic. You translate.
 
@@ -43,7 +43,7 @@ Ask for the stack once if they have not named it. Then keep it. Good stack lines
 
 Read [practice.md](practice.md) and follow it. Do not skip ahead to code.
 
-Pick one theme, one pairing, one family, and the pieces for this pass. Match the world in [practice.md](practice.md). Do not lock the first palette because it is first. Before you choose a layout, write the four lines in Decide the screen in [practice.md](practice.md): who it is for, the one decision, the first thing they see, and the next action. The first thing is the largest type on the view. A region that does not serve those four lines does not go on the screen. The next action names the screen it opens. Follow After the action in [practice.md](practice.md). Show the pick before you paint, unless they already told you to build. Then open the screens, run Look and One correction, and run the finish checklist. Report each line as pass or fail.
+Pick one theme, one pairing, one family, and the pieces for this pass. From their sentence, name the type, the job, and the scope, then match the world in [practice.md](practice.md), including the register. A portfolio or a product page they described with scroll, hover, or a cursor keeps that one effect. Do not lock the first palette because it is first. Before you choose a layout, write the four lines in Decide the screen in [practice.md](practice.md): who it is for, the one decision, the first thing they see, and the next action. The first thing is the largest type on the view. A region that does not serve those four lines does not go on the screen. The next action names the screen it opens. Follow After the action in [practice.md](practice.md). Show the pick before you paint, unless they already told you to build. Then open the screens, run Look and One correction, and run the finish checklist. Report each line as pass or fail.
 
 ## Show the pick, then ask once
 
@@ -70,7 +70,7 @@ You keep one system consistent across the product. You do not become a second de
 
 An internal tool, admin, ops screen, or dashboard is kind `platform`, then the `dashboard` recipe in `starts`. Search `dashboard`, `data`, `charts`, `navigation`, `settings`, `overlays`, `feedback`, `inputs`, `pickers`, `team`, `utility`, and `error`. Do not decide the library is only marketing because most pieces are. A chart, a single metric, an empty list, and a failed load come from those pieces. A line is one stroke. A metric is one number at display size. Do not style a chart library, do not lay four equal numbers in a row, and do not write "No data" into a blank card. On a phone, use the phone empty and the phone failed load.
 
-A pass is more than the first screen. Follow Minimum screens in [practice.md](practice.md). A website includes nav, a hero, one proof block, and a footer. An app includes the shell, a list, one detail, an empty state, and account or settings. A platform includes the shell, a table or board, one record, and the account menu. Add people and billing when the product has staff or a plan.
+A pass is more than the first screen. Follow Minimum screens in [practice.md](practice.md). Write the shell before the first screen: sidebar, panel, and the one nav list. After the screens, the Match block checks those widths again, including the rail closed and the phone. A website includes nav, a hero, one proof block, and a footer. An app includes the shell, a list, one detail, an empty state, and account or settings. A platform includes the shell, a table or board, one record, and the account menu. Add people and billing when the product has staff or a plan.
 
 ## Adopt flow
 
@@ -79,13 +79,13 @@ Use this when a design system is already in the project.
 1. Keep their colours, type, radius, and shadow. Do not lock a second Lounge palette on top.
 2. Take structure, states, motion, and hit targets from the piece brief.
 3. Show the piece demos you will take structure from, with their colours named as the ones you are keeping. Ask once, unless they already said to build. Do not ask how far to go.
-4. Restyle onto a Lounge kit only when they asked for a new look. Then follow Kit flow.
+4. Restyle onto a Lounge kit only when they asked for a new look. Then follow Kit flow. A refine that asks for scroll, hover, or a cursor keeps their colours and adds one effect piece from Register in [practice.md](practice.md). It is not a new kit.
 
 ## Kit flow
 
 1. Pick a kind: `website`, `product`, `platform`, or `personal`. Map their words with [reference.md](reference.md). A shop, magazine, portfolio, or phone app still starts here, then take the matching recipe from `starts` in the index. One person's money is `personal`, not `platform`.
 2. Use `kit.kinds` for that kind: `palettes`, `pairings`, `families`, `pieces`.
-3. If they already chose, lock those ids. If they said just go, you pick, build it, or don't ask, lock the match from Match the world: the recipe that fits, or the theme whose `bestFor` names this product. Say which theme you rejected. Do not lock the first palette, the first pairing, or the first family because they are first.
+3. If they already chose, lock those ids. If they said just go, you pick, build it, or don't ask, lock the match from Match the world: the recipe that fits, or the theme whose `bestFor` names this product. Say which theme you rejected. If they described scroll, hover, or a cursor, the register is that one piece. Do not drop it because the recipe's theme is calm. Do not lock the first palette, the first pairing, or the first family because they are first.
 4. Otherwise show the pick (Show the pick, then ask once) and stop. Do not write UI in that turn.
 5. If they ask to see options, name three palettes and two pairings from that kind's lists, each with its page link. Names and moods only. They pick a whole palette, never a hex.
 6. The locked system is the theme's `css`, the pairing's `css`, and the family's `rules`, `radius`, `button`, and `density` in the index. Match those numbers. Do not fetch a kit URL.

@@ -23,6 +23,8 @@ Decision:
 First thing they see:
 Next action:
 Job of this pass:
+Scope:
+Register: quiet | <one piece id>
 Kind: website | product | platform
 Mode: new kit | adopt existing
 Theme: id (pair: id or none)
@@ -31,8 +33,12 @@ Rejected:
 Pairing: id
 Family: id
 Icons: Lounge Icons, 24px, stroke 1.75
-Motion: cubic-bezier(0.2, 0.7, 0.2, 1) · UI 200ms · layout 320ms · sheets 400ms
+Motion: cubic-bezier(0.2, 0.7, 0.2, 1) · UI 200ms · layout 320ms · sheets 400ms · effect: none or <piece id>
 Density: air | regular | dense
+Shell: none | sidebar 240 open / 64 rail
+Panel: none | 300
+Nav:
+Phone nav: drawer | tabs
 Pieces:
 Kept from their system:
 
@@ -91,25 +97,31 @@ Read this before you set a number or a date. The pairing `devanagari` is the Nep
 
 ## Identity
 
-Restraint is the default. A regional or brand identity is still allowed, in three places, and nowhere else.
+Restraint is the default on a product someone opens every day. A portfolio, a launch, or a product page they described with motion keeps that one effect, in Register. A regional or brand identity is still allowed, in three places, and nowhere else.
 
 1. The locked theme. A Nepali product uses Lokta: lokta paper, crimson primary, navy ink. Lokta Night is the dark pair. Do not stay on Harbour Ledger and then ask why it looks like a Western fintech app.
 2. One texture, on one region. The page background, or a single band. A lokta grain is a low-contrast dot at under 8% opacity. Not on cards, not under type, not tiled across every row.
 3. The display face from the pairing. For Nepal that is Noto Serif Devanagari, including on the amount.
 
-Crimson is `--primary`, not a second accent beside the theme's brass. A festival does not get a second decorative colour. No gradient, no glow, no emoji, no pattern on every card. If they asked for Nepali and you only put it in the nouns, the look failed. Say so, and move the identity into those three places.
+Crimson is `--primary`, not a second accent beside the theme's brass. A festival does not get a second decorative colour. No emoji, and no pattern on every card. A gradient or a glow belongs only to the one effect piece in Register. If they asked for Nepali and you only put it in the nouns, the look failed. Say so, and move the identity into those three places.
 
 For a revamp, name three visual problems. Fix those inside the adopted system. Do not reskin the whole product unless they asked.
 
 ## What to build
 
-The four lines decide a screen. They do not decide the product. Before them, write three lines on the system sheet.
+The four lines decide a screen. They do not decide the product. People name a product in a sentence. Read that sentence and write these lines before you lock a theme.
 
-- The job they already do without this product, in their words. If they did not say, ask once, then stop. Do not invent a research study.
-- One thing you will not build. Name the screen a template would add, and why it does not serve the job.
-- The pushback, if there is one. A person tracking their own spending needs a list of transactions before they need a dashboard. Say that, and build the list. Cash and a wallet are different rows, not one "payment" type, when they said they use both. A festival budget is a dated limit, not a second app.
+- Type. A portfolio, a shop, a clinic, a payroll tool, a phone app, a product page. Use their nouns. "An app for clinics" is a clinic. "My photography site" is a portfolio.
+- What it does. The job, in their words when they gave any. If they only named the type, infer the job and say what you assumed.
+- Scope. This pass: one screen, the public site, or the app's minimum set. A refine of a screen that already exists is that screen. It is not a new product and not a reskin.
 
-You do not interview their users. You do cut a screen they did not need, and you do not add a dashboard to look complete. The screens you ship are the minimum set for the job they named.
+If two recipes both fit and they would lock different themes, ask once which world it is, then stop. A staff dashboard and a personal ledger are that case. A shop and a portfolio are that case. Do not send a list of questions. Do not invent a research study.
+
+One thing you will not build. Name the screen a template would add, and why it does not serve the job.
+
+The pushback, if there is one. A person tracking their own spending needs a list of transactions before they need a dashboard. Say that, and build the list. Cash and a wallet are different rows, not one "payment" type, when they said they use both. A festival budget is a dated limit, not a second app.
+
+You do not interview their users. You do name the type, the job, and the scope from a thin message. You do cut a screen they did not need, and you do not add a dashboard to look complete. The screens you ship are the minimum set for the job you named.
 
 ## Not a copy of the recipe
 
@@ -117,7 +129,22 @@ A recipe locks the system. It does not supply the product. Do not reuse its samp
 
 Two products on the same theme should still differ in the noun, the home screen, and the brand primary if they gave you one. If the interface would still be true after swapping their name for the demo's, you copied the demo. Change the home to the decision they named.
 
-If they asked for loud, playful, or luxury, lock the theme and family whose mood says that. Playroom, Festival, and Atelier Noir exist for that. Do not walk them back to Lokta or Harbour Ledger because those are calmer. The anti-slop checks still hold. Loud is the type and the theme, not a glow.
+If they asked for loud, playful, or luxury, lock the theme and family whose mood says that. Playroom, Festival, and Atelier Noir exist for that. Do not walk them back to Lokta or Harbour Ledger because those are calmer. The anti-slop checks still hold. Loud is the type and the theme, not a glow you invented.
+
+## Register
+
+Write `quiet` or one piece id on the sheet. This is how a thin request still lands on a style that fits.
+
+A ledger, a clinic, a settings screen, or a dashboard stays quiet. Motion is the sheet: 200ms, 320ms, 400ms. Do not add a cursor, a scroll story, or a hover tilt because the page felt plain.
+
+A portfolio, a launch, a product page, or a refine they described as motion is in the library. Search categories `cursor`, `scroll`, and `text-motion`. Take one piece for the effect they named.
+
+- A portfolio: `portfolio-index-hover-preview`, `hover-image-trail`, `portfolio-photographer-horizontal`, `stacking-cards-scroll`, or `cursor-ink-blob`.
+- A product page: `hero-product-window-tilt`, `features-sticky-scroll-steps`, or `hover-tilt-cards`. Not a cursor on the checkout.
+- A headline that moves: `kinetic-type-marquee` or `variable-font-proximity`.
+- A phone: `ios-pull-to-refresh`, `shared-element-expand`, or `m3-container-transform`. Not a web cursor.
+
+If they did not name an effect, the register is quiet. Do not add one to fill the page. The piece's motion table wins inside that region. The rest of the page stays on the sheet's easing. Reduced motion still applies. One effect. A blob, a tilt, a marquee, and a stack on the same page is four designs.
 
 ## Break one rule
 
@@ -189,7 +216,7 @@ Base unit 4px. Use the locked family's density. Do not invent a third gap on the
 | regular | 20–32 | 16 | 16 | 40 / 44 |
 | dense | 16–24 | 12 | 12 | 36 / 44 |
 
-Phone margin 20. The web frame is 1120px. The column inside it is one width for every screen of this pass. Default 720px. Write it on the system sheet before the first screen. A brief that says 640, 720, or 880 does not get its own column. Reading measure stays 58–66ch inside that column.
+Phone margin 20. With no sidebar and no panel, the web frame is 1120px. With the shell in Layout, the viewport is 1280px and the frame is whatever main has left. The column inside that frame is one width for every screen of this pass. Default 720px. Write it on the system sheet before the first screen. A brief that says 640, 720, or 880 does not get its own column. Reading measure stays 58–66ch inside that column. The column does not grow when the rail closes, and it does not shrink to a new number because a panel appeared. The panel has its own width.
 
 ## Type
 
@@ -210,9 +237,21 @@ Body stays on `--font-text`. Do not set a paragraph in the display face. Do not 
 
 One primary action per view. Secondary and tertiary follow the family.
 
-Web screens in one pass share the column from Spacing, and the same page padding. Phone is one column, the full width of the frame. A grid inside the column is the piece's structure. It is not a different page width. The primary action sits in the thumb zone or in the sticky bar the piece specifies.
+Write the shell on the system sheet before the first screen. Every screen in the pass uses that shell. A screen with its own sidebar width, or a screen that drops the sidebar the others have, fails the Match.
 
-One navigation system. A header and a tab bar on the same phone screen is two systems.
+Web screens share the content column from Spacing, and the same page padding. That column sits inside main. Default 720px. Reading measure stays 58–66ch. A grid inside the column is the piece's structure. It is not a different page width. Phone content is one column, the full width of the frame, with the same padding. The primary action sits in the thumb zone or in the sticky bar the piece specifies.
+
+Left nav, when the product has one, is `collapsing-sidebar-rail`. Open is 240px, labels visible. Rail is 64px, icons only, labels become tooltips. Main is `flex: 1` and `min-width: 0`. Closing the rail gives those pixels to main. It does not change the content column, the page padding, the control height, or the type. Do not animate a margin on main. Do not let the reading measure grow because the rail closed. The extra space stays in main, outside the column.
+
+A right panel, when a record needs one, is the panel on `record-detail-header`. It is 300px beside the content, from 768px up. Below 768 it stacks under the content, full width, with a top border instead of a side border. The panel repeats the same verb as outline. It does not get its own primary, its own padding, or a width that changes per screen. A list screen does not grow a panel to match the record. If this pass has no record panel, write `none`. Do not add one to balance the sidebar.
+
+Below 768 the rail does not exist. The same nav becomes a drawer at the open width, 240px, over a scrim. Same items, same order, same current item.
+
+On a phone those sections become `phone-tab-plain`, or `ios-glass-tab-bar` when the family is glass. Three to five tabs, one per real section. Items that do not fit stay in the drawer, under the same labels. Do not rename them. Do not put a header and a tab bar on the same phone screen. That is two navigation systems.
+
+A tablet product uses `tablet-sidebar-overlay-pin`, not the 240/64 rail. Pinned: the content reflows by the sidebar width, 280px. Overlay: a scrim, and the content does not reflow. One sidebar. Do not put the web rail and the tablet pin on the same product.
+
+Nav labels are one list, written on the sheet. Desktop, the drawer, and the phone are three presentations of that list. The current item is the same destination on each.
 
 The header, the button, the filter, and the text field look the same on every screen of this pass. A brief that draws a pill filter loses to the family, unless that family's button is already a pill. Control height and radius come from the family, on every screen.
 
@@ -238,20 +277,25 @@ Feedback colours are for live state only.
 
 You can see the finished screen. Open it. A browser at the frame size, or a screenshot of that frame. Web is 1280×800. Phone is 390×844. Tablet is 1180×820. Read the page. A screenshot alone can hide a gap.
 
-If the browser cannot paint, cannot animate, or the screenshot repeats content, measure the DOM instead and write the same block with "measured". Check: no horizontal overflow (`scrollWidth` no greater than `clientWidth`), one primary button, that button at least 44px on a phone and 36px on the web, one element at display size, and the currency word and the digits sharing one computed `font-family`. If you cannot open it and cannot measure it, say so. The UI is not done.
+If the browser cannot paint, cannot animate, or the screenshot repeats content, measure the DOM instead and write the same block with "measured". Check: no horizontal overflow (`scrollWidth` no greater than `clientWidth`), one primary button, that button at least 44px on a phone and 36px on the web, one element at display size, the currency word and the digits sharing one computed `font-family`, and, when the sheet names them, the sidebar width, the panel width, and the content column. Measure the column once with the rail open and once with it closed. If you cannot open it and cannot measure it, say so. The UI is not done.
 
 A screen that passes alone can still fail the pass. After the last screen, measure the set against each other and write this before you call it done. An agent that cannot see the page still runs this. The numbers are the check.
 
 ```
 Match
 Column: <px> on every screen, or <screen> is <px>
+Column when the rail is closed: <same px, or the fail>
 Page padding: <px>
 Control height / radius: <px> / <px>
 Amount face: <family>
+Shell: sidebar <open>/<rail>, or none
+Panel: <px>, or none
+Nav: <labels in order>
+Phone nav: drawer | tabs · same labels
 Fails: <what differs, or none>
 ```
 
-Column width, page padding, control height, radius, and the amount's computed font are one value across the pass. A mismatch is a fail. Change the outlier to the sheet. Do not keep a brief's 640 beside another's 720.
+Column width, page padding, control height, radius, and the amount's computed font are one value across the pass. The sidebar's open width, its rail width, and the panel width are one value too. A mismatch is a fail. Change the outlier to the sheet. Do not keep a brief's 640 beside another's 720. Do not keep a 240 sidebar on one screen and a 280 sidebar on the next. Closing the rail must leave the content column at the same width. A phone nav that renames or reorders the desktop items is a fail.
 
 For each screen, write this in the reply before you call the pass done:
 
@@ -267,7 +311,7 @@ Fix every fail. Open the screen again. A fail that is still visible means the pa
 
 These are fails. They are the tells of a page that was generated and not designed.
 
-- A gradient, a glow, or a mesh behind the content. The background is the theme's flat `--bg`.
+- A gradient, a glow, or a mesh you added. The locked effect piece may use one. Every other region stays the theme's flat `--bg`.
 - Glass, blur, or a floating card on every region.
 - Gradient text. A second accent used as decoration. The accent is the action and the live state.
 - An emoji used as an icon. Icons are Lounge Icons.
@@ -280,9 +324,9 @@ These are fails. They are the tells of a page that was generated and not designe
 - A button labelled Get started, Submit, Click here, or Learn more, when the screen has a real verb. "Open the week", "Add to bag", "Confirm load".
 - Placeholder copy. Lorem. Feature one. Your text here. John Doe. Acme. A price of $99 with no product attached.
 - Motion that loops because the page felt empty. `ease` or `linear` on a UI move. The curve is the sheet's, or the piece's.
-- Two navigation systems. A chart painted in a library's default colours.
+- Two navigation systems. A sidebar, a panel, or a nav list that differs from the sheet. The content column wider because the rail closed. A chart painted in a library's default colours.
 
-Uniform means the column, the page padding, the button, the filter, the field, the radius, and the type roles match on every screen of this pass. Screen two inventing its own card, or its own width, is a fail.
+Uniform means the column, the page padding, the button, the filter, the field, the radius, the type roles, the sidebar, the panel, and the nav labels match on every screen of this pass, and on the phone form of that nav. Screen two inventing its own card, its own width, or its own rail is a fail.
 
 Read one sentence from the screen. If it is still true after you replace the product name with another, rewrite it.
 
@@ -332,9 +376,10 @@ Put the theme's CSS variables on `:root` once, or in one theme provider. Control
 - A list is one state: loading, empty, failed, or populated. The piece you used matches that state.
 - The next action names the screen it opens. That screen is in this pass, or you said it is still open.
 - You opened each finished screen at its frame size and wrote the look notes in the reply.
-- You wrote the Match block. Column, padding, control height, radius, and amount face are the same on every screen.
+- You wrote the Match block. Column, padding, control height, radius, and amount face are the same on every screen. The sidebar, the panel, and the nav labels match the sheet, including after the rail closes and on the phone.
 - Every look check passed. A fail was fixed, and that screen was opened again.
 - The theme matches this product's world, or a recipe matched. The reply names the theme you rejected. You did not lock a palette because it was first.
+- The register is quiet, or one effect piece from the index. A daily tool did not grow a cursor. A portfolio or a product page they described with motion did not lose that piece.
 - After the look checks passed, you made one correction and opened that screen again.
 
 ## Minimum screens

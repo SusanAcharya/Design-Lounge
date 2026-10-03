@@ -25,8 +25,8 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | SaaS, tool, service, pricing page | `product` | Kit flow |
 | Admin, ops, dashboard, internal tool | `platform` | Also recipe `dashboard`. Search dashboard, data, charts, navigation, settings, overlays, feedback, inputs, pickers. |
 | Personal finance, household, one person's money or health | `personal` | Also recipe `personal`. Lokta and Devanagari when the product is Nepali. Not the staff dashboard. |
-| Portfolio, personal site | `website` | Also recipe `portfolio` in `starts` |
-| One landing page | `website` | Also recipe `landing` |
+| Portfolio, personal site, showreel, case study | `website` | Also recipe `portfolio` in `starts`. Scroll, hover, or a cursor is one piece from Register, not a second theme. |
+| One landing page, a product page with motion | `website` | Also recipe `landing`. A tilt or a sticky scroll is one piece from Register. |
 | Phone app, iOS, Android, PWA | `product` | Also recipe `mobile-app`. Prefer `platform` `mobile-app` pieces. |
 | Shop, checkout | `product` | Also recipe `commerce`. Order is collection, product, cart, checkout, then `order-confirmed`. |
 | Tablet, iPad, landscape | `product` | Also recipe `tablet`. Do not stretch a phone screen to 1180px. |

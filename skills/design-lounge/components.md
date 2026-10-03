@@ -122,7 +122,7 @@ Status badges use `--success-soft`, `--warning-soft`, `--danger-soft`, `--info-s
 
 Icons are Lounge Icons from `library/icons.json`. 24px viewport, stroke 1.75, round caps, `currentColor`. A button icon may be 16px. Do not mix another set.
 
-A nav item is a row or a 40px pill. The current item uses `--primary-soft` and `aria-current="page"`. One nav system per screen.
+A nav item is a row or a 40px pill. The current item uses `--primary-soft` and `aria-current="page"`. One nav system per screen. The shell widths, how main flexes when the rail closes, and how that same list becomes a drawer or phone tabs are in Layout in [practice.md](practice.md).
 
 ## Chart, empty, failed load
 
