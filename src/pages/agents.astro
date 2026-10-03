@@ -10,11 +10,47 @@ import { STARTS } from '../data/starts';
 
 const pieces = await getPieces();
 ---
-<Base title="For AI agents" description={`How coding agents should use Design Lounge by ${AUTHOR.name}: briefs, tokens, type, themes, icons and motion.`}>
-  <PageHead eyebrow="Use with AI" title="Agents" blurb="Install the skill once in Cursor, Claude, or Codex. Then ask for a site or an app, and it designs from this library." />
+<Base title="Install the skill" description={`Install Design Lounge by ${AUTHOR.name} in Cursor, Claude Code, or Codex. Ask for a website or an app and get a design that stands out.`}>
+  <PageHead eyebrow="Install" title="Install" blurb="One command in Cursor, Claude Code, or Codex. Then ask for a website or an app, and your agent designs it from this library." />
   <div class="wrap ag">
     <section class="g">
-      <div class="gn display">00</div>
+      <div class="gn display">01</div>
+      <div>
+        <h2 class="display h3">Install</h2>
+        <p>Run this in your terminal, inside your project. The palettes, type, icons, motion, and every piece brief go into your agent's skill folder.</p>
+        <div class="cmd">
+          <span class="mono prompt" aria-hidden="true">$</span>
+          <code id="ag-cmd">npx skills add SusanAcharya/Design-Lounge</code>
+          <button class="copy" type="button" data-copy="#ag-cmd"><span data-label>Copy</span></button>
+        </div>
+        <p>For every project on this computer, add <code>-g</code>. To get new designs later, run <code>npx skills update</code>.</p>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">02</div>
+      <div>
+        <h2 class="display h3">Ask</h2>
+        <p>Talk to it like a designer. Name what you are making. Say “just build it” if you do not want a question first.</p>
+        <ul class="asks">
+          <li>“Build a SaaS landing page for my invoicing tool.”</li>
+          <li>“A photography portfolio with a horizontal scroll.”</li>
+          <li>“A shop for handmade bowls. Just build it.”</li>
+          <li>“A health app with a weekly view.”</li>
+          <li>“Revamp this dashboard. Keep our colours.”</li>
+        </ul>
+      </div>
+    </section>
+    <section class="g">
+      <div class="gn display">03</div>
+      <div>
+        <h2 class="display h3">What you get</h2>
+        <p>It picks one palette, one type pairing, and the screens that fit your product, and tells you which palette it turned down. A SaaS site, a portfolio, and a shop each get their own look. If you asked for a scroll, a hover, or a cursor, it keeps that one effect.</p>
+        <p>Then it opens what it built and checks it. A gradient nobody asked for, a default font, three identical cards, or a headline like “Unlock your workflow” fail, and it fixes them.</p>
+      </div>
+    </section>
+    <h2 class="eyebrow for">For agents and the curious</h2>
+    <section class="g">
+      <div class="gn display">04</div>
       <div>
         <h2 class="display h3">The map</h2>
         <p>The Lounge has four doors. Do not dump the human a random hero.</p>
@@ -29,7 +65,7 @@ const pieces = await getPieces();
       </div>
     </section>
     <section class="g">
-      <div class="gn display">01</div>
+      <div class="gn display">05</div>
       <div>
         <h2 class="display h3">Read the catalogue first</h2>
         <p>Do not invent a hero, a footer, a pairing or an easing if one already lives here. Fetch the machine index, pick the closest piece or token set, then adapt tokens — not structure.</p>
@@ -41,7 +77,7 @@ const pieces = await getPieces();
       </div>
     </section>
     <section class="g">
-      <div class="gn display">02</div>
+      <div class="gn display">06</div>
       <div>
         <h2 class="display h3">Rebuild from the brief, not the screenshot</h2>
         <p>Every piece at <code>/p/&lt;slug&gt;</code> ships a live demo, the source, and a brief at <code>/p/&lt;slug&gt;.md</code>. The brief is the spec: tokens, motion table, states, a11y, checklist. The demo is the acceptance test. Match the numbers. Do not “improve” them unless the human asked.</p>
@@ -49,7 +85,7 @@ const pieces = await getPieces();
       </div>
     </section>
     <section class="g">
-      <div class="gn display">03</div>
+      <div class="gn display">07</div>
       <div>
         <h2 class="display h3">Steal tokens from the libraries</h2>
         <p>Type, themes, icons and motion are first-class, not leftovers. When a human says “make it feel like a hotel” or “use a quiet grotesk”, open these before inventing a palette.</p>
@@ -62,14 +98,14 @@ const pieces = await getPieces();
       </div>
     </section>
     <section class="g">
-      <div class="gn display">04</div>
+      <div class="gn display">08</div>
       <div>
         <h2 class="display h3">Credit the lounge</h2>
         <p>Pieces, pairings, themes, icons and recipes are free to use in products. Keep the credit comment that ships with copied CSS, or add a line: designed after Design Lounge by {AUTHOR.name} ({AUTHOR.siteLabel}). Do not republish the catalogue as a catalogue.</p>
       </div>
     </section>
     <section class="g">
-      <div class="gn display">05</div>
+      <div class="gn display">09</div>
       <div>
         <h2 class="display h3">What is on the floor</h2>
         <p>{pieces.length} live pieces across {Object.keys(TYPE_META).length} rooms and {Object.keys(CATEGORY_META).length} named categories, plus the four libraries above. {STARTS.length} start recipes. If a category is empty, say so — do not hallucinate a piece that is not here.</p>
@@ -77,18 +113,16 @@ const pieces = await getPieces();
       </div>
     </section>
     <section class="g">
-      <div class="gn display">06</div>
+      <div class="gn display">10</div>
       <div>
-        <h2 class="display h3">Install the skill</h2>
-        <p>Install the skill into the product. The catalogue travels with it, into the agent's skill folder. Then ask for a design. The agent reads the installed palettes, type, and piece briefs.</p>
-        <pre class="ex"><code>npx skills add SusanAcharya/Design-Lounge</code></pre>
-        <p>Or point the agent at this repo. From a local clone, run <code>skills/design-lounge/install.mjs</code> inside the product repo. It copies the skill into Cursor, Claude, and the agents folder.</p>
+        <h2 class="display h3">Install from a clone</h2>
+        <p>From a local clone, run <code>skills/design-lounge/install.mjs</code> inside the product repo. It copies the skill into Cursor, Claude, and the agents folder.</p>
       </div>
     </section>
     <section class="g">
-      <div class="gn display">07</div>
+      <div class="gn display">11</div>
       <div>
-        <h2 class="display h3">What it will do</h2>
+        <h2 class="display h3">What it will do, in full</h2>
         <p>Give the agent the product, the people, and the job. It should choose one system and show it before it paints: the theme, the type, and a link to each piece it wants to use. One question. Say “just build it” and it skips the question. Either way it writes those links into <code>DESIGN.md</code>, so a later change can name the screen. It matches the palette to the product's world. A clinic is not the first palette on the list. Before layout it also writes four lines: who it is for, the decision the screen exists for, the one thing they see first, and the next action. That first thing is the largest type on the view. The next action names the screen it opens: a shop goes collection, product, cart, checkout. A revamp keeps the system you already have, unless you asked for a new look.</p>
         <p>After the screens exist, the agent opens them and says what it sees: the largest type, the one button, and whether the page could belong to any company. A gradient, a default font, three identical cards, and a headline like “Unlock your workflow” fail. It fixes those and looks again. Then it changes one thing: the screen is too loud, too even, too dense, or it uses the wrong noun. Then it calls the work done. You can still disagree. Custom illustration, a brand that has not been chosen, and a product with no brief are still your job. Update an installed skill with <code>npx skills update</code>.</p>
       </div>
@@ -106,6 +140,15 @@ const pieces = await getPieces();
   .g a { text-decoration: underline; text-underline-offset: 3px; color: var(--ink); }
   .g code { background: var(--paper-2); border: 1px solid var(--line); padding: .05em .35em; border-radius: 4px; }
   .links { display: flex; flex-direction: column; gap: 8px; }
+  .for { margin-top: 56px; padding-bottom: 4px; }
+  .for + .g { border-top-color: var(--ink); }
+  .cmd { display: flex; align-items: center; gap: 10px; max-width: 560px; margin-top: 16px; padding: 8px 8px 8px 16px; border: 1px solid var(--ink-3); border-radius: var(--r); background: var(--paper); }
+  .cmd .prompt { color: var(--accent); }
+  .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; background: none; border: 0; padding: 0; font-size: 14.5px; color: var(--ink); }
+  .cmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: var(--r); background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+  .cmd .copy:hover { opacity: .88; }
+  .asks { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+  .asks li { font-family: var(--display); font-style: italic; font-size: 20px; color: var(--ink); }
   .ex { margin-top: 12px; padding: 14px 16px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); font-size: 13px; overflow: auto; }
   @media (max-width: 800px) { .g { grid-template-columns: 1fr; gap: 8px; } .gn { font-size: 32px; } }
 </style>

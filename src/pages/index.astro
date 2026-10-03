@@ -42,10 +42,18 @@ const libs = [
     <div class="hero-text">
       <p class="eyebrow reveal">{String(all.length).padStart(3, '0')} live pieces · {PAIRINGS.length} pairings · {THEMES.length} themes</p>
       <h1 class="display h1"><span class="reveal" style="--d:60ms">Interfaces</span> <span class="reveal" style="--d:140ms">worth</span> <i class="reveal" style="--d:220ms">sitting with.</i></h1>
-      <p class="lede reveal" style="--d:300ms">Free website and app designs by {AUTHOR.name}. Each one is live, with a brief your AI agent can build from.</p>
-      <div class="acts reveal" style="--d:380ms">
-        <a class="btn primary" href="/start">Start here</a>
-        <a class="btn ghost" href="/browse">Browse all</a>
+      <p class="lede reveal" style="--d:300ms">Add Design Lounge to your AI agent. Ask for a website or an app, and get one that stands out: real type, colour, and motion. Not a template.</p>
+      <div class="install reveal" style="--d:380ms">
+        <span class="cmd big">
+          <span class="prompt mono" aria-hidden="true">$</span>
+          <code id="hero-cmd">npx skills add SusanAcharya/Design-Lounge</code>
+          <button class="copy" type="button" data-copy="#hero-cmd"><span data-label>Copy</span></button>
+        </span>
+        <p class="works mono faint">Cursor · Claude Code · Codex · free · <a href="/agents">How it works</a></p>
+      </div>
+      <div class="acts reveal" style="--d:440ms">
+        <a class="btn ghost" href="/browse">See the designs</a>
+        <a class="btn ghost" href="/start">Pick what you're making</a>
       </div>
     </div>
     <div class="hero-wall reveal" style="--d:160ms" aria-label="Featured pieces">
@@ -68,35 +76,38 @@ const libs = [
   </section>
 
   <section class="wrap ways" aria-labelledby="ways-title">
-    <h2 id="ways-title" class="eyebrow">Three ways in</h2>
+    <h2 id="ways-title" class="eyebrow">How it works</h2>
     <ol class="ways-grid">
       <li>
-        <a href="/start">
-          <span class="mono faint">01</span>
-          <span class="display h3">Making something?</span>
-          <span class="muted">Pick a website or an app. Get its colours, type, and screens.</span>
-          <span class="go">Start</span>
-        </a>
-      </li>
-      <li>
-        <a href="/browse">
-          <span class="mono faint">02</span>
-          <span class="display h3">Need one piece?</span>
-          <span class="muted">A hero, a footer, a chart. Open it and copy the brief.</span>
-          <span class="go">Browse</span>
-        </a>
-      </li>
-      <li class="agent">
         <div>
-          <span class="mono faint">03</span>
-          <span class="display h3">Using an AI agent?</span>
-          <span class="muted">Install once. Your agent designs from this library.</span>
+          <span class="mono faint">01</span>
+          <span class="display h3">Install once</span>
+          <span class="muted">One command. The whole library goes into your agent's skills.</span>
           <span class="cmd">
             <code id="install-cmd">npx skills add SusanAcharya/Design-Lounge</code>
             <button class="copy" type="button" data-copy="#install-cmd"><span data-label>Copy</span></button>
           </span>
-          <a class="go" href="/agents">How it works</a>
         </div>
+      </li>
+      <li>
+        <div>
+          <span class="mono faint">02</span>
+          <span class="display h3">Ask like you would a designer</span>
+          <ul class="asks">
+            <li>“Build a SaaS landing page.”</li>
+            <li>“A portfolio with a cool scroll.”</li>
+            <li>“A shop for my ceramics.”</li>
+            <li>“A bank app.”</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <a href="/start">
+          <span class="mono faint">03</span>
+          <span class="display h3">Get a design that stands out</span>
+          <span class="muted">It picks one palette, one type pairing, and the screens that fit. Then it checks its own work for anything generic.</span>
+          <span class="go">See what it picks</span>
+        </a>
       </li>
     </ol>
   </section>
@@ -263,6 +274,16 @@ const libs = [
   .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 12.5px; }
   .cmd .copy { flex: none; height: 30px; padding: 0 12px; border: 1px solid var(--line-strong, var(--line)); border-radius: var(--r); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); background: var(--paper); }
   .cmd .copy:hover { border-color: var(--ink); }
+  .install { display: flex; flex-direction: column; gap: 10px; max-width: 520px; }
+  .cmd.big { padding: 8px 8px 8px 16px; border-color: var(--ink-3); background: var(--paper); }
+  .cmd.big code { font-size: 14.5px; color: var(--ink); }
+  .cmd.big .prompt { color: var(--accent); font-size: 14px; }
+  .cmd.big .copy { height: 38px; padding: 0 16px; background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .cmd.big .copy:hover { opacity: .88; }
+  .works { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  .works a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .asks { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+  .asks li { font-family: var(--display); font-style: italic; font-size: 18px; color: var(--ink); }
   .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; padding: clamp(40px, 6vw, 80px) 0 clamp(32px, 5vw, 48px); min-height: calc(100vh - var(--header-h) - 200px); }
   .hero-text { display: flex; flex-direction: column; gap: 24px; }
   .hero .h1 span, .hero .h1 i { display: inline-block; }
