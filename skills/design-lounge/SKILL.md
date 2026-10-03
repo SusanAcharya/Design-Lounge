@@ -26,7 +26,7 @@ Everything you need is next to this file. Read only what the job needs.
 1. `library/index.json` — kinds, recipes (`starts`), palettes (full CSS), pairings (full CSS), families, motion, and the piece index.
 2. `library/briefs/<id>.md` — the spec for one piece. Open only the pieces you will build.
 3. `library/icons.json` — Lounge Icons, only when the screen needs icons.
-4. [components.md](components.md) — the controls, and which piece to use for which job.
+4. [components.md](components.md) — the controls, icons (including what to do when one is missing), the logo and favicon, and which piece to use for which job.
 5. [practice.md](practice.md) — the method. Its first lines say which sections each job needs. Do not read all of it for one component.
 
 Do not run scripts from this skill. If `library/index.json` is missing, the install is broken. Say so. Do not design from memory.
@@ -97,7 +97,8 @@ If the index has no piece for that job, say so. Do not invent a slug.
 
 - Theme: `themes[]`. `tokens` includes primary, secondary, tertiary, success, warning, danger, info, surfaces, `link`. Copy `css`.
 - Pairing: `pairings[]`. Copy `css`.
-- Icons: `library/icons.json`. 24px stroke, 1.75. Do not mix in another icon set.
+- Icons: `library/icons.json`. 24px stroke, 1.75. When one is missing, follow Icon and nav in [components.md](components.md).
+- Logo, favicon, share image: Logo and favicon in [components.md](components.md).
 - Motion: `motion`. Default easing `cubic-bezier(0.2, 0.7, 0.2, 1)`. UI 200ms, layout 320ms, sheets 400ms. Honour `prefers-reduced-motion`.
 
 ## When numbers disagree

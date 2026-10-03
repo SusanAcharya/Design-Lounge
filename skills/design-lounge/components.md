@@ -122,6 +122,33 @@ Status badges use `--success-soft`, `--warning-soft`, `--danger-soft`, `--info-s
 
 Icons are Lounge Icons from `library/icons.json`. 24px viewport, stroke 1.75, round caps, `currentColor`. A button icon may be 16px. Do not mix another set.
 
+When the icon you need is not in the set (a dumbbell, a tooth, a tractor), use this order:
+
+1. A Lounge icon that means the same thing. Settings is `sliders` or `settings`, not a new gear.
+2. Lucide (lucide.dev, ISC licence). It has the same grammar: 24px, stroke, round caps. Copy the SVG and set `stroke-width="1.75"`. Do not add the whole package for one icon.
+3. Draw it yourself in the same grammar: 24px viewBox, 2px padding, `stroke="currentColor"`, `stroke-width="1.75"`, round caps and joins, no fill, at most about six strokes.
+
+Never use emoji, a filled icon set, or a second outline set with a different stroke next to Lounge icons.
+
+Brand and social logos (GitHub, Instagram, LinkedIn, app stores, payment cards) are not icons. Take them from Simple Icons (simpleicons.org, CC0) as one-colour SVGs in `currentColor`, the same size as the icons beside them. Use the official app store badges for download buttons. Never redraw or recolour a real company's logo.
+
+## Logo and favicon
+
+If they have a logo, use their file. Ask for SVG. Do not redraw it, recolour it, or put it in a box.
+
+If they do not have one, make a wordmark, not a symbol:
+
+- The name in the pairing's display face, at the display weight and tracking. Tighten the tracking a little for a short name.
+- One small move at most: an italic letter, a ligature, a dot in `--primary`, or one letter swapped for a shape. No gradient, no mascot, no clip-art mark, no AI-generated logo.
+- Export it as SVG with the text turned into paths, so it does not depend on the font loading.
+- Make a monogram of one or two letters in the same face for small spaces.
+
+The favicon is the monogram on `--primary` with `--primary-ink`, or the monogram alone in `--ink`. Ship `favicon.svg`, a 32px `favicon.ico`, and a 180px `apple-touch-icon.png`. Add a dark-mode version inside the SVG with `prefers-color-scheme` when the site has a dark theme.
+
+The share image (`og:image`, 1200 × 630) is the wordmark and the page's headline on `--bg`, in the pairing. One per site is enough. Make one per page only for articles or products.
+
+Client and partner logos in `logos-grid-case-hover` or `logos-mono-marquee` come from the person. If they have none, leave the block out. Never use real company logos they did not give you, and never invent fake ones to fill the row.
+
 A nav item is a row or a 40px pill. The current item uses `--primary-soft` and `aria-current="page"`. One nav system per screen. The shell widths, how main flexes when the rail closes, and how that same list becomes a drawer or phone tabs are in Layout in [practice.md](practice.md).
 
 ## Chart, empty, failed load

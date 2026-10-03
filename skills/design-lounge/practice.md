@@ -477,7 +477,8 @@ Put the theme's CSS variables on `:root` once, or in one theme provider. Control
 - One theme, or a theme plus its `pair`. No third palette.
 - One pairing. Display, body, and mono match the sheet.
 - One family. Radius, shadow, button, and density match on every new screen.
-- Icons are Lounge Icons.
+- Icons are Lounge Icons, or follow the missing-icon order in components.md. Brand logos are one colour.
+- A website has a wordmark, a favicon, and a share image. Their logo is used as given.
 - One primary button on each view.
 - Hover and selected use the token map in SKILL.md, not a hex from a brief.
 - Spacing uses the density scale.
