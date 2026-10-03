@@ -23,5 +23,5 @@ const pieces = await getPieces();
   .map a { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid var(--line); }
   .map a + a { padding-left: 20px; }
   .map a:hover { color: var(--accent); }
-  @media (max-width: 640px) { .map { grid-template-columns: 1fr; } .map a + a { padding-left: 0; } }
+  @media (max-width: 640px) { .map { grid-template-columns: minmax(0, 1fr); } .map a + a { padding-left: 0; } }
 </style>

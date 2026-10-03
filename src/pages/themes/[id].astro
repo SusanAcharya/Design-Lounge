@@ -70,5 +70,5 @@ const others = THEMES.filter((x) => x.id !== t.id && x.tags.some((tag) => t.tags
   .more { grid-column: 1 / -1; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
   .more ul { display: flex; gap: 10px 18px; flex-wrap: wrap; }
   .more a { border-bottom: 1px solid var(--line-2); }
-  @media (max-width: 800px) { .page { grid-template-columns: 1fr; } }
+  @media (max-width: 800px) { .page { grid-template-columns: minmax(0, 1fr); } }
 </style>

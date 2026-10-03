@@ -150,5 +150,5 @@ const pieces = await getPieces();
   .asks { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
   .asks li { font-family: var(--display); font-style: italic; font-size: 20px; color: var(--ink); }
   .ex { margin-top: 12px; padding: 14px 16px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); font-size: 13px; overflow: auto; }
-  @media (max-width: 800px) { .g { grid-template-columns: 1fr; gap: 8px; } .gn { font-size: 32px; } }
+  @media (max-width: 800px) { .g { grid-template-columns: minmax(0, 1fr); gap: 8px; } .gn { font-size: 32px; } .cmd code { white-space: normal; overflow-wrap: anywhere; line-height: 1.45; } }
 </style>

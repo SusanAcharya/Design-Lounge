@@ -98,5 +98,5 @@ const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
   .pieces ol { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
   .pieces a { font-size: 14px; text-transform: capitalize; border-bottom: 1px solid transparent; }
   .pieces a:hover { border-color: var(--ink); }
-  @media (max-width: 900px) { .card { grid-template-columns: 1fr; gap: 20px; } }
+  @media (max-width: 900px) { .card { grid-template-columns: minmax(0, 1fr); gap: 20px; } }
 </style>

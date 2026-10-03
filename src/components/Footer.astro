@@ -79,5 +79,5 @@ const year = new Date().getFullYear();
   .big { font-size: clamp(64px, 14vw, 220px); line-height: 0.85; margin: 64px 0 24px; color: transparent; -webkit-text-stroke: 1px var(--ink-3); user-select: none; letter-spacing: -0.03em; }
   .legal { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0 28px; border-top: 1px solid var(--line); }
   .legal a { text-decoration: underline; text-underline-offset: 3px; }
-  @media (max-width: 860px) { .sign { grid-template-columns: 1fr; } .cols { grid-template-columns: 1fr 1fr; } .big { margin-top: 40px; } .legal { flex-direction: column; gap: 6px; } }
+  @media (max-width: 860px) { .sign { grid-template-columns: minmax(0, 1fr); } .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } .big { margin-top: 40px; } .legal { flex-direction: column; gap: 6px; } }
 </style>

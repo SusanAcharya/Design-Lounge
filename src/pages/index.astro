@@ -274,7 +274,7 @@ const libs = [
   .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 12.5px; }
   .cmd .copy { flex: none; height: 30px; padding: 0 12px; border: 1px solid var(--line-strong, var(--line)); border-radius: var(--r); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); background: var(--paper); }
   .cmd .copy:hover { border-color: var(--ink); }
-  .install { display: flex; flex-direction: column; gap: 10px; max-width: 520px; }
+  .install { display: flex; flex-direction: column; gap: 10px; max-width: 520px; min-width: 0; }
   .cmd.big { padding: 8px 8px 8px 16px; border-color: var(--ink-3); background: var(--paper); }
   .cmd.big code { font-size: 14.5px; color: var(--ink); }
   .cmd.big .prompt { color: var(--accent); font-size: 14px; }
@@ -285,7 +285,7 @@ const libs = [
   .asks { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
   .asks li { font-family: var(--display); font-style: italic; font-size: 18px; color: var(--ink); }
   .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; padding: clamp(40px, 6vw, 80px) 0 clamp(32px, 5vw, 48px); min-height: calc(100vh - var(--header-h) - 200px); }
-  .hero-text { display: flex; flex-direction: column; gap: 24px; }
+  .hero-text { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
   .hero .h1 span, .hero .h1 i { display: inline-block; }
   .hero .acts { display: flex; gap: 10px; flex-wrap: wrap; }
   .hero-wall { position: relative; aspect-ratio: 1 / 0.96; }
@@ -333,13 +333,14 @@ const libs = [
     .need-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 960px) {
-    .ways-grid { grid-template-columns: 1fr; }
-    .hero { grid-template-columns: 1fr; min-height: 0; }
+    .ways-grid { grid-template-columns: minmax(0, 1fr); }
+    .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
     .map, .lib-grid { grid-template-columns: repeat(2, 1fr); }
-    .shelf-groups { grid-template-columns: 1fr; gap: 32px; }
+    .shelf-groups { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   }
   @media (max-width: 640px) {
-    .map, .lib-grid, .need-grid, .idx-cols { grid-template-columns: 1fr; }
+    .map, .lib-grid, .need-grid, .idx-cols { grid-template-columns: minmax(0, 1fr); }
+    .cmd code { white-space: normal; overflow-wrap: anywhere; line-height: 1.45; }
     .wall-item.tablet { display: none; }
     .wall-item.web { width: 74%; top: 0; }
     .wall-item.phone { width: 34%; top: 20%; }

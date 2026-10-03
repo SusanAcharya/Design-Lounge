@@ -66,5 +66,5 @@ const others = PAIRINGS.filter((x) => x.id !== p.id).filter((x) => x.tags.some((
   .more a { border-bottom: 1px solid var(--line-2); }
   .more a:hover { border-color: var(--ink); }
   .credit { max-width: 36ch; }
-  @media (max-width: 800px) { .page { grid-template-columns: 1fr; } }
+  @media (max-width: 800px) { .page { grid-template-columns: minmax(0, 1fr); } }
 </style>

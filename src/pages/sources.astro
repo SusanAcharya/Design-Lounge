@@ -52,5 +52,5 @@ const groups = SOURCES.map((source) => ({
   li a { font-size: 14px; }
   li a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .wait { color: var(--ink-3); }
-  @media (max-width: 800px) { section { grid-template-columns: 1fr; gap: 16px; } }
+  @media (max-width: 800px) { section { grid-template-columns: minmax(0, 1fr); gap: 16px; } }
 </style>

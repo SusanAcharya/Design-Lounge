@@ -410,7 +410,7 @@ const payload = {
   .chosen { margin-top: 12px; }
 
   @media (max-width: 960px) {
-    .body { grid-template-columns: 1fr; }
+    .body { grid-template-columns: minmax(0, 1fr); }
     .stage { order: -1; position: static; background: var(--paper); padding: 8px 0 10px; }
     .frames { grid-template-columns: 1fr 120px; }
     .phone { max-height: 200px; }
@@ -421,7 +421,7 @@ const payload = {
     .chosen { display: none; }
   }
   @media (max-width: 640px) {
-    .frames { grid-template-columns: 1fr; }
+    .frames { grid-template-columns: minmax(0, 1fr); }
     .phone { max-width: 240px; }
   }
 </style>

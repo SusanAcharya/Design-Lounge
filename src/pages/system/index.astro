@@ -81,5 +81,5 @@ const previewThemes = THEMES.slice(0, 6);
   .note a { text-decoration: underline; text-underline-offset: 3px; }
   @keyframes slide { from { transform: translateX(0); } to { transform: translateX(48px); } }
   @media (prefers-reduced-motion: reduce) { .ease i { animation: none; } }
-  @media (max-width: 800px) { .libs { grid-template-columns: 1fr; } .libs a { min-height: 0; } }
+  @media (max-width: 800px) { .libs { grid-template-columns: minmax(0, 1fr); } .libs a { min-height: 0; } }
 </style>

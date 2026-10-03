@@ -231,10 +231,10 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
   .shelf-list li { padding: 5px 0; font-size: 14px; }
   .shelf-list a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .related { margin-top: 80px; }
-  .pn-big { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 64px; border-top: 1px solid var(--ink); padding-top: 24px; }
+  .pn-big { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 64px; border-top: 1px solid var(--ink); padding-top: 24px; }
   .pn-big a { display: flex; flex-direction: column; gap: 8px; }
   .pn-big a.r { text-align: right; align-items: flex-end; }
   .pn-big a:hover .h4 { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
-  @media (max-width: 1024px) { .body { grid-template-columns: 1fr; } .side { position: static; } }
+  @media (max-width: 1024px) { .body { grid-template-columns: minmax(0, 1fr); } .side { position: static; } }
   @media (max-width: 640px) { .pnav { position: static; } .stage { height: 62vh; } .stage :global(lounge-frame) { inset: 12px; } .tabs button { font-size: 18px; } }
 </style>
