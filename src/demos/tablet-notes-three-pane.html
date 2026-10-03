@@ -1,0 +1,301 @@
+<!-- Design Lounge piece: tablet-notes-three-pane · platform: tablet · 1180x820 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lekh — On keeping a commonplace book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e7;--paper-2:#efe8da;--sheet:#fbf8f1;--line:#ddd3c1;--line-2:#cbbfa9;
+  --ink:#23201b;--ink-2:#58524a;--ink-3:#71695d;--pencil:#b8402b;--pencil-soft:#f1d9cf;
+  --serif:"Literata",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif;
+  --w-folders:232px;--w-list:316px;--r:10px;
+  --t-fast:150ms;--t-pane:380ms;--ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--paper);padding-top:24px;overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:2px solid var(--pencil);outline-offset:2px}
+.app{position:relative;height:100%;display:grid;grid-template-columns:var(--w-folders) var(--w-list) minmax(0,1fr);transition:grid-template-columns var(--t-pane) var(--ease-out);border-top:1px solid var(--line)}
+.app[data-mode="two"]{grid-template-columns:0px var(--w-list) minmax(0,1fr)}
+.app[data-mode="focus"]{grid-template-columns:0px 0px minmax(0,1fr)}
+.pane{min-width:0;overflow:hidden;display:flex;flex-direction:column}
+.pane>.in{display:flex;flex-direction:column;height:100%;transition:transform var(--t-pane) var(--ease-out),opacity var(--t-pane) var(--ease)}
+.folders{grid-column:1;background:var(--paper-2);border-right:1px solid var(--line)}
+.folders>.in{width:var(--w-folders)}
+.list{grid-column:2;border-right:1px solid var(--line)}
+.list>.in{width:var(--w-list)}
+.editor{grid-column:3;background:var(--sheet);position:relative}
+.app[data-mode="two"] .folders>.in,.app[data-mode="focus"] .folders>.in{transform:translateX(-40px);opacity:0}
+.app[data-mode="focus"] .list>.in{transform:translateX(-60px);opacity:0}
+
+/* folders */
+.brand{display:flex;align-items:center;justify-content:space-between;padding:12px 12px 12px 20px}
+.brand b{font:600 22px var(--serif);letter-spacing:-.01em}
+.brand b i{color:var(--pencil);font-style:normal}
+.ib{min-width:48px;height:48px;border-radius:var(--r);display:inline-grid;place-items:center;color:var(--ink-2);transition:background var(--t-fast) var(--ease)}
+.ib:hover{background:rgba(35,32,27,.06);color:var(--ink)}
+.ib[aria-pressed="true"]{color:var(--pencil)}
+.tree{flex:1;overflow:auto;padding:4px 10px 16px}
+.grp{margin-top:10px}
+.gh{width:100%;min-height:48px;display:flex;align-items:center;gap:6px;padding:0 10px;border-radius:var(--r);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.gh svg{width:16px;height:16px;transition:transform var(--t-fast) var(--ease)}
+.gh[aria-expanded="false"] svg{transform:rotate(-90deg)}
+.gh:hover{color:var(--ink)}
+.kids{list-style:none;margin:0;padding:0;display:grid;grid-template-rows:1fr;transition:grid-template-rows var(--t-pane) var(--ease-out)}
+.kids>div{overflow:hidden;transition:visibility 0s}
+.gh[aria-expanded="false"]+.kids{grid-template-rows:0fr}
+.gh[aria-expanded="false"]+.kids>div{visibility:hidden;transition:visibility 0s var(--t-pane)}
+.fd{width:100%;min-height:48px;display:flex;align-items:center;gap:10px;padding:0 12px;border-radius:var(--r);font-size:15px;color:var(--ink-2);text-align:left}
+.fd span{flex:1}
+.fd small{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.fd:hover{background:rgba(35,32,27,.05)}
+.fd[aria-current="true"]{background:var(--sheet);color:var(--ink);font-weight:500;box-shadow:inset 0 0 0 1px var(--line)}
+.fd[aria-current="true"] svg{color:var(--pencil)}
+.foot{padding:12px 20px 16px;font-size:12px;color:var(--ink-3);border-top:1px solid var(--line)}
+
+/* list */
+.lh{padding:14px 12px 8px 20px;display:flex;align-items:center;gap:8px}
+.lh h1{margin:0;flex:1;font:600 24px var(--serif);letter-spacing:-.01em}
+.lh h1 small{display:block;font:400 12.5px var(--sans);color:var(--ink-3);letter-spacing:0;margin-top:2px}
+.search{margin:4px 16px 8px;display:flex;align-items:center;gap:8px;height:48px;padding:0 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet);color:var(--ink-3)}
+.search input{flex:1;min-width:0;border:0;background:none;font:inherit;color:var(--ink);height:44px}
+.search input:focus{outline:none}
+.search:focus-within{border-color:var(--ink-2)}
+.notes{list-style:none;margin:0;padding:0 0 16px;overflow:auto;flex:1}
+.nt{display:block;width:100%;text-align:left;padding:14px 20px 14px 20px;border-bottom:1px solid var(--line);min-height:48px;position:relative}
+.nt:hover{background:rgba(35,32,27,.03)}
+.nt .t{display:flex;gap:12px;align-items:baseline}
+.nt .t b{flex:1;font:600 16.5px/1.3 var(--serif);color:var(--ink)}
+.nt .t time{font-size:12px;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
+.nt p{margin:4px 0 0;font-size:13.5px;line-height:1.45;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nt[aria-current="true"]{background:var(--sheet)}
+.nt[aria-current="true"] .t b{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 6' preserveAspectRatio='none'%3E%3Cpath d='M1 4C20 2 40 5 60 3s40 1 59-1' fill='none' stroke='%23b8402b' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") left bottom/100% 6px no-repeat;padding-bottom:5px}
+.none{padding:40px 20px;color:var(--ink-3);font-size:14px}
+.none b{display:block;font:600 18px var(--serif);color:var(--ink);margin-bottom:4px}
+
+/* editor */
+.eh{display:flex;align-items:center;gap:4px;padding:8px 16px;height:64px;border-bottom:1px solid transparent}
+.eh .sp{flex:1}
+.saved{font-size:12.5px;color:var(--ink-3);margin-right:8px}
+.page{flex:1;overflow:auto;padding:8px 48px 120px}
+.doc{max-width:640px;margin:0 auto}
+.title{font:600 38px/1.15 var(--serif);letter-spacing:-.015em;margin:12px 0 8px;outline:none}
+.meta{font-size:13px;color:var(--ink-3);margin:0 0 28px;display:flex;gap:10px}
+.meta span+span::before{content:"·";margin-right:10px}
+.body{font:400 19px/1.65 var(--serif);color:var(--ink);outline:none;caret-color:var(--pencil)}
+.body p{margin:0 0 18px}
+.body h2{font:600 24px/1.25 var(--serif);margin:32px 0 10px;letter-spacing:-.01em}
+.body blockquote{margin:28px 0;padding:4px 0 4px 22px;border-left:3px solid var(--pencil);font-style:italic;font-size:21px;line-height:1.55;color:var(--ink)}
+.body blockquote cite{display:block;margin-top:8px;font:normal 13px var(--sans);color:var(--ink-3)}
+.body mark{background:linear-gradient(transparent 62%,var(--pencil-soft) 62%);color:inherit;padding:0 2px}
+.check{list-style:none;padding:0;margin:0 0 18px}
+.check li{display:flex;align-items:flex-start;gap:4px;min-height:48px}
+.check li span{padding-top:9px;transition:color var(--t-fast) var(--ease)}
+.box{width:48px;height:48px;flex:none;display:grid;place-items:center;margin-left:-12px}
+.box i{width:22px;height:22px;border:1.6px solid var(--ink-2);border-radius:5px;display:grid;place-items:center;transition:background var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.box svg{width:16px;height:16px;stroke:var(--sheet);stroke-width:2.4;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset 220ms var(--ease-out)}
+.box[aria-checked="true"] i{background:var(--pencil);border-color:var(--pencil)}
+.box[aria-checked="true"] svg{stroke-dashoffset:0}
+.box[aria-checked="true"]+span{color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--pencil);text-decoration-thickness:1.5px}
+
+/* format bar */
+.fmt{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:2px;padding:6px;background:var(--ink);color:#efe8da;border-radius:14px;box-shadow:0 10px 30px -12px rgba(35,32,27,.55);transition:transform var(--t-pane) var(--ease-out)}
+.fmt .ib{color:#d9d0bf;font:600 16px var(--serif)}
+.fmt .ib:hover{background:rgba(239,232,218,.1);color:#fff}
+.fmt .ib[aria-pressed="true"]{background:rgba(239,232,218,.14);color:#fff;box-shadow:inset 0 -2px 0 var(--pencil)}
+.fmt .ib:focus-visible{outline-color:#f0b9a9}
+.fmt .rule{width:1px;height:24px;background:rgba(239,232,218,.2);margin:0 4px}
+.fmt .wc{font-size:12px;color:#b8ae9c;padding:0 10px 0 6px;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+@media (max-width:900px){
+  .app,.app[data-mode="two"]{grid-template-columns:0px 288px minmax(0,1fr)}
+  .app[data-mode="focus"]{grid-template-columns:0px 0px minmax(0,1fr)}
+  :root{--w-list:288px}
+  .folders{position:absolute;z-index:3;top:0;bottom:0;left:0;width:var(--w-folders);transform:translateX(-101%);transition:transform var(--t-pane) var(--ease-out)}
+  .app[data-mode="three"] .folders{transform:none;box-shadow:12px 0 32px -16px rgba(35,32,27,.4)}
+  .app .folders>.in{transform:none;opacity:1}
+  .page{padding:8px 32px 120px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app" data-mode="three">
+  <nav class="pane folders" aria-label="Folders" id="folders">
+    <div class="in">
+      <div class="brand"><b>Lekh<i>.</i></b>
+        <button class="ib" type="button" aria-label="New folder"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h6l2 2h10v10H3z"/><path d="M12 12v5M9.5 14.5h5"/></svg></button>
+      </div>
+      <div class="tree" id="tree"></div>
+      <div class="foot">Synced to Patan studio · 22:41</div>
+    </div>
+  </nav>
+
+  <section class="pane list" aria-label="Notes" id="listPane">
+    <div class="in">
+      <div class="lh">
+        <h1 id="fname">Essays<small id="fcount">4 notes</small></h1>
+        <button class="ib" type="button" id="newNote" aria-label="New note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19h4L19 9l-4-4L5 15z"/><path d="M13 7l4 4"/></svg></button>
+      </div>
+      <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><input id="q" type="search" placeholder="Search this folder" aria-label="Search notes in this folder"></label>
+      <ul class="notes" id="notes"></ul>
+    </div>
+  </section>
+
+  <main class="pane editor" aria-label="Editor">
+    <div class="eh">
+      <button class="ib" type="button" id="tFolders" aria-pressed="true" aria-label="Show folders"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+      <button class="ib" type="button" id="tFocus" aria-pressed="false" aria-label="Focus mode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+      <span class="sp"></span>
+      <span class="saved" id="saved" aria-live="polite">Saved</span>
+      <button class="ib" type="button" aria-label="Share note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M8 8l4-4 4 4M5 13v6h14v-6"/></svg></button>
+    </div>
+    <div class="page" id="page">
+      <article class="doc">
+        <h2 class="title" id="title" contenteditable="true" spellcheck="false"></h2>
+        <p class="meta"><span id="mFolder">Essays</span><span id="mDate">Edited 3 Oct 2026, 22:41</span></p>
+        <div class="body" id="body" contenteditable="true" spellcheck="false" aria-label="Note text" aria-multiline="true" role="textbox"></div>
+      </article>
+    </div>
+    <div class="fmt" role="toolbar" aria-label="Format" id="fmt">
+      <button class="ib" type="button" data-c="bold" aria-pressed="false" aria-label="Bold"><b>B</b></button>
+      <button class="ib" type="button" data-c="italic" aria-pressed="false" aria-label="Italic"><i>I</i></button>
+      <button class="ib" type="button" data-c="h2" aria-pressed="false" aria-label="Heading">H</button>
+      <span class="rule"></span>
+      <button class="ib" type="button" data-c="check" aria-label="Checklist"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="6" height="6" rx="1.5"/><path d="M5.5 8l1.2 1.2L9 7M13 8h7M4 16h6M13 16h7"/></svg></button>
+      <button class="ib" type="button" data-c="quote" aria-pressed="false" aria-label="Quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6v12M10 8h9M10 12h9M10 16h6"/></svg></button>
+      <button class="ib" type="button" data-c="mark" aria-label="Red pencil highlight"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l3-1 11-11-2-2L5 17z"/><path d="M14 20h6"/></svg></button>
+      <span class="rule"></span>
+      <span class="wc" id="wc">0 words</span>
+    </div>
+  </main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const TREE=[['Writing',[['Essays',1],['Drafts',1],['Letters',0]]],['Studio',[['Clients',0],['Meeting notes',1]]],['Home',[['Recipes',1],['Garden',1]]]];
+const ck=(on,t)=>`<li><button class="box" type="button" role="checkbox" contenteditable="false" aria-checked="${on}"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i></button><span>${t}</span></li>`;
+const NOTES=[
+ {f:'Essays',t:'On keeping a commonplace book',d:'22:41',e:'3 Oct 2026, 22:41',b:`<p>For three years I have copied lines into the same green notebook: a sentence from a seed catalogue, a bus timetable from Bhaktapur, the way my grandmother said the word for slow rain. None of it was meant to add up. It adds up anyway.</p><h2>What goes in</h2><p>Only things I would be sorry to lose. If I have to ask whether a line belongs, it does not.</p><ul class="check">${ck(true,'Pull the six best entries from the green notebook')}${ck(true,'Find the page number for the Ruskin line')}${ck(false,'Ask Mira if I can quote her letter')}${ck(false,'Cut the opening paragraph by half')}</ul><blockquote>A notebook is a room you can come back to, and find the furniture where you left it.<cite>Mira Thapa, in a letter, March 2025</cite></blockquote><h2>The rule of the margin</h2><p>Write in pen. <mark>Correct in red pencil.</mark> Never erase, because the wrong turn is part of the map, and the map is the only thing I am really making.</p>`},
+ {f:'Essays',t:'Walking the ring road at dawn',d:'29 Sep',e:'29 Sep 2026, 06:12',b:'<p>The tea stalls open before the buses do. By six the steam from the kettles is the only cloud over Kalanki, and the dogs have the crossings to themselves.</p>'},
+ {f:'Essays',t:'Against the tidy desk',d:'21 Sep',e:'21 Sep 2026, 19:30',b:'<p>Every tidy desk I have owned has been a desk I did not use. The pile is an index. The pile knows where the receipts are.</p>'},
+ {f:'Essays',t:'Notes on monsoon light',d:'2 Sep',e:'2 Sep 2026, 16:05',b:'<p>Green comes up through the window and sits on the paper. Photographs never get it. Pencil gets close, if you press lightly.</p>'},
+ {f:'Drafts',t:'Talk outline for the paper fair',d:'27 Sep',e:'27 Sep 2026, 11:20',b:'<p>Open with the lokta sheet held up to the window. Three parts: fibre, hand, ink. Twelve minutes, no slides.</p>'},
+ {f:'Meeting notes',t:'Kiran, packaging review',d:'1 Oct',e:'1 Oct 2026, 15:00',b:'<p>Sleeve stays kraft. Move the batch number to the spine. Kiran wants a second red, we keep one.</p>'},
+ {f:'Recipes',t:'Gundruk soup, the slow way',d:'18 Sep',e:'18 Sep 2026, 20:44',b:'<p>Soak the gundruk ten minutes. Fry garlic and chilli in mustard oil until the kitchen complains. Add tomato, then the leaves, then water.</p>'},
+ {f:'Garden',t:'What to sow in October',d:'30 Sep',e:'30 Sep 2026, 07:50',b:'<p>Radish, spinach, coriander, mustard greens. Garlic cloves go in after Dashain, pointy end up, a finger deep.</p>'}
+];
+let folder='Essays',cur=NOTES[0];
+const count=f=>NOTES.filter(n=>n.f===f).length;
+const fIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h6l2 2h10v10H3z"/></svg>';
+
+function drawTree(){
+  $('#tree').innerHTML=TREE.map(([g,kids],i)=>`<div class="grp"><button class="gh" type="button" aria-expanded="true" aria-controls="g${i}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>${g}</button><div class="kids" id="g${i}"><div>${kids.map(([k])=>`<button class="fd" type="button" data-f="${k}" aria-current="${k===folder}">${fIcon}<span>${k}</span><small>${count(k)}</small></button>`).join('')}</div></div></div>`).join('');
+}
+function drawList(){
+  const q=$('#q').value.trim().toLowerCase();
+  const rows=NOTES.filter(n=>n.f===folder&&(!q||(n.t+n.b).toLowerCase().includes(q)));
+  const c=count(folder);
+  $('#fname').firstChild.textContent=folder;$('#fcount').textContent=c+(c===1?' note':' notes');
+  $('#notes').innerHTML=rows.length?rows.map(n=>`<li><button class="nt" type="button" data-i="${NOTES.indexOf(n)}" aria-current="${n===cur}"><span class="t"><b>${n.t}</b><time>${n.d}</time></span><p>${snip(n)}</p></button></li>`).join(''):`<li class="none"><b>${q?'No match':'Nothing here yet'}</b>${q?'Try a shorter word.':'New notes in '+folder+' will land here.'}</li>`;
+}
+function snip(n){const d=document.createElement('div');d.innerHTML=n.b;d.querySelectorAll('cite,h2').forEach(x=>x.remove());return d.textContent.trim().slice(0,140)}
+function words(){const t=$('#body').innerText.trim();const w=t?t.split(/\s+/).length:0;$('#wc').textContent=w+' words';return w}
+function open(n,focusBody){
+  cur=n;$('#title').textContent=n.t;$('#body').innerHTML=n.b;$('#mFolder').textContent=n.f;$('#mDate').textContent='Edited '+n.e;
+  $('#page').scrollTop=0;words();drawList();
+  document.title='Lekh — '+n.t;
+  if(focusBody)$('#body').focus();
+}
+$('#tree').addEventListener('click',e=>{
+  const g=e.target.closest('.gh');
+  if(g){g.setAttribute('aria-expanded',g.getAttribute('aria-expanded')==='false');return}
+  const f=e.target.closest('.fd');if(!f)return;
+  folder=f.dataset.f;document.querySelectorAll('.fd').forEach(x=>x.setAttribute('aria-current',x===f));
+  $('#q').value='';const first=NOTES.find(n=>n.f===folder);
+  if(first)open(first);else drawList();
+});
+$('#notes').addEventListener('click',e=>{const b=e.target.closest('.nt');if(b)open(NOTES[+b.dataset.i])});
+$('#q').addEventListener('input',drawList);
+
+/* edits */
+let saveT;
+function dirty(){
+  cur.b=$('#body').innerHTML;cur.t=$('#title').textContent;cur.d='22:43';cur.e='3 Oct 2026, 22:43';
+  $('#saved').textContent='Saving';clearTimeout(saveT);
+  saveT=setTimeout(()=>{$('#saved').textContent='Saved';$('#mDate').textContent='Edited '+cur.e;drawList()},700);
+  words();
+}
+$('#body').addEventListener('input',dirty);$('#title').addEventListener('input',dirty);
+$('#title').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('#body').focus()}});
+$('#body').addEventListener('click',e=>{
+  const b=e.target.closest('.box');if(!b)return;
+  b.setAttribute('aria-checked',b.getAttribute('aria-checked')!=='true');dirty();
+});
+$('#body').addEventListener('keydown',e=>{
+  const b=e.target.closest&&e.target.closest('.box');
+  if(b&&(e.key===' '||e.key==='Enter')){e.preventDefault();b.click()}
+});
+
+/* format bar */
+const fmt=$('#fmt');
+fmt.addEventListener('mousedown',e=>{if(e.target.closest('.ib'))e.preventDefault()});
+function block(){const s=getSelection();if(!s.rangeCount)return null;let n=s.anchorNode;while(n&&n!==$('#body')){if(n.nodeType===1&&/^(H2|BLOCKQUOTE|P|LI)$/.test(n.tagName))return n;n=n.parentNode}return null}
+fmt.addEventListener('click',e=>{
+  const b=e.target.closest('[data-c]');if(!b)return;
+  const c=b.dataset.c,body=$('#body');
+  if(!body.contains(getSelection().anchorNode)){body.focus()}
+  const bl=block();
+  if(c==='bold'||c==='italic')document.execCommand(c);
+  else if(c==='h2')document.execCommand('formatBlock',false,bl&&bl.tagName==='H2'?'p':'h2');
+  else if(c==='quote')document.execCommand('formatBlock',false,bl&&bl.closest('blockquote')?'p':'blockquote');
+  else if(c==='mark'){const s=getSelection();if(s.rangeCount&&!s.isCollapsed){const m=document.createElement('mark');try{s.getRangeAt(0).surroundContents(m)}catch(_){}}}
+  else if(c==='check'){
+    const li=document.createElement('ul');li.className='check';li.innerHTML=ck(false,'New item');
+    const at=bl&&bl.closest('ul.check')?bl.closest('ul.check'):bl;
+    if(at)at.after(li);else body.append(li);
+    const sp=li.querySelector('span'),r=document.createRange();r.selectNodeContents(sp);getSelection().removeAllRanges();getSelection().addRange(r);
+  }
+  dirty();state();
+});
+function state(){
+  const inBody=$('#body').contains(getSelection().anchorNode),bl=inBody&&block();
+  fmt.querySelector('[data-c="bold"]').setAttribute('aria-pressed',inBody&&document.queryCommandState('bold'));
+  fmt.querySelector('[data-c="italic"]').setAttribute('aria-pressed',inBody&&document.queryCommandState('italic'));
+  fmt.querySelector('[data-c="h2"]').setAttribute('aria-pressed',!!(bl&&bl.tagName==='H2'));
+  fmt.querySelector('[data-c="quote"]').setAttribute('aria-pressed',!!(bl&&bl.closest('blockquote')));
+}
+document.addEventListener('selectionchange',state);
+
+/* panes */
+const app=$('#app'),tF=$('#tFolders'),tX=$('#tFocus');
+let prev='three';
+function mode(m){
+  app.dataset.mode=m;
+  tF.setAttribute('aria-pressed',m==='three');tF.setAttribute('aria-label',m==='three'?'Hide folders':'Show folders');
+  tX.setAttribute('aria-pressed',m==='focus');tX.setAttribute('aria-label',m==='focus'?'Leave focus mode':'Focus mode');
+  $('#folders').inert=m!=='three';$('#listPane').inert=m==='focus';
+}
+tF.onclick=()=>mode(app.dataset.mode==='three'?'two':'three');
+tX.onclick=()=>{if(app.dataset.mode==='focus')mode(prev);else{prev=app.dataset.mode;mode('focus')}};
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&app.dataset.mode==='focus')mode(prev);
+  if((e.metaKey||e.ctrlKey)&&e.key==='.'){e.preventDefault();tX.click()}
+});
+$('#newNote').onclick=()=>{
+  const n={f:folder,t:'Untitled',d:'22:43',e:'3 Oct 2026, 22:43',b:'<p><br></p>'};NOTES.unshift(n);drawTree();open(n);
+  const r=document.createRange();r.selectNodeContents($('#title'));getSelection().removeAllRanges();getSelection().addRange(r);$('#title').focus();
+};
+drawTree();open(cur);
+mode(innerWidth<900?'two':'three');
+</script>
+</body>
+</html>

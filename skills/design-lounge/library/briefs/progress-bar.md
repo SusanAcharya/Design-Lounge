@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 251 · "Progress bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 255 · "Progress bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Progress bar
 

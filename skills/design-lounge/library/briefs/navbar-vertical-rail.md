@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 303 · "Vertical rail navbar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 314 · "Vertical rail navbar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Vertical rail navbar
 

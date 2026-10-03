@@ -1,0 +1,204 @@
+<!-- Design Lounge piece: error-404-editorial · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Page not found · Inkwell Print Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f2ebdd;--sheet:#f8f3e8;--ink:#161412;--ink-2:#4a443c;--ink-3:#6b6358;--rule:#d8cdb8;
+  --pink:#ff4fa3;--pink-soft:#ffd3e8;--focus:#161412;
+  --serif:"Fraunces",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --expo:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--serif);color:var(--ink);background-color:var(--paper);
+  background-image:radial-gradient(rgba(22,20,18,.07) .7px,transparent .8px),radial-gradient(rgba(255,79,163,.06) .7px,transparent .8px);
+  background-size:4px 4px,7px 7px;background-position:0 0,2px 3px;
+  display:grid;grid-template-rows:64px minmax(0,1fr) auto;overflow-x:hidden}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--mono)}
+header{display:flex;align-items:center;justify-content:space-between;padding:0 56px;border-bottom:1px solid var(--ink)}
+.mark{display:flex;align-items:baseline;gap:8px;text-decoration:none;font-size:22px;font-weight:600;letter-spacing:-.02em}
+.mark i{font-weight:400;color:var(--ink-2)}
+nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+nav a{text-decoration:none;padding:8px 0;border-bottom:2px solid transparent}
+nav a:hover{border-color:var(--pink)}
+main{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:64px;padding:36px 56px 24px;min-height:0;overflow-x:clip}
+.left{min-width:0;display:flex;flex-direction:column}
+.kick{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0;display:flex;gap:12px;flex-wrap:wrap}
+.kick span:last-child{text-transform:none;letter-spacing:0;color:var(--ink);background:var(--pink-soft);padding:0 6px}
+.comp{position:relative;margin:18px 0 8px;height:300px;user-select:none}
+.digits{position:absolute;left:-10px;top:0;font:800 320px/0.86 var(--serif);font-variation-settings:"opsz" 144;letter-spacing:-.05em;white-space:nowrap}
+.plate{color:var(--pink);mix-blend-mode:multiply;transform:translate(11px,-8px) rotate(-.6deg);animation:reg .9s var(--expo) .15s both}
+@keyframes reg{from{transform:none;opacity:.2}}
+.key span{display:inline-block}
+.key .ht{color:transparent;background:radial-gradient(circle,var(--ink) 40%,transparent 43%) 0 0/6px 6px;-webkit-background-clip:text;background-clip:text}
+.key .tilt{transform:translateY(6px) rotate(2deg)}
+.tear{position:absolute;left:-56px;right:-24px;top:154px;height:58px;background:var(--sheet);transform:rotate(-3.5deg);
+  display:flex;align-items:center;overflow:hidden;
+  clip-path:polygon(0 14%,3% 4%,6% 16%,10% 2%,14% 12%,18% 0,23% 14%,27% 6%,32% 15%,36% 3%,41% 13%,46% 1%,50% 12%,55% 5%,59% 16%,64% 2%,69% 13%,73% 4%,78% 15%,83% 0,87% 12%,92% 3%,96% 14%,100% 6%,100% 90%,96% 100%,92% 88%,87% 98%,82% 86%,78% 97%,73% 89%,68% 100%,64% 87%,59% 96%,54% 85%,50% 99%,45% 88%,41% 97%,36% 86%,31% 100%,27% 88%,22% 97%,18% 86%,13% 99%,9% 87%,5% 97%,0 88%);
+  box-shadow:0 1px 0 var(--rule)}
+.tear p{margin:0;white-space:nowrap;font:600 13px var(--mono);letter-spacing:.24em;text-transform:uppercase;padding-left:80px;animation:slide 1.1s var(--expo) .3s both}
+.tear b{color:var(--pink);font-weight:600}
+@keyframes slide{from{transform:translateX(-40px);opacity:0}}
+h1{margin:0;max-width:20ch;font-size:36px;line-height:1.12;font-weight:400;letter-spacing:-.02em}
+h1 em{font-style:italic;box-shadow:inset 0 -.32em 0 var(--pink-soft)}
+.trim{position:fixed;width:22px;height:22px;color:var(--ink);pointer-events:none}
+.trim svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1}
+.right{min-width:0;display:flex;flex-direction:column;gap:26px;padding-top:4px}
+.label{display:block;font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.field{display:flex;align-items:center;gap:10px;height:52px;padding:0 14px;background:var(--sheet);border:1.5px solid var(--ink);border-radius:2px;box-shadow:4px 4px 0 var(--pink)}
+.field:focus-within{outline:2px solid var(--focus);outline-offset:3px}
+.field svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round}
+.field input{flex:1;min-width:0;height:100%;border:0;background:none;font-size:18px;outline:none}
+.field input::placeholder{color:var(--ink-3)}
+.clear{width:32px;height:32px;border:0;background:none;cursor:pointer;display:grid;place-items:center;border-radius:2px}
+.clear:hover{background:var(--paper)}
+.clear[hidden]{display:none}
+.hint{margin:10px 0 0;font:12px/1.5 var(--mono);color:var(--ink-2)}
+.list{list-style:none;margin:10px 0 0;padding:0;border-top:1px solid var(--rule)}
+.list[hidden]{display:none}
+.opt{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:4px 12px;padding:9px 8px;border-bottom:1px solid var(--rule);cursor:pointer}
+.opt b{font-weight:600;font-size:17px;line-height:1.25}
+.opt small{font:12px var(--mono);color:var(--ink-3);grid-column:1/-1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.opt i{font:500 11px var(--mono);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.opt mark{background:none;color:inherit;box-shadow:inset 0 -.35em 0 var(--pink-soft)}
+.opt:hover,.opt[aria-selected="true"]{background:var(--sheet)}
+.opt[aria-selected="true"]{box-shadow:inset 3px 0 0 var(--pink)}
+.empty{padding:12px 8px;font:13px/1.5 var(--mono);color:var(--ink-2);border-bottom:1px solid var(--rule)}
+.status{min-height:18px;margin:8px 0 0;font:12px var(--mono);color:var(--ink-2)}
+.pop{list-style:none;margin:0;padding:0;counter-reset:p}
+.pop li{border-top:1px solid var(--ink)}
+.pop li:last-child{border-bottom:1px solid var(--ink)}
+.pop a{display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:baseline;gap:8px;padding:10px 4px;text-decoration:none;min-height:44px}
+.pop a::before{counter-increment:p;content:counter(p,decimal-leading-zero);font:500 12px var(--mono);color:var(--ink-3)}
+.pop span{font-size:18px;line-height:1.25}
+.pop small{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.pop a:hover span{box-shadow:inset 0 -.35em 0 var(--pink-soft)}
+.report{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-height:44px}
+.rbtn{height:40px;padding:0 14px;border:1.5px solid var(--ink);background:none;border-radius:2px;cursor:pointer;font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.rbtn:hover{background:var(--ink);color:var(--sheet)}
+.rnote{font:12px/1.5 var(--mono);color:var(--ink-2)}
+.done{display:flex;align-items:center;gap:12px;font:13px/1.45 var(--mono)}
+.stamp{flex:none;width:48px;height:48px;border:2px solid var(--pink);border-radius:50%;display:grid;place-items:center;color:var(--pink);transform:rotate(-12deg);animation:stamp .26s var(--expo)}
+.stamp svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+@keyframes stamp{from{transform:rotate(-12deg) scale(1.4);opacity:0}}
+footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 56px;border-top:1px solid var(--ink);font:12px var(--mono);color:var(--ink-2)}
+@media (max-width:1100px){main{gap:40px;padding:32px 40px 24px}header,footer{padding-inline:40px}.digits{font-size:260px}.comp{height:250px}.tear{top:120px}}
+@media (max-width:900px){body{height:auto;min-height:100%}main{grid-template-columns:minmax(0,1fr)}.comp{height:240px}nav ul{gap:18px}}
+@media (max-width:640px){
+  header{padding:0 20px}nav{display:none}
+  main{padding:24px 20px;gap:32px}
+  .digits{font-size:150px;left:-4px}.comp{height:136px;margin:14px 0 12px}
+  .tear{top:58px;height:40px;left:-20px;right:-20px}.tear p{font-size:11px;padding-left:28px}
+  h1{font-size:28px}
+  .plate{transform:translate(6px,-5px) rotate(-.6deg)}
+  footer{padding:14px 20px}.trim{display:none}
+}
+@media (prefers-reduced-motion:reduce){.plate,.tear p,.stamp{animation:none}}
+</style>
+</head>
+<body>
+<span class="trim" style="top:8px;left:8px" aria-hidden="true"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="5"/><path d="M11 0v22M0 11h22"/></svg></span>
+<span class="trim" style="top:8px;right:8px;color:var(--pink)" aria-hidden="true"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="5"/><path d="M11 0v22M0 11h22"/></svg></span>
+<header>
+  <a class="mark" href="#/">Inkwell <i>Print Co.</i></a>
+  <nav aria-label="Main"><ul><li><a href="#/shop">Shop</a></li><li><a href="#/workshops">Workshops</a></li><li><a href="#/journal">Journal</a></li><li><a href="#/studio">Studio</a></li></ul></nav>
+</header>
+<main>
+  <section class="left" aria-labelledby="t">
+    <p class="kick"><span>Error 404</span><span>/journal/spring-zine-fair-2025</span></p>
+    <div class="comp" aria-hidden="true">
+      <div class="digits plate">404</div>
+      <div class="tear"><p>Page not found <b>&times;</b> misprint <b>&times;</b> page not found <b>&times;</b> misprint <b>&times;</b> page not found</p></div>
+      <div class="digits key"><span>4</span><span class="ht tilt">0</span><span>4</span></div>
+    </div>
+    <h1 id="t">Sorry, the page at this address has <em>moved or no longer exists</em>.</h1>
+  </section>
+  <section class="right" aria-label="Find your way">
+    <div>
+      <label class="label" for="q">Search the site</label>
+      <div class="field">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
+        <input id="q" type="text" role="combobox" aria-expanded="true" aria-controls="list" aria-autocomplete="list" aria-describedby="hint" autocomplete="off" value="zine fair" placeholder="Try workshop, paper or ink">
+        <button class="clear" id="clr" type="button" aria-label="Clear search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>
+      </div>
+      <p class="hint" id="hint">We filled this in from the address you followed.</p>
+      <ul class="list" id="list" role="listbox" aria-label="Matching pages"></ul>
+      <p class="status" id="st" role="status"></p>
+    </div>
+    <div>
+      <h2 class="label" id="pt">Most visited</h2>
+      <ul class="pop" aria-labelledby="pt">
+        <li><a href="#/workshops/riso-basics"><span>Riso basics, a Saturday class</span><small>Workshops</small></a></li>
+        <li><a href="#/shop/paper-packs"><span>Paper packs and offcuts</span><small>Shop</small></a></li>
+        <li><a href="#/journal/zine-fair-2026"><span>Zine fair 2026, table list</span><small>Journal</small></a></li>
+        <li><a href="#/studio/booking"><span>Book the studio by the hour</span><small>Studio</small></a></li>
+      </ul>
+    </div>
+    <div class="report" id="rep">
+      <button class="rbtn" id="rb" type="button">Report a broken link</button>
+      <span class="rnote">We read every report.</span>
+    </div>
+  </section>
+</main>
+<footer><span>Inkwell Print Co. · Patan Dhoka, Lalitpur</span><span>Open Tuesday to Saturday, 10:00 to 18:00</span></footer>
+<script>
+const MAP=[
+['Paper packs and offcuts','Shop','/shop/paper-packs'],['Fluoro pink ink refills','Shop','/shop/ink-refills'],['Prints by Mira Shakya','Shop','/shop/mira-shakya'],['Gift cards','Shop','/shop/gift-cards'],
+['Riso basics, a Saturday class','Workshops','/workshops/riso-basics'],['Two-colour zine weekend','Workshops','/workshops/zine-weekend'],['Private group sessions','Workshops','/workshops/groups'],
+['Zine fair 2026, table list','Journal','/journal/zine-fair-2026'],['Spring zine fair 2025, photos','Journal','/journal/archive/zine-fair-2025'],['Zine fair stall applications','Journal','/journal/zine-fair-stalls'],['How we mix fluoro pink','Journal','/journal/mixing-fluoro-pink'],
+['Book the studio by the hour','Studio','/studio/booking'],['Visit us in Patan Dhoka','Studio','/studio/visit'],['About Inkwell','Studio','/studio/about']
+];
+const $=id=>document.getElementById(id),q=$('q'),list=$('list'),st=$('st');
+let hits=[],act=-1;
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function hl(text,words){
+  let out=esc(text);
+  words.forEach(w=>{out=out.replace(new RegExp('('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'),'<mark>$1</mark>')});
+  return out;
+}
+function run(){
+  const v=q.value.trim().toLowerCase(),words=v.split(/\s+/).filter(Boolean);
+  $('clr').hidden=!v;act=-1;q.removeAttribute('aria-activedescendant');
+  if(!words.length){list.hidden=true;q.setAttribute('aria-expanded','false');st.textContent='';return}
+  hits=MAP.filter(([t,s,p])=>words.every(w=>(t+' '+s+' '+p).toLowerCase().includes(w))).slice(0,4);
+  list.hidden=false;q.setAttribute('aria-expanded','true');
+  list.innerHTML=hits.length?hits.map(([t,s,p],i)=>`<li class="opt" role="option" id="o${i}" aria-selected="false" data-i="${i}"><b>${hl(t,words)}</b><i>${s}</i><small>${esc(p)}</small></li>`).join('')
+    :`<li class="empty" role="option" aria-disabled="true">No pages match “${esc(q.value.trim())}”. Try workshop, paper or ink.</li>`;
+  st.textContent=hits.length?hits.length+(hits.length>1?' pages match':' page matches'):'No matches';
+}
+function mark(i){
+  act=i;list.querySelectorAll('.opt').forEach((o,j)=>o.setAttribute('aria-selected',j===i));
+  if(i<0)q.removeAttribute('aria-activedescendant');else q.setAttribute('aria-activedescendant','o'+i);
+}
+function open(p,t){location.hash=p;st.textContent='Opening '+t+' at '+p}
+q.addEventListener('input',()=>{$('hint').textContent='Results update as you type. Press Enter to open the first one.';run()});
+q.addEventListener('keydown',e=>{
+  const n=hits.length;
+  if(e.key==='ArrowDown'&&n){e.preventDefault();mark((act+1)%n)}
+  else if(e.key==='ArrowUp'&&n){e.preventDefault();mark(act<=0?n-1:act-1)}
+  else if(e.key==='Enter'){e.preventDefault();const h=hits[act<0?0:act];if(h)open(h[2],h[0])}
+  else if(e.key==='Escape'){if(q.value){q.value='';run()}}
+});
+list.addEventListener('click',e=>{const o=e.target.closest('.opt');if(o){const h=hits[+o.dataset.i];open(h[2],h[0])}});
+list.addEventListener('mousemove',e=>{const o=e.target.closest('.opt');if(o&&+o.dataset.i!==act)mark(+o.dataset.i)});
+$('clr').onclick=()=>{q.value='';run();q.focus()};
+document.querySelector('.pop').addEventListener('click',e=>{const a=e.target.closest('a');if(a)st.textContent='Opening '+a.querySelector('span').textContent+' at '+a.getAttribute('href').slice(1)});
+$('rb').onclick=()=>{
+  const r=$('rep');
+  r.innerHTML='<div class="done" role="status" tabindex="-1"><span class="stamp" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Thanks. Report TP-0419 logged for /journal/spring-zine-fair-2025. We fix broken links within two working days.</span></div>';
+  r.firstChild.focus();
+};
+run();
+</script>
+</body>
+</html>

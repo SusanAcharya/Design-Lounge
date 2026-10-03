@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 258 · "Rating score" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 264 · "Rating score" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Rating score
 

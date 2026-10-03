@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 272 · "Shop product" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 278 · "Shop product" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Shop product
 

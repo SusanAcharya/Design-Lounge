@@ -1,0 +1,431 @@
+<!-- Design Lounge piece: settings-team-members · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Members · Halden Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff;--ink:#000;--ink-2:#3d3d3d;--ink-3:#6b6b6b;--line:#e6e6e6;--line-2:#cfcfcf;--wash:#f5f5f5;
+  --red:#d7261e;--red-wash:#fdeceb;--focus:#000;
+  --sans:"Inter",system-ui,sans-serif;--r:6px;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--bg);font-feature-settings:"tnum" 1,"cv11" 1}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.app{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:100%}
+.nav{border-right:1px solid var(--line);padding:28px 16px}
+.ws{display:flex;align-items:center;gap:10px;padding:0 8px 28px;font-weight:700;letter-spacing:-.01em}
+.ws i{width:24px;height:24px;background:var(--ink);border-radius:var(--r);display:block}
+.nav h2{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0 8px 8px}
+.nav ul{list-style:none;margin:0 0 24px;padding:0}
+.nav a{display:block;padding:7px 8px;border-radius:var(--r);color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.nav a:hover{background:var(--wash);color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--ink);font-weight:600;box-shadow:inset 2px 0 0 var(--ink);border-radius:0 var(--r) var(--r) 0}
+
+main{padding:40px 56px 64px;min-width:0}
+.wrap{max-width:980px}
+.head{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:40px;align-items:end;padding-bottom:28px;border-bottom:2px solid var(--ink)}
+.crumb{font-size:12px;color:var(--ink-3);margin:0 0 10px}
+h1{font-size:48px;line-height:.95;font-weight:700;letter-spacing:-.035em;margin:0}
+.lead{margin:12px 0 0;color:var(--ink-2);max-width:48ch}
+.seats b{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;margin-bottom:10px}
+.seats b span{font-size:12px;font-weight:500;color:var(--ink-3)}
+.meter{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;height:12px}
+.meter i{background:var(--line);border-radius:2px}
+.meter i.on{background:var(--ink)}
+.meter i.inv{background:repeating-linear-gradient(135deg,var(--ink) 0 1.5px,transparent 1.5px 4px);box-shadow:inset 0 0 0 1px var(--ink)}
+.legend{display:flex;gap:14px;margin-top:10px;font-size:12px;color:var(--ink-3)}
+
+section{margin-top:36px}
+.sh{display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+.sh h2{font-size:18px;font-weight:700;letter-spacing:-.015em;margin:0;flex:1;white-space:nowrap}
+.sh h2 span{color:var(--ink-3);font-weight:500;margin-left:6px}
+
+.invite{display:grid;grid-template-columns:minmax(0,1fr) 150px auto;gap:8px}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:44px;padding:6px 8px;border:1px solid var(--line-2);border-radius:var(--r);cursor:text}
+.chips:focus-within{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.chips ul{display:contents;list-style:none}
+.chip{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 4px 0 10px;background:var(--wash);border-radius:4px;font-size:13px;max-width:100%}
+.chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip.bad{background:var(--red-wash);color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
+.chip button{width:22px;height:22px;display:grid;place-items:center;border-radius:3px}
+.chip button:hover{background:rgba(0,0,0,.08)}
+.chip svg{width:12px;height:12px}
+.chips input{flex:1;min-width:180px;border:0;outline:none;height:30px;background:none}
+.chips input::placeholder{color:var(--ink-3)}
+.field{height:44px;padding:0 32px 0 12px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;appearance:none;-webkit-appearance:none;width:100%}
+.field:hover{border-color:var(--ink)}
+.btn{height:44px;padding:0 18px;border-radius:var(--r);background:var(--ink);color:#fff;font-weight:600;white-space:nowrap;transition:opacity .16s var(--ease)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.btn.ghost{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-2)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.btn.danger{background:var(--red)}
+.hint{margin:8px 0 0;font-size:12px;color:var(--ink-3)}
+.hint.err{color:var(--red);font-weight:500}
+
+.tools{display:flex;gap:8px}
+.search{position:relative}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-3)}
+.search input{height:38px;width:240px;padding:0 12px 0 36px;border:1px solid var(--line-2);border-radius:var(--r)}
+.search input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.tools .field{height:38px;width:140px}
+
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:0 12px 10px;border-bottom:1px solid var(--ink)}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+th:first-child,td:first-child{padding-left:0}
+tbody tr:hover td{background:#fafafa}
+.who{display:flex;align-items:center;gap:12px;min-width:0}
+.av{width:32px;height:32px;border-radius:var(--r);background:var(--wash);display:grid;place-items:center;font-size:12px;font-weight:600;flex:none}
+.av.owner{background:var(--ink);color:#fff}
+.who b{font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.you{font-size:11px;font-weight:600;padding:2px 6px;border:1px solid var(--line-2);border-radius:4px;color:var(--ink-2)}
+.mail{color:var(--ink-2)}
+.role{height:34px;border-color:transparent;max-width:130px;font-weight:500}
+.role:hover,.role:focus{border-color:var(--line-2)}
+.role:disabled{background-image:none;color:var(--ink-3);cursor:not-allowed}
+.last{color:var(--ink-3)}
+.live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ink);margin-right:6px;vertical-align:1px}
+.x{width:34px;height:34px;display:grid;place-items:center;border-radius:var(--r);color:var(--ink-3);margin-left:auto}
+.x:hover{color:var(--red);background:var(--red-wash)}
+.x:disabled{opacity:.3;pointer-events:none}
+.none td{color:var(--ink-3);padding:28px 0;text-align:left;white-space:normal}
+
+.pend{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.pend li{display:grid;grid-template-columns:minmax(0,1fr) 100px 140px auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.pend .em{display:flex;align-items:center;gap:12px;min-width:0}
+.pend .em span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pend .av{background:none;box-shadow:inset 0 0 0 1px var(--line-2);color:var(--ink-3)}
+.pend .meta{color:var(--ink-3);font-size:13px}
+.acts{display:flex;gap:4px}
+.link{height:34px;padding:0 10px;border-radius:var(--r);font-weight:500}
+.link:hover{background:var(--wash)}
+.link.red{color:var(--red)}
+.link.red:hover{background:var(--red-wash)}
+.pend .empty{display:block;color:var(--ink-3);padding:20px 0}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);opacity:0;pointer-events:none;display:flex;align-items:center;gap:16px;min-width:340px;max-width:calc(100% - 32px);padding:12px 12px 12px 16px;background:var(--ink);color:#fff;border-radius:var(--r);transition:transform .24s var(--ease-out),opacity .24s var(--ease);overflow:hidden}
+.toast.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.toast p{margin:0;flex:1}
+.toast button{height:32px;padding:0 10px;border-radius:4px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.toast button:hover{background:rgba(255,255,255,.12)}
+.toast button:focus-visible{outline-color:#fff}
+.toast i{position:absolute;left:0;bottom:0;height:2px;width:100%;background:#6b6b6b;transform-origin:left}
+.toast.show i{animation:drain 6s linear forwards}
+@keyframes drain{to{transform:scaleX(0)}}
+
+dialog{border:0;border-radius:var(--r);padding:0;width:min(440px,calc(100% - 32px));box-shadow:0 24px 64px -24px rgba(0,0,0,.45)}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+dialog[open]{animation:pop .24s var(--ease-out)}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.98)}}
+.dlg{padding:28px}
+.dlg h2{font-size:22px;letter-spacing:-.02em;margin:0 0 8px}
+.dlg p{margin:0 0 24px;color:var(--ink-2)}
+.dlg .row{display:flex;justify-content:flex-end;gap:8px}
+
+@media (max-width:1100px){
+  main{padding:36px 32px 56px}
+  .head{grid-template-columns:minmax(0,1fr) 240px;gap:24px}
+  .last-c{display:none}
+}
+@media (max-width:900px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .nav{border-right:0;border-bottom:1px solid var(--line);padding:14px 16px;display:flex;align-items:center;gap:16px;overflow-x:auto}
+  .ws{padding:0;flex:none;white-space:nowrap}
+  .nav h2,.nav ul:not(:nth-of-type(1)){display:none}
+  .nav ul{display:flex;margin:0;gap:4px}
+  .nav a[aria-current="page"]{box-shadow:inset 0 -2px 0 var(--ink);border-radius:0}
+  .head{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  main{padding:24px 16px 96px}
+  h1{font-size:36px}
+  .invite{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .invite .chips{grid-column:1/-1}
+  .sh{align-items:stretch}
+  .tools{width:100%}
+  .search{flex:1}.search input{width:100%}
+  .tools .field{width:120px}
+  thead{display:none}
+  table,tbody,tr,td{display:block}
+  tr{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:4px 8px;padding:12px 0;border-bottom:1px solid var(--line)}
+  td{border:0;padding:0}
+  td.mail{grid-column:1;grid-row:2;padding-left:44px;font-size:13px}
+  .last-c{display:none}
+  .none{display:block!important}
+  .pend li{grid-template-columns:minmax(0,1fr) auto;row-gap:4px}
+  .pend .meta{grid-column:1;padding-left:44px}
+  .pend .acts{grid-column:2;grid-row:1/3}
+  .pend .r{display:none}
+  .toast{min-width:0;width:calc(100% - 32px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<nav class="nav" aria-label="Settings">
+  <div class="ws"><i aria-hidden="true"></i>Halden Studio</div>
+  <h2>Workspace</h2>
+  <ul>
+    <li><a href="#general">General</a></li>
+    <li><a href="#members" aria-current="page">Members</a></li>
+    <li><a href="#billing">Billing</a></li>
+    <li><a href="#security">Security</a></li>
+  </ul>
+  <h2>Account</h2>
+  <ul>
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#alerts">Notifications</a></li>
+  </ul>
+</nav>
+<main id="members">
+<div class="wrap">
+  <header class="head">
+    <div>
+      <p class="crumb">Settings / Workspace</p>
+      <h1>Members</h1>
+      <p class="lead">People who can open projects, comment on drawings, and see invoices in Halden Studio.</p>
+    </div>
+    <div class="seats" aria-labelledby="seatLabel">
+      <b><span id="seatLabel" style="font-size:14px;font-weight:600;color:var(--ink)">8 of 10 seats</span><span>Team plan</span></b>
+      <div class="meter" id="meter" role="img" aria-label="8 of 10 seats used"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </header>
+
+  <section aria-labelledby="invH">
+    <div class="sh"><h2 id="invH">Invite by email</h2></div>
+    <form class="invite" id="inviteForm" novalidate>
+      <div class="chips" id="chips">
+        <ul id="chipList" aria-label="Addresses to invite"></ul>
+        <label class="sr" for="email">Email addresses</label>
+        <input id="email" type="text" inputmode="email" autocomplete="off" placeholder="name@company.com, add several with commas" aria-describedby="invHint">
+      </div>
+      <label class="sr" for="invRole">Role for new members</label>
+      <select class="field" id="invRole"><option>Admin</option><option selected>Member</option><option>Viewer</option></select>
+      <button class="btn" id="sendBtn" type="submit" disabled>Send invites</button>
+    </form>
+    <p class="hint" id="invHint">Press Enter or comma after each address. Each invite takes a seat until it is accepted or revoked.</p>
+  </section>
+
+  <section aria-labelledby="memH">
+    <div class="sh">
+      <h2 id="memH">Members<span id="memCount">6</span></h2>
+      <div class="tools">
+        <div class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg><label class="sr" for="q">Search members</label><input id="q" type="search" placeholder="Search name or email"></div>
+        <label class="sr" for="roleFilter">Filter by role</label>
+        <select class="field" id="roleFilter"><option value="">All roles</option><option>Owner</option><option>Admin</option><option>Member</option><option>Viewer</option></select>
+      </div>
+    </div>
+    <table>
+      <colgroup><col style="width:30%"><col style="width:30%"><col style="width:17%"><col class="last-c" style="width:15%"><col style="width:8%"></colgroup>
+      <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Role</th><th scope="col" class="last-c">Last active</th><th scope="col"><span class="sr">Remove</span></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+
+  <section aria-labelledby="penH">
+    <div class="sh"><h2 id="penH">Pending invites<span id="penCount">2</span></h2></div>
+    <ul class="pend" id="pend"></ul>
+  </section>
+</div>
+</main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><p id="toastMsg"></p><button type="button" id="undo">Undo</button><i aria-hidden="true"></i></div>
+
+<dialog id="dlg" aria-labelledby="dlgH" aria-describedby="dlgP">
+  <form method="dialog" class="dlg">
+    <h2 id="dlgH">Remove member?</h2>
+    <p id="dlgP"></p>
+    <div class="row">
+      <button class="btn ghost" value="cancel" autofocus>Cancel</button>
+      <button class="btn danger" value="remove">Remove member</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const $ = s => document.querySelector(s);
+const SEATS = 10, ROLES = ['Owner', 'Admin', 'Member', 'Viewer'];
+let members = [
+  { n: 'Ingrid Solberg', e: 'ingrid@halden.studio', r: 'Owner', a: 'Active now', you: true },
+  { n: 'Mateo Ruiz', e: 'mateo@halden.studio', r: 'Admin', a: '2 hours ago' },
+  { n: 'Priya Raman', e: 'priya@halden.studio', r: 'Admin', a: 'Yesterday' },
+  { n: 'Jonas Weber', e: 'jonas@halden.studio', r: 'Member', a: '3 days ago' },
+  { n: 'Kofi Mensah', e: 'kofi@halden.studio', r: 'Member', a: '1 week ago' },
+  { n: 'Aiko Tanaka', e: 'aiko.t@northpier.co', r: 'Viewer', a: '12 Sep' }
+];
+let pending = [
+  { e: 'lena.vogt@halden.studio', r: 'Member', s: 'Sent 2 days ago' },
+  { e: 'sam@northpier.co', r: 'Viewer', s: 'Sent 5 days ago' }
+];
+let chips = [];
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const initials = n => n.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+const valid = e => /^[^\s@,]+@[^\s@,]+\.[a-z]{2,}$/i.test(e);
+const X = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+
+/* seats */
+function seats(){
+  const used = members.length + pending.length;
+  $('#seatLabel').textContent = used + ' of ' + SEATS + ' seats';
+  $('#meter').setAttribute('aria-label', used + ' of ' + SEATS + ' seats used');
+  $('#meter').innerHTML = Array.from({ length: SEATS }, (_, i) => '<i class="' + (i < members.length ? 'on' : i < used ? 'inv' : '') + '"></i>').join('');
+  $('#legend').innerHTML = '<span>' + members.length + ' active</span><span>' + pending.length + ' invited</span><span>' + (SEATS - used) + ' free</span>';
+  $('#memCount').textContent = members.length;
+  $('#penCount').textContent = pending.length;
+  checkInvite();
+}
+
+/* members table */
+function render(){
+  const q = $('#q').value.trim().toLowerCase(), rf = $('#roleFilter').value;
+  const list = members.filter(m => (!rf || m.r === rf) && (!q || (m.n + ' ' + m.e).toLowerCase().includes(q)));
+  $('#rows').innerHTML = list.length ? list.map(m => {
+    const i = members.indexOf(m), owner = m.r === 'Owner';
+    return '<tr><td><div class="who"><span class="av' + (owner ? ' owner' : '') + '" aria-hidden="true">' + initials(m.n) + '</span><b>' + esc(m.n) + '</b>' + (m.you ? '<span class="you">You</span>' : '') + '</div></td>' +
+      '<td class="mail">' + esc(m.e) + '</td>' +
+      '<td><label class="sr" for="role' + i + '">Role for ' + esc(m.n) + '</label><select class="field role" id="role' + i + '" data-i="' + i + '"' + (owner ? ' disabled title="Transfer ownership in Security"' : '') + '>' +
+      ROLES.filter(r => owner || r !== 'Owner').map(r => '<option' + (r === m.r ? ' selected' : '') + '>' + r + '</option>').join('') + '</select></td>' +
+      '<td class="last last-c">' + (m.a === 'Active now' ? '<span class="live-dot" aria-hidden="true"></span>' : '') + m.a + '</td>' +
+      '<td><button class="x" type="button" data-rm="' + i + '" aria-label="Remove ' + esc(m.n) + '"' + (owner ? ' disabled' : '') + '>' + X + '</button></td></tr>';
+  }).join('') : '<tr class="none"><td colspan="5">No members match' + (q ? ' "' + esc(q) + '"' : '') + (rf ? ' with the role ' + rf : '') + '.</td></tr>';
+}
+$('#q').addEventListener('input', render);
+$('#roleFilter').addEventListener('change', render);
+
+$('#rows').addEventListener('change', e => {
+  const s = e.target.closest('.role'); if (!s) return;
+  const m = members[s.dataset.i], old = m.r;
+  m.r = s.value;
+  toast(m.n + ' is now ' + m.r + '.', () => { m.r = old; render(); const el = $('#role' + members.indexOf(m)); if (el) el.focus(); });
+});
+
+/* remove with confirm */
+const dlg = $('#dlg'); let target = null;
+$('#rows').addEventListener('click', e => {
+  const b = e.target.closest('[data-rm]'); if (!b) return;
+  target = members[b.dataset.rm];
+  $('#dlgH').textContent = 'Remove ' + target.n + '?';
+  $('#dlgP').textContent = target.n.split(' ')[0] + ' loses access to Halden Studio right away. Their drawings and comments stay. The seat becomes free.';
+  dlg.showModal();
+});
+dlg.addEventListener('close', () => {
+  if (dlg.returnValue === 'remove' && target){
+    const m = target, at = members.indexOf(m);
+    members.splice(at, 1); render(); seats();
+    toast(m.n + ' was removed.', () => { members.splice(at, 0, m); render(); seats(); });
+    $('#q').focus();
+  } else if (target){
+    const b = document.querySelector('[data-rm="' + members.indexOf(target) + '"]'); if (b) b.focus();
+  }
+  target = null; dlg.returnValue = '';
+});
+
+/* pending */
+function renderPending(){
+  $('#pend').innerHTML = pending.length ? pending.map((p, i) =>
+    '<li><div class="em"><span class="av" aria-hidden="true">' + p.e[0].toUpperCase() + '</span><span>' + esc(p.e) + '</span></div>' +
+    '<span class="meta r">' + p.r + '</span><span class="meta">' + p.s + '</span>' +
+    '<div class="acts"><button class="link" type="button" data-resend="' + i + '" aria-label="Resend invite to ' + esc(p.e) + '">Resend</button><button class="link red" type="button" data-revoke="' + i + '" aria-label="Revoke invite to ' + esc(p.e) + '">Revoke</button></div></li>'
+  ).join('') : '<li class="empty">No pending invites.</li>';
+}
+$('#pend').addEventListener('click', e => {
+  const rs = e.target.closest('[data-resend]'), rv = e.target.closest('[data-revoke]');
+  if (rs){
+    const p = pending[rs.dataset.resend]; p.s = 'Sent just now'; renderPending();
+    $('[data-resend="' + pending.indexOf(p) + '"]').focus();
+    toast('Invite sent again to ' + p.e + '.');
+  }
+  if (rv){
+    const at = +rv.dataset.revoke, p = pending[at];
+    pending.splice(at, 1); renderPending(); seats();
+    toast('Invite to ' + p.e + ' revoked.', () => { pending.splice(at, 0, p); renderPending(); seats(); });
+    $('#email').focus();
+  }
+});
+
+/* invite chips */
+const input = $('#email'), list = $('#chipList');
+function renderChips(){
+  list.innerHTML = chips.map((c, i) => '<li class="chip' + (valid(c) ? '' : ' bad') + '"><span>' + esc(c) + '</span><button type="button" data-chip="' + i + '" aria-label="Remove ' + esc(c) + '">' + X + '</button></li>').join('');
+  checkInvite();
+}
+function commit(){
+  const parts = input.value.split(/[\s,;]+/).filter(Boolean);
+  parts.forEach(p => { if (!chips.includes(p) && !members.some(m => m.e === p) && !pending.some(x => x.e === p)) chips.push(p); });
+  input.value = ''; renderChips();
+}
+function checkInvite(){
+  const free = SEATS - members.length - pending.length;
+  const good = chips.filter(valid).length, bad = chips.length - good;
+  const hint = $('#invHint');
+  let msg = 'Press Enter or comma after each address. Each invite takes a seat until it is accepted or revoked.', err = false;
+  if (bad){ msg = bad === 1 ? 'One address is not valid. Fix or remove it.' : bad + ' addresses are not valid. Fix or remove them.'; err = true; }
+  else if (good > free){ msg = (free ? 'Only ' + free + (free === 1 ? ' seat is' : ' seats are') + ' free. Remove ' + (good - free) : 'No seats are free. Revoke an invite') + ' or upgrade the plan.'; err = true; }
+  hint.textContent = msg; hint.classList.toggle('err', err);
+  input.setAttribute('aria-invalid', err);
+  $('#sendBtn').disabled = !good || err;
+  $('#sendBtn').textContent = good > 1 ? 'Send ' + good + ' invites' : 'Send invite' + (good ? '' : 's');
+}
+input.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ',' || e.key === ';') && input.value.trim()){ e.preventDefault(); commit(); }
+  else if (e.key === 'Enter'){ e.preventDefault(); if (!$('#sendBtn').disabled) $('#inviteForm').requestSubmit(); }
+  else if (e.key === 'Backspace' && !input.value && chips.length){ chips.pop(); renderChips(); }
+});
+input.addEventListener('paste', () => setTimeout(commit, 0));
+input.addEventListener('blur', () => { if (input.value.trim()) commit(); });
+$('#chips').addEventListener('click', e => {
+  const b = e.target.closest('[data-chip]');
+  if (b){ chips.splice(+b.dataset.chip, 1); renderChips(); }
+  input.focus();
+});
+$('#inviteForm').addEventListener('submit', e => {
+  e.preventDefault(); if (input.value.trim()) commit();
+  const good = chips.filter(valid); if (!good.length || $('#sendBtn').disabled) return;
+  const role = $('#invRole').value;
+  good.forEach(em => pending.unshift({ e: em, r: role, s: 'Sent just now' }));
+  chips = []; renderChips(); renderPending(); seats();
+  toast(good.length === 1 ? 'Invite sent to ' + good[0] + '.' : good.length + ' invites sent as ' + role + '.');
+  input.focus();
+});
+
+/* toast */
+const t = $('#toast'), undoBtn = $('#undo'); let tTimer, undoFn;
+function toast(msg, undo){
+  clearTimeout(tTimer);
+  t.classList.remove('show'); void t.offsetWidth;
+  $('#toastMsg').textContent = msg;
+  undoFn = undo; undoBtn.hidden = !undo;
+  t.classList.add('show');
+  tTimer = setTimeout(() => t.classList.remove('show'), 6000);
+}
+undoBtn.addEventListener('click', () => {
+  clearTimeout(tTimer); t.classList.remove('show');
+  if (undoFn){ const f = undoFn; undoFn = null; f(); setTimeout(() => { $('#toastMsg').textContent = 'Undone.'; }, 30); }
+});
+t.addEventListener('mouseenter', () => clearTimeout(tTimer));
+t.addEventListener('mouseleave', () => { if (t.classList.contains('show')) tTimer = setTimeout(() => t.classList.remove('show'), 2500); });
+
+document.querySelectorAll('.nav a').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+
+chips = ['dev@harbourline.io', 'rosa.amaral@halden.studio'];
+renderChips(); render(); renderPending(); seats();
+</script>
+</body>
+</html>

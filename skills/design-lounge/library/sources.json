@@ -40,6 +40,7 @@
         "agent-step-trace",
         "breadcrumb",
         "button-roles",
+        "calendar-week-planner",
         "chip-bucket",
         "consent-bar",
         "curve-drawer",
@@ -65,6 +66,7 @@
         "phone-tab-plain",
         "polaroid-fan",
         "popover-panel",
+        "pwa-outbox-sync",
         "qty-stepper",
         "chart-rank-spend",
         "rating-score",
@@ -78,6 +80,8 @@
         "stats-count-up-band",
         "status-badge",
         "switch-row",
+        "tablet-pos-register",
+        "tablet-notes-three-pane",
         "text-field",
         "textarea-field",
         "time-field",
@@ -103,11 +107,13 @@
         "auth-magic-link-sent",
         "mobile-inbox-list",
         "auth-passkey-setup",
+        "ai-chat-workspace",
         "chat-thread",
         "phone-sign-in",
         "otp-code",
         "phone-comments-sheet",
-        "phone-sign-up-steps"
+        "phone-sign-up-steps",
+        "onboarding-workspace-setup"
       ]
     },
     {
@@ -193,6 +199,7 @@
         "spring-deck",
         "contact-project-brief-steps",
         "stretch-switch",
+        "settings-team-members",
         "token-field",
         "undo-toast",
         "week-schedule"
@@ -321,6 +328,8 @@
         "changelog-timeline",
         "cited-answer",
         "code-snippet-tabs",
+        "error-404-editorial",
+        "file-upload-manager",
         "filter-toolbar",
         "focus-dim",
         "funnel-chart",
@@ -335,11 +344,14 @@
         "mega-menu-product-grid",
         "progress-bar",
         "property-list",
+        "pwa-offline-library",
         "chart-line-range",
         "saved-banner",
         "selection-bar",
         "shortcut-sheet",
         "navbar-split-centered-logo",
+        "tablet-kiosk-checkin",
+        "tablet-cook-mode",
         "tooltip"
       ]
     },

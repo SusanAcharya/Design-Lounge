@@ -75,7 +75,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'Loading states that earn the wait',
     kicker: 'Nº 07',
     blurb: 'Skeletons that match their content, loaders with three elements, buttons that carry their own progress. Nothing spins for the sake of spinning.',
-    pieces: ['skeleton-to-content-swap', 'orbit-dots-loader', 'ink-fill-progress', 'button-state-morph', 'pwa-app-shell', 'ios-pull-to-refresh', 'load-failed-retry', 'mobile-load-failed', 'mobile-filter-chips-list'],
+    pieces: ['skeleton-to-content-swap', 'orbit-dots-loader', 'ink-fill-progress', 'button-state-morph', 'pwa-app-shell', 'ios-pull-to-refresh', 'load-failed-retry', 'mobile-load-failed', 'mobile-filter-chips-list', 'error-404-editorial'],
   },
   {
     slug: 'sheets-and-overlays',
@@ -103,14 +103,14 @@ export const COLLECTIONS: Collection[] = [
     title: 'Native feel, web materials',
     kicker: 'Nº 10',
     blurb: 'iOS 26 glass, Material 3 Expressive shapes, and the PWA moments in between: install, offline, update.',
-    pieces: ['ios-glass-tab-bar', 'phone-tab-plain', 'spend-list', 'mobile-inbox-list', 'chat-thread', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'ios-fintech-home', 'ios-swipe-row-actions', 'ios-now-playing', 'ios-grouped-settings', 'ios-onboarding-carousel', 'm3-expressive-home', 'm3-fab-menu', 'pwa-install-sheet', 'pwa-connectivity-banner', 'pwa-news-reader', 'm3-navigation-bar', 'phone-splash-launch', 'phone-sign-in', 'phone-sign-up-steps', 'phone-paywall-plans', 'phone-profile-header', 'phone-comments-sheet', 'phone-product-detail', 'phone-notifications-list', 'phone-form-fields', 'phone-permission-prompt', 'phone-photo-picker'],
+    pieces: ['ios-glass-tab-bar', 'phone-tab-plain', 'spend-list', 'mobile-inbox-list', 'chat-thread', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'ios-fintech-home', 'ios-swipe-row-actions', 'ios-now-playing', 'ios-grouped-settings', 'ios-onboarding-carousel', 'm3-expressive-home', 'm3-fab-menu', 'pwa-install-sheet', 'pwa-connectivity-banner', 'pwa-news-reader', 'm3-navigation-bar', 'phone-splash-launch', 'phone-sign-in', 'phone-sign-up-steps', 'phone-paywall-plans', 'phone-profile-header', 'phone-comments-sheet', 'phone-product-detail', 'phone-notifications-list', 'phone-form-fields', 'phone-permission-prompt', 'phone-photo-picker', 'pwa-offline-library', 'pwa-outbox-sync'],
   },
   {
     slug: 'dashboards-and-data',
     title: 'Dashboards and dense data',
     kicker: 'Nº 11',
     blurb: 'Tables you can live in, KPI rows, boards, bento grids and counters that roll. Density without noise.',
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'audit-activity-log', 'record-detail-header', 'people-role-list', 'pagination', 'filter-toolbar', 'status-badge', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'budget-meter', 'spend-list', 'kpi-delta', 'saved-banner', 'list-empty-plain', 'tablet-dashboard-grid', 'kanban-board', 'bento-feature-grid', 'odometer-counter', 'funnel-chart', 'week-schedule', 'agent-step-trace', 'node-graph', 'cited-answer', 'collapsing-sidebar-rail', 'tablet-split-view-mail'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'audit-activity-log', 'record-detail-header', 'people-role-list', 'pagination', 'filter-toolbar', 'status-badge', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'budget-meter', 'spend-list', 'kpi-delta', 'saved-banner', 'list-empty-plain', 'tablet-dashboard-grid', 'kanban-board', 'bento-feature-grid', 'odometer-counter', 'funnel-chart', 'week-schedule', 'agent-step-trace', 'node-graph', 'cited-answer', 'collapsing-sidebar-rail', 'tablet-split-view-mail', 'ai-chat-workspace', 'settings-team-members', 'file-upload-manager', 'calendar-week-planner', 'onboarding-workspace-setup', 'tablet-pos-register', 'tablet-notes-three-pane', 'tablet-cook-mode', 'tablet-kiosk-checkin'],
   },
   {
     slug: 'motion-with-a-reason',

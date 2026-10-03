@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 276 · "Sitemap columns footer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 282 · "Sitemap columns footer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Sitemap columns footer
 

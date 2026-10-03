@@ -234,7 +234,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'the-lounge',
     shelf: 'website-in-parts',
     categories: ['hero', 'navbar', 'features', 'pricing', 'testimonials', 'faq', 'contact', 'footer'],
-    pieces: ['hero-asymmetric-type-lockup', 'navbar-island-morph', 'features-tabbed-preview', 'testimonials-quote-carousel', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'navbar-hide-on-scroll', 'hamburger-circle-reveal', 'features-alternating-rows', 'testimonials-masonry-wall', 'stats-count-up-band', 'cta-giant-email-band', 'footer-sitemap-columns'],
+    pieces: ['hero-asymmetric-type-lockup', 'navbar-island-morph', 'features-tabbed-preview', 'testimonials-quote-carousel', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'navbar-hide-on-scroll', 'hamburger-circle-reveal', 'features-alternating-rows', 'testimonials-masonry-wall', 'stats-count-up-band', 'cta-giant-email-band', 'footer-sitemap-columns', 'error-404-editorial'],
   },
   {
     id: 'saas',
@@ -273,7 +273,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'indie-maker',
     shelf: 'portfolio-sites',
     categories: ['portfolio', 'features', 'hero', 'scroll'],
-    pieces: ['hero-product-window-tilt', 'bento-feature-grid', 'stacking-cards-scroll', 'portfolio-case-study-long', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'navbar-vertical-rail', 'hamburger-circle-reveal', 'card-article-mix', 'contact-project-brief-steps'],
+    pieces: ['hero-product-window-tilt', 'bento-feature-grid', 'stacking-cards-scroll', 'portfolio-case-study-long', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'navbar-vertical-rail', 'hamburger-circle-reveal', 'card-article-mix', 'contact-project-brief-steps', 'error-404-editorial'],
   },
   {
     id: 'fintech',
@@ -312,7 +312,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'garden-journal',
     shelf: 'first-impressions',
     categories: ['ecommerce', 'contact', 'utility'],
-    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'week-schedule', 'contact-booking-hours', 'card-product-quick-add', 'mobile-web-bottom-nav', 'navbar-split-centered-logo', 'testimonials-masonry-wall'],
+    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'week-schedule', 'contact-booking-hours', 'card-product-quick-add', 'mobile-web-bottom-nav', 'navbar-split-centered-logo', 'testimonials-masonry-wall', 'tablet-pos-register', 'tablet-cook-mode'],
   },
   {
     id: 'wellness',
@@ -325,7 +325,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'garden-journal',
     shelf: 'landing-pages',
     categories: ['landing', 'contact', 'newsletter'],
-    pieces: ['landing-wellness-retreat', 'contact-booking-hours', 'calendar-month', 'newsletter-fold-inline', 'navbar-split-centered-logo', 'mobile-web-bottom-nav', 'testimonials-masonry-wall', 'faq-category-accordion'],
+    pieces: ['landing-wellness-retreat', 'contact-booking-hours', 'calendar-month', 'newsletter-fold-inline', 'navbar-split-centered-logo', 'mobile-web-bottom-nav', 'testimonials-masonry-wall', 'faq-category-accordion', 'tablet-kiosk-checkin', 'calendar-week-planner'],
   },
   {
     id: 'hotel',
@@ -390,7 +390,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'the-lounge',
     shelf: 'typography-first',
     categories: ['profile', 'blog', 'reading', 'newsletter'],
-    pieces: ['profile-creator-masthead', 'blog-issue-index', 'paper-article-reader', 'newsletter-close-band', 'hero-editorial-name-rotator', 'card-article-mix', 'navbar-vertical-rail'],
+    pieces: ['profile-creator-masthead', 'blog-issue-index', 'paper-article-reader', 'newsletter-close-band', 'hero-editorial-name-rotator', 'card-article-mix', 'navbar-vertical-rail', 'error-404-editorial'],
   },
   {
     id: 'event',
@@ -468,7 +468,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'swiss-precision',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'data', 'charts', 'navigation'],
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'kanban-board', 'sidebar-workspace-switcher'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'kanban-board', 'sidebar-workspace-switcher', 'ai-chat-workspace', 'settings-team-members', 'file-upload-manager', 'calendar-week-planner', 'onboarding-workspace-setup'],
   },
   {
     id: 'commerce',
@@ -494,7 +494,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'newsroom',
     shelf: 'navigation-sorted',
     categories: ['reading', 'messaging', 'navigation', 'dashboard'],
-    pieces: ['tablet-two-column-reader', 'tablet-split-view-mail', 'tablet-sidebar-overlay-pin', 'tablet-floating-tool-palette', 'tablet-dashboard-grid'],
+    pieces: ['tablet-two-column-reader', 'tablet-split-view-mail', 'tablet-sidebar-overlay-pin', 'tablet-floating-tool-palette', 'tablet-dashboard-grid', 'tablet-pos-register', 'tablet-notes-three-pane', 'tablet-cook-mode', 'tablet-kiosk-checkin'],
   },
   {
     id: 'editorial',
@@ -507,7 +507,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'newsroom',
     shelf: 'typography-first',
     categories: ['blog', 'reading', 'hero', 'text-motion'],
-    pieces: ['editorial-landing-hero', 'paper-article-reader', 'magazine-editorial-grid', 'blog-issue-index', 'kinetic-type-marquee', 'text-scramble-reveal', 'hero-editorial-name-rotator'],
+    pieces: ['editorial-landing-hero', 'paper-article-reader', 'magazine-editorial-grid', 'blog-issue-index', 'kinetic-type-marquee', 'text-scramble-reveal', 'hero-editorial-name-rotator', 'pwa-offline-library', 'error-404-editorial'],
   },
   {
     id: 'bank',
@@ -572,7 +572,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'newsroom',
     shelf: 'typography-first',
     categories: ['reading', 'scroll', 'loaders'],
-    pieces: ['pwa-news-reader', 'ios-large-title-collapse', 'pwa-app-shell', 'pwa-update-toast', 'phone-tab-plain', 'phone-comments-sheet', 'phone-paywall-plans'],
+    pieces: ['pwa-news-reader', 'ios-large-title-collapse', 'pwa-app-shell', 'pwa-update-toast', 'phone-tab-plain', 'phone-comments-sheet', 'phone-paywall-plans', 'pwa-offline-library'],
   },
   {
     id: 'shop-app',
@@ -624,7 +624,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'swiss-precision',
     shelf: 'native-feel',
     categories: ['utility', 'navigation', 'feedback', 'error'],
-    pieces: ['mobile-run-detail', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed', 'ios-pull-to-refresh', 'phone-form-fields', 'phone-permission-prompt'],
+    pieces: ['mobile-run-detail', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed', 'ios-pull-to-refresh', 'phone-form-fields', 'phone-permission-prompt', 'pwa-outbox-sync'],
   },
   {
     id: 'personal',

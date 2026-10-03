@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 226 · "Overlap slider" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 230 · "Overlap slider" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Overlap slider
 

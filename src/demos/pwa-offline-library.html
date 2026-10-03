@@ -1,0 +1,224 @@
+<!-- Design Lounge piece: pwa-offline-library · platform: pwa · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nightjar · Saved</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1726;--surface:#14223a;--raise:#1b2b45;--line:#26385a;
+  --ink:#f3eee4;--ink-2:#bcc2cd;--ink-3:#8f99ab;
+  --amber:#f0a640;--amber-ink:#1c1304;--amber-dim:#5a4320;
+  --serif:"Source Serif 4",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif;
+  --r:10px;--ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px;border-radius:6px}
+svg{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.app{height:100%;overflow-y:auto;overflow-x:hidden;padding:max(54px,env(safe-area-inset-top)) 20px max(34px,env(safe-area-inset-bottom))}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px}
+.mark{display:flex;align-items:center;gap:8px;font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.mark svg{width:18px;height:18px;color:var(--amber)}
+.off{display:none;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:12px;background:var(--amber);color:var(--amber-ink);font:600 11px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase}
+.mark .off svg{width:14px;height:14px;stroke-width:2;color:var(--amber-ink)}
+.offline .off{display:inline-flex;animation:pop 240ms var(--out)}
+@keyframes pop{from{transform:scale(.85);opacity:0}}
+.demo{height:40px;padding:0 12px;border:1px dashed var(--line);border-radius:20px;font-size:12px;color:var(--ink-2);white-space:nowrap}
+.demo[aria-pressed=true]{border-color:var(--amber);color:var(--amber)}
+h1{font:600 34px/1.05 var(--serif);letter-spacing:-.015em;margin:14px 0 4px}
+.sub{margin:0;color:var(--ink-2)}
+.store{margin:20px 0 0;padding:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.store-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.used{font:600 26px/1 var(--serif);font-variant-numeric:tabular-nums}
+.used small{font:400 13px/1 var(--sans);color:var(--ink-2);margin-left:4px}
+.free{font-size:12px;color:var(--ink-2)}
+.meter{display:flex;height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:14px 0 10px}
+.meter i{display:block;height:100%;transition:width 400ms var(--ease)}
+.m-ep{background:var(--amber)}.m-ar{background:var(--ink);opacity:.85}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--ink-2);margin:0;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:6px}
+.legend b{width:8px;height:8px;border-radius:2px;display:inline-block}
+.wifi{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);text-align:left;width:100%;min-height:56px}
+.wifi strong{display:block;font-weight:500;font-size:15px}
+.wifi span span{display:block;font-size:12px;color:var(--ink-2);margin-top:2px}
+.sw{width:48px;height:28px;border-radius:14px;background:var(--line);position:relative;transition:background 160ms var(--ease)}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--ink-2);transition:transform 200ms var(--out),background 160ms}
+[aria-checked=true] .sw{background:var(--amber)}
+[aria-checked=true] .sw::after{transform:translateX(20px);background:var(--amber-ink)}
+.notice{display:none;margin:16px 0 0;padding:12px 14px;border-left:3px solid var(--amber);background:var(--surface);color:var(--ink-2);font-size:13px}
+.offline .notice{display:block}
+h2{display:flex;justify-content:space-between;font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin:26px 0 4px}
+h2 span{letter-spacing:0;font-weight:500;font-variant-numeric:tabular-nums}
+ul{list-style:none;margin:0;padding:0}
+.it{display:grid;grid-template-columns:40px minmax(0,1fr) 44px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);max-height:120px;transition:opacity 220ms var(--ease),max-height 300ms var(--ease) 120ms,padding 300ms var(--ease) 120ms}
+.it.gone{opacity:0;max-height:0;padding:0;border-bottom-color:transparent;overflow:hidden}
+.ic{width:40px;height:40px;border-radius:8px;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-2);position:relative}
+.ic svg{width:20px;height:20px}
+.ic .tick{position:absolute;right:-4px;bottom:-4px;width:16px;height:16px;border-radius:50%;background:var(--amber);color:var(--amber-ink);display:grid;place-items:center;border:2px solid var(--bg)}
+.ic .tick svg{width:10px;height:10px;stroke-width:3}
+.k{display:block;font:600 10.5px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3px}
+.t{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;font:600 16px/1.25 var(--serif);letter-spacing:-.005em;overflow:hidden;text-wrap:pretty}
+.m{display:block;font-size:12px;color:var(--ink-2);margin-top:3px;font-variant-numeric:tabular-nums}
+.act{width:44px;height:44px;border-radius:8px;display:grid;place-items:center;color:var(--ink-2)}
+.act svg{width:20px;height:20px}
+.act:hover{background:var(--raise);color:var(--ink)}
+.act:active{transform:scale(.94)}
+.ring{width:40px;height:40px;position:relative;display:grid;place-items:center}
+.ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring circle{stroke-width:3}
+.ring .bgc{stroke:var(--line)}
+.ring .fg{stroke:var(--amber);stroke-dasharray:100.5;transition:stroke-dashoffset 400ms var(--ease)}
+.ring b{font:600 10px/1 var(--sans);font-variant-numeric:tabular-nums}
+.offline .ring .fg{stroke:var(--ink-3)}
+.na .t{color:var(--ink-3)}
+.na .ic{border-style:dashed;color:var(--ink-3)}
+.why{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--amber);margin-top:4px}
+.why svg{width:13px;height:13px;flex:none}
+.act[disabled]{color:var(--ink-3);cursor:default;opacity:.6}
+.more{width:100%;min-height:48px;margin-top:4px;border-radius:8px;color:var(--ink-2);font-size:13px;text-align:left;padding:0 2px;display:flex;justify-content:space-between;align-items:center}
+.more svg{width:18px;height:18px}
+.foot{margin:22px 0 8px;font-size:12px;color:var(--ink-3)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;transition-delay:0s!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="top">
+    <span class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>Nightjar
+      <span class="off" id="off"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M8.5 8.6A5 5 0 0 0 7 18h10.5M19.8 16.3A3.5 3.5 0 0 0 17 11h-.3a6 6 0 0 0-5.4-4.9"/></svg>Offline</span></span>
+    <button class="demo" id="demo" type="button" aria-pressed="false">Demo: go offline</button>
+  </div>
+  <h1>Saved for offline</h1>
+  <p class="sub">Stories and episodes kept on this phone.</p>
+  <p class="notice" id="notice">You are offline. Everything under <b>On this device</b> still opens. Downloads resume when you reconnect.</p>
+
+  <section class="store" aria-labelledby="sh">
+    <h2 class="sr" id="sh">Storage</h2>
+    <div class="store-h"><span class="used"><span id="used">1.21 GB</span><small>of 2.00 GB</small></span><span class="free" id="free">786 MB free</span></div>
+    <div class="meter" role="meter" id="meter" aria-label="Storage used" aria-valuemin="0" aria-valuemax="2000" aria-valuenow="1210" aria-valuetext="1.21 GB of 2.00 GB"><i class="m-ep" id="mEp"></i><i class="m-ar" id="mAr"></i></div>
+    <ul class="legend"><li><b class="m-ep"></b>Episodes <span id="lEp">1.12 GB</span></li><li><b class="m-ar"></b>Articles <span id="lAr">94 MB</span></li></ul>
+    <button class="wifi" id="wifi" type="button" role="switch" aria-checked="true">
+      <span><strong>Download on Wi-Fi only</strong><span id="wifiSub">Episodes wait for Wi-Fi. Articles always download.</span></span>
+      <span class="sw" aria-hidden="true"></span>
+    </button>
+  </section>
+
+  <section aria-labelledby="dh">
+    <h2 id="dh">Downloading <span id="dCount">2</span></h2>
+    <ul id="dl"></ul>
+  </section>
+  <section aria-labelledby="rh">
+    <h2 id="rh">On this device <span id="rCount">31 items</span></h2>
+    <ul id="ready"></ul>
+    <button class="more" type="button">Show 27 older items<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+  </section>
+  <section aria-labelledby="nh">
+    <h2 id="nh">Not available offline <span>2</span></h2>
+    <ul id="na"></ul>
+  </section>
+  <p class="foot">Nightjar keeps up to 2.00 GB. Oldest finished episodes are cleared first when space runs low.</p>
+</div>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+const $=id=>document.getElementById(id);
+const I={
+  ep:'<path d="M4 12v-1a8 8 0 0 1 16 0v1"/><path d="M4 13h3v6H5a1 1 0 0 1-1-1zM20 13h-3v6h2a1 1 0 0 0 1-1z"/>',
+  ar:'<path d="M6 4h9l3 3v13H6z"/><path d="M9 10h6M9 13h6M9 16h4"/>',
+  live:'<circle cx="12" cy="12" r="2"/><path d="M8 8a5.5 5.5 0 0 0 0 8M16 8a5.5 5.5 0 0 1 0 8M5 5a10 10 0 0 0 0 14M19 5a10 10 0 0 1 0 14"/>',
+  bin:'<path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10.5 11v5M13.5 11v5"/>',
+  x:'<path d="M7 7l10 10M17 7 7 17"/>',
+  lock:'<rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/>',
+  dl:'<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
+  ok:'<path d="M5 12.5 10 17l9-10"/>'
+};
+const sv=(p,c="")=>`<svg viewBox="0 0 24 24" aria-hidden="true"${c}>${p}</svg>`;
+let ep=1120,ar=94,offline=false,wifi=true;
+let D=[
+ {id:"d1",type:"ep",k:"Episode · The Long Tide",t:"The Harbour Pilots Who Never Sleep",len:"52 min",mb:61.0,p:38,rate:1.6},
+ {id:"d2",type:"ep",k:"Episode · Fathom Radio",t:"Inside the Last Lighthouse Logbook",len:"44 min",mb:48.2,p:9,rate:.45}
+];
+let R=[
+ {id:"r1",type:"ar",k:"Article · Coastline Review",t:"What the Tide Tables Don't Tell You",len:"14 min read",mb:2.4},
+ {id:"r2",type:"ep",k:"Episode · Fathom Radio",t:"A Winter on the Salt Road",len:"38 min",mb:41.6},
+ {id:"r3",type:"ar",k:"Article · The Quarter",t:"How Night Trains Learned to Keep Time",len:"9 min read",mb:1.1},
+ {id:"r4",type:"ar",k:"Article · Coastline Review",t:"Letters From the Weather Ship",len:"22 min read",mb:3.8}
+];
+let readyCount=31;
+const N=[
+ {type:"live",k:"Live audio · Fathom Radio",t:"Storm Watch From Ness Point",why:"Live broadcasts stream only"},
+ {type:"ar",k:"Article · Meridian Weekly",t:"The Cartographer's Daughter, Part 3",why:"Publisher allows online reading only"}
+];
+const fmt=mb=>mb>=1000?(mb/1000).toFixed(2)+" GB":Math.round(mb)+" MB";
+const live=t=>{$("live").textContent="";setTimeout(()=>$("live").textContent=t,40)};
+function meter(){
+  const used=ep+ar;$("used").textContent=fmt(used);$("free").textContent=fmt(2000-used)+" free";
+  $("mEp").style.width=ep/20+"%";$("mAr").style.width=ar/20+"%";
+  $("lEp").textContent=fmt(ep);$("lAr").textContent=fmt(ar);
+  const m=$("meter");m.setAttribute("aria-valuenow",Math.round(used));m.setAttribute("aria-valuetext",fmt(used)+" of 2.00 GB");
+  $("rCount").textContent=readyCount+" items";$("dCount").textContent=D.length;
+}
+function dRow(d){
+  const off=100.5*(1-d.p/100),got=(d.mb*d.p/100).toFixed(1);
+  const meta=offline?`Paused · ${got} of ${d.mb} MB`:`${d.len} · ${got} of ${d.mb} MB`;
+  return `<li class="it" id="${d.id}"><span class="ring" role="progressbar" aria-label="${d.t}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.floor(d.p)}"><svg viewBox="0 0 40 40" aria-hidden="true"><circle class="bgc" cx="20" cy="20" r="16"/><circle class="fg" cx="20" cy="20" r="16" style="stroke-dashoffset:${off}"/></svg><b>${Math.floor(d.p)}</b></span>
+  <span style="min-width:0"><span class="k">${d.k}</span><span class="t">${d.t}</span><span class="m">${meta}</span></span>
+  <button class="act" type="button" data-cancel="${d.id}" aria-label="Cancel download: ${d.t}">${sv(I.x)}</button></li>`;
+}
+function rRow(r){
+  return `<li class="it" id="${r.id}"><span class="ic">${sv(I[r.type])}<span class="tick">${sv(I.ok)}</span></span>
+  <span style="min-width:0"><span class="k">${r.k}</span><span class="t">${r.t}</span><span class="m">${r.len} · ${r.mb.toFixed(1)} MB</span></span>
+  <button class="act" type="button" data-remove="${r.id}" aria-label="Remove from device: ${r.t}, ${r.mb.toFixed(1)} MB">${sv(I.bin)}</button></li>`;
+}
+function nRow(n){
+  return `<li class="it na"><span class="ic">${sv(I[n.type])}</span>
+  <span style="min-width:0"><span class="k">${n.k}</span><span class="t">${n.t}</span><span class="why">${sv(I.lock)}${offline?"Needs a connection. "+n.why:n.why}</span></span>
+  <button class="act" type="button" disabled aria-label="Download unavailable: ${n.t}">${sv(I.dl)}</button></li>`;
+}
+function draw(){$("dl").innerHTML=D.map(dRow).join("")||'<li class="m" style="padding:12px 0">Nothing downloading.</li>';$("ready").innerHTML=R.map(rRow).join("");$("na").innerHTML=N.map(nRow).join("");meter()}
+function patch(d){
+  const li=$(d.id);if(!li)return;
+  li.querySelector(".fg").style.strokeDashoffset=100.5*(1-d.p/100);li.querySelector(".ring b").textContent=Math.floor(d.p);
+  li.querySelector(".ring").setAttribute("aria-valuenow",Math.floor(d.p));
+  li.querySelector(".m").textContent=`${d.len} · ${(d.mb*d.p/100).toFixed(1)} of ${d.mb} MB`;
+}
+function step(){
+  if(offline||!D.length)return;
+  D.forEach(d=>{d.p=Math.min(100,d.p+d.rate);patch(d)});
+  const fin=D.filter(d=>d.p>=100);
+  fin.forEach(d=>{
+    D=D.filter(x=>x!==d);const r={id:"r"+d.id,type:d.type,k:d.k,t:d.t,len:d.len,mb:d.mb};
+    const li=$(d.id);li.classList.add("gone");
+    setTimeout(()=>{R.unshift(r);readyCount++;ep+=d.mb;draw();live(`${d.t} downloaded. Available offline.`)},420);
+  });
+}
+const tm=setInterval(step,500);
+document.addEventListener("click",e=>{
+  const rm=e.target.closest("[data-remove]");
+  if(rm){const r=R.find(x=>x.id===rm.dataset.remove),i=R.indexOf(r);
+    $(r.id).classList.add("gone");
+    setTimeout(()=>{R=R.filter(x=>x!==r);readyCount--;r.type==="ep"?ep-=r.mb:ar-=r.mb;draw();
+      const btns=document.querySelectorAll("#ready .act");(btns[Math.min(i,btns.length-1)]||document.querySelector(".more")).focus();
+      live(`Removed ${r.t}. ${r.mb.toFixed(1)} MB freed.`)},420);
+    return}
+  const c=e.target.closest("[data-cancel]");
+  if(c){const d=D.find(x=>x.id===c.dataset.cancel);$(d.id).classList.add("gone");
+    setTimeout(()=>{D=D.filter(x=>x!==d);draw();live(`Download cancelled: ${d.t}.`)},420)}
+});
+$("wifi").onclick=()=>{wifi=!wifi;$("wifi").setAttribute("aria-checked",wifi);
+  $("wifiSub").textContent=wifi?"Episodes wait for Wi-Fi. Articles always download.":"Episodes may use mobile data, about 50 MB each."};
+$("demo").onclick=()=>{offline=!offline;document.body.classList.toggle("offline",offline);
+  $("demo").setAttribute("aria-pressed",offline);$("demo").textContent=offline?"Demo: go online":"Demo: go offline";
+  draw();live(offline?"You are offline. Saved items still open. Downloads paused.":"Back online. Downloads resumed.")};
+draw();
+</script>
+</body>
+</html>

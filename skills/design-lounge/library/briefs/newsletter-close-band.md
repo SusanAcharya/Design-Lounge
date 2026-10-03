@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 220 · "Newsletter close" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 224 · "Newsletter close" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Newsletter close
 

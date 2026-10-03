@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 216 · "Minute wheel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 220 · "Minute wheel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Minute wheel
 

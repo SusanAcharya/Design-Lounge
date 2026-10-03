@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 265 · "Scroll zoom portal" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 271 · "Scroll zoom portal" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Scroll zoom portal
 

@@ -1,0 +1,225 @@
+<!-- Design Lounge piece: pwa-outbox-sync · platform: pwa · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tern Survey · Outbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#d9cdae;--sand-2:#cdbf9b;--paper:#ece4cd;--line:#b3a47f;--line-2:#8f8162;
+  --ink:#16140f;--ink-2:#3d382c;--ink-3:#5c5442;
+  --sig:#e4571b;--sig-ink:#16140f;--sig-text:#a63a0a;--sig-tint:#f3cdb4;
+  --cond:"Archivo Narrow","Arial Narrow",sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:2px;--ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--cond);color:var(--ink);background:var(--sand);overflow:hidden;position:relative}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;border-radius:var(--r)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 4px var(--sig)}
+svg{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.mono{font-family:var(--mono)}
+/* app behind */
+.app{padding:max(54px,env(safe-area-inset-top)) 20px 0}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.bar b{font:700 20px/1 var(--cond);letter-spacing:.04em;text-transform:uppercase}
+.chip{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1.5px solid var(--ink);border-radius:var(--r);font:500 11px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;background:var(--paper)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--sig)}
+.on .dot{background:var(--ink)}
+.site{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:18px 0 6px}
+h1{font:700 30px/1 var(--cond);margin:0;letter-spacing:-.01em}
+.notes{list-style:none;margin:16px 0 0;padding:0;border-top:1.5px solid var(--ink)}
+.notes li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:16px;font-weight:600}
+.notes span{font:400 11px/1.6 var(--mono);color:var(--ink-2)}
+/* sheet */
+.scrim{position:absolute;inset:0;background:rgba(22,20,15,.28);transition:opacity 300ms var(--ease)}
+.sheet{position:absolute;left:0;right:0;bottom:0;top:184px;background:var(--paper);border-top:2px solid var(--ink);border-radius:var(--r) var(--r) 0 0;display:flex;flex-direction:column;padding:0 16px max(34px,env(safe-area-inset-bottom));transition:transform 360ms var(--sheet)}
+.closed .sheet{transform:translateY(102%)}.closed .scrim{opacity:0;pointer-events:none}
+.grab{width:40px;height:4px;background:var(--line-2);border-radius:2px;margin:8px auto 4px}
+.sh{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sh h2{font:700 26px/1 var(--cond);text-transform:uppercase;letter-spacing:.02em;margin:0}
+.sh h2 small{font:500 12px/1 var(--mono);letter-spacing:0;margin-left:8px;color:var(--ink-2);text-transform:none}
+.x{width:44px;height:44px;display:grid;place-items:center}
+.x svg{width:20px;height:20px}
+.net{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:10px;width:100%;min-height:56px;margin:8px 0 0;padding:0 12px;border:1.5px solid var(--ink);background:var(--sand-2);text-align:left}
+.net svg{width:24px;height:24px}
+.net strong{display:block;font:700 15px/1.1 var(--cond);text-transform:uppercase;letter-spacing:.04em}
+.net span span{display:block;font:400 11px/1.3 var(--mono);color:var(--ink-2)}
+.tg{width:52px;height:28px;border:1.5px solid var(--ink);border-radius:var(--r);position:relative;background:var(--paper)}
+.tg::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:19px;background:var(--ink);border-radius:1px;transition:transform 200ms var(--ease)}
+.net[aria-checked=true] .tg{background:var(--sig)}
+.net[aria-checked=true] .tg::after{transform:translateX(23px)}
+.total{margin:14px 0 4px;display:flex;justify-content:space-between;font:500 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--ink-2)}
+.track{height:6px;background:var(--sand);border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--ink);transition:width 400ms var(--ease)}
+.items{list-style:none;margin:12px -4px 0;padding:0 4px 4px;display:grid;gap:8px;align-content:start;overflow-y:auto;min-height:0;flex:1}
+.it{border:1.5px solid var(--ink);border-radius:var(--r);background:var(--paper);padding:12px;display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:4px 12px;align-items:start;align-content:start}
+.st svg{width:12px;height:12px;stroke-width:3;vertical-align:-2px;margin-right:4px}
+.ic{width:36px;height:36px;border:1.5px solid var(--ink);display:grid;place-items:center;border-radius:var(--r)}
+.ic svg{width:20px;height:20px}
+.ti{font:700 16px/1.2 var(--cond);margin:0}
+.meta{font:400 10.5px/1.5 var(--mono);color:var(--ink-2);margin:2px 0 0;text-transform:uppercase;letter-spacing:.02em}
+.st{font:700 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border:1.5px solid var(--ink);border-radius:var(--r);white-space:nowrap;align-self:start}
+.it[data-s=queued] .st{border-style:dashed;color:var(--ink-2)}
+.it[data-s=sending] .st{background:var(--ink);color:var(--paper)}
+.it[data-s=failed] .st,.it[data-s=conflict] .st{background:var(--sig);border-color:var(--sig);color:var(--sig-ink)}
+.it[data-s=sent]{background:transparent;border-color:var(--line-2)}
+.it[data-s=sent] .st{border-color:transparent;padding-right:0}
+.it[data-s=sent] .ti,.it[data-s=sent] .ic{color:var(--ink-3)}
+.it[data-s=failed],.it[data-s=conflict]{border-color:var(--sig);box-shadow:inset 4px 0 0 var(--sig)}
+.row{grid-column:2/-1}
+.pb{height:4px;background:var(--sand);margin-top:8px;border-radius:1px;overflow:hidden}
+.pb i{display:block;height:100%;background:var(--sig);width:0;transition:width 200ms linear}
+.msg{font:400 11px/1.45 var(--mono);color:var(--sig-text);margin:6px 0 0}
+.msg.q{color:var(--ink-2)}
+.btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.btn{min-height:44px;padding:0 14px;border:1.5px solid var(--ink);font:700 13px/1 var(--cond);text-transform:uppercase;letter-spacing:.06em;display:inline-flex;align-items:center;gap:6px;background:var(--paper)}
+.btn.pri{background:var(--ink);color:var(--paper)}
+.btn svg{width:16px;height:16px}
+.btn:active{transform:translateY(1px)}
+.diff{margin:8px 0 0;display:grid;gap:6px}
+.diff p{margin:0;padding:8px;border:1px solid var(--line-2);font:400 11px/1.45 var(--mono);color:var(--ink-2);background:var(--sand)}
+.diff b{display:block;font:700 10px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink);margin-bottom:3px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:10px;font:400 10.5px/1.4 var(--mono);color:var(--ink-2)}
+.reset{min-height:40px;padding:0 10px;border:1px dashed var(--line-2);font:500 11px/1 var(--mono);text-transform:uppercase;white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*,*::after{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="app" aria-hidden="false">
+  <div class="bar"><b>Tern Survey</b>
+    <button class="chip" id="chip" type="button" aria-controls="sheet" aria-expanded="true"><span class="dot"></span><span id="chipT">Offline · 3 in outbox</span></button></div>
+  <p class="site">Site 14 · Marsh Lane · Crew B</p>
+  <h1>Field notes</h1>
+  <ul class="notes">
+    <li>Culvert C-14 outflow<span>09:14</span></li>
+    <li>Daily site log<span>09:30</span></li>
+    <li>Plot 7 boundary<span>09:36</span></li>
+    <li>Reed bed transect 2<span>08:52</span></li>
+    <li>Water level, gauge W3<span>08:40</span></li>
+    <li>Access gate, north track<span>08:21</span></li>
+    <li>Crew briefing<span>08:05</span></li>
+  </ul>
+</div>
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="false" aria-labelledby="oh">
+  <div class="grab" aria-hidden="true"></div>
+  <div class="sh"><h2 id="oh" tabindex="-1">Outbox<small id="count">3 waiting</small></h2>
+    <button class="x" id="close" type="button" aria-label="Close outbox"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <button class="net" id="net" type="button" role="switch" aria-checked="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true" id="netI"></svg>
+    <span><strong id="netT">Offline · no signal</strong><span id="netS">Changes are saved on this phone</span></span>
+    <span class="tg" aria-hidden="true"></span>
+  </button>
+  <div class="total"><span id="tl">0 of 3 sent</span><span id="tr">Waiting for signal</span></div>
+  <div class="track" aria-hidden="true"><i id="tbar"></i></div>
+  <ul class="items" id="items"></ul>
+  <div class="foot"><span>Kept until the server confirms.</span><button class="reset" id="reset" type="button">Reset demo</button></div>
+</section>
+<p class="sr" id="live" aria-live="polite" aria-atomic="true"></p>
+<script>
+const $=id=>document.getElementById(id);
+const IC={
+ photo:'<path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+ form:'<path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+ edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/>',
+ off:'<path d="M3 3l18 18M12 19h0M8.5 15.5a5 5 0 0 1 6.5-.4M5 12a10 10 0 0 1 4-2.3M14.5 9.4A10 10 0 0 1 19 12"/>',
+ on:'<path d="M12 19h0M8.5 15.5a5 5 0 0 1 7 0M5 12a10 10 0 0 1 14 0M2 8.5a15 15 0 0 1 20 0"/>',
+ retry:'<path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5"/>'
+};
+const sv=p=>`<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+let Q,online=false,busy=null,timers=[];
+function init(){
+  Q=[
+   {id:"a",kind:"photo",t:"Culvert C-14 outflow",meta:"Photo note · 2 photos · 4.2 MB · 09:14",s:"failed",p:62,msg:"Failed at 62%. Signal lost at 09:21."},
+   {id:"b",kind:"form",t:"Daily site log, 3 Oct",meta:"Form · 14 fields · 09:30",s:"queued",p:0,flaky:true},
+   {id:"c",kind:"edit",t:"Plot 7 boundary note",meta:"Edit · 1 field · 09:36",s:"queued",p:0,conflict:true}
+  ];
+  timers.forEach(clearTimeout);timers=[];busy=null;setNet(false,true);draw();
+}
+const live=t=>{$("live").textContent="";timers.push(setTimeout(()=>$("live").textContent=t,40))};
+const later=(f,ms)=>timers.push(setTimeout(f,ms));
+const label={queued:"Queued",sending:"Sending",failed:"Failed",sent:"Sent",conflict:"Conflict"};
+function card(q){
+  let body="";
+  if(q.s==="sending")body=`<div class="pb" role="progressbar" aria-label="Sending ${q.t}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${q.p}"><i style="width:${q.p}%"></i></div>`+(q.msg?`<p class="msg q">${q.msg}</p>`:"");
+  if(q.s==="queued")body=`<p class="msg q">${q.msg||(online?"Next in line.":"Sends when signal returns.")}</p>`;
+  if(q.s==="failed")body=`<p class="msg">${q.msg}</p>${q.wait?"":`<div class="btns"><button class="btn pri" type="button" data-retry="${q.id}">${sv(IC.retry)}Retry</button></div>`}`;
+  if(q.s==="conflict")body=`<p class="msg">Changed on another device.</p><div class="diff"><p><b>Yours · 09:36</b>Post 7 leans 15° north. Reset needed.</p><p><b>Theirs · R. Adeyemi · 09:52</b>Post 7 replaced and reset on 3 Oct.</p></div>
+   <div class="btns"><button class="btn pri" type="button" data-keep="mine" data-id="${q.id}">Keep mine</button><button class="btn" type="button" data-keep="theirs" data-id="${q.id}">Keep theirs</button></div>`;
+  if(q.s==="sent"&&q.msg2)body=`<p class="msg q">${q.msg2}</p>`;
+  const st=q.s==="sending"?`Sending ${q.p}%`:label[q.s];
+  return `<li class="it" data-s="${q.s}" id="i-${q.id}"><span class="ic">${sv(IC[q.kind])}</span><div style="min-width:0"><p class="ti">${q.t}</p><p class="meta">${q.meta}</p></div><span class="st">${q.s==="sent"?sv('<path d="M5 12.5 10 17l9-10"/>'):""}${st}</span><div class="row">${body}</div></li>`;
+}
+function draw(){
+  const sent=Q.filter(q=>q.s==="sent").length,wait=3-sent;
+  const focusId=document.activeElement&&document.activeElement.closest(".it")?.id;
+  $("items").innerHTML=Q.map(card).join("");
+  $("tl").textContent=`${sent} of 3 sent`;$("tbar").style.width=sent/3*100+"%";
+  $("tr").textContent=!online?"Waiting for signal":busy?"Sending one at a time":Q.some(q=>q.s==="conflict")?"Needs your choice":wait?"Paused":"All sent";
+  $("count").textContent=wait?`${wait} waiting`:"Empty";
+  if(online)$("netS").textContent=wait?"Sending queued changes":"Up to date";
+  $("chipT").textContent=(online?"Online":"Offline")+(wait?` · ${wait} in outbox`:" · all sent");
+  if(focusId){const b=$(focusId)?.querySelector("button");b&&b.focus()}
+}
+function update(q){
+  const li=$("i-"+q.id);if(!li||q.s!=="sending"){draw();return}
+  li.querySelector(".pb i").style.width=q.p+"%";li.querySelector(".pb").setAttribute("aria-valuenow",q.p);li.querySelector(".st").textContent=`Sending ${q.p}%`;
+}
+function setNet(on,quiet){
+  online=on;document.body.classList.toggle("on",on);
+  const n=$("net");n.setAttribute("aria-checked",on);$("netI").innerHTML=on?IC.on:IC.off;
+  $("netT").textContent=on?"Online · 2 bars":"Offline · no signal";$("netS").textContent=on?"Sending queued changes":"Changes are saved on this phone";
+  if(!on&&busy){const q=busy;clearTimeout(q.tm);q.s="queued";q.msg=`Paused at ${q.p}%. Resumes with signal.`;busy=null}
+  if(!quiet)live(on?"Back online. Sending outbox.":"Offline. Changes stay in the outbox.");
+  draw();if(on)pump();
+}
+function pump(){
+  if(!online||busy)return;
+  const q=Q.find(x=>x.s==="queued"||(x.s==="failed"&&!x.wait));
+  if(!q){draw();if(Q.every(x=>x.s==="sent"))live("Outbox empty. All 3 changes sent.");return}
+  send(q);
+}
+function send(q){
+  busy=q;q.s="sending";q.msg="";if(q.p>=100)q.p=0;draw();live(`Sending ${q.t}.`);
+  const tick=()=>{
+    if(busy!==q)return;
+    q.p=Math.min(100,q.p+(q.kind==="photo"?6:12));
+    if(q.flaky&&q.p>=48){q.flaky=false;fail(q);return}
+    if(q.conflict&&q.p>=60){q.conflict=false;busy=null;q.s="conflict";draw();$("i-"+q.id).scrollIntoView({block:"end",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});live(`${q.t}: changed on another device. Choose keep mine or keep theirs.`);pump();return}
+    update(q);
+    if(q.p>=100){busy=null;q.s="sent";q.msg=q.msg2||"Saved to the server.";draw();live(`${q.t} sent.`);later(pump,300);return}
+    q.tm=setTimeout(tick,160);
+  };
+  q.tm=setTimeout(tick,160);
+}
+function fail(q){
+  busy=null;q.s="failed";q.wait=true;let n=2;q.msg=`Server did not answer. Retrying in ${n}s.`;draw();live(`${q.t} failed. Retrying in 2 seconds.`);
+  const cd=()=>{n--;if(!online){q.wait=false;q.msg="Server did not answer.";draw();return}
+    if(n>0){q.msg=`Server did not answer. Retrying in ${n}s.`;draw();later(cd,1000)}else{q.wait=false;q.p=0;q.s="queued";pump()}};
+  later(cd,1000);
+}
+document.addEventListener("click",e=>{
+  const r=e.target.closest("[data-retry]");
+  if(r){const q=Q.find(x=>x.id===r.dataset.retry);
+    if(!online){q.s="queued";q.msg="Still offline. Sends when signal returns.";draw();live(q.t+" queued. Still offline.");$("net").focus()}
+    else{q.s="queued";pump()}return}
+  const k=e.target.closest("[data-keep]");
+  if(k){const q=Q.find(x=>x.id===k.dataset.id),mine=k.dataset.keep==="mine";
+    q.s="queued";q.p=60;q.msg="Overwriting with your note.";q.msg2=mine?"Your note replaced theirs.":"Their note kept. Yours discarded.";
+    if(!mine){q.s="sent";q.msg=q.msg2;draw();live(q.t+": kept theirs.");pump()}else{live(q.t+": keeping yours.");pump()}
+    draw();$("oh").focus();}
+});
+$("net").onclick=()=>setNet(!online);
+$("reset").onclick=()=>{init();live("Demo reset. Offline with 3 changes waiting.")};
+const toggle=open=>{document.body.classList.toggle("closed",!open);$("chip").setAttribute("aria-expanded",open);(open?$("net"):$("chip")).focus()};
+$("close").onclick=()=>toggle(false);$("chip").onclick=()=>toggle(document.body.classList.contains("closed"));$("scrim").onclick=()=>toggle(false);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.body.classList.contains("closed"))toggle(false)});
+init();
+</script>
+</body>
+</html>

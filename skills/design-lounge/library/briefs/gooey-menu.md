@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 198 · "Gooey menu" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 202 · "Gooey menu" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Gooey menu
 

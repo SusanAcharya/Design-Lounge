@@ -1,0 +1,377 @@
+<!-- Design Lounge piece: tablet-pos-register · platform: tablet · 1180x820 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chautari Coffee — Register</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#efe6d8;--surface:#faf5ec;--tile:#fffdf8;--oat-2:#e6dac7;--line:#e0d2bd;
+  --ink:#3b2a20;--ink-2:#6b5444;--ink-3:#7d6656;--on-dark:#f6eee2;
+  --teal:#1f6f68;--teal-ink:#f3fbf9;--teal-soft:#d5e9e5;--danger:#a3402c;
+  --band-coffee:#8a5a3b;--band-tea:#b4822c;--band-bakery:#c0663a;--band-cold:#5c8592;
+  --display:"Fraunces",Georgia,serif;--sans:"Source Sans 3",system-ui,sans-serif;
+  --r:16px;--r-sm:12px;--tap:56px;
+  --shadow:0 1px 0 rgba(59,42,32,.06),0 6px 18px -10px rgba(59,42,32,.35);
+  --t-fast:140ms;--t-mid:260ms;--t-sheet:340ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-sheet:cubic-bezier(.32,.72,0,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.35 var(--sans);color:var(--ink);background:var(--bg);padding-top:24px;overflow:hidden;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.app{height:100%;display:grid;grid-template-columns:112px minmax(0,1fr) 384px;gap:16px;padding:0 16px 16px}
+
+/* rail */
+.rail{background:var(--ink);color:var(--on-dark);border-radius:var(--r);padding:16px 8px;display:flex;flex-direction:column;gap:8px}
+.mark{font:600 15px/1.1 var(--display);text-align:center;padding:4px 0 14px;border-bottom:1px solid rgba(246,238,226,.16);margin-bottom:6px}
+.mark small{display:block;font:600 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;opacity:.7;margin-top:4px}
+.cat{min-height:84px;border-radius:var(--r-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:600;color:rgba(246,238,226,.78);transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.cat i{width:10px;height:4px;border-radius:2px;background:var(--b)}
+.cat:hover{background:rgba(246,238,226,.08)}
+.cat[aria-pressed="true"]{background:var(--bg);color:var(--ink)}
+.cat:focus-visible{outline-color:var(--on-dark)}
+.who{margin-top:auto;text-align:center;font-size:12px;opacity:.7;line-height:1.3}
+
+/* menu */
+.rail[inert]{opacity:.7}
+.menu[inert]{opacity:.45;filter:saturate(.6);transition:opacity var(--t-mid) var(--ease)}
+.menu{min-width:0;display:flex;flex-direction:column;padding-top:8px}
+.mhead{display:flex;align-items:baseline;gap:12px;padding:0 4px 16px}
+.mhead h1{margin:0;font:600 34px/1 var(--display);letter-spacing:-.01em}
+.mhead p{margin:0;color:var(--ink-2);font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:150px;gap:12px;overflow:auto;padding:2px 2px 8px;align-content:start}
+.tile{position:relative;background:var(--tile);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);transition:transform var(--t-fast) var(--ease)}
+.tile::before{content:"";position:absolute;inset:0 0 auto;height:10px;background:var(--b)}
+.tile:active{transform:scale(.97)}
+.add{position:absolute;inset:0;width:100%;text-align:left;padding:24px 16px 14px;display:flex;flex-direction:column;border-radius:var(--r)}
+.add:focus-visible{outline-offset:-3px}
+.add b{font-size:19px;font-weight:700;line-height:1.15}
+.add span{font-size:13.5px;color:var(--ink-2);margin-top:4px}
+.add em{font-style:normal;margin-top:auto;font-size:19px;font-weight:700}
+.opt{position:absolute;right:8px;bottom:8px;width:var(--tap);height:var(--tap);border-radius:50%;display:grid;place-items:center;background:var(--bg);color:var(--ink)}
+.opt:hover{background:var(--oat-2)}
+.badge{position:absolute;top:18px;right:12px;min-width:28px;height:28px;padding:0 8px;border-radius:14px;background:var(--teal);color:var(--teal-ink);font-size:14px;font-weight:700;display:grid;place-items:center;pointer-events:none}
+.badge:empty{display:none}
+
+/* ticket */
+.ticket{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden;box-shadow:var(--shadow)}
+.view{display:none;flex:1;min-height:0;flex-direction:column}
+.ticket[data-view="order"] .v-order,.ticket[data-view="tender"] .v-tender,.ticket[data-view="done"] .v-done{display:flex;animation:in var(--t-mid) var(--ease-out)}
+@keyframes in{from{opacity:0;transform:translateX(12px)}}
+.thead{display:flex;align-items:center;gap:8px;padding:16px 16px 12px 20px;border-bottom:1px solid var(--line)}
+.thead h2{margin:0;font:600 20px var(--display)}
+.thead p{margin:2px 0 0;font-size:13.5px;color:var(--ink-2)}
+.thead .grow{flex:1}
+.ghost{min-height:48px;min-width:48px;padding:0 14px;border-radius:var(--r-sm);font-weight:600;font-size:15px;color:var(--ink-2);display:inline-flex;align-items:center;gap:6px}
+.ghost:hover{background:var(--bg);color:var(--ink)}
+.lines{list-style:none;margin:0;padding:4px 0;flex:1;overflow:auto}
+.line{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:12px 16px 12px 20px;border-bottom:1px solid var(--line);transition:background 600ms var(--ease)}
+.line.new{animation:drop var(--t-mid) var(--ease-out)}
+.line.flash{background:var(--teal-soft);transition:none}
+@keyframes drop{from{opacity:0;transform:translateY(-8px)}}
+.line .nm{font-weight:700;font-size:17px}
+.line .md{font-size:13.5px;color:var(--ink-2);grid-column:1;align-self:center}
+.line .md i{font-style:normal;color:var(--ink-3)}
+.line .pr{font-weight:700;font-size:17px;text-align:right}
+.step{grid-column:2;display:flex;align-items:center}
+.step button{width:var(--tap);height:48px;border-radius:var(--r-sm);display:grid;place-items:center;background:var(--bg)}
+.step button:hover{background:var(--oat-2)}
+.step output{min-width:44px;text-align:center;font-weight:700;font-size:18px}
+.empty{padding:48px 24px;text-align:center;color:var(--ink-2)}
+.empty b{display:block;font:600 20px var(--display);color:var(--ink);margin-bottom:6px}
+.note{margin:12px 16px 0;display:flex;align-items:center;gap:10px;min-height:var(--tap);padding:0 14px;border:1px dashed #cdbba2;border-radius:var(--r-sm);color:var(--ink-2)}
+.note input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:15px;color:var(--ink);height:52px}
+.note input:focus{outline:none}
+.note:focus-within{border-style:solid;border-color:var(--teal);box-shadow:0 0 0 2px var(--teal-soft)}
+.sums{padding:12px 20px 4px;margin:0;display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:15px;color:var(--ink-2)}
+.sums dd{margin:0;text-align:right}
+.sums .tot{font-size:20px;font-weight:700;color:var(--ink);padding-top:6px}
+.cta{margin:12px 16px 16px;min-height:72px;border-radius:var(--r);background:var(--teal);color:var(--teal-ink);font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform var(--t-fast) var(--ease),background var(--t-fast) var(--ease)}
+.cta:hover{background:#185d57}
+.cta:active{transform:scale(.98)}
+.cta:disabled{background:var(--oat-2);color:var(--ink-3);cursor:not-allowed}
+.cta:focus-visible{outline-color:var(--ink)}
+
+/* tender */
+.due{padding:24px 20px 8px}
+.due p{margin:0;color:var(--ink-2);font-size:15px}
+.due strong{display:block;font:600 52px/1.05 var(--display);letter-spacing:-.02em;margin-top:4px}
+.methods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px 16px}
+.mth{min-height:96px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--tile);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:17px}
+.mth[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-soft);color:#14524d}
+.pane{padding:8px 16px;flex:1;min-height:0}
+.lbl{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:8px 4px 10px}
+.quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.quick button{min-height:var(--tap);border-radius:var(--r-sm);background:var(--bg);font-weight:700;font-size:17px}
+.quick button[aria-pressed="true"]{background:var(--ink);color:var(--on-dark)}
+.change{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;padding:14px 4px;border-top:1px solid var(--line);font-size:17px}
+.change b{font-size:24px}
+.hint{display:flex;gap:14px;align-items:center;padding:16px;border-radius:var(--r);background:var(--tile);border:1px solid var(--line);color:var(--ink-2);font-size:15px}
+.qr{width:112px;height:112px;flex:none;background:#fff;border-radius:8px;padding:6px}
+.qr svg{width:100%;height:100%;stroke:none;fill:var(--ink)}
+
+/* done */
+.v-done{align-items:center;justify-content:center;text-align:center;padding:24px}
+.tick{width:104px;height:104px;border-radius:50%;background:var(--teal);color:var(--teal-ink);display:grid;place-items:center;margin-bottom:20px}
+.tick svg{width:52px;height:52px;stroke-width:2.4;stroke-dasharray:30;stroke-dashoffset:30;animation:draw 420ms 120ms var(--ease-out) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.v-done h2{margin:0;font:600 40px var(--display)}
+.v-done p{margin:6px 0 0;color:var(--ink-2);font-size:17px}
+.v-done .cta{align-self:stretch;margin:32px 0 0}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(59,42,32,.36);opacity:0;pointer-events:none;transition:opacity var(--t-sheet) var(--ease)}
+.sheet{position:fixed;left:50%;bottom:0;width:min(600px,100%);transform:translate(-50%,104%);background:var(--surface);border-radius:24px 24px 0 0;padding:12px 24px 24px;transition:transform var(--t-sheet) var(--ease-sheet);box-shadow:0 -12px 40px -12px rgba(59,42,32,.4)}
+.open .scrim{opacity:1;pointer-events:auto}
+.open .sheet{transform:translate(-50%,0)}
+.grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 14px}
+.shead{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.shead h2{margin:0;font:600 28px var(--display)}
+.shead span{color:var(--ink-2)}
+.grp{border:0;margin:14px 0 0;padding:0}
+.grp legend{padding:0;margin-bottom:8px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px}
+.seg label{position:relative;min-height:var(--tap);border-radius:var(--r-sm);background:var(--tile);border:1.5px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:16px;cursor:pointer}
+.seg label small{font-weight:400;font-size:13px;color:var(--ink-2)}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.seg label:has(input:checked){border-color:var(--teal);background:var(--teal-soft);color:#14524d}
+.seg label:has(input:focus-visible){outline:3px solid var(--teal);outline-offset:2px}
+.sfoot{display:flex;gap:12px;margin-top:22px}
+.sfoot .ghost{min-height:64px;padding:0 24px;background:var(--bg)}
+.sfoot .cta{flex:1;margin:0;min-height:64px;font-size:20px}
+
+@media (max-width:900px){
+  .app{grid-template-columns:minmax(0,1fr) 340px;grid-template-rows:auto minmax(0,1fr)}
+  .rail{grid-column:1/-1;flex-direction:row;align-items:center;padding:8px}
+  .mark{border:0;padding:0 12px 0 8px;margin:0;text-align:left}
+  .cat{flex:1;min-height:var(--tap);flex-direction:row}
+  .who{margin:0 0 0 8px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:1ms!important;animation-delay:0ms!important;transition-duration:1ms!important}
+  .tick svg{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="rail" aria-label="Menu categories">
+    <div class="mark">Chautari<small>Jhamsikhel</small></div>
+    <button class="cat" type="button" data-cat="coffee" style="--b:var(--band-coffee)" aria-pressed="true"><i></i>Coffee</button>
+    <button class="cat" type="button" data-cat="tea" style="--b:var(--band-tea)" aria-pressed="false"><i></i>Tea</button>
+    <button class="cat" type="button" data-cat="bakery" style="--b:var(--band-bakery)" aria-pressed="false"><i></i>Bakery</button>
+    <button class="cat" type="button" data-cat="cold" style="--b:var(--band-cold)" aria-pressed="false"><i></i>Cold</button>
+    <div class="who">Till 2<br>Anu R.</div>
+  </nav>
+
+  <main class="menu">
+    <div class="mhead"><h1 id="catName">Coffee</h1><p id="catHint">8 items · tap to add, hold for options</p></div>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <aside class="ticket" id="ticket" data-view="order" aria-label="Order ticket">
+    <section class="view v-order">
+      <div class="thead">
+        <div class="grow"><h2 id="ordNo">Order 0418</h2><p>Table 6 · Dine in</p></div>
+        <button class="ghost" type="button" id="clear">Clear</button>
+      </div>
+      <ul class="lines" id="lines" aria-live="polite"></ul>
+      <label class="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19h4L19 9l-4-4L5 15z"/></svg><input id="noteIn" value="Chai with less sugar, bun warmed" aria-label="Note for the barista"></label>
+      <dl class="sums">
+        <dt>Subtotal</dt><dd id="sub">Rs 1,097</dd>
+        <dt>VAT 13% (included)</dt><dd id="vat">Rs 143</dd>
+        <dt class="tot">Total</dt><dd class="tot" id="tot">Rs 1,240</dd>
+      </dl>
+      <button class="cta" type="button" id="charge">Charge Rs 1,240</button>
+    </section>
+
+    <section class="view v-tender" aria-label="Take payment">
+      <div class="thead">
+        <button class="ghost" type="button" id="back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
+        <div class="grow"></div><p>Order 0418 · Table 6</p>
+      </div>
+      <div class="due"><p>Amount due</p><strong id="dueAmt">Rs 1,240</strong></div>
+      <div class="methods" role="group" aria-label="Payment method">
+        <button class="mth" type="button" data-m="cash" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>Cash</button>
+        <button class="mth" type="button" data-m="card" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg>Card</button>
+        <button class="mth" type="button" data-m="qr" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2zM14 18h2"/></svg>QR</button>
+      </div>
+      <div class="pane" id="pane"></div>
+      <button class="cta" type="button" id="take">Take Rs 1,240 cash</button>
+    </section>
+
+    <section class="view v-done" aria-live="polite">
+      <div class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h2>Paid</h2>
+      <p id="paidLine">Rs 1,240 by cash</p>
+      <p id="changeLine">Change Rs 260 · receipt printed</p>
+      <button class="cta" type="button" id="newOrder">New order</button>
+    </section>
+  </aside>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sTitle" hidden>
+  <div class="grab"></div>
+  <div class="shead"><h2 id="sTitle">Flat white</h2><span id="sBase">Rs 280</span></div>
+  <form id="sForm"></form>
+  <div class="sfoot">
+    <button class="ghost" type="button" id="sCancel">Cancel</button>
+    <button class="cta" type="button" id="sAdd">Add Rs 280</button>
+  </div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const rs=n=>'Rs '+n.toLocaleString('en-IN');
+const MENU={
+ coffee:[['Espresso','Double, 60ml',180],['Americano','Long black, 240ml',220],['Flat white','Velvet milk, 180ml',280],['Cappuccino','Dry foam, 200ml',260],['Cafe latte','Silky, 300ml',280],['Mocha','Dark Ilam cocoa',320],['Cortado','Equal milk, 120ml',240],['Honey latte','Chitwan wild honey',310]],
+ tea:[['Masala chai','Ginger, cardamom',180],['Ilam green','First flush, pot',160],['Butter tea','Salted, churned',200],['Ginger lemon','With honey',190],['Rooibos','Caffeine free',170],['Chiya','Milk tea, glass',120]],
+ bakery:[['Cardamom bun','Baked at 7',220],['Banana bread','Walnut, slice',190],['Croissant','Butter, laminated',210],['Sel roti','Rice flour ring',140],['Biscotti','Almond, two',150],['Carrot cake','Cream cheese',260]],
+ cold:[['Cold brew','18 hour steep',290],['Iced latte','Double shot',300],['Lemon soda','Salted or sweet',150],['Lassi','Sweet, thick',200],['Affogato','Vanilla, espresso',340],['Iced mocha','Cocoa, cream',340]]
+};
+const GROUPS={coffee:['size','milk','shot'],tea:['size','milk'],bakery:['warm'],cold:['size','milk','shot']};
+const OPTS={
+ size:['Size',[['Small',-20],['Regular',0],['Large',40]],1],
+ milk:['Milk',[['Whole',0],['Oat',40],['Almond',50],['None',0]],0],
+ shot:['Extra shot',[['No',0],['+1 shot',50],['+2 shots',100]],0],
+ warm:['Serve',[['As is',0],['Warmed',0]],1]
+};
+let cat='coffee',order=[],seq=418,method='cash',tendered=0;
+const find=n=>{for(const c in MENU){const i=MENU[c].find(x=>x[0]===n);if(i)return[c,i]}};
+order=[
+ {n:'Flat white',m:'Regular · Oat · +1 shot',u:370,q:1},
+ {n:'Masala chai',m:'Regular · Whole',u:180,q:2},
+ {n:'Cardamom bun',m:'Warmed',u:220,q:1},
+ {n:'Cold brew',m:'Regular',u:290,q:1}
+];
+const total=()=>order.reduce((a,l)=>a+l.u*l.q,0);
+
+function drawGrid(){
+  const items=MENU[cat],b=`var(--band-${cat})`;
+  $('#catName').textContent=cat[0].toUpperCase()+cat.slice(1);
+  $('#catHint').textContent=items.length+' items · tap to add, hold for options';
+  $('#grid').innerHTML=items.map(([n,d,p])=>`<div class="tile" style="--b:${b}"><button class="add" type="button" data-n="${n}"><b>${n}</b><span>${d}</span><em>${rs(p)}</em></button><span class="badge" data-badge="${n}"></span><button class="opt" type="button" data-o="${n}" aria-label="Options for ${n}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button></div>`).join('');
+  badges();
+}
+function badges(){
+  document.querySelectorAll('[data-badge]').forEach(el=>{
+    const q=order.filter(l=>l.n===el.dataset.badge).reduce((a,l)=>a+l.q,0);
+    el.textContent=q||'';
+  });
+}
+function drawTicket(hit){
+  const L=$('#lines');
+  L.innerHTML=order.length?order.map((l,i)=>`<li class="line${i===hit?' flash':''}${l.fresh?' new':''}"><span class="nm">${l.n}</span><span class="pr">${rs(l.u*l.q)}</span><span class="md">${l.m}<br><i>${rs(l.u)} each</i></span><div class="step"><button type="button" data-d="-1" data-i="${i}" aria-label="${l.q>1?'One less':'Remove'} ${l.n}">${l.q>1?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg>':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></svg>'}</button><output aria-label="Quantity">${l.q}</output><button type="button" data-d="1" data-i="${i}" aria-label="One more ${l.n}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></button></div></li>`).join(''):'<li class="empty"><b>Nothing on the ticket</b>Tap a tile to start an order.</li>';
+  order.forEach(l=>delete l.fresh);
+  if(hit!=null){const el=L.children[hit];requestAnimationFrame(()=>requestAnimationFrame(()=>el&&el.classList.remove('flash')));el&&el.scrollIntoView({block:'nearest'})}
+  const t=total(),net=Math.round(t/1.13);
+  $('#sub').textContent=rs(net);$('#vat').textContent=rs(t-net);$('#tot').textContent=rs(t);
+  const c=$('#charge');c.textContent=t?'Charge '+rs(t):'Charge';c.disabled=!t;
+  badges();
+}
+function addLine(n,m,u,q=1){
+  let i=order.findIndex(l=>l.n===n&&l.m===m);
+  if(i<0){order.push({n,m,u,q,fresh:1});i=order.length-1}else order[i].q+=q;
+  drawTicket(i);
+}
+
+/* tap vs long-press */
+let pressT,longed=false;
+const grid=$('#grid');
+grid.addEventListener('pointerdown',e=>{
+  const b=e.target.closest('.add');if(!b)return;longed=false;
+  pressT=setTimeout(()=>{longed=true;openSheet(b.dataset.n)},480);
+});
+['pointerup','pointerleave','pointercancel'].forEach(t=>grid.addEventListener(t,()=>clearTimeout(pressT),true));
+grid.addEventListener('contextmenu',e=>e.preventDefault());
+grid.addEventListener('click',e=>{
+  const o=e.target.closest('.opt');if(o)return openSheet(o.dataset.o);
+  const b=e.target.closest('.add');if(!b)return;
+  if(longed){longed=false;return}
+  const[c,it]=find(b.dataset.n);
+  addLine(it[0],{coffee:'Regular · Whole',tea:'Regular · Whole',bakery:'As is',cold:'Regular'}[c],it[2]);
+});
+$('.rail').addEventListener('click',e=>{
+  const b=e.target.closest('.cat');if(!b)return;
+  document.querySelectorAll('.cat').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  cat=b.dataset.cat;drawGrid();
+});
+$('#lines').addEventListener('click',e=>{
+  const b=e.target.closest('[data-d]');if(!b)return;
+  const i=+b.dataset.i;order[i].q+=+b.dataset.d;
+  if(order[i].q<1){order.splice(i,1);drawTicket()}else drawTicket(i);
+});
+$('#clear').onclick=()=>{order=[];drawTicket()};
+
+/* sheet */
+let sItem,sCat,lastFocus;
+function openSheet(n){
+  [sCat,sItem]=find(n);lastFocus=document.activeElement;
+  $('#sTitle').textContent=n;$('#sBase').textContent=rs(sItem[2]);
+  $('#sForm').innerHTML=GROUPS[sCat].map(g=>{const[t,o,d]=OPTS[g];return`<fieldset class="grp"><legend>${t}</legend><div class="seg">${o.map(([l,p],i)=>`<label><input type="radio" name="${g}" value="${i}"${i===d?' checked':''}>${l}${p?`<small>${p>0?'+':'−'}${rs(Math.abs(p))}</small>`:''}</label>`).join('')}</div></fieldset>`}).join('')+`<fieldset class="grp"><legend>Quantity</legend><div class="seg"><label><input type="radio" name="q" value="1" checked>1</label><label><input type="radio" name="q" value="2">2</label><label><input type="radio" name="q" value="3">3</label><label><input type="radio" name="q" value="4">4</label></div></fieldset>`;
+  const s=$('#sheet');s.hidden=false;s.offsetWidth;document.body.classList.add('open');
+  sPrice();setTimeout(()=>s.querySelector('input:checked').focus(),60);
+}
+function sPick(){
+  const f=new FormData($('#sForm'));let u=sItem[2],m=[];
+  for(const g of GROUPS[sCat]){const o=OPTS[g][1][+f.get(g)];u+=o[1];if(!(g==='shot'&&!o[1]))m.push(o[0])}
+  return{u,m:m.join(' · '),q:+f.get('q')};
+}
+function sPrice(){const p=sPick();$('#sAdd').textContent='Add '+rs(p.u*p.q)}
+function closeSheet(){document.body.classList.remove('open');setTimeout(()=>{if(!document.body.classList.contains('open'))$('#sheet').hidden=true},360);lastFocus&&lastFocus.focus()}
+$('#sForm').addEventListener('change',sPrice);
+$('#sAdd').onclick=()=>{const p=sPick();addLine(sItem[0],p.m,p.u,p.q);closeSheet()};
+$('#sCancel').onclick=closeSheet;$('#scrim').onclick=closeSheet;
+document.addEventListener('keydown',e=>{
+  if(!document.body.classList.contains('open'))return;
+  if(e.key==='Escape')closeSheet();
+  if(e.key==='Tab'){const f=[...$('#sheet').querySelectorAll('input:checked,button')],a=f[0],z=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+});
+
+/* tender */
+const T=$('#ticket');
+const lock=on=>{$('.menu').inert=on;$('.rail').inert=on};
+function drawPane(){
+  const t=total(),P=$('#pane');
+  document.querySelectorAll('.mth').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===method));
+  if(method==='cash'){
+    const uniq=[t,...[500,1000,5000].map(n=>Math.floor(t/n)*n+n)].filter((v,i,a)=>a.indexOf(v)===i).slice(0,3);if(!uniq.includes(tendered))tendered=uniq[1]||t;
+    P.innerHTML=`<p class="lbl">Cash received</p><div class="quick" role="group" aria-label="Cash received">${uniq.map(v=>`<button type="button" data-v="${v}" aria-pressed="${v===tendered}">${v===t?'Exact':rs(v)}</button>`).join('')}</div><div class="change"><span>Change due</span><b>${rs(tendered-t)}</b></div>`;
+    $('#take').textContent='Take '+rs(t)+' cash';
+  }else if(method==='card'){
+    P.innerHTML=`<p class="lbl">Card reader</p><div class="hint"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 7h6M10 17h4"/></svg>Hand the reader to Table 6. Tap, insert or swipe. The reader shows ${rs(t)}.</div>`;
+    $('#take').textContent='Card approved';
+  }else{
+    let r='';let s=7;for(let y=0;y<21;y++)for(let x=0;x<21;x++){const f=(x<7&&y<7)||(x>13&&y<7)||(x<7&&y>13);const ring=f&&(((x%14===0||x%14===6||y%14===0||y%14===6))||((x%14>1&&x%14<5)&&(y%14>1&&y%14<5)));s=(s*73+11)%101;if(f?ring:s%3===0)r+=`<rect x="${x}" y="${y}" width="1" height="1"/>`}
+    P.innerHTML=`<p class="lbl">Scan to pay</p><div class="hint"><div class="qr"><svg viewBox="0 0 21 21" aria-label="Payment QR code for ${rs(t)}" role="img">${r}</svg></div><span>Merchant: Chautari Coffee, till 2. Wait for the chime, then confirm.</span></div>`;
+    $('#take').textContent='Payment received';
+  }
+}
+$('#charge').onclick=()=>{$('#dueAmt').textContent=rs(total());method='cash';tendered=0;drawPane();T.dataset.view='tender';lock(true);$('#back').focus()};
+$('#back').onclick=()=>{T.dataset.view='order';lock(false);$('#charge').focus()};
+$('.methods').addEventListener('click',e=>{const b=e.target.closest('.mth');if(b){method=b.dataset.m;drawPane()}});
+$('#pane').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b){tendered=+b.dataset.v;drawPane()}});
+$('#take').onclick=()=>{
+  const t=total();
+  $('#paidLine').textContent=rs(t)+' by '+(method==='qr'?'QR':method);
+  $('#changeLine').textContent=method==='cash'&&tendered>t?'Change '+rs(tendered-t)+' · receipt printed':'Receipt printed for Table 6';
+  T.dataset.view='done';lock(true);$('#newOrder').focus();
+};
+$('#newOrder').onclick=()=>{
+  order=[];seq++;$('#ordNo').textContent='Order 0'+seq;$('#noteIn').value='';
+  lock(false);T.dataset.view='order';drawTicket();
+  document.querySelector('.add').focus();
+};
+drawGrid();drawTicket();
+</script>
+</body>
+</html>

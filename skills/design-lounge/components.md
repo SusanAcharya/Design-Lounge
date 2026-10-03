@@ -156,6 +156,10 @@ Website sections. Each block below has a piece. Use it, restyled onto the theme,
 - Close: a signup ask is `cta-giant-email-band`. An agency or freelancer inquiry is `contact-project-brief-steps`.
 - Footer: a product with many pages uses `footer-sitemap-columns`. A portfolio uses `footer-giant-wordmark-reveal`.
 
+App screens on the web. An AI assistant or chat tool is `ai-chat-workspace`: answers stream, sources are numbered, Stop is visible while it streams. Team and seats are `settings-team-members`. Uploads are `file-upload-manager`: every row shows progress, and a failed row has Retry. A week of bookings or shifts is `calendar-week-planner`. A first run that creates something is `onboarding-workspace-setup`, with a live preview of what they are making. A missing page is `error-404-editorial` or `terminal-404`: it has search and four real links, never only "Go home".
+
+Tablet. A shop or cafe till is `tablet-pos-register`. Writing is `tablet-notes-three-pane`. A screen read from across a room, like a kitchen, is `tablet-cook-mode`. A front desk is `tablet-kiosk-checkin`, with 64px keys and an automatic reset. PWA offline: saved items are `pwa-offline-library`. Work done offline that must send later is `pwa-outbox-sync`.
+
 Cards. A shop grid is `card-product-quick-add`. A blog or news grid is `card-article-mix`: one lead, then smaller cards, never six equal boxes. A pass, membership or ticket is `card-holo-foil`.
 
 On Android, or when the family is Material, the tab bar is `m3-navigation-bar`. It is the same job as `phone-tab-plain`. Use one of the three, never two.

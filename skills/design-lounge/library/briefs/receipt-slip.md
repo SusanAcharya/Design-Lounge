@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 259 · "Receipt slip" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 265 · "Receipt slip" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Receipt slip
 

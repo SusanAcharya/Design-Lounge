@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 285 · "Stats count-up band" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 291 · "Stats count-up band" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Stats count-up band
 
