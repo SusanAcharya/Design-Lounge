@@ -1,0 +1,61 @@
+<!-- Design Lounge piece: textarea-field · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Textarea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--ink-3:#5c564e;--line-strong:#cfc6b8;
+  --danger:#9b2c2c;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+.field{width:420px;display:flex;flex-direction:column;gap:6px}
+label{font:500 12px/1 var(--sans);color:var(--ink-2)}
+textarea{min-height:96px;padding:12px;border-radius:2px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font:400 14px/1.45 var(--sans);resize:vertical}
+textarea:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+textarea[aria-invalid="true"]{border-color:var(--danger)}
+.row{display:flex;justify-content:space-between;gap:12px}
+.hint,.err,.count{margin:0;font-size:12px}
+.hint{color:var(--ink-3)}
+.err{color:var(--danger)}
+.count{color:var(--ink-2);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<p class="where">Dock</p>
+<div class="field">
+  <label for="note">Note</label>
+  <textarea id="note" maxlength="400">Leave the rice at Gate 4 before 18:00.</textarea>
+  <div class="row">
+    <p class="hint" id="hint">The driver reads this at the gate.</p>
+    <p class="err" id="err" hidden>Keep the note under 160 characters.</p>
+    <p class="count" id="count">0 of 160</p>
+  </div>
+</div>
+<script>
+const note = document.getElementById('note');
+const hint = document.getElementById('hint');
+const err = document.getElementById('err');
+const count = document.getElementById('count');
+const max = 160;
+function paint(){
+  const n = note.value.length;
+  const over = n > max;
+  count.textContent = n + ' of ' + max;
+  note.setAttribute('aria-invalid', over ? 'true' : 'false');
+  err.hidden = !over;
+  hint.hidden = over;
+}
+note.addEventListener('input', paint);
+paint();
+</script>
+</body>
+</html>

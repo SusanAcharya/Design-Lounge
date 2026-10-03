@@ -1,0 +1,73 @@
+<!-- Design Lounge piece: time-field · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--ink-3:#5c564e;
+  --line-strong:#cfc6b8;--danger:#9b2c2c;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+.field{width:420px;display:flex;flex-direction:column;gap:6px}
+fieldset{margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:6px}
+legend{font:500 12px/1 var(--sans);color:var(--ink-2);padding:0}
+.clock{display:flex;align-items:center;gap:8px}
+input{width:64px;height:40px;padding:0 8px;border-radius:2px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font:400 20px/40px var(--sans);font-variant-numeric:tabular-nums;text-align:center}
+input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+input[aria-invalid="true"]{border-color:var(--danger)}
+.colon{font-size:20px;color:var(--ink)}
+.hint,.err,.status{margin:0;font-size:12px}
+.hint{color:var(--ink-3)}
+.err{color:var(--danger)}
+.status{color:var(--ink)}
+</style>
+</head>
+<body>
+<p class="where">Gate 4</p>
+<fieldset class="field">
+  <legend>Closes</legend>
+  <div class="clock">
+    <input id="hour" inputmode="numeric" maxlength="2" value="18" aria-label="Hour">
+    <span class="colon" aria-hidden="true">:</span>
+    <input id="minute" inputmode="numeric" maxlength="2" value="00" aria-label="Minute">
+  </div>
+  <p class="hint" id="hint">The same closing time as the dock note.</p>
+  <p class="err" id="err" hidden>Use an hour from 0 to 23 and a minute from 0 to 59.</p>
+  <p class="status" id="status" role="status">Gate 4 closes at 18:00.</p>
+</fieldset>
+<script>
+const hour = document.getElementById('hour');
+const minute = document.getElementById('minute');
+const hint = document.getElementById('hint');
+const err = document.getElementById('err');
+const status = document.getElementById('status');
+function part(el, max){
+  if (!/^\d{1,2}$/.test(el.value)) return null;
+  const n = Number(el.value);
+  return n <= max ? n : null;
+}
+function paint(){
+  const h = part(hour, 23);
+  const m = part(minute, 59);
+  const ok = h !== null && m !== null;
+  hour.setAttribute('aria-invalid', ok ? 'false' : 'true');
+  minute.setAttribute('aria-invalid', ok ? 'false' : 'true');
+  err.hidden = ok;
+  hint.hidden = !ok;
+  status.hidden = !ok;
+  if (ok) status.textContent = 'Gate 4 closes at ' + String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + '.';
+}
+hour.addEventListener('input', paint);
+minute.addEventListener('input', paint);
+</script>
+</body>
+</html>

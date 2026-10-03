@@ -1,0 +1,50 @@
+<!-- Design Lounge piece: switch-row · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Switch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--ink-3:#5c564e;
+  --line-strong:#cfc6b8;--primary:#1f4d3a;--primary-ink:#fffdf8;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+.row{width:420px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.lab{font:500 14px/1 var(--sans);color:var(--ink)}
+button{width:44px;height:24px;padding:2px;border:0;border-radius:999px;background:var(--line-strong);cursor:pointer;flex:none}
+button[aria-checked="true"]{background:var(--primary)}
+.thumb{display:block;width:20px;height:20px;border-radius:50%;background:var(--surface);transform:translateX(0)}
+button[aria-checked="true"] .thumb{transform:translateX(20px);background:var(--primary-ink)}
+button:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.status{margin:8px 0 0;font-size:12px;color:var(--ink)}
+@media (prefers-reduced-motion: no-preference){
+  .thumb{transition:transform 160ms cubic-bezier(0.2, 0.7, 0.2, 1)}
+}
+</style>
+</head>
+<body>
+<p class="where">Gate 4</p>
+<div class="row">
+  <span class="lab" id="lab">Hold the gate</span>
+  <button id="hold" type="button" role="switch" aria-checked="false" aria-labelledby="lab"><span class="thumb"></span></button>
+</div>
+<p class="status" id="status" role="status">The gate is open.</p>
+<script>
+const hold = document.getElementById('hold');
+const status = document.getElementById('status');
+hold.addEventListener('click', () => {
+  const on = hold.getAttribute('aria-checked') !== 'true';
+  hold.setAttribute('aria-checked', on ? 'true' : 'false');
+  status.textContent = on ? 'The gate is held.' : 'The gate is open.';
+});
+</script>
+</body>
+</html>

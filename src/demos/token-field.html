@@ -1,0 +1,80 @@
+<!-- Design Lounge piece: token-field · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Token field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--surface-2:#f0ebe3;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-strong:#cfc6b8;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+.field{width:420px}
+.lab{margin:0 0 6px;font:500 12px/1 var(--sans);color:var(--ink-2)}
+.box{min-height:40px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:6px;border-radius:2px;border:1px solid var(--line-strong);background:var(--surface)}
+.box:focus-within{outline:2px solid var(--focus);outline-offset:2px}
+.chip{height:28px;display:inline-flex;align-items:center;gap:4px;padding:0 4px 0 8px;border-radius:2px;background:var(--surface-2);color:var(--ink)}
+.chip button{width:24px;height:24px;border:0;border-radius:2px;background:transparent;color:var(--ink-2);font:500 14px/1 var(--sans);cursor:pointer}
+.chip button:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+input{flex:1;min-width:120px;height:28px;border:0;background:transparent;color:var(--ink);font:400 14px/1.4 var(--sans)}
+input:focus{outline:none}
+.hint{margin:6px 0 0;font-size:12px;color:var(--ink-2)}
+</style>
+</head>
+<body>
+<p class="where">Loads</p>
+<div class="field">
+  <p class="lab" id="lab">On the truck</p>
+  <div class="box" id="box">
+    <input id="add" aria-labelledby="lab" placeholder="Add a load">
+  </div>
+  <p class="hint" id="hint">Enter adds a load. A repeated name is kept once.</p>
+</div>
+<script>
+const names = ['Rice', 'Oil'];
+const box = document.getElementById('box');
+const add = document.getElementById('add');
+function paint(){
+  box.querySelectorAll('.chip').forEach(n => n.remove());
+  names.forEach(name => {
+    const chip = document.createElement('span');
+    chip.className = 'chip';
+    chip.append(document.createTextNode(name));
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Remove ' + name);
+    btn.textContent = '×';
+    btn.addEventListener('click', () => {
+      const i = names.indexOf(name);
+      if (i >= 0) names.splice(i, 1);
+      paint();
+    });
+    chip.append(btn);
+    box.insertBefore(chip, add);
+  });
+}
+function commit(){
+  const name = add.value.trim();
+  if (!name || names.some(n => n.toLowerCase() === name.toLowerCase())) { add.value = ''; return; }
+  names.push(name);
+  add.value = '';
+  paint();
+}
+add.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); commit(); }
+  if (e.key === 'Backspace' && add.value === '' && names.length) {
+    names.pop();
+    paint();
+  }
+});
+paint();
+</script>
+</body>
+</html>

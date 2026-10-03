@@ -1,0 +1,86 @@
+<!-- Design Lounge piece: otp-code · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>One-time code</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line-strong:#cfc6b8;--primary:#1f4d3a;--primary-ink:#fffdf8;--danger:#9b2c2c;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+p.lead{margin:0 0 12px;font:500 12px/1 var(--sans);color:var(--ink-2)}
+.boxes{display:flex;gap:8px}
+input{width:40px;height:48px;text-align:center;border-radius:2px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font:500 20px/1 var(--sans);font-variant-numeric:tabular-nums}
+input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+input[aria-invalid="true"]{border-color:var(--danger)}
+button{margin-top:16px;height:40px;padding:0 14px;border:0;border-radius:2px;background:var(--primary);color:var(--primary-ink);font:500 13px/1 var(--sans);cursor:pointer}
+button:disabled{opacity:.4}
+button:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.err,.status{margin:12px 0 0;min-height:20px;font-size:14px}
+.err{color:var(--danger)}
+</style>
+</head>
+<body>
+<p class="where">Sign in</p>
+<p class="lead" id="lab">Code from the letter</p>
+<div class="boxes" id="boxes" role="group" aria-labelledby="lab">
+  <input inputmode="numeric" maxlength="1" aria-label="Digit 1" value="1" autocomplete="one-time-code">
+  <input inputmode="numeric" maxlength="1" aria-label="Digit 2" value="8">
+  <input inputmode="numeric" maxlength="1" aria-label="Digit 3" value="4">
+  <input inputmode="numeric" maxlength="1" aria-label="Digit 4">
+  <input inputmode="numeric" maxlength="1" aria-label="Digit 5">
+  <input inputmode="numeric" maxlength="1" aria-label="Digit 6">
+</div>
+<button type="button" id="check" disabled>Check the code</button>
+<p class="err" id="err" hidden>The code is 184219.</p>
+<p class="status" id="status" role="status">3 of 6.</p>
+<script>
+const boxes = [...document.querySelectorAll('#boxes input')];
+const check = document.getElementById('check');
+const err = document.getElementById('err');
+const status = document.getElementById('status');
+function code(){ return boxes.map(b => b.value).join(''); }
+function paint(){
+  const n = code().length;
+  check.disabled = n !== 6;
+  status.textContent = n === 6 ? '' : n + ' of 6.';
+}
+boxes.forEach((box, i) => {
+  box.addEventListener('input', () => {
+    box.value = box.value.replace(/\D/g, '').slice(-1);
+    err.hidden = true;
+    boxes.forEach(b => b.setAttribute('aria-invalid', 'false'));
+    if (box.value && i < 5) boxes[i + 1].focus();
+    paint();
+  });
+  box.addEventListener('keydown', e => {
+    if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
+  });
+  box.addEventListener('paste', e => {
+    const text = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+    if (!text) return;
+    e.preventDefault();
+    text.split('').forEach((ch, k) => { if (boxes[k]) boxes[k].value = ch; });
+    boxes[Math.min(text.length, 5)].focus();
+    paint();
+  });
+});
+check.addEventListener('click', () => {
+  const ok = code() === '184219';
+  err.hidden = ok;
+  boxes.forEach(b => b.setAttribute('aria-invalid', ok ? 'false' : 'true'));
+  status.textContent = ok ? 'Code accepted.' : '';
+  check.disabled = true;
+});
+paint();
+</script>
+</body>
+</html>

@@ -77,7 +77,7 @@ Label above, 12px, `--ink-2`. The input is the same height and radius as the but
 .field input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 ```
 
-The specimen is `text-field`: label, hint, error, and a disabled value that stays readable. A visible set of two to five choices is `radio-group`. A stepped value is `slider-field`. A bar of search and chips above a list is `filter-toolbar`. The chip uses this radius and this height. A path above a page is `breadcrumb`. Pages of a long list are `pagination`. A count of units is `qty-stepper`. Nested pages are `tree-nav`. One day is `calendar-month`. A span of days is `date-range-picker`.
+The specimen is `text-field`: label, hint, error, and a disabled value that stays readable. A visible set of two to five choices is `radio-group`. A stepped value is `slider-field`. A bar of search and chips above a list is `filter-toolbar`. The chip uses this radius and this height. A path above a page is `breadcrumb`. Pages of a long list are `pagination`. A count of units is `qty-stepper`. Nested pages are `tree-nav`. One day is `calendar-month`. A span of days is `date-range-picker`. A long note is `textarea-field`. A password with a reveal is `password-field`. Several typed names are `token-field`. A code of digits is `otp-code`. A score from 1 to 5 is `rating-score`. A known count with an end is `progress-bar`. A panel with a button and no scrim is `popover-panel`. Facts on a record are `property-list`. A choice to keep one record is `consent-bar`. Several checks that can all be on are `checkbox-group`. A clock time is `time-field`. One setting that is on or off is `switch-row`.
 
 ## Select
 
@@ -113,6 +113,8 @@ A select is this field, not a second control. The closed control is a button of 
   letter-spacing: .04em;
 }
 ```
+
+A single record in a list is `content-card`. Its radius is `--radius-card`. Hover is `--surface-2`. The open card is `--primary-soft`. An open card under the pointer is `--surface-3`. It does not tilt.
 
 Status badges use `--success-soft`, `--warning-soft`, `--danger-soft`, `--info-soft` with the matching ink. They are for state, not decoration. The four washes on a queue are `status-badge`. A message in the page is `inline-alert`. One message. It is not a toast.
 

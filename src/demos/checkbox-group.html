@@ -1,0 +1,52 @@
+<!-- Design Lounge piece: checkbox-group · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Checkboxes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--ink-3:#5c564e;
+  --line-strong:#cfc6b8;--primary:#1f4d3a;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+fieldset{width:420px;margin:0;padding:0;border:0}
+legend{font:500 12px/1 var(--sans);color:var(--ink-2);padding:0;margin:0 0 8px}
+label{display:flex;align-items:center;gap:12px;min-height:40px;cursor:pointer}
+input{width:18px;height:18px;margin:0;accent-color:var(--primary)}
+input:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.hint,.status{margin:8px 0 0;font-size:12px;color:var(--ink-3)}
+.status{color:var(--ink)}
+</style>
+</head>
+<body>
+<p class="where">Loads</p>
+<fieldset>
+  <legend>On this truck</legend>
+  <label><input type="checkbox" name="load" value="Rice" checked> Rice</label>
+  <label><input type="checkbox" name="load" value="Oil" checked> Oil</label>
+  <label><input type="checkbox" name="load" value="Tea"> Tea</label>
+</fieldset>
+<p class="hint">A load can be on or off. The shift stays one choice.</p>
+<p class="status" id="status" role="status">Rice and Oil are on the truck.</p>
+<script>
+const boxes = [...document.querySelectorAll('input')];
+const status = document.getElementById('status');
+function paint(){
+  const on = boxes.filter(b => b.checked).map(b => b.value);
+  if (on.length === 0) status.textContent = 'Nothing is on the truck.';
+  else if (on.length === 1) status.textContent = on[0] + ' is on the truck.';
+  else if (on.length === 2) status.textContent = on[0] + ' and ' + on[1] + ' are on the truck.';
+  else status.textContent = 'Rice, Oil, and Tea are on the truck.';
+}
+boxes.forEach(b => b.addEventListener('change', paint));
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!-- Design Lounge piece: progress-bar · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--line-strong:#cfc6b8;--primary:#1f4d3a;--primary-ink:#fffdf8;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+.block{width:420px}
+.head{display:flex;justify-content:space-between;align-items:baseline}
+h1{margin:0;font:500 28px/1.2 var(--sans)}
+.count{margin:0;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.track{height:8px;margin-top:12px;background:var(--line-strong);border-radius:2px;overflow:hidden}
+.fill{height:100%;background:var(--primary);width:0}
+button{margin-top:16px;height:40px;padding:0 14px;border:0;border-radius:2px;background:var(--primary);color:var(--primary-ink);font:500 13px/1 var(--sans);cursor:pointer}
+button:disabled{opacity:.4;cursor:default}
+button:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.status{margin:12px 0 0;min-height:20px}
+</style>
+</head>
+<body>
+<p class="where">Dock</p>
+<div class="block">
+  <div class="head">
+    <h1>Packing the rice</h1>
+    <p class="count" id="count">5 of 8</p>
+  </div>
+  <div class="track">
+    <div class="fill" id="fill" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="5" aria-valuetext="5 of 8 bags"></div>
+  </div>
+  <button type="button" id="more">Pack one more</button>
+  <p class="status" id="status" role="status"></p>
+</div>
+<script>
+const fill = document.getElementById('fill');
+const count = document.getElementById('count');
+const more = document.getElementById('more');
+const status = document.getElementById('status');
+let n = 5;
+const max = 8;
+function paint(){
+  fill.style.width = (n / max * 100) + '%';
+  fill.setAttribute('aria-valuenow', String(n));
+  fill.setAttribute('aria-valuetext', n + ' of ' + max + ' bags');
+  count.textContent = n + ' of ' + max;
+  more.disabled = n >= max;
+  status.textContent = n >= max ? 'All 8 bags are packed.' : '';
+}
+more.addEventListener('click', () => { if (n < max) { n += 1; paint(); } });
+paint();
+</script>
+</body>
+</html>

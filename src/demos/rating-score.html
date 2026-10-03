@@ -1,0 +1,61 @@
+<!-- Design Lounge piece: rating-score · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Rating</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--line-strong:#cfc6b8;--primary:#1f4d3a;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+fieldset{margin:0;padding:0;border:0}
+legend{padding:0;margin:0 0 8px;font:500 12px/1 var(--sans);color:var(--ink-2)}
+.row{display:flex;gap:4px}
+label{position:relative;width:40px;height:40px;display:grid;place-items:center;border-radius:2px;color:var(--line-strong);cursor:pointer}
+input{position:absolute;inset:0;opacity:0;margin:0}
+input:focus-visible + svg{outline:2px solid var(--focus);outline-offset:3px}
+svg{display:block}
+.status{margin:12px 0 0;font-size:14px}
+</style>
+</head>
+<body>
+<p class="where">Handoff</p>
+<form>
+  <fieldset>
+    <legend>Score</legend>
+    <div class="row" id="row">
+      <label><input type="radio" name="score" value="1" aria-label="1 of 5"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2 14.4 8.4 20 9.1 15.9 12.9 17 18.5 12 15.8 7 18.5 8.1 12.9 4 9.1 9.6 8.4z"/></svg></label>
+      <label><input type="radio" name="score" value="2" aria-label="2 of 5"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2 14.4 8.4 20 9.1 15.9 12.9 17 18.5 12 15.8 7 18.5 8.1 12.9 4 9.1 9.6 8.4z"/></svg></label>
+      <label><input type="radio" name="score" value="3" aria-label="3 of 5"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2 14.4 8.4 20 9.1 15.9 12.9 17 18.5 12 15.8 7 18.5 8.1 12.9 4 9.1 9.6 8.4z"/></svg></label>
+      <label><input type="radio" name="score" value="4" aria-label="4 of 5" checked><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2 14.4 8.4 20 9.1 15.9 12.9 17 18.5 12 15.8 7 18.5 8.1 12.9 4 9.1 9.6 8.4z"/></svg></label>
+      <label><input type="radio" name="score" value="5" aria-label="5 of 5"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2 14.4 8.4 20 9.1 15.9 12.9 17 18.5 12 15.8 7 18.5 8.1 12.9 4 9.1 9.6 8.4z"/></svg></label>
+    </div>
+  </fieldset>
+</form>
+<p class="status" id="status" role="status">4 of 5.</p>
+<script>
+const status = document.getElementById('status');
+document.querySelectorAll('input').forEach(input => {
+  input.addEventListener('change', () => {
+    status.textContent = input.value + ' of 5.';
+    document.querySelectorAll('label').forEach(label => {
+      const box = label.querySelector('input');
+      label.style.color = Number(box.value) <= Number(input.value) ? 'var(--primary)' : 'var(--line-strong)';
+    });
+  });
+});
+document.querySelectorAll('label').forEach(label => {
+  const box = label.querySelector('input');
+  if (Number(box.value) <= 4) label.style.color = 'var(--primary)';
+});
+</script>
+</body>
+</html>

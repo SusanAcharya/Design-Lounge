@@ -1,0 +1,58 @@
+<!-- Design Lounge piece: consent-bar · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Consent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-strong:#cfc6b8;
+  --primary:#1f4d3a;--primary-ink:#fffdf8;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.45 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px 120px}
+.col{max-width:720px}
+.kicker{margin:0;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+h1{margin:8px 0 0;font:500 40px/1.1 var(--sans)}
+.lead{margin:12px 0 0;max-width:46ch}
+.bar{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 64px;background:var(--surface);border-top:1px solid var(--line)}
+.bar[hidden]{display:none}
+.bar p{margin:0;max-width:52ch}
+.actions{display:flex;gap:8px}
+button{height:40px;padding:0 14px;border-radius:2px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);font:500 13px/1 var(--sans);cursor:pointer}
+.primary{background:var(--primary);color:var(--primary-ink);border-color:transparent}
+button:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.status{margin:16px 0 0;min-height:22px}
+</style>
+</head>
+<body>
+<div class="col">
+  <p class="kicker">3 October</p>
+  <h1>The yard log</h1>
+  <p class="lead">Gate 4 took the rice. The note is the handoff, not a second product.</p>
+  <p class="status" id="status" role="status"></p>
+</div>
+<div class="bar" id="bar" role="region" aria-label="Visit record">
+  <p>We keep one record of this visit. Nothing is sold on from it.</p>
+  <div class="actions">
+    <button type="button" id="no">Decline</button>
+    <button type="button" class="primary" id="yes">Accept</button>
+  </div>
+</div>
+<script>
+const bar = document.getElementById('bar');
+const status = document.getElementById('status');
+function done(text){
+  bar.hidden = true;
+  status.textContent = text;
+}
+document.getElementById('yes').addEventListener('click', () => done('Record kept.'));
+document.getElementById('no').addEventListener('click', () => done('No record kept.'));
+</script>
+</body>
+</html>

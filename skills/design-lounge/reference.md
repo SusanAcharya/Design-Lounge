@@ -31,7 +31,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Shop, checkout | `product` | Also recipe `commerce`. Order is collection, product, cart, checkout, then `order-confirmed`. |
 | Tablet, iPad, landscape | `product` | Also recipe `tablet`. Do not stretch a phone screen to 1180px. |
 | Magazine, journal, docs | `website` | Also recipe `editorial` |
-| Design system only, no screen yet | `product` | Also recipe `design-system`. The controls are `text-field`, `radio-group`, `slider-field`, `select-field`, `combobox`, `calendar-month`, `button-roles`, `breadcrumb`, `tree-nav`, `pagination`, `filter-toolbar`, `qty-stepper`, `status-badge`, `inline-alert`, `tooltip`. |
+| Design system only, no screen yet | `product` | Also recipe `design-system`. The controls are `text-field`, `textarea-field`, `password-field`, `radio-group`, `checkbox-group`, `slider-field`, `select-field`, `combobox`, `token-field`, `otp-code`, `rating-score`, `calendar-month`, `time-field`, `switch-row`, `button-roles`, `breadcrumb`, `tree-nav`, `pagination`, `filter-toolbar`, `qty-stepper`, `progress-bar`, `property-list`, `content-card`, `status-badge`, `inline-alert`, `tooltip`, `popover-panel`, `consent-bar`. |
 
 ## Token roles
 
