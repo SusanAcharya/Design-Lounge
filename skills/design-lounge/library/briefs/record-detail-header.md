@@ -6,16 +6,16 @@
 
 ## What it is
 
-The detail page for a single yard run, Bay 14. A 48px breadcrumb sits on a white bar. Below it, the title, a warning badge "Waiting on driver", and two actions: Hold (outline) and Confirm load (solid). Two tabs, Overview and Notes. Overview is a definition list of weight, driver, slot, gate, and reference. Notes is one paragraph. A 300px panel on the right repeats the next step and the primary action. Confirming from the panel disables that button, changes its label to Confirmed, and turns the badge into a calm green status. This is the page you open from a table row. It is not a second dashboard.
+The detail page for a single yard run, Bay 14. A 48px breadcrumb sits on a white bar. Below it, the title, a warning badge "Waiting on driver", and two actions: Hold (outline) and Confirm load (the only solid primary). Two tabs, Overview and Notes. Overview is a definition list of weight, driver, slot, gate, and reference. Notes is one paragraph. A 300px panel on the right repeats the next step and an outline button with the same verb. Confirming from either button disables both, changes both labels to Confirmed, and turns the badge into a calm green status. One view, one solid button. This is the page you open from a table row. It is not a second dashboard.
 
 ## Reference behaviour
 
 1. Initial tab is Overview, `aria-selected="true"`. Notes copy is hidden.
 2. Click Notes: Overview hides, the note paragraph shows, Notes becomes selected. Click Overview to reverse.
 3. The selected tab has a 2px ink underline. The other tab is `--ink-3` with a transparent underline.
-4. Confirm load in the side panel sets the button text to Confirmed, disables it, and changes the badge text to Confirmed with fill `#e7f2ec` and ink `#1f4d3a`.
-5. The header Confirm load button is the same visual primary. In this demo only the panel button changes state. Do not add a second success toast.
-6. Hold does nothing in the demo. It is present so the outline button exists beside the primary.
+4. Confirm load, in the header or in the panel, sets both buttons to Confirmed, disables both, and changes the badge text to Confirmed with fill `#e7f2ec` and ink `#1f4d3a`.
+5. Only the header button is solid. The panel button is outline. They call the same action. Do not add a second success toast.
+6. Hold does nothing in the demo. It is the outline button beside the one solid primary.
 7. Focus ring is 2px `--focus`, offset 2px.
 8. Meta values use mono. Labels use the text face in `--ink-3`.
 
@@ -98,7 +98,7 @@ None. Tab changes are instant. Reduced motion changes nothing.
 - [ ] Overview shows five meta rows. Values are mono.
 - [ ] Notes hides the list and shows the inspection sentence.
 - [ ] Side panel is 300px.
-- [ ] Panel confirm changes the badge to Confirmed and disables itself.
+- [ ] Either confirm changes the badge to Confirmed and disables both confirm buttons. Only the header one is solid.
 - [ ] Radius on buttons is 2px.
 - [ ] No toast, no second typeface, no photo.
 
@@ -106,7 +106,7 @@ None. Tab changes are instant. Reduced motion changes nothing.
 
 Hide Overview with `display` and show Notes with a class. Do not unmount the nodes if you want the tab pattern to stay simple.
 
-The header primary and the panel primary share a class. Only the panel button is wired in the demo. In a product, both call the same action.
+The header button is the only solid primary. The panel repeats the verb as an outline button and calls the same action. A brief that draws two solid primaries is wrong. Keep one.
 
 Rebuild order:
 
@@ -141,7 +141,7 @@ Copy you keep, in this order:
 2. Title is exactly "Bay 14".
 3. Waiting badge reads "Waiting on driver".
 4. Outline button reads "Hold".
-5. Primary buttons read "Confirm load", then "Confirmed".
+5. Both confirm buttons read "Confirm load", then "Confirmed". Only the header one is solid.
 6. Tab labels are "Overview" and "Notes".
 7. Weight value is "2,400 kg".
 8. Driver value is "Mira Lama".

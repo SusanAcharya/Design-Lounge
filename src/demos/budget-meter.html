@@ -1,0 +1,60 @@
+<!-- Design Lounge piece: budget-meter · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>NEA is over</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600&family=Noto+Serif+Devanagari:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4ead6;--surface:#fbf6ea;--ink:#1c2744;--ink-2:#3e4a66;--ink-3:#6d768c;
+  --line:#d9cbb3;--primary:#c8102e;--focus:#c8102e;
+  --warning-soft:#e8d6bb;--warning-on-soft:#7d470e;
+  --display:"Noto Serif Devanagari",Georgia,serif;--sans:"Mukta",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:16px/1.45 var(--sans);color:var(--ink);
+  background-color:var(--bg);
+  background-image:radial-gradient(rgba(28,39,68,.05) .6px,transparent .6px);
+  background-size:3px 3px;
+  padding:48px 64px;
+}
+.kicker{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--ink-2)}
+h1{margin:0;font-family:var(--display);font-size:56px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.sub{margin:10px 0 28px;max-width:420px;color:var(--ink-2)}
+ul{list-style:none;margin:0;padding:0;max-width:640px;display:flex;flex-direction:column;gap:8px}
+li{padding:12px 14px;border-radius:6px;background:var(--surface)}
+li.over{background:var(--warning-soft)}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.name{font-weight:600}
+.meta{font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+li.over .meta{color:var(--warning-on-soft);font-weight:600}
+.track{margin-top:8px;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{display:block;height:100%;background:var(--primary);border-radius:99px}
+li.over .fill{background:var(--warning-on-soft)}
+</style>
+</head>
+<body>
+<p class="kicker">Budgets</p>
+<h1>रु 700 over</h1>
+<p class="sub">NEA is past 3,500. Groceries and tea are still inside their line.</p>
+<ul>
+  <li>
+    <div class="top"><span class="name">Groceries</span><span class="meta">रु 18,400 of 20,000</span></div>
+    <div class="track"><i class="fill" style="width:92%"></i></div>
+  </li>
+  <li class="over">
+    <div class="top"><span class="name">NEA</span><span class="meta">रु 4,200 of 3,500 · over</span></div>
+    <div class="track"><i class="fill" style="width:100%"></i></div>
+  </li>
+  <li>
+    <div class="top"><span class="name">Tea</span><span class="meta">रु 900 of 2,000</span></div>
+    <div class="track"><i class="fill" style="width:45%"></i></div>
+  </li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!-- Design Lounge piece: saved-banner · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Saved</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600&family=Noto+Serif+Devanagari:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4ead6;--ink:#1c2744;--ink-2:#3e4a66;
+  --primary:#c8102e;--primary-ink:#fffdf8;--focus:#c8102e;
+  --success-soft:#d6d8c2;--success-on-soft:#1b5e3d;
+  --display:"Noto Serif Devanagari",Georgia,serif;--sans:"Mukta",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:16px/1.45 var(--sans);color:var(--ink);
+  background-color:var(--bg);
+  background-image:radial-gradient(rgba(28,39,68,.05) .6px,transparent .6px);
+  background-size:3px 3px;
+  padding:48px 64px;
+}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.banner{
+  max-width:560px;padding:28px 28px 24px;border-radius:6px;
+  background:var(--success-soft);color:var(--success-on-soft);
+}
+.kicker{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em}
+h1{margin:0;font-family:var(--display);font-size:56px;font-weight:600;letter-spacing:-.02em;line-height:1;color:var(--ink)}
+.banner p{margin:12px 0 0;font-size:16px}
+.btn{margin-top:20px;height:40px;padding:0 14px;border:0;border-radius:6px;background:var(--primary);color:var(--primary-ink);font-weight:600}
+.btn:disabled{opacity:.55}
+</style>
+</head>
+<body>
+<div class="banner" role="status">
+  <p class="kicker">Asar</p>
+  <h1>Saved.</h1>
+  <p>The NEA bill is in Asar. It stays on this screen until you leave.</p>
+  <button class="btn" id="go" type="button">Back to Asar</button>
+</div>
+<script>
+document.getElementById('go').addEventListener('click', e => {
+  e.currentTarget.textContent = 'Month opened';
+  e.currentTarget.disabled = true;
+});
+</script>
+</body>
+</html>

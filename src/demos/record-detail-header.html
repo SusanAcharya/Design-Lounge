@@ -51,7 +51,7 @@ dd{margin:0;font-family:var(--mono);font-size:13px}
   </div>
   <div class="actions">
     <button class="btn">Hold</button>
-    <button class="btn primary">Confirm load</button>
+    <button class="btn primary" id="confirm">Confirm load</button>
   </div>
 </div>
 <div class="tabs" role="tablist">
@@ -72,7 +72,7 @@ dd{margin:0;font-family:var(--mono);font-size:13px}
   <aside class="panel">
     <h2>Next</h2>
     <p>Confirm the load before the slot drops. Holding it pages the yard desk.</p>
-    <button class="btn primary" id="confirm">Confirm load</button>
+    <button class="btn" id="side">Confirm load</button>
   </aside>
 </div>
 <script>
@@ -83,13 +83,19 @@ tabs.forEach(tab => tab.addEventListener('click', () => {
   panels.t1.style.display = tab.id === 't1' ? '' : 'none';
   panels.t2.classList.toggle('show', tab.id === 't2');
 }));
-document.getElementById('confirm').addEventListener('click', e => {
-  e.currentTarget.textContent = 'Confirmed';
-  e.currentTarget.disabled = true;
-  document.querySelector('.badge').textContent = 'Confirmed';
-  document.querySelector('.badge').style.background = '#e7f2ec';
-  document.querySelector('.badge').style.color = '#1f4d3a';
-});
+function done() {
+  for (const id of ['confirm', 'side']) {
+    const b = document.getElementById(id);
+    b.textContent = 'Confirmed';
+    b.disabled = true;
+  }
+  const badge = document.querySelector('.badge');
+  badge.textContent = 'Confirmed';
+  badge.style.background = '#e7f2ec';
+  badge.style.color = '#1f4d3a';
+}
+document.getElementById('confirm').addEventListener('click', done);
+document.getElementById('side').addEventListener('click', done);
 </script>
 </body>
 </html>

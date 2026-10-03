@@ -29,6 +29,11 @@ export interface ThemeTokens {
   info: string;
   infoInk: string;
   infoSoft: string;
+  /** Text that passes on the matching soft wash. Not the solid fill. */
+  successOnSoft: string;
+  warningOnSoft: string;
+  dangerOnSoft: string;
+  infoOnSoft: string;
   focus: string;
   /** Brand colour darkened or lightened until it reads as text on --bg. */
   link: string;
@@ -77,6 +82,7 @@ export const ROLE_GROUPS = [
   { id: 'feedback', label: 'Feedback', keys: ['success', 'warning', 'danger', 'info'] },
   { id: 'on-feedback', label: 'On feedback', keys: ['successInk', 'warningInk', 'dangerInk', 'infoInk'] },
   { id: 'feedback-wash', label: 'Feedback wash', keys: ['successSoft', 'warningSoft', 'dangerSoft', 'infoSoft'] },
+  { id: 'on-wash', label: 'Ink on wash', keys: ['successOnSoft', 'warningOnSoft', 'dangerOnSoft', 'infoOnSoft'] },
   { id: 'chrome', label: 'Chrome', keys: ['focus', 'overlay', 'inverse', 'inverseInk'] },
 ] as const;
 
@@ -144,6 +150,14 @@ function role(fill: string, bg: string, dark: boolean) {
   };
 }
 
+/** Feedback text on its own wash. The solid fill is often too light to read there. */
+function inkOnSoft(source: string, soft: string, dark: boolean) {
+  const toward = dark ? '#ffffff' : '#000000';
+  let c = source;
+  for (let i = 0; i < 24 && contrast(c, soft) < 4.5; i++) c = mix(c, toward, 0.12);
+  return c;
+}
+
 /** Brand colour as text on the page background. Fills can stay loud; links have to pass. */
 function linkOn(color: string, bg: string) {
   const toward = luma(bg) > 0.4 ? '#000000' : '#ffffff';
@@ -183,6 +197,10 @@ export function paint(c: Core): ThemeTokens {
     warning: wr.fill, warningInk: wr.ink, warningSoft: wr.soft,
     danger: dg.fill, dangerInk: dg.ink, dangerSoft: dg.soft,
     info: inf.fill, infoInk: inf.ink, infoSoft: inf.soft,
+    successOnSoft: inkOnSoft(ok.fill, ok.soft, dark),
+    warningOnSoft: inkOnSoft(wr.fill, wr.soft, dark),
+    dangerOnSoft: inkOnSoft(dg.fill, dg.soft, dark),
+    infoOnSoft: inkOnSoft(inf.fill, inf.soft, dark),
     focus: p.fill,
     link: linkOn(p.fill, c.bg),
     overlay: dark ? '#070605' : '#141210',
@@ -285,6 +303,15 @@ export const THEMES: Theme[] = [
   { id: 'hud-teal', name: 'HUD Teal', mood: 'Cockpit glass. Signal teal, scanline black.', bestFor: ['Ops', 'Security', 'Games'], tags: ['cyber', 'dark', 'tech'],
     tokens: paint({ bg: '#07090d', surface: '#0e1218', surface2: '#161c26', ink: '#d6e2f0', ink2: '#8aa0b8', ink3: '#5a7088', line: '#1e2834', primary: '#19e6c1', secondary: '#e6c419', tertiary: '#5aa8e6', success: '#19e6c1', warning: '#e6c419', danger: '#ff5a4a', info: '#5aa8e6' }),
     display: 'Chakra Petch', text: 'Share Tech Mono', radius: '0px', shadow: '0 0 0 1px #19e6c1', specimen: 'Signal acquired' },
+  { id: 'lokta', name: 'Lokta', mood: 'Lokta paper, flag crimson, navy ink. A Nepali surface, not a Western fintech skin.', bestFor: ['Nepal', 'Personal finance', 'Civic'], tags: ['paper', 'warm', 'editorial'],
+    tokens: paint({ bg: '#f4ead6', surface: '#fbf6ea', surface2: '#e8dcc4', ink: '#1c2744', ink2: '#3e4a66', ink3: '#6d768c', line: '#d9cbb3', primary: '#c8102e', secondary: '#1c2744', tertiary: '#8a6232', success: '#1f6b45', warning: '#a15c12', danger: '#9b1b2e', info: '#1c2744' }),
+    display: 'Noto Serif Devanagari', text: 'Mukta', radius: '6px', shadow: '0 10px 24px -16px rgba(28,39,68,.18)', specimen: 'रु 44,211 बाँकी' },
+  { id: 'lokta-night', name: 'Lokta Night', mood: 'The same crimson on navy after dark. The paper colour moves into the type.', bestFor: ['Nepal', 'Personal finance', 'Civic'], tags: ['dark', 'warm', 'editorial'],
+    tokens: paint({ bg: '#121820', surface: '#1a2230', surface2: '#243044', ink: '#f4ead6', ink2: '#c9bfae', ink3: '#8a8174', line: '#314056', primary: '#e85a68', secondary: '#f4ead6', tertiary: '#d4b06a', success: '#7dba9a', warning: '#e0a34b', danger: '#ff8a96', info: '#9bb4d4' }),
+    display: 'Noto Serif Devanagari', text: 'Mukta', radius: '6px', shadow: 'none', specimen: 'रु 44,211 बाँकी' },
+  { id: 'harbour-night', name: 'Harbour Night', mood: 'The same ledger after the lamps go down. Cream type, a brighter brass stamp.', bestFor: ['Finance', 'Insurance', 'Civic'], tags: ['luxe', 'finance', 'dark'],
+    tokens: paint({ bg: '#121820', surface: '#1a2330', surface2: '#243044', ink: '#f4efe4', ink2: '#c5c0b4', ink3: '#8a8478', line: '#314056', primary: '#d4b06a', secondary: '#8eb0d4', tertiary: '#c47a7a', success: '#7dba9a', warning: '#e0a34b', danger: '#e07070', info: '#8eb0d4' }),
+    display: 'Libre Caslon Text', text: 'IBM Plex Sans', radius: '2px', shadow: 'none', specimen: 'Accounts settled before the tide' },
 ];
 
 export function themeCss(t: Theme) {
@@ -319,15 +346,19 @@ export function themeCss(t: Theme) {
   --success: ${k.success};
   --success-ink: ${k.successInk};
   --success-soft: ${k.successSoft};
+  --success-on-soft: ${k.successOnSoft};
   --warning: ${k.warning};
   --warning-ink: ${k.warningInk};
   --warning-soft: ${k.warningSoft};
+  --warning-on-soft: ${k.warningOnSoft};
   --danger: ${k.danger};
   --danger-ink: ${k.dangerInk};
   --danger-soft: ${k.dangerSoft};
+  --danger-on-soft: ${k.dangerOnSoft};
   --info: ${k.info};
   --info-ink: ${k.infoInk};
   --info-soft: ${k.infoSoft};
+  --info-on-soft: ${k.infoOnSoft};
 
   /* Chrome */
   --focus: ${k.focus};
@@ -363,7 +394,10 @@ export const THEME_PAIRS: Record<string, { mode: 'light' | 'dark'; pair: string 
   'kiln': { mode: 'light', pair: 'copper-works' },
   'copper-works': { mode: 'dark', pair: 'kiln' },
   'alpine-clinic': { mode: 'light', pair: null },
-  'harbour-ledger': { mode: 'light', pair: null },
+  'harbour-ledger': { mode: 'light', pair: 'harbour-night' },
+  'harbour-night': { mode: 'dark', pair: 'harbour-ledger' },
+  'lokta': { mode: 'light', pair: 'lokta-night' },
+  'lokta-night': { mode: 'dark', pair: 'lokta' },
   'signal-green': { mode: 'dark', pair: null },
   'loam': { mode: 'light', pair: null },
   'ice-station': { mode: 'light', pair: null },
@@ -433,6 +467,8 @@ const FAMILY_SPEC: Record<string, string> = {
   'Fredoka': 'Fredoka:wght@400;500;600;700',
   'Rubik Mono One': 'Rubik+Mono+One',
   'Rubik': 'Rubik:wght@400;600;800',
+  'Noto Serif Devanagari': 'Noto+Serif+Devanagari:wght@400;600;700',
+  'Mukta': 'Mukta:wght@400;500;600;700',
 };
 
 export function themeFontHref(t: Theme) {

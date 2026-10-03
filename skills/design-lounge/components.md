@@ -118,13 +118,23 @@ A nav item is a row or a 40px pill. The current item uses `--primary-soft` and `
 
 ## Chart, empty, failed load
 
-A chart is one series. Bars and sparks use `--primary` for the active mark and `--line` or `--surface-2` for the rest. A line is one stroke in `--primary`, with dots in the same ink. No area fill, no second series, no legend. The number the person came for is display size above the chart. The line is the evidence under it. Numbers are `--font-mono`. Grid lines are `--line`, or omit them. Do not import a chart library's palette, legend, or tooltip.
+A chart is one series. Bars and sparks use `--primary` for the active mark and `--line` or `--surface-2` for the rest. A line is one stroke in `--primary`, with dots in the same ink. No area fill, no second series, no legend, no pie. The number the person came for is display size above the chart. The line is the evidence under it. Grid lines are `--line`, or omit them. Do not import a chart library's palette, legend, or tooltip.
+
+Where the money went is a ranked horizontal bar list, `chart-rank-spend`. One colour, longest first, the selected amount at display size. A budget list is `budget-meter`: only the row past its limit uses the warning wash. Do not paint every row amber.
+
+An amount is one string in one family. If it contains a glyph the mono face lacks, including रु, set the whole amount in the face that contains it. Nepal and India group by lakh: 1,24,000. At display size, mono tracking is `-0.03em` or 0, with tabular numerals. Read Locale in [practice.md](practice.md).
+
+Text on a feedback wash uses `--success-on-soft`, `--warning-on-soft`, `--danger-on-soft`, or `--info-on-soft`. Never the solid fill, and never a hex you invented.
+
+A save confirmation is `saved-banner`. It stays on the page. It is not a toast. A failed load stays the failed-load piece.
+
+A phone tab bar is `phone-tab-plain` unless the family is glass. Glass uses `ios-glass-tab-bar`. Do not put a glass bar on any other family.
 
 A single metric is one number at display size, a delta in `--success` or `--danger`, and a caption in `--ink-2`. If the screen has several figures, only one of them is display size. The others step down to the title role. Do not lay four equal numbers in a row.
 
 An empty list is a heading, one sentence, and one primary button. The heading is the largest type on that view. No illustration unless the named piece is the illustrated empty. On a phone, use the phone empty piece: the screen name is a label, the empty heading is the answer, and the button is at least 44px tall.
 
-A failed load is a banner in `--danger-soft` with `--danger` text and a retry button. It is not a toast, and it is not the empty state. Empty means zero rows. Failure means the load did not arrive.
+A failed load is a banner in `--danger-soft` with `--danger-on-soft` text and a retry button. It is not a toast, and it is not the empty state. Empty means zero rows. Failure means the load did not arrive.
 
 ## What you do not add
 

@@ -83,14 +83,14 @@ Use this when a design system is already in the project.
 
 ## Kit flow
 
-1. Pick a kind: `website`, `product`, or `platform`. Map their words with [reference.md](reference.md). A shop, magazine, portfolio, or phone app still starts here, then take the matching recipe from `starts` in the index.
+1. Pick a kind: `website`, `product`, `platform`, or `personal`. Map their words with [reference.md](reference.md). A shop, magazine, portfolio, or phone app still starts here, then take the matching recipe from `starts` in the index. One person's money is `personal`, not `platform`.
 2. Use `kit.kinds` for that kind: `palettes`, `pairings`, `families`, `pieces`.
 3. If they already chose, lock those ids. If they said just go, you pick, build it, or don't ask, lock the match from Match the world: the recipe that fits, or the theme whose `bestFor` names this product. Say which theme you rejected. Do not lock the first palette, the first pairing, or the first family because they are first.
 4. Otherwise show the pick (Show the pick, then ask once) and stop. Do not write UI in that turn.
 5. If they ask to see options, name three palettes and two pairings from that kind's lists, each with its page link. Names and moods only. They pick a whole palette, never a hex.
 6. The locked system is the theme's `css`, the pairing's `css`, and the family's `rules`, `radius`, `button`, and `density` in the index. Match those numbers. Do not fetch a kit URL.
 7. If the pairing has a `caution`, say it before you write. Mono on `code`, `.num`, and captions comes from `--font-mono`. Body text uses `--font-text`.
-8. A theme is one mode (`light` or `dark`). If the product needs both and `pair` is set, use that other theme as the second mode. Same pairing, same family. If `pair` is null, stay in the one mode and say so. Do not borrow an unpaired palette. Night Desk pairs with Paper & Ink. Harbour Ledger has no twin.
+8. A theme is one mode (`light` or `dark`). If the product needs both and `pair` is set, use that other theme as the second mode. Same pairing, same family. If `pair` is null, stay in the one mode and say so. Do not borrow an unpaired palette. Night Desk pairs with Paper & Ink. Harbour Ledger pairs with Harbour Night. Lokta pairs with Lokta Night. The theme CSS also includes a sample radius and shadow. Ignore them. The family sets radius and shadow.
 9. Implement in their stack. Open `library/briefs/<id>.md` for the pieces named on the kind and the family before you invent a hero, nav, table, or footer. Write each piece into Sources in `DESIGN.md` with its demo link.
 
 ## Piece flow
@@ -139,11 +139,15 @@ Map the brief's paint onto tokens. Do not mix a new hex for hover or selected.
 | Muted text | `--ink-3` |
 | Text button or link | `--link` |
 | Primary button | `--primary` fill, `--primary-ink` label |
+| Text on a success wash | `--success-on-soft` on `--success-soft` |
+| Text on a warning wash | `--warning-on-soft` on `--warning-soft` |
+| Text on a danger wash | `--danger-on-soft` on `--danger-soft` |
+| Text on an info wash | `--info-on-soft` on `--info-soft` |
 
 ## Rules
 
-- One primary button per view. Secondary and tertiary come from the kit family.
-- Feedback colours (success, warning, danger, info) are for live state, not decoration.
+- One primary button per view. If a brief draws that button twice, one of them becomes outline. Secondary and tertiary come from the kit family.
+- Feedback colours (success, warning, danger, info) are for live state, not decoration. Text on a wash uses the matching `on-soft` token. Do not invent a hex because the solid fill fails on the wash. A list where every row is warning has no warning.
 - Credit every copied token block and every rebuilt piece: `Designed by Susan Acharya · Design Lounge · acharyasusan.com.np`. Free to use in products. Do not republish the catalogue as a catalogue.
 - Do not add a second palette, a random Google font, or a default Tailwind theme on top. A second mode is the theme's `pair` only.
 

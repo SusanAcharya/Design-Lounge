@@ -1,0 +1,74 @@
+<!-- Design Lounge piece: phone-tab-plain · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spend</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600&family=Noto+Serif+Devanagari:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4ead6;--surface:#fbf6ea;--ink:#1c2744;--ink-2:#3e4a66;--ink-3:#6d768c;
+  --line:#d9cbb3;--primary:#c8102e;--focus:#c8102e;
+  --display:"Noto Serif Devanagari",Georgia,serif;--sans:"Mukta",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:15px/1.4 var(--sans);color:var(--ink);
+  background-color:var(--bg);
+  background-image:radial-gradient(rgba(28,39,68,.05) .6px,transparent .6px);
+  background-size:3px 3px;
+  padding:54px 20px 96px;
+}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.where{margin:8px 0 0;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--ink-2)}
+h1{margin:8px 0 0;font-family:var(--display);font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.bar{
+  position:fixed;left:0;right:0;bottom:0;display:flex;
+  background:var(--surface);border-top:1px solid var(--line);
+  padding:0 4px 34px;
+}
+.tab{
+  flex:1;min-height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  color:var(--ink-3);font-size:11px;font-weight:600;border-top:2px solid transparent;
+}
+.tab[aria-current="page"]{color:var(--ink);border-top-color:var(--primary)}
+.tab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<p class="where">Asar</p>
+<h1 id="place">Spend</h1>
+<nav class="bar" aria-label="Sections">
+  <button class="tab" type="button" data-name="Home">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20H4z"/><path d="M10 20v-6h4v6"/></svg>
+    Home
+  </button>
+  <button class="tab" type="button" data-name="Spend" aria-current="page">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12v12H6z"/><path d="M9 7V5h6v2"/><path d="M8 12h8M8 15h5"/></svg>
+    Spend
+  </button>
+  <button class="tab" type="button" data-name="Budgets">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16V8h4v8M10 16V5h4v11M16 16v-4h4v4"/></svg>
+    Budgets
+  </button>
+  <button class="tab" type="button" data-name="You">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3"/><path d="M6 19c1.2-3 3.2-4.5 6-4.5S16.8 16 18 19"/></svg>
+    You
+  </button>
+</nav>
+<script>
+const place = document.getElementById('place');
+document.querySelector('.bar').addEventListener('click', e => {
+  const tab = e.target.closest('.tab');
+  if (!tab) return;
+  document.querySelectorAll('.tab').forEach(t => t.removeAttribute('aria-current'));
+  tab.setAttribute('aria-current', 'page');
+  place.textContent = tab.dataset.name;
+});
+</script>
+</body>
+</html>

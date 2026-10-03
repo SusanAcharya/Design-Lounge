@@ -24,10 +24,20 @@ User: "Same app. You pick. Just build it."
 
 User: "Yard desk. Staff open it every morning. Just build it."
 
-1. Kind `platform`. Use the dashboard recipe in `starts` when it matches: Harbour Ledger, Developer Docs, and the pieces named there.
+1. Kind `platform`. Use the dashboard recipe in `starts` when it matches: Harbour Ledger, Swiss Precision, and the pieces named there. Developer Docs is a docs face. It does not pair with a finance theme.
 2. Write the four lines before layout. Who: yard dispatch, they already know today's date. Decision: which bays need a person. First thing: the count of runs today. Next action: open the week.
 3. The count is `kpi-delta`, at display size. The evidence under it is `chart-line-range` or `chart-bar-week`, not a second headline. The list uses `list-empty-plain` when there are zero rows and `load-failed-retry` when the load does not arrive. On a phone, those two are `mobile-list-empty` and `mobile-load-failed`.
 4. Write `DESIGN.md` with Sources, then build the minimum platform set. Do not add a marketing hero.
+
+## A personal app, they said go
+
+User: "A Nepali app for my own spending. Just build it."
+
+1. Kind `personal`. Use the personal recipe: Lokta, Devanagari, and the pieces named there. Harbour Ledger is the staff ledger. It is the wrong lock here. Say you rejected it.
+2. Four lines. Who: the person who spent the money. Decision: what is left, and what is over. First thing: the amount left, in one face, grouped as 44,211 or 1,24,000. Next action: see where it went, which opens `chart-rank-spend`.
+3. Identity is the theme, one paper grain on the page background, and Noto Serif Devanagari on the amount. The nouns alone are not the Nepali part.
+4. A budget row uses warning only when it is over the line. A save stays on screen as `saved-banner`. The phone uses `phone-tab-plain`, not the glass bar.
+5. Write `DESIGN.md` with Sources, then build. Open the screens. If the browser cannot paint, measure the DOM as Look describes.
 
 ## A shop, they said go
 
@@ -70,7 +80,7 @@ User: "Same product, day and night."
 
 1. Lock one theme. Read its `pair`.
 2. Paper & Ink pairs with Night Desk. Use both CSS blocks. Same pairing, same family.
-3. Harbour Ledger's `pair` is null. Build the one mode and say it has no twin.
+3. Harbour Ledger pairs with Harbour Night. Lokta pairs with Lokta Night. Use both CSS blocks. If `pair` is null, build the one mode and say it has no twin.
 
 ## The screens exist, now look
 

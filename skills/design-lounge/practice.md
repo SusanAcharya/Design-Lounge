@@ -54,7 +54,7 @@ A hundred products look like one product when every pass locks the first palette
 Choose in this order.
 
 1. They named a theme, a pairing, or a family. Lock what they named. Choose the rest by the rules below.
-2. A recipe in `starts` matches the product. A yard desk is `dashboard`. A clay shop is `commerce`. A magazine is `editorial`. A phone app is `mobile-app`. A tablet is `tablet`. A portfolio is `portfolio`. Lock that recipe's theme, pairing, and pieces. Say which recipe.
+2. A recipe in `starts` matches the product. A yard desk is `dashboard`. A clay shop is `commerce`. A magazine is `editorial`. A phone app is `mobile-app`. A tablet is `tablet`. A portfolio is `portfolio`. One person's money, health, or home is `personal`, not `dashboard`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. Lock that recipe's theme, pairing, and pieces. Say which recipe.
 3. No recipe matches. Stay inside that kind's `palettes`, `pairings`, and `families`. Read `bestFor`, `mood`, and `tags` on each theme. Lock the theme whose `bestFor` names this world. A clinic is Alpine Clinic. A payroll run is Harbour Ledger, because the job is paying people. Fog City is the first palette on kind `product` and is the wrong lock for both.
 4. Lock a pairing from that kind's list whose `bestFor` is the same world. Payroll on kind `product` takes Friendly SaaS, which lists fintech. A paper takes Newsroom. A clay shop whose recipe is commerce takes Atelier.
 5. Lock the family for how the product is used. Editorial for a page people read. Industrial for a yard or a field tool. Sharp for a dense platform. Quiet for a product that has to last. Soft for a friendly consumer app. Glass only when the recipe is the glass phone language.
@@ -64,6 +64,42 @@ Write one sentence: why this theme, and which theme you rejected. "Harbour Ledge
 Two themes can both fit. Pick the closer mood. Name the other one as rejected. Do not offer a menu unless they asked to see options.
 
 A brand colour they already have replaces `--primary` only, after the theme is locked. The surfaces stay the theme's. The brand does not choose a second theme.
+
+The theme CSS includes a sample `--radius` and `--shadow`. Ignore them. Family sets radius and shadow. Theme sets colour only. Harbour Ledger's 2px sample loses to Quiet's 6px.
+
+## Adapting a brief
+
+A brief is a demo plus a structure. When the product is not that demo, split the lines.
+
+- Always: how many of each thing, which role is largest, the states, the hit targets, one primary, one series.
+- This demo: a quoted title, a number, a name, a checklist line that only passes on that copy. "First frame reads 186 t" is the demo. "One series, no legend" always applies.
+
+Replace the nouns and the numbers with this product's. Do not fail a checklist line that is only true for the yard. Do not keep the demo's hexes once a theme is locked. A sidebar brief written in dark amber still gives you the rail, and the locked theme gives you the colour.
+
+If a brief draws the same solid button twice, keep one. The other is outline or a text link with the same verb.
+
+## Locale
+
+Read this before you set a number or a date. The pairing `devanagari` is the Nepali face: Noto Serif Devanagari for headings and amounts, Mukta for the interface, IBM Plex Mono for Latin codes only.
+
+- An amount is one string in one family. If it contains रु, रू, ₹, or Devanagari digits, the whole string uses a face that contains every glyph. Do not leave the currency word in a fallback next to mono digits.
+- Nepal and India group digits by lakh and crore. The last three, then pairs: 1,24,000 and 18,42,000. Not 124,000. Not 1,842,000. Under 1,000, write 900.
+- Pick one currency and keep it. Nepal is रु or Rs. India is ₹. Do not mix them in one product.
+- If the product uses Bikram Sambat, label the first date on the screen with BS. Use one system, either 17 Aswin 2083 or २०८३ असोज १७. Do not invent a converter, and do not mix Devanagari digits with Western digits in the same number.
+- Devanagari body may be 17px where Latin is 16px. Do not shrink it to fit.
+- For Arabic, Hebrew, or Urdu, set `dir="rtl"` on the document. Mirror the shell with logical properties (`padding-inline`, sidebar on the right). Keep numbers LTR with `unicode-bidi: isolate`. Do not mirror an icon that depicts a real object. There is no RTL theme. The locked theme still applies.
+
+A big amount in mono at 56px or larger gets `letter-spacing: -0.03em` or 0, and `font-variant-numeric: tabular-nums`. The default mono spacing looks gappy at display size.
+
+## Identity
+
+Restraint is the default. A regional or brand identity is still allowed, in three places, and nowhere else.
+
+1. The locked theme. A Nepali product uses Lokta: lokta paper, crimson primary, navy ink. Lokta Night is the dark pair. Do not stay on Harbour Ledger and then ask why it looks like a Western fintech app.
+2. One texture, on one region. The page background, or a single band. A lokta grain is a low-contrast dot at under 8% opacity. Not on cards, not under type, not tiled across every row.
+3. The display face from the pairing. For Nepal that is Noto Serif Devanagari, including on the amount.
+
+Crimson is `--primary`, not a second accent beside the theme's brass. A festival does not get a second decorative colour. No gradient, no glow, no emoji, no pattern on every card. If they asked for Nepali and you only put it in the nouns, the look failed. Say so, and move the identity into those three places.
 
 For a revamp, name three visual problems. Fix those inside the adopted system. Do not reskin the whole product unless they asked.
 
@@ -171,7 +207,9 @@ Feedback colours are for live state only.
 
 ## Look
 
-You can see the finished screen. Open it. A browser at the frame size, or a screenshot of that frame. Web is 1280×800. Phone is 390×844. Tablet is 1180×820. Read the page. A screenshot alone can hide a gap. If you cannot open it, say so. The UI is not done.
+You can see the finished screen. Open it. A browser at the frame size, or a screenshot of that frame. Web is 1280×800. Phone is 390×844. Tablet is 1180×820. Read the page. A screenshot alone can hide a gap.
+
+If the browser cannot paint, cannot animate, or the screenshot repeats content, measure the DOM instead and write the same block with "measured". Check: no horizontal overflow (`scrollWidth` no greater than `clientWidth`), one primary button, that button at least 44px on a phone and 36px on the web, one element at display size, and the currency word and the digits sharing one computed `font-family`. If you cannot open it and cannot measure it, say so. The UI is not done.
 
 For each screen, write this in the reply before you call the pass done:
 
@@ -225,6 +263,10 @@ Left alone: the theme, the pairing, the family, and the other screens
 ```
 
 If the correction makes a look check fail, undo it. A second correction waits until they ask. One change is the pass. Five changes is a new design.
+
+## Stack
+
+Put the theme's CSS variables on `:root` once, or in one theme provider. Controls live in one place and read those variables. Screens import the controls. Do not restyle a button inside a screen. In Tailwind, the tokens are the theme extension. A hex in a class is a fail. In React, the same. The briefs stay stack-agnostic. You translate them once.
 
 ## Finish checklist
 

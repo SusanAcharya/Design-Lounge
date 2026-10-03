@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 170 · "Shop cart" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 174 · "Shop cart" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Shop cart
 

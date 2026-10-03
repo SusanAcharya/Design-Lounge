@@ -15,7 +15,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 
 `site` is the field on `library/index.json`. Use these links when you show a pick. Do not paste a brief into the chat.
 
-`kind` is `website`, `product`, or `platform`. Theme, pairing, and family ids must be in that kind's lists inside `kit.kinds`.
+`kind` is `website`, `product`, `platform`, or `personal`. Theme, pairing, and family ids must be in that kind's lists inside `kit.kinds`.
 
 ## Kind map
 
@@ -24,6 +24,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Marketing site, studio, company site, brochure | `website` | Kit flow |
 | SaaS, tool, service, pricing page | `product` | Kit flow |
 | Admin, ops, dashboard, internal tool | `platform` | Also recipe `dashboard`. Search dashboard, data, charts, navigation, settings, overlays, feedback, inputs, pickers. |
+| Personal finance, household, one person's money or health | `personal` | Also recipe `personal`. Lokta and Devanagari when the product is Nepali. Not the staff dashboard. |
 | Portfolio, personal site | `website` | Also recipe `portfolio` in `starts` |
 | One landing page | `website` | Also recipe `landing` |
 | Phone app, iOS, Android, PWA | `product` | Also recipe `mobile-app`. Prefer `platform` `mobile-app` pieces. |
@@ -36,7 +37,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 
 Copy the theme `css` block. Do not rename the variables.
 
-Brand: `primary`, `secondary`, `tertiary`, each with `Ink` and `Soft`. Surfaces: `bg`, `surface`, `surface2`, `surface3`. Ink: `ink`, `ink2`, `ink3`. Lines: `line`, `lineStrong`. Feedback: `success`, `warning`, `danger`, `info`, each with ink and soft. Chrome: `focus`, `link`, `overlay`, `inverse`, `inverseInk`.
+Brand: `primary`, `secondary`, `tertiary`, each with `Ink` and `Soft`. Surfaces: `bg`, `surface`, `surface2`, `surface3`. Ink: `ink`, `ink2`, `ink3`. Lines: `line`, `lineStrong`. Feedback: `success`, `warning`, `danger`, `info`, each with ink, soft, and on-soft. Text on a wash uses on-soft. Chrome: `focus`, `link`, `overlay`, `inverse`, `inverseInk`.
 
 `link` is for text on `bg`. Buttons use the fill plus its ink.
 
@@ -46,7 +47,7 @@ Hover is `--surface-2`. Selected is `--primary-soft`. Selected and hovered is `-
 
 `mode` is `light` or `dark`. `pair` is the other mode of the same palette, or null.
 
-Twins: Paper & Ink / Night Desk, Linen Shop / Atelier Noir, Kiln / Copper Works. Harbour Ledger, Fog City, and the rest have no twin. Stay in that one mode.
+Twins: Paper & Ink / Night Desk, Linen Shop / Atelier Noir, Kiln / Copper Works, Harbour Ledger / Harbour Night, Lokta / Lokta Night. Fog City and the rest have no twin. Stay in that one mode. The theme's sample radius and shadow lose to the family.
 
 ## Cautions
 

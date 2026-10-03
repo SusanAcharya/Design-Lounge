@@ -1,0 +1,75 @@
+<!-- Design Lounge piece: chart-rank-spend · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Where it went</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600&family=Noto+Serif+Devanagari:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4ead6;--surface:#fbf6ea;--ink:#1c2744;--ink-2:#3e4a66;--ink-3:#6d768c;
+  --line:#d9cbb3;--primary:#c8102e;--primary-soft:#f3d2c8;--focus:#c8102e;
+  --display:"Noto Serif Devanagari",Georgia,serif;--sans:"Mukta",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:16px/1.45 var(--sans);color:var(--ink);
+  background-color:var(--bg);
+  background-image:radial-gradient(rgba(28,39,68,.05) .6px,transparent .6px);
+  background-size:3px 3px;
+  padding:48px 64px;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.kicker{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--ink-2)}
+h1{margin:0;font-family:var(--display);font-size:56px;font-weight:600;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.sub{margin:10px 0 28px;color:var(--ink-2);font-size:16px}
+ol{list-style:none;margin:0;padding:0;max-width:720px;display:flex;flex-direction:column;gap:8px}
+.row{
+  display:grid;grid-template-columns:160px 1fr 120px;gap:16px;align-items:center;
+  min-height:44px;padding:8px 12px;border:0;border-radius:6px;background:var(--surface);text-align:left;width:100%;
+}
+.row[aria-pressed="true"]{background:var(--primary-soft)}
+.name{font-weight:600}
+.track{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar{display:block;height:100%;width:0;background:var(--primary);border-radius:99px;transform-origin:left}
+.amt{font-family:var(--display);font-variant-numeric:tabular-nums;text-align:right}
+@media (prefers-reduced-motion:no-preference){
+  .bar{transition:width 420ms cubic-bezier(.2,.7,.2,1)}
+}
+</style>
+</head>
+<body>
+<p class="kicker">Asar</p>
+<h1 id="answer">रु 1,24,000</h1>
+<p class="sub" id="sub">Rent, the largest share</p>
+<ol id="rows">
+  <li><button class="row" type="button" data-name="Rent" data-n="124000" aria-pressed="true"><span class="name">Rent</span><span class="track"><i class="bar" style="width:100%"></i></span><span class="amt">रु 1,24,000</span></button></li>
+  <li><button class="row" type="button" data-name="Bhatbhateni" data-n="18400" aria-pressed="false"><span class="name">Bhatbhateni</span><span class="track"><i class="bar" style="width:14.8%"></i></span><span class="amt">रु 18,400</span></button></li>
+  <li><button class="row" type="button" data-name="NEA" data-n="4200" aria-pressed="false"><span class="name">NEA</span><span class="track"><i class="bar" style="width:3.4%"></i></span><span class="amt">रु 4,200</span></button></li>
+  <li><button class="row" type="button" data-name="Bus" data-n="2100" aria-pressed="false"><span class="name">Bus</span><span class="track"><i class="bar" style="width:1.7%"></i></span><span class="amt">रु 2,100</span></button></li>
+  <li><button class="row" type="button" data-name="Tea" data-n="900" aria-pressed="false"><span class="name">Tea</span><span class="track"><i class="bar" style="width:0.7%"></i></span><span class="amt">रु 900</span></button></li>
+</ol>
+<script>
+function lakh(n){
+  const s = String(n);
+  if (s.length <= 3) return s;
+  const head = s.slice(0, -3);
+  const tail = s.slice(-3);
+  return head.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + tail;
+}
+const answer = document.getElementById('answer');
+const sub = document.getElementById('sub');
+document.getElementById('rows').addEventListener('click', e => {
+  const row = e.target.closest('.row');
+  if (!row) return;
+  document.querySelectorAll('.row').forEach(r => r.setAttribute('aria-pressed', r === row ? 'true' : 'false'));
+  answer.textContent = 'रु ' + lakh(row.dataset.n);
+  sub.textContent = row.dataset.n === '124000' ? 'Rent, the largest share' : row.dataset.name;
+});
+</script>
+</body>
+</html>

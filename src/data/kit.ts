@@ -1,6 +1,6 @@
 /** Interactive kit: pick a product kind, then a researched palette, pairing, and component family. */
 
-export type KitKind = 'website' | 'product' | 'platform';
+export type KitKind = 'website' | 'product' | 'platform' | 'personal';
 
 export interface Kind {
   id: KitKind;
@@ -83,7 +83,26 @@ export const KINDS: Kind[] = [
       cta: 'Open run',
       phoneTitle: 'Today’s runs',
     },
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'collapsing-sidebar-rail', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'kpi-delta', 'kanban-board', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'collapsing-sidebar-rail', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'kpi-delta', 'budget-meter', 'kanban-board', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner'],
+  },
+  {
+    id: 'personal',
+    title: 'A personal app',
+    kicker: 'Personal',
+    blurb: 'One person’s money, health, or home. Not a staff tool, and not a marketing site.',
+    when: 'The person using it is the customer. The number on the screen is theirs.',
+    palettes: ['lokta', 'harbour-ledger', 'alpine-clinic', 'kiln', 'loam', 'fog-city'],
+    pairings: ['devanagari', 'friendly-saas', 'bookish', 'garden-journal'],
+    families: ['quiet', 'soft', 'editorial'],
+    copy: {
+      brand: 'Asar',
+      nav: ['Spend', 'Budgets', 'You'],
+      headline: 'रु 44,211 बाँकी',
+      deck: 'Bhatbhateni took the largest share. NEA is the line that is over.',
+      cta: 'See where it went',
+      phoneTitle: 'Asar',
+    },
+    pieces: ['chart-rank-spend', 'budget-meter', 'saved-banner', 'phone-tab-plain', 'kpi-delta', 'mobile-list-empty', 'mobile-load-failed'],
   },
 ];
 

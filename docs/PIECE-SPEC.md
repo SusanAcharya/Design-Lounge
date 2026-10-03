@@ -132,6 +132,8 @@ What happens at other sizes. For web: ≥1280, 1024, 768, <640. For phone pieces
 ## Acceptance checklist
 - [ ] Eight to fifteen checkable items an agent can verify (measurements, behaviours, a11y).
 
+Split the list into **Always** (structure, count, states, hit targets) and **This demo** (the quoted names and numbers). An agent adapting the piece keeps Always and replaces This demo with the product's own nouns.
+
 ## Implementation notes
 The two or three trickiest parts, with short code fragments (CSS or JS, ≤ 25 lines each) an agent can lift directly. Point out common mistakes.
 ```
