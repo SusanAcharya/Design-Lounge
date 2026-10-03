@@ -8,7 +8,7 @@ const hrefs = fontHrefs(PAIRINGS.flatMap((p) => [p.display.spec, p.text.spec]));
 ---
 <Base title="Type pairings" description={`Display and text pairings from Design Lounge by ${AUTHOR.name}. Copy the CSS, keep the credit, ship the page.`}>
   {hrefs.map((href) => <link rel="stylesheet" href={href} />)}
-  <PageHead eyebrow="Library · Type" title="Pairings that <i>already work</i>" blurb="Thirty-six display-and-text marriages, each with a mood, a job, and a CSS snippet an agent can paste. Free to use. A credit link is appreciated." count={PAIRINGS.length} countLabel="pairings" />
+  <PageHead eyebrow="System" title="Type" count={PAIRINGS.length} countLabel="pairings" />
   <div class="wrap">
     <nav class="tags" aria-label="Filter by mood">
       {['editorial', 'product', 'tech', 'luxe', 'playful', 'classic', 'loud'].map((t) => <button class="chip" type="button" data-tag={t}>{t}</button>)}
@@ -25,15 +25,12 @@ const hrefs = fontHrefs(PAIRINGS.flatMap((p) => [p.display.spec, p.text.spec]));
           <div class="meta">
             <div>
               <h2 class="display h4"><a href={`/type/${p.id}`}>{p.name}</a></h2>
-              <p class="muted">{p.mood}</p>
             </div>
             <div class="faces mono faint">{p.display.family} + {p.text.family}</div>
-            <div class="jobs">{p.bestFor.map((b) => <span class="chip">{b}</span>)}</div>
           </div>
         </li>
       ))}
     </ol>
-    <p class="credit mono faint">Type pairings by {AUTHOR.name} · Design Lounge · {AUTHOR.siteLabel}</p>
   </div>
 </Base>
 

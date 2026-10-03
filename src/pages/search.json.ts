@@ -4,6 +4,7 @@ import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { STARTS, MAP } from '../data/starts';
 import { COLLECTIONS } from '../data/collections';
+import { SOURCES } from '../data/website-list';
 
 export const GET: APIRoute = async () => {
   const pieces = await getPieces();
@@ -50,6 +51,13 @@ export const GET: APIRoute = async () => {
       summary: m.blurb,
       type: 'map',
       href: m.href,
+    })),
+    ...SOURCES.map((s) => ({
+      id: 'source-' + s.id,
+      title: s.name,
+      summary: s.line,
+      type: 'source',
+      href: '/sources#' + s.id,
     })),
     ...COLLECTIONS.map((c) => ({
       id: 'shelf-' + c.slug,

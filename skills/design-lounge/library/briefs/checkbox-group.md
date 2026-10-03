@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 168 · "Checkbox group" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 172 · "Checkbox group" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Checkbox group
 

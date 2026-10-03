@@ -1,0 +1,53 @@
+<!-- Design Lounge piece: integrations-connect · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Field ledger — Connections</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea;--surface:#fffdf8;--ink:#1a1814;--ink-2:#5c564c;--ink-3:#6f675c;--line:#e3ddd2;--line-2:#cfc6b8;
+  --primary:#1f4d3a;--primary-ink:#fffdf8;--soft:#e7f2ec;
+  --display:"Fraunces",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.page{height:100%;padding:36px 64px 40px;display:flex;flex-direction:column}
+.kicker{margin:0 0 8px;font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:0 0 28px;font:560 44px/1 var(--display);letter-spacing:-.02em}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);padding:22px 20px;display:flex;flex-direction:column;gap:8px;min-height:168px}
+.card h2{margin:0;font:560 22px/1.2 var(--display)}
+.card p{margin:0;color:var(--ink-2);font-size:14px;max-width:28ch}
+.card button{margin-top:auto;align-self:flex-start;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--ink);background:transparent;font:500 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.card button[aria-pressed="true"]{background:var(--soft);border-color:var(--primary);color:var(--primary)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="kicker">Field ledger</p>
+  <h1>Connections</h1>
+  <div class="grid">
+    <article class="card"><h2>Gate mail</h2><p>The driver gets the note when the load is booked.</p><button type="button" aria-pressed="true">Connected</button></article>
+    <article class="card"><h2>Yard map</h2><p>Gate 4 and the salt room on one plan.</p><button type="button" aria-pressed="false">Connect</button></article>
+    <article class="card"><h2>Night book</h2><p>Held loads stay held after 18:00.</p><button type="button" aria-pressed="true">Connected</button></article>
+    <article class="card"><h2>Store tally</h2><p>Rice, oil, salt, and tea as four rows.</p><button type="button" aria-pressed="false">Connect</button></article>
+    <article class="card"><h2>Desk chat</h2><p>Mira at the gate, one thread.</p><button type="button" aria-pressed="false">Connect</button></article>
+    <article class="card"><h2>Month close</h2><p>रु totals in lakh grouping, one face.</p><button type="button" aria-pressed="true">Connected</button></article>
+  </div>
+</div>
+<script>
+document.querySelectorAll('.card button').forEach((b) => b.addEventListener('click', () => {
+  const on = b.getAttribute('aria-pressed') === 'true';
+  b.setAttribute('aria-pressed', on ? 'false' : 'true');
+  b.textContent = on ? 'Connect' : 'Connected';
+}));
+</script>
+</body>
+</html>

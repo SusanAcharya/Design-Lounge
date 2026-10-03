@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 189 · "Property list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 223 · "Property list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Property list
 

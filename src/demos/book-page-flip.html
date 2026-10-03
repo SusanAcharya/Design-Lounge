@@ -1,0 +1,69 @@
+<!-- Design Lounge piece: book-page-flip · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--paper:#fffdf8;--ink:#1a1814;--ink-2:#5c564c;--line:#e3ddd2;--primary:#1f4d3a;--serif:Fraunces,Georgia,serif;--sans:"Public Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center;perspective:1400px}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.book{width:640px;height:400px;position:relative;transform-style:preserve-3d}
+.page{position:absolute;inset:0;background:var(--paper);border:1px solid var(--line);border-radius:2px 8px 8px 2px;padding:36px 40px;transform-origin:left center;backface-visibility:hidden}
+.page h1{font:560 36px/1.1 var(--serif);margin:0 0 12px}
+.page p{margin:0;color:var(--ink-2);max-width:36ch}
+.page.turn{animation:turn 640ms cubic-bezier(0.16,1,0.3,1)}
+@keyframes turn{from{transform:rotateY(0)}to{transform:rotateY(-180deg)}}
+.nav{position:absolute;left:0;right:0;bottom:-56px;display:flex;justify-content:space-between;align-items:center}
+button{height:40px;padding:0 14px;border:1px solid var(--line);background:var(--paper);border-radius:2px;font:500 14px var(--sans);cursor:pointer}
+button:disabled{opacity:.4}
+.n{font-size:13px;color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){.page.turn{animation:none}}
+</style>
+</head>
+<body>
+<div class="book">
+  <article class="page" id="page">
+    <h1 id="t">Gate 4</h1>
+    <p id="b">Twelve loads are still held. Nothing leaves until a person signs.</p>
+  </article>
+  <div class="nav">
+    <button type="button" id="prev">Previous</button>
+    <span class="n" id="n">1 of 3</span>
+    <button type="button" id="next">Next page</button>
+  </div>
+</div>
+<script>
+const pages = [
+  ['Gate 4','Twelve loads are still held. Nothing leaves until a person signs.'],
+  ['Night book','The book closes at 22:00. Kathmandu keeps the late loads.'],
+  ['Month close','Rupee totals keep their face. The count is Rs 18,42,000.'],
+];
+let i = 0, busy = false;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const page = document.getElementById('page');
+function paint(){
+  document.getElementById('t').textContent = pages[i][0];
+  document.getElementById('b').textContent = pages[i][1];
+  document.getElementById('n').textContent = (i+1)+' of '+pages.length;
+  document.getElementById('prev').disabled = i === 0;
+  document.getElementById('next').disabled = i === pages.length-1;
+}
+function go(d){
+  const n = i+d;
+  if (n<0 || n>=pages.length || busy) return;
+  if (reduce){ i = n; paint(); return; }
+  busy = true;
+  page.classList.add('turn');
+  setTimeout(() => { i = n; paint(); page.classList.remove('turn'); busy = false; }, 320);
+}
+document.getElementById('next').onclick = () => go(1);
+document.getElementById('prev').onclick = () => go(-1);
+paint();
+</script>
+</body>
+</html>

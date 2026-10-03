@@ -1,0 +1,65 @@
+<!-- Design Lounge piece: prompt-composer · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Ask</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--surface-2:#f0ebe3;--ink:#161513;--ink-2:#5a554c;--ink-3:#5c564e;
+  --line:#e4dfd4;--line-2:#cfc6b8;--primary:#1f4d3a;--primary-ink:#fffdf8;--soft:#e7f2ec;--danger:#9b2c2c;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+form{width:640px;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:20px}
+label{display:block;font:500 13px var(--sans);margin-bottom:8px}
+textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--line-2);border-radius:2px;padding:12px;font:16px/1.45 var(--sans);color:var(--ink);background:var(--surface)}
+textarea:focus{border-color:var(--primary)}
+.row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.chips{display:flex;gap:6px}
+.chips button{height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface-2);font:500 13px var(--sans);color:var(--ink-2);cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--soft);border-color:var(--primary);color:var(--primary)}
+.send{margin-left:auto;height:40px;padding:0 16px;border:0;border-radius:2px;background:var(--primary);color:var(--primary-ink);font:500 14px var(--sans);cursor:pointer}
+.send:disabled{background:var(--surface-2);color:var(--ink-3);cursor:default}
+.out{margin:14px 0 0;min-height:22px;font-size:14px;color:var(--ink-2)}
+.out[data-state="sent"]{color:var(--primary)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<form id="ask">
+  <label for="q">Ask</label>
+  <textarea id="q" name="q" maxlength="240" placeholder="Which loads are still at Gate 4?"></textarea>
+  <div class="row">
+    <div class="chips" role="group" aria-label="Tone">
+      <button type="button" aria-pressed="true" data-tone="plain">Plain</button>
+      <button type="button" aria-pressed="false" data-tone="short">Short</button>
+      <button type="button" aria-pressed="false" data-tone="formal">Formal</button>
+    </div>
+    <button class="send" type="submit" disabled>Send</button>
+  </div>
+  <p class="out" id="out" aria-live="polite"></p>
+</form>
+<script>
+const q = document.getElementById('q');
+const send = document.querySelector('.send');
+const out = document.getElementById('out');
+const tones = document.querySelectorAll('[data-tone]');
+q.addEventListener('input', () => { send.disabled = q.value.trim().length === 0; out.textContent = ''; out.removeAttribute('data-state'); });
+tones.forEach((b) => b.addEventListener('click', () => {
+  tones.forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+}));
+document.getElementById('ask').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const tone = document.querySelector('[data-tone][aria-pressed="true"]').textContent;
+  out.dataset.state = 'sent';
+  out.textContent = 'Sent · ' + tone + ' · ' + q.value.trim().length + ' characters';
+});
+</script>
+</body>
+</html>

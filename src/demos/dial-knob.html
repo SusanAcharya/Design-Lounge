@@ -1,0 +1,66 @@
+<!-- Design Lounge piece: dial-knob · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Hold hours</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-2:#cfc6b8;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.4 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:4px}
+.card{width:360px;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:28px;text-align:center}
+h1{font:600 22px/1.2 var(--sans);margin:0 0 18px}
+.dial{width:180px;height:180px;margin:0 auto;border-radius:50%;border:1px solid var(--line-2);background:var(--bg);position:relative;touch-action:none;cursor:grab}
+.needle{position:absolute;left:50%;top:18px;width:2px;height:72px;background:var(--primary);transform-origin:50% 72px;border-radius:1px}
+.hub{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px;border-radius:50%;background:var(--ink)}
+.num{margin:16px 0 0;font:600 40px/1 var(--sans);font-variant-numeric:tabular-nums}
+.sub{margin:4px 0 0;color:var(--ink-2);font-size:14px}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Hold hours</h1>
+  <div class="dial" id="dial" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="12" aria-valuenow="6" aria-label="Hold hours">
+    <div class="needle" id="needle"></div>
+    <div class="hub"></div>
+  </div>
+  <p class="num" id="num">6</p>
+  <p class="sub">hours before a load is released</p>
+</div>
+<script>
+const dial = document.getElementById('dial');
+const needle = document.getElementById('needle');
+const num = document.getElementById('num');
+let val = 6, drag = false;
+function paint(v){
+  val = Math.max(0, Math.min(12, Math.round(v)));
+  const deg = -140 + (val / 12) * 280;
+  needle.style.transform = 'rotate('+deg+'deg)';
+  dial.setAttribute('aria-valuenow', String(val));
+  num.textContent = String(val);
+}
+function fromEvent(e){
+  const r = dial.getBoundingClientRect();
+  const x = e.clientX - (r.left + r.width / 2);
+  const y = e.clientY - (r.top + r.height / 2);
+  let deg = Math.atan2(x, -y) * 180 / Math.PI;
+  deg = Math.max(-140, Math.min(140, deg));
+  paint(((deg + 140) / 280) * 12);
+}
+dial.addEventListener('pointerdown', (e) => { drag = true; dial.setPointerCapture(e.pointerId); fromEvent(e); });
+dial.addEventListener('pointermove', (e) => { if (drag) fromEvent(e); });
+dial.addEventListener('pointerup', () => { drag = false; });
+dial.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); paint(val + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); paint(val - 1); }
+  if (e.key === 'Home') paint(0);
+  if (e.key === 'End') paint(12);
+});
+paint(6);
+</script>
+</body>
+</html>

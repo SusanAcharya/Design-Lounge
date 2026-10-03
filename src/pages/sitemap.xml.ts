@@ -8,7 +8,7 @@ export const GET: APIRoute = async ({ site }) => {
   const base = (site?.toString() || 'https://designlounge.vercel.app').replace(/\/$/, '');
   const pieces = await getPieces();
   const urls = [
-    '/', '/browse', '/collections', '/guide', '/about', '/rooms', '/platforms', '/styles',
+    '/', '/browse', '/collections', '/guide', '/about', '/sources', '/rooms', '/platforms', '/styles',
     '/type', '/themes', '/icons', '/motion', '/agents', '/c', '/system', '/start', '/kit',
     ...Object.keys(TYPE_META).map((k) => `/rooms/${k}`),
     ...Object.keys(PLATFORM_META).map((k) => `/platforms/${k}`),

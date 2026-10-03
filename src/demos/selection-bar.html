@@ -1,0 +1,74 @@
+<!-- Design Lounge piece: selection-bar · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Loads</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-2:#cfc6b8;--primary:#1f4d3a;--primary-ink:#fffdf8;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.sheet{width:640px}
+h1{font:600 28px/1.1 var(--sans);margin:0 0 8px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line);font-weight:400}
+th{font-size:12px;color:var(--ink-2);letter-spacing:.04em}
+td:first-child,th:first-child{width:40px}
+input{width:18px;height:18px;accent-color:var(--primary)}
+.bar{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;height:52px;padding:0 12px 0 16px;background:var(--ink);color:var(--primary-ink);border-radius:2px;min-width:420px}
+.bar[hidden]{display:none}
+.bar span{flex:1;font-size:14px}
+.bar button{height:36px;padding:0 12px;border-radius:2px;border:1px solid rgba(255,253,248,.35);background:transparent;color:inherit;font:500 13px var(--sans);cursor:pointer}
+.bar button.solid{background:var(--primary);border-color:transparent}
+.out{margin:14px 0 0;min-height:20px;color:var(--ink-2);font-size:14px}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>Loads on the yard</h1>
+  <table>
+    <thead><tr><th></th><th>Load</th><th>Gate</th><th>State</th></tr></thead>
+    <tbody id="rows">
+      <tr><td><input type="checkbox" checked aria-label="Select 18"></td><td>18</td><td>Gate 4</td><td>Held</td></tr>
+      <tr><td><input type="checkbox" checked aria-label="Select 19"></td><td>19</td><td>Gate 4</td><td>Held</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select 20"></td><td>20</td><td>Gate 2</td><td>Clear</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select 21"></td><td>21</td><td>Gate 1</td><td>Clear</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select 22"></td><td>22</td><td>Biratnagar</td><td>Due</td></tr>
+      <tr><td><input type="checkbox" aria-label="Select 23"></td><td>23</td><td>Gate 4</td><td>Held</td></tr>
+    </tbody>
+  </table>
+  <p class="out" id="out" aria-live="polite"></p>
+</div>
+<div class="bar" id="bar" hidden>
+  <span id="count">0 selected</span>
+  <button type="button" id="clear">Clear</button>
+  <button type="button" id="export">Export</button>
+  <button type="button" class="solid" id="archive">Archive</button>
+</div>
+<script>
+const boxes = [...document.querySelectorAll('tbody input')];
+const bar = document.getElementById('bar');
+const count = document.getElementById('count');
+const out = document.getElementById('out');
+function sync(){
+  const n = boxes.filter((b) => b.checked).length;
+  bar.hidden = n === 0;
+  count.textContent = n + ' selected';
+}
+boxes.forEach((b) => b.addEventListener('change', sync));
+document.getElementById('clear').addEventListener('click', () => { boxes.forEach((b) => b.checked = false); out.textContent = ''; sync(); });
+document.getElementById('export').addEventListener('click', () => { out.textContent = 'Exported ' + boxes.filter(b=>b.checked).length + ' loads on this page'; });
+document.getElementById('archive').addEventListener('click', () => {
+  const n = boxes.filter((b) => b.checked).length;
+  boxes.forEach((b) => { if (b.checked) b.closest('tr').hidden = true; b.checked = false; });
+  out.textContent = 'Archived ' + n + ' loads';
+  sync();
+});
+sync();
+</script>
+</body>
+</html>

@@ -24,9 +24,7 @@ const payload = {
   {hrefs.map((href) => <link rel="stylesheet" href={href} />)}
   <div class="kit" data-kit>
     <header class="kh wrap">
-      <p class="eyebrow">Compose</p>
-      <h1 class="display h2">Pick, see it, <i>go.</i></h1>
-      <p class="lede">You do not pick hex codes. You pick a researched palette, a pairing, and a component family. Both screens update. At the end you get a brief for your agent.</p>
+      <h1 class="display h2">Kit</h1>
       <ol class="steps" role="list">
         <li><button type="button" data-step="0" aria-current="step">01 Kind</button></li>
         <li><button type="button" data-step="1">02 Palette</button></li>
@@ -44,9 +42,7 @@ const payload = {
             {KINDS.map((k) => (
               <li>
                 <button type="button" class="kind" data-kind={k.id}>
-                  <span class="eyebrow">{k.kicker}</span>
                   <span class="display h3">{k.title}</span>
-                  <span class="muted">{k.blurb}</span>
                 </button>
               </li>
             ))}
@@ -54,29 +50,25 @@ const payload = {
         </section>
 
         <section data-panel="1" hidden>
-          <p class="eyebrow">A complete palette</p>
-          <p class="hint muted">Primary, secondary, tertiary — plus success, warning, danger, info, and the surface stack. A role set, not four chips. Click one; both screens take it.</p>
+          <p class="eyebrow">Palette</p>
           <ol class="choices" data-list="themes"></ol>
         </section>
 
         <section data-panel="2" hidden>
-          <p class="eyebrow">A pairing that already works</p>
-          <p class="hint muted">Display plus text. One marriage, not a font drawer.</p>
+          <p class="eyebrow">Type</p>
           <ol class="choices" data-list="pairings"></ol>
         </section>
 
         <section data-panel="3" hidden>
-          <p class="eyebrow">How things are built</p>
-          <p class="hint muted">Corners, buttons, density. A family, not a component dump.</p>
+          <p class="eyebrow">Components</p>
           <ol class="choices" data-list="families"></ol>
         </section>
 
         <section data-panel="4" hidden>
-          <p class="eyebrow">Hand this to your agent</p>
+          <p class="eyebrow">Brief</p>
           <div class="brief-actions">
             <button class="btn primary" type="button" data-copy="#kit-brief"><span data-label>Copy brief</span></button>
             <a class="btn ghost" data-brief-href href="/kit/brief.md">Download .md</a>
-            <a class="btn ghost" href="/agents">How agents use this</a>
           </div>
           <pre class="brief" data-brief></pre>
         </section>

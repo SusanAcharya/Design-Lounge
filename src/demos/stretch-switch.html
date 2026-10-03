@@ -1,0 +1,40 @@
+<!-- Design Lounge piece: stretch-switch · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Hold</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--line:#cfc6b8;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+label{display:flex;align-items:center;gap:14px;cursor:pointer}
+.track{width:64px;height:36px;border-radius:999px;background:#e4dfd4;position:relative;transition:background 200ms}
+input{position:absolute;opacity:0;width:1px;height:1px}
+.thumb{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:999px;background:#fff;transition:transform 220ms cubic-bezier(0.16,1,0.3,1),width 120ms}
+input:checked + .track{background:var(--primary)}
+input:checked + .track .thumb{transform:translateX(28px)}
+input:active + .track .thumb{width:36px}
+input:checked:active + .track .thumb{transform:translateX(20px)}
+input:focus-visible + .track{outline:2px solid var(--primary);outline-offset:3px}
+.t{font-weight:500}
+@media (prefers-reduced-motion:reduce){.thumb,.track{transition:none}}
+</style>
+</head>
+<body>
+<label>
+  <input type="checkbox" id="c" checked>
+  <span class="track" aria-hidden="true"><span class="thumb"></span></span>
+  <span class="t" id="t">Hold is on</span>
+</label>
+<script>
+const c = document.getElementById('c');
+const t = document.getElementById('t');
+c.addEventListener('change', () => { t.textContent = c.checked ? 'Hold is on' : 'Hold is off'; });
+</script>
+</body>
+</html>

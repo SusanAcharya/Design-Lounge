@@ -1,0 +1,61 @@
+<!-- Design Lounge piece: corner-player · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Clip</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--ink:#1a1814;--ink-2:#5c564c;--line:#e3ddd2;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px var(--sans)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.page{padding:48px;max-width:640px}
+h1{font:600 40px/1.1 var(--sans);margin:0 0 8px}
+p{margin:0;color:var(--ink-2)}
+.player{position:fixed;right:28px;bottom:28px;width:220px;height:124px;background:#1a1814;color:#f4f1ea;border-radius:8px;overflow:hidden;transition:width 360ms cubic-bezier(0.16,1,0.3,1),height 360ms cubic-bezier(0.16,1,0.3,1)}
+.player[data-open="true"]{width:640px;height:360px;right:50%;bottom:50%;transform:translate(50%,50%)}
+.bar{position:absolute;left:0;right:0;bottom:0;display:flex;gap:8px;align-items:center;padding:10px}
+button{height:36px;padding:0 12px;border:0;border-radius:2px;background:#fffdf8;color:#1a1814;font:500 13px var(--sans);cursor:pointer}
+.track{flex:1;height:4px;background:#3a342c;border-radius:2px;overflow:hidden}
+.track i{display:block;height:100%;width:0;background:#d7b15e}
+.player[data-play="true"] .track i{animation:go 8s linear}
+@keyframes go{to{width:100%}}
+.title{position:absolute;left:14px;top:14px;font-size:14px}
+@media (prefers-reduced-motion:reduce){.player,.track i{transition:none;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Night shift</h1>
+  <p>The clip stays in the corner until you open it.</p>
+</div>
+<div class="player" id="player">
+  <div class="title">Gate 4 · 0:42</div>
+  <div class="bar">
+    <button type="button" id="play" aria-pressed="false">Play</button>
+    <div class="track" aria-hidden="true"><i></i></div>
+    <button type="button" id="open" aria-expanded="false">Open</button>
+  </div>
+</div>
+<script>
+const player = document.getElementById('player');
+const play = document.getElementById('play');
+const open = document.getElementById('open');
+play.addEventListener('click', () => {
+  const on = play.getAttribute('aria-pressed') !== 'true';
+  play.setAttribute('aria-pressed', String(on));
+  play.textContent = on ? 'Pause' : 'Play';
+  player.dataset.play = String(on);
+});
+open.addEventListener('click', () => {
+  const on = open.getAttribute('aria-expanded') !== 'true';
+  open.setAttribute('aria-expanded', String(on));
+  open.textContent = on ? 'Close' : 'Open';
+  player.dataset.open = String(on);
+});
+</script>
+</body>
+</html>

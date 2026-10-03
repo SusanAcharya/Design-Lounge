@@ -12,13 +12,12 @@ const groups = SHELF_GROUPS.map((g) => ({
 })).filter((g) => g.items.length);
 ---
 <Base title="Shelves" description="Curated shelves of pieces from the Design Lounge, grouped by the job: build a site, ship a product, taste and craft.">
-  <PageHead eyebrow="Shelves" title="Arranged by <i>problem</i>" blurb="Not by what a piece is — by the job it does. Build a site. Ship a product. Steal a language. Each shelf is a reading list you can hand to an agent one piece at a time." count={cols.length} countLabel="shelves" />
+  <PageHead eyebrow="Shelves" title="Shelves" count={cols.length} countLabel="shelves" />
   <div class="wrap">
     {groups.map((g) => (
       <section class="grp" id={g.id}>
         <header>
-          <p class="eyebrow">{g.label}</p>
-          <h2 class="display h3">{g.blurb}</h2>
+          <h2 class="eyebrow">{g.label}</h2>
         </header>
         <ol class="shelves">
           {g.items.map((c, i) => (
@@ -26,7 +25,6 @@ const groups = SHELF_GROUPS.map((g) => ({
               <a href={`/collections/${c!.slug}`}>
                 <span class="kicker mono faint">{c!.kicker} · {c!.items.length}</span>
                 <span class="display h3">{c!.title}</span>
-                <span class="muted">{c!.blurb}</span>
               </a>
             </li>
           ))}

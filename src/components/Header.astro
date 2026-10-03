@@ -1,5 +1,4 @@
 ---
-import { AUTHOR } from '../lib/pieces';
 const path = Astro.url.pathname;
 const nav = [
   { href: '/browse', label: 'Floor', match: /^\/(browse|p\/|rooms|platforms|styles)/ },
@@ -8,11 +7,12 @@ const nav = [
   { href: '/collections', label: 'Shelves', match: /^\/collections/ },
 ];
 const extra = [
-  { href: '/kit', label: 'Compose a kit' },
-  { href: '/start', label: 'Start recipes' },
-  { href: '/agents', label: 'For agents' },
-  { href: '/about', label: `About ${AUTHOR.name.split(' ')[0]}` },
-  { href: '/random', label: 'Surprise me' },
+  { href: '/kit', label: 'Kit' },
+  { href: '/start', label: 'Start' },
+  { href: '/agents', label: 'Agents' },
+  { href: '/sources', label: 'Sources' },
+  { href: '/about', label: 'About' },
+  { href: '/random', label: 'Surprise' },
 ];
 ---
 <header class="hdr">

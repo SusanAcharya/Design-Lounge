@@ -1,0 +1,62 @@
+<!-- Design Lounge piece: inline-edit · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Name</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-2:#cfc6b8;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.card{width:480px}
+.k{font:500 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 10px}
+button.name,input.name{font:600 32px/1.2 var(--sans);color:var(--ink);background:transparent;border:0;border-bottom:1px solid transparent;padding:0 0 4px;width:100%;text-align:left}
+button.name{cursor:text}
+input.name{border-bottom-color:var(--primary);outline:none}
+.hint{margin:10px 0 0;color:var(--ink-2);font-size:14px;min-height:20px}
+</style>
+</head>
+<body>
+<div class="card">
+  <p class="k">Load name</p>
+  <button class="name" id="view" type="button">Gate 4 hold</button>
+  <input class="name" id="edit" hidden maxlength="40" aria-label="Load name">
+  <p class="hint" id="hint">Click the name to edit. Enter saves. Escape cancels.</p>
+</div>
+<script>
+const view = document.getElementById('view');
+const edit = document.getElementById('edit');
+const hint = document.getElementById('hint');
+let saved = view.textContent, cancel = false;
+function open(){
+  edit.value = saved;
+  view.hidden = true;
+  edit.hidden = false;
+  edit.focus();
+  edit.select();
+  hint.textContent = 'Enter saves. Escape cancels.';
+}
+function close(save){
+  if (edit.hidden) return;
+  if (save && !cancel && edit.value.trim()) saved = edit.value.trim();
+  const did = save && !cancel && edit.value.trim();
+  cancel = false;
+  view.textContent = saved;
+  edit.hidden = true;
+  view.hidden = false;
+  view.focus();
+  hint.textContent = did ? 'Saved on this page.' : 'Click the name to edit. Enter saves. Escape cancels.';
+}
+view.addEventListener('click', open);
+edit.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); close(true); }
+  if (e.key === 'Escape') { e.preventDefault(); cancel = true; close(false); }
+});
+edit.addEventListener('blur', () => close(true));
+</script>
+</body>
+</html>

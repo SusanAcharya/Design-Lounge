@@ -9,6 +9,7 @@ import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
 import { RECIPES } from '../data/motion';
 import { STARTS, MAP } from '../data/starts';
+import { SOURCES } from '../data/website-list';
 
 const all = await getPieces();
 const nums = numberMap(all);
@@ -30,10 +31,10 @@ const groupedShelves = SHELF_GROUPS.map((g) => ({
   items: g.slugs.map((s) => COLLECTIONS.find((c) => c.slug === s)).filter(Boolean),
 }));
 const libs = [
-  { href: '/type', kicker: 'Type', title: 'Pairings', n: PAIRINGS.length, blurb: 'Display and text marriages that already work.' },
-  { href: '/themes', kicker: 'Themes', title: 'Palettes', n: THEMES.length, blurb: 'Full token sets, not five hex chips.' },
-  { href: '/icons', kicker: 'Icons', title: 'Lounge Icons', n: ICONS.length, blurb: 'One 24px stroke family. Copy the SVG.' },
-  { href: '/motion', kicker: 'Motion', title: 'Recipes', n: RECIPES.length, blurb: 'Curves, durations, reduced-motion fallbacks.' },
+  { href: '/type', title: 'Type', n: PAIRINGS.length },
+  { href: '/themes', title: 'Themes', n: THEMES.length },
+  { href: '/icons', title: 'Icons', n: ICONS.length },
+  { href: '/motion', title: 'Motion', n: RECIPES.length },
 ];
 ---
 <Base>
@@ -66,28 +67,39 @@ const libs = [
     </div>
   </section>
 
+  <section class="section wrap seen">
+    <div class="section-head">
+      <div>
+        <h2 class="display h2">Sections</h2>
+      </div>
+      <a class="more" href="/c">All</a>
+    </div>
+    <div class="grid">
+      {['hero', 'features', 'pricing', 'portfolio', 'dashboard', 'cursor'].map((c, i) => {
+        const piece = newest.find((p) => p.data.category === c);
+        return piece ? <PieceCard piece={piece} n={nums.get(piece.id) || '000'} index={i} /> : null;
+      })}
+    </div>
+  </section>
+
   <nav class="map wrap" aria-label="Library map">
     {MAP.map((m) => (
       <a href={m.href}>
-        <span class="eyebrow">{m.kicker}</span>
-        <span class="display h4">{m.title}</span>
-        <span class="muted">{m.blurb}</span>
+        <span class="display h4">{m.kicker}</span>
       </a>
     ))}
   </nav>
 
   <section class="section wrap needs">
     <div class="section-head">
-      <div><span class="eyebrow">Start</span><h2 class="display h2">What are you <i>making</i>?</h2></div>
-      <a class="more" href="/start">All recipes →</a>
+      <div><h2 class="display h2">Start</h2></div>
+      <a class="more" href="/start">All</a>
     </div>
     <ol class="need-grid">
       {STARTS.map((s, i) => (
         <li class="reveal" style={`--d:${i * 40}ms`}>
           <a href={`/start#${s.id}`}>
-            <span class="eyebrow">{s.kicker}</span>
             <span class="display h4">{s.title}</span>
-            <span class="muted">{s.blurb}</span>
           </a>
         </li>
       ))}
@@ -96,27 +108,37 @@ const libs = [
 
   <section class="section wrap libs">
     <div class="section-head">
-      <div><span class="eyebrow">System</span><h2 class="display h2">Lock the <i>grammar</i> first.</h2></div>
-      <a class="more" href="/system">Open the system →</a>
+      <div><h2 class="display h2">System</h2></div>
+      <a class="more" href="/system">All</a>
     </div>
     <ol class="lib-grid">
       {libs.map((l, i) => (
         <li class="reveal" style={`--d:${i * 50}ms`}>
           <a href={l.href}>
-            <span class="eyebrow">{l.kicker}</span>
             <span class="display h3">{l.title}</span>
             <span class="n mono num">{String(l.n).padStart(2, '0')}</span>
-            <span class="muted">{l.blurb}</span>
           </a>
         </li>
       ))}
     </ol>
   </section>
 
+  <section class="section wrap sources-home">
+    <div class="section-head">
+      <div><h2 class="display h2">Sources</h2></div>
+      <a class="more" href="/sources">All</a>
+    </div>
+    <ol class="source-row">
+      {SOURCES.map((s) => (
+        <li><a href={`/sources#${s.id}`}><span class="display h4">{s.name}</span></a></li>
+      ))}
+    </ol>
+  </section>
+
   <section class="section wrap idx">
     <div class="section-head">
-      <div><span class="eyebrow">Index</span><h2 class="display h2">Find it <i>by name.</i></h2></div>
-      <a class="more" href="/c">Full index →</a>
+      <div><h2 class="display h2">Index</h2></div>
+      <a class="more" href="/c">All</a>
     </div>
     <div class="idx-cols">
       {indexGroups.map((g) => (
@@ -134,14 +156,13 @@ const libs = [
 
   <section class="section wrap shelves-home">
     <div class="section-head">
-      <div><span class="eyebrow">Shelves</span><h2 class="display h2">Arranged by <i>problem.</i></h2></div>
-      <a class="more" href="/collections">All {COLLECTIONS.length} →</a>
+      <div><h2 class="display h2">Shelves</h2></div>
+      <a class="more" href="/collections">All</a>
     </div>
     <div class="shelf-groups">
       {groupedShelves.map((g) => (
         <div>
           <p class="eyebrow">{g.label}</p>
-          <p class="muted gblurb">{g.blurb}</p>
           <ol>
             {g.items.map((c) => (
               <li>
@@ -160,32 +181,21 @@ const libs = [
 
   <section class="section wrap fresh">
     <div class="section-head">
-      <div><span class="eyebrow">Fresh on the floor</span><h2 class="display h2">Latest <i>pieces</i></h2></div>
-      <a class="more" href="/browse">All {all.length} →</a>
+      <div><h2 class="display h2">Latest</h2></div>
+      <a class="more" href="/browse">All</a>
     </div>
     <div class="grid">
       {fresh.map((p, i) => <PieceCard piece={p} n={nums.get(p.id) || '000'} index={i} />)}
     </div>
   </section>
 
-  <section class="section wrap how">
-    <ol class="how-row">
-      <li class="reveal"><span class="mono faint">01</span><h3 class="display h4">Name the job</h3><p>Compose a kit — website, product, or platform. Or open the index. Don’t scroll 153 cards hoping one feels right.</p></li>
-      <li class="reveal" style="--d:60ms"><span class="mono faint">02</span><h3 class="display h4">Lock the system</h3><p>Pick a researched palette, a pairing, a component family. Both screens update. Then sit with the live pieces.</p></li>
-      <li class="reveal" style="--d:120ms"><span class="mono faint">03</span><h3 class="display h4">Copy the brief</h3><p>The kit writes the MD. Palette, type, components, pieces. Paste it into your agent.</p></li>
-    </ol>
-  </section>
-
-  <section class="section wrap seat">
-    <h2 class="display h1">Take a <i>seat.</i></h2>
-    <div class="acts">
-      <a class="btn primary" href="/random" data-random>Show me something</a>
-      <a class="btn ghost" href="/agents">For agents</a>
-    </div>
-  </section>
 </Base>
 
 <style>
+  .seen { padding-top: clamp(20px, 3vw, 36px); }
+  .section { padding-block: clamp(28px, 4vw, 48px); }
+  .section-head { margin-bottom: 16px; padding-bottom: 12px; }
+  .section-head .h2 { font-size: clamp(28px, 2.4vw, 40px); }
   .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; padding: clamp(40px, 6vw, 80px) 0 clamp(32px, 5vw, 48px); min-height: calc(100vh - var(--header-h) - 120px); }
   .hero-text { display: flex; flex-direction: column; gap: 24px; }
   .hero .h1 span, .hero .h1 i { display: inline-block; }
@@ -200,39 +210,31 @@ const libs = [
   .wall-item.tablet { left: 10%; top: 57%; width: 54%; aspect-ratio: 16 / 11.3; }
 
   .map { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
-  .map a { display: flex; flex-direction: column; gap: 8px; padding: 22px 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 140px; transition: background-color var(--t-med) var(--ease); }
+  .map a { display: flex; align-items: center; padding: 14px 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 0; transition: background-color var(--t-med) var(--ease); }
+  .map .h4, .need-grid .h4 { font-size: 18px; }
   .map a:hover { background: var(--paper-2); }
-  .map .muted { font-size: 13.5px; max-width: 28ch; text-wrap: pretty; }
-
   .need-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
-  .need-grid a { display: flex; flex-direction: column; gap: 8px; padding: 24px 20px; min-height: 168px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
+  .need-grid a { display: flex; align-items: center; padding: 12px 16px; min-height: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
   .need-grid a:hover { background: var(--paper-2); }
-  .need-grid .muted { font-size: 13.5px; max-width: 28ch; text-wrap: pretty; }
 
   .lib-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
-  .lib-grid a { display: flex; flex-direction: column; gap: 10px; padding: 28px 24px; min-height: 200px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
+  .lib-grid a { display: flex; flex-direction: row; align-items: baseline; justify-content: space-between; gap: 12px; padding: 16px 18px; min-height: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
   .lib-grid a:hover { background: var(--paper-2); }
-  .lib-grid .n { font-size: 28px; color: var(--ink-3); margin-top: auto; }
-  .lib-grid .muted { font-size: 14px; max-width: 28ch; text-wrap: pretty; }
+  .lib-grid .n { font-size: 28px; color: var(--ink-3); }
 
+  .source-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+  .source-row a { display: flex; align-items: center; padding: 14px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 0; transition: background-color var(--t-med) var(--ease); }
+  .source-row a:hover { background: var(--paper-2); }
+  .source-row .h4 { font-size: 18px; }
   .idx-cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px 20px; }
   .idx-cols .eyebrow { padding-bottom: 10px; border-bottom: 1px solid var(--ink); margin-bottom: 8px; }
   .idx-cols a { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
   .idx-cols a:hover { color: var(--accent); }
 
   .shelf-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-  .gblurb { font-size: 14px; max-width: 36ch; margin: 8px 0 16px; text-wrap: pretty; }
-  .shelf-groups .eyebrow { padding-bottom: 10px; border-bottom: 1px solid var(--ink); }
+  .shelf-groups .eyebrow { padding-bottom: 10px; border-bottom: 1px solid var(--ink); margin-bottom: 8px; }
   .shelf-groups li a { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); }
   .shelf-groups li a:hover .h4 { text-decoration: underline; text-underline-offset: 4px; }
-
-  .how { padding-block: 0; }
-  .how-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; border-top: 1px solid var(--ink); padding-top: 28px; }
-  .how-row li { display: flex; flex-direction: column; gap: 8px; }
-  .how-row p { color: var(--ink-2); font-size: 14.5px; max-width: 32ch; text-wrap: pretty; }
-
-  .seat { display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; padding-bottom: 0; }
-  .seat .acts { display: flex; gap: 10px; }
 
   @media (max-width: 1100px) {
     .idx-cols { grid-template-columns: repeat(3, 1fr); }
@@ -242,7 +244,6 @@ const libs = [
     .hero { grid-template-columns: 1fr; min-height: 0; }
     .map, .lib-grid { grid-template-columns: repeat(2, 1fr); }
     .shelf-groups { grid-template-columns: 1fr; gap: 32px; }
-    .how-row { grid-template-columns: 1fr; }
   }
   @media (max-width: 640px) {
     .map, .lib-grid, .need-grid, .idx-cols { grid-template-columns: 1fr; }

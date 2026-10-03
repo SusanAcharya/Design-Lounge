@@ -1,0 +1,61 @@
+<!-- Design Lounge piece: funnel-chart · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Billed</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.card{width:640px;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:32px}
+.kicker{margin:0;font:500 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.num{margin:8px 0 4px;font:600 64px/1 var(--sans);font-variant-numeric:tabular-nums}
+.sub{margin:0 0 28px;color:var(--ink-2);font-size:14px}
+.row{display:grid;grid-template-columns:120px 1fr 48px;align-items:center;gap:12px;min-height:44px}
+.row button{text-align:left;border:0;background:transparent;font:14px var(--sans);color:var(--ink);cursor:pointer;padding:0}
+.row[aria-current="true"] button{font-weight:600}
+.track{height:10px;background:#f0ebe3;border-radius:2px}
+.track i{display:block;height:100%;background:var(--primary);border-radius:2px;width:var(--w)}
+.n{font-variant-numeric:tabular-nums;font-size:14px;text-align:right}
+</style>
+</head>
+<body>
+<div class="card">
+  <p class="kicker">This week</p>
+  <p class="num" id="num">71</p>
+  <p class="sub" id="sub">Billed · of 240 that arrived</p>
+  <div id="rows"></div>
+</div>
+<script>
+const stages = [
+  ['Arrived', 240],
+  ['Checked', 210],
+  ['Held', 96],
+  ['Released', 88],
+  ['Billed', 71],
+];
+const root = document.getElementById('rows');
+const num = document.getElementById('num');
+const sub = document.getElementById('sub');
+stages.forEach(([name, n], i) => {
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.setAttribute('aria-current', String(i === stages.length - 1));
+  const w = Math.round((n / 240) * 100);
+  row.innerHTML = '<button type="button">'+name+'</button><div class="track"><i style="--w:'+w+'%"></i></div><span class="n">'+n+'</span>';
+  row.querySelector('button').addEventListener('click', () => {
+    document.querySelectorAll('.row').forEach((r) => r.setAttribute('aria-current', 'false'));
+    row.setAttribute('aria-current', 'true');
+    num.textContent = String(n);
+    sub.textContent = name + ' · of 240 that arrived';
+  });
+  root.appendChild(row);
+});
+</script>
+</body>
+</html>

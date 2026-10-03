@@ -1,0 +1,55 @@
+<!-- Design Lounge piece: shortcut-sheet · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Shortcuts</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-2:#cfc6b8;--primary:#1f4d3a;--soft:#e7f2ec;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.sheet{width:480px;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:24px 24px 12px}
+h1{font:600 22px/1.2 var(--sans);margin:0 0 16px}
+h2{font:500 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:16px 0 8px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:40px;border-top:1px solid var(--line);font-size:14px}
+.row[data-on="true"]{background:var(--soft);margin:0 -12px;padding:0 12px}
+kbd{font:500 12px var(--mono);border:1px solid var(--line-2);border-bottom-width:2px;border-radius:2px;padding:2px 6px;background:var(--bg)}
+.open{height:40px;padding:0 14px;border:0;border-radius:2px;background:var(--primary);color:#fffdf8;font:500 14px var(--sans);cursor:pointer}
+.sheet[hidden]{display:none}
+</style>
+</head>
+<body>
+<button class="open" id="open" type="button" hidden>Show shortcuts</button>
+<div class="sheet" id="sheet" role="dialog" aria-labelledby="title">
+  <h1 id="title">Shortcuts</h1>
+  <h2>General</h2>
+  <div class="row" data-key="?"><span>This sheet</span><kbd>?</kbd></div>
+  <div class="row" data-key="k"><span>Search loads</span><kbd>⌘K</kbd></div>
+  <h2>Loads</h2>
+  <div class="row" data-key="n"><span>New note</span><kbd>N</kbd></div>
+  <div class="row" data-key="h"><span>Hold the load</span><kbd>H</kbd></div>
+  <div class="row" data-key="e"><span>Export the selection</span><kbd>E</kbd></div>
+  <h2>View</h2>
+  <div class="row" data-key="1"><span>Today</span><kbd>1</kbd></div>
+  <div class="row" data-key="2"><span>The week</span><kbd>2</kbd></div>
+</div>
+<script>
+const sheet = document.getElementById('sheet');
+const open = document.getElementById('open');
+const rows = [...document.querySelectorAll('.row')];
+function setOn(ch){ rows.forEach((r) => r.dataset.on = String(r.dataset.key === ch)); }
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { sheet.hidden = true; open.hidden = false; return; }
+  const ch = e.key.length === 1 ? e.key.toLowerCase() : '';
+  if (!ch) return;
+  setOn(ch);
+  if (ch === '?' && sheet.hidden) { sheet.hidden = false; open.hidden = true; }
+});
+open.addEventListener('click', () => { sheet.hidden = false; open.hidden = true; });
+</script>
+</body>
+</html>

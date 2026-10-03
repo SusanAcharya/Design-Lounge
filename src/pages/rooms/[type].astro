@@ -14,7 +14,7 @@ const pieces = all.filter((p) => p.data.type === type);
 const others = Object.entries(TYPE_META).filter(([k]) => k !== type);
 ---
 <Base title={meta.label} description={`${meta.label} in the Design Lounge: ${meta.blurb}`}>
-  <PageHead eyebrow="Room" title={meta.label} blurb={meta.blurb} count={pieces.length}>
+  <PageHead eyebrow="Room" title={meta.label} count={pieces.length}>
     <nav class="rooms" aria-label="Other rooms">
       <span class="eyebrow">Other rooms</span>
       {others.map(([k, v]) => <a class="chip" href={`/rooms/${k}`}>{v.label} <span class="cnt">{all.filter((p) => p.data.type === k).length}</span></a>)}

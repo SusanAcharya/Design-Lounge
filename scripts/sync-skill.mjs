@@ -15,6 +15,7 @@ import { ICONS, ICON_CREDIT, ICON_GROUPS, iconSvg } from '../src/data/icons.ts';
 import { EASINGS, DURATIONS, RECIPES, tokensCss } from '../src/data/motion.ts';
 import { STARTS } from '../src/data/starts.ts';
 import { COLLECTIONS } from '../src/data/collections.ts';
+import { sourcesFrom, studyPiece } from '../src/data/sources.ts';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const piecesDir = path.join(root, 'src/content/pieces');
@@ -59,6 +60,9 @@ const pieces = fs
   })
   .sort((a, b) => String(a.data.published).localeCompare(String(b.data.published)) || String(a.data.title).localeCompare(String(b.data.title)));
 
+const siteSources = sourcesFrom(fs.readFileSync(path.join(root, 'websites.txt'), 'utf8'));
+const sourceOf = new Map(pieces.map((piece) => [piece.id, studyPiece(piece, siteSources)]));
+
 fs.rmSync(briefsDir, { recursive: true, force: true });
 fs.mkdirSync(briefsDir, { recursive: true });
 
@@ -85,7 +89,18 @@ const index = {
     icons: ICONS.length,
     recipes: RECIPES.length,
     starts: STARTS.length,
+    sources: siteSources.length,
   },
+  sources: siteSources.map((source) => ({
+    id: source.id,
+    name: source.name,
+    url: source.url,
+    host: source.host,
+    line: source.line,
+    take: source.take,
+    studied: source.studied,
+    pieces: pieces.filter((piece) => sourceOf.get(piece.id)?.source.id === source.id).map((piece) => piece.id),
+  })),
   kit: {
     kinds: KINDS.map((k) => ({
       id: k.id,
@@ -165,8 +180,17 @@ const index = {
     published: p.data.published,
     brief: `briefs/${p.id}.md`,
     demo: `${lounge}/demo/${p.id}.html`,
+    source: sourceOf.get(p.id)?.source.id ?? '',
   })),
 };
+
+fs.writeFileSync(
+  path.join(skillLib, 'sources.json'),
+  JSON.stringify({
+    note: 'One product, one source. Do not blend two. Do not copy the palette. A locked Lounge theme still wins. New lines in websites.txt appear here after the next sync.',
+    sources: index.sources,
+  }, null, 2),
+);
 
 fs.writeFileSync(path.join(skillLib, 'index.json'), JSON.stringify(index));
 fs.writeFileSync(

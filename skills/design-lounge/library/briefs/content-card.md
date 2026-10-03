@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 172 · "Content card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 180 · "Content card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Content card
 

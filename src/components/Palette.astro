@@ -1,5 +1,5 @@
 ---
-import { TYPE_META, PLATFORM_META } from '../lib/pieces';
+import { TYPE_META, PLATFORM_META, SECTION_NAV, CATEGORY_META } from '../lib/pieces';
 ---
 <div class="pal" id="palette" hidden>
   <div class="pal-scrim" data-pal-close></div>
@@ -19,8 +19,7 @@ import { TYPE_META, PLATFORM_META } from '../lib/pieces';
 <div class="keys" id="keys" hidden>
   <div class="pal-scrim" data-keys-close></div>
   <div class="keys-box" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
-    <p class="eyebrow">Keyboard</p>
-    <h2 class="display h4">Get around the Lounge</h2>
+    <h2 class="display h4">Keys</h2>
     <dl>
       <div><dt><kbd>⌘K</kbd> <kbd>/</kbd></dt><dd>Search pieces, rooms, platforms</dd></div>
       <div><dt><kbd>r</kbd></dt><dd>Open a random piece</dd></div>
@@ -33,13 +32,14 @@ import { TYPE_META, PLATFORM_META } from '../lib/pieces';
   </div>
 </div>
 
-<script define:vars={{ rooms: Object.entries(TYPE_META).map(([k, v]) => ({ k, label: v.label })), platforms: Object.entries(PLATFORM_META).map(([k, v]) => ({ k, label: v.label })) }}>
+<script define:vars={{ rooms: Object.entries(TYPE_META).map(([k, v]) => ({ k, label: v.label })), platforms: Object.entries(PLATFORM_META).map(([k, v]) => ({ k, label: v.label })), sections: SECTION_NAV.map((s) => ({ id: s.id, label: s.label, blurb: CATEGORY_META[s.id].blurb })) }}>
   const pal = document.getElementById('palette');
   const input = document.getElementById('pal-input');
   const list = document.getElementById('pal-list');
   let items = null, results = [], active = 0;
 
   const statics = [
+    ...sections.map((s) => ({ kind: 'Section', title: s.label, sub: s.blurb, href: '/c/' + s.id, hay: `${s.label} ${s.id} ${s.blurb}`.toLowerCase() })),
     ...rooms.map((r) => ({ kind: 'Room', title: r.label, href: '/rooms/' + r.k, hay: r.label.toLowerCase() })),
     ...platforms.map((p) => ({ kind: 'Platform', title: p.label, href: '/platforms/' + p.k, hay: p.label.toLowerCase() })),
     { kind: 'Go', title: 'Browse everything', href: '/browse', hay: 'browse all' },
@@ -99,7 +99,7 @@ import { TYPE_META, PLATFORM_META } from '../lib/pieces';
     const all = await load();
     const pool = [...statics, ...all];
     results = pool.map((it) => ({ it, s: score(it, q) })).filter((x) => x.s > 0).sort((a, b) => b.s - a.s).slice(0, q ? 14 : 10).map((x) => x.it);
-    if (!q) results = [...all.slice(-6).reverse(), ...statics.slice(0, 4)];
+    if (!q) results = [...statics.filter((s) => s.kind === 'Section').slice(0, 8), ...all.slice(-4).reverse()];
     active = 0; render();
   }
 

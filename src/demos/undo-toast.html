@@ -1,0 +1,79 @@
+<!-- Design Lounge piece: undo-toast · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-2:#cfc6b8;--primary:#1f4d3a;--primary-ink:#fffdf8;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.sheet{width:520px}
+h1{font:600 28px/1.1 var(--sans);margin:0 0 16px}
+ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+li[hidden]{display:none}
+button.arch{height:36px;padding:0 12px;border:1px solid var(--line-2);background:var(--surface);border-radius:2px;font:500 13px var(--sans);cursor:pointer}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);width:420px;background:var(--ink);color:var(--primary-ink);border-radius:2px;overflow:hidden}
+.toast[hidden]{display:none}
+.row{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.row p{margin:0;flex:1;font-size:14px}
+.row button{height:32px;padding:0 10px;border:1px solid rgba(255,253,248,.4);background:transparent;color:inherit;border-radius:2px;font:500 13px var(--sans);cursor:pointer}
+.bar{height:3px;background:var(--primary);transform-origin:left;animation:shrink 6s linear forwards}
+@keyframes shrink{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){.bar{animation:none}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>Yard notes</h1>
+  <ul>
+    <li data-id="gate"><span>Gate 4 still holds twelve loads</span><button class="arch" type="button">Archive</button></li>
+    <li data-id="night"><span>Night book closes at 22:00</span><button class="arch" type="button">Archive</button></li>
+    <li data-id="rupee"><span>Rupee totals keep their face</span><button class="arch" type="button">Archive</button></li>
+  </ul>
+</div>
+<div class="toast" id="toast" hidden role="status">
+  <div class="row">
+    <p id="msg">Archived</p>
+    <button type="button" id="undo">Undo</button>
+  </div>
+  <div class="bar" id="bar"></div>
+</div>
+<script>
+const toast = document.getElementById('toast');
+const msg = document.getElementById('msg');
+const bar = document.getElementById('bar');
+const names = { gate: 'Gate 4 still holds twelve loads', night: 'Night book closes at 22:00', rupee: 'Rupee totals keep their face' };
+let current = null, timer = 0;
+function show(id){
+  current = id;
+  document.querySelector('[data-id="'+id+'"]').hidden = true;
+  msg.textContent = 'Archived · ' + names[id];
+  toast.hidden = false;
+  bar.style.animation = 'none';
+  void bar.offsetWidth;
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) bar.style.animation = '';
+  clearTimeout(timer);
+  timer = setTimeout(() => { toast.hidden = true; current = null; }, 6000);
+}
+function undo(){
+  if (!current) return;
+  document.querySelector('[data-id="'+current+'"]').hidden = false;
+  clearTimeout(timer);
+  toast.hidden = true;
+  current = null;
+}
+document.getElementById('undo').addEventListener('click', undo);
+document.querySelectorAll('.arch').forEach((b) => b.addEventListener('click', () => {
+  if (current) undo();
+  show(b.parentElement.dataset.id);
+}));
+show('gate');
+</script>
+</body>
+</html>

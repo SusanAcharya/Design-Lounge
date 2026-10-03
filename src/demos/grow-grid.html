@@ -1,0 +1,46 @@
+<!-- Design Lounge piece: grow-grid · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Grid</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.grid{width:840px;height:460px;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;transition:grid-template-columns 280ms cubic-bezier(0.16,1,0.3,1),grid-template-rows 280ms cubic-bezier(0.16,1,0.3,1)}
+.grid[data-c="0"]{grid-template-columns:1.7fr .65fr .65fr}
+.grid[data-c="1"]{grid-template-columns:.65fr 1.7fr .65fr}
+.grid[data-c="2"]{grid-template-columns:.65fr .65fr 1.7fr}
+.grid[data-r="0"]{grid-template-rows:1.7fr .65fr}
+.grid[data-r="1"]{grid-template-rows:.65fr 1.7fr}
+button{border:1px solid var(--line);background:#fff;border-radius:2px;text-align:left;padding:16px;font:inherit;color:inherit;cursor:pointer}
+button strong{display:block;font-size:18px;margin-bottom:4px}
+button span{color:var(--ink-2);font-size:13px}
+@media (prefers-reduced-motion:reduce){.grid{transition:none}}
+</style>
+</head>
+<body>
+<div class="grid" id="grid">
+  <button type="button" data-c="0" data-r="0"><strong>Gate 4</strong><span>Twelve loads held.</span></button>
+  <button type="button" data-c="1" data-r="0"><strong>Night book</strong><span>Closes at 22:00.</span></button>
+  <button type="button" data-c="2" data-r="0"><strong>Month close</strong><span>Totals keep their face.</span></button>
+  <button type="button" data-c="0" data-r="1"><strong>Yard map</strong><span>Rooms on one board.</span></button>
+  <button type="button" data-c="1" data-r="1"><strong>Hold list</strong><span>Older than six hours.</span></button>
+  <button type="button" data-c="2" data-r="1"><strong>Biratnagar</strong><span>Calls at 11:00.</span></button>
+</div>
+<script>
+const grid = document.getElementById('grid');
+grid.querySelectorAll('button').forEach((b) => {
+  const set = () => { grid.dataset.c = b.dataset.c; grid.dataset.r = b.dataset.r; };
+  b.addEventListener('pointerenter', set);
+  b.addEventListener('focus', set);
+});
+grid.addEventListener('pointerleave', () => { delete grid.dataset.c; delete grid.dataset.r; });
+</script>
+</body>
+</html>

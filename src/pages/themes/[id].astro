@@ -15,7 +15,7 @@ const others = THEMES.filter((x) => x.id !== t.id && x.tags.some((tag) => t.tags
 ---
 <Base title={`${t.name} theme`} description={`${t.name}: ${t.mood} A theme from Design Lounge by ${AUTHOR.name}.`}>
   <link rel="stylesheet" href={themeFontHref(t)} />
-  <PageHead eyebrow="Library · Themes" title={t.name} blurb={t.mood} />
+  <PageHead eyebrow="Theme" title={t.name} />
   <div class="wrap page">
     <section class="hero" style={`background:${t.tokens.bg};color:${t.tokens.ink};border-color:${t.tokens.line}`}>
       <p class="mono" style={`color:${t.tokens.primary}`}>{t.display} + {t.text}</p>

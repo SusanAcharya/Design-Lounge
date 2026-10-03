@@ -14,7 +14,7 @@ const pieces = all.filter((p) => p.data.platform === platform);
 const others = Object.entries(PLATFORM_META).filter(([k]) => k !== platform);
 ---
 <Base title={meta.label} description={`${meta.label} pieces in the Design Lounge. ${meta.blurb}`}>
-  <PageHead eyebrow="Platform" title={meta.label} blurb={meta.blurb} count={pieces.length}>
+  <PageHead eyebrow="Platform" title={meta.label} count={pieces.length}>
     <nav class="rooms" aria-label="Other platforms">
       <span class="eyebrow">Other platforms</span>
       {others.map(([k, v]) => <a class="chip" href={`/platforms/${k}`}>{v.label} <span class="cnt">{all.filter((p) => p.data.platform === k).length}</span></a>)}

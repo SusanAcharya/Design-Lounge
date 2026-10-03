@@ -6,6 +6,7 @@ import Base from '../../layouts/Base.astro';
 import DeviceFrame from '../../components/DeviceFrame.astro';
 import PieceCard from '../../components/PieceCard.astro';
 import { COLLECTIONS } from '../../data/collections';
+import { SOURCES, studyPiece } from '../../data/website-list';
 import { getPieces, numberMap, creditedSource, creditedBrief, demoUrl, briefUrl, PLATFORM_META, TYPE_META, STYLE_META, CATEGORY_META, MOTION_LABEL, DIFFICULTY_LABEL, AUTHOR, bytes } from '../../lib/pieces';
 
 export async function getStaticPaths() {
@@ -25,6 +26,7 @@ const pm = PLATFORM_META[d.platform];
 const lines = source.split('\n').length;
 const briefLines = brief.split('\n').length;
 const inCollections = COLLECTIONS.filter((c) => c.pieces.includes(piece.id));
+const studied = studyPiece(piece, SOURCES);
 const related = (() => {
   const explicit = d.related.map((s) => all.find((p) => p.id === s)).filter(Boolean);
   const scored = all.filter((p) => p.id !== piece.id && !explicit.includes(p)).map((p) => {
@@ -39,7 +41,6 @@ const related = (() => {
 })();
 const og = existsSync(new URL(`../../../public/og/${piece.id}.jpg`, import.meta.url)) ? new URL(`/og/${piece.id}.jpg`, Astro.site).toString() : undefined;
 const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
-const agentLine = `Build this exactly as specified in the brief below. Stack: <your stack>. Don't improvise on numbers.`;
 ---
 <Base title={d.title} description={d.summary} ogImage={og}>
   <article class="piece wrap">
@@ -53,7 +54,6 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
         <a class="pn-link" href={`/p/${next.id}`} data-next title={next.data.title} aria-label={`Next: ${next.data.title}`}>next <kbd>]</kbd></a>
       </div>
       <h1 class="display h2 reveal">{d.title}</h1>
-      <p class="lede reveal" style="--d:60ms">{d.summary}</p>
       <div class="facts reveal" style="--d:120ms">
         <a class="chip" href={`/platforms/${d.platform}`}><span class="dot"></span>{pm.label}</a>
         <a class="chip" href={`/rooms/${d.type}`}>{TYPE_META[d.type].singular}</a>
@@ -74,7 +74,6 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
       <div class="stage" data-stage>
         <DeviceFrame slug={piece.id} platform={d.platform} title={d.title} interactive eager />
       </div>
-      <p class="hint mono faint">Live demo: click into it, tab through it. <kbd>c</kbd> copies the brief · <kbd>?</kbd> all keys</p>
     </section>
 
     <div class="body">
@@ -86,7 +85,7 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
 
         <div id="tab-brief" role="tabpanel" aria-labelledby="t-brief" data-panel="brief">
           <div class="toolbar">
-            <button class="btn primary" type="button" data-copy="#brief-src" data-copy-brief data-done-label="Copied to clipboard"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg><span data-label>Copy brief for your agent</span></button>
+            <button class="btn primary" type="button" data-copy="#brief-src" data-copy-brief data-done-label="Copied"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg><span data-label>Copy brief</span></button>
             <a class="btn" href={briefUrl(piece.id)} download={`${piece.id}.md`}>Download .md</a>
             <a class="btn ghost" href={briefUrl(piece.id)} target="_blank" rel="noopener">Raw</a>
           </div>
@@ -97,7 +96,6 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
           <div class="toolbar">
             <button class="btn primary" type="button" data-copy="#source-src" data-done-label="Copied source"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg><span data-label>Copy source</span></button>
             <a class="btn" href={demoUrl(piece.id)} download={`${piece.id}.html`}>Download .html</a>
-            <span class="mono faint">One self-contained file. No build step, no dependencies beyond Google Fonts.</span>
           </div>
           <div class="source"><Code code={source} lang="html" themes={{ light: 'github-light', dark: 'github-dark-dimmed' }} defaultColor={false} /></div>
         </div>
@@ -108,19 +106,6 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
           <span class="mono-badge" aria-hidden="true">SA</span>
           <span class="credit-text"><span class="eyebrow">Designed by</span><span class="display h4">{AUTHOR.name}</span><span class="mono faint">{AUTHOR.role} · {AUTHOR.city}</span></span>
         </a>
-        <div class="box">
-          <p class="eyebrow">Use it with an agent</p>
-          <ol class="steps">
-            <li>Copy the brief.</li>
-            <li>Paste it into Claude Code, Cursor, Codex, or whichever agent you use, with one line on top:</li>
-          </ol>
-          <div class="agentline"><code>{agentLine}</code><button class="btn sm ghost" type="button" data-copy="#agent-line" data-done-label="Copied"><span data-label>Copy line</span></button></div>
-          <ol class="steps" start="3">
-            <li>Check the result against the acceptance checklist at the end of the brief.</li>
-          </ol>
-          <a class="more mono" href="/guide">Full guide →</a>
-        </div>
-
         <div class="box details">
           <p class="eyebrow">Details</p>
           <dl>
@@ -130,6 +115,13 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
             <div><dt>Build</dt><dd>{DIFFICULTY_LABEL[d.difficulty as 1 | 2 | 3]}</dd></div>
             <div><dt>Tags</dt><dd class="tags">{d.tags.map((t) => <a href={`/browse?q=${encodeURIComponent(t)}`}>{t}</a>)}</dd></div>
           </dl>
+        </div>
+
+        <div class="box">
+          <p class="eyebrow">Studied</p>
+          <a class="studied" href={studied.source.url} target="_blank" rel="noopener">{studied.source.name}</a>
+          <p>{studied.quiet ? 'A control. It studies this site for quiet, not for a show.' : studied.source.take}</p>
+          <a class="more" href={`/sources#${studied.source.id}`}>All sources</a>
         </div>
 
         {inCollections.length > 0 && (
@@ -143,8 +135,8 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
 
     <section class="related">
       <div class="section-head">
-        <div><span class="eyebrow">Nearby</span><h2 class="display h3">Related pieces</h2></div>
-        <a class="more" href={`/rooms/${d.type}`}>All {TYPE_META[d.type].label.toLowerCase()} →</a>
+        <div><h2 class="display h3">Similar</h2></div>
+        <a class="more" href={`/c/${d.category}`}>All {CATEGORY_META[d.category].label.toLowerCase()} →</a>
       </div>
       <div class="grid">
         {related.map((p, i) => <PieceCard piece={p!} n={nums.get(p!.id) || '000'} index={i} />)}
@@ -159,7 +151,6 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
 
   <script type="application/json" id="brief-src" set:html={json(brief)}></script>
   <script type="application/json" id="source-src" set:html={json(source)}></script>
-  <script type="application/json" id="agent-line" set:html={json(agentLine)}></script>
 
   <script>
     // tabs
@@ -234,6 +225,9 @@ const agentLine = `Build this exactly as specified in the brief below. Stack: <y
   .tags { display: flex; flex-wrap: wrap; gap: 4px 10px; }
   .tags a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
   .tags a:hover { color: var(--ink); text-decoration-color: var(--ink); }
+  .studied { display: inline-block; font-family: var(--display); font-size: 22px; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .studied:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .box > p:not(.eyebrow) { color: var(--ink-2); font-size: 14px; }
   .shelf-list li { padding: 5px 0; font-size: 14px; }
   .shelf-list a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .related { margin-top: 80px; }

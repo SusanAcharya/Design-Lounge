@@ -18,7 +18,7 @@ const prev = COLLECTIONS[(i - 1 + COLLECTIONS.length) % COLLECTIONS.length];
 const next = COLLECTIONS[(i + 1) % COLLECTIONS.length];
 ---
 <Base title={collection.title} description={collection.blurb}>
-  <PageHead eyebrow={`Shelf ${collection.kicker}`} title={collection.title} blurb={collection.blurb} count={items.length} />
+  <PageHead eyebrow="Shelf" title={collection.title} count={items.length} />
   <div class="wrap">
     <div class="grid" style="margin-top:32px">
       {items.map((p, idx) => <PieceCard piece={p!} n={nums.get(p!.id) || '000'} index={idx} />)}

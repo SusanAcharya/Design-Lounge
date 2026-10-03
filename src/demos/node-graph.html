@@ -1,0 +1,63 @@
+<!-- Design Lounge piece: node-graph · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Links</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--line:#cfc6b8;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.stage{width:760px;height:460px;position:relative}
+svg{position:absolute;inset:0;width:100%;height:100%}
+line{stroke:var(--line);stroke-width:1.5}
+line.on{stroke:var(--primary);stroke-width:2.5}
+button{position:absolute;height:44px;padding:0 14px;border:1px solid var(--line);background:#fff;border-radius:999px;font:500 14px var(--sans);cursor:pointer}
+button[aria-pressed="true"]{background:#e7f2ec;border-color:var(--primary);color:var(--primary)}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <svg id="svg" aria-hidden="true"></svg>
+</div>
+<script>
+const nodes = [
+  ['Yard', 340, 210],
+  ['Gate mail', 80, 80],
+  ['Night book', 600, 70],
+  ['Hold list', 90, 360],
+  ['Month close', 600, 350],
+];
+const edges = [[0,1],[0,2],[0,3],[0,4],[1,3]];
+const stage = document.getElementById('stage');
+const svg = document.getElementById('svg');
+const btns = nodes.map((n, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = n[0];
+  b.style.left = (n[1]-50)+'px';
+  b.style.top = (n[2]-22)+'px';
+  b.addEventListener('click', () => select(i));
+  stage.appendChild(b);
+  return b;
+});
+const lines = edges.map(([a,b]) => {
+  const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+  l.setAttribute('x1', nodes[a][1]); l.setAttribute('y1', nodes[a][2]);
+  l.setAttribute('x2', nodes[b][1]); l.setAttribute('y2', nodes[b][2]);
+  l.dataset.a = a; l.dataset.b = b;
+  svg.appendChild(l);
+  return l;
+});
+function select(i){
+  btns.forEach((b, k) => b.setAttribute('aria-pressed', String(k===i)));
+  lines.forEach((l) => l.classList.toggle('on', l.dataset.a==i || l.dataset.b==i));
+}
+select(0);
+</script>
+</body>
+</html>

@@ -6,6 +6,7 @@ import { ICONS, ICON_CREDIT } from '../data/icons';
 import { EASINGS, RECIPES } from '../data/motion';
 import { COLLECTIONS, SHELF_GROUPS } from '../data/collections';
 import { STARTS, MAP } from '../data/starts';
+import { SOURCES, studyPiece } from '../data/website-list';
 
 export const GET: APIRoute = async ({ site }) => {
   const base = (site?.toString() || 'https://designlounge.vercel.app').replace(/\/$/, '');
@@ -49,6 +50,10 @@ export const GET: APIRoute = async ({ site }) => {
     `- ${base}/start`,
     `- ${base}/system`,
     ``,
+    `## Sources`,
+    `Public sites the screens study. One product, one site. Do not blend two. Do not copy the palette. The locked Lounge theme still wins. A new link in websites.txt shows up at ${base}/sources.`,
+    ...SOURCES.map((s) => `- [${s.name}](${s.url}): ${s.line} ${s.studied ? s.take : 'No screen claims this site yet.'}`),
+    ``,
     `## Libraries`,
     `- Type pairings (${PAIRINGS.length}): ${base}/type`,
     `- Themes (${THEMES.length}): ${base}/themes`,
@@ -76,7 +81,7 @@ export const GET: APIRoute = async ({ site }) => {
     `## Pieces (${pieces.length})`,
     ...pieces.map((p) => {
       const d = p.data;
-      return `- [${d.title}](${base}/p/${p.id}) (${p.id}) — ${d.summary} platform:${d.platform} type:${d.type} category:${d.category} styles:${d.styles.join(',')} motion:${d.motion} brief:${base}/p/${p.id}.md demo:${base}/demo/${p.id}.html`;
+      return `- [${d.title}](${base}/p/${p.id}) (${p.id}) — ${d.summary} platform:${d.platform} type:${d.type} category:${d.category} styles:${d.styles.join(',')} motion:${d.motion} source:${studyPiece(p, SOURCES).source.id} brief:${base}/p/${p.id}.md demo:${base}/demo/${p.id}.html`;
     }),
     ``,
     `## Categories`,

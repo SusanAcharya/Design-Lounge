@@ -1,0 +1,50 @@
+<!-- Design Lounge piece: scan-page · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Scan</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.wrap{width:420px;text-align:center}
+.sheet{height:260px;background:var(--surface);border:1px solid var(--line);border-radius:2px;position:relative;overflow:hidden;padding:28px;text-align:left}
+.sheet h1{font:600 24px/1.2 var(--sans);margin:0 0 8px}
+.sheet p{margin:0;color:var(--ink-2)}
+.beam{position:absolute;left:0;right:0;top:0;height:8px;background:var(--primary);opacity:0}
+.sheet[data-scan="true"] .beam{opacity:.9;animation:scan 1.1s cubic-bezier(0.2,0.7,0.2,1)}
+@keyframes scan{from{top:0}to{top:100%}}
+button{margin-top:16px;height:44px;padding:0 16px;border:0;border-radius:2px;background:var(--primary);color:#fffdf8;font:500 14px var(--sans);cursor:pointer}
+.out{min-height:22px;margin:12px 0 0;color:var(--ink-2);font-size:14px}
+@media (prefers-reduced-motion:reduce){.beam{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="sheet" id="sheet">
+    <h1>Gate 4 note</h1>
+    <p>Twelve loads held. Signed by the night desk.</p>
+    <div class="beam"></div>
+  </div>
+  <button type="button" id="go">Scan</button>
+  <p class="out" id="out" aria-live="polite"></p>
+</div>
+<script>
+const sheet = document.getElementById('sheet');
+const out = document.getElementById('out');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.getElementById('go').addEventListener('click', () => {
+  sheet.dataset.scan = 'false';
+  void sheet.offsetWidth;
+  sheet.dataset.scan = 'true';
+  out.textContent = '';
+  setTimeout(() => { out.textContent = 'Read · Gate 4 note · 2 lines'; }, reduce ? 0 : 1100);
+});
+</script>
+</body>
+</html>

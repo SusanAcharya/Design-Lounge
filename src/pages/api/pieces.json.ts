@@ -7,6 +7,7 @@ import { EASINGS, DURATIONS, RECIPES } from '../../data/motion';
 import { COLLECTIONS, SHELF_GROUPS } from '../../data/collections';
 import { STARTS, MAP } from '../../data/starts';
 import { KINDS, FAMILIES } from '../../data/kit';
+import { SOURCES, studyPiece } from '../../data/website-list';
 
 export const GET: APIRoute = async ({ site }) => {
   const base = (site?.toString() || 'https://designlounge.vercel.app').replace(/\/$/, '');
@@ -41,7 +42,17 @@ export const GET: APIRoute = async ({ site }) => {
       icons: ICONS.length,
       recipes: RECIPES.length,
       starts: STARTS.length,
+      sources: SOURCES.length,
     },
+    sources: SOURCES.map((s) => ({
+      id: s.id,
+      name: s.name,
+      url: s.url,
+      line: s.line,
+      take: s.take,
+      studied: s.studied,
+      page: `${base}/sources#${s.id}`,
+    })),
     pieces: pieces.map((p) => ({
       id: p.id,
       n: nums.get(p.id),
@@ -61,6 +72,7 @@ export const GET: APIRoute = async ({ site }) => {
       url: `${base}/p/${p.id}`,
       brief: `${base}/p/${p.id}.md`,
       demo: `${base}/demo/${p.id}.html`,
+      source: studyPiece(p, SOURCES).source.id,
     })),
     pairings: PAIRINGS.map((p) => ({ id: p.id, name: p.name, url: `${base}/type/${p.id}`, display: p.display.family, text: p.text.family, tags: p.tags })),
     themes: THEMES.map((t) => ({ id: t.id, name: t.name, url: `${base}/themes/${t.id}`, tokens: t.tokens, tags: t.tags })),

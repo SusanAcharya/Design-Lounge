@@ -1,0 +1,58 @@
+<!-- Design Lounge piece: agent-step-trace · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Steps</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--primary:#1f4d3a;--soft:#e7f2ec;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.card{width:640px;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:8px 8px 8px 0}
+h1{font:600 22px/1.2 var(--sans);margin:12px 20px 8px}
+ol{list-style:none;margin:0;padding:0}
+li{border-top:1px solid var(--line)}
+li button.head{width:100%;text-align:left;background:transparent;border:0;padding:14px 20px;font:500 15px var(--sans);color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;gap:12px}
+.body{padding:0 20px 14px 20px;color:var(--ink-2);font-size:14px}
+.body[hidden]{display:none}
+code{font:500 13px var(--mono);color:var(--primary);background:var(--soft);padding:2px 6px;border-radius:2px}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>How the note was drafted</h1>
+  <ol id="list">
+    <li>
+      <button class="head" type="button" aria-expanded="true">Read the gate note <span>Done</span></button>
+      <div class="body"><p>Tool <code>ledger.get</code></p><p>Gate 4 holds 12 loads. Nothing was sent.</p></div>
+    </li>
+    <li>
+      <button class="head" type="button" aria-expanded="false">Check the hold rule <span>Done</span></button>
+      <div class="body" hidden><p>Tool <code>rules.hold</code></p><p>A hold older than 6 hours needs a person.</p></div>
+    </li>
+    <li>
+      <button class="head" type="button" aria-expanded="false">Draft the reply <span>Done</span></button>
+      <div class="body" hidden><p>Tool <code>notes.draft</code></p><p>Draft kept on this page. Not posted.</p></div>
+    </li>
+    <li>
+      <button class="head" type="button" aria-expanded="false">Wait for a person <span>Waiting</span></button>
+      <div class="body" hidden><p>No tool. The draft stays until someone sends it.</p></div>
+    </li>
+  </ol>
+</div>
+<script>
+document.querySelectorAll('.head').forEach((b) => b.addEventListener('click', () => {
+  const open = b.getAttribute('aria-expanded') !== 'true';
+  document.querySelectorAll('.head').forEach((h) => {
+    h.setAttribute('aria-expanded', 'false');
+    h.nextElementSibling.hidden = true;
+  });
+  if (open) { b.setAttribute('aria-expanded', 'true'); b.nextElementSibling.hidden = false; }
+}));
+</script>
+</body>
+</html>

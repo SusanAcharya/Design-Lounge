@@ -98,6 +98,35 @@ export const STYLE_META: Record<Style, { label: string; blurb: string }> = {
   clay:       { label: 'Clay',        blurb: 'Puffy, tactile surfaces with soft inner light.' },
 };
 
+/** Short names for the section rail and search. Same order as a site is built. */
+export const SECTION_NAV: { id: Category; label: string }[] = [
+  { id: 'hero', label: 'Hero' },
+  { id: 'navbar', label: 'Nav' },
+  { id: 'features', label: 'Features' },
+  { id: 'pricing', label: 'Pricing' },
+  { id: 'cta', label: 'CTA' },
+  { id: 'logos', label: 'Logos' },
+  { id: 'testimonials', label: 'Testimonials' },
+  { id: 'faq', label: 'FAQ' },
+  { id: 'stats', label: 'Stats' },
+  { id: 'team', label: 'Team' },
+  { id: 'newsletter', label: 'Newsletter' },
+  { id: 'blog', label: 'Blog' },
+  { id: 'gallery', label: 'Gallery' },
+  { id: 'footer', label: 'Footer' },
+  { id: 'portfolio', label: 'Portfolio' },
+  { id: 'landing', label: 'Landing' },
+  { id: 'auth', label: 'Sign in' },
+  { id: 'ecommerce', label: 'Shop' },
+  { id: 'dashboard', label: 'Dashboard' },
+  { id: 'reading', label: 'Docs' },
+  { id: 'error', label: '404' },
+  { id: 'inputs', label: 'Fields' },
+  { id: 'overlays', label: 'Overlays' },
+  { id: 'cursor', label: 'Cursor' },
+  { id: 'scroll', label: 'Scroll' },
+];
+
 export const CATEGORY_GROUPS: { key: string; label: string; items: Category[] }[] = [
   { key: 'sections', label: 'Website sections', items: ['hero', 'navbar', 'features', 'pricing', 'testimonials', 'faq', 'cta', 'contact', 'logos', 'stats', 'team', 'newsletter', 'blog', 'gallery', 'footer'] },
   { key: 'pages', label: 'Pages & screens', items: ['portfolio', 'landing', 'auth', 'ecommerce', 'dashboard', 'onboarding', 'settings', 'profile', 'messaging', 'media', 'reading', 'error', 'utility'] },

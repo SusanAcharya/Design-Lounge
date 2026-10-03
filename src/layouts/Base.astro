@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import SectionRail from '../components/SectionRail.astro';
 import Footer from '../components/Footer.astro';
 import Palette from '../components/Palette.astro';
 import { getPieces, AUTHOR } from '../lib/pieces';
@@ -11,8 +12,8 @@ interface Props {
   ogImage?: string;
   bodyClass?: string;
 }
-const { title, description = `Design Lounge by ${AUTHOR.name}: a live library of web and mobile design, sections, motion, type, themes and icons, each with a brief your coding agent can build from.`, ogImage, bodyClass } = Astro.props;
-const fullTitle = title ? `${title} · Design Lounge by ${AUTHOR.name}` : `Design Lounge by ${AUTHOR.name} — interfaces worth sitting with`;
+const { title, description = `Design Lounge by ${AUTHOR.name}. Pieces, type, themes, icons, motion.`, ogImage, bodyClass } = Astro.props;
+const fullTitle = title ? `${title} · Design Lounge` : `Design Lounge`;
 const origin = (Astro.site ?? new URL('https://designlounge.vercel.app')).toString().replace(/\/$/, '');
 const path = Astro.url.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') || '/';
 const canonical = path === '/' ? `${origin}/` : `${origin}${path}`;
@@ -65,6 +66,7 @@ const count = (await getPieces()).length;
 <body class={bodyClass} data-count={count}>
   <a class="skip" href="#main">Skip to content</a>
   <Header />
+  <SectionRail />
   <main id="main">
     <slot />
   </main>

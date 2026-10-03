@@ -1,0 +1,41 @@
+<!-- Design Lounge piece: focus-dim · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Focus</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:640px}
+.grid[data-focus="true"] button{opacity:.35}
+.grid[data-focus="true"] button[aria-pressed="true"]{opacity:1}
+button{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:20px;min-height:140px;cursor:pointer;font:inherit;color:inherit}
+button strong{display:block;font-size:20px;margin-bottom:6px}
+button span{color:var(--ink-2);font-size:14px}
+</style>
+</head>
+<body>
+<div class="grid" id="grid">
+  <button type="button"><strong>Gate 4</strong><span>Twelve loads held.</span></button>
+  <button type="button"><strong>Night book</strong><span>Closes at 22:00.</span></button>
+  <button type="button"><strong>Month close</strong><span>Totals keep their face.</span></button>
+  <button type="button"><strong>Yard map</strong><span>Drag to look around.</span></button>
+</div>
+<script>
+const grid = document.getElementById('grid');
+const buttons = [...grid.querySelectorAll('button')];
+buttons.forEach((b) => b.addEventListener('click', () => {
+  const on = b.getAttribute('aria-pressed') === 'true';
+  buttons.forEach((x) => x.setAttribute('aria-pressed','false'));
+  if (!on) b.setAttribute('aria-pressed','true');
+  grid.dataset.focus = String(buttons.some((x) => x.getAttribute('aria-pressed')==='true'));
+}));
+</script>
+</body>
+</html>

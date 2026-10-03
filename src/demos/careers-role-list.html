@@ -1,0 +1,68 @@
+<!-- Design Lounge piece: careers-role-list · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Harbour — Open roles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,560&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea;--surface:#fffdf8;--ink:#1a1814;--ink-2:#5c564c;--ink-3:#6f675c;--line:#e3ddd2;--line-2:#cfc6b8;
+  --primary:#1f4d3a;--primary-ink:#fffdf8;--soft:#e7f2ec;
+  --display:"Fraunces",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.page{height:100%;display:grid;grid-template-columns:1fr 380px;padding:36px 56px 40px;gap:40px}
+.kicker{margin:0 0 8px;font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:0 0 22px;font:560 44px/1 var(--display);letter-spacing:-.02em}
+ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.role{width:100%;display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:baseline;text-align:left;padding:16px 8px;border:0;border-bottom:1px solid var(--line);background:transparent;font:inherit;color:inherit;cursor:pointer}
+.role[aria-current="true"]{background:var(--soft)}
+.role b{font:560 20px/1.2 var(--display);font-weight:560}
+.meta{font-size:13px;color:var(--ink-2)}
+aside{background:var(--surface);border:1px solid var(--line);padding:28px 24px;align-self:start}
+aside h2{margin:0 0 8px;font:560 28px/1.15 var(--display)}
+aside p{margin:0 0 18px;color:var(--ink-2);font-size:15px;max-width:36ch}
+.apply{height:40px;padding:0 16px;border:1px solid var(--ink);background:transparent;font:500 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.apply:hover{background:var(--ink);color:var(--bg)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div>
+    <p class="kicker">Harbour</p>
+    <h1>Open roles</h1>
+    <ol id="roles">
+      <li><button class="role" type="button" aria-current="true" data-title="Yard lead" data-place="Kathmandu" data-team="Operations" data-copy="You keep Gate 4 moving. Four loads a morning, one note per load, and a list that matches the yard."><b>Yard lead</b><span class="meta">Kathmandu</span><span class="meta">Operations</span></button></li>
+      <li><button class="role" type="button" data-title="Ledger clerk" data-place="Biratnagar" data-team="Finance" data-copy="You enter the day’s totals in lakh grouping and you do not mix रु with ₹."><b>Ledger clerk</b><span class="meta">Biratnagar</span><span class="meta">Finance</span></button></li>
+      <li><button class="role" type="button" data-title="Night dispatcher" data-place="Kathmandu" data-team="Operations" data-copy="You close the yard at 18:00 and you mark a load Held when the gate is full."><b>Night dispatcher</b><span class="meta">Kathmandu</span><span class="meta">Operations</span></button></li>
+      <li><button class="role" type="button" data-title="Type designer" data-place="Remote" data-team="Studio" data-copy="You set the amounts in one face. Devanagari and Latin share the heading, not the mono."><b>Type designer</b><span class="meta">Remote</span><span class="meta">Studio</span></button></li>
+    </ol>
+  </div>
+  <aside>
+    <p class="kicker" id="team">Operations</p>
+    <h2 id="title">Yard lead</h2>
+    <p id="copy">You keep Gate 4 moving. Four loads a morning, one note per load, and a list that matches the yard.</p>
+    <p class="meta" id="place">Kathmandu</p>
+    <button class="apply" type="button">Apply</button>
+  </aside>
+</div>
+<script>
+const buttons = document.querySelectorAll('.role');
+buttons.forEach((b) => b.addEventListener('click', () => {
+  buttons.forEach((x) => x.removeAttribute('aria-current'));
+  b.setAttribute('aria-current', 'true');
+  document.getElementById('title').textContent = b.dataset.title;
+  document.getElementById('team').textContent = b.dataset.team;
+  document.getElementById('place').textContent = b.dataset.place;
+  document.getElementById('copy').textContent = b.dataset.copy;
+}));
+</script>
+</body>
+</html>

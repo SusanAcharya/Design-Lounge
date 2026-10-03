@@ -1,0 +1,48 @@
+<!-- Design Lounge piece: curve-drawer · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Drawer</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.page{padding:48px}
+h1{font:600 36px var(--sans);margin:0 0 12px}
+button.open{height:44px;padding:0 16px;border:0;border-radius:2px;background:var(--primary);color:#fffdf8;font:500 14px var(--sans);cursor:pointer}
+.panel{position:fixed;top:0;right:0;width:340px;height:100%;background:#fffdf8;border-left:1px solid var(--line);padding:32px 28px;transform:translateX(110%);border-radius:120px 0 0 120px;transition:transform 420ms cubic-bezier(0.16,1,0.3,1),border-radius 420ms cubic-bezier(0.16,1,0.3,1)}
+.panel[data-open="true"]{transform:none;border-radius:0}
+.panel h2{font:600 24px var(--sans);margin:0 0 8px}
+.panel p{margin:0 0 16px;color:var(--ink-2)}
+.panel button{height:40px;padding:0 12px;border:1px solid var(--line);background:#fff;font:500 14px var(--sans);cursor:pointer;border-radius:2px}
+@media (prefers-reduced-motion:reduce){.panel{transition:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Night desk</h1>
+  <button class="open" type="button" id="open" aria-expanded="true">Close the hold</button>
+</div>
+<aside class="panel" id="panel" data-open="true" aria-label="Hold">
+  <h2>Gate 4 hold</h2>
+  <p>Twelve loads. A hold older than six hours needs a person.</p>
+  <button type="button" id="close">Close</button>
+</aside>
+<script>
+const panel = document.getElementById('panel');
+const open = document.getElementById('open');
+function set(on) {
+  panel.dataset.open = String(on);
+  open.setAttribute('aria-expanded', String(on));
+  open.textContent = on ? 'Close the hold' : 'Open the hold';
+}
+open.addEventListener('click', () => set(panel.dataset.open !== 'true'));
+document.getElementById('close').addEventListener('click', () => set(false));
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 ---
 import DeviceFrame from './DeviceFrame.astro';
-import { PLATFORM_META, TYPE_META, pieceUrl, type Piece } from '../lib/pieces';
+import { PLATFORM_META, TYPE_META, pieceUrl, briefUrl, type Piece } from '../lib/pieces';
 
 interface Props { piece: Piece; n: string; index?: number; }
 const { piece, n, index = 0 } = Astro.props;
@@ -28,7 +28,7 @@ const d = piece.data;
   <div class="body">
     <div class="meta"><span class="n num">Nº {n}</span><span class="n">{TYPE_META[d.type].singular} · {PLATFORM_META[d.platform].label}</span><span class="swatches" aria-hidden="true">{d.palette.slice(0, 3).map((c) => <i style={`background:${c}`}></i>)}</span></div>
     <h3 class="title"><a href={pieceUrl(piece.id)}>{d.title}</a></h3>
-    <p class="summary">{d.summary}</p>
+    <button class="brief-copy" type="button" data-copy-brief-url={briefUrl(piece.id)} data-done-label="Copied">Copy brief</button>
   </div>
 </article>
 

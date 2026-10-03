@@ -1,82 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import { getPieces, PLATFORM_META, TYPE_META, AUTHOR } from '../lib/pieces';
+import { getPieces, AUTHOR } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
 const pieces = await getPieces();
 ---
-<Base title="About" description="What the Design Lounge is, why it exists, and the rules every piece follows.">
-  <PageHead eyebrow="About" title="A lounge, <i>not a feed</i>" blurb="Design galleries are mostly screenshots of other people’s work, scrolling past. This is the opposite: pieces you can sit with, run, read, and take home — plus the type, themes, icons and motion behind them." />
+<Base title="About" description={`Design Lounge by ${AUTHOR.name}.`}>
+  <PageHead eyebrow="About" title={AUTHOR.name} />
   <div class="wrap about">
-    <section class="block who">
-      <h2 class="display h3">Who</h2>
-      <div>
-        <p><a href={AUTHOR.site}>{AUTHOR.name}</a> — {AUTHOR.role}, working from {AUTHOR.city}. Design Lounge is the public record of how I look at products: what I would ship, what I would steal from, and what I would hand an agent with a straight face.</p>
-        <p>If a piece, a pairing or a theme is here, I would put it in a real app. That is the only bar.</p>
-        <ul class="who-links mono">
-          {AUTHOR.links.map((l) => <li><a href={l.href} target="_blank" rel="noopener">{l.label} ↗</a></li>)}
-          <li><a href={`mailto:${AUTHOR.email}`}>Email ↗</a></li>
-        </ul>
-      </div>
-    </section>
-    <section class="block">
-      <h2 class="display h3">What it is</h2>
-      <p>Design Lounge is a catalogue of interface pieces — and the libraries behind them. Whole screens, sections, components, animations, layouts, product patterns and design languages, for the web, mobile web, native-feel apps, PWAs and tablets. It is arranged as a system (type, themes, icons, motion), an index (by the name a designer would use), and shelves (by the problem). Every piece is live, one self-contained HTML file, and ships with a brief a coding agent can rebuild from. <a href="/start">Start a product</a> if you want the Lounge to pick the grammar for you.</p>
-    </section>
-    <section class="block">
-      <h2 class="display h3">Why briefs, not screenshots</h2>
-      <p>“Make it look like this” with a screenshot gets you a guess. A brief with a token block, a motion table and an acceptance checklist gets you the thing. Agents are good at numbers and lists; they are bad at taste. So the taste is done here, once, and written down in the form agents consume best. You keep the judgement, they keep the typing.</p>
-    </section>
-    <section class="block">
-      <h2 class="display h3">House rules</h2>
-      <ul class="rules">
-        <li><b>One idea per piece.</b> A sidebar piece is a great sidebar, not a sidebar plus a dashboard.</li>
-        <li><b>Real copy, no placeholders.</b> No lorem ipsum, no “Heading 1”, no emoji.</li>
-        <li><b>Motion has a reason.</b> Feedback, hierarchy, continuity, or one moment of delight. Reduced motion always respected.</li>
-        <li><b>No dependencies.</b> A piece is one file: inline CSS, inline JS, inline SVG. Google Fonts are the only outside resource.</li>
-        <li><b>Accessible by default.</b> Semantic elements, visible focus, ≥ 4.5:1 body contrast, ≥ 40px targets on phones.</li>
-        <li><b>Numbers, not adjectives.</b> Briefs say 320ms and <code>cubic-bezier(.2,.7,.2,1)</code>, never “smooth”.</li>
-      </ul>
-    </section>
-    <section class="block stats">
-      <h2 class="display h3">The floor today</h2>
-      <div class="stat-grid">
-        {Object.entries(TYPE_META).map(([k, v]) => <a href={`/rooms/${k}`} class="stat"><span class="display n">{String(pieces.filter((p) => p.data.type === k).length).padStart(2, '0')}</span><span class="mono">{v.label}</span></a>)}
-        {Object.entries(PLATFORM_META).map(([k, v]) => <a href={`/platforms/${k}`} class="stat"><span class="display n">{String(pieces.filter((p) => p.data.platform === k).length).padStart(2, '0')}</span><span class="mono">{v.label}</span></a>)}
-      </div>
-    </section>
-    <section class="block">
-      <h2 class="display h3">Use</h2>
-      <p>Take the briefs, the source, the pairings, the themes, the icons. Build products with them. Change the tokens to match your brand. Attribution is appreciated — keep the credit comment or link back to {AUTHOR.siteLabel}. The one thing not to do is republish the catalogue as a catalogue.</p>
-    </section>
-    <section class="block">
-      <h2 class="display h3">Colophon</h2>
-      <p>Type is Fraunces (display), Instrument Sans (text) and JetBrains Mono (labels and numbers). The site is static HTML built with Astro, with a few hundred lines of vanilla JavaScript for the search, filters and device frames. Demos run in sandboxed iframes at native size and are scaled with a transform, so what you see in a card is the real thing, not a thumbnail. Agents should start at <a href="/llms.txt">/llms.txt</a> or <a href="/api/pieces.json">/api/pieces.json</a>.</p>
-      <p class="floor-note mono faint">{pieces.length} pieces · {PAIRINGS.length} pairings · {THEMES.length} themes · {ICONS.length} icons</p>
-    </section>
+    <p>{AUTHOR.role}, {AUTHOR.city}.</p>
+    <ul class="who-links mono">
+      {AUTHOR.links.map((l) => <li><a href={l.href} target="_blank" rel="noopener">{l.label}</a></li>)}
+      <li><a href={`mailto:${AUTHOR.email}`}>Email</a></li>
+    </ul>
+    <p class="mono faint">{pieces.length} pieces · {PAIRINGS.length} pairings · {THEMES.length} themes · {ICONS.length} icons</p>
   </div>
 </Base>
 
 <style>
-  .about { display: flex; flex-direction: column; margin-top: 40px; }
-  .block { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 32px; padding: 36px 0; border-top: 1px solid var(--line); }
-  .block:first-child { border-top-color: var(--ink); }
-  .block p { max-width: 66ch; font-size: 16.5px; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
-  .block p + p { margin-top: 14px; }
-  .rules { display: flex; flex-direction: column; gap: 12px; font-size: 15.5px; color: var(--ink-2); max-width: 66ch; }
-  .rules b { color: var(--ink); font-weight: 600; }
-  .rules code { background: var(--paper-2); border: 1px solid var(--line); padding: .05em .35em; border-radius: 4px; }
-  .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
-  .stat { display: flex; flex-direction: column; gap: 6px; padding: 16px; border: 1px solid var(--line); border-radius: var(--r-lg); transition: border-color var(--t-fast); }
-  .stat:hover { border-color: var(--ink); }
-  .stat .n { font-size: 40px; line-height: 1; }
-  .stat .mono { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
-  .who-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 16px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+  .about { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; max-width: 40ch; }
+  .who-links { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
   .who-links a { border-bottom: 1px solid var(--line-2); padding-bottom: 2px; }
   .who-links a:hover { border-color: var(--ink); }
-  .block a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-3); }
-  .floor-note { margin-top: 16px; }
-  @media (max-width: 860px) { .block { grid-template-columns: 1fr; gap: 12px; } }
 </style>

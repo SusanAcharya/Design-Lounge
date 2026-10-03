@@ -11,7 +11,7 @@ const groups = CATEGORY_GROUPS.map((g) => ({
 const total = groups.reduce((a, g) => a + g.items.length, 0);
 ---
 <Base title="Index" description="Every kind of interface in Design Lounge: hero sections, footers, pricing, contact, portfolios, landing pages, components and motion.">
-  <PageHead eyebrow="Index" title="Find it <i>by name</i>" blurb="Looking for a footer, a pricing table, a portfolio, a loader? The index sorts every piece by what a designer would call it." count={total} countLabel="categories" />
+  <PageHead eyebrow="Index" title="Index" count={total} countLabel="categories" />
   <div class="wrap idx">
     {groups.map((g, gi) => (
       <section class="grp reveal" style={`--d:${gi * 60}ms`}>
@@ -21,8 +21,6 @@ const total = groups.reduce((a, g) => a + g.items.length, 0);
             <li>
               <a href={`/c/${i.c}`}>
                 <span class="display name">{i.meta.label}</span>
-                <span class="blurb">{i.meta.blurb}</span>
-                <span class="latest mono faint">{i.latest?.data.title}</span>
                 <span class="n mono num">{String(i.n).padStart(2, '0')}</span>
               </a>
             </li>
@@ -36,16 +34,12 @@ const total = groups.reduce((a, g) => a + g.items.length, 0);
 <style>
   .idx { display: flex; flex-direction: column; gap: 56px; margin-top: 48px; }
   .grp > .eyebrow { padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
-  .rows li a { display: grid; grid-template-columns: minmax(200px, 1.1fr) 2fr minmax(160px, 1fr) 48px; gap: 24px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); transition: background-color var(--t-fast), padding var(--t-med) var(--ease); }
+  .rows li a { display: grid; grid-template-columns: 1fr 48px; gap: 24px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); transition: background-color var(--t-fast), padding var(--t-med) var(--ease); }
   .rows li a:hover { background: var(--paper-2); padding-inline: 12px; }
   .name { font-size: clamp(22px, 2.2vw, 30px); letter-spacing: -0.02em; line-height: 1.05; }
-  .blurb { color: var(--ink-2); font-size: 14.5px; text-wrap: pretty; }
-  .latest { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .n { text-align: right; color: var(--ink-2); font-size: 13px; }
   @media (max-width: 860px) {
     .rows li a { grid-template-columns: 1fr 40px; gap: 4px 16px; }
-    .blurb { grid-column: 1; grid-row: 2; }
-    .latest { display: none; }
     .n { grid-column: 2; grid-row: 1; }
   }
 </style>

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 173 · "Failed load with retry" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 187 · "Failed load with retry" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Failed load with retry
 

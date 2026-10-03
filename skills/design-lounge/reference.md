@@ -31,7 +31,13 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Shop, checkout | `product` | Also recipe `commerce`. Order is collection, product, cart, checkout, then `order-confirmed`. |
 | Tablet, iPad, landscape | `product` | Also recipe `tablet`. Do not stretch a phone screen to 1180px. |
 | Magazine, journal, docs | `website` | Also recipe `editorial` |
-| Design system only, no screen yet | `product` | Also recipe `design-system`. The controls are `text-field`, `textarea-field`, `password-field`, `radio-group`, `checkbox-group`, `slider-field`, `select-field`, `combobox`, `token-field`, `otp-code`, `rating-score`, `calendar-month`, `time-field`, `switch-row`, `button-roles`, `breadcrumb`, `tree-nav`, `pagination`, `filter-toolbar`, `qty-stepper`, `progress-bar`, `property-list`, `content-card`, `status-badge`, `inline-alert`, `tooltip`, `popover-panel`, `consent-bar`. |
+| Design system only, no screen yet | `product` | Also recipe `design-system`. The controls are `text-field`, `textarea-field`, `password-field`, `radio-group`, `checkbox-group`, `slider-field`, `select-field`, `combobox`, `token-field`, `otp-code`, `rating-score`, `calendar-month`, `time-field`, `switch-row`, `button-roles`, `breadcrumb`, `tree-nav`, `pagination`, `filter-toolbar`, `qty-stepper`, `progress-bar`, `property-list`, `content-card`, `status-badge`, `inline-alert`, `tooltip`, `popover-panel`, `consent-bar`, `prompt-composer`, `split-button`, `drag-to-confirm`, `dial-knob`, `undo-toast`, `code-snippet-tabs`, `selection-bar`, `shortcut-sheet`, `inline-edit`, `minute-wheel`, `stretch-switch`, `gooey-nav`, `edge-light-button`, `shred-button`, `receipt-slip`, `focus-dim`, `node-graph`, `cited-answer`, `analog-stick`, `chip-bucket`, `press-well`, `curve-drawer`. |
+
+## Sources
+
+Public sites the screens study are `sources` in `library/index.json`, and again in `library/sources.json`. They come from `websites.txt` in the Lounge repo. A new line there is a new source the next time the skill is synced.
+
+Pick one source for a public site. Read its `line` and `take`. The pieces listed on that source are the screens that already study it. Do not blend two sources. Do not copy the site's palette. The locked Lounge theme still wins. A source with `studied: false` is on the list only. No screen claims it yet.
 
 ## Token roles
 

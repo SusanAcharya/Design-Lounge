@@ -14,8 +14,8 @@ const theme = (id: string) => THEMES.find((t) => t.id === id);
 const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
 ---
 <Base title="Start a product" description={`Recipes from Design Lounge by ${AUTHOR.name}: a theme, a type pairing, a shelf of pieces — assembled for the thing you are making.`}>
-  <PageHead eyebrow="Start" title="What are you <i>making</i>?" blurb="Prefer to see it live? Compose a kit — pick a palette, a pairing and a family on a website and a phone. Or take a recipe below: theme, pairing, shelf, pieces." count={STARTS.length} countLabel="recipes" />
-  <p class="wrap kit-jump"><a class="btn primary" href="/kit">Compose a kit →</a></p>
+  <PageHead eyebrow="Start" title="Start" count={STARTS.length} countLabel="recipes" />
+  <p class="wrap kit-jump"><a class="btn primary" href="/kit">Kit</a></p>
   <div class="wrap page">
     <ol class="starts">
       {STARTS.map((s, i) => {
@@ -27,8 +27,6 @@ const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
             <header>
               <span class="eyebrow">{s.kicker} · {String(i + 1).padStart(2, '0')}</span>
               <h2 class="display h3">{s.title}</h2>
-              <p class="muted">{s.blurb}</p>
-              <p class="when">{s.when}</p>
             </header>
             <dl>
               {t && (
@@ -68,7 +66,6 @@ const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
         );
       })}
     </ol>
-    <p class="mono faint">Recipes by {AUTHOR.name} · Design Lounge · {AUTHOR.siteLabel}. Agents: start at /llms.txt, then follow a recipe before inventing tokens.</p>
   </div>
 </Base>
 

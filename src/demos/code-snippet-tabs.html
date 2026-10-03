@@ -1,0 +1,63 @@
+<!-- Design Lounge piece: code-snippet-tabs · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Gate loads</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#161513;--ink:#f4f1ea;--ink-2:#cfc6b8;--line:#3a342c;--primary:#1f4d3a;--primary-ink:#fffdf8;--paper:#f6f4ef;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:#161513;font:16px/1.45 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.deck{width:640px;background:var(--surface);color:var(--ink);border-radius:2px;overflow:hidden}
+.head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:4px}
+.tabs button{height:32px;padding:0 10px;border:0;border-radius:2px;background:transparent;color:var(--ink-2);font:500 13px var(--sans);cursor:pointer}
+.tabs button[aria-selected="true"]{background:#2a2622;color:var(--ink)}
+.copy{margin-left:auto;height:32px;padding:0 10px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:2px;font:500 13px var(--sans);cursor:pointer}
+pre{margin:0;padding:20px;font:14px/1.6 var(--mono);white-space:pre-wrap}
+pre[hidden]{display:none}
+.mark{background:#2c3a32;color:#d7efe4}
+</style>
+</head>
+<body>
+<div class="deck">
+  <div class="head">
+    <div class="tabs" role="tablist" aria-label="Language">
+      <button type="button" role="tab" id="t-curl" aria-controls="p-curl" aria-selected="true">curl</button>
+      <button type="button" role="tab" id="t-js" aria-controls="p-js" aria-selected="false">JavaScript</button>
+      <button type="button" role="tab" id="t-py" aria-controls="p-py" aria-selected="false">Python</button>
+    </div>
+    <button class="copy" type="button" id="copy">Copy</button>
+  </div>
+  <pre id="p-curl" role="tabpanel" aria-labelledby="t-curl">curl -s yard.internal/loads?gate=<span class="mark">4</span></pre>
+  <pre id="p-js" role="tabpanel" aria-labelledby="t-js" hidden>const loads = await yard.loads({ gate: <span class="mark">4</span> })</pre>
+  <pre id="p-py" role="tabpanel" aria-labelledby="t-py" hidden>loads = yard.loads(gate=<span class="mark">4</span>)</pre>
+</div>
+<script>
+const tabs = [...document.querySelectorAll('[role="tab"]')];
+const panels = [...document.querySelectorAll('[role="tabpanel"]')];
+const copy = document.getElementById('copy');
+let i = 0;
+function select(n){
+  i = n;
+  tabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === n)));
+  panels.forEach((p, k) => { p.hidden = k !== n; });
+}
+tabs.forEach((t, k) => t.addEventListener('click', () => select(k)));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') select((i + 1) % tabs.length);
+  if (e.key === 'ArrowLeft') select((i + 2) % tabs.length);
+});
+copy.addEventListener('click', async () => {
+  const text = panels[i].innerText;
+  try { await navigator.clipboard.writeText(text); } catch {}
+  copy.textContent = 'Copied';
+  setTimeout(() => { copy.textContent = 'Copy'; }, 1600);
+});
+</script>
+</body>
+</html>

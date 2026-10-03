@@ -1,0 +1,65 @@
+<!-- Design Lounge piece: minute-wheel · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Minutes</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.card{width:280px;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:24px;text-align:center}
+h1{font:600 22px/1.2 var(--sans);margin:0 0 16px}
+.win{height:180px;overflow:hidden;position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line);touch-action:none}
+.win::before,.win::after{content:"";position:absolute;left:0;right:0;height:60px;z-index:1;pointer-events:none}
+.win::before{top:0;background:linear-gradient(#fff,transparent)}
+.win::after{bottom:0;background:linear-gradient(transparent,#fff)}
+.col{display:flex;flex-direction:column}
+.row{height:60px;display:grid;place-items:center;font:600 28px var(--sans);color:var(--ink-2)}
+.row[data-on="true"]{color:var(--ink)}
+.sub{margin:12px 0 0;color:var(--ink-2);font-size:14px}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Hold minutes</h1>
+  <div class="win" id="win" role="slider" tabindex="0" aria-valuemin="1" aria-valuemax="30" aria-valuenow="10" aria-label="Hold minutes">
+    <div class="col" id="col"></div>
+  </div>
+  <p class="sub" id="sub">10 minutes</p>
+</div>
+<script>
+const col = document.getElementById('col');
+const win = document.getElementById('win');
+const sub = document.getElementById('sub');
+for (let n=1;n<=30;n++){
+  const d = document.createElement('div');
+  d.className = 'row';
+  d.textContent = String(n);
+  col.appendChild(d);
+}
+let val = 10, drag = null, startY = 0, startVal = 10;
+function paint(v){
+  val = Math.max(1, Math.min(30, Math.round(v)));
+  col.style.transform = 'translateY('+((2-(val-1))*60)+'px)';
+  [...col.children].forEach((el, i) => el.dataset.on = String(i+1 === val));
+  win.setAttribute('aria-valuenow', String(val));
+  sub.textContent = val+' minutes';
+}
+win.addEventListener('pointerdown', (e) => { drag = true; startY = e.clientY; startVal = val; win.setPointerCapture(e.pointerId); });
+win.addEventListener('pointermove', (e) => { if (!drag) return; paint(startVal - (e.clientY-startY)/60); });
+win.addEventListener('pointerup', () => drag = false);
+win.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowUp') { e.preventDefault(); paint(val+1); }
+  if (e.key === 'ArrowDown') { e.preventDefault(); paint(val-1); }
+  if (e.key === 'Home') paint(1);
+  if (e.key === 'End') paint(30);
+});
+paint(10);
+</script>
+</body>
+</html>

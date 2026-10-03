@@ -1,0 +1,46 @@
+<!-- Design Lounge piece: scroll-velocity-type · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Scroll</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Public+Sans:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--ink:#1a1814;--ink-2:#5c564c;--primary:#1f4d3a}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:18px/1.5 "Public Sans",system-ui,sans-serif}
+.sticky{position:sticky;top:0;height:180px;display:grid;place-items:center;background:var(--bg)}
+h1{font:560 64px/1 Fraunces,Georgia,serif;margin:0;letter-spacing:var(--ls,0em)}
+section{max-width:62ch;margin:0 auto;padding:0 32px 40vh}
+p{color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){h1{letter-spacing:0!important}}
+</style>
+</head>
+<body>
+<div class="sticky"><h1 id="h">Hold the line</h1></div>
+<section>
+  <p>Gate 4 still holds twelve loads. The night book closes at 22:00. A hold older than six hours needs a person.</p>
+  <p>Month close keeps the rupee totals in one face. Biratnagar calls at 11:00. The yard map is local.</p>
+  <p>Scroll and the headline opens its tracking with the speed, then settles when the scroll stops.</p>
+  <p>Nothing here is fetched. The words stay on this page.</p>
+</section>
+<script>
+const h = document.getElementById('h');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let space = 0, settle = 0;
+addEventListener('scroll', () => {
+  if (reduce) return;
+  space = Math.min(0.2, space + 0.03);
+  h.style.setProperty('--ls', space.toFixed(3)+'em');
+  clearInterval(settle);
+  settle = setInterval(() => {
+    space *= 0.75;
+    if (space < 0.008) { space = 0; clearInterval(settle); }
+    h.style.setProperty('--ls', space.toFixed(3)+'em');
+  }, 48);
+}, { passive: true });
+</script>
+</body>
+</html>

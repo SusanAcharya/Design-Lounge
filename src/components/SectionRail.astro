@@ -1,0 +1,42 @@
+---
+import { getPieces, CATEGORY_META, SECTION_NAV } from '../lib/pieces';
+
+const all = await getPieces();
+const live = SECTION_NAV.filter((s) => all.some((p) => p.data.category === s.id));
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<nav class="rail" aria-label="Sections">
+  <div class="wrap rail-row">
+    <a class="chip" href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
+    {live.map((s) => (
+      <a class="chip" href={`/c/${s.id}`} aria-current={path === `/c/${s.id}` ? 'page' : undefined} title={CATEGORY_META[s.id].blurb}>{s.label}</a>
+    ))}
+    <a class="chip" href="/random" aria-current={path === '/random' ? 'page' : undefined}>Surprise</a>
+  </div>
+</nav>
+
+<style>
+  .rail {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 40;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .rail-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto;
+    padding: 10px 0;
+    scrollbar-width: none;
+  }
+  .rail-row::-webkit-scrollbar { display: none; }
+  .rail-row .chip { text-decoration: none; }
+  .rail-row .chip[aria-current="page"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+</style>
+<script>
+  document.querySelector('.rail [aria-current="page"]')?.scrollIntoView({ inline: 'center', block: 'nearest' });
+</script>

@@ -1,0 +1,81 @@
+<!-- Design Lounge piece: chip-bucket · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Bucket</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.board{width:640px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.pile{display:flex;flex-direction:column;gap:10px}
+.chip{height:40px;padding:0 14px;border-radius:999px;border:1px solid #cfc6b8;background:#fff;font:500 14px var(--sans);cursor:grab;touch-action:none}
+.chip[hidden]{display:none}
+.bucket{width:220px;min-height:240px;background:#1c1b19;color:#f4f1ea;border-radius:8px 8px 16px 16px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.bucket h1{font:600 16px var(--sans);margin:0 0 8px}
+.bucket .chip{background:#2a2926;color:#f4f1ea;border-color:#3a342c;cursor:default}
+.note{margin:12px 0 0;color:var(--ink-2);font-size:14px;min-height:20px}
+@media (prefers-reduced-motion:reduce){.chip{transition:none}}
+</style>
+</head>
+<body>
+<div>
+  <div class="board">
+    <div class="pile" id="pile">
+      <button class="chip" type="button" id="c1">Gate 4</button>
+      <button class="chip" type="button" id="c2">Night book</button>
+      <button class="chip" type="button" id="c3">Hold list</button>
+    </div>
+    <div class="bucket" id="bucket">
+      <h1>Night bucket</h1>
+      <div id="in"></div>
+    </div>
+  </div>
+  <p class="note" id="note">Drag a chip into the bucket.</p>
+</div>
+<script>
+const bucket = document.getElementById('bucket');
+const note = document.getElementById('note');
+const inn = document.getElementById('in');
+document.querySelectorAll('#pile .chip').forEach((chip) => {
+  let drag = null;
+  chip.addEventListener('pointerdown', (e) => {
+    drag = { x: e.clientX, y: e.clientY, ox: 0, oy: 0 };
+    chip.setPointerCapture(e.pointerId);
+  });
+  chip.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    drag.ox = e.clientX - drag.x;
+    drag.oy = e.clientY - drag.y;
+    chip.style.transform = 'translate(' + drag.ox + 'px,' + drag.oy + 'px)';
+  });
+  function take() {
+    chip.hidden = true;
+    chip.style.transform = '';
+    const done = document.createElement('div');
+    done.className = 'chip';
+    done.textContent = chip.textContent;
+    inn.appendChild(done);
+    note.textContent = chip.textContent + ' is in the night bucket.';
+  }
+  chip.addEventListener('pointerup', () => {
+    if (!drag) return;
+    const a = chip.getBoundingClientRect();
+    const b = bucket.getBoundingClientRect();
+    const hit = a.right > b.left && a.left < b.right && a.bottom > b.top && a.top < b.bottom;
+    chip.style.transform = '';
+    drag = null;
+    if (hit) take();
+  });
+  chip.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') take();
+  });
+});
+</script>
+</body>
+</html>

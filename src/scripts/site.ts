@@ -65,6 +65,30 @@ document.querySelectorAll<HTMLElement>('[data-copy]').forEach((b) => {
   b.addEventListener('click', () => copyText(payload(b.dataset.copy!), b));
 });
 
+document.addEventListener('click', async (e) => {
+  const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-copy-brief-url]');
+  if (!btn) return;
+  e.preventDefault();
+  e.stopPropagation();
+  const url = btn.dataset.copyBriefUrl;
+  if (!url || btn.hasAttribute('data-done')) return;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return;
+    await copyText(await res.text(), btn);
+  } catch { /* leave the label alone */ }
+});
+
+document.addEventListener('pointerenter', (e) => {
+  const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="/p/"], a[href^="/c/"]');
+  if (!a || a.dataset.prefetched) return;
+  a.dataset.prefetched = '1';
+  const link = document.createElement('link');
+  link.rel = 'prefetch';
+  link.href = a.href;
+  document.head.appendChild(link);
+}, true);
+
 // Global keys
 addEventListener('keydown', (e) => {
   const tag = (e.target as HTMLElement).tagName;

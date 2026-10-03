@@ -1,0 +1,52 @@
+<!-- Design Lounge piece: lens-bento · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Lens</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px var(--sans);display:grid;place-items:center}
+.board{width:720px;height:420px;position:relative;background:var(--surface);border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.chip{position:absolute;height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line);display:grid;place-items:center;font:500 13px var(--sans);background:#f0ebe3;transition:transform 120ms linear}
+.lens{position:absolute;width:180px;height:180px;margin:-90px;border-radius:50%;border:2px solid var(--primary);pointer-events:none;left:var(--x,360px);top:var(--y,210px);box-shadow:0 0 0 999px rgba(246,244,239,.35)}
+</style>
+</head>
+<body>
+<div class="board" id="board">
+  <div class="lens" id="lens"></div>
+</div>
+<script>
+const names = ['Gate 4','Night book','Month close','Yard map','Store tally','Desk chat','Load bell','Cold room','Hold list','Rupee','Biratnagar','Type'];
+const board = document.getElementById('board');
+const lens = document.getElementById('lens');
+names.forEach((name, i) => {
+  const c = document.createElement('div');
+  c.className = 'chip';
+  c.textContent = name;
+  c.style.left = (40 + (i % 4) * 170) + 'px';
+  c.style.top = (48 + Math.floor(i / 4) * 120) + 'px';
+  board.appendChild(c);
+});
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+board.addEventListener('pointermove', (e) => {
+  const r = board.getBoundingClientRect();
+  const x = e.clientX - r.left, y = e.clientY - r.top;
+  lens.style.setProperty('--x', x+'px');
+  lens.style.setProperty('--y', y+'px');
+  if (reduce) return;
+  board.querySelectorAll('.chip').forEach((c) => {
+    const cr = c.getBoundingClientRect();
+    const cx = cr.left - r.left + cr.width/2, cy = cr.top - r.top + cr.height/2;
+    const d = Math.hypot(cx-x, cy-y);
+    const s = d < 90 ? 1.35 : 1;
+    c.style.transform = 'scale('+s+')';
+  });
+});
+</script>
+</body>
+</html>

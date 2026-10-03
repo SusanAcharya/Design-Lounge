@@ -1,0 +1,56 @@
+<!-- Design Lounge piece: link-orbit · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Connections</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--surface:#fffdf8;--ink:#1a1814;--ink-2:#5c564c;--line:#e3ddd2;--primary:#1f4d3a;--soft:#e7f2ec;--serif:"Fraunces",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.4 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.wrap{text-align:center}
+h1{font:560 40px/1 var(--serif);margin:0}
+.lead{margin:8px 0 20px;color:var(--ink-2)}
+.orbit{width:520px;height:520px;margin:0 auto;position:relative}
+.ring{position:absolute;inset:50px;border:1px dashed var(--line);border-radius:50%}
+.hub{position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-60px;border-radius:50%;background:var(--primary);color:#fffdf8;display:grid;place-items:center;font:560 22px var(--serif)}
+.node{position:absolute;left:50%;top:50%;width:92px;height:40px;margin:-20px 0 0 -46px;border:1px solid var(--line);background:var(--surface);border-radius:999px;font:500 13px var(--sans);color:var(--ink);cursor:pointer;transform:rotate(calc(var(--i) * 45deg)) translateY(-200px) rotate(calc(var(--i) * -45deg))}
+.node[aria-pressed="true"]{background:var(--soft);border-color:var(--primary);color:var(--primary)}
+.cap{margin:8px 0 0;min-height:22px;color:var(--ink-2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Around the yard</h1>
+  <p class="lead">Eight connections. One is live.</p>
+  <div class="orbit" id="orbit">
+    <div class="ring"></div>
+    <div class="hub">Yard</div>
+  </div>
+  <p class="cap" id="cap" aria-live="polite">Gate mail is connected.</p>
+</div>
+<script>
+const items = ['Gate mail','Night book','Month close','Yard map','Store tally','Desk chat','Load bell','Cold room'];
+const orbit = document.getElementById('orbit');
+const cap = document.getElementById('cap');
+items.forEach((name, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'node';
+  b.style.setProperty('--i', i);
+  b.textContent = name;
+  b.setAttribute('aria-pressed', String(i === 0));
+  b.addEventListener('click', () => {
+    orbit.querySelectorAll('.node').forEach((n) => n.setAttribute('aria-pressed', 'false'));
+    b.setAttribute('aria-pressed', 'true');
+    cap.textContent = name + ' is connected.';
+  });
+  orbit.appendChild(b);
+});
+</script>
+</body>
+</html>

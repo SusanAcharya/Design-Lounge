@@ -11,6 +11,6 @@ const items = Object.entries(STYLE_META)
   .sort((a, b) => b.count - a.count);
 ---
 <Base title="Styles" description="Design Lounge pieces by aesthetic: editorial, swiss, brutalist, glass, material, minimal, terminal, paper, luxe and more.">
-  <PageHead eyebrow="Styles" title="Aesthetics, <i>named</i>" blurb="Every piece carries one to three style tags. Use them to find a whole mood, then hand your agent two or three pieces that share it." count={items.length} countLabel="styles" />
+  <PageHead eyebrow="Styles" title="Styles" count={items.length} countLabel="styles" />
   <div class="wrap"><IndexTiles items={items} /></div>
 </Base>

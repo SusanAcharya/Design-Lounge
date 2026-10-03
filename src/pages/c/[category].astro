@@ -15,7 +15,7 @@ const group = CATEGORY_GROUPS.find((g) => g.items.includes(category))!;
 const siblings = group.items.filter((c) => c !== category).map((c) => ({ c, n: all.filter((p) => p.data.category === c).length })).filter((s) => s.n > 0);
 ---
 <Base title={meta.label} description={`${meta.label} in Design Lounge by Susan Acharya: ${meta.blurb}`}>
-  <PageHead eyebrow={`Index · ${group.label}`} title={meta.label} blurb={meta.blurb} count={pieces.length}>
+  <PageHead eyebrow={group.label} title={meta.label} count={pieces.length}>
     <nav class="sibs" aria-label={`More ${group.label.toLowerCase()}`}>
       <a class="eyebrow" href="/c">All categories</a>
       {siblings.map((s) => <a class="chip" href={`/c/${s.c}`}>{CATEGORY_META[s.c].label} <span class="cnt">{s.n}</span></a>)}

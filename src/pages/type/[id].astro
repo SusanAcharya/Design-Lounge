@@ -13,7 +13,7 @@ const others = PAIRINGS.filter((x) => x.id !== p.id).filter((x) => x.tags.some((
 ---
 <Base title={`${p.name} pairing`} description={`${p.name}: ${p.mood} A type pairing from Design Lounge by ${AUTHOR.name}.`}>
   <link rel="stylesheet" href={fontHref([p.display.spec, p.text.spec])} />
-  <PageHead eyebrow="Library · Type" title={p.name} blurb={p.mood} />
+  <PageHead eyebrow="Type" title={p.name} />
   <div class="wrap page">
     <section class="hero" style={`background:${p.bg};color:${p.ink}`}>
       <p class="label" style={`color:${p.accent}`}>{p.label}</p>

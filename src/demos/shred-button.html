@@ -1,0 +1,64 @@
+<!-- Design Lounge piece: shred-button · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Shred</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--danger:#9b2c2c;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.card{width:420px;text-align:center}
+.note{height:140px;background:var(--surface);border:1px solid var(--line);border-radius:2px;display:grid;place-items:center;margin-bottom:16px;position:relative;overflow:hidden}
+.note p{margin:0;font:600 22px var(--sans)}
+.strips{position:absolute;inset:0;display:flex;pointer-events:none;opacity:0}
+.strip{flex:1;background:var(--surface);border-right:1px solid var(--line);transform:translateY(-100%)}
+.note[data-shred="true"] .strips{opacity:1}
+.note[data-shred="true"] .strip{animation:fall 700ms cubic-bezier(0.2,0.7,0.2,1) forwards}
+.note[data-shred="true"] p{opacity:0}
+@keyframes fall{to{transform:translateY(110%) rotate(var(--r))}}
+button{height:44px;padding:0 16px;border:1px solid var(--danger);background:transparent;color:var(--danger);border-radius:2px;font:500 14px var(--sans);cursor:pointer}
+.out{min-height:22px;margin:12px 0 0;color:var(--ink-2);font-size:14px}
+@media (prefers-reduced-motion:reduce){.strip{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="note" id="note">
+    <p>Gate 4 draft</p>
+    <div class="strips" id="strips" aria-hidden="true"></div>
+  </div>
+  <button type="button" id="go">Shred draft</button>
+  <p class="out" id="out" aria-live="polite"></p>
+</div>
+<script>
+const strips = document.getElementById('strips');
+for (let i=0;i<12;i++){
+  const s = document.createElement('i');
+  s.className = 'strip';
+  s.style.setProperty('--r', ((i%2?1:-1)*(4+i%5))+'deg');
+  s.style.animationDelay = (i*30)+'ms';
+  strips.appendChild(s);
+}
+const note = document.getElementById('note');
+const go = document.getElementById('go');
+const out = document.getElementById('out');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+go.addEventListener('click', () => {
+  if (note.dataset.shred === 'true') {
+    note.dataset.shred = 'false';
+    go.textContent = 'Shred draft';
+    out.textContent = '';
+    return;
+  }
+  note.dataset.shred = 'true';
+  go.textContent = 'Restore draft';
+  out.textContent = reduce ? 'Draft shredded on this page.' : 'Draft shredded on this page.';
+});
+</script>
+</body>
+</html>

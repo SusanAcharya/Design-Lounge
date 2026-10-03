@@ -1,0 +1,51 @@
+<!-- Design Lounge piece: scroll-split · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Split</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--ink:#1a1814;--ink-2:#5c564c;--primary:#1f4d3a}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:18px/1.5 "Public Sans",system-ui,sans-serif}
+.stage{position:sticky;top:0;height:100vh;display:grid;place-items:center}
+.panels{display:flex;width:min(960px,calc(100% - 48px));height:360px;gap:var(--gap,0px)}
+.panel{flex:1;background:#1f4d3a;color:#fffdf8;padding:24px;display:flex;flex-direction:column;justify-content:flex-end}
+.panel:nth-child(2){background:#3a342c}
+.panel:nth-child(3){background:#1c1b19}
+.panel strong{font:560 28px/1.1 Fraunces,Georgia,serif}
+.copy{max-width:62ch;margin:0 auto;padding:8vh 32px 50vh}
+@media (prefers-reduced-motion:reduce){.panels{gap:16px!important}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="panels" id="panels">
+    <div class="panel"><strong>Gate 4</strong><span>Twelve loads.</span></div>
+    <div class="panel"><strong>Night book</strong><span>Closes at 22:00.</span></div>
+    <div class="panel"><strong>Month close</strong><span>One face for the totals.</span></div>
+  </div>
+</div>
+<section class="copy">
+  <p>Scroll and the one board opens into three panels.</p>
+  <p>Gate 4 still holds twelve loads. A hold older than six hours needs a person.</p>
+  <p>The night book closes at 22:00. Biratnagar calls at 11:00.</p>
+  <p>Nothing here is fetched. The words stay on this page.</p>
+</section>
+<script>
+const panels = document.getElementById('panels');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function paint() {
+  if (reduce) return;
+  const y = window.scrollY || document.documentElement.scrollTop || 0;
+  const gap = Math.min(16, (y / 240) * 16);
+  panels.style.setProperty('--gap', gap.toFixed(1) + 'px');
+}
+addEventListener('scroll', paint, { passive: true });
+paint();
+</script>
+</body>
+</html>

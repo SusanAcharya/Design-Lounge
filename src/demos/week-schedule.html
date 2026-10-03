@@ -1,0 +1,66 @@
+<!-- Design Lounge piece: week-schedule · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Week</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--surface:#fffdf8;--ink:#1a1814;--ink-2:#5c564c;--line:#e3ddd2;--primary:#1f4d3a;--soft:#e7f2ec;--serif:"Fraunces",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.4 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.board{width:1080px}
+h1{font:560 40px/1 var(--serif);margin:0 0 6px}
+.sub{margin:0 0 18px;color:var(--ink-2)}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;min-height:360px}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.day header{font:500 12px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.day[data-today="true"] header{color:var(--primary)}
+.ev{text-align:left;border:0;border-left:3px solid var(--primary);background:var(--soft);padding:8px;font:13px/1.3 var(--sans);color:var(--ink);cursor:pointer;border-radius:0 2px 2px 0}
+.ev[aria-pressed="true"]{background:var(--primary);color:#fffdf8}
+.out{margin:14px 0 0;min-height:22px;color:var(--ink-2)}
+</style>
+</head>
+<body>
+<div class="board">
+  <h1>Week of 28 Sep</h1>
+  <p class="sub" id="sub">Yard lead · Tuesday · 09:00</p>
+  <div class="days" id="days"></div>
+</div>
+<script>
+const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const events = {
+  1: [{ t: '09:00', name: 'Yard lead' }],
+  2: [{ t: '14:00', name: 'Month close' }],
+  3: [{ t: '11:00', name: 'Biratnagar call' }],
+  4: [{ t: '16:00', name: 'Type review' }],
+};
+const root = document.getElementById('days');
+const sub = document.getElementById('sub');
+days.forEach((d, i) => {
+  const col = document.createElement('section');
+  col.className = 'day';
+  if (i === 1) col.dataset.today = 'true';
+  col.innerHTML = '<header>'+d+'</header>';
+  (events[i] || []).forEach((ev) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ev';
+    b.textContent = ev.t + ' ' + ev.name;
+    b.setAttribute('aria-pressed', String(i === 1));
+      b.addEventListener('click', () => {
+      document.querySelectorAll('.ev').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      const full = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][i];
+      sub.textContent = ev.name + ' · ' + full + ' · ' + ev.t;
+    });
+    col.appendChild(b);
+  });
+  root.appendChild(col);
+});
+</script>
+</body>
+</html>

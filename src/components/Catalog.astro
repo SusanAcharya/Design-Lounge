@@ -15,8 +15,17 @@ const list = [...pieces].reverse(); // newest first
 const count = (k: 'platform' | 'type', v: string) => pieces.filter((p) => p.data[k] === v).length;
 const styleCount = (s: string) => pieces.filter((p) => (p.data.styles as string[]).includes(s)).length;
 const catCount = (c: string) => pieces.filter((p) => p.data.category === c).length;
-const looking = (['hero', 'navbar', 'footer', 'pricing', 'contact', 'portfolio', 'landing', 'dashboard', 'navigation', 'text-motion', 'design-language'] as Category[]).filter((c) => catCount(c) > 0);
-const extraCats = CATEGORY_GROUPS.flatMap((g) => g.items).filter((c) => catCount(c) > 0 && !looking.includes(c));
+const manyCats = new Set(pieces.map((p) => p.data.category)).size > 1;
+const SHORT: Partial<Record<Category, string>> = {
+  hero: 'Hero', navbar: 'Nav', features: 'Features', pricing: 'Pricing', cta: 'CTA', logos: 'Logos',
+  testimonials: 'Quotes', faq: 'FAQ', stats: 'Stats', team: 'Team', newsletter: 'Newsletter', blog: 'Blog',
+  gallery: 'Gallery', footer: 'Footer', portfolio: 'Portfolio', landing: 'Landing', auth: 'Sign in',
+  ecommerce: 'Shop', dashboard: 'Dashboard', reading: 'Docs', error: '404', inputs: 'Fields', overlays: 'Overlays',
+  cursor: 'Cursor', scroll: 'Scroll', contact: 'Contact', onboarding: 'Start', settings: 'Settings', profile: 'Profile',
+  messaging: 'Mail', media: 'Media', utility: 'Tools', navigation: 'Rails', buttons: 'Buttons', cards: 'Cards',
+  feedback: 'Status', data: 'Data', pickers: 'Pickers', charts: 'Charts', 'text-motion': 'Type', transitions: 'Moves',
+  loaders: 'Waiting', micro: 'Micro', backgrounds: 'Ground', 'design-language': 'Kits',
+};
 ---
 <section class="catalog" data-catalog>
   {showFilters && (
@@ -39,57 +48,63 @@ const extraCats = CATEGORY_GROUPS.flatMap((g) => g.items).filter((c) => catCount
           <button type="button" class="vbtn" data-view="grid" aria-pressed="true" aria-label="Grid view"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></button>
           <button type="button" class="vbtn" data-view="list" aria-pressed="false" aria-label="List view"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
         </div>
-      </div>
-      {looking.length > 0 && (
-        <div class="frow chips" data-group="category">
-          <span class="eyebrow">Called</span>
-          {looking.map((c) => (
-            <button type="button" class="chip" data-f="category" data-v={c} aria-pressed="false">{CATEGORY_META[c].label} <span class="cnt">{catCount(c)}</span></button>
-          ))}
-        </div>
-      )}
-      {!lock.type && (
-        <div class="frow chips" data-group="type">
-          <span class="eyebrow">Room</span>
-          {Object.entries(TYPE_META).map(([k, v]) => count('type', k) > 0 && (
-            <button type="button" class="chip" data-f="type" data-v={k} aria-pressed="false">{v.label} <span class="cnt">{count('type', k)}</span></button>
-          ))}
-        </div>
-      )}
-      {!lock.platform && (
-        <div class="frow chips" data-group="platform">
-          <span class="eyebrow">Platform</span>
-          {Object.entries(PLATFORM_META).map(([k, v]) => count('platform', k) > 0 && (
-            <button type="button" class="chip" data-f="platform" data-v={k} aria-pressed="false">{v.label} <span class="cnt">{count('platform', k)}</span></button>
-          ))}
-        </div>
-      )}
-      <div class="frow chips morerow">
-        <button type="button" class="chip" data-more aria-expanded="false">More filters</button>
+        <button type="button" class="chip filter-btn" data-more aria-expanded="false">Filter</button>
         <span class="status mono faint" data-status aria-live="polite"></span>
-        <button type="button" class="clear mono" data-clear hidden>Clear filters</button>
+        <button type="button" class="clear mono" data-clear hidden>Clear</button>
       </div>
-      {extraCats.length > 0 && (
-        <div class="frow chips extra" data-group="category-more" hidden>
-          <span class="eyebrow">Also</span>
-          {extraCats.map((c) => (
-            <button type="button" class="chip" data-f="category" data-v={c} aria-pressed="false">{CATEGORY_META[c].label} <span class="cnt">{catCount(c)}</span></button>
-          ))}
+      <div class="picks" data-picks hidden></div>
+      <div class="panel" data-panel hidden>
+        <div class="cols">
+          {!lock.type && (
+            <div class="col">
+              <span class="eyebrow">Room</span>
+              {Object.entries(TYPE_META).map(([k, v]) => count('type', k) > 0 && (
+                <button type="button" class="chip" data-f="type" data-v={k} aria-pressed="false">{v.label}</button>
+              ))}
+            </div>
+          )}
+          {!lock.platform && (
+            <div class="col">
+              <span class="eyebrow">Platform</span>
+              {Object.entries(PLATFORM_META).map(([k, v]) => count('platform', k) > 0 && (
+                <button type="button" class="chip" data-f="platform" data-v={k} aria-pressed="false">{v.label}</button>
+              ))}
+            </div>
+          )}
+          <div class="col">
+            <span class="eyebrow">Motion</span>
+            <button type="button" class="chip" data-f="motion" data-v="none" aria-pressed="false">Static</button>
+            <button type="button" class="chip" data-f="motion" data-v="subtle" aria-pressed="false">Subtle</button>
+            <button type="button" class="chip" data-f="motion" data-v="rich" aria-pressed="false">Rich</button>
+          </div>
         </div>
-      )}
-      {!lock.style && (
-        <div class="frow chips extra" data-group="style" hidden>
-          <span class="eyebrow">Style</span>
-          {Object.entries(STYLE_META).map(([k, v]) => styleCount(k) > 0 && (
-            <button type="button" class="chip" data-f="style" data-v={k} aria-pressed="false">{v.label} <span class="cnt">{styleCount(k)}</span></button>
-          ))}
-        </div>
-      )}
-      <div class="frow chips extra" data-group="motion" hidden>
-        <span class="eyebrow">Motion</span>
-        <button type="button" class="chip" data-f="motion" data-v="none" aria-pressed="false">Static</button>
-        <button type="button" class="chip" data-f="motion" data-v="subtle" aria-pressed="false">Subtle</button>
-        <button type="button" class="chip" data-f="motion" data-v="rich" aria-pressed="false">Rich</button>
+        {!lock.style && (
+          <div class="block">
+            <span class="eyebrow">Style</span>
+            <div class="chips">
+              {Object.entries(STYLE_META).map(([k, v]) => styleCount(k) > 0 && (
+                <button type="button" class="chip" data-f="style" data-v={k} aria-pressed="false">{v.label}</button>
+              ))}
+            </div>
+          </div>
+        )}
+        {manyCats && (
+          <div class="groups">
+            {CATEGORY_GROUPS.map((g) => {
+              const items = g.items.filter((c) => catCount(c) > 0);
+              return items.length > 0 && (
+                <div class="block">
+                  <span class="eyebrow">{g.label}</span>
+                  <div class="chips">
+                    {items.map((c) => (
+                      <button type="button" class="chip" data-f="category" data-v={c} aria-pressed="false">{SHORT[c] ?? CATEGORY_META[c].label}</button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   )}
@@ -157,6 +172,21 @@ const extraCats = CATEGORY_GROUPS.flatMap((g) => g.items).filter((c) => catCount
         view !== 'grid' ? u.searchParams.set('view', view) : u.searchParams.delete('view');
         history.replaceState(null, '', u);
       }
+      paintPicks();
+    }
+    function paintPicks() {
+      if (!picks) return;
+      picks.replaceChildren();
+      const on = chips.filter((ch) => state[ch.dataset.f!]?.has(ch.dataset.v!));
+      picks.hidden = on.length === 0;
+      for (const ch of on) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'chip on';
+        b.textContent = (ch.textContent || '').trim();
+        b.addEventListener('click', () => { state[ch.dataset.f!].delete(ch.dataset.v!); apply(); });
+        picks.appendChild(b);
+      }
     }
     chips.forEach((ch) => ch.addEventListener('click', () => { const s = state[ch.dataset.f!]; s.has(ch.dataset.v!) ? s.delete(ch.dataset.v!) : s.add(ch.dataset.v!); apply(); }));
     q?.addEventListener('input', () => apply());
@@ -164,21 +194,28 @@ const extraCats = CATEGORY_GROUPS.flatMap((g) => g.items).filter((c) => catCount
     clears.forEach((b) => b.addEventListener('click', () => { Object.values(state).forEach((s) => s.clear()); if (q) q.value = ''; apply(); }));
     views.forEach((v) => v.addEventListener('click', () => { view = v.dataset.view!; try { localStorage.setItem('dl-view', view); } catch {} apply(); }));
     const more = root.querySelector<HTMLButtonElement>('[data-more]');
-    const extras = root.querySelectorAll<HTMLElement>('.extra');
-    const openMore = (on: boolean) => { extras.forEach((e) => (e.hidden = !on)); more?.setAttribute('aria-expanded', String(on)); more?.setAttribute('aria-pressed', String(on)); };
+    const panel = root.querySelector<HTMLElement>('[data-panel]');
+    const picks = root.querySelector<HTMLElement>('[data-picks]');
+    const openMore = (on: boolean) => { if (panel) panel.hidden = !on; more?.setAttribute('aria-expanded', String(on)); more?.setAttribute('aria-pressed', String(on)); };
     more?.addEventListener('click', () => openMore(more.getAttribute('aria-expanded') !== 'true'));
-    const extraCatVals = [...root.querySelectorAll<HTMLButtonElement>('.extra [data-f="category"]')].map((b) => b.dataset.v!);
-    if (state.style.size || state.motion.size || extraCatVals.some((v) => state.category.has(v))) openMore(true);
     apply(false);
   });
 </script>
 
 <style>
-  .filters { display: flex; flex-direction: column; gap: 10px; padding: 18px 0 22px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+  .filters { display: flex; flex-direction: column; gap: 12px; padding: 16px 0 18px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
   .frow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .frow[hidden] { display: none; }
-  .morerow { padding-top: 4px; }
-  .frow .eyebrow { width: 72px; flex: none; }
+  .filter-btn { height: 40px; }
+  .picks { display: flex; flex-wrap: wrap; gap: 6px; }
+  .picks[hidden] { display: none; }
+  .panel { display: flex; flex-direction: column; gap: 18px; padding-top: 4px; }
+  .panel[hidden] { display: none; }
+  .cols { display: flex; flex-wrap: wrap; gap: 28px 48px; }
+  .col { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .col .eyebrow, .block .eyebrow { margin-bottom: 2px; }
+  .block { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px 28px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .q { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: var(--r); flex: 1; min-width: 200px; max-width: 420px; background: var(--paper); }
   .q:focus-within { border-color: var(--ink); }
   .q svg { stroke: var(--ink-3); fill: none; stroke-width: 1.75; stroke-linecap: round; }
@@ -188,11 +225,11 @@ const extraCats = CATEGORY_GROUPS.flatMap((g) => g.items).filter((c) => catCount
   .fgroup .eyebrow { width: auto; }
   select { height: 40px; border: 1px solid var(--line-2); border-radius: var(--r); background: var(--paper); padding: 0 32px 0 12px; font-size: 13px; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238c867b' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>"); background-repeat: no-repeat; background-position: right 10px center; }
   .views { margin-left: auto; border: 1px solid var(--line-2); border-radius: var(--r); overflow: hidden; }
+  .status { font-size: 12px; }
   .vbtn { width: 40px; height: 38px; display: grid; place-items: center; color: var(--ink-3); }
   .vbtn svg { stroke: currentColor; fill: none; stroke-width: 1.75; }
   .vbtn[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
   .chip .cnt { opacity: .55; margin-left: 2px; }
-  .status { margin-left: auto; }
   .clear { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 3px; color: var(--ink-2); }
   .none { padding: 48px 0; color: var(--ink-2); text-align: center; }
   .linkish { text-decoration: underline; text-underline-offset: 3px; }

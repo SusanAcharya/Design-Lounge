@@ -1,0 +1,67 @@
+<!-- Design Lounge piece: coverflow-strip · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Loads</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#141311;--card:#1c1b19;--ink:#f4f1ea;--ink-2:#a39b90;--primary:#d7b15e;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.stage{width:980px;height:360px;position:relative;perspective:900px}
+.card{position:absolute;left:50%;top:40px;width:220px;height:280px;margin-left:-110px;background:var(--card);border-radius:4px;padding:20px;transition:transform 420ms cubic-bezier(0.16,1,0.3,1),opacity 420ms}
+.card strong{display:block;font:600 28px/1.1 var(--sans);margin-bottom:8px}
+.card span{color:var(--ink-2);font-size:14px}
+.nav{display:flex;gap:8px;justify-content:center;margin-top:16px}
+button{height:40px;padding:0 14px;border:1px solid #2c2a26;background:transparent;color:var(--ink);border-radius:2px;font:500 14px var(--sans);cursor:pointer}
+button:disabled{opacity:.35}
+@media (prefers-reduced-motion:reduce){.card{transition:none}}
+</style>
+</head>
+<body>
+<div>
+  <div class="stage" id="stage"></div>
+  <div class="nav">
+    <button type="button" id="prev">Previous</button>
+    <button type="button" id="next">Next</button>
+  </div>
+</div>
+<script>
+const items = [['18','Held · Gate 4'],['19','Held · Gate 4'],['20','Clear · Gate 2'],['21','Clear · Gate 1'],['22','Due · Biratnagar']];
+const stage = document.getElementById('stage');
+let i = 2;
+const cards = items.map((it, n) => {
+  const el = document.createElement('button');
+  el.type = 'button';
+  el.className = 'card';
+  el.innerHTML = '<strong>'+it[0]+'</strong><span>'+it[1]+'</span>';
+  el.addEventListener('click', () => { i = n; paint(); });
+  stage.appendChild(el);
+  return el;
+});
+function paint(){
+  cards.forEach((el, n) => {
+    const d = n - i;
+    const x = d * 180;
+    const z = d === 0 ? 40 : -80;
+    const r = d * -18;
+    const o = Math.abs(d) > 2 ? 0 : 1;
+    el.style.transform = 'translateX('+x+'px) translateZ('+z+'px) rotateY('+r+'deg)';
+    el.style.opacity = o;
+    el.style.zIndex = String(10 - Math.abs(d));
+    el.setAttribute('aria-current', String(d === 0));
+    el.disabled = false;
+  });
+  document.getElementById('prev').disabled = i === 0;
+  document.getElementById('next').disabled = i === items.length - 1;
+}
+document.getElementById('prev').onclick = () => { if (i>0){ i--; paint(); } };
+document.getElementById('next').onclick = () => { if (i<items.length-1){ i++; paint(); } };
+paint();
+</script>
+</body>
+</html>

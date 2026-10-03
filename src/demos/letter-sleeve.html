@@ -1,0 +1,45 @@
+<!-- Design Lounge piece: letter-sleeve · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Letter</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--ink:#1a1814;--ink-2:#5c564c;--primary:#1f4d3a;--line:#e3ddd2}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);display:grid;place-items:center;font:16px/1.45 "Public Sans",system-ui,sans-serif}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.stage{width:420px;height:360px;position:relative}
+.letter{position:absolute;left:50px;top:36px;width:300px;background:#fffdf8;border:1px solid var(--line);padding:24px;transform:translateY(20px) rotate(-2deg);transition:transform 480ms cubic-bezier(0.16,1,0.3,1);z-index:1}
+.stage[data-tuck="true"] .letter{transform:translateY(150px) rotate(0deg)}
+.letter h1{font:560 28px/1.15 Fraunces,Georgia,serif;margin:0 0 8px}
+.letter p{margin:0;color:var(--ink-2)}
+.sleeve{position:absolute;left:20px;right:20px;bottom:48px;height:120px;background:#1c1b19;border-radius:2px 2px 8px 8px;z-index:2}
+button{position:absolute;left:0;bottom:0;height:40px;padding:0 12px;border:1px solid var(--line);background:#fffdf8;font:500 14px "Public Sans",system-ui,sans-serif;cursor:pointer;border-radius:2px}
+@media (prefers-reduced-motion:reduce){.letter{transition:none}}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <article class="letter">
+    <h1>Gate 4</h1>
+    <p>Twelve loads are still held. Signed by the night desk.</p>
+  </article>
+  <div class="sleeve" aria-hidden="true"></div>
+  <button type="button" id="go" aria-expanded="true">Tuck the letter</button>
+</div>
+<script>
+const stage = document.getElementById('stage');
+const go = document.getElementById('go');
+go.addEventListener('click', () => {
+  const tuck = stage.dataset.tuck !== 'true';
+  stage.dataset.tuck = String(tuck);
+  go.setAttribute('aria-expanded', String(!tuck));
+  go.textContent = tuck ? 'Pull the letter' : 'Tuck the letter';
+});
+</script>
+</body>
+</html>

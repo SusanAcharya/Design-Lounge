@@ -1,0 +1,57 @@
+<!-- Design Lounge piece: spring-deck · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--ink:#1a1814;--ink-2:#5c564c;--line:#e3ddd2;--primary:#1f4d3a}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);display:grid;place-items:center;font:16px "Public Sans",system-ui,sans-serif}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.deck{width:320px;height:240px;position:relative}
+.card{position:absolute;inset:0;background:#fffdf8;border:1px solid var(--line);border-radius:2px;padding:24px}
+.card h2{font:560 28px Fraunces,Georgia,serif;margin:0 0 8px}
+.card p{margin:0;color:var(--ink-2)}
+.c1{transform:rotate(-3deg) translate(-8px,6px)}
+.c2{transform:rotate(2deg) translate(8px,4px)}
+.front{z-index:2;cursor:grab;touch-action:none;transition:transform 420ms cubic-bezier(0.16,1,0.3,1)}
+.front.drag{transition:none;cursor:grabbing}
+@media (prefers-reduced-motion:reduce){.front{transition:none}}
+</style>
+</head>
+<body>
+<div class="deck">
+  <article class="card c1"><h2>Night book</h2><p>Closes at 22:00.</p></article>
+  <article class="card c2"><h2>Month close</h2><p>Totals keep their face.</p></article>
+  <article class="card front" id="front" tabindex="0" role="group" aria-label="Gate 4. Drag and it springs back.">
+    <h2>Gate 4</h2>
+    <p>Twelve loads held. Drag the card. It returns.</p>
+  </article>
+</div>
+<script>
+const front = document.getElementById('front');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let drag = null;
+front.addEventListener('pointerdown', (e) => {
+  drag = { x: e.clientX, y: e.clientY };
+  front.classList.add('drag');
+  front.setPointerCapture(e.pointerId);
+});
+front.addEventListener('pointermove', (e) => {
+  if (!drag || reduce) return;
+  front.style.transform = 'translate(' + (e.clientX - drag.x) + 'px,' + (e.clientY - drag.y) + 'px) rotate(-2deg)';
+});
+function back() {
+  drag = null;
+  front.classList.remove('drag');
+  front.style.transform = '';
+}
+front.addEventListener('pointerup', back);
+front.addEventListener('pointercancel', back);
+</script>
+</body>
+</html>

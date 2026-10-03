@@ -1,0 +1,59 @@
+<!-- Design Lounge piece: split-button · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Send the note</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--surface:#fff;--surface-2:#f0ebe3;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-2:#cfc6b8;--primary:#1f4d3a;--primary-ink:#fffdf8;--soft:#e7f2ec;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.wrap{width:320px}
+.split{display:flex;height:44px;position:relative}
+.main,.chev{border:0;background:var(--primary);color:var(--primary-ink);font:500 14px var(--sans);cursor:pointer}
+.main{flex:1;border-radius:2px 0 0 2px;text-align:left;padding:0 16px}
+.chev{width:44px;border-left:1px solid rgba(255,253,248,.28);border-radius:0 2px 2px 0}
+.menu{position:absolute;top:52px;left:0;right:0;background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:4px;display:flex;flex-direction:column}
+.menu[hidden]{display:none}
+.menu button{height:40px;text-align:left;padding:0 12px;border:0;background:transparent;font:14px var(--sans);color:var(--ink);cursor:pointer;border-radius:2px}
+.menu button:hover,.menu button:focus-visible{background:var(--soft)}
+.out{margin:72px 0 0;min-height:22px;font-size:14px;color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="split">
+    <button class="main" type="button" id="go">Send now</button>
+    <button class="chev" type="button" id="more" aria-expanded="true" aria-controls="menu" aria-label="More send actions">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="menu" id="menu" role="menu">
+      <button type="button" role="menuitem" data-act="Send now">Send now</button>
+      <button type="button" role="menuitem" data-act="Schedule for 18:00">Schedule for 18:00</button>
+      <button type="button" role="menuitem" data-act="Save as a draft">Save as a draft</button>
+    </div>
+  </div>
+  <p class="out" id="out" aria-live="polite">Choose how the Gate 4 note leaves.</p>
+</div>
+<script>
+const more = document.getElementById('more');
+const menu = document.getElementById('menu');
+const out = document.getElementById('out');
+const go = document.getElementById('go');
+function setOpen(on){ menu.hidden = !on; more.setAttribute('aria-expanded', String(on)); }
+more.addEventListener('click', () => setOpen(menu.hidden));
+go.addEventListener('click', () => { out.textContent = 'Sent now · Gate 4 note'; setOpen(false); });
+menu.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-act]');
+  if (!b) return;
+  out.textContent = b.dataset.act + ' · Gate 4 note';
+  setOpen(false);
+});
+</script>
+</body>
+</html>

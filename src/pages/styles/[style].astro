@@ -14,7 +14,7 @@ const pieces = all.filter((p) => (p.data.styles as string[]).includes(style));
 const others = Object.entries(STYLE_META).filter(([k]) => k !== style && all.some((p) => (p.data.styles as string[]).includes(k)));
 ---
 <Base title={`${meta.label} style`} description={`${meta.label} pieces in the Design Lounge. ${meta.blurb}`}>
-  <PageHead eyebrow="Style" title={meta.label} blurb={meta.blurb} count={pieces.length}>
+  <PageHead eyebrow="Style" title={meta.label} count={pieces.length}>
     <nav class="rooms" aria-label="Other styles">
       <span class="eyebrow">Other styles</span>
       {others.map(([k, v]) => <a class="chip" href={`/styles/${k}`}>{v.label}</a>)}

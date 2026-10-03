@@ -1,5 +1,16 @@
 /* Design Lounge — global styles */
 
+@view-transition { navigation: auto; }
+.hdr { view-transition-name: lounge-header; }
+.rail { view-transition-name: lounge-rail; }
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 180ms; animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1); }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}
+
 :root {
   /* day */
   --paper: #f3efe6;
@@ -159,9 +170,17 @@ a.chip:hover, button.chip:hover { border-color: var(--ink); color: var(--ink); }
 .card .meta { display: flex; align-items: baseline; gap: 10px; }
 .card .n { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--ink-3); }
 .card .title { font-family: var(--display); font-size: 21px; letter-spacing: -0.015em; line-height: 1.1; font-variation-settings: "opsz" 24; }
-.card .title a::after { content: ""; position: absolute; inset: 0; }
+.card .title a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
 .card:hover .title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--ink-3); }
 .card .summary { font-size: 13.5px; line-height: 1.45; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.card .brief-copy {
+  position: relative; z-index: 5; align-self: flex-start; height: 28px; padding: 0 10px; margin-top: 2px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-2); background: var(--paper); border: 1px solid var(--line-2); border-radius: 999px;
+  transition: color var(--t-fast), border-color var(--t-fast), background-color var(--t-fast);
+}
+.card .brief-copy:hover { color: var(--ink); border-color: var(--ink); }
+.card .brief-copy[data-done] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
 .card .foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: auto; font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; }
 .card .foot .sep { opacity: 0.5; }
 

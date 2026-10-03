@@ -1,0 +1,44 @@
+<!-- Design Lounge piece: glitch-text · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Signal</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#141311;--ink:#f4f1ea;--primary:#d7b15e;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);display:grid;place-items:center;text-align:center}
+:focus-visible{outline:2px solid var(--primary);outline-offset:4px}
+h1{font-size:84px;font-weight:600;letter-spacing:-.03em;margin:0;position:relative}
+h1[data-on="true"]{animation:shake 480ms steps(2) 1}
+h1[data-on="true"]::before,h1[data-on="true"]::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%}
+h1[data-on="true"]::before{color:#9b2c2c;transform:translate(-4px,0);clip-path:inset(0 0 55% 0);animation:slice 480ms steps(2) 1}
+h1[data-on="true"]::after{color:#1f4d3a;transform:translate(4px,0);clip-path:inset(45% 0 0 0)}
+@keyframes shake{50%{transform:translate(2px,-1px)}}
+@keyframes slice{50%{transform:translate(-8px,1px)}}
+button{margin-top:28px;height:40px;padding:0 14px;border:1px solid #2c2a26;background:transparent;color:var(--ink);font:600 14px var(--sans);cursor:pointer;border-radius:2px}
+@media (prefers-reduced-motion:reduce){h1[data-on="true"],h1[data-on="true"]::before{animation:none}}
+</style>
+</head>
+<body>
+<div>
+  <h1 id="h" data-text="GATE 4">GATE 4</h1>
+  <button type="button" id="go">Replay</button>
+</div>
+<script>
+const h = document.getElementById('h');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function play(){
+  h.dataset.on = 'false';
+  if (reduce) return;
+  void h.offsetWidth;
+  h.dataset.on = 'true';
+}
+document.getElementById('go').addEventListener('click', play);
+play();
+</script>
+</body>
+</html>

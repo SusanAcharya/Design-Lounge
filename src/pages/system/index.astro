@@ -5,20 +5,19 @@ import { AUTHOR } from '../../lib/pieces';
 import { PAIRINGS } from '../../data/type';
 import { THEMES } from '../../data/themes';
 import { ICONS, iconSvg } from '../../data/icons';
-import { RECIPES, EASINGS } from '../../data/motion';
+import { RECIPES } from '../../data/motion';
 
 const previewIcons = ICONS.filter((i) => ['search', 'menu', 'heart', 'arrow-right', 'bell', 'image', 'cart', 'mail', 'file', 'check'].includes(i.id)).slice(0, 8);
 const previewThemes = THEMES.slice(0, 6);
 ---
 <Base title="System" description={`Type, themes, icons and motion from Design Lounge by ${AUTHOR.name}. The ingredients of a design system, copyable.`}>
-  <PageHead eyebrow="The system" title="Ingredients, <i>not leftovers</i>" blurb="Before you draw a screen, lock the grammar: a pairing, a theme, an icon stroke, a motion recipe. This is what a future skill will hand your agent first." count={PAIRINGS.length + THEMES.length + ICONS.length + RECIPES.length} countLabel="tokens" />
+  <PageHead eyebrow="System" title="System" count={PAIRINGS.length + THEMES.length + ICONS.length + RECIPES.length} countLabel="tokens" />
   <div class="wrap page">
     <ol class="libs">
       <li>
         <a href="/type">
           <span class="eyebrow">Type · {String(PAIRINGS.length).padStart(2, '0')}</span>
-          <h2 class="display h3">Pairings</h2>
-          <p class="muted">Display and text marriages that already work. Copy the CSS. Don’t invent a pairing if one here fits.</p>
+          <h2 class="display h3">Type</h2>
           <ol class="spec" aria-hidden="true">
             {PAIRINGS.slice(0, 3).map((p) => (
               <li>
@@ -32,8 +31,7 @@ const previewThemes = THEMES.slice(0, 6);
       <li>
         <a href="/themes">
           <span class="eyebrow">Themes · {String(THEMES.length).padStart(2, '0')}</span>
-          <h2 class="display h3">Palettes</h2>
-          <p class="muted">Full token sets — paper, ink, accent, radius, shadow — not five hex chips on a Dribbble shot.</p>
+          <h2 class="display h3">Themes</h2>
           <ol class="swatch-rows" aria-hidden="true">
             {previewThemes.map((t) => (
               <li>
@@ -47,25 +45,19 @@ const previewThemes = THEMES.slice(0, 6);
       <li>
         <a href="/icons">
           <span class="eyebrow">Icons · {String(ICONS.length).padStart(2, '0')}</span>
-          <h2 class="display h3">Lounge Icons</h2>
-          <p class="muted">One 24px stroke family. Copy a single SVG or the whole sprite. Same weight as the site chrome.</p>
+          <h2 class="display h3">Icons</h2>
           <div class="icos" aria-hidden="true" set:html={previewIcons.map((i) => iconSvg(i, { size: 28 })).join('')} />
         </a>
       </li>
       <li>
         <a href="/motion">
           <span class="eyebrow">Motion · {String(RECIPES.length).padStart(2, '0')}</span>
-          <h2 class="display h3">Recipes</h2>
-          <p class="muted">{EASINGS.length} curves, seven durations, {RECIPES.length} recipes. Numbers, not “make it smooth”.</p>
+          <h2 class="display h3">Motion</h2>
           <div class="ease" aria-hidden="true"><i></i><span class="mono faint">lounge-standard · 320ms</span></div>
         </a>
       </li>
     </ol>
-    <aside class="note">
-      <p class="eyebrow">For a new product</p>
-      <p>Pick a <a href="/start">start recipe</a>. It names a theme, a pairing, a shelf of pieces, and the categories to pull from. That is the skill, written as a page.</p>
-      <p class="mono faint">System by {AUTHOR.name} · Design Lounge · {AUTHOR.siteLabel}</p>
-    </aside>
+    <p class="note">Sources are the public sites. <a href="/sources">One product, one site.</a></p>
   </div>
 </Base>
 

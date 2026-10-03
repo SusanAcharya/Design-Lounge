@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { getPieces, numberMap, AUTHOR } from '../lib/pieces';
+import { SOURCES, studyPiece } from '../data/website-list';
+
+const pieces = await getPieces();
+const nums = numberMap(pieces);
+const groups = SOURCES.map((source) => ({
+  source,
+  pieces: pieces
+    .filter((p) => studyPiece(p, SOURCES).source.id === source.id)
+    .sort((a, b) => a.data.title.localeCompare(b.data.title)),
+}));
+---
+<Base title="Sources" description={`Public sites studied by Design Lounge, ${AUTHOR.name}. One product, one site.`}>
+  <PageHead eyebrow="Sources" title="Sites worth opening." count={SOURCES.length} countLabel="sites">
+    <p class="lede">One product studies one site. The palette stays a Lounge theme. Add a link to the list and it shows up here.</p>
+  </PageHead>
+  <div class="wrap list">
+    {groups.map(({ source, pieces: group }) => (
+      <section id={source.id}>
+        <header>
+          <h2 class="display h3"><a href={source.url} target="_blank" rel="noopener">{source.name}</a></h2>
+          <p>{source.line}</p>
+          <p class="take">{source.take}</p>
+          <p class="mono faint">{source.host} · {String(group.length).padStart(2, '0')} screens</p>
+        </header>
+        {group.length > 0 ? (
+          <ol>
+            {group.map((p) => (
+              <li><a href={`/p/${p.id}`}><span class="mono faint">Nº {nums.get(p.id)}</span> {p.data.title}</a></li>
+            ))}
+          </ol>
+        ) : (
+          <p class="wait">No screen claims this site yet.</p>
+        )}
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .lede { max-width: 42ch; color: var(--ink-2); }
+  .list { display: flex; flex-direction: column; margin-top: 36px; }
+  section { display: grid; grid-template-columns: minmax(220px, 320px) 1fr; gap: 32px 48px; padding: 28px 0; border-top: 1px solid var(--ink); }
+  header { display: flex; flex-direction: column; gap: 8px; }
+  header p { color: var(--ink-2); max-width: 36ch; }
+  .take { color: var(--ink); }
+  h2 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  ol { display: flex; flex-wrap: wrap; gap: 8px 18px; align-content: start; }
+  li a { font-size: 14px; }
+  li a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .wait { color: var(--ink-3); }
+  @media (max-width: 800px) { section { grid-template-columns: 1fr; gap: 16px; } }
+</style>

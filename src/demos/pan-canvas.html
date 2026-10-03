@@ -1,0 +1,55 @@
+<!-- Design Lounge piece: pan-canvas · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Yard map</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--primary:#1f4d3a;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#141311;color:#f4f1ea;font:14px var(--sans);display:grid;place-items:center}
+:focus-visible{outline:2px solid #d7b15e;outline-offset:2px}
+.frame{width:960px;height:560px;overflow:hidden;border:1px solid #2c2a26;border-radius:2px;cursor:grab;position:relative;touch-action:none}
+.frame:active{cursor:grabbing}
+.grid{position:absolute;width:1600px;height:1000px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px}
+.cell{background:#1c1b19;border:1px solid #2c2a26;border-radius:2px;padding:16px;min-height:220px}
+.cell b{display:block;font-size:20px;margin-bottom:6px}
+.cell span{color:#a39b90}
+.hint{position:absolute;left:16px;bottom:12px;color:#a39b90;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="frame" id="frame" tabindex="0" role="application" aria-label="Yard map. Drag to pan. Arrow keys move the view.">
+  <div class="grid" id="grid"></div>
+  <p class="hint">Drag the map</p>
+</div>
+<script>
+const names = ['Gate 1','Gate 2','Gate 4','Cold room','Night desk','Store','Biratnagar','Type room','Hold bay','Month close','Load bell','Yard office','Salt room','Paper store','Dispatch','Archive'];
+const grid = document.getElementById('grid');
+names.forEach((n) => {
+  const c = document.createElement('div');
+  c.className = 'cell';
+  c.innerHTML = '<b>'+n+'</b><span>Local sample. Nothing is live.</span>';
+  grid.appendChild(c);
+});
+const frame = document.getElementById('frame');
+let x = -80, y = -40, drag = null;
+function paint(){ grid.style.transform = 'translate('+x+'px,'+y+'px)'; }
+frame.addEventListener('pointerdown', (e) => { drag = {x:e.clientX-x, y:e.clientY-y}; frame.setPointerCapture(e.pointerId); });
+frame.addEventListener('pointermove', (e) => { if (!drag) return; x = e.clientX-drag.x; y = e.clientY-drag.y; paint(); });
+frame.addEventListener('pointerup', () => drag = null);
+frame.addEventListener('keydown', (e) => {
+  const s = 40;
+  if (e.key === 'ArrowLeft') x += s;
+  if (e.key === 'ArrowRight') x -= s;
+  if (e.key === 'ArrowUp') y += s;
+  if (e.key === 'ArrowDown') y -= s;
+  paint();
+});
+paint();
+</script>
+</body>
+</html>

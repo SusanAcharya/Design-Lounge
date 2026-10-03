@@ -7,7 +7,7 @@ import { AUTHOR } from '../../lib/pieces';
 const tokens = tokensCss();
 ---
 <Base title="Motion & easing" description={`Easings, durations and motion recipes from Design Lounge by ${AUTHOR.name}. Numbers, not adjectives.`}>
-  <PageHead eyebrow="Library · Motion" title="Motion with a <i>reason</i>" blurb="Twelve curves, seven durations, sixteen recipes. Every piece in the Lounge uses these, or says why it doesn't. Copy the tokens. Honour reduced motion." count={RECIPES.length} countLabel="recipes" />
+  <PageHead eyebrow="System" title="Motion" count={RECIPES.length} countLabel="recipes" />
   <div class="wrap page">
     <section>
       <div class="section-head"><div><span class="eyebrow">Curves</span><h2 class="display h3">Easings</h2></div>
@@ -43,7 +43,7 @@ const tokens = tokensCss();
     </section>
 
     <section>
-      <div class="section-head"><div><span class="eyebrow">Recipes</span><h2 class="display h3">When to use what</h2></div></div>
+      <div class="section-head"><h2 class="display h3">Recipes</h2></div>
       <ol class="recipes">
         {RECIPES.map((r) => (
           <li>
@@ -58,13 +58,11 @@ const tokens = tokensCss();
               <div><dt>Time</dt><dd>{r.duration} · {r.easing}{r.delay ? ` · ${r.delay}` : ''}</dd></div>
               <div><dt>Reduced</dt><dd>{r.reduced}</dd></div>
             </dl>
-            <p class="muted">{r.note}</p>
             <script type="application/json" id={`rec-${r.id}`} set:html={JSON.stringify(recipeCss(r))}></script>
           </li>
         ))}
       </ol>
     </section>
-    <p class="mono faint">Motion library by {AUTHOR.name} · Design Lounge · {AUTHOR.siteLabel}</p>
     <script type="application/json" id="tokens-json" set:html={JSON.stringify(tokens)}></script>
   </div>
 </Base>

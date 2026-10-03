@@ -1,0 +1,34 @@
+<!-- Design Lounge piece: edge-light-button · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hollis — Edge</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#141311;--ink:#f4f1ea;--primary:#d7b15e;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);display:grid;place-items:center;font-family:var(--sans)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:6px}
+.wrap{position:relative;display:inline-grid}
+.wrap::before{content:"";position:absolute;inset:-2px;border-radius:4px;background:conic-gradient(#d7b15e, transparent 40%, #d7b15e);animation:spin 2.8s linear infinite}
+button{position:relative;height:52px;padding:0 22px;border:0;border-radius:2px;background:#1c1b19;color:var(--ink);font:600 15px var(--sans);cursor:pointer}
+.out{position:absolute;left:0;right:0;top:72px;text-align:center;color:#a39b90;font-size:14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.wrap::before{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <button type="button" id="go">Open the gate</button>
+  <p class="out" id="out" aria-live="polite"></p>
+</div>
+<script>
+document.getElementById('go').addEventListener('click', () => {
+  document.getElementById('out').textContent = 'Gate 4 opened on this page.';
+});
+</script>
+</body>
+</html>
