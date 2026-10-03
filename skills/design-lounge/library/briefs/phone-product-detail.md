@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 225 · "Phone product page" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 231 · "Phone product page" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Phone product page
 

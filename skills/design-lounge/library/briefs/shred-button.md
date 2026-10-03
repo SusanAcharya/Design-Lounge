@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 251 · "Shred button" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 260 · "Shred button" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Shred button
 

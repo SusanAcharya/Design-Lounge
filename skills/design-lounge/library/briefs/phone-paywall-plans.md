@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 222 · "Phone paywall with two plans" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 228 · "Phone paywall with two plans" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Phone paywall with two plans
 

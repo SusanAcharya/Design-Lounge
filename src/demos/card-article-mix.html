@@ -1,0 +1,180 @@
+<!-- Design Lounge piece: card-article-mix · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>This week · Tributary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f2ecdf;--paper-2:#e8e0cf;--ink:#16140f;--ink-2:#4b463c;--ink-3:#6e685c;
+  --rule:#d3c9b4;--cobalt:#1f44c4;
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Schibsted Grotesk",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--t-micro:160ms;--t-nudge:240ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--paper);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px}
+
+/* masthead */
+.mast{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;height:60px;padding:0 48px;border-bottom:3px double var(--ink)}
+.issue{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.logo{font:italic 400 36px/1 var(--serif);letter-spacing:-.01em}
+.nav{justify-self:end;display:flex;gap:20px;font-size:13px;font-weight:500}
+.nav a{padding:10px 0}
+.nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.nav a[aria-current]{color:var(--cobalt)}
+
+main{padding:24px 48px 36px}
+.head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+h1{margin:0;font:400 40px/1 var(--serif);letter-spacing:-.01em}
+.head p{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+
+/* grid */
+.grid{display:grid;grid-template-columns:minmax(0,1.62fr) minmax(0,1fr) minmax(0,1.08fr);gap:0;border-top:1px solid var(--ink)}
+.col{padding:20px 0;min-width:0}
+.col+.col{border-left:1px solid var(--rule);padding-left:24px}
+.col:not(:last-child){padding-right:24px}
+
+.card{position:relative}
+.card h2,.card h3{margin:0;font-family:var(--serif);font-weight:400;letter-spacing:-.01em}
+.card h2 a,.card h3 a{text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:.14em;transition:text-decoration-color var(--t-micro) var(--ease)}
+.card a::after{content:"";position:absolute;inset:0;z-index:1}
+.card:hover h2 a,.card:hover h3 a{text-decoration-color:currentColor}
+.card a:focus-visible{outline:none}
+.card a:focus-visible::after{outline:2px solid var(--cobalt);outline-offset:6px}
+.kick{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}
+.by{font-size:12px;color:var(--ink-3);margin:0}
+.by b{font-weight:500;color:var(--ink-2)}
+
+/* lead */
+.cover{position:relative;height:290px;overflow:hidden;background:var(--paper-2);margin-bottom:16px}
+.cover i{position:absolute;inset:-8px;transition:transform var(--t-nudge) var(--ease)}
+.card:hover .cover i,.card:focus-within .cover i{transform:translate(4px,-4px)}
+.lead .cover i{
+  background:
+    radial-gradient(ellipse 70% 120% at 18% 120%,transparent 58%,var(--cobalt) 58.4%,var(--cobalt) 66%,transparent 66.4%),
+    radial-gradient(ellipse 70% 120% at 30% 120%,transparent 70%,var(--ink) 70.2%,var(--ink) 70.6%,transparent 70.8%),
+    radial-gradient(circle at 78% 26%,var(--ink) 0 34px,transparent 34.5px),
+    repeating-linear-gradient(0deg,transparent 0 22px,rgba(22,20,15,.14) 22px 23px),
+    repeating-linear-gradient(90deg,transparent 0 22px,rgba(22,20,15,.14) 22px 23px),
+    repeating-linear-gradient(90deg,var(--ink) 0 10px,transparent 10px 26px) 0 60%/100% 14px no-repeat;
+}
+.cover figcaption{position:absolute;right:10px;bottom:8px;z-index:0;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);background:var(--paper);padding:3px 6px}
+.lead h2{font-size:44px;line-height:1.02;margin:8px 0 12px}
+.dek{margin:0 0 12px;font-size:16px;line-height:1.5;color:var(--ink-2);max-width:56ch}
+
+/* numbered */
+.num+.num{margin-top:22px;padding-top:22px;border-top:1px solid var(--rule)}
+.big{display:block;font:400 84px/.8 var(--serif);color:var(--cobalt);margin-bottom:14px;letter-spacing:-.03em}
+.num h3{font-size:30px;line-height:1.06;margin:8px 0 10px}
+.num .dek{font-size:14px;margin-bottom:10px}
+
+/* small */
+.sm{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:start}
+.sm+.sm{margin-top:18px;padding-top:18px;border-top:1px solid var(--rule)}
+.sm .cover{height:96px;margin:0}
+.sm h3{font-size:21px;line-height:1.12;margin:6px 0 6px}
+.t1 i{background:repeating-linear-gradient(170deg,var(--ink) 0 3px,var(--paper-2) 3px 11px)}
+.t2 i{background:radial-gradient(circle at 50% 62%,var(--cobalt) 0 22px,transparent 22.5px),linear-gradient(var(--ink) 0 62%,var(--paper-2) 62%)}
+.t3 i{background:radial-gradient(circle at 50% 100%,var(--paper-2) 0 30px,transparent 30.5px),repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 12px),linear-gradient(transparent 40%,var(--cobalt) 40% 48%,transparent 48%)}
+.more{display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:13px;font-weight:500;color:var(--ink)}
+.more svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75}
+.more:hover{text-decoration:underline;text-underline-offset:4px}
+
+@media (max-width:1180px){
+  .mast,main{padding-inline:28px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .col.leadcol{grid-column:1/-1;padding-right:0;border-bottom:1px solid var(--rule)}
+  .lead{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:start}
+  .lead .cover{margin:0!important}
+  .lead h2{font-size:38px}
+  .col:nth-child(2){border-left:0;padding-left:0}
+}
+@media (max-width:900px){.lead{display:block}.lead .cover{margin-bottom:16px!important}.nav{display:none}.mast{grid-template-columns:minmax(0,1fr) auto}}
+@media (max-width:640px){
+  .mast,main{padding-inline:16px}.issue{display:none}.mast{grid-template-columns:auto}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .col+.col{border-left:0;padding-left:0;border-top:1px solid var(--rule)}.col:not(:last-child){padding-right:0}
+  .lead h2{font-size:34px}.cover{height:220px}.big{font-size:64px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}.card:hover .cover i,.card:focus-within .cover i{transform:none}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <span class="issue">Issue 41 · October 2026</span>
+  <a class="logo" href="#" aria-label="Tributary, home">Tributary</a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#">Cities</a><a href="#" aria-current="page">Water</a><a href="#">Work</a><a href="#">Food</a><a href="#">Archive</a>
+  </nav>
+</header>
+<main>
+  <div class="head">
+    <h1>This week</h1>
+    <p>6 stories · Updated 3 October</p>
+  </div>
+  <div class="grid">
+    <div class="col leadcol">
+      <article class="card lead">
+        <figure class="cover" style="margin-top:0;margin-inline:0"><i aria-hidden="true"></i><figcaption>The 1931 bank, dotted</figcaption></figure>
+        <div>
+          <span class="kick">Water</span>
+          <h2><a href="#">The river that moved a town 400 metres west</a></h2>
+          <p class="dek">Over ninety years the Karnel shifted its bed, and the market, the temple steps and two schools followed it. We walked the old shore with the people who remember it.</p>
+          <p class="by"><b>Asha Rai</b> · 14 min read</p>
+        </div>
+      </article>
+    </div>
+    <div class="col">
+      <article class="card num">
+        <span class="big" aria-hidden="true">01</span>
+        <span class="kick">Most read · Work</span>
+        <h3><a href="#">Night shift at the last ferry dock</a></h3>
+        <p class="dek">Twelve crossings, one pilot, and a timetable written in chalk on a door.</p>
+        <p class="by"><b>Tomas Okafor</b> · 8 min read</p>
+      </article>
+      <article class="card num">
+        <span class="big" aria-hidden="true">02</span>
+        <span class="kick">Most read · Food</span>
+        <h3><a href="#">Why every hill town makes its pickle sour</a></h3>
+        <p class="dek">A short history of mustard oil, high sun and patience.</p>
+        <p class="by"><b>Mina Gurung</b> · 6 min read</p>
+      </article>
+    </div>
+    <div class="col">
+      <article class="card sm">
+        <div class="cover t1"><i aria-hidden="true"></i></div>
+        <div>
+          <span class="kick">Cities</span>
+          <h3><a href="#">A bus map drawn by the people who ride it</a></h3>
+          <p class="by">5 min read</p>
+        </div>
+      </article>
+      <article class="card sm">
+        <div class="cover t2"><i aria-hidden="true"></i></div>
+        <div>
+          <span class="kick">Archive</span>
+          <h3><a href="#">Letters to the editor, monsoon of 1974</a></h3>
+          <p class="by">4 min read</p>
+        </div>
+      </article>
+      <article class="card sm">
+        <div class="cover t3"><i aria-hidden="true"></i></div>
+        <div>
+          <span class="kick">Water</span>
+          <h3><a href="#">What a dry well tells a geologist</a></h3>
+          <p class="by">7 min read</p>
+        </div>
+      </article>
+      <a class="more" href="#">All of issue 41 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

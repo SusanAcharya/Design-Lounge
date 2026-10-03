@@ -1,0 +1,245 @@
+<!-- Design Lounge piece: navbar-split-centered-logo · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Verane · Hotel and dining room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4efe4;--paper-2:#ebe4d4;--green:#1d3a2f;--green-2:#142a22;--ink:#1b1f1c;--ink-2:#4a524c;
+  --brass:#b08d4a;--brass-2:#8a6a2f;--line:#d8cfbb;--on-dark:#f7f2e8;--on-dark-2:rgba(247,242,232,.72);
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif;
+  --bar-h:104px;--bar-h-solid:68px;--ease:cubic-bezier(.2,.7,.2,1);--dur:320ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.6 var(--sans);color:var(--ink);background:var(--paper);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+
+/* header */
+.bar{position:fixed;inset:0 0 auto 0;z-index:10;height:var(--bar-h);color:var(--on-dark);
+  border-bottom:1px solid rgba(247,242,232,.18);background:rgba(244,239,228,0);
+  transition:height var(--dur) var(--ease),background-color var(--dur) var(--ease),color var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.bar.solid{height:var(--bar-h-solid);background:var(--paper);color:var(--ink);border-bottom-color:var(--line)}
+.bar-in{height:100%;max-width:1280px;margin:0 auto;padding:0 48px;display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:32px}
+.links{display:flex;gap:32px;list-style:none;margin:0;padding:0;align-items:center;min-width:0}
+.links.right{justify-content:flex-end}
+.right-group{display:flex;justify-content:flex-end;align-items:center;gap:32px;min-width:0}
+.links a{font-size:12px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:10px 0;position:relative;white-space:nowrap}
+.links a::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform 200ms var(--ease)}
+.links a:hover::after,.links a[aria-current="page"]::after{transform:scaleX(1)}
+.mark{font-family:var(--serif);font-weight:500;font-size:40px;line-height:1;letter-spacing:.32em;
+  margin-right:-.32em;text-transform:uppercase;transform-origin:center;transition:transform var(--dur) var(--ease);display:block;padding:8px 0}
+.bar.solid .mark{transform:scale(.6)}
+.mark small{display:block;font-family:var(--sans);font-size:9px;letter-spacing:.5em;margin-top:8px;text-align:center;opacity:.8;transition:opacity 200ms var(--ease)}
+.bar.solid .mark small{opacity:0}
+.cta{display:inline-flex;align-items:center;gap:10px;height:42px;padding:0 18px;border:1px solid currentColor;
+  font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;
+  transition:background-color 200ms var(--ease),color 200ms var(--ease),border-color 200ms var(--ease)}
+.cta:hover{background:var(--on-dark);color:var(--green);border-color:var(--on-dark)}
+.bar.solid .cta{border-color:var(--green);color:var(--green)}
+.bar.solid .cta:hover{background:var(--green);color:var(--paper)}
+.cta svg,.menu-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
+.menu-btn{display:none;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid currentColor}
+.menu-btn svg{width:20px;height:20px}
+.panel{display:none}
+
+/* hero */
+.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;color:var(--on-dark);
+  background:radial-gradient(120% 80% at 50% 110%,#2c5242 0%,var(--green) 45%,var(--green-2) 100%)}
+.arch{position:absolute;bottom:0;width:300px;height:480px;border:1px solid rgba(176,141,74,.55);border-bottom:0;border-radius:150px 150px 0 0}
+.arch.a1{left:calc(50% - 150px);height:560px}
+.arch.a2{left:calc(50% - 520px);height:420px;opacity:.6}
+.arch.a3{left:calc(50% + 220px);height:420px;opacity:.6}
+.arch.a1::before{content:"";position:absolute;inset:24px 24px 0;border:1px solid rgba(176,141,74,.3);border-bottom:0;border-radius:126px 126px 0 0}
+.sun{position:absolute;left:calc(50% - 70px);bottom:300px;width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle at 50% 40%,#d9b878,#b08d4a 70%);opacity:.9}
+.floor{position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to top,rgba(10,22,17,.7),transparent)}
+.hero-copy{position:absolute;left:0;right:0;bottom:72px;text-align:center;padding:0 24px}
+.eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--on-dark-2);margin:0 0 16px}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:76px;line-height:1;letter-spacing:-.01em;margin:0}
+.hero h1 em{color:#d9b878}
+.scroll-hint{position:absolute;left:48px;bottom:40px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--on-dark-2)}
+.hours{position:absolute;right:48px;bottom:40px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--on-dark-2)}
+
+/* sections */
+section.band{max-width:1184px;margin:0 auto;padding:120px 48px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;border-bottom:1px solid var(--line)}
+.kicker{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--brass-2);margin:0 0 20px}
+h2{font-family:var(--serif);font-weight:500;font-size:52px;line-height:1.05;margin:0}
+.band p{margin:0 0 16px;max-width:56ch;color:var(--ink-2)}
+.menu{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 24px;margin:0;font-family:var(--serif);font-size:22px}
+.menu dt{border-bottom:1px dotted var(--line);padding-bottom:6px}
+.menu dd{margin:0;font-family:var(--sans);font-size:14px;color:var(--ink-2);padding-top:6px}
+.rooms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.room{border:1px solid var(--line);padding:24px}
+.room .sw{height:140px;margin-bottom:20px;background:linear-gradient(160deg,var(--green) 0 55%,var(--brass) 55% 57%,var(--paper-2) 57%)}
+.room:nth-child(2) .sw{background:linear-gradient(200deg,var(--paper-2) 0 40%,var(--green) 40%)}
+.room:nth-child(3) .sw{background:radial-gradient(circle at 50% 120%,var(--brass) 0 40%,var(--green) 41%)}
+.room h3{font-family:var(--serif);font-weight:600;font-size:24px;margin:0 0 4px}
+.room p{font-size:14px;margin:0}
+footer{padding:48px;text-align:center;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2)}
+
+@media (max-width:1180px){.links{gap:24px}.links a{letter-spacing:.16em}.bar-in{padding:0 32px;gap:24px}.right-group{gap:24px}.cta .long{display:none}}
+@media (max-width:899px){
+  :root{--bar-h:72px;--bar-h-solid:60px}
+  .bar-in{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);padding:0 16px;gap:12px}
+  .bar-in nav,.bar .cta{display:none}
+  .menu-btn{display:inline-flex;justify-self:start}
+  .mark{font-size:28px}
+  .mark small{display:none}
+  .bar.solid .mark{transform:scale(.86)}
+  .panel{position:fixed;inset:var(--bar-h) 0 auto 0;background:var(--paper);color:var(--ink);border-bottom:1px solid var(--line);padding:16px 24px 24px;z-index:9}
+  .bar.solid~.panel{top:var(--bar-h-solid)}
+  .panel.open{display:block}
+  .panel a{display:block;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;letter-spacing:.2em;text-transform:uppercase}
+  .panel a[aria-current="page"]{color:var(--brass-2)}
+  .panel .cta{display:flex;justify-content:center;margin-top:16px;border-color:var(--green);color:var(--green)}
+  .hero h1{font-size:44px}
+  section.band{grid-template-columns:minmax(0,1fr);padding:72px 24px;gap:32px}
+  .rooms{grid-template-columns:minmax(0,1fr)}
+  h2{font-size:38px}
+  .scroll-hint,.hours{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:0ms!important}
+}
+</style>
+</head>
+<body>
+<header class="bar" id="bar">
+  <div class="bar-in">
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="panel" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+    </button>
+    <nav aria-label="Primary, left">
+      <ul class="links">
+        <li><a href="#rooms">Rooms</a></li>
+        <li><a href="#dining" aria-current="page">Dining</a></li>
+        <li><a href="#garden">Garden</a></li>
+      </ul>
+    </nav>
+    <a class="mark" href="#top" aria-label="Verane, home">Verane<small>Est. 1931</small></a>
+    <div class="right-group">
+      <nav aria-label="Primary, right">
+        <ul class="links right">
+          <li><a href="#events">Events</a></li>
+          <li><a href="#journal">Journal</a></li>
+        </ul>
+      </nav>
+      <a class="cta" href="#reserve"><span>Reserve<span class="long"> a table</span></span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+<div class="panel" id="panel">
+  <a href="#rooms">Rooms</a>
+  <a href="#dining" aria-current="page">Dining</a>
+  <a href="#garden">Garden</a>
+  <a href="#events">Events</a>
+  <a href="#journal">Journal</a>
+  <a class="cta" href="#reserve">Reserve a table</a>
+</div>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h">
+    <div class="arch a2"></div><div class="arch a3"></div>
+    <div class="sun"></div>
+    <div class="arch a1"></div>
+    <div class="floor"></div>
+    <div class="hero-copy">
+      <p class="eyebrow">Hotel and dining room · Lake Ossiach</p>
+      <h1 id="h">Supper under the <em>long arches</em></h1>
+    </div>
+    <p class="scroll-hint">Scroll</p>
+    <p class="hours">Kitchen 18:30 – 23:00</p>
+  </section>
+
+  <section class="band" id="dining">
+    <div>
+      <p class="kicker">The dining room</p>
+      <h2>Seven courses, one lake, no rush.</h2>
+    </div>
+    <div>
+      <p>Chef Ilse Marwood cooks from the walled garden and the morning boats. The tasting menu changes on Thursdays; the room seats thirty-two under the original 1931 vaults.</p>
+      <dl class="menu">
+        <dt>Lake char, brown butter, sorrel</dt><dd>Course 2</dd>
+        <dt>Smoked beetroot, sheep's curd, rye</dt><dd>Course 3</dd>
+        <dt>Saddle of venison, juniper, celeriac</dt><dd>Course 5</dd>
+        <dt>Tasting menu, seven courses</dt><dd>€ 145</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="band" id="rooms">
+    <div>
+      <p class="kicker">Rooms</p>
+      <h2>Twenty-one rooms facing the water.</h2>
+    </div>
+    <div class="rooms">
+      <article class="room"><div class="sw"></div><h3>Lake room</h3><p>32 m² · from € 290</p></article>
+      <article class="room"><div class="sw"></div><h3>Garden suite</h3><p>48 m² · from € 410</p></article>
+      <article class="room"><div class="sw"></div><h3>The Tower</h3><p>64 m² · from € 620</p></article>
+    </div>
+  </section>
+
+  <section class="band" id="garden">
+    <div>
+      <p class="kicker">Garden</p>
+      <h2>A walled acre behind the kitchen.</h2>
+    </div>
+    <div>
+      <p>Forty kinds of herb, a quince orchard and the old glasshouse, open to guests from 08:00. Tours with the head gardener run on Saturdays at 10:00.</p>
+      <p id="events">Weddings and private dinners for up to 80 guests from May to September.</p>
+      <p id="journal">Read the Journal for the winter menu and the story of the 1931 vaults.</p>
+    </div>
+  </section>
+
+  <section class="band" id="reserve">
+    <div>
+      <p class="kicker">Reserve</p>
+      <h2>Tables open sixty days ahead.</h2>
+    </div>
+    <div>
+      <p>Wednesday to Sunday, seatings at 18:30 and 21:00. For parties above eight, write to the maître d', Teodor Haas.</p>
+      <p>+43 4243 2280 · Seeweg 14, 9570 Ossiach</p>
+    </div>
+  </section>
+</main>
+<footer>Verane · Seeweg 14 · Ossiach</footer>
+
+<script>
+const bar = document.getElementById('bar');
+const btn = document.querySelector('.menu-btn');
+const panel = document.getElementById('panel');
+const THRESHOLD = 80;
+let ticking = false;
+function update(){
+  bar.classList.toggle('solid', window.scrollY > THRESHOLD);
+  ticking = false;
+}
+window.addEventListener('scroll', () => {
+  if (!ticking){ requestAnimationFrame(update); ticking = true; }
+}, {passive:true});
+update();
+function setMenu(open){
+  panel.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', String(open));
+  btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+}
+btn.addEventListener('click', () => setMenu(!panel.classList.contains('open')));
+panel.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && panel.classList.contains('open')){ setMenu(false); btn.focus(); }
+});
+</script>
+</body>
+</html>

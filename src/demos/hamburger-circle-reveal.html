@@ -1,0 +1,194 @@
+<!-- Design Lounge piece: hamburger-circle-reveal · platform: mobile-web · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ferro — motion and type studio, Lisboa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#efe9dc;--ink:#121110;--ink-2:#4a4640;--line:#d3cab8;
+  --panel:#121110;--on-panel:#f2ede2;--on-panel-2:#a39d92;--rule:rgba(242,237,226,.16);
+  --accent:#ff4a1c;
+  --display:"Archivo",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --top:54px;--bar-h:60px;--chrome-bottom:84px;--gutter:20px;
+  --std:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--expo-in:cubic-bezier(.7,0,.84,0);
+  --t-reveal:500ms;--t-link:520ms;--stagger:50ms;
+  --cx:calc(100% - 42px);--cy:84px;--r:900px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--page);color:var(--ink);font:400 15px/1.5 var(--display);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.locked{overflow:hidden}
+body.preload *,body.preload *::before{transition:none!important}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:30;height:calc(var(--top) + var(--bar-h));padding:var(--top) var(--gutter) 0;display:flex;align-items:center;justify-content:space-between;background:var(--page);transition:background-color 200ms var(--std) 300ms}
+.open .bar{background:transparent;transition-delay:0s}
+.logo{display:flex;align-items:center;gap:8px;min-height:44px;text-decoration:none;transition:color 240ms var(--std) 380ms}
+.logo b{font-weight:900;font-size:24px;letter-spacing:-.03em;font-stretch:125%}
+.logo small{font:500 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);transition:color 240ms var(--std) 380ms}
+.open .logo,.open .logo small{transition-delay:0s}
+.open .logo{color:var(--on-panel)}
+.open .logo small{color:var(--on-panel-2)}
+
+.burger{position:relative;width:44px;height:44px;border-radius:50%;background:var(--ink);transition:background-color 300ms var(--std)}
+.burger span{position:absolute;left:12px;width:20px;height:2px;border-radius:1px;background:var(--page);transition:transform 300ms var(--expo),opacity 160ms var(--std),background-color 300ms var(--std)}
+.burger span:nth-child(1){top:15px}
+.burger span:nth-child(2){top:21px}
+.burger span:nth-child(3){top:27px}
+.open .burger{background:var(--accent)}
+.open .burger span{background:var(--ink)}
+.open .burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.open .burger span:nth-child(2){opacity:0;transform:scaleX(.2)}
+.open .burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.burger:focus-visible{outline-color:var(--ink)}
+.open .burger:focus-visible{outline-color:var(--on-panel)}
+
+.page{padding:calc(var(--top) + var(--bar-h) + 28px) var(--gutter) calc(var(--chrome-bottom) + 32px)}
+.kicker{margin:0;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:16px 0 0;font-weight:900;font-size:58px;line-height:.9;letter-spacing:-.02em;text-transform:uppercase;font-stretch:75%}
+h1 em{font-style:normal;box-shadow:inset 0 -.14em 0 var(--accent)}
+.lede{margin:20px 0 0;max-width:32ch;font-size:16px;color:var(--ink-2)}
+.work{list-style:none;margin:36px 0 0;padding:0;border-top:2px solid var(--ink)}
+.work li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.work strong{font-weight:700;font-size:17px;font-stretch:100%}
+.work span{font:500 11px/1.6 var(--mono);color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
+.work em{grid-column:1/-1;font-style:normal;font-size:14px;color:var(--ink-2)}
+.cta{display:inline-flex;align-items:center;gap:10px;min-height:48px;margin-top:28px;padding:0 20px;background:var(--ink);color:var(--page);text-decoration:none;font-weight:700;font-stretch:112%;text-transform:uppercase;font-size:14px;letter-spacing:.02em}
+
+.menu{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;padding:calc(var(--top) + var(--bar-h) + 24px) var(--gutter) calc(var(--chrome-bottom) + 20px);overflow-y:auto;background:var(--panel);color:var(--on-panel);clip-path:circle(0px at var(--cx) var(--cy));visibility:hidden;transition:clip-path var(--t-reveal) var(--expo-in) 160ms,visibility 0s linear 660ms}
+.open .menu{clip-path:circle(var(--r) at var(--cx) var(--cy));visibility:visible;transition:clip-path var(--t-reveal) var(--expo),visibility 0s}
+.menu .kicker{color:var(--on-panel-2);display:flex;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.links{list-style:none;margin:0;padding:0}
+.links li{overflow:hidden;border-bottom:1px solid var(--rule)}
+.links a{display:grid;grid-template-columns:32px minmax(0,1fr) 24px;align-items:center;min-height:72px;text-decoration:none;font-weight:800;font-size:40px;line-height:1;letter-spacing:-.02em;text-transform:uppercase;font-stretch:112%;white-space:nowrap;transform:translateY(105%);transition:transform 240ms var(--expo-in) calc((4 - var(--i)) * 30ms),color 160ms var(--std)}
+.open .links a{transform:none;transition:transform var(--t-link) var(--expo) calc(180ms + var(--i) * var(--stagger)),color 160ms var(--std)}
+.links .n{align-self:start;padding-top:20px;font:500 11px/1 var(--mono);letter-spacing:.04em;color:var(--accent)}
+.links svg{width:24px;height:24px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:square;opacity:0;transform:translateX(-8px);transition:opacity 160ms var(--std),transform 200ms var(--expo)}
+.links a:hover,.links a:focus-visible{color:var(--accent)}
+.links a:hover svg,.links a:focus-visible svg,.links a[aria-current] svg{opacity:1;transform:none}
+.links a:focus-visible{outline-offset:-2px}
+
+.foot{margin-top:auto;padding-top:28px;display:grid;gap:6px;opacity:0;transform:translateY(12px);transition:opacity 160ms var(--std),transform 160ms var(--std)}
+.open .foot{opacity:1;transform:none;transition:opacity 420ms var(--std) 460ms,transform 520ms var(--expo) 460ms}
+.foot .kicker{border:0;padding:0}
+.mail{display:inline-flex;align-items:center;min-height:44px;width:max-content;max-width:100%;font-weight:600;font-size:22px;font-stretch:100%;letter-spacing:-.01em;text-decoration:none;border-bottom:2px solid var(--accent)}
+.social{display:flex;gap:24px;flex-wrap:wrap;list-style:none;margin:10px 0 0;padding:0}
+.social a{display:inline-flex;align-items:center;min-height:44px;font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--on-panel-2)}
+.social a:hover{color:var(--on-panel)}
+.menu :focus-visible{outline-color:var(--accent)}
+
+@media (prefers-reduced-motion:reduce){
+  .menu{clip-path:none;opacity:0;transition:opacity 150ms linear,visibility 0s linear 150ms}
+  .open .menu{clip-path:none;opacity:1;transition:opacity 150ms linear,visibility 0s}
+  .links a,.open .links a,.foot,.open .foot{transform:none;transition:color 160ms linear}
+  .foot{opacity:1}
+  .burger span{transition-duration:0s}
+}
+</style>
+</head>
+<body class="open locked preload">
+<header class="bar">
+  <a class="logo" href="#top"><b>FERRO</b><small>Lisboa</small></a>
+  <button class="burger" id="burger" type="button" aria-expanded="true" aria-controls="menu" aria-label="Close menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<main class="page" id="page" inert>
+  <p class="kicker">Motion &amp; type studio · Est. 2014</p>
+  <h1>Type that <em>refuses</em> to sit still.</h1>
+  <p class="lede">Title sequences, brand motion and kinetic identities for broadcasters, festivals and the occasional opera house.</p>
+  <ul class="work" aria-label="Recent work">
+    <li><strong>Halvard Opera</strong><span>2026</span><em>Season titles, 14 productions</em></li>
+    <li><strong>Nodo Telecom</strong><span>2025</span><em>Brand motion system, 62 assets</em></li>
+    <li><strong>Cinemateca Sul</strong><span>2025</span><em>Festival idents and trailer</em></li>
+    <li><strong>Pano Paper Co.</strong><span>2024</span><em>Packaging film, 90 seconds</em></li>
+  </ul>
+  <a class="cta" href="#contact">Start a project</a>
+</main>
+
+<nav class="menu" id="menu" aria-label="Main menu">
+  <p class="kicker"><span>Index</span><span>05 pages</span></p>
+  <ul class="links">
+    <li><a href="#work" style="--i:0" aria-current="page"><span class="n">01</span><span>Work</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a></li>
+    <li><a href="#reel" style="--i:1"><span class="n">02</span><span>Reel</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a></li>
+    <li><a href="#studio" style="--i:2"><span class="n">03</span><span>Studio</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a></li>
+    <li><a href="#journal" style="--i:3"><span class="n">04</span><span>Journal</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a></li>
+    <li><a href="#contact" style="--i:4"><span class="n">05</span><span>Contact</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a></li>
+  </ul>
+  <div class="foot">
+    <p class="kicker">New projects</p>
+    <a class="mail" href="mailto:ola@ferro.studio">ola@ferro.studio</a>
+    <ul class="social" aria-label="Elsewhere">
+      <li><a href="#instagram">Instagram</a></li>
+      <li><a href="#vimeo">Vimeo</a></li>
+      <li><a href="#linkedin">LinkedIn</a></li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+const body = document.body;
+const btn = document.getElementById('burger');
+const menu = document.getElementById('menu');
+const page = document.getElementById('page');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const links = [...menu.querySelectorAll('.links a')];
+
+function geometry() {
+  const b = btn.getBoundingClientRect();
+  const cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+  const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy));
+  body.style.setProperty('--cx', cx + 'px');
+  body.style.setProperty('--cy', cy + 'px');
+  body.style.setProperty('--r', Math.ceil(r) + 'px');
+}
+
+function setOpen(open) {
+  geometry();
+  body.classList.toggle('open', open);
+  body.classList.toggle('locked', open);
+  btn.setAttribute('aria-expanded', open);
+  btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  page.inert = open;
+  if (open) setTimeout(() => links[0].focus({ preventScroll: true }), reduce.matches ? 0 : 200);
+  else btn.focus();
+}
+
+btn.addEventListener('click', () => setOpen(!body.classList.contains('open')));
+
+menu.addEventListener('click', e => {
+  const a = e.target.closest('a');
+  if (!a || a.classList.contains('mail')) return;
+  e.preventDefault();
+  if (a.closest('.links')) {
+    links.forEach(l => l.removeAttribute('aria-current'));
+    a.setAttribute('aria-current', 'page');
+  }
+  setOpen(false);
+});
+
+document.addEventListener('keydown', e => {
+  if (!body.classList.contains('open')) return;
+  if (e.key === 'Escape') { e.preventDefault(); setOpen(false); return; }
+  if (e.key !== 'Tab') return;
+  const f = [btn, ...menu.querySelectorAll('a')];
+  const i = f.indexOf(document.activeElement);
+  if (i === -1) { e.preventDefault(); f[0].focus(); }
+  else if (e.shiftKey && i === 0) { e.preventDefault(); f[f.length - 1].focus(); }
+  else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+});
+
+addEventListener('resize', geometry);
+geometry();
+requestAnimationFrame(() => requestAnimationFrame(() => body.classList.remove('preload')));
+</script>
+</body>
+</html>

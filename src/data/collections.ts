@@ -40,7 +40,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'A website, in parts',
     kicker: 'Nº 02',
     blurb: 'Heroes, navs, features, pricing, proof, contact and the sign-off. Assemble a marketing site from pieces that already agree with each other.',
-    pieces: ['hero-asymmetric-type-lockup', 'hero-swiss-grid-wordmark', 'hero-editorial-name-rotator', 'navbar-island-morph', 'features-tabbed-preview', 'bento-feature-grid', 'integrations-connect', 'link-orbit', 'gooey-nav', 'changelog-timeline', 'careers-role-list', 'testimonials-quote-carousel', 'logos-mono-marquee', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'cta-split-dark-band'],
+    pieces: ['hero-asymmetric-type-lockup', 'hero-swiss-grid-wordmark', 'hero-editorial-name-rotator', 'navbar-island-morph', 'features-tabbed-preview', 'bento-feature-grid', 'integrations-connect', 'link-orbit', 'gooey-nav', 'changelog-timeline', 'careers-role-list', 'testimonials-quote-carousel', 'logos-mono-marquee', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'cta-split-dark-band', 'card-product-quick-add', 'card-article-mix', 'card-holo-foil'],
   },
   {
     slug: 'portfolio-sites',
@@ -68,7 +68,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'Navigation, sorted',
     kicker: 'Nº 06',
     blurb: 'Sidebars, rails, tab bars, drawers and palettes. Every way to get around a product, from a 64px icon rail to a floating glass capsule.',
-    pieces: ['collapsing-sidebar-rail', 'command-palette', 'search-results-filters', 'breadcrumb', 'tree-nav', 'editorial-mega-menu', 'nested-dropdown-menu', 'ios-glass-tab-bar', 'm3-navigation-drawer', 'mobile-fullscreen-menu', 'tablet-sidebar-overlay-pin', 'tabs-morphing-underline', 'segmented-control-sliding'],
+    pieces: ['collapsing-sidebar-rail', 'command-palette', 'search-results-filters', 'breadcrumb', 'tree-nav', 'editorial-mega-menu', 'nested-dropdown-menu', 'ios-glass-tab-bar', 'm3-navigation-drawer', 'mobile-fullscreen-menu', 'tablet-sidebar-overlay-pin', 'tabs-morphing-underline', 'segmented-control-sliding', 'navbar-split-centered-logo', 'navbar-hide-on-scroll', 'navbar-vertical-rail', 'mega-menu-product-grid', 'sidebar-workspace-switcher', 'sidebar-docs-toc', 'hamburger-circle-reveal', 'hamburger-drawer-accordion', 'mobile-web-bottom-nav'],
   },
   {
     slug: 'loading-states',

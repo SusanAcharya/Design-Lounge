@@ -1,0 +1,275 @@
+<!-- Design Lounge piece: card-product-quick-add · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Drop 07 · Halftone Supply Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f1ede4;--media:#e6e0d2;--ink:#151412;--ink-2:#4a463f;--ink-3:#6f6a60;
+  --line:#cfc7b6;--tomato:#c2321c;--stone:#b6ae9d;
+  --cond:"Barlow Condensed","Arial Narrow",sans-serif;--mono:"DM Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+  --t-micro:160ms;--t-bar:280ms;--t-swap:240ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:14px/1.4 var(--mono);color:var(--ink);background-color:var(--paper);
+  background-image:radial-gradient(rgba(21,20,18,.06) .6px,transparent .7px);background-size:4px 4px;
+  overflow-x:hidden;
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;border-radius:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* header */
+.top{height:64px;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;padding:0 48px;border-bottom:1px solid var(--ink)}
+.mark{font:800 26px/1 var(--cond);letter-spacing:.02em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+.mark small{font:500 11px/1 var(--mono);letter-spacing:.08em;margin-left:8px;color:var(--ink-2)}
+.nav{display:flex;gap:28px}
+.nav a{font:600 16px/1 var(--cond);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:12px 0;border-bottom:2px solid transparent}
+.nav a[aria-current]{border-bottom-color:var(--tomato)}
+.nav a:hover{border-bottom-color:var(--ink)}
+.bag{justify-self:end;display:flex;align-items:center;gap:10px;height:40px;padding:0 4px 0 12px;font:600 16px/1 var(--cond);letter-spacing:.06em;text-transform:uppercase}
+.bag svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linejoin:round}
+.count{min-width:28px;height:28px;display:grid;place-items:center;background:var(--ink);color:var(--paper);font:500 13px/1 var(--mono)}
+.bag.bump .count{animation:bump 420ms var(--expo)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.35);background:var(--tomato)}100%{transform:scale(1)}}
+
+/* section head */
+main{padding:28px 48px 40px}
+.head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:24px}
+h1{margin:0;font:800 64px/.86 var(--cond);text-transform:uppercase;letter-spacing:-.01em}
+h1 span{color:var(--tomato)}
+.meta{margin:0;font-size:12px;letter-spacing:.04em;color:var(--ink-2);text-align:right;line-height:1.6}
+
+/* grid */
+.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.card{--c:var(--ink);--p:var(--paper);position:relative;min-width:0}
+.media{position:relative;aspect-ratio:4/5;background:var(--media);overflow:hidden;border:1px solid var(--ink)}
+.media::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(21,20,18,.09) 1px,transparent 1.2px);background-size:7px 7px}
+.art{position:absolute;inset:0;transition:opacity var(--t-swap) var(--ease),transform var(--t-swap) var(--ease)}
+.art.b{opacity:0;transform:translateX(8px)}
+.card:hover .art.f,.media:focus-within .art.f{opacity:0;transform:translateX(-8px)}
+.card:hover .art.b,.media:focus-within .art.b{opacity:1;transform:none}
+.s{position:absolute;background:var(--c);transition:background var(--t-micro) var(--ease)}
+.shade{box-shadow:inset 0 -999px 0 rgba(0,0,0,.18)}
+.print{position:absolute;color:var(--p);font:800 40px/1 var(--cond);text-align:center;letter-spacing:.02em;transition:color var(--t-micro)}
+
+/* tee */
+.tee{left:12%;right:12%;top:14%;bottom:12%;clip-path:polygon(32% 6%,42% 2%,58% 2%,68% 6%,96% 22%,86% 40%,76% 34%,76% 98%,24% 98%,24% 34%,14% 40%,4% 22%)}
+.collar{left:42%;width:16%;top:14%;height:6%;border-radius:0 0 50% 50%;background:var(--media)}
+.b .collar{height:3%}
+.chest{left:56%;top:30%;width:7%;height:5%;background:var(--p)}
+/* sweat */
+.crew{left:6%;right:6%;top:16%;bottom:12%;clip-path:polygon(30% 6%,42% 2%,58% 2%,70% 6%,92% 24%,98% 88%,86% 90%,78% 38%,78% 98%,22% 98%,22% 38%,14% 90%,2% 88%,8% 24%)}
+.hem{left:23.5%;right:23.5%;bottom:12%;height:7%;background:repeating-linear-gradient(90deg,rgba(0,0,0,.22) 0 2px,transparent 2px 6px)}
+.band{left:23.5%;right:23.5%;top:36%;height:12%;background:var(--p);display:grid;place-items:center;color:var(--c);font:800 22px/1 var(--cond);letter-spacing:.2em}
+/* cap */
+.crown{left:22%;right:22%;top:32%;height:28%;border-radius:999px 999px 0 0}
+.bill{left:16%;right:10%;top:56%;height:12%;border-radius:0 0 60% 60%/0 0 100% 100%}
+.btn{left:48%;width:4%;top:30%;height:3.2%;border-radius:50%}
+.patch{left:42%;width:16%;top:44%;height:8%;background:var(--p)}
+.strap{left:42%;width:16%;top:50%;height:10%;border-radius:999px 999px 0 0;background:var(--media)}
+.rim{left:24%;right:24%;top:58%;height:3%}
+/* tote */
+.handle{position:absolute;top:18%;width:16%;height:22%;border:7px solid var(--c);border-bottom:0;border-radius:999px 999px 0 0;transition:border-color var(--t-micro)}
+.bagb{left:20%;right:20%;top:36%;bottom:12%}
+.pocket{left:32%;right:32%;top:56%;height:18%;border:2px dashed var(--p);background:none}
+
+.tag{position:absolute;top:12px;left:12px;z-index:2;padding:5px 8px 4px;font:600 14px/1 var(--cond);letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--paper)}
+.tag.sale{background:var(--tomato)}
+.qa-t{position:absolute;top:8px;right:8px;z-index:3;width:40px;height:40px;display:grid;place-items:center;background:var(--paper);border:1px solid var(--ink)}
+.qa-t svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;transition:transform var(--t-micro) var(--ease)}
+.card.open .qa-t svg{transform:rotate(45deg)}
+
+/* quick add bar */
+.qa{position:absolute;left:0;right:0;bottom:0;z-index:2;background:var(--ink);color:var(--paper);padding:10px 12px 12px;transform:translateY(101%);transition:transform var(--t-bar) var(--expo)}
+.card:hover .qa,.card:focus-within .qa,.card.open .qa,.card.added .qa{transform:none}
+.qa-l{display:flex;justify-content:space-between;font:600 14px/1 var(--cond);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.qa-l span:last-child{font:400 11px/1 var(--mono);letter-spacing:.04em;color:var(--stone);text-transform:none}
+.sizes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;position:relative}
+.sz{height:40px;border:1px solid rgba(241,237,228,.35);font:500 12px/1 var(--mono);color:var(--paper);transition:background var(--t-micro),color var(--t-micro)}
+.sz:hover{background:var(--paper);color:var(--ink)}
+.sz:disabled{color:var(--ink-3);text-decoration:line-through;cursor:not-allowed;background:none}
+.qa :focus-visible{outline-color:var(--paper)}
+.done{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--tomato);color:var(--paper);font:600 18px/1 var(--cond);letter-spacing:.08em;text-transform:uppercase;opacity:0;pointer-events:none;transition:opacity var(--t-micro)}
+.done svg{width:20px;height:20px;stroke:currentColor;stroke-width:2.25;fill:none}
+.card.added .done{opacity:1}
+
+/* info */
+.info{padding-top:12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:start}
+.name{margin:0;font:600 22px/1 var(--cond);text-transform:uppercase;letter-spacing:.01em}
+.price{margin:0;text-align:right;font:500 14px/1.2 var(--mono);white-space:nowrap}
+.price del{color:var(--ink-3);font-size:12px;margin-right:6px}
+.price ins{text-decoration:none;color:var(--tomato)}
+.cname{grid-column:1;font-size:12px;color:var(--ink-2)}
+.sws{grid-column:2;display:flex;gap:2px;justify-self:end}
+.sw{width:28px;height:28px;display:grid;place-items:center}
+.sw i{width:16px;height:16px;border:1px solid var(--ink);display:block}
+.sw[aria-pressed="true"] i{box-shadow:0 0 0 2px var(--paper),0 0 0 3px var(--ink)}
+
+.strip{list-style:none;margin:40px 0 0;padding:16px 0 0;border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;font-size:12px;letter-spacing:.04em;color:var(--ink-2)}
+.strip li{display:flex;align-items:center;gap:10px}
+.strip svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--ink);stroke-width:1.5}
+
+@media (hover:none){.sw{width:40px;height:40px}}
+@media (max-width:1100px){main,.top{padding-inline:28px}.grid{gap:14px}.nav{gap:18px}}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nav{display:none}.top{grid-template-columns:minmax(0,1fr) auto}}
+@media (max-width:640px){main,.top{padding-inline:16px}h1{font-size:44px}.head{grid-template-columns:minmax(0,1fr)}.meta{text-align:left}.grid{gap:10px}.name{font-size:18px}.strip{grid-template-columns:minmax(0,1fr);gap:10px}}
+@media (max-width:400px){.grid{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){*,*::before{transition:none!important;animation:none!important}.art.b,.card:hover .art.f{transform:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="mark" href="#">Halftone<small>SUPPLY CO.</small></a>
+  <nav class="nav" aria-label="Shop">
+    <a href="#" aria-current="page">Drop 07</a><a href="#">Tees</a><a href="#">Layers</a><a href="#">Carry</a>
+  </nav>
+  <button class="bag" type="button" id="bag" aria-label="Bag, 2 items">
+    Bag
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+    <span class="count" id="n">2</span>
+  </button>
+</header>
+<main>
+  <div class="head">
+    <h1>Drop 07 <span>/</span> Monsoon</h1>
+    <p class="meta">4 pieces · 340 gsm cotton<br>Ships from Lalitpur in 2 days</p>
+  </div>
+  <ul class="grid">
+    <li class="card" id="c1">
+      <div class="media">
+        <span class="tag">New</span>
+        <button class="qa-t" type="button" aria-expanded="false" aria-controls="q1" aria-label="Quick add Monsoon heavy tee"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="art f" aria-hidden="true"><i class="s tee"></i><i class="s collar"></i><i class="s chest"></i></div>
+        <div class="art b" aria-hidden="true"><i class="s tee"></i><i class="s collar"></i><b class="print" style="left:0;right:0;top:36%">07<br><small style="font-size:16px;letter-spacing:.2em">MONSOON</small></b></div>
+        <div class="qa" id="q1">
+          <div class="qa-l"><span>Quick add</span><span>Boxy fit</span></div>
+          <div class="sizes"><button class="sz" type="button">S</button><button class="sz" type="button">M</button><button class="sz" type="button">L</button><button class="sz" type="button">XL</button><button class="sz" type="button" disabled aria-label="XXL, sold out">XXL</button>
+            <div class="done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg><span>Added</span></div></div>
+        </div>
+      </div>
+      <div class="info">
+        <h2 class="name">Monsoon heavy tee</h2>
+        <p class="price">$48</p>
+        <span class="cname">Ink</span>
+        <div class="sws" role="group" aria-label="Colour">
+          <button class="sw" type="button" aria-pressed="true" aria-label="Ink" data-c="#151412" data-p="#f1ede4" data-n="Ink"><i style="background:#151412"></i></button>
+          <button class="sw" type="button" aria-pressed="false" aria-label="Tomato" data-c="#c2321c" data-p="#f1ede4" data-n="Tomato"><i style="background:#c2321c"></i></button>
+          <button class="sw" type="button" aria-pressed="false" aria-label="Stone" data-c="#b6ae9d" data-p="#151412" data-n="Stone"><i style="background:#b6ae9d"></i></button>
+        </div>
+      </div>
+    </li>
+    <li class="card open" id="c2" style="--c:#c2321c">
+      <div class="media">
+        <span class="tag sale">-20%</span>
+        <button class="qa-t" type="button" aria-expanded="true" aria-controls="q2" aria-label="Quick add Ridge crew sweat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="art f" aria-hidden="true"><i class="s crew"></i><i class="s collar" style="top:16%"></i><i class="hem s" style="background-color:transparent"></i></div>
+        <div class="art b" aria-hidden="true"><i class="s crew"></i><i class="s collar" style="top:16%;height:3%"></i><b class="s band">RIDGE</b></div>
+        <div class="qa" id="q2">
+          <div class="qa-l"><span>Quick add</span><span>True to size</span></div>
+          <div class="sizes"><button class="sz" type="button">S</button><button class="sz" type="button">M</button><button class="sz" type="button">L</button><button class="sz" type="button" disabled aria-label="XL, sold out">XL</button><button class="sz" type="button">XXL</button>
+            <div class="done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg><span>Added</span></div></div>
+        </div>
+      </div>
+      <div class="info">
+        <h2 class="name">Ridge crew sweat</h2>
+        <p class="price"><del><span class="sr">Was </span>$95</del><ins><span class="sr">Now </span>$76</ins></p>
+        <span class="cname">Tomato</span>
+        <div class="sws" role="group" aria-label="Colour">
+          <button class="sw" type="button" aria-pressed="false" aria-label="Ink" data-c="#151412" data-p="#f1ede4" data-n="Ink"><i style="background:#151412"></i></button>
+          <button class="sw" type="button" aria-pressed="true" aria-label="Tomato" data-c="#c2321c" data-p="#f1ede4" data-n="Tomato"><i style="background:#c2321c"></i></button>
+          <button class="sw" type="button" aria-pressed="false" aria-label="Moss" data-c="#5d5e3c" data-p="#f1ede4" data-n="Moss"><i style="background:#5d5e3c"></i></button>
+        </div>
+      </div>
+    </li>
+    <li class="card" id="c3" style="--c:#b6ae9d;--p:#151412">
+      <div class="media">
+        <span class="tag">New</span>
+        <button class="qa-t" type="button" aria-expanded="false" aria-controls="q3" aria-label="Quick add Six-panel field cap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="art f" aria-hidden="true"><i class="s crown"></i><i class="s bill shade"></i><i class="s btn shade"></i><i class="s patch"></i></div>
+        <div class="art b" aria-hidden="true"><i class="s rim shade"></i><i class="s crown"></i><i class="s btn shade"></i><i class="s strap"></i></div>
+        <div class="qa" id="q3">
+          <div class="qa-l"><span>Quick add</span><span>Strap back</span></div>
+          <div class="sizes" style="grid-template-columns:repeat(2,minmax(0,1fr))"><button class="sz" type="button">S / M</button><button class="sz" type="button">L / XL</button>
+            <div class="done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg><span>Added</span></div></div>
+        </div>
+      </div>
+      <div class="info">
+        <h2 class="name">Six-panel field cap</h2>
+        <p class="price">$38</p>
+        <span class="cname">Stone</span>
+        <div class="sws" role="group" aria-label="Colour">
+          <button class="sw" type="button" aria-pressed="true" aria-label="Stone" data-c="#b6ae9d" data-p="#151412" data-n="Stone"><i style="background:#b6ae9d"></i></button>
+          <button class="sw" type="button" aria-pressed="false" aria-label="Ink" data-c="#151412" data-p="#f1ede4" data-n="Ink"><i style="background:#151412"></i></button>
+          <button class="sw" type="button" aria-pressed="false" aria-label="Tomato" data-c="#c2321c" data-p="#f1ede4" data-n="Tomato"><i style="background:#c2321c"></i></button>
+        </div>
+      </div>
+    </li>
+    <li class="card" id="c4" style="--c:#5d5e3c">
+      <div class="media">
+        <span class="tag sale">-20%</span>
+        <button class="qa-t" type="button" aria-expanded="false" aria-controls="q4" aria-label="Quick add Market tote No. 2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="art f" aria-hidden="true"><i class="handle" style="left:30%"></i><i class="handle" style="right:30%"></i><i class="s bagb"></i><b class="print" style="left:20%;right:20%;top:58%;font-size:20px;letter-spacing:.16em">MARKET<br>No. 2</b></div>
+        <div class="art b" aria-hidden="true"><i class="handle" style="left:42%"></i><i class="s bagb"></i><i class="s pocket"></i></div>
+        <div class="qa" id="q4">
+          <div class="qa-l"><span>Quick add</span><span>One size, 18 L</span></div>
+          <div class="sizes" style="grid-template-columns:minmax(0,1fr)"><button class="sz" type="button">Add one size</button>
+            <div class="done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg><span>Added</span></div></div>
+        </div>
+      </div>
+      <div class="info">
+        <h2 class="name">Market tote No. 2</h2>
+        <p class="price"><del><span class="sr">Was </span>$34</del><ins><span class="sr">Now </span>$27</ins></p>
+        <span class="cname">Moss</span>
+        <div class="sws" role="group" aria-label="Colour">
+          <button class="sw" type="button" aria-pressed="true" aria-label="Moss" data-c="#5d5e3c" data-p="#f1ede4" data-n="Moss"><i style="background:#5d5e3c"></i></button>
+          <button class="sw" type="button" aria-pressed="false" aria-label="Ink" data-c="#151412" data-p="#f1ede4" data-n="Ink"><i style="background:#151412"></i></button>
+          <button class="sw" type="button" aria-pressed="false" aria-label="Stone" data-c="#b6ae9d" data-p="#151412" data-n="Stone"><i style="background:#b6ae9d"></i></button>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <ul class="strip">
+    <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>Free returns within 30 days</li>
+    <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Printed and sewn in Lalitpur</li>
+    <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Drop 08 lands 24 October</li>
+  </ul>
+  <p class="sr" role="status" aria-live="polite" id="live"></p>
+</main>
+<script>
+const bag = document.getElementById('bag'), n = document.getElementById('n'), live = document.getElementById('live');
+let count = 2;
+document.querySelectorAll('.card').forEach(card => {
+  const name = card.querySelector('.name').textContent;
+  const toggle = card.querySelector('.qa-t');
+  toggle.addEventListener('click', () => {
+    toggle.setAttribute('aria-expanded', card.classList.toggle('open'));
+  });
+  card.querySelectorAll('.sw').forEach(sw => sw.addEventListener('click', () => {
+    card.querySelectorAll('.sw').forEach(x => x.setAttribute('aria-pressed', x === sw));
+    card.style.setProperty('--c', sw.dataset.c);
+    card.style.setProperty('--p', sw.dataset.p);
+    card.querySelector('.cname').textContent = sw.dataset.n;
+  }));
+  card.querySelectorAll('.sz:not(:disabled)').forEach(sz => sz.addEventListener('click', () => {
+    count++;
+    n.textContent = count;
+    bag.setAttribute('aria-label', 'Bag, ' + count + ' items');
+    bag.classList.remove('bump'); void bag.offsetWidth; bag.classList.add('bump');
+    card.classList.add('added');
+    const colour = card.querySelector('.cname').textContent;
+    live.textContent = 'Added ' + name + ', ' + colour + ', ' + sz.textContent.replace('Add ', '') + '. Bag has ' + count + ' items.';
+    clearTimeout(card.t);
+    card.t = setTimeout(() => card.classList.remove('added'), 1600);
+  }));
+});
+</script>
+</body>
+</html>

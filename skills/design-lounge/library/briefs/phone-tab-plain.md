@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 228 · "Plain phone tabs" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 234 · "Plain phone tabs" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Plain phone tabs
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 252 · "Slider field" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 262 · "Slider field" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Slider field
 

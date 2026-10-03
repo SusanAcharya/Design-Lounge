@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 270 · "Weekly bar chart" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 282 · "Weekly bar chart" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Weekly bar chart
 

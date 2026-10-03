@@ -1,0 +1,262 @@
+<!-- Design Lounge piece: navbar-hide-on-scroll · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Kestrel · Feature flags that ship on Friday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f5f1;--surface:#fbfaf7;--ink:#141414;--ink-2:#4b4b48;--ink-3:#6b6b66;--line:#e2e0d8;
+  --accent:#1f4fd8;--accent-ink:#ffffff;--note-bg:#141414;--note-ink:#f6f5f1;
+  --sans:"Hanken Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --note-h:36px;--nav-h:64px;--ease:cubic-bezier(.2,.7,.2,1);--dur:280ms;
+  --shadow:0 1px 0 rgba(20,20,20,.06),0 8px 24px -12px rgba(20,20,20,.18);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.55 var(--sans);color:var(--ink);background:var(--bg);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+.top{position:fixed;inset:0 0 auto 0;z-index:10;transform:translateY(0);
+  transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
+.top.hidden{transform:translateY(-100%)}
+.top.raised{box-shadow:var(--shadow)}
+.note{height:var(--note-h);background:var(--note-bg);color:var(--note-ink);display:grid;
+  grid-template-columns:40px minmax(0,1fr) 40px;align-items:center;font:13px/1 var(--mono)}
+.note p{grid-column:2;margin:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.note .tag{display:inline-block;padding:3px 6px;margin-right:10px;background:var(--accent);color:#fff;font-size:11px;letter-spacing:.06em}
+.note a{text-decoration:underline;text-underline-offset:3px}
+.note button{grid-column:3;grid-row:1;width:36px;height:36px;display:grid;place-items:center;color:var(--note-ink)}
+.note button:focus-visible{outline-color:#fff;outline-offset:-4px}
+.note svg,.nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.nav{height:var(--nav-h);background:var(--surface);border-bottom:1px solid var(--line)}
+.nav-in{height:100%;max-width:1184px;margin:0 auto;padding:0 32px;display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.02em}
+.logo svg{width:24px;height:24px;stroke-width:2}
+.links{display:flex;gap:4px;list-style:none;margin:0;padding:0;min-width:0}
+.links a{display:block;padding:8px 12px;font-size:14px;font-weight:500;color:var(--ink-2);position:relative;white-space:nowrap}
+.links a::after{content:"";position:absolute;left:12px;right:12px;bottom:2px;height:2px;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform 200ms var(--ease)}
+.links a:hover{color:var(--ink)}
+.links a[aria-current="true"]{color:var(--ink)}
+.links a[aria-current="true"]::after{transform:scaleX(1)}
+.actions{display:flex;align-items:center;gap:8px}
+.signin{padding:8px 14px;font-size:14px;font-weight:500}
+.signin:hover{text-decoration:underline;text-underline-offset:4px}
+.start{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;background:var(--accent);color:var(--accent-ink);
+  font-size:14px;font-weight:600;border-radius:6px;transition:background-color 160ms var(--ease)}
+.start:hover{background:#173fb3}
+.menu-btn{display:none;width:44px;height:44px;place-items:center;border:1px solid var(--line);border-radius:6px}
+.menu-btn svg{width:20px;height:20px}
+.panel{display:none;background:var(--surface);border-bottom:1px solid var(--line);padding:8px 24px 20px}
+.panel a{display:block;padding:12px 0;border-bottom:1px solid var(--line);font-weight:500}
+.panel a[aria-current="true"]{color:var(--accent)}
+.panel .start{display:flex;justify-content:center;margin-top:16px;border-bottom:0}
+
+main{padding-top:calc(var(--note-h) + var(--nav-h));transition:padding-top var(--dur) var(--ease)}
+body.no-note main{padding-top:var(--nav-h)}
+[data-spy]{scroll-margin-top:var(--nav-h)}
+.wrap{max-width:1184px;margin:0 auto;padding:0 32px}
+.hero{padding:96px 0 80px;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;border-bottom:1px solid var(--line)}
+.label{font:12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0 0 20px}
+h1{font-size:64px;line-height:1.02;letter-spacing:-.035em;font-weight:700;margin:0 0 24px}
+h1 span{color:var(--accent)}
+.lede{font-size:19px;color:var(--ink-2);max-width:46ch;margin:0}
+.code{font:13px/1.8 var(--mono);background:var(--ink);color:#d9d8d2;padding:24px;border-radius:8px;margin:0;overflow-x:auto;min-width:0}
+.code b{color:#8fb0ff;font-weight:500}
+.code i{color:#8a8a84;font-style:normal}
+section.s{padding:96px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px;min-height:520px}
+h2{font-size:40px;line-height:1.05;letter-spacing:-.03em;margin:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.cell{background:var(--surface);padding:24px}
+.cell h3{font-size:17px;margin:0 0 6px;letter-spacing:-.01em}
+.cell p{margin:0;color:var(--ink-2);font-size:15px}
+.num{font:500 13px/1 var(--mono);color:var(--accent);display:block;margin-bottom:16px}
+.price{font-size:44px;font-weight:700;letter-spacing:-.03em}
+.log{list-style:none;margin:0;padding:0;font-size:15px}
+.log li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:24px;padding:16px 0;border-top:1px solid var(--line)}
+.log time{font:13px/1.6 var(--mono);color:var(--ink-3)}
+footer{padding:48px 0;font:13px var(--mono);color:var(--ink-3)}
+
+@media (max-width:1023px){.links a{padding:8px 8px}.links a::after{left:8px;right:8px}.nav-in{gap:24px}h1{font-size:52px}.hero{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:759px){
+  .nav-in nav,.signin,.nav .start{display:none}
+  .nav-in{grid-template-columns:minmax(0,1fr) auto;padding:0 16px}
+  .menu-btn{display:grid}
+  .panel.open{display:block}
+  .note p{font-size:12px}
+  .note .tag{display:none}
+  .wrap{padding:0 20px}
+  .hero,section.s{grid-template-columns:minmax(0,1fr)}
+  h1{font-size:40px}
+  .grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .top,main,.links a::after{transition:none}
+}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+  <div class="note" id="note" role="region" aria-label="Announcement">
+    <p><span class="tag">NEW</span>Kestrel 4.2 evaluates flags at the edge in 11 regions. <a href="#changelog">Read the changelog</a></p>
+    <button type="button" id="dismiss" aria-label="Dismiss announcement">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="nav">
+    <div class="nav-in">
+      <a class="logo" href="#product" aria-label="Kestrel, home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17 12 5l9 12"/><path d="M8 17h8"/></svg>
+        Kestrel
+      </a>
+      <nav aria-label="Primary">
+        <ul class="links">
+          <li><a href="#product" aria-current="true">Product</a></li>
+          <li><a href="#sdks">SDKs</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#changelog">Changelog</a></li>
+          <li><a href="#customers">Customers</a></li>
+        </ul>
+      </nav>
+      <div class="actions">
+        <a class="signin" href="#signin">Sign in</a>
+        <a class="start" href="#start">Start free
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="panel" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="panel" id="panel">
+    <a href="#product" aria-current="true">Product</a>
+    <a href="#sdks">SDKs</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#changelog">Changelog</a>
+    <a href="#customers">Customers</a>
+    <a href="#signin">Sign in</a>
+    <a class="start" href="#start">Start free</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero" id="product" data-spy aria-labelledby="h1">
+      <div>
+        <p class="label">Feature flags · v4.2</p>
+        <h1 id="h1">Ship on Friday. <span>Flip it off</span> on Saturday.</h1>
+        <p class="lede">Kestrel puts every release behind a flag, evaluates it in 4 ms at the edge, and rolls it back without a deploy.</p>
+      </div>
+      <pre class="code" aria-label="Example code"><i>// checkout.ts</i>
+<b>import</b> { flag } <b>from</b> "@kestrel/edge";
+
+<b>if</b> (<b>await</b> flag("new-checkout", user)) {
+  <b>return</b> renderCheckoutV2();
+}
+<i>// 38% of EU traffic · p95 4.1 ms</i></pre>
+    </section>
+
+    <section class="s" id="sdks" data-spy aria-labelledby="h-sdks">
+      <div><p class="label">02 · SDKs</p><h2 id="h-sdks">Nine SDKs. One flag file.</h2></div>
+      <div class="grid">
+        <div class="cell"><span class="num">TS</span><h3>Node and edge</h3><p>Runs in Workers, Lambda and Deno with zero cold-start cost.</p></div>
+        <div class="cell"><span class="num">GO</span><h3>Go</h3><p>A 600-line client with no dependencies outside the standard library.</p></div>
+        <div class="cell"><span class="num">PY</span><h3>Python</h3><p>Async and sync clients, typed, with a pytest fixture.</p></div>
+        <div class="cell"><span class="num">RB</span><h3>Ruby</h3><p>A Rails engine that adds flags to your admin in one line.</p></div>
+      </div>
+    </section>
+
+    <section class="s" id="pricing" data-spy aria-labelledby="h-pricing">
+      <div><p class="label">03 · Pricing</p><h2 id="h-pricing">Free until it matters.</h2></div>
+      <div class="grid">
+        <div class="cell"><span class="num">HOBBY</span><div class="price">$0</div><p>5 seats, 1 million evaluations a month.</p></div>
+        <div class="cell"><span class="num">TEAM</span><div class="price">$12</div><p>Per seat a month. Audit log, approvals, SSO.</p></div>
+      </div>
+    </section>
+
+    <section class="s" id="changelog" data-spy aria-labelledby="h-log">
+      <div><p class="label">04 · Changelog</p><h2 id="h-log">What changed this month.</h2></div>
+      <ul class="log">
+        <li><time datetime="2026-09-30">30 Sep 2026</time><span>4.2: edge evaluation in 11 regions, p95 under 5 ms.</span></li>
+        <li><time datetime="2026-09-18">18 Sep 2026</time><span>Scheduled rollouts now accept a timezone per rule.</span></li>
+        <li><time datetime="2026-09-04">04 Sep 2026</time><span>The Ruby SDK reaches 2.0 with Rails 8 support.</span></li>
+      </ul>
+    </section>
+
+    <section class="s" id="customers" data-spy aria-labelledby="h-cust">
+      <div><p class="label">05 · Customers</p><h2 id="h-cust">2,400 teams flip flags here.</h2></div>
+      <div class="grid">
+        <div class="cell"><h3>Fieldnote</h3><p>"We rolled back a broken payment flow in 9 seconds, on a Sunday."</p></div>
+        <div class="cell"><h3>Orrin Freight</h3><p>"Every route change ships to 1% of drivers first."</p></div>
+      </div>
+    </section>
+    <footer>Kestrel Labs · Rotterdam · status: all systems normal</footer>
+  </div>
+</main>
+
+<script>
+const top_ = document.getElementById('top');
+const note = document.getElementById('note');
+const btn = document.querySelector('.menu-btn');
+const panel = document.getElementById('panel');
+const DELTA = 8;
+let lastY = window.scrollY, ticking = false;
+
+function onScroll(){
+  const y = window.scrollY;
+  const dy = y - lastY;
+  if (Math.abs(dy) > DELTA){
+    const menuOpen = panel.classList.contains('open');
+    if (dy > 0 && y > top_.offsetHeight && !menuOpen && !top_.contains(document.activeElement)) top_.classList.add('hidden');
+    else if (dy < 0) top_.classList.remove('hidden');
+    lastY = y;
+  }
+  top_.classList.toggle('raised', y > 0 && !top_.classList.contains('hidden'));
+  if (y <= 0) top_.classList.remove('hidden');
+  ticking = false;
+}
+window.addEventListener('scroll', () => {
+  if (!ticking){ requestAnimationFrame(onScroll); ticking = true; }
+}, {passive:true});
+top_.addEventListener('focusin', () => top_.classList.remove('hidden'));
+
+document.getElementById('dismiss').addEventListener('click', () => {
+  note.remove();
+  document.body.classList.add('no-note');
+  document.querySelector('.logo').focus();
+});
+
+function setMenu(open){
+  panel.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', String(open));
+  btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+}
+btn.addEventListener('click', () => setMenu(!panel.classList.contains('open')));
+panel.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && panel.classList.contains('open')){ setMenu(false); btn.focus(); }
+});
+
+const links = [...document.querySelectorAll('.links a, .panel a[href^="#"]:not(.start)')];
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const id = entry.target.id;
+    links.forEach(a => {
+      if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
+    });
+  });
+}, {rootMargin:'-40% 0px -55% 0px'});
+document.querySelectorAll('[data-spy]').forEach(s => spy.observe(s));
+</script>
+</body>
+</html>

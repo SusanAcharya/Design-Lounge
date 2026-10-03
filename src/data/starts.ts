@@ -234,7 +234,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'the-lounge',
     shelf: 'website-in-parts',
     categories: ['hero', 'navbar', 'features', 'pricing', 'testimonials', 'faq', 'contact', 'footer'],
-    pieces: ['hero-asymmetric-type-lockup', 'navbar-island-morph', 'features-tabbed-preview', 'testimonials-quote-carousel', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal'],
+    pieces: ['hero-asymmetric-type-lockup', 'navbar-island-morph', 'features-tabbed-preview', 'testimonials-quote-carousel', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'navbar-hide-on-scroll', 'hamburger-circle-reveal'],
   },
   {
     id: 'saas',
@@ -247,7 +247,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'friendly-saas',
     shelf: 'website-in-parts',
     categories: ['landing', 'hero', 'features', 'pricing', 'faq'],
-    pieces: ['landing-devtool-dark', 'hero-product-window-tilt', 'features-tabbed-preview', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'integrations-connect'],
+    pieces: ['landing-devtool-dark', 'hero-product-window-tilt', 'features-tabbed-preview', 'pricing-annual-toggle-roll', 'faq-two-column-search', 'integrations-connect', 'mega-menu-product-grid', 'navbar-hide-on-scroll', 'hamburger-circle-reveal'],
   },
   {
     id: 'portfolio',
@@ -260,7 +260,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'gallery-wall',
     shelf: 'portfolio-sites',
     categories: ['portfolio', 'profile', 'gallery', 'hero'],
-    pieces: ['portfolio-architect-index', 'portfolio-index-hover-preview', 'portfolio-photographer-horizontal', 'portfolio-case-study-long', 'portfolio-motion-showreel', 'profile-creator-masthead'],
+    pieces: ['portfolio-architect-index', 'portfolio-index-hover-preview', 'portfolio-photographer-horizontal', 'portfolio-case-study-long', 'portfolio-motion-showreel', 'profile-creator-masthead', 'navbar-vertical-rail', 'hamburger-circle-reveal'],
   },
   {
     id: 'portfolio-builder',
@@ -273,7 +273,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'indie-maker',
     shelf: 'portfolio-sites',
     categories: ['portfolio', 'features', 'hero', 'scroll'],
-    pieces: ['hero-product-window-tilt', 'bento-feature-grid', 'stacking-cards-scroll', 'portfolio-case-study-long', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal'],
+    pieces: ['hero-product-window-tilt', 'bento-feature-grid', 'stacking-cards-scroll', 'portfolio-case-study-long', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal', 'navbar-vertical-rail', 'hamburger-circle-reveal', 'card-article-mix'],
   },
   {
     id: 'fintech',
@@ -286,7 +286,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'friendly-saas',
     shelf: 'landing-pages',
     categories: ['landing', 'pricing', 'charts', 'auth'],
-    pieces: ['landing-fintech-light', 'swiss-grid-pricing', 'pricing-comparison-sticky', 'charts-kpi-spark-row', 'kpi-delta', 'split-sign-in'],
+    pieces: ['landing-fintech-light', 'swiss-grid-pricing', 'pricing-comparison-sticky', 'charts-kpi-spark-row', 'kpi-delta', 'split-sign-in', 'mega-menu-product-grid', 'navbar-hide-on-scroll'],
   },
   {
     id: 'fashion',
@@ -299,7 +299,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'maison',
     shelf: 'landing-pages',
     categories: ['landing', 'ecommerce', 'gallery'],
-    pieces: ['landing-fashion-atelier', 'luxe-product-detail', 'shop-product', 'gallery-contact-sheet', 'masonry-gallery-captions'],
+    pieces: ['landing-fashion-atelier', 'luxe-product-detail', 'shop-product', 'gallery-contact-sheet', 'masonry-gallery-captions', 'navbar-split-centered-logo', 'card-product-quick-add', 'hamburger-drawer-accordion'],
   },
   {
     id: 'food',
@@ -312,7 +312,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'garden-journal',
     shelf: 'first-impressions',
     categories: ['ecommerce', 'contact', 'utility'],
-    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'week-schedule', 'contact-booking-hours'],
+    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'week-schedule', 'contact-booking-hours', 'card-product-quick-add', 'mobile-web-bottom-nav', 'navbar-split-centered-logo'],
   },
   {
     id: 'wellness',
@@ -325,7 +325,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'garden-journal',
     shelf: 'landing-pages',
     categories: ['landing', 'contact', 'newsletter'],
-    pieces: ['landing-wellness-retreat', 'contact-booking-hours', 'calendar-month', 'newsletter-fold-inline'],
+    pieces: ['landing-wellness-retreat', 'contact-booking-hours', 'calendar-month', 'newsletter-fold-inline', 'navbar-split-centered-logo', 'mobile-web-bottom-nav'],
   },
   {
     id: 'hotel',
@@ -338,7 +338,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'maison',
     shelf: 'landing-pages',
     categories: ['contact', 'gallery', 'pickers'],
-    pieces: ['contact-booking-hours', 'contact-split-map-form', 'gallery-contact-sheet', 'calendar-month', 'masonry-gallery-captions'],
+    pieces: ['contact-booking-hours', 'contact-split-map-form', 'gallery-contact-sheet', 'calendar-month', 'masonry-gallery-captions', 'navbar-split-centered-logo', 'hamburger-drawer-accordion'],
   },
   {
     id: 'agency',
@@ -351,7 +351,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'brutal-grotesk',
     shelf: 'portfolio-sites',
     categories: ['landing', 'portfolio', 'team'],
-    pieces: ['landing-agency-case-wall', 'brutalist-studio-home', 'team-hover-portrait-grid', 'portfolio-case-study-long', 'careers-role-list'],
+    pieces: ['landing-agency-case-wall', 'brutalist-studio-home', 'team-hover-portrait-grid', 'portfolio-case-study-long', 'careers-role-list', 'navbar-vertical-rail', 'hamburger-circle-reveal'],
   },
   {
     id: 'docs',
@@ -364,7 +364,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'developer-docs',
     shelf: 'typography-first',
     categories: ['reading', 'navigation', 'utility'],
-    pieces: ['docs-three-column', 'code-snippet-tabs', 'command-palette', 'search-results-filters', 'tree-nav'],
+    pieces: ['docs-three-column', 'code-snippet-tabs', 'command-palette', 'search-results-filters', 'tree-nav', 'sidebar-docs-toc', 'navbar-hide-on-scroll'],
   },
   {
     id: 'music',
@@ -390,7 +390,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'the-lounge',
     shelf: 'typography-first',
     categories: ['profile', 'blog', 'reading', 'newsletter'],
-    pieces: ['profile-creator-masthead', 'blog-issue-index', 'paper-article-reader', 'newsletter-close-band', 'hero-editorial-name-rotator'],
+    pieces: ['profile-creator-masthead', 'blog-issue-index', 'paper-article-reader', 'newsletter-close-band', 'hero-editorial-name-rotator', 'card-article-mix', 'navbar-vertical-rail'],
   },
   {
     id: 'event',
@@ -403,7 +403,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'poster-condensed',
     shelf: 'first-impressions',
     categories: ['utility', 'text-motion', 'stats', 'cta'],
-    pieces: ['week-schedule', 'split-flap-board', 'kinetic-type-marquee', 'stats-ticker-band', 'cta-split-dark-band'],
+    pieces: ['week-schedule', 'split-flap-board', 'kinetic-type-marquee', 'stats-ticker-band', 'cta-split-dark-band', 'card-holo-foil', 'mobile-web-bottom-nav'],
   },
   {
     id: 'museum',
@@ -455,7 +455,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'the-lounge',
     shelf: 'design-languages',
     categories: ['design-language'],
-    pieces: ['paper-ink-style', 'luxe-serif-style', 'terminal-ui-style', 'clay-soft-style', 'y2k-chrome-style', 'bauhaus-style'],
+    pieces: ['paper-ink-style', 'luxe-serif-style', 'terminal-ui-style', 'clay-soft-style', 'y2k-chrome-style', 'bauhaus-style', 'sidebar-docs-toc'],
   },
   {
     id: 'dashboard',
@@ -468,7 +468,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'swiss-precision',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'data', 'charts', 'navigation'],
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'kanban-board'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'saved-banner', 'kanban-board', 'sidebar-workspace-switcher'],
   },
   {
     id: 'commerce',
@@ -481,7 +481,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'atelier',
     shelf: 'first-impressions',
     categories: ['ecommerce', 'pricing', 'cta'],
-    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'luxe-product-detail', 'select-field'],
+    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'luxe-product-detail', 'select-field', 'card-product-quick-add', 'hamburger-drawer-accordion', 'mega-menu-product-grid'],
   },
   {
     id: 'tablet',

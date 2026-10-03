@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 248 · "Shop collection" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 256 · "Shop collection" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Shop collection
 

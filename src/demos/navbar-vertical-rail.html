@@ -1,0 +1,219 @@
+<!-- Design Lounge piece: navbar-vertical-rail · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ruma Office · Print and identity studio, Patan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f2ebdd;--cream-2:#e9e0cd;--ink:#141414;--ink-2:#3d3a35;--pink:#ff48b0;--line:#141414;
+  --display:"Big Shoulders Display",Impact,sans-serif;--mono:"Space Mono",ui-monospace,monospace;
+  --rail:88px;--item:72px;--ease:cubic-bezier(.16,1,.3,1);--dur:420ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:smooth}
+body{font:15px/1.6 var(--mono);color:var(--ink);background:var(--cream);overflow-x:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:-3px;background-color:var(--cream-2)}
+
+.rail{position:fixed;inset:0 auto 0 0;width:var(--rail);z-index:10;background:var(--cream);border-right:2px solid var(--line);
+  display:flex;flex-direction:column;justify-content:space-between}
+.word{display:block;padding:20px 0 0;text-decoration:none;font:900 30px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;
+  writing-mode:vertical-rl;transform:rotate(180deg);align-self:center;white-space:nowrap}
+.word em{font-style:normal;background:var(--pink);padding:6px 0}
+.nav{position:relative;border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+.nav ol{list-style:none;margin:0;padding:0;position:relative;z-index:1}
+.nav li+li{border-top:1px solid var(--line)}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;height:var(--item);text-decoration:none;gap:2px}
+.nav .n{font:700 26px/1 var(--display);letter-spacing:.02em}
+.nav .l{font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.nav a:hover .l{text-decoration:underline;text-underline-offset:3px}
+.ind{position:absolute;left:0;top:0;width:100%;height:var(--item);background:var(--pink);
+  transform:translateY(var(--y,0px));transition:transform var(--dur) var(--ease)}
+.ind::after{content:"";position:absolute;right:-2px;top:0;bottom:0;width:6px;background:var(--ink)}
+.foot{padding:16px 8px 18px;text-align:center;font-size:10px;line-height:1.4;letter-spacing:.06em;text-transform:uppercase}
+.foot time{display:block;font:700 22px/1 var(--display);letter-spacing:.02em;margin:4px 0 10px}
+.avail{display:flex;flex-direction:column;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--pink);border:2px solid var(--ink);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(.7)}}
+.menu-btn,.panel{display:none}
+
+main{margin-left:var(--rail)}
+section{min-height:100vh;padding:56px 64px;border-bottom:2px solid var(--line);scroll-margin-top:0}
+.tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 24px;display:flex;gap:16px;align-items:center}
+.tag b{background:var(--ink);color:var(--cream);padding:2px 8px;font-weight:700}
+h1,h2{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:-.005em;margin:0}
+h1{font-size:132px;max-width:10ch;position:relative}
+h1 mark{background:none;color:var(--ink);position:relative;z-index:0}
+h1 mark::before{content:"";position:absolute;inset:18% -2% 6% -2%;background:var(--pink);mix-blend-mode:multiply;z-index:-1;transform:translate(6px,4px)}
+h2{font-size:96px;margin-bottom:40px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:48px;align-items:end;margin-bottom:56px}
+.blot{position:relative;height:320px}
+.blot i{position:absolute;display:block;border-radius:50%}
+.blot .p{width:220px;height:220px;right:0;top:0;background:var(--pink);mix-blend-mode:multiply}
+.blot .k{width:200px;height:200px;right:70px;top:100px;background-image:radial-gradient(var(--ink) 1.6px,transparent 1.9px);background-size:7px 7px;mix-blend-mode:multiply}
+.work{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:2px solid var(--line)}
+.proj{padding:16px;border-right:2px solid var(--line);text-decoration:none;display:block}
+.proj:last-child{border-right:0}
+.proj .art{height:150px;border:2px solid var(--line);margin-bottom:12px;background:var(--cream-2);position:relative;overflow:hidden}
+.proj .art::before{content:"";position:absolute;inset:auto -10% -30% 20%;height:90%;background:var(--pink);mix-blend-mode:multiply;border-radius:50% 50% 0 0}
+.proj:nth-child(2) .art::before{inset:15% 15%;border-radius:0;background-image:radial-gradient(var(--ink) 1.4px,transparent 1.7px);background-size:6px 6px;background-color:transparent}
+.proj:nth-child(3) .art::before{inset:-20% 40% -20% -10%;border-radius:0;transform:rotate(12deg)}
+.proj:nth-child(4) .art::before{inset:20%;border-radius:50%;background:var(--ink)}
+.proj h3{font:700 28px/1 var(--display);text-transform:uppercase;margin:0 0 6px}
+.proj p{margin:0;font-size:12px;color:var(--ink-2)}
+.proj:hover h3{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px;max-width:960px}
+.cols p{margin:0 0 16px}
+.notes{list-style:none;margin:0;padding:0;max-width:960px;border-top:2px solid var(--line)}
+.notes li{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:24px;padding:20px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.notes time{font-size:12px}
+.notes a{font:700 30px/1.05 var(--display);text-transform:uppercase;text-decoration:none}
+.notes a:hover{text-decoration:underline}
+.notes span{font-size:12px}
+.mail{font:900 112px/.9 var(--display);text-transform:uppercase;text-decoration:none;display:inline-block;border-bottom:8px solid var(--pink);word-break:break-all}
+.contact p{max-width:52ch}
+
+@media (max-width:1023px){h1{font-size:96px}h2{font-size:72px}.hero{grid-template-columns:minmax(0,1fr)}.blot{display:none}.work{grid-template-columns:repeat(2,minmax(0,1fr))}.proj:nth-child(2){border-right:0}.proj:nth-child(-n+2){border-bottom:2px solid var(--line)}.mail{font-size:80px}}
+@media (max-width:759px){
+  .rail{inset:0 0 auto 0;width:auto;height:56px;flex-direction:row;align-items:center;border-right:0;border-bottom:2px solid var(--line);padding:0 8px 0 16px}
+  .word{writing-mode:horizontal-tb;transform:none;padding:0;font-size:24px}
+  .rail .nav,.foot{display:none}
+  .menu-btn{display:grid;place-items:center;width:44px;height:44px;border:2px solid var(--line)}
+  .menu-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:square}
+  .panel.open{display:block;position:fixed;inset:56px 0 auto 0;z-index:9;background:var(--cream);border-bottom:2px solid var(--line)}
+  .panel a{display:flex;gap:16px;align-items:baseline;padding:14px 16px;border-top:1px solid var(--line);text-decoration:none;font:700 28px/1 var(--display);text-transform:uppercase}
+  .panel a[aria-current="true"]{background:var(--pink)}
+  .panel small{font:12px var(--mono)}
+  main{margin-left:0;padding-top:56px}
+  section{padding:40px 20px;min-height:auto}
+  h1{font-size:64px}h2{font-size:56px}
+  .work,.cols{grid-template-columns:minmax(0,1fr)}
+  .proj{border-right:0;border-bottom:2px solid var(--line)}
+  .notes li{grid-template-columns:minmax(0,1fr)}
+  .mail{font-size:44px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .ind{transition:none}
+  .dot{animation:none}
+}
+</style>
+</head>
+<body>
+<header class="rail">
+  <a class="word" href="#work" aria-label="Ruma Office, home"><span>Ruma</span> <em>Office</em></a>
+  <nav class="nav" aria-label="Sections">
+    <div class="ind" aria-hidden="true"></div>
+    <ol>
+      <li><a href="#work" aria-current="true"><span class="n">01</span><span class="l">Work</span></a></li>
+      <li><a href="#about"><span class="n">02</span><span class="l">About</span></a></li>
+      <li><a href="#notes"><span class="n">03</span><span class="l">Notes</span></a></li>
+      <li><a href="#contact"><span class="n">04</span><span class="l">Contact</span></a></li>
+    </ol>
+  </nav>
+  <div class="foot">
+    Patan
+    <time id="clock" datetime="22:11">22:11</time>
+    <div class="avail"><span class="dot" aria-hidden="true"></span>Booking Jan 2027</div>
+  </div>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="panel" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+</header>
+<nav class="panel" id="panel" aria-label="Sections, compact">
+  <a href="#work" aria-current="true"><small>01</small>Work</a>
+  <a href="#about"><small>02</small>About</a>
+  <a href="#notes"><small>03</small>Notes</a>
+  <a href="#contact"><small>04</small>Contact</a>
+</nav>
+
+<main>
+  <section id="work" aria-labelledby="h-work">
+    <div class="hero">
+      <div>
+        <p class="tag"><b>01</b> Selected work, 2022 – 2026</p>
+        <h1 id="h-work">Posters, books and <mark>signs</mark> that get printed.</h1>
+      </div>
+      <div class="blot" aria-hidden="true"><i class="p"></i><i class="k"></i></div>
+    </div>
+    <div class="work">
+      <a class="proj" href="#work"><div class="art"></div><h3>Jhamsikhel Jazz</h3><p>Festival identity · 2-colour riso · 2026</p></a>
+      <a class="proj" href="#work"><div class="art"></div><h3>Kiln &amp; Co.</h3><p>Shop signage · 14 boards · 2025</p></a>
+      <a class="proj" href="#work"><div class="art"></div><h3>Nine Rivers</h3><p>Photobook · 212 pages · 2025</p></a>
+      <a class="proj" href="#work"><div class="art"></div><h3>Thamel Night Bus</h3><p>Wayfinding · 31 stops · 2024</p></a>
+    </div>
+  </section>
+
+  <section id="about" aria-labelledby="h-about">
+    <p class="tag"><b>02</b> About</p>
+    <h2 id="h-about">Two people, one Riso.</h2>
+    <div class="cols">
+      <p>Ruma Office is Anju Shrestha and Pablo Viñals. We have run a GR3750 duplicator out of a courtyard in Patan since 2022, printing in pink, black and whatever drum we can borrow.</p>
+      <p>We take four commissions a season: identity, books and signage. Everything we design is proofed on paper the same afternoon, so clients see ink, not a screen.</p>
+    </div>
+  </section>
+
+  <section id="notes" aria-labelledby="h-notes">
+    <p class="tag"><b>03</b> Notes</p>
+    <h2 id="h-notes">From the press room.</h2>
+    <ol class="notes">
+      <li><time datetime="2026-09-21">21.09.2026</time><a href="#notes">Why fluorescent pink eats black</a><span>6 min</span></li>
+      <li><time datetime="2026-08-02">02.08.2026</time><a href="#notes">Registration is a feeling</a><span>4 min</span></li>
+      <li><time datetime="2026-06-14">14.06.2026</time><a href="#notes">A drum, a monsoon, a ruined run</a><span>9 min</span></li>
+    </ol>
+  </section>
+
+  <section id="contact" class="contact" aria-labelledby="h-contact">
+    <p class="tag"><b>04</b> Contact</p>
+    <h2 id="h-contact">Say hello.</h2>
+    <a class="mail" href="#contact">studio@ruma.office</a>
+    <p>Next opening for new work is January 2027. Send a brief, a budget and a date; we answer within two working days, Patan time.</p>
+  </section>
+</main>
+
+<script>
+const rail = document.querySelector('.rail .nav');
+const ind = rail.querySelector('.ind');
+const railLinks = [...rail.querySelectorAll('a')];
+const allLinks = [...document.querySelectorAll('.rail .nav a, .panel a')];
+const btn = document.querySelector('.menu-btn');
+const panel = document.getElementById('panel');
+
+function setActive(id){
+  allLinks.forEach(a => {
+    if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'true');
+    else a.removeAttribute('aria-current');
+  });
+  const link = railLinks.find(a => a.getAttribute('href') === '#' + id);
+  if (link) ind.style.setProperty('--y', link.parentElement.offsetTop + 'px');
+}
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+}, {rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('main section').forEach(s => spy.observe(s));
+
+const clock = document.getElementById('clock');
+const fmt = new Intl.DateTimeFormat('en-GB', {hour:'2-digit', minute:'2-digit', hour12:false, timeZone:'Asia/Kathmandu'});
+function tick(){ const t = fmt.format(new Date()); clock.textContent = t; clock.setAttribute('datetime', t); }
+tick();
+setInterval(tick, 30000);
+
+function setMenu(open){
+  panel.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', String(open));
+  btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+}
+btn.addEventListener('click', () => setMenu(!panel.classList.contains('open')));
+panel.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && panel.classList.contains('open')){ setMenu(false); btn.focus(); }
+});
+</script>
+</body>
+</html>

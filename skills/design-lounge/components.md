@@ -138,6 +138,16 @@ A save confirmation is `saved-banner`. It stays on the page. It is not a toast. 
 
 A phone tab bar is `phone-tab-plain` unless the family is glass. Glass uses `ios-glass-tab-bar`. Do not put a glass bar on any other family. The plain bar's demo has four tabs. A product uses one tab per real section, three to five. A transaction list is `spend-list`. Do not invent a second list style. A conversation is `chat-thread`. A paid order that stays on the page is `order-confirmed`.
 
+Website navigation. Pick one header per site, by the brand, not by habit:
+
+- A hotel, restaurant, fashion or luxury brand: `navbar-split-centered-logo`. It sits clear over the hero and turns solid on scroll.
+- A SaaS, docs or tool site: `navbar-hide-on-scroll`. Many products to explain: `mega-menu-product-grid`.
+- A portfolio, studio or agency: `navbar-vertical-rail`, `navbar-island-morph`, or `navbar-floating-pill-shrink`.
+- On a phone the header becomes a menu button. A studio or brand site uses `hamburger-circle-reveal`. A shop or a site with many sections uses `hamburger-drawer-accordion`. A site people come back to every week, like a gym, a restaurant or a PWA, may use `mobile-web-bottom-nav` instead. A marketing page does not.
+- An app shell: `sidebar-workspace-switcher`, or `collapsing-sidebar-rail` when the work needs room. Docs: `sidebar-docs-toc` or `docs-three-column`.
+
+Cards. A shop grid is `card-product-quick-add`. A blog or news grid is `card-article-mix`: one lead, then smaller cards, never six equal boxes. A pass, membership or ticket is `card-holo-foil`.
+
 On Android, or when the family is Material, the tab bar is `m3-navigation-bar`. It is the same job as `phone-tab-plain`. Use one of the three, never two.
 
 Phone app screens, one piece each. Restyle them onto the locked theme. Do not keep the demo's colours.

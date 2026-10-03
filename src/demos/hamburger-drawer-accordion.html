@@ -1,0 +1,247 @@
+<!-- Design Lounge piece: hamburger-drawer-accordion · platform: mobile-web · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loam &amp; Linen — homeware for long dinners</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#fbf7f1;--surface:#fffdf9;--tan:#d8c2a3;--tan-soft:#f1e6d6;--tan-deep:#b8996f;
+  --ink:#3a2a1f;--ink-2:#6e5a49;--line:#e8dccb;--scrim:rgba(58,42,31,.48);
+  --serif:"Fraunces",Georgia,serif;--sans:"Source Sans 3",system-ui,sans-serif;
+  --top:54px;--chrome-bottom:84px;--gutter:20px;--r:12px;--r-sm:8px;
+  --std:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);
+  --t-drawer:380ms;--t-drawer-out:260ms;--t-acc:280ms;
+  --shadow:0 0 0 1px rgba(58,42,31,.06),24px 0 48px -24px rgba(58,42,31,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--page);color:var(--ink);font:400 16px/1.45 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.locked{overflow:hidden}
+body.preload *{transition:none!important}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.top{position:sticky;top:0;z-index:5;padding:var(--top) 12px 0;background:var(--page);border-bottom:1px solid var(--line)}
+.top-row{height:56px;display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center}
+.icon-btn{width:44px;height:44px;display:grid;place-items:center;border-radius:50%}
+.icon-btn:hover{background:var(--tan-soft)}
+.brand{text-align:center;font:600 21px/1 var(--serif);letter-spacing:-.01em}
+.bag{position:relative}
+.bag i{position:absolute;top:6px;right:5px;min-width:16px;height:16px;border-radius:8px;background:var(--ink);color:var(--surface);font:600 10px/16px var(--sans);font-style:normal;text-align:center}
+
+.page{padding:16px var(--gutter) calc(var(--chrome-bottom) + 24px)}
+.hero{border-radius:var(--r);background:var(--tan-soft);padding:24px 20px;display:grid;gap:12px}
+.eyebrow{margin:0;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.hero h1{margin:0;font:600 34px/1.05 var(--serif);letter-spacing:-.02em}
+.hero p{margin:0;color:var(--ink-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:var(--r);background:var(--ink);color:var(--surface);font-weight:600;width:max-content}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px;margin-top:24px}
+.card .ph{aspect-ratio:4/5;border-radius:var(--r);background:var(--tan-soft);display:grid;place-items:center}
+.card .ph span{width:62%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#efe2cf 0 44%,var(--tan) 45% 47%,#e9d9c2 48%)}
+.card:nth-child(2) .ph span{border-radius:4px;aspect-ratio:3/4;width:48%;background:repeating-linear-gradient(0deg,#e4d3bb 0 6px,#ecdfcc 6px 12px)}
+.card:nth-child(3) .ph span{border-radius:40px 40px 8px 8px;aspect-ratio:3/5;width:36%;background:#c9ab83}
+.card:nth-child(4) .ph span{border-radius:8px 8px 24px 24px;aspect-ratio:3/4;width:34%;background:#d6a86a;opacity:.8}
+.card h2{margin:10px 0 0;font:500 15px/1.3 var(--sans)}
+.card p{margin:2px 0 0;font-size:15px;font-weight:600}
+
+.scrim{position:fixed;inset:0;z-index:10;background:var(--scrim);opacity:0;visibility:hidden;transition:opacity var(--t-drawer-out) var(--std),visibility 0s linear var(--t-drawer-out)}
+.open .scrim{opacity:1;visibility:visible;transition:opacity var(--t-drawer) var(--std),visibility 0s}
+.drawer{position:fixed;top:0;bottom:0;left:0;z-index:11;width:86%;max-width:420px;display:flex;flex-direction:column;background:var(--surface);border-radius:0 var(--r) var(--r) 0;box-shadow:var(--shadow);transform:translateX(-104%);visibility:hidden;transition:transform var(--t-drawer-out) cubic-bezier(.4,0,1,1),visibility 0s linear var(--t-drawer-out)}
+.open .drawer{transform:none;visibility:visible;transition:transform var(--t-drawer) var(--sheet),visibility 0s}
+
+.d-head{padding:var(--top) 8px 0 var(--gutter);height:calc(var(--top) + 52px);display:flex;align-items:center;justify-content:space-between}
+.d-head p{margin:0;font:600 20px/1 var(--serif);letter-spacing:-.01em}
+.close{background:var(--tan-soft)}
+.close:hover{background:var(--line)}
+.search{margin:4px var(--gutter) 8px;position:relative}
+.search svg{position:absolute;left:14px;top:13px;color:var(--ink-2)}
+.search input{width:100%;height:48px;padding:0 14px 0 46px;border:1px solid var(--line);border-radius:var(--r);background:var(--page);font-size:16px}
+.search input::placeholder{color:var(--ink-2);opacity:1}
+.search input:focus-visible{outline:2px solid var(--ink);outline-offset:0;border-color:transparent}
+
+.d-body{flex:1;min-height:0;overflow-y:auto;padding:0 var(--gutter) 12px;overscroll-behavior:contain}
+.sections{list-style:none;margin:0;padding:0}
+.sections>li{border-bottom:1px solid var(--line)}
+.row{width:100%;min-height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;font:500 19px/1.2 var(--serif);letter-spacing:-.01em;border-radius:var(--r-sm)}
+.row .tag{font:600 12px/1 var(--sans);letter-spacing:.04em;color:var(--ink-2);background:var(--tan-soft);padding:6px 8px;border-radius:999px}
+.row svg{color:var(--ink-2);transition:transform var(--t-acc) var(--std)}
+.row[aria-expanded="true"] svg{transform:rotate(180deg)}
+.row:focus-visible{outline-offset:-2px}
+.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--t-acc) var(--std)}
+.row[aria-expanded="true"]+.panel{grid-template-rows:1fr}
+.panel>div{overflow:hidden;min-height:0}
+.sub{list-style:none;margin:0 0 10px;padding:0 0 0 14px;border-left:2px solid var(--tan)}
+.sub a{display:flex;align-items:center;min-height:44px;padding-left:4px;color:var(--ink-2);border-radius:var(--r-sm)}
+.sub a:hover{color:var(--ink)}
+.sub a.all{color:var(--ink);font-weight:600}
+.sub a:focus-visible{outline-offset:-2px}
+.promo{margin-top:14px;display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 14px;border-radius:var(--r);background:var(--tan);color:var(--ink)}
+.promo span{flex:1;display:grid}
+.promo strong{font:600 16px/1.25 var(--serif)}
+.promo small{font-size:13px}
+
+.d-foot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:8px var(--gutter) calc(var(--chrome-bottom) + 8px);border-top:1px solid var(--line);background:var(--surface);border-radius:0 0 var(--r) 0}
+.d-foot a{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 10px;border-radius:var(--r-sm);font-size:15px;font-weight:600;background:var(--page);border:1px solid var(--line)}
+.d-foot a span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.d-foot svg{width:20px;height:20px}
+
+@media (prefers-reduced-motion:reduce){
+  .drawer,.open .drawer{transform:none;opacity:0;transition:opacity 150ms linear,visibility 0s linear 150ms}
+  .open .drawer{opacity:1;transition:opacity 150ms linear,visibility 0s}
+  .panel,.row svg{transition:none}
+  .scrim,.open .scrim{transition-duration:150ms}
+}
+</style>
+</head>
+<body class="open locked preload">
+<header class="top" id="top">
+  <div class="top-row">
+    <button class="icon-btn" id="burger" type="button" aria-expanded="true" aria-controls="drawer" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+    </button>
+    <a class="brand" href="#top">Loam &amp; Linen</a>
+    <a class="icon-btn bag" href="#bag" aria-label="Bag, 2 items">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><i aria-hidden="true">2</i>
+    </a>
+  </div>
+</header>
+
+<main class="page" id="page" inert>
+  <section class="hero">
+    <p class="eyebrow">Autumn edit · 38 pieces</p>
+    <h1>The long table</h1>
+    <p>Stoneware, washed linen and oiled oak for dinners that run past eleven.</p>
+    <a class="btn" href="#edit">Shop the edit</a>
+  </section>
+  <div class="grid">
+    <article class="card"><div class="ph"><span></span></div><h2>Ridge stoneware plate</h2><p>$28</p></article>
+    <article class="card"><div class="ph"><span></span></div><h2>Washed linen napkins, set of 4</h2><p>$36</p></article>
+    <article class="card"><div class="ph"><span></span></div><h2>Oak pouring jug</h2><p>$64</p></article>
+    <article class="card"><div class="ph"><span></span></div><h2>Amber tumbler</h2><p>$14</p></article>
+  </div>
+</main>
+
+<div class="scrim" data-close></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+  <div class="d-head">
+    <p id="drawer-title">Loam &amp; Linen</p>
+    <button class="icon-btn close" type="button" data-close aria-label="Close menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <form class="search" role="search">
+    <label class="sr" for="q">Search the shop</label>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
+    <input id="q" type="search" placeholder="Search plates, linen, oak" autocomplete="off">
+  </form>
+  <nav class="d-body" aria-label="Shop">
+    <ul class="sections">
+      <li><a class="row" href="#new">New in <span class="tag">48 pieces</span></a></li>
+      <li>
+        <button class="row" type="button" id="h-kitchen" aria-expanded="true" aria-controls="p-kitchen">Kitchen &amp; dining<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="panel" id="p-kitchen" role="region" aria-labelledby="h-kitchen"><div><ul class="sub">
+          <li><a href="#dinnerware">Dinnerware</a></li>
+          <li><a href="#glassware">Glassware</a></li>
+          <li><a href="#table-linen">Table linen</a></li>
+          <li><a class="all" href="#kitchen">Shop all kitchen</a></li>
+        </ul></div></div>
+      </li>
+      <li>
+        <button class="row" type="button" id="h-bedroom" aria-expanded="false" aria-controls="p-bedroom">Bedroom<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="panel" id="p-bedroom" role="region" aria-labelledby="h-bedroom" inert><div><ul class="sub">
+          <li><a href="#bedding">Bedding</a></li>
+          <li><a href="#throws">Throws &amp; blankets</a></li>
+          <li><a href="#sleepwear">Sleepwear</a></li>
+          <li><a class="all" href="#bedroom">Shop all bedroom</a></li>
+        </ul></div></div>
+      </li>
+      <li>
+        <button class="row" type="button" id="h-living" aria-expanded="false" aria-controls="p-living">Living<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="panel" id="p-living" role="region" aria-labelledby="h-living" inert><div><ul class="sub">
+          <li><a href="#cushions">Cushions</a></li>
+          <li><a href="#rugs">Rugs</a></li>
+          <li><a href="#lamps">Lamps</a></li>
+          <li><a class="all" href="#living">Shop all living</a></li>
+        </ul></div></div>
+      </li>
+      <li>
+        <button class="row" type="button" id="h-bath" aria-expanded="false" aria-controls="p-bath">Bath<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="panel" id="p-bath" role="region" aria-labelledby="h-bath" inert><div><ul class="sub">
+          <li><a href="#towels">Towels</a></li>
+          <li><a href="#robes">Robes</a></li>
+          <li><a href="#soap">Soap &amp; care</a></li>
+          <li><a class="all" href="#bath">Shop all bath</a></li>
+        </ul></div></div>
+      </li>
+    </ul>
+    <a class="promo" href="#delivery">
+      <span><strong>Free delivery over $120</strong><small>Until Sunday 12 October</small></span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </nav>
+  <div class="d-foot">
+    <a href="#account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.2-3.6 3.7-5.5 7-5.5s5.8 1.9 7 5.5"/></svg><span>Account</span></a>
+    <a href="#help"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.5a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4M12 17v.01"/></svg><span>Help</span></a>
+  </div>
+</aside>
+
+<script>
+const body = document.body;
+const burger = document.getElementById('burger');
+const drawer = document.getElementById('drawer');
+const page = document.getElementById('page');
+const rows = [...drawer.querySelectorAll('button.row')];
+
+function setOpen(open) {
+  body.classList.toggle('open', open);
+  body.classList.toggle('locked', open);
+  burger.setAttribute('aria-expanded', open);
+  page.inert = open;
+  if (open) setTimeout(() => drawer.querySelector('.close').focus(), 60);
+  else burger.focus();
+}
+
+function toggleRow(row) {
+  const willOpen = row.getAttribute('aria-expanded') !== 'true';
+  rows.forEach(r => {
+    const on = r === row && willOpen;
+    r.setAttribute('aria-expanded', on);
+    document.getElementById(r.getAttribute('aria-controls')).inert = !on;
+  });
+}
+
+burger.addEventListener('click', () => setOpen(true));
+document.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', () => setOpen(false)));
+rows.forEach(r => r.addEventListener('click', () => toggleRow(r)));
+drawer.querySelector('form').addEventListener('submit', e => e.preventDefault());
+drawer.addEventListener('click', e => {
+  const a = e.target.closest('a');
+  if (!a) return;
+  e.preventDefault();
+  setOpen(false);
+});
+
+document.addEventListener('keydown', e => {
+  if (!body.classList.contains('open')) return;
+  if (e.key === 'Escape') { e.preventDefault(); setOpen(false); return; }
+  if (e.key !== 'Tab') return;
+  const f = [...drawer.querySelectorAll('a[href],button,input')].filter(el => !el.closest('[inert]'));
+  const i = f.indexOf(document.activeElement);
+  if (i === -1) { e.preventDefault(); f[0].focus(); }
+  else if (e.shiftKey && i === 0) { e.preventDefault(); f[f.length - 1].focus(); }
+  else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+});
+
+requestAnimationFrame(() => requestAnimationFrame(() => body.classList.remove('preload')));
+</script>
+</body>
+</html>

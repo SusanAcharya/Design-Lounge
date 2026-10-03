@@ -1,0 +1,250 @@
+<!-- Design Lounge piece: sidebar-docs-toc · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Retries and backoff · Larkspur docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e7;--sheet:#fbf8f1;--code:#efe8da;--ink:#1f1b16;--ink-2:#4a443a;--ink-3:#6e6658;
+  --line:#e3d9c7;--line-2:#d4c8b2;--accent:#b8321f;--accent-soft:#f3e2d9;--focus:#b8321f;
+  --serif:"Newsreader",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--fast:160ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.65 var(--sans);color:var(--ink);background:var(--paper);display:grid;grid-template-columns:240px minmax(0,1fr) 200px;overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:2px}
+
+/* left nav */
+.nav{height:100%;overflow:auto;border-right:1px solid var(--line);padding:24px 0 32px}
+.brand{display:flex;align-items:baseline;gap:8px;padding:0 24px 20px;margin-bottom:8px;border-bottom:1px solid var(--line)}
+.brand b{font:600 22px/1 var(--serif);letter-spacing:-.01em}
+.brand span{font:12px var(--mono);color:var(--ink-3)}
+.nav h2{margin:20px 24px 6px;font:600 11px/1.4 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.nav ul{list-style:none;margin:0;padding:0}
+.nav a{display:block;padding:5px 24px 5px 22px;border-left:2px solid transparent;font-size:14px;line-height:1.45;color:var(--ink-2);text-decoration:none;transition:color var(--fast) var(--ease)}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current="page"]{border-left-color:var(--accent);color:var(--ink);font-weight:600;background:linear-gradient(90deg,var(--accent-soft),transparent 80%)}
+.nav a:focus-visible{outline-offset:-2px}
+
+/* article */
+.scroll{height:100%;overflow:auto;background:var(--sheet);scroll-padding-top:32px}
+article{max-width:68ch;margin:0 auto;padding:48px 40px 96px}
+.crumbs{font-size:13px;color:var(--ink-3);margin:0 0 14px}
+.crumbs a{text-decoration:none}
+.crumbs a:hover{color:var(--ink)}
+h1{margin:0;font:600 46px/1.05 var(--serif);letter-spacing:-.02em;font-variation-settings:"opsz" 72}
+.lede{margin:16px 0 0;font:500 20px/1.5 var(--serif);color:var(--ink-2)}
+.meta{display:flex;gap:16px;margin:20px 0 0;padding:0 0 28px;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-3)}
+article h2{margin:44px 0 0;font:600 28px/1.2 var(--serif);letter-spacing:-.01em;font-variation-settings:"opsz" 36}
+article h3{margin:28px 0 0;font:600 15px/1.4 var(--sans)}
+article p{margin:12px 0 0}
+article li{margin:6px 0 0}
+article ul{margin:12px 0 0;padding-left:20px}
+code{font:13.5px var(--mono);background:var(--code);padding:1px 5px;border-radius:3px}
+pre{margin:16px 0 0;padding:16px 18px;background:var(--code);border:1px solid var(--line);border-radius:4px;overflow:auto;font:13px/1.6 var(--mono);tab-size:2}
+pre code{background:none;padding:0;font-size:inherit}
+pre .c{color:var(--ink-3)}
+pre .k{color:var(--accent)}
+pre .s{color:#5b6b2f}
+.figure{font-size:12px;color:var(--ink-3);margin:8px 0 0}
+.note{margin:20px 0 0;padding:12px 16px;border-left:2px solid var(--accent);background:var(--paper);font-size:14px}
+.note b{color:var(--accent);font-weight:600}
+table{width:100%;margin:16px 0 0;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 12px 8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+td code{white-space:nowrap}
+.pager{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin:56px 0 0}
+.pager a{display:block;padding:14px 16px;border:1px solid var(--line-2);border-radius:4px;text-decoration:none;transition:border-color var(--fast) var(--ease)}
+.pager a:hover{border-color:var(--ink)}
+.pager small{display:block;font-size:12px;color:var(--ink-3)}
+.pager span{font:600 18px/1.3 var(--serif)}
+.pager a:last-child{text-align:right}
+
+/* toc */
+.toc{height:100%;padding:56px 24px 32px 0;overflow:auto}
+.toc-label{margin:0 0 12px 16px;font:600 11px/1.4 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.rail{position:relative}
+.toc ol{position:relative;list-style:none;margin:0;padding:0}
+.track,.fill{position:absolute;left:0;top:0;width:1px;background:var(--line-2)}
+.track{bottom:0}
+.fill{width:2px;left:-.5px;background:var(--accent);height:0;transform-origin:top}
+.toc a{display:block;padding:5px 0 5px 16px;font-size:13px;line-height:1.4;color:var(--ink-3);text-decoration:none;transition:color var(--fast) var(--ease)}
+.toc a.sub{padding-left:28px;font-size:12.5px}
+.toc a:hover{color:var(--ink)}
+.toc a[aria-current="location"]{color:var(--ink);font-weight:500}
+.toc a[aria-current="location"]::before{content:"";position:absolute;left:-2px;width:5px;height:5px;margin-top:6px;border-radius:50%;background:var(--accent)}
+.pct{margin:16px 0 0 16px;font:12px var(--mono);color:var(--ink-3)}
+.top{display:inline-block;margin:6px 0 0 16px;font-size:13px;color:var(--ink-2)}
+
+@media (max-width:1023px){body{grid-template-columns:220px minmax(0,1fr)}.toc{display:none}}
+@media (max-width:759px){body{grid-template-columns:minmax(0,1fr)}.nav{display:none}article{padding:32px 20px 72px}}
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:0ms!important}
+  .scroll{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Documentation">
+  <div class="brand"><b>Larkspur</b><span>v4.2</span></div>
+  <h2 id="g1">Start here</h2>
+  <ul aria-labelledby="g1">
+    <li><a href="#">Introduction</a></li>
+    <li><a href="#">Install</a></li>
+    <li><a href="#">Your first job</a></li>
+  </ul>
+  <h2 id="g2">Jobs</h2>
+  <ul aria-labelledby="g2">
+    <li><a href="#">Defining jobs</a></li>
+    <li><a href="#">Scheduling</a></li>
+    <li><a href="#" aria-current="page">Retries and backoff</a></li>
+    <li><a href="#">Timeouts</a></li>
+    <li><a href="#">Concurrency limits</a></li>
+  </ul>
+  <h2 id="g3">Operations</h2>
+  <ul aria-labelledby="g3">
+    <li><a href="#">Dead-letter queue</a></li>
+    <li><a href="#">Metrics and tracing</a></li>
+    <li><a href="#">Upgrading to 4.0</a></li>
+  </ul>
+  <h2 id="g4">Reference</h2>
+  <ul aria-labelledby="g4">
+    <li><a href="#">CLI</a></li>
+    <li><a href="#">larkspur.toml</a></li>
+    <li><a href="#">Error codes</a></li>
+  </ul>
+</nav>
+
+<div class="scroll" id="scroll">
+  <article>
+    <p class="crumbs"><a href="#">Jobs</a> / Retries and backoff</p>
+    <h1 id="top" tabindex="-1">Retries and backoff</h1>
+    <p class="lede">A job that fails is not finished. Larkspur puts it back on the queue with a delay that grows each time, so a flaky dependency gets room to recover instead of a stampede.</p>
+    <p class="meta"><span>7 min read</span><span>Updated 28 September 2026</span></p>
+
+    <h2 id="how">How a retry is scheduled</h2>
+    <p>When a handler throws, or returns a value marked <code>Retry</code>, the worker does not drop the job. It writes the error to the job's history, increments <code>attempt</code>, and computes the next run time from the job's retry policy. The job then waits in the <code>scheduled</code> set until that time passes.</p>
+    <p>Only the worker that held the lease can reschedule a job. If the worker dies mid-run, the lease expires after <code>visibility_timeout</code> and another worker picks the job up as if it had failed. That attempt counts.</p>
+    <h3 id="what-counts">What counts as a failure</h3>
+    <ul>
+      <li>An uncaught exception from the handler.</li>
+      <li>A return value of <code>Retry(after=...)</code>, which also overrides the delay once.</li>
+      <li>A timeout, when the handler runs past <code>timeout</code>.</li>
+    </ul>
+    <p>Returning <code>Discard</code> ends the job without a retry. Use it for input that will never succeed, such as a deleted account.</p>
+
+    <h2 id="backoff">Backoff with jitter</h2>
+    <p>The default policy is exponential: each delay is the base multiplied by two to the power of the attempt, capped at a ceiling. Without jitter, a thousand jobs that failed together retry together, and the dependency that fell over falls over again. Larkspur applies full jitter by default, picking a random delay between zero and the computed value.</p>
+<pre><code><span class="c"># larkspur.toml</span>
+[retry]
+policy    = <span class="s">"exponential"</span>
+base      = <span class="s">"2s"</span>
+ceiling   = <span class="s">"15m"</span>
+max_tries = <span class="k">8</span>
+jitter    = <span class="s">"full"</span></code></pre>
+    <p class="figure">The defaults, written out. Omit any key to keep its default.</p>
+    <p>With these values, attempt four waits up to 32 seconds and attempt eight waits up to the 15 minute ceiling. The total worst case across eight tries is a little over 25 minutes.</p>
+    <table>
+      <thead><tr><th>Key</th><th>Default</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>base</code></td><td>2s</td><td>Delay before the first retry, before jitter.</td></tr>
+        <tr><td><code>ceiling</code></td><td>15m</td><td>No single delay is longer than this.</td></tr>
+        <tr><td><code>max_tries</code></td><td>8</td><td>Total attempts, including the first run.</td></tr>
+        <tr><td><code>jitter</code></td><td>full</td><td><code>full</code>, <code>equal</code>, or <code>none</code>.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="idempotency">Idempotency keys</h2>
+    <p>A retry runs the handler again from the top. If the handler charged a card before it crashed, the retry charges it twice. Give each job an idempotency key and check it before any side effect.</p>
+<pre><code><span class="k">@job</span>(retry=<span class="s">"payments"</span>)
+<span class="k">def</span> capture(ctx, invoice_id):
+    key = <span class="s">f"capture:{invoice_id}"</span>
+    <span class="k">if</span> ctx.seen(key):
+        <span class="k">return</span> Discard
+    gateway.capture(invoice_id, idempotency_key=key)
+    ctx.mark(key, ttl=<span class="s">"7d"</span>)</code></pre>
+    <div class="note"><b>Note.</b> <code>ctx.seen</code> reads from the same store as the queue. Do not keep keys in process memory; a retry often lands on a different worker.</div>
+
+    <h2 id="dead">When retries run out</h2>
+    <p>After <code>max_tries</code>, the job moves to the dead-letter queue with its full error history. Nothing runs it again on its own. Inspect it with <code>larkspur dead list</code>, fix the cause, then replay it with <code>larkspur dead retry &lt;id&gt;</code>.</p>
+    <p>Dead jobs are kept for 14 days by default. Set <code>dead_ttl</code> in the <code>[queue]</code> table to change this.</p>
+    <h3 id="alerts">Alerting on dead jobs</h3>
+    <p>Larkspur emits <code>larkspur.job.dead</code> once per job. Alert on its rate, not on single events. One dead job a day is normal for most queues; forty in five minutes is an outage.</p>
+
+    <h2 id="limits">Limits</h2>
+    <p>A policy can set <code>max_tries</code> up to 50 and <code>ceiling</code> up to 24 hours. Longer waits belong in a scheduled job, not a retry. Retries do not survive a queue rename; jobs in the <code>scheduled</code> set keep their old queue name until they run.</p>
+
+    <div class="pager">
+      <a href="#"><small>Previous</small><span>Scheduling</span></a>
+      <a href="#"><small>Next</small><span>Timeouts</span></a>
+    </div>
+  </article>
+</div>
+
+<aside class="toc" aria-labelledby="toc-label">
+  <p class="toc-label" id="toc-label">On this page</p>
+  <div class="rail">
+  <span class="track" aria-hidden="true"></span><span class="fill" id="fill" aria-hidden="true"></span>
+  <ol id="toc">
+    <li><a href="#how">How a retry is scheduled</a></li>
+    <li><a class="sub" href="#what-counts">What counts as a failure</a></li>
+    <li><a href="#backoff">Backoff with jitter</a></li>
+    <li><a href="#idempotency">Idempotency keys</a></li>
+    <li><a href="#dead">When retries run out</a></li>
+    <li><a class="sub" href="#alerts">Alerting on dead jobs</a></li>
+    <li><a href="#limits">Limits</a></li>
+  </ol>
+  </div>
+  <p class="pct" id="pct" aria-hidden="true">0% read</p>
+  <a class="top" href="#top">Back to top</a>
+</aside>
+
+<script>
+const scroller = document.getElementById('scroll');
+const links = [...document.querySelectorAll('#toc a')];
+const heads = links.map(a => document.getElementById(a.hash.slice(1)));
+const fill = document.getElementById('fill'), pct = document.getElementById('pct');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const LINE = 120;
+let ticking = false;
+
+function update() {
+  ticking = false;
+  const top = scroller.getBoundingClientRect().top;
+  let idx = 0;
+  heads.forEach((h, i) => { if (h.getBoundingClientRect().top - top <= LINE) idx = i; });
+  const max = scroller.scrollHeight - scroller.clientHeight;
+  if (max > 0 && scroller.scrollTop >= max - 2) idx = heads.length - 1;
+  links.forEach((a, i) => i === idx ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current'));
+  const p = max > 0 ? scroller.scrollTop / max : 1;
+  fill.style.height = (p * 100).toFixed(1) + '%';
+  pct.textContent = Math.round(p * 100) + '% read';
+}
+scroller.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+
+function go(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const y = el.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - 32;
+  scroller.scrollTo({ top: Math.max(0, y), behavior: reduce.matches ? 'auto' : 'smooth' });
+  el.setAttribute('tabindex', '-1');
+  el.focus({ preventScroll: true });
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  e.preventDefault();
+  if (a.hash) go(a.hash.slice(1));
+});
+update();
+</script>
+</body>
+</html>

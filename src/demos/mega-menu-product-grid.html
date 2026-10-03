@@ -1,0 +1,232 @@
+<!-- Design Lounge piece: mega-menu-product-grid · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ordinal · Product</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--tint:#f4f4f1;--ink:#0d0d0d;--ink-2:#4b4b48;--ink-3:#73736e;--line:#e6e6e1;--line-2:#d2d2cc;
+  --accent:#f0441c;--accent-soft:#fde9e3;--focus:#f0441c;
+  --sans:"Schibsted Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:8px;--bar:64px;--ease:cubic-bezier(0.16,1,0.3,1);--std:cubic-bezier(0.2,0.7,0.2,1);
+  --panel-in:200ms;--micro:140ms;
+  --shadow:0 28px 48px -28px rgba(13,13,13,.28);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
+svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+header{position:relative;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:40px;height:var(--bar);max-width:1200px;margin:0 auto;padding:0 40px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-.03em}
+.mark{width:22px;height:22px;background:var(--ink);border-radius:4px;position:relative}
+.mark::after{content:"";position:absolute;right:4px;bottom:4px;width:7px;height:7px;background:var(--accent);border-radius:1px}
+.bar nav{flex:1;min-width:0}
+.links{display:flex;align-items:center;gap:4px;list-style:none;margin:0;padding:0;flex:1}
+.links>li>a,.trigger{display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:6px;font-size:14.5px;font-weight:500;color:var(--ink-2);transition:color var(--micro) var(--std),background var(--micro) var(--std)}
+.links>li>a:hover,.trigger:hover{color:var(--ink);background:var(--tint)}
+.trigger[aria-expanded="true"]{color:var(--ink);background:var(--tint)}
+.trigger svg{width:14px;height:14px;transition:transform var(--panel-in) var(--ease)}
+.trigger[aria-expanded="true"] svg{transform:rotate(180deg)}
+.right{display:flex;align-items:center;gap:8px}
+.signin{height:36px;padding:0 12px;font-size:14.5px;font-weight:500;display:flex;align-items:center}
+.signin:hover{text-decoration:underline;text-underline-offset:4px}
+.cta{display:flex;align-items:center;height:36px;padding:0 16px;background:var(--ink);color:#fff;border-radius:var(--r);font-size:14.5px;font-weight:600}
+.cta:hover{background:#2a2a28}
+
+/* panel */
+.panel{position:absolute;left:0;right:0;top:100%;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:var(--shadow);
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:opacity var(--panel-in) var(--ease),transform var(--panel-in) var(--ease),visibility 0s linear var(--panel-in)}
+.panel[data-open]{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,.78fr) minmax(0,1.3fr);gap:32px;max-width:1200px;margin:0 auto;padding:28px 40px 32px}
+.col h3,.team h3{margin:0 0 12px;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.col ul,.team ul{list-style:none;margin:0;padding:0}
+.prod{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;padding:10px;margin:0 -10px;border-radius:var(--r);transition:background var(--micro) var(--std)}
+.prod:hover{background:var(--tint)}
+.ico{display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--bg);transition:color var(--micro) var(--std),border-color var(--micro) var(--std)}
+.prod:hover .ico{color:var(--accent);border-color:var(--ink)}
+.name{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.desc{display:block;margin-top:2px;font-size:13px;line-height:1.4;color:var(--ink-3)}
+.new{font:500 10px/16px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:0 5px;border-radius:3px}
+.team{border-left:1px solid var(--line);padding-left:32px}
+.team a{display:block;padding:7px 0;font-size:14.5px;font-weight:500;color:var(--ink-2)}
+.team a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--accent)}
+.team .all{margin-top:8px;color:var(--ink);font-weight:600}
+
+.card{display:block;border:1px solid var(--line);border-radius:var(--r);background:var(--tint);overflow:hidden;transition:border-color var(--micro) var(--std)}
+.card:hover{border-color:var(--ink)}
+.preview{position:relative;height:148px;margin:14px 14px 0;background:var(--bg);border:1px solid var(--line-2);border-radius:6px;overflow:hidden;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px);background-size:100% 24px;background-position:0 40px}
+.cell{position:absolute;left:12px;top:10px;right:12px;height:22px;display:flex;align-items:center;gap:8px;font:500 10.5px/1 var(--mono);color:var(--ink-2)}
+.cell i{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+.bars{position:absolute;left:14px;right:14px;bottom:12px;height:84px;display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:6px;align-items:end}
+.bars span{background:var(--ink);border-radius:2px 2px 0 0}
+.bars span:nth-child(8){background:var(--accent)}
+.live{position:absolute;right:12px;top:10px;font:500 10px/16px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:0 6px;border:1px solid var(--line-2);border-radius:3px;background:var(--bg)}
+.card-body{padding:14px 16px 16px}
+.card-meta{font:500 11px/1 var(--mono);letter-spacing:.04em;color:var(--ink-3)}
+.card-title{display:block;margin:8px 0 4px;font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.card-text{display:block;font-size:13px;color:var(--ink-2)}
+.more{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:13.5px;font-weight:600}
+.more svg{width:14px;height:14px;transition:transform var(--micro) var(--std)}
+.card:hover .more svg{transform:translateX(3px)}
+
+.foot{border-top:1px solid var(--line)}
+.foot div{display:flex;align-items:center;gap:24px;max-width:1200px;margin:0 auto;padding:0 40px;height:44px;font-size:13px;color:var(--ink-3)}
+.ok{display:inline-flex;align-items:center;gap:8px}
+.ok::before{content:"";width:7px;height:7px;border-radius:50%;background:#1f9d55}
+.foot a{margin-left:auto;color:var(--ink);font-weight:600}
+.foot a:hover{text-decoration:underline;text-underline-offset:4px}
+
+/* page behind */
+.scrim{position:fixed;inset:var(--bar) 0 0;background:rgba(13,13,13,.05);opacity:0;pointer-events:none;transition:opacity var(--panel-in) var(--ease);z-index:5}
+.scrim[data-on]{opacity:1}
+.hero{display:flex;flex-direction:column;justify-content:flex-end;height:calc(100% - var(--bar));max-width:1200px;margin:0 auto;padding:0 40px 56px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.hero h1{margin:16px 0 0;max-width:16ch;font-size:80px;line-height:.96;font-weight:700;letter-spacing:-.045em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{max-width:52ch;margin:24px 0 0;font-size:18px;color:var(--ink-2)}
+
+@media (max-width:1023px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card{grid-column:1/-1}}
+@media (max-width:759px){
+  .bar{gap:16px;padding:0 20px}.links>li:not(:first-child),.signin{display:none}
+  .panel{max-height:calc(100vh - var(--bar));overflow:auto}
+  .grid{grid-template-columns:minmax(0,1fr);gap:24px;padding:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .panel{transform:none;transition:opacity 0ms,visibility 0ms}
+  *{transition-duration:0ms!important}
+}
+</style>
+</head>
+<body>
+<header id="hdr">
+  <div class="bar">
+    <a class="logo" href="#"><span class="mark" aria-hidden="true"></span>Ordinal</a>
+    <nav aria-label="Main">
+      <ul class="links">
+        <li><button class="trigger" id="pt" type="button" aria-expanded="true" aria-controls="pp">Product<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button></li>
+        <li><a href="#">Customers</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Docs</a></li>
+        <li><a href="#">Changelog</a></li>
+      </ul>
+    </nav>
+    <div class="right"><a class="signin" href="#">Sign in</a><a class="cta" href="#">Start free</a></div>
+  </div>
+
+  <div class="panel" id="pp" data-open>
+    <div class="grid">
+      <section class="col" aria-labelledby="c1">
+        <h3 id="c1">Collect</h3>
+        <ul>
+          <li><a class="prod" href="#"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M4 12h16M4 17h7"/><circle cx="17" cy="7" r="2"/><circle cx="14" cy="17" r="2"/></svg></span><span><span class="name">Pipelines</span><span class="desc">Stream events from 140 sources into one schema.</span></span></a></li>
+          <li><a class="prod" href="#"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></svg></span><span><span class="name">Webhooks</span><span class="desc">Push any event to your stack in under 200 ms.</span></span></a></li>
+          <li><a class="prod" href="#"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span><span><span class="name">SDKs</span><span class="desc">Typed clients for web, iOS, Android and Go.</span></span></a></li>
+        </ul>
+      </section>
+      <section class="col" aria-labelledby="c2">
+        <h3 id="c2">Model</h3>
+        <ul>
+          <li><a class="prod" href="#"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.5"/><path d="M5 6v12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg></span><span><span class="name">Warehouse</span><span class="desc">Columnar storage priced per query, not per seat.</span></span></a></li>
+          <li><a class="prod" href="#"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16M8 16l4-5 3 3 5-6"/></svg></span><span><span class="name">Metrics layer</span><span class="desc">Define revenue once. Every chart agrees.</span></span></a></li>
+          <li><a class="prod" href="#"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="13" rx="2"/><circle cx="12" cy="12.5" r="3"/><path d="M9 6l1.5-2h3L15 6"/></svg></span><span><span class="name">Snapshots</span><span class="desc">Freeze a dataset for audits and board decks.</span></span></a></li>
+        </ul>
+      </section>
+      <section class="col" aria-labelledby="c3">
+        <h3 id="c3">Act</h3>
+        <ul>
+          <li><a class="prod" href="#"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="9" rx="1"/><rect x="13" y="4" width="7" height="5" rx="1"/><rect x="13" y="11" width="7" height="9" rx="1"/><rect x="4" y="15" width="7" height="5" rx="1"/></svg></span><span><span class="name">Dashboards</span><span class="desc">Pin charts, set targets, share a read-only link.</span></span></a></li>
+          <li><a class="prod" href="#"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5h4"/></svg></span><span><span class="name">Alerts</span><span class="desc">Get paged when a metric drifts, not when it twitches.</span></span></a></li>
+          <li><a class="prod" href="#"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h11a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6zM6 3v18M10 8h5M10 12h5"/></svg></span><span><span class="name">Notebooks <span class="new">New</span></span><span class="desc">SQL and Python cells with live results.</span></span></a></li>
+        </ul>
+      </section>
+      <section class="team" aria-labelledby="c4">
+        <h3 id="c4">Solutions by team</h3>
+        <ul>
+          <li><a href="#">Engineering</a></li>
+          <li><a href="#">Product</a></li>
+          <li><a href="#">Finance</a></li>
+          <li><a href="#">Growth</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a class="all" href="#">All solutions</a></li>
+        </ul>
+      </section>
+      <a class="card" href="#">
+        <span class="preview" aria-hidden="true">
+          <span class="cell"><i></i>select week, sum(arr) from revenue</span>
+          <span class="live">Live</span>
+          <span class="bars"><span style="height:34%"></span><span style="height:41%"></span><span style="height:38%"></span><span style="height:52%"></span><span style="height:49%"></span><span style="height:63%"></span><span style="height:70%"></span><span style="height:92%"></span><span style="height:58%;opacity:.25"></span></span>
+        </span>
+        <span class="card-body">
+          <span class="card-meta">Release 7.4 · 30 Sep 2026</span>
+          <span class="card-title">Live notebooks are here</span>
+          <span class="card-text">Cells re-run the moment upstream data lands. There is no refresh button to forget.</span>
+          <span class="more">Read the release note<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+      </a>
+    </div>
+    <div class="foot"><div><span class="ok">All systems normal</span><span>SOC 2 Type II · EU and US regions</span><a href="#">Compare plans</a></div></div>
+  </div>
+</header>
+<div class="scrim" id="scrim" data-on aria-hidden="true"></div>
+
+<main class="hero">
+  <p class="eyebrow">Analytics for teams that ship daily</p>
+  <h1>Every number your team trusts, <em>in one place.</em></h1>
+  <p>Ordinal collects your events, models them once, and puts the answer in front of the people who act on it.</p>
+</main>
+
+<script>
+const hdr = document.getElementById('hdr'), btn = document.getElementById('pt'), panel = document.getElementById('pp'), scrim = document.getElementById('scrim');
+const OPEN_DELAY = 120, CLOSE_DELAY = 200;
+let openT = 0, closeT = 0;
+const links = () => [...panel.querySelectorAll('a')];
+const isOpen = () => btn.getAttribute('aria-expanded') === 'true';
+
+function setOpen(open) {
+  clearTimeout(openT); clearTimeout(closeT);
+  btn.setAttribute('aria-expanded', String(open));
+  panel.toggleAttribute('data-open', open);
+  scrim.toggleAttribute('data-on', open);
+}
+function scheduleOpen() { clearTimeout(closeT); if (!isOpen()) openT = setTimeout(() => setOpen(true), OPEN_DELAY); }
+function scheduleClose() { clearTimeout(openT); if (isOpen()) closeT = setTimeout(() => setOpen(false), CLOSE_DELAY); }
+
+btn.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') scheduleOpen(); });
+btn.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') scheduleClose(); });
+panel.addEventListener('pointerenter', () => { clearTimeout(closeT); });
+panel.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') scheduleClose(); });
+btn.addEventListener('click', () => setOpen(!isOpen()));
+
+btn.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(true); links()[0].focus(); }
+});
+panel.addEventListener('keydown', e => {
+  const all = links(), i = all.indexOf(document.activeElement);
+  if (i < 0) return;
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    all[Math.min(all.length - 1, Math.max(0, i + (e.key === 'ArrowDown' ? 1 : -1)))].focus();
+  } else if (e.key === 'Home' || e.key === 'End') {
+    e.preventDefault(); all[e.key === 'Home' ? 0 : all.length - 1].focus();
+  }
+});
+hdr.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) { e.preventDefault(); setOpen(false); btn.focus(); } });
+hdr.addEventListener('focusout', e => {
+  const to = e.relatedTarget;
+  if (isOpen() && to && !panel.contains(to) && to !== btn) setOpen(false);
+});
+document.addEventListener('pointerdown', e => { if (isOpen() && !panel.contains(e.target) && !btn.contains(e.target)) setOpen(false); });
+</script>
+</body>
+</html>

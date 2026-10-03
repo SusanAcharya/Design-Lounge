@@ -1,0 +1,225 @@
+<!-- Design Lounge piece: card-holo-foil · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Pass wallet · SIGNAL/26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112..125,500..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+@property --rx{syntax:"<angle>";inherits:true;initial-value:0deg}
+@property --ry{syntax:"<angle>";inherits:true;initial-value:0deg}
+@property --px{syntax:"<percentage>";inherits:true;initial-value:30%}
+@property --gx{syntax:"<percentage>";inherits:true;initial-value:28%}
+@property --gy{syntax:"<percentage>";inherits:true;initial-value:39%}
+:root{
+  --bg:#0a0c12;--bg-2:#121521;--ink:#e9ecf2;--ink-2:#a1a8b8;--ink-3:#7a8194;--line:rgba(233,236,242,.1);
+  --pink:#f2c4d6;--aqua:#bfe3ea;--lime:#e6edb8;
+  --wide:"Archivo",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --expo:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+  --t-return:600ms;--t-track:80ms;--t-swap:520ms;
+  --max:12deg;--cw:440px;--ch:278px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:14px/1.5 var(--mono);color:var(--ink);background:var(--bg);overflow-x:hidden;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:40px 40px;background-position:-1px -1px;
+  display:grid;place-items:center;padding:40px 48px;
+}
+:focus-visible{outline:2px solid var(--aqua);outline-offset:4px}
+.wrap{width:100%;max-width:1184px;display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:64px;align-items:center}
+
+/* copy */
+.eyebrow{margin:0 0 20px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);display:flex;gap:12px;align-items:center}
+.eyebrow::before{content:"";width:24px;height:1px;background:var(--aqua)}
+h1{margin:0;font:800 56px/.95 var(--wide);font-stretch:125%;letter-spacing:-.02em}
+.tier{margin:20px 0 4px;font:600 22px/1.2 var(--wide);font-stretch:112%}
+.price{margin:0 0 24px;color:var(--aqua);font-size:13px;letter-spacing:.06em}
+ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--line);color:var(--ink-2);font-size:13px}
+li svg{width:18px;height:18px;fill:none;stroke:var(--aqua);stroke-width:1.75;margin-top:1px}
+.hint{margin:24px 0 0;font-size:11px;color:var(--ink-3);letter-spacing:.04em}
+kbd{font:inherit;border:1px solid var(--line);padding:1px 5px;color:var(--ink-2)}
+
+/* stage */
+.stage{position:relative;height:420px;min-width:0}
+.slot{position:absolute;left:0;top:0;width:var(--cw);height:var(--ch);transform-origin:0 0;transition:transform var(--t-swap) var(--expo);perspective:900px}
+.slot[data-slot="0"]{transform:translate(0,64px);z-index:2}
+.slot[data-slot="1"]{transform:translate(504px,40px) scale(.5)}
+.slot[data-slot="2"]{transform:translate(504px,232px) scale(.5)}
+.slot[data-slot="0"] .float{animation:float 6s cubic-bezier(.45,0,.55,1) infinite alternate}
+@keyframes float{to{transform:translateY(-8px)}}
+.float{width:100%;height:100%}
+
+.pass{
+  --base:linear-gradient(150deg,#232838,#11141d 70%);--fg:var(--ink);--fg-2:var(--ink-2);--foil:.24;--blend:screen;
+  position:relative;width:100%;height:100%;border-radius:18px;overflow:hidden;cursor:pointer;
+  background:var(--base);color:var(--fg);border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.8),0 2px 0 rgba(255,255,255,.06) inset;
+  transform:rotateX(var(--rx)) rotateY(var(--ry));transform-style:preserve-3d;
+  transition:transform var(--t-return) var(--expo),--px var(--t-return) var(--expo),--gx var(--t-return) var(--expo),--gy var(--t-return) var(--expo);
+  padding:22px 24px;display:grid;grid-template-rows:auto minmax(0,1fr) auto;touch-action:pan-y;user-select:none;
+}
+.pass.track{transition:transform var(--t-track) linear,--px var(--t-track) linear,--gx var(--t-track) linear,--gy var(--t-track) linear}
+.slot[data-slot="0"] .pass{cursor:grab}
+.pass::before{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:var(--blend);opacity:var(--foil);
+  background:
+    repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,transparent 1px 3px),
+    linear-gradient(115deg,transparent calc(var(--px) - 24%),var(--pink) calc(var(--px) - 12%),var(--aqua) var(--px),var(--lime) calc(var(--px) + 12%),transparent calc(var(--px) + 24%));}
+.pass::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;
+  background:radial-gradient(circle at var(--gx) var(--gy),rgba(255,255,255,.55),transparent 42%)}
+.pass[data-tier="silver"]{--base:linear-gradient(150deg,#d7dbe2,#a4aab5 75%);--fg:#14161c;--fg-2:#343843;--foil:.5;--blend:soft-light}
+.pass[data-tier="gold"]{--base:linear-gradient(150deg,#e0c27a,#b08a3e 80%);--fg:#1a1408;--fg-2:#2e240e;--foil:.45;--blend:soft-light}
+.pass > *{position:relative;z-index:1}
+
+.row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.brand{font:800 19px/1 var(--wide);font-stretch:125%;letter-spacing:-.01em}
+.badge{font-size:10px;letter-spacing:.14em;text-transform:uppercase;border:1px solid currentColor;padding:4px 8px;opacity:.85}
+.mid{display:flex;align-items:center;gap:18px}
+.mid svg{width:52px;height:52px;flex:none;fill:none;stroke:currentColor;stroke-width:1.25;opacity:.75}
+.lab{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+.who{display:block;font:700 27px/1.05 var(--wide);font-stretch:118%;letter-spacing:-.01em;margin-top:6px}
+.foot{align-items:flex-end}
+.when{font-size:11px;line-height:1.5;color:var(--fg-2);letter-spacing:.04em}
+.code{text-align:right;font-size:10px;letter-spacing:.12em;color:var(--fg-2)}
+.bars{display:block;width:124px;height:30px;margin-bottom:6px;background:repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 4px,currentColor 4px 5px,transparent 5px 8px,currentColor 8px 11px,transparent 11px 13px);color:var(--fg);opacity:.8}
+
+.slot:not([data-slot="0"]) .pass:hover{border-color:var(--aqua)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:1180px){:root{--cw:400px;--ch:252px}.wrap{gap:40px;grid-template-columns:minmax(0,320px) minmax(0,1fr)}h1{font-size:44px}
+  .slot[data-slot="1"]{transform:translate(424px,40px) scale(.5)}.slot[data-slot="2"]{transform:translate(424px,210px) scale(.5)}}
+@media (max-width:900px){body{place-items:start center}.wrap{grid-template-columns:minmax(0,1fr)}.stage{height:440px}
+  .slot[data-slot="0"]{transform:translate(0,0)}.slot[data-slot="1"]{transform:translate(0,288px) scale(.5)}.slot[data-slot="2"]{transform:translate(216px,288px) scale(.5)}}
+@media (max-width:640px){body{padding:24px 16px}:root{--cw:328px;--ch:207px}h1{font-size:36px}.stage{height:340px}
+  .slot[data-slot="1"]{transform:translate(0,230px) scale(.48)}.slot[data-slot="2"]{transform:translate(170px,230px) scale(.48)}
+  .who{font-size:21px}.pass{padding:16px 18px}.mid svg{width:40px;height:40px}}
+@media (prefers-reduced-motion:reduce){
+  .slot,.pass,.pass.track{transition:none}
+  .slot[data-slot="0"] .float{animation:none}
+  .pass{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section aria-labelledby="t">
+    <p class="eyebrow">Pass wallet · 14–16 Nov 2026</p>
+    <h1 id="t">SIGNAL/26</h1>
+    <div aria-live="polite">
+      <p class="tier" id="tier">Ink · Speaker</p>
+      <p class="price" id="price">By invitation</p>
+      <ul id="perks"></ul>
+    </div>
+    <p class="hint">Move over the pass or focus it and press <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> to tilt. <kbd>Esc</kbd> levels it.</p>
+  </section>
+  <div class="stage" id="stage">
+    <div class="slot" data-id="ink" data-slot="0"><div class="float">
+      <div class="pass" data-tier="ink" tabindex="0">
+        <div class="row"><span class="brand">SIGNAL/26</span><span class="badge">Speaker</span></div>
+        <div class="mid"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M7.5 7.5a6.4 6.4 0 0 0 0 9M16.5 7.5a6.4 6.4 0 0 1 0 9M4.6 4.6a10.5 10.5 0 0 0 0 14.8M19.4 4.6a10.5 10.5 0 0 1 0 14.8"/></svg>
+          <div><span class="lab">Pass holder</span><span class="who">Priya Tamang</span></div></div>
+        <div class="row foot"><span class="when">Track B · Room 2<br>Pier 9, Hall C</span><span class="code"><i class="bars" aria-hidden="true"></i>S26-0417</span></div>
+      </div></div></div>
+    <div class="slot" data-id="silver" data-slot="1"><div class="float">
+      <div class="pass" data-tier="silver" tabindex="0">
+        <div class="row"><span class="brand">SIGNAL/26</span><span class="badge">Silver</span></div>
+        <div class="mid"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M7.5 7.5a6.4 6.4 0 0 0 0 9M16.5 7.5a6.4 6.4 0 0 1 0 9"/></svg>
+          <div><span class="lab">Pass holder</span><span class="who">Jonah Lindqvist</span></div></div>
+        <div class="row foot"><span class="when">Attendee · 3 days<br>Pier 9, Hall C</span><span class="code"><i class="bars" aria-hidden="true"></i>S26-2281</span></div>
+      </div></div></div>
+    <div class="slot" data-id="gold" data-slot="2"><div class="float">
+      <div class="pass" data-tier="gold" tabindex="0">
+        <div class="row"><span class="brand">SIGNAL/26</span><span class="badge">Gold</span></div>
+        <div class="mid"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M7.5 7.5a6.4 6.4 0 0 0 0 9M16.5 7.5a6.4 6.4 0 0 1 0 9M4.6 4.6a10.5 10.5 0 0 0 0 14.8M19.4 4.6a10.5 10.5 0 0 1 0 14.8"/><path d="M12 2v2M12 20v2"/></svg>
+          <div><span class="lab">Pass holder</span><span class="who">Adaeze Mensah</span></div></div>
+        <div class="row foot"><span class="when">Patron · 3 days<br>Pier 9, Hall C</span><span class="code"><i class="bars" aria-hidden="true"></i>S26-0009</span></div>
+      </div></div></div>
+  </div>
+</div>
+<script>
+const TIERS = {
+  ink: { name: 'Ink', tier: 'Ink · Speaker', price: 'By invitation', perks: ['Green room and speaker lounge', 'Reserved seat in row A, all three days', 'Dinner on the pier, 15 November'] },
+  silver: { name: 'Silver', tier: 'Silver · Attendee', price: '$420 · 3 days', perks: ['Every talk and workshop, 3 days', 'Lunch and coffee in Hall C', 'Recordings for 12 months'] },
+  gold: { name: 'Gold', tier: 'Gold · Patron', price: '$1,200 · 3 days', perks: ['Everything in Silver', 'Front-row seat at the keynotes', 'Your name on the patron wall'] }
+};
+const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const MAX = 12, REST = reduce ? [0, 0] : [-3, 6];
+const slots = [...document.querySelectorAll('.slot')];
+const order = ['ink', 'silver', 'gold'];
+const clamp = v => Math.max(-MAX, Math.min(MAX, v));
+
+function tilt(p, rx, ry) {
+  if (reduce) { rx = 0; ry = 0; }
+  p.rx = rx = clamp(rx); p.ry = ry = clamp(ry);
+  p.style.setProperty('--rx', rx + 'deg');
+  p.style.setProperty('--ry', ry + 'deg');
+  p.style.setProperty('--px', (50 - ry / MAX * 40).toFixed(1) + '%');
+  p.style.setProperty('--gx', (50 - ry / MAX * 45).toFixed(1) + '%');
+  p.style.setProperty('--gy', (50 + rx / MAX * 45).toFixed(1) + '%');
+}
+function render() {
+  order.forEach((id, i) => {
+    const slot = slots.find(s => s.dataset.id === id), p = slot.querySelector('.pass'), t = TIERS[id];
+    slot.dataset.slot = i;
+    if (i === 0) {
+      p.setAttribute('role', 'group');
+      p.setAttribute('aria-roledescription', 'pass');
+      p.setAttribute('aria-label', t.name + ' pass. Arrow keys tilt it.');
+      tilt(p, REST[0], REST[1]);
+    } else {
+      p.setAttribute('role', 'button');
+      p.removeAttribute('aria-roledescription');
+      p.setAttribute('aria-label', 'Bring the ' + t.name + ' pass forward');
+      tilt(p, 0, 0);
+    }
+  });
+  const t = TIERS[order[0]];
+  document.getElementById('tier').textContent = t.tier;
+  document.getElementById('price').textContent = t.price;
+  document.getElementById('perks').innerHTML = t.perks.map(x => '<li>' + CHECK + '<span>' + x + '</span></li>').join('');
+}
+function bring(id) {
+  const i = order.indexOf(id);
+  if (i < 1) return;
+  order[i] = order[0]; order[0] = id;
+  render();
+}
+slots.forEach(slot => {
+  const p = slot.querySelector('.pass'), front = () => slot.dataset.slot === '0';
+  let raf = 0, ev = null;
+  const frame = () => {
+    raf = 0; if (!ev || !front()) return;
+    const r = p.getBoundingClientRect();
+    const x = Math.min(1, Math.max(0, (ev.clientX - r.left) / r.width));
+    const y = Math.min(1, Math.max(0, (ev.clientY - r.top) / r.height));
+    tilt(p, (y - .5) * 2 * MAX, (.5 - x) * 2 * MAX);
+  };
+  p.addEventListener('pointermove', e => {
+    if (reduce || !front()) return;
+    p.classList.add('track'); ev = e;
+    if (!raf) raf = requestAnimationFrame(frame);
+  });
+  p.addEventListener('pointerleave', () => {
+    ev = null; p.classList.remove('track');
+    if (front()) tilt(p, REST[0], REST[1]);
+  });
+  p.addEventListener('click', () => { if (!front()) bring(slot.dataset.id); });
+  p.addEventListener('keydown', e => {
+    if (!front()) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); bring(slot.dataset.id); }
+      return;
+    }
+    const step = { ArrowLeft: [0, 4], ArrowRight: [0, -4], ArrowUp: [-4, 0], ArrowDown: [4, 0] }[e.key];
+    if (step) { e.preventDefault(); tilt(p, (p.rx || 0) + step[0], (p.ry || 0) + step[1]); }
+    if (e.key === 'Escape' || e.key === 'Home') { e.preventDefault(); tilt(p, 0, 0); }
+  });
+});
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!-- Design Lounge piece: sidebar-workspace-switcher · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Inbox · Tamarind Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16171a;--main:#1c1d20;--hover:#212226;--current:#26272b;--raised:#232428;
+  --ink:#ecebe7;--ink-2:#aeaba4;--ink-3:#8a867e;--line:#2a2a2c;--line-2:#34343a;
+  --accent:#c5e86c;--accent-ink:#16171a;--focus:#c5e86c;
+  --sans:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:6px;--ease:cubic-bezier(0.2,0.7,0.2,1);--fast:140ms;--layout:240ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.4 var(--sans);color:var(--ink);background:var(--bg);display:grid;grid-template-columns:260px minmax(0,1fr);overflow:hidden;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;padding:0;text-align:left}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--focus);outline-offset:-2px;border-radius:var(--r)}
+svg{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+/* sidebar */
+.side{position:relative;display:flex;flex-direction:column;height:100%;padding:8px 8px 0;border-right:1px solid var(--line);min-width:0}
+.ws{display:flex;align-items:center;gap:10px;width:100%;height:40px;padding:0 8px;border-radius:var(--r);transition:background var(--fast) var(--ease)}
+.ws:hover,.ws[aria-expanded="true"]{background:var(--hover)}
+.tile{display:grid;place-items:center;width:24px;height:24px;border-radius:5px;font-size:11px;font-weight:600;letter-spacing:.02em;flex:none}
+.t-ts{background:var(--accent);color:var(--accent-ink)}
+.t-hf{background:#e2b26a;color:#1d1608}
+.t-ol{background:#8fc2b4;color:#0f1f1b}
+.ws-name{flex:1;min-width:0;font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ws svg{color:var(--ink-3)}
+
+.search{position:relative;margin:6px 0 10px}
+.search svg{position:absolute;left:10px;top:8px;color:var(--ink-3)}
+.search input{width:100%;height:32px;padding:0 44px 0 32px;background:var(--raised);border:1px solid var(--line);border-radius:var(--r);outline:none;transition:border-color var(--fast) var(--ease)}
+.search input::placeholder{color:var(--ink-3)}
+.search input::-webkit-search-cancel-button{display:none}
+.search input:focus-visible{border-color:var(--accent);outline:none}
+kbd{position:absolute;right:8px;top:7px;font:500 11px/18px var(--mono);color:var(--ink-3);padding:0 5px;border:1px solid var(--line-2);border-radius:4px}
+
+.list{list-style:none;margin:0;padding:0}
+.item{display:flex;align-items:center;gap:10px;width:100%;height:32px;padding:0 8px;border-radius:var(--r);color:var(--ink-2);transition:background var(--fast) var(--ease),color var(--fast) var(--ease)}
+.item:hover{background:var(--hover);color:var(--ink)}
+.item[aria-current="page"]{background:var(--current);color:var(--ink);font-weight:500}
+.item .label{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.count{font:500 11px/18px var(--mono);color:var(--ink-3);min-width:20px;text-align:center;border-radius:4px;padding:0 5px}
+.item[aria-current="page"] .count{background:var(--accent);color:var(--accent-ink)}
+
+.group{margin-top:18px}
+.ghead{display:flex;align-items:center;gap:2px}
+.gtoggle{flex:1;display:flex;align-items:center;gap:6px;height:28px;padding:0 8px;border-radius:var(--r);font-size:11.5px;font-weight:500;color:var(--ink-3);letter-spacing:.01em}
+.gtoggle:hover{color:var(--ink-2)}
+.gtoggle svg{width:14px;height:14px;transition:transform var(--layout) var(--ease)}
+.gtoggle[aria-expanded="false"] svg{transform:rotate(-90deg)}
+.gadd{display:grid;place-items:center;width:28px;height:28px;border-radius:var(--r);color:var(--ink-3)}
+.gadd:hover{background:var(--hover);color:var(--ink)}
+.gbody{display:grid;grid-template-rows:1fr;transition:grid-template-rows var(--layout) var(--ease)}
+.gbody[data-closed]{grid-template-rows:0fr}
+.gbody>ul{overflow:hidden;min-height:0}
+.dot{width:8px;height:8px;border-radius:2px;margin:0 4px;flex:none}
+.pid{font:500 11px/1 var(--mono);color:var(--ink-3)}
+
+.invite{margin-top:10px;color:var(--ink-3)}
+.spacer{flex:1}
+
+.me{display:flex;align-items:center;gap:10px;margin:0 -8px;padding:10px 16px;border-top:1px solid var(--line);height:60px}
+.avatar{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#3a3832;color:var(--ink);font-size:11.5px;font-weight:600;flex:none}
+.me-text{flex:1;min-width:0;line-height:1.25}
+.me-name{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.me-mail{font-size:11.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plan{font:500 10.5px/18px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(197,232,108,.4);border-radius:4px;padding:0 6px}
+.more{display:grid;place-items:center;width:28px;height:28px;border-radius:var(--r);color:var(--ink-3)}
+.more:hover{background:var(--hover);color:var(--ink)}
+
+/* popover */
+.pop{position:absolute;top:52px;left:8px;width:252px;z-index:5;background:var(--raised);border:1px solid var(--line-2);border-radius:8px;padding:6px;box-shadow:0 12px 32px rgba(0,0,0,.45);transform-origin:top left;transition:opacity var(--fast) var(--ease),transform var(--fast) var(--ease)}
+.pop[hidden]{display:block;opacity:0;transform:translateY(-4px) scale(.98);pointer-events:none;visibility:hidden}
+.pop-label{padding:6px 8px 6px;font-size:11px;color:var(--ink-3)}
+.opt{display:flex;align-items:center;gap:10px;width:100%;height:40px;padding:0 8px;border-radius:var(--r);outline:none}
+.opt:hover,.opt:focus-visible{background:var(--hover)}
+.opt:focus-visible{box-shadow:inset 0 0 0 2px var(--focus)}
+.opt-text{flex:1;min-width:0;line-height:1.25}
+.opt-name{font-weight:500}
+.opt-meta{font-size:11.5px;color:var(--ink-3)}
+.opt .check{color:var(--accent);visibility:hidden}
+.opt[aria-checked="true"] .check{visibility:visible}
+.sep{height:1px;background:var(--line-2);margin:6px -6px}
+.opt.plain{height:34px;color:var(--ink-2)}
+.opt.plain svg{color:var(--ink-3)}
+
+/* main */
+.main{background:var(--main);display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.bar{display:flex;align-items:center;gap:8px;height:48px;padding:0 32px;border-bottom:1px solid var(--line);color:var(--ink-3)}
+.bar b{color:var(--ink-2);font-weight:500}
+.bar .grow{flex:1}
+.ghost{height:28px;padding:0 10px;border:1px solid var(--line-2);border-radius:var(--r);color:var(--ink-2);font-size:12px}
+.ghost:hover{color:var(--ink);border-color:#45454b}
+.page{padding:40px 48px;max-width:860px;width:100%}
+h1{margin:0;font-size:28px;font-weight:600;letter-spacing:-.02em}
+.sub{margin:6px 0 28px;color:var(--ink-3)}
+.sub span{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:center;min-height:56px;border-bottom:1px solid var(--line);padding:8px 0}
+.row .avatar{width:26px;height:26px;font-size:10.5px}
+.row p{margin:0;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row p b{color:var(--ink);font-weight:500}
+.row p .pid{margin-right:6px}
+.row time{font:500 11px var(--mono);color:var(--ink-3)}
+.unread{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-right:8px;vertical-align:middle}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0ms!important}
+}
+</style>
+</head>
+<body>
+<aside class="side" aria-label="Workspace">
+  <button class="ws" id="ws" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="pop" data-rove>
+    <span class="tile t-ts" id="wsTile" aria-hidden="true">TS</span>
+    <span class="ws-name" id="wsName">Tamarind Studio</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 9 4-4 4 4M8 15l4 4 4-4"/></svg>
+  </button>
+
+  <div class="pop" id="pop" role="menu" aria-labelledby="ws" hidden>
+    <div class="pop-label" aria-hidden="true">Workspaces</div>
+    <button class="opt" type="button" role="menuitemradio" aria-checked="true" data-name="Tamarind Studio" data-init="TS" data-tile="t-ts" tabindex="-1">
+      <span class="tile t-ts" aria-hidden="true">TS</span>
+      <span class="opt-text"><span class="opt-name">Tamarind Studio</span><br><span class="opt-meta">14 members · Team</span></span>
+      <svg class="check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
+    </button>
+    <button class="opt" type="button" role="menuitemradio" aria-checked="false" data-name="Halden Freight" data-init="HF" data-tile="t-hf" tabindex="-1">
+      <span class="tile t-hf" aria-hidden="true">HF</span>
+      <span class="opt-text"><span class="opt-name">Halden Freight</span><br><span class="opt-meta">38 members · Business</span></span>
+      <svg class="check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
+    </button>
+    <button class="opt" type="button" role="menuitemradio" aria-checked="false" data-name="Okra Labs" data-init="OL" data-tile="t-ol" tabindex="-1">
+      <span class="tile t-ol" aria-hidden="true">OL</span>
+      <span class="opt-text"><span class="opt-name">Okra Labs</span><br><span class="opt-meta">3 members · Free</span></span>
+      <svg class="check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
+    </button>
+    <div class="sep" role="separator"></div>
+    <button class="opt plain" type="button" role="menuitem" tabindex="-1">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Create workspace
+    </button>
+  </div>
+
+  <div class="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
+    <input id="q" type="search" placeholder="Search" aria-label="Search Tamarind Studio" aria-keyshortcuts="Meta+K Control+K" data-rove>
+    <kbd aria-hidden="true">⌘K</kbd>
+  </div>
+
+  <nav aria-label="Primary" id="nav">
+    <ul class="list">
+      <li><a class="item" href="#inbox" aria-current="page" data-rove data-title="Inbox"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13 6.5 5h11L20 13v6H4z"/><path d="M4 13h5l1 2h4l1-2h5"/></svg><span class="label">Inbox</span><span class="count" aria-label="12 unread">12</span></a></li>
+      <li><a class="item" href="#mine" data-rove data-title="My issues"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5"/></svg><span class="label">My issues</span><span class="count" aria-label="4 open">4</span></a></li>
+      <li><a class="item" href="#reviews" data-rove data-title="Reviews"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M6 8v8M18 16V9a2 2 0 0 0-2-2h-4"/></svg><span class="label">Reviews</span><span class="count" aria-label="2 waiting">2</span></a></li>
+      <li><a class="item" href="#cycles" data-rove data-title="Cycles"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4h-4"/></svg><span class="label">Cycles</span></a></li>
+      <li><a class="item" href="#docs" data-rove data-title="Docs"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg><span class="label">Docs</span></a></li>
+    </ul>
+
+    <div class="group">
+      <div class="ghead">
+        <button class="gtoggle" id="gt" type="button" aria-expanded="true" aria-controls="projects" data-rove>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>Projects
+        </button>
+        <button class="gadd" type="button" aria-label="New project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <div class="gbody" id="projects">
+        <ul class="list">
+          <li><a class="item" href="#har" data-rove data-title="Harbor redesign"><span class="dot" style="background:#c5e86c" aria-hidden="true"></span><span class="label">Harbor redesign</span><span class="pid">HAR</span></a></li>
+          <li><a class="item" href="#bil" data-rove data-title="Billing v2"><span class="dot" style="background:#e2b26a" aria-hidden="true"></span><span class="label">Billing v2</span><span class="pid">BIL</span></a></li>
+          <li><a class="item" href="#onb" data-rove data-title="Onboarding flow"><span class="dot" style="background:#8fc2b4" aria-hidden="true"></span><span class="label">Onboarding flow</span><span class="pid">ONB</span></a></li>
+          <li><a class="item" href="#mob" data-rove data-title="Mobile 3.0"><span class="dot" style="background:#d98b72" aria-hidden="true"></span><span class="label">Mobile 3.0</span><span class="pid">MOB</span></a></li>
+          <li><a class="item" href="#fld" data-rove data-title="Field research"><span class="dot" style="background:#9aa3c7" aria-hidden="true"></span><span class="label">Field research</span><span class="pid">FLD</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <button class="item invite" type="button" data-rove><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-3.6 3.3-5.5 6.5-5.5s5.7 1.9 6.5 5.5M19 8v6M16 11h6"/></svg><span class="label">Invite people</span></button>
+  </nav>
+
+  <div class="spacer"></div>
+
+  <div class="me">
+    <span class="avatar" aria-hidden="true">MR</span>
+    <span class="me-text"><span class="me-name">Mira Rautio</span><br><span class="me-mail">mira@tamarind.studio</span></span>
+    <span class="plan">Team</span>
+    <button class="more" type="button" aria-label="Account options" data-rove><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12h.01M12 12h.01M18.5 12h.01" stroke-width="2.6"/></svg></button>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="bar"><span id="crumbWs">Tamarind Studio</span><span aria-hidden="true">/</span><b id="crumb">Inbox</b><span class="grow"></span><button class="ghost" type="button">Mark all read</button><button class="ghost" type="button">Filter</button></div>
+  <div class="page">
+    <h1 id="title">Inbox</h1>
+    <p class="sub"><span>12</span> unread · <span>3</span> mentions · updated 2 minutes ago</p>
+    <ul class="rows">
+      <li class="row"><span class="avatar" aria-hidden="true">IB</span><p><span class="unread" aria-label="Unread"></span><b>Ilse Brandt</b> commented on <span class="pid">HAR-214</span>Pier map hit areas are too small on tablet</p><time>4m</time></li>
+      <li class="row"><span class="avatar" aria-hidden="true">DK</span><p><span class="unread" aria-label="Unread"></span><b>Dev Kapoor</b> asked for your review on <span class="pid">BIL-88</span>Prorate seat changes mid-cycle</p><time>18m</time></li>
+      <li class="row"><span class="avatar" aria-hidden="true">AO</span><p><span class="unread" aria-label="Unread"></span><b>Ama Owusu</b> moved <span class="pid">ONB-31</span>Skip step for invited members to In progress</p><time>1h</time></li>
+      <li class="row"><span class="avatar" aria-hidden="true">TS</span><p><b>Tomas Silva</b> mentioned you in <span class="pid">MOB-102</span>Offline queue drops edits after 24h</p><time>3h</time></li>
+      <li class="row"><span class="avatar" aria-hidden="true">IB</span><p><b>Ilse Brandt</b> closed <span class="pid">HAR-198</span>Ferry timetable contrast on dark tiles</p><time>Yesterday</time></li>
+      <li class="row"><span class="avatar" aria-hidden="true">LN</span><p><b>Lena Nyberg</b> added interview notes to <span class="pid">FLD-12</span>Dock workers, Gothenburg, round two</p><time>Mon</time></li>
+    </ul>
+  </div>
+</main>
+
+<script>
+const ws = document.getElementById('ws'), pop = document.getElementById('pop');
+const opts = [...pop.querySelectorAll('[role^="menuitem"]')];
+const side = document.querySelector('.side');
+
+function openPop() {
+  pop.hidden = false; ws.setAttribute('aria-expanded', 'true');
+  (opts.find(o => o.getAttribute('aria-checked') === 'true') || opts[0]).focus();
+}
+function closePop(refocus) {
+  if (pop.hidden) return;
+  pop.hidden = true; ws.setAttribute('aria-expanded', 'false');
+  if (refocus) ws.focus();
+}
+ws.addEventListener('click', () => pop.hidden ? openPop() : closePop(true));
+ws.addEventListener('keydown', e => { if (e.key === 'ArrowDown' && pop.hidden) { e.preventDefault(); e.stopPropagation(); openPop(); } });
+
+pop.addEventListener('click', e => {
+  const o = e.target.closest('[role="menuitemradio"]');
+  if (o) {
+    opts.forEach(x => x.setAttribute('aria-checked', String(x === o)));
+    const tile = document.getElementById('wsTile');
+    tile.className = 'tile ' + o.dataset.tile; tile.textContent = o.dataset.init;
+    document.getElementById('wsName').textContent = o.dataset.name;
+    document.getElementById('crumbWs').textContent = o.dataset.name;
+    document.getElementById('q').setAttribute('aria-label', 'Search ' + o.dataset.name);
+  }
+  if (e.target.closest('[role^="menuitem"]')) closePop(true);
+});
+pop.addEventListener('keydown', e => {
+  const i = opts.indexOf(document.activeElement);
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault(); e.stopPropagation();
+    opts[(i + (e.key === 'ArrowDown' ? 1 : -1) + opts.length) % opts.length].focus();
+  } else if (e.key === 'Home' || e.key === 'End') {
+    e.preventDefault(); e.stopPropagation(); opts[e.key === 'Home' ? 0 : opts.length - 1].focus();
+  } else if (e.key === 'Escape') {
+    e.preventDefault(); closePop(true);
+  } else if (e.key === 'Tab') closePop(false);
+});
+document.addEventListener('pointerdown', e => { if (!pop.hidden && !pop.contains(e.target) && !ws.contains(e.target)) closePop(false); });
+
+const gt = document.getElementById('gt'), gbody = document.getElementById('projects');
+gt.addEventListener('click', () => {
+  const open = gt.getAttribute('aria-expanded') !== 'true';
+  gt.setAttribute('aria-expanded', String(open));
+  if (open) { gbody.removeAttribute('data-closed'); gbody.inert = false; }
+  else { gbody.setAttribute('data-closed', ''); gbody.inert = true; }
+});
+
+document.getElementById('nav').addEventListener('click', e => {
+  const a = e.target.closest('a.item');
+  if (!a) return;
+  e.preventDefault();
+  document.querySelectorAll('a.item[aria-current]').forEach(x => x.removeAttribute('aria-current'));
+  a.setAttribute('aria-current', 'page');
+  document.getElementById('title').textContent = a.dataset.title;
+  document.getElementById('crumb').textContent = a.dataset.title;
+});
+
+side.addEventListener('keydown', e => {
+  if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key) || !pop.hidden) return;
+  const items = [...side.querySelectorAll('[data-rove]')].filter(el => !el.closest('[inert]'));
+  const i = items.indexOf(document.activeElement);
+  if (i < 0) return;
+  e.preventDefault();
+  const n = e.key === 'Home' ? 0 : e.key === 'End' ? items.length - 1 : Math.min(items.length - 1, Math.max(0, i + (e.key === 'ArrowDown' ? 1 : -1)));
+  items[n].focus();
+});
+
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); closePop(false); const q = document.getElementById('q'); q.focus(); q.select(); }
+  else if (e.key === 'Escape' && document.activeElement.id === 'q') document.activeElement.blur();
+});
+</script>
+</body>
+</html>
