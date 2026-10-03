@@ -43,7 +43,7 @@ Ask for the stack once if they have not named it. Then keep it. Good stack lines
 
 Read [practice.md](practice.md) and follow it. Do not skip ahead to code.
 
-Pick one theme, one pairing, one family, and the pieces for this pass. Before you choose a layout, write the four lines in Decide the screen in [practice.md](practice.md): who it is for, the one decision, the first thing they see, and the next action. The first thing is the largest type on the view. A region that does not serve those four lines does not go on the screen. The next action names the screen it opens. Follow After the action in [practice.md](practice.md). Show the pick before you paint, unless they already told you to build. Then run the finish checklist and report each line as pass or fail.
+Pick one theme, one pairing, one family, and the pieces for this pass. Match the world in [practice.md](practice.md). Do not lock the first palette because it is first. Before you choose a layout, write the four lines in Decide the screen in [practice.md](practice.md): who it is for, the one decision, the first thing they see, and the next action. The first thing is the largest type on the view. A region that does not serve those four lines does not go on the screen. The next action names the screen it opens. Follow After the action in [practice.md](practice.md). Show the pick before you paint, unless they already told you to build. Then open the screens, run Look and One correction, and run the finish checklist. Report each line as pass or fail.
 
 ## Show the pick, then ask once
 
@@ -85,7 +85,7 @@ Use this when a design system is already in the project.
 
 1. Pick a kind: `website`, `product`, or `platform`. Map their words with [reference.md](reference.md). A shop, magazine, portfolio, or phone app still starts here, then take the matching recipe from `starts` in the index.
 2. Use `kit.kinds` for that kind: `palettes`, `pairings`, `families`, `pieces`.
-3. If they already chose, lock those ids. If they said just go, you pick, build it, or don't ask, lock the first palette, first pairing, and first family.
+3. If they already chose, lock those ids. If they said just go, you pick, build it, or don't ask, lock the match from Match the world: the recipe that fits, or the theme whose `bestFor` names this product. Say which theme you rejected. Do not lock the first palette, the first pairing, or the first family because they are first.
 4. Otherwise show the pick (Show the pick, then ask once) and stop. Do not write UI in that turn.
 5. If they ask to see options, name three palettes and two pairings from that kind's lists, each with its page link. Names and moods only. They pick a whole palette, never a hex.
 6. The locked system is the theme's `css`, the pairing's `css`, and the family's `rules`, `radius`, `button`, and `density` in the index. Match those numbers. Do not fetch a kit URL.

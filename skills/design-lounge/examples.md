@@ -7,7 +7,7 @@ The catalogue is `library/index.json` in this skill. Briefs are `library/briefs/
 User: "Payroll app for a Kathmandu studio. Next.js and Tailwind."
 
 1. Kind `product`. Stack is Next.js + Tailwind. Do not ask the stack again.
-2. Read `library/index.json`. Choose the first palette, pairing, and family on kind `product` (Fog City, Friendly SaaS, Quiet, unless the JSON lists a different order).
+2. Read `bestFor` on the kind's palettes. Payroll is paying people, so Harbour Ledger (finance) beats Fog City, which is first on the list and is a general app. Pairing is Friendly SaaS, which lists fintech. Family is Quiet, because the tool has to last. Say you rejected Fog City.
 3. Reply with the theme page, the type page, and the demo link for each screen you will build. One question: build this, or swap the palette or one of these screens?
 4. Stop. Do not write UI in this turn.
 5. When they say yes, or "just build it", write `DESIGN.md` with those links under Sources, then build.
@@ -16,9 +16,9 @@ User: "Payroll app for a Kathmandu studio. Next.js and Tailwind."
 
 User: "Same app. You pick. Just build it."
 
-1. Lock that first palette, pairing, and family. Do not ask.
-2. Write `DESIGN.md`, including Sources, before the screens.
-3. Build. Put the same demo links in the reply so they can still compare and ask for a change.
+1. Lock the match you already named: Harbour Ledger, Friendly SaaS, Quiet. Do not ask. Do not switch to Fog City because it is first.
+2. Write `DESIGN.md`, including Sources and the rejected theme, before the screens.
+3. Build. Open the screens. Run Look, then One correction. Put the same demo links in the reply so they can still compare and ask for a change.
 
 ## An ops home, they said go
 

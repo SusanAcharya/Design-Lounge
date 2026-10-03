@@ -8,11 +8,11 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 
 1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
-3. Choose the system and the pieces. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
+3. Match the world, then choose the pieces. Read Match the world. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
 4. Show that pick with links, and ask once, before any UI. Follow Show the pick in [SKILL.md](SKILL.md). Stop unless they already said just go, you pick, build it, or don't ask, or they already named the system.
 5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
 6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
-7. Open every finished screen and run Look. Fix what fails, and open it again. Then run the finish checklist. Report each line as pass or fail. Do not call the UI done from the source.
+7. Open every finished screen and run Look. Fix what fails, and open it again. When the fails are none, run One correction. Then run the finish checklist. Report each line as pass or fail. Do not call the UI done from the source.
 
 ## System sheet
 
@@ -26,6 +26,8 @@ Job of this pass:
 Kind: website | product | platform
 Mode: new kit | adopt existing
 Theme: id (pair: id or none)
+Why this theme:
+Rejected:
 Pairing: id
 Family: id
 Icons: Lounge Icons, 24px, stroke 1.75
@@ -43,7 +45,25 @@ Kept from their system:
 
 `{site}` is the `site` field in `library/index.json`. One line per piece you actually build. The role is layout, motion, or component: what they should look at if they want to compare. When they ask to change a screen, change that line, then rebuild only that screen.
 
-For a new product, the matching recipe in `starts` names the first pieces. Build those before you invent a screen the recipe did not name.
+For a new product, the matching recipe in `starts` names the theme and the first pieces. Build those before you invent a screen the recipe did not name.
+
+## Match the world
+
+A hundred products look like one product when every pass locks the first palette on the list. The first id is not a default. Do not lock it because it is first.
+
+Choose in this order.
+
+1. They named a theme, a pairing, or a family. Lock what they named. Choose the rest by the rules below.
+2. A recipe in `starts` matches the product. A yard desk is `dashboard`. A clay shop is `commerce`. A magazine is `editorial`. A phone app is `mobile-app`. A tablet is `tablet`. A portfolio is `portfolio`. Lock that recipe's theme, pairing, and pieces. Say which recipe.
+3. No recipe matches. Stay inside that kind's `palettes`, `pairings`, and `families`. Read `bestFor`, `mood`, and `tags` on each theme. Lock the theme whose `bestFor` names this world. A clinic is Alpine Clinic. A payroll run is Harbour Ledger, because the job is paying people. Fog City is the first palette on kind `product` and is the wrong lock for both.
+4. Lock a pairing from that kind's list whose `bestFor` is the same world. Payroll on kind `product` takes Friendly SaaS, which lists fintech. A paper takes Newsroom. A clay shop whose recipe is commerce takes Atelier.
+5. Lock the family for how the product is used. Editorial for a page people read. Industrial for a yard or a field tool. Sharp for a dense platform. Quiet for a product that has to last. Soft for a friendly consumer app. Glass only when the recipe is the glass phone language.
+
+Write one sentence: why this theme, and which theme you rejected. "Harbour Ledger, because this is payroll. Fog City is first on the list and is a general app, so it loses." Put both lines on the system sheet.
+
+Two themes can both fit. Pick the closer mood. Name the other one as rejected. Do not offer a menu unless they asked to see options.
+
+A brand colour they already have replaces `--primary` only, after the theme is locked. The surfaces stay the theme's. The brand does not choose a second theme.
 
 For a revamp, name three visual problems. Fix those inside the adopted system. Do not reskin the whole product unless they asked.
 
@@ -174,7 +194,7 @@ These are fails. They are the tells of a page that was generated and not designe
 - A radius that is not the family's. Every corner on a large radius when the family is sharp, editorial, or industrial.
 - Three identical cards — icon, title, one sentence — standing in for the product. A feature row is allowed when a named piece is that row and the copy is about this product.
 - A headline that could sit on any company. Welcome. Unlock. Elevate. The future of. Next-generation. Your all-in-one. All-in-one platform. Use this product's noun and a number you were given.
-- The stack's default face — Inter, Roboto, Arial, or a bare system font — when a pairing is locked.
+- A face that is not the locked pairing. Inter, Roboto, or Arial are a fail only when that pairing names a different family. If the pairing's text face is Inter, Inter is correct.
 - Body text in the display face. A fourth family.
 - A shadow on a family whose shadow is `none`.
 - A button labelled Get started, Submit, Click here, or Learn more, when the screen has a real verb. "Open the week", "Add to bag", "Confirm load".
@@ -185,6 +205,26 @@ These are fails. They are the tells of a page that was generated and not designe
 Uniform means the button, the field, the radius, and the type roles match on every screen of this pass. Screen two inventing its own card is a fail.
 
 Read one sentence from the screen. If it is still true after you replace the product name with another, rewrite it.
+
+## One correction
+
+The look checks can pass while the screen is still wrong. After the fails are none, open the screen once more. Name the worst of these, and change only that.
+
+- Too loud. The answer is the largest type and it still shouts over the evidence. Cut a word, or drop the headline one step. Do not shrink the answer below the evidence.
+- Too even. Two regions are the same size, so nothing is the answer. Make the answer one step larger. Make the other a title or a caption.
+- Too dense. Someone who sits here all day cannot find the next action. Move to the next density's stack gap, or remove one group. Do not add a card to create air.
+- Too much chrome. Nav, filters, or badges compete with the answer. Quiet one of them. Do not add a region.
+- The wrong noun. A label says Items, Users, or Data when they named the thing. Use their noun.
+
+Write this, then open that screen again.
+
+```
+Correction: <too loud | too even | too dense | too much chrome | the wrong noun>
+Changed: <the one change>
+Left alone: the theme, the pairing, the family, and the other screens
+```
+
+If the correction makes a look check fail, undo it. A second correction waits until they ask. One change is the pass. Five changes is a new design.
 
 ## Finish checklist
 
@@ -209,6 +249,8 @@ Read one sentence from the screen. If it is still true after you replace the pro
 - The next action names the screen it opens. That screen is in this pass, or you said it is still open.
 - You opened each finished screen at its frame size and wrote the look notes in the reply.
 - Every look check passed. A fail was fixed, and that screen was opened again.
+- The theme matches this product's world, or a recipe matched. The reply names the theme you rejected. You did not lock a palette because it was first.
+- After the look checks passed, you made one correction and opened that screen again.
 
 ## Minimum screens
 
@@ -229,6 +271,7 @@ Say it in the reply when any of these are true.
 - The library has no piece for this interaction. You built from the sheet only.
 - The theme has no dark or light pair.
 - The pairing has a caution.
+- You locked the first palette because it was first. Choose again with Match the world.
 - You could not open the built screen. The UI is not done.
 - A look check failed and the fail is still on the screen.
 - The person using the product disagrees with your look notes. Change the screen they named. Do not skip the look on the next pass.
