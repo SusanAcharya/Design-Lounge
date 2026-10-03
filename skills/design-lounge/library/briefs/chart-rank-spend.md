@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 263 · "Ranked spend" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 272 · "Ranked spend" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Ranked spend
 

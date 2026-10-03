@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 288 · "Split navbar with centred wordmark" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 298 · "Split navbar with centred wordmark" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Split navbar with centred wordmark
 

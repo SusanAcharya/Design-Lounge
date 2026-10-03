@@ -1,0 +1,281 @@
+<!-- Design Lounge piece: phone-search-results · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search · Porchlight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--field:#f1f3f6;--ink:#11151c;--ink-2:#4a5260;--ink-3:#6b7280;--line:#e6e8ec;
+  --primary:#1f4fd8;--primary-wash:#edf2fd;--focus:#1f4fd8;
+  --sans:"Inter",-apple-system,system-ui,sans-serif;
+  --r:10px;--ease:cubic-bezier(.2,.7,.2,1);--micro:160ms;--layout:280ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.4 var(--sans);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+svg{flex:none}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.top{padding:max(54px,env(safe-area-inset-top)) 16px 0;border-bottom:1px solid transparent;transition:border-color var(--micro) var(--ease)}
+.top.ruled{border-bottom-color:var(--line)}
+.row{display:flex;align-items:center;gap:0;overflow:hidden;padding:2px 2px 6px}
+.field{flex:1;min-width:0;display:flex;align-items:center;height:44px;padding-left:12px;background:var(--field);border-radius:var(--r);color:var(--ink-3);transition:background var(--micro) var(--ease),box-shadow var(--micro) var(--ease)}
+.field:focus-within{background:#fff;box-shadow:inset 0 0 0 1.5px var(--focus)}
+.field input{flex:1;min-width:0;height:44px;border:0;background:none;font:400 17px var(--sans);color:var(--ink);padding:0 8px;outline:none;caret-color:var(--primary)}
+.field input::placeholder{color:var(--ink-3)}
+.field input::-webkit-search-cancel-button{display:none}
+.clear{width:44px;height:44px;display:grid;place-items:center}
+.clear[hidden]{display:none}
+.cancel{flex:none;width:72px;min-height:44px;padding:0;text-align:right;color:var(--primary);font-size:17px;font-weight:500;margin-right:-72px;opacity:0;visibility:hidden;transition:margin var(--layout) var(--ease),opacity var(--micro) var(--ease),visibility 0s var(--layout)}
+.top.on .cancel{margin-right:0;opacity:1;visibility:visible;transition:margin var(--layout) var(--ease),opacity var(--micro) var(--ease)}
+.cancel:focus-visible{outline-offset:-2px}
+.tabs{position:relative;display:flex;gap:4px;margin:0 -16px;padding:0 8px}
+.tabs[hidden]{display:none}
+.tab{min-height:44px;padding:0 10px;font-size:15px;font-weight:600;color:var(--ink-3);white-space:nowrap}
+.tab span{font-weight:500;font-size:13px;margin-left:4px;font-variant-numeric:tabular-nums}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab:disabled{opacity:.45;cursor:default}
+.ind{position:absolute;left:0;bottom:-1px;height:2px;width:10px;background:var(--primary);border-radius:2px;transition:transform var(--layout) var(--ease),width var(--layout) var(--ease)}
+main{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 16px calc(max(34px,env(safe-area-inset-bottom)) + 16px)}
+.view{animation:in 220ms var(--ease) both}
+.view[hidden]{display:none}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.sh{display:flex;align-items:center;justify-content:space-between;margin:18px 0 2px}
+h2{margin:0;font-size:20px;font-weight:700;letter-spacing:-.015em}
+.link{min-height:44px;padding:0 2px;color:var(--primary);font-size:15px;font-weight:500}
+ul{list-style:none;margin:0;padding:0}
+.recent li{display:flex;align-items:center;border-bottom:1px solid var(--line);overflow:hidden;transition:height 200ms var(--ease),opacity 160ms var(--ease)}
+.recent li:last-child{border-bottom:0}
+.recent .go{flex:1;min-width:0;display:flex;align-items:center;gap:12px;min-height:48px;color:var(--ink)}
+.recent .go .ic{color:var(--ink-3)}
+.recent .go b{font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rm{width:44px;height:44px;display:grid;place-items:center;color:var(--ink-3);margin-right:-10px}
+.rm .ic{width:18px;height:18px}
+.none{color:var(--ink-3);font-size:15px;margin:10px 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 14px 0 12px;border:1px solid var(--line);border-radius:var(--r);font-size:15px;font-weight:500;transition:background var(--micro) var(--ease)}
+.chip i{font-style:normal;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.chip:active,.cat:active,.go:active,.res:active{background:var(--field)}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.cat{display:flex;align-items:center;gap:10px;min-height:52px;padding:0 12px;background:var(--field);border-radius:var(--r);font-size:15px;font-weight:500}
+.cat .ic{color:var(--ink-2)}
+.sug li{display:flex;align-items:center;gap:12px;min-height:48px;border-bottom:1px solid var(--line);cursor:pointer;color:var(--ink-2);margin:0 -16px;padding:0 16px}
+.sug li .ic{color:var(--ink-3)}
+.sug li.first .ic{color:var(--primary)}
+.sug li.first{color:var(--ink)}
+.sug li .tx{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sug li b{font-weight:700;color:var(--ink)}
+.sug li em{font-style:normal;font-size:13px;color:var(--ink-3)}
+.sug li[aria-selected="true"]{background:var(--field)}
+.count{margin:14px 0 2px;font-size:13px;color:var(--ink-3)}
+.count b{color:var(--ink);font-weight:600}
+.gh{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+h3{margin:0;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
+.res{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);width:100%;border-radius:0}
+.lst li:last-child .res{border-bottom:0}
+.th{width:44px;height:44px;border-radius:var(--r);background:var(--field);display:grid;place-items:center;color:var(--ink-2)}
+.av{border-radius:50%;font-size:15px;font-weight:600;color:var(--ink)}
+.bd{flex:1;min-width:0}
+.t{display:block;font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.s{display:block;font-size:14px;color:var(--ink-2);margin-top:2px}
+.p .s{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mt{display:block;font-size:13px;color:var(--ink-3);margin-top:4px}
+.r{font-size:13px;color:var(--ink-3);white-space:nowrap;padding-top:2px;font-variant-numeric:tabular-nums}
+.empty{text-align:center;padding:72px 16px 0}
+.empty svg{width:56px;height:56px;stroke-width:1.25;color:var(--ink-3)}
+.empty h2{margin-top:16px;overflow-wrap:anywhere}
+.empty p{margin:8px auto 20px;max-width:280px;font-size:15px;color:var(--ink-2)}
+.try{min-height:44px;padding:0 18px;border-radius:var(--r);background:var(--primary-wash);color:var(--primary);font-weight:600;font-size:15px;text-align:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:1ms!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10.5a6 6 0 0 1 12 0C18 15.7 12 21 12 21z"/><circle cx="12" cy="10.5" r="2"/></symbol>
+  <symbol id="i-cup" viewBox="0 0 24 24"><path d="M5 9h11v5a5 5 0 0 1-10 0z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 4v2M11 4v2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8 3.5v4M16 3.5v4"/></symbol>
+  <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.5 5.5a4 4 0 0 0 4.9 4.9L11 18.8a2 2 0 0 1-2.8-2.8l8.4-8.4"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M5 8h13l-3-3M19 16H6l3 3"/></symbol>
+  <symbol id="i-group" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.2"/><path d="M3.5 19c.8-3 2.8-4.5 5.5-4.5s4.7 1.5 5.5 4.5M15 15c2.6-.4 4.6.9 5.5 3.5"/></symbol>
+  <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="7" cy="10" r="1.7"/><circle cx="10.5" cy="6.5" r="1.7"/><circle cx="14.5" cy="6.5" r="1.7"/><circle cx="18" cy="10" r="1.7"/><path d="M8.5 17c0-2.5 1.6-4.5 3.5-4.5s3.5 2 3.5 4.5c0 1.6-1.6 2-3.5 2s-3.5-.4-3.5-2z"/></symbol>
+  <symbol id="i-post" viewBox="0 0 24 24"><path d="M5 5h14v10H10l-5 4z"/></symbol>
+</svg>
+
+<header class="top on" id="top">
+  <form class="row" role="search" id="form" autocomplete="off">
+    <label class="field">
+      <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+      <span class="sr">Search Porchlight</span>
+      <input id="q" type="search" placeholder="People, places, posts" role="combobox" aria-expanded="false" aria-controls="sugList" aria-autocomplete="list" enterkeyhint="search" autofocus>
+      <button class="clear" type="button" id="clear" aria-label="Clear search" hidden>
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="#9aa0aa"/><path d="M6.2 6.2l5.6 5.6M11.8 6.2l-5.6 5.6" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </label>
+    <button class="cancel" type="button" id="cancel">Cancel</button>
+  </form>
+  <div class="tabs" role="tablist" aria-label="Result type" id="tabs" hidden>
+    <button class="tab" role="tab" data-t="top" aria-selected="true">Top</button>
+    <button class="tab" role="tab" data-t="person" aria-selected="false">People<span></span></button>
+    <button class="tab" role="tab" data-t="place" aria-selected="false">Places<span></span></button>
+    <button class="tab" role="tab" data-t="post" aria-selected="false">Posts<span></span></button>
+    <i class="ind" id="ind" aria-hidden="true"></i>
+  </div>
+</header>
+
+<main id="main">
+  <section class="view" id="home" aria-label="Search start">
+    <div class="sh"><h2>Recent</h2><button class="link" type="button" id="clearAll">Clear</button></div>
+    <ul class="recent" id="recent"></ul>
+    <div class="sh"><h2>Trending in Fairhaven</h2></div>
+    <div class="chips" id="chips"></div>
+    <div class="sh"><h2>Browse</h2></div>
+    <div class="cats" id="cats"></div>
+  </section>
+  <section class="view sug" id="suggest" hidden>
+    <ul id="sugList" role="listbox" aria-label="Suggestions"></ul>
+  </section>
+  <section class="view" id="results" hidden></section>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+
+<script>
+const D=[
+ ['place','Rye & Ember','Bakery · Dock Street','0.4 mi','bread sourdough bakery coffee'],
+ ['place','Fairhaven Farmers Market','Market · Saturdays 8 to 1','0.9 mi','market farmers produce bread'],
+ ['place','Hollis Street Pottery','Studio · Classes weekly','1.2 mi','pottery class ceramics'],
+ ['place','Lantern Pool','Lido · Night swim Fridays','1.6 mi','swim pool night'],
+ ['place','Corbel Dog Park','Park · Off-lead field','0.7 mi','dog park'],
+ ['place','The Quay Room','Bar · Open mic Thursdays','0.5 mi','open mic music bar'],
+ ['person','Mara Okafor','Baker at Rye & Ember','4 mutual','bread sourdough bakery'],
+ ['person','Theo Lindqvist','Runs the Saturday market','12 mutual','market farmers'],
+ ['person','Priya Raman','Teaches wheel pottery','2 mutual','pottery class ceramics'],
+ ['person','Jonah Abbey','Piano lessons, all ages','1 mutual','piano lessons music'],
+ ['person','Ines Varga','Dog walker near Corbel','6 mutual','dog park walker'],
+ ['post','Best sourdough on Dock Street?','Rye & Ember sells out by ten. Is there a second spot that bakes a dark crust?','Ines Varga · 14 replies · 2h','bread sourdough bakery'],
+ ['post','Market moves indoors from November','The Saturday market runs in the old ferry shed from 4 Nov. Same hours, same stalls.','Theo Lindqvist · 31 replies · 1d','market farmers'],
+ ['post','Rye starter to give away','Eight-year-old starter, very lively. Bring your own jar to Hollis Street after six.','Mara Okafor · 9 replies · 3d','sourdough bread starter'],
+ ['post','Kick wheel for sale, £80','Works well, a little loud. Collect from Ferry Lane this weekend.','Priya Raman · 3 replies · 5d','pottery ceramics wheel'],
+ ['post','Lost: grey whippet near Corbel','Answers to Moss. Blue collar. Last seen by the dog park gate at 7am.','Jonah Abbey · 22 replies · 6h','dog park lost'],
+ ['post','Open mic sign-up sheet','Thursday slots at The Quay Room fill by Tuesday. Add your name below.','Leah Tran · 18 replies · 8h','open mic music'],
+ ['post','Night swim lanes this Friday','Lantern Pool keeps two lanes open until 10pm all October.','Lantern Pool · 5 replies · 1d','swim pool night']
+].map(([k,t,s,m,g])=>({k,t,s,m,g,h:(t+' '+s+' '+g).toLowerCase()}));
+const TOPICS=['sourdough','bread','bakery','farmers market','pottery class','night swim','dog park','open mic','piano lessons','coffee','ceramics','lost dog'];
+const TREND=['Farmers market','Night swim','Lost dog','Pottery class','Open mic','Sourdough'];
+const CATS=[['Food & drink','cup','coffee'],['Events','cal','open mic'],['Services','tool','piano lessons'],['Swaps','swap','for sale'],['Groups','group','market'],['Pets','paw','dog park']];
+let recents=['Rye & Ember','Hollis Street pottery','Piano lessons','Mara Okafor'];
+const KIND={place:'Place',person:'Person',post:'Post',topic:'Topic'};
+const $=id=>document.getElementById(id);
+const q=$("q"),hdr=$("top"),tabs=$('tabs'),live=$('live');
+const views={home:$('home'),suggest:$('suggest'),results:$('results')};
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ic=(n,c='ic')=>`<svg class="${c}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+let tab='top',active=-1,opts=[],submitted='';
+
+function show(v){for(const k in views){const on=k===v;if(on&&views[k].hidden){views[k].hidden=false;views[k].style.animation='none';views[k].offsetHeight;views[k].style.animation=''}else views[k].hidden=!on}
+  hdr.classList.toggle('ruled',v==='results'&&!tabs.hidden);q.setAttribute('aria-expanded',v==='suggest')}
+
+function renderHome(){
+  $('recent').innerHTML=recents.map(r=>`<li><button class="go" type="button" data-q="${esc(r)}">${ic('clock')}<b>${esc(r)}</b></button><button class="rm" type="button" aria-label="Remove ${esc(r)}">${ic('x')}</button></li>`).join('')||'<li class="none" style="border:0">No recent searches.</li>';
+  $('clearAll').hidden=!recents.length;
+}
+$('chips').innerHTML=TREND.map((t,i)=>`<button class="chip" type="button" data-q="${t}"><i>${i+1}</i>${t}</button>`).join('');
+$('cats').innerHTML=CATS.map(([l,i,s])=>`<button class="cat" type="button" data-q="${s}">${ic(i)}${l}</button>`).join('');
+
+const at=(h,l)=>{const m=new RegExp('(^|[^a-z0-9])'+l.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).exec(h.toLowerCase());return m?m.index+m[1].length:-1};
+function hl(text,qq){const i=at(text,qq);if(i<0)return esc(text);return esc(text.slice(0,i))+'<b>'+esc(text.slice(i,i+qq.length))+'</b>'+esc(text.slice(i+qq.length))}
+
+function renderSuggest(){
+  const v=q.value.trim(),l=v.toLowerCase();
+  const pool=[...TOPICS.map(t=>({t,k:'topic'})),...D.filter(d=>d.k!=='post')];
+  const m=pool.filter(p=>at(p.t,l)>=0).sort((a,b)=>(b.t.toLowerCase().startsWith(l))-(a.t.toLowerCase().startsWith(l))).slice(0,6);
+  opts=[v,...m.map(p=>p.t)];active=-1;q.removeAttribute('aria-activedescendant');
+  $('sugList').innerHTML=`<li class="first" role="option" id="o0" aria-selected="false">${ic('search')}<span class="tx">Search “${esc(v)}”</span></li>`+
+    m.map((p,i)=>`<li role="option" id="o${i+1}" aria-selected="false">${ic(p.k==='topic'?'search':p.k==='place'?'pin':'group')}<span class="tx">${hl(p.t,l)}</span><em>${KIND[p.k]}</em></li>`).join('');
+  show('suggest');
+}
+
+function lev(a,b){const d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)d[0][j]=j;
+  for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length]}
+
+function item(d,l){
+  if(d.k==='place')return `<button class="res" type="button">${'<span class="th">'+ic('pin')+'</span>'}<span class="bd"><span class="t">${esc(d.t)}</span><span class="s">${esc(d.s)}</span></span><span class="r">${d.m}</span></button>`;
+  if(d.k==='person'){const ini=d.t.split(' ').map(w=>w[0]).join('');return `<button class="res" type="button"><span class="th av">${ini}</span><span class="bd"><span class="t">${esc(d.t)}</span><span class="s">${esc(d.s)}</span></span><span class="r">${d.m}</span></button>`}
+  return `<button class="res p" type="button"><span class="th">${ic('post')}</span><span class="bd"><span class="t">${esc(d.t)}</span><span class="s">${esc(d.s)}</span><span class="mt">${esc(d.m)}</span></span></button>`;
+}
+const list=a=>`<ul class="lst">${a.map(d=>`<li>${item(d)}</li>`).join('')}</ul>`;
+
+function renderResults(){
+  const v=submitted,l=v.toLowerCase();
+  const hits=D.filter(d=>at(d.h,l)>=0);
+  const by=k=>hits.filter(d=>d.k===k);
+  const R=$('results');
+  if(!hits.length){
+    tabs.hidden=true;
+    const words=[...TOPICS,...D.map(d=>d.t.toLowerCase())];
+    let best='farmers market',bd=99;for(const w of words){const x=lev(l,w);if(x<bd){bd=x;best=w}}
+    if(bd>Math.max(3,l.length/2))best='farmers market';
+    R.innerHTML=`<div class="empty"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4M8.5 11h5"/></svg><h2>No results for “${esc(v)}”</h2><p>Check the spelling, or try a shorter word. Posts older than a year are not searched.</p><button class="try" type="button" data-q="${esc(best)}">Search “${esc(best)}” instead</button></div>`;
+    live.textContent=`No results for ${v}`;show('results');return;
+  }
+  tabs.hidden=false;
+  tabs.querySelectorAll('.tab').forEach(b=>{const k=b.dataset.t,n=k==='top'?hits.length:by(k).length;
+    if(b.querySelector('span'))b.querySelector('span').textContent=n;b.disabled=k!=='top'&&!n;
+    b.setAttribute('aria-selected',k===tab);b.tabIndex=k===tab?0:-1});
+  const shown=tab==='top'?hits:by(tab);
+  let h=`<p class="count" id="cnt"><b>${shown.length} ${shown.length===1?'result':'results'}</b> for “${esc(v)}”</p>`;
+  if(tab==='top'){
+    for(const [k,lab] of [['place','Places'],['person','People'],['post','Posts']]){const a=by(k);if(!a.length)continue;
+      h+=`<div class="gh"><h3>${lab}</h3>${a.length>2?`<button class="link" type="button" data-tab="${k}">See all ${a.length}</button>`:''}</div>`+list(a.slice(0,2))}
+  }else h+=list(shown);
+  R.innerHTML=h;R.setAttribute('role','tabpanel');R.setAttribute('aria-labelledby','cnt');
+  live.textContent=`${shown.length} results for ${v}`;
+  show('results');moveInd();
+}
+function moveInd(){const b=tabs.querySelector('[aria-selected="true"]');if(!b)return;const ind=$('ind');ind.style.width=(b.offsetWidth-20)+'px';ind.style.transform=`translateX(${b.offsetLeft+10}px)`}
+
+function submit(v){v=v.trim();if(!v)return;q.value=v;submitted=v;tab='top';
+  recents=[v,...recents.filter(r=>r.toLowerCase()!==v.toLowerCase())].slice(0,5);renderHome();
+  $('clear').hidden=false;hdr.classList.add('on');q.blur();renderResults();$('main').scrollTop=0}
+
+function onInput(){const v=q.value.trim();$('clear').hidden=!q.value;submitted='';tabs.hidden=true;
+  if(!v){show('home')}else renderSuggest()}
+q.addEventListener('input',onInput);
+q.addEventListener('focus',()=>{hdr.classList.add('on');if(submitted&&q.value)renderSuggest()});
+q.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){e.preventDefault();cancel();return}
+  if(views.suggest.hidden)return;
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();active=(active+(e.key==='ArrowDown'?1:-1)+opts.length)%opts.length;
+    $('sugList').querySelectorAll('li').forEach((li,i)=>li.setAttribute('aria-selected',i===active));q.setAttribute('aria-activedescendant','o'+active)}
+});
+$('form').addEventListener('submit',e=>{e.preventDefault();submit(active>=0?opts[active]:q.value)});
+$('sugList').addEventListener('click',e=>{const li=e.target.closest('li');if(li)submit(opts[+li.id.slice(1)])});
+function cancel(){q.value='';submitted='';tabs.hidden=true;$('clear').hidden=true;hdr.classList.remove('on');q.blur();show('home')}
+$('cancel').addEventListener('click',cancel);
+$('clear').addEventListener('click',()=>{q.value='';onInput();q.focus()});
+$('clearAll').addEventListener('click',()=>{recents=[];renderHome();$('cancel').focus()});
+document.body.addEventListener('click',e=>{
+  const rm=e.target.closest('.rm');
+  if(rm){const li=rm.parentElement,name=li.querySelector('.go').dataset.q,idx=recents.indexOf(name);recents=recents.filter(r=>r!==name);
+    li.style.height=li.offsetHeight+'px';li.offsetHeight;li.style.height='0px';li.style.opacity='0';
+    const done=()=>{renderHome();const b=$('recent').querySelectorAll('.rm');(b[Math.min(idx,b.length-1)]||$('chips').firstChild).focus()};
+    matchMedia('(prefers-reduced-motion: reduce)').matches?done():setTimeout(done,210);return}
+  const t=e.target.closest('[data-tab]');if(t){tab=t.dataset.tab;renderResults();return}
+  const d=e.target.closest('[data-q]');if(d)submit(d.dataset.q);
+});
+tabs.addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b||b.disabled)return;tab=b.dataset.t;renderResults();b.focus()});
+tabs.addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;const all=[...tabs.querySelectorAll('.tab:not(:disabled)')];
+  const i=all.indexOf(document.activeElement);const n=all[(i+(e.key==='ArrowRight'?1:-1)+all.length)%all.length];tab=n.dataset.t;renderResults();n.focus()});
+addEventListener('resize',moveInd);
+renderHome();q.focus();
+</script>
+</body>
+</html>

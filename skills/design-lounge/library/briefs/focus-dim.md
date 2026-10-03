@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 198 · "Focus dim" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 200 · "Focus dim" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Focus dim
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 221 · "Mixed article cards" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 225 · "Mixed article cards" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Mixed article cards
 

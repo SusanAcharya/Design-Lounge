@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 209 · "Inline alert" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 211 · "Inline alert" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Inline alert
 

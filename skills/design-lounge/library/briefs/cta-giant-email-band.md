@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 187 · "CTA giant email band" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 189 · "CTA giant email band" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # CTA giant email band
 

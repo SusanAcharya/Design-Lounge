@@ -1,0 +1,226 @@
+<!-- Design Lounge piece: phone-lesson-quiz · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burrow Spanish lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500..700&family=Nunito:wght@600..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf4e6;--card:#fffdf7;--well:#efe5d3;--line:#e5d8c1;--line2:#d6c5a8;
+  --ink:#3a2e22;--ink2:#76664f;
+  --grass:#5bc236;--grass-dk:#3e9a1c;--on-grass:#0f2e05;--ok-bg:#ddf5c8;--ok-ink:#2a730d;
+  --coral:#ff7a59;--coral-dk:#d9573a;--on-coral:#3d0f04;--no-bg:#ffe3da;--no-ink:#ad371c;
+  --flame:#ff9a1f;--flame-in:#ffd23f;--flame-ink:#b35400;--heart:#ff5a4e;
+  --round:"Fredoka",system-ui,sans-serif;--sans:"Nunito",system-ui,sans-serif;
+  --boing:cubic-bezier(.34,1.36,.64,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.4 var(--sans);font-weight:700;color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:3px solid #2f6fdb;outline-offset:3px}
+.top{display:flex;align-items:center;gap:10px;padding:max(54px,env(safe-area-inset-top)) 16px 0}
+.x{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;color:var(--ink2);flex:none}
+.x svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+.pg{flex:1;height:18px;border-radius:9px;background:#eadfcb;overflow:hidden;min-width:0}
+.pg i{display:block;height:100%;width:60%;border-radius:9px;background:var(--grass);position:relative;transition:width .6s var(--boing)}
+.pg i::after{content:"";position:absolute;left:8px;right:8px;top:4px;height:4px;border-radius:2px;background:rgba(255,255,255,.45)}
+.st{display:flex;align-items:center;gap:3px;font-family:var(--round);font-weight:700;font-size:18px;min-height:44px;flex:none}
+.st svg{width:26px;height:26px}
+.fl{color:var(--flame-ink)}
+.ht{color:var(--heart)}
+.ht.hit svg{animation:shake .5s var(--std)}
+@keyframes shake{20%{transform:translateX(-4px) rotate(-8deg)}40%{transform:translateX(4px) rotate(8deg)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+main{flex:1;min-height:0;display:flex;flex-direction:column;padding:16px 20px 0}
+.eyebrow{font-size:13px;font-weight:900;letter-spacing:.08em;color:var(--coral-dk);text-transform:uppercase}
+h1{margin:4px 0 14px;font-family:var(--round);font-weight:700;font-size:26px;line-height:1.1}
+.prompt{display:flex;align-items:flex-end;gap:12px}
+.mas{width:76px;height:84px;flex:none}
+.bub{position:relative;flex:1;padding:14px 16px;border:2px solid var(--line);border-bottom-width:4px;border-radius:18px;background:var(--card);font-family:var(--round);font-weight:500;font-size:20px;line-height:1.25;margin-bottom:18px}
+.bub::before{content:"";position:absolute;left:-9px;bottom:16px;width:14px;height:14px;background:var(--card);border-left:2px solid var(--line);border-bottom:2px solid var(--line);transform:rotate(45deg)}
+.ans{position:relative;display:flex;flex-wrap:wrap;align-items:flex-start;align-content:flex-start;gap:8px;min-height:124px;padding:4px 0;margin:18px 0 20px;
+  background:linear-gradient(var(--line) 0 0) 0 58px/100% 2px no-repeat,linear-gradient(var(--line) 0 0) 0 116px/100% 2px no-repeat}
+.bank{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.slot{display:inline-block;border-radius:14px;background:var(--well)}
+.tile{position:relative;display:inline-flex;align-items:center;height:50px;padding:0 16px;border-radius:14px;background:var(--card);border:2px solid var(--line);border-bottom:4px solid var(--line2);font-family:var(--round);font-weight:500;font-size:19px;white-space:nowrap;transition:background .15s}
+.tile:hover{background:#fff}
+.tile:active{border-bottom-width:2px;margin-top:2px}
+.tile.gone{visibility:hidden}
+.tile.fly{z-index:3}
+.lock .tile{pointer-events:none}
+.ft{position:relative;z-index:4;padding:16px 20px max(34px,env(safe-area-inset-bottom));border-top:2px solid transparent;transition:background .25s var(--std)}
+.res{display:none;position:absolute;left:0;right:0;bottom:100%;align-items:flex-start;gap:12px;padding:18px 20px 6px;background:inherit;border-radius:24px 24px 0 0}
+.ft[data-s="right"]{background:var(--ok-bg)}
+.ft[data-s="right"],.ft[data-s="wrong"]{transition:none}
+.ft[data-s="wrong"]{background:var(--no-bg)}
+.ft[data-s="right"] .res,.ft[data-s="wrong"] .res{display:flex;animation:rise .38s var(--boing)}
+@keyframes rise{from{transform:translateY(24px);opacity:0}}
+.bd{width:40px;height:40px;border-radius:20px;display:grid;place-items:center;background:var(--card);flex:none}
+.bd svg{width:24px;height:24px;fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.res h2{margin:0;font-family:var(--round);font-size:22px;font-weight:700;line-height:1.2}
+.res p{margin:2px 0 0;font-size:16px;font-weight:700}
+.res small{display:block;font-size:13px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-top:4px}
+.ft[data-s="right"] .res{color:var(--ok-ink)}
+.ft[data-s="wrong"] .res{color:var(--no-ink)}
+.ft[data-s="right"] .bd svg{stroke:var(--grass-dk)}
+.ft[data-s="wrong"] .bd svg{stroke:var(--coral-dk)}
+.btn{display:block;width:100%;height:56px;border-radius:16px;background:var(--grass);color:var(--on-grass);border-bottom:4px solid var(--grass-dk);font-family:var(--round);font-weight:700;font-size:18px;letter-spacing:.06em;text-transform:uppercase}
+.btn:active{border-bottom-width:2px;transform:translateY(2px)}
+.btn:disabled{background:#ede3d1;color:#8f8069;border-bottom-color:#dccfb8;cursor:default;transform:none}
+.ft[data-s="wrong"] .btn{background:var(--coral);color:var(--on-coral);border-bottom-color:var(--coral-dk)}
+.end{position:fixed;inset:0;z-index:5;background:var(--bg);display:flex;flex-direction:column;align-items:center;text-align:center;padding:max(54px,env(safe-area-inset-top)) 20px max(34px,env(safe-area-inset-bottom));visibility:hidden;opacity:0;transition:opacity .3s var(--std),visibility 0s .3s}
+.end.on{visibility:visible;opacity:1;transition:opacity .3s var(--std)}
+.big{width:132px;height:150px;margin-top:40px}
+.end.on .big{animation:flare .9s var(--boing)}
+@keyframes flare{0%{transform:scale(.4) rotate(-8deg)}60%{transform:scale(1.08) rotate(3deg)}}
+.cnt{font-family:var(--round);font-weight:700;font-size:84px;line-height:.9;color:var(--flame-ink);margin-top:6px}
+.end h2{margin:4px 0 0;font-family:var(--round);font-size:28px;font-weight:700}
+.end p{margin:6px 0 0;color:var(--ink2);font-size:16px;max-width:300px}
+.cards{display:flex;gap:12px;width:100%;margin-top:28px}
+.cd{flex:1;border-radius:18px;border:2px solid;border-bottom-width:5px;overflow:hidden;background:var(--card)}
+.cd small{display:block;padding:6px;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.cd b{display:block;padding:12px 4px 14px;font-family:var(--round);font-size:28px;font-weight:700}
+.cd.g{border-color:var(--grass-dk)}.cd.g small{background:var(--grass-dk)}.cd.g b{color:var(--ok-ink)}
+.cd.c{border-color:var(--coral-dk)}.cd.c small{background:var(--coral-dk)}.cd.c b{color:var(--no-ink)}
+.wkr{display:flex;gap:8px;margin-top:22px}
+.wkr span{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:900;color:var(--ink2)}
+.wkr i{width:30px;height:30px;border-radius:15px;background:var(--well);display:grid;place-items:center}
+.wkr i.y{background:var(--flame)}
+.wkr i svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+.wkr i.t{box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--flame)}
+.end .btn{margin-top:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-height:800px){.mas{width:60px;height:66px}h1{font-size:23px;margin-bottom:10px}.bub{font-size:18px;padding:10px 14px}.ans{margin:12px 0 14px}.big{margin-top:16px;height:120px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="x" type="button" aria-label="Quit lesson"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <div class="pg" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="6" id="pg"><i id="pgi"></i></div>
+  <span class="st fl" id="fl" aria-label="13 day streak"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.8c1.2 3.6 6.2 6 6.2 11.6a6.2 6.2 0 0 1-12.4 0c0-2.6 1.3-4.4 2.6-5.6.1 2.1 1 3.2 2.2 3.4-.8-3.4.2-6.6 1.4-9.4z" fill="#ff9a1f"/><path d="M12 11.5c1.2 1.6 3 2.7 3 5a3 3 0 0 1-6 0c0-1.5.8-2.4 1.6-3 .1.9.5 1.4 1 1.5-.3-1.3 0-2.5.4-3.5z" fill="#ffd23f"/></svg><span id="fln">13</span></span>
+  <span class="st ht" id="ht" aria-label="5 hearts"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8.5-5-8.5-11.2A4.6 4.6 0 0 1 12 7.2a4.6 4.6 0 0 1 8.5 2.6C20.5 16 12 21 12 21z" fill="#ff5a4e"/><ellipse cx="8" cy="9.6" rx="1.8" ry="1.2" fill="#fff" opacity=".55" transform="rotate(-30 8 9.6)"/></svg><span id="htn">5</span></span>
+</header>
+<main id="m">
+  <span class="eyebrow">Unit 4 · Getting around</span>
+  <h1>Translate this sentence</h1>
+  <div class="prompt">
+    <svg class="mas" viewBox="0 0 80 88" aria-hidden="true"><ellipse cx="40" cy="85" rx="28" ry="3" fill="#e5d8c1"/><circle cx="17" cy="22" r="8" fill="#e8694a"/><circle cx="63" cy="22" r="8" fill="#e8694a"/><path d="M8 82V46a32 32 0 0 1 64 0v36z" fill="#ff8a66"/><path d="M8 82v-8h64v8z" fill="#e8694a"/><ellipse cx="40" cy="62" rx="18" ry="14" fill="#ffe2cf"/><circle cx="29" cy="40" r="5" fill="#3a2e22"/><circle cx="51" cy="40" r="5" fill="#3a2e22"/><circle cx="30.6" cy="38.4" r="1.6" fill="#fff"/><circle cx="52.6" cy="38.4" r="1.6" fill="#fff"/><ellipse cx="40" cy="50" rx="5" ry="3.6" fill="#c2412d"/><path d="M34 56q6 4 12 0" fill="none" stroke="#3a2e22" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <p class="bub" id="en">Where is the bus stop?</p>
+  </div>
+  <div class="ans" id="ans" role="group" aria-label="Your answer"></div>
+  <div class="bank" id="bank" role="group" aria-label="Word bank"></div>
+</main>
+<footer class="ft" id="ft" data-s="idle">
+  <div class="res">
+    <span class="bd" id="bd" aria-hidden="true"></span>
+    <div><h2 id="rt">Nice one!</h2><small id="rl">Meaning</small><p id="rp">¿Dónde está la parada de autobús?</p></div>
+  </div>
+  <button class="btn" id="ck" type="button">Check</button>
+</footer>
+<p class="sr" id="live" aria-live="assertive"></p>
+<section class="end" id="end" aria-labelledby="eh" aria-hidden="true">
+  <svg class="big" viewBox="0 0 24 27" aria-hidden="true"><ellipse cx="12" cy="25.8" rx="7" ry="1" fill="#e5d8c1"/><path d="M12 .8c1.4 4.2 7.6 7 7.6 14.2a7.6 7.6 0 0 1-15.2 0c0-3.2 1.6-5.4 3.2-6.8.1 2.6 1.2 3.9 2.7 4.2-1-4.2.2-8.2 1.7-11.6z" fill="#ff9a1f"/><path d="M12 11.4c1.6 2 3.8 3.4 3.8 6.4a3.8 3.8 0 0 1-7.6 0c0-1.9 1-3 2-3.8.1 1.1.6 1.8 1.3 1.9-.4-1.6 0-3.2.5-4.5z" fill="#ffd23f"/><ellipse cx="8.4" cy="13" rx="1" ry="2.2" fill="#fff" opacity=".4" transform="rotate(20 8.4 13)"/></svg>
+  <span class="cnt" id="ec">14</span>
+  <h2 id="eh">Day streak!</h2>
+  <p id="ep">Lesson complete. Come back tomorrow to make it 15.</p>
+  <div class="wkr" id="wkr" aria-label="Practised every day this week"></div>
+  <div class="cards">
+    <div class="cd g"><small>Total XP</small><b id="ex">+40</b></div>
+    <div class="cd c"><small>Accuracy</small><b id="ea">100%</b></div>
+  </div>
+  <button class="btn" id="eb" type="button">Continue</button>
+</section>
+<script>
+const $=s=>document.getElementById(s);
+const Q=[
+{en:'Where is the bus stop?',es:'¿Dónde está la parada de autobús?',a:['Dónde','está','la','parada','de','autobús'],bank:['autobús','está','el','Dónde','parada','tren','la','de','es'],pre:[3,1]},
+{en:'I would like a ticket, please.',es:'Quisiera un billete, por favor.',a:['Quisiera','un','billete','por','favor'],bank:['billete','por','Quisiera','una','favor','un','tengo']},
+{en:'The train leaves at nine.',es:'El tren sale a las nueve.',a:['El','tren','sale','a','las','nueve'],bank:['sale','las','El','nueve','llega','a','tren','la']},
+{en:'Is it far from here?',es:'¿Está lejos de aquí?',a:['Está','lejos','de','aquí'],bank:['lejos','cerca','Está','aquí','es','de']}];
+const RIGHT=['Nice one!','Spot on!','Exactly right!','You nailed it!'];
+const OK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',NO='<svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17"/></svg>';
+const ans=$('ans'),bank=$('bank'),ft=$('ft'),ck=$('ck'),RM=matchMedia('(prefers-reduced-motion: reduce)');
+let qi,hearts,step,right,done,state;
+const bankBtn=i=>bank.querySelector(`.tile[data-i="${i}"]`);
+const ansBtn=i=>ans.querySelector(`.tile[data-i="${i}"]`);
+function tile(i,w,where){const b=document.createElement('button');b.type='button';b.className='tile';b.dataset.i=i;b.textContent=w;b.setAttribute('aria-label',w+(where?', '+where:''));return b}
+function fly(el,from,ms){
+  if(RM.matches)return;
+  const to=el.getBoundingClientRect(),dx=from.left-to.left,dy=from.top-to.top;
+  if(!dx&&!dy)return;
+  el.classList.add('fly');
+  el.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:'none'}],{duration:ms||360,easing:'cubic-bezier(.34,1.36,.64,1)'}).onfinish=()=>el.classList.remove('fly');
+}
+function place(i,quiet,kb){
+  const src=bankBtn(i);if(src.classList.contains('gone'))return;
+  const r0=src.getBoundingClientRect();
+  src.classList.add('gone');src.tabIndex=-1;src.setAttribute('aria-hidden','true');
+  const t=tile(i,src.textContent,'in answer, tap to remove');ans.append(t);
+  if(!quiet)fly(t,r0);if(kb){const nx=[...bank.querySelectorAll('.tile:not(.gone)')];(nx.find(b=>+b.dataset.i>i)||nx[0]||ck).focus()}
+  sync();
+}
+function unplace(i,kb){
+  const t=ansBtn(i),src=bankBtn(i),r0=t.getBoundingClientRect();
+  const before=new Map([...ans.children].map(c=>[c,c.getBoundingClientRect()]));
+  const nextFocus=t.nextElementSibling||t.previousElementSibling;
+  t.remove();
+  src.classList.remove('gone');src.tabIndex=0;src.removeAttribute('aria-hidden');
+  fly(src,r0);
+  for(const [c,r] of before)if(c.isConnected)fly(c,r,260);
+  if(kb)(nextFocus&&nextFocus.isConnected?nextFocus:src).focus();
+  sync();
+}
+function sync(){if(state==='idle')ck.disabled=!ans.children.length}
+function load(n){
+  qi=n;const q=Q[n];state='idle';
+  $('en').textContent=q.en;
+  ans.innerHTML='';bank.innerHTML='';
+  q.bank.forEach((w,i)=>{const s=document.createElement('span');s.className='slot';s.append(tile(i,w));bank.append(s)});
+  document.body.classList.remove('lock');
+  ft.dataset.s='idle';ck.textContent='Check';
+  (q.pre||[]).forEach(i=>place(i,true));
+  sync();
+}
+function bar(){const p=$('pg');p.setAttribute('aria-valuenow',step);$('pgi').style.width=step*10+'%'}
+function check(){
+  const q=Q[qi],got=[...ans.children].map(t=>t.textContent),ok=got.join(' ').toLowerCase()===q.a.join(' ').toLowerCase();
+  state=ok?'right':'wrong';done++;step++;bar();document.body.classList.add('lock');
+  ft.dataset.s=state;
+  if(ok){right++;$('rt').textContent=RIGHT[qi%RIGHT.length];$('rl').textContent='Meaning';$('bd').innerHTML=OK;ck.textContent='Continue';
+    $('live').textContent='Correct. '+q.es;}
+  else{hearts=Math.max(0,hearts-1);$('htn').textContent=hearts;$('ht').setAttribute('aria-label',hearts+' hearts');
+    const h=$('ht');h.classList.remove('hit');void h.offsetWidth;h.classList.add('hit');
+    $('rt').textContent='Not quite';$('rl').textContent='Correct answer';$('bd').innerHTML=NO;ck.textContent='Got it';
+    $('live').textContent=`Incorrect. Correct answer: ${q.es} You lost a heart. ${hearts} left.`;}
+  $('rp').textContent=q.es;
+}
+function end(){
+  const out=hearts===0,e=$('end');
+  $('ec').textContent=out?13:14;$('fln').textContent=out?13:14;$('fl').setAttribute('aria-label',(out?13:14)+' day streak');
+  $('eh').textContent=out?'Out of hearts':'Day streak!';
+  $('ep').textContent=out?'Your 13 day streak is safe until midnight. Take a breath and try again.':'Lesson complete. Come back tomorrow to make it 15.';
+  $('ex').textContent='+'+right*10;$('ea').textContent=(done?Math.round(right/done*100):100)+'%';
+  $('eb').textContent=out?'Try again':'Continue';
+  e.classList.add('on');e.removeAttribute('aria-hidden');
+  $('live').textContent=out?'Out of hearts.':`Lesson complete. 14 day streak. ${right*10} XP, ${done?Math.round(right/done*100):100} percent accuracy.`;
+  setTimeout(()=>$('eb').focus(),60);
+}
+ck.onclick=e=>{
+  if(state==='idle'){if(ans.children.length)check();return}
+  if(hearts===0||qi===Q.length-1)return end();
+  load(qi+1);if(!e.detail){const f=bank.querySelector('.tile');f&&f.focus()}
+};
+bank.addEventListener('click',e=>{const t=e.target.closest('.tile');if(t&&state==='idle')place(+t.dataset.i,false,!e.detail)});
+ans.addEventListener('click',e=>{const t=e.target.closest('.tile');if(t&&state==='idle')unplace(+t.dataset.i,!e.detail)});
+function start(){hearts=5;step=6;right=0;done=0;$('htn').textContent=5;$('ht').setAttribute('aria-label','5 hearts');$('fln').textContent=13;$('fl').setAttribute('aria-label','13 day streak');bar();load(0)}
+$('eb').onclick=()=>{const e=$('end');e.classList.remove('on');e.setAttribute('aria-hidden','true');start();bank.querySelector('.tile:not(.gone)').focus()};
+const CK='<svg viewBox="0 0 24 24"><path d="M6 12.5l4 4L18 8"/></svg>';
+$('wkr').innerHTML=['M','T','W','T','F','S','S'].map((d,i)=>`<span aria-hidden="true"><i class="${i<6?'y':''}${i===5?' t':''}">${i<6?CK:''}</i>${d}</span>`).join('');
+start();
+</script>
+</body>
+</html>

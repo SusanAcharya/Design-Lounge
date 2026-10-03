@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 193 · "Editorial phone sign-in" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 195 · "Editorial phone sign-in" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Editorial phone sign-in
 

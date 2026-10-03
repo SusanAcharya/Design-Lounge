@@ -1,0 +1,304 @@
+<!-- Design Lounge piece: phone-qr-scanner · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gatepost · Scan tickets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000;--sheet:#111111;--raise:#1b1b1b;--line:#2c2c2c;
+  --ink:#ffffff;--ink-2:#b8b8b8;--ink-3:#8a8a8a;
+  --valid:#4fe3a5;--invalid:#ff5a4f;--lock:var(--ink);
+  --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --r:12px;--ease:cubic-bezier(.2,.7,.2,1);--sheet-e:cubic-bezier(.32,.72,0,1);--out:cubic-bezier(.16,1,.3,1);
+  --cy:calc(50% - 30px);--size:248px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.4 var(--sans);overflow:hidden;position:relative}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:10px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.mono{font-family:var(--mono)}
+
+/* camera scene */
+.cam{position:absolute;inset:0;overflow:hidden}
+.scene{position:absolute;inset:-12px;background:
+  radial-gradient(120% 60% at 30% 85%,#262420 0%,transparent 60%),
+  linear-gradient(172deg,#161513 0%,#0b0b0a 55%,#151410 100%);
+  animation:drift 7s var(--ease) infinite alternate;transition:filter .3s var(--ease)}
+body.torch .scene{filter:brightness(1.7) contrast(.95)}
+.edge{position:absolute;left:-10%;right:-10%;top:68%;height:2px;background:#2a2823;transform:rotate(-4deg)}
+.phone{position:absolute;left:50%;top:var(--cy);width:196px;height:360px;margin:-158px 0 0 -98px;border-radius:30px;background:#0c0c0c;border:2px solid #232323;transform:rotate(-7deg);transform-origin:50% 158px;
+  filter:blur(1.4px) brightness(.5);transition:filter .3s var(--ease)}
+.screen{position:absolute;inset:8px;border-radius:23px;background:#d9d8d2;overflow:hidden;padding:18px 14px}
+.screen .ev{height:7px;width:70%;background:#9b9a94;border-radius:2px}
+.screen .ev+.ev{width:46%;margin-top:6px;background:#b4b3ad}
+.qr{position:absolute;left:50%;top:150px;width:140px;height:140px;margin:-70px 0 0 -70px;background:#fbfbf7;padding:8px;border-radius:4px}
+.qr svg{display:block;width:100%;height:100%}
+.screen .foot{position:absolute;left:14px;right:14px;bottom:22px;height:24px;border-radius:6px;background:#1d1d1d}
+body.locked .scene{animation-play-state:paused}
+body.locked .phone{filter:brightness(.78)}
+.grain{position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);opacity:.16;mix-blend-mode:screen;pointer-events:none;animation:grain 1.2s steps(6) infinite}
+.vignette{position:absolute;inset:0;background:radial-gradient(90% 70% at 50% 46%,transparent 40%,rgba(0,0,0,.75) 100%);pointer-events:none}
+.flash{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 0 var(--lock);opacity:0}
+.flash.go{animation:flash .6s var(--out)}
+
+/* reticle */
+.reticle{position:absolute;left:50%;top:var(--cy);width:var(--size);height:var(--size);transform:translate(-50%,-50%);
+  transition:width .3s var(--out),height .3s var(--out),transform .3s var(--out)}
+.c{position:absolute;width:38px;height:38px;border:3.5px solid var(--lock);transition:border-color .2s var(--ease);animation:breathe 2.4s var(--ease) infinite alternate}
+.c1{left:0;top:0;border-right:0;border-bottom:0;border-top-left-radius:14px;--dx:6px;--dy:6px}
+.c2{right:0;top:0;border-left:0;border-bottom:0;border-top-right-radius:14px;--dx:-6px;--dy:6px}
+.c3{left:0;bottom:0;border-right:0;border-top:0;border-bottom-left-radius:14px;--dx:6px;--dy:-6px}
+.c4{right:0;bottom:0;border-left:0;border-top:0;border-bottom-right-radius:14px;--dx:-6px;--dy:-6px}
+.scanline{position:absolute;left:14px;right:14px;top:10px;height:46px;border-bottom:2px solid var(--ink);
+  background:linear-gradient(to bottom,transparent,rgba(255,255,255,.14));animation:scan 2.4s cubic-bezier(.45,0,.55,1) infinite alternate}
+.ring{position:absolute;inset:-4px;border-radius:18px;border:2px solid var(--lock);opacity:0}
+body.locked .reticle{width:176px;height:176px;transform:translate(-50%,-50%) rotate(-7deg)}
+body.locked .c{animation:none}
+body.locked .scanline{opacity:0;animation:none}
+body.ok{--lock:var(--valid)}
+body.bad{--lock:var(--invalid)}
+body.ok .ring,body.bad .ring{animation:ring .7s var(--out)}
+body.bad .reticle{animation:shake .36s var(--ease)}
+
+/* chrome */
+.top{position:absolute;left:0;right:0;top:0;padding:max(54px,env(safe-area-inset-top)) 12px 0;display:flex;align-items:center;gap:8px}
+.ib{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);transition:background-color .16s var(--ease),color .16s var(--ease)}
+.ib[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.top .t{flex:1;text-align:center;min-width:0}
+.top h1{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.top p{margin:2px 0 0;font:500 11px var(--mono);letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase}
+.count{position:absolute;left:50%;top:calc(max(54px,env(safe-area-inset-top)) + 58px);transform:translateX(-50%);font:500 12px var(--mono);letter-spacing:.08em;color:var(--ink-2);
+  padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.12);white-space:nowrap}
+.count b{color:var(--ink);font-weight:600}
+.status{position:absolute;left:16px;right:16px;top:calc(var(--cy) + 150px);text-align:center;font-size:15px;font-weight:500;text-shadow:0 1px 8px #000}
+.status small{display:block;font:400 11px var(--mono);letter-spacing:.1em;color:var(--ink-2);margin-top:4px;text-transform:uppercase}
+.bottom{position:absolute;left:0;right:0;bottom:0;padding:0 16px max(34px,env(safe-area-inset-bottom));display:grid;gap:12px}
+.hint{justify-self:center;min-height:44px;padding:0 14px;border:1px dashed rgba(255,255,255,.4);border-radius:999px;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);background:rgba(0,0,0,.4)}
+.row{display:flex;gap:10px}
+.gal{width:56px;height:56px;border-radius:var(--r);display:grid;place-items:center;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);flex:none}
+.manual{flex:1;min-height:56px;border-radius:var(--r);background:var(--ink);color:var(--bg);font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
+
+/* sheets */
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--sheet);border-top:1px solid var(--line);border-radius:22px 22px 0 0;
+  padding:10px 20px max(34px,env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .42s var(--sheet-e);visibility:hidden}
+.sheet.on{transform:none;visibility:visible}
+.sheet::before{content:"";display:block;width:36px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 16px}
+.band{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.badge{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--lock);color:var(--bg);flex:none}
+.badge .i{width:26px;height:26px;stroke-width:2.5}
+.band h2{margin:0;font-size:24px;font-weight:700;letter-spacing:-.02em;color:var(--lock);line-height:1.1}
+.band p{margin:2px 0 0;font:500 11px var(--mono);letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase}
+.name{margin:0 0 12px;font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.facts{margin:0;display:grid;grid-template-columns:auto 1fr;border-top:1px solid var(--line)}
+.facts dt,.facts dd{margin:0;padding:11px 0;border-bottom:1px solid var(--line)}
+.facts dt{font:500 11px/20px var(--mono);letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;padding-right:16px}
+.facts dd{text-align:right;font-weight:500;font-variant-numeric:tabular-nums}
+.facts dd.mono{font-size:14px;letter-spacing:.06em}
+.btn{width:100%;min-height:56px;border-radius:var(--r);background:var(--ink);color:var(--bg);font-weight:600;font-size:16px;margin-top:16px}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line);margin-top:8px;min-height:48px}
+#sheet-manual h2{margin:0;font-size:22px;font-weight:600;letter-spacing:-.01em}
+#sheet-manual label{display:block;font:500 11px var(--mono);letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;margin:14px 0 8px}
+#code{width:100%;height:60px;border-radius:var(--r);border:1px solid var(--line);background:var(--raise);padding:0 16px;font:500 22px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+#code::placeholder{color:#5c5c5c}
+#code:focus{outline:2px solid var(--ink);outline-offset:2px}
+#code[aria-invalid="true"]{border-color:var(--invalid)}
+.help{margin:8px 0 0;font-size:13px;color:var(--ink-2)}
+.help.err{color:var(--invalid)}
+
+@keyframes drift{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(4px,-3px) rotate(.4deg)}100%{transform:translate(-3px,2px) rotate(-.3deg)}}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-17px,9px)}40%{transform:translate(13px,-21px)}60%{transform:translate(-9px,17px)}80%{transform:translate(21px,5px)}100%{transform:translate(-5px,-13px)}}
+@keyframes breathe{to{transform:translate(var(--dx),var(--dy))}}
+@keyframes scan{to{top:calc(100% - 56px)}}
+@keyframes ring{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.28)}}
+@keyframes flash{0%{opacity:1;box-shadow:inset 0 0 0 8px var(--lock)}100%{opacity:0;box-shadow:inset 0 0 0 0 var(--lock)}}
+@keyframes shake{25%{margin-left:-6px}50%{margin-left:6px}75%{margin-left:-3px}}
+@media (max-height:800px){:root{--size:224px;--cy:calc(50% - 40px)}.phone{transform:rotate(-7deg) scale(.92)}.status{top:calc(var(--cy) + 136px)}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  .scanline{top:calc(50% - 23px)}
+}
+</style>
+</head>
+<body>
+<div class="cam" aria-hidden="true"><div class="scene">
+  <div class="edge"></div>
+  <div class="phone"><div class="screen">
+    <div class="ev"></div><div class="ev"></div>
+    <div class="qr"><svg viewBox="0 0 21 21" shape-rendering="crispEdges"><path id="qr" fill="#0a0a0a" fill-rule="evenodd"/></svg></div>
+    <div class="foot"></div>
+  </div></div>
+  <svg class="grain"><filter id="n" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+</div></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="flash" id="flash" aria-hidden="true"></div>
+
+<div class="reticle" aria-hidden="true">
+  <span class="c c1"></span><span class="c c2"></span><span class="c c3"></span><span class="c c4"></span>
+  <span class="scanline"></span><span class="ring"></span>
+</div>
+
+<header class="top">
+  <button class="ib" type="button" aria-label="Close scanner">
+    <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="t"><h1>Scan tickets</h1><p>Pier Nine · Gate 2</p></div>
+  <button class="ib" id="torch" type="button" aria-pressed="false" aria-label="Torch">
+    <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v4l-2 3v11h-4V10L8 7z"/><path d="M12 13v2"/></svg>
+  </button>
+</header>
+<div class="count"><b id="n-in">312</b> / 480 checked in</div>
+
+<p class="status" id="status" role="status" aria-live="polite">Point the camera at the ticket QR<small>Mira Sol · Doors 19:00</small></p>
+
+<div class="bottom">
+  <button class="hint" id="sim" type="button">Demo · simulate scan</button>
+  <div class="row">
+    <button class="gal" id="gal" type="button" aria-label="Scan from a photo">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 8"/></svg>
+    </button>
+    <button class="manual" id="manual" type="button">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 12h.01M11 12h.01M15 12h.01"/></svg>
+      Enter code manually
+    </button>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<section class="sheet" id="sheet-result" role="dialog" aria-modal="true" aria-labelledby="r-title">
+  <div class="band">
+    <span class="badge" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" id="r-icon"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+    <div><h2 id="r-title">Valid ticket</h2><p id="r-sub">Admit one · scanned 19:31</p></div>
+  </div>
+  <p class="name" id="r-name">Ines Albescu</p>
+  <dl class="facts">
+    <dt>Seat</dt><dd id="r-seat">Block B · Row 4 · Seat 12</dd>
+    <dt>Time</dt><dd>Doors 19:00 · Show 20:15</dd>
+    <dt>Ticket</dt><dd class="mono" id="r-id">PN9-7Q4K-2210</dd>
+  </dl>
+  <button class="btn" type="button" data-close>Scan next</button>
+</section>
+
+<section class="sheet" id="sheet-manual" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <form id="mform" novalidate>
+    <h2 id="m-title">Enter ticket code</h2>
+    <label for="code">Ticket code</label>
+    <input id="code" autocomplete="off" spellcheck="false" placeholder="PN9-0000-0000" maxlength="14" aria-describedby="m-help">
+    <p class="help" id="m-help">Printed under the QR. 11 letters and numbers.</p>
+    <button class="btn" type="submit">Check code</button>
+    <button class="btn ghost" type="button" data-close>Cancel</button>
+  </form>
+</section>
+
+<script>
+(function(){
+  let s = 7, d = 'M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2zM14 0h7v7h-7zM15 1v5h5V1zM16 2h3v3h-3zM0 14h7v7H0zM1 15v5h5v-5zM2 16h3v3H2z';
+  const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  for (let y = 0; y < 21; y++) for (let x = 0; x < 21; x++) {
+    if ((x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12)) continue;
+    if (r() < .5) d += `M${x} ${y}h1v1h-1z`;
+  }
+  document.getElementById('qr').setAttribute('d', d);
+})();
+
+const body = document.body, status = document.getElementById('status');
+const flash = document.getElementById('flash'), scrim = document.getElementById('scrim');
+const resultSheet = document.getElementById('sheet-result'), manualSheet = document.getElementById('sheet-manual');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DEFAULT = status.innerHTML;
+const TICKETS = {
+  ok: { title: 'Valid ticket', sub: 'Admit one · scanned 19:31', name: 'Ines Albescu', seat: 'Block B · Row 4 · Seat 12', id: 'PN9-7Q4K-2210',
+        icon: 'M5 12.5l4.5 4.5L19 7.5', say: 'Valid ticket. Ines Albescu, Block B, Row 4, Seat 12.' },
+  bad: { title: 'Already scanned', sub: 'Gate 2 · 19:12 · by Theo M.', name: 'Dario Pensa', seat: 'Block D · Row 11 · Seat 3', id: 'PN9-3H8D-0417',
+         icon: 'M7 7l10 10M17 7L7 17', say: 'Invalid. Ticket already scanned at Gate 2 at 19:12.' }
+};
+let next = 'ok', opener = null, busy = false, timers = [];
+
+function openSheet(el, from) {
+  opener = from || document.activeElement;
+  scrim.classList.add('on'); el.classList.add('on');
+  setTimeout(() => (el.querySelector('input') || el.querySelector('button')).focus(), reduce ? 0 : 320);
+}
+function closeSheets() {
+  timers.forEach(clearTimeout); timers = [];
+  [resultSheet, manualSheet].forEach(x => x.classList.remove('on'));
+  scrim.classList.remove('on');
+  body.classList.remove('locked', 'ok', 'bad');
+  status.innerHTML = DEFAULT; busy = false;
+  if (opener) opener.focus();
+}
+function fill(kind, idOverride) {
+  const t = TICKETS[kind];
+  document.getElementById('r-title').textContent = t.title;
+  document.getElementById('r-sub').textContent = t.sub;
+  document.getElementById('r-name').textContent = t.name;
+  document.getElementById('r-seat').textContent = t.seat;
+  document.getElementById('r-id').textContent = idOverride || t.id;
+  document.querySelector('#r-icon path').setAttribute('d', t.icon);
+}
+function verdict(kind, from, idOverride) {
+  body.classList.add(kind);
+  flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go');
+  if (navigator.vibrate) try { navigator.vibrate(kind === 'ok' ? 30 : [40, 60, 40]); } catch (e) {}
+  if (kind === 'ok') { const n = document.getElementById('n-in'); n.textContent = +n.textContent + 1; }
+  fill(kind, idOverride);
+  status.textContent = TICKETS[kind].say;
+  timers.push(setTimeout(() => openSheet(resultSheet, from), reduce ? 200 : 650));
+}
+function scan(from) {
+  if (busy) return; busy = true;
+  const kind = next; next = next === 'ok' ? 'bad' : 'ok';
+  body.classList.add('locked');
+  status.textContent = 'Ticket found. Checking';
+  timers.push(setTimeout(() => verdict(kind, from), reduce ? 100 : 520));
+}
+
+document.getElementById('sim').addEventListener('click', e => scan(e.currentTarget));
+const torch = document.getElementById('torch');
+torch.addEventListener('click', () => {
+  const on = torch.getAttribute('aria-pressed') !== 'true';
+  torch.setAttribute('aria-pressed', on);
+  body.classList.toggle('torch', on);
+});
+document.getElementById('gal').addEventListener('click', () => {
+  status.innerHTML = 'No ticket images in Recents<small>Screenshots of a QR will show here</small>';
+});
+document.getElementById('manual').addEventListener('click', e => {
+  const c = document.getElementById('code');
+  c.value = ''; c.removeAttribute('aria-invalid');
+  const h = document.getElementById('m-help');
+  h.className = 'help'; h.textContent = 'Printed under the QR. 11 letters and numbers.';
+  openSheet(manualSheet, e.currentTarget);
+});
+document.getElementById('mform').addEventListener('submit', e => {
+  e.preventDefault();
+  const c = document.getElementById('code'), h = document.getElementById('m-help');
+  const raw = c.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (raw.length !== 11) {
+    c.setAttribute('aria-invalid', 'true');
+    h.className = 'help err'; h.textContent = 'That code is ' + raw.length + ' characters. Codes have 11.';
+    c.focus(); return;
+  }
+  const id = `${raw.slice(0, 3)}-${raw.slice(3, 7)}-${raw.slice(7)}`;
+  manualSheet.classList.remove('on');
+  busy = true; body.classList.add('locked');
+  verdict(id === TICKETS.bad.id ? 'bad' : 'ok', document.getElementById('manual'), id);
+});
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeSheets));
+scrim.addEventListener('click', closeSheets);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && scrim.classList.contains('on')) closeSheets();
+});
+</script>
+</body>
+</html>

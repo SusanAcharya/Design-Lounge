@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 304 · "Text mask scroll reveal" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 314 · "Text mask scroll reveal" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Text mask scroll reveal
 

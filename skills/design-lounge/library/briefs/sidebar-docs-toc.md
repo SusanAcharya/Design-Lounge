@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 234 · "Paper docs with scrollspy TOC" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 238 · "Paper docs with scrollspy TOC" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Paper docs with scrollspy TOC
 

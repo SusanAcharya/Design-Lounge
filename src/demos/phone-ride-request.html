@@ -1,0 +1,278 @@
+<!-- Design Lounge piece: phone-ride-request · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kerb · Request a ride</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --map:#0d0e0f;--block:#141517;--road:#202225;--road-2:#18191b;
+  --panel:#121314;--raise:#1a1b1d;--line:#2b2d30;
+  --ink:#f2f2ee;--ink-2:#b4b6b8;--ink-3:#8b8e92;
+  --acid:#d7ff2e;--on-acid:#0d0e0f;--acid-wash:#1d2110;
+  --cond:"Barlow Condensed","Arial Narrow",sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:8px;--ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--map);color:var(--ink);font:15px/1.35 var(--cond);overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--acid);outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.mono{font-family:var(--mono)}
+
+.map{position:absolute;inset:0}
+.map svg{width:100%;height:100%;display:block}
+.lbl{font:500 8px var(--mono);fill:#5a5d61;letter-spacing:.14em}
+.rings circle{fill:none;stroke:var(--acid);stroke-width:1.5;opacity:0}
+body[data-state="finding"] .rings circle{animation:ring 2.4s var(--ease) infinite}
+.rings circle:nth-child(2){animation-delay:.8s!important}
+.rings circle:nth-child(3){animation-delay:1.6s!important}
+@keyframes ring{0%{r:10;opacity:.9}100%{r:110;opacity:0}}
+#car{opacity:0;transition:opacity .3s var(--ease),transform 1.2s var(--ease)}
+#car{transform:translate(-20px,226px)}
+body[data-state="found"] #car{opacity:1;transform:translate(78px,226px)}
+#routeLine{transition:opacity .3s var(--ease)}
+body[data-state="finding"] #routeLine{opacity:.35}
+
+.topbar{position:absolute;left:0;right:0;top:0;padding:max(54px,env(safe-area-inset-top)) 16px 0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.topbar>*{pointer-events:auto}
+.sq{width:44px;height:44px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);display:grid;place-items:center}
+.brand{font:700 20px var(--cond);letter-spacing:.2em;text-transform:uppercase;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:9px 12px 8px}
+.brand b{color:var(--acid)}
+
+.panel{position:absolute;left:0;right:0;bottom:0;background:var(--panel);border-top:1px solid var(--line);border-radius:var(--r) var(--r) 0 0;
+  padding:8px 16px max(34px,env(safe-area-inset-bottom))}
+.grab{width:36px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 12px}
+.view{display:none}
+body[data-state="plan"] .v-plan,body[data-state="finding"] .v-finding,body[data-state="found"] .v-found{display:block;animation:in .36s var(--sheet)}
+@keyframes in{from{opacity:0;transform:translateY(12px)}}
+
+.route{position:relative;border:1px solid var(--line);border-radius:var(--r);background:var(--raise)}
+.field{display:flex;align-items:center;gap:12px;min-height:54px;padding:6px 60px 6px 14px;width:100%;text-align:left}
+.field+.field{border-top:1px solid var(--line)}
+.field .k{display:block;font:500 10px var(--mono);letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
+.field .v{display:block;font-size:19px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.field>span:last-child{min-width:0}
+.dot{width:12px;height:12px;border-radius:50%;border:3px solid var(--ink);flex:none}
+.box{width:12px;height:12px;background:var(--acid);flex:none}
+.swap{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;transition:transform .3s var(--ease)}
+.swap.spin{transform:translateY(-50%) rotate(180deg)}
+
+.opts{margin:12px 0 0;display:grid;gap:6px}
+.opt{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:12px;min-height:58px;padding:6px 14px 6px 10px;border:1px solid var(--line);border-radius:var(--r);text-align:left;width:100%;transition:border-color .16s var(--ease),background-color .16s var(--ease)}
+.opt svg{width:40px;height:24px;fill:none;stroke:var(--ink-2);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.opt .n{display:block;font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;line-height:1}
+.opt .m{display:block;font:400 11px var(--mono);color:var(--ink-3);letter-spacing:.06em;margin-top:4px;white-space:nowrap}
+.opt .p{font:600 16px var(--mono);font-variant-numeric:tabular-nums}
+.opt[aria-checked="true"]{border-color:var(--acid);background:var(--acid-wash)}
+.opt[aria-checked="true"] svg{stroke:var(--acid)}
+.opt[aria-checked="true"] .m{color:var(--ink-2)}
+
+.pay{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;margin-top:6px;padding:0 4px;font:500 13px var(--mono);letter-spacing:.06em;color:var(--ink-2)}
+.pay .grow{flex:1;text-align:left}
+.pay .ch{color:var(--ink);font-family:var(--cond);font-size:16px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+
+.cta{width:100%;min-height:56px;margin-top:6px;border-radius:var(--r);background:var(--acid);color:var(--on-acid);font-size:22px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;transition:transform .12s var(--ease)}
+.cta:active{transform:scale(.98)}
+.ghost{width:100%;min-height:52px;margin-top:12px;border-radius:var(--r);border:1px solid var(--line);font-size:19px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+
+.eyebrow{font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid);margin:4px 0 6px}
+h2{margin:0;font-size:36px;font-weight:700;line-height:1;text-transform:uppercase;letter-spacing:.01em}
+.sub{margin:8px 0 0;font:400 12px var(--mono);color:var(--ink-2);letter-spacing:.06em}
+.track{height:3px;background:var(--line);border-radius:2px;margin-top:18px;overflow:hidden;position:relative}
+.track::after{content:"";position:absolute;inset:0 auto 0 0;width:30%;background:var(--acid);animation:slide 1.4s var(--ease) infinite}
+@keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(340%)}}
+.steps{list-style:none;margin:16px 0 0;padding:0;font:400 12px var(--mono);color:var(--ink-3);letter-spacing:.06em;display:grid;gap:8px}
+.steps li::before{content:"— ";color:var(--line)}
+
+.drv{display:flex;align-items:center;gap:12px;margin-top:14px}
+.av{width:52px;height:52px;border-radius:var(--r);background:var(--ink);color:var(--map);display:grid;place-items:center;font-size:22px;font-weight:700;flex:none}
+.drv .who{flex:1;min-width:0}
+.drv b{display:block;font-size:24px;font-weight:700;text-transform:uppercase;line-height:1}
+.drv .who span{display:block;font:400 12px var(--mono);color:var(--ink-2);margin-top:5px;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plate{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--raise)}
+.plate .k{font:500 10px var(--mono);letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
+.plate .num{font:600 24px var(--mono);letter-spacing:.12em;padding:4px 10px;border:2px solid var(--ink);border-radius:4px;background:var(--ink);color:var(--map)}
+.plate .car{font-size:17px;font-weight:600;margin-top:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.row2 button{min-height:52px;border-radius:var(--r);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:8px;font-size:18px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.textbtn{display:block;margin:6px auto 0;min-height:44px;padding:0 16px;font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);text-decoration:underline;text-underline-offset:4px}
+
+@media (max-height:800px){.opt{min-height:52px}.field{min-height:50px}h2{font-size:32px}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  body[data-state="finding"] .rings circle{opacity:.5}
+  .rings circle:nth-child(1){r:30}.rings circle:nth-child(2){r:60}.rings circle:nth-child(3){r:90}
+}
+</style>
+</head>
+<body data-state="plan">
+<div class="map" aria-hidden="true">
+  <svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMin slice">
+    <rect width="390" height="844" fill="var(--map)"/>
+    <path d="M230 -10Q280 70 400 96V-10z" fill="#08090a"/>
+    <g fill="var(--block)">
+      <rect x="14" y="110" width="70" height="104" rx="3"/><rect x="120" y="110" width="74" height="50" rx="3"/>
+      <rect x="120" y="172" width="74" height="42" rx="3"/><rect x="14" y="238" width="70" height="92" rx="3"/>
+      <rect x="120" y="238" width="74" height="46" rx="3"/><rect x="218" y="172" width="80" height="42" rx="3"/>
+      <rect x="320" y="120" width="60" height="94" rx="3"/><rect x="218" y="238" width="162" height="56" rx="3"/>
+      <rect x="120" y="296" width="74" height="34" rx="3"/><rect x="218" y="306" width="162" height="24" rx="3"/>
+      <rect x="14" y="356" width="180" height="120" rx="3"/><rect x="218" y="356" width="162" height="120" rx="3"/>
+      <rect x="14" y="500" width="180" height="344" rx="3"/><rect x="218" y="500" width="162" height="344" rx="3"/>
+    </g>
+    <g fill="none" stroke="var(--road-2)" stroke-width="5">
+      <path d="M-10 166H200M200 300H400M102 90V844M309 160V844"/>
+    </g>
+    <g fill="none" stroke="var(--road)" stroke-width="10">
+      <path d="M-10 226H400M-10 343H400M-10 488H400M206 90V844M-10 98Q140 104 240 70"/>
+    </g>
+    <text class="lbl" x="18" y="221">CORRAN ST</text>
+    <text class="lbl" x="214" y="244" transform="rotate(90 214 244)">MILL RD</text>
+    <text class="lbl" x="226" y="338">QUAY LANE</text>
+    <text class="lbl" x="318" y="112">HARBOUR</text>
+    <path id="routeLine" d="M96 300V226H206V170Q206 146 230 144L300 140" fill="none" stroke="var(--acid)" stroke-width="3" stroke-dasharray="7 6" stroke-linecap="round"/>
+    <g class="rings" transform="translate(96 300)"><circle r="10"/><circle r="10"/><circle r="10"/></g>
+    <g transform="translate(96 300)">
+      <circle r="11" fill="var(--map)" stroke="var(--ink)" stroke-width="4"/>
+      <circle r="3" fill="var(--ink)"/>
+    </g>
+    <g transform="translate(300 140)">
+      <rect x="-10" y="-10" width="20" height="20" fill="var(--acid)" stroke="var(--map)" stroke-width="3"/>
+      <rect x="-28" y="16" width="56" height="18" rx="3" fill="var(--panel)" stroke="var(--line)"/>
+      <text x="0" y="28" text-anchor="middle" style="font:600 9px var(--mono);fill:var(--ink);letter-spacing:.08em">18 MIN</text>
+    </g>
+    <g id="car"><rect x="-13" y="-8" width="26" height="16" rx="4" fill="var(--ink)" stroke="var(--map)" stroke-width="2"/><rect x="2" y="-5" width="5" height="10" rx="1" fill="var(--map)"/></g>
+  </svg>
+</div>
+
+<header class="topbar">
+  <button class="sq" type="button" aria-label="Menu">
+    <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+  </button>
+  <div class="brand" aria-label="Kerb">Ker<b>b</b></div>
+  <button class="sq" type="button" aria-label="Scheduled rides">
+    <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+  </button>
+</header>
+
+<section class="panel" id="panel" aria-label="Ride request">
+  <div class="grab" aria-hidden="true"></div>
+
+  <div class="view v-plan">
+    <h1 class="vh">Request a ride</h1>
+    <div class="route">
+      <button class="field" type="button" aria-label="Pickup: 14 Corran Street"><span class="dot" aria-hidden="true"></span><span><span class="k">Pickup</span><span class="v" id="from">14 Corran Street</span></span></button>
+      <button class="field" type="button" aria-label="Destination: Harbour Terminal B"><span class="box" aria-hidden="true"></span><span><span class="k">Destination</span><span class="v" id="to">Harbour Terminal B</span></span></button>
+      <button class="swap" id="swap" type="button" aria-label="Swap pickup and destination">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16M4 8l4-4 4 4M16 20V4M12 16l4 4 4-4"/></svg>
+      </button>
+    </div>
+
+    <div class="opts" role="radiogroup" aria-label="Ride type">
+      <button class="opt" type="button" role="radio" aria-checked="false" data-name="Moto" data-price="$6.40" tabindex="-1">
+        <svg viewBox="0 0 40 24" aria-hidden="true"><circle cx="9" cy="16" r="5"/><circle cx="31" cy="16" r="5"/><path d="M9 16l7-8h7l8 8M18 8l-2-3h-3"/></svg>
+        <span><span class="n">Moto</span><span class="m">3 MIN · 1 SEAT</span></span><span class="p">$6.40</span>
+      </button>
+      <button class="opt" type="button" role="radio" aria-checked="true" data-name="Car" data-price="$11.80" tabindex="0">
+        <svg viewBox="0 0 40 24" aria-hidden="true"><path d="M3 17v-4l5-6h18l7 6h4v4z"/><circle cx="11" cy="17" r="3"/><circle cx="29" cy="17" r="3"/></svg>
+        <span><span class="n">Car</span><span class="m">5 MIN · 4 SEATS</span></span><span class="p">$11.80</span>
+      </button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-name="XL" data-price="$17.20" tabindex="-1">
+        <svg viewBox="0 0 40 24" aria-hidden="true"><path d="M2 17V6h26l8 6v5z"/><path d="M8 6v6M16 6v6M24 6v6"/><circle cx="10" cy="17" r="3"/><circle cx="29" cy="17" r="3"/></svg>
+        <span><span class="n">XL</span><span class="m">9 MIN · 6 SEATS</span></span><span class="p">$17.20</span>
+      </button>
+    </div>
+
+    <button class="pay" type="button" aria-label="Payment: Visa ending 4417. Change">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+      <span class="grow">VISA ···· 4417 · PERSONAL</span><span class="ch">Change</span>
+    </button>
+
+    <button class="cta" id="request" type="button">Request <span id="reqName">Car</span></button>
+  </div>
+
+  <div class="view v-finding">
+    <p class="eyebrow">Request sent · <span id="fName">Car</span> · <span id="fPrice">$11.80</span></p>
+    <h2>Finding your driver</h2>
+    <p class="sub">3 DRIVERS NEARBY · USUALLY UNDER 1 MIN</p>
+    <div class="track" role="progressbar" aria-label="Searching for a driver"></div>
+    <ul class="steps">
+      <li>Pickup at the Corran Street entrance</li>
+      <li>You will not be charged until a driver accepts</li>
+    </ul>
+    <button class="ghost" id="cancel" type="button">Cancel request</button>
+  </div>
+
+  <div class="view v-found">
+    <p class="eyebrow">Driver found · arrives in 4 min</p>
+    <div class="drv">
+      <div class="av" aria-hidden="true">MO</div>
+      <div class="who"><b>Mara Okafor</b><span>4.92 RATING · 2,140 TRIPS</span></div>
+    </div>
+    <div class="plate">
+      <div><div class="k">Grey · Toyota</div><div class="car">Corolla Hybrid</div></div>
+      <div class="num" aria-label="Plate number K R B 4 4 7 1">KRB 4471</div>
+    </div>
+    <div class="row2">
+      <button type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v10H10l-5 4z"/></svg>Message</button>
+      <button type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h3l1.5 4-2 1.5a10 10 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A15 15 0 0 1 4 6a2 2 0 0 1 2-2z"/></svg>Call</button>
+    </div>
+    <button class="textbtn" id="cancelRide" type="button">Cancel ride</button>
+  </div>
+</section>
+
+<p class="vh" id="live" aria-live="polite"></p>
+
+<script>
+const body = document.body, live = document.getElementById('live');
+const opts = [...document.querySelectorAll('.opt')];
+let sel = opts[1], timer;
+
+function setState(s, msg, focusSel) {
+  body.dataset.state = s;
+  if (msg) live.textContent = msg;
+  if (focusSel) document.querySelector(focusSel).focus();
+}
+function pick(o, focus) {
+  opts.forEach(x => { x.setAttribute('aria-checked', x === o); x.tabIndex = x === o ? 0 : -1; });
+  sel = o;
+  document.getElementById('reqName').textContent = o.dataset.name;
+  if (focus) o.focus();
+}
+opts.forEach((o, i) => {
+  o.addEventListener('click', () => pick(o));
+  o.addEventListener('keydown', e => {
+    const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+    if (!d) return;
+    e.preventDefault();
+    pick(opts[(i + d + opts.length) % opts.length], true);
+  });
+});
+
+const swap = document.getElementById('swap');
+swap.addEventListener('click', () => {
+  const a = document.getElementById('from'), b = document.getElementById('to');
+  [a.textContent, b.textContent] = [b.textContent, a.textContent];
+  a.closest('.field').setAttribute('aria-label', 'Pickup: ' + a.textContent);
+  b.closest('.field').setAttribute('aria-label', 'Destination: ' + b.textContent);
+  swap.classList.toggle('spin');
+  live.textContent = `Pickup is now ${a.textContent}`;
+});
+
+document.getElementById('request').addEventListener('click', () => {
+  document.getElementById('fName').textContent = sel.dataset.name;
+  document.getElementById('fPrice').textContent = sel.dataset.price;
+  setState('finding', `Finding your ${sel.dataset.name.toLowerCase()} driver`, '#cancel');
+  clearTimeout(timer);
+  timer = setTimeout(() => setState('found', 'Driver found. Mara Okafor, grey Toyota Corolla, plate K R B 4 4 7 1, arrives in 4 minutes', '#cancelRide'), 3400);
+});
+document.getElementById('cancel').addEventListener('click', () => { clearTimeout(timer); setState('plan', 'Request cancelled', '#request'); });
+document.getElementById('cancelRide').addEventListener('click', () => setState('plan', 'Ride cancelled', '#request'));
+</script>
+</body>
+</html>

@@ -60,9 +60,11 @@
         "password-field",
         "phone-form-fields",
         "phone-notifications-list",
+        "phone-order-tracking",
         "phone-paywall-plans",
         "phone-photo-picker",
         "phone-product-detail",
+        "phone-search-results",
         "phone-tab-plain",
         "polaroid-fan",
         "popover-panel",
@@ -88,6 +90,7 @@
         "tree-nav",
         "pricing-usage-slider",
         "navbar-vertical-rail",
+        "phone-wallet-cards",
         "chart-bar-week"
       ]
     },
@@ -167,6 +170,7 @@
         "team-hover-portrait-grid",
         "upload-file-queue",
         "y2k-chrome-style",
+        "phone-calendar-agenda",
         "features-alternating-rows",
         "analog-stick",
         "budget-meter",
@@ -180,8 +184,10 @@
         "gooey-nav",
         "navbar-hide-on-scroll",
         "inline-alert",
+        "phone-workout-timer",
         "link-orbit",
         "m3-navigation-bar",
+        "phone-map-listings",
         "mobile-web-bottom-nav",
         "node-graph",
         "sidebar-docs-toc",
@@ -324,6 +330,7 @@
         "organic-garden-style",
         "riso-print-style",
         "book-page-flip",
+        "phone-booking-slots",
         "calendar-month",
         "changelog-timeline",
         "cited-answer",
@@ -339,6 +346,8 @@
         "newsletter-close-band",
         "mobile-list-empty",
         "phone-permission-prompt",
+        "phone-qr-scanner",
+        "phone-ride-request",
         "list-empty-plain",
         "card-product-quick-add",
         "mega-menu-product-grid",
@@ -352,7 +361,8 @@
         "navbar-split-centered-logo",
         "tablet-kiosk-checkin",
         "tablet-cook-mode",
-        "tooltip"
+        "tooltip",
+        "phone-lesson-quiz"
       ]
     },
     {
@@ -387,6 +397,8 @@
         "corner-player",
         "coverflow-strip",
         "overlap-slider",
+        "phone-video-player",
+        "phone-feed-posts",
         "testimonials-masonry-wall",
         "testimonials-metric-tabs",
         "webgl-shader-hero"

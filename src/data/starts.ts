@@ -442,7 +442,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['navigation', 'overlays', 'media', 'onboarding', 'settings'],
-    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet', 'phone-splash-launch', 'phone-sign-in', 'phone-sign-up-steps', 'phone-profile-header', 'phone-notifications-list', 'phone-permission-prompt', 'm3-navigation-bar', 'phone-form-fields'],
+    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet', 'phone-splash-launch', 'phone-sign-in', 'phone-sign-up-steps', 'phone-profile-header', 'phone-notifications-list', 'phone-permission-prompt', 'm3-navigation-bar', 'phone-form-fields', 'phone-search-results', 'phone-feed-posts', 'phone-calendar-agenda', 'phone-booking-slots'],
   },
   {
     id: 'design-system',
@@ -520,7 +520,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'friendly-saas',
     shelf: 'native-feel',
     categories: ['dashboard', 'navigation', 'settings', 'auth'],
-    pieces: ['ios-fintech-home', 'phone-tab-plain', 'ios-grouped-settings', 'auth-passkey-setup', 'ios-large-title-collapse', 'mobile-list-empty', 'phone-sign-in', 'phone-notifications-list'],
+    pieces: ['ios-fintech-home', 'phone-tab-plain', 'ios-grouped-settings', 'auth-passkey-setup', 'ios-large-title-collapse', 'mobile-list-empty', 'phone-sign-in', 'phone-notifications-list', 'phone-wallet-cards', 'phone-qr-scanner'],
   },
   {
     id: 'health',
@@ -533,7 +533,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['dashboard', 'navigation', 'settings', 'onboarding'],
-    pieces: ['ios-health-activity-rings', 'phone-tab-plain', 'ios-grouped-settings', 'ios-onboarding-carousel', 'ios-pull-to-refresh', 'phone-paywall-plans', 'phone-permission-prompt'],
+    pieces: ['ios-health-activity-rings', 'phone-tab-plain', 'ios-grouped-settings', 'ios-onboarding-carousel', 'ios-pull-to-refresh', 'phone-paywall-plans', 'phone-permission-prompt', 'phone-workout-timer', 'phone-booking-slots'],
   },
   {
     id: 'messages',
@@ -546,7 +546,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['messaging', 'navigation', 'overlays'],
-    pieces: ['mobile-inbox-list', 'chat-thread', 'ios-swipe-row-actions', 'phone-tab-plain', 'ios-bottom-sheet-detents', 'phone-photo-picker', 'phone-notifications-list'],
+    pieces: ['mobile-inbox-list', 'chat-thread', 'ios-swipe-row-actions', 'phone-tab-plain', 'ios-bottom-sheet-detents', 'phone-photo-picker', 'phone-notifications-list', 'phone-search-results'],
   },
   {
     id: 'music-app',
@@ -559,7 +559,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'y2k-chrome',
     shelf: 'native-feel',
     categories: ['media', 'navigation', 'buttons'],
-    pieces: ['ios-now-playing', 'm3-music-player-expressive', 'ios-glass-tab-bar', 'm3-fab-menu', 'm3-navigation-bar', 'phone-paywall-plans'],
+    pieces: ['ios-now-playing', 'm3-music-player-expressive', 'ios-glass-tab-bar', 'm3-fab-menu', 'm3-navigation-bar', 'phone-paywall-plans', 'phone-video-player', 'phone-search-results'],
   },
   {
     id: 'news',
@@ -572,7 +572,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'newsroom',
     shelf: 'typography-first',
     categories: ['reading', 'scroll', 'loaders'],
-    pieces: ['pwa-news-reader', 'ios-large-title-collapse', 'pwa-app-shell', 'pwa-update-toast', 'phone-tab-plain', 'phone-comments-sheet', 'phone-paywall-plans', 'pwa-offline-library'],
+    pieces: ['pwa-news-reader', 'ios-large-title-collapse', 'pwa-app-shell', 'pwa-update-toast', 'phone-tab-plain', 'phone-comments-sheet', 'phone-paywall-plans', 'pwa-offline-library', 'phone-video-player', 'phone-search-results'],
   },
   {
     id: 'shop-app',
@@ -585,7 +585,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'atelier',
     shelf: 'first-impressions',
     categories: ['ecommerce', 'inputs'],
-    pieces: ['mobile-filter-chips-list', 'shop-product', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'phone-product-detail', 'phone-sign-in'],
+    pieces: ['mobile-filter-chips-list', 'shop-product', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'phone-product-detail', 'phone-sign-in', 'phone-order-tracking', 'phone-wallet-cards', 'phone-search-results'],
   },
   {
     id: 'social',
@@ -598,7 +598,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['dashboard', 'media', 'navigation'],
-    pieces: ['m3-expressive-home', 'mobile-story-viewer', 'ios-glass-tab-bar', 'm3-fab-menu', 'ios-context-menu-lift', 'phone-profile-header', 'phone-comments-sheet', 'phone-photo-picker', 'phone-notifications-list'],
+    pieces: ['m3-expressive-home', 'mobile-story-viewer', 'ios-glass-tab-bar', 'm3-fab-menu', 'ios-context-menu-lift', 'phone-profile-header', 'phone-comments-sheet', 'phone-photo-picker', 'phone-notifications-list', 'phone-feed-posts', 'phone-search-results'],
   },
   {
     id: 'weather',
@@ -611,7 +611,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['utility', 'scroll', 'navigation'],
-    pieces: ['ios-weather-hourly-scrub', 'ios-large-title-collapse', 'phone-tab-plain', 'ios-pull-to-refresh', 'phone-permission-prompt'],
+    pieces: ['ios-weather-hourly-scrub', 'ios-large-title-collapse', 'phone-tab-plain', 'ios-pull-to-refresh', 'phone-permission-prompt', 'phone-map-listings'],
   },
   {
     id: 'field',
@@ -624,7 +624,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'swiss-precision',
     shelf: 'native-feel',
     categories: ['utility', 'navigation', 'feedback', 'error'],
-    pieces: ['mobile-run-detail', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed', 'ios-pull-to-refresh', 'phone-form-fields', 'phone-permission-prompt', 'pwa-outbox-sync'],
+    pieces: ['mobile-run-detail', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed', 'ios-pull-to-refresh', 'phone-form-fields', 'phone-permission-prompt', 'pwa-outbox-sync', 'phone-map-listings', 'phone-qr-scanner', 'phone-calendar-agenda'],
   },
   {
     id: 'personal',
@@ -637,7 +637,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'devanagari',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'charts', 'feedback', 'navigation'],
-    pieces: ['spend-list', 'chart-rank-spend', 'budget-meter', 'saved-banner', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed'],
+    pieces: ['spend-list', 'chart-rank-spend', 'budget-meter', 'saved-banner', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed', 'phone-wallet-cards', 'phone-calendar-agenda'],
   },
 ];
 

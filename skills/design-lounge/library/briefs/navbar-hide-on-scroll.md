@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 207 · "Hide-on-scroll navbar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 209 · "Hide-on-scroll navbar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Hide-on-scroll navbar
 

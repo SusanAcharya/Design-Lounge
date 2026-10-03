@@ -1,0 +1,216 @@
+<!-- Design Lounge piece: phone-wallet-cards · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carrow Wallet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0b;--surface:#151517;--surface-2:#1d1d20;--line:#2a2a2e;
+  --ink:#f2efe9;--ink-2:#b9b5ad;--ink-3:#8a867f;--gold:#d9c8a3;--gold-ink:#16130c;--pos:#9cc7a4;
+  --bank:#2b2d31;--transit:#163f3c;--loyal:#4e1d1a;--ticket:#d6c7a6;
+  --wide:"Archivo",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --peek:56px;--r-card:18px;--ease:cubic-bezier(.32,.72,0,1);--std:cubic-bezier(.2,.7,.2,1);
+  --t-layout:420ms;--t-micro:160ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.4 var(--wide);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+header{position:absolute;left:0;right:0;top:0;padding:max(54px,env(safe-area-inset-top)) 20px 0;display:flex;align-items:flex-end;justify-content:space-between}
+.eyebrow{margin:0;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+h1{margin:8px 0 0;font-size:30px;font-weight:650;font-stretch:125%;letter-spacing:-.01em;line-height:1}
+.hbtn{min-width:44px;height:44px;border-radius:22px;border:1px solid var(--line);display:grid;place-items:center;padding:0 14px;font-size:14px;font-weight:600;font-stretch:112%}
+.hbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round}
+#stack{position:absolute;left:20px;right:20px;top:130px;bottom:max(34px,env(safe-area-inset-bottom));overflow:hidden}
+.card{position:absolute;left:0;right:0;top:0;aspect-ratio:1.586;border-radius:var(--r-card);overflow:hidden;display:block;
+  transition:transform var(--t-layout) var(--ease),opacity var(--t-layout) var(--std);transform-origin:50% 0;
+  box-shadow:0 -1px 0 rgba(255,255,255,.08) inset,0 -8px 24px rgba(0,0,0,.45)}
+.card:focus-visible{outline-offset:-3px}
+.top{position:absolute;left:0;right:0;top:0;height:var(--peek);padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:13px;font-weight:650;font-stretch:125%;letter-spacing:.06em;text-transform:uppercase}
+.fig{font-size:14px;font-weight:500}
+.lbl{font:500 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.c-bank{background:repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 1px,transparent 1px 7px),linear-gradient(160deg,#34363b,var(--bank) 60%,#202125);color:var(--gold)}
+.chip{position:absolute;left:20px;top:76px;width:40px;height:30px;border-radius:6px;background:linear-gradient(135deg,#cdb98e,#9c8a62);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.chip::before,.chip::after{content:"";position:absolute;left:0;right:0;top:10px;height:10px;border-block:1px solid rgba(0,0,0,.28)}
+.chip::after{top:0;bottom:0;left:15px;right:15px;height:auto;border-block:0;border-inline:1px solid rgba(0,0,0,.28)}
+.pan{position:absolute;left:20px;bottom:44px;font-size:15px;letter-spacing:.08em;color:var(--ink)}
+.under{position:absolute;left:20px;right:20px;bottom:18px;display:flex;justify-content:space-between;align-items:flex-end}
+.net{display:flex}.net i{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gold)}.net i+i{margin-left:-10px;opacity:.6}
+.c-transit{background:linear-gradient(170deg,#1b4a46,var(--transit));color:#cfe6dc}
+.route{position:absolute;left:0;right:0;top:70px;width:100%;height:60px}
+.route path{fill:none;stroke:#cfe6dc;stroke-width:1.5;opacity:.5}.route circle{fill:var(--transit);stroke:#cfe6dc;stroke-width:1.5}
+.line{font:600 30px/1 var(--wide);font-stretch:125%}
+.c-loyal{background:radial-gradient(120% 90% at 100% 0,#6a2a24,var(--loyal) 60%);color:#f0e2cf}
+.stamps{position:absolute;left:20px;right:20px;bottom:52px;display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.stamps i{aspect-ratio:1;border-radius:50%;border:1.5px solid rgba(240,226,207,.55)}.stamps i.on{background:#f0e2cf;border-color:#f0e2cf}
+.c-ticket{background:var(--ticket);color:#1d1a14;box-shadow:0 -8px 24px rgba(0,0,0,.45)}
+.c-ticket::before,.c-ticket::after{content:"";position:absolute;top:56px;width:20px;height:20px;margin-top:-10px;border-radius:50%;background:var(--bg)}
+.c-ticket::before{left:-10px}.c-ticket::after{right:-10px}
+.perf{position:absolute;left:16px;right:16px;top:56px;border-top:1.5px dashed rgba(29,26,20,.35)}
+.show{position:absolute;left:20px;top:76px;font-size:22px;font-weight:650;font-stretch:118%;line-height:1.1;letter-spacing:-.01em;max-width:80%}
+.seat{position:absolute;left:20px;right:20px;bottom:18px;display:flex;justify-content:space-between;font-size:13px}
+#detail{position:absolute;left:0;right:0;bottom:60px;opacity:0;transform:translateY(16px);pointer-events:none;
+  transition:opacity 240ms var(--std),transform 320ms var(--ease);display:flex;flex-direction:column}
+#detail.on{opacity:1;transform:none;pointer-events:auto;transition-delay:120ms}
+.bal{display:flex;align-items:baseline;justify-content:space-between;padding:4px 2px 14px;border-bottom:1px solid var(--line)}
+.bal b{font:500 30px/1 var(--mono);letter-spacing:-.02em}
+.bal small{display:block;color:var(--ink-3);font-size:12px;margin-bottom:6px}
+ul{list-style:none;margin:0;padding:0}
+.tx{display:flex;align-items:center;gap:12px;min-height:46px;border-bottom:1px solid var(--line)}
+.tx>span:first-child{flex:1;min-width:0}.tx strong{display:block;font-size:14px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx em{font-style:normal;color:var(--ink-3);font-size:12px}.tx .num{font-size:14px}.tx .in{color:var(--pos)}
+.code{margin:2px 0 0;background:#f4f1ea;border-radius:14px;padding:14px;display:grid;place-items:center}
+.code svg{display:block}
+.meta{display:flex;justify-content:space-between;color:var(--ink-2);font-size:13px;padding:12px 2px 0}
+.cta{width:100%;margin-top:auto;height:52px;border-radius:26px;background:var(--gold);color:var(--gold-ink);font-weight:650;font-stretch:112%;font-size:15px;
+  display:flex;align-items:center;justify-content:center;gap:10px;transition:transform var(--t-micro) var(--std)}
+.cta:active{transform:scale(.97)}
+.cta svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round}
+#pay{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  opacity:0;pointer-events:none;transition:opacity 240ms var(--std)}
+#pay.on{opacity:1;pointer-events:auto;transition-delay:160ms}
+.ring{position:relative;width:112px;height:112px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--gold);margin-bottom:22px}
+.ring::before,.ring::after{content:"";position:absolute;inset:-1px;border-radius:50%;border:1px solid var(--gold);opacity:0}
+#pay[data-s="hold"] .ring::before{animation:pulse 1800ms var(--std) infinite}
+#pay[data-s="hold"] .ring::after{animation:pulse 1800ms var(--std) 600ms infinite}
+@keyframes pulse{from{transform:scale(1);opacity:.6}to{transform:scale(1.9);opacity:0}}
+.ring svg{width:44px;height:44px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.tick{display:none}
+#pay[data-s="done"] .ring{background:var(--gold);color:var(--gold-ink);border-color:var(--gold);transition:background 240ms var(--std)}
+#pay[data-s="done"] .nfc{display:none}#pay[data-s="done"] .tick{display:block}
+.tick path{stroke-dasharray:30;stroke-dashoffset:30;animation:draw 420ms var(--ease) 80ms forwards;stroke-width:2.25}
+@keyframes draw{to{stroke-dashoffset:0}}
+.ps{font-size:22px;font-weight:650;font-stretch:125%;margin:0}
+.pm{margin:8px 0 0;color:var(--ink-2);font-size:13px}
+.pbtn{margin-top:26px;min-height:44px;padding:0 22px;border-radius:22px;border:1px solid var(--line);font-weight:600;font-stretch:112%;font-size:14px}
+#bar{position:absolute;left:20px;right:20px;bottom:max(34px,env(safe-area-inset-bottom));transition:opacity 240ms var(--std),transform 320ms var(--ease)}
+#bar p{margin:14px 0 12px;color:var(--ink-3);font-size:12px;text-align:center}
+.last{border-top:1px solid var(--line)}
+.last .tx em{display:block}
+body.open #bar{opacity:0;transform:translateY(20px);pointer-events:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  :root{--t-layout:1ms;--t-micro:1ms}
+  #detail,#pay,#bar{transition-duration:1ms!important;transition-delay:0ms!important}
+  .ring::before,.ring::after{animation:none!important}
+  .tick path{animation:none;stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+<header>
+  <div><p class="eyebrow">Carrow</p><h1 id="title">Wallet</h1></div>
+  <button class="hbtn" id="hbtn" type="button" aria-label="Add a card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+</header>
+
+<main id="stack" aria-label="Cards and passes">
+  <button class="card c-bank" type="button" aria-expanded="false" aria-controls="detail" aria-label="Meridian Debit, ending 4821">
+    <span class="top"><span class="brand">Meridian</span><span class="fig num">€4,218.60</span></span>
+    <span class="chip"></span>
+    <span class="pan num">•••• •••• •••• 4821</span>
+    <span class="under"><span class="lbl">Debit · Ines Varga</span><span class="net"><i></i><i></i></span></span>
+  </button>
+  <button class="card c-transit" type="button" aria-expanded="false" aria-controls="detail" aria-label="Lune Transit monthly pass">
+    <span class="top"><span class="brand">Lune Transit</span><span class="fig num">€23.40</span></span>
+    <svg class="route" viewBox="0 0 350 60" preserveAspectRatio="none" aria-hidden="true"><path d="M20 40 H120 L150 18 H330"/><circle cx="20" cy="40" r="5"/><circle cx="120" cy="40" r="5"/><circle cx="230" cy="18" r="5"/><circle cx="330" cy="18" r="5"/></svg>
+    <span class="under"><span class="lbl">Zones 1–3 · Oct</span><span class="line">L3</span></span>
+  </button>
+  <button class="card c-loyal" type="button" aria-expanded="false" aria-controls="detail" aria-label="Brasa Coffee loyalty card, 7 of 10 stamps">
+    <span class="top"><span class="brand">Brasa Coffee</span><span class="fig num">7/10</span></span>
+    <span class="stamps"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>
+    <span class="under"><span class="lbl">Member since 2023</span><span class="lbl">No. 08 114</span></span>
+  </button>
+  <button class="card c-ticket" type="button" aria-expanded="false" aria-controls="detail" aria-label="Halcyon Hall ticket, Saturday 17 October">
+    <span class="top"><span class="brand">Halcyon Hall</span><span class="fig num">17 OCT</span></span>
+    <span class="perf"></span>
+    <span class="show">Night Shift Orchestra</span>
+    <span class="seat"><span>Sat · Doors 19:00</span><span class="num">ROW F · 14</span></span>
+  </button>
+
+  <section id="detail" aria-live="polite" aria-labelledby="title"></section>
+
+  <section id="pay" data-s="idle" aria-live="assertive">
+    <div class="ring">
+      <svg class="nfc" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M14.5 3.5a12 12 0 0 1 0 17"/></svg>
+      <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12.5l4 4 9-9"/></svg>
+    </div>
+    <p class="ps" id="ps">Hold near reader</p>
+    <p class="pm num" id="pm">Meridian ••4821</p>
+    <button class="pbtn" id="pbtn" type="button">Cancel</button>
+  </section>
+</main>
+
+<div id="bar">
+  <ul class="last" aria-label="Recent">
+    <li class="tx"><span><strong>Brasa Coffee</strong><em>Last payment · Meridian · 08:41</em></span><span class="num">−€4.80</span></li>
+    <li class="tx"><span><strong>Night Shift Orchestra</strong><em>Next event · Halcyon Hall</em></span><span class="num">Sat 19:00</span></li>
+  </ul>
+  <p>Default card · Meridian ••4821</p>
+  <button class="cta" id="quick" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 8.5a5 5 0 0 1 0 7M12 6a8.5 8.5 0 0 1 0 12"/></svg>Pay with Meridian</button>
+</div>
+<p class="sr" id="sr" aria-live="polite"></p>
+
+<script>
+const D=[
+ {name:'Meridian Debit',bal:'€4,218.60',sub:'Available',pay:'Pay with this card',done:['Paid €4.80','Brasa Coffee · 22:51'],tx:[['Fenwick Market','Today 18:12','−€38.20'],['Brasa Coffee','Today 08:41','−€4.80'],['Odell & Pryce','Salary · Thu','+€3,100.00']]},
+ {name:'Lune Transit',bal:'€23.40',sub:'Pass balance',pay:'Tap to ride',done:['Gate open','Harbour St · €2.10'],tx:[['Harbour St → Mill Lane','Today 08:20','−€2.10'],['Mill Lane → Harbour St','Yesterday 18:55','−€2.10'],['Top-up','Mon 5 Oct','+€20.00']]},
+ {name:'Brasa Coffee',code:'bar',meta:['7 of 10 stamps','3 to a free cortado']},
+ {name:'Halcyon Hall',code:'qr',meta:['Row F · Seat 14','Doors 19:00']}
+];
+const $=s=>document.querySelector(s);
+const cards=[...document.querySelectorAll('.card')],stack=$('#stack'),detail=$('#detail'),pay=$('#pay'),hbtn=$('#hbtn'),title=$('#title');
+let sel=-1,mode='stack',timer=0;
+const PLUS=hbtn.innerHTML;
+
+function rng(seed){return()=>(seed=(seed*16807)%2147483647)/2147483647}
+function qr(){const n=25,r=rng(91),s=6;let p='';const f=(x,y)=>x<8&&y<8||x>n-9&&y<8||x<8&&y>n-9;
+ for(let y=0;y<n;y++)for(let x=0;x<n;x++){if(f(x,y))continue;if(r()>.52)p+=`M${x*s} ${y*s}h${s}v${s}h-${s}z`}
+ const fin=(x,y)=>`<rect x="${x*s+3}" y="${y*s+3}" width="36" height="36" fill="none" stroke="#16130c" stroke-width="6"/><rect x="${x*s+12}" y="${y*s+12}" width="18" height="18"/>`;
+ return `<svg width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="Ticket QR code"><g fill="#16130c"><path d="${p}"/>${fin(0,0)}${fin(n-7,0)}${fin(0,n-7)}</g></svg>`}
+function bar(){const r=rng(37);let x=0,p='';while(x<270){const w=1+Math.floor(r()*3);if(r()>.42)p+=`M${x} 0h${w}v64h-${w}z`;x+=w+1}
+ return `<svg width="100%" height="64" viewBox="0 0 270 64" preserveAspectRatio="none" role="img" aria-label="Loyalty barcode 0811 4402 7719"><path fill="#16130c" d="${p}"/></svg><p class="num" style="margin:8px 0 0;color:#16130c;font-size:12px;letter-spacing:.2em">0811 4402 7719</p>`}
+
+function fill(i){const d=D[i];
+ if(d.code){detail.innerHTML=`<div class="code">${d.code==='qr'?qr():bar()}</div><div class="meta"><span>${d.meta[0]}</span><span class="num">${d.meta[1]}</span></div>`;return}
+ detail.innerHTML=`<div class="bal"><div><small>${d.sub}</small><b>${d.bal}</b></div></div><ul>${d.tx.map(t=>`<li class="tx"><span><strong>${t[0]}</strong><em>${t[1]}</em></span><span class="num ${t[2][0]==='+'?'in':''}">${t[2]}</span></li>`).join('')}</ul><button class="cta" type="button" data-pay><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 8.5a5 5 0 0 1 0 7M12 6a8.5 8.5 0 0 1 0 12"/></svg>${d.pay}</button>`}
+
+function layout(){
+ const ch=cards[0].offsetHeight,H=stack.clientHeight;let k=0;
+ detail.style.top=pay.style.top=(ch+18)+'px';
+ cards.forEach((c,i)=>{let y,s=1,o=1;
+  if(sel<0)y=i*56;
+  else if(i===sel)y=0;
+  else{y=mode==='pay'?H+24:H-44+k*12;s=.94;o=mode==='pay'?0:1;k++}
+  c.style.transform=`translateY(${y}px) scale(${s})`;c.style.opacity=o;c.style.zIndex=i===sel?10:i;
+  c.setAttribute('aria-expanded',i===sel);c.tabIndex=mode==='pay'&&i!==sel?-1:0});
+ document.body.classList.toggle('open',sel>=0);
+ detail.classList.toggle('on',sel>=0&&mode==='card');
+ pay.classList.toggle('on',mode==='pay');
+}
+function open(i){sel=i;mode='card';fill(i);title.textContent=D[i].name.split(' ')[0];
+ hbtn.textContent='Done';hbtn.setAttribute('aria-label','Close card');layout()}
+function close(){clearTimeout(timer);sel=-1;mode='stack';title.textContent='Wallet';hbtn.innerHTML=PLUS;hbtn.setAttribute('aria-label','Add a card');layout()}
+function startPay(){clearTimeout(timer);const d=D[sel];mode='pay';pay.dataset.s='hold';
+ $('#ps').textContent='Hold near reader';$('#pm').textContent=sel===0?'Meridian ••4821':'Lune Transit · Zones 1–3';$('#pbtn').textContent='Cancel';layout();
+ timer=setTimeout(()=>{pay.dataset.s='done';$('#ps').textContent=d.done[0];$('#pm').textContent=d.done[1];$('#pbtn').textContent='Done';$('#pbtn').focus()},2600)}
+
+cards.forEach((c,i)=>c.addEventListener('click',()=>{if(mode==='pay')return;sel===i?close():open(i)}));
+detail.addEventListener('click',e=>{if(e.target.closest('[data-pay]'))startPay()});
+$('#pbtn').addEventListener('click',()=>{clearTimeout(timer);mode='card';pay.dataset.s='idle';layout();cards[sel].focus()});
+$('#quick').addEventListener('click',()=>{open(0);startPay()});
+hbtn.addEventListener('click',()=>{if(sel>=0)close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sel>=0){const s=sel;close();cards[s].focus()}});
+addEventListener('resize',layout);
+layout();
+document.fonts&&document.fonts.ready.then(layout);
+</script>
+</body>
+</html>

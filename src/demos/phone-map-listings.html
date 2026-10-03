@@ -1,0 +1,240 @@
+<!-- Design Lounge piece: phone-map-listings · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tarn · Alfaro old town</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#e8dcc2;--street:#f7f1e3;--park:#c7cfa2;--river:#aec4c1;
+  --surface:#fbf7ee;--ink:#1e1a16;--ink-2:#4f463c;--ink-3:#73685a;--line:#e2d6c0;
+  --pin:#b84a26;--pin-ink:#fff8ef;--focus:#b84a26;
+  --serif:"Newsreader",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;
+  --r:14px;--ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);--expo:cubic-bezier(.16,1,.3,1);
+  --shadow:0 1px 2px rgba(30,26,22,.12),0 6px 18px rgba(30,26,22,.12);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--sans);color:var(--ink);background:var(--sand);overflow:hidden;position:relative;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#map{position:absolute;inset:0;overflow:hidden;touch-action:none;cursor:grab}
+#map.drag{cursor:grabbing}
+#layer{position:absolute;left:0;top:0;width:960px;height:1240px;will-change:transform}
+#layer.glide{transition:transform 520ms var(--expo)}
+#layer svg{display:block}
+.lbl{font:italic 500 13px var(--serif);fill:#7a6c58;letter-spacing:.02em}
+.pin{position:absolute;transform:translate(-50%,-100%);transform-origin:50% 100%;min-width:44px;height:30px;margin-top:-6px;padding:0 10px;border-radius:15px;background:var(--pin);color:var(--pin-ink);font:600 14px var(--sans);font-variant-numeric:tabular-nums;box-shadow:0 1px 0 rgba(30,26,22,.25),0 4px 10px rgba(30,26,22,.18);transition:transform 240ms var(--expo),background 160ms var(--ease);z-index:1}
+.pin::before{content:"";position:absolute;inset:-7px -2px}
+.pin::after{content:"";position:absolute;left:50%;bottom:-5px;width:10px;height:10px;background:inherit;transform:translateX(-50%) rotate(45deg);border-radius:0 0 2px 0;z-index:-1}
+.pin[aria-pressed="true"]{background:var(--ink);transform:translate(-50%,-100%) scale(1.22);z-index:3}
+.pin.out{opacity:.45}
+.me{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--ink);border:3px solid var(--surface);box-shadow:0 1px 4px rgba(30,26,22,.3)}
+.me::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1.5px solid var(--ink);opacity:0;animation:ping 2.8s var(--ease) infinite}
+@keyframes ping{0%{transform:scale(.4);opacity:.5}80%,100%{transform:scale(1.4);opacity:0}}
+.bar{position:absolute;left:16px;right:16px;top:max(54px,env(safe-area-inset-top));display:flex;gap:8px;z-index:5}
+.where{flex:1;min-width:0;display:flex;align-items:center;gap:10px;min-height:48px;padding:0 14px;background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow)}
+.where b{display:block;font:600 16px/1.2 var(--serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.where small{display:block;font-size:12px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.where span{min-width:0}
+.sq{width:48px;height:48px;display:grid;place-items:center;background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);flex:none}
+.area{position:absolute;left:50%;top:calc(max(54px,env(safe-area-inset-top)) + 60px);z-index:5;display:flex;align-items:center;gap:8px;min-height:44px;padding:0 18px 0 14px;border-radius:22px;background:var(--ink);color:var(--surface);font-weight:600;font-size:14px;box-shadow:var(--shadow);transform:translate(-50%,-12px);opacity:0;visibility:hidden;transition:transform 300ms var(--expo),opacity 200ms var(--ease),visibility 0s 300ms;white-space:nowrap}
+.area.show{transform:translate(-50%,0);opacity:1;visibility:visible;transition:transform 300ms var(--expo),opacity 200ms var(--ease)}
+.area.busy .ic{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loc{position:absolute;right:16px;bottom:0;z-index:4;transition:transform 420ms var(--sheet),opacity 200ms var(--ease)}
+.loc.hide{opacity:0;pointer-events:none}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-radius:20px 20px 0 0;box-shadow:0 -1px 0 var(--line),0 -8px 28px rgba(30,26,22,.14);display:flex;flex-direction:column;transition:transform 420ms var(--sheet);will-change:transform}
+.sheet.drag,.sheet.drag~.loc{transition:none}
+.head{padding:8px 20px 12px;touch-action:none;cursor:grab;flex:none}
+.grab{display:block;width:100%;height:24px;position:relative;border-radius:8px}
+.grab::before{content:"";position:absolute;left:50%;top:6px;width:36px;height:5px;margin-left:-18px;border-radius:3px;background:#cdbfa6}
+.ttl{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+h1{margin:0;font:600 24px/1.15 var(--serif);letter-spacing:-.01em}
+.ttl small{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.sub{margin:2px 0 0;font-size:13px;color:var(--ink-2)}
+.body{flex:1;min-height:0;position:relative}
+.car{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 20px 12px;scroll-padding:0 20px;scrollbar-width:none;transition:opacity 200ms var(--ease)}
+.car::-webkit-scrollbar{display:none}
+.card{flex:0 0 76%;max-width:300px;scroll-snap-align:start;border-radius:var(--r);background:#fff;box-shadow:0 0 0 1px var(--line);overflow:hidden;transition:box-shadow 160ms var(--ease)}
+.card[aria-current="true"]{box-shadow:0 0 0 2px var(--ink)}
+.art{position:relative;height:148px;background:var(--sky);overflow:hidden}
+.art::before{content:"";position:absolute;left:14%;right:22%;top:30%;bottom:0;background:var(--wall);clip-path:polygon(0 18%,50% 0,100% 18%,100% 100%,0 100%)}
+.art::after{content:"";position:absolute;left:22%;right:30%;top:48%;bottom:14%;background:repeating-linear-gradient(90deg,transparent 0 var(--wx,12px),var(--wall) 0 calc(var(--wx,12px)*1.85)),repeating-linear-gradient(0deg,transparent 0 var(--wy,14px),var(--wall) 0 calc(var(--wy,14px)*1.7)),var(--shut)}
+.art i{position:absolute;right:10%;top:18%;width:34px;height:34px;border-radius:50%;background:#f2d9a2}
+.art u{position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--shut);opacity:.35}
+.ci{padding:10px 14px 12px}
+.ci h2{margin:0;font:600 18px/1.2 var(--serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta{margin:2px 0 0;font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.price{margin:6px 0 0;font-size:14px;color:var(--ink-3)}
+.price b{font-weight:600;color:var(--ink);font-size:15px}
+.star{width:12px;height:12px;fill:var(--ink);vertical-align:-1px}
+.list{position:absolute;inset:0;overflow-y:auto;padding:0 20px max(34px,env(safe-area-inset-bottom));opacity:0;visibility:hidden;transition:opacity 200ms var(--ease)}
+.full .list{opacity:1;visibility:visible}
+.full .car{opacity:0;visibility:hidden}
+.peek .car{opacity:0;visibility:hidden}
+.row{display:flex;gap:14px;width:100%;padding:12px 0;border-top:1px solid var(--line);align-items:center}
+.row .art{flex:0 0 88px;height:88px;border-radius:12px;--wx:6px;--wy:7px}
+.row .art i{width:18px;height:18px;top:12%}
+.row[aria-current="true"] h2{text-decoration:underline;text-decoration-color:var(--pin);text-decoration-thickness:2px;text-underline-offset:4px}
+.row .ci{padding:0;min-width:0;flex:1}
+.none{padding:8px 20px;color:var(--ink-2);font-size:14px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div id="map" aria-label="Map of Alfaro old town. Drag to move.">
+  <div id="layer">
+    <svg width="960" height="1240" viewBox="0 0 960 1240" aria-hidden="true">
+      <rect width="960" height="1240" fill="#e8dcc2"/>
+      <g fill="#e1d3b6"><rect x="110" y="160" width="140" height="70" rx="6"/><rect x="560" y="120" width="120" height="80" rx="6"/><rect x="700" y="420" width="150" height="90" rx="6"/><rect x="90" y="640" width="170" height="80" rx="6"/><rect x="620" y="980" width="170" height="90" rx="6"/></g>
+      <g stroke="#f7f1e3" stroke-width="8" fill="none" stroke-linecap="round">
+        <path d="M0 140 960 90M0 270 960 220M0 390 960 350M0 640 960 620M0 1010 960 970M0 1130 960 1100M90 0l60 1240M220 0l50 1240M410 0l20 1240M520 0v1240M660 0l-10 1240M790 0l-20 1240M900 0l-25 1240"/>
+      </g>
+      <path d="M524 292h170l14 80-30 34H530l-12-60z" fill="#c7cfa2"/>
+      <g fill="#b3bf8a"><circle cx="550" cy="318" r="8"/><circle cx="672" cy="316" r="9"/><circle cx="660" cy="384" r="7"/><circle cx="548" cy="388" r="6"/></g>
+      <rect x="150" y="980" width="140" height="110" rx="12" fill="#c7cfa2"/>
+      <path d="M1000 380C820 400 700 460 560 500S330 590 -40 700" fill="none" stroke="#9db6b3" stroke-width="62"/>
+      <path d="M1000 380C820 400 700 460 560 500S330 590 -40 700" fill="none" stroke="#aec4c1" stroke-width="54"/>
+      <g fill="none" stroke-linecap="round">
+        <path d="M1000 336C820 356 700 410 560 452S330 544 -40 654M318 0c20 400-40 800 30 1240" stroke="#d6c6a6" stroke-width="20"/>
+        <path d="M1000 336C820 356 700 410 560 452S330 544 -40 654M318 0c20 400-40 800 30 1240" stroke="#fbf8f0" stroke-width="15"/>
+        <path d="M600 420 660 580" stroke="#d6c6a6" stroke-width="13"/><path d="M600 420 660 580" stroke="#fbf8f0" stroke-width="9"/>
+      </g>
+      <text class="lbl" x="538" y="356">Old Mint Park</text>
+      <text class="lbl" x="380" y="494" transform="rotate(-17 380 494)">Quay Street</text>
+      <text class="lbl" x="304" y="200" transform="rotate(86 304 200)">Rope Walk</text>
+      <text class="lbl" x="440" y="552" transform="rotate(-16 440 552)" style="fill:#4f6866;letter-spacing:.2em">RIVER LENN</text>
+      <text class="lbl" x="166" y="1040">Tanners' Green</text>
+    </svg>
+    <span class="me" style="left:352px;top:418px" aria-hidden="true"></span>
+    <div id="pins"></div>
+  </div>
+</div>
+
+<div class="bar">
+  <button class="where" type="button" aria-label="Change search: Alfaro old town, 12 to 15 November, 2 guests">
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+    <span><b>Alfaro old town</b><small>12 – 15 Nov · 2 guests</small></span>
+  </button>
+  <button class="sq" type="button" aria-label="Filters">
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+  </button>
+</div>
+<button class="area" type="button" id="area">
+  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12a7 7 0 1 1-2.1-5"/><path d="M19 4v4h-4"/></svg><span>Search this area</span>
+</button>
+<section class="sheet half" id="sheet" aria-labelledby="count">
+  <div class="head" id="head">
+    <button class="grab" type="button" id="grab" aria-label="Resize list. Half open."></button>
+    <div class="ttl"><h1 id="count">8 stays</h1><small>Per night, fees in</small></div>
+    <p class="sub" id="sub">In this part of Alfaro old town</p>
+  </div>
+  <div class="body">
+    <div class="car" id="car" aria-label="Stays" role="list"></div>
+    <div class="list" id="list" role="list"></div>
+  </div>
+</section>
+<button class="sq loc" type="button" id="loc" aria-label="Show my location">
+  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+</button>
+<p class="sr" aria-live="polite" id="live"></p>
+
+<script>
+const L=[
+ ['The Rope Walk Rooms','Guesthouse · 2 rooms',4.92,318,142,300,292,'#d9a27a','#cfe0e3','#5b3a2a'],
+ ['Casa Lenn','Whole flat · sleeps 3',4.81,204,96,405,262,'#e9cfa8','#d8e4dc','#2f5a57'],
+ ['Quay Street Loft','Loft · river view',4.97,112,188,585,425,'#c86f4b','#e6dccb','#2b2621'],
+ ["The Cooper's House",'Townhouse · garden',4.88,96,121,275,440,'#efe3c9','#cfe0e3','#7b3b23'],
+ ['Mint Garden Studio','Studio · park side',4.74,451,74,580,268,'#a9b58a','#efe1c4','#3d4a2a'],
+ ["Harbour Master's Flat",'Whole flat · balcony',4.95,67,215,470,428,'#d7b48a','#c9dadb','#1f3b4d'],
+ ['Lantern Yard','Room · shared courtyard',4.69,233,109,370,370,'#e3b49a','#e9e0cd','#5a2e23'],
+ ["Weaver's Attic",'Attic room · top floor',4.86,142,88,480,330,'#efd9b4','#d6e2e4','#4e3a2a'],
+ ['Tanners Row No. 4','Cottage · sleeps 4',4.9,58,132,180,820,'#cf9a70','#d8e3dc','#3a2a20'],
+ ['The Ferry Lofts','Loft · two bedrooms',4.78,175,164,770,700,'#bfc6b4','#ece2cf','#2e3a33']
+].map(([t,k,r,n,p,x,y,wall,sky,shut],i)=>({i,t,k,r,n,p,x,y,wall,sky,shut}));
+const $=id=>document.getElementById(id);
+const map=$('map'),layer=$('layer'),sheet=$('sheet'),car=$('car'),list=$('list'),area=$('area'),loc=$('loc'),grab=$('grab');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const HOME={x:-245,y:-110};
+let pos={...HOME},shown=[],sel=0,detent='half',H=innerHeight;
+const star='<svg class="star" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg>';
+const art=l=>`<div class="art" style="--wall:${l.wall};--sky:${l.sky};--shut:${l.shut}" aria-hidden="true"><i></i><u></u></div>`;
+const info=l=>`<div class="ci"><h2>${l.t.replace("'","&rsquo;")}</h2><p class="meta">${l.k} · ${star} ${l.r.toFixed(2)} (${l.n})</p><p class="price"><b>€${l.p}</b> night</p></div>`;
+
+$('pins').innerHTML=L.map(l=>`<button class="pin" type="button" data-i="${l.i}" style="left:${l.x}px;top:${l.y}px" aria-pressed="false" aria-label="${l.t}, €${l.p} a night">€${l.p}</button>`).join('');
+const pins=[...document.querySelectorAll('.pin')];
+
+function place(glide){layer.classList.toggle('glide',!!glide&&!reduce);layer.style.transform=`translate(${pos.x}px,${pos.y}px)`}
+function inView(l){const sx=l.x+pos.x,sy=l.y+pos.y;return sx>20&&sx<innerWidth-20&&sy>140&&sy<H-vis('half')+24}
+
+function render(){
+  $('count').textContent=`${shown.length} ${shown.length===1?'stay':'stays'}`;
+  car.innerHTML=shown.map(l=>`<button class="card" type="button" role="listitem" data-i="${l.i}" aria-current="${l.i===sel}">${art(l)}${info(l)}</button>`).join('')||'<p class="none">No stays in this area. Move the map or zoom out.</p>';
+  list.innerHTML=shown.map(l=>`<button class="row" type="button" role="listitem" data-i="${l.i}" aria-current="${l.i===sel}">${art(l)}${info(l)}</button>`).join('');
+  pins.forEach(p=>p.classList.toggle('out',!shown.some(l=>l.i===+p.dataset.i)));
+}
+function select(i,from){
+  sel=i;
+  pins.forEach(p=>p.setAttribute('aria-pressed',+p.dataset.i===i));
+  document.querySelectorAll('.card,.row').forEach(c=>c.setAttribute('aria-current',+c.dataset.i===i));
+  if(from!=='car'){const c=car.querySelector(`.card[data-i="${i}"]`);if(c){syncing=true;car.scrollTo({left:c.offsetLeft-20,behavior:reduce?'auto':'smooth'});setTimeout(()=>syncing=false,500)}}
+  if(from==='pin'){if(detent==='peek')setDetent('half');const r=list.querySelector(`.row[data-i="${i}"]`);if(r&&detent==='full')r.scrollIntoView({block:'nearest'})}
+  const l=L[i];$('live').textContent=`${l.t}, €${l.p} a night, rated ${l.r}`;
+}
+
+function vis(d){const head=$('head').offsetHeight,safe=34;return d==='peek'?head+safe:d==='half'?Math.min(head+258+safe,H*.62):H-112}
+function setDetent(d,fast){
+  detent=d;H=innerHeight;sheet.style.height=(H-112)+'px';
+  const y=(H-112)-vis(d);sheet.style.transform=`translateY(${y}px)`;
+  sheet.className='sheet '+d;loc.style.transform=`translateY(${-vis(d)-12}px)`;loc.classList.toggle('hide',d==='full');
+  grab.setAttribute('aria-label',`Resize list. ${d==='peek'?'Collapsed':d==='half'?'Half open':'Full'}.`);
+}
+const ORDER=['peek','half','full'];
+
+/* sheet drag */
+let sd=null;
+$('head').addEventListener('pointerdown',e=>{sd={y:e.clientY,t:performance.now(),base:(H-112)-vis(detent),moved:0,last:e.clientY,lt:performance.now(),v:0};sheet.classList.add('drag');$('head').setPointerCapture(e.pointerId)});
+$('head').addEventListener('pointermove',e=>{if(!sd)return;const now=performance.now();sd.v=(e.clientY-sd.last)/Math.max(1,now-sd.lt);sd.last=e.clientY;sd.lt=now;
+  let y=sd.base+(e.clientY-sd.y);const min=0,max=(H-112)-vis('peek');if(y<min)y=min+(y-min)*.25;if(y>max)y=max+(y-max)*.25;
+  sd.moved=Math.abs(e.clientY-sd.y);sheet.style.transform=`translateY(${y}px)`;loc.style.transform=`translateY(${-((H-112)-y)-12}px)`});
+const endDrag=e=>{if(!sd)return;sheet.classList.remove('drag');const s=sd;sd=null;
+  if(s.moved<6){if(e.type==='pointerup'&&e.target===grab)return;setDetent(detent);return}
+  const cur=(H-112)-((H-112)-vis(detent)+(e.clientY-s.y));let i=ORDER.indexOf(detent);
+  if(Math.abs(s.v)>.4)i=Math.max(0,Math.min(2,i+(s.v<0?1:-1)));
+  else i=ORDER.map(d=>Math.abs(vis(d)-cur)).reduce((b,x,j,a)=>x<a[b]?j:b,0);
+  setDetent(ORDER[i]);grab.dataset.skip='1'};
+$('head').addEventListener('pointerup',endDrag);$('head').addEventListener('pointercancel',endDrag);
+grab.addEventListener('click',()=>{if(grab.dataset.skip){delete grab.dataset.skip;return}setDetent(ORDER[(ORDER.indexOf(detent)+1)%3])});
+grab.addEventListener('keydown',e=>{const i=ORDER.indexOf(detent);if(e.key==='ArrowUp'&&i<2){e.preventDefault();setDetent(ORDER[i+1])}if(e.key==='ArrowDown'&&i>0){e.preventDefault();setDetent(ORDER[i-1])}});
+
+/* map pan */
+let md=null,dragged=false;
+map.addEventListener('pointerdown',e=>{md={x:e.clientX,y:e.clientY,px:pos.x,py:pos.y,id:e.pointerId};dragged=false;layer.classList.remove('glide')});
+map.addEventListener('pointermove',e=>{if(!md)return;const dx=e.clientX-md.x,dy=e.clientY-md.y;
+  if(!dragged&&Math.hypot(dx,dy)>6){dragged=true;map.classList.add('drag');map.setPointerCapture(md.id)}
+  if(!dragged)return;pos.x=Math.min(0,Math.max(innerWidth-960,md.px+dx));pos.y=Math.min(0,Math.max(H-1240,md.py+dy));place()});
+const endPan=()=>{if(!md)return;md=null;map.classList.remove('drag');if(dragged){area.classList.add('show');area.querySelector('span').textContent='Search this area'}};
+map.addEventListener('pointerup',endPan);map.addEventListener('pointercancel',endPan);
+map.addEventListener('click',e=>{if(dragged){e.stopPropagation();dragged=false;return}const p=e.target.closest('.pin');if(p)select(+p.dataset.i,'pin')},true);
+
+function search(){shown=L.filter(inView);if(!shown.some(l=>l.i===sel)&&shown.length)sel=shown[0].i;render();select(sel,'search');$('live').textContent=`${shown.length} stays in this area`}
+area.addEventListener('click',()=>{area.classList.add('busy');area.querySelector('span').textContent='Searching';
+  setTimeout(()=>{area.classList.remove('busy','show');search()},reduce?0:650)});
+loc.addEventListener('click',()=>{pos={...HOME};place(true);area.classList.add('show');$('live').textContent='Map centred on your location'});
+
+let syncing=false,st;
+car.addEventListener('scroll',()=>{if(syncing)return;clearTimeout(st);st=setTimeout(()=>{const cards=[...car.querySelectorAll('.card')];if(!cards.length)return;
+  const c=cards.reduce((b,x)=>Math.abs(x.offsetLeft-20-car.scrollLeft)<Math.abs(b.offsetLeft-20-car.scrollLeft)?x:b);if(+c.dataset.i!==sel)select(+c.dataset.i,'car')},120)});
+sheet.addEventListener('click',e=>{const c=e.target.closest('.card,.row');if(c)select(+c.dataset.i,c.classList.contains('row')?'row':'cardtap')});
+addEventListener('resize',()=>{H=innerHeight;setDetent(detent)});
+
+place();setDetent('half');shown=L.filter(inView);render();select(0,'init');
+</script>
+</body>
+</html>

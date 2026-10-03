@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 166 · "Analog stick" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 167 · "Analog stick" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Analog stick
 

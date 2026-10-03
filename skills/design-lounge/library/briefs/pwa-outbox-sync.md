@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 259 · "PWA outbox sync" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 268 · "PWA outbox sync" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # PWA outbox sync
 

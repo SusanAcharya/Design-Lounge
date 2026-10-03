@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 279 · "Shortcut sheet" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 288 · "Shortcut sheet" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Shortcut sheet
 

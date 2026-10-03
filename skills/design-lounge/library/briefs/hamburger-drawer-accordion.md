@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 277 · "Shop drawer with accordion sections" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 286 · "Shop drawer with accordion sections" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Shop drawer with accordion sections
 

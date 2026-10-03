@@ -174,6 +174,12 @@ Phone app screens, one piece each. Restyle them onto the locked theme. Do not ke
 - A product: `phone-product-detail`. The bag and payment: `mobile-one-page-checkout`.
 - A form: `phone-form-fields`. Errors on blur, the first error gets focus on save.
 - Adding photos: `phone-photo-picker`.
+- Search: `phone-search-results`. Recent searches first, then results in tabs, and an empty state that suggests a real word.
+- Places on a map: `phone-map-listings`. A trip: `phone-ride-request`. A delivery on its way: `phone-order-tracking`.
+- A feed: `phone-feed-posts`. A video: `phone-video-player`.
+- Cards, passes and tickets: `phone-wallet-cards`. Scanning a ticket or code: `phone-qr-scanner`.
+- Picking a time: `phone-booking-slots`. A day or week of plans: `phone-calendar-agenda`.
+- A timer you watch from a distance: `phone-workout-timer`. A lesson or quiz: `phone-lesson-quiz`.
 
 A single metric is one number at display size, a delta in `--success` or `--danger`, and a caption in `--ink-2`. If the screen has several figures, only one of them is display size. The others step down to the title role. Do not lay four equal numbers in a row.
 

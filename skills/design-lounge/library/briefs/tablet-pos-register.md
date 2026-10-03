@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 296 · "Tablet cafe register" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 306 · "Tablet cafe register" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Tablet cafe register
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 200 · "Funnel chart" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 202 · "Funnel chart" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Funnel chart
 
