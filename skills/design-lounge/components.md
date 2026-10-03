@@ -114,9 +114,11 @@ A nav item is a row or a 40px pill. The current item uses `--primary-soft` and `
 
 ## Chart, empty, failed load
 
-A chart is one series. Bars and sparks use `--primary` for the active mark and `--line` or `--surface-2` for the rest. Numbers are `--font-mono`. Grid lines are `--line`. Do not import a chart library's palette, legend, or tooltip.
+A chart is one series. Bars and sparks use `--primary` for the active mark and `--line` or `--surface-2` for the rest. A line is one stroke in `--primary`, with dots in the same ink. No area fill, no second series, no legend. The number the person came for is display size above the chart. The line is the evidence under it. Numbers are `--font-mono`. Grid lines are `--line`, or omit them. Do not import a chart library's palette, legend, or tooltip.
 
-An empty list is a heading, one sentence, and one primary button. No illustration unless the named piece is the illustrated empty.
+A single metric is one number at display size, a delta in `--success` or `--danger`, and a caption in `--ink-2`. If the screen has several figures, only one of them is display size. The others step down to the title role. Do not lay four equal numbers in a row.
+
+An empty list is a heading, one sentence, and one primary button. The heading is the largest type on that view. No illustration unless the named piece is the illustrated empty. On a phone, use the phone empty piece: the screen name is a label, the empty heading is the answer, and the button is at least 44px tall.
 
 A failed load is a banner in `--danger-soft` with `--danger` text and a retry button. It is not a toast, and it is not the empty state. Empty means zero rows. Failure means the load did not arrive.
 

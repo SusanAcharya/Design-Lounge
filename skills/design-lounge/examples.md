@@ -20,6 +20,15 @@ User: "Same app. You pick. Just build it."
 2. Write `DESIGN.md`, including Sources, before the screens.
 3. Build. Put the same demo links in the reply so they can still compare and ask for a change.
 
+## An ops home, they said go
+
+User: "Yard desk. Staff open it every morning. Just build it."
+
+1. Kind `platform`. Use the dashboard recipe in `starts` when it matches: Harbour Ledger, Developer Docs, and the pieces named there.
+2. Write the four lines before layout. Who: yard dispatch, they already know today's date. Decision: which bays need a person. First thing: the count of runs today. Next action: open the week.
+3. The count is `kpi-delta`, at display size. The evidence under it is `chart-line-range` or `chart-bar-week`, not a second headline. The list uses `list-empty-plain` when there are zero rows and `load-failed-retry` when the load does not arrive. On a phone, those two are `mobile-list-empty` and `mobile-load-failed`.
+4. Write `DESIGN.md` with Sources, then build the minimum platform set. Do not add a marketing hero.
+
 ## They want options
 
 User: "Company site. Show me palettes."

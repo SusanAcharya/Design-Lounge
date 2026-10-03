@@ -65,7 +65,7 @@ h2, sentence, button
 ## Typography
 
 - Header title: IBM Plex Sans 500, 20px.
-- Empty heading: 22px, weight 500, tracking -0.02em.
+- Empty heading: 28px, weight 500, tracking -0.02em. The screen title is 20px. The empty heading is the answer, so it is the larger type.
 - Sentence: 14px, `--ink-2`, margin 0 0 18px.
 - Button: 14px, weight 500, height 36px, radius 2px, fill `#1f4d3a`, ink `#f6f4ef`.
 - One face. No italic display word.
@@ -116,7 +116,7 @@ Rebuild order:
 2. Header padding 0 32px. Title 20px weight 500.
 3. The well is `flex: 1` and `display: grid; place-items: center`.
 4. Block max-width 360px, `text-align: center`.
-5. Heading 22px, margin 0 0 8px.
+5. Heading 28px, margin 0 0 8px. The 20px screen title stays smaller.
 6. Sentence colour `#5a554c`, margin 0 0 18px.
 7. Button height 36, padding 0 14px, radius 2, no border.
 8. Disabled opacity 0.55.

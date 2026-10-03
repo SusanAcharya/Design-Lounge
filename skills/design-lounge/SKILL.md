@@ -43,7 +43,7 @@ Ask for the stack once if they have not named it. Then keep it. Good stack lines
 
 Read [practice.md](practice.md) and follow it. Do not skip ahead to code.
 
-Pick one theme, one pairing, one family, and the pieces for this pass. Show that pick before you paint, unless they already told you to build. Then run the finish checklist and report each line as pass or fail.
+Pick one theme, one pairing, one family, and the pieces for this pass. Before you choose a layout, write the four lines in Decide the screen in [practice.md](practice.md): who it is for, the one decision, the first thing they see, and the next action. The first thing is the largest type on the view. A region that does not serve those four lines does not go on the screen. Show the pick before you paint, unless they already told you to build. Then run the finish checklist and report each line as pass or fail.
 
 ## Show the pick, then ask once
 
@@ -68,7 +68,7 @@ Every button, field, card, row, badge, and nav item comes from [components.md](c
 
 You keep one system consistent across the product. You do not become a second designer with a second palette halfway through. If the index has no piece, say so and build from the sheet. Do not claim the interface is finished only because the code runs. A person still has to look at the screens.
 
-An internal tool, admin, ops screen, or dashboard is kind `platform`, then the `dashboard` recipe in `starts`. Search `dashboard`, `data`, `charts`, `navigation`, `settings`, `overlays`, `feedback`, `inputs`, `pickers`, `team`, `utility`, and `error`. Do not decide the library is only marketing because most pieces are. A chart, an empty list, and a failed load come from those pieces. Do not style a chart library, and do not write "No data" into a blank card.
+An internal tool, admin, ops screen, or dashboard is kind `platform`, then the `dashboard` recipe in `starts`. Search `dashboard`, `data`, `charts`, `navigation`, `settings`, `overlays`, `feedback`, `inputs`, `pickers`, `team`, `utility`, and `error`. Do not decide the library is only marketing because most pieces are. A chart, a single metric, an empty list, and a failed load come from those pieces. A line is one stroke. A metric is one number at display size. Do not style a chart library, do not lay four equal numbers in a row, and do not write "No data" into a blank card. On a phone, use the phone empty and the phone failed load.
 
 A pass is more than the first screen. Follow Minimum screens in [practice.md](practice.md). A website includes nav, a hero, one proof block, and a footer. An app includes the shell, a list, one detail, an empty state, and account or settings. A platform includes the shell, a table or board, one record, and the account menu. Add people and billing when the product has staff or a plan.
 

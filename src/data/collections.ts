@@ -75,7 +75,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'Loading states that earn the wait',
     kicker: 'Nº 07',
     blurb: 'Skeletons that match their content, loaders with three elements, buttons that carry their own progress. Nothing spins for the sake of spinning.',
-    pieces: ['skeleton-to-content-swap', 'orbit-dots-loader', 'ink-fill-progress', 'button-state-morph', 'pwa-app-shell', 'ios-pull-to-refresh', 'load-failed-retry', 'mobile-filter-chips-list'],
+    pieces: ['skeleton-to-content-swap', 'orbit-dots-loader', 'ink-fill-progress', 'button-state-morph', 'pwa-app-shell', 'ios-pull-to-refresh', 'load-failed-retry', 'mobile-load-failed', 'mobile-filter-chips-list'],
   },
   {
     slug: 'sheets-and-overlays',
@@ -96,14 +96,14 @@ export const COLLECTIONS: Collection[] = [
     title: 'Native feel, web materials',
     kicker: 'Nº 10',
     blurb: 'iOS 26 glass, Material 3 Expressive shapes, and the PWA moments in between: install, offline, update.',
-    pieces: ['ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'ios-fintech-home', 'ios-swipe-row-actions', 'ios-now-playing', 'ios-grouped-settings', 'ios-onboarding-carousel', 'm3-expressive-home', 'm3-fab-menu', 'pwa-install-sheet', 'pwa-connectivity-banner', 'pwa-news-reader'],
+    pieces: ['ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'ios-fintech-home', 'ios-swipe-row-actions', 'ios-now-playing', 'ios-grouped-settings', 'ios-onboarding-carousel', 'm3-expressive-home', 'm3-fab-menu', 'pwa-install-sheet', 'pwa-connectivity-banner', 'pwa-news-reader'],
   },
   {
     slug: 'dashboards-and-data',
     title: 'Dashboards and dense data',
     kicker: 'Nº 11',
     blurb: 'Tables you can live in, KPI rows, boards, bento grids and counters that roll. Density without noise.',
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'audit-activity-log', 'record-detail-header', 'people-role-list', 'chart-bar-week', 'list-empty-plain', 'tablet-dashboard-grid', 'kanban-board', 'bento-feature-grid', 'odometer-counter', 'collapsing-sidebar-rail', 'tablet-split-view-mail'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'audit-activity-log', 'record-detail-header', 'people-role-list', 'chart-bar-week', 'chart-line-range', 'kpi-delta', 'list-empty-plain', 'tablet-dashboard-grid', 'kanban-board', 'bento-feature-grid', 'odometer-counter', 'collapsing-sidebar-rail', 'tablet-split-view-mail'],
   },
   {
     slug: 'motion-with-a-reason',

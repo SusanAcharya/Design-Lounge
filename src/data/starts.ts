@@ -59,7 +59,7 @@ export const STARTS: Start[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['navigation', 'overlays', 'media', 'onboarding', 'settings'],
-    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet'],
+    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet'],
   },
   {
     id: 'design-system',
@@ -83,7 +83,7 @@ export const STARTS: Start[] = [
     pairing: 'developer-docs',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'data', 'charts', 'navigation'],
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'kanban-board'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'charts-kpi-spark-row', 'chart-bar-week', 'chart-line-range', 'kpi-delta', 'collapsing-sidebar-rail', 'audit-activity-log', 'upload-file-queue', 'account-menu-panel', 'record-detail-header', 'people-role-list', 'billing-plan-summary', 'list-empty-plain', 'load-failed-retry', 'kanban-board'],
   },
   {
     id: 'commerce',

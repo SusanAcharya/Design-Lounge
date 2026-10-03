@@ -6,9 +6,9 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 
 ## Before code
 
-1. Write one sentence: who it is for, and the one job of this pass. If you cannot, you are not ready to pick a hero.
+1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
-3. Choose the system and the pieces. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, record, people, detail, chart, empty, error. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
+3. Choose the system and the pieces. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, record, people, detail, chart, line, kpi, empty, error. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
 4. Show that pick with links, and ask once, before any UI. Follow Show the pick in [SKILL.md](SKILL.md). Stop unless they already said just go, you pick, build it, or don't ask, or they already named the system.
 5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
 6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
@@ -18,6 +18,10 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 
 ```
 Product:
+Who:
+Decision:
+First thing they see:
+Next action:
 Job of this pass:
 Kind: website | product | platform
 Mode: new kit | adopt existing
@@ -42,6 +46,44 @@ Kept from their system:
 For a new product, the matching recipe in `starts` names the first pieces. Build those before you invent a screen the recipe did not name.
 
 For a revamp, name three visual problems. Fix those inside the adopted system. Do not reskin the whole product unless they asked.
+
+## Decide the screen
+
+Write these four lines into the system sheet before you choose a layout. They are the brief. The pixels come after.
+
+- Who opens this, and what they already know.
+- The decision this screen exists for. One decision.
+- The first thing they see: the answer to that decision, in one phrase.
+- The next action, in one verb.
+
+A region that does not serve one of those four lines does not go on this screen. A metric nobody acts on does not go on this screen. A second chart series, a second primary button, and a second navigation do not go on this screen.
+
+Reading order on the view, and only this order:
+
+1. Where they are. A label or a title. Not both at display size.
+2. The answer. This is the largest type on the view. One display size per view.
+3. The next action. One primary button.
+4. The evidence. The list, the chart, or the facts that justify the answer.
+5. Chrome. Nav, filters, account. Quiet, and smaller than the answer.
+
+Size is the hierarchy. Colour is not a second hierarchy. The accent is for the action and for live state, not for making a second thing look important.
+
+Group facts that are decided together. One title per group. Space between groups is the density stack gap. Space inside a group is half of that. Do not invent a third gap on the same screen.
+
+A list has four states. Ship the one this pass needs, from a piece when the index has it.
+
+| State | Meaning | What you build |
+| --- | --- | --- |
+| Loading | The rows have not arrived | A skeleton that matches the row, or the loader piece you named |
+| Empty | Zero rows | A heading, one sentence, one primary button |
+| Failed | The load did not arrive | A danger banner and retry. Not a toast |
+| Populated | The rows are here | The list |
+
+Empty and failed are different. Do not put both in one card.
+
+On a phone, the answer stays the largest type. The primary button is at least 44px tall and sits with the answer, or in the bottom bar the piece specifies. A header and a tab bar on the same phone screen is two navigation systems.
+
+When they describe a whole product, build the minimum set, then stop. An internal tool does not get a marketing hero. A marketing site does not get an ops table unless they asked for one.
 
 ## Spacing
 
@@ -112,6 +154,10 @@ Feedback colours are for live state only.
 - The credit line is on the token block.
 - Every piece you named is in the index.
 - DESIGN.md Sources lists each of those pieces with its demo link. The reply includes the same links.
+- The four lines (who, decision, first thing, next action) are in DESIGN.md.
+- The first thing is the largest type on that view. There is one display size.
+- Space between groups is the stack gap. Space inside a group is half of that.
+- A list is one state: loading, empty, failed, or populated. The piece you used matches that state.
 
 ## Minimum screens
 

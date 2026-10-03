@@ -1,0 +1,43 @@
+<!-- Design Lounge piece: kpi-delta · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>46 runs today</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--ink-3:#8a847a;
+  --line:#e4dfd4;--primary:#1f4d3a;--primary-ink:#f6f4ef;--success:#1f4d3a;--success-soft:#e7f2ec;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.kicker{margin:0 0 8px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+h1{margin:0;font-family:var(--mono);font-size:72px;font-weight:500;letter-spacing:-.04em;line-height:1}
+.delta{margin:14px 0 0;display:flex;align-items:center;gap:8px;color:var(--ink-2);font-size:14px}
+.delta b{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:99px;background:var(--success-soft);color:var(--success);font-family:var(--mono);font-size:12px;font-weight:500}
+.why{margin:10px 0 0;max-width:360px;color:var(--ink-2);font-size:14px}
+.btn{margin-top:20px;height:36px;padding:0 14px;border-radius:2px;border:0;background:var(--primary);color:var(--primary-ink);font-weight:500}
+.btn:disabled{opacity:.55}
+</style>
+</head>
+<body>
+<p class="kicker">Runs today</p>
+<h1>46</h1>
+<p class="delta"><b>+8</b> more than yesterday</p>
+<p class="why">Friday closed at 38. The yard is ahead of that close.</p>
+<button class="btn" id="go" type="button">See the week</button>
+<script>
+document.getElementById('go').addEventListener('click', e => {
+  e.currentTarget.textContent = 'Week opened';
+  e.currentTarget.disabled = true;
+});
+</script>
+</body>
+</html>
