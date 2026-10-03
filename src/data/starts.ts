@@ -21,7 +21,7 @@ export const SURFACES: { id: Surface; title: string; blurb: string }[] = [
 ];
 
 const ORDER = [
-  'marketing-site', 'saas', 'portfolio', 'commerce', 'fintech', 'fashion', 'food', 'wellness', 'hotel', 'agency', 'editorial', 'docs', 'music', 'personal-site', 'event', 'museum', 'landing', 'dashboard', 'design-system',
+  'marketing-site', 'saas', 'portfolio', 'portfolio-builder', 'commerce', 'fintech', 'fashion', 'food', 'wellness', 'hotel', 'agency', 'editorial', 'docs', 'music', 'personal-site', 'event', 'museum', 'landing', 'dashboard', 'design-system',
   'mobile-app', 'personal', 'bank', 'health', 'messages', 'music-app', 'news', 'shop-app', 'social', 'weather', 'field', 'tablet',
 ];
 
@@ -63,12 +63,25 @@ export const STARTS: Start[] = [
     title: 'A portfolio',
     kicker: 'Personal',
     blurb: 'Index, case study, a horizontal rail, a masthead. Steal a structure, keep your personality.',
-    when: 'A designer, photographer, architect, or studio needs a site that shows the work, including a scroll, a hover preview, or a cursor.',
+    when: 'A visual designer, photographer, architect, or studio whose work is images. Someone who ships software takes portfolio-builder instead.',
     theme: 'atelier-noir',
     pairing: 'gallery-wall',
     shelf: 'portfolio-sites',
     categories: ['portfolio', 'profile', 'gallery', 'hero'],
     pieces: ['portfolio-architect-index', 'portfolio-index-hover-preview', 'portfolio-photographer-horizontal', 'portfolio-case-study-long', 'portfolio-motion-showreel', 'profile-creator-masthead'],
+  },
+  {
+    id: 'portfolio-builder',
+    surface: 'web',
+    title: 'A builder’s portfolio',
+    kicker: 'Personal',
+    blurb: 'For people who ship software. The projects are small working screens, not a list of names.',
+    when: 'A developer, product manager, product designer, or founder. Kiln, warm and light, because the work is the colour. Atelier Noir is a fashion room, so it loses.',
+    theme: 'kiln',
+    pairing: 'indie-maker',
+    shelf: 'portfolio-sites',
+    categories: ['portfolio', 'features', 'hero', 'scroll'],
+    pieces: ['hero-product-window-tilt', 'bento-feature-grid', 'stacking-cards-scroll', 'portfolio-case-study-long', 'contact-giant-email-copy', 'footer-giant-wordmark-reveal'],
   },
   {
     id: 'fintech',

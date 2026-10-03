@@ -35,7 +35,7 @@ export const KINDS: Kind[] = [
     blurb: 'Marketing, studio, or company site. Heroes, proof, a footer that signs off.',
     when: 'People arrive from the outside. The first viewport has to hold them.',
     palettes: ['paper-ink', 'linen-shop', 'atelier-noir', 'kiln', 'press-room', 'sakura-desk', 'marble-hall', 'loam', 'night-desk', 'neon-alley', 'festival', 'alpine-clinic'],
-    pairings: ['the-lounge', 'gallery-wall', 'maison', 'newsroom', 'lettera', 'garden-journal', 'brutal-grotesk', 'y2k-chrome', 'poster-condensed'],
+    pairings: ['the-lounge', 'gallery-wall', 'maison', 'newsroom', 'lettera', 'garden-journal', 'brutal-grotesk', 'y2k-chrome', 'poster-condensed', 'indie-maker', 'studio-display', 'neo-grotesk-mono'],
     families: ['editorial', 'quiet', 'soft', 'sharp'],
     copy: {
       brand: 'Northroom',

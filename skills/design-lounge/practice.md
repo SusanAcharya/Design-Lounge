@@ -6,13 +6,81 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 
 ## Before code
 
-1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero.
+1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero. For a website, also read Stand out and write the Idea.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
 3. Match the world, then choose the pieces. Read Match the world. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
 4. Show that pick with links, and ask once, before any UI. Follow Show the pick in [SKILL.md](SKILL.md). Stop unless they already said just go, you pick, build it, or don't ask, or they already named the system.
 5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
 6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
 7. Open every finished screen and run Look. Fix what fails, and open it again. When the fails are none, run One correction. Then run the finish checklist. Report each line as pass or fail. Do not call the UI done from the source.
+
+## Stand out
+
+This is for every website: a portfolio, a landing page, a product page, a personal site. It is not for a dashboard or a tool someone opens every day.
+
+The rest of this file stops slop. This section stops dull. A page can pass every slop check and still be forgettable. Forgettable is a fail. People install this skill to get a site that stands out.
+
+### The default looks
+
+Agents with good taste still land on the same few pages. These are fails, unless they asked for one by name.
+
+- The dark portfolio. A near-black page, a huge serif italic name, a small mono kicker line, a numbered table of projects, a local clock, an "open to work" dot.
+- The SaaS template. A gradient hero, a centred headline, three feature cards, a row of logos.
+- The quiet paper page. Cream background, a serif headline, and everything else small grey text.
+
+If your plan matches one of these, change the theme or the layout before you write code.
+
+### Write the idea
+
+Add one line to the sheet: `Idea:`. It says what this site does that only fits this person or this product. It is a picture, not an adjective.
+
+- Good: "Her projects are small working apps on the page. You can tap them." "The hero is the product's own window, running." "The work is a stack of cards you scroll through, one per shipped product."
+- Not an idea: "Bold and minimal." "Clean, modern, premium." "Luxury dark."
+
+The idea decides the hero and the proof block. If you cannot write it, you are not ready to build.
+
+### Show the work
+
+- The first screen has the name or headline and a picture of the work. Not big type alone on an empty page.
+- A portfolio shows every project as a picture. A text list of project names is not proof. A preview that only appears on hover does not count. A phone has no hover.
+- No screenshots? Draw the picture. For someone who makes software, build each project as a small working screen in HTML and CSS, in the locked theme, inside a phone or browser frame. Take the structure from a library piece: a bank home from `ios-fintech-home`, a table from the dashboard pieces, a chat from the messages pieces. This is the library's edge. You can draw real interfaces, not grey boxes.
+- A photographer or illustrator with no images: leave clear image slots at the right size, each with one caption. Do not paint fake art with gradients.
+
+### Layout
+
+- Fewer, bigger sections. A website pass is four to six sections. Each one has one job and one large thing.
+- Sections change shape: a full-width colour band, a bento, a sticky split, a horizontal rail, a card stack. Not five rows of text at the same width.
+- The reading column is for paragraphs. The hero, the work, and the bands use the full frame, 1120 to 1280px.
+- Use the colour. Put `--primary` on one large surface: a band, a big card, or the hero block. That is the brand, not decoration. A light theme with a strong primary beats a dark page with one gold line.
+- Do not let the page become one colour. The theme has `--secondary` and `--tertiary` too. Give each project panel or band its own one: primary, secondary, tertiary, or the ink colour reversed. Each panel is one colour, with no gradients.
+
+### Size and contrast
+
+- Body text on a website is 17 to 19px, in `--ink` or `--ink-2`. Never `--ink-3` for a sentence.
+- Small tracked labels: three per view at most. A page where half the text is 11px grey looks unfinished.
+- No facts strip, clock, timeline, status dot, or filter chips unless they asked. Each one is a small region that does not serve the four lines.
+
+### Motion you can see
+
+A website has one signature motion, from Register. It runs without a hover: on load, or on scroll. A hover effect can be extra. It is never the signature.
+
+### Real content only
+
+- Never invent clients, employers, projects, numbers, quotes, or dates. Use what they told you.
+- Use what is real and public: a product they named, their GitHub, their own site.
+- If they named no projects, show what they do as two or three labelled studies, such as "Study: a credit ledger for a corner shop". A study is honest. A fake client is not. Say in the reply which slots to replace with real work.
+- If the site is mostly a portfolio and they did not say just build it, ask once for three projects, each with a link or a screenshot.
+
+### The five-second test
+
+Open the first screen at 1280×800. Look for five seconds. Write:
+
+```
+Remember: "<the one thing you remember>"
+Could this be anyone's site: yes | no
+```
+
+If you remember nothing, or the answer is yes, it fails. Change the idea or the hero. Rewording the copy is not a fix.
 
 ## System sheet
 
@@ -24,6 +92,8 @@ First thing they see:
 Next action:
 Job of this pass:
 Scope:
+Idea: <website only, one picture sentence>
+Avoiding: <website only, the default look this could have become>
 Register: quiet | <one piece id>
 Kind: website | product | platform
 Mode: new kit | adopt existing
@@ -60,7 +130,7 @@ A hundred products look like one product when every pass locks the first palette
 Choose in this order.
 
 1. They named a theme, a pairing, or a family. Lock what they named. Choose the rest by the rules below.
-2. A recipe in `starts` matches the product. The names are in reference.md: a yard desk is `dashboard`, a clay shop is `commerce`, a SaaS page is `saas`, a showreel is `portfolio`, a phone shop is `shop-app`. A magazine is `editorial`. A phone app with no named world is `mobile-app`. A tablet is `tablet`. One person's money is `personal`, not `dashboard` and not `bank`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. Lock that recipe's theme, pairing, and pieces. Say which recipe.
+2. A recipe in `starts` matches the product. The names are in reference.md: a yard desk is `dashboard`, a clay shop is `commerce`, a SaaS page is `saas`, a showreel is `portfolio`, a developer, product manager, product designer, or founder is `portfolio-builder`, a phone shop is `shop-app`. A magazine is `editorial`. A phone app with no named world is `mobile-app`. A tablet is `tablet`. One person's money is `personal`, not `dashboard` and not `bank`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. Lock that recipe's theme, pairing, and pieces. Say which recipe.
 3. No recipe matches. Stay inside that kind's `palettes`, `pairings`, and `families`. Read `bestFor`, `mood`, and `tags` on each theme. Lock the theme whose `bestFor` names this world. A clinic is Alpine Clinic. A payroll run is Harbour Ledger, because the job is paying people. Fog City is the first palette on kind `product` and is the wrong lock for both.
 4. Lock a pairing from that kind's list whose `bestFor` is the same world. Payroll on kind `product` takes Friendly SaaS, which lists fintech. A paper takes Newsroom. A clay shop whose recipe is commerce takes Atelier.
 5. Lock the family for how the product is used. Editorial for a page people read. Industrial for a yard or a field tool. Sharp for a dense platform. Quiet for a product that has to last. Soft for a friendly consumer app. Glass only when the recipe is the glass phone language.
@@ -139,12 +209,13 @@ A ledger, a clinic, a settings screen, or a dashboard stays quiet. Motion is the
 
 A portfolio, a launch, a product page, or a refine they described as motion is in the library. Search categories `cursor`, `scroll`, and `text-motion`. Take one piece for the effect they named.
 
-- A portfolio: `portfolio-index-hover-preview`, `hover-image-trail`, `portfolio-photographer-horizontal`, `stacking-cards-scroll`, or `cursor-ink-blob`.
+- A builder's portfolio: `stacking-cards-scroll`, `hero-product-window-tilt`, or `features-sticky-scroll-steps`. The work moves, not the name.
+- A visual portfolio: `portfolio-photographer-horizontal`, `hover-image-trail`, `stacking-cards-scroll`, or `cursor-ink-blob`. `portfolio-index-hover-preview` only when every row has a real image.
 - A product page: `hero-product-window-tilt`, `features-sticky-scroll-steps`, or `hover-tilt-cards`. Not a cursor on the checkout.
 - A headline that moves: `kinetic-type-marquee` or `variable-font-proximity`.
 - A phone: `ios-pull-to-refresh`, `shared-element-expand`, or `m3-container-transform`. Not a web cursor.
 
-If they did not name an effect, the register is quiet. Do not add one to fill the page. The piece's motion table wins inside that region. The rest of the page stays on the sheet's easing. Reduced motion still applies. One effect. A blob, a tilt, a marquee, and a stack on the same page is four designs.
+A website always takes one effect piece, even when they did not name one. Pick the one that serves the Idea. A daily tool with no named effect stays quiet. Do not add one to fill the page. The piece's motion table wins inside that region. The rest of the page stays on the sheet's easing. Reduced motion still applies. One effect. A blob, a tilt, a marquee, and a stack on the same page is four designs.
 
 ## Break one rule
 
@@ -216,7 +287,7 @@ Base unit 4px. Use the locked family's density. Do not invent a third gap on the
 | regular | 20–32 | 16 | 16 | 40 / 44 |
 | dense | 16–24 | 12 | 12 | 36 / 44 |
 
-Phone margin 20. With no sidebar and no panel, the web frame is 1120px. With the shell in Layout, the viewport is 1280px and the frame is whatever main has left. The column inside that frame is one width for every screen of this pass. Default 720px. Write it on the system sheet before the first screen. A brief that says 640, 720, or 880 does not get its own column. Reading measure stays 58–66ch inside that column. The column does not grow when the rail closes, and it does not shrink to a new number because a panel appeared. The panel has its own width.
+Phone margin 20. With no sidebar and no panel, the web frame is 1120px. With the shell in Layout, the viewport is 1280px and the frame is whatever main has left. The column inside that frame is one width for every screen of this pass. Default 720px. Write it on the system sheet before the first screen. On a website, that column is for paragraphs only. The hero, the work, and the bands use the full frame, as Stand out says. A brief that says 640, 720, or 880 does not get its own column. Reading measure stays 58–66ch inside that column. The column does not grow when the rail closes, and it does not shrink to a new number because a panel appeared. The panel has its own width.
 
 ## Type
 
@@ -304,6 +375,7 @@ Looked at: <screen> at <width>×<height>
 Largest type: "<the words>" — the answer named above, or not
 Primary: "<label>" sits <where>
 Copy that still works if you swap the product name: "<quote>" or none
+Website only. Remember after five seconds: "<one thing>" · Could be anyone's site: yes | no
 Fails: <the checks below that failed, or none>
 ```
 
@@ -325,6 +397,8 @@ These are fails. They are the tells of a page that was generated and not designe
 - Placeholder copy. Lorem. Feature one. Your text here. John Doe. Acme. A price of $99 with no product attached.
 - Motion that loops because the page felt empty. `ease` or `linear` on a UI move. The curve is the sheet's, or the piece's.
 - Two navigation systems. A sidebar, a panel, or a nav list that differs from the sheet. The content column wider because the rail closed. A chart painted in a library's default colours.
+- On a website: one of the default looks in Stand out. A first screen with type and no picture of the work. A portfolio whose work is a text list. A site where half the text is small grey labels. A page you cannot remember after five seconds.
+- An invented client, employer, project, number, or quote.
 
 Uniform means the column, the page padding, the button, the filter, the field, the radius, the type roles, the sidebar, the panel, and the nav labels match on every screen of this pass, and on the phone form of that nav. Screen two inventing its own card, its own width, or its own rail is a fail.
 
@@ -334,6 +408,7 @@ Read one sentence from the screen. If it is still true after you replace the pro
 
 The look checks can pass while the screen is still wrong. After the fails are none, open the screen once more. Name the worst of these, and change only that.
 
+- Too plain. Usually the worst on a website. Nothing on the first screen would make someone stop. Make the picture of the work larger, put `--primary` on one big surface, or cut two small regions so the big one can grow.
 - Too loud. The answer is the largest type and it still shouts over the evidence. Cut a word, or drop the headline one step. Do not shrink the answer below the evidence.
 - Too even. Two regions are the same size, so nothing is the answer. Make the answer one step larger. Make the other a title or a caption.
 - Too dense. Someone who sits here all day cannot find the next action. Move to the next density's stack gap, or remove one group. Do not add a card to create air.
@@ -343,7 +418,7 @@ The look checks can pass while the screen is still wrong. After the fails are no
 Write this, then open that screen again.
 
 ```
-Correction: <too loud | too even | too dense | too much chrome | the wrong noun>
+Correction: <too plain | too loud | too even | too dense | too much chrome | the wrong noun>
 Changed: <the one change>
 Left alone: the theme, the pairing, the family, and the other screens
 ```
@@ -381,12 +456,13 @@ Put the theme's CSS variables on `:root` once, or in one theme provider. Control
 - The theme matches this product's world, or a recipe matched. The reply names the theme you rejected. You did not lock a palette because it was first.
 - The register is quiet, or one effect piece from the index. A daily tool did not grow a cursor. A portfolio or a product page they described with motion did not lose that piece.
 - After the look checks passed, you made one correction and opened that screen again.
+- Website: the Idea and Avoiding lines are on the sheet. The first screen shows the Idea. The work is pictures. Nothing is invented. The five-second test passed.
 
 ## Minimum screens
 
 A pass that only ships a hero, a landing, or a dashboard home is unfinished. Cover this set before you call the UI done. Reuse the locked sheet on every one.
 
-- Website: nav, hero, one proof block, footer. Take them from the website recipe.
+- Website: nav, hero, one proof block, footer. Take them from the website recipe. The proof block is pictures of the work or the product, not a list.
 - App: shell (tab bar or nav), the primary list, one detail, an empty state, and settings or account.
 - Platform: shell, a table or a board, one record, and the account menu. Add people and billing when the product has staff or a plan.
 - Shop: a collection, one product, the cart, and checkout. Take them from the commerce recipe.

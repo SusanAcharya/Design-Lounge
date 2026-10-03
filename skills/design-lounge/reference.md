@@ -26,7 +26,8 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Fintech, banking, payments, a card | `product` | Also recipe `fintech` on the web, `bank` on a phone |
 | Admin, ops, dashboard, internal tool | `platform` | Also recipe `dashboard`. Search dashboard, data, charts, navigation, settings, overlays, feedback, inputs, pickers. |
 | Personal finance, household, one person's money | `personal` | Also recipe `personal`. Lokta and Devanagari when the product is Nepali. Not the staff dashboard, and not `bank`. |
-| Portfolio, showreel, case study | `website` | Also recipe `portfolio`. Scroll, hover, or a cursor is one piece from Register, not a second theme. |
+| Portfolio of a developer, product manager, product designer, or founder | `website` | Also recipe `portfolio-builder`. Projects are drawn as small working screens. Not the dark `portfolio`. |
+| Portfolio of a visual designer, photographer, architect, or studio; a showreel | `website` | Also recipe `portfolio`. Scroll, hover, or a cursor is one piece from Register, not a second theme. |
 | Personal site, a journal, not a showreel | `website` | Also recipe `personal-site` |
 | Fashion, a lookbook, a luxury good | `website` | Also recipe `fashion` |
 | Food, a local shop, a menu | `website` | Also recipe `food` |
