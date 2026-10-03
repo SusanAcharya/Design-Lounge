@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 360 · "Weather glance widget, three sizes" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 431 · "Weather glance widget, three sizes" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Weather glance widget, three sizes
 

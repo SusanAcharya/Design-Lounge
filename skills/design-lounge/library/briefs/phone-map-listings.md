@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 241 · "Map with price pins and listing sheet" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 281 · "Map with price pins and listing sheet" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Map with price pins and listing sheet
 

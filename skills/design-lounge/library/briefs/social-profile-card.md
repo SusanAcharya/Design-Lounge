@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 204 · "Editorial creator profile card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 222 · "Editorial creator profile card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Editorial creator profile card
 

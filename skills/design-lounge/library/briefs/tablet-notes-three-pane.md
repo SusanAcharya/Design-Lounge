@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 338 · "Tablet notes in three panes" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 403 · "Tablet notes in three panes" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Tablet notes in three panes
 

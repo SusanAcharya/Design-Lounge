@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 168 · "Architecture studio index" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 170 · "Architecture studio index" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Architecture studio index
 

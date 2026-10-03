@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 233 · "Law firm home, editorial" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 267 · "Law firm home, editorial" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Law firm home, editorial
 

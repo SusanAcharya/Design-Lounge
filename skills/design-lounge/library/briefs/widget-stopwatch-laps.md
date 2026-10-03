@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 226 · "Industrial stopwatch with lap log" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 256 · "Industrial stopwatch with lap log" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Industrial stopwatch with lap log
 

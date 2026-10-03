@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 166 · "Alternating feature rows" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 168 · "Alternating feature rows" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Alternating feature rows
 

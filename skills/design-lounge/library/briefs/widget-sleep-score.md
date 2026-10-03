@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 320 · "Sleep score with scrubbable hypnogram" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 377 · "Sleep score with scrubbable hypnogram" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Sleep score with scrubbable hypnogram
 

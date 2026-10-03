@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 208 · "FAQ category accordion" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 228 · "FAQ category accordion" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # FAQ category accordion
 

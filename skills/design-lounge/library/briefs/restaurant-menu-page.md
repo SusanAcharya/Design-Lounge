@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 300 · "Restaurant menu page" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 354 · "Restaurant menu page" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Restaurant menu page
 

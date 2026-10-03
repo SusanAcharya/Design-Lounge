@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 220 · "Greeting loader" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 246 · "Greeting loader" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Greeting loader
 

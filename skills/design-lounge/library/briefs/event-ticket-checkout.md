@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 206 · "Event ticket checkout" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 226 · "Event ticket checkout" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Event ticket checkout
 

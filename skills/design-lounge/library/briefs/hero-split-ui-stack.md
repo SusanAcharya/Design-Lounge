@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 326 · "Split hero with UI card stack" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 385 · "Split hero with UI card stack" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Split hero with UI card stack
 

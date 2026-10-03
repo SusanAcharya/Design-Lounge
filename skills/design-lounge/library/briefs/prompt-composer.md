@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 289 · "Prompt composer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 342 · "Prompt composer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Prompt composer
 

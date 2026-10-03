@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 307 · "Scroll word highlight" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 362 · "Scroll word highlight" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Scroll word highlight
 

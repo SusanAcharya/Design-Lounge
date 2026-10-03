@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 250 · "One number, with a delta" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 293 · "One number, with a delta" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # One number, with a delta
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 274 · "Phone QR ticket scanner" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 320 · "Phone QR ticket scanner" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Phone QR ticket scanner
 

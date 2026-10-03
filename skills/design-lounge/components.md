@@ -162,6 +162,24 @@ Tablet. A shop or cafe till is `tablet-pos-register`. Writing is `tablet-notes-t
 
 Cards. A shop grid is `card-product-quick-add`. A blog or news grid is `card-article-mix`: one lead, then smaller cards, never six equal boxes. A pass, membership or ticket is `card-holo-foil`.
 
+Paper things. A real ticket is `card-cinema-ticket`, `card-event-ticket-stub` or `card-boarding-pass`. A menu on the wall is `card-cafe-menu-board`. A price tag is `card-retail-price-tag`. A postcard, polaroid, stamped form or folder is `card-postcard-stamp`, `card-polaroid-frames`, `card-stamped-document` or `card-folder-tabs`. A magazine cover is `card-magazine-cover`. A long read card is `card-drop-cap-editorial`. A quote is `card-pull-quote`. Use one paper object per page. It is the memorable thing, not the layout.
+
+Widgets. Health is `widget-heart-rate`, `widget-sleep-score`, `widget-activity-rings` or `widget-hydration`. Time is `widget-analog-clock`, `widget-world-clocks`, `widget-pomodoro` or `widget-stopwatch-laps`. Utility is `widget-compass`, `widget-weather-glance`, `widget-device-battery` or `widget-control-toggles`. Live things are `widget-ride-pickup`, `widget-flight-arrival`, `widget-now-playing` and `widget-voice-assistant`. A widget shows one number big and one action. Goals are `card-progress-goals`. A countdown is `card-event-countdown`.
+
+Social. A post is `social-microblog-post`, `social-photo-post`, `social-pro-post` or `social-thread-card`. A profile is `social-profile-card`, `social-pro-profile` or `social-microblog-profile`. A developer profile shows `social-repo-card` and `social-contribution-graph`. A community is `social-chat-server-card`. A business card is `profile-contact-card`. A staff page is `profile-editorial-staff`. Invent the brand. Never draw a real company's logo.
+
+Tables. Orders are `table-orders-status`. Money is `table-transactions-ledger`: amounts line up on the decimal point. Users and roles are `table-users-select`. Tasks are `table-tasks-inline`. Logs are `card-terminal-log`. On a phone every table becomes cards or scrolls inside its own box.
+
+Menus and notices. Row actions are `dropdown-kebab-actions`. Sharing is `dropdown-share-menu`. A desktop app menu is `dropdown-menubar-file`. Filtering a list is `dropdown-filter-sort`. A search over everything is `spotlight-command-bar`. A rich notice is `notif-incoming-call`, `notif-deploy-status`, `notif-delivery-live` or `notif-payment-received`.
+
+Buttons beyond the basic set. A physical key is `button-3d-press`. Soft UI is `button-inset-soft`. A premium pill is `button-sheen-pill`. Deleting or paying is `button-hold-to-confirm`. Shop, social, download and copy are `button-add-to-cart`, `button-follow-bookmark`, `button-download-progress` and `button-copy-share`. Pick one button language per product.
+
+Inputs and waiting. A code by email or text is `otp-code` or `input-otp-underline`. A phone number is `input-phone-country`. Many spinners are in `loader-spinner-set`. Waiting on AI is `loader-text-shimmer`.
+
+Showing work. A phone, laptop, watch or music player is `mockup-phone-showcase`, `mockup-laptop-browser`, `mockup-watch-faces` or `mockup-ipod-classic`. A desktop dock is `dock-magnify-desktop`. Editor tools are `dock-editor-tools`. Who is here is `dock-presence-bar`. A selection box is `frame-transform-box`. Image frames with shapes are `frame-circle-cut`. Galleries are `gallery-film-strip`, `gallery-photo-album`, `gallery-museum-placard` and `gallery-wall-frames`.
+
+Backgrounds. Soft colour is `background-aurora-mesh` or `background-sunrise-horizon`. Print is `background-halftone-pop` or `background-ink-wash`. Material is `background-terrazzo` or `background-linen-weave`. Technical is `background-graph-paper` or `background-diagonal-boxes`. A background sits behind one section, not the whole site, and text on it passes 4.5:1. Hand-drawn marks on words are `text-annotated-underlines`.
+
 On Android, or when the family is Material, the tab bar is `m3-navigation-bar`. It is the same job as `phone-tab-plain`. Use one of the three, never two.
 
 Phone app screens, one piece each. Restyle them onto the locked theme. Do not keep the demo's colours.

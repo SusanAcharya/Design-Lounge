@@ -1,0 +1,268 @@
+<!-- Design Lounge piece: frame-transform-box · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Poster A · Kerf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#1a1c20;--panel:#22252b;--panel-2:#2a2e35;--line:#33373f;--text:#e8e6e1;--muted:#9aa0a9;
+  --sel:#ff6b2c;--handle:#fbfaf7;
+  --sans:"Bricolage Grotesque",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--t:160ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.4 var(--sans);color:var(--text);background:var(--canvas);display:grid;grid-template-rows:48px minmax(0,1fr);overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--sel);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.bar{display:flex;align-items:center;gap:16px;padding:0 16px;background:var(--panel);border-bottom:1px solid var(--line);min-width:0}
+.logo{display:flex;align-items:center;gap:8px;font:800 17px/1 var(--sans);letter-spacing:-.02em}
+.logo svg{width:20px;height:20px}
+.file{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file b{color:var(--text);font-weight:600}
+.seg{margin-left:auto;display:flex;padding:3px;border-radius:8px;background:var(--canvas);border:1px solid var(--line)}
+.seg button{height:28px;padding:0 12px;border-radius:5px;display:flex;align-items:center;gap:6px;color:var(--muted);font-weight:600;font-size:12px;transition:background var(--t) var(--ease),color var(--t) var(--ease)}
+.seg button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.75}
+.seg button[aria-pressed=true]{background:var(--panel-2);color:var(--text)}
+.zoom{font:500 12px/1 var(--mono);color:var(--muted)}
+
+.work{display:grid;grid-template-columns:minmax(0,1fr) 272px;min-height:0}
+.canvas{position:relative;overflow:hidden;background-color:var(--canvas);background-image:radial-gradient(#3a3e46 1px,transparent 1.2px);background-size:24px 24px;touch-action:none;user-select:none}
+.board{position:absolute;left:50%;top:50%;width:520px;height:600px;transform:translate(-50%,-50%);background:#f3ecdf;box-shadow:0 1px 0 rgba(0,0,0,.4),0 20px 50px rgba(0,0,0,.35)}
+.board-label{position:absolute;left:0;top:-22px;font:500 11px/1 var(--mono);color:var(--muted);white-space:nowrap}
+
+.obj{position:absolute;container-type:size;cursor:move;outline:none}
+.obj:focus-visible{outline:none}
+.poster{background:#2140c8;overflow:hidden}
+.poster .sun{position:absolute;left:14%;top:10%;width:72%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 40%,#ffb347,#ff6b2c 70%)}
+.poster .hz{position:absolute;left:0;right:0;top:52%;bottom:0;background:repeating-linear-gradient(#2140c8 0 6%,#1b33a3 6% 12%)}
+.poster .ttl{display:block;position:absolute;left:8%;right:8%;bottom:16%;margin:0;font:800 17cqw/.9 var(--sans);letter-spacing:-.04em;color:#f3ecdf}
+.poster p{position:absolute;left:8%;right:8%;bottom:7%;margin:0;display:flex;justify-content:space-between;font:500 4.2cqw/1 var(--mono);color:#f3ecdf;opacity:.85}
+.tag{border-radius:999px;background:#151619;color:#f3ecdf}
+.tag .in{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:6cqw;font:600 30cqh/1 var(--sans);letter-spacing:-.01em;white-space:nowrap}
+.tag i{width:28cqh;height:28cqh;border-radius:50%;background:#ff6b2c;flex:none}
+
+.sel{position:absolute;pointer-events:none;outline:1px solid var(--sel)}
+.sel[hidden]{display:none}
+.h{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;pointer-events:auto;display:grid;place-items:center;touch-action:none}
+.h::before{content:"";width:9px;height:9px;background:var(--handle);border:1.5px solid var(--sel);border-radius:2px;transition:transform var(--t) var(--ease)}
+.h:hover::before{transform:scale(1.3)}
+.h[data-h=rot]{cursor:grab}
+.h[data-h=rot]::before{border-radius:50%;width:11px;height:11px}
+.stem{position:absolute;left:50%;top:-28px;width:1px;height:28px;background:var(--sel)}
+.h[data-h=rot]{left:50%;top:-28px}
+.h[data-h=nw]{left:0;top:0}.h[data-h=n]{left:50%;top:0}.h[data-h=ne]{left:100%;top:0}.h[data-h=e]{left:100%;top:50%}
+.h[data-h=se]{left:100%;top:100%}.h[data-h=s]{left:50%;top:100%}.h[data-h=sw]{left:0;top:100%}.h[data-h=w]{left:0;top:50%}
+.sel.cross{outline:1px dashed rgba(255,107,44,.7)}
+.sel.cross .h::before{width:18px;height:18px;border:0;border-radius:0;background:linear-gradient(var(--sel),var(--sel)) center/18px 1.5px no-repeat,linear-gradient(var(--sel),var(--sel)) center/1.5px 18px no-repeat}
+.sel.cross .h.edge::before{width:10px;height:10px;background-size:10px 1.5px,1.5px 10px}
+.sel.cross .stem{display:none}
+.sel.cross .h[data-h=rot]::before{width:11px;height:11px;border:1.5px solid var(--sel);border-radius:50%;background:none}
+.sel.cross .h[data-h=rot]{top:-20px}
+.sel.cross::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;background:linear-gradient(var(--sel),var(--sel)) center/14px 1px no-repeat,linear-gradient(var(--sel),var(--sel)) center/1px 14px no-repeat;opacity:.8}
+.badge{position:absolute;transform:translate(-50%,0);padding:4px 7px;border-radius:4px;background:var(--sel);color:#1a1c20;font:500 11px/1 var(--mono);white-space:nowrap;pointer-events:none}
+.badge[hidden]{display:none}
+.hover-out{position:absolute;pointer-events:none;outline:1px solid rgba(255,107,44,.55)}
+
+.insp{background:var(--panel);border-left:1px solid var(--line);overflow:auto;min-width:0}
+.sec{padding:16px;border-bottom:1px solid var(--line)}
+.sec h3{margin:0 0 12px;font:600 11px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.layers{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.layers button{width:100%;height:32px;display:flex;align-items:center;gap:10px;padding:0 8px;border-radius:6px;text-align:left;color:var(--muted)}
+.layers button:hover{background:var(--panel-2)}
+.layers button[aria-current=true]{background:rgba(255,107,44,.14);color:var(--text)}
+.layers svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.f{display:flex;align-items:center;height:32px;border-radius:6px;background:var(--canvas);border:1px solid var(--line);padding:0 8px;gap:8px}
+.f:focus-within{border-color:var(--sel)}
+.f span{font:500 11px/1 var(--mono);color:var(--muted);width:12px}
+.f input{width:100%;min-width:0;background:none;border:0;font:500 12px/1 var(--mono);outline:none}
+.lock{grid-column:1/-1;display:flex;align-items:center;gap:8px;height:32px;font-size:12px;color:var(--muted)}
+.lock kbd,.keys kbd{font:500 11px/1 var(--mono);padding:3px 6px;border-radius:4px;border:1px solid var(--line);color:var(--text);background:var(--canvas)}
+.lock.on{color:var(--sel)}.lock.on kbd{border-color:var(--sel);color:var(--sel)}
+.keys{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:center;font-size:12px;color:var(--muted)}
+.keys dt{white-space:nowrap}.keys dd{margin:0}
+
+@media (max-width:900px){.work{grid-template-columns:1fr}.insp{display:none}.file{display:none}}
+@media (max-width:640px){.zoom,.seg .t{display:none}.board{width:300px;height:380px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z" fill="none" stroke="#ff6b2c" stroke-width="2"/><path d="M4 12h16M12 4v16" stroke="#e8e6e1" stroke-width="1.5"/></svg>Kerf</span>
+  <span class="file">Midsummer series / <b>Poster A</b></span>
+  <div class="seg" role="group" aria-label="Selection style">
+    <button type="button" id="variant-h" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z"/><path d="M4 4h4v4H4zM16 4h4v4h-4zM4 16h4v4H4zM16 16h4v4h-4z"/></svg><span class="t">Handles</span></button>
+    <button type="button" id="variant" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2v8M2 6h8M18 14v8M14 18h8"/></svg><span class="t">Crosshair</span></button>
+  </div>
+  <span class="zoom">100%</span>
+</header>
+<div class="work">
+  <div class="canvas" id="canvas" aria-label="Canvas">
+    <div class="board" aria-hidden="true"><span class="board-label">Poster A · 520 × 600</span></div>
+    <div class="obj poster" data-name="Solstice poster" tabindex="0" role="button" aria-roledescription="layer">
+      <div class="sun"></div><div class="hz"></div><b class="ttl">Solstice</b><p><span>21.06.26</span><span>Riverside</span></p>
+    </div>
+    <div class="obj tag" data-name="Live set tag" tabindex="0" role="button" aria-roledescription="layer"><span class="in"><i></i>Live set 22:00</span></div>
+    <div class="hover-out" id="hov" hidden></div>
+    <div class="sel" id="sel" aria-hidden="true">
+      <span class="stem"></span>
+      <span class="h" data-h="nw"></span><span class="h edge" data-h="n"></span><span class="h" data-h="ne"></span>
+      <span class="h edge" data-h="e"></span><span class="h" data-h="se"></span><span class="h edge" data-h="s"></span>
+      <span class="h" data-h="sw"></span><span class="h edge" data-h="w"></span><span class="h" data-h="rot" title="Rotate"></span>
+    </div>
+    <div class="badge" id="badge"></div>
+  </div>
+  <aside class="insp" aria-label="Inspector">
+    <div class="sec"><h3>Layers</h3>
+      <ul class="layers">
+        <li><button type="button" data-i="1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9" width="16" height="6" rx="3"/></svg>Live set tag</button></li>
+        <li><button type="button" data-i="0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18"/><circle cx="12" cy="10" r="3.5"/></svg>Solstice poster</button></li>
+      </ul>
+    </div>
+    <div class="sec"><h3>Transform</h3>
+      <div class="fields">
+        <label class="f"><span>X</span><input data-k="x" inputmode="numeric" aria-label="X position"></label>
+        <label class="f"><span>Y</span><input data-k="y" inputmode="numeric" aria-label="Y position"></label>
+        <label class="f"><span>W</span><input data-k="w" inputmode="numeric" aria-label="Width"></label>
+        <label class="f"><span>H</span><input data-k="h" inputmode="numeric" aria-label="Height"></label>
+        <label class="f"><span>R</span><input data-k="r" inputmode="numeric" aria-label="Rotation in degrees"></label>
+        <div class="lock" id="lock"><kbd>Shift</kbd>keeps ratio · snaps 15°</div>
+      </div>
+    </div>
+    <div class="sec"><h3>Keyboard</h3>
+      <dl class="keys">
+        <dt><kbd>Arrows</kbd></dt><dd>Move 1px, Shift 10px</dd>
+        <dt><kbd>Alt</kbd>+<kbd>Arrows</kbd></dt><dd>Resize width, height</dd>
+        <dt><kbd>[</kbd> <kbd>]</kbd></dt><dd>Rotate 1°, Shift 15°</dd>
+        <dt><kbd>Esc</kbd></dt><dd>Deselect</dd>
+      </dl>
+    </div>
+  </aside>
+</div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<script>
+const cv = document.getElementById('canvas'), sel = document.getElementById('sel'), badge = document.getElementById('badge');
+const hov = document.getElementById('hov'), live = document.getElementById('live'), lock = document.getElementById('lock');
+const els = [...document.querySelectorAll('.obj')];
+const small = innerWidth < 640;
+const st = small
+  ? [{cx:0,cy:-30,w:180,h:240,r:-4},{cx:40,cy:168,w:150,h:40,r:6}]
+  : [{cx:-20,cy:-40,w:300,h:380,r:-4},{cx:110,cy:238,w:220,h:56,r:6}];
+let cur = 0, drag = null, shift = false;
+const rad = d => d * Math.PI / 180, R = Math.round;
+const origin = () => ({ x: cv.clientWidth / 2, y: cv.clientHeight / 2 });
+const fields = {}; document.querySelectorAll('.f input').forEach(i => fields[i.dataset.k] = i);
+const CUR = ['ns-resize','nesw-resize','ew-resize','nwse-resize'];
+const HANG = { n:0, ne:45, e:90, se:135, s:180, sw:225, w:270, nw:315 };
+const SIGN = { n:[0,-1], ne:[1,-1], e:[1,0], se:[1,1], s:[0,1], sw:[-1,1], w:[-1,0], nw:[-1,-1] };
+
+function place(el, s) {
+  const o = origin();
+  Object.assign(el.style, { left: (o.x + s.cx - s.w / 2) + 'px', top: (o.y + s.cy - s.h / 2) + 'px', width: s.w + 'px', height: s.h + 'px', transform: `rotate(${s.r}deg)` });
+}
+function render(mode) {
+  els.forEach((el, i) => place(el, st[i]));
+  document.querySelectorAll('.layers button').forEach(b => b.setAttribute('aria-current', +b.dataset.i === cur));
+  els.forEach((el, i) => el.setAttribute('aria-label', el.dataset.name + (i === cur ? ', selected' : '')));
+  if (cur < 0) { sel.hidden = badge.hidden = true; Object.values(fields).forEach(f => f.value = ''); return; }
+  const s = st[cur]; sel.hidden = badge.hidden = false; place(sel, s);
+  const hh = (Math.abs(s.w * Math.sin(rad(s.r))) + Math.abs(s.h * Math.cos(rad(s.r)))) / 2, o = origin();
+  badge.style.left = (o.x + s.cx) + 'px'; badge.style.top = (o.y + s.cy + hh + 12) + 'px';
+  badge.textContent = mode === 'rot' ? R(s.r) + '°' : mode === 'move' ? `${R(s.cx - s.w / 2)}, ${R(s.cy - s.h / 2)}` : `${R(s.w)} × ${R(s.h)}`;
+  const vals = { x: R(s.cx - s.w / 2), y: R(s.cy - s.h / 2), w: R(s.w), h: R(s.h), r: R(s.r) };
+  for (const k in vals) if (document.activeElement !== fields[k]) fields[k].value = vals[k];
+  sel.querySelectorAll('.h').forEach(h => { const a = HANG[h.dataset.h]; if (a !== undefined) h.style.cursor = CUR[(((R((a + s.r) / 45)) % 4) + 4) % 4]; });
+}
+function pt(e) { const b = cv.getBoundingClientRect(), o = origin(); return { x: e.clientX - b.left - o.x, y: e.clientY - b.top - o.y }; }
+function select(i, focus) { cur = i; render(); if (focus && i >= 0) els[i].focus({ preventScroll: true }); }
+function norm(a) { a = ((a + 180) % 360 + 360) % 360 - 180; return a === -180 ? 180 : a; }
+
+els.forEach((el, i) => {
+  el.addEventListener('pointerdown', e => { select(i, true); start(e, 'move'); });
+  el.addEventListener('pointerenter', () => { if (i !== cur && !drag) { hov.hidden = false; place(hov, st[i]); } });
+  el.addEventListener('pointerleave', () => hov.hidden = true);
+  el.addEventListener('focus', () => { if (cur !== i) select(i); });
+  el.addEventListener('keydown', key);
+});
+sel.querySelectorAll('.h').forEach(h => h.addEventListener('pointerdown', e => start(e, h.dataset.h)));
+cv.addEventListener('pointerdown', e => { if (e.target === cv || e.target.classList.contains('board')) select(-1); });
+
+function start(e, kind) {
+  e.preventDefault(); e.stopPropagation(); hov.hidden = true;
+  const p = pt(e), s = { ...st[cur] };
+  drag = { kind, p, s, a0: Math.atan2(p.y - s.cy, p.x - s.cx) };
+  cv.setPointerCapture(e.pointerId);
+  if (kind === 'rot') sel.querySelector('[data-h=rot]').style.cursor = 'grabbing';
+}
+cv.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const p = pt(e), { kind, s } = drag, n = st[cur];
+  shift = e.shiftKey; lock.classList.toggle('on', shift);
+  if (kind === 'move') {
+    n.cx = s.cx + p.x - drag.p.x; n.cy = s.cy + p.y - drag.p.y;
+    if (shift) { if (Math.abs(p.x - drag.p.x) > Math.abs(p.y - drag.p.y)) n.cy = s.cy; else n.cx = s.cx; }
+  } else if (kind === 'rot') {
+    let r = s.r + (Math.atan2(p.y - s.cy, p.x - s.cx) - drag.a0) * 180 / Math.PI;
+    if (shift) r = Math.round(r / 15) * 15;
+    n.r = norm(r);
+  } else {
+    const [sx, sy] = SIGN[kind], c = Math.cos(rad(-s.r)), si = Math.sin(rad(-s.r));
+    const dx = p.x - drag.p.x, dy = p.y - drag.p.y, lx = dx * c - dy * si, ly = dx * si + dy * c;
+    const m = e.altKey ? 2 : 1;
+    let w = s.w + sx * lx * m, h = s.h + sy * ly * m;
+    if (shift) {
+      let k = sx && sy ? Math.max(w / s.w, h / s.h) : sx ? w / s.w : h / s.h;
+      k = Math.max(k, 24 / Math.min(s.w, s.h)); w = s.w * k; h = s.h * k;
+    } else { w = Math.max(24, w); h = Math.max(24, h); }
+    const ox = e.altKey ? 0 : sx * (w - s.w) / 2, oy = e.altKey ? 0 : sy * (h - s.h) / 2;
+    const cr = Math.cos(rad(s.r)), sr = Math.sin(rad(s.r));
+    Object.assign(n, { w, h, cx: s.cx + ox * cr - oy * sr, cy: s.cy + ox * sr + oy * cr });
+  }
+  render(kind === 'move' || kind === 'rot' ? kind : 'size');
+});
+const end = () => { if (!drag) return; drag = null; lock.classList.remove('on'); sel.querySelector('[data-h=rot]').style.cursor = ''; render(); announce(); };
+cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+function announce() { if (cur < 0) return; const s = st[cur]; live.textContent = `${els[cur].dataset.name}: ${R(s.w)} by ${R(s.h)}, rotated ${R(s.r)} degrees, at ${R(s.cx - s.w / 2)}, ${R(s.cy - s.h / 2)}.`; }
+let at;
+function key(e) {
+  if (cur < 0) return;
+  const s = st[cur], d = e.shiftKey ? 10 : 1, k = e.key;
+  const ar = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[k];
+  if (ar && e.altKey) { s.w = Math.max(24, s.w + ar[0] * d); s.h = Math.max(24, s.h - ar[1] * d); }
+  else if (ar) { s.cx += ar[0] * d; s.cy += ar[1] * d; }
+  else if (k === '[' || k === ']' || k === '{' || k === '}') s.r = norm(s.r + (k === '[' || k === '{' ? -1 : 1) * (e.shiftKey ? 15 : 1));
+  else if (k === 'Escape') { select(-1); return; }
+  else return;
+  e.preventDefault(); render(ar && !e.altKey ? 'move' : k.length === 1 ? 'rot' : 'size');
+  clearTimeout(at); at = setTimeout(() => { render(); announce(); }, 500);
+}
+Object.values(fields).forEach(f => f.addEventListener('change', () => {
+  if (cur < 0) return; const v = parseFloat(f.value), s = st[cur]; if (isNaN(v)) return render();
+  const k = f.dataset.k;
+  if (k === 'x') s.cx = v + s.w / 2; else if (k === 'y') s.cy = v + s.h / 2;
+  else if (k === 'w') { const x = s.cx - s.w / 2; s.w = Math.max(24, v); s.cx = x + s.w / 2; }
+  else if (k === 'h') { const y = s.cy - s.h / 2; s.h = Math.max(24, v); s.cy = y + s.h / 2; }
+  else s.r = norm(v);
+  render(); announce();
+}));
+document.querySelectorAll('.layers button').forEach(b => b.addEventListener('click', () => select(+b.dataset.i, true)));
+const vH = document.getElementById('variant-h'), vC = document.getElementById('variant');
+function variant(cross) { sel.classList.toggle('cross', cross); vC.setAttribute('aria-pressed', cross); vH.setAttribute('aria-pressed', !cross); }
+vH.addEventListener('click', () => variant(false)); vC.addEventListener('click', () => variant(true));
+addEventListener('keydown', e => { if (e.key === 'Shift') lock.classList.add('on'); });
+addEventListener('keyup', e => { if (e.key === 'Shift' && !drag) lock.classList.remove('on'); });
+addEventListener('resize', () => render());
+render();
+</script>
+</body>
+</html>

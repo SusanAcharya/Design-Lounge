@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 171 · "Boxing gym home with timetable" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 175 · "Boxing gym home with timetable" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Boxing gym home with timetable
 

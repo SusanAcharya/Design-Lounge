@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 187 · "Contact sheet" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 195 · "Contact sheet" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Contact sheet
 

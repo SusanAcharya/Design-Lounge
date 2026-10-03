@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 258 · "Paper contribution heatmap" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 302 · "Paper contribution heatmap" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Paper contribution heatmap
 

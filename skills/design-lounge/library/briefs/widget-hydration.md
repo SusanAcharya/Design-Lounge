@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 260 · "Paper hydration tumbler" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 304 · "Paper hydration tumbler" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Paper hydration tumbler
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 356 · "Usage pricing slider" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 426 · "Usage pricing slider" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Usage pricing slider
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 203 · "Editorial 404 with search" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 221 · "Editorial 404 with search" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Editorial 404 with search
 

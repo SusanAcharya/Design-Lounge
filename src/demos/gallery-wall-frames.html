@@ -1,0 +1,218 @@
+<!-- Design Lounge piece: gallery-wall-frames · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Salon wall planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f1ede4;--paper-2:#e7e2d6;--line:#d6cfbf;--ink:#22251f;--ink-2:#575a50;--ink-3:#7a7c70;
+  --wall:#b9c0a8;--wall-2:#aeb69c;--accent:#c4532e;--accent-ink:#fff8f2;--sofa:#8f5e4a;--floor:#9a8a72;
+  --sans:"Bricolage Grotesque",system-ui,sans-serif;--serif:"Instrument Serif",Georgia,serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+  --s:1;--grid:20px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--paper);display:grid;grid-template-columns:300px minmax(0,1fr);overflow-x:hidden}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.panel{padding:28px 28px 24px;display:flex;flex-direction:column;gap:22px;border-right:1px solid var(--line);overflow:auto}
+.brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;letter-spacing:-.01em}
+.brand svg{color:var(--accent)}
+h1{margin:0;font:400 38px/1 var(--serif);letter-spacing:-.01em}
+.sub{margin:6px 0 0;color:var(--ink-2)}
+.lbl{margin:0 0 10px;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.styles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sw{display:flex;align-items:center;gap:10px;height:52px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:#fbf9f4;cursor:pointer;text-align:left;font-size:13px;transition:border-color .16s var(--ease),background .16s var(--ease)}
+.sw i{flex:none;width:26px;height:30px;border:5px solid;background:#f7f4ec}
+.sw[aria-checked="true"]{border-color:var(--ink);background:#fff;box-shadow:inset 0 0 0 1px var(--ink)}
+.sw:hover:not([aria-checked="true"]){border-color:var(--ink-3)}
+.linkbtn{margin-top:10px;border:0;background:none;padding:6px 0;color:var(--accent);font-weight:500;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.sel{padding:14px 16px;border-radius:12px;background:var(--paper-2)}
+.sel h2{margin:0;font:400 24px/1.1 var(--serif)}
+.sel p{margin:4px 0 0;color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;border:0;background:none;padding:6px 0;cursor:pointer;text-align:left}
+.switch .t{position:relative;flex:none;width:40px;height:24px;border-radius:12px;background:#c9c3b4;transition:background .18s var(--ease)}
+.switch .t::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:transform .2s var(--expo)}
+.switch[aria-checked="true"] .t{background:var(--ink)}
+.switch[aria-checked="true"] .t::after{transform:translateX(16px)}
+.cta{margin-top:auto;height:44px;border:0;border-radius:22px;background:var(--accent);color:var(--accent-ink);font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .16s var(--ease)}
+.cta:hover{background:#ad4524}
+.status{margin:0;min-height:20px;font-size:12px;color:var(--ink-3)}
+
+.stage{position:relative;display:grid;place-items:center;padding:28px;min-width:0;min-height:0;background:var(--paper-2)}
+.fit{width:calc(900px * var(--s));height:calc(600px * var(--s))}
+.wall{position:relative;width:900px;height:600px;transform:scale(var(--s));transform-origin:0 0;border-radius:4px;overflow:hidden;touch-action:none;
+  background:radial-gradient(120% 90% at 50% 20%,#c2c9b2,var(--wall) 60%,var(--wall-2)),var(--wall);box-shadow:0 1px 0 #fff8 inset,0 20px 40px -24px #0005}
+.wall::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,#22251f55 1.1px,transparent 1.4px) 0 0/var(--grid) var(--grid);opacity:0;transition:opacity .2s var(--ease);pointer-events:none}
+.wall.dragging::before{opacity:.7}
+.wall.nosnap::before{opacity:0}
+.floor{position:absolute;left:0;right:0;bottom:0;height:40px;background:linear-gradient(#e9e3d5 0 6px,var(--floor) 6px)}
+.sofa{position:absolute;left:190px;bottom:40px;width:520px;height:120px;pointer-events:none}
+.sofa::before{content:"";position:absolute;left:0;right:0;top:0;height:96px;border-radius:26px 26px 10px 10px;background:linear-gradient(var(--sofa),#7a4e3c);box-shadow:inset 0 -26px 0 #6e4535,0 10px 18px -8px #0006}
+.sofa::after{content:"";position:absolute;left:30px;right:30px;bottom:0;height:24px;background:linear-gradient(90deg,#3b2a20 0 8px,transparent 8px calc(100% - 8px),#3b2a20 calc(100% - 8px))}
+.lamp{position:absolute;left:800px;bottom:40px;width:60px;height:220px;pointer-events:none}
+.lamp::before{content:"";position:absolute;left:29px;bottom:0;width:2px;height:180px;background:#2d2b26}
+.lamp::after{content:"";position:absolute;left:4px;top:0;width:52px;height:46px;background:#efe6d2;clip-path:polygon(18% 0,82% 0,100% 100%,0 100%)}
+.ghost{position:absolute;border:2px dashed var(--ink);border-radius:2px;opacity:0;pointer-events:none;transition:opacity .15s var(--ease)}
+.dragging .ghost{opacity:.55}
+.ghost.bad{border-color:var(--accent);opacity:.9!important}
+.fr{position:absolute;cursor:grab;transform-origin:50% -22px;transition:left .24s var(--expo),top .24s var(--expo),filter .2s var(--ease),scale .2s var(--ease);rotate:var(--tilt,0deg);filter:drop-shadow(0 8px 10px #2a2a1e40);outline-offset:6px}
+.fr.drag{cursor:grabbing;transition:filter .2s var(--ease),scale .2s var(--ease),rotate .12s linear;scale:1.03;filter:drop-shadow(0 22px 22px #2a2a1e55);z-index:50}
+.fr .body{position:absolute;inset:0;padding:var(--t);background:var(--fb)}
+.fr .mat{position:absolute;inset:var(--t);padding:var(--m,0);background:#faf7f0;box-shadow:inset 0 1px 3px #0003}
+.fr svg.a{display:block;width:100%;height:100%;box-shadow:0 0 0 1px #0002}
+.fr .wire{position:absolute;left:0;top:-22px;width:100%;height:22px;overflow:visible;pointer-events:none}
+.fr::after{content:"";position:absolute;left:50%;top:-26px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#5b5a52;box-shadow:0 1px 0 #fff6}
+.fr[aria-pressed="true"] .body{box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--ink)}
+.fr[data-style="black"]{--t:9px;--fb:linear-gradient(135deg,#2a2926,#161513)}
+.fr[data-style="oak"]{--t:11px;--fb:repeating-linear-gradient(90deg,#0000 0 3px,#7a52281a 3px 4px),linear-gradient(135deg,#c79a63,#a87a46 60%,#b98a54)}
+.fr[data-style="gilt"]{--t:12px;--fb:linear-gradient(135deg,#ead08f,#c29a55 35%,#8f6d35 60%,#e0bf78);}
+.fr[data-style="gilt"] .body{box-shadow:inset 0 0 0 2px #7a5a26,inset 0 0 0 4px #f0d79a}
+.fr[data-style="white"]{--t:9px;--fb:linear-gradient(135deg,#fdfcf8,#ebe7dd)}
+.fr[data-style="white"] .body{box-shadow:inset 0 0 0 1px #0000001a}
+.sw[data-style="black"] i{border-color:#1d1c1a}.sw[data-style="oak"] i{border-color:#b08250}.sw[data-style="gilt"] i{border-color:#c29a55}.sw[data-style="white"] i{border-color:#f5f2ea;box-shadow:0 0 0 1px #0002}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0s!important}.fr.drag{rotate:0deg}}
+@media (max-width:900px){html,body{height:auto}body{min-height:100%;grid-template-columns:1fr;grid-template-rows:auto auto}.stage{order:-1}.panel{overflow:visible;border-right:0;border-top:1px solid var(--line)}.cta{margin-top:0}.stage{padding:16px}}
+</style>
+</head>
+<body>
+<aside class="panel" aria-label="Wall settings">
+  <div class="brand"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4" r="1.5"/><path d="M5 12 12 5.5 19 12"/><rect x="4" y="12" width="16" height="9" rx="1"/></svg>Hangline</div>
+  <div>
+    <h1>Hallway, north wall</h1>
+    <p class="sub">450 × 300 cm · 7 frames</p>
+  </div>
+  <div>
+    <p class="lbl" id="styleLbl">Frame style</p>
+    <div class="styles" role="radiogroup" aria-labelledby="styleLbl">
+      <button type="button" class="sw" role="radio" data-style="black" aria-checked="false"><i aria-hidden="true"></i>Black ash</button>
+      <button type="button" class="sw" role="radio" data-style="oak" aria-checked="true"><i aria-hidden="true"></i>Natural oak</button>
+      <button type="button" class="sw" role="radio" data-style="gilt" aria-checked="false"><i aria-hidden="true"></i>Gilt</button>
+      <button type="button" class="sw" role="radio" data-style="white" aria-checked="false"><i aria-hidden="true"></i>White lacquer</button>
+    </div>
+    <button type="button" class="linkbtn" id="all">Apply to all frames</button>
+  </div>
+  <div class="sel">
+    <p class="lbl" style="margin-bottom:6px">Selected</p>
+    <h2 id="selName">Harbour light</h2>
+    <p id="selSize">100 × 70 cm</p>
+    <p id="selPos">105 cm from left · 60 cm from top</p>
+  </div>
+  <button type="button" class="switch" role="switch" aria-checked="true" id="snap"><span><b style="font-weight:500">Snap to grid</b><br><span style="color:var(--ink-3);font-size:12px">10 cm steps</span></span><span class="t" aria-hidden="true"></span></button>
+  <p class="status" id="status" aria-live="polite">Drag a frame, or focus one and use the arrow keys.</p>
+  <button type="button" class="cta" id="rehang"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg>Rehang all</button>
+</aside>
+
+<main class="stage">
+  <div class="fit">
+    <div class="wall" id="wall" aria-label="Wall, 450 by 300 centimetres">
+      <div class="lamp" aria-hidden="true"></div>
+      <div class="sofa" aria-hidden="true"></div>
+      <div class="floor" aria-hidden="true"></div>
+      <div class="ghost" id="ghost" aria-hidden="true"></div>
+    </div>
+  </div>
+</main>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="a0" viewBox="0 0 60 80"><rect width="60" height="80" fill="#f3ecd9"/><g stroke="#5f7a4a" stroke-width="1.1" fill="none"><path d="M30 78V30M30 50 18 36M30 44l12-14M30 30 22 18M30 30l8-12"/></g><g fill="#d9b23f"><circle cx="18" cy="34" r="3.4"/><circle cx="42" cy="28" r="3.8"/><circle cx="22" cy="16" r="3"/><circle cx="38" cy="16" r="3.2"/></g><text x="30" y="74" font-family="serif" font-size="4" text-anchor="middle" fill="#7a6c52" font-style="italic">Foeniculum</text></symbol>
+<symbol id="a1" viewBox="0 0 100 70"><rect width="100" height="40" fill="#e9c9a0"/><rect y="40" width="100" height="30" fill="#3f5f6e"/><rect y="40" width="100" height="3" fill="#f4e3c4" opacity=".6"/><circle cx="72" cy="30" r="9" fill="#f1844f"/><path d="M24 48h16l-3 4H27zM31 48V36l7 12z" fill="#22251f"/><path d="M0 56h100M0 63h100" stroke="#6e8e98" stroke-width=".8"/></symbol>
+<symbol id="a2" viewBox="0 0 50 50"><rect width="50" height="50" fill="#1f2a3d"/><circle cx="25" cy="25" r="13" fill="#efe6cf"/><circle cx="30" cy="21" r="3" fill="#d9ceb4"/><circle cx="20" cy="30" r="2" fill="#d9ceb4"/></symbol>
+<symbol id="a3" viewBox="0 0 60 80"><rect width="60" height="80" fill="#c4532e"/><path d="M22 76c-6-6-8-16-4-26 2-6 4-8 4-14h16c0 6 2 8 4 14 4 10 2 20-4 26z" fill="#2f4f8f"/><path d="M24 36h12" stroke="#1d3463" stroke-width="2"/><g fill="#f6efe1"><circle cx="30" cy="20" r="6"/><circle cx="20" cy="26" r="5"/><circle cx="40" cy="25" r="5"/></g><g fill="#e3b341"><circle cx="30" cy="20" r="1.6"/><circle cx="20" cy="26" r="1.4"/><circle cx="40" cy="25" r="1.4"/></g></symbol>
+<symbol id="a4" viewBox="0 0 40 50"><rect width="40" height="50" fill="#d9a441"/><path d="M14 40c-6 0-8-6-6-11s5-6 6-10c1 4 4 5 6 10s0 11-6 11z" fill="#5a2d4a"/><path d="M27 42c-5 0-7-5-5-9s4-5 5-8c1 3 3 4 5 8s0 9-5 9z" fill="#6e3a5a"/><path d="M14 19v-3M27 25v-3" stroke="#3d4a2a" stroke-width="1.2"/></symbol>
+<symbol id="a5" viewBox="0 0 100 50"><rect width="100" height="50" fill="#f3efe3"/><g fill="none" stroke="#8a6f4a" stroke-width=".7"><path d="M30 25c0-8 8-14 18-12s14 10 10 16-14 8-20 6-8-4-8-10z"/><path d="M22 26c0-12 12-20 26-18s22 14 16 24-22 12-30 9-12-6-12-15z"/><path d="M14 27c0-16 16-26 34-24s30 18 22 32-30 16-40 12-16-8-16-20z"/><path d="M70 14c6-2 14 0 18 6s0 14-8 14-14-4-14-10 0-8 4-10z"/></g><circle cx="44" cy="22" r="1.4" fill="#c4532e"/></symbol>
+<symbol id="a6" viewBox="0 0 50 70"><rect width="50" height="70" fill="#2f7c7a"/><g fill="none" stroke="#f3efe3" stroke-width="2"><path d="M0 44c6-4 12-4 17 0s12 4 17 0 12-4 16 0"/><path d="M0 52c6-4 12-4 17 0s12 4 17 0 12-4 16 0"/></g><text x="25" y="22" font-family="sans-serif" font-weight="700" font-size="11" text-anchor="middle" fill="#f3efe3">SWIM</text><text x="25" y="32" font-family="sans-serif" font-size="5" letter-spacing="1" text-anchor="middle" fill="#f3efe3">CLUB · 1962</text><circle cx="40" cy="62" r="3" fill="#e3b341"/></symbol>
+</svg>
+
+<script>
+const G=20;
+const items=[
+  {n:'Fennel, study',a:'a0',x:210,y:100,w:120,h:160,st:'oak',m:12},
+  {n:'Harbour light',a:'a1',x:350,y:120,w:200,h:140,st:'gilt',m:0},
+  {n:'Moon over Ost',a:'a2',x:570,y:100,w:100,h:100,st:'black',m:14},
+  {n:'Blue vase',a:'a3',x:570,y:220,w:120,h:160,st:'white',m:0},
+  {n:'Two figs',a:'a4',x:250,y:280,w:80,h:100,st:'black',m:8},
+  {n:'Contour, Lake Ost',a:'a5',x:350,y:280,w:200,h:100,st:'oak',m:12},
+  {n:'Swim club, 1962',a:'a6',x:710,y:160,w:100,h:140,st:'white',m:0}
+];
+const $=id=>document.getElementById(id);
+const wall=$('wall'),ghost=$('ghost'),reduce=matchMedia('(prefers-reduced-motion: reduce)');
+const W=900,FLOORY=440;
+let sel=1,snap=true;
+const els=items.map((it,i)=>{
+  const e=document.createElement('div');
+  e.className='fr';e.tabIndex=0;e.setAttribute('role','button');e.dataset.style=it.st;
+  e.setAttribute('aria-label',`${it.n}, ${it.w/2} by ${it.h/2} cm`);
+  e.innerHTML=`<svg class="wire" viewBox="0 0 100 22" preserveAspectRatio="none" aria-hidden="true"><path d="M18 22 50 0 82 22" stroke="#3d3c36" stroke-width="1" fill="none" vector-effect="non-scaling-stroke"/></svg><div class="body"></div><div class="mat" style="--m:${it.m}px"><svg class="a" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#${it.a}"/></svg></div>`;
+  wall.appendChild(e);return e;
+});
+const cm=v=>Math.round(v/2);
+function place(i){const it=items[i],e=els[i];e.style.left=it.x+'px';e.style.top=it.y+'px';e.style.width=it.w+'px';e.style.height=it.h+'px'}
+function clamp(it){it.x=Math.max(0,Math.min(W-it.w,it.x));it.y=Math.max(30,Math.min(FLOORY-it.h,it.y))}
+function snapped(it){const s=snap?G:1;return{x:Math.round(it.x/s)*s,y:Math.round(it.y/s)*s}}
+function overlaps(i,p){const a=items[i];return items.some((b,j)=>j!==i&&p.x<b.x+b.w&&p.x+a.w>b.x&&p.y<b.y+b.h&&p.y+a.h>b.y)}
+function info(){
+  const it=items[sel];
+  els.forEach((e,j)=>e.setAttribute('aria-pressed',j===sel));
+  $('selName').textContent=it.n;$('selSize').textContent=`${cm(it.w)} × ${cm(it.h)} cm`;$('selPos').textContent=`${cm(it.x)} cm from left · ${cm(it.y)} cm from top`;
+  document.querySelectorAll('.sw').forEach(s=>s.setAttribute('aria-checked',s.dataset.style===it.st));
+}
+function hang(e,amp=5,delay=0){
+  if(reduce.matches)return;
+  e.animate([{rotate:amp+'deg'},{rotate:-amp*.6+'deg'},{rotate:amp*.32+'deg'},{rotate:-amp*.14+'deg'},{rotate:'0deg'}],{duration:amp>3?1000:600,delay,easing:'cubic-bezier(.2,.7,.2,1)',fill:'backwards'});
+}
+function select(i){sel=i;els.forEach((e,j)=>e.style.zIndex=j===i?20:'');info()}
+
+let drag=null;
+els.forEach((e,i)=>{
+  e.addEventListener('pointerdown',ev=>{
+    if(ev.button)return;ev.preventDefault();e.focus({preventScroll:true});select(i);
+    const r=wall.getBoundingClientRect(),s=r.width/W;
+    drag={i,s,r,ox:(ev.clientX-r.left)/s-items[i].x,oy:(ev.clientY-r.top)/s-items[i].y,lx:ev.clientX};
+    e.setPointerCapture(ev.pointerId);e.classList.add('drag');wall.classList.add('dragging');
+    showGhost();
+  });
+  e.addEventListener('pointermove',ev=>{
+    if(!drag||drag.i!==i)return;const it=items[i];
+    it.x=(ev.clientX-drag.r.left)/drag.s-drag.ox;it.y=(ev.clientY-drag.r.top)/drag.s-drag.oy;clamp(it);place(i);
+    const t=Math.max(-6,Math.min(6,(ev.clientX-drag.lx)*.5));drag.lx=ev.clientX;e.style.setProperty('--tilt',(reduce.matches?0:t)+'deg');
+    showGhost();
+  });
+  const end=()=>{
+    if(!drag||drag.i!==i)return;drag=null;const it=items[i];
+    const p=snapped(it);it.x=p.x;it.y=p.y;clamp(it);
+    e.classList.remove('drag');wall.classList.remove('dragging');e.style.setProperty('--tilt','0deg');place(i);info();
+    setTimeout(()=>hang(e),reduce.matches?0:180);
+    say(`${it.n} hung ${cm(it.x)} cm from left, ${cm(it.y)} cm from top${overlaps(i,it)?'. It overlaps another frame.':'.'}`);
+  };
+  e.addEventListener('pointerup',end);e.addEventListener('pointercancel',end);
+  e.addEventListener('focus',()=>{if(sel!==i)select(i)});
+  e.addEventListener('keydown',ev=>{
+    const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[ev.key];
+    if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();hang(e);return}
+    if(!d)return;ev.preventDefault();const it=items[i],k=(snap?G:2)*(ev.shiftKey?5:1);
+    it.x+=d[0]*k;it.y+=d[1]*k;clamp(it);const p=snapped(it);it.x=p.x;it.y=p.y;place(i);info();hang(e,1.6);
+    say(`${it.n}: ${cm(it.x)} cm from left, ${cm(it.y)} cm from top`);
+  });
+});
+function showGhost(){const it=items[drag.i],p=snapped(it);const q={x:Math.max(0,Math.min(W-it.w,p.x)),y:Math.max(30,Math.min(FLOORY-it.h,p.y))};Object.assign(ghost.style,{left:q.x+'px',top:q.y+'px',width:it.w+'px',height:it.h+'px'});ghost.classList.toggle('bad',overlaps(drag.i,q))}
+function say(t){$('status').textContent=t}
+
+document.querySelectorAll('.sw').forEach(s=>s.addEventListener('click',()=>{
+  items[sel].st=els[sel].dataset.style=s.dataset.style;info();hang(els[sel],2.4);say(`${items[sel].n} now in ${s.textContent.trim().toLowerCase()}.`);
+}));
+$('all').onclick=()=>{const st=items[sel].st;items.forEach((it,i)=>{it.st=els[i].dataset.style=st;hang(els[i],2.4,i*50)});say(`All frames now match ${items[sel].n}.`)};
+$('snap').onclick=()=>{snap=!snap;$('snap').setAttribute('aria-checked',snap);wall.classList.toggle('nosnap',!snap);say(snap?'Snapping to 10 cm grid.':'Free placement, 1 cm steps.')};
+$('rehang').onclick=()=>{els.forEach((e,i)=>hang(e,6,i*70));say('All seven frames rehung.')};
+function scale(){const st=document.querySelector('.stage'),pad=innerWidth<=900?32:56;const s=Math.min(1.25,(st.clientWidth-pad)/W,innerWidth<=900?9:(innerHeight-pad)/600);document.documentElement.style.setProperty('--s',Math.max(.3,s).toFixed(3))}
+addEventListener('resize',scale);scale();
+items.forEach((_,i)=>place(i));select(1);
+</script>
+</body>
+</html>

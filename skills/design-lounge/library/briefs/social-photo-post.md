@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 278 · "Photo post with carousel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 326 · "Photo post with carousel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Photo post with carousel
 

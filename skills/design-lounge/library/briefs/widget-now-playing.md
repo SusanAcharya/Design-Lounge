@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 358 · "Vinyl now-playing widget" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 428 · "Vinyl now-playing widget" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Vinyl now-playing widget
 

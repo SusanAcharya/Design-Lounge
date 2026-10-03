@@ -1,0 +1,289 @@
+<!-- Design Lounge piece: card-folder-tabs · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Fernhill Library · Project file</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@400;600&family=Zilla+Slab:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#d6dcdf;--desk-2:#c8d0d4;--ink:#1d2a33;--ink-2:#4b5963;--ink-3:#6b7780;
+  --manila:#e4c78e;--manila-hi:#ecd5a6;--manila-lo:#d3b274;--manila-edge:#b8955a;
+  --sheet:#fbf8f1;--rule:#e2dccd;--accent:#2449a8;--blueprint:#27467a;
+  --slab:"Zilla Slab",Rockwell,Georgia,serif;
+  --mono:"Overpass Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);--in:cubic-bezier(.5,0,.75,0);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  display:grid;place-items:center;padding:36px 32px;overflow-x:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.35),transparent 40%),
+    repeating-linear-gradient(0deg,rgba(29,42,51,.025) 0 1px,transparent 1px 4px),var(--desk);
+  color:var(--ink);font:400 14px/1.5 var(--slab);
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.page{width:min(1120px,100%);display:grid;grid-template-columns:minmax(0,640px) minmax(0,360px);gap:72px;align-items:end;justify-content:center}
+.kicker{margin:0 0 6px;font:600 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+h1{margin:0 0 26px;font:600 30px/1.05 var(--slab);letter-spacing:-.01em}
+h1 em{font-weight:400;color:var(--ink-2)}
+
+/* ---------- folder with tabs ---------- */
+.folder{position:relative;height:520px;filter:drop-shadow(0 22px 22px rgba(29,42,51,.22))}
+.tabs{position:absolute;left:0;right:0;top:0;height:42px;display:flex;gap:6px;padding-left:18px;z-index:1}
+.tab{
+  position:relative;width:138px;height:42px;padding:0 0 4px;border:0;
+  background:var(--manila-lo);color:var(--ink);
+  clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 100%,0 100%);
+  font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transform:translateY(5px);transition:transform 200ms var(--ease),background-color 200ms var(--ease),color 200ms var(--ease);
+}
+.tab .n{font-weight:400;color:#594520}
+.tab:hover{transform:translateY(1px)}
+.tab[aria-selected="true"]{background:var(--manila);color:var(--ink);transform:translateY(0);z-index:2}
+.tab[aria-selected="true"] .n{color:var(--accent)}
+.tab:focus-visible{outline:none;box-shadow:inset 0 -3px 0 var(--accent)}
+.tab:focus-visible::after{content:"";position:absolute;left:20px;right:20px;bottom:8px;height:2px;background:var(--accent)}
+.back{position:absolute;inset:40px 0 0;background:linear-gradient(180deg,var(--manila),#dfc085);border-radius:2px 6px 4px 4px;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.pocket{position:absolute;left:26px;right:26px;top:66px;bottom:0;overflow:hidden}
+.doc{
+  position:absolute;left:0;right:0;top:10px;height:420px;padding:28px 32px;
+  background:var(--sheet);box-shadow:0 1px 2px rgba(29,42,51,.15),0 10px 18px -12px rgba(29,42,51,.35);
+  transform:translateY(105%);visibility:hidden;
+}
+.doc.on{transform:translateY(0) rotate(var(--tilt,0deg));visibility:visible;transition:transform 420ms 90ms var(--expo),visibility 0s 90ms}
+.doc.out{visibility:visible;transform:translateY(78%);transition:transform 240ms var(--in)}
+.front{
+  position:absolute;left:0;right:0;bottom:0;height:150px;z-index:3;border-radius:0 0 4px 4px;
+  background:linear-gradient(180deg,var(--manila-hi),var(--manila) 30%);
+  box-shadow:0 -1px 0 var(--manila-edge),0 -10px 16px -10px rgba(29,42,51,.35);
+  display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 22px;
+}
+.front::before{content:"";position:absolute;left:0;right:0;top:12px;height:1px;background:rgba(184,149,90,.5)}
+.front{-webkit-mask:radial-gradient(circle 30px at 50% 0,transparent 29px,#000 30px);mask:radial-gradient(circle 30px at 50% 0,transparent 29px,#000 30px)}
+.sticker{background:var(--sheet);padding:10px 14px;transform:rotate(-1deg);box-shadow:0 1px 1px rgba(29,42,51,.2);min-width:240px}
+.sticker b{display:block;font:600 17px/1.2 var(--slab)}
+.sticker span{font:400 11px/1.4 var(--mono);color:var(--ink-2);letter-spacing:.04em}
+.count{font:400 11px/1.5 var(--mono);color:#5e4a22;letter-spacing:.08em;text-transform:uppercase;text-align:right}
+
+/* doc contents */
+.dh{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:14px}
+.dh h2{margin:0;font:600 21px/1.1 var(--slab)}
+.dh span{font:400 11px/1 var(--mono);color:var(--ink-3);letter-spacing:.06em}
+.memo dl{display:grid;grid-template-columns:64px 1fr;gap:4px 12px;margin:0 0 12px;font:400 12px/1.5 var(--mono)}
+.memo dt{color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+.memo dd{margin:0}
+.memo p{margin:0 0 10px;font-size:15px;line-height:1.5;color:var(--ink);max-width:56ch}
+.plan{background:var(--blueprint);color:#dfe8f6}
+.plan .dh{border-color:rgba(223,232,246,.5)}
+.plan .dh span{color:#a9bddc}
+.plan svg{display:block;width:100%;height:auto;max-height:250px}
+.budget table{width:100%;border-collapse:collapse;font:400 13px/1 var(--mono)}
+.budget td{padding:9px 0;border-bottom:1px solid var(--rule)}
+.budget td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.budget td small{color:var(--ink-3);margin-left:6px}
+.budget tr.total td{border-bottom:0;border-top:2px solid var(--ink);font-weight:600;padding-top:12px}
+.budget tr.total td:last-child{color:var(--accent)}
+.minutes ol{margin:0;padding:0;list-style:none;counter-reset:m}
+.minutes li{counter-increment:m;display:grid;grid-template-columns:28px 1fr auto;gap:10px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px;line-height:1.35}
+.minutes li::before{content:counter(m,decimal-leading-zero);font:400 11px/1.9 var(--mono);color:var(--ink-3)}
+.minutes .who{font:600 11px/1.9 var(--mono);color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- stacked variant ---------- */
+.stackcol .kicker{margin-bottom:14px}
+.stack{position:relative;height:422px}
+.sf{
+  position:absolute;left:0;right:0;height:250px;padding:0;border:0;text-align:left;background:none;
+  top:calc((2 - var(--pos)) * 86px);z-index:calc(10 - var(--pos));
+  transition:top 380ms var(--expo),transform 220ms var(--ease);
+  filter:drop-shadow(0 10px 12px rgba(29,42,51,.2));
+}
+.sf .t{position:absolute;top:0;left:var(--tx);width:132px;height:32px;background:var(--c);clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 100%,0 100%);
+  font:600 10.5px/32px var(--mono);letter-spacing:.12em;text-transform:uppercase;text-align:center;color:var(--ink)}
+.sf .b{position:absolute;inset:30px 0 0;background:var(--c);border-radius:2px 5px 4px 4px;padding:22px 22px 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.sf .b b{display:block;font:600 19px/1.2 var(--slab)}
+.sf .b span{display:block;margin-top:4px;font:400 11px/1.5 var(--mono);color:#3a3a32;letter-spacing:.04em}
+.sf .b .sub,.sf .b .meta{transition:opacity 200ms var(--ease)}
+.sf:not([data-pos="0"]) .b .sub,.sf:not([data-pos="0"]) .b .meta{opacity:0}
+.sf .b .meta{display:flex;gap:18px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(29,42,51,.18);font:400 11px/1.4 var(--mono);color:#3a3a32}
+.sf .meta strong{display:block;font:600 15px/1.2 var(--slab);color:var(--ink)}
+.sf:not([data-pos="0"]):hover{transform:translateY(-12px)}
+.sf.lift{transform:translateY(-84px)!important}
+.sf[data-pos="0"]{cursor:default}
+.sf:focus-visible{outline:none}
+.sf:focus-visible .t,.sf:focus-visible .b{outline:2px solid var(--accent);outline-offset:-4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:1100px){.page{grid-template-columns:minmax(0,640px);gap:56px}.stackcol{max-width:420px}}
+@media (max-width:640px){
+  body{padding:28px 14px}
+  .tabs{padding-left:8px;gap:2px}
+  .tab{width:25%;font-size:9.5px;letter-spacing:.06em;clip-path:polygon(7px 0,calc(100% - 7px) 0,100% 100%,0 100%)}
+  .tab .n{display:none}
+  .pocket{left:12px;right:12px}
+  .doc{padding:20px 18px}
+  .front{padding:0 14px 16px;height:130px}
+  .sticker{min-width:0}
+  .count{display:none}
+  .memo p{font-size:14px}
+  .sf .t{width:108px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tab,.sf,.doc.on,.doc.out{transition:none}
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <section aria-labelledby="fileTitle">
+    <p class="kicker">Ostrom &amp; Lunde Architects &middot; Job 2291</p>
+    <h1 id="fileTitle">Fernhill Library <em>&mdash; stage 2 file</em></h1>
+    <div class="folder">
+      <div class="tabs" role="tablist" aria-label="Documents in the Fernhill Library file">
+        <button class="tab" role="tab" id="t-brief" aria-controls="p-brief" aria-selected="true" tabindex="0"><span class="n">01</span>Brief</button>
+        <button class="tab" role="tab" id="t-plan" aria-controls="p-plan" aria-selected="false" tabindex="-1"><span class="n">02</span>Drawings</button>
+        <button class="tab" role="tab" id="t-budget" aria-controls="p-budget" aria-selected="false" tabindex="-1"><span class="n">03</span>Budget</button>
+        <button class="tab" role="tab" id="t-minutes" aria-controls="p-minutes" aria-selected="false" tabindex="-1"><span class="n">04</span>Minutes</button>
+      </div>
+      <div class="back"></div>
+      <div class="pocket">
+        <article class="doc memo on" id="p-brief" role="tabpanel" aria-labelledby="t-brief" style="--tilt:-.5deg" tabindex="0">
+          <div class="dh"><h2>Client brief, revised</h2><span>REV C &middot; 18 SEP</span></div>
+          <dl><dt>To</dt><dd>Design team, Fernhill</dd><dt>From</dt><dd>Hedda Lunde</dd><dt>Re</dt><dd>Reading room and the north light</dd></dl>
+          <p>The council has agreed to keep the 1931 reading room. Our new wing wraps it on two sides and must not take its north light. Plan for 40,000 volumes, a children's floor with its own entrance, and a hall for 120 that can stay open after the library closes.</p>
+          <p>Budget is fixed. Programme is not, so long as we open before the school year in 2028.</p>
+        </article>
+        <article class="doc plan" id="p-plan" role="tabpanel" aria-labelledby="t-plan" style="--tilt:.6deg" tabindex="0" hidden>
+          <div class="dh"><h2>Ground floor plan</h2><span>DWG A-101 &middot; 1:200</span></div>
+          <svg viewBox="0 0 520 250" fill="none" stroke="currentColor" stroke-width="1.5" aria-label="Plan: the 1931 reading room on the left, the new wing wrapping it to the north and east, a hall and the children's entrance on the right" role="img">
+            <rect x="10" y="10" width="500" height="230" stroke-width="3"/>
+            <rect x="30" y="90" width="190" height="130" stroke-width="2.5" stroke-dasharray="7 4"/>
+            <path d="M220 10 V240 M220 120 H510 M360 120 V240 M30 70 H220"/>
+            <path d="M250 240 a24 24 0 0 1 24 -24 M400 240 a20 20 0 0 1 20 -20" stroke-width="1"/>
+            <g stroke-width="1" opacity=".55"><path d="M240 30 h250 M240 50 h250 M240 70 h250 M240 90 h250"/></g>
+            <g font-family="Overpass Mono,monospace" font-size="10" fill="currentColor" stroke="none" letter-spacing="1">
+              <text x="62" y="160">READING ROOM 1931</text><text x="96" y="46">STACKS, 40K</text>
+              <text x="320" y="112">OPEN SHELVING</text><text x="250" y="186">HALL / 120</text><text x="380" y="186">CHILDREN</text><text x="384" y="200">OWN ENTRY</text>
+            </g>
+            <path d="M486 216 l0 -20 l-6 8 m6 -8 l6 8" stroke-width="1.2"/><text x="482" y="232" font-family="Overpass Mono,monospace" font-size="10" fill="currentColor" stroke="none">N</text>
+          </svg>
+        </article>
+        <article class="doc budget" id="p-budget" role="tabpanel" aria-labelledby="t-budget" style="--tilt:-.3deg" tabindex="0" hidden>
+          <div class="dh"><h2>Cost plan, stage 2</h2><span>GBP &middot; EXCL. VAT</span></div>
+          <table>
+            <tr><td>Reading room repair <small>roof, glazing</small></td><td>612,000</td></tr>
+            <tr><td>New wing, shell and core</td><td>2,940,000</td></tr>
+            <tr><td>Fit-out and shelving</td><td>780,500</td></tr>
+            <tr><td>Hall and children's entrance</td><td>455,000</td></tr>
+            <tr><td>Landscape and approach</td><td>186,000</td></tr>
+            <tr class="total"><td>Total against 5,000,000 cap</td><td>4,973,500</td></tr>
+          </table>
+        </article>
+        <article class="doc minutes" id="p-minutes" role="tabpanel" aria-labelledby="t-minutes" style="--tilt:.4deg" tabindex="0" hidden>
+          <div class="dh"><h2>Design team meeting 14</h2><span>02 OCT &middot; SITE HUT</span></div>
+          <ol>
+            <li>Rooflight survey on the reading room is back. Two of six panes cracked.<span class="who">AB</span></li>
+            <li>Engineer to confirm the wing can bear on the old east wall.<span class="who">RK</span></li>
+            <li>Council asks for a second quote on the bronze screen.<span class="who">HL</span></li>
+            <li>Children's entrance moves 3 m south, clear of the oak.<span class="who">AB</span></li>
+          </ol>
+        </article>
+      </div>
+      <div class="front">
+        <div class="sticker"><b>Fernhill Library</b><span>Job 2291 &middot; Stage 2 &middot; Box 3 of 7</span></div>
+        <div class="count" aria-live="polite" id="count">Showing 01 of 04<br>Brief</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stackcol" aria-labelledby="stackTitle">
+    <p class="kicker" id="stackTitle">Stacked &middot; other jobs in the drawer</p>
+    <div class="stack" id="stack">
+      <button class="sf" type="button" data-pos="2" style="--pos:2;--c:#d3b274;--tx:196px" aria-label="Orchard School, job 2264. Bring to front.">
+        <span class="t">2264</span>
+        <span class="b"><b>Orchard School</b><span class="sub">Stage 4 &middot; Tender issued</span>
+          <span class="meta"><span><strong>18</strong>drawings</span><span><strong>Nov 26</strong>site start</span></span></span>
+      </button>
+      <button class="sf" type="button" data-pos="1" style="--pos:1;--c:#e9cf9b;--tx:108px" aria-label="Tannery Lane Flats, job 2278. Bring to front.">
+        <span class="t">2278</span>
+        <span class="b"><b>Tannery Lane Flats</b><span class="sub">Stage 3 &middot; Planning submitted</span>
+          <span class="meta"><span><strong>42</strong>homes</span><span><strong>12 Dec</strong>decision due</span></span></span>
+      </button>
+      <button class="sf" type="button" data-pos="0" style="--pos:0;--c:#e4c78e;--tx:20px" aria-label="Fernhill Library, job 2291. In front." aria-current="true">
+        <span class="t">2291</span>
+        <span class="b"><b>Fernhill Library</b><span class="sub">Stage 2 &middot; Concept signed off</span>
+          <span class="meta"><span><strong>4</strong>documents</span><span><strong>4.97m</strong>of 5m cap</span></span></span>
+      </button>
+    </div>
+  </section>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tabs = [...document.querySelectorAll('.tab')];
+  const count = document.getElementById('count');
+  let busy = 0;
+
+  function select(i, focus) {
+    const cur = tabs.findIndex(t => t.getAttribute('aria-selected') === 'true');
+    if (i === cur) return;
+    const oldP = document.getElementById(tabs[cur].getAttribute('aria-controls'));
+    const newP = document.getElementById(tabs[i].getAttribute('aria-controls'));
+    tabs.forEach((t, k) => { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+    if (focus) tabs[i].focus();
+    clearTimeout(busy);
+    document.querySelectorAll('.doc.out').forEach(d => { d.classList.remove('out'); d.hidden = true; });
+    oldP.classList.remove('on');
+    if (!reduce) { oldP.classList.add('out'); busy = setTimeout(() => { oldP.classList.remove('out'); oldP.hidden = true; }, 260); }
+    else oldP.hidden = true;
+    newP.hidden = false;
+    void newP.offsetWidth;
+    newP.classList.add('on');
+    count.innerHTML = `Showing 0${i + 1} of 04<br>${tabs[i].textContent.replace(/^\d+/, '')}`;
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(i));
+    t.addEventListener('keydown', e => {
+      const map = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 };
+      if (!(e.key in map)) return;
+      e.preventDefault();
+      select((map[e.key] + tabs.length) % tabs.length, true);
+    });
+  });
+
+  /* stacked variant: pull a folder out of the stack and drop it in front */
+  const folders = [...document.querySelectorAll('.sf')];
+  const live = document.getElementById('live');
+  let moving = false;
+  folders.forEach(f => f.addEventListener('click', () => {
+    if (f.dataset.pos === '0' || moving) return;
+    moving = true;
+    const place = () => {
+      const from = +f.dataset.pos;
+      folders.forEach(o => { const p = +o.dataset.pos; if (o !== f && p < from) set(o, p + 1); });
+      set(f, 0);
+      f.classList.remove('lift');
+      live.textContent = f.querySelector('.b b').textContent + ' is now in front.';
+      moving = false;
+    };
+    if (reduce) return place();
+    f.classList.add('lift');
+    f.style.zIndex = 20;
+    setTimeout(() => { f.style.zIndex = ''; place(); }, 230);
+  }));
+  function set(o, p) {
+    o.dataset.pos = p; o.style.setProperty('--pos', p);
+    const name = o.querySelector('.b b').textContent, job = o.querySelector('.t').textContent;
+    o.setAttribute('aria-label', `${name}, job ${job}. ${p === 0 ? 'In front.' : 'Bring to front.'}`);
+    if (p === 0) o.setAttribute('aria-current', 'true'); else o.removeAttribute('aria-current');
+  }
+})();
+</script>
+</body>
+</html>

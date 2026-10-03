@@ -1,0 +1,187 @@
+<!-- Design Lounge piece: gallery-museum-placard · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Museum wall with placards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#6b2420;--wall-2:#58201c;--wall-dk:#2a1210;--floor:#3b2a20;--skirt:#4e1c19;
+  --gilt:#c29a55;--gilt-2:#8a6a33;--walnut:#3a271c;--black:#16110f;
+  --card:#f3eee3;--card-ink:#1f1a17;--card-ink-2:#5d544b;--card-line:#d8cfbf;--ink:#f3e9df;--ink-2:#d9b9ac;
+  --serif:"Bodoni Moda",Didot,Georgia,serif;--sans:"Jost",system-ui,sans-serif;
+  --expo:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.55 var(--sans);color:var(--ink);background:var(--wall);overflow-x:hidden}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--card);outline-offset:4px}
+.room{position:relative;min-height:100%;display:flex;flex-direction:column;background:radial-gradient(130% 70% at 50% 40%,#7a2a25 0,var(--wall) 50%,var(--wall-2) 100%)}
+.room::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(var(--skirt) 0 14px,#2b1e17 14px 16px,var(--floor) 16px);box-shadow:0 -1px 0 #ffffff10}
+header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding:30px 48px 0}
+.kicker{margin:0;font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:6px 0 0;font:400 34px/1.1 var(--serif);letter-spacing:-.01em}
+h1 em{font-style:italic}
+.room-no{font:400 13px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2)}
+.wall{flex:1;display:flex;align-items:center;justify-content:center;gap:22px;padding:30px 32px 104px;flex-wrap:wrap}
+.work{display:flex;align-items:flex-end;gap:12px;position:relative}
+.work::before{content:"";position:absolute;left:var(--lx);top:-70px;width:calc(var(--aw) * 1.5);height:calc(var(--ah) + 160px);transform:translateX(-50%);background:radial-gradient(50% 55% at 50% 30%,#ffd9a61f,transparent 70%);pointer-events:none}
+.art{position:relative;padding:0;border:0;background:none;cursor:zoom-in;display:block}
+.art .lamp{position:absolute;left:50%;top:-22px;width:44%;height:6px;transform:translateX(-50%);border-radius:3px;background:linear-gradient(#d6b77a,#7e6233);box-shadow:0 3px 6px #0006}
+.art .lamp::before{content:"";position:absolute;left:50%;top:-12px;width:2px;height:12px;background:#7e6233}
+.frame{display:block;box-shadow:0 18px 26px -10px #000a,0 2px 3px #0007;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.frame svg{display:block}
+.f-gilt{padding:14px;background:linear-gradient(135deg,#e2c27f,var(--gilt) 30%,var(--gilt-2) 55%,#d8b46d 80%,var(--gilt-2));box-shadow:inset 0 0 0 2px #6b4f22,inset 0 0 0 5px #e9cd8c,0 18px 26px -10px #000a}
+.f-gilt svg{box-shadow:0 0 0 2px #5a421c}
+.f-walnut{padding:12px;background:linear-gradient(160deg,#4a3324,var(--walnut) 50%,#24170f);box-shadow:inset 0 0 0 1px #000,0 18px 26px -10px #000a}
+.f-walnut .mat{display:block;padding:14px;background:#efe7d6}
+.f-float{padding:10px;background:var(--black);box-shadow:inset 0 0 0 1px #2b2420,0 18px 26px -10px #000a}
+.f-float svg{box-shadow:0 0 0 6px #0b0908}
+.art:hover .frame{transform:translateY(-2px);box-shadow:0 24px 30px -10px #000b,0 2px 3px #0007}
+.bench{position:absolute;left:50%;bottom:30px;width:360px;height:58px;transform:translateX(-50%);z-index:1;pointer-events:none;background:linear-gradient(#3a241d,#24150f) top/100% 22px no-repeat,linear-gradient(#8f8778,#5c564c) 24px 22px/6px 36px no-repeat,linear-gradient(#8f8778,#5c564c) calc(100% - 24px) 22px/6px 36px no-repeat;border-radius:4px 4px 0 0;filter:drop-shadow(0 10px 8px #0007)}
+.hint{font-size:12px;color:var(--ink-2);letter-spacing:.04em}
+.placard{width:88px;padding:9px 9px 10px;background:var(--card);color:var(--card-ink);font-size:10px;line-height:1.35;box-shadow:0 1px 2px #0005;margin-bottom:4px}
+.placard b{display:block;font:500 11px/1.2 var(--sans);letter-spacing:.02em}
+.placard i{display:block;font:italic 400 12px/1.2 var(--serif);margin:4px 0 2px}
+.placard span{color:var(--card-ink-2);display:block}
+
+.detail{position:fixed;inset:0;z-index:10;display:grid;grid-template-columns:minmax(0,1fr) 380px;background:radial-gradient(90% 90% at 35% 50%,#5a1e1b,var(--wall-dk));visibility:hidden;opacity:0;transition:opacity .32s var(--ease),visibility 0s .32s}
+.detail.open{visibility:visible;opacity:1;transition:opacity .32s var(--ease)}
+.stagebig{display:grid;place-items:center;padding:56px;min-width:0;min-height:0}
+.big{position:relative;transform-origin:0 0}
+.big .frame{box-shadow:0 40px 60px -20px #000c}
+.panel{background:var(--card);color:var(--card-ink);padding:56px 40px 32px;display:flex;flex-direction:column;gap:14px;overflow:auto;transform:translateX(24px);opacity:0;transition:transform .4s var(--expo) .12s,opacity .3s var(--ease) .12s}
+.open .panel{transform:none;opacity:1}
+.panel .artist{margin:0;font:500 15px/1.2 var(--sans);letter-spacing:.02em}
+.panel .dates{margin:0;color:var(--card-ink-2);font-size:13px}
+.panel h2{margin:10px 0 0;font:italic 400 34px/1.08 var(--serif);letter-spacing:-.01em}
+.panel dl{margin:4px 0 0;display:grid;grid-template-columns:96px 1fr;gap:6px 12px;font-size:13px;border-top:1px solid var(--card-line);padding-top:14px}
+.panel dt{color:var(--card-ink-2);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding-top:2px}
+.panel dd{margin:0}
+.panel .note{margin:6px 0 0;font:400 16px/1.6 var(--serif);color:var(--card-ink);max-width:34ch}
+.panel .nav{margin-top:auto;display:flex;align-items:center;gap:8px;border-top:1px solid var(--card-line);padding-top:16px;font-size:12px;color:var(--card-ink-2)}
+.panel .nav span{flex:1;letter-spacing:.14em;text-transform:uppercase}
+.iconbtn{width:40px;height:40px;border-radius:50%;border:1px solid var(--card-line);background:none;display:grid;place-items:center;cursor:pointer;color:var(--card-ink);transition:background .16s var(--ease)}
+.iconbtn:hover{background:#1f1a170d}
+.panel :focus-visible,.close:focus-visible{outline-color:var(--card-ink)}
+.close{position:absolute;top:16px;right:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0s!important;transition-delay:0s!important}}
+@media (max-width:640px){.bench{width:240px}.wall{row-gap:64px}.work{flex-direction:column;align-items:flex-start}.wall .frame svg{max-width:calc(100vw - 110px);height:auto}.bench{position:absolute;left:50%;bottom:30px;width:360px;height:58px;transform:translateX(-50%);z-index:1;pointer-events:none;background:linear-gradient(#3a241d,#24150f) top/100% 22px no-repeat,linear-gradient(#8f8778,#5c564c) 24px 22px/6px 36px no-repeat,linear-gradient(#8f8778,#5c564c) calc(100% - 24px) 22px/6px 36px no-repeat;border-radius:4px 4px 0 0;filter:drop-shadow(0 10px 8px #0007)}
+.hint{font-size:12px;color:var(--ink-2);letter-spacing:.04em}
+.placard{width:auto;max-width:240px}.work::before{display:none}}
+@media (max-width:900px){.detail{grid-template-columns:1fr;grid-template-rows:minmax(300px,52vh) auto;overflow:auto}.stagebig{padding:48px 20px 20px}.panel{padding:28px 24px}.wall{padding-inline:20px}header{padding-inline:20px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <filter id="paint" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="2.4"/></filter>
+  <linearGradient id="mSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ea3a8"/><stop offset=".7" stop-color="#d9d0b9"/><stop offset="1" stop-color="#e8dcc0"/></linearGradient>
+  <linearGradient id="mWin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1e6c8"/><stop offset="1" stop-color="#b8b59b"/></linearGradient>
+</defs>
+<symbol id="w0" viewBox="0 0 260 180"><g filter="url(#paint)"><rect x="-6" y="-6" width="272" height="110" fill="url(#mSky)"/><path d="M-6 30c40-6 80 4 120-2s90-6 152 2v10c-60-6-110 4-150 0S20 36-6 42z" fill="#f2ead6" opacity=".55"/><path d="M-6 96h272v20H-6z" fill="#586f73"/><path d="M-6 100c50-3 120 2 272-2" stroke="#c9d1c8" stroke-width="2" fill="none" opacity=".7"/><path d="M-6 114c60 4 140-6 272 0v72H-6z" fill="#c7aa7a"/><path d="M-6 132c70-6 150 4 272-2v54H-6z" fill="#a98a5c"/><path d="M40 140c40-8 90-6 140 4" stroke="#7d9a9c" stroke-width="5" fill="none" opacity=".6"/><path d="M176 120v-24l5-6 5 6v24z" fill="#2e2a26"/><circle cx="181" cy="88" r="3.6" fill="#2e2a26"/><path d="M176 98l-6 10" stroke="#2e2a26" stroke-width="2"/><path d="M60 92l8-10 8 10z" fill="#3a3a3a" opacity=".6"/></g></symbol>
+<symbol id="w1" viewBox="0 0 150 200"><g filter="url(#paint)"><rect x="-6" y="-6" width="162" height="212" fill="#3a3530"/><rect x="18" y="20" width="74" height="104" fill="url(#mWin)"/><path d="M55 20v104M18 72h74" stroke="#3a3530" stroke-width="4"/><path d="M18 124 92 124 150 200H-6z" fill="#e7d9b5" opacity=".18"/><path d="M84 200c0-40 4-62 20-72 6-4 6-14 4-22-3-12 4-22 14-22s16 10 14 22c-1 8 0 16 6 22 10 10 12 34 12 72z" fill="#6c3a2e"/><circle cx="118" cy="92" r="11" fill="#d9b48f"/><path d="M106 90c0-12 22-16 24 0 0-6-4-14-12-14s-12 6-12 14z" fill="#2a1d17"/><path d="M98 150l22-12 20 10-22 12z" fill="#efe6d0"/><path d="M118 138v22" stroke="#bfb397" stroke-width="1"/></g></symbol>
+<symbol id="w2" viewBox="0 0 180 230"><g filter="url(#paint)"><rect x="-6" y="-6" width="192" height="242" fill="#24345a"/><rect x="18" y="20" width="144" height="92" fill="#3d5f97" filter="url(#soft)"/><rect x="22" y="128" width="136" height="20" fill="#c9a34a" filter="url(#soft)"/><rect x="18" y="160" width="144" height="50" fill="#1a2238" filter="url(#soft)"/></g></symbol>
+<symbol id="w3" viewBox="0 0 150 120"><g filter="url(#paint)"><rect x="-6" y="-6" width="162" height="132" fill="#5d5a3d"/><rect x="-6" y="80" width="162" height="46" fill="#8a6e4a"/><path d="M-6 80h162" stroke="#3e3a28" stroke-width="2"/><path d="M28 82V44c0-8 6-12 12-12h14c6 0 10 4 10 12v38z" fill="#b7aa8c"/><path d="M28 54h36" stroke="#8a7f66" stroke-width="3"/><path d="M64 46c10 0 12 10 4 16" stroke="#b7aa8c" stroke-width="4" fill="none"/><path d="M84 84c-6 0-10-6-8-14 2-6 6-8 6-14 0-4 3-6 6-6s6 2 6 6c0 6 4 8 6 14 2 8-2 14-8 14z" fill="#c9b04a"/><path d="M110 86c-8 0-12-6-10-12s6-6 7-12c1-3 3-4 5-4s4 1 5 4c1 6 6 6 7 12s-2 12-14 12z" fill="#a8b04a"/><path d="M88 50l2-6M112 58l2-6" stroke="#4a3a22" stroke-width="1.6"/><ellipse cx="98" cy="88" rx="30" ry="3" fill="#3b2c1d" opacity=".5"/></g></symbol>
+</svg>
+
+<div class="room" id="room">
+  <header>
+    <div>
+      <p class="kicker">The Wren Hall Collection</p>
+      <h1>Weather Indoors <em>· the coast painters, 1900–1960</em></h1>
+    </div>
+    <div style="text-align:right"><span class="room-no">Room 12</span><br><span class="hint">Select a work to read its label</span></div>
+  </header>
+  <main class="wall" id="wall" aria-label="Gallery wall"></main>
+  <div class="bench" aria-hidden="true"></div>
+</div>
+
+<div class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle" aria-hidden="true">
+  <div class="stagebig"><div class="big" id="big"></div></div>
+  <aside class="panel">
+    <p class="artist" id="dArtist"></p>
+    <p class="dates" id="dDates"></p>
+    <h2 id="dTitle"></h2>
+    <dl>
+      <dt>Date</dt><dd id="dYear"></dd>
+      <dt>Medium</dt><dd id="dMed"></dd>
+      <dt>Size</dt><dd id="dSize"></dd>
+      <dt>Credit</dt><dd id="dCredit"></dd>
+    </dl>
+    <p class="note" id="dNote"></p>
+    <div class="nav">
+      <span id="dPos">1 of 4</span>
+      <button class="iconbtn" type="button" id="dPrev" aria-label="Previous work"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="iconbtn" type="button" id="dNext" aria-label="Next work"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+  </aside>
+  <button class="iconbtn close" type="button" id="dClose" aria-label="Back to the wall" style="color:var(--ink);border-color:#f3e9df40"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+</div>
+
+<script>
+const works=[
+  {s:'w0',w:260,h:180,k:.86,f:'gilt',artist:'Ilka Ostergaard',dates:'Danish, 1878–1951',title:'Low Tide at Varre',year:'1912',med:'Oil on canvas',size:'64 × 91 cm',credit:'Bequest of Hanne Lisberg, 1974',acc:'1974.12',note:'Ostergaard painted the flats at Varre every spring for twenty years. The lone figure is her brother, who dug for cockles. Look at the wet sand: she drags a dry brush through the blue so the sky shows through the shine.'},
+  {s:'w1',w:150,h:200,k:.78,f:'walnut',artist:'Casimir Halm',dates:'Polish, 1890–1967',title:'Woman Reading by a Window',year:'1926',med:'Oil on board',size:'48 × 36 cm',credit:'Purchased with the Arkwright Fund, 1988',acc:'1988.3',note:'The window is the brightest thing in the room, yet the light on the page comes from the left. Halm kept the impossible second source because, he wrote, "she reads by her own lamp."'},
+  {s:'w2',w:180,h:230,k:.8,f:'float',artist:'Ruth Anselm',dates:'American, 1921–2004',title:'Blue Interval No. 4',year:'1958',med:'Oil and acrylic on linen',size:'152 × 122 cm',credit:'Gift of the artist, 1999',acc:'1999.41',note:'Stand close. The ochre band is not one colour but eleven thin layers. Anselm asked that this work be hung low, so its centre meets the eye of a seated visitor.'},
+  {s:'w3',w:150,h:120,k:.78,f:'gilt',artist:'Agnes Vollrath',dates:'German, 1885–1960',title:'Pears and a Stoneware Jug',year:'1934',med:'Egg tempera on panel',size:'30 × 38 cm',credit:'Gift of Marten and Ida Coe, 1981',acc:'1981.7',note:'Painted in a borrowed kitchen the winter Vollrath was barred from exhibiting. The jug was her mother\u2019s. Its chipped lip is the only sharp edge in the picture.'}
+];
+const $=id=>document.getElementById(id);
+const wall=$('wall'),detail=$('detail'),big=$('big');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+const svg=(o,k=1)=>`<svg width="${o.w*k}" height="${o.h*k}" viewBox="0 0 ${o.w} ${o.h}" aria-hidden="true"><use href="#${o.s}"/></svg>`;
+const framed=(o,k)=>`<span class="frame f-${o.f}">${o.f==='walnut'?`<span class="mat">${svg(o,k)}</span>`:svg(o,k)}</span>`;
+wall.innerHTML=works.map((o,i)=>`<div class="work" data-i="${i}" style="--aw:${o.w*o.k}px;--ah:${o.h*o.k}px;--lx:${o.w*o.k/2+16}px"><button class="art" type="button" aria-label="${o.title}, ${o.artist}, ${o.year}. View with placard"><span class="lamp" aria-hidden="true"></span>${framed(o,o.k)}</button><div class="placard"><b>${o.artist}</b><span>${o.dates}</span><i>${o.title}</i><span>${o.year}</span><span>${o.med}</span></div></div>`).join('');
+const arts=[...wall.querySelectorAll('.art')];
+let cur=-1;
+
+function fill(i){
+  const o=works[i];
+  const st=detail.querySelector('.stagebig').getBoundingClientRect();
+  const pad=o.f==='walnut'?52:o.f==='gilt'?28:20;
+  const g=innerWidth<=900?40:112;const k=Math.max(.5,Math.min((st.width-g-pad)/o.w,(st.height-g-pad)/o.h,3.2));
+  big.innerHTML=framed(o,k);
+  $('dArtist').textContent=o.artist;$('dDates').textContent=o.dates;$('dTitle').textContent=o.title;
+  $('dYear').textContent=o.year;$('dMed').textContent=o.med;$('dSize').textContent=o.size;
+  $('dCredit').textContent=`${o.credit} · ${o.acc}`;$('dNote').textContent=o.note;$('dPos').textContent=`${i+1} of ${works.length}`;
+}
+function flip(fromEl,toEl,back){
+  if(reduce.matches)return;
+  const a=fromEl.getBoundingClientRect(),b=toEl.getBoundingClientRect();
+  const t=`translate(${a.left-b.left}px,${a.top-b.top}px) scale(${a.width/b.width},${a.height/b.height})`;
+  return toEl.animate(back?[{transform:'none'},{transform:t}]:[{transform:t},{transform:'none'}],{duration:back?380:560,easing:'cubic-bezier(.16,1,.3,1)',fill:back?'forwards':'none'});
+}
+function open(i){
+  cur=i;detail.classList.add('open');detail.setAttribute('aria-hidden','false');
+  fill(i);flip(arts[i].querySelector('.frame'),big);
+  arts[i].style.visibility='hidden';
+  $('dClose').focus({preventScroll:true});
+}
+function close(){
+  if(cur<0)return;const i=cur;cur=-1;
+  const done=()=>{arts[i].style.visibility='';detail.classList.remove('open');detail.setAttribute('aria-hidden','true');big.getAnimations().forEach(a=>a.cancel());arts[i].focus({preventScroll:true})};
+  arts[i].style.visibility='';const an=flip(arts[i].querySelector('.frame'),big,true);arts[i].style.visibility='hidden';
+  an?an.finished.then(done):done();
+}
+function step(d){
+  if(cur<0)return;arts[cur].style.visibility='';cur=(cur+d+works.length)%works.length;arts[cur].style.visibility='hidden';fill(cur);
+  if(!reduce.matches)big.animate([{opacity:0,transform:`translateX(${d*-24}px)`},{opacity:1,transform:'none'}],{duration:320,easing:'cubic-bezier(.2,.7,.2,1)'});
+}
+arts.forEach((b,i)=>b.addEventListener('click',()=>open(i)));
+$('dClose').onclick=close;$('dPrev').onclick=()=>step(-1);$('dNext').onclick=()=>step(1);
+detail.querySelector('.stagebig').addEventListener('click',e=>{if(e.target===e.currentTarget)close()});
+addEventListener('keydown',e=>{
+  if(cur<0)return;
+  if(e.key==='Escape')close();else if(e.key==='ArrowRight')step(1);else if(e.key==='ArrowLeft')step(-1);
+  else if(e.key==='Tab'){const f=[...detail.querySelectorAll('button')];const x=f.indexOf(document.activeElement);if(e.shiftKey&&x<=0){e.preventDefault();f[f.length-1].focus()}else if(!e.shiftKey&&x===f.length-1){e.preventDefault();f[0].focus()}}
+});
+addEventListener('resize',()=>{if(cur>=0)fill(cur)});
+</script>
+</body>
+</html>

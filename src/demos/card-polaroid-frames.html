@@ -1,0 +1,242 @@
+<!-- Design Lounge piece: card-polaroid-frames · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Contact sheet 03 · Polaroid frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Sometype+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f1eee4;--paper:#fffdf6;--ink:#141414;--ink-2:#4a4740;--line:#d8d3c4;
+  --tomato:#ff4f2e;--sticky:#ffd93b;--film:#d9dccf;
+  --marker:"Permanent Marker","Marker Felt",cursive;
+  --mono:"Sometype Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  min-height:100%;display:grid;grid-template-rows:auto 1fr;padding:36px 48px 40px;overflow-x:hidden;
+  background:radial-gradient(rgba(20,20,20,.13) 1px,transparent 1.2px) 0 0/22px 22px,var(--bg);
+  color:var(--ink);font:400 13px/1.5 var(--mono);
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--tomato);outline-offset:4px}
+header{display:flex;justify-content:space-between;align-items:baseline;gap:24px;border-bottom:2px solid var(--ink);padding-bottom:12px}
+header h1{margin:0;font:600 13px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+header p{margin:0;color:var(--ink-2);font-size:12px;letter-spacing:.04em}
+.sheet{display:grid;grid-template-columns:repeat(3,minmax(0,300px));justify-content:center;align-content:center;align-items:start;gap:72px;padding:24px 0 56px}
+.cell{position:relative;display:grid;justify-items:center;gap:34px}
+.cell:nth-child(2){z-index:2}
+.label{margin:0;white-space:nowrap;display:flex;gap:10px;align-items:center;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.label b{display:inline-grid;place-items:center;width:24px;height:24px;border:2px solid var(--ink);font-weight:600;background:var(--paper)}
+.label span{color:var(--ink-2)}
+
+.pol{position:relative;width:100%;max-width:300px;background:var(--paper);padding:16px 16px 0;border:2px solid var(--ink)}
+.img{position:relative;aspect-ratio:1;overflow:hidden;border:2px solid var(--ink);background:#222}
+.img svg{display:block;width:100%;height:100%}
+.cap{display:block;height:68px;padding-top:12px;text-align:center;font:400 24px/1.1 var(--marker);color:var(--ink);transform:rotate(-1.5deg)}
+
+/* A: hard shadow, light follows the pointer */
+.hard{--sx:10px;--sy:10px;transform:rotate(-3deg);box-shadow:var(--sx) var(--sy) 0 var(--ink);transition:box-shadow 140ms var(--ease),transform 160ms var(--ease);cursor:crosshair}
+.hard:active{transform:rotate(-3deg) translate(calc(var(--sx) * .6),calc(var(--sy) * .6));box-shadow:calc(var(--sx) * .4) calc(var(--sy) * .4) 0 var(--ink)}
+.hard .cap{color:var(--tomato)}
+
+/* B: tape + sticky note */
+.taped{transform:rotate(2.5deg);box-shadow:0 1px 0 var(--ink),0 18px 24px -18px rgba(20,20,20,.5)}
+.tape{position:absolute;top:-17px;left:50%;width:116px;height:34px;transform:translateX(-50%) rotate(-5deg);z-index:2;
+  background:repeating-linear-gradient(135deg,rgba(255,79,46,.62) 0 7px,rgba(255,79,46,.42) 7px 14px);
+  clip-path:polygon(0 8%,4% 0,8% 10%,12% 2%,88% 2%,92% 10%,96% 0,100% 8%,100% 92%,96% 100%,92% 90%,88% 98%,12% 98%,8% 90%,4% 100%,0 92%);
+  mix-blend-mode:multiply}
+.sticky{
+  position:absolute;right:-42px;bottom:-34px;width:152px;min-height:132px;z-index:3;padding:14px 14px 16px;text-align:left;
+  background:var(--sticky);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  font:400 17px/1.2 var(--marker);transform:rotate(7deg);transform-origin:50% 0;
+  transition:transform 380ms var(--spring),box-shadow 240ms var(--ease);
+}
+.sticky::after{content:"";position:absolute;right:-2px;bottom:-2px;width:22px;height:22px;background:linear-gradient(315deg,var(--bg) 0 50%,#e6bf1f 50%);border-left:2px solid var(--ink);border-top:2px solid var(--ink)}
+.sticky:hover{transform:rotate(4deg) translateY(-3px)}
+.sticky[aria-pressed="true"]{transform:rotate(-10deg) translate(8px,-150px);box-shadow:9px 12px 0 var(--ink)}
+.sticky small{display:block;margin-top:8px;font:600 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.under{position:absolute;right:14px;bottom:10px;font:400 14px/1 var(--marker);color:var(--ink-2);transform:rotate(-3deg)}
+
+/* C: developing */
+.dev{--p:.35;transform:rotate(-1.5deg);box-shadow:0 18px 24px -18px rgba(20,20,20,.5);cursor:grab;touch-action:none;user-select:none;transition:transform 420ms var(--spring)}
+.dev.shaking{cursor:grabbing;transition:none}
+.dev .img svg{filter:blur(calc((1 - var(--p)) * 7px)) saturate(calc(var(--p) * 1.1)) contrast(calc(.55 + var(--p) * .45))}
+.dev .img::after{content:"";position:absolute;inset:0;background:var(--film);opacity:calc((1 - var(--p)) * .94);pointer-events:none}
+.dev .cap{clip-path:inset(0 100% 0 0);transition:clip-path 900ms var(--ease)}
+.dev.done .cap{clip-path:inset(0 0 0 0)}
+.dev.nudge{animation:nudge 360ms var(--ease)}
+@keyframes nudge{25%{transform:rotate(-4deg) translateX(-8px)}60%{transform:rotate(1.5deg) translateX(7px)}}
+.meter{position:absolute;left:0;right:0;top:calc(100% + 14px);display:flex;align-items:center;gap:12px;max-width:300px;margin:0 auto}
+.bar{flex:1;height:10px;border:2px solid var(--ink);background:var(--paper)}
+.bar i{display:block;height:100%;width:calc(var(--p) * 100%);background:var(--ink)}
+.meter output{min-width:40px;text-align:right;font-weight:600}
+.reset{min-height:40px;padding:0 12px;border:2px solid var(--ink);background:var(--paper);box-shadow:3px 3px 0 var(--ink);font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:transform 120ms var(--ease),box-shadow 120ms var(--ease)}
+.reset:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:1100px){.sheet{gap:48px;grid-template-columns:repeat(3,minmax(0,260px))}.cap{font-size:20px}}
+@media (max-width:860px){body{padding:28px 20px}.sheet{grid-template-columns:minmax(0,300px);gap:72px}header{flex-direction:column;gap:6px}.sticky{right:-12px}}
+@media (prefers-reduced-motion:reduce){
+  .hard,.sticky,.dev,.dev .cap,.reset{transition:none}
+  .dev.nudge{animation:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Contact sheet 03 &mdash; Polaroid frames</h1>
+  <p>Three treatments for one 300px frame. Move, peel, shake.</p>
+</header>
+
+<main class="sheet">
+  <!-- A -->
+  <div class="cell">
+    <figure class="pol hard" id="hard" tabindex="0" role="group" aria-label="Hard shadow polaroid. Arrow keys move the light." style="margin:0">
+      <div class="img">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs><linearGradient id="a1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a5c"/><stop offset=".55" stop-color="#ffc79a"/><stop offset="1" stop-color="#ffe2c2"/></linearGradient></defs>
+          <rect width="100" height="100" fill="url(#a1)"/>
+          <circle cx="68" cy="44" r="12" fill="#fff4d6"/>
+          <path d="M0 56 L10 56 L12 44 L30 44 L33 56 L58 56 L60 50 L74 50 L76 56 L100 56 L100 100 L0 100Z" fill="#b8452b"/>
+          <path d="M0 60 H100 V100 H0Z" fill="#d9774a"/>
+          <path d="M44 60 L56 60 L92 100 L8 100Z" fill="#3a3330"/>
+          <path d="M50 62 L50 66 M50 70 L50.6 76 M51 82 L52 92" stroke="#ffd93b" stroke-width="1.6"/>
+          <path d="M18 74 l2 -8 l2 8 M82 70 l1.6 -6 l1.6 6" stroke="#2f5b3a" stroke-width="1.8" fill="none"/>
+        </svg>
+      </div>
+      <figcaption class="cap">Route 9, 6:40am</figcaption>
+    </figure>
+    <p class="label"><b>A</b> Hard shadow <span>/ light follows you</span></p>
+  </div>
+
+  <!-- B -->
+  <div class="cell">
+    <figure class="pol taped" style="margin:0">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="img">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs><linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9cc7e8"/><stop offset="1" stop-color="#e3eef2"/></linearGradient></defs>
+          <rect width="100" height="100" fill="url(#b1)"/>
+          <path d="M0 52 C18 40 30 46 44 42 C60 36 76 46 100 40 V60 H0Z" fill="#6f8f9b"/>
+          <rect y="58" width="100" height="42" fill="#3f7590"/>
+          <g stroke="#bcd8e4" stroke-width="1.2" opacity=".8"><path d="M8 68 h14 M60 66 h22 M30 80 h18 M70 88 h20"/></g>
+          <path d="M44 100 L46 70 Q50 64 56 70 L60 100Z" fill="#ff4f2e"/>
+          <circle cx="51.5" cy="62" r="6" fill="#2a2420"/>
+          <path d="M44 100 L46 72 L50 100Z" fill="#d93d20"/>
+        </svg>
+      </div>
+      <figcaption class="cap">Juno at Kettle Pond</figcaption>
+      <span class="under" aria-hidden="true">08 · 07 · 26</span>
+      <button class="sticky" id="sticky" type="button" aria-pressed="false" aria-label="Sticky note: the water was freezing, she went in twice. Press to peel it up.">
+        the water was freezing. she went in twice.
+        <small>peel me</small>
+      </button>
+    </figure>
+    <p class="label"><b>B</b> Tape + note <span>/ click to peel</span></p>
+  </div>
+
+  <!-- C -->
+  <div class="cell">
+    <figure class="pol dev" id="dev" tabindex="0" role="group" aria-describedby="devHint" aria-label="Developing polaroid, 35 percent developed. Drag it side to side, or press Space, to shake it." style="margin:0">
+      <div class="img">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="100" height="100" fill="#2f6a3a"/>
+          <g fill="#4f9a4c"><circle cx="14" cy="18" r="16"/><circle cx="52" cy="10" r="18"/><circle cx="90" cy="22" r="16"/><circle cx="30" cy="62" r="20"/><circle cx="80" cy="70" r="22"/></g>
+          <g fill="#7cc35a"><circle cx="34" cy="30" r="10"/><circle cx="72" cy="40" r="11"/><circle cx="12" cy="86" r="12"/><circle cx="58" cy="90" r="10"/></g>
+          <g stroke="#1f4a28" stroke-width="1.4" fill="none"><path d="M40 0 C42 30 46 50 44 100"/><path d="M78 0 C74 30 70 60 72 100"/></g>
+          <g fill="#ff4f2e"><circle cx="40" cy="40" r="8"/><circle cx="50" cy="46" r="7"/><circle cx="72" cy="58" r="9"/><circle cx="24" cy="72" r="7.5"/><circle cx="62" cy="80" r="6"/></g>
+          <g fill="#ffb199" opacity=".8"><circle cx="37.5" cy="37" r="2"/><circle cx="48" cy="43.5" r="1.8"/><circle cx="69" cy="55" r="2.2"/><circle cx="22" cy="69.5" r="1.8"/></g>
+          <g fill="#1f4a28"><path d="M40 32 l-3 -3 l3 1 l3 -1z"/><path d="M72 49 l-3 -3 l3 1 l3 -1z"/><path d="M50 39 l-2.6 -2.6 l2.6 .8 l2.6 -.8z"/></g>
+        </svg>
+      </div>
+      <figcaption class="cap">Gran's tomatoes, again</figcaption>
+    </figure>
+        <p class="label" id="devHint"><b>C</b> Developing <span>/ drag to shake</span></p>
+<div class="meter" style="--p:.35" id="meter">
+      <span class="bar" aria-hidden="true"><i></i></span>
+      <output id="pct" for="dev">35%</output>
+      <button class="reset" id="reset" type="button">Eject new</button>
+    </div>
+  </div>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const live = document.getElementById('live');
+
+  /* A: the hard shadow falls away from the pointer, as if the cursor were the light */
+  const hard = document.getElementById('hard');
+  let sx = 10, sy = 10, raf = 0, px = 0, py = 0;
+  const clamp = (v, m) => Math.max(-m, Math.min(m, v));
+  const setShadow = () => { hard.style.setProperty('--sx', sx.toFixed(1) + 'px'); hard.style.setProperty('--sy', sy.toFixed(1) + 'px'); };
+  addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    px = e.clientX; py = e.clientY;
+    if (!raf) raf = requestAnimationFrame(() => {
+      raf = 0;
+      const r = hard.getBoundingClientRect();
+      const dx = (r.left + r.width / 2) - px, dy = (r.top + r.height / 2) - py;
+      const d = Math.hypot(dx, dy) || 1, len = Math.min(14, 6 + d / 60);
+      sx = dx / d * len; sy = dy / d * len; setShadow();
+    });
+  });
+  hard.addEventListener('keydown', e => {
+    const k = { ArrowLeft: [2, 0], ArrowRight: [-2, 0], ArrowUp: [0, 2], ArrowDown: [0, -2] }[e.key];
+    if (!k) { if (e.key === 'Home') { sx = 10; sy = 10; setShadow(); } return; }
+    e.preventDefault(); sx = clamp(sx + k[0], 14); sy = clamp(sy + k[1], 14); setShadow();
+  });
+
+  /* B: peel the sticky note */
+  const sticky = document.getElementById('sticky');
+  sticky.addEventListener('click', () => {
+    const on = sticky.getAttribute('aria-pressed') !== 'true';
+    sticky.setAttribute('aria-pressed', String(on));
+    sticky.querySelector('small').textContent = on ? 'stick back' : 'peel me';
+    live.textContent = on ? 'Note peeled up. The date 8 July 2026 is written under it.' : 'Note stuck back down.';
+  });
+
+  /* C: develop by shaking */
+  const dev = document.getElementById('dev'), meter = document.getElementById('meter'), pct = document.getElementById('pct');
+  let p = .35, lastAnnounced = 0;
+  function setP(v) {
+    p = Math.max(0, Math.min(1, v));
+    dev.style.setProperty('--p', p.toFixed(3));
+    meter.style.setProperty('--p', p.toFixed(3));
+    const n = Math.round(p * 100);
+    pct.textContent = n + '%';
+    dev.setAttribute('aria-label', `Developing polaroid, ${n} percent developed. Drag it side to side, or press Space, to shake it.`);
+    const was = dev.classList.contains('done');
+    dev.classList.toggle('done', p >= 1);
+    if (p >= 1 && !was) live.textContent = "Developed: Gran's tomatoes, again.";
+    else if (n - lastAnnounced >= 25) { lastAnnounced = n - n % 25; live.textContent = n + ' percent developed.'; }
+  }
+  let down = false, lx = 0, ly = 0, ox = 0, f = 0;
+  dev.addEventListener('pointerdown', e => { down = true; lx = e.clientX; ly = e.clientY; ox = 0; dev.setPointerCapture(e.pointerId); dev.classList.add('shaking'); });
+  dev.addEventListener('pointermove', e => {
+    if (!down) return;
+    const dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY;
+    ox = clamp(ox + dx, 40);
+    if (!reduce) dev.style.transform = `translate(${ox * .5}px, ${clamp(dy, 6)}px) rotate(${-1.5 + ox * .12}deg)`;
+    setP(p + (Math.abs(dx) + Math.abs(dy) * .5) / 3600);
+  });
+  const up = () => { if (!down) return; down = false; dev.classList.remove('shaking'); dev.style.transform = ''; };
+  dev.addEventListener('pointerup', up); dev.addEventListener('pointercancel', up);
+  dev.addEventListener('keydown', e => {
+    if (e.key !== ' ' && e.key !== 'Enter') return;
+    e.preventDefault();
+    dev.classList.remove('nudge'); void dev.offsetWidth; dev.classList.add('nudge');
+    setP(p + .1);
+  });
+  dev.addEventListener('animationend', () => dev.classList.remove('nudge'));
+  document.getElementById('reset').addEventListener('click', () => { lastAnnounced = 0; setP(0); live.textContent = 'New shot ejected. Blank film.'; });
+})();
+</script>
+</body>
+</html>

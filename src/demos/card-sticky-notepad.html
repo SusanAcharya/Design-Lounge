@@ -1,0 +1,231 @@
+<!-- Design Lounge piece: card-sticky-notepad · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Studio retro · Tackwall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+@property --peel{syntax:"<length>";inherits:true;initial-value:0px}
+:root{
+  --board:#2d2b28;--board-2:#36332f;--chalk:#d9d2c3;--chalk-2:#a49c8d;--line:#48443e;
+  --butter:#f6d365;--mint:#a8ddb5;--coral:#f5a08b;--sky:#9cc9ee;--paper:#f2eee6;--note-ink:#2a2620;
+  --danger:#e8553e;
+  --hand:"Kalam",cursive;--sans:"Karla",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);color:var(--chalk);background:var(--board);display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden}
+button,textarea{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--butter);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding:14px 32px;border-bottom:1px solid var(--line);background:var(--board-2)}
+.brand{display:flex;align-items:baseline;gap:12px;margin-right:auto;min-width:0}
+.brand b{font:700 24px/1 var(--hand);color:var(--paper)}
+.brand span{font-size:13px;color:var(--chalk-2);white-space:nowrap}
+.brand span em{font-style:normal;color:var(--chalk)}
+.swatches{display:flex;gap:4px;margin:0;padding:0;border:0}
+.swatches legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sw{position:relative;width:40px;height:40px;display:grid;place-items:center;cursor:pointer}
+.sw input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.sw i{width:22px;height:22px;border-radius:50%;background:var(--c);transition:transform 160ms var(--ease),box-shadow 160ms var(--ease)}
+.sw input:checked+i{box-shadow:0 0 0 3px var(--board-2),0 0 0 5px var(--c);transform:scale(1.05)}
+.sw input:focus-visible+i{outline:2px solid var(--butter);outline-offset:6px}
+.add{height:40px;display:flex;align-items:center;gap:8px;padding:0 18px 0 14px;border-radius:20px;background:var(--butter);color:var(--note-ink);font-weight:700;transition:transform 160ms var(--ease)}
+.add:active{transform:scale(.96)}
+.add svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+
+.board{position:relative;overflow:hidden;background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1.2px),radial-gradient(rgba(0,0,0,.18) 1px,transparent 1.2px);background-size:6px 6px,9px 9px;background-position:0 0,3px 4px;touch-action:none}
+.cols{position:absolute;inset:24px 32px auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;pointer-events:none}
+.cols h2{margin:0;font:400 22px/1 var(--hand);color:var(--chalk-2);border-bottom:1px dashed var(--line);padding-bottom:10px}
+
+.note{position:absolute;width:var(--nw);height:var(--nw);--nw:196px;--peel:0px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35)) drop-shadow(0 8px 10px rgba(0,0,0,.28));transform:translate(var(--x),var(--y)) rotate(var(--r));transition:--peel 260ms var(--expo),filter 200ms var(--ease),transform 320ms var(--expo),opacity 280ms var(--ease)}
+.note:hover,.note:focus-within{--peel:30px}
+.note.lift{--peel:0px;transition:--peel 200ms var(--ease),filter 200ms var(--ease);filter:drop-shadow(0 2px 2px rgba(0,0,0,.3)) drop-shadow(0 22px 22px rgba(0,0,0,.35))}
+.note.lift .paper{transform:scale(1.04)}
+.note.doom .paper{transform:scale(.72);opacity:.7}
+.note.gone{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.2)}
+.note.new{animation:drop 420ms var(--expo)}
+@keyframes drop{from{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1.15)}}
+.paper{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--c);color:var(--note-ink);
+  background-image:linear-gradient(rgba(255,255,255,.22),transparent 40%);
+  clip-path:polygon(0 0,100% 0,100% calc(100% - var(--peel)),calc(100% - var(--peel)) 100%,0 100%);transition:transform 200ms var(--ease),opacity 200ms var(--ease)}
+.paper::after{content:"";position:absolute;right:0;bottom:0;width:var(--peel);height:var(--peel);background:linear-gradient(to bottom right,color-mix(in srgb,var(--c),#fff 35%) 0,color-mix(in srgb,var(--c),#000 14%) 50%,transparent 50%)}
+.note{cursor:grab}.note textarea{cursor:text}
+.grip{height:36px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 12px;font:600 11px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:rgba(42,38,32,.62)}
+.note.lift{cursor:grabbing}
+.grip .dots{width:16px;height:16px;fill:currentColor}
+.mv{display:flex;align-items:center;gap:6px;height:32px;border-radius:4px}
+.dot{width:28px;height:28px;display:grid;place-items:center;border-radius:50%}
+.dot i{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1.5px rgba(42,38,32,.55)}
+.paper textarea{flex:1;margin:0 12px 14px;padding:0;border:0;background:none;resize:none;outline:none;font:400 19px/1.3 var(--hand);color:var(--note-ink);overflow:hidden}
+.paper:has(textarea:focus-visible){box-shadow:inset 0 0 0 2px rgba(42,38,32,.6)}
+
+.bin{z-index:99999;pointer-events:none;position:absolute;right:28px;bottom:28px;width:84px;height:84px;border-radius:50%;display:grid;place-items:center;border:1.5px dashed var(--chalk-2);color:var(--chalk-2);transition:transform 260ms var(--expo),background 200ms var(--ease),border-color 200ms var(--ease),color 200ms var(--ease)}
+.bin svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.bin .lid{transform-origin:5px 7px;transition:transform 260ms var(--expo)}
+.bin-l{position:absolute;right:20px;bottom:120px;width:100px;text-align:center;font-size:12px;color:var(--chalk-2);transition:color 200ms var(--ease)}
+.board.dragging .bin{border-color:var(--chalk);color:var(--chalk);transform:scale(1.08)}
+.bin.hot{background:var(--danger);border-style:solid;border-color:var(--danger)!important;color:#fff!important;transform:scale(1.22)!important}
+.bin.hot .lid{transform:rotate(-28deg) translate(-1px,-2px)}
+.board:has(.bin.hot) .bin-l{color:var(--paper)}
+
+.toast{z-index:100000;position:absolute;left:50%;bottom:28px;display:flex;align-items:center;gap:16px;padding:8px 8px 8px 18px;border-radius:24px;background:var(--paper);color:var(--note-ink);font-weight:600;transform:translate(-50%,140%);opacity:0;transition:transform 320ms var(--expo),opacity 200ms var(--ease);pointer-events:none}
+.toast.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.toast button{height:32px;padding:0 14px;border-radius:16px;background:var(--note-ink);color:var(--paper);font-weight:700}
+
+@media (max-width:640px){.bar{padding:12px 16px}.brand span{display:none}.cols{inset:16px 16px auto;gap:12px}.cols h2{font-size:16px}.note{--nw:132px}.paper textarea{font-size:15px;margin:0 10px 10px}.grip{height:30px;padding-left:8px}.bin{right:16px;bottom:16px;width:68px;height:68px}.bin-l{display:none}}
+@media (prefers-reduced-motion:reduce){.note,.paper,.bin,.bin .lid,.toast,.sw i{transition:none!important}.note.new{animation:none}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="brand"><b>Tackwall</b><span><em>Studio retro</em> · Week 41 · <span id="count">7 notes</span></span></div>
+  <fieldset class="swatches"><legend>Colour for new notes</legend>
+    <label class="sw" style="--c:var(--butter)"><input type="radio" name="c" value="butter" checked aria-label="Butter"><i></i></label>
+    <label class="sw" style="--c:var(--mint)"><input type="radio" name="c" value="mint" aria-label="Mint"><i></i></label>
+    <label class="sw" style="--c:var(--coral)"><input type="radio" name="c" value="coral" aria-label="Coral"><i></i></label>
+    <label class="sw" style="--c:var(--sky)"><input type="radio" name="c" value="sky" aria-label="Sky"><i></i></label>
+    <label class="sw" style="--c:var(--paper)"><input type="radio" name="c" value="paper" aria-label="Paper"><i></i></label>
+  </fieldset>
+  <button class="add" id="add" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add note</button>
+</header>
+<main class="board" id="board" aria-label="Retro board">
+  <div class="cols" aria-hidden="true"><h2>Went well</h2><h2>To change</h2><h2>Try next</h2></div>
+  <div class="bin-l" aria-hidden="true">Drag here to delete</div>
+  <div class="bin" id="bin" aria-hidden="true"><svg viewBox="0 0 24 24"><g class="lid"><path d="M4 7h16"/><path d="M9 7V4.5h6V7"/></g><path d="M6 7l1 13h10l1-13"/><path d="M10 11v6M14 11v6"/></svg></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-t">Note deleted</span><button type="button" id="undo">Undo</button></div>
+</main>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+const board = document.getElementById('board'), bin = document.getElementById('bin'), toast = document.getElementById('toast');
+const live = document.getElementById('live'), countEl = document.getElementById('count');
+const COLS = ['butter', 'mint', 'coral', 'sky', 'paper'];
+const ROT = [-3, 2.2, -1.4, 3.4, -2.6, 1.2, 3.8, -3.6, 1.8];
+const seed = [
+  ['butter', .04, .14, 'New empty states landed well. People noticed!', 'Went well'],
+  ['mint', .12, .52, 'Pairing on the upload bug saved two days', 'Went well'],
+  ['coral', .37, .13, 'Kickoff felt rushed. Give it 15 more minutes', 'To change'],
+  ['paper', .44, .5, 'Too many review pings after 6 pm', 'To change'],
+  ['sky', .68, .14, 'Pairing Fridays, 2 to 4, any project', 'Try next'],
+  ['butter', .73, .5, 'Book room 4B for demo day, 16 Oct (Mira)', 'Try next'],
+  ['mint', .26, .3, 'Ship onboarding copy by Thursday', 'Went well'],
+];
+let z = 10, n = 0, lastDeleted = null, toastT;
+const rot = () => ROT[n % ROT.length];
+const nw = () => parseFloat(getComputedStyle(board.querySelector('.note') || board).getPropertyValue('--nw')) || (innerWidth < 640 ? 132 : 196);
+const dateStr = 'Oct 3';
+
+function make(c, fx, fy, text, col, isNew) {
+  const el = document.createElement('div');
+  el.className = 'note'; el.style.setProperty('--c', `var(--${c})`); el.style.setProperty('--r', rot() + 'deg');
+  el.dataset.c = c; el.dataset.fx = fx; el.dataset.fy = fy; el.style.zIndex = ++z; n++;
+  el.innerHTML = `<div class="paper"><div class="grip"><button class="mv" type="button"><svg class="dots" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg><span>${col || dateStr}</span></button><button class="dot" type="button"><i></i></button></div><textarea rows="4"></textarea></div>`;
+  const ta = el.querySelector('textarea'); ta.value = text; ta.setAttribute('aria-label', 'Note text');
+  label(el);
+  board.insertBefore(el, bin.previousElementSibling);
+  pos(el);
+  wire(el);
+  if (isNew) { el.classList.add('new'); el.addEventListener('animationend', () => el.classList.remove('new'), { once: true }); }
+  count();
+  return el;
+}
+function label(el) {
+  const t = el.querySelector('textarea').value.trim().split(/\s+/).slice(0, 5).join(' ') || 'empty note';
+  el.querySelector('.mv').setAttribute('aria-label', `Move note "${t}". Arrow keys move, Delete removes`);
+  el.querySelector('.dot').setAttribute('aria-label', `Colour: ${el.dataset.c}. Change colour`);
+}
+function pos(el) {
+  const W = board.clientWidth, H = board.clientHeight, s = nw();
+  el.style.setProperty('--x', Math.round(Math.min(Math.max(0, +el.dataset.fx * W), W - s - 4)) + 'px');
+  el.style.setProperty('--y', Math.round(Math.min(Math.max(48, +el.dataset.fy * H), H - s - 4)) + 'px');
+}
+function count() { const k = board.querySelectorAll('.note:not(.gone)').length; countEl.textContent = k + (k === 1 ? ' note' : ' notes'); }
+
+function overBin(x, y) { const b = bin.getBoundingClientRect(), pad = 28; return x > b.left - pad && x < b.right + pad && y > b.top - pad && y < b.bottom + pad; }
+
+function wire(el) {
+  const grip = el.querySelector('.grip'), mv = el.querySelector('.mv'), ta = el.querySelector('textarea');
+  let d = null;
+  el.addEventListener('pointerdown', e => {
+    if (e.target.closest('.dot, textarea') || e.button > 0) return;
+    e.preventDefault(); mv.focus({ preventScroll: true });
+    const b = board.getBoundingClientRect();
+    d = { ox: e.clientX - b.left - parseFloat(el.style.getPropertyValue('--x')), oy: e.clientY - b.top - parseFloat(el.style.getPropertyValue('--y')), lx: e.clientX, tilt: 0, r: el.style.getPropertyValue('--r') };
+    el.style.zIndex = ++z; el.classList.add('lift'); board.classList.add('dragging');
+    el.setPointerCapture(e.pointerId);
+  });
+  el.addEventListener('pointermove', e => {
+    if (!d) return;
+    const b = board.getBoundingClientRect(), s = nw();
+    const x = Math.min(Math.max(-s / 2, e.clientX - b.left - d.ox), b.width - s / 2);
+    const y = Math.min(Math.max(0, e.clientY - b.top - d.oy), b.height - s / 2);
+    d.tilt = Math.max(-8, Math.min(8, d.tilt * .7 + (e.clientX - d.lx) * .6)); d.lx = e.clientX;
+    el.style.setProperty('--x', x + 'px'); el.style.setProperty('--y', y + 'px');
+    el.style.setProperty('--r', (parseFloat(d.r) + d.tilt) + 'deg');
+    const hot = overBin(e.clientX, e.clientY);
+    bin.classList.toggle('hot', hot); el.classList.toggle('doom', hot);
+  });
+  const up = e => {
+    if (!d) return;
+    const hot = overBin(e.clientX, e.clientY);
+    el.classList.remove('lift', 'doom'); board.classList.remove('dragging'); bin.classList.remove('hot');
+    el.style.setProperty('--r', d.r); d = null;
+    if (hot) return remove(el);
+    store(el);
+  };
+  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  mv.addEventListener('keydown', e => {
+    const step = e.shiftKey ? 48 : 16, a = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
+    if (a) {
+      e.preventDefault();
+      el.style.setProperty('--x', (parseFloat(el.style.getPropertyValue('--x')) + a[0] * step) + 'px');
+      el.style.setProperty('--y', (parseFloat(el.style.getPropertyValue('--y')) + a[1] * step) + 'px');
+      store(el); pos(el);
+    } else if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); remove(el); }
+    else if (e.key === 'Enter') { e.preventDefault(); ta.focus(); }
+  });
+  el.querySelector('.dot').addEventListener('click', () => {
+    const c = COLS[(COLS.indexOf(el.dataset.c) + 1) % COLS.length];
+    el.dataset.c = c; el.style.setProperty('--c', `var(--${c})`); label(el); live.textContent = 'Note colour ' + c;
+  });
+  ta.addEventListener('input', () => label(el));
+  el.addEventListener('focusin', () => { el.style.zIndex = ++z; });
+}
+function store(el) {
+  el.dataset.fx = parseFloat(el.style.getPropertyValue('--x')) / board.clientWidth;
+  el.dataset.fy = parseFloat(el.style.getPropertyValue('--y')) / board.clientHeight;
+}
+function remove(el) {
+  const ta = el.querySelector('textarea');
+  lastDeleted = { c: el.dataset.c, fx: el.dataset.fx, fy: el.dataset.fy, text: ta.value, col: el.querySelector('.mv span').textContent };
+  el.classList.add('gone'); count();
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  setTimeout(() => el.remove(), reduce ? 0 : 300);
+  document.getElementById('toast-t').textContent = 'Note deleted';
+  toast.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => toast.classList.remove('on'), 5000);
+  const next = board.querySelector('.note:not(.gone) .mv'); if (next) next.focus({ preventScroll: true });
+}
+document.getElementById('undo').addEventListener('click', () => {
+  if (!lastDeleted) return;
+  const l = lastDeleted; lastDeleted = null;
+  const el = make(l.c, l.fx, l.fy, l.text, l.col, true); el.querySelector('.mv').focus();
+  toast.classList.remove('on'); live.textContent = 'Note restored';
+});
+document.getElementById('add').addEventListener('click', () => {
+  const c = document.querySelector('.sw input:checked').value;
+  const k = board.querySelectorAll('.note').length;
+  const el = make(c, .38 + (k % 4) * .05, .3 + (k % 3) * .08, '', dateStr, true);
+  el.querySelector('textarea').focus({ preventScroll: true });
+  live.textContent = 'Note added. Type to write.';
+});
+seed.forEach(s => make(...s));
+addEventListener('resize', () => board.querySelectorAll('.note').forEach(pos));
+</script>
+</body>
+</html>

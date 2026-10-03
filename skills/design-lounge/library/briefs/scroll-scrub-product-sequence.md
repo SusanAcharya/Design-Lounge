@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 309 · "Scroll-scrubbed product teardown" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 364 · "Scroll-scrubbed product teardown" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Scroll-scrubbed product teardown
 

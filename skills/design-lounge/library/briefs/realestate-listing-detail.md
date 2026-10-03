@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 298 · "Real estate listing detail" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 352 · "Real estate listing detail" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Real estate listing detail
 

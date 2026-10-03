@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 256 · "Pagination" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 300 · "Pagination" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Pagination
 

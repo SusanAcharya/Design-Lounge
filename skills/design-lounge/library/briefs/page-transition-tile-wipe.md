@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 255 · "Page transition tile wipe" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 299 · "Page transition tile wipe" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Page transition tile wipe
 

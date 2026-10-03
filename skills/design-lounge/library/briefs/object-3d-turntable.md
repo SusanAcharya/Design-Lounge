@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 232 · "Kraft box 3D turntable" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 265 · "Kraft box 3D turntable" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Kraft box 3D turntable
 

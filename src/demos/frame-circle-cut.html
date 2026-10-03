@@ -1,0 +1,165 @@
+<!-- Design Lounge piece: frame-circle-cut · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Objects 2026 · Umber Atelier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+@property --a{syntax:"<length>";inherits:false;initial-value:0px}
+@property --b{syntax:"<length>";inherits:false;initial-value:0px}
+:root{
+  --bone:#eee7dc;--ink:#231f1a;--ink-2:#5a5148;--line:#d6cbb9;--umber:#8a4b2a;
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Manrope",system-ui,sans-serif;
+  --morph:cubic-bezier(.16,1,.3,1);--ease:cubic-bezier(.2,.7,.2,1);--t-morph:620ms;--t-art:900ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--bone);overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--umber);outline-offset:4px}
+
+.top{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 48px;border-bottom:1px solid var(--line)}
+.mark{font:italic 28px/1 var(--serif);letter-spacing:-.01em}
+.top nav{display:flex;gap:28px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.top nav a{color:var(--ink-2);text-decoration:none;padding:10px 0;border-bottom:1px solid transparent}
+.top nav a[aria-current]{color:var(--ink);border-bottom-color:var(--ink)}
+
+main{padding:36px 48px 32px}
+.head{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;align-items:end;margin-bottom:32px}
+h1{margin:0;font:400 80px/.92 var(--serif);letter-spacing:-.025em}
+h1 em{color:var(--umber)}
+.lede{margin:0;font-size:14px;line-height:1.6;color:var(--ink-2)}
+.lede b{color:var(--ink);font-weight:700}
+
+.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.work{min-width:0}
+.frame{display:block;width:100%;position:relative;aspect-ratio:4/5;border-radius:0}
+.shape{position:absolute;inset:0;overflow:hidden;transition:clip-path var(--t-morph) var(--morph),border-radius var(--t-morph) var(--morph),--a var(--t-morph) var(--morph),--b var(--t-morph) var(--morph)}
+.art{position:absolute;inset:0;transition:transform var(--t-art) var(--morph)}
+.work.on .art{transform:scale(1.06)}
+
+/* 1 circle cut-outs */
+.c-circle .shape{--a:84px;--b:44px;
+  -webkit-mask:radial-gradient(circle at 100% 0,transparent var(--a),#000 calc(var(--a) + .5px)),radial-gradient(circle at 0 100%,transparent var(--b),#000 calc(var(--b) + .5px));
+  -webkit-mask-composite:source-in;
+  mask:radial-gradient(circle at 100% 0,transparent var(--a),#000 calc(var(--a) + .5px)),radial-gradient(circle at 0 100%,transparent var(--b),#000 calc(var(--b) + .5px));
+  mask-composite:intersect}
+.c-circle.on .shape{--a:28px;--b:132px}
+/* 2 arch */
+.c-arch .shape{border-radius:50% 50% 0 0/36% 36% 0 0}
+.c-arch.on .shape{border-radius:50% 50% 50% 50%/36% 36% 36% 36%}
+/* 3 notched corner */
+.c-notch .shape{--a:72px;--b:0px;clip-path:polygon(0 0,calc(100% - var(--a)) 0,100% var(--a),100% 100%,var(--b) 100%,0 calc(100% - var(--b)))}
+.c-notch.on .shape{--a:0px;--b:72px}
+/* 4 blob */
+.c-blob .shape{border-radius:62% 38% 54% 46%/49% 58% 42% 51%}
+.c-blob.on .shape{border-radius:38% 62% 40% 60%/60% 40% 58% 42%}
+
+/* CSS-drawn photographs */
+.a1{background:radial-gradient(120% 70% at 30% 20%,#f1dcc0,transparent 60%),linear-gradient(#d8bc98 0 66%,#b98d67 66%)}
+.a1 i{position:absolute;display:block}
+.a1 .jar{left:24%;right:24%;top:30%;height:42%;border-radius:48% 48% 44% 44%/52% 52% 46% 46%;background:radial-gradient(60% 50% at 34% 30%,#fbf3e6,#e6d3b8 55%,#b8946f 100%)}
+.a1 .lip{left:40%;right:40%;top:27.5%;height:5%;border-radius:4px 4px 0 0;background:linear-gradient(90deg,#c9ab87,#efe1cb,#c3a27d)}
+.a1 .sh{left:16%;right:12%;top:68%;height:8%;border-radius:50%;background:radial-gradient(closest-side,rgba(60,35,18,.42),transparent)}
+.a2{background:linear-gradient(115deg,transparent 0 56%,rgba(48,52,30,.16) 56%),linear-gradient(#bfc29a,#a6a97e 74%,#8c8e64 74%)}
+.a2 i{position:absolute;display:block}
+.a2 .bot{left:30%;width:22%;top:22%;height:52%;border-radius:40% 40% 8% 8%/18% 18% 4% 4%;background:linear-gradient(90deg,#3f4a2c,#6c7a48 45%,#3a4428)}
+.a2 .neck{left:37%;width:8%;top:14%;height:10%;background:linear-gradient(90deg,#3f4a2c,#76844f,#3f4a2c);border-radius:3px 3px 0 0}
+.a2 .ball{left:56%;width:20%;aspect-ratio:1;top:60%;border-radius:50%;background:radial-gradient(circle at 34% 30%,#f2ead7,#c9b996 60%,#8f7d5a)}
+.a2 .sh{left:24%;right:14%;top:72%;height:5%;border-radius:50%;background:radial-gradient(closest-side,rgba(40,40,20,.4),transparent)}
+.a3{background:radial-gradient(70% 46% at 50% 58%,rgba(244,170,92,.55),transparent 70%),linear-gradient(#2b2621,#3a322a 70%,#2a241f 70%)}
+.a3 i{position:absolute;display:block}
+.a3 .cord{left:calc(50% - 1px);width:2px;top:0;height:24%;background:#15120f}
+.a3 .shade{left:26%;right:26%;top:24%;height:20%;clip-path:polygon(30% 0,70% 0,100% 100%,0 100%);background:linear-gradient(90deg,#9b5a30,#d78a4f 50%,#8a4b2a)}
+.a3 .bulb{left:42%;right:42%;top:42%;height:6%;border-radius:0 0 50% 50%;background:#ffe2b0;box-shadow:0 0 40px 18px rgba(255,200,130,.5)}
+.a3 .pool{left:14%;right:14%;top:70%;height:10%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,200,130,.38),transparent)}
+.a4{background:radial-gradient(90% 60% at 70% 20%,#e5ddcb,transparent 60%),linear-gradient(#cfc4ae,#bcae93 70%,#a6967a 70%)}
+.a4 i{position:absolute;display:block}
+.a4 .seat{left:22%;right:22%;top:40%;height:14%;border-radius:50%;background:radial-gradient(70% 70% at 40% 30%,#6b4630,#3e271a)}
+.a4 .leg{top:47%;width:5%;height:27%;background:linear-gradient(90deg,#4a2f20,#7b5238,#4a2f20);border-radius:0 0 3px 3px}
+.a4 .l1{left:30%;transform:rotate(6deg)}.a4 .l2{right:30%;transform:rotate(-6deg)}.a4 .l3{left:47.5%;top:50%;height:26%}
+.a4 .sh{left:20%;right:20%;top:72%;height:6%;border-radius:50%;background:radial-gradient(closest-side,rgba(50,35,20,.38),transparent)}
+
+.chip{position:absolute;left:12px;bottom:12px;z-index:2;display:flex;align-items:center;gap:6px;height:28px;padding:0 10px 0 8px;border-radius:14px;background:rgba(238,231,220,.92);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.c-circle .chip,.c-notch .chip{bottom:auto;top:12px}
+.c-blob .chip{left:50%;transform:translateX(-50%);bottom:18px}
+.chip svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75}
+.work[aria-pressed=true] .chip,.frame[aria-pressed=true] .chip{background:var(--ink);color:var(--bone)}
+
+.cap{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:baseline;padding-top:14px;margin-top:14px;border-top:1px solid var(--line)}
+.no{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--umber)}
+.name{margin:0;font:400 24px/1.1 var(--serif)}
+.meta{font-size:12px;color:var(--ink-2)}
+
+.foot{display:flex;justify-content:space-between;gap:24px;margin-top:28px;font-size:12px;color:var(--ink-2)}
+.foot kbd{font:700 11px/1 var(--sans);border:1px solid var(--line);border-radius:4px;padding:3px 6px;color:var(--ink)}
+
+@media (max-width:1100px){h1{font-size:64px}.head{grid-template-columns:minmax(0,1fr) 260px}}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.top nav{display:none}.head{grid-template-columns:1fr;gap:16px}}
+@media (max-width:640px){.top,main{padding-left:20px;padding-right:20px}h1{font-size:48px}.grid{gap:16px}.name{font-size:20px}.meta{display:none}.foot{flex-direction:column}.c-circle .shape{--a:56px;--b:32px}.c-circle.on .shape{--a:20px;--b:88px}.c-notch .shape{--a:48px}.c-notch.on .shape{--b:48px}}
+@media (prefers-reduced-motion:reduce){.shape,.art{transition:none}.work.on .art{transform:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="mark">Umber Atelier</span>
+  <nav aria-label="Studio"><a href="#" aria-current="page">Objects</a><a href="#">Interiors</a><a href="#">Journal</a><a href="#">Contact</a></nav>
+</header>
+<main>
+  <div class="head">
+    <h1>Objects, <em>cut</em><br>to shape.</h1>
+    <p class="lede"><b>Selected work, 2026.</b> Four pieces photographed in the Lalitpur studio. Each frame keeps the shape of the object it holds. Hover or focus a frame to see it move; press it to hold the second shape.</p>
+  </div>
+  <ul class="grid">
+    <li class="work c-circle">
+      <button class="frame" type="button" aria-pressed="false" aria-label="Lune vessel, circle cut-out frame. Hold shape">
+        <span class="shape"><span class="art a1" aria-hidden="true"><i class="lip"></i><i class="sh"></i><i class="jar"></i></span></span>
+        <span class="chip" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h10a6 6 0 0 0 6 6v10H4z"/></svg>Circle cut</span>
+      </button>
+      <div class="cap"><span class="no">01</span><h2 class="name">Lune vessel</h2><span class="meta">Stoneware, 34 cm</span></div>
+    </li>
+    <li class="work c-arch">
+      <button class="frame" type="button" aria-pressed="false" aria-label="Arch study, arch frame. Hold shape">
+        <span class="shape"><span class="art a2" aria-hidden="true"><i class="neck"></i><i class="sh"></i><i class="bot"></i><i class="ball"></i></span></span>
+        <span class="chip" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 20V11a7 7 0 0 1 14 0v9z"/></svg>Arch</span>
+      </button>
+      <div class="cap"><span class="no">02</span><h2 class="name">Arch study</h2><span class="meta">Glass, 2 parts</span></div>
+    </li>
+    <li class="work c-notch">
+      <button class="frame" type="button" aria-pressed="false" aria-label="Notch lamp, notched corner frame. Hold shape">
+        <span class="shape"><span class="art a3" aria-hidden="true"><i class="cord"></i><i class="pool"></i><i class="shade"></i><i class="bulb"></i></span></span>
+        <span class="chip" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h11l5 5v11H4z"/></svg>Notch</span>
+      </button>
+      <div class="cap"><span class="no">03</span><h2 class="name">Notch lamp</h2><span class="meta">Spun copper</span></div>
+    </li>
+    <li class="work c-blob">
+      <button class="frame" type="button" aria-pressed="false" aria-label="Pebble stool, blob frame. Hold shape">
+        <span class="shape"><span class="art a4" aria-hidden="true"><i class="sh"></i><i class="leg l1"></i><i class="leg l2"></i><i class="leg l3"></i><i class="seat"></i></span></span>
+        <span class="chip" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6c4-4 12-2 13 4s-3 11-9 10S2 10 6 6z"/></svg>Blob</span>
+      </button>
+      <div class="cap"><span class="no">04</span><h2 class="name">Pebble stool</h2><span class="meta">Walnut, oiled</span></div>
+    </li>
+  </ul>
+  <div class="foot"><span>Frames are CSS masks over the image. The photograph never changes size; only the cut moves.</span><span><kbd>Tab</kbd> to a frame, <kbd>Enter</kbd> to hold its shape</span></div>
+</main>
+<script>
+document.querySelectorAll('.work').forEach(w => {
+  const b = w.querySelector('.frame');
+  const sync = () => w.classList.toggle('on', w.matches(':hover') || b.matches(':focus-visible') || b.getAttribute('aria-pressed') === 'true');
+  w.addEventListener('pointerenter', () => w.classList.add('on'));
+  w.addEventListener('pointerleave', () => requestAnimationFrame(sync));
+  b.addEventListener('focus', () => requestAnimationFrame(sync));
+  b.addEventListener('blur', () => requestAnimationFrame(sync));
+  b.addEventListener('click', () => {
+    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    sync();
+  });
+});
+document.querySelector('.c-notch .frame').setAttribute('aria-pressed', 'true');
+document.querySelector('.c-notch').classList.add('on');
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 212 · "Flight arrival split-flap widget" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 234 · "Flight arrival split-flap widget" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Flight arrival split-flap widget
 

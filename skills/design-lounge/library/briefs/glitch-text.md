@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 217 · "Glitch text" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 241 · "Glitch text" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Glitch text
 

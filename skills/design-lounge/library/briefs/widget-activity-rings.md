@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 333 · "Sticker activity rings" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 394 · "Sticker activity rings" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Sticker activity rings
 

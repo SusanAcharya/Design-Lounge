@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 242 · "Marketplace search hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 282 · "Marketplace search hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Marketplace search hero
 

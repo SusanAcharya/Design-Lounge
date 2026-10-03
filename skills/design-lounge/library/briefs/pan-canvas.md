@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 257 · "Pan canvas" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 301 · "Pan canvas" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Pan canvas
 

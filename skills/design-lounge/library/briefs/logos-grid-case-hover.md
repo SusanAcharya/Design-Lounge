@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 239 · "Logos grid case hover" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 276 · "Logos grid case hover" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Logos grid case hover
 

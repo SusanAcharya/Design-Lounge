@@ -1,0 +1,285 @@
+<!-- Design Lounge piece: card-stamped-document · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Mooring permit HP-12 / 0884</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blotter:#2e3a33;--blotter-2:#36443b;--on-blotter:#e9e2cf;--on-blotter-2:#a9b3a3;
+  --paper:#f2ebd9;--paper-2:#e8dfc8;--rule:#cdbf9f;--ink:#2a2723;--ink-2:#5e574b;
+  --stamp:#c0262d;--pen:#1f3a8a;--brass:#c9a35b;
+  --serif:"Old Standard TT","Times New Roman",serif;
+  --type:"Special Elite","Courier New",monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  display:grid;place-items:center;padding:32px 24px;overflow-x:hidden;
+  background:
+    radial-gradient(ellipse at 60% 45%,var(--blotter-2),transparent 70%),
+    repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,.035) 0 1px,transparent 1px 3px),
+    var(--blotter);
+  color:var(--on-blotter);font:400 14px/1.5 var(--serif);
+}
+button{font:inherit;color:inherit;cursor:pointer}
+.desk{display:grid;grid-template-columns:minmax(0,280px) minmax(0,560px);gap:72px;align-items:center;width:min(912px,100%)}
+
+/* left: tray */
+.tray h1{margin:0 0 4px;font:italic 400 34px/1.05 var(--serif)}
+.tray .eyebrow{margin:0 0 18px;font:400 11px/1 var(--type);letter-spacing:.16em;text-transform:uppercase;color:var(--on-blotter-2)}
+.steps{list-style:none;margin:0 0 28px;padding:0;border-top:1px solid rgba(233,226,207,.16)}
+.steps li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(233,226,207,.16);font-size:15px}
+.steps .box{width:18px;height:18px;border:1.5px solid var(--on-blotter-2);display:grid;place-items:center;flex:none}
+.steps .box svg{width:14px;height:14px;opacity:0;transform:scale(.4);transition:opacity 160ms var(--ease),transform 220ms var(--expo)}
+.steps li.ok .box{border-color:var(--on-blotter)}
+.steps li.ok .box svg{opacity:1;transform:none}
+.steps small{margin-left:auto;font:400 11px/1 var(--type);color:var(--on-blotter-2);letter-spacing:.06em}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{min-height:42px;padding:0 18px;border:1px solid rgba(233,226,207,.4);background:transparent;font:400 13px/1 var(--type);letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;transition:background-color 160ms var(--ease),border-color 160ms var(--ease)}
+.btn svg{width:18px;height:18px}
+.btn:hover{border-color:var(--on-blotter);background:rgba(233,226,207,.06)}
+.btn.red{background:var(--stamp);border-color:var(--stamp);color:#fff6ee}
+.btn.red:hover{background:#a81f26}
+.btn.quiet{border-color:transparent;color:var(--on-blotter-2);padding:0 8px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.hint{margin:16px 0 0;font-size:13px;color:var(--on-blotter-2);font-style:italic}
+
+/* the document */
+.docwrap{position:relative;transform:rotate(-1.2deg)}
+.slip{position:absolute;left:-26px;top:-22px;width:210px;height:120px;background:#e4d6b4;transform:rotate(-6deg);padding:14px 16px;
+  box-shadow:0 8px 16px -10px rgba(0,0,0,.6);font:400 11px/1.5 var(--type);color:var(--ink-2)}
+.slip b{display:block;font:700 10px/1 var(--serif);letter-spacing:.18em;text-transform:uppercase;color:var(--ink);margin-bottom:6px}
+.doc{
+  position:relative;padding:42px 46px 38px;color:var(--ink);cursor:none;overflow:hidden;
+  background:
+    linear-gradient(180deg,transparent 33.1%,rgba(90,70,30,.08) 33.3%,rgba(255,255,255,.35) 33.6%,transparent 34.4%),
+    linear-gradient(180deg,transparent 66.4%,rgba(90,70,30,.08) 66.6%,rgba(255,255,255,.35) 66.9%,transparent 67.7%),
+    radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(120,95,50,.16)),
+    var(--paper);
+  box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 28px 50px -26px rgba(0,0,0,.8),0 4px 10px -4px rgba(0,0,0,.4);
+}
+.doc::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;mix-blend-mode:multiply;filter:url(#fibre);background:var(--paper-2)}
+.doc.thud{animation:thud 280ms var(--ease)}
+@keyframes thud{35%{transform:translateY(3px) scale(.996)}}
+.head{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:3px double var(--ink)}
+.head svg{width:40px;height:40px;flex:none}
+.head .org{font:700 11px/1.35 var(--serif);letter-spacing:.2em;text-transform:uppercase}
+.head .org span{display:block;font-weight:400;letter-spacing:.12em;color:var(--ink-2)}
+.head .form{margin-left:auto;white-space:nowrap;border:1.5px solid var(--ink);padding:6px 9px;font:400 12px/1 var(--type);letter-spacing:.06em}
+.doc h2{margin:22px 0 4px;font:italic 400 40px/1 var(--serif);letter-spacing:-.01em}
+.ref{margin:0 0 22px;font:400 12px/1 var(--type);color:var(--ink-2);letter-spacing:.04em}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px 28px;margin:0}
+.fields div{border-bottom:1px dotted var(--ink-2);padding-bottom:4px}
+.fields dt{font:700 9.5px/1 var(--serif);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.fields dd{margin:0;font:400 16px/1.2 var(--type);color:#24211d}
+.fields .wide{grid-column:1/-1}
+.terms{margin:22px 0 0;font:400 12.5px/1.55 var(--serif);color:var(--ink-2);max-width:44ch}
+.foot{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;margin-top:26px;align-items:end}
+.sigline{position:relative;height:74px;border-bottom:1px solid var(--ink)}
+.sigline svg{position:absolute;left:2px;bottom:-6px;width:230px;height:84px;overflow:visible}
+.sig{fill:none;stroke:var(--pen);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.signed .sig{stroke-dashoffset:0;transition:stroke-dashoffset 1500ms cubic-bezier(.45,.05,.4,1)}
+.cap{margin-top:6px;font:700 9.5px/1 var(--serif);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2)}
+.date{font:400 15px/1 var(--type);padding-bottom:6px;border-bottom:1px solid var(--ink);height:74px;display:flex;align-items:end}
+
+/* stamp */
+.stamp{position:absolute;left:0;top:0;width:230px;pointer-events:none;color:var(--stamp);mix-blend-mode:multiply;opacity:0;transform-origin:50% 50%}
+.stamp svg{display:block;width:100%;height:auto;overflow:visible}
+.stamp.on{opacity:.9;animation:stampin 520ms var(--expo) both}
+.stamp .bleed{opacity:.35;filter:blur(1.3px)}
+.stamp.on .bleed{animation:bleed 1300ms 140ms ease-out both}
+@keyframes stampin{
+  0%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) translateY(-26px) scale(1.55)}
+  42%{opacity:1;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.96)}
+  70%{transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1.015)}
+  100%{opacity:.9;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1)}
+}
+@keyframes bleed{from{opacity:0;filter:blur(0)}to{opacity:.35;filter:blur(1.3px)}}
+.stamp{transform:translate(var(--x),var(--y)) rotate(var(--r))}
+.ghost{position:absolute;left:0;top:0;width:230px;aspect-ratio:230/92;border:2px dashed rgba(192,38,45,.55);border-radius:6px;pointer-events:none;opacity:0;transition:opacity 140ms var(--ease)}
+.doc:hover .ghost{opacity:1}
+.doc:focus-visible{outline:2px solid var(--brass);outline-offset:6px}
+
+/* paperclip */
+.clip{position:absolute;left:28px;top:-34px;width:34px;height:96px;z-index:4;pointer-events:none;filter:drop-shadow(2px 3px 2px rgba(0,0,0,.35))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:980px){.desk{grid-template-columns:minmax(0,560px);gap:40px;justify-content:center}.tray{order:2}}
+@media (max-width:640px){
+  body{padding:40px 14px}
+  .doc{padding:34px 22px 28px}
+  .doc h2{font-size:30px}
+  .fields{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr;gap:18px}
+  .slip{left:-8px;width:170px}
+  .stamp,.ghost{width:190px}
+  .head .org{font-size:9.5px;letter-spacing:.14em}
+}
+@media (prefers-reduced-motion:reduce){
+  .stamp.on,.stamp.on .bleed,.doc.thud{animation:none}
+  .signed .sig,.steps .box svg,.btn,.ghost{transition:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="ink" x="-8%" y="-15%" width="116%" height="130%">
+      <feTurbulence type="turbulence" baseFrequency=".035" numOctaves="2" seed="3" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="3.4" result="rough"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7" result="grain"/>
+      <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.4 1.9" result="holes"/>
+      <feComposite in="rough" in2="holes" operator="in"/>
+    </filter>
+    <filter id="fibre"><feTurbulence type="fractalNoise" baseFrequency=".9 .05" numOctaves="2" seed="2"/><feColorMatrix values="0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .3 0 0 0 .45 0"/></filter>
+  </defs>
+</svg>
+
+<main class="desk">
+  <section class="tray" aria-labelledby="trayTitle">
+    <p class="eyebrow">In tray &middot; 3 of 11</p>
+    <h1 id="trayTitle">Mooring permit for the Saltwren</h1>
+    <ul class="steps" aria-label="Progress">
+      <li class="ok"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Fee received <small>02 Oct</small></li>
+      <li class="ok"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Berth checked <small>03 Oct</small></li>
+      <li id="stepSign"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Signed by the harbour master <small id="signWhen">&nbsp;</small></li>
+      <li id="stepStamp"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Stamped approved <small id="stampWhen">&nbsp;</small></li>
+    </ul>
+    <div class="actions">
+      <button class="btn" id="signBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 19c3-1 4-6 6-6s1 4 3 4 3-3 4-3 1 2 2 2h3"/><path d="M14 4l4 4-7 7H7v-4z"/></svg>
+        Sign
+      </button>
+      <button class="btn red" id="stampBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6v6l2 3H7l2-3z"/><path d="M4 15h16v3H4z"/><path d="M7 21h10"/></svg>
+        Stamp approved
+      </button>
+      <button class="btn quiet" id="resetBtn" type="button">Next form</button>
+    </div>
+    <p class="hint">Or click anywhere on the permit to thump the stamp down right there.</p>
+  </section>
+
+  <div class="docwrap">
+    <div class="slip" aria-hidden="true"><b>Receipt</b>No. 0884<br>Mooring fee, 5 months<br>412.00 paid in full</div>
+    <svg class="clip" viewBox="0 0 34 96" aria-hidden="true">
+      <defs><linearGradient id="steel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d949b"/><stop offset=".45" stop-color="#eef1f3"/><stop offset="1" stop-color="#7b838b"/></linearGradient></defs>
+      <path d="M10 70 V16 a7 7 0 0 1 14 0 V80 a10 10 0 0 1 -20 0 V22" fill="none" stroke="url(#steel)" stroke-width="3.2" stroke-linecap="round"/>
+    </svg>
+    <article class="doc" id="doc" tabindex="0" aria-labelledby="docTitle" aria-describedby="docHelp">
+      <header class="head">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="20" cy="20" r="18"/><circle cx="20" cy="20" r="15" stroke-width=".8"/><path d="M20 10v19M15 14h10M12 22c1 5 4 7 8 7s7-2 8-7"/><circle cx="20" cy="9.5" r="1.6"/></svg>
+        <div class="org">Port Ellery Harbour Authority<span>Office of the Harbour Master</span></div>
+        <div class="form">Form HP-12</div>
+      </header>
+      <h2 id="docTitle">Mooring Permit</h2>
+      <p class="ref">Ref. HP-12 / 0884 &nbsp;&middot;&nbsp; Issued under Harbour Bylaw 7(2)</p>
+      <dl class="fields">
+        <div><dt>Vessel</dt><dd>Saltwren</dd></div>
+        <div><dt>Berth</dt><dd>Pontoon C, No. 14</dd></div>
+        <div><dt>Owner</dt><dd>Wilhelmina Strand</dd></div>
+        <div><dt>Length overall</dt><dd>9.4 m</dd></div>
+        <div class="wide"><dt>Period</dt><dd>1 November 2026 to 31 March 2027</dd></div>
+      </dl>
+      <p class="terms">The vessel shall be kept in a seaworthy state, display this permit number on the port quarter, and leave the berth within 48 hours of a gale notice from the harbour office.</p>
+      <div class="foot">
+        <div>
+          <div class="sigline" id="sigline">
+            <svg viewBox="0 0 230 84" aria-hidden="true">
+              <path class="sig" pathLength="1" d="M14 30 C30 24 52 21 72 23 M42 24 C40 40 35 56 28 72 M58 56 C48 46 60 36 66 46 C71 56 58 64 54 56 C62 50 70 48 76 52 C80 42 82 34 84 28 C82 42 80 54 82 58 C86 50 92 46 96 50 C98 54 93 58 98 56 C104 50 106 46 112 48 C116 52 110 58 116 56 C122 50 124 48 128 52 C130 56 130 58 134 54 C138 50 140 48 144 52 C148 60 142 76 134 78 M150 50 C154 45 162 46 162 52 C162 58 153 58 152 52 M92 68 C126 63 170 62 214 55"/>
+            </svg>
+          </div>
+          <div class="cap">Harbour master</div>
+        </div>
+        <div>
+          <div class="date" id="date">&nbsp;</div>
+          <div class="cap">Date</div>
+        </div>
+      </div>
+      <span class="ghost" id="ghost" aria-hidden="true"></span>
+      <div class="stamp" id="stamp" aria-hidden="true">
+        <svg viewBox="0 0 230 92">
+          <g class="bleed"><rect x="4" y="4" width="222" height="84" rx="6" fill="none" stroke="currentColor" stroke-width="5"/><text x="115" y="60" text-anchor="middle" font-family="Old Standard TT,serif" font-weight="700" font-size="40" letter-spacing="5" fill="currentColor">APPROVED</text></g>
+          <g filter="url(#ink)">
+            <rect x="4" y="4" width="222" height="84" rx="6" fill="none" stroke="currentColor" stroke-width="5"/>
+            <rect x="12" y="12" width="206" height="68" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <text x="115" y="58" text-anchor="middle" font-family="Old Standard TT,serif" font-weight="700" font-size="40" letter-spacing="5" fill="currentColor">APPROVED</text>
+            <text x="115" y="73" text-anchor="middle" font-family="Special Elite,monospace" font-size="10.5" letter-spacing="2.5" fill="currentColor">PORT ELLERY · 04 OCT 2026</text>
+          </g>
+        </svg>
+      </div>
+      <p class="sr" id="docHelp">Press Enter to stamp approved at the foot of the permit.</p>
+    </article>
+  </div>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const doc = document.getElementById('doc'), stamp = document.getElementById('stamp'), ghost = document.getElementById('ghost');
+  const sigline = document.getElementById('sigline'), live = document.getElementById('live');
+  const signBtn = document.getElementById('signBtn');
+  const stepSign = document.getElementById('stepSign'), stepStamp = document.getElementById('stepStamp');
+  const when = () => '04 Oct';
+
+  function sign() {
+    if (sigline.classList.contains('signed')) return;
+    sigline.classList.add('signed');
+    stepSign.classList.add('ok');
+    document.getElementById('signWhen').textContent = when();
+    document.getElementById('date').textContent = '4 October 2026';
+    signBtn.disabled = true;
+    live.textContent = 'Signed by the harbour master.';
+  }
+
+  function thump(x, y, r) {
+    const w = stamp.offsetWidth, h = w * 92 / 230;
+    if (r === undefined) r = (Math.random() * 14 - 10).toFixed(1);
+    x = Math.max(14, Math.min(doc.clientWidth - w - 14, x - w / 2));
+    y = Math.max(14, Math.min(doc.clientHeight - h - 14, y - h / 2));
+    stamp.style.setProperty('--x', x + 'px');
+    stamp.style.setProperty('--y', y + 'px');
+    stamp.style.setProperty('--r', r + 'deg');
+    stamp.classList.remove('on'); doc.classList.remove('thud');
+    void stamp.offsetWidth;
+    stamp.classList.add('on');
+    if (!reduce) setTimeout(() => doc.classList.add('thud'), 190);
+    stepStamp.classList.add('ok');
+    document.getElementById('stampWhen').textContent = when();
+    live.textContent = 'Stamped approved.';
+  }
+  const defaultSpot = () => { const d = document.getElementById('date'); return [d.offsetLeft + d.offsetWidth / 2, d.offsetTop + 4, -7]; };
+  doc.addEventListener('animationend', e => { if (e.animationName === 'thud') doc.classList.remove('thud'); });
+
+  const local = e => { const b = doc.getBoundingClientRect(), s = doc.offsetWidth / b.width; return [(e.clientX - b.left) * s, (e.clientY - b.top) * s]; };
+  doc.addEventListener('pointermove', e => {
+    const [x, y] = local(e), w = ghost.offsetWidth, h = ghost.offsetHeight;
+    ghost.style.transform = `translate(${x - w / 2}px, ${y - h / 2}px) rotate(-4deg)`;
+  });
+  doc.addEventListener('click', e => { const [x, y] = local(e); thump(x, y); });
+  doc.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); thump(...defaultSpot()); } });
+  document.getElementById('stampBtn').addEventListener('click', () => thump(...defaultSpot()));
+  signBtn.addEventListener('click', sign);
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    stamp.classList.remove('on'); sigline.classList.remove('signed');
+    stepSign.classList.remove('ok'); stepStamp.classList.remove('ok');
+    document.getElementById('signWhen').innerHTML = '&nbsp;'; document.getElementById('stampWhen').innerHTML = '&nbsp;';
+    document.getElementById('date').innerHTML = '&nbsp;';
+    signBtn.disabled = false;
+    live.textContent = 'Permit reset: unsigned and unstamped.';
+  });
+
+  /* hero state: signed and stamped on load */
+  sign();
+  thump(...defaultSpot());
+  live.textContent = '';
+})();
+</script>
+</body>
+</html>

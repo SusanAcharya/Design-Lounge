@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 283 · "Preloader counter intro" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 334 · "Preloader counter intro" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Preloader counter intro
 
