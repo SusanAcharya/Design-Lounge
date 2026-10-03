@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 177 · "Spend list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 192 · "Spend list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Spend list
 

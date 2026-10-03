@@ -1,0 +1,99 @@
+<!-- Design Lounge piece: calendar-month · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Calendar month</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--ink-3:#5c564e;--line:#e4dfd4;
+  --primary:#1f4d3a;--primary-soft:#e7f2ec;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+.cal{width:320px}
+.head{display:flex;align-items:center;justify-content:space-between;min-height:40px}
+.head p{margin:0;font-weight:500}
+.head button{width:40px;height:40px;border:1px solid var(--line);border-radius:2px;background:var(--surface);color:var(--ink);font:500 16px/1 var(--sans);cursor:pointer}
+.days,.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.days{margin:8px 0 4px}
+.days span{text-align:center;font-size:12px;color:var(--ink-2)}
+.grid button,.grid span{height:40px;border:0;border-radius:2px;background:transparent;color:var(--ink);font:400 14px/40px var(--sans);text-align:center;padding:0}
+.grid button{cursor:pointer}
+.grid button[aria-pressed="true"]{background:var(--primary-soft);font-weight:500}
+.grid button.today{box-shadow:inset 0 -2px 0 var(--primary)}
+.grid .out{color:var(--ink-3)}
+button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.status{margin:12px 0 0;font-size:14px}
+</style>
+</head>
+<body>
+<p class="where">Dock</p>
+<div class="cal">
+  <div class="head">
+    <button type="button" id="prev" aria-label="Previous month">‹</button>
+    <p id="label">October 2026</p>
+    <button type="button" id="next" aria-label="Next month">›</button>
+  </div>
+  <div class="days" aria-hidden="true"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div>
+  <div class="grid" id="grid" role="group" aria-label="October 2026"></div>
+</div>
+<p class="status" id="status" role="status">17 October is the slot.</p>
+<script>
+const months = [
+  { y:2026, m:8, name:'September 2026' },
+  { y:2026, m:9, name:'October 2026' },
+  { y:2026, m:10, name:'November 2026' }
+];
+const names = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+let view = 1;
+let chosen = { y:2026, m:9, d:17 };
+const grid = document.getElementById('grid');
+const label = document.getElementById('label');
+const status = document.getElementById('status');
+function paint(){
+  const cur = months[view];
+  label.textContent = cur.name;
+  grid.setAttribute('aria-label', cur.name);
+  grid.replaceChildren();
+  const first = new Date(cur.y, cur.m, 1);
+  const start = (first.getDay() + 6) % 7;
+  const days = new Date(cur.y, cur.m + 1, 0).getDate();
+  const prevDays = new Date(cur.y, cur.m, 0).getDate();
+  const cells = [];
+  for (let i = 0; i < start; i++) cells.push({ n: prevDays - start + 1 + i, out: true });
+  for (let d = 1; d <= days; d++) cells.push({ n: d, out: false });
+  while (cells.length % 7) cells.push({ n: cells.length - (start + days) + 1, out: true });
+  cells.forEach(cell => {
+    if (cell.out) {
+      const s = document.createElement('span');
+      s.className = 'out';
+      s.textContent = cell.n;
+      grid.append(s);
+      return;
+    }
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = cell.n;
+    b.setAttribute('aria-pressed', String(chosen.y===cur.y && chosen.m===cur.m && chosen.d===cell.n));
+    if (cur.y===2026 && cur.m===9 && cell.n===3) b.classList.add('today');
+    b.addEventListener('click', () => {
+      chosen = { y: cur.y, m: cur.m, d: cell.n };
+      status.textContent = cell.n + ' ' + names[cur.m] + ' is the slot.';
+      paint();
+    });
+    grid.append(b);
+  });
+}
+document.getElementById('prev').addEventListener('click', () => { if (view>0){ view--; paint(); } });
+document.getElementById('next').addEventListener('click', () => { if (view<2){ view++; paint(); } });
+paint();
+</script>
+</body>
+</html>

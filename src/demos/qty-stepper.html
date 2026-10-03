@@ -1,0 +1,63 @@
+<!-- Design Lounge piece: qty-stepper · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Quantity stepper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-strong:#cfc6b8;
+  --primary:#1f4d3a;--primary-ink:#fffdf8;--focus:#1f4d3a;
+  --sans:"Noto Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+.row{width:420px;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 16px;background:var(--surface);border:1px solid var(--line);border-radius:2px}
+.name{margin:0;font-weight:500}
+.meta{margin:2px 0 0;font-size:13px;color:var(--ink-2)}
+.step{display:flex;align-items:center;gap:4px}
+.step button{width:40px;height:40px;border-radius:2px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);font:500 16px/1 var(--sans);cursor:pointer}
+.step button:disabled{opacity:.4;cursor:default}
+.step button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.n{width:32px;text-align:center;font-variant-numeric:tabular-nums;font-weight:500}
+.line{margin:16px 0 0;font-size:28px;font-weight:500;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<p class="where">Bag</p>
+<div class="row">
+  <div>
+    <p class="name">Rice</p>
+    <p class="meta">रु 1,200 a bag</p>
+  </div>
+  <div class="step">
+    <button type="button" id="minus" aria-label="Remove one bag">−</button>
+    <span class="n" id="n">2</span>
+    <button type="button" id="plus" aria-label="Add one bag">+</button>
+  </div>
+</div>
+<p class="line" id="line">रु 2,400</p>
+<script>
+const minus = document.getElementById('minus');
+const plus = document.getElementById('plus');
+const n = document.getElementById('n');
+const line = document.getElementById('line');
+let qty = 2;
+function paint(){
+  n.textContent = String(qty);
+  const total = qty * 1200;
+  line.textContent = 'रु ' + total.toLocaleString('en-IN');
+  minus.disabled = qty <= 1;
+  plus.disabled = qty >= 8;
+}
+minus.addEventListener('click', () => { if (qty > 1) { qty -= 1; paint(); } });
+plus.addEventListener('click', () => { if (qty < 8) { qty += 1; paint(); } });
+paint();
+</script>
+</body>
+</html>

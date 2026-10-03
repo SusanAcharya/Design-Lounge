@@ -1,0 +1,75 @@
+<!-- Design Lounge piece: filter-toolbar · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Filter toolbar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--surface-2:#f0ebe3;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-strong:#cfc6b8;
+  --primary-soft:#e7f2ec;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.bar{display:flex;gap:8px;align-items:center;width:720px}
+input,button{height:40px;border-radius:2px;font:500 13px/1 var(--sans)}
+input{width:220px;padding:0 12px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-weight:400}
+button{padding:0 14px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer}
+button[aria-pressed="true"]{background:var(--primary-soft);border-color:transparent}
+button:focus-visible,input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.count{margin-left:auto;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+ul{list-style:none;margin:16px 0 0;padding:0;width:720px;background:var(--surface);border:1px solid var(--line);border-radius:2px}
+li{min-height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--line)}
+li:last-child{border-bottom:0}
+li[hidden]{display:none}
+.empty{margin:16px 0 0;font-size:14px}
+</style>
+</head>
+<body>
+<div class="bar">
+  <input id="q" type="search" aria-label="Find a load" placeholder="Find a load">
+  <button type="button" data-kind="all" aria-pressed="true">All</button>
+  <button type="button" data-kind="out" aria-pressed="false">Out</button>
+  <button type="button" data-kind="in" aria-pressed="false">In</button>
+  <button type="button" data-kind="held" aria-pressed="false">Held</button>
+  <span class="count" id="count">4 loads</span>
+</div>
+<ul id="list">
+  <li data-kind="out" data-name="rice"><span>Rice</span><span>Out</span></li>
+  <li data-kind="held" data-name="oil"><span>Oil</span><span>Held</span></li>
+  <li data-kind="in" data-name="tea"><span>Tea</span><span>In</span></li>
+  <li data-kind="out" data-name="salt"><span>Salt</span><span>Out</span></li>
+</ul>
+<p class="empty" id="empty" hidden>No loads match.</p>
+<script>
+const q = document.getElementById('q');
+const chips = [...document.querySelectorAll('[data-kind]')].filter(el => el.tagName === 'BUTTON');
+const rows = [...document.querySelectorAll('#list li')];
+const count = document.getElementById('count');
+const empty = document.getElementById('empty');
+let kind = 'all';
+function apply(){
+  const query = q.value.trim().toLowerCase();
+  let n = 0;
+  rows.forEach(row => {
+    const ok = (kind === 'all' || row.dataset.kind === kind) && row.dataset.name.includes(query);
+    row.hidden = !ok;
+    if (ok) n += 1;
+  });
+  count.textContent = n + (n === 1 ? ' load' : ' loads');
+  empty.hidden = n !== 0;
+}
+chips.forEach(chip => chip.addEventListener('click', () => {
+  kind = chip.dataset.kind;
+  chips.forEach(c => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
+  apply();
+}));
+q.addEventListener('input', apply);
+</script>
+</body>
+</html>

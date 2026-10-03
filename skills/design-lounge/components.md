@@ -54,6 +54,8 @@ One height per platform: `var(--control)`. Padding 0 14px. Font 13px / 500 on we
 
 Hover: primary darkens by using `--inverse` only when the family is sharp. Otherwise the border becomes `--ink` on outline buttons, and primary buttons stay the fill. Do not invent a third hover colour.
 
+The five roles in one row are `button-roles`. Save is the one solid. A destructive action on that same view stays outline. On a confirm dialog the destructive action is the one solid and cancel is outline. That dialog is `modal-dialog-focus-trap`. A short description of a control is `tooltip`. It shows on hover and on focus. Do not put a tooltip on a chart.
+
 ## Field
 
 Label above, 12px, `--ink-2`. The input is the same height and radius as the button. Error text under the field, 12px, `--danger`. Hint is `--ink-3`.
@@ -75,9 +77,11 @@ Label above, 12px, `--ink-2`. The input is the same height and radius as the but
 .field input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 ```
 
+The specimen is `text-field`: label, hint, error, and a disabled value that stays readable. A visible set of two to five choices is `radio-group`. A stepped value is `slider-field`. A bar of search and chips above a list is `filter-toolbar`. The chip uses this radius and this height. A path above a page is `breadcrumb`. Pages of a long list are `pagination`. A count of units is `qty-stepper`. Nested pages are `tree-nav`. One day is `calendar-month`. A span of days is `date-range-picker`.
+
 ## Select
 
-A select is this field, not a second control. The closed control is a button of height `--control` and radius `--radius`. The list is `--surface` with a `--line` border and radius `--radius-card`. An option is at least 40px tall. Hover uses `--surface-2`. The selected option uses `--primary-soft`. The error, when the value is empty on submit, is 12px `--danger` under the field. Do not restyle the browser's native popup, and do not invent a new radius for the list.
+A select is this field, not a second control. The closed control is a button of height `--control` and radius `--radius`. The list is `--surface` with a `--line` border and radius `--radius-card`. An option is at least 40px tall. Hover uses `--surface-2`. The selected option uses `--primary-soft`. The error, when the value is empty on submit, is 12px `--danger` under the field. Do not restyle the browser's native popup, and do not invent a new radius for the list. Four known options and no typing is `select-field`. A longer list you filter by typing is `combobox`.
 
 ## Card, row, badge
 
@@ -110,7 +114,7 @@ A select is this field, not a second control. The closed control is a button of 
 }
 ```
 
-Status badges use `--success-soft`, `--warning-soft`, `--danger-soft`, `--info-soft` with the matching ink. They are for state, not decoration.
+Status badges use `--success-soft`, `--warning-soft`, `--danger-soft`, `--info-soft` with the matching ink. They are for state, not decoration. The four washes on a queue are `status-badge`. A message in the page is `inline-alert`. One message. It is not a toast.
 
 ## Icon and nav
 
@@ -130,7 +134,7 @@ Text on a feedback wash uses `--success-on-soft`, `--warning-on-soft`, `--danger
 
 A save confirmation is `saved-banner`. It stays on the page. It is not a toast. A failed load stays the failed-load piece.
 
-A phone tab bar is `phone-tab-plain` unless the family is glass. Glass uses `ios-glass-tab-bar`. Do not put a glass bar on any other family. The plain bar's demo has four tabs. A product uses one tab per real section, three to five. A transaction list is `spend-list`. Do not invent a second list style.
+A phone tab bar is `phone-tab-plain` unless the family is glass. Glass uses `ios-glass-tab-bar`. Do not put a glass bar on any other family. The plain bar's demo has four tabs. A product uses one tab per real section, three to five. A transaction list is `spend-list`. Do not invent a second list style. A conversation is `chat-thread`. A paid order that stays on the page is `order-confirmed`.
 
 A single metric is one number at display size, a delta in `--success` or `--danger`, and a caption in `--ink-2`. If the screen has several figures, only one of them is display size. The others step down to the title role. Do not lay four equal numbers in a row.
 

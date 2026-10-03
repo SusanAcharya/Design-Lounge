@@ -1,0 +1,72 @@
+<!-- Design Lounge piece: newsletter-close-band · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Evening list</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4efe6;--band:#f7f3ea;--ink:#241c16;--ink-2:#5c5148;--line:#ddd4c6;--line-strong:#c9bfb2;
+  --primary:#3f5c4b;--primary-ink:#fffdf8;--danger:#9b2c2c;--focus:#3f5c4b;
+  --serif:"Newsreader",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.45 var(--sans);background:var(--bg);color:var(--ink);display:flex;flex-direction:column}
+.close{padding:64px 64px 32px}
+.col{max-width:720px}
+h1{margin:0;font:500 48px/1.05 var(--serif);max-width:16ch}
+.lead{margin:12px 0 0;max-width:42ch;color:var(--ink-2)}
+.band{margin-top:auto;background:var(--band);border-top:1px solid var(--line);padding:28px 64px 36px}
+.band h2{margin:0;font:500 28px/1.1 var(--serif)}
+.promise{margin:6px 0 16px;color:var(--ink-2);max-width:46ch}
+form{display:flex;gap:8px;align-items:flex-start;width:520px}
+input{height:40px;flex:1;padding:0 12px;border-radius:2px;border:1px solid var(--line-strong);background:#fff;color:var(--ink);font:400 14px/1.4 var(--sans)}
+input[aria-invalid="true"]{border-color:var(--danger)}
+button{height:40px;padding:0 14px;border:0;border-radius:2px;background:var(--primary);color:var(--primary-ink);font:500 13px/1 var(--sans);cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.err{margin:6px 0 0;font-size:12px;color:var(--danger)}
+.done{margin:0;font:500 22px/1.3 var(--serif)}
+</style>
+</head>
+<body>
+<div class="close">
+  <div class="col">
+    <h1>That is the evening.</h1>
+    <p class="lead">The note ends here. The list, if you want it, is under this line.</p>
+  </div>
+</div>
+<section class="band" aria-label="Evening list">
+  <div class="col">
+  <h2>The evening list</h2>
+  <p class="promise">One letter on Sunday. No second list, and no offer beside the letter.</p>
+  <form id="form">
+    <div>
+      <input id="email" type="email" autocomplete="email" aria-label="Email" aria-describedby="err" placeholder="you@press.mail">
+      <p class="err" id="err" hidden>Use a full address.</p>
+    </div>
+    <button type="submit">Join</button>
+  </form>
+  <p class="done" id="done" hidden>You are on the evening list.</p>
+  </div>
+</section>
+<script>
+const form = document.getElementById('form');
+const email = document.getElementById('email');
+const err = document.getElementById('err');
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+  email.setAttribute('aria-invalid', ok ? 'false' : 'true');
+  err.hidden = ok;
+  if (!ok) { email.focus(); return; }
+  form.hidden = true;
+  document.querySelector('.promise').hidden = true;
+  document.getElementById('done').hidden = false;
+});
+</script>
+</body>
+</html>

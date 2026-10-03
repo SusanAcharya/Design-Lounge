@@ -1,0 +1,40 @@
+<!-- Design Lounge piece: tooltip · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tooltip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-strong:#cfc6b8;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:80px 64px}
+.wrap{position:relative;display:inline-block}
+button{height:40px;padding:0 14px;border-radius:2px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font:500 13px/1 var(--sans);cursor:pointer}
+button:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+[role="tooltip"]{position:absolute;left:0;top:48px;width:240px;margin:0;padding:8px 12px;background:var(--ink);color:#fffdf8;border-radius:2px;font-size:13px;line-height:1.4}
+[role="tooltip"][hidden]{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <button type="button" id="hold" aria-describedby="tip">Hold</button>
+  <p id="tip" role="tooltip">Keeps the load on the dock until 18:00.</p>
+</div>
+<script>
+const hold = document.getElementById('hold');
+const tip = document.getElementById('tip');
+function show(on){ tip.hidden = !on; }
+hold.addEventListener('mouseenter', () => show(true));
+hold.addEventListener('mouseleave', () => show(false));
+hold.addEventListener('focus', () => show(true));
+hold.addEventListener('blur', () => show(false));
+</script>
+</body>
+</html>

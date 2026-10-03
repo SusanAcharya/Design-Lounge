@@ -1,0 +1,74 @@
+<!-- Design Lounge piece: tree-nav · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;
+  --primary-soft:#e7f2ec;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+ul{list-style:none;margin:0;padding:0;width:320px}
+ul ul{padding-left:16px;width:auto}
+li{margin:0}
+button,.leaf{min-height:40px;width:100%;display:flex;align-items:center;gap:8px;padding:0 8px;border:0;border-radius:2px;background:transparent;color:var(--ink);font:400 14px/1 var(--sans);text-align:left;cursor:pointer}
+button[aria-expanded="false"] + ul{display:none}
+[aria-current="page"]{background:var(--primary-soft);font-weight:500}
+button:focus-visible,.leaf:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.mark{width:16px;color:var(--ink-2);font-size:12px}
+</style>
+</head>
+<body>
+<p class="where">Places</p>
+<ul id="tree">
+  <li>
+    <button type="button" aria-expanded="true"><span class="mark" aria-hidden="true">–</span>Dispatch</button>
+    <ul>
+      <li>
+        <button type="button" aria-expanded="true"><span class="mark" aria-hidden="true">–</span>Asar</button>
+        <ul>
+          <li><button type="button" class="leaf" aria-current="page">Gate 4</button></li>
+          <li><button type="button" class="leaf">Gate 2</button></li>
+        </ul>
+      </li>
+      <li>
+        <button type="button" aria-expanded="false"><span class="mark" aria-hidden="true">+</span>Bhadra</button>
+        <ul>
+          <li><button type="button" class="leaf">Shift list</button></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <button type="button" aria-expanded="false"><span class="mark" aria-hidden="true">+</span>People</button>
+    <ul>
+      <li><button type="button" class="leaf">Roles</button></li>
+    </ul>
+  </li>
+</ul>
+<script>
+document.querySelectorAll('button[aria-expanded]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    btn.querySelector('.mark').textContent = open ? '+' : '–';
+  });
+});
+document.querySelectorAll('.leaf').forEach(leaf => {
+  leaf.addEventListener('click', () => {
+    document.querySelectorAll('[aria-current]').forEach(n => n.removeAttribute('aria-current'));
+    leaf.setAttribute('aria-current', 'page');
+  });
+});
+</script>
+</body>
+</html>

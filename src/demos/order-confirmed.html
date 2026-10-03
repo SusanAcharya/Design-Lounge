@@ -1,0 +1,58 @@
+<!-- Design Lounge piece: order-confirmed · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Order confirmed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-strong:#cfc6b8;
+  --primary:#1f4d3a;--primary-ink:#fffdf8;--success-soft:#d6e8dc;--success-on-soft:#1b5e3d;--focus:#1f4d3a;
+  --sans:"Noto Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.45 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.col{max-width:720px}
+.flag{display:inline-block;margin:0 0 16px;padding:8px 12px;border-radius:2px;background:var(--success-soft);color:var(--success-on-soft);font-size:14px;font-weight:500}
+.kicker{margin:0;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+h1{margin:8px 0 0;font:600 56px/1 var(--sans);letter-spacing:-.02em}
+.lead{margin:12px 0 0;max-width:36ch}
+ul{list-style:none;margin:24px 0 0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:2px}
+li{min-height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+li:last-child{border-bottom:0}
+.total{font-weight:500}
+button{margin-top:20px;height:40px;padding:0 14px;border-radius:2px;border:0;background:var(--primary);color:var(--primary-ink);font:500 13px/1 var(--sans);cursor:pointer}
+button:disabled{opacity:.4}
+button:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.status{margin:12px 0 0;min-height:20px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="col">
+  <p class="flag">Paid</p>
+  <p class="kicker">Order 1842</p>
+  <h1>रु 4,200</h1>
+  <p class="lead">Leaves today from Koteshwor.</p>
+  <ul>
+    <li><span>Rice, 2 kg</span><span>रु 2,400</span></li>
+    <li><span>Oil, 1 tin</span><span>रु 1,200</span></li>
+    <li><span>Tea, 200 g</span><span>रु 600</span></li>
+    <li class="total"><span>Total</span><span>रु 4,200</span></li>
+  </ul>
+  <button type="button" id="track">Track this order</button>
+  <p class="status" id="status" role="status"></p>
+</div>
+<script>
+const track = document.getElementById('track');
+track.addEventListener('click', () => {
+  document.getElementById('status').textContent = 'Tracking opened for order 1842.';
+  track.disabled = true;
+  track.textContent = 'Tracking opened';
+});
+</script>
+</body>
+</html>

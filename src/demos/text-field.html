@@ -1,0 +1,61 @@
+<!-- Design Lounge piece: text-field · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Text field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--surface-2:#f0ebe3;--ink:#161513;--ink-2:#5a554c;--ink-3:#5c564e;
+  --line:#e4dfd4;--line-strong:#cfc6b8;--primary:#1f4d3a;--danger:#9b2c2c;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 20px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+form{width:320px;display:flex;flex-direction:column;gap:16px}
+.field{display:flex;flex-direction:column;gap:6px}
+label{font:500 12px/1 var(--sans);color:var(--ink-2)}
+input{height:40px;padding:0 12px;border-radius:2px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font:400 14px/1.4 var(--sans)}
+input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+input[aria-invalid="true"]{border-color:var(--danger)}
+input:disabled{background:var(--surface-2);color:var(--ink-2)}
+.hint,.err{margin:0;font-size:12px}
+.hint{color:var(--ink-3)}
+.err{color:var(--danger)}
+</style>
+</head>
+<body>
+<p class="where">Yard account</p>
+<form>
+  <div class="field">
+    <label for="name">Name</label>
+    <input id="name" name="name" value="Mira Shrestha" autocomplete="name">
+    <p class="hint">As it appears on the gate pass.</p>
+  </div>
+  <div class="field">
+    <label for="code">Gate code</label>
+    <input id="code" name="code" inputmode="numeric" aria-invalid="true" aria-describedby="code-err" autocomplete="off">
+    <p class="err" id="code-err">Enter the four-digit code.</p>
+  </div>
+  <div class="field">
+    <label for="badge">Badge number</label>
+    <input id="badge" name="badge" value="Y-1842" disabled>
+    <p class="hint">Issued by the yard. You cannot edit it.</p>
+  </div>
+</form>
+<script>
+const code = document.getElementById('code');
+const err = document.getElementById('code-err');
+code.addEventListener('input', () => {
+  const ok = /^\d{4}$/.test(code.value);
+  code.setAttribute('aria-invalid', ok ? 'false' : 'true');
+  err.hidden = ok;
+});
+</script>
+</body>
+</html>

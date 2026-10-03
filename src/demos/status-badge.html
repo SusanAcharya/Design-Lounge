@@ -1,0 +1,44 @@
+<!-- Design Lounge piece: status-badge · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Status badge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;
+  --success-soft:#d6e8dc;--success-on-soft:#1b5e3d;
+  --warning-soft:#f3e6d0;--warning-on-soft:#7d470e;
+  --danger-soft:#f8e4e2;--danger-on-soft:#8a1f1f;
+  --info-soft:#e4eef5;--info-on-soft:#1a4060;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+ul{list-style:none;margin:0;padding:0;width:560px;background:var(--surface);border:1px solid var(--line);border-radius:2px}
+li{min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 16px;border-bottom:1px solid var(--line)}
+li:last-child{border-bottom:0}
+.name{font-weight:500}
+.meta{display:block;font-size:12px;color:var(--ink-2);font-weight:400}
+.badge{height:22px;padding:0 8px;border-radius:999px;font:500 11px/22px var(--sans);letter-spacing:.04em}
+.ok{background:var(--success-soft);color:var(--success-on-soft)}
+.wait{background:var(--warning-soft);color:var(--warning-on-soft)}
+.no{background:var(--danger-soft);color:var(--danger-on-soft)}
+.info{background:var(--info-soft);color:var(--info-on-soft)}
+</style>
+</head>
+<body>
+<p class="where">Asar loads</p>
+<ul>
+  <li><span><span class="name">Rice</span><span class="meta">Gate 4</span></span><span class="badge ok">Cleared</span></li>
+  <li><span><span class="name">Oil</span><span class="meta">Gate 2</span></span><span class="badge wait">Held</span></li>
+  <li><span><span class="name">Salt</span><span class="meta">Gate 1</span></span><span class="badge no">Refused</span></li>
+  <li><span><span class="name">Tea</span><span class="meta">Gate 4</span></span><span class="badge info">Booked</span></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!-- Design Lounge piece: chat-thread · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat thread</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--ink:#161513;--ink-2:#5a554c;--line:#e4dfd4;--line-strong:#cfc6b8;
+  --primary:#1f4d3a;--primary-ink:#fffdf8;--primary-soft:#e7f2ec;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--sans);background:var(--bg);color:var(--ink);display:flex;flex-direction:column;padding:max(54px, env(safe-area-inset-top)) 20px max(34px, env(safe-area-inset-bottom))}
+.where{margin:0;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+h1{margin:4px 0 16px;font:500 28px/1.1 var(--sans)}
+.thread{flex:1;display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.thread li{max-width:78%;padding:10px 12px;border-radius:2px}
+.them{align-self:flex-start;background:var(--surface);border:1px solid var(--line)}
+.me{align-self:flex-end;background:var(--primary-soft)}
+.who{display:block;font-size:12px;color:var(--ink-2);margin-bottom:2px}
+form{display:flex;gap:8px;margin-top:12px}
+input{flex:1;height:44px;padding:0 12px;border-radius:2px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font:400 15px/1.4 var(--sans)}
+button{height:44px;padding:0 14px;border-radius:2px;border:0;background:var(--primary);color:var(--primary-ink);font:500 15px/1 var(--sans)}
+button:disabled{opacity:.4}
+input:focus-visible,button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+</style>
+</head>
+<body>
+<p class="where">Yard desk</p>
+<h1>Mira</h1>
+<ul class="thread" id="thread">
+  <li class="them"><span class="who">Mira</span>Gate 4 is clear for the rice.</li>
+  <li class="me"><span class="who">You</span>Send the truck at 16:10.</li>
+  <li class="them"><span class="who">Mira</span>Driver is Mira. Plate NA 4 123.</li>
+</ul>
+<form id="form">
+  <input id="msg" aria-label="Message" placeholder="Message the desk" autocomplete="off">
+  <button type="submit" id="send" disabled>Send</button>
+</form>
+<script>
+const msg = document.getElementById('msg');
+const send = document.getElementById('send');
+const thread = document.getElementById('thread');
+msg.addEventListener('input', () => { send.disabled = msg.value.trim() === ''; });
+document.getElementById('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const text = msg.value.trim();
+  if (!text) return;
+  const li = document.createElement('li');
+  li.className = 'me';
+  const who = document.createElement('span');
+  who.className = 'who';
+  who.textContent = 'You';
+  li.append(who, document.createTextNode(text));
+  thread.append(li);
+  msg.value = '';
+  send.disabled = true;
+});
+</script>
+</body>
+</html>

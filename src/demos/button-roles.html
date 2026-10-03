@@ -1,0 +1,48 @@
+<!-- Design Lounge piece: button-roles · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Button roles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--line-strong:#cfc6b8;
+  --primary:#1f4d3a;--primary-ink:#fffdf8;--primary-soft:#e7f2ec;--danger:#9b2c2c;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{height:40px;padding:0 14px;border-radius:2px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);font:500 13px/1 var(--sans);cursor:pointer}
+button:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.primary{background:var(--primary);color:var(--primary-ink);border-color:transparent}
+.soft{background:var(--primary-soft);color:var(--ink);border-color:transparent}
+.danger{color:var(--danger);border-color:var(--danger)}
+button:disabled{opacity:.4;cursor:default}
+.status{margin:16px 0 0;min-height:20px;font-size:14px}
+</style>
+</head>
+<body>
+<p class="where">Shift</p>
+<div class="row">
+  <button class="primary" id="save" type="button">Save</button>
+  <button type="button" id="cancel">Cancel</button>
+  <button class="soft" type="button" id="preview">Preview</button>
+  <button class="danger" type="button" id="remove">Remove</button>
+  <button type="button" disabled>Export</button>
+</div>
+<p class="status" id="status" role="status"></p>
+<script>
+const status = document.getElementById('status');
+document.getElementById('save').addEventListener('click', () => { status.textContent = 'Shift saved.'; });
+document.getElementById('cancel').addEventListener('click', () => { status.textContent = 'Left the shift as it was.'; });
+document.getElementById('preview').addEventListener('click', () => { status.textContent = 'Preview opened.'; });
+document.getElementById('remove').addEventListener('click', () => { status.textContent = 'Remove stays outline. It is not a second primary.'; });
+</script>
+</body>
+</html>

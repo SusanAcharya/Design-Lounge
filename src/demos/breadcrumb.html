@@ -1,0 +1,49 @@
+<!-- Design Lounge piece: breadcrumb · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Breadcrumb</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+ol{list-style:none;display:flex;align-items:center;gap:8px;margin:0;padding:0}
+li{display:flex;align-items:center;gap:8px;min-height:40px}
+a{color:var(--ink-2);text-decoration:none}
+a:hover{color:var(--ink)}
+a:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+[aria-current="page"]{color:var(--ink);font-weight:500}
+svg{display:block;color:var(--ink-2)}
+h1{margin:8px 0 0;font:500 40px/1.1 var(--sans);letter-spacing:-.02em}
+.status{margin:16px 0 0;min-height:20px;font-size:14px;color:var(--ink-2)}
+</style>
+</head>
+<body>
+<nav aria-label="Breadcrumb">
+  <ol>
+    <li><a href="#dispatch">Dispatch</a></li>
+    <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><a href="#asar">Asar</a></li>
+    <li><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><span aria-current="page">Gate 4</span></li>
+  </ol>
+</nav>
+<h1>Gate 4</h1>
+<p class="status" id="status" role="status"></p>
+<script>
+const status = document.getElementById('status');
+document.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    status.textContent = 'Opened ' + a.textContent + '.';
+  });
+});
+</script>
+</body>
+</html>

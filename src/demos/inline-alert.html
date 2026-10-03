@@ -1,0 +1,57 @@
+<!-- Design Lounge piece: inline-alert · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Inline alert</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--ink:#161513;--ink-2:#5a554c;--line-strong:#cfc6b8;--focus:#1f4d3a;
+  --warning-soft:#f3e6d0;--warning-on-soft:#7d470e;
+  --success-soft:#d6e8dc;--success-on-soft:#1b5e3d;
+  --danger-soft:#f8e4e2;--danger-on-soft:#8a1f1f;
+  --info-soft:#e4eef5;--info-on-soft:#1a4060;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+.alert{width:640px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:16px;border-radius:2px;background:var(--warning-soft);color:var(--warning-on-soft)}
+.alert p{margin:0;max-width:46ch}
+.alert strong{font-weight:500}
+button{height:40px;padding:0 14px;border-radius:2px;border:1px solid currentColor;background:transparent;color:inherit;font:500 13px/1 var(--sans);cursor:pointer;flex:none}
+button:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.tones{width:640px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px}
+.tone{min-height:44px;display:flex;align-items:center;padding:0 12px;border-radius:2px;font-size:13px;font-weight:500}
+.ok{background:var(--success-soft);color:var(--success-on-soft)}
+.no{background:var(--danger-soft);color:var(--danger-on-soft)}
+.info{background:var(--info-soft);color:var(--info-on-soft)}
+.note{margin:8px 0 0;font-size:12px;color:var(--ink-2)}
+.gone{margin:0;font-size:14px}
+</style>
+</head>
+<body>
+<p class="where">Dispatch</p>
+<div class="alert" id="alert" role="status">
+  <p><strong>Gate 2 closes at 18:00.</strong> Move the Asar loads to Gate 4.</p>
+  <button type="button" id="dismiss">Dismiss</button>
+</div>
+<p class="gone" id="gone" role="status" hidden>Alert dismissed. The loads stay on the list.</p>
+<div class="tones" aria-hidden="true">
+  <div class="tone ok">Cleared. The other tones.</div>
+  <div class="tone no">Refused. One message, one tone.</div>
+  <div class="tone info">Booked. Do not stack four.</div>
+</div>
+<p class="note">The row under the alert is the tone key. A page shows one message.</p>
+<script>
+document.getElementById('dismiss').addEventListener('click', () => {
+  document.getElementById('alert').hidden = true;
+  document.getElementById('gone').hidden = false;
+});
+</script>
+</body>
+</html>

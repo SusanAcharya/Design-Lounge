@@ -95,7 +95,7 @@ export const STARTS: Start[] = [
     pairing: 'atelier',
     shelf: 'first-impressions',
     categories: ['ecommerce', 'pricing', 'cta'],
-    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'mobile-one-page-checkout', 'luxe-product-detail', 'select-field'],
+    pieces: ['shop-collection', 'shop-product', 'shop-cart', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'luxe-product-detail', 'select-field'],
   },
   {
     id: 'tablet',
@@ -119,7 +119,7 @@ export const STARTS: Start[] = [
     pairing: 'newsroom',
     shelf: 'typography-first',
     categories: ['blog', 'reading', 'hero', 'text-motion'],
-    pieces: ['editorial-landing-hero', 'paper-article-reader', 'magazine-editorial-grid', 'kinetic-type-marquee', 'text-scramble-reveal', 'hero-editorial-name-rotator'],
+    pieces: ['editorial-landing-hero', 'paper-article-reader', 'magazine-editorial-grid', 'blog-issue-index', 'kinetic-type-marquee', 'text-scramble-reveal', 'hero-editorial-name-rotator'],
   },
   {
     id: 'personal',
