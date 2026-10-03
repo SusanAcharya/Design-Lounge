@@ -13,7 +13,17 @@ interface Props {
 }
 const { title, description = `Design Lounge by ${AUTHOR.name}: a live library of web and mobile design, sections, motion, type, themes and icons, each with a brief your coding agent can build from.`, ogImage, bodyClass } = Astro.props;
 const fullTitle = title ? `${title} · Design Lounge by ${AUTHOR.name}` : `Design Lounge by ${AUTHOR.name} — interfaces worth sitting with`;
-const ld = JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Design Lounge', description, author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.site, jobTitle: AUTHOR.role, sameAs: AUTHOR.links.map((l) => l.href) } });
+const origin = (Astro.site ?? new URL('https://designlounge.vercel.app')).toString().replace(/\/$/, '');
+const path = Astro.url.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') || '/';
+const canonical = path === '/' ? `${origin}/` : `${origin}${path}`;
+const ld = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Design Lounge',
+  url: `${origin}/`,
+  description,
+  author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.site, jobTitle: AUTHOR.role, sameAs: AUTHOR.links.map((l) => l.href) },
+});
 const count = (await getPieces()).length;
 ---
 <!doctype html>
@@ -23,6 +33,7 @@ const count = (await getPieces()).length;
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
   <meta name="author" content={AUTHOR.name} />
   <meta property="og:site_name" content={`Design Lounge by ${AUTHOR.name}`} />
   <meta name="twitter:card" content="summary_large_image" />
@@ -30,6 +41,7 @@ const count = (await getPieces()).length;
   <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
   <link rel="alternate" type="application/json" href="/api/pieces.json" title="Design Lounge catalogue" />
   <script type="application/ld+json" set:html={ld}></script>
+  <meta property="og:url" content={canonical} />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
   {ogImage && <meta property="og:image" content={ogImage} />}
