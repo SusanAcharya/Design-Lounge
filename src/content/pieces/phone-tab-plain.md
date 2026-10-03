@@ -130,7 +130,7 @@ None. A tab change replaces the heading immediately. A sliding pill is the glass
 - [ ] The other labels are Home, Budgets, and You.
 - [ ] Tapping Budgets sets the heading to Budgets and moves the mark.
 - [ ] The bar background is `#fbf6ea` with a `#d9cbb3` top rule.
-- [ ] Page padding-top is 54px. Bar padding-bottom is 34px.
+- [ ] Page padding-top is max(54px, env(safe-area-inset-top)). Bar padding-bottom is max(34px, env(safe-area-inset-bottom)).
 - [ ] No status bar is drawn.
 - [ ] Focus ring is 2px, offset 2px.
 
@@ -143,7 +143,7 @@ The current mark is a border, not an extra element:
 ```css
 .tab { border-top: 2px solid transparent; min-height: 44px; color: var(--ink-3); }
 .tab[aria-current="page"] { color: var(--ink); border-top-color: var(--primary); }
-.bar { padding-bottom: 34px; background: var(--surface); border-top: 1px solid var(--line); }
+.bar { padding-bottom: max(34px, env(safe-area-inset-bottom)); background: var(--surface); border-top: 1px solid var(--line); }
 ```
 
 Common mistakes:

@@ -137,7 +137,7 @@ None. Filtering shows and hides rows immediately. A slide-in is decoration. Redu
 - [ ] The heading does not change when the filter changes.
 - [ ] Salary carries the word "in" on `#d6d8c2` with `#1b5e3d`.
 - [ ] Bhatbhateni starts pressed. Tapping Rent moves the press.
-- [ ] No tab bar is drawn. Top padding is 54px. Bottom padding is 34px.
+- [ ] No tab bar is drawn. Top clearance is max(54px, env(safe-area-inset-top)). Bottom clearance is max(34px, env(safe-area-inset-bottom)).
 
 ## Implementation notes
 

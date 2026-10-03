@@ -21,7 +21,7 @@ body{
   background-color:var(--bg);
   background-image:radial-gradient(rgba(28,39,68,.05) .6px,transparent .6px);
   background-size:3px 3px;
-  padding:54px 20px 34px;
+  padding:max(54px,env(safe-area-inset-top)) 20px max(34px,env(safe-area-inset-bottom));
 }
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}

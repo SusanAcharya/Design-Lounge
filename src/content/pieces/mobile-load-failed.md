@@ -124,7 +124,7 @@ None. The banner hides and the list shows in the same frame. Do not slide the li
 
 ## Acceptance checklist
 
-- [ ] Padding-top is 54px. No status bar is drawn.
+- [ ] Padding-top is max(54px, env(safe-area-inset-top)). Padding-bottom is max(34px, env(safe-area-inset-bottom)). No status bar is drawn.
 - [ ] The first frame shows the banner and Retry, and does not show the three rows.
 - [ ] "Runs" is 13px. The failure sentence is 20px and weight 600.
 - [ ] The banner background is `#f8e8e6` and the text is `#9b2c2c`.

@@ -131,7 +131,7 @@ export const STARTS: Start[] = [
     pairing: 'devanagari',
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'charts', 'feedback', 'navigation'],
-    pieces: ['spend-list', 'chart-rank-spend', 'budget-meter', 'saved-banner', 'phone-tab-plain', 'kpi-delta', 'mobile-list-empty', 'mobile-load-failed'],
+    pieces: ['spend-list', 'chart-rank-spend', 'budget-meter', 'saved-banner', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed'],
   },
 ];
 

@@ -122,7 +122,7 @@ A chart is one series. Bars and sparks use `--primary` for the active mark and `
 
 Where the money went is a ranked horizontal bar list, `chart-rank-spend`. One colour, longest first, the selected amount at display size. A budget list is `budget-meter`: only the row past its limit uses the warning wash. Do not paint every row amber.
 
-An amount is one string in one family. If it contains a glyph the mono face lacks, including रु, set the whole amount in the face that contains it. Nepal and India group by lakh: 1,24,000. At display size, mono tracking is `-0.03em` or 0, with tabular numerals. Read Locale in [practice.md](practice.md).
+An amount is one string in one family. If it contains a glyph the mono face lacks, including रु, set the whole amount in the face that contains it. Nepal and India group by lakh: 1,24,000. Letter-spacing comes from the locked pairing. Do not pick a second tracking. Read Locale in [practice.md](practice.md).
 
 Text on a feedback wash uses `--success-on-soft`, `--warning-on-soft`, `--danger-on-soft`, or `--info-on-soft`. Never the solid fill, and never a hex you invented.
 

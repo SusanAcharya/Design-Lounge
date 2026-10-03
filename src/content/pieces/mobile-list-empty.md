@@ -116,7 +116,7 @@ None. Reduced motion has nothing to remove. Do not fade the heading in.
 
 ## Acceptance checklist
 
-- [ ] Padding-top is 54px. Padding-bottom is 34px. No status bar is drawn.
+- [ ] Padding-top is max(54px, env(safe-area-inset-top)). Padding-bottom is max(34px, env(safe-area-inset-bottom)). No status bar is drawn.
 - [ ] "Runs" is 13px, weight 600, colour `#5e574e`.
 - [ ] "No runs today" is the `h1` at 28px, weight 600.
 - [ ] The sentence is "The yard is clear. A new load shows up in this list."
@@ -133,7 +133,7 @@ None. Reduced motion has nothing to remove. Do not fade the heading in.
 The web empty state uses a 20px screen title and a 28px heading. This phone piece goes further: the screen name drops to a label so the answer is unmistakable at 390px. Do not copy a marketing empty state with a drawing of a box.
 
 ```css
-body { padding: 54px 20px 34px; display: flex; flex-direction: column; }
+body { padding: max(54px, env(safe-area-inset-top)) 20px max(34px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; }
 .well { flex: 1; display: flex; flex-direction: column; justify-content: center; max-width: 300px; }
 .btn { height: 44px; padding: 0 18px; border-radius: 10px; align-self: flex-start; }
 ```

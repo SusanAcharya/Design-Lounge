@@ -150,6 +150,13 @@ function role(fill: string, bg: string, dark: boolean) {
   };
 }
 
+/** Walk a muted ink toward the body ink until it can be read on every ground. */
+function untilContrast(color: string, toward: string, grounds: string[]) {
+  let c = color;
+  for (let i = 0; i < 24 && grounds.some((g) => contrast(c, g) < 4.5); i++) c = mix(c, toward, 0.15);
+  return c;
+}
+
 /** Feedback text on its own wash. The solid fill is often too light to read there. */
 function inkOnSoft(source: string, soft: string, dark: boolean) {
   const toward = dark ? '#ffffff' : '#000000';
@@ -187,7 +194,7 @@ export function paint(c: Core): ThemeTokens {
     surface3: mix(c.surface2, c.ink, dark ? 0.1 : 0.06),
     ink: c.ink,
     ink2: c.ink2,
-    ink3: c.ink3,
+    ink3: untilContrast(c.ink3, c.ink, [c.bg, c.surface]),
     line: c.line,
     lineStrong: mix(c.line, c.ink, 0.38),
     primary: p.fill, primaryInk: p.ink, primarySoft: p.soft,

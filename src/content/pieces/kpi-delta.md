@@ -81,7 +81,7 @@ A negative delta uses `--danger` on `--danger-soft` (`#9b2c2c` on `#f8e8e6`). Th
 | Explanation | sans | 14px | 400 | 0 | `--ink-2` |
 | Button | sans | 14px | 500 | 0 | `--primary-ink` |
 
-The answer line-height is 1. Do not set the number in the text face.
+The answer line-height is 1. This demo uses mono. When the locked pairing sets `numbers` to `display`, the amount uses that display face instead. Do not force mono onto a pairing whose CSS keeps `.num` off mono.
 
 ## Motion
 

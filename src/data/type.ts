@@ -229,7 +229,7 @@ export function pairingCss(p: Pairing) {
   const monoVar = p.mono ? `\n  --font-mono: "${p.mono.family}", ${p.mono.fallback};` : '';
   const monoRule = p.mono
     ? p.numbers === 'display'
-      ? `\n/* Amounts use .num in the display face. Mono lacks this pairing's script, so it is only for code. */\ncode, kbd, samp, .mono {\n  font-family: var(--font-mono);\n  font-weight: ${p.mono.weight};\n}\n.num {\n  font-family: var(--font-display);\n  font-variant-numeric: tabular-nums;\n  letter-spacing: -0.02em;\n}`
+      ? `\n/* Amounts use .num in the display face. Mono lacks this pairing's script, so it is only for code. */\ncode, kbd, samp, .mono {\n  font-family: var(--font-mono);\n  font-weight: ${p.mono.weight};\n}\n.num {\n  font-family: var(--font-display);\n  font-variant-numeric: tabular-nums;\n  letter-spacing: ${p.display.tracking ?? '-0.02em'};\n}`
       : `\ncode, kbd, samp, .mono, .num {\n  font-family: var(--font-mono);\n  font-weight: ${p.mono.weight};\n}`
     : '';
   return `/* ${p.name} · type pairing from Design Lounge by Susan Acharya (acharyasusan.com.np) */

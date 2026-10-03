@@ -89,8 +89,6 @@ Read this before you set a number or a date. The pairing `devanagari` is the Nep
 - Devanagari body may be 17px where Latin is 16px. Do not shrink it to fit.
 - For Arabic, Hebrew, or Urdu, set `dir="rtl"` on the document. Mirror the shell with logical properties (`padding-inline`, sidebar on the right). Keep numbers LTR with `unicode-bidi: isolate`. Do not mirror an icon that depicts a real object. There is no RTL theme. The locked theme still applies.
 
-A big amount in mono at 56px or larger gets `letter-spacing: -0.03em` or 0, and `font-variant-numeric: tabular-nums`. The default mono spacing looks gappy at display size.
-
 ## Identity
 
 Restraint is the default. A regional or brand identity is still allowed, in three places, and nowhere else.
@@ -126,8 +124,9 @@ If they asked for loud, playful, or luxury, lock the theme and family whose mood
 One display size, one primary, and the sample tab count are defaults. A designer breaks one when the content cannot be said otherwise. You may break one per screen. Write it on the sheet, or you did not break it.
 
 - One display size. Break it only when two numbers are both the decision, such as money in and money out. The second is one step smaller, not equal. A third display size is not allowed.
-- One primary. Break it only inside a confirm dialog, where the destructive action and the cancel are both required. The page behind keeps one.
 - Tab count. `phone-tab-plain` shows four tabs because that demo has four sections. A product uses three to five, one per real section. Do not add a tab to match the demo, and do not drop a section they named to stay at four.
+
+A confirm dialog does not break the one-primary rule. Cancel is outline. The destructive action is the one solid button.
 
 Do not break a rule to fill empty space, to look more designed, or because another app had it. If you cannot name the content that required the break, keep the default.
 
@@ -165,7 +164,7 @@ A list has four states. Ship the one this pass needs, from a piece when the inde
 
 Empty and failed are different. Do not put both in one card.
 
-On a phone, the answer stays the largest type. The primary button is at least 44px tall and sits with the answer, or in the bottom bar the piece specifies. A header and a tab bar on the same phone screen is two navigation systems.
+On a phone, the answer stays the largest type. The primary button is at least 44px tall and sits with the answer, or in the bottom bar the piece specifies. Clear the top with `max(54px, env(safe-area-inset-top))` and the bottom with `max(34px, env(safe-area-inset-bottom))`. The inset is 0 on a desktop browser, so 54 and 34 are the minimum, not a fallback inside `env()`. Do not draw a status bar. A header and a tab bar on the same phone screen is two navigation systems.
 
 When they describe a whole product, build the minimum set, then stop. An internal tool does not get a marketing hero. A marketing site does not get an ops table unless they asked for one.
 

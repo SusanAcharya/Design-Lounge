@@ -102,7 +102,7 @@ export const KINDS: Kind[] = [
       cta: 'See where it went',
       phoneTitle: 'Asar',
     },
-    pieces: ['spend-list', 'chart-rank-spend', 'budget-meter', 'saved-banner', 'phone-tab-plain', 'kpi-delta', 'mobile-list-empty', 'mobile-load-failed'],
+    pieces: ['spend-list', 'chart-rank-spend', 'budget-meter', 'saved-banner', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed'],
   },
 ];
 

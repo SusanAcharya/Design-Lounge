@@ -15,7 +15,7 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
-body{font:15px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:54px 20px 34px;display:flex;flex-direction:column}
+body{font:15px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:max(54px,env(safe-area-inset-top)) 20px max(34px,env(safe-area-inset-bottom));display:flex;flex-direction:column}
 button{font:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .where{margin:8px 0 0;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--ink-2)}
