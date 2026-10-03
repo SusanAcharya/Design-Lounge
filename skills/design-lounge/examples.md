@@ -72,6 +72,15 @@ User: "Same product, day and night."
 2. Paper & Ink pairs with Night Desk. Use both CSS blocks. Same pairing, same family.
 3. Harbour Ledger's `pair` is null. Build the one mode and say it has no twin.
 
+## The screens exist, now look
+
+User: "Just build it" — and the screens are in the app.
+
+1. Open the home at 1280×800. Write the look notes.
+2. The headline says "Unlock your workflow". That sentence still works if the product is a bank or a clinic. Rewrite it to the noun and the number they gave you. "Payroll for 46 people, filed Friday."
+3. The features are three cards with the same icon circle, the same title size, and a sentence that could move to any site. Replace that row with the feature piece you named, and write copy that is only true here.
+4. Open the screen again. Fails are none. Then run the finish checklist.
+
 ## One component, kit already locked
 
 User: "Add the pricing section."

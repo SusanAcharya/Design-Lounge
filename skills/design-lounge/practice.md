@@ -2,7 +2,7 @@
 
 This is how you design with the library. Read it before you write UI. The catalogue is the material. This file is the discipline.
 
-The aim is one product that feels designed: same palette, type, icons, radius, spacing, motion, and components on every screen. A new screen extends the sheet. It does not start a second system.
+The aim is one product that feels designed: same palette, type, icons, radius, spacing, motion, and components on every screen. A new screen extends the sheet. It does not start a second system. An agent without this skill can still ship a page. The page reads as generated when the type, the copy, and the decoration could belong to any product. Look is how you catch that.
 
 ## Before code
 
@@ -12,7 +12,7 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 4. Show that pick with links, and ask once, before any UI. Follow Show the pick in [SKILL.md](SKILL.md). Stop unless they already said just go, you pick, build it, or don't ask, or they already named the system.
 5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
 6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
-7. Run the finish checklist. Fix failures. Report each line as pass or fail.
+7. Open every finished screen and run Look. Fix what fails, and open it again. Then run the finish checklist. Report each line as pass or fail. Do not call the UI done from the source.
 
 ## System sheet
 
@@ -149,6 +149,43 @@ Empty, loading, and error ship with the screen. A list without an empty state is
 
 Feedback colours are for live state only.
 
+## Look
+
+You can see the finished screen. Open it. A browser at the frame size, or a screenshot of that frame. Web is 1280×800. Phone is 390×844. Tablet is 1180×820. Read the page. A screenshot alone can hide a gap. If you cannot open it, say so. The UI is not done.
+
+For each screen, write this in the reply before you call the pass done:
+
+```
+Looked at: <screen> at <width>×<height>
+Largest type: "<the words>" — the answer named above, or not
+Primary: "<label>" sits <where>
+Copy that still works if you swap the product name: "<quote>" or none
+Fails: <the checks below that failed, or none>
+```
+
+Fix every fail. Open the screen again. A fail that is still visible means the pass is open.
+
+These are fails. They are the tells of a page that was generated and not designed.
+
+- A gradient, a glow, or a mesh behind the content. The background is the theme's flat `--bg`.
+- Glass, blur, or a floating card on every region.
+- Gradient text. A second accent used as decoration. The accent is the action and the live state.
+- An emoji used as an icon. Icons are Lounge Icons.
+- A radius that is not the family's. Every corner on a large radius when the family is sharp, editorial, or industrial.
+- Three identical cards — icon, title, one sentence — standing in for the product. A feature row is allowed when a named piece is that row and the copy is about this product.
+- A headline that could sit on any company. Welcome. Unlock. Elevate. The future of. Next-generation. Your all-in-one. All-in-one platform. Use this product's noun and a number you were given.
+- The stack's default face — Inter, Roboto, Arial, or a bare system font — when a pairing is locked.
+- Body text in the display face. A fourth family.
+- A shadow on a family whose shadow is `none`.
+- A button labelled Get started, Submit, Click here, or Learn more, when the screen has a real verb. "Open the week", "Add to bag", "Confirm load".
+- Placeholder copy. Lorem. Feature one. Your text here. John Doe. Acme. A price of $99 with no product attached.
+- Motion that loops because the page felt empty. `ease` or `linear` on a UI move. The curve is the sheet's, or the piece's.
+- Two navigation systems. A chart painted in a library's default colours.
+
+Uniform means the button, the field, the radius, and the type roles match on every screen of this pass. Screen two inventing its own card is a fail.
+
+Read one sentence from the screen. If it is still true after you replace the product name with another, rewrite it.
+
 ## Finish checklist
 
 - One theme, or a theme plus its `pair`. No third palette.
@@ -170,6 +207,8 @@ Feedback colours are for live state only.
 - Space between groups is the stack gap. Space inside a group is half of that.
 - A list is one state: loading, empty, failed, or populated. The piece you used matches that state.
 - The next action names the screen it opens. That screen is in this pass, or you said it is still open.
+- You opened each finished screen at its frame size and wrote the look notes in the reply.
+- Every look check passed. A fail was fixed, and that screen was opened again.
 
 ## Minimum screens
 
@@ -190,4 +229,6 @@ Say it in the reply when any of these are true.
 - The library has no piece for this interaction. You built from the sheet only.
 - The theme has no dark or light pair.
 - The pairing has a caution.
-- A person still needs to look at the built screens. You cannot judge the product the way someone using it can.
+- You could not open the built screen. The UI is not done.
+- A look check failed and the fail is still on the screen.
+- The person using the product disagrees with your look notes. Change the screen they named. Do not skip the look on the next pass.
