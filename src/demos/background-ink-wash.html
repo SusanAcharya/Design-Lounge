@@ -1,0 +1,200 @@
+<!-- Design Lounge piece: background-ink-wash · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ink wash background</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eee7d8;--paper-2:#f6f1e6;--ink:#1b1a17;--ink-2:#4b463d;--ink-3:#6f685b;--line:rgba(27,26,23,.18);
+  --sumi:#1b1a17;--ai:#2e3f5c;--shu:#b5332a;
+  --serif:"Shippori Mincho",Georgia,serif;--sans:"Zen Kaku Gothic New",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--t-fast:160ms;--t-rinse:700ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:var(--paper);color:var(--ink);font:15px/1.7 var(--sans);-webkit-font-smoothing:antialiased}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+#ink{mix-blend-mode:multiply;transition:opacity var(--t-rinse) var(--ease);
+  -webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.28) 0,rgba(0,0,0,.28) 40%,#000 58%);mask-image:linear-gradient(90deg,rgba(0,0,0,.28) 0,rgba(0,0,0,.28) 40%,#000 58%)}
+#ink.rinse{opacity:0}
+a,button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--shu);outline-offset:3px}
+.page{position:relative;height:100%;padding:0 80px;pointer-events:none}
+.page a,.page button{pointer-events:auto}
+header{height:88px;display:flex;align-items:center;gap:14px}
+.seal{width:34px;height:34px;display:grid;place-items:center;background:var(--shu);color:var(--paper-2);font:700 18px/1 var(--serif);border-radius:3px}
+.name{font:700 17px var(--serif);letter-spacing:.04em;text-decoration:none}
+header nav{margin-left:auto;display:flex;gap:32px}
+header nav a{font-size:13px;letter-spacing:.08em;color:var(--ink-2);text-decoration:none;padding:6px 0;border-bottom:1px solid transparent;transition:border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+header nav a:hover{color:var(--ink);border-color:var(--ink)}
+.copy{margin-top:76px;max-width:520px}
+.kicker{margin:0;font-size:13px;letter-spacing:.12em;color:var(--ink-2)}
+.kicker b{color:var(--shu);font-weight:500}
+h1{margin:20px 0 22px;font:500 68px/1.12 var(--serif);letter-spacing:-.01em}
+.sub{margin:0 0 34px;max-width:440px;font-size:16px;color:var(--ink-2)}
+.cta{display:flex;gap:14px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 22px;font-size:14px;font-weight:500;letter-spacing:.04em;text-decoration:none;border:1px solid var(--ink);border-radius:2px;transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.btn.primary{background:var(--ink);color:var(--paper-2)}
+.btn.primary:hover{background:var(--ai);border-color:var(--ai)}
+.btn:not(.primary):hover{background:var(--ink);color:var(--paper-2)}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.facts{display:flex;gap:40px;margin:56px 0 0;padding-top:18px;border-top:1px solid var(--line)}
+.facts dt{font-size:11px;letter-spacing:.14em;color:var(--ink-3)}
+.facts dd{margin:2px 0 0;font:500 17px var(--serif)}
+.tate{position:fixed;right:84px;top:118px;writing-mode:vertical-rl;font:500 22px/1.6 var(--serif);letter-spacing:.3em;color:var(--ink);margin:0}
+.panel{position:fixed;right:40px;bottom:40px;display:flex;align-items:center;gap:18px;padding:10px 12px 10px 18px;background:rgba(246,241,230,.88);border:1px solid var(--line);border-radius:3px;font-size:12px;letter-spacing:.06em;color:var(--ink-2);box-shadow:0 1px 0 rgba(27,26,23,.04)}
+.panel .grp{display:flex;align-items:center;gap:8px}
+.sw{width:26px;height:26px;border-radius:50%;border:0;padding:0;cursor:pointer;background:var(--c);box-shadow:inset 0 0 0 2px var(--paper-2);outline-offset:2px;transition:transform var(--t-fast) var(--ease)}
+.sw[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--paper-2),0 0 0 1.5px var(--ink)}
+.sw:hover{transform:scale(1.08)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:110px;height:26px;background:transparent;margin:0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:linear-gradient(90deg,rgba(27,26,23,.15),var(--ink-2));border-radius:2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-6px;border-radius:50%;background:var(--ink);border:2px solid var(--paper-2)}
+input[type=range]::-moz-range-track{height:2px;background:var(--ink-3)}
+input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--ink);border:2px solid var(--paper-2)}
+.tool{height:36px;padding:0 14px;border:1px solid var(--line);background:transparent;border-radius:2px;cursor:pointer;font-size:12px;letter-spacing:.06em;display:inline-flex;align-items:center;gap:8px;transition:background var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.tool:hover{background:var(--paper);border-color:var(--ink-3)}
+.tool svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.hint{position:fixed;right:40px;bottom:98px;margin:0;font-size:12px;letter-spacing:.06em;color:var(--ink-3)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:1000px){.tate{display:none}}
+@media (max-width:640px){
+  .page{padding:0 24px}header nav{display:none}.copy{margin-top:32px}h1{font-size:42px}.sub{font-size:15px}.facts{gap:20px;flex-wrap:wrap;margin-top:32px}.cta{flex-wrap:wrap;gap:10px}.btn{padding:0 16px;white-space:nowrap}
+  #ink{-webkit-mask-image:linear-gradient(rgba(0,0,0,.3) 0,rgba(0,0,0,.3) 60%,#000 75%);mask-image:linear-gradient(rgba(0,0,0,.3) 0,rgba(0,0,0,.3) 60%,#000 75%)}
+  .panel{left:16px;right:16px;bottom:16px;gap:10px;padding:8px 10px;justify-content:space-between}.panel input{width:64px}.tool span,.hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<canvas id="paper" aria-hidden="true"></canvas>
+<canvas id="ink" aria-hidden="true"></canvas>
+<div class="page">
+  <header>
+    <span class="seal" aria-hidden="true">霞</span><a class="name" href="#">Kasumi Hall</a>
+    <nav aria-label="Main"><a href="#">Exhibitions</a><a href="#">Visit</a><a href="#">Membership</a></nav>
+  </header>
+  <main class="copy">
+    <p class="kicker">Exhibition · <b>12 Nov – 8 Dec 2026</b></p>
+    <h1>Ink that keeps moving after the brush lifts.</h1>
+    <p class="sub">Forty hanging scrolls by Haruno Ise, painted wet into wet on unsized kozo paper. Each one was left to dry flat for a night before anyone was allowed to look.</p>
+    <div class="cta">
+      <a class="btn primary" href="#">Reserve a time<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn" href="#">Read the catalogue</a>
+    </div>
+    <dl class="facts">
+      <div><dt>ROOM</dt><dd>Hall 3, east wing</dd></div>
+      <div><dt>OPEN</dt><dd>Tue–Sun, 10–18</dd></div>
+      <div><dt>ENTRY</dt><dd>¥1,200</dd></div>
+    </dl>
+  </main>
+  <p class="tate" lang="ja" aria-hidden="true">墨は、水を待つ。</p>
+</div>
+<p class="hint" id="hint">Click the paper to drop ink</p>
+<div class="panel" role="group" aria-label="Background controls">
+  <div class="grp" role="group" aria-label="Ink colour">
+    <button type="button" class="sw" style="--c:#1b1a17" data-ink="#1b1a17" aria-pressed="true" aria-label="Sumi black"></button>
+    <button type="button" class="sw" style="--c:#2e3f5c" data-ink="#2e3f5c" aria-pressed="false" aria-label="Indigo"></button>
+    <button type="button" class="sw" style="--c:#b5332a" data-ink="#b5332a" aria-pressed="false" aria-label="Vermilion"></button>
+  </div>
+  <label class="grp" for="water">Water <input id="water" type="range" min="70" max="280" step="10" value="150"></label>
+  <button type="button" class="tool" id="drop"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 3-7 6-11z"/></svg><span>Drop ink</span></button>
+  <button type="button" class="tool" id="rinse"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg><span>Rinse</span></button>
+</div>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+(()=>{
+  const pc=document.getElementById('paper'),px=pc.getContext('2d');
+  const ic=document.getElementById('ink'),ctx=ic.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DUR=2.6,N=64,MAX=24;
+  let W=0,H=0,ink='#1b1a17',water=150,blooms=[],active=[],raf=0,last=0;
+  let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+  function paper(){
+    pc.width=W;pc.height=H;
+    px.fillStyle='#eee7d8';px.fillRect(0,0,W,H);
+    for(let i=0;i<14;i++){const x=rnd()*W,y=rnd()*H,r=120+rnd()*260,g=px.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0,rnd()>.5?'rgba(255,252,244,.35)':'rgba(150,128,96,.07)');g.addColorStop(1,'rgba(0,0,0,0)');px.fillStyle=g;px.fillRect(x-r,y-r,r*2,r*2);}
+    for(let i=0;i<W*H/700;i++){px.fillStyle=rnd()>.5?'rgba(110,90,60,.07)':'rgba(255,255,255,.4)';px.fillRect(rnd()*W,rnd()*H,1,1);}
+    px.lineCap='round';
+    for(let i=0;i<W*H/2600;i++){
+      const x=rnd()*W,y=rnd()*H,a=rnd()*6.283,l=18+rnd()*80,b=(rnd()-.5)*30;
+      px.strokeStyle=rnd()>.35?'rgba(120,98,66,.09)':'rgba(255,253,247,.4)';px.lineWidth=.3+rnd()*.7;
+      px.beginPath();px.moveTo(x,y);px.quadraticCurveTo(x+Math.cos(a)*l/2+b,y+Math.sin(a)*l/2-b,x+Math.cos(a)*l,y+Math.sin(a)*l);px.stroke();
+    }
+  }
+  function make(x,y,R,col,delay){
+    const h=[];for(let k=2;k<=9;k++)h.push(k,Math.random()*6.283,(.4+Math.random())/(k*.8));
+    return{x,y,R,col,h,age:-(delay||0),done:false,grain:Math.random()*1e6|0};
+  }
+  function shape(b,r,amp,t){
+    ctx.beginPath();
+    for(let i=0;i<=N;i++){
+      const a=i/N*6.283;let n=0;
+      for(let j=0;j<b.h.length;j+=3)n+=Math.sin(b.h[j]*a+b.h[j+1]+t*.35)*b.h[j+2];
+      const rr=r*(1+amp*n);
+      i?ctx.lineTo(b.x+Math.cos(a)*rr,b.y+Math.sin(a)*rr):ctx.moveTo(b.x+Math.cos(a)*rr,b.y+Math.sin(a)*rr);
+    }
+    ctx.closePath();
+  }
+  function layer(b,p){
+    const e=1-Math.pow(1-p,3),r=b.R*(.1+.9*e);
+    ctx.fillStyle=b.col;ctx.globalAlpha=.014*Math.pow(1-p,1.5)+.003;
+    shape(b,r,.05+.12*e,p*DUR);ctx.fill();
+  }
+  function finish(b){
+    const t=DUR;ctx.strokeStyle=b.col;
+    ctx.globalAlpha=.06;ctx.lineWidth=7;shape(b,b.R*.975,.17,t);ctx.stroke();
+    ctx.globalAlpha=.07;ctx.lineWidth=2.5;shape(b,b.R*.995,.17,t);ctx.stroke();
+    let s=b.grain;const g=()=>(s=(s*16807)%2147483647)/2147483647;
+    ctx.fillStyle=b.col;
+    for(let i=0;i<b.R*1.4;i++){const a=g()*6.283,d=Math.sqrt(g())*b.R*.9;ctx.globalAlpha=.05+g()*.12;const z=.5+g()*1.3;ctx.fillRect(b.x+Math.cos(a)*d,b.y+Math.sin(a)*d,z,z);}
+    ctx.globalAlpha=1;b.done=true;
+  }
+  function instant(b){const F=Math.round(DUR*60);for(let f=0;f<=F;f++)layer(b,f/F);finish(b);}
+  function frame(now){
+    const dt=Math.min(now-last,50)/1000;last=now;
+    for(const b of active){
+      b.age+=dt;if(b.age<0)continue;
+      const p=Math.min(1,b.age/DUR);layer(b,p);if(p>=1)finish(b);
+    }
+    ctx.globalAlpha=1;active=active.filter(b=>!b.done);
+    raf=active.length?requestAnimationFrame(frame):0;
+  }
+  function add(x,y,R,col){
+    const set=[make(x,y,R,col)];
+    const kids=1+(Math.random()*2|0);
+    for(let i=0;i<kids;i++){const a=Math.random()*6.283,d=R*(.55+Math.random()*.4);set.push(make(x+Math.cos(a)*d,y+Math.sin(a)*d,R*(.22+Math.random()*.18),col,.5+Math.random()*.6));}
+    for(const b of set){blooms.push(b);if(reduce){b.age=0;instant(b);}else active.push(b);}
+    if(blooms.length>MAX)blooms=blooms.slice(-MAX);
+    if(!reduce&&!raf){last=performance.now();raf=requestAnimationFrame(frame);}
+  }
+  function resize(){
+    const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;seed=7;paper();
+    ic.width=W*d;ic.height=H*d;ctx.setTransform(d,0,0,d,0,0);
+    for(const b of blooms){b.age=Math.max(b.age,DUR);instant(b);}active=[];
+  }
+  function blank(){const w=W<700;return[w?W*(.2+Math.random()*.6):W*(.6+Math.random()*.32),w?H*(.72+Math.random()*.2):H*(.2+Math.random()*.6)];}
+  addEventListener('pointerdown',e=>{if(e.target.closest('a,button,input,label,.panel'))return;add(e.clientX,e.clientY,water*(.85+Math.random()*.3),ink);});
+  document.getElementById('drop').addEventListener('click',()=>{const[x,y]=blank();add(x,y,water,ink);document.getElementById('live').textContent='Ink dropped';});
+  document.getElementById('rinse').addEventListener('click',()=>{
+    const wipe=()=>{ctx.clearRect(0,0,W,H);blooms=[];active=[];ic.classList.remove('rinse');};
+    if(reduce)return wipe();ic.classList.add('rinse');setTimeout(wipe,720);
+    document.getElementById('live').textContent='Paper rinsed';
+  });
+  document.querySelectorAll('[data-ink]').forEach(b=>b.addEventListener('click',()=>{ink=b.dataset.ink;document.querySelectorAll('[data-ink]').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));}));
+  const wr=document.getElementById('water');wr.addEventListener('input',()=>{water=+wr.value;});
+  addEventListener('resize',resize);
+  resize();
+  [[.76,.36,210,'#1b1a17'],[.92,.72,150,'#2e3f5c'],[.62,.8,80,'#1b1a17'],[.68,.17,34,'#b5332a']].forEach(([fx,fy,R,c])=>{
+    const set=[make(W*fx,H*fy,R,c)];if(R>100)set.push(make(W*fx+R*.7,H*fy+R*.45,R*.3,c));
+    for(const b of set){blooms.push(b);instant(b);}
+  });
+})();
+</script>
+</body>
+</html>

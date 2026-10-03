@@ -1,0 +1,200 @@
+<!-- Design Lounge piece: button-sheen-pill · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Orlé · Pill buttons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@property --ang{syntax:"<angle>";inherits:false;initial-value:120deg}
+:root{
+  --bg:#0f1412;--surface:#161c19;--surface-2:#1d2420;--ivory:#f2ebdd;--ink-2:#a8a293;--line:rgba(242,235,221,.1);
+  --gold-1:#f4e2b8;--gold-2:#d4b073;--gold-3:#8f6c3a;--on-gold:#1d160a;--sage:#8fd3a8;--rose:#e79a8a;
+  --serif:"Italiana",Georgia,serif;--sans:"Urbanist",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ivory);background:var(--bg);display:grid;place-items:center;padding:24px 16px;overflow-x:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.stage{width:min(1060px,100%);background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:36px 44px 32px;
+  background-image:linear-gradient(180deg,rgba(244,226,184,.035),transparent 40%)}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:26px;border-bottom:1px solid var(--line)}
+h1{margin:0;font:400 52px/0.9 var(--serif);letter-spacing:.01em;color:var(--gold-1)}
+.meta{margin:10px 0 0;color:var(--ink-2);font-size:14px}
+.note{margin:0;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+
+.live{display:flex;flex-wrap:wrap;align-items:center;gap:18px;padding:34px 0}
+.cap{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin:0 0 14px}
+
+/* pill */
+.pill{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  height:52px;padding:0 28px;border-radius:999px;font-weight:600;font-size:15px;letter-spacing:.01em;white-space:nowrap;
+  transition:transform 160ms var(--ease),box-shadow 240ms var(--ease),width 420ms var(--out),--ang 900ms var(--out),background-color 240ms var(--ease)}
+.pill svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.pill::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.5) 48%,rgba(255,255,255,.12) 56%,transparent 70%);
+  transform:translateX(-130%)}
+.pill:hover::after,.pill:focus-visible::after{animation:sheen 1000ms var(--out)}
+.pill.is-hover::after{transform:translateX(-10%)}
+@keyframes sheen{from{transform:translateX(-130%)}to{transform:translateX(130%)}}
+.pill:hover,.pill.is-hover{--ang:300deg}
+.pill:active,.pill.is-pressed{transform:scale(.97);transition-duration:90ms}
+.pill:focus-visible,.pill.is-focus{outline:2px solid var(--gold-1);outline-offset:4px}
+
+.solid{color:var(--on-gold);background:linear-gradient(180deg,var(--gold-1),var(--gold-2) 60%,#c49c5c);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(90,60,20,.4),0 10px 26px -12px rgba(212,176,115,.55)}
+.solid:hover,.solid.is-hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(90,60,20,.4),0 14px 32px -12px rgba(212,176,115,.7)}
+.solid::after{background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.75) 48%,rgba(255,255,255,.2) 56%,transparent 70%);z-index:0}
+.solid>*{position:relative;z-index:1}
+.edge{border:1.5px solid transparent;color:var(--ivory);
+  background:linear-gradient(var(--surface-2),var(--surface-2)) padding-box,
+    conic-gradient(from var(--ang),var(--gold-1),var(--gold-3) 25%,var(--gold-2) 50%,#5a4526 75%,var(--gold-1)) border-box}
+.edge::after{background:linear-gradient(105deg,transparent 30%,rgba(244,226,184,.3) 48%,transparent 66%)}
+.quiet{color:var(--gold-1);padding:0 18px}
+.quiet:hover,.quiet.is-hover{background:rgba(244,226,184,.08)}
+.quiet::after{display:none}
+.lg{height:58px;padding:0 34px;font-size:16px}
+.sm{height:42px;padding:0 20px;font-size:14px}
+.ico{width:52px;padding:0}
+.pill:disabled{cursor:not-allowed;transform:none;box-shadow:none;color:#6f6b61;background:#1c211e;border-color:transparent}
+.pill:disabled::after{display:none}
+.edge:disabled{background:linear-gradient(#1c211e,#1c211e) padding-box,linear-gradient(#3a3f3a,#3a3f3a) border-box}
+.quiet:disabled{background:none}
+
+/* async */
+.pill[aria-busy="true"]{cursor:progress}
+.spin{width:18px;height:18px;animation:rot 800ms linear infinite}
+.spin circle{stroke-dasharray:44 100;stroke-width:2}
+@keyframes rot{to{transform:rotate(360deg)}}
+.check path{stroke-dasharray:24;stroke-dashoffset:24;animation:draw 420ms 80ms var(--out) forwards;stroke-width:2.2}
+@keyframes draw{to{stroke-dashoffset:0}}
+.solid.ok{background:linear-gradient(180deg,#c9efd6,var(--sage));box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 10px 26px -12px rgba(143,211,168,.55);color:#0d2617}
+.edge.ok{background:linear-gradient(var(--surface-2),var(--surface-2)) padding-box,linear-gradient(var(--sage),var(--sage)) border-box;color:var(--sage)}
+.ico[aria-pressed="true"]{color:var(--rose)}
+.ico[aria-pressed="true"] svg{fill:currentColor}
+.lbl{display:inline-flex;align-items:center;gap:10px}
+.lbl.in{animation:fade 260ms var(--out)}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+
+/* sheet */
+.states{border-top:1px solid var(--line);padding-top:22px}
+.grid{display:grid;grid-template-columns:120px repeat(5,1fr);align-items:center;row-gap:16px;column-gap:10px}
+.h{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);text-align:center}
+.rl{font-size:13px;color:var(--ink-2)}
+.c{display:flex;justify-content:center}
+.grid .pill{height:42px;padding:0 20px;font-size:14px}
+.cycle{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.cycle .pill{height:42px;padding:0 20px;font-size:14px}
+.cycle small{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.cycle .arrow{color:var(--ink-2);width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5}
+
+@media (max-width:860px){
+  .stage{padding:26px 20px}
+  h1{font-size:42px}
+  .grid{grid-template-columns:repeat(5,minmax(0,1fr));column-gap:2px}
+  .grid .rl{grid-column:1/-1;margin-top:4px}
+  .grid .corner{display:none}
+  .h{font-size:8px;letter-spacing:.04em}
+  .grid .pill{padding:0 7px;font-size:11.5px;height:36px}
+  .cycle .arrow{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .pill,.pill::after{transition:none;animation:none!important}
+  .spin{animation-duration:2400ms}
+  .check path{animation:none;stroke-dashoffset:0}
+  .lbl.in{animation:none}
+}
+</style>
+</head>
+<body>
+<main class="stage" aria-labelledby="t">
+  <header class="top">
+    <div>
+      <h1 id="t">Orlé</h1>
+      <p class="meta">Chef's counter · Saturday 14 November · 2 guests</p>
+    </div>
+    <p class="note">Pill buttons · sheen on hover</p>
+  </header>
+
+  <section class="live" aria-label="Try the buttons">
+    <button class="pill solid lg" type="button" id="reserve" data-load="Holding your table" data-done="Table for 2 · 20:30" data-say="Table reserved for 2 at 20:30"><span class="lbl">Reserve the table</span></button>
+    <button class="pill edge" type="button" id="pair" data-load="Adding pairing" data-done="Pairing added · £68" data-say="Wine pairing added, 68 pounds"><span class="lbl">Add wine pairing</span></button>
+    <button class="pill edge sm" type="button"><span class="lbl">Tasting menu<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+    <button class="pill quiet sm" type="button"><span class="lbl">Gift an evening</span></button>
+    <button class="pill edge ico" type="button" aria-label="Save to favourites" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+  </section>
+  <p class="vh" aria-live="polite" id="sr"></p>
+
+  <section class="states" aria-labelledby="st">
+    <span class="cap" id="st">States</span>
+    <p class="vh">Reference sheet showing each variant at rest, hovered with the sheen mid-sweep, pressed, disabled and focused, then the loading lifecycle.</p>
+    <div inert aria-hidden="true">
+      <div class="grid">
+        <span class="corner"></span><span class="h">Default</span><span class="h">Hover</span><span class="h">Pressed</span><span class="h">Disabled</span><span class="h">Focus</span>
+        <span class="rl">Solid</span>
+        <span class="c"><button class="pill solid"><span>Reserve</span></button></span>
+        <span class="c"><button class="pill solid is-hover"><span>Reserve</span></button></span>
+        <span class="c"><button class="pill solid is-pressed"><span>Reserve</span></button></span>
+        <span class="c"><button class="pill solid" disabled><span>Reserve</span></button></span>
+        <span class="c"><button class="pill solid is-focus"><span>Reserve</span></button></span>
+        <span class="rl">Gradient edge</span>
+        <span class="c"><button class="pill edge">Pairing</button></span>
+        <span class="c"><button class="pill edge is-hover">Pairing</button></span>
+        <span class="c"><button class="pill edge is-pressed">Pairing</button></span>
+        <span class="c"><button class="pill edge" disabled>Pairing</button></span>
+        <span class="c"><button class="pill edge is-focus">Pairing</button></span>
+        <span class="rl">Quiet</span>
+        <span class="c"><button class="pill quiet">Gift</button></span>
+        <span class="c"><button class="pill quiet is-hover">Gift</button></span>
+        <span class="c"><button class="pill quiet is-pressed">Gift</button></span>
+        <span class="c"><button class="pill quiet" disabled>Gift</button></span>
+        <span class="c"><button class="pill quiet is-focus">Gift</button></span>
+      </div>
+      <div class="cycle">
+        <small>Lifecycle</small>
+        <button class="pill solid"><span>Reserve the table</span></button>
+        <svg class="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <button class="pill solid"><span class="lbl"><svg class="spin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>Holding your table</span></button>
+        <svg class="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <button class="pill solid ok"><span class="lbl"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" style="stroke-width:2.2"/></svg>Table for 2 · 20:30</span></button>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+const sr = document.getElementById('sr');
+const SPIN = '<svg class="spin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>';
+const CHECK = '<svg class="check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+function morph(btn, html){
+  const lbl = btn.querySelector('.lbl'), w0 = btn.offsetWidth;
+  btn.style.width = 'auto'; lbl.innerHTML = html; lbl.classList.remove('in'); void lbl.offsetWidth; lbl.classList.add('in');
+  const w1 = btn.offsetWidth;
+  btn.style.width = w0 + 'px'; void btn.offsetWidth; btn.style.width = w1 + 'px';
+}
+document.querySelectorAll('[data-load]').forEach(btn => {
+  const idle = btn.querySelector('.lbl').innerHTML;
+  btn.addEventListener('click', () => {
+    if (btn.getAttribute('aria-busy') === 'true' || btn.classList.contains('ok')) return;
+    btn.setAttribute('aria-busy', 'true');
+    morph(btn, SPIN + btn.dataset.load);
+    sr.textContent = btn.dataset.load + '…';
+    setTimeout(() => {
+      btn.removeAttribute('aria-busy'); btn.classList.add('ok');
+      morph(btn, CHECK + btn.dataset.done);
+      sr.textContent = btn.dataset.say;
+      setTimeout(() => { btn.classList.remove('ok'); morph(btn, idle); }, 3200);
+    }, 1500);
+  });
+});
+document.querySelector('.ico').addEventListener('click', e => {
+  const b = e.currentTarget, on = b.getAttribute('aria-pressed') !== 'true';
+  b.setAttribute('aria-pressed', on); sr.textContent = on ? 'Saved to favourites' : 'Removed from favourites';
+});
+</script>
+</body>
+</html>

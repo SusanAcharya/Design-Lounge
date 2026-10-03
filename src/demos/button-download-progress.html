@@ -1,0 +1,291 @@
+<!-- Design Lounge piece: button-download-progress · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>pocketknife 3.2.0 — Downloads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0d0a;--surface:#121510;--surface-2:#1a1e17;--line:#262c22;
+  --ink:#e4e9d8;--ink-2:#a3ac95;--ink-3:#7f8872;
+  --acid:#c8f04a;--on-acid:#10140a;--err:#ff6a4d;--err-soft:rgba(255,106,77,.14);
+  --sans:"Epilogue",system-ui,sans-serif;--mono:"Fragment Mono",ui-monospace,monospace;
+  --r:10px;--h:60px;--ring:40px;
+  --t-micro:160ms;--t-morph:280ms;--t-check:360ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{min-height:100%;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:32px 20px;background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px;background-position:-1px -1px}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 0,var(--bg) 70%);pointer-events:none}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--acid);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.panel{position:relative;width:min(680px,100%);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px}
+.hd{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.mark{width:36px;height:36px;border-radius:8px;background:var(--acid);color:var(--on-acid);display:grid;place-items:center}
+.mark svg{width:20px;height:20px;stroke-width:2.2}
+h1{margin:0;font:700 24px/1 var(--sans);letter-spacing:-.02em}
+.ver{font:13px var(--mono);color:var(--ink-2)}
+.tag{padding:3px 8px;border-radius:999px;border:1px solid rgba(200,240,74,.35);color:var(--acid);font:12px var(--mono)}
+.lede{margin:12px 0 22px;color:var(--ink-2);font-size:15px}
+
+/* hero download control */
+.dl{display:flex;gap:0;height:var(--h)}
+.main{position:relative;flex:1;min-width:0}
+.go{position:absolute;inset:0;display:flex;align-items:center;gap:12px;padding:0 20px;border-radius:var(--r);background:var(--acid);color:var(--on-acid);font-weight:700;font-size:16px;transition:opacity var(--t-micro) var(--ease),transform var(--t-morph) var(--ease-out),filter var(--t-micro)}
+.go:hover{filter:brightness(1.06)}
+.go:active{transform:scale(.985)}
+.go svg{width:20px;height:20px;stroke-width:2.4}
+.go-m{margin-left:auto;font:400 13px var(--mono);opacity:.75}
+.bar{position:absolute;inset:0;border-radius:var(--r);background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line);overflow:hidden;opacity:0;pointer-events:none;transition:opacity var(--t-micro) var(--ease),background var(--t-morph) var(--ease)}
+.txt{position:absolute;inset:0;display:flex;align-items:center;gap:16px;padding:0 20px;white-space:nowrap}
+.txt .s{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px}
+.txt .s svg{width:18px;height:18px;stroke-width:2.4}
+.txt .m{margin-left:auto;font:13px var(--mono);overflow:hidden;text-overflow:ellipsis;min-width:0}
+.fill{position:absolute;inset:0;background-color:var(--acid);color:var(--on-acid);clip-path:inset(0 calc(100% - var(--p,0%)) 0 0);
+  background-image:repeating-linear-gradient(-45deg,rgba(16,20,10,.09) 0 8px,transparent 8px 16px);background-size:22.63px 22.63px}
+.dl[data-state=running] .fill{animation:stripes 700ms linear infinite}
+@keyframes stripes{to{background-position:22.63px 0}}
+.dl:not([data-state=idle]) .go{opacity:0;transform:scaleX(.97);pointer-events:none}
+.dl:not([data-state=idle]) .bar{opacity:1}
+.dl[data-state=paused] .fill{background-color:#a9c447}
+.dl[data-state=error] .bar{background:var(--err-soft);box-shadow:inset 0 0 0 1px rgba(255,106,77,.4)}
+.dl[data-state=error] .fill{background-color:var(--err);background-image:none;color:#1a0c08}
+.dl[data-state=error] .bar>.txt .s{color:var(--err)}
+.dl[data-state=done] .fill{background-image:none}
+.check path{stroke-dasharray:22;stroke-dashoffset:22}
+.dl[data-state=done] .check path{animation:draw var(--t-check) 120ms var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.ctl{flex:none;width:0;height:var(--h);margin-left:0;border-radius:var(--r);display:grid;place-items:center;overflow:hidden;opacity:0;background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line);transition:width var(--t-morph) var(--ease-out),margin var(--t-morph) var(--ease-out),opacity var(--t-micro) var(--ease),background var(--t-micro)}
+.ctl svg{width:20px;height:20px}
+.ctl:hover{background:#232821}
+.dl[data-state=running] .ctl,.dl[data-state=paused] .ctl,.dl[data-state=error] .ctl{width:var(--h);margin-left:8px;opacity:1}
+.dl[data-state=error] #pause{color:var(--err);box-shadow:inset 0 0 0 1px rgba(255,106,77,.45)}
+.under{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:12px;min-height:32px;font:12.5px var(--mono);color:var(--ink-3)}
+.again{display:none;color:var(--acid);font:600 13px var(--sans);padding:6px 0}
+.again:hover{text-decoration:underline;text-underline-offset:3px}
+.dl-wrap[data-state=done] .again{display:inline}
+.dl-wrap[data-state=done] .sha{display:none}
+.sw{display:flex;align-items:center;gap:10px;color:var(--ink-2);font:13px var(--sans);cursor:pointer}
+.sw button{position:relative;width:36px;height:20px;border-radius:999px;background:var(--line);transition:background var(--t-micro) var(--ease)}
+.sw button::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--ink-2);transition:transform var(--t-micro) var(--ease),background var(--t-micro)}
+.sw button[aria-checked=true]{background:var(--err)}
+.sw button[aria-checked=true]::after{transform:translateX(16px);background:#1a0c08}
+
+/* asset rows */
+h2{margin:26px 0 4px;font:600 12px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{display:flex;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+.rows li:first-child{border-top:0}
+.ficon{flex:none;width:32px;height:32px;border-radius:8px;background:var(--surface-2);display:grid;place-items:center;color:var(--ink-2)}
+.ficon svg{width:17px;height:17px;stroke-width:1.8}
+.fname{flex:1;min-width:0}
+.fname b{display:block;font:400 13.5px var(--mono);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fname span{display:block;font:12.5px var(--mono);color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row[data-state=error] .fname span{color:var(--err)}
+.row[data-state=done] .fname span{color:var(--ink-2)}
+.ring{position:relative;flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--ink)}
+.ring>svg:not(.ic){position:absolute;inset:2px;width:var(--ring);height:var(--ring);transform:rotate(-90deg)}
+.ring circle{stroke-width:2.5;fill:none}
+.ring .trk{stroke:var(--line)}
+.ring .arc{stroke:var(--acid);stroke-dasharray:106.8;stroke-dashoffset:calc(106.8 * (1 - var(--f,0)));transition:stroke var(--t-micro)}
+.ring .ic{position:relative;width:18px;height:18px;stroke-width:2.2}
+.ring:hover:not([aria-disabled=true]) .trk{stroke:#3a4234}
+.ring .disc{position:absolute;inset:4px;border-radius:50%;background:var(--acid);transform:scale(0);transition:transform var(--t-morph) var(--ease-out)}
+.row[data-state=done] .disc{transform:scale(1)}
+.row[data-state=done] .ring{color:var(--on-acid);cursor:default}
+.row[data-state=done] .ic path{stroke-dasharray:22;stroke-dashoffset:22;animation:draw var(--t-check) 120ms var(--ease) forwards}
+.row[data-state=paused] .arc{stroke:#a9c447}
+.row[data-state=error] .arc{stroke:var(--err)}
+.row[data-state=error] .ring{color:var(--err)}
+@media (max-width:520px){
+  .panel{padding:20px}
+  .go-m{display:none}
+  .txt{padding:0 14px;gap:10px}
+  .txt .m{display:none}
+  .under{flex-direction:column;align-items:flex-start;gap:8px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
+  .dl[data-state=running] .fill{animation:none}
+}
+</style>
+</head>
+<body>
+<main class="panel">
+  <div class="hd">
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 17l9-9 3 3-9 9H4z"/><path d="M13 8l3-3 3 3-3 3"/></svg></span>
+    <h1>pocketknife</h1><span class="ver">v3.2.0</span><span class="tag">latest</span>
+  </div>
+  <p class="lede">A pocket-sized task runner for monorepos. Released 2 Oct 2026.</p>
+
+  <div class="dl-wrap" id="wrap" data-state="idle">
+    <div class="dl" id="dl" data-state="idle">
+      <div class="main">
+        <button class="go" id="go" type="button" aria-label="Download pocketknife for macOS, arm64, 18.4 megabytes">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>
+          <span>Download for macOS</span><span class="go-m">arm64 · 18.4 MB</span>
+        </button>
+        <div class="bar" id="bar" role="progressbar" aria-label="pocketknife for macOS" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-hidden="true">
+          <div class="txt"><span class="s"></span><span class="m"></span></div>
+          <div class="fill" aria-hidden="true"><div class="txt"><span class="s"></span><span class="m"></span></div></div>
+        </div>
+      </div>
+      <button class="ctl" id="pause" type="button" aria-label="Pause download" inert></button>
+      <button class="ctl" id="cancel" type="button" aria-label="Cancel download" inert><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="under">
+      <span class="sha">sha256 7c1e4f…09a3b2</span>
+      <button class="again" id="again" type="button">Download again</button>
+      <label class="sw"><button type="button" role="switch" aria-checked="false" id="flaky"></button>Simulate a dropped connection</label>
+    </div>
+  </div>
+
+  <h2>Other assets</h2>
+  <ul class="rows">
+    <li class="row" data-total="17.9" data-start="0.38" data-speed="2.2" data-name="linux-x64.tar.gz">
+      <span class="ficon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M10 11h4M10 14h4M10 17h2"/></svg></span>
+      <span class="fname"><b>pocketknife-3.2.0-linux-x64.tar.gz</b><span></span></span>
+      <button class="ring" type="button"><span class="disc"></span><svg viewBox="0 0 40 40" aria-hidden="true"><circle class="trk" cx="20" cy="20" r="17"/><circle class="arc" cx="20" cy="20" r="17"/></svg><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"></svg></button>
+    </li>
+    <li class="row" data-total="19.2" data-speed="2.6" data-fail="0.62" data-name="windows-x64.zip">
+      <span class="ficon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M11 9h2M11 12h2M11 15h2"/></svg></span>
+      <span class="fname"><b>pocketknife-3.2.0-windows-x64.zip</b><span></span></span>
+      <button class="ring" type="button"><span class="disc"></span><svg viewBox="0 0 40 40" aria-hidden="true"><circle class="trk" cx="20" cy="20" r="17"/><circle class="arc" cx="20" cy="20" r="17"/></svg><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"></svg></button>
+    </li>
+    <li class="row" data-total="0.0012" data-done="1" data-name="checksums.txt">
+      <span class="ficon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9.5 14l2 2 3.5-4"/></svg></span>
+      <span class="fname"><b>checksums.txt</b><span></span></span>
+      <button class="ring" type="button"><span class="disc"></span><svg viewBox="0 0 40 40" aria-hidden="true"><circle class="trk" cx="20" cy="20" r="17"/><circle class="arc" cx="20" cy="20" r="17"/></svg><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"></svg></button>
+    </li>
+  </ul>
+  <p class="sr" id="live" aria-live="polite"></p>
+</main>
+<script>
+const I = {
+  down:'<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>',
+  pause:'<path d="M9 6v12M15 6v12"/>',
+  play:'<path d="M8 5.5v13l10-6.5z"/>',
+  retry:'<path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v4.5h4.5"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  warn:'<path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9"/>'
+};
+const live = document.getElementById('live');
+const say = t => { live.textContent = ''; requestAnimationFrame(() => { live.textContent = t; }); };
+const mb = v => v < 0.01 ? (v * 1000).toFixed(1) + ' KB' : v.toFixed(1) + ' MB';
+const eta = s => s >= 60 ? Math.ceil(s / 60) + 'm left' : Math.max(1, Math.ceil(s)) + 's left';
+
+/* one rAF loop drives every running job */
+const jobs = [];
+let raf = 0, last = 0;
+function tick(t){
+  const dt = last ? Math.min(.1, (t - last) / 1000) : 0;
+  last = t;
+  let any = false;
+  for (const j of jobs){
+    if (j.state !== 'running') continue;
+    any = true;
+    j.v += (j.base * (.7 + Math.random() * .6) - j.v) * Math.min(1, dt * 3);
+    j.got = Math.min(j.total, j.got + j.v * dt);
+    if (j.failAt && j.got >= j.failAt * j.total){ j.got = j.failAt * j.total; j.failAt = 0; j.set('error'); continue; }
+    if (j.got >= j.total){ j.got = j.total; j.set('done'); continue; }
+    j.paint();
+  }
+  raf = any ? requestAnimationFrame(tick) : (last = 0, 0);
+}
+function kick(){ if (!raf){ last = 0; raf = requestAnimationFrame(tick); } }
+function job(o){ const j = Object.assign({state:'idle', got:0, v:o.base, failAt:0}, o); jobs.push(j); return j; }
+
+/* hero */
+const wrap = document.getElementById('wrap'), dl = document.getElementById('dl'), bar = document.getElementById('bar');
+const go = document.getElementById('go'), pause = document.getElementById('pause'), cancel = document.getElementById('cancel');
+const again = document.getElementById('again'), flaky = document.getElementById('flaky');
+const hero = job({total:18.4, base:3.4, name:'pocketknife for macOS'});
+let lastPct = -1;
+function heroText(s, m){
+  bar.querySelectorAll('.s').forEach(e => { e.innerHTML = s; });
+  bar.querySelectorAll('.m').forEach(e => { e.textContent = m; });
+}
+hero.paint = function(){
+  const f = this.got / this.total, pct = Math.floor(f * 100);
+  bar.style.setProperty('--p', (f * 100).toFixed(2) + '%');
+  if (pct !== lastPct){ lastPct = pct; bar.setAttribute('aria-valuenow', pct); bar.setAttribute('aria-valuetext', `${pct}%, ${mb(this.got)} of ${mb(this.total)}`); }
+  const left = (this.total - this.got) / Math.max(.1, this.v);
+  const of = `${this.got.toFixed(1)} / ${mb(this.total)}`;
+  if (this.state === 'running') heroText(`Downloading ${pct}%`, `${of} · ${this.v.toFixed(1)} MB/s · ${eta(left)}`);
+  else if (this.state === 'paused') heroText(`Paused at ${pct}%`, of);
+  else if (this.state === 'error') heroText(`<svg viewBox="0 0 24 24" aria-hidden="true">${I.warn}</svg>Connection dropped`, `${of} kept`);
+  else if (this.state === 'done') heroText(`<svg class="check" viewBox="0 0 24 24" aria-hidden="true">${I.check}</svg>Downloaded`, 'pocketknife-3.2.0-macos-arm64.pkg');
+};
+hero.set = function(s){
+  const prev = this.state;
+  this.state = s;
+  dl.dataset.state = wrap.dataset.state = s;
+  const busy = s === 'running' || s === 'paused' || s === 'error';
+  go.inert = s !== 'idle';
+  bar.setAttribute('aria-hidden', s === 'idle');
+  pause.inert = cancel.inert = !busy;
+  pause.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${s === 'running' ? I.pause : s === 'error' ? I.retry : I.play}</svg>`;
+  pause.setAttribute('aria-label', s === 'running' ? 'Pause download' : s === 'error' ? 'Retry download' : 'Resume download');
+  if (s === 'running'){ kick(); if (prev === 'idle') pause.focus(); }
+  if (s === 'idle'){ this.got = 0; lastPct = -1; bar.style.setProperty('--p', '0%'); }
+  if (s === 'done'){ again.focus(); say('Download complete. pocketknife-3.2.0-macos-arm64.pkg, 18.4 MB.'); }
+  if (s === 'error'){ pause.focus(); say(`Connection dropped at ${Math.floor(this.got / this.total * 100)}%. Retry resumes from ${mb(this.got)}.`); }
+  if (s === 'paused') say(`Paused at ${Math.floor(this.got / this.total * 100)}%.`);
+  if (s === 'running' && prev !== 'idle') say('Resumed.');
+  this.paint();
+};
+go.addEventListener('click', () => {
+  hero.failAt = flaky.getAttribute('aria-checked') === 'true' ? .47 : 0;
+  hero.v = hero.base;
+  hero.set('running');
+});
+pause.addEventListener('click', () => hero.set(hero.state === 'running' ? 'paused' : 'running'));
+cancel.addEventListener('click', () => { hero.set('idle'); go.focus(); say('Download cancelled.'); });
+again.addEventListener('click', () => { hero.set('idle'); go.focus(); });
+flaky.addEventListener('click', () => flaky.setAttribute('aria-checked', flaky.getAttribute('aria-checked') !== 'true'));
+flaky.setAttribute('aria-label', 'Simulate a dropped connection');
+
+/* rows */
+document.querySelectorAll('.row').forEach(li => {
+  const btn = li.querySelector('.ring'), ic = li.querySelector('.ic'), meta = li.querySelector('.fname span');
+  const j = job({total:+li.dataset.total, base:+(li.dataset.speed || 2), name:li.dataset.name});
+  j.failAt = +(li.dataset.fail || 0);
+  j.paint = function(){
+    const f = this.got / this.total, pct = Math.floor(f * 100);
+    btn.style.setProperty('--f', f.toFixed(4));
+    if (this.state === 'idle') meta.textContent = mb(this.total);
+    else if (this.state === 'running') meta.textContent = `${mb(this.got)} / ${mb(this.total)} · ${this.v.toFixed(1)} MB/s`;
+    else if (this.state === 'paused') meta.textContent = `Paused · ${mb(this.got)} / ${mb(this.total)}`;
+    else if (this.state === 'error') meta.textContent = `Mirror reset at ${pct}% · tap to retry`;
+    else meta.textContent = `${mb(this.total)} · verified`;
+  };
+  j.set = function(s){
+    this.state = s;
+    li.dataset.state = s;
+    ic.innerHTML = {idle:I.down, running:I.pause, paused:I.play, error:I.retry, done:I.check}[s];
+    btn.setAttribute('aria-label', {idle:`Download ${this.name}, ${mb(this.total)}`, running:`Pause ${this.name}`, paused:`Resume ${this.name}`, error:`Retry ${this.name}`, done:`${this.name} downloaded`}[s]);
+    if (s === 'done'){ btn.setAttribute('aria-disabled', 'true'); if (!this.silent) say(`${this.name} downloaded.`); }
+    if (s === 'error') say(`${this.name} failed at ${Math.floor(this.got / this.total * 100)}%. Retry available.`);
+    if (s === 'running') kick();
+    this.paint();
+  };
+  btn.addEventListener('click', () => {
+    if (j.state === 'done') return;
+    j.set(j.state === 'running' ? 'paused' : 'running');
+  });
+  if (li.dataset.done){ j.got = j.total; j.silent = true; j.set('done'); j.silent = false; }
+  else if (li.dataset.start){ j.got = j.total * +li.dataset.start; j.set('running'); }
+  else j.set('idle');
+});
+hero.paint();
+</script>
+</body>
+</html>

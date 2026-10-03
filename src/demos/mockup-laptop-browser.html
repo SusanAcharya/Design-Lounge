@@ -1,0 +1,240 @@
+<!-- Design Lounge piece: mockup-laptop-browser · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Torva Book laptop mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#cfd5d0;--desk:#b4bcb5;--desk-2:#a6afa8;--ink:#131714;--ink-2:#3f4842;--ink-3:#5c665f;--line:#a9b2ab;
+  --accent:#2346d8;--paper:#f3f1ec;
+  --sans:"Bricolage Grotesque",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --open:1500ms;
+  /* finish: Silver */
+  --al-1:#f2f3f4;--al-2:#d6d8db;--al-3:#a9adb2;--al-4:#7d8187;
+}
+body[data-finish="space"]{--al-1:#9a9ea4;--al-2:#5f6368;--al-3:#45484c;--al-4:#2a2c2f}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--mono);color:var(--ink);background:var(--wall);overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.top{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:16px 24px;flex-wrap:wrap;padding:24px clamp(20px,4vw,48px) 0}
+.cap{display:flex;flex-direction:column;gap:2px}
+.cap b{font:800 22px/1.1 var(--sans);letter-spacing:-.01em}
+.cap span{font-size:12px;color:var(--ink-3);letter-spacing:.02em}
+.ctrls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--ink-3);border-radius:4px;overflow:hidden}
+.seg button{height:36px;padding:0 14px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px;transition:background-color .16s var(--ease),color .16s var(--ease)}
+.seg button+button{border-left:1px solid var(--ink-3)}
+.seg button i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--wall)}
+.seg button:focus-visible{outline-offset:-4px}
+.seg button[aria-pressed="true"]:focus-visible{outline-color:var(--wall)}
+.seg button:hover:not([aria-pressed="true"]){background:rgba(19,23,20,.06)}
+.replay{height:38px;padding:0 14px;border-radius:4px;border:1px solid var(--ink-3);font-size:12px;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.replay svg{width:16px;height:16px}
+.replay:hover{background:rgba(19,23,20,.06)}
+.stage{flex:1;display:grid;place-items:center;padding:12px 24px 40px;min-height:0;overflow:hidden}
+.rig{position:relative;width:min(900px,calc(100vw - 48px),calc((100vh - 190px)*1.42));container-type:inline-size;perspective:2400px;perspective-origin:50% -40%}
+.rig::before{content:"";position:absolute;left:-100vw;right:-100vw;top:calc(100% - 1.2cqw);height:100vh;background:linear-gradient(var(--desk),var(--desk-2));border-top:1px solid #c3cac4;z-index:-2}
+.lid{position:relative;margin:0 auto;width:90%;aspect-ratio:1.545;transform-origin:50% 100%;transform-style:preserve-3d;transform:rotateX(0deg)}
+.lid.anim{animation:open var(--open) var(--ease-out) both}
+@keyframes open{0%{transform:rotateX(-90deg)}100%{transform:rotateX(0deg)}}
+.face,.back{position:absolute;inset:0;border-radius:2.4cqw 2.4cqw .9cqw .9cqw;backface-visibility:hidden}
+.face{background:var(--al-3);padding:.32cqw;box-shadow:inset 0 0 0 .1cqw rgba(255,255,255,.3)}
+.back{transform:rotateX(180deg);background:radial-gradient(60% 80% at 50% 40%,var(--al-1),var(--al-2) 70%,var(--al-3));display:grid;place-items:center}
+.back span{font:600 2cqw/1 var(--sans);letter-spacing:.3em;color:var(--al-3);text-shadow:0 1px 0 var(--al-1);transform:rotate(180deg)}
+.bezel{height:100%;border-radius:2.1cqw 2.1cqw .6cqw .6cqw;background:#0a0a0b;padding:1.25cqw 1.25cqw 1.6cqw;position:relative}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:10%;height:2.5cqw;background:#0a0a0b;border-radius:0 0 .9cqw .9cqw;z-index:4;display:grid;place-items:center}
+.notch::after{content:"";width:.6cqw;height:.6cqw;border-radius:50%;background:radial-gradient(circle at 35% 35%,#2d3a52,#07080b 70%)}
+.screen{position:relative;height:100%;border-radius:1cqw 1cqw 0 0;overflow:hidden;background:#000}
+.screen::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:linear-gradient(112deg,rgba(255,255,255,.07) 0 34%,transparent 34.2%)}
+.desk-ui{position:absolute;inset:0;opacity:0;background:linear-gradient(160deg,#2c3d37 0%,#5c7468 45%,#c9b48c 100%);transition:opacity .5s var(--ease)}
+.on .desk-ui{opacity:1}
+.menubar{height:2.5cqw;display:flex;justify-content:space-between;align-items:center;padding:0 1.4cqw;font:500 1cqw/1 var(--sans);color:#f3f1ec;background:rgba(20,26,23,.35)}
+.menubar span{display:flex;gap:1.6cqw}
+.menubar b{font-weight:800}
+.win{position:absolute;left:4%;right:4%;top:4.6cqw;bottom:3.4cqw;border-radius:1cqw;background:var(--paper);overflow:hidden;box-shadow:0 2cqw 4cqw rgba(0,0,0,.35),0 0 0 .08cqw rgba(0,0,0,.4);display:flex;flex-direction:column;opacity:0;transform:translateY(1.2cqw) scale(.97);transition:opacity .45s var(--ease) .15s,transform .6s var(--ease-out) .15s}
+.on .win{opacity:1;transform:none}
+.chrome{background:#e2dfd8;border-bottom:.08cqw solid #cfcbc2}
+.tabs{display:flex;align-items:flex-end;gap:.3cqw;padding:.8cqw 1cqw 0;height:3.4cqw}
+.dots{display:flex;gap:.6cqw;align-self:center;margin-right:1.2cqw}
+.dots i{width:1cqw;height:1cqw;border-radius:50%;background:#c9c4ba;box-shadow:inset 0 0 0 .08cqw rgba(0,0,0,.15)}
+.tab{height:2.6cqw;min-width:0;flex:0 1 15cqw;display:flex;align-items:center;gap:.7cqw;padding:0 1cqw;border-radius:.8cqw .8cqw 0 0;font:500 1cqw/1 var(--sans);color:#5d5a53;white-space:nowrap;overflow:hidden;transition:background-color .16s var(--ease)}
+.tab .fav{flex:none;width:1.2cqw;height:1.2cqw;border-radius:.3cqw;background:var(--fc)}
+.tab .t{overflow:hidden;text-overflow:ellipsis;flex:1;text-align:left}
+.tab svg{flex:none;width:1cqw;height:1cqw;opacity:0}
+.tab:hover{background:rgba(255,255,255,.4)}
+.tab[aria-selected="true"]{background:var(--paper);color:#1d1c19}
+.tab[aria-selected="true"] svg,.tab:hover svg{opacity:.6}
+.tab:focus-visible{outline-offset:-2px}
+.newt{align-self:center;width:2cqw;height:2cqw;display:grid;place-items:center;color:#7a766d}
+.newt svg{width:1.2cqw;height:1.2cqw}
+.bar{display:flex;align-items:center;gap:1cqw;padding:.6cqw 1.2cqw;background:var(--paper)}
+.bar svg{width:1.3cqw;height:1.3cqw;color:#8a867c;flex:none}
+.url{flex:1;height:2.4cqw;border-radius:1.2cqw;background:#e9e6df;display:flex;align-items:center;gap:.6cqw;padding:0 1.2cqw;font:400 1.05cqw/1 var(--mono);color:#56534c;overflow:hidden;white-space:nowrap}
+.url b{font-weight:400;color:#1d1c19}
+.pages{position:relative;flex:1;overflow:hidden;font-family:var(--sans);color:#1d1c19}
+.pg{position:absolute;inset:0;padding:2.4cqw 3cqw;opacity:0;visibility:hidden;transform:translateY(.8cqw);transition:opacity .28s var(--ease),transform .4s var(--ease-out),visibility 0s .28s}
+.pg.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.nav{display:flex;justify-content:space-between;align-items:center;font-size:1.05cqw;color:#5d5a53;margin-bottom:3cqw}
+.nav b{font-weight:800;font-size:1.4cqw;color:#1d1c19;letter-spacing:-.02em}
+.nav span{display:flex;gap:2cqw}
+.pg h2{margin:0;font-weight:800;font-size:4.6cqw;line-height:.95;letter-spacing:-.035em;max-width:16ch}
+.pg h2 em{font-style:normal;color:var(--accent)}
+.pg p{margin:1.4cqw 0 0;font-size:1.25cqw;line-height:1.45;color:#56534c;max-width:44ch}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4cqw;margin-top:2.6cqw}
+.card{height:10.5cqw;border-radius:.8cqw;position:relative;overflow:hidden;padding:1cqw;display:flex;align-items:flex-end;font:600 1.05cqw/1 var(--sans)}
+.c1{background:#1d1c19;color:#f3f1ec}.c1::before{content:"Aa";position:absolute;top:.6cqw;left:1cqw;font:800 6cqw/1 var(--sans);letter-spacing:-.04em;color:#f3f1ec}
+.c2{background:var(--accent);color:#fff}.c2::before{content:"";position:absolute;inset:1.4cqw 1.4cqw auto auto;width:5cqw;height:5cqw;border-radius:50%;border:.5cqw solid #fff}
+.c3{background:#e2b64a}.c3::before{content:"";position:absolute;top:1.4cqw;left:1cqw;right:1cqw;height:4.6cqw;background:repeating-linear-gradient(90deg,#1d1c19 0 .5cqw,transparent .5cqw 1.4cqw)}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4cqw;margin-top:2.4cqw}
+.tier{border:.08cqw solid #d4d0c7;border-radius:.8cqw;padding:1.4cqw;display:flex;flex-direction:column;gap:.6cqw;font-size:1.05cqw;color:#56534c}
+.tier b{font-size:1.2cqw;color:#1d1c19}
+.tier strong{font-size:3.2cqw;font-weight:800;letter-spacing:-.03em;color:#1d1c19;line-height:1}
+.tier strong small{font-size:1cqw;font-weight:400;color:#56534c;letter-spacing:0}
+.tier.hot{background:#1d1c19;color:#c9c6be;border-color:#1d1c19}.tier.hot b,.tier.hot strong{color:#f3f1ec}
+.tier i{font-style:normal;margin-top:.6cqw;height:2.6cqw;border-radius:.5cqw;display:grid;place-items:center;font-weight:600;background:#e9e6df;color:#1d1c19}
+.tier.hot i{background:var(--accent);color:#fff}
+.log{margin:2cqw 0 0;padding:0;list-style:none}
+.log li{display:grid;grid-template-columns:9cqw 7cqw 1fr;gap:1.4cqw;align-items:baseline;padding:1.2cqw 0;border-top:.08cqw solid #dcd8cf;font-size:1.2cqw;color:#56534c}
+.log time{font:400 1cqw/1 var(--mono)}
+.log b{font-weight:800;color:#1d1c19;font-size:1.6cqw;letter-spacing:-.02em}
+.log em{font-style:normal;font:500 .9cqw/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:.4cqw .6cqw;border-radius:.3cqw;background:#e1e6fb;color:var(--accent);margin-right:.8cqw}
+.hinge{width:84%;margin:0 auto;height:.75cqw;background:linear-gradient(#050505,#2a2b2d 40%,#0b0b0c);border-radius:0 0 .3cqw .3cqw}
+.base{position:relative;height:1.55cqw;margin-top:-.15cqw;border-radius:.2cqw .2cqw 1.4cqw 1.4cqw / .2cqw .2cqw 1.1cqw 1.1cqw;background:linear-gradient(var(--al-1),var(--al-2) 30%,var(--al-3) 75%,var(--al-4));box-shadow:0 .2cqw .1cqw rgba(0,0,0,.18)}
+.base::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:13%;height:55%;border-radius:0 0 1.2cqw 1.2cqw;background:linear-gradient(var(--al-3),var(--al-2))}
+.shadow{position:absolute;left:3%;right:3%;bottom:-1.6cqw;height:2.4cqw;border-radius:50%;background:rgba(30,38,33,.45);filter:blur(12px);z-index:-1}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:640px){.cap b{font-size:18px}.top{padding-top:20px}}
+@media (prefers-reduced-motion:reduce){
+  .lid.anim{animation:none}
+  .desk-ui,.win,.pg{transition-duration:0s!important;transition-delay:0s!important}
+}
+</style>
+</head>
+<body data-finish="silver">
+<header class="top">
+  <div class="cap"><b>Torva Book 14</b><span>Browser mockup · brask.studio case study</span></div>
+  <div class="ctrls">
+    <div class="seg" role="group" aria-label="Finish">
+      <button type="button" aria-pressed="true" data-f="silver" style="--c:#d6d8db"><i></i>Silver</button>
+      <button type="button" aria-pressed="false" data-f="space" style="--c:#4a4d52"><i></i>Space</button>
+    </div>
+    <button class="replay" id="replay" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg>Open lid again</button>
+  </div>
+</header>
+<main class="stage">
+  <div class="rig" role="group" aria-roledescription="device mockup" aria-label="Torva Book 14 laptop in Silver showing a browser">
+    <div class="lid anim" id="lid">
+      <div class="back" aria-hidden="true"><span>TORVA</span></div>
+      <div class="face"><div class="bezel"><div class="notch"></div>
+        <div class="screen" id="screen">
+          <div class="desk-ui">
+            <div class="menubar" aria-hidden="true"><span><b>Torva</b><span>File</span><span>Edit</span><span>View</span><span>History</span></span><span>Sun 4 Oct&nbsp;&nbsp;9:41</span></div>
+          </div>
+          <div class="win">
+            <div class="chrome">
+              <div class="tabs" role="tablist" aria-label="Browser tabs" id="tabs">
+                <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <button class="tab" role="tab" type="button" aria-selected="true" aria-controls="p0" id="t0" data-url="brask.studio" data-path="/work" style="--fc:#1d1c19"><span class="fav"></span><span class="t">Brask, Index</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+                <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="p1" id="t1" tabindex="-1" data-url="brask.studio" data-path="/pricing" style="--fc:#2346d8"><span class="fav"></span><span class="t">Pricing, Brask</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+                <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="p2" id="t2" tabindex="-1" data-url="brask.studio" data-path="/changelog" style="--fc:#e2b64a"><span class="fav"></span><span class="t">Changelog</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+                <span class="newt" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+              </div>
+              <div class="bar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+                <div class="url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="11" width="12" height="9" rx="2"/><path d="M9 11V8a3 3 0 0 1 6 0v3"/></svg><b id="host">brask.studio</b><span id="path">/work</span></div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01"/></svg>
+              </div>
+            </div>
+            <div class="pages">
+              <section class="pg on" id="p0" role="tabpanel" aria-labelledby="t0">
+                <div class="nav"><b>Brask</b><span><span>Work</span><span>Type</span><span>Studio</span><span>Contact</span></span></div>
+                <h2>Type and tools for <em>slow, careful</em> reading.</h2>
+                <p>A two-person studio in Bergen drawing typefaces and the software that sets them. Eleven families, four apps, one stubborn kerning table.</p>
+                <div class="cards"><div class="card c1">Fjell Sans, 2026</div><div class="card c2">Margin app</div><div class="card c3">Ledger Mono</div></div>
+              </section>
+              <section class="pg" id="p1" role="tabpanel" aria-labelledby="t1">
+                <div class="nav"><b>Brask</b><span><span>Work</span><span>Type</span><span>Studio</span><span>Contact</span></span></div>
+                <h2>Licence once, <em>set forever.</em></h2>
+                <div class="tiers">
+                  <div class="tier"><b>Personal</b><strong>€40<small> / family</small></strong>Desktop, one person<i>Buy</i></div>
+                  <div class="tier hot"><b>Studio</b><strong>€180<small> / family</small></strong>Desktop and web, 10 seats<i>Buy studio</i></div>
+                  <div class="tier"><b>App</b><strong>€600<small> / family</small></strong>Embed in one product<i>Talk to us</i></div>
+                </div>
+              </section>
+              <section class="pg" id="p2" role="tabpanel" aria-labelledby="t2">
+                <div class="nav"><b>Brask</b><span><span>Work</span><span>Type</span><span>Studio</span><span>Contact</span></span></div>
+                <h2>Changelog</h2>
+                <ul class="log">
+                  <li><time>2026-10-01</time><b>v3.2</b><span><em>New</em>Fjell Sans gains a hairline weight and true small caps.</span></li>
+                  <li><time>2026-09-12</time><b>v3.1</b><span><em>Fix</em>Margin no longer drops ligatures on export.</span></li>
+                  <li><time>2026-08-28</time><b>v3.0</b><span><em>New</em>Ledger Mono ships with tabular old-style figures.</span></li>
+                </ul>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="hinge"></div>
+    <div class="base"></div>
+    <div class="shadow"></div>
+  </div>
+</main>
+<p class="sr" aria-live="polite" id="live"></p>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lid = document.getElementById('lid'), screen = document.getElementById('screen');
+  const rig = document.querySelector('.rig'), live = document.getElementById('live');
+  const tabs = [...document.querySelectorAll('.tab')];
+  const host = document.getElementById('host'), path = document.getElementById('path');
+  let boot;
+  function open() {
+    clearTimeout(boot);
+    screen.classList.remove('on');
+    lid.classList.remove('anim'); void lid.offsetWidth;
+    if (reduce) { screen.classList.add('on'); return; }
+    lid.classList.add('anim');
+    boot = setTimeout(() => screen.classList.add('on'), 1000);
+  }
+  document.getElementById('replay').addEventListener('click', () => { open(); live.textContent = 'Lid opening'; });
+  document.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => {
+    document.body.dataset.finish = b.dataset.f;
+    document.querySelectorAll('[data-f]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    const name = b.textContent.trim();
+    rig.setAttribute('aria-label', `Torva Book 14 laptop in ${name} showing a browser`);
+    live.textContent = name + ' finish';
+  }));
+  function select(i, focus) {
+    tabs.forEach((t, j) => {
+      const on = j === i;
+      t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1;
+      document.getElementById('p' + j).classList.toggle('on', on);
+    });
+    host.textContent = tabs[i].dataset.url; path.textContent = tabs[i].dataset.path;
+    if (focus) tabs[i].focus();
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(i));
+    t.addEventListener('keydown', e => {
+      const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (k) { e.preventDefault(); select((i + k + tabs.length) % tabs.length, true); }
+      if (e.key === 'Home') { e.preventDefault(); select(0, true); }
+      if (e.key === 'End') { e.preventDefault(); select(tabs.length - 1, true); }
+    });
+  });
+  open();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!-- Design Lounge piece: dock-magnify-desktop · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Desktop dock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-1:#f6d9b8;--sky-2:#efa77a;--sun:#fbe9cf;--dune-1:#e3945f;--dune-2:#c4643f;--dune-3:#8a3a2c;--dune-4:#4a1f1f;
+  --bar:rgba(58,24,20,.30);--dock:rgba(46,20,18,.34);--dock-line:rgba(255,236,214,.30);
+  --cream:#fff1df;--ink:#2b1a1e;--ink-2:#5b3a30;--ink-3:#8a6a5e;--win:#fff8f0;--win-line:#ecdccb;
+  --badge:#e5483a;--accent:#c4643f;
+  --sans:"Familjen Grotesk",system-ui,sans-serif;--mono:"Martian Mono",ui-monospace,monospace;
+  --b:52px;--gap:6px;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--sans);color:var(--ink);overflow:hidden;background:var(--sky-2);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+.wall{position:fixed;inset:0;width:100%;height:100%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* menu bar */
+.menubar{position:fixed;top:0;left:0;right:0;height:30px;display:flex;align-items:center;gap:18px;padding:0 14px;background:var(--bar);
+  backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);color:var(--cream);font-size:13px;z-index:50;white-space:nowrap}
+.menubar svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.menubar b{font-weight:700}
+.menubar .menus{display:flex;gap:16px;opacity:.92}
+.menubar .right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.clock{font:500 12px var(--mono);letter-spacing:-.02em}
+
+/* windows */
+.win{position:absolute;width:min(520px,calc(100vw - 32px));background:var(--win);border-radius:12px;overflow:hidden;
+  box-shadow:0 34px 70px -24px rgba(60,16,8,.62),0 0 0 1px rgba(70,24,12,.16);animation:winin 360ms var(--expo)}
+.win.back{filter:saturate(.85)}
+.win header{height:38px;display:flex;align-items:center;gap:8px;padding:0 12px;border-bottom:1px solid var(--win-line);cursor:default}
+.win header h2{position:absolute;left:0;right:0;margin:0;text-align:center;font-size:13px;font-weight:600;color:var(--ink-2);pointer-events:none}
+.light{width:12px;height:12px;border-radius:50%;border:0;padding:0;background:#d9c7b6;position:relative;z-index:1}
+.win:not(.back) .light:nth-of-type(1){background:#e5604d}.win:not(.back) .light:nth-of-type(2){background:#e8b04b}.win:not(.back) .light:nth-of-type(3){background:#7dba5c}
+.light:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.wb{padding:14px 18px 18px;font-size:14px}
+.wb .row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--win-line)}
+.wb .row:last-child{border:0}
+.wb small{color:var(--ink-3);font-size:12px}
+.wb .k{font-weight:600}
+.wb .term{background:#232226;color:#d9f5cf;font:12px/1.8 var(--mono);margin:-14px -18px -18px;padding:14px 18px}
+.wb .term i{color:#f2b45a;font-style:normal}
+.wb .big{font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.thumbs span{aspect-ratio:1;border-radius:6px}
+@keyframes winin{from{opacity:0;transform:translateY(14px) scale(.97)}}
+
+/* dock */
+.dock{position:fixed;left:50%;bottom:8px;transform:translateX(-50%);display:flex;align-items:flex-end;gap:var(--gap);margin:0;padding:7px 9px 9px;list-style:none;z-index:40}
+.dock::before{content:"";position:absolute;left:0;right:0;bottom:0;height:calc(var(--b) + 16px);border-radius:20px;background:var(--dock);
+  border:1px solid var(--dock-line);backdrop-filter:blur(26px) saturate(1.4);-webkit-backdrop-filter:blur(26px) saturate(1.4);
+  box-shadow:0 18px 40px -18px rgba(40,10,6,.6)}
+.it{position:relative;flex:none;width:var(--s,var(--b));transition:width 260ms var(--ease)}
+.dock.mag .it{transition:width 80ms var(--ease)}
+.sep{width:1px;height:calc(var(--b) - 6px);margin:0 5px 3px;background:var(--dock-line);flex:none;position:relative}
+.app{display:block;width:100%;aspect-ratio:1;padding:0;border:0;background:none;cursor:pointer;border-radius:24%}
+.app:focus-visible{outline:2px solid var(--cream);outline-offset:3px}
+.ic{width:100%;height:100%;border-radius:23%;display:grid;place-items:center;position:relative;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.14),0 7px 14px -6px rgba(40,10,6,.6)}
+.ic svg{width:58%;height:58%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.app:active .ic{filter:brightness(.82)}
+.it.bounce .app{animation:bounce 560ms cubic-bezier(.3,.6,.4,1) 2}
+@keyframes bounce{0%,100%{transform:translateY(0)}42%{transform:translateY(calc(var(--b) * -.55))}}
+.dot{position:absolute;left:50%;bottom:-7px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--cream);opacity:0;transition:opacity 200ms}
+.it.run .dot{opacity:1}
+.badge{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;padding:0 5px;border-radius:10px;background:var(--badge);color:#fff;
+  font:700 11px/19px var(--sans);text-align:center;box-shadow:0 0 0 1.5px rgba(255,241,223,.85);pointer-events:none}
+.tip{position:absolute;left:50%;bottom:calc(100% + 12px);transform:translate(-50%,4px);opacity:0;pointer-events:none;white-space:nowrap;
+  padding:5px 10px;border-radius:7px;background:rgba(43,26,30,.9);color:var(--cream);font-size:12.5px;font-weight:500;
+  transition:opacity 120ms var(--ease),transform 120ms var(--ease)}
+.tip::after{content:"";position:absolute;left:50%;top:100%;margin-left:-5px;border:5px solid transparent;border-top-color:rgba(43,26,30,.9)}
+.it:hover .tip,.app:focus-visible~.tip,.it.peek .tip{opacity:1;transform:translate(-50%,0)}
+@media (max-width:640px){.menubar .menus{display:none}.badge{min-width:15px;height:15px;font-size:9.5px;line-height:15px;padding:0 4px;top:-4px;right:-4px}}
+
+/* icon faces */
+.i-cobble{background:linear-gradient(#f5bf66,#e0892f);color:#3a1f12}
+.i-gannet{background:linear-gradient(#fbf6ee,#e7d8c5);color:#b5543a}
+.i-pipit{background:linear-gradient(#ffe896,#f4c540);color:#5a4210}
+.i-wicket{background:linear-gradient(#2a706d,#123f3e);color:#e9f7f2}
+.i-murrel{background:linear-gradient(#ea6a5d,#b3352e);color:#fff4ec}
+.i-sundial{background:#fffdf8;color:var(--ink);display:flex;flex-direction:column;justify-content:flex-start}
+.i-sundial .m{width:100%;background:#d8473a;color:#fff;font:700 calc(var(--s,var(--b))*.17)/1.55 var(--sans);letter-spacing:.06em;text-align:center}
+.i-sundial .d{font:600 calc(var(--s,var(--b))*.48)/1.05 var(--sans);letter-spacing:-.04em}
+.i-glint{background:linear-gradient(#fffaf2,#f1e4d4)}
+.i-shale{background:linear-gradient(#3a383e,#1f1e22);color:#a8eba0}
+.i-shale b{font:500 calc(var(--s,var(--b))*.3)/1 var(--mono);letter-spacing:-.06em}
+.i-gully{background:linear-gradient(#d9ebcd,#b9d6a6);color:#2f5a3a}
+.i-bin{background:linear-gradient(rgba(255,241,223,.42),rgba(255,241,223,.16));color:var(--cream)}
+
+@media (prefers-reduced-motion:reduce){
+  .it,.dock.mag .it,.tip,.dot{transition:none}
+  .it.bounce .app{animation:none}
+  .win{animation:none}
+}
+</style>
+</head>
+<body>
+<svg class="wall" viewBox="0 0 1280 800" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d9b8"/><stop offset=".72" stop-color="#efa77a"/></linearGradient></defs>
+  <rect width="1280" height="800" fill="url(#sky)"/>
+  <circle cx="880" cy="380" r="112" fill="#fbe9cf" opacity=".9"/>
+  <path d="M0 470C220 420 420 440 640 470S1060 430 1280 455V800H0Z" fill="#e3945f"/>
+  <path d="M0 560C260 500 520 520 760 575S1120 540 1280 520V800H0Z" fill="#c4643f"/>
+  <path d="M0 560C260 500 520 520 760 575" fill="none" stroke="#e7a07a" stroke-width="2" opacity=".6"/>
+  <path d="M0 650C300 600 600 620 860 690S1180 680 1280 640V800H0Z" fill="#8a3a2c"/>
+  <path d="M0 740C320 700 640 720 900 770S1200 760 1280 740V800H0Z" fill="#4a1f1f"/>
+</svg>
+
+<header class="menubar">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16" fill="currentColor"/></svg>
+  <b id="front">Gannet</b>
+  <span class="menus" aria-hidden="true"><span>File</span><span>Edit</span><span>View</span><span>Window</span><span>Help</span></span>
+  <span class="right">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5a13 13 0 0 1 18 0M6 13a8.5 8.5 0 0 1 12 0M9.2 16.4a4 4 0 0 1 5.6 0"/><circle cx="12" cy="19.5" r=".6" fill="currentColor"/></svg>
+    <span aria-label="Battery 82 percent">82%</span>
+    <time class="clock" id="clock"></time>
+  </span>
+</header>
+
+<main id="desk" aria-label="Desktop"></main>
+
+<ul class="dock" id="dock" role="toolbar" aria-label="Dock"></ul>
+<p class="sr" aria-live="polite" id="live"></p>
+
+<script>
+const S = {
+  folder:'<path d="M3 7.5V18a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-8l-2-2.5H4a1 1 0 0 0-1 1Z"/><path d="M3 11h18"/>',
+  mail:'<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/>',
+  note:'<path d="M6 3.5h9l4 4V20a.5.5 0 0 1-.5.5h-12A.5.5 0 0 1 6 20Z"/><path d="M9 10h7M9 13.5h7M9 17h4"/>',
+  compass:'<circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5Z" fill="currentColor"/>',
+  music:'<path d="M9 17.5V6l10-2v11.5"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/>',
+  petals:'<g stroke="none"><circle cx="12" cy="7" r="4" fill="#f2b45a"/><circle cx="16.5" cy="10" r="4" fill="#e5604d" opacity=".9"/><circle cx="15" cy="15.5" r="4" fill="#c4446b" opacity=".85"/><circle cx="9" cy="15.5" r="4" fill="#3f8f87" opacity=".85"/><circle cx="7.5" cy="10" r="4" fill="#7dba5c" opacity=".9"/></g>',
+  map:'<path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20Z"/><path d="M9 4v13.5M15 6.5V20"/>',
+  bin:'<path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10 11v5.5M14 11v5.5"/>'
+};
+const now = new Date();
+const MON = now.toLocaleString('en', {month:'short'}).toUpperCase();
+const APPS = [
+  {id:'cobble', name:'Cobble', face:`<svg viewBox="0 0 24 24">${S.folder}</svg>`, run:true, body:()=>
+    `<div class="row"><span class="k">Field notes</span><small>12 items</small></div><div class="row"><span class="k">Invoices 2026</span><small>31 items</small></div><div class="row"><span class="k">Pokhara trip</span><small>148 photos</small></div><div class="row"><span class="k">studio-rates.pdf</span><small>214 KB</small></div>`, title:'Home'},
+  {id:'gannet', name:'Gannet', face:`<svg viewBox="0 0 24 24">${S.mail}</svg>`, run:true, badge:3, body:()=>
+    `<div class="row"><span><span class="k">Anika Shrestha</span><br><small>Revised moodboard for the tea packaging</small></span><small>23:41</small></div><div class="row"><span><span class="k">Rohan Mehta</span><br><small>Invoice 0412 is paid, thank you</small></span><small>21:08</small></div><div class="row"><span><span class="k">Studio Pith</span><br><small>Kiosk prototype, round two</small></span><small>18:30</small></div>`, title:'Inbox — 3 unread'},
+  {id:'pipit', name:'Pipit', face:`<svg viewBox="0 0 24 24">${S.note}</svg>`, body:()=>
+    `<p class="k" style="margin:0 0 6px">Sunday list</p><div class="row"><span>Call the printer about the matte stock</span></div><div class="row"><span>Pick up film from Lakeside lab</span></div><div class="row"><span>Draft the October retainer note</span></div>`, title:'Sunday list'},
+  {id:'wicket', name:'Wicket', face:`<svg viewBox="0 0 24 24">${S.compass}</svg>`, body:()=>
+    `<div class="row"><small>wicket://start</small><small>4 tabs</small></div><div class="thumbs"><span style="background:#e3945f"></span><span style="background:#2a706d"></span><span style="background:#f4c540"></span><span style="background:#8a3a2c"></span></div>`, title:'Start page'},
+  {id:'murrel', name:'Murrel', face:`<svg viewBox="0 0 24 24">${S.music}</svg>`, body:()=>
+    `<p class="k" style="margin:0">Low Tide</p><small>Halden Quartet · Shorelines</small><div style="height:4px;background:var(--win-line);border-radius:2px;margin:14px 0 6px"><div style="width:38%;height:100%;background:var(--accent);border-radius:2px"></div></div><div class="row"><small>1:42</small><small>4:31</small></div>`, title:'Now playing'},
+  {id:'sundial', name:'Sundial', face:`<span class="m">${MON}</span><span class="d">${now.getDate()}</span>`, body:()=>
+    `<div class="big">${now.toLocaleString('en',{weekday:'long'})}</div><small>${now.toLocaleString('en',{day:'numeric',month:'long',year:'numeric'})}</small><div class="row" style="margin-top:10px"><span class="k">Brand review</span><small>10:00</small></div><div class="row"><span class="k">Lunch with Mira</span><small>13:00</small></div>`, title:'Calendar'},
+  {id:'glint', name:'Glint', face:`<svg viewBox="0 0 24 24">${S.petals}</svg>`, body:()=>
+    `<div class="thumbs">${['#e3945f','#c4643f','#f6d9b8','#4a1f1f','#2a706d','#efa77a','#8a3a2c','#f4c540'].map(c=>`<span style="background:${c}"></span>`).join('')}</div>`, title:'Pokhara — 148 photos'},
+  {id:'shale', name:'Shale', face:'<b>&gt;_</b>', run:true, body:()=>
+    `<div class="term"><i>~/studio</i> $ pnpm build<br>built 42 pages in 1.9s<br><i>~/studio</i> $ git status<br>nothing to commit, working tree clean<br><i>~/studio</i> $ _</div>`, title:'shale — ~/studio'},
+  {id:'gully', name:'Gully', face:`<svg viewBox="0 0 24 24">${S.map}</svg>`, body:()=>
+    `<div class="row"><span class="k">Lakeside to Sarangkot</span><small>9.4 km</small></div><div class="row"><span>Fastest by road</span><small>32 min</small></div><div class="row"><span>Walking</span><small>2 h 10 min</small></div>`, title:'Directions'},
+  'sep',
+  {id:'bin', name:'Bin', face:`<svg viewBox="0 0 24 24">${S.bin}</svg>`, body:()=>`<p style="margin:0" class="k">Bin is empty</p><small>Items you delete stay here for 30 days.</small>`, title:'Bin'}
+];
+
+const dock = document.getElementById('dock'), desk = document.getElementById('desk'), live = document.getElementById('live'), front = document.getElementById('front');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const items = [];
+APPS.forEach(a => {
+  const li = document.createElement('li');
+  if (a === 'sep') { li.className = 'sep'; li.setAttribute('role','separator'); li.setAttribute('aria-orientation','vertical'); dock.append(li); items.push({sep:true, el:li}); return; }
+  li.className = 'it' + (a.run ? ' run' : '');
+  li.innerHTML = `<button class="app" type="button" tabindex="-1"><span class="ic i-${a.id}" aria-hidden="true">${a.face}</span>${a.badge?`<span class="badge" aria-hidden="true">${a.badge}</span>`:''}</button><span class="tip" aria-hidden="true">${a.name}</span><span class="dot" aria-hidden="true"></span>`;
+  a.el = li; a.btn = li.querySelector('.app');
+  dock.append(li); items.push({app:a, el:li});
+  label(a);
+});
+const apps = items.filter(i => i.app);
+apps[0].app.btn.tabIndex = 0;
+
+function label(a){
+  const run = a.el.classList.contains('run');
+  a.btn.setAttribute('aria-label', a.name + (run ? ', running' : '') + (a.badge ? `, ${a.badge} unread` : ''));
+}
+
+/* sizing and magnification */
+let B = 52, M = 90, R = 156, GAP = 6;
+function measure(){
+  const W = innerWidth, n = apps.length;
+  GAP = W < 640 ? 4 : 6;
+  B = Math.max(24, Math.min(52, Math.floor((W - 48 - 12) / n) - GAP));
+  M = Math.round(B * 1.75); R = B * 3;
+  document.documentElement.style.setProperty('--b', B + 'px');
+  document.documentElement.style.setProperty('--gap', GAP + 'px');
+  let total = 18, sepW = 11;
+  items.forEach((it, i) => { total += (it.sep ? sepW : B) + (i ? GAP : 0); });
+  let x = W / 2 - total / 2 + 9;
+  items.forEach(it => { const w = it.sep ? sepW : B; it.cx = x + w / 2; x += w + GAP; });
+  rest();
+}
+function magnify(px){
+  apps.forEach(it => {
+    const d = Math.abs(px - it.cx);
+    const s = d < R ? B + (M - B) * (Math.cos(Math.PI * d / R) + 1) / 2 : B;
+    it.el.style.setProperty('--s', s.toFixed(1) + 'px');
+  });
+}
+function rest(){ dock.classList.remove('mag'); apps.forEach(it => it.el.style.removeProperty('--s')); }
+let raf = 0, lastX = 0;
+dock.addEventListener('pointermove', e => {
+  if (e.pointerType === 'touch' || reduce.matches) return;
+  lastX = e.clientX; dock.classList.add('mag');
+  if (!raf) raf = requestAnimationFrame(() => { raf = 0; magnify(lastX); });
+});
+dock.addEventListener('pointerleave', () => { cancelAnimationFrame(raf); raf = 0; rest(); });
+addEventListener('resize', measure);
+
+/* keyboard: roving tabindex */
+dock.addEventListener('keydown', e => {
+  const i = apps.findIndex(it => it.app.btn === document.activeElement);
+  if (i < 0) return;
+  let j = {ArrowRight:i+1, ArrowLeft:i-1, Home:0, End:apps.length-1}[e.key];
+  if (j === undefined) return;
+  e.preventDefault();
+  j = (j + apps.length) % apps.length;
+  apps[i].app.btn.tabIndex = -1; apps[j].app.btn.tabIndex = 0; apps[j].app.btn.focus();
+});
+dock.addEventListener('focusin', e => {
+  const it = apps.find(x => x.app.btn === e.target);
+  if (!it) return;
+  apps.forEach(x => x.app.btn.tabIndex = x === it ? 0 : -1);
+  if (!reduce.matches && e.target.matches(':focus-visible')) { dock.classList.add('mag'); magnify(it.cx); }
+});
+dock.addEventListener('focusout', e => { if (!dock.contains(e.relatedTarget) && !dock.matches(':hover')) rest(); });
+
+/* launching and windows */
+let z = 10, stack = 0;
+const wins = {};
+function openWin(a){
+  if (wins[a.id]) return focusWin(a);
+  const w = document.createElement('section');
+  w.className = 'win'; w.setAttribute('aria-label', a.name + ' window');
+  w.innerHTML = `<header><button class="light" type="button" aria-label="Close ${a.name} window"></button><span class="light" aria-hidden="true"></span><span class="light" aria-hidden="true"></span><h2>${a.title}</h2></header><div class="wb">${a.body()}</div>`;
+  const ww = Math.min(520, innerWidth - 32), k = stack++ % 6;
+  w.style.left = Math.max(16, Math.min(innerWidth - ww - 16, (innerWidth - ww) / 2 - 150 + k * 60)) + 'px';
+  w.style.top = Math.min(innerHeight - 320, 70 + k * 34) + 'px';
+  w.addEventListener('pointerdown', () => focusWin(a));
+  w.querySelector('button').addEventListener('click', e => { e.stopPropagation(); w.remove(); delete wins[a.id]; topWin(); });
+  desk.append(w); wins[a.id] = w; focusWin(a);
+}
+function focusWin(a){
+  Object.values(wins).forEach(w => w.classList.add('back'));
+  const w = wins[a.id]; w.classList.remove('back'); w.style.zIndex = ++z;
+  front.textContent = a.name;
+}
+function topWin(){
+  let best = null, bz = -1;
+  for (const id in wins) { const zz = +wins[id].style.zIndex; if (zz > bz) { bz = zz; best = id; } }
+  if (best) focusWin(apps.find(x => x.app.id === best).app); else front.textContent = 'Cobble';
+}
+function launch(a){
+  const li = a.el;
+  if (li.classList.contains('run') || a.id === 'bin') { openWin(a); return; }
+  if (li.classList.contains('bounce')) return;
+  live.textContent = 'Opening ' + a.name;
+  const done = () => { li.classList.remove('bounce'); li.classList.add('run'); label(a); openWin(a); live.textContent = a.name + ' is open'; };
+  if (reduce.matches) return done();
+  li.classList.add('bounce');
+  setTimeout(done, 1120);
+}
+apps.forEach(it => it.app.btn.addEventListener('click', () => launch(it.app)));
+
+/* clock */
+const clock = document.getElementById('clock');
+function tick(){ const d = new Date(); clock.textContent = d.toLocaleString('en-GB',{weekday:'short',day:'numeric',month:'short'}) + '  ' + d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}); clock.dateTime = d.toISOString(); }
+tick(); setInterval(tick, 10000);
+
+measure();
+openWin(APPS[7]); openWin(APPS[1]);
+/* hero frame: the dock opens mid-magnify on Murrel until the first real hover or focus */
+if (!reduce.matches && matchMedia('(hover: hover)').matches) {
+  const peek = apps[4];
+  dock.classList.add('mag'); magnify(peek.cx); peek.el.classList.add('peek');
+  const unpeek = () => peek.el.classList.remove('peek');
+  dock.addEventListener('pointerenter', unpeek, {once:true});
+  dock.addEventListener('focusin', unpeek, {once:true});
+}
+</script>
+</body>
+</html>

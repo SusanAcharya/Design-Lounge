@@ -1,0 +1,289 @@
+<!-- Design Lounge piece: dock-presence-bar · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Field notes: the Pokhara pop-up — Tessera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bone:#ece9e1;--sheet:#fbfaf6;--ink:#17181c;--ink-2:#4a4b52;--ink-3:#6e6f76;--line:#dcd8cd;
+  --dock:#17181c;--dock-2:#2a2b31;--dock-ink:#f3f1ea;--dock-mute:#a3a29b;--lime:#d4f25a;
+  --p1:#ff7a59;--p2:#6aa8ff;--p3:#3fd0a0;--p4:#f5b82e;
+  --serif:"Literata",Georgia,serif;--ui:"Albert Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--ui);color:var(--ink);background:var(--bone);overflow:hidden;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar */
+.top{height:56px;display:flex;align-items:center;gap:14px;padding:0 24px;border-bottom:1px solid var(--line);background:var(--bone);font-size:13.5px;white-space:nowrap}
+.top .mark{width:22px;height:22px;border-radius:6px;background:var(--ink);display:grid;place-items:center;flex:none}
+.top .mark i{width:8px;height:8px;background:var(--lime);border-radius:2px}
+.crumbs{color:var(--ink-3);overflow:hidden;text-overflow:ellipsis}
+.crumbs b{color:var(--ink);font-weight:600}
+.edit{margin-left:auto;color:var(--ink-3)}
+.edit b{font-weight:600;color:var(--ink-2)}
+
+/* document */
+.scroller{position:absolute;top:56px;left:0;right:0;bottom:0;overflow:hidden auto}
+.sheet{position:relative;width:min(760px,calc(100% - 32px));margin:32px auto 140px;padding:72px 84px 88px;background:var(--sheet);border:1px solid var(--line);border-radius:4px}
+.sheet h1{font:600 44px/1.08 var(--serif);letter-spacing:-.02em;margin:0 0 12px}
+.sheet .meta{font:500 13px/1.4 var(--ui);color:var(--ink-3);margin:0 0 36px;display:flex;gap:14px;flex-wrap:wrap}
+.sheet h2{font:600 22px/1.25 var(--serif);margin:40px 0 10px;letter-spacing:-.01em}
+.sheet p,.sheet li{font:400 17px/1.65 var(--serif);color:#26272c;margin:0 0 16px;max-width:62ch}
+.sheet ul{padding-left:20px;margin:0 0 16px}
+.sheet li{margin:0 0 8px}
+.days{display:grid;grid-template-columns:120px 1fr;border-top:1px solid var(--line);margin:8px 0 20px;font-size:14.5px}
+.days span{padding:10px 0;border-bottom:1px solid var(--line)}
+.days span:nth-child(odd){font-weight:600;color:var(--ink-2)}
+.selx{background:color-mix(in srgb,var(--p2) 32%,transparent);box-shadow:inset 0 -2px 0 var(--p2);border-radius:2px}
+
+/* cursors */
+.cur{position:absolute;left:0;top:0;pointer-events:none;will-change:transform;z-index:3}
+.cur svg{width:20px;height:20px;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.25))}
+.cur span{position:absolute;left:14px;top:17px;padding:3px 8px 4px;border-radius:4px 10px 10px 10px;background:var(--c);color:var(--ink);
+  font:600 12px/1.2 var(--ui);white-space:nowrap}
+.cur.idle{opacity:.7}
+
+/* follow frame */
+.frame{position:fixed;inset:0;border:3px solid var(--fc,transparent);pointer-events:none;opacity:0;transition:opacity 200ms var(--ease);z-index:20}
+.frame.on{opacity:1}
+.frame b{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:var(--fc);color:var(--ink);font:600 12.5px/1 var(--ui);
+  padding:7px 12px;border-radius:999px;white-space:nowrap}
+
+/* presence dock */
+.dock{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;height:60px;padding:0 8px 0 14px;
+  background:var(--dock);border-radius:999px;color:var(--dock-ink);box-shadow:0 20px 40px -18px rgba(23,24,28,.55),0 0 0 1px rgba(255,255,255,.04) inset;z-index:30}
+.here{font-size:12.5px;color:var(--dock-mute);padding-right:6px;white-space:nowrap}
+.here b{color:var(--dock-ink);font-weight:600}
+.people{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.av{position:relative;width:42px;height:42px;border-radius:50%;padding:0;border:2px solid var(--c);background:var(--dock-2);display:grid;place-items:center;
+  font:600 13px/1 var(--ui);color:var(--dock-ink);cursor:pointer;transition:transform 160ms var(--ease),background 160ms var(--ease)}
+.av:hover{transform:translateY(-2px)}
+.av[aria-pressed=true]{background:var(--c);color:var(--ink);animation:ring 1.8s var(--ease) infinite}
+.av.me{cursor:default;border-color:var(--dock-mute)}
+.av.me:hover{transform:none}
+.av.pending{border-style:dashed;border-color:var(--dock-mute);color:var(--dock-mute)}
+.av .st{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;background:#4ade80;border:2.5px solid var(--dock)}
+.av.idle .st{background:var(--dock-mute)}
+.av.pending .st{display:none}
+@keyframes ring{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--c) 70%,transparent)}70%,100%{box-shadow:0 0 0 9px transparent}}
+.tip{position:absolute;bottom:calc(100% + 14px);left:50%;transform:translate(-50%,4px);min-width:180px;padding:10px 12px;border-radius:10px;background:var(--dock);
+  color:var(--dock-ink);text-align:left;pointer-events:none;opacity:0;transition:opacity 140ms var(--ease),transform 140ms var(--ease);box-shadow:0 12px 24px -12px rgba(0,0,0,.5)}
+.tip b{display:block;font-weight:600;font-size:13px}
+.tip small{display:block;font-size:12px;color:var(--dock-mute);margin-top:2px;white-space:nowrap}
+.tip em{display:block;font-style:normal;font-size:11.5px;color:var(--c);margin-top:6px}
+li{position:relative}
+li:hover .tip,.av:focus-visible+.tip{opacity:1;transform:translate(-50%,0)}
+.av:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.sep{width:1px;height:28px;background:var(--dock-2);margin:0 6px;flex:none}
+.invite{display:flex;align-items:center;gap:6px;height:42px;padding:0 16px 0 12px;border:0;border-radius:999px;background:var(--lime);color:var(--ink);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;transition:filter 140ms var(--ease)}
+.invite:hover{filter:brightness(1.06)}
+.invite:active{transform:translateY(1px)}
+.invite svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.invite:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+
+/* invite popover */
+.pop{position:absolute;right:0;bottom:calc(100% + 14px);width:320px;padding:18px;background:var(--sheet);color:var(--ink);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 24px 48px -20px rgba(23,24,28,.5);animation:pop 260ms var(--expo)}
+.pop[hidden]{display:none}
+.pop h3{margin:0 0 4px;font:600 18px/1.2 var(--serif)}
+.pop p{margin:0 0 14px;font-size:13px;color:var(--ink-3)}
+.pop label{display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin:0 0 6px}
+.row{display:flex;gap:8px}
+.pop input,.pop select{height:40px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 10px;font-size:14px;min-width:0}
+.pop input{flex:1}
+.pop input[aria-invalid=true]{border-color:#c2410c}
+.err{font-size:12px;color:#b4380a;min-height:18px;margin:6px 0 4px}
+.send{width:100%;height:40px;border:0;border-radius:8px;background:var(--ink);color:var(--sheet);font-weight:600;cursor:pointer}
+.send:hover{background:#2c2d33}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+.toast{position:fixed;left:50%;top:72px;transform:translate(-50%,-8px);padding:8px 14px;border-radius:999px;background:var(--ink);color:var(--dock-ink);font-size:13px;
+  opacity:0;pointer-events:none;transition:opacity 200ms var(--ease),transform 200ms var(--ease);white-space:nowrap;z-index:31}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:640px){
+  .top .crumbs span,.edit{display:none}
+  .sheet{padding:40px 22px 60px;margin-top:16px}
+  .sheet h1{font-size:32px}
+  .here{display:none}
+  .dock{gap:4px;padding:0 6px;height:56px}
+  .av{width:38px;height:38px;font-size:12px}
+  .people{gap:4px}
+  .invite{padding:0 12px}
+  .invite span{display:none}
+  .pop{width:min(320px,calc(100vw - 24px));right:-6px}
+  .sep{margin:0 2px}
+}
+@media (prefers-reduced-motion:reduce){
+  .av,.tip,.frame,.toast,.invite{transition:none}
+  .av[aria-pressed=true]{animation:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 45%,transparent)}
+  .pop{animation:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="mark" aria-hidden="true"><i></i></span>
+  <span class="crumbs"><span>Tessera / Launch team / </span><b>Field notes: the Pokhara pop-up</b></span>
+  <span class="edit" id="lastEdit">Last edit by <b>Asha</b> just now</span>
+</header>
+
+<div class="scroller" id="scroller">
+  <article class="sheet" id="sheet">
+    <h1>Field notes: the Pokhara pop-up</h1>
+    <p class="meta"><span>Draft 3</span><span>Launch team · 5 people</span><span>Updated 4 Oct</span></p>
+    <p data-z="a">Ilam Leaf opens a twelve-day tea counter on the Lakeside strip from 15 October. These notes collect what we agreed on the call and what is still open. Edit freely; resolved questions move to the bottom.</p>
+    <h2 data-z="a">1. What we're opening</h2>
+    <p data-z="a">One counter, four seats, a standing ledge facing the lake. Three single-estate leaves on rotation, brewed to order in under four minutes. No food beyond the honey biscuits from the bakery two doors down.</p>
+    <p data-z="a">The counter has to pack into two crates. Anything that can't travel back to Kathmandu in the van doesn't get built.</p>
+    <h2 data-z="b">2. Who walks in</h2>
+    <ul>
+      <li data-z="b">Trekkers coming down from Sarangkot before noon, who want something warm and a place to sit.</li>
+      <li data-z="b">Hotel staff on the afternoon break, who already know the estates and will tell us when a brew is off.</li>
+      <li data-z="b">Couples on the evening walk. They buy tins, not cups. Keep the tin shelf at eye level.</li>
+    </ul>
+    <h2 data-z="c">3. Risks we've named</h2>
+    <p data-z="c">Power on the strip drops most evenings around seven. <span class="selx" id="devSel">We need the second kettle on gas, and someone has to test it before soft open.</span> The permit covers twelve days; extending it means a new form, not a phone call.</p>
+    <p data-z="c">Card readers have failed twice on test runs. Cash float of NPR 8,000 each morning until that's solved.</p>
+    <h2 data-z="d">4. Opening week</h2>
+    <div class="days" data-z="d">
+      <span>Thu 15 Oct</span><span>Soft open, 7:00 to 11:00, friends and hotel staff</span>
+      <span>Sat 17 Oct</span><span>Tasting flight, three leaves, booked in slots of six</span>
+      <span>Sun 18 Oct</span><span>Market morning, tins at 10% off</span>
+      <span>Tue 20 Oct</span><span>First stock count and reorder call</span>
+    </div>
+    <p data-z="d">Sunita owns the rota. Dev owns the kettle question. Leo is drafting the tin labels and wants feedback by Friday.</p>
+  </article>
+</div>
+
+<div class="frame" id="frame" aria-hidden="true"><b id="frameLabel"></b></div>
+<p class="toast" id="toast" role="status"></p>
+
+<div class="dock" role="region" aria-label="People in this document">
+  <span class="here"><b>5</b> here</span>
+  <ul class="people" id="people">
+    <li><span class="av me" style="--c:#a3a29b" aria-label="You">YO<span class="st"></span></span></li>
+  </ul>
+  <span class="sep" aria-hidden="true"></span>
+  <div style="position:relative">
+    <button class="invite" type="button" id="invite" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Invite</span>
+    </button>
+    <form class="pop" id="pop" role="dialog" aria-label="Invite to this document" hidden novalidate>
+      <h3>Invite to Field notes</h3>
+      <p>They'll get a link and see everyone's cursor.</p>
+      <label for="email">Email</label>
+      <div class="row">
+        <input id="email" type="email" placeholder="name@studio.np" autocomplete="off" aria-describedby="err">
+        <select aria-label="Access"><option>Can edit</option><option>Can comment</option><option>Can view</option></select>
+      </div>
+      <p class="err" id="err" aria-live="polite"></p>
+      <button class="send" type="submit">Send invite</button>
+    </form>
+  </div>
+</div>
+
+<script>
+const PEOPLE = [
+  {id:'asha', name:'Asha Thapa', ini:'AT', c:'#ff7a59', zone:'a', where:'Editing §1 · What we\'re opening'},
+  {id:'dev', name:'Dev Raman', ini:'DR', c:'#6aa8ff', zone:'c', where:'Selecting in §3 · Risks'},
+  {id:'sunita', name:'Sunita Gurung', ini:'SG', c:'#3fd0a0', zone:'b', where:'Reading §2 · Who walks in'},
+  {id:'leo', name:'Leo Brandt', ini:'LB', c:'#f5b82e', zone:'a', where:'Idle 4 min · Introduction', idle:true}
+];
+const $ = s => document.querySelector(s);
+const sheet = $('#sheet'), scroller = $('#scroller'), people = $('#people'), frame = $('#frame'), toast = $('#toast');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const ARROW = c => `<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 2.5 16.5 9l-6 1.6L7.6 17Z" fill="${c}" stroke="#17181c" stroke-width="1.3" stroke-linejoin="round"/></svg>`;
+
+PEOPLE.forEach(p => {
+  const li = document.createElement('li');
+  li.innerHTML = `<button class="av${p.idle?' idle':''}" type="button" style="--c:${p.c}" aria-pressed="false" aria-label="${p.name}, ${p.where}. Follow">${p.ini}<span class="st" aria-hidden="true"></span></button>
+    <span class="tip" style="--c:${p.c}" aria-hidden="true"><b>${p.name}</b><small>${p.where}</small><em>Click to follow</em></span>`;
+  people.append(li);
+  p.btn = li.querySelector('button'); p.tipEm = li.querySelector('em');
+  p.btn.addEventListener('click', () => follow(following === p ? null : p));
+  const cur = document.createElement('div');
+  cur.className = 'cur' + (p.idle ? ' idle' : ''); cur.style.setProperty('--c', p.c);
+  cur.innerHTML = ARROW(p.c) + `<span>${p.name.split(' ')[0]}</span>`;
+  sheet.append(cur); p.cur = cur;
+  p.els = [...sheet.querySelectorAll('[data-z]')].filter(e => p.zone.includes(e.dataset.z));
+  p.pos = pickTarget(p); p.tgt = {...p.pos}; p.next = 0;
+});
+
+function pickTarget(p){
+  if (p.id === 'dev' && Math.random() < .5) { const r = rel($('#devSel')); return {x:r.x + r.w * (.2 + Math.random() * .7), y:r.y + r.h * Math.random()}; }
+  const el = p.els[Math.floor(Math.random() * p.els.length)], r = rel(el);
+  return {x:r.x + Math.min(r.w, 560) * (.05 + Math.random() * .9), y:r.y + r.h * (.15 + Math.random() * .7)};
+}
+function rel(el){ const a = el.getBoundingClientRect(), b = sheet.getBoundingClientRect(); return {x:a.left - b.left, y:a.top - b.top, w:a.width, h:a.height}; }
+
+/* live cursors */
+let last = performance.now();
+function frameLoop(t){
+  const dt = Math.min(64, t - last); last = t;
+  const k = reduce.matches ? 1 : 1 - Math.exp(-dt / 260);
+  PEOPLE.forEach(p => {
+    if (t > p.next) { p.tgt = pickTarget(p); p.next = t + (p.idle ? 7000 : reduce.matches ? 3500 : 1300 + Math.random() * 1900); }
+    p.pos.x += (p.tgt.x - p.pos.x) * k; p.pos.y += (p.tgt.y - p.pos.y) * k;
+    p.cur.style.transform = `translate(${p.pos.x.toFixed(1)}px,${p.pos.y.toFixed(1)}px)`;
+  });
+  if (following) track(following, dt);
+  requestAnimationFrame(frameLoop);
+}
+requestAnimationFrame(frameLoop);
+
+/* follow mode */
+let following = null;
+function follow(p){
+  if (following) { following.btn.setAttribute('aria-pressed', 'false'); following.tipEm.textContent = 'Click to follow'; }
+  following = p;
+  frame.classList.toggle('on', !!p);
+  if (p) {
+    p.btn.setAttribute('aria-pressed', 'true'); p.tipEm.textContent = 'Click to stop following';
+    frame.style.setProperty('--fc', p.c);
+    $('#frameLabel').textContent = `Following ${p.name} · Esc to stop`;
+    say(`Following ${p.name}`);
+  } else say('Stopped following');
+}
+function track(p, dt){
+  const view = scroller.clientHeight, top = sheet.offsetTop + p.pos.y;
+  const goal = Math.max(0, Math.min(scroller.scrollHeight - view, top - view * .42));
+  const diff = goal - scroller.scrollTop;
+  if (Math.abs(diff) < 1) return;
+  scroller.scrollTop += reduce.matches ? diff : diff * (1 - Math.exp(-dt / 180));
+}
+['wheel', 'touchmove'].forEach(ev => scroller.addEventListener(ev, () => { if (following) follow(null); }, {passive:true}));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { if (!pop.hidden) closePop(true); else if (following) follow(null); }
+  if (following && ['PageDown', 'PageUp', 'ArrowDown', 'ArrowUp', 'Home', 'End', ' '].includes(e.key) && !e.target.closest('.dock')) follow(null);
+});
+let toastT;
+function say(msg){ toast.textContent = msg; toast.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => toast.classList.remove('show'), 2200); }
+
+/* invite */
+const pop = $('#pop'), inviteBtn = $('#invite'), email = $('#email'), err = $('#err');
+function openPop(){ pop.hidden = false; inviteBtn.setAttribute('aria-expanded', 'true'); email.focus(); }
+function closePop(refocus){ pop.hidden = true; inviteBtn.setAttribute('aria-expanded', 'false'); err.textContent = ''; email.removeAttribute('aria-invalid'); if (refocus) inviteBtn.focus(); }
+inviteBtn.addEventListener('click', () => pop.hidden ? openPop() : closePop(false));
+document.addEventListener('pointerdown', e => { if (!pop.hidden && !e.target.closest('.pop,#invite')) closePop(false); });
+pop.addEventListener('submit', e => {
+  e.preventDefault();
+  const v = email.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { email.setAttribute('aria-invalid', 'true'); err.textContent = 'Enter an email address, like name@studio.np'; email.focus(); return; }
+  const li = document.createElement('li'), ini = v.slice(0, 2).toUpperCase();
+  li.innerHTML = `<span class="av pending" role="img" aria-label="${v}, invited, pending">${ini}</span><span class="tip" style="--c:#a3a29b" aria-hidden="true"><b>${v}</b><small>Invited · ${pop.querySelector('select').value.toLowerCase()}</small><em>Pending</em></span>`;
+  people.append(li);
+  email.value = ''; closePop(true);
+  say('Invite sent to ' + v);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!-- Design Lounge piece: dock-editor-tools · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Scrawl — Offsite map Q4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3eee4;--dots:#cfc6b5;--surface:#fffdf8;--ink:#1d1b18;--ink-2:#5e574c;--line:#d9d0bf;--hover:#efe8da;
+  --accent:#ff5a36;--sel:#2e5bff;
+  --ui:"Bricolage Grotesque",system-ui,sans-serif;--hand:"Caveat",cursive;
+  --r-dock:16px;--r-btn:10px;--btn:44px;--hard:4px 5px 0 var(--ink);
+  --ease:cubic-bezier(.2,.7,.2,1);--pop:cubic-bezier(.16,1,.3,1);--t:140ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--ui);color:var(--ink);background:var(--paper);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:2px solid var(--sel);outline-offset:2px}
+
+/* board */
+.board{position:fixed;inset:0;background-color:var(--paper);background-image:radial-gradient(var(--dots) 1.2px,transparent 1.3px);
+  background-size:22px 22px;background-position:var(--px,0) var(--py,0);touch-action:none}
+.world{position:absolute;inset:0;transform:translate(var(--px,0),var(--py,0))}
+.ink{position:absolute;left:0;top:0;width:3000px;height:2000px;overflow:visible}
+.ink .hit{stroke:transparent;stroke-width:16;fill:none;pointer-events:stroke}
+.ink .solid{pointer-events:visible}
+.ink text{font:700 30px var(--hand);fill:var(--ink)}
+.ink .lbl{font:500 13px var(--ui);fill:var(--ink-2)}
+.note{position:absolute;width:156px;min-height:140px;padding:14px 14px 18px;font:500 25px/1.05 var(--hand);color:var(--ink);
+  box-shadow:0 1px 0 rgba(0,0,0,.06),0 10px 18px -12px rgba(40,30,10,.45);outline:none}
+.txt{position:absolute;font:700 30px/1.1 var(--hand);color:var(--ink);white-space:nowrap;padding:2px 4px;outline:none}
+.note[contenteditable=true],.txt[contenteditable=true]{box-shadow:0 0 0 2px var(--sel);cursor:text}
+.picked{outline:2px dashed var(--sel)!important;outline-offset:4px}
+g.picked{outline:none!important}
+g.picked .solid,g.picked path{stroke-dasharray:6 5}
+.board[data-tool=pen],.board[data-tool=shape]{cursor:crosshair}
+.board[data-tool=hand]{cursor:grab}.board[data-tool=hand].drag{cursor:grabbing}
+.board[data-tool=text]{cursor:text}.board[data-tool=sticky]{cursor:copy}
+.board[data-tool=eraser]{cursor:cell}
+
+/* top chips */
+.chip-bar{position:fixed;top:16px;left:16px;right:16px;display:flex;justify-content:space-between;gap:12px;pointer-events:none;z-index:5}
+.chip{pointer-events:auto;display:flex;align-items:center;gap:10px;height:44px;padding:0 6px 0 12px;background:var(--surface);
+  border:2px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);min-width:0}
+.chip .logo{width:24px;height:24px;color:var(--accent);flex:none}
+.chip b{font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip small{color:var(--ink-2);font-size:12.5px;white-space:nowrap;padding-right:8px}
+.chip .zoom{font-variant-numeric:tabular-nums;font-weight:500;padding:0 6px}
+.share{height:32px;padding:0 14px;border:0;border-radius:8px;background:var(--ink);color:var(--surface);font-weight:700}
+.share:hover{background:#3a362f}
+.hint{position:fixed;left:50%;top:27px;transform:translateX(-50%);padding:5px 12px;border-radius:20px;background:rgba(29,27,24,.86);
+  color:var(--surface);font-size:12.5px;white-space:nowrap;pointer-events:none;transition:opacity 200ms var(--ease);z-index:4}
+.hint.off{opacity:0}
+
+/* dock */
+.dock{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:6px;
+  background:var(--surface);border:2px solid var(--ink);border-radius:var(--r-dock);box-shadow:var(--hard);z-index:10}
+.tb{position:relative;width:var(--btn);height:var(--btn);display:grid;place-items:center;border:2px solid transparent;border-radius:var(--r-btn);
+  background:transparent;padding:0;transition:background var(--t) var(--ease),transform var(--t) var(--ease)}
+.tb:hover{background:var(--hover)}
+.tb:active{transform:translateY(1px)}
+.tb[aria-pressed=true]{background:var(--accent);border-color:var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.tb:disabled{opacity:.32;cursor:default;background:transparent;transform:none}
+.tb[data-tip]::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 12px);left:50%;transform:translate(-50%,4px);
+  padding:5px 9px;border-radius:7px;background:var(--ink);color:var(--surface);font:500 12px/1 var(--ui);white-space:pre;
+  opacity:0;pointer-events:none;transition:opacity var(--t) var(--ease),transform var(--t) var(--ease)}
+.tb:hover::after,.tb:focus-visible::after{opacity:1;transform:translate(-50%,0)}
+.tb[aria-expanded=true]::after{display:none}
+.corner{position:absolute;right:4px;bottom:4px;width:0;height:0;border-left:5px solid transparent;border-bottom:5px solid currentColor;opacity:.7}
+.div{width:2px;height:28px;margin:0 4px;background:var(--line);border-radius:1px;flex:none}
+.wrap{position:relative;display:flex}
+.sw .dotc{width:22px;height:22px;border-radius:50%;background:var(--c,#1d1b18);box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ink)}
+.more,.brk{display:none}
+
+/* flyout + popover */
+.fly,.pop{position:absolute;left:50%;bottom:calc(100% + 14px);transform:translateX(-50%);display:flex;gap:4px;padding:6px;background:var(--surface);
+  border:2px solid var(--ink);border-radius:14px;box-shadow:var(--hard);animation:up 220ms var(--pop)}
+.fly[hidden],.pop[hidden]{display:none}
+.fly::after,.pop::after{content:"";position:absolute;left:50%;top:100%;width:10px;height:10px;margin:-4px 0 0 -5px;background:var(--surface);
+  border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg)}
+.fly .tb{width:40px;height:40px}
+.pop{padding:10px;gap:8px}
+.pop button{width:28px;height:28px;border-radius:50%;border:0;background:var(--c);box-shadow:0 0 0 2px var(--surface),0 0 0 3px var(--line)}
+.pop button[aria-checked=true]{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ink)}
+@keyframes up{from{opacity:0;transform:translate(-50%,8px) scale(.96)}}
+
+@media (max-width:640px){
+  .chip small,.chip .zoom{display:none}
+  .dock{flex-wrap:wrap-reverse;justify-content:center;width:max-content;max-width:calc(100vw - 24px);row-gap:4px}
+  .ov{display:none;order:2}
+  .brk{order:1;flex-basis:100%;height:0}
+  .dock.open .ov:not(.div),.dock.open .brk{display:grid}
+  .dock.open .brk{display:block}
+  .more{display:grid}
+  .hint{top:72px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tb,.tb[data-tip]::after,.hint{transition:none}
+  .fly,.pop{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="board" id="board" data-tool="shape" aria-label="Whiteboard canvas" role="application">
+  <div class="world" id="world">
+    <svg class="ink" id="ink" aria-hidden="true">
+      <g data-el><rect class="solid" x="210" y="120" width="420" height="300" rx="10" fill="none" stroke="#1d1b18" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/><text class="lbl" x="214" y="108">Friday — onboarding</text></g>
+      <g data-el><path d="M560 232C640 178 700 182 752 214" fill="none" stroke="#1d1b18" stroke-width="2.5" stroke-linecap="round"/><path d="M736 199l17 15-22 5" fill="none" stroke="#1d1b18" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path class="hit" d="M560 232C640 178 700 182 752 214"/></g>
+      <g data-el><ellipse class="solid" cx="930" cy="470" rx="128" ry="52" fill="none" stroke="#ff5a36" stroke-width="2.5"/><text x="840" y="481">Launch Nov 12</text></g>
+      <g data-el><path d="M262 470c18-8 34 8 52 0s34 8 52 0 34 8 52 0 34 8 52 0" fill="none" stroke="#2e5bff" stroke-width="3" stroke-linecap="round"/><path class="hit" d="M262 470c18-8 34 8 52 0s34 8 52 0 34 8 52 0 34 8 52 0"/></g>
+      <g data-el><text x="262" y="455">Fewer screens, same data</text></g>
+    </svg>
+    <div data-el class="note" style="left:240px;top:160px;background:#ffe27a;transform:rotate(-2deg)">Map the signup funnel, step by step</div>
+    <div data-el class="note" style="left:420px;top:210px;background:#ffb4a0;transform:rotate(2.5deg)">Kill the 3-step form?</div>
+    <div data-el class="note" style="left:772px;top:172px;background:#a8e6c6;transform:rotate(-1deg)">Ask Priya for the pricing export</div>
+  </div>
+</div>
+
+<div class="chip-bar">
+  <div class="chip">
+    <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M4 16c3-6 5-8 6-6s-2 7 1 7 4-9 6-9 0 6 3 5"/></svg>
+    <b>Offsite map — Q4</b><small id="saved">Edited 2 min ago</small>
+  </div>
+  <div class="chip"><span class="zoom" aria-label="Zoom 100 percent">100%</span><button class="share" type="button" id="share">Share</button></div>
+</div>
+
+<div class="dock" id="dock" role="toolbar" aria-label="Tools">
+  <button class="tb" type="button" data-tool="select" data-key="v" data-tip="Select   V" aria-label="Select" aria-pressed="false"><svg class="i" viewBox="0 0 24 24"><path d="M5.5 3.5 18 11l-6 1.6-3 6.4Z"/></svg></button>
+  <button class="tb ov" type="button" data-tool="hand" data-key="h" data-tip="Hand   H" aria-label="Hand" aria-pressed="false"><svg class="i" viewBox="0 0 24 24"><path d="M8 12.5V6.5a1.5 1.5 0 0 1 3 0V11m0-5.5a1.5 1.5 0 0 1 3 0V11m0-4a1.5 1.5 0 0 1 3 0v6.5c0 4-2.5 6.5-6 6.5-2.6 0-4-1.2-5.5-3.4L4 14a1.5 1.5 0 0 1 2.4-1.8L8 14"/></svg></button>
+  <i class="div ov" aria-hidden="true"></i>
+  <button class="tb" type="button" data-tool="pen" data-key="p" data-tip="Pen   P" aria-label="Pen" aria-pressed="false"><svg class="i" viewBox="0 0 24 24"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5Z"/><path d="M13.5 7l3 3"/></svg></button>
+  <span class="wrap">
+    <button class="tb" type="button" id="shapeBtn" data-tool="shape" data-key="r" data-tip="Shapes   R" aria-label="Shapes: Ellipse" aria-pressed="true" aria-haspopup="true" aria-expanded="false" aria-controls="fly"><span id="shapeIcon"></span><span class="corner" aria-hidden="true"></span></button>
+    <div class="fly" id="fly" role="group" aria-label="Shapes" hidden></div>
+  </span>
+  <button class="tb ov" type="button" data-tool="text" data-key="t" data-tip="Text   T" aria-label="Text" aria-pressed="false"><svg class="i" viewBox="0 0 24 24"><path d="M5 7V5h14v2M12 5v14M9 19h6"/></svg></button>
+  <button class="tb" type="button" data-tool="sticky" data-key="n" data-tip="Sticky note   N" aria-label="Sticky note" aria-pressed="false"><svg class="i" viewBox="0 0 24 24"><path d="M4.5 4.5h15v9l-6 6h-9Z"/><path d="M13.5 19.5v-6h6"/></svg></button>
+  <button class="tb ov" type="button" data-tool="eraser" data-key="e" data-tip="Eraser   E" aria-label="Eraser" aria-pressed="false"><svg class="i" viewBox="0 0 24 24"><path d="m8.5 19.5-4-4a1.5 1.5 0 0 1 0-2.1L13.4 4.5a1.5 1.5 0 0 1 2.1 0l4 4a1.5 1.5 0 0 1 0 2.1L11 19.5Z"/><path d="M9.5 8.5l6 6M11 19.5h9"/></svg></button>
+  <i class="div" aria-hidden="true"></i>
+  <span class="wrap">
+    <button class="tb sw" type="button" id="swatch" data-tip="Colour" aria-label="Colour: Ink" aria-haspopup="true" aria-expanded="false" aria-controls="pop"><span class="dotc" id="dotc"></span></button>
+    <div class="pop" id="pop" role="radiogroup" aria-label="Colour" hidden></div>
+  </span>
+  <i class="div ov" aria-hidden="true"></i>
+  <button class="tb ov" type="button" id="undo" data-tip="Undo   ⌘Z" aria-label="Undo" disabled><svg class="i" viewBox="0 0 24 24"><path d="M9 14 4.5 9.5 9 5"/><path d="M5 9.5h9.5a5 5 0 0 1 0 10H11"/></svg></button>
+  <button class="tb ov" type="button" id="redo" data-tip="Redo   ⇧⌘Z" aria-label="Redo" disabled><svg class="i" viewBox="0 0 24 24"><path d="m15 14 4.5-4.5L15 5"/><path d="M19 9.5H9.5a5 5 0 0 0 0 10H13"/></svg></button>
+  <span class="brk" aria-hidden="true"></span>
+  <button class="tb more" type="button" id="more" data-tip="More tools" aria-label="More tools" aria-expanded="false"><svg class="i" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="18" cy="12" r="1.3" fill="currentColor"/></svg></button>
+</div>
+<p class="hint" id="hint" aria-live="polite"></p>
+
+<script>
+const $ = s => document.querySelector(s);
+const NS = 'http://www.w3.org/2000/svg';
+const board = $('#board'), world = $('#world'), ink = $('#ink'), dock = $('#dock'), hint = $('#hint');
+const SHAPES = {
+  rect:{name:'Rectangle', svg:'<rect x="4" y="6" width="16" height="12" rx="1.5"/>'},
+  ellipse:{name:'Ellipse', svg:'<ellipse cx="12" cy="12" rx="8.5" ry="6.5"/>'},
+  triangle:{name:'Triangle', svg:'<path d="M12 4.5 20.5 19h-17Z"/>'},
+  arrow:{name:'Arrow', svg:'<path d="M5 19 19 5M10 5h9v9"/>'}
+};
+const COLOURS = [['Ink','#1d1b18','#ffe27a'],['Tomato','#ff5a36','#ffb4a0'],['Cobalt','#2e5bff','#b9c8ff'],['Moss','#1e9e6a','#a8e6c6'],['Ochre','#d99a00','#ffe27a'],['Plum','#8e3b8a','#e7b9e4']];
+const HINTS = {select:'Select — click an object, drag to move it', hand:'Hand — drag to pan the board', pen:'Pen — drag to draw',
+  shape:() => SHAPES[shape].name + ' — drag to draw, click for a default size', text:'Text — click to place a label',
+  sticky:'Sticky note — click to drop one', eraser:'Eraser — click or drag across objects'};
+let tool = 'shape', shape = 'ellipse', colour = COLOURS[0];
+const icon = k => `<svg class="i" viewBox="0 0 24 24">${SHAPES[k].svg}</svg>`;
+
+/* build flyout + palette */
+const fly = $('#fly'), pop = $('#pop'), shapeBtn = $('#shapeBtn'), swatch = $('#swatch');
+fly.innerHTML = Object.keys(SHAPES).map(k => `<button class="tb" type="button" data-shape="${k}" aria-label="${SHAPES[k].name}" aria-pressed="${k===shape}">${icon(k)}</button>`).join('');
+pop.innerHTML = COLOURS.map((c,i) => `<button type="button" role="radio" aria-label="${c[0]}" aria-checked="${i===0}" style="--c:${c[1]}" tabindex="${i?-1:0}"></button>`).join('');
+const toolBtns = [...dock.querySelectorAll('[data-tool]')];
+function setTool(t){
+  tool = t; board.dataset.tool = t;
+  toolBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.tool === t));
+  showHint(); pick(null);
+}
+function setShape(k){
+  shape = k; $('#shapeIcon').innerHTML = icon(k);
+  shapeBtn.setAttribute('aria-label', 'Shapes: ' + SHAPES[k].name);
+  fly.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.shape === k));
+  setTool('shape');
+}
+let hintT;
+function showHint(){
+  const h = HINTS[tool]; hint.textContent = typeof h === 'function' ? h() : h;
+  hint.classList.remove('off'); clearTimeout(hintT); hintT = setTimeout(() => hint.classList.add('off'), 2600);
+}
+function openMenu(btn, menu, open, focus){
+  if (open) closeMenus(menu);
+  menu.hidden = !open; btn.setAttribute('aria-expanded', open);
+  if (open && focus) (menu.querySelector('[aria-pressed=true],[aria-checked=true]') || menu.querySelector('button')).focus();
+}
+function closeMenus(except){
+  if (except !== fly) openMenu(shapeBtn, fly, false);
+  if (except !== pop) openMenu(swatch, pop, false);
+}
+function setColour(i){
+  colour = COLOURS[i]; $('#dotc').style.setProperty('--c', colour[1]);
+  swatch.setAttribute('aria-label', 'Colour: ' + colour[0]);
+  pop.querySelectorAll('button').forEach((b,j) => { b.setAttribute('aria-checked', j===i); b.tabIndex = j===i ? 0 : -1; });
+}
+
+dock.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.shape) { setShape(b.dataset.shape); openMenu(shapeBtn, fly, false); shapeBtn.focus(); return; }
+  if (b.parentElement === pop) { setColour([...pop.children].indexOf(b)); openMenu(swatch, pop, false); swatch.focus(); return; }
+  if (b === shapeBtn) { if (tool !== 'shape') setTool('shape'); openMenu(shapeBtn, fly, fly.hidden, e.detail === 0); return; }
+  if (b === swatch) { openMenu(swatch, pop, pop.hidden, e.detail === 0); return; }
+  if (b.id === 'undo') return undo();
+  if (b.id === 'redo') return redo();
+  if (b.id === 'more') { const o = dock.classList.toggle('open'); b.setAttribute('aria-expanded', o); return; }
+  if (b.dataset.tool) { setTool(b.dataset.tool); closeMenus(); }
+});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.wrap')) closeMenus(); });
+
+/* keyboard: roving focus in the dock, arrows inside menus, letter shortcuts */
+const rov = () => [...dock.children].flatMap(n => n.matches('.wrap') ? [n.firstElementChild] : n.matches('button') ? [n] : []).filter(b => b.offsetParent);
+rov().forEach((b,i) => b.tabIndex = b === shapeBtn ? 0 : -1);
+dock.addEventListener('keydown', e => {
+  const menu = e.target.closest('.fly,.pop');
+  if (menu) {
+    const list = [...menu.children], i = list.indexOf(e.target);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); list[(i + (e.key === 'ArrowRight' ? 1 : -1) + list.length) % list.length].focus(); }
+    if (e.key === 'Escape') { const btn = menu === fly ? shapeBtn : swatch; openMenu(btn, menu, false); btn.focus(); }
+    if (menu === pop && e.key === ' ') { e.preventDefault(); e.target.click(); }
+    return;
+  }
+  const list = rov(), i = list.indexOf(e.target);
+  if (i < 0) return;
+  let j = {ArrowRight:i+1, ArrowLeft:i-1, Home:0, End:list.length-1}[e.key];
+  if (e.key === 'ArrowUp' && (e.target === shapeBtn || e.target === swatch)) { e.preventDefault(); e.target === shapeBtn ? (setTool('shape'), openMenu(shapeBtn, fly, true, true)) : openMenu(swatch, pop, true, true); return; }
+  if (j === undefined) return;
+  e.preventDefault(); j = (j + list.length) % list.length;
+  list.forEach(b => b.tabIndex = -1); list[j].tabIndex = 0; list[j].focus();
+});
+document.addEventListener('keydown', e => {
+  if (e.target.isContentEditable) { if (e.key === 'Escape') e.target.blur(); return; }
+  const mod = e.metaKey || e.ctrlKey;
+  if (mod && e.key.toLowerCase() === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
+  if (mod && e.key.toLowerCase() === 'y') { e.preventDefault(); redo(); return; }
+  if (mod || e.altKey) return;
+  if (e.key === 'Escape') { closeMenus(); pick(null); return; }
+  if ((e.key === 'Backspace' || e.key === 'Delete') && picked) { const el = picked; pick(null); erase(el); return; }
+  const k = e.key.toLowerCase();
+  const map = {o:'ellipse', y:'triangle', a:'arrow'};
+  if (map[k]) return setShape(map[k]);
+  if (k === 'r') return setShape('rect');
+  const b = toolBtns.find(x => x.dataset.key === k);
+  if (b) setTool(b.dataset.tool);
+});
+
+/* history */
+const past = [], future = [];
+function commit(a){ past.push(a); future.length = 0; sync(); }
+function sync(){ $('#undo').disabled = !past.length; $('#redo').disabled = !future.length; $('#saved').textContent = past.length ? 'Saved just now' : 'Edited 2 min ago'; }
+function apply(a, back){
+  if (a.type === 'add') back ? a.el.remove() : a.parent.append(a.el);
+  if (a.type === 'remove') back ? a.parent.insertBefore(a.el, a.next && a.next.parentNode === a.parent ? a.next : null) : a.el.remove();
+  if (a.type === 'move') place(a.el, back ? a.from : a.to);
+}
+function undo(){ const a = past.pop(); if (!a) return; apply(a, true); future.push(a); pick(null); sync(); }
+function redo(){ const a = future.pop(); if (!a) return; apply(a, false); past.push(a); pick(null); sync(); }
+function erase(el){ commit({type:'remove', el, parent:el.parentNode, next:el.nextSibling}); el.remove(); }
+
+/* objects */
+const offset = el => (el.dataset.off || '0,0').split(',').map(Number);
+function place(el, [x, y]){
+  el.dataset.off = x + ',' + y;
+  if (el instanceof SVGElement) el.setAttribute('transform', `translate(${x} ${y})`);
+  else el.style.translate = `${x}px ${y}px`;
+}
+let picked = null;
+function pick(el){ if (picked) picked.classList.remove('picked'); picked = el; if (el) el.classList.add('picked'); }
+const svgEl = (tag, attrs) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
+function drawShape(g, k, x0, y0, x1, y1){
+  g.textContent = '';
+  const st = {fill:'none', stroke:colour[1], 'stroke-width':2.5, 'stroke-linecap':'round', 'stroke-linejoin':'round', class:'solid'};
+  const L = Math.min(x0,x1), T = Math.min(y0,y1), W = Math.abs(x1-x0), H = Math.abs(y1-y0);
+  if (k === 'rect') g.append(svgEl('rect', {...st, x:L, y:T, width:W, height:H, rx:8}));
+  if (k === 'ellipse') g.append(svgEl('ellipse', {...st, cx:L+W/2, cy:T+H/2, rx:W/2, ry:H/2}));
+  if (k === 'triangle') g.append(svgEl('path', {...st, d:`M${L+W/2} ${T}L${L+W} ${T+H}H${L}Z`}));
+  if (k === 'arrow') {
+    const a = Math.atan2(y1-y0, x1-x0), h = 16, s = .5;
+    const d = `M${x0} ${y0}L${x1} ${y1}M${x1-h*Math.cos(a-s)} ${y1-h*Math.sin(a-s)}L${x1} ${y1}L${x1-h*Math.cos(a+s)} ${y1-h*Math.sin(a+s)}`;
+    g.append(svgEl('path', {...st, class:'', d}), svgEl('path', {class:'hit', d}));
+  }
+}
+function addNode(el, parent){ parent.append(el); commit({type:'add', el, parent}); }
+function addBlock(cls, x, y, text){
+  const d = document.createElement('div');
+  d.dataset.el = ''; d.className = cls; d.textContent = text;
+  d.style.left = x + 'px'; d.style.top = y + 'px';
+  if (cls === 'note') { d.style.background = colour[2]; d.style.transform = `rotate(${(Math.random()*4-2).toFixed(1)}deg)`; }
+  else d.style.color = colour[1];
+  addNode(d, world); edit(d);
+}
+function edit(d){
+  d.contentEditable = 'true'; d.focus();
+  getSelection().selectAllChildren(d);
+  d.addEventListener('blur', () => d.contentEditable = 'false', {once:true});
+}
+world.addEventListener('dblclick', e => { const d = e.target.closest('.note,.txt'); if (d && tool === 'select') edit(d); });
+
+/* pointer on board */
+let pan = [0, 0], drag = null;
+const pt = e => [e.clientX - pan[0], e.clientY - pan[1]];
+function setPan(x, y){ pan = [x, y]; board.style.setProperty('--px', x + 'px'); board.style.setProperty('--py', y + 'px'); }
+board.addEventListener('pointerdown', e => {
+  if (e.button !== 0 || e.target.isContentEditable) return;
+  const [x, y] = pt(e), target = e.target.closest('[data-el]');
+  if (tool === 'hand') { drag = {kind:'pan', sx:e.clientX, sy:e.clientY, p:[...pan]}; board.classList.add('drag'); }
+  else if (tool === 'select') { pick(target); if (target) drag = {kind:'move', el:target, sx:e.clientX, sy:e.clientY, from:offset(target)}; }
+  else if (tool === 'eraser') { drag = {kind:'erase'}; if (target) erase(target); }
+  else if (tool === 'pen') {
+    const g = svgEl('g', {'data-el':''}), p = svgEl('path', {fill:'none', stroke:colour[1], 'stroke-width':3, 'stroke-linecap':'round', 'stroke-linejoin':'round', d:`M${x} ${y}`}), hit = svgEl('path', {class:'hit', d:`M${x} ${y}`});
+    g.append(p, hit); ink.append(g); drag = {kind:'pen', g, p, hit, d:`M${x} ${y}`, n:0};
+  }
+  else if (tool === 'shape') { const g = svgEl('g', {'data-el':''}); ink.append(g); drag = {kind:'shape', g, x, y, moved:false}; drawShape(g, shape, x, y, x, y); }
+  else if (tool === 'sticky') { e.preventDefault(); addBlock('note', x - 78, y - 40, 'New idea'); return; }
+  else if (tool === 'text') { e.preventDefault(); addBlock('txt', x - 4, y - 20, 'Label'); return; }
+  if (drag) board.setPointerCapture(e.pointerId);
+});
+board.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const [x, y] = pt(e);
+  if (drag.kind === 'pan') setPan(drag.p[0] + e.clientX - drag.sx, drag.p[1] + e.clientY - drag.sy);
+  if (drag.kind === 'move') place(drag.el, [drag.from[0] + e.clientX - drag.sx, drag.from[1] + e.clientY - drag.sy]);
+  if (drag.kind === 'erase') { const t = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-el]'); if (t) erase(t); }
+  if (drag.kind === 'pen') { drag.d += `L${x.toFixed(1)} ${y.toFixed(1)}`; drag.n++; drag.p.setAttribute('d', drag.d); drag.hit.setAttribute('d', drag.d); }
+  if (drag.kind === 'shape') { drag.moved = Math.hypot(x - drag.x, y - drag.y) > 6; drawShape(drag.g, shape, drag.x, drag.y, x, y); }
+});
+function endDrag(){
+  if (!drag) return;
+  const d = drag; drag = null; board.classList.remove('drag');
+  if (d.kind === 'pen') { if (d.n < 2) d.g.remove(); else commit({type:'add', el:d.g, parent:ink}); }
+  if (d.kind === 'shape') {
+    if (!d.moved) drawShape(d.g, shape, d.x - 70, d.y - 45, d.x + 70, d.y + 45);
+    commit({type:'add', el:d.g, parent:ink});
+  }
+  if (d.kind === 'move') { const to = offset(d.el); if (to[0] !== d.from[0] || to[1] !== d.from[1]) commit({type:'move', el:d.el, from:d.from, to}); }
+}
+board.addEventListener('pointerup', endDrag);
+board.addEventListener('pointercancel', endDrag);
+
+$('#share').addEventListener('click', e => { e.target.textContent = 'Link copied'; setTimeout(() => e.target.textContent = 'Share', 1600); });
+
+if (innerWidth < 640) setPan(-200, 40);
+setShape('ellipse'); setColour(0);
+openMenu(shapeBtn, fly, true, false);
+</script>
+</body>
+</html>

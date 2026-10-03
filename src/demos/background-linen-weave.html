@@ -1,0 +1,175 @@
+<!-- Design Lounge piece: background-linen-weave · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Linen weave background</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,500;0,600;1,500&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --warp:#a4532e;--weft:#d9cbb0;
+  --gap:color-mix(in srgb,color-mix(in srgb,var(--warp) 50%,var(--weft)) 62%,#1c140d);
+  --paper:color-mix(in srgb,var(--weft) 24%,#f6f2ea);
+  --label:#fbf8f2;--ink:#2a221b;--ink-2:#5a4e43;--ink-3:#7a6d60;--line:#e2d9cb;--stitch:#b9a68c;--accent:#8a3f1f;
+  --serif:"Gelasio",Georgia,serif;--sans:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--t-fast:160ms;--t-mode:360ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:var(--gap);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a,button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.cloth,.fold,.sheen{position:fixed;inset:0;width:100%;height:100%;transition:opacity var(--t-mode) var(--ease)}
+.cloth .wa{fill:var(--warp)}.cloth .we{fill:var(--weft)}.cloth .gp{fill:var(--gap)}
+.fold{background:var(--paper);display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);opacity:0}
+.fold i{display:block}
+.fold .grain{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:multiply;opacity:.5}
+.crease{position:absolute;pointer-events:none}
+.crease.v{top:0;bottom:0;width:24px;margin-left:-12px}
+.crease.h{left:0;right:0;height:24px;margin-top:-12px}
+.crease.v.valley{background:linear-gradient(90deg,transparent,rgba(60,40,20,.08) 46%,rgba(60,40,20,.22) 50%,rgba(60,40,20,.08) 54%,transparent)}
+.crease.v.mountain{background:linear-gradient(90deg,transparent,rgba(60,40,20,.05) 40%,rgba(255,255,255,.75) 50%,rgba(60,40,20,.09) 56%,transparent)}
+.crease.h.valley{background:linear-gradient(transparent,rgba(60,40,20,.08) 46%,rgba(60,40,20,.2) 50%,rgba(60,40,20,.08) 54%,transparent)}
+.crease.h.mountain{background:linear-gradient(transparent,rgba(60,40,20,.05) 40%,rgba(255,255,255,.75) 50%,rgba(60,40,20,.09) 56%,transparent)}
+.sheen{--mx:70%;--my:40%;pointer-events:none;mix-blend-mode:overlay;will-change:background;
+  background:
+    radial-gradient(ellipse 560px 150px at var(--mx) var(--my),rgba(255,250,236,.55),transparent 70%),
+    radial-gradient(ellipse 150px 480px at var(--mx) var(--my),rgba(255,250,236,.32),transparent 70%),
+    radial-gradient(circle 900px at var(--mx) var(--my),rgba(255,250,236,.16),rgba(20,12,6,.32) 100%)}
+[data-mode="paper"] .cloth{opacity:0}
+[data-mode="paper"] .fold{opacity:1}
+[data-mode="paper"] .sheen{opacity:.45}
+.page{position:relative;height:100%;padding:56px 72px;display:flex;align-items:center;pointer-events:none}
+.label{pointer-events:auto;position:relative;width:560px;padding:40px 44px 36px;background:var(--label);box-shadow:0 1px 0 rgba(40,25,10,.08),0 22px 40px -22px rgba(40,25,10,.55);border-radius:2px}
+.label::before{content:"";position:absolute;inset:10px;border:1.5px dashed var(--stitch);border-radius:1px;pointer-events:none}
+.mark{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 26px;padding-bottom:14px;border-bottom:1px solid var(--line);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.mark span{font-weight:400;letter-spacing:.08em}
+h1{margin:0 0 18px;font:500 56px/1.04 var(--serif);letter-spacing:-.02em}
+h1 em{color:var(--accent);font-style:italic}
+.sub{margin:0 0 22px;max-width:430px;font-size:16px;color:var(--ink-2)}
+.spec{display:flex;align-items:center;gap:10px;margin:0 0 28px;font-size:13px;color:var(--ink-2)}
+.spec i{width:28px;height:16px;border-radius:2px;flex:none;background:linear-gradient(90deg,var(--warp) 50%,var(--weft) 50%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.spec b{color:var(--ink);font-weight:700}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 20px;border:1.5px solid var(--ink);border-radius:2px;font-weight:700;font-size:14px;text-decoration:none;transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.btn.primary{background:var(--ink);color:var(--label)}
+.btn.primary:hover{background:var(--accent);border-color:var(--accent)}
+.btn:not(.primary):hover{background:var(--ink);color:var(--label)}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.panel{position:fixed;right:40px;bottom:40px;width:268px;padding:16px 18px;background:var(--label);border-radius:2px;box-shadow:0 18px 32px -18px rgba(40,25,10,.6);display:grid;gap:12px;font-size:12px;color:var(--ink-2)}
+.panel .row{display:grid;grid-template-columns:44px 1fr;align-items:center;gap:8px}
+.panel .k{font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.sws{display:flex;gap:6px}
+.sw{width:30px;height:30px;padding:0;border:0;border-radius:50%;cursor:pointer;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);transition:transform var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease)}
+.sw:hover{transform:translateY(-1px)}
+.sw[aria-pressed="true"]{box-shadow:inset 0 0 0 1px rgba(0,0,0,.14),0 0 0 2px var(--label),0 0 0 3.5px var(--ink)}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--ink);border-radius:2px}
+.seg button{height:34px;border:0;background:transparent;cursor:pointer;font-weight:700;font-size:12px;letter-spacing:.04em;transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--label)}
+.seg button:focus-visible{outline-offset:-4px;outline-color:var(--label)}
+.seg button:not([aria-pressed="true"]):focus-visible{outline-color:var(--accent)}
+@media (max-width:1000px){.label{width:500px}h1{font-size:46px}}
+@media (max-width:640px){
+  .page{padding:24px 16px 200px;align-items:flex-start}.label{width:100%;padding:28px 26px 26px}h1{font-size:36px}.sub{font-size:15px}.mark span{display:none}
+  .panel{left:16px;right:16px;bottom:16px;width:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<svg class="cloth" aria-hidden="true">
+  <defs>
+    <linearGradient id="rh"><stop offset="0" stop-color="#000" stop-opacity=".2"/><stop offset=".5" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>
+    <linearGradient id="rv" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".18"/><stop offset=".5" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient>
+    <linearGradient id="dv" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".26"/><stop offset=".28" stop-color="#000" stop-opacity="0"/><stop offset=".72" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".26"/></linearGradient>
+    <linearGradient id="dh"><stop offset="0" stop-color="#000" stop-opacity=".24"/><stop offset=".28" stop-color="#000" stop-opacity="0"/><stop offset=".72" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".24"/></linearGradient>
+    <pattern id="weave" width="14" height="14" patternUnits="userSpaceOnUse">
+      <rect class="gp" width="14" height="14"/>
+      <rect class="wa" x=".25" width="6.5" height="14"/><rect class="wa" x="7.25" width="6.5" height="14"/>
+      <rect class="we" y=".25" width="14" height="6.5"/><rect class="we" y="7.25" width="14" height="6.5"/>
+      <rect fill="url(#rv)" y=".25" width="14" height="6.5"/><rect fill="url(#rv)" y="7.25" width="14" height="6.5"/>
+      <rect fill="url(#dh)" x="7" y=".25" width="7" height="6.5"/><rect fill="url(#dh)" y="7.25" width="7" height="6.5"/>
+      <rect class="wa" x=".25" width="6.5" height="7"/><rect class="wa" x="7.25" y="7" width="6.5" height="7"/>
+      <rect fill="url(#rh)" x=".25" width="6.5" height="7"/><rect fill="url(#rh)" x="7.25" y="7" width="6.5" height="7"/>
+      <rect fill="url(#dv)" x=".25" width="6.5" height="7"/><rect fill="url(#dv)" x="7.25" y="7" width="6.5" height="7"/>
+    </pattern>
+    <filter id="slubx" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".003 .45" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -.62"/></filter>
+    <filter id="sluby" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".45 .003" numOctaves="2" seed="9"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -.66"/></filter>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#weave)"/>
+  <rect width="100%" height="100%" filter="url(#slubx)" opacity=".6"/>
+  <rect width="100%" height="100%" filter="url(#sluby)" opacity=".4"/>
+</svg>
+<div class="fold" id="fold" aria-hidden="true">
+  <svg class="grain"><filter id="pg"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" seed="5"/><feColorMatrix values="0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .2 0 0 0 -.9 .62"/></filter><rect width="100%" height="100%" filter="url(#pg)"/></svg>
+</div>
+<div class="sheen" id="sheen" aria-hidden="true"></div>
+<div class="page">
+  <section class="label" aria-labelledby="h">
+    <p class="mark">Hollin Linen Co. <span>Spring cloth · No. 14</span></p>
+    <h1 id="h">Woven slowly, worn for <em>twenty summers.</em></h1>
+    <p class="sub">Heavy plain-weave linen, spun from long flax and loomed at 18 picks a centimetre in our Calder Valley mill. Washed once, softer every year after.</p>
+    <p class="spec" aria-live="polite"><i aria-hidden="true"></i><span id="spec"><b>Rust</b> warp × <b>Oat</b> weft · 185 gsm · plain weave</span></p>
+    <div class="cta">
+      <a class="btn primary" href="#">Shop the spring cloth<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn" href="#">Order free swatches</a>
+    </div>
+  </section>
+</div>
+<div class="panel" role="group" aria-label="Background controls">
+  <div class="row"><span class="k" id="kw">Warp</span><div class="sws" role="group" aria-labelledby="kw" data-thread="warp"></div></div>
+  <div class="row"><span class="k" id="kf">Weft</span><div class="sws" role="group" aria-labelledby="kf" data-thread="weft"></div></div>
+  <div class="seg" role="group" aria-label="Surface"><button type="button" data-mode="linen" aria-pressed="true">Linen</button><button type="button" data-mode="paper" aria-pressed="false">Paper fold</button></div>
+</div>
+<script>
+(()=>{
+  const root=document.documentElement,sheen=document.getElementById('sheen'),fold=document.getElementById('fold'),spec=document.getElementById('spec');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const THREADS=[['Oat','#d9cbb0'],['Sage','#8f9e83'],['Rust','#a4532e'],['Ink','#2f3540'],['Chalk','#eee9df']];
+  const cur={warp:'Rust',weft:'Oat'};let mode='linen';
+  function text(){
+    spec.innerHTML=mode==='linen'
+      ?`<b>${cur.warp}</b> warp × <b>${cur.weft}</b> weft · 185 gsm · plain weave`
+      :`<b>${cur.weft}</b> stock · folded 4 × 3 · 120 gsm`;
+  }
+  document.querySelectorAll('[data-thread]').forEach(g=>{
+    const t=g.dataset.thread;
+    for(const[n,c]of THREADS){
+      const b=document.createElement('button');b.type='button';b.className='sw';b.style.setProperty('--c',c);
+      b.setAttribute('aria-label',`${n} ${t}`);b.setAttribute('aria-pressed',String(cur[t]===n));
+      b.addEventListener('click',()=>{cur[t]=n;root.style.setProperty('--'+t,c);g.querySelectorAll('.sw').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));text();});
+      g.append(b);
+    }
+  });
+  const panels=[];
+  for(let r=0;r<3;r++)for(let c=0;c<4;c++){const i=document.createElement('i');fold.append(i);panels.push({el:i,c,r,nx:c%2?-.38:.38,ny:r%2?-.3:.3});}
+  [[25,'valley'],[50,'mountain'],[75,'valley']].forEach(([p,k])=>{const d=document.createElement('div');d.className='crease v '+k;d.style.left=p+'%';fold.append(d);});
+  [[100/3,'mountain'],[200/3,'valley']].forEach(([p,k])=>{const d=document.createElement('div');d.className='crease h '+k;d.style.top=p+'%';fold.append(d);});
+  let tx=innerWidth*.7,ty=innerHeight*.4,x=tx,y=ty,raf=0;
+  function shade(){
+    const W=innerWidth,H=innerHeight;
+    for(const p of panels){
+      const cx=(p.c+.5)*W/4,cy=(p.r+.5)*H/3,lx=x-cx,ly=y-cy,l=Math.hypot(lx,ly,520);
+      const s=Math.max(-1,Math.min(1,(p.nx*lx+p.ny*ly)/l*2.6));
+      p.el.style.background=s>0?`rgba(255,253,247,${(s*.45).toFixed(3)})`:`rgba(70,48,28,${(-s*.16).toFixed(3)})`;
+    }
+  }
+  function paint(){sheen.style.setProperty('--mx',x.toFixed(1)+'px');sheen.style.setProperty('--my',y.toFixed(1)+'px');if(mode==='paper')shade();}
+  function tick(){
+    x+=(tx-x)*.12;y+=(ty-y)*.12;paint();
+    raf=Math.abs(tx-x)+Math.abs(ty-y)>.5?requestAnimationFrame(tick):0;
+  }
+  if(!reduce)addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;if(!raf)raf=requestAnimationFrame(tick);},{passive:true});
+  document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{
+    mode=b.dataset.mode;root.dataset.mode=mode;
+    document.querySelectorAll('[data-mode]').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));
+    text();paint();
+  }));
+  addEventListener('resize',()=>{if(reduce){x=tx=innerWidth*.7;y=ty=innerHeight*.4;}paint();});
+  paint();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!-- Design Lounge piece: spotlight-command-bar · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Spotlight search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600&family=Red+Hat+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#16202b;--slate-1:#3e5468;--slate-2:#2a3a48;--slate-3:#1d2935;--mist:#9fb2bf;
+  --glass:rgba(242,244,247,.80);--glass-line:rgba(255,255,255,.65);--ink:#14181e;--ink-2:#4b5360;--ink-3:#6a7280;--rule:rgba(20,24,30,.09);
+  --row-hover:rgba(20,24,30,.05);--accent:#2f6fe4;--on-accent:#fff;--mark:#14181e;
+  --sans:"Geologica",system-ui,sans-serif;--mono:"Red Hat Mono",ui-monospace,monospace;
+  --w:740px;--r:18px;--row:40px;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+body.dark{--glass:rgba(30,36,44,.80);--glass-line:rgba(255,255,255,.12);--ink:#eef1f5;--ink-2:#b5bdc8;--ink-3:#8c95a2;--rule:rgba(255,255,255,.09);--row-hover:rgba(255,255,255,.06);--mark:#fff}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);color:var(--ink);background:var(--night);overflow:hidden;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wall{position:fixed;inset:0;width:100%;height:100%}
+
+/* desktop */
+.menubar{position:fixed;top:0;left:0;right:0;height:28px;display:flex;align-items:center;gap:18px;padding:0 10px 0 16px;background:rgba(10,16,24,.38);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);color:#e8edf2;font-size:13px;z-index:5;white-space:nowrap}
+.menubar b{font-weight:600}
+.menubar .menus{display:flex;gap:16px;color:#c9d2db}
+.menubar .r{margin-left:auto;display:flex;align-items:center;gap:6px}
+.mb-btn{height:24px;padding:0 8px;border:0;border-radius:6px;background:transparent;display:flex;align-items:center;gap:6px;cursor:pointer;color:#e8edf2}
+.mb-btn:hover{background:rgba(255,255,255,.14)}
+.mb-btn kbd{font:500 11px var(--mono);color:#c9d2db}
+.clock{font:500 12.5px var(--mono);padding:0 6px}
+.icons{position:fixed;right:22px;top:52px;display:grid;gap:18px;justify-items:center;color:#eef2f6;font-size:12px;text-align:center}
+.icons div{width:92px;display:grid;justify-items:center;gap:6px;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.icons i{display:block;width:46px;height:56px;border-radius:4px;background:#f6f7f9;box-shadow:0 4px 10px rgba(0,0,0,.35);position:relative}
+.icons i::after{content:"PDF";position:absolute;left:6px;bottom:8px;font:600 9px var(--sans);color:#fff;background:#d9473f;padding:1px 4px;border-radius:2px}
+.icons i.fold{width:56px;height:44px;border-radius:5px;background:linear-gradient(#7fb4e8,#4f8fd0)}
+.icons i.fold::after{content:none}
+.hint{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
+  background:rgba(10,16,24,.5);color:#dfe6ec;font-size:13px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap}
+.hint kbd,.foot kbd,.pv kbd{font:500 11.5px/1 var(--mono);padding:3px 6px;border-radius:5px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2)}
+.toast{position:fixed;top:40px;right:16px;width:300px;display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:rgba(242,244,247,.86);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);color:#14181e;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);
+  transform:translateX(calc(100% + 24px));transition:transform 360ms var(--expo);z-index:6}
+.toast.show{transform:none}
+.toast b{display:block;font-weight:600;font-size:13px}
+.toast small{color:#4b5360;font-size:12.5px}
+
+/* spotlight */
+.scrim{position:fixed;inset:0;z-index:10}
+.scrim[hidden]{display:none}
+.spot{position:absolute;left:50%;top:16vh;width:min(var(--w),calc(100vw - 24px));transform:translateX(-50%);background:var(--glass);color:var(--ink);
+  backdrop-filter:blur(40px) saturate(1.6);-webkit-backdrop-filter:blur(40px) saturate(1.6);border:1px solid var(--glass-line);border-radius:var(--r);
+  box-shadow:0 0 0 .5px rgba(0,0,0,.3),0 40px 90px -24px rgba(4,8,16,.7);overflow:hidden;animation:open 200ms var(--expo)}
+@keyframes open{from{opacity:0;transform:translateX(-50%) scale(.97)}}
+.field{display:flex;align-items:center;gap:12px;height:62px;padding:0 18px}
+.field svg.i{width:24px;height:24px;color:var(--ink-3);stroke-width:2}
+.field input{flex:1;min-width:0;height:100%;border:0;background:transparent;font-size:23px;font-weight:300;letter-spacing:-.01em;outline:none}
+.field input::placeholder{color:var(--ink-3)}
+.field kbd{font:500 11.5px/1 var(--mono);color:var(--ink-3);padding:4px 6px;border:1px solid var(--rule);border-radius:5px}
+.body{display:grid;grid-template-columns:340px 1fr;border-top:1px solid var(--rule);height:372px}
+.list{overflow-y:auto;padding:6px 8px 8px;scrollbar-width:thin}
+.grp{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:12px 10px 6px}
+.opt{display:flex;align-items:center;gap:10px;height:var(--row);padding:0 10px;border-radius:9px;cursor:default}
+.opt:hover{background:var(--row-hover)}
+.opt .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-2)}
+.opt .t mark{background:none;color:var(--mark);font-weight:600}
+.opt .k{font:400 11.5px var(--mono);color:var(--ink-3);white-space:nowrap}
+.opt[aria-selected=true]{background:var(--accent)}
+.opt[aria-selected=true] .t,.opt[aria-selected=true] mark{color:var(--on-accent)}
+.opt[aria-selected=true] .k{color:rgba(255,255,255,.8)}
+.ic{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;flex:none;color:#fff;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.15)}
+.ic svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ic.f{background:transparent;box-shadow:none;color:var(--tint,var(--ink-3))}
+.ic.f svg{width:20px;height:20px;stroke-width:1.6}
+.opt[aria-selected=true] .ic.f{color:#fff}
+.empty{padding:40px 16px;text-align:center;color:var(--ink-3)}
+.empty b{display:block;color:var(--ink-2);font-weight:500;margin-bottom:4px}
+
+/* preview */
+.pv{border-left:1px solid var(--rule);padding:26px 26px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden}
+.pv .art{height:170px;display:grid;place-items:center;margin-bottom:16px}
+.pv h2{margin:0;font-size:18px;font-weight:500;letter-spacing:-.01em;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv .sub{color:var(--ink-3);font-size:12.5px;margin:4px 0 16px}
+.pv dl{width:100%;margin:auto 0 0;display:grid;grid-template-columns:auto 1fr;gap:0 14px;font-size:12.5px;text-align:left;border-top:1px solid var(--rule);padding-top:12px}
+.pv dt{color:var(--ink-3);padding:3px 0}
+.pv dd{margin:0;padding:3px 0;color:var(--ink-2);text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv kbd{background:var(--row-hover);border-color:var(--rule);color:var(--ink-2)}
+.big-ic{width:84px;height:84px;border-radius:20px}
+.big-ic svg{width:44px;height:44px;stroke-width:1.7}
+.calc-x{font:400 15px var(--mono);color:var(--ink-3)}
+.calc-r{font-size:46px;font-weight:500;letter-spacing:-.03em;line-height:1.1;margin-top:6px;font-variant-numeric:tabular-nums}
+.page{width:122px;height:158px;background:#fff;border-radius:3px;box-shadow:0 8px 20px -8px rgba(0,0,0,.35),0 0 0 .5px rgba(0,0,0,.12);padding:14px 12px;text-align:left}
+.page b{display:block;height:8px;width:60%;background:#d9473f;border-radius:2px;margin-bottom:10px}
+.page i{display:block;height:4px;background:#d5d9df;border-radius:2px;margin:6px 0}
+.page.md{font:9px/1.5 var(--mono);color:#4b5360;white-space:pre;overflow:hidden}
+.slide{width:230px;height:130px;border-radius:6px;background:#1d2935;color:#fff;padding:16px;text-align:left;box-shadow:0 10px 24px -10px rgba(0,0,0,.5);display:flex;flex-direction:column;justify-content:space-between}
+.slide b{font-weight:500;font-size:15px}
+.slide span{display:flex;gap:6px;align-items:flex-end;height:44px}
+.slide span i{flex:1;background:#f0a04b;border-radius:2px 2px 0 0}
+.photo{width:236px;height:160px;border-radius:6px;overflow:hidden;box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
+.sheet{width:220px;height:140px;border-radius:5px;background:#fff;box-shadow:0 8px 20px -8px rgba(0,0,0,.35);
+  background-image:linear-gradient(#e3e7ec 1px,transparent 1px),linear-gradient(90deg,#e3e7ec 1px,transparent 1px);background-size:44px 20px}
+.sw{display:flex;width:220px;height:110px;border-radius:8px;overflow:hidden;box-shadow:0 8px 20px -8px rgba(0,0,0,.35)}
+.sw i{flex:1}
+.foot{display:flex;align-items:center;gap:16px;height:36px;padding:0 16px;border-top:1px solid var(--rule);font-size:12px;color:var(--ink-3)}
+.foot kbd{background:var(--row-hover);border-color:var(--rule);color:var(--ink-2);margin-right:4px}
+.foot .n{margin-left:auto}
+
+@media (max-width:720px){
+  .body{grid-template-columns:1fr}
+  .pv{display:none}
+  .icons,.menubar .menus{display:none}
+  .spot{top:56px}
+  .foot span:nth-child(3){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .spot{animation:none}
+  .toast{transition:none}
+}
+</style>
+</head>
+<body>
+<svg class="wall" viewBox="0 0 1280 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16202b"/><stop offset=".55" stop-color="#3e5468"/><stop offset=".62" stop-color="#9fb2bf"/></linearGradient>
+  <linearGradient id="lk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#556b7d"/><stop offset="1" stop-color="#16202b"/></linearGradient></defs>
+  <rect width="1280" height="800" fill="url(#sk)"/>
+  <circle cx="300" cy="170" r="26" fill="#e9eef2" opacity=".85"/>
+  <path d="M0 470 160 330l90 70 150-170 130 130 90-60 170 150 120-110 150 120 120-80 100 60v30H0Z" fill="#2a3a48"/>
+  <path d="M400 230l-40 46 30-10 22 22 18-30 26 20-56-48Z" fill="#c9d4dc" opacity=".7"/>
+  <path d="M0 500 120 420l110 50 140-90 160 110 120-70 140 80 160-90 140 70 190-60v80H0Z" fill="#1d2935"/>
+  <rect y="500" width="1280" height="300" fill="url(#lk)"/>
+  <path d="M0 500 120 560l110-30 140 70 160-80 120 50 140-60 160 70 140-50 190 40V500Z" fill="#1d2935" opacity=".55"/>
+  <g stroke="#9fb2bf" stroke-width="1.5" opacity=".35"><path d="M220 610h180M640 640h260M120 690h140M760 700h320"/></g>
+</svg>
+
+<header class="menubar">
+  <b id="front">Nettle</b>
+  <span class="menus" aria-hidden="true"><span>File</span><span>Edit</span><span>View</span><span>Format</span><span>Window</span></span>
+  <span class="r">
+    <button class="mb-btn" type="button" id="opener" aria-label="Search" aria-haspopup="dialog" aria-keyshortcuts="Meta+K Control+K">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><kbd class="mk">⌘K</kbd>
+    </button>
+    <time class="clock" id="clock"></time>
+  </span>
+</header>
+
+<div class="icons" aria-hidden="true"><div><i></i>Q3 roadmap.pdf</div><div><i class="fold"></i>Treks</div></div>
+<p class="hint">Press <kbd class="mk">⌘K</kbd> to search apps, files and actions</p>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="scrim" id="scrim">
+  <div class="spot" id="spot" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="field">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input id="q" type="text" role="combobox" aria-expanded="true" aria-controls="list" aria-autocomplete="list" aria-label="Search apps, files, actions, or type a sum" placeholder="Search apps, files, actions…" autocomplete="off" spellcheck="false" value="re">
+      <kbd>esc</kbd>
+    </div>
+    <div class="body">
+      <div class="list" id="list" role="listbox" aria-label="Results"></div>
+      <section class="pv" id="pv" aria-label="Preview"></section>
+    </div>
+    <div class="foot" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd>select</span><span><kbd>↵</kbd>open</span><span><kbd>esc</kbd>close</span><span class="n" id="count"></span></div>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const MAC = /Mac|iPhone|iPad/.test(navigator.platform);
+if (!MAC) document.querySelectorAll('.mk').forEach(k => k.textContent = 'Ctrl K');
+const G = {
+  compass:'<circle cx="12" cy="12" r="8"/><path d="m15 9-2 4-4 2 2-4Z"/>', mail:'<rect x="3.5" y="6" width="17" height="12" rx="2"/><path d="m4 7.5 8 5.5 8-5.5"/>',
+  note:'<path d="M6 4h12v16H6z"/><path d="M9 9h6M9 12.5h6M9 16h3"/>', code:'<path d="m9 8-4 4 4 4M15 8l4 4-4 4"/>',
+  photo:'<rect x="4" y="5.5" width="16" height="13" rx="2"/><path d="m4.5 16 4.5-4.5 3.5 3.5 2.5-2.5 4.5 4"/>', calc:'<rect x="6" y="3.5" width="12" height="17" rx="2"/><path d="M9 7.5h6M9 12h.01M12 12h.01M15 12h.01M9 15.5h.01M12 15.5h.01M15 15.5h.01"/>',
+  cal:'<rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/>', gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3M6 6l2.1 2.1M15.9 15.9 18 18M6 18l2.1-2.1M15.9 8.1 18 6"/>',
+  doc:'<path d="M7 3.5h7l4 4v13H7z"/><path d="M14 3.5v4h4"/>', moon:'<path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5Z"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>', lock:'<rect x="5.5" y="10.5" width="13" height="10" rx="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/>',
+  bin:'<path d="M5 7h14M10 7V4.5h4V7M7 7l1 13h8l1-13"/>', timer:'<circle cx="12" cy="13" r="7.5"/><path d="M12 9v4l2.5 2M10 3h4"/>', desk:'<rect x="3.5" y="4.5" width="17" height="12" rx="1.5"/><path d="M9 20h6M12 16.5V20"/>'
+};
+const app = (t, sub, g, bg, extra) => ({t, kind:'app', k:'Application', sub, g, bg, ...extra});
+const ITEMS = [
+  app('Marlin', 'Browser', 'compass', 'linear-gradient(#3aa7a0,#1f6f73)', {ver:'12.4', used:'Today, 09:12', size:'312 MB'}),
+  app('Petrel Mail', 'Mail', 'mail', 'linear-gradient(#5b9cf0,#2f6fe4)', {ver:'8.1', used:'Today, 08:40', size:'96 MB'}),
+  app('Nettle', 'Notes', 'note', 'linear-gradient(#f5c84b,#e1a514)', {ver:'5.0', used:'Running now', size:'48 MB'}),
+  app('Corvid', 'Code editor', 'code', 'linear-gradient(#3b4250,#1c2028)', {ver:'2.19', used:'Yesterday, 22:05', size:'540 MB'}),
+  app('Bracken Photos', 'Photos', 'photo', 'linear-gradient(#7cc47a,#3f9a55)', {ver:'7.3', used:'2 Oct', size:'1.2 GB'}),
+  app('Abacus', 'Calculator', 'calc', 'linear-gradient(#f08a4b,#d9612a)', {ver:'3.2', used:'28 Sep', size:'14 MB'}),
+  app('Avocet Calendar', 'Calendar', 'cal', 'linear-gradient(#ef6a62,#cf3f39)', {ver:'6.0', used:'Today, 07:58', size:'72 MB'}),
+  app('System Settings', 'Settings', 'gear', 'linear-gradient(#9aa4b1,#6a7482)', {ver:'26.1', used:'1 Oct', size:'—'}),
+  {t:'Q3 roadmap.pdf', kind:'file', k:'PDF', art:'pdf', size:'2.4 MB', mod:'Yesterday, 18:12', where:'Documents › Planning'},
+  {t:'Roadmap review — October.deck', kind:'file', k:'Slides', art:'deck', size:'18.7 MB', mod:'Today, 10:30', where:'Shared › Leadership'},
+  {t:'Annapurna ridge at dawn.jpg', kind:'file', k:'JPEG', art:'photo', size:'6.1 MB · 4032×3024', mod:'12 Sep', where:'Pictures › Treks'},
+  {t:'Rooftop garden budget.sheet', kind:'file', k:'Sheet', art:'sheet', size:'184 KB', mod:'30 Sep', where:'Documents › Home'},
+  {t:'standup-notes.md', kind:'file', k:'Markdown', art:'md', size:'6 KB', mod:'Today, 09:45', where:'Projects › Corvid'},
+  {t:'brand-colours.swatch', kind:'file', k:'Swatch', art:'swatch', size:'2 KB', mod:'21 Sep', where:'Design › Brand'},
+  {t:'invoice-0412.pdf', kind:'file', k:'PDF', art:'pdf', size:'98 KB', mod:'3 Oct', where:'Documents › Invoices'},
+  {t:'Toggle dark appearance', kind:'action', k:'Action', g:'moon', key:'⌥⌘D', desc:'Switch this panel and the system between light and dark.'},
+  {t:'New note in Nettle', kind:'action', k:'Action', g:'plus', key:'⌘N', desc:'Opens a blank note with today\'s date as the title.'},
+  {t:'Start focus — 25 min', kind:'action', k:'Action', g:'timer', key:'', desc:'Silences notifications and starts a 25-minute timer.'},
+  {t:'Lock screen', kind:'action', k:'Action', g:'lock', key:'⌃⌘Q', desc:'Locks this computer. Your apps keep running.'},
+  {t:'Empty Bin', kind:'action', k:'14 items', g:'bin', key:'⇧⌘⌫', desc:'Permanently removes 14 items (212 MB) from the Bin.'},
+  {t:'Show desktop', kind:'action', k:'Action', g:'desk', key:'F11', desc:'Moves every window aside so you can see the desktop.'}
+];
+const RECENT = ['Nettle', 'Q3 roadmap.pdf', 'Marlin', 'Roadmap review — October.deck', 'Toggle dark appearance', 'Start focus — 25 min'];
+const GROUPS = [['app', 'Applications'], ['file', 'Files'], ['action', 'Actions']];
+
+function greedy(q, t, start){
+  let score = 0, from = start, prev = start - 2; const idx = [];
+  for (const ch of q) {
+    const i = t.indexOf(ch, from); if (i < 0) return null;
+    score += 1 + (i === prev + 1 ? 5 : 0) + (i === 0 || /[\s\-_.—]/.test(t[i - 1]) ? 8 : 0) - Math.min(3, (i - from) * .15);
+    idx.push(i); prev = i; from = i + 1;
+  }
+  return {score, idx};
+}
+function fuzzy(q, s){
+  q = q.replace(/\s+/g, ''); const t = s.toLowerCase(); let best = null;
+  for (let i = t.indexOf(q[0]); i >= 0; i = t.indexOf(q[0], i + 1)) { const m = greedy(q, t, i); if (m && (!best || m.score > best.score)) best = m; }
+  return best && {score: best.score - s.length * .02, idx: best.idx};
+}
+function calc(q){
+  const pct = q.match(/^\s*(\d+(?:\.\d+)?)\s*%\s*of\s*(\d+(?:\.\d+)?)\s*$/i);
+  let expr = pct ? `${pct[1]}/100*${pct[2]}` : q.replace(/[×x]/g, '*').replace(/÷/g, '/').replace(/\^/g, '**');
+  if (!pct && !(/^[\d\s.+\-*/()%]+$/.test(expr) && /\d/.test(expr) && /[+\-*/%]/.test(expr.replace(/^\s*-/, '')))) return null;
+  try { const v = Function('"use strict";return (' + expr + ')')(); if (!Number.isFinite(v)) return null;
+    return {t:(+v.toFixed(8)).toLocaleString('en-GB', {maximumFractionDigits:8}), kind:'calc', k:'Abacus', expr:q.trim()}; } catch { return null; }
+}
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;'}[c]));
+function hl(s, idx){ if (!idx) return esc(s); let o = ''; [...s].forEach((c, i) => o += idx.includes(i) ? `<mark>${esc(c)}</mark>` : esc(c)); return o; }
+function icon(it, big){
+  if (it.kind === 'app') return `<span class="ic${big ? ' big-ic' : ''}" style="background:${it.bg}" aria-hidden="true"><svg viewBox="0 0 24 24">${G[it.g]}</svg></span>`;
+  if (it.kind === 'calc') return `<span class="ic${big ? ' big-ic' : ''}" style="background:linear-gradient(#f08a4b,#d9612a)" aria-hidden="true"><svg viewBox="0 0 24 24">${G.calc}</svg></span>`;
+  const tint = {pdf:'#d9473f', deck:'#e0812a', photo:'#3f9a55', sheet:'#1e9e6a', md:'#6a7280', swatch:'#2f6fe4'}[it.art];
+  return `<span class="ic f${big ? ' big-ic' : ''}"${tint ? ` style="--tint:${tint}"` : ''} aria-hidden="true"><svg viewBox="0 0 24 24">${G[it.g || 'doc']}</svg></span>`;
+}
+
+const q = $('#q'), list = $('#list'), pv = $('#pv'), scrim = $('#scrim'), toast = $('#toast');
+let flat = [], sel = 0;
+function render(){
+  const v = q.value.trim().toLowerCase();
+  const groups = [];
+  if (!v) groups.push(['Recent', RECENT.map(t => ({it:ITEMS.find(i => i.t === t)}))]);
+  else {
+    const c = calc(v); if (c) groups.push(['Calculator', [{it:c}]]);
+    const hits = ITEMS.map(it => ({it, m:fuzzy(v, it.t)})).filter(h => h.m).sort((a, b) => b.m.score - a.m.score);
+    if (hits.length) groups.push(['Top hit', [hits[0]]]);
+    GROUPS.forEach(([kind, name]) => { const g = hits.slice(1).filter(h => h.it.kind === kind).slice(0, 4); if (g.length) groups.push([name, g]); });
+  }
+  flat = []; let html = '';
+  groups.forEach(([name, rows], gi) => {
+    html += `<div role="group" aria-labelledby="g${gi}"><div class="grp" id="g${gi}" role="presentation">${name}</div>`;
+    rows.forEach(r => { const n = flat.length; flat.push(r.it);
+      html += `<div class="opt" role="option" id="o${n}" data-n="${n}" aria-selected="false">${icon(r.it)}<span class="t">${hl(r.it.t, r.m && r.m.idx)}</span><span class="k">${r.it.k}</span></div>`; });
+    html += '</div>';
+  });
+  if (!flat.length) html = `<div class="empty"><b>No results for “${esc(q.value.trim())}”</b>Try an app name, a file, or a sum like 1280*0.15</div>`;
+  list.innerHTML = html;
+  $('#count').textContent = flat.length ? `${flat.length} result${flat.length > 1 ? 's' : ''}` : '';
+  select(0);
+}
+function select(n){
+  if (!flat.length) { q.removeAttribute('aria-activedescendant'); pv.innerHTML = ''; return; }
+  sel = (n + flat.length) % flat.length;
+  list.querySelectorAll('.opt').forEach(o => o.setAttribute('aria-selected', +o.dataset.n === sel));
+  const el = $('#o' + sel); q.setAttribute('aria-activedescendant', el.id); el.scrollIntoView({block:'nearest'});
+  preview(flat[sel]);
+}
+const ART = {
+  pdf:'<div class="page"><b></b><i></i><i style="width:80%"></i><i></i><i style="width:65%"></i><i></i><i style="width:90%"></i><i style="width:40%"></i></div>',
+  deck:'<div class="slide"><b>Roadmap review<br>October</b><span><i style="height:40%"></i><i style="height:65%"></i><i style="height:55%"></i><i style="height:90%"></i></span></div>',
+  photo:'<svg class="photo" viewBox="0 0 236 160" aria-hidden="true"><rect width="236" height="160" fill="#f2c79a"/><rect width="236" height="70" fill="#9fb2bf"/><path d="M0 110 60 50l30 24 40-44 50 50 26-18 30 28v70H0Z" fill="#3e5468"/><path d="M90 74l40-44 14 14-10-2-12 10-8-4Z" fill="#f4f6f8"/><path d="M0 130 70 100l60 20 50-26 56 22v44H0Z" fill="#1d2935"/></svg>',
+  sheet:'<div class="sheet"></div>', swatch:'<div class="sw"><i style="background:#16202b"></i><i style="background:#3e5468"></i><i style="background:#9fb2bf"></i><i style="background:#f2c79a"></i><i style="background:#2f6fe4"></i></div>',
+  md:'<div class="page md"># Standup, 4 Oct\n\n- shipped search v2\n- flaky test in\n  sync/queue\n- blocked: design\n  review on Tue\n\n## Today\n- pair on preview\n  pane</div>'
+};
+function preview(it){
+  if (it.kind === 'calc') { pv.innerHTML = `<div class="art"><div><div class="calc-x">${esc(it.expr)} =</div><div class="calc-r">${it.t}</div></div></div><h2>Abacus</h2><p class="sub">Press <kbd>↵</kbd> to copy the result</p>`; return; }
+  if (it.kind === 'app') { pv.innerHTML = `<div class="art">${icon(it, true)}</div><h2>${esc(it.t)}</h2><p class="sub">${it.sub} · version ${it.ver}</p><dl><dt>Last opened</dt><dd>${it.used}</dd><dt>Size</dt><dd>${it.size}</dd><dt>Where</dt><dd>Applications</dd></dl>`; return; }
+  if (it.kind === 'file') { pv.innerHTML = `<div class="art">${ART[it.art]}</div><h2>${esc(it.t)}</h2><p class="sub">${it.k} document · ${it.size.split(' ·')[0]}</p><dl><dt>Modified</dt><dd>${it.mod}</dd><dt>Size</dt><dd>${it.size}</dd><dt>Where</dt><dd>${it.where}</dd></dl>`; return; }
+  pv.innerHTML = `<div class="art">${icon(it, true)}</div><h2>${esc(it.t)}</h2><p class="sub">${it.desc}</p>${it.key ? `<dl><dt>Shortcut</dt><dd><kbd>${it.key}</kbd></dd></dl>` : ''}`;
+}
+
+/* open / close */
+let opener = null, toastT;
+function open(){ if (!scrim.hidden) return q.select(); opener = document.activeElement; scrim.hidden = false; q.value = ''; render(); q.focus(); }
+function close(){ scrim.hidden = true; (opener && opener !== document.body ? opener : $('#opener')).focus(); }
+function notify(title, sub){ toast.innerHTML = `<div><b>${esc(title)}</b><small>${esc(sub)}</small></div>`; toast.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => toast.classList.remove('show'), 2600); }
+function run(it){
+  close();
+  if (it.kind === 'calc') { navigator.clipboard?.writeText(it.t.replace(/,/g, '')).catch(() => {}); return notify('Copied ' + it.t, it.expr + ' = ' + it.t); }
+  if (it.t === 'Toggle dark appearance') { document.body.classList.toggle('dark'); return notify('Appearance', document.body.classList.contains('dark') ? 'Dark' : 'Light'); }
+  if (it.kind === 'app') { $('#front').textContent = it.t; return notify('Opened ' + it.t, it.sub); }
+  if (it.kind === 'file') return notify('Opened ' + it.t, it.where);
+  notify(it.t, 'Done');
+}
+q.addEventListener('input', render);
+q.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); select(sel + (e.key === 'ArrowDown' ? 1 : -1)); }
+  else if (e.key === 'PageDown' || e.key === 'PageUp') { e.preventDefault(); select(Math.max(0, Math.min(flat.length - 1, sel + (e.key === 'PageDown' ? 5 : -5)))); }
+  else if (e.key === 'Enter' && flat.length) { e.preventDefault(); run(flat[sel]); }
+  else if (e.key === 'Tab') e.preventDefault();
+});
+list.addEventListener('mousemove', e => { const o = e.target.closest('.opt'); if (o && +o.dataset.n !== sel) select(+o.dataset.n); });
+list.addEventListener('click', e => { const o = e.target.closest('.opt'); if (o) run(flat[+o.dataset.n]); });
+scrim.addEventListener('pointerdown', e => { if (e.target === scrim) close(); });
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); scrim.hidden ? open() : close(); }
+  else if (e.key === 'Escape' && !scrim.hidden) { e.preventDefault(); q.value ? (q.value = '', render()) : close(); }
+});
+$('#opener').addEventListener('click', open);
+
+const clock = $('#clock');
+function tick(){ const d = new Date(); clock.textContent = d.toLocaleString('en-GB', {weekday:'short', day:'numeric', month:'short'}) + ' ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}); }
+tick(); setInterval(tick, 10000);
+render(); q.focus(); q.setSelectionRange(2, 2);
+</script>
+</body>
+</html>

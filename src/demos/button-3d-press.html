@@ -1,0 +1,197 @@
+<!-- Design Lounge piece: button-3d-press · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Klakk · Keycap buttons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;800&family=Reddit+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e7e1d5;--deck:#d6cebf;--deck-lo:#c4bbaa;--ink:#1f1b17;--ink-2:#5a5248;--line:#c2b8a6;
+  --cream:#f7f2e8;--cream-edge:#b8ac98;--orange:#ff6b1a;--orange-edge:#b8460b;--char:#2b2825;--char-edge:#0e0c0b;
+  --off:#e4ddd0;--off-edge:#c9c0b1;--off-ink:#8f867a;
+  --sans:"Gabarito",system-ui,sans-serif;--mono:"Reddit Mono",ui-monospace,monospace;
+  --press:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.4 var(--sans);color:var(--ink);background:var(--bg);display:grid;place-items:center;padding:24px 16px;overflow-x:hidden}
+button{font:inherit;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+
+.deck{width:min(1040px,100%);background:var(--deck);border-radius:28px;padding:28px 32px 30px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.55),inset 0 -3px 0 var(--deck-lo),0 30px 60px -30px rgba(60,45,30,.45)}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.brand{margin:0;font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.brand span{color:var(--orange-edge)}
+.sub{margin:6px 0 0;font:500 12px var(--mono);color:var(--ink-2);letter-spacing:.02em}
+.readout{font:500 12px var(--mono);color:var(--ink-2);background:var(--cream);border-radius:8px;padding:8px 12px;min-width:250px;
+  box-shadow:inset 0 2px 3px rgba(60,45,30,.18)}
+.readout b{color:var(--ink);font-weight:700}
+
+.live{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap;padding:30px 0 30px}
+.group{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.cap{display:block;font:500 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:10px}
+
+/* keycap */
+.key{--face:var(--cream);--edge:var(--cream-edge);--txt:var(--ink);--d:6px;
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  height:52px;padding:0 24px;border-radius:12px;margin-bottom:var(--d);
+  font-size:16px;font-weight:700;letter-spacing:-.01em;color:var(--txt);
+  background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0) 45%),var(--face);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 0 rgba(0,0,0,.07),
+    0 var(--d) 0 var(--edge),0 calc(var(--d) + 5px) 10px -3px rgba(50,35,20,.38);
+  transition:transform 220ms var(--spring),box-shadow 220ms var(--spring)}
+.key svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.key .leg{position:absolute;top:5px;left:8px;font:700 9px var(--mono);letter-spacing:.04em;opacity:.55}
+.key:hover,.key.is-hover{transform:translateY(-1px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 0 rgba(0,0,0,.07),
+    0 calc(var(--d) + 1px) 0 var(--edge),0 calc(var(--d) + 7px) 12px -3px rgba(50,35,20,.38)}
+.key:active,.key.is-pressed{transform:translateY(calc(var(--d) - 1px));transition-duration:60ms;transition-timing-function:var(--press);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 2px 4px rgba(0,0,0,.12),0 1px 0 var(--edge),0 2px 3px -1px rgba(50,35,20,.4)}
+.key[aria-pressed="true"]{transform:translateY(calc(var(--d) / 2));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 2px 3px rgba(0,0,0,.1),0 calc(var(--d) / 2) 0 var(--edge),0 calc(var(--d) / 2 + 3px) 6px -2px rgba(50,35,20,.38)}
+.key[aria-pressed="true"]:active{transform:translateY(calc(var(--d) - 1px))}
+.key:focus-visible,.key.is-focus{outline:3px solid var(--ink);outline-offset:4px}
+.key:disabled{--face:var(--off);--edge:var(--off-edge);--txt:var(--off-ink);--d:2px;cursor:not-allowed;transform:none;
+  background:var(--face);box-shadow:0 2px 0 var(--edge)}
+
+.primary{--face:var(--orange);--edge:var(--orange-edge);--txt:var(--ink)}
+.dark{--face:var(--char);--edge:var(--char-edge);--txt:var(--cream)}
+.dark{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0) 45%),var(--face)}
+.lg{height:60px;padding:0 30px;font-size:18px;border-radius:14px;--d:7px}
+.sm{height:40px;padding:0 16px 0 20px;font-size:14px;border-radius:10px;--d:4px}
+.sm .leg{top:3px;left:6px}
+.ico{width:60px;height:60px;padding:0;border-radius:14px}
+.led{position:absolute;top:8px;right:8px;width:6px;height:6px;border-radius:50%;background:var(--off-edge);transition:background-color 120ms var(--press)}
+.key[aria-pressed="true"] .led{background:var(--orange);box-shadow:0 0 0 2px rgba(255,107,26,.25)}
+
+/* state matrix */
+.states{border-top:1px solid var(--line);padding-top:20px}
+.states h2{margin:0 0 14px;font:500 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.grid{display:grid;grid-template-columns:96px repeat(5,1fr);align-items:end;row-gap:14px;column-gap:12px}
+.grid .h{font:500 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-align:center;align-self:center}
+.grid .rl{font:500 11px var(--mono);color:var(--ink-2);align-self:center}
+.grid .c{display:flex;justify-content:center}
+.grid .key{height:44px;padding:0 18px;font-size:15px;--d:5px}
+.grid .key.ico{width:48px;height:48px;padding:0}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:760px){
+  .deck{padding:22px 18px 24px}
+  .live{gap:22px}
+  .grid{grid-template-columns:repeat(5,1fr);column-gap:6px}
+  .grid .rl{grid-column:1/-1;margin-top:6px}
+  .grid .h.corner{display:none}
+  .grid .key{padding:0 10px;font-size:13px;height:40px}
+  .grid .key.ico{width:40px;height:40px}
+  .grid .h{font-size:8px;letter-spacing:.02em}
+  .readout{min-width:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .key,.key:active,.key.is-pressed{transition:none}
+  .key:hover{transform:none}
+}
+</style>
+</head>
+<body>
+<main class="deck" aria-labelledby="brand">
+  <header class="top">
+    <div>
+      <h1 class="brand" id="brand">Klakk<span>.</span></h1>
+      <p class="sub">Keycap buttons · 6px travel · press a key or the legend on your keyboard</p>
+    </div>
+    <p class="readout" aria-live="polite" id="readout">Last: <b>none yet</b> · 0 presses</p>
+  </header>
+
+  <section class="live" aria-label="Try the buttons">
+    <div>
+      <span class="cap">Text keys · L / M / M / S</span>
+      <div class="group">
+        <button class="key primary lg" data-k="s" type="button"><span class="leg" aria-hidden="true">S</span>Ship build</button>
+        <button class="key dark" data-k="r" type="button"><span class="leg" aria-hidden="true">R</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Run tests</button>
+        <button class="key" data-k="d" type="button"><span class="leg" aria-hidden="true">D</span>Save draft</button>
+        <button class="key sm" data-k="x" type="button"><span class="leg" aria-hidden="true">X</span>Cancel</button>
+      </div>
+    </div>
+    <div>
+      <span class="cap">Icon keys · 60px</span>
+      <div class="group">
+        <button class="key ico dark" data-k="p" type="button" aria-label="Play preview"><span class="leg" aria-hidden="true">P</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+        <button class="key ico" data-k="m" type="button" aria-label="Mute microphone" aria-pressed="false"><span class="leg" aria-hidden="true">M</span><span class="led" aria-hidden="true"></span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+        <button class="key ico" data-k="n" type="button" aria-label="New track"><span class="leg" aria-hidden="true">N</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        <button class="key ico primary" data-k="z" type="button" aria-label="Undo"><span class="leg" aria-hidden="true">Z</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="states" aria-labelledby="st">
+    <h2 id="st">States</h2>
+    <p class="vh">Reference sheet showing each variant at rest, hovered, pressed, disabled and focused.</p>
+    <div class="grid" inert aria-hidden="true">
+      <span class="h corner"></span><span class="h">Default</span><span class="h">Hover</span><span class="h">Pressed</span><span class="h">Disabled</span><span class="h">Focus</span>
+      <span class="rl">Primary</span>
+      <span class="c"><button class="key primary">Ship</button></span>
+      <span class="c"><button class="key primary is-hover">Ship</button></span>
+      <span class="c"><button class="key primary is-pressed">Ship</button></span>
+      <span class="c"><button class="key primary" disabled>Ship</button></span>
+      <span class="c"><button class="key primary is-focus">Ship</button></span>
+      <span class="rl">Dark</span>
+      <span class="c"><button class="key dark">Run</button></span>
+      <span class="c"><button class="key dark is-hover">Run</button></span>
+      <span class="c"><button class="key dark is-pressed">Run</button></span>
+      <span class="c"><button class="key dark" disabled>Run</button></span>
+      <span class="c"><button class="key dark is-focus">Run</button></span>
+      <span class="rl">Cream</span>
+      <span class="c"><button class="key">Save</button></span>
+      <span class="c"><button class="key is-hover">Save</button></span>
+      <span class="c"><button class="key is-pressed">Save</button></span>
+      <span class="c"><button class="key" disabled>Save</button></span>
+      <span class="c"><button class="key is-focus">Save</button></span>
+      <span class="rl">Icon · latched</span>
+      <span class="c"><button class="key ico"><span class="led"></span><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button></span>
+      <span class="c"><button class="key ico is-hover"><span class="led"></span><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button></span>
+      <span class="c"><button class="key ico" aria-pressed="true"><span class="led"></span><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button></span>
+      <span class="c"><button class="key ico" disabled><span class="led"></span><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button></span>
+      <span class="c"><button class="key ico is-focus"><span class="led"></span><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button></span>
+    </div>
+  </section>
+</main>
+<script>
+const live = document.querySelector('.live');
+const readout = document.getElementById('readout');
+let count = 0;
+function name(b){ return b.getAttribute('aria-label') || b.textContent.trim().replace(/^[A-Z]\s*/, ''); }
+function fire(b){
+  count++;
+  if (b.hasAttribute('aria-pressed')) b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+  const state = b.hasAttribute('aria-pressed') ? (b.getAttribute('aria-pressed') === 'true' ? ' (on)' : ' (off)') : '';
+  readout.innerHTML = 'Last: <b>' + name(b) + state + '</b> · ' + count + (count === 1 ? ' press' : ' presses');
+}
+live.addEventListener('click', e => { const b = e.target.closest('.key'); if (b) fire(b); });
+/* Enter does not trigger :active, so mirror the travel for Enter and for the legend shortcuts */
+const byKey = {}; live.querySelectorAll('[data-k]').forEach(b => byKey[b.dataset.k] = b);
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const t = document.activeElement;
+  if (e.key === 'Enter' && t && t.classList.contains('key')) { t.classList.add('is-pressed'); return; }
+  const b = byKey[e.key.toLowerCase()];
+  if (!b) return;
+  e.preventDefault();
+  if (!e.repeat) b.classList.add('is-pressed');
+});
+document.addEventListener('keyup', e => {
+  const t = document.activeElement;
+  if (e.key === 'Enter' && t && t.classList.contains('key')) { t.classList.remove('is-pressed'); return; }
+  const b = byKey[e.key.toLowerCase()];
+  if (b && b.classList.contains('is-pressed')) { b.classList.remove('is-pressed'); fire(b); }
+});
+</script>
+</body>
+</html>

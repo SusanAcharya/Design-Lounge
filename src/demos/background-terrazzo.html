@@ -1,0 +1,150 @@
+<!-- Design Lounge piece: background-terrazzo · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Terrazzo background</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --base:#efe6d8;--c0:#b4532a;--c1:#d9a441;--c2:#8a9a7b;--c3:#2e2a26;--c4:#fbf6ee;
+  --card:#fbf6ee;--ink:#2a2420;--ink-2:#5f554c;--line:#d8ccba;--accent:#b4532a;--accent-ink:#fffaf2;
+  --serif:"Young Serif",Georgia,serif;--sans:"Figtree",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--t:180ms;--t-mix:420ms;
+}
+[data-stone="nero"]{--base:#2a2826;--c0:#f1ece4;--c1:#e59b82;--c2:#b89b5e;--c3:#6f7a80;--c4:#46423e;--accent:#e59b82;--accent-ink:#2a1a14}
+[data-stone="palma"]{--base:#f2c9b8;--c0:#2f6b4f;--c1:#c4532e;--c2:#fbf3e6;--c3:#e8a33d;--c4:#b98b7a;--accent:#2f6b4f;--accent-ink:#f7f2e8}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--base);color:var(--ink);font:15px/1.5 var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased;transition:background-color var(--t-mix) var(--ease)}
+svg.floor{position:fixed;inset:-24px;width:calc(100% + 48px);height:calc(100% + 48px);display:block}
+.floor g{will-change:transform;transition:opacity var(--t-mix) var(--ease)}
+.floor path{transition:fill var(--t-mix) var(--ease)}
+.floor .k0{fill:var(--c0)}.floor .k1{fill:var(--c1)}.floor .k2{fill:var(--c2)}.floor .k3{fill:var(--c3)}.floor .k4{fill:var(--c4)}
+.sheen{position:fixed;inset:0;pointer-events:none;background:radial-gradient(120% 80% at 70% 0%,rgba(255,255,255,.22),rgba(255,255,255,0) 60%)}
+.page{position:relative;height:100%;display:flex;flex-direction:column;pointer-events:none}
+.page a,.page button{pointer-events:auto}
+nav{display:flex;align-items:center;gap:32px;margin:24px 40px 0;padding:0 20px;height:56px;background:var(--card);border:1px solid var(--line);border-radius:2px}
+.brand{font:400 20px/1 var(--serif);color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.links{display:flex;gap:24px;margin-left:auto}
+.links a{color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:500;transition:color var(--t) var(--ease)}
+.links a:hover{color:var(--ink)}
+a:focus-visible,button:focus-visible,input:focus-visible+span{outline:2px solid var(--ink);outline-offset:3px}
+.hero{flex:1;display:flex;align-items:center;padding:0 40px 40px}
+.label{width:600px;background:var(--card);border:1px solid var(--line);border-radius:2px;padding:40px 44px 44px}
+.code{display:flex;justify-content:space-between;font:600 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);padding-bottom:16px;border-bottom:1px solid var(--line);margin:0 0 28px}
+h1{font:400 64px/1.02 var(--serif);letter-spacing:-.02em;margin:0 0 20px;color:var(--ink)}
+.sub{font-size:17px;line-height:1.55;color:var(--ink-2);margin:0 0 32px;max-width:460px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 22px;border-radius:2px;background:var(--accent);color:var(--accent-ink);font:600 15px var(--sans);text-decoration:none;transition:transform var(--t) var(--ease),background-color var(--t-mix) var(--ease),color var(--t-mix) var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.ctl{position:fixed;right:40px;bottom:40px;width:264px;background:var(--card);border:1px solid var(--line);border-radius:2px;padding:16px;font-size:13px;color:var(--ink-2)}
+.ctl-h{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+.ctl-h b{font:400 18px var(--serif);color:var(--ink)}
+.ctl-h output{font-variant-numeric:tabular-nums}
+.shuffle{width:100%;height:44px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--ink);border-radius:2px;background:transparent;color:var(--ink);font:600 14px var(--sans);cursor:pointer;transition:background-color var(--t) var(--ease),color var(--t) var(--ease)}
+.shuffle:hover{background:var(--ink);color:var(--card)}
+.shuffle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--t-mix) var(--ease)}
+.shuffle:active svg{transform:rotate(-120deg)}
+fieldset{border:0;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+legend{font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;padding:0}
+.stone{position:relative;cursor:pointer;display:block}
+.stone input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.stone span{display:block;border:1px solid var(--line);border-radius:2px;padding:6px;text-align:center;font-weight:500;color:var(--ink);transition:border-color var(--t) var(--ease)}
+.stone i{display:block;height:28px;margin-bottom:6px;border-radius:1px;background:radial-gradient(circle at 25% 35%,var(--a) 0 3px,transparent 3.5px),radial-gradient(circle at 70% 60%,var(--b) 0 5px,transparent 5.5px),radial-gradient(circle at 45% 80%,var(--d) 0 2px,transparent 2.5px),var(--g)}
+.stone input:checked+span{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.switch{display:flex;align-items:center;justify-content:space-between;margin-top:14px;min-height:40px}
+.switch button{width:44px;height:26px;border-radius:13px;border:1px solid var(--ink);background:transparent;position:relative;cursor:pointer;padding:0;transition:background-color var(--t) var(--ease)}
+.switch button::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--ink);transition:transform var(--t) var(--ease),background-color var(--t) var(--ease)}
+.switch button[aria-pressed="true"]{background:var(--ink)}
+.switch button[aria-pressed="true"]::after{transform:translateX(18px);background:var(--card)}
+@media (max-width:760px){
+  nav{margin:12px 12px 0;flex:none}.links{display:none}
+  .hero{padding:12px 12px 280px;align-items:flex-start}
+  .switch{display:none}.label{width:100%;padding:24px}h1{font-size:40px}.sub{font-size:15px}
+  .ctl{left:12px;right:12px;bottom:12px;width:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body data-stone="verona">
+<svg class="floor" id="floor" aria-hidden="true"><g id="L0"></g><g id="L1"></g><g id="L2"></g></svg>
+<div class="sheen" aria-hidden="true"></div>
+<div class="page">
+  <nav aria-label="Main">
+    <a class="brand" href="#">Casa Brecce</a>
+    <div class="links"><a href="#">Tiles</a><a href="#">Worktops</a><a href="#">The studio</a><a href="#">Trade</a></div>
+  </nav>
+  <main class="hero">
+    <div class="label">
+      <p class="code"><span id="code">Sample 012 · Verona</span><span>Porto, PT</span></p>
+      <h1>Floors poured by hand, chipped by chance.</h1>
+      <p class="sub">Hand-cast terrazzo tiles and worktops from a small studio by the river. Every batch is a one-off, so no two floors match.</p>
+      <a class="btn" href="#">Order a sample box<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </main>
+</div>
+<form class="ctl" aria-label="Terrazzo controls" onsubmit="return false">
+  <div class="ctl-h"><b>Mix</b><output id="batch" aria-live="polite">Batch 4182</output></div>
+  <button type="button" class="shuffle" id="shuffle"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>Reshuffle chips</button>
+  <fieldset><legend>Stone</legend>
+    <label class="stone"><input type="radio" name="stone" value="verona" checked><span><i style="--g:#efe6d8;--a:#b4532a;--b:#d9a441;--d:#2e2a26"></i>Verona</span></label>
+    <label class="stone"><input type="radio" name="stone" value="nero"><span><i style="--g:#2a2826;--a:#f1ece4;--b:#e59b82;--d:#b89b5e"></i>Nero</span></label>
+    <label class="stone"><input type="radio" name="stone" value="palma"><span><i style="--g:#f2c9b8;--a:#2f6b4f;--b:#c4532e;--d:#fbf3e6"></i>Palma</span></label>
+  </fieldset>
+  <div class="switch"><span id="plx-l">Pointer parallax</span><button type="button" id="plx" aria-pressed="true" aria-labelledby="plx-l"></button></div>
+</form>
+<script>
+(()=>{
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $=id=>document.getElementById(id);
+  const floor=$('floor'),L=[$('L0'),$('L1'),$('L2')];
+  const LAYERS=[{per:800,min:1.2,max:4,depth:3},{per:2800,min:5,max:15,depth:8},{per:13000,min:16,max:42,depth:16}];
+  const WEIGHT=[0,0,0,1,1,2,2,3,4,4];
+  const names={verona:'Verona',nero:'Nero',palma:'Palma'};
+  let seed=4182,plx=!reduce,raf=0;
+  const pos={x:0,y:0,tx:0,ty:0};
+  function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  function chip(r,x,y,s){
+    const n=4+Math.floor(r()*4),rot=r()*6.283,pts=[];
+    for(let i=0;i<n;i++){const a=rot+i/n*6.283+(r()-.5)*.9,d=s*(.55+r()*.45);pts.push((x+Math.cos(a)*d).toFixed(1)+' '+(y+Math.sin(a)*d*(.7+r()*.3)).toFixed(1));}
+    return 'M'+pts.join('L')+'Z';
+  }
+  function build(animate){
+    const W=innerWidth+48,H=innerHeight+48,r=rng(seed);
+    floor.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    LAYERS.forEach((cfg,li)=>{
+      const n=Math.round(W*H/cfg.per),byColour=[[],[],[],[],[]];
+      for(let i=0;i<n;i++){
+        const s=cfg.min+Math.pow(r(),1.8)*(cfg.max-cfg.min);
+        byColour[WEIGHT[Math.floor(r()*WEIGHT.length)]].push(chip(r,r()*W,r()*H,s));
+      }
+      const html=byColour.map((d,k)=>d.length?`<path class="k${k}" d="${d.join('')}"/>`:'').join('');
+      const g=L[li];
+      if(animate&&!reduce){g.style.transition='none';g.style.opacity=0;g.innerHTML=html;
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{g.style.transition='';g.style.transitionDelay=(li*90)+'ms';g.style.opacity=1;}));}
+      else g.innerHTML=html;
+    });
+  }
+  function apply(){L.forEach((g,i)=>{const d=LAYERS[i].depth;g.style.transform=`translate(${(pos.x*d).toFixed(2)}px,${(pos.y*d).toFixed(2)}px)`;});}
+  function frame(){
+    pos.x+=(pos.tx-pos.x)*.08;pos.y+=(pos.ty-pos.y)*.08;apply();
+    raf=Math.abs(pos.tx-pos.x)+Math.abs(pos.ty-pos.y)>.002&&!document.hidden?requestAnimationFrame(frame):0;
+  }
+  function kick(){if(!raf&&!document.hidden)raf=requestAnimationFrame(frame);}
+  addEventListener('pointermove',e=>{if(!plx)return;pos.tx=e.clientX/innerWidth*2-1;pos.ty=e.clientY/innerHeight*2-1;kick();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf);raf=0;}else kick();});
+  $('plx').addEventListener('click',e=>{plx=!plx;e.currentTarget.setAttribute('aria-pressed',String(plx));if(!plx){pos.tx=pos.ty=0;kick();}});
+  $('plx').setAttribute('aria-pressed',String(plx));
+  $('shuffle').addEventListener('click',()=>{seed=1000+Math.floor(Math.random()*9000);$('batch').textContent='Batch '+seed;label();build(true);});
+  const label=()=>{$('code').textContent=`Sample ${String(seed%97+1).padStart(3,'0')} · ${names[document.body.dataset.stone]}`;};
+  document.querySelectorAll('input[name=stone]').forEach(i=>i.addEventListener('change',()=>{document.body.dataset.stone=i.value;label();}));
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>build(false),150);});
+  build(false);
+})();
+</script>
+</body>
+</html>

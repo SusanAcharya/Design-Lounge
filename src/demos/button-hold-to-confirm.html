@@ -1,0 +1,318 @@
+<!-- Design Lounge piece: button-hold-to-confirm · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Tallyhut · Confirm actions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eeede7;--panel:#fafaf6;--ink:#151613;--ink-2:#5c5e57;--line:#d9d8d0;
+  --red:#c42a1c;--red-deep:#7e1409;--red-tint:#f6dcd7;--go:#1e7a4a;--cream:#f4f1e6;--off:#e4e3dc;--off-ink:#8c8d86;
+  --sans:"Commissioner",system-ui,sans-serif;--mono:"Fragment Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--out:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.4,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--bg);display:grid;place-items:center;padding:24px 16px;overflow-x:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+.stage{width:min(1080px,100%);background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:22px 32px;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:22px;font-weight:700;letter-spacing:-.02em}
+h1 small{font:400 12px var(--mono);color:var(--ink-2);margin-left:10px;letter-spacing:0}
+.hint{margin:0;font:400 12px var(--mono);color:var(--ink-2)}
+.hint kbd{font:inherit;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--ink);background:#fff}
+.cols{display:grid;grid-template-columns:1fr 1fr}
+.col{padding:28px 32px 26px}
+.col+.col{border-left:1px solid var(--line)}
+h2{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.desc{margin:4px 0 22px;font-size:13px;color:var(--ink-2)}
+.stack{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.line{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cap{font:400 11px var(--mono);color:var(--ink-2)}
+
+/* hold button */
+.hold{--p:0;position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  height:56px;min-width:300px;padding:0 24px;border-radius:12px;background:var(--red);color:#fff;font-weight:600;font-size:15px;
+  touch-action:none;user-select:none;-webkit-user-select:none;transition:transform 140ms var(--ease),background-color 200ms var(--ease)}
+.hold .fill{position:absolute;inset:0;z-index:-1;background:var(--red-deep);transform-origin:left;transform:scaleX(var(--p))}
+.hold svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.hold .t{font-variant-numeric:tabular-nums}
+.hold:hover,.hold.is-hover{background:#b02417}
+.hold.holding,.hold.is-pressed{transform:scale(.985)}
+.hold.outline{height:48px;min-width:260px;background:var(--panel);color:var(--red);box-shadow:inset 0 0 0 1.5px var(--red)}
+.hold.outline .fill{background:var(--red-tint)}
+.hold.outline:hover,.hold.outline.is-hover{background:#fdf3f1}
+.hold.done{background:var(--ink);color:var(--cream)}
+.hold.outline.done{background:var(--ink);box-shadow:none;color:var(--cream)}
+.hold.done .fill{transform:scaleX(0)}
+.hold:disabled{background:var(--off);color:var(--off-ink);box-shadow:none;cursor:not-allowed;transform:none}
+.hold.is-focus{outline:2px solid var(--ink);outline-offset:3px}
+
+/* icon hold with ring */
+.ring{--p:0;position:relative;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:var(--red);background:var(--red-tint);
+  touch-action:none;user-select:none;transition:transform 140ms var(--ease),background-color 200ms var(--ease)}
+.ring>svg.i{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.ring .arc{position:absolute;inset:-5px;width:66px;height:66px;transform:rotate(-90deg);pointer-events:none}
+.ring .arc circle{fill:none;stroke:var(--red);stroke-width:3;stroke-linecap:round;stroke-dasharray:194.8;stroke-dashoffset:calc(194.8 * (1 - var(--p)))}
+.ring:hover,.ring.is-hover{background:#f1cbc4}
+.ring.holding,.ring.is-pressed{transform:scale(.94)}
+.ring.done{background:var(--ink);color:var(--cream)}
+.ring.done .arc circle{stroke:var(--ink)}
+.ring:disabled{background:var(--off);color:var(--off-ink);cursor:not-allowed}
+.ring.is-focus{outline:2px solid var(--ink);outline-offset:8px}
+
+.undo{font:600 13px var(--sans);color:var(--ink);text-decoration:underline;text-underline-offset:3px;min-height:40px;padding:0 4px}
+.undo[hidden]{display:none}
+
+/* slider */
+.slide{--x:0px;position:relative;width:min(400px,100%);height:64px;border-radius:999px;background:var(--ink);color:var(--cream);overflow:hidden;user-select:none;-webkit-user-select:none}
+.slide .trail{position:absolute;inset:0;width:calc(var(--x) + 64px);background:var(--go);border-radius:999px}
+.slide .lab{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;white-space:nowrap;padding-left:56px;font-weight:600;font-size:15px;pointer-events:none;
+  opacity:calc(1 - var(--k,0) * 1.4)}
+.slide .lab .tag{font:400 12px var(--mono);opacity:.7;margin-left:8px}
+.slide .thumb{position:absolute;top:4px;left:4px;width:56px;height:56px;border-radius:50%;background:var(--cream);color:var(--ink);display:grid;place-items:center;
+  transform:translateX(var(--x));touch-action:none;cursor:grab;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.slide .thumb svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.slide .thumb:active{cursor:grabbing}
+.slide .thumb:focus-visible,.slide.is-focus .thumb{outline:3px solid #f2c94c;outline-offset:2px}
+.slide.back .thumb{transition:transform 420ms var(--spring)}
+.slide.back .trail{transition:width 420ms var(--spring)}
+.slide:hover .thumb,.slide.is-hover .thumb{box-shadow:0 0 0 6px rgba(244,241,230,.14),0 2px 6px rgba(0,0,0,.25)}
+.slide.done{background:var(--go)}
+.slide.done .lab{opacity:1;padding-left:0;padding-right:56px}
+.slide.done .thumb{color:var(--go);cursor:default}
+.slide.sm{height:52px;width:min(320px,100%)}
+.slide.sm .thumb{width:44px;height:44px}
+.slide.sm .trail{width:calc(var(--x) + 52px)}
+.slide.sm .lab{padding-left:44px;font-size:14px}
+.slide.sm.done .lab{padding-left:0;padding-right:44px}
+.slide.off{background:var(--off);color:var(--off-ink)}
+.slide.off .thumb{background:#f4f3ee;color:var(--off-ink);box-shadow:none;cursor:not-allowed}
+.reset{font:400 12px var(--mono);color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;min-height:40px}
+
+/* sheet */
+.sheet{border-top:1px solid var(--line);padding:18px 32px 22px;background:#f5f4ee}
+.sheet .cap{display:block;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em;font-size:10px}
+.srow{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:flex-end}
+.srow+.srow{margin-top:14px}
+.spec{display:flex;flex-direction:column;align-items:center;gap:6px}
+.spec>span{font:400 10px var(--mono);color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
+.sheet .hold{min-width:0;height:40px;padding:0 14px;font-size:13px;border-radius:10px}
+.sheet .slide{width:150px;height:40px}
+.sheet .slide .thumb{width:32px;height:32px}
+.sheet .slide .trail{width:calc(var(--x) + 40px)}
+.sheet .slide .lab{padding-left:32px;font-size:12px}
+.sheet .ring{width:40px;height:40px}
+.sheet .ring .arc{inset:-4px;width:48px;height:48px}
+.sheet .ring>svg.i{width:18px;height:18px}
+
+@media (max-width:860px){
+  .cols{grid-template-columns:1fr}
+  .col+.col{border-left:0;border-top:1px solid var(--line)}
+  .col,.top,.sheet{padding-left:20px;padding-right:20px}
+  .hold{min-width:0;width:100%}
+  .hold.outline{min-width:0}
+  .slide .lab .tag{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .hold,.ring,.slide.back .thumb,.slide.back .trail{transition:none}
+  .hold.holding,.ring.holding{transform:none}
+}
+</style>
+</head>
+<body>
+<main class="stage" aria-labelledby="t">
+  <header class="top">
+    <h1 id="t">Tallyhut <small>Settings · Danger zone &amp; payouts</small></h1>
+    <p class="hint">Hold: pointer, or <kbd>Space</kbd>/<kbd>Enter</kbd> held · Slide: drag, or <kbd>→</kbd> <kbd>End</kbd></p>
+  </header>
+  <div class="cols">
+    <section class="col" aria-labelledby="h-hold">
+      <h2 id="h-hold">Hold to confirm</h2>
+      <p class="desc">Fills while held. Let go early and it drains back. Nothing happens until it is full.</p>
+      <div class="stack">
+        <div class="line">
+          <button class="hold" type="button" data-ms="1600" data-idle="Hold to delete workspace" data-held="Workspace deleted" data-say="Workspace Northfield deleted. Undo available.">
+            <span class="fill" aria-hidden="true"></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+            <span class="lab">Hold to delete workspace</span><span class="t" aria-hidden="true"></span>
+          </button>
+          <button class="undo" type="button" hidden>Undo</button>
+        </div>
+        <span class="cap">L · 56px · 1.6s · "Northfield", 14 members</span>
+        <div class="line">
+          <button class="hold outline" type="button" data-ms="1000" data-idle="Hold to remove card ·· 4417" data-held="Card removed" data-say="Card ending 4417 removed. Undo available.">
+            <span class="fill" aria-hidden="true"></span>
+            <span class="lab">Hold to remove card ·· 4417</span><span class="t" aria-hidden="true"></span>
+          </button>
+          <button class="undo" type="button" hidden>Undo</button>
+        </div>
+        <span class="cap">M · 48px · 1.0s</span>
+        <div class="line">
+          <button class="ring" type="button" data-ms="900" data-idle="Hold to discard draft" data-held="Draft discarded" data-say="Draft discarded. Undo available." aria-label="Hold to discard draft">
+            <svg class="arc" viewBox="0 0 66 66" aria-hidden="true"><circle cx="33" cy="33" r="31"/></svg>
+            <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+          </button>
+          <span class="cap">Icon · 56px · 0.9s ring</span>
+          <button class="undo" type="button" hidden>Undo</button>
+        </div>
+      </div>
+    </section>
+    <section class="col" aria-labelledby="h-slide">
+      <h2 id="h-slide">Slide to confirm</h2>
+      <p class="desc">Drag the thumb to the end. Released short of 92% it springs home.</p>
+      <div class="stack">
+        <div class="slide" id="pay" data-done="Paid · ref TH-20931" data-say="Payment of 1,240 pounds sent. Reference TH-20931.">
+          <span class="trail" aria-hidden="true"></span>
+          <span class="lab" aria-hidden="true"><span class="txt">Slide to pay £1,240.00</span><span class="tag">to Odalys Print Co.</span></span>
+          <span class="thumb" role="slider" tabindex="0" aria-label="Slide to pay £1,240.00 to Odalys Print Co." aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Not sent, 0 percent">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+        <span class="cap">L · 64px track · 56px thumb · payout</span>
+        <div class="slide sm" id="move" data-done="Moved £85" data-say="85 pounds moved to Savings.">
+          <span class="trail" aria-hidden="true"></span>
+          <span class="lab" aria-hidden="true"><span class="txt">Slide to move £85 to Savings</span></span>
+          <span class="thumb" role="slider" tabindex="0" aria-label="Slide to move £85 to Savings" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Not moved, 0 percent">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+        <span class="cap">M · 52px track · 44px thumb</span>
+        <button class="reset" type="button" id="reset">Reset sliders</button>
+      </div>
+    </section>
+  </div>
+  <section class="sheet" aria-labelledby="st">
+    <span class="cap" id="st">States</span>
+    <p class="vh">Reference sheet showing hold buttons and sliders at default, hover, pressed part-way, disabled, focus and done.</p>
+    <div inert aria-hidden="true">
+      <div class="srow">
+        <div class="spec"><button class="hold"><span class="fill"></span>Hold to delete</button><span>Default</span></div>
+        <div class="spec"><button class="hold is-hover"><span class="fill"></span>Hold to delete</button><span>Hover</span></div>
+        <div class="spec"><button class="hold is-pressed" style="--p:.6"><span class="fill"></span>Keep holding 0.6s</button><span>Pressed 60%</span></div>
+        <div class="spec"><button class="hold" disabled><span class="fill"></span>Hold to delete</button><span>Disabled</span></div>
+        <div class="spec"><button class="hold is-focus"><span class="fill"></span>Hold to delete</button><span>Focus</span></div>
+        <div class="spec"><button class="hold done"><span class="fill"></span>Deleted</button><span>Done</span></div>
+        <div class="spec"><button class="ring is-pressed" style="--p:.6"><svg class="arc" viewBox="0 0 66 66"><circle cx="33" cy="33" r="31"/></svg><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button><span>Ring 60%</span></div>
+      </div>
+      <div class="srow">
+        <div class="spec"><div class="slide"><span class="trail"></span><span class="lab">Slide to pay</span><span class="thumb"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><span>Default</span></div>
+        <div class="spec"><div class="slide is-hover"><span class="trail"></span><span class="lab">Slide to pay</span><span class="thumb"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><span>Hover</span></div>
+        <div class="spec"><div class="slide" style="--x:62px;--k:.55"><span class="trail"></span><span class="lab">Slide to pay</span><span class="thumb"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><span>Dragging 55%</span></div>
+        <div class="spec"><div class="slide off"><span class="trail" style="display:none"></span><span class="lab">Slide to pay</span><span class="thumb"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><span>Disabled</span></div>
+        <div class="spec"><div class="slide is-focus"><span class="trail"></span><span class="lab">Slide to pay</span><span class="thumb"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><span>Focus</span></div>
+        <div class="spec"><div class="slide done" style="--x:110px"><span class="trail"></span><span class="lab">Paid</span><span class="thumb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div><span>Done</span></div>
+      </div>
+    </div>
+  </section>
+  <p class="vh" aria-live="polite" id="sr"></p>
+</main>
+<script>
+const sr = document.getElementById('sr');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const CHECK = '<path d="M5 12.5l4.5 4.5L19 7.5"/>', ARROW = '<path d="M5 12h14M13 6l6 6-6 6"/>';
+
+/* hold to confirm */
+document.querySelectorAll('.hold:not(:disabled), .ring').forEach(btn => {
+  if (btn.closest('[inert]')) return;
+  const ms = +btn.dataset.ms, lab = btn.querySelector('.lab'), t = btn.querySelector('.t');
+  const undo = btn.parentElement.querySelector('.undo');
+  let p = 0, raf = 0, start = 0, from = 0, state = 'idle', timer;
+  const set = v => { p = v; btn.style.setProperty('--p', v.toFixed(4)); };
+  const label = s => { if (lab) lab.textContent = s; else btn.setAttribute('aria-label', s); };
+  function frame(now){
+    if (state === 'holding') {
+      set(Math.min(1, from + (now - start) / ms));
+      if (t) t.textContent = ' ' + ((1 - p) * ms / 1000).toFixed(1) + 's';
+      if (p >= 1) return finish();
+    } else if (state === 'draining') {
+      set(Math.max(0, from - (now - start) / 260));
+      if (p <= 0) { state = 'idle'; return; }
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  function begin(){
+    if (state === 'done' || state === 'holding') return;
+    state = 'holding'; from = p; start = performance.now();
+    btn.classList.add('holding'); if (lab) lab.textContent = 'Keep holding';
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(frame);
+  }
+  function cancel(){
+    if (state !== 'holding') return;
+    state = 'draining'; from = p; start = performance.now();
+    btn.classList.remove('holding'); label(btn.dataset.idle); if (t) t.textContent = '';
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(frame);
+  }
+  function finish(){
+    state = 'done'; btn.classList.remove('holding'); btn.classList.add('done'); if (t) t.textContent = '';
+    label(btn.dataset.held); sr.textContent = btn.dataset.say;
+    if (btn.classList.contains('ring')) btn.querySelector('.i').innerHTML = CHECK;
+    if (undo) undo.hidden = false;
+    timer = setTimeout(restore, 6000);
+  }
+  function restore(){
+    clearTimeout(timer); state = 'idle'; set(0); btn.classList.remove('done'); label(btn.dataset.idle);
+    if (btn.classList.contains('ring')) btn.querySelector('.i').innerHTML = '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>';
+    if (undo) undo.hidden = true;
+  }
+  if (undo) undo.addEventListener('click', () => { restore(); sr.textContent = 'Restored.'; btn.focus(); });
+  btn.addEventListener('pointerdown', e => { if (e.button !== 0) return; btn.setPointerCapture(e.pointerId); begin(); });
+  btn.addEventListener('pointerup', cancel);
+  btn.addEventListener('pointercancel', cancel);
+  btn.addEventListener('lostpointercapture', cancel);
+  btn.addEventListener('keydown', e => {
+    if (e.key !== ' ' && e.key !== 'Enter') return;
+    e.preventDefault(); if (!e.repeat) begin();
+  });
+  btn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); cancel(); } });
+  btn.addEventListener('blur', cancel);
+  btn.addEventListener('click', e => e.preventDefault());
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+});
+
+/* slide to confirm */
+const sliders = [...document.querySelectorAll('.cols .slide')];
+sliders.forEach(sl => {
+  const thumb = sl.querySelector('.thumb'), txt = sl.querySelector('.txt'), idle = txt.textContent, tag = sl.querySelector('.tag');
+  let x = 0, max = 0, sx = 0, ox = 0, drag = false, done = false;
+  const measure = () => { max = sl.clientWidth - thumb.offsetWidth - 8; };
+  function put(v, anim){
+    measure(); x = Math.max(0, Math.min(max, v));
+    sl.classList.toggle('back', !!anim && !reduce.matches);
+    sl.style.setProperty('--x', x + 'px'); sl.style.setProperty('--k', (x / max).toFixed(3));
+    const pct = Math.round(x / max * 100);
+    thumb.setAttribute('aria-valuenow', pct);
+    thumb.setAttribute('aria-valuetext', done ? 'Confirmed' : pct + ' percent');
+  }
+  function complete(){
+    done = true; put(max, true); sl.classList.add('done');
+    txt.textContent = sl.dataset.done; if (tag) tag.hidden = true;
+    thumb.querySelector('svg').innerHTML = CHECK; thumb.setAttribute('aria-valuetext', 'Confirmed');
+    sr.textContent = sl.dataset.say;
+  }
+  sl.reset = () => { done = false; sl.classList.remove('done'); txt.textContent = idle; if (tag) tag.hidden = false; thumb.querySelector('svg').innerHTML = ARROW; put(0, true); };
+  thumb.addEventListener('pointerdown', e => {
+    if (done) return; drag = true; sx = e.clientX; ox = x; thumb.setPointerCapture(e.pointerId); sl.classList.remove('back');
+  });
+  thumb.addEventListener('pointermove', e => { if (drag) put(ox + e.clientX - sx); });
+  const release = () => { if (!drag) return; drag = false; x >= max * .92 ? complete() : put(0, true); };
+  thumb.addEventListener('pointerup', release);
+  thumb.addEventListener('pointercancel', release);
+  thumb.addEventListener('keydown', e => {
+    if (done) return;
+    measure();
+    const step = { ArrowRight: .1, ArrowUp: .1, PageUp: .25, ArrowLeft: -.1, ArrowDown: -.1, PageDown: -.25 }[e.key];
+    if (step) { e.preventDefault(); put(x + step * max, true); if (x >= max) complete(); }
+    else if (e.key === 'End') { e.preventDefault(); complete(); }
+    else if (e.key === 'Home' || e.key === 'Escape') { e.preventDefault(); put(0, true); }
+  });
+  addEventListener('resize', () => put(done ? 1e4 : x));
+});
+document.getElementById('reset').addEventListener('click', () => { sliders.forEach(s => s.reset()); sr.textContent = 'Sliders reset.'; });
+</script>
+</body>
+</html>

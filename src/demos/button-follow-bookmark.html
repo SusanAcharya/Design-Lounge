@@ -1,0 +1,263 @@
+<!-- Design Lounge piece: button-follow-bookmark · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Driftline — Wren Achebe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;600;700&family=Funnel+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ebedf1;--surface:#fff;--surface-2:#f4f5f8;--line:#dfe3ea;
+  --ink:#0d1015;--ink-2:#4b5261;--ink-3:#687080;
+  --accent:#2443f5;--accent-soft:#e7ebff;
+  --danger:#cf2a1f;--danger-soft:#fdeceb;
+  --display:"Funnel Display",system-ui,sans-serif;--sans:"Funnel Sans",system-ui,sans-serif;
+  --r-card:20px;--r-pill:999px;
+  --t-micro:160ms;--t-morph:240ms;--t-fill:380ms;--t-toast:280ms;--hold-toast:4000ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-pop:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{min-height:100%;display:grid;place-items:center;padding:32px 20px 96px;background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans)}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.stage{display:grid;grid-template-columns:360px 500px;gap:24px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:24px}
+svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.av{flex:none;display:grid;place-items:center;border-radius:50%;font:600 15px/1 var(--display);color:var(--ink);background:var(--c)}
+.me{display:flex;align-items:center;gap:14px}
+.me .av{width:64px;height:64px;font-size:22px}
+h1{margin:0;font:600 23px/1.15 var(--display);letter-spacing:-.015em}
+.handle{margin:2px 0 0;color:var(--ink-3);font-size:14px}
+.bio{margin:16px 0 0;color:var(--ink-2);font-size:14.5px;line-height:1.55}
+.stats{display:flex;gap:18px;margin:14px 0 0;font-size:14px;color:var(--ink-3)}
+.stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;display:inline-block}
+.stats b.roll{animation:roll 260ms var(--ease-out)}
+@keyframes roll{from{transform:translateY(-8px);opacity:0}to{transform:none;opacity:1}}
+.acts{display:flex;gap:8px;margin-top:20px}
+
+/* follow — three labels stacked in one grid cell so width never jumps */
+.follow{position:relative;display:inline-grid;align-items:center;height:44px;padding:0 20px;border-radius:var(--r-pill);background:var(--ink);color:#fff;font-weight:600;font-size:15px;transition:background var(--t-morph) var(--ease),color var(--t-morph) var(--ease),box-shadow var(--t-morph) var(--ease),transform var(--t-micro) var(--ease)}
+.follow:active{transform:scale(.96)}
+.follow .lab{display:grid}
+.follow .lab>span{grid-area:1/1;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity var(--t-micro) var(--ease),transform var(--t-morph) var(--ease-out)}
+.follow svg{width:16px;height:16px;stroke-width:2.2}
+.follow .l2,.follow .l3{opacity:0;transform:translateY(6px)}
+.follow:hover{background:#262b35}
+.follow[aria-pressed=true]{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.follow[aria-pressed=true] .l1{opacity:0;transform:translateY(-6px)}
+.follow[aria-pressed=true] .l2{opacity:1;transform:none}
+.follow[aria-pressed=true] .tick path{stroke-dasharray:20;stroke-dashoffset:20;animation:draw 320ms 80ms var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.follow[aria-pressed=true].armed:hover{background:var(--danger-soft);color:var(--danger);box-shadow:inset 0 0 0 1px rgba(207,42,31,.35)}
+.follow[aria-pressed=true].armed:hover .l2{opacity:0;transform:translateY(-6px)}
+.follow[aria-pressed=true].armed:hover .l3{opacity:1;transform:none}
+.follow.sm{height:36px;padding:0 14px;font-size:13.5px}
+.follow.sm svg{width:14px;height:14px}
+
+.bell{width:0;height:44px;border-radius:50%;display:grid;place-items:center;overflow:hidden;opacity:0;box-shadow:inset 0 0 0 1px var(--line);transition:width var(--t-morph) var(--ease-out),opacity var(--t-micro) var(--ease),background var(--t-micro) var(--ease),color var(--t-micro)}
+.bell.show{width:44px;opacity:1}
+.bell:hover{background:var(--surface-2)}
+.bell svg{width:20px;height:20px}
+.bell[aria-pressed=true]{background:var(--accent);color:#fff;box-shadow:none}
+.bell[aria-pressed=true] svg{fill:currentColor;animation:ring 600ms var(--ease);transform-origin:50% 15%}
+@keyframes ring{0%,100%{transform:rotate(0)}20%{transform:rotate(16deg)}40%{transform:rotate(-12deg)}60%{transform:rotate(7deg)}80%{transform:rotate(-3deg)}}
+
+.sugg{margin:24px -24px -24px;padding:16px 24px 20px;border-top:1px solid var(--line)}
+.sugg h2{margin:0 0 6px;font:600 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.sugg ul{list-style:none;margin:0;padding:0}
+.sugg li{display:flex;align-items:center;gap:12px;padding:10px 0}
+.sugg li+li{border-top:1px solid var(--surface-2)}
+.sugg .av{width:36px;height:36px;font-size:13px}
+.who{flex:1;min-width:0;line-height:1.3}
+.who b{display:block;font-weight:600;font-size:14.5px}
+.who span{font-size:13px;color:var(--ink-3)}
+
+.kick{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--ink-3);font-weight:500}
+.kick em{font-style:normal;color:var(--accent);font-weight:600}
+.post h2{margin:10px 0 0;font:600 30px/1.12 var(--display);letter-spacing:-.02em}
+.post p{margin:12px 0 0;color:var(--ink-2);font-size:15px;line-height:1.6}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:20px 0 0;padding:8px;border-radius:12px;background:var(--ink)}
+.strip i{aspect-ratio:4/3;border-radius:3px;background:radial-gradient(circle at var(--sx) var(--sy),#ffe7c2 0 7%,transparent 8%),linear-gradient(180deg,var(--s1) 0 var(--h),var(--s2) var(--h) 100%)}
+.foot{display:flex;align-items:center;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.save{display:flex;align-items:center;gap:8px;height:44px;padding:0 16px 0 12px;border-radius:var(--r-pill);font-weight:600;font-size:14.5px;transition:background var(--t-micro) var(--ease),color var(--t-micro)}
+.save:hover{background:var(--surface-2)}
+.save .rib{position:relative;width:22px;height:22px}
+.save .rib svg{position:absolute;inset:0;width:22px;height:22px}
+.save .fill{color:var(--accent);clip-path:inset(0 0 100% 0);transition:clip-path var(--t-fill) var(--ease)}
+.save .fill path{fill:currentColor}
+.save .n{font-variant-numeric:tabular-nums;color:var(--ink-3);font-weight:500;display:inline-block}
+.save .n.roll{animation:roll 260ms var(--ease-out)}
+.save[aria-pressed=true]{color:var(--accent);background:var(--accent-soft)}
+.save[aria-pressed=true] .fill{clip-path:inset(0 0 0 0)}
+.save[aria-pressed=true] .rib{animation:drop 420ms var(--fill-delay,200ms) var(--ease-pop) both}
+.save[aria-pressed=true] .n{color:var(--accent)}
+@keyframes drop{0%{transform:translateY(0)}45%{transform:translateY(3px) scaleY(1.06)}100%{transform:none}}
+.meta{margin-left:auto;font-size:13px;color:var(--ink-3)}
+
+.toast{position:fixed;left:50%;bottom:28px;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 18px;min-height:52px;border-radius:14px;background:var(--ink);color:#fff;font-size:14.5px;box-shadow:0 14px 34px rgba(13,16,21,.28);opacity:0;transform:translate(-50%,14px);pointer-events:none;transition:opacity var(--t-toast) var(--ease),transform var(--t-toast) var(--ease-out);max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast svg{width:18px;height:18px;flex:none;color:#9fb0ff}
+.toast button{height:36px;padding:0 14px;border-radius:10px;color:#c3ceff;font-weight:600}
+.toast button:hover{background:rgba(255,255,255,.1)}
+.toast button:focus-visible{outline-color:#c3ceff;outline-offset:-2px}
+
+@media (max-width:920px){.stage{grid-template-columns:minmax(0,500px)}}
+@media (max-width:480px){.card{padding:20px}.sugg{margin:20px -20px -20px;padding:14px 20px 16px}.post h2{font-size:25px}.meta{display:none}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:1ms!important;animation-delay:0ms!important;transition-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<main class="stage">
+  <section class="card" aria-labelledby="name">
+    <div class="me">
+      <span class="av" style="--c:#c9d3ff" aria-hidden="true">WA</span>
+      <div><h1 id="name">Wren Achebe</h1><p class="handle">@wren.achebe · Lisbon</p></div>
+    </div>
+    <p class="bio">Film photographer. One roll a week, developed at home. Notes on light, chemistry and walking slowly.</p>
+    <p class="stats"><span><b id="followers">12,408</b> followers</span><span><b>311</b> following</span></p>
+    <div class="acts">
+      <button class="follow" type="button" aria-pressed="false" data-name="Wren" id="mainFollow" style="min-width:128px">
+        <span class="lab">
+          <span class="l1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Follow</span>
+          <span class="l2"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Following</span>
+          <span class="l3">Unfollow</span>
+        </span>
+      </button>
+      <button class="bell" id="bell" type="button" aria-pressed="false" aria-label="Notify me when Wren posts" inert><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5h4"/></svg></button>
+    </div>
+    <div class="sugg">
+      <h2>Also on Driftline</h2>
+      <ul>
+        <li><span class="av" style="--c:#ffd9c7" aria-hidden="true">IV</span><span class="who"><b>Ilse Varga</b><span>@ilse.darkroom</span></span>
+          <button class="follow sm armed" type="button" aria-pressed="true" data-name="Ilse"><span class="lab"><span class="l1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Follow</span><span class="l2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Following</span><span class="l3">Unfollow</span></span></button></li>
+        <li><span class="av" style="--c:#d5ecd9" aria-hidden="true">NC</span><span class="who"><b>Noor Castell</b><span>@noor.walks</span></span>
+          <button class="follow sm" type="button" aria-pressed="false" data-name="Noor"><span class="lab"><span class="l1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Follow</span><span class="l2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Following</span><span class="l3">Unfollow</span></span></button></li>
+        <li><span class="av" style="--c:#f3e7b8" aria-hidden="true">MB</span><span class="who"><b>Mateo Brandt</b><span>@mateo.prints</span></span>
+          <button class="follow sm" type="button" aria-pressed="false" data-name="Mateo"><span class="lab"><span class="l1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Follow</span><span class="l2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Following</span><span class="l3">Unfollow</span></span></button></li>
+      </ul>
+    </div>
+  </section>
+
+  <article class="card post">
+    <p class="kick"><em>Story</em><span>·</span><span>8 min read</span><span>·</span><span>2 Oct</span></p>
+    <h2>Forty mornings on the river, one roll each</h2>
+    <p>I set one rule for September: walk the same mile of bank at first light and shoot a single roll. Here is what changed when the light stopped being a surprise.</p>
+    <div class="strip" aria-hidden="true">
+      <i style="--s1:#9fb6d6;--s2:#3c556f;--h:58%;--sx:70%;--sy:40%"></i>
+      <i style="--s1:#e7b99b;--s2:#5c4a5a;--h:52%;--sx:30%;--sy:44%"></i>
+      <i style="--s1:#c9d2d6;--s2:#4f5d5e;--h:64%;--sx:55%;--sy:52%"></i>
+      <i style="--s1:#f0c7a0;--s2:#38475e;--h:48%;--sx:80%;--sy:36%"></i>
+    </div>
+    <div class="foot">
+      <button class="save" id="save" type="button" aria-pressed="false" aria-label="Save story, 214 saves">
+        <span class="rib" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z"/></svg>
+          <svg class="fill" viewBox="0 0 24 24"><path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z"/></svg>
+        </span>
+        <span class="t">Save</span><span class="n" id="saves">214</span>
+      </button>
+      <span class="meta">38 replies · 1.9k reads</span>
+    </div>
+  </article>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" aria-hidden="true" id="toastIcon"></svg>
+  <span id="toastText"></span>
+  <button type="button" id="undo">Undo</button>
+</div>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const fmt = n => n.toLocaleString('en-GB');
+const toast = document.getElementById('toast'), toastText = document.getElementById('toastText');
+const toastIcon = document.getElementById('toastIcon'), undoBtn = document.getElementById('undo');
+const ICONS = {
+  rib:'<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z" fill="currentColor"/>',
+  bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5h4"/>',
+  out:'<path d="M5 12h14"/>'
+};
+let toastTimer, undoFn = null;
+function showToast(icon, text, undo){
+  clearTimeout(toastTimer);
+  toastIcon.innerHTML = ICONS[icon];
+  toastText.textContent = text;
+  undoFn = undo || null;
+  undoBtn.hidden = !undo;
+  toast.classList.add('show');
+  toastTimer = setTimeout(hideToast, 4000);
+}
+function hideToast(){ toast.classList.remove('show'); undoFn = null; }
+undoBtn.addEventListener('click', () => { const f = undoFn; hideToast(); if (f) f(); });
+toast.addEventListener('mouseenter', () => clearTimeout(toastTimer));
+toast.addEventListener('mouseleave', () => { toastTimer = setTimeout(hideToast, 2000); });
+addEventListener('keydown', e => { if (e.key === 'Escape') hideToast(); });
+
+function roll(el, text){
+  el.textContent = text;
+  if (reduce.matches) return;
+  el.classList.remove('roll'); void el.offsetWidth; el.classList.add('roll');
+}
+
+/* follow */
+const followers = document.getElementById('followers'), bell = document.getElementById('bell');
+let followerCount = 12408;
+function labelFollow(btn){
+  const on = btn.getAttribute('aria-pressed') === 'true';
+  btn.setAttribute('aria-label', on ? `Following ${btn.dataset.name}. Press to unfollow` : `Follow ${btn.dataset.name}`);
+}
+function setFollow(btn, on){
+  btn.setAttribute('aria-pressed', on);
+  btn.classList.remove('armed');
+  labelFollow(btn);
+  if (btn.id === 'mainFollow'){
+    followerCount += on ? 1 : -1;
+    roll(followers, fmt(followerCount));
+    bell.classList.toggle('show', on);
+    bell.inert = !on;
+    if (!on){ bell.setAttribute('aria-pressed', 'false'); }
+  }
+}
+document.querySelectorAll('.follow').forEach(btn => {
+  labelFollow(btn);
+  btn.addEventListener('pointerleave', () => { if (btn.getAttribute('aria-pressed') === 'true') btn.classList.add('armed'); });
+  btn.addEventListener('blur', () => { if (btn.getAttribute('aria-pressed') === 'true') btn.classList.add('armed'); });
+  btn.addEventListener('click', () => {
+    const on = btn.getAttribute('aria-pressed') !== 'true';
+    setFollow(btn, on);
+    if (!on) showToast('out', `Unfollowed ${btn.dataset.name}`, () => { setFollow(btn, true); btn.classList.add('armed'); });
+    else if (toast.classList.contains('show') && toastText.textContent.includes(btn.dataset.name)) hideToast();
+  });
+});
+bell.addEventListener('click', () => {
+  const on = bell.getAttribute('aria-pressed') !== 'true';
+  bell.setAttribute('aria-pressed', on);
+  bell.setAttribute('aria-label', on ? 'Notifications on for Wren. Press to turn off' : 'Notify me when Wren posts');
+  showToast('bell', on ? "You'll hear when Wren posts" : 'Notifications off for Wren');
+});
+
+/* save */
+const save = document.getElementById('save'), saves = document.getElementById('saves');
+let saveCount = 214;
+function setSave(on){
+  save.setAttribute('aria-pressed', on);
+  saveCount += on ? 1 : -1;
+  save.querySelector('.t').textContent = on ? 'Saved' : 'Save';
+  roll(saves, fmt(saveCount));
+  save.setAttribute('aria-label', `${on ? 'Saved' : 'Save story'}, ${fmt(saveCount)} saves`);
+}
+save.addEventListener('click', () => {
+  const on = save.getAttribute('aria-pressed') !== 'true';
+  setSave(on);
+  showToast('rib', on ? 'Saved to Reading list' : 'Removed from Reading list', () => setSave(!on));
+});
+</script>
+</body>
+</html>

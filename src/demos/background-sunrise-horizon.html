@@ -1,0 +1,175 @@
+<!-- Design Lounge piece: background-sunrise-horizon · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Sunrise horizon background</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5efe4;--paper-ink:#221d18;--paper-2:#5e554b;--rule:#ddd2c1;
+  --ink:#221d18;--ink-2:#4a4239;--accent:#c4471f;
+  --serif:"Newsreader",Georgia,serif;--sans:"Schibsted Grotesk",system-ui,sans-serif;
+  --horizon:62%;--ease:cubic-bezier(.2,.7,.2,1);--t:180ms;--t-ink:600ms;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{background:var(--paper)}
+body{color:var(--ink);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.scene{position:fixed;inset:0;overflow:hidden;pointer-events:none}
+.sky{position:absolute;left:0;right:0;top:0;height:var(--horizon);display:flex;flex-direction:column;overflow:hidden}
+.sky i,.sea i{display:block;flex:var(--h) 0 0}
+.sea{position:absolute;left:0;right:0;top:var(--horizon);bottom:0;display:flex;flex-direction:column;overflow:hidden}
+.sun{position:absolute;left:72%;top:0;width:144px;height:144px;margin:-72px 0 0 -72px;border-radius:50%;will-change:transform}
+.glint{position:absolute;left:72%;top:10px;width:220px;margin-left:-110px;display:flex;flex-direction:column;align-items:center;gap:9px}
+.glint b{display:block;height:3px;border-radius:2px;background:var(--sun,#f26b2a);animation:shimmer 3.2s var(--ease) infinite alternate}
+.glint b:nth-child(2n){animation-duration:2.6s;animation-delay:-.8s}
+.glint b:nth-child(3n){animation-duration:3.8s;animation-delay:-1.6s}
+@keyframes shimmer{from{transform:scaleX(.7)}to{transform:scaleX(1.12)}}
+.paused .glint b{animation-play-state:paused}
+.horizon-rule{position:absolute;left:0;right:0;top:var(--horizon);height:1px;background:rgba(34,29,24,.18)}
+.page{position:relative}
+.hero{height:100vh;min-height:620px;display:flex;flex-direction:column;color:var(--ink);transition:color var(--t-ink) var(--ease)}
+nav{display:flex;align-items:baseline;gap:36px;padding:28px 64px 0;color:var(--ink);transition:color var(--t-ink) var(--ease)}
+.brand{font:italic 400 24px/1 var(--serif);color:inherit;text-decoration:none;letter-spacing:-.01em}
+.links{display:flex;gap:26px;margin-left:auto}
+.links a{color:inherit;opacity:.78;text-decoration:none;font-size:14px;transition:opacity var(--t) var(--ease)}
+.links a:hover{opacity:1}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.copy{padding:96px 64px 0;max-width:760px}
+.kicker{font:600 12px var(--sans);letter-spacing:.18em;text-transform:uppercase;margin:0 0 20px;opacity:.8}
+h1{font:400 92px/.98 var(--serif);letter-spacing:-.025em;margin:0 0 24px}
+h1 em{font-style:italic}
+.sub{font:400 20px/1.5 var(--serif);max-width:500px;margin:0 0 32px;color:inherit;opacity:.86}
+.btn{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 22px;border:1px solid currentColor;border-radius:2px;color:inherit;text-decoration:none;font:500 14px var(--sans);letter-spacing:.02em;background:transparent;transition:background-color var(--t) var(--ease),color var(--t) var(--ease)}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.dark{--ink:#f7f1e6}
+.issue{position:relative;background:var(--paper);color:var(--paper-ink);border-top:1px solid var(--rule);padding:56px 64px 120px}
+.issue h2{font:600 12px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--paper-2);margin:0 0 28px}
+.stories{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.stories article{border-top:1px solid var(--paper-ink);padding-top:16px}
+.stories time{font:500 13px var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
+.stories h3{font:400 28px/1.15 var(--serif);letter-spacing:-.01em;margin:8px 0 10px}
+.stories p{margin:0;color:var(--paper-2);font-size:15px;max-width:34ch}
+.ctl{position:fixed;right:24px;bottom:24px;display:flex;align-items:center;gap:14px;padding:10px 12px 10px 16px;background:#fbf7f0;border:1px solid var(--rule);border-radius:4px;color:var(--paper-ink);box-shadow:0 8px 24px -12px rgba(34,29,24,.35)}
+.ctl label{font:600 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--paper-2)}
+.ctl output{font:400 28px/1 var(--serif);font-variant-numeric:tabular-nums;min-width:68px}
+.ctl input{-webkit-appearance:none;appearance:none;width:180px;height:24px;background:transparent;margin:0}
+.ctl input::-webkit-slider-runnable-track{height:1px;background:var(--paper-ink)}
+.ctl input::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:var(--accent);border:3px solid #fbf7f0;box-shadow:0 0 0 1px var(--accent)}
+.ctl input::-moz-range-track{height:1px;background:var(--paper-ink)}
+.ctl input::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent);border:3px solid #fbf7f0}
+.ctl button{width:40px;height:40px;border-radius:50%;border:1px solid var(--rule);background:transparent;color:var(--paper-ink);display:grid;place-items:center;cursor:pointer;padding:0;transition:border-color var(--t) var(--ease)}
+.ctl button:hover{border-color:var(--paper-ink)}
+.ctl svg{width:14px;height:14px;fill:currentColor}
+.hint{font:400 12px var(--sans);color:var(--paper-2);max-width:96px;line-height:1.3}
+@media (max-width:760px){
+  nav{padding:20px 20px 0}.links{display:none}
+  .copy{padding:56px 20px 0}h1{font-size:54px}.sub{font-size:18px}
+  .issue{padding:40px 20px 140px}.stories{grid-template-columns:1fr;gap:28px}
+  .ctl{left:12px;right:12px;bottom:12px;gap:10px}.ctl input{flex:1;width:auto;min-width:0}.hint{display:none}
+  .sun{left:78%;width:96px;height:96px;margin:-48px 0 0 -48px}.glint{left:78%}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="scene" id="scene" aria-hidden="true">
+  <div class="sky" id="sky"><div class="sun" id="sun"></div></div>
+  <div class="sea" id="sea"><div class="glint" id="glint"></div></div>
+  <div class="horizon-rule"></div>
+</div>
+<div class="page">
+  <header class="hero" id="hero">
+    <nav aria-label="Main">
+      <a class="brand" href="#">Eastlight Almanac</a>
+      <div class="links"><a href="#">Issues</a><a href="#">Shore notes</a><a href="#">Stockists</a><a href="#">Subscribe</a></div>
+    </nav>
+    <div class="copy">
+      <p class="kicker">No. 14 · Spring 2027</p>
+      <h1>Every morning arrives <em>in layers.</em></h1>
+      <p class="sub">A quarterly journal of first light on far coasts: eleven sunrises, watched from the shore and written down before breakfast.</p>
+      <a class="btn" href="#">Read issue 14<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </header>
+  <section class="issue" aria-labelledby="inside">
+    <h2 id="inside">In this issue</h2>
+    <div class="stories">
+      <article><time>05:48</time><h3>The harbour that sets its clocks by the ferry</h3><p>Nine mornings in a fishing town where nobody owns an alarm.</p></article>
+      <article><time>06:04</time><h3>A keeper's notebook, forty winters long</h3><p>Weather, tide and first light, recorded at the same desk since 1986.</p></article>
+      <article><time>06:31</time><h3>Breakfast on the salt flats</h3><p>Flatbread, tea and a horizon so level it looks drawn with a rule.</p></article>
+    </div>
+  </section>
+</div>
+<div class="ctl" role="group" aria-label="Time of day">
+  <label for="time">Sunrise</label>
+  <output id="clock" for="time">06:12</output>
+  <input id="time" type="range" min="330" max="480" step="1" value="372" aria-valuetext="06:12">
+  <span class="hint">Scroll to move the morning</span>
+  <button type="button" id="play" aria-pressed="false" aria-label="Pause the morning"><svg viewBox="0 0 24 24" id="ico"></svg></button>
+</div>
+<script>
+(()=>{
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $=id=>document.getElementById(id);
+  const K=[
+    [330,'#4f5c76','#b9b3b9','#efb08c','#e2552a','#3e4860'],
+    [352,'#7487a3','#dcc0b6','#f6a876','#ec5f27','#56637c'],
+    [370,'#9db0c6','#edcdb9','#f9b071','#f26b2a','#6e8098'],
+    [410,'#bccddc','#f3dfcb','#fbd496','#f8a04a','#89a0b3'],
+    [480,'#d3e0ea','#f0f0ea','#f7e8c8','#fde3a0','#a7bccb']
+  ];
+  const SKY=[18,15,13,11,10,9,8,8,8],SEA=[14,15,16,17,18,20];
+  const hex=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+  const mix=(a,b,f)=>a.map((v,i)=>v+(b[i]-v)*f);
+  const css=c=>`rgb(${c.map(v=>Math.round(v)).join(',')})`;
+  const lum=c=>{const [r,g,b]=c.map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*r+.7152*g+.0722*b;};
+  const sky=$('sky'),sea=$('sea'),sun=$('sun'),glint=$('glint'),nav=document.querySelector('nav'),input=$('time'),clock=$('clock');
+  const skyEls=SKY.map(h=>{const i=document.createElement('i');i.style.setProperty('--h',h);sky.insertBefore(i,sun);return i;});
+  const seaEls=SEA.map(h=>{const i=document.createElement('i');i.style.setProperty('--h',h);sea.insertBefore(i,glint);return i;});
+  const glints=[1,.82,.66,.52,.4,.3,.22,.16].map(w=>{const b=document.createElement('b');b.style.width=(w*100)+'%';glint.appendChild(b);return b;});
+  let minutes=372,playing=!reduce,raf=0,last=0,lastY=scrollY;
+  function stops(m){
+    let i=0;while(i<K.length-2&&m>K[i+1][0])i++;
+    const a=K[i],b=K[i+1],f=Math.max(0,Math.min(1,(m-a[0])/(b[0]-a[0])));
+    return [1,2,3,4,5].map(j=>mix(hex(a[j]),hex(b[j]),f));
+  }
+  function render(){
+    const [top,mid,low,sunC,water]=stops(minutes);
+    skyEls.forEach((el,i)=>{const p=Math.sqrt(i/(skyEls.length-1));el.style.background=css(p<.6?mix(top,mid,p/.6):mix(mid,low,(p-.6)/.4));});
+    seaEls.forEach((el,i)=>{const p=i/(seaEls.length-1);el.style.background=css(mix(mix(low,mid,.35),water,.25+p*.75));});
+    const H=sky.clientHeight,alt=(minutes-370)/100;
+    sun.style.background=css(sunC);
+    sun.style.transform=`translate3d(0,${(H-alt*H*.62).toFixed(1)}px,0)`;
+    const g=Math.max(0,Math.min(1,(alt+.25)*1.6));
+    glint.style.opacity=g.toFixed(2);glint.style.setProperty('--sun',css(mix(sunC,[255,247,230],.25)));
+    nav.classList.toggle('dark',lum(top)<.2);
+    const t=`${String(Math.floor(minutes/60)).padStart(2,'0')}:${String(Math.floor(minutes%60)).padStart(2,'0')}`;
+    clock.textContent=t;input.value=Math.round(minutes);input.setAttribute('aria-valuetext',t);
+  }
+  function frame(now){
+    raf=requestAnimationFrame(frame);
+    const dt=now-last;if(dt<1000/30-1)return;
+    last=now;minutes+=Math.min(dt,100)/1000*3.2;
+    if(minutes>=480){minutes=480;playing=false;sync();stop();}
+    render();
+  }
+  function start(){if(!raf&&playing&&!document.hidden){last=performance.now();raf=requestAnimationFrame(frame);}}
+  function stop(){cancelAnimationFrame(raf);raf=0;}
+  const btn=$('play'),ico=$('ico');
+  function sync(){btn.setAttribute('aria-pressed',String(!playing));btn.setAttribute('aria-label',playing?'Pause the morning':'Play the morning');
+    ico.innerHTML=playing?'<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>':'<path d="M7 5l12 7-12 7z"/>';
+    document.body.classList.toggle('paused',!playing);}
+  btn.addEventListener('click',()=>{playing=!playing;if(playing&&minutes>=479)minutes=340;sync();playing?start():stop();});
+  input.addEventListener('input',()=>{minutes=+input.value;render();});
+  addEventListener('scroll',()=>{const d=scrollY-lastY;lastY=scrollY;minutes=Math.max(330,Math.min(480,minutes+d/innerHeight*90));if(!raf)render();},{passive:true});
+  addEventListener('resize',render);
+  document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
+  sync();render();start();
+})();
+</script>
+</body>
+</html>
