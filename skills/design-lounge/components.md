@@ -19,6 +19,8 @@ Put these on `:root` with the theme colour tokens. Density comes from [practice.
 
 `--shadow` is the family's shadow. Sharp, editorial, and industrial use `none`.
 
+A filter, a chip, and a segmented control use `--radius` and `--control` too. A brief that draws a pill does not win unless this family's button is already a pill.
+
 ## Button
 
 One height per platform: `var(--control)`. Padding 0 14px. Font 13px / 500 on web, 15px / 500 on phone. Icon 16px, gap 8px. One primary button per view.

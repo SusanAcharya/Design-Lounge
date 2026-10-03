@@ -50,7 +50,7 @@ NEA is past 3,500. …
 
 - The label is a paragraph. The over amount is the only `h1`.
 - The list is a `ul`. Each item is a name, a meta line, and an 8px track.
-- The list max-width is 640px.
+- The list max-width is 720px, the same column as the other screens in the pass.
 - Grain is on the page background only. Quiet rows use `--surface`. The over row uses the warning wash and covers the grain.
 
 ## Tokens
@@ -135,7 +135,7 @@ None. A meter that animates on load delays the fact that NEA is over. Reduced mo
 - [ ] NEA is 4,200 of 3,500, the words include over, the row is `#e8d6bb`, the meta is `#7d470e`.
 - [ ] Tea is 900 of 2,000 at 45%, primary fill.
 - [ ] No row other than NEA uses the warning wash.
-- [ ] The list is at most 640px wide.
+- [ ] The list is 720px wide, the pass column. Do not keep 640 because an older note said so.
 - [ ] There is no button on this frame.
 
 ## Implementation notes

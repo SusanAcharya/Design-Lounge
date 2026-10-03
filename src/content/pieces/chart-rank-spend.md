@@ -138,7 +138,7 @@ No count-up on the heading. The amount is already the answer.
 - [ ] Five rows: Rent, Bhatbhateni, NEA, Bus, Tea.
 - [ ] Rent is pressed and its bar is 100% of the track.
 - [ ] Clicking Tea sets the heading to रु 900 and the subtitle to Tea.
-- [ ] The list max-width is 720px.
+- [ ] The list max-width is 720px, the pass column. Another screen in the same pass does not get a different width.
 - [ ] Focus ring is 2px, offset 2px.
 
 ## Implementation notes

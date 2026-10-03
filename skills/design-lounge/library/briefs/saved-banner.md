@@ -22,7 +22,7 @@ The screen after a bill is saved. The first frame is already the success, becaus
 
 ```
 padding 48px 64px
-┌ banner, max 560px, success wash ─────────┐
+┌ banner, max 720px, success wash ─────────┐
 │ ASAR                                      │
 │ Saved.                    56px            │
 │ The NEA bill is in Asar. …                │
@@ -73,7 +73,7 @@ None. A banner that fades after 2 seconds is a toast. Reduced motion has nothing
 
 ## States
 
-- Banner resting: `--success-soft`, radius 6px, padding 28px 28px 24px, max-width 560px.
+- Banner resting: `--success-soft`, radius 6px, padding 28px 28px 24px, max-width 720px. The radius becomes the family's when a kit is locked.
 - Button: height 40px, radius 6px, fill `--primary`, ink `--primary-ink`.
 - Button disabled: opacity 0.55. The banner stays.
 - Focus-visible: 2px outline, offset 2px.
@@ -91,7 +91,7 @@ None. A banner that fades after 2 seconds is a toast. Reduced motion has nothing
 
 ## Responsive rules
 
-- At 1280 the padding is 48px 64px and the heading is 56px. The banner is 560px, left aligned.
+- At 1280 the padding is 48px 64px and the heading is 56px. The banner is 720px, the pass column, left aligned.
 - At 768, padding becomes 24px.
 - Below 640, the heading drops to 40px and the button becomes full width of the banner, height 44px. The banner keeps its padding. It does not become a bottom toast.
 
@@ -114,7 +114,7 @@ None. A banner that fades after 2 seconds is a toast. Reduced motion has nothing
 - [ ] Clicking the button sets "Month opened" and disables it at opacity 0.55.
 - [ ] The banner remains after the click.
 - [ ] No timer, no checkmark animation, no second button.
-- [ ] The banner max-width is 560px.
+- [ ] The banner max-width is 720px, the same column as the list screens.
 
 ## Implementation notes
 
@@ -154,7 +154,7 @@ Where it sits:
 Rebuild order:
 
 1. Set the paper and the two faces.
-2. Place one banner, success wash, max 560px.
+2. Place one banner, success wash, max 720px.
 3. Place the label, the 56px word, the sentence, the button.
 4. Wire the button to "Month opened" and disabled.
 5. Confirm the banner does not dismiss.

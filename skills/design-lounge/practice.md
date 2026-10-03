@@ -189,7 +189,7 @@ Base unit 4px. Use the locked family's density. Do not invent a third gap on the
 | regular | 20–32 | 16 | 16 | 40 / 44 |
 | dense | 16–24 | 12 | 12 | 36 / 44 |
 
-Phone margin 20. Web content width 1120 unless a piece brief sets a stage. Reading measure 58–66ch.
+Phone margin 20. The web frame is 1120px. The column inside it is one width for every screen of this pass. Default 720px. Write it on the system sheet before the first screen. A brief that says 640, 720, or 880 does not get its own column. Reading measure stays 58–66ch inside that column.
 
 ## Type
 
@@ -202,7 +202,7 @@ One display face, one text face, one mono for numbers and code. No fourth family
 | body | prose, 16px web / 17px phone, line-height 1.5 |
 | label | 11–12px with tracking, never a sentence |
 | caption | secondary, `--ink-2` |
-| num | `--font-mono`, tabular numbers |
+| num | the pairing's number face, tabular. `--font-mono`, or `--font-display` when `numbers` is `display` |
 
 Body stays on `--font-text`. Do not set a paragraph in the display face. Do not set body in mono unless that pairing's `caution` says the body is mono on purpose.
 
@@ -210,15 +210,17 @@ Body stays on `--font-text`. Do not set a paragraph in the display face. Do not 
 
 One primary action per view. Secondary and tertiary follow the family.
 
-Web is a 12-column grid with a 16px gutter, or the grid in the piece brief. Phone is one column. The primary action sits in the thumb zone or in the sticky bar the piece specifies.
+Web screens in one pass share the column from Spacing, and the same page padding. Phone is one column, the full width of the frame. A grid inside the column is the piece's structure. It is not a different page width. The primary action sits in the thumb zone or in the sticky bar the piece specifies.
 
 One navigation system. A header and a tab bar on the same phone screen is two systems.
 
-The header, the button, and the text field look the same on every screen of this pass.
+The header, the button, the filter, and the text field look the same on every screen of this pass. A brief that draws a pill filter loses to the family, unless that family's button is already a pill. Control height and radius come from the family, on every screen.
 
 ## Brand
 
 If they already have a brand colour, the theme still supplies surfaces, ink, lines, and feedback. Their brand becomes `--primary` only. `--primary-ink` is `#141210` or `#fffdf8`, whichever reaches contrast 4.5 against that brand. `--link` is the brand walked darker on a light background, or lighter on a dark one, until it reaches 4.5 against `--bg`. Secondary and tertiary stay the theme's, unless they named those too.
+
+On a dark theme, a brand red can disappear into `--bg` even when the label on the button passes. If the fill contrasts under 3 with `--bg`, walk it lighter until the button separates from the page, then choose `--primary-ink` again at 4.5 against that adjusted fill. Do not put the raw brand red down as text on a dark surface. Text uses `--link`.
 
 ## Components
 
@@ -237,6 +239,19 @@ Feedback colours are for live state only.
 You can see the finished screen. Open it. A browser at the frame size, or a screenshot of that frame. Web is 1280×800. Phone is 390×844. Tablet is 1180×820. Read the page. A screenshot alone can hide a gap.
 
 If the browser cannot paint, cannot animate, or the screenshot repeats content, measure the DOM instead and write the same block with "measured". Check: no horizontal overflow (`scrollWidth` no greater than `clientWidth`), one primary button, that button at least 44px on a phone and 36px on the web, one element at display size, and the currency word and the digits sharing one computed `font-family`. If you cannot open it and cannot measure it, say so. The UI is not done.
+
+A screen that passes alone can still fail the pass. After the last screen, measure the set against each other and write this before you call it done. An agent that cannot see the page still runs this. The numbers are the check.
+
+```
+Match
+Column: <px> on every screen, or <screen> is <px>
+Page padding: <px>
+Control height / radius: <px> / <px>
+Amount face: <family>
+Fails: <what differs, or none>
+```
+
+Column width, page padding, control height, radius, and the amount's computed font are one value across the pass. A mismatch is a fail. Change the outlier to the sheet. Do not keep a brief's 640 beside another's 720.
 
 For each screen, write this in the reply before you call the pass done:
 
@@ -267,7 +282,7 @@ These are fails. They are the tells of a page that was generated and not designe
 - Motion that loops because the page felt empty. `ease` or `linear` on a UI move. The curve is the sheet's, or the piece's.
 - Two navigation systems. A chart painted in a library's default colours.
 
-Uniform means the button, the field, the radius, and the type roles match on every screen of this pass. Screen two inventing its own card is a fail.
+Uniform means the column, the page padding, the button, the filter, the field, the radius, and the type roles match on every screen of this pass. Screen two inventing its own card, or its own width, is a fail.
 
 Read one sentence from the screen. If it is still true after you replace the product name with another, rewrite it.
 
@@ -317,6 +332,7 @@ Put the theme's CSS variables on `:root` once, or in one theme provider. Control
 - A list is one state: loading, empty, failed, or populated. The piece you used matches that state.
 - The next action names the screen it opens. That screen is in this pass, or you said it is still open.
 - You opened each finished screen at its frame size and wrote the look notes in the reply.
+- You wrote the Match block. Column, padding, control height, radius, and amount face are the same on every screen.
 - Every look check passed. A fail was fixed, and that screen was opened again.
 - The theme matches this product's world, or a recipe matched. The reply names the theme you rejected. You did not lock a palette because it was first.
 - After the look checks passed, you made one correction and opened that screen again.

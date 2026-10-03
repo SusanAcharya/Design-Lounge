@@ -111,7 +111,7 @@ None. Filtering shows and hides rows immediately. A slide-in is decoration. Redu
 
 - The frame is 390×844. Padding top 54px. Padding bottom 34px. Do not draw a status bar.
 - At 360 wide, the amount stays on the right. The name may wrap. The amount does not drop under the name unless the row is under 320px, and then the amount is still 16px.
-- On the web, the same list sits in a column at most 720px, left aligned, with the heading at 56px. Do not turn it into a table with a sidebar to look like a staff tool.
+- On the web, the same list sits in the pass column, 720px in this demo, left aligned, with the heading at 56px. Do not turn it into a table with a sidebar to look like a staff tool. The filters in this demo are pills. When a family is locked, the filter uses that family's radius and control height. A pill survives only if the family button is already a pill.
 - A tablet does not stretch these rows to 1180px. Use a readable column.
 
 ## Acceptance checklist
