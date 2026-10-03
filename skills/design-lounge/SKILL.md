@@ -43,7 +43,7 @@ Ask for the stack once if they have not named it. Then keep it. Good stack lines
 
 Read [practice.md](practice.md) and follow it. Do not skip ahead to code.
 
-Pick one theme, one pairing, one family, and the pieces for this pass. Before you choose a layout, write the four lines in Decide the screen in [practice.md](practice.md): who it is for, the one decision, the first thing they see, and the next action. The first thing is the largest type on the view. A region that does not serve those four lines does not go on the screen. Show the pick before you paint, unless they already told you to build. Then run the finish checklist and report each line as pass or fail.
+Pick one theme, one pairing, one family, and the pieces for this pass. Before you choose a layout, write the four lines in Decide the screen in [practice.md](practice.md): who it is for, the one decision, the first thing they see, and the next action. The first thing is the largest type on the view. A region that does not serve those four lines does not go on the screen. The next action names the screen it opens. Follow After the action in [practice.md](practice.md). Show the pick before you paint, unless they already told you to build. Then run the finish checklist and report each line as pass or fail.
 
 ## Show the pick, then ask once
 

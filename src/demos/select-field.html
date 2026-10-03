@@ -1,0 +1,104 @@
+<!-- Design Lounge piece: select-field · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Role</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#fff;--surface-2:#f0ebe3;--ink:#161513;--ink-2:#5a554c;
+  --line:#e4dfd4;--line-strong:#cfc6b8;--primary:#1f4d3a;--primary-soft:#e7f2ec;
+  --danger:#9b2c2c;--focus:#1f4d3a;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.where{margin:0 0 16px;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-2)}
+.field{position:relative;width:320px;display:flex;flex-direction:column;gap:6px}
+.field label{font:500 12px/1 var(--sans);color:var(--ink-2)}
+#sel{height:40px;padding:0 12px;border-radius:2px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);text-align:left;font-weight:500}
+#list{position:absolute;z-index:2;top:68px;left:0;right:0;margin:0;padding:4px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:2px}
+#list[hidden]{display:none}
+#list li{min-height:40px;display:flex;align-items:center;padding:0 12px;border-radius:2px}
+#list li[aria-selected="true"]{background:var(--primary-soft)}
+#list li[data-on="true"]{background:var(--surface-2)}
+#list li[aria-selected="true"][data-on="true"]{background:var(--primary-soft)}
+.err{margin:0;font-size:12px;color:var(--danger)}
+.clear{margin-top:16px;height:36px;padding:0 14px;border-radius:2px;border:1px solid var(--line-strong);background:transparent;color:var(--ink-2)}
+</style>
+</head>
+<body>
+<p class="where">People</p>
+<div class="field">
+  <label id="lab">Role</label>
+  <button id="sel" type="button" aria-haspopup="listbox" aria-expanded="true" aria-controls="list">Dispatch</button>
+  <ul id="list" role="listbox" aria-labelledby="lab" aria-activedescendant="o0">
+    <li role="option" id="o0" aria-selected="true" data-on="true">Dispatch</li>
+    <li role="option" id="o1" aria-selected="false" data-on="false">Finance</li>
+    <li role="option" id="o2" aria-selected="false" data-on="false">Yard</li>
+    <li role="option" id="o3" aria-selected="false" data-on="false">Studio</li>
+  </ul>
+  <p class="err" id="err" hidden>Choose a role.</p>
+</div>
+<button class="clear" id="clear" type="button">Clear</button>
+<script>
+const sel = document.getElementById('sel');
+const list = document.getElementById('list');
+const err = document.getElementById('err');
+const options = [...list.querySelectorAll('[role="option"]')];
+let value = 'Dispatch';
+let active = 0;
+function paint(){
+  options.forEach((o, i) => {
+    o.setAttribute('aria-selected', o.textContent === value ? 'true' : 'false');
+    o.dataset.on = String(i === active);
+  });
+  list.setAttribute('aria-activedescendant', options[active].id);
+  sel.textContent = value || 'Choose a role';
+}
+function open(on){
+  sel.setAttribute('aria-expanded', on ? 'true' : 'false');
+  list.hidden = !on;
+}
+options.forEach((o, i) => {
+  o.addEventListener('mouseenter', () => { active = i; paint(); });
+  o.addEventListener('click', () => {
+    value = o.textContent;
+    err.hidden = true;
+    open(false);
+    paint();
+  });
+});
+sel.addEventListener('click', () => open(list.hidden));
+sel.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (list.hidden) open(true);
+    active = (active + (e.key === 'ArrowDown' ? 1 : options.length - 1)) % options.length;
+    paint();
+  } else if (e.key === 'Enter' && !list.hidden) {
+    e.preventDefault();
+    value = options[active].textContent;
+    err.hidden = true;
+    open(false);
+    paint();
+  } else if (e.key === 'Escape') {
+    open(false);
+  }
+});
+document.getElementById('clear').addEventListener('click', () => {
+  value = '';
+  err.hidden = false;
+  open(false);
+  paint();
+});
+paint();
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!-- Design Lounge piece: shop-product · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ash bowl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3e6d4;--surface:#faefe0;--ink:#2a1b14;--ink-2:#6a4e3e;
+  --primary:#c45c2a;--primary-ink:#fffdf8;--focus:#c45c2a;
+  --serif:"Young Serif",Georgia,serif;--sans:"Hanken Grotesk",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.45 var(--sans);background:var(--bg);color:var(--ink);padding:48px 64px;display:grid;grid-template-columns:420px 1fr;gap:48px;align-items:center}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.swatch{height:480px;border-radius:8px;background:#c45c2a}
+.back{height:32px;padding:0;border:0;background:transparent;color:var(--ink-2);font-weight:600}
+h1{margin:12px 0 8px;font-family:var(--serif);font-size:56px;font-weight:400;letter-spacing:-.03em}
+.price{margin:0;font-size:20px;font-variant-numeric:tabular-nums}
+.why{margin:12px 0 0;max-width:36ch;color:var(--ink-2)}
+.add{margin-top:24px;height:44px;padding:0 18px;border:0;border-radius:8px;background:var(--primary);color:var(--primary-ink);font-weight:600}
+.add:disabled{opacity:.55}
+</style>
+</head>
+<body>
+<div class="swatch" aria-hidden="true"></div>
+<div>
+  <button class="back" id="back" type="button">This firing</button>
+  <h1>Ash bowl</h1>
+  <p class="price">Rs 2,400</p>
+  <p class="why">Thrown last week. It holds a portion for two.</p>
+  <button class="add" id="add" type="button">Add to bag</button>
+</div>
+<script>
+document.getElementById('add').addEventListener('click', e => {
+  e.currentTarget.textContent = 'In the bag';
+  e.currentTarget.disabled = true;
+});
+document.getElementById('back').addEventListener('click', e => {
+  e.currentTarget.textContent = 'Collection opened';
+});
+</script>
+</body>
+</html>

@@ -8,7 +8,7 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 
 1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
-3. Choose the system and the pieces. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, record, people, detail, chart, line, kpi, empty, error. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
+3. Choose the system and the pieces. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
 4. Show that pick with links, and ask once, before any UI. Follow Show the pick in [SKILL.md](SKILL.md). Stop unless they already said just go, you pick, build it, or don't ask, or they already named the system.
 5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
 6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
@@ -85,6 +85,17 @@ On a phone, the answer stays the largest type. The primary button is at least 44
 
 When they describe a whole product, build the minimum set, then stop. An internal tool does not get a marketing hero. A marketing site does not get an ops table unless they asked for one.
 
+## After the action
+
+The next action lands on a named screen. Write that name in the system sheet before you draw the button.
+
+- A list opens the detail you already named.
+- A form stays on the form until the fields are valid. Then it confirms on that screen, or opens the next named screen. A field error sits under the field. It is not a toast.
+- A shop is four screens, in this order: collection, one product, cart, checkout. Do not invent a fifth. The collection's action opens the product. The product's action opens the cart. The cart's action opens checkout.
+- A tablet is the tablet recipe: a split or a sidebar, one primary pane, one detail. A phone list stretched wide is the wrong piece.
+- The confirmation says what changed, in one sentence, and offers one next action. It keeps the same theme, pairing, and family.
+- If the action can fail, use the failed-load piece or the field error. A toast that disappears is not the failure.
+
 ## Spacing
 
 Base unit 4px. Use the locked family's density. Do not invent a third gap on the same screen.
@@ -158,6 +169,7 @@ Feedback colours are for live state only.
 - The first thing is the largest type on that view. There is one display size.
 - Space between groups is the stack gap. Space inside a group is half of that.
 - A list is one state: loading, empty, failed, or populated. The piece you used matches that state.
+- The next action names the screen it opens. That screen is in this pass, or you said it is still open.
 
 ## Minimum screens
 
@@ -166,6 +178,8 @@ A pass that only ships a hero, a landing, or a dashboard home is unfinished. Cov
 - Website: nav, hero, one proof block, footer. Take them from the website recipe.
 - App: shell (tab bar or nav), the primary list, one detail, an empty state, and settings or account.
 - Platform: shell, a table or a board, one record, and the account menu. Add people and billing when the product has staff or a plan.
+- Shop: a collection, one product, the cart, and checkout. Take them from the commerce recipe.
+- Tablet: a split or a sidebar, one primary pane, and one detail. Take them from the tablet recipe.
 
 If they asked for one component, build that component inside the locked system. Say that the rest of the set is still open. Do not invent a second palette to fill the gaps.
 

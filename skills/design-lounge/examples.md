@@ -29,6 +29,15 @@ User: "Yard desk. Staff open it every morning. Just build it."
 3. The count is `kpi-delta`, at display size. The evidence under it is `chart-line-range` or `chart-bar-week`, not a second headline. The list uses `list-empty-plain` when there are zero rows and `load-failed-retry` when the load does not arrive. On a phone, those two are `mobile-list-empty` and `mobile-load-failed`.
 4. Write `DESIGN.md` with Sources, then build the minimum platform set. Do not add a marketing hero.
 
+## A shop, they said go
+
+User: "A clay shop. People should be able to buy a bowl. Just build it."
+
+1. Use the commerce recipe in `starts`: Kiln, Atelier, and the pieces named there.
+2. Four lines. Who: a buyer who already knows the shop. Decision: which piece to take home. First thing: the product name. Next action: add it to the bag, which opens the cart.
+3. Order is fixed: `shop-collection`, then `shop-product`, then `shop-cart`, then `mobile-one-page-checkout`. The collection does not link to a fragrance page unless they asked for that product.
+4. A form on the way uses `select-field` for a closed list of choices. Write `DESIGN.md` with Sources, then build.
+
 ## They want options
 
 User: "Company site. Show me palettes."

@@ -1,0 +1,112 @@
+<!-- Design Lounge piece: shop-collection · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>This firing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3e6d4;--surface:#faefe0;--ink:#2a1b14;--ink-2:#6a4e3e;--ink-3:#9a7d68;
+  --line:#d8c0a4;--primary:#c45c2a;--primary-ink:#fffdf8;--focus:#c45c2a;
+  --serif:"Young Serif",Georgia,serif;--sans:"Hanken Grotesk",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--sans);background:var(--bg);color:var(--ink);padding:36px 48px}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.where{margin:0;font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--ink-2)}
+h1{margin:8px 0 16px;font-family:var(--serif);font-size:40px;font-weight:400;letter-spacing:-.02em}
+.filters{display:flex;gap:8px;margin-bottom:20px}
+.filters button{height:32px;padding:0 12px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--primary);border-color:transparent;color:var(--primary-ink)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:960px}
+.card{display:flex;flex-direction:column;width:100%;text-align:left;padding:0;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:inherit;overflow:hidden}
+.card[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--primary)}
+.swatch{display:block;height:112px}
+.meta{display:flex;flex-direction:column;padding:12px 14px 14px}
+.name{font-weight:600}
+.price{display:block;margin-top:4px;color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums}
+.open{height:40px;padding:0 16px;border:0;border-radius:8px;background:var(--primary);color:var(--primary-ink);font-weight:600}
+.open:disabled{opacity:.55}
+.empty{display:none;max-width:360px}
+.empty.show{display:block}
+.empty h2{margin:0 0 8px;font-family:var(--serif);font-size:32px;font-weight:400}
+.empty p{margin:0 0 16px;color:var(--ink-2)}
+.grid.hide{display:none}
+h1.hide{display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <p class="where">Kiln</p>
+  <button class="open" id="open" type="button">Open ash bowl</button>
+</div>
+<h1 id="title">This firing</h1>
+<div class="filters" role="group" aria-label="Shelf">
+  <button type="button" aria-pressed="true" data-f="all">All</button>
+  <button type="button" aria-pressed="false" data-f="bowls">Bowls</button>
+  <button type="button" aria-pressed="false" data-f="cups">Cups</button>
+  <button type="button" aria-pressed="false" data-f="lamps">Lamps</button>
+</div>
+<div class="grid" id="grid"></div>
+<div class="empty" id="empty">
+  <h2>No lamps this firing.</h2>
+  <p>The lamp shelf is clear. Everything else is still on the table.</p>
+  <button class="open" id="back" type="button">Show everything</button>
+</div>
+<script>
+const goods = [
+  { name:'Ash bowl', price:'Rs 2,400', kind:'bowls', color:'#c45c2a' },
+  { name:'Salt cup', price:'Rs 900', kind:'cups', color:'#6a4e3e' },
+  { name:'Night plate', price:'Rs 3,200', kind:'bowls', color:'#2a1b14' },
+  { name:'Clay jug', price:'Rs 4,600', kind:'vessels', color:'#4f6b3a' },
+  { name:'Small lid', price:'Rs 700', kind:'cups', color:'#d8c0a4' },
+  { name:'Fire vase', price:'Rs 5,800', kind:'vessels', color:'#9a7d68' }
+];
+const grid = document.getElementById('grid');
+const open = document.getElementById('open');
+const title = document.getElementById('title');
+const empty = document.getElementById('empty');
+const filters = [...document.querySelectorAll('.filters button')];
+let current = 'Ash bowl';
+let shelf = 'all';
+function paint(){
+  const list = goods.filter(g => shelf === 'all' || g.kind === shelf);
+  const none = list.length === 0;
+  title.classList.toggle('hide', none);
+  grid.classList.toggle('hide', none);
+  empty.classList.toggle('show', none);
+  open.hidden = none;
+  grid.innerHTML = list.map(g => `<button class="card" type="button" aria-pressed="${g.name === current}"><i class="swatch" style="background:${g.color}"></i><span class="meta"><span class="name">${g.name}</span><span class="price">${g.price}</span></span></button>`).join('');
+  grid.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      current = card.querySelector('.name').textContent;
+      open.disabled = false;
+      open.textContent = 'Open ' + current.toLowerCase();
+      paint();
+    });
+  });
+}
+filters.forEach(f => f.addEventListener('click', () => {
+  shelf = f.dataset.f;
+  filters.forEach(x => x.setAttribute('aria-pressed', x === f ? 'true' : 'false'));
+  paint();
+}));
+open.addEventListener('click', () => {
+  open.textContent = 'Opening ' + current.toLowerCase();
+  open.disabled = true;
+});
+document.getElementById('back').addEventListener('click', () => {
+  shelf = 'all';
+  filters.forEach(x => x.setAttribute('aria-pressed', x.dataset.f === 'all' ? 'true' : 'false'));
+  paint();
+});
+paint();
+</script>
+</body>
+</html>

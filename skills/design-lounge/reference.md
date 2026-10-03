@@ -27,7 +27,8 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Portfolio, personal site | `website` | Also recipe `portfolio` in `starts` |
 | One landing page | `website` | Also recipe `landing` |
 | Phone app, iOS, Android, PWA | `product` | Also recipe `mobile-app`. Prefer `platform` `mobile-app` pieces. |
-| Shop, checkout | `product` | Also recipe `commerce` |
+| Shop, checkout | `product` | Also recipe `commerce`. Order is collection, product, cart, checkout. |
+| Tablet, iPad, landscape | `product` | Also recipe `tablet`. Do not stretch a phone screen to 1180px. |
 | Magazine, journal, docs | `website` | Also recipe `editorial` |
 | Design system only, no screen yet | `product` | Also recipe `design-system` |
 

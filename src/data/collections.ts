@@ -33,7 +33,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'First impressions',
     kicker: 'Nº 01',
     blurb: 'Landing pages, onboarding, empty states and the 404. The screens people meet before they trust you.',
-    pieces: ['editorial-landing-hero', 'brutalist-studio-home', 'mobile-landing-sticky-cta', 'ios-onboarding-carousel', 'empty-state-line-illustration', 'terminal-404', 'luxe-product-detail', 'swiss-grid-pricing', 'landing-fashion-atelier', 'landing-wellness-retreat'],
+    pieces: ['editorial-landing-hero', 'brutalist-studio-home', 'mobile-landing-sticky-cta', 'ios-onboarding-carousel', 'empty-state-line-illustration', 'terminal-404', 'luxe-product-detail', 'shop-collection', 'shop-product', 'shop-cart', 'swiss-grid-pricing', 'landing-fashion-atelier', 'landing-wellness-retreat'],
   },
   {
     slug: 'website-in-parts',
@@ -89,7 +89,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'Forms people finish',
     kicker: 'Nº 09',
     blurb: 'Steppers, inline validation, one-page checkout, sign-in that respects the keyboard. The boring parts, made unboring by getting the details right.',
-    pieces: ['multi-step-form-stepper', 'inline-form-validation', 'upload-file-queue', 'mobile-one-page-checkout', 'split-sign-in', 'date-range-picker', 'settings-page-sticky-nav', 'billing-plan-summary', 'onboarding-checklist'],
+    pieces: ['multi-step-form-stepper', 'inline-form-validation', 'select-field', 'upload-file-queue', 'mobile-one-page-checkout', 'split-sign-in', 'date-range-picker', 'settings-page-sticky-nav', 'billing-plan-summary', 'onboarding-checklist'],
   },
   {
     slug: 'native-feel',

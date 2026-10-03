@@ -73,6 +73,10 @@ Label above, 12px, `--ink-2`. The input is the same height and radius as the but
 .field input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 ```
 
+## Select
+
+A select is this field, not a second control. The closed control is a button of height `--control` and radius `--radius`. The list is `--surface` with a `--line` border and radius `--radius-card`. An option is at least 40px tall. Hover uses `--surface-2`. The selected option uses `--primary-soft`. The error, when the value is empty on submit, is 12px `--danger` under the field. Do not restyle the browser's native popup, and do not invent a new radius for the list.
+
 ## Card, row, badge
 
 ```css

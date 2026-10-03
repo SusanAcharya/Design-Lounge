@@ -27,7 +27,7 @@ export const GET: APIRoute = async ({ site }) => {
     `2. If the human is starting a product, pick a recipe from /start. Choose one theme, one pairing, one family. Show the theme page, the type page, and each piece demo, and ask once before code. If they said to just build it, skip the question. Write the same links into DESIGN.md as Sources.`,
     `3. Search this file or GET ${base}/api/pieces.json for the closest pieces. If none fit, say so.`,
     `4. Open the brief: ${base}/p/<slug>.md. Rebuild the structure. Map colours onto the locked tokens. Family wins radius, shadow, and density.`,
-    `5. Hold the result to the brief's checklist and to one system: same type, icons, spacing, and components on every screen of the pass. Before layout, name who it is for, the decision, the one thing they see first, and the next action. That first thing is the largest type on the view.`,
+    `5. Hold the result to the brief's checklist and to one system: same type, icons, spacing, and components on every screen of the pass. Before layout, name who it is for, the decision, the one thing they see first, and the next action. That first thing is the largest type on the view. The next action names the screen it opens. A shop is collection, product, cart, checkout. A tablet uses the tablet recipe.`,
     ``,
     `## Map`,
     ...MAP.map((m) => `- ${m.kicker} — ${m.title}: ${base}${m.href}. ${m.blurb}`),
