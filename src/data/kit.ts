@@ -34,8 +34,8 @@ export const KINDS: Kind[] = [
     kicker: 'Website',
     blurb: 'Marketing, studio, or company site. Heroes, proof, a footer that signs off.',
     when: 'People arrive from the outside. The first viewport has to hold them.',
-    palettes: ['paper-ink', 'linen-shop', 'atelier-noir', 'kiln', 'press-room', 'sakura-desk', 'marble-hall', 'loam'],
-    pairings: ['the-lounge', 'gallery-wall', 'maison', 'newsroom', 'lettera', 'garden-journal'],
+    palettes: ['paper-ink', 'linen-shop', 'atelier-noir', 'kiln', 'press-room', 'sakura-desk', 'marble-hall', 'loam', 'night-desk', 'neon-alley', 'festival', 'alpine-clinic'],
+    pairings: ['the-lounge', 'gallery-wall', 'maison', 'newsroom', 'lettera', 'garden-journal', 'brutal-grotesk', 'y2k-chrome', 'poster-condensed'],
     families: ['editorial', 'quiet', 'soft', 'sharp'],
     copy: {
       brand: 'Northroom',
@@ -53,8 +53,8 @@ export const KINDS: Kind[] = [
     kicker: 'Product',
     blurb: 'SaaS, a tool, a service with a price. Data when it earns the screen.',
     when: 'Someone is deciding whether to use you. Clarity over theatre.',
-    palettes: ['fog-city', 'alpine-clinic', 'glacier', 'harbour-ledger', 'night-desk', 'ice-station', 'circuit', 'playroom'],
-    pairings: ['friendly-saas', 'geometric-modern', 'swiss-precision', 'developer-docs', 'signal-mono', 'indie-maker'],
+    palettes: ['fog-city', 'alpine-clinic', 'glacier', 'harbour-ledger', 'night-desk', 'ice-station', 'circuit', 'playroom', 'kiln', 'neon-alley', 'press-room'],
+    pairings: ['friendly-saas', 'geometric-modern', 'swiss-precision', 'developer-docs', 'signal-mono', 'indie-maker', 'atelier', 'y2k-chrome', 'newsroom'],
     families: ['quiet', 'soft', 'sharp', 'glass'],
     copy: {
       brand: 'Tally',

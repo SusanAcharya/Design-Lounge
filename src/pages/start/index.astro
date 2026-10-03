@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
 import { AUTHOR, CATEGORY_META, getPieces } from '../../lib/pieces';
-import { STARTS } from '../../data/starts';
+import { STARTS, SURFACES, startsOn } from '../../data/starts';
 import { PAIRINGS } from '../../data/type';
 import { THEMES } from '../../data/themes';
 import { COLLECTIONS } from '../../data/collections';
@@ -17,16 +17,23 @@ const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
   <PageHead eyebrow="Start" title="Start" count={STARTS.length} countLabel="recipes" />
   <p class="wrap kit-jump"><a class="btn primary" href="/kit">Kit</a></p>
   <div class="wrap page">
-    <ol class="starts">
-      {STARTS.map((s, i) => {
+    {SURFACES.map((group) => (
+      <section id={group.id}>
+        <header class="group">
+          <h2 class="display h2">{group.title}</h2>
+          <p class="when">{group.blurb}</p>
+        </header>
+        <ol class="starts">
+      {startsOn(group.id).map((s, i) => {
         const t = theme(s.theme);
         const p = pairing(s.pairing);
         const sh = shelf(s.shelf);
         return (
-          <li class="card reveal" style={`--d:${i * 50}ms`} id={s.id}>
+          <li class="card reveal" style={`--d:${i * 40}ms`} id={s.id}>
             <header>
               <span class="eyebrow">{s.kicker} · {String(i + 1).padStart(2, '0')}</span>
               <h2 class="display h3">{s.title}</h2>
+              <p class="when">{s.when}</p>
             </header>
             <dl>
               {t && (
@@ -65,13 +72,17 @@ const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
           </li>
         );
       })}
-    </ol>
+        </ol>
+      </section>
+    ))}
   </div>
 </Base>
 
 <style>
   .kit-jump { margin: 20px auto 0; }
-  .page { margin-top: 40px; display: flex; flex-direction: column; gap: 40px; }
+  .page { margin-top: 40px; display: flex; flex-direction: column; gap: 64px; }
+  .group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+  .group .h2 { font-size: clamp(32px, 3vw, 48px); }
   .starts { display: flex; flex-direction: column; border-top: 1px solid var(--ink); }
   .card { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, .9fr) minmax(200px, .8fr); gap: 32px; padding: 36px 0; border-bottom: 1px solid var(--line); }
   .card header { display: flex; flex-direction: column; gap: 10px; }

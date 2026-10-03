@@ -21,16 +21,35 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 
 | They say | Kind | Then |
 | --- | --- | --- |
-| Marketing site, studio, company site, brochure | `website` | Kit flow |
-| SaaS, tool, service, pricing page | `product` | Kit flow |
+| Marketing site, company site, brochure | `website` | Also recipe `marketing-site` |
+| SaaS, a tool people subscribe to, a pricing page | `product` | Also recipe `saas`. Fog City. Not the fashion landing. |
+| Fintech, banking, payments, a card | `product` | Also recipe `fintech` on the web, `bank` on a phone |
 | Admin, ops, dashboard, internal tool | `platform` | Also recipe `dashboard`. Search dashboard, data, charts, navigation, settings, overlays, feedback, inputs, pickers. |
-| Personal finance, household, one person's money or health | `personal` | Also recipe `personal`. Lokta and Devanagari when the product is Nepali. Not the staff dashboard. |
-| Portfolio, personal site, showreel, case study | `website` | Also recipe `portfolio` in `starts`. Scroll, hover, or a cursor is one piece from Register, not a second theme. |
-| One landing page, a product page with motion | `website` | Also recipe `landing`. A tilt or a sticky scroll is one piece from Register. |
-| Phone app, iOS, Android, PWA | `product` | Also recipe `mobile-app`. Prefer `platform` `mobile-app` pieces. |
-| Shop, checkout | `product` | Also recipe `commerce`. Order is collection, product, cart, checkout, then `order-confirmed`. |
+| Personal finance, household, one person's money | `personal` | Also recipe `personal`. Lokta and Devanagari when the product is Nepali. Not the staff dashboard, and not `bank`. |
+| Portfolio, showreel, case study | `website` | Also recipe `portfolio`. Scroll, hover, or a cursor is one piece from Register, not a second theme. |
+| Personal site, a journal, not a showreel | `website` | Also recipe `personal-site` |
+| Fashion, a lookbook, a luxury good | `website` | Also recipe `fashion` |
+| Food, a local shop, a menu | `website` | Also recipe `food` |
+| Wellness, a retreat, a class | `website` | Also recipe `wellness` |
+| Hotel, a house, a reservation | `website` | Also recipe `hotel` |
+| Agency, a studio site | `website` | Also recipe `agency` |
+| Magazine, journal | `website` | Also recipe `editorial` |
+| Docs, an API, a guide | `product` | Also recipe `docs` |
+| Music site, a label, a release | `website` | Also recipe `music` |
+| Event, festival, a night | `website` | Also recipe `event` |
+| Museum, gallery, a collection | `website` | Also recipe `museum` |
+| One landing page, and they did not name the world | `website` | Also recipe `landing`. If they named fashion, wellness, fintech, or a tool, use that recipe instead. A tilt or a sticky scroll is one piece from Register. |
+| Phone app, iOS, Android, PWA, and they did not name the world | `product` | Also recipe `mobile-app`. Prefer `platform` `mobile-app` pieces. |
+| Health, fitness, a clinic app | `product` | Also recipe `health` |
+| Messages, mail, chat | `product` | Also recipe `messages` |
+| Music app, now playing | `product` | Also recipe `music-app` |
+| News on a phone | `product` | Also recipe `news` |
+| Shop on a phone | `product` | Also recipe `shop-app`. A shop in a browser is `commerce`. |
+| Social app, a feed, stories | `product` | Also recipe `social` |
+| Weather | `product` | Also recipe `weather` |
+| Field tool, ops on a phone | `platform` | Also recipe `field` |
+| Shop, checkout, in a browser | `product` | Also recipe `commerce`. Order is collection, product, cart, checkout, then `order-confirmed`. |
 | Tablet, iPad, landscape | `product` | Also recipe `tablet`. Do not stretch a phone screen to 1180px. |
-| Magazine, journal, docs | `website` | Also recipe `editorial` |
 | Design system only, no screen yet | `product` | Also recipe `design-system`. The controls are `text-field`, `textarea-field`, `password-field`, `radio-group`, `checkbox-group`, `slider-field`, `select-field`, `combobox`, `token-field`, `otp-code`, `rating-score`, `calendar-month`, `time-field`, `switch-row`, `button-roles`, `breadcrumb`, `tree-nav`, `pagination`, `filter-toolbar`, `qty-stepper`, `progress-bar`, `property-list`, `content-card`, `status-badge`, `inline-alert`, `tooltip`, `popover-panel`, `consent-bar`, `prompt-composer`, `split-button`, `drag-to-confirm`, `dial-knob`, `undo-toast`, `code-snippet-tabs`, `selection-bar`, `shortcut-sheet`, `inline-edit`, `minute-wheel`, `stretch-switch`, `gooey-nav`, `edge-light-button`, `shred-button`, `receipt-slip`, `focus-dim`, `node-graph`, `cited-answer`, `analog-stick`, `chip-bucket`, `press-well`, `curve-drawer`. |
 
 ## Sources

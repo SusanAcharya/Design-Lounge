@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { getPieces, numberMap } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
-import { STARTS, MAP } from '../data/starts';
+import { STARTS, SURFACES, MAP } from '../data/starts';
 import { COLLECTIONS } from '../data/collections';
 import { SOURCES } from '../data/website-list';
 
@@ -37,6 +37,14 @@ export const GET: APIRoute = async () => {
       href: '/themes/' + t.id,
     })),
     { id: 'kit', title: 'Compose a kit', summary: 'Pick a kind, a palette, a pairing and a family. Get a brief.', type: 'map', href: '/kit' },
+    ...SURFACES.map((g) => ({
+      id: 'surface-' + g.id,
+      title: g.title,
+      summary: g.blurb,
+      type: 'start',
+      tags: [g.id],
+      href: '/start#' + g.id,
+    })),
     ...STARTS.map((s) => ({
       id: 'start-' + s.id,
       title: s.title,

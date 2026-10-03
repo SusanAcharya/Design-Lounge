@@ -83,7 +83,7 @@ Use this when a design system is already in the project.
 
 ## Kit flow
 
-1. Pick a kind: `website`, `product`, `platform`, or `personal`. Map their words with [reference.md](reference.md). A shop, magazine, portfolio, or phone app still starts here, then take the matching recipe from `starts` in the index. One person's money is `personal`, not `platform`.
+1. Pick a kind: `website`, `product`, `platform`, or `personal`. Map their words with [reference.md](reference.md). A shop, a SaaS page, a portfolio, or a phone app still starts here, then take the matching recipe from `starts`. Those recipes are the website kinds and the app kinds. One person's money is `personal`, not `platform`. A SaaS page is `saas`, not the fashion landing.
 2. Use `kit.kinds` for that kind: `palettes`, `pairings`, `families`, `pieces`.
 3. If they already chose, lock those ids. If they said just go, you pick, build it, or don't ask, lock the match from Match the world: the recipe that fits, or the theme whose `bestFor` names this product. Say which theme you rejected. If they described scroll, hover, or a cursor, the register is that one piece. Do not drop it because the recipe's theme is calm. Do not lock the first palette, the first pairing, or the first family because they are first.
 4. Otherwise show the pick (Show the pick, then ask once) and stop. Do not write UI in that turn.

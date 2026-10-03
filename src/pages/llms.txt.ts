@@ -5,7 +5,7 @@ import { THEMES } from '../data/themes';
 import { ICONS, ICON_CREDIT } from '../data/icons';
 import { EASINGS, RECIPES } from '../data/motion';
 import { COLLECTIONS, SHELF_GROUPS } from '../data/collections';
-import { STARTS, MAP } from '../data/starts';
+import { STARTS, SURFACES, MAP } from '../data/starts';
 import { SOURCES, studyPiece } from '../data/website-list';
 
 export const GET: APIRoute = async ({ site }) => {
@@ -40,6 +40,7 @@ export const GET: APIRoute = async ({ site }) => {
     ``,
     `## Starting a product`,
     `When a human is starting a product or design system, pick the closest recipe and assemble from it. Do not skip the theme and pairing.`,
+    ...SURFACES.map((g) => `- ${g.title}: ${base}/start#${g.id}. ${g.blurb}`),
     ...STARTS.map((s) => `- [${s.title}](${base}/start#${s.id}): theme=${s.theme} pairing=${s.pairing} shelf=${s.shelf} categories=${s.categories.join(',')} pieces=${s.pieces.join(',')}. ${s.when}`),
     ``,
     `## Machine endpoints`,
