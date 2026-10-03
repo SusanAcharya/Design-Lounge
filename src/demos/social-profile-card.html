@@ -1,0 +1,152 @@
+<!-- Design Lounge piece: social-profile-card · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Juno Achterberg on Thatch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ece5d8;--card:#fbf8f2;--ink:#1f1a17;--ink-2:#4a423b;--ink-3:#6f665d;
+  --line:#ddd3c4;--accent:#8c2f1b;--accent-ink:#f6e9dc;--ochre:#d9a441;
+  --serif:"Fraunces",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+  --r:6px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:15px/1.5 var(--sans);color:var(--ink);background:var(--bg);
+  display:grid;place-items:center;padding:24px 16px;
+  background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(31,26,23,.045) 31px 32px);
+}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.card{
+  width:min(440px,100%);background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:0 1px 0 rgba(31,26,23,.04),0 24px 48px -28px rgba(60,36,20,.35);overflow:hidden;
+}
+.cover{
+  position:relative;height:176px;background:var(--accent);color:var(--accent-ink);
+  padding:18px 24px;overflow:hidden;
+}
+.cover::after{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0 13px,rgba(246,233,220,.07) 13px 14px)}
+.cover .issue{display:flex;justify-content:space-between;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;position:relative;z-index:1}
+.cover .num{position:absolute;right:10px;bottom:-22px;font:italic 400 150px/1 var(--serif);letter-spacing:-.06em;color:rgba(246,233,220,.16);font-variation-settings:"opsz" 144}
+.cover .kicker{position:relative;z-index:1;margin:16px 0 0;font:italic 400 24px/1.12 var(--serif);max-width:270px;font-variation-settings:"opsz" 48}
+.head{position:relative;padding:0 24px}
+.avatar{
+  width:88px;height:88px;border-radius:50%;margin-top:-44px;position:relative;z-index:2;
+  background:var(--ochre);border:4px solid var(--card);display:grid;place-items:center;
+  font:italic 600 34px/1 var(--serif);color:var(--ink);letter-spacing:-.04em;
+}
+.avatar::after{content:"";position:absolute;right:2px;bottom:4px;width:14px;height:14px;border-radius:50%;background:#3f7a4a;border:3px solid var(--card)}
+.row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.follow{
+  min-width:128px;height:40px;padding:0 18px;border-radius:999px;background:var(--ink);color:var(--card);
+  font-weight:600;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  border:1px solid var(--ink);transition:background .18s var(--ease),color .18s var(--ease),transform .12s var(--ease);
+}
+.follow:hover{background:#3a312b}
+.follow:active{transform:scale(.96)}
+.follow svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.follow .ck{display:none}
+.follow[aria-pressed="true"]{background:transparent;color:var(--ink)}
+.follow[aria-pressed="true"] .ck{display:block}
+.follow[aria-pressed="true"] .pl{display:none}
+.follow[aria-pressed="true"]:hover{color:var(--accent);border-color:var(--accent)}
+.follow .alt{display:none}
+.follow[aria-pressed="true"]:hover .lbl{display:none}
+.follow[aria-pressed="true"]:hover .alt{display:inline}
+.follow[aria-pressed="true"]:hover .ck{display:none}
+h1{margin:14px 0 0;font:600 30px/1.05 var(--serif);letter-spacing:-.02em;font-variation-settings:"opsz" 72}
+.handle{margin:4px 0 0;font-size:13px;color:var(--ink-3)}
+.bio{margin:12px 0 0;color:var(--ink-2);max-width:36ch}
+.bio em{font:italic 400 16px/1 var(--serif);color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin:20px 24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:14px 0 12px;text-align:left}
+.stat+.stat{border-left:1px solid var(--line);padding-left:16px}
+.stat b{display:block;font:400 26px/1 var(--serif);letter-spacing:-.02em;font-variant-numeric:tabular-nums lining-nums;font-variation-settings:"opsz" 48}
+.stat span{display:block;margin-top:6px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.latest{display:flex;gap:12px;align-items:baseline;margin:16px 24px 0;padding:0;font-size:13px;color:var(--ink-3)}
+.latest a{color:var(--ink);font:italic 400 17px/1.25 var(--serif);text-decoration:none;background:linear-gradient(var(--accent),var(--accent)) 0 100%/0 1px no-repeat;transition:background-size .3s var(--expo)}
+.latest a:hover,.latest a:focus-visible{background-size:100% 1px}
+.mutuals{display:flex;align-items:center;gap:12px;margin:18px 24px 22px}
+.faces{display:flex}
+.faces i{width:30px;height:30px;border-radius:50%;border:2px solid var(--card);display:grid;place-items:center;font:normal 600 9px/1 var(--sans);color:var(--ink);letter-spacing:.02em;transition:transform .2s var(--expo)}
+.faces i+i{margin-left:-8px}
+.faces i:nth-child(1){background:#c9b8a3}.faces i:nth-child(2){background:#a9b79a}.faces i:nth-child(3){background:#d6a28c}
+.mutuals:hover .faces i:nth-child(2){transform:translateX(4px)}
+.mutuals:hover .faces i:nth-child(3){transform:translateX(8px)}
+.mutuals p{margin:0;font-size:13px;color:var(--ink-3);line-height:1.35}
+.mutuals strong{color:var(--ink);font-weight:600}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<article class="card" aria-labelledby="name">
+  <div class="cover" aria-hidden="true">
+    <div class="issue"><span>Letters from the edge</span><span>Vol. 4</span></div>
+    <p class="kicker">Field notes on slow cities and who keeps them</p>
+    <span class="num">41</span>
+  </div>
+  <div class="head">
+    <div class="row">
+      <div class="avatar" aria-hidden="true">Ja</div>
+      <button class="follow" id="follow" type="button" aria-pressed="false">
+        <svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        <svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+        <span class="lbl">Follow</span><span class="alt">Unfollow</span>
+      </button>
+    </div>
+    <h1 id="name">Juno Achterberg</h1>
+    <p class="handle">@juno.writes · Rotterdam · on Thatch since 2021</p>
+    <p class="bio">Urbanist and essayist. I walk a city until it tells me something, then I write <em>it down</em>. New letter every second Sunday.</p>
+  </div>
+  <dl class="stats">
+    <div class="stat"><dt class="sr">Followers</dt><dd style="margin:0"><b id="followers" data-to="48213">48,213</b><span aria-hidden="true">Followers</span></dd></div>
+    <div class="stat"><dt class="sr">Following</dt><dd style="margin:0"><b data-to="312">312</b><span aria-hidden="true">Following</span></dd></div>
+    <div class="stat"><dt class="sr">Letters</dt><dd style="margin:0"><b data-to="141">141</b><span aria-hidden="true">Letters</span></dd></div>
+  </dl>
+  <p class="latest"><span>Latest</span><a href="#" onclick="return false">The bench as infrastructure</a></p>
+  <div class="mutuals">
+    <div class="faces" aria-hidden="true"><i>MS</i><i>TB</i><i>RA</i></div>
+    <p>Followed by <strong>Mira Sato</strong>, <strong>Teo Brandt</strong> and 14 others you follow</p>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</article>
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt = n => n.toLocaleString('en-US');
+function count(el, from, to, ms){
+  if (reduce){ el.textContent = fmt(to); return; }
+  const t0 = performance.now();
+  const step = t => {
+    const p = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - p, 4);
+    el.textContent = fmt(Math.round(from + (to - from) * e));
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+document.querySelectorAll('.stat b').forEach((b, i) => {
+  const to = +b.dataset.to; b.textContent = '0';
+  setTimeout(() => count(b, 0, to, 1100), 120 + i * 90);
+});
+const btn = document.getElementById('follow'), fol = document.getElementById('followers'), live = document.getElementById('live');
+btn.addEventListener('click', () => {
+  const on = btn.getAttribute('aria-pressed') !== 'true';
+  btn.setAttribute('aria-pressed', on);
+  btn.querySelector('.lbl').textContent = on ? 'Following' : 'Follow';
+  const cur = +fol.dataset.to, next = cur + (on ? 1 : -1);
+  fol.dataset.to = next;
+  count(fol, cur, next, 380);
+  live.textContent = on ? 'You now follow Juno Achterberg' : 'You unfollowed Juno Achterberg';
+});
+</script>
+</body>
+</html>

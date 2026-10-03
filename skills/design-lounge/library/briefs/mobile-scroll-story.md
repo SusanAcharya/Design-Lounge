@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 234 · "Mobile scroll story" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 246 · "Mobile scroll story" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Mobile scroll story
 

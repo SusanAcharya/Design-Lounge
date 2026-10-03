@@ -1,0 +1,223 @@
+<!-- Design Lounge piece: widget-device-battery · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Merrow — Device batteries widget</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#dfcfbd;--body:#ecdfd0;--tile:#f3e9dd;--puck:#fbf4ea;--groove:#e1d2c1;
+  --ink:#3a2c23;--ink-2:#6e5a4b;--sage:#5f9468;--sage-hi:#9fcaa2;--clay:#c8603c;--clay-hi:#eaa284;
+  --hi:rgba(255,250,243,.85);--lo:rgba(132,96,68,.28);
+  --display:"Fredoka",ui-rounded,system-ui,sans-serif;--sans:"Nunito Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.34,1.56,.64,1)
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(120% 90% at 30% 20%,#e4d4c2 0%,var(--bg) 55%,#cdb59d 100%);color:var(--ink);font:400 14px/1.45 var(--sans);display:grid;place-items:center;overflow:hidden}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.w{position:relative;width:min(452px,calc(100vw - 24px));min-height:438px;background:var(--body);border-radius:40px;padding:22px;box-shadow:18px 22px 44px rgba(120,86,60,.32),-14px -14px 30px rgba(255,248,238,.6),inset 3px 3px 6px var(--hi),inset -5px -6px 12px rgba(150,112,82,.2);overflow:hidden}
+.head{display:flex;justify-content:space-between;align-items:center;padding:2px 6px 16px}
+h1{font:600 22px/1 var(--display);margin:0;letter-spacing:.005em}
+.sum{font-size:13px;color:var(--ink-2);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;transition:opacity 220ms var(--ease),transform 320ms var(--ease)}
+.tile{appearance:none;border:0;font:inherit;color:inherit;text-align:left;background:var(--tile);border-radius:28px;padding:14px 14px 14px;min-height:170px;display:flex;flex-direction:column;cursor:pointer;box-shadow:7px 9px 16px var(--lo),-5px -5px 12px var(--hi),inset 2px 2px 3px var(--hi),inset -3px -4px 6px rgba(150,112,82,.16);transition:transform 260ms var(--spring),box-shadow 200ms var(--ease)}
+.tile:hover{transform:translateY(-2px)}
+.tile:active{transform:scale(.96);box-shadow:3px 4px 8px var(--lo),-2px -2px 6px var(--hi),inset 3px 3px 6px rgba(150,112,82,.22),inset -2px -2px 4px var(--hi)}
+.rings{display:flex;gap:8px;align-items:center;min-height:84px}
+.ring{position:relative;width:84px;height:84px;flex:none}
+.ring.sm{width:56px;height:56px}
+.ring svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring .tr{fill:none;stroke:var(--groove);stroke-width:9}
+.ring .fl{fill:none;stroke:var(--sage);stroke-width:9;stroke-linecap:round;transition:stroke-dashoffset 600ms var(--ease)}
+.ring.low .fl{stroke:var(--clay)}
+.ring .sh{fill:none;stroke:var(--sage-hi);stroke-width:4;stroke-linecap:round;opacity:0}
+.ring.chg .sh{opacity:.9;animation:sheen 2.4s var(--ease) infinite}
+.ring.sm .tr,.ring.sm .fl{stroke-width:7}
+.ring .puck{position:absolute;inset:15px;border-radius:50%;background:var(--puck);display:grid;place-items:center;box-shadow:2px 3px 6px var(--lo),inset 1px 1px 2px #fff}
+.ring.sm .puck{inset:11px;font:600 12px var(--display)}
+.puck svg{position:static;transform:none;width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.bolt{position:absolute;right:-2px;top:-2px;width:26px;height:26px;border-radius:50%;background:var(--sage);display:grid;place-items:center;box-shadow:2px 3px 6px var(--lo),inset 1px 1px 2px rgba(255,255,255,.45);animation:pulse 2.4s var(--ease) infinite}
+.ring.sm .bolt{width:20px;height:20px;right:-4px;top:-4px}
+.bolt svg{position:static;transform:none;width:14px;height:14px;fill:#fbf4ea;stroke:none}
+.ring:not(.chg) .bolt{display:none}
+.lbl{margin-top:auto;padding:10px 4px 0}
+.pct{font:600 30px/1 var(--display);font-variant-numeric:tabular-nums}
+.pct small{font-size:16px;margin-left:1px}
+.name{font-weight:700;font-size:14px;margin-top:4px}
+.note{font-size:12.5px;color:var(--ink-2);font-weight:600}
+.note.low{color:#9e4426}
+.subs{display:flex;gap:6px;width:100%;justify-content:space-between}
+.sub{display:grid;justify-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--ink-2)}
+/* detail */
+.detail{position:absolute;inset:22px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateX(28px);transition:opacity 220ms var(--ease),transform 320ms var(--ease),visibility 0s 320ms}
+.w.open .grid{opacity:0;transform:scale(.96);pointer-events:none}
+.w.open .head{visibility:hidden}
+.w.open .detail{opacity:1;visibility:visible;transform:none;transition:opacity 260ms var(--ease) 80ms,transform 380ms var(--ease) 60ms,visibility 0s}
+.dtop{display:flex;align-items:center;gap:12px}
+.back{appearance:none;border:0;width:44px;height:44px;border-radius:50%;background:var(--tile);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:4px 5px 10px var(--lo),-3px -3px 8px var(--hi),inset 1px 1px 2px #fff;transition:transform 200ms var(--spring)}
+.back:active{transform:scale(.92)}
+.back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dtop h2{font:600 22px/1.1 var(--display);margin:0}
+.dtop p{margin:2px 0 0;font-size:13px;color:var(--ink-2);font-weight:600}
+.big{display:flex;align-items:flex-end;justify-content:space-between;margin:22px 4px 12px}
+.big .pct{font-size:64px}
+.big .pct small{font-size:28px}
+.status{font-weight:700;font-size:13px;padding:8px 14px;border-radius:999px;background:var(--tile);box-shadow:inset 2px 2px 4px rgba(150,112,82,.2),inset -2px -2px 4px var(--hi);margin-bottom:8px}
+.status.chg{color:#2f6a3a}.status.low{color:#9e4426}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:52px 1fr 44px;align-items:center;gap:10px;font-size:12.5px;font-weight:700;color:var(--ink-2)}
+.bar .t{height:22px;border-radius:12px;background:var(--groove);box-shadow:inset 2px 3px 5px rgba(140,104,76,.25),inset -2px -2px 4px var(--hi);padding:3px;overflow:hidden}
+.bar .t i{display:block;height:100%;border-radius:9px;background:linear-gradient(180deg,var(--sage-hi),var(--sage));box-shadow:inset 0 1px 1px rgba(255,255,255,.5);transition:width 600ms var(--ease);position:relative;overflow:hidden}
+.bar .t i.low{background:linear-gradient(180deg,var(--clay-hi),var(--clay))}
+.bar .t i.chg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-100%);animation:sweep 1.8s var(--ease) infinite}
+.bar b{font:600 15px var(--display);color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:auto}
+.fact{background:var(--tile);border-radius:20px;padding:10px 12px;box-shadow:4px 5px 10px var(--lo),-3px -3px 8px var(--hi),inset 1px 1px 2px #fff}
+.fact span{display:block;font-size:11.5px;color:var(--ink-2);font-weight:600}
+.fact b{font:600 18px/1.3 var(--display)}
+.hist{display:flex;align-items:flex-end;gap:5px;height:44px;margin:16px 4px 14px}
+.hist i{flex:1;border-radius:5px 5px 3px 3px;background:var(--groove);box-shadow:inset 1px 1px 2px rgba(255,255,255,.6)}
+.hist i.on{background:var(--sage-hi)}
+.histl{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-2);font-weight:600;margin:-8px 4px 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:480px){
+  .w{padding:16px;border-radius:32px}.detail{inset:16px}.grid{gap:10px}
+  .ring{width:70px;height:70px}.ring .puck{inset:13px}
+  .ring.sm{width:40px;height:40px}.ring.sm .puck{inset:8px;font-size:10px}.ring.sm .tr,.ring.sm .fl{stroke-width:8}
+  .subs{gap:2px}.tile{padding:12px;border-radius:24px}
+  .big .pct{font-size:52px}
+}
+@keyframes sheen{from{stroke-dashoffset:0}to{stroke-dashoffset:-226}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+@keyframes sweep{to{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){
+  *,*::after{animation:none!important;transition:none!important}
+  .ring.chg .sh{opacity:0}
+}
+</style>
+</head>
+<body>
+<section class="w" id="w" aria-label="Merrow device batteries">
+  <div class="head"><h1>Batteries</h1><span class="sum" id="sum">2 charging · 1 low</span></div>
+  <div class="grid" id="grid"></div>
+  <div class="detail" id="detail" role="region" aria-labelledby="dname"></div>
+</section>
+<p class="sr" id="live" aria-live="polite"></p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="d-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="d-buds" viewBox="0 0 24 24"><path d="M7 4a3 3 0 0 0-3 3v1a3 3 0 0 0 3 3v8"/><path d="M17 4a3 3 0 0 1 3 3v1a3 3 0 0 1-3 3v8"/><circle cx="7" cy="6.5" r="1"/><circle cx="17" cy="6.5" r="1"/></symbol>
+  <symbol id="d-watch" viewBox="0 0 24 24"><rect x="6" y="6.5" width="12" height="11" rx="3"/><path d="M9 6.5 9.5 3h5l.5 3.5M9 17.5l.5 3.5h5l.5-3.5M12 10v2.2l1.5 1"/></symbol>
+  <symbol id="d-pen" viewBox="0 0 24 24"><path d="M4 20l1.2-4.2L15.5 5.5a2.1 2.1 0 0 1 3 3L8.2 18.8Z"/><path d="M13.5 7.5l3 3"/></symbol>
+  <symbol id="d-bolt" viewBox="0 0 24 24"><path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6Z"/></symbol>
+</svg>
+<script>
+const $ = (id) => document.getElementById(id);
+const C = 2 * Math.PI * 36;
+const devices = [
+  { id: 'phone', name: 'Phone', model: 'Ilex 12', icon: 'phone', parts: [{ k: 'Phone', p: 82, chg: true }], rate: '18 W', health: 96, used: '4 h 12 m', hist: [62, 55, 48, 40, 34, 28, 24, 30, 44, 58, 70, 82] },
+  { id: 'buds', name: 'Earbuds', model: 'Pebblepod Pro', icon: 'buds', parts: [{ k: 'Left', p: 64 }, { k: 'Right', p: 61 }, { k: 'Case', p: 38, chg: true }], rate: '5 W', health: 92, used: '1 h 40 m', hist: [90, 88, 86, 80, 74, 70, 68, 66, 66, 65, 64, 64] },
+  { id: 'watch', name: 'Watch', model: 'Tide S', icon: 'watch', parts: [{ k: 'Watch', p: 23 }], rate: '—', health: 91, used: '19 h', hist: [74, 68, 62, 57, 51, 46, 41, 37, 33, 29, 26, 23] },
+  { id: 'pen', name: 'Pen', model: 'Quill 2', icon: 'pen', parts: [{ k: 'Pen', p: 91 }], rate: '—', health: 98, used: '12 min ago', hist: [100, 99, 99, 98, 97, 96, 95, 94, 94, 93, 92, 91] }
+];
+const svgUse = (n) => `<svg aria-hidden="true"><use href="#d-${n}"/></svg>`;
+const isLow = (p) => p <= 25;
+const eta = (p, rate) => Math.max(1, Math.round((100 - p) * (rate === '18 W' ? 1.9 : 1.4)));
+function noteFor(d) {
+  const main = d.parts[0];
+  if (d.id === 'buds') return d.parts[2].chg ? 'Case charging' : 'In case';
+  if (main.chg) return main.p >= 100 ? 'Charged' : `Charging · ${eta(main.p, d.rate)} min to full`;
+  if (isLow(main.p)) return 'Low · about 3 h left';
+  return d.id === 'pen' ? 'Attached to tablet' : 'On battery';
+}
+function ring(part, icon, small) {
+  const off = C * (1 - part.p / 100);
+  return `<span class="ring${small ? ' sm' : ''}${isLow(part.p) ? ' low' : ''}${part.chg && part.p < 100 ? ' chg' : ''}" data-part="${part.k}">
+    <svg viewBox="0 0 84 84" aria-hidden="true"><circle class="tr" cx="42" cy="42" r="36"/><circle class="fl" cx="42" cy="42" r="36" stroke-dasharray="${C}" stroke-dashoffset="${off}"/><circle class="sh" cx="42" cy="42" r="36" stroke-dasharray="10 ${C}" /></svg>
+    <span class="puck">${small ? part.k[0] : svgUse(icon)}</span><span class="bolt">${svgUse('bolt')}</span></span>`;
+}
+function label(d) {
+  const p = d.parts.map((x) => `${x.k} ${x.p} percent${x.chg ? ' charging' : ''}`).join(', ');
+  return `${d.name}, ${d.model}: ${p}. Open details`;
+}
+function tile(d) {
+  const main = d.parts[0];
+  const rings = d.id === 'buds'
+    ? `<span class="subs">${d.parts.map((x) => `<span class="sub">${ring(x, d.icon, true)}${x.p}%</span>`).join('')}</span>`
+    : ring(main, d.icon);
+  const big = d.id === 'buds' ? Math.min(d.parts[0].p, d.parts[1].p) : main.p;
+  return `<button type="button" class="tile" data-id="${d.id}" aria-label="${label(d)}">
+    <span class="rings">${rings}</span>
+    <span class="lbl"><span class="pct">${big}<small>%</small></span><span class="name" style="display:block">${d.id === 'buds' ? d.model : d.name}</span><span class="note${isLow(main.p) && !main.chg ? ' low' : ''}" style="display:block">${noteFor(d)}</span></span>
+  </button>`;
+}
+function renderGrid() {
+  $('grid').innerHTML = devices.map(tile).join('');
+  const chg = devices.filter((d) => d.parts.some((x) => x.chg && x.p < 100)).length;
+  const low = devices.filter((d) => d.parts.some((x) => isLow(x.p) && !x.chg)).length;
+  $('sum').textContent = `${chg} charging${low ? ` · ${low} low` : ''}`;
+}
+let openId = null;
+function renderDetail() {
+  const d = devices.find((x) => x.id === openId);
+  if (!d) return;
+  const main = d.parts[0], anyChg = d.parts.some((x) => x.chg && x.p < 100);
+  const st = anyChg ? ['chg', d.id === 'buds' ? 'Case charging' : 'Charging'] : isLow(main.p) ? ['low', 'Low battery'] : ['', 'On battery'];
+  const mins = anyChg ? eta(d.parts.find((x) => x.chg).p, d.rate) + ' min' : isLow(main.p) ? '~3 h' : '2 days';
+  const max = Math.max(...d.hist);
+  $('detail').innerHTML = `
+    <div class="dtop"><button type="button" class="back" id="back" aria-label="Back to all devices"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div><h2 id="dname" tabindex="-1">${d.name}</h2><p>${d.model}</p></div></div>
+    <div class="big"><span class="pct">${d.id === 'buds' ? Math.min(d.parts[0].p, d.parts[1].p) : main.p}<small>%</small></span><span class="status ${st[0]}">${st[1]}</span></div>
+    <div class="bars">${(d.parts.length > 1 ? d.parts : [{ ...main, k: 'Level' }]).map((x) => `<div class="bar"><span>${x.k}</span><span class="t"><i class="${isLow(x.p) ? 'low ' : ''}${x.chg && x.p < 100 ? 'chg' : ''}" style="width:${x.p}%"></i></span><b>${x.p}%</b></div>`).join('')}</div>
+    <div class="hist" role="img" aria-label="Last 24 hours: from ${d.hist[0]} to ${d.hist[d.hist.length - 1]} percent">${d.hist.map((h, i) => `<i class="${i === d.hist.length - 1 ? 'on' : ''}" style="height:${Math.max(12, h / max * 100)}%"></i>`).join('')}</div><div class="histl" aria-hidden="true"><span>24 h ago</span><span>Now</span></div>
+    <div class="facts"><div class="fact"><span>${anyChg ? 'Full in' : 'Lasts'}</span><b>${mins}</b></div><div class="fact"><span>${anyChg ? 'Input' : 'Use'}</span><b>${anyChg ? d.rate : d.used}</b></div><div class="fact"><span>Health</span><b>${d.health}%</b></div></div>`;
+  $('back').addEventListener('click', close);
+}
+function open(id) {
+  openId = id; renderDetail();
+  $('w').classList.add('open');
+  $('grid').setAttribute('inert', '');
+  $('dname').focus();
+}
+function close() {
+  const id = openId; openId = null;
+  $('w').classList.remove('open');
+  $('grid').removeAttribute('inert');
+  document.querySelector(`.tile[data-id="${id}"]`)?.focus();
+}
+$('grid').addEventListener('click', (e) => { const t = e.target.closest('.tile'); if (t) open(t.dataset.id); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && openId) close(); });
+
+function charge() {
+  let changed = false;
+  devices.forEach((d) => d.parts.forEach((x) => { if (x.chg && x.p < 100) { x.p++; changed = true; if (x.p === 100) $('live').textContent = `${d.name} ${x.k === d.name ? '' : x.k + ' '}fully charged`; } }));
+  if (!changed) return;
+  document.querySelectorAll('.tile').forEach((t) => {
+    const d = devices.find((x) => x.id === t.dataset.id);
+    const fresh = document.createElement('div'); fresh.innerHTML = tile(d);
+    const n = fresh.firstElementChild;
+    t.setAttribute('aria-label', n.getAttribute('aria-label'));
+    t.querySelector('.lbl').innerHTML = n.querySelector('.lbl').innerHTML;
+    t.querySelectorAll('.ring').forEach((r, i) => {
+      const part = d.parts[i] ?? d.parts[0];
+      r.querySelector('.fl').setAttribute('stroke-dashoffset', C * (1 - part.p / 100));
+      r.classList.toggle('chg', !!part.chg && part.p < 100);
+      r.classList.toggle('low', isLow(part.p));
+      const s = r.parentElement.classList.contains('sub') ? r.parentElement : null;
+      if (s) s.lastChild.textContent = part.p + '%';
+    });
+  });
+  if (openId) {
+    const f = document.activeElement?.id;
+    renderDetail();
+    if (f) $(f)?.focus();
+  }
+}
+renderGrid();
+setInterval(charge, 6000);
+</script>
+</body>
+</html>

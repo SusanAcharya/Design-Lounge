@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 342 · "Workspace setup with live preview" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 365 · "Workspace setup with live preview" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Workspace setup with live preview
 

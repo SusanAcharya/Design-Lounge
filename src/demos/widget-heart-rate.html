@@ -1,0 +1,251 @@
+<!-- Design Lounge piece: widget-heart-rate · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Live heart-rate widget</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500&family=Teko:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c0b;--tile:#121513;--tile-2:#181c19;--line:#232924;--line-2:#2f3631;
+  --ink:#eef2ec;--ink-2:#a3aca2;--ink-3:#717a70;
+  --signal:#ff4632;--signal-soft:rgba(255,70,50,.16);
+  --z1:#3a423b;--z2:#5d675d;--z3:#a3aca2;--z4:#ff9a80;--z5:#ff4632;
+  --display:"Teko","Arial Narrow",sans-serif;
+  --mono:"Azeret Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --t-micro:160ms;--t-view:320ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--mono);display:grid;place-items:center;overflow:hidden;-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px;background-position:center center}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(closest-side,transparent 40%,var(--bg) 100%);pointer-events:none}
+.stage{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px}
+.tile{position:relative;width:min(400px,calc(100vw - 48px));aspect-ratio:1;border-radius:23%;background:var(--tile);border:1px solid var(--line-2);container-type:inline-size;box-shadow:0 0 0 8px #0e110f,0 0 0 9px var(--line),0 30px 60px -20px #000}
+.face{all:unset;position:absolute;inset:0;border-radius:inherit;cursor:pointer;display:grid;padding:7cqw 7.5cqw 13cqw}
+.face:focus-visible{outline:2px solid var(--signal);outline-offset:6px}
+.view{grid-area:1/1;display:flex;flex-direction:column;min-width:0;opacity:0;transform:translateX(4%);transition:opacity var(--t-view) var(--ease),transform var(--t-view) var(--ease-out);pointer-events:none}
+.view.on{opacity:1;transform:none}
+.view.out{transform:translateX(-4%)}
+.top{display:flex;align-items:center;justify-content:space-between;font-size:2.9cqw;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.brand{display:flex;align-items:center;gap:1.8cqw}
+.heart{width:4.4cqw;height:4.4cqw;color:var(--signal);transform-origin:center}
+.heart.beat{animation:beat 300ms var(--ease-out)}
+@keyframes beat{0%{transform:scale(1)}30%{transform:scale(1.35)}100%{transform:scale(1)}}
+.pill{display:flex;align-items:center;gap:1.4cqw;color:var(--signal);padding:1cqw 2.2cqw;border-radius:99px;background:var(--signal-soft)}
+.pill i{width:1.6cqw;height:1.6cqw;border-radius:50%;background:currentColor;animation:blink 1.6s steps(2,jump-none) infinite}
+@keyframes blink{50%{opacity:.25}}
+.read{display:flex;align-items:flex-end;gap:2.4cqw;margin-top:5cqw}
+.num{font-family:var(--display);font-weight:600;font-size:37cqw;line-height:.78;letter-spacing:-.025em;font-variant-numeric:tabular-nums;display:block}
+.num.tick{animation:tick 260ms var(--ease-out)}
+@keyframes tick{from{transform:translateY(-6%);opacity:.35}to{transform:none;opacity:1}}
+.unit{display:flex;flex-direction:column;gap:1.2cqw;padding-bottom:1.6cqw;font-size:3.1cqw;letter-spacing:.12em;color:var(--ink-2)}
+.unit b{font-weight:500;color:var(--ink-3);font-size:2.6cqw;letter-spacing:.06em}
+.trace{display:block;width:100%;height:23cqw;margin-top:4cqw;overflow:visible}
+.trace .base{stroke:var(--line-2);stroke-width:1;stroke-dasharray:2 4}
+.trace polyline{fill:none;stroke:var(--signal);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.trace .old{opacity:.38}
+.trace circle{fill:var(--signal)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:auto;border-top:1px solid var(--line);padding-top:2.6cqw}
+.stats span{display:flex;flex-direction:column;gap:.6cqw;font-size:2.5cqw;letter-spacing:.14em;color:var(--ink-3)}
+.stats b{font-family:var(--display);font-weight:600;font-size:7.4cqw;line-height:1;letter-spacing:0;color:var(--ink)}
+.small-num{font-size:30cqw}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:2cqw;align-items:end;flex:1;min-height:0;margin-top:4cqw}
+.week span{display:flex;flex-direction:column;align-items:center;gap:1.4cqw;height:100%;justify-content:flex-end;font-size:2.4cqw;color:var(--ink-3)}
+.week i{order:-1;display:block;width:100%;border-radius:1cqw 1cqw 0 0;background:var(--line-2)}
+.week .today i{background:var(--signal)}
+.week .today{color:var(--ink)}
+.delta{margin-top:2.6cqw;font-size:2.8cqw;color:var(--ink-2);letter-spacing:.04em}
+.delta b{color:var(--ink);font-weight:500}
+.zones{display:flex;flex-direction:column;gap:3.6cqw;margin-top:5cqw}
+.zones span{display:grid;grid-template-columns:21cqw 1fr 8cqw;align-items:center;gap:2.6cqw;font-size:2.6cqw;white-space:nowrap;color:var(--ink-2);letter-spacing:.06em}
+.zones em{font-style:normal;color:var(--ink-3)}
+.zones i{display:block;height:3.6cqw;border-radius:1cqw;background:var(--c);width:var(--w);min-width:1.6cqw}
+.zones b{font-weight:500;color:var(--ink);text-align:right}
+.now{margin-top:auto;display:flex;justify-content:space-between;font-size:2.6cqw;letter-spacing:.06em;color:var(--ink-3);border-top:1px solid var(--line);padding-top:2.6cqw}
+.now b{font-weight:500;color:var(--ink)}
+.ztitle{font-family:var(--display);font-weight:600;font-size:15cqw;line-height:.9;margin-top:3.4cqw;display:block}
+.ztitle small{font-family:var(--mono);font-weight:400;font-size:2.8cqw;color:var(--ink-3);letter-spacing:.1em;margin-left:1.6cqw}
+.pager{position:absolute;left:0;right:0;bottom:3.6cqw;display:flex;justify-content:center;gap:0;z-index:2}
+.dot{all:unset;cursor:pointer;width:9cqw;height:7cqw;display:grid;place-items:center;border-radius:99px}
+.dot i{width:1.8cqw;height:1.8cqw;border-radius:99px;background:var(--line-2);transition:width var(--t-view) var(--ease-out),background var(--t-micro) var(--ease)}
+.dot:hover i{background:var(--ink-3)}
+.dot[aria-current="true"] i{width:5cqw;background:var(--ink)}
+.dot:focus-visible{outline:2px solid var(--signal);outline-offset:0}
+.hint{text-align:center;padding:0 16px;margin:0;line-height:2;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);position:relative}
+.hint kbd{font:inherit;color:var(--ink-2);border:1px solid var(--line-2);border-radius:4px;padding:2px 6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){
+  .view,.dot i{transition:none}
+  .heart.beat,.num.tick,.pill i{animation:none}
+}
+</style>
+</head>
+<body>
+<main class="stage">
+  <section class="tile" aria-label="Pulsewire heart-rate widget">
+    <button class="face" id="face" type="button" aria-describedby="hint">
+      <span class="view on" data-name="Live">
+        <span class="top">
+          <span class="brand"><svg class="heart" id="heart" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 20.5s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.6-7.5 10-7.5 10z"/></svg>Pulsewire</span>
+          <span class="pill"><i></i>Live</span>
+        </span>
+        <span class="read">
+          <span class="num" id="bpm">72</span>
+          <span class="unit">BPM<b id="zoneLbl">Resting band</b></span>
+        </span>
+        <svg class="trace" id="trace" viewBox="0 0 300 80" preserveAspectRatio="none" role="img" aria-label="Electrocardiogram trace, steady rhythm">
+          <line class="base" x1="0" y1="58" x2="300" y2="58"/>
+          <polyline class="old" id="pOld" points=""/>
+          <polyline id="pNew" points=""/>
+          <circle id="headDot" r="3" cx="-10" cy="58"/>
+        </svg>
+        <span class="stats">
+          <span>Min<b>58</b></span>
+          <span>Avg<b id="avg">71</b></span>
+          <span>Max<b>124</b></span>
+        </span>
+      </span>
+
+      <span class="view" data-name="Resting">
+        <span class="top"><span>Resting · 7 days</span><span>Sat 3 Oct</span></span>
+        <span class="read">
+          <span class="num small-num">54</span>
+          <span class="unit">BPM<b>Resting avg</b></span>
+        </span>
+        <span class="delta"><b>−3 BPM</b> vs last week · trend steady</span>
+        <span class="week" aria-label="Resting heart rate by day">
+          <span>S<i style="height:62%"></i></span>
+          <span>M<i style="height:56%"></i></span>
+          <span>T<i style="height:68%"></i></span>
+          <span>W<i style="height:50%"></i></span>
+          <span>T<i style="height:44%"></i></span>
+          <span>F<i style="height:56%"></i></span>
+          <span class="today">S<i style="height:50%"></i></span>
+        </span>
+      </span>
+
+      <span class="view" data-name="Zones">
+        <span class="top"><span>Zones · today</span><span>Max 190</span></span>
+        <span class="ztitle">77 min<small>in zone</small></span>
+        <span class="zones">
+          <span><em>Z5 Max</em><i style="--w:8%;--c:var(--z5)"></i><b>2m</b></span>
+          <span><em>Z4 Thresh</em><i style="--w:35%;--c:var(--z4)"></i><b>9m</b></span>
+          <span><em>Z3 Aerobic</em><i style="--w:100%;--c:var(--z3)"></i><b>26m</b></span>
+          <span><em>Z2 Easy</em><i style="--w:69%;--c:var(--z2)"></i><b>18m</b></span>
+          <span><em>Z1 Warm</em><i style="--w:85%;--c:var(--z1)"></i><b>22m</b></span>
+        </span>
+        <span class="now"><span>Now <b id="nowBpm">72</b> BPM</span><span>Z1 starts at 95</span></span>
+      </span>
+    </button>
+    <nav class="pager" aria-label="Widget views">
+      <button class="dot" type="button" aria-current="true" aria-label="Live heart rate"><i></i></button>
+      <button class="dot" type="button" aria-current="false" aria-label="Resting heart rate"><i></i></button>
+      <button class="dot" type="button" aria-current="false" aria-label="Heart-rate zones"><i></i></button>
+    </nav>
+  </section>
+  <p class="hint" id="hint">Tap the tile or press <kbd>←</kbd> <kbd>→</kbd> to switch view</p>
+  <p class="sr" aria-live="polite" id="live"></p>
+</main>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const face = document.getElementById('face');
+  const views = [...face.querySelectorAll('.view')];
+  const dots = [...document.querySelectorAll('.dot')];
+  const live = document.getElementById('live');
+  const bpmEl = document.getElementById('bpm'), nowBpm = document.getElementById('nowBpm');
+  const heart = document.getElementById('heart');
+  const pOld = document.getElementById('pOld'), pNew = document.getElementById('pNew'), headDot = document.getElementById('headDot');
+  let vi = 0, bpm = 72, beats = 0, running = false;
+
+  function setView(i) {
+    const prev = vi;
+    vi = (i + views.length) % views.length;
+    views.forEach((v, j) => {
+      v.classList.toggle('on', j === vi);
+      v.classList.toggle('out', j === prev && j !== vi);
+      v.setAttribute('aria-hidden', j === vi ? 'false' : 'true');
+    });
+    dots.forEach((d, j) => d.setAttribute('aria-current', j === vi ? 'true' : 'false'));
+    live.textContent = views[vi].dataset.name + ' view';
+    label();
+    if (vi === 0) start(); else running = false;
+  }
+  function label() {
+    const next = views[(vi + 1) % views.length].dataset.name.toLowerCase();
+    const now = vi === 0 ? `Heart rate ${bpm} BPM, live.` : vi === 1 ? 'Resting heart rate 54 BPM, down 3 from last week.' : '77 minutes in heart-rate zones today.';
+    face.setAttribute('aria-label', `${now} Activate to show ${next}.`);
+  }
+  face.addEventListener('click', () => setView(vi + 1));
+  face.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); setView(vi + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); setView(vi - 1); }
+  });
+  dots.forEach((d, j) => d.addEventListener('click', () => setView(j)));
+
+  /* ECG sweep */
+  const N = 180, GAP = 10, SWEEP = 3200, W = 300;
+  const buf = new Float32Array(N).fill(0);
+  let head = 0, phase = 0.6, acc = 0, last = 0;
+  const g = (p, c, w, a) => a * Math.exp(-((p - c) ** 2) / (2 * w * w));
+  const ecg = p => g(p, .12, .022, .1) + g(p, .232, .007, -.1) + g(p, .255, .009, 1) + g(p, .28, .009, -.26) + g(p, .47, .038, .24);
+  const pt = i => `${(i / (N - 1) * W).toFixed(1)},${(58 - buf[i] * 50).toFixed(1)}`;
+
+  function step() {
+    const prev = phase;
+    phase += (SWEEP / N) / (60000 / bpm);
+    if (prev < .255 && phase >= .255) onBeat();
+    if (phase >= 1) phase -= 1;
+    buf[head] = ecg(phase);
+    head = (head + 1) % N;
+  }
+  function draw() {
+    const a = [], b = [];
+    for (let i = 0; i < head; i++) a.push(pt(i));
+    for (let i = head + GAP; i < N; i++) b.push(pt(i));
+    pNew.setAttribute('points', a.join(' '));
+    pOld.setAttribute('points', b.join(' '));
+    if (head > 0) { headDot.setAttribute('cx', (head - 1) / (N - 1) * W); headDot.setAttribute('cy', 58 - buf[head - 1] * 50); }
+  }
+  function onBeat() {
+    beats++;
+    if (!reduce) { heart.classList.remove('beat'); void heart.getBoundingClientRect(); heart.classList.add('beat'); }
+    if (beats % 3 === 0) {
+      bpm = Math.max(64, Math.min(84, bpm + Math.round(Math.random() * 4 - 2)));
+      bpmEl.textContent = bpm; nowBpm.textContent = bpm;
+      if (!reduce) { bpmEl.classList.remove('tick'); void bpmEl.offsetWidth; bpmEl.classList.add('tick'); }
+      label();
+    }
+  }
+  function frame(t) {
+    if (!running) return;
+    const dt = Math.min(t - (last || t), 64); last = t;
+    acc += dt / SWEEP * N;
+    while (acc >= 1) { acc--; step(); }
+    draw();
+    requestAnimationFrame(frame);
+  }
+  function start() {
+    if (reduce || running) return;
+    running = true; last = 0; requestAnimationFrame(frame);
+  }
+  document.addEventListener('visibilitychange', () => { if (document.hidden) running = false; else if (vi === 0) start(); });
+
+  for (let i = 0; i < N; i++) step();
+  head = reduce ? N : 118;
+  if (reduce) {
+    for (let i = 0; i < N; i++) { phase = (i * (SWEEP / N) / (60000 / bpm) + .6) % 1; buf[i] = ecg(phase); }
+    setInterval(() => { if (vi === 0) onBeat(); }, 830);
+  }
+  draw();
+  label();
+  start();
+})();
+</script>
+</body>
+</html>

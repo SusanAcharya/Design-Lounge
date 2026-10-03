@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 322 · "Terminal crypto trading screen" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 341 · "Terminal crypto trading screen" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Terminal crypto trading screen
 

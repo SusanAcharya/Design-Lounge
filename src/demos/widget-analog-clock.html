@@ -1,0 +1,255 @@
+<!-- Design Lounge piece: widget-analog-clock · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Vauclair Orrery 38</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stage:#0a1411;--stage-2:#15241f;--text:#ece2c8;--text-2:#a99f86;--line:rgba(236,226,200,.14);
+  --gold-1:#7d6436;--gold-2:#e8d29c;--gold-3:#a2834b;--gold-4:#f4e3b4;
+  --display:"Marcellus",Georgia,serif;--sans:"Mulish",system-ui,sans-serif;
+  --size:min(470px,84vw);
+  --ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+.watch[data-dial="verde"]{--dial:#143f33;--ink:#eadfc1;--hand:#d8b673;--hand-2:#9c7b3f;--accent:#e2c27f;--sub:rgba(0,0,0,.18)}
+.watch[data-dial="salmone"]{--dial:#d99a7d;--ink:#3b2219;--hand:#2a3a5a;--hand-2:#141e33;--accent:#1d2b4a;--sub:rgba(80,30,10,.10)}
+.watch[data-dial="ardoise"]{--dial:#2b2f34;--ink:#efe9dc;--hand:#dfe1e3;--hand-2:#8d9195;--accent:#e3a43b;--sub:rgba(0,0,0,.22)}
+.watch[data-dial="email"]{--dial:#f1e9d8;--ink:#1d1a16;--hand:#24407e;--hand-2:#122452;--accent:#a8322a;--sub:rgba(60,40,10,.07)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:15px/1.5 var(--sans);color:var(--text);
+  background:radial-gradient(ellipse 60% 70% at 38% 50%,var(--stage-2),var(--stage) 70%);
+  display:grid;place-items:center;overflow-x:hidden;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--gold-2);outline-offset:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.stage{display:flex;align-items:center;gap:88px;padding:32px 24px}
+
+/* case */
+.watch{position:relative;width:var(--size);aspect-ratio:1;flex:none}
+.crown{position:absolute;right:-14px;top:50%;width:22px;height:46px;margin-top:-23px;border-radius:4px;
+  background:repeating-linear-gradient(90deg,var(--gold-3) 0 2px,var(--gold-2) 2px 4px);box-shadow:0 2px 6px rgba(0,0,0,.5)}
+.case{position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 40deg,var(--gold-1),var(--gold-2),var(--gold-3),var(--gold-4),var(--gold-1) 50%,var(--gold-2),var(--gold-3),var(--gold-4),var(--gold-1));
+  box-shadow:0 40px 60px -20px rgba(0,0,0,.7),0 12px 24px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,240,200,.4)}
+.dial{position:absolute;inset:5.6%;border-radius:50%;overflow:hidden;
+  background-color:var(--dial);
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.35),inset 0 6px 18px rgba(0,0,0,.45);
+  transition:background-color 500ms var(--ease),transform 160ms var(--ease)}
+.dial::before{content:"";position:absolute;inset:0;border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,255,255,.05) 0 1deg,rgba(0,0,0,.05) 1deg 2deg),
+  radial-gradient(circle at 35% 25%,rgba(255,255,255,.16),transparent 55%)}
+.dial:active{transform:scale(.992)}
+.dial:focus-visible{outline-offset:10px}
+.dial svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ink{fill:var(--ink);transition:fill 500ms var(--ease)}
+.inks{stroke:var(--ink);transition:stroke 500ms var(--ease)}
+.idx{fill:var(--hand);stroke:var(--hand-2);stroke-width:.6;transition:fill 500ms var(--ease),stroke 500ms var(--ease)}
+.h-a{fill:var(--hand);transition:fill 500ms var(--ease)}
+.h-b{fill:var(--hand-2);transition:fill 500ms var(--ease)}
+.acc{fill:var(--accent);stroke:var(--accent);transition:fill 500ms var(--ease),stroke 500ms var(--ease)}
+.hands{filter:drop-shadow(0 3px 2px rgba(0,0,0,.35))}
+.sub-bg{fill:var(--sub)}
+.brand{font-family:var(--display);font-size:15px;letter-spacing:.32em}
+.small{font-family:var(--sans);font-size:6.4px;font-weight:700;letter-spacing:.28em}
+.num{font-family:var(--sans);font-size:7px;font-weight:700}
+.date-win{fill:#f7f2e6;stroke:var(--hand-2);stroke-width:1.2}
+.date-txt{font-family:var(--sans);font-size:14px;font-weight:700;fill:#1d1a16}
+.flash{animation:flash 520ms var(--expo)}
+@keyframes flash{from{opacity:.55;transform:rotate(-4deg)}to{opacity:1;transform:none}}
+
+/* panel */
+.panel{width:300px}
+.eyebrow{margin:0;font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--text-2)}
+h1{margin:10px 0 4px;font:400 40px/1.05 var(--display);letter-spacing:.01em}
+.dialname{margin:0 0 28px;font-size:15px;color:var(--text-2)}
+.dialname b{color:var(--text);font-weight:600}
+.group{border:0;margin:0 0 24px;padding:20px 0 0;border-top:1px solid var(--line)}
+.group legend{padding:0;margin-bottom:12px;font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--text-2)}
+.swatches{display:flex;gap:12px}
+.sw{width:40px;height:40px;border-radius:50%;position:relative;display:grid;place-items:center}
+.sw input,.zone input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.sw span{width:28px;height:28px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.4);transition:transform 160ms var(--ease)}
+.sw::after{content:"";position:absolute;inset:2px;border-radius:50%;border:1px solid transparent;transition:border-color 160ms var(--ease)}
+.sw:has(input:checked)::after{border-color:var(--gold-2)}
+.sw:hover span{transform:scale(1.08)}
+.sw:has(input:focus-visible),.zone:has(input:focus-visible){outline:2px solid var(--gold-2);outline-offset:3px}
+.zones{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.zone{position:relative;display:flex;justify-content:space-between;align-items:baseline;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;transition:border-color 160ms var(--ease),background-color 160ms var(--ease)}
+.zone:hover{border-color:rgba(236,226,200,.35)}
+.zone:has(input:checked){border-color:var(--gold-2);background:rgba(232,210,156,.08)}
+.zone b{font-weight:600;font-size:14px}
+.zone small{font-size:12px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.hint{margin:0;font-size:13px;color:var(--text-2)}
+kbd{font:600 11px var(--sans);padding:2px 6px;border:1px solid var(--line);border-radius:4px}
+
+@media (max-width:900px){.stage{flex-direction:column;gap:40px}.panel{width:min(340px,100%)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="stage">
+  <div class="watch" id="watch" data-dial="verde">
+    <div class="crown" aria-hidden="true"></div>
+    <div class="case" aria-hidden="true"></div>
+    <button class="dial" id="dial" type="button" aria-describedby="readout">
+      <span class="sr" id="dialLabel">Change dial. Current dial: Verde sunburst</span>
+      <svg viewBox="-200 -200 400 400" aria-hidden="true">
+        <g id="track"></g>
+        <text class="ink brand" x="0" y="-78" text-anchor="middle">VAUCLAIR</text>
+        <text class="ink small" x="0" y="-62" text-anchor="middle">ORRERY · AUTOMATIQUE</text>
+        <g transform="translate(0 82)">
+          <circle r="46" class="sub-bg"/>
+          <path d="M-46 0A46 46 0 0 1 46 0Z" class="sub-bg"/>
+          <circle r="46" fill="none" class="inks" stroke-width=".8"/>
+          <circle r="38" fill="none" class="inks" stroke-width=".4" stroke-dasharray="1 2.98"/>
+          <text class="ink num" y="-27" text-anchor="middle">24</text>
+          <text class="ink num" y="33" text-anchor="middle">12</text>
+          <text class="ink num" x="-28" y="2.5" text-anchor="middle">18</text>
+          <text class="ink num" x="28" y="2.5" text-anchor="middle">6</text>
+          <text class="ink small" id="zoneCode" y="18" text-anchor="middle">TYO</text>
+          <g id="zoneHand"><path class="acc" d="M-1.4 6 L0 -36 L1.4 6Z"/><circle r="3.2" class="acc"/></g>
+        </g>
+        <rect class="date-win" x="122" y="-13" width="38" height="26" rx="2"/>
+        <text class="date-txt" id="date" x="141" y="5" text-anchor="middle">3</text>
+        <g class="hands">
+          <g id="hHour"><path class="h-a" d="M0 16 L-8 0 L0 -102Z"/><path class="h-b" d="M0 16 L8 0 L0 -102Z"/></g>
+          <g id="hMin"><path class="h-a" d="M0 18 L-6.5 0 L0 -160Z"/><path class="h-b" d="M0 18 L6.5 0 L0 -160Z"/></g>
+          <circle r="7" class="h-b"/>
+          <g id="hSec"><path class="acc" d="M-.8 40 L-.6 -170 L.6 -170 L.8 40Z"/><circle cy="30" r="5" class="acc"/><circle r="4" class="acc"/></g>
+          <circle r="1.6" fill="#1d1a16"/>
+        </g>
+      </svg>
+    </button>
+  </div>
+
+  <section class="panel" aria-labelledby="title">
+    <p class="eyebrow">Vauclair · Ref. 3810</p>
+    <h1 id="title">Orrery 38</h1>
+    <p class="dialname" aria-live="polite"><b id="dialName">Verde sunburst</b> · <span id="dialNote">green lacquer, gilt dauphine</span></p>
+    <fieldset class="group">
+      <legend>Dial</legend>
+      <div class="swatches" id="swatches">
+        <label class="sw"><input type="radio" name="dial" value="verde" checked aria-label="Verde sunburst"><span style="background:#143f33"></span></label>
+        <label class="sw"><input type="radio" name="dial" value="salmone" aria-label="Salmone"><span style="background:#d99a7d"></span></label>
+        <label class="sw"><input type="radio" name="dial" value="ardoise" aria-label="Ardoise"><span style="background:#2b2f34"></span></label>
+        <label class="sw"><input type="radio" name="dial" value="email" aria-label="Grand feu enamel"><span style="background:#f1e9d8"></span></label>
+      </div>
+    </fieldset>
+    <fieldset class="group">
+      <legend>Second zone</legend>
+      <div class="zones" id="zones">
+        <label class="zone"><input type="radio" name="zone" value="Asia/Tokyo" data-code="TYO" checked><b>Tokyo</b><small></small></label>
+        <label class="zone"><input type="radio" name="zone" value="America/New_York" data-code="NYC"><b>New York</b><small></small></label>
+        <label class="zone"><input type="radio" name="zone" value="Europe/Lisbon" data-code="LIS"><b>Lisbon</b><small></small></label>
+        <label class="zone"><input type="radio" name="zone" value="Asia/Kathmandu" data-code="KTM"><b>Kathmandu</b><small></small></label>
+      </div>
+    </fieldset>
+    <p class="hint">Tap the dial or press <kbd>Enter</kbd> on it to change the dial.</p>
+    <p class="sr" id="readout" role="status" aria-live="off"></p>
+  </section>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const NS = 'http://www.w3.org/2000/svg';
+const DIALS = {
+  verde:['Verde sunburst','green lacquer, gilt dauphine'],
+  salmone:['Salmone','copper-salmon, blued steel hands'],
+  ardoise:['Ardoise','slate grey, rhodium and amber'],
+  email:['Grand feu enamel','ivory enamel, blued hands, red seconds']
+};
+const order = Object.keys(DIALS);
+const watch = $('#watch'), dial = $('#dial'), svg = dial.querySelector('svg');
+
+const track = $('#track');
+for (let i = 0; i < 60; i++) {
+  const a = i * 6;
+  if (i % 5) {
+    const l = document.createElementNS(NS, 'line');
+    l.setAttribute('class', 'inks'); l.setAttribute('stroke-width', '1');
+    l.setAttribute('y1', -183); l.setAttribute('y2', -176);
+    l.setAttribute('transform', `rotate(${a})`); track.append(l);
+  } else if (i !== 15) {
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('transform', `rotate(${a})`);
+    const xs = i === 0 ? [-6.5, 2.5] : [-3.5];
+    for (const x of xs) {
+      const r = document.createElementNS(NS, 'rect');
+      r.setAttribute('class', 'idx'); r.setAttribute('x', x); r.setAttribute('y', -170);
+      r.setAttribute('width', i === 0 ? 4 : 7); r.setAttribute('height', 36); r.setAttribute('rx', 1);
+      g.append(r);
+    }
+    track.append(g);
+  }
+}
+
+function setDial(key, announce) {
+  watch.dataset.dial = key;
+  const [name, note] = DIALS[key];
+  $('#dialName').textContent = name; $('#dialNote').textContent = note;
+  $('#dialLabel').textContent = 'Change dial. Current dial: ' + name;
+  document.querySelector(`input[name=dial][value=${key}]`).checked = true;
+  if (announce) { svg.classList.remove('flash'); void svg.offsetWidth; svg.classList.add('flash'); }
+}
+dial.addEventListener('click', () => setDial(order[(order.indexOf(watch.dataset.dial) + 1) % order.length], true));
+$('#swatches').addEventListener('change', e => setDial(e.target.value, true));
+
+let zone = 'Asia/Tokyo';
+const fmt = {};
+const zoneParts = (tz, d) => {
+  fmt[tz] ||= new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+  const p = fmt[tz].formatToParts(d);
+  return { h: +p.find(x => x.type === 'hour').value, m: +p.find(x => x.type === 'minute').value };
+};
+$('#zones').addEventListener('change', e => {
+  zone = e.target.value; $('#zoneCode').textContent = e.target.dataset.code; lastSec = -1;
+});
+
+const hH = $('#hHour'), hM = $('#hMin'), hS = $('#hSec'), zH = $('#zoneHand');
+const rm = matchMedia('(prefers-reduced-motion: reduce)');
+let lastSec = -1, lastMin = -1, zoneA = 0;
+const pad = n => String(n).padStart(2, '0');
+
+function draw() {
+  const d = new Date();
+  const sec = d.getSeconds();
+  const s = rm.matches ? sec : sec + d.getMilliseconds() / 1000;
+  const m = d.getMinutes() + s / 60;
+  const h = (d.getHours() % 12) + m / 60;
+  hS.setAttribute('transform', `rotate(${s * 6})`);
+  hM.setAttribute('transform', `rotate(${m * 6})`);
+  hH.setAttribute('transform', `rotate(${h * 30})`);
+  if (sec !== lastSec) {
+    lastSec = sec;
+    const z = zoneParts(zone, d);
+    zoneA = (z.h + z.m / 60) * 15;
+    zH.setAttribute('transform', `rotate(${zoneA})`);
+    $('#date').textContent = d.getDate();
+    document.querySelectorAll('.zone').forEach(el => {
+      const p = zoneParts(el.querySelector('input').value, d);
+      el.querySelector('small').textContent = pad(p.h) + ':' + pad(p.m);
+    });
+    if (d.getMinutes() !== lastMin) {
+      lastMin = d.getMinutes();
+      const city = document.querySelector('input[name=zone]:checked').parentElement.querySelector('b').textContent;
+      $('#readout').textContent = `Local time ${pad(d.getHours())}:${pad(d.getMinutes())}, date ${d.getDate()}. ${city} ${pad(z.h)}:${pad(z.m)}.`;
+    }
+  }
+}
+function loop() { draw(); if (!rm.matches) requestAnimationFrame(loop); }
+let tick;
+function start() {
+  clearInterval(tick);
+  if (rm.matches) { draw(); tick = setInterval(draw, 1000); } else requestAnimationFrame(loop);
+}
+rm.addEventListener('change', start);
+start();
+</script>
+</body>
+</html>

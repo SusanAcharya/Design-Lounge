@@ -14,7 +14,7 @@ export const CATEGORIES = [
   // whole pages & screens
   'portfolio', 'landing', 'auth', 'ecommerce', 'dashboard', 'onboarding', 'settings', 'profile', 'messaging', 'media', 'reading', 'error', 'utility',
   // components
-  'navigation', 'buttons', 'inputs', 'cards', 'overlays', 'feedback', 'data', 'pickers', 'charts',
+  'navigation', 'buttons', 'inputs', 'cards', 'overlays', 'feedback', 'data', 'pickers', 'charts', 'widgets', 'social', 'mockups',
   // motion
   'text-motion', 'scroll', 'cursor', 'transitions', 'loaders', 'micro', 'backgrounds',
   // kits

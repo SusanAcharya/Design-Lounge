@@ -1,0 +1,198 @@
+<!-- Design Lounge piece: widget-sleep-score · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Sleep score widget</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&family=Petrona:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e141c;--card:#151d28;--card-2:#1b2532;--line:#243142;--line-2:#2f3e52;
+  --ink:#f1e9d6;--ink-2:#aab5c5;--ink-3:#8190a6;
+  --moon:#ead9b0;
+  --awake:#e7a37a;--rem:#a9c4ee;--core:#5e86c2;--deep:#3d63ab;
+  --serif:"Petrona",Georgia,serif;--sans:"Mulish",system-ui,sans-serif;
+  --r-card:28px;--r-seg:4px;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --t-micro:160ms;--t-ring:1100ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);display:grid;place-items:center;overflow:hidden;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(1px 1px at 12% 18%,#3a4a60 50%,transparent 51%),radial-gradient(1px 1px at 82% 12%,#3a4a60 50%,transparent 51%),radial-gradient(1px 1px at 68% 84%,#33435a 50%,transparent 51%),radial-gradient(1px 1px at 22% 76%,#33435a 50%,transparent 51%),radial-gradient(1.5px 1.5px at 90% 52%,#46576e 50%,transparent 51%),radial-gradient(1px 1px at 6% 48%,#33435a 50%,transparent 51%)}
+.card{width:min(640px,calc(100vw - 32px));background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:28px 28px 24px}
+.head{display:grid;grid-template-columns:168px 1fr;gap:28px;align-items:center}
+.ring{position:relative;width:168px;height:168px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:12}
+.ring .track{stroke:var(--card-2)}
+.ring .prog{stroke:var(--moon);stroke-linecap:round;stroke-dasharray:452.39;stroke-dashoffset:452.39;transition:stroke-dashoffset var(--t-ring) var(--ease-out)}
+.ring .val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring b{font:italic 500 58px/1 var(--serif);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ring small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-top:6px}
+.eyebrow{margin:0;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+h1{margin:6px 0 4px;font:400 28px/1.15 var(--serif);letter-spacing:-.01em}
+h1 em{color:var(--moon)}
+.meta{margin:0;color:var(--ink-2)}
+.meta b{color:var(--ink);font-weight:600}
+.legend{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 0;padding:0;list-style:none}
+.legend li{display:flex;flex-direction:column;gap:2px;transition:opacity var(--t-micro) var(--ease)}
+.legend span{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.legend span::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--c)}
+.legend b{font:500 19px/1.2 var(--serif);white-space:nowrap}
+.legend i{display:block;height:3px;border-radius:2px;background:var(--line);margin-top:4px;overflow:hidden}
+.legend i::after{content:"";display:block;height:100%;width:var(--p);background:var(--c)}
+.legend.scrub li{opacity:.4}
+.legend.scrub li.on{opacity:1}
+.hyp{margin-top:26px;border-top:1px solid var(--line);padding-top:20px}
+.hyp-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.hyp-top p{margin:0}
+.readout{font:italic 400 20px/1 var(--serif);color:var(--ink)}
+.readout span{font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-style:normal;margin-left:8px}
+.hint{font-size:12px;color:var(--ink-3)}
+.grid{display:grid;grid-template-columns:52px 1fr;gap:0 10px}
+.lanes{display:grid;grid-template-rows:repeat(4,26px);font-size:11px;font-weight:600;color:var(--ink-3);align-items:center}
+.plot{position:relative;height:104px;border-radius:8px;cursor:ew-resize;touch-action:none;outline:none;background:repeating-linear-gradient(to bottom,transparent 0 25px,var(--line) 25px 26px)}
+.plot:focus-visible{box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--moon)}
+.seg{position:absolute;height:16px;border-radius:var(--r-seg);background:var(--c);transition:filter var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.seg.on{box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--ink);z-index:1}
+.link{position:absolute;width:1px;background:var(--line-2)}
+.cursor{position:absolute;top:-6px;bottom:-6px;width:2px;margin-left:-1px;background:var(--moon);border-radius:2px;pointer-events:none;z-index:2}
+.cursor::before{content:"";position:absolute;top:-4px;left:-4px;width:10px;height:10px;border-radius:50%;background:var(--moon)}
+.axis{position:relative;height:18px;margin-top:10px;font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.axis span:first-child{transform:none}
+.axis span:last-child{transform:translateX(-100%)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:560px){
+  .card{padding:22px 18px 18px}
+  .head{grid-template-columns:1fr;justify-items:center;text-align:center;gap:16px}
+  .legend{text-align:left;grid-template-columns:repeat(2,1fr);gap:14px 20px;width:100%}
+  .axis span:nth-child(2),.axis span:nth-child(4){display:none}
+  .grid{grid-template-columns:40px 1fr}
+  .lanes{font-size:10px}
+  .hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .ring .prog,.legend li,.seg{transition:none}
+}
+</style>
+</head>
+<body>
+<main class="card" aria-labelledby="title">
+  <div class="head">
+    <div class="ring" role="img" aria-label="Sleep score 84 out of 100">
+      <svg viewBox="0 0 168 168" aria-hidden="true"><circle class="track" cx="84" cy="84" r="72"/><circle class="prog" id="prog" cx="84" cy="84" r="72"/></svg>
+      <div class="val" aria-hidden="true"><b id="score">0</b><small>Score</small></div>
+    </div>
+    <div>
+      <p class="eyebrow">Lullow · Fri into Sat</p>
+      <h1 id="title">Restful night, <em>deep sleep held.</em></h1>
+      <p class="meta"><b>7h 12m</b> asleep · 11:18 pm to 6:51 am</p>
+      <ul class="legend" id="legend" aria-label="Time in each stage"></ul>
+    </div>
+  </div>
+  <section class="hyp" aria-label="Hypnogram">
+    <div class="hyp-top">
+      <p class="readout" id="readout" aria-hidden="true">3:20 am<span>Deep</span></p>
+      <p class="hint">Drag or use arrow keys to scrub</p>
+    </div>
+    <div class="grid">
+      <div class="lanes" aria-hidden="true"><span>Awake</span><span>REM</span><span>Core</span><span>Deep</span></div>
+      <div>
+        <div class="plot" id="plot" role="slider" tabindex="0" aria-label="Night timeline" aria-valuemin="0" aria-valuemax="453" aria-valuenow="242">
+          <div class="cursor" id="cursor"></div>
+        </div>
+        <div class="axis" aria-hidden="true"><span style="left:0">11:18 pm</span><span style="left:22.5%">1 am</span><span style="left:49%">3 am</span><span style="left:75.5%">5 am</span><span style="left:100%">6:51 am</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const STAGES = { A: ['Awake', 'var(--awake)', 0], R: ['REM', 'var(--rem)', 1], C: ['Core', 'var(--core)', 2], D: ['Deep', 'var(--deep)', 3] };
+  const NIGHT = [['A',6],['C',18],['D',42],['C',20],['R',14],['C',26],['D',34],['C',18],['A',4],['R',22],['C',30],['D',18],['C',24],['R',28],['A',6],['C',36],['R',34],['C',26],['A',5],['R',22],['C',20]];
+  const START = 23 * 60 + 18, TOTAL = NIGHT.reduce((s, [, m]) => s + m, 0);
+  const plot = document.getElementById('plot'), cursor = document.getElementById('cursor');
+  const readout = document.getElementById('readout'), legend = document.getElementById('legend');
+
+  const segs = []; let t = 0, prevLane = null;
+  NIGHT.forEach(([k, m]) => {
+    const [, c, lane] = STAGES[k];
+    const el = document.createElement('div');
+    el.className = 'seg';
+    el.style.cssText = `left:${t / TOTAL * 100}%;width:calc(${m / TOTAL * 100}% - 1px);top:${lane * 26 + 5}px;--c:${c}`;
+    plot.appendChild(el);
+    if (prevLane !== null && prevLane !== lane) {
+      const l = document.createElement('div');
+      l.className = 'link';
+      const a = Math.min(prevLane, lane), b = Math.max(prevLane, lane);
+      l.style.cssText = `left:${t / TOTAL * 100}%;top:${a * 26 + 13}px;height:${(b - a) * 26}px`;
+      plot.insertBefore(l, plot.firstChild);
+    }
+    segs.push({ k, from: t, to: t + m, el });
+    prevLane = lane; t += m;
+  });
+
+  const totals = { A: 0, R: 0, C: 0, D: 0 };
+  NIGHT.forEach(([k, m]) => totals[k] += m);
+  const asleep = TOTAL - totals.A;
+  const dur = m => m < 60 ? `${m}m` : `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, '0')}m`;
+  legend.innerHTML = ['A', 'R', 'C', 'D'].map(k => {
+    const pct = k === 'A' ? Math.round(totals.A / TOTAL * 100) : Math.round(totals[k] / asleep * 100);
+    return `<li data-k="${k}" style="--c:${STAGES[k][1]};--p:${pct}%"><span>${STAGES[k][0]}</span><b>${dur(totals[k])}</b><i aria-hidden="true"></i><em class="sr">${pct} percent</em></li>`;
+  }).join('');
+
+  const clock = m => {
+    const tot = (START + Math.round(m)) % 1440, h = Math.floor(tot / 60), mm = tot % 60;
+    return `${h % 12 || 12}:${String(mm).padStart(2, '0')} ${h < 12 ? 'am' : 'pm'}`;
+  };
+  let pos = 242;
+  function set(m, scrubbing) {
+    pos = Math.max(0, Math.min(TOTAL, m));
+    const seg = segs.find(s => pos >= s.from && pos < s.to) || segs[segs.length - 1];
+    const name = STAGES[seg.k][0];
+    cursor.style.left = pos / TOTAL * 100 + '%';
+    readout.innerHTML = `${clock(pos)}<span>${name}</span>`;
+    segs.forEach(s => s.el.classList.toggle('on', s === seg));
+    [...legend.children].forEach(li => li.classList.toggle('on', li.dataset.k === seg.k));
+    legend.classList.toggle('scrub', !!scrubbing);
+    plot.setAttribute('aria-valuenow', Math.round(pos));
+    plot.setAttribute('aria-valuetext', `${clock(pos)}, ${name}${seg.k === 'A' ? '' : ' sleep'}`);
+  }
+  const fromEvent = e => { const r = plot.getBoundingClientRect(); return (e.clientX - r.left) / r.width * TOTAL; };
+  let dragging = false;
+  plot.addEventListener('pointerdown', e => { dragging = true; plot.setPointerCapture(e.pointerId); set(fromEvent(e), true); });
+  plot.addEventListener('pointermove', e => { set(fromEvent(e), true); });
+  plot.addEventListener('pointerup', () => { dragging = false; });
+  plot.addEventListener('pointerleave', () => { if (!dragging) legend.classList.remove('scrub'); });
+  plot.addEventListener('keydown', e => {
+    const big = e.shiftKey ? 30 : 5;
+    const map = { ArrowRight: pos + big, ArrowUp: pos + big, ArrowLeft: pos - big, ArrowDown: pos - big, PageUp: pos + 60, PageDown: pos - 60, Home: 0, End: TOTAL };
+    if (e.key in map) { e.preventDefault(); set(map[e.key], true); }
+  });
+  plot.addEventListener('blur', () => legend.classList.remove('scrub'));
+  set(pos, false);
+
+  const SCORE = 84, prog = document.getElementById('prog'), scoreEl = document.getElementById('score');
+  const C = 2 * Math.PI * 72;
+  const fill = () => { prog.style.strokeDashoffset = C * (1 - SCORE / 100); };
+  if (reduce) { fill(); scoreEl.textContent = SCORE; }
+  else {
+    requestAnimationFrame(() => requestAnimationFrame(fill));
+    const t0 = performance.now(), D = 1100;
+    const count = now => {
+      const p = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - p, 4);
+      scoreEl.textContent = Math.round(SCORE * e);
+      if (p < 1) requestAnimationFrame(count);
+    };
+    requestAnimationFrame(count);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!-- Design Lounge piece: widget-now-playing · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Turntide · now playing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#e9dcc0;--stripe:#e2d2b1;--card:#2b1d14;--card-2:#3a281c;--ink:#f3e7cf;--ink-2:#d2c1a2;--ink-3:#a8957a;
+  --orange:#d9541e;--mustard:#e3a92b;--olive:#7b7a33;--vinyl:#141010;
+  --disp:"Shrikhand",Georgia,serif;--mono:"Space Mono",ui-monospace,monospace;
+  --std:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:13px/1.4 var(--mono);color:var(--card);overflow-x:hidden;
+  background:
+    repeating-linear-gradient(180deg,transparent 0 22px,var(--stripe) 22px 26px),
+    var(--page);
+  display:grid;place-items:center;padding:32px 16px;
+}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.stage{display:grid;justify-items:center;gap:28px;width:100%}
+.seg{display:inline-flex;padding:4px;border-radius:999px;background:var(--card);gap:4px}
+.seg button{min-height:36px;padding:0 18px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);transition:background 200ms var(--std),color 200ms var(--std)}
+.seg button[aria-pressed="true"]{background:var(--mustard);color:var(--card)}
+.seg button:hover:not([aria-pressed="true"]){color:var(--ink)}
+
+.w{
+  --art:linear-gradient(#000,#000);
+  position:relative;background:var(--card);color:var(--ink);border-radius:28px;
+  box-shadow:0 2px 0 #1a110b,0 30px 50px -30px rgba(43,29,20,.7);
+  width:min(580px,100%);height:212px;padding:20px;
+  display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px;overflow:hidden;
+  transition:width 420ms var(--expo),height 420ms var(--expo);
+}
+.w[data-size="small"]{width:212px;height:212px;grid-template-columns:1fr;padding:0}
+
+.sleeve{position:relative;width:172px;height:172px}
+.rec{position:absolute;top:6px;left:80px;width:160px;height:160px;border-radius:50%;
+  background:
+    radial-gradient(circle,var(--orange) 0 15%,var(--vinyl) 15.5% 17%,transparent 17.5%),
+    repeating-radial-gradient(circle,#1e1818 0 1px,var(--vinyl) 1px 3px);
+  box-shadow:inset 0 0 0 2px #0a0808,0 0 0 1px #4a3426;transition:left 420ms var(--expo),opacity 240ms var(--std);
+  animation:spin 3.2s linear infinite;animation-play-state:paused}
+.rec::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 30deg,transparent,rgba(255,255,255,.1) 10%,transparent 20%,transparent 50%,rgba(255,255,255,.07) 60%,transparent 70%)}
+.rec i{position:absolute;top:50%;left:50%;width:6px;height:6px;margin:-3px;border-radius:50%;background:var(--card)}
+.w.playing .rec{animation-play-state:running}
+.w[data-size="medium"] .sleeve:hover .rec{left:92px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.art{position:absolute;inset:0;border-radius:10px;background:var(--art);overflow:hidden;box-shadow:4px 0 12px rgba(0,0,0,.35)}
+.art b{position:absolute;left:10px;bottom:8px;right:10px;font-family:var(--disp);font-weight:400;font-size:19px;line-height:1;color:var(--ac,#2b1d14);letter-spacing:-.01em}
+.w[data-size="small"] .sleeve{width:212px;height:212px}
+.w[data-size="small"] .rec{left:52px;opacity:0}
+.w[data-size="small"] .art{border-radius:0}
+.w[data-size="small"] .art b{opacity:0}
+
+.body{display:flex;flex-direction:column;min-width:0}
+.top{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.eq{display:flex;align-items:flex-end;gap:2px;height:12px}
+.eq span{width:3px;height:100%;background:var(--mustard);border-radius:1px;transform-origin:bottom;transform:scaleY(.3);animation:eq 900ms var(--std) infinite alternate;animation-play-state:paused}
+.eq span:nth-child(2){animation-duration:620ms;animation-delay:-200ms}
+.eq span:nth-child(3){animation-duration:1100ms;animation-delay:-500ms}
+.eq span:nth-child(4){animation-duration:740ms;animation-delay:-300ms}
+.w.playing .eq span{animation-play-state:running}
+@keyframes eq{0%{transform:scaleY(.25)}50%{transform:scaleY(1)}100%{transform:scaleY(.45)}}
+.title{margin:10px 0 0;font-family:var(--disp);font-weight:400;font-size:28px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.artist{margin:4px 0 0;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scrub{margin-top:auto}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:24px;margin:0;background:transparent;cursor:pointer;--v:0%}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--orange) var(--v),var(--card-2) var(--v))}
+input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--orange) var(--v),var(--card-2) var(--v))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-5px;border-radius:50%;background:var(--ink);border:3px solid var(--orange);transition:transform 120ms var(--std)}
+input[type=range]::-moz-range-thumb{width:8px;height:8px;border-radius:50%;background:var(--ink);border:3px solid var(--orange)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.25)}
+input[type=range]:focus-visible{outline-offset:0}
+.times{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.ctrls{display:flex;align-items:center;gap:8px;margin-top:6px}
+.ib{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--ink-2);transition:background 160ms var(--std),color 160ms var(--std),transform 120ms var(--std)}
+.ib:hover{background:var(--card-2);color:var(--ink)}
+.ib:active{transform:scale(.92)}
+.ib svg{width:20px;height:20px;fill:currentColor}
+.ib.pp{width:48px;height:48px;background:var(--orange);color:var(--ink)}
+.ib.pp:hover{background:#e8662f}
+.ib.pp svg{width:22px;height:22px}
+.brand{margin-left:auto;font-family:var(--disp);font-size:14px;color:var(--ink-3)}
+
+.mini{display:none}
+.w[data-size="small"] .body{display:none}
+.w[data-size="small"] .mini{display:flex;position:absolute;inset:auto 0 0 0;padding:44px 14px 14px;align-items:flex-end;gap:10px;background:linear-gradient(180deg,transparent,rgba(43,29,20,.92) 55%)}
+.mini .mt{flex:1;min-width:0}
+.mini .mt b{display:block;font-family:var(--disp);font-weight:400;font-size:18px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .mt>span{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px;color:var(--ink-2);min-width:0}
+.mini .mt>span>span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .bar{position:absolute;left:14px;right:14px;bottom:6px;height:3px;border-radius:2px;background:rgba(243,231,207,.2)}
+.mini .bar i{display:block;height:100%;width:var(--v,0%);background:var(--orange);border-radius:2px}
+.mini .ib.pp{width:44px;height:44px}
+
+.t1{--art:radial-gradient(circle at 50% 118%,#f3e7cf 0 14%,#e3a92b 14% 26%,#d9541e 26% 38%,#a5371a 38% 50%,#5a2a17 50% 62%,transparent 62%),linear-gradient(#efd9a8,#efd9a8);--ac:#2b1d14}
+.t2{--art:radial-gradient(circle at 70% 30%,#e3a92b 0 18%,transparent 18.5%),repeating-linear-gradient(90deg,#7b7a33 0 18px,#5f5e26 18px 36px);--ac:#f3e7cf}
+.t3{--art:repeating-radial-gradient(circle at 30% 70%,#f3e7cf 0 8px,#d9541e 8px 16px,#2b1d14 16px 24px);--ac:#f3e7cf}
+.t3 .art b{text-shadow:0 1px 0 #2b1d14,0 0 6px #2b1d14}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:540px){
+  .w{height:auto;grid-template-columns:1fr;padding:16px}
+  .sleeve{width:150px;height:150px}
+  .rec{width:140px;height:140px;left:70px;top:5px}
+  .w[data-size="medium"] .sleeve:hover .rec{left:80px}
+  .body{padding-left:0}
+  .title{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0ms!important;animation:none!important}
+  .w.playing .eq span{transform:scaleY(.7)}
+}
+</style>
+</head>
+<body>
+<main class="stage">
+  <div class="seg" role="group" aria-label="Widget size">
+    <button type="button" data-size="small" aria-pressed="false">Small</button>
+    <button type="button" data-size="medium" aria-pressed="true">Medium</button>
+  </div>
+
+  <section class="w playing t1" id="w" data-size="medium" aria-label="Turntide now playing">
+    <div class="sleeve" aria-hidden="true">
+      <div class="rec"><i></i></div>
+      <div class="art"><b id="artTitle">Low Sun Over Patan</b></div>
+    </div>
+    <div class="body">
+      <div class="top"><span class="eq" aria-hidden="true"><span></span><span></span><span></span><span></span></span><span id="state">Now playing</span></div>
+      <p class="title" id="title">Monsoon Radio</p>
+      <p class="artist" id="artist">The Marigold Hours</p>
+      <div class="scrub">
+        <input type="range" id="seek" min="0" max="228" value="74" step="1" aria-label="Seek" aria-valuetext="1:14 of 3:48">
+        <div class="times" aria-hidden="true"><span id="cur">1:14</span><span id="rem">-2:34</span></div>
+      </div>
+      <div class="ctrls">
+        <button class="ib" type="button" id="prev" aria-label="Previous track"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+        <button class="ib pp" type="button" id="pp" aria-label="Pause"><svg viewBox="0 0 24 24"><path id="ppIcon" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+        <button class="ib" type="button" id="next" aria-label="Next track"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+        <span class="brand" aria-hidden="true">Turntide</span>
+      </div>
+    </div>
+    <div class="mini">
+      <div class="mt"><b id="mTitle">Monsoon Radio</b><span><span class="eq" aria-hidden="true"><span></span><span></span><span></span><span></span></span><span id="mArtist">The Marigold Hours</span></span></div>
+      <button class="ib pp" type="button" id="pp2" aria-label="Pause"><svg viewBox="0 0 24 24"><path id="ppIcon2" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+      <span class="bar" aria-hidden="true"><i></i></span>
+    </div>
+    <p class="sr" aria-live="polite" id="live"></p>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const w = $('w'), seek = $('seek');
+const TRACKS = [
+  { t:'Monsoon Radio', a:'The Marigold Hours', alb:'Low Sun Over Patan', d:228, c:'t1' },
+  { t:'Copper Bus', a:'Kesar & the Tinfoils', alb:'Copper Bus', d:252, c:'t2' },
+  { t:'Late Tram', a:'Nilo Sato', alb:'Rings', d:185, c:'t3' },
+];
+const PLAY = 'M8 5v14l11-7z', PAUSE = 'M7 5h4v14H7zM13 5h4v14h-4z';
+let i = 0, pos = 74, playing = true, dragging = false;
+const fmt = s => Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0');
+
+function paint(){
+  const tr = TRACKS[i], v = (pos/tr.d*100).toFixed(2) + '%';
+  seek.max = tr.d; if (!dragging) seek.value = pos;
+  seek.style.setProperty('--v', v); w.style.setProperty('--v', v);
+  $('cur').textContent = fmt(pos); $('rem').textContent = '-' + fmt(tr.d - pos);
+  seek.setAttribute('aria-valuetext', `${fmt(pos)} of ${fmt(tr.d)}`);
+}
+function load(n, announce){
+  i = (n + TRACKS.length) % TRACKS.length; pos = 0;
+  const tr = TRACKS[i];
+  w.classList.remove('t1','t2','t3'); w.classList.add(tr.c);
+  $('title').textContent = $('mTitle').textContent = tr.t;
+  $('artist').textContent = $('mArtist').textContent = tr.a;
+  $('artTitle').textContent = tr.alb;
+  paint();
+  if (announce) $('live').textContent = `${tr.t} by ${tr.a}`;
+}
+function setPlaying(p){
+  playing = p; w.classList.toggle('playing', p);
+  $('state').textContent = p ? 'Now playing' : 'Paused';
+  ['pp','pp2'].forEach(id => $(id).setAttribute('aria-label', p ? 'Pause' : 'Play'));
+  $('ppIcon').setAttribute('d', p ? PAUSE : PLAY); $('ppIcon2').setAttribute('d', p ? PAUSE : PLAY);
+}
+$('pp').onclick = $('pp2').onclick = () => setPlaying(!playing);
+$('next').onclick = () => load(i + 1, true);
+$('prev').onclick = () => pos > 3 ? (pos = 0, paint()) : load(i - 1, true);
+seek.addEventListener('input', () => { dragging = true; pos = +seek.value; paint(); });
+seek.addEventListener('change', () => { dragging = false; });
+document.querySelectorAll('.seg button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  w.dataset.size = b.dataset.size;
+});
+setInterval(() => {
+  if (!playing || dragging) return;
+  pos++;
+  if (pos >= TRACKS[i].d) load(i + 1, true); else paint();
+}, 1000);
+paint();
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!-- Design Lounge piece: widget-pomodoro · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Pommo · Focus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&family=Rammetto+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffe9d6;--card:#fff8ef;--ink:#3a1610;--ink-2:#7a4a3c;--line:#f0d3bf;
+  --tomato:#e8442e;--tomato-soft:#f8d0c3;--leaf:#2f7d4f;--leaf-soft:#cfe6d4;
+  --display:"Rammetto One",Georgia,serif;--sans:"Nunito",system-ui,sans-serif;
+  --pop:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+.widget[data-mode="focus"]{--accent:var(--tomato);--accent-soft:var(--tomato-soft)}
+.widget[data-mode="short"],.widget[data-mode="long"]{--accent:var(--leaf);--accent-soft:var(--leaf-soft)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.4 var(--sans);color:var(--ink);display:grid;place-items:center;overflow-x:hidden;
+  background:var(--bg) radial-gradient(circle,rgba(232,68,46,.10) 1.5px,transparent 1.6px) 0 0/28px 28px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+.widget{width:min(420px,100vw - 32px);padding:24px 28px 28px;background:var(--card);border:2.5px solid var(--ink);border-radius:36px;box-shadow:8px 8px 0 var(--ink);text-align:center}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.brand{font:400 18px var(--display);letter-spacing:-.01em;color:var(--tomato)}
+.today{font-size:13px;font-weight:700;color:var(--ink-2)}
+.modes{display:flex;gap:4px;padding:4px;background:var(--bg);border:2px solid var(--ink);border-radius:999px}
+.mode{flex:1;min-height:40px;border-radius:999px;font-size:14px;font-weight:800;color:var(--ink-2);transition:background-color 200ms var(--ease),color 200ms var(--ease)}
+.mode:hover{color:var(--ink)}
+.mode[aria-pressed="true"]{background:var(--ink);color:var(--card);box-shadow:inset 0 -3px 0 var(--accent)}
+
+.dial{position:relative;width:272px;max-width:100%;aspect-ratio:1;margin:30px auto 18px}
+.dial svg{width:100%;height:100%;overflow:visible;display:block}
+.track{stroke:var(--accent-soft);transition:stroke 300ms var(--ease)}
+.prog{stroke:var(--accent);transition:stroke-dashoffset 1000ms linear,stroke 300ms var(--ease)}
+.prog.jump{transition:stroke 300ms var(--ease)}
+.leaf{fill:var(--leaf);stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;transform-origin:150px 40px;transition:transform 400ms var(--pop)}
+.leaf .stem{fill:none;stroke-width:3.5}
+.widget.running .leaf{animation:sway 3.2s var(--ease) infinite alternate}
+@keyframes sway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:10px}
+.time{font:400 46px/1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.label{margin-top:10px;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);transition:color 300ms var(--ease)}
+.bounce{animation:bounce 600ms var(--pop)}
+@keyframes bounce{0%{transform:scale(.9)}100%{transform:scale(1)}}
+
+.controls{display:flex;align-items:center;justify-content:center;gap:22px}
+.round{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:2.5px solid var(--ink);background:var(--card);box-shadow:0 4px 0 var(--ink);transition:transform 120ms var(--ease),box-shadow 120ms var(--ease),background-color 160ms var(--ease)}
+.round:hover{background:var(--bg)}
+.round:active{transform:translateY(4px);box-shadow:0 0 0 var(--ink)}
+.round svg{width:22px;height:22px;stroke:currentColor;stroke-width:2.25;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.play{width:84px;height:84px;background:var(--accent);color:#fff8ef;box-shadow:0 6px 0 var(--ink)}
+.play:hover{background:var(--accent);filter:brightness(1.06)}
+.play:active{transform:translateY(6px)}
+.play svg{width:30px;height:30px;fill:currentColor;stroke:none}
+
+.sessions{display:flex;justify-content:center;align-items:center;gap:10px;margin:26px 0 6px}
+.dot{width:14px;height:14px;border-radius:50%;border:2.5px solid var(--ink);background:transparent;transition:background-color 300ms var(--ease),transform 300ms var(--pop)}
+.dot.done{background:var(--tomato)}
+.dot.now{box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--tomato)}
+.dot.done.pop{transform:scale(1.3)}
+.next{margin:6px 0 0;font-size:14px;color:var(--ink-2);font-weight:700}
+.keys{margin:16px 0 0;font-size:12px;color:var(--ink-2)}
+kbd{font:800 11px var(--sans);padding:1px 6px;border:1.5px solid var(--ink-2);border-radius:5px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<section class="widget running" id="w" data-mode="focus" aria-labelledby="brand">
+  <div class="top"><span class="brand" id="brand">Pommo</span><span class="today" id="today">Today: 50 min focused</span></div>
+  <div class="modes" role="group" aria-label="Timer mode">
+    <button class="mode" type="button" data-mode="focus" aria-pressed="true">Focus</button>
+    <button class="mode" type="button" data-mode="short" aria-pressed="false">Short break</button>
+    <button class="mode" type="button" data-mode="long" aria-pressed="false">Long break</button>
+  </div>
+  <div class="dial" id="dial">
+    <svg viewBox="0 0 300 300" aria-hidden="true">
+      <circle cx="150" cy="158" r="118" fill="none" stroke="var(--ink)" stroke-width="25"/>
+      <circle class="track" cx="150" cy="158" r="118" fill="none" stroke-width="20"/>
+      <circle class="prog" id="prog" cx="150" cy="158" r="118" fill="none" stroke-width="20" stroke-linecap="round" transform="rotate(-90 150 158)" stroke-dasharray="741.4" stroke-dashoffset="0"/>
+      <g class="leaf"><g transform="translate(150 38) scale(1.35) translate(-150 -38)">
+        <path class="stem" d="M150 36C150 28 152 20 158 13"/>
+        <path d="M150 22.6L155.3 34L176.6 33.2L158.6 39.5L166.5 50.5L150 43L133.5 50.5L141.4 39.5L123.4 33.2L144.7 34Z"/>
+      </g></g>
+    </svg>
+    <div class="face">
+      <div class="time" id="time" role="timer" aria-live="off">17:24</div>
+      <div class="label" id="label">Focus</div>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="round" type="button" id="reset" aria-label="Reset timer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg>
+    </button>
+    <button class="round play" type="button" id="play" aria-label="Pause">
+      <svg viewBox="0 0 24 24" aria-hidden="true" id="playIcon"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>
+    </button>
+    <button class="round" type="button" id="skip" aria-label="Skip to next">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5l9 7-9 7z"/><path d="M18 5v14"/></svg>
+    </button>
+  </div>
+  <div class="sessions" id="sessions" role="img" aria-label="Session 2 of 4"></div>
+  <p class="next" id="next" aria-live="polite">Next: short break · 5 min</p>
+  <p class="keys"><kbd>Space</kbd> start or pause · <kbd>S</kbd> skip · <kbd>R</kbd> reset</p>
+</section>
+<script>
+const LEN = { focus: 25 * 60, short: 5 * 60, long: 15 * 60 };
+const NAME = { focus: 'Focus', short: 'Short break', long: 'Long break' };
+const C = 741.4;
+const $ = s => document.querySelector(s);
+const w = $('#w'), prog = $('#prog'), timeEl = $('#time');
+const PLAY = '<path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.5A1 1 0 0 0 8 5.5z"/>';
+const PAUSE = '<rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/>';
+
+let mode = 'focus', remaining = 17 * 60 + 24, running = true, session = 2, done = 1, focused = 50;
+let endAt = Date.now() + remaining * 1000, timer;
+
+const fmt = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+function paint(jump) {
+  prog.classList.toggle('jump', !!jump);
+  timeEl.textContent = fmt(remaining);
+  const shown = running && !jump ? Math.max(0, remaining - 1) : remaining;
+  prog.style.strokeDashoffset = (C * (1 - shown / LEN[mode])).toFixed(1);
+  document.title = `${fmt(remaining)} · ${NAME[mode]}`;
+}
+function dots(popIdx) {
+  const el = $('#sessions'); el.innerHTML = '';
+  for (let i = 1; i <= 4; i++) {
+    const d = document.createElement('span');
+    d.className = 'dot' + (i <= done ? ' done' : '') + (i === session && mode === 'focus' ? ' now' : '') + (i === popIdx ? ' pop' : '');
+    el.append(d);
+  }
+  el.setAttribute('aria-label', `Session ${session} of 4, ${done} completed`);
+  if (popIdx) setTimeout(() => el.querySelector('.pop')?.classList.remove('pop'), 300);
+}
+function nextLabel() {
+  const n = mode === 'focus' ? (session >= 4 ? 'long' : 'short') : 'focus';
+  $('#next').textContent = `Next: ${NAME[n].toLowerCase()} · ${LEN[n] / 60} min`;
+}
+function setRunning(r) {
+  running = r;
+  w.classList.toggle('running', r);
+  $('#playIcon').innerHTML = r ? PAUSE : PLAY;
+  $('#play').setAttribute('aria-label', r ? 'Pause' : 'Start');
+  clearInterval(timer);
+  if (r) { endAt = Date.now() + remaining * 1000; timer = setInterval(tick, 250); }
+  paint(!r);
+}
+function tick() {
+  const left = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
+  if (left !== remaining) {
+    remaining = left; paint();
+    if (mode === 'focus' && left % 60 === 0) { focused++; $('#today').textContent = `Today: ${focused} min focused`; }
+  }
+  if (left === 0) advance(true);
+}
+function setMode(m, keepRunning) {
+  mode = m; w.dataset.mode = m;
+  remaining = LEN[m];
+  document.querySelectorAll('.mode').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+  $('#label').textContent = m === 'focus' ? `Focus · ${session} of 4` : NAME[m];
+  const f = $('.face'); f.classList.remove('bounce'); void f.offsetWidth; f.classList.add('bounce');
+  dots(); nextLabel();
+  setRunning(!!keepRunning);
+  paint(true);
+}
+function advance(auto) {
+  let pop = 0;
+  if (mode === 'focus') {
+    done = Math.min(4, done + 1); pop = done;
+    setMode(session >= 4 ? 'long' : 'short', auto);
+  } else {
+    if (mode === 'long') { session = 1; done = 0; } else session = Math.min(4, session + 1);
+    setMode('focus', auto);
+  }
+  dots(pop);
+}
+$('#play').addEventListener('click', () => setRunning(!running));
+$('#skip').addEventListener('click', () => advance(running));
+$('#reset').addEventListener('click', () => { remaining = LEN[mode]; setRunning(false); });
+document.querySelectorAll('.mode').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode, false)));
+addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const onButton = e.target.closest && e.target.closest('button');
+  if (e.code === 'Space' && !onButton) { e.preventDefault(); setRunning(!running); }
+  else if (e.key === 's' || e.key === 'S') advance(running);
+  else if (e.key === 'r' || e.key === 'R') { remaining = LEN[mode]; setRunning(false); }
+});
+$('#label').textContent = `Focus · ${session} of 4`;
+dots(); nextLabel(); paint(true);
+requestAnimationFrame(() => setRunning(true));
+</script>
+</body>
+</html>

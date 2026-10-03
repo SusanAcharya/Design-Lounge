@@ -1,0 +1,215 @@
+<!-- Design Lounge piece: social-repo-card · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>heronry/brackwater</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c1011;--card:#12181a;--raise:#182023;--ink:#dfe6e3;--ink-2:#a3aeab;--ink-3:#7c8784;
+  --line:#243033;--line-2:#2f3d40;--accent:#f2b84b;--accent-dim:rgba(242,184,75,.14);
+  --l1:#e08a5b;--l2:#5fb3b3;--l3:#7a9cdb;--l4:#9bb56a;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;--sans:"IBM Plex Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:14px/1.5 var(--sans);color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(rgba(223,230,227,.06) 1px,transparent 1px);background-size:24px 24px;
+  display:grid;place-items:center;padding:24px 16px;
+}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg.i{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.card{width:min(580px,100%);background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 22px 0}
+.name{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0;font:500 17px/1.3 var(--mono);letter-spacing:-.01em}
+.name .own{color:var(--ink-2);font-weight:400}
+.name .sl{color:var(--ink-3)}
+.badge{font:500 11px/1 var(--mono);color:var(--ink-3);border:1px solid var(--line-2);border-radius:999px;padding:4px 8px}
+.acts{display:flex;gap:8px;flex:none}
+.btn{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 4px 0 12px;border:1px solid var(--line-2);border-radius:6px;background:var(--raise);font:500 13px/1 var(--mono);transition:border-color .16s var(--ease),background .16s var(--ease)}
+.btn:hover{border-color:#41545a}
+.btn .n{padding:4px 7px;border-radius:4px;background:var(--bg);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.star{position:relative}
+.star svg{transition:transform .25s var(--expo),fill .16s var(--ease)}
+.star[aria-pressed="true"]{border-color:rgba(242,184,75,.5);background:var(--accent-dim);color:var(--accent)}
+.star[aria-pressed="true"] svg{fill:var(--accent);stroke:var(--accent)}
+.star[aria-pressed="true"] .n{color:var(--accent)}
+.star.pop svg{animation:pop .42s var(--expo)}
+.star.pop::after{content:"";position:absolute;left:10px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;border:1.5px solid var(--accent);animation:ring .5s var(--expo) forwards;pointer-events:none}
+@keyframes pop{0%{transform:scale(.6) rotate(-30deg)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes ring{from{transform:scale(.4);opacity:1}to{transform:scale(1.7);opacity:0}}
+.desc{margin:10px 22px 0;color:var(--ink-2);font-size:14.5px;max-width:52ch}
+.topics{display:flex;flex-wrap:wrap;gap:6px;margin:14px 22px 0;padding:0;list-style:none}
+.topics a{display:block;font:500 12px/1 var(--mono);color:var(--accent);background:var(--accent-dim);padding:6px 9px;border-radius:999px;text-decoration:none;transition:background .16s var(--ease)}
+.topics a:hover{background:rgba(242,184,75,.24)}
+.sec{margin:18px 22px 0;padding-top:16px;border-top:1px solid var(--line)}
+.lbl{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 10px;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.lbl output{letter-spacing:0;text-transform:none;font-size:12px;color:var(--ink-2)}
+.bar{display:flex;gap:2px;height:8px;border-radius:4px;overflow:hidden}
+.bar span{transition:opacity .2s var(--ease),flex-grow .6s var(--expo)}
+.langs{display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 0 0;padding:0;list-style:none}
+.langs button{display:inline-flex;align-items:center;gap:7px;height:28px;font:400 12.5px/1 var(--mono);color:var(--ink-2);border-radius:4px;padding:0 4px;margin-left:-4px;transition:color .16s var(--ease),opacity .2s var(--ease)}
+.langs button b{font-weight:500;color:var(--ink)}
+.langs i{width:8px;height:8px;border-radius:50%}
+.card.hl .bar span:not(.on),.card.hl .langs button:not(.on){opacity:.28}
+.spark{position:relative;height:64px;border-radius:4px}
+.spark svg{display:block;width:100%;height:64px;overflow:visible}
+.spark .ln{fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linejoin:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.2s var(--expo) .2s forwards}
+.spark .ar{fill:url(#g);opacity:0;animation:fade .6s var(--ease) .7s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+.spark .cur{opacity:0;transition:opacity .12s var(--ease)}
+.spark.on .cur{opacity:1}
+.spark .cur line{stroke:var(--ink-3);stroke-dasharray:2 3}
+.spark .cur circle{fill:var(--card);stroke:var(--accent);stroke-width:2}
+.axis{display:flex;justify-content:space-between;margin-top:6px;font:400 11px/1 var(--mono);color:var(--ink-3)}
+.commit{display:flex;align-items:center;gap:10px;margin:18px 0 0;padding:12px 22px;background:var(--raise);border-top:1px solid var(--line);font:400 12.5px/1.3 var(--mono);color:var(--ink-2)}
+.av{width:22px;height:22px;border-radius:50%;background:#2e4a4a;color:#bfe0dc;display:grid;place-items:center;font:600 9px/1 var(--mono);flex:none}
+.commit .who{color:var(--ink);font-weight:500}
+.commit .msg{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.commit code{font:inherit;color:var(--ink-3)}
+.foot{display:flex;flex-wrap:wrap;gap:6px 18px;padding:12px 22px 14px;border-top:1px solid var(--line);font:400 12px/1 var(--mono);color:var(--ink-3)}
+.foot span{display:inline-flex;align-items:center;gap:6px}
+.foot svg.i{width:14px;height:14px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:520px){.top{flex-direction:column}.commit .ago{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.spark .ln{stroke-dashoffset:0}.spark .ar{opacity:1}}
+</style>
+</head>
+<body>
+<article class="card" id="card" aria-labelledby="repo">
+  <div class="top">
+    <h1 class="name" id="repo">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"/><path d="M5 17a2 2 0 0 1 2-2h11"/></svg>
+      <span><span class="own">heronry</span><span class="sl"> / </span>brackwater</span>
+      <span class="badge">Public</span>
+    </h1>
+    <div class="acts">
+      <button class="btn star" id="star" type="button" aria-pressed="false" aria-label="Star heronry/brackwater, 12,418 stars">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z"/></svg>
+        <span class="t">Star</span><span class="n" id="stars">12,418</span>
+      </button>
+      <button class="btn" type="button" aria-label="Fork, 864 forks">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><path d="M6 7v2a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V7M12 12v5"/></svg>
+        <span>Fork</span><span class="n">864</span>
+      </button>
+    </div>
+  </div>
+  <p class="desc">Embedded time-series store for edge devices. Append-only WAL, columnar segments, zero-copy reads, and a 340 KB footprint.</p>
+  <ul class="topics" aria-label="Topics">
+    <li><a href="#" onclick="return false">time-series</a></li>
+    <li><a href="#" onclick="return false">embedded</a></li>
+    <li><a href="#" onclick="return false">storage-engine</a></li>
+    <li><a href="#" onclick="return false">wal</a></li>
+    <li><a href="#" onclick="return false">edge</a></li>
+  </ul>
+  <section class="sec" aria-labelledby="lang-h">
+    <p class="lbl"><span id="lang-h">Languages</span></p>
+    <div class="bar" id="bar" aria-hidden="true"></div>
+    <ul class="langs" id="langs"></ul>
+  </section>
+  <section class="sec" aria-labelledby="act-h">
+    <p class="lbl"><span id="act-h">Commit activity · 52 weeks</span><output id="readout">1,284 commits</output></p>
+    <div class="spark" id="spark" tabindex="0" role="img" aria-label="Weekly commits, use left and right arrow keys to inspect weeks">
+      <svg id="sv" viewBox="0 0 520 64" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f2b84b" stop-opacity=".22"/><stop offset="1" stop-color="#f2b84b" stop-opacity="0"/></linearGradient></defs>
+        <path class="ar" id="ar"/><path class="ln" id="ln" vector-effect="non-scaling-stroke"/>
+        <g class="cur"><line id="cl" y1="0" y2="64" vector-effect="non-scaling-stroke"/></g>
+      </svg>
+      <svg style="position:absolute;inset:0;pointer-events:none" width="100%" height="64" aria-hidden="true" class="cur"><circle id="dot" r="4" cx="0" cy="0" fill="#12181a" stroke="#f2b84b" stroke-width="2"/></svg>
+    </div>
+    <div class="axis" aria-hidden="true"><span>Oct 2025</span><span>Apr 2026</span><span>This week</span></div>
+  </section>
+  <div class="commit">
+    <span class="av" aria-hidden="true">OF</span>
+    <span class="who">orla-f</span>
+    <span class="msg">fix(wal): close compaction race on segment rotate</span>
+    <code>a3f9c1e</code><span class="ago">2h ago</span>
+  </div>
+  <div class="foot">
+    <span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4M12 15.5v.5"/></svg>37 issues</span>
+    <span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M6 8v12M18 16V9a3 3 0 0 0-3-3h-4"/></svg>9 pull requests</span>
+    <span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M5 8h14M7 8l-3 6a3 3 0 0 0 6 0zM17 8l-3 6a3 3 0 0 0 6 0z"/></svg>Apache-2.0</span>
+    <span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M8 4v16"/></svg>v0.14.2</span>
+  </div>
+</article>
+<p class="sr" aria-live="polite" id="live"></p>
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+/* languages */
+const L = [['Rust',62.4,'--l1'],['Go',20.8,'--l2'],['TypeScript',11.3,'--l3'],['Shell',5.5,'--l4']];
+const card = $('card'), bar = $('bar'), langs = $('langs');
+L.forEach(([n,p,c],i) => {
+  const s = document.createElement('span');
+  s.style.cssText = `background:var(${c});flex:${reduce?p:0} 1 0`;
+  bar.append(s);
+  const li = document.createElement('li');
+  li.innerHTML = `<button type="button"><i style="background:var(${c})"></i><b>${n}</b>${p}%</button>`;
+  langs.append(li);
+  const btn = li.firstChild;
+  const on = () => { card.classList.add('hl'); s.classList.add('on'); btn.classList.add('on'); };
+  const off = () => { card.classList.remove('hl'); s.classList.remove('on'); btn.classList.remove('on'); };
+  btn.addEventListener('mouseenter', on); btn.addEventListener('mouseleave', off);
+  btn.addEventListener('focus', on); btn.addEventListener('blur', off);
+  s.addEventListener('mouseenter', on); s.addEventListener('mouseleave', off);
+});
+if (!reduce) requestAnimationFrame(() => requestAnimationFrame(() => [...bar.children].forEach((s,i) => s.style.flexGrow = L[i][1])));
+/* star */
+const star = $('star'), stars = $('stars');
+let count = 12418;
+star.addEventListener('click', () => {
+  const on = star.getAttribute('aria-pressed') !== 'true';
+  count += on ? 1 : -1;
+  star.setAttribute('aria-pressed', on);
+  star.querySelector('.t').textContent = on ? 'Starred' : 'Star';
+  stars.textContent = count.toLocaleString('en-US');
+  star.setAttribute('aria-label', `${on?'Unstar':'Star'} heronry/brackwater, ${count.toLocaleString('en-US')} stars`);
+  star.classList.remove('pop');
+  if (on && !reduce) { void star.offsetWidth; star.classList.add('pop'); }
+  $('live').textContent = on ? 'Starred' : 'Star removed';
+});
+/* sparkline */
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const W = [...Array(52)].map((_, i) => Math.round(10 + 14 * Math.sin(i / 6) + i * .45 + rnd() * 16 + (i === 38 ? 28 : 0)));
+const max = Math.max(...W), X = i => i * 520 / 51, Y = v => 60 - v / max * 54;
+const d = W.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join('');
+$('ln').setAttribute('d', d);
+$('ar').setAttribute('d', d + 'L520 64L0 64Z');
+$('ln').style.setProperty('--len', 1400);
+const spark = $('spark'), out = $('readout'), cl = $('cl'), dot = $('dot');
+const total = W.reduce((a, b) => a + b, 0);
+out.textContent = total.toLocaleString('en-US') + ' commits';
+const start = new Date(2025, 9, 6);
+const fmt = i => { const dt = new Date(start); dt.setDate(dt.getDate() + i * 7); return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); };
+let idx = 51;
+function show(i) {
+  idx = Math.max(0, Math.min(51, i));
+  spark.classList.add('on');
+  cl.setAttribute('x1', X(idx)); cl.setAttribute('x2', X(idx));
+  const r = spark.getBoundingClientRect();
+  dot.setAttribute('cx', X(idx) / 520 * r.width); dot.setAttribute('cy', Y(W[idx]));
+  out.textContent = `Week of ${fmt(idx)} · ${W[idx]} commits`;
+}
+function hide() { spark.classList.remove('on'); out.textContent = total.toLocaleString('en-US') + ' commits'; }
+spark.addEventListener('pointermove', e => { const r = spark.getBoundingClientRect(); show(Math.round((e.clientX - r.left) / r.width * 51)); });
+spark.addEventListener('pointerleave', hide);
+spark.addEventListener('focus', () => show(idx));
+spark.addEventListener('blur', hide);
+spark.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') { show(idx - 1); e.preventDefault(); }
+  if (e.key === 'ArrowRight') { show(idx + 1); e.preventDefault(); }
+  if (e.key === 'Home') { show(0); e.preventDefault(); }
+  if (e.key === 'End') { show(51); e.preventDefault(); }
+  $('live').textContent = out.textContent;
+});
+</script>
+</body>
+</html>

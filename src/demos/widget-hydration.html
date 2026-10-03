@@ -1,0 +1,187 @@
+<!-- Design Lounge piece: widget-hydration · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hydration widget</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eeeae0;--card:#f8f6f0;--line:#dbd4c5;--line-2:#c9c0ae;
+  --ink:#22262a;--ink-2:#4f5459;--ink-3:#73787c;
+  --water:#2f5fd0;--water-back:#a9c0ee;--water-soft:#e3eaf8;
+  --serif:"Spectral",Georgia,serif;--sans:"Albert Sans",system-ui,sans-serif;
+  --r:6px;--r-btn:4px;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --t-micro:140ms;--t-row:320ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);display:grid;place-items:center;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.card{width:min(620px,calc(100vw - 32px));background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:36px 40px 32px 28px;display:grid;grid-template-columns:200px 1fr;gap:36px;box-shadow:0 1px 0 #fff inset,0 24px 40px -32px rgba(34,38,42,.35)}
+.glass{position:relative;align-self:center}
+.glass svg{display:block;width:100%;height:auto;overflow:visible}
+.outline{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round}
+.rim{fill:none;stroke:var(--ink);stroke-width:1.5;opacity:.5}
+.tick{stroke:var(--ink-3);stroke-width:1}
+.tick-l{font:500 10px var(--sans);fill:var(--ink-3);letter-spacing:.04em}
+.goalmark{opacity:0;transition:opacity var(--t-row) var(--ease)}
+.met .goalmark{opacity:1}
+.side{display:flex;flex-direction:column;min-width:0}
+.eyebrow{margin:0;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
+.amount{margin:14px 0 0;display:flex;align-items:baseline;gap:8px}
+.amount b{font:300 76px/.9 var(--serif);letter-spacing:-.03em;font-variant-numeric:lining-nums tabular-nums}
+.amount span{font:italic 300 24px/1 var(--serif);color:var(--ink-2)}
+.of{margin:8px 0 0;color:var(--ink-2)}
+.of strong{color:var(--ink);font-weight:600}
+.bar{height:2px;background:var(--line);margin:18px 0 0;position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--water);width:var(--p,0%);transition:width 600ms var(--ease-out)}
+.actions{display:flex;gap:10px;margin-top:22px}
+.add,.undo{font:600 15px var(--sans);height:48px;border-radius:var(--r-btn);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background var(--t-micro) var(--ease),transform var(--t-micro) var(--ease),color var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+.add{flex:1;border:0;background:var(--ink);color:var(--card)}
+.add:hover{background:#000}
+.add:active{transform:scale(.98)}
+.add svg,.undo svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.undo{padding:0 16px;background:transparent;border:1px solid var(--line-2);color:var(--ink)}
+.undo:hover:not(:disabled){border-color:var(--ink)}
+.undo:disabled{color:var(--ink-3);border-color:var(--line);cursor:not-allowed}
+.add:focus-visible,.undo:focus-visible{outline:2px solid var(--water);outline-offset:3px}
+.add:disabled{background:var(--line-2);cursor:not-allowed}
+.log{list-style:none;margin:22px 0 0;padding:0;border-top:1px solid var(--line)}
+.log li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.log li span:last-child{color:var(--ink)}
+.log li.new{animation:row var(--t-row) var(--ease-out)}
+@keyframes row{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.log-h{display:flex;justify-content:space-between;margin:22px 0 0;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.log-h + .log{margin-top:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:560px){
+  .card{grid-template-columns:1fr;padding:24px 20px;gap:20px;justify-items:stretch}
+  .glass{width:150px;justify-self:center}
+  .amount b{font-size:60px}
+  body{padding:24px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  .bar i,.add,.undo,.goalmark{transition:none}
+  .log li.new{animation:none}
+}
+</style>
+</head>
+<body>
+<main class="card" aria-labelledby="amountLbl">
+  <div class="glass" id="glass">
+    <svg viewBox="0 0 200 270" aria-hidden="true">
+      <defs><clipPath id="inside"><path d="M24 14 H156 L141 252 Q140 258 134 258 H46 Q40 258 39 252 Z"/></clipPath></defs>
+      <g clip-path="url(#inside)">
+        <path id="back" fill="var(--water-back)" d=""/>
+        <path id="front" fill="var(--water)" d=""/>
+        <path d="M35 40 L46 236" stroke="#fff" stroke-opacity=".4" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <path class="outline" d="M20 10 H160 L144 254 Q143 262 135 262 H45 Q37 262 36 254 Z"/>
+      <path class="rim" d="M20 10 H160"/>
+      <g id="ticks"></g>
+      <path class="goalmark" d="M84 34 l5 5 10-11" fill="none" stroke="var(--card)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="side">
+    <p class="eyebrow"><span>Sipwell</span><span>Sat 3 Oct</span></p>
+    <p class="amount" id="amountLbl"><b id="amount">1,250</b><span>ml</span></p>
+    <p class="of" id="of"></p>
+    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+    <div class="actions">
+      <button class="add" id="add" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>250 ml</button>
+      <button class="undo" id="undo" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3"/></svg>Undo</button>
+    </div>
+    <p class="log-h"><span>Today</span><span id="count">5 glasses</span></p>
+    <ul class="log" id="log" aria-label="Today's log"></ul>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</main>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const GOAL = 2000, STEP = 250, MAX = 3500;
+  const TOP = 22, BOTTOM = 256, W = 200;
+  const entries = [['7:40', 250], ['9:15', 250], ['11:02', 250], ['13:30', 250], ['15:10', 250]];
+  let clock = 16 * 60 + 5;
+  const $ = id => document.getElementById(id);
+  const front = $('front'), back = $('back'), glass = $('glass');
+  const total = () => entries.reduce((s, e) => s + e[1], 0);
+  const fmt = n => n.toLocaleString('en-US');
+  const levelFor = ml => BOTTOM - Math.min(1, ml / GOAL) * (BOTTOM - TOP);
+
+  $('ticks').innerHTML = [500, 1000, 1500, 2000].map(ml => {
+    const y = levelFor(ml), x = 160 - (y - 10) * (16 / 244);
+    return `<line class="tick" x1="${x + 3}" y1="${y}" x2="${x + 9}" y2="${y}"/><text class="tick-l" x="${x + 13}" y="${y + 3.5}">${ml === 2000 ? '2 L' : ml}</text>`;
+  }).join('');
+
+  let level = levelFor(total()), target = level, amp = 1.6, tiltA = 0, tiltT = 0, phase = 0, running = false;
+
+  function surface(y0, a, ph, tilt) {
+    let d = `M0 ${BOTTOM + 10}`;
+    for (let x = 0; x <= W; x += 8) {
+      const y = y0 + a * Math.sin(x * 0.045 + ph) + tilt * (x - 90) / 90;
+      d += ` L${x} ${y.toFixed(2)}`;
+    }
+    return d + ` L${W} ${BOTTOM + 10} Z`;
+  }
+  function draw() {
+    const tilt = tiltA * Math.sin(tiltT * 0.16) * Math.exp(-tiltT / 70);
+    front.setAttribute('d', surface(level, amp, phase, tilt));
+    back.setAttribute('d', surface(level - 2, amp * 0.8, phase + 2.2, -tilt * 0.7));
+  }
+  function frame() {
+    if (!running) return;
+    level += (target - level) * 0.07;
+    amp += (1.6 - amp) * 0.025;
+    phase += 0.035 + amp * 0.004;
+    tiltT++;
+    draw();
+    requestAnimationFrame(frame);
+  }
+  function start() { if (reduce || running) return; running = true; requestAnimationFrame(frame); }
+  document.addEventListener('visibilitychange', () => { if (document.hidden) running = false; else start(); });
+
+  function slosh(strength) { amp = 1.6 + 5 * strength; tiltA = 9 * strength; tiltT = 0; }
+
+  const hhmm = m => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+  function render(change) {
+    const t = total(), left = GOAL - t;
+    $('amount').textContent = fmt(t);
+    $('of').innerHTML = left > 0
+      ? `of <strong>${fmt(GOAL)} ml</strong> · ${fmt(left)} ml to go`
+      : `Goal met · <strong>${t > GOAL ? fmt(t - GOAL) + ' ml over' : 'right on 2 L'}</strong>`;
+    $('bar').style.setProperty('--p', Math.min(100, t / GOAL * 100) + '%');
+    glass.classList.toggle('met', t >= GOAL);
+    $('count').textContent = `${entries.length} ${entries.length === 1 ? 'glass' : 'glasses'}`;
+    $('undo').disabled = entries.length === 0;
+    $('add').disabled = t >= MAX;
+    const rows = entries.slice(-4).reverse();
+    $('log').innerHTML = rows.length
+      ? rows.map((e, i) => `<li${i === 0 && change === 'add' ? ' class="new"' : ''}><span>${e[0]}</span><span>${e[1]} ml</span></li>`).join('')
+      : '<li><span>Nothing logged yet</span><span>0 ml</span></li>';
+    target = levelFor(t);
+    if (reduce) { level = target; amp = 0; draw(); }
+  }
+
+  $('add').addEventListener('click', () => {
+    entries.push([hhmm(clock), STEP]); clock += 40;
+    render('add'); slosh(1);
+    $('live').textContent = `Logged ${STEP} ml. ${fmt(total())} of ${fmt(GOAL)} ml.`;
+  });
+  $('undo').addEventListener('click', () => {
+    if (!entries.length) return;
+    entries.pop(); clock = Math.max(16 * 60 + 5, clock - 40);
+    render('undo'); slosh(0.45);
+    $('live').textContent = `Removed ${STEP} ml. ${fmt(total())} of ${fmt(GOAL)} ml.`;
+  });
+
+  render();
+  if (reduce) { amp = 0; draw(); } else { draw(); start(); }
+})();
+</script>
+</body>
+</html>

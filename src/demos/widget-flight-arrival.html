@@ -1,0 +1,254 @@
+<!-- Design Lounge piece: widget-flight-arrival · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Aerovale AV 218 · arrival</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Overpass+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --floor:#24231f;--board:#121211;--cell:#1f1f1d;--cell-hi:#2a2a27;--seam:#050505;
+  --ink:#f4f1e6;--ink-2:#b9b5a8;--ink-3:#8e8a7e;--line:#2e2d29;
+  --sign:#ffc72c;--sign-ink:#141310;--ok:#8fd694;--warn:#ff7a45;
+  --cond:"Barlow Condensed",system-ui,sans-serif;--mono:"Overpass Mono",ui-monospace,monospace;
+  --std:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+  --cw:30px;--ch:44px;--cf:30px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:14px/1.4 var(--mono);color:var(--ink);
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/96px 96px,
+    linear-gradient(0deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/96px 96px,
+    radial-gradient(ellipse 70% 60% at 50% 45%,#2f2d27,var(--floor));
+  display:grid;place-items:center;padding:32px 16px;overflow-x:hidden;
+}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--sign);outline-offset:3px}
+.wrap{width:100%;max-width:640px;display:grid;gap:20px}
+
+.w{background:var(--board);border-radius:20px;overflow:hidden;border:1px solid #000;box-shadow:0 40px 80px -40px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.05);container-type:inline-size}
+.band{display:flex;align-items:center;gap:12px;height:48px;padding:0 20px;background:var(--sign);color:var(--sign-ink);font-family:var(--cond);font-weight:700;font-size:20px;letter-spacing:.06em;text-transform:uppercase}
+.band svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.band .fl{margin-left:auto;font-weight:600;letter-spacing:.04em}
+.band .live{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em}
+.band .live i{width:8px;height:8px;border-radius:50%;background:var(--sign-ink);animation:blink 2s steps(1) infinite}
+@keyframes blink{50%{opacity:.2}}
+
+.route{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:end;gap:12px;padding:24px 24px 8px}
+.ap b{display:block;font-family:var(--cond);font-weight:700;font-size:48px;line-height:.9;letter-spacing:.01em}
+.ap span{display:block;margin-top:6px;font-size:12px;color:var(--ink-2)}
+.ap.to{text-align:right}
+.arc{display:block;width:100%;height:auto;overflow:visible}
+.arc .base{fill:none;stroke:var(--ink-3);stroke-width:1.5;stroke-dasharray:2 6;stroke-linecap:round}
+.arc .done{fill:none;stroke:var(--sign);stroke-width:2;transition:stroke-dashoffset 600ms var(--expo)}
+.arc .plane{transition:transform 600ms var(--expo)}
+.arc text{font-family:var(--mono);font-size:10px;fill:var(--ink-3);letter-spacing:.06em}
+
+.facts{display:flex;flex-wrap:wrap;gap:20px 28px;padding:20px 24px;margin:12px 0 0;border-top:1px solid var(--line)}
+.fact dt{font-size:10px;font-weight:600;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase;margin-bottom:8px}
+.fact dd{margin:0}
+.flaps{display:flex;gap:3px;align-items:center}
+.colon{font-family:var(--cond);font-weight:700;font-size:var(--cf);color:var(--ink-2);width:8px;text-align:center}
+.c{position:relative;width:var(--cw);height:var(--ch);border-radius:4px;background:var(--cell);perspective:200px;font-family:var(--cond);font-weight:600;font-size:var(--cf);color:var(--ink);box-shadow:inset 0 -1px 0 rgba(255,255,255,.04)}
+.c span{position:absolute;left:0;right:0;height:50%;overflow:hidden;backface-visibility:hidden;background:inherit;border-radius:inherit}
+.c span::before{content:attr(data-ch);position:absolute;left:0;right:0;height:var(--ch);line-height:var(--ch);text-align:center}
+.c .t,.c .ft{top:0;border-bottom-left-radius:0;border-bottom-right-radius:0;transform-origin:50% 100%;background:var(--cell-hi)}
+.c .b,.c .fb{bottom:0;border-top-left-radius:0;border-top-right-radius:0;transform-origin:50% 0}
+.c .b::before,.c .fb::before{top:calc(var(--ch) / -2)}
+.c .ft,.c .fb{z-index:2;visibility:hidden}
+.c::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--seam);z-index:3}
+.status .c{color:var(--ok)}
+.w.delayed .status .c{color:var(--warn)}
+.w.delayed .est .c{color:var(--sign)}
+
+.fact.left{margin-left:auto;text-align:right;align-self:end}
+.fact.left dd{font-family:var(--cond);font-weight:700;font-size:40px;line-height:var(--ch);letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 24px 18px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-2)}
+.foot b{color:var(--ink);font-weight:600}
+.note{color:var(--ink-3)}
+
+.ctrl{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.tog{display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:0 16px 0 10px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);transition:background 160ms var(--std)}
+.tog:hover{background:rgba(255,255,255,.1)}
+.tog .sw{width:32px;height:18px;border-radius:9px;background:#3a3934;position:relative;transition:background 200ms var(--std)}
+.tog .sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--ink);transition:transform 200ms var(--expo)}
+.tog[aria-pressed="true"]{color:var(--ink)}
+.tog[aria-pressed="true"] .sw{background:var(--warn)}
+.tog[aria-pressed="true"] .sw::after{transform:translateX(14px)}
+.clock{font-size:12px;color:var(--ink-3);letter-spacing:.06em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:640px){
+  :root{--cw:22px;--ch:34px;--cf:23px}
+  .route{padding:20px 16px 4px;gap:8px}
+  .ap b{font-size:34px}
+  .facts{padding:16px;gap:16px 20px}
+  .foot{padding:12px 16px 16px;flex-direction:column;align-items:flex-start;gap:4px}
+  .band{padding:0 16px;font-size:17px;gap:8px}
+  .band .lbl{display:none}
+  .arc text{display:none}
+  .fact.left{margin-left:0;text-align:left}
+  .fact.left dd{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0ms!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <article class="w" id="w" aria-labelledby="fltitle">
+    <header class="band">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18"/><path d="M4 9l3-1 3 4 9 2.5a1.5 1.5 0 0 1-.8 2.9L5 14z"/></svg>
+      <span class="lbl">Arrivals</span>
+      <span class="fl" id="fltitle">Aerovale AV 218</span>
+      <span class="live" aria-hidden="true"><i></i>LIVE</span>
+    </header>
+
+    <div class="route">
+      <div class="ap"><b>KTM</b><span>Kathmandu</span></div>
+      <svg class="arc" viewBox="0 0 400 110" role="img" aria-label="Flight progress" id="arcsvg">
+        <path class="base" id="path" d="M10 100Q200 -24 390 100"/>
+        <path class="done" id="done" d="M10 100Q200 -24 390 100"/>
+        <circle cx="10" cy="100" r="4" fill="#ffc72c"/>
+        <circle cx="390" cy="100" r="4" fill="#121211" stroke="#f4f1e6" stroke-width="1.5"/>
+        <g class="plane" id="plane"><g id="planeRot"><path d="M12 0l-6-2H-2l-5-6h-3l3 6.6-4 .4-3-3h-2l2 4-2 4h2l3-3 4 .4-3 6.6h3l5-6h8l6-2z" fill="#f4f1e6"/></g></g>
+        <text x="200" y="104" text-anchor="middle" id="dur">3H 05M · 1,920 KM</text>
+      </svg>
+      <div class="ap to"><b>BKK</b><span>Bangkok</span></div>
+    </div>
+
+    <dl class="facts">
+      <div class="fact"><dt>Scheduled</dt><dd class="flaps" data-f="sched" aria-label="Scheduled 14:35"></dd></div>
+      <div class="fact est"><dt>Estimated</dt><dd class="flaps" data-f="est" id="estdd"></dd></div>
+      <div class="fact"><dt>Gate</dt><dd class="flaps" data-f="gate" id="gatedd"></dd></div>
+      <div class="fact"><dt>Term</dt><dd class="flaps" data-f="term" aria-label="Terminal 1"></dd></div>
+      <div class="fact"><dt>Belt</dt><dd class="flaps" data-f="belt" aria-label="Belt 4"></dd></div>
+      <div class="fact status"><dt>Status</dt><dd class="flaps" data-f="status" id="statusdd"></dd></div>
+      <div class="fact left"><dt id="leftLbl">Lands in</dt><dd id="left">1h 08m</dd></div>
+    </dl>
+
+    <footer class="foot">
+      <span class="note" id="note">Cruising at 11,600 m over the Bay of Bengal</span>
+      <span>Seat 14A · Mina Gurung</span>
+    </footer>
+    <p class="sr" aria-live="polite" id="live"></p>
+  </article>
+
+  <div class="ctrl">
+    <button class="tog" type="button" id="delay" aria-pressed="false"><span class="sw" aria-hidden="true"></span>Simulate delay</button>
+    <span class="clock" id="clock" aria-hidden="true">Local 13:27</span>
+  </div>
+</main>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const w = $('w'), path = $('path'), done = $('done'), plane = $('plane'), planeRot = $('planeRot');
+const L = path.getTotalLength();
+done.style.strokeDasharray = L;
+const SEQ = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const DEP = 11*60+30, SCHED = 14*60+35, DELAY = 45;
+let now = 13*60+27, delayed = false, landedAt = null;
+
+const hhmm = m => String(Math.floor(m/60)%24).padStart(2,'0') + ':' + String(m%60).padStart(2,'0');
+const dur = m => `${Math.floor(m/60)}h ${String(m%60).padStart(2,'0')}m`;
+
+function makeCell(ch){
+  const c = document.createElement('span'); c.className = 'c';
+  c.innerHTML = '<span class="t"></span><span class="b"></span><span class="ft"></span><span class="fb"></span>';
+  c.setAttribute('aria-hidden','true'); setCh(c, ch); return c;
+}
+function setCh(c, ch){ c.dataset.v = ch; c.querySelectorAll('span').forEach(s => s.dataset.ch = ch); }
+function flipOnce(c, from, to){
+  const [t,b,ft,fb] = c.children;
+  t.dataset.ch = to; b.dataset.ch = from; ft.dataset.ch = from; fb.dataset.ch = to;
+  ft.style.visibility = fb.style.visibility = 'visible';
+  ft.animate([{transform:'rotateX(0)'},{transform:'rotateX(-90deg)'}],{duration:60,easing:'ease-in',fill:'forwards'});
+  const a = fb.animate([{transform:'rotateX(90deg)'},{transform:'rotateX(0)'}],{duration:60,delay:60,easing:'ease-out',fill:'forwards'});
+  return a.finished.then(() => { setCh(c, to); ft.style.visibility = fb.style.visibility = 'hidden'; });
+}
+async function flipTo(c, to){
+  if (c.busy) { c.next = to; return; }
+  let from = c.dataset.v;
+  if (from === to) return;
+  if (reduce) { setCh(c, to); return; }
+  c.busy = true;
+  let i = SEQ.indexOf(from), j = SEQ.indexOf(to);
+  if (i < 0) i = 0;
+  let steps = 0;
+  while (from !== to && steps < 12) {
+    i = (i + 1) % SEQ.length;
+    const nx = steps === 11 || (j >= 0 && i === j) || j < 0 ? to : SEQ[i];
+    await flipOnce(c, from, nx); from = nx; steps++;
+  }
+  c.busy = false;
+  if (c.next) { const n = c.next; c.next = null; flipTo(c, n); }
+}
+function board(name, text, width){
+  const dd = document.querySelector(`[data-f="${name}"]`);
+  text = text.padEnd(width || text.length, ' ');
+  if (!dd.children.length){
+    [...text].forEach(ch => ch === ':' ? dd.appendChild(Object.assign(document.createElement('span'),{className:'colon',textContent:':',ariaHidden:'true'})) : dd.appendChild(makeCell(' ')));
+  }
+  const cells = [...dd.querySelectorAll('.c')];
+  [...text.replace(':','')].forEach((ch, k) => setTimeout(() => flipTo(cells[k], ch), reduce ? 0 : k*40));
+}
+function place(p){
+  const d = Math.max(0, Math.min(1, p)) * L;
+  const a = path.getPointAtLength(d), b = path.getPointAtLength(Math.min(L, d+1)), a0 = path.getPointAtLength(Math.max(0, d-1));
+  const ang = Math.atan2(b.y - a0.y, b.x - a0.x) * 180 / Math.PI;
+  plane.setAttribute('transform', `translate(${a.x.toFixed(1)} ${a.y.toFixed(1)})`);
+  planeRot.setAttribute('transform', `rotate(${ang.toFixed(1)})`);
+  done.style.strokeDashoffset = (L - d).toFixed(1);
+}
+function say(t){ $('live').textContent = t; }
+function render(first){
+  const est = SCHED + (delayed ? DELAY : 0);
+  const left = Math.max(0, est - now);
+  place((now - DEP) / (est - DEP));
+  $('clock').textContent = 'Local ' + hhmm(now);
+  if (left === 0) {
+    $('leftLbl').textContent = 'Landed';
+    $('left').textContent = hhmm(est);
+    $('note').textContent = 'Taxiing to gate ' + (delayed ? 'C2' : 'B7');
+    board('status', 'LANDED', 8);
+  } else {
+    $('leftLbl').textContent = 'Lands in';
+    $('left').textContent = dur(left);
+    $('note').textContent = delayed ? 'Holding east of BKK for runway slot' : 'Cruising at 11,600 m over the Bay of Bengal';
+  }
+  if (first) {
+    board('sched', hhmm(SCHED)); board('term', '1'); board('belt', '4');
+  }
+  if (first || first === false) {
+    board('est', hhmm(est));
+    board('gate', delayed ? 'C2' : 'B7');
+    if (left > 0) board('status', delayed ? 'DELAYED' : 'ON TIME', 8);
+    $('estdd').setAttribute('aria-label', 'Estimated ' + hhmm(est));
+    $('gatedd').setAttribute('aria-label', 'Gate ' + (delayed ? 'C2' : 'B7'));
+    $('statusdd').setAttribute('aria-label', 'Status ' + (delayed ? 'delayed 45 minutes' : 'on time'));
+  }
+}
+$('delay').addEventListener('click', e => {
+  delayed = !delayed;
+  e.currentTarget.setAttribute('aria-pressed', String(delayed));
+  w.classList.toggle('delayed', delayed);
+  if (now >= SCHED + (delayed ? DELAY : 0)) now = 13*60+27;
+  render(false);
+  say(delayed ? 'AV 218 delayed 45 minutes. New arrival 15:20, gate C2.' : 'AV 218 back on time. Arrival 14:35, gate B7.');
+});
+render(true);
+setInterval(() => {
+  const est = SCHED + (delayed ? DELAY : 0);
+  if (now < est) { now++; render(); if (now === est) say('AV 218 has landed.'); }
+  else if (landedAt === null) landedAt = Date.now();
+  else if (Date.now() - landedAt > 5000) { landedAt = null; now = 13*60+27; render(false); }
+}, 1500);
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 304 · "Smooth scroll with inertia" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 322 · "Smooth scroll with inertia" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Smooth scroll with inertia
 

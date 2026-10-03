@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 190 · "Course landing with curriculum" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 191 · "Course landing with curriculum" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Course landing with curriculum
 

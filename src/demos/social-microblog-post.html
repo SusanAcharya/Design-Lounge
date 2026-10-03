@@ -1,0 +1,233 @@
+<!-- Design Lounge piece: social-microblog-post · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Chirrup post</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stage:#eef0ec;--card:#fcfdfb;--line:#dfe3dc;--line-2:#cfd5cc;
+  --ink:#121614;--ink-2:#4a524d;--ink-3:#6b746e;
+  --brand:#0b6f6a;--brand-soft:rgba(11,111,106,.1);
+  --like:#d92a5b;--like-soft:rgba(217,42,91,.1);--repost:#16834f;--repost-soft:rgba(22,131,79,.1);
+  --sans:"Hanken Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:18px;--r-media:14px;
+  --t-micro:160ms;--t-roll:420ms;--t-burst:600ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-pop:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.5 var(--sans);color:var(--ink);background:var(--stage);display:flex;align-items:center;justify-content:center;padding:24px 16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:8px}
+svg{display:block}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+.post{width:min(598px,100%);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px 8px;box-shadow:0 1px 0 rgba(18,22,20,.04),0 18px 40px -28px rgba(18,22,20,.35)}
+.head{display:flex;align-items:center;gap:12px}
+.av{width:44px;height:44px;border-radius:50%;flex:none;background:linear-gradient(140deg,#0b6f6a,#173b39);display:grid;place-items:center;color:#fcfdfb;font:700 15px var(--sans);letter-spacing:.02em}
+.who{min-width:0;flex:1}
+.name{display:flex;align-items:center;gap:4px;font-weight:700;font-size:15.5px;line-height:1.2}
+.name svg{width:18px;height:18px;flex:none}
+.handle{color:var(--ink-3);font-size:14px}
+.more{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--ink-3);transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.more:hover{background:var(--brand-soft);color:var(--brand)}
+
+.text{margin:12px 0 12px;font-size:17px;line-height:1.48;letter-spacing:-.006em;overflow-wrap:anywhere}
+.text a{color:var(--brand);text-decoration:none;border-radius:3px}
+.text a:hover{text-decoration:underline;text-underline-offset:3px}
+.text .tag{font-weight:600}
+
+.media{position:relative;border:1px solid var(--line);border-radius:var(--r-media);overflow:hidden;aspect-ratio:16/9;background:#f3eee2}
+.media svg{width:100%;height:100%}
+.media figcaption{position:absolute;left:10px;bottom:10px;font:500 11px var(--mono);letter-spacing:.04em;color:#f3eee2;background:rgba(18,22,20,.72);padding:3px 7px;border-radius:6px}
+.stop{transform-box:fill-box;transform-origin:center;animation:pulse 2.4s var(--ease) infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+
+.meta{margin:14px 0 0;padding-bottom:12px;border-bottom:1px solid var(--line);font:400 12.5px var(--mono);color:var(--ink-3);letter-spacing:.01em}
+.meta b{color:var(--ink);font-weight:500}
+
+.actions{display:flex;justify-content:space-between;padding:4px 0 0;margin:0 -8px}
+.act{position:relative;display:flex;align-items:center;gap:4px;min-height:40px;padding:0 10px 0 8px;border-radius:999px;color:var(--ink-3);font:500 13px var(--sans);font-variant-numeric:tabular-nums;transition:color var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.act .bub{width:34px;height:34px;margin:-3px -2px -3px -4px;border-radius:50%;display:grid;place-items:center;transition:background var(--t-micro) var(--ease)}
+.act:hover{color:var(--brand)}.act:hover .bub{background:var(--brand-soft)}
+.act.rp:hover,.act.rp[aria-pressed="true"]{color:var(--repost)}.act.rp:hover .bub{background:var(--repost-soft)}
+.act.lk:hover,.act.lk[aria-pressed="true"]{color:var(--like)}.act.lk:hover .bub{background:var(--like-soft)}
+.act:active .ico{transform:scale(.88)}
+.ico{transition:transform var(--t-micro) var(--ease)}
+.lk[aria-pressed="true"] .ico{fill:var(--like);animation:pop 420ms var(--ease-pop)}
+.rp[aria-pressed="true"] .ico{animation:spin 480ms var(--ease-out)}
+@keyframes pop{0%{transform:scale(.4)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes spin{from{transform:rotate(-180deg) scale(.7)}to{transform:rotate(0) scale(1)}}
+
+/* rolling counter */
+.num{display:inline-flex;height:20px;overflow:hidden;line-height:20px}
+.num .d{display:inline-block;height:20px;overflow:hidden}
+.num .col{display:flex;flex-direction:column;transition:transform var(--t-roll) var(--ease-out)}
+.num .col span{height:20px}
+
+/* like burst */
+.burst{position:absolute;left:8px;top:50%;width:34px;height:34px;margin-top:-17px;pointer-events:none}
+.burst i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--like);opacity:0;transform:scale(.2)}
+.burst b{position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:var(--like);opacity:0}
+.burst b:nth-child(odd){background:#f2a33a}
+.burst.go i{animation:ring var(--t-burst) var(--ease-out)}
+.burst.go b{animation:fly var(--t-burst) var(--ease-out)}
+@keyframes ring{0%{opacity:.9;transform:scale(.2)}100%{opacity:0;transform:scale(1.5);border-width:0}}
+@keyframes fly{0%{opacity:1;transform:rotate(var(--a)) translateY(0) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateY(-26px) scale(.3)}}
+
+.share-wrap{position:relative}
+.menu{position:absolute;right:0;bottom:calc(100% + 6px);min-width:200px;background:var(--card);border:1px solid var(--line-2);border-radius:12px;padding:6px;box-shadow:0 14px 30px -14px rgba(18,22,20,.35);opacity:0;transform:translateY(6px) scale(.98);transform-origin:bottom right;visibility:hidden;transition:opacity var(--t-micro) var(--ease),transform 220ms var(--ease-out),visibility 0s 220ms;z-index:2}
+.menu.open{opacity:1;transform:none;visibility:visible;transition-delay:0s}
+.menu button{display:flex;align-items:center;gap:10px;width:100%;min-height:40px;padding:0 10px;border-radius:8px;font-size:14px;font-weight:500;text-align:left}
+.menu button:hover,.menu button:focus-visible{background:var(--brand-soft);color:var(--brand)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);background:var(--ink);color:var(--card);font-size:14px;font-weight:500;padding:10px 16px;border-radius:999px;opacity:0;transition:opacity 200ms var(--ease),transform 280ms var(--ease-out);pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:480px){.post{padding:14px 14px 6px}.text{font-size:16px}.act{padding:0 6px 0 6px}.meta{font-size:11.5px}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:1ms!important}
+  .burst{display:none}
+}
+</style>
+</head>
+<body>
+<article class="post" aria-labelledby="author">
+  <header class="head">
+    <div class="av" aria-hidden="true">MO</div>
+    <div class="who">
+      <div class="name" id="author">Mira Okafor
+        <svg viewBox="0 0 24 24" role="img" aria-label="Verified account"><path fill="#0b6f6a" d="M12 2l2.4 1.8 3-.2.9 2.9 2.5 1.7-1 2.8 1 2.8-2.5 1.7-.9 2.9-3-.2L12 22l-2.4-1.8-3 .2-.9-2.9-2.5-1.7 1-2.8-1-2.8 2.5-1.7.9-2.9 3 .2z"/><path d="M8 12.2l2.6 2.6L16.2 9" fill="none" stroke="#fcfdfb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="handle">@miraokafor · 2h</div>
+    </div>
+    <button class="more" type="button" aria-label="More options">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>
+    </button>
+  </header>
+
+  <p class="text">Shipped the new transit map for Lisbon today. Every stop now plays its own two-note chime when you tap it, so the 28 tram finally sounds like a song. Thanks <a href="#">@ruifaria</a> for the field recordings. Write-up: <a href="#">chirr.up/lisbon-chimes</a> <a class="tag" href="#">#maps</a> <a class="tag" href="#">#sounddesign</a></p>
+
+  <figure class="media" style="margin:0">
+    <svg viewBox="0 0 560 315" role="img" aria-label="Illustrated transit map of four coloured lines crossing at Baixa">
+      <rect width="560" height="315" fill="#f3eee2"/>
+      <path d="M0 250 C120 230 170 280 280 250 S460 200 560 215" fill="none" stroke="#bcd7d4" stroke-width="34" opacity=".6"/>
+      <g fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M40 60 H200 L280 140 H520" stroke="#e2a12b"/>
+        <path d="M70 280 L190 160 H280 L360 80 H500" stroke="#0b6f6a"/>
+        <path d="M280 20 V140 L280 295" stroke="#d92a5b"/>
+        <path d="M30 190 H160 L210 140 H280 L340 200 H540" stroke="#3a5ba8"/>
+      </g>
+      <g fill="#fcfdfb" stroke="#121614" stroke-width="3">
+        <circle cx="200" cy="60" r="7"/><circle cx="400" cy="140" r="7"/><circle cx="190" cy="160" r="7"/>
+        <circle cx="360" cy="80" r="7"/><circle cx="280" cy="60" r="7"/><circle cx="280" cy="240" r="7"/>
+        <circle cx="160" cy="190" r="7"/><circle cx="340" cy="200" r="7"/><circle cx="470" cy="200" r="7"/>
+        <circle class="stop" cx="280" cy="140" r="12" stroke-width="4"/>
+      </g>
+      <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#121614">
+        <text x="226" y="184">Baixa</text><text x="208" y="50">Graça</text><text x="368" y="72">Martim Moniz</text><text x="296" y="244">Cais</text><text x="44" y="178">Estrela</text>
+      </g>
+    </svg>
+    <figcaption>28 · 14 stops · 9 chimes</figcaption>
+  </figure>
+
+  <p class="meta"><time datetime="2026-10-03T09:41">9:41 AM · Oct 3, 2026</time> · <b>48.2K</b> views</p>
+
+  <div class="actions" role="group" aria-label="Post actions">
+    <button class="act rep" type="button" data-key="reply" aria-label="Reply, 214 replies">
+      <span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 7 0 1 1 3.4 5.7L4 19l1.1-3.3A6.8 6.8 0 0 1 4 12z"/></svg></span>
+      <span class="num" aria-hidden="true" data-n="214"></span>
+    </button>
+    <button class="act rp" type="button" data-key="repost" aria-pressed="false" aria-label="Repost, 1,186 reposts">
+      <span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3"/><path d="M4 7h11a4 4 0 0 1 4 4v1"/><path d="m17 20 3-3-3-3"/><path d="M20 17H9a4 4 0 0 1-4-4v-1"/></svg></span>
+      <span class="num" aria-hidden="true" data-n="1186"></span>
+    </button>
+    <button class="act lk" type="button" data-key="like" aria-pressed="false" aria-label="Like, 8,402 likes">
+      <span class="burst" aria-hidden="true"><i></i><b style="--a:0deg"></b><b style="--a:51deg"></b><b style="--a:103deg"></b><b style="--a:154deg"></b><b style="--a:206deg"></b><b style="--a:257deg"></b><b style="--a:309deg"></b></span>
+      <span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span>
+      <span class="num" aria-hidden="true" data-n="8402"></span>
+    </button>
+    <div class="share-wrap">
+      <button class="act sh" type="button" id="share" aria-haspopup="menu" aria-expanded="false" aria-controls="menu" aria-label="Share">
+        <span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4"/><path d="m7.5 8.5 4.5-4.5 4.5 4.5"/><path d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg></span>
+      </button>
+      <div class="menu" id="menu" role="menu" aria-label="Share options">
+        <button type="button" role="menuitem" data-msg="Link copied"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Copy link</button>
+        <button type="button" role="menuitem" data-msg="Added to Bookmarks"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"/></svg>Bookmark</button>
+        <button type="button" role="menuitem" data-msg="Sent to Rui Faria"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/></svg>Send via message</button>
+      </div>
+    </div>
+  </div>
+</article>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const fmt = n => n.toLocaleString('en-US');
+function render(el, n) {
+  const s = fmt(n);
+  if (el.dataset.len != s.length) {
+    el.innerHTML = [...s].map(c => /\d/.test(c)
+      ? '<span class="d"><span class="col">' + [...'0123456789'].map(x => '<span>' + x + '</span>').join('') + '</span></span>'
+      : '<span>' + c + '</span>').join('');
+    el.dataset.len = s.length;
+    el.offsetHeight;
+  }
+  [...s].forEach((c, i) => {
+    const col = el.children[i].querySelector('.col');
+    if (col) col.style.transform = 'translateY(' + (-20 * +c) + 'px)';
+  });
+}
+const nums = {};
+document.querySelectorAll('.act').forEach(b => {
+  const el = b.querySelector('.num');
+  if (!el) return;
+  nums[b.dataset.key] = { el, n: +el.dataset.n, b };
+  render(el, +el.dataset.n);
+});
+const labels = { reply: ['Reply', 'replies'], repost: ['Repost', 'reposts'], like: ['Like', 'likes'] };
+function bump(key, d) {
+  const c = nums[key];
+  c.n += d; render(c.el, c.n);
+  c.b.setAttribute('aria-label', labels[key][0] + ', ' + fmt(c.n) + ' ' + labels[key][1]);
+}
+const toast = document.getElementById('toast');
+let tt;
+function say(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1800); }
+
+document.querySelectorAll('.rp,.lk').forEach(b => b.addEventListener('click', () => {
+  const on = b.getAttribute('aria-pressed') !== 'true';
+  b.setAttribute('aria-pressed', on);
+  bump(b.dataset.key, on ? 1 : -1);
+  if (b.dataset.key === 'like' && on) {
+    const burst = b.querySelector('.burst');
+    burst.classList.remove('go'); burst.offsetWidth; burst.classList.add('go');
+  }
+  if (b.dataset.key === 'repost') say(on ? 'Reposted to your followers' : 'Repost removed');
+}));
+document.querySelector('[data-key="reply"]').addEventListener('click', () => say('Replying to @miraokafor'));
+
+const share = document.getElementById('share'), menu = document.getElementById('menu');
+const items = [...menu.querySelectorAll('button')];
+function setMenu(open, focus) {
+  menu.classList.toggle('open', open);
+  share.setAttribute('aria-expanded', open);
+  if (open && focus) items[0].focus();
+  if (!open && focus) share.focus();
+}
+share.addEventListener('click', () => setMenu(share.getAttribute('aria-expanded') !== 'true', true));
+items.forEach((it, i) => {
+  it.addEventListener('click', () => { setMenu(false, true); say(it.dataset.msg); });
+  it.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); items[(i + items.length - 1) % items.length].focus(); }
+  });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false, true); });
+document.addEventListener('click', e => { if (!e.target.closest('.share-wrap')) setMenu(false); });
+</script>
+</body>
+</html>

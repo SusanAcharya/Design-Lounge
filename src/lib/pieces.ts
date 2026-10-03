@@ -130,7 +130,7 @@ export const SECTION_NAV: { id: Category; label: string }[] = [
 export const CATEGORY_GROUPS: { key: string; label: string; items: Category[] }[] = [
   { key: 'sections', label: 'Website sections', items: ['hero', 'navbar', 'features', 'pricing', 'testimonials', 'faq', 'cta', 'contact', 'logos', 'stats', 'team', 'newsletter', 'blog', 'gallery', 'footer'] },
   { key: 'pages', label: 'Pages & screens', items: ['portfolio', 'landing', 'auth', 'ecommerce', 'dashboard', 'onboarding', 'settings', 'profile', 'messaging', 'media', 'reading', 'error', 'utility'] },
-  { key: 'components', label: 'Components', items: ['navigation', 'buttons', 'inputs', 'cards', 'overlays', 'feedback', 'data', 'pickers', 'charts'] },
+  { key: 'components', label: 'Components', items: ['navigation', 'buttons', 'inputs', 'cards', 'overlays', 'feedback', 'data', 'pickers', 'charts', 'widgets', 'social', 'mockups'] },
   { key: 'motion', label: 'Motion', items: ['text-motion', 'scroll', 'cursor', 'transitions', 'loaders', 'micro', 'backgrounds'] },
   { key: 'kits', label: 'Kits', items: ['design-language'] },
 ];
@@ -173,6 +173,9 @@ export const CATEGORY_META: Record<Category, { label: string; blurb: string }> =
   data: { label: 'Data display', blurb: 'Tables, lists, timelines.' },
   pickers: { label: 'Pickers', blurb: 'Dates, colours, ranges, options.' },
   charts: { label: 'Charts', blurb: 'Lines, bars, donuts, heatmaps with real interaction.' },
+  widgets: { label: 'Widgets', blurb: 'Clocks, rings, timers, tiles. Small live faces of a bigger app.' },
+  social: { label: 'Social cards', blurb: 'Posts, profiles and repo cards in the shape people already know.' },
+  mockups: { label: 'Device mockups', blurb: 'Phones, laptops, watches and browsers to present work in.' },
   'text-motion': { label: 'Text animation', blurb: 'Reveals, scrambles, marquees, variable type.' },
   scroll: { label: 'Scroll effects', blurb: 'Scroll as the timeline: stacks, pins, reveals.' },
   cursor: { label: 'Cursor & hover', blurb: 'Things that answer the pointer.' },

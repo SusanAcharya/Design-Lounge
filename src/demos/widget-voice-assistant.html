@@ -1,0 +1,224 @@
+<!-- Design Lounge piece: widget-voice-assistant · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ossa · voice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#e4e9e4;--card:#f6f7f3;--line:#d9dfd8;--ink:#13201d;--ink-2:#45534f;--ink-3:#66736f;
+  --mint:#9fe3d2;--teal:#2e8c7c;--deep:#1d5e55;--coral:#f0764a;
+  --sans:"Sora",system-ui,sans-serif;--serif:"Newsreader",Georgia,serif;
+  --std:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:14px/1.5 var(--sans);color:var(--ink);overflow-x:hidden;
+  background:radial-gradient(ellipse 60% 70% at 50% 40%,#f1f4f0,var(--page));
+  display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:32px 16px;
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--teal);outline-offset:4px}
+
+.w{width:min(400px,100%);background:var(--card);border:1px solid var(--line);border-radius:36px;padding:24px 28px 28px;
+  box-shadow:0 1px 0 #fff inset,0 40px 70px -40px rgba(19,32,29,.35);display:flex;flex-direction:column;align-items:center}
+.top{align-self:stretch;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:600;font-size:15px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.brand i{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,var(--mint) 40%,var(--teal))}
+.chip{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:5px 10px;border-radius:999px;border:1px solid var(--line);transition:color 200ms var(--std),border-color 200ms var(--std),background 200ms var(--std)}
+.w[data-state="listening"] .chip{color:#a8401c;border-color:#f5c3ae;background:#fdf0ea}
+.w[data-state="thinking"] .chip,.w[data-state="speaking"] .chip{color:var(--deep);border-color:#bfe6dc;background:#ecf8f4}
+
+.stage{position:relative;width:280px;height:280px;margin:12px 0 4px;display:grid;place-items:center}
+.bars{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.bars line{stroke:var(--teal);stroke-width:3;stroke-linecap:round;opacity:.55;transition:stroke 300ms var(--std)}
+.w[data-state="listening"] .bars line{stroke:var(--coral);opacity:.85}
+.orb{
+  --amp:0;position:relative;width:168px;height:168px;border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,#fff 0 6%,#d8f6ee 18%,var(--mint) 42%,var(--teal) 76%,var(--deep));
+  box-shadow:0 30px 60px -22px rgba(46,140,124,.55),inset 0 -10px 30px rgba(29,94,85,.35);
+  transform:scale(calc(1 + var(--amp) * .09));transition:transform 90ms linear;
+  touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;overflow:hidden;
+  animation:breathe 4.8s cubic-bezier(.45,0,.55,1) infinite alternate;
+}
+.orb::before{content:"";position:absolute;inset:-20%;background:conic-gradient(from 0deg,transparent,rgba(255,255,255,.55) 12%,transparent 30%,rgba(240,118,74,.0) 50%,rgba(255,255,255,.35) 66%,transparent 80%);filter:blur(14px);animation:swirl 9s linear infinite;mix-blend-mode:soft-light}
+.orb::after{content:"";position:absolute;inset:0;border-radius:50%;mix-blend-mode:screen;opacity:0;background:radial-gradient(circle at 50% 115%,rgba(255,180,146,.85),transparent 64%);transition:opacity 300ms var(--std)}
+.w[data-state="listening"] .orb,.w[data-state="speaking"] .orb{animation:none}
+.w[data-state="listening"] .orb::after{opacity:1}
+.w[data-state="thinking"] .orb::before{animation-duration:1.2s}
+.orb:focus-visible{outline-offset:10px}
+@keyframes breathe{from{transform:scale(.97)}to{transform:scale(1.02)}}
+@keyframes swirl{to{transform:rotate(360deg)}}
+
+.hint{margin:0;font-size:12px;color:var(--ink-3);min-height:18px;text-align:center}
+.hint kbd{font:500 11px var(--sans);padding:1px 6px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;color:var(--ink-2)}
+
+.tx{align-self:stretch;margin-top:18px;padding-top:18px;border-top:1px solid var(--line);min-height:184px}
+.said{margin:0;font-family:var(--serif);font-style:italic;font-size:26px;line-height:1.2;letter-spacing:-.01em;color:var(--ink);min-height:62px}
+.said .wd,.reply .wd{display:inline-block;animation:wd 260ms var(--expo) both}
+@keyframes wd{from{opacity:0;transform:translateY(6px);filter:blur(4px)}}
+.said .caret{display:inline-block;width:2px;height:22px;margin-left:3px;vertical-align:-3px;background:var(--coral);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.reply{margin:14px 0 0;display:flex;gap:10px;font-size:15px;color:var(--ink-2);min-height:46px}
+.reply::before{content:"";flex:none;width:8px;height:8px;margin-top:8px;border-radius:50%;background:var(--teal)}
+.reply>span{min-width:0}
+.reply:has(span:empty)::before{display:none}
+.card{display:inline-flex;align-items:center;gap:8px;margin:14px 0 0 18px;padding:8px 12px;border-radius:12px;background:#ecf3ef;border:1px solid #d4e6de;font-size:12px;font-weight:500;color:var(--deep);opacity:0;transform:translateY(6px);transition:opacity 300ms var(--std),transform 300ms var(--expo)}
+.card.on{opacity:1;transform:none}
+.card svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:420px){
+  .w{padding:20px 20px 24px;border-radius:28px}
+  .stage{width:240px;height:240px}
+  .orb{width:144px;height:144px}
+  .said{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:0ms!important}
+  .orb{transform:none!important}
+}
+</style>
+</head>
+<body>
+<section class="w" id="w" data-state="idle" aria-label="Ossa voice assistant">
+  <div class="top">
+    <span class="brand"><i aria-hidden="true"></i>Ossa</span>
+    <span class="chip" id="chip">Ready</span>
+  </div>
+
+  <div class="stage">
+    <svg class="bars" id="bars" viewBox="-140 -140 280 280" aria-hidden="true"></svg>
+    <button class="orb" id="orb" type="button" aria-label="Hold to talk to Ossa" aria-pressed="false" aria-describedby="hint"></button>
+  </div>
+  <p class="hint" id="hint">Hold the orb, or hold <kbd>Space</kbd>, and speak</p>
+
+  <div class="tx">
+    <p class="said" id="said" aria-label="You said"></p>
+    <p class="reply"><span id="reply"></span></p>
+    <span class="card" id="card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 2M9 3h6"/></svg><span id="cardTxt"></span></span>
+  </div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</section>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const w = $('w'), orb = $('orb'), bars = $('bars'), said = $('said'), reply = $('reply'), card = $('card');
+const N = 56, R = 100;
+const SCRIPTS = [
+  { q:'Remind me to water the tulsi plant tomorrow at seven', a:"Done. Tomorrow at 7:00 am I'll remind you to water the tulsi plant.", c:'Reminder · Sun 4 Oct, 7:00' },
+  { q:"What's the weather in Pokhara this evening", a:'Clear until nine, then light rain. 19° at sunset, so take a thin jacket.', c:'Pokhara · 19° · rain after 21:00' },
+  { q:'Play something quiet for reading', a:'Playing Slow Paper, a quiet piano mix. It runs 42 minutes.', c:'Slow Paper · 42 min' },
+];
+const lines = [];
+for (let k = 0; k < N; k++) {
+  const a = k / N * Math.PI * 2, l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  l.dataset.c = Math.cos(a); l.dataset.s = Math.sin(a);
+  bars.appendChild(l); lines.push(l);
+}
+function drawBars(amp, t){
+  lines.forEach((l, k) => {
+    const c = +l.dataset.c, s = +l.dataset.s;
+    const n = .5 + .5 * Math.sin(k * 1.7 + t * .011) * Math.sin(k * .45 - t * .007);
+    const len = 3 + amp * (6 + 28 * n);
+    l.setAttribute('x1', (c * R).toFixed(1)); l.setAttribute('y1', (s * R).toFixed(1));
+    l.setAttribute('x2', (c * (R + len)).toFixed(1)); l.setAttribute('y2', (s * (R + len)).toFixed(1));
+  });
+}
+drawBars(0.08, 0);
+
+let script = 0, state = 'idle', words = [], heard = 0, wordTimer, raf, amp = 0, target = 0, pulseAt = 0, downAt = 0, seq = 0;
+function setState(s, label){
+  state = s; w.dataset.state = s; $('chip').textContent = label;
+  orb.setAttribute('aria-pressed', String(s === 'listening'));
+}
+function addWord(el, text){
+  const sp = document.createElement('span'); sp.className = 'wd'; sp.textContent = text;
+  el.appendChild(sp); el.appendChild(document.createTextNode(' '));
+}
+function loop(t){
+  if (state === 'listening' || state === 'speaking') {
+    const since = t - pulseAt;
+    target = since < 220 ? .55 + .45 * Math.abs(Math.sin(t * .03)) : .12 + .06 * Math.sin(t * .02);
+  } else if (state === 'thinking') target = .25 + .15 * Math.sin(t * .012);
+  else target = .08;
+  amp += (target - amp) * .18;
+  orb.style.setProperty('--amp', state === 'listening' || state === 'speaking' ? amp.toFixed(3) : 0);
+  drawBars(amp, t);
+  if (state === 'idle' && Math.abs(amp - target) < .005) { raf = null; return; }
+  raf = requestAnimationFrame(loop);
+}
+function kick(){ if (!raf && !reduce) raf = requestAnimationFrame(loop); }
+
+function start(){
+  if (state === 'listening') return;
+  seq++; clearTimeout(wordTimer);
+  const sc = SCRIPTS[script];
+  words = sc.q.split(' '); heard = 0; downAt = performance.now();
+  said.innerHTML = '<span class="caret"></span>'; reply.textContent = ''; card.classList.remove('on');
+  $('hint').textContent = 'Listening. Let go when you are done.';
+  setState('listening', 'Listening'); kick();
+  const step = () => {
+    if (state !== 'listening' || heard >= words.length) return;
+    said.lastChild.remove(); addWord(said, words[heard++]);
+    said.insertAdjacentHTML('beforeend', '<span class="caret"></span>');
+    pulseAt = performance.now();
+    wordTimer = setTimeout(step, 230 + Math.random() * 110);
+  };
+  wordTimer = setTimeout(step, 380);
+}
+function release(){
+  if (state !== 'listening') return;
+  clearTimeout(wordTimer);
+  const caret = said.querySelector('.caret'); if (caret) caret.remove();
+  if (heard < 2) {
+    said.textContent = ''; setState('idle', 'Ready'); kick();
+    $('hint').textContent = 'Hold a little longer, then speak'; return;
+  }
+  const sc = SCRIPTS[script], my = seq;
+  if (heard < words.length) { while (heard < words.length) addWord(said, words[heard++]); }
+  $('hint').textContent = 'Thinking';
+  setState('thinking', 'Thinking'); kick();
+  setTimeout(() => {
+    if (my !== seq) return;
+    setState('speaking', 'Answering'); kick();
+    const rw = sc.a.split(' '); let k = 0;
+    const out = () => {
+      if (my !== seq) return;
+      if (k < rw.length) { addWord(reply, rw[k++]); pulseAt = performance.now(); wordTimer = setTimeout(out, 110); }
+      else {
+        $('cardTxt').textContent = sc.c; card.classList.add('on');
+        $('live').textContent = sc.a;
+        setState('idle', 'Ready'); kick();
+        $('hint').innerHTML = 'Hold again to ask something else';
+        script = (script + 1) % SCRIPTS.length;
+      }
+    };
+    out();
+  }, reduce ? 200 : 900);
+}
+orb.addEventListener('pointerdown', e => { e.preventDefault(); orb.setPointerCapture(e.pointerId); start(); });
+orb.addEventListener('pointerup', release);
+orb.addEventListener('pointercancel', release);
+orb.addEventListener('contextmenu', e => e.preventDefault());
+orb.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); start(); } });
+orb.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); release(); } });
+orb.addEventListener('click', e => e.preventDefault());
+
+(function hero(){
+  const sc = SCRIPTS[0];
+  sc.q.split(' ').forEach(x => addWord(said, x));
+  sc.a.split(' ').forEach(x => addWord(reply, x));
+  $('cardTxt').textContent = sc.c; card.classList.add('on');
+  said.querySelectorAll('.wd').forEach((s, k) => s.style.animationDelay = k * 60 + 'ms');
+  reply.querySelectorAll('.wd').forEach((s, k) => s.style.animationDelay = 600 + k * 40 + 'ms');
+  script = 1;
+})();
+</script>
+</body>
+</html>

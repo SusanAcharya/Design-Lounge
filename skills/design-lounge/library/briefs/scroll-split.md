@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 288 · "Scroll split" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 305 · "Scroll split" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Scroll split
 

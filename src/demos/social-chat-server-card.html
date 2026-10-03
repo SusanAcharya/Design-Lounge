@@ -1,0 +1,281 @@
+<!-- Design Lounge piece: social-chat-server-card · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Lowlight Collective on Bivouac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0b12;--card:#16131d;--side:#1b1724;--raise:#241f30;--hover:#2a2438;
+  --ink:#ece8f4;--ink-2:#aaa3ba;--ink-3:#8a8299;--line:#2c2639;
+  --accent:#c6f36b;--accent-ink:#141a05;--idle:#f0b545;--dnd:#f0606a;
+  --disp:"Chakra Petch",system-ui,sans-serif;--body:"Rubik",system-ui,sans-serif;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--expo:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14px/1.45 var(--body);color:var(--ink);background:var(--bg);display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:24px 16px;
+  background-image:linear-gradient(rgba(198,243,107,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(198,243,107,.03) 1px,transparent 1px);background-size:40px 40px}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{width:min(940px,100%);height:min(580px,calc(100vh - 48px));display:grid;grid-template-columns:256px minmax(0,1fr) 208px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(198,243,107,.04),0 40px 80px -40px rgba(0,0,0,.8)}
+/* side */
+.side{background:var(--side);display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--line)}
+.banner{position:relative;height:132px;padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;
+  background:repeating-linear-gradient(-55deg,transparent 0 10px,rgba(198,243,107,.07) 10px 11px),linear-gradient(160deg,#2b2140 0%,#16121f 100%)}
+.banner::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);pointer-events:none}
+.banner .tag{position:absolute;top:12px;left:16px;font:600 10px/1 var(--disp);letter-spacing:.18em;color:var(--accent);display:flex;align-items:center;gap:6px}
+.banner .tag i{width:6px;height:6px;background:var(--accent);border-radius:1px;animation:blink 2.4s steps(1) infinite}
+@keyframes blink{50%{opacity:.25}}
+.banner .big{position:absolute;right:-6px;top:6px;font:700 56px/1 var(--disp);color:transparent;-webkit-text-stroke:1px rgba(198,243,107,.22);letter-spacing:-.02em}
+.banner h1{position:relative;margin:0;font:700 20px/1.05 var(--disp);text-transform:uppercase;letter-spacing:.02em}
+.banner p{position:relative;margin:4px 0 0;font-size:12px;color:var(--ink-2)}
+.banner p b{color:var(--accent);font-weight:500}
+.chans{flex:1;overflow:auto;padding:12px 8px}
+.grp{margin:10px 8px 4px;font:600 11px/1 var(--disp);letter-spacing:.14em;color:var(--ink-3)}
+.grp:first-child{margin-top:2px}
+.chan{width:100%;display:flex;align-items:center;gap:8px;height:34px;padding:0 8px;border-radius:6px;color:var(--ink-3);text-align:left;position:relative;transition:background .14s var(--ease),color .14s var(--ease)}
+.chan svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;flex:none}
+.chan:hover{background:var(--hover);color:var(--ink-2)}
+.chan.unread{color:var(--ink);font-weight:500}
+.chan.unread::before{content:"";position:absolute;left:-8px;top:50%;width:4px;height:8px;margin-top:-4px;border-radius:0 3px 3px 0;background:var(--ink)}
+.chan[aria-current="true"]{background:var(--raise);color:var(--ink)}
+.chan[aria-current="true"]::before{content:"";position:absolute;left:-8px;top:8px;bottom:8px;width:4px;height:auto;margin:0;border-radius:0 3px 3px 0;background:var(--accent)}
+.chan .badge{margin-left:auto;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font:700 11px/18px var(--disp);text-align:center;transform:scale(0);transition:transform .25s var(--expo)}
+.chan .badge.on{transform:scale(1)}
+.voice{margin:2px 0 0 32px;display:flex;flex-direction:column;gap:6px;padding:4px 0}
+.voice span{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
+.voice .av{width:20px;height:20px;border-radius:6px;font-size:9px}
+.voice .talk{box-shadow:0 0 0 2px var(--side),0 0 0 3.5px var(--accent);animation:talk 1.8s var(--ease) infinite}
+@keyframes talk{50%{box-shadow:0 0 0 2px var(--side),0 0 0 3.5px rgba(198,243,107,.15)}}
+/* main */
+.main{display:flex;flex-direction:column;min-height:0;min-width:0}
+.mh{height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 18px;border-bottom:1px solid var(--line)}
+.mh svg{width:18px;height:18px;stroke:var(--ink-3);fill:none;stroke-width:1.8;stroke-linecap:round}
+.mh h2{margin:0;font:600 16px/1 var(--disp);letter-spacing:.01em}
+.mh p{margin:0;font-size:12.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:10px;border-left:1px solid var(--line)}
+.log{flex:1;overflow:auto;padding:14px 0 6px;display:flex;flex-direction:column;scroll-behavior:smooth}
+.log::before{content:"";flex:1}
+.msg{display:grid;grid-template-columns:36px 1fr;gap:12px;padding:6px 18px;transition:background .14s var(--ease)}
+.msg:hover{background:rgba(255,255,255,.02)}
+.msg.new{animation:rise .42s var(--expo) both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.av{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font:700 13px/1 var(--disp);color:#0d0b12;flex:none}
+.meta{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.meta b{font-weight:500}
+.role{font:700 9.5px/1 var(--disp);letter-spacing:.12em;color:var(--accent);border:1px solid rgba(198,243,107,.4);padding:2px 5px;border-radius:3px;align-self:center}
+.meta time{font-size:11.5px;color:var(--ink-3)}
+.txt{margin:2px 0 0;color:#d6d1e0;overflow-wrap:anywhere}
+.txt .ch{color:var(--accent);background:rgba(198,243,107,.1);padding:0 3px;border-radius:3px}
+.clip{display:flex;align-items:center;gap:12px;margin-top:8px;max-width:300px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--side)}
+.clip i{width:56px;height:36px;border-radius:5px;display:grid;place-items:center;background:repeating-linear-gradient(-55deg,#2b2140 0 6px,#231b34 6px 12px)}
+.clip svg{width:14px;height:14px;fill:var(--accent)}
+.clip span{font-size:12.5px;color:var(--ink-2)}
+.clip b{display:block;font-weight:500;color:var(--ink)}
+.typing{height:22px;flex:none;padding:0 18px;font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:8px;opacity:0;transition:opacity .2s var(--ease)}
+.typing.on{opacity:1}
+.typing .dots{display:flex;gap:3px}
+.typing .dots i{width:5px;height:5px;border-radius:50%;background:var(--ink-2);animation:dot 1.1s var(--ease) infinite}
+.typing .dots i:nth-child(2){animation-delay:.15s}.typing .dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{transform:none;opacity:.5}30%{transform:translateY(-3px);opacity:1}}
+.typing b{color:var(--ink-2);font-weight:500}
+.comp{flex:none;margin:0 16px 16px;display:flex;align-items:center;gap:8px;height:44px;padding:0 6px 0 14px;background:var(--raise);border:1px solid transparent;border-radius:10px;transition:border-color .16s var(--ease)}
+.comp:focus-within{border-color:rgba(198,243,107,.45)}
+.comp input{flex:1;min-width:0;height:100%;background:none;border:0;outline:none;color:var(--ink)}
+.comp input::placeholder{color:var(--ink-3)}
+.send{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;color:var(--accent-ink);background:var(--accent);transition:transform .12s var(--ease),opacity .16s var(--ease)}
+.send:disabled{opacity:.3;cursor:default}
+.send:not(:disabled):active{transform:scale(.92)}
+.send svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* members */
+.mem{border-left:1px solid var(--line);background:var(--side);overflow:auto;padding:14px 10px}
+.mem h3{margin:6px 8px 8px;font:600 11px/1 var(--disp);letter-spacing:.14em;color:var(--ink-3)}
+.mem ul{list-style:none;margin:0 0 14px;padding:0}
+.mem li{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:6px;transition:background .14s var(--ease)}
+.mem li:hover{background:var(--hover)}
+.mem .av{width:30px;height:30px;border-radius:9px;font-size:11px;position:relative}
+.mem .av::after{content:"";position:absolute;right:-3px;bottom:-3px;width:10px;height:10px;border-radius:50%;border:2.5px solid var(--side);background:var(--accent)}
+.mem .idle::after{background:var(--idle)}
+.mem .dnd::after{background:var(--dnd)}
+.mem .off .av{opacity:.4}.mem .off .av::after{background:var(--ink-3)}
+.mem .off .nm{color:var(--ink-3)}
+.mem .nm{display:block;font-size:13px;font-weight:500;line-height:1.2}
+.mem small{display:block;font-size:11px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.mem li>div{min-width:0}
+.replay{position:fixed;right:16px;bottom:16px;height:32px;padding:0 12px;border:1px solid var(--line);border-radius:8px;font:600 11px/1 var(--disp);letter-spacing:.12em;color:var(--ink-3);background:var(--card);transition:color .14s var(--ease),border-color .14s var(--ease)}
+.replay:hover{color:var(--accent);border-color:rgba(198,243,107,.4)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:980px){.card{grid-template-columns:232px minmax(0,1fr)}.mem{display:none}}
+@media (max-width:640px){
+  .card{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);height:calc(100vh - 48px)}
+  .side{border-right:0;border-bottom:1px solid var(--line)}
+  .banner{height:96px}.banner .big{font-size:44px}
+  .chans{display:flex;overflow-x:auto;gap:4px;padding:8px}
+  .grp,.voice,.chan.vc{display:none}
+  .chan{width:auto;flex:none}
+  .chan[aria-current="true"]::before,.chan.unread::before{display:none}
+  .mh p{display:none}
+  body{padding-top:56px}
+  .card{height:calc(100vh - 80px)}
+  .replay{bottom:auto;top:12px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.log{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="srv">
+  <aside class="side">
+    <div class="banner">
+      <span class="tag"><i aria-hidden="true"></i>BIVOUAC · LIVE</span>
+      <span class="big" aria-hidden="true">LLC</span>
+      <h1 id="srv">Lowlight Collective</h1>
+      <p>2,431 members · <b>318 online</b></p>
+    </div>
+    <nav class="chans" aria-label="Channels" id="chans">
+      <p class="grp" aria-hidden="true">TEXT</p>
+      <button class="chan" type="button" data-c="announcements"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h15M4 15h15M10 4 8 20M16 4l-2 16"/></svg>announcements<span class="badge" aria-hidden="true"></span></button>
+      <button class="chan" type="button" data-c="general" aria-current="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h15M4 15h15M10 4 8 20M16 4l-2 16"/></svg>general<span class="badge" aria-hidden="true"></span></button>
+      <button class="chan unread" type="button" data-c="routes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h15M4 15h15M10 4 8 20M16 4l-2 16"/></svg>routes-and-splits<span class="badge" aria-hidden="true"></span></button>
+      <button class="chan" type="button" data-c="clips"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h15M4 15h15M10 4 8 20M16 4l-2 16"/></svg>clips<span class="badge" aria-hidden="true"></span></button>
+      <p class="grp" aria-hidden="true">VOICE</p>
+      <button class="chan vc" type="button" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 10v4h3l5 4V6L8 10zM16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>Practice lobby</button>
+      <div class="voice" aria-label="In Practice lobby: rue.exe speaking, Brannoch, Ivo Sand" role="note">
+        <span><i class="av talk" style="background:#e7a6d8">R</i>rue.exe</span>
+        <span><i class="av" style="background:#9ec8f0">B</i>Brannoch</span>
+        <span><i class="av" style="background:#f1c27a">I</i>Ivo Sand</span>
+      </div>
+    </nav>
+  </aside>
+  <div class="main">
+    <header class="mh">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h15M4 15h15M10 4 8 20M16 4l-2 16"/></svg>
+      <h2 id="ch">general</h2><p id="topic">Hang out, ask for help, post PBs. Be kind to new runners.</p>
+    </header>
+    <div class="log" id="log" role="log" aria-live="polite" aria-labelledby="ch"></div>
+    <div class="typing" id="typing" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span><span><b id="tw">kaito</b> is typing</span></div>
+    <form class="comp" id="form">
+      <label for="msg" class="sr">Message</label>
+      <input id="msg" autocomplete="off" placeholder="Message #general">
+      <button class="send" type="submit" id="send" disabled aria-label="Send"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button>
+    </form>
+  </div>
+  <aside class="mem" aria-label="Members">
+    <h3>ONLINE — 6</h3>
+    <ul>
+      <li><i class="av" style="background:#c6f36b">V</i><div><span class="nm">vexa</span><small>Moderating</small></div><span class="sr">online</span></li>
+      <li><i class="av" style="background:#8fe0d0">K</i><div><span class="nm">kaito</span><small>Running Hollow Tide</small></div><span class="sr">online</span></li>
+      <li><i class="av" style="background:#e7a6d8">R</i><div><span class="nm">rue.exe</span><small>In Practice lobby</small></div><span class="sr">online</span></li>
+      <li><i class="av idle" style="background:#f1c27a">P</i><div><span class="nm">pim_o</span><small>Idle · 12m</small></div><span class="sr">idle</span></li>
+      <li><i class="av dnd" style="background:#9ec8f0">B</i><div><span class="nm">Brannoch</span><small>Do not disturb</small></div><span class="sr">do not disturb</span></li>
+      <li><i class="av" style="background:#b9a7f2">I</i><div><span class="nm">Ivo Sand</span><small>Glasswing 100%</small></div><span class="sr">online</span></li>
+    </ul>
+    <h3>OFFLINE — 2</h3>
+    <ul>
+      <li class="off"><i class="av" style="background:#d9d3e4">M</i><div><span class="nm">mothlamp</span><small>Last seen 3h ago</small></div></li>
+      <li class="off"><i class="av" style="background:#d9d3e4">T</i><div><span class="nm">Tamsin</span><small>Last seen yesterday</small></div></li>
+    </ul>
+  </aside>
+</section>
+<button class="replay" type="button" id="replay">REPLAY</button>
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const U = { vexa:['V','#c6f36b','MOD'], kaito:['K','#8fe0d0'], 'rue.exe':['R','#e7a6d8'], pim_o:['P','#f1c27a'], Brannoch:['B','#9ec8f0'], 'Ivo Sand':['I','#b9a7f2'], you:['Y','#ece8f4'] };
+const C = {
+  announcements: { topic:'Read-only. Relay dates, rule changes, server news.', msgs:[
+    ['vexa','Yesterday at 18:02','Sunday relay is on: four teams of three, Hollow Tide any%. Sign-ups in <span class="ch">#general</span> until Friday.']] },
+  general: { topic:'Hang out, ask for help, post PBs. Be kind to new runners.', msgs:[
+    ['vexa','Today at 21:02','Reminder: relay sign-ups close in two hours. Teams get posted at 23:00.'],
+    ['pim_o','Today at 21:09','anyone got the 4-2 ledge skip consistent? I land it maybe 1 in 6'],
+    ['kaito','Today at 21:11','buffer the dash on the second ledge, not the first. went 9 for 10 last night']] },
+  routes: { topic:'Splits, routes, frame data. Show your working.', msgs:[
+    ['Ivo Sand','Today at 19:40','New Glasswing 100% route saves the second key detour. 41.2s faster on paper.'],
+    ['Brannoch','Today at 20:15','Tested it twice. Real-time saving is closer to 33s because of the extra load zone.']] },
+  clips: { topic:'Your best moments. No reposts.', msgs:[
+    ['rue.exe','Today at 20:51','first sub-12 ever, still shaking', {t:'sub-12 hollow tide.mp4', d:'0:48'}]] },
+};
+const LIVE = [
+  ['pim_o','wait. the SECOND ledge?'],
+  ['rue.exe','clip or it didn\u2019t happen'],
+  ['kaito','posting it in <span class="ch">#clips</span> now', {t:'4-2 ledge buffer.mp4', d:'0:21'}],
+  ['vexa','pinned. nice find, that goes in the route doc'],
+];
+let cur = 'general', timers = [], unread = { general: 0 }, liveIdx = 0, clock = 14;
+const log = $('log');
+function el(u, time, txt, clip, isNew) {
+  const [ini, col, role] = U[u] || ['?', '#888'];
+  const d = document.createElement('article');
+  d.className = 'msg' + (isNew && !reduce ? ' new' : '');
+  d.innerHTML = `<i class="av" style="background:${col}" aria-hidden="true">${ini}</i><div><div class="meta"><b>${u}</b>${role ? `<span class="role">${role}</span>` : ''}<time>${time}</time></div><p class="txt">${txt}</p>${clip ? `<div class="clip"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></i><span><b>${clip.t}</b>${clip.d} · clip</span></div>` : ''}</div>`;
+  return d;
+}
+function open(c) {
+  cur = c;
+  document.querySelectorAll('.chan[data-c]').forEach(b => {
+    const on = b.dataset.c === c;
+    on ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current');
+    if (on) { b.classList.remove('unread'); b.querySelector('.badge').classList.remove('on'); }
+  });
+  if (c === 'general') unread.general = 0;
+  $('ch').textContent = c === 'routes' ? 'routes-and-splits' : c;
+  $('topic').textContent = C[c].topic;
+  $('msg').placeholder = c === 'announcements' ? 'You do not have permission to send messages here' : `Message #${$('ch').textContent}`;
+  $('msg').disabled = c === 'announcements';
+  log.setAttribute('aria-live', 'off');
+  log.innerHTML = '';
+  C[c].msgs.forEach(m => log.append(el(m[0], m[1], m[2], m[3], false)));
+  log.scrollTop = log.scrollHeight;
+  requestAnimationFrame(() => log.setAttribute('aria-live', 'polite'));
+  $('typing').classList.toggle('on', c === 'general' && typingOn);
+}
+let typingOn = false;
+function push(c, u, txt, clip) {
+  const time = `Today at 21:${String(clock++).padStart(2, '0')}`;
+  C[c].msgs.push([u, time, txt, clip]);
+  if (cur === c) { log.append(el(u, time, txt, clip, true)); log.scrollTop = log.scrollHeight; }
+  else if (c === 'general') {
+    unread.general++;
+    const b = document.querySelector('.chan[data-c="general"]');
+    b.classList.add('unread');
+    const badge = b.querySelector('.badge'); badge.textContent = unread.general; badge.classList.add('on');
+  }
+}
+function setTyping(on, who) {
+  typingOn = on;
+  if (who) $('tw').textContent = who;
+  $('typing').classList.toggle('on', on && cur === 'general');
+}
+function run() {
+  timers.forEach(clearTimeout); timers = [];
+  let t = 1400;
+  LIVE.slice(liveIdx).forEach(([u, txt, clip]) => {
+    timers.push(setTimeout(() => setTyping(true, u), t));
+    t += 1700;
+    timers.push(setTimeout(() => { setTyping(false); push('general', u, txt, clip); liveIdx++; }, t));
+    t += 1500;
+  });
+}
+document.getElementById('chans').addEventListener('click', e => { const b = e.target.closest('.chan[data-c]'); if (b) open(b.dataset.c); });
+const input = $('msg'), send = $('send');
+input.addEventListener('input', () => send.disabled = !input.value.trim());
+$('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = input.value.trim(); if (!v) return;
+  const safe = v.replace(/[&<>]/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[ch]));
+  push(cur, 'you', safe);
+  input.value = ''; send.disabled = true;
+});
+$('replay').addEventListener('click', () => {
+  C.general.msgs = C.general.msgs.slice(0, 3); liveIdx = 0; clock = 14; setTyping(false);
+  open('general'); run();
+});
+open('general');
+run();
+</script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!-- Design Lounge piece: widget-weather-glance · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Cirro — Weather at a glance</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-1:#14243d;--sky-2:#2c5568;--sky-3:#c98f74;--glow:#f3b27f;--hill-1:#203a4a;--hill-2:#15283a;--hill-3:#0d1a28;
+  --text:#f7f2ea;--text-2:rgba(247,242,234,.74);--text-3:rgba(247,242,234,.5);
+  --glass:rgba(255,250,244,.13);--glass-hi:rgba(255,250,244,.22);--edge:rgba(255,250,244,.3);
+  --cool:#9fd0df;--warm:#f6b48f;--sun:#ffd28a;
+  --sans:"Outfit",system-ui,sans-serif;--serif:"Instrument Serif",Georgia,serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);
+  --u:1px
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:400 14px/1.4 var(--sans);color:var(--text);background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 46%,var(--sky-3) 74%,var(--glow) 86%);display:grid;place-items:center;overflow:hidden}
+.scene{position:fixed;inset:0;pointer-events:none}
+.scene svg{position:absolute;left:0;bottom:0;width:100%;height:46%}
+.sunset{position:absolute;left:55%;top:47%;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,#ffe2b4 0 34%,rgba(255,210,150,.5) 35%,rgba(255,190,140,0) 70%)}
+main{position:relative;display:grid;justify-items:center;gap:28px;padding:16px;width:100%}
+.stage{display:grid;place-items:center;width:100%;min-height:440px}
+.w{position:relative;width:404px;height:420px;max-width:calc(100vw - 32px);border-radius:30px;padding:18px 20px;background:linear-gradient(160deg,var(--glass-hi),var(--glass) 55%);border:1px solid var(--edge);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 24px 50px -24px rgba(5,12,24,.55);-webkit-backdrop-filter:blur(26px) saturate(150%);backdrop-filter:blur(26px) saturate(150%);overflow:hidden;transition:width 420ms var(--sheet),height 420ms var(--sheet),border-radius 420ms var(--sheet)}
+.w[data-size="s"]{width:190px;height:190px;border-radius:26px}
+.hero{display:grid;grid-template-columns:1fr auto;grid-template-areas:"place art" "temp art" "temp meta";align-items:start;column-gap:12px}
+.place{grid-area:place;font-size:14px;font-weight:500;display:flex;align-items:center;gap:5px}
+.place svg{width:12px;height:12px}
+.temp{grid-area:temp;font:400 64px/0.95 var(--serif);letter-spacing:-.02em;margin-top:2px;font-variant-numeric:tabular-nums}
+.temp i{font-style:italic;color:var(--text-2)}
+.art{grid-area:art;width:64px;height:64px;justify-self:end}
+.meta{grid-area:meta;text-align:right;font-size:13px;color:var(--text-2);align-self:end;line-height:1.35}
+.meta b{display:block;font-weight:500;color:var(--text)}
+.w[data-size="s"] .hero{grid-template-columns:1fr auto;grid-template-areas:"place art" "temp temp" "meta meta";height:100%;grid-template-rows:auto 1fr auto}
+.w[data-size="s"] .temp{font-size:58px;align-self:center}
+.w[data-size="s"] .art{width:48px;height:48px;margin:-6px -4px 0 0}
+.w[data-size="s"] .meta{text-align:left}
+.w[data-size="s"] .hero{height:154px;column-gap:4px}
+.w[data-size="s"] .place{white-space:nowrap;font-size:13px}
+.w[data-size="m"]{height:198px}
+.w[data-size="m"] .hero{grid-template-columns:1fr auto auto;grid-template-areas:"place meta art" "temp meta art"}
+.w[data-size="m"] .temp{font-size:48px}
+.w[data-size="m"] .art{width:52px;height:52px}
+.w[data-size="m"] .meta{align-self:center}
+.w[data-size="m"] .hours{margin-top:8px}
+.hours{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:12px -8px 0;padding:0}
+.hour{appearance:none;border:0;background:transparent;color:var(--text);font:inherit;display:grid;justify-items:center;gap:3px;padding:6px 0 7px;border-radius:14px;cursor:pointer;transition:background 160ms var(--ease),transform 160ms var(--ease)}
+.hour:hover{background:rgba(255,250,244,.1)}
+.hour:active{transform:scale(.95)}
+.hour[aria-pressed="true"]{background:rgba(255,250,244,.2);box-shadow:inset 0 0 0 1px rgba(255,250,244,.28)}
+.hour span{font-size:11px;color:var(--text-2);letter-spacing:.02em}
+.hour svg{width:22px;height:22px}
+.hour strong{font-weight:500;font-size:14px;font-variant-numeric:tabular-nums}
+.days{list-style:none;margin:14px 0 0;padding:12px 0 0;border-top:1px solid rgba(255,250,244,.18);display:grid;gap:6px}
+.days li{display:grid;grid-template-columns:44px 22px 28px 1fr 28px;align-items:center;gap:10px;font-size:13px;height:28px}
+.days li span:first-child{font-weight:500}
+.days svg{width:20px;height:20px}
+.days .lo{color:var(--text-3);text-align:right;font-variant-numeric:tabular-nums}
+.days .hi{text-align:right;font-variant-numeric:tabular-nums}
+.bar{position:relative;height:4px;border-radius:2px;background:rgba(255,250,244,.16)}
+.bar i{position:absolute;top:0;bottom:0;border-radius:2px;background:linear-gradient(90deg,var(--cool),var(--warm))}
+.w[data-size="s"] .hours,.w[data-size="s"] .days,.w[data-size="m"] .days{visibility:hidden;opacity:0}
+.hours,.days{transition:opacity 260ms var(--ease) 140ms}
+.w.swap .hero,.w.swap .hours,.w.swap .days{animation:in 360ms var(--ease) both}
+@keyframes in{from{opacity:0;transform:translateY(4px)}}
+.sizes{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(10,20,34,.32);border:1px solid rgba(255,250,244,.16);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.sizes button{appearance:none;border:0;background:transparent;color:var(--text-2);font:500 13px var(--sans);height:36px;padding:0 16px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background 160ms var(--ease),color 160ms var(--ease)}
+.sizes button i{display:block;border:1.5px solid currentColor;border-radius:3px}
+.sizes button[aria-checked="true"]{background:var(--text);color:var(--sky-1)}
+:focus-visible{outline:2px solid var(--sun);outline-offset:2px}
+.updated{font-size:12px;color:var(--text-2);margin:-14px 0 0}
+/* condition art */
+.art *{transition:opacity 420ms var(--ease),transform 520ms var(--sheet),fill 420ms var(--ease)}
+.art .sun{transform-origin:24px 24px}
+.art .rays{transform-origin:24px 24px;animation:spin 28s linear infinite}
+.art .rays line{stroke:var(--sun);stroke-width:2.4;stroke-linecap:round}
+.art .core{fill:var(--sun)}
+.art .cloud{fill:#f4f1ec}
+.art .cloud.back{fill:#cfd8de;opacity:.9}
+.art .drift{animation:drift 7s var(--ease) infinite alternate}
+.art .rain line{stroke:var(--cool);stroke-width:2.2;stroke-linecap:round;animation:fall 1s linear infinite}
+.art .rain line:nth-child(2){animation-delay:-.33s}.art .rain line:nth-child(3){animation-delay:-.66s}
+.art .bolt{fill:var(--sun);opacity:0}
+.art[data-c="clear"] .sun{transform:translate(8px,8px) scale(1.25)}
+.art[data-c="clear"] .cloudset{opacity:0;transform:translateX(14px)}
+.art[data-c="cloud"] .sun,.art[data-c="rain"] .sun,.art[data-c="storm"] .sun{opacity:0;transform:scale(.6)}
+.art[data-c="rain"] .cloud,.art[data-c="storm"] .cloud{fill:#c4ccd4}
+.art[data-c="rain"] .cloud.back,.art[data-c="storm"] .cloud.back{fill:#8796a3}
+.art:not([data-c="rain"]):not([data-c="storm"]) .rain{opacity:0}
+.art[data-c="storm"] .bolt{animation:flash 3.6s var(--ease) infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes drift{from{transform:translateX(-2px)}to{transform:translateX(3px)}}
+@keyframes fall{from{transform:translateY(-5px);opacity:0}30%{opacity:1}to{transform:translateY(7px);opacity:0}}
+@keyframes flash{0%,62%,72%,100%{opacity:0}64%,70%{opacity:1}}
+.icon{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+@media (prefers-reduced-motion:reduce){
+  .w,.hours,.days,.art *,.hour,.sizes button{transition:none!important}
+  .art .rays,.art .drift,.art .rain line,.w.swap .hero,.w.swap .hours,.w.swap .days{animation:none!important}
+  .art[data-c="storm"] .bolt{animation:none;opacity:1}
+}
+</style>
+</head>
+<body>
+<div class="scene" aria-hidden="true">
+  <div class="sunset"></div>
+  <svg viewBox="0 0 1280 370" preserveAspectRatio="none">
+    <path fill="#203a4a" d="M0 150 C160 90 260 120 380 100 S620 40 760 90 1040 60 1280 120 V370 H0Z"/>
+    <path fill="#15283a" d="M0 230 C140 180 300 200 460 170 S760 210 900 180 1140 150 1280 200 V370 H0Z"/>
+    <path fill="#0d1a28" d="M0 300 C220 270 420 300 640 280 S1000 250 1280 290 V370 H0Z"/>
+  </svg>
+</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-clear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></symbol>
+  <symbol id="i-partly" viewBox="0 0 24 24"><path d="M9 3.5v1.2M3.5 9h1.2M5.2 5.2l.9.9M12.8 5.2l-.9.9"/><path d="M6.4 11A3 3 0 0 1 12 8.6"/><path d="M8 20h9a3.5 3.5 0 0 0 .4-7 5 5 0 0 0-9.6 1A3 3 0 0 0 8 20Z"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 19h10a4 4 0 0 0 .5-8 6 6 0 0 0-11.4 1.6A3.3 3.3 0 0 0 7 19Z"/></symbol>
+  <symbol id="i-rain" viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 .5-8 6 6 0 0 0-11.4 1.6A3.3 3.3 0 0 0 7 15Z"/><path d="M8 18l-1 2.5M12 18l-1 2.5M16 18l-1 2.5"/></symbol>
+  <symbol id="i-storm" viewBox="0 0 24 24"><path d="M7 15h10a4 4 0 0 0 .5-8 6 6 0 0 0-11.4 1.6A3.3 3.3 0 0 0 7 15Z"/><path d="M12.5 15.5 10.5 19h3l-2 3.5"/></symbol>
+</svg>
+<main>
+  <div class="stage">
+    <section class="w" id="w" data-size="l" aria-label="Cirro weather widget">
+      <div class="hero">
+        <div class="place"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M5 11 20 4l-7 15-2-6Z"/></svg>Harbour Hill</div>
+        <div class="temp" id="temp" aria-live="polite">18°</div>
+        <svg class="art" id="art" data-c="partly" viewBox="0 0 64 64" role="img" aria-label="Partly cloudy">
+          <g class="sun"><g class="rays"><line x1="24" y1="7" x2="24" y2="10"/><line x1="24" y1="38" x2="24" y2="41"/><line x1="7" y1="24" x2="10" y2="24"/><line x1="38" y1="24" x2="41" y2="24"/><line x1="12" y1="12" x2="14.2" y2="14.2"/><line x1="33.8" y1="33.8" x2="36" y2="36"/><line x1="12" y1="36" x2="14.2" y2="33.8"/><line x1="33.8" y1="14.2" x2="36" y2="12"/></g><circle class="core" cx="24" cy="24" r="9"/></g>
+          <g class="cloudset"><g class="drift"><path class="cloud back" d="M30 34h20a7 7 0 0 0 0-14 9 9 0 0 0-17-2 6 6 0 0 0-3 16Z"/><path class="cloud" d="M16 50h30a9 9 0 0 0 0-18 12 12 0 0 0-23-3 8 8 0 0 0-7 21Z"/></g>
+          <g class="rain"><line x1="24" y1="53" x2="22" y2="58"/><line x1="32" y1="53" x2="30" y2="58"/><line x1="40" y1="53" x2="38" y2="58"/></g>
+          <path class="bolt" d="M33 44 27 54h5l-3 8 9-12h-5l3-6Z"/></g>
+        </svg>
+        <div class="meta"><b id="cond">Partly cloudy</b><span id="hl">H 21° · L 12°</span></div>
+      </div>
+      <div class="hours" id="hours" role="group" aria-label="Next six hours"></div>
+      <ul class="days" id="days" aria-label="Five-day forecast"></ul>
+    </section>
+  </div>
+  <div class="sizes" role="radiogroup" aria-label="Widget size">
+    <button type="button" role="radio" aria-checked="false" data-s="s"><i style="width:10px;height:10px" aria-hidden="true"></i>Small</button>
+    <button type="button" role="radio" aria-checked="false" data-s="m"><i style="width:18px;height:10px" aria-hidden="true"></i>Medium</button>
+    <button type="button" role="radio" aria-checked="true" data-s="l"><i style="width:18px;height:18px" aria-hidden="true"></i>Large</button>
+  </div>
+  <p class="updated">Updated 14:02 · tap an hour to preview it</p>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NAMES = { clear: 'Clear', partly: 'Partly cloudy', cloud: 'Overcast', rain: 'Light rain', storm: 'Thunderstorm' };
+const HOURS = [['Now', 'partly', 18], ['15:00', 'clear', 19], ['16:00', 'partly', 19], ['17:00', 'cloud', 17], ['18:00', 'rain', 15], ['19:00', 'storm', 14]];
+const DAYS = [['Today', 'partly', 12, 21], ['Sun', 'rain', 10, 16], ['Mon', 'cloud', 9, 17], ['Tue', 'clear', 11, 20], ['Wed', 'partly', 13, 22]];
+const LO = 9, HI = 22;
+const sym = (c) => `<svg class="icon" aria-hidden="true"><use href="#i-${c}"/></svg>`;
+
+$('hours').innerHTML = HOURS.map(([t, c, d], i) =>
+  `<button type="button" class="hour" aria-pressed="${i === 0}" data-i="${i}" aria-label="${t === 'Now' ? 'Now' : t}, ${NAMES[c]}, ${d} degrees"><span>${t}</span>${sym(c)}<strong>${d}°</strong></button>`).join('');
+$('days').innerHTML = DAYS.map(([n, c, lo, hi]) =>
+  `<li aria-label="${n}: ${NAMES[c]}, low ${lo}, high ${hi}"><span>${n}</span>${sym(c)}<span class="lo">${lo}°</span><span class="bar" aria-hidden="true"><i style="left:${(lo - LO) / (HI - LO) * 100}%;right:${(HI - hi) / (HI - LO) * 100}%"></i></span><span class="hi">${hi}°</span></li>`).join('');
+
+function show(i) {
+  const [, c, d] = HOURS[i];
+  document.querySelectorAll('.hour').forEach((b, j) => b.setAttribute('aria-pressed', String(i === j)));
+  $('temp').textContent = d + '°';
+  $('art').dataset.c = c;
+  $('art').setAttribute('aria-label', NAMES[c]);
+  $('cond').textContent = NAMES[c];
+}
+$('hours').addEventListener('click', (e) => { const b = e.target.closest('.hour'); if (b) show(+b.dataset.i); });
+
+const w = $('w');
+const radios = [...document.querySelectorAll('.sizes button')];
+function size(s) {
+  radios.forEach((r) => r.setAttribute('aria-checked', String(r.dataset.s === s)));
+  if (w.dataset.size === s) return;
+  w.dataset.size = s;
+  if (s === 's') show(0);
+  if (!reduce) { w.classList.remove('swap'); void w.offsetWidth; w.classList.add('swap'); }
+}
+radios.forEach((r) => r.addEventListener('click', () => size(r.dataset.s)));
+document.querySelector('.sizes').addEventListener('keydown', (e) => {
+  const k = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+  if (!k) return;
+  const i = radios.findIndex((r) => r.getAttribute('aria-checked') === 'true');
+  const n = radios[(i + k + radios.length) % radios.length];
+  size(n.dataset.s); n.focus(); e.preventDefault();
+});
+</script>
+</body>
+</html>

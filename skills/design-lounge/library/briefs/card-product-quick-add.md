@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 270 · "Product cards with quick add" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 285 · "Product cards with quick add" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Product cards with quick add
 

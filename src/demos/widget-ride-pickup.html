@@ -1,0 +1,209 @@
+<!-- Design Lounge piece: widget-ride-pickup · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wend · ride on the way</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ece6d8;--street:#f7f3ea;--park:#cfd9b4;--water:#bcd3d6;
+  --card:#fbf9f4;--ink:#191b1f;--ink-2:#4a4d54;--ink-3:#6c6f76;--line:#e2dccd;
+  --accent:#f2551d;--accent-soft:#f9c7b2;--plate:#f5d548;
+  --sans:"Bricolage Grotesque",system-ui,sans-serif;--mono:"Martian Mono",ui-monospace,monospace;
+  --sheet:cubic-bezier(.32,.72,0,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:15px/1.4 var(--sans);color:var(--ink);overflow:hidden;
+  background:
+    linear-gradient(90deg,transparent 0 46%,var(--street) 46% 49%,transparent 49%) 0 0/130px 100%,
+    linear-gradient(0deg,transparent 0 62%,var(--street) 62% 66%,transparent 66%) 0 0/100% 170px,
+    radial-gradient(ellipse 140px 90px at 82% 78%,var(--park) 98%,transparent 100%),
+    linear-gradient(118deg,transparent 0 58%,var(--water) 58% 64%,transparent 64%),
+    var(--paper);
+  display:flex;flex-direction:column;align-items:center;
+  padding:max(54px,env(safe-area-inset-top)) 16px max(34px,env(safe-area-inset-bottom));
+}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(236,230,216,.92) 0,rgba(236,230,216,.55) 46%,rgba(236,230,216,.2));pointer-events:none}
+body>*{position:relative}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.lock{text-align:center;margin-top:18px}
+.date{margin:0;font-weight:600;font-size:17px;letter-spacing:.01em;color:var(--ink-2)}
+.time{margin:0;font-size:96px;font-weight:700;font-variation-settings:"opsz" 96;letter-spacing:-.045em;line-height:.95}
+
+.la{
+  width:100%;max-width:358px;margin-top:28px;background:var(--card);color:var(--ink);
+  border-radius:26px;border:1px solid rgba(25,27,31,.08);
+  box-shadow:0 18px 40px -22px rgba(25,27,31,.45);overflow:hidden;
+  transition:border-radius 360ms var(--sheet);
+}
+.la[data-size="compact"]{border-radius:22px}
+.head{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:12px 16px;text-align:left;border-radius:inherit}
+.head:focus-visible{outline-offset:-3px}
+.mark{flex:none;width:36px;height:36px;border-radius:11px;background:var(--ink);color:var(--card);display:grid;place-items:center}
+.mark svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.who{flex:1;min-width:0}
+.who b{display:block;font-size:15px;font-weight:700;letter-spacing:-.01em}
+.who span{display:block;font-size:13px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.eta{text-align:right;font-variant-numeric:tabular-nums}
+.eta b{display:block;font-family:var(--mono);font-weight:600;font-size:20px;letter-spacing:-.04em;color:var(--accent);line-height:1.1}
+.eta span{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.chev{flex:none;width:20px;height:20px;fill:none;stroke:var(--ink-3);stroke-width:2;stroke-linecap:round;transition:transform 360ms var(--sheet)}
+.la[data-size="compact"] .chev{transform:rotate(180deg)}
+
+.bar{height:4px;margin:0 16px 14px;border-radius:2px;background:var(--line);overflow:hidden;display:none}
+.bar i{display:block;height:100%;width:calc(var(--p,0)*100%);background:var(--accent);border-radius:2px;transition:width 240ms var(--std)}
+.la[data-size="compact"] .bar{display:block}
+
+.more{display:grid;grid-template-rows:1fr;transition:grid-template-rows 360ms var(--sheet)}
+.la[data-size="compact"] .more{grid-template-rows:0fr}
+.more>div{overflow:hidden;min-height:0}
+.inner{padding:0 16px 16px;transition:opacity 240ms var(--std)}
+.la[data-size="compact"] .inner{opacity:0}
+
+.map{display:block;width:100%;height:auto;border-radius:16px;background:#efe9db}
+.map .st{stroke:#fff;stroke-width:7;fill:none;stroke-linecap:square}
+.map .route{fill:none;stroke:var(--accent-soft);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.map .done{fill:none;stroke:var(--accent);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;transition:stroke-dashoffset 240ms var(--std)}
+.car{transition:transform 240ms var(--std)}
+.pin{transform-origin:296px 76px;transform-box:view-box}
+.ring{fill:none;stroke:var(--accent);stroke-width:2;transform-origin:296px 76px;transform-box:view-box;opacity:0}
+.la.here .ring{animation:ping 1.6s var(--std) infinite}
+@keyframes ping{from{transform:scale(.6);opacity:.9}to{transform:scale(2.4);opacity:0}}
+
+.status{margin:14px 0 0;font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.15;font-variation-settings:"opsz" 32}
+.status em{font-style:normal;color:var(--accent)}
+.meta{display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.ava{flex:none;width:40px;height:40px;border-radius:50%;background:#2f3a3c;color:#f2ead6;display:grid;place-items:center;font-weight:700;font-size:15px}
+.drv{flex:1;min-width:0;font-size:13px;color:var(--ink-2)}
+.drv b{display:block;font-size:15px;color:var(--ink)}
+.plate{flex:none;font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.04em;padding:6px 8px;border-radius:6px;background:var(--plate);border:1.5px solid var(--ink);transition:transform 240ms var(--std)}
+.la.here .plate{transform:scale(1.08)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.act{min-height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14px;background:#efeadd;transition:background 160ms var(--std),transform 120ms var(--std)}
+.act:hover{background:#e6e0d0}
+.act:active{transform:scale(.97)}
+.act.pri{background:var(--ink);color:var(--card)}
+.act.pri:hover{background:#2d3036}
+.act svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+.foot{margin-top:auto;display:flex;align-items:center;gap:8px}
+.chip{min-height:40px;padding:0 16px;border-radius:20px;background:rgba(25,27,31,.08);font-size:13px;font-weight:600;color:var(--ink-2)}
+.chip:hover{background:rgba(25,27,31,.14)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0ms!important;animation:none!important}
+  .la.here .ring{opacity:.8;transform:scale(1.6)}
+}
+</style>
+</head>
+<body>
+<header class="lock">
+  <p class="date">Saturday 3 October</p>
+  <p class="time" aria-label="23:54">23:54</p>
+</header>
+
+<section class="la" id="la" data-size="expanded" aria-label="Wend ride activity">
+  <button class="head" id="head" type="button" aria-expanded="true" aria-controls="more">
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 16V11l2-5h10l2 5v5"/><path d="M4 16h16v2H4z"/><circle cx="8" cy="13" r=".6"/><circle cx="16" cy="13" r=".6"/></svg></span>
+    <span class="who"><b id="headline">Ramesh is on the way</b><span id="sub">Silver hatchback · ends 4821</span></span>
+    <span class="eta"><b id="eta">4:00</b><span id="etaLbl">min away</span></span>
+    <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+  </button>
+  <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+  <div class="more" id="more"><div><div class="inner">
+    <svg class="map" viewBox="0 0 320 120" role="img" aria-label="Route from the driver to your pickup point at Jhamsikhel Gate">
+      <rect x="196" y="84" width="44" height="36" rx="6" fill="#cfd9b4"/>
+      <path d="M0 8 L70 0 H0z M260 0 L320 26 V0z" fill="#bcd3d6"/>
+      <path class="st" d="M0 96H320M0 32H320M132 0V120M248 0V120M60 0V120M0 64H90"/>
+      <path class="route" id="route" d="M20 96H120Q132 96 132 84V44Q132 32 144 32H236Q248 32 248 44V64Q248 76 260 76H296"/>
+      <path class="done" id="done" d="M20 96H120Q132 96 132 84V44Q132 32 144 32H236Q248 32 248 44V64Q248 76 260 76H296"/>
+      <circle class="ring" cx="296" cy="76" r="9"/>
+      <g class="pin"><circle cx="296" cy="76" r="9" fill="#fbf9f4" stroke="#191b1f" stroke-width="2"/><circle cx="296" cy="76" r="3.5" fill="#f2551d"/></g>
+      <g class="car" id="car"><g id="carRot"><rect x="-9" y="-5.5" width="18" height="11" rx="3.5" fill="#191b1f"/><rect x="2" y="-4" width="4" height="8" rx="1.2" fill="#bcd3d6"/></g></g>
+      <text x="284" y="104" font-family="Martian Mono" font-size="8" font-weight="600" fill="#191b1f">YOU</text>
+    </svg>
+    <p class="status" id="status">Pickup at <em>Jhamsikhel Gate</em></p>
+    <div class="meta">
+      <span class="ava" aria-hidden="true">RK</span>
+      <span class="drv"><b>Ramesh K.</b>4.92 · 1,840 trips</span>
+      <span class="plate" aria-label="Plate BA 2 PA 4821">BA 2 PA 4821</span>
+    </div>
+    <div class="acts">
+      <button class="act" type="button" aria-label="Message Ramesh"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v10H9l-5 4z"/></svg>Message</button>
+      <button class="act pri" type="button" id="share"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 9l5-5 5 5M5 14v6h14v-6"/></svg><span>Share trip</span></button>
+    </div>
+  </div></div></div>
+  <p class="sr" aria-live="polite" id="live"></p>
+</section>
+
+<div class="foot">
+  <button class="chip" type="button" id="replay">Replay pickup</button>
+</div>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const la = $('la'), head = $('head'), route = $('route'), done = $('done'), car = $('car'), carRot = $('carRot');
+const L = route.getTotalLength();
+done.style.strokeDasharray = L;
+const TOTAL = 240;
+let left = TOTAL, timer, lastMin = null;
+
+function fmt(s){ return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+function place(p){
+  const d = Math.min(L, p*L), a = route.getPointAtLength(d), b = route.getPointAtLength(Math.min(L, d+1));
+  const ang = d >= L ? 0 : Math.atan2(b.y-a.y, b.x-a.x)*180/Math.PI;
+  car.setAttribute('transform', `translate(${a.x.toFixed(1)} ${a.y.toFixed(1)})`);
+  carRot.setAttribute('transform', `rotate(${ang.toFixed(0)})`);
+  done.style.strokeDashoffset = (L - d).toFixed(1);
+  la.style.setProperty('--p', p.toFixed(3));
+}
+function say(t){ $('live').textContent = t; }
+function render(){
+  const p = 1 - left/TOTAL;
+  place(p);
+  if (left > 0) {
+    $('eta').textContent = fmt(left);
+    $('etaLbl').textContent = left <= 30 ? 'arriving' : 'min away';
+    $('headline').textContent = left <= 30 ? 'Ramesh is turning in' : 'Ramesh is on the way';
+    const m = Math.ceil(left/60);
+    if (m !== lastMin){ lastMin = m; say(`Ramesh is ${m} minute${m>1?'s':''} away.`); }
+  } else {
+    la.classList.add('here');
+    $('eta').textContent = 'Here';
+    $('etaLbl').textContent = 'now';
+    $('headline').textContent = 'Ramesh has arrived';
+    $('status').innerHTML = 'Look for the <em>yellow plate</em>, he waits 3 min';
+    say('Ramesh has arrived. Silver hatchback, plate BA 2 PA 4821.');
+    clearInterval(timer);
+  }
+}
+function start(){
+  clearInterval(timer);
+  left = TOTAL; lastMin = null;
+  la.classList.remove('here');
+  $('status').innerHTML = 'Pickup at <em>Jhamsikhel Gate</em>';
+  render();
+  timer = setInterval(() => { left = Math.max(0, left - 1); render(); }, 250);
+}
+head.addEventListener('click', () => {
+  const open = la.dataset.size === 'compact';
+  la.dataset.size = open ? 'expanded' : 'compact';
+  head.setAttribute('aria-expanded', String(open));
+});
+$('replay').addEventListener('click', start);
+$('share').addEventListener('click', e => {
+  const s = e.currentTarget.querySelector('span');
+  s.textContent = 'Link copied';
+  setTimeout(() => s.textContent = 'Share trip', 1600);
+});
+start();
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 252 · "Phone launch splash lift" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 266 · "Phone launch splash lift" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Phone launch splash lift
 

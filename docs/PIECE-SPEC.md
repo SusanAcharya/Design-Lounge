@@ -87,7 +87,7 @@ Fixed `category` list (the single source of truth is `src/content.config.ts`):
 
 - Website sections: `hero`, `navbar`, `footer`, `features`, `pricing`, `testimonials`, `faq`, `cta`, `contact`, `logos`, `stats`, `team`, `newsletter`, `blog`, `gallery`
 - Pages & screens: `portfolio`, `landing`, `auth`, `ecommerce`, `dashboard`, `onboarding`, `settings`, `profile`, `messaging`, `media`, `reading`, `error`, `utility`
-- Components: `navigation`, `buttons`, `inputs`, `cards`, `overlays`, `feedback`, `data`, `pickers`, `charts`
+- Components: `navigation`, `buttons`, `inputs`, `cards`, `overlays`, `feedback`, `data`, `pickers`, `charts`, `widgets`, `social`, `mockups`
 - Motion: `text-motion`, `scroll`, `cursor`, `transitions`, `loaders`, `micro`, `backgrounds`
 - Kits: `design-language`
 

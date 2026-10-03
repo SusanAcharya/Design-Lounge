@@ -1,0 +1,214 @@
+<!-- Design Lounge piece: widget-control-toggles · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Umbra — Controls</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0d0f;--tile:#1a1b1f;--tile-2:#24252a;--edge:rgba(255,255,255,.06);
+  --text:#edebe6;--muted:#8f8d89;--bone:#ecebe6;--accent:#ffb547;--on-accent:#1c1407;
+  --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+  --gap:12px;--r:24px;--press:90ms;--release:420ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.34,1.56,.64,1)
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(120% 60% at 50% 0%,#17181c 0%,var(--bg) 60%);color:var(--text);font:400 14px/1.4 var(--sans);overflow:hidden;user-select:none;-webkit-user-select:none}
+.page{height:100%;padding:max(54px,env(safe-area-inset-top)) 20px max(34px,env(safe-area-inset-bottom));display:flex;flex-direction:column}
+.head{display:flex;justify-content:space-between;align-items:flex-end;padding:14px 2px 18px}
+.head h1{font:600 28px/1 var(--sans);letter-spacing:-.02em;margin:0}
+.head p{margin:0 0 3px;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.status{height:40px;border-radius:999px;border:1px solid var(--edge);display:flex;align-items:center;gap:10px;padding:0 16px;margin-bottom:var(--gap);font:500 12px var(--mono);color:var(--muted);letter-spacing:.02em}
+.status i{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;transition:transform 300ms var(--spring)}
+.status.ping i{transform:scale(1.8)}
+.status b{color:var(--text);font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:calc((100vw - 76px)/4 + 8px);gap:var(--gap)}
+@media (min-width:430px){.grid{grid-auto-rows:90px}}
+.block{grid-column:span 2;grid-row:span 2;background:var(--tile);border:1px solid var(--edge);border-radius:var(--r);display:grid;grid-template-columns:1fr 1fr;place-items:center;padding:10px}
+button{appearance:none;border:0;font:inherit;color:inherit;cursor:pointer;background:none;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.tg{transition:transform var(--release) var(--spring),background-color 200ms var(--ease),color 200ms var(--ease)}
+.tg:active,.tg.down{transform:scale(.9);transition:transform var(--press) var(--ease),background-color 200ms var(--ease)}
+.round{width:58px;height:58px;border-radius:50%;background:var(--tile-2);display:grid;place-items:center}
+.round[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.ic .arc{transition:opacity 220ms var(--ease)}
+[aria-pressed="false"] .ic .arc{opacity:.35}
+[aria-pressed="true"] .ic .arc:nth-of-type(2){transition-delay:60ms}[aria-pressed="true"] .ic .arc:nth-of-type(3){transition-delay:120ms}
+.ic .slash{stroke-dasharray:28;stroke-dashoffset:28;transition:stroke-dashoffset 260ms var(--ease)}
+[aria-pressed="false"] .ic .slash{stroke-dashoffset:0}
+.tile{background:var(--tile);border:1px solid var(--edge);border-radius:var(--r);display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;padding:14px;text-align:left}
+.tile[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:transparent}
+.tile .lb{font:500 10.5px/1.2 var(--mono);letter-spacing:.04em;color:var(--muted)}
+.tile[aria-pressed="true"] .lb{color:rgba(28,20,7,.7)}
+.wide{grid-column:span 2;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;padding:12px}
+.wide strong{white-space:nowrap}
+.wide .moon{width:34px;height:34px;border-radius:50%;background:var(--tile-2);display:grid;place-items:center;flex:none;transition:background-color 200ms var(--ease)}
+.wide[aria-pressed="true"] .moon{background:rgba(28,20,7,.12)}
+.moon .ic{transition:transform 520ms var(--spring)}
+.wide[aria-pressed="false"] .moon .ic{transform:rotate(-14deg) scale(.82);opacity:.75}
+.wide>span:last-child{min-width:0}
+.wide strong{overflow:hidden;text-overflow:ellipsis}
+@media (max-width:370px){.wide .moon{display:none}}
+.wide strong{display:block;font:600 13.5px/1.2 var(--sans);letter-spacing:-.01em}
+.wide span.lb{display:block;margin-top:3px}
+.wide[data-k="out"] .moon .ic{transform:none}
+.slider{grid-row:span 3;position:relative;border-radius:var(--r);background:var(--tile);border:1px solid var(--edge);overflow:hidden;touch-action:none;cursor:ns-resize;transform-origin:50% 100%;transition:transform var(--release) var(--spring)}
+.slider.drag{transition:none}
+.slider .fill{position:absolute;left:0;right:0;bottom:0;background:var(--bone);height:50%}
+.slider .ico{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);color:var(--text);mix-blend-mode:difference}
+.slider .val{position:absolute;top:12px;left:0;right:0;text-align:center;font:500 11px var(--mono);color:var(--muted);opacity:0;transition:opacity 200ms var(--ease)}
+.slider.drag .val,.slider:focus-visible .val{opacity:1}
+.ray{transition:opacity 120ms var(--ease)}
+.dim,.warm,.beam{position:fixed;inset:0;pointer-events:none}
+.dim{background:#000;opacity:.1;z-index:5}
+.warm{background:#ff8a3d;mix-blend-mode:multiply;opacity:0;transition:opacity 600ms var(--ease);z-index:4}
+.warm.on{opacity:.22}
+.beam{background:radial-gradient(60% 34% at 50% 0%,rgba(255,214,150,.42),rgba(255,181,71,.12) 55%,transparent 80%);opacity:0;transition:opacity 260ms var(--ease);z-index:3}
+.beam.on{opacity:1}
+.foot{margin-top:auto;font:500 10.5px var(--mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase;text-align:center;padding-top:16px}
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:1ms!important;transition-delay:0ms!important}
+  .tg:active,.tg.down{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="beam" id="beam" aria-hidden="true"></div>
+<div class="warm" id="warm" aria-hidden="true"></div>
+<div class="dim" id="dim" aria-hidden="true"></div>
+<main class="page">
+  <header class="head"><h1>Controls</h1><p>Umbra One</p></header>
+  <div class="status" id="status" role="status"><i aria-hidden="true"></i><span id="msg"><b>Wi-Fi</b> · Larchmont 5G</span></div>
+  <div class="grid">
+    <div class="block" role="group" aria-label="Connectivity">
+      <button class="tg round" aria-pressed="false" data-k="air" aria-label="Airplane mode"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 4.5c0-1 .7-2 1.5-2s1.5 1 1.5 2V9l7 4v2l-7-2v4.5l2 1.5v1.5l-3.5-1-3.5 1V19l2-1.5V13l-7 2v-2l7-4Z"/></svg></button>
+      <button class="tg round" aria-pressed="true" data-k="cell" aria-label="Mobile data"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M5 19v-3"/><path class="arc" d="M10 19v-6"/><path class="arc" d="M15 19v-9"/><path class="arc" d="M20 19V7"/></svg></button>
+      <button class="tg round" aria-pressed="true" data-k="wifi" aria-label="Wi-Fi"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="18.5" r="1.2" fill="currentColor" stroke="none"/><path class="arc" d="M8.8 15.2a4.6 4.6 0 0 1 6.4 0"/><path class="arc" d="M5.9 12.2a8.8 8.8 0 0 1 12.2 0"/><path class="arc" d="M3 9.2a13 13 0 0 1 18 0"/><path class="slash" d="M4 4l16 16"/></svg></button>
+      <button class="tg round" aria-pressed="true" data-k="bt" aria-label="Bluetooth"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path class="bt" d="M7 7.5l10 9-5 4.5v-18l5 4.5-10 9"/><path class="slash" d="M4 4l16 16"/></svg></button>
+    </div>
+    <div class="slider" id="bright" role="slider" tabindex="0" aria-label="Brightness" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72" aria-valuetext="72 percent">
+      <div class="fill"></div><div class="val"></div>
+      <svg class="ic ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.6"/><g class="rays"></g></svg>
+    </div>
+    <div class="slider" id="vol" role="slider" tabindex="0" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45" aria-valuetext="45 percent">
+      <div class="fill"></div><div class="val"></div>
+      <svg class="ic ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4Z"/><path class="w1" d="M15 9.5a3.5 3.5 0 0 1 0 5"/><path class="w2" d="M17.5 7a7 7 0 0 1 0 10"/><path class="mute" d="M15.5 9.5l5 5M20.5 9.5l-5 5"/></svg>
+    </div>
+    <button class="tg tile wide" aria-pressed="false" data-k="dnd" aria-describedby="dndsub">
+      <span class="moon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10Z"/></svg></span>
+      <span><strong>Do not disturb</strong><span class="lb" id="dndsub">Off</span></span>
+    </button>
+    <button class="tg tile" aria-pressed="false" data-k="torch" aria-label="Torch"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v3l-2 4v10.5a1.5 1.5 0 0 1-1.5 1.5h-1A1.5 1.5 0 0 1 10 20.5V10L8 6Z"/><path d="M8 6h8M12 13.5v2"/></svg><span class="lb" aria-hidden="true">Torch</span></button>
+    <button class="tg tile" aria-pressed="true" data-k="rot" aria-label="Rotation lock"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="10.5" width="6" height="5" rx="1"/><path d="M10.2 10.5V9a1.8 1.8 0 0 1 3.6 0v1.5"/><path d="M20 12a8 8 0 1 1-2.6-5.9M20 3.5v3.3h-3.3"/></svg><span class="lb" aria-hidden="true">Lock</span></button>
+    <button class="tg tile" aria-pressed="false" data-k="low" aria-label="Low power"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7.5" width="16" height="9" rx="2.5"/><path d="M21.5 10.5v3M6.5 10.5v3"/></svg><span class="lb" aria-hidden="true">Saver</span></button>
+    <button class="tg tile" aria-pressed="false" data-k="warm" aria-label="Warm screen"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 3.5 5.5 6.6 5.5 10a5.5 5.5 0 0 1-11 0C6.5 9.6 9 6.5 12 3Z"/><path d="M12 18a2.5 2.5 0 0 1-2.5-2.5"/></svg><span class="lb" aria-hidden="true">Warm</span></button>
+    <button class="tg tile" aria-pressed="false" data-k="hot" aria-label="Hotspot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1.6"/><path d="M8.5 15.5a5 5 0 0 1 0-7M15.5 8.5a5 5 0 0 1 0 7M5.6 18.4a9 9 0 0 1 0-12.8M18.4 5.6a9 9 0 0 1 0 12.8"/></svg><span class="lb" aria-hidden="true">Hotspot</span></button>
+    <button class="tg tile" aria-pressed="false" data-k="sil" aria-label="Silent mode"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16.5h12l-1.5-2.5V10a4.5 4.5 0 0 0-9 0v4Z"/><path d="M10.5 19.5a1.6 1.6 0 0 0 3 0"/></svg><span class="lb" aria-hidden="true">Silent</span></button>
+    <button class="tg tile wide" aria-pressed="true" data-k="out" aria-describedby="outsub">
+      <span class="moon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3.5" y="14" width="4" height="6" rx="1.5"/><rect x="16.5" y="14" width="4" height="6" rx="1.5"/></svg></span>
+      <span><strong>Pebblepod Pro</strong><span class="lb" id="outsub">L 64 · R 61</span></span>
+    </button>
+  </div>
+  <p class="foot">Hold a tile for more · Swipe up to close</p>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NAMES = { out: 'Pebblepod Pro', air: 'Airplane mode', cell: 'Mobile data', wifi: 'Wi-Fi', bt: 'Bluetooth', dnd: 'Do not disturb', torch: 'Torch', rot: 'Rotation lock', low: 'Low power', warm: 'Warm screen', hot: 'Hotspot', sil: 'Silent mode' };
+const DETAIL = { wifi: 'Larchmont 5G', bt: 'Pebblepod Pro', dnd: 'until 7:00', hot: '2 devices', cell: 'Fenwick · 5G' };
+const btn = (k) => document.querySelector(`[data-k="${k}"]`);
+const on = (k) => btn(k).getAttribute('aria-pressed') === 'true';
+let pingT;
+function say(html) {
+  $('msg').innerHTML = html;
+  const s = $('status'); s.classList.remove('ping'); void s.offsetWidth; s.classList.add('ping');
+  clearTimeout(pingT); pingT = setTimeout(() => s.classList.remove('ping'), 220);
+}
+function set(k, v) {
+  btn(k).setAttribute('aria-pressed', String(v));
+  if (k === 'dnd') $('dndsub').textContent = v ? 'Until 7:00' : 'Off';
+  if (k === 'out') $('outsub').textContent = v ? 'L 64 · R 61' : 'Not connected';
+  if (k === 'bt' && !v && on('out')) set('out', false);
+  if (k === 'out' && v && !on('bt')) { set('bt', true); if (on('air')) set('air', false); }
+  if (k === 'torch') $('beam').classList.toggle('on', v);
+  if (k === 'warm') $('warm').classList.toggle('on', v);
+}
+document.querySelectorAll('.tg').forEach((b) => {
+  b.addEventListener('click', () => {
+    const k = b.dataset.k, v = !on(k);
+    set(k, v);
+    if (k === 'air' && v) ['cell', 'wifi', 'bt', 'hot'].forEach((x) => set(x, false));
+    if (k === 'hot' && v && on('air')) set('air', false);
+    const extra = v && DETAIL[k] ? ' · ' + DETAIL[k] : '';
+    if (k === 'out') return say(`<b>Pebblepod Pro</b> ${v ? 'connected' : 'disconnected'}`);
+    say(`<b>${NAMES[k]}</b> ${v ? 'on' : 'off'}${extra}${k === 'air' && v ? ' · radios off' : ''}`);
+  });
+  b.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') b.classList.add('down'); });
+  b.addEventListener('keyup', () => b.classList.remove('down'));
+  b.addEventListener('blur', () => b.classList.remove('down'));
+});
+
+const rays = document.querySelector('#bright .rays');
+for (let i = 0; i < 8; i++) {
+  const a = i * Math.PI / 4, s = Math.sin(a), c = Math.cos(a);
+  const l = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  l.setAttribute('class', 'ray'); l.dataset.s = s; l.dataset.c = c;
+  rays.appendChild(l);
+}
+function slider(el, value, paint) {
+  const fill = el.querySelector('.fill'), val = el.querySelector('.val');
+  let v = value, drag = null;
+  const render = () => {
+    fill.style.height = v + '%';
+    val.textContent = Math.round(v) + '%';
+    el.setAttribute('aria-valuenow', Math.round(v));
+    el.setAttribute('aria-valuetext', Math.round(v) + ' percent');
+    paint(v);
+  };
+  const commit = () => say(`<b>${el.getAttribute('aria-label')}</b> ${Math.round(v)}%`);
+  el.addEventListener('pointerdown', (e) => {
+    el.setPointerCapture(e.pointerId); el.classList.add('drag');
+    drag = { y: e.clientY, v, h: el.clientHeight };
+  });
+  el.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const raw = drag.v + (drag.y - e.clientY) / drag.h * 100;
+    v = Math.max(0, Math.min(100, raw));
+    const over = raw - v;
+    if (over && !reduce) {
+      const s = 1 + Math.min(0.06, Math.abs(over) / 900);
+      el.style.transformOrigin = over > 0 ? '50% 100%' : '50% 0%';
+      el.style.transform = `scale(${1 - (s - 1) * 0.5}, ${s})`;
+    } else el.style.transform = '';
+    render();
+  });
+  const end = () => { if (!drag) return; drag = null; el.classList.remove('drag'); el.style.transform = ''; commit(); };
+  el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+  el.addEventListener('keydown', (e) => {
+    const m = { ArrowUp: 5, ArrowRight: 5, ArrowDown: -5, ArrowLeft: -5, PageUp: 20, PageDown: -20 }[e.key];
+    if (m) v = Math.max(0, Math.min(100, Math.round(v) + m));
+    else if (e.key === 'Home') v = 0; else if (e.key === 'End') v = 100; else return;
+    e.preventDefault(); render(); commit();
+  });
+  render();
+}
+slider($('bright'), 72, (v) => {
+  $('dim').style.opacity = ((100 - v) / 100 * 0.6).toFixed(3);
+  rays.querySelectorAll('.ray').forEach((r) => {
+    const s = +r.dataset.s, c = +r.dataset.c, len = 1 + v / 100 * 3.2;
+    r.setAttribute('d', `M${12 + s * 6} ${12 - c * 6}L${(12 + s * (6 + len)).toFixed(2)} ${(12 - c * (6 + len)).toFixed(2)}`);
+  });
+});
+slider($('vol'), 45, (v) => {
+  const ic = document.querySelector('#vol .ico');
+  ic.querySelector('.w1').style.opacity = v > 0 ? 1 : 0;
+  ic.querySelector('.w2').style.opacity = v > 50 ? 1 : 0;
+  ic.querySelector('.mute').style.opacity = v === 0 ? 1 : 0;
+});
+</script>
+</body>
+</html>

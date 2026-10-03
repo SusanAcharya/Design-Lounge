@@ -1,0 +1,182 @@
+<!-- Design Lounge piece: widget-activity-rings · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Activity rings widget</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffd447;--card:#fff7e4;--ink:#1b1a17;--ink-2:#4a463d;--ink-3:#6b6558;--line:#eadfc4;
+  --burn:#ff5b3a;--burn-t:#ffd9cd;--hustle:#2f5bff;--hustle-t:#d5ddff;--rise:#13b07a;--rise-t:#c6eedc;
+  --display:"Bowlby One","Arial Black",sans-serif;--sans:"Outfit",system-ui,sans-serif;
+  --r-card:32px;--r-pill:999px;--border:2.5px solid var(--ink);--shadow:8px 8px 0 var(--ink);
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-pop:cubic-bezier(.34,1.56,.64,1);
+  --t-micro:160ms;--t-swap:320ms;--t-fill:1000ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg) radial-gradient(rgba(27,26,23,.12) 1.2px,transparent 1.6px) 0 0/22px 22px;color:var(--ink);font:15px/1.45 var(--sans);display:grid;place-items:center;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.card{position:relative;width:min(760px,calc(100vw - 40px));background:var(--card);border:var(--border);border-radius:var(--r-card);box-shadow:var(--shadow);padding:32px 36px 32px 32px;display:grid;grid-template-columns:300px 1fr;gap:36px;align-items:center}
+.rings{position:relative;width:300px;aspect-ratio:1}
+.rings svg{width:100%;height:100%;display:block;overflow:visible}
+.rings circle{fill:none;stroke-width:26}
+.prog{stroke-linecap:round;transform:rotate(-90deg);transform-origin:150px 150px;cursor:pointer;pointer-events:stroke;transition:stroke-dashoffset var(--t-fill) var(--ease-pop),opacity var(--t-micro) var(--ease),stroke-width var(--t-swap) var(--ease-pop)}
+.track{pointer-events:stroke;cursor:pointer}
+.dim .prog{opacity:.32}
+.dim .prog.on{opacity:1;stroke-width:30}
+.glyph{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.side{min-width:0;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.eyebrow{margin:0;font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.replay{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13px;padding:6px 12px;border-radius:var(--r-pill);border:2px solid var(--ink);background:var(--card);transition:transform var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.replay svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.replay:hover{background:#fff}
+.replay:active{transform:translate(1px,1px)}
+.picker{display:flex;gap:8px;margin:16px 0 18px;flex-wrap:wrap}
+.pick{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px 0 12px;border-radius:var(--r-pill);border:2px solid var(--ink);font-weight:600;background:var(--card);box-shadow:0 3px 0 var(--ink);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease),background var(--t-micro) var(--ease)}
+.pick i{width:14px;height:14px;border-radius:50%;background:var(--c);border:2px solid var(--ink)}
+.pick:hover{background:#fff}
+.pick[aria-pressed="true"]{background:var(--ink);color:var(--card);transform:translateY(3px);box-shadow:0 0 0 var(--ink)}
+.pick[aria-pressed="true"] i{border-color:var(--card)}
+.pick:focus-visible,.replay:focus-visible{outline:3px solid var(--hustle);outline-offset:3px}
+.detail{display:flex;flex-direction:column}
+.detail.swap{animation:swap var(--t-swap) var(--ease-pop)}
+@keyframes swap{from{opacity:0;transform:translateY(10px) rotate(-1deg)}to{opacity:1;transform:none}}
+.big{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big b{font:400 76px/.95 var(--display);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.big span{font-weight:600;font-size:20px;color:var(--ink-2)}
+.note{margin:8px 0 0;font-size:16px;color:var(--ink-2);max-width:34ch}
+.note strong{color:var(--ink);font-weight:700;background:linear-gradient(transparent 60%,var(--tint) 60%)}
+.hours{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;align-items:end;height:64px;margin-top:18px}
+.hours i{display:block;border:2px solid var(--ink);border-radius:5px 5px 2px 2px;background:var(--c);min-height:8px;transform-origin:bottom;transition:height var(--t-swap) var(--ease-pop)}
+.hours i.zero{background:var(--card)}
+.hlabels{display:flex;justify-content:space-between;font-size:12px;font-weight:500;color:var(--ink-3);margin-top:6px}
+.steps{position:absolute;left:32px;bottom:-22px;display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--card);padding:9px 16px 9px 12px;border-radius:var(--r-pill);font-weight:600;font-size:14px;transform:rotate(-3deg)}
+.steps svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.steps b{font:400 16px/1 var(--display);letter-spacing:.02em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:720px){
+  .card{grid-template-columns:1fr;justify-items:center;padding:24px 20px 40px;gap:20px}
+  .rings{width:min(260px,100%)}
+  .side{width:100%}
+  .big b{font-size:60px}
+  .steps{left:50%;transform:translateX(-50%) rotate(-3deg)}
+  body{padding:32px 0 48px}
+}
+@media (prefers-reduced-motion:reduce){
+  .prog,.pick,.replay,.hours i{transition:none}
+  .detail.swap{animation:none}
+}
+</style>
+</head>
+<body>
+<main class="card" aria-labelledby="eyebrow">
+  <div class="rings" id="rings">
+    <svg viewBox="0 0 300 300" aria-hidden="true">
+      <circle class="track" data-i="0" cx="150" cy="150" r="126" style="stroke:var(--burn-t)"/>
+      <circle class="track" data-i="1" cx="150" cy="150" r="94" style="stroke:var(--hustle-t)"/>
+      <circle class="track" data-i="2" cx="150" cy="150" r="62" style="stroke:var(--rise-t)"/>
+      <circle class="prog" data-i="0" cx="150" cy="150" r="126" style="stroke:var(--burn)"/>
+      <circle class="prog" data-i="1" cx="150" cy="150" r="94" style="stroke:var(--hustle)"/>
+      <circle class="prog" data-i="2" cx="150" cy="150" r="62" style="stroke:var(--rise)"/>
+      <path class="glyph" d="M150 15c3 3 6 6 6 10a6 6 0 0 1-12 0c0-2 1-4 3-5 0 2 1 3 2 3 0-3-1-5 1-8z"/>
+      <path class="glyph" d="M152 48l-6 9h7l-5 9"/>
+      <path class="glyph" d="M150 98v-14M144 90l6-6 6 6"/>
+    </svg>
+  </div>
+  <div class="side">
+    <div class="top">
+      <p class="eyebrow" id="eyebrow">Hoopla · Saturday</p>
+      <button class="replay" id="replay" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4"/></svg>Replay</button>
+    </div>
+    <div class="picker" role="group" aria-label="Choose a ring">
+      <button class="pick" type="button" aria-pressed="true" style="--c:var(--burn)"><i></i>Burn</button>
+      <button class="pick" type="button" aria-pressed="false" style="--c:var(--hustle)"><i></i>Hustle</button>
+      <button class="pick" type="button" aria-pressed="false" style="--c:var(--rise)"><i></i>Rise</button>
+    </div>
+    <div class="detail" id="detail" aria-live="polite">
+      <div class="big"><b id="val">520</b><span id="goal">/ 600 kcal</span></div>
+      <p class="note" id="note"></p>
+      <div class="hours" id="hours" aria-hidden="true"></div>
+      <div class="hlabels" aria-hidden="true"><span>7 am</span><span>12 pm</span><span>6 pm</span></div>
+    </div>
+  </div>
+  <p class="steps"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3c-2 0-3 2.5-3 5s1 4 3 4 2.5-1.5 2.5-4S10 3 8 3zM6 15h4l-.5 3a2 2 0 0 1-3 0zM16 7c-2 0-2.5 2.5-2.5 5s.5 3 2.5 3 3-1.5 3-4-1-4-3-4zM14 18h4l-.5 2.5a2 2 0 0 1-3 0z"/></svg><b>8,412</b> steps</p>
+</main>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const RINGS = [
+    { name: 'Burn', val: 520, goal: 600, unit: 'kcal', tint: 'var(--burn-t)', c: 'var(--burn)', r: 126,
+      note: v => `<strong>${600 - v} kcal</strong> to close Burn. A brisk 15-minute walk does it.`,
+      hours: [20, 34, 62, 48, 30, 26, 70, 92, 44, 38, 28, 28] },
+    { name: 'Hustle', val: 27, goal: 45, unit: 'min', tint: 'var(--hustle-t)', c: 'var(--hustle)', r: 94,
+      note: v => `<strong>${45 - v} minutes</strong> of hard effort left. Your 7 am ride counted 12.`,
+      hours: [60, 40, 0, 0, 10, 0, 30, 70, 0, 0, 0, 0] },
+    { name: 'Rise', val: 10, goal: 12, unit: 'hours', tint: 'var(--rise-t)', c: 'var(--rise)', r: 62,
+      note: v => `Up and moving in <strong>${v} of 12 hours</strong>. Stand once in two more.`,
+      hours: [100, 100, 100, 100, 100, 0, 100, 100, 100, 100, 0, 0] },
+  ];
+  const svg = document.querySelector('#rings svg');
+  const progs = [...svg.querySelectorAll('.prog')];
+  const picks = [...document.querySelectorAll('.pick')];
+  const detail = document.getElementById('detail'), valEl = document.getElementById('val'), goalEl = document.getElementById('goal');
+  const noteEl = document.getElementById('note'), hoursEl = document.getElementById('hours');
+  let sel = 0, raf = 0;
+
+  hoursEl.innerHTML = '<i></i>'.repeat(12);
+  const bars = [...hoursEl.children];
+  const circ = r => 2 * Math.PI * r;
+  progs.forEach((p, i) => { const C = circ(RINGS[i].r); p.style.strokeDasharray = C; p.style.strokeDashoffset = C; });
+
+  function fill(delayed) {
+    progs.forEach((p, i) => {
+      const C = circ(RINGS[i].r), target = C * (1 - RINGS[i].val / RINGS[i].goal);
+      p.style.transitionDelay = delayed && !reduce ? `${i * 140}ms` : '0ms';
+      p.style.strokeDashoffset = target;
+    });
+  }
+  function empty() {
+    progs.forEach((p, i) => { p.style.transition = 'none'; p.style.strokeDashoffset = circ(RINGS[i].r); });
+    void svg.getBoundingClientRect();
+    progs.forEach(p => { p.style.transition = ''; });
+  }
+  function count(to) {
+    cancelAnimationFrame(raf);
+    if (reduce) { valEl.textContent = to; return; }
+    const t0 = performance.now(), D = 900;
+    const tick = now => {
+      const k = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - k, 3);
+      valEl.textContent = Math.round(to * e).toLocaleString('en-US');
+      if (k < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+  }
+  function select(i, focused) {
+    if (focused && i === sel && svg.parentElement.classList.contains('dim')) focused = false;
+    sel = i;
+    const R = RINGS[i];
+    picks.forEach((b, j) => b.setAttribute('aria-pressed', j === i ? 'true' : 'false'));
+    progs.forEach((p, j) => p.classList.toggle('on', j === i));
+    svg.parentElement.classList.toggle('dim', focused);
+    goalEl.textContent = `/ ${R.goal} ${R.unit}`;
+    noteEl.innerHTML = R.note(R.val);
+    detail.style.setProperty('--tint', R.tint);
+    bars.forEach((b, j) => { const h = R.hours[j]; b.style.height = Math.max(8, h * .64) + 'px'; b.style.setProperty('--c', R.c); b.classList.toggle('zero', !h); });
+    detail.classList.remove('swap'); void detail.offsetWidth; detail.classList.add('swap');
+    count(R.val);
+  }
+  picks.forEach((b, i) => b.addEventListener('click', () => select(i, true)));
+  svg.addEventListener('click', e => { const i = e.target.dataset && e.target.dataset.i; if (i !== undefined) select(+i, true); });
+  document.getElementById('replay').addEventListener('click', () => { empty(); requestAnimationFrame(() => fill(true)); select(sel, false); });
+
+  select(0, false);
+  requestAnimationFrame(() => requestAnimationFrame(() => fill(true)));
+})();
+</script>
+</body>
+</html>

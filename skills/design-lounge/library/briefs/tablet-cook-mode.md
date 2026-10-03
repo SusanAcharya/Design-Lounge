@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 320 · "Tablet recipe cook mode" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 339 · "Tablet recipe cook mode" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Tablet recipe cook mode
 

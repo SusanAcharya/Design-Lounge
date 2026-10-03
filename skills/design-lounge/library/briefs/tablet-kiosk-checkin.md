@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 318 · "Tablet kiosk check-in" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 337 · "Tablet kiosk check-in" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Tablet kiosk check-in
 

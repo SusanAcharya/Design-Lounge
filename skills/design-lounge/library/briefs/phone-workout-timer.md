@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 219 · "Interval workout timer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 229 · "Interval workout timer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Interval workout timer
 

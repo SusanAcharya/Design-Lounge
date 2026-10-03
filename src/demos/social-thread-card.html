@@ -1,0 +1,295 @@
+<!-- Design Lounge piece: social-thread-card · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Murmur thread</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stage:#ffe38a;--card:#fffaf0;--sunk:#fff1d6;--ink:#1d1638;--ink-2:#4a4366;--ink-3:#6a6385;
+  --tomato:#d0391f;--mint:#6fd3a8;--lilac:#c4b2ff;--sky:#8fd0ff;--peach:#ffb38a;
+  --sans:"Bricolage Grotesque",system-ui,sans-serif;--mono:"DM Mono",ui-monospace,monospace;
+  --b:2px solid var(--ink);--r:24px;--shadow:6px 6px 0 var(--ink);
+  --av:40px;--gut:56px;
+  --t-micro:140ms;--t-expand:420ms;--stagger:70ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-pop:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--stage);background-image:radial-gradient(rgba(29,22,56,.14) 1.2px,transparent 1.3px);background-size:22px 22px;display:flex;align-items:center;justify-content:center;padding:24px 16px;-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:3px solid var(--tomato);outline-offset:2px;border-radius:10px}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block;flex:none;transition:transform var(--t-micro) var(--ease)}
+
+.card{width:min(560px,100%);height:min(752px,100%);display:flex;flex-direction:column;background:var(--card);border:var(--b);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.top{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:var(--b)}
+.top h1{margin:0;font-size:20px;font-weight:800;letter-spacing:-.02em;flex:1}
+.top span{font:500 12px var(--mono);background:var(--mint);border:var(--b);border-radius:999px;padding:2px 10px}
+.scroll{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:16px 18px 8px;scroll-behavior:smooth}
+
+.p{display:grid;grid-template-columns:var(--av) 1fr;column-gap:12px;position:relative;padding-bottom:12px}
+.rail{position:relative;display:flex;justify-content:center}
+.p.line .rail::after{content:"";position:absolute;top:calc(var(--av) + 6px);bottom:-10px;left:50%;width:2px;margin-left:-1px;background:var(--ink);border-radius:2px}
+.av{width:var(--av);height:var(--av);border-radius:50%;border:var(--b);background:var(--c,var(--lilac));display:grid;place-items:center;font-weight:800;font-size:14px;letter-spacing:-.02em;position:relative;z-index:1}
+.av.big{--av:48px}
+.meta{display:flex;align-items:baseline;gap:6px;min-width:0;flex-wrap:wrap}
+.meta b{font-weight:800;font-size:15px;letter-spacing:-.01em}
+.meta small{font:400 12px var(--mono);color:var(--ink-3)}
+.badge{font:500 10.5px var(--mono);background:var(--tomato);color:var(--card);border-radius:6px;padding:1px 6px;align-self:center}
+.txt{margin:2px 0 8px;overflow-wrap:anywhere}
+.p.parent .txt{font-size:18px;line-height:1.4;font-weight:500;letter-spacing:-.01em}
+.txt a{color:var(--tomato);font-weight:600;text-decoration:none}
+
+.pan{display:flex;gap:6px;margin:4px 0 8px;height:100px}
+.pan span{flex:1;border:var(--b);border-radius:14px;position:relative;overflow:hidden}
+.pan .a{background:radial-gradient(ellipse 34% 9% at 50% 30%,#f7c873 92%,transparent),radial-gradient(ellipse 36% 10% at 50% 44%,#e9a24e 92%,transparent),radial-gradient(ellipse 37% 10% at 50% 58%,#d98c3c 92%,transparent),radial-gradient(ellipse 38% 10% at 50% 72%,#c97a30 92%,transparent),radial-gradient(ellipse 46% 9% at 50% 84%,#fff 92%,transparent),var(--sky)}
+.pan .a::after{content:"";position:absolute;left:44%;top:22%;width:12%;height:8%;background:#fff6c4;border:2px solid var(--ink);border-radius:4px}
+.pan .b{background:radial-gradient(circle at 50% 54%,#f3e7cf 0 34%,var(--ink) 34% 36%,transparent 36%),var(--peach)}
+.pan .b::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 42% 46%,rgba(29,22,56,.5) 0 2px,transparent 3px),radial-gradient(circle at 56% 60%,rgba(29,22,56,.5) 0 2px,transparent 3px),radial-gradient(circle at 50% 40%,rgba(29,22,56,.5) 0 2px,transparent 3px),radial-gradient(circle at 60% 48%,rgba(29,22,56,.5) 0 2px,transparent 3px)}
+
+.acts{display:flex;gap:4px;margin-left:-8px}
+.act{display:flex;align-items:center;gap:4px;height:36px;min-width:40px;padding:0 10px 0 8px;border-radius:999px;font:500 13px var(--mono);color:var(--ink-2);transition:background var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.act:hover{background:var(--sunk);color:var(--ink)}
+.act:active{transform:scale(.94)}
+.act .n{display:inline-block}
+.like[aria-pressed="true"]{color:var(--tomato)}
+.like[aria-pressed="true"] .ico{fill:var(--tomato);animation:squish 460ms var(--ease-pop)}
+.rp[aria-pressed="true"]{color:#1e8a5c}
+@keyframes squish{0%{transform:scale(1)}25%{transform:scale(.6,.8)}60%{transform:scale(1.3,1.15) rotate(-8deg)}100%{transform:scale(1)}}
+.n.tick{animation:tick 300ms var(--ease-out)}
+@keyframes tick{from{transform:translateY(-70%);opacity:0}to{transform:none;opacity:1}}
+
+.quote{display:block;width:100%;text-align:left;border:var(--b);border-radius:16px;padding:10px 12px;margin:2px 0 10px;background:var(--sunk);box-shadow:3px 3px 0 var(--ink);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.quote:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.quote .meta{gap:6px;align-items:center}
+.quote .av{--av:22px;font-size:9px;border-width:1.5px}
+.quote p{margin:4px 0 0;font-size:14px}
+
+/* expand */
+.morebtn{display:flex;align-items:center;gap:10px;height:44px;padding:0 14px 0 6px;margin:-4px 0 8px;border:var(--b);border-radius:999px;background:var(--card);font-weight:600;font-size:14px;transition:background var(--t-micro) var(--ease),transform var(--t-micro) var(--ease)}
+.morebtn:hover{background:var(--lilac)}
+.morebtn:active{transform:scale(.97)}
+.minis{display:flex}
+.minis i{width:26px;height:26px;border-radius:50%;border:var(--b);margin-left:-8px;background:var(--c)}
+.minis i:first-child{margin-left:0}
+.morebtn .chev{transition:transform var(--t-expand) var(--ease-out)}
+.morebtn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.hookrow{display:grid;grid-template-columns:var(--av) 1fr;column-gap:12px}
+.hook{position:relative}
+.hook::before{content:"";position:absolute;left:50%;top:-12px;width:16px;height:24px;margin-left:-1px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);border-bottom-left-radius:14px}
+.hidden-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--t-expand) var(--ease-out)}
+.hidden-wrap.open{grid-template-rows:1fr}
+.hidden-wrap>div{overflow:hidden;min-height:0}
+.hidden-wrap .p{opacity:0;transform:translateY(-8px);transition:opacity 260ms var(--ease),transform 320ms var(--ease-out)}
+.hidden-wrap.open .p{opacity:1;transform:none;transition-delay:calc(var(--k) * var(--stagger))}
+.new{animation:drop 360ms var(--ease-out)}
+@keyframes drop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* repost menu */
+.rpw{position:relative}
+.menu{position:absolute;left:0;bottom:calc(100% + 6px);min-width:170px;background:var(--card);border:var(--b);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:5px;z-index:3;opacity:0;visibility:hidden;transform:translateY(6px) rotate(-1deg);transition:opacity var(--t-micro) var(--ease),transform 220ms var(--ease-pop),visibility 0s 220ms}
+.menu.open{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.menu button{display:flex;align-items:center;gap:10px;width:100%;height:40px;padding:0 10px;border-radius:9px;font-weight:600;font-size:14px}
+.menu button:hover,.menu button:focus-visible{background:var(--mint)}
+
+/* composer */
+.compose{border-top:var(--b);padding:10px 14px 12px;background:var(--card)}
+.qprev{display:none;align-items:center;gap:8px;margin:0 0 8px 52px;border:var(--b);border-radius:12px;padding:6px 6px 6px 10px;background:var(--sunk);font-size:13px}
+.qprev.on{display:flex;animation:drop 260ms var(--ease-out)}
+.qprev span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qprev button{width:28px;height:28px;border-radius:50%;display:grid;place-items:center}
+.qprev button:hover{background:var(--peach)}
+.row{display:flex;align-items:center;gap:12px}
+.row input{flex:1;min-width:0;height:44px;border:var(--b);border-radius:999px;padding:0 16px;background:#fff;outline:0;font-size:15px}
+.row input:focus{box-shadow:3px 3px 0 var(--ink)}
+.row input::placeholder{color:var(--ink-3)}
+.go{height:44px;padding:0 18px;border:var(--b);border-radius:999px;background:var(--tomato);color:var(--card);font-weight:800;box-shadow:3px 3px 0 var(--ink);transition:transform var(--t-micro) var(--ease),box-shadow var(--t-micro) var(--ease)}
+.go:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+.go:disabled{background:var(--sunk);color:var(--ink-3);box-shadow:none;cursor:default}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:480px){.scroll{padding:14px 12px 6px}.p.parent .txt{font-size:16.5px}.act{padding:0 6px}.pan{height:96px}.card{box-shadow:4px 4px 0 var(--ink)}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:1ms!important;transition-delay:0s!important}
+  .scroll{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<main class="card" aria-labelledby="title">
+  <header class="top"><h1 id="title">Thread</h1><span>312 replies</span></header>
+
+  <div class="scroll" id="scroll">
+    <article class="p parent line" aria-label="Juno Adeyemi, original post">
+      <div class="rail"><div class="av big" style="--c:var(--peach)" aria-hidden="true">JA</div></div>
+      <div>
+        <div class="meta"><b>juno.bakes</b><small>4h</small></div>
+        <p class="txt">Hot take: sourdough discard pancakes are better than the sourdough itself. I will not be taking questions.</p>
+        <div class="pan" role="img" aria-label="Two photos: a stack of pancakes with butter, and a jar of bubbling discard"><span class="a"></span><span class="b"></span></div>
+        <div class="acts"></div>
+      </div>
+    </article>
+
+    <article class="p line" aria-label="Reply from Tomas">
+      <div class="rail"><div class="av" style="--c:var(--sky)" aria-hidden="true">TK</div></div>
+      <div>
+        <div class="meta"><b>tomas.kneads</b><small>3h</small></div>
+        <p class="txt">Taking one question anyway: what ratio? Asking for my discard jar, which is now the size of a toddler.</p>
+        <div class="acts" data-like="214" data-reply="12" data-rp="3"></div>
+      </div>
+    </article>
+
+    <article class="p line" aria-label="Reply from Wren, quoting fermentfriday">
+      <div class="rail"><div class="av" style="--c:var(--mint)" aria-hidden="true">WO</div></div>
+      <div>
+        <div class="meta"><b>wren.eats</b><small>2h</small></div>
+        <p class="txt">Bringing receipts from last spring.</p>
+        <button class="quote" type="button" aria-label="Quoted post from fermentfriday: Discard is not waste. It is a second recipe you have not met yet.">
+          <span class="meta"><span class="av" style="--c:var(--lilac)" aria-hidden="true">FF</span><b>fermentfriday</b><small>Mar 14</small></span>
+          <p>Discard is not waste. It is a second recipe you have not met yet.</p>
+        </button>
+        <div class="acts" data-like="96" data-reply="4" data-rp="11"></div>
+      </div>
+    </article>
+
+    <div class="hidden-wrap" id="more"><div id="moreInner">
+      <article class="p line" style="--k:0" aria-label="Reply from Ada"><div class="rail"><div class="av" style="--c:var(--lilac)" aria-hidden="true">AK</div></div><div><div class="meta"><b>ada.k</b><small>2h</small></div><p class="txt">100g discard, 1 egg, 120ml milk, pinch of soda. Rest it ten minutes. You are welcome, toddler jar.</p><div class="acts" data-like="388" data-reply="21" data-rp="40"></div></div></article>
+      <article class="p line" style="--k:1" aria-label="Reply from Basil"><div class="rail"><div class="av" style="--c:var(--peach)" aria-hidden="true">BO</div></div><div><div class="meta"><b>basil.ok</b><small>1h</small></div><p class="txt">Counterpoint: discard crackers. Thin, salty, gone in an afternoon.</p><div class="acts" data-like="57" data-reply="6" data-rp="2"></div></div></article>
+      <article class="p line" style="--k:2" aria-label="Reply from Mo"><div class="rail"><div class="av" style="--c:var(--sky)" aria-hidden="true">MC</div></div><div><div class="meta"><b>mo.cooks</b><small>48m</small></div><p class="txt">Brown butter. That is the whole reply.</p><div class="acts" data-like="141" data-reply="3" data-rp="9"></div></div></article>
+      <article class="p line" style="--k:3" aria-label="Reply from Juno, the author"><div class="rail"><div class="av" style="--c:var(--peach)" aria-hidden="true">JA</div></div><div><div class="meta"><b>juno.bakes</b><span class="badge">Author</span><small>20m</small></div><p class="txt">Ada wins. Mo gets an honourable mention. Basil, we need to talk.</p><div class="acts" data-like="502" data-reply="18" data-rp="7"></div></div></article>
+    </div></div>
+    <div id="added"></div>
+
+    <div class="hookrow">
+      <div class="hook" aria-hidden="true"></div>
+      <div><button class="morebtn" id="moreBtn" type="button" aria-expanded="false" aria-controls="more">
+        <span class="minis" aria-hidden="true"><i style="--c:var(--lilac)"></i><i style="--c:var(--peach)"></i><i style="--c:var(--sky)"></i></span>
+        <span id="moreLabel">Show 4 more replies</span>
+        <svg class="ico chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button></div>
+    </div>
+  </div>
+
+  <form class="compose" id="compose">
+    <div class="qprev" id="qprev"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h4v4H7c0 3 1 4 3 5M14 7h4v4h-4c0 3 1 4 3 5"/></svg><span>Quoting <b>juno.bakes</b>: Hot take: sourdough discard pancakes…</span><button type="button" id="unquote" aria-label="Remove quote"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="row">
+      <div class="av" style="--c:var(--mint)" aria-hidden="true">You</div>
+      <label class="sr" for="cin">Reply to juno.bakes</label>
+      <input id="cin" placeholder="Reply to juno.bakes…" autocomplete="off" maxlength="200">
+      <button class="go" id="go" type="submit" disabled>Post</button>
+    </div>
+  </form>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const I = {
+  like: '<path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 2.8C19.5 15.4 12 20 12 20z"/>',
+  reply: '<path d="M20 11.5a8 8 0 0 1-11.8 7l-4.2 1 1.1-3.9A8 8 0 1 1 20 11.5z"/>',
+  rp: '<path d="M7 4 4 7l3 3"/><path d="M4 7h11a4 4 0 0 1 4 4v1"/><path d="m17 20 3-3-3-3"/><path d="M20 17H9a4 4 0 0 1-4-4v-1"/>',
+  share: '<path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/>'
+};
+const svg = k => '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">' + I[k] + '</svg>';
+const fmt = n => !n ? "" : n >= 1000 ? (n / 1000).toFixed(1).replace('.0', '') + 'K' : '' + n;
+let menuOpen = null;
+function build(el, d) {
+  el.setAttribute('role', 'group'); el.setAttribute('aria-label', 'Actions');
+  el.innerHTML =
+    '<button class="act like" type="button" aria-pressed="false">' + svg('like') + '<span class="n" aria-hidden="true">' + fmt(d.like) + '</span></button>' +
+    '<button class="act" type="button" data-reply aria-label="Reply, ' + d.reply + ' replies">' + svg('reply') + '<span class="n" aria-hidden="true">' + fmt(d.reply) + '</span></button>' +
+    '<span class="rpw"><button class="act rp" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Repost or quote, ' + d.rp + ' reposts">' + svg('rp') + '<span class="n" aria-hidden="true">' + fmt(d.rp) + '</span></button>' +
+    '<span class="menu" role="menu"><button type="button" role="menuitem" data-do="repost">' + svg('rp') + '<span>Repost</span></button><button type="button" role="menuitem" data-do="quote"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h4v4H7c0 3 1 4 3 5M14 7h4v4h-4c0 3 1 4 3 5"/></svg>Quote</button></span></span>' +
+    '<button class="act" type="button" aria-label="Share">' + svg('share') + '</button>';
+  const like = el.querySelector('.like'), ln = like.querySelector('.n');
+  let n = d.like;
+  const lab = () => like.setAttribute('aria-label', 'Like, ' + n + ' likes');
+  lab();
+  like.onclick = () => {
+    const on = like.getAttribute('aria-pressed') !== 'true';
+    like.setAttribute('aria-pressed', on); n += on ? 1 : -1; lab();
+    ln.textContent = fmt(n); ln.classList.remove('tick'); void ln.offsetWidth; ln.classList.add('tick');
+  };
+  const rp = el.querySelector('.rp'), menu = el.querySelector('.menu'), rn = rp.querySelector('.n');
+  let r = d.rp, reposted = false;
+  rp.onclick = e => { e.stopPropagation(); toggleMenu(menu.classList.contains('open') ? null : { rp, menu }, true); };
+  menu.addEventListener('keydown', e => {
+    const items = [...menu.querySelectorAll('button')], i = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); items[(i + 1) % 2].focus(); }
+  });
+  menu.querySelector('[data-do="repost"]').onclick = () => {
+    reposted = !reposted; r += reposted ? 1 : -1;
+    rp.setAttribute('aria-pressed', reposted); rp.setAttribute('aria-label', 'Repost or quote, ' + r + ' reposts');
+    rn.textContent = fmt(r); rn.classList.remove('tick'); void rn.offsetWidth; rn.classList.add('tick');
+    menu.querySelector('[data-do="repost"] span').textContent = reposted ? 'Undo repost' : 'Repost';
+    toggleMenu(null, true);
+  };
+  menu.querySelector('[data-do="quote"]').onclick = () => {
+    const post = el.closest('.p'), who = post.querySelector('.meta b').textContent, t = post.querySelector('.txt').textContent;
+    startQuote(who, t, post.querySelector('.av').outerHTML);
+    toggleMenu(null, false);
+  };
+  el.querySelector('[data-reply]').onclick = () => $('cin').focus();
+}
+function toggleMenu(next, refocus) {
+  if (menuOpen) { menuOpen.menu.classList.remove('open'); menuOpen.rp.setAttribute('aria-expanded', 'false'); if (refocus && !next) menuOpen.rp.focus(); }
+  menuOpen = next;
+  if (next) { next.menu.classList.add('open'); next.rp.setAttribute('aria-expanded', 'true'); next.menu.querySelector('button').focus(); }
+}
+document.addEventListener('click', e => { if (menuOpen && !e.target.closest('.rpw')) toggleMenu(null, false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) toggleMenu(null, true); });
+
+document.querySelector('.parent .acts').dataset.like = 1204;
+document.querySelector('.parent .acts').dataset.reply = 312;
+document.querySelector('.parent .acts').dataset.rp = 48;
+document.querySelectorAll('.acts').forEach(el => build(el, { like: +el.dataset.like, reply: +el.dataset.reply, rp: +el.dataset.rp }));
+
+/* expand */
+const more = $('more'), moreBtn = $('moreBtn');
+more.querySelectorAll('.p').forEach(p => p.setAttribute('inert', ''));
+moreBtn.onclick = () => {
+  const open = !more.classList.contains('open');
+  more.classList.toggle('open', open);
+  moreBtn.setAttribute('aria-expanded', open);
+  $('moreLabel').textContent = open ? 'Hide replies' : 'Show 4 more replies';
+  more.querySelectorAll('.p').forEach(p => open ? p.removeAttribute('inert') : p.setAttribute('inert', ''));
+  if (open) setTimeout(() => more.querySelector('.p').scrollIntoView({ block: 'nearest' }), 120);
+};
+
+/* compose + quote */
+const cin = $('cin'), go = $('go'), qprev = $('qprev');
+let quote = null;
+function startQuote(who, text, av) {
+  quote = { who, text, av };
+  qprev.querySelector('span').innerHTML = 'Quoting <b></b>: ';
+  qprev.querySelector('b').textContent = who;
+  qprev.querySelector('span').append(text.length > 48 ? text.slice(0, 48) + '…' : text);
+  qprev.classList.add('on'); cin.placeholder = 'Add your take…'; cin.focus(); sync();
+}
+$('unquote').onclick = () => { quote = null; qprev.classList.remove('on'); cin.placeholder = 'Reply to juno.bakes…'; cin.focus(); sync(); };
+function sync() { go.disabled = !cin.value.trim(); }
+cin.oninput = sync;
+$('compose').onsubmit = e => {
+  e.preventDefault();
+  const a = document.createElement('article');
+  a.className = 'p line new';
+  a.setAttribute('aria-label', quote ? 'Your quote post' : 'Your reply');
+  a.innerHTML = '<div class="rail"><div class="av" style="--c:var(--mint)" aria-hidden="true">You</div></div><div><div class="meta"><b>you</b><small>now</small></div><p class="txt"></p><div class="acts"></div></div>';
+  a.querySelector('.txt').textContent = cin.value.trim();
+  if (quote) {
+    const q = document.createElement('div');
+    q.className = 'quote';
+    q.innerHTML = '<span class="meta">' + quote.av.replace('av big', 'av') + '<b></b><small>4h</small></span><p></p>';
+    q.querySelector('b').textContent = quote.who; q.querySelector('p').textContent = quote.text;
+    a.querySelector('.txt').after(q);
+  }
+  $('added').append(a);
+  build(a.querySelector('.acts'), { like: 0, reply: 0, rp: 0 });
+  a.scrollIntoView({ block: 'nearest' });
+  cin.value = ''; quote = null; qprev.classList.remove('on'); cin.placeholder = 'Reply to juno.bakes…'; sync();
+};
+</script>
+</body>
+</html>

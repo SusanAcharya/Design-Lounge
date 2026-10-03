@@ -1,0 +1,352 @@
+<!-- Design Lounge piece: social-pro-post · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Commons post</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stage:#ebe3d4;--card:#fbf7ef;--sunk:#f3ecdf;--line:#e0d5c2;--line-2:#cfc2ab;
+  --ink:#24201b;--ink-2:#544d45;--ink-3:#71685e;
+  --accent:#2f5e4b;--accent-soft:rgba(47,94,75,.1);--inkblue:#2e3f7a;--paper:#f6eedd;
+  --r-like:#2f5e8c;--r-celebrate:#3d7f4f;--r-support:#b4492f;--r-insight:#93680f;--r-curious:#6b5a8e;
+  --serif:"Newsreader",Georgia,serif;--sans:"Public Sans",system-ui,sans-serif;
+  --r:10px;
+  --t-micro:150ms;--t-picker:260ms;--t-slide:380ms;--hover-delay:350ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-pop:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:14.5px/1.5 var(--sans);color:var(--ink);background:var(--stage);display:flex;padding:24px 16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;display:block;flex:none}
+
+.post{margin:auto;width:min(560px,100%);background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 1px 0 rgba(36,32,27,.05)}
+.head{display:flex;gap:12px;padding:16px 16px 0}
+.av{width:52px;height:52px;border-radius:50%;flex:none;background:var(--inkblue);color:var(--paper);display:grid;place-items:center;font:500 22px/1 var(--serif);font-style:italic}
+.who{flex:1;min-width:0}
+.name{font:600 17px/1.2 var(--serif);letter-spacing:-.005em}
+.name span{font:400 13px var(--sans);color:var(--ink-3)}
+.role{font-size:13px;color:var(--ink-2);line-height:1.35;margin-top:1px}
+.when{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--ink-3);margin-top:2px}
+.when .ico{width:13px;height:13px}
+.follow{align-self:flex-start;display:flex;align-items:center;gap:4px;height:34px;padding:0 12px 0 8px;border-radius:999px;color:var(--accent);font-weight:700;font-size:14px;transition:background var(--t-micro) var(--ease)}
+.follow:hover{background:var(--accent-soft)}
+.follow[aria-pressed="true"]{color:var(--ink-3)}
+
+.text{margin:12px 16px 0;font-size:14.5px;color:var(--ink);overflow-wrap:anywhere}
+.text p{margin:0 0 8px}
+.clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.text a{color:var(--accent);font-weight:600;text-decoration:none}
+.seemore{display:block;margin:-4px 16px 0 auto;color:var(--ink-3);font-weight:600;font-size:13.5px;min-height:28px;padding:0 0 0 8px}
+.seemore:hover{color:var(--accent);text-decoration:underline}
+
+/* document carousel */
+.doc{margin:12px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--sunk)}
+.doc-top{display:flex;align-items:center;gap:8px;padding:8px 16px;font-size:12.5px;color:var(--ink-2);border-bottom:1px solid var(--line)}
+.doc-top b{color:var(--ink);font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.view{position:relative;overflow:hidden;aspect-ratio:16/10;outline:0}
+.view:focus-visible{box-shadow:inset 0 0 0 2px var(--accent)}
+.pages{display:flex;height:100%;transition:transform var(--t-slide) var(--ease-out)}
+.page{flex:0 0 100%;height:100%;padding:22px 26px;display:flex;align-items:center;justify-content:center}
+.sheet{position:relative;width:100%;height:100%;background:var(--paper);border:1px solid var(--line-2);border-radius:4px;box-shadow:0 8px 20px -14px rgba(36,32,27,.5);padding:22px 26px;display:flex;flex-direction:column;overflow:hidden}
+.kick{font:600 10.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--inkblue)}
+.big{font:500 clamp(22px,5.4vw,34px)/1.08 var(--serif);letter-spacing:-.015em;margin:8px 0 0;max-width:16ch}
+.big i{color:var(--inkblue)}
+.numeral{position:absolute;right:18px;bottom:-14px;font:400 150px/1 var(--serif);font-style:italic;color:rgba(140,59,40,.13)}
+.foot{margin-top:auto;display:flex;justify-content:space-between;font-size:10.5px;letter-spacing:.06em;color:var(--ink-3);text-transform:uppercase}
+.bars{display:flex;align-items:flex-end;gap:10px;height:42%;margin-top:14px}
+.bars span{flex:1;background:var(--accent);border-radius:2px 2px 0 0;position:relative}
+.bars span:nth-child(-n+3){background:var(--line-2)}
+.bars em{position:absolute;top:-17px;left:0;right:0;text-align:center;font:600 10px var(--sans);font-style:normal;color:var(--ink-2)}
+.quote{font:italic 400 clamp(18px,4.2vw,25px)/1.25 var(--serif);margin:12px 0 0;max-width:24ch}
+.doc-nav{display:flex;align-items:center;gap:10px;padding:6px 10px 8px 16px}
+.prog{flex:1;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;width:16.66%;background:var(--ink);border-radius:2px;transition:width var(--t-slide) var(--ease-out)}
+.pg{font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums;min-width:40px;text-align:right}
+.pgbtn{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--ink);border:1px solid var(--line-2);background:var(--card);transition:background var(--t-micro) var(--ease)}
+.pgbtn:hover{background:var(--accent-soft)}
+.pgbtn:disabled{opacity:.35;cursor:default;background:var(--card)}
+
+/* social counts */
+.counts{display:flex;align-items:center;gap:8px;padding:10px 16px 8px;font-size:13px;color:var(--ink-3)}
+.stack{display:flex}
+.stack span{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;color:#fff;border:2px solid var(--card);margin-left:-5px;transition:transform 240ms var(--ease-pop)}
+.stack span:first-child{margin-left:0}
+.stack .ico{width:11px;height:11px;stroke-width:2.5}
+.who-reacted{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ccount{color:var(--ink-3);min-height:28px}
+.ccount:hover{color:var(--accent);text-decoration:underline}
+.ccount .n{display:inline-block}
+.n.tick{animation:tick 320ms var(--ease-out)}
+@keyframes tick{from{transform:translateY(70%);opacity:0}to{transform:none;opacity:1}}
+
+.actions{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin:0 12px;padding:4px 0}
+.act{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;border-radius:6px;color:var(--ink-2);font-weight:600;font-size:14px;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.act:hover{background:var(--sunk);color:var(--ink)}
+.react-wrap{position:relative}
+.react-wrap .act{width:100%}
+.act.set .ico{animation:pop 380ms var(--ease-pop)}
+@keyframes pop{0%{transform:scale(.5)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+
+.picker{position:absolute;left:-4px;bottom:calc(100% + 6px);display:flex;gap:4px;padding:6px;background:var(--card);border:1px solid var(--line-2);border-radius:999px;box-shadow:0 12px 28px -12px rgba(36,32,27,.45);opacity:0;visibility:hidden;transform:translateY(8px) scale(.96);transform-origin:20% 100%;transition:opacity var(--t-picker) var(--ease),transform var(--t-picker) var(--ease-out),visibility 0s var(--t-picker);z-index:3}
+.picker.open{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.rx{position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--c);transition:transform 200ms var(--ease-pop)}
+.rx .ico{width:22px;height:22px}
+.picker.open .rx{animation:rise 320ms var(--ease-out) both;animation-delay:calc(var(--i) * 30ms)}
+@keyframes rise{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+.rx:hover,.rx:focus-visible{transform:translateY(-6px) scale(1.18)}
+.rx:focus-visible{outline-offset:3px;border-radius:50%}
+.rx::after{content:attr(data-label);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--card);font:600 11.5px var(--sans);padding:3px 8px;border-radius:999px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--t-micro) var(--ease)}
+.rx:hover::after,.rx:focus-visible::after{opacity:1}
+
+/* comments */
+.comments{padding:4px 16px 16px;border-top:1px solid var(--line)}
+.comments[hidden]{display:none}
+.compose{display:flex;gap:8px;align-items:center;margin-top:10px}
+.me{width:36px;height:36px;border-radius:50%;background:var(--accent);color:var(--paper);display:grid;place-items:center;font:italic 500 15px var(--serif);flex:none}
+.field{flex:1;display:flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;background:var(--card);padding:0 4px 0 14px;min-width:0}
+.field:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field input{flex:1;min-width:0;height:40px;border:0;background:none;outline:0}
+.field input::placeholder{color:var(--ink-3)}
+.send{height:32px;padding:0 14px;border-radius:999px;background:var(--accent);color:var(--paper);font-weight:700;font-size:13px}
+.send:disabled{opacity:.4;cursor:default}
+.clist{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px}
+.clist li{display:flex;gap:8px;animation:tick 320ms var(--ease-out)}
+.clist .bubble{flex:1;background:var(--sunk);border-radius:0 10px 10px 10px;padding:8px 12px;font-size:13.5px}
+.clist b{font:600 14px var(--serif);display:block}
+.clist small{display:block;color:var(--ink-3);font-size:12px;margin-bottom:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:480px){.act span.l,.rp-n{display:none}.page{padding:14px}.sheet{padding:16px 18px}.numeral{font-size:110px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-like" viewBox="0 0 24 24"><path d="M7 11v9H4v-9zM7 11l4-7c1.5 0 2.5 1 2.2 2.6L12.6 10H19a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 17.8 20H7"/></symbol>
+  <symbol id="i-celebrate" viewBox="0 0 24 24"><path d="M4 20 9 7l8 8z"/><path d="M14 4v2M19 9h2M17.5 5.5 16 7M20 13l-1.5-.5"/></symbol>
+  <symbol id="i-support" viewBox="0 0 24 24"><path d="M12 19s-7-4.2-7-9.4A3.8 3.8 0 0 1 12 7.4a3.8 3.8 0 0 1 7 2.2C19 14.8 12 19 12 19z"/></symbol>
+  <symbol id="i-insight" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.5 1 .5 1.6V16h6v-.5c0-.6 0-1.2.5-1.6A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-curious" viewBox="0 0 24 24"><path d="M9.2 9a3 3 0 1 1 4.3 2.7c-1 .5-1.5 1.2-1.5 2.3"/><path d="M12 18h.01"/></symbol>
+</svg>
+
+<article class="post" aria-labelledby="author">
+  <header class="head">
+    <div class="av" aria-hidden="true">PR</div>
+    <div class="who">
+      <div class="name" id="author">Priya Raman <span>· 2nd</span></div>
+      <div class="role">Head of Yard Operations at Halden Freight · Rotterdam</div>
+      <div class="when"><span>3d · Edited ·</span><svg class="ico" viewBox="0 0 24 24" role="img" aria-label="Visible to everyone"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.5 2.5 2.5 13.5 0 16M12 4c-2.5 2.5-2.5 13.5 0 16"/></svg></div>
+    </div>
+    <button class="follow" type="button" id="follow" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Follow</span></button>
+  </header>
+
+  <div class="text">
+    <div class="clamp" id="body">
+      <p>Eighteen months ago we moved 60% of our container moves at the Waalhaven yard to the night shift. Truck wait times fell from 74 to 19 minutes. Injuries went down, not up.</p>
+      <p>But the thing nobody warned us about was sleep. These are the nine lessons I wish I had read before we signed the roster, including the one that cost us two of our best crane operators.</p>
+      <p>If you run a yard, a depot, or any 24-hour floor, I would love to hear what worked for you. <a href="#">#logistics</a> <a href="#">#shiftwork</a> <a href="#">#operations</a></p>
+    </div>
+  </div>
+  <button class="seemore" type="button" id="seemore" aria-expanded="false" aria-controls="body">see more</button>
+
+  <section class="doc" aria-label="Document: Nine lessons from moving our yard to nights">
+    <div class="doc-top">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg>
+      <b>Nine lessons from moving our yard to nights</b><span>6 pages</span>
+    </div>
+    <div class="view" id="view" tabindex="0" aria-roledescription="carousel" aria-label="Document pages. Use left and right arrow keys.">
+      <div class="pages" id="pages">
+        <div class="page" role="group" aria-label="Page 1 of 6"><div class="sheet">
+          <span class="kick">Halden Freight · Field notes</span>
+          <p class="big">Nine lessons from moving our yard to <i>nights</i></p>
+          <span class="numeral" aria-hidden="true">9</span>
+          <div class="foot"><span>Priya Raman</span><span>Oct 2026</span></div>
+        </div></div>
+        <div class="page" role="group" aria-label="Page 2 of 6"><div class="sheet">
+          <span class="kick">The result</span>
+          <p class="big" style="font-size:clamp(18px,4vw,24px)">Truck wait time, minutes</p>
+          <div class="bars" aria-label="Wait time by quarter: 74, 68, 61, 38, 24, 19 minutes"><span style="height:100%"><em>74</em></span><span style="height:92%"><em>68</em></span><span style="height:82%"><em>61</em></span><span style="height:51%"><em>38</em></span><span style="height:32%"><em>24</em></span><span style="height:26%"><em>19</em></span></div>
+          <div class="foot"><span>Q1 2025 → Q2 2026</span><span>02</span></div>
+        </div></div>
+        <div class="page" role="group" aria-label="Page 3 of 6"><div class="sheet">
+          <span class="kick">Lesson 01</span>
+          <p class="big">Roster the <i>sleep</i>, not the shift</p>
+          <span class="numeral" aria-hidden="true">1</span>
+          <div class="foot"><span>Fixed nights beat rotating</span><span>03</span></div>
+        </div></div>
+        <div class="page" role="group" aria-label="Page 4 of 6"><div class="sheet">
+          <span class="kick">Lesson 04</span>
+          <p class="quote">“The crane cab is the loneliest room in the port at 3 a.m. Put a radio channel in it that is just for talking.”</p>
+          <div class="foot"><span>— Joost, crane lead</span><span>04</span></div>
+        </div></div>
+        <div class="page" role="group" aria-label="Page 5 of 6"><div class="sheet">
+          <span class="kick">Lesson 07</span>
+          <p class="big">Light the yard like a <i>kitchen</i>, not a stadium</p>
+          <span class="numeral" aria-hidden="true">7</span>
+          <div class="foot"><span>2700K at ground level</span><span>05</span></div>
+        </div></div>
+        <div class="page" role="group" aria-label="Page 6 of 6"><div class="sheet">
+          <span class="kick">What we would redo</span>
+          <p class="big">Ask the operators <i>first</i>. Then the spreadsheet.</p>
+          <div class="foot"><span>Full notes in comments</span><span>06</span></div>
+        </div></div>
+      </div>
+    </div>
+    <div class="doc-nav">
+      <div class="prog" aria-hidden="true"><i id="prog"></i></div>
+      <span class="pg" id="pg" aria-live="polite">1 / 6</span>
+      <button class="pgbtn" type="button" id="prev" aria-label="Previous page" disabled><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+      <button class="pgbtn" type="button" id="next" aria-label="Next page"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+    </div>
+  </section>
+
+  <div class="counts">
+    <span class="stack" id="stack" aria-hidden="true"></span>
+    <span class="who-reacted" id="reacted">Tomas Brandt and 1,284 others</span>
+    <button class="ccount" type="button" id="ccount" aria-controls="comments" aria-expanded="false"><span class="n" id="cn">212</span> comments</button>
+    <span class="rp-n" aria-hidden="true">·</span><span class="rp-n">48 reposts</span>
+  </div>
+
+  <div class="actions" role="group" aria-label="Post actions">
+    <div class="react-wrap" id="rwrap">
+      <button class="act" type="button" id="react" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-describedby="rhint">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-like"/></svg><span class="l" id="rlabel">Like</span>
+      </button>
+      <span class="sr" id="rhint">Press Arrow Up for more reactions</span>
+      <div class="picker" id="picker" role="toolbar" aria-label="Reactions"></div>
+    </div>
+    <button class="act" type="button" id="cbtn" aria-controls="comments" aria-label="Comment"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 7 0 0 1-11.6 6.2L4 19.5l1.3-3.7A7 7 0 0 1 4 12a8 7 0 0 1 16 0z"/></svg><span class="l">Comment</span></button>
+    <button class="act" type="button" id="rpbtn" aria-pressed="false" aria-label="Repost"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3"/><path d="M4 7h11a4 4 0 0 1 4 4v1"/><path d="m17 20 3-3-3-3"/><path d="M20 17H9a4 4 0 0 1-4-4v-1"/></svg><span class="l">Repost</span></button>
+    <button class="act" type="button" aria-label="Send"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/></svg><span class="l">Send</span></button>
+  </div>
+
+  <section class="comments" id="comments" hidden aria-label="Comments">
+    <form class="compose" id="compose">
+      <div class="me" aria-hidden="true">Y</div>
+      <div class="field"><label class="sr" for="cin">Add a comment</label><input id="cin" placeholder="Add a comment…" autocomplete="off" maxlength="200"><button class="send" id="send" type="submit" disabled>Post</button></div>
+    </form>
+    <ul class="clist" id="clist">
+      <li><div class="me" style="background:var(--r-curious)" aria-hidden="true">E</div><div class="bubble"><b>Elif Demir</b><small>Depot Manager, Kestrow Logistics · 2d</small>Lesson 04 is real. We added a talk-only channel on night shift last winter and the number of near-miss reports went up, which is exactly what you want.</div></li>
+    </ul>
+  </section>
+</article>
+
+<script>
+const $ = id => document.getElementById(id);
+const R = [
+  { k: 'like', label: 'Like', c: '--r-like' },
+  { k: 'celebrate', label: 'Celebrate', c: '--r-celebrate' },
+  { k: 'support', label: 'Support', c: '--r-support' },
+  { k: 'insight', label: 'Insightful', c: '--r-insight' },
+  { k: 'curious', label: 'Curious', c: '--r-curious' }
+];
+const ico = k => '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-' + k + '"/></svg>';
+const picker = $('picker'), react = $('react'), wrap = $('rwrap');
+picker.innerHTML = R.map((r, i) => '<button class="rx" type="button" tabindex="-1" style="--c:var(' + r.c + ');--i:' + i + '" data-k="' + r.k + '" data-label="' + r.label + '" aria-label="' + r.label + '" aria-pressed="false">' + ico(r.k) + '</button>').join('');
+const rx = [...picker.children];
+
+let mine = null, base = 1284;
+const baseTypes = ['like', 'insight', 'celebrate'];
+function paint() {
+  const r = R.find(x => x.k === mine);
+  react.innerHTML = ico(r ? r.k : 'like') + '<span class="l">' + (r ? r.label : 'Like') + '</span>';
+  react.style.color = r ? 'var(' + r.c + ')' : '';
+  react.setAttribute('aria-pressed', !!r);
+  react.setAttribute('aria-label', r ? 'Reacted ' + r.label + '. Press to remove.' : 'Like');
+  rx.forEach(b => b.setAttribute('aria-pressed', b.dataset.k === mine));
+  const types = mine && !baseTypes.includes(mine) ? [mine, ...baseTypes.slice(0, 2)] : baseTypes;
+  $('stack').innerHTML = types.map(k => '<span style="background:var(' + R.find(x => x.k === k).c + ')">' + ico(k) + '</span>').join('');
+  $('reacted').textContent = mine ? 'You, Tomas Brandt and ' + base.toLocaleString('en-US') + ' others' : 'Tomas Brandt and ' + base.toLocaleString('en-US') + ' others';
+}
+function choose(k) {
+  mine = mine === k ? null : k; paint();
+  if (mine) { react.classList.remove('set'); react.offsetWidth; react.classList.add('set'); }
+  close(true);
+}
+function open(focusFirst) {
+  picker.classList.add('open'); react.setAttribute('aria-expanded', 'true');
+  if (focusFirst) { const idx = Math.max(0, R.findIndex(r => r.k === mine)); rx[idx].tabIndex = 0; rx[idx].focus(); }
+}
+function close(refocus) {
+  if (!picker.classList.contains('open')) return;
+  const had = picker.contains(document.activeElement);
+  picker.classList.remove('open'); react.setAttribute('aria-expanded', 'false');
+  rx.forEach(b => b.tabIndex = -1);
+  if (refocus && had) react.focus();
+}
+let tOpen, tClose;
+wrap.addEventListener('pointerenter', e => { if (e.pointerType !== 'mouse') return; clearTimeout(tClose); tOpen = setTimeout(() => open(false), 350); });
+wrap.addEventListener('pointerleave', e => { if (e.pointerType !== 'mouse') return; clearTimeout(tOpen); tClose = setTimeout(() => close(false), 300); });
+let press;
+react.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') press = setTimeout(() => { press = 'long'; open(false); }, 450); });
+react.addEventListener('click', e => {
+  if (press === 'long') { press = null; return; }
+  clearTimeout(press); press = null; clearTimeout(tOpen);
+  choose(mine ? mine : 'like');
+});
+react.addEventListener('keydown', e => { if (e.key === 'ArrowUp') { e.preventDefault(); open(true); } });
+rx.forEach((b, i) => {
+  b.addEventListener('click', () => choose(b.dataset.k));
+  b.addEventListener('keydown', e => {
+    const m = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (m) { e.preventDefault(); const n = rx[(i + m + rx.length) % rx.length]; b.tabIndex = -1; n.tabIndex = 0; n.focus(); }
+    if (e.key === 'Escape' || e.key === 'ArrowDown') { e.preventDefault(); close(true); }
+    if (e.key === 'Tab') close(false);
+  });
+});
+document.addEventListener('pointerdown', e => { if (!wrap.contains(e.target)) close(false); });
+
+/* document */
+const pages = $('pages'), N = pages.children.length; let p = 0;
+function page(n) {
+  p = Math.max(0, Math.min(N - 1, n));
+  pages.style.transform = 'translateX(' + (-p * 100) + '%)';
+  [...pages.children].forEach((g, i) => g.setAttribute('aria-hidden', i !== p));
+  $('pg').textContent = (p + 1) + ' / ' + N;
+  $('prog').style.width = ((p + 1) / N * 100) + '%';
+  $('prev').disabled = p === 0; $('next').disabled = p === N - 1;
+}
+$('prev').onclick = () => page(p - 1);
+$('next').onclick = () => page(p + 1);
+$('view').addEventListener('keydown', e => { if (e.key === 'ArrowRight') page(p + 1); if (e.key === 'ArrowLeft') page(p - 1); });
+let sx = null;
+$('view').addEventListener('pointerdown', e => sx = e.clientX);
+$('view').addEventListener('pointerup', e => { if (sx !== null && Math.abs(e.clientX - sx) > 40) page(p + (e.clientX < sx ? 1 : -1)); sx = null; });
+
+/* text, follow, repost */
+$('seemore').onclick = function () { $('body').classList.remove('clamp'); this.remove(); $('body').setAttribute('tabindex', '-1'); $('body').style.outline = 'none'; $('body').focus(); };
+$('follow').onclick = function () {
+  const on = this.getAttribute('aria-pressed') !== 'true';
+  this.setAttribute('aria-pressed', on);
+  this.innerHTML = on ? '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>Following</span>' : '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Follow</span>';
+};
+$('rpbtn').onclick = function () { const on = this.getAttribute('aria-pressed') !== 'true'; this.setAttribute('aria-pressed', on); this.style.color = on ? 'var(--accent)' : ''; };
+
+/* comments */
+const cs = $('comments'), cin = $('cin'), send = $('send');
+function showComments(focus) {
+  cs.hidden = false; $('ccount').setAttribute('aria-expanded', 'true');
+  if (focus) cin.focus();
+}
+$('cbtn').onclick = () => showComments(true);
+$('ccount').onclick = () => { const o = cs.hidden; cs.hidden = !o; $('ccount').setAttribute('aria-expanded', o); };
+cin.oninput = () => send.disabled = !cin.value.trim();
+$('compose').onsubmit = e => {
+  e.preventDefault();
+  const li = document.createElement('li');
+  li.innerHTML = '<div class="me" aria-hidden="true">Y</div><div class="bubble"><b>You</b><small>Just now</small></div>';
+  li.querySelector('.bubble').append(cin.value.trim());
+  $('clist').prepend(li);
+  const n = $('cn'); n.textContent = +n.textContent + 1; n.classList.remove('tick'); n.offsetWidth; n.classList.add('tick');
+  cin.value = ''; send.disabled = true;
+};
+paint(); page(0);
+</script>
+</body>
+</html>
