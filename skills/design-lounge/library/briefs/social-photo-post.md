@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 326 · "Photo post with carousel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 326 · "Photo post with carousel" · designlounge.vercel.app -->
 
 # Photo post with carousel
 
@@ -222,4 +222,4 @@ track.style.transform = `translateX(calc(${-i * 100}% + ${dx * edge}px))`;
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

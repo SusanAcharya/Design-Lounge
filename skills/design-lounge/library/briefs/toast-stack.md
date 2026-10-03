@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 077 · "Toast stack" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 077 · "Toast stack" · designlounge.vercel.app -->
 
 # Toast stack
 
@@ -230,4 +230,4 @@ Common mistakes: using `setTimeout` per toast (then hover-pause needs bookkeepin
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

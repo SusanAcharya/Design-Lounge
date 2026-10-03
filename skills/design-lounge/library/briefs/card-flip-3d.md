@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 079 · "3D card flip trio" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 079 · "3D card flip trio" · designlounge.vercel.app -->
 
 # 3D card flip trio
 
@@ -191,4 +191,4 @@ Common mistakes: putting `perspective` on the card instead of its parent (the fl
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

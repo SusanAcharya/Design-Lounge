@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 137 · "Photographer horizontal gallery" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 137 · "Photographer horizontal gallery" · designlounge.vercel.app -->
 
 # Photographer horizontal gallery
 
@@ -218,4 +218,4 @@ Common mistakes: using `overflow-x: auto` native scroll (you lose lerp, parallax
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 095 · "Audit activity log" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 095 · "Audit activity log" · designlounge.vercel.app -->
 
 # Audit activity log
 
@@ -151,4 +151,4 @@ Common mistakes to avoid:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

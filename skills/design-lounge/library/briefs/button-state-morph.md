@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 006 · "Button state morph" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 006 · "Button state morph" · designlounge.vercel.app -->
 
 # Button state morph
 
@@ -237,4 +237,4 @@ Common mistakes: swapping the button's `innerHTML` per state (kills focus and th
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

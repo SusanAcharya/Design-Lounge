@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 150 · "Sticky scroll feature steps" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 150 · "Sticky scroll feature steps" · designlounge.vercel.app -->
 
 # Sticky scroll feature steps
 
@@ -199,4 +199,4 @@ Common mistakes: making the right column `position:fixed` (it will overlap the n
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

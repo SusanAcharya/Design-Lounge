@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 085 · "Magnetic buttons" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 085 · "Magnetic buttons" · designlounge.vercel.app -->
 
 # Magnetic buttons
 
@@ -206,4 +206,4 @@ Common mistakes: putting the transform on the control itself (the hit area moves
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

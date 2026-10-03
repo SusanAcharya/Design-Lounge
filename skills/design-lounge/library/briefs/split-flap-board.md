@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 387 · "Split-flap board" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 387 · "Split-flap board" · designlounge.vercel.app -->
 
 # Split-flap board
 
@@ -153,4 +153,4 @@ Do not step through the whole alphabet. One flip from the dot to the letter is t
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

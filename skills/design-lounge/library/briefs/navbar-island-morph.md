@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 118 · "Island morph navbar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 118 · "Island morph navbar" · designlounge.vercel.app -->
 
 # Island morph navbar
 
@@ -218,4 +218,4 @@ Common mistakes: animating `left` instead of `margin-left: calc(w/-2)` (the isla
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

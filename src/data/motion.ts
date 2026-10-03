@@ -65,12 +65,12 @@ export const RECIPES: Recipe[] = [
 ];
 
 export function easingCss(e: Easing) {
-  return `/* ${e.name} · easing from Design Lounge by Susan Acharya (acharyasusan.com.np) */
+  return `/* ${e.name} · easing from Designed using Design Lounge (https://designlounge.vercel.app) */
 --ease-${e.id}: ${e.css};`;
 }
 
 export function tokensCss() {
-  return `/* Motion tokens · Design Lounge by Susan Acharya (acharyasusan.com.np) */
+  return `/* Motion tokens · Designed using Design Lounge (https://designlounge.vercel.app) */
 :root {
 ${EASINGS.map((e) => `  --ease-${e.id}: ${e.css};`).join('\n')}
 ${DURATIONS.map((d) => `  --t-${d.id}: ${d.ms}ms;`).join('\n')}
@@ -78,7 +78,7 @@ ${DURATIONS.map((d) => `  --t-${d.id}: ${d.ms}ms;`).join('\n')}
 }
 
 export function recipeCss(r: Recipe) {
-  return `/* ${r.name} · motion recipe from Design Lounge by Susan Acharya (acharyasusan.com.np)
+  return `/* ${r.name} · motion recipe from Designed using Design Lounge (https://designlounge.vercel.app)
    Trigger: ${r.trigger}
    ${r.property}: ${r.from} → ${r.to}
    ${r.duration} ${r.easing}${r.delay ? ` · ${r.delay}` : ''}

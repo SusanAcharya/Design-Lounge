@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 122 · "Long-form product case study" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 122 · "Long-form product case study" · designlounge.vercel.app -->
 
 # Long-form product case study
 
@@ -202,4 +202,4 @@ Common mistakes: putting the sticky label on the section instead of the `<h2>` (
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 217 · "Drag to confirm" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 217 · "Drag to confirm" · designlounge.vercel.app -->
 
 # Drag to confirm
 
@@ -154,4 +154,4 @@ Do not confirm on pointer down. The person must release at the end.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

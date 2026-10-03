@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 133 · "Organic garden design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 133 · "Organic garden design language kit" · designlounge.vercel.app -->
 
 # Organic garden design language kit
 
@@ -168,4 +168,4 @@ Reduced motion: transitions 1ms. Season still swaps copy and blob colours.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

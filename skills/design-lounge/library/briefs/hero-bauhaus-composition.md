@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 096 · "Bauhaus composition hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 096 · "Bauhaus composition hero" · designlounge.vercel.app -->
 
 # Bauhaus composition hero
 
@@ -202,4 +202,4 @@ Common mistakes: putting `isolation` on the shapes instead of the poster (blend 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

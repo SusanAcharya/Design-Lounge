@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 034 · "Magazine editorial grid" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 034 · "Magazine editorial grid" · designlounge.vercel.app -->
 
 # Magazine editorial grid
 
@@ -189,4 +189,4 @@ Common mistakes: giving the lead's inner grid `auto` rows only, so the photo row
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

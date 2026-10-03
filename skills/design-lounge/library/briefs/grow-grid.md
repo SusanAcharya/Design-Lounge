@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 247 · "Grow grid" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 247 · "Grow grid" · designlounge.vercel.app -->
 
 # Grow grid
 
@@ -156,4 +156,4 @@ Delete the attributes on pointerleave of the grid, not of the cell, or the track
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

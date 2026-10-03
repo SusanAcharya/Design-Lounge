@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 161 · "Wellness retreat booking landing" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 161 · "Wellness retreat booking landing" · designlounge.vercel.app -->
 
 # Wellness retreat booking landing
 
@@ -169,4 +169,4 @@ Common mistakes: a stock photograph of a spa; a purple wellness gradient; using 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

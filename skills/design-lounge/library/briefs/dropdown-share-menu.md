@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 367 · "Share menu with invites and QR" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 367 · "Share menu with invites and QR" · designlounge.vercel.app -->
 
 # Share menu with invites and QR
 
@@ -233,4 +233,4 @@ Rebuild order:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

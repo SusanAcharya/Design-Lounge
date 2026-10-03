@@ -23,7 +23,7 @@ export const AUTHOR = {
   ],
 } as const;
 
-export const CREDIT_LINE = `Designed by ${AUTHOR.name} · Design Lounge · ${AUTHOR.siteLabel}`;
+export const CREDIT_LINE = `Designed using Design Lounge · https://designlounge.vercel.app`;
 
 const demoFiles = import.meta.glob('/src/demos/*.html', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
@@ -43,14 +43,14 @@ export function creditedSource(slug: string): string {
 /** What /demo/<slug>.html serves: credited source plus a signature that only shows when the demo is opened on its own. */
 export function servedDemo(slug: string): string {
   const html = creditedSource(slug);
-  const sig = `<script>(function(){try{if(window.top!==window.self)return;}catch(e){return;}var h=document.createElement('lounge-signature');h.style.cssText='position:fixed;right:14px;bottom:14px;z-index:2147483647';var r=h.attachShadow({mode:'closed'});r.innerHTML='<style>a{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px 0 6px;border-radius:999px;background:rgba(18,17,15,.78);color:#f3efe6;font:500 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;text-decoration:none;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 20px -8px rgba(0,0,0,.5);opacity:.82;transition:opacity .16s}a:hover,a:focus-visible{opacity:1}i{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#e0a34b;color:#1b1300;font-style:normal;font-weight:700;font-size:9px;letter-spacing:0}span{white-space:nowrap}@media print{a{display:none}}</style><a href="${AUTHOR.site}" target="_blank" rel="noopener" title="${CREDIT_LINE}"><i>SA</i><span>${AUTHOR.name} \\u00b7 Design Lounge</span></a>';document.body.appendChild(h);})();</script>`;
+  const sig = `<script>(function(){try{if(window.top!==window.self)return;}catch(e){return;}var h=document.createElement('lounge-signature');h.style.cssText='position:fixed;right:14px;bottom:14px;z-index:2147483647';var r=h.attachShadow({mode:'closed'});r.innerHTML='<style>a{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px 0 6px;border-radius:999px;background:rgba(18,17,15,.78);color:#f3efe6;font:500 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;text-decoration:none;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 20px -8px rgba(0,0,0,.5);opacity:.82;transition:opacity .16s}a:hover,a:focus-visible{opacity:1}i{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#e0a34b;color:#1b1300;font-style:normal;font-weight:700;font-size:9px;letter-spacing:0}span{white-space:nowrap}@media print{a{display:none}}</style><a href="https://designlounge.vercel.app" target="_blank" rel="noopener" title="${CREDIT_LINE}"><i>DL</i><span>Designed using Design Lounge</span></a>';document.body.appendChild(h);})();</script>`;
   return html.includes('</body>') ? html.replace(/<\/body>(?![\s\S]*<\/body>)/i, `${sig}\n</body>`) : html + sig;
 }
 
 /** Brief markdown with attribution, as copied, downloaded and served at /p/<slug>.md. */
 export function creditedBrief(piece: { id: string; body?: string; data: { title: string } }, n?: string): string {
-  const head = `<!-- Design Lounge${n ? ` Nº ${n}` : ''} · "${piece.data.title}" · designed by ${AUTHOR.name} (${AUTHOR.site}) -->\n\n`;
-  const foot = `\n\n---\n\n*From Design Lounge, the design library of ${AUTHOR.name} (${AUTHOR.site}). Live demo and source: /p/${piece.id}. Free to use in your products; a credit link is appreciated.*\n`;
+  const head = `<!-- Design Lounge${n ? ` Nº ${n}` : ''} · "${piece.data.title}" · designlounge.vercel.app -->\n\n`;
+  const foot = `\n\n---\n\n*From Design Lounge (https://designlounge.vercel.app). Live demo and source: /p/${piece.id}. Free to use in your products. Credit line: Designed using Design Lounge.*\n`;
   return head + (piece.body ?? '').trim() + foot;
 }
 

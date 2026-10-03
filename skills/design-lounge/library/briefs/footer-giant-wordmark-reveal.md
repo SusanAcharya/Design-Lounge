@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 116 · "Giant wordmark reveal footer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 116 · "Giant wordmark reveal footer" · designlounge.vercel.app -->
 
 # Giant wordmark reveal footer
 
@@ -206,4 +206,4 @@ Common mistakes: using `justify-content: space-between` to fill the width (it sp
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

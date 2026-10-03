@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 063 · "Split sign-in" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 063 · "Split sign-in" · designlounge.vercel.app -->
 
 # Split sign-in
 
@@ -217,4 +217,4 @@ Common mistakes: animating `font-size` on the label instead of `scale` (blurry, 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

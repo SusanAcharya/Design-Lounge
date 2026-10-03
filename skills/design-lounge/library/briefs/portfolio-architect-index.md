@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 093 · "Architect index with plan drawings" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 093 · "Architect index with plan drawings" · designlounge.vercel.app -->
 
 # Architect index with plan drawings
 
@@ -170,4 +170,4 @@ Common mistakes: following the cursor with the plan; using a serif wordmark; set
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

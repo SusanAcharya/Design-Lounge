@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 046 · "One-page mobile checkout" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 046 · "One-page mobile checkout" · designlounge.vercel.app -->
 
 # One-page mobile checkout
 
@@ -243,4 +243,4 @@ Common mistakes: using a `data:` SVG for the select chevron (blocked in strict C
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

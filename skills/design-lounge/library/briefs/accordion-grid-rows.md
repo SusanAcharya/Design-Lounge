@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 080 · "Grid-rows FAQ accordion" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 080 · "Grid-rows FAQ accordion" · designlounge.vercel.app -->
 
 # Grid-rows FAQ accordion
 
@@ -183,4 +183,4 @@ Common mistakes: putting padding on the `overflow: hidden` wrapper (it leaks hei
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

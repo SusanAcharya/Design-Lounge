@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 004 · "Bottom sheet with three detents" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 004 · "Bottom sheet with three detents" · designlounge.vercel.app -->
 
 # Bottom sheet with three detents
 
@@ -208,4 +208,4 @@ Common mistakes: making the whole sheet the drag surface (then the list cannot s
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

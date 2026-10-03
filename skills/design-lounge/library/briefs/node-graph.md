@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 292 · "Node graph" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 292 · "Node graph" · designlounge.vercel.app -->
 
 # Node graph
 
@@ -169,4 +169,4 @@ Create the SVG line with the SVG namespace.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 087 · "Variable font proximity headline" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 087 · "Variable font proximity headline" · designlounge.vercel.app -->
 
 # Variable font proximity headline
 
@@ -197,4 +197,4 @@ Common mistakes: animating `font-weight` instead of `font-variation-settings` (n
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

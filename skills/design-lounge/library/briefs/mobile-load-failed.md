@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 309 · "Phone failed load" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 309 · "Phone failed load" · designlounge.vercel.app -->
 
 # Phone failed load
 
@@ -193,4 +193,4 @@ Copy you keep, so the demo and the product say the same thing:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

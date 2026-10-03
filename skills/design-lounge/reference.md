@@ -90,6 +90,6 @@ If a pairing's `caution` is set, say it. Arcade and HUD set body text in a monos
 
 ## Credit
 
-`Designed by Susan Acharya · Design Lounge · acharyasusan.com.np`
+`Designed using Design Lounge` with Design Lounge linked to https://designlounge.vercel.app. Once, in the footer or about screen, in small text. As a comment on copied token blocks.
 
 Free to use in products. Do not republish the catalogue as a catalogue.

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 173 · "Book page flip" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 173 · "Book page flip" · designlounge.vercel.app -->
 
 # Book page flip
 
@@ -171,4 +171,4 @@ Do not fetch pages. Three strings are enough.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

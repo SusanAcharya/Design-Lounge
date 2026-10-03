@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 308 · "Phone empty list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 308 · "Phone empty list" · designlounge.vercel.app -->
 
 # Phone empty list
 
@@ -168,4 +168,4 @@ Rebuild order:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

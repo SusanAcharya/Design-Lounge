@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 220 · "Edge light button" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 220 · "Edge light button" · designlounge.vercel.app -->
 
 # Edge light button
 
@@ -168,4 +168,4 @@ The button background covers the middle so only the edge shows.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

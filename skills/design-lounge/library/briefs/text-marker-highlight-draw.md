@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 126 · "Marker highlight draw" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 126 · "Marker highlight draw" · designlounge.vercel.app -->
 
 # Marker highlight draw
 
@@ -223,4 +223,4 @@ Common mistakes: a CSS `background` underline instead of a stretched path (it wi
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

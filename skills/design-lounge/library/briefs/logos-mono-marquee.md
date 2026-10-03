@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 121 · "Logos mono marquee" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 121 · "Logos mono marquee" · designlounge.vercel.app -->
 
 # Logos mono marquee
 
@@ -177,4 +177,4 @@ Common mistakes: colour logos or favicon PNGs; a single row; `ease` instead of `
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

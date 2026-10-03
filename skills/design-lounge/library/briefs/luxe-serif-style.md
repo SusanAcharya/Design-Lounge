@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 029 · "Luxe serif design style" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 029 · "Luxe serif design style" · designlounge.vercel.app -->
 
 # Luxe serif design style
 
@@ -191,4 +191,4 @@ Common mistakes: using gold as a text colour at body size (fails contrast); givi
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

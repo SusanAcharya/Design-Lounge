@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 039 · "Neo-brutalist design style" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 039 · "Neo-brutalist design style" · designlounge.vercel.app -->
 
 # Neo-brutalist design style
 
@@ -189,4 +189,4 @@ Common mistakes: animating the shadow to a *blurred* zero (`0 0 8px`) so it fade
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

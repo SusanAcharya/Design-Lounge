@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 091 · "AI prompt cycle hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 091 · "AI prompt cycle hero" · designlounge.vercel.app -->
 
 # AI prompt cycle hero
 
@@ -234,4 +234,4 @@ Common mistakes: typing into the textarea during the demo (the caret will fight 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

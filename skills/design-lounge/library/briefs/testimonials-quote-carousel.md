@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 155 · "Testimonials quote carousel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 155 · "Testimonials quote carousel" · designlounge.vercel.app -->
 
 # Testimonials quote carousel
 
@@ -183,4 +183,4 @@ Common mistakes: using a horizontal scroller instead of one-quote-at-a-time; fad
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 038 · "Multi-step form stepper" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 038 · "Multi-step form stepper" · designlounge.vercel.app -->
 
 # Multi-step form stepper
 
@@ -245,4 +245,4 @@ Common mistakes: focusing the new panel's field immediately (the browser scrolls
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

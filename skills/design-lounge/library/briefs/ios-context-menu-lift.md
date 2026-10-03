@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 083 · "iOS context menu lift" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 083 · "iOS context menu lift" · designlounge.vercel.app -->
 
 # iOS context menu lift
 
@@ -221,4 +221,4 @@ Common mistakes: setting `touch-action: none` on bubbles (kills thread scrolling
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

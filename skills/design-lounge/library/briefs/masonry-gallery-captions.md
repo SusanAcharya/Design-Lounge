@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 035 · "Masonry gallery with captions" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 035 · "Masonry gallery with captions" · designlounge.vercel.app -->
 
 # Masonry gallery with captions
 
@@ -188,4 +188,4 @@ Common mistakes: animating `bottom` instead of `transform` for the caption (jank
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

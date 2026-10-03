@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 152 · "Swiss grid wordmark hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 152 · "Swiss grid wordmark hero" · designlounge.vercel.app -->
 
 # Swiss grid wordmark hero
 
@@ -191,4 +191,4 @@ Common mistakes: using `line-height:1`, which makes the cell too tall so the let
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

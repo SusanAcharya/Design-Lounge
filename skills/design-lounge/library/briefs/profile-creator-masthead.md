@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 103 · "Creator profile with masthead" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 103 · "Creator profile with masthead" · designlounge.vercel.app -->
 
 # Creator profile with masthead
 
@@ -169,4 +169,4 @@ Common mistakes: setting the name in Fraunces; using a purple subscribe pill; ma
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

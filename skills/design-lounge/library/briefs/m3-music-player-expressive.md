@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 124 · "M3 expressive music player" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 124 · "M3 expressive music player" · designlounge.vercel.app -->
 
 # M3 expressive music player
 
@@ -237,4 +237,4 @@ Common mistakes: using `border-radius` instead of clip-path (you cannot get a co
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

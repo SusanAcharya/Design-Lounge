@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 149 · "Sticky mobile CTA bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 149 · "Sticky mobile CTA bar" · designlounge.vercel.app -->
 
 # Sticky mobile CTA bar
 
@@ -188,4 +188,4 @@ Common mistakes: `bottom: 0` so the bar sits on the lounge home indicator. Using
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

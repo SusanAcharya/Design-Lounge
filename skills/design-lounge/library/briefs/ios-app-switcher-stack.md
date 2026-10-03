@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 082 · "iOS app switcher stack" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 082 · "iOS app switcher stack" · designlounge.vercel.app -->
 
 # iOS app switcher stack
 
@@ -217,4 +217,4 @@ Common mistakes: forgetting `setPointerCapture`, so a fast upward fling loses th
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 078 · "Two-column tablet reader" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 078 · "Two-column tablet reader" · designlounge.vercel.app -->
 
 # Two-column tablet reader
 
@@ -207,4 +207,4 @@ Common mistakes: measuring before web fonts load (wrong page count; wait on `doc
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

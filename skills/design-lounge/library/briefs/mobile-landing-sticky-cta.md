@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 036 · "Mobile landing with sticky CTA" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 036 · "Mobile landing with sticky CTA" · designlounge.vercel.app -->
 
 # Mobile landing with sticky CTA
 
@@ -235,4 +235,4 @@ Common mistakes: forgetting `padding-bottom` on the footer so the last FAQ row i
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

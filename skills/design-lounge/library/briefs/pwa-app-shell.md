@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 053 · "PWA app shell hydration" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 053 · "PWA app shell hydration" · designlounge.vercel.app -->
 
 # PWA app shell hydration
 
@@ -215,4 +215,4 @@ Common mistakes: rendering skeletons as separate DOM that's swapped out (causes 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

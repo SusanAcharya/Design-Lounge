@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 158 · "Topographic lines background" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 158 · "Topographic lines background" · designlounge.vercel.app -->
 
 # Topographic lines background
 
@@ -232,4 +232,4 @@ Common mistakes: drawing contours as concentric CSS circles (they will not branc
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

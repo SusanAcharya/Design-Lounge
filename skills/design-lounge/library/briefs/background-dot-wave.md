@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 108 · "Dot wave background" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 108 · "Dot wave background" · designlounge.vercel.app -->
 
 # Dot wave background
 
@@ -211,4 +211,4 @@ Common mistakes: letting the page layer swallow clicks (set `pointer-events:none
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

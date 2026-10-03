@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 216 · "Download button with progress and retry" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 216 · "Download button with progress and retry" · designlounge.vercel.app -->
 
 # Download button with progress and retry
 
@@ -222,4 +222,4 @@ Common mistakes:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

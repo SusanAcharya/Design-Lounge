@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 092 · "Annual toggle with rolling prices" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 092 · "Annual toggle with rolling prices" · designlounge.vercel.app -->
 
 # Annual toggle with rolling prices
 
@@ -207,4 +207,4 @@ Common mistakes: using `line-height` other than 1 on `.odo` (strips drift off-gr
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

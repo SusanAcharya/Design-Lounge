@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 156 · "Testimonials wall grid" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 156 · "Testimonials wall grid" · designlounge.vercel.app -->
 
 # Testimonials wall grid
 
@@ -190,4 +190,4 @@ Common mistakes: loading a serif “for the quotes”; equal-height cards that r
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

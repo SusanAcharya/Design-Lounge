@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 131 · "Newsletter fold inline" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 131 · "Newsletter fold inline" · designlounge.vercel.app -->
 
 # Newsletter fold inline
 
@@ -188,4 +188,4 @@ Common mistakes: putting this in the footer; a filled moss pill button; pairing 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

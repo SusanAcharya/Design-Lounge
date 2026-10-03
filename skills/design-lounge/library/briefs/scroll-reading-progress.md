@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 058 · "Scroll reading progress" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 058 · "Scroll reading progress" · designlounge.vercel.app -->
 
 # Scroll reading progress
 
@@ -228,4 +228,4 @@ Common mistakes: using `width` instead of `transform: scaleX` for the bar (layou
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

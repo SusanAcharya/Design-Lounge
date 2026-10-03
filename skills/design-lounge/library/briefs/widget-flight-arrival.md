@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 234 · "Flight arrival split-flap widget" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 234 · "Flight arrival split-flap widget" · designlounge.vercel.app -->
 
 # Flight arrival split-flap widget
 
@@ -228,4 +228,4 @@ Rebuild order:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

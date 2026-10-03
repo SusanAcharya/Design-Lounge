@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 086 · "Shared element expand" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 086 · "Shared element expand" · designlounge.vercel.app -->
 
 # Shared element expand
 
@@ -214,4 +214,4 @@ Common mistakes: measuring the dialog while it is still `display: none` (rect is
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

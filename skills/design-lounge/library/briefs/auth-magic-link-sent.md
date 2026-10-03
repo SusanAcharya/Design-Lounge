@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 125 · "Magic link sent" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 125 · "Magic link sent" · designlounge.vercel.app -->
 
 # Magic link sent
 
@@ -214,4 +214,4 @@ Common mistakes: putting the countdown in a live region (screen readers read eve
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 015 · "Filter chips product list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 015 · "Filter chips product list" · designlounge.vercel.app -->
 
 # Filter chips product list
 
@@ -230,4 +230,4 @@ Common mistakes: animating `padding-left` on the chip instead of the icon width 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 153 · "Tabbed feature preview" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 153 · "Tabbed feature preview" · designlounge.vercel.app -->
 
 # Tabbed feature preview
 
@@ -213,4 +213,4 @@ Common mistakes: using `setInterval` for autoplay (drifts and can't pause mid-wa
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

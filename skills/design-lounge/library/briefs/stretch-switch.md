@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 396 · "Stretch switch" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 396 · "Stretch switch" · designlounge.vercel.app -->
 
 # Stretch switch
 
@@ -166,4 +166,4 @@ input:checked:active + .track .thumb { transform: translateX(20px); }
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

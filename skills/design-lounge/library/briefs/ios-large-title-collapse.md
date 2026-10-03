@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 027 · "Large title collapse on scroll" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 027 · "Large title collapse on scroll" · designlounge.vercel.app -->
 
 # Large title collapse on scroll
 
@@ -194,4 +194,4 @@ Common mistakes: putting the large title inside the fixed bar and animating `fon
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

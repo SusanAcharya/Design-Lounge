@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 235 · "Focus dim" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 235 · "Focus dim" · designlounge.vercel.app -->
 
 # Focus dim
 
@@ -170,4 +170,4 @@ Set aria-pressed false on all buttons first.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

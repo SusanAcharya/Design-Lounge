@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 236 · "Folder reveal" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 236 · "Folder reveal" · designlounge.vercel.app -->
 
 # Folder reveal
 
@@ -152,4 +152,4 @@ Do not use a 3D perspective. The rotate is a small 2D fan.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

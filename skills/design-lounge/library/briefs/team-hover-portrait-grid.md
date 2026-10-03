@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 154 · "Team hover portrait grid" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 154 · "Team hover portrait grid" · designlounge.vercel.app -->
 
 # Team hover portrait grid
 
@@ -170,4 +170,4 @@ Common mistakes: photograph avatars; a purple-to-blue portrait gradient; reveali
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

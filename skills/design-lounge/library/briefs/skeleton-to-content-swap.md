@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 061 · "Skeleton to content swap" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 061 · "Skeleton to content swap" · designlounge.vercel.app -->
 
 # Skeleton to content swap
 
@@ -230,4 +230,4 @@ Common mistakes: using `display: none` on the content (kills the fade and the he
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

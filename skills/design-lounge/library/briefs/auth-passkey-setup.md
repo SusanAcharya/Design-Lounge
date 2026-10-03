@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 135 · "Passkey setup with face-scan ring" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 135 · "Passkey setup with face-scan ring" · designlounge.vercel.app -->
 
 # Passkey setup with face-scan ring
 
@@ -203,4 +203,4 @@ Common mistakes: putting `backdrop-filter` on an element with no translucent bac
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

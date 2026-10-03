@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 263 · "Journal page" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 263 · "Journal page" · designlounge.vercel.app -->
 
 # Journal page
 
@@ -211,4 +211,4 @@ Other mistakes to avoid:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

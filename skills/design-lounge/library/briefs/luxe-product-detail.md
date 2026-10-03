@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 028 · "Luxe product detail" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 028 · "Luxe product detail" · designlounge.vercel.app -->
 
 # Luxe product detail
 
@@ -210,4 +210,4 @@ Common mistakes: rounding the size group or the button (the piece reads as luxe 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

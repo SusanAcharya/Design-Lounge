@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 353 · "Receipt slip" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 353 · "Receipt slip" · designlounge.vercel.app -->
 
 # Receipt slip
 
@@ -171,4 +171,4 @@ Use max-height so the slip can grow without a fixed height animation library.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -232,7 +232,7 @@ export function pairingCss(p: Pairing) {
       ? `\n/* Amounts use .num in the display face. Mono lacks this pairing's script, so it is only for code. */\ncode, kbd, samp, .mono {\n  font-family: var(--font-mono);\n  font-weight: ${p.mono.weight};\n}\n.num {\n  font-family: var(--font-display);\n  font-variant-numeric: tabular-nums;\n  letter-spacing: ${p.display.tracking ?? '-0.02em'};\n}`
       : `\ncode, kbd, samp, .mono, .num {\n  font-family: var(--font-mono);\n  font-weight: ${p.mono.weight};\n}`
     : `\n/* No mono in this pairing. Code uses the system mono; amounts stay in the text face with even-width digits. */\ncode, kbd, samp, .mono {\n  font-family: var(--font-mono);\n}\n.num {\n  font-family: var(--font-text);\n  font-variant-numeric: tabular-nums;\n}`;
-  return `/* ${p.name} · type pairing from Design Lounge by Susan Acharya (acharyasusan.com.np) */
+  return `/* ${p.name} · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
 @import url("${fontHref(specs)}");
 
 :root {

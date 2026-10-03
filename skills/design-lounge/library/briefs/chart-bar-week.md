@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 434 · "Weekly bar chart" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 434 · "Weekly bar chart" · designlounge.vercel.app -->
 
 # Weekly bar chart
 
@@ -159,4 +159,4 @@ Where it sits in a product:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

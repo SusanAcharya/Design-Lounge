@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 017 · "Floating glass tab bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 017 · "Floating glass tab bar" · designlounge.vercel.app -->
 
 # Floating glass tab bar
 
@@ -202,4 +202,4 @@ Common mistakes: putting the dock inside `<main>` so it scrolls away; using `bot
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 104 · "CTA split dark band" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 104 · "CTA split dark band" · designlounge.vercel.app -->
 
 # CTA split dark band
 
@@ -197,4 +197,4 @@ Common mistakes: pairing Unbounded with Inter; making the headline a single 64px
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

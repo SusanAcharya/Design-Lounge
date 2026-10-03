@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 132 · "Newsletter split footer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 132 · "Newsletter split footer" · designlounge.vercel.app -->
 
 # Newsletter split footer
 
@@ -215,4 +215,4 @@ Common mistakes: a filled input box (the piece is an underline); using `type="em
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

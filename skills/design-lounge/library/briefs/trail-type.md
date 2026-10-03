@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 421 · "Trail type" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 421 · "Trail type" · designlounge.vercel.app -->
 
 # Trail type
 
@@ -153,4 +153,4 @@ Remove every ghost on pointer up. Do not leave them on a timer.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

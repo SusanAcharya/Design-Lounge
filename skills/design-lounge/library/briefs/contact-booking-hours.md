@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 151 · "Studio hours and booking" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 151 · "Studio hours and booking" · designlounge.vercel.app -->
 
 # Studio hours and booking
 
@@ -166,4 +166,4 @@ Common mistakes: a custom focus trap that forgets Shift+Tab. Using `alert`. Putt
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

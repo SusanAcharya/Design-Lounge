@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 265 · "Kraft box 3D turntable" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 265 · "Kraft box 3D turntable" · designlounge.vercel.app -->
 
 # Kraft box 3D turntable
 
@@ -282,4 +282,4 @@ Common mistakes:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

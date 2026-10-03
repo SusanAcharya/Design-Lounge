@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 389 · "Spring deck" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 389 · "Spring deck" · designlounge.vercel.app -->
 
 # Spring deck
 
@@ -157,4 +157,4 @@ Clear the transform on pointer up so the CSS transition can run back to identity
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 140 · "Product window tilt hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 140 · "Product window tilt hero" · designlounge.vercel.app -->
 
 # Product window tilt hero
 
@@ -201,4 +201,4 @@ Common mistakes: putting the entrance on `transform`, which overwrites the rotat
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

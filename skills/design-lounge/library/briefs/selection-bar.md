@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 366 · "Selection bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 366 · "Selection bar" · designlounge.vercel.app -->
 
 # Selection bar
 
@@ -154,4 +154,4 @@ Do not select every row with a header checkbox in this piece. Add one only if th
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

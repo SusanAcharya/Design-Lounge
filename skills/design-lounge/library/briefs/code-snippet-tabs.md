@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 190 · "Code snippet tabs" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 190 · "Code snippet tabs" · designlounge.vercel.app -->
 
 # Code snippet tabs
 
@@ -152,4 +152,4 @@ If the clipboard is blocked, still flip the label. Do not alert.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 049 · "Page transition curtain" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 049 · "Page transition curtain" · designlounge.vercel.app -->
 
 # Page transition curtain
 
@@ -236,4 +236,4 @@ Common mistakes: animating the panels with `left/right` instead of `transform`; 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

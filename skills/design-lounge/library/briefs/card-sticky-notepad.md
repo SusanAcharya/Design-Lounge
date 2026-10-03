@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 395 · "Sticky notes board" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 395 · "Sticky notes board" · designlounge.vercel.app -->
 
 # Sticky notes board
 
@@ -251,4 +251,4 @@ Rebuild order:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

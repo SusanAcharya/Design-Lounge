@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 201 · "Coverflow strip" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 201 · "Coverflow strip" · designlounge.vercel.app -->
 
 # Coverflow strip
 
@@ -170,4 +170,4 @@ Do not loop from the last card to the first.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

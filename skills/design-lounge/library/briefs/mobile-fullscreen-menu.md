@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 019 · "Full-screen mobile menu" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 019 · "Full-screen mobile menu" · designlounge.vercel.app -->
 
 # Full-screen mobile menu
 
@@ -214,4 +214,4 @@ Common mistakes: animating `height` or `clip-path` on the whole menu (kills the 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

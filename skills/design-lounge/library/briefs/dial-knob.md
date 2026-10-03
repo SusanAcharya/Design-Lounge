@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 213 · "Dial knob" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 213 · "Dial knob" · designlounge.vercel.app -->
 
 # Dial knob
 
@@ -155,4 +155,4 @@ Round to an integer hour. Do not show decimals.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

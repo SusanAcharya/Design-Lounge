@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 380 · "Social feed with stories and posts" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 380 · "Social feed with stories and posts" · designlounge.vercel.app -->
 
 # Social feed with stories and posts
 
@@ -275,4 +275,4 @@ Rebuild order:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

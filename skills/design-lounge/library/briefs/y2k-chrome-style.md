@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 162 · "Y2K chrome design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 162 · "Y2K chrome design language kit" · designlounge.vercel.app -->
 
 # Y2K chrome design language kit
 
@@ -176,4 +176,4 @@ Reduced motion: `animation: none` on `.disc`; every transition 1ms.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

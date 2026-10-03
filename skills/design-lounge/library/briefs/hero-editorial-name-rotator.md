@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 109 · "Editorial name rotator hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 109 · "Editorial name rotator hero" · designlounge.vercel.app -->
 
 # Editorial name rotator hero
 
@@ -227,4 +227,4 @@ Common mistakes: animating `top` on each word instead of one reel `translateY` (
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

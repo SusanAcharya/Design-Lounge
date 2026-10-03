@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 112 · "Fashion atelier landing page" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 112 · "Fashion atelier landing page" · designlounge.vercel.app -->
 
 # Fashion atelier landing page
 
@@ -168,4 +168,4 @@ Common mistakes: a purple-blue hero gradient; rounding the plate; a second accen
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

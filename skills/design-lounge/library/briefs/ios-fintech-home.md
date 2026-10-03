@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 016 · "Fintech home" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 016 · "Fintech home" · designlounge.vercel.app -->
 
 # Fintech home
 
@@ -211,4 +211,4 @@ Common mistakes: using `letter-spacing` on the tabular figures (breaks column al
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

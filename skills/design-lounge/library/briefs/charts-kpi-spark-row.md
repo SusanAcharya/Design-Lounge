@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 119 · "KPI row with sparklines" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 119 · "KPI row with sparklines" · designlounge.vercel.app -->
 
 # KPI row with sparklines
 
@@ -175,4 +175,4 @@ Common mistakes: animating `stroke-dasharray` with a guessed pixel length (the f
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

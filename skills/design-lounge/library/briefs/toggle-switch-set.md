@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 157 · "Toggle switch set" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 157 · "Toggle switch set" · designlounge.vercel.app -->
 
 # Toggle switch set
 
@@ -199,4 +199,4 @@ Common mistakes: scoping `.lb span { transform: translateY(-50%) }` so broadly t
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 020 · "Grouped settings list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 020 · "Grouped settings list" · designlounge.vercel.app -->
 
 # Grouped settings list
 
@@ -198,4 +198,4 @@ Common mistakes: using `<input type="checkbox">` with `appearance:none` but forg
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

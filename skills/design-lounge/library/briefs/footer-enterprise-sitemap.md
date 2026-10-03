@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 110 · "Enterprise sitemap footer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 110 · "Enterprise sitemap footer" · designlounge.vercel.app -->
 
 # Enterprise sitemap footer
 
@@ -201,4 +201,4 @@ Common mistakes: opening the popover upward into the CTA band (anchor it to the 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 045 · "Onboarding checklist card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 045 · "Onboarding checklist card" · designlounge.vercel.app -->
 
 # Onboarding checklist card
 
@@ -199,4 +199,4 @@ Common mistakes: animating `max-height` (jumpy timing); letting the tick and the
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

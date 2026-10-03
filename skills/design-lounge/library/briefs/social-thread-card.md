@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 415 · "Threaded conversation card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 415 · "Threaded conversation card" · designlounge.vercel.app -->
 
 # Threaded conversation card
 
@@ -232,4 +232,4 @@ startQuote(post.querySelector('.meta b').textContent,
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

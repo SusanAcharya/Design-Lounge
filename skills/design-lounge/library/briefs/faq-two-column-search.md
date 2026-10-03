@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 111 · "FAQ two-column search" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 111 · "FAQ two-column search" · designlounge.vercel.app -->
 
 # FAQ two-column search
 
@@ -183,4 +183,4 @@ Common mistakes: a single-column accordion (that is a different piece); filterin
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

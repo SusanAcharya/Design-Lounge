@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 024 · "Kanban board" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 024 · "Kanban board" · designlounge.vercel.app -->
 
 # Kanban board
 
@@ -217,4 +217,4 @@ Common mistakes: forgetting `pointer-events: none` on the ghost (every `elementF
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

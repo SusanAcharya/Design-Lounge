@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 057 · "PWA update toast" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 057 · "PWA update toast" · designlounge.vercel.app -->
 
 # PWA update toast
 
@@ -214,4 +214,4 @@ Common mistakes: placing the toast over the nav instead of above it; animating t
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

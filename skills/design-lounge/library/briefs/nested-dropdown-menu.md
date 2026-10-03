@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 040 · "Nested dropdown menu" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 040 · "Nested dropdown menu" · designlounge.vercel.app -->
 
 # Nested dropdown menu
 
@@ -209,4 +209,4 @@ Common mistakes: opening submenus on `mouseenter` with no delay (flicker when sk
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 097 · "Bauhaus design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 097 · "Bauhaus design language kit" · designlounge.vercel.app -->
 
 # Bauhaus design language kit
 
@@ -207,4 +207,4 @@ Triangles are `clip-path: polygon(50% 0, 100% 100%, 0 100%)` on a div, not SVG, 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

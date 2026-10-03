@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 043 · "Odometer counter" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 043 · "Odometer counter" · designlounge.vercel.app -->
 
 # Odometer counter
 
@@ -237,4 +237,4 @@ Common mistakes: rebuilding the whole number on each change (every digit rolls, 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

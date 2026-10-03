@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 072 · "Tablet ops dashboard grid" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 072 · "Tablet ops dashboard grid" · designlounge.vercel.app -->
 
 # Tablet ops dashboard grid
 
@@ -232,4 +232,4 @@ Common mistakes: a second y-axis for latency on the requests chart (never dual-a
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

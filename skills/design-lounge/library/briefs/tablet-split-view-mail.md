@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 071 · "Tablet mail split view" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 071 · "Tablet mail split view" · designlounge.vercel.app -->
 
 # Tablet mail split view
 
@@ -212,4 +212,4 @@ Common mistakes: giving every row `tabindex="0"` (ten tab stops); fading the rea
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

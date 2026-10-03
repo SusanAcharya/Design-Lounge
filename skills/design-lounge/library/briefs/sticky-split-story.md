@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 066 · "Sticky split scroll story" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 066 · "Sticky split scroll story" · designlounge.vercel.app -->
 
 # Sticky split scroll story
 
@@ -184,4 +184,4 @@ Common mistakes: putting `overflow: hidden` on an ancestor of the sticky column 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

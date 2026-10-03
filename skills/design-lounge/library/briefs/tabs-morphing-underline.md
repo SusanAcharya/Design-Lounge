@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 073 · "Tabs with morphing underline" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 073 · "Tabs with morphing underline" · designlounge.vercel.app -->
 
 # Tabs with morphing underline
 
@@ -222,4 +222,4 @@ Common mistakes: putting the underline outside the scrolling element (it stops t
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

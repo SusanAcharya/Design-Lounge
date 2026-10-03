@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 148 · "Sticky comparison table" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 148 · "Sticky comparison table" · designlounge.vercel.app -->
 
 # Sticky comparison table
 
@@ -200,4 +200,4 @@ Common mistakes: making the whole page scroll so the sticky header is relative t
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

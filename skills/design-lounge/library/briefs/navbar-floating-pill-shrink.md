@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 114 · "Floating pill navbar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 114 · "Floating pill navbar" · designlounge.vercel.app -->
 
 # Floating pill navbar
 
@@ -205,4 +205,4 @@ Common mistakes: animating `left`/`right` on a fixed bar instead of width inside
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

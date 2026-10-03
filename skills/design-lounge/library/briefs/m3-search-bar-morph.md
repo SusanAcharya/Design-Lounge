@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 033 · "M3 search bar morph" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 033 · "M3 search bar morph" · designlounge.vercel.app -->
 
 # M3 search bar morph
 
@@ -212,4 +212,4 @@ Common mistakes: fading the pill out and a new full-screen view in (breaks conti
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

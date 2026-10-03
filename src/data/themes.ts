@@ -323,9 +323,9 @@ export const THEMES: Theme[] = [
 
 export function themeCss(t: Theme) {
   const k = t.tokens;
-  return `/* ${t.name} · full palette from Design Lounge by Susan Acharya (acharyasusan.com.np)
+  return `/* ${t.name} · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
-   Free to use. A credit link is appreciated: https://acharyasusan.com.np */
+   Free to use. */
 :root {
   /* Brand */
   --primary: ${k.primary};

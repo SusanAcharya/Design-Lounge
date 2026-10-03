@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 431 · "Weather glance widget, three sizes" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 431 · "Weather glance widget, three sizes" · designlounge.vercel.app -->
 
 # Weather glance widget, three sizes
 
@@ -219,4 +219,4 @@ Where it sits: a home-screen or dashboard widget gallery next to `widget-compass
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 373 · "Shortcut sheet" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 373 · "Shortcut sheet" · designlounge.vercel.app -->
 
 # Shortcut sheet
 
@@ -155,4 +155,4 @@ if (e.key === "Escape") { sheet.hidden = true; open.hidden = false; }
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

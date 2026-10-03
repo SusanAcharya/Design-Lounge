@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 205 · "Daily quote card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 205 · "Daily quote card" · designlounge.vercel.app -->
 
 # Daily quote card
 
@@ -253,4 +253,4 @@ Rebuild order:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

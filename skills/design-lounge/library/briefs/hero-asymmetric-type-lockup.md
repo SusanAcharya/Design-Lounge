@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 094 · "Asymmetric type lockup hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 094 · "Asymmetric type lockup hero" · designlounge.vercel.app -->
 
 # Asymmetric type lockup hero
 
@@ -169,4 +169,4 @@ Common mistakes: `line-height: 1` on 160px italic (the tails clip), giving RTO a
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

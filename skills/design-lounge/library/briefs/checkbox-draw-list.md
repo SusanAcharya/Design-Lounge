@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 100 · "Checkbox draw list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 100 · "Checkbox draw list" · designlounge.vercel.app -->
 
 # Checkbox draw list
 
@@ -180,4 +180,4 @@ Common mistakes: using `text-decoration: line-through` (can't animate); wrapping
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

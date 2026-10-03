@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 147 · "Stats ticker band" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 147 · "Stats ticker band" · designlounge.vercel.app -->
 
 # Stats ticker band
 
@@ -151,4 +151,4 @@ Common mistakes: starting the count from the already-visible final number (clear
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

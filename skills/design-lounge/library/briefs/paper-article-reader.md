@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 051 · "Paper article reader" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 051 · "Paper article reader" · designlounge.vercel.app -->
 
 # Paper article reader
 
@@ -204,4 +204,4 @@ Common mistakes: putting the note after the paragraph (it floats below, not besi
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

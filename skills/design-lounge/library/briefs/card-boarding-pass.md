@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 172 · "Boarding pass with fold-out details" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 172 · "Boarding pass with fold-out details" · designlounge.vercel.app -->
 
 # Boarding pass with fold-out details
 
@@ -190,4 +190,4 @@ Common mistakes:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

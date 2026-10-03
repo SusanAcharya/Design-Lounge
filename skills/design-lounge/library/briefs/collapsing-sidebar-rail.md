@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 007 · "Collapsing sidebar rail" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 007 · "Collapsing sidebar rail" · designlounge.vercel.app -->
 
 # Collapsing sidebar rail
 
@@ -180,4 +180,4 @@ Common mistakes: animating `margin-left` on main instead of letting flex reflow;
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

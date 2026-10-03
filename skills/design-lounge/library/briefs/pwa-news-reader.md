@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 056 · "PWA news reader" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 056 · "PWA news reader" · designlounge.vercel.app -->
 
 # PWA news reader
 
@@ -228,4 +228,4 @@ Common mistakes: using `<img>` placeholders for thumbs (the brief wants CSS colo
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

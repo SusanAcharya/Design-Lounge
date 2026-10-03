@@ -536,6 +536,16 @@
         "split-flap-board",
         "trail-type"
       ]
+    },
+    {
+      "id": "stripe",
+      "name": "stripe.com",
+      "url": "https://stripe.com/",
+      "host": "stripe.com",
+      "line": "Added. Open the site.",
+      "take": "Open the site before a screen borrows from it.",
+      "studied": false,
+      "pieces": []
     }
   ]
 }

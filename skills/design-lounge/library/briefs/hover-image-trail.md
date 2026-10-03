@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 081 · "Hover image trail" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 081 · "Hover image trail" · designlounge.vercel.app -->
 
 # Hover image trail
 
@@ -208,4 +208,4 @@ Common mistakes: spawning on every `pointermove` (hundreds of nodes per second);
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

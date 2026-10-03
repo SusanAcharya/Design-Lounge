@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 012 · "Editorial landing hero" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 012 · "Editorial landing hero" · designlounge.vercel.app -->
 
 # Editorial landing hero
 
@@ -201,4 +201,4 @@ Common mistakes: using `ease` on the rise (it reads as a bounce-less thud; expo-
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

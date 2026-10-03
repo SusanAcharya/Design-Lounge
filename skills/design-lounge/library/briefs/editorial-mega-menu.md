@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 013 · "Editorial mega menu" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 013 · "Editorial mega menu" · designlounge.vercel.app -->
 
 # Editorial mega menu
 
@@ -234,4 +234,4 @@ Common mistakes: animating `max-height` (wrong curve, wrong duration for short s
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

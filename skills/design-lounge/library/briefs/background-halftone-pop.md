@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 248 · "Halftone pop background" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 248 · "Halftone pop background" · designlounge.vercel.app -->
 
 # Halftone pop background
 
@@ -208,4 +208,4 @@ Common mistakes:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 360 · "Scroll split" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 360 · "Scroll split" · designlounge.vercel.app -->
 
 # Scroll split
 
@@ -155,4 +155,4 @@ Use a passive listener. Do not request animation frames in a loop.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 076 · "Text scramble reveal" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 076 · "Text scramble reveal" · designlounge.vercel.app -->
 
 # Text scramble reveal
 
@@ -221,4 +221,4 @@ Common mistakes: re-randomising every frame (strobes); scrambling spaces (words 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

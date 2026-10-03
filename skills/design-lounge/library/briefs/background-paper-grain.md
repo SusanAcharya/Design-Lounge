@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 134 · "Paper grain and ink blots" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 134 · "Paper grain and ink blots" · designlounge.vercel.app -->
 
 # Paper grain and ink blots
 
@@ -166,4 +166,4 @@ Common mistakes: `mix-blend-mode: overlay` (washes the type). Animating blot pos
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

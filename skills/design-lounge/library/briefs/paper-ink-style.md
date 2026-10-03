@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 050 · "Paper and ink design style" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 050 · "Paper and ink design style" · designlounge.vercel.app -->
 
 # Paper and ink design style
 
@@ -189,4 +189,4 @@ Common mistakes: omitting `width:100%; height:100%` on the grain SVG (a replaced
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 054 · "PWA connectivity banner" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 054 · "PWA connectivity banner" · designlounge.vercel.app -->
 
 # PWA connectivity banner
 
@@ -222,4 +222,4 @@ Common mistakes: overlaying the banner on the content (covers the first card); d
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

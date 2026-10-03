@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 142 · "Riso print design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 142 · "Riso print design language kit" · designlounge.vercel.app -->
 
 # Riso print design language kit
 
@@ -167,4 +167,4 @@ The overlay is `position: fixed; inset: 0; pointer-events: none; z-index: 8`. Co
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

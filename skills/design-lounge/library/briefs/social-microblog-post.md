@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 284 · "Microblog post card" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 284 · "Microblog post card" · designlounge.vercel.app -->
 
 # Microblog post card
 
@@ -235,4 +235,4 @@ burst.classList.remove('go'); burst.offsetWidth; burst.classList.add('go');
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

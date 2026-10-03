@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 098 · "Billing plan summary" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 098 · "Billing plan summary" · designlounge.vercel.app -->
 
 # Billing plan summary
 
@@ -151,4 +151,4 @@ Copy you keep, in this order:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

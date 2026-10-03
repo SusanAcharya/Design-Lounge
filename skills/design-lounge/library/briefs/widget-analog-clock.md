@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 218 · "Dress-watch analog clock widget" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 218 · "Dress-watch analog clock widget" · designlounge.vercel.app -->
 
 # Dress-watch analog clock widget
 
@@ -208,4 +208,4 @@ Common mistakes:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

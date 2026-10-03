@@ -122,7 +122,7 @@ export const ICONS: IconDef[] = [
   { id: 'spark', name: 'Spark', group: 'objects', d: '<path d="M12 3l1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6z"/>' },
 ];
 
-export const ICON_CREDIT = `Lounge Icons · designed by Susan Acharya · Design Lounge · acharyasusan.com.np`;
+export const ICON_CREDIT = `Lounge Icons · Designed using Design Lounge · designlounge.vercel.app`;
 
 export function iconSvg(icon: IconDef, opts: { size?: number; stroke?: number } = {}) {
   const size = opts.size ?? 24;

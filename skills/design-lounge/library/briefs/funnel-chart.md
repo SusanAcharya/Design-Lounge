@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 238 · "Funnel chart" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 238 · "Funnel chart" · designlounge.vercel.app -->
 
 # Funnel chart
 
@@ -154,4 +154,4 @@ Build the button with createElement if the names ever come from outside the file
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 343 · "Property list" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 343 · "Property list" · designlounge.vercel.app -->
 
 # Property list
 
@@ -154,4 +154,4 @@ Copy you keep:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

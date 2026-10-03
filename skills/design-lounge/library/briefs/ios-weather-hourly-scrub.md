@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 160 · "Weather with an hourly scrubber" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 160 · "Weather with an hourly scrubber" · designlounge.vercel.app -->
 
 # Weather with an hourly scrubber
 
@@ -232,4 +232,4 @@ Common mistakes: forgetting `touch-action: none` on the scrub area (the page scr
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 001 · "Analytics dashboard overview" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 001 · "Analytics dashboard overview" · designlounge.vercel.app -->
 
 # Analytics dashboard overview
 
@@ -215,4 +215,4 @@ Common mistakes: a dual y-axis (never; two measures → two charts); colouring t
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

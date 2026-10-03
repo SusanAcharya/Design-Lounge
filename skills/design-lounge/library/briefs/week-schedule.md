@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 433 · "Week schedule" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 433 · "Week schedule" · designlounge.vercel.app -->
 
 # Week schedule
 
@@ -155,4 +155,4 @@ Do not store the events in localStorage.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 332 · "Popover panel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 332 · "Popover panel" · designlounge.vercel.app -->
 
 # Popover panel
 
@@ -158,4 +158,4 @@ Copy you keep:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 052 · "Pull to refresh with drawn ring" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 052 · "Pull to refresh with drawn ring" · designlounge.vercel.app -->
 
 # Pull to refresh with drawn ring
 
@@ -200,4 +200,4 @@ Common mistakes: translating the `<ul>` instead of the scroll container (the scr
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

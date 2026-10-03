@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 041 · "Notification center panel" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 041 · "Notification center panel" · designlounge.vercel.app -->
 
 # Notification center panel
 
@@ -202,4 +202,4 @@ Common mistakes: using `display:none` for the closed panel (no exit animation); 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

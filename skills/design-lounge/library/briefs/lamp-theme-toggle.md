@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 026 · "Lamp pull-cord theme toggle" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 026 · "Lamp pull-cord theme toggle" · designlounge.vercel.app -->
 
 # Lamp pull-cord theme toggle
 
@@ -195,4 +195,4 @@ Common mistakes: leaving the default `::view-transition` cross-fade on (the circ
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

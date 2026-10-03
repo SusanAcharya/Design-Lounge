@@ -25,7 +25,7 @@ const repo = 'https://github.com/SusanAcharya/Design-Lounge';
 const lounge = 'https://designlounge.vercel.app';
 const raw = 'https://raw.githubusercontent.com/SusanAcharya/Design-Lounge/main';
 const author = { name: 'Susan Acharya', site: 'https://acharyasusan.com.np' };
-const credit = 'Designed by Susan Acharya · Design Lounge · acharyasusan.com.np';
+const credit = 'Designed using Design Lounge · https://designlounge.vercel.app';
 
 function parseFrontmatter(rawText) {
   const match = rawText.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
@@ -68,8 +68,8 @@ fs.mkdirSync(briefsDir, { recursive: true });
 
 for (const piece of pieces) {
   const n = String(pieces.indexOf(piece) + 1).padStart(3, '0');
-  const head = `<!-- Design Lounge Nº ${n} · "${piece.data.title}" · designed by ${author.name} (${author.site}) -->\n\n`;
-  const foot = `\n\n---\n\n*From Design Lounge, the design library of ${author.name} (${author.site}). Free to use in your products; a credit link is appreciated.*\n`;
+  const head = `<!-- Design Lounge Nº ${n} · "${piece.data.title}" · designlounge.vercel.app -->\n\n`;
+  const foot = `\n\n---\n\n*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*\n`;
   fs.writeFileSync(path.join(briefsDir, `${piece.id}.md`), head + piece.body + foot);
 }
 

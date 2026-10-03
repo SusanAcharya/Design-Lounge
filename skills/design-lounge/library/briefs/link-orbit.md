@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 272 · "Link orbit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 272 · "Link orbit" · designlounge.vercel.app -->
 
 # Link orbit
 
@@ -154,4 +154,4 @@ Do not animate --i. A moving target is hard to press.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

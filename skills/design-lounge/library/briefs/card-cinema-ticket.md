@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 186 · "Cinema ticket with tear-off stub" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 186 · "Cinema ticket with tear-off stub" · designlounge.vercel.app -->
 
 # Cinema ticket with tear-off stub
 
@@ -206,4 +206,4 @@ Common mistakes:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 065 · "Staggered list reveal" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 065 · "Staggered list reveal" · designlounge.vercel.app -->
 
 # Staggered list reveal
 
@@ -238,4 +238,4 @@ Common mistakes: using `transition` instead of `animation` (you can't re-trigger
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 032 · "M3 modal navigation drawer" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 032 · "M3 modal navigation drawer" · designlounge.vercel.app -->
 
 # M3 modal navigation drawer
 
@@ -238,4 +238,4 @@ Common mistakes: animating `left` instead of `transform`; giving the drawer full
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

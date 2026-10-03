@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 031 · "M3 Expressive home feed" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 031 · "M3 Expressive home feed" · designlounge.vercel.app -->
 
 # M3 Expressive home feed
 
@@ -245,4 +245,4 @@ Common mistakes: drawing the toolbar as a full-width bottom bar (it must float, 
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

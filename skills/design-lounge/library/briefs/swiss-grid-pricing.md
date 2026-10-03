@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 069 · "Swiss grid pricing" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 069 · "Swiss grid pricing" · designlounge.vercel.app -->
 
 # Swiss grid pricing
 
@@ -205,4 +205,4 @@ Common mistakes: rounding the switch or the buttons (the grid reads as Swiss onl
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

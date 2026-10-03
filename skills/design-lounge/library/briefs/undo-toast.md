@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 425 · "Undo toast" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 425 · "Undo toast" · designlounge.vercel.app -->
 
 # Undo toast
 
@@ -157,4 +157,4 @@ Clear the previous timeout before starting another. Do not stack timers.
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

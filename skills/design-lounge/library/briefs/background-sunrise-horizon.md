@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 397 · "Sunrise horizon background" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 397 · "Sunrise horizon background" · designlounge.vercel.app -->
 
 # Sunrise horizon background
 
@@ -209,4 +209,4 @@ Common mistakes:
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

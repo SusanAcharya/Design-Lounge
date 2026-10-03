@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 138 · "Pixel arcade design language kit" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 138 · "Pixel arcade design language kit" · designlounge.vercel.app -->
 
 # Pixel arcade design language kit
 
@@ -167,4 +167,4 @@ Stars are four 4×4 rects via `background-image` (two white, one yellow, one whi
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*

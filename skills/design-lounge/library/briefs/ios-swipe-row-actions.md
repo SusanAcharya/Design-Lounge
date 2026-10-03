@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 068 · "Swipe-to-reveal row actions" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 068 · "Swipe-to-reveal row actions" · designlounge.vercel.app -->
 
 # Swipe-to-reveal row actions
 
@@ -210,4 +210,4 @@ Common mistakes: using `touch-action: none` on rows (kills list scrolling); test
 
 ---
 
-*From Design Lounge, the design library of Susan Acharya (https://acharyasusan.com.np). Free to use in your products; a credit link is appreciated.*
+*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*
