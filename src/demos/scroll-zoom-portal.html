@@ -1,0 +1,193 @@
+<!-- Design Lounge piece: scroll-zoom-portal · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Open House Kreis · 17–18 October</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f2ebdd;--red:#d9402b;--blue:#1d3b8c;--yellow:#f2b630;
+  --ink:var(--blue);--sans:"League Spartan",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--cream);color:var(--ink);font:18px/1.45 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}
+a,button{color:inherit;font:inherit}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+
+.nav{position:fixed;z-index:10;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:var(--cream);border-bottom:3px solid var(--blue)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;letter-spacing:.04em;text-decoration:none}
+.logo i{width:20px;height:20px;border-radius:50%;background:var(--red)}
+.nav ul{display:flex;gap:32px;margin:0;padding:0;list-style:none;font-weight:600;font-size:16px}
+.nav ul a{text-decoration:none;padding:8px 0}
+.nav ul a:hover{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px}
+.tix{display:inline-flex;align-items:center;height:40px;padding:4px 18px 0;background:var(--blue);color:var(--cream);font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+.tix:hover{background:var(--red)}
+
+.pin{position:relative;height:300vh}
+.stage{position:sticky;top:0;height:100vh;min-height:560px;overflow:hidden}
+.zoom{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:96px 72px 48px}
+.word{display:block;width:100%;max-width:1136px;height:auto;margin:0 auto}
+.meta{display:flex;justify-content:space-between;gap:24px;width:100%;max-width:1136px;margin:28px auto 0;padding-top:16px;border-top:3px solid var(--blue);font-weight:800;font-size:22px;line-height:1.1}
+.meta span:nth-child(2){color:var(--red)}
+.deco{position:absolute;pointer-events:none}
+.d1{right:72px;top:104px;width:0;height:0;border-left:30px solid transparent;border-right:30px solid transparent;border-bottom:52px solid var(--yellow)}
+.d2{left:0;bottom:0;width:120px;height:120px;background:var(--blue);border-radius:0 120px 0 0}
+.d3{right:150px;bottom:72px;width:28px;height:28px;background:var(--red)}
+.hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.hint b{display:block;width:12px;height:12px;border-radius:50%;background:var(--red);animation:bob 1.6s var(--ease) infinite}
+@keyframes bob{50%{transform:translateY(6px)}}
+
+.after{position:absolute;inset:0;background:var(--yellow);opacity:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 72px 72px;pointer-events:none}
+.after .kick{margin:0 0 16px;font-weight:800;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.after h2{margin:0;font-weight:800;font-size:clamp(44px,7.2vw,104px);line-height:.92;letter-spacing:-.02em;max-width:13ch}
+.lift{opacity:0}
+
+.prog{background:var(--yellow);padding:8px 72px 112px}
+.prog-head{display:flex;justify-content:space-between;align-items:end;padding:40px 0 20px;border-bottom:3px solid var(--blue)}
+.prog-head p{margin:0;max-width:44ch;font-size:19px}
+.prog ol{margin:0;padding:0;list-style:none}
+.prog li{display:grid;grid-template-columns:56px 40px 1fr 160px 220px;align-items:center;gap:16px;padding:20px 0;border-bottom:2px solid rgba(29,59,140,.35)}
+.prog .no{font-weight:800;font-size:15px}
+.prog h3{margin:0;font-weight:800;font-size:28px;line-height:1.05}
+.prog .where{font-weight:600;font-size:15px}
+.prog .when{font-weight:400;font-size:16px;text-align:right}
+.shape{width:28px;height:28px}
+.links{display:flex;gap:16px;margin-top:40px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:4px 24px 0;font-weight:800;font-size:16px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border:3px solid var(--blue)}
+.btn.solid{background:var(--blue);color:var(--yellow)}
+.btn.solid:hover{background:var(--red);border-color:var(--red);color:var(--cream)}
+.btn:not(.solid):hover{background:var(--cream)}
+footer{background:var(--blue);color:var(--cream);padding:32px 72px;display:flex;justify-content:space-between;font-weight:600;font-size:15px}
+
+@media (max-width:900px){
+  .nav ul{display:none}
+  .prog li{grid-template-columns:40px 32px 1fr;row-gap:4px}
+  .prog .where{grid-column:3}
+  .prog .when{grid-column:3;text-align:left}
+  .prog-head{flex-direction:column;align-items:flex-start;gap:12px}
+}
+@media (max-width:640px){
+  .pin{height:250vh}
+  .nav{padding:0 20px}
+  .zoom{padding:88px 20px 40px}
+  .meta{flex-direction:column;gap:6px;font-size:18px}
+  .d1{right:20px;top:88px;border-width:0 18px 32px}
+  .d2{width:72px;height:72px;border-radius:0 72px 0 0}
+  .d3{display:none}
+  .after{padding:0 20px 56px}
+  .prog{padding:0 20px 80px}
+  .prog h3{font-size:22px}
+  .links{flex-direction:column}
+  footer{padding:28px 20px;flex-direction:column;gap:6px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pin{height:auto}
+  .stage{position:relative;height:auto;overflow:visible}
+  .zoom{position:relative;min-height:100vh;transform:none!important}
+  .after,.lift{position:relative;opacity:1!important;transform:none!important;min-height:60vh;padding-top:96px}
+  .lift{min-height:0;padding:0}
+  .hint b{animation:none}
+}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <a class="logo" href="#"><i></i>KREIS</a>
+  <ul><li><a href="#prog">Programme</a></li><li><a href="#prog">Map</a></li><li><a href="#prog">Volunteer</a></li></ul>
+  <a class="tix" href="#prog">Free pass</a>
+</nav>
+
+<section class="pin" id="pin" aria-labelledby="hero-h">
+  <div class="stage">
+    <div class="zoom" id="zoom">
+      <h1 id="hero-h" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Open House Kreis</h1>
+      <svg class="word" id="word" viewBox="0 0 1100 380" aria-hidden="true">
+        <path fill="#d9402b" fill-rule="evenodd" d="M190 10a180 180 0 1 1 0 360a180 180 0 1 1 0-360zM190 144a46 46 0 1 0 0 92a46 46 0 1 0 0-92z"/>
+        <circle cx="190" cy="190" r="46" fill="#f2b630"/>
+        <g fill="#1d3b8c" fill-rule="evenodd">
+          <path d="M400 10H480A110 110 0 0 1 480 230V370H400ZM506 92a28 28 0 1 0 0 56a28 28 0 1 0 0-56z"/>
+          <path d="M630 10H830V82H706V154H804V226H706V298H830V370H630Z"/>
+          <path d="M880 10H952L1028 194.9V10H1100V370H1028L952 185.1V370H880Z"/>
+        </g>
+      </svg>
+      <div class="meta"><span>House Weekend</span><span>17–18 October 2026</span><span>42 buildings · free entry</span></div>
+      <div class="deco d1"></div><div class="deco d2"></div><div class="deco d3"></div>
+    </div>
+    <div class="hint" id="hint" aria-hidden="true"><b></b>Scroll to step inside</div>
+    <div class="after" id="after">
+      <div class="lift" id="lift">
+        <p class="kick">Two days · every door unlocked</p>
+        <h2>Forty-two rooms you are never let into.</h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="prog" id="prog" aria-labelledby="prog-h">
+  <div class="prog-head">
+    <h3 id="prog-h" style="font-size:15px;letter-spacing:.16em;text-transform:uppercase;margin:0">Saturday and Sunday highlights</h3>
+    <p>Water towers, print halls and a 1931 house with its original kitchen. Queue at the door, no booking needed, last entry 30 minutes before close.</p>
+  </div>
+  <ol>
+    <li><span class="no">01</span><svg class="shape" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="#d9402b"/></svg><h3>Tannenhof Water Tower</h3><span class="where">1928 · Altstadt</span><span class="when">Sat 10:00–17:00</span></li>
+    <li><span class="no">02</span><svg class="shape" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" fill="#1d3b8c"/></svg><h3>Haus Ebert</h3><span class="where">1931 · Südhang</span><span class="when">Sat &amp; Sun 11:00–16:00</span></li>
+    <li><span class="no">03</span><svg class="shape" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 2l13 24H1z" fill="#f2ebdd" stroke="#1d3b8c" stroke-width="2"/></svg><h3>Municipal Swimming Hall</h3><span class="where">1929 · Mitte</span><span class="when">Sun 09:00–14:00</span></li>
+    <li><span class="no">04</span><svg class="shape" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="#d9402b"/></svg><h3>Lenz Printing Works</h3><span class="where">1926 · Hafen</span><span class="when">Sat 12:00–18:00</span></li>
+    <li><span class="no">05</span><svg class="shape" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" fill="#1d3b8c"/></svg><h3>Siedlung Am Rain, No. 7</h3><span class="where">1930 · Nordfeld</span><span class="when">Sun 10:00–15:00</span></li>
+    <li><span class="no">06</span><svg class="shape" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 2l13 24H1z" fill="#f2ebdd" stroke="#1d3b8c" stroke-width="2"/></svg><h3>Old Telegraph Office</h3><span class="where">1927 · Bahnhof</span><span class="when">Sat &amp; Sun 10:00–17:00</span></li>
+  </ol>
+  <div class="links"><a class="btn solid" href="#pin">See all 42 buildings</a><a class="btn" href="#pin">Get the paper map</a></div>
+</section>
+<footer><span>Open House Kreis is run by 180 volunteers.</span><span>Circle: tower · Square: house · Triangle: public hall</span></footer>
+
+<script>
+(() => {
+  const pin = document.getElementById('pin'), zoom = document.getElementById('zoom'), word = document.getElementById('word');
+  const after = document.getElementById('after'), lift = document.getElementById('lift'), hint = document.getElementById('hint');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  let top = 0, len = 1, sy = scrollY, S = 28, queued = false;
+
+  const clamp = v => v < 0 ? 0 : v > 1 ? 1 : v;
+  const smooth = t => t * t * (3 - 2 * t);
+  const seg = (p, a, b) => clamp((p - a) / (b - a));
+
+  const measure = () => {
+    zoom.style.transform = 'none';
+    sy = scrollY;
+    top = pin.offsetTop; len = Math.max(1, pin.offsetHeight - innerHeight);
+    const z = zoom.getBoundingClientRect(), w = word.getBoundingClientRect(), f = w.width / 1100;
+    const cx = w.left - z.left + 190 * f, cy = w.top - z.top + 190 * f, r = 46 * f;
+    zoom.style.transformOrigin = `${cx.toFixed(1)}px ${cy.toFixed(1)}px`;
+    const D = Math.hypot(Math.max(cx, z.width - cx), Math.max(cy, z.height - cy));
+    S = 1.12 * D / r;
+  };
+
+  const paint = () => {
+    queued = false;
+    if (reduce.matches) { zoom.style.transform = ''; return; }
+    const p = clamp((sy - top) / len);
+    const t = smooth(seg(p, .04, .7));
+    zoom.style.transform = `scale(${Math.pow(S, t).toFixed(4)})`;
+    after.style.opacity = smooth(seg(p, .62, .72)).toFixed(3);
+    const l = smooth(seg(p, .72, .9));
+    lift.style.opacity = l.toFixed(3);
+    lift.style.transform = `translateY(${((1 - l) * 32).toFixed(1)}px)`;
+    hint.style.opacity = (1 - seg(p, 0, .05)).toFixed(3);
+  };
+  const queue = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+
+  addEventListener('scroll', () => { sy = scrollY; queue(); }, { passive: true });
+  addEventListener('resize', () => { measure(); queue(); }, { passive: true });
+  reduce.addEventListener('change', () => { measure(); queue(); });
+  document.fonts && document.fonts.ready.then(() => { measure(); queue(); });
+  measure();
+  queue();
+})();
+</script>
+</body>
+</html>

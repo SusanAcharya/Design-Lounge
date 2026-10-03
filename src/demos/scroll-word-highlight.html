@@ -1,0 +1,201 @@
+<!-- Design Lounge piece: scroll-word-highlight · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>About · Fenwick Bindery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f2ea;--paper:#fbf8f2;--ink:#26231f;--ink-2:#5b554c;--ink-3:#6f685d;--line:#e2dacb;
+  --accent:#b4532f;--focus:#b4532f;
+  --serif:"Newsreader",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;
+  --dim:.18;--ease:cubic-bezier(.16,1,.3,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{background:var(--bg)}
+body{color:var(--ink);font:15px/1.5 var(--sans);overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+.runway{position:relative;height:340vh}
+.stage{
+  position:sticky;top:0;height:100vh;min-height:560px;
+  display:grid;grid-template-rows:auto 1fr auto;
+  padding:40px clamp(24px,8vw,120px) 36px;
+}
+.top,.foot{display:flex;justify-content:space-between;align-items:baseline;gap:24px;
+  font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.label{margin:0;font:inherit;letter-spacing:inherit}
+.top b{font-weight:600;color:var(--ink)}
+.top .no{color:var(--accent);margin-right:10px}
+.body{display:flex;align-items:center;min-height:0}
+.manifesto{
+  margin:0;max-width:960px;
+  font-family:var(--serif);font-optical-sizing:auto;font-weight:400;
+  font-size:clamp(28px,4vw,54px);line-height:1.16;letter-spacing:-.012em;
+  text-wrap:pretty;
+}
+.manifesto mark{background:none;color:inherit}
+.w{opacity:var(--dim);transition:opacity .14s linear}
+.k{position:relative}
+.k::after{
+  content:"";position:absolute;left:0;right:0;bottom:.02em;height:max(2px,.055em);
+  background:var(--accent);transform:scaleX(0);transform-origin:0 50%;
+  transition:transform .32s var(--ease);transition-delay:calc(var(--j,0) * 45ms);
+}
+.k.on::after{transform:scaleX(1)}
+
+.hint{display:inline-flex;align-items:center;gap:10px;transition:opacity .3s var(--std),transform .3s var(--std)}
+.hint svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;animation:nudge 1.8s var(--std) infinite}
+.hint.gone{opacity:0;transform:translateY(6px)}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.meter{display:flex;align-items:center;gap:14px;font-variant-numeric:tabular-nums}
+.track{width:120px;height:1px;background:var(--line);overflow:hidden}
+.fill{display:block;height:100%;background:var(--ink);transform:scaleX(0);transform-origin:0 50%}
+
+.visit{
+  border-top:1px solid var(--line);background:var(--paper);
+  padding:88px clamp(24px,8vw,120px) 96px;
+  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px;align-items:end;
+}
+.visit h2{margin:0;font:400 clamp(28px,3vw,40px)/1.1 var(--serif);letter-spacing:-.01em}
+.visit p{margin:14px 0 0;color:var(--ink-2);max-width:44ch}
+.visit dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 28px;font-size:14px}
+.visit dt{color:var(--ink-3);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding-top:2px}
+.visit dd{margin:0}
+.btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;min-height:44px;padding:0 20px;
+  border:1px solid var(--ink);border-radius:999px;text-decoration:none;font-weight:500;
+  transition:background-color .16s var(--std),color .16s var(--std)}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:640px){
+  .stage{padding:28px 24px 28px}
+  .top span:last-child{display:none}
+  .track{width:64px}
+  .visit{grid-template-columns:1fr;padding:64px 24px 72px}
+}
+@media (prefers-reduced-motion:reduce){
+  .runway{height:auto}
+  .stage{position:relative;height:auto;min-height:100vh;gap:48px}
+  .w{opacity:1;transition:none}
+  .k::after{transform:scaleX(1);transition:none}
+  .hint,.meter{display:none}
+}
+</style>
+</head>
+<body>
+<main>
+  <section class="runway" id="about" aria-labelledby="about-h">
+    <div class="stage">
+      <header class="top">
+        <h1 id="about-h" class="label"><span class="no" aria-hidden="true">02</span><b>About the bindery</b></h1>
+        <span>Fenwick Bindery &middot; Leith, since 1987</span>
+      </header>
+      <div class="body">
+        <p class="manifesto" id="m">We bind books the slow way. Every signature is <mark>folded by hand</mark>, sewn on linen tape and left under the press overnight, because glue dries in an hour but a spine <mark>has to last a lifetime</mark>. We do not chase the season. We keep one bench, three people and a shelf of waxed thread, and we would rather make forty books that <mark>open flat</mark> than four thousand that crack.</p>
+      </div>
+      <footer class="foot">
+        <span class="hint" id="hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>Scroll to read</span>
+        <span class="meter" aria-hidden="true"><span id="count">0 / 0</span><span class="track"><i class="fill" id="fill"></i></span></span>
+      </footer>
+    </div>
+  </section>
+  <section class="visit" aria-labelledby="visit-h">
+    <div>
+      <h2 id="visit-h">Visit the bench</h2>
+      <p>We open the workshop on Saturday mornings. Bring a book that needs saving and we will tell you, honestly, whether it can be.</p>
+      <a class="btn" href="#about">Book a Saturday visit <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <dl>
+      <dt>Address</dt><dd>14 Coburg Lane, Leith, Edinburgh EH6 6ET</dd>
+      <dt>Hours</dt><dd>Tue to Fri 10:00 to 17:00, Sat 09:30 to 12:30</dd>
+      <dt>Repairs</dt><dd>From &pound;45, four to six weeks</dd>
+    </dl>
+  </section>
+</main>
+<script>
+(() => {
+  const p = document.getElementById('m');
+  const runway = document.querySelector('.runway');
+  const hint = document.getElementById('hint');
+  const fill = document.getElementById('fill');
+  const count = document.getElementById('count');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const words = [], groups = [];
+
+  const sr = document.createElement('span');
+  sr.className = 'sr';
+  sr.textContent = p.textContent.replace(/\s+/g, ' ').trim();
+  const vis = document.createElement('span');
+  vis.setAttribute('aria-hidden', 'true');
+
+  const add = (text, group) => {
+    for (const tok of text.match(/\s+|\S+/g) || []) {
+      if (/^\s/.test(tok)) {
+        if (!group) { vis.append(' '); continue; }
+        const gap = document.createElement('span');
+        gap.className = 'k';
+        gap.textContent = ' ';
+        gap.style.setProperty('--j', group.els.length);
+        group.els.push(gap);
+        vis.append(gap);
+        continue;
+      }
+      const s = document.createElement('span');
+      s.className = 'w';
+      s.textContent = tok;
+      if (group) { s.classList.add('k'); s.style.setProperty('--j', group.els.length); group.els.push(s); group.last = words.length; }
+      words.push({ el: s, o: -1 });
+      vis.append(s);
+    }
+  };
+  for (const n of [...p.childNodes]) {
+    if (n.nodeType === 3) add(n.textContent, null);
+    else { const g = { els: [], last: 0, on: false }; groups.push(g); add(n.textContent, g); }
+  }
+  p.replaceChildren(sr, vis);
+
+  const N = words.length;
+  const clamp = v => Math.min(1, Math.max(0, v));
+  let ticking = false;
+
+  function frame() {
+    ticking = false;
+    if (reduce.matches) {
+      words.forEach(w => { w.el.style.opacity = ''; w.o = -1; });
+      groups.forEach(g => g.els.forEach(el => el.classList.add('on')));
+      return;
+    }
+    const range = runway.offsetHeight - innerHeight;
+    const t = clamp(-runway.getBoundingClientRect().top / (range * 0.8));
+    const f = 0.6 + t * (N + 0.4);
+    let lit = 0;
+    for (let i = 0; i < N; i++) {
+      const k = clamp(f - i);
+      if (k === 1) lit++;
+      const o = +(0.18 + 0.82 * k).toFixed(3);
+      if (o !== words[i].o) { words[i].o = o; words[i].el.style.opacity = o; }
+    }
+    for (const g of groups) {
+      const on = f >= g.last + 1;
+      if (on !== g.on) { g.on = on; g.els.forEach(el => el.classList.toggle('on', on)); }
+    }
+    fill.style.transform = 'scaleX(' + t.toFixed(4) + ')';
+    count.textContent = lit + ' / ' + N;
+    hint.classList.toggle('gone', scrollY > 40);
+  }
+  const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue);
+  reduce.addEventListener('change', queue);
+  frame();
+})();
+</script>
+</body>
+</html>

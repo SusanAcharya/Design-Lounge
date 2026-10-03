@@ -1,0 +1,293 @@
+<!-- Design Lounge piece: scroll-scrub-product-sequence · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Orrery Meridian 40</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,500;125,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#121214;--surface:#1a1a1d;--line:rgba(236,232,225,.1);--ink:#ece8e1;--ink-2:#a29d94;
+  --brass:#b8955a;--brass-hi:#dcc08a;--brass-lo:#8a6c3c;--steel:#2c2c31;
+  --wide:"Archivo",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--P:1600px;
+  --brushed:conic-gradient(from 20deg,var(--brass-lo),var(--brass-hi) 12%,var(--brass) 25%,var(--brass-lo) 40%,var(--brass-hi) 58%,var(--brass) 72%,var(--brass-lo) 88%,var(--brass-hi));
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--wide);font-stretch:125%;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a,button{color:inherit;font:inherit}
+:focus-visible{outline:2px solid var(--brass-hi);outline-offset:3px}
+
+.nav{position:fixed;z-index:10;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;border-bottom:1px solid var(--line);background:rgba(18,18,20,.86)}
+.logo{font-weight:700;font-size:15px;letter-spacing:.32em;text-decoration:none}
+.nav ul{display:flex;gap:28px;margin:0;padding:0;list-style:none;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.nav ul a{text-decoration:none}.nav ul a:hover{color:var(--ink)}
+.nav .buy{display:inline-flex;align-items:center;height:40px;padding:0 18px;border:1px solid var(--brass);color:var(--brass-hi);font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+.nav .buy:hover{background:var(--brass);color:var(--bg)}
+
+.pin{position:relative;height:400vh}
+.sticky{position:sticky;top:0;height:100vh;min-height:560px;display:grid;grid-template-columns:7fr 5fr;overflow:hidden}
+.stage-col{position:relative}
+.scaler{position:absolute;left:56%;top:calc(50% + 32px);width:0;height:0}
+.stage{position:absolute;left:-200px;top:-200px;width:400px;height:400px;perspective:var(--P);transform:scale(var(--k,1))}
+.watch{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(10deg) rotateZ(-6deg)}
+.part{position:absolute;left:50%;top:50%;border-radius:50%;transform-style:preserve-3d;will-change:transform}
+.case{width:320px;height:320px;margin:-160px}
+.strap{position:absolute;left:50%;width:150px;height:260px;margin-left:-75px;background:linear-gradient(90deg,#1b1b1e,#26262a 50%,#1b1b1e);-webkit-mask:linear-gradient(var(--d),#000 30%,transparent);mask:linear-gradient(var(--d),#000 30%,transparent)}
+.strap::after{content:"";position:absolute;inset:10px 12px;border:1px dashed rgba(184,149,90,.35);border-radius:8px}
+.strap.t{bottom:250px;--d:to top;border-radius:20px 20px 0 0}
+.strap.b{top:250px;--d:to bottom;border-radius:0 0 20px 20px}
+.ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 30deg,#2a2a2e,#46464c 15%,#2a2a2e 32%,#3d3d43 55%,#26262a 75%,#2a2a2e);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 30px 60px rgba(0,0,0,.45)}
+.ring::before{content:"";position:absolute;inset:22px;border-radius:50%;background:var(--brushed)}
+.ring::after{content:"";position:absolute;inset:36px;border-radius:50%;background:#111113}
+.crown{position:absolute;right:-16px;top:50%;width:20px;height:38px;margin-top:-19px;border-radius:3px;background:repeating-linear-gradient(0deg,var(--brass-hi) 0 2px,var(--brass-lo) 2px 4px)}
+.move{width:248px;height:248px;margin:-124px;background:radial-gradient(circle,#26262b,#18181b 70%);box-shadow:inset 0 0 0 1px rgba(236,232,225,.08)}
+.move svg{position:absolute;inset:0;width:100%;height:100%}
+.rotor{position:absolute;left:14px;right:14px;top:14px;height:110px;border-radius:110px 110px 0 0;transform-origin:50% 100%;background:var(--brushed);opacity:.92;display:flex;align-items:flex-start;justify-content:center;padding-top:26px;font:500 8px var(--mono);letter-spacing:.2em;color:#3a2d16}
+.dial{width:262px;height:262px;margin:-131px;background:repeating-conic-gradient(rgba(255,255,255,.025) 0 1.5deg,transparent 1.5deg 3deg),radial-gradient(circle at 50% 38%,#34343a,#18181b 72%)}
+.dial svg{position:absolute;inset:0;width:100%;height:100%}
+.dial .mk{position:absolute;left:0;right:0;text-align:center}
+.dial .nm{top:74px;font-weight:700;font-size:12px;letter-spacing:.34em}
+.dial .sb{top:170px;font:500 7.5px var(--mono);letter-spacing:.2em;color:var(--ink-2)}
+.date{position:absolute;right:38px;top:50%;margin-top:-9px;width:22px;height:18px;background:#ece8e1;color:#121214;font:500 10px/18px var(--mono);text-align:center}
+.hand{position:absolute;left:50%;bottom:50%;transform-origin:50% 100%;border-radius:2px}
+.hand.h{width:6px;height:68px;margin-left:-3px;background:var(--brass-hi)}
+.hand.m{width:4px;height:104px;margin-left:-2px;background:var(--brass)}
+.hand.s{width:1.5px;height:112px;margin-left:-.75px;background:var(--ink)}
+.cap{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;border-radius:50%;background:var(--brushed)}
+.crystal{width:276px;height:276px;margin:-138px;background:linear-gradient(140deg,rgba(255,255,255,.16),rgba(255,255,255,0) 38%,rgba(255,255,255,0) 70%,rgba(255,255,255,.06));box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+
+.labels{position:absolute;left:56%;top:calc(50% + 32px);width:0;height:0;pointer-events:none}
+.lab{position:absolute;left:0;top:0;display:flex;align-items:center;gap:12px;white-space:nowrap;opacity:0;will-change:transform,opacity}
+.lab div{text-align:right}
+.lab b{display:block;font-weight:500;font-size:13px}
+.lab small{display:block;font:400 11px var(--mono);color:var(--ink-2);letter-spacing:.04em}
+.lab i{width:56px;height:1px;background:var(--brass)}
+.lab i::after{content:"";display:block;width:5px;height:5px;margin:-2px 0 0 54px;border-radius:50%;background:var(--brass-hi)}
+
+.copy{position:relative;display:flex;flex-direction:column;justify-content:center;padding:96px 64px 48px 0}
+.kick{margin:0;font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--brass-hi)}
+h1{margin:14px 0 8px;font-weight:700;font-size:58px;line-height:.95;letter-spacing:-.02em}
+.price{margin:0 0 40px;font:400 13px var(--mono);color:var(--ink-2)}
+.caps{position:relative;height:176px;border-top:1px solid var(--line)}
+.capt{position:absolute;inset:24px 0 0;opacity:0;transform:translateY(14px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.capt.on{opacity:1;transform:none}
+.capt .n{font:500 11px var(--mono);letter-spacing:.14em;color:var(--brass-hi);text-transform:uppercase}
+.capt h2{margin:8px 0 10px;font-weight:700;font-size:22px;line-height:1.15;letter-spacing:-.005em}
+.capt p{margin:0;max-width:40ch;font-size:14px;color:var(--ink-2);font-stretch:100%}
+.rail{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.rail button{background:none;border:0;padding:12px 0 0;min-height:44px;text-align:left;cursor:pointer;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);position:relative}
+.rail button::before,.rail button span{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--line)}
+.rail button span{background:var(--brass);transform-origin:0 50%;transform:scaleX(0)}
+.rail button[aria-current="step"]{color:var(--ink)}
+.rail button:hover{color:var(--ink)}
+.hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2)}
+.hint svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;animation:nudge 1.6s var(--ease) infinite}
+@keyframes nudge{50%{transform:translateY(4px)}}
+
+.specs{padding:112px 48px 64px;border-top:1px solid var(--line);display:grid;grid-template-columns:5fr 7fr;gap:64px}
+.specs h2{margin:0;font-weight:700;font-size:40px;line-height:1;letter-spacing:-.02em}
+.specs p{color:var(--ink-2);font-stretch:100%;max-width:36ch}
+.specs dl{margin:0;display:grid;grid-template-columns:180px 1fr;font:400 14px var(--mono)}
+.specs dt,.specs dd{margin:0;padding:14px 0;border-bottom:1px solid var(--line)}
+.specs dt{color:var(--ink-2);text-transform:uppercase;font-size:11px;letter-spacing:.12em;padding-top:17px}
+.reserve{display:inline-flex;align-items:center;height:48px;margin-top:24px;padding:0 24px;background:linear-gradient(100deg,var(--brass-lo),var(--brass-hi) 45%,var(--brass) 70%,var(--brass-lo));color:#1a140a;font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+footer{padding:24px 48px 40px;display:flex;justify-content:space-between;font:400 12px var(--mono);color:var(--ink-2)}
+
+@media (max-width:900px){
+  .nav ul{display:none}
+  .sticky{grid-template-columns:1fr;grid-template-rows:56% 44%}
+  .scaler,.labels{top:calc(50% + 32px);left:50%}
+  .copy{padding:0 24px 28px;justify-content:flex-start}
+  h1{font-size:30px;margin:6px 0 4px}
+  .price{margin-bottom:14px;font-size:12px}
+  .caps{height:150px}
+  .capt{inset:14px 0 0}
+  .capt h2{font-size:18px;margin:6px 0}
+  .capt p{font-size:13px}
+  .labels{display:none}
+  .hint{display:none}
+  .specs{grid-template-columns:1fr;gap:24px;padding:72px 24px 48px}
+  .specs dl{grid-template-columns:120px 1fr;font-size:13px}
+  footer{padding:24px;flex-direction:column;gap:6px}
+}
+@media (max-width:640px){
+  .pin{height:300vh}
+  .nav{padding:0 20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pin{height:auto}
+  .sticky{position:relative;height:auto;min-height:100vh}
+  .caps{height:auto}
+  .capt{position:static;opacity:1;transform:none;transition:none;padding:16px 0;border-bottom:1px solid var(--line)}
+  .rail,.hint{display:none}
+}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <a class="logo" href="#">ORRERY</a>
+  <ul><li><a href="#specs">Meridian</a></li><li><a href="#specs">Calibre</a></li><li><a href="#specs">Service</a></li></ul>
+  <a class="buy" href="#specs">Reserve</a>
+</nav>
+
+<section class="pin" id="pin" aria-label="Meridian 40, taken apart">
+  <div class="sticky">
+    <div class="stage-col">
+      <div class="scaler"><div class="stage"><div class="watch" id="watch" aria-hidden="true">
+        <div class="part case" data-spread="-130" data-base="0">
+          <div class="strap t"></div><div class="strap b"></div>
+          <div class="ring"></div><div class="crown"></div>
+        </div>
+        <div class="part move" data-spread="-45" data-base="1">
+          <svg viewBox="0 0 248 248" fill="none" stroke="#b8955a">
+            <circle cx="88" cy="150" r="46" stroke-width="7" stroke-dasharray="3 3"/><circle cx="88" cy="150" r="30" stroke-width="1" opacity=".6"/>
+            <circle cx="168" cy="96" r="26" stroke-width="6" stroke-dasharray="2.5 2.5"/><circle cx="168" cy="96" r="5" fill="#dcc08a"/>
+            <circle cx="170" cy="178" r="30" stroke-width="2"/><path d="M170 148v60M140 178h60" stroke-width="1"/>
+            <circle cx="124" cy="124" r="96" stroke-width="1" opacity=".3"/>
+            <g fill="#ece8e1" stroke="none"><circle cx="88" cy="150" r="3"/><circle cx="170" cy="178" r="3"/><circle cx="124" cy="58" r="2.5"/><circle cx="60" cy="96" r="2.5"/></g>
+          </svg>
+          <div class="rotor" id="rotor">OR-7 · 28 JEWELS</div>
+        </div>
+        <div class="part dial" data-spread="45" data-base="2">
+          <svg viewBox="0 0 262 262" id="idx"></svg>
+          <div class="mk nm">ORRERY</div>
+          <div class="mk sb">AUTOMATIC · 100 M</div>
+          <div class="date">14</div>
+          <div class="hand h" id="hh"></div><div class="hand m" id="hm"></div><div class="hand s"></div><div class="cap"></div>
+        </div>
+        <div class="part crystal" data-spread="130" data-base="3"></div>
+      </div></div></div>
+      <div class="labels" aria-hidden="true">
+        <div class="lab"><div><b>Case</b><small>Titanium · 40 mm</small></div><i></i></div>
+        <div class="lab"><div><b>Calibre OR-7</b><small>28 jewels · 4 Hz</small></div><i></i></div>
+        <div class="lab"><div><b>Dial</b><small>Graphite sunray</small></div><i></i></div>
+        <div class="lab"><div><b>Crystal</b><small>Sapphire · 2.1 mm</small></div><i></i></div>
+      </div>
+      <div class="hint" id="hint" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 3v10M4 9l4 4 4-4"/></svg>Scroll</div>
+    </div>
+    <div class="copy">
+      <p class="kick">Orrery Instruments · Geneva</p>
+      <h1>Meridian 40</h1>
+      <p class="price">CHF 4,200 · Ships 12 November</p>
+      <div class="caps">
+        <div class="capt on" data-i="0"><span class="n">01 / Turn</span><h2>Forty millimetres of graphite.</h2><p>A brushed titanium case in graphite PVD, 9.8 mm thin, with a brass crown you can wind wearing gloves.</p></div>
+        <div class="capt" data-i="1"><span class="n">02 / Open</span><h2>Four parts. Nothing glued.</h2><p>Crystal, dial, movement and case lift apart with two screws. Our Geneva bench services each one on its own.</p></div>
+        <div class="capt" data-i="2"><span class="n">03 / Inside</span><h2>Calibre OR-7, wound by your wrist.</h2><p>A 28-jewel automatic beating at 4 Hz. The brass rotor stores 72 hours of reserve, enough for a weekend off.</p></div>
+        <div class="capt" data-i="3"><span class="n">04 / Close</span><h2>Sealed again to 100 metres.</h2><p>Double gaskets close the stack. Sapphire front and back, anti-reflective inside, so the dial reads at dusk.</p></div>
+      </div>
+      <div class="rail" role="group" aria-label="Steps">
+        <button type="button" aria-current="step"><span></span>01 Turn</button>
+        <button type="button"><span></span>02 Open</button>
+        <button type="button"><span></span>03 Inside</button>
+        <button type="button"><span></span>04 Close</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="specs" id="specs" aria-labelledby="sp-h">
+  <div>
+    <h2 id="sp-h">Specifications</h2>
+    <p>Made in a run of 600 pieces for 2026. Each Meridian is regulated in five positions and signed by the watchmaker who closed it.</p>
+    <a class="reserve" href="#pin">Reserve yours</a>
+  </div>
+  <dl>
+    <dt>Case</dt><dd>40.0 mm, Grade 5 titanium, graphite PVD</dd>
+    <dt>Thickness</dt><dd>9.8 mm</dd>
+    <dt>Movement</dt><dd>OR-7 automatic, 28 jewels, 28,800 vph</dd>
+    <dt>Reserve</dt><dd>72 hours</dd>
+    <dt>Water</dt><dd>100 m, screw-down crown</dd>
+    <dt>Strap</dt><dd>FKM rubber, 20 mm, brass pin buckle</dd>
+    <dt>Price</dt><dd>CHF 4,200 incl. VAT</dd>
+  </dl>
+</section>
+<footer><span>Orrery Instruments SA · Rue du Rhône 14, Geneva</span><span>Service interval 8 years</span></footer>
+
+<script>
+(() => {
+  const idx = document.getElementById('idx');
+  let s = '';
+  for (let i = 0; i < 60; i++) {
+    const big = i % 5 === 0, a = i * 6;
+    s += big
+      ? `<rect x="${i ? 129 : 125}" y="14" width="${i ? 4 : 12}" height="22" fill="#dcc08a" transform="rotate(${a} 131 131)"/>`
+      : `<rect x="130.5" y="14" width="1" height="6" fill="#a29d94" transform="rotate(${a} 131 131)"/>`;
+  }
+  idx.innerHTML = s;
+
+  const pin = document.getElementById('pin'), watch = document.getElementById('watch');
+  const rotor = document.getElementById('rotor'), hh = document.getElementById('hh'), hm = document.getElementById('hm');
+  const hint = document.getElementById('hint');
+  const parts = [...document.querySelectorAll('.part')].map(el => ({ el, sp: +el.dataset.spread, b: +el.dataset.base }));
+  const labs = [...document.querySelectorAll('.lab')];
+  const caps = [...document.querySelectorAll('.capt')];
+  const btns = [...document.querySelectorAll('.rail button')];
+  const fills = btns.map(b => b.firstElementChild);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const narrow = matchMedia('(max-width: 900px)');
+  const P = 1600, R = Math.PI / 180;
+  let top = 0, len = 1, vh = innerHeight, sy = scrollY, k = 1, step = -1, queued = false;
+
+  const clamp = v => v < 0 ? 0 : v > 1 ? 1 : v;
+  const io = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const seg = (p, a, b) => io(clamp((p - a) / (b - a)));
+
+  const measure = () => {
+    vh = innerHeight; sy = scrollY;
+    top = pin.offsetTop; len = Math.max(1, pin.offsetHeight - vh);
+    k = narrow.matches ? Math.min(0.66, innerWidth / 560) : 1;
+    pin.style.setProperty('--k', k);
+  };
+
+  const pose = p => {
+    const tilt = seg(p, 0, .2) - seg(p, .86, 1);
+    const ex = seg(p, .22, .42) - seg(p, .72, .9);
+    const lift = seg(p, .48, .6) - seg(p, .66, .76);
+    const ax = 10 + 50 * tilt, az = -6 - 32 * tilt;
+    watch.style.transform = `rotateX(${ax.toFixed(2)}deg) rotateZ(${az.toFixed(2)}deg)`;
+    const sin = Math.sin(ax * R), cos = Math.cos(ax * R);
+    parts.forEach((pt, i) => {
+      const z = pt.b + pt.sp * ex + (pt.sp > 0 ? 50 : -20) * lift;
+      pt.el.style.transform = `translateZ(${z.toFixed(1)}px)`;
+      const sc = P / (P - z * cos), y = -z * sin * sc * k;
+      labs[i].style.transform = `translate(calc(-100% - ${(150 * k).toFixed(0)}px),calc(-50% + ${y.toFixed(1)}px))`;
+      labs[i].style.opacity = clamp((ex - .55 - i * .08) / .25).toFixed(3);
+    });
+    rotor.style.transform = `rotate(${(p * 540).toFixed(1)}deg)`;
+    hm.style.transform = `rotate(${(48 + p * 360).toFixed(1)}deg)`;
+    hh.style.transform = `rotate(${(304 + p * 30).toFixed(2)}deg)`;
+  };
+
+  const paint = () => {
+    queued = false;
+    if (reduce.matches) { pose(.5); return; }
+    const p = clamp((sy - top) / len);
+    pose(p);
+    fills.forEach((f, i) => (f.style.transform = `scaleX(${clamp(p * 4 - i).toFixed(3)})`));
+    hint.style.opacity = clamp(1 - p * 25).toFixed(2);
+    const st = Math.min(3, Math.floor(p * 4));
+    if (st !== step) {
+      step = st;
+      caps.forEach((c, i) => { c.classList.toggle('on', i === st); c.setAttribute('aria-hidden', i !== st); });
+      btns.forEach((b, i) => i === st ? b.setAttribute('aria-current', 'step') : b.removeAttribute('aria-current'));
+    }
+  };
+  const queue = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+
+  btns.forEach((b, i) => b.addEventListener('click', () => {
+    scrollTo({ top: top + len * (i * .25 + .13), behavior: reduce.matches ? 'auto' : 'smooth' });
+  }));
+  addEventListener('scroll', () => { sy = scrollY; queue(); }, { passive: true });
+  addEventListener('resize', () => { measure(); step = -1; queue(); }, { passive: true });
+  reduce.addEventListener('change', () => { measure(); step = -1; caps.forEach(c => c.removeAttribute('aria-hidden')); queue(); });
+  measure();
+  if (reduce.matches) caps.forEach(c => c.classList.add('on'));
+  queue();
+})();
+</script>
+</body>
+</html>

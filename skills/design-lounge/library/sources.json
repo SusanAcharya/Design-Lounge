@@ -49,6 +49,7 @@
         "gooey-menu",
         "hamburger-circle-reveal",
         "inline-edit",
+        "object-3d-turntable",
         "letter-sleeve",
         "minute-wheel",
         "card-article-mix",
@@ -229,9 +230,17 @@
         "hero-swiss-grid-wordmark",
         "background-topographic-lines",
         "greeting-loader",
+        "parallax-layered-hero",
+        "mobile-scroll-story",
+        "page-transition-tile-wipe",
         "phone-splash-launch",
+        "preloader-counter-intro",
         "scroll-split",
-        "scroll-velocity-type"
+        "scroll-velocity-type",
+        "scroll-zoom-portal",
+        "scroll-scrub-product-sequence",
+        "smooth-scroll-inertia",
+        "text-mask-scroll-reveal"
       ]
     },
     {
@@ -357,7 +366,8 @@
         "landing-wellness-retreat",
         "corner-player",
         "coverflow-strip",
-        "overlap-slider"
+        "overlap-slider",
+        "webgl-shader-hero"
       ]
     },
     {
@@ -376,7 +386,9 @@
         "text-marker-highlight-draw",
         "text-mask-line-reveal",
         "text-split-letter-wave",
+        "hero-video-loop",
         "glitch-text",
+        "scroll-word-highlight",
         "split-flap-board",
         "trail-type"
       ]

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 182 · "Coverflow strip" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 183 · "Coverflow strip" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Coverflow strip
 

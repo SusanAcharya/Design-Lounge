@@ -1,0 +1,233 @@
+<!-- Design Lounge piece: preloader-counter-intro · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Grainroom — Independent print fair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f1eadb;--cream-2:#e6dcc8;--ink:#141310;--ink-2:#4f4a40;--acid:#c6f432;--line:#141310;
+  --display:"Anton",Impact,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --pad:40px;--count-dur:1800ms;--hold:150ms;--t-split:700ms;
+  --ease-split:cubic-bezier(.76,0,.24,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-pop:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--cream);color:var(--ink);font:14px/1.5 var(--mono);overflow:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--acid)}
+
+.site{height:100%;display:flex;flex-direction:column}
+header{height:64px;flex:none;display:flex;align-items:center;gap:32px;padding:0 var(--pad);border-bottom:2px solid var(--line)}
+.logo{font:400 30px/1 var(--display);letter-spacing:.01em;text-decoration:none;text-transform:uppercase}
+header nav{display:flex;gap:24px;margin-left:auto}
+header nav a{font-size:13px;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;padding:10px 0}
+header nav a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.pass{display:flex;align-items:center;gap:10px;height:40px;padding:0 16px;background:var(--ink);color:var(--cream);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;transition:background .16s var(--ease),color .16s var(--ease)}
+.pass:hover{background:var(--acid);color:var(--ink)}
+
+main{flex:1;display:flex;flex-direction:column;padding:28px var(--pad) 72px;min-height:0}
+.kicker{display:flex;justify-content:space-between;margin:0;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+h1{margin:16px 0 0;font:400 clamp(72px,18.4vw,236px)/.86 var(--display);text-transform:uppercase;letter-spacing:-.005em}
+h1 .w{display:inline-flex;overflow:hidden;vertical-align:top;padding-top:.04em}
+h1 .on{background:var(--acid);padding:0 .06em;margin:0 .04em}
+h1 .ch{display:inline-block;transform:translateY(105%);transition:transform 650ms var(--ease-out);transition-delay:calc(150ms + var(--i) * 30ms)}
+.in h1 .ch{transform:none}
+.site:not(.in) h1 .ch,.site:not(.in) .rise{transition:none}
+.rise{opacity:0;transform:translateY(12px);transition:opacity .4s var(--ease) .5s,transform .5s var(--ease-out) .5s}
+.in .rise{opacity:1;transform:none}
+
+.row{margin-top:auto;display:grid;grid-template-columns:3fr repeat(4,2fr);gap:16px;align-items:end}
+.meta{display:grid;gap:10px;border-top:2px solid var(--line);padding-top:12px}
+.meta strong{display:block;font:400 34px/1 var(--display);text-transform:uppercase}
+.meta span{color:var(--ink-2);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+figure{margin:0}
+figure .art{height:128px;border:2px solid var(--line)}
+figcaption{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+figcaption b{font-weight:500;color:var(--ink-2)}
+
+.art{position:relative;overflow:hidden}
+.b1{background:radial-gradient(circle at 38% 52%,var(--ink) 0 30%,transparent 30.5%),radial-gradient(circle at 62% 48%,var(--acid) 0 30%,transparent 30.5%),var(--cream)}
+.b1::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 62% 48%,var(--acid) 0 30%,transparent 30.5%);mix-blend-mode:multiply}
+.b2{background:var(--cream-2);display:grid;place-items:center;font:400 112px/1 var(--display);color:var(--ink)}
+.b3{background:radial-gradient(var(--ink) 34%,transparent 36%) 0 0/12px 12px,var(--acid)}
+.b4{background:repeating-linear-gradient(135deg,var(--ink) 0 3px,transparent 3px 14px),var(--cream)}
+.b4::before{content:"";position:absolute;inset:22% 18%;background:var(--acid);border:2px solid var(--ink);transform:rotate(-6deg)}
+
+.replay{position:fixed;left:20px;bottom:20px;z-index:4;display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;background:var(--cream);border:2px solid var(--line);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;transition:background .16s var(--ease)}
+.replay:hover{background:var(--acid)}
+.replay svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.loading .replay{visibility:hidden}
+
+.loader{position:fixed;inset:0;z-index:10}
+.loader[hidden]{display:none}
+.half{position:absolute;left:0;right:0;height:50%;overflow:hidden;background:var(--ink);transition:transform var(--t-split) var(--ease-split)}
+.half.top{top:0}.half.bot{bottom:0}
+.half .stage{position:absolute;left:0;right:0;height:200%}
+.half.top .stage{top:0}.half.bot .stage{bottom:0}
+.split .half.top{transform:translateY(-100%)}
+.split .half.bot{transform:translateY(100%)}
+.stage{color:var(--cream)}
+.stage .lbl{position:absolute;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.l1{top:28px;left:var(--pad)}.l2{top:28px;right:var(--pad)}.l3{bottom:28px;left:var(--pad)}.l4{bottom:28px;right:var(--pad);color:var(--acid)}
+.num{position:absolute;right:var(--pad);top:50%;transform:translateY(-52%);display:flex;align-items:flex-start;font:400 clamp(160px,34vw,420px)/1 var(--display);letter-spacing:0;font-variant-numeric:tabular-nums}
+.num .d{display:inline-block;width:.47em;text-align:center}
+.num sup{font:700 clamp(18px,2.6vw,32px)/1 var(--mono);color:var(--acid);margin:.5em 0 0 .25em}
+.full .num{color:var(--acid)}
+.bar{position:absolute;left:var(--pad);right:var(--pad);bottom:64px;height:2px;background:#3a3730}
+.bar i{position:absolute;inset:0;background:var(--acid);transform-origin:0 50%;transform:scaleX(var(--p,0))}
+.pop{position:absolute;width:clamp(72px,9vw,116px);aspect-ratio:4/5;border:2px solid var(--cream);opacity:0;transform:scale(.6) rotate(var(--r));transition:opacity .2s var(--ease),transform .36s var(--ease-pop)}
+.pop.on{opacity:1;transform:scale(1) rotate(var(--r))}
+.p1{left:8%;top:16%;--r:-4deg}.p2{left:24%;top:30%;--r:5deg}.p3{left:12%;bottom:18%;--r:3deg}.p4{left:30%;bottom:26%;--r:-6deg}
+.pop.b2{font-size:64px}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:1023px){.row{grid-template-columns:repeat(4,1fr)}.meta{grid-column:1/-1;grid-template-columns:repeat(3,1fr)}}
+@media (max-width:767px){
+  :root{--pad:20px}
+  body{overflow:auto}
+  .site{height:auto;min-height:100%}
+  header{gap:12px}header nav{display:none}.pass{margin-left:auto}
+  .kicker{flex-direction:column;gap:4px}
+  h1{font-size:clamp(56px,19vw,120px);margin-top:20px}
+  .row{margin-top:32px;grid-template-columns:1fr 1fr}
+  .meta{grid-template-columns:1fr}
+  figure .art{height:112px}
+  main{padding-bottom:88px}
+  .num{font-size:clamp(150px,42vw,220px)}
+  .p1{left:auto;right:10%;top:12%}.p2{left:8%;top:22%}.p3{left:12%;bottom:18%}.p4{left:auto;right:8%;bottom:24%}
+}
+@media (prefers-reduced-motion:reduce){
+  h1 .ch,.rise{transition:none!important;transform:none!important;opacity:1!important}
+  .half{transition:none}
+  .pop{transition:none}
+  .loader{transition:opacity .2s linear}
+  .loader.fade{opacity:0}
+}
+</style>
+</head>
+<body class="loading">
+<div class="site" id="site">
+  <header>
+    <a class="logo" href="#">Grainroom</a>
+    <nav aria-label="Primary"><a href="#">Exhibitors</a><a href="#">Programme</a><a href="#">Visit</a></nav>
+    <a class="pass" href="#">Day pass £12</a>
+  </header>
+  <main id="main">
+    <p class="kicker rise"><span>Independent print &amp; zine fair · No. 07</span><span>120 tables · 3 days</span></p>
+    <h1 id="headline" aria-label="Ink on everything"><span class="w" data-t="Ink"></span> <span class="w on" data-t="on"></span><br><span class="w" data-t="everything"></span></h1>
+    <div class="row rise">
+      <div class="meta">
+        <div><strong>14—16 Nov 2026</strong><span>Fri 16:00 — Sun 18:00</span></div>
+        <div><strong>Leeds Corn Exchange</strong><span>Call Lane, LS1 7BR</span></div>
+      </div>
+      <figure><div class="art b1"></div><figcaption>Riso<b>32 tables</b></figcaption></figure>
+      <figure><div class="art b2">A</div><figcaption>Letterpress<b>18</b></figcaption></figure>
+      <figure><div class="art b3"></div><figcaption>Screen<b>24</b></figcaption></figure>
+      <figure><div class="art b4"></div><figcaption>Zines<b>46</b></figcaption></figure>
+    </div>
+  </main>
+</div>
+<button class="replay" type="button" id="replay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg>Replay intro</button>
+
+<div class="loader" id="loader" role="progressbar" aria-label="Loading the fair guide" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div class="half top"><div class="stage"></div></div>
+  <div class="half bot" aria-hidden="true"><div class="stage"></div></div>
+</div>
+<p class="sr" id="live" role="status"></p>
+
+<template id="stage-tpl">
+  <span class="lbl l1">Grainroom / Fair guide 2026</span>
+  <span class="lbl l2">14—16.11.26</span>
+  <span class="lbl l3">Leeds Corn Exchange</span>
+  <span class="lbl l4">Loading tables</span>
+  <div class="pop art b1 p1"></div>
+  <div class="pop art b2 p2">A</div>
+  <div class="pop art b3 p3"></div>
+  <div class="pop art b4 p4"></div>
+  <div class="num" aria-hidden="true"><span class="d"></span><span class="d"></span><span class="d">0</span><sup>%</sup></div>
+  <div class="bar"><i></i></div>
+</template>
+
+<script>
+(() => {
+  const DUR = 1800, HOLD = 150, SPLIT = 700, AT = [0.18, 0.42, 0.66, 0.88];
+  const $ = id => document.getElementById(id);
+  const body = document.body, site = $('site'), loader = $('loader'), main = $('main'), replay = $('replay');
+  const rm = matchMedia('(prefers-reduced-motion: reduce)');
+  const tpl = $('stage-tpl');
+  loader.querySelectorAll('.stage').forEach(s => s.appendChild(tpl.content.cloneNode(true)));
+  const digits = [...loader.querySelectorAll('.num')].map(n => [...n.querySelectorAll('.d')]);
+  const bars = [...loader.querySelectorAll('.bar')];
+  const pops = [0, 1, 2, 3].map(i => [...loader.querySelectorAll('.p' + (i + 1))]);
+
+  let i = 0;
+  document.querySelectorAll('h1 .w').forEach(w => {
+    w.setAttribute('aria-hidden', 'true');
+    w.innerHTML = [...w.dataset.t].map(c => `<span class="ch" style="--i:${i++}">${c}</span>`).join('');
+  });
+
+  let raf = 0, timers = [], step = -1, refocus = false;
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+
+  function set(v) {
+    const s = String(v).padStart(3, ' ');
+    digits.forEach(d => d.forEach((el, k) => { el.textContent = s[k] === ' ' ? '' : s[k]; }));
+    bars.forEach(b => b.style.setProperty('--p', v / 100));
+    const q = Math.floor(v / 25);
+    if (q !== step) { step = q; loader.setAttribute('aria-valuenow', String(q * 25)); }
+    AT.forEach((a, k) => pops[k].forEach(p => p.classList.toggle('on', v / 100 >= a)));
+  }
+
+  function reveal() {
+    if (!rm.matches) loader.classList.add('split');
+    site.classList.add('in');
+    later(() => {
+      loader.hidden = true;
+      body.classList.remove('loading');
+      main.inert = false;
+      $('live').textContent = 'Fair guide loaded';
+      if (refocus) replay.focus();
+    }, rm.matches ? 200 : SPLIT);
+  }
+
+  function tick(start, now) {
+    const t = Math.min(1, (now - start) / DUR);
+    set(Math.round(100 * ease(t)));
+    if (t < 1) raf = requestAnimationFrame(n => tick(start, n));
+    else { loader.classList.add('full'); later(reveal, HOLD); }
+  }
+
+  function play() {
+    cancelAnimationFrame(raf);
+    timers.forEach(clearTimeout); timers = [];
+    step = -1;
+    loader.hidden = false;
+    loader.classList.remove('split', 'full', 'fade');
+    site.classList.remove('in');
+    body.classList.add('loading');
+    main.inert = true;
+    $('live').textContent = '';
+    if (rm.matches) {
+      set(100);
+      loader.classList.add('full');
+      later(() => { loader.classList.add('fade'); reveal(); }, 300);
+      return;
+    }
+    set(0);
+    void loader.offsetWidth;
+    raf = requestAnimationFrame(n => tick(n, n));
+  }
+
+  replay.addEventListener('click', () => { refocus = true; play(); });
+  play();
+})();
+</script>
+</body>
+</html>

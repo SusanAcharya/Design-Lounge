@@ -1,0 +1,289 @@
+<!-- Design Lounge piece: smooth-scroll-inertia · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ostra — Identity and motion studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0d0c;--bg-2:#171513;--ink:#eae4d8;--ink-2:#a8a195;--ink-3:#8a8478;--line:#2a2826;--red:#ea3a22;
+  --sans:"Inter Tight",system-ui,sans-serif;--serif:"Instrument Serif",Georgia,serif;
+  --pad:48px;--nav-h:72px;--lerp:.1;--skew-max:4;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-behavior:auto}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);overflow-x:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:5;display:flex;align-items:center;gap:32px;padding:0 var(--pad);
+  background:var(--bg);border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.04em;text-decoration:none}
+.logo span{color:var(--red)}
+.nav ul{display:flex;gap:28px;margin:0 0 0 auto;padding:0;list-style:none}
+.nav ul a{font-size:14px;font-weight:500;text-decoration:none;color:var(--ink-2);transition:color .16s var(--ease)}
+.nav ul a:hover{color:var(--ink)}
+.mode{display:flex;align-items:center;gap:10px;height:40px;padding:0 14px;border:1px solid var(--line);border-radius:20px;font-size:13px;color:var(--ink-2)}
+.mode i{width:28px;height:16px;border-radius:8px;background:var(--line);position:relative;transition:background .2s var(--ease)}
+.mode i::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--ink-3);transition:transform .2s var(--ease),background .2s var(--ease)}
+.mode[aria-pressed="true"] i{background:var(--red)}
+.mode[aria-pressed="true"] i::after{transform:translateX(12px);background:var(--ink)}
+
+#view{position:relative;width:100%;overflow-x:clip}
+.smooth #view{position:fixed;top:0;left:0;will-change:transform}
+
+.hero{min-height:100vh;padding:calc(var(--nav-h) + 72px) var(--pad) 40px;display:flex;flex-direction:column}
+.eyebrow{margin:0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:28px 0 0;font-weight:800;font-size:clamp(64px,14.8vw,188px);line-height:.88;letter-spacing:-.055em}
+h1 em{font-size:1.08em;letter-spacing:-.02em;padding-right:.04em}
+h1 b{color:var(--red);font-weight:800}
+.hero-foot{margin-top:auto;display:grid;grid-template-columns:5fr 4fr 3fr;gap:32px;align-items:end;padding-top:40px;border-top:1px solid var(--line)}
+.hero-foot p{margin:0;max-width:40ch;color:var(--ink-2)}
+.hero-foot p strong{color:var(--ink);font-weight:500}
+.cue{justify-self:end;display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.cue svg{width:20px;height:20px;fill:none;stroke:var(--red);stroke-width:1.75;stroke-linecap:round}
+
+section{padding:120px var(--pad)}
+.head{display:flex;align-items:baseline;gap:24px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:72px}
+h2{margin:0;font-weight:700;font-size:40px;letter-spacing:-.04em;line-height:1}
+h2 em{font-size:1.1em}
+.head span{font-size:13px;color:var(--ink-3);letter-spacing:.1em}
+.head .n{margin-left:auto;color:var(--red)}
+
+.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:96px}
+.p{margin:0}
+.p1{grid-column:1/8}.p2{grid-column:8/13;margin-top:180px}.p3{grid-column:2/7}.p4{grid-column:7/13;margin-top:120px}
+.frame{position:relative;overflow:hidden;background:var(--bg-2);transform:skewY(calc(var(--skew,0) * 1deg));transform-origin:50% 50%}
+.p1 .frame{aspect-ratio:4/3}.p2 .frame{aspect-ratio:4/5}.p3 .frame{aspect-ratio:1/1}.p4 .frame{aspect-ratio:3/2}
+.art{position:absolute;left:0;right:0;top:-12%;height:124%;will-change:transform}
+.a1{background:radial-gradient(circle at 50% 44%,#eae4d8 0 21%,transparent 21.4%),linear-gradient(transparent 0 63%,#ea3a22 63% 64.2%,transparent 64.2%),linear-gradient(#26211d,#12100e)}
+.a2{background:linear-gradient(#ea3a22,#ea3a22) 64% 34%/18% 38% no-repeat,repeating-linear-gradient(90deg,#2f2a26 0 2px,transparent 2px 26px),#161412}
+.a3{background:radial-gradient(ellipse 22% 40% at 30% 100%,#eae4d8 0 99%,transparent 100%),radial-gradient(ellipse 22% 40% at 72% 100%,#ea3a22 0 99%,transparent 100%),radial-gradient(ellipse 22% 40% at 30% 60%,#3a332d 0 99%,transparent 100%),#1f1a16}
+.a4{background:radial-gradient(#3b3631 1.2px,transparent 1.5px) 0 0/18px 18px,#141210;display:grid;place-items:center}
+.a4 span{font:italic 400 clamp(120px,19vw,240px)/1 var(--serif);color:var(--ink);letter-spacing:-.04em}
+.a4 span b{color:var(--red);font-weight:400}
+figcaption{display:grid;grid-template-columns:40px 1fr auto;gap:12px;padding-top:16px;font-size:14px;color:var(--ink-2)}
+figcaption .i{color:var(--red);font-weight:500}
+figcaption strong{display:block;color:var(--ink);font-size:20px;font-weight:700;letter-spacing:-.02em}
+
+.method blockquote{margin:0 0 96px;max-width:17ch;font-weight:700;font-size:clamp(40px,5.6vw,72px);line-height:1;letter-spacing:-.045em}
+.method blockquote em{color:var(--red)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:0;padding:0;list-style:none}
+.steps li{border-top:1px solid var(--line);padding-top:20px}
+.steps b{display:block;font-family:var(--serif);font-style:italic;font-weight:400;font-size:28px;color:var(--red)}
+.steps h3{margin:8px 0 8px;font-size:22px;letter-spacing:-.02em}
+.steps p{margin:0;color:var(--ink-2);max-width:32ch}
+
+footer{padding:120px var(--pad) 32px;border-top:1px solid var(--line)}
+.contact{display:grid;grid-template-columns:5fr 4fr 3fr;gap:32px;align-items:end}
+.contact h2{font-size:56px}
+.contact p{margin:0;color:var(--ink-2)}
+.contact .mail{display:inline-block;margin-top:8px;font-size:24px;font-weight:500;color:var(--ink);text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:6px}
+.word{margin-top:80px;overflow:hidden;background:none;transform:none}
+.word .art{position:relative;top:0;height:auto;font-weight:800;font-size:27.4vw;line-height:.8;letter-spacing:-.07em;text-align:center;padding:.02em 0 .03em;user-select:none}
+.word .art span{color:var(--red)}
+.legal{display:flex;justify-content:space-between;margin-top:32px;font-size:13px;color:var(--ink-3)}
+
+.status{position:fixed;left:var(--pad);bottom:20px;z-index:5;margin:0;font-size:12px;letter-spacing:.08em;color:var(--ink-3);opacity:0;transition:opacity .3s var(--ease);pointer-events:none}
+.status.show{opacity:1}
+
+@media (max-width:767px){
+  :root{--pad:20px;--nav-h:64px}
+  .nav ul{display:none}.mode{margin-left:auto}
+  .hero{min-height:80vh;padding-top:calc(var(--nav-h) + 40px)}
+  h1{font-size:clamp(52px,17vw,96px)}
+  .hero-foot,.contact{grid-template-columns:1fr;gap:20px}
+  .cue{justify-self:start}
+  section{padding:80px var(--pad)}
+  .head{margin-bottom:40px}h2{font-size:32px}
+  .grid{row-gap:56px}.p1,.p2,.p3,.p4{grid-column:1/-1;margin-top:0}
+  .steps{grid-template-columns:1fr;gap:32px}
+  .contact h2{font-size:40px}.contact .mail{font-size:20px}
+  .legal{flex-direction:column;gap:6px}
+}
+@media (prefers-reduced-motion:reduce){
+  .frame{transform:none}.art{transform:none!important}
+  .mode i,.mode i::after,.status{transition:none}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="#top">Ostra<span>.</span></a>
+  <nav aria-label="Primary"><ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#method">Method</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul></nav>
+  <button class="mode" type="button" id="mode" aria-pressed="true"><i aria-hidden="true"></i>Smooth scroll</button>
+</header>
+
+<div id="view">
+  <main>
+    <div class="hero" id="top" tabindex="-1">
+      <p class="eyebrow">Identity &amp; motion studio · Porto · Since 2014</p>
+      <h1>Brands that<br>move <em>slowly</em><b>.</b></h1>
+      <div class="hero-foot">
+        <p>We are twelve people who design <strong>identities, type and motion</strong> for companies that plan in decades, not quarters.</p>
+        <p>Now booking for spring 2027.<br>Two projects at a time, never more.</p>
+        <a class="cue" href="#work">Selected work <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6"/></svg></a>
+      </div>
+    </div>
+
+    <section id="work" tabindex="-1" aria-labelledby="work-h">
+      <div class="head"><h2 id="work-h">Selected <em>work</em></h2><span>2023 — 2026</span><span class="n">04</span></div>
+      <div class="grid">
+        <figure class="p p1"><div class="frame"><div class="art a1" aria-hidden="true"></div></div>
+          <figcaption><span class="i">01</span><span><strong>Salt Archive</strong>Identity and archive system</span><span>Museu do Sal, 2026</span></figcaption></figure>
+        <figure class="p p2"><div class="frame"><div class="art a2" aria-hidden="true"></div></div>
+          <figcaption><span class="i">02</span><span><strong>Lumen Rail</strong>Wayfinding and motion</span><span>Linha Norte, 2025</span></figcaption></figure>
+        <figure class="p p3"><div class="frame"><div class="art a3" aria-hidden="true"></div></div>
+          <figcaption><span class="i">03</span><span><strong>Kiln Week</strong>Festival identity</span><span>Kiln Week Porto, 2024</span></figcaption></figure>
+        <figure class="p p4"><div class="frame"><div class="art a4" aria-hidden="true"><span>N<b>b</b></span></div></div>
+          <figcaption><span class="i">04</span><span><strong>Northbound</strong>Type family and campaign</span><span>Northbound Ferries, 2023</span></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="method" id="method" tabindex="-1" aria-labelledby="method-h">
+      <div class="head"><h2 id="method-h">Method</h2><span>Six weeks, three phases</span></div>
+      <blockquote>Slow is a decision. We listen for three weeks, then make it look <em>easy</em>.</blockquote>
+      <ol class="steps">
+        <li><b>i.</b><h3>Listen</h3><p>Three weeks of interviews, archives and site visits before a single sketch.</p></li>
+        <li><b>ii.</b><h3>Draw</h3><p>Marks, type and motion rules drawn together, tested at 16 pixels and at 16 metres.</p></li>
+        <li><b>iii.</b><h3>Hand over</h3><p>A system your team runs without us: source files, motion rules and a 40-page manual.</p></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer id="contact" tabindex="-1" aria-labelledby="contact-h">
+    <div class="contact">
+      <div><h2 id="contact-h">Start a <em>project</em></h2><a class="mail" href="#contact">hello@ostra.studio</a></div>
+      <p>Rua do Almada 212<br>4050-032 Porto, Portugal</p>
+      <p>Mon to Thu, 09:00 — 18:00<br>+351 220 418 377</p>
+    </div>
+    <div class="frame word" aria-hidden="true"><div class="art">Ostra<span>.</span></div></div>
+    <div class="legal"><span>© 2026 Ostra Studio Lda.</span><span>Set in Inter Tight and Instrument Serif</span></div>
+  </footer>
+</div>
+<div id="spacer" aria-hidden="true"></div>
+<p class="status" id="status" role="status"></p>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const view = document.getElementById('view');
+  const spacer = document.getElementById('spacer');
+  const btn = document.getElementById('mode');
+  const status = document.getElementById('status');
+  const rm = matchMedia('(prefers-reduced-motion: reduce)');
+  const coarse = matchMedia('(pointer: coarse)');
+  const LERP = 0.1, SKEW_MAX = 4, NAV = 72;
+  const frames = [...document.querySelectorAll('.frame')].map(f => ({ f, art: f.firstElementChild, top: 0, h: 0, word: f.classList.contains('word') }));
+  let smooth = false, userOff = false, cur = 0, raf = 0, vh = innerHeight, statusT = 0;
+
+  const topIn = el => { let y = 0; while (el && el !== view) { y += el.offsetTop; el = el.offsetParent; } return y; };
+
+  function measure() {
+    vh = innerHeight;
+    spacer.style.height = smooth ? view.offsetHeight + 'px' : '0px';
+    frames.forEach(o => { o.top = topIn(o.f); o.h = o.f.offsetHeight; o.tail = view.offsetHeight - o.top - o.h; });
+  }
+
+  function apply(v) {
+    if (smooth) view.style.transform = `translate3d(0,${-cur}px,0)`;
+    if (rm.matches) return;
+    const skew = smooth ? Math.max(-SKEW_MAX, Math.min(SKEW_MAX, v * 0.025)) : 0;
+    view.style.setProperty('--skew', skew.toFixed(3));
+    for (const o of frames) {
+      if (o.word) {
+        const dist = o.top + o.h - cur - (vh - o.tail);
+        o.art.style.transform = `translate3d(0,${Math.min(100, Math.max(0, dist / o.h * 70)).toFixed(1)}%,0)`;
+        continue;
+      }
+      const rel = (o.top - cur + o.h / 2 - vh / 2) / vh;
+      if (rel < -1.4 || rel > 1.4) continue;
+      o.art.style.transform = `translate3d(0,${(rel * -o.h * 0.1).toFixed(1)}px,0)`;
+    }
+  }
+
+  function tick() {
+    const target = scrollY;
+    const d = target - cur;
+    cur = smooth ? cur + d * LERP : target;
+    if (Math.abs(target - cur) < 0.1) cur = target;
+    apply(d);
+    raf = cur !== target ? requestAnimationFrame(tick) : 0;
+    if (!raf) apply(0);
+  }
+  const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
+
+  function setSmooth(on, note) {
+    smooth = on && !rm.matches && !coarse.matches;
+    root.classList.toggle('smooth', smooth);
+    btn.setAttribute('aria-pressed', String(smooth));
+    if (!smooth) view.style.transform = '';
+    measure();
+    cur = scrollY;
+    apply(0);
+    if (note) say(note);
+  }
+
+  function say(text) {
+    status.textContent = text;
+    status.classList.add('show');
+    clearTimeout(statusT);
+    statusT = setTimeout(() => status.classList.remove('show'), 2200);
+  }
+
+  function scrollToEl(el) {
+    const top = Math.max(0, topIn(el) - NAV);
+    scrollTo({ top, behavior: smooth || rm.matches ? 'auto' : 'smooth' });
+  }
+
+  addEventListener('scroll', kick, { passive: true });
+  addEventListener('resize', () => { measure(); kick(); });
+  new ResizeObserver(() => measure()).observe(view);
+
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const el = document.querySelector(a.getAttribute('href'));
+    if (!el) return;
+    e.preventDefault();
+    scrollToEl(el);
+    try { history.replaceState(null, '', a.getAttribute('href')); } catch (_) {}
+    el.focus({ preventScroll: true });
+  });
+
+  document.addEventListener('focusin', e => {
+    if (!smooth || e.target === btn || e.target.closest('.nav')) return;
+    const t = topIn(e.target);
+    if (t < scrollY + NAV || t + Math.min(e.target.offsetHeight, 120) > scrollY + vh - 40) scrollTo(0, Math.max(0, t - vh * 0.3));
+  });
+
+  addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'f' && smooth) setSmooth(false, 'Native scroll while you search');
+  });
+  addEventListener('wheel', () => { if (!smooth && !userOff && !rm.matches && !coarse.matches) setSmooth(true); }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    userOff = smooth;
+    setSmooth(!smooth, smooth ? 'Native scroll' : 'Smooth scroll, lerp 0.1');
+    if (rm.matches) say('Reduced motion is on: native scroll');
+  });
+  rm.addEventListener('change', () => setSmooth(!userOff));
+
+  setSmooth(true);
+  if (location.hash) { const el = document.querySelector(location.hash); if (el) scrollToEl(el); }
+  if (document.fonts) document.fonts.ready.then(() => { measure(); apply(0); });
+})();
+</script>
+</body>
+</html>

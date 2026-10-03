@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 235 · "Polaroid fan" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 240 · "Polaroid fan" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Polaroid fan
 

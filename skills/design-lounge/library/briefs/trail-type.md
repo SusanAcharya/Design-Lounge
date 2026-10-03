@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 277 · "Trail type" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 288 · "Trail type" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Trail type
 

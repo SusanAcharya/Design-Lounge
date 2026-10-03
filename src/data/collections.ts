@@ -117,7 +117,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'Motion with a reason',
     kicker: 'Nº 12',
     blurb: 'Transitions that explain where things went. Every duration and curve here is doing a job: continuity, hierarchy, or feedback.',
-    pieces: ['shared-element-expand', 'm3-container-transform', 'page-transition-curtain', 'logo-draw-intro', 'ios-app-switcher-stack', 'ios-context-menu-lift', 'staggered-list-reveal', 'ios-large-title-collapse', 'm3-search-bar-morph', 'tabs-morphing-underline', 'segmented-control-sliding', 'lamp-theme-toggle', 'optimistic-like-button', 'card-flip-3d', 'gooey-menu', 'folder-reveal', 'split-flap-board', 'book-page-flip', 'coverflow-strip', 'lens-bento', 'polaroid-fan', 'pan-canvas', 'scan-page', 'glitch-text', 'greeting-loader', 'corner-player', 'scroll-velocity-type', 'grow-grid', 'overlap-slider', 'scroll-split', 'trail-type', 'letter-sleeve', 'spring-deck'],
+    pieces: ['shared-element-expand', 'm3-container-transform', 'page-transition-curtain', 'logo-draw-intro', 'ios-app-switcher-stack', 'ios-context-menu-lift', 'staggered-list-reveal', 'ios-large-title-collapse', 'm3-search-bar-morph', 'tabs-morphing-underline', 'segmented-control-sliding', 'lamp-theme-toggle', 'optimistic-like-button', 'card-flip-3d', 'gooey-menu', 'folder-reveal', 'split-flap-board', 'book-page-flip', 'coverflow-strip', 'lens-bento', 'polaroid-fan', 'pan-canvas', 'scan-page', 'glitch-text', 'greeting-loader', 'corner-player', 'scroll-velocity-type', 'grow-grid', 'overlap-slider', 'scroll-split', 'trail-type', 'letter-sleeve', 'spring-deck', 'page-transition-tile-wipe', 'preloader-counter-intro', 'webgl-shader-hero', 'object-3d-turntable', 'hero-video-loop'],
   },
   {
     slug: 'typography-first',
@@ -145,6 +145,6 @@ export const COLLECTIONS: Collection[] = [
     title: 'Scroll as the timeline',
     kicker: 'Nº 16',
     blurb: 'Motion tied to scroll position, not the clock: stacking cards, clip reveals, sticky stories, collapsing titles, reading progress.',
-    pieces: ['stacking-cards-scroll', 'features-sticky-scroll-steps', 'sticky-split-story', 'scroll-reading-progress', 'ios-large-title-collapse', 'accordion-grid-rows'],
+    pieces: ['stacking-cards-scroll', 'features-sticky-scroll-steps', 'sticky-split-story', 'scroll-reading-progress', 'ios-large-title-collapse', 'accordion-grid-rows', 'parallax-layered-hero', 'scroll-scrub-product-sequence', 'scroll-zoom-portal', 'smooth-scroll-inertia', 'scroll-word-highlight', 'text-mask-scroll-reveal', 'mobile-scroll-story'],
   },
 ];

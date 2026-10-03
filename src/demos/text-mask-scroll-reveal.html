@@ -1,0 +1,197 @@
+<!-- Design Lounge piece: text-mask-scroll-reveal · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Kiln, motion studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,500;100,700;125,800;125,900&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#000;--bone:#f4ede4;--bone-2:#a89f94;--line:#2a2522;
+  --flame:#ff5b14;--sun:#ffb21e;--ember:#b3122e;
+  --focus:#ffb21e;
+  --grot:"Archivo",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{background:var(--black)}
+body{color:var(--bone);font:15px/1.5 var(--grot);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.bar{position:fixed;inset:0 0 auto;z-index:5;display:flex;justify-content:space-between;align-items:center;
+  padding:22px clamp(20px,4vw,48px);font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  transition:color .3s var(--std)}
+.bar.dark{color:var(--black)}
+.bar .logo{font:900 18px/1 var(--grot);font-stretch:125%;letter-spacing:-.02em}
+.bar nav{display:flex;gap:4px}
+.bar nav a{padding:12px 10px}
+.bar nav a:hover{text-decoration:underline;text-underline-offset:4px}
+
+.runway{position:relative;height:420vh}
+.stage{position:sticky;top:0;height:100vh;overflow:hidden;isolation:isolate}
+
+.scene{position:absolute;inset:0;background:var(--flame);overflow:hidden}
+.sun{position:absolute;left:50%;top:62%;width:46vmin;height:46vmin;margin:-23vmin 0 0 -23vmin;border-radius:50%;
+  background:linear-gradient(transparent 52%,var(--flame) 52% 55%,transparent 55% 63%,var(--flame) 63% 67%,transparent 67% 74%,var(--flame) 74% 79%,transparent 79%),var(--sun);
+  animation:rise 9s cubic-bezier(.45,0,.55,1) infinite alternate}
+@keyframes rise{to{transform:translateY(-4vmin)}}
+.ridge{position:absolute;left:0;width:200%;display:block;animation:drift linear infinite}
+.ridge.far{bottom:30%;height:22%;color:var(--ember);animation-duration:64s}
+.ridge.near{bottom:22%;height:20%;color:var(--black);animation-duration:30s}
+@keyframes drift{to{transform:translateX(-50%)}}
+.ground{position:absolute;inset:auto 0 0;height:23%;background:var(--black)}
+.ground i{position:absolute;left:0;width:200%;height:6px;background:repeating-linear-gradient(90deg,var(--sun) 0 120px,transparent 120px 220px);animation:drift 7s linear infinite}
+.ground i:nth-child(1){top:22%;opacity:.9}
+.ground i:nth-child(2){top:48%;height:10px;animation-duration:4.5s;background:repeating-linear-gradient(90deg,var(--flame) 0 200px,transparent 200px 320px)}
+.ground i:nth-child(3){top:76%;height:14px;animation-duration:3s;background:repeating-linear-gradient(90deg,var(--ember) 0 260px,transparent 260px 400px)}
+
+.knock{position:absolute;inset:0;z-index:2;background:var(--black);color:#fff;mix-blend-mode:multiply;
+  display:grid;place-items:center;transform-origin:50% 50%}
+.word{margin:0;font-weight:900;font-stretch:125%;font-size:26vw;line-height:.74;letter-spacing:-.045em;
+  padding-bottom:.04em;white-space:nowrap}
+
+.hero-meta{position:absolute;inset:auto 0 0;z-index:3;display:flex;justify-content:space-between;align-items:end;gap:24px;
+  padding:0 clamp(20px,4vw,48px) 32px;font:500 12px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--bone-2)}
+.hero-meta b{display:block;color:var(--bone);font-weight:500}
+.hint{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--bone)}
+.hint svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;animation:nudge 1.6s var(--std) infinite}
+@keyframes nudge{50%{transform:translateY(4px)}}
+.hero-meta .r{text-align:right}
+
+.over{position:absolute;z-index:1;left:clamp(20px,4vw,48px);right:clamp(20px,4vw,48px);top:14vh;color:var(--black);opacity:0}
+.over p{margin:0;font:500 12px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.over h2{margin:14px 0 0;max-width:15em;font-weight:900;font-stretch:125%;font-size:clamp(30px,4.6vw,64px);line-height:.98;letter-spacing:-.03em}
+.over ul{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;padding:0;list-style:none}
+.over li{border:2px solid var(--black);padding:6px 12px;font:700 13px/1.2 var(--grot);font-stretch:100%;text-transform:uppercase;letter-spacing:.04em}
+
+.work{position:relative;z-index:1;background:var(--black);padding:96px clamp(20px,4vw,48px) 72px}
+.work h2{margin:0 0 32px;font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--bone-2)}
+.work ol{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.work li a{display:grid;grid-template-columns:64px 1fr auto;align-items:baseline;gap:16px;padding:20px 0;border-bottom:1px solid var(--line);transition:color .16s var(--std)}
+.work li a:hover{color:var(--sun)}
+.work .n,.work .y{font:500 12px/1 var(--mono);color:var(--bone-2)}
+.work .t{font-weight:800;font-stretch:125%;font-size:clamp(22px,3vw,40px);line-height:1.05;letter-spacing:-.02em}
+.mail{display:inline-block;margin-top:56px;font-weight:900;font-stretch:125%;font-size:clamp(24px,4vw,52px);letter-spacing:-.03em;border-bottom:4px solid var(--flame);line-height:1.1}
+.mail:hover{color:var(--flame)}
+
+@media (max-width:640px){
+  .bar nav a:not(:last-child){display:none}
+  .word{font-size:28vw}
+  .hero-meta{font-size:11px}
+  .hero-meta > div:first-child{display:none}
+  .work li a{grid-template-columns:36px 1fr;}
+  .work .y{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .runway{height:auto}
+  .stage{position:relative;height:auto;overflow:visible;display:flex;flex-direction:column}
+  .knock{order:-1;position:relative;height:100vh;mix-blend-mode:normal;color:var(--sun);transform:none!important;opacity:1!important;visibility:visible!important}
+  .hero-meta{position:absolute;top:calc(100vh - 80px);bottom:auto;opacity:1!important}
+  .hint{display:none}
+  .scene{position:relative;height:100vh;min-height:560px}
+  .scene *,.hint svg{animation:none!important}
+  .over{opacity:1!important;transform:none!important}
+  .bar{position:absolute;transition:none}
+}
+</style>
+</head>
+<body>
+<header class="bar" id="bar">
+  <a class="logo" href="#top" aria-label="Kiln, home">KILN</a>
+  <nav aria-label="Main"><a href="#work">Work</a><a href="#studio">Studio</a><a href="#contact">Contact</a></nav>
+</header>
+<main id="top">
+  <section class="runway" id="runway" aria-label="Kiln intro">
+    <div class="stage">
+      <div class="scene">
+        <div class="sun" aria-hidden="true"></div>
+        <svg class="ridge far" viewBox="0 0 2400 200" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 120c150-60 300-60 450-20s300 60 450 10 200-40 300 10c150-60 300-60 450-20s300 60 450 10 200-40 300 10V200H0z"/></svg>
+        <svg class="ridge near" viewBox="0 0 2400 200" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 90c200 0 260 70 520 70s340-110 680-70c200 0 260 70 520 70s340-110 680-70V200H0z"/></svg>
+        <div class="ground" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="over" id="over">
+          <p id="studio">Kiln Studio &middot; Marvila, Lisbon</p>
+          <h2>Title sequences and brand films for things that need to move first.</h2>
+          <ul aria-label="Services"><li>Title design</li><li>Brand film</li><li>Motion systems</li><li>Type in motion</li></ul>
+        </div>
+      </div>
+      <div class="knock" id="knock" aria-hidden="true"><p class="word">K<span id="stem">I</span>LN</p></div>
+      <h1 class="sr">Kiln, a motion studio in Lisbon</h1>
+      <div class="hero-meta" id="meta">
+        <div><b>Motion &amp; title design</b>Lisbon, since 2014</div>
+        <div class="hint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg>Scroll</div>
+        <div class="r"><b>212 films</b>9 people, one kiln</div>
+      </div>
+    </div>
+  </section>
+  <section class="work" id="work" aria-labelledby="work-h">
+    <h2 id="work-h">Selected work, 2023 to 2026</h2>
+    <ol>
+      <li><a href="#work"><span class="n">01</span><span class="t">Salt Year, opening titles</span><span class="y">Feature, 2026</span></a></li>
+      <li><a href="#work"><span class="n">02</span><span class="t">Tramline 28 brand film</span><span class="y">Brand, 2025</span></a></li>
+      <li><a href="#work"><span class="n">03</span><span class="t">Orla Ferries motion system</span><span class="y">System, 2024</span></a></li>
+      <li><a href="#work"><span class="n">04</span><span class="t">The Long Kitchen, series titles</span><span class="y">Series, 2023</span></a></li>
+    </ol>
+    <a class="mail" id="contact" href="#contact">fire@kiln.studio</a>
+  </section>
+</main>
+<script>
+(() => {
+  const runway = document.getElementById('runway');
+  const knock = document.getElementById('knock');
+  const stem = document.getElementById('stem');
+  const over = document.getElementById('over');
+  const meta = document.getElementById('meta');
+  const bar = document.getElementById('bar');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const clamp = v => Math.min(1, Math.max(0, v));
+  const span = (t, a, b) => clamp((t - a) / (b - a));
+  const easeIn = x => x * x * x;
+  const easeOut = x => 1 - Math.pow(1 - x, 3);
+  let maxScale = 40, ticking = false;
+
+  function measure() {
+    knock.style.transform = 'none';
+    const k = knock.getBoundingClientRect();
+    const s = stem.getBoundingClientRect();
+    const cx = s.left + s.width * 0.47 - k.left;
+    const cy = s.top + s.height * 0.5 - k.top;
+    knock.style.transformOrigin = cx + 'px ' + cy + 'px';
+    maxScale = Math.max(innerWidth / (s.width * 0.3), innerHeight / (s.height * 0.5)) * 1.3;
+  }
+
+  function frame() {
+    ticking = false;
+    if (reduce.matches) {
+      [knock, over, meta].forEach(el => { el.style.transform = ''; el.style.opacity = ''; });
+      bar.classList.remove('dark');
+      return;
+    }
+    const range = runway.offsetHeight - innerHeight;
+    const t = clamp(-runway.getBoundingClientRect().top / range);
+    const grow = easeIn(span(t, 0.04, 0.6));
+    const scale = Math.exp(Math.log(maxScale) * grow);
+    knock.style.transform = 'scale(' + scale.toFixed(3) + ')';
+    knock.style.opacity = (1 - span(t, 0.58, 0.64)).toFixed(3);
+    knock.style.visibility = t > 0.64 ? 'hidden' : '';
+    meta.style.opacity = (1 - span(t, 0, 0.06)).toFixed(3);
+    const o = easeOut(span(t, 0.64, 0.82));
+    over.style.opacity = o.toFixed(3);
+    over.style.transform = 'translateY(' + ((1 - o) * 48).toFixed(1) + 'px)';
+    bar.classList.toggle('dark', t > 0.5 && runway.getBoundingClientRect().bottom > 60);
+  }
+  const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', () => { measure(); queue(); });
+  reduce.addEventListener('change', queue);
+  document.fonts.ready.then(() => { measure(); frame(); });
+  measure();
+  frame();
+})();
+</script>
+</body>
+</html>

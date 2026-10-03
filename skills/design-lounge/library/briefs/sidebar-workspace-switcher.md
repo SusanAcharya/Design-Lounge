@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 261 · "Sidebar with workspace switcher" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 270 · "Sidebar with workspace switcher" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Sidebar with workspace switcher
 

@@ -225,8 +225,13 @@ A portfolio, a launch, a product page, or a refine they described as motion is i
 - A builder's portfolio: `stacking-cards-scroll`, `hero-product-window-tilt`, or `features-sticky-scroll-steps`. The work moves, not the name.
 - A visual portfolio: `portfolio-photographer-horizontal`, `hover-image-trail`, `stacking-cards-scroll`, or `cursor-ink-blob`. `portfolio-index-hover-preview` only when every row has a real image.
 - A product page: `hero-product-window-tilt`, `features-sticky-scroll-steps`, or `hover-tilt-cards`. Not a cursor on the checkout.
+- A product they want to show off, like a watch, a speaker, or a box: `scroll-scrub-product-sequence` or `object-3d-turntable`.
+- An outdoor, travel, or place brand: `parallax-layered-hero` or `scroll-zoom-portal`.
+- A studio or agency that wants the site to feel made: `smooth-scroll-inertia`, `page-transition-tile-wipe`, `preloader-counter-intro`, or `text-mask-scroll-reveal`. A preloader never runs longer than the real load.
+- A tech, science, or cold brand that wants depth: `webgl-shader-hero`. A hotel, film, or food brand that wants footage: `hero-video-loop`.
+- An about or manifesto block: `scroll-word-highlight`.
 - A headline that moves: `kinetic-type-marquee` or `variable-font-proximity`.
-- A phone: `ios-pull-to-refresh`, `shared-element-expand`, or `m3-container-transform`. Not a web cursor.
+- A phone: `ios-pull-to-refresh`, `shared-element-expand`, or `m3-container-transform`. Not a web cursor. A phone web story: `mobile-scroll-story`.
 
 A website always takes one effect piece, even when they did not name one. Pick the one that serves the Idea. A daily tool with no named effect stays quiet. Do not add one to fill the page. The piece's motion table wins inside that region. The rest of the page stays on the sheet's easing. Reduced motion still applies. One effect. A blob, a tilt, a marquee, and a stack on the same page is four designs.
 

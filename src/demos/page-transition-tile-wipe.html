@@ -1,0 +1,228 @@
+<!-- Design Lounge piece: page-transition-tile-wipe · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Raster — Studio für Gestaltung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ffffff;--ink:#0a0a0a;--ink-2:#5c5c5c;--line:#dcdcdc;--cobalt:#1f3fff;--on-cobalt:#ffffff;
+  --sans:"Schibsted Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --pad:48px;--head-h:64px;--title:168px;
+  --cols:6;--rows:4;
+  --t-tile:380ms;--stagger:35ms;--t-line:700ms;--line-gap:90ms;
+  --ease:cubic-bezier(.2,.7,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);--ease-tile:cubic-bezier(.65,0,.35,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.5 var(--sans);overflow-x:hidden;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px}
+h1:focus{outline:none}
+h1:focus-visible{outline:2px solid var(--cobalt);outline-offset:6px}
+
+header{height:var(--head-h);flex:none;display:flex;align-items:center;gap:40px;padding:0 var(--pad);border-bottom:1px solid var(--ink)}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.04em;display:flex;align-items:center;gap:8px}
+.logo svg{width:22px;height:22px}
+nav ul{display:flex;gap:4px;margin:0;padding:0;list-style:none}
+nav a{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;font-weight:500;font-size:15px;color:var(--ink-2);transition:color .16s var(--ease)}
+nav a small{font:500 11px var(--mono);letter-spacing:.04em}
+nav a::before{content:"";width:8px;height:8px;background:var(--cobalt);transform:scale(0);transition:transform .24s var(--ease)}
+nav a:hover{color:var(--ink)}
+nav a[aria-current="page"]{color:var(--ink)}
+nav a[aria-current="page"]::before{transform:scale(1)}
+.where{margin-left:auto;font:400 12px var(--mono);letter-spacing:.04em;color:var(--ink-2)}
+
+main{flex:1;display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:auto auto 1fr;column-gap:24px;padding:40px var(--pad) 0;min-height:0}
+.idx{grid-column:1/-1;display:flex;justify-content:space-between;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.idx b{color:var(--cobalt);font-weight:500}
+h1{grid-column:1/-1;margin:20px 0 0;font-weight:800;font-size:var(--title);line-height:.92;letter-spacing:-.055em}
+h1 .ln{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+h1 .ln span{display:block;transform:translateY(105%);transition:transform var(--t-line) var(--ease-out);transition-delay:calc(200ms + var(--i) * var(--line-gap))}
+h1 b{color:var(--cobalt);font-weight:800}
+.lede{grid-column:1/6;align-self:end;margin:0 0 40px;font-size:19px;line-height:1.45;max-width:30ch}
+.panel{grid-column:7/-1;align-self:end;margin:0 0 40px}
+.lede,.panel{opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease) .38s,transform .5s var(--ease-out) .38s}
+main.in h1 .ln span,main.in .lede,main.in .panel{transform:none;opacity:1}
+main:not(.in) h1 .ln span,main:not(.in) .lede,main:not(.in) .panel{transition:none}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.stats div{padding:14px 16px 0 0}
+.stats div+div{border-left:1px solid var(--line);padding-left:16px}
+.stats strong{display:block;font-size:56px;font-weight:800;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
+.stats div:first-child strong{color:var(--cobalt)}
+.stats span,.rows span,.people span{font:400 12px var(--mono);letter-spacing:.04em;color:var(--ink-2)}
+.rows{margin:0;padding:0;list-style:none;border-top:1px solid var(--ink)}
+.rows li{display:grid;grid-template-columns:56px 1fr auto;gap:16px;align-items:center;height:40px;border-bottom:1px solid var(--line);font-size:15px;font-weight:500}
+.people{display:grid;grid-template-columns:1fr 1fr;column-gap:24px;margin:0;border-top:1px solid var(--ink)}
+.people div{display:flex;justify-content:space-between;align-items:center;height:40px;border-bottom:1px solid var(--line)}
+.people dt{font-weight:500;font-size:15px}.people dd{margin:0}
+
+footer{flex:none;display:flex;justify-content:space-between;height:48px;align-items:center;padding:0 var(--pad);border-top:1px solid var(--line);font:400 12px var(--mono);letter-spacing:.04em;color:var(--ink-2)}
+
+.wipe{position:fixed;inset:0;z-index:20;display:grid;grid-template-columns:repeat(var(--cols),1fr);grid-template-rows:repeat(var(--rows),1fr);pointer-events:none}
+.wipe i{background:var(--cobalt);transform:scale(0) rotate(-90deg);transition:transform var(--t-tile) var(--ease-tile);transition-delay:calc(var(--d) * var(--stagger))}
+.wipe.cover i{transform:scale(1.02) rotate(0)}
+.wipe.leave i{transform:scale(0) rotate(90deg)}
+.wipe.reset i{transition:none}
+.wipe p{position:absolute;inset:0;z-index:1;margin:0;display:grid;place-items:center;color:var(--on-cobalt);font-weight:800;font-size:72px;letter-spacing:-.05em;opacity:0;transition:opacity .16s var(--ease)}
+.wipe p small{display:block;font:500 13px var(--mono);letter-spacing:.08em;text-align:center}
+.wipe.cover p{opacity:1;transition-delay:.56s}
+.fade main{transition:opacity .18s var(--ease)}
+.fade.out main{opacity:0}
+
+html.tiling::view-transition-old(root),html.tiling::view-transition-new(root){animation:none}
+::view-transition-old(root),::view-transition-new(root){animation-duration:240ms;animation-timing-function:cubic-bezier(.2,.7,.2,1)}
+
+@media (max-width:1023px){:root{--title:120px}.lede{grid-column:1/7}.panel{grid-column:7/-1}}
+@media (max-width:767px){
+  :root{--pad:20px;--title:clamp(48px,14vw,72px);--cols:4;--rows:6}
+  header{gap:12px}.where{display:none}
+  nav a{padding:0 8px;font-size:14px}nav a small{display:none}
+  main{grid-template-rows:auto auto auto 1fr;align-content:start;padding-top:28px}
+  .lede,.panel{grid-column:1/-1;align-self:start}
+  .lede{align-self:start;margin:24px 0 32px;font-size:17px}
+  .stats strong{font-size:40px}
+  .people{grid-template-columns:1fr}
+  .wipe p{font-size:44px}
+  footer span+span{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  h1 .ln span,.lede,.panel{transition:none!important;transform:none!important}
+  .wipe{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#home" aria-label="Raster, home"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#1f3fff"/><rect x="2" y="2" width="10" height="10" fill="#0a0a0a"/></svg>Raster</a>
+  <nav aria-label="Primary"><ul>
+    <li><a href="#home" data-page="home"><small>01</small>Home</a></li>
+    <li><a href="#work" data-page="work"><small>02</small>Work</a></li>
+    <li><a href="#studio" data-page="studio"><small>03</small>Studio</a></li>
+  </ul></nav>
+  <span class="where">Basel, CH · 47.56° N</span>
+</header>
+<main id="main" class="in">
+  <p class="idx"><span id="idx"><b>01</b> / 03</span><span id="kicker">Studio für Gestaltung</span></p>
+  <h1 id="title" tabindex="-1"></h1>
+  <p class="lede" id="lede"></p>
+  <div class="panel" id="panel"></div>
+</main>
+<footer><span>Raster GmbH · Klybeckstrasse 141 · 4057 Basel</span><span>Posters, signage, type systems</span></footer>
+<div class="wipe" id="wipe" aria-hidden="true"><p id="wipe-label"></p></div>
+<p id="live" class="sr" role="status" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></p>
+
+<script>
+(() => {
+  const PAGES = {
+    home: { n: '01', kicker: 'Studio für Gestaltung', lines: ['Form follows', 'the <b>grid.</b>'],
+      lede: 'We design posters, signage and type systems on a twelve-column grid that has not changed since 1994.',
+      panel: '<div class="stats"><div><strong>1994</strong><span>Founded in Basel</span></div><div><strong>412</strong><span>Posters printed</span></div><div><strong>06</strong><span>People, one table</span></div></div>' },
+    work: { n: '02', kicker: 'Selected work, 2021 to 2026', lines: ['Thirty years', 'of <b>posters.</b>'],
+      lede: 'Every sheet starts as a pencil grid on A0 paper. Five recent projects, newest first.',
+      panel: '<ul class="rows"><li><span>2026</span>Kunsthalle Rhein<span>Season identity</span></li><li><span>2025</span>Basel Jazz Tage<span>14 posters</span></li><li><span>2024</span>Regio Nord Rail<span>Wayfinding</span></li><li><span>2023</span>Typo Bern<span>Type system</span></li><li><span>2021</span>Museum Klang<span>Exhibition</span></li></ul>' },
+    studio: { n: '03', kicker: 'Klybeckstrasse 141, third floor', lines: ['Six people,', 'one <b>table.</b>'],
+      lede: 'We work at one long table in a former print shop. Visits by appointment, Tuesday to Thursday.',
+      panel: '<dl class="people"><div><dt>Anna Reiter</dt><dd><span>Partner, type</span></dd></div><div><dt>Jonas Mäder</dt><dd><span>Partner, motion</span></dd></div><div><dt>Lea Frei</dt><dd><span>Designer</span></dd></div><div><dt>Nico Baumann</dt><dd><span>Designer</span></dd></div><div><dt>Mira Sutter</dt><dd><span>Producer</span></dd></div><div><dt>Tim Vogt</dt><dd><span>Studio manager</span></dd></div></dl>' }
+  };
+  const ORDER = ['home', 'work', 'studio'];
+  const NAMES = { home: 'Home', work: 'Work', studio: 'Studio' };
+  const COVER = 800, LEAVE = 680;
+  const $ = id => document.getElementById(id);
+  const main = $('main'), title = $('title'), wipe = $('wipe'), label = $('wipe-label');
+  const rm = matchMedia('(prefers-reduced-motion: reduce)');
+  const vt = typeof document.startViewTransition === 'function';
+  let current = null, busy = false, pending = null;
+
+  for (let i = 0; i < 24; i++) wipe.appendChild(document.createElement('i'));
+
+  const keyFromHash = () => { const k = location.hash.slice(1); return PAGES[k] ? k : 'home'; };
+
+  function render(key) {
+    const p = PAGES[key];
+    main.classList.remove('in');
+    $('idx').innerHTML = `<b>${p.n}</b> / 03`;
+    $('kicker').textContent = p.kicker;
+    title.innerHTML = p.lines.map((l, i) => `<span class="ln"><span style="--i:${i}">${l}</span></span>`).join('');
+    $('lede').textContent = p.lede;
+    $('panel').innerHTML = p.panel;
+    document.title = `${NAMES[key]} — Raster`;
+    document.querySelectorAll('nav a').forEach(a => { if (a.dataset.page === key) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    void main.offsetWidth;
+    main.classList.add('in');
+    current = key;
+  }
+
+  function setOrder(forward) {
+    const cols = parseInt(getComputedStyle(wipe).getPropertyValue('--cols'), 10) || 6;
+    const rows = 24 / cols;
+    [...wipe.querySelectorAll('i')].forEach((t, i) => {
+      const c = i % cols, r = Math.floor(i / cols);
+      t.style.setProperty('--d', forward ? c + r : (cols - 1 - c) + (rows - 1 - r));
+    });
+  }
+
+  function arrive(key) {
+    title.focus({ preventScroll: true });
+    $('live').textContent = `${NAMES[key]} page`;
+  }
+
+  function swap(key, done) {
+    if (vt) {
+      const t = document.startViewTransition(() => render(key));
+      t.updateCallbackDone.then(done, () => { render(key); done(); });
+    } else { render(key); done(); }
+  }
+
+  function go(key) {
+    if (key === current) return;
+    if (busy) { pending = key; return; }
+    busy = true;
+    if (rm.matches) {
+      if (vt) swap(key, finish);
+      else {
+        document.documentElement.classList.add('fade', 'out');
+        setTimeout(() => { render(key); document.documentElement.classList.remove('out'); finish(); }, 180);
+      }
+      return;
+    }
+    const forward = ORDER.indexOf(key) > ORDER.indexOf(current);
+    setOrder(forward);
+    label.innerHTML = `<span><small>${PAGES[key].n} / 03</small>${NAMES[key]}</span>`;
+    wipe.classList.remove('reset', 'leave');
+    wipe.classList.add('cover');
+    setTimeout(() => {
+      document.documentElement.classList.add('tiling');
+      swap(key, () => {
+        document.documentElement.classList.remove('tiling');
+        wipe.classList.remove('cover');
+        wipe.classList.add('leave');
+        arrive(key);
+        setTimeout(() => {
+          wipe.classList.add('reset');
+          wipe.classList.remove('leave');
+          busy = false;
+          if (pending && pending !== current) { const k = pending; pending = null; go(k); } else pending = null;
+        }, LEAVE);
+      });
+    }, COVER);
+  }
+
+  function finish() {
+    arrive(current);
+    busy = false;
+    if (pending && pending !== current) { const k = pending; pending = null; go(k); } else pending = null;
+  }
+
+  addEventListener('hashchange', () => go(keyFromHash()));
+  render(keyFromHash());
+  main.classList.remove('in');
+  requestAnimationFrame(() => requestAnimationFrame(() => main.classList.add('in')));
+})();
+</script>
+</body>
+</html>
