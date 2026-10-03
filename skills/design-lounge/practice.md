@@ -1,6 +1,14 @@
 # Practice
 
-This is how you design with the library. Read it before you write UI. The catalogue is the material. This file is the discipline.
+This is how you design with the library. The catalogue is the material. This file is the discipline.
+
+You do not need all of it every time. Read what the job needs:
+
+- One component or section: Adapting a brief, Components, and the brief itself.
+- A website: Before code, Stand out, Pick a direction, Register, Decide the screen, Look, Finish checklist.
+- An app or a tool: Before code, Match the world, Decide the screen, Minimum screens, Look, Finish checklist.
+
+Their words beat this file. When they ask for something a default here forbids, such as more motion, a second effect, or skipping a step, do what they asked, and write one line in DESIGN.md saying which default you set aside and why.
 
 The aim is one product that feels designed: same palette, type, icons, radius, spacing, motion, and components on every screen. A new screen extends the sheet. It does not start a second system. An agent without this skill can still ship a page. The page reads as generated when the type, the copy, and the decoration could belong to any product. Look is how you catch that.
 
@@ -9,10 +17,10 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero. For a website, also read Stand out and write the Idea.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
 3. Match the world, then choose the pieces. Read Match the world. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
-4. Show that pick with links, and ask once, before any UI. Follow Show the pick in [SKILL.md](SKILL.md). Stop unless they already said just go, you pick, build it, or don't ask, or they already named the system.
+4. Say the pick with links at the top of your reply, then build. Follow Say the pick in [SKILL.md](SKILL.md). Ask first only when two worlds fit and would lock different themes, or when they asked to choose.
 5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
 6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
-7. Open every finished screen and run Look. Fix what fails, and open it again. When the fails are none, run One correction. Then run the finish checklist. Report each line as pass or fail. Do not call the UI done from the source.
+7. Open every finished screen and run Look. Fix what fails, and open it again. When the fails are none, run One correction. Then run the finish checklist. In the reply, list only what failed and what you changed, plus the look notes. Do not paste every line that passed. Do not call the UI done from the source.
 
 ## Stand out
 
@@ -62,7 +70,7 @@ The idea decides the hero and the proof block. If you cannot write it, you are n
 
 ### Motion you can see
 
-A website has one signature motion, from Register. It runs without a hover: on load, or on scroll. A hover effect can be extra. It is never the signature.
+A website has one lead motion, from Register. It runs without a hover: on load, or on scroll. A hover effect can be extra. It is never the lead. When they ask for more motion, such as parallax plus reveals, add supporting effects. Follow More than one effect in Register.
 
 ### Real content only
 
@@ -165,6 +173,13 @@ A brief is a demo plus a structure. When the product is not that demo, split the
 
 Replace the nouns and the numbers with this product's. Do not fail a checklist line that is only true for the yard. Do not keep the demo's hexes once a theme is locked. A sidebar brief written in dark amber still gives you the rail, and the locked theme gives you the colour.
 
+Briefs are written for their demo's palette and mode. Your theme may be the opposite. Translate by role, not by colour:
+
+- A dark demo on a light theme: the demo's darkest layer becomes `--bg`, the next layer `--surface`, glows become `--primary-soft`, and light text becomes `--ink`. Keep the layering and the contrast, not the darkness.
+- A brief's gradient or sky uses the theme's own colours: `--bg` to `--surface-2`, with `--primary` or `--accent` as the one bright stop. A dusk parallax on a light theme becomes a daylight parallax with the same layers and speeds.
+- A brief's fonts become the pairing's roles. Display stays display, body stays `--font-text`. Where the brief uses mono for labels or numbers and the pairing has no mono, labels use `--font-text` small caps or tracked caps, numbers use `.num` (the text face with even-width digits), and only code uses the system mono. Do not add a Google mono font.
+- Keep from the brief: structure, counts, sizes, motion timing, states, and hit targets.
+
 If a brief draws the same solid button twice, keep one. The other is outline or a text link with the same verb.
 
 ## Locale
@@ -180,13 +195,13 @@ Read this before you set a number or a date. The pairing `devanagari` is the Nep
 
 ## Identity
 
-Restraint is the default on a product someone opens every day. A portfolio, a launch, or a product page they described with motion keeps that one effect, in Register. A regional or brand identity is still allowed, in three places, and nowhere else.
+Restraint is the default on a product someone opens every day. A portfolio, a launch, or a product page they described with motion keeps its effects, in Register. A regional or brand identity is still allowed, in three places, and nowhere else.
 
 1. The locked theme. A Nepali product uses Lokta: lokta paper, crimson primary, navy ink. Lokta Night is the dark pair. Do not stay on Harbour Ledger and then ask why it looks like a Western fintech app.
 2. One texture, on one region. The page background, or a single band. A lokta grain is a low-contrast dot at under 8% opacity. Not on cards, not under type, not tiled across every row.
 3. The display face from the pairing. For Nepal that is Noto Serif Devanagari, including on the amount.
 
-Crimson is `--primary`, not a second accent beside the theme's brass. A festival does not get a second decorative colour. No emoji, and no pattern on every card. A gradient or a glow belongs only to the one effect piece in Register. If they asked for Nepali and you only put it in the nouns, the look failed. Say so, and move the identity into those three places.
+Crimson is `--primary`, not a second accent beside the theme's brass. A festival does not get a second decorative colour. No emoji, and no pattern on every card. A gradient or a glow belongs only to the effect pieces in Register. If they asked for Nepali and you only put it in the nouns, the look failed. Say so, and move the identity into those three places.
 
 For a revamp, name three visual problems. Fix those inside the adopted system. Do not reskin the whole product unless they asked.
 
@@ -233,7 +248,17 @@ A portfolio, a launch, a product page, or a refine they described as motion is i
 - A headline that moves: `kinetic-type-marquee` or `variable-font-proximity`.
 - A phone: `ios-pull-to-refresh`, `shared-element-expand`, or `m3-container-transform`. Not a web cursor. A phone web story: `mobile-scroll-story`.
 
-A website always takes one effect piece, even when they did not name one. Pick the one that serves the Idea. A daily tool with no named effect stays quiet. Do not add one to fill the page. The piece's motion table wins inside that region. The rest of the page stays on the sheet's easing. Reduced motion still applies. One effect. A blob, a tilt, a marquee, and a stack on the same page is four designs.
+A website always takes one effect piece, even when they did not name one. Pick the one that serves the Idea. A daily tool with no named effect stays quiet. Do not add one to fill the page. The piece's motion table wins inside that region. The rest of the page stays on the sheet's easing. Reduced motion still applies.
+
+### More than one effect
+
+One effect is the default, not a ceiling. When they ask for more motion, or name two effects, build them. Keep it one design:
+
+- One lead effect, the one that carries the Idea. It gets the first screen or the biggest section.
+- Supporting effects each own one section. Two effects never run in the same viewport at once.
+- Every effect uses the sheet's easing and durations, so they move like one hand made them. Translate each piece's motion table onto the sheet, not the other way round.
+- No more than three effects on a page unless they asked for more. A blob, a tilt, a marquee, and a stack fighting on one screen is four designs.
+- Reduced motion turns all of them into a still frame.
 
 ## Break one rule
 
@@ -472,7 +497,7 @@ Put the theme's CSS variables on `:root` once, or in one theme provider. Control
 - You wrote the Match block. Column, padding, control height, radius, and amount face are the same on every screen. The sidebar, the panel, and the nav labels match the sheet, including after the rail closes and on the phone.
 - Every look check passed. A fail was fixed, and that screen was opened again.
 - The theme matches this product's world, or a recipe matched. The reply names the theme you rejected. You did not lock a palette because it was first.
-- The register is quiet, or one effect piece from the index. A daily tool did not grow a cursor. A portfolio or a product page they described with motion did not lose that piece.
+- The register is quiet, one effect piece from the index, or a lead plus supporting effects they asked for, each in its own section. A daily tool did not grow a cursor. A portfolio or a product page they described with motion did not lose that piece.
 - After the look checks passed, you made one correction and opened that screen again.
 - Website: the Idea and Avoiding lines are on the sheet. The first screen shows the Idea. The work is pictures. Nothing is invented. The five-second test passed.
 

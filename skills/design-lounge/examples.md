@@ -2,23 +2,29 @@
 
 The catalogue is `library/index.json` in this skill. Briefs are `library/briefs/<id>.md`.
 
-## New product, they have not said go
+## New product
 
 User: "Payroll app for a Kathmandu studio. Next.js and Tailwind."
 
 1. Kind `product`. Stack is Next.js + Tailwind. Do not ask the stack again.
 2. Read `bestFor` on the kind's palettes. Payroll is paying people, so Harbour Ledger (finance) beats Fog City, which is first on the list and is a general app. Pairing is Friendly SaaS, which lists fintech. Family is Quiet, because the tool has to last. Say you rejected Fog City.
-3. Reply with the theme page, the type page, and the demo link for each screen you will build. One question: build this, or swap the palette or one of these screens?
-4. Stop. Do not write UI in this turn.
-5. When they say yes, or "just build it", write `DESIGN.md` with those links under Sources, then build.
+3. Put the theme page, the type page, and the demo link for each screen at the top of the reply. Write them into `DESIGN.md` under Sources.
+4. Build in the same turn. Open the screens. Run Look, then One correction. They can still say "swap the palette" or "change the table" after.
 
-## They said go
+## They want to choose first
 
-User: "Same app. You pick. Just build it."
+User: "Payroll app. Show me a few looks before you build."
 
-1. Lock the match you already named: Harbour Ledger, Friendly SaaS, Quiet. Do not ask. Do not switch to Fog City because it is first.
-2. Write `DESIGN.md`, including Sources and the rejected theme, before the screens.
-3. Build. Open the screens. Run Look, then One correction. Put the same demo links in the reply so they can still compare and ask for a change.
+1. They asked to choose, so do not build yet.
+2. Name three palettes and two pairings from the kind's lists, each with its page link. Names and moods only. Stop.
+
+## They asked for more than a default allows
+
+User: "Outdoor gear site, light and airy. I want parallax and lots of motion."
+
+1. Recipe and direction as usual. The direction's theme is light. The parallax brief is written in dusk blue. Translate it by role: same layers and speeds, daylight colours from the theme.
+2. Lead effect: `parallax-layered-hero` on the first screen. Supporting effects, one per section: `text-mask-scroll-reveal` on the story, `stacking-cards-scroll` on the products. All on the sheet's easing. Reduced motion stills all three.
+3. Write one line in `DESIGN.md`: "Three effects instead of one, because they asked for lots of motion."
 
 ## An ops home, they said go
 
