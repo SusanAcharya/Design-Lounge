@@ -15,7 +15,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 
 `site` is the field on `library/index.json`. Use these links when you show a pick. Do not paste a brief into the chat.
 
-`kind` is `website`, `product`, `platform`, or `personal`. Theme, pairing, and family ids must be in that kind's lists inside `kit.kinds`.
+`kind` is `website`, `product`, `platform`, or `personal`. Theme, pairing, and family ids must be in that kind's lists inside `kit.kinds`, unless they come from a recipe direction. A direction was chosen for that recipe and wins.
 
 ## Kind map
 

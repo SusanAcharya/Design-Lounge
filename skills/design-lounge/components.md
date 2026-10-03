@@ -138,6 +138,19 @@ A save confirmation is `saved-banner`. It stays on the page. It is not a toast. 
 
 A phone tab bar is `phone-tab-plain` unless the family is glass. Glass uses `ios-glass-tab-bar`. Do not put a glass bar on any other family. The plain bar's demo has four tabs. A product uses one tab per real section, three to five. A transaction list is `spend-list`. Do not invent a second list style. A conversation is `chat-thread`. A paid order that stays on the page is `order-confirmed`.
 
+On Android, or when the family is Material, the tab bar is `m3-navigation-bar`. It is the same job as `phone-tab-plain`. Use one of the three, never two.
+
+Phone app screens, one piece each. Restyle them onto the locked theme. Do not keep the demo's colours.
+
+- Launch: `phone-splash-launch`. Under 1.6s, then the first real screen.
+- Sign in: `phone-sign-in`. Sign up: `phone-sign-up-steps`. A passkey step is `auth-passkey-setup`.
+- First run: `ios-onboarding-carousel`, then `phone-permission-prompt` before any system prompt. Never fire the system prompt on launch.
+- Paid plan: `phone-paywall-plans`. Show the trial dates and the price per month. No fake countdown.
+- A person: `phone-profile-header`. Comments: `phone-comments-sheet`. Alerts: `phone-notifications-list`.
+- A product: `phone-product-detail`. The bag and payment: `mobile-one-page-checkout`.
+- A form: `phone-form-fields`. Errors on blur, the first error gets focus on save.
+- Adding photos: `phone-photo-picker`.
+
 A single metric is one number at display size, a delta in `--success` or `--danger`, and a caption in `--ink-2`. If the screen has several figures, only one of them is display size. The others step down to the title role. Do not lay four equal numbers in a row.
 
 An empty list is a heading, one sentence, and one primary button. The heading is the largest type on that view. No illustration unless the named piece is the illustrated empty. On a phone, use the phone empty piece: the screen name is a label, the empty heading is the answer, and the button is at least 44px tall.

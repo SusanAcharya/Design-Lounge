@@ -1,0 +1,149 @@
+<!-- Design Lounge piece: m3-navigation-bar · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidepool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,300..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#006a63;--on-primary:#fff;--primary-c:#9ef2e6;--on-primary-c:#00201d;
+  --secondary-c:#cce8e3;--on-secondary-c:#051f1c;
+  --surface:#f4fbf8;--surface-c:#e9efec;--on-surface:#161d1b;--on-surface-v:#3f4946;
+  --error:#ba1a1a;--on-error:#fff;
+  --page:#ddf5ef;--card:#9ef2e6;--on-card:#00201d;--title:#006a63;
+  --font:"Roboto Flex","Google Sans","Roboto",system-ui,sans-serif;
+  --emph:cubic-bezier(.2,0,0,1);--emph-d:cubic-bezier(.05,.7,.1,1);--emph-a:cubic-bezier(.3,0,.8,.15);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.5 var(--font);color:var(--on-surface);background:var(--page);transition:background-color 500ms var(--emph);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+
+main{padding:max(70px,calc(env(safe-area-inset-top) + 16px)) 24px 0}
+.eyebrow{margin:0;font-size:14px;font-weight:500;letter-spacing:.01em;color:var(--on-surface-v)}
+h1{margin:4px 0 0;font-size:88px;line-height:.92;letter-spacing:-.035em;color:var(--title);
+  font-variation-settings:"wdth" 118,"wght" 780,"opsz" 144;transition:color 500ms var(--emph)}
+h1.in{animation:titleIn 500ms var(--emph) both}
+@keyframes titleIn{from{opacity:0;transform:translateY(28px);font-variation-settings:"wdth" 151,"wght" 320,"opsz" 144}to{opacity:1;transform:none;font-variation-settings:"wdth" 118,"wght" 780,"opsz" 144}}
+.line{margin:16px 0 0;font-size:18px;line-height:26px;font-variation-settings:"wdth" 100,"wght" 420;color:var(--on-surface-v);max-width:28ch}
+
+.card{margin-top:32px;padding:24px;min-height:272px;background:var(--card);color:var(--on-card);border-radius:48px 48px 48px 12px;
+  display:flex;flex-direction:column;justify-content:space-between;transition:background-color 500ms var(--emph),border-radius 500ms var(--emph)}
+.card.in{animation:cardIn 500ms var(--emph) both}
+@keyframes cardIn{from{border-radius:12px 48px 48px 48px;transform:scale(.96)}to{border-radius:48px 48px 48px 12px;transform:none}}
+.card small{font-size:14px;font-weight:500;letter-spacing:.02em}
+.big{font-size:80px;line-height:1;letter-spacing:-.03em;font-variation-settings:"wdth" 100,"wght" 300,"opsz" 144;font-variant-numeric:tabular-nums}
+.card p{margin:0;font-size:16px;font-variation-settings:"wght" 500}
+
+.fab{position:fixed;right:16px;bottom:calc(80px + max(34px,env(safe-area-inset-bottom)) + 16px);width:56px;height:56px;border-radius:16px;
+  display:grid;place-items:center;background:var(--primary-c);color:var(--on-primary-c);
+  box-shadow:0 3px 6px rgba(0,32,29,.16),0 1px 2px rgba(0,32,29,.2);transition:border-radius 200ms var(--emph),transform 200ms var(--emph)}
+.fab:active{border-radius:28px;transform:scale(.94)}
+.fab svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--surface-c);padding-bottom:max(34px,env(safe-area-inset-bottom))}
+.dest{flex:1;height:80px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:12px;gap:4px;color:var(--on-surface-v);-webkit-tap-highlight-color:transparent}
+.dest:focus-visible{outline:none}
+.dest:focus-visible .ind{outline:3px solid var(--primary);outline-offset:2px}
+.ic{position:relative;width:64px;height:32px;display:grid;place-items:center}
+.ind{position:absolute;inset:0;border-radius:16px;background:var(--secondary-c);transform:scaleX(.32);opacity:0;
+  transition:transform 400ms var(--emph-d),opacity 120ms linear}
+.ic::after{content:"";position:absolute;inset:0;border-radius:16px;background:var(--on-surface);opacity:0;transition:opacity 120ms linear}
+.dest:hover .ic::after{opacity:.08}
+.dest:active .ic::after{opacity:.12}
+.ic svg{position:relative;z-index:1;width:24px;height:24px;fill:currentColor;fill-opacity:0;stroke:currentColor;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;transition:fill-opacity 200ms var(--emph)}
+.lbl{font-size:12px;line-height:16px;letter-spacing:.04em;font-variation-settings:"wght" 500;transition:font-variation-settings 200ms var(--emph)}
+.dest[aria-current="page"]{color:var(--on-surface)}
+.dest[aria-current="page"] .ind{transform:none;opacity:1}
+.dest[aria-current="page"] .ic svg{color:var(--on-secondary-c);fill-opacity:1}
+.dest[aria-current="page"] .lbl{font-variation-settings:"wght" 760}
+.badge{position:absolute;z-index:2;background:var(--error);color:var(--on-error)}
+.badge.dot{top:4px;left:38px;width:6px;height:6px;border-radius:3px;transition:transform 200ms var(--emph)}
+.badge.dot.gone{transform:scale(0)}
+.badge.num{top:1px;left:34px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;font-size:11px;line-height:16px;font-variation-settings:"wght" 600;text-align:center}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow" id="eyebrow">Kettle Cove · Saturday 3 October</p>
+  <h1 id="title">Today</h1>
+  <p class="line" id="line">High water at 14:12. Calm sea and a light westerly until dusk.</p>
+  <section class="card" id="card" aria-live="polite">
+    <small id="cardK">Water temperature</small>
+    <div>
+      <div class="big" id="cardV">17°</div>
+      <p id="cardS">Good for a 40 minute swim</p>
+    </div>
+  </section>
+</main>
+
+<button class="fab" type="button" aria-label="Log a swim">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+</button>
+
+<nav aria-label="Main">
+  <button class="dest" type="button" data-i="0" aria-current="page">
+    <span class="ic"><span class="ind"></span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
+    </span><span class="lbl">Today</span>
+  </button>
+  <button class="dest" type="button" data-i="1" aria-label="Tides, new data">
+    <span class="ic"><span class="ind"></span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3.5 4.4 6 7.6 6 10.6A6 6 0 0 1 6 13.6C6 10.6 8.5 7.4 12 3z"/></svg>
+      <span class="badge dot" id="tideDot"></span>
+    </span><span class="lbl">Tides</span>
+  </button>
+  <button class="dest" type="button" data-i="2">
+    <span class="ic"><span class="ind"></span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10v17l-5-3.6-5 3.6z"/></svg>
+    </span><span class="lbl">Saved</span>
+  </button>
+  <button class="dest" type="button" data-i="3" aria-label="Inbox, 12 unread">
+    <span class="ic"><span class="ind"></span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5h15v10.5h-9L6 19.5v-4H4.5z"/></svg>
+      <span class="badge num" aria-hidden="true">12</span>
+    </span><span class="lbl">Inbox</span>
+  </button>
+</nav>
+
+<script>
+const $ = id => document.getElementById(id);
+const views = [
+  { t:'Today', e:'Kettle Cove · Saturday 3 October', l:'High water at 14:12. Calm sea and a light westerly until dusk.', k:'Water temperature', v:'17°', s:'Good for a 40 minute swim',
+    page:'#ddf5ef', card:'#9ef2e6', on:'#00201d', title:'#006a63' },
+  { t:'Tides', e:'Kettle Cove · next 24 hours', l:'Low water at 20:31. The ebb runs fast past the north rocks.', k:'Range today', v:'2.4 m', s:'Spring tide, highest of the month',
+    page:'#e4f0fa', card:'#cde5ff', on:'#001d32', title:'#33618d' },
+  { t:'Saved', e:'6 spots on your list', l:'Your swims sorted by how sheltered they are this week.', k:'Most sheltered', v:'Harbour Steps', s:'Last swim 28 September',
+    page:'#e6f2ef', card:'#cce8e3', on:'#051f1c', title:'#4a6360' },
+  { t:'Inbox', e:'Kettle Cove Swim Club', l:'12 unread messages from the dawn group and 2 from the lifeguard desk.', k:'Next meet', v:'06:30', s:'Sunday at the pier, bring a tow float',
+    page:'#eef1ef', card:'#dde4e1', on:'#161d1b', title:'#161d1b' }
+];
+const dests = [...document.querySelectorAll('.dest')], root = document.documentElement.style;
+function replay(el) { el.classList.remove('in'); void el.offsetWidth; el.classList.add('in'); }
+function go(i) {
+  const v = views[i];
+  dests.forEach((d, n) => n === i ? d.setAttribute('aria-current', 'page') : d.removeAttribute('aria-current'));
+  root.setProperty('--page', v.page); root.setProperty('--card', v.card);
+  root.setProperty('--on-card', v.on); root.setProperty('--title', v.title);
+  $('title').textContent = v.t; $('eyebrow').textContent = v.e; $('line').textContent = v.l;
+  $('cardK').textContent = v.k; $('cardV').textContent = v.v; $('cardS').textContent = v.s;
+  $('cardV').style.fontSize = v.v.length > 6 ? '40px' : '';
+  replay($('title')); replay($('card'));
+  document.title = v.t + ' · Tidepool';
+  if (i === 1 && !$('tideDot').classList.contains('gone')) {
+    $('tideDot').classList.add('gone');
+    dests[1].removeAttribute('aria-label');
+  }
+}
+dests.forEach((d, i) => d.addEventListener('click', () => { if (d.getAttribute('aria-current') !== 'page') go(i); }));
+</script>
+</body>
+</html>

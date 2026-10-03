@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 247 · "Stretch switch" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 258 · "Stretch switch" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Stretch switch
 

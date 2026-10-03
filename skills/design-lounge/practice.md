@@ -97,6 +97,7 @@ Avoiding: <website only, the default look this could have become>
 Register: quiet | <one piece id>
 Kind: website | product | platform
 Mode: new kit | adopt existing
+Recipe: id · Direction: id (why, or the letter count)
 Theme: id (pair: id or none)
 Why this theme:
 Rejected:
@@ -121,7 +122,19 @@ Kept from their system:
 
 `{site}` is the `site` field in `library/index.json`. One line per piece you actually build. The role is layout, motion, or component: what they should look at if they want to compare. When they ask to change a screen, change that line, then rebuild only that screen.
 
-For a new product, the matching recipe in `starts` names the theme and the first pieces. Build those before you invent a screen the recipe did not name.
+For a new product, the matching recipe in `starts` names the first pieces, and its chosen direction names the look. Build those before you invent a screen the recipe did not name.
+
+## Pick a direction
+
+Every recipe has three to five `directions`. Each one is a complete look: theme, pairing, family, hero piece, and one effect. Two people who type the same sentence must not get the same site. Choose in this order.
+
+1. They named a theme, a pairing, a colour, or a site they like. Lock the direction closest to it, then swap in what they named.
+2. Their words carry a mood, an audience, or a world: dark, light, playful, calm, luxury, technical, for developers, for kids, loud, Nepali, retro, AI. Lock the direction whose `mood` says it.
+3. Nothing to go on. Count the letters in the product or brand name, ignoring spaces. If there is no name, count the words in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: dev-night (Northwind = 9 letters, 9 mod 5 = 4)`. This keeps one product consistent and keeps two products apart.
+
+Do not take the first direction because it is first. Do not mix two directions. If the hero is unset, use the recipe's first piece. If the effect is null, the register stays quiet.
+
+The direction is the start, not the end. The Idea, the copy, the projects, and the order of the sections still come from this product.
 
 ## Match the world
 
@@ -130,10 +143,10 @@ A hundred products look like one product when every pass locks the first palette
 Choose in this order.
 
 1. They named a theme, a pairing, or a family. Lock what they named. Choose the rest by the rules below.
-2. A recipe in `starts` matches the product. The names are in reference.md: a yard desk is `dashboard`, a clay shop is `commerce`, a SaaS page is `saas`, a showreel is `portfolio`, a developer, product manager, product designer, or founder is `portfolio-builder`, a phone shop is `shop-app`. A magazine is `editorial`. A phone app with no named world is `mobile-app`. A tablet is `tablet`. One person's money is `personal`, not `dashboard` and not `bank`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. Lock that recipe's theme, pairing, and pieces. Say which recipe.
+2. A recipe in `starts` matches the product. The names are in reference.md: a yard desk is `dashboard`, a clay shop is `commerce`, a SaaS page is `saas`, a showreel is `portfolio`, a developer, product manager, product designer, or founder is `portfolio-builder`, a phone shop is `shop-app`. A magazine is `editorial`. A phone app with no named world is `mobile-app`. A tablet is `tablet`. One person's money is `personal`, not `dashboard` and not `bank`. A Nepali finance app is `personal`: Lokta and the Devanagari pairing. Say which recipe. Then pick one of its `directions`, as Pick a direction says. The direction locks the theme, pairing, family, hero, and effect. The recipe's `pieces` are still the screens to open.
 3. No recipe matches. Stay inside that kind's `palettes`, `pairings`, and `families`. Read `bestFor`, `mood`, and `tags` on each theme. Lock the theme whose `bestFor` names this world. A clinic is Alpine Clinic. A payroll run is Harbour Ledger, because the job is paying people. Fog City is the first palette on kind `product` and is the wrong lock for both.
 4. Lock a pairing from that kind's list whose `bestFor` is the same world. Payroll on kind `product` takes Friendly SaaS, which lists fintech. A paper takes Newsroom. A clay shop whose recipe is commerce takes Atelier.
-5. Lock the family for how the product is used. Editorial for a page people read. Industrial for a yard or a field tool. Sharp for a dense platform. Quiet for a product that has to last. Soft for a friendly consumer app. Glass only when the recipe is the glass phone language.
+5. Lock the family for how the product is used. Editorial for a page people read. Industrial for a yard or a field tool. Sharp for a dense platform. Quiet for a product that has to last. Soft for a friendly consumer app. Glass only when the direction names it.
 
 Write one sentence: why this theme, and which theme you rejected. "Harbour Ledger, because this is payroll. Fog City is first on the list and is a general app, so it loses." Put both lines on the system sheet.
 

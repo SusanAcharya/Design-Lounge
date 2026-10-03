@@ -1,0 +1,143 @@
+<!-- Design Lounge piece: phone-splash-launch · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gantry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --splash:#0c0d0b;--bg:#141513;--surface:#1b1c1a;--surface-2:#232421;--ink:#ecece6;--ink-2:#a3a59c;--ink-3:#7d8077;
+  --line:#2c2e2a;--accent:#c8f031;--on-accent:#0c0d0b;
+  --sans:"Archivo",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --radius:2px;
+  --expo:cubic-bezier(0.16,1,0.3,1);--sheet:cubic-bezier(0.32,0.72,0,1);--std:cubic-bezier(0.2,0.7,0.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:square;stroke-linejoin:miter}
+.mono{font-family:var(--mono)}
+
+/* home */
+.home{height:100%;padding:max(54px,env(safe-area-inset-top)) 20px max(34px,env(safe-area-inset-bottom));display:flex;flex-direction:column;transform-origin:50% 30%}
+.hd{display:flex;justify-content:space-between;align-items:center;height:44px}
+.mk{display:flex;align-items:center;gap:8px;font:800 15px/1 var(--sans);letter-spacing:.14em}
+.mk svg{width:22px;height:22px;color:var(--accent);stroke-width:2.5}
+.ib{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:var(--radius);color:var(--ink-2)}
+.ib svg{width:20px;height:20px}
+.meta{margin:26px 0 0;font:500 11px/1 var(--mono);letter-spacing:.08em;color:var(--ink-3);text-transform:uppercase}
+.meta b{color:var(--accent);font-weight:500}
+h1{margin:10px 0 0;font:700 40px/1 var(--sans);letter-spacing:-.03em}
+.sub{margin:10px 0 0;color:var(--ink-2);font-size:15px}
+.cards{display:grid;gap:12px;margin-top:28px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.ct{display:flex;justify-content:space-between;align-items:center;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.tag{padding:4px 6px;border:1px solid var(--line);border-radius:var(--radius);color:var(--ink)}
+.tag.hot{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.big{display:flex;align-items:baseline;gap:10px;margin-top:14px}
+.big strong{font:700 52px/0.9 var(--sans);letter-spacing:-.04em}
+.big span{color:var(--ink-2);font-size:14px}
+.spark{display:flex;align-items:flex-end;gap:4px;height:40px;margin-top:16px}
+.spark i{flex:1;background:var(--surface-2);border-radius:1px}
+.spark i.late{background:var(--accent)}
+.legend{display:flex;justify-content:space-between;margin-top:8px;font:400 11px/1 var(--mono);color:var(--ink-3)}
+.dock{display:flex;justify-content:space-between;align-items:flex-end;margin-top:14px}
+.dock strong{font:700 28px/1 var(--sans);letter-spacing:-.02em}
+.dock span{font:500 13px/1 var(--mono);color:var(--accent)}
+.meter{height:6px;margin-top:14px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.meter i{display:block;height:100%;width:72%;background:var(--ink)}
+.row2{display:flex;justify-content:space-between;margin-top:8px;font:400 11px/1 var(--mono);color:var(--ink-3)}
+.cta{margin-top:auto;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--accent);color:var(--on-accent);border-radius:var(--radius);font:700 15px/1 var(--sans);letter-spacing:.02em}
+.cta svg{width:20px;height:20px;stroke-width:2}
+
+/* splash */
+.splash{position:fixed;inset:0;z-index:5;background:var(--splash);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;border-bottom:1px solid var(--accent);transform:translateY(-101%);pointer-events:none}
+.logo{width:84px;height:84px;color:var(--accent)}
+.logo path{stroke-width:5;stroke-linecap:square;stroke-dasharray:var(--l);stroke-dashoffset:0}
+.word{display:flex;overflow:hidden;font:800 44px/1.05 var(--sans);letter-spacing:.16em;padding-left:.16em}
+.word span{display:block}
+.line{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+.tick{position:absolute;left:24px;right:24px;bottom:calc(34px + 24px);display:flex;justify-content:space-between;font:400 11px/1 var(--mono);color:var(--ink-3)}
+
+body.run .splash{animation:lift 420ms var(--sheet) 1100ms both}
+body.run .logo path{animation:draw 440ms var(--expo) both}
+body.run .logo path:nth-child(2){animation-delay:70ms}
+body.run .logo path:nth-child(3){animation-delay:140ms}
+body.run .word span{animation:rise 380ms var(--expo) both;animation-delay:calc(260ms + var(--i) * 40ms)}
+body.run .line,body.run .tick{animation:fade 220ms var(--std) 700ms both}
+body.run .home{animation:settle 420ms var(--sheet) 1100ms both}
+@keyframes draw{from{stroke-dashoffset:var(--l)}to{stroke-dashoffset:0}}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes lift{from{transform:none}to{transform:translateY(-101%)}}
+@keyframes settle{from{transform:scale(.965) translateY(12px);opacity:.35}to{transform:none;opacity:1}}
+
+.replay{position:fixed;z-index:6;right:16px;bottom:calc(max(34px,env(safe-area-inset-bottom)) + 64px);min-height:44px;padding:0 12px;display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius);font:500 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.replay svg{width:16px;height:16px;stroke-width:2}
+.replay:hover{border-color:var(--accent)}
+
+@media (prefers-reduced-motion: reduce){
+  body.run .splash{animation:none;transform:translateY(-101%)}
+  body.run .logo path,body.run .word span,body.run .line,body.run .tick{animation:none}
+  body.run .home{animation:fade 200ms var(--std) both}
+}
+@media (max-height:760px){.cards{margin-top:18px}.big strong{font-size:44px}}
+</style>
+</head>
+<body class="run">
+<main class="home" id="home">
+  <div class="hd">
+    <div class="mk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 5H5v14h14v-6h-6"/></svg>GANTRY</div>
+    <button class="ib" type="button" aria-label="Alerts, 2 new"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg></button>
+  </div>
+  <p class="meta"><b>Shift 2</b> · Yard 4 · Wed 06:12</p>
+  <h1>Morning, Dev.</h1>
+  <p class="sub">Six trailers are late. Dock 7 frees up first.</p>
+  <div class="cards">
+    <section class="card" aria-label="Inbound today">
+      <div class="ct"><span>Inbound today</span><span class="tag hot">6 late</span></div>
+      <div class="big"><strong>38</strong><span>trailers booked</span></div>
+      <div class="spark" aria-hidden="true">
+        <i style="height:30%"></i><i style="height:55%"></i><i style="height:80%" class="late"></i><i style="height:100%"></i><i style="height:70%"></i><i style="height:45%" class="late"></i><i style="height:60%"></i><i style="height:85%"></i><i style="height:40%"></i><i style="height:25%"></i><i style="height:50%" class="late"></i><i style="height:20%"></i>
+      </div>
+      <div class="legend"><span>05:00</span><span>11:00</span><span>17:00</span></div>
+    </section>
+    <section class="card" aria-label="Next free dock">
+      <div class="ct"><span>Next free dock</span><span class="tag">Bay B</span></div>
+      <div class="dock"><strong>Dock 7</strong><span>12 min</span></div>
+      <div class="meter" role="progressbar" aria-label="Dock 7 unload progress" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"><i></i></div>
+      <div class="row2"><span>Trailer KT-4471 unloading</span><span>72%</span></div>
+    </section>
+  </div>
+  <button class="cta" type="button">Start yard check<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+</main>
+
+<div class="splash" id="splash" aria-hidden="true">
+  <svg class="logo" viewBox="0 0 84 84">
+    <path d="M70 12H12v60h58" style="--l:176"/>
+    <path d="M70 72V44" style="--l:28"/>
+    <path d="M70 44H44" style="--l:26"/>
+  </svg>
+  <div class="word"><span style="--i:0">G</span><span style="--i:1">A</span><span style="--i:2">N</span><span style="--i:3">T</span><span style="--i:4">R</span><span style="--i:5">Y</span></div>
+  <div class="line">Yard operations</div>
+  <div class="tick"><span>v4.2.0</span><span>Yard 4 · online</span></div>
+</div>
+
+<button class="replay" type="button" id="replay" aria-label="Replay launch animation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v5h5"/></svg>Replay</button>
+<p id="live" role="status" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></p>
+
+<script>
+const b=document.body,splash=document.getElementById('splash'),live=document.getElementById('live');
+splash.addEventListener('animationend',e=>{if(e.target===splash)live.textContent='Gantry home loaded'});
+document.getElementById('replay').addEventListener('click',()=>{
+  b.classList.remove('run');void b.offsetWidth;b.classList.add('run');
+});
+</script>
+</body>
+</html>

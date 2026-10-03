@@ -1,0 +1,203 @@
+<!-- Design Lounge piece: phone-sign-in · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · Margin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2efe8;--surface:#faf8f3;--ink:#121110;--ink-2:#47443e;--ink-3:#6b665d;
+  --line:#d6d0c4;--accent:#ff4f00;--accent-ink:#b3380a;--on-accent:#121110;
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Inter Tight",system-ui,sans-serif;
+  --radius:0;--control:56px;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--fast:160ms;--mid:280ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:15px/1.45 var(--sans);color:var(--ink);background:var(--bg);
+  padding:max(54px,env(safe-area-inset-top)) 24px max(34px,env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;
+}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.mast{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0 10px;border-bottom:1px solid var(--ink);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.mast span:last-child{color:var(--ink-2)}
+.brand{margin:18px 0 0;font:400 112px/0.82 var(--serif);letter-spacing:-.045em}
+.brand i{color:var(--accent);font-style:normal}
+.dek{margin:12px 0 0;font:italic 400 22px/1.15 var(--serif);color:var(--ink-2);max-width:18ch}
+.rule{height:1px;background:var(--line);margin:20px 0 16px}
+
+h2{margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+form{display:flex;flex-direction:column}
+.field{margin-top:16px}
+label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.box{position:relative;display:flex;align-items:center;border-bottom:1.5px solid var(--ink);transition:border-color var(--fast) var(--ease)}
+.box input{flex:1;min-width:0;height:48px;border:0;background:none;font-size:18px;font-weight:500;padding:0;outline:0;border-radius:0}
+.box input::placeholder{color:#9b958a;font-weight:400}
+.box:focus-within{border-bottom-color:var(--accent);box-shadow:0 1.5px 0 var(--accent)}
+.field.bad .box{border-bottom-color:var(--accent-ink)}
+.eye{width:44px;height:44px;display:grid;place-items:center;margin-right:-10px;color:var(--ink-2)}
+.eye:hover{color:var(--ink)}
+.eye svg{width:22px;height:22px}
+.err{display:flex;gap:8px;align-items:center;min-height:0;margin:8px 0 0;font-size:13px;font-weight:500;color:var(--accent-ink)}
+.err:empty{display:none}
+.err::before{content:"";width:6px;height:6px;background:var(--accent-ink);flex:none}
+.row{display:flex;justify-content:flex-end;margin-top:4px}
+.link{min-height:44px;display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:4px}
+.link:hover{text-decoration-color:var(--ink)}
+
+.btn{position:relative;width:100%;height:var(--control);border-radius:var(--radius);display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:16px;font-weight:600;letter-spacing:.01em;transition:background-color var(--mid) var(--ease),color var(--mid) var(--ease),transform var(--fast) var(--ease)}
+.btn:active{transform:translateY(1px)}
+.primary{margin-top:14px;background:var(--accent);color:var(--on-accent)}
+.primary:hover{background:#ff6620}
+.primary svg{width:22px;height:22px}
+.primary .lbl{transition:opacity var(--fast) var(--ease)}
+.primary[data-state="loading"]{background:var(--ink);color:var(--surface);cursor:progress}
+.primary[data-state="done"]{background:var(--ink);color:var(--surface)}
+.primary[data-state="done"] .tick{stroke:var(--accent)}
+.bars{display:none;gap:4px;align-items:center;height:22px}
+.bars b{width:4px;height:16px;background:var(--accent);animation:bar 720ms var(--ease) infinite}
+.bars b:nth-child(2){animation-delay:120ms}.bars b:nth-child(3){animation-delay:240ms}
+@keyframes bar{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+.primary[data-state="loading"] .bars{display:flex}
+.primary[data-state="loading"] .arrow,.primary[data-state="done"] .arrow{display:none}
+.tick{display:none;fill:none;stroke-width:2.25;stroke-dasharray:24;stroke-dashoffset:24}
+.primary[data-state="done"] .tick{display:block;animation:draw 360ms var(--ease) 60ms forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.or{display:flex;align-items:center;gap:12px;margin:18px 0;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.ghost{border:1.5px solid var(--ink);background:transparent;justify-content:center;gap:10px}
+.ghost:hover{background:var(--ink);color:var(--surface)}
+.ghost svg{width:20px;height:20px}
+.ghost[aria-busy="true"]{border-style:dashed;cursor:progress}
+
+.foot{margin-top:auto;padding-top:16px;display:flex;justify-content:center;align-items:center;gap:6px;font-size:14px;color:var(--ink-2)}
+svg{stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:square;stroke-linejoin:miter}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important;animation-iteration-count:1!important}
+  .tick{stroke-dashoffset:0}
+}
+@media (max-height:760px){.brand{font-size:92px}.rule{margin:16px 0 12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="mast"><span>No. 214</span><span>Saturday 3 October</span></div>
+  <h1 class="brand">Margin<i>.</i></h1>
+  <p class="dek">Long reads, read to the end.</p>
+</header>
+<div class="rule" role="presentation"></div>
+
+<main>
+  <h2 id="t">Sign in</h2>
+  <form id="f" novalidate aria-labelledby="t">
+    <div class="field" id="fe">
+      <label for="email">Email</label>
+      <div class="box"><input id="email" name="email" type="email" inputmode="email" autocomplete="username" placeholder="you@example.com" aria-describedby="email-err"></div>
+      <p class="err" id="email-err" aria-live="polite"></p>
+    </div>
+    <div class="field" id="fp">
+      <label for="pw">Password</label>
+      <div class="box">
+        <input id="pw" name="password" type="password" autocomplete="current-password" placeholder="Your password" aria-describedby="pw-err">
+        <button class="eye" type="button" id="eye" aria-controls="pw" aria-pressed="false" aria-label="Show password">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path class="o" d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle class="o" cx="12" cy="12" r="3"/><path class="x" d="M4 4l16 16" style="display:none"/></svg>
+        </button>
+      </div>
+      <p class="err" id="pw-err" aria-live="polite"></p>
+    </div>
+    <div class="row"><a class="link" href="#forgot" id="forgot">Forgot password?</a></div>
+    <button class="btn primary" type="submit" id="go" data-state="idle">
+      <span class="lbl">Sign in</span>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+      <span class="bars" aria-hidden="true"><b></b><b></b><b></b></span>
+      <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    </button>
+  </form>
+  <div class="or">or</div>
+  <button class="btn ghost" type="button" id="pk">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v3"/></svg>
+    <span class="lbl">Continue with passkey</span>
+  </button>
+  <p class="sr" id="live" role="status" aria-live="polite"></p>
+</main>
+
+<p class="foot">New to Margin? <a class="link" href="#join">Create an account</a></p>
+
+<script>
+const f=document.getElementById('f'),email=document.getElementById('email'),pw=document.getElementById('pw');
+const go=document.getElementById('go'),lbl=go.querySelector('.lbl'),live=document.getElementById('live');
+const eye=document.getElementById('eye'),pk=document.getElementById('pk');
+const RX=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+let touched=false,timers=[];
+
+function setErr(input,msg){
+  const field=input.closest('.field'),out=document.getElementById(input.id+'-err');
+  out.textContent=msg;field.classList.toggle('bad',!!msg);
+  msg?input.setAttribute('aria-invalid','true'):input.removeAttribute('aria-invalid');
+  return !msg;
+}
+function checkEmail(){
+  const v=email.value.trim();
+  return setErr(email,!v?'Enter your email address.':!RX.test(v)?'Enter an email like name@example.com.':'');
+}
+function checkPw(){return setErr(pw,pw.value?'':'Enter your password.')}
+
+email.addEventListener('blur',()=>{if(touched||email.value)checkEmail()});
+email.addEventListener('input',()=>{if(email.getAttribute('aria-invalid'))checkEmail()});
+pw.addEventListener('input',()=>{if(pw.getAttribute('aria-invalid'))checkPw()});
+
+eye.addEventListener('click',()=>{
+  const show=pw.type==='password';
+  pw.type=show?'text':'password';
+  eye.setAttribute('aria-pressed',show);
+  eye.setAttribute('aria-label',show?'Hide password':'Show password');
+  eye.querySelector('.x').style.display=show?'':'none';
+});
+
+function reset(){
+  go.dataset.state='idle';lbl.textContent='Sign in';go.removeAttribute('aria-busy');go.disabled=false;
+}
+f.addEventListener('submit',e=>{
+  e.preventDefault();
+  if(go.dataset.state!=='idle')return;
+  touched=true;
+  const okE=checkEmail(),okP=checkPw();
+  if(!okE){email.focus();return}
+  if(!okP){pw.focus();return}
+  timers.forEach(clearTimeout);
+  go.dataset.state='loading';go.setAttribute('aria-busy','true');lbl.textContent='Signing in';
+  live.textContent='Signing in';
+  timers=[
+    setTimeout(()=>{
+      go.dataset.state='done';go.removeAttribute('aria-busy');
+      const name=email.value.split('@')[0].split(/[._-]/)[0];
+      lbl.textContent='Welcome back'+(name?', '+name.charAt(0).toUpperCase()+name.slice(1):'');
+      live.textContent='Signed in. '+lbl.textContent;
+    },1200),
+    setTimeout(reset,3600)
+  ];
+});
+
+pk.addEventListener('click',()=>{
+  if(pk.getAttribute('aria-busy'))return;
+  const t=pk.querySelector('.lbl');
+  pk.setAttribute('aria-busy','true');t.textContent='Check your phone';live.textContent='Waiting for your passkey';
+  setTimeout(()=>{pk.removeAttribute('aria-busy');t.textContent='Continue with passkey';live.textContent='Passkey request ended'},1800);
+});
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();live.textContent=a.textContent+' opens next';
+}));
+</script>
+</body>
+</html>

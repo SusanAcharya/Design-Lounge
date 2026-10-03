@@ -1,0 +1,245 @@
+<!-- Design Lounge piece: phone-comments-sheet · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comments on Ridgeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#0f0e0d;--sheet:#1c1a18;--raised:#262320;--line:#33302c;
+  --ink:#ede8e1;--ink-2:#b8b0a5;--ink-3:#948b80;
+  --accent:#e9a23b;--on-accent:#1c1a18;--accent-wash:rgba(233,162,59,.16);
+  --scrim:rgba(8,7,6,.62);--focus:#e9a23b;
+  --sans:"Instrument Sans",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:6px;
+  --ease:cubic-bezier(.2,.7,.2,1);--sheet-ease:cubic-bezier(.32,.72,0,1);
+  --micro:160ms;--layout:360ms;
+  --top:max(54px,env(safe-area-inset-top));--bottom:max(34px,env(safe-area-inset-bottom));
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{font:14px/1.45 var(--sans);color:var(--ink);background:var(--page);-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+svg{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.post{padding:var(--top) 0 0}
+.post-head{display:flex;align-items:center;gap:10px;padding:8px 16px 12px}
+.av{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--sheet);background:var(--c,#b8b0a5)}
+.post-head b{font-weight:600}
+.post-head span{color:var(--ink-3);font-size:12px}
+.scene{height:300px;background:linear-gradient(180deg,#3a3f4a 0%,#c98a5a 62%,#e9b47a 100%);position:relative;overflow:hidden}
+.scene svg{position:absolute;inset:auto 0 0;width:100%;height:220px;stroke:none}
+.caption{padding:12px 16px;color:var(--ink-2)}
+.scrim{position:fixed;inset:0;background:var(--scrim);border:0;width:100%;cursor:default}
+
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;height:calc(100% - 268px);display:flex;flex-direction:column;
+  background:var(--sheet);border-radius:var(--r) var(--r) 0 0;border-top:1px solid var(--line);
+  transition:height var(--layout) var(--sheet-ease);
+}
+.sheet.is-tall{height:calc(100% - 64px)}
+.grab{height:44px;margin-bottom:-8px;display:grid;place-items:center;border-radius:var(--r)}
+.grab span{width:36px;height:4px;border-radius:2px;background:var(--line)}
+.grab:hover span{background:var(--ink-3)}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:0 16px 10px;border-bottom:1px solid var(--line)}
+h2{margin:0;font-size:16px;font-weight:600;letter-spacing:-.005em;display:flex;align-items:baseline;gap:8px}
+h2 .mono{font-size:13px;color:var(--ink-3);font-weight:400}
+.sort{display:flex;background:var(--raised);border-radius:var(--r);padding:0}
+.sort button{min-height:44px;min-width:68px;padding:0 10px;border-radius:var(--r);font-size:13px;font-weight:500;color:var(--ink-3);transition:color var(--micro) var(--ease),background-color var(--micro) var(--ease)}
+.sort button[aria-pressed="true"]{background:var(--line);color:var(--ink)}
+
+.list{flex:1;overflow:auto;list-style:none;margin:0;padding:6px 0 12px;overscroll-behavior:contain}
+.c{display:grid;grid-template-columns:32px 1fr;gap:10px;padding:10px 16px 2px;border-radius:var(--r)}
+.c.reply{grid-template-columns:24px 1fr;padding:8px 16px 2px 0}
+.c.reply .av{width:24px;height:24px;font-size:9px}
+.meta{display:flex;align-items:baseline;gap:8px;font-size:13px}
+.meta b{font-weight:600}
+.meta .op{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.meta .mono{font-size:11px;color:var(--ink-3)}
+.text{margin:2px 0 0;color:var(--ink);overflow-wrap:anywhere}
+.acts{display:flex;gap:2px;margin-left:-10px}
+.acts button{min-height:44px;min-width:44px;padding:0 10px;display:inline-flex;align-items:center;gap:6px;color:var(--ink-3);font-size:12px;font-weight:500;border-radius:var(--r)}
+.acts button:hover{color:var(--ink)}
+.like svg{width:16px;height:16px;transition:transform var(--micro) var(--ease)}
+.like .mono{font-size:12px;min-width:3ch;text-align:left}
+.like[aria-pressed="true"]{color:var(--accent)}
+.like[aria-pressed="true"] svg{fill:currentColor}
+.like.pop svg{animation:pop 220ms var(--ease)}
+@keyframes pop{50%{transform:scale(1.25)}}
+.replies{list-style:none;margin:0 0 0 32px;padding:0 0 0 22px;border-left:1px solid var(--line)}
+.fresh{animation:fresh 1400ms var(--ease)}
+@keyframes fresh{0%,30%{background:var(--accent-wash)}100%{background:transparent}}
+
+.composer{border-top:1px solid var(--line);padding:8px 12px var(--bottom);background:var(--sheet)}
+.chip{display:flex;align-items:center;justify-content:space-between;margin:0 0 6px 42px;padding-left:10px;min-height:32px;background:var(--raised);border-radius:var(--r);font-size:12px;color:var(--ink-2)}
+.chip[hidden]{display:none}
+.chip b{color:var(--ink);font-weight:500}
+.chip button{width:44px;height:44px;margin:-6px 0;display:grid;place-items:center;color:var(--ink-3)}
+.chip svg{width:14px;height:14px}
+.row{display:grid;grid-template-columns:32px 1fr 44px;gap:10px;align-items:center}
+.row input{
+  height:44px;min-width:0;padding:0 12px;background:var(--raised);border:1px solid var(--line);border-radius:var(--r);
+  font-size:15px;outline:none;transition:border-color var(--micro) var(--ease);
+}
+.row input::placeholder{color:var(--ink-3)}
+.row input:focus-visible{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.send{width:44px;height:44px;display:grid;place-items:center;border-radius:var(--r);background:var(--accent);color:var(--on-accent);transition:background-color var(--micro) var(--ease),color var(--micro) var(--ease),transform var(--micro) var(--ease)}
+.send svg{width:20px;height:20px;stroke-width:2}
+.send:active:not(:disabled){transform:scale(.94)}
+.send:disabled{background:var(--raised);color:var(--ink-3);cursor:not-allowed}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+  .fresh{animation:none;outline:1px solid var(--accent);outline-offset:-1px}
+}
+</style>
+</head>
+<body>
+<article class="post" aria-hidden="true">
+  <div class="post-head"><span class="av" style="--c:#c9a27a">KG</span><div><b>Kesh Gurung</b><br><span>Poon Hill, 3,210 m</span></div></div>
+  <div class="scene">
+    <svg viewBox="0 0 390 220" preserveAspectRatio="none"><path fill="#7d6a74" d="M0 120 70 40l46 50 64-80 70 86 52-44 88 78v90H0z"/><path fill="#4b4049" d="M0 160 60 110l60 34 70-52 80 60 60-30 60 36v62H0z"/><path fill="#2a2427" d="M0 190 90 160l90 24 100-30 110 28v38H0z"/></svg>
+  </div>
+  <p class="caption">Poon Hill at 5:40. Worth the 4 a.m. start.</p>
+</article>
+<button class="scrim" type="button" tabindex="-1" aria-hidden="true"></button>
+
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="title">
+  <button class="grab" id="grab" type="button" aria-label="Expand comments" aria-expanded="false"><span></span></button>
+  <div class="sheet-head">
+    <h2 id="title">Comments <span class="mono" id="count">128</span></h2>
+    <div class="sort" role="group" aria-label="Sort comments">
+      <button type="button" data-sort="top" aria-pressed="true">Top</button>
+      <button type="button" data-sort="new" aria-pressed="false">Newest</button>
+    </div>
+  </div>
+  <ul class="list" id="list"></ul>
+  <form class="composer" id="form" autocomplete="off">
+    <div class="chip" id="chip" hidden><span>Replying to <b id="chipName"></b></span><button type="button" id="chipX" aria-label="Cancel reply"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="row">
+      <span class="av" style="--c:#e9a23b" aria-hidden="true">SO</span>
+      <label class="sr" for="field">Add a comment</label>
+      <input id="field" type="text" placeholder="Add a comment for Kesh" maxlength="280">
+      <button class="send" id="send" type="submit" aria-label="Post comment" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+    </div>
+  </form>
+  <p class="sr" role="status" aria-live="polite" id="status"></p>
+</section>
+<script>
+const data = [
+  { id: 1, name: 'Anjali Rai', handle: 'anjali.r', c: '#9db8a0', mins: 42, likes: 86, text: 'The light on Dhaulagiri here is unreal. Which week did you go?', replies: [
+    { id: 11, name: 'Kesh Gurung', handle: 'kesh.walks', c: '#c9a27a', op: true, mins: 30, likes: 24, text: 'Second week of October. Clear every single morning.' },
+    { id: 12, name: 'Tom Ellery', handle: 'tellery', c: '#a9a3c9', mins: 12, likes: 3, text: 'Booking for next year. Thanks for this.' }] },
+  { id: 2, name: 'Mika Sato', handle: 'mikasato', c: '#d9b36c', mins: 8, likes: 12, text: 'How cold was it at the top before sunrise?', replies: [] },
+  { id: 3, name: 'Bikash Thapa', handle: 'bthapa', c: '#c98a7a', mins: 95, likes: 140, text: 'Tip for anyone going: leave Ghorepani at 4:30, not 5. The tower gets crowded fast.', replies: [
+    { id: 31, name: 'Lena Vogt', handle: 'lenav', c: '#8fb1c4', mins: 60, likes: 9, text: 'Can confirm. We were late and watched it from the stairs.' }] },
+  { id: 4, name: 'Priya Menon', handle: 'priyam', c: '#b8c48f', mins: 3, likes: 1, text: 'Saving this for my October list.', replies: [] }
+];
+const liked = new Set();
+let sort = 'top', replyTo = null, nextId = 100, total = 128, freshId = null;
+const $ = id => document.getElementById(id);
+const list = $('list'), field = $('field'), send = $('send'), chip = $('chip'), status = $('status');
+const ago = m => m < 1 ? 'now' : m < 60 ? m + 'm' : Math.floor(m / 60) + 'h';
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+const heart = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+
+function item(c, parent) {
+  const li = el('li');
+  const row = el('div', 'c' + (parent ? ' reply' : ''));
+  row.dataset.id = c.id;
+  if (c.id === freshId) row.classList.add('fresh');
+  const av = el('span', 'av', c.name.split(' ').map(w => w[0]).join('').slice(0, 2));
+  av.style.setProperty('--c', c.c); av.setAttribute('aria-hidden', 'true');
+  const body = el('div');
+  const meta = el('div', 'meta');
+  meta.append(el('b', '', c.name));
+  if (c.op) meta.append(el('span', 'op', 'Author'));
+  meta.append(el('span', 'mono', ago(c.mins)));
+  const acts = el('div', 'acts');
+  const like = el('button', 'like');
+  like.type = 'button';
+  const on = liked.has(c.id);
+  like.setAttribute('aria-pressed', String(on));
+  like.innerHTML = heart + '<span class="sr">Like</span>';
+  like.append(el('span', 'mono', String(c.likes + (on ? 1 : 0))));
+  like.addEventListener('click', () => {
+    liked.has(c.id) ? liked.delete(c.id) : liked.add(c.id);
+    const now = liked.has(c.id);
+    like.setAttribute('aria-pressed', String(now));
+    like.lastChild.textContent = c.likes + (now ? 1 : 0);
+    like.classList.remove('pop'); void like.offsetWidth; like.classList.add('pop');
+  });
+  const reply = el('button', '', 'Reply');
+  reply.type = 'button';
+  reply.setAttribute('aria-label', 'Reply to ' + c.name);
+  reply.addEventListener('click', () => setReply(parent || c, c));
+  acts.append(like, reply);
+  body.append(meta, el('p', 'text', c.text), acts);
+  row.append(av, body);
+  li.append(row);
+  if (!parent && c.replies.length) {
+    const ul = el('ul', 'replies');
+    c.replies.forEach(r => ul.append(item(r, c)));
+    li.append(ul);
+  }
+  return li;
+}
+function render() {
+  const rows = [...data];
+  if (sort === 'top') rows.sort((a, b) => b.likes - a.likes);
+  else rows.sort((a, b) => a.mins - b.mins);
+  const mine = rows.filter(r => r.mine), rest = rows.filter(r => !r.mine);
+  list.replaceChildren(...[...mine, ...rest].map(c => item(c)));
+}
+function setReply(thread, who) {
+  replyTo = thread;
+  $('chipName').textContent = '@' + who.handle;
+  chip.hidden = false;
+  field.placeholder = 'Reply to ' + who.name.split(' ')[0];
+  field.focus();
+}
+function clearReply() {
+  replyTo = null; chip.hidden = true; field.placeholder = 'Add a comment for Kesh';
+}
+$('chipX').addEventListener('click', () => { clearReply(); field.focus(); });
+field.addEventListener('input', () => { send.disabled = !field.value.trim(); });
+field.addEventListener('keydown', e => { if (e.key === 'Escape' && replyTo) { e.preventDefault(); clearReply(); } });
+$('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const text = field.value.trim();
+  if (!text) return;
+  const c = { id: nextId++, name: 'Sam Okoro', handle: 'samokoro', c: '#e9a23b', mins: 0, likes: 0, text, mine: true, replies: [] };
+  freshId = c.id;
+  if (replyTo) replyTo.replies.push(c); else data.unshift(c);
+  total++;
+  $('count').textContent = total;
+  status.textContent = replyTo ? 'Reply posted.' : 'Comment posted.';
+  clearReply();
+  field.value = ''; send.disabled = true;
+  render();
+  const row = list.querySelector(`[data-id="${c.id}"]`);
+  if (row) row.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  freshId = null;
+});
+document.querySelectorAll('.sort button').forEach(b => b.addEventListener('click', () => {
+  sort = b.dataset.sort;
+  document.querySelectorAll('.sort button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  render();
+  list.scrollTop = 0;
+}));
+document.querySelector('.scrim').addEventListener('click', () => { $('sheet').classList.remove('is-tall'); $('grab').setAttribute('aria-expanded', 'false'); $('grab').setAttribute('aria-label', 'Expand comments'); });
+$('grab').addEventListener('click', () => {
+  const tall = $('sheet').classList.toggle('is-tall');
+  $('grab').setAttribute('aria-expanded', String(tall));
+  $('grab').setAttribute('aria-label', tall ? 'Shrink comments' : 'Expand comments');
+});
+render();
+</script>
+</body>
+</html>

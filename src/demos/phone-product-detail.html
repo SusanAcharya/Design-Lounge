@@ -1,0 +1,264 @@
+<!-- Design Lounge piece: phone-product-detail · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tumbler No. 4 · Okra Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+@property --glaze{syntax:'<color>';inherits:true;initial-value:#b5532f}
+:root{
+  --bg:#f3e9d8;--surface:#fbf5ea;--ink:#2a1e16;--ink-2:#5a4637;--ink-3:#7a6553;
+  --line:#d8c6aa;--clay:#b5532f;--clay-ink:#fff6ec;--raw:#dcb994;--stage:#e7d3b6;
+  --grot:"Archivo",system-ui,sans-serif;--serif:"Instrument Serif",Georgia,serif;
+  --r:2px;--ease:cubic-bezier(.2,.7,.2,1);--expo:cubic-bezier(.16,1,.3,1);
+  --glaze:#b5532f;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--grot);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.page{height:100%;overflow-y:auto;padding-bottom:calc(84px + max(34px,env(safe-area-inset-bottom)))}
+
+/* gallery */
+.gallery{position:relative;height:404px;background:var(--stage);border-bottom:2px solid var(--ink)}
+.track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;position:relative;display:grid;place-items:center;padding-top:54px}
+.slide::before{content:"";position:absolute;inset:auto 0 0;height:38%;background:repeating-linear-gradient(90deg,transparent 0 23px,rgba(42,30,22,.06) 23px 24px);border-top:1px solid rgba(42,30,22,.12)}
+.tag{position:absolute;left:20px;bottom:18px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.tag i{font:italic 15px var(--serif);letter-spacing:0;text-transform:none;margin-left:4px}
+
+.cup{position:relative;width:146px;height:166px;border-radius:4px 4px 34px 34px/4px 4px 20px 20px;
+  background:linear-gradient(90deg,rgba(42,30,22,.22),transparent 26%,rgba(255,246,236,.22) 40%,transparent 56%,rgba(42,30,22,.28)),
+  linear-gradient(var(--glaze) 0 70%,var(--raw) 70%);transition:--glaze 420ms var(--ease);z-index:1}
+.cup::before{content:"";position:absolute;left:0;right:0;top:-9px;height:18px;border-radius:50%;
+  background:radial-gradient(ellipse at 50% 60%,color-mix(in srgb,var(--glaze) 60%,#000) 0 58%,var(--glaze) 62%);
+  box-shadow:inset 0 -2px 0 rgba(255,246,236,.2)}
+.cup::after{content:"";position:absolute;left:4px;right:4px;top:calc(70% - 2px);height:16px;
+  background:radial-gradient(circle at 9px 0,var(--glaze) 6px,transparent 6.5px) 0 0/23px 16px repeat-x;transition:--glaze 420ms var(--ease)}
+.shadow{position:absolute;bottom:calc(38% - 14px);width:190px;height:24px;border-radius:50%;background:rgba(42,30,22,.22);filter:blur(4px)}
+.top{position:relative;width:184px;height:184px;border-radius:50%;z-index:1;transition:--glaze 420ms var(--ease);
+  background:radial-gradient(circle,color-mix(in srgb,var(--glaze) 55%,#000) 0 30%,var(--glaze) 31% 82%,color-mix(in srgb,var(--glaze) 70%,#fff) 83% 86%,var(--glaze) 87%);
+  box-shadow:10px 12px 0 rgba(42,30,22,.16)}
+.top::after{content:"";position:absolute;inset:22%;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,246,236,.28),transparent 40%)}
+.pair{display:flex;gap:18px;align-items:flex-end;position:relative;z-index:1}
+.pair .cup{width:104px;height:122px}
+.pair .cup:last-child{height:92px;width:96px;--glaze:#3d4a3c}
+
+.over{position:absolute;top:max(58px,calc(env(safe-area-inset-top) + 4px));left:12px;right:12px;display:flex;gap:8px;pointer-events:none}
+.over .sp{flex:1}
+.ib{pointer-events:auto;position:relative;width:44px;height:44px;display:grid;place-items:center;background:var(--surface);border:2px solid var(--ink);border-radius:var(--r);box-shadow:2px 2px 0 var(--ink)}
+.ib:active{transform:translate(2px,2px);box-shadow:none}
+.ib svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ib[aria-pressed="true"] svg{fill:var(--clay);stroke:var(--clay)}
+.badge{position:absolute;top:-8px;right:-8px;min-width:20px;height:20px;padding:0 5px;border-radius:var(--r);background:var(--clay);color:var(--clay-ink);border:2px solid var(--ink);font-size:11px;font-weight:800;line-height:16px;text-align:center}
+.badge.bump{animation:bump 360ms var(--expo)}
+@keyframes bump{40%{transform:scale(1.35)}100%{transform:scale(1)}}
+.dots{position:absolute;right:20px;bottom:12px;display:flex}
+.dot{width:24px;height:44px;display:grid;place-items:center}
+.dot::after{content:"";width:8px;height:8px;border:2px solid var(--ink);border-radius:var(--r);transition:width 240ms var(--ease),background-color 240ms var(--ease)}
+.dot[aria-current="true"]::after{width:20px;background:var(--ink)}
+
+/* info */
+.info{padding:22px 20px 0}
+.eyebrow{margin:0;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:6px 0 0;font-size:36px;line-height:1;font-weight:800;font-stretch:118%;letter-spacing:-.02em}
+.sub{margin:4px 0 0;font:italic 21px/1.2 var(--serif);color:var(--ink-2)}
+.row{display:flex;align-items:baseline;justify-content:space-between;margin-top:16px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.price{font-size:26px;font-weight:800;font-stretch:110%;font-variant-numeric:tabular-nums}
+.rate{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.rate svg{width:14px;height:14px;fill:var(--clay)}
+fieldset{border:0;margin:0;padding:16px 0 0;min-width:0}
+legend{padding:0;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+legend span{font:italic 17px var(--serif);letter-spacing:0;text-transform:none;color:var(--ink-2);margin-left:6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.vh{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.sw{width:44px;height:44px;display:grid;place-items:center;cursor:pointer;border:2px solid transparent;border-radius:var(--r);transition:border-color 160ms var(--ease)}
+.sw i{width:30px;height:30px;border-radius:var(--r);background:var(--c);box-shadow:inset 0 0 0 1px rgba(42,30,22,.25)}
+input:checked+.sw{border-color:var(--ink)}
+input:focus-visible+.sw,input:focus-visible+.chip{outline:2px solid var(--ink);outline-offset:2px}
+.chip{min-width:72px;height:44px;padding:0 14px;display:grid;place-items:center;cursor:pointer;border:2px solid var(--ink);border-radius:var(--r);font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;background:var(--surface);transition:background-color 160ms var(--ease),color 160ms var(--ease)}
+input:checked+.chip{background:var(--ink);color:var(--surface)}
+input:disabled+.chip{cursor:not-allowed;border-style:dashed;border-color:var(--ink-3);color:var(--ink-3);background:transparent;text-decoration:line-through}
+.note{margin:8px 0 0;font-size:12px;color:var(--ink-3)}
+
+.acc{margin-top:22px;border-top:2px solid var(--ink)}
+.acc h2{margin:0;font-size:inherit}
+.acc-b{width:100%;min-height:52px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+.acc-b svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;transition:transform 240ms var(--ease)}
+.acc-b[aria-expanded="true"] svg{transform:rotate(45deg)}
+.acc-p{display:grid;grid-template-rows:0fr;transition:grid-template-rows 280ms var(--ease)}
+.acc-p>div{overflow:hidden}
+.acc-p p{margin:0;padding:12px 0 16px;font-size:14px;color:var(--ink-2);max-width:34ch}
+.acc-b[aria-expanded="true"]+.acc-p{grid-template-rows:1fr}
+
+/* bar */
+.bar{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:16px;padding:12px 20px max(34px,env(safe-area-inset-bottom));background:var(--surface);border-top:2px solid var(--ink);z-index:5}
+.tot{flex:none}
+.tot small{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.tot b{font-size:22px;font-weight:800;font-stretch:110%;font-variant-numeric:tabular-nums}
+.add{flex:1;height:56px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--clay);color:var(--clay-ink);border:2px solid var(--ink);border-radius:var(--r);box-shadow:4px 4px 0 var(--ink);font-size:16px;font-weight:800;font-stretch:112%;letter-spacing:.02em;transition:transform 120ms var(--ease),box-shadow 120ms var(--ease),background-color 200ms var(--ease)}
+.add:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+.add.done{background:var(--ink)}
+.add svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.fly{position:fixed;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--glaze);border:2px solid var(--ink);z-index:9;pointer-events:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+  .track{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="gallery" aria-label="Product photos">
+    <div class="track" id="track" tabindex="0" aria-label="Tumbler No. 4, swipe for more views">
+      <div class="slide" role="group" aria-label="Front view"><div class="shadow"></div><div class="cup"></div><p class="tag">Plate 1 <i>front</i></p></div>
+      <div class="slide" role="group" aria-label="Top view"><div class="top"></div><p class="tag">Plate 2 <i>from above</i></p></div>
+      <div class="slide" role="group" aria-label="Two sizes side by side"><div class="shadow"></div><div class="pair"><div class="cup"></div><div class="cup"></div></div><p class="tag">Plate 3 <i>260 and 180 ml</i></p></div>
+    </div>
+    <div class="over">
+      <button class="ib" type="button" aria-label="Back to Cups">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="sp"></span>
+      <button class="ib" type="button" id="save" aria-pressed="false" aria-label="Save to wishlist">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+      </button>
+      <button class="ib" type="button" id="bag" aria-label="Bag, 2 items">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="badge" id="count" aria-hidden="true">2</span>
+      </button>
+    </div>
+    <div class="dots" id="dots">
+      <button class="dot" type="button" aria-label="Photo 1 of 3" aria-current="true"></button>
+      <button class="dot" type="button" aria-label="Photo 2 of 3"></button>
+      <button class="dot" type="button" aria-label="Photo 3 of 3"></button>
+    </div>
+  </section>
+
+  <div class="info">
+    <p class="eyebrow">Okra Studio · Stoneware</p>
+    <h1>Tumbler No. 4</h1>
+    <p class="sub">thrown by hand, fired twice, a little different each time</p>
+    <div class="row">
+      <span class="price" id="price">$38</span>
+      <span class="rate">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>
+        4.8 · 212 reviews
+      </span>
+    </div>
+
+    <fieldset>
+      <legend>Glaze <span id="glazeName">Kiln red</span></legend>
+      <div class="opts" id="glazes">
+        <input class="vh" type="radio" name="glaze" id="g1" value="Kiln red" data-c="#b5532f" checked><label class="sw" for="g1" style="--c:#b5532f" title="Kiln red"><i></i><span class="vh">Kiln red</span></label>
+        <input class="vh" type="radio" name="glaze" id="g2" value="Oat ash" data-c="#cdbb98"><label class="sw" for="g2" style="--c:#cdbb98" title="Oat ash"><i></i><span class="vh">Oat ash</span></label>
+        <input class="vh" type="radio" name="glaze" id="g3" value="Moss" data-c="#5e6b47"><label class="sw" for="g3" style="--c:#5e6b47" title="Moss"><i></i><span class="vh">Moss</span></label>
+        <input class="vh" type="radio" name="glaze" id="g4" value="Iron blue" data-c="#34465a"><label class="sw" for="g4" style="--c:#34465a" title="Iron blue"><i></i><span class="vh">Iron blue</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Size <span id="sizeName">260 ml</span></legend>
+      <div class="opts" id="sizes">
+        <input class="vh" type="radio" name="size" id="s1" value="180 ml" data-p="32"><label class="chip" for="s1">180 ml</label>
+        <input class="vh" type="radio" name="size" id="s2" value="260 ml" data-p="38" checked><label class="chip" for="s2">260 ml</label>
+        <input class="vh" type="radio" name="size" id="s3" value="340 ml" data-p="42" disabled aria-describedby="soldout"><label class="chip" for="s3">340 ml</label>
+        <input class="vh" type="radio" name="size" id="s4" value="420 ml" data-p="46"><label class="chip" for="s4">420 ml</label>
+      </div>
+      <p class="note" id="soldout">340 ml is sold out. Next firing 14 October.</p>
+    </fieldset>
+
+    <div class="acc">
+      <h2><button class="acc-b" type="button" aria-expanded="true" aria-controls="p1" id="b1">Details<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></h2>
+      <div class="acc-p" id="p1" role="region" aria-labelledby="b1"><div><p>Wheel-thrown stoneware with an unglazed foot so you can feel the clay. 9 cm tall, 8 cm across. Made in batches of 40 in our Patan studio.</p></div></div>
+      <h2><button class="acc-b" type="button" aria-expanded="false" aria-controls="p2" id="b2">Care<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></h2>
+      <div class="acc-p" id="p2" role="region" aria-labelledby="b2" hidden><div><p>Dishwasher safe on the top rack. Microwave safe. Avoid going straight from the freezer to boiling water.</p></div></div>
+      <h2><button class="acc-b" type="button" aria-expanded="false" aria-controls="p3" id="b3">Shipping<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></h2>
+      <div class="acc-p" id="p3" role="region" aria-labelledby="b3" hidden><div><p>Wrapped in paper and corrugated card. Ships in 2 working days. Free over $60, otherwise $6 flat.</p></div></div>
+    </div>
+  </div>
+</main>
+
+<div class="bar">
+  <div class="tot"><small>Total</small><b id="total">$38</b></div>
+  <button class="add" type="button" id="add">
+    <svg viewBox="0 0 24 24" aria-hidden="true" id="addIcon"><path d="M12 5v14M5 12h14"/></svg>
+    <span id="addLabel">Add to bag</span>
+  </button>
+</div>
+<p class="vh" aria-live="polite" id="live"></p>
+
+<script>
+const $ = id => document.getElementById(id);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const track = $('track'), dots = [...document.querySelectorAll('.dot')];
+
+track.addEventListener('scroll', () => {
+  const i = Math.round(track.scrollLeft / track.clientWidth);
+  dots.forEach((d, n) => d.setAttribute('aria-current', n === i ? 'true' : 'false'));
+}, { passive: true });
+dots.forEach((d, n) => d.addEventListener('click', () =>
+  track.scrollTo({ left: n * track.clientWidth, behavior: reduce ? 'auto' : 'smooth' })));
+
+$('save').addEventListener('click', e => {
+  const b = e.currentTarget, on = b.getAttribute('aria-pressed') !== 'true';
+  b.setAttribute('aria-pressed', on);
+  b.setAttribute('aria-label', on ? 'Saved to wishlist' : 'Save to wishlist');
+});
+
+$('glazes').addEventListener('change', e => {
+  document.querySelector('.gallery').style.setProperty('--glaze', e.target.dataset.c);
+  $('glazeName').textContent = e.target.value;
+});
+$('sizes').addEventListener('change', e => {
+  $('sizeName').textContent = e.target.value;
+  $('price').textContent = $('total').textContent = '$' + e.target.dataset.p;
+});
+
+document.querySelectorAll('.acc-b').forEach(b => b.addEventListener('click', () => {
+  const open = b.getAttribute('aria-expanded') !== 'true', p = $(b.getAttribute('aria-controls'));
+  if (open) { p.hidden = false; requestAnimationFrame(() => b.setAttribute('aria-expanded', 'true')); }
+  else { b.setAttribute('aria-expanded', 'false'); setTimeout(() => { if (b.getAttribute('aria-expanded') === 'false') p.hidden = true; }, reduce ? 0 : 280); }
+}));
+
+let count = 2, busy = false;
+const plus = '<path d="M12 5v14M5 12h14"/>', tick = '<path d="M5 12.5l4.5 4.5L19 7"/>';
+function bump() {
+  count++;
+  const c = $('count');
+  c.textContent = count;
+  $('bag').setAttribute('aria-label', 'Bag, ' + count + ' items');
+  c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump');
+}
+$('add').addEventListener('click', () => {
+  if (busy) return;
+  busy = true;
+  const btn = $('add'), size = document.querySelector('[name=size]:checked').value, glaze = document.querySelector('[name=glaze]:checked').value;
+  btn.classList.add('done'); $('addLabel').textContent = 'Added'; $('addIcon').innerHTML = tick;
+  $('live').textContent = 'Added Tumbler No. 4, ' + glaze + ', ' + size + ' to your bag.';
+  const reset = () => setTimeout(() => {
+    btn.classList.remove('done'); $('addLabel').textContent = 'Add to bag'; $('addIcon').innerHTML = plus; busy = false;
+  }, 1400);
+  if (reduce) { bump(); reset(); return; }
+  const a = btn.getBoundingClientRect(), b = $('bag').getBoundingClientRect();
+  const x0 = a.left + a.width / 2, y0 = a.top + a.height / 2, dx = b.left + b.width / 2 - x0, dy = b.top + b.height / 2 - y0;
+  const fly = document.createElement('span');
+  fly.className = 'fly'; fly.style.left = x0 + 'px'; fly.style.top = y0 + 'px';
+  document.body.appendChild(fly);
+  fly.animate([
+    { transform: 'translate(0,0) scale(1)' },
+    { transform: `translate(${dx * .35}px,${dy * .55}px) scale(1.4)`, offset: .45 },
+    { transform: `translate(${dx}px,${dy}px) scale(.5)` }
+  ], { duration: 640, easing: 'cubic-bezier(.2,.7,.2,1)' }).onfinish = () => { fly.remove(); bump(); };
+  reset();
+});
+</script>
+</body>
+</html>

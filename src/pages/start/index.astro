@@ -62,6 +62,18 @@ const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
               </div>
             </dl>
             <div class="pieces">
+              <p class="eyebrow">{s.directions.length} directions</p>
+              <ul class="dirs">
+                {s.directions.map((dir) => {
+                  const dt = theme(dir.theme);
+                  return (
+                    <li title={dir.mood}>
+                      {dt && <span class="swatches" aria-hidden="true"><i style={`background:${dt.tokens.bg}`}></i><i style={`background:${dt.tokens.accent}`}></i></span>}
+                      <span>{dir.name}</span>
+                    </li>
+                  );
+                })}
+              </ul>
               <p class="eyebrow">Open first</p>
               <ol>
                 {s.pieces.map((id) => (
@@ -98,5 +110,7 @@ const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
   .pieces ol { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
   .pieces a { font-size: 14px; text-transform: capitalize; border-bottom: 1px solid transparent; }
   .pieces a:hover { border-color: var(--ink); }
+  .dirs { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 18px; }
+  .dirs li { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 6px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; }
   @media (max-width: 900px) { .card { grid-template-columns: minmax(0, 1fr); gap: 20px; } }
 </style>

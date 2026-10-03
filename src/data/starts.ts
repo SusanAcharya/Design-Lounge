@@ -1,6 +1,20 @@
 /** Product-start recipes. Shared by /start, home, agents, llms.txt, and the skill. */
 export type Surface = 'web' | 'app';
 
+/** One complete look for a recipe. Two people asking for the same kind of product land on different directions. */
+export interface Direction {
+  id: string;
+  name: string;
+  mood: string;
+  theme: string;
+  pairing: string;
+  family: string;
+  /** The piece that sets the first screen. Unset: the recipe's first piece. */
+  hero?: string;
+  /** The one signature motion. Null on a daily tool: the register stays quiet. */
+  effect: string | null;
+}
+
 export interface Start {
   id: string;
   surface: Surface;
@@ -13,7 +27,185 @@ export interface Start {
   shelf: string;
   categories: string[];
   pieces: string[];
+  directions: Direction[];
 }
+
+type D = [id: string, name: string, mood: string, theme: string, pairing: string, family: string, hero: string | undefined, effect: string | null];
+const d = (rows: D[]): Direction[] => rows.map(([id, name, mood, theme, pairing, family, hero, effect]) => ({ id, name, mood, theme, pairing, family, ...(hero ? { hero } : {}), effect }));
+
+const DIRECTIONS: Record<string, Direction[]> = {
+  'marketing-site': d([
+    ['paper-press', 'Paper press', 'Calm, literate, warm paper', 'paper-ink', 'the-lounge', 'editorial', 'hero-asymmetric-type-lockup', 'text-mask-line-reveal'],
+    ['swiss-office', 'Swiss office', 'Precise, cool, a visible grid', 'ice-station', 'swiss-precision', 'sharp', 'hero-swiss-grid-wordmark', 'scroll-velocity-type'],
+    ['loud-poster', 'Loud poster', 'Playful, loud, primary shapes', 'festival', 'brutal-grotesk', 'sharp', 'hero-bauhaus-composition', 'kinetic-type-marquee'],
+    ['warm-studio', 'Warm studio', 'Friendly, crafted, clay and sand', 'kiln', 'studio-display', 'soft', 'editorial-landing-hero', 'stacking-cards-scroll'],
+  ]),
+  saas: d([
+    ['calm-cobalt', 'Calm cobalt', 'Trustworthy, clear, enterprise-friendly', 'fog-city', 'friendly-saas', 'quiet', 'hero-product-window-tilt', 'features-sticky-scroll-steps'],
+    ['dev-night', 'Dev night', 'Technical, dark, for developers', 'night-desk', 'developer-docs', 'sharp', 'landing-devtool-dark', 'text-scramble-reveal'],
+    ['lime-engine', 'Lime engine', 'AI, infrastructure, fast and expensive', 'circuit', 'signal-mono', 'sharp', 'hero-ai-prompt-cycle', 'spotlight-hover-grid'],
+    ['butter-tool', 'Butter tool', 'Playful, consumer, small teams', 'playroom', 'indie-maker', 'soft', 'hero-product-window-tilt', 'stacking-cards-scroll'],
+    ['printed-saas', 'Printed SaaS', 'Editorial, opinionated, founder-led', 'paper-ink', 'neo-grotesk-mono', 'editorial', 'hero-asymmetric-type-lockup', 'text-marker-highlight-draw'],
+  ]),
+  portfolio: d([
+    ['noir-index', 'Noir index', 'Luxury, dark, art direction', 'atelier-noir', 'gallery-wall', 'editorial', 'portfolio-index-hover-preview', 'hover-image-trail'],
+    ['stone-architect', 'Stone architect', 'Architecture, white stone, a strict grid', 'marble-hall', 'swiss-precision', 'sharp', 'portfolio-architect-index', 'scroll-split'],
+    ['brutal-studio', 'Brutal studio', 'Loud, black on white, a studio with opinions', 'paper-ink', 'brutal-grotesk', 'sharp', 'brutalist-studio-home', 'cursor-ink-blob'],
+    ['linen-series', 'Linen series', 'Photography, soft light, a long series', 'linen-shop', 'maison', 'editorial', 'portfolio-photographer-horizontal', 'text-mask-line-reveal'],
+  ]),
+  'portfolio-builder': d([
+    ['kiln-workbench', 'Kiln workbench', 'Warm, human, product screens as the art', 'kiln', 'indie-maker', 'soft', 'hero-product-window-tilt', 'stacking-cards-scroll'],
+    ['cobalt-desk', 'Cobalt desk', 'Precise, systems thinker, a visible grid', 'fog-city', 'neo-grotesk-mono', 'sharp', 'hero-swiss-grid-wordmark', 'features-sticky-scroll-steps'],
+    ['night-terminal', 'Night terminal', 'Developer, dark, code as craft', 'night-desk', 'terminal-native', 'editorial', 'hero-flashlight-reveal', 'text-scramble-reveal'],
+    ['sakura-notes', 'Sakura notes', 'Designer, soft, personal and bright', 'sakura-desk', 'studio-display', 'soft', 'hero-editorial-name-rotator', 'scroll-split'],
+  ]),
+  fintech: d([
+    ['harbour', 'Harbour', 'Trust, cream and navy, a bank you can call', 'harbour-ledger', 'friendly-saas', 'quiet', 'landing-fintech-light', 'staggered-list-reveal'],
+    ['lime-card', 'Lime card', 'A card for young people, dark and fast', 'circuit', 'wide-tech', 'sharp', 'hero-product-window-tilt', 'scroll-velocity-type'],
+    ['lokta', 'Lokta', 'Nepali money, crimson on lokta paper', 'lokta', 'devanagari', 'quiet', 'landing-fintech-light', 'text-marker-highlight-draw'],
+    ['co-op-ledger', 'Co-op ledger', 'Old-fashioned trust, stamped paper', 'archive', 'slab-ledger', 'editorial', 'hero-asymmetric-type-lockup', 'split-flap-board'],
+  ]),
+  fashion: d([
+    ['washed-linen', 'Washed linen', 'Soft, natural, slow fashion', 'linen-shop', 'maison', 'editorial', 'landing-fashion-atelier', 'text-mask-line-reveal'],
+    ['noir-house', 'Noir house', 'Luxury, black, a fragrance or a house', 'atelier-noir', 'maison', 'editorial', 'landing-fashion-atelier', 'hover-image-trail'],
+    ['chrome-drop', 'Chrome drop', 'Streetwear, a drop, Y2K', 'y2k-chrome', 'y2k-chrome', 'glass', 'hero-editorial-name-rotator', 'kinetic-type-marquee'],
+    ['blush-letter', 'Blush letter', 'Romantic, bright, bridal or beauty', 'sakura-desk', 'lettera', 'soft', 'editorial-landing-hero', 'overlap-slider'],
+  ]),
+  food: d([
+    ['garden-table', 'Garden table', 'Seasonal, olive and cream, a farm kitchen', 'loam', 'garden-journal', 'soft', 'editorial-landing-hero', 'features-sticky-scroll-steps'],
+    ['market-zine', 'Market zine', 'Street food, loud, turmeric and tomato', 'market-stall', 'riso-zine', 'sharp', 'hero-bauhaus-composition', 'kinetic-type-marquee'],
+    ['clay-menu', 'Clay menu', 'A restaurant with a point of view', 'kiln', 'magazine-contrast', 'editorial', 'hero-asymmetric-type-lockup', 'stacking-cards-scroll'],
+  ]),
+  wellness: d([
+    ['mint-air', 'Mint air', 'Clinical calm, mint and teal', 'alpine-clinic', 'garden-journal', 'soft', 'landing-wellness-retreat', 'sticky-split-story'],
+    ['glacier', 'Glacier', 'Quiet, almost white, a retreat', 'glacier', 'academic', 'quiet', 'editorial-landing-hero', 'text-mask-line-reveal'],
+    ['greenhouse', 'Greenhouse', 'Growing, soft green, habits and yoga', 'greenhouse', 'indie-maker', 'soft', 'landing-wellness-retreat', 'stacking-cards-scroll'],
+  ]),
+  hotel: d([
+    ['noir-maison', 'Noir maison', 'Black, bone, a city hotel', 'atelier-noir', 'maison', 'editorial', 'landing-fashion-atelier', 'sticky-split-story'],
+    ['velvet-bar', 'Velvet bar', 'Burgundy, gold, a house with a bar', 'velvet-club', 'deco-hotel', 'editorial', 'hero-editorial-name-rotator', 'page-transition-curtain'],
+    ['marble-stay', 'Marble stay', 'Stone, heritage, a grand hotel', 'marble-hall', 'monumental', 'editorial', 'editorial-landing-hero', 'overlap-slider'],
+  ]),
+  agency: d([
+    ['night-wall', 'Night wall', 'Dark, confident, a case wall', 'night-desk', 'brutal-grotesk', 'sharp', 'landing-agency-case-wall', 'cursor-ink-blob'],
+    ['paper-brutal', 'Paper brutal', 'Black on white, uppercase, opinionated', 'paper-ink', 'brutal-grotesk', 'sharp', 'brutalist-studio-home', 'kinetic-type-marquee'],
+    ['festival-studio', 'Festival studio', 'Colourful, playful, a creative studio', 'festival', 'studio-display', 'soft', 'hero-bauhaus-composition', 'magnetic-buttons'],
+    ['copper-works', 'Copper works', 'Industrial, warm dark, a product studio', 'copper-works', 'neo-grotesk-mono', 'sharp', 'hero-swiss-grid-wordmark', 'page-transition-curtain'],
+  ]),
+  editorial: d([
+    ['press-room', 'Press room', 'Newsprint and one red', 'press-room', 'newsroom', 'editorial', 'editorial-landing-hero', 'scroll-reading-progress'],
+    ['archive', 'Archive', 'Literary, manila and Garamond', 'archive', 'classic-garamond', 'editorial', 'hero-asymmetric-type-lockup', 'text-marker-highlight-draw'],
+    ['riso-zine', 'Riso zine', 'Indie, two inks, loud', 'festival', 'riso-zine', 'sharp', 'hero-bauhaus-composition', 'kinetic-type-marquee'],
+  ]),
+  docs: d([
+    ['cobalt-docs', 'Cobalt docs', 'Clear, civic, the default reader', 'fog-city', 'developer-docs', 'quiet', undefined, null],
+    ['phosphor-docs', 'Phosphor docs', 'Dark, terminal, a CLI', 'signal-green', 'terminal-native', 'sharp', undefined, null],
+    ['paper-docs', 'Paper docs', 'Long reads, a research tool', 'paper-ink', 'academic', 'editorial', undefined, null],
+  ]),
+  music: d([
+    ['neon-tube', 'Neon tube', 'Night, magenta and cyan', 'neon-alley', 'y2k-chrome', 'glass', 'hero-editorial-name-rotator', 'kinetic-type-marquee'],
+    ['gig-poster', 'Gig poster', 'Loud, condensed, a tour', 'festival', 'poster-condensed', 'sharp', 'hero-bauhaus-composition', 'variable-font-proximity'],
+    ['observatory', 'Observatory', 'Ambient, navy and gold, a record label', 'observatory', 'cinema', 'editorial', 'portfolio-motion-showreel', 'coverflow-strip'],
+  ]),
+  'personal-site': d([
+    ['sakura-essay', 'Sakura essay', 'A writer, blush paper', 'sakura-desk', 'the-lounge', 'editorial', 'hero-editorial-name-rotator', 'text-mask-line-reveal'],
+    ['margin-notes', 'Margin notes', 'Handwritten, warm, a notebook', 'paper-ink', 'handwritten-notes', 'soft', 'profile-creator-masthead', 'text-marker-highlight-draw'],
+    ['greenhouse-journal', 'Greenhouse journal', 'Soft green, a slow blog', 'greenhouse', 'bookish', 'quiet', 'editorial-landing-hero', 'scroll-reading-progress'],
+  ]),
+  event: d([
+    ['festival', 'Festival', 'Fluoro pink, a drum, a weekend', 'festival', 'poster-condensed', 'sharp', 'hero-bauhaus-composition', 'split-flap-board'],
+    ['night-marquee', 'Night marquee', 'Neon, a club night', 'neon-alley', 'neon-marquee', 'glass', 'hero-flashlight-reveal', 'kinetic-type-marquee'],
+    ['film-week', 'Film week', 'Cinema, newsprint red, a programme', 'press-room', 'cinema', 'editorial', 'hero-swiss-grid-wordmark', 'scroll-velocity-type'],
+  ]),
+  museum: d([
+    ['marble-hall', 'Marble hall', 'White stone, a brass plaque', 'marble-hall', 'the-lounge', 'editorial', 'editorial-landing-hero', 'pan-canvas'],
+    ['archive-room', 'Archive room', 'Heritage, Cinzel, a collection', 'archive', 'monumental', 'editorial', 'hero-asymmetric-type-lockup', 'text-mask-line-reveal'],
+    ['night-gallery', 'Night gallery', 'Modern art, navy, Bauhaus shapes', 'observatory', 'bauhaus-school', 'sharp', 'hero-bauhaus-composition', 'sticky-split-story'],
+  ]),
+  landing: d([
+    ['noir-launch', 'Noir launch', 'Luxury, dark, one product', 'atelier-noir', 'maison', 'editorial', 'landing-fashion-atelier', 'text-mask-line-reveal'],
+    ['clay-launch', 'Clay launch', 'Warm, crafted, a maker', 'kiln', 'studio-display', 'soft', 'editorial-landing-hero', 'stacking-cards-scroll'],
+    ['grid-launch', 'Grid launch', 'Precise, cool, a hardware launch', 'ice-station', 'swiss-precision', 'sharp', 'hero-swiss-grid-wordmark', 'scroll-velocity-type'],
+    ['toy-launch', 'Toy launch', 'Playful, butter and coral', 'playroom', 'candy-clay', 'soft', 'hero-bauhaus-composition', 'spring-deck'],
+  ]),
+  dashboard: d([
+    ['harbour-desk', 'Harbour desk', 'Finance ops, navy and brass', 'harbour-ledger', 'swiss-precision', 'sharp', undefined, null],
+    ['night-ops', 'Night ops', 'Dark, engineers, long shifts', 'night-desk', 'developer-docs', 'sharp', undefined, null],
+    ['yard', 'Yard', 'Logistics, safety orange, concrete', 'cinder', 'industrial-label', 'industrial', undefined, null],
+    ['civic', 'Civic', 'Calm cobalt, an admin that lasts', 'fog-city', 'red-hat', 'quiet', undefined, null],
+  ]),
+  'design-system': d([
+    ['paper-system', 'Paper system', 'Editorial, warm', 'paper-ink', 'the-lounge', 'editorial', undefined, null],
+    ['cobalt-system', 'Cobalt system', 'Neutral, product', 'fog-city', 'geometric-modern', 'quiet', undefined, null],
+    ['night-system', 'Night system', 'Dark, technical', 'night-desk', 'signal-mono', 'sharp', undefined, null],
+  ]),
+  commerce: d([
+    ['clay-shop', 'Clay shop', 'Handmade, warm, a studio shop', 'kiln', 'atelier', 'soft', 'shop-collection', 'staggered-list-reveal'],
+    ['linen-boutique', 'Linen boutique', 'Soft luxury, fashion and home', 'linen-shop', 'maison', 'editorial', 'luxe-product-detail', 'overlap-slider'],
+    ['market-stall', 'Market stall', 'Loud, local, groceries and merch', 'market-stall', 'riso-zine', 'sharp', 'shop-collection', 'kinetic-type-marquee'],
+    ['noir-counter', 'Noir counter', 'Watches, fragrance, a dark counter', 'atelier-noir', 'gallery-wall', 'editorial', 'luxe-product-detail', 'hover-image-trail'],
+  ]),
+  'mobile-app': d([
+    ['mint-app', 'Mint app', 'Calm, clinical, trustworthy', 'alpine-clinic', 'geometric-modern', 'soft', 'm3-expressive-home', 'm3-container-transform'],
+    ['cobalt-glass', 'Cobalt glass', 'iOS native, glass bars', 'fog-city', 'friendly-saas', 'glass', 'pwa-app-shell', 'ios-large-title-collapse'],
+    ['toy-app', 'Toy app', 'Playful, consumer, butter and coral', 'playroom', 'candy-clay', 'soft', 'm3-expressive-home', 'shared-element-expand'],
+  ]),
+  personal: d([
+    ['lokta-day', 'Lokta day', 'Nepali, crimson on lokta paper', 'lokta', 'devanagari', 'quiet', 'spend-list', 'staggered-list-reveal'],
+    ['lokta-night', 'Lokta night', 'Nepali, after dark', 'lokta-night', 'devanagari', 'quiet', 'spend-list', 'ios-pull-to-refresh'],
+    ['garden-ledger', 'Garden ledger', 'Soft, olive, a household', 'loam', 'garden-journal', 'soft', 'spend-list', 'staggered-list-reveal'],
+  ]),
+  bank: d([
+    ['harbour-bank', 'Harbour bank', 'Navy and brass, a real bank', 'harbour-ledger', 'friendly-saas', 'quiet', 'ios-fintech-home', 'ios-pull-to-refresh'],
+    ['harbour-night', 'Harbour night', 'The same bank after dark, glass bars', 'harbour-night', 'friendly-saas', 'glass', 'ios-fintech-home', 'shared-element-expand'],
+    ['lime-bank', 'Lime bank', 'A young card, lime on charcoal', 'circuit', 'wide-tech', 'sharp', 'ios-fintech-home', 'staggered-list-reveal'],
+  ]),
+  health: d([
+    ['mint-rings', 'Mint rings', 'Clinic calm, rings', 'alpine-clinic', 'geometric-modern', 'soft', 'ios-health-activity-rings', 'ios-large-title-collapse'],
+    ['glacier-run', 'Glacier run', 'Quiet, a run log', 'glacier', 'academic', 'quiet', 'mobile-run-detail', 'staggered-list-reveal'],
+    ['greenhouse-habit', 'Greenhouse habit', 'Friendly, soft green, habits', 'greenhouse', 'playground', 'soft', 'ios-health-activity-rings', 'shared-element-expand'],
+  ]),
+  messages: d([
+    ['cobalt-inbox', 'Cobalt inbox', 'Clear, work mail', 'fog-city', 'geometric-modern', 'quiet', 'mobile-inbox-list', 'ios-swipe-row-actions'],
+    ['night-chat', 'Night chat', 'Dark, glass, a private chat', 'night-desk', 'signal-mono', 'glass', 'chat-thread', 'ios-pull-to-refresh'],
+    ['sakura-letters', 'Sakura letters', 'Soft, personal, friends', 'sakura-desk', 'indie-maker', 'soft', 'mobile-inbox-list', 'shared-element-expand'],
+  ]),
+  'music-app': d([
+    ['neon-player', 'Neon player', 'Night, magenta, glass', 'neon-alley', 'y2k-chrome', 'glass', 'ios-now-playing', 'shared-element-expand'],
+    ['festival-player', 'Festival player', 'Loud, expressive, Android', 'festival', 'variable-expressive', 'soft', 'm3-music-player-expressive', 'm3-container-transform'],
+    ['observatory-player', 'Observatory player', 'Ambient, navy and gold', 'observatory', 'cinema', 'glass', 'ios-now-playing', 'coverflow-strip'],
+  ]),
+  news: d([
+    ['press-room', 'Press room', 'Newsprint and one red', 'press-room', 'newsroom', 'editorial', 'pwa-news-reader', 'ios-large-title-collapse'],
+    ['archive-reader', 'Archive reader', 'Literary, long reads', 'archive', 'classic-garamond', 'editorial', 'pwa-news-reader', 'ios-pull-to-refresh'],
+    ['night-edition', 'Night edition', 'Dark, a late edition', 'night-desk', 'magazine-contrast', 'editorial', 'pwa-news-reader', 'staggered-list-reveal'],
+  ]),
+  'shop-app': d([
+    ['clay-bag', 'Clay bag', 'Handmade, warm', 'kiln', 'atelier', 'soft', 'mobile-filter-chips-list', 'shared-element-expand'],
+    ['linen-bag', 'Linen bag', 'Soft luxury', 'linen-shop', 'maison', 'editorial', 'mobile-filter-chips-list', 'ios-bottom-sheet-detents'],
+    ['candy-bag', 'Candy bag', 'Playful, loud, snacks and toys', 'market-stall', 'candy-clay', 'soft', 'mobile-filter-chips-list', 'staggered-list-reveal'],
+  ]),
+  social: d([
+    ['playroom', 'Playroom', 'Friendly, coral, everyone', 'playroom', 'geometric-modern', 'soft', 'mobile-story-viewer', 'optimistic-like-button'],
+    ['neon-feed', 'Neon feed', 'Night, glass, creators', 'neon-alley', 'indie-maker', 'glass', 'mobile-story-viewer', 'shared-element-expand'],
+    ['sketchbook', 'Sketchbook', 'Handwritten, small groups', 'sakura-desk', 'handwritten-notes', 'soft', 'm3-expressive-home', 'optimistic-like-button'],
+  ]),
+  weather: d([
+    ['ice-glass', 'Ice glass', 'Pale, northern, glass', 'ice-station', 'geometric-modern', 'glass', 'ios-weather-hourly-scrub', 'ios-large-title-collapse'],
+    ['night-sky', 'Night sky', 'Navy and star gold', 'observatory', 'wide-tech', 'glass', 'ios-weather-hourly-scrub', 'ios-pull-to-refresh'],
+    ['garden-forecast', 'Garden forecast', 'Soft, for growers', 'greenhouse', 'garden-journal', 'soft', 'ios-weather-hourly-scrub', 'staggered-list-reveal'],
+  ]),
+  field: d([
+    ['yard', 'Yard', 'Safety orange on concrete', 'cinder', 'swiss-precision', 'industrial', undefined, null],
+    ['shed', 'Shed', 'Rust and olive, outdoor work', 'oxide', 'industrial-label', 'industrial', undefined, null],
+    ['cockpit', 'Cockpit', 'Dark, teal, night shifts', 'hud-teal', 'hud', 'sharp', undefined, null],
+  ]),
+  tablet: d([
+    ['press-tablet', 'Press tablet', 'Reading, newsprint', 'press-room', 'newsroom', 'editorial', undefined, null],
+    ['cobalt-tablet', 'Cobalt tablet', 'Neutral, work', 'fog-city', 'geometric-modern', 'quiet', undefined, null],
+    ['night-tablet', 'Night tablet', 'Dark, technical', 'night-desk', 'developer-docs', 'sharp', undefined, null],
+  ]),
+};
 
 export const SURFACES: { id: Surface; title: string; blurb: string }[] = [
   { id: 'web', title: 'Websites', blurb: 'The kind of site. Open one, then the screens that belong to it.' },
@@ -30,7 +222,7 @@ export function startsOn(surface: Surface) {
   return STARTS.filter((s) => s.surface === surface).sort((a, b) => (rank.get(a.id) ?? 99) - (rank.get(b.id) ?? 99));
 }
 
-export const STARTS: Start[] = [
+const BASE: Omit<Start, 'directions'>[] = [
   {
     id: 'marketing-site',
     surface: 'web',
@@ -250,7 +442,7 @@ export const STARTS: Start[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['navigation', 'overlays', 'media', 'onboarding', 'settings'],
-    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet'],
+    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet', 'phone-splash-launch', 'phone-sign-in', 'phone-sign-up-steps', 'phone-profile-header', 'phone-notifications-list', 'phone-permission-prompt', 'm3-navigation-bar', 'phone-form-fields'],
   },
   {
     id: 'design-system',
@@ -328,7 +520,7 @@ export const STARTS: Start[] = [
     pairing: 'friendly-saas',
     shelf: 'native-feel',
     categories: ['dashboard', 'navigation', 'settings', 'auth'],
-    pieces: ['ios-fintech-home', 'phone-tab-plain', 'ios-grouped-settings', 'auth-passkey-setup', 'ios-large-title-collapse', 'mobile-list-empty'],
+    pieces: ['ios-fintech-home', 'phone-tab-plain', 'ios-grouped-settings', 'auth-passkey-setup', 'ios-large-title-collapse', 'mobile-list-empty', 'phone-sign-in', 'phone-notifications-list'],
   },
   {
     id: 'health',
@@ -341,7 +533,7 @@ export const STARTS: Start[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['dashboard', 'navigation', 'settings', 'onboarding'],
-    pieces: ['ios-health-activity-rings', 'phone-tab-plain', 'ios-grouped-settings', 'ios-onboarding-carousel', 'ios-pull-to-refresh'],
+    pieces: ['ios-health-activity-rings', 'phone-tab-plain', 'ios-grouped-settings', 'ios-onboarding-carousel', 'ios-pull-to-refresh', 'phone-paywall-plans', 'phone-permission-prompt'],
   },
   {
     id: 'messages',
@@ -354,7 +546,7 @@ export const STARTS: Start[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['messaging', 'navigation', 'overlays'],
-    pieces: ['mobile-inbox-list', 'chat-thread', 'ios-swipe-row-actions', 'phone-tab-plain', 'ios-bottom-sheet-detents'],
+    pieces: ['mobile-inbox-list', 'chat-thread', 'ios-swipe-row-actions', 'phone-tab-plain', 'ios-bottom-sheet-detents', 'phone-photo-picker', 'phone-notifications-list'],
   },
   {
     id: 'music-app',
@@ -367,7 +559,7 @@ export const STARTS: Start[] = [
     pairing: 'y2k-chrome',
     shelf: 'native-feel',
     categories: ['media', 'navigation', 'buttons'],
-    pieces: ['ios-now-playing', 'm3-music-player-expressive', 'ios-glass-tab-bar', 'm3-fab-menu'],
+    pieces: ['ios-now-playing', 'm3-music-player-expressive', 'ios-glass-tab-bar', 'm3-fab-menu', 'm3-navigation-bar', 'phone-paywall-plans'],
   },
   {
     id: 'news',
@@ -380,7 +572,7 @@ export const STARTS: Start[] = [
     pairing: 'newsroom',
     shelf: 'typography-first',
     categories: ['reading', 'scroll', 'loaders'],
-    pieces: ['pwa-news-reader', 'ios-large-title-collapse', 'pwa-app-shell', 'pwa-update-toast', 'phone-tab-plain'],
+    pieces: ['pwa-news-reader', 'ios-large-title-collapse', 'pwa-app-shell', 'pwa-update-toast', 'phone-tab-plain', 'phone-comments-sheet', 'phone-paywall-plans'],
   },
   {
     id: 'shop-app',
@@ -393,7 +585,7 @@ export const STARTS: Start[] = [
     pairing: 'atelier',
     shelf: 'first-impressions',
     categories: ['ecommerce', 'inputs'],
-    pieces: ['mobile-filter-chips-list', 'shop-product', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed'],
+    pieces: ['mobile-filter-chips-list', 'shop-product', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'phone-product-detail', 'phone-sign-in'],
   },
   {
     id: 'social',
@@ -406,7 +598,7 @@ export const STARTS: Start[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['dashboard', 'media', 'navigation'],
-    pieces: ['m3-expressive-home', 'mobile-story-viewer', 'ios-glass-tab-bar', 'm3-fab-menu', 'ios-context-menu-lift'],
+    pieces: ['m3-expressive-home', 'mobile-story-viewer', 'ios-glass-tab-bar', 'm3-fab-menu', 'ios-context-menu-lift', 'phone-profile-header', 'phone-comments-sheet', 'phone-photo-picker', 'phone-notifications-list'],
   },
   {
     id: 'weather',
@@ -419,7 +611,7 @@ export const STARTS: Start[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['utility', 'scroll', 'navigation'],
-    pieces: ['ios-weather-hourly-scrub', 'ios-large-title-collapse', 'phone-tab-plain', 'ios-pull-to-refresh'],
+    pieces: ['ios-weather-hourly-scrub', 'ios-large-title-collapse', 'phone-tab-plain', 'ios-pull-to-refresh', 'phone-permission-prompt'],
   },
   {
     id: 'field',
@@ -432,7 +624,7 @@ export const STARTS: Start[] = [
     pairing: 'swiss-precision',
     shelf: 'native-feel',
     categories: ['utility', 'navigation', 'feedback', 'error'],
-    pieces: ['mobile-run-detail', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed', 'ios-pull-to-refresh'],
+    pieces: ['mobile-run-detail', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed', 'ios-pull-to-refresh', 'phone-form-fields', 'phone-permission-prompt'],
   },
   {
     id: 'personal',
@@ -448,6 +640,8 @@ export const STARTS: Start[] = [
     pieces: ['spend-list', 'chart-rank-spend', 'budget-meter', 'saved-banner', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed'],
   },
 ];
+
+export const STARTS: Start[] = BASE.map((s) => ({ ...s, directions: DIRECTIONS[s.id] ?? [] }));
 
 export const MAP = [
   { href: '/kit', kicker: 'Kit', title: 'Compose', blurb: 'Pick a kind, a palette, a pairing, a family. Get a brief.' },

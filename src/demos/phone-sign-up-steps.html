@@ -1,0 +1,244 @@
+<!-- Design Lounge piece: phone-sign-up-steps · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join Sprig</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f0e3;--surface:#fffbf2;--ink:#1e2a22;--ink-2:#4a5a4f;--ink-3:#6e7a70;
+  --line:#e2d8c3;--primary:#1f4d3a;--on-primary:#fffbf2;--primary-soft:#dce8d9;--track:#e8dfcc;
+  --danger:#a63d2a;
+  --sans:"Nunito",system-ui,sans-serif;
+  --radius:14px;--pill:999px;--control:56px;
+  --emph:cubic-bezier(0.2,0,0,1);--decel:cubic-bezier(0.05,0.7,0.1,1);
+  --fast:160ms;--mid:320ms;--slide:420ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.45 var(--sans);color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.top{padding:max(54px,env(safe-area-inset-top)) 24px 0}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px;color:var(--primary);letter-spacing:-.01em}
+.brand svg{width:26px;height:26px;fill:var(--primary);stroke:none}
+.prog{display:flex;gap:6px;margin-top:20px}
+.seg{flex:1;height:6px;border-radius:3px;background:var(--track);overflow:hidden}
+.seg i{display:block;height:100%;width:0;border-radius:3px;background:var(--primary);transition:width var(--mid) var(--emph)}
+.seg.on i{width:100%}
+.count{margin:10px 0 0;font-size:13px;font-weight:700;color:var(--ink-2);letter-spacing:.02em}
+
+.view{flex:1;overflow:hidden;position:relative}
+.track{display:flex;width:300%;height:100%;transition:transform var(--slide) var(--emph)}
+.step{width:calc(100% / 3);padding:20px 24px 16px;overflow-y:auto}
+h1{margin:0;font-size:32px;line-height:1.08;font-weight:800;letter-spacing:-.02em;outline:0}
+.lede{margin:10px 0 0;color:var(--ink-2);font-size:16px;max-width:30ch}
+
+.field{margin-top:22px}
+label{display:block;font-size:14px;font-weight:700;margin-bottom:8px}
+.box{display:flex;align-items:center;height:var(--control);background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius);padding:0 6px 0 16px;transition:border-color var(--fast) var(--emph),box-shadow var(--fast) var(--emph)}
+.box:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.box input{flex:1;min-width:0;border:0;background:none;outline:0;height:100%;font-size:17px;font-weight:600}
+.box input::placeholder{color:#958c78;font-weight:400}
+.bad .box{border-color:var(--danger)}
+.err{margin:8px 0 0;font-size:14px;font-weight:600;color:var(--danger)}
+.err:empty{display:none}
+.eye{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;color:var(--ink-2)}
+.eye svg{width:22px;height:22px}
+
+.rules{list-style:none;margin:18px 0 0;padding:16px;background:var(--surface);border-radius:var(--radius);display:grid;gap:12px}
+.rules li{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;color:var(--ink-2);transition:color var(--fast) var(--emph)}
+.dot{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;transition:background-color var(--mid) var(--decel),border-color var(--mid) var(--decel),transform var(--mid) var(--decel)}
+.dot svg{width:14px;height:14px;stroke:var(--on-primary);stroke-width:3;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset var(--mid) var(--decel) 60ms}
+.rules li.ok{color:var(--ink)}
+.rules li.ok .dot{background:var(--primary);border-color:var(--primary);transform:scale(1.08)}
+.rules li.ok .dot svg{stroke-dashoffset:0}
+.meter{margin:14px 2px 0;font-size:13px;font-weight:700;color:var(--ink-2)}
+
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{min-height:44px;padding:0 16px 0 12px;border-radius:var(--radius);background:var(--surface);border:1.5px solid var(--line);display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--ink);transition:background-color var(--fast) var(--emph),border-color var(--fast) var(--emph),border-radius var(--mid) var(--decel)}
+.chip svg{width:18px;height:18px;transition:transform var(--mid) var(--decel)}
+.chip .ck{display:none}
+.chip[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:var(--on-primary);border-radius:22px}
+.chip[aria-pressed="true"] .pl{display:none}
+.chip[aria-pressed="true"] .ck{display:block}
+.chip:hover{border-color:var(--primary)}
+.tally{margin:18px 0 0;font-size:14px;font-weight:700;color:var(--ink-2)}
+.tally b{color:var(--primary)}
+
+.bar{display:flex;gap:12px;padding:12px 24px max(34px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--bg)}
+.btn{height:var(--control);border-radius:var(--pill);font-size:17px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background-color var(--fast) var(--emph),transform var(--fast) var(--emph),opacity var(--fast) var(--emph)}
+.btn:active{transform:scale(.97)}
+.back{width:112px;background:var(--primary-soft);color:var(--primary)}
+.back[disabled]{opacity:.45;cursor:default}
+.back[disabled]:active{transform:none}
+.next{flex:1;background:var(--primary);color:var(--on-primary)}
+.next:hover{background:#18402f}
+.next svg,.back svg{width:20px;height:20px}
+.next[aria-busy="true"]{cursor:progress}
+.spin{display:none;width:20px;height:20px;border-radius:50%;border:2.5px solid rgba(255,251,242,.35);border-top-color:var(--on-primary);animation:spin 700ms linear infinite}
+.next[aria-busy="true"] .spin{display:block}
+.next[aria-busy="true"] .go{display:none}
+@keyframes spin{to{transform:rotate(1turn)}}
+svg{stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+@media (prefers-reduced-motion: reduce){
+  .track{transition:none}
+  .step{transition:opacity 120ms linear}
+  .seg i,.dot,.dot svg,.chip{transition-duration:1ms}
+  .spin{animation-duration:1.6s}
+}
+@media (max-width:360px){h1{font-size:28px}.back{width:96px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c-.6-5 .2-9 3-12 2.4-2.6 5.6-3.4 7-3.5-.2 3.6-1.6 7-4.6 9-1.8 1.2-3.6 1.6-5.4 1.5zM11 15C8.6 15 4 13.6 3 7.5c3.6 0 7.2 1.6 8 7.5z"/></svg>Sprig</div>
+  <div class="prog" role="progressbar" aria-label="Sign up progress" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" aria-valuetext="Step 1 of 3, About you" id="prog">
+    <div class="seg on"><i></i></div><div class="seg"><i></i></div><div class="seg"><i></i></div>
+  </div>
+  <p class="count" id="count">Step 1 of 3 · About you</p>
+</header>
+
+<main class="view">
+  <form class="track" id="track" novalidate>
+    <section class="step" aria-labelledby="h1" data-name="About you">
+      <h1 id="h1" tabindex="-1">Let's get you growing</h1>
+      <p class="lede">Your plot, your seed swaps and your watering plan, in one place.</p>
+      <div class="field"><label for="name">Your name</label>
+        <div class="box"><input id="name" autocomplete="name" value="Mina Gurung" placeholder="First and last name" aria-describedby="name-err"></div>
+        <p class="err" id="name-err" aria-live="polite"></p></div>
+      <div class="field"><label for="email">Email</label>
+        <div class="box"><input id="email" type="email" inputmode="email" autocomplete="email" value="mina.gurung@fernpost.org" placeholder="you@example.com" aria-describedby="email-err"></div>
+        <p class="err" id="email-err" aria-live="polite"></p></div>
+    </section>
+
+    <section class="step" aria-labelledby="h2" data-name="Password" inert>
+      <h1 id="h2" tabindex="-1">Make a password</h1>
+      <p class="lede">Each rule turns green as you type.</p>
+      <div class="field"><label for="pw">Password</label>
+        <div class="box"><input id="pw" type="password" autocomplete="new-password" placeholder="At least 10 characters" aria-describedby="rules pw-err">
+          <button class="eye" type="button" id="eye" aria-pressed="false" aria-label="Show password" aria-controls="pw"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="x" d="M4 4l16 16" style="display:none"/></svg></button></div>
+        <p class="err" id="pw-err" aria-live="polite"></p></div>
+      <ul class="rules" id="rules" aria-label="Password rules">
+        <li data-r="len"><span class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>At least 10 characters</span><span class="sr st">, not met</span></li>
+        <li data-r="num"><span class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>One number</span><span class="sr st">, not met</span></li>
+        <li data-r="up"><span class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>One capital letter</span><span class="sr st">, not met</span></li>
+        <li data-r="own"><span class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Not your name or email</span><span class="sr st">, not met</span></li>
+      </ul>
+      <p class="meter" id="meter" aria-live="polite">0 of 4 rules met</p>
+    </section>
+
+    <section class="step" aria-labelledby="h3" data-name="What you grow" inert>
+      <h1 id="h3" tabindex="-1">What do you grow?</h1>
+      <p class="lede">Pick 3 or more. We use them to fill your first week of tips.</p>
+      <div class="chips" id="chips" role="group" aria-labelledby="h3" aria-describedby="tally"></div>
+      <p class="tally" id="tally" aria-live="polite"></p>
+      <p class="err" id="chip-err" aria-live="polite"></p>
+    </section>
+  </form>
+</main>
+
+<nav class="bar" aria-label="Sign up steps">
+  <button class="btn back" type="button" id="back" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Back</button>
+  <button class="btn next" type="button" id="next"><span class="lbl">Continue</span><svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="spin" aria-hidden="true"></span></button>
+</nav>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+
+<script>
+const $=id=>document.getElementById(id);
+const steps=[...document.querySelectorAll('.step')],segs=[...document.querySelectorAll('.seg')];
+const track=$('track'),back=$('back'),next=$('next'),lbl=next.querySelector('.lbl'),live=$('live');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const RX=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const TOPICS=['Herbs','Tomatoes','Balcony pots','Composting','Seed saving','Houseplants','Native flowers','Fruit trees','Mushrooms','Chillies'];
+const picked=new Set(['Herbs','Tomatoes']);
+let i=0,busy=false;
+
+const chips=$('chips');
+TOPICS.forEach(t=>{
+  const b=document.createElement('button');
+  b.type='button';b.className='chip';b.setAttribute('aria-pressed',picked.has(t));
+  b.innerHTML='<svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'+t;
+  b.addEventListener('click',()=>{picked.has(t)?picked.delete(t):picked.add(t);b.setAttribute('aria-pressed',picked.has(t));tally();});
+  chips.appendChild(b);
+});
+function tally(){
+  const n=picked.size;
+  $('tally').innerHTML=n>=3?'<b>'+n+' picked.</b> Good start.':n+' of 3 picked. '+(3-n)+' more to go.';
+  if(n>=3)$('chip-err').textContent='';
+}
+tally();
+
+function setErr(input,msg){
+  $(input.id+'-err').textContent=msg;input.closest('.field').classList.toggle('bad',!!msg);
+  msg?input.setAttribute('aria-invalid','true'):input.removeAttribute('aria-invalid');return !msg;
+}
+const nameI=$('name'),emailI=$('email'),pw=$('pw');
+function v1(){
+  const a=setErr(nameI,nameI.value.trim()?'':'Tell us your name.');
+  const e=emailI.value.trim();
+  const b=setErr(emailI,!e?'Enter your email address.':!RX.test(e)?'Enter an email like name@example.com.':'');
+  if(!a)nameI.focus();else if(!b)emailI.focus();
+  return a&&b;
+}
+function rules(){
+  const v=pw.value,low=v.toLowerCase();
+  const first=nameI.value.trim().split(/\s+/)[0].toLowerCase(),local=emailI.value.split('@')[0].toLowerCase();
+  const r={len:v.length>=10,num:/\d/.test(v),up:/[A-Z]/.test(v),own:v.length>0&&!(first.length>2&&low.includes(first))&&!(local.length>2&&low.includes(local))};
+  let n=0;
+  document.querySelectorAll('.rules li').forEach(li=>{const ok=r[li.dataset.r];n+=ok;li.classList.toggle('ok',ok);li.querySelector('.st').textContent=ok?', met':', not met';});
+  $('meter').textContent=n+' of 4 rules met';
+  return n===4;
+}
+pw.addEventListener('input',()=>{if(rules())setErr(pw,'')});
+[nameI,emailI].forEach(el=>el.addEventListener('input',()=>{if(el.getAttribute('aria-invalid'))v1()}));
+function v2(){const ok=rules();setErr(pw,ok?'':'Meet all four rules to continue.');if(!ok)pw.focus();return ok}
+function v3(){const ok=picked.size>=3;$('chip-err').textContent=ok?'':'Pick at least 3 to continue.';return ok}
+
+$('eye').addEventListener('click',e=>{
+  const b=e.currentTarget,show=pw.type==='password';
+  pw.type=show?'text':'password';b.setAttribute('aria-pressed',show);
+  b.setAttribute('aria-label',show?'Hide password':'Show password');b.querySelector('.x').style.display=show?'':'none';
+});
+
+function go(n){
+  i=n;
+  track.style.transform='translateX('+(-100/3*i)+'%)';
+  if(reduce){steps[i].style.opacity=0;requestAnimationFrame(()=>requestAnimationFrame(()=>steps[i].style.opacity=1));}
+  steps.forEach((s,k)=>s.inert=k!==i);
+  segs.forEach((s,k)=>s.classList.toggle('on',k<=i));
+  const name=steps[i].dataset.name;
+  $('count').textContent='Step '+(i+1)+' of 3 · '+name;
+  const p=$('prog');p.setAttribute('aria-valuenow',i+1);p.setAttribute('aria-valuetext','Step '+(i+1)+' of 3, '+name);
+  back.disabled=i===0;
+  lbl.textContent=i===2?'Create account':'Continue';
+  setTimeout(()=>steps[i].querySelector('h1').focus({preventScroll:true}),reduce?0:200);
+}
+track.addEventListener('submit',e=>e.preventDefault());
+track.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName==='INPUT'){e.preventDefault();next.click()}});
+back.addEventListener('click',()=>{if(i>0&&!busy)go(i-1)});
+next.addEventListener('click',()=>{
+  if(busy)return;
+  if(i===0&&v1())go(1);
+  else if(i===1&&v2())go(2);
+  else if(i===2&&v3()){
+    busy=true;next.setAttribute('aria-busy','true');lbl.textContent='Creating account';live.textContent='Creating your account';
+    setTimeout(()=>{
+      next.removeAttribute('aria-busy');
+      const first=nameI.value.trim().split(/\s+/)[0];
+      lbl.textContent='Welcome, '+first;live.textContent='Account created. Welcome to Sprig, '+first+'.';
+      setTimeout(()=>{busy=false;pw.value='';rules();go(0)},2200);
+    },1300);
+  }
+});
+</script>
+</body>
+</html>

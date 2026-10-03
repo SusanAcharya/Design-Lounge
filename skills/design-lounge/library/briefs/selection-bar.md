@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 235 · "Selection bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
+<!-- Design Lounge Nº 246 · "Selection bar" · designed by Susan Acharya (https://acharyasusan.com.np) -->
 
 # Selection bar
 

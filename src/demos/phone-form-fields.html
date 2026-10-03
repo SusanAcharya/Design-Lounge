@@ -1,0 +1,226 @@
+<!-- Design Lounge piece: phone-form-fields · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a collection · Kerbstone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#d3d1cb;--surface:#e4e2dd;--field:#f0efeb;--ink:#1a1a18;--ink-2:#45443f;--ink-3:#55534d;
+  --line:#a8a59d;--line-strong:#1a1a18;--accent:#ffd400;--accent-ink:#1a1a18;--error:#a3200f;--error-bg:#f4dcd4;--ok:#2f5d2a;
+  --cond:"Barlow Condensed","Arial Narrow",sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:2px;--ease:cubic-bezier(.2,.7,.2,1);--fast:140ms;--mid:240ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:15px/1.4 var(--mono);color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(rgba(26,26,24,.07) .7px,transparent .8px),radial-gradient(rgba(255,255,255,.18) .6px,transparent .7px);
+  background-size:5px 5px,7px 7px;background-position:0 0,2px 3px;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.page{padding:max(54px,env(safe-area-inset-top)) 16px calc(92px + max(34px,env(safe-area-inset-bottom)))}
+.hazard{height:6px;margin:0 -16px 16px;background:repeating-linear-gradient(-45deg,var(--accent) 0 10px,var(--ink) 10px 20px)}
+.eyebrow{display:flex;justify-content:space-between;margin:0;font:600 13px/1 var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow b{font-family:var(--mono);font-weight:500;letter-spacing:0;color:var(--ink)}
+h1{margin:10px 0 4px;font:700 34px/0.95 var(--cond);letter-spacing:.01em;text-transform:uppercase}
+.lede{margin:0 0 20px;font-size:12px;color:var(--ink-2)}
+.summary{display:none;margin:0 0 20px;padding:12px 14px;border:2px solid var(--error);border-left-width:8px;border-radius:var(--r);background:var(--error-bg)}
+.summary.show{display:block;animation:drop var(--mid) var(--ease)}
+.summary h2{margin:0 0 6px;font:700 16px/1.1 var(--cond);letter-spacing:.06em;text-transform:uppercase;color:var(--error)}
+.summary ul{margin:0;padding:0;list-style:none}
+.summary a{display:inline-block;min-height:32px;padding:6px 0;font-size:13px;color:var(--error);text-underline-offset:3px}
+@keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+fieldset{margin:0 0 18px;padding:0;border:0;min-width:0}
+.group{margin:0 0 18px}
+.lbl,legend{display:flex;justify-content:space-between;align-items:baseline;padding:0;margin:0 0 6px;font:600 13px/1 var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.lbl small,legend small{font:500 11px/1 var(--mono);letter-spacing:0;text-transform:none;color:var(--ink-3)}
+.box{display:flex;align-items:stretch;min-height:48px;background:var(--field);border:2px solid var(--line);border-radius:var(--r);transition:border-color var(--fast) var(--ease),box-shadow var(--fast) var(--ease)}
+.box:focus-within{border-color:var(--line-strong);box-shadow:0 0 0 3px var(--accent)}
+.box input,.box select,.box textarea{flex:1;min-width:0;border:0;background:transparent;padding:12px;font-size:15px;outline:none}
+.box input::placeholder,.box textarea::placeholder{color:#8a877f}
+.box select{flex:0 0 auto;appearance:none;padding:12px 26px 12px 12px;border-right:2px solid var(--line);background:linear-gradient(45deg,transparent 50%,var(--ink) 50%) right 14px center/5px 5px no-repeat,linear-gradient(-45deg,transparent 50%,var(--ink) 50%) right 9px center/5px 5px no-repeat;cursor:pointer}
+.box textarea{resize:none;min-height:88px;line-height:1.45}
+.box input[type=date]{min-height:44px}
+.box input[type=date]::-webkit-calendar-picker-indicator{opacity:.7;cursor:pointer}
+.row2{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:10px}
+.box input{min-width:0}
+.invalid .box{border-color:var(--error);background:#faf1ee}
+.invalid .box:focus-within{box-shadow:0 0 0 3px rgba(163,32,15,.28)}
+.err{display:none;align-items:flex-start;gap:6px;margin:6px 0 0;font-size:12px;line-height:1.35;color:var(--error)}
+.invalid .err{display:flex;animation:drop var(--fast) var(--ease)}
+.err svg{flex:0 0 16px;width:16px;height:16px}
+.valid .box{border-color:var(--ink-2)}
+.tick{display:none;align-self:center;width:18px;height:18px;margin-right:12px;color:var(--ok)}
+.valid .tick{display:block}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink);border-radius:var(--r);background:var(--field)}
+.seg label{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:52px;cursor:pointer;border-left:2px solid var(--ink)}
+.seg label:first-child{border-left:0}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.seg span{font:700 16px/1 var(--cond);letter-spacing:.06em;text-transform:uppercase}
+.seg em{font:400 10px/1 var(--mono);font-style:normal;color:var(--ink-3);margin-top:4px}
+.seg label:has(input:checked){background:var(--accent)}
+.seg label:has(input:checked) em{color:var(--ink)}
+.seg label:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:-6px}
+.count{font:500 11px/1 var(--mono);color:var(--ink-3)}
+.count.warn{color:var(--error)}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:8px 12px;border:2px solid var(--line);border-radius:var(--r);background:var(--field)}
+.switch-row p{margin:0;font-size:12px;line-height:1.35;color:var(--ink-2)}
+.switch-row strong{display:block;font:600 14px/1.1 var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-bottom:3px}
+.switch{position:relative;flex:0 0 56px;width:56px;height:32px;padding:0;border:2px solid var(--ink);border-radius:var(--r);background:var(--surface);cursor:pointer}
+.switch::before{content:"";position:absolute;inset:-8px -2px}
+.switch i{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:1px;background:var(--ink);transition:transform var(--mid) var(--ease)}
+.switch[aria-checked=true]{background:var(--accent)}
+.switch[aria-checked=true] i{transform:translateX(24px)}
+.dock{position:fixed;left:0;right:0;bottom:0;padding:12px 16px max(34px,env(safe-area-inset-bottom));background:var(--surface);border-top:2px solid var(--ink)}
+.save{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:52px;padding:0 16px;border:2px solid var(--ink);border-radius:var(--r);background:var(--accent);color:var(--accent-ink);cursor:pointer;font:700 19px/1 var(--cond);letter-spacing:.1em;text-transform:uppercase;transition:transform var(--fast) var(--ease)}
+.save:active{transform:translateY(1px)}
+.save b{font:500 12px/1 var(--mono);letter-spacing:0;text-transform:none}
+.save.done{background:var(--ink);color:var(--accent)}
+.save svg{width:20px;height:20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="hazard" aria-hidden="true"></div>
+  <p class="eyebrow">Kerbstone · Collection <b>KS-40817</b></p>
+  <h1>Book a collection</h1>
+  <p class="lede">Skip bag pickup. Driver needs a clear 3 m kerb.</p>
+
+  <div class="summary" id="summary" role="alert" tabindex="-1">
+    <h2 id="sumTitle">Fix 2 fields</h2>
+    <ul id="sumList"></ul>
+  </div>
+
+  <form id="form" novalidate>
+    <div class="group valid" data-field="name">
+      <label class="lbl" for="name">Contact name</label>
+      <div class="box">
+        <input id="name" name="name" type="text" autocomplete="name" autocapitalize="words" enterkeyhint="next" value="Mira Oduya" aria-describedby="name-err">
+        <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+      </div>
+      <p class="err" id="name-err"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17v.5"/></svg><span></span></p>
+    </div>
+
+    <div class="group invalid" data-field="tel">
+      <label class="lbl" for="tel">Mobile <small>for the driver only</small></label>
+      <div class="box">
+        <select id="cc" name="cc" autocomplete="tel-country-code" aria-label="Country code">
+          <option value="+44" selected>+44</option><option value="+353">+353</option><option value="+31">+31</option><option value="+49">+49</option>
+        </select>
+        <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel-national" enterkeyhint="next" value="7700 90" aria-invalid="true" aria-describedby="tel-err">
+        <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+      </div>
+      <p class="err" id="tel-err"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17v.5"/></svg><span>Enter 10 digits after +44. You typed 6.</span></p>
+    </div>
+
+    <div class="row2">
+      <div class="group" data-field="street">
+        <label class="lbl" for="street">Street</label>
+        <div class="box"><input id="street" name="street" type="text" autocomplete="address-line1" enterkeyhint="next" placeholder="14 Tanner Row" aria-describedby="street-err"></div>
+        <p class="err" id="street-err"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17v.5"/></svg><span></span></p>
+      </div>
+      <div class="group valid" data-field="post">
+        <label class="lbl" for="post">Postcode</label>
+        <div class="box">
+          <input id="post" name="post" type="text" autocomplete="postal-code" autocapitalize="characters" spellcheck="false" enterkeyhint="next" value="YO1 6JR" aria-describedby="post-err">
+          <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+        </div>
+        <p class="err" id="post-err"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17v.5"/></svg><span></span></p>
+      </div>
+    </div>
+
+    <div class="group valid" data-field="date">
+      <label class="lbl" for="date">Collection day <small>Mon to Sat</small></label>
+      <div class="box">
+        <input id="date" name="date" type="date" min="2026-10-05" max="2026-12-19" value="2026-10-07" aria-describedby="date-err">
+        <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+      </div>
+      <p class="err" id="date-err"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17v.5"/></svg><span></span></p>
+    </div>
+
+    <fieldset>
+      <legend>Bag size <small>price incl. VAT</small></legend>
+      <div class="seg">
+        <label><input type="radio" name="size" value="mini"><span>Mini</span><em>£89</em></label>
+        <label><input type="radio" name="size" value="mid" checked><span>Midi</span><em>£119</em></label>
+        <label><input type="radio" name="size" value="mega"><span>Mega</span><em>£149</em></label>
+      </div>
+    </fieldset>
+
+    <div class="group" data-field="note">
+      <label class="lbl" for="note">Note for the driver <span class="count" id="count" aria-hidden="true">38/140</span></label>
+      <div class="box"><textarea id="note" name="note" maxlength="140" autocomplete="off" enterkeyhint="done" aria-describedby="count-sr">Bag is behind the side gate. Code 2214.</textarea></div>
+      <p class="sr" id="count-sr" aria-live="polite">102 characters left</p>
+    </div>
+
+    <div class="switch-row">
+      <p id="sw-lbl"><strong>Text me on the way</strong>One SMS when the lorry is 15 min out.</p>
+      <button type="button" class="switch" role="switch" aria-checked="true" aria-labelledby="sw-lbl"><i></i></button>
+    </div>
+  </form>
+</main>
+
+<div class="dock">
+  <button class="save" id="save" type="submit" form="form"><span id="saveTxt">Save booking</span><b id="saveMeta">Wed 7 Oct · £119</b></button>
+</div>
+<p class="sr" id="live" aria-live="polite"></p>
+
+<script>
+const form=document.getElementById('form');
+const $=id=>document.getElementById(id);
+const labels={name:'Contact name',tel:'Mobile',street:'Street',post:'Postcode',date:'Collection day'};
+const prices={mini:89,mid:119,mega:149};
+const rules={
+  name:v=>v.trim().length<2?'Enter the name the driver should ask for.':'',
+  tel:v=>{const d=v.replace(/\D/g,'');return !d?'Enter a mobile number.':d.length!==10?`Enter 10 digits after ${$('cc').value}. You typed ${d.length}.`:''},
+  street:v=>!v.trim()?'Enter the street and house number.':'',
+  post:v=>!v.trim()?'Enter a postcode.':!/^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/i.test(v.trim())?'Use a full postcode, like YO1 6JR.':'',
+  date:v=>{if(!v)return 'Pick a collection day.';const d=new Date(v+'T12:00');if(v<$('date').min)return 'Earliest day is Mon 5 Oct.';if(d.getDay()===0)return 'No collections on Sunday. Pick Mon to Sat.';return ''}
+};
+function check(key,show=true){
+  const input=$(key),g=input.closest('.group'),msg=rules[key](input.value);
+  if(!show)return msg;
+  g.classList.toggle('invalid',!!msg);g.classList.toggle('valid',!msg&&!!input.value.trim());
+  input.setAttribute('aria-invalid',msg?'true':'false');
+  g.querySelector('.err span').textContent=msg;
+  return msg;
+}
+Object.keys(rules).forEach(k=>{
+  $(k).addEventListener('blur',()=>check(k));
+  $(k).addEventListener('input',()=>{if($(k).closest('.group').classList.contains('invalid'))check(k)});
+});
+$('cc').addEventListener('change',()=>{if($('tel').value)check('tel')});
+$('post').addEventListener('blur',e=>{e.target.value=e.target.value.toUpperCase().replace(/\s+/g,' ').trim()},true);
+function count(){const n=$('note').value.length;$('count').textContent=n+'/140';$('count').classList.toggle('warn',n>=120);$('count-sr').textContent=(140-n)+' characters left'}
+$('note').addEventListener('input',count);
+document.querySelector('.switch').addEventListener('click',e=>{const b=e.currentTarget;b.setAttribute('aria-checked',b.getAttribute('aria-checked')!=='true')});
+function meta(){const d=$('date').value?new Date($('date').value+'T12:00'):null;const s=form.size.value;$('saveMeta').textContent=(d?d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}).replace(',',''):'No day')+' · £'+prices[s]}
+form.addEventListener('change',meta);
+form.addEventListener('input',()=>{const b=$('save');if(b.classList.contains('done')){b.classList.remove('done');$('saveTxt').textContent='Save booking'}});
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const bad=Object.keys(rules).filter(k=>check(k));
+  const sum=$('summary'),list=$('sumList');
+  if(bad.length){
+    $('sumTitle').textContent=bad.length===1?'Fix 1 field':`Fix ${bad.length} fields`;
+    list.innerHTML='';
+    bad.forEach(k=>{const li=document.createElement('li'),a=document.createElement('a');a.href='#'+k;a.textContent=labels[k]+': '+rules[k]($(k).value);a.addEventListener('click',ev=>{ev.preventDefault();$(k).focus()});li.append(a);list.append(li)});
+    sum.classList.remove('show');void sum.offsetWidth;sum.classList.add('show');
+    $(bad[0]).focus();
+    return;
+  }
+  sum.classList.remove('show');
+  const b=$('save');b.classList.add('done');
+  $('saveTxt').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="vertical-align:-4px;margin-right:6px"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Booked';
+  $('live').textContent='Booking saved for '+$('saveMeta').textContent;
+});
+</script>
+</body>
+</html>

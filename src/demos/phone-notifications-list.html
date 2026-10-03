@@ -1,0 +1,246 @@
+<!-- Design Lounge piece: phone-notifications-list · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notifications · Plinth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--ink:#0a0a0a;--ink-2:#525252;--ink-3:#737373;--line:#e5e5e5;--fill:#f4f4f4;
+  --red:#e10600;--focus:#0a0a0a;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --r:6px;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{display:flex;flex-direction:column;font:15px/1.6 var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0;text-align:left}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+header{flex:none;padding:max(56px,env(safe-area-inset-top)) 24px 16px;border-bottom:1px solid var(--ink)}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+h1{margin:0;font-size:32px;line-height:40px;font-weight:700;letter-spacing:-.025em}
+.count{margin:0;font-size:13px;line-height:24px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.count b{color:var(--red);font-weight:600}
+.markall{height:48px;padding:0 0 0 8px;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.markall:disabled{color:var(--ink-3);text-decoration:none;cursor:default}
+
+.seg{position:relative;display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;height:48px;border:1px solid var(--ink);border-radius:var(--r);padding:3px}
+.seg-i{position:absolute;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/3);background:var(--ink);border-radius:3px;transition:transform 240ms var(--ease)}
+.seg button{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;border-radius:3px;transition:color 200ms var(--ease)}
+.seg button[aria-pressed="true"]{color:#fff}
+.seg em{font-style:normal;min-width:24px;height:16px;padding:0 4px;border-radius:3px;background:var(--red);color:#fff;font-size:11px;line-height:16px;text-align:center;font-variant-numeric:tabular-nums}
+.seg em:empty{display:none}
+
+.list{flex:1;overflow-y:auto;padding-bottom:max(34px,env(safe-area-inset-bottom))}
+.group h2{position:sticky;top:0;z-index:2;margin:0;padding:16px 24px 8px;background:var(--bg);font-size:11px;line-height:16px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+ul{list-style:none;margin:0;padding:0}
+.row{position:relative;border-bottom:1px solid var(--line)}
+.row[hidden],.group[hidden]{display:none}
+.hit{display:grid;grid-template-columns:40px 1fr auto;gap:16px;width:100%;min-height:72px;padding:16px 24px;align-items:start}
+.hit:hover{background:var(--fill)}
+.hit:focus-visible{outline-offset:-2px}
+.dot{position:absolute;left:8px;top:32px;width:8px;height:8px;border-radius:50%;background:var(--red);transform:scale(0);transition:transform 160ms var(--ease)}
+.unread .dot{transform:scale(1)}
+.av{position:relative;width:40px;height:40px;border-radius:var(--r);background:var(--fill);display:grid;place-items:center;font-size:13px;font-weight:600;letter-spacing:.02em}
+.av.dark{background:var(--ink);color:#fff}
+.av svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.av .k{position:absolute;right:-4px;bottom:-4px;width:16px;height:16px;border-radius:3px;background:var(--ink);color:#fff;display:grid;place-items:center;box-shadow:0 0 0 2px var(--bg)}
+.av .k svg{width:10px;height:10px;stroke-width:2.5}
+.stack{position:relative;width:40px;height:40px}
+.stack span{position:absolute;width:28px;height:28px;border-radius:4px;display:grid;place-items:center;font-size:10px;font-weight:600;background:var(--fill);box-shadow:0 0 0 2px var(--bg)}
+.stack span:first-child{left:0;top:0}
+.stack span:last-child{right:0;bottom:0;background:#d4d4d4}
+.txt{min-width:0;font-size:14px;line-height:24px;color:var(--ink-2);transition:color 200ms var(--ease)}
+.txt b{font-weight:600;color:var(--ink)}
+.unread .txt{color:var(--ink);font-weight:500}
+.q{display:block;margin-top:8px;padding-left:8px;border-left:2px solid var(--ink);color:var(--ink-2);font-weight:400;font-size:13px;line-height:16px}
+.time{font-size:12px;line-height:24px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.row.has-btn .hit{padding-bottom:64px}
+.fb{position:absolute;left:80px;bottom:16px;height:40px;padding:0 16px;border-radius:var(--r);background:var(--ink);color:#fff;font-size:13px;font-weight:600;transition:background-color 160ms var(--ease),color 160ms var(--ease)}
+.fb::before{content:"";position:absolute;inset:-4px -2px}
+.fb[aria-pressed="true"]{background:var(--bg);color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+
+.empty{display:none;padding:80px 24px 0;text-align:left}
+.empty.on{display:block}
+.empty .mark{width:48px;height:48px;border:1px solid var(--ink);border-radius:var(--r);display:grid;place-items:center}
+.empty svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.empty h2{margin:24px 0 0;font-size:24px;line-height:32px;font-weight:700;letter-spacing:-.02em}
+.empty p{margin:8px 0 0;font-size:14px;line-height:24px;color:var(--ink-2);max-width:32ch}
+.empty button{margin-top:24px;height:48px;padding:0 24px;border:1px solid var(--ink);border-radius:var(--r);font-size:14px;font-weight:600}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important;transition-delay:0ms!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div>
+      <h1>Notifications</h1>
+      <p class="count" id="count"><b>5</b> unread</p>
+    </div>
+    <button class="markall" type="button" id="markall">Mark all read</button>
+  </div>
+  <div class="seg" role="group" aria-label="Filter notifications" id="seg">
+    <span class="seg-i" id="segI" aria-hidden="true"></span>
+    <button type="button" aria-pressed="true" data-f="all">All</button>
+    <button type="button" aria-pressed="false" data-f="mention">Mentions</button>
+    <button type="button" aria-pressed="false" data-f="unread">Unread <em id="segN">5</em></button>
+  </div>
+</header>
+
+<main class="list" id="list">
+  <section class="group" aria-labelledby="h-today">
+    <h2 id="h-today">Today</h2>
+    <ul>
+      <li class="row unread" data-t="mention"><span class="dot" aria-hidden="true"></span>
+        <button class="hit" type="button"><span class="av">AR<span class="k"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg></span></span>
+          <span class="txt"><b>Anaya Rai</b> mentioned you in Riverside housing study<span class="q">@sam can you check the section heights on sheet 3?</span></span>
+          <span class="time">12m</span></button></li>
+      <li class="row unread" data-t="like"><span class="dot" aria-hidden="true"></span>
+        <button class="hit" type="button"><span class="stack" aria-hidden="true"><span>MO</span><span>+4</span></span>
+          <span class="txt"><b>Mira Okafor</b> and 4 others liked Facade study 07</span>
+          <span class="time">1h</span></button></li>
+      <li class="row unread has-btn" data-t="follow"><span class="dot" aria-hidden="true"></span>
+        <button class="hit" type="button"><span class="av">TD<span class="k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></span>
+          <span class="txt"><b>Tenzin Doma</b> started following you</span>
+          <span class="time">3h</span></button>
+        <button class="fb" type="button" aria-pressed="false" aria-label="Follow back Tenzin Doma">Follow back</button></li>
+      <li class="row unread" data-t="system"><span class="dot" aria-hidden="true"></span>
+        <button class="hit" type="button"><span class="av dark"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span>
+          <span class="txt"><b>Studio plan</b> renews on 12 October. $96.00 will be charged to the card ending 4421.</span>
+          <span class="time">5h</span></button></li>
+    </ul>
+  </section>
+
+  <section class="group" aria-labelledby="h-week">
+    <h2 id="h-week">This week</h2>
+    <ul>
+      <li class="row" data-t="mention"><span class="dot" aria-hidden="true"></span>
+        <button class="hit" type="button"><span class="av">JB<span class="k"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg></span></span>
+          <span class="txt"><b>Jonas Berg</b> mentioned you in Kiosk roof options<span class="q">Going with option B unless @sam objects.</span></span>
+          <span class="time">Tue</span></button></li>
+      <li class="row unread" data-t="like"><span class="dot" aria-hidden="true"></span>
+        <button class="hit" type="button"><span class="stack" aria-hidden="true"><span>PN</span><span>+11</span></span>
+          <span class="txt"><b>Priya Nair</b> and 11 others liked Stair detail A</span>
+          <span class="time">Mon</span></button></li>
+      <li class="row has-btn" data-t="follow"><span class="dot" aria-hidden="true"></span>
+        <button class="hit" type="button"><span class="av">OL<span class="k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></span>
+          <span class="txt"><b>Oskar Lind</b> started following you</span>
+          <span class="time">Mon</span></button>
+        <button class="fb" type="button" aria-pressed="true" aria-label="Follow back Oskar Lind">Following</button></li>
+    </ul>
+  </section>
+
+  <section class="group" aria-labelledby="h-earlier">
+    <h2 id="h-earlier">Earlier</h2>
+    <ul>
+      <li class="row" data-t="mention"><span class="dot" aria-hidden="true"></span>
+        <button class="hit" type="button"><span class="av">LP<span class="k"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg></span></span>
+          <span class="txt"><b>Lena Park</b> replied to you in Library atrium<span class="q">Agreed, the north light works better.</span></span>
+          <span class="time">24 Sep</span></button></li>
+      <li class="row" data-t="system"><span class="dot" aria-hidden="true"></span>
+        <button class="hit" type="button"><span class="av dark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>
+          <span class="txt"><b>Receipt</b> for September. $96.00 paid with the card ending 4421.</span>
+          <span class="time">12 Sep</span></button></li>
+      <li class="row" data-t="like"><span class="dot" aria-hidden="true"></span>
+        <button class="hit" type="button"><span class="stack" aria-hidden="true"><span>KS</span><span>+2</span></span>
+          <span class="txt"><b>Kabir Shah</b> and 2 others liked Bench, oak and steel</span>
+          <span class="time">9 Sep</span></button></li>
+    </ul>
+  </section>
+
+  <div class="empty" id="empty" role="status">
+    <div class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></div>
+    <h2 id="emptyH">All caught up</h2>
+    <p id="emptyP">No unread notifications. New mentions, likes and follows will show up here.</p>
+    <button type="button" id="showAll">Show all notifications</button>
+  </div>
+</main>
+<p class="vh" aria-live="polite" id="live"></p>
+
+<script>
+const $ = id => document.getElementById(id);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const rows = [...document.querySelectorAll('.row')];
+let filter = 'all';
+
+function label(r) {
+  const b = r.querySelector('.hit');
+  b.setAttribute('aria-label', (r.classList.contains('unread') ? 'Unread. ' : '') + b.textContent.replace(/\s+/g, ' ').trim());
+}
+function sync() {
+  const n = rows.filter(r => r.classList.contains('unread')).length;
+  $('count').innerHTML = n ? '<b>' + n + '</b> unread' : 'No unread';
+  $('segN').textContent = n || '';
+  $('markall').disabled = !n;
+  rows.forEach(label);
+}
+function apply() {
+  rows.forEach(r => r.hidden = filter === 'mention' ? r.dataset.t !== 'mention' : filter === 'unread' ? !r.classList.contains('unread') : false);
+  let any = false;
+  document.querySelectorAll('.group').forEach(g => {
+    const vis = [...g.querySelectorAll('.row')].some(r => !r.hidden);
+    g.hidden = !vis; any = any || vis;
+  });
+  $('empty').classList.toggle('on', !any);
+  if (!any) {
+    $('emptyH').textContent = filter === 'mention' ? 'No mentions yet' : 'All caught up';
+    $('emptyP').textContent = filter === 'mention' ? 'When someone writes @sam in a project, it shows up here.' : 'No unread notifications. New mentions, likes and follows will show up here.';
+  }
+}
+function read(r) {
+  if (!r.classList.contains('unread')) return;
+  r.classList.remove('unread');
+  sync();
+  if (filter === 'unread') setTimeout(apply, reduce ? 0 : 360);
+}
+
+$('list').addEventListener('click', e => {
+  const fb = e.target.closest('.fb');
+  if (fb) {
+    const on = fb.getAttribute('aria-pressed') !== 'true';
+    fb.setAttribute('aria-pressed', on);
+    fb.textContent = on ? 'Following' : 'Follow back';
+    read(fb.closest('.row'));
+    return;
+  }
+  const hit = e.target.closest('.hit');
+  if (hit) read(hit.closest('.row'));
+});
+
+$('markall').addEventListener('click', () => {
+  const un = rows.filter(r => r.classList.contains('unread') && !r.hidden);
+  const all = rows.filter(r => r.classList.contains('unread'));
+  const step = reduce ? 0 : 60;
+  un.forEach((r, i) => setTimeout(() => r.classList.remove('unread'), i * step));
+  all.filter(r => r.hidden).forEach(r => r.classList.remove('unread'));
+  setTimeout(() => {
+    sync();
+    $('live').textContent = 'All notifications marked as read.';
+    if (filter === 'unread') setTimeout(apply, reduce ? 0 : 240);
+  }, un.length * step);
+});
+
+const segBtns = [...$('seg').querySelectorAll('button')];
+function setFilter(f) {
+  filter = f;
+  segBtns.forEach((b, i) => {
+    const on = b.dataset.f === f;
+    b.setAttribute('aria-pressed', on);
+    if (on) $('segI').style.transform = 'translateX(' + (i * 100) + '%)';
+  });
+  apply();
+  $('list').scrollTop = 0;
+}
+$('seg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setFilter(b.dataset.f); });
+$('showAll').addEventListener('click', () => { setFilter('all'); segBtns[0].focus(); });
+
+sync();
+</script>
+</body>
+</html>

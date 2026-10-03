@@ -1,0 +1,204 @@
+<!-- Design Lounge piece: phone-permission-prompt · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reminders · Fennel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..600,100&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5efe2;--card:#e7ead9;--card-2:#d7dfc6;--ink:#26301f;--ink-2:#4b5641;--ink-3:#5d6753;
+  --sage:#56704a;--sage-deep:#3d5434;--leaf:#7f9a6c;--clay:#c98a63;--water:#7aa3b0;--line:#d9d3c2;
+  --sys-bg:#f2f2f0;--sys-ink:#1d1d1b;--sys-line:#cfcfcb;--scrim:rgba(30,36,26,.42);
+  --display:"Fraunces",Georgia,serif;--sans:"Source Sans 3",system-ui,sans-serif;
+  --r:20px;--r-sm:12px;--ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.45 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--sage-deep);outline-offset:3px}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;padding:max(54px,env(safe-area-inset-top)) 24px max(34px,env(safe-area-inset-bottom))}
+.screen[hidden]{display:none}
+.screen.enter>*{animation:rise 520ms var(--ease) both}
+.screen.enter>*:nth-child(2){animation-delay:60ms}.screen.enter>*:nth-child(3){animation-delay:120ms}.screen.enter>*:nth-child(4){animation-delay:180ms}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.art{position:relative;height:272px;margin-top:12px;border-radius:var(--r);background:var(--card);overflow:hidden;flex:0 0 auto}
+.art svg{position:absolute;inset:0;width:100%;height:100%}
+.art .tag{position:absolute;left:16px;top:14px;font:600 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+h1,h2{font-family:var(--display);font-variation-settings:"SOFT" 100,"opsz" 72;font-weight:560;letter-spacing:-.015em;line-height:1.06;margin:24px 0 0}
+h1{font-size:32px}h2{font-size:30px}
+h1:focus,h2:focus{outline:none}
+.reasons{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:14px}
+.reasons li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;font-size:15px;color:var(--ink-2)}
+.reasons b{display:block;font-weight:600;color:var(--ink);font-size:16px}
+.ico{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:var(--card);color:var(--sage-deep)}
+.ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.actions{margin-top:auto;display:grid;gap:6px;padding-top:16px}
+.primary{min-height:54px;border-radius:var(--r);background:var(--sage);color:#fbf8ef;font-weight:600;font-size:17px;transition:background 160ms var(--ease),transform 160ms var(--ease)}
+.primary:hover{background:var(--sage-deep)}
+.primary:active{transform:scale(.98)}
+.quiet{min-height:48px;border-radius:var(--r);color:var(--ink-2);font-weight:600;font-size:16px}
+.quiet:hover{background:rgba(86,112,74,.08)}
+.fine{margin:4px 0 0;text-align:center;font-size:13px;color:var(--ink-3)}
+.steps{margin:20px 0 0;padding:0;list-style:none;counter-reset:s;display:grid;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:center;min-height:52px;padding:10px 14px;border-radius:var(--r-sm);background:var(--card);font-size:15px}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--bg);font:600 16px/1 var(--display);color:var(--sage-deep)}
+.steps b{font-weight:600}
+.lead{margin:12px 0 0;font-size:16px;color:var(--ink-2)}
+.chip{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:10px 14px;border-radius:999px;background:var(--card);font-size:14px;color:var(--ink);align-self:flex-start}
+.chip svg{width:18px;height:18px;fill:none;stroke:var(--sage-deep);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* illustration motion */
+.sway{transform-origin:195px 196px;animation:sway 5.6s cubic-bezier(.45,0,.55,1) infinite}
+.sway2{transform-origin:195px 196px;animation:sway 5.6s cubic-bezier(.45,0,.55,1) -2.8s infinite}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.drop{animation:fall 3.2s cubic-bezier(.5,0,.8,.6) infinite;opacity:0}
+.drop.d2{animation-delay:1.05s}.drop.d3{animation-delay:2.1s}
+@keyframes fall{0%{opacity:0;transform:translateY(0)}15%{opacity:1}70%{opacity:1}100%{opacity:0;transform:translateY(64px)}}
+.bell{transform-origin:290px 70px;animation:ring 5.6s var(--ease) infinite}
+@keyframes ring{0%,80%,100%{transform:rotate(0)}84%{transform:rotate(12deg)}88%{transform:rotate(-10deg)}92%{transform:rotate(6deg)}96%{transform:rotate(-3deg)}}
+.halo{transform-origin:290px 72px;animation:halo 5.6s var(--ease) infinite;opacity:0}
+@keyframes halo{0%,80%{opacity:0;transform:scale(.6)}88%{opacity:.6}100%{opacity:0;transform:scale(1.5)}}
+/* simulated system step */
+.scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;transition:opacity 240ms var(--ease);z-index:5}
+.scrim.on{opacity:1}
+.sys{position:fixed;left:12px;right:12px;bottom:max(34px,env(safe-area-inset-bottom));z-index:6;padding:16px 16px 12px;border-radius:16px;background:var(--sys-bg);color:var(--sys-ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;transform:translateY(calc(100% + 48px));transition:transform 360ms var(--sheet)}
+.sys.on{transform:none}
+.sys-label{display:flex;align-items:center;gap:8px;margin:0 0 12px;padding-bottom:10px;border-bottom:1px dashed var(--sys-line);font:600 11px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#5b5b57}
+.sys-label svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75}
+.sys h3{margin:0;font-size:17px;font-weight:600;line-height:1.3}
+.sys p{margin:6px 0 14px;font-size:14px;color:#4a4a47}
+.sys-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sys-btns button{min-height:48px;border-radius:12px;background:#e3e3e0;font:600 15px/1 system-ui,-apple-system,sans-serif;color:var(--sys-ink)}
+.sys-btns button:last-child{background:var(--sys-ink);color:#fff}
+.sys :focus-visible{outline:2px solid var(--sys-ink);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){
+  .sway,.sway2,.drop,.bell,.halo,.screen.enter>*{animation:none!important}
+  .drop{opacity:1}.d2,.d3{opacity:0}
+  .sys,.scrim{transition:opacity 1ms}
+}
+</style>
+</head>
+<body>
+
+<section class="screen" id="ask" aria-labelledby="askTitle">
+  <div class="art" aria-hidden="true">
+    <span class="tag">Fennel · Reminders</span>
+    <svg viewBox="0 0 390 272">
+      <circle cx="195" cy="300" r="150" fill="#d7dfc6"/>
+      <ellipse cx="195" cy="252" rx="70" ry="8" fill="#c5cfb1"/>
+      <g class="sway2"><path d="M195 196c-2-26-20-44-46-46 2 26 20 44 46 46z" fill="#7f9a6c"/></g>
+      <g class="sway"><path d="M195 196c2-34 24-58 58-60-2 34-24 58-58 60z" fill="#56704a"/><path d="M195 196v-40" stroke="#3d5434" stroke-width="3" stroke-linecap="round"/></g>
+      <path d="M150 196h90l-12 56h-66z" fill="#c98a63"/>
+      <rect x="144" y="190" width="102" height="16" rx="8" fill="#b77852"/>
+      <circle class="drop" cx="196" cy="88" r="5" fill="#7aa3b0"/>
+      <circle class="drop d2" cx="186" cy="96" r="4" fill="#7aa3b0"/>
+      <circle class="drop d3" cx="206" cy="92" r="4" fill="#7aa3b0"/>
+      <circle class="halo" cx="290" cy="72" r="34" fill="none" stroke="#56704a" stroke-width="2"/>
+      <g class="bell">
+        <circle cx="290" cy="72" r="28" fill="#f5efe2"/>
+        <path d="M279 80v-10a11 11 0 0 1 22 0v10l3 4h-28z" fill="#56704a"/>
+        <circle cx="290" cy="88" r="3.5" fill="#56704a"/>
+      </g>
+    </svg>
+  </div>
+  <h1 id="askTitle" tabindex="-1">Let Fennel tell you when a plant is thirsty</h1>
+  <ul class="reasons">
+    <li><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg></span><span><b>Only on watering day</b>One nudge per plant. Nothing on the other days.</span></li>
+    <li><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M4 7.5l16 9M20 7.5l-16 9"/></svg></span><span><b>Frost warnings</b>The night before it drops under 3°C.</span></li>
+    <li><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z"/></svg></span><span><b>Quiet at night</b>No sound between 21:00 and 08:00.</span></li>
+  </ul>
+  <div class="actions">
+    <button class="primary" id="allow" type="button">Allow reminders</button>
+    <button class="quiet" id="later" type="button">Not now</button>
+  </div>
+</section>
+
+<section class="screen" id="granted" aria-labelledby="grantTitle" hidden>
+  <div class="art" aria-hidden="true">
+    <span class="tag">Reminders on</span>
+    <svg viewBox="0 0 390 272">
+      <circle cx="195" cy="300" r="150" fill="#d7dfc6"/>
+      <g class="sway2"><path d="M195 196c-2-26-20-44-46-46 2 26 20 44 46 46z" fill="#7f9a6c"/></g>
+      <g class="sway"><path d="M195 196c2-34 24-58 58-60-2 34-24 58-58 60z" fill="#56704a"/><path d="M195 196v-40" stroke="#3d5434" stroke-width="3" stroke-linecap="round"/><path d="M195 170c-10-14-8-30 6-40 6 16 4 30-6 40z" fill="#7f9a6c"/></g>
+      <path d="M150 196h90l-12 56h-66z" fill="#c98a63"/>
+      <rect x="144" y="190" width="102" height="16" rx="8" fill="#b77852"/>
+      <circle cx="290" cy="72" r="28" fill="#56704a"/>
+      <path d="m278 72 8 8 16-16" fill="none" stroke="#f5efe2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h2 id="grantTitle" tabindex="-1">You are all set</h2>
+  <p class="lead">First reminder: Thursday at 08:30, for the Monstera on the landing.</p>
+  <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>4 plants on the schedule</span>
+  <div class="actions">
+    <button class="primary" type="button" data-reset>Done</button>
+  </div>
+</section>
+
+<section class="screen" id="declined" aria-labelledby="declTitle" hidden>
+  <h2 id="declTitle" tabindex="-1">No reminders for now</h2>
+  <p class="lead">Fennel still keeps the schedule. You can switch reminders on later in three taps.</p>
+  <ol class="steps">
+    <li><span>Open <b>Settings</b> on your phone</span></li>
+    <li><span>Scroll to <b>Fennel</b>, then <b>Notifications</b></span></li>
+    <li><span>Turn on <b>Allow notifications</b></span></li>
+  </ol>
+  <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg>Watering days show on the Today tab</span>
+  <div class="actions">
+    <button class="primary" type="button" data-reset>Back to my plants</button>
+    <button class="quiet" type="button" data-ask>Ask me again</button>
+  </div>
+</section>
+
+<div class="scrim" id="scrim" hidden></div>
+<div class="sys" id="sys" role="dialog" aria-modal="true" aria-labelledby="sysTitle" aria-describedby="sysBody" hidden>
+  <p class="sys-label"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>System step · your phone draws this</p>
+  <h3 id="sysTitle">Allow “Fennel” to send you notifications?</h3>
+  <p id="sysBody">Notifications may include alerts, sounds and icon badges.</p>
+  <div class="sys-btns">
+    <button type="button" id="deny">Don’t allow</button>
+    <button type="button" id="grant">Allow</button>
+  </div>
+</div>
+<p class="sr" id="live" aria-live="polite"></p>
+
+<script>
+const $=id=>document.getElementById(id);
+const screens=['ask','granted','declined'];
+let lastFocus=null;
+function show(id,msg){
+  screens.forEach(s=>{$(s).hidden=s!==id;$(s).classList.remove('enter')});
+  const el=$(id);void el.offsetWidth;el.classList.add('enter');
+  el.querySelector('h1,h2').focus();
+  if(msg)$('live').textContent=msg;
+}
+function openSys(){
+  lastFocus=document.activeElement;
+  $('scrim').hidden=false;$('sys').hidden=false;
+  $('ask').setAttribute('inert','');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{$('scrim').classList.add('on');$('sys').classList.add('on');$('grant').focus()}));
+}
+function closeSys(next,msg){
+  $('scrim').classList.remove('on');$('sys').classList.remove('on');
+  $('ask').removeAttribute('inert');
+  setTimeout(()=>{$('scrim').hidden=true;$('sys').hidden=true},matchMedia('(prefers-reduced-motion: reduce)').matches?0:360);
+  if(next)show(next,msg);else if(lastFocus)lastFocus.focus();
+}
+$('allow').addEventListener('click',openSys);
+$('later').addEventListener('click',()=>show('declined','Reminders are off. Steps to turn them on later are shown.'));
+$('grant').addEventListener('click',()=>closeSys('granted','Reminders allowed.'));
+$('deny').addEventListener('click',()=>closeSys('declined','Reminders not allowed. Steps to turn them on later are shown.'));
+$('scrim').addEventListener('click',()=>closeSys());
+document.addEventListener('keydown',e=>{
+  if($('sys').hidden)return;
+  if(e.key==='Escape'){closeSys();return}
+  if(e.key==='Tab'){const a=$('deny'),b=$('grant');if(e.shiftKey&&document.activeElement===a){e.preventDefault();b.focus()}else if(!e.shiftKey&&document.activeElement===b){e.preventDefault();a.focus()}}
+});
+document.querySelectorAll('[data-reset]').forEach(b=>b.addEventListener('click',()=>show('ask')));
+document.querySelectorAll('[data-ask]').forEach(b=>b.addEventListener('click',()=>{show('ask');openSys()}));
+</script>
+</body>
+</html>

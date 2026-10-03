@@ -54,6 +54,11 @@
         "order-confirmed",
         "pagination",
         "password-field",
+        "phone-form-fields",
+        "phone-notifications-list",
+        "phone-paywall-plans",
+        "phone-photo-picker",
+        "phone-product-detail",
         "phone-tab-plain",
         "polaroid-fan",
         "popover-panel",
@@ -93,7 +98,10 @@
         "mobile-inbox-list",
         "auth-passkey-setup",
         "chat-thread",
-        "otp-code"
+        "phone-sign-in",
+        "otp-code",
+        "phone-comments-sheet",
+        "phone-sign-up-steps"
       ]
     },
     {
@@ -158,8 +166,10 @@
         "gooey-nav",
         "inline-alert",
         "link-orbit",
+        "m3-navigation-bar",
         "node-graph",
         "mobile-load-failed",
+        "phone-profile-header",
         "press-well",
         "prompt-composer",
         "radio-group",
@@ -211,6 +221,7 @@
         "hero-swiss-grid-wordmark",
         "background-topographic-lines",
         "greeting-loader",
+        "phone-splash-launch",
         "scroll-split",
         "scroll-velocity-type"
       ]
@@ -292,6 +303,7 @@
         "lens-bento",
         "newsletter-close-band",
         "mobile-list-empty",
+        "phone-permission-prompt",
         "list-empty-plain",
         "progress-bar",
         "property-list",

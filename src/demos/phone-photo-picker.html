@@ -1,0 +1,203 @@
+<!-- Design Lounge piece: phone-photo-picker · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add photos · Silverline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --backdrop:#0a0a0a;--sheet:#161616;--raised:#202020;--tile:#262626;--line:#2c2c2c;
+  --text:#f5f5f5;--text-2:#b3b3b3;--text-3:#8c8c8c;--accent:#ffe500;--on-accent:#111111;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:6px;--ease:cubic-bezier(.2,.7,.2,1);--sheet-ease:cubic-bezier(.32,.72,0,1);--fast:160ms;--mid:280ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--sans);color:var(--text);background:var(--backdrop);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.under{position:fixed;left:16px;right:16px;top:max(54px,env(safe-area-inset-top));height:60px;padding:12px 16px;border-radius:var(--r);background:#1a1a1a;color:var(--text-3);font-size:13px;transform:scale(.94);transform-origin:top center;opacity:.6}
+.under b{display:block;color:var(--text-2);font-weight:600;font-size:15px}
+.sheet{position:fixed;left:0;right:0;bottom:0;top:calc(max(54px,env(safe-area-inset-top)) + 14px);display:flex;flex-direction:column;background:var(--sheet);border-radius:var(--r) var(--r) 0 0;border-top:1px solid var(--line);animation:up 420ms var(--sheet-ease) both}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.grab{width:36px;height:5px;margin:6px auto 0;border-radius:3px;background:#3a3a3a}
+.head{position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:52px;padding:0 8px}
+.txtbtn{min-height:44px;min-width:44px;padding:0 10px;color:var(--text-2);font-size:16px;justify-self:start;border-radius:var(--r)}
+.album{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border-radius:var(--r);font-weight:600;font-size:17px}
+.album svg{width:16px;height:16px;transition:transform var(--fast) var(--ease)}
+.album[aria-expanded=true] svg{transform:rotate(180deg)}
+.album:hover,.txtbtn:hover{background:var(--raised)}
+.count{justify-self:end;padding-right:10px;font:600 13px/1 var(--mono);color:var(--text-3)}
+.count b{color:var(--accent)}
+.menu{position:absolute;top:50px;left:50%;width:236px;margin-left:-118px;padding:6px;border-radius:var(--r);background:var(--raised);border:1px solid #333;box-shadow:0 18px 40px rgba(0,0,0,.6);z-index:4;transform-origin:top center;animation:pop 200ms var(--ease)}
+.menu[hidden]{display:none}
+@keyframes pop{from{opacity:0;transform:scale(.96) translateY(-4px)}}
+.menu button{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:0 10px;border-radius:4px;text-align:left;font-size:15px}
+.menu button:hover,.menu button:focus-visible{background:#2c2c2c;outline:none}
+.menu .n{margin-left:auto;font:500 12px/1 var(--mono);color:var(--text-3)}
+.menu .chk{width:16px;height:16px;color:var(--accent);visibility:hidden}
+.menu [aria-checked=true] .chk{visibility:visible}
+.grid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 3px 12px;align-content:start;scrollbar-width:none}
+.tile{position:relative;aspect-ratio:1;border-radius:var(--r);overflow:hidden;background:var(--tile)}
+.tile .img{position:absolute;inset:0;border-radius:var(--r);transition:transform var(--mid) var(--ease),border-radius var(--mid) var(--ease)}
+.tile[aria-pressed=true] .img{transform:scale(.88);border-radius:4px}
+.tile[aria-pressed=true]{box-shadow:inset 0 0 0 2px var(--accent)}
+.badge{position:absolute;top:6px;right:6px;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.9);background:rgba(0,0,0,.28);font:600 13px/1 var(--mono);color:var(--on-accent)}
+.tile[aria-pressed=true] .badge{background:var(--accent);border-color:var(--accent);animation:tick 240ms var(--ease)}
+@keyframes tick{0%{transform:scale(.6)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+.dur{position:absolute;left:6px;bottom:6px;font:500 11px/1 var(--mono);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.7)}
+.tile.cam{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:var(--raised);color:var(--text);font-size:13px;font-weight:500}
+.tile.cam svg{width:28px;height:28px}
+.tile.nope{animation:nope 300ms var(--ease)}
+@keyframes nope{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+.tray{display:flex;align-items:center;gap:12px;padding:12px 16px max(34px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#121212}
+.thumbs{flex:1;display:flex;gap:8px;min-height:56px;align-items:center;list-style:none;margin:0;padding:0}
+.thumbs li{position:relative;width:52px;height:52px;flex:0 0 52px;border-radius:var(--r);animation:pop 200ms var(--ease)}
+.thumbs .img{position:absolute;inset:0;border-radius:var(--r)}
+.thumbs .num{position:absolute;left:4px;bottom:4px;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--on-accent);font:600 11px/1 var(--mono)}
+.rm{position:absolute;top:-12px;right:-12px;width:44px;height:44px;display:grid;place-items:center}
+.rm span{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#f5f5f5;color:#111;box-shadow:0 0 0 2px #121212}
+.rm svg{width:12px;height:12px}
+.empty{font-size:13px;color:var(--text-3)}
+.add{flex:0 0 auto;min-width:104px;min-height:48px;padding:0 18px;border-radius:var(--r);background:var(--accent);color:var(--on-accent);font-weight:600;font-size:16px;transition:background var(--fast) var(--ease),color var(--fast) var(--ease)}
+.add:disabled{background:var(--raised);color:var(--text-3);cursor:default}
+.toast{position:fixed;left:50%;bottom:calc(max(34px,env(safe-area-inset-bottom)) + 92px);transform:translate(-50%,12px);max-width:320px;padding:12px 16px;border-radius:var(--r);background:#f5f5f5;color:#111;font-size:14px;font-weight:500;opacity:0;pointer-events:none;transition:opacity var(--fast) var(--ease),transform var(--mid) var(--ease);white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="under" aria-hidden="true"><b>New roll · Silverline</b>Caption, film stock, location</div>
+
+<section class="sheet" role="dialog" aria-modal="true" aria-label="Add photos to your roll">
+  <div class="grab" aria-hidden="true"></div>
+  <header class="head">
+    <button class="txtbtn" type="button" id="cancel">Cancel</button>
+    <button class="album" type="button" id="albumBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="menu"><span id="albumName">Recents</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+    <span class="count" id="count" aria-hidden="true"><b>3</b>/4</span>
+    <div class="menu" id="menu" role="menu" aria-label="Albums" hidden></div>
+  </header>
+  <div class="grid" id="grid" role="group" aria-label="Photos"></div>
+  <footer class="tray">
+    <ul class="thumbs" id="thumbs" aria-label="Selected photos"></ul>
+    <button class="add" id="add" type="button">Add 3</button>
+  </footer>
+</section>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const MAX=4;
+const albums=[{id:'rec',name:'Recents',n:248,seed:3},{id:'fav',name:'Favourites',n:31,seed:11},{id:'ktm',name:'Pokhara, March',n:64,seed:23},{id:'scan',name:'Film scans',n:112,seed:37}];
+const pal=[['#f2a65a','#5b3a6e','#1f2a2e'],['#9fd3e0','#e9e2c8','#2f4f3a'],['#ffcf8a','#d4573b','#2b1d1a'],['#c9d6df','#7a93a5','#1d262d'],['#e7d6b8','#a46b3f','#3a2416'],['#b8e0c6','#4f8a6b','#13261c'],['#f6e3a1','#e08a4c','#4a2d3c'],['#dfe7ef','#a9b8c7','#4d5866']];
+const kinds=['ridge','sea','face','cup','city','leaf'];
+const words={ridge:'hills at dusk',sea:'sea horizon',face:'portrait',cup:'cup on a table',city:'street at night',leaf:'leaf close-up'};
+const days=['2 Oct','1 Oct','30 Sep','28 Sep','27 Sep','25 Sep','22 Sep','19 Sep'];
+function art(kind,p){
+  const [a,b,c]=p;
+  switch(kind){
+    case 'ridge':return `radial-gradient(130% 55% at 25% 100%,${c} 0 60%,transparent 61%),radial-gradient(110% 50% at 85% 100%,${b} 0 64%,transparent 65%),radial-gradient(circle at 68% 34%,#fff6d8 0 8%,transparent 9%),linear-gradient(${a},${b})`;
+    case 'sea':return `linear-gradient(90deg,transparent 44%,rgba(255,255,255,.35) 44% 56%,transparent 56%) 0 58%/100% 42% no-repeat,radial-gradient(circle at 50% 56%,#fff3c4 0 10%,transparent 11%),linear-gradient(${a} 0 58%,${c} 58%)`;
+    case 'face':return `radial-gradient(circle at 50% 42%,${a} 0 17%,transparent 18%),radial-gradient(62% 42% at 50% 104%,${c} 0 98%,transparent 100%),linear-gradient(160deg,${b},${c})`;
+    case 'cup':return `radial-gradient(28% 9% at 50% 46%,${c} 0 90%,transparent 100%),linear-gradient(90deg,transparent 30%,${a} 30% 70%,transparent 70%) 0 46%/100% 26% no-repeat,radial-gradient(40% 9% at 50% 74%,rgba(0,0,0,.35) 0 90%,transparent 100%),linear-gradient(${b} 0 62%,${c} 62%)`;
+    case 'city':return `repeating-linear-gradient(90deg,${c} 0 14%,transparent 14% 18%,${c} 18% 26%,transparent 26% 30%) 0 100%/100% 52% no-repeat,radial-gradient(circle at 30% 30%,${a} 0 3%,transparent 4%),linear-gradient(${b},#0d0d12)`;
+    default:return `conic-gradient(from 210deg at 40% 60%,${b},${a},${c},${b}),${c}`;
+  }
+}
+function photos(album){
+  const out=[];let s=album.seed;
+  for(let i=0;i<20;i++){
+    s=(s*9301+49297)%233280;
+    const k=kinds[(s+i)%kinds.length],p=pal[(s>>3)%pal.length];
+    out.push({id:album.id+'-'+i,bg:art(k,p),label:`${words[k]}, ${days[i%days.length]}`,dur:(i===4||i===11)?`0:${(10+i*3)%60}`.replace(/:(\d)$/,':0$1'):''});
+  }
+  return out;
+}
+const all={};albums.forEach(a=>photos(a).forEach(p=>all[p.id]=p));
+let current=albums[0];
+let selected=['rec-1','rec-4','rec-2'];
+const $=id=>document.getElementById(id);
+const grid=$('grid'),thumbs=$('thumbs');
+function renderGrid(){
+  grid.innerHTML='';
+  const cam=document.createElement('button');
+  cam.type='button';cam.className='tile cam';
+  cam.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Camera';
+  cam.addEventListener('click',()=>toast('Camera opens full screen here'));
+  grid.append(cam);
+  photos(current).forEach(p=>{
+    const b=document.createElement('button');
+    b.type='button';b.className='tile';b.dataset.id=p.id;
+    b.innerHTML=`<span class="img" style="background:${p.bg}"></span>${p.dur?`<span class="dur">${p.dur}</span>`:''}<span class="badge" aria-hidden="true"></span>`;
+    b.addEventListener('click',()=>toggle(p.id,b));
+    grid.append(b);
+  });
+  sync();
+}
+function toggle(id,el){
+  const i=selected.indexOf(id);
+  if(i>-1)selected.splice(i,1);
+  else if(selected.length>=MAX){
+    el.classList.remove('nope');void el.offsetWidth;el.classList.add('nope');
+    toast(`You can add up to ${MAX} photos`);return;
+  }else selected.push(id);
+  sync();
+}
+function sync(){
+  grid.querySelectorAll('.tile[data-id]').forEach(t=>{
+    const i=selected.indexOf(t.dataset.id),p=all[t.dataset.id];
+    t.setAttribute('aria-pressed',i>-1);
+    t.querySelector('.badge').textContent=i>-1?i+1:'';
+    t.setAttribute('aria-label',(p.dur?'Video, '+p.dur+', ':'Photo, ')+p.label+(i>-1?`, selected ${i+1} of ${selected.length}`:''));
+  });
+  thumbs.innerHTML='';
+  if(!selected.length)thumbs.innerHTML='<li class="empty" style="width:auto;flex:1;height:auto;animation:none">Pick up to 4 for this roll</li>';
+  selected.forEach((id,i)=>{
+    const p=all[id],li=document.createElement('li');
+    li.innerHTML=`<span class="img" style="background:${p.bg}"></span><span class="num" aria-hidden="true">${i+1}</span><button class="rm" type="button" aria-label="Remove ${p.label}"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></span></button>`;
+    li.querySelector('.rm').addEventListener('click',()=>{
+      const next=selected[i+1]||selected[i-1];
+      selected.splice(i,1);sync();
+      const f=next&&thumbs.querySelectorAll('.rm')[selected.indexOf(next)];
+      (f||$('add')).focus();
+    });
+    thumbs.append(li);
+  });
+  const n=selected.length;
+  $('count').innerHTML=`<b>${n}</b>/${MAX}`;
+  $('add').disabled=!n;
+  $('add').textContent=n?`Add ${n}`:'Add';
+}
+let tt;
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2400)}
+/* album menu */
+const menu=$('menu'),btn=$('albumBtn');
+function renderMenu(){
+  menu.innerHTML='';
+  albums.forEach(a=>{
+    const b=document.createElement('button');
+    b.type='button';b.setAttribute('role','menuitemradio');b.setAttribute('aria-checked',a===current);b.tabIndex=-1;
+    b.innerHTML=`<svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>${a.name}<span class="n">${a.n}</span>`;
+    b.addEventListener('click',()=>{current=a;$('albumName').textContent=a.name;closeMenu();renderGrid();grid.scrollTop=0});
+    menu.append(b);
+  });
+}
+function openMenu(){renderMenu();menu.hidden=false;btn.setAttribute('aria-expanded','true');menu.querySelector('[aria-checked=true]').focus()}
+function closeMenu(focus=true){menu.hidden=true;btn.setAttribute('aria-expanded','false');if(focus)btn.focus()}
+btn.addEventListener('click',()=>menu.hidden?openMenu():closeMenu());
+menu.addEventListener('keydown',e=>{
+  const items=[...menu.querySelectorAll('button')],i=items.indexOf(document.activeElement);
+  if(e.key==='ArrowDown'){e.preventDefault();items[(i+1)%items.length].focus()}
+  else if(e.key==='ArrowUp'){e.preventDefault();items[(i-1+items.length)%items.length].focus()}
+  else if(e.key==='Escape'||e.key==='Tab'){e.preventDefault();closeMenu()}
+});
+document.addEventListener('click',e=>{if(!menu.hidden&&!menu.contains(e.target)&&e.target!==btn&&!btn.contains(e.target))closeMenu(false)});
+$('add').addEventListener('click',()=>toast(`${selected.length} ${selected.length===1?'photo':'photos'} added to your roll`));
+$('cancel').addEventListener('click',()=>{selected=[];sync();toast('Selection cleared')});
+renderGrid();
+</script>
+</body>
+</html>
