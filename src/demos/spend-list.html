@@ -1,0 +1,79 @@
+<!-- Design Lounge piece: spend-list · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asar lines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600&family=Noto+Serif+Devanagari:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4ead6;--surface:#fbf6ea;--ink:#1c2744;--ink-2:#3e4a66;--ink-3:#6d768c;
+  --line:#d9cbb3;--primary:#c8102e;--primary-soft:#f3d2c8;--focus:#c8102e;
+  --success-soft:#d6d8c2;--success-on-soft:#1b5e3d;
+  --display:"Noto Serif Devanagari",Georgia,serif;--sans:"Mukta",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:15px/1.4 var(--sans);color:var(--ink);
+  background-color:var(--bg);
+  background-image:radial-gradient(rgba(28,39,68,.05) .6px,transparent .6px);
+  background-size:3px 3px;
+  padding:54px 20px 34px;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.where{margin:8px 0 0;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--ink-2)}
+h1{margin:8px 0 0;font-family:var(--display);font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.sub{margin:8px 0 16px;color:var(--ink-2);font-size:15px}
+.filters{display:flex;gap:8px;margin:0 0 16px}
+.chip{height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:600}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.row{
+  width:100%;min-height:56px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;
+  padding:10px 12px;border:0;border-radius:6px;background:var(--surface);text-align:left;
+}
+.row[aria-pressed="true"]{background:var(--primary-soft)}
+.row[hidden]{display:none}
+.name{font-weight:600}
+.meta{grid-column:1;font-size:13px;color:var(--ink-2)}
+.amt{grid-row:1 / span 2;align-self:center;font-family:var(--display);font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:99px;background:var(--success-soft);color:var(--success-on-soft);font-size:11px;font-weight:600}
+</style>
+</head>
+<body>
+<p class="where">Asar 2083 · BS</p>
+<h1>रु 31,300</h1>
+<p class="sub">Left after five lines.</p>
+<div class="filters" role="group" aria-label="Direction">
+  <button class="chip" type="button" data-f="all" aria-pressed="true">All</button>
+  <button class="chip" type="button" data-f="out" aria-pressed="false">Out</button>
+  <button class="chip" type="button" data-f="in" aria-pressed="false">In</button>
+</div>
+<ul id="rows">
+  <li><button class="row" type="button" data-dir="out" aria-pressed="true"><span class="name">Bhatbhateni</span><span class="amt">रु 18,400</span><span class="meta">Out · 17 Asar</span></button></li>
+  <li><button class="row" type="button" data-dir="out" aria-pressed="false"><span class="name">NEA</span><span class="amt">रु 4,200</span><span class="meta">Out · 12 Asar</span></button></li>
+  <li><button class="row" type="button" data-dir="out" aria-pressed="false"><span class="name">Bus</span><span class="amt">रु 2,100</span><span class="meta">Out · 9 Asar</span></button></li>
+  <li><button class="row" type="button" data-dir="out" aria-pressed="false"><span class="name">Rent</span><span class="amt">रु 1,24,000</span><span class="meta">Out · 1 Asar</span></button></li>
+  <li><button class="row" type="button" data-dir="in" aria-pressed="false"><span class="name">Salary</span><span class="amt">रु 1,80,000</span><span class="meta">1 Asar <b class="tag">in</b></span></button></li>
+</ul>
+<script>
+const rows = [...document.querySelectorAll('.row')];
+document.querySelector('.filters').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
+  const f = chip.dataset.f;
+  rows.forEach(r => { r.hidden = f !== 'all' && r.dataset.dir !== f; });
+});
+document.getElementById('rows').addEventListener('click', e => {
+  const row = e.target.closest('.row');
+  if (!row) return;
+  rows.forEach(r => r.setAttribute('aria-pressed', r === row ? 'true' : 'false'));
+});
+</script>
+</body>
+</html>

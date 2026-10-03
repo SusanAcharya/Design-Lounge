@@ -96,14 +96,14 @@ export const COLLECTIONS: Collection[] = [
     title: 'Native feel, web materials',
     kicker: 'Nº 10',
     blurb: 'iOS 26 glass, Material 3 Expressive shapes, and the PWA moments in between: install, offline, update.',
-    pieces: ['ios-glass-tab-bar', 'phone-tab-plain', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'ios-fintech-home', 'ios-swipe-row-actions', 'ios-now-playing', 'ios-grouped-settings', 'ios-onboarding-carousel', 'm3-expressive-home', 'm3-fab-menu', 'pwa-install-sheet', 'pwa-connectivity-banner', 'pwa-news-reader'],
+    pieces: ['ios-glass-tab-bar', 'phone-tab-plain', 'spend-list', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'ios-fintech-home', 'ios-swipe-row-actions', 'ios-now-playing', 'ios-grouped-settings', 'ios-onboarding-carousel', 'm3-expressive-home', 'm3-fab-menu', 'pwa-install-sheet', 'pwa-connectivity-banner', 'pwa-news-reader'],
   },
   {
     slug: 'dashboards-and-data',
     title: 'Dashboards and dense data',
     kicker: 'Nº 11',
     blurb: 'Tables you can live in, KPI rows, boards, bento grids and counters that roll. Density without noise.',
-    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'audit-activity-log', 'record-detail-header', 'people-role-list', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'budget-meter', 'kpi-delta', 'saved-banner', 'list-empty-plain', 'tablet-dashboard-grid', 'kanban-board', 'bento-feature-grid', 'odometer-counter', 'collapsing-sidebar-rail', 'tablet-split-view-mail'],
+    pieces: ['analytics-dashboard-overview', 'dense-data-table', 'audit-activity-log', 'record-detail-header', 'people-role-list', 'chart-bar-week', 'chart-line-range', 'chart-rank-spend', 'budget-meter', 'spend-list', 'kpi-delta', 'saved-banner', 'list-empty-plain', 'tablet-dashboard-grid', 'kanban-board', 'bento-feature-grid', 'odometer-counter', 'collapsing-sidebar-rail', 'tablet-split-view-mail'],
   },
   {
     slug: 'motion-with-a-reason',

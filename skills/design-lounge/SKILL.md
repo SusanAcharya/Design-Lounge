@@ -89,7 +89,7 @@ Use this when a design system is already in the project.
 4. Otherwise show the pick (Show the pick, then ask once) and stop. Do not write UI in that turn.
 5. If they ask to see options, name three palettes and two pairings from that kind's lists, each with its page link. Names and moods only. They pick a whole palette, never a hex.
 6. The locked system is the theme's `css`, the pairing's `css`, and the family's `rules`, `radius`, `button`, and `density` in the index. Match those numbers. Do not fetch a kit URL.
-7. If the pairing has a `caution`, say it before you write. Mono on `code`, `.num`, and captions comes from `--font-mono`. Body text uses `--font-text`.
+7. If the pairing has a `caution`, say it before you write. Body text uses `--font-text`. When `numbers` is `mono` or unset, `.num` uses `--font-mono`. When `numbers` is `display`, `.num` uses `--font-display` and mono is only for `code`. Do not put an amount on the mono face if the CSS kept it off `.num`.
 8. A theme is one mode (`light` or `dark`). If the product needs both and `pair` is set, use that other theme as the second mode. Same pairing, same family. If `pair` is null, stay in the one mode and say so. Do not borrow an unpaired palette. Night Desk pairs with Paper & Ink. Harbour Ledger pairs with Harbour Night. Lokta pairs with Lokta Night. The theme CSS also includes a sample radius and shadow. Ignore them. The family sets radius and shadow.
 9. Implement in their stack. Open `library/briefs/<id>.md` for the pieces named on the kind and the family before you invent a hero, nav, table, or footer. Write each piece into Sources in `DESIGN.md` with its demo link.
 

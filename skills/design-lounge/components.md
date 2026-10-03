@@ -128,7 +128,7 @@ Text on a feedback wash uses `--success-on-soft`, `--warning-on-soft`, `--danger
 
 A save confirmation is `saved-banner`. It stays on the page. It is not a toast. A failed load stays the failed-load piece.
 
-A phone tab bar is `phone-tab-plain` unless the family is glass. Glass uses `ios-glass-tab-bar`. Do not put a glass bar on any other family.
+A phone tab bar is `phone-tab-plain` unless the family is glass. Glass uses `ios-glass-tab-bar`. Do not put a glass bar on any other family. The plain bar's demo has four tabs. A product uses one tab per real section, three to five. A transaction list is `spend-list`. Do not invent a second list style.
 
 A single metric is one number at display size, a delta in `--success` or `--danger`, and a caption in `--ink-2`. If the screen has several figures, only one of them is display size. The others step down to the title role. Do not lay four equal numbers in a row.
 

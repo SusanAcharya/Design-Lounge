@@ -100,7 +100,7 @@ None. A tab change replaces the heading immediately. A sliding pill is the glass
 
 ### Always
 
-- [ ] Four tabs, one current.
+- [ ] One current tab. This demo has four sections. A product uses three to five, one per real section, and does not add or drop a tab to match this demo.
 - [ ] The bar is a flat surface with a 1px top rule. No blur, no glass, no floating capsule.
 - [ ] The current tab uses a 2px top mark in the primary, not a pill fill.
 - [ ] Each tab is at least 44px tall.

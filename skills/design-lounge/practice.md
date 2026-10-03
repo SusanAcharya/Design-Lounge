@@ -103,6 +103,34 @@ Crimson is `--primary`, not a second accent beside the theme's brass. A festival
 
 For a revamp, name three visual problems. Fix those inside the adopted system. Do not reskin the whole product unless they asked.
 
+## What to build
+
+The four lines decide a screen. They do not decide the product. Before them, write three lines on the system sheet.
+
+- The job they already do without this product, in their words. If they did not say, ask once, then stop. Do not invent a research study.
+- One thing you will not build. Name the screen a template would add, and why it does not serve the job.
+- The pushback, if there is one. A person tracking their own spending needs a list of transactions before they need a dashboard. Say that, and build the list. Cash and a wallet are different rows, not one "payment" type, when they said they use both. A festival budget is a dated limit, not a second app.
+
+You do not interview their users. You do cut a screen they did not need, and you do not add a dashboard to look complete. The screens you ship are the minimum set for the job they named.
+
+## Not a copy of the recipe
+
+A recipe locks the system. It does not supply the product. Do not reuse its sample nouns, dates, or amounts unless that is their product. Asar, Bhatbhateni, Bay 14, and the yard are demos.
+
+Two products on the same theme should still differ in the noun, the home screen, and the brand primary if they gave you one. If the interface would still be true after swapping their name for the demo's, you copied the demo. Change the home to the decision they named.
+
+If they asked for loud, playful, or luxury, lock the theme and family whose mood says that. Playroom, Festival, and Atelier Noir exist for that. Do not walk them back to Lokta or Harbour Ledger because those are calmer. The anti-slop checks still hold. Loud is the type and the theme, not a glow.
+
+## Break one rule
+
+One display size, one primary, and the sample tab count are defaults. A designer breaks one when the content cannot be said otherwise. You may break one per screen. Write it on the sheet, or you did not break it.
+
+- One display size. Break it only when two numbers are both the decision, such as money in and money out. The second is one step smaller, not equal. A third display size is not allowed.
+- One primary. Break it only inside a confirm dialog, where the destructive action and the cancel are both required. The page behind keeps one.
+- Tab count. `phone-tab-plain` shows four tabs because that demo has four sections. A product uses three to five, one per real section. Do not add a tab to match the demo, and do not drop a section they named to stay at four.
+
+Do not break a rule to fill empty space, to look more designed, or because another app had it. If you cannot name the content that required the break, keep the default.
+
 ## Decide the screen
 
 Write these four lines into the system sheet before you choose a layout. They are the brief. The pixels come after.
@@ -117,7 +145,7 @@ A region that does not serve one of those four lines does not go on this screen.
 Reading order on the view, and only this order:
 
 1. Where they are. A label or a title. Not both at display size.
-2. The answer. This is the largest type on the view. One display size per view.
+2. The answer. This is the largest type on the view. One display size per view, unless you wrote a break in Break one rule.
 3. The next action. One primary button.
 4. The evidence. The list, the chart, or the facts that justify the answer.
 5. Chrome. Nav, filters, account. Quiet, and smaller than the answer.
@@ -285,7 +313,7 @@ Put the theme's CSS variables on `:root` once, or in one theme provider. Control
 - Every piece you named is in the index.
 - DESIGN.md Sources lists each of those pieces with its demo link. The reply includes the same links.
 - The four lines (who, decision, first thing, next action) are in DESIGN.md.
-- The first thing is the largest type on that view. There is one display size.
+- The first thing is the largest type on that view. There is one display size, or one written break.
 - Space between groups is the stack gap. Space inside a group is half of that.
 - A list is one state: loading, empty, failed, or populated. The piece you used matches that state.
 - The next action names the screen it opens. That screen is in this pass, or you said it is still open.

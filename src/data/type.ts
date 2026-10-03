@@ -10,6 +10,8 @@ export interface Pairing {
   text: Face;
   /** Numbers, code, and captions. Not body copy. */
   mono?: Face;
+  /** Where a number is set. `display` means `.num` stays in the display face, because mono lacks the script. */
+  numbers?: 'mono' | 'display';
   /** Say this before using the pairing for long prose. */
   caution?: string;
   headline: string;
@@ -96,6 +98,7 @@ export const PAIRINGS: Pairing[] = [
     display: { family: 'Noto Serif Devanagari', spec: 'Noto+Serif+Devanagari:wght@400;600;700', weight: 600, tracking: '-0.02em', fallback: serif },
     text: { family: 'Mukta', spec: 'Mukta:wght@400;500;600;700', weight: 400, fallback: sans },
     mono: { family: 'IBM Plex Mono', spec: 'IBM+Plex+Mono:wght@400;500', weight: 400, fallback: mono },
+    numbers: 'display',
     headline: 'रु 44,211 बाँकी', body: 'Bhatbhateni, the NEA bill, and what is left before Dashain. A lakh is 1,00,000, written 1,00,000.', label: 'काठमाडौं', bg: '#f4ead6', ink: '#1c2744', accent: '#c8102e' },
   { id: 'bauhaus-school', name: 'Bauhaus School', mood: 'Geometric heavyweight with a mono for the rules.', bestFor: ['Education', 'Exhibitions', 'Architecture'], tags: ['bauhaus', 'geometric'],
     display: { family: 'Outfit', spec: 'Outfit:wght@400;600;800', weight: 800, tracking: '-0.04em', fallback: sans },
@@ -225,7 +228,9 @@ export function pairingCss(p: Pairing) {
   const specs = [p.display.spec, p.text.spec, p.mono?.spec].filter((spec): spec is string => Boolean(spec));
   const monoVar = p.mono ? `\n  --font-mono: "${p.mono.family}", ${p.mono.fallback};` : '';
   const monoRule = p.mono
-    ? `\ncode, kbd, samp, .mono, .num {\n  font-family: var(--font-mono);\n  font-weight: ${p.mono.weight};\n}`
+    ? p.numbers === 'display'
+      ? `\n/* Amounts use .num in the display face. Mono lacks this pairing's script, so it is only for code. */\ncode, kbd, samp, .mono {\n  font-family: var(--font-mono);\n  font-weight: ${p.mono.weight};\n}\n.num {\n  font-family: var(--font-display);\n  font-variant-numeric: tabular-nums;\n  letter-spacing: -0.02em;\n}`
+      : `\ncode, kbd, samp, .mono, .num {\n  font-family: var(--font-mono);\n  font-weight: ${p.mono.weight};\n}`
     : '';
   return `/* ${p.name} · type pairing from Design Lounge by Susan Acharya (acharyasusan.com.np) */
 @import url("${fontHref(specs)}");

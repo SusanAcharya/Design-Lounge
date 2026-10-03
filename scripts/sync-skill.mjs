@@ -138,6 +138,7 @@ const index = {
     display: p.display.family,
     text: p.text.family,
     mono: p.mono?.family ?? '',
+    numbers: p.numbers ?? 'mono',
     caution: p.caution ?? '',
     css: pairingCss(p),
   })),
