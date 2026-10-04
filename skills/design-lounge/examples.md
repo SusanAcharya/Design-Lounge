@@ -1,6 +1,6 @@
 # Examples
 
-The catalogue is `library/index.json` in this skill. Briefs are `library/briefs/<id>.md`.
+Start from `library/map.json` in this skill. Search pieces in `library/pieces.txt`. Briefs are `library/briefs/<id>.md`.
 
 ## New product
 
@@ -78,7 +78,7 @@ User: "Company site. Show me palettes."
 User: "The table feels wrong. Use a different one."
 
 1. Read Sources in `DESIGN.md`. Find the line whose role is the table.
-2. Pick another piece in the index. Replace that line and its demo link.
+2. Pick another piece from `pieces.txt`. Replace that line and its demo link.
 3. Rebuild the table. Keep the theme, pairing, and family.
 
 ## They already have a design system
@@ -130,5 +130,5 @@ User: "Just build it" — and the screens are in the app.
 User: "Add the pricing section."
 
 1. Do not open a new palette.
-2. Find a `pricing` piece in `pieces`. Read `library/briefs/<id>.md`.
+2. Search `pieces.txt` for `pricing`. Read `library/briefs/<id>.md`.
 3. Rebuild it. Swap its colours and fonts for the locked kit. Keep its toggle, type scale, and motion.

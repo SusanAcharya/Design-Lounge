@@ -1,0 +1,55 @@
+{
+ "id": "nonprofit",
+ "surface": "web",
+ "title": "A nonprofit",
+ "kicker": "Give",
+ "blurb": "The story, what each amount does, the goal.",
+ "when": "A charity, a fundraiser, or a community group asking for money or time.",
+ "theme": "kiln",
+ "pairing": "garden-journal",
+ "shelf": "website-in-parts",
+ "categories": [
+  "landing",
+  "stats",
+  "cta"
+ ],
+ "pieces": [
+  "donation-page-impact",
+  "stats-count-up-band",
+  "scroll-word-highlight",
+  "testimonials-masonry-wall",
+  "newsletter-fold-inline"
+ ],
+ "directions": [
+  {
+   "id": "warm-lunch",
+   "name": "Warm lunch",
+   "mood": "Terracotta, cream, a real cause",
+   "theme": "kiln",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "donation-page-impact",
+   "effect": "scroll-word-highlight"
+  },
+  {
+   "id": "greenhouse-fund",
+   "name": "Greenhouse fund",
+   "mood": "Leaf green, soft, hopeful",
+   "theme": "greenhouse",
+   "pairing": "the-lounge",
+   "family": "soft",
+   "hero": "donation-page-impact",
+   "effect": "parallax-layered-hero"
+  },
+  {
+   "id": "lokta-seva",
+   "name": "Lokta seva",
+   "mood": "Nepali paper, crimson, community",
+   "theme": "lokta",
+   "pairing": "devanagari",
+   "family": "editorial",
+   "hero": "donation-page-impact",
+   "effect": "text-marker-highlight-draw"
+  }
+ ]
+}

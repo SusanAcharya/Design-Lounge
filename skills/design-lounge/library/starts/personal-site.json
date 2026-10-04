@@ -1,0 +1,59 @@
+{
+ "id": "personal-site",
+ "surface": "web",
+ "title": "A personal site",
+ "kicker": "Personal",
+ "blurb": "A name, a journal, one essay. Not a showreel.",
+ "when": "A person, not a studio. The writing is the work.",
+ "theme": "sakura-desk",
+ "pairing": "the-lounge",
+ "shelf": "typography-first",
+ "categories": [
+  "profile",
+  "blog",
+  "reading",
+  "newsletter"
+ ],
+ "pieces": [
+  "profile-creator-masthead",
+  "blog-issue-index",
+  "paper-article-reader",
+  "newsletter-close-band",
+  "hero-editorial-name-rotator",
+  "card-article-mix",
+  "navbar-vertical-rail",
+  "error-404-editorial"
+ ],
+ "directions": [
+  {
+   "id": "sakura-essay",
+   "name": "Sakura essay",
+   "mood": "A writer, blush paper",
+   "theme": "sakura-desk",
+   "pairing": "the-lounge",
+   "family": "editorial",
+   "hero": "hero-editorial-name-rotator",
+   "effect": "scroll-word-highlight"
+  },
+  {
+   "id": "margin-notes",
+   "name": "Margin notes",
+   "mood": "Handwritten, warm, a notebook",
+   "theme": "paper-ink",
+   "pairing": "handwritten-notes",
+   "family": "soft",
+   "hero": "profile-creator-masthead",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "greenhouse-journal",
+   "name": "Greenhouse journal",
+   "mood": "Soft green, a slow blog",
+   "theme": "greenhouse",
+   "pairing": "bookish",
+   "family": "quiet",
+   "hero": "editorial-landing-hero",
+   "effect": "scroll-reading-progress"
+  }
+ ]
+}

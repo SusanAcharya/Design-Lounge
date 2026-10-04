@@ -1,0 +1,70 @@
+/* Sakura Desk · light · no pair
+   Blush paper, black ink, one stamp of red.
+   Best for: Personal sites, Poetry, Studios */
+/* Sakura Desk · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #c43b3b;
+  --primary-ink: #fffdf8;
+  --primary-soft: #efd2d0;
+  --secondary: #2a1716;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d9cdcb;
+  --tertiary: #d4a09a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #f1e1dd;
+
+  /* Surface */
+  --bg: #f6ebe8;
+  --surface: #fff7f4;
+  --surface-2: #ead8d3;
+  --surface-3: #deccc8;
+  --ink: #2a1716;
+  --ink-2: #6a4a46;
+  --ink-3: #7b5e5a;
+  --line: #e0c8c2;
+  --line-strong: #9b8581;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3d6b4a;
+  --success-ink: #fffdf8;
+  --success-soft: #dcd9d2;
+  --success-on-soft: #365e41;
+  --warning: #c47a28;
+  --warning-ink: #141210;
+  --warning-soft: #efdbcd;
+  --warning-on-soft: #85531b;
+  --danger: #c43b3b;
+  --danger-ink: #fffdf8;
+  --danger-soft: #efd2d0;
+  --danger-on-soft: #972e2e;
+  --info: #5a4a6b;
+  --info-ink: #fffdf8;
+  --info-soft: #e0d4d7;
+  --info-on-soft: #5a4a6b;
+
+  /* Chrome */
+  --focus: #c43b3b;
+  --link: #b03535;
+  --overlay: #141210;
+  --inverse: #2a1716;
+  --inverse-ink: #f6ebe8;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-text: "Work Sans", system-ui, sans-serif;
+  --radius: 6px;
+  --shadow: 0 10px 24px -14px rgba(42,23,22,.18);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

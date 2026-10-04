@@ -1,0 +1,59 @@
+{
+ "id": "shop-app",
+ "surface": "app",
+ "title": "A shop app",
+ "kicker": "Commerce",
+ "blurb": "The list, the piece, then one page to pay.",
+ "when": "Buying on a phone. The bag is the next screen, not a carnival.",
+ "theme": "kiln",
+ "pairing": "atelier",
+ "shelf": "first-impressions",
+ "categories": [
+  "ecommerce",
+  "inputs"
+ ],
+ "pieces": [
+  "mobile-filter-chips-list",
+  "shop-product",
+  "qty-stepper",
+  "mobile-one-page-checkout",
+  "order-confirmed",
+  "phone-product-detail",
+  "phone-sign-in",
+  "phone-order-tracking",
+  "phone-wallet-cards",
+  "phone-search-results"
+ ],
+ "directions": [
+  {
+   "id": "clay-bag",
+   "name": "Clay bag",
+   "mood": "Handmade, warm",
+   "theme": "kiln",
+   "pairing": "atelier",
+   "family": "soft",
+   "hero": "mobile-filter-chips-list",
+   "effect": "shared-element-expand"
+  },
+  {
+   "id": "linen-bag",
+   "name": "Linen bag",
+   "mood": "Soft luxury",
+   "theme": "linen-shop",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "mobile-filter-chips-list",
+   "effect": "ios-bottom-sheet-detents"
+  },
+  {
+   "id": "candy-bag",
+   "name": "Candy bag",
+   "mood": "Playful, loud, snacks and toys",
+   "theme": "market-stall",
+   "pairing": "candy-clay",
+   "family": "soft",
+   "hero": "mobile-filter-chips-list",
+   "effect": "staggered-list-reveal"
+  }
+ ]
+}

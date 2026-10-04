@@ -1,0 +1,61 @@
+{
+ "id": "social",
+ "surface": "app",
+ "title": "A social app",
+ "kicker": "Feed",
+ "blurb": "A feed, a story you hold, a tab bar.",
+ "when": "People, posts, or stories. One feed, not a dashboard.",
+ "theme": "playroom",
+ "pairing": "geometric-modern",
+ "shelf": "native-feel",
+ "categories": [
+  "dashboard",
+  "media",
+  "navigation"
+ ],
+ "pieces": [
+  "m3-expressive-home",
+  "mobile-story-viewer",
+  "ios-glass-tab-bar",
+  "m3-fab-menu",
+  "ios-context-menu-lift",
+  "phone-profile-header",
+  "phone-comments-sheet",
+  "phone-photo-picker",
+  "phone-notifications-list",
+  "phone-feed-posts",
+  "phone-search-results"
+ ],
+ "directions": [
+  {
+   "id": "playroom",
+   "name": "Playroom",
+   "mood": "Friendly, coral, everyone",
+   "theme": "playroom",
+   "pairing": "geometric-modern",
+   "family": "soft",
+   "hero": "mobile-story-viewer",
+   "effect": "optimistic-like-button"
+  },
+  {
+   "id": "neon-feed",
+   "name": "Neon feed",
+   "mood": "Night, glass, creators",
+   "theme": "neon-alley",
+   "pairing": "indie-maker",
+   "family": "glass",
+   "hero": "mobile-story-viewer",
+   "effect": "shared-element-expand"
+  },
+  {
+   "id": "sketchbook",
+   "name": "Sketchbook",
+   "mood": "Handwritten, small groups",
+   "theme": "sakura-desk",
+   "pairing": "handwritten-notes",
+   "family": "soft",
+   "hero": "m3-expressive-home",
+   "effect": "optimistic-like-button"
+  }
+ ]
+}

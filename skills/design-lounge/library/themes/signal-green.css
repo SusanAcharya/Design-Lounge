@@ -1,0 +1,70 @@
+/* Signal Green · dark · no pair
+   A terminal that grew up. Phosphor on soot, no nostalgia drag.
+   Best for: CLIs, Infra, Changelogs */
+/* Signal Green · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #3ddc84;
+  --primary-ink: #141210;
+  --primary-soft: #174029;
+  --secondary: #e6c35c;
+  --secondary-ink: #141210;
+  --secondary-soft: #403a1f;
+  --tertiary: #7ab8c8;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #263839;
+
+  /* Surface */
+  --bg: #0b0f0c;
+  --surface: #121814;
+  --surface-2: #1a221c;
+  --surface-3: #2b372e;
+  --ink: #c8f7d4;
+  --ink-2: #7fb38c;
+  --ink-3: #6f9479;
+  --line: #1e2a21;
+  --line-strong: #5f7865;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3ddc84;
+  --success-ink: #141210;
+  --success-soft: #174029;
+  --success-on-soft: #3ddc84;
+  --warning: #e6c35c;
+  --warning-ink: #141210;
+  --warning-soft: #403a1f;
+  --warning-on-soft: #e6c35c;
+  --danger: #ff6b5a;
+  --danger-ink: #141210;
+  --danger-soft: #46251f;
+  --danger-on-soft: #ff6b5a;
+  --info: #7ab8c8;
+  --info-ink: #141210;
+  --info-soft: #263839;
+  --info-on-soft: #7ab8c8;
+
+  /* Chrome */
+  --focus: #3ddc84;
+  --link: #3ddc84;
+  --overlay: #070605;
+  --inverse: #c8f7d4;
+  --inverse-ink: #0b0f0c;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "JetBrains Mono", Georgia, serif;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 0px;
+  --shadow: none;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

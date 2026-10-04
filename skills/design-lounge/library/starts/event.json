@@ -1,0 +1,61 @@
+{
+ "id": "event",
+ "surface": "web",
+ "title": "An event",
+ "kicker": "Night",
+ "blurb": "The date, the board, one ask.",
+ "when": "A festival, a launch night, or a programme with hours.",
+ "theme": "festival",
+ "pairing": "poster-condensed",
+ "shelf": "first-impressions",
+ "categories": [
+  "utility",
+  "text-motion",
+  "stats",
+  "cta"
+ ],
+ "pieces": [
+  "week-schedule",
+  "split-flap-board",
+  "kinetic-type-marquee",
+  "stats-ticker-band",
+  "cta-split-dark-band",
+  "card-holo-foil",
+  "mobile-web-bottom-nav",
+  "stats-count-up-band",
+  "faq-category-accordion",
+  "event-ticket-checkout"
+ ],
+ "directions": [
+  {
+   "id": "festival",
+   "name": "Festival",
+   "mood": "Fluoro pink, a drum, a weekend",
+   "theme": "festival",
+   "pairing": "poster-condensed",
+   "family": "sharp",
+   "hero": "hero-bauhaus-composition",
+   "effect": "split-flap-board"
+  },
+  {
+   "id": "night-marquee",
+   "name": "Night marquee",
+   "mood": "Neon, a club night",
+   "theme": "neon-alley",
+   "pairing": "neon-marquee",
+   "family": "glass",
+   "hero": "hero-flashlight-reveal",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "film-week",
+   "name": "Film week",
+   "mood": "Cinema, newsprint red, a programme",
+   "theme": "press-room",
+   "pairing": "cinema",
+   "family": "editorial",
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": "hero-video-loop"
+  }
+ ]
+}

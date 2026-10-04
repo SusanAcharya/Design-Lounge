@@ -1,0 +1,70 @@
+/* HUD Teal · dark · no pair
+   Cockpit glass. Signal teal, scanline black.
+   Best for: Ops, Security, Games */
+/* HUD Teal · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #19e6c1;
+  --primary-ink: #141210;
+  --primary-soft: #0b3e38;
+  --secondary: #e6c419;
+  --secondary-ink: #141210;
+  --secondary-soft: #3d3610;
+  --tertiary: #5aa8e6;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #1b2f41;
+
+  /* Surface */
+  --bg: #07090d;
+  --surface: #0e1218;
+  --surface-2: #161c26;
+  --surface-3: #29303a;
+  --ink: #d6e2f0;
+  --ink-2: #8aa0b8;
+  --ink-3: #6d8198;
+  --line: #1e2834;
+  --line-strong: #646f7b;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #19e6c1;
+  --success-ink: #141210;
+  --success-soft: #0b3e38;
+  --success-on-soft: #19e6c1;
+  --warning: #e6c419;
+  --warning-ink: #141210;
+  --warning-soft: #3d3610;
+  --warning-on-soft: #e6c419;
+  --danger: #ff5a4a;
+  --danger-ink: #141210;
+  --danger-soft: #431c1c;
+  --danger-on-soft: #ff5a4a;
+  --info: #5aa8e6;
+  --info-ink: #141210;
+  --info-soft: #1b2f41;
+  --info-on-soft: #5aa8e6;
+
+  /* Chrome */
+  --focus: #19e6c1;
+  --link: #19e6c1;
+  --overlay: #070605;
+  --inverse: #d6e2f0;
+  --inverse-ink: #07090d;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Chakra Petch", Georgia, serif;
+  --font-text: "Share Tech Mono", system-ui, sans-serif;
+  --radius: 0px;
+  --shadow: 0 0 0 1px #19e6c1;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

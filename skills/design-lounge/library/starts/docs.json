@@ -1,0 +1,55 @@
+{
+ "id": "docs",
+ "surface": "web",
+ "title": "Documentation",
+ "kicker": "Docs",
+ "blurb": "Three columns, a snippet, a way to search the tree.",
+ "when": "A guide, an API, or a changelog people keep open.",
+ "theme": "fog-city",
+ "pairing": "developer-docs",
+ "shelf": "typography-first",
+ "categories": [
+  "reading",
+  "navigation",
+  "utility"
+ ],
+ "pieces": [
+  "docs-three-column",
+  "code-snippet-tabs",
+  "command-palette",
+  "search-results-filters",
+  "tree-nav",
+  "sidebar-docs-toc",
+  "navbar-hide-on-scroll",
+  "faq-category-accordion"
+ ],
+ "directions": [
+  {
+   "id": "cobalt-docs",
+   "name": "Cobalt docs",
+   "mood": "Clear, civic, the default reader",
+   "theme": "fog-city",
+   "pairing": "developer-docs",
+   "family": "quiet",
+   "effect": null
+  },
+  {
+   "id": "phosphor-docs",
+   "name": "Phosphor docs",
+   "mood": "Dark, terminal, a CLI",
+   "theme": "signal-green",
+   "pairing": "terminal-native",
+   "family": "sharp",
+   "effect": null
+  },
+  {
+   "id": "paper-docs",
+   "name": "Paper docs",
+   "mood": "Long reads, a research tool",
+   "theme": "paper-ink",
+   "pairing": "academic",
+   "family": "editorial",
+   "effect": null
+  }
+ ]
+}

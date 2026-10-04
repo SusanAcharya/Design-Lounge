@@ -1,0 +1,73 @@
+{
+ "id": "fintech",
+ "surface": "web",
+ "title": "Fintech",
+ "kicker": "Finance",
+ "blurb": "A card, a price, one number. The page stays light.",
+ "when": "Banking, payments, or a ledger someone is deciding to trust.",
+ "theme": "harbour-ledger",
+ "pairing": "friendly-saas",
+ "shelf": "landing-pages",
+ "categories": [
+  "landing",
+  "pricing",
+  "charts",
+  "auth"
+ ],
+ "pieces": [
+  "landing-fintech-light",
+  "swiss-grid-pricing",
+  "pricing-comparison-sticky",
+  "charts-kpi-spark-row",
+  "kpi-delta",
+  "split-sign-in",
+  "mega-menu-product-grid",
+  "navbar-hide-on-scroll",
+  "stats-count-up-band",
+  "testimonials-metric-tabs",
+  "faq-category-accordion",
+  "crypto-exchange-trade"
+ ],
+ "directions": [
+  {
+   "id": "harbour",
+   "name": "Harbour",
+   "mood": "Trust, cream and navy, a bank you can call",
+   "theme": "harbour-ledger",
+   "pairing": "friendly-saas",
+   "family": "quiet",
+   "hero": "landing-fintech-light",
+   "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "lime-card",
+   "name": "Lime card",
+   "mood": "A card for young people, dark and fast",
+   "theme": "circuit",
+   "pairing": "wide-tech",
+   "family": "sharp",
+   "hero": "hero-product-window-tilt",
+   "effect": "scroll-velocity-type"
+  },
+  {
+   "id": "lokta",
+   "name": "Lokta",
+   "mood": "Nepali money, crimson on lokta paper",
+   "theme": "lokta",
+   "pairing": "devanagari",
+   "family": "quiet",
+   "hero": "landing-fintech-light",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "co-op-ledger",
+   "name": "Co-op ledger",
+   "mood": "Old-fashioned trust, stamped paper",
+   "theme": "archive",
+   "pairing": "slab-ledger",
+   "family": "editorial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "split-flap-board"
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "id": "saas",
+ "surface": "web",
+ "title": "A SaaS site",
+ "kicker": "Product",
+ "blurb": "A tool people subscribe to. One product window, the price, the questions.",
+ "when": "A software product needs a public page. Fog City, because this is SaaS. Atelier Noir is a fashion room, so it loses.",
+ "theme": "fog-city",
+ "pairing": "friendly-saas",
+ "shelf": "website-in-parts",
+ "categories": [
+  "landing",
+  "hero",
+  "features",
+  "pricing",
+  "faq"
+ ],
+ "pieces": [
+  "landing-devtool-dark",
+  "hero-product-window-tilt",
+  "features-tabbed-preview",
+  "pricing-annual-toggle-roll",
+  "faq-two-column-search",
+  "integrations-connect",
+  "mega-menu-product-grid",
+  "navbar-hide-on-scroll",
+  "hamburger-circle-reveal",
+  "hero-split-ui-stack",
+  "testimonials-metric-tabs",
+  "logos-grid-case-hover",
+  "pricing-usage-slider",
+  "faq-category-accordion",
+  "footer-sitemap-columns"
+ ],
+ "directions": [
+  {
+   "id": "calm-cobalt",
+   "name": "Calm cobalt",
+   "mood": "Trustworthy, clear, enterprise-friendly",
+   "theme": "fog-city",
+   "pairing": "friendly-saas",
+   "family": "quiet",
+   "hero": "hero-product-window-tilt",
+   "effect": "features-sticky-scroll-steps"
+  },
+  {
+   "id": "dev-night",
+   "name": "Dev night",
+   "mood": "Technical, dark, for developers",
+   "theme": "night-desk",
+   "pairing": "developer-docs",
+   "family": "sharp",
+   "hero": "landing-devtool-dark",
+   "effect": "webgl-shader-hero"
+  },
+  {
+   "id": "lime-engine",
+   "name": "Lime engine",
+   "mood": "AI, infrastructure, fast and expensive",
+   "theme": "circuit",
+   "pairing": "signal-mono",
+   "family": "sharp",
+   "hero": "hero-ai-prompt-cycle",
+   "effect": "spotlight-hover-grid"
+  },
+  {
+   "id": "butter-tool",
+   "name": "Butter tool",
+   "mood": "Playful, consumer, small teams",
+   "theme": "playroom",
+   "pairing": "indie-maker",
+   "family": "soft",
+   "hero": "hero-product-window-tilt",
+   "effect": "stacking-cards-scroll"
+  },
+  {
+   "id": "printed-saas",
+   "name": "Printed SaaS",
+   "mood": "Editorial, opinionated, founder-led",
+   "theme": "paper-ink",
+   "pairing": "neo-grotesk-mono",
+   "family": "editorial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "text-marker-highlight-draw"
+  }
+ ]
+}

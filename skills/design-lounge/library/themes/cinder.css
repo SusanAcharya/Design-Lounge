@@ -1,0 +1,70 @@
+/* Cinder · light · no pair
+   Yard ops. Safety orange on poured concrete.
+   Best for: Logistics, Manufacturing, Field tools */
+/* Cinder · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff5a1f;
+  --primary-ink: #141210;
+  --primary-soft: #ead2c6;
+  --secondary: #3a4a5a;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #cfd0ce;
+  --tertiary: #e6b020;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #e7dec6;
+
+  /* Surface */
+  --bg: #e7e6e1;
+  --surface: #f4f3ef;
+  --surface-2: #d4d3cd;
+  --surface-3: #c9c8c3;
+  --ink: #1b1c1e;
+  --ink-2: #4e5054;
+  --ink-3: #616366;
+  --line: #c4c3bd;
+  --line-strong: #848481;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2f7a4a;
+  --success-ink: #fffdf8;
+  --success-soft: #cdd7cc;
+  --success-on-soft: #245e39;
+  --warning: #e6b020;
+  --warning-ink: #141210;
+  --warning-soft: #e7dec6;
+  --warning-on-soft: #795d11;
+  --danger: #ff5a1f;
+  --danger-ink: #141210;
+  --danger-soft: #ead2c6;
+  --danger-on-soft: #983712;
+  --info: #3a4a5a;
+  --info-ink: #fffdf8;
+  --info-soft: #cfd0ce;
+  --info-on-soft: #3a4a5a;
+
+  /* Chrome */
+  --focus: #ff5a1f;
+  --link: #a73b15;
+  --overlay: #141210;
+  --inverse: #1b1c1e;
+  --inverse-ink: #e7e6e1;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Big Shoulders Display", Georgia, serif;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 2px;
+  --shadow: none;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

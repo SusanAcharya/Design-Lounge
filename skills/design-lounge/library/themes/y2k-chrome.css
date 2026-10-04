@@ -1,0 +1,70 @@
+/* Y2K Chrome · light · no pair
+   Ice silver, bevels, one electric blue. Millennium optimism.
+   Best for: Music drops, Fashion, Nightlife */
+/* Y2K Chrome · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #2b62eb;
+  --primary-ink: #fffdf8;
+  --primary-soft: #cedaf4;
+  --secondary: #ff4fa3;
+  --secondary-ink: #141210;
+  --secondary-soft: #ebd6e7;
+  --tertiary: #1aa87a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #cbe2e1;
+
+  /* Surface */
+  --bg: #e8ecf2;
+  --surface: #f4f6fa;
+  --surface-2: #d0d6e0;
+  --surface-3: #c4cad4;
+  --ink: #10131a;
+  --ink-2: #4a5260;
+  --ink-3: #5d636f;
+  --line: #c0c6d0;
+  --line-strong: #7d828b;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #1aa87a;
+  --success-ink: #141210;
+  --success-soft: #cbe2e1;
+  --success-on-soft: #106449;
+  --warning: #e6b020;
+  --warning-ink: #141210;
+  --warning-soft: #e8e4d5;
+  --warning-on-soft: #795d11;
+  --danger: #ff4fa3;
+  --danger-ink: #141210;
+  --danger-soft: #ebd6e7;
+  --danger-on-soft: #983062;
+  --info: #2b62eb;
+  --info-ink: #fffdf8;
+  --info-soft: #cedaf4;
+  --info-on-soft: #2656cf;
+
+  /* Chrome */
+  --focus: #2b62eb;
+  --link: #2758d4;
+  --overlay: #141210;
+  --inverse: #10131a;
+  --inverse-ink: #e8ecf2;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Michroma", Georgia, serif;
+  --font-text: "Figtree", system-ui, sans-serif;
+  --radius: 14px;
+  --shadow: inset 0 1px 0 #fff, 0 8px 20px -10px rgba(16,19,26,.3);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

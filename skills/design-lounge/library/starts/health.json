@@ -1,0 +1,60 @@
+{
+ "id": "health",
+ "surface": "app",
+ "title": "A health app",
+ "kicker": "Health",
+ "blurb": "The rings, the week, a quiet settings list.",
+ "when": "Fitness, a clinic, or a body people check daily.",
+ "theme": "alpine-clinic",
+ "pairing": "geometric-modern",
+ "shelf": "native-feel",
+ "categories": [
+  "dashboard",
+  "navigation",
+  "settings",
+  "onboarding"
+ ],
+ "pieces": [
+  "ios-health-activity-rings",
+  "phone-tab-plain",
+  "ios-grouped-settings",
+  "ios-onboarding-carousel",
+  "ios-pull-to-refresh",
+  "phone-paywall-plans",
+  "phone-permission-prompt",
+  "phone-workout-timer",
+  "phone-booking-slots"
+ ],
+ "directions": [
+  {
+   "id": "mint-rings",
+   "name": "Mint rings",
+   "mood": "Clinic calm, rings",
+   "theme": "alpine-clinic",
+   "pairing": "geometric-modern",
+   "family": "soft",
+   "hero": "ios-health-activity-rings",
+   "effect": "ios-large-title-collapse"
+  },
+  {
+   "id": "glacier-run",
+   "name": "Glacier run",
+   "mood": "Quiet, a run log",
+   "theme": "glacier",
+   "pairing": "academic",
+   "family": "quiet",
+   "hero": "mobile-run-detail",
+   "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "greenhouse-habit",
+   "name": "Greenhouse habit",
+   "mood": "Friendly, soft green, habits",
+   "theme": "greenhouse",
+   "pairing": "playground",
+   "family": "soft",
+   "hero": "ios-health-activity-rings",
+   "effect": "shared-element-expand"
+  }
+ ]
+}

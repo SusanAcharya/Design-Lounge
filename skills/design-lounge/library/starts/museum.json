@@ -1,0 +1,55 @@
+{
+ "id": "museum",
+ "surface": "web",
+ "title": "A museum",
+ "kicker": "Rooms",
+ "blurb": "The works, a caption, a long note.",
+ "when": "A gallery, a collection, or a room people walk.",
+ "theme": "marble-hall",
+ "pairing": "the-lounge",
+ "shelf": "portfolio-sites",
+ "categories": [
+  "gallery",
+  "reading",
+  "hero"
+ ],
+ "pieces": [
+  "masonry-gallery-captions",
+  "gallery-contact-sheet",
+  "pan-canvas",
+  "editorial-landing-hero",
+  "paper-article-reader"
+ ],
+ "directions": [
+  {
+   "id": "marble-hall",
+   "name": "Marble hall",
+   "mood": "White stone, a brass plaque",
+   "theme": "marble-hall",
+   "pairing": "the-lounge",
+   "family": "editorial",
+   "hero": "editorial-landing-hero",
+   "effect": "pan-canvas"
+  },
+  {
+   "id": "archive-room",
+   "name": "Archive room",
+   "mood": "Heritage, Cinzel, a collection",
+   "theme": "archive",
+   "pairing": "monumental",
+   "family": "editorial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "night-gallery",
+   "name": "Night gallery",
+   "mood": "Modern art, navy, Bauhaus shapes",
+   "theme": "observatory",
+   "pairing": "bauhaus-school",
+   "family": "sharp",
+   "hero": "hero-bauhaus-composition",
+   "effect": "scroll-zoom-portal"
+  }
+ ]
+}

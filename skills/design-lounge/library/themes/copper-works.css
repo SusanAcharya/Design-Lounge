@@ -1,0 +1,70 @@
+/* Copper Works · dark · pair: kiln
+   Soot walls, a copper pipe, cream labels.
+   Best for: Hardware, Whisky, Workshops */
+/* Copper Works · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #c46a32;
+  --primary-ink: #141210;
+  --primary-soft: #432918;
+  --secondary: #8fbf7a;
+  --secondary-ink: #141210;
+  --secondary-soft: #363d29;
+  --tertiary: #c4a86a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #433826;
+
+  /* Surface */
+  --bg: #1a1410;
+  --surface: #241c16;
+  --surface-2: #30261e;
+  --surface-3: #433930;
+  --ink: #f0e6d6;
+  --ink-2: #b4a08a;
+  --ink-3: #9b8d79;
+  --line: #3a3026;
+  --line-strong: #7f7569;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #8fbf7a;
+  --success-ink: #141210;
+  --success-soft: #363d29;
+  --success-on-soft: #8fbf7a;
+  --warning: #c46a32;
+  --warning-ink: #141210;
+  --warning-soft: #432918;
+  --warning-on-soft: #d18c61;
+  --danger: #e07060;
+  --danger-ink: #141210;
+  --danger-soft: #4a2a23;
+  --danger-on-soft: #e48173;
+  --info: #7a9ab4;
+  --info-ink: #141210;
+  --info-soft: #313437;
+  --info-on-soft: #8aa6bd;
+
+  /* Chrome */
+  --focus: #c46a32;
+  --link: #c46a32;
+  --overlay: #070605;
+  --inverse: #f0e6d6;
+  --inverse-ink: #1a1410;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Zilla Slab", Georgia, serif;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 4px;
+  --shadow: 0 16px 36px -18px rgba(0,0,0,.5);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

@@ -1,0 +1,81 @@
+{
+ "id": "marketing-site",
+ "surface": "web",
+ "title": "A marketing site",
+ "kicker": "Website",
+ "blurb": "Hero, nav, proof, pricing, FAQ, contact, footer. Assemble a public site from pieces that already agree.",
+ "when": "A company, studio or product needs a public website with a point of view — not a template.",
+ "theme": "paper-ink",
+ "pairing": "the-lounge",
+ "shelf": "website-in-parts",
+ "categories": [
+  "hero",
+  "navbar",
+  "features",
+  "pricing",
+  "testimonials",
+  "faq",
+  "contact",
+  "footer"
+ ],
+ "pieces": [
+  "hero-asymmetric-type-lockup",
+  "navbar-island-morph",
+  "features-tabbed-preview",
+  "testimonials-quote-carousel",
+  "pricing-annual-toggle-roll",
+  "faq-two-column-search",
+  "contact-giant-email-copy",
+  "footer-giant-wordmark-reveal",
+  "navbar-hide-on-scroll",
+  "hamburger-circle-reveal",
+  "features-alternating-rows",
+  "testimonials-masonry-wall",
+  "stats-count-up-band",
+  "cta-giant-email-band",
+  "footer-sitemap-columns",
+  "error-404-editorial"
+ ],
+ "directions": [
+  {
+   "id": "paper-press",
+   "name": "Paper press",
+   "mood": "Calm, literate, warm paper",
+   "theme": "paper-ink",
+   "pairing": "the-lounge",
+   "family": "editorial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "swiss-office",
+   "name": "Swiss office",
+   "mood": "Precise, cool, a visible grid",
+   "theme": "ice-station",
+   "pairing": "swiss-precision",
+   "family": "sharp",
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": "scroll-velocity-type"
+  },
+  {
+   "id": "loud-poster",
+   "name": "Loud poster",
+   "mood": "Playful, loud, primary shapes",
+   "theme": "festival",
+   "pairing": "brutal-grotesk",
+   "family": "sharp",
+   "hero": "hero-bauhaus-composition",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "warm-studio",
+   "name": "Warm studio",
+   "mood": "Friendly, crafted, clay and sand",
+   "theme": "kiln",
+   "pairing": "studio-display",
+   "family": "soft",
+   "hero": "editorial-landing-hero",
+   "effect": "scroll-word-highlight"
+  }
+ ]
+}

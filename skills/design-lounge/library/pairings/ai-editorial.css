@@ -1,0 +1,29 @@
+/* AI Editorial · display Instrument Serif · text JetBrains Mono · no mono · numbers mono
+   The 2026 look: a delicate serif with a precise mono. Thoughtful machines. */
+/* AI Editorial · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-text: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+/* No mono in this pairing. Code uses the system mono; amounts stay in the text face with even-width digits. */
+code, kbd, samp, .mono {
+  font-family: var(--font-mono);
+}
+.num {
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+}

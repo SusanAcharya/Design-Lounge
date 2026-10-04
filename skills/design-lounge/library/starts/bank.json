@@ -1,0 +1,61 @@
+{
+ "id": "bank",
+ "surface": "app",
+ "title": "A bank app",
+ "kicker": "Finance",
+ "blurb": "The balance first. Tabs, settings, a passkey.",
+ "when": "A phone someone opens to see their money. Not the staff ledger.",
+ "theme": "harbour-ledger",
+ "pairing": "friendly-saas",
+ "shelf": "native-feel",
+ "categories": [
+  "dashboard",
+  "navigation",
+  "settings",
+  "auth"
+ ],
+ "pieces": [
+  "ios-fintech-home",
+  "phone-tab-plain",
+  "ios-grouped-settings",
+  "auth-passkey-setup",
+  "ios-large-title-collapse",
+  "mobile-list-empty",
+  "phone-sign-in",
+  "phone-notifications-list",
+  "phone-wallet-cards",
+  "phone-qr-scanner"
+ ],
+ "directions": [
+  {
+   "id": "harbour-bank",
+   "name": "Harbour bank",
+   "mood": "Navy and brass, a real bank",
+   "theme": "harbour-ledger",
+   "pairing": "friendly-saas",
+   "family": "quiet",
+   "hero": "ios-fintech-home",
+   "effect": "ios-pull-to-refresh"
+  },
+  {
+   "id": "harbour-night",
+   "name": "Harbour night",
+   "mood": "The same bank after dark, glass bars",
+   "theme": "harbour-night",
+   "pairing": "friendly-saas",
+   "family": "glass",
+   "hero": "ios-fintech-home",
+   "effect": "shared-element-expand"
+  },
+  {
+   "id": "lime-bank",
+   "name": "Lime bank",
+   "mood": "A young card, lime on charcoal",
+   "theme": "circuit",
+   "pairing": "wide-tech",
+   "family": "sharp",
+   "hero": "ios-fintech-home",
+   "effect": "staggered-list-reveal"
+  }
+ ]
+}

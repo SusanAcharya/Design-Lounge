@@ -1,0 +1,70 @@
+/* Archive · light · no pair
+   Manila folders, faded navy, a stamp of red.
+   Best for: Archives, Legal, Libraries */
+/* Archive · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #8b1e1e;
+  --primary-ink: #fffdf8;
+  --primary-soft: #e1c8b0;
+  --secondary: #2a3a5a;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d3ccb9;
+  --tertiary: #c4a86a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #e9dcbb;
+
+  /* Surface */
+  --bg: #efe4c8;
+  --surface: #f7eed6;
+  --surface-2: #e0d2ae;
+  --surface-3: #d5c7a5;
+  --ink: #231c12;
+  --ink-2: #5a4e38;
+  --ink-3: #6e6045;
+  --line: #d4c49a;
+  --line-strong: #918466;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3d5c2a;
+  --success-ink: #fffdf8;
+  --success-soft: #d6d1b2;
+  --success-on-soft: #3d5c2a;
+  --warning: #c4a86a;
+  --warning-ink: #141210;
+  --warning-soft: #e9dcbb;
+  --warning-on-soft: #675837;
+  --danger: #8b1e1e;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e1c8b0;
+  --danger-on-soft: #8b1e1e;
+  --info: #2a3a5a;
+  --info-ink: #fffdf8;
+  --info-soft: #d3ccb9;
+  --info-on-soft: #2a3a5a;
+
+  /* Chrome */
+  --focus: #8b1e1e;
+  --link: #8b1e1e;
+  --overlay: #141210;
+  --inverse: #231c12;
+  --inverse-ink: #efe4c8;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "EB Garamond", Georgia, serif;
+  --font-text: "Hanken Grotesk", system-ui, sans-serif;
+  --radius: 0px;
+  --shadow: none;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

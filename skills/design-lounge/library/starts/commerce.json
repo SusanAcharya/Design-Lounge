@@ -1,0 +1,73 @@
+{
+ "id": "commerce",
+ "surface": "web",
+ "title": "A shop",
+ "kicker": "Commerce",
+ "blurb": "Collection, one product, the bag, then checkout. The name is the largest type. The total is the largest type on the bag.",
+ "when": "A product, a bowl, a kit — something people buy without a carnival.",
+ "theme": "kiln",
+ "pairing": "atelier",
+ "shelf": "first-impressions",
+ "categories": [
+  "ecommerce",
+  "pricing",
+  "cta"
+ ],
+ "pieces": [
+  "shop-collection",
+  "shop-product",
+  "shop-cart",
+  "qty-stepper",
+  "mobile-one-page-checkout",
+  "order-confirmed",
+  "luxe-product-detail",
+  "select-field",
+  "card-product-quick-add",
+  "hamburger-drawer-accordion",
+  "mega-menu-product-grid",
+  "faq-category-accordion",
+  "footer-sitemap-columns"
+ ],
+ "directions": [
+  {
+   "id": "clay-shop",
+   "name": "Clay shop",
+   "mood": "Handmade, warm, a studio shop",
+   "theme": "kiln",
+   "pairing": "atelier",
+   "family": "soft",
+   "hero": "shop-collection",
+   "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "linen-boutique",
+   "name": "Linen boutique",
+   "mood": "Soft luxury, fashion and home",
+   "theme": "linen-shop",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "luxe-product-detail",
+   "effect": "overlap-slider"
+  },
+  {
+   "id": "market-stall",
+   "name": "Market stall",
+   "mood": "Loud, local, groceries and merch",
+   "theme": "market-stall",
+   "pairing": "riso-zine",
+   "family": "sharp",
+   "hero": "shop-collection",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "noir-counter",
+   "name": "Noir counter",
+   "mood": "Watches, fragrance, a dark counter",
+   "theme": "atelier-noir",
+   "pairing": "gallery-wall",
+   "family": "editorial",
+   "hero": "luxe-product-detail",
+   "effect": "object-3d-turntable"
+  }
+ ]
+}

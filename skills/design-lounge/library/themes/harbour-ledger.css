@@ -1,0 +1,70 @@
+/* Harbour Ledger · light · pair: harbour-night
+   Navy wool, cream paper, a brass stamp.
+   Best for: Finance, Insurance, Civic */
+/* Harbour Ledger · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #b08a3e;
+  --primary-ink: #141210;
+  --primary-soft: #eae1cd;
+  --secondary: #1e3a5f;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d6d6d1;
+  --tertiary: #8a3a3a;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #e5d6cc;
+
+  /* Surface */
+  --bg: #f4efe4;
+  --surface: #fffaf0;
+  --surface-2: #e8e0d0;
+  --surface-3: #dbd4c7;
+  --ink: #152033;
+  --ink-2: #4a5568;
+  --ink-3: #5e6879;
+  --line: #d4cbb8;
+  --line-strong: #8b8a85;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2f6b4f;
+  --success-ink: #fffdf8;
+  --success-soft: #d8ddcf;
+  --success-on-soft: #2f6b4f;
+  --warning: #c27a14;
+  --warning-ink: #141210;
+  --warning-soft: #eddfc7;
+  --warning-on-soft: #84530e;
+  --danger: #8a2a2a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e5d3ca;
+  --danger-on-soft: #8a2a2a;
+  --info: #2a4a7a;
+  --info-ink: #fffdf8;
+  --info-soft: #d8d8d5;
+  --info-on-soft: #2a4a7a;
+
+  /* Chrome */
+  --focus: #b08a3e;
+  --link: #80652d;
+  --overlay: #141210;
+  --inverse: #152033;
+  --inverse-ink: #f4efe4;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Libre Caslon Text", Georgia, serif;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 2px;
+  --shadow: 0 1px 0 rgba(21,32,51,.06);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

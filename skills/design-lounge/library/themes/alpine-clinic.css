@@ -1,0 +1,70 @@
+/* Alpine Clinic · light · no pair
+   Cool, washed, trustworthy. Mint air and a precise teal.
+   Best for: Health, Clinics, Wellness apps */
+/* Alpine Clinic · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #22937a;
+  --primary-ink: #141210;
+  --primary-soft: #cfe7e0;
+  --secondary: #2a6f97;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d3e3e6;
+  --tertiary: #6b5a8a;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #dce0e4;
+
+  /* Surface */
+  --bg: #eef6f3;
+  --surface: #ffffff;
+  --surface-2: #dceae4;
+  --surface-3: #d0dfd9;
+  --ink: #11302a;
+  --ink-2: #3d5c55;
+  --ink-3: #53716b;
+  --line: #c5d8d0;
+  --line-strong: #819891;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #22937a;
+  --success-ink: #141210;
+  --success-soft: #cfe7e0;
+  --success-on-soft: #176453;
+  --warning: #c27a1a;
+  --warning-ink: #141210;
+  --warning-soft: #e8e5d5;
+  --warning-on-soft: #845312;
+  --danger: #b53838;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e6dbd9;
+  --danger-on-soft: #9f3131;
+  --info: #2a6f97;
+  --info-ink: #fffdf8;
+  --info-soft: #d3e3e6;
+  --info-on-soft: #256285;
+
+  /* Chrome */
+  --focus: #22937a;
+  --link: #1c7763;
+  --overlay: #141210;
+  --inverse: #11302a;
+  --inverse-ink: #eef6f3;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Sora", Georgia, serif;
+  --font-text: "Sora", system-ui, sans-serif;
+  --radius: 12px;
+  --shadow: 0 10px 28px -14px rgba(17,48,42,.28);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

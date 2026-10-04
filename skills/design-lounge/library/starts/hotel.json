@@ -1,0 +1,58 @@
+{
+ "id": "hotel",
+ "surface": "web",
+ "title": "A hotel",
+ "kicker": "Stay",
+ "blurb": "The room, the hours, a map. Bone type on black.",
+ "when": "A hotel, a house, or a night people reserve.",
+ "theme": "atelier-noir",
+ "pairing": "maison",
+ "shelf": "landing-pages",
+ "categories": [
+  "contact",
+  "gallery",
+  "pickers"
+ ],
+ "pieces": [
+  "contact-booking-hours",
+  "contact-split-map-form",
+  "gallery-contact-sheet",
+  "calendar-month",
+  "masonry-gallery-captions",
+  "navbar-split-centered-logo",
+  "hamburger-drawer-accordion",
+  "hero-search-marketplace"
+ ],
+ "directions": [
+  {
+   "id": "noir-maison",
+   "name": "Noir maison",
+   "mood": "Black, bone, a city hotel",
+   "theme": "atelier-noir",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "landing-fashion-atelier",
+   "effect": "hero-video-loop"
+  },
+  {
+   "id": "velvet-bar",
+   "name": "Velvet bar",
+   "mood": "Burgundy, gold, a house with a bar",
+   "theme": "velvet-club",
+   "pairing": "deco-hotel",
+   "family": "editorial",
+   "hero": "hero-editorial-name-rotator",
+   "effect": "page-transition-curtain"
+  },
+  {
+   "id": "marble-stay",
+   "name": "Marble stay",
+   "mood": "Stone, heritage, a grand hotel",
+   "theme": "marble-hall",
+   "pairing": "monumental",
+   "family": "editorial",
+   "hero": "editorial-landing-hero",
+   "effect": "overlap-slider"
+  }
+ ]
+}

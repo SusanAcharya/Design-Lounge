@@ -1,0 +1,55 @@
+{
+ "id": "jobs",
+ "surface": "web",
+ "title": "A job board",
+ "kicker": "Work",
+ "blurb": "Search, filters, one job beside the list.",
+ "when": "A job board, a careers page with many roles, or a hiring marketplace.",
+ "theme": "fog-city",
+ "pairing": "swiss-precision",
+ "shelf": "website-in-parts",
+ "categories": [
+  "utility",
+  "inputs",
+  "data"
+ ],
+ "pieces": [
+  "job-board-search",
+  "careers-role-list",
+  "search-results-filters",
+  "file-upload-manager",
+  "phone-search-results"
+ ],
+ "directions": [
+  {
+   "id": "swiss-board",
+   "name": "Swiss board",
+   "mood": "White, black, one green, fast to scan",
+   "theme": "fog-city",
+   "pairing": "swiss-precision",
+   "family": "quiet",
+   "hero": "job-board-search",
+   "effect": null
+  },
+  {
+   "id": "night-roles",
+   "name": "Night roles",
+   "mood": "Dark, technical, for engineers",
+   "theme": "night-desk",
+   "pairing": "developer-docs",
+   "family": "sharp",
+   "hero": "job-board-search",
+   "effect": "text-scramble-reveal"
+  },
+  {
+   "id": "press-hiring",
+   "name": "Press hiring",
+   "mood": "Newsprint and one red",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "careers-role-list",
+   "effect": "text-mask-line-reveal"
+  }
+ ]
+}

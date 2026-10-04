@@ -1,0 +1,30 @@
+/* Gallery Wall · display Instrument Serif · text Inter · no mono · numbers mono
+   Quiet confidence. A serif with ink-trap italics over a neutral grotesk. */
+/* Gallery Wall · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-text: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+/* No mono in this pairing. Code uses the system mono; amounts stay in the text face with even-width digits. */
+code, kbd, samp, .mono {
+  font-family: var(--font-mono);
+}
+.num {
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+}

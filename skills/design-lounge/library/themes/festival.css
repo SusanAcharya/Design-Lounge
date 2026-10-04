@@ -1,0 +1,70 @@
+/* Festival · light · no pair
+   Two inks, one drum. Fluoro pink on indigo cream.
+   Best for: Zines, Festivals, Merch */
+/* Festival · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff4f8b;
+  --primary-ink: #141210;
+  --primary-soft: #f7dadd;
+  --secondary: #1f2a6b;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d8d5d8;
+  --tertiary: #f0c84a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #f5ebd4;
+
+  /* Surface */
+  --bg: #f6f1ea;
+  --surface: #fffaf4;
+  --surface-2: #ebe0d2;
+  --surface-3: #dfd5cc;
+  --ink: #1f2a6b;
+  --ink-2: #4a4e8a;
+  --ink-3: #606494;
+  --line: #d4c8ba;
+  --line-strong: #8f8c9c;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #1f2a6b;
+  --success-ink: #fffdf8;
+  --success-soft: #d8d5d8;
+  --success-on-soft: #1f2a6b;
+  --warning: #f0c84a;
+  --warning-ink: #141210;
+  --warning-soft: #f5ebd4;
+  --warning-on-soft: #705d22;
+  --danger: #ff4f8b;
+  --danger-ink: #141210;
+  --danger-soft: #f7dadd;
+  --danger-on-soft: #ad375e;
+  --info: #1f2a6b;
+  --info-ink: #fffdf8;
+  --info-soft: #d8d5d8;
+  --info-on-soft: #1f2a6b;
+
+  /* Chrome */
+  --focus: #ff4f8b;
+  --link: #ba3a66;
+  --overlay: #141210;
+  --inverse: #1f2a6b;
+  --inverse-ink: #f6f1ea;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Rubik Mono One", Georgia, serif;
+  --font-text: "Rubik", system-ui, sans-serif;
+  --radius: 0px;
+  --shadow: 4px 4px 0 #1f2a6b;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

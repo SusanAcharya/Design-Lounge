@@ -1,0 +1,70 @@
+/* Kiln · light · pair: copper-works
+   Fired clay, sand, charcoal. A studio that still has dust on the floor.
+   Best for: Craft, Food, Studios */
+/* Kiln · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #c9693b;
+  --primary-ink: #141210;
+  --primary-soft: #ecd3bc;
+  --secondary: #4f6b3a;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #dcd5be;
+  --tertiary: #3a4558;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #d9cfc3;
+
+  /* Surface */
+  --bg: #f3e6d4;
+  --surface: #faefe0;
+  --surface-2: #e6d2b8;
+  --surface-3: #dbc7ae;
+  --ink: #2a1b14;
+  --ink-2: #6a4e3e;
+  --ink-3: #7b6250;
+  --line: #d8c0a4;
+  --line-strong: #96816d;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3d7a32;
+  --success-ink: #fffdf8;
+  --success-soft: #dad7bd;
+  --success-on-soft: #305e27;
+  --warning: #d4a02a;
+  --warning-ink: #141210;
+  --warning-soft: #efdcbc;
+  --warning-on-soft: #715417;
+  --danger: #9b2c2c;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e7ccbc;
+  --danger-on-soft: #9b2c2c;
+  --info: #3a5a78;
+  --info-ink: #fffdf8;
+  --info-soft: #d9d2c7;
+  --info-on-soft: #3a5a78;
+
+  /* Chrome */
+  --focus: #c9693b;
+  --link: #934d2b;
+  --overlay: #141210;
+  --inverse: #2a1b14;
+  --inverse-ink: #f3e6d4;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Young Serif", Georgia, serif;
+  --font-text: "Hanken Grotesk", system-ui, sans-serif;
+  --radius: 8px;
+  --shadow: 0 14px 30px -16px rgba(42,27,20,.3);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

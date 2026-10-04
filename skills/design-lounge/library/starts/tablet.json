@@ -1,0 +1,57 @@
+{
+ "id": "tablet",
+ "surface": "app",
+ "title": "A tablet",
+ "kicker": "Tablet",
+ "blurb": "Landscape. A split, a sidebar, a reader, a tool palette, an ops grid. Not a phone layout pulled wide.",
+ "when": "Someone holds the product in two hands. The frame is 1180 wide, and a phone list does not belong there.",
+ "theme": "press-room",
+ "pairing": "newsroom",
+ "shelf": "navigation-sorted",
+ "categories": [
+  "reading",
+  "messaging",
+  "navigation",
+  "dashboard"
+ ],
+ "pieces": [
+  "tablet-two-column-reader",
+  "tablet-split-view-mail",
+  "tablet-sidebar-overlay-pin",
+  "tablet-floating-tool-palette",
+  "tablet-dashboard-grid",
+  "tablet-pos-register",
+  "tablet-notes-three-pane",
+  "tablet-cook-mode",
+  "tablet-kiosk-checkin"
+ ],
+ "directions": [
+  {
+   "id": "press-tablet",
+   "name": "Press tablet",
+   "mood": "Reading, newsprint",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "effect": null
+  },
+  {
+   "id": "cobalt-tablet",
+   "name": "Cobalt tablet",
+   "mood": "Neutral, work",
+   "theme": "fog-city",
+   "pairing": "geometric-modern",
+   "family": "quiet",
+   "effect": null
+  },
+  {
+   "id": "night-tablet",
+   "name": "Night tablet",
+   "mood": "Dark, technical",
+   "theme": "night-desk",
+   "pairing": "developer-docs",
+   "family": "sharp",
+   "effect": null
+  }
+ ]
+}

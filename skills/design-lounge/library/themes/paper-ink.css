@@ -1,0 +1,70 @@
+/* Paper & Ink · light · pair: night-desk
+   Warm newsprint. The default of a well-printed book, not a template.
+   Best for: Editorial, Portfolios, Libraries */
+/* Paper & Ink · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #a8661a;
+  --primary-ink: #fffdf8;
+  --primary-soft: #e9dcc9;
+  --secondary: #3f6b4a;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #daddd0;
+  --tertiary: #3d4f6b;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #dad9d5;
+
+  /* Surface */
+  --bg: #f3efe6;
+  --surface: #eae5d9;
+  --surface-2: #e0dacb;
+  --surface-3: #d4cec0;
+  --ink: #171512;
+  --ink-2: #5b564e;
+  --ink-3: #5e5b53;
+  --line: #d6cfc0;
+  --line-strong: #8d887e;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3f6b4a;
+  --success-ink: #fffdf8;
+  --success-soft: #daddd0;
+  --success-on-soft: #375e41;
+  --warning: #b45309;
+  --warning-ink: #fffdf8;
+  --warning-soft: #ead9c7;
+  --warning-on-soft: #8b4007;
+  --danger: #9b2c2c;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e7d4cc;
+  --danger-on-soft: #9b2c2c;
+  --info: #3d4f6b;
+  --info-ink: #fffdf8;
+  --info-soft: #dad9d5;
+  --info-on-soft: #3d4f6b;
+
+  /* Chrome */
+  --focus: #a8661a;
+  --link: #975c17;
+  --overlay: #141210;
+  --inverse: #171512;
+  --inverse-ink: #f3efe6;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-text: "Instrument Sans", system-ui, sans-serif;
+  --radius: 4px;
+  --shadow: 0 12px 32px -12px rgba(23,21,18,.25);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

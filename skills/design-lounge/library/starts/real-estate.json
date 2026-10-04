@@ -1,0 +1,56 @@
+{
+ "id": "real-estate",
+ "surface": "web",
+ "title": "Real estate",
+ "kicker": "Live",
+ "blurb": "One home, its plan, a viewing, the monthly cost.",
+ "when": "A property listing, an agent, or a rental site. Marble Hall for a high price, Fog City for city rentals.",
+ "theme": "marble-hall",
+ "pairing": "gallery-wall",
+ "shelf": "website-in-parts",
+ "categories": [
+  "ecommerce",
+  "contact",
+  "gallery"
+ ],
+ "pieces": [
+  "realestate-listing-detail",
+  "hero-search-marketplace",
+  "phone-map-listings",
+  "contact-split-map-form",
+  "faq-category-accordion",
+  "navbar-split-centered-logo"
+ ],
+ "directions": [
+  {
+   "id": "stone-listing",
+   "name": "Stone listing",
+   "mood": "Quiet, architectural, high price",
+   "theme": "marble-hall",
+   "pairing": "gallery-wall",
+   "family": "editorial",
+   "hero": "realestate-listing-detail",
+   "effect": "parallax-layered-hero"
+  },
+  {
+   "id": "harbour-homes",
+   "name": "Harbour homes",
+   "mood": "Navy, brass, a trusted agent",
+   "theme": "harbour-ledger",
+   "pairing": "magazine-contrast",
+   "family": "quiet",
+   "hero": "realestate-listing-detail",
+   "effect": "scroll-word-highlight"
+  },
+  {
+   "id": "fog-flats",
+   "name": "Fog flats",
+   "mood": "Cool, plain, city rentals",
+   "theme": "fog-city",
+   "pairing": "neo-grotesk-mono",
+   "family": "sharp",
+   "hero": "hero-search-marketplace",
+   "effect": "staggered-list-reveal"
+  }
+ ]
+}

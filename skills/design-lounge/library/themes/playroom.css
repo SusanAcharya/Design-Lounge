@@ -1,0 +1,70 @@
+/* Playroom · light · no pair
+   Butter walls, coral buttons, a navy that keeps it honest.
+   Best for: Kids, Learning, Consumer apps */
+/* Playroom · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff6b4a;
+  --primary-ink: #141210;
+  --primary-soft: #ffe1c2;
+  --secondary: #2c2140;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #e1d6c1;
+  --tertiary: #f0c84a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #fdeec2;
+
+  /* Surface */
+  --bg: #fff4d6;
+  --surface: #fffaf0;
+  --surface-2: #ffe8a8;
+  --surface-3: #f2dca2;
+  --ink: #2c2140;
+  --ink-2: #5a4e78;
+  --ink-3: #706488;
+  --line: #ead8a0;
+  --line-strong: #a2927c;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2f9e5b;
+  --success-ink: #141210;
+  --success-soft: #e2e8c5;
+  --success-on-soft: #206b3e;
+  --warning: #f0c84a;
+  --warning-ink: #141210;
+  --warning-soft: #fdeec2;
+  --warning-on-soft: #7f6a27;
+  --danger: #ff6b4a;
+  --danger-ink: #141210;
+  --danger-soft: #ffe1c2;
+  --danger-on-soft: #98402c;
+  --info: #4a6ab4;
+  --info-ink: #fffdf8;
+  --info-soft: #e6e1d1;
+  --info-on-soft: #415d9e;
+
+  /* Chrome */
+  --focus: #ff6b4a;
+  --link: #ba4d36;
+  --overlay: #141210;
+  --inverse: #2c2140;
+  --inverse-ink: #fff4d6;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Bagel Fat One", Georgia, serif;
+  --font-text: "Fredoka", system-ui, sans-serif;
+  --radius: 20px;
+  --shadow: 0 8px 0 #2c2140;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

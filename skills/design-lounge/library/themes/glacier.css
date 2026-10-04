@@ -1,0 +1,70 @@
+/* Glacier · light · no pair
+   Almost white, a glacial blue, slate type.
+   Best for: Health, Climate, Architecture */
+/* Glacier · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #3a8aa8;
+  --primary-ink: #141210;
+  --primary-soft: #d8e7ed;
+  --secondary: #4a5a68;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #dae0e4;
+  --tertiary: #3b9376;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #d6e7e4;
+
+  /* Surface */
+  --bg: #f2f6f8;
+  --surface: #ffffff;
+  --surface-2: #e0e8ee;
+  --surface-3: #d4dce3;
+  --ink: #1a2430;
+  --ink-2: #4a5a68;
+  --ink-3: #606e7b;
+  --line: #c8d4dc;
+  --line-strong: #86919b;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3b9376;
+  --success-ink: #141210;
+  --success-soft: #d6e7e4;
+  --success-on-soft: #286451;
+  --warning: #c28a20;
+  --warning-ink: #141210;
+  --warning-soft: #ebe7da;
+  --warning-on-soft: #845d16;
+  --danger: #b53838;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e9dbdd;
+  --danger-on-soft: #9f3131;
+  --info: #3a8aa8;
+  --info-ink: #141210;
+  --info-soft: #d8e7ed;
+  --info-on-soft: #2d6a82;
+
+  /* Chrome */
+  --focus: #3a8aa8;
+  --link: #2f7088;
+  --overlay: #141210;
+  --inverse: #1a2430;
+  --inverse-ink: #f2f6f8;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Sora", Georgia, serif;
+  --font-text: "Sora", system-ui, sans-serif;
+  --radius: 14px;
+  --shadow: 0 10px 24px -16px rgba(26,36,48,.16);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

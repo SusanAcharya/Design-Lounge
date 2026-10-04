@@ -1,0 +1,56 @@
+{
+ "id": "weather",
+ "surface": "app",
+ "title": "Weather",
+ "kicker": "Sky",
+ "blurb": "The hour under your thumb. The title gets out of the way.",
+ "when": "A forecast. One place, the next hours, nothing else.",
+ "theme": "ice-station",
+ "pairing": "geometric-modern",
+ "shelf": "native-feel",
+ "categories": [
+  "utility",
+  "scroll",
+  "navigation"
+ ],
+ "pieces": [
+  "ios-weather-hourly-scrub",
+  "ios-large-title-collapse",
+  "phone-tab-plain",
+  "ios-pull-to-refresh",
+  "phone-permission-prompt",
+  "phone-map-listings"
+ ],
+ "directions": [
+  {
+   "id": "ice-glass",
+   "name": "Ice glass",
+   "mood": "Pale, northern, glass",
+   "theme": "ice-station",
+   "pairing": "geometric-modern",
+   "family": "glass",
+   "hero": "ios-weather-hourly-scrub",
+   "effect": "ios-large-title-collapse"
+  },
+  {
+   "id": "night-sky",
+   "name": "Night sky",
+   "mood": "Navy and star gold",
+   "theme": "observatory",
+   "pairing": "wide-tech",
+   "family": "glass",
+   "hero": "ios-weather-hourly-scrub",
+   "effect": "ios-pull-to-refresh"
+  },
+  {
+   "id": "garden-forecast",
+   "name": "Garden forecast",
+   "mood": "Soft, for growers",
+   "theme": "greenhouse",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "ios-weather-hourly-scrub",
+   "effect": "staggered-list-reveal"
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+ "id": "personal",
+ "surface": "app",
+ "title": "A personal app",
+ "kicker": "Personal",
+ "blurb": "One person and their number. Lokta and Devanagari when the product is Nepali. Not a staff dashboard.",
+ "when": "Money, health, or home for the person using it. A Nepali finance app starts here.",
+ "theme": "lokta",
+ "pairing": "devanagari",
+ "shelf": "dashboards-and-data",
+ "categories": [
+  "dashboard",
+  "charts",
+  "feedback",
+  "navigation"
+ ],
+ "pieces": [
+  "spend-list",
+  "chart-rank-spend",
+  "budget-meter",
+  "saved-banner",
+  "phone-tab-plain",
+  "mobile-list-empty",
+  "mobile-load-failed",
+  "phone-wallet-cards",
+  "phone-calendar-agenda"
+ ],
+ "directions": [
+  {
+   "id": "lokta-day",
+   "name": "Lokta day",
+   "mood": "Nepali, crimson on lokta paper",
+   "theme": "lokta",
+   "pairing": "devanagari",
+   "family": "quiet",
+   "hero": "spend-list",
+   "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "lokta-night",
+   "name": "Lokta night",
+   "mood": "Nepali, after dark",
+   "theme": "lokta-night",
+   "pairing": "devanagari",
+   "family": "quiet",
+   "hero": "spend-list",
+   "effect": "ios-pull-to-refresh"
+  },
+  {
+   "id": "garden-ledger",
+   "name": "Garden ledger",
+   "mood": "Soft, olive, a household",
+   "theme": "loam",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "spend-list",
+   "effect": "staggered-list-reveal"
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+ "id": "wellness",
+ "surface": "web",
+ "title": "Wellness",
+ "kicker": "Stay",
+ "blurb": "One retreat, the dates, a way to write.",
+ "when": "A retreat, a studio class, or a clinic people book. Alpine Clinic, because this is a body. Loam is the food shop, so it loses.",
+ "theme": "alpine-clinic",
+ "pairing": "garden-journal",
+ "shelf": "landing-pages",
+ "categories": [
+  "landing",
+  "contact",
+  "newsletter"
+ ],
+ "pieces": [
+  "landing-wellness-retreat",
+  "contact-booking-hours",
+  "calendar-month",
+  "newsletter-fold-inline",
+  "navbar-split-centered-logo",
+  "mobile-web-bottom-nav",
+  "testimonials-masonry-wall",
+  "faq-category-accordion",
+  "tablet-kiosk-checkin",
+  "calendar-week-planner"
+ ],
+ "directions": [
+  {
+   "id": "mint-air",
+   "name": "Mint air",
+   "mood": "Clinical calm, mint and teal",
+   "theme": "alpine-clinic",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "landing-wellness-retreat",
+   "effect": "parallax-layered-hero"
+  },
+  {
+   "id": "glacier",
+   "name": "Glacier",
+   "mood": "Quiet, almost white, a retreat",
+   "theme": "glacier",
+   "pairing": "academic",
+   "family": "quiet",
+   "hero": "editorial-landing-hero",
+   "effect": "parallax-layered-hero"
+  },
+  {
+   "id": "greenhouse",
+   "name": "Greenhouse",
+   "mood": "Growing, soft green, habits and yoga",
+   "theme": "greenhouse",
+   "pairing": "indie-maker",
+   "family": "soft",
+   "hero": "landing-wellness-retreat",
+   "effect": "stacking-cards-scroll"
+  }
+ ]
+}

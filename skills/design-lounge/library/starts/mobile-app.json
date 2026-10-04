@@ -1,0 +1,73 @@
+{
+ "id": "mobile-app",
+ "surface": "app",
+ "title": "A mobile app",
+ "kicker": "App",
+ "blurb": "iOS 26 glass and Material 3 Expressive, plus the PWA moments in between. Native feel, web materials.",
+ "when": "A phone product that should feel shipped, not like a website squeezed into 390px. Motion on a phone is a native piece, not a cursor.",
+ "theme": "alpine-clinic",
+ "pairing": "geometric-modern",
+ "shelf": "native-feel",
+ "categories": [
+  "navigation",
+  "overlays",
+  "media",
+  "onboarding",
+  "settings"
+ ],
+ "pieces": [
+  "ios-weather-hourly-scrub",
+  "ios-glass-tab-bar",
+  "mobile-inbox-list",
+  "mobile-run-detail",
+  "mobile-list-empty",
+  "mobile-load-failed",
+  "m3-expressive-home",
+  "ios-onboarding-carousel",
+  "pwa-install-sheet",
+  "phone-splash-launch",
+  "phone-sign-in",
+  "phone-sign-up-steps",
+  "phone-profile-header",
+  "phone-notifications-list",
+  "phone-permission-prompt",
+  "m3-navigation-bar",
+  "phone-form-fields",
+  "phone-search-results",
+  "phone-feed-posts",
+  "phone-calendar-agenda",
+  "phone-booking-slots"
+ ],
+ "directions": [
+  {
+   "id": "mint-app",
+   "name": "Mint app",
+   "mood": "Calm, clinical, trustworthy",
+   "theme": "alpine-clinic",
+   "pairing": "geometric-modern",
+   "family": "soft",
+   "hero": "m3-expressive-home",
+   "effect": "m3-container-transform"
+  },
+  {
+   "id": "cobalt-glass",
+   "name": "Cobalt glass",
+   "mood": "iOS native, glass bars",
+   "theme": "fog-city",
+   "pairing": "friendly-saas",
+   "family": "glass",
+   "hero": "pwa-app-shell",
+   "effect": "ios-large-title-collapse"
+  },
+  {
+   "id": "toy-app",
+   "name": "Toy app",
+   "mood": "Playful, consumer, butter and coral",
+   "theme": "playroom",
+   "pairing": "candy-clay",
+   "family": "soft",
+   "hero": "m3-expressive-home",
+   "effect": "shared-element-expand"
+  }
+ ]
+}

@@ -1,0 +1,70 @@
+{
+ "id": "portfolio",
+ "surface": "web",
+ "title": "A portfolio",
+ "kicker": "Personal",
+ "blurb": "Index, case study, a horizontal rail, a masthead. Steal a structure, keep your personality.",
+ "when": "A visual designer, photographer, architect, or studio whose work is images. Someone who ships software takes portfolio-builder instead.",
+ "theme": "atelier-noir",
+ "pairing": "gallery-wall",
+ "shelf": "portfolio-sites",
+ "categories": [
+  "portfolio",
+  "profile",
+  "gallery",
+  "hero"
+ ],
+ "pieces": [
+  "portfolio-architect-index",
+  "portfolio-index-hover-preview",
+  "portfolio-photographer-horizontal",
+  "portfolio-case-study-long",
+  "portfolio-motion-showreel",
+  "profile-creator-masthead",
+  "navbar-vertical-rail",
+  "hamburger-circle-reveal",
+  "architecture-studio-index"
+ ],
+ "directions": [
+  {
+   "id": "noir-index",
+   "name": "Noir index",
+   "mood": "Luxury, dark, art direction",
+   "theme": "atelier-noir",
+   "pairing": "gallery-wall",
+   "family": "editorial",
+   "hero": "portfolio-index-hover-preview",
+   "effect": "hover-image-trail"
+  },
+  {
+   "id": "stone-architect",
+   "name": "Stone architect",
+   "mood": "Architecture, white stone, a strict grid",
+   "theme": "marble-hall",
+   "pairing": "swiss-precision",
+   "family": "sharp",
+   "hero": "portfolio-architect-index",
+   "effect": "scroll-split"
+  },
+  {
+   "id": "brutal-studio",
+   "name": "Brutal studio",
+   "mood": "Loud, black on white, a studio with opinions",
+   "theme": "paper-ink",
+   "pairing": "brutal-grotesk",
+   "family": "sharp",
+   "hero": "brutalist-studio-home",
+   "effect": "text-mask-scroll-reveal"
+  },
+  {
+   "id": "linen-series",
+   "name": "Linen series",
+   "mood": "Photography, soft light, a long series",
+   "theme": "linen-shop",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "portfolio-photographer-horizontal",
+   "effect": "text-mask-line-reveal"
+  }
+ ]
+}

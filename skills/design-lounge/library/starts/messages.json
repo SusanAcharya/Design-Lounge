@@ -1,0 +1,58 @@
+{
+ "id": "messages",
+ "surface": "app",
+ "title": "Messages",
+ "kicker": "Mail",
+ "blurb": "The inbox, then one thread. A row can swipe.",
+ "when": "Chat, mail, or a list of conversations.",
+ "theme": "fog-city",
+ "pairing": "geometric-modern",
+ "shelf": "native-feel",
+ "categories": [
+  "messaging",
+  "navigation",
+  "overlays"
+ ],
+ "pieces": [
+  "mobile-inbox-list",
+  "chat-thread",
+  "ios-swipe-row-actions",
+  "phone-tab-plain",
+  "ios-bottom-sheet-detents",
+  "phone-photo-picker",
+  "phone-notifications-list",
+  "phone-search-results"
+ ],
+ "directions": [
+  {
+   "id": "cobalt-inbox",
+   "name": "Cobalt inbox",
+   "mood": "Clear, work mail",
+   "theme": "fog-city",
+   "pairing": "geometric-modern",
+   "family": "quiet",
+   "hero": "mobile-inbox-list",
+   "effect": "ios-swipe-row-actions"
+  },
+  {
+   "id": "night-chat",
+   "name": "Night chat",
+   "mood": "Dark, glass, a private chat",
+   "theme": "night-desk",
+   "pairing": "signal-mono",
+   "family": "glass",
+   "hero": "chat-thread",
+   "effect": "ios-pull-to-refresh"
+  },
+  {
+   "id": "sakura-letters",
+   "name": "Sakura letters",
+   "mood": "Soft, personal, friends",
+   "theme": "sakura-desk",
+   "pairing": "indie-maker",
+   "family": "soft",
+   "hero": "mobile-inbox-list",
+   "effect": "shared-element-expand"
+  }
+ ]
+}

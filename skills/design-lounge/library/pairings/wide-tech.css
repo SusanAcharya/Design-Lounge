@@ -1,0 +1,29 @@
+/* Wide Tech · display Unbounded · text Onest · no mono · numbers mono
+   Extended display, crisp neutral body. Feels engineered and expensive. */
+/* Wide Tech · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Onest:wght@400;600;800&display=swap");
+
+:root {
+  --font-display: "Unbounded", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "Onest", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+/* No mono in this pairing. Code uses the system mono; amounts stay in the text face with even-width digits. */
+code, kbd, samp, .mono {
+  font-family: var(--font-mono);
+}
+.num {
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+}

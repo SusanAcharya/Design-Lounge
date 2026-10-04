@@ -141,6 +141,6 @@ Some lines in those skills fight the library. They are not used here.
 
 - Random picks by prompt length. The name number in practice.md does this and keeps one product consistent.
 - A list of banned fonts. The pairing decides the fonts. Every pairing in the library is chosen already.
-- "Every element animates" and "pin and scrub everything". Register in practice.md decides one lead motion and when to add more.
+- "Every element animates" and "pin and scrub everything". Register in website.md decides one lead motion and when to add more.
 - Tailwind class names as rules. The briefs are stack-agnostic. Translate the idea to the project's stack.
 - "Never the same layout twice in a row". The same product should get the same site each time. Two products should not.

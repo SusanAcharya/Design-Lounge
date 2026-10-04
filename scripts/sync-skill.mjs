@@ -193,6 +193,45 @@ fs.writeFileSync(
 );
 
 fs.writeFileSync(path.join(skillLib, 'index.json'), JSON.stringify(index));
+
+// Small files an agent reads one at a time, so a build never loads the whole catalogue.
+for (const dir of ['starts', 'themes', 'pairings']) {
+  fs.rmSync(path.join(skillLib, dir), { recursive: true, force: true });
+  fs.mkdirSync(path.join(skillLib, dir), { recursive: true });
+}
+for (const s of STARTS) fs.writeFileSync(path.join(skillLib, 'starts', `${s.id}.json`), JSON.stringify(s, null, 1));
+for (const t of index.themes) {
+  const head = `/* ${t.name} · ${t.mode}${t.pair ? ` · pair: ${t.pair}` : ' · no pair'}\n   ${t.mood}\n   Best for: ${(t.bestFor || []).join(', ')} */\n`;
+  fs.writeFileSync(path.join(skillLib, 'themes', `${t.id}.css`), head + t.css + '\n');
+}
+for (const p of index.pairings) {
+  const head = `/* ${p.name} · display ${p.display} · text ${p.text}${p.mono ? ` · mono ${p.mono}` : ' · no mono'} · numbers ${p.numbers}\n   ${p.mood}${p.caution ? `\n   Caution: ${p.caution}` : ''} */\n`;
+  fs.writeFileSync(path.join(skillLib, 'pairings', `${p.id}.css`), head + p.css + '\n');
+}
+const brief = (o, keys) => Object.fromEntries(keys.map((k) => [k, o[k]]));
+fs.writeFileSync(
+  path.join(skillLib, 'map.json'),
+  JSON.stringify({
+    name: index.name,
+    site: index.site,
+    credit,
+    license: index.license,
+    readme: 'Read this first. Then open only what you lock: starts/<id>.json for the recipe, themes/<id>.css, pairings/<id>.css, and briefs/<id>.md for each piece. Search pieces.txt for pieces. Do not read index.json; it is the whole catalogue for tools.',
+    counts: index.counts,
+    kinds: index.kit.kinds,
+    families: index.kit.families,
+    starts: STARTS.map((s) => ({ id: s.id, surface: s.surface, title: s.title, when: s.when, directions: s.directions.map((d) => `${d.id}: ${d.mood}`) })),
+    themes: index.themes.map((t) => brief(t, ['id', 'name', 'mood', 'bestFor', 'mode', 'pair'])),
+    pairings: index.pairings.map((p) => brief(p, ['id', 'name', 'mood', 'bestFor', 'mono', 'numbers', 'caution'])),
+    scales: SCALES,
+    motion: { css: tokensCss(), durations: DURATIONS },
+  }),
+);
+fs.writeFileSync(
+  path.join(skillLib, 'pieces.txt'),
+  `# Design Lounge pieces · id | platform | category | title | tags\n# Spec: briefs/<id>.md · Live demo: ${lounge}/demo/<id>.html\n# Search this file. Do not read it top to bottom.\n` +
+    index.pieces.map((p) => [p.id, p.platform, p.category, p.title, (p.tags || []).join(' ')].join(' | ')).join('\n') + '\n',
+);
 fs.writeFileSync(
   path.join(skillLib, 'icons.json'),
   JSON.stringify({

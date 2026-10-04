@@ -1,0 +1,70 @@
+/* Courtroom · light · no pair
+   Deep green leather, cream paper, a gold rule.
+   Best for: Law, Universities, Foundations */
+/* Courtroom · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #b5381f;
+  --primary-ink: #fffdf8;
+  --primary-soft: #ead5c7;
+  --secondary: #14241c;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d4d2c6;
+  --tertiary: #b08a3e;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #eae0cb;
+
+  /* Surface */
+  --bg: #f3eee2;
+  --surface: #faf6ec;
+  --surface-2: #e4dcc8;
+  --surface-3: #d8d1be;
+  --ink: #14241c;
+  --ink-2: #4a5a4c;
+  --ink-3: #5e6e5e;
+  --line: #d0c6ae;
+  --line-strong: #898877;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2a5c3a;
+  --success-ink: #fffdf8;
+  --success-soft: #d7daca;
+  --success-on-soft: #2a5c3a;
+  --warning: #b08a3e;
+  --warning-ink: #141210;
+  --warning-soft: #eae0cb;
+  --warning-on-soft: #785d2a;
+  --danger: #b5381f;
+  --danger-ink: #fffdf8;
+  --danger-soft: #ead5c7;
+  --danger-on-soft: #9f311b;
+  --info: #3d4f6b;
+  --info-ink: #fffdf8;
+  --info-soft: #dad8d1;
+  --info-on-soft: #3d4f6b;
+
+  /* Chrome */
+  --focus: #b5381f;
+  --link: #b5381f;
+  --overlay: #141210;
+  --inverse: #14241c;
+  --inverse-ink: #f3eee2;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "EB Garamond", Georgia, serif;
+  --font-text: "Public Sans", system-ui, sans-serif;
+  --radius: 2px;
+  --shadow: none;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

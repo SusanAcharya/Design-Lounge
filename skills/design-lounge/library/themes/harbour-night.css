@@ -1,0 +1,70 @@
+/* Harbour Night · dark · pair: harbour-ledger
+   The same ledger after the lamps go down. Cream type, a brighter brass stamp.
+   Best for: Finance, Insurance, Civic */
+/* Harbour Night · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #d4b06a;
+  --primary-ink: #141210;
+  --primary-soft: #413c32;
+  --secondary: #8eb0d4;
+  --secondary-ink: #141210;
+  --secondary-soft: #303c4b;
+  --tertiary: #c47a7a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #3d3036;
+
+  /* Surface */
+  --bg: #121820;
+  --surface: #1a2330;
+  --surface-2: #243044;
+  --surface-3: #394354;
+  --ink: #f4efe4;
+  --ink-2: #c5c0b4;
+  --ink-3: #9a9488;
+  --line: #314056;
+  --line-strong: #7b838c;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #7dba9a;
+  --success-ink: #141210;
+  --success-soft: #2c3f3d;
+  --success-on-soft: #7dba9a;
+  --warning: #e0a34b;
+  --warning-ink: #141210;
+  --warning-soft: #43392a;
+  --warning-on-soft: #e0a34b;
+  --danger: #e07070;
+  --danger-ink: #141210;
+  --danger-soft: #432d33;
+  --danger-on-soft: #e48181;
+  --info: #8eb0d4;
+  --info-ink: #141210;
+  --info-soft: #303c4b;
+  --info-on-soft: #8eb0d4;
+
+  /* Chrome */
+  --focus: #d4b06a;
+  --link: #d4b06a;
+  --overlay: #070605;
+  --inverse: #f4efe4;
+  --inverse-ink: #121820;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Libre Caslon Text", Georgia, serif;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 2px;
+  --shadow: none;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

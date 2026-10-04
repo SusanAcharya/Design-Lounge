@@ -1,0 +1,70 @@
+/* Oxide · light · no pair
+   Rusted metal, olive, bone. A shed that still works.
+   Best for: Outdoor, Tools, Field notes */
+/* Oxide · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #a84828;
+  --primary-ink: #fffdf8;
+  --primary-soft: #ddc7b2;
+  --secondary: #4a6b32;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d0ccb3;
+  --tertiary: #5a6a7a;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #d2ccbd;
+
+  /* Surface */
+  --bg: #e6dcc8;
+  --surface: #f2ead8;
+  --surface-2: #d4c8ae;
+  --surface-3: #cabea5;
+  --ink: #2a2218;
+  --ink-2: #5a5244;
+  --ink-3: #665c4e;
+  --line: #c8bca4;
+  --line-strong: #8c816f;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3d6b2a;
+  --success-ink: #fffdf8;
+  --success-soft: #ceccb2;
+  --success-on-soft: #365e25;
+  --warning: #c49a2a;
+  --warning-ink: #141210;
+  --warning-soft: #e1d3b2;
+  --warning-on-soft: #675217;
+  --danger: #8a2a2a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #d9c3b2;
+  --danger-on-soft: #8a2a2a;
+  --info: #3d4f6b;
+  --info-ink: #fffdf8;
+  --info-soft: #cec8bb;
+  --info-on-soft: #3d4f6b;
+
+  /* Chrome */
+  --focus: #a84828;
+  --link: #974124;
+  --overlay: #141210;
+  --inverse: #2a2218;
+  --inverse-ink: #e6dcc8;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Roboto Slab", Georgia, serif;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 4px;
+  --shadow: 0 12px 26px -16px rgba(42,34,24,.28);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

@@ -1,0 +1,71 @@
+{
+ "id": "agency",
+ "surface": "web",
+ "title": "An agency",
+ "kicker": "Studio",
+ "blurb": "The work on the wall, the people, the open roles.",
+ "when": "A studio selling the work, after dark.",
+ "theme": "night-desk",
+ "pairing": "brutal-grotesk",
+ "shelf": "portfolio-sites",
+ "categories": [
+  "landing",
+  "portfolio",
+  "team"
+ ],
+ "pieces": [
+  "landing-agency-case-wall",
+  "brutalist-studio-home",
+  "team-hover-portrait-grid",
+  "portfolio-case-study-long",
+  "careers-role-list",
+  "navbar-vertical-rail",
+  "hamburger-circle-reveal",
+  "contact-project-brief-steps",
+  "logos-grid-case-hover",
+  "testimonials-masonry-wall",
+  "architecture-studio-index"
+ ],
+ "directions": [
+  {
+   "id": "night-wall",
+   "name": "Night wall",
+   "mood": "Dark, confident, a case wall",
+   "theme": "night-desk",
+   "pairing": "brutal-grotesk",
+   "family": "sharp",
+   "hero": "landing-agency-case-wall",
+   "effect": "smooth-scroll-inertia"
+  },
+  {
+   "id": "paper-brutal",
+   "name": "Paper brutal",
+   "mood": "Black on white, uppercase, opinionated",
+   "theme": "paper-ink",
+   "pairing": "brutal-grotesk",
+   "family": "sharp",
+   "hero": "brutalist-studio-home",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "festival-studio",
+   "name": "Festival studio",
+   "mood": "Colourful, playful, a creative studio",
+   "theme": "festival",
+   "pairing": "studio-display",
+   "family": "soft",
+   "hero": "hero-bauhaus-composition",
+   "effect": "preloader-counter-intro"
+  },
+  {
+   "id": "copper-works",
+   "name": "Copper works",
+   "mood": "Industrial, warm dark, a product studio",
+   "theme": "copper-works",
+   "pairing": "neo-grotesk-mono",
+   "family": "sharp",
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": "page-transition-tile-wipe"
+  }
+ ]
+}

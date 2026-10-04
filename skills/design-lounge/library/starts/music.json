@@ -1,0 +1,56 @@
+{
+ "id": "music",
+ "surface": "web",
+ "title": "A music site",
+ "kicker": "Music",
+ "blurb": "The showreel, a moving line, a player in the corner.",
+ "when": "A label, a release, or a night. Neon, not a paper magazine.",
+ "theme": "neon-alley",
+ "pairing": "y2k-chrome",
+ "shelf": "portfolio-sites",
+ "categories": [
+  "portfolio",
+  "text-motion",
+  "media"
+ ],
+ "pieces": [
+  "portfolio-motion-showreel",
+  "kinetic-type-marquee",
+  "corner-player",
+  "coverflow-strip",
+  "logos-mono-marquee",
+  "event-ticket-checkout"
+ ],
+ "directions": [
+  {
+   "id": "neon-tube",
+   "name": "Neon tube",
+   "mood": "Night, magenta and cyan",
+   "theme": "neon-alley",
+   "pairing": "y2k-chrome",
+   "family": "glass",
+   "hero": "hero-editorial-name-rotator",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "gig-poster",
+   "name": "Gig poster",
+   "mood": "Loud, condensed, a tour",
+   "theme": "festival",
+   "pairing": "poster-condensed",
+   "family": "sharp",
+   "hero": "hero-bauhaus-composition",
+   "effect": "variable-font-proximity"
+  },
+  {
+   "id": "observatory",
+   "name": "Observatory",
+   "mood": "Ambient, navy and gold, a record label",
+   "theme": "observatory",
+   "pairing": "cinema",
+   "family": "editorial",
+   "hero": "portfolio-motion-showreel",
+   "effect": "webgl-shader-hero"
+  }
+ ]
+}

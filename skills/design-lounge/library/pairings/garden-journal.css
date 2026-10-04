@@ -1,0 +1,29 @@
+/* Garden Journal · display Young Serif · text Hanken Grotesk · no mono · numbers mono
+   Chunky friendly serif, generous grotesk. Earthy and kind. */
+/* Garden Journal · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+@import url("https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@400;600;800&display=swap");
+
+:root {
+  --font-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --font-text: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+/* No mono in this pairing. Code uses the system mono; amounts stay in the text face with even-width digits. */
+code, kbd, samp, .mono {
+  font-family: var(--font-mono);
+}
+.num {
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+}

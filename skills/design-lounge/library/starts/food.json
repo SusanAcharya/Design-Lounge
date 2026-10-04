@@ -1,0 +1,61 @@
+{
+ "id": "food",
+ "surface": "web",
+ "title": "A food shop",
+ "kicker": "Food",
+ "blurb": "What is for sale, then the hours. A local shop, not a craft catalogue.",
+ "when": "A kitchen, a stall, or a menu people order from.",
+ "theme": "loam",
+ "pairing": "garden-journal",
+ "shelf": "first-impressions",
+ "categories": [
+  "ecommerce",
+  "contact",
+  "utility"
+ ],
+ "pieces": [
+  "shop-collection",
+  "shop-product",
+  "shop-cart",
+  "week-schedule",
+  "contact-booking-hours",
+  "card-product-quick-add",
+  "mobile-web-bottom-nav",
+  "navbar-split-centered-logo",
+  "testimonials-masonry-wall",
+  "tablet-pos-register",
+  "tablet-cook-mode"
+ ],
+ "directions": [
+  {
+   "id": "garden-table",
+   "name": "Garden table",
+   "mood": "Seasonal, olive and cream, a farm kitchen",
+   "theme": "loam",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "editorial-landing-hero",
+   "effect": "hero-video-loop"
+  },
+  {
+   "id": "market-zine",
+   "name": "Market zine",
+   "mood": "Street food, loud, turmeric and tomato",
+   "theme": "market-stall",
+   "pairing": "riso-zine",
+   "family": "sharp",
+   "hero": "hero-bauhaus-composition",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "clay-menu",
+   "name": "Clay menu",
+   "mood": "A restaurant with a point of view",
+   "theme": "kiln",
+   "pairing": "magazine-contrast",
+   "family": "editorial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "stacking-cards-scroll"
+  }
+ ]
+}

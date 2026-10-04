@@ -1,0 +1,57 @@
+{
+ "id": "restaurant",
+ "surface": "web",
+ "title": "A restaurant",
+ "kicker": "Eat",
+ "blurb": "Hours today, the menu with prices, a table.",
+ "when": "A restaurant, a cafe, or a bar people visit. Not a food shop that ships; that is food.",
+ "theme": "velvet-club",
+ "pairing": "riso-zine",
+ "shelf": "website-in-parts",
+ "categories": [
+  "landing",
+  "contact",
+  "pickers"
+ ],
+ "pieces": [
+  "restaurant-menu-page",
+  "contact-booking-hours",
+  "navbar-split-centered-logo",
+  "mobile-web-bottom-nav",
+  "hero-video-loop",
+  "testimonials-masonry-wall",
+  "tablet-pos-register"
+ ],
+ "directions": [
+  {
+   "id": "bistro-riso",
+   "name": "Bistro riso",
+   "mood": "Printed menu, oxblood, a corner bistro",
+   "theme": "velvet-club",
+   "pairing": "riso-zine",
+   "family": "editorial",
+   "hero": "restaurant-menu-page",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "market-kitchen",
+   "name": "Market kitchen",
+   "mood": "Turmeric, tomato, loud and busy",
+   "theme": "market-stall",
+   "pairing": "poster-condensed",
+   "family": "industrial",
+   "hero": "restaurant-menu-page",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "garden-supper",
+   "name": "Garden supper",
+   "mood": "Olive, cream, slow food",
+   "theme": "loam",
+   "pairing": "garden-journal",
+   "family": "soft",
+   "hero": "restaurant-menu-page",
+   "effect": "hero-video-loop"
+  }
+ ]
+}

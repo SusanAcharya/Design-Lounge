@@ -1,0 +1,70 @@
+/* Lokta Night · dark · pair: lokta
+   The same crimson on navy after dark. The paper colour moves into the type.
+   Best for: Nepal, Personal finance, Civic */
+/* Lokta Night · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #e85a68;
+  --primary-ink: #141210;
+  --primary-soft: #452831;
+  --secondary: #f4ead6;
+  --secondary-ink: #141210;
+  --secondary-soft: #484a4c;
+  --tertiary: #d4b06a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #413c32;
+
+  /* Surface */
+  --bg: #121820;
+  --surface: #1a2230;
+  --surface-2: #243044;
+  --surface-3: #394353;
+  --ink: #f4ead6;
+  --ink-2: #c9bfae;
+  --ink-3: #9a9183;
+  --line: #314056;
+  --line-strong: #7b8187;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #7dba9a;
+  --success-ink: #141210;
+  --success-soft: #2c3f3d;
+  --success-on-soft: #7dba9a;
+  --warning: #e0a34b;
+  --warning-ink: #141210;
+  --warning-soft: #43392a;
+  --warning-on-soft: #e0a34b;
+  --danger: #ff8a96;
+  --danger-ink: #141210;
+  --danger-soft: #4b333c;
+  --danger-on-soft: #ff8a96;
+  --info: #9bb4d4;
+  --info-ink: #141210;
+  --info-soft: #333d4b;
+  --info-on-soft: #9bb4d4;
+
+  /* Chrome */
+  --focus: #e85a68;
+  --link: #e85a68;
+  --overlay: #070605;
+  --inverse: #f4ead6;
+  --inverse-ink: #121820;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Noto Serif Devanagari", Georgia, serif;
+  --font-text: "Mukta", system-ui, sans-serif;
+  --radius: 6px;
+  --shadow: none;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

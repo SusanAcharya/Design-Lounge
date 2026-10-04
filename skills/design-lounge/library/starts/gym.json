@@ -1,0 +1,55 @@
+{
+ "id": "gym",
+ "surface": "web",
+ "title": "A gym",
+ "kicker": "Train",
+ "blurb": "A loud poster, the timetable, the price, a free class.",
+ "when": "A gym, a boxing club, a yoga or spin studio with a timetable.",
+ "theme": "cinder",
+ "pairing": "poster-condensed",
+ "shelf": "website-in-parts",
+ "categories": [
+  "landing",
+  "pricing",
+  "utility"
+ ],
+ "pieces": [
+  "gym-membership-home",
+  "mobile-web-bottom-nav",
+  "phone-workout-timer",
+  "pricing-annual-toggle-roll",
+  "phone-booking-slots"
+ ],
+ "directions": [
+  {
+   "id": "blood-orange",
+   "name": "Blood orange",
+   "mood": "Black, loud, a fight gym",
+   "theme": "cinder",
+   "pairing": "poster-condensed",
+   "family": "industrial",
+   "hero": "gym-membership-home",
+   "effect": "kinetic-type-marquee"
+  },
+  {
+   "id": "volt-studio",
+   "name": "Volt studio",
+   "mood": "Dark, neon, a spin or HIIT studio",
+   "theme": "neon-alley",
+   "pairing": "wide-tech",
+   "family": "sharp",
+   "hero": "gym-membership-home",
+   "effect": "preloader-counter-intro"
+  },
+  {
+   "id": "oxide-yard",
+   "name": "Oxide yard",
+   "mood": "Rust, bone, a strength barn",
+   "theme": "oxide",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "hero": "gym-membership-home",
+   "effect": "scroll-velocity-type"
+  }
+ ]
+}

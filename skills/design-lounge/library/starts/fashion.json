@@ -1,0 +1,68 @@
+{
+ "id": "fashion",
+ "surface": "web",
+ "title": "Fashion",
+ "kicker": "Look",
+ "blurb": "A lookbook and one garment. The name is the largest type.",
+ "when": "Clothes, fragrance, or a luxury good. Linen and a Didone, not a product sans.",
+ "theme": "linen-shop",
+ "pairing": "maison",
+ "shelf": "landing-pages",
+ "categories": [
+  "landing",
+  "ecommerce",
+  "gallery"
+ ],
+ "pieces": [
+  "landing-fashion-atelier",
+  "luxe-product-detail",
+  "shop-product",
+  "gallery-contact-sheet",
+  "masonry-gallery-captions",
+  "navbar-split-centered-logo",
+  "card-product-quick-add",
+  "hamburger-drawer-accordion"
+ ],
+ "directions": [
+  {
+   "id": "washed-linen",
+   "name": "Washed linen",
+   "mood": "Soft, natural, slow fashion",
+   "theme": "linen-shop",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "landing-fashion-atelier",
+   "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "noir-house",
+   "name": "Noir house",
+   "mood": "Luxury, black, a fragrance or a house",
+   "theme": "atelier-noir",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "landing-fashion-atelier",
+   "effect": "page-transition-tile-wipe"
+  },
+  {
+   "id": "chrome-drop",
+   "name": "Chrome drop",
+   "mood": "Streetwear, a drop, Y2K",
+   "theme": "y2k-chrome",
+   "pairing": "y2k-chrome",
+   "family": "glass",
+   "hero": "hero-editorial-name-rotator",
+   "effect": "scroll-scrub-product-sequence"
+  },
+  {
+   "id": "blush-letter",
+   "name": "Blush letter",
+   "mood": "Romantic, bright, bridal or beauty",
+   "theme": "sakura-desk",
+   "pairing": "lettera",
+   "family": "soft",
+   "hero": "editorial-landing-hero",
+   "effect": "overlap-slider"
+  }
+ ]
+}

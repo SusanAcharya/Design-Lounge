@@ -1,0 +1,70 @@
+/* Loam · light · no pair
+   Garden journal. Olive, cream, a rust that looks like soil.
+   Best for: Food, Wellness, Field notes */
+/* Loam · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #c46a3c;
+  --primary-ink: #141210;
+  --primary-soft: #e8ddce;
+  --secondary: #4a6b38;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d7ddce;
+  --tertiary: #6a3a4a;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #dcd7d0;
+
+  /* Surface */
+  --bg: #eef0e6;
+  --surface: #f7f6ee;
+  --surface-2: #dde1d0;
+  --surface-3: #d2d6c5;
+  --ink: #1e2a1e;
+  --ink-2: #4e5c4c;
+  --ink-3: #606d5e;
+  --line: #c9d0bc;
+  --line-strong: #889180;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #4a6b38;
+  --success-ink: #fffdf8;
+  --success-soft: #d7ddce;
+  --success-on-soft: #415e31;
+  --warning: #c46a3c;
+  --warning-ink: #141210;
+  --warning-soft: #e8ddce;
+  --warning-on-soft: #854829;
+  --danger: #9b2c2c;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e2d5cc;
+  --danger-on-soft: #9b2c2c;
+  --info: #3d5a6b;
+  --info-ink: #fffdf8;
+  --info-soft: #d5dbd5;
+  --info-on-soft: #3d5a6b;
+
+  /* Chrome */
+  --focus: #c46a3c;
+  --link: #9e5631;
+  --overlay: #141210;
+  --inverse: #1e2a1e;
+  --inverse-ink: #eef0e6;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Young Serif", Georgia, serif;
+  --font-text: "Hanken Grotesk", system-ui, sans-serif;
+  --radius: 10px;
+  --shadow: 0 12px 28px -16px rgba(30,42,30,.22);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

@@ -1,0 +1,25 @@
+/* Developer Docs · display Geist · text Geist · mono Geist Mono · numbers mono
+   Neutral, technical, legible at 13px. Built for code next to prose. */
+/* Developer Docs · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap");
+
+:root {
+  --font-display: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+code, kbd, samp, .mono, .num {
+  font-family: var(--font-mono);
+  font-weight: 400;
+}

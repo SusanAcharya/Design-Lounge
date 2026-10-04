@@ -1,0 +1,55 @@
+{
+ "id": "clinic",
+ "surface": "web",
+ "title": "A clinic",
+ "kicker": "Care",
+ "blurb": "The next free slot, the doctors, the hours, the map.",
+ "when": "A dental, physio, vet, or doctor clinic people book. A retreat is wellness.",
+ "theme": "alpine-clinic",
+ "pairing": "friendly-saas",
+ "shelf": "website-in-parts",
+ "categories": [
+  "landing",
+  "contact",
+  "pickers"
+ ],
+ "pieces": [
+  "clinic-home-booking",
+  "calendar-week-planner",
+  "phone-booking-slots",
+  "faq-category-accordion",
+  "tablet-kiosk-checkin"
+ ],
+ "directions": [
+  {
+   "id": "aqua-care",
+   "name": "Aqua care",
+   "mood": "Calm, clear, trusted",
+   "theme": "alpine-clinic",
+   "pairing": "friendly-saas",
+   "family": "soft",
+   "hero": "clinic-home-booking",
+   "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "glacier-physio",
+   "name": "Glacier physio",
+   "mood": "Pale, precise, sports care",
+   "theme": "glacier",
+   "pairing": "geometric-modern",
+   "family": "quiet",
+   "hero": "clinic-home-booking",
+   "effect": "features-sticky-scroll-steps"
+  },
+  {
+   "id": "linen-practice",
+   "name": "Linen practice",
+   "mood": "Warm, small, a family doctor",
+   "theme": "linen-shop",
+   "pairing": "bookish",
+   "family": "soft",
+   "hero": "clinic-home-booking",
+   "effect": "scroll-word-highlight"
+  }
+ ]
+}

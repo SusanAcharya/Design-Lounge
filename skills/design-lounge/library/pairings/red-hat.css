@@ -1,0 +1,29 @@
+/* Red Hat Pair · display Red Hat Display · text Red Hat Mono · no mono · numbers mono
+   One superfamily: display and mono designed together. */
+/* Red Hat Pair · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700;900&family=Red+Hat+Mono:wght@400;500&display=swap");
+
+:root {
+  --font-display: "Red Hat Display", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "Red Hat Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+/* No mono in this pairing. Code uses the system mono; amounts stay in the text face with even-width digits. */
+code, kbd, samp, .mono {
+  font-family: var(--font-mono);
+}
+.num {
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+}

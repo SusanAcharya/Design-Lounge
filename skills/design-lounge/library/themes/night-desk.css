@@ -1,0 +1,70 @@
+/* Night Desk · dark · pair: paper-ink
+   A lamp over a dark table. Warm paper type on near-black.
+   Best for: Dev tools, Studios after dark, Writing apps */
+/* Night Desk · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #e0a34b;
+  --primary-ink: #141210;
+  --primary-soft: #45361f;
+  --secondary: #8fbf7a;
+  --secondary-ink: #141210;
+  --secondary-soft: #323c2a;
+  --tertiary: #c48a8a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #3e302e;
+
+  /* Surface */
+  --bg: #141311;
+  --surface: #1b1a17;
+  --surface-2: #242320;
+  --surface-3: #383733;
+  --ink: #ece7dc;
+  --ink-2: #a7a196;
+  --ink-3: #928d83;
+  --line: #2b2925;
+  --line-strong: #74716b;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #8fbf7a;
+  --success-ink: #141210;
+  --success-soft: #323c2a;
+  --success-on-soft: #8fbf7a;
+  --warning: #e08a3a;
+  --warning-ink: #141210;
+  --warning-soft: #45301b;
+  --warning-on-soft: #e08a3a;
+  --danger: #e07060;
+  --danger-ink: #141210;
+  --danger-soft: #452924;
+  --danger-on-soft: #e48173;
+  --info: #8ab4c8;
+  --info-ink: #141210;
+  --info-soft: #303a3d;
+  --info-on-soft: #8ab4c8;
+
+  /* Chrome */
+  --focus: #e0a34b;
+  --link: #e0a34b;
+  --overlay: #070605;
+  --inverse: #ece7dc;
+  --inverse-ink: #141311;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-text: "Instrument Sans", system-ui, sans-serif;
+  --radius: 4px;
+  --shadow: 0 16px 40px -16px rgba(0,0,0,.7);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

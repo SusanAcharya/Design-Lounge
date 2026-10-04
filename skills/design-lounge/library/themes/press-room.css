@@ -1,0 +1,70 @@
+/* Press Room · light · no pair
+   Newsprint and one red. Headlines do the shouting.
+   Best for: News, Magazines, Campaigns */
+/* Press Room · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #c4121a;
+  --primary-ink: #fffdf8;
+  --primary-soft: #edd2cb;
+  --secondary: #1a2744;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d5d5d1;
+  --tertiary: #c49a2a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #ede5cd;
+
+  /* Surface */
+  --bg: #f4f1e8;
+  --surface: #fffdf6;
+  --surface-2: #e6e1d4;
+  --surface-3: #d9d5c8;
+  --ink: #111111;
+  --ink-2: #444444;
+  --ink-3: #686868;
+  --line: #cfc8b8;
+  --line-strong: #878279;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #1f6b3a;
+  --success-ink: #fffdf8;
+  --success-soft: #d6ded0;
+  --success-on-soft: #1f6b3a;
+  --warning: #c49a2a;
+  --warning-ink: #141210;
+  --warning-soft: #ede5cd;
+  --warning-on-soft: #755d1a;
+  --danger: #c4121a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #edd2cb;
+  --danger-on-soft: #ac1017;
+  --info: #1a2744;
+  --info-ink: #fffdf8;
+  --info-soft: #d5d5d1;
+  --info-on-soft: #1a2744;
+
+  /* Chrome */
+  --focus: #c4121a;
+  --link: #c4121a;
+  --overlay: #141210;
+  --inverse: #111111;
+  --inverse-ink: #f4f1e8;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Newsreader", Georgia, serif;
+  --font-text: "Work Sans", system-ui, sans-serif;
+  --radius: 0px;
+  --shadow: none;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

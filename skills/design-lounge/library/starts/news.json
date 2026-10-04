@@ -1,0 +1,60 @@
+{
+ "id": "news",
+ "surface": "app",
+ "title": "A news app",
+ "kicker": "News",
+ "blurb": "The issue, then the piece. A title that collapses as you read.",
+ "when": "News or a magazine someone reads on a phone.",
+ "theme": "press-room",
+ "pairing": "newsroom",
+ "shelf": "typography-first",
+ "categories": [
+  "reading",
+  "scroll",
+  "loaders"
+ ],
+ "pieces": [
+  "pwa-news-reader",
+  "ios-large-title-collapse",
+  "pwa-app-shell",
+  "pwa-update-toast",
+  "phone-tab-plain",
+  "phone-comments-sheet",
+  "phone-paywall-plans",
+  "pwa-offline-library",
+  "phone-video-player",
+  "phone-search-results"
+ ],
+ "directions": [
+  {
+   "id": "press-room",
+   "name": "Press room",
+   "mood": "Newsprint and one red",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "pwa-news-reader",
+   "effect": "ios-large-title-collapse"
+  },
+  {
+   "id": "archive-reader",
+   "name": "Archive reader",
+   "mood": "Literary, long reads",
+   "theme": "archive",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "pwa-news-reader",
+   "effect": "ios-pull-to-refresh"
+  },
+  {
+   "id": "night-edition",
+   "name": "Night edition",
+   "mood": "Dark, a late edition",
+   "theme": "night-desk",
+   "pairing": "magazine-contrast",
+   "family": "editorial",
+   "hero": "pwa-news-reader",
+   "effect": "staggered-list-reveal"
+  }
+ ]
+}

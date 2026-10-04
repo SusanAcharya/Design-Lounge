@@ -1,0 +1,70 @@
+/* Greenhouse · light · no pair
+   Leaf-filtered light. Soft, wet, growing.
+   Best for: Gardens, Kids, Habits */
+/* Greenhouse · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #4f7a32;
+  --primary-ink: #fffdf8;
+  --primary-soft: #d2dfc4;
+  --secondary: #2a4a28;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #cdd9c3;
+  --tertiary: #c46a6a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #e2ddcc;
+
+  /* Surface */
+  --bg: #e7f0dc;
+  --surface: #f4f8ec;
+  --surface-2: #d4e2c4;
+  --surface-3: #c9d7ba;
+  --ink: #1d2e18;
+  --ink-2: #4a5e40;
+  --ink-3: #56684d;
+  --line: #bfd0ae;
+  --line-strong: #819275;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #4f7a32;
+  --success-ink: #fffdf8;
+  --success-soft: #d2dfc4;
+  --success-on-soft: #3e5e27;
+  --warning: #c47a28;
+  --warning-ink: #141210;
+  --warning-soft: #e2dfc3;
+  --warning-on-soft: #85531b;
+  --danger: #b53838;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e0d6c5;
+  --danger-on-soft: #9f3131;
+  --info: #3a6a7a;
+  --info-ink: #fffdf8;
+  --info-soft: #cfddce;
+  --info-on-soft: #335d6b;
+
+  /* Chrome */
+  --focus: #4f7a32;
+  --link: #476e2d;
+  --overlay: #141210;
+  --inverse: #1d2e18;
+  --inverse-ink: #e7f0dc;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Baloo 2", Georgia, serif;
+  --font-text: "Nunito", system-ui, sans-serif;
+  --radius: 16px;
+  --shadow: 0 10px 24px -12px rgba(29,46,24,.2);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

@@ -1,0 +1,56 @@
+{
+ "id": "education",
+ "surface": "web",
+ "title": "A school or course",
+ "kicker": "Learn",
+ "blurb": "What you learn, the lessons, the dates, how to apply.",
+ "when": "An online course, a school, a college, or a bootcamp.",
+ "theme": "paper-ink",
+ "pairing": "academic",
+ "shelf": "website-in-parts",
+ "categories": [
+  "landing",
+  "faq",
+  "inputs"
+ ],
+ "pieces": [
+  "course-landing-curriculum",
+  "school-admissions-home",
+  "faq-category-accordion",
+  "pricing-annual-toggle-roll",
+  "testimonials-metric-tabs",
+  "phone-lesson-quiz"
+ ],
+ "directions": [
+  {
+   "id": "lecture-hall",
+   "name": "Lecture hall",
+   "mood": "Academic, calm, one green",
+   "theme": "paper-ink",
+   "pairing": "academic",
+   "family": "editorial",
+   "hero": "course-landing-curriculum",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "bauhaus-campus",
+   "name": "Bauhaus campus",
+   "mood": "Cream, navy, shapes, a school",
+   "theme": "archive",
+   "pairing": "bauhaus-school",
+   "family": "soft",
+   "hero": "school-admissions-home",
+   "effect": "staggered-list-reveal"
+  },
+  {
+   "id": "play-lesson",
+   "name": "Play lesson",
+   "mood": "Bright, friendly, for learners",
+   "theme": "playroom",
+   "pairing": "playground",
+   "family": "soft",
+   "hero": "course-landing-curriculum",
+   "effect": "spring-deck"
+  }
+ ]
+}

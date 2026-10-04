@@ -191,8 +191,8 @@ Website sections. Each block below has a piece. Use it, restyled onto the theme,
 - Price: a price that grows with use is `pricing-usage-slider`. Fixed plans are `pricing-annual-toggle-roll`.
 - Questions: more than eight questions use `faq-category-accordion`.
 - Close: a signup ask is `cta-giant-email-band`. An agency or freelancer inquiry is `contact-project-brief-steps`.
-- Footer: a product with many pages uses `footer-sitemap-columns`. A portfolio or personal site picks from the footer list in Sections, one by one in [practice.md](practice.md). Do not reach for the same footer every time.
-- Work, about, and contact on a website also pick from the lists in Sections, one by one.
+- Footer: a product with many pages uses `footer-sitemap-columns`. A portfolio or personal site picks from the footer list in Sections, one by one in [website.md](website.md). Do not reach for the same footer every time.
+- Work, about, and contact on a website also pick from the lists in Sections, one by one in [website.md](website.md).
 
 App screens on the web. An AI assistant or chat tool is `ai-chat-workspace`: answers stream, sources are numbered, Stop is visible while it streams. Team and seats are `settings-team-members`. Uploads are `file-upload-manager`: every row shows progress, and a failed row has Retry. A week of bookings or shifts is `calendar-week-planner`. A first run that creates something is `onboarding-workspace-setup`, with a live preview of what they are making. A missing page is `error-404-editorial` or `terminal-404`: it has search and four real links, never only "Go home".
 

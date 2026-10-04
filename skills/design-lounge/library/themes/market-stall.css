@@ -1,0 +1,70 @@
+/* Market Stall · light · no pair
+   Turmeric, tomato, kraft paper. Loud in a friendly way.
+   Best for: Food, Local shops, Festivals */
+/* Market Stall · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #d23a1e;
+  --primary-ink: #fffdf8;
+  --primary-soft: #f1d1b9;
+  --secondary: #d4a020;
+  --secondary-ink: #141210;
+  --secondary-soft: #f1e0b9;
+  --tertiary: #3d6b2a;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #dcd8ba;
+
+  /* Surface */
+  --bg: #f6ead2;
+  --surface: #fff6e4;
+  --surface-2: #ead8b4;
+  --surface-3: #decdaa;
+  --ink: #2a1a10;
+  --ink-2: #6a4a30;
+  --ink-3: #7b5b41;
+  --line: #d8c094;
+  --line-strong: #968162;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3d6b2a;
+  --success-ink: #fffdf8;
+  --success-soft: #dcd8ba;
+  --success-on-soft: #365e25;
+  --warning: #d4a020;
+  --warning-ink: #141210;
+  --warning-soft: #f1e0b9;
+  --warning-on-soft: #715411;
+  --danger: #d23a1e;
+  --danger-ink: #fffdf8;
+  --danger-soft: #f1d1b9;
+  --danger-on-soft: #a32d17;
+  --info: #2a5a7a;
+  --info-ink: #fffdf8;
+  --info-soft: #d9d6c6;
+  --info-on-soft: #2a5a7a;
+
+  /* Chrome */
+  --focus: #d23a1e;
+  --link: #bd341b;
+  --overlay: #141210;
+  --inverse: #2a1a10;
+  --inverse-ink: #f6ead2;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Zilla Slab", Georgia, serif;
+  --font-text: "Karla", system-ui, sans-serif;
+  --radius: 10px;
+  --shadow: 0 12px 26px -14px rgba(42,26,16,.22);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

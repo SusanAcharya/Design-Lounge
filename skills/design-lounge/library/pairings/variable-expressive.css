@@ -1,0 +1,30 @@
+/* Variable Expressive · display Anybody · text Epilogue · no mono · numbers mono
+   A width-and-weight variable display with a crisp body. Begs to animate. */
+/* Variable Expressive · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+@import url("https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=Epilogue:wght@400;600;800&display=swap");
+
+:root {
+  --font-display: "Anybody", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "Epilogue", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+/* No mono in this pairing. Code uses the system mono; amounts stay in the text face with even-width digits. */
+code, kbd, samp, .mono {
+  font-family: var(--font-mono);
+}
+.num {
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+}

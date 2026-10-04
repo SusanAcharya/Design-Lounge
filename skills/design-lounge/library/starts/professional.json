@@ -1,0 +1,55 @@
+{
+ "id": "professional",
+ "surface": "web",
+ "title": "A firm",
+ "kicker": "Advise",
+ "blurb": "One serious sentence, the practice areas, a private form.",
+ "when": "A law firm, an accountant, a consultant, or an advisory practice.",
+ "theme": "courtroom",
+ "pairing": "maison",
+ "shelf": "website-in-parts",
+ "categories": [
+  "landing",
+  "team",
+  "contact"
+ ],
+ "pieces": [
+  "law-firm-home",
+  "people-role-list",
+  "stats-count-up-band",
+  "contact-project-brief-steps",
+  "card-article-mix"
+ ],
+ "directions": [
+  {
+   "id": "courtroom",
+   "name": "Courtroom",
+   "mood": "Green leather, cream, serious",
+   "theme": "courtroom",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "law-firm-home",
+   "effect": "scroll-word-highlight"
+  },
+  {
+   "id": "ivory-counsel",
+   "name": "Ivory counsel",
+   "mood": "Ivory, navy, oxblood, quiet money",
+   "theme": "marble-hall",
+   "pairing": "lettera",
+   "family": "editorial",
+   "hero": "law-firm-home",
+   "effect": "text-mask-line-reveal"
+  },
+  {
+   "id": "harbour-advisors",
+   "name": "Harbour advisors",
+   "mood": "Navy and brass, an accounting or consulting firm",
+   "theme": "harbour-ledger",
+   "pairing": "slab-ledger",
+   "family": "quiet",
+   "hero": "law-firm-home",
+   "effect": "stats-count-up-band"
+  }
+ ]
+}

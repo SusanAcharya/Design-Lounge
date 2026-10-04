@@ -1,0 +1,70 @@
+/* Observatory · dark · no pair
+   Deep navy, star-gold, a little ice on the glass.
+   Best for: Science, Maps, Night products */
+/* Observatory · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #e0b44a;
+  --primary-ink: #141210;
+  --primary-soft: #3e392a;
+  --secondary: #5ec8a0;
+  --secondary-ink: #141210;
+  --secondary-soft: #1f3e3f;
+  --tertiary: #6a5a9a;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #22233d;
+
+  /* Surface */
+  --bg: #0b1220;
+  --surface: #121a2c;
+  --surface-2: #1a2438;
+  --surface-3: #2f384b;
+  --ink: #e8eef8;
+  --ink-2: #9aacc4;
+  --ink-3: #7a8aa3;
+  --line: #243044;
+  --line-strong: #6e7888;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #5ec8a0;
+  --success-ink: #141210;
+  --success-soft: #1f3e3f;
+  --success-on-soft: #5ec8a0;
+  --warning: #e0b44a;
+  --warning-ink: #141210;
+  --warning-soft: #3e392a;
+  --warning-on-soft: #e0b44a;
+  --danger: #e07070;
+  --danger-ink: #141210;
+  --danger-soft: #3e2933;
+  --danger-on-soft: #e48181;
+  --info: #6a8ac8;
+  --info-ink: #141210;
+  --info-soft: #222f48;
+  --info-on-soft: #7c98cf;
+
+  /* Chrome */
+  --focus: #e0b44a;
+  --link: #e0b44a;
+  --overlay: #070605;
+  --inverse: #e8eef8;
+  --inverse-ink: #0b1220;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 6px;
+  --shadow: 0 18px 40px -18px rgba(0,0,0,.55);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

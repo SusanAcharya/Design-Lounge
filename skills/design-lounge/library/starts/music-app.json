@@ -1,0 +1,58 @@
+{
+ "id": "music-app",
+ "surface": "app",
+ "title": "A music app",
+ "kicker": "Music",
+ "blurb": "Now playing, and a player that takes the screen.",
+ "when": "A song, a queue, a night. The player is the product.",
+ "theme": "neon-alley",
+ "pairing": "y2k-chrome",
+ "shelf": "native-feel",
+ "categories": [
+  "media",
+  "navigation",
+  "buttons"
+ ],
+ "pieces": [
+  "ios-now-playing",
+  "m3-music-player-expressive",
+  "ios-glass-tab-bar",
+  "m3-fab-menu",
+  "m3-navigation-bar",
+  "phone-paywall-plans",
+  "phone-video-player",
+  "phone-search-results"
+ ],
+ "directions": [
+  {
+   "id": "neon-player",
+   "name": "Neon player",
+   "mood": "Night, magenta, glass",
+   "theme": "neon-alley",
+   "pairing": "y2k-chrome",
+   "family": "glass",
+   "hero": "ios-now-playing",
+   "effect": "shared-element-expand"
+  },
+  {
+   "id": "festival-player",
+   "name": "Festival player",
+   "mood": "Loud, expressive, Android",
+   "theme": "festival",
+   "pairing": "variable-expressive",
+   "family": "soft",
+   "hero": "m3-music-player-expressive",
+   "effect": "m3-container-transform"
+  },
+  {
+   "id": "observatory-player",
+   "name": "Observatory player",
+   "mood": "Ambient, navy and gold",
+   "theme": "observatory",
+   "pairing": "cinema",
+   "family": "glass",
+   "hero": "ios-now-playing",
+   "effect": "coverflow-strip"
+  }
+ ]
+}

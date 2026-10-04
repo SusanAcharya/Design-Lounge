@@ -1,0 +1,70 @@
+/* Circuit · dark · no pair
+   Engineered and a little expensive. Lime on charcoal.
+   Best for: Hardware, Mobility, Energy */
+/* Circuit · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #c6ff3d;
+  --primary-ink: #141210;
+  --primary-soft: #3a491c;
+  --secondary: #3d8aff;
+  --secondary-ink: #141210;
+  --secondary-soft: #192d4b;
+  --tertiary: #ffb020;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #483615;
+
+  /* Surface */
+  --bg: #0e0f12;
+  --surface: #16181d;
+  --surface-2: #1f2229;
+  --surface-3: #34373d;
+  --ink: #eef0f3;
+  --ink-2: #9aa3b0;
+  --ink-3: #7e8691;
+  --line: #2a2e36;
+  --line-strong: #74787e;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #c6ff3d;
+  --success-ink: #141210;
+  --success-soft: #3a491c;
+  --success-on-soft: #c6ff3d;
+  --warning: #ffb020;
+  --warning-ink: #141210;
+  --warning-soft: #483615;
+  --warning-on-soft: #ffb020;
+  --danger: #ff5a4a;
+  --danger-ink: #141210;
+  --danger-soft: #48211f;
+  --danger-on-soft: #ff5a4a;
+  --info: #3d8aff;
+  --info-ink: #141210;
+  --info-soft: #192d4b;
+  --info-on-soft: #5498ff;
+
+  /* Chrome */
+  --focus: #c6ff3d;
+  --link: #c6ff3d;
+  --overlay: #070605;
+  --inverse: #eef0f3;
+  --inverse-ink: #0e0f12;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Unbounded", Georgia, serif;
+  --font-text: "Onest", system-ui, sans-serif;
+  --radius: 8px;
+  --shadow: 0 16px 36px -18px rgba(0,0,0,.55);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

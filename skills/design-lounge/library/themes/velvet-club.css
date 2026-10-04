@@ -1,0 +1,70 @@
+/* Velvet Club · dark · no pair
+   Burgundy walls, a gold rail, last orders at two.
+   Best for: Nightlife, Wine, Memberships */
+/* Velvet Club · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #d4a24a;
+  --primary-ink: #141210;
+  --primary-soft: #47321f;
+  --secondary: #8a2a44;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #35151e;
+  --tertiary: #6a8a7a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #2d2c2b;
+
+  /* Surface */
+  --bg: #1a0e12;
+  --surface: #26151b;
+  --surface-2: #341e26;
+  --surface-3: #473238;
+  --ink: #f3e6d8;
+  --ink-2: #c4a992;
+  --ink-3: #9a8174;
+  --line: #3d2630;
+  --line-strong: #826f70;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #8fbf7a;
+  --success-ink: #141210;
+  --success-soft: #36382b;
+  --success-on-soft: #8fbf7a;
+  --warning: #d4a24a;
+  --warning-ink: #141210;
+  --warning-soft: #47321f;
+  --warning-on-soft: #d4a24a;
+  --danger: #e07070;
+  --danger-ink: #141210;
+  --danger-soft: #4a2629;
+  --danger-on-soft: #e48181;
+  --info: #8aa0c4;
+  --info-ink: #141210;
+  --info-soft: #35313d;
+  --info-on-soft: #8aa0c4;
+
+  /* Chrome */
+  --focus: #d4a24a;
+  --link: #d4a24a;
+  --overlay: #070605;
+  --inverse: #f3e6d8;
+  --inverse-ink: #1a0e12;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Cinzel", Georgia, serif;
+  --font-text: "Spectral", system-ui, sans-serif;
+  --radius: 2px;
+  --shadow: 0 18px 40px -18px rgba(0,0,0,.6);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

@@ -1,0 +1,31 @@
+/* HUD · display Chakra Petch · text Share Tech Mono · no mono · numbers mono
+   Angular, technical, cockpit-adjacent. Pairs with cut corners and scanlines.
+   Caution: Body text is Share Tech Mono on purpose. Cockpit and status screens only. Do not use it for reports. */
+/* HUD · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;700&family=Share+Tech+Mono&display=swap");
+
+:root {
+  --font-display: "Chakra Petch", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+/* No mono in this pairing. Code uses the system mono; amounts stay in the text face with even-width digits. */
+code, kbd, samp, .mono {
+  font-family: var(--font-mono);
+}
+.num {
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+}

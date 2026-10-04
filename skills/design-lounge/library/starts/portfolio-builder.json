@@ -1,0 +1,72 @@
+{
+ "id": "portfolio-builder",
+ "surface": "web",
+ "title": "A builder’s portfolio",
+ "kicker": "Personal",
+ "blurb": "For people who ship software. The projects are small working screens, not a list of names.",
+ "when": "A developer, product manager, product designer, or founder. Kiln, warm and light, because the work is the colour. Atelier Noir is a fashion room, so it loses.",
+ "theme": "kiln",
+ "pairing": "indie-maker",
+ "shelf": "portfolio-sites",
+ "categories": [
+  "portfolio",
+  "features",
+  "hero",
+  "scroll"
+ ],
+ "pieces": [
+  "hero-product-window-tilt",
+  "bento-feature-grid",
+  "stacking-cards-scroll",
+  "portfolio-case-study-long",
+  "contact-giant-email-copy",
+  "footer-giant-wordmark-reveal",
+  "navbar-vertical-rail",
+  "hamburger-circle-reveal",
+  "card-article-mix",
+  "contact-project-brief-steps",
+  "error-404-editorial"
+ ],
+ "directions": [
+  {
+   "id": "kiln-workbench",
+   "name": "Kiln workbench",
+   "mood": "Warm, human, product screens as the art",
+   "theme": "kiln",
+   "pairing": "indie-maker",
+   "family": "soft",
+   "hero": "hero-product-window-tilt",
+   "effect": "stacking-cards-scroll"
+  },
+  {
+   "id": "cobalt-desk",
+   "name": "Cobalt desk",
+   "mood": "Precise, systems thinker, a visible grid",
+   "theme": "fog-city",
+   "pairing": "neo-grotesk-mono",
+   "family": "sharp",
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": "features-sticky-scroll-steps"
+  },
+  {
+   "id": "night-terminal",
+   "name": "Night terminal",
+   "mood": "Developer, dark, code as craft",
+   "theme": "night-desk",
+   "pairing": "terminal-native",
+   "family": "editorial",
+   "hero": "hero-flashlight-reveal",
+   "effect": "text-scramble-reveal"
+  },
+  {
+   "id": "sakura-notes",
+   "name": "Sakura notes",
+   "mood": "Designer, soft, personal and bright",
+   "theme": "sakura-desk",
+   "pairing": "studio-display",
+   "family": "soft",
+   "hero": "hero-editorial-name-rotator",
+   "effect": "scroll-word-highlight"
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+ "id": "editorial",
+ "surface": "web",
+ "title": "An editorial product",
+ "kicker": "Reading",
+ "blurb": "Type does the work: magazine grids, kinetic headlines, a reader with a proper measure.",
+ "when": "A magazine, a journal, a long-read product where the type is the design.",
+ "theme": "press-room",
+ "pairing": "newsroom",
+ "shelf": "typography-first",
+ "categories": [
+  "blog",
+  "reading",
+  "hero",
+  "text-motion"
+ ],
+ "pieces": [
+  "editorial-landing-hero",
+  "paper-article-reader",
+  "magazine-editorial-grid",
+  "blog-issue-index",
+  "kinetic-type-marquee",
+  "text-scramble-reveal",
+  "hero-editorial-name-rotator",
+  "pwa-offline-library",
+  "error-404-editorial"
+ ],
+ "directions": [
+  {
+   "id": "press-room",
+   "name": "Press room",
+   "mood": "Newsprint and one red",
+   "theme": "press-room",
+   "pairing": "newsroom",
+   "family": "editorial",
+   "hero": "editorial-landing-hero",
+   "effect": "scroll-reading-progress"
+  },
+  {
+   "id": "archive",
+   "name": "Archive",
+   "mood": "Literary, manila and Garamond",
+   "theme": "archive",
+   "pairing": "classic-garamond",
+   "family": "editorial",
+   "hero": "hero-asymmetric-type-lockup",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "riso-zine",
+   "name": "Riso zine",
+   "mood": "Indie, two inks, loud",
+   "theme": "festival",
+   "pairing": "riso-zine",
+   "family": "sharp",
+   "hero": "hero-bauhaus-composition",
+   "effect": "kinetic-type-marquee"
+  }
+ ]
+}

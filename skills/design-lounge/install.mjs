@@ -14,7 +14,7 @@ if (fs.existsSync(path.join(root, 'src/content/pieces')) && fs.existsSync(path.j
   process.exit(1);
 }
 
-if (!fs.existsSync(path.join(skillDir, 'library', 'index.json'))) {
+if (!fs.existsSync(path.join(skillDir, 'library', 'map.json'))) {
   console.error('This skill has no library. From the Design Lounge repo run: node --experimental-strip-types scripts/sync-skill.mjs');
   process.exit(1);
 }

@@ -6,16 +6,21 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 
 | Need | Path, relative to this skill |
 | --- | --- |
-| Catalogue, palettes, type, kit, motion | `library/index.json` |
+| The map: kinds, families, recipes, themes and pairings by mood, motion | `library/map.json` |
+| One recipe | `library/starts/<id>.json` |
+| One theme's CSS | `library/themes/<id>.css` |
+| One pairing's CSS | `library/pairings/<id>.css` |
+| Piece list, to search | `library/pieces.txt` |
 | One piece spec | `library/briefs/<id>.md` |
 | Icons | `library/icons.json` |
-| HTML demo | `demo` field on that piece in the index |
+| HTML demo | `{site}/demo/<id>.html` |
+| Everything in one file, for tools only | `library/index.json` (do not read it in a build) |
 | Theme page | `{site}/themes/<id>` |
 | Type page | `{site}/type/<id>` |
 
-`site` is the field on `library/index.json`. Use these links when you show a pick. Do not paste a brief into the chat.
+`site` is the field on `library/map.json`. Use these links when you show a pick. Do not paste a brief into the chat.
 
-`kind` is `website`, `product`, `platform`, or `personal`. Theme, pairing, and family ids must be in that kind's lists inside `kit.kinds`, unless they come from a recipe direction. A direction was chosen for that recipe and wins.
+`kind` is `website`, `product`, `platform`, or `personal`. Theme, pairing, and family ids must be in that kind's lists inside `kinds` in `library/map.json`, unless they come from a recipe direction. A direction was chosen for that recipe and wins.
 
 ## Kind map
 
@@ -27,7 +32,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Admin, ops, dashboard, internal tool | `platform` | Also recipe `dashboard`. Search dashboard, data, charts, navigation, settings, overlays, feedback, inputs, pickers. |
 | Personal finance, household, one person's money | `personal` | Also recipe `personal`. Lokta and Devanagari when the product is Nepali. Not the staff dashboard, and not `bank`. |
 | Portfolio of a developer, product manager, product designer, or founder | `website` | Also recipe `portfolio-builder`. Projects are drawn as small working screens. Not the dark `portfolio`. |
-| Portfolio of a visual designer, photographer, architect, or studio; a showreel | `website` | Also recipe `portfolio`. Scroll, hover, or a cursor is one piece from Register, not a second theme. |
+| Portfolio of a visual designer, photographer, architect, or studio; a showreel | `website` | Also recipe `portfolio`. Scroll, hover, or a cursor is one piece from Register in [website.md](website.md), not a second theme. |
 | Personal site, a journal, not a showreel | `website` | Also recipe `personal-site` |
 | Fashion, a lookbook, a luxury good | `website` | Also recipe `fashion` |
 | Food, a local shop that sells or ships | `website` | Also recipe `food` |
@@ -64,7 +69,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 
 ## Sources
 
-Public sites the screens study are `sources` in `library/index.json`, and again in `library/sources.json`. They come from `websites.txt` in the Lounge repo. A new line there is a new source the next time the skill is synced.
+Public sites the screens study are in `library/sources.json`. They come from `websites.txt` in the Lounge repo. A new line there is a new source the next time the skill is synced.
 
 Pick one source for a public site. Read its `line` and `take`. The pieces listed on that source are the screens that already study it. Do not blend two sources. Do not copy the site's palette. The locked Lounge theme still wins. A source with `studied: false` is on the list only. No screen claims it yet.
 
@@ -104,7 +109,7 @@ If they won't install it, use the browser your editor gives you. Its screenshots
 
 ## Token roles
 
-Copy the theme `css` block. Do not rename the variables.
+Copy the theme's CSS file. Do not rename the variables.
 
 Brand: `primary`, `secondary`, `tertiary`, each with `Ink` and `Soft`. Surfaces: `bg`, `surface`, `surface2`, `surface3`. Ink: `ink`, `ink2`, `ink3`. Lines: `line`, `lineStrong`. Feedback: `success`, `warning`, `danger`, `info`, each with ink, soft, and on-soft. Text on a wash uses on-soft. Chrome: `focus`, `link`, `overlay`, `inverse`, `inverseInk`.
 

@@ -1,0 +1,30 @@
+/* Y2K Chrome · display Michroma · text Figtree · no mono · numbers mono
+   Wide, sci-fi, millennium. Wants bevels and sparkles. */
+/* Y2K Chrome · type pairing · Designed using Design Lounge (https://designlounge.vercel.app) */
+@import url("https://fonts.googleapis.com/css2?family=Michroma&family=Figtree:wght@400;600;800&display=swap");
+
+:root {
+  --font-display: "Michroma", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "Figtree", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.55;
+}
+/* No mono in this pairing. Code uses the system mono; amounts stay in the text face with even-width digits. */
+code, kbd, samp, .mono {
+  font-family: var(--font-mono);
+}
+.num {
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+}

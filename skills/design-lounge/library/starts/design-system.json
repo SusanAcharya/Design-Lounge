@@ -1,0 +1,52 @@
+{
+ "id": "design-system",
+ "surface": "web",
+ "title": "A design system",
+ "kicker": "System",
+ "blurb": "Start with a language kit, then lock type, colour, icons and motion before drawing a single screen.",
+ "when": "A new product needs a grammar — tokens and taste — before components.",
+ "theme": "paper-ink",
+ "pairing": "the-lounge",
+ "shelf": "design-languages",
+ "categories": [
+  "design-language"
+ ],
+ "pieces": [
+  "paper-ink-style",
+  "luxe-serif-style",
+  "terminal-ui-style",
+  "clay-soft-style",
+  "y2k-chrome-style",
+  "bauhaus-style",
+  "sidebar-docs-toc"
+ ],
+ "directions": [
+  {
+   "id": "paper-system",
+   "name": "Paper system",
+   "mood": "Editorial, warm",
+   "theme": "paper-ink",
+   "pairing": "the-lounge",
+   "family": "editorial",
+   "effect": null
+  },
+  {
+   "id": "cobalt-system",
+   "name": "Cobalt system",
+   "mood": "Neutral, product",
+   "theme": "fog-city",
+   "pairing": "geometric-modern",
+   "family": "quiet",
+   "effect": null
+  },
+  {
+   "id": "night-system",
+   "name": "Night system",
+   "mood": "Dark, technical",
+   "theme": "night-desk",
+   "pairing": "signal-mono",
+   "family": "sharp",
+   "effect": null
+  }
+ ]
+}

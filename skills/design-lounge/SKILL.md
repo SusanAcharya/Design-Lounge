@@ -25,14 +25,16 @@ This skill is a set of defaults. When the person asks for something a default fo
 
 Everything you need is next to this file. Read only what the job needs.
 
-1. `library/index.json` — kinds, recipes (`starts`), palettes (full CSS), pairings (full CSS), families, motion, and the piece index.
-2. `library/briefs/<id>.md` — the spec for one piece. Open only the pieces you will build.
-3. `library/icons.json` — Lounge Icons, only when the screen needs icons.
-4. [components.md](components.md) — the controls, icons (including what to do when one is missing), the logo and favicon, and which piece to use for which job.
-5. [practice.md](practice.md) — the method. Its first lines say which sections each job needs. Do not read all of it for one component.
-6. [taste.md](taste.md) — the taste-skill pack folded in: named looks (minimal, brutalist, high-end), page shape, craft details, image-first mockups, and brand boards. You do not need those skills installed separately.
+1. `library/map.json` — read this first. Kinds, families, the recipe list with each direction's mood, every theme and pairing by mood, and the motion tokens. About 35 KB.
+2. Then open only what you lock: `library/starts/<id>.json` for the recipe, `library/themes/<id>.css`, `library/pairings/<id>.css`.
+3. `library/pieces.txt` — one line per piece. Search it (grep for a category, platform, or tag). Do not read it top to bottom.
+4. `library/briefs/<id>.md` — the spec for one piece. Open only the pieces you will build.
+5. `library/icons.json` — Lounge Icons, only when the screen needs icons.
+6. [components.md](components.md) — the controls, icons (including what to do when one is missing), the logo and favicon, and which piece to use for which job.
+7. [practice.md](practice.md) — the method every build shares. Its first lines say which other file your job adds: [website.md](website.md), [app.md](app.md), or [locale.md](locale.md). Read only those.
+8. [taste.md](taste.md) — the taste-skill pack folded in: named looks (minimal, brutalist, high-end), page shape, craft details, image-first mockups, and brand boards. You do not need those skills installed separately.
 
-Do not run scripts from this skill. If `library/index.json` is missing, the install is broken. Say so. Do not design from memory.
+Do not run scripts from this skill. If `library/map.json` is missing, the install is broken. Say so. Do not design from memory.
 
 If the open project is the Design Lounge repo itself (`src/demos` and `src/content/pieces` exist) and the user is editing the library, stop using this skill for that edit. Follow `docs/PIECE-SPEC.md` instead.
 
@@ -55,7 +57,7 @@ If they have not named a stack, use what the project already uses. In an empty f
 
 ## Say the pick, then build
 
-Choose, say it, and build in the same turn. Put this at the top of the reply, using `site` from `library/index.json`:
+Choose, say it, and build in the same turn. Put this at the top of the reply, using `site` from `library/map.json`:
 
 - Theme: name, one-line mood, `{site}/themes/<id>`
 - Pairing: name, `{site}/type/<id>`
@@ -77,8 +79,8 @@ The full method is long. For a website, these are the steps that matter, in orde
 
 1. Read the person: their words, bio, projects, own site. Write three words for them (Pick a direction, rule 3, in [practice.md](practice.md)).
 2. Lock the recipe and the direction whose mood matches those words. The name number only breaks a tie.
-3. Write the Idea and the Signature (Write the idea). Name the default look you are avoiding, including the studio template.
-4. Pick work, about, contact, and footer by what content they have (Sections, one by one).
+3. Write the Idea and the Signature (Write the idea in [website.md](website.md)). Name the default look you are avoiding, including the studio template.
+4. Pick work, about, contact, and footer by what content they have (Sections, one by one in [website.md](website.md)).
 5. Open the brief of every piece you build, including the menu and any copy button.
 6. Build with real content only. Links go where they say. Drawn data says "Example".
 7. Screenshot web and phone, then scroll through each effect (Opening the page in [reference.md](reference.md)). Fix what you see. Make one correction.
@@ -88,13 +90,13 @@ The rules are the floor, not the design. Passing all of them makes a page correc
 
 ## Kit flow
 
-1. Pick a kind (`website`, `product`, `platform`, `personal`) with the kind map in [reference.md](reference.md). Then take the matching recipe from `starts` and one of its `directions` (Pick a direction in [practice.md](practice.md)). The same sentence from two people must not give the same site. Do not lock the first palette, pairing, or family because it is first.
-2. For a website, read Stand out in [practice.md](practice.md) first: name the default look you are avoiding, write the Idea in one picture sentence, show the work as pictures, never invent clients.
+1. Pick a kind (`website`, `product`, `platform`, `personal`) with the kind map in [reference.md](reference.md). Then take the matching recipe from `starts` in `library/map.json`, open `library/starts/<id>.json`, and lock one of its `directions` (Pick a direction in [practice.md](practice.md)). The same sentence from two people must not give the same site. Do not lock the first palette, pairing, or family because it is first.
+2. For a website, read Stand out in [website.md](website.md) first: name the default look you are avoiding, write the Idea in one picture sentence, show the work as pictures, never invent clients.
 3. Write the four lines from Decide the screen: who it is for, the one decision, the first thing they see, and the next action.
-4. The locked system is the theme's `css`, the pairing's `css`, and the family's `rules`, `radius`, `button`, and `density`. Match those numbers.
+4. The locked system is `library/themes/<id>.css`, `library/pairings/<id>.css`, and the family's `rules`, `radius`, `button`, and `density`. Match those numbers.
 5. If the pairing has a `caution`, say it before you write. Body text uses `--font-text`. Amounts use `.num`. If the pairing has a mono, `.num` and code use it. If `numbers` is `display`, `.num` uses the display face. If the pairing has no mono, `.num` is the text face with even-width digits, code uses the system mono, and you do not add a Google mono font.
 6. A theme is one mode. If the product needs both and `pair` is set, use that theme as the second mode. If `pair` is null, stay in one mode and say so, unless they asked for both. Then build the second mode from the same theme's tokens and say so. The theme CSS includes a sample radius and shadow. Ignore them. The family sets radius and shadow.
-7. Build the shell first, then the primary screen, then the rest of Minimum screens in [practice.md](practice.md). Open each brief before you invent a hero, nav, table, or footer.
+7. Build the shell first, then the primary screen, then the rest of Minimum screens in [app.md](app.md). Open each brief before you invent a hero, nav, table, or footer.
 8. Open the screens and run Look and One correction in [practice.md](practice.md). Fix every fail.
 
 An internal tool, admin, ops screen, or dashboard is kind `platform`, then the `dashboard` recipe. A chart, a metric, an empty list, and a failed load come from pieces, not a chart library's defaults.
@@ -105,7 +107,7 @@ Use this when a design system is already in the project.
 
 1. Keep their colours, type, radius, and shadow. Do not lock a second Lounge palette on top.
 2. Take structure, states, motion, and hit targets from the piece briefs. Name the demos you take structure from.
-3. Restyle onto a Lounge kit only when they asked for a new look. A refine that asks for scroll, hover, or a cursor keeps their colours and adds effect pieces from Register in [practice.md](practice.md).
+3. Restyle onto a Lounge kit only when they asked for a new look. A refine that asks for scroll, hover, or a cursor keeps their colours and adds effect pieces from Register in [website.md](website.md).
 
 For a redesign, first decide which kind it is: keep the brand, or start the look again. If you can't tell, ask once. Then follow Redesign in [practice.md](practice.md). Look at the site before you change it. Never change the URLs, the nav labels, the form field names, the logo, or the legal text unless they asked.
 
@@ -122,17 +124,17 @@ If the brand isn't in the list, say so. Then pick the closest Lounge theme and p
 
 ## Piece flow
 
-1. Search `pieces` in the index by `category`, `platform`, `tags`, and `summary`, or use the routes in [components.md](components.md). Platforms: `web`, `mobile-web`, `mobile-app`, `pwa`, `tablet`.
+1. Search `library/pieces.txt` by category, platform, title, and tags, or use the routes in [components.md](components.md). Platforms: `web`, `mobile-web`, `mobile-app`, `pwa`, `tablet`.
 2. Read `library/briefs/<id>.md`. The brief is the spec for structure, counts, sizes, motion timing, states, and hit targets. `demo` is the HTML acceptance file, if you need to see the motion.
 3. The brief's colours, fonts, and light or dark mode belong to its demo. Translate them by role onto the locked theme and pairing. Follow Adapting a brief in [practice.md](practice.md). A dusk-blue parallax on a light theme becomes a daylight parallax with the same layers and speeds.
 4. Hold the result to the brief's acceptance checklist, skipping lines that only hold for the demo's copy. Fix what fails.
 
-If the index has no piece for that job, say so. Do not invent a slug.
+If `pieces.txt` has no piece for that job, say so. Do not invent a slug.
 
 ## Library flow
 
-- Theme: `themes[]`. `tokens` includes primary, secondary, tertiary, success, warning, danger, info, surfaces, `link`. Copy `css`.
-- Pairing: `pairings[]`. Copy `css`.
+- Theme: pick by mood in `library/map.json`, then copy `library/themes/<id>.css`. It holds primary, secondary, tertiary, success, warning, danger, info, surfaces, and `link`.
+- Pairing: pick in `library/map.json`, then copy `library/pairings/<id>.css`.
 - Icons: `library/icons.json`. 24px stroke, 1.75. When one is missing, follow Icon and nav in [components.md](components.md).
 - Logo, favicon, share image: Logo and favicon in [components.md](components.md).
 - Motion: `motion`. Default easing `cubic-bezier(0.2, 0.7, 0.2, 1)`. UI 200ms, layout 320ms, sheets 400ms. Honour `prefers-reduced-motion`.

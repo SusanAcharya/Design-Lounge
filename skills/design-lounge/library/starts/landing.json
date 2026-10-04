@@ -1,0 +1,69 @@
+{
+ "id": "landing",
+ "surface": "web",
+ "title": "A landing page",
+ "kicker": "Launch",
+ "blurb": "One argument, one sitting. Fashion, wellness, fintech, a tool, an agency — each a complete first page.",
+ "when": "A launch, a waitlist, or one product page, including a tilt, a sticky scroll, or a hover on the product.",
+ "theme": "atelier-noir",
+ "pairing": "maison",
+ "shelf": "landing-pages",
+ "categories": [
+  "landing",
+  "hero",
+  "cta"
+ ],
+ "pieces": [
+  "landing-fashion-atelier",
+  "landing-wellness-retreat",
+  "landing-fintech-light",
+  "landing-devtool-dark",
+  "landing-agency-case-wall",
+  "editorial-landing-hero",
+  "hero-split-ui-stack",
+  "cta-giant-email-band",
+  "stats-count-up-band"
+ ],
+ "directions": [
+  {
+   "id": "noir-launch",
+   "name": "Noir launch",
+   "mood": "Luxury, dark, one product",
+   "theme": "atelier-noir",
+   "pairing": "maison",
+   "family": "editorial",
+   "hero": "landing-fashion-atelier",
+   "effect": "scroll-scrub-product-sequence"
+  },
+  {
+   "id": "clay-launch",
+   "name": "Clay launch",
+   "mood": "Warm, crafted, a maker",
+   "theme": "kiln",
+   "pairing": "studio-display",
+   "family": "soft",
+   "hero": "editorial-landing-hero",
+   "effect": "stacking-cards-scroll"
+  },
+  {
+   "id": "grid-launch",
+   "name": "Grid launch",
+   "mood": "Precise, cool, a hardware launch",
+   "theme": "ice-station",
+   "pairing": "swiss-precision",
+   "family": "sharp",
+   "hero": "hero-swiss-grid-wordmark",
+   "effect": "scroll-velocity-type"
+  },
+  {
+   "id": "toy-launch",
+   "name": "Toy launch",
+   "mood": "Playful, butter and coral",
+   "theme": "playroom",
+   "pairing": "candy-clay",
+   "family": "soft",
+   "hero": "hero-bauhaus-composition",
+   "effect": "scroll-zoom-portal"
+  }
+ ]
+}

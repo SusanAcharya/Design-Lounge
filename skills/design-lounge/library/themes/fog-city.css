@@ -1,0 +1,70 @@
+/* Fog City · light · no pair
+   Cool gray, white, one cobalt. Civic and calm.
+   Best for: SaaS, Gov, Docs */
+/* Fog City · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #0e66eb;
+  --primary-ink: #fffdf8;
+  --primary-soft: #cfdff5;
+  --secondary: #3d4a5c;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d5dade;
+  --tertiary: #22937a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #cfe3e0;
+
+  /* Surface */
+  --bg: #eef1f3;
+  --surface: #ffffff;
+  --surface-2: #dfe4e8;
+  --surface-3: #d3d8dc;
+  --ink: #0f1418;
+  --ink-2: #4a5560;
+  --ink-3: #5c666f;
+  --line: #cdd3d8;
+  --line-strong: #858a8f;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #319367;
+  --success-ink: #141210;
+  --success-soft: #d1e3de;
+  --success-on-soft: #216446;
+  --warning: #c27a14;
+  --warning-ink: #141210;
+  --warning-soft: #e8e0d4;
+  --warning-on-soft: #84530e;
+  --danger: #c4121a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e8d2d5;
+  --danger-on-soft: #ac1017;
+  --info: #0e66eb;
+  --info-ink: #fffdf8;
+  --info-soft: #cfdff5;
+  --info-on-soft: #0c5acf;
+
+  /* Chrome */
+  --focus: #0e66eb;
+  --link: #0d5cd4;
+  --overlay: #141210;
+  --inverse: #0f1418;
+  --inverse-ink: #eef1f3;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Familjen Grotesk", Georgia, serif;
+  --font-text: "Chivo Mono", system-ui, sans-serif;
+  --radius: 8px;
+  --shadow: 0 10px 24px -14px rgba(15,20,24,.16);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

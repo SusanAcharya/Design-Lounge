@@ -1,0 +1,82 @@
+{
+ "id": "dashboard",
+ "surface": "web",
+ "title": "A dashboard",
+ "kicker": "Product",
+ "blurb": "Dense tables, one metric, a collapsing rail, a board. A finance palette with a dashboard face, not a docs face.",
+ "when": "An internal tool, analytics home, or ops screen people will live in all day.",
+ "theme": "harbour-ledger",
+ "pairing": "swiss-precision",
+ "shelf": "dashboards-and-data",
+ "categories": [
+  "dashboard",
+  "data",
+  "charts",
+  "navigation"
+ ],
+ "pieces": [
+  "analytics-dashboard-overview",
+  "dense-data-table",
+  "charts-kpi-spark-row",
+  "chart-bar-week",
+  "chart-line-range",
+  "chart-rank-spend",
+  "kpi-delta",
+  "collapsing-sidebar-rail",
+  "audit-activity-log",
+  "upload-file-queue",
+  "account-menu-panel",
+  "record-detail-header",
+  "people-role-list",
+  "billing-plan-summary",
+  "list-empty-plain",
+  "load-failed-retry",
+  "saved-banner",
+  "kanban-board",
+  "sidebar-workspace-switcher",
+  "ai-chat-workspace",
+  "settings-team-members",
+  "file-upload-manager",
+  "calendar-week-planner",
+  "onboarding-workspace-setup",
+  "crypto-exchange-trade"
+ ],
+ "directions": [
+  {
+   "id": "harbour-desk",
+   "name": "Harbour desk",
+   "mood": "Finance ops, navy and brass",
+   "theme": "harbour-ledger",
+   "pairing": "swiss-precision",
+   "family": "sharp",
+   "effect": null
+  },
+  {
+   "id": "night-ops",
+   "name": "Night ops",
+   "mood": "Dark, engineers, long shifts",
+   "theme": "night-desk",
+   "pairing": "developer-docs",
+   "family": "sharp",
+   "effect": null
+  },
+  {
+   "id": "yard",
+   "name": "Yard",
+   "mood": "Logistics, safety orange, concrete",
+   "theme": "cinder",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "effect": null
+  },
+  {
+   "id": "civic",
+   "name": "Civic",
+   "mood": "Calm cobalt, an admin that lasts",
+   "theme": "fog-city",
+   "pairing": "red-hat",
+   "family": "quiet",
+   "effect": null
+  }
+ ]
+}

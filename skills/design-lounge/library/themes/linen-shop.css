@@ -1,0 +1,70 @@
+/* Linen Shop · light · pair: atelier-noir
+   Flax, clay, sage. Washed twice so it arrives soft.
+   Best for: Fashion, Home, Lifestyle */
+/* Linen Shop · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #9d4b2c;
+  --primary-ink: #fffdf8;
+  --primary-soft: #e4d1c3;
+  --secondary: #6a7a5a;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #dcd8ca;
+  --tertiary: #b08a4a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #e6dac8;
+
+  /* Surface */
+  --bg: #efe7dc;
+  --surface: #f8f2e8;
+  --surface-2: #e2d6c6;
+  --surface-3: #d7cbbc;
+  --ink: #2a211b;
+  --ink-2: #6a5a4c;
+  --ink-3: #6f6154;
+  --line: #d4c6b4;
+  --line-strong: #93877a;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #4a6b3a;
+  --success-ink: #fffdf8;
+  --success-soft: #d8d6c5;
+  --success-on-soft: #415e33;
+  --warning: #b08a4a;
+  --warning-ink: #141210;
+  --warning-soft: #e6dac8;
+  --warning-on-soft: #6a522c;
+  --danger: #9d4b2c;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e4d1c3;
+  --danger-on-soft: #8a4227;
+  --info: #4a5a6b;
+  --info-ink: #fffdf8;
+  --info-soft: #d8d3cc;
+  --info-on-soft: #4a5a6b;
+
+  /* Chrome */
+  --focus: #9d4b2c;
+  --link: #9d4b2c;
+  --overlay: #141210;
+  --inverse: #2a211b;
+  --inverse-ink: #efe7dc;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Gloock", Georgia, serif;
+  --font-text: "Figtree", system-ui, sans-serif;
+  --radius: 8px;
+  --shadow: 0 12px 28px -16px rgba(42,33,27,.2);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

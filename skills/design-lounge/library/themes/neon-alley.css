@@ -1,0 +1,70 @@
+/* Neon Alley · dark · no pair
+   Black wet street, magenta and cyan tubes.
+   Best for: Music, Nightlife, Games */
+/* Neon Alley · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff4fa3;
+  --primary-ink: #141210;
+  --primary-soft: #451835;
+  --secondary: #19e6c1;
+  --secondary-ink: #141210;
+  --secondary-soft: #0e3c3c;
+  --tertiary: #7f49eb;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #29184b;
+
+  /* Surface */
+  --bg: #0a0612;
+  --surface: #140c20;
+  --surface-2: #1e1230;
+  --surface-3: #332845;
+  --ink: #f2e9ff;
+  --ink-2: #b8a0d4;
+  --ink-3: #8c7ba4;
+  --line: #2a1a44;
+  --line-strong: #76698b;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #19e6c1;
+  --success-ink: #141210;
+  --success-soft: #0e3c3c;
+  --success-on-soft: #19e6c1;
+  --warning: #ffb020;
+  --warning-ink: #141210;
+  --warning-soft: #452f15;
+  --warning-on-soft: #ffb020;
+  --danger: #ff4fa3;
+  --danger-ink: #141210;
+  --danger-soft: #451835;
+  --danger-on-soft: #ff4fa3;
+  --info: #7f49eb;
+  --info-ink: #fffdf8;
+  --info-soft: #29184b;
+  --info-on-soft: #9c72ef;
+
+  /* Chrome */
+  --focus: #ff4fa3;
+  --link: #ff4fa3;
+  --overlay: #070605;
+  --inverse: #f2e9ff;
+  --inverse-ink: #0a0612;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+  --font-display: "Monoton", Georgia, serif;
+  --font-text: "Josefin Sans", system-ui, sans-serif;
+  --radius: 4px;
+  --shadow: 0 0 24px -6px rgba(255,79,163,.45);
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+h1, h2, h3, .display { font-family: var(--font-display); }

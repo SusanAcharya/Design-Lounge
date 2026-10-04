@@ -1,0 +1,59 @@
+{
+ "id": "field",
+ "surface": "app",
+ "title": "A field app",
+ "kicker": "Ops",
+ "blurb": "Today’s run, an empty list, a failed load.",
+ "when": "Staff on a phone, outside. A yard, a route, a job.",
+ "theme": "cinder",
+ "pairing": "swiss-precision",
+ "shelf": "native-feel",
+ "categories": [
+  "utility",
+  "navigation",
+  "feedback",
+  "error"
+ ],
+ "pieces": [
+  "mobile-run-detail",
+  "phone-tab-plain",
+  "mobile-list-empty",
+  "mobile-load-failed",
+  "ios-pull-to-refresh",
+  "phone-form-fields",
+  "phone-permission-prompt",
+  "pwa-outbox-sync",
+  "phone-map-listings",
+  "phone-qr-scanner",
+  "phone-calendar-agenda"
+ ],
+ "directions": [
+  {
+   "id": "yard",
+   "name": "Yard",
+   "mood": "Safety orange on concrete",
+   "theme": "cinder",
+   "pairing": "swiss-precision",
+   "family": "industrial",
+   "effect": null
+  },
+  {
+   "id": "shed",
+   "name": "Shed",
+   "mood": "Rust and olive, outdoor work",
+   "theme": "oxide",
+   "pairing": "industrial-label",
+   "family": "industrial",
+   "effect": null
+  },
+  {
+   "id": "cockpit",
+   "name": "Cockpit",
+   "mood": "Dark, teal, night shifts",
+   "theme": "hud-teal",
+   "pairing": "hud",
+   "family": "sharp",
+   "effect": null
+  }
+ ]
+}

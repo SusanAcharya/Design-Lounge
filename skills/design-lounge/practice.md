@@ -1,109 +1,27 @@
 # Practice
 
-This is how you design with the library. The catalogue is the material. This file is the discipline.
+This is how you design with the library. The catalogue is the material. This file is the discipline every build shares. The rest is split by job, so you only read what yours needs:
 
-You do not need all of it every time. Read what the job needs:
-
-- One component or section: Adapting a brief, Components, and the brief itself.
-- A website: Before code, Stand out, Pick a direction, Register, Decide the screen, Look, Finish checklist. Then Page shape and Craft in [taste.md](taste.md). If they named a style, Named looks there too.
-- An app or a tool: Before code, Match the world, Decide the screen, Minimum screens, Look, Finish checklist.
-- A redesign: Redesign, then the list above for its kind.
+- A website: this file, then [website.md](website.md). Then Page shape and Craft in [taste.md](taste.md), and Named looks there if they named a style.
+- An app, a tool, a dashboard, or a shop: this file, then [app.md](app.md).
+- Another language, a currency, a calendar, or a regional look: [locale.md](locale.md) as well.
+- One component or section: Adapting a brief, Components, and the brief. Skip the rest.
+- A redesign: Redesign below, then the files for its kind.
 - A brand kit or logo system: Brand board in [taste.md](taste.md), after the kit is locked.
 
 Their words beat this file. When they ask for something a default here forbids, such as more motion, a second effect, or skipping a step, do what they asked, and write one line in DESIGN.md saying which default you set aside and why.
 
-The aim is one product that feels designed: same palette, type, icons, radius, spacing, motion, and components on every screen. A new screen extends the sheet. It does not start a second system. An agent without this skill can still ship a page. The page reads as generated when the type, the copy, and the decoration could belong to any product. Look is how you catch that.
+The aim is one product that feels designed: same palette, type, icons, radius, spacing, motion, and components on every screen. A new screen extends the sheet. It does not start a second system. The page reads as generated when the type, the copy, and the decoration could belong to any product. Look is how you catch that.
 
 ## Before code
 
-1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero. For a website, also read Stand out and write the Idea.
+1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero. For a website, also read Stand out in [website.md](website.md) and write the Idea.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
-3. Match the world, then choose the pieces. Read Match the world. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If the index has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
+3. Match the world, then choose the pieces. Read Match the world. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If `pieces.txt` has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
 4. Say the pick with links at the top of your reply, then build. Follow Say the pick in [SKILL.md](SKILL.md). Ask first only when two worlds fit and would lock different themes, or when they asked to choose.
 5. When the system is locked, write the sheet below. If the project has no DESIGN.md, add it. If one exists and you are adopting it, do not overwrite it. If one exists from an earlier Lounge pass, update Sources when they change a screen. Do not start a second file.
 6. Build the shell first (nav, tab bar, or frame), then the primary screen, then the rest of the minimum set below. A product is not done after the first screen.
 7. Open every finished screen and run Look. Fix what fails, and open it again. When the fails are none, run One correction. Then run the finish checklist. In the reply, list only what failed and what you changed, plus the look notes. Do not paste every line that passed. Do not call the UI done from the source.
-
-## Stand out
-
-This is for every website: a portfolio, a landing page, a product page, a personal site. It is not for a dashboard or a tool someone opens every day.
-
-The rest of this file stops slop. This section stops dull. A page can pass every slop check and still be forgettable. Forgettable is a fail. People install this skill to get a site that stands out.
-
-### The default looks
-
-Agents with good taste still land on the same few pages. These are fails, unless they asked for one by name.
-
-- The dark portfolio. A near-black page, a huge serif italic name, a small mono kicker line, a numbered table of projects, a local clock, an "open to work" dot.
-- The SaaS template. A gradient hero, a centred headline, three feature cards, a row of logos.
-- The quiet paper page. Cream background, a serif headline, and everything else small grey text.
-- The studio template. The 2024-26 look that good agents now all make: hairline grid lines everywhere, small tracked uppercase mono labels, numbered sections ("01 / Work"), a giant wordmark footer, and a sticky scroll section. Each one is fine. All of them together is a template. Use two at most on one site.
-
-If your plan matches one of these, change the theme or the layout before you write code.
-
-### Write the idea
-
-Add one line to the sheet: `Idea:`. It says what this site does that only fits this person or this product. It is a picture, not an adjective.
-
-- Good: "Her projects are small working apps on the page. You can tap them." "The hero is the product's own window, running." "The work is a stack of cards you scroll through, one per shipped product."
-- Not an idea: "Bold and minimal." "Clean, modern, premium." "Luxury dark."
-
-The idea decides the hero and the proof block. If you cannot write it, you are not ready to build.
-
-To find it, look in their material, not in the library:
-
-- A thing from their work: the object they make, the screen they are proud of, the tool they built. Can the site be that thing? A ledger designer's work sits in ledger rows. A typeface maker's name is set in their face.
-- A habit: how they work. Someone who writes about explicit gates gets a site you move through gate by gate.
-- A place or a time: their city, their trade, the hour they work.
-
-Write three candidates. Keep the one that changes the hero. An idea that only changes the copy is not the idea.
-
-Then make one signature: one element built only for this site, from the Idea, that no piece in the library has. It uses the locked tokens, so it still belongs. Everything else may come from pieces. Name it on the sheet: `Signature: the project cards open like gates`. This is where the site stops rhyming with every other Lounge site.
-
-### Show the work
-
-- The first screen has the name or headline and a picture of the work. Not big type alone on an empty page.
-- A portfolio shows every project as a picture. A text list of project names is not proof. A preview that only appears on hover does not count. A phone has no hover.
-- No screenshots? Draw the picture. For someone who makes software, build each project as a small working screen in HTML and CSS, in the locked theme, inside a phone or browser frame. Take the structure from a library piece: a bank home from `ios-fintech-home`, a table from the dashboard pieces, a chat from the messages pieces. This is the library's edge. You can draw real interfaces, not grey boxes.
-- A photographer or illustrator with no images: leave clear image slots at the right size, each with one caption. Do not paint fake art with gradients.
-
-### Layout
-
-- Fewer, bigger sections. A website pass is four to six sections. Each one has one job and one large thing.
-- Sections change shape: a full-width colour band, a bento, a sticky split, a horizontal rail, a card stack. Not five rows of text at the same width.
-- The reading column is for paragraphs. The hero, the work, and the bands use the full frame, 1120 to 1280px.
-- Use the colour. Put `--primary` on one large surface: a band, a big card, or the hero block. That is the brand, not decoration. A light theme with a strong primary beats a dark page with one gold line.
-- Do not let the page become one colour. The theme has `--secondary` and `--tertiary` too. Give each project panel or band its own one: primary, secondary, tertiary, or the ink colour reversed. Each panel is one colour, with no gradients.
-
-### Size and contrast
-
-- Body text on a website is 17 to 19px, in `--ink` or `--ink-2`. Never `--ink-3` for a sentence.
-- Small tracked labels: three per view at most. A page where half the text is 11px grey looks unfinished. The labels a piece's brief draws count too. If the hero piece already has three, add none of your own. If a brief draws more than three, cut its labels down to three. The limit wins over the brief.
-- No facts strip, clock, timeline, status dot, or filter chips unless they asked. Each one is a small region that does not serve the four lines.
-
-### Motion you can see
-
-A website has one lead motion, from Register. It runs without a hover: on load, or on scroll. A hover effect can be extra. It is never the lead. When they ask for more motion, such as parallax plus reveals, add supporting effects. Follow More than one effect in Register.
-
-### Real content only
-
-- Never invent clients, employers, projects, numbers, quotes, or dates. Use what they told you.
-- Use what is real and public: a product they named, their GitHub, their own site.
-- If they named no projects, show what they do as two or three labelled studies, such as "Study: a credit ledger for a corner shop". A study is honest. A fake client is not. Say in the reply which slots to replace with real work.
-- If the site is mostly a portfolio and they did not say just build it, ask once for three projects, each with a link or a screenshot.
-- A link goes where its label says. "Live demo" opens the demo. "Paper" opens the paper. If you don't have that URL, drop the link, or label it for where it really goes ("All projects"). List the missing URLs in the reply.
-- A drawn screen with made-up data (file names, logs, numbers) gets a small "Example" caption, so nobody reads it as a real result. A drawn screen that only shows real facts doesn't need one.
-
-### The five-second test
-
-Open the first screen at 1280×800. Look for five seconds. Write:
-
-```
-Remember: "<the one thing you remember>"
-Could this be anyone's site: yes | no
-```
-
-If you remember nothing, or the answer is yes, it fails. Change the idea or the hero. Rewording the copy is not a fix.
 
 ## System sheet
 
@@ -146,7 +64,7 @@ Kept from their system:
 - <piece id> — layout | motion | component — demo url
 ```
 
-`{site}` is the `site` field in `library/index.json`. One line per piece you actually build. The role is layout, motion, or component: what they should look at if they want to compare. When they ask to change a screen, change that line, then rebuild only that screen.
+`{site}` is the `site` field in `library/map.json`. One line per piece you actually build. The role is layout, motion, or component: what they should look at if they want to compare. When they ask to change a screen, change that line, then rebuild only that screen.
 
 For a new product, the matching recipe in `starts` names the first pieces, and its chosen direction names the look. Build those before you invent a screen the recipe did not name.
 
@@ -164,7 +82,7 @@ Three numbers from 1 to 10 that say how far to push. Set them from their words, 
 | Government, health, money, anything where trust comes first | 3 | 2 | 5 |
 
 - Variance: 1 is centred and even. 10 is off-grid, with sizes that clash on purpose. Above 6, no two sections share a shape.
-- Motion: 1 to 3 is Register quiet. 4 to 7 is one lead effect. 8 to 10 is a lead plus supporting effects, each in its own section.
+- Motion: 1 to 3 is Register quiet (Register is in [website.md](website.md)). 4 to 7 is one lead effect. 8 to 10 is a lead plus supporting effects, each in its own section.
 - Density: 1 to 3 is air, 4 to 6 is regular, 7 to 10 is dense. It sets the Density line.
 
 When they ask for "more" or "calmer", move a dial two steps and rebuild. Do not swap the theme.
@@ -198,24 +116,7 @@ Do not take the first direction because it is first. Do not mix two directions. 
 
 The direction is the start, not the end. The Idea, the copy, the projects, and the order of the sections still come from this product.
 
-### Sections, one by one
-
-The direction picks the hero and one effect. It does not pick the other sections. If every site took the recipe's first footer and first work block, two different people would get the same page under different colours. So pick each section on its own.
-
-1. If their words point at one option ("a big email to copy", "a timeline of my work"), take it.
-2. Fit the content you have. Work: three projects of different kinds suit cards or a horizontal rail, one product with steps suits a sticky scroll, many small things suit a bento. About: a long story suits a sticky split, a short belief suits a word highlight. Contact: a freelancer who takes briefs suits the brief steps, someone who just wants mail suits the giant email. Drop every option the content does not fit.
-3. Several still fit. Use the name number from the direction, plus the section's step: work +1, about +2, contact +3, footer +4. Divide by the number of options in that section's list below. The remainder picks it, counting from 0. Write each on the sheet: `Footer: footer-centered-colophon (76 + 4 = 80, 80 mod 4 = 0)`.
-4. Skip an option that clashes with the locked family, or that needs something they don't have, such as real photos. Move to the next one, and say why.
-5. Never use the same piece for two sections.
-
-The lists, for a website:
-
-- Work (builders, products, case studies): `features-sticky-scroll-steps`, `stacking-cards-scroll`, `bento-feature-grid`, `case-file-horizontal-scroll`, `process-step-dossier`, `scroll-lens-card-ticker`, `features-tabbed-preview`. With real images: `portfolio-index-hover-preview`, `landing-agency-case-wall`, `gallery-film-strip`.
-- About: `profile-creator-masthead`, `sticky-split-story`, `profile-editorial-staff`, `text-rise-underline-whisper`, `scroll-word-highlight`. A team of three or more: `team-hover-portrait-grid`.
-- Contact: `contact-giant-email-copy`, `contact-project-brief-steps`, `profile-contact-card`, `cta-giant-email-band`, `contact-conversational-form`. A place people visit: `contact-split-map-form` or `contact-booking-hours`.
-- Footer: `footer-giant-wordmark-reveal`, `footer-centered-colophon`, `footer-newsletter-split`, `footer-engraved-caravan-strip`. A product with many pages: `footer-sitemap-columns` or `footer-enterprise-sitemap`.
-
-Open the brief for every section you build. A phone menu, a copy-email button, or a drawer is a piece too: `hamburger-circle-reveal`, `contact-giant-email-copy`, `button-copy-share`. If you build a part without opening its brief, say so in the reply.
+On a website, work, about, contact, and footer are picked next, in Sections, one by one in [website.md](website.md).
 
 ## Match the world
 
@@ -257,29 +158,6 @@ When the content does not fit the brief's shape, do not force it. A sticky scrol
 
 If a brief draws the same solid button twice, keep one. The other is outline or a text link with the same verb.
 
-## Locale
-
-Read this before you set a number or a date. The pairing `devanagari` is the Nepali face: Noto Serif Devanagari for headings and amounts, Mukta for the interface, IBM Plex Mono for Latin codes only.
-
-- An amount is one string in one family. If it contains रु, रू, ₹, or Devanagari digits, the whole string uses a face that contains every glyph. Do not leave the currency word in a fallback next to mono digits.
-- Nepal and India group digits by lakh and crore. The last three, then pairs: 1,24,000 and 18,42,000. Not 124,000. Not 1,842,000. Under 1,000, write 900.
-- Pick one currency and keep it. Nepal is रु or Rs. India is ₹. Do not mix them in one product.
-- If the product uses Bikram Sambat, label the first date on the screen with BS. Use one system, either 17 Aswin 2083 or २०८३ असोज १७. Do not invent a converter, and do not mix Devanagari digits with Western digits in the same number.
-- Devanagari body may be 17px where Latin is 16px. Do not shrink it to fit.
-- For Arabic, Hebrew, or Urdu, set `dir="rtl"` on the document. Mirror the shell with logical properties (`padding-inline`, sidebar on the right). Keep numbers LTR with `unicode-bidi: isolate`. Do not mirror an icon that depicts a real object. There is no RTL theme. The locked theme still applies.
-
-## Identity
-
-Restraint is the default on a product someone opens every day. A portfolio, a launch, or a product page they described with motion keeps its effects, in Register. A regional or brand identity is still allowed, in three places, and nowhere else.
-
-1. The locked theme. A Nepali product uses Lokta: lokta paper, crimson primary, navy ink. Lokta Night is the dark pair. Do not stay on Harbour Ledger and then ask why it looks like a Western fintech app.
-2. One texture, on one region. The page background, or a single band. A lokta grain is a low-contrast dot at under 8% opacity. Not on cards, not under type, not tiled across every row.
-3. The display face from the pairing. For Nepal that is Noto Serif Devanagari, including on the amount.
-
-Crimson is `--primary`, not a second accent beside the theme's brass. A festival does not get a second decorative colour. No emoji, and no pattern on every card. A gradient or a glow belongs only to the effect pieces in Register. If they asked for Nepali and you only put it in the nouns, the look failed. Say so, and move the identity into those three places.
-
-For a revamp, name three visual problems. Fix those inside the adopted system. Do not reskin the whole product unless they asked.
-
 ## What to build
 
 The four lines decide a screen. They do not decide the product. People name a product in a sentence. Read that sentence and write these lines before you lock a theme.
@@ -304,48 +182,6 @@ Two products on the same theme should still differ in the noun, the home screen,
 
 If they asked for loud, playful, or luxury, lock the theme and family whose mood says that. Playroom, Festival, and Atelier Noir exist for that. Do not walk them back to Lokta or Harbour Ledger because those are calmer. The anti-slop checks still hold. Loud is the type and the theme, not a glow you invented.
 
-## Register
-
-Write `quiet` or one piece id on the sheet. This is how a thin request still lands on a style that fits.
-
-A ledger, a clinic, a settings screen, or a dashboard stays quiet. Motion is the sheet: 200ms, 320ms, 400ms. Do not add a cursor, a scroll story, or a hover tilt because the page felt plain.
-
-A portfolio, a launch, a product page, or a refine they described as motion is in the library. Search categories `cursor`, `scroll`, and `text-motion`. Take one piece for the effect they named.
-
-- A builder's portfolio: `stacking-cards-scroll`, `hero-product-window-tilt`, or `features-sticky-scroll-steps`. The work moves, not the name.
-- A visual portfolio: `portfolio-photographer-horizontal`, `hover-image-trail`, `stacking-cards-scroll`, or `cursor-ink-blob`. `portfolio-index-hover-preview` only when every row has a real image.
-- A product page: `hero-product-window-tilt`, `features-sticky-scroll-steps`, or `hover-tilt-cards`. Not a cursor on the checkout.
-- A product they want to show off, like a watch, a speaker, or a box: `scroll-scrub-product-sequence` or `object-3d-turntable`.
-- An outdoor, travel, or place brand: `parallax-layered-hero` or `scroll-zoom-portal`.
-- A studio or agency that wants the site to feel made: `smooth-scroll-inertia`, `page-transition-tile-wipe`, `preloader-counter-intro`, or `text-mask-scroll-reveal`. A preloader never runs longer than the real load.
-- A tech, science, or cold brand that wants depth: `webgl-shader-hero`. A hotel, film, or food brand that wants footage: `hero-video-loop`.
-- An about or manifesto block: `scroll-word-highlight`.
-- A headline that moves: `kinetic-type-marquee` or `variable-font-proximity`.
-- A phone: `ios-pull-to-refresh`, `shared-element-expand`, or `m3-container-transform`. Not a web cursor. A phone web story: `mobile-scroll-story`.
-
-A website always takes one effect piece, even when they did not name one. Pick the one that serves the Idea. A daily tool with no named effect stays quiet. Do not add one to fill the page. The piece's motion table wins inside that region. The rest of the page stays on the sheet's easing. Reduced motion still applies.
-
-### More than one effect
-
-One effect is the default, not a ceiling. When they ask for more motion, or name two effects, build them. Keep it one design:
-
-- One lead effect, the one that carries the Idea. It gets the first screen or the biggest section.
-- Supporting effects each own one section. Two effects never run in the same viewport at once.
-- Every effect uses the sheet's easing and durations, so they move like one hand made them. Translate each piece's motion table onto the sheet, not the other way round.
-- No more than three effects on a page unless they asked for more. A blob, a tilt, a marquee, and a stack fighting on one screen is four designs.
-- Reduced motion turns all of them into a still frame.
-
-## Break one rule
-
-One display size, one primary, and the sample tab count are defaults. A designer breaks one when the content cannot be said otherwise. You may break one per screen. Write it on the sheet, or you did not break it.
-
-- One display size. Break it only when two numbers are both the decision, such as money in and money out. The second is one step smaller, not equal. A third display size is not allowed.
-- Tab count. `phone-tab-plain` shows four tabs because that demo has four sections. A product uses three to five, one per real section. Do not add a tab to match the demo, and do not drop a section they named to stay at four.
-
-A confirm dialog does not break the one-primary rule. Cancel is outline. The destructive action is the one solid button.
-
-Do not break a rule to fill empty space, to look more designed, or because another app had it. If you cannot name the content that required the break, keep the default.
-
 ## Decide the screen
 
 Write these four lines into the system sheet before you choose a layout. They are the brief. The pixels come after.
@@ -360,7 +196,7 @@ A region that does not serve one of those four lines does not go on this screen.
 Reading order on the view, and only this order:
 
 1. Where they are. A label or a title. Not both at display size.
-2. The answer. This is the largest type on the view. One display size per view, unless you wrote a break in Break one rule.
+2. The answer. This is the largest type on the view. One display size per view, unless you wrote a break in Break one rule in [app.md](app.md).
 3. The next action. One primary button.
 4. The evidence. The list, the chart, or the facts that justify the answer.
 5. Chrome. Nav, filters, account. Quiet, and smaller than the answer.
@@ -369,7 +205,7 @@ Size is the hierarchy. Colour is not a second hierarchy. The accent is for the a
 
 Group facts that are decided together. One title per group. Space between groups is the density stack gap. Space inside a group is half of that. Do not invent a third gap on the same screen.
 
-A list has four states. Ship the one this pass needs, from a piece when the index has it.
+A list has four states. Ship the one this pass needs, from a piece when `pieces.txt` has it.
 
 | State | Meaning | What you build |
 | --- | --- | --- |
@@ -383,17 +219,6 @@ Empty and failed are different. Do not put both in one card.
 On a phone, the answer stays the largest type. The primary button is at least 44px tall and sits with the answer, or in the bottom bar the piece specifies. Clear the top with `max(54px, env(safe-area-inset-top))` and the bottom with `max(34px, env(safe-area-inset-bottom))`. The inset is 0 on a desktop browser, so 54 and 34 are the minimum, not a fallback inside `env()`. Do not draw a status bar. A header and a tab bar on the same phone screen is two navigation systems.
 
 When they describe a whole product, build the minimum set, then stop. An internal tool does not get a marketing hero. A marketing site does not get an ops table unless they asked for one.
-
-## After the action
-
-The next action lands on a named screen. Write that name in the system sheet before you draw the button.
-
-- A list opens the detail you already named.
-- A form stays on the form until the fields are valid. Then it confirms on that screen, or opens the next named screen. A field error sits under the field. It is not a toast.
-- A shop is four screens, in this order: collection, one product, cart, checkout. Do not invent a fifth. The collection's action opens the product. The product's action opens the cart. The cart's action opens checkout.
-- A tablet is the tablet recipe: a split or a sidebar, one primary pane, one detail. A phone list stretched wide is the wrong piece.
-- The confirmation says what changed, in one sentence, and offers one next action. It keeps the same theme, pairing, and family.
-- If the action can fail, use the failed-load piece or the field error. A toast that disappears is not the failure.
 
 ## Spacing
 
@@ -486,16 +311,7 @@ Fails: <what differs, or none>
 
 Column width, page padding, control height, radius, and the amount's computed font are one value across the pass. The sidebar's open width, its rail width, and the panel width are one value too. A mismatch is a fail. Change the outlier to the sheet. Do not keep a brief's 640 beside another's 720. Do not keep a 240 sidebar on one screen and a 280 sidebar on the next. Closing the rail must leave the content column at the same width. A phone nav that renames or reorders the desktop items is a fail.
 
-For each screen, write this in the reply before you call the pass done:
-
-```
-Looked at: <screen> at <width>×<height>
-Largest type: "<the words>" — the answer named above, or not
-Primary: "<label>" sits <where>
-Copy that still works if you swap the product name: "<quote>" or none
-Website only. Remember after five seconds: "<one thing>" · Could be anyone's site: yes | no
-Fails: <the checks below that failed, or none>
-```
+For each screen, ask four things before you call it done. Is the largest type the answer named in the four lines? Where does the one primary sit? Does any copy still work if you swap in another product's name? On a website, what do you remember after five seconds, and could it be anyone's site? The answers go in the closing block in The reply in [SKILL.md](SKILL.md), not in a second block.
 
 Fix every fail. Open the screen again. A fail that is still visible means the pass is open.
 
@@ -515,7 +331,7 @@ These are fails. They are the tells of a page that was generated and not designe
 - Placeholder copy. Lorem. Feature one. Your text here. John Doe. Acme. A price of $99 with no product attached.
 - Motion that loops because the page felt empty. `ease` or `linear` on a UI move. The curve is the sheet's, or the piece's.
 - Two navigation systems. A sidebar, a panel, or a nav list that differs from the sheet. The content column wider because the rail closed. A chart painted in a library's default colours.
-- On a website: one of the default looks in Stand out. A first screen with type and no picture of the work. A portfolio whose work is a text list. A site where half the text is small grey labels. A page you cannot remember after five seconds.
+- On a website: one of the default looks in Stand out in [website.md](website.md). A first screen with type and no picture of the work. A portfolio whose work is a text list. A site where half the text is small grey labels. A page you cannot remember after five seconds.
 - An invented client, employer, project, number, or quote.
 - An em dash or en dash in text people read. A version label in the hero, such as BETA or v2.0, when this is not a launch. Numbered eyebrows like `001 · Work` or `01 / 04`.
 - Dots between every word in a strip (`a · b · c · d`). One per line at most. A coloured dot before every nav item or row, when it is not a live status.
@@ -524,7 +340,7 @@ These are fails. They are the tells of a page that was generated and not designe
 - "Step 1, Step 2, Step 3" as the labels. The step's own verb is the label: Install, Connect, Ship.
 - Numbers that look made up: 99.99%, 10x, 50%, $1,000,000. Real numbers are uneven: 47.2%, 1,284. Brand names that sound made up: Nexus, Acme, SmartFlow, Cloudly. Copy words that mean nothing: elevate, seamless, unleash, supercharge, next-gen.
 - On a phone, a pinned panel or sticky block that covers more than a third of the screen. Unpin it below 720px and let it scroll with its section.
-- Pure `#000` black. A custom cursor on a daily tool. A grey box standing in for the product. Draw the product as a small working screen, as Show the work says, or leave it out.
+- Pure `#000` black. A custom cursor on a daily tool. A grey box standing in for the product. Draw the product as a small working screen, as Show the work in [website.md](website.md) says, or leave it out.
 
 A piece you locked may use one of these on purpose. For example, a footer piece may show a live clock. Then it is allowed, because you chose it. Do not add one on your own.
 
@@ -582,47 +398,16 @@ Put the theme's CSS variables on `:root` once, or in one theme provider. Control
 
 ## Finish checklist
 
-- One theme, or a theme plus its `pair`. No third palette.
-- One pairing. Display, body, and mono match the sheet.
-- One family. Radius, shadow, button, and density match on every new screen.
-- Icons are Lounge Icons, or follow the missing-icon order in components.md. Brand logos are one colour.
-- A website has a wordmark, a favicon, and a share image. Their logo is used as given. The files exist: `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` (180 × 180), and the share image at exactly 1200 × 630. Read the image size from the file. Don't trust the size you asked for.
-- Every link label matches where it goes. Missing URLs are listed in the reply.
-- One primary button on each view.
-- Hover and selected use the token map in SKILL.md, not a hex from a brief.
-- Spacing uses the density scale.
-- Type uses the six roles. No extra font.
-- Motion uses the sheet, or the piece's motion table, and reduced motion is handled.
-- The piece's structure and hit targets survived.
-- Empty, error, and loading exist where the screen can be empty or fail.
-- The credit line is on the token block.
-- Every piece you named is in the index.
-- DESIGN.md Sources lists each of those pieces with its demo link. The reply includes the same links.
-- The four lines (who, decision, first thing, next action) are in DESIGN.md.
-- The first thing is the largest type on that view. There is one display size, or one written break.
-- Space between groups is the stack gap. Space inside a group is half of that.
-- A list is one state: loading, empty, failed, or populated. The piece you used matches that state.
-- The next action names the screen it opens. That screen is in this pass, or you said it is still open.
-- You opened each finished screen at its frame size and wrote the look notes in the reply. Nothing scrolls sideways at 390px, the console has no errors, and the reduced-motion frame is complete.
-- No em dash or en dash in the text on the page.
-- You wrote the Match block. Column, padding, control height, radius, and amount face are the same on every screen. The sidebar, the panel, and the nav labels match the sheet, including after the rail closes and on the phone.
-- Every look check passed. A fail was fixed, and that screen was opened again.
-- The theme matches this product's world, or a recipe matched. The reply names the theme you rejected. You did not lock a palette because it was first.
-- The register is quiet, one effect piece from the index, or a lead plus supporting effects they asked for, each in its own section. A daily tool did not grow a cursor. A portfolio or a product page they described with motion did not lose that piece.
-- After the look checks passed, you made one correction and opened that screen again.
-- Website: the Idea and Avoiding lines are on the sheet. The first screen shows the Idea. The work is pictures. Nothing is invented. The five-second test passed.
+Look and One correction already checked the screen. These are the things they do not cover.
 
-## Minimum screens
-
-A pass that only ships a hero, a landing, or a dashboard home is unfinished. Cover this set before you call the UI done. Reuse the locked sheet on every one.
-
-- Website: nav, hero, one proof block, footer. Take them from the website recipe. The proof block is pictures of the work or the product, not a list.
-- App: shell (tab bar or nav), the primary list, one detail, an empty state, and settings or account.
-- Platform: shell, a table or a board, one record, and the account menu. Add people and billing when the product has staff or a plan.
-- Shop: a collection, one product, the cart, and checkout. Take them from the commerce recipe.
-- Tablet: a split or a sidebar, one primary pane, and one detail. Take them from the tablet recipe.
-
-If they asked for one component, build that component inside the locked system. Say that the rest of the set is still open. Do not invent a second palette to fill the gaps.
+- One theme (or a theme plus its `pair`), one pairing, one family, Lounge Icons. Nothing on top.
+- A website has a wordmark and these files: `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` (180 × 180), and a share image at exactly 1200 × 630. Read the size from the file.
+- Every link label matches where it goes. Missing URLs are in the reply.
+- Empty, error, and loading exist where the screen can be empty or fail. The next action opens a screen in this pass, or you said it is still open.
+- Nothing scrolls sideways at 390px, the console has no errors, and the reduced-motion frame is complete.
+- DESIGN.md has the sheet, the four lines, and Sources with a demo link per piece. The reply has the same links.
+- The credit line is in the footer and on the token block.
+- Website: Idea, Signature, Avoiding, and Sections are on the sheet.
 
 ## Say so
 
