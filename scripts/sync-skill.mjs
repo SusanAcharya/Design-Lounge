@@ -227,6 +227,34 @@ for (const p of index.pairings) {
   const head = `/* ${p.name} · display ${p.display} · text ${p.text}${p.mono ? ` · mono ${p.mono}` : ' · no mono'} · numbers ${p.numbers}\n   ${p.mood}${p.caution ? `\n   Caution: ${p.caution}` : ''} */\n`;
   fs.writeFileSync(path.join(skillLib, 'pairings', `${p.id}.css`), head + p.css + '\n');
 }
+// The same system as plain numbers, for React Native, Flutter, SwiftUI, and Compose.
+for (const t of index.themes) {
+  fs.writeFileSync(path.join(skillLib, 'themes', `${t.id}.json`), JSON.stringify({ id: t.id, name: t.name, mode: t.mode, pair: t.pair, colors: t.tokens }, null, 1));
+}
+const face = (f) => f && ({ family: f.family, weight: f.weight, italic: Boolean(f.italic), upper: Boolean(f.upper), trackingEm: parseFloat(f.tracking ?? '0') || 0, google: f.spec ?? null });
+for (const p of PAIRINGS) {
+  fs.writeFileSync(path.join(skillLib, 'pairings', `${p.id}.json`), JSON.stringify({
+    id: p.id, name: p.name, display: { ...face(p.display), lineHeight: 1 }, text: { ...face(p.text), lineHeight: 1.55 },
+    mono: face(p.mono) ?? null, numbers: p.mono ? (p.numbers ?? 'mono') : 'text', caution: p.caution ?? '',
+  }, null, 1));
+}
+const bezier = (css) => (css.match(/cubic-bezier\(([^)]+)\)/)?.[1].split(',').map(Number)) ?? null;
+fs.writeFileSync(path.join(skillLib, 'app.json'), JSON.stringify({
+  readme: 'Numbers for native apps. CSS px = iOS pt = Android dp = Flutter logical px. Pair this with themes/<id>.json and pairings/<id>.json. See native.md.',
+  families: FAMILIES.map((f) => ({ id: f.id, radius: parseFloat(f.radius) || 0, button: f.button, density: f.density, shadow: f.shadow, rules: f.rules })),
+  density: {
+    air: { pagePadding: 20, stackGap: 24, cardPadding: 20, controlHeight: 48 },
+    regular: { pagePadding: 20, stackGap: 16, cardPadding: 16, controlHeight: 44 },
+    dense: { pagePadding: 16, stackGap: 12, cardPadding: 12, controlHeight: 44 },
+  },
+  type: { body: 17, label: 12, caption: 13, title: 22, display: 34, lineHeightBody: 1.5, note: 'Phone sizes. Display is one per screen. Sizes scale with the user text size setting.' },
+  touchTarget: { ios: 44, android: 48 },
+  motion: {
+    durations: Object.fromEntries(DURATIONS.map((d) => [d.id, d.ms])),
+    easings: Object.fromEntries(EASINGS.map((e) => [e.id, bezier(e.css)]).filter(([, v]) => v)),
+  },
+}, null, 1));
+
 const brief = (o, keys) => Object.fromEntries(keys.map((k) => [k, o[k]]));
 fs.writeFileSync(
   path.join(skillLib, 'map.json'),

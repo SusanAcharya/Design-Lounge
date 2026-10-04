@@ -1,0 +1,25 @@
+{
+ "id": "riso-zine",
+ "name": "Riso Zine",
+ "display": {
+  "family": "Rubik Mono One",
+  "weight": 400,
+  "italic": false,
+  "upper": true,
+  "trackingEm": -0.02,
+  "google": "Rubik+Mono+One",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Rubik",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Rubik:wght@400;600;800",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

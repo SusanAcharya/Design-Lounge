@@ -5,7 +5,8 @@ description: >-
   pairings, component families, icons, motion, and piece briefs. Use when the
   user asks for a design, design system, UI, look and feel, palette, colors,
   fonts, landing page, marketing site, dashboard, admin, mobile app, shop,
-  editorial, or to make an interface look finished. Also covers what the
+  editorial, React Native, Flutter, SwiftUI, Compose, or PWA apps, or to
+  make an interface look finished. Also covers what the
   taste-skill pack does: anti-slop pages, minimal, brutalist and high-end
   looks, redesigns, image-first mockups, logos and brand kits. Also use when
   they mention Design Lounge, a kit, or a piece brief.
@@ -31,7 +32,7 @@ Everything you need is next to this file. Read only what the job needs.
 4. `library/briefs/<id>.md` — the spec for one piece. Open only the pieces you will build.
 5. `library/icons.json` — Lounge Icons, only when the screen needs icons.
 6. [components.md](components.md) — the controls, icons (including what to do when one is missing), the logo and favicon, and which piece to use for which job.
-7. [practice.md](practice.md) — the method every build shares. Its first lines say which other file your job adds: [website.md](website.md), [app.md](app.md), or [locale.md](locale.md). Read only those.
+7. [practice.md](practice.md) — the method every build shares. Its first lines say which other file your job adds: [website.md](website.md), [app.md](app.md), [native.md](native.md), or [locale.md](locale.md). Read only those.
 8. [taste.md](taste.md) — the taste-skill pack folded in: named looks (minimal, brutalist, high-end), page shape, craft details, image-first mockups, and brand boards. You do not need those skills installed separately.
 
 Do not run scripts from this skill. If `library/map.json` is missing, the install is broken. Say so. Do not design from memory.
@@ -48,6 +49,7 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | A new product, site, app, or design system | Kit flow |
 | A style by name: minimal, brutalist, Swiss, terminal, high-end, agency, luxury | Kit flow, with Named looks in [taste.md](taste.md) |
 | A brand kit, identity, logo system, or brand board | Kit flow, then Brand board in [taste.md](taste.md) |
+| A React Native, Expo, Flutter, SwiftUI, or Compose app, or a PWA | Kit flow, then [native.md](native.md) for tokens, fonts, platform rules, and simulator screenshots |
 | "Show me first", a concept, or mockup images, and you can make images | Kit flow, then Image first in [taste.md](taste.md) before code |
 | One screen, section, or component | Piece flow, inside the locked kit if one exists |
 | Only a palette, font, icon, or motion | Library flow |

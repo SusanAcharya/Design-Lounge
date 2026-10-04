@@ -1,0 +1,25 @@
+{
+ "id": "lettera",
+ "name": "Lettera",
+ "display": {
+  "family": "Playfair Display",
+  "weight": 500,
+  "italic": true,
+  "upper": false,
+  "trackingEm": -0.02,
+  "google": "Playfair+Display:ital,wght@0,400..900;1,400..900",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Karla",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Karla:wght@400;500;700",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

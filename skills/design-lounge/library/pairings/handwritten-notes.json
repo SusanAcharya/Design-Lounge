@@ -1,0 +1,25 @@
+{
+ "id": "handwritten-notes",
+ "name": "Handwritten Notes",
+ "display": {
+  "family": "Caveat",
+  "weight": 700,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Caveat:wght@400;700",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Inter",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Inter:wght@400;500;600",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

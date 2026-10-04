@@ -1,0 +1,25 @@
+{
+ "id": "gallery-wall",
+ "name": "Gallery Wall",
+ "display": {
+  "family": "Instrument Serif",
+  "weight": 400,
+  "italic": true,
+  "upper": false,
+  "trackingEm": -0.02,
+  "google": "Instrument+Serif:ital@0;1",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Inter",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Inter:wght@400;500;600",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

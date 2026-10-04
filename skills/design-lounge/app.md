@@ -1,6 +1,6 @@
 # Apps and tools
 
-Read this after [practice.md](practice.md) when the job is an app, a tool, a dashboard, a platform, a shop, or a tablet screen. A daily tool stays quiet: motion is the sheet's 200, 320, and 400ms, with no effect piece unless they asked. If they did, Register is in [website.md](website.md).
+Read this after [practice.md](practice.md) when the job is an app, a tool, a dashboard, a platform, a shop, or a tablet screen. A daily tool stays quiet: motion is the sheet's 200, 320, and 400ms, with no effect piece unless they asked. If they did, Register is in [website.md](website.md). A native app or a PWA also reads [native.md](native.md).
 
 ## After the action
 

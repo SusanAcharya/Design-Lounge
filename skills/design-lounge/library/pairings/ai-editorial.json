@@ -1,0 +1,25 @@
+{
+ "id": "ai-editorial",
+ "name": "AI Editorial",
+ "display": {
+  "family": "Instrument Serif",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.025,
+  "google": "Instrument+Serif:ital@0;1",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "JetBrains Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "JetBrains+Mono:wght@400;500;700",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

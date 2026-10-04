@@ -1,0 +1,25 @@
+{
+ "id": "slab-ledger",
+ "name": "Slab Ledger",
+ "display": {
+  "family": "Zilla Slab",
+  "weight": 700,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.02,
+  "google": "Zilla+Slab:wght@400;600;700",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "IBM Plex Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "IBM+Plex+Mono:wght@400;500;600",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

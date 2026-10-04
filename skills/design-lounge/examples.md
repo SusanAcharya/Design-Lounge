@@ -132,3 +132,13 @@ User: "Add the pricing section."
 1. Do not open a new palette.
 2. Search `pieces.txt` for `pricing`. Read `library/briefs/<id>.md`.
 3. Rebuild it. Swap its colours and fonts for the locked kit. Keep its toggle, type scale, and motion.
+
+## A Flutter app
+
+User: "Flutter app for a Pokhara cycling club. Members log rides and see the weekend route."
+
+1. Kind `personal` is wrong: this is a group. Recipe `mobile-app`, then pick a direction by their words (outdoor, a club, weekends). Read [app.md](app.md) and [native.md](native.md).
+2. Build `theme.dart` from `library/themes/<id>.json` (and its `pair` for dark mode), `library/pairings/<id>.json`, and `library/app.json`. Map the roles onto `ColorScheme` by the table in native.md. No `ColorScheme.fromSeed`.
+3. Load the pairing's fonts with `google_fonts`, or bundle them, since riders are often offline. Tracking in em becomes points.
+4. Screens from pieces: `phone-tab-plain` (or `m3-navigation-bar` on Android), `mobile-run-detail` for a ride, `phone-map-listings` for the route, `mobile-list-empty`, `mobile-load-failed`, `ios-grouped-settings`. Translate each brief's CSS with the CSS to native table.
+5. Look on a simulator: light, dark, and the largest text size, on iOS and Android. Name the screenshot files in the closing block.

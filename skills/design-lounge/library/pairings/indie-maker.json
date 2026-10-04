@@ -1,0 +1,25 @@
+{
+ "id": "indie-maker",
+ "name": "Indie Maker",
+ "display": {
+  "family": "Bricolage Grotesque",
+  "weight": 800,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.04,
+  "google": "Bricolage+Grotesque:opsz,wght@12..96,400..800",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Bricolage Grotesque",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Bricolage+Grotesque:opsz,wght@12..96,400..800",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

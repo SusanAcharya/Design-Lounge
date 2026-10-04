@@ -1,0 +1,32 @@
+{
+ "id": "devanagari",
+ "name": "Devanagari",
+ "display": {
+  "family": "Noto Serif Devanagari",
+  "weight": 600,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.02,
+  "google": "Noto+Serif+Devanagari:wght@400;600;700",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Mukta",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Mukta:wght@400;500;600;700",
+  "lineHeight": 1.55
+ },
+ "mono": {
+  "family": "IBM Plex Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "IBM+Plex+Mono:wght@400;500"
+ },
+ "numbers": "display",
+ "caution": "IBM Plex Mono is for Latin codes only. An amount that contains रु, रू, or Devanagari digits is set entirely in Noto Serif Devanagari or Mukta, digits included. Do not let the currency word fall back to another face. Group Nepal and India digits by lakh: 1,24,000."
+}

@@ -1,0 +1,25 @@
+{
+ "id": "neon-marquee",
+ "name": "Neon Marquee",
+ "display": {
+  "family": "Monoton",
+  "weight": 400,
+  "italic": false,
+  "upper": true,
+  "trackingEm": 0.02,
+  "google": "Monoton",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Josefin Sans",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Josefin+Sans:wght@300;400;600",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

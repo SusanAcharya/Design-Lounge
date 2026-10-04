@@ -1,0 +1,25 @@
+{
+ "id": "poster-condensed",
+ "name": "Poster Condensed",
+ "display": {
+  "family": "Bebas Neue",
+  "weight": 400,
+  "italic": false,
+  "upper": true,
+  "trackingEm": 0.01,
+  "google": "Bebas+Neue",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Space Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Space+Mono:ital,wght@0,400;0,700;1,400",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

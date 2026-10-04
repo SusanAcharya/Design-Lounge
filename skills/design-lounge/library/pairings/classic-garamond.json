@@ -1,0 +1,25 @@
+{
+ "id": "classic-garamond",
+ "name": "Classic Garamond",
+ "display": {
+  "family": "EB Garamond",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.01,
+  "google": "EB+Garamond:ital,wght@0,400;0,600;1,400",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Hanken Grotesk",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Hanken+Grotesk:wght@400;600;800",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

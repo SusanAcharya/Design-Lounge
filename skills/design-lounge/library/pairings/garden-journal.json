@@ -1,0 +1,25 @@
+{
+ "id": "garden-journal",
+ "name": "Garden Journal",
+ "display": {
+  "family": "Young Serif",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.02,
+  "google": "Young+Serif",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Hanken Grotesk",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Hanken+Grotesk:wght@400;600;800",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

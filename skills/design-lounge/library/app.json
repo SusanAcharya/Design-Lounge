@@ -1,0 +1,195 @@
+{
+ "readme": "Numbers for native apps. CSS px = iOS pt = Android dp = Flutter logical px. Pair this with themes/<id>.json and pairings/<id>.json. See native.md.",
+ "families": [
+  {
+   "id": "quiet",
+   "radius": 6,
+   "button": "solid",
+   "density": "regular",
+   "shadow": "0 10px 24px -16px rgba(0,0,0,.18)",
+   "rules": [
+    "Radius 6px on controls, 8px on cards. Never more.",
+    "One solid primary. Secondary is outline, same height (40px web / 44px phone).",
+    "Hairline borders at 1px. No drop shadows on tables.",
+    "Focus ring 2px accent, 3px offset."
+   ]
+  },
+  {
+   "id": "soft",
+   "radius": 14,
+   "button": "soft",
+   "density": "air",
+   "shadow": "0 12px 28px -16px rgba(0,0,0,.16)",
+   "rules": [
+    "Radius 14px on cards, 999px on chips and the primary button.",
+    "Primary is a soft accent wash, not a hard fill, unless contrast needs it.",
+    "Plenty of air: 24px gaps, 20px card pad.",
+    "Phone targets 44px. No hairlines thinner than 1px."
+   ]
+  },
+  {
+   "id": "sharp",
+   "radius": 0,
+   "button": "outline",
+   "density": "dense",
+   "shadow": "none",
+   "rules": [
+    "Radius 0 everywhere. If you round a button you have left the family.",
+    "1px ink rules. No shadows. Alignment is the decoration.",
+    "Primary can be a solid ink block; hover inverts.",
+    "Uppercase 11px labels, 0.12em tracking, on data and nav."
+   ]
+  },
+  {
+   "id": "editorial",
+   "radius": 2,
+   "button": "outline",
+   "density": "air",
+   "shadow": "none",
+   "rules": [
+    "Measure 58–66ch on reading. Headlines can break the grid.",
+    "Buttons are outlined, 40px, no fill until hover.",
+    "Paper grain or warm off-white is allowed; stock photos are not.",
+    "Italic is a voice, used once per viewport."
+   ]
+  },
+  {
+   "id": "glass",
+   "radius": 16,
+   "button": "soft",
+   "density": "regular",
+   "shadow": "0 16px 40px -20px rgba(0,0,0,.28)",
+   "rules": [
+    "Bars use backdrop-filter: blur(16px) at ~72% opacity. Always give a solid fallback.",
+    "Radius 16px on sheets, 999px on tab pills.",
+    "Phone chrome: 44px tab bar, home indicator clearance 10px.",
+    "Do not glass a whole page. One floating layer is enough."
+   ]
+  },
+  {
+   "id": "industrial",
+   "radius": 2,
+   "button": "solid",
+   "density": "dense",
+   "shadow": "none",
+   "rules": [
+    "Radius 2px. Dense padding (12px). Tables are first-class.",
+    "Primary is a committed fill (accent or ink). 36px on web, 44px on phone.",
+    "Mono for numbers. Tabular nums. No ornament.",
+    "Status colour is reserved for live state, never decoration."
+   ]
+  }
+ ],
+ "density": {
+  "air": {
+   "pagePadding": 20,
+   "stackGap": 24,
+   "cardPadding": 20,
+   "controlHeight": 48
+  },
+  "regular": {
+   "pagePadding": 20,
+   "stackGap": 16,
+   "cardPadding": 16,
+   "controlHeight": 44
+  },
+  "dense": {
+   "pagePadding": 16,
+   "stackGap": 12,
+   "cardPadding": 12,
+   "controlHeight": 44
+  }
+ },
+ "type": {
+  "body": 17,
+  "label": 12,
+  "caption": 13,
+  "title": 22,
+  "display": 34,
+  "lineHeightBody": 1.5,
+  "note": "Phone sizes. Display is one per screen. Sizes scale with the user text size setting."
+ },
+ "touchTarget": {
+  "ios": 44,
+  "android": 48
+ },
+ "motion": {
+  "durations": {
+   "micro": 120,
+   "fast": 160,
+   "ui": 200,
+   "layout": 320,
+   "sheet": 400,
+   "hero": 640,
+   "cinematic": 900
+  },
+  "easings": {
+   "standard": [
+    0.2,
+    0.7,
+    0.2,
+    1
+   ],
+   "expo-out": [
+    0.16,
+    1,
+    0.3,
+    1
+   ],
+   "ios-sheet": [
+    0.32,
+    0.72,
+    0,
+    1
+   ],
+   "enter": [
+    0.16,
+    1,
+    0.3,
+    1
+   ],
+   "exit": [
+    0.4,
+    0,
+    1,
+    1
+   ],
+   "emphasized": [
+    0.2,
+    0,
+    0,
+    1
+   ],
+   "emphasized-decel": [
+    0.05,
+    0.7,
+    0.1,
+    1
+   ],
+   "emphasized-accel": [
+    0.3,
+    0,
+    0.8,
+    0.15
+   ],
+   "spring-soft": [
+    0.22,
+    1.2,
+    0.36,
+    1
+   ],
+   "spring-snappy": [
+    0.34,
+    1.4,
+    0.64,
+    1
+   ],
+   "in-out": [
+    0.65,
+    0,
+    0.35,
+    1
+   ]
+  }
+ }
+}

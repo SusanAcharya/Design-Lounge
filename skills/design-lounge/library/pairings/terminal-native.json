@@ -1,0 +1,25 @@
+{
+ "id": "terminal-native",
+ "name": "Terminal Native",
+ "display": {
+  "family": "JetBrains Mono",
+  "weight": 700,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.03,
+  "google": "JetBrains+Mono:wght@400;500;700",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "IBM Plex Sans",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "IBM+Plex+Sans:wght@400;500;600;700",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

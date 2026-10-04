@@ -10,6 +10,7 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | One recipe | `library/starts/<id>.json` |
 | One theme's CSS | `library/themes/<id>.css` |
 | One pairing's CSS | `library/pairings/<id>.css` |
+| The same theme, pairing, and family as numbers, for native apps | `library/themes/<id>.json`, `library/pairings/<id>.json`, `library/app.json` |
 | Piece list, to search | `library/pieces.txt` |
 | One piece spec | `library/briefs/<id>.md` |
 | Icons | `library/icons.json` |
@@ -85,7 +86,7 @@ If the fetch fails, the list may have moved. Say so, and use the closest Lounge 
 
 ## Opening the page
 
-Look in [practice.md](practice.md) needs a real browser. Use [playwright-cli](https://github.com/microsoft/playwright-cli). If the `playwright-cli` command is missing, try `npx playwright cli`. If that is missing too, ask before you install it with `npm install -g @playwright/cli@latest`. Installing it is their call.
+Look in [practice.md](practice.md) needs a real browser. A native app needs a simulator instead: the commands are in Looking at the app in [native.md](native.md). Use [playwright-cli](https://github.com/microsoft/playwright-cli). If the `playwright-cli` command is missing, try `npx playwright cli`. If that is missing too, ask before you install it with `npm install -g @playwright/cli@latest`. Installing it is their call.
 
 ```bash
 playwright-cli open file:///abs/path/index.html

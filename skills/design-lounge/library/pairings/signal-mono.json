@@ -1,0 +1,32 @@
+{
+ "id": "signal-mono",
+ "name": "Signal Mono",
+ "display": {
+  "family": "Space Grotesk",
+  "weight": 600,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.04,
+  "google": "Space+Grotesk:wght@300..700",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Space Grotesk",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Space+Grotesk:wght@300..700",
+  "lineHeight": 1.55
+ },
+ "mono": {
+  "family": "Space Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Space+Mono:ital,wght@0,400;0,700;1,400"
+ },
+ "numbers": "mono",
+ "caution": ""
+}

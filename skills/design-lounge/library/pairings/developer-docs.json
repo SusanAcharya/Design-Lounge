@@ -1,0 +1,32 @@
+{
+ "id": "developer-docs",
+ "name": "Developer Docs",
+ "display": {
+  "family": "Geist",
+  "weight": 600,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.035,
+  "google": "Geist:wght@400;500;700",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Geist",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Geist:wght@400;500;700",
+  "lineHeight": 1.55
+ },
+ "mono": {
+  "family": "Geist Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Geist+Mono:wght@400;500"
+ },
+ "numbers": "mono",
+ "caution": ""
+}

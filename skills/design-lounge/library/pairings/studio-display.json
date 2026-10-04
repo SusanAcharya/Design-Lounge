@@ -1,0 +1,25 @@
+{
+ "id": "studio-display",
+ "name": "Studio Display",
+ "display": {
+  "family": "Syne",
+  "weight": 800,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.03,
+  "google": "Syne:wght@400;600;800",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Manrope",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Manrope:wght@400;500;700",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

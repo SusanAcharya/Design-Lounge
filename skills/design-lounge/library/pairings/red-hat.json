@@ -1,0 +1,25 @@
+{
+ "id": "red-hat",
+ "name": "Red Hat Pair",
+ "display": {
+  "family": "Red Hat Display",
+  "weight": 900,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.035,
+  "google": "Red+Hat+Display:wght@400;700;900",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Red Hat Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Red+Hat+Mono:wght@400;500",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

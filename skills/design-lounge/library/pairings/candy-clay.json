@@ -1,0 +1,25 @@
+{
+ "id": "candy-clay",
+ "name": "Candy Clay",
+ "display": {
+  "family": "Bagel Fat One",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.01,
+  "google": "Bagel+Fat+One",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Fredoka",
+  "weight": 500,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Fredoka:wght@400;500;600;700",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

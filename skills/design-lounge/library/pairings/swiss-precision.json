@@ -1,0 +1,32 @@
+{
+ "id": "swiss-precision",
+ "name": "Swiss Precision",
+ "display": {
+  "family": "Schibsted Grotesk",
+  "weight": 800,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.04,
+  "google": "Schibsted+Grotesk:wght@400;600;800",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Schibsted Grotesk",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Schibsted+Grotesk:wght@400;600;800",
+  "lineHeight": 1.55
+ },
+ "mono": {
+  "family": "IBM Plex Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "IBM+Plex+Mono:wght@400;500;600"
+ },
+ "numbers": "mono",
+ "caution": ""
+}

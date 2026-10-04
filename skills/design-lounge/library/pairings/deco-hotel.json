@@ -1,0 +1,25 @@
+{
+ "id": "deco-hotel",
+ "name": "Deco Hotel",
+ "display": {
+  "family": "Italiana",
+  "weight": 400,
+  "italic": false,
+  "upper": true,
+  "trackingEm": 0.06,
+  "google": "Italiana",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Josefin Sans",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0.02,
+  "google": "Josefin+Sans:wght@300;400;600",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

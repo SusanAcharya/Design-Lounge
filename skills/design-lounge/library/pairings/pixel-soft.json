@@ -1,0 +1,25 @@
+{
+ "id": "pixel-soft",
+ "name": "Pixel Soft",
+ "display": {
+  "family": "Pixelify Sans",
+  "weight": 700,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Pixelify+Sans:wght@400;700",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Lexend",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Lexend:wght@300;400;600",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

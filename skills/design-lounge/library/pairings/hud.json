@@ -1,0 +1,25 @@
+{
+ "id": "hud",
+ "name": "HUD",
+ "display": {
+  "family": "Chakra Petch",
+  "weight": 700,
+  "italic": false,
+  "upper": true,
+  "trackingEm": 0.02,
+  "google": "Chakra+Petch:wght@400;500;700",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Share Tech Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Share+Tech+Mono",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": "Body text is Share Tech Mono on purpose. Cockpit and status screens only. Do not use it for reports."
+}

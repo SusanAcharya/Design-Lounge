@@ -1,0 +1,25 @@
+{
+ "id": "the-lounge",
+ "name": "The Lounge",
+ "display": {
+  "family": "Fraunces",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.03,
+  "google": "Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Instrument Sans",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Instrument+Sans:wght@400..700",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

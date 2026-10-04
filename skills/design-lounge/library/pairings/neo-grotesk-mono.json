@@ -1,0 +1,32 @@
+{
+ "id": "neo-grotesk-mono",
+ "name": "Neo Grotesk Mono",
+ "display": {
+  "family": "Familjen Grotesk",
+  "weight": 700,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.035,
+  "google": "Familjen+Grotesk:wght@400;600;700",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Familjen Grotesk",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Familjen+Grotesk:wght@400;600;700",
+  "lineHeight": 1.55
+ },
+ "mono": {
+  "family": "Chivo Mono",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Chivo+Mono:wght@400;500"
+ },
+ "numbers": "mono",
+ "caution": ""
+}

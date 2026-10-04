@@ -1,0 +1,25 @@
+{
+ "id": "atelier",
+ "name": "Atelier",
+ "display": {
+  "family": "Gloock",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": -0.025,
+  "google": "Gloock",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Figtree",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Figtree:wght@400;600;800",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": ""
+}

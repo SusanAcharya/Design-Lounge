@@ -4,6 +4,7 @@ This is how you design with the library. The catalogue is the material. This fil
 
 - A website: this file, then [website.md](website.md). Then Page shape and Craft in [taste.md](taste.md), and Named looks there if they named a style.
 - An app, a tool, a dashboard, or a shop: this file, then [app.md](app.md).
+- A React Native, Expo, Flutter, SwiftUI, or Compose app, or a PWA: also [native.md](native.md).
 - Another language, a currency, a calendar, or a regional look: [locale.md](locale.md) as well.
 - One component or section: Adapting a brief, Components, and the brief. Skip the rest.
 - A redesign: Redesign below, then the files for its kind.
