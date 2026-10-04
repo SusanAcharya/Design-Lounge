@@ -4,26 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Glass is allowed in one place only: the compact top bar. Everything else is opaque.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A creator profile in Kiln, a fictional app where potters share their work. The profile is Noor Haddad, @noorthrows, who throws stoneware in a garage in Leeds. The top of the screen is a large header: a 92px avatar drawn from initials, the name at 28px, the handle, a two-line bio, three stats, and a row of actions. Under it, a segmented control switches between Posts, Saved, and About. Posts is a two-column grid of six tiles drawn with CSS colour blocks. When the name scrolls under the top bar, the bar turns to iOS 26-ish glass and shows a small avatar and the name. The detail worth copying is the hand-off: the big name leaves, and the small name arrives in the same place your eye is looking.
 
 The language is iOS 26-ish. Use an SF-like stack. This demo loads Inter so it renders the same everywhere. Neutrals are bright and slightly warm. One vivid cobalt does the brand work: the avatar, the Follow button, and the focus ring.
-
-## Reference behaviour
-
-1. First frame: the bar is transparent. Only the back and more buttons show in it. The large header is fully visible. Follow is a filled cobalt pill with a plus icon. Posts is the selected tab. Six post tiles are below.
-2. Scroll down. The avatar scales from 1 to 0.65 and fades from 1 to 0.1 over the first 120px of scroll. It scales from its bottom-left corner.
-3. When the bottom of the `h1` passes the bottom of the bar (99px from the top), the bar gets the class `is-compact`. Its background fades to glass over 280ms. A hairline appears under it. The bar title (26px avatar + "Noor Haddad") fades in and rises 6px over 200ms.
-4. Scroll back up past that line. The bar returns to transparent and the title fades out.
-5. The segmented control is sticky. It pins at 98px from the top, right under the bar. Tiles scroll under it and then under the glass bar.
-6. Tap Follow. The button turns white with a hairline border. Its radius goes from pill to 14px. The plus rotates 90° and fades out. A check scales in from 0.4 and rotates from -45°. The label becomes "Following". Followers goes from 18,642 to 18,643.
-7. Tap Following. Everything reverses. Followers goes back to 18,642.
-8. A polite live region says "Following Noor Haddad" or "Unfollowed Noor Haddad".
-9. Tap Saved. The white thumb slides under Saved over 280ms. The Posts panel hides. The Saved panel shows four tiles from other makers.
-10. Tap About. The thumb slides again. A five-row definition list shows Studio, Clay, Sells, Teaches, Joined.
-11. With a tab focused, Left and Right move to the next tab and select it. Home and End jump to the first and last tab.
-12. Message and Share are buttons. They do nothing in this demo.
 
 ## Structure
 
@@ -62,66 +49,6 @@ The language is iOS 26-ish. Use an SF-like stack. This demo loads Inter so it re
 - Each panel is a `section role="tabpanel"` with `tabindex="0"` and `hidden` when not selected.
 - Each tile is a `button` with a block swatch, a bold title, and a meta line.
 - Panels have `min-height: 560px`, so the header can collapse on every tab.
-
-## Tokens
-
-```css
-:root {
-  /* neutrals */
-  --bg: #f6f5f2;
-  --surface: #ffffff;
-  --fill: #ecebe7;          /* segmented track */
-  --line: #e3e1dc;
-  --ink: #141518;
-  --ink-2: #45474d;
-  --ink-3: #686b73;
-  /* accent */
-  --accent: #2340f0;        /* cobalt */
-  --accent-press: #1a31c4;
-  --on-accent: #ffffff;
-  --focus: #2340f0;
-  /* glass, compact bar only */
-  --glass: rgba(250, 250, 248, 0.72);
-  --glass-line: rgba(20, 21, 24, 0.08);
-  --glass-blur: blur(20px) saturate(180%);
-  /* type */
-  --sans: "Inter", -apple-system, "SF Pro Text", system-ui, sans-serif;
-  /* space, 4px base */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px;
-  --page-x: 20px;
-  /* radii */
-  --r-s: 10px; --r-m: 14px; --r-l: 20px; --r-pill: 999px;
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --spring: cubic-bezier(0.32, 0.72, 0, 1);
-  --micro: 160ms;
-  --layout: 280ms;
-  /* insets */
-  --top: max(54px, env(safe-area-inset-top));
-}
-```
-
-Glaze colours for the tiles are per-tile inline values, not tokens: `--a` top block, `--b` bottom block, `--c` pot. Example celadon: `#dfe7dc`, `#c9d5c4`, `#8fb19a`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Name | Inter | 28px | 700 | 1.1 | -0.025em | `--ink` |
-| Handle | Inter | 15px | 400 | 1.45 | 0 | `--ink-3` |
-| Bio | Inter | 15px | 400 | 1.45 | 0 | `--ink-2`, max 32ch |
-| Stat number | Inter | 20px | 700 | 1.2 | -0.02em | tabular-nums |
-| Stat label | Inter | 13px | 400 | 1.3 | 0 | `--ink-3` |
-| Button | Inter | 15px | 600 | 1 | 0 | |
-| Tab | Inter | 14px | 600 | 1 | 0 | `--ink-3`, selected `--ink` |
-| Bar title | Inter | 16px | 600 | 1 | -0.01em | |
-| Avatar initials | Inter | 32px | 700 | 1 | -0.02em | white |
-| Tile title | Inter | 14px | 600 | 1.25 | -0.01em | |
-| Tile meta | Inter | 12px | 400 | 1.3 | 0 | tabular-nums |
-| Badge | Inter | 12px | 600 | 1 | 0 | `--ink-2` |
-
-- Turn on `font-feature-settings: "cv11", "ss01"` for Inter's single-storey a and open digits. With SF, drop it.
-- Stat numbers must be tabular. 18,642 → 18,643 must not shift the label.
 
 ## Motion
 
@@ -201,6 +128,85 @@ Glaze colours for the tiles are per-tile inline values, not tokens: `--a` top bl
 - [ ] Posts shows six tiles. The first is "Celadon bowl, third firing", "Cone 10 · 2d".
 - [ ] Saved shows four tiles. About shows five rows.
 - [ ] Background `#f6f5f2`, track `#ecebe7`, glass `rgba(250,250,248,.72)` with 20px blur.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the bar is transparent. Only the back and more buttons show in it. The large header is fully visible. Follow is a filled cobalt pill with a plus icon. Posts is the selected tab. Six post tiles are below.
+2. Scroll down. The avatar scales from 1 to 0.65 and fades from 1 to 0.1 over the first 120px of scroll. It scales from its bottom-left corner.
+3. When the bottom of the `h1` passes the bottom of the bar (99px from the top), the bar gets the class `is-compact`. Its background fades to glass over 280ms. A hairline appears under it. The bar title (26px avatar + "Noor Haddad") fades in and rises 6px over 200ms.
+4. Scroll back up past that line. The bar returns to transparent and the title fades out.
+5. The segmented control is sticky. It pins at 98px from the top, right under the bar. Tiles scroll under it and then under the glass bar.
+6. Tap Follow. The button turns white with a hairline border. Its radius goes from pill to 14px. The plus rotates 90° and fades out. A check scales in from 0.4 and rotates from -45°. The label becomes "Following". Followers goes from 18,642 to 18,643.
+7. Tap Following. Everything reverses. Followers goes back to 18,642.
+8. A polite live region says "Following Noor Haddad" or "Unfollowed Noor Haddad".
+9. Tap Saved. The white thumb slides under Saved over 280ms. The Posts panel hides. The Saved panel shows four tiles from other makers.
+10. Tap About. The thumb slides again. A five-row definition list shows Studio, Clay, Sells, Teaches, Joined.
+11. With a tab focused, Left and Right move to the next tab and select it. Home and End jump to the first and last tab.
+12. Message and Share are buttons. They do nothing in this demo.
+
+## Tokens
+
+```css
+:root {
+  /* neutrals */
+  --bg: #f6f5f2;
+  --surface: #ffffff;
+  --fill: #ecebe7;          /* segmented track */
+  --line: #e3e1dc;
+  --ink: #141518;
+  --ink-2: #45474d;
+  --ink-3: #686b73;
+  /* accent */
+  --accent: #2340f0;        /* cobalt */
+  --accent-press: #1a31c4;
+  --on-accent: #ffffff;
+  --focus: #2340f0;
+  /* glass, compact bar only */
+  --glass: rgba(250, 250, 248, 0.72);
+  --glass-line: rgba(20, 21, 24, 0.08);
+  --glass-blur: blur(20px) saturate(180%);
+  /* type */
+  --sans: "Inter", -apple-system, "SF Pro Text", system-ui, sans-serif;
+  /* space, 4px base */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px;
+  --page-x: 20px;
+  /* radii */
+  --r-s: 10px; --r-m: 14px; --r-l: 20px; --r-pill: 999px;
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --spring: cubic-bezier(0.32, 0.72, 0, 1);
+  --micro: 160ms;
+  --layout: 280ms;
+  /* insets */
+  --top: max(54px, env(safe-area-inset-top));
+}
+```
+
+Glaze colours for the tiles are per-tile inline values, not tokens: `--a` top block, `--b` bottom block, `--c` pot. Example celadon: `#dfe7dc`, `#c9d5c4`, `#8fb19a`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Name | Inter | 28px | 700 | 1.1 | -0.025em | `--ink` |
+| Handle | Inter | 15px | 400 | 1.45 | 0 | `--ink-3` |
+| Bio | Inter | 15px | 400 | 1.45 | 0 | `--ink-2`, max 32ch |
+| Stat number | Inter | 20px | 700 | 1.2 | -0.02em | tabular-nums |
+| Stat label | Inter | 13px | 400 | 1.3 | 0 | `--ink-3` |
+| Button | Inter | 15px | 600 | 1 | 0 | |
+| Tab | Inter | 14px | 600 | 1 | 0 | `--ink-3`, selected `--ink` |
+| Bar title | Inter | 16px | 600 | 1 | -0.01em | |
+| Avatar initials | Inter | 32px | 700 | 1 | -0.02em | white |
+| Tile title | Inter | 14px | 600 | 1.25 | -0.01em | |
+| Tile meta | Inter | 12px | 400 | 1.3 | 0 | tabular-nums |
+| Badge | Inter | 12px | 600 | 1 | 0 | `--ink-2` |
+
+- Turn on `font-feature-settings: "cv11", "ss01"` for Inter's single-storey a and open digits. With SF, drop it.
+- Stat numbers must be tabular. 18,642 → 18,643 must not shift the label.
 
 ## Implementation notes
 

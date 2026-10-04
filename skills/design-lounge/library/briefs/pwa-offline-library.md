@@ -4,27 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The "Saved" screen of "Nightjar", an installed reading and listening app. It answers three questions in order: how much room is left, what is still downloading, and what can I open with no signal. The look is an editorial night page: deep navy, paper-white serif titles, sans meta, and one amber accent for progress and warnings. The detail worth copying is that nothing is hidden when offline. Items that cannot work offline stay in the list, dimmed, with the reason written under the title.
-
-## Reference behaviour
-
-1. First frame, online. Top row: a moon mark and "NIGHTJAR" on the left, a dashed "Demo: go offline" button on the right. Heading "Saved for offline" at 34px serif, then "Stories and episodes kept on this phone."
-2. Storage card: "1.21 GB of 2.00 GB" on the left, "786 MB free" on the right. An 8px meter shows Episodes (amber, 1.12 GB) and Articles (paper, 94 MB) on a navy track. A legend repeats both numbers.
-3. Inside the same card, under a hairline: a switch row "Download on Wi-Fi only", on by default, with the sub line "Episodes wait for Wi-Fi. Articles always download."
-4. Section "Downloading 2". Each row has a 40px progress ring with the percent in the middle, a kicker ("Episode · The Long Tide"), a serif title, a meta line ("52 min · 23.2 of 61 MB"), and a 44px cancel button (×).
-5. The rings advance every 500ms. Episode one gains 1.6% per tick from 38%. Episode two gains 0.45% per tick from 9%.
-6. When a ring reaches 100%, its row fades and collapses over 420ms. The item then appears at the top of "On this device", the item count goes up by one, the episode size is added to the meter, and the live region says "The Harbour Pilots Who Never Sleep downloaded. Available offline."
-7. Section "On this device 31 items" shows four rows: a 40px type icon with a small amber tick badge, kicker, title, "14 min read · 2.4 MB", and a 44px remove button (bin icon). Below them: "Show 27 older items".
-8. Tap remove. The row fades (220ms) and collapses (300ms after a 120ms delay). Then the meter drops by the item size, the count drops by one, focus moves to the next row's remove button, and the live region says "Removed A Winter on the Salt Road. 41.6 MB freed."
-9. Tap cancel on a download. The row collapses the same way and the live region says "Download cancelled: …".
-10. Section "Not available offline 2". Rows are dimmed: muted title colour, dashed icon border, and an amber lock line with the reason ("Live broadcasts stream only", "Publisher allows online reading only"). The download button is disabled.
-11. Tap the switch. It flips to off and the sub line becomes "Episodes may use mobile data, about 50 MB each."
-12. Tap "Demo: go offline". An amber "OFFLINE" pill appears next to the wordmark (pops in over 240ms). A notice with a 3px amber left rule appears under the heading: "You are offline. Everything under On this device still opens. Downloads resume when you reconnect." Rings stop and turn grey, and their meta becomes "Paused · 28.1 of 61 MB". Dimmed reasons gain a prefix: "Needs a connection. Live broadcasts stream only". The button now reads "Demo: go online".
-13. Go online again. The pill and notice go, rings turn amber and resume, and the live region says "Back online. Downloads resumed."
-14. A footer line explains the eviction rule: "Nightjar keeps up to 2.00 GB. Oldest finished episodes are cleared first when space runs low."
-15. The page scrolls in one column. Nothing scrolls sideways.
 
 ## Structure
 
@@ -78,66 +62,6 @@ Sample content:
 | On device | Article · Coastline Review | Letters From the Weather Ship | 22 min read · 3.8 MB |
 | Not available | Live audio · Fathom Radio | Storm Watch From Ness Point | Live broadcasts stream only |
 | Not available | Article · Meridian Weekly | The Cartographer's Daughter, Part 3 | Publisher allows online reading only |
-
-## Tokens
-
-```css
-:root {
-  /* night neutrals */
-  --bg: #0d1726;          /* page */
-  --surface: #14223a;     /* storage card, notice */
-  --raise: #1b2b45;       /* button hover */
-  --line: #26385a;        /* hairlines, meter track, ring track */
-  --ink: #f3eee4;         /* paper-white titles */
-  --ink-2: #bcc2cd;       /* meta, body */
-  --ink-3: #8f99ab;       /* kickers, dimmed titles, paused ring */
-
-  /* the one accent */
-  --amber: #f0a640;       /* rings, episode share, ticks, offline pill, reasons */
-  --amber-ink: #1c1304;   /* text and icons on amber */
-
-  /* type */
-  --serif: "Source Serif 4", Georgia, serif;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --fs-h1: 34px; --fs-used: 26px; --fs-title: 16px; --fs-body: 14px;
-  --fs-meta: 12px; --fs-kicker: 10.5px; --fs-label: 11px;
-
-  /* space and shape */
-  --pad-x: 20px;
-  --top-clear: 54px;
-  --bottom-clear: 34px;
-  --row-pad: 12px;
-  --r: 10px;              /* card */
-  --r-sm: 8px;            /* icons, buttons */
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --out: cubic-bezier(.16, 1, .3, 1);
-  --t-ring: 400ms;
-  --t-meter: 400ms;
-  --t-fade: 220ms;
-  --t-collapse: 300ms;
-  --tick: 500ms;          /* demo download tick */
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | ---: | ---: | ---: | ---: | --- |
-| Heading | Source Serif 4 | 34px | 600 | 1.05 | −0.015em | sentence |
-| Used amount | Source Serif 4 | 26px | 600 | 1 | 0 | numerals, tabular |
-| Item title | Source Serif 4 | 16px | 600 | 1.25 | −0.005em | title, 2-line clamp |
-| Switch label | IBM Plex Sans | 15px | 500 | 1.3 | 0 | sentence |
-| Body / sub | IBM Plex Sans | 14px | 400 | 1.45 | 0 | sentence |
-| Meta / legend | IBM Plex Sans | 12px | 400 | 1.45 | 0 | sentence, tabular |
-| Section label | IBM Plex Sans | 11px | 600 | 1 | 0.14em | upper |
-| Kicker | IBM Plex Sans | 10.5px | 600 | 1.2 | 0.1em | upper |
-| Wordmark | IBM Plex Sans | 12px | 600 | 1 | 0.14em | upper |
-| Offline pill | IBM Plex Sans | 11px | 600 | 1 | 0.06em | upper |
-| Ring percent | IBM Plex Sans | 10px | 600 | 1 | 0 | numerals |
-
-Serif is for things you read: the heading, the amount, and titles. Sans is for things you scan: sizes, durations, labels.
 
 ## Motion
 
@@ -210,6 +134,88 @@ The download percentages keep updating under reduced motion. Only the tweening g
 - [ ] "On this device" starts at 31 items with 4 shown and "Show 27 older items".
 - [ ] Background `#0d1726`, titles `#f3eee4` in Source Serif 4, accent `#f0a640`.
 - [ ] Removing "A Winter on the Salt Road" frees 41.6 MB.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame, online. Top row: a moon mark and "NIGHTJAR" on the left, a dashed "Demo: go offline" button on the right. Heading "Saved for offline" at 34px serif, then "Stories and episodes kept on this phone."
+2. Storage card: "1.21 GB of 2.00 GB" on the left, "786 MB free" on the right. An 8px meter shows Episodes (amber, 1.12 GB) and Articles (paper, 94 MB) on a navy track. A legend repeats both numbers.
+3. Inside the same card, under a hairline: a switch row "Download on Wi-Fi only", on by default, with the sub line "Episodes wait for Wi-Fi. Articles always download."
+4. Section "Downloading 2". Each row has a 40px progress ring with the percent in the middle, a kicker ("Episode · The Long Tide"), a serif title, a meta line ("52 min · 23.2 of 61 MB"), and a 44px cancel button (×).
+5. The rings advance every 500ms. Episode one gains 1.6% per tick from 38%. Episode two gains 0.45% per tick from 9%.
+6. When a ring reaches 100%, its row fades and collapses over 420ms. The item then appears at the top of "On this device", the item count goes up by one, the episode size is added to the meter, and the live region says "The Harbour Pilots Who Never Sleep downloaded. Available offline."
+7. Section "On this device 31 items" shows four rows: a 40px type icon with a small amber tick badge, kicker, title, "14 min read · 2.4 MB", and a 44px remove button (bin icon). Below them: "Show 27 older items".
+8. Tap remove. The row fades (220ms) and collapses (300ms after a 120ms delay). Then the meter drops by the item size, the count drops by one, focus moves to the next row's remove button, and the live region says "Removed A Winter on the Salt Road. 41.6 MB freed."
+9. Tap cancel on a download. The row collapses the same way and the live region says "Download cancelled: …".
+10. Section "Not available offline 2". Rows are dimmed: muted title colour, dashed icon border, and an amber lock line with the reason ("Live broadcasts stream only", "Publisher allows online reading only"). The download button is disabled.
+11. Tap the switch. It flips to off and the sub line becomes "Episodes may use mobile data, about 50 MB each."
+12. Tap "Demo: go offline". An amber "OFFLINE" pill appears next to the wordmark (pops in over 240ms). A notice with a 3px amber left rule appears under the heading: "You are offline. Everything under On this device still opens. Downloads resume when you reconnect." Rings stop and turn grey, and their meta becomes "Paused · 28.1 of 61 MB". Dimmed reasons gain a prefix: "Needs a connection. Live broadcasts stream only". The button now reads "Demo: go online".
+13. Go online again. The pill and notice go, rings turn amber and resume, and the live region says "Back online. Downloads resumed."
+14. A footer line explains the eviction rule: "Nightjar keeps up to 2.00 GB. Oldest finished episodes are cleared first when space runs low."
+15. The page scrolls in one column. Nothing scrolls sideways.
+
+## Tokens
+
+```css
+:root {
+  /* night neutrals */
+  --bg: #0d1726;          /* page */
+  --surface: #14223a;     /* storage card, notice */
+  --raise: #1b2b45;       /* button hover */
+  --line: #26385a;        /* hairlines, meter track, ring track */
+  --ink: #f3eee4;         /* paper-white titles */
+  --ink-2: #bcc2cd;       /* meta, body */
+  --ink-3: #8f99ab;       /* kickers, dimmed titles, paused ring */
+
+  /* the one accent */
+  --amber: #f0a640;       /* rings, episode share, ticks, offline pill, reasons */
+  --amber-ink: #1c1304;   /* text and icons on amber */
+
+  /* type */
+  --serif: "Source Serif 4", Georgia, serif;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --fs-h1: 34px; --fs-used: 26px; --fs-title: 16px; --fs-body: 14px;
+  --fs-meta: 12px; --fs-kicker: 10.5px; --fs-label: 11px;
+
+  /* space and shape */
+  --pad-x: 20px;
+  --top-clear: 54px;
+  --bottom-clear: 34px;
+  --row-pad: 12px;
+  --r: 10px;              /* card */
+  --r-sm: 8px;            /* icons, buttons */
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --out: cubic-bezier(.16, 1, .3, 1);
+  --t-ring: 400ms;
+  --t-meter: 400ms;
+  --t-fade: 220ms;
+  --t-collapse: 300ms;
+  --tick: 500ms;          /* demo download tick */
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Heading | Source Serif 4 | 34px | 600 | 1.05 | −0.015em | sentence |
+| Used amount | Source Serif 4 | 26px | 600 | 1 | 0 | numerals, tabular |
+| Item title | Source Serif 4 | 16px | 600 | 1.25 | −0.005em | title, 2-line clamp |
+| Switch label | IBM Plex Sans | 15px | 500 | 1.3 | 0 | sentence |
+| Body / sub | IBM Plex Sans | 14px | 400 | 1.45 | 0 | sentence |
+| Meta / legend | IBM Plex Sans | 12px | 400 | 1.45 | 0 | sentence, tabular |
+| Section label | IBM Plex Sans | 11px | 600 | 1 | 0.14em | upper |
+| Kicker | IBM Plex Sans | 10.5px | 600 | 1.2 | 0.1em | upper |
+| Wordmark | IBM Plex Sans | 12px | 600 | 1 | 0.14em | upper |
+| Offline pill | IBM Plex Sans | 11px | 600 | 1 | 0.06em | upper |
+| Ring percent | IBM Plex Sans | 10px | 600 | 1 | 0 | numerals |
+
+Serif is for things you read: the heading, the amount, and titles. Sans is for things you scan: sizes, durations, labels.
 
 ## Implementation notes
 

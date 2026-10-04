@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A drag-to-confirm for voiding a hold at Hollis. The sentence says Gate 4, load 18, and that it cannot be sent again today. The thumb starts at the left. Releasing before 92 percent snaps it back. Releasing at or past 92 percent completes the void. This is not a settings slider. A slider is `slider-field`. This is not a confirm dialog. A dialog is `modal-dialog-focus-trap`. The drag is the confirmation.
-
-## Reference behaviour
-
-1. The first frame shows the track with the thumb at the left. The label reads Slide to void. The status line is empty. Reset is hidden.
-2. Pointer down on the thumb starts a drag. The thumb follows the pointer and does not leave the track.
-3. The red wash behind the thumb grows with the thumb.
-4. Pointer up below 92 percent animates the thumb back to the start in 180ms.
-5. Pointer up at 92 percent or more moves the thumb to the end, sets the label to Voided, disables the thumb, and writes "Hold voided · load 18 · Gate 4".
-6. Reset returns the track to the start and clears the status.
-7. ArrowRight adds 10 percent. ArrowLeft subtracts 10. End completes. Home returns to zero. Enter completes only when the value is already at least 92.
 
 ## Structure
 
@@ -33,23 +25,6 @@ Reset, hidden until done
 - Thumb is 48px, inset 4px, fill #9b2c2c.
 - The thumb is a slider with aria-valuemin 0 and aria-valuemax 100.
 - Reset is a 36px outline button.
-
-## Tokens
-
-```css
-:root {
-  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
-  --line:#e4dfd4; --line-2:#cfc6b8; --primary:#1f4d3a; --danger:#9b2c2c;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Title | IBM Plex Sans | 22px | 600 | 1.2 | 0 |
-| Body | IBM Plex Sans | 14px | 400 | 1.45 | 0 |
-| Track label | IBM Plex Sans | 14px | 500 | 1 | 0 |
 
 ## Motion
 
@@ -97,16 +72,6 @@ Reset, hidden until done
 - [ ] Threshold is 92 percent.
 - [ ] Type is IBM Plex Sans.
 
-## Implementation notes
-
-max travel is track width minus 56, because the thumb is 48px plus 4px inset on each side.
-
-```js
-function commit(v){ if (v >= 92) finish(); else paint(0, true); }
-```
-
-Do not confirm on pointer down. The person must release at the end.
-
 ## Measurements to keep
 
 - Card 440px, padding 28px.
@@ -151,6 +116,47 @@ Do not confirm on pointer down. The person must release at the end.
 - Do not start a drag from the track label. The thumb is the handle.
 - A finished thumb is disabled.
 - Reduced motion removes the 180ms snap and jumps.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the track with the thumb at the left. The label reads Slide to void. The status line is empty. Reset is hidden.
+2. Pointer down on the thumb starts a drag. The thumb follows the pointer and does not leave the track.
+3. The red wash behind the thumb grows with the thumb.
+4. Pointer up below 92 percent animates the thumb back to the start in 180ms.
+5. Pointer up at 92 percent or more moves the thumb to the end, sets the label to Voided, disables the thumb, and writes "Hold voided · load 18 · Gate 4".
+6. Reset returns the track to the start and clears the status.
+7. ArrowRight adds 10 percent. ArrowLeft subtracts 10. End completes. Home returns to zero. Enter completes only when the value is already at least 92.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
+  --line:#e4dfd4; --line-2:#cfc6b8; --primary:#1f4d3a; --danger:#9b2c2c;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Title | IBM Plex Sans | 22px | 600 | 1.2 | 0 |
+| Body | IBM Plex Sans | 14px | 400 | 1.45 | 0 |
+| Track label | IBM Plex Sans | 14px | 500 | 1 | 0 |
+
+## Implementation notes
+
+max travel is track width minus 56, because the thumb is 48px plus 4px inset on each side.
+
+```js
+function commit(v){ if (v >= 92) finish(); else paint(0, true); }
+```
+
+Do not confirm on pointer down. The person must release at the end.
 
 ---
 

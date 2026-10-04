@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The booking buttons for "Orlé", a fictional chef's-counter restaurant. Full pill buttons on a green-black card: a solid champagne pill with a soft gold glow, a dark pill with a 1.5px gold conic gradient border, a quiet text pill, and a round icon pill. On hover a narrow diagonal band of light sweeps once across the pill in 1s, and the border gradient rotates 180°, so the metal looks like it caught the light. The two booking pills are asynchronous: click and the label cross-fades to a spinner with "Holding your table", the pill width animates to fit, then it turns sage with a drawn check and "Table for 2 · 20:30". The detail worth copying is that the sweep is a one-shot keyframe on hover, not a transition, so it never runs backwards when the pointer leaves.
-
-## Reference behaviour
-
-1. First frame: centred card. "Orlé" in Italiana 52px champagne, meta line "Chef's counter · Saturday 14 November · 2 guests", and on the right a tracked caption "Pill buttons · sheen on hover".
-2. Live row: "Reserve the table" (solid, large), "Add wine pairing" (gradient edge, medium), "Tasting menu →" (gradient edge, small), "Gift an evening" (quiet, small), heart icon pill (edge, 52px circle, toggle).
-3. Hover or keyboard focus: the sheen band travels from −130% to 130% of the pill's width over 1000ms, expo-out. The edge gradient's start angle animates 120° → 300° over 900ms. Solid pills grow their glow.
-4. Press: scale 0.97 in 90ms.
-5. Click "Reserve the table": `aria-busy="true"`, label swaps to a spinning 18px arc + "Holding your table"; the label fades up 6px in 260ms; the pill width animates from old to new in 420ms.
-6. After 1500ms: `aria-busy` is removed, the pill gains `.ok`, turns sage (`#c9efd6 → #8fd3a8`) with dark green text, a check draws in 420ms, label "Table for 2 · 20:30". A polite live region says "Table reserved for 2 at 20:30".
-7. After 3200ms more it morphs back to the idle label. Clicks while busy or in success are ignored.
-8. "Add wine pairing" runs the same cycle: "Adding pairing" → "Pairing added · £68"; its success state is a sage 1.5px border with sage text.
-9. Heart pill toggles `aria-pressed`; on, it turns rose `#e79a8a` and fills. The live region says "Saved to favourites" / "Removed from favourites".
-10. A States sheet shows Solid, Gradient edge and Quiet at Default, Hover (sheen frozen mid-sweep), Pressed, Disabled, Focus; below it a Lifecycle strip: idle → loading → success.
-11. Reduced motion: no sheen, no width tween, no fade, no check draw; the spinner slows to 2400ms per turn.
 
 ## Structure
 
@@ -45,44 +33,6 @@ The booking buttons for "Orlé", a fictional chef's-counter restaurant. Full pil
 - Live row: `section aria-label="Try the buttons"` of `button type="button"`; each label sits in a `span.lbl` so it can be swapped.
 - A visually hidden `p aria-live="polite"` sits after the row.
 - The sheet and lifecycle strip are wrapped in one `div inert aria-hidden="true"`, after a visually hidden description.
-
-## Tokens
-
-```css
-@property --ang { syntax: "<angle>"; inherits: false; initial-value: 120deg; }
-:root {
-  --bg: #0f1412;        /* page, green-black */
-  --surface: #161c19;   /* card */
-  --surface-2: #1d2420; /* edge pill fill */
-  --ivory: #f2ebdd;     /* text */
-  --ink-2: #a8a293;     /* captions ~7:1 on card */
-  --line: rgba(242,235,221,.1);
-  --gold-1: #f4e2b8;  --gold-2: #d4b073;  --gold-3: #8f6c3a;   /* champagne ramp */
-  --on-gold: #1d160a;   /* text on solid pill ~10:1 */
-  --sage: #8fd3a8;      /* success */
-  --rose: #e79a8a;      /* favourite on */
-  --serif: "Italiana", Georgia, serif;
-  --sans: "Urbanist", system-ui, sans-serif;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --out: cubic-bezier(.16,1,.3,1);
-}
-```
-
-Sizes: L 58px / 34px padding / 16px; M 52 / 28 / 15; S 42 / 20 / 14; icon 52×52; sheet 42 / 20 / 14. Radius always 999px. Gap 10px between icon and label; 18px between pills.
-
-Solid fill: `linear-gradient(180deg, #f4e2b8, #d4b073 60%, #c49c5c)` + `inset 0 1px 0 rgba(255,255,255,.6)`, `inset 0 -1px 0 rgba(90,60,20,.4)`, `0 10px 26px -12px rgba(212,176,115,.55)`.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Wordmark | Italiana | 52px / 0.9 | 400 | 0.01em | Title, `--gold-1` |
-| Meta | Urbanist | 14px | 400 | 0 | Sentence |
-| Pill label | Urbanist | 14 / 15 / 16px | 600 | 0.01em | Sentence |
-| Captions, column heads | Urbanist | 11px / 10px | 600 | 0.16em | Upper |
-| Row labels | Urbanist | 13px | 400 | 0 | Sentence |
-
-Italiana is display-only. Labels stay Urbanist 600 so they read at 14px on gold.
 
 ## Motion
 
@@ -147,6 +97,62 @@ Linear is right for the spinner only.
 - [ ] Loading 1500ms, success held 3200ms.
 - [ ] Success labels "Table for 2 · 20:30" and "Pairing added · £68".
 - [ ] Card `#161c19` on `#0f1412`; solid gold `#f4e2b8 → #d4b073`; success `#8fd3a8`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: centred card. "Orlé" in Italiana 52px champagne, meta line "Chef's counter · Saturday 14 November · 2 guests", and on the right a tracked caption "Pill buttons · sheen on hover".
+2. Live row: "Reserve the table" (solid, large), "Add wine pairing" (gradient edge, medium), "Tasting menu →" (gradient edge, small), "Gift an evening" (quiet, small), heart icon pill (edge, 52px circle, toggle).
+3. Hover or keyboard focus: the sheen band travels from −130% to 130% of the pill's width over 1000ms, expo-out. The edge gradient's start angle animates 120° → 300° over 900ms. Solid pills grow their glow.
+4. Press: scale 0.97 in 90ms.
+5. Click "Reserve the table": `aria-busy="true"`, label swaps to a spinning 18px arc + "Holding your table"; the label fades up 6px in 260ms; the pill width animates from old to new in 420ms.
+6. After 1500ms: `aria-busy` is removed, the pill gains `.ok`, turns sage (`#c9efd6 → #8fd3a8`) with dark green text, a check draws in 420ms, label "Table for 2 · 20:30". A polite live region says "Table reserved for 2 at 20:30".
+7. After 3200ms more it morphs back to the idle label. Clicks while busy or in success are ignored.
+8. "Add wine pairing" runs the same cycle: "Adding pairing" → "Pairing added · £68"; its success state is a sage 1.5px border with sage text.
+9. Heart pill toggles `aria-pressed`; on, it turns rose `#e79a8a` and fills. The live region says "Saved to favourites" / "Removed from favourites".
+10. A States sheet shows Solid, Gradient edge and Quiet at Default, Hover (sheen frozen mid-sweep), Pressed, Disabled, Focus; below it a Lifecycle strip: idle → loading → success.
+11. Reduced motion: no sheen, no width tween, no fade, no check draw; the spinner slows to 2400ms per turn.
+
+## Tokens
+
+```css
+@property --ang { syntax: "<angle>"; inherits: false; initial-value: 120deg; }
+:root {
+  --bg: #0f1412;        /* page, green-black */
+  --surface: #161c19;   /* card */
+  --surface-2: #1d2420; /* edge pill fill */
+  --ivory: #f2ebdd;     /* text */
+  --ink-2: #a8a293;     /* captions ~7:1 on card */
+  --line: rgba(242,235,221,.1);
+  --gold-1: #f4e2b8;  --gold-2: #d4b073;  --gold-3: #8f6c3a;   /* champagne ramp */
+  --on-gold: #1d160a;   /* text on solid pill ~10:1 */
+  --sage: #8fd3a8;      /* success */
+  --rose: #e79a8a;      /* favourite on */
+  --serif: "Italiana", Georgia, serif;
+  --sans: "Urbanist", system-ui, sans-serif;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --out: cubic-bezier(.16,1,.3,1);
+}
+```
+
+Sizes: L 58px / 34px padding / 16px; M 52 / 28 / 15; S 42 / 20 / 14; icon 52×52; sheet 42 / 20 / 14. Radius always 999px. Gap 10px between icon and label; 18px between pills.
+
+Solid fill: `linear-gradient(180deg, #f4e2b8, #d4b073 60%, #c49c5c)` + `inset 0 1px 0 rgba(255,255,255,.6)`, `inset 0 -1px 0 rgba(90,60,20,.4)`, `0 10px 26px -12px rgba(212,176,115,.55)`.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Wordmark | Italiana | 52px / 0.9 | 400 | 0.01em | Title, `--gold-1` |
+| Meta | Urbanist | 14px | 400 | 0 | Sentence |
+| Pill label | Urbanist | 14 / 15 / 16px | 600 | 0.01em | Sentence |
+| Captions, column heads | Urbanist | 11px / 10px | 600 | 0.16em | Upper |
+| Row labels | Urbanist | 13px | 400 | 0 | Sentence |
+
+Italiana is display-only. Labels stay Urbanist 600 so they read at 14px on gold.
 
 ## Implementation notes
 

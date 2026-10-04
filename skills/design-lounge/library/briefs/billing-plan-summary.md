@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep one primary button and the usage fraction.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Billing for a small ops tool on the Yard desk plan. Two cards in a grid, max width 880px. The left card names the plan, the price, a renewal date, and a usage bar at 72 percent: 720 of 1,000 runs. Change plan is the only solid button. The right card lists three invoices and an outline button, Download October. Change plan rewrites itself to "Request sent" and disables. This is an account screen, not a marketing pricing table. Do not add three plan columns.
-
-## Reference behaviour
-
-1. Initial usage bar width is 72 percent. The fraction reads 720 / 1,000.
-2. Change plan sets its label to Request sent and disables. The plan name does not change.
-3. Download October does nothing in the demo. It stays an outline button.
-4. Invoice rows are 1 Oct, 1 Sep, 1 Aug, each $48.00, mono, right aligned.
-5. No toggle for annual pricing. No comparison grid.
-6. Focus ring 2px `--focus`, offset 2px.
-7. The bar is decorative for the number. The fraction is the text.
 
 ## Structure
 
@@ -30,36 +22,6 @@ right card: kicker, three invoices, outline button
 
 - Each card is a `section`.
 - Invoices are a `ul`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4efe4;
-  --surface: #fffaf0;
-  --surface-2: #efe6d4;
-  --ink: #152033;
-  --ink-2: #4a5568;
-  --ink-3: #7a8494;
-  --line: #e4dcc8;
-  --primary: #8a6230;
-  --primary-ink: #fffaf0;
-  --focus: #8a6230;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --radius: 2px;
-}
-```
-
-## Typography
-
-- Title: IBM Plex Sans 500, 28px, tracking -0.03em.
-- Kicker: 11px, weight 600, uppercase, tracking 0.12em, `--ink-3`.
-- Plan name: 22px, weight 500.
-- Price line: IBM Plex Mono 13px, `--ink-2`.
-- Fraction: mono 12px weight 500 for the numbers. The label "Runs this month" is 12px sans `--ink-2`.
-- Invoice date 13px sans. Amount mono 13px.
-- Buttons 14px weight 500, height 36, radius 2px.
 
 ## Motion
 
@@ -96,6 +58,50 @@ None. The bar does not animate from 0. It renders at 72 percent. Reduced motion 
 - [ ] Change plan becomes "Request sent" and disables.
 - [ ] Amounts are IBM Plex Mono. Prose is IBM Plex Sans.
 - [ ] There is no three-column pricing comparison.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial usage bar width is 72 percent. The fraction reads 720 / 1,000.
+2. Change plan sets its label to Request sent and disables. The plan name does not change.
+3. Download October does nothing in the demo. It stays an outline button.
+4. Invoice rows are 1 Oct, 1 Sep, 1 Aug, each $48.00, mono, right aligned.
+5. No toggle for annual pricing. No comparison grid.
+6. Focus ring 2px `--focus`, offset 2px.
+7. The bar is decorative for the number. The fraction is the text.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4efe4;
+  --surface: #fffaf0;
+  --surface-2: #efe6d4;
+  --ink: #152033;
+  --ink-2: #4a5568;
+  --ink-3: #7a8494;
+  --line: #e4dcc8;
+  --primary: #8a6230;
+  --primary-ink: #fffaf0;
+  --focus: #8a6230;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius: 2px;
+}
+```
+
+## Typography
+
+- Title: IBM Plex Sans 500, 28px, tracking -0.03em.
+- Kicker: 11px, weight 600, uppercase, tracking 0.12em, `--ink-3`.
+- Plan name: 22px, weight 500.
+- Price line: IBM Plex Mono 13px, `--ink-2`.
+- Fraction: mono 12px weight 500 for the numbers. The label "Runs this month" is 12px sans `--ink-2`.
+- Invoice date 13px sans. Amount mono 13px.
+- Buttons 14px weight 500, height 36, radius 2px.
 
 ## Implementation notes
 

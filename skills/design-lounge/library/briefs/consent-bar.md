@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, Accept is the one solid button and the bar is `--surface` with `--line`. This is a choice about a record. It is not a newsletter and not a sticky sale.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A short page, the yard log for 3 October, and a bar fixed to the bottom. The bar says we keep one record of this visit and nothing is sold on from it. Decline is outline. Accept is the one solid primary. Accept hides the bar and the page says "Record kept." Decline hides the bar and the page says "No record kept." The page above is still readable. The body has 120px of padding at the bottom so the bar does not cover the log. There is no second list, no checkbox, and no wall that blocks the log until a choice.
-
-## Reference behaviour
-
-1. The log is visible: the kicker 3 October, the title The yard log, and one sentence about Gate 4.
-2. The bar is fixed to the bottom, full width, with the sentence and the two buttons.
-3. Accept hides the bar and writes "Record kept."
-4. Decline hides the bar and writes "No record kept."
-5. After either choice the buttons are gone. The choice is not asked again on this view.
-6. There is no animation.
-7. Focus ring is 2px `--focus`, offset 3px.
 
 ## Structure
 
@@ -35,38 +27,6 @@ bar, fixed, full width, padding 16px 64px, hairline top
 - The bar is a region labelled Visit record.
 - The status line is `role="status"` in the column, not inside the bar, so it remains after the bar is gone.
 - Accept is the only button with the primary class.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --primary-ink: #fffdf8;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Button radius is 2px. The family replaces it. The bar itself is square to the viewport edges. Do not float it as a card with a margin unless the family is soft, and even then keep it one bar, not a toast.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Kicker | sans | 12px | 500 | `--ink-2` |
-| Title | sans | 40px | 500 | `--ink` |
-| Lead | sans | 16px | 400 | `--ink` |
-| Bar | sans | 16px | 400 | `--ink` |
-| Button | sans | 13px | 500 | see states |
-| Status | sans | 16px | 400 | `--ink` |
-
-The title is the largest type. The bar sentence measure is about 52 characters. The kicker letter-spacing is 0.04em.
 
 ## Motion
 
@@ -116,6 +76,52 @@ None. The bar leaves in one frame. Reduced motion has nothing to remove. Do not 
 - [ ] The log is readable before either choice.
 - [ ] Focus ring is 2px, offset 3px.
 - [ ] There is no checkbox, no second list, and no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The log is visible: the kicker 3 October, the title The yard log, and one sentence about Gate 4.
+2. The bar is fixed to the bottom, full width, with the sentence and the two buttons.
+3. Accept hides the bar and writes "Record kept."
+4. Decline hides the bar and writes "No record kept."
+5. After either choice the buttons are gone. The choice is not asked again on this view.
+6. There is no animation.
+7. Focus ring is 2px `--focus`, offset 3px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --primary-ink: #fffdf8;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Button radius is 2px. The family replaces it. The bar itself is square to the viewport edges. Do not float it as a card with a margin unless the family is soft, and even then keep it one bar, not a toast.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Kicker | sans | 12px | 500 | `--ink-2` |
+| Title | sans | 40px | 500 | `--ink` |
+| Lead | sans | 16px | 400 | `--ink` |
+| Bar | sans | 16px | 400 | `--ink` |
+| Button | sans | 13px | 500 | see states |
+| Status | sans | 16px | 400 | `--ink` |
+
+The title is the largest type. The bar sentence measure is about 52 characters. The kicker letter-spacing is 0.04em.
 
 ## Implementation notes
 

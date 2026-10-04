@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens and keep the 2px ink borders and hard offset shadows.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from usearticle.com: the "configure an automation, watch it come alive" section, where a real settings form sits beside a sticky dashboard card that redraws as you click. This version is Tidepost, a fictional service that writes and sends a harbour club newsletter on a schedule. The left column is three form cards (Schedule, Sections, Voice). The right column is a sticky preview with a Summary tab and a Calendar tab, plus one big orange call to action whose label carries the live total. The feeling is a friendly tool that is already running. The detail worth copying is that the preview headline reads as a sentence, "24 issues over 12 weeks", with the numbers in ink and the connecting words dimmed, so one glance gives the result of every setting.
-
-## Reference behaviour
-
-1. First frame at 1280×800: eyebrow pill, 48px headline "Set the run once. Watch it fill in." with the second sentence orange on a butter marker stripe, lede, then the Schedule card and the top of Sections. On the right, the Summary tab is selected and the card shows "24 issues over 12 weeks", "Monday and Thursday · salty voice", progress "3 / 24 sent", a bar at 13%, three stats, four chips, and five next issues (two sent with green dots).
-2. Cadence is a radio group: Weekly (1), Twice a week (2, selected), Weekdays (5). Run length is a radio group: 4, 8, 12 (selected), 26 weeks. Picking any option recomputes total = cadence × weeks, rewrites the headline, sub line, progress, bar width, next issues dates, calendar, and the CTA label "Start this run · N issues".
-3. Sections are six checkbox tiles in a 2-column grid. Tide tables, Boat of the week and Harbour notes start checked. Toggling a tile updates the "3 / 6" counter, the sections stat, the chip and the next-issues titles, which rotate round-robin through checked sections in DOM order. The last checked tile cannot be unchecked; clicking it flashes it instead.
-4. Voice is a radio group (Plain, Salty, Warm, Brisk; Salty selected). It changes the sub line and the first chip (butter fill).
-5. Length is a range 300–2000 step 100, default 900. The output reads "900 words". It changes the "min read" stat (words ÷ 220, rounded, min 1) and the "900w" chip.
-6. Whatever region changed flashes a pale amber background for 600ms so the eye finds it.
-7. Calendar tab: a 7-column grid (M–S) of up to 12 week rows. Send days are ink blocks, the first three sent days are green, other days are outlined. Below: "+ 14 more weeks" when the run is longer than 12, else "Whole run shown".
-8. Scrolling the page keeps the preview pinned 24px from the top while the form scrolls past.
-9. Clicking the CTA changes the fine print to "Run saved · first issue goes out Thu 8 Oct". No navigation.
 
 ## Structure
 
@@ -47,56 +37,6 @@ Studied from usearticle.com: the "configure an automation, watch it come alive" 
 - Radio groups: `div[role=radiogroup]` with `button[role=radio]` children. Tiles: `button[role=checkbox]` in a `role=group`.
 - Preview: `aside` labelled "Live preview of the run", a `role=tablist` with two tabs, one `role=tabpanel` whose `data-view` switches content.
 - CTA: a real `button`, full width of the aside.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #fff6e9;        /* page, warm cream */
-  --surface: #fffdf8;   /* cards and controls */
-  --ink: #1b1712;       /* text, 2px borders, hard shadows, selected fill */
-  --ink-2: #5a5146;     /* body copy, hints */
-  --ink-3: #7d7265;     /* mono labels, meta */
-  --rule: #eadcc6;      /* unchecked tile border, stat border, dividers */
-  --primary: #ff5a1f;   /* CTA, headline accent, slider thumb, focus */
-  --live: #2fae74;      /* live dot, progress fill, sent marks, card top */
-  --live-soft: #d8f5e6; /* live pill background, dot halo */
-  --butter: #ffd84d;    /* marker stripe, voice chip */
-  --dim: #b9ad9c;       /* the connecting words in the big headline */
-  /* type */
-  --display: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-  /* shape */
-  --r-card: 14px; --r-ctl: 9px; --r-cta: 12px;
-  --border: 2px solid var(--ink);
-  --hard: 4px 4px 0 var(--ink);
-  --hard-sm: 2px 2px 0 var(--ink);
-  /* space: 4 8 10 12 16 18 20 22 28 40 */
-  /* motion */
-  --micro: 150ms; --layout: 400ms; --flash: 600ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Eyebrow pill | DM Mono | 12px | 500 | 1 | 0.08em | upper |
-| H1 | Bricolage Grotesque | 48px | 800 | 1.0 | -0.03em | sentence |
-| Lede | Bricolage Grotesque | 18px | 400 | 1.55 | 0 | sentence, `--ink-2` |
-| Card title h2 | Bricolage Grotesque | 18px | 700 | 1.3 | -0.01em | sentence |
-| Hint | Bricolage Grotesque | 14px | 400 | 1.5 | 0 | `--ink-2`, indented 48px |
-| Field label | DM Mono | 11px | 500 | 1 | 0.08em | upper, `--ink-3` |
-| Option button | Bricolage Grotesque | 14px | 600 | 1 | 0 | sentence |
-| Tile title / desc | Bricolage Grotesque | 15px 700 / 13px 400 | | 1.35 | 0 | |
-| Preview headline | Bricolage Grotesque | 38px | 800 | 1.02 | -0.03em | numbers `--ink`, words `--dim` |
-| Stat number | Bricolage Grotesque | 22px | 800 | 1.1 | 0 | |
-| Stat label, chips, dates | DM Mono | 11px | 400–500 | 1.4 | 0 | lower |
-| CTA | Bricolage Grotesque | 17px | 800 | 1 | 0 | sentence, white |
-
-Mono is only for labels, counts and dates. All prose and controls are in the grotesque.
 
 ## Motion
 
@@ -161,6 +101,72 @@ Reduced motion: remove every transition and the flash animation. Values still up
 - [ ] Six section tiles; Tide tables, Boat of the week, Harbour notes checked; counter "3 / 6".
 - [ ] Calendar shows at most 12 rows and "+ 14 more weeks" for a 26-week run.
 - [ ] CTA background `#ff5a1f`, card top border 6px `#2fae74`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 1280×800: eyebrow pill, 48px headline "Set the run once. Watch it fill in." with the second sentence orange on a butter marker stripe, lede, then the Schedule card and the top of Sections. On the right, the Summary tab is selected and the card shows "24 issues over 12 weeks", "Monday and Thursday · salty voice", progress "3 / 24 sent", a bar at 13%, three stats, four chips, and five next issues (two sent with green dots).
+2. Cadence is a radio group: Weekly (1), Twice a week (2, selected), Weekdays (5). Run length is a radio group: 4, 8, 12 (selected), 26 weeks. Picking any option recomputes total = cadence × weeks, rewrites the headline, sub line, progress, bar width, next issues dates, calendar, and the CTA label "Start this run · N issues".
+3. Sections are six checkbox tiles in a 2-column grid. Tide tables, Boat of the week and Harbour notes start checked. Toggling a tile updates the "3 / 6" counter, the sections stat, the chip and the next-issues titles, which rotate round-robin through checked sections in DOM order. The last checked tile cannot be unchecked; clicking it flashes it instead.
+4. Voice is a radio group (Plain, Salty, Warm, Brisk; Salty selected). It changes the sub line and the first chip (butter fill).
+5. Length is a range 300–2000 step 100, default 900. The output reads "900 words". It changes the "min read" stat (words ÷ 220, rounded, min 1) and the "900w" chip.
+6. Whatever region changed flashes a pale amber background for 600ms so the eye finds it.
+7. Calendar tab: a 7-column grid (M–S) of up to 12 week rows. Send days are ink blocks, the first three sent days are green, other days are outlined. Below: "+ 14 more weeks" when the run is longer than 12, else "Whole run shown".
+8. Scrolling the page keeps the preview pinned 24px from the top while the form scrolls past.
+9. Clicking the CTA changes the fine print to "Run saved · first issue goes out Thu 8 Oct". No navigation.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #fff6e9;        /* page, warm cream */
+  --surface: #fffdf8;   /* cards and controls */
+  --ink: #1b1712;       /* text, 2px borders, hard shadows, selected fill */
+  --ink-2: #5a5146;     /* body copy, hints */
+  --ink-3: #7d7265;     /* mono labels, meta */
+  --rule: #eadcc6;      /* unchecked tile border, stat border, dividers */
+  --primary: #ff5a1f;   /* CTA, headline accent, slider thumb, focus */
+  --live: #2fae74;      /* live dot, progress fill, sent marks, card top */
+  --live-soft: #d8f5e6; /* live pill background, dot halo */
+  --butter: #ffd84d;    /* marker stripe, voice chip */
+  --dim: #b9ad9c;       /* the connecting words in the big headline */
+  /* type */
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  /* shape */
+  --r-card: 14px; --r-ctl: 9px; --r-cta: 12px;
+  --border: 2px solid var(--ink);
+  --hard: 4px 4px 0 var(--ink);
+  --hard-sm: 2px 2px 0 var(--ink);
+  /* space: 4 8 10 12 16 18 20 22 28 40 */
+  /* motion */
+  --micro: 150ms; --layout: 400ms; --flash: 600ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Eyebrow pill | DM Mono | 12px | 500 | 1 | 0.08em | upper |
+| H1 | Bricolage Grotesque | 48px | 800 | 1.0 | -0.03em | sentence |
+| Lede | Bricolage Grotesque | 18px | 400 | 1.55 | 0 | sentence, `--ink-2` |
+| Card title h2 | Bricolage Grotesque | 18px | 700 | 1.3 | -0.01em | sentence |
+| Hint | Bricolage Grotesque | 14px | 400 | 1.5 | 0 | `--ink-2`, indented 48px |
+| Field label | DM Mono | 11px | 500 | 1 | 0.08em | upper, `--ink-3` |
+| Option button | Bricolage Grotesque | 14px | 600 | 1 | 0 | sentence |
+| Tile title / desc | Bricolage Grotesque | 15px 700 / 13px 400 | | 1.35 | 0 | |
+| Preview headline | Bricolage Grotesque | 38px | 800 | 1.02 | -0.03em | numbers `--ink`, words `--dim` |
+| Stat number | Bricolage Grotesque | 22px | 800 | 1.1 | 0 | |
+| Stat label, chips, dates | DM Mono | 11px | 400–500 | 1.4 | 0 | lower |
+| CTA | Bricolage Grotesque | 17px | 800 | 1 | 0 | sentence, white |
+
+Mono is only for labels, counts and dates. All prose and controls are in the grotesque.
 
 ## Implementation notes
 

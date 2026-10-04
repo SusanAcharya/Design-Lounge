@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A pricing row for a design tool ("Tessel") with three 340 × 440 cards: Sketch (€12), Studio (€48, highlighted, "Most picked" badge), Scale (€190). Each card sits in its own 1000px perspective. As the pointer moves across a card it rotates toward the cursor — at most 8° on either axis — a soft white radial highlight tracks the pointer across the surface, and the shadow deepens and drops as if the card lifted. When the pointer leaves, the card returns to flat over 650ms on an overshooting cubic-bezier, so it settles with one small bounce. The detail worth copying is the two transition profiles: a 90ms linear transition while tracking (so it follows the hand without lag or jitter) and a 650ms spring only on the way back.
-
-## Reference behaviour
-
-1. Initial state: centred heading "Choose your Tessel plan" and a one-line subtitle, three cards in a row with 28px gaps, a caption underneath. All cards flat, resting shadow. The middle card has an orange tier dot, an orange "Most picked" badge overlapping its top edge, and an orange filled CTA. The others have grey dots and outlined CTAs.
-2. Pointer enters a card: class `track` is added. Transition durations switch to 90ms (transform) and 160ms (shadow). Shadow goes from resting to lifted; the specular layer fades in (160ms).
-3. Pointer moves: on each frame (throttled with `requestAnimationFrame`), pointer position is normalised to 0–1 across the card's box. `rotateY = (x − 0.5) × 16°` (−8° at left edge, +8° at right); `rotateX = (0.5 − y) × 16°` (+8° at top, −8° at bottom). The highlight centre is set to `x%, y%`.
-4. Pointer leaves: `track` is removed, `--rx` and `--ry` are set to 0. The return transition is 650ms `cubic-bezier(.34,1.56,.64,1)`, which overshoots past flat by roughly 1° and settles. Shadow returns on the same curve; highlight fades over 160ms.
-5. Keyboard focus on a card (`tabindex="0"`): lifted shadow and a 1px orange border, no tilt. CTA buttons are separately focusable with a 2px orange outline.
-6. Hover a CTA: border becomes `--ink-3`; on the highlighted card the orange fill lightens to `#ff7e57`.
-7. Card content is on its own composited layer (`translateZ(0)`) so text stays crisp during rotation.
-8. With `prefers-reduced-motion: reduce`: no tilt (JS ignores pointer events), no highlight layer, transitions off; the shadow lift on focus remains.
 
 ## Structure
 
@@ -58,66 +49,6 @@ Card copy:
 | Company | Scale  | €190  | SSO, audit logs and a named engineer who answers within four hours, 24 / 7. | Everything in Studio · SAML SSO & SCIM · Unlimited history | Talk to sales |
 
 Unit line under every price: "per editor / month".
-
-## Tokens
-
-```css
-:root {
-  /* colour — cool charcoal, one coral accent */
-  --bg: #121316;
-  --card: #1b1d22;
-  --card-2: #22252b;      /* outlined CTA fill */
-  --line: #2b2e36;
-  --ink: #edeef2;
-  --ink-2: #9aa0ab;       /* tier label, unit, description */
-  --ink-3: #666c78;       /* resting tier dot, caption, CTA hover border */
-  --accent: #ff6a3d;      /* badge, hot dot, checks, hot CTA, focus */
-  --accent-hover: #ff7e57;
-  --accent-ink: #1a0c07;  /* text on accent */
-
-  /* type */
-  --display: "Syne", system-ui, sans-serif;
-  --sans: "Manrope", system-ui, sans-serif;
-
-  /* geometry */
-  --card-w: 340px;
-  --card-h: 440px;
-  --card-pad: 28px;
-  --gap: 28px;
-  --r: 16px;
-  --r-cta: 10px;
-  --tilt: 8deg;           /* max rotation per axis */
-  --persp: 1000px;
-  --spot: 360px;          /* highlight radius */
-
-  /* shadow */
-  --shadow-rest: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px -12px rgba(0,0,0,.6);
-  --shadow-lift: 0 1px 0 rgba(255,255,255,.06) inset, 0 30px 60px -20px rgba(0,0,0,.7), 0 12px 24px -12px rgba(0,0,0,.5);
-
-  /* motion */
-  --t-track: 90ms;        /* while pointer is over the card */
-  --t-return: 650ms;      /* spring back */
-  --t-micro: 160ms;       /* highlight and colour changes */
-  --spring: cubic-bezier(.34, 1.56, .64, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role        | Family  | Size | Weight | Line-height | Tracking | Case      |
-|-------------|---------|-----:|-------:|------------:|---------:|-----------|
-| Heading     | Syne    | 34px | 700    | 1.1         | −0.02em  | sentence  |
-| Subtitle    | Manrope | 15px | 400    | 1.5         | 0        | sentence  |
-| Tier label  | Manrope | 12px | 600    | 1.5         | +0.10em  | UPPERCASE |
-| Plan name   | Syne    | 30px | 700    | 1           | −0.02em  | sentence  |
-| Price       | Syne    | 44px | 700    | 1           | −0.03em  | numerals  |
-| Unit        | Manrope | 13px | 400    | 1.5         | 0        | sentence  |
-| Description | Manrope | 14px | 400    | 1.5         | 0        | sentence  |
-| Feature     | Manrope | 13px | 400    | 1.5         | 0        | sentence  |
-| CTA         | Manrope | 14px | 600    | 44px box    | 0        | sentence  |
-| Badge       | Manrope | 11px | 700    | 1           | +0.06em  | UPPERCASE |
-| Caption     | Manrope | 12px | 400    | 1.5         | 0        | sentence  |
 
 ## Motion
 
@@ -186,6 +117,81 @@ Reduced motion: `.card { transition: none; transform: none !important } .card::a
 - [ ] With `prefers-reduced-motion: reduce` or `(hover: none)`, no tilt or highlight is applied.
 - [ ] No pointer handler throws when the pointer leaves before the pending frame runs.
 - [ ] Pointer updates are clamped to the 0–1 range so a fast exit never leaves a card at more than 8°.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: centred heading "Choose your Tessel plan" and a one-line subtitle, three cards in a row with 28px gaps, a caption underneath. All cards flat, resting shadow. The middle card has an orange tier dot, an orange "Most picked" badge overlapping its top edge, and an orange filled CTA. The others have grey dots and outlined CTAs.
+2. Pointer enters a card: class `track` is added. Transition durations switch to 90ms (transform) and 160ms (shadow). Shadow goes from resting to lifted; the specular layer fades in (160ms).
+3. Pointer moves: on each frame (throttled with `requestAnimationFrame`), pointer position is normalised to 0–1 across the card's box. `rotateY = (x − 0.5) × 16°` (−8° at left edge, +8° at right); `rotateX = (0.5 − y) × 16°` (+8° at top, −8° at bottom). The highlight centre is set to `x%, y%`.
+4. Pointer leaves: `track` is removed, `--rx` and `--ry` are set to 0. The return transition is 650ms `cubic-bezier(.34,1.56,.64,1)`, which overshoots past flat by roughly 1° and settles. Shadow returns on the same curve; highlight fades over 160ms.
+5. Keyboard focus on a card (`tabindex="0"`): lifted shadow and a 1px orange border, no tilt. CTA buttons are separately focusable with a 2px orange outline.
+6. Hover a CTA: border becomes `--ink-3`; on the highlighted card the orange fill lightens to `#ff7e57`.
+7. Card content is on its own composited layer (`translateZ(0)`) so text stays crisp during rotation.
+8. With `prefers-reduced-motion: reduce`: no tilt (JS ignores pointer events), no highlight layer, transitions off; the shadow lift on focus remains.
+
+## Tokens
+
+```css
+:root {
+  /* colour — cool charcoal, one coral accent */
+  --bg: #121316;
+  --card: #1b1d22;
+  --card-2: #22252b;      /* outlined CTA fill */
+  --line: #2b2e36;
+  --ink: #edeef2;
+  --ink-2: #9aa0ab;       /* tier label, unit, description */
+  --ink-3: #666c78;       /* resting tier dot, caption, CTA hover border */
+  --accent: #ff6a3d;      /* badge, hot dot, checks, hot CTA, focus */
+  --accent-hover: #ff7e57;
+  --accent-ink: #1a0c07;  /* text on accent */
+
+  /* type */
+  --display: "Syne", system-ui, sans-serif;
+  --sans: "Manrope", system-ui, sans-serif;
+
+  /* geometry */
+  --card-w: 340px;
+  --card-h: 440px;
+  --card-pad: 28px;
+  --gap: 28px;
+  --r: 16px;
+  --r-cta: 10px;
+  --tilt: 8deg;           /* max rotation per axis */
+  --persp: 1000px;
+  --spot: 360px;          /* highlight radius */
+
+  /* shadow */
+  --shadow-rest: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px -12px rgba(0,0,0,.6);
+  --shadow-lift: 0 1px 0 rgba(255,255,255,.06) inset, 0 30px 60px -20px rgba(0,0,0,.7), 0 12px 24px -12px rgba(0,0,0,.5);
+
+  /* motion */
+  --t-track: 90ms;        /* while pointer is over the card */
+  --t-return: 650ms;      /* spring back */
+  --t-micro: 160ms;       /* highlight and colour changes */
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role        | Family  | Size | Weight | Line-height | Tracking | Case      |
+|-------------|---------|-----:|-------:|------------:|---------:|-----------|
+| Heading     | Syne    | 34px | 700    | 1.1         | −0.02em  | sentence  |
+| Subtitle    | Manrope | 15px | 400    | 1.5         | 0        | sentence  |
+| Tier label  | Manrope | 12px | 600    | 1.5         | +0.10em  | UPPERCASE |
+| Plan name   | Syne    | 30px | 700    | 1           | −0.02em  | sentence  |
+| Price       | Syne    | 44px | 700    | 1           | −0.03em  | numerals  |
+| Unit        | Manrope | 13px | 400    | 1.5         | 0        | sentence  |
+| Description | Manrope | 14px | 400    | 1.5         | 0        | sentence  |
+| Feature     | Manrope | 13px | 400    | 1.5         | 0        | sentence  |
+| CTA         | Manrope | 14px | 600    | 44px box    | 0        | sentence  |
+| Badge       | Manrope | 11px | 700    | 1           | +0.06em  | UPPERCASE |
+| Caption     | Manrope | 12px | 400    | 1.5         | 0        | sentence  |
 
 ## Implementation notes
 

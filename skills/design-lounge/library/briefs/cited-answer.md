@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A card states that twelve loads are still at Gate 4. Two source chips sit under the paragraph. Night book starts pressed and its quote is on the card. Hold rule replaces the quote. The answer does not change. This is not a chat. A step trace is `agent-step-trace`. A long article is `paper-article-reader`.
-
-## Reference behaviour
-
-1. The heading is Twelve loads are still at Gate 4.
-2. Night book is aria-pressed true. The quote is Night book, 22:00 entry. Gate 4 still holds twelve.
-3. Hold rule is not pressed. Its quote is Hold rule. Older than six hours, a person must sign.
-4. Clicking a chip presses only that chip and sets the quote from data-q.
-5. The pressed chip is fill #e7f2ec, border and text #1f4d3a.
-6. The heading and the paragraph do not change.
-7. There is no motion.
 
 ## Structure
 
@@ -33,20 +25,6 @@ quote
 - Chips are 36px, radius 999px, gap 8px, margin-top 20px.
 - The quote is 16px, colour #5c564c, min-height 44px, margin-top 14px.
 - The source row is role group, name Sources.
-
-## Tokens
-
-```css
-:root { --bg:#f4f1ea; --surface:#fffdf8; --ink:#1a1814; --ink-2:#5c564c; --line:#e3ddd2; --primary:#1f4d3a; --soft:#e7f2ec; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Heading | Fraunces | 28px | 560 |
-| Body | Public Sans | 16px | 400 |
-| Chip | Public Sans | 13px | 500 |
 
 ## Motion
 
@@ -91,16 +69,6 @@ quote
 - [ ] The Hold rule quote names six hours and a signature.
 - [ ] Pressed fill is #e7f2ec.
 - [ ] Display is Fraunces. Text is Public Sans.
-
-## Implementation notes
-
-Store the quote on the button.
-
-```js
-q.textContent = b.dataset.q;
-```
-
-Clear aria-pressed on the other chip first.
 
 ## Measurements to keep
 
@@ -169,6 +137,44 @@ Clear aria-pressed on the other chip first.
 - While rebuilding, remember: Do not leave both chips pressed.
 - While rebuilding, remember: Do not hide the quote.
 - While rebuilding, remember: Do not add a third source in this demo.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The heading is Twelve loads are still at Gate 4.
+2. Night book is aria-pressed true. The quote is Night book, 22:00 entry. Gate 4 still holds twelve.
+3. Hold rule is not pressed. Its quote is Hold rule. Older than six hours, a person must sign.
+4. Clicking a chip presses only that chip and sets the quote from data-q.
+5. The pressed chip is fill #e7f2ec, border and text #1f4d3a.
+6. The heading and the paragraph do not change.
+7. There is no motion.
+
+## Tokens
+
+```css
+:root { --bg:#f4f1ea; --surface:#fffdf8; --ink:#1a1814; --ink-2:#5c564c; --line:#e3ddd2; --primary:#1f4d3a; --soft:#e7f2ec; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Heading | Fraunces | 28px | 560 |
+| Body | Public Sans | 16px | 400 |
+| Chip | Public Sans | 13px | 500 |
+
+## Implementation notes
+
+Store the quote on the button.
+
+```js
+q.textContent = b.dataset.q;
+```
+
+Clear aria-pressed on the other chip first.
 
 ---
 

@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A live revenue headline for a finance dashboard ("Marrow"): a 112px serif figure — `$1,284,930` — where every digit is a column containing a vertical strip of 0–9. When the value changes, each column whose digit changed translates its strip to the new digit over 700ms with expo-out easing; columns cascade from the right with a 24ms delay per position, so a carry ripples leftward like a mechanical odometer. Commas are static cells placed by thousands grouping; when the number gains a digit a new column widens in from zero width. Four buttons add an invoice, a subscription, an annual plan, or apply a refund; a timer adds a random real-looking payment every 3s. The detail worth copying is the reconciliation: existing columns are kept and rolled, never rebuilt, so a `+$49` change only moves the two or three digits that actually changed.
-
-## Reference behaviour
-
-1. Initial state: header (64px) with the wordmark "Marrow", a "Revenue · September" tag and a pulsing green "Live · auto-tick every 3 s" indicator. Main shows a small uppercase label ("Gross revenue, month to date · updated just now"), the odometer `$1,284,930`, a four-stat meta row (Today +$4,120 · Transactions 14 · Avg. order $294 · Last event Subscription), four pill buttons and a caption with a roll counter.
-2. Every 3000ms a random event is added: "Card payment" (19/29/49/89/120/240), "Invoice" (340/780/1,250) or "Subscription" (49/49/99). The figure rolls; Today, Transactions, Avg. order and Last event update instantly (no animation); the roll counter increments; the "updated" text shows the current time (`HH:MM:SS`).
-3. Click "Add invoice $1,250" (or press `1`): value += 1,250. Columns whose digit changed roll: column *c* (0 = rightmost digit, commas do not count as columns but do count in the index) starts after `c × 24ms`. A strip moves `translateY(-d em)` where `d` is the new digit, over 700ms, `cubic-bezier(.16,1,.3,1)`.
-4. Click "Add subscription $49" (`2`), "Add annual plan $8,900" (`3`): same. "Refund $120" (`4`, red text): value −= 120; digits roll upward instead (strip translates toward 0) — same duration.
-5. When the formatted string gains characters (e.g. `999,999` → `1,000,000`), new cells are prepended: a digit cell starts at 0 and rolls to its target; a comma cell is static. New cells animate `width: 0 → natural` and opacity 0 → 1 over 400ms. When it loses characters (refund below a power of ten), leftmost cells are removed immediately.
-6. Commas are recomputed from the right on every render (positions 3, 7, 11 from the right); if a cell's type changes (digit ↔ comma) it is replaced in place.
-7. Avg. order = Today ÷ Transactions. Today can go negative after refunds and then reads "−$…".
-8. Buttons: hover darkens the border; active scales to 0.97; focus-visible shows a 2px green outline. Keys 1–4 trigger the corresponding button unless a modifier is held.
-9. A visually hidden `role="status" aria-live="polite"` span carries the formatted value for screen readers; the visible strips are `aria-hidden`.
-10. With `prefers-reduced-motion: reduce`: strips jump to the new digit (no transition), new cells appear at full width, the live dot does not pulse.
 
 ## Structure
 
@@ -51,64 +40,6 @@ pad 0 40px 48px; main content vertically centred
   - `.meta` — flex, gap 40px, 1px top hairline, four `<div>`s of label + `<b>` value.
   - `.actions` — four `<button class="btn" data-add data-kind>` with a 16px plus/minus SVG and a `<kbd>` hint.
   - `.log` — caption, `margin-top: auto`, includes `#rolls`.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm paper, dark brown ink, one green accent, brick for refunds */
-  --bg: #f6f1e8;
-  --surface: #fffdf9;     /* buttons */
-  --line: #e4dccf;        /* hairlines, button borders */
-  --line-2: #efe8dc;
-  --ink: #2b241b;
-  --ink-2: #7d7263;       /* labels, currency sign */
-  --ink-3: #a89c8b;       /* tag, caption, hover border */
-  --accent: #2e7d5b;      /* live dot, primary button, positive delta, focus */
-  --accent-hover: #286f51;
-  --accent-soft: #e2efe7;
-  --neg: #b4462f;         /* refund button text */
-
-  /* type */
-  --serif: "Fraunces", Georgia, serif;        /* opsz 9–144 */
-  --sans: "Instrument Sans", system-ui, sans-serif;
-  --digit: 112px;         /* odometer font-size */
-  --digit-w: .62em;       /* digit cell width */
-  --comma-w: .28em;
-
-  /* layout */
-  --header-h: 64px;
-  --pad-x: 40px;
-  --btn-h: 44px;
-  --r: 12px;
-  --r-pill: 999px;
-
-  /* motion */
-  --t-roll: 700ms;
-  --cascade: 24ms;        /* per column, from the right */
-  --t-widen: 400ms;       /* new column */
-  --t-micro: 160ms;
-  --tick: 3s;             /* auto event interval */
-  --t-pulse: 3s;
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role          | Family          | Size  | Weight | Line-height | Tracking | Case      | Notes |
-|---------------|-----------------|------:|-------:|------------:|---------:|-----------|-------|
-| Odometer      | Fraunces        | 112px | 600    | 1           | −0.03em  | numerals  | `"opsz" 144`, `tabular-nums` |
-| Currency sign | Fraunces        | 61.6px (.55em) | 600 | 1     | —        | —         | colour `--ink-2` |
-| Wordmark      | Fraunces        | 18px  | 600    | 1.5         | −0.01em  | sentence  | `"opsz" 18` |
-| Meta value    | Fraunces        | 22px  | 500    | 1.3         | 0        | numerals  | `"opsz" 22`, `tabular-nums` |
-| Label         | Instrument Sans | 13px  | 400 (b 500) | 1.5    | +0.08em  | UPPERCASE | |
-| Live tag      | Instrument Sans | 12px  | 400    | 1.5         | +0.06em  | UPPERCASE | |
-| Meta label    | Instrument Sans | 13px  | 400    | 1.5         | 0        | sentence  | |
-| Button        | Instrument Sans | 14px  | 500    | 44px box    | 0        | sentence  | |
-| kbd           | Instrument Sans | 11px  | 400    | 16px        | 0        | numerals  | 60% opacity |
-| Caption       | Instrument Sans | 12px  | 400    | 1.5         | 0        | sentence  | |
 
 ## Motion
 
@@ -184,6 +115,81 @@ Reduced motion: `.strip { transition: none }`, `.cell.new { animation: none }`, 
 - [ ] A visually hidden live region announces the formatted value; visible digits are `aria-hidden`.
 - [ ] Digits are tabular (`font-variant-numeric: tabular-nums`) and cells have fixed widths so nothing shifts horizontally during a roll.
 - [ ] Reduced motion: no strip transitions, no widen, no pulse.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header (64px) with the wordmark "Marrow", a "Revenue · September" tag and a pulsing green "Live · auto-tick every 3 s" indicator. Main shows a small uppercase label ("Gross revenue, month to date · updated just now"), the odometer `$1,284,930`, a four-stat meta row (Today +$4,120 · Transactions 14 · Avg. order $294 · Last event Subscription), four pill buttons and a caption with a roll counter.
+2. Every 3000ms a random event is added: "Card payment" (19/29/49/89/120/240), "Invoice" (340/780/1,250) or "Subscription" (49/49/99). The figure rolls; Today, Transactions, Avg. order and Last event update instantly (no animation); the roll counter increments; the "updated" text shows the current time (`HH:MM:SS`).
+3. Click "Add invoice $1,250" (or press `1`): value += 1,250. Columns whose digit changed roll: column *c* (0 = rightmost digit, commas do not count as columns but do count in the index) starts after `c × 24ms`. A strip moves `translateY(-d em)` where `d` is the new digit, over 700ms, `cubic-bezier(.16,1,.3,1)`.
+4. Click "Add subscription $49" (`2`), "Add annual plan $8,900" (`3`): same. "Refund $120" (`4`, red text): value −= 120; digits roll upward instead (strip translates toward 0) — same duration.
+5. When the formatted string gains characters (e.g. `999,999` → `1,000,000`), new cells are prepended: a digit cell starts at 0 and rolls to its target; a comma cell is static. New cells animate `width: 0 → natural` and opacity 0 → 1 over 400ms. When it loses characters (refund below a power of ten), leftmost cells are removed immediately.
+6. Commas are recomputed from the right on every render (positions 3, 7, 11 from the right); if a cell's type changes (digit ↔ comma) it is replaced in place.
+7. Avg. order = Today ÷ Transactions. Today can go negative after refunds and then reads "−$…".
+8. Buttons: hover darkens the border; active scales to 0.97; focus-visible shows a 2px green outline. Keys 1–4 trigger the corresponding button unless a modifier is held.
+9. A visually hidden `role="status" aria-live="polite"` span carries the formatted value for screen readers; the visible strips are `aria-hidden`.
+10. With `prefers-reduced-motion: reduce`: strips jump to the new digit (no transition), new cells appear at full width, the live dot does not pulse.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm paper, dark brown ink, one green accent, brick for refunds */
+  --bg: #f6f1e8;
+  --surface: #fffdf9;     /* buttons */
+  --line: #e4dccf;        /* hairlines, button borders */
+  --line-2: #efe8dc;
+  --ink: #2b241b;
+  --ink-2: #7d7263;       /* labels, currency sign */
+  --ink-3: #a89c8b;       /* tag, caption, hover border */
+  --accent: #2e7d5b;      /* live dot, primary button, positive delta, focus */
+  --accent-hover: #286f51;
+  --accent-soft: #e2efe7;
+  --neg: #b4462f;         /* refund button text */
+
+  /* type */
+  --serif: "Fraunces", Georgia, serif;        /* opsz 9–144 */
+  --sans: "Instrument Sans", system-ui, sans-serif;
+  --digit: 112px;         /* odometer font-size */
+  --digit-w: .62em;       /* digit cell width */
+  --comma-w: .28em;
+
+  /* layout */
+  --header-h: 64px;
+  --pad-x: 40px;
+  --btn-h: 44px;
+  --r: 12px;
+  --r-pill: 999px;
+
+  /* motion */
+  --t-roll: 700ms;
+  --cascade: 24ms;        /* per column, from the right */
+  --t-widen: 400ms;       /* new column */
+  --t-micro: 160ms;
+  --tick: 3s;             /* auto event interval */
+  --t-pulse: 3s;
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role          | Family          | Size  | Weight | Line-height | Tracking | Case      | Notes |
+|---------------|-----------------|------:|-------:|------------:|---------:|-----------|-------|
+| Odometer      | Fraunces        | 112px | 600    | 1           | −0.03em  | numerals  | `"opsz" 144`, `tabular-nums` |
+| Currency sign | Fraunces        | 61.6px (.55em) | 600 | 1     | —        | —         | colour `--ink-2` |
+| Wordmark      | Fraunces        | 18px  | 600    | 1.5         | −0.01em  | sentence  | `"opsz" 18` |
+| Meta value    | Fraunces        | 22px  | 500    | 1.3         | 0        | numerals  | `"opsz" 22`, `tabular-nums` |
+| Label         | Instrument Sans | 13px  | 400 (b 500) | 1.5    | +0.08em  | UPPERCASE | |
+| Live tag      | Instrument Sans | 12px  | 400    | 1.5         | +0.06em  | UPPERCASE | |
+| Meta label    | Instrument Sans | 13px  | 400    | 1.5         | 0        | sentence  | |
+| Button        | Instrument Sans | 14px  | 500    | 44px box    | 0        | sentence  | |
+| kbd           | Instrument Sans | 11px  | 400    | 16px        | 0        | numerals  | 60% opacity |
+| Caption       | Instrument Sans | 12px  | 400    | 1.5         | 0        | sentence  | |
 
 ## Implementation notes
 

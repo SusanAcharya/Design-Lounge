@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The bottom navigation of "Loam", a plant-care and shop app, in an iOS 26-style Liquid-glass language. A 64px tall capsule floats 16px from each side and 44px from the bottom; it holds four tabs and a translucent "lens" that slides to the selected tab. A separate 64px circular island to its right opens search. Both are blurred glass, so the product cards scrolling under them smear into soft colour; that under-scroll is the whole point of the piece and must be visible in the first frame. The lens does not just translate: it squashes horizontally for the first third of its move, which is what makes it read as liquid.
-
-## Reference behaviour
-
-1. Initial state: "Home" tab selected, lens sits over it. The page is a scrollable list (greeting, a dark green hero card, two product grids, two tip rows) with 140px of bottom padding so the last row can scroll clear of the dock.
-2. Scroll the list: cards pass underneath the capsule and island; the glass blurs them (24px blur, 180% saturation). Nothing in the dock moves on scroll.
-3. Tap "Shop": the lens translates from column 1 to column 2 over 420ms with `cubic-bezier(.32,.72,0,1)`. During the same 420ms it runs a squash keyframe: `scale(1,1)` → `scale(1.22,.9)` at 35% → `scale(1,1)`. The Shop icon and label turn `--accent` and the icon lifts 1px and scales to 1.06; the previously selected tab returns to `--ink-2`.
-4. Tap the same tab again: no movement, but the squash keyframe still replays (feedback).
-5. Press-and-hold any tab: it scales to 0.94 over 160ms (`:active`) and returns on release.
-6. Tap the search island: it fills with `--accent` and white icon (`aria-pressed="true"`); a 48px white search field slides up from 12px below to sit 120px from the bottom, fading in over 160ms and springing over 420ms; the input receives focus after 60ms. Tap again or press Escape in the field: the field drops away and clears.
-7. Keyboard: with focus in the tab list, ArrowLeft/ArrowRight move selection (wrapping) and focus follows; only the selected tab is in the Tab order (roving tabindex).
 
 ## Structure
 
@@ -50,61 +42,6 @@ The bottom navigation of "Loam", a plant-care and shop app, in an iOS 26-style L
   - `.bar[role=tablist]`: flex 1, 64px, `display:grid; grid-template-columns:repeat(4,1fr); padding:0 4px`. Contains `.lens` (absolute) and four `<button role="tab">`.
   - `.island`: 64×64 `<button aria-pressed aria-controls="search">`.
 - `.search`: fixed, `left/right:16px; bottom:120px; height:48px`, contains an `<input type="search">`.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm off-white, one leaf-green accent */
-  --bg: #f3f1ec;              /* page */
-  --card: #ffffff;            /* product cards, search field */
-  --ink: #1c1b18;             /* primary text */
-  --ink-2: #6b6862;           /* secondary text, inactive tabs */
-  --ink-3: #9c988f;           /* placeholder */
-  --line: #e4e1da;            /* card hairline */
-  --accent: #2f6b3a;          /* selected tab, links, island pressed */
-  --accent-soft: #dfeadf;     /* badge chip */
-  --hero-a: #2f6b3a;  --hero-b: #1f4a28;  --hero-glow: #7cae6f;
-
-  /* glass */
-  --glass: rgba(255,255,255,.58);
-  --glass-line: rgba(255,255,255,.75);
-  --glass-blur: blur(24px) saturate(180%);
-  --glass-shadow: 0 10px 30px rgba(28,27,24,.14), 0 1px 2px rgba(28,27,24,.06);
-  --glass-highlight: inset 0 1px 0 rgba(255,255,255,.85), inset 0 -1px 0 rgba(28,27,24,.04);
-  --lens: rgba(255,255,255,.78);
-  --lens-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(28,27,24,.05), 0 2px 10px rgba(28,27,24,.10);
-
-  /* type */
-  --font: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
-
-  /* layout */
-  --dock-h: 64px;  --dock-inset: 16px;  --dock-bottom: 44px;  --dock-gap: 10px;
-  --lens-h: 52px;  --lens-pad: 4px;
-  --r-card: 18px;  --r-thumb: 12px;  --r-bar: 32px;  --r-lens: 26px;
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-move: 420ms;
-  --spring: cubic-bezier(.32, .72, 0, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role            | Family         | Size | Weight | Line-height | Tracking | Case      |
-|-----------------|----------------|-----:|-------:|------------:|---------:|-----------|
-| Body            | Hanken Grotesk | 15px | 400    | 1.4         | 0        | sentence  |
-| Eyebrow date    | Hanken Grotesk | 13px | 500    | 1.4         | 0        | sentence  |
-| Page title      | Hanken Grotesk | 32px | 700    | 1.1         | −0.025em | sentence  |
-| Hero tag        | Hanken Grotesk | 11px | 600    | 1.2         | +0.10em  | UPPERCASE |
-| Hero heading    | Hanken Grotesk | 24px | 600    | 1.15        | −0.02em  | sentence  |
-| Section heading | Hanken Grotesk | 17px | 600    | 1.3         | −0.01em  | sentence  |
-| Card name       | Hanken Grotesk | 14px | 600    | 1.25        | 0        | sentence  |
-| Card meta       | Hanken Grotesk | 12px | 400    | 1.4         | 0        | sentence  |
-| Chip            | Hanken Grotesk | 11px | 500    | 1.4         | 0        | sentence  |
-| Tab label       | Hanken Grotesk | 10px | 500    | 1           | +0.01em  | sentence  |
 
 ## Motion
 
@@ -162,6 +99,75 @@ Reduced motion: every transition and animation duration becomes 1ms; the lens ju
 - [ ] `<main>` has 140px bottom padding so the last card can scroll above the dock.
 - [ ] With `prefers-reduced-motion: reduce`, the lens jumps instantly and no squash plays.
 - [ ] No status bar, notch or home indicator is drawn by the piece.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: "Home" tab selected, lens sits over it. The page is a scrollable list (greeting, a dark green hero card, two product grids, two tip rows) with 140px of bottom padding so the last row can scroll clear of the dock.
+2. Scroll the list: cards pass underneath the capsule and island; the glass blurs them (24px blur, 180% saturation). Nothing in the dock moves on scroll.
+3. Tap "Shop": the lens translates from column 1 to column 2 over 420ms with `cubic-bezier(.32,.72,0,1)`. During the same 420ms it runs a squash keyframe: `scale(1,1)` → `scale(1.22,.9)` at 35% → `scale(1,1)`. The Shop icon and label turn `--accent` and the icon lifts 1px and scales to 1.06; the previously selected tab returns to `--ink-2`.
+4. Tap the same tab again: no movement, but the squash keyframe still replays (feedback).
+5. Press-and-hold any tab: it scales to 0.94 over 160ms (`:active`) and returns on release.
+6. Tap the search island: it fills with `--accent` and white icon (`aria-pressed="true"`); a 48px white search field slides up from 12px below to sit 120px from the bottom, fading in over 160ms and springing over 420ms; the input receives focus after 60ms. Tap again or press Escape in the field: the field drops away and clears.
+7. Keyboard: with focus in the tab list, ArrowLeft/ArrowRight move selection (wrapping) and focus follows; only the selected tab is in the Tab order (roving tabindex).
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm off-white, one leaf-green accent */
+  --bg: #f3f1ec;              /* page */
+  --card: #ffffff;            /* product cards, search field */
+  --ink: #1c1b18;             /* primary text */
+  --ink-2: #6b6862;           /* secondary text, inactive tabs */
+  --ink-3: #9c988f;           /* placeholder */
+  --line: #e4e1da;            /* card hairline */
+  --accent: #2f6b3a;          /* selected tab, links, island pressed */
+  --accent-soft: #dfeadf;     /* badge chip */
+  --hero-a: #2f6b3a;  --hero-b: #1f4a28;  --hero-glow: #7cae6f;
+
+  /* glass */
+  --glass: rgba(255,255,255,.58);
+  --glass-line: rgba(255,255,255,.75);
+  --glass-blur: blur(24px) saturate(180%);
+  --glass-shadow: 0 10px 30px rgba(28,27,24,.14), 0 1px 2px rgba(28,27,24,.06);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,.85), inset 0 -1px 0 rgba(28,27,24,.04);
+  --lens: rgba(255,255,255,.78);
+  --lens-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(28,27,24,.05), 0 2px 10px rgba(28,27,24,.10);
+
+  /* type */
+  --font: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+
+  /* layout */
+  --dock-h: 64px;  --dock-inset: 16px;  --dock-bottom: 44px;  --dock-gap: 10px;
+  --lens-h: 52px;  --lens-pad: 4px;
+  --r-card: 18px;  --r-thumb: 12px;  --r-bar: 32px;  --r-lens: 26px;
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-move: 420ms;
+  --spring: cubic-bezier(.32, .72, 0, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role            | Family         | Size | Weight | Line-height | Tracking | Case      |
+|-----------------|----------------|-----:|-------:|------------:|---------:|-----------|
+| Body            | Hanken Grotesk | 15px | 400    | 1.4         | 0        | sentence  |
+| Eyebrow date    | Hanken Grotesk | 13px | 500    | 1.4         | 0        | sentence  |
+| Page title      | Hanken Grotesk | 32px | 700    | 1.1         | −0.025em | sentence  |
+| Hero tag        | Hanken Grotesk | 11px | 600    | 1.2         | +0.10em  | UPPERCASE |
+| Hero heading    | Hanken Grotesk | 24px | 600    | 1.15        | −0.02em  | sentence  |
+| Section heading | Hanken Grotesk | 17px | 600    | 1.3         | −0.01em  | sentence  |
+| Card name       | Hanken Grotesk | 14px | 600    | 1.25        | 0        | sentence  |
+| Card meta       | Hanken Grotesk | 12px | 400    | 1.4         | 0        | sentence  |
+| Chip            | Hanken Grotesk | 11px | 500    | 1.4         | 0        | sentence  |
+| Tab label       | Hanken Grotesk | 10px | 500    | 1           | +0.01em  | sentence  |
 
 ## Implementation notes
 

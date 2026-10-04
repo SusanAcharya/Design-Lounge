@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the current row uses `--primary-soft` and the row height follows the family. This is not the collapsing sidebar. That piece is a rail of icons. This piece is nested pages.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A tree of places, 320px wide. Dispatch is open. Inside it, Asar is open on Gate 4 and Gate 2, and Gate 4 is the current page. Bhadra is closed, and it holds Shift list. People is closed, and it holds Roles. A branch button shows – when open and + when closed. Opening Bhadra reveals Shift list. Clicking a leaf moves `aria-current="page"` to that leaf. The current row sits on the soft green. There is no indentation ornament beyond 16px per level, and no animation.
-
-## Reference behaviour
-
-1. Dispatch and Asar are expanded. Gate 4 has `aria-current="page"`. Bhadra and People are collapsed, and their children are not shown.
-2. Clicking a branch toggles `aria-expanded` and swaps the mark between – and +.
-3. Clicking Gate 2, Shift list, or Roles makes that leaf current and clears the previous current. The branches stay as they were.
-4. Collapsing Asar hides Gate 4 and Gate 2. Gate 4 remains the current page even while hidden, and it shows again when Asar opens.
-5. There is no animation. Focus ring is 2px `--focus`, offset 2px.
-6. The tree does not navigate the frame. Current is a state on the row.
 
 ## Structure
 
@@ -36,32 +29,6 @@ each row min-height 40, indent 16px per level
 - A branch is a button with `aria-expanded`. Its child list is the next sibling.
 - A leaf is a button. The current leaf has `aria-current="page"`.
 - The + and – marks are `aria-hidden`. The button name is the place.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --primary-soft: #e7f2ec;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Row radius is 2px. The family replaces it. Do not put each row in a card. The current row is the only fill.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Row | sans | 14px | 400 | `--ink` |
-| Current | sans | 14px | 500 | `--ink` |
-| Mark | sans | 12px | 400 | `--ink-2` |
-
-The where-line letter-spacing is 0.04em. The mark is 16px wide so the words align.
 
 ## Motion
 
@@ -112,6 +79,45 @@ None. A branch opens in one frame. Reduced motion has nothing to remove. Do not 
 - [ ] Radius is 2px.
 - [ ] There is no animation and no icon rail.
 - [ ] Focus ring is 2px, offset 2px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Dispatch and Asar are expanded. Gate 4 has `aria-current="page"`. Bhadra and People are collapsed, and their children are not shown.
+2. Clicking a branch toggles `aria-expanded` and swaps the mark between – and +.
+3. Clicking Gate 2, Shift list, or Roles makes that leaf current and clears the previous current. The branches stay as they were.
+4. Collapsing Asar hides Gate 4 and Gate 2. Gate 4 remains the current page even while hidden, and it shows again when Asar opens.
+5. There is no animation. Focus ring is 2px `--focus`, offset 2px.
+6. The tree does not navigate the frame. Current is a state on the row.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --primary-soft: #e7f2ec;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Row radius is 2px. The family replaces it. Do not put each row in a card. The current row is the only fill.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Row | sans | 14px | 400 | `--ink` |
+| Current | sans | 14px | 500 | `--ink` |
+| Mark | sans | 12px | 400 | `--ink-2` |
+
+The where-line letter-spacing is 0.04em. The mark is 16px wide so the words align.
 
 ## Implementation notes
 

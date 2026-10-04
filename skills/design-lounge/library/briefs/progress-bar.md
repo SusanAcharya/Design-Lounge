@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the fill is `--primary` and the track is `--line-strong`. A budget is `budget-meter`. An ink wash that fills for its own sake is `ink-fill-progress`. This bar is a known count.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A determinate bar for a job with an end. Packing the rice starts at 5 of 8. The track is 8px tall and 420px wide. The fill is `--primary` at five eighths. The count sits beside the title. Pack one more advances the count and the fill. At 8 the button disables and the status line reads "All 8 bags are packed." The title stays. The bar does not become a spinner, and it does not loop.
-
-## Reference behaviour
-
-1. The first frame is 5 of 8. The fill width is 62.5 percent. `aria-valuenow` is 5. `aria-valuemax` is 8.
-2. Each click adds one. The count, the width, and the valuetext stay in step.
-3. At 8 the button is disabled and the status line appears. Further clicks do nothing.
-4. The button is the one solid primary.
-5. There is no animation. The width changes in one frame.
-6. Focus ring is 2px `--focus`, offset 3px, on the button.
 
 ## Structure
 
@@ -32,35 +25,6 @@ width 420
 - The fill is `role="progressbar"` with min, max, now, and valuetext.
 - The count is also visible text. The bar is not the only place the number lives.
 - The status line is `role="status"`, empty until the end.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --primary-ink: #fffdf8;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-The track radius is 2px. A square family stays square. Do not turn the bar into a pill unless the family's radius is already a pill. The fill uses the same radius by clipping inside the track.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Title | sans | 28px | 500 | `--ink` |
-| Count | sans | 14px | 400 | `--ink-2` |
-| Button | sans | 13px | 500 | `--primary-ink` |
-| Status | sans | 14px | 400 | `--ink` |
-
-The count uses tabular numbers. The title is the largest type. The where-line letter-spacing is 0.04em.
 
 ## Motion
 
@@ -109,6 +73,48 @@ None on a timer. Reduced motion has nothing to remove. Do not animate the width 
 - [ ] Focus ring is 2px, offset 3px.
 - [ ] The width does not animate.
 - [ ] There is no spinner and no budget row.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is 5 of 8. The fill width is 62.5 percent. `aria-valuenow` is 5. `aria-valuemax` is 8.
+2. Each click adds one. The count, the width, and the valuetext stay in step.
+3. At 8 the button is disabled and the status line appears. Further clicks do nothing.
+4. The button is the one solid primary.
+5. There is no animation. The width changes in one frame.
+6. Focus ring is 2px `--focus`, offset 3px, on the button.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --primary-ink: #fffdf8;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+The track radius is 2px. A square family stays square. Do not turn the bar into a pill unless the family's radius is already a pill. The fill uses the same radius by clipping inside the track.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Title | sans | 28px | 500 | `--ink` |
+| Count | sans | 14px | 400 | `--ink-2` |
+| Button | sans | 13px | 500 | `--primary-ink` |
+| Status | sans | 14px | 400 | `--ink` |
+
+The count uses tabular numbers. The title is the largest type. The where-line letter-spacing is 0.04em.
 
 ## Implementation notes
 

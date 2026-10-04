@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A pomodoro widget for a desktop focus app or a dashboard corner. The card is cream with a 2.5px brown outline and a hard 8px offset shadow, like a sticker. The countdown ring is drawn as the tomato itself: a thick red ring with a green star-shaped calyx and stem sitting on top at 12 o'clock. The ring empties clockwise as time runs down. Three modes (Focus 25, Short break 5, Long break 15) recolour the ring: tomato red for focus, leaf green for breaks. Four session dots under the controls show progress through a set. The detail worth copying is that the ring and the mascot are the same object, so the whimsy costs no extra space.
-
-## Reference behaviour
-
-1. The first frame is mid-session and running: Focus mode, 17:24 remaining, label "Focus · 2 of 4", the first dot filled, the second dot ringed as current, "Next: short break · 5 min", "Today: 50 min focused".
-2. While running, the time drops each second and the ring's arc shrinks smoothly (1000ms linear per second). The calyx sways ±5° over 3.2s, alternating.
-3. The big centre button toggles Start / Pause. Its icon swaps between a pause glyph and a play triangle; its label swaps between "Pause" and "Start".
-4. Skip ends the current block immediately. From Focus it fills the current session dot (dot pops to 1.3× and back), then goes to Short break, or to Long break after session 4. From a break it goes to Focus and advances the session (after Long break the set restarts at session 1 with no dots filled). Skip keeps the running state.
-5. Reset sets the current mode back to its full length and pauses.
-6. Clicking a mode chip switches mode, sets its full length and pauses. The face does a 600ms pop (scale .9 → 1).
-7. When the countdown reaches 0:00 it advances automatically exactly like Skip, and keeps running.
-8. Every full minute of running Focus adds one to "Today: N min focused".
-9. Keyboard anywhere on the page (not inside a button): Space toggles start/pause, S skips, R resets.
-10. The tab title shows "17:24 · Focus" and updates every second.
-11. Reduced motion: no sway, no ring tween (the arc jumps each second), no pops, no colour transitions.
 
 ## Structure
 
@@ -49,43 +37,6 @@ padding 24px 28px 28px
 - The ring is one inline SVG (`viewBox="0 0 300 300"`, ring centre 150,158, r 118) with: an ink circle (stroke 25) for the outline, the track circle (stroke 20), the progress circle (stroke 20, round caps, rotated −90°), and the calyx group.
 - The time is a `div role="timer"` overlaid in the ring's centre.
 - Controls are three `button`s. Session dots are spans inside a `div role="img"` with a descriptive `aria-label`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ffe9d6;          /* page, with 1.5px tomato dots on a 28px grid */
-  --card: #fff8ef;        /* card surface */
-  --ink: #3a1610;         /* outline, shadow, text */
-  --ink-2: #7a4a3c;       /* muted text */
-  --line: #f0d3bf;
-  --tomato: #e8442e;      /* focus accent */
-  --tomato-soft: #f8d0c3; /* focus track */
-  --leaf: #2f7d4f;        /* break accent, calyx */
-  --leaf-soft: #cfe6d4;   /* break track */
-  --display: "Rammetto One", Georgia, serif;
-  --sans: "Nunito", system-ui, sans-serif;
-  --pop: cubic-bezier(.34,1.56,.64,1);
-  --ease: cubic-bezier(.2,.7,.2,1);
-}
-.widget[data-mode="focus"] { --accent: var(--tomato); --accent-soft: var(--tomato-soft); }
-.widget[data-mode="short"], .widget[data-mode="long"] { --accent: var(--leaf); --accent-soft: var(--leaf-soft); }
-```
-
-Spacing: 4, 6, 10, 16, 18, 22, 24, 26, 28, 30. Radii: card 36px, pills 999px, round buttons 50%, `kbd` 5px.
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Countdown | Rammetto One | 46px / 1 | 400 | −0.02em | tabular |
-| Wordmark | Rammetto One | 18px | 400 | −0.01em | Title, tomato |
-| Mode label in ring | Nunito | 14px | 800 | 0.12em | Upper, accent |
-| Mode chips | Nunito | 14px | 800 | 0 | Sentence |
-| Today stat, Next | Nunito | 13–14px | 700 | 0 | Sentence |
-| Key hints | Nunito | 12px, kbd 11px 800 | — | 0 | — |
-
-Rammetto One is very wide. At 46px "17:23" is about 170px, which fits inside the 200px inner ring at 272px. Do not go above 48px.
 
 ## Motion
 
@@ -148,6 +99,61 @@ Linear is correct for the arc because it represents time, not a UI move.
 - [ ] Lengths 25 / 5 / 15 minutes.
 - [ ] Card `#fff8ef`, outline `#3a1610`, shadow 8px 8px 0.
 - [ ] Ring r 118 in a 300 viewBox, stroke 20 over a 25 ink outline.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is mid-session and running: Focus mode, 17:24 remaining, label "Focus · 2 of 4", the first dot filled, the second dot ringed as current, "Next: short break · 5 min", "Today: 50 min focused".
+2. While running, the time drops each second and the ring's arc shrinks smoothly (1000ms linear per second). The calyx sways ±5° over 3.2s, alternating.
+3. The big centre button toggles Start / Pause. Its icon swaps between a pause glyph and a play triangle; its label swaps between "Pause" and "Start".
+4. Skip ends the current block immediately. From Focus it fills the current session dot (dot pops to 1.3× and back), then goes to Short break, or to Long break after session 4. From a break it goes to Focus and advances the session (after Long break the set restarts at session 1 with no dots filled). Skip keeps the running state.
+5. Reset sets the current mode back to its full length and pauses.
+6. Clicking a mode chip switches mode, sets its full length and pauses. The face does a 600ms pop (scale .9 → 1).
+7. When the countdown reaches 0:00 it advances automatically exactly like Skip, and keeps running.
+8. Every full minute of running Focus adds one to "Today: N min focused".
+9. Keyboard anywhere on the page (not inside a button): Space toggles start/pause, S skips, R resets.
+10. The tab title shows "17:24 · Focus" and updates every second.
+11. Reduced motion: no sway, no ring tween (the arc jumps each second), no pops, no colour transitions.
+
+## Tokens
+
+```css
+:root {
+  --bg: #ffe9d6;          /* page, with 1.5px tomato dots on a 28px grid */
+  --card: #fff8ef;        /* card surface */
+  --ink: #3a1610;         /* outline, shadow, text */
+  --ink-2: #7a4a3c;       /* muted text */
+  --line: #f0d3bf;
+  --tomato: #e8442e;      /* focus accent */
+  --tomato-soft: #f8d0c3; /* focus track */
+  --leaf: #2f7d4f;        /* break accent, calyx */
+  --leaf-soft: #cfe6d4;   /* break track */
+  --display: "Rammetto One", Georgia, serif;
+  --sans: "Nunito", system-ui, sans-serif;
+  --pop: cubic-bezier(.34,1.56,.64,1);
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+.widget[data-mode="focus"] { --accent: var(--tomato); --accent-soft: var(--tomato-soft); }
+.widget[data-mode="short"], .widget[data-mode="long"] { --accent: var(--leaf); --accent-soft: var(--leaf-soft); }
+```
+
+Spacing: 4, 6, 10, 16, 18, 22, 24, 26, 28, 30. Radii: card 36px, pills 999px, round buttons 50%, `kbd` 5px.
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Countdown | Rammetto One | 46px / 1 | 400 | −0.02em | tabular |
+| Wordmark | Rammetto One | 18px | 400 | −0.01em | Title, tomato |
+| Mode label in ring | Nunito | 14px | 800 | 0.12em | Upper, accent |
+| Mode chips | Nunito | 14px | 800 | 0 | Sentence |
+| Today stat, Next | Nunito | 13–14px | 700 | 0 | Sentence |
+| Key hints | Nunito | 12px, kbd 11px 800 | — | 0 | — |
+
+Rammetto One is very wide. At 46px "17:23" is about 170px, which fits inside the 200px inner ring at 272px. Do not go above 48px.
 
 ## Implementation notes
 

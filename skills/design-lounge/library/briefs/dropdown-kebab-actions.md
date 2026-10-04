@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map the colours onto the kit's surface, line, ink, primary and danger tokens.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The row-level actions menu of an invoice list in a billing app called Tallyroom. Every row ends in a 36px ⋯ button. It opens a 252px menu anchored to the button's right edge: a mono context line naming the invoice, five actions with 16px stroke icons and right-aligned mono shortcuts, a hairline divider, Archive, and a red Delete invoice…. Delete does not delete. It swaps the menu for a small confirm panel in the same popover, with Cancel focused. The detail worth copying is that the popover never jumps: it chooses above or below once when it opens and keeps that side when the confirm panel replaces the list.
-
-## Reference behaviour
-
-1. First frame: the menu is open on row 3, INV-2045 · Okafor Studio. Duplicate has focus. The row is tinted `#f6f9f8` and the ⋯ button shows its pressed fill.
-2. Clicking a ⋯ button opens its menu and focuses the first item. Clicking the same button again closes it. Clicking another ⋯ closes the first menu and opens the new one.
-3. With the ⋯ button focused, Enter, Space, ArrowDown and Shift+F10 open the menu on the first item. ArrowUp opens it on the last item.
-4. Inside the menu: ArrowDown/ArrowUp move focus and wrap. Home/PageUp go to the first item, End/PageDown to the last. Hovering an item moves focus to it, so the mouse and keyboard highlight are one highlight.
-5. Typeahead: printable keys build a buffer that resets 500ms after the last key. Focus moves to the next item whose label starts with the buffer, searching from the item after the current one and wrapping. Pressing D from Download PDF lands on Delete invoice….
-6. Enter or Space activates the focused item. Escape closes and returns focus to the ⋯ button that opened it. Tab closes without trapping, and focus continues to the next element in the page.
-7. Clicking anywhere outside the popover and outside the button closes it without moving focus.
-8. Disabled items stay in the list and stay focusable, with `aria-disabled="true"`, muted ink, and no hover fill. On a paid invoice, Send reminder and Mark as paid are disabled. On a draft, Send reminder is disabled.
-9. Actions: Open shows a toast "Opening INV-2045…". Duplicate inserts a draft copy at the top as INV-2048, tints it `--accent-soft` for 900ms, and focuses its ⋯ button. Download PDF and Send reminder show a toast. Mark as paid flips the pill to Paid. Archive slides the row out and offers Undo.
-10. Delete invoice… swaps the item list for the confirm panel: heading "Delete INV-2045?", one sentence, Cancel (focused) and a red Delete. The popover keeps the side it opened on.
-11. In the confirm panel, Tab and ArrowLeft/ArrowRight move between the two buttons only. Escape or Cancel returns to the list with Delete invoice… focused.
-12. Delete removes the row (200ms fade and 12px slide right), moves focus to the next row's ⋯ (or the previous row's if it was last), and shows the toast "INV-2045 deleted" with Undo. Undo puts the row back at the same index.
-13. Placement: the menu opens 6px below the button with its right edge aligned to the button's right edge. If it would cross the bottom of the viewport minus 8px and there is room above, it opens 6px above instead. If the left edge would leave the viewport, it aligns to the button's left edge. Final top and left are clamped to 8px inside the viewport. It re-places on resize and on any scroll.
 
 ## Structure
 
@@ -58,53 +44,6 @@ max-width 1080, padding 28 32
 - Popover: one `position: fixed` container reused for every row, appended once at body level, so no row's `overflow: hidden` clips it.
 - Inside it: a context line (`aria-hidden`, the menu carries the same words in `aria-label`), a `role="menu"` list of `<button role="menuitem" tabindex="-1">`, `role="separator"` between groups, and a hidden `role="alertdialog"` confirm panel.
 - Toast: `role="status" aria-live="polite"`, fixed bottom centre, 24px up.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f2f0eb;          /* page */
-  --surface: #ffffff;     /* card, menu */
-  --sunk: #f7f5f1;        /* table header, item hover/focus */
-  --ink: #16181d;
-  --ink-2: #5b5f68;       /* secondary text */
-  --ink-3: #71757e;       /* icons, shortcuts, disabled */
-  --line: #e2ded5;        /* card and menu border */
-  --line-2: #ece9e2;      /* row rules, divider */
-  --accent: #0e6e63;      /* focus ring, Sent pill */
-  --accent-soft: #e3f0ee;
-  --danger: #c0341b;      /* delete item, delete button */
-  --danger-soft: #fbeae6; /* delete item hover */
-  --warn: #9a5b00; --warn-soft: #fbf0dc;
-  --focus: #0e6e63;
-
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --mono: "Spline Sans Mono", ui-monospace, monospace;
-
-  --r-menu: 10px; --r-item: 6px; --r-card: 12px;
-  --menu-w: 252px; --item-h: 34px; --menu-pad: 6px; --gap-anchor: 6px; --edge: 8px;
-  --shadow: 0 1px 2px rgba(22,24,29,.06), 0 12px 32px -6px rgba(22,24,29,.18);
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --t-in: 140ms; --t-out: 100ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- | --- |
-| Page title | Schibsted Grotesk | 32px | 700 | 1.1 | -0.025em | `--ink` |
-| Client name | Schibsted Grotesk | 14px | 600 | 1.45 | 0 | `--ink` |
-| Client email, header | Schibsted Grotesk | 12px | 400/500 | 1.45 | 0.02em header | `--ink-3` |
-| Invoice number, amount | Spline Sans Mono | 12.5px / 13px | 400 | 1.45 | 0 | `--ink-2` / `--ink`, tabular |
-| Menu context line | Spline Sans Mono | 11.5px | 400 | 1.45 | 0 | `--ink-3` |
-| Menu item | Schibsted Grotesk | 13.5px | 400 | 34px box | 0 | `--ink` |
-| Shortcut | Spline Sans Mono | 11px | 400 | — | 0.02em | `--ink-3` |
-| Confirm heading | Schibsted Grotesk | 14px | 700 | 1.3 | -0.01em | `--ink` |
-| Confirm body | Schibsted Grotesk | 13px | 400 | 1.45 | 0 | `--ink-2` |
-
-Shortcuts are display only. Write them with platform glyphs (↵ ⌘D ⇧⌘S ⌘R ⌘P E ⌫) and mark them `aria-hidden`.
 
 ## Motion
 
@@ -177,6 +116,73 @@ Transform origin follows the anchor: right/top when the menu hangs below a right
 - [ ] Confirm reads "Delete INV-2045?" and "The PDF and payment link stop working. This can't be undone."
 - [ ] Opening the INV-2041 row (last) places the menu above the button.
 - [ ] Duplicate creates INV-2048 as a draft at the top.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the menu is open on row 3, INV-2045 · Okafor Studio. Duplicate has focus. The row is tinted `#f6f9f8` and the ⋯ button shows its pressed fill.
+2. Clicking a ⋯ button opens its menu and focuses the first item. Clicking the same button again closes it. Clicking another ⋯ closes the first menu and opens the new one.
+3. With the ⋯ button focused, Enter, Space, ArrowDown and Shift+F10 open the menu on the first item. ArrowUp opens it on the last item.
+4. Inside the menu: ArrowDown/ArrowUp move focus and wrap. Home/PageUp go to the first item, End/PageDown to the last. Hovering an item moves focus to it, so the mouse and keyboard highlight are one highlight.
+5. Typeahead: printable keys build a buffer that resets 500ms after the last key. Focus moves to the next item whose label starts with the buffer, searching from the item after the current one and wrapping. Pressing D from Download PDF lands on Delete invoice….
+6. Enter or Space activates the focused item. Escape closes and returns focus to the ⋯ button that opened it. Tab closes without trapping, and focus continues to the next element in the page.
+7. Clicking anywhere outside the popover and outside the button closes it without moving focus.
+8. Disabled items stay in the list and stay focusable, with `aria-disabled="true"`, muted ink, and no hover fill. On a paid invoice, Send reminder and Mark as paid are disabled. On a draft, Send reminder is disabled.
+9. Actions: Open shows a toast "Opening INV-2045…". Duplicate inserts a draft copy at the top as INV-2048, tints it `--accent-soft` for 900ms, and focuses its ⋯ button. Download PDF and Send reminder show a toast. Mark as paid flips the pill to Paid. Archive slides the row out and offers Undo.
+10. Delete invoice… swaps the item list for the confirm panel: heading "Delete INV-2045?", one sentence, Cancel (focused) and a red Delete. The popover keeps the side it opened on.
+11. In the confirm panel, Tab and ArrowLeft/ArrowRight move between the two buttons only. Escape or Cancel returns to the list with Delete invoice… focused.
+12. Delete removes the row (200ms fade and 12px slide right), moves focus to the next row's ⋯ (or the previous row's if it was last), and shows the toast "INV-2045 deleted" with Undo. Undo puts the row back at the same index.
+13. Placement: the menu opens 6px below the button with its right edge aligned to the button's right edge. If it would cross the bottom of the viewport minus 8px and there is room above, it opens 6px above instead. If the left edge would leave the viewport, it aligns to the button's left edge. Final top and left are clamped to 8px inside the viewport. It re-places on resize and on any scroll.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f2f0eb;          /* page */
+  --surface: #ffffff;     /* card, menu */
+  --sunk: #f7f5f1;        /* table header, item hover/focus */
+  --ink: #16181d;
+  --ink-2: #5b5f68;       /* secondary text */
+  --ink-3: #71757e;       /* icons, shortcuts, disabled */
+  --line: #e2ded5;        /* card and menu border */
+  --line-2: #ece9e2;      /* row rules, divider */
+  --accent: #0e6e63;      /* focus ring, Sent pill */
+  --accent-soft: #e3f0ee;
+  --danger: #c0341b;      /* delete item, delete button */
+  --danger-soft: #fbeae6; /* delete item hover */
+  --warn: #9a5b00; --warn-soft: #fbf0dc;
+  --focus: #0e6e63;
+
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --mono: "Spline Sans Mono", ui-monospace, monospace;
+
+  --r-menu: 10px; --r-item: 6px; --r-card: 12px;
+  --menu-w: 252px; --item-h: 34px; --menu-pad: 6px; --gap-anchor: 6px; --edge: 8px;
+  --shadow: 0 1px 2px rgba(22,24,29,.06), 0 12px 32px -6px rgba(22,24,29,.18);
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --t-in: 140ms; --t-out: 100ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- | --- |
+| Page title | Schibsted Grotesk | 32px | 700 | 1.1 | -0.025em | `--ink` |
+| Client name | Schibsted Grotesk | 14px | 600 | 1.45 | 0 | `--ink` |
+| Client email, header | Schibsted Grotesk | 12px | 400/500 | 1.45 | 0.02em header | `--ink-3` |
+| Invoice number, amount | Spline Sans Mono | 12.5px / 13px | 400 | 1.45 | 0 | `--ink-2` / `--ink`, tabular |
+| Menu context line | Spline Sans Mono | 11.5px | 400 | 1.45 | 0 | `--ink-3` |
+| Menu item | Schibsted Grotesk | 13.5px | 400 | 34px box | 0 | `--ink` |
+| Shortcut | Spline Sans Mono | 11px | 400 | — | 0.02em | `--ink-3` |
+| Confirm heading | Schibsted Grotesk | 14px | 700 | 1.3 | -0.01em | `--ink` |
+| Confirm body | Schibsted Grotesk | 13px | 400 | 1.45 | 0 | `--ink-2` |
+
+Shortcuts are display only. Write them with platform glyphs (↵ ⌘D ⇧⌘S ⌘R ⌘P E ⌫) and mark them `aria-hidden`.
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The "Library" screen of "Tessel", a reading app, showing the iOS large-title navigation pattern. At rest the toolbar is transparent and the 34px Playfair Display title sits in the content with a subtitle and a 36px search field under it. Over the first 52px of scroll, a single custom property `--p` (0 → 1) drives everything: the large title scales to 82% and fades out, the 17px centred Inter title rises 6px and fades in during the last 45% of the range, the toolbar gains a 78%-opaque paper fill, 20px blur and a hairline, and the search field's height, margin and opacity collapse to 0. There is no JS animation; JS writes one number per frame and CSS does the rest, which is why it stays in sync with the finger.
-
-## Reference behaviour
-
-1. Initial state (`scrollTop 0`, `--p: 0`): toolbar shows "‹ Shelves" (left) and "Edit" (right) in the terracotta accent on a transparent bar; large "Library" title with "Tessel · 24 titles, 6 in progress" under it; search field visible; book list below in three sections.
-2. Scroll down 0 → 52px: `--p` rises linearly (`scrollTop / 52`, clamped). The large title scales from 1 to 0.82 around its bottom-left corner, moves up 4px and fades (opacity `1 − 1.4p`, so it is gone by p ≈ 0.71). The search field height goes 36 → 0px, top margin 12 → 0, opacity `1 − 1.6p`, scale 1 → 0.94.
-3. From p = 0.55 to 1 the centred small title fades in (`clamp(0, (p − .55)/.45, 1)`) while rising from 6px to 0.
-4. The toolbar's background alpha is `.78p`, its `backdrop-filter` blur is `20px × p`, its bottom hairline alpha `.08p` and its inner top highlight `.6p`. At p = 1 it is fully glass; the list scrolls under it.
-5. Scroll back up: everything reverses continuously; there is no snapping and no hysteresis.
-6. Scrolling beyond 52px changes nothing further in the toolbar.
-7. Tapping "Shelves" or "Edit" has no navigation in the demo; they show focus rings and press states.
-8. Tapping the search field focuses the input (2px accent ring); it stays focusable only while `--p < 1` in practice, because its height is 0 when collapsed.
 
 ## Structure
 
@@ -51,58 +42,6 @@ The "Library" screen of "Tessel", a reading app, showing the iOS large-title nav
 - `<header class="bar">`: fixed, `height: 54 + 44px`, `padding-top:54px`, flex row with two `<button>`s and an absolutely positioned `.mid` title (`aria-hidden`, because the `<h1>` remains the accessible title).
 - `<main>`: the scroller, `padding-top: 98px`. `.head` holds `<h1>` (with a `<small>` subtitle) and `.search` (`<label>` wrapping an `<input type="search">`).
 - `.sec` uppercase labels; `<a class="book">` rows: grid `44px 1fr auto` — `.cover` (solid colour with a 4px spine highlight and an inset right shadow), title + author, `.pct` with a 44×3 progress bar.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm paper, ink-brown text, terracotta accent */
-  --bg: #fbf8f3;
-  --surface: #ffffff;
-  --ink: #221f1b;
-  --ink-2: #6d675e;         /* subtitle, author */
-  --ink-3: #a39c91;         /* section labels, placeholder, percentages */
-  --line: #e9e3d8;          /* row hairlines, progress track */
-  --accent: #b5442f;        /* toolbar buttons, progress fill, focus */
-  --accent-soft: #f6e6e1;
-  --glass-rgb: 251, 248, 243;                 /* toolbar fill, alpha = .78·p */
-  --glass-line: rgba(34,31,27,.08);           /* alpha scaled by p */
-  --search-bg: rgba(34,31,27,.06);
-  --covers: #3f5f7a #b5442f #5a7a4f #d9a441 #2f2d2a #8a6a9c #c97c5d #4f6f8a;
-
-  /* type */
-  --serif: "Playfair Display", Georgia, serif;
-  --sans: "Inter", system-ui, -apple-system, sans-serif;
-
-  /* geometry */
-  --status: 54px;  --bar-h: 44px;  --content-top: 98px;
-  --title-lg: 34px;  --title-sm: 17px;  --title-scale: .82;  --title-lift: 4px;
-  --search-h: 36px;  --search-gap: 12px;
-  --range: 52px;                              /* scroll distance for p: 0 → 1 */
-  --mid-start: .55;                           /* p where the small title begins */
-  --blur-max: 20px;  --fill-max: .78;
-  --cover-w: 44px;  --cover-h: 62px;  --r-cover: 6px;  --r-search: 10px;
-  --bar-w: 44px;  --bar-hh: 3px;              /* progress bar */
-
-  /* motion — none by duration; everything is scroll-linked */
-  --t-micro: 160ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role            | Family           | Size | Weight | Line-height | Tracking | Case |
-|-----------------|------------------|-----:|-------:|------------:|---------:|------|
-| Large title     | Playfair Display | 34px | 600    | 1.15        | −0.01em  | sentence |
-| Subtitle        | Inter            | 13px | 500    | 1.4         | 0        | sentence |
-| Toolbar title   | Inter            | 17px | 600    | 1           | −0.01em  | sentence |
-| Toolbar buttons | Inter            | 15px | 500    | 1           | 0        | sentence, `--accent` |
-| Search          | Inter            | 15px | 400    | 1           | 0        | placeholder `--ink-3` |
-| Section label   | Inter            | 12px | 600    | 1.3         | +0.08em  | UPPERCASE |
-| Book title      | Inter            | 15px | 500    | 1.3         | −0.01em  | sentence |
-| Author / pages  | Inter            | 13px | 400    | 1.45        | 0        | sentence |
-| Percent         | Inter            | 12px | 500    | 1.3         | 0        | `tabular-nums` |
 
 ## Motion
 
@@ -161,6 +100,73 @@ Reduced motion: nothing to reduce; scroll-linked values are not animations. Opti
 - [ ] Book rows use a 44×62 cover with a 6px radius, 4px spine highlight and a 44×3 progress bar filled to `--w`.
 - [ ] All interactive elements (2 toolbar buttons, search input, 12 rows) show a visible focus ring.
 - [ ] No JS-driven animation loops; the only script is the scroll → `--p` bridge (about 6 lines).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state (`scrollTop 0`, `--p: 0`): toolbar shows "‹ Shelves" (left) and "Edit" (right) in the terracotta accent on a transparent bar; large "Library" title with "Tessel · 24 titles, 6 in progress" under it; search field visible; book list below in three sections.
+2. Scroll down 0 → 52px: `--p` rises linearly (`scrollTop / 52`, clamped). The large title scales from 1 to 0.82 around its bottom-left corner, moves up 4px and fades (opacity `1 − 1.4p`, so it is gone by p ≈ 0.71). The search field height goes 36 → 0px, top margin 12 → 0, opacity `1 − 1.6p`, scale 1 → 0.94.
+3. From p = 0.55 to 1 the centred small title fades in (`clamp(0, (p − .55)/.45, 1)`) while rising from 6px to 0.
+4. The toolbar's background alpha is `.78p`, its `backdrop-filter` blur is `20px × p`, its bottom hairline alpha `.08p` and its inner top highlight `.6p`. At p = 1 it is fully glass; the list scrolls under it.
+5. Scroll back up: everything reverses continuously; there is no snapping and no hysteresis.
+6. Scrolling beyond 52px changes nothing further in the toolbar.
+7. Tapping "Shelves" or "Edit" has no navigation in the demo; they show focus rings and press states.
+8. Tapping the search field focuses the input (2px accent ring); it stays focusable only while `--p < 1` in practice, because its height is 0 when collapsed.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm paper, ink-brown text, terracotta accent */
+  --bg: #fbf8f3;
+  --surface: #ffffff;
+  --ink: #221f1b;
+  --ink-2: #6d675e;         /* subtitle, author */
+  --ink-3: #a39c91;         /* section labels, placeholder, percentages */
+  --line: #e9e3d8;          /* row hairlines, progress track */
+  --accent: #b5442f;        /* toolbar buttons, progress fill, focus */
+  --accent-soft: #f6e6e1;
+  --glass-rgb: 251, 248, 243;                 /* toolbar fill, alpha = .78·p */
+  --glass-line: rgba(34,31,27,.08);           /* alpha scaled by p */
+  --search-bg: rgba(34,31,27,.06);
+  --covers: #3f5f7a #b5442f #5a7a4f #d9a441 #2f2d2a #8a6a9c #c97c5d #4f6f8a;
+
+  /* type */
+  --serif: "Playfair Display", Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* geometry */
+  --status: 54px;  --bar-h: 44px;  --content-top: 98px;
+  --title-lg: 34px;  --title-sm: 17px;  --title-scale: .82;  --title-lift: 4px;
+  --search-h: 36px;  --search-gap: 12px;
+  --range: 52px;                              /* scroll distance for p: 0 → 1 */
+  --mid-start: .55;                           /* p where the small title begins */
+  --blur-max: 20px;  --fill-max: .78;
+  --cover-w: 44px;  --cover-h: 62px;  --r-cover: 6px;  --r-search: 10px;
+  --bar-w: 44px;  --bar-hh: 3px;              /* progress bar */
+
+  /* motion — none by duration; everything is scroll-linked */
+  --t-micro: 160ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role            | Family           | Size | Weight | Line-height | Tracking | Case |
+|-----------------|------------------|-----:|-------:|------------:|---------:|------|
+| Large title     | Playfair Display | 34px | 600    | 1.15        | −0.01em  | sentence |
+| Subtitle        | Inter            | 13px | 500    | 1.4         | 0        | sentence |
+| Toolbar title   | Inter            | 17px | 600    | 1           | −0.01em  | sentence |
+| Toolbar buttons | Inter            | 15px | 500    | 1           | 0        | sentence, `--accent` |
+| Search          | Inter            | 15px | 400    | 1           | 0        | placeholder `--ink-3` |
+| Section label   | Inter            | 12px | 600    | 1.3         | +0.08em  | UPPERCASE |
+| Book title      | Inter            | 15px | 500    | 1.3         | −0.01em  | sentence |
+| Author / pages  | Inter            | 13px | 400    | 1.45        | 0        | sentence |
+| Percent         | Inter            | 12px | 500    | 1.3         | 0        | `tabular-nums` |
 
 ## Implementation notes
 

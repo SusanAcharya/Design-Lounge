@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The top of a website for a fictional design summer school, Werkhalle. On the left is a 136px black Archivo headline ("Shape / is a / verb.", with the last word in red), a short lede, a blue CTA and a three-cell stat row. On the right is a 560px square "poster" holding seven flat shapes in red, blue, yellow and black, printed with `mix-blend-mode: multiply` so overlaps darken the way overprinted ink does. Clicking the poster, or one of three Roman-numeral buttons, rearranges the same seven shapes into a different composition. Every shape moves, resizes and rotates on a 900ms expo-out curve with a 60ms stagger. What makes it worth copying: one set of DOM nodes, three coordinate tables, and the motion does all the work.
-
-## Reference behaviour
-
-1. Initial state: composition I ("Weight") is shown. The big red circle sits top-left, a black half-disc and ring top-right, a blue square bottom-right, a yellow triangle under the circle, and a black bar along the bottom. The caption reads "I / III · Weight · The circle anchors the corner." and button I is pressed.
-2. The grid behind the shapes (70px squares, 1px `--line`) shows through every shape because of `multiply`.
-3. Click anywhere on the poster: the poster advances to the next composition (I → II → III → I).
-4. During the change, each shape transitions `transform` (translate + rotate), `width` and `height` over 900ms with `cubic-bezier(.16,1,.3,1)`. Shape *n* starts `n × 60ms` late (0–360ms across seven shapes).
-5. Composition II ("Tension"): one 18 × 512px vertical bar splits the poster; the square tilts 12°, the half-disc flips 180° into a bowl, the circle drops bottom-right.
-6. Composition III ("Rotation"): the bar crosses the poster at −32°, the square turns 45° into a diamond, the triangle points down, the half-disc stands on its side (90°).
-7. Buttons I / II / III jump straight to that composition. Their `aria-pressed` reflects the current composition.
-8. The caption updates its number, title and one-line description as the shapes move. It is a polite live region.
-9. Clicking during a transition simply retargets: the CSS transitions pick up from the current in-flight values.
-10. Nav links underline on hover (2px, 5px offset). The CTA turns from blue to black on hover; "Apply" in the nav turns red.
 
 ## Structure
 
@@ -44,67 +33,6 @@ The top of a website for a fictional design summer school, Werkhalle. On the lef
 - `<main class="hero">`: two-column grid.
   - `.copy`: vertical rotated label (`writing-mode: vertical-rl; rotate(180deg)`), a kicker of three outlined mono tags, `<h1>`, `.lede`, `.ctas` (blue button + underlined mono link), `.meta` (3-column stat grid pushed to the bottom with `margin-top: auto`).
   - `.side`: `<button class="canvas">` containing seven `<span class="shape">` children plus a hint label; then `.caption` with the live text and a `role="group"` of three `aria-pressed` buttons.
-
-## Tokens
-
-```css
-:root {
-  /* neutrals: cool-warm grey paper, near-black ink */
-  --bg: #ecebe6;          /* page */
-  --canvas-bg: #f4f3ef;   /* poster ground */
-  --ink: #141414;         /* text, rules, black shapes */
-  --ink-2: #4a4944;       /* lede, caption */
-  --ink-3: #77756e;       /* meta labels (11px mono) */
-  --line: #cfcdc5;        /* poster grid, stat dividers */
-
-  /* primaries */
-  --red: #e1341e;         /* circle, "verb.", nav Apply hover */
-  --blue: #1f4fbf;        /* square, CTA, focus ring */
-  --yellow: #f2b705;      /* triangle, dot */
-
-  /* type */
-  --sans: "Archivo", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --fs-display: 136px;
-  --fs-stat: 30px;
-  --fs-lede: 16px;
-  --fs-nav: 14px;
-  --fs-label: 11px;
-
-  /* layout */
-  --nav-h: 64px;
-  --canvas: 560px;
-  --grid-cell: 70px;
-  --gutter: 56px;
-  --ring-border: 16px;
-  --radius: 0;            /* everything is square-cornered */
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-shape: 900ms;
-  --stagger: 60ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role            | Family        | Size  | Weight | Line-height | Tracking | Case      |
-|-----------------|---------------|------:|-------:|------------:|---------:|-----------|
-| Headline        | Archivo       | 136px | 900    | 0.84        | −0.06em  | sentence  |
-| Logo            | Archivo       | 18px  | 900    | 1           | −0.03em  | title     |
-| Nav links       | Archivo       | 14px  | 500    | 1.5         | 0        | title     |
-| Lede            | Archivo       | 16px  | 400    | 1.5         | 0        | sentence  |
-| CTA             | Archivo       | 15px  | 800    | 1           | −0.01em  | sentence  |
-| Stat value      | Archivo       | 30px  | 800    | 1           | −0.04em  | numerals  |
-| Caption title   | Archivo       | 15px  | 800    | 1.3         | −0.01em  | title     |
-| Kicker tags     | IBM Plex Mono | 12px  | 500    | 1           | +0.12em  | UPPERCASE |
-| Vertical label  | IBM Plex Mono | 11px  | 500    | 1           | +0.18em  | UPPERCASE |
-| Stat label      | IBM Plex Mono | 11px  | 400    | 1.4         | +0.10em  | UPPERCASE |
-| Caption body    | IBM Plex Mono | 12px  | 400    | 1.4         | 0        | sentence  |
-
-Pull the headline 6px left (`margin-left: -6px`) so the S optically aligns with the lede.
 
 ## Motion
 
@@ -169,6 +97,84 @@ Reduced motion: shape transitions drop to 1ms with no stagger; the composition s
 - [ ] With reduced motion, compositions switch instantly.
 - [ ] All interactive elements show a visible 2px blue focus ring.
 - [ ] Nothing in the stat row collides with the CTA row at 1280 × 800.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: composition I ("Weight") is shown. The big red circle sits top-left, a black half-disc and ring top-right, a blue square bottom-right, a yellow triangle under the circle, and a black bar along the bottom. The caption reads "I / III · Weight · The circle anchors the corner." and button I is pressed.
+2. The grid behind the shapes (70px squares, 1px `--line`) shows through every shape because of `multiply`.
+3. Click anywhere on the poster: the poster advances to the next composition (I → II → III → I).
+4. During the change, each shape transitions `transform` (translate + rotate), `width` and `height` over 900ms with `cubic-bezier(.16,1,.3,1)`. Shape *n* starts `n × 60ms` late (0–360ms across seven shapes).
+5. Composition II ("Tension"): one 18 × 512px vertical bar splits the poster; the square tilts 12°, the half-disc flips 180° into a bowl, the circle drops bottom-right.
+6. Composition III ("Rotation"): the bar crosses the poster at −32°, the square turns 45° into a diamond, the triangle points down, the half-disc stands on its side (90°).
+7. Buttons I / II / III jump straight to that composition. Their `aria-pressed` reflects the current composition.
+8. The caption updates its number, title and one-line description as the shapes move. It is a polite live region.
+9. Clicking during a transition simply retargets: the CSS transitions pick up from the current in-flight values.
+10. Nav links underline on hover (2px, 5px offset). The CTA turns from blue to black on hover; "Apply" in the nav turns red.
+
+## Tokens
+
+```css
+:root {
+  /* neutrals: cool-warm grey paper, near-black ink */
+  --bg: #ecebe6;          /* page */
+  --canvas-bg: #f4f3ef;   /* poster ground */
+  --ink: #141414;         /* text, rules, black shapes */
+  --ink-2: #4a4944;       /* lede, caption */
+  --ink-3: #77756e;       /* meta labels (11px mono) */
+  --line: #cfcdc5;        /* poster grid, stat dividers */
+
+  /* primaries */
+  --red: #e1341e;         /* circle, "verb.", nav Apply hover */
+  --blue: #1f4fbf;        /* square, CTA, focus ring */
+  --yellow: #f2b705;      /* triangle, dot */
+
+  /* type */
+  --sans: "Archivo", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --fs-display: 136px;
+  --fs-stat: 30px;
+  --fs-lede: 16px;
+  --fs-nav: 14px;
+  --fs-label: 11px;
+
+  /* layout */
+  --nav-h: 64px;
+  --canvas: 560px;
+  --grid-cell: 70px;
+  --gutter: 56px;
+  --ring-border: 16px;
+  --radius: 0;            /* everything is square-cornered */
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-shape: 900ms;
+  --stagger: 60ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role            | Family        | Size  | Weight | Line-height | Tracking | Case      |
+|-----------------|---------------|------:|-------:|------------:|---------:|-----------|
+| Headline        | Archivo       | 136px | 900    | 0.84        | −0.06em  | sentence  |
+| Logo            | Archivo       | 18px  | 900    | 1           | −0.03em  | title     |
+| Nav links       | Archivo       | 14px  | 500    | 1.5         | 0        | title     |
+| Lede            | Archivo       | 16px  | 400    | 1.5         | 0        | sentence  |
+| CTA             | Archivo       | 15px  | 800    | 1           | −0.01em  | sentence  |
+| Stat value      | Archivo       | 30px  | 800    | 1           | −0.04em  | numerals  |
+| Caption title   | Archivo       | 15px  | 800    | 1.3         | −0.01em  | title     |
+| Kicker tags     | IBM Plex Mono | 12px  | 500    | 1           | +0.12em  | UPPERCASE |
+| Vertical label  | IBM Plex Mono | 11px  | 500    | 1           | +0.18em  | UPPERCASE |
+| Stat label      | IBM Plex Mono | 11px  | 400    | 1.4         | +0.10em  | UPPERCASE |
+| Caption body    | IBM Plex Mono | 12px  | 400    | 1.4         | 0        | sentence  |
+
+Pull the headline 6px left (`margin-left: -6px`) so the S optically aligns with the lede.
 
 ## Implementation notes
 

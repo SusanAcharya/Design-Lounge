@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A night page with the word GATE 4. Replay sets a 480ms split: a red slice shifts left and a green slice shifts right, then both are gone. Reduced motion does not play. This is not a scramble through random letters. That reveal is `text-scramble-reveal`. This is not a flap board. That board is `split-flap-board`. One word, one short fault.
-
-## Reference behaviour
-
-1. The word GATE 4 is still on the first frame.
-2. Replay sets data-on for 480ms.
-3. The red slice is #9b2c2c, translate -4px, clipped to the top 45%.
-4. The green slice is #1f4d3a, translate 4px, clipped to the bottom 55%.
-5. After 480ms data-on is removed.
-6. A second Replay can run again.
-7. Reduced motion returns without setting data-on.
 
 ## Structure
 
@@ -30,19 +22,6 @@ Replay
 - Replay sits 28px under the word, height 40px.
 - The ground is #141311.
 - The word colour is #f4f1ea.
-
-## Tokens
-
-```css
-:root { --bg:#141311; --ink:#f4f1ea; --red:#9b2c2c; --green:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Word | IBM Plex Sans | 92px | 600 |
-| Button | IBM Plex Sans | 14px | 500 |
 
 ## Motion
 
@@ -87,17 +66,6 @@ Replay
 - [ ] The duration is 480ms.
 - [ ] The offsets are 4px.
 - [ ] The ground is #141311.
-
-## Implementation notes
-
-Copy the word into data-text so the slices match.
-
-```js
-h.dataset.on = "true";
-setTimeout(() => { h.dataset.on = ""; }, 480);
-```
-
-If reduced motion matches, return before setting data-on.
 
 ## Measurements to keep
 
@@ -166,6 +134,44 @@ If reduced motion matches, return before setting data-on.
 - While rebuilding, remember: Do not hide the word.
 - While rebuilding, remember: Do not run under reduced motion.
 - While rebuilding, remember: Do not add a second word.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The word GATE 4 is still on the first frame.
+2. Replay sets data-on for 480ms.
+3. The red slice is #9b2c2c, translate -4px, clipped to the top 45%.
+4. The green slice is #1f4d3a, translate 4px, clipped to the bottom 55%.
+5. After 480ms data-on is removed.
+6. A second Replay can run again.
+7. Reduced motion returns without setting data-on.
+
+## Tokens
+
+```css
+:root { --bg:#141311; --ink:#f4f1ea; --red:#9b2c2c; --green:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Word | IBM Plex Sans | 92px | 600 |
+| Button | IBM Plex Sans | 14px | 500 |
+
+## Implementation notes
+
+Copy the word into data-text so the slices match.
+
+```js
+h.dataset.on = "true";
+setTimeout(() => { h.dataset.on = ""; }, 480);
+```
+
+If reduced motion matches, return before setting data-on.
 
 ---
 

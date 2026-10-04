@@ -4,24 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A personal goals card for a habit or finance app: "Autumn goals" for Mira Okafor, Oct 1 – Dec 31. Three goals sit side by side, each a 156px progress ring in its own colour (tomato, marigold, teal) with a big percentage inside, the goal name, a `now / target` line where the target is an inline-editable dashed button, and a −/+ stepper that logs progress. A segmented bar in the footer sums the three. When a goal crosses 100%, the ring's centre fills with ink, a check appears, and 34 confetti pieces burst from the ring once. The detail worth copying is that the celebration fires only on the crossing (by logging or by lowering the target), never on load and never twice, and reduced motion keeps the done state but drops the particles.
 
 Not `progress-bar` (a single linear bar) and not `widget-activity-rings` (nested rings, read-only). This card is about setting and hitting targets.
-
-## Reference behaviour
-
-1. First frame: Run 60 km at 52 km (87%, "8 km to go"), Read 6 books at 6 (done: ink disc, marigold check, "DONE"), Save $1,200 at $780 (65%, "$420 to go"). Footer: "84% overall · 1 of 3 done", segmented bar, "Reset goals". Rings draw from 0 to their value on load over 800ms. No confetti on load.
-2. `+` logs one step (Run +4 km, Read +1 book, Save +$60). The ring offset animates over 800ms, the percentage and "to go" update immediately, the footer recalculates.
-3. `−` removes one step, floored at 0. It is disabled at 0.
-4. Crossing 100%: when a goal goes from < 100% to ≥ 100%, the card tile tints darker (11% of the goal colour), the ink disc scales from 0 to 1 over 500ms behind the ring, the check and "DONE" replace the percentage, 34 confetti pieces burst from the ring, and the live region says "Run 60 km complete. Nice work."
-5. Percent is clamped at 100. Logging past the target keeps it done and does not re-fire confetti.
-6. Edit target: click the dashed target button (`60 km ✎`). It becomes a number input (84px, right-aligned) with the unit beside it, focused and selected. Enter or blur saves. Escape cancels. The goal title rewrites from the target ("Run 64 km", "Save $900", "Read 1 book").
-7. Validation: anything not a whole number from 1 to 99,999 keeps the input open, sets `aria-invalid`, turns the border red, and shows "Use a whole number, 1–99,999." under it. Typing clears the error.
-8. Lowering a target to at or below the current amount completes the goal and fires the celebration the same way as logging.
-9. Reset goals restores the three start values and redraws the rings from 0. It never fires confetti.
-10. Reduced motion: rings, disc and bar jump to their values; no confetti; the done state, check and announcement still happen.
 
 ## Structure
 
@@ -50,55 +39,6 @@ Not `progress-bar` (a single linear bar) and not `widget-activity-rings` (nested
 - `h2` goal title, then `.amt` with the current amount, a slash, and the target `button` (swapped for the edit input), then a `p.err[aria-live=polite]`.
 - `.steps`: two buttons, `−` (icon only, labelled) and `+` with the step text.
 - Footer: overall `p`, `.bar[role=img]` with three segments, Reset `button`. A visually hidden `p[aria-live=polite]` announces completions.
-
-## Tokens
-
-```css
-:root {
-  --bg: #d5e3d8;        /* sage page */
-  --card: #fbfcf7;      /* card surface */
-  --ink: #1c2923;       /* text, done disc, focus */
-  --ink-2: #47554e;     /* amounts */
-  --ink-3: #5f6c65;     /* eyebrow, sub labels */
-  --line: #dfe6dc;      /* tile borders, footer rule */
-  --track: #e8ede4;     /* ring track, bar track */
-
-  --tomato: #d9512f;    /* Run */
-  --marigold: #c98a12;  /* Read */
-  --teal: #1f7a74;      /* Save */
-  --danger: #b3261e;    /* validation only */
-
-  --display: "Bricolage Grotesque", system-ui, sans-serif;  /* opsz axis 12–96 */
-  --mono: "Azeret Mono", ui-monospace, monospace;
-
-  --r-card: 28px; --r-tile: 20px; --r-input: 8px; --r-pill: 99px;
-  --ring: 156px; --ring-r: 62; --ring-stroke: 13; --disc-r: 50;
-  --space: 4px 8px 12px 16px 20px 24px 28px 36px 40px;
-
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --t-ring: 800ms; --t-disc: 500ms; --t-tile: 400ms; --t-micro: 150ms;
-
-  --shadow-card: inset 0 1px 0 rgba(255,255,255,.8), 0 30px 60px -30px rgba(28,41,35,.35), 0 2px 6px rgba(28,41,35,.06);
-}
-```
-
-Tile background is `color-mix(in srgb, var(--c) 5%, var(--card))` with a border of `color-mix(var(--c) 14%, var(--line))`. Done tiles use 11% and 35%. The `+` button fill is `color-mix(in srgb, var(--c) 70%, var(--ink))` so white text clears 4.5:1 on all three colours. The done check stroke is `color-mix(var(--c) 70%, #fff)`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Eyebrow | Azeret Mono | 11px | 500 | 1.4 | 0.12em | UPPER |
-| Card title | Bricolage Grotesque, opsz 96 | 40px | 800 | 1 | -0.03em | Title |
-| Days left number | Bricolage Grotesque | 22px | 700 | 1.1 | -0.01em | — |
-| Ring percent | Bricolage Grotesque, opsz 72 | 38px (% sign 18px) | 800 | 1 | -0.03em | tabular |
-| Ring sub | Azeret Mono | 10px | 500 | 1.2 | 0.1em | UPPER |
-| Goal title | Bricolage Grotesque | 20px | 700 | 1.2 | -0.015em | Sentence |
-| Amounts, target | Azeret Mono | 13px | 500 | 1 | 0 | tabular |
-| Step button | Bricolage Grotesque | 14px | 600 | 1 | 0 | — |
-| Footer | Azeret Mono 12px, percent Bricolage 16px 700 | | | | | |
-| Error | Azeret Mono | 11px | 500 | 1.4 | 0 | sentence |
 
 ## Motion
 
@@ -165,6 +105,72 @@ Confetti recipe: angle uniformly within ±75° of straight up, speed 90–200px.
 - [ ] Tomato `#d9512f`, marigold `#c98a12`, teal `#1f7a74` on `#fbfcf7`, page `#d5e3d8`.
 - [ ] Ring 156px, radius 62, stroke 13, round caps, 800ms expo.
 - [ ] 34 confetti pieces, removed at 1900ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Run 60 km at 52 km (87%, "8 km to go"), Read 6 books at 6 (done: ink disc, marigold check, "DONE"), Save $1,200 at $780 (65%, "$420 to go"). Footer: "84% overall · 1 of 3 done", segmented bar, "Reset goals". Rings draw from 0 to their value on load over 800ms. No confetti on load.
+2. `+` logs one step (Run +4 km, Read +1 book, Save +$60). The ring offset animates over 800ms, the percentage and "to go" update immediately, the footer recalculates.
+3. `−` removes one step, floored at 0. It is disabled at 0.
+4. Crossing 100%: when a goal goes from < 100% to ≥ 100%, the card tile tints darker (11% of the goal colour), the ink disc scales from 0 to 1 over 500ms behind the ring, the check and "DONE" replace the percentage, 34 confetti pieces burst from the ring, and the live region says "Run 60 km complete. Nice work."
+5. Percent is clamped at 100. Logging past the target keeps it done and does not re-fire confetti.
+6. Edit target: click the dashed target button (`60 km ✎`). It becomes a number input (84px, right-aligned) with the unit beside it, focused and selected. Enter or blur saves. Escape cancels. The goal title rewrites from the target ("Run 64 km", "Save $900", "Read 1 book").
+7. Validation: anything not a whole number from 1 to 99,999 keeps the input open, sets `aria-invalid`, turns the border red, and shows "Use a whole number, 1–99,999." under it. Typing clears the error.
+8. Lowering a target to at or below the current amount completes the goal and fires the celebration the same way as logging.
+9. Reset goals restores the three start values and redraws the rings from 0. It never fires confetti.
+10. Reduced motion: rings, disc and bar jump to their values; no confetti; the done state, check and announcement still happen.
+
+## Tokens
+
+```css
+:root {
+  --bg: #d5e3d8;        /* sage page */
+  --card: #fbfcf7;      /* card surface */
+  --ink: #1c2923;       /* text, done disc, focus */
+  --ink-2: #47554e;     /* amounts */
+  --ink-3: #5f6c65;     /* eyebrow, sub labels */
+  --line: #dfe6dc;      /* tile borders, footer rule */
+  --track: #e8ede4;     /* ring track, bar track */
+
+  --tomato: #d9512f;    /* Run */
+  --marigold: #c98a12;  /* Read */
+  --teal: #1f7a74;      /* Save */
+  --danger: #b3261e;    /* validation only */
+
+  --display: "Bricolage Grotesque", system-ui, sans-serif;  /* opsz axis 12–96 */
+  --mono: "Azeret Mono", ui-monospace, monospace;
+
+  --r-card: 28px; --r-tile: 20px; --r-input: 8px; --r-pill: 99px;
+  --ring: 156px; --ring-r: 62; --ring-stroke: 13; --disc-r: 50;
+  --space: 4px 8px 12px 16px 20px 24px 28px 36px 40px;
+
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-ring: 800ms; --t-disc: 500ms; --t-tile: 400ms; --t-micro: 150ms;
+
+  --shadow-card: inset 0 1px 0 rgba(255,255,255,.8), 0 30px 60px -30px rgba(28,41,35,.35), 0 2px 6px rgba(28,41,35,.06);
+}
+```
+
+Tile background is `color-mix(in srgb, var(--c) 5%, var(--card))` with a border of `color-mix(var(--c) 14%, var(--line))`. Done tiles use 11% and 35%. The `+` button fill is `color-mix(in srgb, var(--c) 70%, var(--ink))` so white text clears 4.5:1 on all three colours. The done check stroke is `color-mix(var(--c) 70%, #fff)`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Eyebrow | Azeret Mono | 11px | 500 | 1.4 | 0.12em | UPPER |
+| Card title | Bricolage Grotesque, opsz 96 | 40px | 800 | 1 | -0.03em | Title |
+| Days left number | Bricolage Grotesque | 22px | 700 | 1.1 | -0.01em | — |
+| Ring percent | Bricolage Grotesque, opsz 72 | 38px (% sign 18px) | 800 | 1 | -0.03em | tabular |
+| Ring sub | Azeret Mono | 10px | 500 | 1.2 | 0.1em | UPPER |
+| Goal title | Bricolage Grotesque | 20px | 700 | 1.2 | -0.015em | Sentence |
+| Amounts, target | Azeret Mono | 13px | 500 | 1 | 0 | tabular |
+| Step button | Bricolage Grotesque | 14px | 600 | 1 | 0 | — |
+| Footer | Azeret Mono 12px, percent Bricolage 16px 700 | | | | | |
+| Error | Azeret Mono | 11px | 500 | 1.4 | 0 | sentence |
 
 ## Implementation notes
 

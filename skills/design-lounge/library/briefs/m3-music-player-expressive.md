@@ -4,31 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-screen now-playing view for a fictional player ("Lull"), drawn in **Material 3 Expressive**: tonal surfaces, a 104px play control whose filled shape morphs (squircle → circle on press → 9-lobe cookie while playing), skip pills that squash on `:active`, and a liked heart that turns from a 20px squircle into a circle. The seeker is not a line-and-thumb: a 4px sine wave in `--primary` is clipped to elapsed time, a 4×24px rounded rect sits on the playhead, and the remaining time is a round-capped rest line. Changing track retints every token (wine / teal / saffron) over 600ms. Padding-top 54px and padding-bottom 34px leave the Lounge chrome clear. The detail worth copying is driving the play shape with a 72-point `clip-path: polygon(...)` so CSS can tween the morph.
-
-## Reference behaviour
-
-1. First paint: track 1 **Paper Lanterns** / Low Tide Choir / album Late Bloom. Play is a squircle in `--primary`. App has class `paused`. Like is `aria-pressed="true"` (filled). Repeat is on; shuffle is off. Seek value 102 of 238 (1:42 / 3:58). Waveform is `scaleY(0)`.
-2. After 600ms, play turns on: `aria-pressed="true"`, `aria-label="Pause"`, icon becomes two bars, shape becomes the cookie, cookie rotates 360° every 9s, waveform `scaleY(1)` and the wave path translates −30px every 1.1s. `setInterval` advances `t` by 1s.
-3. Pointer-down on play sets clip-path to the circle; pointer-leave restores cookie (if playing) or squircle. Click toggles play.
-4. **Next** / **Previous** cycle three tracks. Art gets `.out` (scale 0.9, translateX −24px, or +24px if `go-r` for previous), opacity 0, over 400ms / 300ms. At 260ms swap body class, art class (`a1`/`a2`/`a3`), title, artist, album, `LP · 03` label, and `aria-label`. Next rAF removes `.out`. Time resets to 0. If `t` hits duration while playing, auto-advance next.
-5. Seek `<input type="range">` is opacity 0 over the 28px svg (hit height 44px). `input` sets `t` and redraws clip width, thumb `x`, rest `x1`, times, `aria-valuetext`.
-6. Like, shuffle, repeat toggle `aria-pressed`. Liked: radius 50%, background `--primary-c`, icon fill. Toggled icon-buttons: colour `--primary` on `--surface-c`.
-7. Skip `:active`: width 76px, radius 16px (from 68×56 pill).
-8. Dock: Lyrics, Queue, **Studio speaker** (the last is `--primary-c` pill). They are visual only in this demo.
-9. Reduced motion: all transitions 1ms, animations none. Autoplay-at-600ms still fires (state changes, no spin).
-
-Tracks (match exactly):
-
-| k | body class | art | title | artist | album | badge | art label | duration |
-|---|------------|-----|-------|--------|-------|-------|-----------|----------|
-| 0 | *(none)* | a1 | Paper Lanterns | Low Tide Choir | Late Bloom | LP · 03 | Low Tide / Choir | 238 |
-| 1 | t2 | a2 | Glasshouse | Mirelle Okafor | Conservatory Sessions | EP · 01 | Mirelle / Okafor | 201 |
-| 2 | t3 | a3 | Saffron Hour | The Velvet Ferries | Harbour Lights | LP · 07 | Velvet / Ferries | 274 |
-
-Art backgrounds are CSS only (radials, repeating-conic, repeating-linear) — never photographs.
 
 ## Structure
 
@@ -59,72 +39,6 @@ Art backgrounds are CSS only (radials, repeating-conic, repeating-linear) — ne
 - `.prog` — inline SVG `viewBox="0 0 342 28"` + range `#seek`. ClipPath `#cpr` rect. Wave `#wave` in group `.wv` > `.wp`. Thumb `#thumb`. Rest `#rest`.
 - `.ctl` — shuffle, prev, play, next, repeat. Play contains `.sh#sh` (the morphing fill) and `#pi` icon.
 - `.dock` — three buttons, 40px, 18px icons.
-
-## Tokens
-
-```css
-:root {
-  /* colour — track 1 wine; t2 and t3 override the same names */
-  --surface: #2b1418;
-  --surface-c: #3c1f24;
-  --surface-high: #4a2a2f;
-  --on-surface: #ffdad4;
-  --on-surface-v: #e0bfb8;
-  --track: rgba(255, 218, 212, .24);
-  --primary: #ffb59e;
-  --on-primary: #5c1a0b;
-  --primary-c: #7a2e1e;
-  --on-primary-c: #ffdbcf;
-
-  /* type */
-  --display: "Unbounded", system-ui, sans-serif;
-  --font: "Onest", system-ui, sans-serif;
-
-  /* layout */
-  --r-art: 44px;
-  --r-pill: 999px;
-  --r-tonal: 20px;
-  --art: 326px;
-  --play: 104px;
-  --wave-w: 342;
-  --wave-h: 28;
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-shape: 500ms;
-  --t-tone: 600ms;
-  --ease-emph: cubic-bezier(.2, 0, 0, 1);
-}
-
-body.t2 {
-  --surface: #0f2224; --surface-c: #1b3234; --surface-high: #26403f;
-  --on-surface: #d6f0ee; --on-surface-v: #a9c6c3; --track: rgba(214, 240, 238, .22);
-  --primary: #80d5d0; --on-primary: #003735; --primary-c: #1f504d; --on-primary-c: #9ff2ec;
-}
-body.t3 {
-  --surface: #24200b; --surface-c: #353016; --surface-high: #433d20;
-  --on-surface: #f1ecd2; --on-surface-v: #cfc6a6; --track: rgba(241, 236, 210, .22);
-  --primary: #e3c75b; --on-primary: #3a3000; --primary-c: #544810; --on-primary-c: #ffe98c;
-}
-```
-
-Body also transitions `background-color` and `color` over `--t-tone`.
-
-## Typography
-
-| Role         | Family    | Size | Weight | Line-height | Tracking | Case      |
-|--------------|-----------|-----:|-------:|------------:|---------:|-----------|
-| Body         | Onest     | 15px | 400    | 1.4         | 0        | sentence  |
-| Playing from | Onest     | 12px | 400    | 1.3         | 0        | sentence  |
-| Album        | Onest     | 14px | 600    | 1.3         | 0        | sentence  |
-| Art badge    | Onest     | 11px | 500    | 1           | +0.12em  | mixed     |
-| Art label    | Unbounded | 13px | 700    | 1.15        | +0.02em  | UPPERCASE |
-| Title        | Unbounded | 26px | 700    | 1.15        | −0.02em  | sentence  |
-| Artist       | Onest     | 16px | 400    | 1.4         | 0        | sentence  |
-| Times        | Onest     | 12px | 500    | 1           | 0        | tabular   |
-| Dock         | Onest     | 13px | 600    | 40px h      | 0        | sentence  |
-
-Title is nowrap + ellipsis. Times use `font-variant-numeric: tabular-nums`. Format `m:ss` with padded seconds.
 
 ## Motion
 
@@ -194,6 +108,98 @@ Progress draw: `p = max(6, t/dur * 342)`; clip rect width `max(0, p-6)`; thumb x
 - [ ] Focus-visible is a 3px primary ring; the range focuses the `.prog` wrapper.
 - [ ] Reduced motion removes spin and phase but still plays, skips and seeks.
 - [ ] Copy matches: Paper Lanterns, Glasshouse, Saffron Hour, Studio speaker, Lull.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First paint: track 1 **Paper Lanterns** / Low Tide Choir / album Late Bloom. Play is a squircle in `--primary`. App has class `paused`. Like is `aria-pressed="true"` (filled). Repeat is on; shuffle is off. Seek value 102 of 238 (1:42 / 3:58). Waveform is `scaleY(0)`.
+2. After 600ms, play turns on: `aria-pressed="true"`, `aria-label="Pause"`, icon becomes two bars, shape becomes the cookie, cookie rotates 360° every 9s, waveform `scaleY(1)` and the wave path translates −30px every 1.1s. `setInterval` advances `t` by 1s.
+3. Pointer-down on play sets clip-path to the circle; pointer-leave restores cookie (if playing) or squircle. Click toggles play.
+4. **Next** / **Previous** cycle three tracks. Art gets `.out` (scale 0.9, translateX −24px, or +24px if `go-r` for previous), opacity 0, over 400ms / 300ms. At 260ms swap body class, art class (`a1`/`a2`/`a3`), title, artist, album, `LP · 03` label, and `aria-label`. Next rAF removes `.out`. Time resets to 0. If `t` hits duration while playing, auto-advance next.
+5. Seek `<input type="range">` is opacity 0 over the 28px svg (hit height 44px). `input` sets `t` and redraws clip width, thumb `x`, rest `x1`, times, `aria-valuetext`.
+6. Like, shuffle, repeat toggle `aria-pressed`. Liked: radius 50%, background `--primary-c`, icon fill. Toggled icon-buttons: colour `--primary` on `--surface-c`.
+7. Skip `:active`: width 76px, radius 16px (from 68×56 pill).
+8. Dock: Lyrics, Queue, **Studio speaker** (the last is `--primary-c` pill). They are visual only in this demo.
+9. Reduced motion: all transitions 1ms, animations none. Autoplay-at-600ms still fires (state changes, no spin).
+
+Tracks (match exactly):
+
+| k | body class | art | title | artist | album | badge | art label | duration |
+|---|------------|-----|-------|--------|-------|-------|-----------|----------|
+| 0 | *(none)* | a1 | Paper Lanterns | Low Tide Choir | Late Bloom | LP · 03 | Low Tide / Choir | 238 |
+| 1 | t2 | a2 | Glasshouse | Mirelle Okafor | Conservatory Sessions | EP · 01 | Mirelle / Okafor | 201 |
+| 2 | t3 | a3 | Saffron Hour | The Velvet Ferries | Harbour Lights | LP · 07 | Velvet / Ferries | 274 |
+
+Art backgrounds are CSS only (radials, repeating-conic, repeating-linear) — never photographs.
+
+## Tokens
+
+```css
+:root {
+  /* colour — track 1 wine; t2 and t3 override the same names */
+  --surface: #2b1418;
+  --surface-c: #3c1f24;
+  --surface-high: #4a2a2f;
+  --on-surface: #ffdad4;
+  --on-surface-v: #e0bfb8;
+  --track: rgba(255, 218, 212, .24);
+  --primary: #ffb59e;
+  --on-primary: #5c1a0b;
+  --primary-c: #7a2e1e;
+  --on-primary-c: #ffdbcf;
+
+  /* type */
+  --display: "Unbounded", system-ui, sans-serif;
+  --font: "Onest", system-ui, sans-serif;
+
+  /* layout */
+  --r-art: 44px;
+  --r-pill: 999px;
+  --r-tonal: 20px;
+  --art: 326px;
+  --play: 104px;
+  --wave-w: 342;
+  --wave-h: 28;
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-shape: 500ms;
+  --t-tone: 600ms;
+  --ease-emph: cubic-bezier(.2, 0, 0, 1);
+}
+
+body.t2 {
+  --surface: #0f2224; --surface-c: #1b3234; --surface-high: #26403f;
+  --on-surface: #d6f0ee; --on-surface-v: #a9c6c3; --track: rgba(214, 240, 238, .22);
+  --primary: #80d5d0; --on-primary: #003735; --primary-c: #1f504d; --on-primary-c: #9ff2ec;
+}
+body.t3 {
+  --surface: #24200b; --surface-c: #353016; --surface-high: #433d20;
+  --on-surface: #f1ecd2; --on-surface-v: #cfc6a6; --track: rgba(241, 236, 210, .22);
+  --primary: #e3c75b; --on-primary: #3a3000; --primary-c: #544810; --on-primary-c: #ffe98c;
+}
+```
+
+Body also transitions `background-color` and `color` over `--t-tone`.
+
+## Typography
+
+| Role         | Family    | Size | Weight | Line-height | Tracking | Case      |
+|--------------|-----------|-----:|-------:|------------:|---------:|-----------|
+| Body         | Onest     | 15px | 400    | 1.4         | 0        | sentence  |
+| Playing from | Onest     | 12px | 400    | 1.3         | 0        | sentence  |
+| Album        | Onest     | 14px | 600    | 1.3         | 0        | sentence  |
+| Art badge    | Onest     | 11px | 500    | 1           | +0.12em  | mixed     |
+| Art label    | Unbounded | 13px | 700    | 1.15        | +0.02em  | UPPERCASE |
+| Title        | Unbounded | 26px | 700    | 1.15        | −0.02em  | sentence  |
+| Artist       | Onest     | 16px | 400    | 1.4         | 0        | sentence  |
+| Times        | Onest     | 12px | 500    | 1           | 0        | tabular   |
+| Dock         | Onest     | 13px | 600    | 40px h      | 0        | sentence  |
+
+Title is nowrap + ellipsis. Times use `font-variant-numeric: tabular-nums`. Format `m:ss` with padded seconds.
 
 ## Implementation notes
 

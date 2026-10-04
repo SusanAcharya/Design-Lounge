@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. The demo fakes the footage on a canvas so it can ship with no files. In production, use a real `<video>` with the exact attributes in Implementation notes.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The opening of a small hotel's site. Casa Vellera has eleven rooms on Lake Orta, and the hero is a 10-second night film of the lake: warm shore lights on a dark hill line, their reflections breaking up on moving water, a small boat crossing, and film grain. A serif headline sits on the left over a scrim, with one warm call to action. A thin control bar at the bottom carries a visible Pause button, a captions toggle, a timecode and the location. The detail worth copying is that the film is treated like real media: it has a poster still, it stops when nobody can see it, it has captions for its sound, and the user can always stop it.
-
-## Reference behaviour
-
-1. First frame: the film is playing. Shore lights glow along a low hill line at 56% of the height. Broken gold reflections move on the water below. The timecode starts at "00:00 / 00:10" and a 1px gold progress line grows along the top of the control bar.
-2. The film runs at 24 frames per second, not 60, so it reads as footage. One loop is 10 s and repeats with no visible cut: every motion is periodic over 10 s.
-3. The camera does a slow push: scale 1.025 to 1.045 and back over one loop, with a 0.2% sideways drift twice per loop.
-4. A small boat light crosses from left to right once per loop, fading in and out over the first and last 12% of its path.
-5. Grain is redrawn every frame from three 128px noise tiles, offset each frame, at 14% opacity in overlay blend.
-6. Click "Pause". The film freezes on the current frame. The button becomes "Play" with a triangle icon, and its label becomes "Play film". Click again to continue from the same frame.
-7. Click "CC". The button fills ivory and `aria-pressed="true"`. A caption box appears 104px above the bottom, centred, and the copy block moves up 48px to make room. Captions change with the film time: 0 s "[Water laps against the jetty]", 3.4 s "[A boat engine, far off across the lake]", 7 s "[Glasses and quiet voices from the terrace]".
-8. Scroll the hero out of view or switch tabs. The film stops. It resumes when visible again, unless the user paused it.
-9. With `prefers-reduced-motion: reduce` the page shows the poster: a still frame at 6.2 s. A small "Still · film paused" tag appears at the top right. The button reads "Play". The user can press Play to run the film.
-10. Nav links, the reserve link and the controls have 160 to 200ms colour and border shifts and a 2px gold focus ring.
 
 ## Structure
 
@@ -48,61 +37,6 @@ layers, back to front: film → vignette → scrim → content
 - `section.copy`: eyebrow `p`, the only `h1`, sub `p`, the filled CTA link and the underlined text link.
 - `p.cap`: the caption box. `aria-live="off"` while captions are hidden, `polite` while shown.
 - `.bar`: progress line, then the Play/Pause `button`, the CC `button` and the timecode at the left, and the location pushed right with `margin-left: auto`. Controls stay at the left end so a chat widget or host badge in the bottom-right corner never covers Pause.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --black: #0b0907;      /* page, under the film */
-  --ivory: #f1e8da;      /* headline, buttons text */
-  --muted: #b9ad9b;      /* sub copy, nav, timecode */
-  --warm: #e9b872;       /* accent words, eyebrow, CTA fill, progress, focus */
-  --ember: #c9773b;      /* horizon haze in the film only */
-  --rule: rgba(241, 232, 218, .2);
-  --scrim: rgba(8, 6, 4, .78);
-  --focus: #e9b872;
-
-  /* type */
-  --serif: "Cormorant Garamond", Georgia, serif;
-  --sans: "Work Sans", system-ui, sans-serif;
-  --fs-hero: 104px;
-  --fs-sub: 17px;
-  --fs-sc: 11px;      /* small caps labels */
-  --fs-cap: 16px;
-
-  /* space */
-  --s-1: 8px; --s-2: 12px; --s-3: 22px; --s-4: 28px; --s-5: 34px; --s-6: 56px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-micro: 160ms;
-  --t-btn: 200ms;
-
-  /* film */
-  --loop: 10s;
-  --fps: 24;
-  --poster-at: 6.2s;
-  --grain-opacity: .14;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Logo | Cormorant Garamond italic | 28px | 400 | 1 | 0.01em | as written |
-| Nav, labels, buttons | Work Sans | 11px | 500 | 1 | 0.2em | upper (small caps style) |
-| Eyebrow | Work Sans | 11px | 500 | 1 | 0.2em | upper, `--warm` |
-| Headline | Cormorant Garamond | 104px | 400 | 0.9 | -0.02em | sentence |
-| Headline accent | Cormorant Garamond italic | 104px | 400 | 0.9 | -0.02em | "late hours." in `--warm` |
-| Sub | Work Sans | 17px | 400 | 1.6 | 0 | sentence |
-| Timecode | Work Sans | 12px | 400, tabular numbers | 1 | 0.06em | as written |
-| Caption | Work Sans | 16px | 400 | 1.4 | 0 | as written |
-
-- The small caps are uppercase Work Sans at 11px with 0.2em tracking. Do not fake them with `font-variant: small-caps` on a face that has no small caps.
-- Keep the serif at weight 400. Bolder Cormorant looks cheap at 104px.
 
 ## Motion
 
@@ -176,6 +110,78 @@ layers, back to front: film → vignette → scrim → content
 - [ ] The bar reads "45°48′N 8°24′E · Filmed at 21:40" and "00:00 / 00:10".
 - [ ] The film runs at 24fps with a 10 s loop and grain at 14% overlay.
 - [ ] The poster is the frame at 6.2 s.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the film is playing. Shore lights glow along a low hill line at 56% of the height. Broken gold reflections move on the water below. The timecode starts at "00:00 / 00:10" and a 1px gold progress line grows along the top of the control bar.
+2. The film runs at 24 frames per second, not 60, so it reads as footage. One loop is 10 s and repeats with no visible cut: every motion is periodic over 10 s.
+3. The camera does a slow push: scale 1.025 to 1.045 and back over one loop, with a 0.2% sideways drift twice per loop.
+4. A small boat light crosses from left to right once per loop, fading in and out over the first and last 12% of its path.
+5. Grain is redrawn every frame from three 128px noise tiles, offset each frame, at 14% opacity in overlay blend.
+6. Click "Pause". The film freezes on the current frame. The button becomes "Play" with a triangle icon, and its label becomes "Play film". Click again to continue from the same frame.
+7. Click "CC". The button fills ivory and `aria-pressed="true"`. A caption box appears 104px above the bottom, centred, and the copy block moves up 48px to make room. Captions change with the film time: 0 s "[Water laps against the jetty]", 3.4 s "[A boat engine, far off across the lake]", 7 s "[Glasses and quiet voices from the terrace]".
+8. Scroll the hero out of view or switch tabs. The film stops. It resumes when visible again, unless the user paused it.
+9. With `prefers-reduced-motion: reduce` the page shows the poster: a still frame at 6.2 s. A small "Still · film paused" tag appears at the top right. The button reads "Play". The user can press Play to run the film.
+10. Nav links, the reserve link and the controls have 160 to 200ms colour and border shifts and a 2px gold focus ring.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --black: #0b0907;      /* page, under the film */
+  --ivory: #f1e8da;      /* headline, buttons text */
+  --muted: #b9ad9b;      /* sub copy, nav, timecode */
+  --warm: #e9b872;       /* accent words, eyebrow, CTA fill, progress, focus */
+  --ember: #c9773b;      /* horizon haze in the film only */
+  --rule: rgba(241, 232, 218, .2);
+  --scrim: rgba(8, 6, 4, .78);
+  --focus: #e9b872;
+
+  /* type */
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Work Sans", system-ui, sans-serif;
+  --fs-hero: 104px;
+  --fs-sub: 17px;
+  --fs-sc: 11px;      /* small caps labels */
+  --fs-cap: 16px;
+
+  /* space */
+  --s-1: 8px; --s-2: 12px; --s-3: 22px; --s-4: 28px; --s-5: 34px; --s-6: 56px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-micro: 160ms;
+  --t-btn: 200ms;
+
+  /* film */
+  --loop: 10s;
+  --fps: 24;
+  --poster-at: 6.2s;
+  --grain-opacity: .14;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Logo | Cormorant Garamond italic | 28px | 400 | 1 | 0.01em | as written |
+| Nav, labels, buttons | Work Sans | 11px | 500 | 1 | 0.2em | upper (small caps style) |
+| Eyebrow | Work Sans | 11px | 500 | 1 | 0.2em | upper, `--warm` |
+| Headline | Cormorant Garamond | 104px | 400 | 0.9 | -0.02em | sentence |
+| Headline accent | Cormorant Garamond italic | 104px | 400 | 0.9 | -0.02em | "late hours." in `--warm` |
+| Sub | Work Sans | 17px | 400 | 1.6 | 0 | sentence |
+| Timecode | Work Sans | 12px | 400, tabular numbers | 1 | 0.06em | as written |
+| Caption | Work Sans | 16px | 400 | 1.4 | 0 | as written |
+
+- The small caps are uppercase Work Sans at 11px with 0.2em tracking. Do not fake them with `font-variant: small-caps` on a face that has no small caps.
+- Keep the serif at weight 400. Bolder Cormorant looks cheap at 104px.
 
 ## Implementation notes
 

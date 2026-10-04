@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the chosen day uses `--primary-soft` and the control height follows the family. A span of days is `date-range-picker`, not a second month beside this one.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A single month for choosing one day. The dock slot opens on October 2026. The 17th is selected, on the soft green. The 3rd is today, with a 2px green rule along its bottom. Days from the previous and next month are visible and muted, and they are not buttons. Previous and next step one month, September then November, and no further. The status line names the chosen day: "17 October is the slot." This is not the two-month range picker. There is no preset column and no start-and-end band.
-
-## Reference behaviour
-
-1. The first frame is October 2026. The 17th is pressed. The 3rd has the today rule. The status line reads "17 October is the slot."
-2. The week starts on Monday. October 2026 begins on a Thursday, so 28, 29, and 30 September show as muted days, and 1 November closes the last row.
-3. Clicking a day in the visible month selects it, clears the previous selection, and rewrites the status line as "17 October is the slot." with that day and that month's name.
-4. Previous shows September 2026. Next from October shows November 2026. Previous on September does nothing. Next on November does nothing.
-5. The chosen day stays chosen when you leave its month. It highlights again when you return. Today is only marked in October.
-6. Muted days are not buttons. Clicking them does nothing.
-7. There is no animation. Focus ring is 2px `--focus`, offset 2px.
 
 ## Structure
 
@@ -34,39 +26,6 @@ width 320
 - Day names are `aria-hidden`. The grid is `role="group"` labelled by the month.
 - A day in the month is a `button` with `aria-pressed`.
 - A day outside the month is a `span`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #5c564e;
-  --line: #e4dfd4;
-  --primary: #1f4d3a;
-  --primary-soft: #e7f2ec;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Cell radius is 2px in this yard demo. The family replaces it. The chosen day is `--primary-soft`, not a solid circle in `--primary`. The range picker uses circles because a range has two ends. One day is a cell.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Month | sans | 14px | 500 | `--ink` |
-| Weekday | sans | 12px | 400 | `--ink-2` |
-| Day | sans | 14px | 400 | `--ink` |
-| Chosen day | sans | 14px | 500 | `--ink` |
-| Outside day | sans | 14px | 400 | `--ink-3` |
-| Status | sans | 14px | 400 | `--ink` |
-
-The where-line letter-spacing is 0.04em. Day numbers are centered in the 40px cell. They use tabular numbers if the face has them.
 
 ## Motion
 
@@ -117,6 +76,53 @@ None. The month replaces itself in one frame. Reduced motion has nothing to remo
 - [ ] Cells and month buttons are 40px. The calendar is 320px wide.
 - [ ] There is one chosen day, no range band, and no animation.
 - [ ] Focus ring is 2px, offset 2px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is October 2026. The 17th is pressed. The 3rd has the today rule. The status line reads "17 October is the slot."
+2. The week starts on Monday. October 2026 begins on a Thursday, so 28, 29, and 30 September show as muted days, and 1 November closes the last row.
+3. Clicking a day in the visible month selects it, clears the previous selection, and rewrites the status line as "17 October is the slot." with that day and that month's name.
+4. Previous shows September 2026. Next from October shows November 2026. Previous on September does nothing. Next on November does nothing.
+5. The chosen day stays chosen when you leave its month. It highlights again when you return. Today is only marked in October.
+6. Muted days are not buttons. Clicking them does nothing.
+7. There is no animation. Focus ring is 2px `--focus`, offset 2px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #5c564e;
+  --line: #e4dfd4;
+  --primary: #1f4d3a;
+  --primary-soft: #e7f2ec;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Cell radius is 2px in this yard demo. The family replaces it. The chosen day is `--primary-soft`, not a solid circle in `--primary`. The range picker uses circles because a range has two ends. One day is a cell.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Month | sans | 14px | 500 | `--ink` |
+| Weekday | sans | 12px | 400 | `--ink-2` |
+| Day | sans | 14px | 400 | `--ink` |
+| Chosen day | sans | 14px | 500 | `--ink` |
+| Outside day | sans | 14px | 400 | `--ink-3` |
+| Status | sans | 14px | 400 | `--ink` |
+
+The where-line letter-spacing is 0.04em. Day numbers are centered in the 40px cell. They use tabular numbers if the face has them.
 
 ## Implementation notes
 

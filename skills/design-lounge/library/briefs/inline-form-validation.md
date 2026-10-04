@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A three-field signup form ("Tessel", a shift-planning product) on a split page: a warm sand marketing panel on the left, the form on the right. Each field validates when it loses focus, never while the user is still typing a fresh value. Errors turn the border red, replace the helper line with the error and shake the control 6px; successes draw a tick inside the field and turn the helper green. The password field has a four-segment strength meter that fills as you type. The submit button stays disabled until all three fields pass and the terms box is ticked. A polite live region narrates each outcome. The detail worth copying is the blur-then-live rule: validation is triggered on blur, but once a field has a verdict it re-validates on every keystroke so the error clears the moment it is fixed.
-
-## Reference behaviour
-
-1. Initial state: left panel (520px) with logo "Tessel.", a 46px serif headline with one italic accent word, a paragraph and a customer quote pinned to the bottom. Right: a 420px form, heading "Create your account", lead line, three fields (Full name, Work email, Password), a terms checkbox, a disabled "Create account" button, and a status line reading "Fill in the three fields to continue".
-2. Focusing an input: border becomes `--accent`, plus a 3px `--accent-soft` ring.
-3. Blurring a field with a value that fails: border `--error` with a 3px `--error-soft` ring, helper text turns `--error` and shows the message, a red X icon appears at the right of the input, the control shakes (−6, +6, −4, +4px over 320ms), `aria-invalid="true"` is set, and the live region announces "<Label>: <message>".
-4. Blurring a field that passes: border `--accent`, helper turns `--accent` and reads a short confirmation ("Looks good"), a tick draws itself inside the field over 280ms, and the live region announces "<Label> accepted".
-5. Blurring an empty field: neutral (no error, hint restored). Empty is not an error until submit is attempted.
-6. Once a field has a verdict (ok or error), every subsequent `input` event re-checks it silently: the border and message update but there is no shake and no announcement.
-7. Password rules: score = (length ≥ 8) + (mixed case) + (digit) + (symbol); if length < 8 the score is capped at 1. The meter fills 1/2/3/4 segments in `--weak`/`--fair`/`--good`/`--strong` as the user types. Score ≥ 3 passes.
-8. The eye button toggles the password between `type="password"` and `type="text"`, updating `aria-pressed` and its label.
-9. The submit button enables only when name, email, password all pass **and** the terms checkbox is checked; when that happens the live region says "All set — press Create account".
-10. Submitting: the button label becomes "Creating account…", the fields dim to 50 % opacity, and after 900ms the label becomes a tick + "Account created" and the live region confirms. A small "reset the form" link under the status line restores the initial state.
 
 ## Structure
 
@@ -51,67 +40,6 @@ A three-field signup form ("Tessel", a shift-planning product) on a split page: 
   - Password field adds `<button class="eye" aria-pressed>` and `.meter[role=meter]` with four `<i>` segments.
   - `<label class="check">` wraps the checkbox and its text (links inside).
   - `<button class="submit" type="submit" disabled>`; `.live[aria-live=polite][role=status]`; `.reset` line with a text button.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm paper neutrals, deep green success, brick error */
-  --bg: #fbfaf7;           /* page */
-  --panel: #efe7da;        /* left marketing panel */
-  --surface: #ffffff;      /* inputs */
-  --line: #e2dbd0;         /* meter empty, disabled button */
-  --line-2: #cbc2b4;       /* input border, panel rule */
-  --ink: #221e1a;
-  --ink-2: #6b6259;        /* lead, quote, checkbox text */
-  --ink-3: #9a9188;        /* placeholder, helper, status */
-  --accent: #2f5d50;       /* focus, success, submit */
-  --accent-hover: #25493f;
-  --accent-soft: #e4efe9;  /* focus ring */
-  --on-accent: #ffffff;
-  --error: #b4432a;
-  --error-soft: #f9e9e4;   /* error ring */
-  --weak: #c9532f;  --fair: #d9962b;  --good: #7f9a3a;  --strong: #2f5d50;
-
-  /* type */
-  --serif: "DM Serif Display", Georgia, serif;
-  --sans: "DM Sans", system-ui, sans-serif;
-
-  /* layout */
-  --w-side: 520px;
-  --w-form: 420px;
-  --field-h: 44px;
-  --submit-h: 46px;
-  --meter-h: 4px;
-  --r: 6px;
-  --r-lg: 14px;
-  --ring: 3px;
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-shake: 320ms;
-  --t-tick: 280ms;
-  --t-submit: 900ms;       /* fake request */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role            | Family           | Size   | Weight | Line-height | Tracking | Case     |
-|-----------------|------------------|-------:|-------:|------------:|---------:|----------|
-| Logo            | DM Serif Display | 24px   | 400    | 1.2         | −0.01em  | sentence, italic full stop in accent |
-| Panel headline  | DM Serif Display | 46px   | 400    | 1.08        | −0.015em | sentence, one italic word |
-| Panel paragraph | DM Sans          | 16px   | 400    | 1.5         | 0        | sentence |
-| Quote           | DM Sans          | 14px   | 400    | 1.5         | 0        | sentence; attribution 500 |
-| Form heading    | DM Serif Display | 30px   | 400    | 1.15        | −0.01em  | sentence |
-| Lead            | DM Sans          | 14px   | 400    | 1.5         | 0        | sentence |
-| Field label     | DM Sans          | 13px   | 500    | 1.5         | 0        | sentence |
-| Input value     | DM Sans          | 15px   | 400    | 1           | 0        | as typed |
-| Helper / error  | DM Sans          | 12.5px | 400    | 1.45        | 0        | sentence |
-| Submit          | DM Sans          | 15px   | 500    | 1           | 0        | sentence |
-| Status line     | DM Sans          | 12.5px | 400    | 1.45        | 0        | sentence |
 
 ## Motion
 
@@ -175,6 +103,84 @@ The shake is re-triggered on every erroring blur by removing the class, forcing 
 - [ ] Under reduced motion there is no shake and the tick appears instantly.
 - [ ] Input height is 44px; submit 46px; form width 420px; side panel 520px.
 - [ ] No native validation bubbles appear (`novalidate` present).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: left panel (520px) with logo "Tessel.", a 46px serif headline with one italic accent word, a paragraph and a customer quote pinned to the bottom. Right: a 420px form, heading "Create your account", lead line, three fields (Full name, Work email, Password), a terms checkbox, a disabled "Create account" button, and a status line reading "Fill in the three fields to continue".
+2. Focusing an input: border becomes `--accent`, plus a 3px `--accent-soft` ring.
+3. Blurring a field with a value that fails: border `--error` with a 3px `--error-soft` ring, helper text turns `--error` and shows the message, a red X icon appears at the right of the input, the control shakes (−6, +6, −4, +4px over 320ms), `aria-invalid="true"` is set, and the live region announces "<Label>: <message>".
+4. Blurring a field that passes: border `--accent`, helper turns `--accent` and reads a short confirmation ("Looks good"), a tick draws itself inside the field over 280ms, and the live region announces "<Label> accepted".
+5. Blurring an empty field: neutral (no error, hint restored). Empty is not an error until submit is attempted.
+6. Once a field has a verdict (ok or error), every subsequent `input` event re-checks it silently: the border and message update but there is no shake and no announcement.
+7. Password rules: score = (length ≥ 8) + (mixed case) + (digit) + (symbol); if length < 8 the score is capped at 1. The meter fills 1/2/3/4 segments in `--weak`/`--fair`/`--good`/`--strong` as the user types. Score ≥ 3 passes.
+8. The eye button toggles the password between `type="password"` and `type="text"`, updating `aria-pressed` and its label.
+9. The submit button enables only when name, email, password all pass **and** the terms checkbox is checked; when that happens the live region says "All set — press Create account".
+10. Submitting: the button label becomes "Creating account…", the fields dim to 50 % opacity, and after 900ms the label becomes a tick + "Account created" and the live region confirms. A small "reset the form" link under the status line restores the initial state.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm paper neutrals, deep green success, brick error */
+  --bg: #fbfaf7;           /* page */
+  --panel: #efe7da;        /* left marketing panel */
+  --surface: #ffffff;      /* inputs */
+  --line: #e2dbd0;         /* meter empty, disabled button */
+  --line-2: #cbc2b4;       /* input border, panel rule */
+  --ink: #221e1a;
+  --ink-2: #6b6259;        /* lead, quote, checkbox text */
+  --ink-3: #9a9188;        /* placeholder, helper, status */
+  --accent: #2f5d50;       /* focus, success, submit */
+  --accent-hover: #25493f;
+  --accent-soft: #e4efe9;  /* focus ring */
+  --on-accent: #ffffff;
+  --error: #b4432a;
+  --error-soft: #f9e9e4;   /* error ring */
+  --weak: #c9532f;  --fair: #d9962b;  --good: #7f9a3a;  --strong: #2f5d50;
+
+  /* type */
+  --serif: "DM Serif Display", Georgia, serif;
+  --sans: "DM Sans", system-ui, sans-serif;
+
+  /* layout */
+  --w-side: 520px;
+  --w-form: 420px;
+  --field-h: 44px;
+  --submit-h: 46px;
+  --meter-h: 4px;
+  --r: 6px;
+  --r-lg: 14px;
+  --ring: 3px;
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-shake: 320ms;
+  --t-tick: 280ms;
+  --t-submit: 900ms;       /* fake request */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role            | Family           | Size   | Weight | Line-height | Tracking | Case     |
+|-----------------|------------------|-------:|-------:|------------:|---------:|----------|
+| Logo            | DM Serif Display | 24px   | 400    | 1.2         | −0.01em  | sentence, italic full stop in accent |
+| Panel headline  | DM Serif Display | 46px   | 400    | 1.08        | −0.015em | sentence, one italic word |
+| Panel paragraph | DM Sans          | 16px   | 400    | 1.5         | 0        | sentence |
+| Quote           | DM Sans          | 14px   | 400    | 1.5         | 0        | sentence; attribution 500 |
+| Form heading    | DM Serif Display | 30px   | 400    | 1.15        | −0.01em  | sentence |
+| Lead            | DM Sans          | 14px   | 400    | 1.5         | 0        | sentence |
+| Field label     | DM Sans          | 13px   | 500    | 1.5         | 0        | sentence |
+| Input value     | DM Sans          | 15px   | 400    | 1           | 0        | as typed |
+| Helper / error  | DM Sans          | 12.5px | 400    | 1.45        | 0        | sentence |
+| Submit          | DM Sans          | 15px   | 500    | 1           | 0        | sentence |
+| Status line     | DM Sans          | 12.5px | 400    | 1.45        | 0        | sentence |
 
 ## Implementation notes
 

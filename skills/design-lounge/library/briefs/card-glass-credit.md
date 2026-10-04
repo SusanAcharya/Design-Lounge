@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The card view of a wallet app for a fictional bank, "Vantor". One 470px card made of frosted glass floats over three crisp shapes: a copper disc, a teal ring, and a sand slab. The glass blurs them, so the card reads as a real pane. It tilts up to 12° toward the pointer, a thin holographic band runs around its edge and rotates to face the pointer, and a soft glare follows. A flip shows the back with a magnetic stripe, a signature strip, and a CVV that stays masked unless you hold a button. A three-tab switcher swaps cards; the shapes behind the glass slide and recolour so every card has its own light. The detail worth copying is that the glass is real `backdrop-filter`, and the background shapes are crisp, not glowing blobs, so the blur has something to show.
-
-## Reference behaviour
-
-1. First frame: the Everyday card, front side, resting at rotateX 6° and rotateY −12° so it already looks dimensional. The copper disc is behind its upper left, the teal ring behind its lower right.
-2. Move the pointer anywhere on the page: the card eases toward rotateX `−cy × 12°`, rotateY `cx × 14°`, where `cx`, `cy` are the pointer position relative to the card centre, clamped to −1…1. Easing is a lerp of 0.12 per frame; the loop stops when it settles.
-3. The glare (`radial-gradient` at the pointer, soft-light) and the holographic edge band (`conic-gradient` whose start angle is the pointer's angle from the card centre plus 30°) follow the pointer.
-4. Pointer leaves the document: the card eases back to the resting tilt.
-5. Click the card, press Enter or Space on it, or press "Show back": the card flips 180° about Y in 700ms with a quartic ease-out. At 90° the front content is swapped for the back content, which is mirrored back to read correctly. The button text becomes "Show front".
-6. Back side: a 46px dark stripe 26px from the top, a striped signature panel with "Anika Rai" in italic mono, a white CVV box showing "•••", and a 40px pill "Hold to reveal CVV" with a 28px progress ring.
-7. Press and hold the pill (pointer or Space/Enter): the ring fills over 500ms and the label reads "Keep holding…". When full, the CVV shows "382" and the label reads "Release to hide". Releasing, leaving, cancelling, or blurring masks it again immediately. Clicking the pill does not flip the card.
-8. Arrow keys on the focused card nudge the tilt 4° per press, within ±12° / ±14°.
-9. Pick "Travel" or "Vault" in the switcher (or ArrowLeft/ArrowRight between tabs): the card fades and drops 24px in 300ms, the body theme changes, the shapes slide to new positions and colours over 700ms, then the new card fades up. The back resets to the front. The balance line under the flip button changes.
-10. Reduced motion: no tilt, the flip is an instant swap, the CVV reveals without the ring delay, the switch is instant.
 
 ## Structure
 
@@ -58,62 +47,6 @@ Cards:
 | Everyday | debit | 4821 | 09/29 | 382 | Available NPR 84,210.50 | `#c9733f` / `#2fa39a` / `#e8d9b5` |
 | Travel | credit | 0937 | 03/28 | 715 | Limit left USD 2,640.00 · no FX fee | `#f07457` / `#1f6fb2` / `#f2e3c6` |
 | Vault | credit | 5560 | 11/30 | 049 | Limit left NPR 412,000.00 · metal | `#d9b45a` / `#3a4340` / `#ede6d6` |
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #0b1513;                     /* deep green-black page */
-  --text: #eef2ec;                   /* all card text */
-  --text-2: #a9b8b1;                 /* kicker, captions, inactive tabs */
-  --line: rgba(238,242,236,.14);     /* pill and tablist borders */
-  --s1: #c9733f;                     /* shape: disc */
-  --s2: #2fa39a;                     /* shape: ring */
-  --s3: #e8d9b5;                     /* shape: slab, focus ring, CVV progress */
-  --tint: rgba(240,246,242,.10);     /* glass body tint, per card */
-
-  /* type */
-  --disp: "Unbounded", system-ui, sans-serif;
-  --mono: "Sometype Mono", ui-monospace, monospace;
-
-  /* geometry */
-  --cw: 470px;                       /* card width; height from aspect-ratio 1.586 */
-  --r-card: 20px; --r-pill: 999px; --r-tabs: 16px; --r-tab: 11px;
-  --blur: 22px;
-
-  /* space: 4px base */
-  --s-1: 4px; --s-2: 8px; --s-3: 14px; --s-4: 18px; --s-5: 24px; --s-6: 28px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-flip: 700ms;    /* JS-driven, ease-out quart */
-  --t-swap: 300ms;    /* card out / in */
-  --t-shapes: 700ms;  /* background shapes move and recolour */
-  --t-hold: 500ms;    /* CVV hold */
-  --lerp: .12;        /* tilt smoothing per frame */
-}
-body[data-c="1"] { --s1: #f07457; --s2: #1f6fb2; --s3: #f2e3c6; --tint: rgba(236,244,255,.10); }
-body[data-c="2"] { --s1: #d9b45a; --s2: #3a4340; --s3: #ede6d6; --tint: rgba(20,22,21,.28); }
-```
-
-Glass recipe: `background: linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.04)), var(--tint); backdrop-filter: blur(22px) saturate(1.5); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 30px 60px -20px rgba(0,0,0,.55)`. Text on glass gets `text-shadow: 0 1px 3px rgba(5,10,9,.35)`.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case |
-|------|--------|-----:|-------:|---------:|------|
-| Kicker | Sometype Mono | 11px | 400 | 0.18em | UPPER |
-| Page title | Unbounded | 22px | 600 (suffix 400 in `--text-2`) | -0.01em | sentence |
-| Card wordmark "vantor" | Unbounded | 20px | 700 | -0.02em | lower |
-| Card kind | Sometype Mono | 10px | 400 | 0.16em | UPPER, 85% opacity |
-| Card number | Sometype Mono | 21px | 500 | 0.12em | numerals, masked groups 75% |
-| Field caption | Sometype Mono | 9px | 400 | 0.18em | UPPER, 75% |
-| Field value | Sometype Mono | 13px | 400 | 0.06em | UPPER |
-| CVV | Sometype Mono | 16px | 500 | 0.14em | numerals |
-| Tab name | Unbounded | 12px | 600 | 0 | Title |
-| Tab digits, balance | Sometype Mono | 11–12px | 400 / 500 | 0.04–0.06em | as written |
 
 ## Motion
 
@@ -182,6 +115,79 @@ Perspective is inside the transform (`perspective(1200px) rotateX() rotateY()`),
 - [ ] Everyday 4821 (09/29), Travel 0937 (03/28), Vault 5560 (11/30), holder Anika Rai.
 - [ ] Hold time 500ms; CVVs 382, 715, 049.
 - [ ] Page `#0b1513`; Everyday shapes copper `#c9733f`, teal `#2fa39a`, sand `#e8d9b5`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the Everyday card, front side, resting at rotateX 6° and rotateY −12° so it already looks dimensional. The copper disc is behind its upper left, the teal ring behind its lower right.
+2. Move the pointer anywhere on the page: the card eases toward rotateX `−cy × 12°`, rotateY `cx × 14°`, where `cx`, `cy` are the pointer position relative to the card centre, clamped to −1…1. Easing is a lerp of 0.12 per frame; the loop stops when it settles.
+3. The glare (`radial-gradient` at the pointer, soft-light) and the holographic edge band (`conic-gradient` whose start angle is the pointer's angle from the card centre plus 30°) follow the pointer.
+4. Pointer leaves the document: the card eases back to the resting tilt.
+5. Click the card, press Enter or Space on it, or press "Show back": the card flips 180° about Y in 700ms with a quartic ease-out. At 90° the front content is swapped for the back content, which is mirrored back to read correctly. The button text becomes "Show front".
+6. Back side: a 46px dark stripe 26px from the top, a striped signature panel with "Anika Rai" in italic mono, a white CVV box showing "•••", and a 40px pill "Hold to reveal CVV" with a 28px progress ring.
+7. Press and hold the pill (pointer or Space/Enter): the ring fills over 500ms and the label reads "Keep holding…". When full, the CVV shows "382" and the label reads "Release to hide". Releasing, leaving, cancelling, or blurring masks it again immediately. Clicking the pill does not flip the card.
+8. Arrow keys on the focused card nudge the tilt 4° per press, within ±12° / ±14°.
+9. Pick "Travel" or "Vault" in the switcher (or ArrowLeft/ArrowRight between tabs): the card fades and drops 24px in 300ms, the body theme changes, the shapes slide to new positions and colours over 700ms, then the new card fades up. The back resets to the front. The balance line under the flip button changes.
+10. Reduced motion: no tilt, the flip is an instant swap, the CVV reveals without the ring delay, the switch is instant.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #0b1513;                     /* deep green-black page */
+  --text: #eef2ec;                   /* all card text */
+  --text-2: #a9b8b1;                 /* kicker, captions, inactive tabs */
+  --line: rgba(238,242,236,.14);     /* pill and tablist borders */
+  --s1: #c9733f;                     /* shape: disc */
+  --s2: #2fa39a;                     /* shape: ring */
+  --s3: #e8d9b5;                     /* shape: slab, focus ring, CVV progress */
+  --tint: rgba(240,246,242,.10);     /* glass body tint, per card */
+
+  /* type */
+  --disp: "Unbounded", system-ui, sans-serif;
+  --mono: "Sometype Mono", ui-monospace, monospace;
+
+  /* geometry */
+  --cw: 470px;                       /* card width; height from aspect-ratio 1.586 */
+  --r-card: 20px; --r-pill: 999px; --r-tabs: 16px; --r-tab: 11px;
+  --blur: 22px;
+
+  /* space: 4px base */
+  --s-1: 4px; --s-2: 8px; --s-3: 14px; --s-4: 18px; --s-5: 24px; --s-6: 28px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-flip: 700ms;    /* JS-driven, ease-out quart */
+  --t-swap: 300ms;    /* card out / in */
+  --t-shapes: 700ms;  /* background shapes move and recolour */
+  --t-hold: 500ms;    /* CVV hold */
+  --lerp: .12;        /* tilt smoothing per frame */
+}
+body[data-c="1"] { --s1: #f07457; --s2: #1f6fb2; --s3: #f2e3c6; --tint: rgba(236,244,255,.10); }
+body[data-c="2"] { --s1: #d9b45a; --s2: #3a4340; --s3: #ede6d6; --tint: rgba(20,22,21,.28); }
+```
+
+Glass recipe: `background: linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.04)), var(--tint); backdrop-filter: blur(22px) saturate(1.5); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 30px 60px -20px rgba(0,0,0,.55)`. Text on glass gets `text-shadow: 0 1px 3px rgba(5,10,9,.35)`.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case |
+|------|--------|-----:|-------:|---------:|------|
+| Kicker | Sometype Mono | 11px | 400 | 0.18em | UPPER |
+| Page title | Unbounded | 22px | 600 (suffix 400 in `--text-2`) | -0.01em | sentence |
+| Card wordmark "vantor" | Unbounded | 20px | 700 | -0.02em | lower |
+| Card kind | Sometype Mono | 10px | 400 | 0.16em | UPPER, 85% opacity |
+| Card number | Sometype Mono | 21px | 500 | 0.12em | numerals, masked groups 75% |
+| Field caption | Sometype Mono | 9px | 400 | 0.18em | UPPER, 75% |
+| Field value | Sometype Mono | 13px | 400 | 0.06em | UPPER |
+| CVV | Sometype Mono | 16px | 500 | 0.14em | numerals |
+| Tab name | Unbounded | 12px | 600 | 0 | Title |
+| Tab digits, balance | Sometype Mono | 11–12px | 400 / 500 | 0.04–0.06em | as written |
 
 ## Implementation notes
 

@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The sign-in screen for *Mira*, a planning tool for teams. The viewport is split 45 / 55: the left 576px is a warm off-white column holding a 360px form (floating-label email and password fields, a filled "Continue" button, an "or" rule, and an outlined "Email me a magic link" button that turns into a confirmation). The right 704px is a deep-green panel with two thin concentric circles in the corner, a 40px DM Serif Display testimonial that crossfades to the next quote every 5 seconds, three 40px bar-shaped dots, and a footer meta line. The feeling is calm and print-like; the detail worth copying is the floating label: 56px fields whose label shrinks to 78% and lifts 10px on focus or when the field has a value, with no layout shift.
-
-## Reference behaviour
-
-1. Initial state: email field is prefilled ("priya@loam.studio") so its label is already floated; password is empty with the label at rest; "Keep me signed in" is checked; testimonial 1 is visible and dot 1 is filled.
-2. Hover a field: border `--line` → `--ink-3`. Focus: border `--ink`, 3px ring `rgba(31,107,82,.15)`, label lifts (`translateY(-10px) scale(.78)`) and darkens over 180ms.
-3. Type into the password field: label stays lifted after blur because the input is no longer `:placeholder-shown`.
-4. Click the eye button (40 × 40, inside the field's right edge): input type flips `password` ↔ `text`, the icon swaps to a slashed eye, `aria-pressed` and `aria-label` ("Show password" / "Hide password") update, and focus returns to the input.
-5. Hover "Continue": background `--green` → `--green-2`. Submit is prevented in the demo.
-6. Click "Email me a magic link": the button's border and text become `--accent`, its label changes to "Link sent to priya@loam.studio · check your email", and further clicks do nothing.
-7. Every 5000ms the visible quote fades out and the next fades in (both over 600ms, overlapping, since the figures are absolutely stacked). The corresponding dot fills.
-8. Click a dot: jumps to that quote and restarts the 5s timer. Hovering anywhere on the green panel pauses rotation; leaving resumes it.
-9. Reduced motion: quotes swap instantly; labels move in 1ms.
 
 ## Structure
 
@@ -50,68 +40,6 @@ The sign-in screen for *Mira*, a planning tool for teams. The viewport is split 
   - `.row` — checkbox label + "Forgot password?" link.
   - `.btn` submit, `.or` rule, `.btn.ghost#magic`, `.foot` paragraph.
 - `<aside class="panel" aria-label="What customers say">` — `.tag`, `.quotes[aria-live="polite"]` with three stacked `<figure class="q">` (blockquote + figcaption), `.dots` group of three buttons, `.meta` row. Circles are `.panel::before/::after`.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm off-white left, deep green right, cream type on green */
-  --bg:         #fbfaf7;  /* left column */
-  --field:      #ffffff;  /* input surface */
-  --ink:        #1b1f1c;  /* headings, input text, links */
-  --ink-2:      #5d645f;  /* lede, floated labels, footer text */
-  --ink-3:      #8c938e;  /* resting labels, eye icon, "or" */
-  --line:       #dcdfda;  /* field borders, ghost button, rules */
-  --line-focus: #1b1f1c;  /* focused field border */
-  --green:      #0f2e26;  /* panel, primary button */
-  --green-2:    #173d33;  /* primary button hover */
-  --cream:      #f1e9d6;  /* panel text, active dot, button label */
-  --cream-2:    #b9b19b;  /* panel secondary text, italic emphasis */
-  --accent:     #1f6b52;  /* focus ring, magic-link sent state */
-  --ring:       rgba(31, 107, 82, .15);
-  --circle:     rgba(241, 233, 214, .14);
-
-  /* type */
-  --serif: "DM Serif Display", Georgia, serif;
-  --sans:  "DM Sans", system-ui, sans-serif;
-  --quote-size: 40px;    /* 32 ≤1100 */
-
-  /* layout */
-  --split: 45%;
-  --form-w: 360px;
-  --field-h: 56px;
-  --btn-h: 50px;
-  --eye: 40px;
-  --r: 8px;
-  --r-eye: 6px;
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-label: 180ms;
-  --t-fade: 600ms;
-  --t-rotate: 5000ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role              | Family           | Size | Weight | Line-height | Tracking | Notes |
-|-------------------|------------------|-----:|-------:|------------:|---------:|-------|
-| Wordmark          | DM Serif Display | 24px | 400    | 1           | −0.01em  | 26px two-ring logo mark before it |
-| Heading           | DM Serif Display | 36px | 400    | 1.1         | −0.01em  | |
-| Lede              | DM Sans          | 15px | 400    | 1.5         | 0        | `--ink-2` |
-| Input text        | DM Sans          | 15px | 400    | 1           | 0        | padding `22px 48px 6px 14px` |
-| Label at rest     | DM Sans          | 15px | 400    | 1           | 0        | `--ink-3`, `left:14px; top:18px` |
-| Label floated     | DM Sans          | 15px × .78 (≈11.7px) | 400 | 1 | 0 | `--ink-2`, `translateY(-10px)` |
-| Checkbox / links  | DM Sans          | 13px | 400    | 1.5         | 0        | links underlined, `text-underline-offset: 3px` |
-| Buttons           | DM Sans          | 15px | 500    | 1           | 0        | |
-| "OR" rule label   | DM Sans          | 12px | 400    | 1           | +0.06em  | UPPERCASE, `--ink-3` |
-| Panel tag         | DM Sans          | 12px | 400    | 1           | +0.14em  | UPPERCASE, `--cream-2` |
-| Quote             | DM Serif Display | 40px | 400    | 1.2         | −0.01em  | `max-width: 18ch; text-indent: -.4em` (hanging open quote); `<em>` italic in `--cream-2` |
-| Attribution       | DM Sans          | 14px | 500 name / 400 role | 1.5 | 0 | name `--cream`, role `--cream-2` |
-| Panel meta        | DM Sans          | 12px | 400    | 1.5         | 0        | `--cream-2` |
 
 ## Motion
 
@@ -176,6 +104,84 @@ Timer: `setInterval(next, 5000)`; cleared on `pointerenter` of the panel and on 
 - [ ] Focus rings (2px `#1f6b52`, 3px offset) are visible on every control including the dots.
 - [ ] No layout shift occurs when labels float or when the magic-link text changes (button height stays 50px).
 - [ ] Reduced motion: quote swaps are instant.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: email field is prefilled ("priya@loam.studio") so its label is already floated; password is empty with the label at rest; "Keep me signed in" is checked; testimonial 1 is visible and dot 1 is filled.
+2. Hover a field: border `--line` → `--ink-3`. Focus: border `--ink`, 3px ring `rgba(31,107,82,.15)`, label lifts (`translateY(-10px) scale(.78)`) and darkens over 180ms.
+3. Type into the password field: label stays lifted after blur because the input is no longer `:placeholder-shown`.
+4. Click the eye button (40 × 40, inside the field's right edge): input type flips `password` ↔ `text`, the icon swaps to a slashed eye, `aria-pressed` and `aria-label` ("Show password" / "Hide password") update, and focus returns to the input.
+5. Hover "Continue": background `--green` → `--green-2`. Submit is prevented in the demo.
+6. Click "Email me a magic link": the button's border and text become `--accent`, its label changes to "Link sent to priya@loam.studio · check your email", and further clicks do nothing.
+7. Every 5000ms the visible quote fades out and the next fades in (both over 600ms, overlapping, since the figures are absolutely stacked). The corresponding dot fills.
+8. Click a dot: jumps to that quote and restarts the 5s timer. Hovering anywhere on the green panel pauses rotation; leaving resumes it.
+9. Reduced motion: quotes swap instantly; labels move in 1ms.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm off-white left, deep green right, cream type on green */
+  --bg:         #fbfaf7;  /* left column */
+  --field:      #ffffff;  /* input surface */
+  --ink:        #1b1f1c;  /* headings, input text, links */
+  --ink-2:      #5d645f;  /* lede, floated labels, footer text */
+  --ink-3:      #8c938e;  /* resting labels, eye icon, "or" */
+  --line:       #dcdfda;  /* field borders, ghost button, rules */
+  --line-focus: #1b1f1c;  /* focused field border */
+  --green:      #0f2e26;  /* panel, primary button */
+  --green-2:    #173d33;  /* primary button hover */
+  --cream:      #f1e9d6;  /* panel text, active dot, button label */
+  --cream-2:    #b9b19b;  /* panel secondary text, italic emphasis */
+  --accent:     #1f6b52;  /* focus ring, magic-link sent state */
+  --ring:       rgba(31, 107, 82, .15);
+  --circle:     rgba(241, 233, 214, .14);
+
+  /* type */
+  --serif: "DM Serif Display", Georgia, serif;
+  --sans:  "DM Sans", system-ui, sans-serif;
+  --quote-size: 40px;    /* 32 ≤1100 */
+
+  /* layout */
+  --split: 45%;
+  --form-w: 360px;
+  --field-h: 56px;
+  --btn-h: 50px;
+  --eye: 40px;
+  --r: 8px;
+  --r-eye: 6px;
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-label: 180ms;
+  --t-fade: 600ms;
+  --t-rotate: 5000ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role              | Family           | Size | Weight | Line-height | Tracking | Notes |
+|-------------------|------------------|-----:|-------:|------------:|---------:|-------|
+| Wordmark          | DM Serif Display | 24px | 400    | 1           | −0.01em  | 26px two-ring logo mark before it |
+| Heading           | DM Serif Display | 36px | 400    | 1.1         | −0.01em  | |
+| Lede              | DM Sans          | 15px | 400    | 1.5         | 0        | `--ink-2` |
+| Input text        | DM Sans          | 15px | 400    | 1           | 0        | padding `22px 48px 6px 14px` |
+| Label at rest     | DM Sans          | 15px | 400    | 1           | 0        | `--ink-3`, `left:14px; top:18px` |
+| Label floated     | DM Sans          | 15px × .78 (≈11.7px) | 400 | 1 | 0 | `--ink-2`, `translateY(-10px)` |
+| Checkbox / links  | DM Sans          | 13px | 400    | 1.5         | 0        | links underlined, `text-underline-offset: 3px` |
+| Buttons           | DM Sans          | 15px | 500    | 1           | 0        | |
+| "OR" rule label   | DM Sans          | 12px | 400    | 1           | +0.06em  | UPPERCASE, `--ink-3` |
+| Panel tag         | DM Sans          | 12px | 400    | 1           | +0.14em  | UPPERCASE, `--cream-2` |
+| Quote             | DM Serif Display | 40px | 400    | 1.2         | −0.01em  | `max-width: 18ch; text-indent: -.4em` (hanging open quote); `<em>` italic in `--cream-2` |
+| Attribution       | DM Sans          | 14px | 500 name / 400 role | 1.5 | 0 | name `--cream`, role `--cream-2` |
+| Panel meta        | DM Sans          | 12px | 400    | 1.5         | 0        | `--cream-2` |
 
 ## Implementation notes
 

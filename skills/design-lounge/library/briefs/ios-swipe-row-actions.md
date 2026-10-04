@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The inbox of "Nord Post", a mail client, demonstrating the iOS swipe-actions pattern with pointer events. Dragging a row left uncovers two 80px buttons behind it (green Archive, red Delete); dragging right uncovers an orange Pin. Beyond the revealed width the row rubber-bands at 45% travel. Once the drag passes 60% of the row width the outermost action grows to fill the whole reveal and the row gives a 3px nudge, a visual stand-in for the haptic; releasing there commits (delete removes the row with a height collapse, pin moves it to the top). Only one row is open at a time; Reset rebuilds the list so the piece is replayable.
-
-## Reference behaviour
-
-1. Initial state: eight rows, the first two unread (9px blue dot at the left). All rows are closed; nothing is revealed.
-2. Drag a row left by less than 40px and release: it springs back to 0 over 360ms `cubic-bezier(.32,.72,0,1)`.
-3. Drag left more than 40px and release: it snaps open to −160px, showing Archive (80px) then Delete (80px) at the right. The action buttons become focusable (`tabindex` −1 → 0).
-4. Keep dragging past −160px: travel is damped, `x = −160 − (|dx| − 160) × .45`.
-5. Cross 60% of the row width (234px at 390 wide): the row gets class `commit`; Delete's width transitions to 100% over 200ms and Archive collapses to 0 and fades; the icon scales to 1.15; the row plays a 120ms nudge (3px further in the drag direction and back). Crossing back removes `commit` and nudges again.
-6. Release past 60%: the row translates fully off-screen (−390px) over 360ms, then after 200ms its height collapses to 0 over 320ms while fading, and the element is removed.
-7. Release between −40px and 60%: snaps to −160px open. Tapping Archive or Delete removes the row the same way; Archive's exit is green.
-8. Drag right: Pin (80px) is revealed at the left; past 60% it fills the row. Release past 60% or tap Pin: the row closes, gets a pin glyph before the sender name and moves to the top of the list. Pinning a pinned row unpins it.
-9. Starting a drag on another row closes the currently open row.
-10. Tap (no movement) on a row focuses it. ArrowLeft opens Archive/Delete, ArrowRight opens Pin, Escape closes. Tab then reaches the revealed buttons.
-11. When the list is empty, "Inbox zero. Nothing to swipe." shows; Reset restores all eight rows.
 
 ## Structure
 
@@ -57,61 +45,6 @@ The inbox of "Nord Post", a mail client, demonstrating the iOS swipe-actions pat
   - `.act` buttons: 80px wide, icon over an 11px label.
   - `.front[tabindex=0]`: the visible content, `position:relative`, grid `1fr auto` with sender, time, subject, 2-line preview; translated by the gesture.
 - `<template>` holds one row; JS clones it from a data array so Reset can rebuild.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm paper neutrals; semantic action colours follow platform convention */
-  --bg: #fbfaf7;            /* page */
-  --surface: #ffffff;       /* rows */
-  --ink: #1a1916;
-  --ink-2: #66625a;         /* preview text */
-  --ink-3: #9b968c;         /* time, hint */
-  --line: #ebe8e1;          /* hairlines */
-  --unread: #2b6be4;        /* dot, focus ring */
-  --archive: #2f8f5b;
-  --delete: #d93b2b;
-  --pin: #e0862b;
-  --on-action: #ffffff;
-
-  /* type */
-  --font: "Schibsted Grotesk", system-ui, -apple-system, sans-serif;
-
-  /* geometry */
-  --act-w: 80px;            /* one action */
-  --open-l: -160px;         /* two actions */
-  --open-r: 80px;
-  --commit: .6;             /* fraction of row width */
-  --rubber: .45;            /* overshoot damping */
-  --snap-min: 40px;         /* below this, close */
-  --dot: 9px;
-  --row-pad: 12px 20px 12px 30px;
-
-  /* motion */
-  --t-micro: 140ms;
-  --t-nudge: 120ms;
-  --t-fill: 200ms;
-  --t-snap: 360ms;
-  --t-collapse: 320ms;
-  --spring: cubic-bezier(.32, .72, 0, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role       | Family            | Size | Weight | Line-height | Tracking | Case |
-|------------|-------------------|-----:|-------:|------------:|---------:|------|
-| Page title | Schibsted Grotesk | 30px | 700    | 1           | −0.025em | sentence |
-| App name   | Schibsted Grotesk | 13px | 500    | 1.2         | 0        | sentence |
-| Hint       | Schibsted Grotesk | 12px | 400    | 1.4         | 0        | sentence |
-| Sender     | Schibsted Grotesk | 15px | 600    | 1.35        | 0        | sentence, ellipsis |
-| Time       | Schibsted Grotesk | 12px | 400    | 1.35        | 0        | tabular numerals |
-| Subject    | Schibsted Grotesk | 14px | 500    | 1.35        | 0        | sentence, ellipsis |
-| Preview    | Schibsted Grotesk | 13px | 400    | 1.4         | 0        | sentence, 2-line clamp |
-| Action     | Schibsted Grotesk | 11px | 600    | 1           | +0.02em  | sentence |
-| Reset      | Schibsted Grotesk | 13px | 500    | 1           | 0        | sentence |
 
 ## Motion
 
@@ -171,6 +104,79 @@ Reduced motion: snaps, fills and collapses become 1ms; the nudge animation is re
 - [ ] Empty list shows "Inbox zero." and Reset restores all eight rows.
 - [ ] No transition is applied to `transform` during a drag (the row tracks the pointer without lag).
 - [ ] Reduced motion removes the nudge and shortens snaps to 1ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: eight rows, the first two unread (9px blue dot at the left). All rows are closed; nothing is revealed.
+2. Drag a row left by less than 40px and release: it springs back to 0 over 360ms `cubic-bezier(.32,.72,0,1)`.
+3. Drag left more than 40px and release: it snaps open to −160px, showing Archive (80px) then Delete (80px) at the right. The action buttons become focusable (`tabindex` −1 → 0).
+4. Keep dragging past −160px: travel is damped, `x = −160 − (|dx| − 160) × .45`.
+5. Cross 60% of the row width (234px at 390 wide): the row gets class `commit`; Delete's width transitions to 100% over 200ms and Archive collapses to 0 and fades; the icon scales to 1.15; the row plays a 120ms nudge (3px further in the drag direction and back). Crossing back removes `commit` and nudges again.
+6. Release past 60%: the row translates fully off-screen (−390px) over 360ms, then after 200ms its height collapses to 0 over 320ms while fading, and the element is removed.
+7. Release between −40px and 60%: snaps to −160px open. Tapping Archive or Delete removes the row the same way; Archive's exit is green.
+8. Drag right: Pin (80px) is revealed at the left; past 60% it fills the row. Release past 60% or tap Pin: the row closes, gets a pin glyph before the sender name and moves to the top of the list. Pinning a pinned row unpins it.
+9. Starting a drag on another row closes the currently open row.
+10. Tap (no movement) on a row focuses it. ArrowLeft opens Archive/Delete, ArrowRight opens Pin, Escape closes. Tab then reaches the revealed buttons.
+11. When the list is empty, "Inbox zero. Nothing to swipe." shows; Reset restores all eight rows.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm paper neutrals; semantic action colours follow platform convention */
+  --bg: #fbfaf7;            /* page */
+  --surface: #ffffff;       /* rows */
+  --ink: #1a1916;
+  --ink-2: #66625a;         /* preview text */
+  --ink-3: #9b968c;         /* time, hint */
+  --line: #ebe8e1;          /* hairlines */
+  --unread: #2b6be4;        /* dot, focus ring */
+  --archive: #2f8f5b;
+  --delete: #d93b2b;
+  --pin: #e0862b;
+  --on-action: #ffffff;
+
+  /* type */
+  --font: "Schibsted Grotesk", system-ui, -apple-system, sans-serif;
+
+  /* geometry */
+  --act-w: 80px;            /* one action */
+  --open-l: -160px;         /* two actions */
+  --open-r: 80px;
+  --commit: .6;             /* fraction of row width */
+  --rubber: .45;            /* overshoot damping */
+  --snap-min: 40px;         /* below this, close */
+  --dot: 9px;
+  --row-pad: 12px 20px 12px 30px;
+
+  /* motion */
+  --t-micro: 140ms;
+  --t-nudge: 120ms;
+  --t-fill: 200ms;
+  --t-snap: 360ms;
+  --t-collapse: 320ms;
+  --spring: cubic-bezier(.32, .72, 0, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role       | Family            | Size | Weight | Line-height | Tracking | Case |
+|------------|-------------------|-----:|-------:|------------:|---------:|------|
+| Page title | Schibsted Grotesk | 30px | 700    | 1           | −0.025em | sentence |
+| App name   | Schibsted Grotesk | 13px | 500    | 1.2         | 0        | sentence |
+| Hint       | Schibsted Grotesk | 12px | 400    | 1.4         | 0        | sentence |
+| Sender     | Schibsted Grotesk | 15px | 600    | 1.35        | 0        | sentence, ellipsis |
+| Time       | Schibsted Grotesk | 12px | 400    | 1.35        | 0        | tabular numerals |
+| Subject    | Schibsted Grotesk | 14px | 500    | 1.35        | 0        | sentence, ellipsis |
+| Preview    | Schibsted Grotesk | 13px | 400    | 1.4         | 0        | sentence, 2-line clamp |
+| Action     | Schibsted Grotesk | 11px | 600    | 1           | +0.02em  | sentence |
+| Reset      | Schibsted Grotesk | 13px | 500    | 1           | 0        | sentence |
 
 ## Implementation notes
 

@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens and the family's radius and control height. This is the field in the component sheet, not a second control.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Three fields on a yard account, stacked in a 320px column on warm paper. Name is filled with Mira Shrestha and a hint under it. Gate code starts empty, with a danger border and the sentence "Enter the four-digit code." Badge number shows Y-1842 and is disabled, with a hint that the yard issued it. The label sits above each field at 12px. The input is 40px tall with a 2px radius. The error replaces the hint. It is not a toast.
-
-## Reference behaviour
-
-1. The first frame shows all three fields. Gate code is empty, `aria-invalid` is true, and the error is visible.
-2. Typing in Gate code hides the error only when the value is exactly four digits. Any other length keeps the error and `aria-invalid="true"`.
-3. Name keeps its hint. Nothing validates Name in this piece.
-4. Badge number does not accept input. It stays Y-1842.
-5. There is no submit button. The error is the field's own state, the way it looks after a failed check.
-6. Focus ring is 2px `--focus`, offset 2px, on the inputs that can be focused. The disabled input is not in the tab order.
-7. There is no animation.
 
 ## Structure
 
@@ -38,40 +30,6 @@ column, width 320, gap 16
 - One `form`. Each control is a `.field` with a `label`, an `input`, and either a hint or an error.
 - The error uses `id="code-err"`. The gate input points at it with `aria-describedby` while the error is showing.
 - The badge input has the `disabled` attribute.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --surface-2: #f0ebe3;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #5c564e;
-  --line: #e4dfd4;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --danger: #9b2c2c;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px because this demo sits with the industrial yard controls, including `select-field`. A locked family replaces the radius and the 40px height. Quiet is 6px and 40px. Soft is 14px and 44px. Do not keep 2px after the family is locked.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 12px | 500 | `--ink-2` |
-| Value | sans | 14px | 400 | `--ink` |
-| Hint | sans | 12px | 400 | `--ink-3` |
-| Error | sans | 12px | 400 | `--danger` |
-| Disabled value | sans | 14px | 400 | `--ink-2` |
-
-The where-line letter-spacing is 0.04em. Values are left aligned, vertically centered in the 40px input.
 
 ## Motion
 
@@ -122,6 +80,54 @@ None. The error appears and disappears in one frame. Reduced motion has nothing 
 - [ ] The disabled field is not faded below a readable value.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is no submit button and no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows all three fields. Gate code is empty, `aria-invalid` is true, and the error is visible.
+2. Typing in Gate code hides the error only when the value is exactly four digits. Any other length keeps the error and `aria-invalid="true"`.
+3. Name keeps its hint. Nothing validates Name in this piece.
+4. Badge number does not accept input. It stays Y-1842.
+5. There is no submit button. The error is the field's own state, the way it looks after a failed check.
+6. Focus ring is 2px `--focus`, offset 2px, on the inputs that can be focused. The disabled input is not in the tab order.
+7. There is no animation.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --surface-2: #f0ebe3;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #5c564e;
+  --line: #e4dfd4;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --danger: #9b2c2c;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px because this demo sits with the industrial yard controls, including `select-field`. A locked family replaces the radius and the 40px height. Quiet is 6px and 40px. Soft is 14px and 44px. Do not keep 2px after the family is locked.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 12px | 500 | `--ink-2` |
+| Value | sans | 14px | 400 | `--ink` |
+| Hint | sans | 12px | 400 | `--ink-3` |
+| Error | sans | 12px | 400 | `--danger` |
+| Disabled value | sans | 14px | 400 | `--ink-2` |
+
+The where-line letter-spacing is 0.04em. Values are left aligned, vertically centered in the 40px input.
 
 ## Implementation notes
 

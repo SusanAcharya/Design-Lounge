@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the radius and the 40px height follow the family. A day is `calendar-month`. This is a clock time.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 When Gate 4 closes. The label is Closes. Two fields sit with a colon between them: hour 18 and minute 00. The status reads "Gate 4 closes at 18:00." The hint says this is the same closing time as the dock note. An hour outside 0–23 or a minute outside 0–59 hides the hint and the status, marks both fields invalid, and shows "Use an hour from 0 to 23 and a minute from 0 to 59." A valid pair brings the status back, padded to two digits. This is not a slider, not a day on a month, and not a second closing time.
-
-## Reference behaviour
-
-1. The first frame is 18 and 00. The hint is visible. The error is hidden. The status is "Gate 4 closes at 18:00."
-2. Editing either field rewrites the status when both values are in range, padded to two digits.
-3. A value that is empty, not digits, hour above 23, or minute above 59 is invalid.
-4. While invalid, both fields have `aria-invalid`, the hint hides, the status hides, and the error shows.
-5. Returning to a real time restores the hint and the status.
-6. Each field is 64px wide and 40px tall, radius 2px. The digit is 20px and tabular.
-7. There is no submit button, no clock face, and no animation.
-8. Focus-visible is a 2px outline, offset 2px.
 
 ## Structure
 
@@ -34,38 +25,6 @@ width 420
 - The visible label is Closes. Each field has its own accessible name, Hour and Minute.
 - The colon is decorative.
 - Hint and error do not show together. The status shows only while the time is valid.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #5c564e;
-  --line-strong: #cfc6b8;
-  --danger: #9b2c2c;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px in this yard. The family replaces it. Do not draw a round clock.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 12px | 500 | `--ink-2` |
-| Digit | sans | 20px | 400 | `--ink` |
-| Colon | sans | 20px | 400 | `--ink` |
-| Hint | sans | 12px | 400 | `--ink-3` |
-| Error | sans | 12px | 400 | `--danger` |
-| Status | sans | 12px | 400 | `--ink` |
-
-Digits are tabular. The where-line letter-spacing is 0.04em. The locked pairing's number face replaces the digit face when that pairing sets numbers to display.
 
 ## Motion
 
@@ -116,6 +75,53 @@ None. Valid and invalid swap in one frame. Reduced motion has nothing to remove.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is no clock face, no slider, and no submit.
 - [ ] 18:00 matches the dock note. Do not start at a second time.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is 18 and 00. The hint is visible. The error is hidden. The status is "Gate 4 closes at 18:00."
+2. Editing either field rewrites the status when both values are in range, padded to two digits.
+3. A value that is empty, not digits, hour above 23, or minute above 59 is invalid.
+4. While invalid, both fields have `aria-invalid`, the hint hides, the status hides, and the error shows.
+5. Returning to a real time restores the hint and the status.
+6. Each field is 64px wide and 40px tall, radius 2px. The digit is 20px and tabular.
+7. There is no submit button, no clock face, and no animation.
+8. Focus-visible is a 2px outline, offset 2px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #5c564e;
+  --line-strong: #cfc6b8;
+  --danger: #9b2c2c;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px in this yard. The family replaces it. Do not draw a round clock.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 12px | 500 | `--ink-2` |
+| Digit | sans | 20px | 400 | `--ink` |
+| Colon | sans | 20px | 400 | `--ink` |
+| Hint | sans | 12px | 400 | `--ink-3` |
+| Error | sans | 12px | 400 | `--danger` |
+| Status | sans | 12px | 400 | `--ink` |
+
+Digits are tabular. The where-line letter-spacing is 0.04em. The locked pairing's number face replaces the digit face when that pairing sets numbers to display.
 
 ## Implementation notes
 

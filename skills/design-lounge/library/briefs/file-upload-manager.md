@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep one accent for progress and the primary button, and a second warm colour only for failure.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The upload screen of Depot, a file desk for a film post house. Rushes for day 3 of a documentary are going up. On the left is a tall dropzone with a real Browse button. On the right is the queue: a large total percent, a total bar, and one row per file with a type badge, live speed, time left, and controls. The look is dark and industrial: graphite panels, off-white type, mono numbers, 4px corners, hairline rules, and one electric lime for progress. The details worth copying are the dropzone that flips to off-white when a file is dragged over it, and the row meta line that reads like a machine log: `48%  39.7 MB/s  0:32 left  1.16 GB / 2.40 GB`.
-
-## Reference behaviour
-
-1. First frame: seven rows. Two are uploading (A001_C014_0912.mov at 46%, boom_scene12_take3.wav at 72%). Two are done (a PDF and a CUBE file). One failed at 61% (drone_pass_04.mp4). One is paused at 18%. One is queued.
-2. The header shows the bytes sent of the total, a 56px lime percent, a 6px total bar, and a count line: "2 of 7 done · 2 uploading · 1 paused · 1 failed · 1 queued".
-3. Every 250ms, each uploading row gains bytes at its speed. Speed drifts by up to ±1.5 MB/s per tick, kept between 6 and 64 MB/s. Time left is remaining bytes divided by speed.
-4. At most two files upload at once. When one finishes, the next queued file starts.
-5. A finished row shows "Uploaded", its size, a lime check, and a darker filled badge. Its bar goes away. The live region says "boom_scene12_take3.wav uploaded".
-6. Pause on an uploading or queued row sets it to "Paused 48%" with a dashed grey bar. The button becomes Resume (play icon). Resume puts it back in the queue.
-7. The failed row reads "Failed at 61%  Connection dropped" in coral, with a coral bar and a coral outlined Retry button. Retry puts it back in the queue and it carries on from 61%.
-8. The X on any unfinished row cancels it and removes the row. On a finished row the same X is "Remove". Focus moves to the next row's first button, or to Browse if the list is empty.
-9. "Pause all" pauses every uploading and queued row and becomes "Resume all". "Clear finished" removes done rows.
-10. Browse files opens the real system file picker, accepting any type, several at once. Each picked file joins the queue with its real name and size. The line under the dropzone reads "2 files added: grade_notes_v3.txt, mix_stem_dialogue.wav". After three names it says "and N more".
-11. Dragging files over the dropzone inverts it: off-white ground, graphite text, solid border. The heading changes to "Release to add 2 files". Leaving or dropping restores it. Dropping adds the files. Dropping anywhere else on the page does nothing.
-12. When nothing is uploading or queued, the live region says "All uploads complete", or "Uploads stopped. One file needs a retry." if a row failed.
-13. Reduced motion: bars jump to their new width, the sheen on uploading bars is off, and the dropzone swaps colours with no fade.
 
 ## Structure
 
@@ -54,62 +40,6 @@ The upload screen of Depot, a file desk for a film post house. Rushes for day 3 
 - The queue is a `ul`. Each row is an `li` grid: `52px minmax(0,1fr) auto`. The badge spans two rows. Name on row 1, meta on row 2, bar under the meta in column 2. Controls span two rows in column 3.
 - Each row bar is `role="progressbar"` labelled with the file name and `aria-valuenow`.
 - One visually hidden `p aria-live="polite"` announces state changes.
-
-## Tokens
-
-```css
-:root {
-  --bg: #141518;        /* graphite page */
-  --panel: #1b1d21;     /* dropzone */
-  --raise: #23262b;     /* bar track, done badge, hover */
-  --line: #2c2f35;      /* hairlines */
-  --line-2: #3a3e45;    /* dashed border, outlines */
-  --ink: #ebe9e3;       /* off-white text */
-  --ink-2: #b4b1a9;     /* secondary text */
-  --ink-3: #8c8981;     /* labels, meta */
-  --lime: #c8f53c;      /* the accent: progress, percent, primary */
-  --lime-ink: #141518;  /* text on lime */
-  --err: #ff7a66;       /* failure only */
-  --focus: #c8f53c;
-
-  --sans: "Archivo", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
-
-  --r: 4px;
-  --r-bar: 2px;
-
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
-  --space-5: 20px; --space-6: 24px; --space-7: 28px;
-
-  --bar-total: 6px;
-  --bar-row: 3px;
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --t-zone: 180ms;
-  --t-bar: 250ms;       /* equals the tick, linear */
-  --t-total: 300ms;
-  --tick: 250ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Dropzone heading | Archivo | 44px | 800 | 0.95 | -0.03em | Sentence |
-| Total percent | JetBrains Mono | 56px (% sign 24px) | 500 | 0.85 | -0.04em | Number |
-| Logo | Archivo | 13px | 800 | 1 | 0.02em | Upper |
-| Queue title | Archivo | 13px | 600 | 1.3 | 0.08em | Upper |
-| File name | Archivo | 14px | 500 | 1.45 | 0 | As named |
-| Body copy | Archivo | 14px | 400 | 1.45 | 0 | Sentence |
-| Button | Archivo | 13-14px | 600 | 1 | 0 | Sentence |
-| Row meta, totals, path | JetBrains Mono | 12-13px | 400 | 1.5 | 0 | As written |
-| Badge | JetBrains Mono | 11px | 500 | 1 | 0.04em | Upper |
-| Zone tag, fact label | JetBrains Mono | 10-11px | 400 | 1 | 0.06-0.08em | Upper |
-
-- Every number is mono. Every word a person reads first is the grotesk.
-- The badge is the file extension, up to four letters, uppercased. No icon per file type.
 
 ## Motion
 
@@ -181,6 +111,82 @@ The upload screen of Depot, a file desk for a film post house. Rushes for day 3 
 - [ ] The product is "Depot". The path is "northbank-post / harbour-doc / rushes / day-03".
 - [ ] Seven starting rows, including drone_pass_04.mp4 failed at 61% and A001_C015_0912.mov paused at 18%.
 - [ ] The page is `#141518`, text `#ebe9e3`, accent `#c8f53c`, failure `#ff7a66`, radius 4px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: seven rows. Two are uploading (A001_C014_0912.mov at 46%, boom_scene12_take3.wav at 72%). Two are done (a PDF and a CUBE file). One failed at 61% (drone_pass_04.mp4). One is paused at 18%. One is queued.
+2. The header shows the bytes sent of the total, a 56px lime percent, a 6px total bar, and a count line: "2 of 7 done · 2 uploading · 1 paused · 1 failed · 1 queued".
+3. Every 250ms, each uploading row gains bytes at its speed. Speed drifts by up to ±1.5 MB/s per tick, kept between 6 and 64 MB/s. Time left is remaining bytes divided by speed.
+4. At most two files upload at once. When one finishes, the next queued file starts.
+5. A finished row shows "Uploaded", its size, a lime check, and a darker filled badge. Its bar goes away. The live region says "boom_scene12_take3.wav uploaded".
+6. Pause on an uploading or queued row sets it to "Paused 48%" with a dashed grey bar. The button becomes Resume (play icon). Resume puts it back in the queue.
+7. The failed row reads "Failed at 61%  Connection dropped" in coral, with a coral bar and a coral outlined Retry button. Retry puts it back in the queue and it carries on from 61%.
+8. The X on any unfinished row cancels it and removes the row. On a finished row the same X is "Remove". Focus moves to the next row's first button, or to Browse if the list is empty.
+9. "Pause all" pauses every uploading and queued row and becomes "Resume all". "Clear finished" removes done rows.
+10. Browse files opens the real system file picker, accepting any type, several at once. Each picked file joins the queue with its real name and size. The line under the dropzone reads "2 files added: grade_notes_v3.txt, mix_stem_dialogue.wav". After three names it says "and N more".
+11. Dragging files over the dropzone inverts it: off-white ground, graphite text, solid border. The heading changes to "Release to add 2 files". Leaving or dropping restores it. Dropping adds the files. Dropping anywhere else on the page does nothing.
+12. When nothing is uploading or queued, the live region says "All uploads complete", or "Uploads stopped. One file needs a retry." if a row failed.
+13. Reduced motion: bars jump to their new width, the sheen on uploading bars is off, and the dropzone swaps colours with no fade.
+
+## Tokens
+
+```css
+:root {
+  --bg: #141518;        /* graphite page */
+  --panel: #1b1d21;     /* dropzone */
+  --raise: #23262b;     /* bar track, done badge, hover */
+  --line: #2c2f35;      /* hairlines */
+  --line-2: #3a3e45;    /* dashed border, outlines */
+  --ink: #ebe9e3;       /* off-white text */
+  --ink-2: #b4b1a9;     /* secondary text */
+  --ink-3: #8c8981;     /* labels, meta */
+  --lime: #c8f53c;      /* the accent: progress, percent, primary */
+  --lime-ink: #141518;  /* text on lime */
+  --err: #ff7a66;       /* failure only */
+  --focus: #c8f53c;
+
+  --sans: "Archivo", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --r: 4px;
+  --r-bar: 2px;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-7: 28px;
+
+  --bar-total: 6px;
+  --bar-row: 3px;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --t-zone: 180ms;
+  --t-bar: 250ms;       /* equals the tick, linear */
+  --t-total: 300ms;
+  --tick: 250ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Dropzone heading | Archivo | 44px | 800 | 0.95 | -0.03em | Sentence |
+| Total percent | JetBrains Mono | 56px (% sign 24px) | 500 | 0.85 | -0.04em | Number |
+| Logo | Archivo | 13px | 800 | 1 | 0.02em | Upper |
+| Queue title | Archivo | 13px | 600 | 1.3 | 0.08em | Upper |
+| File name | Archivo | 14px | 500 | 1.45 | 0 | As named |
+| Body copy | Archivo | 14px | 400 | 1.45 | 0 | Sentence |
+| Button | Archivo | 13-14px | 600 | 1 | 0 | Sentence |
+| Row meta, totals, path | JetBrains Mono | 12-13px | 400 | 1.5 | 0 | As written |
+| Badge | JetBrains Mono | 11px | 500 | 1 | 0.04em | Upper |
+| Zone tag, fact label | JetBrains Mono | 10-11px | 400 | 1 | 0.06-0.08em | Upper |
+
+- Every number is mono. Every word a person reads first is the grotesk.
+- The badge is the file extension, up to four letters, uppercased. No icon per file type.
 
 ## Implementation notes
 

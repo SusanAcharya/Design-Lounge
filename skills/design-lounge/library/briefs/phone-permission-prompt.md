@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the soft, organic family: 20px radii, sage on cream, a rounded serif for headlines.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full phone screen that asks for notification permission before the operating system does. It belongs to a fictional plant care app called Fennel. A small drawing of a potted sprout sways, water drops fall, and a bell rings once every few seconds. Under it sit a headline, three short reasons, a sage Allow button and a quiet Not now button.
@@ -11,27 +13,6 @@ A full phone screen that asks for notification permission before the operating s
 Allow opens a neutral sheet that stands in for the OS dialog. The sheet is labelled "System step · your phone draws this", so nobody mistakes it for a copy of a real OS alert. Allowing shows a granted screen. Not now, or Don't allow, shows how to turn reminders on later in three steps.
 
 The detail worth copying is the order. You explain first, in your own voice, and only then fire the one-shot OS prompt. A user who says no on your screen has not burned the real prompt.
-
-## Reference behaviour
-
-1. The first frame is the ask screen. The drawing card is 272px tall and already moving.
-2. The card has a 12px caps tag in the top left: "Fennel · Reminders".
-3. In the card, two leaves sway ±3deg on a 5.6s loop, half a cycle apart. Three drops fall 64px from above the sprout, 1.05s apart, on a 3.2s loop. The bell rings at 80% of a 5.6s loop and a ring spreads from it.
-4. The headline reads "Let Fennel tell you when a plant is thirsty" in 32px soft serif over two lines.
-5. Three reasons follow. Each has a 36px sage icon tile, a bold line and a plain line:
-   - "Only on watering day". "One nudge per plant. Nothing on the other days."
-   - "Frost warnings". "The night before it drops under 3°C."
-   - "Quiet at night". "No sound between 21:00 and 08:00."
-6. At the bottom, above the 34px home clearance: "Allow reminders", 54px sage, and "Not now", 48px text button.
-7. Tapping "Allow reminders" fades in a scrim to 42% and slides a neutral sheet up from the bottom in 360ms. The ask screen becomes `inert`. Focus moves to the sheet's Allow button.
-8. The sheet has a dashed rule under its label "System step · your phone draws this", then "Allow “Fennel” to send you notifications?", a line of body copy, and two 48px buttons: "Don’t allow" and "Allow".
-9. Sheet Allow closes the sheet and shows the granted screen. Sheet "Don’t allow" closes it and shows the later screen.
-10. Escape, or a tap on the scrim, closes the sheet and returns focus to "Allow reminders". It does not count as a decision.
-11. The granted screen keeps the drawing with a third leaf. The bell becomes a sage circle with a cream tick. The headline reads "You are all set". The lead reads "First reminder: Thursday at 08:30, for the Monstera on the landing." A chip reads "4 plants on the schedule". One button: Done.
-12. The later screen has no drawing. Headline "No reminders for now". A lead line, then three numbered steps: Open Settings on your phone, Scroll to Fennel then Notifications, Turn on Allow notifications. A chip reads "Watering days show on the Today tab". Buttons: "Back to my plants" and "Ask me again".
-13. Not now on the ask screen goes straight to the later screen. It never opens the sheet.
-14. Each new screen fades its children up 10px with a 60ms stagger. Focus moves to the new headline.
-15. "Ask me again" returns to the ask screen and opens the sheet. Done and "Back to my plants" return to the ask screen.
 
 ## Structure
 
@@ -77,56 +58,6 @@ system step (fixed, 12px from sides, 34px from bottom)
 - The actions block uses `margin-top: auto` so it sits on the bottom edge.
 - The system step is a `div role="dialog" aria-modal="true"` with `aria-labelledby` and `aria-describedby`.
 - A visually hidden `p aria-live="polite"` announces each outcome.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f5efe2;          /* cream page */
-  --card: #e7ead9;        /* drawing card, icon tiles, steps */
-  --card-2: #d7dfc6;      /* hill in the drawing */
-  --ink: #26301f;         /* headline, bold text */
-  --ink-2: #4b5641;       /* body */
-  --ink-3: #5d6753;       /* fine print */
-  --sage: #56704a;        /* primary button, main leaf */
-  --sage-deep: #3d5434;   /* hover, icons, focus */
-  --leaf: #7f9a6c;        /* second leaf */
-  --clay: #c98a63;        /* pot */
-  --water: #7aa3b0;       /* drops */
-  --sys-bg: #f2f2f0;      /* neutral system sheet */
-  --sys-ink: #1d1d1b;
-  --sys-line: #cfcfcb;
-  --scrim: rgba(30, 36, 26, 0.42);
-  --display: "Fraunces", Georgia, serif;
-  --sans: "Source Sans 3", system-ui, sans-serif;
-  --r: 20px;
-  --r-sm: 12px;
-  --space: 4px 8px 12px 16px 20px 24px;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --sheet: cubic-bezier(0.32, 0.72, 0, 1);
-  --loop: cubic-bezier(0.45, 0, 0.55, 1);
-}
-```
-
-The system sheet uses its own grey tokens and the platform system font on purpose. It must look foreign to the app, because it is the OS's turn to speak.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Ask headline | Fraunces, SOFT 100, opsz 72 | 32px | 560 | 1.06 | -0.015em |
-| Result headline | Fraunces, SOFT 100, opsz 72 | 30px | 560 | 1.06 | -0.015em |
-| Reason title | Source Sans 3 | 16px | 600 | 1.45 | 0 |
-| Reason body | Source Sans 3 | 15px | 400 | 1.45 | 0 |
-| Lead | Source Sans 3 | 16px | 400 | 1.45 | 0 |
-| Primary button | Source Sans 3 | 17px | 600 | 1 | 0 |
-| Quiet button | Source Sans 3 | 16px | 600 | 1 | 0 |
-| Card tag | Source Sans 3 | 12px | 600 | 1 | 0.08em, caps |
-| Step number | Fraunces | 16px | 600 | 1 | 0 |
-| System label | Source Sans 3 | 11px | 600 | 1.2 | 0.1em, caps |
-| System title | system-ui | 17px | 600 | 1.3 | 0 |
-
-Load Fraunces with the SOFT axis: `family=Fraunces:opsz,wght,SOFT@9..144,500..600,100`. Then set `font-variation-settings: "SOFT" 100, "opsz" 72`. SOFT 100 rounds the serifs. Without it the face reads sharp and editorial, which is the wrong family.
 
 ## Motion
 
@@ -200,6 +131,81 @@ Rotate the leaves around the pot rim, `transform-origin: 195px 196px` in SVG use
 - [ ] The sheet label reads "System step · your phone draws this".
 - [ ] The granted lead names Thursday at 08:30 and the Monstera.
 - [ ] The later screen lists Settings, Fennel then Notifications, and Allow notifications.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is the ask screen. The drawing card is 272px tall and already moving.
+2. The card has a 12px caps tag in the top left: "Fennel · Reminders".
+3. In the card, two leaves sway ±3deg on a 5.6s loop, half a cycle apart. Three drops fall 64px from above the sprout, 1.05s apart, on a 3.2s loop. The bell rings at 80% of a 5.6s loop and a ring spreads from it.
+4. The headline reads "Let Fennel tell you when a plant is thirsty" in 32px soft serif over two lines.
+5. Three reasons follow. Each has a 36px sage icon tile, a bold line and a plain line:
+   - "Only on watering day". "One nudge per plant. Nothing on the other days."
+   - "Frost warnings". "The night before it drops under 3°C."
+   - "Quiet at night". "No sound between 21:00 and 08:00."
+6. At the bottom, above the 34px home clearance: "Allow reminders", 54px sage, and "Not now", 48px text button.
+7. Tapping "Allow reminders" fades in a scrim to 42% and slides a neutral sheet up from the bottom in 360ms. The ask screen becomes `inert`. Focus moves to the sheet's Allow button.
+8. The sheet has a dashed rule under its label "System step · your phone draws this", then "Allow “Fennel” to send you notifications?", a line of body copy, and two 48px buttons: "Don’t allow" and "Allow".
+9. Sheet Allow closes the sheet and shows the granted screen. Sheet "Don’t allow" closes it and shows the later screen.
+10. Escape, or a tap on the scrim, closes the sheet and returns focus to "Allow reminders". It does not count as a decision.
+11. The granted screen keeps the drawing with a third leaf. The bell becomes a sage circle with a cream tick. The headline reads "You are all set". The lead reads "First reminder: Thursday at 08:30, for the Monstera on the landing." A chip reads "4 plants on the schedule". One button: Done.
+12. The later screen has no drawing. Headline "No reminders for now". A lead line, then three numbered steps: Open Settings on your phone, Scroll to Fennel then Notifications, Turn on Allow notifications. A chip reads "Watering days show on the Today tab". Buttons: "Back to my plants" and "Ask me again".
+13. Not now on the ask screen goes straight to the later screen. It never opens the sheet.
+14. Each new screen fades its children up 10px with a 60ms stagger. Focus moves to the new headline.
+15. "Ask me again" returns to the ask screen and opens the sheet. Done and "Back to my plants" return to the ask screen.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f5efe2;          /* cream page */
+  --card: #e7ead9;        /* drawing card, icon tiles, steps */
+  --card-2: #d7dfc6;      /* hill in the drawing */
+  --ink: #26301f;         /* headline, bold text */
+  --ink-2: #4b5641;       /* body */
+  --ink-3: #5d6753;       /* fine print */
+  --sage: #56704a;        /* primary button, main leaf */
+  --sage-deep: #3d5434;   /* hover, icons, focus */
+  --leaf: #7f9a6c;        /* second leaf */
+  --clay: #c98a63;        /* pot */
+  --water: #7aa3b0;       /* drops */
+  --sys-bg: #f2f2f0;      /* neutral system sheet */
+  --sys-ink: #1d1d1b;
+  --sys-line: #cfcfcb;
+  --scrim: rgba(30, 36, 26, 0.42);
+  --display: "Fraunces", Georgia, serif;
+  --sans: "Source Sans 3", system-ui, sans-serif;
+  --r: 20px;
+  --r-sm: 12px;
+  --space: 4px 8px 12px 16px 20px 24px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --sheet: cubic-bezier(0.32, 0.72, 0, 1);
+  --loop: cubic-bezier(0.45, 0, 0.55, 1);
+}
+```
+
+The system sheet uses its own grey tokens and the platform system font on purpose. It must look foreign to the app, because it is the OS's turn to speak.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Ask headline | Fraunces, SOFT 100, opsz 72 | 32px | 560 | 1.06 | -0.015em |
+| Result headline | Fraunces, SOFT 100, opsz 72 | 30px | 560 | 1.06 | -0.015em |
+| Reason title | Source Sans 3 | 16px | 600 | 1.45 | 0 |
+| Reason body | Source Sans 3 | 15px | 400 | 1.45 | 0 |
+| Lead | Source Sans 3 | 16px | 400 | 1.45 | 0 |
+| Primary button | Source Sans 3 | 17px | 600 | 1 | 0 |
+| Quiet button | Source Sans 3 | 16px | 600 | 1 | 0 |
+| Card tag | Source Sans 3 | 12px | 600 | 1 | 0.08em, caps |
+| Step number | Fraunces | 16px | 600 | 1 | 0 |
+| System label | Source Sans 3 | 11px | 600 | 1.2 | 0.1em, caps |
+| System title | system-ui | 17px | 600 | 1.3 | 0 |
+
+Load Fraunces with the SOFT axis: `family=Fraunces:opsz,wght,SOFT@9..144,500..600,100`. Then set `font-variation-settings: "SOFT" 100, "opsz" 72`. SOFT 100 rounds the serifs. Without it the face reads sharp and editorial, which is the wrong family.
 
 ## Implementation notes
 

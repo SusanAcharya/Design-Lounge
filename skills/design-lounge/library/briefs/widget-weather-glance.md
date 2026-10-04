@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A weather widget for an app called Cirro, shown over a dusk landscape so the frosted glass has something to blur. One widget, three sizes: small shows the place, temperature and condition; medium adds a six-hour strip; large adds a five-day list with temperature range bars. A segmented control morphs the widget between sizes with a sheet-like ease. The condition illustration is a tiny SVG scene (sun, two clouds, rain, a bolt) whose parts slide and fade between conditions instead of swapping icons, and tapping any hour previews that hour in the hero. Glass here is the point, so it is used once, on the widget only.
-
-## Reference behaviour
-
-1. First frame: Large size. Place "Harbour Hill", temperature 18°, condition "Partly cloudy", "H 21° · L 12°". The hourly strip shows Now / 15:00 / 16:00 / 17:00 / 18:00 / 19:00; Now is selected. The five-day list shows Today, Sun, Mon, Tue, Wed.
-2. The condition scene is alive: sun rays turn once per 28s, the clouds drift ±3px over 7s alternating. Rain drops fall in rain and storm; the bolt flashes twice every 3.6s in storm.
-3. Clicking an hour sets `aria-pressed="true"` on it (only one at a time), sets the hero temperature to that hour's value, sets the condition text, and morphs the scene to that condition (sun scales away, cloud darkens, rain fades in).
-4. Hour data: Now partly 18°, 15:00 clear 19°, 16:00 partly 19°, 17:00 overcast 17°, 18:00 light rain 15°, 19:00 thunderstorm 14°.
-5. Day data (low/high): Today partly 12/21, Sun rain 10/16, Mon overcast 9/17, Tue clear 11/20, Wed partly 13/22. Range bars are positioned on a shared 9°–22° scale.
-6. The size control (Small / Medium / Large) changes the widget's width, height and corner radius over 420ms. Content re-lays out immediately and fades in from 4px below over 360ms.
-7. Switching to Small resets the preview to Now, because the hourly strip is not visible to undo it.
-8. In Medium the hero compresses into one row: place and 48px temperature on the left, condition and H/L in the middle, a 52px scene on the right; the hourly strip sits below. The daily list is hidden.
-9. In Small the place and scene share the top row, the temperature is 58px centred vertically, and the condition and H/L sit at the bottom left.
-10. "Updated 14:02 · tap an hour to preview it" sits below the control.
 
 ## Structure
 
@@ -50,6 +39,84 @@ A weather widget for an app called Cirro, shown over a dusk landscape so the fro
 - Daily list: a `ul` of five `li`, each a 5-column grid `44px 22px 28px 1fr 28px` (day, icon, low, bar, high).
 - Size control: `role="radiogroup"` with three `role="radio"` buttons, each with a tiny outline glyph of its shape (10×10, 18×10, 18×18).
 - Small icons are `symbol`s in one hidden SVG sprite, used via `<use>`, stroke 1.6, `currentColor`.
+
+## Motion
+
+| Thing | Trigger | Property | From → to | Duration / easing | Reduced motion |
+| --- | --- | --- | --- | --- | --- |
+| Widget size | size radio | width, height, border-radius | L 404×420 r30 ↔ M 404×198 ↔ S 190×190 r26 | 420ms `--sheet` | instant |
+| Content swap | size radio | opacity, translateY | 0, 4px → 1, 0 | 360ms `--ease` | none |
+| Strip / list reveal | size radio | opacity (visibility hidden when off) | 0 → 1 | 260ms `--ease`, 140ms delay | instant |
+| Sun rays | always | rotate | 0 → 360° | 28s linear, infinite | static |
+| Cloud drift | always | translateX | −2px → 3px | 7s `--ease`, alternate | static |
+| Rain drops (3) | rain, storm | translateY, opacity | −5px, 0 → 7px, 0 (peak 1 at 30%) | 1s linear, staggered −0.33s | static drops |
+| Bolt | storm | opacity | flash at 64–70% of cycle | 3.6s loop | bolt shown solid |
+| Scene morph | hour click | sun transform/opacity, cloud fill | e.g. clear: sun translate(8px,8px) scale(1.25), clouds out right 14px | 520ms `--sheet` (transform), 420ms (opacity, fill) | instant |
+| Hour chip | hover / press | background, scale | → 10% white; press 0.95 | 160ms `--ease` | no scale |
+
+## States
+
+- Hour resting: transparent. Hover: `rgba(255,250,244,.1)`. Active: scale 0.95. Selected: `rgba(255,250,244,.2)` with a 1px inset ring at 28% white.
+- Size radio checked: background `--text`, label `--sky-1`. Unchecked: transparent, `--text-2`.
+- Focus-visible everywhere: 2px `--sun` outline, 2px offset.
+- Conditions map onto the scene: clear (big sun only), partly (sun top-left, clouds), overcast (clouds only), light rain (darker clouds + drops), thunderstorm (darker clouds + drops + bolt).
+- No loading or error state in this demo. In a product, the stale state keeps the last reading and changes the footnote to "Updated 2 h ago", never empties the widget.
+
+## Accessibility
+
+- The temperature has `aria-live="polite"` so previewing an hour announces the new value.
+- Each hour button's accessible name is "15:00, Clear, 19 degrees". The visible text is decorative to the name.
+- Each day row has an `aria-label` such as "Sun: Light rain, low 10, high 16"; the bar is `aria-hidden`.
+- The scene SVG is `role="img"` with the condition as its label, updated with each change.
+- Size control: radiogroup; arrow keys move and select, wrapping. Buttons are 36px tall inside a 4px-padded pill (44px hit).
+- Hidden content uses `visibility: hidden` (not just opacity), so the hourly strip is not tabbable in Small.
+- Contrast: `#f7f2ea` on the glass over `#2c5568` is above 7:1. `--text-2` stays above 4.5:1. `--text-3` is used only for daily lows, which repeat in the row label.
+
+## Responsive rules
+
+- ≥1024: widget centred, sizes exactly as above.
+- 768: unchanged.
+- <640: widget gets `max-width: calc(100vw - 32px)`; at 375 the Large widget is 343px wide, the strip keeps six columns, and range bars shrink. No horizontal overflow.
+- On a real home screen the three sizes map onto the grid's 2×2, 4×2 and 4×4 cells; keep the aspect ratios, not the pixel values.
+
+## Acceptance checklist
+
+### Always
+
+- [ ] One widget element whose layout is driven by a single `data-size` attribute; no duplicated markup per size.
+- [ ] Size morph animates width, height and radius together with the sheet easing.
+- [ ] Hidden sections are `visibility: hidden` so they leave the tab order.
+- [ ] The condition scene morphs parts between conditions; it never hard-swaps an icon.
+- [ ] Exactly one hour is pressed; clicking it updates temperature, condition text, and scene label.
+- [ ] Range bars share one scale across all days.
+- [ ] Glass (blur + translucent fill + 1px light edge + inset top highlight) is on the widget only.
+- [ ] Reduced motion: no loops, no size tween; storm shows a static bolt.
+
+### This demo
+
+- [ ] First frame is Large, Harbour Hill, 18°, Partly cloudy, H 21° · L 12°.
+- [ ] Sizes are 190×190, 404×198, 404×420.
+- [ ] Temperature in Instrument Serif at 64px in Large.
+- [ ] Hours: Now, 15:00, 16:00, 17:00, 18:00, 19:00 with 18, 19, 19, 17, 15, 14 degrees.
+- [ ] 19:00 shows "Thunderstorm" with a flashing bolt.
+- [ ] Range bar gradient runs `#9fd0df` → `#f6b48f`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Large size. Place "Harbour Hill", temperature 18°, condition "Partly cloudy", "H 21° · L 12°". The hourly strip shows Now / 15:00 / 16:00 / 17:00 / 18:00 / 19:00; Now is selected. The five-day list shows Today, Sun, Mon, Tue, Wed.
+2. The condition scene is alive: sun rays turn once per 28s, the clouds drift ±3px over 7s alternating. Rain drops fall in rain and storm; the bolt flashes twice every 3.6s in storm.
+3. Clicking an hour sets `aria-pressed="true"` on it (only one at a time), sets the hero temperature to that hour's value, sets the condition text, and morphs the scene to that condition (sun scales away, cloud darkens, rain fades in).
+4. Hour data: Now partly 18°, 15:00 clear 19°, 16:00 partly 19°, 17:00 overcast 17°, 18:00 light rain 15°, 19:00 thunderstorm 14°.
+5. Day data (low/high): Today partly 12/21, Sun rain 10/16, Mon overcast 9/17, Tue clear 11/20, Wed partly 13/22. Range bars are positioned on a shared 9°–22° scale.
+6. The size control (Small / Medium / Large) changes the widget's width, height and corner radius over 420ms. Content re-lays out immediately and fades in from 4px below over 360ms.
+7. Switching to Small resets the preview to Now, because the hourly strip is not visible to undo it.
+8. In Medium the hero compresses into one row: place and 48px temperature on the left, condition and H/L in the middle, a 52px scene on the right; the hourly strip sits below. The daily list is hidden.
+9. In Small the place and scene share the top row, the temperature is 58px centred vertically, and the condition and H/L sit at the bottom left.
+10. "Updated 14:02 · tap an hour to preview it" sits below the control.
 
 ## Tokens
 
@@ -112,67 +179,6 @@ A weather widget for an app called Cirro, shown over a dusk landscape so the fro
 | Footnote | Outfit | 12px | 400 | — | `--text-2` |
 
 Only the temperature uses the serif. Everything else is Outfit.
-
-## Motion
-
-| Thing | Trigger | Property | From → to | Duration / easing | Reduced motion |
-| --- | --- | --- | --- | --- | --- |
-| Widget size | size radio | width, height, border-radius | L 404×420 r30 ↔ M 404×198 ↔ S 190×190 r26 | 420ms `--sheet` | instant |
-| Content swap | size radio | opacity, translateY | 0, 4px → 1, 0 | 360ms `--ease` | none |
-| Strip / list reveal | size radio | opacity (visibility hidden when off) | 0 → 1 | 260ms `--ease`, 140ms delay | instant |
-| Sun rays | always | rotate | 0 → 360° | 28s linear, infinite | static |
-| Cloud drift | always | translateX | −2px → 3px | 7s `--ease`, alternate | static |
-| Rain drops (3) | rain, storm | translateY, opacity | −5px, 0 → 7px, 0 (peak 1 at 30%) | 1s linear, staggered −0.33s | static drops |
-| Bolt | storm | opacity | flash at 64–70% of cycle | 3.6s loop | bolt shown solid |
-| Scene morph | hour click | sun transform/opacity, cloud fill | e.g. clear: sun translate(8px,8px) scale(1.25), clouds out right 14px | 520ms `--sheet` (transform), 420ms (opacity, fill) | instant |
-| Hour chip | hover / press | background, scale | → 10% white; press 0.95 | 160ms `--ease` | no scale |
-
-## States
-
-- Hour resting: transparent. Hover: `rgba(255,250,244,.1)`. Active: scale 0.95. Selected: `rgba(255,250,244,.2)` with a 1px inset ring at 28% white.
-- Size radio checked: background `--text`, label `--sky-1`. Unchecked: transparent, `--text-2`.
-- Focus-visible everywhere: 2px `--sun` outline, 2px offset.
-- Conditions map onto the scene: clear (big sun only), partly (sun top-left, clouds), overcast (clouds only), light rain (darker clouds + drops), thunderstorm (darker clouds + drops + bolt).
-- No loading or error state in this demo. In a product, the stale state keeps the last reading and changes the footnote to "Updated 2 h ago", never empties the widget.
-
-## Accessibility
-
-- The temperature has `aria-live="polite"` so previewing an hour announces the new value.
-- Each hour button's accessible name is "15:00, Clear, 19 degrees". The visible text is decorative to the name.
-- Each day row has an `aria-label` such as "Sun: Light rain, low 10, high 16"; the bar is `aria-hidden`.
-- The scene SVG is `role="img"` with the condition as its label, updated with each change.
-- Size control: radiogroup; arrow keys move and select, wrapping. Buttons are 36px tall inside a 4px-padded pill (44px hit).
-- Hidden content uses `visibility: hidden` (not just opacity), so the hourly strip is not tabbable in Small.
-- Contrast: `#f7f2ea` on the glass over `#2c5568` is above 7:1. `--text-2` stays above 4.5:1. `--text-3` is used only for daily lows, which repeat in the row label.
-
-## Responsive rules
-
-- ≥1024: widget centred, sizes exactly as above.
-- 768: unchanged.
-- <640: widget gets `max-width: calc(100vw - 32px)`; at 375 the Large widget is 343px wide, the strip keeps six columns, and range bars shrink. No horizontal overflow.
-- On a real home screen the three sizes map onto the grid's 2×2, 4×2 and 4×4 cells; keep the aspect ratios, not the pixel values.
-
-## Acceptance checklist
-
-### Always
-
-- [ ] One widget element whose layout is driven by a single `data-size` attribute; no duplicated markup per size.
-- [ ] Size morph animates width, height and radius together with the sheet easing.
-- [ ] Hidden sections are `visibility: hidden` so they leave the tab order.
-- [ ] The condition scene morphs parts between conditions; it never hard-swaps an icon.
-- [ ] Exactly one hour is pressed; clicking it updates temperature, condition text, and scene label.
-- [ ] Range bars share one scale across all days.
-- [ ] Glass (blur + translucent fill + 1px light edge + inset top highlight) is on the widget only.
-- [ ] Reduced motion: no loops, no size tween; storm shows a static bolt.
-
-### This demo
-
-- [ ] First frame is Large, Harbour Hill, 18°, Partly cloudy, H 21° · L 12°.
-- [ ] Sizes are 190×190, 404×198, 404×420.
-- [ ] Temperature in Instrument Serif at 64px in Large.
-- [ ] Hours: Now, 15:00, 16:00, 17:00, 18:00, 19:00 with 18, 19, 19, 17, 15, 14 degrees.
-- [ ] 19:00 shows "Thunderstorm" with a flashing bolt.
-- [ ] Range bar gradient runs `#9fd0df` → `#f6b48f`.
 
 ## Implementation notes
 

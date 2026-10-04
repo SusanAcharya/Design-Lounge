@@ -4,28 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the honest timer and the itemised fees whatever the look.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Step one of buying tickets for Chrome Heart, an all-night club event at Halle Null in Berlin. Three columns: the event and ticket types on the left, a seat map in the middle, the order summary on the right. A 10:00 hold timer sits in the top bar. The look is a Y2K night club: near-black, wide extended capitals, mono numbers, one acid pink for "yours", and a chrome-silver gradient used in exactly three places (poster title, stage arc, VIP seat outline). The detail worth copying is honesty. Every fee is a line with its per-ticket rate, the total on the button matches the total in the summary, and when the timer hits 00:00 the seats really are released and the page says which ones.
-
-## Reference behaviour
-
-1. First frame: General quantity 2, VIP 0, Early bird sold out. Seats E7 and E8 are selected in pink. The timer reads 10:00 and starts counting down at once.
-2. The summary shows 2 × General €56.00, Service fee €5.00 (€2.50 × 2), Venue levy €2.00 (€1.00 per ticket), Seats E7, E8, Total €63.00. The pink button reads "Continue · €63.00".
-3. Each ticket type has a stepper: minus, a mono quantity, plus. General max 6. VIP max 4. The order max is 6 across all types. Plus is disabled at either limit. Minus is disabled at 0.
-4. Early bird shows a SOLD OUT tag, a struck-through €20.00, and a disabled stepper. It stays in the list so buyers see the price they missed.
-5. Each ticket line shows the price plus its fees before you pick it: "€28.00 + €3.50 fees".
-6. The seat map has a stage arc at the top, then rows A–H with 16 seats each, split 4 / 8 / 4 by two aisles. Rows A–B are VIP and have a chrome outline. Rows C–H are stalls. Row letters sit at both ends.
-7. Sold seats are dark with a diagonal stroke. They cannot be selected. About a quarter of seats are sold.
-8. Clicking an available seat selects it if its tier has a ticket left to place. Clicking a selected seat frees it.
-9. If the tier is full, the seat does not select. A pink line under the map says why: "All 2 General seats are placed. Remove one or add a ticket." or "Add a VIP ticket to pick row A."
-10. The map header shows what is left: "Pick 1 VIP seat", "Pick 2 General + 1 VIP seats", or "All 3 seats placed".
-11. Lowering a quantity below the seats placed frees the last seat of that tier and says "Seat E8 released."
-12. Continue is enabled only when every ticket has a seat and the hold is live. Disabled, it reads "Continue" with no price.
-13. The timer bar shrinks from full to empty over 600 seconds. At 2:00 the clock and bar turn pink.
-14. At 00:00: every selected seat is freed, the map shows them as available, the summary shows "No seats held", Continue disables, and a pink-bordered box says "Your hold ran out. Seats E7, E8 were released and are back on sale. Your ticket choice is kept." with a "Start a new 10:00 hold" button.
-15. Starting a new hold, or clicking any seat after expiry, resets the clock to 10:00. Ticket quantities are kept.
-16. Below the map, three notes explain rows A–B, row E, and the aisle seats.
 
 ## Structure
 
@@ -55,67 +38,6 @@ Step one of buying tickets for Chrome Heart, an all-night club event at Halle Nu
 - Middle: a `section` with an `h2`, a live "what is left" line, the `svg` map inside a horizontally scrollable wrapper, a legend, a `role="status"` message line, and a `dl` of three notes.
 - Right: an `aside` with a `dl` of lines, the seat list, the total `output`, the fee promise, the Continue button, the expiry box, and fine print.
 - The poster is CSS only: a radial gradient with thin repeating rings, a 150px conic-gradient chrome disc with a 26px pink centre, half off the bottom-right corner, the title in chrome gradient text, an ALL NIGHT tag rotated 4deg, and the line-up bottom-left.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #070708;          /* page */
-  --panel: #0e0e10;
-  --raise: #161619;       /* disabled button fill */
-  --line: #25252a;        /* hairlines */
-  --line-2: #3a3a41;      /* stepper border */
-  --ink: #f2f2f4;         /* text */
-  --ink-2: #b4b5bb;       /* secondary text */
-  --ink-3: #8a8b92;       /* labels, fees, fine print */
-  --seat: #1b1b1f;        /* available seat fill */
-  --seat-edge: #6e6f77;   /* available seat stroke */
-  --sold: #1d1d21;        /* sold seat fill, no stroke */
-  --pink: #ff2e93;        /* the accent: your seats, Continue, low timer, messages */
-  --pink-ink: #140008;    /* text on pink */
-  --focus: #ffffff;
-  --chrome: linear-gradient(180deg, #fbfbfc 0%, #b9bbc2 38%, #f0f1f4 50%, #6c6e76 78%, #d9dade 100%);
-
-  /* type */
-  --wide: "Archivo", system-ui, sans-serif;   /* font-stretch 125% for display, 100% for body */
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  /* space (4px base) */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
-
-  /* shape */
-  --r: 4px;
-  --pill: 999px;
-
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --fast: 150ms;
-}
-```
-
-Chrome is used three times only: the poster title, the stage arc, the VIP seat stroke (as an SVG `linearGradient`). Do not put chrome on buttons, borders, or text elsewhere.
-
-## Typography
-
-Load Archivo with the width axis: `family=Archivo:wdth,wght@100,400;100,500;100,600;125,700;125,800`.
-
-| Role | Family | Size | Weight | Stretch | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Poster title | Archivo | 38px / 0.9 | 800 | 125% | -0.01em | Title, chrome fill |
-| Logo | Archivo | 15px | 800 | 125% | 0.06em | Upper |
-| Section label (h2) | Archivo | 12px | 700 | 125% | 0.12em | Upper |
-| Ticket name | Archivo | 15px | 600 | 100% | 0 | Title |
-| Fact value | Archivo | 14px | 600 | 100% | 0 | Sentence |
-| Body, notes | Archivo | 13–14px | 400 | 100% | 0 | Sentence |
-| Continue | Archivo | 14px | 800 | 125% | 0.06em | Upper |
-| Clock | JetBrains Mono | 20px | 500 | — | 0.02em | — |
-| Total | JetBrains Mono | 28px | 500 | — | -0.02em | — |
-| Prices, fees, quantities | JetBrains Mono | 13–15px | 400–500 | — | 0 | — |
-| Labels, legend, fine print | JetBrains Mono | 11–12px | 400 | — | 0.08em on labels | Upper on labels |
-| Seat number (selected only) | JetBrains Mono | 9px | 600 | — | 0 | — |
-
-Rule: wide capitals for names of things, mono for every number and every small label.
 
 ## Motion
 
@@ -190,6 +112,90 @@ No pulsing timer, no shaking seats, no confetti. The pink at 2:00 is the only ur
 - [ ] First frame: 2 General, E7 and E8 selected, total €63.00, clock 10:00.
 - [ ] Rows A–H, 16 seats each, aisles after seats 4 and 12, rows A–B VIP.
 - [ ] Pink is `#ff2e93`. Page is `#070708`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: General quantity 2, VIP 0, Early bird sold out. Seats E7 and E8 are selected in pink. The timer reads 10:00 and starts counting down at once.
+2. The summary shows 2 × General €56.00, Service fee €5.00 (€2.50 × 2), Venue levy €2.00 (€1.00 per ticket), Seats E7, E8, Total €63.00. The pink button reads "Continue · €63.00".
+3. Each ticket type has a stepper: minus, a mono quantity, plus. General max 6. VIP max 4. The order max is 6 across all types. Plus is disabled at either limit. Minus is disabled at 0.
+4. Early bird shows a SOLD OUT tag, a struck-through €20.00, and a disabled stepper. It stays in the list so buyers see the price they missed.
+5. Each ticket line shows the price plus its fees before you pick it: "€28.00 + €3.50 fees".
+6. The seat map has a stage arc at the top, then rows A–H with 16 seats each, split 4 / 8 / 4 by two aisles. Rows A–B are VIP and have a chrome outline. Rows C–H are stalls. Row letters sit at both ends.
+7. Sold seats are dark with a diagonal stroke. They cannot be selected. About a quarter of seats are sold.
+8. Clicking an available seat selects it if its tier has a ticket left to place. Clicking a selected seat frees it.
+9. If the tier is full, the seat does not select. A pink line under the map says why: "All 2 General seats are placed. Remove one or add a ticket." or "Add a VIP ticket to pick row A."
+10. The map header shows what is left: "Pick 1 VIP seat", "Pick 2 General + 1 VIP seats", or "All 3 seats placed".
+11. Lowering a quantity below the seats placed frees the last seat of that tier and says "Seat E8 released."
+12. Continue is enabled only when every ticket has a seat and the hold is live. Disabled, it reads "Continue" with no price.
+13. The timer bar shrinks from full to empty over 600 seconds. At 2:00 the clock and bar turn pink.
+14. At 00:00: every selected seat is freed, the map shows them as available, the summary shows "No seats held", Continue disables, and a pink-bordered box says "Your hold ran out. Seats E7, E8 were released and are back on sale. Your ticket choice is kept." with a "Start a new 10:00 hold" button.
+15. Starting a new hold, or clicking any seat after expiry, resets the clock to 10:00. Ticket quantities are kept.
+16. Below the map, three notes explain rows A–B, row E, and the aisle seats.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #070708;          /* page */
+  --panel: #0e0e10;
+  --raise: #161619;       /* disabled button fill */
+  --line: #25252a;        /* hairlines */
+  --line-2: #3a3a41;      /* stepper border */
+  --ink: #f2f2f4;         /* text */
+  --ink-2: #b4b5bb;       /* secondary text */
+  --ink-3: #8a8b92;       /* labels, fees, fine print */
+  --seat: #1b1b1f;        /* available seat fill */
+  --seat-edge: #6e6f77;   /* available seat stroke */
+  --sold: #1d1d21;        /* sold seat fill, no stroke */
+  --pink: #ff2e93;        /* the accent: your seats, Continue, low timer, messages */
+  --pink-ink: #140008;    /* text on pink */
+  --focus: #ffffff;
+  --chrome: linear-gradient(180deg, #fbfbfc 0%, #b9bbc2 38%, #f0f1f4 50%, #6c6e76 78%, #d9dade 100%);
+
+  /* type */
+  --wide: "Archivo", system-ui, sans-serif;   /* font-stretch 125% for display, 100% for body */
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* space (4px base) */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+
+  /* shape */
+  --r: 4px;
+  --pill: 999px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --fast: 150ms;
+}
+```
+
+Chrome is used three times only: the poster title, the stage arc, the VIP seat stroke (as an SVG `linearGradient`). Do not put chrome on buttons, borders, or text elsewhere.
+
+## Typography
+
+Load Archivo with the width axis: `family=Archivo:wdth,wght@100,400;100,500;100,600;125,700;125,800`.
+
+| Role | Family | Size | Weight | Stretch | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Poster title | Archivo | 38px / 0.9 | 800 | 125% | -0.01em | Title, chrome fill |
+| Logo | Archivo | 15px | 800 | 125% | 0.06em | Upper |
+| Section label (h2) | Archivo | 12px | 700 | 125% | 0.12em | Upper |
+| Ticket name | Archivo | 15px | 600 | 100% | 0 | Title |
+| Fact value | Archivo | 14px | 600 | 100% | 0 | Sentence |
+| Body, notes | Archivo | 13–14px | 400 | 100% | 0 | Sentence |
+| Continue | Archivo | 14px | 800 | 125% | 0.06em | Upper |
+| Clock | JetBrains Mono | 20px | 500 | — | 0.02em | — |
+| Total | JetBrains Mono | 28px | 500 | — | -0.02em | — |
+| Prices, fees, quantities | JetBrains Mono | 13–15px | 400–500 | — | 0 | — |
+| Labels, legend, fine print | JetBrains Mono | 11–12px | 400 | — | 0.08em on labels | Upper on labels |
+| Seat number (selected only) | JetBrains Mono | 9px | 600 | — | 0 | — |
+
+Rule: wide capitals for names of things, mono for every number and every small label.
 
 ## Implementation notes
 

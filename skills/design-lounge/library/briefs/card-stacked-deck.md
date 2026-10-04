@@ -4,25 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A decision deck for content, not dating: "Farfield · Weekend deck", seven short trips from Lisbon. Three cards are visible in a stack. Drag the top card and it follows the pointer, tilting with the drag, while a SAVE or PASS stamp fades in. Past 110px (or a quick flick) it flies off and the stack steps up. Arrow keys do the same, three round buttons mirror them, and Undo brings the last card back in from the side it left, removing it from the shortlist if it was saved. Saved trips gather as chips in the left column. Every card has a flat illustrated scene made from CSS gradients and clip-paths: no images.
 
 The detail worth copying is the undo: the card is placed off-screen on the side it left, with transitions off, then released so it travels back onto the stack. Not `spring-deck`, which only springs back and never decides.
-
-## Reference behaviour
-
-1. First frame: left column with brand line, "Where next, Inês?" (64px serif), a lede, a key legend, and "Saved trips 0" with an empty message. Right column: the deck with Sintra on top, Comporta and Douro Valley behind it, then Pass, Undo (disabled), Save buttons and "1 of 7".
-2. Stack: depth 0 at identity; depth 1 at `translateY(18px) scale(.95)` with an 18% page-colour veil; depth 2 at `translateY(36px) scale(.90)` with a 34% veil; depth 3 is parked at depth 2's transform with opacity 0, so it can fade in when the stack steps. Transform origin is bottom centre. Cards behind the top hide their facts row so only the clean edge peeks.
-3. Drag: pointer down on the top card captures the pointer and turns transitions off. The card moves `translate(dx, dy × .4)` and rotates `dx / 18` degrees. The stamp on the side of travel fades to full opacity at 110px: SAVE (persimmon, top right, rotated 12°) for right, PASS (dark green, top left, rotated −12°) for left. While dragging, the card behind shows its facts.
-4. Release: if `|dx| > 110px`, or `|vx| > .6px/ms` with `|dx| > 30px`, the card decides in that direction. Otherwise it springs back to identity over 420ms on expo out and the stamps reset.
-5. Decide: the card flies to `translate(±(deckWidth + 260px), dy + 40px) rotate(±24°)` and opacity 0 over 380ms on `cubic-bezier(.3,.6,.4,1)`. At the same moment the stack steps: every remaining card moves up one depth over 420ms expo. The fly-out card is set to `display: none` after 380ms. Input is locked during the fly.
-6. Save adds the trip as a chip to "Saved trips" (pops in from 70% scale over 400ms) and updates the count. Pass adds nothing.
-7. Keyboard on the focused deck: Right Arrow saves, Left Arrow passes, U, Backspace, or Cmd/Ctrl+Z undoes. The page does not scroll.
-8. Undo: pops the last decision. That card is placed on its exit side at `translate(±(deckWidth + 260px), 40px) rotate(±24°)`, opacity 0, with no transition. After a forced reflow, transitions come back on and it returns to depth 0 over 420ms; the other cards step back down. A saved trip's chip is removed. Undo is disabled when there is nothing to undo.
-9. End: after the seventh card, a dashed empty slot reads "That's the deck" and "You saved N of 7 trips. Undo to look again." with a "Deal again" button. Pass and Save disable; the counter reads "7 of 7 seen". Deal again clears history and restacks instantly with Sintra on top.
-10. Live region announces each step: "Saved Sintra. Next: Comporta.", "Back to Douro Valley. Removed from saved.", "That was the last card."
-11. Reduced motion: no drag tilt animation on release (cards jump), no fly-out (cards vanish), no stack tween, no chip pop. Dragging still moves the card under the finger because that is direct manipulation.
 
 ## Structure
 
@@ -62,58 +50,6 @@ Deck content (seven cards):
 | Monsaraz | Évora district · Portugal | Village | 2 h by car · Oct–Apr · €70 | night navy sky, moon, dark hills |
 | Serra da Estrela | Guarda · Portugal | Peaks | 3 h 30 by car · Oct–Nov · €65 | cold grey sky, peaks + rolling |
 | Tavira | Algarve · Portugal | Coast | 2 h 45 by train · Sep–Nov · €75 | blush sky, low sun, flat shore, sea 36% |
-
-## Tokens
-
-```css
-:root {
-  --bg: #22302a;        /* deep olive page */
-  --bg-2: #2b3a33;      /* ellipse behind the deck */
-  --paper: #f6eedf;     /* card */
-  --paper-rule: #dccfb6;/* facts rule */
-  --ink: #1f2a24;       /* card text */
-  --ink-2: #4d564f;     /* region, fact labels */
-  --on-bg: #efe7d6;     /* headline on page */
-  --on-bg-2: #b9bfae;   /* lede, labels, counter */
-  --line: rgba(239, 231, 214, .14);
-  --save: #e2643a;      /* save button, SAVE stamp, chip dots, brand icon */
-  --pass-stamp: #3d4d45;
-  --focus: #f2b38f;
-
-  --serif: "Gloock", Georgia, serif;
-  --sans: "Instrument Sans", system-ui, sans-serif;
-
-  --cw: 360px; --ch: 500px;
-  --r-card: 20px; --r-pill: 99px;
-  --depth-1: translateY(18px) scale(.95);
-  --depth-2: translateY(36px) scale(.90);
-  --threshold: 110px; --flick: .6;   /* px per ms */
-
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --fly: cubic-bezier(.3, .6, .4, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --t-step: 420ms; --t-fly: 380ms; --t-chip: 400ms; --t-micro: 160ms;
-  --shadow-card: inset 0 1px 0 rgba(255,255,255,.6), 0 24px 50px -24px rgba(0,0,0,.55);
-}
-```
-
-Scene recipe per card, as custom properties on `.scene`: `--sky1`, `--sky2` (vertical gradient), `--sun` and `--sx`/`--sy` (76px disc), `--far` + `--farp` (62% tall band, clip-path polygon), `--near` + `--nearp` (42% band), `--sea` + `--seah` (striped band: 7px colour, 1px 20% lighter). The polygons are shared presets: PEAKS, HILLS, ROLL, FLAT, CLIFF, TERRACES.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Brand line | Instrument Sans | 12px | 600 | 1 | 0.16em | UPPER |
-| Headline | Gloock | 64px | 400 | 1 | -0.01em | Sentence, max 9ch |
-| Lede | Instrument Sans | 16px | 400 | 1.5 | 0 | sentence, 38ch |
-| Section label | Instrument Sans | 12px | 600 | 1 | 0.14em | UPPER |
-| Chip | Instrument Sans | 14px | 500 | 1 | 0 | Title |
-| Card title | Gloock | 34px | 400 | 1.02 | -0.01em | Title |
-| Region | Instrument Sans | 14px | 400 | 1.5 | 0 | — |
-| Pitch | Instrument Sans | 14.5px | 400 | 1.5 | 0 | sentence |
-| Fact value / label | Instrument Sans | 14px 600 / 12px 400 | | 1.3 | 0 | — |
-| Scene tag | Instrument Sans | 11px | 600 | 1 | 0.1em | UPPER |
-| Stamp | Gloock | 30px | 400 | 1 | 0.04em | UPPER, 3px border |
 
 ## Motion
 
@@ -181,6 +117,76 @@ Scene recipe per card, as custom properties on `.scene`: `--sky1`, `--sky2` (ver
 - [ ] Card 360 × 500, radius 20px, scene 56% of height.
 - [ ] Gloock for headline, titles and stamps; Instrument Sans for everything else.
 - [ ] Scenes are CSS gradients and clip-path polygons only.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: left column with brand line, "Where next, Inês?" (64px serif), a lede, a key legend, and "Saved trips 0" with an empty message. Right column: the deck with Sintra on top, Comporta and Douro Valley behind it, then Pass, Undo (disabled), Save buttons and "1 of 7".
+2. Stack: depth 0 at identity; depth 1 at `translateY(18px) scale(.95)` with an 18% page-colour veil; depth 2 at `translateY(36px) scale(.90)` with a 34% veil; depth 3 is parked at depth 2's transform with opacity 0, so it can fade in when the stack steps. Transform origin is bottom centre. Cards behind the top hide their facts row so only the clean edge peeks.
+3. Drag: pointer down on the top card captures the pointer and turns transitions off. The card moves `translate(dx, dy × .4)` and rotates `dx / 18` degrees. The stamp on the side of travel fades to full opacity at 110px: SAVE (persimmon, top right, rotated 12°) for right, PASS (dark green, top left, rotated −12°) for left. While dragging, the card behind shows its facts.
+4. Release: if `|dx| > 110px`, or `|vx| > .6px/ms` with `|dx| > 30px`, the card decides in that direction. Otherwise it springs back to identity over 420ms on expo out and the stamps reset.
+5. Decide: the card flies to `translate(±(deckWidth + 260px), dy + 40px) rotate(±24°)` and opacity 0 over 380ms on `cubic-bezier(.3,.6,.4,1)`. At the same moment the stack steps: every remaining card moves up one depth over 420ms expo. The fly-out card is set to `display: none` after 380ms. Input is locked during the fly.
+6. Save adds the trip as a chip to "Saved trips" (pops in from 70% scale over 400ms) and updates the count. Pass adds nothing.
+7. Keyboard on the focused deck: Right Arrow saves, Left Arrow passes, U, Backspace, or Cmd/Ctrl+Z undoes. The page does not scroll.
+8. Undo: pops the last decision. That card is placed on its exit side at `translate(±(deckWidth + 260px), 40px) rotate(±24°)`, opacity 0, with no transition. After a forced reflow, transitions come back on and it returns to depth 0 over 420ms; the other cards step back down. A saved trip's chip is removed. Undo is disabled when there is nothing to undo.
+9. End: after the seventh card, a dashed empty slot reads "That's the deck" and "You saved N of 7 trips. Undo to look again." with a "Deal again" button. Pass and Save disable; the counter reads "7 of 7 seen". Deal again clears history and restacks instantly with Sintra on top.
+10. Live region announces each step: "Saved Sintra. Next: Comporta.", "Back to Douro Valley. Removed from saved.", "That was the last card."
+11. Reduced motion: no drag tilt animation on release (cards jump), no fly-out (cards vanish), no stack tween, no chip pop. Dragging still moves the card under the finger because that is direct manipulation.
+
+## Tokens
+
+```css
+:root {
+  --bg: #22302a;        /* deep olive page */
+  --bg-2: #2b3a33;      /* ellipse behind the deck */
+  --paper: #f6eedf;     /* card */
+  --paper-rule: #dccfb6;/* facts rule */
+  --ink: #1f2a24;       /* card text */
+  --ink-2: #4d564f;     /* region, fact labels */
+  --on-bg: #efe7d6;     /* headline on page */
+  --on-bg-2: #b9bfae;   /* lede, labels, counter */
+  --line: rgba(239, 231, 214, .14);
+  --save: #e2643a;      /* save button, SAVE stamp, chip dots, brand icon */
+  --pass-stamp: #3d4d45;
+  --focus: #f2b38f;
+
+  --serif: "Gloock", Georgia, serif;
+  --sans: "Instrument Sans", system-ui, sans-serif;
+
+  --cw: 360px; --ch: 500px;
+  --r-card: 20px; --r-pill: 99px;
+  --depth-1: translateY(18px) scale(.95);
+  --depth-2: translateY(36px) scale(.90);
+  --threshold: 110px; --flick: .6;   /* px per ms */
+
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --fly: cubic-bezier(.3, .6, .4, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-step: 420ms; --t-fly: 380ms; --t-chip: 400ms; --t-micro: 160ms;
+  --shadow-card: inset 0 1px 0 rgba(255,255,255,.6), 0 24px 50px -24px rgba(0,0,0,.55);
+}
+```
+
+Scene recipe per card, as custom properties on `.scene`: `--sky1`, `--sky2` (vertical gradient), `--sun` and `--sx`/`--sy` (76px disc), `--far` + `--farp` (62% tall band, clip-path polygon), `--near` + `--nearp` (42% band), `--sea` + `--seah` (striped band: 7px colour, 1px 20% lighter). The polygons are shared presets: PEAKS, HILLS, ROLL, FLAT, CLIFF, TERRACES.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Brand line | Instrument Sans | 12px | 600 | 1 | 0.16em | UPPER |
+| Headline | Gloock | 64px | 400 | 1 | -0.01em | Sentence, max 9ch |
+| Lede | Instrument Sans | 16px | 400 | 1.5 | 0 | sentence, 38ch |
+| Section label | Instrument Sans | 12px | 600 | 1 | 0.14em | UPPER |
+| Chip | Instrument Sans | 14px | 500 | 1 | 0 | Title |
+| Card title | Gloock | 34px | 400 | 1.02 | -0.01em | Title |
+| Region | Instrument Sans | 14px | 400 | 1.5 | 0 | — |
+| Pitch | Instrument Sans | 14.5px | 400 | 1.5 | 0 | sentence |
+| Fact value / label | Instrument Sans | 14px 600 / 12px 400 | | 1.3 | 0 | — |
+| Scene tag | Instrument Sans | 11px | 600 | 1 | 0.1em | UPPER |
+| Stamp | Gloock | 30px | 400 | 1 | 0.04em | UPPER, 3px border |
 
 ## Implementation notes
 

@@ -4,29 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the primary button uses `--primary` and the yellow becomes the kit's one accent. Keep it to one shape of yellow.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The first screen after sign-up in a team tool called Plover. The left half is a three-step form: name the workspace and claim its address, pick a colour and a mark, invite teammates. The right half is a live preview of the workspace sidebar. Every keystroke and every pick shows up there at once. The last button, "Open workspace", runs a short build: four lines tick off on the left while the preview assembles itself part by part on the right. The look is Bauhaus kept light: white, black, one blue for the primary action, one yellow circle. The detail worth copying is the preview. It turns a dull form into something people want to finish.
 
 This is not `onboarding-checklist`. That piece is a task card on a home page after setup. This is not `multi-step-form-stepper`. That piece is a generic stepper. This screen is the setup itself, with a mirror of the result.
-
-## Reference behaviour
-
-1. First frame: step 1 is current. The name field holds "Lumbini Studio". The address field holds "lumbini-studio" after a grey "plover.app/" prefix. A green line says "plover.app/lumbini-studio is available". Continue is enabled.
-2. The preview shows a black 36px tile with a white arch mark, "Lumbini Studio", "plover.app/lumbini-studio", nav (Home current, Inbox with 2, Docs), three projects, and one member, Rhea Shrestha, Owner. The main area says "Welcome to Lumbini Studio" above three starter project cards.
-3. Typing in the name rewrites the address until the user edits the address by hand. Lowercase, accents removed, anything else becomes one dash, dashes trimmed, 32 characters at most.
-4. Each address change shows a 14px spinner and "Checking plover.app/…". After 550ms it shows available (green tick) or taken (red mark). Taken offers a one-click fix: "That address is taken. Use lumbini-hq".
-5. Taken addresses in the demo: lumbini, studio, design, team, acme, admin, plover, home, app.
-6. Continue is disabled until the name has 2 or more characters and the address is available.
-7. Step 2, "Give it a look": 6 colour swatches (Black, Blue, Red, Yellow, Green, Orange), 44px circles. 8 marks (Arch, Circle, Square, Triangle, Half, Quarter, Cross, Initial), 52px tiles. Picking one updates the preview tile at once. The tile background fades over 250ms. Yellow and Orange tiles use a black mark. The others use white.
-8. Step 3, "Invite your team": an email field with chips. Enter, comma, space or semicolon adds the typed email. Pasting a list adds them all. Blur adds what is left. Backspace in an empty field removes the last chip.
-9. A bad email stays in the field with "bad@ is not a full email address." A duplicate says "… is already on the list." The cap is 8. A good add says "2 people will get an invite."
-10. Each new chip appears in the preview under Members with initials, the email, and "Invited". The member count updates.
-11. Step 3 shows "Skip for now" and the primary reads "Open workspace". Skip clears invites and builds.
-12. The progress steps at the top show done steps as black circles with a tick, the current step as a blue circle, future steps as outlines. Done steps are buttons that go back. Back also goes back. Values are kept.
-13. Open workspace: the form swaps to "Building your workspace" with four lines: "Reserving plover.app/lumbini-studio", "Setting up Home, Inbox and Docs", "Adding 3 starter projects", "Sending 2 invites" (or "Keeping it just you for now"). One line ticks every 420ms.
-14. While it builds, the preview empties and refills in step: line 1 shows the workspace header, line 2 the nav and welcome text, line 3 the projects and cards, line 4 the members. Each part fades up 8px over 300 to 400ms.
-15. 120ms after the last tick: the heading becomes "Lumbini Studio is ready". Two buttons appear: "Set up another" (resets to step 1) and "Go to Lumbini Studio" (primary, takes focus).
 
 ## Structure
 
@@ -59,64 +43,6 @@ This is not `onboarding-checklist`. That piece is a task card on a home page aft
 - The right side is a `section` labelled "Live preview". The window inside is a 2-column grid: a 232px `aside` sidebar and a main area.
 - The member list, tile, name and address in the preview are the only parts that change with input.
 - The three Bauhaus shapes are decorative spans: a 260px yellow circle at top right (cut off by the panel), a 120 × 14px black bar and a 72 × 36px outlined half circle at bottom left.
-
-## Tokens
-
-```css
-:root {
-  --white: #ffffff;       /* page and form */
-  --ink: #141414;         /* text, borders, done steps, window shadow */
-  --ink-2: #4b4b4b;       /* lede, secondary */
-  --ink-3: #6e6e6e;       /* prefix, kicker, muted */
-  --line: #e4e4e0;        /* hairlines, idle tiles */
-  --wash: #f4f4f1;        /* preview panel, chip fill, chosen tile */
-  --blue: #1f4fe0;        /* primary action and current step only */
-  --blue-dark: #173db3;   /* primary hover */
-  --yellow: #ffc629;      /* one circle, one project colour */
-  --ok: #1e7a4f;
-  --err: #c8321f;
-  --focus: #1f4fe0;
-
-  --sans: "Jost", system-ui, sans-serif;
-  --r: 10px;              /* inputs, buttons, tiles, window */
-
-  --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
-  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
-
-  --shadow-window: 10px 10px 0 var(--ink);   /* hard, no blur */
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --dur-step: 320ms;
-  --dur-tick: 420ms;
-}
-```
-
-The preview window sets `--wc` (workspace colour) and `--wk` (mark colour) from the chosen swatch. The tile and the current nav item read them.
-
-Swatches: Black `#141414`, Blue `#1f4fe0`, Red `#d93a26`, Yellow `#ffc629`, Green `#1e7a4f`, Orange `#f07a22`.
-
-## Typography
-
-One family, Jost, a geometric sans.
-
-| Role | Size | Weight | Line height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Logo | 20px | 700 | 1.2 | -0.01em | as written |
-| Step label | 15px | 500 | 1.2 | 0 | as written |
-| Step number | 13px | 600 | 28px circle | 0 | — |
-| Kicker | 13px | 600 | 1.2 | 0.12em | upper |
-| h1 | 40px | 600 | 1.05 | -0.025em | sentence |
-| Lede | 16px | 400 | 1.45 | 0 | sentence, max 40ch |
-| Field label, legend | 14px | 600 | 1.3 | 0 | sentence |
-| Input text | 18px | 400 | 52px box | 0 | — |
-| Field message | 14px | 400 | 1.4 | 0 | sentence |
-| Buttons | 16px | 600 | 48px box | 0 | sentence |
-| Build line | 17px | 400 | 48px row | 0 | sentence |
-| Preview name | 15px | 600 | 1.2 | 0 | as written |
-| Preview nav | 14px | 400, current 600 | 32px row | 0 | as written |
-| Preview section | 11px | 600 | 1.2 | 0.1em | upper |
-| Preview welcome | 22px | 600 | 1.2 | -0.02em | sentence |
 
 ## Motion
 
@@ -196,6 +122,86 @@ With reduced motion, the build shows all four ticks and the ready state at once.
 - [ ] The owner in the preview is Rhea Shrestha.
 - [ ] Build lines tick every 420ms. The ready heading reads "Lumbini Studio is ready".
 - [ ] Radius is 10px on inputs, buttons, tiles and the window.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: step 1 is current. The name field holds "Lumbini Studio". The address field holds "lumbini-studio" after a grey "plover.app/" prefix. A green line says "plover.app/lumbini-studio is available". Continue is enabled.
+2. The preview shows a black 36px tile with a white arch mark, "Lumbini Studio", "plover.app/lumbini-studio", nav (Home current, Inbox with 2, Docs), three projects, and one member, Rhea Shrestha, Owner. The main area says "Welcome to Lumbini Studio" above three starter project cards.
+3. Typing in the name rewrites the address until the user edits the address by hand. Lowercase, accents removed, anything else becomes one dash, dashes trimmed, 32 characters at most.
+4. Each address change shows a 14px spinner and "Checking plover.app/…". After 550ms it shows available (green tick) or taken (red mark). Taken offers a one-click fix: "That address is taken. Use lumbini-hq".
+5. Taken addresses in the demo: lumbini, studio, design, team, acme, admin, plover, home, app.
+6. Continue is disabled until the name has 2 or more characters and the address is available.
+7. Step 2, "Give it a look": 6 colour swatches (Black, Blue, Red, Yellow, Green, Orange), 44px circles. 8 marks (Arch, Circle, Square, Triangle, Half, Quarter, Cross, Initial), 52px tiles. Picking one updates the preview tile at once. The tile background fades over 250ms. Yellow and Orange tiles use a black mark. The others use white.
+8. Step 3, "Invite your team": an email field with chips. Enter, comma, space or semicolon adds the typed email. Pasting a list adds them all. Blur adds what is left. Backspace in an empty field removes the last chip.
+9. A bad email stays in the field with "bad@ is not a full email address." A duplicate says "… is already on the list." The cap is 8. A good add says "2 people will get an invite."
+10. Each new chip appears in the preview under Members with initials, the email, and "Invited". The member count updates.
+11. Step 3 shows "Skip for now" and the primary reads "Open workspace". Skip clears invites and builds.
+12. The progress steps at the top show done steps as black circles with a tick, the current step as a blue circle, future steps as outlines. Done steps are buttons that go back. Back also goes back. Values are kept.
+13. Open workspace: the form swaps to "Building your workspace" with four lines: "Reserving plover.app/lumbini-studio", "Setting up Home, Inbox and Docs", "Adding 3 starter projects", "Sending 2 invites" (or "Keeping it just you for now"). One line ticks every 420ms.
+14. While it builds, the preview empties and refills in step: line 1 shows the workspace header, line 2 the nav and welcome text, line 3 the projects and cards, line 4 the members. Each part fades up 8px over 300 to 400ms.
+15. 120ms after the last tick: the heading becomes "Lumbini Studio is ready". Two buttons appear: "Set up another" (resets to step 1) and "Go to Lumbini Studio" (primary, takes focus).
+
+## Tokens
+
+```css
+:root {
+  --white: #ffffff;       /* page and form */
+  --ink: #141414;         /* text, borders, done steps, window shadow */
+  --ink-2: #4b4b4b;       /* lede, secondary */
+  --ink-3: #6e6e6e;       /* prefix, kicker, muted */
+  --line: #e4e4e0;        /* hairlines, idle tiles */
+  --wash: #f4f4f1;        /* preview panel, chip fill, chosen tile */
+  --blue: #1f4fe0;        /* primary action and current step only */
+  --blue-dark: #173db3;   /* primary hover */
+  --yellow: #ffc629;      /* one circle, one project colour */
+  --ok: #1e7a4f;
+  --err: #c8321f;
+  --focus: #1f4fe0;
+
+  --sans: "Jost", system-ui, sans-serif;
+  --r: 10px;              /* inputs, buttons, tiles, window */
+
+  --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+
+  --shadow-window: 10px 10px 0 var(--ink);   /* hard, no blur */
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --dur-step: 320ms;
+  --dur-tick: 420ms;
+}
+```
+
+The preview window sets `--wc` (workspace colour) and `--wk` (mark colour) from the chosen swatch. The tile and the current nav item read them.
+
+Swatches: Black `#141414`, Blue `#1f4fe0`, Red `#d93a26`, Yellow `#ffc629`, Green `#1e7a4f`, Orange `#f07a22`.
+
+## Typography
+
+One family, Jost, a geometric sans.
+
+| Role | Size | Weight | Line height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Logo | 20px | 700 | 1.2 | -0.01em | as written |
+| Step label | 15px | 500 | 1.2 | 0 | as written |
+| Step number | 13px | 600 | 28px circle | 0 | — |
+| Kicker | 13px | 600 | 1.2 | 0.12em | upper |
+| h1 | 40px | 600 | 1.05 | -0.025em | sentence |
+| Lede | 16px | 400 | 1.45 | 0 | sentence, max 40ch |
+| Field label, legend | 14px | 600 | 1.3 | 0 | sentence |
+| Input text | 18px | 400 | 52px box | 0 | — |
+| Field message | 14px | 400 | 1.4 | 0 | sentence |
+| Buttons | 16px | 600 | 48px box | 0 | sentence |
+| Build line | 17px | 400 | 48px row | 0 | sentence |
+| Preview name | 15px | 600 | 1.2 | 0 | as written |
+| Preview nav | 14px | 400, current 600 | 32px row | 0 | as written |
+| Preview section | 11px | 600 | 1.2 | 0.1em | upper |
+| Preview welcome | 22px | 600 | 1.2 | -0.02em | sentence |
 
 ## Implementation notes
 

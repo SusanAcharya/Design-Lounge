@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A changes page for Field ledger, a yard product. Four releases sit in one column. Each row is a date, a version pill, a kind, a title, and two facts. All, Added, and Fixed are three filters over that same list. This is not a magazine index. A magazine index is `blog-issue-index`. This is not an audit log of one account. An audit log is `audit-activity-log`.
-
-## Reference behaviour
-
-1. The first frame shows all four releases, newest first: 3 Oct 2026, 19 Sep 2026, 2 Sep 2026, 14 Aug 2026.
-2. All is pressed. Added and Fixed are not.
-3. Added hides the two Fixed rows. Fixed hides the two Added rows. All shows four.
-4. The hidden rows are `hidden`, not a second list.
-5. Pressing the same filter again does nothing new. One filter is pressed at a time.
-6. There is no search box and no year jump.
 
 ## Structure
 
@@ -35,41 +28,6 @@ rule
 - The filters are a `role="group"` named Kind.
 - The list is an `ol`. Each release is an `li`.
 - The date column is 148px. The gap to the text is 28px.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f1ea;
-  --surface: #fffdf8;
-  --ink: #1a1814;
-  --ink-2: #5c564c;
-  --ink-3: #6f675c;
-  --line: #e3ddd2;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --primary-soft: #e7f2ec;
-  --display: "Fraunces", Georgia, serif;
-  --sans: "Public Sans", system-ui, sans-serif;
-  --pad-x: 64px;
-  --pad-y: 36px;
-  --t: 180ms;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Kicker | Public Sans | 11px | 500 | 1 | 0.14em, upper |
-| Title | Fraunces | 44px | 560 | 1 | -0.02em |
-| Date | Public Sans | 13px | 500 | 1.3 | 0 |
-| Version | Public Sans | 11px | 600 | 22px | 0.04em |
-| Kind | Public Sans | 11px | 600 | 1 | 0.12em, upper |
-| Entry title | Fraunces | 22px | 560 | 1.2 | 0 |
-| Fact | Public Sans | 15px | 400 | 1.45 | 0 |
-| Filter | Public Sans | 13px | 500 | 36px | 0 |
 
 ## Motion
 
@@ -121,6 +79,54 @@ Filters change colour in 180ms with `--ease`. Reduced motion removes the transit
 - [ ] 2 Sep 2026 is Added, titled A second yard in Biratnagar.
 - [ ] 14 Aug 2026 is Fixed, titled Held loads stay held overnight.
 - [ ] The rupee fact uses रु and the grouping 18,42,000.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows all four releases, newest first: 3 Oct 2026, 19 Sep 2026, 2 Sep 2026, 14 Aug 2026.
+2. All is pressed. Added and Fixed are not.
+3. Added hides the two Fixed rows. Fixed hides the two Added rows. All shows four.
+4. The hidden rows are `hidden`, not a second list.
+5. Pressing the same filter again does nothing new. One filter is pressed at a time.
+6. There is no search box and no year jump.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f1ea;
+  --surface: #fffdf8;
+  --ink: #1a1814;
+  --ink-2: #5c564c;
+  --ink-3: #6f675c;
+  --line: #e3ddd2;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --primary-soft: #e7f2ec;
+  --display: "Fraunces", Georgia, serif;
+  --sans: "Public Sans", system-ui, sans-serif;
+  --pad-x: 64px;
+  --pad-y: 36px;
+  --t: 180ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Kicker | Public Sans | 11px | 500 | 1 | 0.14em, upper |
+| Title | Fraunces | 44px | 560 | 1 | -0.02em |
+| Date | Public Sans | 13px | 500 | 1.3 | 0 |
+| Version | Public Sans | 11px | 600 | 22px | 0.04em |
+| Kind | Public Sans | 11px | 600 | 1 | 0.12em, upper |
+| Entry title | Fraunces | 22px | 560 | 1.2 | 0 |
+| Fact | Public Sans | 15px | 400 | 1.45 | 0 |
+| Filter | Public Sans | 13px | 500 | 36px | 0 |
 
 ## Implementation notes
 

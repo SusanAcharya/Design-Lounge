@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A like button on a social post card (product: "Marrow", a kitchen-ops app) that behaves optimistically: the UI commits first and asks the server second. The heart fills coral with a 420ms overshoot bounce and eight tiny particles fly outward (pure CSS, no canvas); the count ticks up on the same frame. A fake request resolves 700ms later. If a "Simulate request failure" switch is on, the request logs a 503 and a dark toast slides up offering **Undo**; if the user does nothing, a 3px progress bar drains over 5s and the like rolls back automatically. The detail worth copying is that failure does not snatch the like away instantly: the optimistic state is kept, explained, and reversible.
-
-## Reference behaviour
-
-1. Initial state: a 560px post card (avatar initials, name, handle, "2h", a two-line post, three pill tags, an action row: heart 1,284 · comment 96 · Share · save). To the right, a 300px "Demo controls" panel with the failure switch (off) and a request log seeded with `01 GET /posts/8123/like 200`.
-2. Hover the like button: background `--heart-soft`, icon and count turn `--heart`. Other actions hover to `--card-2` / `--ink`.
-3. Click like: on the same frame the heart fills (`fill` + `stroke` → `--heart`), scale-bounces (1 → 1.35 → .9 → 1.08 → 1 over 420ms), eight particles emit from the heart centre at 45° increments travelling 26px outward while shrinking to 20 % and fading over 520ms (odd particles coral 4px, even particles amber 3px), the count becomes 1,285 with a 6px rise-in over 240ms, `aria-pressed` becomes `true`, and a log entry `POST /posts/8123/like pending` appears in amber at the top of the log.
-4. 700ms later the log entry resolves: `201` in green (success) or `503` in coral (failure switch on).
-5. On failure the toast slides up from 12px below to rest at `bottom:32px` over 280ms: title "Couldn't save your like", sub-line "Kept it for now. Undo, or it rolls back in 5s.", a coral **Undo** button and a dismiss X. A 3px coral bar along the toast's bottom edge drains from full to zero over 5000ms (linear).
-6. Pressing **Undo** (or waiting the 5s) un-fills the heart with no bounce, decrements the count, hides the toast and logs `rollback local`. Pressing X dismisses the toast but keeps the like (and cancels the auto-rollback).
-7. Clicking the filled heart un-likes: count decrements, no bounce, no particles, log `DELETE … pending` → `204` (or `503` with no toast, since there's nothing to keep).
-8. Clicking like again replays the whole animation; the burst and bounce restart from zero every time.
-9. The log keeps the six most recent entries.
 
 ## Structure
 
@@ -49,6 +39,80 @@ A like button on a social post card (product: "Marrow", a kitchen-ops app) that 
   - `<button class="like" aria-pressed>` contains `.h` (20×20, `position:relative`) holding the heart `<svg>` and `.burst` (eight `<i style="--i:n">`), then `.n` count span.
 - `<aside class="panel">` → `<h6>` headings, `.row` with `<label>` + `<button role="switch">`, `<ul class="log" aria-live="polite">`.
 - `.toast[role=status]` fixed at bottom centre; `::after` is the drain bar.
+
+## Motion
+
+| Element              | Trigger          | Property          | From → To                                   | Duration | Easing         | Reduced motion |
+|----------------------|------------------|-------------------|---------------------------------------------|---------:|----------------|----------------|
+| heart `svg`          | like             | fill, stroke      | none/`--ink-2` → `--heart`                  | 160ms    | `--ease`       | 1ms |
+| heart `svg`          | like (`.pop`)    | scale             | 1 → 1.35 (35 %) → .9 (60 %) → 1.08 (80 %) → 1 | 420ms  | `--ease-bounce` | none |
+| `.burst i` ×8        | like (`.pop`)    | transform, opacity | `rotate(i·45deg) translateY(−4px) scale(1)`, 1 → `translateY(−26px) scale(.2)`, 0 | 520ms | `--ease-out` | none |
+| `.n` count           | any change       | translateY, opacity | 6px, 0 → 0, 1                             | 240ms    | `--ease-out`   | none |
+| `.like` background   | hover            | background, color | transparent → `--heart-soft`, `--heart`     | 160ms    | `--ease`       | 1ms |
+| `.toast`             | failure          | opacity, translateY | 0, 12px → 1, 0                            | 280ms    | `--ease`       | 1ms |
+| `.toast::after`      | shown            | scaleX            | 1 → 0 (transform-origin left)               | 5000ms   | linear         | kept (it is information) |
+| `.switch::after`     | toggle           | translateX        | 0 → 18px                                    | 160ms    | `--ease`       | 1ms |
+
+The burst and bounce are both driven by one `.pop` class; remove it, force reflow, re-add it so they restart on every like. Unlike does **not** add `.pop`.
+
+## States
+
+- **Like resting:** icon stroke `--ink-2`, no fill; count `--ink-2`.
+- **Like hover:** `--heart-soft` background, `--heart` icon and count.
+- **Liked (`aria-pressed="true"`):** icon filled and stroked `--heart`, count `--heart`; hover unchanged.
+- **Focus-visible (all buttons):** 2px `--ink` outline, 2px offset. Toast buttons use an inset outline in `--bg`.
+- **Log status:** `pending` `--warn`, `2xx` `--ok`, `503` `--heart`, `local` (rollback) `--warn`.
+- **Switch on:** track `--heart`, knob translated 18px.
+- **Toast visible:** `.show`; pointer events enabled only when shown.
+- **Rolled back:** identical to resting; the count returns to its previous value.
+
+## Accessibility
+
+- The like is a `<button aria-pressed>` whose `aria-label` carries the verb and the count: "Like, 1,284 likes" / "Unlike, 1,285 likes". Update it on every change.
+- The particles container is `aria-hidden="true"`; the heart SVG has no text of its own.
+- The request log is `aria-live="polite"` so status changes are read without interrupting; the toast is `role="status" aria-live="assertive"` because it needs a decision inside 5s.
+- Keyboard: Space/Enter on the like toggles; when the toast is shown, Tab reaches **Undo** then the dismiss button. Do not move focus into the toast automatically (the user may be mid-scroll); do give **Undo** a visible focus ring.
+- The failure switch is `role="switch"` with `aria-checked` and a `<label for>`.
+- Contrast: `--ink-2` on `--card` 7.1:1; `--heart` on `--card` 4.6:1 (count text at 13.5px/500); `--toast-sub` on the toast 6.9:1.
+- Hit targets: action buttons 36px tall with 12px horizontal padding; toast buttons 32px tall.
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- 1024–1279: unchanged (892px of content fits); panel 260px below 1000px.
+- 768–1023: the panel moves below the card; both 100 % width up to 560px; toast min-width 320px.
+- < 640: card padding 18px; body text 16px; the toast spans `left:16px; right:16px` and the sub-line wraps; Undo remains right-aligned.
+
+## Acceptance checklist
+
+- [ ] Count increments on the same frame as the click, before any request resolves.
+- [ ] The heart scale keyframes are 1 → 1.35 → .9 → 1.08 → 1 over 420ms with `cubic-bezier(.34,1.56,.64,1)`.
+- [ ] Exactly 8 particles at 45° increments travel 26px and fade over 520ms, using only CSS transforms.
+- [ ] The burst replays on every like (class removed, reflow forced, class re-added).
+- [ ] Unliking has no bounce and no particles.
+- [ ] The fake request resolves at 700ms and writes `201`/`204` or `503` to the log.
+- [ ] On failure, the toast appears within 280ms and the 3px bar drains over exactly 5000ms.
+- [ ] Undo, dismiss and auto-rollback behave as in behaviours 6–7; dismiss keeps the like.
+- [ ] `aria-pressed` and the button's `aria-label` reflect state and count.
+- [ ] Toast is `role="status"`; log is `aria-live="polite"`.
+- [ ] Focus rings visible on like, other actions, switch, Undo and dismiss.
+- [ ] Reduced motion: no bounce, no particles, no count rise; toast fades in 1ms; the drain bar still runs.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: a 560px post card (avatar initials, name, handle, "2h", a two-line post, three pill tags, an action row: heart 1,284 · comment 96 · Share · save). To the right, a 300px "Demo controls" panel with the failure switch (off) and a request log seeded with `01 GET /posts/8123/like 200`.
+2. Hover the like button: background `--heart-soft`, icon and count turn `--heart`. Other actions hover to `--card-2` / `--ink`.
+3. Click like: on the same frame the heart fills (`fill` + `stroke` → `--heart`), scale-bounces (1 → 1.35 → .9 → 1.08 → 1 over 420ms), eight particles emit from the heart centre at 45° increments travelling 26px outward while shrinking to 20 % and fading over 520ms (odd particles coral 4px, even particles amber 3px), the count becomes 1,285 with a 6px rise-in over 240ms, `aria-pressed` becomes `true`, and a log entry `POST /posts/8123/like pending` appears in amber at the top of the log.
+4. 700ms later the log entry resolves: `201` in green (success) or `503` in coral (failure switch on).
+5. On failure the toast slides up from 12px below to rest at `bottom:32px` over 280ms: title "Couldn't save your like", sub-line "Kept it for now. Undo, or it rolls back in 5s.", a coral **Undo** button and a dismiss X. A 3px coral bar along the toast's bottom edge drains from full to zero over 5000ms (linear).
+6. Pressing **Undo** (or waiting the 5s) un-fills the heart with no bounce, decrements the count, hides the toast and logs `rollback local`. Pressing X dismisses the toast but keeps the like (and cancels the auto-rollback).
+7. Clicking the filled heart un-likes: count decrements, no bounce, no particles, log `DELETE … pending` → `204` (or `503` with no toast, since there's nothing to keep).
+8. Clicking like again replays the whole animation; the burst and bounce restart from zero every time.
+9. The log keeps the six most recent entries.
 
 ## Tokens
 
@@ -111,64 +175,6 @@ A like button on a social post card (product: "Marrow", a kitchen-ops app) that 
 | Toast title     | Sora   | 13.5px | 600    | 1.4         | 0        | |
 | Toast sub       | Sora   | 12.5px | 400    | 1.4         | 0        | `--toast-sub` |
 | Avatar initials | Sora   | 13px   | 600    | 1           | 0        | |
-
-## Motion
-
-| Element              | Trigger          | Property          | From → To                                   | Duration | Easing         | Reduced motion |
-|----------------------|------------------|-------------------|---------------------------------------------|---------:|----------------|----------------|
-| heart `svg`          | like             | fill, stroke      | none/`--ink-2` → `--heart`                  | 160ms    | `--ease`       | 1ms |
-| heart `svg`          | like (`.pop`)    | scale             | 1 → 1.35 (35 %) → .9 (60 %) → 1.08 (80 %) → 1 | 420ms  | `--ease-bounce` | none |
-| `.burst i` ×8        | like (`.pop`)    | transform, opacity | `rotate(i·45deg) translateY(−4px) scale(1)`, 1 → `translateY(−26px) scale(.2)`, 0 | 520ms | `--ease-out` | none |
-| `.n` count           | any change       | translateY, opacity | 6px, 0 → 0, 1                             | 240ms    | `--ease-out`   | none |
-| `.like` background   | hover            | background, color | transparent → `--heart-soft`, `--heart`     | 160ms    | `--ease`       | 1ms |
-| `.toast`             | failure          | opacity, translateY | 0, 12px → 1, 0                            | 280ms    | `--ease`       | 1ms |
-| `.toast::after`      | shown            | scaleX            | 1 → 0 (transform-origin left)               | 5000ms   | linear         | kept (it is information) |
-| `.switch::after`     | toggle           | translateX        | 0 → 18px                                    | 160ms    | `--ease`       | 1ms |
-
-The burst and bounce are both driven by one `.pop` class; remove it, force reflow, re-add it so they restart on every like. Unlike does **not** add `.pop`.
-
-## States
-
-- **Like resting:** icon stroke `--ink-2`, no fill; count `--ink-2`.
-- **Like hover:** `--heart-soft` background, `--heart` icon and count.
-- **Liked (`aria-pressed="true"`):** icon filled and stroked `--heart`, count `--heart`; hover unchanged.
-- **Focus-visible (all buttons):** 2px `--ink` outline, 2px offset. Toast buttons use an inset outline in `--bg`.
-- **Log status:** `pending` `--warn`, `2xx` `--ok`, `503` `--heart`, `local` (rollback) `--warn`.
-- **Switch on:** track `--heart`, knob translated 18px.
-- **Toast visible:** `.show`; pointer events enabled only when shown.
-- **Rolled back:** identical to resting; the count returns to its previous value.
-
-## Accessibility
-
-- The like is a `<button aria-pressed>` whose `aria-label` carries the verb and the count: "Like, 1,284 likes" / "Unlike, 1,285 likes". Update it on every change.
-- The particles container is `aria-hidden="true"`; the heart SVG has no text of its own.
-- The request log is `aria-live="polite"` so status changes are read without interrupting; the toast is `role="status" aria-live="assertive"` because it needs a decision inside 5s.
-- Keyboard: Space/Enter on the like toggles; when the toast is shown, Tab reaches **Undo** then the dismiss button. Do not move focus into the toast automatically (the user may be mid-scroll); do give **Undo** a visible focus ring.
-- The failure switch is `role="switch"` with `aria-checked` and a `<label for>`.
-- Contrast: `--ink-2` on `--card` 7.1:1; `--heart` on `--card` 4.6:1 (count text at 13.5px/500); `--toast-sub` on the toast 6.9:1.
-- Hit targets: action buttons 36px tall with 12px horizontal padding; toast buttons 32px tall.
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- 1024–1279: unchanged (892px of content fits); panel 260px below 1000px.
-- 768–1023: the panel moves below the card; both 100 % width up to 560px; toast min-width 320px.
-- < 640: card padding 18px; body text 16px; the toast spans `left:16px; right:16px` and the sub-line wraps; Undo remains right-aligned.
-
-## Acceptance checklist
-
-- [ ] Count increments on the same frame as the click, before any request resolves.
-- [ ] The heart scale keyframes are 1 → 1.35 → .9 → 1.08 → 1 over 420ms with `cubic-bezier(.34,1.56,.64,1)`.
-- [ ] Exactly 8 particles at 45° increments travel 26px and fade over 520ms, using only CSS transforms.
-- [ ] The burst replays on every like (class removed, reflow forced, class re-added).
-- [ ] Unliking has no bounce and no particles.
-- [ ] The fake request resolves at 700ms and writes `201`/`204` or `503` to the log.
-- [ ] On failure, the toast appears within 280ms and the 3px bar drains over exactly 5000ms.
-- [ ] Undo, dismiss and auto-rollback behave as in behaviours 6–7; dismiss keeps the like.
-- [ ] `aria-pressed` and the button's `aria-label` reflect state and count.
-- [ ] Toast is `role="status"`; log is `aria-live="polite"`.
-- [ ] Focus rings visible on like, other actions, switch, Undo and dismiss.
-- [ ] Reduced motion: no bounce, no particles, no count rise; toast fades in 1ms; the drain bar still runs.
 
 ## Implementation notes
 

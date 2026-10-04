@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A note that says Gate 4 draft, and a button that shreds it. Twelve strips fall out of the note. The button becomes Restore draft. Restore puts the note back. The status says the draft was shredded on this page. This is not a drag-to-confirm. That track is `drag-to-confirm`. This is not a button that morphs to a check. That morph is `button-state-morph`. The strips are the confirmation.
-
-## Reference behaviour
-
-1. The note is whole. The button reads Shred draft. The status is empty.
-2. Click sets data-shred and the strips animate down over 700ms with a small rotate.
-3. The button reads Restore draft.
-4. The status reads Draft shredded on this page.
-5. Restore clears the shred and the note text returns.
-6. Strip delays step by 30ms.
-7. Reduced motion hides the note text immediately and skips the fall.
 
 ## Structure
 
@@ -32,20 +24,6 @@ status
 - The button is 44px, danger outline.
 - The status is 14px, min-height 22px.
 - Strips are decorative.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --danger:#9b2c2c; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Note | IBM Plex Sans | 22px | 600 |
-| Button | IBM Plex Sans | 14px | 500 |
-| Status | IBM Plex Sans | 14px | 400 |
 
 ## Motion
 
@@ -90,16 +68,6 @@ status
 - [ ] The status sentence is Draft shredded on this page.
 - [ ] There are 12 strips.
 - [ ] The outline is #9b2c2c.
-
-## Implementation notes
-
-Toggle data-shred. The animation runs because the strips start offscreen.
-
-```css
-.note[data-shred="true"] .strip { animation: fall 700ms forwards; }
-```
-
-Restore removes the attribute so the note text shows again.
 
 ## Measurements to keep
 
@@ -168,6 +136,44 @@ Restore removes the attribute so the note text shows again.
 - While rebuilding, remember: Do not shred on hover.
 - While rebuilding, remember: Do not send the draft.
 - While rebuilding, remember: Do not use a red fill on the whole page.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The note is whole. The button reads Shred draft. The status is empty.
+2. Click sets data-shred and the strips animate down over 700ms with a small rotate.
+3. The button reads Restore draft.
+4. The status reads Draft shredded on this page.
+5. Restore clears the shred and the note text returns.
+6. Strip delays step by 30ms.
+7. Reduced motion hides the note text immediately and skips the fall.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --danger:#9b2c2c; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Note | IBM Plex Sans | 22px | 600 |
+| Button | IBM Plex Sans | 14px | 500 |
+| Status | IBM Plex Sans | 14px | 400 |
+
+## Implementation notes
+
+Toggle data-shred. The animation runs because the strips start offscreen.
+
+```css
+.note[data-shred="true"] .strip { animation: fall 700ms forwards; }
+```
+
+Restore removes the attribute so the note text shows again.
 
 ---
 

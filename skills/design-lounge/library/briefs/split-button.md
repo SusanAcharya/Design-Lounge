@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A split button for Hollis, a yard desk. The wide part sends the Gate 4 note now. The 44px chevron opens a menu of the other ways that same note can leave: send now, schedule for 18:00, or save as a draft. The menu is part of the control, not a second button somewhere else on the page. This is not the five roles in `button-roles`. This is not a nested nav menu. That menu is `nested-dropdown-menu`. One primary action, one menu of siblings.
-
-## Reference behaviour
-
-1. The first frame shows the menu open. The chevron is expanded. The status line reads "Choose how the Gate 4 note leaves."
-2. The wide button reads Send now. Clicking it sets the status to "Sent now · Gate 4 note" and closes the menu.
-3. Clicking the chevron toggles the menu. aria-expanded follows the open state.
-4. The menu has three items: Send now, Schedule for 18:00, Save as a draft.
-5. Choosing an item writes that action plus "· Gate 4 note" into the status line and closes the menu.
-6. The menu does not navigate. Nothing is emailed.
-7. Focus rings stay 2px on the primary green, offset 3px.
 
 ## Structure
 
@@ -34,24 +26,6 @@ status line, 72px under the split
 - The menu is absolute, top 52px, left 0, right 0.
 - Each item is a button with role menuitem. The menu has role menu.
 - The status is a paragraph with aria-live polite.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef; --surface: #fff; --ink: #161513; --ink-2: #5a554c;
-  --line: #e4dfd4; --primary: #1f4d3a; --primary-ink: #fffdf8; --soft: #e7f2ec;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Main label | IBM Plex Sans | 14px | 500 | 1 | 0 |
-| Menu item | IBM Plex Sans | 14px | 400 | 1 | 0 |
-| Status | IBM Plex Sans | 14px | 400 | 1.45 | 0 |
 
 ## Motion
 
@@ -99,19 +73,6 @@ status line, 72px under the split
 - [ ] The status after a choice ends with "· Gate 4 note".
 - [ ] Type is IBM Plex Sans. Radius is 2px. Fill is #1f4d3a.
 
-## Implementation notes
-
-Keep the menu in the same stacking context as the split. top: 52px is 44px control plus 8px gap.
-
-```js
-function setOpen(on) {
-  menu.hidden = !on;
-  more.setAttribute('aria-expanded', String(on));
-}
-```
-
-Do not use a native select. The point is one filled control with a shared menu. Do not add a fourth item that goes to another page.
-
 ## Measurements to keep
 
 - Split height 44px. Chevron width 44px. Wrap width 320px.
@@ -156,6 +117,51 @@ Do not use a native select. The point is one filled control with a shared menu. 
 - Hidden uses the hidden attribute, which removes the items from the tab order.
 - There is one status, not a toast and a status.
 - After a choice, focus may stay on the item that just closed. Do not move focus to the body.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the menu open. The chevron is expanded. The status line reads "Choose how the Gate 4 note leaves."
+2. The wide button reads Send now. Clicking it sets the status to "Sent now · Gate 4 note" and closes the menu.
+3. Clicking the chevron toggles the menu. aria-expanded follows the open state.
+4. The menu has three items: Send now, Schedule for 18:00, Save as a draft.
+5. Choosing an item writes that action plus "· Gate 4 note" into the status line and closes the menu.
+6. The menu does not navigate. Nothing is emailed.
+7. Focus rings stay 2px on the primary green, offset 3px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef; --surface: #fff; --ink: #161513; --ink-2: #5a554c;
+  --line: #e4dfd4; --primary: #1f4d3a; --primary-ink: #fffdf8; --soft: #e7f2ec;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Main label | IBM Plex Sans | 14px | 500 | 1 | 0 |
+| Menu item | IBM Plex Sans | 14px | 400 | 1 | 0 |
+| Status | IBM Plex Sans | 14px | 400 | 1.45 | 0 |
+
+## Implementation notes
+
+Keep the menu in the same stacking context as the split. top: 52px is 44px control plus 8px gap.
+
+```js
+function setOpen(on) {
+  menu.hidden = !on;
+  more.setAttribute('aria-expanded', String(on));
+}
+```
+
+Do not use a native select. The point is one filled control with a shared menu. Do not add a fourth item that goes to another page.
 
 ---
 

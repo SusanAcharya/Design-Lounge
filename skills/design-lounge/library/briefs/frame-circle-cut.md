@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A row of four image frames for a small object studio's portfolio, "Umber Atelier". Each frame is the same 4:5 rectangle, cut by a different CSS shape: two circle bites from opposite corners, an arch, a notched corner, and an organic blob. On hover or keyboard focus the cut morphs to a second shape over 620ms while the photograph inside scales to 1.06. Pressing a frame holds the second shape. The feeling is a printed catalogue: warm bone paper, a tall editorial serif, and photographs that look cut out with a knife rather than rounded with a preset. The detail worth copying is that the image never moves its box. Only the mask moves, driven by registered custom properties so `mask` and `clip-path` can tween.
-
-## Reference behaviour
-
-1. First frame: four frames in one row under the heading "Objects, cut to shape." Frame 03 (Notch lamp) starts held: its notch has already moved from the top-right to the bottom-left corner, and its chip is filled ink.
-2. Frame 01, Lune vessel, "Circle cut": an 84px circle bites the top-right corner and a 44px circle bites the bottom-left. Hover: the top-right bite shrinks to 28px and the bottom-left grows to 132px.
-3. Frame 02, Arch study, "Arch": top corners are a half-ellipse (`50% / 36%`), bottom corners square. Hover: the bottom corners round to the same ellipse, so the arch becomes a capsule.
-4. Frame 03, Notch lamp, "Notch": a 72px 45° notch cuts the top-right corner. Hover: the top-right notch closes to 0 while a 72px notch opens on the bottom-left.
-5. Frame 04, Pebble stool, "Blob": an 8-value border-radius blob. Hover: the radii swap to a second blob of the same structure, so the outline drifts.
-6. Every morph takes 620ms on `cubic-bezier(.16,1,.3,1)`. At the same time the photograph scales from 1 to 1.06 over 900ms on the same curve.
-7. Leaving the frame plays the morph back. A held frame does not play back.
-8. Click, Enter or Space on a frame toggles `aria-pressed`. Pressed frames keep the second shape and their chip turns ink with bone text.
-9. Keyboard focus on a frame (focus-visible only) also morphs it, so keyboard users see the same effect as hover.
-10. The photographs are CSS drawings: a moon jar on a sand wall, a green bottle and stone ball with a diagonal sun shadow, a copper pendant lamp glowing in a dark room, a walnut three-leg stool on a sage wall. No image files.
-11. With reduced motion the shape and scale change instantly. Nothing tweens.
 
 ## Structure
 
@@ -61,59 +49,6 @@ Frame copy:
 | 02 | Arch study | Glass, 2 parts | `c-arch` | Arch | bottom-left |
 | 03 | Notch lamp | Spun copper | `c-notch` | Notch | top-left |
 | 04 | Pebble stool | Walnut, oiled | `c-blob` | Blob | bottom-centre, 18px up |
-
-## Tokens
-
-```css
-@property --a { syntax: "<length>"; inherits: false; initial-value: 0px; }
-@property --b { syntax: "<length>"; inherits: false; initial-value: 0px; }
-
-:root {
-  /* colour */
-  --bone: #eee7dc;    /* page, chip fill */
-  --ink: #231f1a;     /* text, held chip */
-  --ink-2: #5a5148;   /* lede, meta, foot */
-  --line: #d6cbb9;    /* rules, kbd border */
-  --umber: #8a4b2a;   /* accent: italic "cut", numbers, focus ring */
-
-  /* type */
-  --serif: "Instrument Serif", Georgia, serif;
-  --sans: "Manrope", system-ui, sans-serif;
-
-  /* space (4px base) */
-  --s-3: 12px; --s-4: 16px; --s-6: 24px; --s-7: 28px; --s-8: 32px; --s-9: 36px; --s-12: 48px;
-
-  /* shape values */
-  --circle-a: 84px; --circle-b: 44px;          /* rest bites */
-  --circle-a-on: 28px; --circle-b-on: 132px;   /* hover bites */
-  --notch: 72px;
-  --arch: 50% 50% 0 0 / 36% 36% 0 0;
-  --blob: 62% 38% 54% 46% / 49% 58% 42% 51%;
-  --blob-on: 38% 62% 40% 60% / 60% 40% 58% 42%;
-
-  /* motion */
-  --morph: cubic-bezier(.16, 1, .3, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --t-morph: 620ms;
-  --t-art: 900ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Wordmark | Instrument Serif italic | 28px | 400 | 1 | -0.01em | as written |
-| Nav | Manrope | 12px | 700 | 1 | 0.14em | UPPER |
-| Heading | Instrument Serif | 80px | 400 | 0.92 | -0.025em | sentence, "cut" italic umber |
-| Lede | Manrope | 14px | 400, lead-in 700 | 1.6 | 0 | sentence |
-| Chip | Manrope | 11px | 700 | 1 | 0.1em | UPPER |
-| Number | Manrope | 11px | 700 | 1 | 0.12em | numerals, umber |
-| Work name | Instrument Serif | 24px | 400 | 1.1 | 0 | title |
-| Meta, foot | Manrope | 12px | 400 | 1.5 | 0 | sentence |
-| kbd | Manrope | 11px | 700 | 1 | 0 | as written |
-
-The serif carries names and the heading only. Labels, chips and numbers are the grotesk. Do not set the chip in the serif.
 
 ## Motion
 
@@ -175,6 +110,77 @@ The serif carries names and the heading only. Labels, chips and numbers are the 
 - [ ] Page `#eee7dc`, ink `#231f1a`, accent `#8a4b2a` on the italic "cut" and the numbers.
 - [ ] Heading "Objects, cut to shape." in Instrument Serif 80px/0.92.
 - [ ] All four photographs are CSS gradients and shapes. No image files.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: four frames in one row under the heading "Objects, cut to shape." Frame 03 (Notch lamp) starts held: its notch has already moved from the top-right to the bottom-left corner, and its chip is filled ink.
+2. Frame 01, Lune vessel, "Circle cut": an 84px circle bites the top-right corner and a 44px circle bites the bottom-left. Hover: the top-right bite shrinks to 28px and the bottom-left grows to 132px.
+3. Frame 02, Arch study, "Arch": top corners are a half-ellipse (`50% / 36%`), bottom corners square. Hover: the bottom corners round to the same ellipse, so the arch becomes a capsule.
+4. Frame 03, Notch lamp, "Notch": a 72px 45° notch cuts the top-right corner. Hover: the top-right notch closes to 0 while a 72px notch opens on the bottom-left.
+5. Frame 04, Pebble stool, "Blob": an 8-value border-radius blob. Hover: the radii swap to a second blob of the same structure, so the outline drifts.
+6. Every morph takes 620ms on `cubic-bezier(.16,1,.3,1)`. At the same time the photograph scales from 1 to 1.06 over 900ms on the same curve.
+7. Leaving the frame plays the morph back. A held frame does not play back.
+8. Click, Enter or Space on a frame toggles `aria-pressed`. Pressed frames keep the second shape and their chip turns ink with bone text.
+9. Keyboard focus on a frame (focus-visible only) also morphs it, so keyboard users see the same effect as hover.
+10. The photographs are CSS drawings: a moon jar on a sand wall, a green bottle and stone ball with a diagonal sun shadow, a copper pendant lamp glowing in a dark room, a walnut three-leg stool on a sage wall. No image files.
+11. With reduced motion the shape and scale change instantly. Nothing tweens.
+
+## Tokens
+
+```css
+@property --a { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --b { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
+:root {
+  /* colour */
+  --bone: #eee7dc;    /* page, chip fill */
+  --ink: #231f1a;     /* text, held chip */
+  --ink-2: #5a5148;   /* lede, meta, foot */
+  --line: #d6cbb9;    /* rules, kbd border */
+  --umber: #8a4b2a;   /* accent: italic "cut", numbers, focus ring */
+
+  /* type */
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Manrope", system-ui, sans-serif;
+
+  /* space (4px base) */
+  --s-3: 12px; --s-4: 16px; --s-6: 24px; --s-7: 28px; --s-8: 32px; --s-9: 36px; --s-12: 48px;
+
+  /* shape values */
+  --circle-a: 84px; --circle-b: 44px;          /* rest bites */
+  --circle-a-on: 28px; --circle-b-on: 132px;   /* hover bites */
+  --notch: 72px;
+  --arch: 50% 50% 0 0 / 36% 36% 0 0;
+  --blob: 62% 38% 54% 46% / 49% 58% 42% 51%;
+  --blob-on: 38% 62% 40% 60% / 60% 40% 58% 42%;
+
+  /* motion */
+  --morph: cubic-bezier(.16, 1, .3, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-morph: 620ms;
+  --t-art: 900ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Wordmark | Instrument Serif italic | 28px | 400 | 1 | -0.01em | as written |
+| Nav | Manrope | 12px | 700 | 1 | 0.14em | UPPER |
+| Heading | Instrument Serif | 80px | 400 | 0.92 | -0.025em | sentence, "cut" italic umber |
+| Lede | Manrope | 14px | 400, lead-in 700 | 1.6 | 0 | sentence |
+| Chip | Manrope | 11px | 700 | 1 | 0.1em | UPPER |
+| Number | Manrope | 11px | 700 | 1 | 0.12em | numerals, umber |
+| Work name | Instrument Serif | 24px | 400 | 1.1 | 0 | title |
+| Meta, foot | Manrope | 12px | 400 | 1.5 | 0 | sentence |
+| kbd | Manrope | 11px | 700 | 1 | 0 | as written |
+
+The serif carries names and the heading only. Labels, chips and numbers are the grotesk. Do not set the chip in the serif.
 
 ## Implementation notes
 

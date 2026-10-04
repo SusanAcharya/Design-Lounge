@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A 640px setup card for a fictional SaaS ("Mira") that collects an account, a workspace and then shows a review before creating it. Three numbered 28px dots sit across the top joined by 2px connector tracks; when a step completes, its dot fills terracotta with a check and the connector after it fills left-to-right over 320ms. The step panels slide horizontally: going forward the old panel exits 40px to the left and the new one enters from 40px right; going back the directions reverse. Continue validates the current step before moving; the review step lists every answer with an Edit link that jumps back to the right step. Warm off-white, one accent, no shadows heavier than a whisper.
-
-## Reference behaviour
-
-1. Initial state: card centred with 64px above it; brand "Mira" and a lead line. Stepper shows **1 Account** current (accent ring + 4px `--accent-soft` halo), 2 Workspace and 3 Review upcoming (grey ring). Panel 1 is visible: Full name (pre-filled "Ines Okafor"), Company (empty), Work email (empty). Footer: Back (disabled), "Step 1 of 3", Continue.
-2. Click Continue with Company empty: Company gets `aria-invalid="true"`, a red border with a 3px `#f6e0dc` halo, and the message "Company is required." appears beneath it; focus moves to the first invalid field. No slide.
-3. Type in an invalid field: its error clears immediately on `input`.
-4. Enter "x" in Work email and Continue: "Enter a valid email address." (regex `^[^\s@]+@[^\s@]+\.[^\s@]+$`).
-5. With valid fields, Continue: panel 1 slides to `translateX(-40px)` and fades out; panel 2 arrives from `translateX(40px)` — both 320ms. Dot 1 fills accent with a check; connector 1 fills over 320ms; dot 2 becomes current. Footer reads "Step 2 of 3", Back enables. After the slide (330ms) focus lands on the first field of the new panel.
-6. Panel 2: Workspace name (pre-filled "marrow"), Data region select (Frankfurt, Dublin, Oregon, Singapore), Team size radio segment (Just me / 2–10 / 11–50 / 50+; 2–10 checked). Continue → panel 3 (Review) with Continue relabelled "Create workspace".
-7. Review lists six rows (Full name, Company, Work email, Workspace name, Data region, Team size) each with an accent **Edit** link. Clicking Edit on a row goes to that row's step; the slide runs in the backward direction (panels to the right of the target enter from the left... i.e. current panel exits to the right, target enters from the left).
-8. Back: same backward slide; connectors un-fill (scaleX 0) and dots revert.
-9. Create workspace: a fourth "finish" panel slides in — 56px accent circle with a check, "Workspace created", "marrow.mira.app is ready in Frankfurt." and a "Start over" link. The footer is hidden. Start over returns to step 1 with the backward slide.
 
 ## Structure
 
@@ -78,6 +68,81 @@ Validation runs only for `input[required]` inside the current panel; the select 
 | Team size      | size         | 2 |
 
 Values come from `new FormData(form)` at the moment step 3 opens; an empty value renders as "—". The finish message is `${ws}.mira.app is ready in ${region.split(' ')[0]}.` (e.g. "marrow.mira.app is ready in Frankfurt.").
+
+## Motion
+
+| Element        | Trigger          | Property            | From → To                          | Duration | Easing       | Notes |
+|----------------|------------------|---------------------|------------------------------------|---------:|--------------|-------|
+| outgoing panel | forward          | transform, opacity  | none, 1 → `translateX(-40px)`, 0   | 320ms    | transform `--ease-out`, opacity `--ease` | `visibility` hidden after |
+| incoming panel | forward          | transform, opacity  | `translateX(40px)`, 0 → none, 1    | 320ms    | same         | starts simultaneously |
+| panels         | backward         | same, mirrored      | current → +40px; target from −40px | 320ms    | same         | direction falls out of `data-pos` |
+| `.conn i`      | step completes   | transform `scaleX`  | 0 → 1 (origin left)                | 320ms    | `--ease`     | reverses on Back |
+| `.dot`         | state change     | background, border, colour, box-shadow | per state         | 140ms    | `--ease`     | |
+| input          | focus / invalid  | border-color, box-shadow | `--line-2` → `--accent` + 3px halo | 140ms | linear (default) | |
+| focus move     | after slide      | —                   | first field of new panel           | 330ms delay | —         | so focus doesn't drag the panel |
+
+Reduced motion: all durations 1ms (panels swap in place; connectors fill instantly). Keep the 330ms focus delay at ~1ms too if you gate it on the same media query.
+
+## States
+
+- **Step upcoming:** dot white with 1.5px `--line-2` border, number `--ink-3`; label `--ink-3`.
+- **Step current:** dot border `--accent`, number `--accent`, `box-shadow: 0 0 0 4px var(--accent-soft)`; label `--ink`; `aria-current="step"`.
+- **Step done:** dot filled `--accent`, check icon in `--accent-ink` (number hidden); label `--ink-2`; connector after it filled.
+- **Input default:** `--field` background, `--line-2` border, 10px radius. **Hover:** border `--ink-3`. **Focus-visible:** border `--accent` + 3px `--accent-soft` halo. **Invalid:** border `--err` + 3px `--err-soft` halo, message visible.
+- **Segment radio checked:** border + text `--accent`, background `--accent-soft`. **Focus-visible:** 3px `--accent-soft` halo on the label.
+- **Back disabled:** opacity .45, default cursor.
+- **Primary button:** `--accent`; hover `--accent-hover`; focus-visible 2px accent outline offset 2px.
+- **Edit link:** `--accent` 12/600; hover underline; focus-visible 2px outline.
+- **Finish:** footer `visibility:hidden`; panel content centred.
+
+## Accessibility
+
+- The stepper is an `<ol aria-label="Progress">`; the current step has `aria-current="step"`. Dots are `aria-hidden` (the label carries the name); connectors are `aria-hidden`.
+- Each panel is a `<section aria-labelledby>` its heading. Inactive panels are `visibility:hidden` so their fields leave the tab order.
+- Validation: `novalidate` on the form, custom messages in a `<span aria-live="polite">` inside the label so they are announced and associated; `aria-invalid` toggled on the input; first invalid field receives focus.
+- Keyboard: Tab through fields; Enter in any field submits the form (Continue); Back is a `type="button"`; radios move with arrow keys natively; Edit links are real links with `aria-label="Edit company"` etc.
+- Focus management: after each slide, focus the first input/select (or the first link on Review) after 330ms.
+- Contrast: `--ink-2` on white 7.6:1; `--ink-3` on white 3.5:1 — used only for 12px 600 labels and helper text, never for values; `--accent-ink` on `--accent` 4.6:1.
+- Hit targets: inputs and buttons 40px; segment options 40px; dots are non-interactive.
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- 1024–1279: unchanged.
+- 768–1023: card `width: min(640px, calc(100vw − 48px))`; step columns shrink to 80px.
+- < 640: card full-width with 16px margins, radius 12px; `.two` becomes one column; `--panel-h` grows to 420px (or switch panels to `position:static` and animate `height` with a measured value); stepper labels hide except the current one, which renders inline next to its dot; footer buttons stretch to equal widths.
+
+## Acceptance checklist
+
+- [ ] Card is 640px, 16px radius, 1px `#e8e1d8` border; stepper padding `28px 32px 24px`; panel area 344px tall.
+- [ ] Dots are 28px; the current dot has an accent ring and a 4px `#fbe9e1` halo; done dots fill `#d2603a` with a check.
+- [ ] Connector tracks are 2px `#e8e1d8`; the accent fill scales from 0 to 1 (origin left) over 320ms on step completion and back on Back.
+- [ ] Forward: outgoing panel to −40px, incoming from +40px; backward mirrors; both 320ms `cubic-bezier(.16,1,.3,1)` with an opacity crossfade.
+- [ ] Continue with empty Company shows "Company is required." and focuses that field; no slide occurs.
+- [ ] Invalid email shows "Enter a valid email address."; typing clears the error.
+- [ ] Review step lists six rows with the entered values and an Edit link per row; Edit jumps to the correct step with the backward slide.
+- [ ] Footer counter reads "Step N of 3"; Back is disabled on step 1; the submit button reads "Create workspace" on step 3.
+- [ ] Finish panel hides the footer and offers "Start over", which returns to step 1.
+- [ ] Focus lands on the new panel's first field ~330ms after each transition.
+- [ ] Inactive panels are `visibility:hidden` (not reachable by Tab).
+- [ ] `aria-current="step"` moves with the current step; `aria-invalid` toggles on fields.
+- [ ] Reduced motion: transitions collapse to 1ms; everything still works.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: card centred with 64px above it; brand "Mira" and a lead line. Stepper shows **1 Account** current (accent ring + 4px `--accent-soft` halo), 2 Workspace and 3 Review upcoming (grey ring). Panel 1 is visible: Full name (pre-filled "Ines Okafor"), Company (empty), Work email (empty). Footer: Back (disabled), "Step 1 of 3", Continue.
+2. Click Continue with Company empty: Company gets `aria-invalid="true"`, a red border with a 3px `#f6e0dc` halo, and the message "Company is required." appears beneath it; focus moves to the first invalid field. No slide.
+3. Type in an invalid field: its error clears immediately on `input`.
+4. Enter "x" in Work email and Continue: "Enter a valid email address." (regex `^[^\s@]+@[^\s@]+\.[^\s@]+$`).
+5. With valid fields, Continue: panel 1 slides to `translateX(-40px)` and fades out; panel 2 arrives from `translateX(40px)` — both 320ms. Dot 1 fills accent with a check; connector 1 fills over 320ms; dot 2 becomes current. Footer reads "Step 2 of 3", Back enables. After the slide (330ms) focus lands on the first field of the new panel.
+6. Panel 2: Workspace name (pre-filled "marrow"), Data region select (Frankfurt, Dublin, Oregon, Singapore), Team size radio segment (Just me / 2–10 / 11–50 / 50+; 2–10 checked). Continue → panel 3 (Review) with Continue relabelled "Create workspace".
+7. Review lists six rows (Full name, Company, Work email, Workspace name, Data region, Team size) each with an accent **Edit** link. Clicking Edit on a row goes to that row's step; the slide runs in the backward direction (panels to the right of the target enter from the left... i.e. current panel exits to the right, target enters from the left).
+8. Back: same backward slide; connectors un-fill (scaleX 0) and dots revert.
+9. Create workspace: a fourth "finish" panel slides in — 56px accent circle with a check, "Workspace created", "marrow.mira.app is ready in Frankfurt." and a "Start over" link. The footer is hidden. Start over returns to step 1 with the backward slide.
 
 ## Tokens
 
@@ -140,65 +205,6 @@ Values come from `new FormData(form)` at the moment step 3 opens; an empty value
 | Step counter    | Manrope | 12px | 600    | 1           | +0.04em  | `--ink-3` |
 | Buttons         | Manrope | 14px | 600    | 40px height | 0        | |
 | Review label    | Manrope | 12px | 600    | 1.3         | 0        | `--ink-3`; value 13px 400 `--ink` |
-
-## Motion
-
-| Element        | Trigger          | Property            | From → To                          | Duration | Easing       | Notes |
-|----------------|------------------|---------------------|------------------------------------|---------:|--------------|-------|
-| outgoing panel | forward          | transform, opacity  | none, 1 → `translateX(-40px)`, 0   | 320ms    | transform `--ease-out`, opacity `--ease` | `visibility` hidden after |
-| incoming panel | forward          | transform, opacity  | `translateX(40px)`, 0 → none, 1    | 320ms    | same         | starts simultaneously |
-| panels         | backward         | same, mirrored      | current → +40px; target from −40px | 320ms    | same         | direction falls out of `data-pos` |
-| `.conn i`      | step completes   | transform `scaleX`  | 0 → 1 (origin left)                | 320ms    | `--ease`     | reverses on Back |
-| `.dot`         | state change     | background, border, colour, box-shadow | per state         | 140ms    | `--ease`     | |
-| input          | focus / invalid  | border-color, box-shadow | `--line-2` → `--accent` + 3px halo | 140ms | linear (default) | |
-| focus move     | after slide      | —                   | first field of new panel           | 330ms delay | —         | so focus doesn't drag the panel |
-
-Reduced motion: all durations 1ms (panels swap in place; connectors fill instantly). Keep the 330ms focus delay at ~1ms too if you gate it on the same media query.
-
-## States
-
-- **Step upcoming:** dot white with 1.5px `--line-2` border, number `--ink-3`; label `--ink-3`.
-- **Step current:** dot border `--accent`, number `--accent`, `box-shadow: 0 0 0 4px var(--accent-soft)`; label `--ink`; `aria-current="step"`.
-- **Step done:** dot filled `--accent`, check icon in `--accent-ink` (number hidden); label `--ink-2`; connector after it filled.
-- **Input default:** `--field` background, `--line-2` border, 10px radius. **Hover:** border `--ink-3`. **Focus-visible:** border `--accent` + 3px `--accent-soft` halo. **Invalid:** border `--err` + 3px `--err-soft` halo, message visible.
-- **Segment radio checked:** border + text `--accent`, background `--accent-soft`. **Focus-visible:** 3px `--accent-soft` halo on the label.
-- **Back disabled:** opacity .45, default cursor.
-- **Primary button:** `--accent`; hover `--accent-hover`; focus-visible 2px accent outline offset 2px.
-- **Edit link:** `--accent` 12/600; hover underline; focus-visible 2px outline.
-- **Finish:** footer `visibility:hidden`; panel content centred.
-
-## Accessibility
-
-- The stepper is an `<ol aria-label="Progress">`; the current step has `aria-current="step"`. Dots are `aria-hidden` (the label carries the name); connectors are `aria-hidden`.
-- Each panel is a `<section aria-labelledby>` its heading. Inactive panels are `visibility:hidden` so their fields leave the tab order.
-- Validation: `novalidate` on the form, custom messages in a `<span aria-live="polite">` inside the label so they are announced and associated; `aria-invalid` toggled on the input; first invalid field receives focus.
-- Keyboard: Tab through fields; Enter in any field submits the form (Continue); Back is a `type="button"`; radios move with arrow keys natively; Edit links are real links with `aria-label="Edit company"` etc.
-- Focus management: after each slide, focus the first input/select (or the first link on Review) after 330ms.
-- Contrast: `--ink-2` on white 7.6:1; `--ink-3` on white 3.5:1 — used only for 12px 600 labels and helper text, never for values; `--accent-ink` on `--accent` 4.6:1.
-- Hit targets: inputs and buttons 40px; segment options 40px; dots are non-interactive.
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- 1024–1279: unchanged.
-- 768–1023: card `width: min(640px, calc(100vw − 48px))`; step columns shrink to 80px.
-- < 640: card full-width with 16px margins, radius 12px; `.two` becomes one column; `--panel-h` grows to 420px (or switch panels to `position:static` and animate `height` with a measured value); stepper labels hide except the current one, which renders inline next to its dot; footer buttons stretch to equal widths.
-
-## Acceptance checklist
-
-- [ ] Card is 640px, 16px radius, 1px `#e8e1d8` border; stepper padding `28px 32px 24px`; panel area 344px tall.
-- [ ] Dots are 28px; the current dot has an accent ring and a 4px `#fbe9e1` halo; done dots fill `#d2603a` with a check.
-- [ ] Connector tracks are 2px `#e8e1d8`; the accent fill scales from 0 to 1 (origin left) over 320ms on step completion and back on Back.
-- [ ] Forward: outgoing panel to −40px, incoming from +40px; backward mirrors; both 320ms `cubic-bezier(.16,1,.3,1)` with an opacity crossfade.
-- [ ] Continue with empty Company shows "Company is required." and focuses that field; no slide occurs.
-- [ ] Invalid email shows "Enter a valid email address."; typing clears the error.
-- [ ] Review step lists six rows with the entered values and an Edit link per row; Edit jumps to the correct step with the backward slide.
-- [ ] Footer counter reads "Step N of 3"; Back is disabled on step 1; the submit button reads "Create workspace" on step 3.
-- [ ] Finish panel hides the footer and offers "Start over", which returns to step 1.
-- [ ] Focus lands on the new panel's first field ~330ms after each transition.
-- [ ] Inactive panels are `visibility:hidden` (not reachable by Tab).
-- [ ] `aria-current="step"` moves with the current step; `aria-invalid` toggles on fields.
-- [ ] Reduced motion: transitions collapse to 1ms; everything still works.
 
 ## Implementation notes
 

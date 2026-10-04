@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the home of a personal ledger. It is not a dashboard.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The list a person opens to see their own month. The answer is what is left, रु 31,300, at 40px in Noto Serif Devanagari, so the currency word and the digits are one face. Under it, five lines, newest first: Bhatbhateni, NEA, a bus fare, rent, and a salary. Three filters, All, Out, and In, change which rows show. The heading does not change, because the month's remainder is still the decision. The calendar is labeled once, "Asar 2083 · BS", and every date is a day in Asar. Salary is the only money in, marked with the word "in" on the success wash. This is the screen the personal recipe was missing. A chart of categories is the next screen, not this one.
-
-## Reference behaviour
-
-1. The first frame shows रु 31,300, the sentence "Left after five lines.", All pressed, and five rows. Bhatbhateni starts `aria-pressed="true"`.
-2. All shows every row. Out hides Salary. In shows only Salary. Hidden rows use the `hidden` attribute.
-3. The heading and the sentence stay put when the filter changes.
-4. Tapping a row selects it and clears the previous selection. It does not open a second page in this demo. In a product, that tap opens the line you named.
-5. Amounts use lakh grouping: 1,24,000 and 1,80,000. 18,400, 4,200, and 2,100 stay as they are.
-6. No motion. Reduced motion has nothing to remove.
-7. Do not draw a tab bar in this piece. The shell, if the product has one, comes from `phone-tab-plain`.
 
 ## Structure
 
@@ -40,41 +32,6 @@ Left after five lines.
 - The list is a `ul` of buttons. Each row is a grid: name and meta in the first column, amount in the second, spanning both lines.
 - Row min-height is 56px. Radius 6px. Surface fill.
 - Grain is on the page only.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4ead6;
-  --surface: #fbf6ea;
-  --ink: #1c2744;
-  --ink-2: #3e4a66;
-  --line: #d9cbb3;
-  --primary-soft: #f3d2c8;
-  --focus: #c8102e;
-  --success-soft: #d6d8c2;
-  --success-on-soft: #1b5e3d;
-  --display: "Noto Serif Devanagari", Georgia, serif;
-  --sans: "Mukta", system-ui, sans-serif;
-}
-```
-
-Do not set `.num` in IBM Plex Mono for this pairing. The Devanagari pairing's CSS puts `.num` on the display face. Mono is for code only.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Month | Mukta | 13px | 600 | 0.04em | `--ink-2` |
-| Answer | Noto Serif Devanagari | 40px | 600 | -0.02em | `--ink` |
-| Sentence | Mukta | 15px | 400 | 0 | `--ink-2` |
-| Filter | Mukta | 15px | 600 | 0 | `--ink`, pressed on `--bg` |
-| Name | Mukta | 15px | 600 | 0 | `--ink` |
-| Meta | Mukta | 13px | 400 | 0 | `--ink-2` |
-| Amount | Noto Serif Devanagari | 16px | 600 | 0 | `--ink` |
-| In tag | Mukta | 11px | 600 | 0 | `--success-on-soft` |
-
-The 40px remainder is the only display size. Row amounts stay 16px. Do not enlarge Salary because it is income.
 
 ## Motion
 
@@ -138,6 +95,55 @@ None. Filtering shows and hides rows immediately. A slide-in is decoration. Redu
 - [ ] Salary carries the word "in" on `#d6d8c2` with `#1b5e3d`.
 - [ ] Bhatbhateni starts pressed. Tapping Rent moves the press.
 - [ ] No tab bar is drawn. Top clearance is max(54px, env(safe-area-inset-top)). Bottom clearance is max(34px, env(safe-area-inset-bottom)).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows रु 31,300, the sentence "Left after five lines.", All pressed, and five rows. Bhatbhateni starts `aria-pressed="true"`.
+2. All shows every row. Out hides Salary. In shows only Salary. Hidden rows use the `hidden` attribute.
+3. The heading and the sentence stay put when the filter changes.
+4. Tapping a row selects it and clears the previous selection. It does not open a second page in this demo. In a product, that tap opens the line you named.
+5. Amounts use lakh grouping: 1,24,000 and 1,80,000. 18,400, 4,200, and 2,100 stay as they are.
+6. No motion. Reduced motion has nothing to remove.
+7. Do not draw a tab bar in this piece. The shell, if the product has one, comes from `phone-tab-plain`.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4ead6;
+  --surface: #fbf6ea;
+  --ink: #1c2744;
+  --ink-2: #3e4a66;
+  --line: #d9cbb3;
+  --primary-soft: #f3d2c8;
+  --focus: #c8102e;
+  --success-soft: #d6d8c2;
+  --success-on-soft: #1b5e3d;
+  --display: "Noto Serif Devanagari", Georgia, serif;
+  --sans: "Mukta", system-ui, sans-serif;
+}
+```
+
+Do not set `.num` in IBM Plex Mono for this pairing. The Devanagari pairing's CSS puts `.num` on the display face. Mono is for code only.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Month | Mukta | 13px | 600 | 0.04em | `--ink-2` |
+| Answer | Noto Serif Devanagari | 40px | 600 | -0.02em | `--ink` |
+| Sentence | Mukta | 15px | 400 | 0 | `--ink-2` |
+| Filter | Mukta | 15px | 600 | 0 | `--ink`, pressed on `--bg` |
+| Name | Mukta | 15px | 600 | 0 | `--ink` |
+| Meta | Mukta | 13px | 400 | 0 | `--ink-2` |
+| Amount | Noto Serif Devanagari | 16px | 600 | 0 | `--ink` |
+| In tag | Mukta | 11px | 600 | 0 | `--success-on-soft` |
+
+The 40px remainder is the only display size. Row amounts stay 16px. Do not enlarge Salary because it is income.
 
 ## Implementation notes
 

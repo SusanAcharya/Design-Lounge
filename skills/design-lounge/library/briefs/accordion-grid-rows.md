@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A help-page FAQ for a soil subscription product. Six questions set in Newsreader at 22px sit on hairline rules over a warm paper background; the answer panels animate height with `grid-template-rows: 0fr → 1fr` so no JS ever measures `scrollHeight`. Only one answer is open at a time, the chevron rotates 180° on the same 320ms clock, and Up/Down/Home/End move focus between questions like a proper disclosure group. The detail worth copying is the height animation: pure CSS, content-agnostic, and it works with `prefers-reduced-motion` by collapsing to 1ms.
-
-## Reference behaviour
-
-1. Initial state: left column (400px) with kicker "Loam · Help", a 44px serif heading and a short paragraph; right column lists six numbered questions. Question 01 is open, its chevron pointing up and its text in `--accent`.
-2. Hover a closed question: its text turns `--accent` over 160ms. No background change, no movement.
-3. Click question 03: question 01's panel collapses (`1fr → 0fr`, 320ms) while 03's expands on the same clock; 01's chevron rotates back to 0°, 03's rotates to 180°. The answer text inside 03 fades in and slides up 4px over the same 320ms.
-4. `aria-expanded` is `true` on exactly one button, or none.
-5. Click the open question again: it collapses; nothing is open.
-6. With focus on any question: ArrowDown moves focus to the next question (wrapping from 06 to 01), ArrowUp to the previous (wrapping), Home to 01, End to 06. Moving focus does not open anything; Enter/Space toggles the focused question.
-7. Focus-visible on a question shows a 2px `--accent` outline inset 2px, rounded 6px.
-8. Some answers end with a small pill tag ("Sizing", "Delivery", "Coverage") in `--accent` on `--accent-soft`.
 
 ## Structure
 
@@ -45,51 +36,6 @@ A help-page FAQ for a soil subscription product. Six questions set in Newsreader
 - `<li class="item">` — one per question. Contains `<h3>` wrapping `<button class="q" aria-expanded aria-controls>` and the `.panel`.
 - `.q` — three children: `.n` (28px-wide number), `.t` (question text, flex 1), inline chevron SVG (20px).
 - `.panel` — `display: grid; grid-template-rows: 0fr`, `role="region" aria-labelledby`. Its single child has `overflow: hidden; min-height: 0`; inside that, `.a` holds the answer with padding `0 60px 22px 28px`.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm paper, ink, one rust accent */
-  --bg: #f4f0e8;           /* page */
-  --panel: #faf7f1;        /* reserved for cards/inputs */
-  --line: #ddd5c6;         /* hairlines between items */
-  --line-strong: #b8ad98;  /* top rule of the list, link underline */
-  --ink: #221d17;          /* questions, headings */
-  --ink-2: #5c5449;        /* answers, paragraphs */
-  --ink-3: #8c8272;        /* numbers, chevrons, captions */
-  --accent: #b5472a;       /* open/hover question, chevron, kicker, tag */
-  --accent-soft: #f1e2dc;  /* tag background */
-
-  /* type */
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Inter", system-ui, sans-serif;
-
-  /* layout */
-  --aside-w: 400px;
-  --r: 6px;                /* button focus radius */
-  --answer-pad: 0 60px 22px 28px;
-
-  /* motion */
-  --t-open: 320ms;
-  --t-fast: 160ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role            | Family     | Size | Weight | Line-height | Tracking | Case      |
-|-----------------|------------|-----:|-------:|------------:|---------:|-----------|
-| Page heading    | Newsreader (opsz 72) | 44px | 400 | 1.05  | −0.015em | sentence  |
-| Question        | Newsreader (opsz 30) | 22px | 400 | 1.25  | −0.005em | sentence  |
-| Pull quote in answer | Newsreader italic (opsz 18) | 17px | 400 | 1.5 | 0 | sentence |
-| Answer body     | Inter      | 15px | 400    | 1.55        | 0        | sentence  |
-| Answer emphasis | Inter      | 15px | 500    | 1.55        | 0        | as written |
-| Kicker / count  | Inter      | 11px | 500    | 1.3         | +0.14em  | UPPERCASE |
-| Question number | Inter      | 12px | 400    | 1           | +0.06em  | tabular numerals |
-| Tag             | Inter      | 11px | 500    | 1.3         | +0.06em  | title     |
-| Contact line    | Inter      | 13px | 400    | 1.55        | 0        | sentence  |
 
 ## Motion
 
@@ -144,6 +90,66 @@ Reduced motion: `.panel, .q svg, .a { transition-duration: 1ms }`. State is comp
 - [ ] First question is open on load.
 - [ ] Reduced motion collapses all transitions to 1ms and the UI still completes every state change.
 - [ ] Body text contrast ≥ 4.5:1 throughout.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: left column (400px) with kicker "Loam · Help", a 44px serif heading and a short paragraph; right column lists six numbered questions. Question 01 is open, its chevron pointing up and its text in `--accent`.
+2. Hover a closed question: its text turns `--accent` over 160ms. No background change, no movement.
+3. Click question 03: question 01's panel collapses (`1fr → 0fr`, 320ms) while 03's expands on the same clock; 01's chevron rotates back to 0°, 03's rotates to 180°. The answer text inside 03 fades in and slides up 4px over the same 320ms.
+4. `aria-expanded` is `true` on exactly one button, or none.
+5. Click the open question again: it collapses; nothing is open.
+6. With focus on any question: ArrowDown moves focus to the next question (wrapping from 06 to 01), ArrowUp to the previous (wrapping), Home to 01, End to 06. Moving focus does not open anything; Enter/Space toggles the focused question.
+7. Focus-visible on a question shows a 2px `--accent` outline inset 2px, rounded 6px.
+8. Some answers end with a small pill tag ("Sizing", "Delivery", "Coverage") in `--accent` on `--accent-soft`.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm paper, ink, one rust accent */
+  --bg: #f4f0e8;           /* page */
+  --panel: #faf7f1;        /* reserved for cards/inputs */
+  --line: #ddd5c6;         /* hairlines between items */
+  --line-strong: #b8ad98;  /* top rule of the list, link underline */
+  --ink: #221d17;          /* questions, headings */
+  --ink-2: #5c5449;        /* answers, paragraphs */
+  --ink-3: #8c8272;        /* numbers, chevrons, captions */
+  --accent: #b5472a;       /* open/hover question, chevron, kicker, tag */
+  --accent-soft: #f1e2dc;  /* tag background */
+
+  /* type */
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Inter", system-ui, sans-serif;
+
+  /* layout */
+  --aside-w: 400px;
+  --r: 6px;                /* button focus radius */
+  --answer-pad: 0 60px 22px 28px;
+
+  /* motion */
+  --t-open: 320ms;
+  --t-fast: 160ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role            | Family     | Size | Weight | Line-height | Tracking | Case      |
+|-----------------|------------|-----:|-------:|------------:|---------:|-----------|
+| Page heading    | Newsreader (opsz 72) | 44px | 400 | 1.05  | −0.015em | sentence  |
+| Question        | Newsreader (opsz 30) | 22px | 400 | 1.25  | −0.005em | sentence  |
+| Pull quote in answer | Newsreader italic (opsz 18) | 17px | 400 | 1.5 | 0 | sentence |
+| Answer body     | Inter      | 15px | 400    | 1.55        | 0        | sentence  |
+| Answer emphasis | Inter      | 15px | 500    | 1.55        | 0        | as written |
+| Kicker / count  | Inter      | 11px | 500    | 1.3         | +0.14em  | UPPERCASE |
+| Question number | Inter      | 12px | 400    | 1           | +0.06em  | tabular numerals |
+| Tag             | Inter      | 11px | 500    | 1.3         | +0.06em  | title     |
+| Contact line    | Inter      | 13px | 400    | 1.55        | 0        | sentence  |
 
 ## Implementation notes
 

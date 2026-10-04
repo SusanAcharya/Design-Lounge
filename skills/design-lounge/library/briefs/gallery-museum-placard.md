@@ -4,22 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One room of a museum, drawn as a page. Four paintings hang on a single eye line across an oxblood wall, each under a small brass picture light, each with a cream wall label to its right: artist, nationality and dates, title in italic, year, medium. A skirting board, a wooden floor and a gallery bench sit at the bottom. Selecting a work zooms it out of its place on the wall into a darkened view, and the label grows into a 380px reading panel with the full record and a curator's note. The detail worth copying is that the label is the panel. The small wall label and the side panel use the same fields in the same order, so the zoom reads as walking up to the wall.
 
 The paintings are SVG scenes run through an `feTurbulence` + `feDisplacementMap` filter so edges wobble like brushwork. No image files.
-
-## Reference behaviour
-
-1. First frame: four works on one horizontal centre line, left to right: Low Tide at Varre (gilt), Woman Reading by a Window (walnut with mat), Blue Interval No. 4 (black float frame), Pears and a Stoneware Jug (gilt). Header right reads "Room 12" and "Select a work to read its label".
-2. Hovering a painting lifts its frame 2px and deepens the shadow. The cursor is `zoom-in`.
-3. Clicking a painting (or Enter/Space on it) opens the detail view. The view fades in over 320ms. The painting animates from its wall position and size to its large size (FLIP, 560ms expo-out). The wall copy is hidden while the big copy is up, so there is only ever one.
-4. The panel slides in from 24px right and fades in, 400ms, delayed 120ms. It shows artist, dates, title (34px italic), a definition list (Date, Medium, Size, Credit with accession number), the note, and "N of 4" with Previous and Next.
-5. Focus moves to the close button. Tab cycles inside the dialog only.
-6. ← and → (or the panel arrows) step to the previous and next work, wrapping. The big painting cross-fades in from 24px on the side it came from (320ms).
-7. Esc, the close button, or a click on the dark area outside the painting closes. The painting flies back to its spot on the wall (380ms), the view fades out, and focus returns to that painting.
-8. Reduced motion: no FLIP, no slide; the view and panel appear and disappear without transition.
 
 ## Structure
 
@@ -54,58 +45,6 @@ Detail (fixed, full frame), grid: 1fr | 380px
 - `main.wall` (labelled "Gallery wall"): four `.work` rows, each a `button.art` (lamp, frame, SVG) plus a `div.placard`.
 - `.bench` and the floor are decorative (`aria-hidden`, pseudo-elements).
 - `div.detail` with `role="dialog"`, `aria-modal="true"`, `aria-labelledby` → the panel `h2`. Inside: `.stagebig` with the big framed copy, `aside.panel`, and the close button.
-
-## Tokens
-
-```css
-:root {
-  --wall: #6b2420;      /* oxblood wall */
-  --wall-2: #58201c;    /* wall edges */
-  --wall-dk: #2a1210;   /* detail backdrop */
-  --floor: #3b2a20;
-  --skirt: #4e1c19;
-  --gilt: #c29a55;
-  --gilt-2: #8a6a33;
-  --walnut: #3a271c;
-  --black: #16110f;     /* float frame */
-  --card: #f3eee3;      /* labels, panel */
-  --card-ink: #1f1a17;
-  --card-ink-2: #5d544b;
-  --card-line: #d8cfbf;
-  --ink: #f3e9df;       /* text on wall */
-  --ink-2: #d9b9ac;
-  --serif: "Bodoni Moda", Didot, Georgia, serif;
-  --sans: "Jost", system-ui, sans-serif;
-  --expo: cubic-bezier(.16,1,.3,1);
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --panel-w: 380px;
-  --placard-w: 88px;
-}
-```
-
-Frames:
-
-- Gilt: 14px padding, `linear-gradient(135deg, #e2c27f, #c29a55 30%, #8a6a33 55%, #d8b46d 80%, #8a6a33)`, inset rings `2px #6b4f22` and `5px #e9cd8c`, 2px dark slip around the canvas.
-- Walnut: 12px, `linear-gradient(160deg, #4a3324, #3a271c 50%, #24170f)`, 14px `#efe7d6` mat.
-- Float: 10px `#16110f`, 6px `#0b0908` gap around the canvas.
-- All frames: `0 18px 26px -10px #000a, 0 2px 3px #0007`. Big frame: `0 40px 60px -20px #000c`.
-- Picture light: brass bar 44% of frame width, 6px tall, 22px above; glow `radial-gradient(50% 55% at 50% 30%, #ffd9a61f, transparent 70%)` on the wall behind.
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Kicker | Jost | 11px | 500 | 0.24em, upper | `--ink-2` |
-| h1 | Bodoni Moda | 34px / 1.1 | 400 (subtitle italic) | −0.01em | `--ink` |
-| Room no. | Jost | 13px | 400 | 0.2em, upper | `--ink-2` |
-| Label artist | Jost | 11px / 1.2 | 500 | 0.02em | `--card-ink` |
-| Label title | Bodoni Moda italic | 12px / 1.2 | 400 | 0 | `--card-ink` |
-| Label meta | Jost | 10px / 1.35 | 400 | 0 | `--card-ink-2` |
-| Panel artist | Jost | 15px | 500 | 0.02em | `--card-ink` |
-| Panel title h2 | Bodoni Moda italic | 34px / 1.08 | 400 | −0.01em | `--card-ink` |
-| Panel dt | Jost | 11px | 400 | 0.14em, upper | `--card-ink-2` |
-| Panel dd | Jost | 13px | 400 | 0 | `--card-ink` |
-| Note | Bodoni Moda | 16px / 1.6 | 400 | 0, max 34ch | `--card-ink` |
 
 ## Motion
 
@@ -164,6 +103,73 @@ Frames:
 - [ ] Works: Ostergaard 1912, Halm 1926, Anselm 1958, Vollrath 1934.
 - [ ] Panel 380px; title 34px Bodoni Moda italic.
 - [ ] Zoom 560ms, return 380ms, expo-out.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: four works on one horizontal centre line, left to right: Low Tide at Varre (gilt), Woman Reading by a Window (walnut with mat), Blue Interval No. 4 (black float frame), Pears and a Stoneware Jug (gilt). Header right reads "Room 12" and "Select a work to read its label".
+2. Hovering a painting lifts its frame 2px and deepens the shadow. The cursor is `zoom-in`.
+3. Clicking a painting (or Enter/Space on it) opens the detail view. The view fades in over 320ms. The painting animates from its wall position and size to its large size (FLIP, 560ms expo-out). The wall copy is hidden while the big copy is up, so there is only ever one.
+4. The panel slides in from 24px right and fades in, 400ms, delayed 120ms. It shows artist, dates, title (34px italic), a definition list (Date, Medium, Size, Credit with accession number), the note, and "N of 4" with Previous and Next.
+5. Focus moves to the close button. Tab cycles inside the dialog only.
+6. ← and → (or the panel arrows) step to the previous and next work, wrapping. The big painting cross-fades in from 24px on the side it came from (320ms).
+7. Esc, the close button, or a click on the dark area outside the painting closes. The painting flies back to its spot on the wall (380ms), the view fades out, and focus returns to that painting.
+8. Reduced motion: no FLIP, no slide; the view and panel appear and disappear without transition.
+
+## Tokens
+
+```css
+:root {
+  --wall: #6b2420;      /* oxblood wall */
+  --wall-2: #58201c;    /* wall edges */
+  --wall-dk: #2a1210;   /* detail backdrop */
+  --floor: #3b2a20;
+  --skirt: #4e1c19;
+  --gilt: #c29a55;
+  --gilt-2: #8a6a33;
+  --walnut: #3a271c;
+  --black: #16110f;     /* float frame */
+  --card: #f3eee3;      /* labels, panel */
+  --card-ink: #1f1a17;
+  --card-ink-2: #5d544b;
+  --card-line: #d8cfbf;
+  --ink: #f3e9df;       /* text on wall */
+  --ink-2: #d9b9ac;
+  --serif: "Bodoni Moda", Didot, Georgia, serif;
+  --sans: "Jost", system-ui, sans-serif;
+  --expo: cubic-bezier(.16,1,.3,1);
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --panel-w: 380px;
+  --placard-w: 88px;
+}
+```
+
+Frames:
+
+- Gilt: 14px padding, `linear-gradient(135deg, #e2c27f, #c29a55 30%, #8a6a33 55%, #d8b46d 80%, #8a6a33)`, inset rings `2px #6b4f22` and `5px #e9cd8c`, 2px dark slip around the canvas.
+- Walnut: 12px, `linear-gradient(160deg, #4a3324, #3a271c 50%, #24170f)`, 14px `#efe7d6` mat.
+- Float: 10px `#16110f`, 6px `#0b0908` gap around the canvas.
+- All frames: `0 18px 26px -10px #000a, 0 2px 3px #0007`. Big frame: `0 40px 60px -20px #000c`.
+- Picture light: brass bar 44% of frame width, 6px tall, 22px above; glow `radial-gradient(50% 55% at 50% 30%, #ffd9a61f, transparent 70%)` on the wall behind.
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Kicker | Jost | 11px | 500 | 0.24em, upper | `--ink-2` |
+| h1 | Bodoni Moda | 34px / 1.1 | 400 (subtitle italic) | −0.01em | `--ink` |
+| Room no. | Jost | 13px | 400 | 0.2em, upper | `--ink-2` |
+| Label artist | Jost | 11px / 1.2 | 500 | 0.02em | `--card-ink` |
+| Label title | Bodoni Moda italic | 12px / 1.2 | 400 | 0 | `--card-ink` |
+| Label meta | Jost | 10px / 1.35 | 400 | 0 | `--card-ink-2` |
+| Panel artist | Jost | 15px | 500 | 0.02em | `--card-ink` |
+| Panel title h2 | Bodoni Moda italic | 34px / 1.08 | 400 | −0.01em | `--card-ink` |
+| Panel dt | Jost | 11px | 400 | 0.14em, upper | `--card-ink-2` |
+| Panel dd | Jost | 13px | 400 | 0 | `--card-ink` |
+| Note | Bodoni Moda | 16px / 1.6 | 400 | 0, max 34ch | `--card-ink` |
 
 ## Implementation notes
 

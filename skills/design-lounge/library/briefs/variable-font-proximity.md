@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A type-foundry specimen hero on a cream page. The headline "Weight follows your hand" is set in Fraunces Variable at 148px, weight 300. As the pointer moves across it, each letter's `wght` axis is driven by its distance to the cursor: the nearest glyph reaches 900 and turns rust-red, letters within a 260px radius blend between, everything else stays at 300. On leave, the letters ease back to 300 over 520ms. Keyboard focus and `prefers-reduced-motion` show a static heavy state (800) so nobody misses the point. The detail worth copying: weight is written per-letter via a custom property (`--w`) and rendered by `font-variation-settings`, with a CSS transition doing the smoothing, so the JS only sets numbers.
-
-## Reference behaviour
-
-1. Initial state: 64px header (brand, 4 nav links, dark pill CTA "Trial fonts"), a kicker line "Fraunces Variable · 100–900 · optical size 9–144", the headline at weight 300, a 420px paragraph, three stats on the right, and a 52px footer with a status readout "Weight 300 — resting" beside a 6px rust dot.
-2. Pointer enters the `<h1>`: letter centres are measured once (`getBoundingClientRect`), the footer dot scales to 1.6 over 160ms.
-3. Pointer moves: on each `requestAnimationFrame`, for every letter compute `d` = distance from cursor to the letter's centre, `t = smoothstep(1 − d/260)`, then `wght = 300 + 600·t` and `SOFT = 30 + 70·t`. Letters with `t > 0.92` get class `.hot` (colour `--accent`). Each letter's `font-variation-settings` transitions over 180ms so the weight glides rather than snaps.
-4. The footer readout updates to the heaviest weight in the frame: "Weight 900 — peak" or "Weight 640 — blending".
-5. Pointer leaves: every letter gets `.leave` (transition 520ms expo-out), `--w` resets to 300, `.hot` is removed, readout returns to "Weight 300 — resting", dot scales back.
-6. Tab to the headline (`tabindex="0"`): a 2px rust focus ring at 4px offset appears and all letters jump to weight 800 / SOFT 60 with no transition; readout says "Weight 800 — keyboard".
-7. With `prefers-reduced-motion: reduce`, the body gets `.static`: the headline sits permanently at weight 800, the pointer handlers are never attached, readout says "Weight 800 — static (reduced motion)".
-8. Hovering nav links darkens them to `--ink`; hovering the CTA fills it with `--accent`.
 
 ## Structure
 
@@ -44,61 +35,6 @@ A type-foundry specimen hero on a cream page. The headline "Weight follows your 
   - `<h1 id="hl" tabindex="0" aria-label="Weight follows your hand">` — JS splits the text into `<span class="l">` per letter and `<span class="sp">` per space, all `aria-hidden="true"`.
   - `.sub` — 2-column grid `420px 1fr`, gap 48px, align end: paragraph left, `.meta` stats right.
 - `<footer>` — `.status` (`.dot` + `#read` live text) and a right-aligned caption.
-
-## Tokens
-
-```css
-:root {
-  /* colour — cream paper, warm near-black ink, one rust accent */
-  --bg: #f4efe4;        /* page */
-  --bg-2: #ede6d6;      /* reserved for hover surfaces */
-  --ink: #1c1a16;       /* headline, primary text */
-  --ink-2: #6b655a;     /* paragraph, nav */
-  --ink-3: #9a9385;     /* kicker, meta labels, footer */
-  --line: #d9d1c0;      /* hairlines */
-  --accent: #b4472b;    /* hot letters, focus ring, CTA hover, dot */
-
-  /* type */
-  --serif: "Fraunces", Georgia, serif;          /* axes: opsz 9..144, wght 100..900, SOFT 0..100 */
-  --sans: "Instrument Sans", system-ui, sans-serif;
-
-  /* proximity model */
-  --w-min: 300;         /* resting weight */
-  --w-max: 900;         /* weight under the cursor */
-  --radius: 260px;      /* falloff radius */
-
-  /* layout */
-  --header-h: 64px;
-  --footer-h: 52px;
-  --gutter: 48px;
-  --measure: 420px;     /* paragraph width */
-  --r-focus: 8px;       /* headline focus-ring radius */
-
-  /* motion */
-  --t-micro: 160ms;     /* colour, dot */
-  --t-weight: 180ms;    /* per-letter weight glide while hovering */
-  --t-leave: 520ms;     /* ease back to rest */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role          | Family          | Size  | Weight        | Line-height | Tracking | Case      | Extra axes |
-|---------------|-----------------|------:|--------------:|------------:|---------:|-----------|------------|
-| Headline      | Fraunces        | 148px | 300 → 900 var | 0.92        | −0.035em | sentence  | `opsz` 144, `SOFT` 30 → 100 |
-| Headline (focus / reduced) | Fraunces | 148px | 800   | 0.92        | −0.035em | sentence  | `SOFT` 60 |
-| Kicker        | Instrument Sans | 12px  | 400           | 1           | +0.14em  | UPPERCASE | — |
-| Paragraph     | Instrument Sans | 17px  | 400           | 1.5         | 0        | sentence  | — |
-| Nav / body    | Instrument Sans | 14px  | 400           | 1.5         | 0        | sentence  | — |
-| Brand         | Instrument Sans | 15px  | 500           | 1           | −0.01em  | sentence  | — |
-| CTA           | Instrument Sans | 13px  | 500           | 1           | 0        | sentence  | — |
-| Stat value    | Fraunces        | 22px  | 500           | 1.1         | −0.01em  | numerals  | `opsz` 24 |
-| Stat label / footer | Instrument Sans | 13px / 12px | 400 | 1.5   | 0        | sentence  | — |
-
-Load Fraunces with the axis ranges in the URL, otherwise the browser gets static instances and nothing animates:
-`family=Fraunces:opsz,wght,SOFT@9..144,100..900,0..100`.
 
 ## Motion
 
@@ -154,6 +90,76 @@ Reduced motion: no pointer listeners are attached; `.static .l` is fixed at wght
 - [ ] With `prefers-reduced-motion: reduce` no pointer listeners run and the headline is static at 800.
 - [ ] Footer readout shows the current peak weight and the dot scales 1.6 while hovering.
 - [ ] No console errors; only one rAF is queued at a time.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 64px header (brand, 4 nav links, dark pill CTA "Trial fonts"), a kicker line "Fraunces Variable · 100–900 · optical size 9–144", the headline at weight 300, a 420px paragraph, three stats on the right, and a 52px footer with a status readout "Weight 300 — resting" beside a 6px rust dot.
+2. Pointer enters the `<h1>`: letter centres are measured once (`getBoundingClientRect`), the footer dot scales to 1.6 over 160ms.
+3. Pointer moves: on each `requestAnimationFrame`, for every letter compute `d` = distance from cursor to the letter's centre, `t = smoothstep(1 − d/260)`, then `wght = 300 + 600·t` and `SOFT = 30 + 70·t`. Letters with `t > 0.92` get class `.hot` (colour `--accent`). Each letter's `font-variation-settings` transitions over 180ms so the weight glides rather than snaps.
+4. The footer readout updates to the heaviest weight in the frame: "Weight 900 — peak" or "Weight 640 — blending".
+5. Pointer leaves: every letter gets `.leave` (transition 520ms expo-out), `--w` resets to 300, `.hot` is removed, readout returns to "Weight 300 — resting", dot scales back.
+6. Tab to the headline (`tabindex="0"`): a 2px rust focus ring at 4px offset appears and all letters jump to weight 800 / SOFT 60 with no transition; readout says "Weight 800 — keyboard".
+7. With `prefers-reduced-motion: reduce`, the body gets `.static`: the headline sits permanently at weight 800, the pointer handlers are never attached, readout says "Weight 800 — static (reduced motion)".
+8. Hovering nav links darkens them to `--ink`; hovering the CTA fills it with `--accent`.
+
+## Tokens
+
+```css
+:root {
+  /* colour — cream paper, warm near-black ink, one rust accent */
+  --bg: #f4efe4;        /* page */
+  --bg-2: #ede6d6;      /* reserved for hover surfaces */
+  --ink: #1c1a16;       /* headline, primary text */
+  --ink-2: #6b655a;     /* paragraph, nav */
+  --ink-3: #9a9385;     /* kicker, meta labels, footer */
+  --line: #d9d1c0;      /* hairlines */
+  --accent: #b4472b;    /* hot letters, focus ring, CTA hover, dot */
+
+  /* type */
+  --serif: "Fraunces", Georgia, serif;          /* axes: opsz 9..144, wght 100..900, SOFT 0..100 */
+  --sans: "Instrument Sans", system-ui, sans-serif;
+
+  /* proximity model */
+  --w-min: 300;         /* resting weight */
+  --w-max: 900;         /* weight under the cursor */
+  --radius: 260px;      /* falloff radius */
+
+  /* layout */
+  --header-h: 64px;
+  --footer-h: 52px;
+  --gutter: 48px;
+  --measure: 420px;     /* paragraph width */
+  --r-focus: 8px;       /* headline focus-ring radius */
+
+  /* motion */
+  --t-micro: 160ms;     /* colour, dot */
+  --t-weight: 180ms;    /* per-letter weight glide while hovering */
+  --t-leave: 520ms;     /* ease back to rest */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role          | Family          | Size  | Weight        | Line-height | Tracking | Case      | Extra axes |
+|---------------|-----------------|------:|--------------:|------------:|---------:|-----------|------------|
+| Headline      | Fraunces        | 148px | 300 → 900 var | 0.92        | −0.035em | sentence  | `opsz` 144, `SOFT` 30 → 100 |
+| Headline (focus / reduced) | Fraunces | 148px | 800   | 0.92        | −0.035em | sentence  | `SOFT` 60 |
+| Kicker        | Instrument Sans | 12px  | 400           | 1           | +0.14em  | UPPERCASE | — |
+| Paragraph     | Instrument Sans | 17px  | 400           | 1.5         | 0        | sentence  | — |
+| Nav / body    | Instrument Sans | 14px  | 400           | 1.5         | 0        | sentence  | — |
+| Brand         | Instrument Sans | 15px  | 500           | 1           | −0.01em  | sentence  | — |
+| CTA           | Instrument Sans | 13px  | 500           | 1           | 0        | sentence  | — |
+| Stat value    | Fraunces        | 22px  | 500           | 1.1         | −0.01em  | numerals  | `opsz` 24 |
+| Stat label / footer | Instrument Sans | 13px / 12px | 400 | 1.5   | 0        | sentence  | — |
+
+Load Fraunces with the axis ranges in the URL, otherwise the browser gets static instances and nothing animates:
+`family=Fraunces:opsz,wght,SOFT@9..144,100..900,0..100`.
 
 ## Implementation notes
 

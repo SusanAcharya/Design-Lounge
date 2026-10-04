@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A wheel for how many minutes a hold lasts. Values run from 1 to 30. The window shows three rows and starts on 10. Dragging moves the wheel. Arrow up adds a minute. This is not a clock time. A clock is `time-field`. This is not a 0 to 12 knob. That knob is `dial-knob`. The value is a count of minutes.
-
-## Reference behaviour
-
-1. The value starts at 10. The caption reads 10 minutes.
-2. The selected row is dark. Neighbours are #5a554c.
-3. Drag changes the value by the pointer delta over 60px per minute.
-4. ArrowUp adds 1. ArrowDown subtracts 1. Home is 1. End is 30.
-5. The value clamps. It does not wrap.
-6. aria-valuenow matches the number.
-7. Fades at the top and bottom of the window are decorative.
 
 ## Structure
 
@@ -34,20 +26,6 @@ Hold minutes
 - The column translates so the value sits in the middle row.
 - The window is role slider.
 - The caption is 14px.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c; --line:#e4dfd4; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Title | IBM Plex Sans | 22px | 600 |
-| Minute | IBM Plex Sans | 28px | 600 |
-| Caption | IBM Plex Sans | 14px | 400 |
 
 ## Motion
 
@@ -92,16 +70,6 @@ Hold minutes
 - [ ] The caption is 10 minutes.
 - [ ] There are 30 rows.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Middle row is index 1 of the visible three, so translate is (2 - (val-1)) * 60.
-
-```js
-col.style.transform = "translateY(" + ((2 - (val - 1)) * 60) + "px)";
-```
-
-Round to an integer.
 
 ## Measurements to keep
 
@@ -170,6 +138,44 @@ Round to an integer.
 - While rebuilding, remember: Do not hide the caption.
 - While rebuilding, remember: Do not use a scrollbar.
 - While rebuilding, remember: Do not show seconds.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The value starts at 10. The caption reads 10 minutes.
+2. The selected row is dark. Neighbours are #5a554c.
+3. Drag changes the value by the pointer delta over 60px per minute.
+4. ArrowUp adds 1. ArrowDown subtracts 1. Home is 1. End is 30.
+5. The value clamps. It does not wrap.
+6. aria-valuenow matches the number.
+7. Fades at the top and bottom of the window are decorative.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c; --line:#e4dfd4; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Title | IBM Plex Sans | 22px | 600 |
+| Minute | IBM Plex Sans | 28px | 600 |
+| Caption | IBM Plex Sans | 14px | 400 |
+
+## Implementation notes
+
+Middle row is index 1 of the visible three, so translate is (2 - (val-1)) * 60.
+
+```js
+col.style.transform = "translateY(" + ((2 - (val - 1)) * 60) + "px)";
+```
+
+Round to an integer.
 
 ---
 

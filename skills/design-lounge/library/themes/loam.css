@@ -1,6 +1,7 @@
 /* Loam · light · no pair
    Garden journal. Olive, cream, a rust that looks like soil.
    Best for: Food, Wellness, Field notes */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Loam · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Young Serif", Georgia, serif;
-  --font-text: "Hanken Grotesk", system-ui, sans-serif;
-  --radius: 10px;
-  --shadow: 0 12px 28px -16px rgba(30,42,30,.22);
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

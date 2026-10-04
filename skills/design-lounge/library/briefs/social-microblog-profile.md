@@ -4,23 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The top of a person's page on a short-post network, in a near-black theme with one acid-lime accent. A 620px timeline column holds a contour-ring banner with a coordinate tag and a glowing pin, a 128px avatar overlapping the banner, actions on the right (more, bell, Follow), name with a verified seal, a mono handle with a "Follows you" chip, bio with lime links, a meta row, follow counts, and a three-tab strip that swaps the timeline below.
 
 The member is Saoirse Dunleavy, a Galway cartographer, so the banner is a map: concentric rings around her pin, a halftone screen over it, the latitude and longitude in DM Mono. The detail worth copying is the behaviour of the Follow cluster: the bell is disabled until you follow, the Following pill reads "Unfollow" in coral on hover, and the follower count changes by exactly one.
-
-## Reference behaviour
-
-1. First frame: Posts tab selected with a 4px lime bar under its label. Two posts are visible. Follow is a solid lime pill; the bell is at 35% opacity and disabled. Followers reads "21,438".
-2. Clicking Follow: the pill becomes an outlined "Following" (`aria-pressed="true"`), Followers becomes "21,439", the bell enables, and a polite live region says "You are following Saoirse Dunleavy."
-3. Hovering the Following pill changes its label to "Unfollow" with coral text, coral 1px ring and an 8% coral wash. Leaving restores "Following".
-4. Clicking it again unfollows: back to lime "Follow", count returns to 21,438, bell disables and resets to off, live region says "Unfollowed Saoirse Dunleavy."
-5. Clicking the bell (only when following) toggles `aria-pressed`; on it turns lime with a lime ring. Announces "Notifications on for new posts." / "Notifications off."
-6. Clicking a tab selects it: label goes bold and full ink, the lime bar slides and resizes to the label width + 8px over 360ms, and the matching panel fades up 6px over 320ms. Other panels are `hidden`.
-7. With focus on a tab, Left/Right move and select (wrapping), Home/End jump to first/last. Only the selected tab is in the tab order.
-8. Replies shows two posts with a "Replying to @…" line. Media shows a 3×2 grid of square, CSS-drawn map tiles with mono captions; tiles brighten 15% on hover.
-9. Bio links, the site link and mentions are inert in the demo.
 
 ## Structure
 
@@ -54,62 +44,6 @@ page 1280×800, dotted bg, column 620px centred, 1px side rules
 - Tabs: `div role="tablist" aria-label="Profile timeline"` with three `button role="tab"`, each label wrapped in a `span` (measured for the bar). The bar is a decorative absolutely positioned `span`.
 - Panels: `section role="tabpanel" tabindex="0" aria-labelledby`. Posts are `article`s. Media tiles are `button`s with `aria-label`.
 - Hidden `p aria-live="polite"` for announcements.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #0e0f0c;         /* page, with lime dot grid at 5% */
-  --col: #141611;        /* timeline column */
-  --raise: #1b1e17;      /* hover wash, chips */
-  --line: #2a2e24;       /* hairlines */
-  --ink: #eeede4;        /* primary text */
-  --ink-2: #b0b2a4;      /* chip text */
-  --ink-3: #8b8e80;      /* meta, handles, inactive tabs */
-  --lime: #c8f23a;       /* accent: Follow, links, tab bar, seal, focus */
-  --lime-ink: #151a05;   /* text on lime */
-  --danger: #ff6b5a;     /* Unfollow hover only */
-
-  /* type */
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-
-  /* space */
-  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px;
-
-  /* shape */
-  --r-pill: 999px;
-  --r-chip: 4px;
-  --bar-h: 4px;
-
-  /* motion */
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --t-micro: 160ms;
-  --t-bar: 360ms;
-  --t-panel: 320ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size / lh | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Name | Bricolage Grotesque (opsz 48) | 26px / 1.1 | 800 | -0.02em | `--ink` |
-| Handle | DM Mono | 14px | 400 | 0 | `--ink-3` |
-| Chip "Follows you" | DM Mono | 11px | 500 | 0 | `--ink-2` on `--raise` |
-| Bio | Bricolage Grotesque | 15px / 1.45 | 400 | 0 | `--ink`, links `--lime` |
-| Meta row | Bricolage Grotesque | 14px | 400 | 0 | `--ink-3`, 17px icons |
-| Count number | Bricolage Grotesque | 14px | 700 | 0 | `--ink`, tabular-nums |
-| Follow | Bricolage Grotesque | 15px | 700 | 0 | `--lime-ink` on lime |
-| Tab | Bricolage Grotesque | 15px | 500 / 700 selected | 0 | `--ink-3` / `--ink` |
-| Post author | Bricolage Grotesque | 14px | 700 | 0 | |
-| Post handle + time | DM Mono | 13px | 400 | 0 | `--ink-3` |
-| Post stats | DM Mono | 12.5px | 400 | 0 | `--ink-3`, 16px icons |
-| Banner coords | DM Mono | 11px | 500 | 0.06em | lime on 70% black |
-
-Mono is for machine-ish strings: handles, timestamps, counts on posts, coordinates. Names and prose are the grotesque.
 
 ## Motion
 
@@ -173,6 +107,78 @@ On first paint, place the bar with transitions disabled, force a reflow, then re
 - [ ] Counts: 482 Following, 21,438 → 21,439 Followers.
 - [ ] Banner tag "53.2707° N, 9.0568° W" and a lime pin at 70% / 60%.
 - [ ] Media grid: Rossaveel, Hatching, Inis Meáin, Spiddal, Rose, Night tide.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Posts tab selected with a 4px lime bar under its label. Two posts are visible. Follow is a solid lime pill; the bell is at 35% opacity and disabled. Followers reads "21,438".
+2. Clicking Follow: the pill becomes an outlined "Following" (`aria-pressed="true"`), Followers becomes "21,439", the bell enables, and a polite live region says "You are following Saoirse Dunleavy."
+3. Hovering the Following pill changes its label to "Unfollow" with coral text, coral 1px ring and an 8% coral wash. Leaving restores "Following".
+4. Clicking it again unfollows: back to lime "Follow", count returns to 21,438, bell disables and resets to off, live region says "Unfollowed Saoirse Dunleavy."
+5. Clicking the bell (only when following) toggles `aria-pressed`; on it turns lime with a lime ring. Announces "Notifications on for new posts." / "Notifications off."
+6. Clicking a tab selects it: label goes bold and full ink, the lime bar slides and resizes to the label width + 8px over 360ms, and the matching panel fades up 6px over 320ms. Other panels are `hidden`.
+7. With focus on a tab, Left/Right move and select (wrapping), Home/End jump to first/last. Only the selected tab is in the tab order.
+8. Replies shows two posts with a "Replying to @…" line. Media shows a 3×2 grid of square, CSS-drawn map tiles with mono captions; tiles brighten 15% on hover.
+9. Bio links, the site link and mentions are inert in the demo.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #0e0f0c;         /* page, with lime dot grid at 5% */
+  --col: #141611;        /* timeline column */
+  --raise: #1b1e17;      /* hover wash, chips */
+  --line: #2a2e24;       /* hairlines */
+  --ink: #eeede4;        /* primary text */
+  --ink-2: #b0b2a4;      /* chip text */
+  --ink-3: #8b8e80;      /* meta, handles, inactive tabs */
+  --lime: #c8f23a;       /* accent: Follow, links, tab bar, seal, focus */
+  --lime-ink: #151a05;   /* text on lime */
+  --danger: #ff6b5a;     /* Unfollow hover only */
+
+  /* type */
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+
+  /* space */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px;
+
+  /* shape */
+  --r-pill: 999px;
+  --r-chip: 4px;
+  --bar-h: 4px;
+
+  /* motion */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --t-micro: 160ms;
+  --t-bar: 360ms;
+  --t-panel: 320ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size / lh | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Name | Bricolage Grotesque (opsz 48) | 26px / 1.1 | 800 | -0.02em | `--ink` |
+| Handle | DM Mono | 14px | 400 | 0 | `--ink-3` |
+| Chip "Follows you" | DM Mono | 11px | 500 | 0 | `--ink-2` on `--raise` |
+| Bio | Bricolage Grotesque | 15px / 1.45 | 400 | 0 | `--ink`, links `--lime` |
+| Meta row | Bricolage Grotesque | 14px | 400 | 0 | `--ink-3`, 17px icons |
+| Count number | Bricolage Grotesque | 14px | 700 | 0 | `--ink`, tabular-nums |
+| Follow | Bricolage Grotesque | 15px | 700 | 0 | `--lime-ink` on lime |
+| Tab | Bricolage Grotesque | 15px | 500 / 700 selected | 0 | `--ink-3` / `--ink` |
+| Post author | Bricolage Grotesque | 14px | 700 | 0 | |
+| Post handle + time | DM Mono | 13px | 400 | 0 | `--ink-3` |
+| Post stats | DM Mono | 12.5px | 400 | 0 | `--ink-3`, 16px icons |
+| Banner coords | DM Mono | 11px | 500 | 0.06em | lime on 70% black |
+
+Mono is for machine-ish strings: handles, timestamps, counts on posts, coordinates. Names and prose are the grotesque.
 
 ## Implementation notes
 

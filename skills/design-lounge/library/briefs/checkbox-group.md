@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the radius and the control height follow the family. One choice among visible answers is `radio-group`. This is several choices that can all be on.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The loads on one truck. The legend is On this truck. Rice and Oil start checked. Tea starts clear. A line under the group names what is on: "Rice and Oil are on the truck." Clearing both leaves "Nothing is on the truck." Checking all three leaves "Rice, Oil, and Tea are on the truck." Each row is at least 40px. The box is a native checkbox, 18px, with the yard green as the accent. There is no strike-through, no drawn pencil, and no count of nine. The hint says a load can be on or off, and the shift stays one choice.
-
-## Reference behaviour
-
-1. The first frame has Rice and Oil checked and Tea clear. The status is "Rice and Oil are on the truck."
-2. Checking or clearing a box rewrites the status from the boxes that are on, in the order Rice, Oil, Tea.
-3. One box on reads "{name} is on the truck."
-4. Two boxes on read "{first} and {second} are on the truck."
-5. All three read "Rice, Oil, and Tea are on the truck."
-6. None on reads "Nothing is on the truck."
-7. There is no submit button and no animation.
-8. Focus-visible is a 2px outline, offset 3px, on the box.
 
 ## Structure
 
@@ -36,36 +27,6 @@ width 420
 - The three boxes share one `name` so they are a group, and each has its own value.
 - The row is the label. The box and the word are inside it.
 - The status is `role="status"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #5c564e;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-The box uses `accent-color: var(--primary)`. The family may restyle the box. Do not replace it with a drawn pencil.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Legend | sans | 12px | 500 | `--ink-2` |
-| Row | sans | 14px | 400 | `--ink` |
-| Hint | sans | 12px | 400 | `--ink-3` |
-| Status | sans | 12px | 400 | `--ink` |
-
-The where-line letter-spacing is 0.04em. The row is the body size. Do not set the load names in a display face.
 
 ## Motion
 
@@ -112,6 +73,51 @@ None. The status changes in one frame. Reduced motion has nothing to remove. Do 
 - [ ] There is no strike-through and no drawn check animation.
 - [ ] Focus ring is 2px, offset 3px.
 - [ ] The names are Rice, Oil, and Tea, the same loads as the token field.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame has Rice and Oil checked and Tea clear. The status is "Rice and Oil are on the truck."
+2. Checking or clearing a box rewrites the status from the boxes that are on, in the order Rice, Oil, Tea.
+3. One box on reads "{name} is on the truck."
+4. Two boxes on read "{first} and {second} are on the truck."
+5. All three read "Rice, Oil, and Tea are on the truck."
+6. None on reads "Nothing is on the truck."
+7. There is no submit button and no animation.
+8. Focus-visible is a 2px outline, offset 3px, on the box.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #5c564e;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+The box uses `accent-color: var(--primary)`. The family may restyle the box. Do not replace it with a drawn pencil.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Legend | sans | 12px | 500 | `--ink-2` |
+| Row | sans | 14px | 400 | `--ink` |
+| Hint | sans | 12px | 400 | `--ink-3` |
+| Status | sans | 12px | 400 | `--ink` |
+
+The where-line letter-spacing is 0.04em. The row is the body size. Do not set the load names in a display face.
 
 ## Implementation notes
 

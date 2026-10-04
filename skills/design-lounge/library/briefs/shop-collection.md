@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. The next screen is `shop-product`.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The collection for a clay shop called Kiln. The page is fired-clay paper. "Kiln" is a 12px label. "This firing" is a 40px serif heading. Four shelf filters sit under it: All, Bowls, Cups, Lamps. Six pieces sit in a three-column grid. Each card is a clay colour field, a name, and a price. Ash bowl starts selected. The only primary button reads "Open ash bowl". Lamps is an empty shelf: the heading becomes the empty sentence, and the button becomes "Show everything". There is no hero photograph, no sale banner, and no second shop inside this page. Opening a piece goes to `shop-product`. It does not go to the fragrance detail unless the product they named is that fragrance.
-
-## Reference behaviour
-
-1. All is pressed. Six cards are visible. Ash bowl is pressed. The button reads "Open ash bowl".
-2. Clicking a card selects it and rewrites the button as "Open {name}" in lower case. The previous card loses the ring.
-3. Clicking the open button sets "Opening {name}" and disables it. It does not navigate inside this demo. In a product, it opens `shop-product` for that piece.
-4. Bowls shows Ash bowl and Night plate. Cups shows Salt cup and Small lid. All also shows Clay jug and Fire vase.
-5. Lamps shows no cards. The heading "This firing" hides. The empty heading reads "No lamps this firing." The open button hides. "Show everything" is the primary button.
-6. "Show everything" returns to All and restores the heading, the grid, and the open button.
-7. There is no animation.
-8. Focus ring is 2px `--focus`, offset 2px.
 
 ## Structure
 
@@ -35,40 +26,6 @@ empty, hidden until Lamps
 - Cards are buttons. The colour field is decorative and `aria` comes from the button name via its text.
 - The empty block is hidden until the shelf has zero pieces.
 - Do not draw product photography. The colour field is the stand-in.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f3e6d4;
-  --surface: #faefe0;
-  --ink: #2a1b14;
-  --ink-2: #6a4e3e;
-  --ink-3: #9a7d68;
-  --line: #d8c0a4;
-  --primary: #c45c2a;
-  --primary-ink: #fffdf8;
-  --focus: #c45c2a;
-  --serif: "Young Serif", Georgia, serif;
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-}
-```
-
-These are the Kiln theme colours. When a kit is locked, replace them. Keep the sizes.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 600 | `--ink-2` |
-| Title | serif | 40px | 400 | `--ink` |
-| Filter | sans | 15px | 400 | `--ink` or `--primary-ink` |
-| Name | sans | 15px | 600 | `--ink` |
-| Price | sans | 13px | 400 | `--ink-2` |
-| Empty title | serif | 32px | 400 | `--ink` |
-| Button | sans | 15px | 600 | `--primary-ink` |
-
-Prices use tabular numerals. The title letter-spacing is -0.02em.
 
 ## Motion
 
@@ -122,6 +79,55 @@ None. Reduced motion has nothing to remove. Do not fade the grid when the shelf 
 - [ ] Selected card has a 2px inset ring in `#c45c2a`.
 - [ ] No photograph, no sale banner, no second primary button.
 - [ ] Prices match the table in Implementation notes.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. All is pressed. Six cards are visible. Ash bowl is pressed. The button reads "Open ash bowl".
+2. Clicking a card selects it and rewrites the button as "Open {name}" in lower case. The previous card loses the ring.
+3. Clicking the open button sets "Opening {name}" and disables it. It does not navigate inside this demo. In a product, it opens `shop-product` for that piece.
+4. Bowls shows Ash bowl and Night plate. Cups shows Salt cup and Small lid. All also shows Clay jug and Fire vase.
+5. Lamps shows no cards. The heading "This firing" hides. The empty heading reads "No lamps this firing." The open button hides. "Show everything" is the primary button.
+6. "Show everything" returns to All and restores the heading, the grid, and the open button.
+7. There is no animation.
+8. Focus ring is 2px `--focus`, offset 2px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f3e6d4;
+  --surface: #faefe0;
+  --ink: #2a1b14;
+  --ink-2: #6a4e3e;
+  --ink-3: #9a7d68;
+  --line: #d8c0a4;
+  --primary: #c45c2a;
+  --primary-ink: #fffdf8;
+  --focus: #c45c2a;
+  --serif: "Young Serif", Georgia, serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+}
+```
+
+These are the Kiln theme colours. When a kit is locked, replace them. Keep the sizes.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 600 | `--ink-2` |
+| Title | serif | 40px | 400 | `--ink` |
+| Filter | sans | 15px | 400 | `--ink` or `--primary-ink` |
+| Name | sans | 15px | 600 | `--ink` |
+| Price | sans | 13px | 400 | `--ink-2` |
+| Empty title | serif | 32px | 400 | `--ink` |
+| Button | sans | 15px | 600 | `--primary-ink` |
+
+Prices use tabular numerals. The title letter-spacing is -0.02em.
 
 ## Implementation notes
 

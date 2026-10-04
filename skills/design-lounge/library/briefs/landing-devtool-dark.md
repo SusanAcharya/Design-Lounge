@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The marketing home page for **Kiln**, a fictional edge image-rendering API. It scrolls through a sticky nav, a two-column hero (four-line 72px headline on the left, a tabbed code card on the right), a customer logo strip, a six-cell hairline feature grid, a latency section with 112px numerals and per-region bars, a three-tier pricing teaser and a footer with a ghosted 228px wordmark. The palette is graphite with one acid-lime accent. What makes it worth copying is the code card: it reads like a real terminal. It has line numbers, a syntax palette tuned for dark backgrounds, a response pane next to a gradient "rendered image" thumbnail, and a timing strip whose bar replays every time you switch language.
-
-## Reference behaviour
-
-1. Initial state: page scrolled to top. The first 800px show the nav, the eyebrow pill, the four-line headline ending in a lime "18ms.", the lede, both CTAs, the `npm i @kiln/sdk` install chip, the three meta stats, and the full code card with the `curl` tab selected.
-2. On load the timing bar inside the code card grows from 0 to 18% width over 700ms (expo out).
-3. Click `node.js` or `python`: that tab becomes selected (lighter background, full ink), its panel fades up 4px over 280ms and the others hide. The timing bar replays its 700ms grow.
-4. With a tab focused, ArrowLeft/ArrowRight move selection cyclically and focus follows (roving tabindex).
-5. Click **Copy** in the card header: the visible sample's text, without line numbers, goes to the clipboard. The button turns lime and reads "Copied" for 1400ms, then reverts. If the clipboard API is blocked, the visual confirmation still runs.
-6. Click the copy icon in the install chip: copies `npm i @kiln/sdk` and flashes the same way (icon tints lime).
-7. Scroll: the nav stays pinned (60px, 82% opaque graphite with a 10px backdrop blur and a hairline bottom border).
-8. Hover a feature cell: its background fills with `--panel`. Hover a nav link: colour goes from `--ink-2` to `--ink`.
-9. The footer ends with a 228px lowercase "kiln" wordmark in `--panel-2` (barely visible), then a fine-print row.
 
 ## Structure
 
@@ -54,6 +44,74 @@ gutter 64px · hero grid 1fr 560px gap 56px · section padding 96px 0
 - `section#latency`: two columns, giant numerals left, `.regions` list right (six rows, 44px each).
 - `section#pricing`: `.price` three-column grid of `.tier` cards.
 - `<footer>`: `.fgrid`, `.wordmark`, `.fine`.
+
+## Motion
+
+| Element | Trigger | Property | From → To | Duration | Easing |
+|---|---|---|---|---:|---|
+| Timing bar `i` | load, tab change | width | 0 → 18% | 700ms | `--ease-out` |
+| Tab panel | tab change | opacity, translateY | 0, 4px → 1, 0 | 280ms | `--ease-out` |
+| Tab label | hover | color | `--ink-3` → `--ink` | 160ms | `--ease` |
+| Copy button | click | color + border to lime, label "Copied" | instant, reverts after 1400ms | — | — |
+| Buttons | hover | background / border-color | — | 160ms | `--ease` |
+| Feature cell | hover | background | transparent → `--panel` | 160ms | `--ease` |
+
+Replay the bar by setting `animation: none`, forcing reflow (`offsetWidth`), then clearing it. Reduced motion: animations off and transitions 1ms; the bar renders at 18% immediately.
+
+## States
+
+- **Tab selected:** `aria-selected="true"`, `--panel-2` background, `--ink` text; unselected tabs `--ink-3`, `tabindex="-1"`.
+- **Copy (idle):** 1px `--line` border, `--ink-2` text. **Copied:** text and icon `--accent`, border `rgba(200,246,90,.4)`.
+- **Primary button hover:** `#d8ff7a`. **Ghost button hover:** border `--ink-3`, background `--panel`.
+- **Focus-visible (everything):** 2px lime outline, 2px offset, 6px radius.
+- **Pricing "Pro" tier:** border `rgba(200,246,90,.45)`, background fades from 6% lime to `--panel` at 40%, "most teams" label in lime, filled CTA.
+- **Status dot:** 6px lime dot with a 3px 15% lime halo (static, no pulse).
+
+## Accessibility
+
+- Tabs follow the WAI-ARIA tabs pattern: `role=tablist` with `aria-label`, each tab `aria-controls` its panel, panels `aria-labelledby` their tab. Arrow keys move selection, Tab leaves the list.
+- The copy button has `aria-live="polite"`, so "Copied" is announced. The install copy button has `aria-label="Copy install command"`.
+- Line numbers are `user-select: none` and excluded from copied text.
+- The dot grid, window dots, thumbnail and wordmark are decorative (`aria-hidden` or CSS-only).
+- Contrast: `--ink-2` on `--bg` is 7.6:1; `--ink-3` (4.0:1) is used only for 12px mono meta and labels; lime on `--bg` is 15:1, `--accent-ink` on lime is 14:1.
+
+## Responsive rules
+
+- ≥ 1280: as specified; content max-width 1280 with 64px gutters.
+- 1024–1279: hero grid becomes `1fr 480px`; headline 60px; code sample font 12px.
+- 768–1023: hero stacks (code card below copy, full width); feature grid 2 columns; latency section stacks; pricing 3 columns stay but drop the bullet lists to two items.
+- < 640: gutter 20px; nav links collapse to a menu button; headline 44px; numerals 72px; feature grid and pricing single column; footer columns 2-up; wordmark 120px.
+
+## Acceptance checklist
+
+- [ ] Headline is exactly four lines at 1280: "Images, / rendered at / the edge in / 18ms." with "18ms" in `#c8f65a`.
+- [ ] The full code card, both CTAs and the install chip are visible without scrolling at 1280×800.
+- [ ] Switching tabs shows exactly one panel and replays the 700ms timing bar.
+- [ ] ArrowLeft/ArrowRight cycle tabs, and only the selected tab is in the Tab order.
+- [ ] Copy puts the sample text without line numbers on the clipboard and shows "Copied" for 1.4s.
+- [ ] The page never throws if `navigator.clipboard` is unavailable.
+- [ ] The nav stays sticky with a blurred, 82%-opaque background and a 1px bottom hairline.
+- [ ] Feature grid hairlines are 1px everywhere (no doubled borders).
+- [ ] Latency numerals are 112px with a 28px lime "ms" superscript.
+- [ ] Only one accent colour is used outside the syntax palette.
+- [ ] Focus rings are visible on nav links, tabs, copy buttons, CTAs and footer links.
+- [ ] Reduced motion disables the panel fade and bar grow without hiding content.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: page scrolled to top. The first 800px show the nav, the eyebrow pill, the four-line headline ending in a lime "18ms.", the lede, both CTAs, the `npm i @kiln/sdk` install chip, the three meta stats, and the full code card with the `curl` tab selected.
+2. On load the timing bar inside the code card grows from 0 to 18% width over 700ms (expo out).
+3. Click `node.js` or `python`: that tab becomes selected (lighter background, full ink), its panel fades up 4px over 280ms and the others hide. The timing bar replays its 700ms grow.
+4. With a tab focused, ArrowLeft/ArrowRight move selection cyclically and focus follows (roving tabindex).
+5. Click **Copy** in the card header: the visible sample's text, without line numbers, goes to the clipboard. The button turns lime and reads "Copied" for 1400ms, then reverts. If the clipboard API is blocked, the visual confirmation still runs.
+6. Click the copy icon in the install chip: copies `npm i @kiln/sdk` and flashes the same way (icon tints lime).
+7. Scroll: the nav stays pinned (60px, 82% opaque graphite with a 10px backdrop blur and a hairline bottom border).
+8. Hover a feature cell: its background fills with `--panel`. Hover a nav link: colour goes from `--ink-2` to `--ink`.
+9. The footer ends with a 228px lowercase "kiln" wordmark in `--panel-2` (barely visible), then a fine-print row.
 
 ## Tokens
 
@@ -111,58 +169,6 @@ gutter 64px · hero grid 1fr 560px gap 56px · section padding 96px 0
 | Code | Geist Mono | 13px | 400 | 1.75 | 0 | — |
 | Response / meta | Geist Mono | 12px | 400 | 1.7 | +0.08em for labels | UPPERCASE labels |
 | Footer wordmark | Geist | 228px | 700 | 0.8 | −0.07em | lowercase |
-
-## Motion
-
-| Element | Trigger | Property | From → To | Duration | Easing |
-|---|---|---|---|---:|---|
-| Timing bar `i` | load, tab change | width | 0 → 18% | 700ms | `--ease-out` |
-| Tab panel | tab change | opacity, translateY | 0, 4px → 1, 0 | 280ms | `--ease-out` |
-| Tab label | hover | color | `--ink-3` → `--ink` | 160ms | `--ease` |
-| Copy button | click | color + border to lime, label "Copied" | instant, reverts after 1400ms | — | — |
-| Buttons | hover | background / border-color | — | 160ms | `--ease` |
-| Feature cell | hover | background | transparent → `--panel` | 160ms | `--ease` |
-
-Replay the bar by setting `animation: none`, forcing reflow (`offsetWidth`), then clearing it. Reduced motion: animations off and transitions 1ms; the bar renders at 18% immediately.
-
-## States
-
-- **Tab selected:** `aria-selected="true"`, `--panel-2` background, `--ink` text; unselected tabs `--ink-3`, `tabindex="-1"`.
-- **Copy (idle):** 1px `--line` border, `--ink-2` text. **Copied:** text and icon `--accent`, border `rgba(200,246,90,.4)`.
-- **Primary button hover:** `#d8ff7a`. **Ghost button hover:** border `--ink-3`, background `--panel`.
-- **Focus-visible (everything):** 2px lime outline, 2px offset, 6px radius.
-- **Pricing "Pro" tier:** border `rgba(200,246,90,.45)`, background fades from 6% lime to `--panel` at 40%, "most teams" label in lime, filled CTA.
-- **Status dot:** 6px lime dot with a 3px 15% lime halo (static, no pulse).
-
-## Accessibility
-
-- Tabs follow the WAI-ARIA tabs pattern: `role=tablist` with `aria-label`, each tab `aria-controls` its panel, panels `aria-labelledby` their tab. Arrow keys move selection, Tab leaves the list.
-- The copy button has `aria-live="polite"`, so "Copied" is announced. The install copy button has `aria-label="Copy install command"`.
-- Line numbers are `user-select: none` and excluded from copied text.
-- The dot grid, window dots, thumbnail and wordmark are decorative (`aria-hidden` or CSS-only).
-- Contrast: `--ink-2` on `--bg` is 7.6:1; `--ink-3` (4.0:1) is used only for 12px mono meta and labels; lime on `--bg` is 15:1, `--accent-ink` on lime is 14:1.
-
-## Responsive rules
-
-- ≥ 1280: as specified; content max-width 1280 with 64px gutters.
-- 1024–1279: hero grid becomes `1fr 480px`; headline 60px; code sample font 12px.
-- 768–1023: hero stacks (code card below copy, full width); feature grid 2 columns; latency section stacks; pricing 3 columns stay but drop the bullet lists to two items.
-- < 640: gutter 20px; nav links collapse to a menu button; headline 44px; numerals 72px; feature grid and pricing single column; footer columns 2-up; wordmark 120px.
-
-## Acceptance checklist
-
-- [ ] Headline is exactly four lines at 1280: "Images, / rendered at / the edge in / 18ms." with "18ms" in `#c8f65a`.
-- [ ] The full code card, both CTAs and the install chip are visible without scrolling at 1280×800.
-- [ ] Switching tabs shows exactly one panel and replays the 700ms timing bar.
-- [ ] ArrowLeft/ArrowRight cycle tabs, and only the selected tab is in the Tab order.
-- [ ] Copy puts the sample text without line numbers on the clipboard and shows "Copied" for 1.4s.
-- [ ] The page never throws if `navigator.clipboard` is unavailable.
-- [ ] The nav stays sticky with a blurred, 82%-opaque background and a 1px bottom hairline.
-- [ ] Feature grid hairlines are 1px everywhere (no doubled borders).
-- [ ] Latency numerals are 112px with a 28px lime "ms" superscript.
-- [ ] Only one accent colour is used outside the syntax palette.
-- [ ] Focus rings are visible on nav links, tabs, copy buttons, CTAs and footer links.
-- [ ] Reduced motion disables the panel fade and bar grow without hiding content.
 
 ## Implementation notes
 

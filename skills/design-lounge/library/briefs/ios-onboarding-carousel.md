@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The first-run screen of "Mira", a sleep app. Three full-width slides scroll horizontally with mandatory snap; each has a 380px illustration card drawn entirely in CSS (a moon over hills, a sleep-stage bar chart that rises in, a readiness ring that sweeps to 72%), an italic-accented serif headline and one short paragraph. Below, three page dots: the active one stretches from an 8px circle to a 24px pill in the accent colour. A full-width "Continue" button advances; on the last slide its label swaps to "Get started" and "Skip" disappears. The mood is night-time and quiet: deep navy surfaces, a warm apricot accent, an old-style serif for the headings.
-
-## Reference behaviour
-
-1. Initial state: slide 1 ("Fall asleep on purpose") is centred, dot 1 is a 24px apricot pill, the button reads "Continue", "Skip" is top-right. The moon illustration is static with a three-ring halo.
-2. Swipe or drag the track horizontally (mouse drag also works via native scroll): slides snap one at a time (`scroll-snap-stop: always`).
-3. When the scroll position crosses the midpoint of a slide, the dot for that slide grows to 24px over 320ms `cubic-bezier(.32,.72,0,1)` and turns apricot; the previous one shrinks to 8px and returns to `--ink-3`.
-4. Arriving on slide 2 replays its chart: 18 bars scale up from `scaleY(0)` over 700ms `cubic-bezier(.16,1,.3,1)`, staggered 40ms each.
-5. Arriving on slide 3 replays the ring: the conic sweep goes 0% → 72% over 1200ms with the same expo-out curve. "Skip" hides. The button text fades out (160ms, 6px downward) and "Get started" fades in.
-6. Tap "Continue": smooth-scrolls to the next slide. Tap "Get started": returns to slide 1 (the Lounge demo loops; in a product it dismisses onboarding).
-7. Tap "Skip": jumps to slide 3.
-8. ArrowRight / ArrowLeft anywhere move one slide.
-9. Pressing the button scales it to 0.97 for 160ms.
 
 ## Structure
 
@@ -50,61 +40,6 @@ The first-run screen of "Mira", a sleep app. Three full-width slides scroll hori
 - `.slide`: `flex:0 0 100%; scroll-snap-align:center; scroll-snap-stop:always; padding:8px 28px 0`. Each is a `<section role="group" aria-label="n of 3">` holding `.art` (aria-hidden), `<h2>`, `<p>`.
 - `.art`: 380px tall, `border-radius:24px`, `--surface` with a 1px `--line` border and a radial apricot glow at the bottom (`::after`).
 - `<footer>`: `padding:12px 24px 44px`, `.dots[role=tablist]` then `<button class="cta">`.
-
-## Tokens
-
-```css
-:root {
-  /* colour — deep navy, parchment text, apricot accent */
-  --bg: #0e1220;
-  --surface: #161b2e;      /* art cards */
-  --surface-2: #1f2540;    /* hills, light-sleep bars */
-  --surface-3: #1a2038;    /* far hill */
-  --ink: #f3efe6;
-  --ink-2: #a9adbd;        /* paragraphs, skip */
-  --ink-3: #6c7188;        /* inactive dots, axis labels */
-  --line: #262c45;         /* card border, ring track */
-  --accent: #f0c27b;       /* CTA, active dot, deep-sleep bars, ring, italic words */
-  --accent-ink: #2b1d05;   /* text on CTA */
-  --moon: #f6e7c6;
-  --rem: #8fa3d9;          /* REM bars */
-  --glow: rgba(240,194,123,.22);
-
-  /* type */
-  --serif: "Instrument Serif", Georgia, serif;
-  --sans: "Manrope", system-ui, -apple-system, sans-serif;
-
-  /* layout */
-  --header-h: 98px;  --art-h: 380px;  --slide-pad: 28px;
-  --r-card: 24px;  --r-btn: 16px;  --cta-h: 56px;
-  --dot: 8px;  --dot-active: 24px;  --dot-gap: 6px;
-  --footer-bottom: 44px;               /* 34 home indicator + 10 */
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-dot: 320ms;
-  --t-hero: 700ms;
-  --t-ring: 1200ms;
-  --stagger: 40ms;
-  --spring: cubic-bezier(.32, .72, 0, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role            | Family           | Size | Weight | Line-height | Tracking | Case      |
-|-----------------|------------------|-----:|-------:|------------:|---------:|-----------|
-| Brand           | Instrument Serif | 22px | 400 italic | 1.2     | −0.01em  | sentence  |
-| Headline        | Instrument Serif | 36px | 400    | 1.1         | −0.015em | sentence; one `<i>` phrase in `--accent` |
-| Paragraph       | Manrope          | 15px | 400    | 1.55        | 0        | sentence, `max-width:300px` |
-| Skip            | Manrope          | 14px | 600    | 1           | 0        | sentence  |
-| CTA             | Manrope          | 16px | 700    | 1           | −0.01em  | sentence  |
-| Big stat        | Instrument Serif | 56px | 400    | 1           | −0.02em  | numerals  |
-| Ring number     | Instrument Serif | 48px | 400    | 1           | 0        | numerals  |
-| Stat caption    | Manrope          | 12px | 500    | 1.2         | +0.08em  | UPPERCASE |
-| Axis            | Manrope          | 11px | 500    | 1           | +0.06em  | numerals  |
 
 ## Motion
 
@@ -160,6 +95,77 @@ Reduced motion: all transitions and animations are 1ms (dots jump, bars and ring
 - [ ] Footer keeps 44px clear at the bottom; header content sits below the 54px status area.
 - [ ] Focus rings visible on Skip and CTA.
 - [ ] Reduced motion: no bar or ring animation, dots jump, Continue jumps.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: slide 1 ("Fall asleep on purpose") is centred, dot 1 is a 24px apricot pill, the button reads "Continue", "Skip" is top-right. The moon illustration is static with a three-ring halo.
+2. Swipe or drag the track horizontally (mouse drag also works via native scroll): slides snap one at a time (`scroll-snap-stop: always`).
+3. When the scroll position crosses the midpoint of a slide, the dot for that slide grows to 24px over 320ms `cubic-bezier(.32,.72,0,1)` and turns apricot; the previous one shrinks to 8px and returns to `--ink-3`.
+4. Arriving on slide 2 replays its chart: 18 bars scale up from `scaleY(0)` over 700ms `cubic-bezier(.16,1,.3,1)`, staggered 40ms each.
+5. Arriving on slide 3 replays the ring: the conic sweep goes 0% → 72% over 1200ms with the same expo-out curve. "Skip" hides. The button text fades out (160ms, 6px downward) and "Get started" fades in.
+6. Tap "Continue": smooth-scrolls to the next slide. Tap "Get started": returns to slide 1 (the Lounge demo loops; in a product it dismisses onboarding).
+7. Tap "Skip": jumps to slide 3.
+8. ArrowRight / ArrowLeft anywhere move one slide.
+9. Pressing the button scales it to 0.97 for 160ms.
+
+## Tokens
+
+```css
+:root {
+  /* colour — deep navy, parchment text, apricot accent */
+  --bg: #0e1220;
+  --surface: #161b2e;      /* art cards */
+  --surface-2: #1f2540;    /* hills, light-sleep bars */
+  --surface-3: #1a2038;    /* far hill */
+  --ink: #f3efe6;
+  --ink-2: #a9adbd;        /* paragraphs, skip */
+  --ink-3: #6c7188;        /* inactive dots, axis labels */
+  --line: #262c45;         /* card border, ring track */
+  --accent: #f0c27b;       /* CTA, active dot, deep-sleep bars, ring, italic words */
+  --accent-ink: #2b1d05;   /* text on CTA */
+  --moon: #f6e7c6;
+  --rem: #8fa3d9;          /* REM bars */
+  --glow: rgba(240,194,123,.22);
+
+  /* type */
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Manrope", system-ui, -apple-system, sans-serif;
+
+  /* layout */
+  --header-h: 98px;  --art-h: 380px;  --slide-pad: 28px;
+  --r-card: 24px;  --r-btn: 16px;  --cta-h: 56px;
+  --dot: 8px;  --dot-active: 24px;  --dot-gap: 6px;
+  --footer-bottom: 44px;               /* 34 home indicator + 10 */
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-dot: 320ms;
+  --t-hero: 700ms;
+  --t-ring: 1200ms;
+  --stagger: 40ms;
+  --spring: cubic-bezier(.32, .72, 0, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role            | Family           | Size | Weight | Line-height | Tracking | Case      |
+|-----------------|------------------|-----:|-------:|------------:|---------:|-----------|
+| Brand           | Instrument Serif | 22px | 400 italic | 1.2     | −0.01em  | sentence  |
+| Headline        | Instrument Serif | 36px | 400    | 1.1         | −0.015em | sentence; one `<i>` phrase in `--accent` |
+| Paragraph       | Manrope          | 15px | 400    | 1.55        | 0        | sentence, `max-width:300px` |
+| Skip            | Manrope          | 14px | 600    | 1           | 0        | sentence  |
+| CTA             | Manrope          | 16px | 700    | 1           | −0.01em  | sentence  |
+| Big stat        | Instrument Serif | 56px | 400    | 1           | −0.02em  | numerals  |
+| Ring number     | Instrument Serif | 48px | 400    | 1           | 0        | numerals  |
+| Stat caption    | Manrope          | 12px | 500    | 1.2         | +0.08em  | UPPERCASE |
+| Axis            | Manrope          | 11px | 500    | 1           | +0.06em  | numerals  |
 
 ## Implementation notes
 

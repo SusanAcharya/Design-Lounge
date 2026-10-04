@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A smartwatch mockup, the fictional Vesta Trail, drawn in CSS and presented on a dark moss stage with faint topographic contour rings. The case is a rounded rectangle in gunmetal with a black glass inset, a knurled crown with an orange collar, and a flat side button. A woven strap runs off the top and bottom of the frame. The screen holds four live faces stacked vertically: Topo (huge digital time), Analog (sweeping hands), Altitude (elevation profile) and Weather. Turning the crown rolls the stack exactly like the real thing, with the crown knurling moving in step. The detail worth copying is that one number, `--pos`, drives the face track, the crown texture and the scroll indicator together, so the device feels mechanically linked.
-
-## Reference behaviour
-
-1. First frame: face 1 Topo, Ember strap, current local time in 47cqw condensed numerals, the minutes in orange.
-2. Drag the crown vertically: every 90px of drag moves one face. Dragging up goes to the next face. The track follows the pointer continuously, not in steps.
-3. Drag the screen itself: it follows the finger 1:1 (one screen height per face).
-4. Wheel over the watch: `deltaY / 260` faces per event. 160ms after the last wheel event, the track snaps.
-5. Release: the track snaps to the nearest face over 420ms with expo-out.
-6. Past the first or last face the movement is rubber-banded at 30% and springs back on release.
-7. While moving, a thin scroll indicator appears at the right edge of the screen (25% thumb on a 40% track) and fades 500ms after settling.
-8. The crown's knurling moves 24cqw per face (`background-position-y`), so it visibly turns with the content.
-9. Keyboard on the focused crown: ArrowDown/ArrowRight/PageDown next, ArrowUp/ArrowLeft/PageUp previous, Home first, End last.
-10. Side button: snaps back to face 1.
-11. The left caption shows `01 / 04` and the face name in 120px condensed caps, updated when the nearest face changes; it is a polite live region.
-12. Band swatches (Ember, Moss, Chalk) recolour both strap halves over 300ms.
-13. Faces keep live time: the analog second hand sweeps on rAF; digital digits and date update when the minute changes.
 
 ## Structure
 
@@ -47,41 +33,6 @@ A smartwatch mockup, the fictional Vesta Trail, drawn in CSS and presented on a 
 - `.rig` (290px, `container-type: inline-size`) holds two `.band` halves (50vh tall, 72% of the rig wide), `button.crown` (`role="slider"`), `button.btn`, and `.watch` (`role="img"`, aspect 250/300).
 - `.watch > .glass > .screen > .track > .face × 4` plus `.scroll`.
 - `aside.side`: band `fieldset` of radios and a `ul` of instructions with `kbd` keys.
-
-## Tokens
-
-```css
-:root {
-  --bg: #141912;  --bg-2: #1c2219;
-  --ink: #ecefe4; --ink-2: #a9b19c; --ink-3: #7f8873;
-  --line: #2c3428;
-  --accent: #ff6a2b;              /* trail orange */
-  --band: #e8612c; --band-2: #b9461b;   /* Ember */
-  --display: "Big Shoulders Display", "Arial Narrow", sans-serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --snap: 420ms;
-  --px-per-face: 90px;            /* crown drag distance */
-}
-[data-band="moss"]  { --band: #5d6b3a; --band-2: #3e4826; }
-[data-band="chalk"] { --band: #d9d4c7; --band-2: #aaa494; }
-```
-
-Case geometry in `cqw` of the rig: case radius 22% / 19%, case padding 2.4cqw, glass radius 19% / 16% with 4.4cqw padding, screen radius 15% / 12%. Crown 7 × 17cqw at right −4.6cqw, top 24%. Side button 4 × 20cqw at right −2.4cqw, top 52%.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Face name (stage) | Big Shoulders Display | 120px (84px narrow) | 900 | 0.82 | −0.01em | uppercase |
-| Index `01 / 04` | Big Shoulders Display | 22px | 700 | 1 | 0.08em | — |
-| Eyebrow, legend | DM Mono | 12px | 400 | 1.45 | 0.16em | uppercase |
-| Description | DM Mono | 14px | 400 | 1.45 | 0 | sentence |
-| Topo digits | Big Shoulders Display | 47cqw | 900 | 0.8 | −0.02em | tabular |
-| Altitude / temperature | Big Shoulders Display | 30cqw / 52cqw | 900 | 0.8–0.85 | −0.01em | — |
-| Dial numerals | Big Shoulders Display | 9cqw | 700 | 1 | 0 | — |
-| Face labels | DM Mono | 4.4–5.4cqw | 500 | 1–1.35 | 0.08em | uppercase labels |
 
 ## Motion
 
@@ -141,6 +92,61 @@ Case geometry in `cqw` of the rig: case radius 22% / 19%, case padding 2.4cqw, g
 - [ ] Straps Ember `#e8612c`, Moss `#5d6b3a`, Chalk `#d9d4c7`.
 - [ ] Caption reads `01 / 04` TOPO on load.
 - [ ] Orange crown collar and orange minutes on Topo.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: face 1 Topo, Ember strap, current local time in 47cqw condensed numerals, the minutes in orange.
+2. Drag the crown vertically: every 90px of drag moves one face. Dragging up goes to the next face. The track follows the pointer continuously, not in steps.
+3. Drag the screen itself: it follows the finger 1:1 (one screen height per face).
+4. Wheel over the watch: `deltaY / 260` faces per event. 160ms after the last wheel event, the track snaps.
+5. Release: the track snaps to the nearest face over 420ms with expo-out.
+6. Past the first or last face the movement is rubber-banded at 30% and springs back on release.
+7. While moving, a thin scroll indicator appears at the right edge of the screen (25% thumb on a 40% track) and fades 500ms after settling.
+8. The crown's knurling moves 24cqw per face (`background-position-y`), so it visibly turns with the content.
+9. Keyboard on the focused crown: ArrowDown/ArrowRight/PageDown next, ArrowUp/ArrowLeft/PageUp previous, Home first, End last.
+10. Side button: snaps back to face 1.
+11. The left caption shows `01 / 04` and the face name in 120px condensed caps, updated when the nearest face changes; it is a polite live region.
+12. Band swatches (Ember, Moss, Chalk) recolour both strap halves over 300ms.
+13. Faces keep live time: the analog second hand sweeps on rAF; digital digits and date update when the minute changes.
+
+## Tokens
+
+```css
+:root {
+  --bg: #141912;  --bg-2: #1c2219;
+  --ink: #ecefe4; --ink-2: #a9b19c; --ink-3: #7f8873;
+  --line: #2c3428;
+  --accent: #ff6a2b;              /* trail orange */
+  --band: #e8612c; --band-2: #b9461b;   /* Ember */
+  --display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --snap: 420ms;
+  --px-per-face: 90px;            /* crown drag distance */
+}
+[data-band="moss"]  { --band: #5d6b3a; --band-2: #3e4826; }
+[data-band="chalk"] { --band: #d9d4c7; --band-2: #aaa494; }
+```
+
+Case geometry in `cqw` of the rig: case radius 22% / 19%, case padding 2.4cqw, glass radius 19% / 16% with 4.4cqw padding, screen radius 15% / 12%. Crown 7 × 17cqw at right −4.6cqw, top 24%. Side button 4 × 20cqw at right −2.4cqw, top 52%.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Face name (stage) | Big Shoulders Display | 120px (84px narrow) | 900 | 0.82 | −0.01em | uppercase |
+| Index `01 / 04` | Big Shoulders Display | 22px | 700 | 1 | 0.08em | — |
+| Eyebrow, legend | DM Mono | 12px | 400 | 1.45 | 0.16em | uppercase |
+| Description | DM Mono | 14px | 400 | 1.45 | 0 | sentence |
+| Topo digits | Big Shoulders Display | 47cqw | 900 | 0.8 | −0.02em | tabular |
+| Altitude / temperature | Big Shoulders Display | 30cqw / 52cqw | 900 | 0.8–0.85 | −0.01em | — |
+| Dial numerals | Big Shoulders Display | 9cqw | 700 | 1 | 0 | — |
+| Face labels | DM Mono | 4.4–5.4cqw | 500 | 1–1.35 | 0.08em | uppercase labels |
 
 ## Implementation notes
 

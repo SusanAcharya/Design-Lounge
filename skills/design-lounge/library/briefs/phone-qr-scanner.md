@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens, but keep valid and invalid as two separate colours that never appear anywhere else.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The scanner a door person holds at a gig. The app is Gatepost, the venue is Pier Nine, the door is Gate 2, the act is Mira Sol. The whole phone is the camera. A grainy dark scene shows a guest's phone held up with a QR on it, a little out of focus and drifting like a real hand. A white 248px reticle with four rounded corners breathes in and out, and a white scan line sweeps up and down inside it.
@@ -13,26 +15,6 @@ When a code is read, the reticle snaps down to 176px and turns 7 degrees to sit 
 The look is dark utility: true black, white, one mint `#4fe3a5` that only means valid, one red `#ff5a4f` that only means invalid. Geist for words, Geist Mono for codes and counts. iOS sheet behaviour and 44px round controls, no glass.
 
 The detail worth copying: the reticle locks onto the code at the code's own angle. The staff member sees the app found that exact ticket, not just "something".
-
-## Reference behaviour
-
-1. First frame: camera scene, title "Scan tickets" with "Pier Nine · Gate 2", a count pill "312 / 480 checked in", the reticle with a moving scan line, the status "Point the camera at the ticket QR" over "Mira Sol · Doors 19:00", a dashed hint button "Demo · simulate scan", a gallery button, and a white "Enter code manually" button.
-2. The scene drifts slowly: up to 4px and 0.4 degrees over 7 seconds, back and forth. The grain shifts in 6 steps every 1.2 seconds.
-3. The reticle corners move 6px inward and back every 2.4 seconds. The scan line sweeps from top to bottom and back every 2.4 seconds with an in-out curve.
-4. Tapping the torch button sets `aria-pressed="true"`, fills the button white with a black icon, and brightens the scene to 1.7. Tapping again turns it off.
-5. Tapping the hint button runs a scan. Scans alternate: the first is valid, the second is invalid, then valid again.
-6. Lock: the reticle shrinks from 248px to 176px and turns -7 degrees in 300ms. The scan line fades. The drift pauses. The blur on the guest's phone drops to zero. Status reads "Ticket found. Checking".
-7. After 520ms, the verdict: corners and the result colour turn mint or red, a ring around the reticle grows to 1.28 and fades in 700ms, and the screen edge flashes an 8px inset band in the same colour that fades in 600ms. On invalid, the reticle also shakes 6px left and right in 360ms. If the device can vibrate, it buzzes 30ms for valid, 40-60-40ms for invalid.
-8. Valid also adds one to the count: 312 becomes 313.
-9. After 650ms more, the result sheet slides up in 420ms. Focus moves to "Scan next".
-10. Valid sheet: mint check badge, "Valid ticket", "Admit one · scanned 19:31", name "Ines Albescu", Seat "Block B · Row 4 · Seat 12", Time "Doors 19:00 · Show 20:15", Ticket "PN9-7Q4K-2210".
-11. Invalid sheet: red cross badge, "Already scanned", "Gate 2 · 19:12 · by Theo M.", name "Dario Pensa", Seat "Block D · Row 11 · Seat 3", same time row, Ticket "PN9-3H8D-0417".
-12. "Scan next", a tap on the dark scrim, or Escape closes the sheet, unlocks the reticle, restores the status line, and returns focus to the control that started the scan.
-13. "Enter code manually" opens a sheet with "Enter ticket code", a 60px mono input with placeholder "PN9-0000-0000", the help line "Printed under the QR. 11 letters and numbers.", a "Check code" button, and Cancel. Focus goes to the input.
-14. Check code strips everything but letters and digits. If the result is not 11 characters, the input gets a red border and `aria-invalid`, and the help line turns red: "That code is 5 characters. Codes have 11." Focus stays in the input.
-15. An 11-character code runs the verdict. "PN93H8D0417" (the used ticket) gives invalid. Any other gives valid with the typed id shown.
-16. The gallery button changes the status to "No ticket images in Recents" over "Screenshots of a QR will show here".
-17. With reduced motion: no drift, no grain shift, no breathing, the scan line rests across the middle, the lock and sheets appear without travel, and the verdict colours still change.
 
 ## Structure
 
@@ -78,71 +60,6 @@ The detail worth copying: the reticle locks onto the code at the code's own angl
 - Sheets: two `section role="dialog" aria-modal="true"` with `aria-labelledby`, plus one scrim.
 - Result facts: a `dl` with three `dt`/`dd` pairs in a two-column grid.
 - Manual form: a `form novalidate` with `label`, `input`, a help `p` tied by `aria-describedby`, and two buttons.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #000000;        /* camera black */
-  --sheet: #111111;     /* sheets */
-  --raise: #1b1b1b;     /* input field */
-  --line: #2c2c2c;      /* hairlines */
-  --ink: #ffffff;       /* text, reticle at rest, primary buttons */
-  --ink-2: #b8b8b8;     /* secondary text */
-  --ink-3: #8a8a8a;     /* fact keys */
-  --valid: #4fe3a5;     /* valid only */
-  --invalid: #ff5a4f;   /* invalid only */
-  --lock: var(--ink);   /* reticle colour, set to valid or invalid on verdict */
-
-  /* type */
-  --sans: "Geist", system-ui, sans-serif;
-  --mono: "Geist Mono", ui-monospace, monospace;
-
-  /* layout */
-  --cy: calc(50% - 30px);   /* reticle centre */
-  --size: 248px;            /* reticle at rest */
-  --size-lock: 176px;       /* reticle on a code */
-
-  /* shape */
-  --r: 12px;          /* buttons, input */
-  --r-sheet: 22px;    /* sheet top corners */
-  --r-corner: 14px;   /* reticle corner curve */
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --sheet-e: cubic-bezier(.32, .72, 0, 1);
-  --out: cubic-bezier(.16, 1, .3, 1);
-  --breathe: 2400ms;
-  --scan: 2400ms;
-  --lock-t: 300ms;
-  --check-t: 520ms;
-  --sheet-t: 420ms;
-}
-```
-
-The scene uses fixed greys outside the token list (`#161513`, `#0b0b0a`, `#262420`, `#d9d8d2`) because it is a picture, not UI. In a real app the scene is the live camera feed and those go away.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Title | Geist | 17px | 600 | -0.01em | sentence |
-| Venue line | Geist Mono | 11px | 500 | 0.12em | upper |
-| Count pill | Geist Mono | 12px | 500 / 600 | 0.08em | sentence |
-| Status | Geist | 15px | 500 | 0 | sentence |
-| Status sub | Geist Mono | 11px | 400 | 0.1em | upper |
-| Hint button | Geist Mono | 11px | 500 | 0.12em | upper |
-| Primary buttons | Geist | 16px | 600 | 0 | sentence |
-| Result title | Geist | 24px | 700 | -0.02em | sentence, in `--lock` |
-| Result sub | Geist Mono | 11px | 500 | 0.12em | upper |
-| Guest name | Geist | 28px | 600 | -0.02em | sentence |
-| Fact key | Geist Mono | 11px | 500 | 0.12em | upper |
-| Fact value | Geist | 15px | 500 | 0 | sentence, tabular |
-| Ticket id | Geist Mono | 14px | 500 | 0.06em | upper |
-| Code input | Geist Mono | 22px | 500 | 0.1em | upper |
-
-The status line has `text-shadow: 0 1px 8px #000` so it reads over any camera picture.
 
 ## Motion
 
@@ -221,6 +138,95 @@ The breathing and scan line run all the time, so keep them slow and white. Colou
 - [ ] Invalid: "Already scanned", "Gate 2 · 19:12 · by Theo M.", Dario Pensa, PN9-3H8D-0417.
 - [ ] Mint `#4fe3a5`, red `#ff5a4f`, sheet `#111111`, sheet radius 22px.
 - [ ] Reticle 248px at rest, 176px at -7 degrees when locked.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: camera scene, title "Scan tickets" with "Pier Nine · Gate 2", a count pill "312 / 480 checked in", the reticle with a moving scan line, the status "Point the camera at the ticket QR" over "Mira Sol · Doors 19:00", a dashed hint button "Demo · simulate scan", a gallery button, and a white "Enter code manually" button.
+2. The scene drifts slowly: up to 4px and 0.4 degrees over 7 seconds, back and forth. The grain shifts in 6 steps every 1.2 seconds.
+3. The reticle corners move 6px inward and back every 2.4 seconds. The scan line sweeps from top to bottom and back every 2.4 seconds with an in-out curve.
+4. Tapping the torch button sets `aria-pressed="true"`, fills the button white with a black icon, and brightens the scene to 1.7. Tapping again turns it off.
+5. Tapping the hint button runs a scan. Scans alternate: the first is valid, the second is invalid, then valid again.
+6. Lock: the reticle shrinks from 248px to 176px and turns -7 degrees in 300ms. The scan line fades. The drift pauses. The blur on the guest's phone drops to zero. Status reads "Ticket found. Checking".
+7. After 520ms, the verdict: corners and the result colour turn mint or red, a ring around the reticle grows to 1.28 and fades in 700ms, and the screen edge flashes an 8px inset band in the same colour that fades in 600ms. On invalid, the reticle also shakes 6px left and right in 360ms. If the device can vibrate, it buzzes 30ms for valid, 40-60-40ms for invalid.
+8. Valid also adds one to the count: 312 becomes 313.
+9. After 650ms more, the result sheet slides up in 420ms. Focus moves to "Scan next".
+10. Valid sheet: mint check badge, "Valid ticket", "Admit one · scanned 19:31", name "Ines Albescu", Seat "Block B · Row 4 · Seat 12", Time "Doors 19:00 · Show 20:15", Ticket "PN9-7Q4K-2210".
+11. Invalid sheet: red cross badge, "Already scanned", "Gate 2 · 19:12 · by Theo M.", name "Dario Pensa", Seat "Block D · Row 11 · Seat 3", same time row, Ticket "PN9-3H8D-0417".
+12. "Scan next", a tap on the dark scrim, or Escape closes the sheet, unlocks the reticle, restores the status line, and returns focus to the control that started the scan.
+13. "Enter code manually" opens a sheet with "Enter ticket code", a 60px mono input with placeholder "PN9-0000-0000", the help line "Printed under the QR. 11 letters and numbers.", a "Check code" button, and Cancel. Focus goes to the input.
+14. Check code strips everything but letters and digits. If the result is not 11 characters, the input gets a red border and `aria-invalid`, and the help line turns red: "That code is 5 characters. Codes have 11." Focus stays in the input.
+15. An 11-character code runs the verdict. "PN93H8D0417" (the used ticket) gives invalid. Any other gives valid with the typed id shown.
+16. The gallery button changes the status to "No ticket images in Recents" over "Screenshots of a QR will show here".
+17. With reduced motion: no drift, no grain shift, no breathing, the scan line rests across the middle, the lock and sheets appear without travel, and the verdict colours still change.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #000000;        /* camera black */
+  --sheet: #111111;     /* sheets */
+  --raise: #1b1b1b;     /* input field */
+  --line: #2c2c2c;      /* hairlines */
+  --ink: #ffffff;       /* text, reticle at rest, primary buttons */
+  --ink-2: #b8b8b8;     /* secondary text */
+  --ink-3: #8a8a8a;     /* fact keys */
+  --valid: #4fe3a5;     /* valid only */
+  --invalid: #ff5a4f;   /* invalid only */
+  --lock: var(--ink);   /* reticle colour, set to valid or invalid on verdict */
+
+  /* type */
+  --sans: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+
+  /* layout */
+  --cy: calc(50% - 30px);   /* reticle centre */
+  --size: 248px;            /* reticle at rest */
+  --size-lock: 176px;       /* reticle on a code */
+
+  /* shape */
+  --r: 12px;          /* buttons, input */
+  --r-sheet: 22px;    /* sheet top corners */
+  --r-corner: 14px;   /* reticle corner curve */
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --sheet-e: cubic-bezier(.32, .72, 0, 1);
+  --out: cubic-bezier(.16, 1, .3, 1);
+  --breathe: 2400ms;
+  --scan: 2400ms;
+  --lock-t: 300ms;
+  --check-t: 520ms;
+  --sheet-t: 420ms;
+}
+```
+
+The scene uses fixed greys outside the token list (`#161513`, `#0b0b0a`, `#262420`, `#d9d8d2`) because it is a picture, not UI. In a real app the scene is the live camera feed and those go away.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Title | Geist | 17px | 600 | -0.01em | sentence |
+| Venue line | Geist Mono | 11px | 500 | 0.12em | upper |
+| Count pill | Geist Mono | 12px | 500 / 600 | 0.08em | sentence |
+| Status | Geist | 15px | 500 | 0 | sentence |
+| Status sub | Geist Mono | 11px | 400 | 0.1em | upper |
+| Hint button | Geist Mono | 11px | 500 | 0.12em | upper |
+| Primary buttons | Geist | 16px | 600 | 0 | sentence |
+| Result title | Geist | 24px | 700 | -0.02em | sentence, in `--lock` |
+| Result sub | Geist Mono | 11px | 500 | 0.12em | upper |
+| Guest name | Geist | 28px | 600 | -0.02em | sentence |
+| Fact key | Geist Mono | 11px | 500 | 0.12em | upper |
+| Fact value | Geist | 15px | 500 | 0 | sentence, tabular |
+| Ticket id | Geist Mono | 14px | 500 | 0.06em | upper |
+| Code input | Geist Mono | 22px | 500 | 0.1em | upper |
+
+The status line has `text-shadow: 0 1px 8px #000` so it reads over any camera picture.
 
 ## Implementation notes
 

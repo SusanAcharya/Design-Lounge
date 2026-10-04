@@ -4,25 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the widths, the row heights and the keyboard rules.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The left sidebar of a fictional issue tracker. The workspace is Tamarind Studio. The sidebar is 260px wide and always open. From top to bottom: a workspace switcher, a search field with a ⌘K hint, five primary items with icons and counts, a Projects group that collapses, an Invite people row, and the signed-in user pinned to the bottom with a plan badge. The switcher opens a 252px popover that lists three workspaces with coloured initials tiles and a check on the current one. The look is quiet and dark: warm greys, one lime accent, 6px radii, counts in mono. The detail worth copying is that the lime appears in only three places: the current workspace tile, the current item's count pill, and the plan badge.
 
 This is not the collapsing rail. That piece shrinks to icons. This sidebar never shrinks on desktop.
-
-## Reference behaviour
-
-1. First frame: popover closed. Inbox is current (`aria-current="page"`). Its count pill is lime with dark text. The main area title reads Inbox. Projects is expanded.
-2. Click the switcher (or press Enter, Space or Arrow Down on it): the popover opens under it, 52px from the sidebar top, 8px from its left edge. Focus moves to the checked workspace. The trigger gets `aria-expanded="true"`.
-3. In the popover, Arrow Down and Arrow Up move between the four options and wrap. Home and End jump to the first and last.
-4. Choose a workspace (click or Enter): the check moves to it, the switcher tile and name change, the breadcrumb in the main area changes, the popover closes, and focus returns to the switcher.
-5. Escape closes the popover and returns focus to the switcher. Tab closes it and lets focus move on. A pointer press outside the popover closes it without moving focus.
-6. Press ⌘K (Ctrl+K off macOS) anywhere: the search field takes focus and selects its text. Escape in the field blurs it.
-7. Click a primary item or a project: it becomes current. The old current item loses `aria-current` and its lime pill. The main title and breadcrumb change to the item's name.
-8. Click the Projects heading: the five project rows collapse to zero height over 240ms. The chevron turns -90deg. `aria-expanded` flips to false. The collapsed rows are `inert`, so neither Tab nor arrows reach them. Click again to expand.
-9. With focus on any sidebar control, Arrow Down and Arrow Up move focus to the next or previous control in visual order: switcher, search, five items, Projects heading, visible projects, Invite people, account options. They stop at the ends. They do not wrap. Home and End jump to the ends.
-10. Hover a row: background `--hover`, text `--ink`. No movement.
-11. The user row does not scroll away. It stays at the bottom edge at every height.
 
 ## Structure
 
@@ -71,61 +59,6 @@ popover (open): top 52, left 8, width 252
 - Invite people is a `button` styled as a row.
 - A flex spacer pushes the user row down. The user row is 60px high, `border-top: 1px solid --line`, full sidebar width.
 - Main area: a 48px bar with breadcrumb and two ghost buttons, then a page with padding 40px 48px and max-width 860px.
-
-## Tokens
-
-```css
-:root {
-  --bg: #16171a;          /* sidebar and page ground */
-  --main: #1c1d20;        /* main area */
-  --hover: #212226;       /* row hover */
-  --current: #26272b;     /* current row */
-  --raised: #232428;      /* search field, popover */
-  --ink: #ecebe7;         /* primary text */
-  --ink-2: #aeaba4;       /* row text */
-  --ink-3: #8a867e;       /* meta, counts, group labels */
-  --line: #2a2a2c;        /* hairlines */
-  --line-2: #34343a;      /* popover border, kbd border */
-  --accent: #c5e86c;      /* lime: current count, plan badge, focus */
-  --accent-ink: #16171a;  /* text on lime */
-  --focus: #c5e86c;
-
-  --tile-hf: #e2b26a;     /* second workspace tile */
-  --tile-ol: #8fc2b4;     /* third workspace tile */
-
-  --sans: "Inter", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  --text-xs: 11px;  --text-s: 11.5px; --text-m: 13px; --text-l: 13.5px; --title: 28px;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
-  --r: 6px; --r-pop: 8px; --r-tile: 5px; --r-kbd: 4px;
-  --shadow-pop: 0 12px 32px rgba(0, 0, 0, .45);
-
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --fast: 140ms;
-  --layout: 240ms;
-}
-```
-
-Project dots use five muted hues: `#c5e86c`, `#e2b26a`, `#8fc2b4`, `#d98b72`, `#9aa3c7`. They are 8px squares with a 2px radius. They are labels, not accents. Keep them at this saturation.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Workspace name | Inter | 13.5px | 600 | 0 | `--ink` |
-| Row label | Inter | 13px | 400, current 500 | 0 | `--ink-2`, current `--ink` |
-| Group label | Inter | 11.5px | 500 | 0.01em | `--ink-3` |
-| Count | JetBrains Mono | 11px | 500 | 0 | `--ink-3`, current `--accent-ink` on `--accent` |
-| Project key | JetBrains Mono | 11px | 500 | 0 | `--ink-3` |
-| kbd hint | JetBrains Mono | 11px | 500 | 0 | `--ink-3` |
-| Plan badge | JetBrains Mono | 10.5px | 500 | 0.04em, uppercase | `--accent` |
-| User name | Inter | 13px | 500 | 0 | `--ink` |
-| User email | Inter | 11.5px | 400 | 0 | `--ink-3` |
-| Page title | Inter | 28px | 600 | -0.02em | `--ink` |
-| Tile initials | Inter | 11px | 600 | 0.02em | dark on the tile colour |
-
-Body line-height is 1.4. Turn on `-webkit-font-smoothing: antialiased` on dark. Every number in the sidebar is mono. Every word is Inter.
 
 ## Motion
 
@@ -207,6 +140,79 @@ The popover's transform origin is top left. Nothing else moves. There is no slid
 - [ ] Projects are Harbor redesign, Billing v2, Onboarding flow, Mobile 3.0, Field research, each with a key.
 - [ ] User is Mira Rautio with a TEAM badge.
 - [ ] Background is `#16171a`. Accent is `#c5e86c`. Radii are 6px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: popover closed. Inbox is current (`aria-current="page"`). Its count pill is lime with dark text. The main area title reads Inbox. Projects is expanded.
+2. Click the switcher (or press Enter, Space or Arrow Down on it): the popover opens under it, 52px from the sidebar top, 8px from its left edge. Focus moves to the checked workspace. The trigger gets `aria-expanded="true"`.
+3. In the popover, Arrow Down and Arrow Up move between the four options and wrap. Home and End jump to the first and last.
+4. Choose a workspace (click or Enter): the check moves to it, the switcher tile and name change, the breadcrumb in the main area changes, the popover closes, and focus returns to the switcher.
+5. Escape closes the popover and returns focus to the switcher. Tab closes it and lets focus move on. A pointer press outside the popover closes it without moving focus.
+6. Press ⌘K (Ctrl+K off macOS) anywhere: the search field takes focus and selects its text. Escape in the field blurs it.
+7. Click a primary item or a project: it becomes current. The old current item loses `aria-current` and its lime pill. The main title and breadcrumb change to the item's name.
+8. Click the Projects heading: the five project rows collapse to zero height over 240ms. The chevron turns -90deg. `aria-expanded` flips to false. The collapsed rows are `inert`, so neither Tab nor arrows reach them. Click again to expand.
+9. With focus on any sidebar control, Arrow Down and Arrow Up move focus to the next or previous control in visual order: switcher, search, five items, Projects heading, visible projects, Invite people, account options. They stop at the ends. They do not wrap. Home and End jump to the ends.
+10. Hover a row: background `--hover`, text `--ink`. No movement.
+11. The user row does not scroll away. It stays at the bottom edge at every height.
+
+## Tokens
+
+```css
+:root {
+  --bg: #16171a;          /* sidebar and page ground */
+  --main: #1c1d20;        /* main area */
+  --hover: #212226;       /* row hover */
+  --current: #26272b;     /* current row */
+  --raised: #232428;      /* search field, popover */
+  --ink: #ecebe7;         /* primary text */
+  --ink-2: #aeaba4;       /* row text */
+  --ink-3: #8a867e;       /* meta, counts, group labels */
+  --line: #2a2a2c;        /* hairlines */
+  --line-2: #34343a;      /* popover border, kbd border */
+  --accent: #c5e86c;      /* lime: current count, plan badge, focus */
+  --accent-ink: #16171a;  /* text on lime */
+  --focus: #c5e86c;
+
+  --tile-hf: #e2b26a;     /* second workspace tile */
+  --tile-ol: #8fc2b4;     /* third workspace tile */
+
+  --sans: "Inter", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --text-xs: 11px;  --text-s: 11.5px; --text-m: 13px; --text-l: 13.5px; --title: 28px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
+  --r: 6px; --r-pop: 8px; --r-tile: 5px; --r-kbd: 4px;
+  --shadow-pop: 0 12px 32px rgba(0, 0, 0, .45);
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --fast: 140ms;
+  --layout: 240ms;
+}
+```
+
+Project dots use five muted hues: `#c5e86c`, `#e2b26a`, `#8fc2b4`, `#d98b72`, `#9aa3c7`. They are 8px squares with a 2px radius. They are labels, not accents. Keep them at this saturation.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Workspace name | Inter | 13.5px | 600 | 0 | `--ink` |
+| Row label | Inter | 13px | 400, current 500 | 0 | `--ink-2`, current `--ink` |
+| Group label | Inter | 11.5px | 500 | 0.01em | `--ink-3` |
+| Count | JetBrains Mono | 11px | 500 | 0 | `--ink-3`, current `--accent-ink` on `--accent` |
+| Project key | JetBrains Mono | 11px | 500 | 0 | `--ink-3` |
+| kbd hint | JetBrains Mono | 11px | 500 | 0 | `--ink-3` |
+| Plan badge | JetBrains Mono | 10.5px | 500 | 0.04em, uppercase | `--accent` |
+| User name | Inter | 13px | 500 | 0 | `--ink` |
+| User email | Inter | 11.5px | 400 | 0 | `--ink-3` |
+| Page title | Inter | 28px | 600 | -0.02em | `--ink` |
+| Tile initials | Inter | 11px | 600 | 0.02em | dark on the tile colour |
+
+Body line-height is 1.4. Turn on `-webkit-font-smoothing: antialiased` on dark. Every number in the sidebar is mono. Every word is Inter.
 
 ## Implementation notes
 

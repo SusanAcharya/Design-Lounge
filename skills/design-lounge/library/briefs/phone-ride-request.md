@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the three states: plan, finding, found.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The ride screen of a city app called Kerb, used at night. A near-black map fills the phone. A dashed acid-yellow route runs from a white ring pin at 14 Corran Street to a yellow square at Harbour Terminal B. A flat dark panel sits at the bottom with the two places, a swap button, three ride types, the card on file, and one acid button that says "Request Car".
@@ -13,23 +15,6 @@ Pressing it turns the panel into "Finding your driver" with radar rings spreadin
 The look is industrial night: near-black greys, white type, one acid yellow `#d7ff2e`, condensed Barlow in caps for names, IBM Plex Mono for every number, 8px corners, 1px hairlines, no shadows. The panel behaves like an iOS sheet (slides with the sheet curve) but stays flat. No glass.
 
 The detail worth copying: the button label names the ride you picked. "Request Car" becomes "Request XL" the moment you pick XL. Nobody has to guess what they are about to pay for.
-
-## Reference behaviour
-
-1. First frame, plan state: map with route and both pins, panel with Pickup "14 Corran Street", Destination "Harbour Terminal B", options Moto, Car, XL with Car selected, payment row, and the "Request Car" button.
-2. A small panel on the drop pin reads "18 MIN" in mono. It is the trip time, not the wait time.
-3. Tapping a ride option selects it. The selected row gets a 1px acid border, a dark olive wash `#1d2110`, and an acid icon. The button text changes to "Request" plus the option name.
-4. Arrow keys move the selection inside the option group, wrapping from XL to Moto. Only the selected row is in the tab order.
-5. Tapping swap exchanges the pickup and destination text and turns the swap icon 180 degrees in 300ms. A live region says "Pickup is now Harbour Terminal B".
-6. Tapping "Request Car" switches to the finding state. The panel content slides up 12px and fades in over 360ms. Focus moves to "Cancel request".
-7. Finding state: eyebrow "Request sent · Car · $11.80" in acid mono, heading "Finding your driver" in 36px caps, line "3 drivers nearby · usually under 1 min", a 3px progress track with a sliding acid segment, two notes, and a Cancel button.
-8. On the map in finding state, three acid rings grow from the pickup pin, radius 10 to 110, fading out, 2.4 seconds each, 0.8 seconds apart. The route dims to 35%.
-9. Cancel request returns to plan state and moves focus to the Request button. A live region says "Request cancelled".
-10. After 3.4 seconds without cancel, the found state appears. Focus moves to "Cancel ride". The live region reads the driver, car, plate, and wait.
-11. Found state: eyebrow "Driver found · arrives in 4 min", a 52px white tile "MO", name "Mara Okafor", "4.92 rating · 2,140 trips", a plate block with "Grey · Toyota / Corolla Hybrid" and "KRB 4471", Message and Call buttons, and a "Cancel ride" text button.
-12. On the map in found state, a white car marker fades in and slides 98px along Corran Street toward the pickup in 1.2 seconds.
-13. Cancel ride returns to plan state.
-14. With reduced motion, rings show as three still circles at radius 30, 60, 90 at 50% opacity, the car appears in place, and panel changes are instant.
 
 ## Structure
 
@@ -67,68 +52,6 @@ The detail worth copying: the button label names the ride you picked. "Request C
 - Finding: `p` eyebrow, `h2`, `p`, a `div role="progressbar"`, a `ul`, a Cancel `button`.
 - Found: eyebrow, driver row, plate block, a two-column grid of buttons, a text button.
 - One visually hidden `p aria-live="polite"` for state changes.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --map: #0d0e0f;        /* map ground, page */
-  --block: #141517;      /* city blocks */
-  --road: #202225;       /* main roads */
-  --road-2: #18191b;     /* side streets */
-  --panel: #121314;      /* bottom panel, top buttons */
-  --raise: #1a1b1d;      /* places box, plate block */
-  --line: #2b2d30;       /* 1px hairlines */
-  --ink: #f2f2ee;        /* primary text, pickup pin, plate */
-  --ink-2: #b4b6b8;      /* secondary text */
-  --ink-3: #8b8e92;      /* field keys, option meta */
-  --acid: #d7ff2e;       /* the one accent */
-  --on-acid: #0d0e0f;    /* text on acid */
-  --acid-wash: #1d2110;  /* selected option fill */
-
-  /* type */
-  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  /* space: 4px base */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
-
-  /* shape */
-  --r: 8px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --sheet: cubic-bezier(.32, .72, 0, 1);
-  --view-in: 360ms;
-  --ring: 2400ms;
-  --find-wait: 3400ms;
-  --car-in: 1200ms;
-}
-```
-
-Acid appears on: the route, the drop pin, the selected option border and icon, the Request button, the eyebrows, the progress segment, and the radar rings. Never on body text. Never as a large fill except the one button.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Wordmark | Barlow Condensed | 20px | 700 | 0.2em | upper |
-| Field key | IBM Plex Mono | 10px | 500 | 0.14em | upper |
-| Field value | Barlow Condensed | 19px | 600 | 0 | sentence |
-| Option name | Barlow Condensed | 22px | 700 | 0.04em | upper |
-| Option meta | IBM Plex Mono | 11px | 400 | 0.06em | upper |
-| Price | IBM Plex Mono | 16px | 600 | 0 | tabular |
-| Payment | IBM Plex Mono | 13px | 500 | 0.06em | upper |
-| Change link | Barlow Condensed | 16px | 600 | 0.04em | upper |
-| Request button | Barlow Condensed | 22px | 700 | 0.12em | upper |
-| Eyebrow | IBM Plex Mono | 11px | 500 | 0.16em | upper |
-| State heading | Barlow Condensed | 36px | 700 | 0.01em | upper, line-height 1 |
-| Driver name | Barlow Condensed | 24px | 700 | 0 | upper |
-| Plate | IBM Plex Mono | 24px | 600 | 0.12em | upper |
-| Map labels | IBM Plex Mono | 8px | 500 | 0.14em | upper, `#5a5d61` |
-
-Rule: words in Barlow, numbers in Plex Mono. Prices, times, seats, card digits, trips, and the plate are all mono.
 
 ## Motion
 
@@ -205,6 +128,89 @@ The radar is the one moment of drama. Everything else is a cut or a short fade.
 - [ ] Payment "VISA ···· 4417 · PERSONAL".
 - [ ] Accent `#d7ff2e`, map `#0d0e0f`, panel `#121314`, radius 8px.
 - [ ] Driver appears after 3.4 seconds: Mara Okafor, 4.92, grey Toyota Corolla Hybrid, plate KRB 4471, 4 min.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame, plan state: map with route and both pins, panel with Pickup "14 Corran Street", Destination "Harbour Terminal B", options Moto, Car, XL with Car selected, payment row, and the "Request Car" button.
+2. A small panel on the drop pin reads "18 MIN" in mono. It is the trip time, not the wait time.
+3. Tapping a ride option selects it. The selected row gets a 1px acid border, a dark olive wash `#1d2110`, and an acid icon. The button text changes to "Request" plus the option name.
+4. Arrow keys move the selection inside the option group, wrapping from XL to Moto. Only the selected row is in the tab order.
+5. Tapping swap exchanges the pickup and destination text and turns the swap icon 180 degrees in 300ms. A live region says "Pickup is now Harbour Terminal B".
+6. Tapping "Request Car" switches to the finding state. The panel content slides up 12px and fades in over 360ms. Focus moves to "Cancel request".
+7. Finding state: eyebrow "Request sent · Car · $11.80" in acid mono, heading "Finding your driver" in 36px caps, line "3 drivers nearby · usually under 1 min", a 3px progress track with a sliding acid segment, two notes, and a Cancel button.
+8. On the map in finding state, three acid rings grow from the pickup pin, radius 10 to 110, fading out, 2.4 seconds each, 0.8 seconds apart. The route dims to 35%.
+9. Cancel request returns to plan state and moves focus to the Request button. A live region says "Request cancelled".
+10. After 3.4 seconds without cancel, the found state appears. Focus moves to "Cancel ride". The live region reads the driver, car, plate, and wait.
+11. Found state: eyebrow "Driver found · arrives in 4 min", a 52px white tile "MO", name "Mara Okafor", "4.92 rating · 2,140 trips", a plate block with "Grey · Toyota / Corolla Hybrid" and "KRB 4471", Message and Call buttons, and a "Cancel ride" text button.
+12. On the map in found state, a white car marker fades in and slides 98px along Corran Street toward the pickup in 1.2 seconds.
+13. Cancel ride returns to plan state.
+14. With reduced motion, rings show as three still circles at radius 30, 60, 90 at 50% opacity, the car appears in place, and panel changes are instant.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --map: #0d0e0f;        /* map ground, page */
+  --block: #141517;      /* city blocks */
+  --road: #202225;       /* main roads */
+  --road-2: #18191b;     /* side streets */
+  --panel: #121314;      /* bottom panel, top buttons */
+  --raise: #1a1b1d;      /* places box, plate block */
+  --line: #2b2d30;       /* 1px hairlines */
+  --ink: #f2f2ee;        /* primary text, pickup pin, plate */
+  --ink-2: #b4b6b8;      /* secondary text */
+  --ink-3: #8b8e92;      /* field keys, option meta */
+  --acid: #d7ff2e;       /* the one accent */
+  --on-acid: #0d0e0f;    /* text on acid */
+  --acid-wash: #1d2110;  /* selected option fill */
+
+  /* type */
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* space: 4px base */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+
+  /* shape */
+  --r: 8px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --sheet: cubic-bezier(.32, .72, 0, 1);
+  --view-in: 360ms;
+  --ring: 2400ms;
+  --find-wait: 3400ms;
+  --car-in: 1200ms;
+}
+```
+
+Acid appears on: the route, the drop pin, the selected option border and icon, the Request button, the eyebrows, the progress segment, and the radar rings. Never on body text. Never as a large fill except the one button.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Wordmark | Barlow Condensed | 20px | 700 | 0.2em | upper |
+| Field key | IBM Plex Mono | 10px | 500 | 0.14em | upper |
+| Field value | Barlow Condensed | 19px | 600 | 0 | sentence |
+| Option name | Barlow Condensed | 22px | 700 | 0.04em | upper |
+| Option meta | IBM Plex Mono | 11px | 400 | 0.06em | upper |
+| Price | IBM Plex Mono | 16px | 600 | 0 | tabular |
+| Payment | IBM Plex Mono | 13px | 500 | 0.06em | upper |
+| Change link | Barlow Condensed | 16px | 600 | 0.04em | upper |
+| Request button | Barlow Condensed | 22px | 700 | 0.12em | upper |
+| Eyebrow | IBM Plex Mono | 11px | 500 | 0.16em | upper |
+| State heading | Barlow Condensed | 36px | 700 | 0.01em | upper, line-height 1 |
+| Driver name | Barlow Condensed | 24px | 700 | 0 | upper |
+| Plate | IBM Plex Mono | 24px | 600 | 0.12em | upper |
+| Map labels | IBM Plex Mono | 8px | 500 | 0.14em | upper, `#5a5d61` |
+
+Rule: words in Barlow, numbers in Plex Mono. Prices, times, seats, card digits, trips, and the plate are all mono.
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the field and the list use the family's radius. A list of four known options with no typing is `select-field`.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A field for a list long enough that typing helps. The label is Bay. The eight names are Bay 2, Bay 4, Bay 14, Cold store, Dock A, Dock B, Gate 4, and Salt room. The first frame has the letters Ba in the field and the list open on the three bays. The highlight sits on Bay 2. Clicking a row, or pressing Enter, commits that name, writes it into the field, and closes the list. A query that matches nothing shows "No bay matches." under the field. This is not the command palette. That piece searches the whole product. This piece picks one value for one field.
-
-## Reference behaviour
-
-1. The field reads Ba. The list is open. Bay 2 is highlighted. `aria-expanded` is true.
-2. Typing filters by a case-insensitive substring. "dock" leaves Dock A and Dock B. Clearing the field shows all eight.
-3. ArrowDown and ArrowUp move the highlight and do not commit.
-4. Enter commits the highlighted row and closes the list.
-5. A click commits that row and closes the list.
-6. Escape closes the list and leaves the typed text. It does not commit the highlight.
-7. When nothing matches, the list hides and "No bay matches." shows in `--danger`.
-8. There is no animation. Focus ring is 2px `--focus`, offset 2px.
 
 ## Structure
 
@@ -35,38 +26,6 @@ field, width 320
 - The input is `role="combobox"` with `aria-autocomplete="list"` and `aria-controls` pointing at the list.
 - The list is `role="listbox"`. Each row is `role="option"`.
 - `aria-activedescendant` points at the highlighted option.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --surface-2: #f0ebe3;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --line-strong: #cfc6b8;
-  --primary-soft: #e7f2ec;
-  --danger: #9b2c2c;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px. The family replaces it on the field and the list together. Highlight is `--surface-2`. A committed option, if the list is still open, is `--primary-soft`. After commit the list is closed, so the field text is the value.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 12px | 500 | `--ink-2` |
-| Field | sans | 14px | 400 | `--ink` |
-| Option | sans | 14px | 400 | `--ink` |
-| Empty | sans | 12px | 400 | `--danger` |
-
-The where-line letter-spacing is 0.04em. Options are vertically centered in a 40px row.
 
 ## Motion
 
@@ -121,6 +80,53 @@ None. The list filters in one frame. Reduced motion has nothing to remove. Do no
 - [ ] Escape closes the list and keeps the typed text.
 - [ ] Highlight is `#f0ebe3`. A committed row, while open, is `#e7f2ec`.
 - [ ] There is no animation and no command palette.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The field reads Ba. The list is open. Bay 2 is highlighted. `aria-expanded` is true.
+2. Typing filters by a case-insensitive substring. "dock" leaves Dock A and Dock B. Clearing the field shows all eight.
+3. ArrowDown and ArrowUp move the highlight and do not commit.
+4. Enter commits the highlighted row and closes the list.
+5. A click commits that row and closes the list.
+6. Escape closes the list and leaves the typed text. It does not commit the highlight.
+7. When nothing matches, the list hides and "No bay matches." shows in `--danger`.
+8. There is no animation. Focus ring is 2px `--focus`, offset 2px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --surface-2: #f0ebe3;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --line-strong: #cfc6b8;
+  --primary-soft: #e7f2ec;
+  --danger: #9b2c2c;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px. The family replaces it on the field and the list together. Highlight is `--surface-2`. A committed option, if the list is still open, is `--primary-soft`. After commit the list is closed, so the field text is the value.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 12px | 500 | `--ink-2` |
+| Field | sans | 14px | 400 | `--ink` |
+| Option | sans | 14px | 400 | `--ink` |
+| Empty | sans | 12px | 400 | `--danger` |
+
+The where-line letter-spacing is 0.04em. Options are vertically centered in a 40px row.
 
 ## Implementation notes
 

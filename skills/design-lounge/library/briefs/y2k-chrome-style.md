@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A kit sheet for "Helix Records", a fictional late-1990s label, that teaches a Y2K chrome dialect: ice-silver surfaces, 180deg metallic bevels, a white glass cap on primary pills, and a spinning chrome disc. The first row is a music-drop fragment for the album **Aurora 7** by Pulse Circuit, with CD / MP3 / Stream tabs that rewrite the copy and price. The rest of the sheet is a type specimen (72px Michroma "Aa"), five colour chips, buttons, chips, an email field, a link, an autoplay switch, three surface plates, and four grammar cards. The detail worth copying: **hot pink is used once**. It is a 22px LIVE badge and nothing else — no pink type, no pink fill, no pink gradient.
-
-## Reference behaviour
-
-1. Initial state: 54px chrome header with a 28px conic-gradient disc mark, "Helix kit / Y2K chrome 01", four section anchors, "Kit v1.0 · 31 Dec 1999". Below it a 12-column sheet on a #6B7788 grid. First 800px shows the 430px hero, the specimen, and the top of the component row.
-2. The chrome disc at the right of the hero rotates 360deg over 18s, linear, infinite. A hot-pink LIVE pill sits above it.
-3. Hover a pill button: it lifts `translateY(-1px)` and the drop shadow grows from 2px to 3px over 140ms. Press: `translateY(1px)`, shadow 1px.
-4. Click CD / MP3 / Stream tabs (`role="tablist"`). The selected tab fills electric blue with white text. `#fmt-copy` and `#price` swap: CD "Preorder $12.99" + jewel-case copy; MP3 "Download $8.99" + 128 kbps / 52 MB; Stream "Included with Helix Radio" + 56k note.
-5. Click "Play preview": `aria-pressed` flips and the label becomes "Pause preview".
-6. Focus the email input: border `#0078FF`, 3px `rgba(0,120,255,.25)` ring. No glow beyond that.
-7. Click format chips in cell 03: `aria-pressed` toggles the blue fill.
-8. Click the Autoplay switch: the 20px chrome knob slides 22px right over 220ms expo-out; the track fills electric blue.
-9. Header anchors jump to sections; hover is a 2px electric-blue underline.
-10. With `prefers-reduced-motion: reduce`, the disc does not spin and all transitions are 1ms.
 
 ## Structure
 
@@ -47,47 +36,6 @@ A kit sheet for "Helix Records", a fictional late-1990s label, that teaches a Y2
 - `<main class="sheet">`: `display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background: #6B7788`.
 - `.hero` (`<section>`, cols 1–7, 430px, padding 0): `.mini` bar, `.live` badge, `.disc`, `.copy` (eyebrow, h1, p, tablist, play + price).
 - `.spec` cols 8–12, 430px. `.pal` `.ctl` `.inp` `.surf` span 3. `.gram` × 4 span 3. `.foot` spans 12.
-
-## Tokens
-
-```css
-:root {
-  --ice: #d8e2ec;       /* surface, 55 % */
-  --ice-2: #c4d0dc;     /* inner rules, chip fill */
-  --chrome: #8a96a3;    /* bevel edge, 20 % */
-  --shine: #f7fbff;     /* highlight stop */
-  --ink: #1a2230;       /* text, 15 % */
-  --ink-2: #3a4758;     /* secondary */
-  --ink-3: #6b7788;     /* meta, grid */
-  --blue: #0078ff;      /* action, 9 % */
-  --blue-deep: #0054c4; /* press / selected */
-  --pink: #ff2d7a;      /* LIVE badge only */
-  --on: #f7fbff;
-  --display: "Michroma", Verdana, sans-serif;
-  --text: "Figtree", system-ui, sans-serif;
-  --fs-display: 28px; --fs-aa: 72px; --fs-h2: 20px; --fs-body: 14px; --fs-label: 11px;
-  --r: 10px; --pill: 22px; --ctl: 44px; --pad: 20px;
-  --bevel: linear-gradient(180deg, #f7fbff 0%, #d8e2ec 42%, #8a96a3 50%, #e8eef4 100%);
-  --t-micro: 140ms; --t-tab: 240ms; --t-switch: 220ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Hero headline | Michroma | 28px | 400 | .95 | +0.04em | UPPERCASE |
-| Specimen glyph | Michroma | 72px | 400 | .8 | −0.04em | "Aa" |
-| Brand / mini | Michroma | 10–12px | 400 | 1 | +0.08–0.1em | UPPERCASE |
-| Grammar title | Michroma | 12px | 400 | 1.2 | +0.04em | UPPERCASE |
-| H2 | Figtree | 20px | 700 | 1 | 0 | sentence |
-| Body | Figtree | 14–15px | 400 | 1.45 | 0 | sentence |
-| Button | Figtree | 14px | 600 | 1 | 0 | sentence |
-| Label / eyebrow | Figtree | 10–11px | 600 | 1 | +0.14–0.16em | UPPERCASE |
-
-Michroma has one weight. Do not request 700. It sits wide; keep headlines short (one or two words).
 
 ## Motion
 
@@ -141,6 +89,64 @@ Reduced motion: `animation: none` on `.disc`; every transition 1ms.
 - [ ] Focus-visible is 2px electric blue, 3px offset, on links, tabs, buttons, input, switch.
 - [ ] Only Michroma and Figtree are loaded.
 - [ ] No emoji, no placeholder copy, no second accent colour.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 54px chrome header with a 28px conic-gradient disc mark, "Helix kit / Y2K chrome 01", four section anchors, "Kit v1.0 · 31 Dec 1999". Below it a 12-column sheet on a #6B7788 grid. First 800px shows the 430px hero, the specimen, and the top of the component row.
+2. The chrome disc at the right of the hero rotates 360deg over 18s, linear, infinite. A hot-pink LIVE pill sits above it.
+3. Hover a pill button: it lifts `translateY(-1px)` and the drop shadow grows from 2px to 3px over 140ms. Press: `translateY(1px)`, shadow 1px.
+4. Click CD / MP3 / Stream tabs (`role="tablist"`). The selected tab fills electric blue with white text. `#fmt-copy` and `#price` swap: CD "Preorder $12.99" + jewel-case copy; MP3 "Download $8.99" + 128 kbps / 52 MB; Stream "Included with Helix Radio" + 56k note.
+5. Click "Play preview": `aria-pressed` flips and the label becomes "Pause preview".
+6. Focus the email input: border `#0078FF`, 3px `rgba(0,120,255,.25)` ring. No glow beyond that.
+7. Click format chips in cell 03: `aria-pressed` toggles the blue fill.
+8. Click the Autoplay switch: the 20px chrome knob slides 22px right over 220ms expo-out; the track fills electric blue.
+9. Header anchors jump to sections; hover is a 2px electric-blue underline.
+10. With `prefers-reduced-motion: reduce`, the disc does not spin and all transitions are 1ms.
+
+## Tokens
+
+```css
+:root {
+  --ice: #d8e2ec;       /* surface, 55 % */
+  --ice-2: #c4d0dc;     /* inner rules, chip fill */
+  --chrome: #8a96a3;    /* bevel edge, 20 % */
+  --shine: #f7fbff;     /* highlight stop */
+  --ink: #1a2230;       /* text, 15 % */
+  --ink-2: #3a4758;     /* secondary */
+  --ink-3: #6b7788;     /* meta, grid */
+  --blue: #0078ff;      /* action, 9 % */
+  --blue-deep: #0054c4; /* press / selected */
+  --pink: #ff2d7a;      /* LIVE badge only */
+  --on: #f7fbff;
+  --display: "Michroma", Verdana, sans-serif;
+  --text: "Figtree", system-ui, sans-serif;
+  --fs-display: 28px; --fs-aa: 72px; --fs-h2: 20px; --fs-body: 14px; --fs-label: 11px;
+  --r: 10px; --pill: 22px; --ctl: 44px; --pad: 20px;
+  --bevel: linear-gradient(180deg, #f7fbff 0%, #d8e2ec 42%, #8a96a3 50%, #e8eef4 100%);
+  --t-micro: 140ms; --t-tab: 240ms; --t-switch: 220ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Hero headline | Michroma | 28px | 400 | .95 | +0.04em | UPPERCASE |
+| Specimen glyph | Michroma | 72px | 400 | .8 | −0.04em | "Aa" |
+| Brand / mini | Michroma | 10–12px | 400 | 1 | +0.08–0.1em | UPPERCASE |
+| Grammar title | Michroma | 12px | 400 | 1.2 | +0.04em | UPPERCASE |
+| H2 | Figtree | 20px | 700 | 1 | 0 | sentence |
+| Body | Figtree | 14–15px | 400 | 1.45 | 0 | sentence |
+| Button | Figtree | 14px | 600 | 1 | 0 | sentence |
+| Label / eyebrow | Figtree | 10–11px | 600 | 1 | +0.14–0.16em | UPPERCASE |
+
+Michroma has one weight. Do not request 700. It sits wide; keep headlines short (one or two words).
 
 ## Implementation notes
 

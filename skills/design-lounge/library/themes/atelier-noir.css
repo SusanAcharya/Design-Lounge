@@ -1,6 +1,7 @@
 /* Atelier Noir · dark · pair: linen-shop
    Bone type on black. Luxury as the absence of extra lines.
    Best for: Fashion, Fragrance, Hotels */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Atelier Noir · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Bodoni Moda", Georgia, serif;
-  --font-text: "Tenor Sans", system-ui, sans-serif;
-  --radius: 0px;
-  --shadow: none;
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

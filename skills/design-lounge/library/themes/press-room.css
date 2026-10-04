@@ -1,6 +1,7 @@
 /* Press Room · light · no pair
    Newsprint and one red. Headlines do the shouting.
    Best for: News, Magazines, Campaigns */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Press Room · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Newsreader", Georgia, serif;
-  --font-text: "Work Sans", system-ui, sans-serif;
-  --radius: 0px;
-  --shadow: none;
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

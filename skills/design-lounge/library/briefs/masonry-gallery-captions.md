@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A portfolio archive page ("Marrow Archive") on near-black. Fourteen tiles of six different aspect ratios flow into a four-column masonry built with CSS `columns`, each tile "painted" with gradients and a pseudo-element shape rather than an image. Hovering or focusing a tile slides a caption bar up from the bottom edge (title, dimensions, series label in coral) while the artwork scales 3 % behind it. A row of pill chips above filters the wall by series: hidden tiles fade and shrink out over 360ms, the survivors reflow. The thing worth copying is the caption bar: a gradient scrim that reads as part of the tile, sliding on `transform` only.
-
-## Reference behaviour
-
-1. Initial state: header with the title (Syne 30px, "Archive" in coral), a one-line subtitle, and five chips at the right; "All 14" is pressed (inverted: light fill, dark text). Below a hairline, the wall shows all 14 tiles at rest, no captions visible. The wall scrolls; the header stays.
-2. Hover a tile: the caption bar translates from `translateY(100%)` to 0 over 280ms; the artwork scales to 1.03 over 600ms expo-out. Leave: both reverse.
-3. Tab to a tile: same as hover, plus a two-ring focus box-shadow (2px page colour, then 2px coral).
-4. Click a chip (e.g. "Landscape 4"): the chip becomes pressed and "All" unpresses. Non-matching tiles fade to opacity 0 and scale to .96 over 360ms, then are removed from flow (`display: none`); matching tiles that were hidden are re-inserted and fade in from the same state. The wall scrolls back to top.
-5. Click "All": every tile returns.
-6. If a filter yields nothing (not reachable with the shipped data, but the code handles it), the wall shows "Nothing in this series yet." centred in `--ink-3`.
-7. Clicking a tile is prevented in the demo (would open a detail view in a product).
 
 ## Structure
 
@@ -42,54 +34,6 @@ tile widths = (1280 − 80 − 3×12) / 4 = 291px
 - `<div class="wall">` (`flex: 1; overflow: auto; padding: 20px 40px 40px`): `<div class="grid">` with `columns: 4; column-gap: 12px`, then a `.empty` paragraph.
 - Each tile is `<a class="tile nN" data-c="series">` containing `<div class="art">` (sets `aspect-ratio` from `--ar`) and `<div class="cap">` with `<b>` title, `<span>` meta, `<i>` series label. The painted artwork lives on the tile's `background` and an optional `::after` shape.
 - Aspect ratios in order: 4/5, 1/1, 3/4, 16/10, 2/3, 1/1, 5/4, 3/4, 1/1, 4/5, 16/9, 3/4, 1/1, 5/4. Series: land ×4, studio ×4, type ×3, obj ×3.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm near-black, bone text, coral accent */
-  --bg: #151517;          /* page, scrim base */
-  --panel: #1c1c1f;       /* tile fallback surface */
-  --line: #2a2a2e;        /* hairline, chip border */
-  --ink: #f1efe9;         /* text, pressed chip fill */
-  --ink-2: #a3a29c;       /* secondary */
-  --ink-3: #6c6b66;       /* tertiary, chip hover border */
-  --accent: #f05d3b;      /* series label, focus ring, title word */
-  --accent-ink: #1a0d08;
-  --scrim: linear-gradient(to top, rgba(21,21,23,.92), rgba(21,21,23,.6) 70%, transparent);
-
-  /* artwork palette (used across the 14 tiles) */
-  --bone: #e9e3d5; --sky: #a9c4d4; --pine: #26402f; --sand: #f2e6c9; --ochre: #e6c15a;
-  --rust: #b8452e; --teal: #0f6b62; --plum: #3b2b45; --stone: #8f8a80; --lamp: #e3a75a;
-
-  /* type */
-  --display: "Syne", system-ui, sans-serif;
-  --sans: "Manrope", system-ui, sans-serif;
-  --fs-h1: 30px; --fs-sub: 13px; --fs-chip: 13px; --fs-cap: 14px; --fs-meta: 12px; --fs-label: 11px;
-
-  /* layout */
-  --cols: 4; --gap: 12px; --gutter: 40px; --r: 6px; --chip-h: 34px;
-  --cap-pad: 12px 14px;
-
-  /* motion */
-  --t-micro: 160ms; --t-layout: 280ms; --t-filter: 360ms; --t-zoom: 600ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --zoom: 1.03; --shrink: .96;
-}
-```
-
-## Typography
-
-| Role          | Family  | Size | Weight | Line-height | Tracking | Case |
-|---------------|---------|-----:|-------:|------------:|---------:|------|
-| Title         | Syne    | 30px | 700    | 1           | −0.02em  | sentence; second word `--accent` |
-| Subtitle      | Manrope | 13px | 400    | 1.5         | 0        | `--ink-2` |
-| Chip          | Manrope | 13px | 500    | 1           | 0        | sentence; count 11px at 60 % opacity, tabular |
-| Caption title | Syne    | 14px | 700    | 1.2         | −0.01em  | sentence |
-| Caption meta  | Manrope | 12px | 400    | 1.3         | 0        | `--ink-2`; "80 × 100 cm" uses a real multiplication sign |
-| Series label  | Manrope | 11px | 600    | 1           | +0.06em  | UPPERCASE `--accent` |
-| Empty state   | Manrope | 14px | 400    | 1.5         | 0        | `--ink-3`, centred |
 
 ## Motion
 
@@ -147,6 +91,68 @@ Reduced motion: all transitions 1ms; the art does not scale on hover; filtered t
 - [ ] Header stays fixed while only the wall scrolls.
 - [ ] Column count steps 4 → 3 → 2 → 1 at 1023 / 767 / 480.
 - [ ] No console errors when clicking chips rapidly (timeouts must not throw if a tile is re-shown mid-fade).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header with the title (Syne 30px, "Archive" in coral), a one-line subtitle, and five chips at the right; "All 14" is pressed (inverted: light fill, dark text). Below a hairline, the wall shows all 14 tiles at rest, no captions visible. The wall scrolls; the header stays.
+2. Hover a tile: the caption bar translates from `translateY(100%)` to 0 over 280ms; the artwork scales to 1.03 over 600ms expo-out. Leave: both reverse.
+3. Tab to a tile: same as hover, plus a two-ring focus box-shadow (2px page colour, then 2px coral).
+4. Click a chip (e.g. "Landscape 4"): the chip becomes pressed and "All" unpresses. Non-matching tiles fade to opacity 0 and scale to .96 over 360ms, then are removed from flow (`display: none`); matching tiles that were hidden are re-inserted and fade in from the same state. The wall scrolls back to top.
+5. Click "All": every tile returns.
+6. If a filter yields nothing (not reachable with the shipped data, but the code handles it), the wall shows "Nothing in this series yet." centred in `--ink-3`.
+7. Clicking a tile is prevented in the demo (would open a detail view in a product).
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm near-black, bone text, coral accent */
+  --bg: #151517;          /* page, scrim base */
+  --panel: #1c1c1f;       /* tile fallback surface */
+  --line: #2a2a2e;        /* hairline, chip border */
+  --ink: #f1efe9;         /* text, pressed chip fill */
+  --ink-2: #a3a29c;       /* secondary */
+  --ink-3: #6c6b66;       /* tertiary, chip hover border */
+  --accent: #f05d3b;      /* series label, focus ring, title word */
+  --accent-ink: #1a0d08;
+  --scrim: linear-gradient(to top, rgba(21,21,23,.92), rgba(21,21,23,.6) 70%, transparent);
+
+  /* artwork palette (used across the 14 tiles) */
+  --bone: #e9e3d5; --sky: #a9c4d4; --pine: #26402f; --sand: #f2e6c9; --ochre: #e6c15a;
+  --rust: #b8452e; --teal: #0f6b62; --plum: #3b2b45; --stone: #8f8a80; --lamp: #e3a75a;
+
+  /* type */
+  --display: "Syne", system-ui, sans-serif;
+  --sans: "Manrope", system-ui, sans-serif;
+  --fs-h1: 30px; --fs-sub: 13px; --fs-chip: 13px; --fs-cap: 14px; --fs-meta: 12px; --fs-label: 11px;
+
+  /* layout */
+  --cols: 4; --gap: 12px; --gutter: 40px; --r: 6px; --chip-h: 34px;
+  --cap-pad: 12px 14px;
+
+  /* motion */
+  --t-micro: 160ms; --t-layout: 280ms; --t-filter: 360ms; --t-zoom: 600ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --zoom: 1.03; --shrink: .96;
+}
+```
+
+## Typography
+
+| Role          | Family  | Size | Weight | Line-height | Tracking | Case |
+|---------------|---------|-----:|-------:|------------:|---------:|------|
+| Title         | Syne    | 30px | 700    | 1           | −0.02em  | sentence; second word `--accent` |
+| Subtitle      | Manrope | 13px | 400    | 1.5         | 0        | `--ink-2` |
+| Chip          | Manrope | 13px | 500    | 1           | 0        | sentence; count 11px at 60 % opacity, tabular |
+| Caption title | Syne    | 14px | 700    | 1.2         | −0.01em  | sentence |
+| Caption meta  | Manrope | 12px | 400    | 1.3         | 0        | `--ink-2`; "80 × 100 cm" uses a real multiplication sign |
+| Series label  | Manrope | 11px | 600    | 1           | +0.06em  | UPPERCASE `--accent` |
+| Empty state   | Manrope | 14px | 400    | 1.5         | 0        | `--ink-3`, centred |
 
 ## Implementation notes
 

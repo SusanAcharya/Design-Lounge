@@ -4,25 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from gmxdigital.com: the idea is a pinned hero where a short headline stays still while numbered chapters (01 to 04) play scenes behind it, each with its own progress hairline. This version is the first screen of Brasswell Films, a fictional studio that films hotels and residences before they are built. The left side never moves: a kicker, a two-line 108px headline ("Unbuilt." / "Already lit." in amber), a lede and two actions. The right two-thirds is a stack of four night scenes (Facade, Courtyard, Rooms, Shoreline) that crossfade every 6.5s with a slow push-in, while a chapter index on the right edge shows which scene is playing. The detail worth copying is that the progress lives in the active row's bottom hairline, so the index is both the navigation and the timer.
 
 The scenes are inline SVG so the demo has no images. In a product, each scene is a muted, looping video or a still with a Ken Burns push. Keep everything else.
-
-## Reference behaviour
-
-1. Load: scene 01 Facade is visible. Index row 01 is amber with a ↗ arrow, and its bottom hairline starts filling left to right over 6500ms.
-2. Kicker, both headline lines, lede and actions rise in: opacity 0 → 1, `translateY(18px)` → 0, 800ms expo-out, stagger 0 / 90 / 200 / 280ms.
-3. The active scene's SVG scales from 1.07 → 1 over 7400ms while it is on screen (push-in).
-4. When the hairline reaches the end (`animationend`), the next chapter becomes active. After 04 it wraps to 01.
-5. Changing chapter: the old scene fades out and the new one fades in over 900ms (crossfade, both absolute). The bottom-left meta line and bottom-right pair label swap with a 220ms fade/drop. The bottom-right number changes to the new chapter number.
-6. Clicking a chapter row jumps to it at once and restarts its hairline from 0.
-7. Hovering the index pauses the hairline (`animation-play-state: paused`). Leaving resumes it, unless the pause button is on.
-8. Pause button (40×40 square in the header, amber bars icon): toggles autoplay. When paused the icon becomes a play triangle, `aria-pressed="true"`, the hairline freezes where it is.
-9. Keyboard: the index is a tablist. Arrow Down / Right goes to the next chapter, Up / Left to the previous (wrapping), Home and End go to 01 and 04. Focus moves with the selection.
-10. A polite live region announces "Scene 3 of 4: Rooms" on each change.
-11. Reduced motion: autoplay starts paused, no push-in, no crossfade (instant swap), no entrance rise, hairline shows full for the active row, window flicker and light twinkle are off.
 
 ## Structure
 
@@ -51,50 +39,6 @@ copy: left 56px, width 600px, vertically centred (translateY(-44%))
 - `.index` is `role="tablist"` with four `button role="tab"`. Each tab: number, label, arrow SVG, and an absolute `.bar` hairline.
 - `.strip`: meta text left, chapter number + 120px rule + pair label right. Mono, uppercase.
 - One visually hidden `p aria-live="polite"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #110e0b;            /* warm night, page and mask colour */
-  --bg-2: #1a1510;
-  --ink: #f1e8da;           /* headline, primary text */
-  --ink-2: #c9bca9;         /* lede, nav, inactive labels */
-  --ink-3: #8f8272;         /* numbers, meta strip */
-  --line: rgba(241,232,218,.14);
-  --line-2: rgba(241,232,218,.28);
-  --accent: #e9a15b;        /* amber: second headline line, active chapter, CTA */
-  --accent-ink: #1d130a;    /* text on amber */
-  --glow: #f2b66a;          /* lit windows and lamps in scenes */
-
-  --sans: "Familjen Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px; --gutter: 56px;
-  --radius-pill: 999px;
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --dwell: 6500ms;          /* time per chapter */
-  --fade: 900ms;            /* scene crossfade */
-  --push: 7400ms;           /* scene push-in, longer than dwell so it never stops on screen */
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Headline | Familjen Grotesk | 108px | 500 | 0.98 | -0.058em | Sentence |
-| Kicker | Familjen Grotesk | 14px | 400 | 1.5 | 0 | Sentence, 40px rule before |
-| Lede | Familjen Grotesk | 17px | 400 | 1.55 | 0 | Sentence, `--ink-2`, max 440px |
-| Nav, CTA | Familjen Grotesk | 14–15px | 500–600 | 1 | 0 | Title |
-| Brand | Familjen Grotesk | 13px | 600 | 1 | 0.16em | Upper |
-| Chapter number | Familjen Grotesk | 26px | 400 | 1 | -0.02em | Digits, 2-wide |
-| Chapter label | Familjen Grotesk | 14px | 500 | 1 | 0 | Title |
-| Meta strip | IBM Plex Mono | 11px | 500 | 1 | 0.14em | Upper |
-
-The headline is the only big type. Chapter numbers are big-ish and light so they read as a timeline, not as buttons.
 
 ## Motion
 
@@ -164,6 +108,68 @@ The hairline is the only linear motion. It is a clock.
 - [ ] Pair labels: Site → Skyline, Path → Gathering, Space → Stay, Tide → Terrace.
 - [ ] Dwell is 6500ms per chapter.
 - [ ] CTA "Plan a launch film" is a 56px amber pill with a 44px dark circle arrow.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Load: scene 01 Facade is visible. Index row 01 is amber with a ↗ arrow, and its bottom hairline starts filling left to right over 6500ms.
+2. Kicker, both headline lines, lede and actions rise in: opacity 0 → 1, `translateY(18px)` → 0, 800ms expo-out, stagger 0 / 90 / 200 / 280ms.
+3. The active scene's SVG scales from 1.07 → 1 over 7400ms while it is on screen (push-in).
+4. When the hairline reaches the end (`animationend`), the next chapter becomes active. After 04 it wraps to 01.
+5. Changing chapter: the old scene fades out and the new one fades in over 900ms (crossfade, both absolute). The bottom-left meta line and bottom-right pair label swap with a 220ms fade/drop. The bottom-right number changes to the new chapter number.
+6. Clicking a chapter row jumps to it at once and restarts its hairline from 0.
+7. Hovering the index pauses the hairline (`animation-play-state: paused`). Leaving resumes it, unless the pause button is on.
+8. Pause button (40×40 square in the header, amber bars icon): toggles autoplay. When paused the icon becomes a play triangle, `aria-pressed="true"`, the hairline freezes where it is.
+9. Keyboard: the index is a tablist. Arrow Down / Right goes to the next chapter, Up / Left to the previous (wrapping), Home and End go to 01 and 04. Focus moves with the selection.
+10. A polite live region announces "Scene 3 of 4: Rooms" on each change.
+11. Reduced motion: autoplay starts paused, no push-in, no crossfade (instant swap), no entrance rise, hairline shows full for the active row, window flicker and light twinkle are off.
+
+## Tokens
+
+```css
+:root {
+  --bg: #110e0b;            /* warm night, page and mask colour */
+  --bg-2: #1a1510;
+  --ink: #f1e8da;           /* headline, primary text */
+  --ink-2: #c9bca9;         /* lede, nav, inactive labels */
+  --ink-3: #8f8272;         /* numbers, meta strip */
+  --line: rgba(241,232,218,.14);
+  --line-2: rgba(241,232,218,.28);
+  --accent: #e9a15b;        /* amber: second headline line, active chapter, CTA */
+  --accent-ink: #1d130a;    /* text on amber */
+  --glow: #f2b66a;          /* lit windows and lamps in scenes */
+
+  --sans: "Familjen Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px; --gutter: 56px;
+  --radius-pill: 999px;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --dwell: 6500ms;          /* time per chapter */
+  --fade: 900ms;            /* scene crossfade */
+  --push: 7400ms;           /* scene push-in, longer than dwell so it never stops on screen */
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Headline | Familjen Grotesk | 108px | 500 | 0.98 | -0.058em | Sentence |
+| Kicker | Familjen Grotesk | 14px | 400 | 1.5 | 0 | Sentence, 40px rule before |
+| Lede | Familjen Grotesk | 17px | 400 | 1.55 | 0 | Sentence, `--ink-2`, max 440px |
+| Nav, CTA | Familjen Grotesk | 14–15px | 500–600 | 1 | 0 | Title |
+| Brand | Familjen Grotesk | 13px | 600 | 1 | 0.16em | Upper |
+| Chapter number | Familjen Grotesk | 26px | 400 | 1 | -0.02em | Digits, 2-wide |
+| Chapter label | Familjen Grotesk | 14px | 500 | 1 | 0 | Title |
+| Meta strip | IBM Plex Mono | 11px | 500 | 1 | 0.14em | Upper |
+
+The headline is the only big type. Chapter numbers are big-ish and light so they read as a timeline, not as buttons.
 
 ## Implementation notes
 

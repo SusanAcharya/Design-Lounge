@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A messaging thread (fictional product "Halden") in an iOS 26-style light palette. Pressing and holding any message bubble for 350ms lifts a copy of the bubble out of the thread (scale 1.04, deep soft shadow), blurs and tints everything behind it, and springs a 250px context menu (Reply, Copy, Forward, Delete) into place next to the bubble. Menu rows arrive one after another, 40ms apart. Releasing anywhere outside the menu drops the bubble back and dismisses. The detail worth copying is the layering: the bubble is *cloned* into a fixed layer above the blur so the original list never has to escape its scroll container, and the hold is cancelled by a 6px finger move so scrolling never triggers it.
-
-## Reference behaviour
-
-1. Initial state: a chat header (back chevron, avatar "ML", name "Mira Lindqvist", video icon) pinned at the top under the status bar; a thread of seven bubbles (incoming grey on the left, outgoing blue on the right); a composer pinned at the bottom above the home indicator. A hint line "Press and hold a bubble for 350ms" sits above the composer.
-2. Pointer down on a bubble: the bubble shrinks to `scale(.985)` over 160ms (`:active`). A 350ms timer starts.
-3. If the pointer lifts, is cancelled, or moves more than 6px (summed |dx|+|dy| per `pointermove`) before 350ms: the timer is cancelled and nothing else happens. Scrolling the thread therefore never opens a menu.
-4. At 350ms: the original bubble becomes `visibility:hidden`; a clone is placed at its exact viewport rect in a fixed layer (z-index 9) and animates `scale(1) → scale(1.04)` over 320ms with the spring curve, gaining `--shadow-lift`. A full-screen scrim (z-index 8, `rgba(232,232,238,.42)` + `backdrop-filter: blur(18px) saturate(1.1)`) fades in over 220ms. The hint fades out.
-5. In the same frame, a `<ul role="menu">` (250px wide, radius 14px, translucent `rgba(250,250,252,.92)` with `blur(30px) saturate(1.6)`) animates `opacity 0, scale(.55) → 1, scale(1)` over 320ms with the spring curve. Its transform-origin is the corner nearest the bubble (`left top` for incoming below, `right top` for outgoing below; `bottom` variants when flipped).
-6. The menu sits 8px below the bubble, aligned to the bubble's outer edge (left edge for incoming, right edge for outgoing). If `bubble.bottom + 8 + 178 > 844 − 34 − 8`, it flips to 8px above the bubble.
-7. Each of the four rows (44px tall) fades from `opacity 0, translateY(−6px)` to `1, 0` over 240ms, delayed `60ms + index × 40ms`. "Delete" is red (`--danger`) with a trash icon; the others use the secondary ink for their trailing 20px icon.
-8. Focus moves to the first menu row. ArrowDown/ArrowUp cycle rows, Escape dismisses, Tab is trapped.
-9. Tapping a row: a black pill toast near the bottom ("Copied", or "Reply · Mira", "Forward · your message", etc.) slides up 8px and fades in over 160ms, stays 1400ms, then fades out. The menu dismisses at the same time.
-10. Releasing (pointerup) on the scrim: the scrim fades out over 220ms; the clone animates back to `scale(1)` and loses its shadow over 180ms; the menu scales to `.9` and fades over 160ms. After 180ms the clone and menu are removed, the original bubble is made visible again and receives focus.
-11. Keyboard: Enter or Space on a focused bubble opens the menu immediately (no hold), with the same animation.
 
 ## Structure
 
@@ -61,62 +49,6 @@ A messaging thread (fictional product "Halden") in an iOS 26-style light palette
 - `.scrim` — fixed inset 0, z-index 8.
 - `.lift` (bubble clone) and `.menu` — appended to `<body>` at open, removed at close.
 - `.toast` — fixed, `bottom: 112px`, centred, `role="status"`.
-
-## Tokens
-
-```css
-:root {
-  /* colour — cool off-white iOS surfaces, one blue, one red */
-  --bg: #f7f7f9;                     /* thread background */
-  --bar: rgba(247,247,249,.86);      /* header + composer translucent bars */
-  --line: rgba(60,60,67,.18);        /* hairlines */
-  --ink: #111114;                    /* primary text, toast bg */
-  --ink-2: #6e6e78;                  /* menu icons */
-  --ink-3: #9a9aa3;                  /* meta, hint, placeholder */
-  --in: #e9e9ee;                     /* incoming bubble */
-  --out: #0a7aff;                    /* outgoing bubble, tint, focus ring */
-  --out-ink: #ffffff;                /* text on outgoing */
-  --danger: #e5352b;                 /* Delete row */
-  --menu: rgba(250,250,252,.92);     /* menu surface (over blur) */
-  --menu-line: rgba(60,60,67,.14);   /* menu row separators */
-  --scrim: rgba(232,232,238,.42);    /* tint over the blurred thread */
-
-  /* type */
-  --font: "Schibsted Grotesk", -apple-system, system-ui, sans-serif;
-
-  /* shape */
-  --r-bubble: 18px;                  /* tail corner is 6px */
-  --r-menu: 14px;
-  --menu-w: 250px;
-  --row: 44px;
-
-  /* elevation */
-  --shadow-lift: 0 18px 40px rgba(17,17,20,.22), 0 2px 6px rgba(17,17,20,.10);
-  --shadow-menu: 0 12px 32px rgba(17,17,20,.16);
-
-  /* motion */
-  --hold: 350ms;                     /* long-press threshold */
-  --t-micro: 160ms;
-  --t-menu: 320ms;
-  --stagger: 40ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --spring: cubic-bezier(.34, 1.45, .64, 1);   /* overshoots ~4% */
-  --sheet: cubic-bezier(.32, .72, 0, 1);
-}
-```
-
-## Typography
-
-| Role              | Family            | Size | Weight | Line-height | Tracking | Case     |
-|-------------------|-------------------|-----:|-------:|------------:|---------:|----------|
-| Bubble text       | Schibsted Grotesk | 16px | 400    | 1.32        | −0.005em | sentence |
-| Menu row          | Schibsted Grotesk | 17px | 400    | 1           | −0.01em  | sentence |
-| Header name       | Schibsted Grotesk | 12px | 500    | 1.2         | −0.01em  | sentence |
-| Avatar initials   | Schibsted Grotesk | 14px | 600    | 1           | 0        | UPPER    |
-| Day label / hint  | Schibsted Grotesk | 12px | 500    | 1.3         | 0        | sentence |
-| Meta (Delivered)  | Schibsted Grotesk | 11px | 400    | 1.3         | 0        | sentence |
-| Toast             | Schibsted Grotesk | 13px | 500    | 1.3         | 0        | sentence |
-| Composer field    | Schibsted Grotesk | 16px | 400    | 1           | 0        | sentence |
 
 ## Motion
 
@@ -181,6 +113,80 @@ Reduced motion (`prefers-reduced-motion: reduce`): every `animation-duration`, `
 - [ ] "Delete" is rendered in `#e5352b` including its icon.
 - [ ] Under `prefers-reduced-motion: reduce`, the whole sequence completes within a frame and no element scales.
 - [ ] No console errors when dismissing during the open animation (guard with the `open` handle).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: a chat header (back chevron, avatar "ML", name "Mira Lindqvist", video icon) pinned at the top under the status bar; a thread of seven bubbles (incoming grey on the left, outgoing blue on the right); a composer pinned at the bottom above the home indicator. A hint line "Press and hold a bubble for 350ms" sits above the composer.
+2. Pointer down on a bubble: the bubble shrinks to `scale(.985)` over 160ms (`:active`). A 350ms timer starts.
+3. If the pointer lifts, is cancelled, or moves more than 6px (summed |dx|+|dy| per `pointermove`) before 350ms: the timer is cancelled and nothing else happens. Scrolling the thread therefore never opens a menu.
+4. At 350ms: the original bubble becomes `visibility:hidden`; a clone is placed at its exact viewport rect in a fixed layer (z-index 9) and animates `scale(1) → scale(1.04)` over 320ms with the spring curve, gaining `--shadow-lift`. A full-screen scrim (z-index 8, `rgba(232,232,238,.42)` + `backdrop-filter: blur(18px) saturate(1.1)`) fades in over 220ms. The hint fades out.
+5. In the same frame, a `<ul role="menu">` (250px wide, radius 14px, translucent `rgba(250,250,252,.92)` with `blur(30px) saturate(1.6)`) animates `opacity 0, scale(.55) → 1, scale(1)` over 320ms with the spring curve. Its transform-origin is the corner nearest the bubble (`left top` for incoming below, `right top` for outgoing below; `bottom` variants when flipped).
+6. The menu sits 8px below the bubble, aligned to the bubble's outer edge (left edge for incoming, right edge for outgoing). If `bubble.bottom + 8 + 178 > 844 − 34 − 8`, it flips to 8px above the bubble.
+7. Each of the four rows (44px tall) fades from `opacity 0, translateY(−6px)` to `1, 0` over 240ms, delayed `60ms + index × 40ms`. "Delete" is red (`--danger`) with a trash icon; the others use the secondary ink for their trailing 20px icon.
+8. Focus moves to the first menu row. ArrowDown/ArrowUp cycle rows, Escape dismisses, Tab is trapped.
+9. Tapping a row: a black pill toast near the bottom ("Copied", or "Reply · Mira", "Forward · your message", etc.) slides up 8px and fades in over 160ms, stays 1400ms, then fades out. The menu dismisses at the same time.
+10. Releasing (pointerup) on the scrim: the scrim fades out over 220ms; the clone animates back to `scale(1)` and loses its shadow over 180ms; the menu scales to `.9` and fades over 160ms. After 180ms the clone and menu are removed, the original bubble is made visible again and receives focus.
+11. Keyboard: Enter or Space on a focused bubble opens the menu immediately (no hold), with the same animation.
+
+## Tokens
+
+```css
+:root {
+  /* colour — cool off-white iOS surfaces, one blue, one red */
+  --bg: #f7f7f9;                     /* thread background */
+  --bar: rgba(247,247,249,.86);      /* header + composer translucent bars */
+  --line: rgba(60,60,67,.18);        /* hairlines */
+  --ink: #111114;                    /* primary text, toast bg */
+  --ink-2: #6e6e78;                  /* menu icons */
+  --ink-3: #9a9aa3;                  /* meta, hint, placeholder */
+  --in: #e9e9ee;                     /* incoming bubble */
+  --out: #0a7aff;                    /* outgoing bubble, tint, focus ring */
+  --out-ink: #ffffff;                /* text on outgoing */
+  --danger: #e5352b;                 /* Delete row */
+  --menu: rgba(250,250,252,.92);     /* menu surface (over blur) */
+  --menu-line: rgba(60,60,67,.14);   /* menu row separators */
+  --scrim: rgba(232,232,238,.42);    /* tint over the blurred thread */
+
+  /* type */
+  --font: "Schibsted Grotesk", -apple-system, system-ui, sans-serif;
+
+  /* shape */
+  --r-bubble: 18px;                  /* tail corner is 6px */
+  --r-menu: 14px;
+  --menu-w: 250px;
+  --row: 44px;
+
+  /* elevation */
+  --shadow-lift: 0 18px 40px rgba(17,17,20,.22), 0 2px 6px rgba(17,17,20,.10);
+  --shadow-menu: 0 12px 32px rgba(17,17,20,.16);
+
+  /* motion */
+  --hold: 350ms;                     /* long-press threshold */
+  --t-micro: 160ms;
+  --t-menu: 320ms;
+  --stagger: 40ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --spring: cubic-bezier(.34, 1.45, .64, 1);   /* overshoots ~4% */
+  --sheet: cubic-bezier(.32, .72, 0, 1);
+}
+```
+
+## Typography
+
+| Role              | Family            | Size | Weight | Line-height | Tracking | Case     |
+|-------------------|-------------------|-----:|-------:|------------:|---------:|----------|
+| Bubble text       | Schibsted Grotesk | 16px | 400    | 1.32        | −0.005em | sentence |
+| Menu row          | Schibsted Grotesk | 17px | 400    | 1           | −0.01em  | sentence |
+| Header name       | Schibsted Grotesk | 12px | 500    | 1.2         | −0.01em  | sentence |
+| Avatar initials   | Schibsted Grotesk | 14px | 600    | 1           | 0        | UPPER    |
+| Day label / hint  | Schibsted Grotesk | 12px | 500    | 1.3         | 0        | sentence |
+| Meta (Delivered)  | Schibsted Grotesk | 11px | 400    | 1.3         | 0        | sentence |
+| Toast             | Schibsted Grotesk | 13px | 500    | 1.3         | 0        | sentence |
+| Composer field    | Schibsted Grotesk | 16px | 400    | 1           | 0        | sentence |
 
 ## Implementation notes
 

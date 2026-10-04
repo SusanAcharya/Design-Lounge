@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A system-level search bar for an invented desktop OS, floating over a dusk alpine-lake wallpaper. It opens with ⌘K (Ctrl+K off Mac) or a magnifier button in the menu bar. It is a 740px frosted-light panel with a 62px search field in 23px light-weight type, a 340px result list on the left, and a preview pane on the right that redraws for whatever is selected: an app icon with version and size, a document thumbnail with path, an action with its shortcut, or a big calculator result. Results are fuzzy-matched and grouped as Top hit, Applications, Files and Actions, with matched letters set bold. It is the system-wide sibling of `command-palette`, which is a dark in-app palette with no preview. The detail worth copying is the preview pane: it turns a list of names into a decision you can make without opening anything.
-
-## Reference behaviour
-
-1. First frame: the panel is open with the query "re". Top hit is "Roadmap review — October.deck", selected in blue, and the preview shows a navy slide thumbnail with an orange bar chart and Modified / Size / Where. Below: Applications (Petrel Mail, Bracken Photos), Files (Annapurna ridge at dawn.jpg, Rooftop garden budget.sheet), Actions (Lock screen). The footer reads "7 results".
-2. Typing re-runs the search on every input. The first result is selected and previewed.
-3. Up/Down move the selection and wrap. PageUp/PageDown jump 5 and clamp. The selected row scrolls into view. The preview updates with no animation.
-4. Moving the mouse over a row selects it. Clicking a row runs it.
-5. Enter runs the selected item and closes the panel. A notification slides in from the right edge (360ms) for 2.6s. Opening an app also changes the menu bar app name.
-6. "Toggle dark appearance" really flips the panel to its dark tokens.
-7. A query that is arithmetic (digits, `+ − * / % ( ) ^ × ÷ x`) or "N% of M" adds a Calculator group at the top. "15% of 8000" shows 1,200. The preview shows the expression in mono and the result at 46px. Enter copies the result.
-8. Empty query: a Recent group of six items (Nettle, Q3 roadmap.pdf, Marlin, the deck, Toggle dark appearance, Start focus — 25 min).
-9. No matches: "No results for “zzz”" with a hint to try an app, a file or a sum like 1280*0.15.
-10. Escape clears a non-empty query first, then closes on a second press. ⌘K toggles. A pointer down outside the panel closes it. Focus returns to whatever opened it.
-11. When closed, a pill at the bottom reads "Press ⌘K to search apps, files and actions".
 
 ## Structure
 
@@ -53,54 +41,6 @@ A system-level search bar for an invented desktop OS, floating over a dusk alpin
 - Preview: `section aria-label="Preview"` (not live, to avoid chatter).
 - Footer: decorative key hints (`aria-hidden`) and the result count.
 - Notification: `div role="status" aria-live="polite"`, fixed top-right.
-
-## Tokens
-
-```css
-:root {
-  /* wallpaper */
-  --night: #16202b; --slate-1: #3e5468; --slate-2: #2a3a48; --slate-3: #1d2935; --mist: #9fb2bf;
-  /* panel, light */
-  --glass: rgba(242, 244, 247, .80);
-  --glass-line: rgba(255, 255, 255, .65);
-  --ink: #14181e;  --ink-2: #4b5360;  --ink-3: #6a7280;
-  --rule: rgba(20, 24, 30, .09);
-  --row-hover: rgba(20, 24, 30, .05);
-  --accent: #2f6fe4;  --on-accent: #fff;  --mark: #14181e;
-  /* type */
-  --sans: "Geologica", system-ui, sans-serif;
-  --mono: "Red Hat Mono", ui-monospace, monospace;
-  /* geometry */
-  --w: 740px; --r: 18px; --row: 40px; --list-w: 340px; --body-h: 372px;
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-body.dark {
-  --glass: rgba(30, 36, 44, .80); --glass-line: rgba(255, 255, 255, .12);
-  --ink: #eef1f5; --ink-2: #b5bdc8; --ink-3: #8c95a2;
-  --rule: rgba(255, 255, 255, .09); --row-hover: rgba(255, 255, 255, .06); --mark: #fff;
-}
-```
-
-Panel surface: `backdrop-filter: blur(40px) saturate(1.6)`, `border: 1px solid var(--glass-line)`, `box-shadow: 0 0 0 .5px rgba(0,0,0,.3), 0 40px 90px -24px rgba(4,8,16,.7)`.
-
-App icon gradients (24px rows, 84px preview, radius 6px / 20px): Marlin `#3aa7a0→#1f6f73`, Petrel Mail `#5b9cf0→#2f6fe4`, Nettle `#f5c84b→#e1a514`, Corvid `#3b4250→#1c2028`, Bracken Photos `#7cc47a→#3f9a55`, Abacus `#f08a4b→#d9612a`, Avocet Calendar `#ef6a62→#cf3f39`, System Settings `#9aa4b1→#6a7482`. File glyphs are tinted by type: PDF `#d9473f`, Slides `#e0812a`, JPEG `#3f9a55`, Sheet `#1e9e6a`, Markdown `#6a7280`, Swatch `#2f6fe4`.
-
-## Typography
-
-| Role | Family | Size | Weight | Notes |
-| --- | --- | --- | --- | --- |
-| Query | Geologica | 23px | 300 | letter-spacing −0.01em |
-| Group heading | Geologica | 11px | 600 | uppercase, 0.08em, `--ink-3` |
-| Row title | Geologica | 14px | 400 | `--ink-2`; matched letters 600 `--mark` |
-| Row kind | Red Hat Mono | 11.5px | 400 | `--ink-3` |
-| Preview title | Geologica | 18px | 500 | ellipsis |
-| Preview sub / meta | Geologica | 12.5px | 400 | `--ink-3` labels, `--ink-2` values |
-| Calc expression | Red Hat Mono | 15px | 400 | |
-| Calc result | Geologica | 46px | 500 | −0.03em, tabular numbers |
-| Key caps | Red Hat Mono | 11.5px | 500 | 5px radius |
-| Menu bar | Geologica | 13px | 400, app 600 | clock in mono 12.5px |
 
 ## Motion
 
@@ -163,6 +103,72 @@ Selection and preview never animate. A search panel that fades between previews 
 - [ ] First frame query "re" with the Roadmap review deck previewed.
 - [ ] Eight invented apps, seven files, six actions.
 - [ ] "Toggle dark appearance" flips the panel to dark tokens.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the panel is open with the query "re". Top hit is "Roadmap review — October.deck", selected in blue, and the preview shows a navy slide thumbnail with an orange bar chart and Modified / Size / Where. Below: Applications (Petrel Mail, Bracken Photos), Files (Annapurna ridge at dawn.jpg, Rooftop garden budget.sheet), Actions (Lock screen). The footer reads "7 results".
+2. Typing re-runs the search on every input. The first result is selected and previewed.
+3. Up/Down move the selection and wrap. PageUp/PageDown jump 5 and clamp. The selected row scrolls into view. The preview updates with no animation.
+4. Moving the mouse over a row selects it. Clicking a row runs it.
+5. Enter runs the selected item and closes the panel. A notification slides in from the right edge (360ms) for 2.6s. Opening an app also changes the menu bar app name.
+6. "Toggle dark appearance" really flips the panel to its dark tokens.
+7. A query that is arithmetic (digits, `+ − * / % ( ) ^ × ÷ x`) or "N% of M" adds a Calculator group at the top. "15% of 8000" shows 1,200. The preview shows the expression in mono and the result at 46px. Enter copies the result.
+8. Empty query: a Recent group of six items (Nettle, Q3 roadmap.pdf, Marlin, the deck, Toggle dark appearance, Start focus — 25 min).
+9. No matches: "No results for “zzz”" with a hint to try an app, a file or a sum like 1280*0.15.
+10. Escape clears a non-empty query first, then closes on a second press. ⌘K toggles. A pointer down outside the panel closes it. Focus returns to whatever opened it.
+11. When closed, a pill at the bottom reads "Press ⌘K to search apps, files and actions".
+
+## Tokens
+
+```css
+:root {
+  /* wallpaper */
+  --night: #16202b; --slate-1: #3e5468; --slate-2: #2a3a48; --slate-3: #1d2935; --mist: #9fb2bf;
+  /* panel, light */
+  --glass: rgba(242, 244, 247, .80);
+  --glass-line: rgba(255, 255, 255, .65);
+  --ink: #14181e;  --ink-2: #4b5360;  --ink-3: #6a7280;
+  --rule: rgba(20, 24, 30, .09);
+  --row-hover: rgba(20, 24, 30, .05);
+  --accent: #2f6fe4;  --on-accent: #fff;  --mark: #14181e;
+  /* type */
+  --sans: "Geologica", system-ui, sans-serif;
+  --mono: "Red Hat Mono", ui-monospace, monospace;
+  /* geometry */
+  --w: 740px; --r: 18px; --row: 40px; --list-w: 340px; --body-h: 372px;
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+body.dark {
+  --glass: rgba(30, 36, 44, .80); --glass-line: rgba(255, 255, 255, .12);
+  --ink: #eef1f5; --ink-2: #b5bdc8; --ink-3: #8c95a2;
+  --rule: rgba(255, 255, 255, .09); --row-hover: rgba(255, 255, 255, .06); --mark: #fff;
+}
+```
+
+Panel surface: `backdrop-filter: blur(40px) saturate(1.6)`, `border: 1px solid var(--glass-line)`, `box-shadow: 0 0 0 .5px rgba(0,0,0,.3), 0 40px 90px -24px rgba(4,8,16,.7)`.
+
+App icon gradients (24px rows, 84px preview, radius 6px / 20px): Marlin `#3aa7a0→#1f6f73`, Petrel Mail `#5b9cf0→#2f6fe4`, Nettle `#f5c84b→#e1a514`, Corvid `#3b4250→#1c2028`, Bracken Photos `#7cc47a→#3f9a55`, Abacus `#f08a4b→#d9612a`, Avocet Calendar `#ef6a62→#cf3f39`, System Settings `#9aa4b1→#6a7482`. File glyphs are tinted by type: PDF `#d9473f`, Slides `#e0812a`, JPEG `#3f9a55`, Sheet `#1e9e6a`, Markdown `#6a7280`, Swatch `#2f6fe4`.
+
+## Typography
+
+| Role | Family | Size | Weight | Notes |
+| --- | --- | --- | --- | --- |
+| Query | Geologica | 23px | 300 | letter-spacing −0.01em |
+| Group heading | Geologica | 11px | 600 | uppercase, 0.08em, `--ink-3` |
+| Row title | Geologica | 14px | 400 | `--ink-2`; matched letters 600 `--mark` |
+| Row kind | Red Hat Mono | 11.5px | 400 | `--ink-3` |
+| Preview title | Geologica | 18px | 500 | ellipsis |
+| Preview sub / meta | Geologica | 12.5px | 400 | `--ink-3` labels, `--ink-2` values |
+| Calc expression | Red Hat Mono | 15px | 400 | |
+| Calc result | Geologica | 46px | 500 | −0.03em, tabular numbers |
+| Key caps | Red Hat Mono | 11.5px | 500 | 5px radius |
+| Menu bar | Geologica | 13px | 400, app 600 | clock in mono 12.5px |
 
 ## Implementation notes
 

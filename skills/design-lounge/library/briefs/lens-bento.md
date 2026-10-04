@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A white board of twelve yard chips. A 180px circle follows the pointer. Chips whose center is inside 90px scale to 1.35. Outside, they stay at 1. Reduced motion moves the lens and does not scale. This is not a bento of feature cards. That grid is `bento-feature-grid`. This is not a spotlight that lights a cell. That grid is `spotlight-hover-grid`. The lens is the piece.
-
-## Reference behaviour
-
-1. Twelve chips sit in a 4 by 3 grid.
-2. The lens starts near the middle of the 720 by 420 board.
-3. Pointer move sets the lens center to the pointer.
-4. A chip scales to 1.35 when its center is within 90px of the lens.
-5. Other chips stay at scale 1.
-6. The lens does not capture clicks. It is pointer-events none.
-7. Reduced motion skips the scale.
 
 ## Structure
 
@@ -31,19 +23,6 @@ chips
 - Lens is 180px, border 2px #1f4d3a, margin -90px so the center is the pointer.
 - A dim wash sits outside the lens via a huge box-shadow.
 - Chips are positioned absolutely.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --line:#e4dfd4; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Chip | IBM Plex Sans | 13px | 500 |
-| Board | IBM Plex Sans | 15px | 500 |
 
 ## Motion
 
@@ -88,16 +67,6 @@ chips
 - [ ] Lens diameter is 180px.
 - [ ] Scale is 1.35 inside 90px.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Measure distance from chip center to pointer in board coordinates.
-
-```js
-const s = d < 90 ? 1.35 : 1;
-```
-
-Do not use a canvas. The chips are DOM.
 
 ## Measurements to keep
 
@@ -166,6 +135,43 @@ Do not use a canvas. The chips are DOM.
 - While rebuilding, remember: Do not scale every chip.
 - While rebuilding, remember: Do not add click actions on the chips in this piece.
 - While rebuilding, remember: Do not spin the lens.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Twelve chips sit in a 4 by 3 grid.
+2. The lens starts near the middle of the 720 by 420 board.
+3. Pointer move sets the lens center to the pointer.
+4. A chip scales to 1.35 when its center is within 90px of the lens.
+5. Other chips stay at scale 1.
+6. The lens does not capture clicks. It is pointer-events none.
+7. Reduced motion skips the scale.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --line:#e4dfd4; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Chip | IBM Plex Sans | 13px | 500 |
+| Board | IBM Plex Sans | 15px | 500 |
+
+## Implementation notes
+
+Measure distance from chip center to pointer in board coordinates.
+
+```js
+const s = d < 90 ? 1.35 : 1;
+```
+
+Do not use a canvas. The chips are DOM.
 
 ---
 

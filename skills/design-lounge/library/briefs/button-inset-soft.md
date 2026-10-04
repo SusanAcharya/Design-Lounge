@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The control panel of a ceramics kiln controller, "Kilnhouse", built in soft UI. Everything is the same terracotta-clay colour; shape comes only from a paired light and dark shadow. Buttons are raised pillows that sink into the clay when pressed. Toggles stay sunk while on. A switch and a three-way segmented control sit in carved wells. The piece is worth copying because it fixes the two things that make neumorphism fail: every control also has a 1px hairline edge so it reads without the shadows, and every "on" state also turns its label or icon ember-red, so state never relies on depth alone. All text clears 4.5:1.
-
-## Reference behaviour
-
-1. First frame: a raised clay stage, radius 40px. Top left "Kilnhouse" in Gloock 34px and "Kiln 2 · Stoneware · target 1,222°C". Top right a carved status pill with a dot: "Idle · 24°C".
-2. Left column "Buttons · L / M / M / S": Start firing (large, ember text, small ember dot), Hold temp, Vent, Unload (small, disabled, dashed outline).
-3. Below that "Icon toggles · 56px": three round toggles. Chamber light starts on (sunk, ember icon); Exhaust fan and Lock door start off.
-4. Right column "Toggles": Auto vent switch (on, ember knob slid right, "On"), Slow cool switch (off, "Off"). Below, "Programme": Bisque / Glaze / Raku segmented control with Glaze selected.
-5. Hover on a raised button: its shadow grows from 6px to 9px offset, so it lifts towards you.
-6. Press: the button flips to an inset shadow and scales to 0.985 in 90ms. Release returns over 200ms.
-7. Start firing toggles: it stays sunk with `aria-pressed="true"`, its label becomes "Stop firing", and the status reads "Firing · ramp 150°C/h" with the dot turning ember with a 3px halo. Pressing again restores "Idle · 24°C".
-8. Hold temp sets the status to "Holding at 1,040°C" and Vent to "Vent opened for 30 s"; after 2.4s the status returns to the firing or idle line.
-9. Icon toggles flip `aria-pressed`; on = inset + ember icon.
-10. Switches flip `aria-checked`; the knob slides 30px in 280ms, becomes ember, and the track tints ember at 14%. The trailing word flips On/Off.
-11. Segmented control: click or arrow keys move selection; a raised thumb slides under the chosen label in 320ms, and the label turns ember 600.
-12. A "States" sheet underneath shows Primary, Raised, Icon toggle and Switch at Default, Hover, Pressed, Disabled, Focus.
-13. Reduced motion: all transitions removed, no press scale.
 
 ## Structure
 
@@ -53,47 +39,6 @@ The control panel of a ceramics kiln controller, "Kilnhouse", built in soft UI. 
 - Switches are `button role="switch" aria-checked`, the visible text is the name; the On/Off word is `aria-hidden`.
 - Segmented control is `div role="radiogroup"` labelled by its caption, with three `button role="radio"` using roving `tabindex`; the thumb is an `aria-hidden` span.
 - The states grid is `inert` and `aria-hidden`, with a visually hidden sentence before it.
-
-## Tokens
-
-```css
-:root {
-  --clay: #e3cbb8;      /* surface: page, stage and every control */
-  --hi: #f7e8db;        /* light shadow (top-left) */
-  --lo: #b8957d;        /* dark shadow (bottom-right) */
-  --ink: #3a261b;       /* text ~10:1 */
-  --ink-2: #6b4a38;     /* captions ~5:1 */
-  --ember: #8f3219;     /* the one accent: on-state text, knob, dot ~5:1 */
-  --line: rgba(90,55,35,.14);  /* hairline on every raised control */
-  --off-ink: #a08573;   /* disabled text */
-  --serif: "Gloock", Georgia, serif;
-  --sans: "Lexend", system-ui, sans-serif;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --out: cubic-bezier(.16,1,.3,1);
-  --raise: 6px 6px 14px var(--lo), -6px -6px 14px var(--hi);
-  --raise-hi: 9px 9px 20px var(--lo), -9px -9px 20px var(--hi);
-  --sink: inset 4px 4px 9px var(--lo), inset -4px -4px 9px var(--hi);
-  --well: inset 3px 3px 7px var(--lo), inset -3px -3px 7px var(--hi);
-}
-```
-
-Stage shadow: `14px 14px 34px var(--lo), -14px -14px 34px var(--hi)` plus `1px solid rgba(255,255,255,.35)`.
-
-Sizes: L 60px tall / 32px padding / radius 20; M 52 / 26 / 18; S 42 / 18 / 14; icon 56px circle. Switch track 64×34, knob 26. Segmented: 5px well padding, items 42px tall, thumb radius 14, well radius 18.
-
-Spacing: 4, 6, 10, 14, 16, 22, 26, 32, 40.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Wordmark | Gloock | 34px / 1 | 400 | −0.01em | Title |
-| Meta, status | Lexend | 13px | 400 / 500 | 0 | Sentence |
-| Button labels | Lexend | 14 / 15 / 16px | 500 (primary and on 600) | 0 | Sentence |
-| Captions, column heads | Lexend | 11px / 10px | 500 | 0.12em | Upper |
-| On/Off word | Lexend | 12px | 400 | 0 | Title |
-
-Gloock appears once. Never set button labels in it.
 
 ## Motion
 
@@ -153,6 +98,67 @@ Gloock appears once. Never set button labels in it.
 - [ ] Chamber light and Auto vent start on; Glaze starts selected.
 - [ ] Clay `#e3cbb8`, shadows `#f7e8db` / `#b8957d`, ember `#8f3219`.
 - [ ] Hold temp and Vent show their message for 2.4s.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a raised clay stage, radius 40px. Top left "Kilnhouse" in Gloock 34px and "Kiln 2 · Stoneware · target 1,222°C". Top right a carved status pill with a dot: "Idle · 24°C".
+2. Left column "Buttons · L / M / M / S": Start firing (large, ember text, small ember dot), Hold temp, Vent, Unload (small, disabled, dashed outline).
+3. Below that "Icon toggles · 56px": three round toggles. Chamber light starts on (sunk, ember icon); Exhaust fan and Lock door start off.
+4. Right column "Toggles": Auto vent switch (on, ember knob slid right, "On"), Slow cool switch (off, "Off"). Below, "Programme": Bisque / Glaze / Raku segmented control with Glaze selected.
+5. Hover on a raised button: its shadow grows from 6px to 9px offset, so it lifts towards you.
+6. Press: the button flips to an inset shadow and scales to 0.985 in 90ms. Release returns over 200ms.
+7. Start firing toggles: it stays sunk with `aria-pressed="true"`, its label becomes "Stop firing", and the status reads "Firing · ramp 150°C/h" with the dot turning ember with a 3px halo. Pressing again restores "Idle · 24°C".
+8. Hold temp sets the status to "Holding at 1,040°C" and Vent to "Vent opened for 30 s"; after 2.4s the status returns to the firing or idle line.
+9. Icon toggles flip `aria-pressed`; on = inset + ember icon.
+10. Switches flip `aria-checked`; the knob slides 30px in 280ms, becomes ember, and the track tints ember at 14%. The trailing word flips On/Off.
+11. Segmented control: click or arrow keys move selection; a raised thumb slides under the chosen label in 320ms, and the label turns ember 600.
+12. A "States" sheet underneath shows Primary, Raised, Icon toggle and Switch at Default, Hover, Pressed, Disabled, Focus.
+13. Reduced motion: all transitions removed, no press scale.
+
+## Tokens
+
+```css
+:root {
+  --clay: #e3cbb8;      /* surface: page, stage and every control */
+  --hi: #f7e8db;        /* light shadow (top-left) */
+  --lo: #b8957d;        /* dark shadow (bottom-right) */
+  --ink: #3a261b;       /* text ~10:1 */
+  --ink-2: #6b4a38;     /* captions ~5:1 */
+  --ember: #8f3219;     /* the one accent: on-state text, knob, dot ~5:1 */
+  --line: rgba(90,55,35,.14);  /* hairline on every raised control */
+  --off-ink: #a08573;   /* disabled text */
+  --serif: "Gloock", Georgia, serif;
+  --sans: "Lexend", system-ui, sans-serif;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --out: cubic-bezier(.16,1,.3,1);
+  --raise: 6px 6px 14px var(--lo), -6px -6px 14px var(--hi);
+  --raise-hi: 9px 9px 20px var(--lo), -9px -9px 20px var(--hi);
+  --sink: inset 4px 4px 9px var(--lo), inset -4px -4px 9px var(--hi);
+  --well: inset 3px 3px 7px var(--lo), inset -3px -3px 7px var(--hi);
+}
+```
+
+Stage shadow: `14px 14px 34px var(--lo), -14px -14px 34px var(--hi)` plus `1px solid rgba(255,255,255,.35)`.
+
+Sizes: L 60px tall / 32px padding / radius 20; M 52 / 26 / 18; S 42 / 18 / 14; icon 56px circle. Switch track 64×34, knob 26. Segmented: 5px well padding, items 42px tall, thumb radius 14, well radius 18.
+
+Spacing: 4, 6, 10, 14, 16, 22, 26, 32, 40.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Wordmark | Gloock | 34px / 1 | 400 | −0.01em | Title |
+| Meta, status | Lexend | 13px | 400 / 500 | 0 | Sentence |
+| Button labels | Lexend | 14 / 15 / 16px | 500 (primary and on 600) | 0 | Sentence |
+| Captions, column heads | Lexend | 11px / 10px | 500 | 0.12em | Upper |
+| On/Off word | Lexend | 12px | 400 | 0 | Title |
+
+Gloock appears once. Never set button labels in it.
 
 ## Implementation notes
 

@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the selected frame uses a 2px `--ink` border and the caption uses the display face. The masonry wall is `masonry-gallery-captions`. This sheet is equal frames.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A photographer's contact sheet, North plates. Eight squares, 120px, in four columns. They are flat colour fields, not photographs and not images fetched from anywhere. North wall starts selected, with a 2px ink border. The caption under the sheet is "North wall" at 28px, and the line under it is "Plate 01 · morning". Clicking another plate moves the border and rewrites both lines. There is no hover caption, no filter chip, and no lightbox. The masonry gallery already does the hover caption. This piece is the sheet you edit from.
-
-## Reference behaviour
-
-1. North wall is `aria-pressed="true"`. The caption and the meta match plate 01.
-2. Clicking a plate presses that one only. The caption becomes its name. The meta becomes its plate number and time of day.
-3. The eight names, in order: North wall, Gate light, Salt, River, Wool, Noon, Ink, Yard.
-4. Their metas: Plate 01 · morning, Plate 02 · morning, Plate 03 · noon, Plate 04 · noon, Plate 05 · afternoon, Plate 06 · afternoon, Plate 07 · evening, Plate 08 · evening.
-5. There is no animation. Focus ring is 2px `--focus`, offset 3px.
-6. The frames are buttons. They do not open a second page in this demo.
 
 ## Structure
 
@@ -31,34 +24,6 @@ Plate 01 · morning           15px
 - Each frame is a button with an accessible name equal to the plate name.
 - The colour is the art. It is a background, not a letter inside the square.
 - One caption, under the whole sheet, not a bar inside every tile.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f3efe6;
-  --ink: #1a1814;
-  --ink-2: #5c5348;
-  --focus: #1a1814;
-  --serif: "Fraunces", Georgia, serif;
-  --sans: "Public Sans", system-ui, sans-serif;
-}
-```
-
-The frame colours are the pictures: `#c4b49a`, `#d7c4a3`, `#e6e0d4`, `#b7c4c0`, `#c9b8a8`, `#e2c7a4`, `#2c2825`, `#b9c3a8`. They are not theme tokens. When a theme is locked, the page paper, the type, and the selection border follow the theme. The eight fields stay these colours, because they are the work, not the chrome. Do not recolour the plates to the brand.
-
-Frame radius is 2px. The family may replace the chrome radius. A square family stays square. Do not turn the plates into circles.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Kicker | sans | 12px | 500 | `--ink-2` |
-| Title | serif | 40px | 500 | `--ink` |
-| Caption | serif | 28px | 500 | `--ink` |
-| Meta | sans | 15px | 400 | `--ink-2` |
-
-The kicker letter-spacing is 0.06em in this demo. The title is the largest type. The caption steps down. The meta is the text face.
 
 ## Motion
 
@@ -106,6 +71,47 @@ None. Selection changes in one frame. Reduced motion has nothing to remove. Do n
 - [ ] There is no lightbox, no chip filter, and no hover caption.
 - [ ] Focus ring is 2px, offset 3px.
 - [ ] There is no animation and no fetched image.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. North wall is `aria-pressed="true"`. The caption and the meta match plate 01.
+2. Clicking a plate presses that one only. The caption becomes its name. The meta becomes its plate number and time of day.
+3. The eight names, in order: North wall, Gate light, Salt, River, Wool, Noon, Ink, Yard.
+4. Their metas: Plate 01 · morning, Plate 02 · morning, Plate 03 · noon, Plate 04 · noon, Plate 05 · afternoon, Plate 06 · afternoon, Plate 07 · evening, Plate 08 · evening.
+5. There is no animation. Focus ring is 2px `--focus`, offset 3px.
+6. The frames are buttons. They do not open a second page in this demo.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f3efe6;
+  --ink: #1a1814;
+  --ink-2: #5c5348;
+  --focus: #1a1814;
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Public Sans", system-ui, sans-serif;
+}
+```
+
+The frame colours are the pictures: `#c4b49a`, `#d7c4a3`, `#e6e0d4`, `#b7c4c0`, `#c9b8a8`, `#e2c7a4`, `#2c2825`, `#b9c3a8`. They are not theme tokens. When a theme is locked, the page paper, the type, and the selection border follow the theme. The eight fields stay these colours, because they are the work, not the chrome. Do not recolour the plates to the brand.
+
+Frame radius is 2px. The family may replace the chrome radius. A square family stays square. Do not turn the plates into circles.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Kicker | sans | 12px | 500 | `--ink-2` |
+| Title | serif | 40px | 500 | `--ink` |
+| Caption | serif | 28px | 500 | `--ink` |
+| Meta | sans | 15px | 400 | `--ink-2` |
+
+The kicker letter-spacing is 0.06em in this demo. The title is the largest type. The caption steps down. The meta is the text face.
 
 ## Implementation notes
 

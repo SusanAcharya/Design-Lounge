@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from moremedia.at: the "our clients" wall where the names themselves are the logos, set huge in outline type and drifting in rows that alternate direction, plus the slowly rotating circular-text badge used as a link. This rebuild is for **Ombra**, a fictional design studio, and flips it to a warm plum-black page with cream outlines. Hovering a name fills it solid apricot, pauses its row, and a caption under the rows says what the studio made for that client and since when. The detail worth copying is that the wall stops being a brag and becomes an index: each name answers "what did you do for them?" without leaving the section.
-
-## Reference behaviour
-
-1. First frame: eyebrow "SELECTED CLIENTS · 2014–2026", a 52px serif heading "Some of the people we have *made things* with" (the two words in apricot italic), and a 15px note on the right.
-2. Four 92px rows of 70px outlined names (Hanken Grotesk 800, 1px cream stroke at 62%, transparent fill) separated by 10px ring dots with 34px margins on each side.
-3. Rows 1 and 3 drift left; rows 2 and 4 drift right. Durations 64s, 76s, 58s, 70s, linear, infinite.
-4. "Ivelle Ferries" (row 2) starts filled apricot, and the caption reads "Ivelle Ferries — *Timetables, booking and onboard signs*" with "Since 2021 · row 2 of 4".
-5. Hover any name: the previous fill clears, this name (and its clone) fills apricot over 200ms, the caption updates. The hovered row pauses in place; other rows keep moving.
-6. Leave the row: it resumes from the same offset. The last name stays filled.
-7. Tab focuses a row (2px apricot outline inset). Focus pauses it and selects its first name unless one in that row is already selected. ←/→ step through that row's names (wrapping), Home/End jump.
-8. Bottom right: a 124px ring badge "ALL WORK · ALL WORK · ALL WORK ·" rotating once every 22s around a ↗ arrow. Hover/focus turns the arrow 45° and apricot; the ring text turns apricot on hover.
-9. Reduced motion: rows and badge stop; the clone set hides; names still fill and caption on hover and arrows.
 
 ## Structure
 
@@ -44,46 +34,6 @@ Studied from moremedia.at: the "our clients" wall where the names themselves are
 - Each `.row` is `div[role=group][tabindex=0]` with an `aria-label` naming its number and direction. Inside: `.track` > two `.set`s (both `aria-hidden`; the hidden list carries the names).
 - Each `.set`: `span.name[data-k="row-index"]` + `span.dot`, repeated.
 - `.bottom`: `.now[aria-live=polite]` (key, value, year line) and `a.badge` holding a ring SVG with `textPath` and an arrow SVG.
-
-## Tokens
-
-```css
-:root {
-  --bg: #191517;                          /* warm plum-black */
-  --cream: #eadfcb;                       /* headings, caption, ring text */
-  --cream-2: #b3a895;                     /* eyebrow, note, year line */
-  --stroke: rgba(234, 223, 203, 0.62);    /* outline names, dots */
-  --line: rgba(234, 223, 203, 0.14);      /* rule above caption */
-  --apricot: #ff9f6b;                     /* filled name, italic words, focus */
-
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-  --serif: "Instrument Serif", Georgia, serif;
-
-  --row-h: 92px;
-  --name: 70px;
-  --dot: 10px;
-  --dot-gap: 34px;
-  --badge: 124px;
-  --pad-x: 64px;
-
-  --d1: 64s; --d2: 76s; --d3: 58s; --d4: 70s;
-  --spin: 22s;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-|---|---|---:|---:|---:|---:|---|
-| Eyebrow / caption key | Hanken Grotesk | 11px | 600 | 1 | 0.18em | UPPER |
-| Heading | Instrument Serif | 52px | 400 | 1.02 | −0.01em | max 20ch, 2 lines; accent words italic |
-| Note | Hanken Grotesk | 15px | 400 (lead 600) | 1.5 | 0 | max 30ch |
-| Client name | Hanken Grotesk | 70px | 800 | 1 | −0.035em | outline only, 1px stroke |
-| Caption | Instrument Serif | 28px | 400 | 1.2 | 0 | name roman, project italic |
-| Year line | Hanken Grotesk | 14px | 400 | 1.5 | 0 | — |
-| Ring text | Hanken Grotesk | 10.5px | 600 | 1 | 0.32em | UPPER, on a 48px-radius path |
 
 ## Motion
 
@@ -146,6 +96,62 @@ The four durations are deliberately unrelated so the rows never line up into a g
 - [ ] Durations 64s, 76s, 58s, 70s; ring 22s.
 - [ ] Names 70px Hanken Grotesk 800 with a 1px `rgba(234,223,203,.62)` stroke on `#191517`.
 - [ ] Fill colour `#FF9F6B`; heading and caption in Instrument Serif.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: eyebrow "SELECTED CLIENTS · 2014–2026", a 52px serif heading "Some of the people we have *made things* with" (the two words in apricot italic), and a 15px note on the right.
+2. Four 92px rows of 70px outlined names (Hanken Grotesk 800, 1px cream stroke at 62%, transparent fill) separated by 10px ring dots with 34px margins on each side.
+3. Rows 1 and 3 drift left; rows 2 and 4 drift right. Durations 64s, 76s, 58s, 70s, linear, infinite.
+4. "Ivelle Ferries" (row 2) starts filled apricot, and the caption reads "Ivelle Ferries — *Timetables, booking and onboard signs*" with "Since 2021 · row 2 of 4".
+5. Hover any name: the previous fill clears, this name (and its clone) fills apricot over 200ms, the caption updates. The hovered row pauses in place; other rows keep moving.
+6. Leave the row: it resumes from the same offset. The last name stays filled.
+7. Tab focuses a row (2px apricot outline inset). Focus pauses it and selects its first name unless one in that row is already selected. ←/→ step through that row's names (wrapping), Home/End jump.
+8. Bottom right: a 124px ring badge "ALL WORK · ALL WORK · ALL WORK ·" rotating once every 22s around a ↗ arrow. Hover/focus turns the arrow 45° and apricot; the ring text turns apricot on hover.
+9. Reduced motion: rows and badge stop; the clone set hides; names still fill and caption on hover and arrows.
+
+## Tokens
+
+```css
+:root {
+  --bg: #191517;                          /* warm plum-black */
+  --cream: #eadfcb;                       /* headings, caption, ring text */
+  --cream-2: #b3a895;                     /* eyebrow, note, year line */
+  --stroke: rgba(234, 223, 203, 0.62);    /* outline names, dots */
+  --line: rgba(234, 223, 203, 0.14);      /* rule above caption */
+  --apricot: #ff9f6b;                     /* filled name, italic words, focus */
+
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+
+  --row-h: 92px;
+  --name: 70px;
+  --dot: 10px;
+  --dot-gap: 34px;
+  --badge: 124px;
+  --pad-x: 64px;
+
+  --d1: 64s; --d2: 76s; --d3: 58s; --d4: 70s;
+  --spin: 22s;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+|---|---|---:|---:|---:|---:|---|
+| Eyebrow / caption key | Hanken Grotesk | 11px | 600 | 1 | 0.18em | UPPER |
+| Heading | Instrument Serif | 52px | 400 | 1.02 | −0.01em | max 20ch, 2 lines; accent words italic |
+| Note | Hanken Grotesk | 15px | 400 (lead 600) | 1.5 | 0 | max 30ch |
+| Client name | Hanken Grotesk | 70px | 800 | 1 | −0.035em | outline only, 1px stroke |
+| Caption | Instrument Serif | 28px | 400 | 1.2 | 0 | name roman, project italic |
+| Year line | Hanken Grotesk | 14px | 400 | 1.5 | 0 | — |
+| Ring text | Hanken Grotesk | 10.5px | 600 | 1 | 0.32em | UPPER, on a 48px-radius path |
 
 ## Implementation notes
 

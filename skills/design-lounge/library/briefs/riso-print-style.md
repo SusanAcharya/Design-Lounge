@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A kit sheet for "Ink Fair 26", a fictional one-night print fair in a canal warehouse, that teaches a risograph dialect: two drums only (fluoro pink `#FF3D8A` and indigo `#1E2A6E`), `mix-blend-mode: multiply` wherever they overlap, a 3px/2px misregistration between layers, and a fixed 18 % grain overlay. The first row is a zine-cover / festival-flyer fragment: "INK FAIR 26" set twice (pink offset + indigo offset), a circular "Zine 03" stamp, a halftone field, and Pink / Indigo / Both tabs that peel the cover down to one drum. Below: a misregistered 84px "Aa", five chips, blocky buttons, chips, a workshop field, a grain switch, three flood plates, four grammar cards. The detail worth copying: **the type is never in register**. Pink sits `translate(3px, 2px)`, indigo `translate(-2px, -1px)`.
-
-## Reference behaviour
-
-1. Initial state: 52px paper header, 18px two-square mark (pink over indigo, multiply), "INK FAIR / riso kit 04", four anchors, "Two inks · 11 Oct 2026". Sheet of paper cells with 2px indigo rules. First 800px shows the 432px hero + specimen. Grain overlay is on (opacity .18).
-2. The hero draws the same composition twice: `.layer.pink` and `.layer.indigo`, both `mix-blend-mode: multiply`, `pointer-events: none`. Where they overlap, the mix reads as overprint `#9A1858`.
-3. Hover a button: it shifts `translate(-2px, -2px)` over 140ms. No shadow. Press returns to 0.
-4. Click Pink / Indigo / Both. `aria-selected` moves. Pink hides the indigo layer; Indigo hides the pink layer; Both shows both (the default).
-5. Click Zine / Poster / Tote chips: `aria-pressed` toggles a pink multiply fill.
-6. Focus the workshop input: a 3px pink offset block (`box-shadow: 3px 3px 0 var(--pink)`), no glow.
-7. Click Show grain: `aria-checked` flips; overlay opacity goes .18 → 0.
-8. Header link hover: pink. The "Sold out" button is pink multiply.
-9. Reduced motion: transitions 1ms. Layer peeling is instant.
 
 ## Structure
 
@@ -46,42 +36,6 @@ A kit sheet for "Ink Fair 26", a fictional one-night print fair in a canal wareh
 - Halftone: `radial-gradient(circle, currentColor 1.4px, transparent 1.6px)` at 8px.
 - The body paragraph under the title is live DOM (not inside a multiply layer) so it stays readable when a drum is hidden: `z-index: 2; color: var(--indigo)`.
 - Footer spans 12 with 2px indigo rules like every other cell. Copy: "Pink / Indigo / Both tabs peel the cover".
-
-## Tokens
-
-```css
-:root {
-  --paper: #f6f1e4;    /* stock, 70 % */
-  --paper-2: #efe6d0;  /* hover fill */
-  --pink: #ff3d8a;     /* drum 1 */
-  --indigo: #1e2a6e;   /* drum 2, type, rules */
-  --over: #9a1858;     /* multiply mix, documented not mixed in CSS */
-  --ink: #1a1420;      /* key — never a third drum */
-  --display: "Rubik Mono One", Impact, sans-serif;
-  --text: "Rubik", system-ui, sans-serif;
-  --fs-display: 64px; --fs-aa: 84px; --fs-h2: 22px; --fs-body: 14px; --fs-label: 11px;
-  --pad: 18px; --ctl: 44px; --rule: 2px;
-  --mis-p: translate(3px, 2px);
-  --mis-i: translate(-2px, -1px);
-  --grain: .18;
-  --t-micro: 140ms; --t-switch: 200ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Hero headline | Rubik Mono One | 64px | 400 | .85 | −0.04em | UPPERCASE |
-| Specimen glyph | Rubik Mono One | 84px | 400 | .8 | 0 | "Aa", indigo with pink `::after` offset 3px/2px |
-| Grammar title | Rubik Mono One | 13px | 400 | 1 | −0.02em | UPPERCASE |
-| Brand | Rubik Mono One | 14px | 400 | 1 | −0.02em | as designed |
-| H3 / button | Rubik | 13–18px | 700 | 1 | +0.04em | UPPERCASE on buttons |
-| Body | Rubik | 14–16px | 400–500 | 1.4 | 0 | sentence |
-| Label | Rubik | 10–11px | 700 | 1 | +0.12–0.14em | UPPERCASE |
-
-Rubik Mono One has one weight and a large em. Keep display lines to two words. Do not italicise it.
 
 ## Motion
 
@@ -133,6 +87,58 @@ Reduced motion: transitions 1ms. Misregistration stays; it is layout, not animat
 - [ ] Focus-visible is 3px pink, 3px offset.
 - [ ] Only Rubik Mono One and Rubik are loaded.
 - [ ] No photographs, no third colour flood, no border-radius on controls.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 52px paper header, 18px two-square mark (pink over indigo, multiply), "INK FAIR / riso kit 04", four anchors, "Two inks · 11 Oct 2026". Sheet of paper cells with 2px indigo rules. First 800px shows the 432px hero + specimen. Grain overlay is on (opacity .18).
+2. The hero draws the same composition twice: `.layer.pink` and `.layer.indigo`, both `mix-blend-mode: multiply`, `pointer-events: none`. Where they overlap, the mix reads as overprint `#9A1858`.
+3. Hover a button: it shifts `translate(-2px, -2px)` over 140ms. No shadow. Press returns to 0.
+4. Click Pink / Indigo / Both. `aria-selected` moves. Pink hides the indigo layer; Indigo hides the pink layer; Both shows both (the default).
+5. Click Zine / Poster / Tote chips: `aria-pressed` toggles a pink multiply fill.
+6. Focus the workshop input: a 3px pink offset block (`box-shadow: 3px 3px 0 var(--pink)`), no glow.
+7. Click Show grain: `aria-checked` flips; overlay opacity goes .18 → 0.
+8. Header link hover: pink. The "Sold out" button is pink multiply.
+9. Reduced motion: transitions 1ms. Layer peeling is instant.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f6f1e4;    /* stock, 70 % */
+  --paper-2: #efe6d0;  /* hover fill */
+  --pink: #ff3d8a;     /* drum 1 */
+  --indigo: #1e2a6e;   /* drum 2, type, rules */
+  --over: #9a1858;     /* multiply mix, documented not mixed in CSS */
+  --ink: #1a1420;      /* key — never a third drum */
+  --display: "Rubik Mono One", Impact, sans-serif;
+  --text: "Rubik", system-ui, sans-serif;
+  --fs-display: 64px; --fs-aa: 84px; --fs-h2: 22px; --fs-body: 14px; --fs-label: 11px;
+  --pad: 18px; --ctl: 44px; --rule: 2px;
+  --mis-p: translate(3px, 2px);
+  --mis-i: translate(-2px, -1px);
+  --grain: .18;
+  --t-micro: 140ms; --t-switch: 200ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Hero headline | Rubik Mono One | 64px | 400 | .85 | −0.04em | UPPERCASE |
+| Specimen glyph | Rubik Mono One | 84px | 400 | .8 | 0 | "Aa", indigo with pink `::after` offset 3px/2px |
+| Grammar title | Rubik Mono One | 13px | 400 | 1 | −0.02em | UPPERCASE |
+| Brand | Rubik Mono One | 14px | 400 | 1 | −0.02em | as designed |
+| H3 / button | Rubik | 13–18px | 700 | 1 | +0.04em | UPPERCASE on buttons |
+| Body | Rubik | 14–16px | 400–500 | 1.4 | 0 | sentence |
+| Label | Rubik | 10–11px | 700 | 1 | +0.12–0.14em | UPPERCASE |
+
+Rubik Mono One has one weight and a large em. Keep display lines to two words. Do not italicise it.
 
 ## Implementation notes
 

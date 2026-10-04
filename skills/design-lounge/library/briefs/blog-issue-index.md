@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the column is the pass column and the pressed topic uses `--primary-soft`. This is a list of notes. The magazine front is `magazine-editorial-grid`.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The index of Field Index, not a front spread. A kicker, a 48px serif title "Four notes", then four topics: All, City, Desk, Kitchen. All starts pressed. Under that, four essays in a 720px column, each a date and a serif headline with one sentence. Newest first: The frost line on 3 Oct 2026, A desk by the window on 19 Sep 2026, Bread before noon on 2 Sep 2026, What the river kept on 14 Aug 2026. City leaves the frost line and the river. Desk leaves the window. Kitchen leaves the bread. The links do not leave the frame.
-
-## Reference behaviour
-
-1. All is `aria-pressed="true"`. Four articles show, in the date order above.
-2. City hides the desk and the kitchen. Desk hides the other three. Kitchen hides the other three.
-3. One topic is pressed. Pressing another releases the rest.
-4. The pressed topic is pale blue, `#e4eef5`, which becomes `--primary-soft` when a theme is locked.
-5. Clicking a headline does not navigate away. In a product the link opens that essay. The essay page is `paper-article-reader` in structure, with this index's own words.
-6. There is no animation. Focus ring is 2px `--focus`, offset 2px.
-7. An empty topic does not exist in this demo. Every chip has at least one note.
 
 ## Structure
 
@@ -35,36 +27,6 @@ column 720
 - Each essay is an `article` with a `time` and an `h2` inside a link.
 - The date column is 140px. The headline takes the rest.
 - A hairline sits on top of each article.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f7f4ee;
-  --ink: #1c2430;
-  --ink-2: #3e4a5c;
-  --line: #ddd6c8;
-  --primary-soft: #e4eef5;
-  --focus: #1e4a6e;
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Public Sans", system-ui, sans-serif;
-}
-```
-
-Topic radius is 2px in this demo. The family replaces it. A pill topic survives only when the family's button is already a pill. The title is the display face. The dates and the sentences are the text face.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Kicker | sans | 12px | 500 | `--ink-2` |
-| Title | serif | 48px | 500 | `--ink` |
-| Topic | sans | 13px | 500 | `--ink` |
-| Date | sans | 13px | 400 | `--ink-2` |
-| Headline | serif | 28px | 500 | `--ink` |
-| Sentence | sans | 16px | 400 | `--ink-2` |
-
-The kicker letter-spacing is 0.06em. The title is the largest type. Headlines are not the same size as the title. The sentence measure stays under 52ch.
 
 ## Motion
 
@@ -114,6 +76,50 @@ None. A topic hides rows in one frame. Reduced motion has nothing to remove. Do 
 - [ ] Hidden notes use the hidden attribute.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is no magazine spread and no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. All is `aria-pressed="true"`. Four articles show, in the date order above.
+2. City hides the desk and the kitchen. Desk hides the other three. Kitchen hides the other three.
+3. One topic is pressed. Pressing another releases the rest.
+4. The pressed topic is pale blue, `#e4eef5`, which becomes `--primary-soft` when a theme is locked.
+5. Clicking a headline does not navigate away. In a product the link opens that essay. The essay page is `paper-article-reader` in structure, with this index's own words.
+6. There is no animation. Focus ring is 2px `--focus`, offset 2px.
+7. An empty topic does not exist in this demo. Every chip has at least one note.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f7f4ee;
+  --ink: #1c2430;
+  --ink-2: #3e4a5c;
+  --line: #ddd6c8;
+  --primary-soft: #e4eef5;
+  --focus: #1e4a6e;
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Public Sans", system-ui, sans-serif;
+}
+```
+
+Topic radius is 2px in this demo. The family replaces it. A pill topic survives only when the family's button is already a pill. The title is the display face. The dates and the sentences are the text face.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Kicker | sans | 12px | 500 | `--ink-2` |
+| Title | serif | 48px | 500 | `--ink` |
+| Topic | sans | 13px | 500 | `--ink` |
+| Date | sans | 13px | 400 | `--ink-2` |
+| Headline | serif | 28px | 500 | `--ink` |
+| Sentence | sans | 16px | 400 | `--ink-2` |
+
+The kicker letter-spacing is 0.06em. The title is the largest type. Headlines are not the same size as the title. The sentence measure stays under 52ch.
 
 ## Implementation notes
 

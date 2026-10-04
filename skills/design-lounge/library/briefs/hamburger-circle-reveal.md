@@ -4,29 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The phone header of a motion and type studio site, "Ferro", from Lisboa. A cream page holds a logo and a round black 44px menu button. Tapping the button turns its three lines into an X and grows a black panel out of the button as a circle. The circle covers the whole screen in 500ms with an expo-out curve. Five huge uppercase links rise out of their rows one after another, each with a small vermilion index number. A contact email and three social links fade in last. The detail worth copying is that the circle starts at the exact centre of the button, so the menu looks like it pours out of the control you pressed.
 
 This is not `mobile-fullscreen-menu`. That piece recolours the page with no panel edge and uses a serif. This one is a hard black panel with a visible circular edge while it grows, and a wide grotesk.
-
-## Reference behaviour
-
-1. First frame (hero): the menu is already open. The body has `.open`, the button shows the X on a vermilion disc, `aria-expanded="true"`, and the page behind is `inert`. No animation plays on load. Transitions are switched on two animation frames after load.
-2. Tap the X: the five links drop back into their rows over 240ms with an expo-in curve. The bottom link leaves first, 30ms apart. The contact block fades out over 160ms.
-3. 160ms after the tap, the circle shrinks back into the button over 500ms with an expo-in curve. The panel becomes `visibility: hidden` at 660ms.
-4. At the same time the X turns back into three lines over 300ms, and the disc goes from vermilion back to black.
-5. The logo turns from cream back to ink with a 380ms delay, so it never sits ink-on-black while the circle is still large.
-6. Focus returns to the menu button. The page loses `inert`. Body scroll unlocks.
-7. Tap the menu button: the button centre is measured. The circle radius is set to the distance from that centre to the farthest screen corner. The panel clip-path grows from `circle(0px)` to `circle(r)` over 500ms `cubic-bezier(.16,1,.3,1)`.
-8. The X forms over 300ms. The top line moves down 6px and turns 45 degrees. The bottom line moves up 6px and turns -45 degrees. The middle line fades over 160ms and scales to 20% width.
-9. Each link rises from `translateY(105%)` to `0` over 520ms expo-out. Link 1 starts at 180ms, then each next link starts 50ms later: 180, 230, 280, 330, 380ms.
-10. The contact block rises 12px and fades in over 420ms with a 460ms delay.
-11. 200ms after opening, focus moves to the first link, "Work".
-12. Tab and Shift+Tab cycle through the menu button, five links, the email and three social links. Focus never reaches the page behind.
-13. Esc closes the menu exactly like the X does.
-14. Tapping a link marks it current (`aria-current="page"`, arrow shown) and closes the menu. The demo has no routing.
-15. Hover or focus on a link turns its text vermilion and slides a 24px arrow in from 8px left over 200ms.
 
 ## Structure
 
@@ -69,62 +53,6 @@ row grid: 32px index | minmax(0,1fr) word | 24px arrow
 - Menu kicker: "Index" and "05 pages".
 - Links: 01 Work (current), 02 Reel, 03 Studio, 04 Journal, 05 Contact.
 - Foot: "New projects", "ola@ferro.studio", then Instagram, Vimeo, LinkedIn.
-
-## Tokens
-
-```css
-:root {
-  /* colour: cream page, black panel, one vermilion accent */
-  --page: #efe9dc;          /* page background */
-  --ink: #121110;           /* page text, closed button */
-  --ink-2: #4a4640;         /* page secondary text */
-  --line: #d3cab8;          /* page hairlines */
-  --panel: #121110;         /* menu panel */
-  --on-panel: #f2ede2;      /* menu text */
-  --on-panel-2: #a39d92;    /* menu labels, social links */
-  --rule: rgba(242, 237, 226, .16); /* menu row rules */
-  --accent: #ff4a1c;        /* index numbers, X disc, arrow, email underline, focus */
-
-  /* type */
-  --display: "Archivo", system-ui, sans-serif;   /* variable, wdth 62..125 */
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  /* layout */
-  --top: 54px;              /* status bar reserve */
-  --bar-h: 60px;            /* header row */
-  --chrome-bottom: 84px;    /* browser bar drawn over the frame; 0 in production */
-  --gutter: 20px;
-
-  /* motion */
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --expo-in: cubic-bezier(.7, 0, .84, 0);
-  --t-reveal: 500ms;
-  --t-link: 520ms;
-  --stagger: 50ms;
-
-  /* circle geometry, overwritten by JS */
-  --cx: calc(100% - 42px);
-  --cy: 84px;
-  --r: 900px;
-}
-```
-
-## Typography
-
-| Role | Family | Size / line | Weight | Width | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Menu link | Archivo | 40px / 1 | 800 | 112% | -0.02em | upper |
-| Index number | JetBrains Mono | 11px / 1 | 500 | n/a | 0.04em | digits |
-| Kicker, labels | JetBrains Mono | 11px / 1 | 500 | n/a | 0.08em | upper |
-| Wordmark | Archivo | 24px | 900 | 125% | -0.03em | upper |
-| City label | JetBrains Mono | 10px | 500 | n/a | 0.08em | upper |
-| Email | Archivo | 22px | 600 | 100% | -0.01em | lower |
-| Social links | JetBrains Mono | 12px | 500 | n/a | 0.08em | upper |
-| Page headline | Archivo | 58px / 0.9 | 900 | 75% | -0.02em | upper |
-| Page body | Archivo | 15–16px / 1.5 | 400 | 100% | 0 | sentence |
-
-Load Archivo with its width axis (`wdth,wght@62..125,400..900`) and set width with `font-stretch`. The menu links are wide (112%), the page headline is narrow (75%). That contrast between the two states is part of the look. Keep links on one line with `white-space: nowrap`.
 
 ## Motion
 
@@ -199,6 +127,84 @@ Reduced motion: drop the clip-path entirely. The panel fades `opacity 0 → 1` o
 - [ ] The panel is `#121110`, text `#f2ede2`, accent `#ff4a1c`, page `#efe9dc`.
 - [ ] The email is "ola@ferro.studio" with a 2px vermilion underline.
 - [ ] Social links read Instagram, Vimeo, LinkedIn in 12px mono caps.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame (hero): the menu is already open. The body has `.open`, the button shows the X on a vermilion disc, `aria-expanded="true"`, and the page behind is `inert`. No animation plays on load. Transitions are switched on two animation frames after load.
+2. Tap the X: the five links drop back into their rows over 240ms with an expo-in curve. The bottom link leaves first, 30ms apart. The contact block fades out over 160ms.
+3. 160ms after the tap, the circle shrinks back into the button over 500ms with an expo-in curve. The panel becomes `visibility: hidden` at 660ms.
+4. At the same time the X turns back into three lines over 300ms, and the disc goes from vermilion back to black.
+5. The logo turns from cream back to ink with a 380ms delay, so it never sits ink-on-black while the circle is still large.
+6. Focus returns to the menu button. The page loses `inert`. Body scroll unlocks.
+7. Tap the menu button: the button centre is measured. The circle radius is set to the distance from that centre to the farthest screen corner. The panel clip-path grows from `circle(0px)` to `circle(r)` over 500ms `cubic-bezier(.16,1,.3,1)`.
+8. The X forms over 300ms. The top line moves down 6px and turns 45 degrees. The bottom line moves up 6px and turns -45 degrees. The middle line fades over 160ms and scales to 20% width.
+9. Each link rises from `translateY(105%)` to `0` over 520ms expo-out. Link 1 starts at 180ms, then each next link starts 50ms later: 180, 230, 280, 330, 380ms.
+10. The contact block rises 12px and fades in over 420ms with a 460ms delay.
+11. 200ms after opening, focus moves to the first link, "Work".
+12. Tab and Shift+Tab cycle through the menu button, five links, the email and three social links. Focus never reaches the page behind.
+13. Esc closes the menu exactly like the X does.
+14. Tapping a link marks it current (`aria-current="page"`, arrow shown) and closes the menu. The demo has no routing.
+15. Hover or focus on a link turns its text vermilion and slides a 24px arrow in from 8px left over 200ms.
+
+## Tokens
+
+```css
+:root {
+  /* colour: cream page, black panel, one vermilion accent */
+  --page: #efe9dc;          /* page background */
+  --ink: #121110;           /* page text, closed button */
+  --ink-2: #4a4640;         /* page secondary text */
+  --line: #d3cab8;          /* page hairlines */
+  --panel: #121110;         /* menu panel */
+  --on-panel: #f2ede2;      /* menu text */
+  --on-panel-2: #a39d92;    /* menu labels, social links */
+  --rule: rgba(242, 237, 226, .16); /* menu row rules */
+  --accent: #ff4a1c;        /* index numbers, X disc, arrow, email underline, focus */
+
+  /* type */
+  --display: "Archivo", system-ui, sans-serif;   /* variable, wdth 62..125 */
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* layout */
+  --top: 54px;              /* status bar reserve */
+  --bar-h: 60px;            /* header row */
+  --chrome-bottom: 84px;    /* browser bar drawn over the frame; 0 in production */
+  --gutter: 20px;
+
+  /* motion */
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --expo-in: cubic-bezier(.7, 0, .84, 0);
+  --t-reveal: 500ms;
+  --t-link: 520ms;
+  --stagger: 50ms;
+
+  /* circle geometry, overwritten by JS */
+  --cx: calc(100% - 42px);
+  --cy: 84px;
+  --r: 900px;
+}
+```
+
+## Typography
+
+| Role | Family | Size / line | Weight | Width | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Menu link | Archivo | 40px / 1 | 800 | 112% | -0.02em | upper |
+| Index number | JetBrains Mono | 11px / 1 | 500 | n/a | 0.04em | digits |
+| Kicker, labels | JetBrains Mono | 11px / 1 | 500 | n/a | 0.08em | upper |
+| Wordmark | Archivo | 24px | 900 | 125% | -0.03em | upper |
+| City label | JetBrains Mono | 10px | 500 | n/a | 0.08em | upper |
+| Email | Archivo | 22px | 600 | 100% | -0.01em | lower |
+| Social links | JetBrains Mono | 12px | 500 | n/a | 0.08em | upper |
+| Page headline | Archivo | 58px / 0.9 | 900 | 75% | -0.02em | upper |
+| Page body | Archivo | 15–16px / 1.5 | 400 | 100% | 0 | sentence |
+
+Load Archivo with its width axis (`wdth,wght@62..125,400..900`) and set width with `font-stretch`. The menu links are wide (112%), the page headline is narrow (75%). That contrast between the two states is part of the look. Keep links on one line with `white-space: nowrap`.
 
 ## Implementation notes
 

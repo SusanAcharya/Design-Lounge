@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The screen a recipe app ("Pantry Press") shows when the tablet is propped up next to the stove. It shows one step at a time, in type big enough to read from a metre away, with messy hands. The ingredients for that step sit in a dark olive panel on the right, each with a large tick box. Two timers live as chips in the top bar. When one runs out it turns tomato red and pulses gently until tapped. A green dot says the screen will stay on. Move between steps by swiping the step text or with 72px Back and Next buttons. The look is bold kitchen: cream paper, dark olive ink, one tomato red, heavy rounded Rubik. The detail worth copying is that the time in each step is set in red inside the sentence, and the matching timer is one tap away under it.
-
-## Reference behaviour
-
-1. First frame: step 4 of 7, "Tip in the tomatoes and chickpeas. Simmer until thick and glossy, 10 minutes." with "10 minutes." in tomato red. The tip reads "Squash a few chickpeas with the spoon. It thickens the sauce." A "Start 10 min sauce timer" button sits under it. The panel lists four ingredients. Chopped tomatoes and Chickpeas are ticked. The footer reads "2 of 4 still to add" and "Next step needs: Eggs".
-2. The top bar shows two running timer chips: Bread 0:18 and Sauce 9:48. Both count down once a second. "Screen stays on" shows with a green dot.
-3. When Bread reaches zero, its chip turns tomato red, the pause icon becomes a bell, the time reads "Done", and a soft ring pulses out from the chip every 1.8s. A screen reader hears "Bread timer is done".
-4. Tap a running chip: it pauses and the time turns grey-olive. Tap again: it resumes. Tap a done chip: it stops ringing and resets to its full time, paused.
-5. Tap "Start 10 min sauce timer": the Sauce chip restarts at 10:00. Starting a timer with a new name replaces a done chip first, then a paused one, then the first chip. There are never more than two chips.
-6. Tap an ingredient row: its box fills cream with an olive tick, the name gets a line through it at 60% opacity. The footer count updates. With all ticked it reads "All in. On to the next step."
-7. Tap Next ("Next: Add the eggs"): step 5 slides in from the right. Back slides the previous step in from the left. Back is disabled on step 1. On step 7, Next reads "Finish".
-8. Drag the step text sideways: it follows the finger. Let go past 80px to change step. Under 80px it springs back in 240ms. At the first or last step the drag moves at a quarter speed and always springs back.
-9. Tap a step dot to jump to that step. Left and Right arrow keys move one step.
-10. Ticks are kept per step. Going back to step 4 shows the same ticks.
-11. A step with no new ingredients shows "Nothing new to add. Keep the lid close." in the panel.
-12. Tap "Screen stays on": it changes to "Screen may sleep" and the dot turns grey. Where the Wake Lock API exists, it is requested and released to match.
 
 ## Structure
 
@@ -67,59 +54,6 @@ The screen a recipe app ("Pantry Press") shows when the tablet is propped up nex
 | 7 | Scatter the feta and coriander. Serve from the pan with [warm bread.] | Feta, Coriander, Flatbreads | |
 
 Each ingredient has a name and an amount line ("2 × 400 g tins", "1 × 400 g tin, drained"). Each step has a short name for the Next label and the dot labels: Warm the oil, Soften onions, Toast spices, Simmer sauce, Add the eggs, Set the eggs, Serve.
-
-## Tokens
-
-```css
-:root {
-  --cream: #f5ecd7;        /* page */
-  --cream-2: #ece0c2;      /* close button, hover */
-  --card: #fbf5e6;         /* timer chip */
-  --line: #ddcda8;         /* chip border, future dots */
-  --olive: #2e3820;        /* ink and the ingredient panel */
-  --olive-2: #545e3e;      /* secondary text */
-  --olive-3: #6b7452;      /* past dots, paused time */
-  --on-olive: #f5ecd7;
-  --on-olive-2: #c9c7a6;   /* labels on the panel */
-  --tomato: #c4381f;       /* the one accent: Next, done timers, step badge */
-  --tomato-dk: #a92e18;    /* red text on cream, Next hover */
-  --tomato-soft: #f4d2c3;
-  --on-tomato: #fff8ef;
-  --wake: #5b7a2e;         /* the keep-awake dot only */
-  --font: "Rubik", system-ui, sans-serif;
-  --r: 20px;
-  --r-lg: 28px;
-  --tap: 72px;
-  --t-fast: 150ms;
-  --t-step: 320ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-}
-```
-
-Spacing: 4, 8, 10, 12, 14, 18, 20, 24, 28.
-
-## Typography
-
-One family, Rubik, at four weights (400, 500, 700, 800).
-
-| Role | Size | Weight | Line-height | Notes |
-| --- | --- | --- | --- | --- |
-| Step sentence | 54px | 800 | 1.1 | -0.02em, max 16ch, `text-wrap: balance` |
-| Time inside the step | 54px | 800 | 1.1 | `--tomato-dk`, `white-space: nowrap` |
-| Step label | 16px | 700 | 1.2 | uppercase, 0.08em, `--tomato-dk` |
-| Step number badge | 20px | 700 | 1 | in a 44px tomato circle |
-| Tip | 19px | 400 | 1.4 | `--olive-2`, max 42ch |
-| Recipe title | 22px | 800 | 1.2 | -0.01em |
-| Recipe meta | 14px | 500 | 1.4 | `--olive-2` |
-| Timer name | 15px | 500 | 1 | |
-| Timer time | 20px | 700 | 1 | tabular figures |
-| Panel heading | 15px | 700 | 1.2 | uppercase, 0.08em, `--on-olive-2` |
-| Ingredient name | 20px | 700 | 1.2 | |
-| Ingredient amount | 15px | 400 | 1.3 | `--on-olive-2` |
-| Back / Next | 21px | 700 | 1 | |
-
-Never set the step under 40px at any size. It is read from across the kitchen.
 
 ## Motion
 
@@ -193,6 +127,78 @@ The ring is the only loop. It is calm on purpose: one soft pulse every 1.8s, not
 - [ ] Bread starts at 0:18 and rings at zero. Sauce starts at 9:48.
 - [ ] The panel is `#2e3820` with a 28px radius. Next is `#c4381f`.
 - [ ] The step sentence is Rubik 800 at 54px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: step 4 of 7, "Tip in the tomatoes and chickpeas. Simmer until thick and glossy, 10 minutes." with "10 minutes." in tomato red. The tip reads "Squash a few chickpeas with the spoon. It thickens the sauce." A "Start 10 min sauce timer" button sits under it. The panel lists four ingredients. Chopped tomatoes and Chickpeas are ticked. The footer reads "2 of 4 still to add" and "Next step needs: Eggs".
+2. The top bar shows two running timer chips: Bread 0:18 and Sauce 9:48. Both count down once a second. "Screen stays on" shows with a green dot.
+3. When Bread reaches zero, its chip turns tomato red, the pause icon becomes a bell, the time reads "Done", and a soft ring pulses out from the chip every 1.8s. A screen reader hears "Bread timer is done".
+4. Tap a running chip: it pauses and the time turns grey-olive. Tap again: it resumes. Tap a done chip: it stops ringing and resets to its full time, paused.
+5. Tap "Start 10 min sauce timer": the Sauce chip restarts at 10:00. Starting a timer with a new name replaces a done chip first, then a paused one, then the first chip. There are never more than two chips.
+6. Tap an ingredient row: its box fills cream with an olive tick, the name gets a line through it at 60% opacity. The footer count updates. With all ticked it reads "All in. On to the next step."
+7. Tap Next ("Next: Add the eggs"): step 5 slides in from the right. Back slides the previous step in from the left. Back is disabled on step 1. On step 7, Next reads "Finish".
+8. Drag the step text sideways: it follows the finger. Let go past 80px to change step. Under 80px it springs back in 240ms. At the first or last step the drag moves at a quarter speed and always springs back.
+9. Tap a step dot to jump to that step. Left and Right arrow keys move one step.
+10. Ticks are kept per step. Going back to step 4 shows the same ticks.
+11. A step with no new ingredients shows "Nothing new to add. Keep the lid close." in the panel.
+12. Tap "Screen stays on": it changes to "Screen may sleep" and the dot turns grey. Where the Wake Lock API exists, it is requested and released to match.
+
+## Tokens
+
+```css
+:root {
+  --cream: #f5ecd7;        /* page */
+  --cream-2: #ece0c2;      /* close button, hover */
+  --card: #fbf5e6;         /* timer chip */
+  --line: #ddcda8;         /* chip border, future dots */
+  --olive: #2e3820;        /* ink and the ingredient panel */
+  --olive-2: #545e3e;      /* secondary text */
+  --olive-3: #6b7452;      /* past dots, paused time */
+  --on-olive: #f5ecd7;
+  --on-olive-2: #c9c7a6;   /* labels on the panel */
+  --tomato: #c4381f;       /* the one accent: Next, done timers, step badge */
+  --tomato-dk: #a92e18;    /* red text on cream, Next hover */
+  --tomato-soft: #f4d2c3;
+  --on-tomato: #fff8ef;
+  --wake: #5b7a2e;         /* the keep-awake dot only */
+  --font: "Rubik", system-ui, sans-serif;
+  --r: 20px;
+  --r-lg: 28px;
+  --tap: 72px;
+  --t-fast: 150ms;
+  --t-step: 320ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+```
+
+Spacing: 4, 8, 10, 12, 14, 18, 20, 24, 28.
+
+## Typography
+
+One family, Rubik, at four weights (400, 500, 700, 800).
+
+| Role | Size | Weight | Line-height | Notes |
+| --- | --- | --- | --- | --- |
+| Step sentence | 54px | 800 | 1.1 | -0.02em, max 16ch, `text-wrap: balance` |
+| Time inside the step | 54px | 800 | 1.1 | `--tomato-dk`, `white-space: nowrap` |
+| Step label | 16px | 700 | 1.2 | uppercase, 0.08em, `--tomato-dk` |
+| Step number badge | 20px | 700 | 1 | in a 44px tomato circle |
+| Tip | 19px | 400 | 1.4 | `--olive-2`, max 42ch |
+| Recipe title | 22px | 800 | 1.2 | -0.01em |
+| Recipe meta | 14px | 500 | 1.4 | `--olive-2` |
+| Timer name | 15px | 500 | 1 | |
+| Timer time | 20px | 700 | 1 | tabular figures |
+| Panel heading | 15px | 700 | 1.2 | uppercase, 0.08em, `--on-olive-2` |
+| Ingredient name | 20px | 700 | 1.2 | |
+| Ingredient amount | 15px | 400 | 1.3 | `--on-olive-2` |
+| Back / Next | 21px | 700 | 1 | |
+
+Never set the step under 40px at any size. It is read from across the kitchen.
 
 ## Implementation notes
 

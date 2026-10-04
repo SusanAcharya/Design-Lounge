@@ -4,28 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A product page opener for a fictional Geneva watchmaker, Orrery Instruments, and its Meridian 40. One section is 400vh tall with a 100vh sticky stage inside it. Scroll progress from 0 to 1 drives a wristwatch built only from CSS and inline SVG: it tilts into a three-quarter view, lifts apart into four labelled layers (case, movement, dial, crystal), shows the movement while its brass rotor turns, then closes and turns back to face-on. Four captions step in on the right, one per quarter of progress, and a four-part rail fills as you go. There is no video and no image sequence. It feels like a product page from a big phone maker, done in graphite with one brushed brass.
 
 The detail worth copying: the part labels are flat 2D elements, but they follow the 3D layers exactly. Each frame they are placed with the same angle and perspective maths the browser uses, so there is no layout read and no drift.
-
-## Reference behaviour
-
-1. First frame (progress 0): fixed 64px nav (logo "ORRERY", three links, "Reserve" outline button). Left 7/12: the watch face-on with a slight 10° tilt back and a −6° turn. Strap runs top to bottom and fades out. Right 5/12: kicker "Orrery Instruments · Geneva", 58px headline "Meridian 40", price line "CHF 4,200 · Ships 12 November", caption 01 "Forty millimetres of graphite.", and a rail of four steps with 01 current. "Scroll" with a bobbing arrow sits 28px from the bottom of the stage.
-2. Progress = (scrollY − section top) / (section height − viewport height), clamped 0–1. At 1280×800 the scrubbed distance is 2400px.
-3. 0 → 0.20, Turn: the watch rotates from `rotateX(10deg) rotateZ(-6deg)` to `rotateX(60deg) rotateZ(-38deg)`. Ease in-out cubic.
-4. 0.22 → 0.42, Open: the four layers separate along their own z axis. Case to −130px, movement to −45px, dial to +45px, crystal to +130px. The stack stays centred. Labels fade in one by one as the gap opens.
-5. 0.48 → 0.60, Inside: dial and crystal lift a further 50px and the case drops 20px, so the movement is clearly visible. 0.66 → 0.76 they settle back.
-6. 0.72 → 0.90, Close: the layers return to 0, 1, 2, 3px. The labels fade out.
-7. 0.86 → 1.00: the watch turns back to the first-frame angle.
-8. The rotor spins 540° across the whole scroll. The minute hand turns one full hour (48° → 408°). The hour hand moves 30°. Time passes as you scroll.
-9. Captions: step = floor(progress × 4), max 3. The active caption fades in and rises 14px over 400ms. The others fade out.
-10. Rail: each of four segments fills with brass by `scaleX(clamp(progress × 4 − i))`. The active step's label turns ink and gets `aria-current="step"`.
-11. Clicking a rail step smooth-scrolls to the middle of that quarter (i × 0.25 + 0.13).
-12. The scroll hint fades out over the first 4% of progress.
-13. After the section: a specs block ("Specifications", seven rows in mono) with a brass "Reserve yours" button, then a footer.
-14. Reduced motion: the section is not pinned. The watch shows the open state at rest, with all four labels. All four captions show as a stacked list. The rail and hint hide.
 
 ## Structure
 
@@ -56,57 +41,6 @@ then: specs (5fr / 7fr), footer
 - Crystal: a translucent disc with a 1px white inner ring and a diagonal glare.
 - Labels: a flat `div.labels` at the same centre point as the stage, holding four `.lab` rows (name, mono spec, 56px brass line with a 5px dot).
 - Copy column: `p.kick`, `h1`, `p.price`, a captions box with four `div.capt` (each an `h2` and `p`), and a `div.rail` group of four buttons.
-
-## Tokens
-
-```css
-:root {
-  --bg: #121214;          /* page */
-  --surface: #1a1a1d;     /* raised blocks */
-  --steel: #2c2c31;       /* case highlight */
-  --line: rgba(236, 232, 225, .1);
-  --ink: #ece8e1;         /* primary text */
-  --ink-2: #a29d94;       /* secondary text, ticks */
-  --brass: #b8955a;       /* accent */
-  --brass-hi: #dcc08a;    /* brass highlight, kicker */
-  --brass-lo: #8a6c3c;    /* brass shadow */
-  --brushed: conic-gradient(from 20deg, #8a6c3c, #dcc08a 12%, #b8955a 25%,
-    #8a6c3c 40%, #dcc08a 58%, #b8955a 72%, #8a6c3c 88%, #dcc08a);
-
-  --wide: "Archivo", system-ui, sans-serif;     /* font-stretch 125% */
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  --text-hero: 58px; --text-h2: 22px; --text-body: 14px;
-  --text-mono: 11px; --text-spec: 14px;
-
-  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-6: 48px; --space-8: 64px;
-
-  --P: 1600px;            /* stage perspective */
-  --pin: 400vh;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --dur-caption: 400ms;
-
-  --z-case: -130px; --z-move: -45px; --z-dial: 45px; --z-crystal: 130px;
-  --tilt-x: 60deg; --tilt-z: -38deg;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Headline | Archivo, wdth 125 | 58px | 700 | 0.95 | -0.02em | Title |
-| Caption title | Archivo, wdth 125 | 22px | 700 | 1.15 | -0.005em | Sentence |
-| Caption body | Archivo, wdth 100 | 14px | 500 | 1.55 | 0 | Sentence, max 40ch |
-| Kicker, step number | IBM Plex Mono | 11px | 500 | 1.2 | 0.14–0.16em | Upper, brass-hi |
-| Price | IBM Plex Mono | 13px | 400 | 1.4 | 0 | Sentence |
-| Rail label | IBM Plex Mono | 11px | 500 | 1 | 0.1em | Upper |
-| Part label name | Archivo | 13px | 500 | 1.3 | 0 | Title |
-| Part label spec | IBM Plex Mono | 11px | 400 | 1.3 | 0.04em | Sentence |
-| Logo | Archivo | 15px | 700 | 1 | 0.32em | Upper |
-| Spec rows | IBM Plex Mono | 14px; keys 11px upper | 400 | 1.5 | keys 0.12em | — |
-
-Body copy drops to normal width (`font-stretch: 100%`) so long lines stay readable. Wide is for names and headlines only.
 
 ## Motion
 
@@ -184,6 +118,78 @@ Optional: in browsers with `animation-timeline: view()`, the captions can switch
 - [ ] Labels read Case, Calibre OR-7, Dial and Crystal, with mono specs under each.
 - [ ] Captions: "Forty millimetres of graphite.", "Four parts. Nothing glued.", "Calibre OR-7, wound by your wrist.", "Sealed again to 100 metres."
 - [ ] The rotor turns 540° over the full scroll and the minute hand moves one hour from 10:08.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame (progress 0): fixed 64px nav (logo "ORRERY", three links, "Reserve" outline button). Left 7/12: the watch face-on with a slight 10° tilt back and a −6° turn. Strap runs top to bottom and fades out. Right 5/12: kicker "Orrery Instruments · Geneva", 58px headline "Meridian 40", price line "CHF 4,200 · Ships 12 November", caption 01 "Forty millimetres of graphite.", and a rail of four steps with 01 current. "Scroll" with a bobbing arrow sits 28px from the bottom of the stage.
+2. Progress = (scrollY − section top) / (section height − viewport height), clamped 0–1. At 1280×800 the scrubbed distance is 2400px.
+3. 0 → 0.20, Turn: the watch rotates from `rotateX(10deg) rotateZ(-6deg)` to `rotateX(60deg) rotateZ(-38deg)`. Ease in-out cubic.
+4. 0.22 → 0.42, Open: the four layers separate along their own z axis. Case to −130px, movement to −45px, dial to +45px, crystal to +130px. The stack stays centred. Labels fade in one by one as the gap opens.
+5. 0.48 → 0.60, Inside: dial and crystal lift a further 50px and the case drops 20px, so the movement is clearly visible. 0.66 → 0.76 they settle back.
+6. 0.72 → 0.90, Close: the layers return to 0, 1, 2, 3px. The labels fade out.
+7. 0.86 → 1.00: the watch turns back to the first-frame angle.
+8. The rotor spins 540° across the whole scroll. The minute hand turns one full hour (48° → 408°). The hour hand moves 30°. Time passes as you scroll.
+9. Captions: step = floor(progress × 4), max 3. The active caption fades in and rises 14px over 400ms. The others fade out.
+10. Rail: each of four segments fills with brass by `scaleX(clamp(progress × 4 − i))`. The active step's label turns ink and gets `aria-current="step"`.
+11. Clicking a rail step smooth-scrolls to the middle of that quarter (i × 0.25 + 0.13).
+12. The scroll hint fades out over the first 4% of progress.
+13. After the section: a specs block ("Specifications", seven rows in mono) with a brass "Reserve yours" button, then a footer.
+14. Reduced motion: the section is not pinned. The watch shows the open state at rest, with all four labels. All four captions show as a stacked list. The rail and hint hide.
+
+## Tokens
+
+```css
+:root {
+  --bg: #121214;          /* page */
+  --surface: #1a1a1d;     /* raised blocks */
+  --steel: #2c2c31;       /* case highlight */
+  --line: rgba(236, 232, 225, .1);
+  --ink: #ece8e1;         /* primary text */
+  --ink-2: #a29d94;       /* secondary text, ticks */
+  --brass: #b8955a;       /* accent */
+  --brass-hi: #dcc08a;    /* brass highlight, kicker */
+  --brass-lo: #8a6c3c;    /* brass shadow */
+  --brushed: conic-gradient(from 20deg, #8a6c3c, #dcc08a 12%, #b8955a 25%,
+    #8a6c3c 40%, #dcc08a 58%, #b8955a 72%, #8a6c3c 88%, #dcc08a);
+
+  --wide: "Archivo", system-ui, sans-serif;     /* font-stretch 125% */
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --text-hero: 58px; --text-h2: 22px; --text-body: 14px;
+  --text-mono: 11px; --text-spec: 14px;
+
+  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-6: 48px; --space-8: 64px;
+
+  --P: 1600px;            /* stage perspective */
+  --pin: 400vh;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --dur-caption: 400ms;
+
+  --z-case: -130px; --z-move: -45px; --z-dial: 45px; --z-crystal: 130px;
+  --tilt-x: 60deg; --tilt-z: -38deg;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Headline | Archivo, wdth 125 | 58px | 700 | 0.95 | -0.02em | Title |
+| Caption title | Archivo, wdth 125 | 22px | 700 | 1.15 | -0.005em | Sentence |
+| Caption body | Archivo, wdth 100 | 14px | 500 | 1.55 | 0 | Sentence, max 40ch |
+| Kicker, step number | IBM Plex Mono | 11px | 500 | 1.2 | 0.14–0.16em | Upper, brass-hi |
+| Price | IBM Plex Mono | 13px | 400 | 1.4 | 0 | Sentence |
+| Rail label | IBM Plex Mono | 11px | 500 | 1 | 0.1em | Upper |
+| Part label name | Archivo | 13px | 500 | 1.3 | 0 | Title |
+| Part label spec | IBM Plex Mono | 11px | 400 | 1.3 | 0.04em | Sentence |
+| Logo | Archivo | 15px | 700 | 1 | 0.32em | Upper |
+| Spec rows | IBM Plex Mono | 14px; keys 11px upper | 400 | 1.5 | keys 0.12em | — |
+
+Body copy drops to normal width (`font-stretch: 100%`) so long lines stay readable. Wide is for names and headlines only.
 
 ## Implementation notes
 

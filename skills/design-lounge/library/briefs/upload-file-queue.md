@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the three states: sent, running, rejected.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The drawing upload for a small architecture desk. A 160px dashed drop zone sits under the title "Drawings". Below it, a card lists files. plan-level-2.pdf is already sent. section-aa.png is in progress and advances. site-notes.heic is rejected because HEIC is not accepted. Dropping, clicking, or pressing Enter on the zone adds sheet-0N.pdf at 8 percent, which then climbs. The queue does not leave the page.
-
-## Reference behaviour
-
-1. Initial state: three rows. Sent row has a full green bar and the word Sent. Running row starts at 62 percent with a primary bar. Rejected row has a 40 percent danger bar and the meta line "HEIC is not accepted".
-2. Every 700ms, each running row gains 12 percent, capped at 100. At 100 the label becomes Sent, the bar turns `--success`, and the row stops.
-3. Click the drop zone, press Enter or Space on it, or drop a file: append `sheet-0N.pdf`, 1.1 MB, starting at 8 percent, then start the ticker if it had stopped.
-4. Drag over the zone: background `--primary-soft`, border `--primary`. Drag leave or drop removes that state. Drop also adds a file and does not navigate.
-5. The list is `aria-live="polite"` so the new name is announced.
-6. There is no separate upload button besides the zone.
-7. Reduced motion: the bar width still updates, but it does not transition.
 
 ## Structure
 
@@ -33,40 +25,6 @@ ul card
 - Drop zone is a `div` with `role="button"`, tabindex 0, label "Add files".
 - List is a `ul`. Each file is an `li`.
 - Do not use a real file input if it would open the OS dialog in the demo. The zone adds a sample sheet. In a product build, the same row component receives real `File` objects.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f1ea;
-  --surface: #fffdf8;
-  --surface-2: #efeae0;
-  --ink: #1c1915;
-  --ink-2: #5e574e;
-  --ink-3: #8a8176;
-  --line: #e0d8cc;
-  --line-strong: #cfc4b4;
-  --primary: #8a4b12;
-  --success: #2f6b45;
-  --success-soft: #e5f2ea;
-  --danger: #8d2f2f;
-  --focus: #8a4b12;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --radius: 8px;
-  --zone: 160px;
-  --bar: 4px;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-```
-
-## Typography
-
-- Title: IBM Plex Sans 500, 28px, tracking -0.03em.
-- Deck: 14px, `--ink-2`.
-- File name: 14px, weight 500.
-- Meta and sizes: IBM Plex Mono 12px, `--ink-3`.
-- State label: 12px, weight 600. Sent is `--success`. Rejected is `--danger`. Percent is `--ink`.
 
 ## Motion
 
@@ -109,6 +67,54 @@ The timer stops when no row is running. It starts again when a file is added.
 - [ ] Names are Plex Sans. Sizes are Plex Mono.
 - [ ] Reduced motion removes the bar width transition.
 - [ ] The ticker is not left running when every row has settled.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: three rows. Sent row has a full green bar and the word Sent. Running row starts at 62 percent with a primary bar. Rejected row has a 40 percent danger bar and the meta line "HEIC is not accepted".
+2. Every 700ms, each running row gains 12 percent, capped at 100. At 100 the label becomes Sent, the bar turns `--success`, and the row stops.
+3. Click the drop zone, press Enter or Space on it, or drop a file: append `sheet-0N.pdf`, 1.1 MB, starting at 8 percent, then start the ticker if it had stopped.
+4. Drag over the zone: background `--primary-soft`, border `--primary`. Drag leave or drop removes that state. Drop also adds a file and does not navigate.
+5. The list is `aria-live="polite"` so the new name is announced.
+6. There is no separate upload button besides the zone.
+7. Reduced motion: the bar width still updates, but it does not transition.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f1ea;
+  --surface: #fffdf8;
+  --surface-2: #efeae0;
+  --ink: #1c1915;
+  --ink-2: #5e574e;
+  --ink-3: #8a8176;
+  --line: #e0d8cc;
+  --line-strong: #cfc4b4;
+  --primary: #8a4b12;
+  --success: #2f6b45;
+  --success-soft: #e5f2ea;
+  --danger: #8d2f2f;
+  --focus: #8a4b12;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius: 8px;
+  --zone: 160px;
+  --bar: 4px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+```
+
+## Typography
+
+- Title: IBM Plex Sans 500, 28px, tracking -0.03em.
+- Deck: 14px, `--ink-2`.
+- File name: 14px, weight 500.
+- Meta and sizes: IBM Plex Mono 12px, `--ink-3`.
+- State label: 12px, weight 600. Sent is `--success`. Rejected is `--danger`. Percent is `--ink`.
 
 ## Implementation notes
 

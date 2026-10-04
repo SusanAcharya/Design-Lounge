@@ -4,32 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A magazine pull-quote for "The Margin" (Issue 31, Autumn 2026). The 58px Newsreader sentence is annotated the way a reader would mark a galley: a yellow highlighter wipe, a red ink circle around *wait*, a wavy underline, two more highlights, then a −5° Caveat note with a hand-drawn arrow. Every stroke is an SVG path with `pathLength="1"` and `stroke-dashoffset` animated 1 → 0. A notebook rule sits 55px from the left. The detail worth copying is that the marks are **behind** the type (`z-index: -1` on the SVG, `mix-blend-mode: multiply` on highlights) so the serifs stay sharp and the yellow reads as ink on paper, not a box behind a span.
-
-## Reference behaviour
-
-1. First paint: `<main id="stage" class="run">`. Marks draw in this order (CSS `--d` delay, then `--draw` 650ms, except the circle 820ms):
-   - 300ms — highlight "your attention."
-   - 900ms — circle around italic *wait*
-   - 1400ms — underline "remember where"
-   - 1900ms — highlight "get out"
-   - 2250ms — highlight "of the way."
-   - 2500ms — arrow path; 380ms later the two-line note types in over 700ms (`clip-path` inset 100% → 0, `steps(14)`).
-2. Hovering any `.mk` replays **that** path only: `animation: none`, force reflow via `getBBox()`, then `draw 650ms` (820ms if `.ci`) `cubic-bezier(.65, 0, .35, 1) 0ms backwards`.
-3. **Replay** button: clear inline `animation` on all paths and `.note span`, remove `.run`, force reflow (`offsetWidth`), add `.run` again so the full sequence restarts from `--d`.
-4. Header Subscribe pill inverts on hover (ink fill, paper type). Replay border goes `--ink` on hover.
-5. Reduced motion: `.run` paths and note spans have `animation: none`. Marks are fully visible (dashoffset 0, clip open). Replay/hover still swap classes but there is nothing to watch.
-
-Quote (exact wrapping):
-
-> The best tools don’t ask for **your attention.**  
-> They ***wait***, they **remember where**  
-> you left off, and then they **get out**  
-> **of the way.**
-
-Kicker: "Notes on slow software". Byline: Ines Okafor · 11 min read · 2 October 2026 · Filed under Craft. Note: "the whole essay," / "in one word". Footer legend: Highlight / Pen, "Hover a mark to redraw it".
 
 ## Structure
 
@@ -64,59 +43,6 @@ Path geometry (viewBoxes, keep these curves):
 - Arrow: 150×84, `M140 80 C 120 40, 70 18, 12 22 M26 10 L 10 22 L 26 34`. Stroke 2.2.
 
 `preserveAspectRatio="none"` on the quote SVGs so they stretch to the word width.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm paper, navy ink, yellow marker, red pen */
-  --paper: #F2F1EC;
-  --paper-2: #E8E6DE;
-  --ink: #1B2333;
-  --ink-2: #4A5163;
-  --ink-3: #6E7383;
-  --rule: #D3D0C6;
-  --marker: #FFD43B;
-  --pen: #D9402A;
-  --av: #CBD5E8;
-
-  /* type */
-  --serif: "Newsreader", Georgia, serif;
-  --hand: "Caveat", cursive;
-
-  /* sizes */
-  --fs-quote: 58px;
-  --fs-body: 17px;
-  --fs-label: 12px;
-  --fs-hand: 30px;
-  --rule-x: 55px;
-
-  /* motion */
-  --draw: 650ms;
-  --draw-circle: 820ms;
-  --write: 700ms;
-  --ease-pen: cubic-bezier(.65, 0, .35, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role           | Family     | Size | Weight | Line-height | Tracking | Case      |
-|----------------|------------|-----:|-------:|------------:|---------:|-----------|
-| Body           | Newsreader | 17px | 400    | 1.6         | 0        | sentence  |
-| Masthead       | Newsreader | 30px | 400 italic | 1        | −0.02em  | title     |
-| Header meta    | Newsreader | 12px | 500    | 1           | +0.14em  | UPPERCASE |
-| Subscribe      | Newsreader | 14px | 500    | 1           | 0        | sentence  |
-| Kicker         | Newsreader | 12px | 500    | 1           | +0.14em  | UPPERCASE |
-| Quote          | Newsreader | 58px | 400    | 1.16        | −0.022em | sentence  |
-| Quote italic   | Newsreader | 58px | 400 italic | 1.16     | −0.022em | sentence  |
-| Note           | Caveat     | 30px | 600    | 1.05        | 0        | sentence  |
-| Byline         | Newsreader | 15px | 400/500| 1.6         | 0        | sentence  |
-| Footer / legend| Newsreader | 12px | 500    | 1           | +0.14em  | UPPERCASE |
-| Replay         | Newsreader | 14px | 500    | 40px h      | 0        | sentence  |
-
-Quote uses `font-variation-settings: "opsz" 72`. Marks are `white-space: nowrap` so a highlight never wraps mid-stroke.
 
 ## Motion
 
@@ -185,6 +111,86 @@ CSS:
 - [ ] Focus rings are 2px pen-red on Subscribe and Replay.
 - [ ] Highlight spans do not wrap (`white-space: nowrap`).
 - [ ] Circle SVG sits above the italic; highlight SVGs sit behind.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First paint: `<main id="stage" class="run">`. Marks draw in this order (CSS `--d` delay, then `--draw` 650ms, except the circle 820ms):
+   - 300ms — highlight "your attention."
+   - 900ms — circle around italic *wait*
+   - 1400ms — underline "remember where"
+   - 1900ms — highlight "get out"
+   - 2250ms — highlight "of the way."
+   - 2500ms — arrow path; 380ms later the two-line note types in over 700ms (`clip-path` inset 100% → 0, `steps(14)`).
+2. Hovering any `.mk` replays **that** path only: `animation: none`, force reflow via `getBBox()`, then `draw 650ms` (820ms if `.ci`) `cubic-bezier(.65, 0, .35, 1) 0ms backwards`.
+3. **Replay** button: clear inline `animation` on all paths and `.note span`, remove `.run`, force reflow (`offsetWidth`), add `.run` again so the full sequence restarts from `--d`.
+4. Header Subscribe pill inverts on hover (ink fill, paper type). Replay border goes `--ink` on hover.
+5. Reduced motion: `.run` paths and note spans have `animation: none`. Marks are fully visible (dashoffset 0, clip open). Replay/hover still swap classes but there is nothing to watch.
+
+Quote (exact wrapping):
+
+> The best tools don’t ask for **your attention.**  
+> They ***wait***, they **remember where**  
+> you left off, and then they **get out**  
+> **of the way.**
+
+Kicker: "Notes on slow software". Byline: Ines Okafor · 11 min read · 2 October 2026 · Filed under Craft. Note: "the whole essay," / "in one word". Footer legend: Highlight / Pen, "Hover a mark to redraw it".
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm paper, navy ink, yellow marker, red pen */
+  --paper: #F2F1EC;
+  --paper-2: #E8E6DE;
+  --ink: #1B2333;
+  --ink-2: #4A5163;
+  --ink-3: #6E7383;
+  --rule: #D3D0C6;
+  --marker: #FFD43B;
+  --pen: #D9402A;
+  --av: #CBD5E8;
+
+  /* type */
+  --serif: "Newsreader", Georgia, serif;
+  --hand: "Caveat", cursive;
+
+  /* sizes */
+  --fs-quote: 58px;
+  --fs-body: 17px;
+  --fs-label: 12px;
+  --fs-hand: 30px;
+  --rule-x: 55px;
+
+  /* motion */
+  --draw: 650ms;
+  --draw-circle: 820ms;
+  --write: 700ms;
+  --ease-pen: cubic-bezier(.65, 0, .35, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role           | Family     | Size | Weight | Line-height | Tracking | Case      |
+|----------------|------------|-----:|-------:|------------:|---------:|-----------|
+| Body           | Newsreader | 17px | 400    | 1.6         | 0        | sentence  |
+| Masthead       | Newsreader | 30px | 400 italic | 1        | −0.02em  | title     |
+| Header meta    | Newsreader | 12px | 500    | 1           | +0.14em  | UPPERCASE |
+| Subscribe      | Newsreader | 14px | 500    | 1           | 0        | sentence  |
+| Kicker         | Newsreader | 12px | 500    | 1           | +0.14em  | UPPERCASE |
+| Quote          | Newsreader | 58px | 400    | 1.16        | −0.022em | sentence  |
+| Quote italic   | Newsreader | 58px | 400 italic | 1.16     | −0.022em | sentence  |
+| Note           | Caveat     | 30px | 600    | 1.05        | 0        | sentence  |
+| Byline         | Newsreader | 15px | 400/500| 1.6         | 0        | sentence  |
+| Footer / legend| Newsreader | 12px | 500    | 1           | +0.14em  | UPPERCASE |
+| Replay         | Newsreader | 14px | 500    | 40px h      | 0        | sentence  |
+
+Quote uses `font-variation-settings: "opsz" 72`. Marks are `white-space: nowrap` so a highlight never wraps mid-stroke.
 
 ## Implementation notes
 

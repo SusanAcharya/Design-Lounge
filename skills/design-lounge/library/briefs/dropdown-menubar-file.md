@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, keep the amber-fill highlight idea but use the kit's primary and its on-primary ink.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The in-window menubar of Tapehouse, a desktop audio workstation (think an Electron or web app that draws its own menus, as on Windows and Linux). Six top-level menus sit in a 36px title bar next to the app mark. Once any menu is open, sliding the pointer along the bar switches menus without clicking, the way native menubars behave. Menus hold plain commands with mono shortcuts, checkable items with an amber tick, a radio group with a dot, separators, and submenus that open to the right and flip left at the edge. The View menu really drives the app behind it: Mixer, Waveforms, Snap and Zoom change the arrangement. The highlighted item is a solid amber bar with near-black text, which is the detail that gives it a hardware feel.
-
-## Reference behaviour
-
-1. First frame: File is open (title amber), Open Recent is highlighted and its submenu is open to the right, listing Harbour Lights · mix v3, Basement Takes 0912, Choir Rehearsal, September, a separator, and Clear Menu. Focus is on Open Recent.
-2. Pointer on the bar: pressing a closed title opens its menu with focus left on the title. Pressing an open title closes it. While any menu is open, hovering another title opens that one instead (no click).
-3. Pointer in a menu: hovering an item focuses it (one highlight for mouse and keyboard). Hovering an item with a submenu opens it after 120ms. Hovering a plain item closes deeper submenus after 120ms. Moving into an open submenu keeps it open. Clicking an item with a submenu opens it immediately.
-4. Keyboard on the bar: the bar is one tab stop (roving tabindex). ArrowLeft/Right move between titles and wrap; Home/End jump. If a menu is open, moving also switches the open menu. ArrowDown, Enter or Space opens and focuses the first item; ArrowUp opens on the last item. Escape closes. A letter jumps to the title starting with it. F10 anywhere focuses the bar.
-5. Keyboard in a menu: ArrowUp/Down wrap; Home/PageUp and End/PageDown jump; typeahead with a 500ms buffer (any non-character key clears it). ArrowRight on a submenu item opens it and focuses its first item; ArrowRight on a plain item opens the next top-level menu on its first item. ArrowLeft in a submenu closes it and focuses its parent item; ArrowLeft in a top-level menu opens the previous top-level menu. Escape closes one level and returns focus to that level's trigger. Tab closes everything, focuses the bar title, and lets Tab carry on.
-6. Enter/Space on a command: the menu blinks once (140ms, two steps), closes, focus returns to the bar title, and the status bar reads "File › Save".
-7. Enter/Space on a checkbox or radio toggles it and keeps the menu open, so several view options can be set in one visit. The status bar announces the change ("Waveforms hidden", "Snap to Bar").
-8. Disabled items (Redo) stay reachable, render `#6b6862`, and say "Nothing to redo" when activated.
-9. View effects: Mixer shows a 132px mixer strip under the lanes. Waveforms hides the clip waveforms. Follow Playhead updates the status bar. Snap to Bar/Beat/Off updates the status bar. Zoom In/Out step the bar width by 25% between 50% and 200%, Fit Session resets to 100%; clips and the playhead slide to their new positions in 240ms.
-10. Track › Arm for Recording toggles the red R on Lead Vocal.
-11. Placement: a top-level menu hangs 4px under its title, left-aligned to it, clamped 6px inside the viewport. A submenu opens at the parent menu's right edge minus 3px, its first item level with the parent item (top minus 6px). If it would cross the right edge it opens on the left of the parent; if neither side fits it drops under the parent item, indented 16px. Heights are clamped 6px from the bottom. Clicking outside or resizing closes all menus.
 
 ## Structure
 
@@ -69,51 +57,6 @@ Menu contents:
 - Track: New Audio Track ⌥⌘N, New Instrument Track, Duplicate Track, —, Arm for Recording R ☑, Freeze Track, —, Delete Track ⌘⌫ (danger ink).
 - Window: Minimise ⌘M, Bring All to Front, —, Sessions: Harbour Lights · mix v3 ● / Basement Takes 0912.
 - Help: Tapehouse Guide, Keyboard Shortcuts ⌘/, Release Notes 4.2.
-
-## Tokens
-
-```css
-:root {
-  --bg: #151619;        /* app body, transport */
-  --surface: #1d1f23;   /* title bar, track heads, status bar */
-  --raised: #25282d;    /* title hover, fader track */
-  --menu: #272a30;      /* menu surface */
-  --menu-border: #3d4048;
-  --line: #33363d;      /* region rules, separators */
-  --line-2: #2a2d33;    /* lane rules, bar grid */
-  --ink: #ebe7df;
-  --ink-2: #b1ada4;     /* idle titles */
-  --ink-3: #9c988f;     /* shortcuts, chevrons, group labels */
-  --ink-disabled: #6b6862;
-  --amber: #f2a33a;     /* highlight fill, ticks, timecode, playhead */
-  --on-amber: #1d1406;  /* text on the amber fill */
-  --amber-trail: #4a3a22; /* parent item while its submenu has focus */
-  --rec: #e5484d;
-  --danger-ink: #ff8a8d;
-
-  --sans: "Onest", system-ui, sans-serif;
-  --mono: "Fragment Mono", ui-monospace, monospace;
-
-  --title-h: 26px; --item-h: 28px; --menu-pad: 5px; --menu-min: 248px;
-  --r-menu: 8px; --r-item: 5px;
-  --shadow-menu: inset 0 1px 0 rgba(255,255,255,.04), 0 18px 40px -8px rgba(0,0,0,.6), 0 4px 10px rgba(0,0,0,.3);
-  --bar: 64px;          /* one bar at 100% zoom */
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --hover-intent: 120ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Menubar title | Onest | 13px | 500 | `--ink-2`, open: `--on-amber` |
-| Menu item | Onest | 13px | 400 | `--ink`, highlighted: `--on-amber` |
-| Group label (SNAP TO) | Onest | 11px | 400, uppercase, 0.04em | `--ink-3` |
-| Shortcut | Fragment Mono | 11px | 400 | `--ink-3`, highlighted: `--on-amber` |
-| Timecode | Fragment Mono | 22px | 400, 0.02em, tabular | `--amber` |
-| Track name | Onest | 13px | 600 | `--ink` |
-| Status bar | Onest | 11.5px | 400 / 500 values | `--ink-3` / `--ink-2` |
 
 ## Motion
 
@@ -178,6 +121,69 @@ Desktop menus do not fade or scale; they must feel instant when the pointer swee
 - [ ] Zoom steps 25% between 50% and 200% and slides clips in 240ms.
 - [ ] Redo is disabled; Delete Track is in danger ink.
 - [ ] Highlight is `#f2a33a` with `#1d1406` text.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: File is open (title amber), Open Recent is highlighted and its submenu is open to the right, listing Harbour Lights · mix v3, Basement Takes 0912, Choir Rehearsal, September, a separator, and Clear Menu. Focus is on Open Recent.
+2. Pointer on the bar: pressing a closed title opens its menu with focus left on the title. Pressing an open title closes it. While any menu is open, hovering another title opens that one instead (no click).
+3. Pointer in a menu: hovering an item focuses it (one highlight for mouse and keyboard). Hovering an item with a submenu opens it after 120ms. Hovering a plain item closes deeper submenus after 120ms. Moving into an open submenu keeps it open. Clicking an item with a submenu opens it immediately.
+4. Keyboard on the bar: the bar is one tab stop (roving tabindex). ArrowLeft/Right move between titles and wrap; Home/End jump. If a menu is open, moving also switches the open menu. ArrowDown, Enter or Space opens and focuses the first item; ArrowUp opens on the last item. Escape closes. A letter jumps to the title starting with it. F10 anywhere focuses the bar.
+5. Keyboard in a menu: ArrowUp/Down wrap; Home/PageUp and End/PageDown jump; typeahead with a 500ms buffer (any non-character key clears it). ArrowRight on a submenu item opens it and focuses its first item; ArrowRight on a plain item opens the next top-level menu on its first item. ArrowLeft in a submenu closes it and focuses its parent item; ArrowLeft in a top-level menu opens the previous top-level menu. Escape closes one level and returns focus to that level's trigger. Tab closes everything, focuses the bar title, and lets Tab carry on.
+6. Enter/Space on a command: the menu blinks once (140ms, two steps), closes, focus returns to the bar title, and the status bar reads "File › Save".
+7. Enter/Space on a checkbox or radio toggles it and keeps the menu open, so several view options can be set in one visit. The status bar announces the change ("Waveforms hidden", "Snap to Bar").
+8. Disabled items (Redo) stay reachable, render `#6b6862`, and say "Nothing to redo" when activated.
+9. View effects: Mixer shows a 132px mixer strip under the lanes. Waveforms hides the clip waveforms. Follow Playhead updates the status bar. Snap to Bar/Beat/Off updates the status bar. Zoom In/Out step the bar width by 25% between 50% and 200%, Fit Session resets to 100%; clips and the playhead slide to their new positions in 240ms.
+10. Track › Arm for Recording toggles the red R on Lead Vocal.
+11. Placement: a top-level menu hangs 4px under its title, left-aligned to it, clamped 6px inside the viewport. A submenu opens at the parent menu's right edge minus 3px, its first item level with the parent item (top minus 6px). If it would cross the right edge it opens on the left of the parent; if neither side fits it drops under the parent item, indented 16px. Heights are clamped 6px from the bottom. Clicking outside or resizing closes all menus.
+
+## Tokens
+
+```css
+:root {
+  --bg: #151619;        /* app body, transport */
+  --surface: #1d1f23;   /* title bar, track heads, status bar */
+  --raised: #25282d;    /* title hover, fader track */
+  --menu: #272a30;      /* menu surface */
+  --menu-border: #3d4048;
+  --line: #33363d;      /* region rules, separators */
+  --line-2: #2a2d33;    /* lane rules, bar grid */
+  --ink: #ebe7df;
+  --ink-2: #b1ada4;     /* idle titles */
+  --ink-3: #9c988f;     /* shortcuts, chevrons, group labels */
+  --ink-disabled: #6b6862;
+  --amber: #f2a33a;     /* highlight fill, ticks, timecode, playhead */
+  --on-amber: #1d1406;  /* text on the amber fill */
+  --amber-trail: #4a3a22; /* parent item while its submenu has focus */
+  --rec: #e5484d;
+  --danger-ink: #ff8a8d;
+
+  --sans: "Onest", system-ui, sans-serif;
+  --mono: "Fragment Mono", ui-monospace, monospace;
+
+  --title-h: 26px; --item-h: 28px; --menu-pad: 5px; --menu-min: 248px;
+  --r-menu: 8px; --r-item: 5px;
+  --shadow-menu: inset 0 1px 0 rgba(255,255,255,.04), 0 18px 40px -8px rgba(0,0,0,.6), 0 4px 10px rgba(0,0,0,.3);
+  --bar: 64px;          /* one bar at 100% zoom */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --hover-intent: 120ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Menubar title | Onest | 13px | 500 | `--ink-2`, open: `--on-amber` |
+| Menu item | Onest | 13px | 400 | `--ink`, highlighted: `--on-amber` |
+| Group label (SNAP TO) | Onest | 11px | 400, uppercase, 0.04em | `--ink-3` |
+| Shortcut | Fragment Mono | 11px | 400 | `--ink-3`, highlighted: `--on-amber` |
+| Timecode | Fragment Mono | 22px | 400, 0.02em, tabular | `--amber` |
+| Track name | Onest | 13px | 600 | `--ink` |
+| Status bar | Onest | 11.5px | 400 / 500 values | `--ink-3` / `--ink-2` |
 
 ## Implementation notes
 

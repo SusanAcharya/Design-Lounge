@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A single plate: ivory paper, two translucent ink blots (sienna `#6b2e1f` on the left, Prussian `#1a3352` on the right) with an SVG displacement filter so their edges look pressed, not CSS-rounded, and a full-viewport fractal-noise grain layered on top with `mix-blend-mode: multiply`. In the centre, a three-line poem in italic 42px Literata. A Grain range input at the bottom changes `--grain` (overlay opacity) and the turbulence `baseFrequency`. The slider is the interaction; the composition is the piece. No nav, no CTA.
-
-## Reference behaviour
-
-1. Initial state: paper `#f3ebd8`. Header row "Plate 07" — hairline — "Two inks on laid stock", 11px uppercase Public Sans `--ink-3`. Poem centred. Slider at **45**.
-2. Left blot: 540×420px, `left: 8%; top: 18%`, sienna, organic `border-radius: 58% 42% 48% 52% / 46% 54% 46% 54%`, rotate −12deg, `filter: url(#spread)`, `mix-blend-mode: multiply`, opacity 0.82.
-3. Right blot: 480×380px, `right: 6%; bottom: 10%`, Prussian, complementary radii, rotate 8deg, same filter and blend.
-4. `#spread` filter: `feTurbulence` fractalNoise baseFrequency 0.018, 3 octaves, seed 4, then `feDisplacementMap` scale 42 (R→X, G→Y). This chews the ellipse into a blot.
-5. Grain layer: full-size SVG `<rect>` with filter `#grainF` — fractalNoise baseFrequency **0.8**, 4 octaves, seed 2, saturate 0, alpha table `0 / 0.55`. The SVG itself has `opacity: var(--grain)` (initial 0.45) and `mix-blend-mode: multiply`.
-6. Slider `min=0 max=100 value=45`, `aria-valuenow` kept in sync. On `input`: set `--grain` to `value/100`, write the numeric label, set turbulence `baseFrequency` to `(0.45 + value/100 * 0.7).toFixed(3)` so 0 → 0.45 (fine, quiet) and 100 → 1.15 (coarse, heavy).
-7. Poem does not move. Blots do not animate. Only the grain overlay changes with the slider.
-8. Reduced motion: no extra animation to disable (the piece is static besides the slider). Keep the slider working.
 
 ## Structure
 
@@ -49,37 +40,6 @@ Poem lines, exact:
 3. Two inks, one afternoon.
 
 Attribution: `— from the bindery notes, 2026`
-
-## Tokens
-
-```css
-:root {
-  --paper: #f3ebd8;            /* page */
-  --ink: #2b1f18;              /* poem */
-  --ink-2: #5e4e42;            /* attribution */
-  --ink-3: #8a7666;            /* plate caption, label */
-  --sienna: #6b2e1f;           /* left blot */
-  --prussian: #1a3352;         /* right blot */
-  --line: rgba(43, 31, 24, .16);
-  --serif: "Literata", Georgia, serif;
-  --sans: "Public Sans", system-ui, sans-serif;
-  --grain: .45;                /* overlay opacity, 0–1 */
-  --t-micro: 160ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role         | Family      | Size | Weight | Line-height | Tracking | Case      |
-|--------------|-------------|-----:|-------:|------------:|---------:|-----------|
-| Poem line    | Literata    | 42px | italic 400 | 1.25    | −0.02em  | sentence  |
-| Attribution  | Public Sans | 12px | 500    | 1           | +0.14em  | UPPERCASE |
-| Plate label  | Public Sans | 11px | 500    | 1           | +0.16em  | UPPERCASE |
-| Slider label | Public Sans | 11px | 500    | 1           | +0.12em  | UPPERCASE |
-| Slider value | Public Sans | 12px | 500    | 1           | 0        | tabular   |
-
-Poem `max-width: 22ch`, `text-align: center`, `font-optical-sizing: auto`. Line margin-bottom 0.35em.
 
 ## Motion
 
@@ -124,6 +84,52 @@ Do not animate the blots. Reduced motion: no change required.
 - [ ] Focus ring on the slider is 2px `#1a3352`.
 - [ ] Only Literata and Public Sans load.
 - [ ] Palette is ivory / sienna / Prussian, not purple-blue blobs and not the site's Fraunces paper.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: paper `#f3ebd8`. Header row "Plate 07" — hairline — "Two inks on laid stock", 11px uppercase Public Sans `--ink-3`. Poem centred. Slider at **45**.
+2. Left blot: 540×420px, `left: 8%; top: 18%`, sienna, organic `border-radius: 58% 42% 48% 52% / 46% 54% 46% 54%`, rotate −12deg, `filter: url(#spread)`, `mix-blend-mode: multiply`, opacity 0.82.
+3. Right blot: 480×380px, `right: 6%; bottom: 10%`, Prussian, complementary radii, rotate 8deg, same filter and blend.
+4. `#spread` filter: `feTurbulence` fractalNoise baseFrequency 0.018, 3 octaves, seed 4, then `feDisplacementMap` scale 42 (R→X, G→Y). This chews the ellipse into a blot.
+5. Grain layer: full-size SVG `<rect>` with filter `#grainF` — fractalNoise baseFrequency **0.8**, 4 octaves, seed 2, saturate 0, alpha table `0 / 0.55`. The SVG itself has `opacity: var(--grain)` (initial 0.45) and `mix-blend-mode: multiply`.
+6. Slider `min=0 max=100 value=45`, `aria-valuenow` kept in sync. On `input`: set `--grain` to `value/100`, write the numeric label, set turbulence `baseFrequency` to `(0.45 + value/100 * 0.7).toFixed(3)` so 0 → 0.45 (fine, quiet) and 100 → 1.15 (coarse, heavy).
+7. Poem does not move. Blots do not animate. Only the grain overlay changes with the slider.
+8. Reduced motion: no extra animation to disable (the piece is static besides the slider). Keep the slider working.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f3ebd8;            /* page */
+  --ink: #2b1f18;              /* poem */
+  --ink-2: #5e4e42;            /* attribution */
+  --ink-3: #8a7666;            /* plate caption, label */
+  --sienna: #6b2e1f;           /* left blot */
+  --prussian: #1a3352;         /* right blot */
+  --line: rgba(43, 31, 24, .16);
+  --serif: "Literata", Georgia, serif;
+  --sans: "Public Sans", system-ui, sans-serif;
+  --grain: .45;                /* overlay opacity, 0–1 */
+  --t-micro: 160ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role         | Family      | Size | Weight | Line-height | Tracking | Case      |
+|--------------|-------------|-----:|-------:|------------:|---------:|-----------|
+| Poem line    | Literata    | 42px | italic 400 | 1.25    | −0.02em  | sentence  |
+| Attribution  | Public Sans | 12px | 500    | 1           | +0.14em  | UPPERCASE |
+| Plate label  | Public Sans | 11px | 500    | 1           | +0.16em  | UPPERCASE |
+| Slider label | Public Sans | 11px | 500    | 1           | +0.12em  | UPPERCASE |
+| Slider value | Public Sans | 12px | 500    | 1           | 0        | tabular   |
+
+Poem `max-width: 22ch`, `text-align: center`, `font-optical-sizing: auto`. Line margin-bottom 0.35em.
 
 ## Implementation notes
 

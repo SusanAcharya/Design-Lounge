@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A specimen page for a product's ("Mira") loading indicators: three indicators in three cards, all in one electric blue on white, each built from at most three DOM elements (pseudo-elements do the rest) and animated with CSS only. **Orbit dots** — three dots at 0°, 120°, 240° at decreasing opacity, spinning linearly. **Staggered bars** — three vertical bars scaling in height with negative animation delays so the wave is already in motion on first paint. **Morphing ring** — a thick ring whose radius morphs between a circle and a rounded square while rotating at half speed, with a faint core pulsing inside. Two sliders (duration 600–2400ms, size 32–96px) write `--dur` and `--size` on `:root`; nothing else changes, which is the point: the loaders are parametric.
-
-## Reference behaviour
-
-1. Initial state: header with title and a mono badge reading `--dur: 1200ms · --size: 64px`; three cards, each with a centred loader on a soft radial white stage, a name, a mono description and an element-count chip; a footer bar with the two sliders, a Pause button and a one-line code hint. All three loaders are already mid-cycle (negative delays), so there is no "start-up" frame.
-2. Drag Duration: every loader's cycle time changes immediately (the ring's spin is always 2 × duration); the output reads e.g. "900 ms" and the badge updates.
-3. Drag Size: loaders scale from 32px to 96px; dot size, bar width and ring thickness scale proportionally because they are all expressed as fractions of `--size`.
-4. Click Pause: `aria-pressed` becomes true, the button inverts (ink fill) and reads "Resume"; all animations freeze in place via `animation-play-state: paused`. Click again to resume from the same frame.
-5. Hover a card: border darkens from `--line` to `--line-2`. Hover a slider thumb: it scales 1.15.
-6. Keyboard: Tab reaches the two sliders (arrow keys step 100ms / 4px) and the Pause button (Space toggles).
-7. Under `prefers-reduced-motion: reduce`, all three loaders stop moving and instead fade between 45 % and 100 % opacity over 2.4s.
 
 ## Structure
 
@@ -44,59 +36,6 @@ cards: 3 equal columns, 20px gap, 24px 56px section padding; card radius 14px
 - `<section class="row" aria-label="Loader gallery">`: three `<article class="card">`, each `.stage` (`display: grid; place-items: center`) + `.info` (`<h2>`, `<p>`, `.n` chip).
 - Loaders: `<div class="orbit" role="status" aria-label="Loading"><span></span></div>`; `<div class="bars" role="status" aria-label="Loading"></div>`; `<div class="ring" role="status" aria-label="Loading"></div>`.
 - `<footer class="controls">`: two `.ctl` groups (`<label>`, `<input type="range">`, `<output>`), `<button class="btn" aria-pressed>`, `.code` hint.
-
-## Tokens
-
-```css
-:root {
-  /* colour — cool light, white cards, electric blue */
-  --bg: #f2f4f7;           /* page */
-  --card: #ffffff;         /* cards, footer, slider thumb */
-  --stage-edge: #f7f9fc;   /* radial edge behind loaders */
-  --line: #dfe3ea;         /* hairlines, chip border */
-  --line-2: #c7cdd8;       /* hovered card, button border */
-  --ink: #0f172a;
-  --ink-2: #4b5565;        /* descriptions */
-  --ink-3: #8a94a6;        /* mono meta, chips */
-  --accent: #0055ff;       /* loaders, thumb ring, badge text */
-  --accent-soft: #e0eaff;  /* badge background */
-  --track: #e6e9ef;        /* slider track, ring gap */
-
-  /* type */
-  --font: "Space Grotesk", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  --fs-h1: 28px; --fs-h2: 16px; --fs-body: 15px; --fs-sub: 14px; --fs-ctl: 13px; --fs-mono: 12px; --fs-chip: 11px;
-
-  /* loader parameters (the only two the sliders write) */
-  --dur: 1200ms;   /* range 600–2400, step 100 */
-  --size: 64px;    /* range 32–96, step 4 */
-  /* derived fractions of --size */
-  --dot: .18; --orbit-radius: .42; --bar-w: .16; --bar-gap: .28; --ring-stroke: .11; --core-inset: 18%;
-
-  /* layout */
-  --gutter: 56px; --gap: 20px; --r: 14px; --r-btn: 8px; --thumb: 18px; --track-h: 3px;
-
-  /* motion */
-  --t-micro: 140ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-loader: cubic-bezier(.45, 0, .55, 1);   /* symmetric ease-in-out for cyclic motion */
-}
-```
-
-## Typography
-
-| Role            | Family         | Size | Weight | Line-height | Tracking | Case |
-|-----------------|----------------|-----:|-------:|------------:|---------:|------|
-| Title           | Space Grotesk  | 28px | 600    | 1.2         | −0.02em  | sentence; second word `--accent` |
-| Subtitle        | Space Grotesk  | 14px | 500    | 1.5         | 0        | `--ink-2` |
-| Card name       | Space Grotesk  | 16px | 600    | 1.3         | −0.01em  | sentence |
-| Card meta       | JetBrains Mono | 12px | 400    | 1.5         | 0        | `--ink-3`; emphasised tokens 500 `--ink-2` |
-| Element chip    | JetBrains Mono | 11px | 500    | 1           | 0        | 1px `--line` border, 6px radius |
-| Badge           | JetBrains Mono | 12px | 500    | 1           | 0        | `--accent` on `--accent-soft`, pill |
-| Control label   | Space Grotesk  | 13px | 500    | 1           | 0        | `--ink-2` |
-| Control output  | JetBrains Mono | 12px | 500    | 1           | 0        | right-aligned, min 6ch |
-| Button          | Space Grotesk  | 13px | 500    | 1           | 0        | 36px tall |
-| Code hint       | JetBrains Mono | 12px | 400    | 1           | 0        | `--ink-3`, `var()` tokens `--ink-2` |
 
 ## Motion
 
@@ -152,6 +91,73 @@ Reduced motion: replace every loader animation with `calm` (opacity .45 ↔ 1, 2
 - [ ] Sliders and the button have visible focus styles.
 - [ ] Under reduced motion no element rotates, scales or morphs; each loader pulses opacity only.
 - [ ] Page fits 1280 × 800 without scrolling.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header with title and a mono badge reading `--dur: 1200ms · --size: 64px`; three cards, each with a centred loader on a soft radial white stage, a name, a mono description and an element-count chip; a footer bar with the two sliders, a Pause button and a one-line code hint. All three loaders are already mid-cycle (negative delays), so there is no "start-up" frame.
+2. Drag Duration: every loader's cycle time changes immediately (the ring's spin is always 2 × duration); the output reads e.g. "900 ms" and the badge updates.
+3. Drag Size: loaders scale from 32px to 96px; dot size, bar width and ring thickness scale proportionally because they are all expressed as fractions of `--size`.
+4. Click Pause: `aria-pressed` becomes true, the button inverts (ink fill) and reads "Resume"; all animations freeze in place via `animation-play-state: paused`. Click again to resume from the same frame.
+5. Hover a card: border darkens from `--line` to `--line-2`. Hover a slider thumb: it scales 1.15.
+6. Keyboard: Tab reaches the two sliders (arrow keys step 100ms / 4px) and the Pause button (Space toggles).
+7. Under `prefers-reduced-motion: reduce`, all three loaders stop moving and instead fade between 45 % and 100 % opacity over 2.4s.
+
+## Tokens
+
+```css
+:root {
+  /* colour — cool light, white cards, electric blue */
+  --bg: #f2f4f7;           /* page */
+  --card: #ffffff;         /* cards, footer, slider thumb */
+  --stage-edge: #f7f9fc;   /* radial edge behind loaders */
+  --line: #dfe3ea;         /* hairlines, chip border */
+  --line-2: #c7cdd8;       /* hovered card, button border */
+  --ink: #0f172a;
+  --ink-2: #4b5565;        /* descriptions */
+  --ink-3: #8a94a6;        /* mono meta, chips */
+  --accent: #0055ff;       /* loaders, thumb ring, badge text */
+  --accent-soft: #e0eaff;  /* badge background */
+  --track: #e6e9ef;        /* slider track, ring gap */
+
+  /* type */
+  --font: "Space Grotesk", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --fs-h1: 28px; --fs-h2: 16px; --fs-body: 15px; --fs-sub: 14px; --fs-ctl: 13px; --fs-mono: 12px; --fs-chip: 11px;
+
+  /* loader parameters (the only two the sliders write) */
+  --dur: 1200ms;   /* range 600–2400, step 100 */
+  --size: 64px;    /* range 32–96, step 4 */
+  /* derived fractions of --size */
+  --dot: .18; --orbit-radius: .42; --bar-w: .16; --bar-gap: .28; --ring-stroke: .11; --core-inset: 18%;
+
+  /* layout */
+  --gutter: 56px; --gap: 20px; --r: 14px; --r-btn: 8px; --thumb: 18px; --track-h: 3px;
+
+  /* motion */
+  --t-micro: 140ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-loader: cubic-bezier(.45, 0, .55, 1);   /* symmetric ease-in-out for cyclic motion */
+}
+```
+
+## Typography
+
+| Role            | Family         | Size | Weight | Line-height | Tracking | Case |
+|-----------------|----------------|-----:|-------:|------------:|---------:|------|
+| Title           | Space Grotesk  | 28px | 600    | 1.2         | −0.02em  | sentence; second word `--accent` |
+| Subtitle        | Space Grotesk  | 14px | 500    | 1.5         | 0        | `--ink-2` |
+| Card name       | Space Grotesk  | 16px | 600    | 1.3         | −0.01em  | sentence |
+| Card meta       | JetBrains Mono | 12px | 400    | 1.5         | 0        | `--ink-3`; emphasised tokens 500 `--ink-2` |
+| Element chip    | JetBrains Mono | 11px | 500    | 1           | 0        | 1px `--line` border, 6px radius |
+| Badge           | JetBrains Mono | 12px | 500    | 1           | 0        | `--accent` on `--accent-soft`, pill |
+| Control label   | Space Grotesk  | 13px | 500    | 1           | 0        | `--ink-2` |
+| Control output  | JetBrains Mono | 12px | 500    | 1           | 0        | right-aligned, min 6ch |
+| Button          | Space Grotesk  | 13px | 500    | 1           | 0        | 36px tall |
+| Code hint       | JetBrains Mono | 12px | 400    | 1           | 0        | `--ink-3`, `var()` tokens `--ink-2` |
 
 ## Implementation notes
 

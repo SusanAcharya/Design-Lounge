@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A green button in a shallow well. While it is pressed it moves down 4px, into the well. Click writes Gate 4 opened on this page. The label does not change. This is not a traveling gold edge. That edge is `edge-light-button`. This is not a morph to a check. That morph is `button-state-morph`. The drop is the press.
-
-## Reference behaviour
-
-1. The button reads Open the gate. The status is empty.
-2. The well is #e7e1d6, radius 10px, padding 6px 6px 10px, with an inset shadow.
-3. Active translates the button 4px down over 120ms.
-4. Click sets the status to Gate 4 opened on this page.
-5. The status is aria-live polite.
-6. A second click leaves the same sentence.
-7. Reduced motion removes the transition. The button still moves on active if the browser applies transform. The information is the sentence.
 
 ## Structure
 
@@ -30,19 +22,6 @@ status
 - The status is 14px, #5a554c, min-height 22px, margin-top 16px, centered.
 - Focus ring is 2px #1f4d3a, offset 4px.
 - There is one button.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --well:#e7e1d6; --primary:#1f4d3a; --ink:#fffdf8; --muted:#5a554c; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Label | IBM Plex Sans | 15px | 600 |
-| Status | IBM Plex Sans | 14px | 400 |
 
 ## Motion
 
@@ -87,16 +66,6 @@ status
 - [ ] The drop is 4px.
 - [ ] The well fill is #e7e1d6.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Use :active for the drop. Do not wait for click to move it.
-
-```css
-button:active { transform: translateY(4px); }
-```
-
-The extra bottom padding on the well is the space the button drops into.
 
 ## Measurements to keep
 
@@ -151,6 +120,43 @@ The extra bottom padding on the well is the space the button drops into.
 - Honour reduced motion.
 - Do not add a second accent.
 - Do not add a second type family.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The button reads Open the gate. The status is empty.
+2. The well is #e7e1d6, radius 10px, padding 6px 6px 10px, with an inset shadow.
+3. Active translates the button 4px down over 120ms.
+4. Click sets the status to Gate 4 opened on this page.
+5. The status is aria-live polite.
+6. A second click leaves the same sentence.
+7. Reduced motion removes the transition. The button still moves on active if the browser applies transform. The information is the sentence.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --well:#e7e1d6; --primary:#1f4d3a; --ink:#fffdf8; --muted:#5a554c; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Label | IBM Plex Sans | 15px | 600 |
+| Status | IBM Plex Sans | 14px | 400 |
+
+## Implementation notes
+
+Use :active for the drop. Do not wait for click to move it.
+
+```css
+button:active { transform: translateY(4px); }
+```
+
+The extra bottom padding on the well is the space the button drops into.
 
 ---
 

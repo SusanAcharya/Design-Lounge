@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-frame engineering graph-paper background behind a short landing section for a fictional machine shop, "Ferrule Works". The sheet is drawn entirely with CSS gradients: a minor line every 8px (one millimetre) and a major line every 40px (five millimetres), with a top and left ruler labelled every 10 mm. A red crosshair follows the pointer, snaps to the millimetre grid, and a small dark tag beside it reads `X 135.0  Y 055.0 mm`. The detail worth copying is that **the grid, the rulers, the readout and the technical drawing all share one scale**: the bracket drawn on the right is dimensioned 40.0 × 35.0, and it really is 40 × 35 squares, so hovering its corners gives the same numbers as its dimension lines. A floating control switches between a cream paper sheet and a blueprint sheet, and toggles snapping and the crosshair.
-
-## Reference behaviour
-
-1. First frame: cream paper sheet, rulers on top and left, the crosshair already parked on the bottom-right corner of the drawn bracket at X 135.0, Y 055.0 mm. Its readout tag sits to the right of the corner. Nothing animates until the user moves.
-2. Moving the pointer anywhere moves the horizontal and vertical crosshair lines, a 5px triangle marker on each ruler, and the readout tag. Updates are batched with `requestAnimationFrame`, so one transform write per frame.
-3. With "Snap 1 mm" on (default), the crosshair lands only on minor grid lines and the readout shows whole millimetres (`047.0`). With snap off, it follows the raw pointer and shows tenths (`047.4`).
-4. The readout tag sits 14px right and 12px below the crosshair; it flips to the left when it would cross the right edge minus 16px, and above when within 40px of the bottom.
-5. The origin is the inner corner of the rulers at (24, 24). Coordinates never go negative; the crosshair clamps to the origin when the pointer is over the rulers.
-6. "Paper" / "Blueprint" swap every sheet colour in 420ms. Colours are registered custom properties (`@property`), so the gradient lines themselves cross-fade instead of popping.
-7. "Crosshair" hides the two lines, the readout and the ruler markers; `aria-pressed` follows.
-8. The sheet is focusable (first in tab order). With it focused, arrow keys move the crosshair by 1 mm, Shift+arrow by 5 mm, and a polite live region reads "X 047.0, Y 060.0 millimetres".
-9. Nav-level links and buttons over the sheet have a 160ms colour swap on hover and a 2px accent focus ring.
-10. Reduced motion: the sheet swap is instant. The crosshair still follows the pointer, because it is direct manipulation with no easing.
 
 ## Structure
 
@@ -49,59 +38,6 @@ A full-frame engineering graph-paper background behind a short landing section f
 - `.copy` is a `<section>` with the kicker, `<h1>`, sub, two links and a `<dl class="specs">`.
 - `.drawing` is an inline `<svg role="img">` with an `aria-label` describing the part. `.block` is a `<dl>` title block.
 - `.panel` is a `role="group"` with a segmented pair of `aria-pressed` buttons and two toggle buttons.
-
-## Tokens
-
-```css
-@property --paper  { syntax: '<color>'; inherits: true; initial-value: #f1eee3; }
-@property --minor  { syntax: '<color>'; inherits: true; initial-value: #d5e1dc; }
-@property --major  { syntax: '<color>'; inherits: true; initial-value: #9dbcb5; }
-@property --ink    { syntax: '<color>'; inherits: true; initial-value: #1f2a2e; }
-@property --accent { syntax: '<color>'; inherits: true; initial-value: #c8412b; }
-
-:root {
-  /* paper sheet */
-  --paper: #f1eee3;      /* sheet */
-  --minor: #d5e1dc;      /* 1 mm lines */
-  --major: #9dbcb5;      /* 5 mm lines, ruler borders */
-  --ink: #1f2a2e;        /* type, drawing strokes, readout bg */
-  --ink-2: #4a585c;      /* sub-copy, labels, ruler numbers */
-  --accent: #c8412b;     /* crosshair, markers, accent words, primary */
-  --on-accent: #fff8f0;
-
-  --display: "Big Shoulders Display", Impact, sans-serif;
-  --mono: "Red Hat Mono", ui-monospace, monospace;
-
-  --o: 24px;             /* origin = ruler thickness */
-  --mm: 8px;             /* one minor square */
-  --maj: 40px;           /* one major square, 5 mm */
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --t-fast: 160ms;
-  --t-sheet: 420ms;
-}
-
-:root[data-sheet="blueprint"] {
-  --paper: #163e72; --minor: #2a5487; --major: #4f78aa;
-  --ink: #eaf1fb; --ink-2: #b4c6e0; --accent: #f2c14e; --on-accent: #1a2a44;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|---|---|---:|---:|---:|---:|---|
-| Headline | Big Shoulders Display | 92px | 800 | 0.9 | −0.005em | UPPER |
-| Spec value | Big Shoulders Display | 30px | 700 | 1 | 0 | as written, tabular |
-| Kicker | Red Hat Mono | 11px | 600 | 1 | 0.14em | UPPER |
-| Sub-copy | Red Hat Mono | 14px | 400 | 1.6 | 0 | sentence |
-| Buttons | Red Hat Mono | 13px | 600 | 1 | 0 | sentence |
-| Readout | Red Hat Mono | 11px | 500 | 1 | 0.02em | tabular numerals |
-| Ruler numbers | Red Hat Mono | 9px | 500 | 1 | 0 | numerals |
-| Drawing labels | Red Hat Mono | 11px | 500 | 1 | 0 | as written |
-| Title block label | Red Hat Mono | 9px | 500 | 1 | 0.12em | UPPER |
-
-Readout numbers are zero-padded to five characters (`047.0`) so the tag never changes width while moving.
 
 ## Motion
 
@@ -162,6 +98,76 @@ There is no idle animation. The page is static until touched.
 - [ ] The bracket's dimension lines read 40.0, 35.0 and 6.0, matching the grid squares they span.
 - [ ] Title block: Kestrel bracket, left hand · Rev C · Scale 1 : 1 · 6061-T6 · R. Okafor.
 - [ ] Blueprint sheet is `#163e72` with an amber `#f2c14e` crosshair.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: cream paper sheet, rulers on top and left, the crosshair already parked on the bottom-right corner of the drawn bracket at X 135.0, Y 055.0 mm. Its readout tag sits to the right of the corner. Nothing animates until the user moves.
+2. Moving the pointer anywhere moves the horizontal and vertical crosshair lines, a 5px triangle marker on each ruler, and the readout tag. Updates are batched with `requestAnimationFrame`, so one transform write per frame.
+3. With "Snap 1 mm" on (default), the crosshair lands only on minor grid lines and the readout shows whole millimetres (`047.0`). With snap off, it follows the raw pointer and shows tenths (`047.4`).
+4. The readout tag sits 14px right and 12px below the crosshair; it flips to the left when it would cross the right edge minus 16px, and above when within 40px of the bottom.
+5. The origin is the inner corner of the rulers at (24, 24). Coordinates never go negative; the crosshair clamps to the origin when the pointer is over the rulers.
+6. "Paper" / "Blueprint" swap every sheet colour in 420ms. Colours are registered custom properties (`@property`), so the gradient lines themselves cross-fade instead of popping.
+7. "Crosshair" hides the two lines, the readout and the ruler markers; `aria-pressed` follows.
+8. The sheet is focusable (first in tab order). With it focused, arrow keys move the crosshair by 1 mm, Shift+arrow by 5 mm, and a polite live region reads "X 047.0, Y 060.0 millimetres".
+9. Nav-level links and buttons over the sheet have a 160ms colour swap on hover and a 2px accent focus ring.
+10. Reduced motion: the sheet swap is instant. The crosshair still follows the pointer, because it is direct manipulation with no easing.
+
+## Tokens
+
+```css
+@property --paper  { syntax: '<color>'; inherits: true; initial-value: #f1eee3; }
+@property --minor  { syntax: '<color>'; inherits: true; initial-value: #d5e1dc; }
+@property --major  { syntax: '<color>'; inherits: true; initial-value: #9dbcb5; }
+@property --ink    { syntax: '<color>'; inherits: true; initial-value: #1f2a2e; }
+@property --accent { syntax: '<color>'; inherits: true; initial-value: #c8412b; }
+
+:root {
+  /* paper sheet */
+  --paper: #f1eee3;      /* sheet */
+  --minor: #d5e1dc;      /* 1 mm lines */
+  --major: #9dbcb5;      /* 5 mm lines, ruler borders */
+  --ink: #1f2a2e;        /* type, drawing strokes, readout bg */
+  --ink-2: #4a585c;      /* sub-copy, labels, ruler numbers */
+  --accent: #c8412b;     /* crosshair, markers, accent words, primary */
+  --on-accent: #fff8f0;
+
+  --display: "Big Shoulders Display", Impact, sans-serif;
+  --mono: "Red Hat Mono", ui-monospace, monospace;
+
+  --o: 24px;             /* origin = ruler thickness */
+  --mm: 8px;             /* one minor square */
+  --maj: 40px;           /* one major square, 5 mm */
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-fast: 160ms;
+  --t-sheet: 420ms;
+}
+
+:root[data-sheet="blueprint"] {
+  --paper: #163e72; --minor: #2a5487; --major: #4f78aa;
+  --ink: #eaf1fb; --ink-2: #b4c6e0; --accent: #f2c14e; --on-accent: #1a2a44;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|---|---|---:|---:|---:|---:|---|
+| Headline | Big Shoulders Display | 92px | 800 | 0.9 | −0.005em | UPPER |
+| Spec value | Big Shoulders Display | 30px | 700 | 1 | 0 | as written, tabular |
+| Kicker | Red Hat Mono | 11px | 600 | 1 | 0.14em | UPPER |
+| Sub-copy | Red Hat Mono | 14px | 400 | 1.6 | 0 | sentence |
+| Buttons | Red Hat Mono | 13px | 600 | 1 | 0 | sentence |
+| Readout | Red Hat Mono | 11px | 500 | 1 | 0.02em | tabular numerals |
+| Ruler numbers | Red Hat Mono | 9px | 500 | 1 | 0 | numerals |
+| Drawing labels | Red Hat Mono | 11px | 500 | 1 | 0 | as written |
+| Title block label | Red Hat Mono | 9px | 500 | 1 | 0.12em | UPPER |
+
+Readout numbers are zero-padded to five characters (`047.0`) so the tag never changes width while moving.
 
 ## Implementation notes
 

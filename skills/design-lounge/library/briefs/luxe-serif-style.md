@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A style sheet for a small fragrance house ("Halcyon Atelier") in a luxe register: a cream page, charcoal type, and gold used only as a 1px hairline or a small-caps label, never as a fill except when a button is hovered. Headings are Cormorant Garamond at large sizes with true italics; every label is Karla 11px uppercase with 0.22em tracking. Whitespace does the structural work: 72px column gaps, 44px between sections, 76px nav. Motion is limited to three quiet moves: nav underlines that grow from the centre, buttons that fill from the left edge, and a candle that lifts 6px and lights on hover. The detail worth copying is the button fill: a `::before` layer scaled from 0 → 1 on the x-axis so the fill *wipes* rather than fades.
-
-## Reference behaviour
-
-1. Initial state: nav with three links left (Candles current), the brand centred ("HALCYON" spaced caps + italic "atelier" in gold), three links right. Below: Buttons + Input (320px), Product (300px), Quote (rest).
-2. Hover a nav link: a 1px gold underline grows from the centre to full width over 320ms; text darkens to `--charcoal`. The current link shows the full underline at rest.
-3. Hover the outlined button: a charcoal layer wipes in from the left over 260ms; text becomes cream. The gold-outlined variant wipes gold. The solid charcoal variant wipes gold and its text becomes charcoal. The text-link variant's gold underline grows from 35 % to 100 %.
-4. Focus the newsletter input: the hairline under the row turns gold and thickens to 2px; the "Subscribe" label to its right is gold small caps.
-5. Hover the product card: the picture area darkens one step (`--cream-2` → `--cream-3`), the candle drawing rises 6px over 600ms, and a gold flame fades in over 260ms.
-6. Click "Add to bag": the button turns solid charcoal, its label becomes "Added — view bag", `aria-pressed="true"`. Click again to revert.
-7. The quote sits between two gold hairlines; nothing on it moves. Three "fine print" figures under it are separated by gold hairlines on their left.
-8. Nothing animates on load.
 
 ## Structure
 
@@ -47,62 +38,6 @@ A style sheet for a small fragrance house ("Halcyon Atelier") in a luxe register
 - `.fld` → `<label class="sc">`, `.row` (flex, hairline bottom) with `<input type="email">` + `<button class="sc">`, `<small>`.
 - `<article class="product">` → `.pic` (300px tall, `<svg>` candle with a `.flame` path, `.no` label), `<h3>`, `.desc`, `.price` (struck old price + new), `.btn[aria-pressed]`.
 - `.quote` → `<blockquote>` with `<p>` and `<footer>`; `.fine` three figure blocks.
-
-## Tokens
-
-```css
-:root {
-  /* colour — cream, charcoal, gold; gold is a line, not a fill */
-  --cream: #f3eee4;          /* page */
-  --cream-2: #eae3d6;        /* product picture */
-  --cream-3: #e2dacb;        /* picture on hover */
-  --charcoal: #2a2724;       /* text, solid button */
-  --charcoal-2: #5a544d;     /* nav links, descriptions */
-  --charcoal-3: #8d867c;     /* labels, placeholders, struck price */
-  --gold: #b08d57;
-  --gold-line: rgba(176, 141, 87, .45);   /* hairlines */
-  --gold-soft: rgba(176, 141, 87, .12);
-
-  /* type */
-  --serif: "Cormorant Garamond", Georgia, serif;
-  --sans: "Karla", system-ui, sans-serif;
-  --track-caps: .22em;
-
-  /* structure */
-  --hair: 1px;
-  --r: 0px;
-  --nav-h: 76px;
-  --btn-h: 46px;
-  --input-h: 40px;
-  --pic-h: 300px;
-  --gap-col: 72px;
-  --gap-section: 44px;
-
-  /* motion */
-  --t-micro: 200ms;
-  --t-line: 320ms;           /* underline grow */
-  --t-fill: 260ms;           /* button wipe */
-  --t-lift: 600ms;           /* candle rise */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role            | Family             | Size | Weight | Line-height | Tracking | Case |
-|-----------------|--------------------|-----:|-------:|------------:|---------:|------|
-| Small caps label (`.sc`) | Karla     | 11px | 500    | 1           | +0.22em  | UPPERCASE — used for section labels, buttons, input label, subscribe, quote attribution, "No. 04" |
-| Nav link        | Karla              | 15px | 400    | 1.6         | 0        | sentence |
-| Brand           | Cormorant Garamond | 24px | 500    | 1           | +0.18em  | UPPERCASE; "atelier" italic 26px, 400, no tracking, gold |
-| Body / helper   | Karla              | 15px / 12.5px | 400 | 1.6     | 0        | sentence |
-| Input value     | Cormorant Garamond | 19px | 400    | 1           | 0        | italic |
-| Product title   | Cormorant Garamond | 26px | 400    | 1.15        | +0.01em  | title; ampersand italic |
-| Price           | Cormorant Garamond | 20px | 500    | 1           | +0.06em  | numerals; old price struck, 400, `--charcoal-3` |
-| Quote           | Cormorant Garamond | 36px | 400    | 1.25        | −0.005em | italic; gold curly quotes via `::before/::after` |
-| Fine figure     | Cormorant Garamond | 22px | 500    | 1           | +0.02em  | numerals |
-
-Only two colours ever carry text: charcoal (three steps) and gold. Cream text appears only on hovered/solid buttons.
 
 ## Motion
 
@@ -161,6 +96,77 @@ Reduced motion: all transitions 1ms. Nothing loops or plays on load.
 - [ ] Quote is 36px italic Cormorant between two gold hairlines with gold quotation marks.
 - [ ] No box shadows, no radii, no gradients anywhere.
 - [ ] Reduced motion: all transitions 1ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: nav with three links left (Candles current), the brand centred ("HALCYON" spaced caps + italic "atelier" in gold), three links right. Below: Buttons + Input (320px), Product (300px), Quote (rest).
+2. Hover a nav link: a 1px gold underline grows from the centre to full width over 320ms; text darkens to `--charcoal`. The current link shows the full underline at rest.
+3. Hover the outlined button: a charcoal layer wipes in from the left over 260ms; text becomes cream. The gold-outlined variant wipes gold. The solid charcoal variant wipes gold and its text becomes charcoal. The text-link variant's gold underline grows from 35 % to 100 %.
+4. Focus the newsletter input: the hairline under the row turns gold and thickens to 2px; the "Subscribe" label to its right is gold small caps.
+5. Hover the product card: the picture area darkens one step (`--cream-2` → `--cream-3`), the candle drawing rises 6px over 600ms, and a gold flame fades in over 260ms.
+6. Click "Add to bag": the button turns solid charcoal, its label becomes "Added — view bag", `aria-pressed="true"`. Click again to revert.
+7. The quote sits between two gold hairlines; nothing on it moves. Three "fine print" figures under it are separated by gold hairlines on their left.
+8. Nothing animates on load.
+
+## Tokens
+
+```css
+:root {
+  /* colour — cream, charcoal, gold; gold is a line, not a fill */
+  --cream: #f3eee4;          /* page */
+  --cream-2: #eae3d6;        /* product picture */
+  --cream-3: #e2dacb;        /* picture on hover */
+  --charcoal: #2a2724;       /* text, solid button */
+  --charcoal-2: #5a544d;     /* nav links, descriptions */
+  --charcoal-3: #8d867c;     /* labels, placeholders, struck price */
+  --gold: #b08d57;
+  --gold-line: rgba(176, 141, 87, .45);   /* hairlines */
+  --gold-soft: rgba(176, 141, 87, .12);
+
+  /* type */
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Karla", system-ui, sans-serif;
+  --track-caps: .22em;
+
+  /* structure */
+  --hair: 1px;
+  --r: 0px;
+  --nav-h: 76px;
+  --btn-h: 46px;
+  --input-h: 40px;
+  --pic-h: 300px;
+  --gap-col: 72px;
+  --gap-section: 44px;
+
+  /* motion */
+  --t-micro: 200ms;
+  --t-line: 320ms;           /* underline grow */
+  --t-fill: 260ms;           /* button wipe */
+  --t-lift: 600ms;           /* candle rise */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role            | Family             | Size | Weight | Line-height | Tracking | Case |
+|-----------------|--------------------|-----:|-------:|------------:|---------:|------|
+| Small caps label (`.sc`) | Karla     | 11px | 500    | 1           | +0.22em  | UPPERCASE — used for section labels, buttons, input label, subscribe, quote attribution, "No. 04" |
+| Nav link        | Karla              | 15px | 400    | 1.6         | 0        | sentence |
+| Brand           | Cormorant Garamond | 24px | 500    | 1           | +0.18em  | UPPERCASE; "atelier" italic 26px, 400, no tracking, gold |
+| Body / helper   | Karla              | 15px / 12.5px | 400 | 1.6     | 0        | sentence |
+| Input value     | Cormorant Garamond | 19px | 400    | 1           | 0        | italic |
+| Product title   | Cormorant Garamond | 26px | 400    | 1.15        | +0.01em  | title; ampersand italic |
+| Price           | Cormorant Garamond | 20px | 500    | 1           | +0.06em  | numerals; old price struck, 400, `--charcoal-3` |
+| Quote           | Cormorant Garamond | 36px | 400    | 1.25        | −0.005em | italic; gold curly quotes via `::before/::after` |
+| Fine figure     | Cormorant Garamond | 22px | 500    | 1           | +0.02em  | numerals |
+
+Only two colours ever carry text: charcoal (three steps) and gold. Cream text appears only on hovered/solid buttons.
 
 ## Implementation notes
 

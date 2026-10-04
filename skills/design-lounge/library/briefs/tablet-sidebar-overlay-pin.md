@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A notes app ("Sedge") on a landscape tablet with one sidebar that has two personalities. **Pinned:** it sits in the layout, the note content shifts right by 280px and there is no scrim. **Overlay:** it floats above the content with a soft right-hand shadow and a 32% scrim, and closes on scrim tap, Escape or picking a note. The pin toggle in the sidebar header switches modes while the sidebar stays exactly where it is; only the content margin and the scrim animate, so the switch reads as the page moving, not the sidebar. The sidebar is always the same absolutely positioned element; mode is expressed with two body classes and three transitions.
-
-## Reference behaviour
-
-1. Initial state: `body.open.pinned`. Sidebar visible at 0–280px with a search field, two notebook groups and eight notes; the first note is current. Main content starts at 280px and shows the note (serif 40px title, meta line, paragraphs, a to-do list with two done items). Pin button is filled accent and reads "Pinned"; the "Pin | Overlay" segment in the top bar shows Pin pressed.
-2. Click "Pinned" (or press P, or click "Overlay" in the segment): `.pinned` is removed. Main's `margin-left` animates 280 → 0 over 320ms; the scrim fades in to 32% over 320ms; the sidebar grows a `12px 0 40px rgba(28,27,25,.14)` shadow; the pin icon rotates from −45° back to 0 and the button turns outlined, reading "Pin".
-3. Click the scrim, press Escape, or click a note in overlay mode: the sidebar slides to `translateX(-100%)` over 320ms and becomes `visibility: hidden` once the slide finishes; the scrim fades out; focus moves to the menu button.
-4. Click the menu button (or press `[`): the sidebar slides in from −100% over 320ms. In overlay mode the scrim returns; in pinned mode the main margin animates to 280px at the same time.
-5. Click "Pin" while the overlay is open: the scrim fades out and main's margin animates 0 → 280 while the sidebar stays put. If the sidebar is closed when a mode button is pressed, it opens in that mode.
-6. Click the chevron in the sidebar header: closes the sidebar in either mode (in pinned mode the content reflows back to the full width).
-7. Click a note: it becomes current (`--selected` background); the breadcrumb and page title update; in overlay mode the sidebar then closes.
 
 ## Structure
 
@@ -48,62 +40,6 @@ A notes app ("Sedge") on a landscape tablet with one sidebar that has two person
 - Top bar: breadcrumb "Work / Halden rebrand · kickoff notes"; segment "Pin" | "Overlay".
 - Note: meta "Edited today, 11:08" · "1,240 words" · "Shared with 3"; h1 "Halden rebrand · kickoff notes"; two paragraphs; a task list — done: "Share the board with Fjord Bank by Friday", "Book the second review for the 14th"; open: "Write the rationale for dropping the secondary mark", "Price the 40,000-sheet run at both mills"; two closing paragraphs ("Things we said no to…", "Next: …").
 - Hint chip: "[ toggles the sidebar · P toggles pin".
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm off-white, putty sidebar, violet accent */
-  --bg: #fbfbf9;             /* main */
-  --side: #f1f0ec;           /* sidebar, hint chip */
-  --hover: #e8e6e0;
-  --selected: #e3e0f7;       /* current note */
-  --line: #e4e2dc;
-  --line-strong: #cfcbc2;    /* pin outline, checkbox border */
-  --ink: #1c1b19;
-  --ink-2: #5f5c55;
-  --ink-3: #8f8b82;          /* meta, group labels, snippets */
-  --accent: #5b4fcf;         /* pinned pin, done checks, markers, focus */
-  --accent-ink: #ffffff;
-  --scrim: rgba(28, 27, 25, .32);
-
-  /* type */
-  --serif: "DM Serif Display", Georgia, serif;
-  --sans: "DM Sans", system-ui, sans-serif;
-
-  /* layout */
-  --w-side: 280px;
-  --h-top: 56px;
-  --doc-max: 640px;
-  --doc-pad: 44px 64px 64px;
-  --r: 8px;
-  --r-pill: 999px;
-  --shadow-side: 12px 0 40px rgba(28, 27, 25, .14);
-
-  /* motion */
-  --t-fast: 160ms;           /* pin colours, hovers */
-  --t-layout: 320ms;         /* slide, margin, scrim, shadow, pin rotate */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role             | Family          | Size | Weight | Line-height | Tracking | Case      |
-|------------------|-----------------|-----:|-------:|------------:|---------:|-----------|
-| UI base          | DM Sans         | 14px | 400    | 1.5         | 0        | sentence  |
-| Wordmark         | DM Serif Display| 20px | 400    | 1.2         | −0.01em  | sentence  |
-| Pin / mode buttons | DM Sans       | 12px | 500    | 1           | 0        | sentence  |
-| Search           | DM Sans         | 13px | 400    | 1           | 0        | sentence  |
-| Group label      | DM Sans         | 11px | 500    | 1.3         | +0.10em  | UPPERCASE |
-| Note title       | DM Sans         | 13px | 500    | 1.35        | 0        | sentence, ellipsis |
-| Note snippet, date | DM Sans       | 12px / 11px | 400 | 1.35    | 0        | sentence  |
-| Breadcrumb       | DM Sans         | 13px | 400 (current 500) | 1.3 | 0    | sentence  |
-| Note meta        | DM Sans         | 12px | 400    | 1.3         | 0        | sentence  |
-| Note title h1    | DM Serif Display| 40px | 400    | 1.1         | −0.015em | sentence  |
-| Note body        | DM Sans         | 16px | 400    | 1.65        | 0        | sentence  |
-| Hint chip        | DM Sans         | 12px | 400 (keys 500) | 1     | 0        | as written |
 
 ## Motion
 
@@ -162,6 +98,76 @@ Reduced motion: all transitions 1ms; the `visibility` delay collapses to 1ms too
 - [ ] Current note has `aria-current="true"` and a `#e3e0f7` background; selecting a note updates the breadcrumb and title.
 - [ ] Note title is DM Serif Display 40px / 1.1; body is DM Sans 16px / 1.65 in a 640px column.
 - [ ] Reduced motion: all transitions ≤ 1ms; all states still reachable.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: `body.open.pinned`. Sidebar visible at 0–280px with a search field, two notebook groups and eight notes; the first note is current. Main content starts at 280px and shows the note (serif 40px title, meta line, paragraphs, a to-do list with two done items). Pin button is filled accent and reads "Pinned"; the "Pin | Overlay" segment in the top bar shows Pin pressed.
+2. Click "Pinned" (or press P, or click "Overlay" in the segment): `.pinned` is removed. Main's `margin-left` animates 280 → 0 over 320ms; the scrim fades in to 32% over 320ms; the sidebar grows a `12px 0 40px rgba(28,27,25,.14)` shadow; the pin icon rotates from −45° back to 0 and the button turns outlined, reading "Pin".
+3. Click the scrim, press Escape, or click a note in overlay mode: the sidebar slides to `translateX(-100%)` over 320ms and becomes `visibility: hidden` once the slide finishes; the scrim fades out; focus moves to the menu button.
+4. Click the menu button (or press `[`): the sidebar slides in from −100% over 320ms. In overlay mode the scrim returns; in pinned mode the main margin animates to 280px at the same time.
+5. Click "Pin" while the overlay is open: the scrim fades out and main's margin animates 0 → 280 while the sidebar stays put. If the sidebar is closed when a mode button is pressed, it opens in that mode.
+6. Click the chevron in the sidebar header: closes the sidebar in either mode (in pinned mode the content reflows back to the full width).
+7. Click a note: it becomes current (`--selected` background); the breadcrumb and page title update; in overlay mode the sidebar then closes.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm off-white, putty sidebar, violet accent */
+  --bg: #fbfbf9;             /* main */
+  --side: #f1f0ec;           /* sidebar, hint chip */
+  --hover: #e8e6e0;
+  --selected: #e3e0f7;       /* current note */
+  --line: #e4e2dc;
+  --line-strong: #cfcbc2;    /* pin outline, checkbox border */
+  --ink: #1c1b19;
+  --ink-2: #5f5c55;
+  --ink-3: #8f8b82;          /* meta, group labels, snippets */
+  --accent: #5b4fcf;         /* pinned pin, done checks, markers, focus */
+  --accent-ink: #ffffff;
+  --scrim: rgba(28, 27, 25, .32);
+
+  /* type */
+  --serif: "DM Serif Display", Georgia, serif;
+  --sans: "DM Sans", system-ui, sans-serif;
+
+  /* layout */
+  --w-side: 280px;
+  --h-top: 56px;
+  --doc-max: 640px;
+  --doc-pad: 44px 64px 64px;
+  --r: 8px;
+  --r-pill: 999px;
+  --shadow-side: 12px 0 40px rgba(28, 27, 25, .14);
+
+  /* motion */
+  --t-fast: 160ms;           /* pin colours, hovers */
+  --t-layout: 320ms;         /* slide, margin, scrim, shadow, pin rotate */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role             | Family          | Size | Weight | Line-height | Tracking | Case      |
+|------------------|-----------------|-----:|-------:|------------:|---------:|-----------|
+| UI base          | DM Sans         | 14px | 400    | 1.5         | 0        | sentence  |
+| Wordmark         | DM Serif Display| 20px | 400    | 1.2         | −0.01em  | sentence  |
+| Pin / mode buttons | DM Sans       | 12px | 500    | 1           | 0        | sentence  |
+| Search           | DM Sans         | 13px | 400    | 1           | 0        | sentence  |
+| Group label      | DM Sans         | 11px | 500    | 1.3         | +0.10em  | UPPERCASE |
+| Note title       | DM Sans         | 13px | 500    | 1.35        | 0        | sentence, ellipsis |
+| Note snippet, date | DM Sans       | 12px / 11px | 400 | 1.35    | 0        | sentence  |
+| Breadcrumb       | DM Sans         | 13px | 400 (current 500) | 1.3 | 0    | sentence  |
+| Note meta        | DM Sans         | 12px | 400    | 1.3         | 0        | sentence  |
+| Note title h1    | DM Serif Display| 40px | 400    | 1.1         | −0.015em | sentence  |
+| Note body        | DM Sans         | 16px | 400    | 1.65        | 0        | sentence  |
+| Hint chip        | DM Sans         | 12px | 400 (keys 500) | 1     | 0        | as written |
 
 ## Implementation notes
 

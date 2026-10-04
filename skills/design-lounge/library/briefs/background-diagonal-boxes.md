@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-frame isometric cube pattern drawn on one `<canvas>` behind a short hero for a fictional architecture practice, "Cubit Studio". Every tile is a three-face cube in one hue: a light top, a mid left face, a dark right face. Cubes within 230px of the pointer **rise**: the top face moves up by up to 24px while both side faces stretch to meet it, and the faces lighten in step. The field looks like a relief model pressed up from below. The detail worth copying is that nothing is faked with CSS 3D: each cube is three polygons, drawn back-to-front row by row, so a raised cube correctly overlaps the cube behind it and is overlapped by the cube in front. A floating panel switches Graphite and Chalk tones, the box size (S/M/L), and the lift height.
-
-## Reference behaviour
-
-1. First frame: graphite tone, medium boxes (side 30px), and a cluster already raised around (74%, 62%) of the viewport, so the effect is visible before the pointer arrives.
-2. Moving the pointer re-targets every cube's lift from its distance to the pointer, with a smoothstep falloff over 230px. Each cube eases 16% of the way to its target per frame.
-3. The animation loop runs only while any cube is still more than 0.05px from its target. When everything settles, `requestAnimationFrame` stops. An idle page uses no CPU.
-4. Leaving the window drops every target to 0, and the field settles flat.
-5. Tone: Graphite / Chalk swaps the three face ramps and the page tokens instantly. Exactly one is pressed.
-6. Box size: S 20px, M 30px, L 44px side. The grid rebuilds and the current lift is applied without easing, so the change reads as a swap.
-7. Lift slider: 0–48px in steps of 4, default 24. The value is shown as "24 px" next to the label. 0 makes the field a flat pattern.
-8. Reduced motion: the pointer does not move the field. The initial raised cluster stays as a static composition, and the hint reads "Reduced motion: the field stays still." Tone, size and lift still redraw one static frame.
-9. Links and buttons over the field have 160ms colour transitions and a 2px ink focus ring.
 
 ## Structure
 
@@ -46,59 +36,6 @@ A full-frame isometric cube pattern drawn on one `<canvas>` behind a short hero 
 - `<main class="hero">`: kicker chip, `<h1>`, sub on a scrim, two links.
 - `<ul class="work" aria-label="Recent projects">`: three items with name and mono meta.
 - `.panel role="group"`: two segmented groups of `aria-pressed` buttons and a labelled range input with an `<output>`.
-
-## Tokens
-
-```css
-:root {
-  /* graphite — the three faces, flat */
-  --face-top: #2b2d31;
-  --face-left: #222428;
-  --face-right: #1a1b1e;     /* also page background */
-  /* raised ramp ends (top / left / right at full lift) */
-  --face-top-hi: #686b72;
-  --face-left-hi: #3d3f45;
-  --face-right-hi: #2b2d31;
-
-  --ink: #ecedef;            /* headline, active segment fill */
-  --ink-2: #a3a6ac;          /* sub, links, labels */
-  --ink-3: #7b7e85;          /* project meta, hint */
-  --line: rgba(236, 237, 239, .14);
-  --scrim: rgba(26, 27, 30, .78);   /* behind chip, sub, panel, buttons */
-
-  --font: "Familjen Grotesk", system-ui, sans-serif;
-  --mono: "Spline Sans Mono", ui-monospace, monospace;
-
-  --box-s: 20px; --box-m: 30px; --box-l: 44px;
-  --lift-default: 24px; --lift-max: 48px;
-  --lift-radius: 230px;
-  --ease-k: .16;             /* per-frame approach factor */
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --t-fast: 160ms;
-  --r: 2px;
-}
-
-:root[data-tone="chalk"] {
-  --face-top: #ecebe6; --face-left: #d6d3cc; --face-right: #bfbbb2;
-  --face-top-hi: #ffffff; --face-left-hi: #e6e4de; --face-right-hi: #d0cdc5;
-  --ink: #18191b; --ink-2: #45474c; --ink-3: #5d6066;
-  --line: rgba(24, 25, 27, .16); --scrim: rgba(236, 235, 230, .82);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|---|---|---:|---:|---:|---:|---|
-| Headline | Familjen Grotesk | 88px | 500 | 0.95 | −0.045em | sentence, balanced |
-| Sub | Familjen Grotesk | 18px | 400 | 1.55 | 0 | sentence |
-| Brand | Familjen Grotesk | 19px | 600 | 1 | −0.02em | Title |
-| Buttons | Familjen Grotesk | 15px | 500 | 1 | 0 | sentence |
-| Project name | Familjen Grotesk | 15px | 500 | 1.5 | 0 | Title |
-| Nav links, kicker | Spline Sans Mono | 12px | 500 | 1 | 0.08em | UPPER |
-| Panel labels | Spline Sans Mono | 11px | 500 | 1 | 0.06em | UPPER |
-| Project meta | Spline Sans Mono | 12px | 400 | 1 | 0 | as written |
 
 ## Motion
 
@@ -165,6 +102,75 @@ colour step k = round(current / 48 × 16 × 1.6), clamped to 16
 - [ ] Lift default 24px, range 0–48 step 4; sizes 20 / 30 / 44px.
 - [ ] Chalk tone top face `#ecebe6`, raised to `#ffffff`.
 - [ ] Projects: Casa Lumen, Gaia · Reading room, Braga · Atelier Rua Nove.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: graphite tone, medium boxes (side 30px), and a cluster already raised around (74%, 62%) of the viewport, so the effect is visible before the pointer arrives.
+2. Moving the pointer re-targets every cube's lift from its distance to the pointer, with a smoothstep falloff over 230px. Each cube eases 16% of the way to its target per frame.
+3. The animation loop runs only while any cube is still more than 0.05px from its target. When everything settles, `requestAnimationFrame` stops. An idle page uses no CPU.
+4. Leaving the window drops every target to 0, and the field settles flat.
+5. Tone: Graphite / Chalk swaps the three face ramps and the page tokens instantly. Exactly one is pressed.
+6. Box size: S 20px, M 30px, L 44px side. The grid rebuilds and the current lift is applied without easing, so the change reads as a swap.
+7. Lift slider: 0–48px in steps of 4, default 24. The value is shown as "24 px" next to the label. 0 makes the field a flat pattern.
+8. Reduced motion: the pointer does not move the field. The initial raised cluster stays as a static composition, and the hint reads "Reduced motion: the field stays still." Tone, size and lift still redraw one static frame.
+9. Links and buttons over the field have 160ms colour transitions and a 2px ink focus ring.
+
+## Tokens
+
+```css
+:root {
+  /* graphite — the three faces, flat */
+  --face-top: #2b2d31;
+  --face-left: #222428;
+  --face-right: #1a1b1e;     /* also page background */
+  /* raised ramp ends (top / left / right at full lift) */
+  --face-top-hi: #686b72;
+  --face-left-hi: #3d3f45;
+  --face-right-hi: #2b2d31;
+
+  --ink: #ecedef;            /* headline, active segment fill */
+  --ink-2: #a3a6ac;          /* sub, links, labels */
+  --ink-3: #7b7e85;          /* project meta, hint */
+  --line: rgba(236, 237, 239, .14);
+  --scrim: rgba(26, 27, 30, .78);   /* behind chip, sub, panel, buttons */
+
+  --font: "Familjen Grotesk", system-ui, sans-serif;
+  --mono: "Spline Sans Mono", ui-monospace, monospace;
+
+  --box-s: 20px; --box-m: 30px; --box-l: 44px;
+  --lift-default: 24px; --lift-max: 48px;
+  --lift-radius: 230px;
+  --ease-k: .16;             /* per-frame approach factor */
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-fast: 160ms;
+  --r: 2px;
+}
+
+:root[data-tone="chalk"] {
+  --face-top: #ecebe6; --face-left: #d6d3cc; --face-right: #bfbbb2;
+  --face-top-hi: #ffffff; --face-left-hi: #e6e4de; --face-right-hi: #d0cdc5;
+  --ink: #18191b; --ink-2: #45474c; --ink-3: #5d6066;
+  --line: rgba(24, 25, 27, .16); --scrim: rgba(236, 235, 230, .82);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|---|---|---:|---:|---:|---:|---|
+| Headline | Familjen Grotesk | 88px | 500 | 0.95 | −0.045em | sentence, balanced |
+| Sub | Familjen Grotesk | 18px | 400 | 1.55 | 0 | sentence |
+| Brand | Familjen Grotesk | 19px | 600 | 1 | −0.02em | Title |
+| Buttons | Familjen Grotesk | 15px | 500 | 1 | 0 | sentence |
+| Project name | Familjen Grotesk | 15px | 500 | 1.5 | 0 | Title |
+| Nav links, kicker | Spline Sans Mono | 12px | 500 | 1 | 0.08em | UPPER |
+| Panel labels | Spline Sans Mono | 11px | 500 | 1 | 0.06em | UPPER |
+| Project meta | Spline Sans Mono | 12px | 400 | 1 | 0 | as written |
 
 ## Implementation notes
 

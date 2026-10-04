@@ -4,37 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The deploy notification of "Pipewright", a fictional hosting platform, shown in the bottom-right corner of a browser IDE after a push. It follows one commit through Queued, Build, Checks and Live. Each stage gets a segment with its duration, the newest log line slides in underneath, and three checks tick off while they run. It ends on a lime "Live on preview" with Open preview and Rollback. Rollback asks once, inline, then re-aliases. The look is graphite with one acid-lime accent, used only for "live" and the primary button. A humanist sans names things and a wide mono reports what machines say. The detail worth copying is that the toast never changes size by surprise. The stepper is always four segments, the log is always one 20px line, and the checks list opens and closes with a height transition only during the Checks stage.
-
-## Reference behaviour
-
-1. The background is a browser IDE. It has a 44px top bar ("Pipewright · fernhill / atlas-web / feat/cart-currency"), a 232px file explorer with `currency.ts` modified, a code editor showing the coupon fix, and a 32px status bar reading "● deploying a3f9c1e" with a "Push again" button on the right.
-2. 200ms after load, the toast rises into the bottom-right corner, 24px from the right and 56px from the bottom so it clears the status bar. It is 404px wide and goes from translateY(24px) scale(.97) to rest over 550ms with expo-out.
-3. Toast header: the Pipewright mark, a "PREVIEW" environment tag, "now", and 32px Minimise (—) and Dismiss (×) buttons.
-4. Title row: a 16px spinner, "Building atlas-web", and an elapsed timer on the right in mono ("0:03"). The demo starts 2.4s into the deploy, so the first frame is already mid-build.
-5. Commit card: a 24px avatar "MO" and "fix(cart): keep coupon on currency switch" over "feat/cart-currency · Maya Ostrowski". On the right is a hash button "a3f9c1e" with a copy icon. Clicking it shows "copied" for 1.4s.
-6. Stepper: four equal segments with a 3px rule on top, a label, and a mono value:
-   - Done: grey rule, duration ("1.2s", "5.0s", "4.2s").
-   - Current: a white sweep runs along the rule (1.1s loop), and the value is a live "0:02".
-   - Upcoming: dim rule, "—".
-   - When live, the Live segment's rule turns lime and its value becomes the hash.
-7. Log line: one line under the stepper. Each new message slides up from below over 240ms and replaces the old one. The sequence is: "queued on runner eu-west-2b", "installing deps from lockfile, 1,284 packages", "compiling 214 modules", "bundling client, 1.21 MB → 342 kB gzip", "uploading 38 assets", "running 3 checks in parallel", and then a √ line for each check.
-8. At 6.2s the stage becomes Checks. The title reads "Running checks" and a three-row list opens (max-height 0 → 120px, 360ms): "Lint and types", "Unit tests" and "Lighthouse, /cart". Each row has a spinner that becomes a lime check with a value ("4.1s", "412/412", "96") at 7.4s, 8.6s and 9.8s.
-9. At 10.4s the deploy is live:
-   - The top 2px rule of the toast turns lime and the spinner becomes a lime dot with a soft 6px halo.
-   - The title reads "Live on preview" and the timer freezes.
-   - The checks list collapses 900ms later.
-   - A URL row appears: "atlas-web-a3f9c1e.preview.pipewright.dev", with the subdomain in lime.
-   - Two buttons appear: "Open preview ↵" (lime fill) and "Rollback" (outlined).
-   - The header time starts counting "1s ago", "2s ago" and so on.
-   - The status bar reads "● live a3f9c1e" with a lime dot.
-10. Open preview: a 420px cream preview window slides in at the top of the editor (right 452px, top 60px) showing the cart in GBP with "Coupon AUTUMN15 −£14.40". That proves the fix. A close button or Escape closes it.
-11. Rollback: the buttons are replaced by a red-tinted box: "Roll preview back to 9be20d4? This deploy stays in history." with "Roll back" (red fill) and "Cancel". Focus goes to Cancel.
-12. Roll back: the spinner border turns red, the title reads "Rolling back to 9be20d4", and the log reads "re-aliasing preview to 9be20d4". After 1.6s the title reads "Rolled back to 9be20d4" with a grey dot and a grey top rule. The log reads "√ preview serves 9be20d4 · a3f9c1e kept". The Live value becomes "9be20d4" and a "Redeploy a3f9c1e" button appears.
-13. Minimise (— or Escape) collapses the toast into a 40px pill in the same corner, showing a spinner and "Building · 0:07". The pill keeps updating and reads "Live · a3f9c1e" when done. Click it to restore.
-14. Dismiss (×) slides the toast away and moves focus to "Push again". "Push again" or "Redeploy" replays from step 2.
 
 ## Structure
 
@@ -70,62 +44,6 @@ The deploy notification of "Pipewright", a fictional hosting platform, shown in 
 - The checks are a `ul`, the actions are buttons, and the rollback confirm is a `div role="group"` labelled by its question.
 - The minimised pill is a separate `button` in the same corner. The toast is `inert` while minimised.
 - A visually hidden `aria-live="polite"` paragraph is used for announcements.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0c0e0d;          /* workspace */
-  --panel: #131614;       /* commit card, pill */
-  --raise: #191d1a;       /* hovers, selected file */
-  --line: #242a26;        /* hairlines */
-  --line-2: #323a34;      /* toast border, idle rules */
-  --text: #e6e9e4;
-  --text-2: #a3aca5;
-  --text-3: #717a73;
-
-  --live: #c8f25a;        /* the one accent: live state, primary button */
-  --live-ink: #10140a;    /* text on lime */
-  --warn: #f2b84b;        /* status-bar "deploying" dot, code keywords */
-  --bad: #ff6b5b;         /* rollback only */
-  --focus: #c8f25a;
-
-  --sans: "Wix Madefor Text", system-ui, sans-serif;
-  --mono: "Martian Mono", ui-monospace, monospace;
-
-  --toast-w: 404px;
-  --toast-r: 12px;
-  --btn-h: 36px;
-  --btn-r: 7px;
-  --gap-corner: 24px;
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-enter: 550ms;
-  --t-log: 240ms;
-  --t-checks: 360ms;
-}
-```
-
-The toast fill is `rgba(19,22,20,.97)` with a 1px `--line-2` border and a shadow of `0 0 0 1px rgba(0,0,0,.4), 0 28px 60px -18px rgba(0,0,0,.85)`. A 2px top rule sits inside: `--line-2`, then `--live` when live, then `--text-3` once rolled back.
-
-## Typography
-
-| Role | Family | Size | Weight | Notes |
-| --- | --- | ---: | ---: | --- |
-| Title | Wix Madefor Text | 16px | 600 | −0.01em |
-| Commit message | Wix Madefor Text | 13px | 400 | one line, ellipsis |
-| Buttons | Wix Madefor Text | 13px | 600 | |
-| Step label | Wix Madefor Text | 12px | 400 | |
-| Check row | Wix Madefor Text | 12.5px | 400 | |
-| Elapsed | Martian Mono | 12px | 500 | tabular |
-| Hash | Martian Mono | 11px | 500 | |
-| Log line | Martian Mono | 11px | 400 | 20px line box, values in 500 `--text-2` |
-| Step value | Martian Mono | 10.5px | 400 | tabular |
-| Env tag | Martian Mono | 10px | 500 | 0.04em, upper, 1px border |
-| Editor | Martian Mono | 12.5px | 400 | line-height 1.95 |
-
-Anything a person wrote (commit message, labels) is sans. Anything the machine reports (hash, times, counts, log) is mono.
 
 ## Motion
 
@@ -202,6 +120,94 @@ The sweep and spinner stop the moment the deploy is live or rolled back.
 - [ ] Checks "Lint and types 4.1s", "Unit tests 412/412", "Lighthouse, /cart 96".
 - [ ] Graphite `#0c0e0d`, toast `#131614`, lime `#c8f25a`, red `#ff6b5b`.
 - [ ] Toast 404px wide, 24px from the right, 56px from the bottom.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The background is a browser IDE. It has a 44px top bar ("Pipewright · fernhill / atlas-web / feat/cart-currency"), a 232px file explorer with `currency.ts` modified, a code editor showing the coupon fix, and a 32px status bar reading "● deploying a3f9c1e" with a "Push again" button on the right.
+2. 200ms after load, the toast rises into the bottom-right corner, 24px from the right and 56px from the bottom so it clears the status bar. It is 404px wide and goes from translateY(24px) scale(.97) to rest over 550ms with expo-out.
+3. Toast header: the Pipewright mark, a "PREVIEW" environment tag, "now", and 32px Minimise (—) and Dismiss (×) buttons.
+4. Title row: a 16px spinner, "Building atlas-web", and an elapsed timer on the right in mono ("0:03"). The demo starts 2.4s into the deploy, so the first frame is already mid-build.
+5. Commit card: a 24px avatar "MO" and "fix(cart): keep coupon on currency switch" over "feat/cart-currency · Maya Ostrowski". On the right is a hash button "a3f9c1e" with a copy icon. Clicking it shows "copied" for 1.4s.
+6. Stepper: four equal segments with a 3px rule on top, a label, and a mono value:
+   - Done: grey rule, duration ("1.2s", "5.0s", "4.2s").
+   - Current: a white sweep runs along the rule (1.1s loop), and the value is a live "0:02".
+   - Upcoming: dim rule, "—".
+   - When live, the Live segment's rule turns lime and its value becomes the hash.
+7. Log line: one line under the stepper. Each new message slides up from below over 240ms and replaces the old one. The sequence is: "queued on runner eu-west-2b", "installing deps from lockfile, 1,284 packages", "compiling 214 modules", "bundling client, 1.21 MB → 342 kB gzip", "uploading 38 assets", "running 3 checks in parallel", and then a √ line for each check.
+8. At 6.2s the stage becomes Checks. The title reads "Running checks" and a three-row list opens (max-height 0 → 120px, 360ms): "Lint and types", "Unit tests" and "Lighthouse, /cart". Each row has a spinner that becomes a lime check with a value ("4.1s", "412/412", "96") at 7.4s, 8.6s and 9.8s.
+9. At 10.4s the deploy is live:
+   - The top 2px rule of the toast turns lime and the spinner becomes a lime dot with a soft 6px halo.
+   - The title reads "Live on preview" and the timer freezes.
+   - The checks list collapses 900ms later.
+   - A URL row appears: "atlas-web-a3f9c1e.preview.pipewright.dev", with the subdomain in lime.
+   - Two buttons appear: "Open preview ↵" (lime fill) and "Rollback" (outlined).
+   - The header time starts counting "1s ago", "2s ago" and so on.
+   - The status bar reads "● live a3f9c1e" with a lime dot.
+10. Open preview: a 420px cream preview window slides in at the top of the editor (right 452px, top 60px) showing the cart in GBP with "Coupon AUTUMN15 −£14.40". That proves the fix. A close button or Escape closes it.
+11. Rollback: the buttons are replaced by a red-tinted box: "Roll preview back to 9be20d4? This deploy stays in history." with "Roll back" (red fill) and "Cancel". Focus goes to Cancel.
+12. Roll back: the spinner border turns red, the title reads "Rolling back to 9be20d4", and the log reads "re-aliasing preview to 9be20d4". After 1.6s the title reads "Rolled back to 9be20d4" with a grey dot and a grey top rule. The log reads "√ preview serves 9be20d4 · a3f9c1e kept". The Live value becomes "9be20d4" and a "Redeploy a3f9c1e" button appears.
+13. Minimise (— or Escape) collapses the toast into a 40px pill in the same corner, showing a spinner and "Building · 0:07". The pill keeps updating and reads "Live · a3f9c1e" when done. Click it to restore.
+14. Dismiss (×) slides the toast away and moves focus to "Push again". "Push again" or "Redeploy" replays from step 2.
+
+## Tokens
+
+```css
+:root {
+  --bg: #0c0e0d;          /* workspace */
+  --panel: #131614;       /* commit card, pill */
+  --raise: #191d1a;       /* hovers, selected file */
+  --line: #242a26;        /* hairlines */
+  --line-2: #323a34;      /* toast border, idle rules */
+  --text: #e6e9e4;
+  --text-2: #a3aca5;
+  --text-3: #717a73;
+
+  --live: #c8f25a;        /* the one accent: live state, primary button */
+  --live-ink: #10140a;    /* text on lime */
+  --warn: #f2b84b;        /* status-bar "deploying" dot, code keywords */
+  --bad: #ff6b5b;         /* rollback only */
+  --focus: #c8f25a;
+
+  --sans: "Wix Madefor Text", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+
+  --toast-w: 404px;
+  --toast-r: 12px;
+  --btn-h: 36px;
+  --btn-r: 7px;
+  --gap-corner: 24px;
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-enter: 550ms;
+  --t-log: 240ms;
+  --t-checks: 360ms;
+}
+```
+
+The toast fill is `rgba(19,22,20,.97)` with a 1px `--line-2` border and a shadow of `0 0 0 1px rgba(0,0,0,.4), 0 28px 60px -18px rgba(0,0,0,.85)`. A 2px top rule sits inside: `--line-2`, then `--live` when live, then `--text-3` once rolled back.
+
+## Typography
+
+| Role | Family | Size | Weight | Notes |
+| --- | --- | ---: | ---: | --- |
+| Title | Wix Madefor Text | 16px | 600 | −0.01em |
+| Commit message | Wix Madefor Text | 13px | 400 | one line, ellipsis |
+| Buttons | Wix Madefor Text | 13px | 600 | |
+| Step label | Wix Madefor Text | 12px | 400 | |
+| Check row | Wix Madefor Text | 12.5px | 400 | |
+| Elapsed | Martian Mono | 12px | 500 | tabular |
+| Hash | Martian Mono | 11px | 500 | |
+| Log line | Martian Mono | 11px | 400 | 20px line box, values in 500 `--text-2` |
+| Step value | Martian Mono | 10.5px | 400 | tabular |
+| Env tag | Martian Mono | 10px | 500 | 0.04em, upper, 1px border |
+| Editor | Martian Mono | 12.5px | 400 | line-height 1.95 |
+
+Anything a person wrote (commit message, labels) is sans. Anything the machine reports (hash, times, counts, log) is mono.
 
 ## Implementation notes
 

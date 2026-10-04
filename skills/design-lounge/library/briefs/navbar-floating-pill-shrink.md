@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The top navigation for Solenne, a fictional home-battery company. At the top of the page it is a full-width, transparent 76px bar with cream text sitting over a dusk-landscape hero. Once the page scrolls past 48px it contracts into a 780 × 56px frosted pill that floats 16px below the viewport edge, switches to dark ink, and drops the wordmark and "Sign in" link so only the mark, the five section links and the orange CTA remain. A soft capsule behind the current section's link slides between links as the reader scrolls (scrollspy), with a 4px orange dot that tucks inside the capsule in the pill state. The detail worth copying: the link group keeps identical padding in both states, so the indicator never has to be re-measured mid-transition.
-
-## Reference behaviour
-
-1. On load the page sits at `scrollY = 72` (the demo nudges itself there after 60ms) so the first frame shows the pill over the sky of the hero; scrolling to the top restores the full bar.
-2. **Full state** (scrollY ≤ 48): bar spans the viewport, 76px tall, 40px side padding, no background, 1px bottom hairline `rgba(251,246,238,.22)`, cream text. Left: 28px conic-gradient mark + "Solenne" wordmark (19px/600). Centre: five links. Right: "Sign in" text link then the orange "Get a quote" button.
-3. **Pill state** (scrollY > 48): over 420ms with expo-out the bar's width goes 100% → 780px, height 76 → 56px, radius 0 → 999px, padding `0 40px` → `0 8px 0 18px`, the wrapper gains 16px top padding, background goes to `rgba(251,246,238,.58)` with `blur(18px) saturate(1.6)`, text colour cream → ink, and a soft shadow appears. The wordmark and "Sign in" collapse via `max-width → 0` and `opacity → 0`.
-4. The active-section capsule (full link height, radius 999px) translates and resizes to the current link over 420ms expo-out. Its fill is `rgba(251,246,238,.16)` in the full state and `rgba(19,32,26,.08)` in the pill.
-5. The 4px orange dot sits 9px **below** the capsule in the full state and moves to 3px **inside** its bottom edge in the pill state.
-6. The current section is the last one whose top edge is above 40% of the viewport height. At the very bottom of the page the last link (Journal) is forced active.
-7. Clicking a link smooth-scrolls to its section (`scroll-behavior:smooth`); the capsule follows as sections pass the 40% line.
-8. Hovering a link raises its opacity from .78 to 1. The CTA lifts 1px on hover.
-9. Scroll handling is rAF-throttled; there is no work on frames without a scroll event.
 
 ## Structure
 
@@ -50,63 +40,6 @@ pill state (centered, top 16px):
   - `a.login`, `a.cta` (40px tall, arrow SVG).
 - `<main>`: `#overview` wraps the hero and stats strip; then `section.block#battery`, `#installers`, `#pricing`, `#journal`; a footer.
 - Hero image is CSS + one inline SVG: a 5-stop vertical gradient sky, a radial sun at 62% / 60%, two radial hazes, and three hill paths plus a house silhouette with a lit window.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --page: #f3eee6;               /* page background, warm paper */
-  --ink: #13201a;                /* text on light, pill text */
-  --ink-2: #4b5a52;              /* body secondary */
-  --ink-3: #7a857e;              /* mono meta */
-  --line: rgba(19, 32, 26, .12); /* hairlines */
-  --cream: #fbf6ee;              /* text on the hero, full-state nav text */
-  --accent: #e8542a;             /* CTA, indicator dot, section numbers */
-  --accent-ink: #fff7f0;         /* text on accent */
-  --glass: rgba(251, 246, 238, .58);      /* pill fill */
-  --glass-line: rgba(255, 255, 255, .55); /* pill border */
-  --sky-1: #24314a; --sky-2: #5b4a68; --sky-3: #c06e6e; --sky-4: #f0a66e; --sky-5: #f7c98d;
-  --hill-far: #6a4d5e; --hill-mid: #2f3836; --hill-near: #161d1a; --window: #ffc985;
-
-  /* type */
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "Geist Mono", ui-monospace, monospace;
-  --fs-display: 156px; --fs-h2: 84px; --fs-stat: 56px; --fs-lede: 19px;
-  --fs-body: 16px; --fs-link: 15px; --fs-cta: 14px; --fs-meta: 12px;
-
-  /* layout */
-  --bar-h: 76px; --pill-h: 56px; --pill-w: 780px; --pill-top: 16px;
-  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-5: 40px;
-  --r-pill: 999px; --r-card: 16px; --r-panel: 20px;
-
-  /* elevation */
-  --shadow-pill: 0 1px 0 rgba(255,255,255,.6) inset, 0 12px 32px -12px rgba(19,32,26,.35);
-  --blur-pill: blur(18px) saturate(1.6);
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-layout: 420ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role             | Family              | Size  | Weight | Line-height | Tracking | Case      |
-|------------------|---------------------|------:|-------:|------------:|---------:|-----------|
-| Hero display     | Bricolage Grotesque | 156px | 600    | 0.86        | −0.055em | sentence  |
-| Section h2       | Bricolage Grotesque | 84px  | 600    | 0.92        | −0.045em | sentence  |
-| Stat numeral     | Bricolage Grotesque | 56px  | 500    | 1           | −0.04em  | numerals, unit as 20px `sup` |
-| Lede             | Bricolage Grotesque | 19px  | 400    | 1.5         | 0        | sentence  |
-| Wordmark         | Bricolage Grotesque | 19px  | 600    | 1           | −0.02em  | sentence  |
-| Nav link         | Bricolage Grotesque | 15px  | 500    | 1.5         | 0        | sentence  |
-| CTA              | Bricolage Grotesque | 14px  | 600    | 1           | 0        | sentence  |
-| Kicker / section number | Geist Mono   | 12px  | 500    | 1           | +0.14em / +0.12em | UPPERCASE |
-| Stat caption     | Geist Mono          | 12px  | 400    | 1.4         | 0        | lowercase |
-
-Use the `opsz` axis at 96 for the display line so the counters tighten.
 
 ## Motion
 
@@ -165,6 +98,79 @@ Reduced motion: every transition drops to 1ms and `scroll-behavior` returns to `
 - [ ] Scroll handler is passive and rAF-throttled.
 - [ ] `aria-current="true"` follows the active link.
 - [ ] Reduced motion makes both state changes instant.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. On load the page sits at `scrollY = 72` (the demo nudges itself there after 60ms) so the first frame shows the pill over the sky of the hero; scrolling to the top restores the full bar.
+2. **Full state** (scrollY ≤ 48): bar spans the viewport, 76px tall, 40px side padding, no background, 1px bottom hairline `rgba(251,246,238,.22)`, cream text. Left: 28px conic-gradient mark + "Solenne" wordmark (19px/600). Centre: five links. Right: "Sign in" text link then the orange "Get a quote" button.
+3. **Pill state** (scrollY > 48): over 420ms with expo-out the bar's width goes 100% → 780px, height 76 → 56px, radius 0 → 999px, padding `0 40px` → `0 8px 0 18px`, the wrapper gains 16px top padding, background goes to `rgba(251,246,238,.58)` with `blur(18px) saturate(1.6)`, text colour cream → ink, and a soft shadow appears. The wordmark and "Sign in" collapse via `max-width → 0` and `opacity → 0`.
+4. The active-section capsule (full link height, radius 999px) translates and resizes to the current link over 420ms expo-out. Its fill is `rgba(251,246,238,.16)` in the full state and `rgba(19,32,26,.08)` in the pill.
+5. The 4px orange dot sits 9px **below** the capsule in the full state and moves to 3px **inside** its bottom edge in the pill state.
+6. The current section is the last one whose top edge is above 40% of the viewport height. At the very bottom of the page the last link (Journal) is forced active.
+7. Clicking a link smooth-scrolls to its section (`scroll-behavior:smooth`); the capsule follows as sections pass the 40% line.
+8. Hovering a link raises its opacity from .78 to 1. The CTA lifts 1px on hover.
+9. Scroll handling is rAF-throttled; there is no work on frames without a scroll event.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --page: #f3eee6;               /* page background, warm paper */
+  --ink: #13201a;                /* text on light, pill text */
+  --ink-2: #4b5a52;              /* body secondary */
+  --ink-3: #7a857e;              /* mono meta */
+  --line: rgba(19, 32, 26, .12); /* hairlines */
+  --cream: #fbf6ee;              /* text on the hero, full-state nav text */
+  --accent: #e8542a;             /* CTA, indicator dot, section numbers */
+  --accent-ink: #fff7f0;         /* text on accent */
+  --glass: rgba(251, 246, 238, .58);      /* pill fill */
+  --glass-line: rgba(255, 255, 255, .55); /* pill border */
+  --sky-1: #24314a; --sky-2: #5b4a68; --sky-3: #c06e6e; --sky-4: #f0a66e; --sky-5: #f7c98d;
+  --hill-far: #6a4d5e; --hill-mid: #2f3836; --hill-near: #161d1a; --window: #ffc985;
+
+  /* type */
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+  --fs-display: 156px; --fs-h2: 84px; --fs-stat: 56px; --fs-lede: 19px;
+  --fs-body: 16px; --fs-link: 15px; --fs-cta: 14px; --fs-meta: 12px;
+
+  /* layout */
+  --bar-h: 76px; --pill-h: 56px; --pill-w: 780px; --pill-top: 16px;
+  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-5: 40px;
+  --r-pill: 999px; --r-card: 16px; --r-panel: 20px;
+
+  /* elevation */
+  --shadow-pill: 0 1px 0 rgba(255,255,255,.6) inset, 0 12px 32px -12px rgba(19,32,26,.35);
+  --blur-pill: blur(18px) saturate(1.6);
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-layout: 420ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role             | Family              | Size  | Weight | Line-height | Tracking | Case      |
+|------------------|---------------------|------:|-------:|------------:|---------:|-----------|
+| Hero display     | Bricolage Grotesque | 156px | 600    | 0.86        | −0.055em | sentence  |
+| Section h2       | Bricolage Grotesque | 84px  | 600    | 0.92        | −0.045em | sentence  |
+| Stat numeral     | Bricolage Grotesque | 56px  | 500    | 1           | −0.04em  | numerals, unit as 20px `sup` |
+| Lede             | Bricolage Grotesque | 19px  | 400    | 1.5         | 0        | sentence  |
+| Wordmark         | Bricolage Grotesque | 19px  | 600    | 1           | −0.02em  | sentence  |
+| Nav link         | Bricolage Grotesque | 15px  | 500    | 1.5         | 0        | sentence  |
+| CTA              | Bricolage Grotesque | 14px  | 600    | 1           | 0        | sentence  |
+| Kicker / section number | Geist Mono   | 12px  | 500    | 1           | +0.14em / +0.12em | UPPERCASE |
+| Stat caption     | Geist Mono          | 12px  | 400    | 1.4         | 0        | lowercase |
+
+Use the `opsz` axis at 96 for the display line so the counters tighten.
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. The bars stay one series.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A weekly bar chart for yard runs. The page is warm paper. A title and a date range sit above a white card, max width 880px. Inside, a quiet axis (60, 30, 0) and seven bars for Monday through Sunday. Resting bars are warm gray. The selected bar, and the bar under the pointer, is the primary green. A mono line under the chart reads the day and the count. Wednesday starts selected: 51 runs. There is no legend, no grid of colours, and no imported chart theme. This is the chart an ops home uses beside a KPI row. It is not a marketing graphic.
-
-## Reference behaviour
-
-1. Wednesday starts with `aria-pressed="true"`. The readout is "Wednesday · 51 runs".
-2. Pointer enter or click on a day selects it and rewrites the readout as "{Day} · {n} runs".
-3. Only one day is pressed. The others return to gray.
-4. Bars rise from the baseline on load, 420ms, `cubic-bezier(0.2, 0.7, 0.2, 1)`, `transform-origin: bottom`.
-5. Reduced motion: the rise animation is removed. Bars render at full height. Selection still works.
-6. The axis is `aria-hidden`. The buttons carry the day and the count.
-7. Focus ring is 2px `--focus`, offset 2px.
-8. Do not add a tooltip that floats over the bar. The readout is the value.
 
 ## Structure
 
@@ -31,36 +22,6 @@ readout
 
 - Each day is a `button` inside a group labelled "Runs by day".
 - The bar is an `i` with a percentage height. The scale is 60 runs = 100 percent of the plot.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #8a847a;
-  --line: #e4dfd4;
-  --bar: #d9d3c7;
-  --primary: #1f4d3a;
-  --focus: #1f4d3a;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --radius: 2px;
-}
-```
-
-When a kit is locked, `--bar` is `--line` or `--surface-2`, and the selected bar is `--primary`. Do not keep `#1f4d3a` beside another theme.
-
-## Typography
-
-- Title: IBM Plex Sans 500, 28px, tracking -0.03em.
-- Date line: 13px, `--ink-2`.
-- Axis: IBM Plex Mono 11px, `--ink-3`.
-- Day labels: 12px, weight 500. Selected day weight 600, `--ink`.
-- Readout: IBM Plex Mono 13px.
-- One text face, one mono. No display serif.
 
 ## Motion
 
@@ -102,6 +63,51 @@ Reduced motion sets `animation: none`. Selection does not animate colour.
 - [ ] Bars rise once. Reduced motion skips the rise.
 - [ ] No legend, no second series, no pie.
 - [ ] Card radius is 2px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Wednesday starts with `aria-pressed="true"`. The readout is "Wednesday · 51 runs".
+2. Pointer enter or click on a day selects it and rewrites the readout as "{Day} · {n} runs".
+3. Only one day is pressed. The others return to gray.
+4. Bars rise from the baseline on load, 420ms, `cubic-bezier(0.2, 0.7, 0.2, 1)`, `transform-origin: bottom`.
+5. Reduced motion: the rise animation is removed. Bars render at full height. Selection still works.
+6. The axis is `aria-hidden`. The buttons carry the day and the count.
+7. Focus ring is 2px `--focus`, offset 2px.
+8. Do not add a tooltip that floats over the bar. The readout is the value.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #8a847a;
+  --line: #e4dfd4;
+  --bar: #d9d3c7;
+  --primary: #1f4d3a;
+  --focus: #1f4d3a;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius: 2px;
+}
+```
+
+When a kit is locked, `--bar` is `--line` or `--surface-2`, and the selected bar is `--primary`. Do not keep `#1f4d3a` beside another theme.
+
+## Typography
+
+- Title: IBM Plex Sans 500, 28px, tracking -0.03em.
+- Date line: 13px, `--ink-2`.
+- Axis: IBM Plex Mono 11px, `--ink-3`.
+- Day labels: 12px, weight 500. Selected day weight 600, `--ink`.
+- Readout: IBM Plex Mono 13px.
+- One text face, one mono. No display serif.
 
 ## Implementation notes
 

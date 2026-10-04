@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from stripe.com: the product section where each feature card holds a small, real piece of the product (a checkout form floating over a connected-accounts table, an issued card) instead of an icon and a paragraph. This version is for an invented billing platform for fitness studios, Courant, on cool mist with navy ink and one vermilion accent. Three small cells each prove one claim with a control you can press; the wide cell runs a whole payment, and the money visibly lands in the ledger behind it. That cause-and-effect between two overlapping UIs is the detail worth copying.
-
-## Reference behaviour
-
-1. The section opens with a two-tone `h2`: a navy lead sentence, then a slate continuation. "Explore products →" sits bottom-right of the heading row.
-2. Cell 1, "Charge in 31 currencies.": a 34px mono amount "€48.00" over four pill chips EUR / GBP / USD / JPY. EUR starts pressed. Pressing another chip fades the amount down 6px (160ms), swaps the text (£41.30, $52.10, ¥7,820) and brings it back. The amount is a polite live region.
-3. Cell 2, "Issue instructor cards.": a 168 × 92px navy card with a vermilion ring clipped off its top-right corner, "•••• 4417", cardholder "Ines Barroso", and a spend bar "€640 of €1,000 this month" at 64%. Hovering the card lifts it 3px and turns it −1.5°. The "Freeze card" button toggles a frost overlay (diagonal 2px stripes over a pale blue wash, a "Frozen" tag), desaturates the card to 20% and scales it to 0.97; the button reads "Unfreeze card" and has `aria-pressed="true"`.
-4. Cell 3, "Recover failed renewals.": a three-step track, Day 0 Declined (vermilion ×), Day 3 Retried (slate ↻), Day 5 Paid (green ✓), with a green fill line between them, and "Recovered in September €1,240" under a dashed rule. Hovering the cell or pressing "Replay retries" resets it and replays: dots fill at 0, 450 and 900ms while the line grows over 900ms.
-5. Wide cell, "Embed checkout in your booking flow": text column on the left (290px), a scene on the right. In the scene, a dashboard window ("dashboard.courant.test/payouts") shows a "Studio payouts" table with six studios and a "Today · €29,184.00" total. A checkout card for "Juniper Pilates" floats over the window's left edge with a shadow.
-6. The checkout has a Monthly / Yearly segmented control (sliding white thumb, 280ms). Yearly shows "−20%" and changes "Due today" from €120.00 to €1,152.00 and the button label to match.
-7. Payment method is two radio rows, Card •••• 0291 and Bank debit SEPA. The checked row gets a vermilion border and a 3px vermilion-tint ring.
-8. Pressing "Pay €120.00" shows a spinner and "Processing" for 950ms, then the button turns green with a check and "Paid". At the same moment a "Juniper Pilates · Lisbon · +€120.00" row slides into the top of the ledger (8px drop, 700ms) with a vermilion-tint background that fades over 2.4s; the bottom row is removed so the table keeps six rows; the total rises by the amount. A "Run again" link appears in the checkout's top-right corner and resets the button.
 
 ## Structure
 
@@ -49,51 +40,6 @@ Studied from stripe.com: the product section where each feature card holds a sma
 - The wide cell is `article.cell.wide` (row flex): `.text` (h3, p, link) and `.scene`. In the scene, `.window` is absolutely placed (left 150px, top 24px, bleeding off right and bottom) and the checkout `form` floats above it at `z-index: 2`.
 - The ledger is a real `table` with `th scope="col"`; numbers are right-aligned mono.
 - The checkout is a `form`: segmented control `role="radiogroup"` with two `role="radio"` buttons, a `fieldset` of two native radios, a submit button, a reset button, and an `sr-only` live status `p`.
-
-## Tokens
-
-```css
-:root {
-  --mist: #EEF1F5;        /* page */
-  --card: #FFFFFF;        /* cells, window, checkout */
-  --sunk: #F6F8FA;        /* stages, segmented track */
-  --ink: #14213D;         /* text, pay button, issued card */
-  --ink-2: #5B6782;       /* muted copy, h2 continuation */
-  --ink-3: #8590A6;       /* table headers, hints */
-  --line: #DDE2EA;        /* cell borders */
-  --line-2: #E9ECF1;      /* inner rules */
-  --accent: #E4572E;      /* checked ring, card ring, declined */
-  --accent-ink: #B83E1B;  /* links, −20% (accessible on white) */
-  --accent-tint: #FCEAE4; /* rings, new-row flash */
-  --ok: #1F8A5B;          /* paid, recovered */
-
-  --sans: "Geist", system-ui, sans-serif;
-  --mono: "Geist Mono", ui-monospace, monospace;
-
-  --r-card: 10px; --r-ctl: 6px;
-  --shadow: 0 1px 2px rgba(20,33,61,.06), 0 12px 32px -12px rgba(20,33,61,.22);
-  --gap: 16px; --pad-cell: 18px;
-
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Section heading | Geist | 28px / 1.22 | 500 | -0.025em | lead `--ink`, rest `--ink-2` |
-| Wide cell title | Geist | 22px / 1.2 | 500 | -0.02em | `--ink` |
-| Cell copy | Geist | 14px / 1.45 | 400, lead 600 | 0 | `--ink-2`, lead `--ink` |
-| Currency amount | Geist Mono | 34px | 500 | -0.03em | `--ink` |
-| Chips | Geist Mono | 12px | 500 | 0 | `--ink` / white |
-| Table head | Geist | 11px | 500 | 0 | `--ink-3` |
-| Table body | Geist (numbers Geist Mono) | 12px | 400–500 | 0 | `--ink` |
-| Checkout total | Geist Mono | 15px | 500 | 0 | `--ink` |
-| Buttons | Geist | 12px (cells), 14px (pay) | 500 | 0 | |
-
-Every money figure is mono with tabular numerals, so swapping €120.00 for €1,152.00 never shifts the layout sideways.
 
 ## Motion
 
@@ -158,6 +104,66 @@ Every money figure is mono with tabular numerals, so swapping €120.00 for €1
 - [ ] Card ending 4417 for Ines Barroso, €640 of €1,000.
 - [ ] Monthly €120.00, Yearly €1,152.00 (−20%).
 - [ ] Paying adds a Juniper Pilates, Lisbon row and raises €29,184.00 by the amount.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The section opens with a two-tone `h2`: a navy lead sentence, then a slate continuation. "Explore products →" sits bottom-right of the heading row.
+2. Cell 1, "Charge in 31 currencies.": a 34px mono amount "€48.00" over four pill chips EUR / GBP / USD / JPY. EUR starts pressed. Pressing another chip fades the amount down 6px (160ms), swaps the text (£41.30, $52.10, ¥7,820) and brings it back. The amount is a polite live region.
+3. Cell 2, "Issue instructor cards.": a 168 × 92px navy card with a vermilion ring clipped off its top-right corner, "•••• 4417", cardholder "Ines Barroso", and a spend bar "€640 of €1,000 this month" at 64%. Hovering the card lifts it 3px and turns it −1.5°. The "Freeze card" button toggles a frost overlay (diagonal 2px stripes over a pale blue wash, a "Frozen" tag), desaturates the card to 20% and scales it to 0.97; the button reads "Unfreeze card" and has `aria-pressed="true"`.
+4. Cell 3, "Recover failed renewals.": a three-step track, Day 0 Declined (vermilion ×), Day 3 Retried (slate ↻), Day 5 Paid (green ✓), with a green fill line between them, and "Recovered in September €1,240" under a dashed rule. Hovering the cell or pressing "Replay retries" resets it and replays: dots fill at 0, 450 and 900ms while the line grows over 900ms.
+5. Wide cell, "Embed checkout in your booking flow": text column on the left (290px), a scene on the right. In the scene, a dashboard window ("dashboard.courant.test/payouts") shows a "Studio payouts" table with six studios and a "Today · €29,184.00" total. A checkout card for "Juniper Pilates" floats over the window's left edge with a shadow.
+6. The checkout has a Monthly / Yearly segmented control (sliding white thumb, 280ms). Yearly shows "−20%" and changes "Due today" from €120.00 to €1,152.00 and the button label to match.
+7. Payment method is two radio rows, Card •••• 0291 and Bank debit SEPA. The checked row gets a vermilion border and a 3px vermilion-tint ring.
+8. Pressing "Pay €120.00" shows a spinner and "Processing" for 950ms, then the button turns green with a check and "Paid". At the same moment a "Juniper Pilates · Lisbon · +€120.00" row slides into the top of the ledger (8px drop, 700ms) with a vermilion-tint background that fades over 2.4s; the bottom row is removed so the table keeps six rows; the total rises by the amount. A "Run again" link appears in the checkout's top-right corner and resets the button.
+
+## Tokens
+
+```css
+:root {
+  --mist: #EEF1F5;        /* page */
+  --card: #FFFFFF;        /* cells, window, checkout */
+  --sunk: #F6F8FA;        /* stages, segmented track */
+  --ink: #14213D;         /* text, pay button, issued card */
+  --ink-2: #5B6782;       /* muted copy, h2 continuation */
+  --ink-3: #8590A6;       /* table headers, hints */
+  --line: #DDE2EA;        /* cell borders */
+  --line-2: #E9ECF1;      /* inner rules */
+  --accent: #E4572E;      /* checked ring, card ring, declined */
+  --accent-ink: #B83E1B;  /* links, −20% (accessible on white) */
+  --accent-tint: #FCEAE4; /* rings, new-row flash */
+  --ok: #1F8A5B;          /* paid, recovered */
+
+  --sans: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+
+  --r-card: 10px; --r-ctl: 6px;
+  --shadow: 0 1px 2px rgba(20,33,61,.06), 0 12px 32px -12px rgba(20,33,61,.22);
+  --gap: 16px; --pad-cell: 18px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Section heading | Geist | 28px / 1.22 | 500 | -0.025em | lead `--ink`, rest `--ink-2` |
+| Wide cell title | Geist | 22px / 1.2 | 500 | -0.02em | `--ink` |
+| Cell copy | Geist | 14px / 1.45 | 400, lead 600 | 0 | `--ink-2`, lead `--ink` |
+| Currency amount | Geist Mono | 34px | 500 | -0.03em | `--ink` |
+| Chips | Geist Mono | 12px | 500 | 0 | `--ink` / white |
+| Table head | Geist | 11px | 500 | 0 | `--ink-3` |
+| Table body | Geist (numbers Geist Mono) | 12px | 400–500 | 0 | `--ink` |
+| Checkout total | Geist Mono | 15px | 500 | 0 | `--ink` |
+| Buttons | Geist | 12px (cells), 14px (pay) | 500 | 0 | |
+
+Every money figure is mono with tabular numerals, so swapping €120.00 for €1,152.00 never shifts the layout sideways.
 
 ## Implementation notes
 

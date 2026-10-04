@@ -4,28 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the Soft family: 14px radii on fields and chips, pill buttons. The motion language is Material 3 Expressive.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The sign-up flow of Sprig, a fictional app for home growers. It is three steps in one screen. Step 1 asks for a name and an email. Step 2 asks for a password and ticks off four rules as you type. Step 3 asks you to pick at least three things you grow, as chips. A segmented bar at the top shows the step. Back and Continue sit in a fixed bar at the bottom. Steps slide sideways in 420ms. The colours are warm cream, a deep garden green and a soft green tonal fill. Nunito carries everything, at 800 for headings and 600 for inputs. The detail worth copying is the rules list. Each rule's circle fills green and draws a tick the moment the password meets it, so the user never guesses what is wrong.
-
-## Reference behaviour
-
-1. First frame: step 1. Segment 1 is green, segments 2 and 3 are track colour. The label reads "Step 1 of 3 · About you". The heading reads "Let's get you growing". Name is prefilled "Mina Gurung". Email is prefilled "mina.gurung@fernpost.org". Back is shown at 45% opacity and is disabled. Continue is a green pill.
-2. Clear the name and tap Continue. The error "Tell us your name." shows under it in `--danger`. The field border turns `--danger`. Focus moves to the name field.
-3. Type a bad email and tap Continue. The error reads "Enter an email like name@example.com." An empty email reads "Enter your email address."
-4. While an error shows, typing re-checks the field. The error clears as soon as the value is valid.
-5. Tap Continue with valid fields. The track slides left by one step in 420ms. Segment 2 fills left to right in 320ms. The label becomes "Step 2 of 3 · Password". Back becomes active. Focus moves to the new heading after 200ms.
-6. Step 2 heading: "Make a password". Four rules are listed: "At least 10 characters", "One number", "One capital letter", "Not your name or email". Each starts with an empty 22px circle.
-7. Type in the password. Each rule that passes fills its circle green, scales it to 1.08, and draws a white tick in 320ms. A rule that stops passing reverses. The line under the list reads "N of 4 rules met".
-8. "Not your name or email" fails if the password contains the first name or the email's local part, when either is longer than 2 characters. It also fails while the field is empty.
-9. Tap Continue with fewer than 4 rules met. The error reads "Meet all four rules to continue." Focus moves to the password.
-10. The eye button shows and hides the password. Its label flips between "Show password" and "Hide password".
-11. Step 3 heading: "What do you grow?". Ten chips: Herbs, Tomatoes, Balcony pots, Composting, Seed saving, Houseplants, Native flowers, Fruit trees, Mushrooms, Chillies. Herbs and Tomatoes start picked.
-12. Tap a chip to toggle it. A picked chip fills green, swaps its plus icon for a tick, and its radius grows from 14px to 22px in 320ms. The tally reads "2 of 3 picked. 1 more to go." or "3 picked. Good start."
-13. On step 3, Continue reads "Create account". With fewer than 3 picked, the error reads "Pick at least 3 to continue."
-14. With 3 or more picked, Create account shows a spinner and the label "Creating account" for 1300ms, then "Welcome, Mina" for 2200ms. Then the demo clears the password and slides back to step 1.
-15. Back slides one step right. Picked chips and typed values stay.
-16. Enter in any input acts as Continue.
 
 ## Structure
 
@@ -60,63 +43,6 @@ The sign-up flow of Sprig, a fictional app for home growers. It is three steps i
 - The chips are buttons with `aria-pressed`, inside a `div role="group"` labelled by the step heading.
 - `nav.bar` holds Back and Continue. It is outside the sliding track, so it never moves.
 - A hidden `role="status"` paragraph speaks the account result.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #f6f0e3;            /* cream page */
-  --surface: #fffbf2;       /* fields, chips, rules card */
-  --ink: #1e2a22;           /* headings, input text */
-  --ink-2: #4a5a4f;         /* lede, labels of quiet text */
-  --ink-3: #6e7a70;         /* rare muted text */
-  --line: #e2d8c3;          /* field borders, bar rule */
-  --primary: #1f4d3a;       /* deep green: Continue, filled segments, picked chips, ticks */
-  --on-primary: #fffbf2;
-  --primary-soft: #dce8d9;  /* tonal: Back button, focus halo */
-  --track: #e8dfcc;         /* empty segments */
-  --danger: #a63d2a;        /* errors */
-
-  /* type */
-  --sans: "Nunito", system-ui, sans-serif;
-
-  /* shape */
-  --radius: 14px;
-  --pill: 999px;
-  --control: 56px;
-  --hit: 44px;
-
-  /* space: 4px base */
-  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
-
-  /* motion: M3 Expressive */
-  --emph: cubic-bezier(0.2, 0, 0, 1);
-  --decel: cubic-bezier(0.05, 0.7, 0.1, 1);
-  --fast: 160ms;
-  --mid: 320ms;
-  --slide: 420ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Brand | Nunito | 18px | 800 | 1 | -0.01em |
-| Step label | Nunito | 13px | 700 | 1.45 | 0.02em |
-| Heading | Nunito | 32px | 800 | 1.08 | -0.02em |
-| Lede | Nunito | 16px | 400 | 1.45 | 0 |
-| Field label | Nunito | 14px | 700 | 1.45 | 0 |
-| Input | Nunito | 17px | 600 | 56px box | 0 |
-| Rule item | Nunito | 15px | 600 | 1.45 | 0 |
-| Chip | Nunito | 15px | 700 | 1 | 0 |
-| Buttons | Nunito | 17px | 800 | 1 | 0 |
-| Error | Nunito | 14px | 600 | 1.45 | 0 |
-
-- One family, used at 400, 600, 700 and 800. Do not add a second face.
-- Headings are sentence case. Never caps.
-- At 360 wide, the heading drops to 28px.
 
 ## Motion
 
@@ -197,6 +123,86 @@ The sign-up flow of Sprig, a fictional app for home growers. It is three steps i
 - [ ] Ten chips, with Herbs and Tomatoes picked at start. The tally reads "2 of 3 picked. 1 more to go."
 - [ ] Step 3 button reads "Create account", then "Creating account", then "Welcome, Mina".
 - [ ] Slide is 420ms `cubic-bezier(0.2, 0, 0, 1)`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: step 1. Segment 1 is green, segments 2 and 3 are track colour. The label reads "Step 1 of 3 · About you". The heading reads "Let's get you growing". Name is prefilled "Mina Gurung". Email is prefilled "mina.gurung@fernpost.org". Back is shown at 45% opacity and is disabled. Continue is a green pill.
+2. Clear the name and tap Continue. The error "Tell us your name." shows under it in `--danger`. The field border turns `--danger`. Focus moves to the name field.
+3. Type a bad email and tap Continue. The error reads "Enter an email like name@example.com." An empty email reads "Enter your email address."
+4. While an error shows, typing re-checks the field. The error clears as soon as the value is valid.
+5. Tap Continue with valid fields. The track slides left by one step in 420ms. Segment 2 fills left to right in 320ms. The label becomes "Step 2 of 3 · Password". Back becomes active. Focus moves to the new heading after 200ms.
+6. Step 2 heading: "Make a password". Four rules are listed: "At least 10 characters", "One number", "One capital letter", "Not your name or email". Each starts with an empty 22px circle.
+7. Type in the password. Each rule that passes fills its circle green, scales it to 1.08, and draws a white tick in 320ms. A rule that stops passing reverses. The line under the list reads "N of 4 rules met".
+8. "Not your name or email" fails if the password contains the first name or the email's local part, when either is longer than 2 characters. It also fails while the field is empty.
+9. Tap Continue with fewer than 4 rules met. The error reads "Meet all four rules to continue." Focus moves to the password.
+10. The eye button shows and hides the password. Its label flips between "Show password" and "Hide password".
+11. Step 3 heading: "What do you grow?". Ten chips: Herbs, Tomatoes, Balcony pots, Composting, Seed saving, Houseplants, Native flowers, Fruit trees, Mushrooms, Chillies. Herbs and Tomatoes start picked.
+12. Tap a chip to toggle it. A picked chip fills green, swaps its plus icon for a tick, and its radius grows from 14px to 22px in 320ms. The tally reads "2 of 3 picked. 1 more to go." or "3 picked. Good start."
+13. On step 3, Continue reads "Create account". With fewer than 3 picked, the error reads "Pick at least 3 to continue."
+14. With 3 or more picked, Create account shows a spinner and the label "Creating account" for 1300ms, then "Welcome, Mina" for 2200ms. Then the demo clears the password and slides back to step 1.
+15. Back slides one step right. Picked chips and typed values stay.
+16. Enter in any input acts as Continue.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #f6f0e3;            /* cream page */
+  --surface: #fffbf2;       /* fields, chips, rules card */
+  --ink: #1e2a22;           /* headings, input text */
+  --ink-2: #4a5a4f;         /* lede, labels of quiet text */
+  --ink-3: #6e7a70;         /* rare muted text */
+  --line: #e2d8c3;          /* field borders, bar rule */
+  --primary: #1f4d3a;       /* deep green: Continue, filled segments, picked chips, ticks */
+  --on-primary: #fffbf2;
+  --primary-soft: #dce8d9;  /* tonal: Back button, focus halo */
+  --track: #e8dfcc;         /* empty segments */
+  --danger: #a63d2a;        /* errors */
+
+  /* type */
+  --sans: "Nunito", system-ui, sans-serif;
+
+  /* shape */
+  --radius: 14px;
+  --pill: 999px;
+  --control: 56px;
+  --hit: 44px;
+
+  /* space: 4px base */
+  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+
+  /* motion: M3 Expressive */
+  --emph: cubic-bezier(0.2, 0, 0, 1);
+  --decel: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --fast: 160ms;
+  --mid: 320ms;
+  --slide: 420ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Brand | Nunito | 18px | 800 | 1 | -0.01em |
+| Step label | Nunito | 13px | 700 | 1.45 | 0.02em |
+| Heading | Nunito | 32px | 800 | 1.08 | -0.02em |
+| Lede | Nunito | 16px | 400 | 1.45 | 0 |
+| Field label | Nunito | 14px | 700 | 1.45 | 0 |
+| Input | Nunito | 17px | 600 | 56px box | 0 |
+| Rule item | Nunito | 15px | 600 | 1.45 | 0 |
+| Chip | Nunito | 15px | 700 | 1 | 0 |
+| Buttons | Nunito | 17px | 800 | 1 | 0 |
+| Error | Nunito | 14px | 600 | 1.45 | 0 |
+
+- One family, used at 400, 600, 700 and 800. Do not add a second face.
+- Headings are sentence case. Never caps.
+- At 360 wide, the heading drops to 28px.
 
 ## Implementation notes
 

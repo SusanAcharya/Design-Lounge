@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the panel uses `--surface`, `--line`, and `--radius-card`. A sentence with no button inside it is `tooltip`. A dialog that traps focus is `modal-dialog-focus-trap`.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A button, Note, with a panel anchored under it. The panel starts open so the piece can be read. It says Gate 2 closes at 18:00 and the rice moves to Gate 4. Close is an outline button inside the panel. Close hides the panel and returns focus to Note. Escape does the same. Clicking Note toggles the panel. There is no scrim, no focus trap, and no page dimming. The rest of the page stays usable. The panel is 280px wide, padding 12px, radius 2px, on the surface, with a hairline.
-
-## Reference behaviour
-
-1. Note is `aria-expanded="true"`. The panel is visible under the button.
-2. Close hides the panel, sets expanded to false, and focuses Note.
-3. Escape hides the panel.
-4. Clicking Note while it is closed opens the panel. Clicking it while open closes the panel.
-5. There is no animation.
-6. Focus ring is 2px `--focus`, offset 2px, on Note and on Close.
 
 ## Structure
 
@@ -31,33 +24,6 @@ wrap, position relative
 - Note has `aria-controls` pointing at the panel and `aria-expanded`.
 - The panel is hidden with the `hidden` attribute.
 - Close is a button, not a gesture the person must guess.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --line-strong: #cfc6b8;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px. The family's card radius replaces the panel. The button radius replaces Note and Close. Do not add a shadow if the family's shadow is none.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Note | sans | 13px | 500 | `--ink` |
-| Body | sans | 14px | 400 | `--ink` |
-| Close | sans | 13px | 500 | `--ink` |
-
-The sentence wraps inside 280px minus the padding. It is not a tooltip's one short line only, because the panel can hold a second sentence and a button.
 
 ## Motion
 
@@ -107,6 +73,46 @@ None. The panel appears in one frame. Reduced motion has nothing to remove. Do n
 - [ ] Note and Close are 40px and outline.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Note is `aria-expanded="true"`. The panel is visible under the button.
+2. Close hides the panel, sets expanded to false, and focuses Note.
+3. Escape hides the panel.
+4. Clicking Note while it is closed opens the panel. Clicking it while open closes the panel.
+5. There is no animation.
+6. Focus ring is 2px `--focus`, offset 2px, on Note and on Close.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --line-strong: #cfc6b8;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px. The family's card radius replaces the panel. The button radius replaces Note and Close. Do not add a shadow if the family's shadow is none.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Note | sans | 13px | 500 | `--ink` |
+| Body | sans | 14px | 400 | `--ink` |
+| Close | sans | 13px | 500 | `--ink` |
+
+The sentence wraps inside 280px minus the padding. It is not a tooltip's one short line only, because the panel can hold a second sentence and a button.
 
 ## Implementation notes
 

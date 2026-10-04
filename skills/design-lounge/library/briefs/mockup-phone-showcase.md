@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A device frame for presenting phone work in a case study or a landing page, drawn entirely in CSS. No images, no SVG device outlines. The phone, a fictional Corvo 3, has a brushed titanium edge, three keys on the left, a side button on the right, a black bezel, and a pill-shaped island with a camera lens. Inside sits real HTML: a lock screen, a journal list and a run summary. A side panel switches the finish (Raw, Graphite, Dune, Fjord), the screen and the stage (warm bone gallery or espresso dark). Moving the pointer over the stage turns the phone in 3D, and a glare band slides across the glass. The detail worth copying is the stacked depth layers: four copies of the body outline at −4, −8, −12 and −16px on Z give the phone real thickness when it turns, so it never looks like a flat card.
-
-## Reference behaviour
-
-1. First frame: light stage, Raw finish, Lock screen. The phone rests at `rotateX(5deg) rotateY(-20deg)` so the left keys and the edge thickness are visible.
-2. Pointer moves over the stage: target tilt is `rotateX = -ny * 24`, `rotateY = nx * 56`, where `nx`, `ny` are pointer position in −0.5…0.5 of the stage box. The current tilt eases toward the target by 10% per animation frame.
-3. Pointer leaves the stage: the target returns to the rest pose and the phone eases back.
-4. The glare band on the screen moves with `rotateY`: its centre is at `42 − ry × 1.6` percent across the screen.
-5. The floor shadow under the phone shifts sideways by `−1.4px × ry` and narrows as the tilt grows.
-6. Finish swatches (radio group): the edge gradient, depth layers and keys recolour instantly; the legend reads "Finish Graphite" etc.
-7. Screen segmented control (Lock, Journal, Run): the outgoing screen fades out, the incoming one fades in from `scale(1.04)` to `1`.
-8. When Run is shown, the island widens from 29% to 52% of the phone width and shows a green dot, "Run" and an elapsed time "24:18". It shrinks back for other screens.
-9. Stage segmented control (Light, Dark): background, text and the floor shadow switch over 400ms.
-10. The right side button is a real button. Pressing it puts the screen to sleep (all screens fade to black, island shrinks). Pressing again or choosing any screen wakes it.
-11. A polite live region announces each change: "Graphite finish", "Run screen", "dark stage", "Screen asleep".
 
 ## Structure
 
@@ -47,47 +35,6 @@ A device frame for presenting phone work in a case study or a landing page, draw
 - `.rig` sets the phone width and is `container-type: inline-size`, so every part of the phone and its screens is sized in `cqw`.
 - `.phone` (aspect 300/628, `transform-style: preserve-3d`) contains: four `.depth` layers, three decorative `.key` elements on the left, `button.k-pow` on the right, then `.edge > .bezel > .screen`.
 - `.screen` holds `.island`, three `.scr` panels and a `.glare` overlay.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ebe5da;        /* bone wall */
-  --bg-2: #f6f2ea;      /* spotlight centre */
-  --ink: #1d1a16;
-  --ink-2: #5b544a;
-  --ink-3: #7a7266;
-  --line: #d3cabb;
-  --accent: #b4561f;    /* ochre: headline italic, focus, journal FAB */
-  --floor: rgba(40, 28, 14, .32);
-  --serif: "Instrument Serif", Georgia, serif;
-  --sans: "Geist", system-ui, sans-serif;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  /* finish ramp, light → dark */
-  --f1: #e4e0d8; --f2: #b3ada3; --f3: #77726a; --f4: #4e4a44;   /* Raw */
-}
-body.dark { --bg: #14120f; --bg-2: #26221c; --ink: #efe8dc; --ink-2: #b6ad9f; --ink-3: #91887a; --line: #3a342b; --accent: #e08a4f; --floor: rgba(0,0,0,.7); }
-[data-finish="graphite"] { --f1: #8d9096; --f2: #4a4d52; --f3: #2b2d31; --f4: #17181a; }
-[data-finish="dune"]     { --f1: #f1dcc6; --f2: #c9a385; --f3: #8f6c52; --f4: #5c4433; }
-[data-finish="fjord"]    { --f1: #dfe8ee; --f2: #9fb2bf; --f3: #677c8a; --f4: #3f4f5a; }
-```
-
-Phone geometry, all in `cqw` of the rig (rig = 300px at full size): body radius 15.5cqw, edge padding 1.7cqw, bezel radius 13.8cqw and padding 1.5cqw, screen radius 12.4cqw, island 29 × 8.6cqw at top 3.4cqw.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Headline | Instrument Serif | 56px (44px narrow) | 400, second line italic in accent | 1 | −0.01em | sentence |
-| Eyebrow / legends | Geist | 12px | 500 | 1.45 | 0.14em | uppercase |
-| Lede | Geist | 15px | 400 | 1.45 | 0 | sentence |
-| Segmented labels | Geist | 14px | 500 | 1 | 0 | sentence |
-| Lock time | Instrument Serif | 30cqw | 400 | 1 | −0.02em | — |
-| Journal title, run distance | Instrument Serif | 11cqw / 24cqw | 400 | 1 | −0.02em | — |
-| In-screen body | Geist | 3.4–3.6cqw | 400/600 | 1.3 | 0 | — |
-
-The serif carries every big number and title, inside and outside the phone. That shared voice is what makes the mockup feel art-directed rather than dropped in.
 
 ## Motion
 
@@ -148,6 +95,65 @@ The serif carries every big number and title, inside and outside the phone. That
 - [ ] Island widens to 52cqw with "Run 24:18" only on the Run screen.
 - [ ] Rest pose `rotateX(5deg) rotateY(-20deg)`, perspective 1100px.
 - [ ] Headline "Hold it to *the light.*" in Instrument Serif, italic half in ochre.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: light stage, Raw finish, Lock screen. The phone rests at `rotateX(5deg) rotateY(-20deg)` so the left keys and the edge thickness are visible.
+2. Pointer moves over the stage: target tilt is `rotateX = -ny * 24`, `rotateY = nx * 56`, where `nx`, `ny` are pointer position in −0.5…0.5 of the stage box. The current tilt eases toward the target by 10% per animation frame.
+3. Pointer leaves the stage: the target returns to the rest pose and the phone eases back.
+4. The glare band on the screen moves with `rotateY`: its centre is at `42 − ry × 1.6` percent across the screen.
+5. The floor shadow under the phone shifts sideways by `−1.4px × ry` and narrows as the tilt grows.
+6. Finish swatches (radio group): the edge gradient, depth layers and keys recolour instantly; the legend reads "Finish Graphite" etc.
+7. Screen segmented control (Lock, Journal, Run): the outgoing screen fades out, the incoming one fades in from `scale(1.04)` to `1`.
+8. When Run is shown, the island widens from 29% to 52% of the phone width and shows a green dot, "Run" and an elapsed time "24:18". It shrinks back for other screens.
+9. Stage segmented control (Light, Dark): background, text and the floor shadow switch over 400ms.
+10. The right side button is a real button. Pressing it puts the screen to sleep (all screens fade to black, island shrinks). Pressing again or choosing any screen wakes it.
+11. A polite live region announces each change: "Graphite finish", "Run screen", "dark stage", "Screen asleep".
+
+## Tokens
+
+```css
+:root {
+  --bg: #ebe5da;        /* bone wall */
+  --bg-2: #f6f2ea;      /* spotlight centre */
+  --ink: #1d1a16;
+  --ink-2: #5b544a;
+  --ink-3: #7a7266;
+  --line: #d3cabb;
+  --accent: #b4561f;    /* ochre: headline italic, focus, journal FAB */
+  --floor: rgba(40, 28, 14, .32);
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Geist", system-ui, sans-serif;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  /* finish ramp, light → dark */
+  --f1: #e4e0d8; --f2: #b3ada3; --f3: #77726a; --f4: #4e4a44;   /* Raw */
+}
+body.dark { --bg: #14120f; --bg-2: #26221c; --ink: #efe8dc; --ink-2: #b6ad9f; --ink-3: #91887a; --line: #3a342b; --accent: #e08a4f; --floor: rgba(0,0,0,.7); }
+[data-finish="graphite"] { --f1: #8d9096; --f2: #4a4d52; --f3: #2b2d31; --f4: #17181a; }
+[data-finish="dune"]     { --f1: #f1dcc6; --f2: #c9a385; --f3: #8f6c52; --f4: #5c4433; }
+[data-finish="fjord"]    { --f1: #dfe8ee; --f2: #9fb2bf; --f3: #677c8a; --f4: #3f4f5a; }
+```
+
+Phone geometry, all in `cqw` of the rig (rig = 300px at full size): body radius 15.5cqw, edge padding 1.7cqw, bezel radius 13.8cqw and padding 1.5cqw, screen radius 12.4cqw, island 29 × 8.6cqw at top 3.4cqw.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Headline | Instrument Serif | 56px (44px narrow) | 400, second line italic in accent | 1 | −0.01em | sentence |
+| Eyebrow / legends | Geist | 12px | 500 | 1.45 | 0.14em | uppercase |
+| Lede | Geist | 15px | 400 | 1.45 | 0 | sentence |
+| Segmented labels | Geist | 14px | 500 | 1 | 0 | sentence |
+| Lock time | Instrument Serif | 30cqw | 400 | 1 | −0.02em | — |
+| Journal title, run distance | Instrument Serif | 11cqw / 24cqw | 400 | 1 | −0.02em | — |
+| In-screen body | Geist | 3.4–3.6cqw | 400/600 | 1.3 | 0 | — |
+
+The serif carries every big number and title, inside and outside the phone. That shared voice is what makes the mockup feel art-directed rather than dropped in.
 
 ## Implementation notes
 

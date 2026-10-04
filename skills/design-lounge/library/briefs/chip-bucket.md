@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Gate 4, Night book, and Hold list start in a pile. A dark bucket is labelled Night bucket. Drag a chip. If it overlaps the bucket on release, it joins the bucket and the note names it. If it misses, it returns to the pile. This is not a token field. That field is `token-field`. This is not a drag-to-confirm track. That track is `drag-to-confirm`.
-
-## Reference behaviour
-
-1. Three chips start in the pile. The note says Drag a chip into the bucket.
-2. Pointer down captures the chip.
-3. Pointer move translates the chip with the pointer.
-4. Release tests the chip box against the bucket box.
-5. A hit hides the pile chip and appends a resting chip in the bucket.
-6. The note reads the name plus is in the night bucket.
-7. A miss clears the transform. The chip stays in the pile.
 
 ## Structure
 
@@ -32,20 +24,6 @@ Hold list
 - The bucket is 220px wide, min-height 240px, fill #1c1b19, radius 8px 8px 16px 16px.
 - A chip inside the bucket is fill #2a2926 and is not a button.
 - The note is 14px, min-height 20px.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --chip:#fff; --bucket:#1c1b19; --ink:#161513; --on:#f4f1ea; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Chip | IBM Plex Sans | 14px | 500 |
-| Bucket title | IBM Plex Sans | 16px | 600 |
-| Note | IBM Plex Sans | 14px | 400 |
 
 ## Motion
 
@@ -90,16 +68,6 @@ Hold list
 - [ ] The resting note is Drag a chip into the bucket.
 - [ ] A hit says the name is in the night bucket.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Hit-test the two boxes.
-
-```js
-const hit = a.right > b.left && a.left < b.right && a.bottom > b.top && a.top < b.bottom;
-```
-
-Clear the transform before hiding, so a later show is not offset.
 
 ## Measurements to keep
 
@@ -154,6 +122,44 @@ Clear the transform before hiding, so a later show is not offset.
 - Honour reduced motion.
 - Do not add a second accent.
 - Do not add a second type family.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Three chips start in the pile. The note says Drag a chip into the bucket.
+2. Pointer down captures the chip.
+3. Pointer move translates the chip with the pointer.
+4. Release tests the chip box against the bucket box.
+5. A hit hides the pile chip and appends a resting chip in the bucket.
+6. The note reads the name plus is in the night bucket.
+7. A miss clears the transform. The chip stays in the pile.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --chip:#fff; --bucket:#1c1b19; --ink:#161513; --on:#f4f1ea; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Chip | IBM Plex Sans | 14px | 500 |
+| Bucket title | IBM Plex Sans | 16px | 600 |
+| Note | IBM Plex Sans | 14px | 400 |
+
+## Implementation notes
+
+Hit-test the two boxes.
+
+```js
+const hit = a.right > b.left && a.left < b.right && a.bottom > b.top && a.top < b.bottom;
+```
+
+Clear the transform before hiding, so a later show is not offset.
 
 ---
 

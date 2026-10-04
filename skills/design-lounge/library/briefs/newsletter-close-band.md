@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, Join is the one solid button and the band colour is `--surface`. The mid-article fold is `newsletter-fold-inline`. This band closes the page.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The end of a note, then the ask. The note says "That is the evening." in 48px serif, with one sentence under it. The band is a full-width surface with a hairline on top. Inside the same 720px column: "The evening list", the promise of one Sunday letter, an email field, and Join. An empty or broken address shows "Use a full address." under the field and does not submit. A full address hides the form and the promise, and the line "You are on the evening list." takes their place. The band stays. It is not a toast, and it is not a fold in the middle of an essay.
-
-## Reference behaviour
-
-1. The first frame shows the closing title, the lead, the band, the empty field, and Join.
-2. Submit with an empty field, or a value that is not a full address, sets `aria-invalid`, shows the error, and moves focus to the field. Join still says Join.
-3. A full address has one @ and a dot in the domain. `ada@press.mail` qualifies. `ada@press` does not.
-4. A valid submit hides the form and the promise. The heading stays. The done line reads "You are on the evening list."
-5. There is no second field, no name, and no checkbox.
-6. There is no animation. Focus ring is 2px `--focus`, offset 2px.
-7. The error is under the field. It is not a toast.
 
 ## Structure
 
@@ -36,42 +28,6 @@ band, full width, hairline top, padding 28px 64px
 - The band is a `section` labelled Evening list.
 - The field's accessible name is Email.
 - The error uses an id the field points at with `aria-describedby`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4efe6;
-  --band: #f7f3ea;
-  --ink: #241c16;
-  --ink-2: #5c5148;
-  --line: #ddd4c6;
-  --line-strong: #c9bfb2;
-  --primary: #3f5c4b;
-  --primary-ink: #fffdf8;
-  --danger: #9b2c2c;
-  --focus: #3f5c4b;
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Public Sans", system-ui, sans-serif;
-}
-```
-
-Join is the one solid button. Radius is 2px. The family replaces the radius and the 40px height. The band background becomes `--surface` when a theme is locked. Do not keep this cream on a dark theme.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Close title | serif | 48px | 500 | `--ink` |
-| Lead | sans | 16px | 400 | `--ink-2` |
-| Band title | serif | 28px | 500 | `--ink` |
-| Promise | sans | 16px | 400 | `--ink-2` |
-| Field | sans | 14px | 400 | `--ink` |
-| Button | sans | 13px | 500 | `--primary-ink` |
-| Error | sans | 12px | 400 | `--danger` |
-| Done | serif | 22px | 500 | `--ink` |
-
-The close title is the largest type. The band title steps down. The done line is smaller than the band title, because the ask has been answered. The lead measure is about 42 characters. The promise is about 46.
 
 ## Motion
 
@@ -122,6 +78,56 @@ None. Success replaces the form in one frame. Reduced motion has nothing to remo
 - [ ] The error is under the field, not a toast.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is no name field, no checkbox, and no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the closing title, the lead, the band, the empty field, and Join.
+2. Submit with an empty field, or a value that is not a full address, sets `aria-invalid`, shows the error, and moves focus to the field. Join still says Join.
+3. A full address has one @ and a dot in the domain. `ada@press.mail` qualifies. `ada@press` does not.
+4. A valid submit hides the form and the promise. The heading stays. The done line reads "You are on the evening list."
+5. There is no second field, no name, and no checkbox.
+6. There is no animation. Focus ring is 2px `--focus`, offset 2px.
+7. The error is under the field. It is not a toast.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4efe6;
+  --band: #f7f3ea;
+  --ink: #241c16;
+  --ink-2: #5c5148;
+  --line: #ddd4c6;
+  --line-strong: #c9bfb2;
+  --primary: #3f5c4b;
+  --primary-ink: #fffdf8;
+  --danger: #9b2c2c;
+  --focus: #3f5c4b;
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Public Sans", system-ui, sans-serif;
+}
+```
+
+Join is the one solid button. Radius is 2px. The family replaces the radius and the 40px height. The band background becomes `--surface` when a theme is locked. Do not keep this cream on a dark theme.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Close title | serif | 48px | 500 | `--ink` |
+| Lead | sans | 16px | 400 | `--ink-2` |
+| Band title | serif | 28px | 500 | `--ink` |
+| Promise | sans | 16px | 400 | `--ink-2` |
+| Field | sans | 14px | 400 | `--ink` |
+| Button | sans | 13px | 500 | `--primary-ink` |
+| Error | sans | 12px | 400 | `--danger` |
+| Done | serif | 22px | 500 | `--ink` |
+
+The close title is the largest type. The band title steps down. The done line is smaller than the band title, because the ask has been answered. The lead measure is about 42 characters. The promise is about 46.
 
 ## Implementation notes
 

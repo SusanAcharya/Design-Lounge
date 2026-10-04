@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from hauntedbouldercity.com: the "strange stuff" section, where vertical scrolling pins the screen and slides three full-height story panels sideways, each a night scene with a huge condensed headline, while tabs at the bottom track the chapter. This piece is that section for a fictional harbour ghost walk, the Wrexley Lantern Walk. Three case files (the keeper, the wreck, the lights) sit side by side on a track. The next panel always peeks in from the right at 22% width, dimmed, so people know to keep going. The detail worth copying is that every piece of chrome reads the same single number, scroll progress from 0 to 1: the track position, the tab fills, the counter, the dimming and the top progress bar.
-
-## Reference behaviour
-
-1. First frame: panel 01 fills the left 78% of the screen. Panel 02 peeks on the right, its copy at 35% opacity. Tab "01 Keepers" is current and its top rule is lit amber. The counter reads 01 / 03. Fog drifts slowly across the bottom.
-2. Scrolling down does not move the page visibly. The section is pinned (`position: sticky`) and the track translates left in exact proportion to scroll. There is no snapping and no easing; the track follows the wheel.
-3. The pinned scroll distance is 240vh (section 340vh minus one screen). Across it, the track moves by `trackWidth - viewportWidth`.
-4. Each tab's 1px top rule fills left to right as you pass through its chapter (`scaleX` 0 → 1). Tabs behind you stay full.
-5. When progress × 2 rounds to a new integer, that panel becomes current: its copy fades to full opacity (500ms), the previous one dims to 35%, the tab gets `aria-current="true"`, the counter changes, and the live region says "Case file 2 of 3".
-6. Clicking a tab smooth-scrolls the window to that chapter's exact progress point (0, 0.5, 1). Under reduced motion it jumps.
-7. ArrowLeft / ArrowRight step one chapter while the section is fully pinned on screen.
-8. A 3px amber bar at the very top shows whole-page progress.
-9. After the last panel, the section un-pins and a short "Pick a foggy night." booking block scrolls up.
 
 ## Structure
 
@@ -47,57 +37,6 @@ Studied from hauntedbouldercity.com: the "strange stuff" section, where vertical
 - Each panel is an `article aria-labelledby` its `h2`. Layers inside, back to front: `.sky` gradient, `.moon`, inline SVG scene silhouette (`preserveAspectRatio="xMidYMax slice"`, 62% height), two `.fog` layers, `.shade` left-to-right darkening gradient, `.num` outlined numeral, `.copy` (kicker, `h2`, `p`, tag).
 - `.foot`: `ol.tabs aria-label="Case files"` of three buttons, and the counter (`aria-hidden`; the live region speaks).
 - `section.after` with an `h3` and a second booking link.
-
-## Tokens
-
-```css
-:root {
-  --night: #0a1220;          /* page */
-  --night-2: #111c30;
-  --deep: #060b14;           /* silhouettes, button text */
-  --bone: #ece6d8;           /* headlines */
-  --bone-2: #b9b7ae;         /* body, meta */
-  --bone-3: #8d9099;         /* tags, inactive tab numbers */
-  --line: rgba(236,230,216,.18);
-  --fog: #9fb4c4;            /* fog gradients at 26–34% alpha */
-  --lamp: #e8873a;           /* lantern amber: highlight line, button, progress */
-  --lamp-2: #f2b27a;         /* lit window, kicker bold, current tab text */
-  --focus: #f2b27a;
-
-  --display: "Anton", Impact, "Arial Narrow", sans-serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-
-  --h2: clamp(44px, min(11vh, 13vw), 104px);
-  --numeral: min(40vh, 330px);
-  --gutter: 48px;            /* 18px under 760px */
-  --panel: 78vw;             /* 88vw under 760px; last panel 100vw */
-  --pin-length: 340vh;
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --t-dim: 500ms; --t-copy: 700ms;
-  --fog-a: 38s; --fog-b: 54s;
-}
-```
-
-Sky gradients per panel (top → bottom): `#0d1a2e → #1b2c44 → #2a3a52`, `#081322 → #12253a → #1e3a4a`, `#05101d → #0f2033 → #1a2e45`.
-
-## Typography
-
-| Role | Family | Size / LH | Weight | Tracking | Case / colour |
-| --- | --- | --- | --- | --- | --- |
-| Brand | Anton | 20px | 400 | 0.04em | uppercase, middle word `--lamp` |
-| Meta row | DM Mono | 11px | 400 | 0.14em | uppercase, `--bone-2`; right item `--lamp-2` |
-| Kicker | DM Mono | 11px | 400 / 500 | 0.16em | uppercase; "Case file 01" `--lamp-2` |
-| Headline h2 | Anton | `--h2` / 0.92 | 400 | 0.005em | uppercase, 3 short lines, last line `--lamp` |
-| Body | DM Mono | 14.5px / 1.55 | 400 | 0 | `--bone-2`, max 420px |
-| Tag | DM Mono | 11px | 400 | 0.16em | uppercase, `--bone-3` |
-| Tab | DM Mono | 13px | 400 | 0 | number `--bone-3`, current `--lamp` |
-| Counter | DM Mono | 12px | 400 / 500 | 0.2em | tabular, current number `--bone` |
-| Numeral | Anton | `--numeral` / 0.8 | 400 | 0 | transparent fill, 1.5px stroke at 22% bone |
-| Button | DM Mono | 13px | 500 | 0.02em | sentence case, `--deep` on `--lamp` |
-
-Each headline is three lines broken by hand with `<br>`. Never let a condensed headline wrap on its own.
 
 ## Motion
 
@@ -161,6 +100,73 @@ Scroll-linked transforms stay under reduced motion because the user is driving t
 - [ ] Tabs "01 Keepers", "02 Wrecks", "03 Lights"; counter "01 / 03".
 - [ ] Booking button "Book a lantern" amber with near-black text.
 - [ ] Outlined numerals 01–03 bottom-right of each panel.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: panel 01 fills the left 78% of the screen. Panel 02 peeks on the right, its copy at 35% opacity. Tab "01 Keepers" is current and its top rule is lit amber. The counter reads 01 / 03. Fog drifts slowly across the bottom.
+2. Scrolling down does not move the page visibly. The section is pinned (`position: sticky`) and the track translates left in exact proportion to scroll. There is no snapping and no easing; the track follows the wheel.
+3. The pinned scroll distance is 240vh (section 340vh minus one screen). Across it, the track moves by `trackWidth - viewportWidth`.
+4. Each tab's 1px top rule fills left to right as you pass through its chapter (`scaleX` 0 → 1). Tabs behind you stay full.
+5. When progress × 2 rounds to a new integer, that panel becomes current: its copy fades to full opacity (500ms), the previous one dims to 35%, the tab gets `aria-current="true"`, the counter changes, and the live region says "Case file 2 of 3".
+6. Clicking a tab smooth-scrolls the window to that chapter's exact progress point (0, 0.5, 1). Under reduced motion it jumps.
+7. ArrowLeft / ArrowRight step one chapter while the section is fully pinned on screen.
+8. A 3px amber bar at the very top shows whole-page progress.
+9. After the last panel, the section un-pins and a short "Pick a foggy night." booking block scrolls up.
+
+## Tokens
+
+```css
+:root {
+  --night: #0a1220;          /* page */
+  --night-2: #111c30;
+  --deep: #060b14;           /* silhouettes, button text */
+  --bone: #ece6d8;           /* headlines */
+  --bone-2: #b9b7ae;         /* body, meta */
+  --bone-3: #8d9099;         /* tags, inactive tab numbers */
+  --line: rgba(236,230,216,.18);
+  --fog: #9fb4c4;            /* fog gradients at 26–34% alpha */
+  --lamp: #e8873a;           /* lantern amber: highlight line, button, progress */
+  --lamp-2: #f2b27a;         /* lit window, kicker bold, current tab text */
+  --focus: #f2b27a;
+
+  --display: "Anton", Impact, "Arial Narrow", sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+
+  --h2: clamp(44px, min(11vh, 13vw), 104px);
+  --numeral: min(40vh, 330px);
+  --gutter: 48px;            /* 18px under 760px */
+  --panel: 78vw;             /* 88vw under 760px; last panel 100vw */
+  --pin-length: 340vh;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --t-dim: 500ms; --t-copy: 700ms;
+  --fog-a: 38s; --fog-b: 54s;
+}
+```
+
+Sky gradients per panel (top → bottom): `#0d1a2e → #1b2c44 → #2a3a52`, `#081322 → #12253a → #1e3a4a`, `#05101d → #0f2033 → #1a2e45`.
+
+## Typography
+
+| Role | Family | Size / LH | Weight | Tracking | Case / colour |
+| --- | --- | --- | --- | --- | --- |
+| Brand | Anton | 20px | 400 | 0.04em | uppercase, middle word `--lamp` |
+| Meta row | DM Mono | 11px | 400 | 0.14em | uppercase, `--bone-2`; right item `--lamp-2` |
+| Kicker | DM Mono | 11px | 400 / 500 | 0.16em | uppercase; "Case file 01" `--lamp-2` |
+| Headline h2 | Anton | `--h2` / 0.92 | 400 | 0.005em | uppercase, 3 short lines, last line `--lamp` |
+| Body | DM Mono | 14.5px / 1.55 | 400 | 0 | `--bone-2`, max 420px |
+| Tag | DM Mono | 11px | 400 | 0.16em | uppercase, `--bone-3` |
+| Tab | DM Mono | 13px | 400 | 0 | number `--bone-3`, current `--lamp` |
+| Counter | DM Mono | 12px | 400 / 500 | 0.2em | tabular, current number `--bone` |
+| Numeral | Anton | `--numeral` / 0.8 | 400 | 0 | transparent fill, 1.5px stroke at 22% bone |
+| Button | DM Mono | 13px | 500 | 0.02em | sentence case, `--deep` on `--lamp` |
+
+Each headline is three lines broken by hand with `<br>`. Never let a condensed headline wrap on its own.
 
 ## Implementation notes
 

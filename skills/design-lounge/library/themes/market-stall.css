@@ -1,6 +1,7 @@
 /* Market Stall · light · no pair
    Turmeric, tomato, kraft paper. Loud in a friendly way.
    Best for: Food, Local shops, Festivals */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Market Stall · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Zilla Slab", Georgia, serif;
-  --font-text: "Karla", system-ui, sans-serif;
-  --radius: 10px;
-  --shadow: 0 12px 26px -14px rgba(42,26,16,.22);
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

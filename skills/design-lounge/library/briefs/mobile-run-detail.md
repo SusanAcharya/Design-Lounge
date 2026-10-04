@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the back control, the fact list, and the bottom button.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The detail a driver opens from a list, on a phone. The Lounge draws the device chrome, so this screen pads 54px at the top and does not draw a clock. Back reads "Runs" in the primary colour. The title is Bay 14. A warning badge says Waiting on driver. Five facts sit in a white rounded card: weight, driver, slot, gate, reference. A fixed bar at the bottom holds one full-width Confirm load button, with 28px padding under it for the home indicator. Confirming disables the button, sets its label to Confirmed, and turns the badge green. There is no tab bar on this screen. Back is the way out.
-
-## Reference behaviour
-
-1. Initial badge is Waiting on driver, fill `#f8efd8`, ink `#8a5a10`.
-2. Confirm load fills the bar button, height 44, radius 10.
-3. Tap confirm: label Confirmed, button disabled, badge text Confirmed, badge fill `#e7f2ec`, ink `#1f4d3a`.
-4. Back is a button. In the demo it does not navigate. It is 44px tall so the hit target is real.
-5. Fact values are mono. Labels are the text face in `--ink-2`.
-6. Do not draw a status bar, a notch, or a tab bar.
-7. Focus ring 2px `--focus`, offset 2px.
 
 ## Structure
 
@@ -33,35 +25,6 @@ fixed bar height 84, padding 12 20 28
 - Facts are a `dl` of pairs. Each pair is a row with the label and the value.
 - The bar is `position: fixed` at the bottom.
 - Body padding-bottom 96 so the card is not hidden behind the bar.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f1ea;
-  --surface: #fffdf8;
-  --ink: #1b1814;
-  --ink-2: #5e574e;
-  --ink-3: #8d857a;
-  --line: #e3dbcf;
-  --primary: #8a4b12;
-  --primary-ink: #fffdf8;
-  --warning: #8a5a10;
-  --warning-soft: #f8efd8;
-  --focus: #8a4b12;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --safe-top: 54px;
-}
-```
-
-## Typography
-
-- Back: IBM Plex Sans 600, 15px, colour `#8a4b12`.
-- Title: 32px, weight 600, tracking -0.03em.
-- Badge: 11px, weight 600, height 22.
-- Labels: 14px `--ink-2`. Values: IBM Plex Mono 13px.
-- Button: 15px, weight 600, white-warm `#fffdf8` on `#8a4b12`.
 
 ## Motion
 
@@ -98,6 +61,49 @@ None. The badge and label change in place. Reduced motion changes nothing.
 - [ ] Confirm changes the badge and disables the button.
 - [ ] No tab bar on this screen.
 - [ ] Card radius is 10px. Button radius is 10px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial badge is Waiting on driver, fill `#f8efd8`, ink `#8a5a10`.
+2. Confirm load fills the bar button, height 44, radius 10.
+3. Tap confirm: label Confirmed, button disabled, badge text Confirmed, badge fill `#e7f2ec`, ink `#1f4d3a`.
+4. Back is a button. In the demo it does not navigate. It is 44px tall so the hit target is real.
+5. Fact values are mono. Labels are the text face in `--ink-2`.
+6. Do not draw a status bar, a notch, or a tab bar.
+7. Focus ring 2px `--focus`, offset 2px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f1ea;
+  --surface: #fffdf8;
+  --ink: #1b1814;
+  --ink-2: #5e574e;
+  --ink-3: #8d857a;
+  --line: #e3dbcf;
+  --primary: #8a4b12;
+  --primary-ink: #fffdf8;
+  --warning: #8a5a10;
+  --warning-soft: #f8efd8;
+  --focus: #8a4b12;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --safe-top: 54px;
+}
+```
+
+## Typography
+
+- Back: IBM Plex Sans 600, 15px, colour `#8a4b12`.
+- Title: 32px, weight 600, tracking -0.03em.
+- Badge: 11px, weight 600, height 22.
+- Labels: 14px `--ink-2`. Values: IBM Plex Mono 13px.
+- Button: 15px, weight 600, white-warm `#fffdf8` on `#8a4b12`.
 
 ## Implementation notes
 

@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A tabbed document viewer drawn as an architect's manila project folder. Four trapezoid tabs run along the top edge: Brief, Drawings, Budget, Minutes. The selected tab is lighter and sits 5px higher. Below, one sheet stands in the folder's pocket behind a front flap with a thumb notch and a typed sticker. Switch tabs and the current sheet drops into the pocket. The next one rises out of it, each sheet at its own slight tilt. Each sheet has its own content: a memo, a blueprint plan, a cost table, meeting minutes. To the right is the stacked variant, three job folders in a drawer with staggered tabs. Click a back folder and it lifts out and drops in front. Use the main folder for any record with four or five sections. Use the stack for picking a record. The detail worth copying is that the sheets go back into the pocket, behind the front flap, instead of cross-fading.
-
-## Reference behaviour
-
-1. First frame: Brief selected. The memo sheet stands in the pocket, tilted −0.5°, its bottom hidden behind the front flap. The flap sticker reads "Fernhill Library / Job 2291 · Stage 2 · Box 3 of 7"; the counter at right reads "Showing 01 of 04 / Brief". The stack shows Orchard School at the back, Tannery Lane Flats in the middle, Fernhill Library in front.
-2. Hover an unselected tab: it rises from 5px down to 1px down, 200ms.
-3. Click a tab, or focus the tab list and use Arrow Left/Right (wrapping), Home, End: the old sheet gets `.out` and falls to `translateY(78%)` in 240ms on an ease-in curve, behind the flap. The new sheet is unhidden and rises from `translateY(105%)` to `0` with its own tilt in 420ms on expo out, starting 90ms later. At 260ms the old sheet is set `hidden`.
-4. Selection moves `aria-selected` and roving `tabindex`; with the keyboard, focus follows selection. The counter updates.
-5. Fast clicking never leaves two sheets up: any sheet still in `.out` is hidden at once when a new switch starts.
-6. Stack, hover a back folder: it lifts 12px, 220ms.
-7. Stack, click a back folder (its visible tab or name strip), or focus it and press Enter or Space: it lifts 84px above the stack with `z-index: 20` for 230ms. Then every folder that was in front of it moves back one place, it takes place 0, and the `top` values animate over 380ms on expo out. The detail lines of the new front folder fade in; the old front's details fade out.
-8. Clicking the front folder does nothing. Its label says "In front." and it has `aria-current="true"`.
-9. Reduced motion: no slides, no lift. Sheets swap instantly and the stack reorders instantly.
 
 ## Structure
 
@@ -58,53 +48,6 @@ Sheet content:
 | 04 Minutes | Design team meeting 14 · 02 OCT · SITE HUT | 0.4° | Four numbered actions, owner initials in the accent |
 
 Stack folders: 2264 Orchard School (`#d3b274`, tab at 196px, "Stage 4 · Tender issued", 18 drawings, Nov 26 site start), 2278 Tannery Lane Flats (`#e9cf9b`, tab at 108px, "Stage 3 · Planning submitted", 42 homes, 12 Dec decision due), 2291 Fernhill Library (`#e4c78e`, tab at 20px, "Stage 2 · Concept signed off", 4 documents, 4.97m of 5m cap).
-
-## Tokens
-
-```css
-:root {
-  --desk: #d6dcdf;  --desk-2: #c8d0d4;
-  --ink: #1d2a33;   --ink-2: #4b5963;  --ink-3: #6b7780;
-  --manila: #e4c78e;      /* folder, selected tab */
-  --manila-hi: #ecd5a6;   /* flap highlight */
-  --manila-lo: #d3b274;   /* unselected tabs */
-  --manila-edge: #b8955a; /* flap edge line */
-  --sheet: #fbf8f1;  --rule: #e2dccd;
-  --accent: #2449a8;      /* selected tab number, focus, owners, budget total */
-  --blueprint: #27467a;
-
-  --slab: "Zilla Slab", Rockwell, Georgia, serif;
-  --mono: "Overpass Mono", ui-monospace, monospace;
-
-  --folder-h: 520px; --tab-w: 138px; --tab-h: 42px; --tab-cut: 12px; --tab-drop: 5px;
-  --pocket-inset: 26px; --sheet-h: 420px; --flap-h: 150px; --notch: 30px;
-  --stack-step: 86px; --sf-h: 250px;
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --in: cubic-bezier(.5, 0, .75, 0);
-  --t-out: 240ms; --t-in: 420ms; --t-in-delay: 90ms; --t-tab: 200ms;
-  --t-lift: 230ms; --t-restack: 380ms;
-  --shadow-folder: drop-shadow(0 22px 22px rgba(29,42,51,.22));
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Kicker | Overpass Mono | 11px | 600 | 1 | 0.16em | UPPER, `--ink-3` |
-| Title | Zilla Slab | 30px | 600, then 400 italic | 1.05 | −0.01em | Title |
-| Tab | Overpass Mono | 11px | 600 | 1 | 0.12em | UPPER, number 400 |
-| Sheet heading | Zilla Slab | 21px | 600 | 1.1 | 0 | sentence |
-| Sheet meta | Overpass Mono | 11px | 400 | 1 | 0.06em | UPPER, `--ink-3` |
-| Memo rows | Overpass Mono | 12px | 400 | 1.5 | 0.08em labels | UPPER labels |
-| Body | Zilla Slab | 15px | 400 | 1.5 | 0 | sentence, 56ch |
-| Table | Overpass Mono | 13px | 400 / 600 total | 1 | 0 | tabular nums |
-| Sticker name | Zilla Slab | 17px | 600 | 1.2 | 0 | Title |
-| Sticker line, counter | Overpass Mono | 11px | 400 | 1.4–1.5 | 0.04–0.08em | — |
-| Stack tab | Overpass Mono | 10.5px | 600 | 32px | 0.12em | UPPER |
-| Stack name | Zilla Slab | 19px | 600 | 1.2 | 0 | Title |
 
 ## Motion
 
@@ -169,6 +112,69 @@ Stack folders: 2264 Orchard School (`#d3b274`, tab at 196px, "Stage 4 · Tender 
 - [ ] Budget total "4,973,500" against "5,000,000 cap" in the accent.
 - [ ] Stack order on load: 2264 Orchard School back, 2278 Tannery Lane Flats middle, 2291 Fernhill Library front, 86px apart.
 - [ ] Sticker "Fernhill Library / Job 2291 · Stage 2 · Box 3 of 7".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Brief selected. The memo sheet stands in the pocket, tilted −0.5°, its bottom hidden behind the front flap. The flap sticker reads "Fernhill Library / Job 2291 · Stage 2 · Box 3 of 7"; the counter at right reads "Showing 01 of 04 / Brief". The stack shows Orchard School at the back, Tannery Lane Flats in the middle, Fernhill Library in front.
+2. Hover an unselected tab: it rises from 5px down to 1px down, 200ms.
+3. Click a tab, or focus the tab list and use Arrow Left/Right (wrapping), Home, End: the old sheet gets `.out` and falls to `translateY(78%)` in 240ms on an ease-in curve, behind the flap. The new sheet is unhidden and rises from `translateY(105%)` to `0` with its own tilt in 420ms on expo out, starting 90ms later. At 260ms the old sheet is set `hidden`.
+4. Selection moves `aria-selected` and roving `tabindex`; with the keyboard, focus follows selection. The counter updates.
+5. Fast clicking never leaves two sheets up: any sheet still in `.out` is hidden at once when a new switch starts.
+6. Stack, hover a back folder: it lifts 12px, 220ms.
+7. Stack, click a back folder (its visible tab or name strip), or focus it and press Enter or Space: it lifts 84px above the stack with `z-index: 20` for 230ms. Then every folder that was in front of it moves back one place, it takes place 0, and the `top` values animate over 380ms on expo out. The detail lines of the new front folder fade in; the old front's details fade out.
+8. Clicking the front folder does nothing. Its label says "In front." and it has `aria-current="true"`.
+9. Reduced motion: no slides, no lift. Sheets swap instantly and the stack reorders instantly.
+
+## Tokens
+
+```css
+:root {
+  --desk: #d6dcdf;  --desk-2: #c8d0d4;
+  --ink: #1d2a33;   --ink-2: #4b5963;  --ink-3: #6b7780;
+  --manila: #e4c78e;      /* folder, selected tab */
+  --manila-hi: #ecd5a6;   /* flap highlight */
+  --manila-lo: #d3b274;   /* unselected tabs */
+  --manila-edge: #b8955a; /* flap edge line */
+  --sheet: #fbf8f1;  --rule: #e2dccd;
+  --accent: #2449a8;      /* selected tab number, focus, owners, budget total */
+  --blueprint: #27467a;
+
+  --slab: "Zilla Slab", Rockwell, Georgia, serif;
+  --mono: "Overpass Mono", ui-monospace, monospace;
+
+  --folder-h: 520px; --tab-w: 138px; --tab-h: 42px; --tab-cut: 12px; --tab-drop: 5px;
+  --pocket-inset: 26px; --sheet-h: 420px; --flap-h: 150px; --notch: 30px;
+  --stack-step: 86px; --sf-h: 250px;
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --in: cubic-bezier(.5, 0, .75, 0);
+  --t-out: 240ms; --t-in: 420ms; --t-in-delay: 90ms; --t-tab: 200ms;
+  --t-lift: 230ms; --t-restack: 380ms;
+  --shadow-folder: drop-shadow(0 22px 22px rgba(29,42,51,.22));
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Kicker | Overpass Mono | 11px | 600 | 1 | 0.16em | UPPER, `--ink-3` |
+| Title | Zilla Slab | 30px | 600, then 400 italic | 1.05 | −0.01em | Title |
+| Tab | Overpass Mono | 11px | 600 | 1 | 0.12em | UPPER, number 400 |
+| Sheet heading | Zilla Slab | 21px | 600 | 1.1 | 0 | sentence |
+| Sheet meta | Overpass Mono | 11px | 400 | 1 | 0.06em | UPPER, `--ink-3` |
+| Memo rows | Overpass Mono | 12px | 400 | 1.5 | 0.08em labels | UPPER labels |
+| Body | Zilla Slab | 15px | 400 | 1.5 | 0 | sentence, 56ch |
+| Table | Overpass Mono | 13px | 400 / 600 total | 1 | 0 | tabular nums |
+| Sticker name | Zilla Slab | 17px | 600 | 1.2 | 0 | Title |
+| Sticker line, counter | Overpass Mono | 11px | 400 | 1.4–1.5 | 0.04–0.08em | — |
+| Stack tab | Overpass Mono | 10.5px | 600 | 32px | 0.12em | UPPER |
+| Stack name | Zilla Slab | 19px | 600 | 1.2 | 0 | Title |
 
 ## Implementation notes
 

@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The hero of a fictional summer motion-design camp, "Sundae Club". The two-line headline "Make things / that wiggle." is split into one span per letter; on load each letter rises from 0.7em below its baseline, tilted 10°, and springs past its resting position before settling, with a 34ms stagger so the wave sweeps left to right across both lines. Hovering (or focusing) any single word replays a smaller "hop" on that word only. The feeling is a bouncy, confident toy: big soft letterforms on saturated cobalt. The detail worth copying is the two-layer letter span, which lets the entrance and the hover hop run on separate elements so they never cancel each other.
-
-## Reference behaviour
-
-1. Initial state: cobalt page, nav at top, eyebrow "Summer motion camp · Lisbon", headline animating in, lede and two CTAs below, an info bar along the bottom.
-2. On load, 21 letters animate in sequence. Letter `n` starts at `120ms + n × 34ms`; each takes 820ms. The last letter lands at about 1.62s.
-3. Each letter: opacity 0 → 1 over its first 35%, travels from `translateY(.7em) rotate(10deg) scale(.9)` up past rest to `translateY(-.1em) rotate(-3deg) scale(1.02)` at 70%, then settles at rest.
-4. The word "wiggle." is pink (`--pink`); the other three words are cream.
-5. Hovering any word (mouseenter) restarts a 520ms hop on that word's letters, 28ms stagger per letter within the word: up 0.22em with −6° tilt, down past rest by 0.04em with +2°, then rest.
-6. Re-hovering mid-hop restarts the hop cleanly from the first letter.
-7. Each word is focusable (`tabindex="0"`); focusing it triggers the same hop and shows a 3px pink ring.
-8. Clicking "Replay" in the bottom bar restarts the full entrance wave.
-9. A 140px cream starburst sticker reading "No. 04" sits top-right, rotated 12°, slowly spinning (one turn per 24s).
-10. Pink "Get tickets" / "Apply by 30 May" buttons lift 2px and tilt −2° on hover.
 
 ## Structure
 
@@ -43,55 +32,6 @@ The hero of a fictional summer motion-design camp, "Sundae Club". The two-line h
 - `<section class="hero">`: flex column, vertically centred. Contains `.sticker` (absolute), `.eyebrow`, `<h1>`, `.foot` (lede + CTA row, space-between, aligned to bottom).
 - `<h1 aria-label="Make things that wiggle.">`: two `.line` spans (`aria-hidden="true"`), each containing `.word` spans; each word contains `.ch` spans (entrance), each `.ch` contains one `.g` span (hover hop).
 - `.bar`: date, venue, price, a hint ("Hover a word to wave it again") and a `<button>` Replay pushed right with `margin-left:auto`.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #2336E6;          /* page, saturated cobalt */
-  --bg-deep: #1726B8;     /* bottom-right radial shade */
-  --cream: #FFF3D6;       /* headline + body text */
-  --cream-2: #C9CDF7;     /* eyebrow, meta text */
-  --pink: #FF9EC4;        /* accent word, primary buttons, focus */
-  --pink-ink: #3A0A22;    /* text on pink and on the sticker */
-  --line: rgba(255, 243, 214, .22); /* hairlines + ghost button border */
-
-  /* type */
-  --display: "Bagel Fat One", system-ui, sans-serif;
-  --body: "Figtree", system-ui, sans-serif;
-  --fs-display: 192px;
-  --fs-lede: 20px;
-  --fs-label: 13px;
-
-  /* shape */
-  --r-pill: 999px;
-
-  /* motion */
-  --rise: 820ms;
-  --hop: 520ms;
-  --stagger: 34ms;
-  --ease-over: cubic-bezier(.34, 1.56, .64, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-Background: `--bg` plus two radial gradients, `900×520 at 88% 110%` of `--bg-deep` and `600×400 at 0 0` of `rgba(255,255,255,.07)`.
-
-## Typography
-
-| Role          | Family        | Size  | Weight | Line-height | Tracking | Case      |
-|---------------|---------------|------:|-------:|------------:|---------:|-----------|
-| Headline      | Bagel Fat One | 192px | 400    | .92         | −0.02em  | sentence  |
-| Logo          | Bagel Fat One | 24px  | 400    | 1           | 0        | Title     |
-| Sticker       | Bagel Fat One | 30px  | 400    | 1           | 0        | Title     |
-| Eyebrow       | Figtree       | 13px  | 600    | 1           | +0.16em  | UPPERCASE |
-| Lede          | Figtree       | 20px  | 400 / 600 bold | 1.45 | 0     | sentence  |
-| Nav links     | Figtree       | 15px  | 500    | 1.5         | 0        | Title     |
-| Buttons       | Figtree       | 15px  | 700    | 44px box    | 0        | sentence  |
-| Bar meta      | Figtree       | 13px  | 500    | 1           | 0        | sentence  |
-
-Headline lines use `white-space: nowrap`; the eyebrow is preceded by a 40 × 1.5px rule.
 
 ## Motion
 
@@ -144,6 +84,72 @@ Reduced motion: remove the entrance, the hop and the sticker spin entirely (`ani
 - [ ] Screen readers announce "Make things that wiggle." once.
 - [ ] With reduced motion, the headline is static and complete on first paint; the sticker does not spin.
 - [ ] No console errors; JS under 40 lines.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: cobalt page, nav at top, eyebrow "Summer motion camp · Lisbon", headline animating in, lede and two CTAs below, an info bar along the bottom.
+2. On load, 21 letters animate in sequence. Letter `n` starts at `120ms + n × 34ms`; each takes 820ms. The last letter lands at about 1.62s.
+3. Each letter: opacity 0 → 1 over its first 35%, travels from `translateY(.7em) rotate(10deg) scale(.9)` up past rest to `translateY(-.1em) rotate(-3deg) scale(1.02)` at 70%, then settles at rest.
+4. The word "wiggle." is pink (`--pink`); the other three words are cream.
+5. Hovering any word (mouseenter) restarts a 520ms hop on that word's letters, 28ms stagger per letter within the word: up 0.22em with −6° tilt, down past rest by 0.04em with +2°, then rest.
+6. Re-hovering mid-hop restarts the hop cleanly from the first letter.
+7. Each word is focusable (`tabindex="0"`); focusing it triggers the same hop and shows a 3px pink ring.
+8. Clicking "Replay" in the bottom bar restarts the full entrance wave.
+9. A 140px cream starburst sticker reading "No. 04" sits top-right, rotated 12°, slowly spinning (one turn per 24s).
+10. Pink "Get tickets" / "Apply by 30 May" buttons lift 2px and tilt −2° on hover.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #2336E6;          /* page, saturated cobalt */
+  --bg-deep: #1726B8;     /* bottom-right radial shade */
+  --cream: #FFF3D6;       /* headline + body text */
+  --cream-2: #C9CDF7;     /* eyebrow, meta text */
+  --pink: #FF9EC4;        /* accent word, primary buttons, focus */
+  --pink-ink: #3A0A22;    /* text on pink and on the sticker */
+  --line: rgba(255, 243, 214, .22); /* hairlines + ghost button border */
+
+  /* type */
+  --display: "Bagel Fat One", system-ui, sans-serif;
+  --body: "Figtree", system-ui, sans-serif;
+  --fs-display: 192px;
+  --fs-lede: 20px;
+  --fs-label: 13px;
+
+  /* shape */
+  --r-pill: 999px;
+
+  /* motion */
+  --rise: 820ms;
+  --hop: 520ms;
+  --stagger: 34ms;
+  --ease-over: cubic-bezier(.34, 1.56, .64, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+Background: `--bg` plus two radial gradients, `900×520 at 88% 110%` of `--bg-deep` and `600×400 at 0 0` of `rgba(255,255,255,.07)`.
+
+## Typography
+
+| Role          | Family        | Size  | Weight | Line-height | Tracking | Case      |
+|---------------|---------------|------:|-------:|------------:|---------:|-----------|
+| Headline      | Bagel Fat One | 192px | 400    | .92         | −0.02em  | sentence  |
+| Logo          | Bagel Fat One | 24px  | 400    | 1           | 0        | Title     |
+| Sticker       | Bagel Fat One | 30px  | 400    | 1           | 0        | Title     |
+| Eyebrow       | Figtree       | 13px  | 600    | 1           | +0.16em  | UPPERCASE |
+| Lede          | Figtree       | 20px  | 400 / 600 bold | 1.45 | 0     | sentence  |
+| Nav links     | Figtree       | 15px  | 500    | 1.5         | 0        | Title     |
+| Buttons       | Figtree       | 15px  | 700    | 44px box    | 0        | sentence  |
+| Bar meta      | Figtree       | 13px  | 500    | 1           | 0        | sentence  |
+
+Headline lines use `white-space: nowrap`; the eyebrow is preceded by a 40 × 1.5px rule.
 
 ## Implementation notes
 

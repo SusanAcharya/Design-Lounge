@@ -4,17 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A hiring page for Harbour. Four roles sit in a list. One row is current. A panel 380px wide repeats that role: team, title, one sentence, place, and Apply. This is not a portrait grid. Portraits are `team-hover-portrait-grid`. This is not a staff directory inside a product. A staff list is `people-role-list`.
-
-## Reference behaviour
-
-1. The first frame current row is Yard lead. The panel title is Yard lead. The team line is Operations. The place is Kathmandu.
-2. Clicking Ledger clerk, Night dispatcher, or Type designer moves `aria-current` to that button and rewrites the panel from that button's data.
-3. Only one row is current.
-4. Apply is a button. It does not navigate and it does not open a form. A form is a different piece.
-5. The list does not filter. Place and team are labels, not controls.
 
 ## Structure
 
@@ -41,34 +35,6 @@ panel, surface, border, padding 28px 24px
 - Each role is a `button` inside an `li`.
 - The button is a three-column grid: title, place, team.
 - The panel is an `aside`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f1ea;
-  --surface: #fffdf8;
-  --ink: #1a1814;
-  --ink-2: #5c564c;
-  --line: #e3ddd2;
-  --primary: #1f4d3a;
-  --soft: #e7f2ec;
-  --display: "Fraunces", Georgia, serif;
-  --sans: "Public Sans", system-ui, sans-serif;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Kicker | Public Sans | 11px | 500 | 1 | 0.14em, upper |
-| Page title | Fraunces | 44px | 560 | 1 | -0.02em |
-| Role name | Fraunces | 20px | 560 | 1.2 | 0 |
-| Place, team | Public Sans | 13px | 400 | 1.3 | 0 |
-| Panel title | Fraunces | 28px | 560 | 1.15 | 0 |
-| Panel sentence | Public Sans | 15px | 400 | 1.45 | 0 |
-| Apply | Public Sans | 12px | 500 | 40px | 0.08em, upper |
 
 ## Motion
 
@@ -118,6 +84,46 @@ None. The current row changes fill with no transition. Reduced motion has nothin
 - [ ] Night dispatcher is Kathmandu, Operations.
 - [ ] Type designer is Remote, Studio.
 - [ ] The Yard lead sentence mentions Gate 4.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame current row is Yard lead. The panel title is Yard lead. The team line is Operations. The place is Kathmandu.
+2. Clicking Ledger clerk, Night dispatcher, or Type designer moves `aria-current` to that button and rewrites the panel from that button's data.
+3. Only one row is current.
+4. Apply is a button. It does not navigate and it does not open a form. A form is a different piece.
+5. The list does not filter. Place and team are labels, not controls.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f1ea;
+  --surface: #fffdf8;
+  --ink: #1a1814;
+  --ink-2: #5c564c;
+  --line: #e3ddd2;
+  --primary: #1f4d3a;
+  --soft: #e7f2ec;
+  --display: "Fraunces", Georgia, serif;
+  --sans: "Public Sans", system-ui, sans-serif;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Kicker | Public Sans | 11px | 500 | 1 | 0.14em, upper |
+| Page title | Fraunces | 44px | 560 | 1 | -0.02em |
+| Role name | Fraunces | 20px | 560 | 1.2 | 0 |
+| Place, team | Public Sans | 13px | 400 | 1.3 | 0 |
+| Panel title | Fraunces | 28px | 560 | 1.15 | 0 |
+| Panel sentence | Public Sans | 15px | 400 | 1.45 | 0 |
+| Apply | Public Sans | 12px | 500 | 40px | 0.08em, upper |
 
 ## Implementation notes
 

@@ -4,29 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The bottom-centre tool dock of an invented whiteboard app, Scrawl, floating over a dotted paper canvas that already holds a dashed frame, three sticky notes, a hand-drawn arrow and a circled "Launch Nov 12". The dock is cream with a 2px ink border and a hard 4px/5px offset shadow, so it reads as a printed object, not a glass panel. Tools are exclusive. The active tool fills tomato red with its own small hard shadow. Shapes open a nested flyout above the dock. Every tool really works on the canvas, so undo and redo have real history. The detail worth copying is how it collapses on phones: secondary tools wrap onto a second row above the primary row via `flex-wrap: wrap-reverse`, without moving any DOM.
-
-## Reference behaviour
-
-1. First frame: the Shapes tool is active showing the Ellipse icon. Its flyout is open above it with Ellipse pressed. A dark hint chip at top centre reads "Ellipse — drag to draw, click for a default size". Undo and Redo are disabled. The file chip reads "Offsite map — Q4 · Edited 2 min ago".
-2. The dock, left to right: Select, Hand, divider, Pen, Shapes (with a corner triangle), Text, Sticky note, Eraser, divider, Colour swatch, divider, Undo, Redo.
-3. Clicking a tool sets it active (`aria-pressed="true"`), closes any open menu, deselects any picked object, and shows its hint for 2.6s.
-4. Clicking Shapes activates it and toggles the flyout. The flyout holds Rectangle, Ellipse, Triangle, Arrow. Picking one closes the flyout, swaps the Shapes button's icon, and returns focus to the Shapes button.
-5. Clicking the Colour swatch opens a six-dot palette: Ink `#1d1b18`, Tomato `#ff5a36`, Cobalt `#2e5bff`, Moss `#1e9e6a`, Ochre `#d99a00`, Plum `#8e3b8a`. Picking one updates the swatch. New strokes, shapes and text use it; new stickies use its pastel (`#ffe27a`, `#ffb4a0`, `#b9c8ff`, `#a8e6c6`, `#ffe27a`, `#e7b9e4`).
-6. Pointer down anywhere outside a menu closes it.
-7. Tools on the canvas:
-   - Pen: drag draws a 3px round-capped stroke.
-   - Shapes: drag draws the current shape. A click without moving more than 6px drops a 140×90 default.
-   - Text: click places an editable "Label" in Caveat 30px, text selected.
-   - Sticky: click drops a 156px note reading "New idea", rotated −2° to 2°, text selected.
-   - Eraser: click or drag across objects removes them.
-   - Select: click picks an object (dashed cobalt outline), drag moves it, Delete or Backspace removes it, double-click a note or label to edit.
-   - Hand: drag pans the board. The dot grid pans with it.
-8. Every add, remove and move is pushed onto an undo stack. Undo (⌘Z or Ctrl+Z) and Redo (⇧⌘Z, Ctrl+Shift+Z or Ctrl+Y) walk it. A new action clears the redo stack. The buttons disable when their stack is empty. The file chip switches to "Saved just now" once anything is in history.
-9. Letter shortcuts when not typing: V, H, P, T, N, E for tools; R, O, Y, A for Rectangle, Ellipse, Triangle, Arrow; Escape closes menus and deselects.
-10. Below 640px wide, Hand, Text, Eraser, Undo and Redo hide and a "More tools" (•••) button appears. Pressing it shows them as a second row above the main row.
 
 ## Structure
 
@@ -53,45 +35,6 @@ The bottom-centre tool dock of an invented whiteboard app, Scrawl, floating over
 - Flyout: `div role="group" aria-label="Shapes"` of four `aria-pressed` buttons.
 - Palette: `div role="radiogroup" aria-label="Colour"` of six `role="radio"` buttons.
 - Hint: `p aria-live="polite"`.
-
-## Tokens
-
-```css
-:root {
-  --paper: #f3eee4;     /* canvas */
-  --dots: #cfc6b5;      /* 1.2px dots on a 22px grid */
-  --surface: #fffdf8;   /* dock, chips, menus */
-  --ink: #1d1b18;       /* borders, text, hard shadows */
-  --ink-2: #5e574c;     /* secondary text */
-  --line: #d9d0bf;      /* dividers */
-  --hover: #efe8da;     /* button hover */
-  --accent: #ff5a36;    /* active tool */
-  --sel: #2e5bff;       /* focus ring, selection outline */
-  --ui: "Bricolage Grotesque", system-ui, sans-serif;
-  --hand: "Caveat", cursive;
-  --btn: 44px;          /* 40px inside the flyout */
-  --r-dock: 16px; --r-btn: 10px; --r-menu: 14px; --r-chip: 12px;
-  --hard: 4px 5px 0 var(--ink);
-  --hard-sm: 2px 2px 0 var(--ink);
-  --space: 4px;         /* dock gap; padding 6px */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --pop: cubic-bezier(.16, 1, .3, 1);
-  --t: 140ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Notes |
-| --- | --- | --- | --- | --- |
-| File name | Bricolage Grotesque | 14px | 700 | letter-spacing −0.01em, ellipsis |
-| Save status | Bricolage Grotesque | 12.5px | 400 | `--ink-2` |
-| Share button | Bricolage Grotesque | 14px | 700 | cream on ink, 32px tall |
-| Tooltip | Bricolage Grotesque | 12px | 500 | "Pen   P", tool name then key |
-| Hint chip | Bricolage Grotesque | 12.5px | 400 | cream on `rgba(29,27,24,.86)` |
-| Frame label | Bricolage Grotesque | 13px | 500 | `--ink-2` |
-| Sticky note | Caveat | 25px | 500 | line-height 1.05 |
-| Canvas text | Caveat | 30px | 700 | |
 
 ## Motion
 
@@ -158,6 +101,69 @@ Drawing is direct manipulation and has no easing.
 - [ ] Six colours, Ink to Plum, with pastel sticky backgrounds.
 - [ ] Canvas starts with three notes, a dashed frame, an arrow, a squiggle and "Launch Nov 12" circled in tomato.
 - [ ] Shapes is active with the flyout open on the first frame.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the Shapes tool is active showing the Ellipse icon. Its flyout is open above it with Ellipse pressed. A dark hint chip at top centre reads "Ellipse — drag to draw, click for a default size". Undo and Redo are disabled. The file chip reads "Offsite map — Q4 · Edited 2 min ago".
+2. The dock, left to right: Select, Hand, divider, Pen, Shapes (with a corner triangle), Text, Sticky note, Eraser, divider, Colour swatch, divider, Undo, Redo.
+3. Clicking a tool sets it active (`aria-pressed="true"`), closes any open menu, deselects any picked object, and shows its hint for 2.6s.
+4. Clicking Shapes activates it and toggles the flyout. The flyout holds Rectangle, Ellipse, Triangle, Arrow. Picking one closes the flyout, swaps the Shapes button's icon, and returns focus to the Shapes button.
+5. Clicking the Colour swatch opens a six-dot palette: Ink `#1d1b18`, Tomato `#ff5a36`, Cobalt `#2e5bff`, Moss `#1e9e6a`, Ochre `#d99a00`, Plum `#8e3b8a`. Picking one updates the swatch. New strokes, shapes and text use it; new stickies use its pastel (`#ffe27a`, `#ffb4a0`, `#b9c8ff`, `#a8e6c6`, `#ffe27a`, `#e7b9e4`).
+6. Pointer down anywhere outside a menu closes it.
+7. Tools on the canvas:
+   - Pen: drag draws a 3px round-capped stroke.
+   - Shapes: drag draws the current shape. A click without moving more than 6px drops a 140×90 default.
+   - Text: click places an editable "Label" in Caveat 30px, text selected.
+   - Sticky: click drops a 156px note reading "New idea", rotated −2° to 2°, text selected.
+   - Eraser: click or drag across objects removes them.
+   - Select: click picks an object (dashed cobalt outline), drag moves it, Delete or Backspace removes it, double-click a note or label to edit.
+   - Hand: drag pans the board. The dot grid pans with it.
+8. Every add, remove and move is pushed onto an undo stack. Undo (⌘Z or Ctrl+Z) and Redo (⇧⌘Z, Ctrl+Shift+Z or Ctrl+Y) walk it. A new action clears the redo stack. The buttons disable when their stack is empty. The file chip switches to "Saved just now" once anything is in history.
+9. Letter shortcuts when not typing: V, H, P, T, N, E for tools; R, O, Y, A for Rectangle, Ellipse, Triangle, Arrow; Escape closes menus and deselects.
+10. Below 640px wide, Hand, Text, Eraser, Undo and Redo hide and a "More tools" (•••) button appears. Pressing it shows them as a second row above the main row.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f3eee4;     /* canvas */
+  --dots: #cfc6b5;      /* 1.2px dots on a 22px grid */
+  --surface: #fffdf8;   /* dock, chips, menus */
+  --ink: #1d1b18;       /* borders, text, hard shadows */
+  --ink-2: #5e574c;     /* secondary text */
+  --line: #d9d0bf;      /* dividers */
+  --hover: #efe8da;     /* button hover */
+  --accent: #ff5a36;    /* active tool */
+  --sel: #2e5bff;       /* focus ring, selection outline */
+  --ui: "Bricolage Grotesque", system-ui, sans-serif;
+  --hand: "Caveat", cursive;
+  --btn: 44px;          /* 40px inside the flyout */
+  --r-dock: 16px; --r-btn: 10px; --r-menu: 14px; --r-chip: 12px;
+  --hard: 4px 5px 0 var(--ink);
+  --hard-sm: 2px 2px 0 var(--ink);
+  --space: 4px;         /* dock gap; padding 6px */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --pop: cubic-bezier(.16, 1, .3, 1);
+  --t: 140ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Notes |
+| --- | --- | --- | --- | --- |
+| File name | Bricolage Grotesque | 14px | 700 | letter-spacing −0.01em, ellipsis |
+| Save status | Bricolage Grotesque | 12.5px | 400 | `--ink-2` |
+| Share button | Bricolage Grotesque | 14px | 700 | cream on ink, 32px tall |
+| Tooltip | Bricolage Grotesque | 12px | 500 | "Pen   P", tool name then key |
+| Hint chip | Bricolage Grotesque | 12.5px | 400 | cream on `rgba(29,27,24,.86)` |
+| Frame label | Bricolage Grotesque | 13px | 500 | `--ink-2` |
+| Sticky note | Caveat | 25px | 500 | line-height 1.05 |
+| Canvas text | Caveat | 30px | 700 | |
 
 ## Implementation notes
 

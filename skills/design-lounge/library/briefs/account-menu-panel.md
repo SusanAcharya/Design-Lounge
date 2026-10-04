@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the menu width, the focus rules, and the item list.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The account menu for North ledger. A 64px header has the product name on the left and a pill trigger on the right: a 32px avatar with the initials SA, and the name S. Acharya. The menu opens 8px under the header, aligned to the right edge with 28px page margin. It is 280px wide. Inside: the person's name and email, then Account, Billing, Keyboard shortcuts, and Sign out in danger colour. Choosing an item changes the page title and closes the menu. Escape and a click outside do the same and return focus to the trigger.
-
-## Reference behaviour
-
-1. Initial state: menu open, trigger `aria-expanded="true"`. Page title is "Today".
-2. Click the trigger: toggles the menu. Opening moves focus to the first menuitem.
-3. Arrow Down and Arrow Up move through the four items and wrap.
-4. Click an item: the page `h1` becomes that item's destination. Sign out sets the title to "Signed out" and the deck to the session-ended sentence. The menu closes. Focus returns to the trigger.
-5. Escape from an item or from the page closes the menu and focuses the trigger.
-6. A click that is not on the trigger or inside the menu closes it.
-7. Hover on an item sets background `--surface-2`. Sign out stays `--danger` and does not turn black.
-8. The trigger pill uses `--surface-2` while expanded.
 
 ## Structure
 
@@ -38,35 +29,6 @@ main
 - Trigger is a `button` with `aria-haspopup="menu"` and `aria-controls` pointing at the menu.
 - Menu has `role="menu"` and each row is `role="menuitem"`.
 - Do not use a native `<select>`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #eef1f4;
-  --surface: #ffffff;
-  --surface-2: #e6ebf0;
-  --ink: #12171c;
-  --ink-2: #4c5864;
-  --ink-3: #7d8b98;
-  --line: #d5dde4;
-  --primary: #0f4c81;
-  --danger: #9b2c2c;
-  --focus: #0f4c81;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --menu-w: 280px;
-  --header: 64px;
-  --radius: 8px;
-  --shadow: 0 16px 40px -20px rgba(18,23,28,.35);
-}
-```
-
-## Typography
-
-- Brand and page title: IBM Plex Sans 500. Title 32px, tracking -0.03em. Brand 14px, weight 600.
-- Identity name: 14px, weight 600. Email: 12px, `--ink-2`.
-- Menu items: 13px, weight 400, min-height 36px.
-- Deck under the title: 14px, `--ink-2`, max-width 46ch.
 
 ## Motion
 
@@ -104,6 +66,50 @@ No open animation. The menu appears and disappears. Reduced motion is already sa
 - [ ] Choosing an item sets the page title and closes the menu.
 - [ ] Type is IBM Plex Sans only.
 - [ ] No animation on open.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: menu open, trigger `aria-expanded="true"`. Page title is "Today".
+2. Click the trigger: toggles the menu. Opening moves focus to the first menuitem.
+3. Arrow Down and Arrow Up move through the four items and wrap.
+4. Click an item: the page `h1` becomes that item's destination. Sign out sets the title to "Signed out" and the deck to the session-ended sentence. The menu closes. Focus returns to the trigger.
+5. Escape from an item or from the page closes the menu and focuses the trigger.
+6. A click that is not on the trigger or inside the menu closes it.
+7. Hover on an item sets background `--surface-2`. Sign out stays `--danger` and does not turn black.
+8. The trigger pill uses `--surface-2` while expanded.
+
+## Tokens
+
+```css
+:root {
+  --bg: #eef1f4;
+  --surface: #ffffff;
+  --surface-2: #e6ebf0;
+  --ink: #12171c;
+  --ink-2: #4c5864;
+  --ink-3: #7d8b98;
+  --line: #d5dde4;
+  --primary: #0f4c81;
+  --danger: #9b2c2c;
+  --focus: #0f4c81;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --menu-w: 280px;
+  --header: 64px;
+  --radius: 8px;
+  --shadow: 0 16px 40px -20px rgba(18,23,28,.35);
+}
+```
+
+## Typography
+
+- Brand and page title: IBM Plex Sans 500. Title 32px, tracking -0.03em. Brand 14px, weight 600.
+- Identity name: 14px, weight 600. Email: 12px, `--ink-2`.
+- Menu items: 13px, weight 400, min-height 36px.
+- Deck under the title: 14px, `--ink-2`, max-width 46ch.
 
 ## Implementation notes
 

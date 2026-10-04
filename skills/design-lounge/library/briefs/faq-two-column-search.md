@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A docs FAQ for **Kestrel**, an HTTP API product. Eight numbered questions sit in two columns under a 44px search field. Typing filters rows by question and answer text (case-insensitive). A live “**N** of 8 topics” count updates on every keystroke. If the filter matches nothing, both columns hide their rows and an empty state appears: “No topics match that filter” plus a Clear filter button. Each row is an accordion that opens with `grid-template-rows: 0fr → 1fr` over 280ms; several may be open at once. This is a swiss index, not a paper one-column FAQ.
-
-## Reference behaviour
-
-1. Initial state: 52px nav (8px rotated-square mark + Kestrel + Guides / API / Changelog in Geist Mono + “docs 2.4.1”). Lead: kicker “DOCS · FAQ”, 32px heading “Questions the API desk hears”, search on the right with placeholder “Filter by topic — auth, webhook, region…”. Count reads **8** of 8 topics. Eight rows in two columns (odd numbers left, even right). Question 01 is open (`aria-expanded="true"`), its plus icon rotated 45°, text navy. The other seven are closed.
-2. Click a closed question: that row opens over 280ms; its plus rotates 45° to a close mark; question text turns `--navy`. Other open rows stay open.
-3. Click an open question: it closes on the same clock; icon returns to +; colour returns to `--ink`.
-4. Type `auth` in the search field: rows whose haystack contains “auth” stay; the rest get `hidden`. Count becomes **2 of 8** (01 rotate key, 06 signed requests). Open/closed state of survivors is unchanged.
-5. Type a string with no hit (e.g. `banana`): count **0 of 8**, `#empty` gets `.show`, the two columns look vacant. Empty copy offers `auth`, `webhook`, `region` as examples.
-6. Click **Clear filter**: input value is emptied, all eight rows unhide, count returns to 8, focus returns to the search field.
-7. Clearing the field with the input’s native clear control (type=search) also runs the same `input` handler.
-8. Reduced motion: panel and icon transitions become 1ms. Filter still works.
 
 ## Structure
 
@@ -55,50 +46,6 @@ Questions, exact (odd → left, even → right):
 | 06 | How do signed requests expire? | `X-Kestrel-Ts` within 300 seconds. Else `401 kestrel.auth.skew`. |
 | 07 | Is the sandbox key billed? | No. 1,000 calls/day. Promote copies routes and drops the flag; new key. |
 | 08 | Where do I file a region outage? | status.kestrel.dev. Ticket with `X-Kestrel-Id`. Do not rotate keys first. |
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f6f4;
-  --ink: #111111;
-  --ink-2: #5a5a56;
-  --ink-3: #8a8a84;
-  --line: #e2e2dc;
-  --line-2: #c8c8c2;
-  --navy: #1f4e79;        /* kicker, open question, focus, code */
-  --navy-soft: #e6eef4;   /* code chip */
-
-  --sans: "Geist", system-ui, sans-serif;
-  --mono: "Geist Mono", ui-monospace, monospace;
-
-  --nav-h: 52px;
-  --pad: 56px;
-  --search-h: 44px;
-  --gap-cols: 48px;
-
-  --t-fast: 160ms;
-  --t-open: 280ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Body / answers | Geist | 14px | 400 | 1.45 | 0 | sentence |
-| Brand | Geist | 14px | 600 | 1 | −0.02em | sentence |
-| Nav links | Geist Mono | 12px | 400 | 1 | 0 | sentence |
-| Version / count | Geist Mono | 11px | 400 / 500 | 1 | 0 | sentence |
-| Kicker | Geist Mono | 11px | 500 | 1 | +0.12em | UPPERCASE |
-| Heading | Geist | 32px | 600 | 1.1 | −0.03em | sentence |
-| Search input | Geist | 14px | 400 | 1 | 0 | as typed |
-| Question | Geist | 15px | 500 | 1.3 | −0.01em | sentence |
-| Number | Geist Mono | 11px | 400 | 1.3 | 0 | 01–08 |
-| Code | Geist Mono | 12px | 400 | 1 | 0 | as written |
-| Empty title | Geist | 22px | 600 | 1.2 | −0.02em | sentence |
-| Clear button | Geist Mono | 12px | 500 | 1 | 0 | sentence |
 
 ## Motion
 
@@ -153,6 +100,65 @@ Do not animate rows in and out of the filter. Reduced motion: 1ms on `.panel` an
 - [ ] Focus rings are 2px navy, 3px offset, on search, questions, and Clear.
 - [ ] `prefers-reduced-motion: reduce` keeps filter and toggle, instant height.
 - [ ] Demo fills 1280×800 and starts with the piece header comment.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 52px nav (8px rotated-square mark + Kestrel + Guides / API / Changelog in Geist Mono + “docs 2.4.1”). Lead: kicker “DOCS · FAQ”, 32px heading “Questions the API desk hears”, search on the right with placeholder “Filter by topic — auth, webhook, region…”. Count reads **8** of 8 topics. Eight rows in two columns (odd numbers left, even right). Question 01 is open (`aria-expanded="true"`), its plus icon rotated 45°, text navy. The other seven are closed.
+2. Click a closed question: that row opens over 280ms; its plus rotates 45° to a close mark; question text turns `--navy`. Other open rows stay open.
+3. Click an open question: it closes on the same clock; icon returns to +; colour returns to `--ink`.
+4. Type `auth` in the search field: rows whose haystack contains “auth” stay; the rest get `hidden`. Count becomes **2 of 8** (01 rotate key, 06 signed requests). Open/closed state of survivors is unchanged.
+5. Type a string with no hit (e.g. `banana`): count **0 of 8**, `#empty` gets `.show`, the two columns look vacant. Empty copy offers `auth`, `webhook`, `region` as examples.
+6. Click **Clear filter**: input value is emptied, all eight rows unhide, count returns to 8, focus returns to the search field.
+7. Clearing the field with the input’s native clear control (type=search) also runs the same `input` handler.
+8. Reduced motion: panel and icon transitions become 1ms. Filter still works.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f6f4;
+  --ink: #111111;
+  --ink-2: #5a5a56;
+  --ink-3: #8a8a84;
+  --line: #e2e2dc;
+  --line-2: #c8c8c2;
+  --navy: #1f4e79;        /* kicker, open question, focus, code */
+  --navy-soft: #e6eef4;   /* code chip */
+
+  --sans: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+
+  --nav-h: 52px;
+  --pad: 56px;
+  --search-h: 44px;
+  --gap-cols: 48px;
+
+  --t-fast: 160ms;
+  --t-open: 280ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Body / answers | Geist | 14px | 400 | 1.45 | 0 | sentence |
+| Brand | Geist | 14px | 600 | 1 | −0.02em | sentence |
+| Nav links | Geist Mono | 12px | 400 | 1 | 0 | sentence |
+| Version / count | Geist Mono | 11px | 400 / 500 | 1 | 0 | sentence |
+| Kicker | Geist Mono | 11px | 500 | 1 | +0.12em | UPPERCASE |
+| Heading | Geist | 32px | 600 | 1.1 | −0.03em | sentence |
+| Search input | Geist | 14px | 400 | 1 | 0 | as typed |
+| Question | Geist | 15px | 500 | 1.3 | −0.01em | sentence |
+| Number | Geist Mono | 11px | 400 | 1.3 | 0 | 01–08 |
+| Code | Geist Mono | 12px | 400 | 1 | 0 | as written |
+| Empty title | Geist | 22px | 600 | 1.2 | −0.02em | sentence |
+| Clear button | Geist Mono | 12px | 500 | 1 | 0 | sentence |
 
 ## Implementation notes
 

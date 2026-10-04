@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the impact lines and the honest fee wording whatever the look.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The donate page of Saathi Lunch Fund, a fictional charity that cooks school lunches in hill schools in Nepal. On the left is the story: an eyebrow, a large rounded-serif heading, one paragraph, an SVG illustration of hills, a school and a bowl, and a trust row. On the right is the donation card: goal progress, a One-time / Monthly switch, four amount chips, a fee-cover checkbox, and a terracotta Donate button. Recent donors sit under the card. The look is organic and warm: cream paper, terracotta, forest green, a soft serif, a humanist sans, 12px corners. The detail worth copying is that every amount says what it buys, in the chip and again in a green line under the chips: "Rs 1,000 = 8 school lunches."
-
-## Reference behaviour
-
-1. First frame: One-time is on. Rs 1,000 is selected. The impact line reads "Rs 1,000 = 8 school lunches." The button reads "Donate Rs 1,000". The fee box is unticked.
-2. The card top shows "Rs 12,46,500" raised "of Rs 18,00,000", a forest bar at 69%, "1,284 donors" and "11 days left". Numbers use Indian grouping (lakh), via `toLocaleString('en-IN')`.
-3. The chips are Rs 500, Rs 1,000, Rs 2,500 and Other. Each amount chip has a line under it: "= 4 school lunches", "= 8 school lunches", "= 20 school lunches". One lunch is Rs 125. Other reads "Choose any amount".
-4. Switching to Monthly slides the white knob to the right in 260ms. Every impact line adds "every month". The button reads "Donate Rs 1,000 monthly".
-5. Rs 2,500 one-time adds ", a month of lunches for one child" to the impact line.
-6. Choosing Other shows a "Your amount" field with an Rs prefix, starting at 1,500, and moves focus into it. The impact line updates as you type.
-7. Under Rs 100, the impact line reads "Enter at least Rs 100." Pressing Donate then marks the field invalid, shows "The smallest gift is Rs 100." under it in terracotta, and keeps focus in the field.
-8. The fee box reads "Add Rs 30 to cover the 3% card fee, so all of your Rs 1,000 reaches the kitchen." The fee is 3% of the gift, rounded. Ticking it adds the fee to the button total: "Donate Rs 1,030".
-9. Pressing Donate with a valid amount replaces the form with a thank-you state: a bowl drawing, "Thank you. That is 8 school lunches.", one sentence about when the money arrives, a dashed receipt (Gift, Card fee covered, Charged today), and a "Make another gift" button. Focus moves to the heading.
-10. At the same time the raised total grows by the gift, donors goes up by 1, the bar widens over 700ms, and "You · just now" slides in at the top of Recent donors. The list stays at three rows.
-11. "Make another gift" brings the form back with the last choices kept and focuses the Donate button.
-12. The trust row has three items: the registration number with the council and PAN, an audited report link with file type and size, and the share of each rupee that goes to food.
 
 ## Structure
 
@@ -52,64 +39,6 @@ The donate page of Saathi Lunch Fund, a fictional charity that cooks school lunc
 - Right: a `div.card` holding the progress block, a hairline, then a `form` with two `fieldset`s (frequency, amount), the Other field, the impact line, the fee checkbox, the submit button, and a payment note. The thank-you block is a sibling of the form in the same card.
 - Under the card: a `section` with an `h2` "Recent donors" and a `ul` of three rows.
 - The illustration is inline SVG: a cream sky, a `#e2a35a` sun, three hill paths in `#9db58f`, `#5f8a68`, `#2f5d46`, a dotted terrace line, a school with a terracotta roof, and a terracotta bowl with steam. Keep it to about 15 shapes.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #f6eedf;          /* cream page */
-  --card: #fffbf3;        /* card surface */
-  --ink: #2b2118;         /* warm dark brown text */
-  --ink-2: #5b4a3c;       /* body text */
-  --ink-3: #76614f;       /* captions, meta */
-  --line: #e4d5bf;        /* hairlines, chip borders */
-  --terra: #b4502c;       /* primary: Donate, selected chip, heading accent */
-  --terra-dk: #94401f;    /* hover, error text, selected chip line */
-  --terra-tint: #f5e1d2;  /* selected chip fill */
-  --forest: #2f5d46;      /* progress, impact, trust icons, focus */
-  --forest-tint: #dfe9dc; /* progress track, impact line fill */
-  --sun: #e2a35a;         /* illustration only */
-  --focus: #2f5d46;
-
-  /* type */
-  --serif: "Fraunces", Georgia, serif;      /* font-variation-settings: "SOFT" 100 */
-  --sans: "Source Sans 3", system-ui, sans-serif;
-
-  /* space (4px base) */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-12: 48px;
-
-  /* shape */
-  --r: 12px;
-  --r-sm: 8px;
-  --card-shadow: 0 1px 0 #e9dcc7, 0 18px 40px -28px rgba(80, 48, 20, .35);
-
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-Load Fraunces with the SOFT axis: `family=Fraunces:opsz,wght,SOFT@9..144,400..600,100`. SOFT 100 rounds the serifs. That is the "rounded serif".
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Hero h1 | Fraunces SOFT 100, opsz 120 | 50px | 500 | 1.04 | -0.025em | max 15ch, last words italic terracotta |
-| Raised total | Fraunces SOFT 100 | 30px | 600 | 1.2 | -0.02em | |
-| Thank-you h2 | Fraunces SOFT 100 | 28px | 500 | 1.12 | -0.02em | |
-| Chip amount | Fraunces SOFT 100 | 22px | 600 | 1.2 | -0.01em | |
-| Other input | Fraunces SOFT 100 | 20px | 600 | 1 | 0 | |
-| Logo | Fraunces SOFT 100 | 19px | 600 | 1 | -0.01em | |
-| Donor amount | Fraunces SOFT 100 | 15px | 600 | 1.3 | 0 | |
-| Lede | Source Sans 3 | 18px | 400 | 1.55 | 0 | max 52ch |
-| Body, impact | Source Sans 3 | 15–16px | 400 | 1.5 | 0 | impact number bold 700 |
-| Button | Source Sans 3 | 18px | 600 | 1 | 0 | |
-| Eyebrow | Source Sans 3 | 13px | 600 | 1.4 | 0.06em | upper, forest |
-| Chip impact, meta | Source Sans 3 | 12–14px | 400 | 1.4 | 0 | `--ink-3` |
-
-Rule: amounts of money are serif. Explanations are sans.
 
 ## Motion
 
@@ -182,6 +111,83 @@ No confetti, no count-up on the raised total, no looping illustration.
 - [ ] Fee is 3%. Minimum gift is Rs 100.
 - [ ] Trust row reads Reg. 41372/079, Audited 2025/26, 91 paise in every rupee.
 - [ ] Radius 12px. Terracotta `#b4502c`. Forest `#2f5d46`. Page `#f6eedf`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: One-time is on. Rs 1,000 is selected. The impact line reads "Rs 1,000 = 8 school lunches." The button reads "Donate Rs 1,000". The fee box is unticked.
+2. The card top shows "Rs 12,46,500" raised "of Rs 18,00,000", a forest bar at 69%, "1,284 donors" and "11 days left". Numbers use Indian grouping (lakh), via `toLocaleString('en-IN')`.
+3. The chips are Rs 500, Rs 1,000, Rs 2,500 and Other. Each amount chip has a line under it: "= 4 school lunches", "= 8 school lunches", "= 20 school lunches". One lunch is Rs 125. Other reads "Choose any amount".
+4. Switching to Monthly slides the white knob to the right in 260ms. Every impact line adds "every month". The button reads "Donate Rs 1,000 monthly".
+5. Rs 2,500 one-time adds ", a month of lunches for one child" to the impact line.
+6. Choosing Other shows a "Your amount" field with an Rs prefix, starting at 1,500, and moves focus into it. The impact line updates as you type.
+7. Under Rs 100, the impact line reads "Enter at least Rs 100." Pressing Donate then marks the field invalid, shows "The smallest gift is Rs 100." under it in terracotta, and keeps focus in the field.
+8. The fee box reads "Add Rs 30 to cover the 3% card fee, so all of your Rs 1,000 reaches the kitchen." The fee is 3% of the gift, rounded. Ticking it adds the fee to the button total: "Donate Rs 1,030".
+9. Pressing Donate with a valid amount replaces the form with a thank-you state: a bowl drawing, "Thank you. That is 8 school lunches.", one sentence about when the money arrives, a dashed receipt (Gift, Card fee covered, Charged today), and a "Make another gift" button. Focus moves to the heading.
+10. At the same time the raised total grows by the gift, donors goes up by 1, the bar widens over 700ms, and "You · just now" slides in at the top of Recent donors. The list stays at three rows.
+11. "Make another gift" brings the form back with the last choices kept and focuses the Donate button.
+12. The trust row has three items: the registration number with the council and PAN, an audited report link with file type and size, and the share of each rupee that goes to food.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #f6eedf;          /* cream page */
+  --card: #fffbf3;        /* card surface */
+  --ink: #2b2118;         /* warm dark brown text */
+  --ink-2: #5b4a3c;       /* body text */
+  --ink-3: #76614f;       /* captions, meta */
+  --line: #e4d5bf;        /* hairlines, chip borders */
+  --terra: #b4502c;       /* primary: Donate, selected chip, heading accent */
+  --terra-dk: #94401f;    /* hover, error text, selected chip line */
+  --terra-tint: #f5e1d2;  /* selected chip fill */
+  --forest: #2f5d46;      /* progress, impact, trust icons, focus */
+  --forest-tint: #dfe9dc; /* progress track, impact line fill */
+  --sun: #e2a35a;         /* illustration only */
+  --focus: #2f5d46;
+
+  /* type */
+  --serif: "Fraunces", Georgia, serif;      /* font-variation-settings: "SOFT" 100 */
+  --sans: "Source Sans 3", system-ui, sans-serif;
+
+  /* space (4px base) */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-12: 48px;
+
+  /* shape */
+  --r: 12px;
+  --r-sm: 8px;
+  --card-shadow: 0 1px 0 #e9dcc7, 0 18px 40px -28px rgba(80, 48, 20, .35);
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+Load Fraunces with the SOFT axis: `family=Fraunces:opsz,wght,SOFT@9..144,400..600,100`. SOFT 100 rounds the serifs. That is the "rounded serif".
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Hero h1 | Fraunces SOFT 100, opsz 120 | 50px | 500 | 1.04 | -0.025em | max 15ch, last words italic terracotta |
+| Raised total | Fraunces SOFT 100 | 30px | 600 | 1.2 | -0.02em | |
+| Thank-you h2 | Fraunces SOFT 100 | 28px | 500 | 1.12 | -0.02em | |
+| Chip amount | Fraunces SOFT 100 | 22px | 600 | 1.2 | -0.01em | |
+| Other input | Fraunces SOFT 100 | 20px | 600 | 1 | 0 | |
+| Logo | Fraunces SOFT 100 | 19px | 600 | 1 | -0.01em | |
+| Donor amount | Fraunces SOFT 100 | 15px | 600 | 1.3 | 0 | |
+| Lede | Source Sans 3 | 18px | 400 | 1.55 | 0 | max 52ch |
+| Body, impact | Source Sans 3 | 15–16px | 400 | 1.5 | 0 | impact number bold 700 |
+| Button | Source Sans 3 | 18px | 600 | 1 | 0 | |
+| Eyebrow | Source Sans 3 | 13px | 600 | 1.4 | 0.06em | upper, forest |
+| Chip impact, meta | Source Sans 3 | 12–14px | 400 | 1.4 | 0 | `--ink-3` |
+
+Rule: amounts of money are serif. Explanations are sans.
 
 ## Implementation notes
 

@@ -4,29 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A voice assistant widget for a fictional assistant, "Ossa". A pale sage card holds a 168px pearl-teal orb wrapped in a ring of 56 short radial bars. Press and hold the orb (or hold Space) and it starts "listening": the bars turn coral and jump with each word, the orb swells with the amplitude, a coral glow rises from its base, and your words appear one at a time in a large italic serif with a blinking caret. Let go and the orb thinks for 900ms, then Ossa answers word by word in a grotesk, and a small result chip slides in. The feeling is calm and near-future, without purple gradients or glass. The detail worth copying: one smoothed amplitude value drives the bar lengths and the orb scale, and every word that appears "kicks" that value, so the waveform visibly reacts to speech.
-
-## Reference behaviour
-
-1. First frame: idle, chip "READY". A previous exchange is already shown: "Remind me to water the tulsi plant tomorrow at seven", the reply "Done. Tomorrow at 7:00 am I'll remind you to water the tulsi plant.", and the chip "Reminder · Sun 4 Oct, 7:00". Its words fade up on load (60ms stagger for the question, 40ms for the reply after 600ms). The orb breathes between 0.97 and 1.02 scale over 4.8s. The bars sit at about 4px, teal, 55% opacity.
-2. Pointer down on the orb (mouse, touch, pen) or Space/Enter keydown while it has focus: state becomes listening. Chip "LISTENING" in coral tint. The transcript and reply clear. A coral caret blinks. The hint reads "Listening. Let go when you are done." `aria-pressed="true"`.
-3. While held: after 380ms the first word appears, then one word every 230–340ms (random). Each word fades up from 6px below with a 4px blur over 260ms, and sets `pulseAt = now`. For 220ms after each pulse the target amplitude is 0.55–1.0; between words it falls to about 0.12–0.18. The bars lengthen to as much as 37px, and the orb scales up to 1.09.
-4. Holding past the last word: the waveform settles to the quiet level; nothing more appears.
-5. Release (pointer up, pointer cancel, or key up): if fewer than 2 words were heard, the transcript clears, state returns to idle, and the hint reads "Hold a little longer, then speak". Otherwise any unheard words are filled in at once, the caret goes, and the state becomes thinking (chip "THINKING", the orb's inner swirl speeds from 9s to 1.2s per turn, the bars pulse at 0.25 ± 0.15).
-6. After 900ms: state speaking (chip "ANSWERING"). The reply appears one word every 110ms with the same fade, each word kicking the amplitude (bars teal).
-7. When the reply ends: the result chip fades and slides up over 300ms, the live region reads the reply, state returns to idle, hint "Hold again to ask something else". The next hold uses the next script (three, looping).
-8. Starting a new hold during thinking or speaking cancels the old answer.
-9. Reduced motion: no breathing, swirl, word fades, caret blink, or orb scale. The bars stay at their idle length. The words and reply still appear in sequence, thinking lasts 200ms.
-
-Scripts:
-
-| # | Heard | Reply | Chip |
-|---|-------|-------|------|
-| 1 | Remind me to water the tulsi plant tomorrow at seven | Done. Tomorrow at 7:00 am I'll remind you to water the tulsi plant. | Reminder · Sun 4 Oct, 7:00 |
-| 2 | What's the weather in Pokhara this evening | Clear until nine, then light rain. 19° at sunset, so take a thin jacket. | Pokhara · 19° · rain after 21:00 |
-| 3 | Play something quiet for reading | Playing Slow Paper, a quiet piano mix. It runs 42 minutes. | Slow Paper · 42 min |
 
 ## Structure
 
@@ -53,53 +35,6 @@ Scripts:
 - `p.hint` with a `kbd`.
 - `.tx`: `p.said` (transcript), `p.reply > span` (reply words), `span.card` (result chip with icon).
 - `p.sr[aria-live=polite]` for the final reply.
-
-## Tokens
-
-```css
-:root {
-  --page: #e4e9e4;   /* sage page, radial lift to #f1f4f0 at 50% 40% */
-  --card: #f6f7f3;
-  --line: #d9dfd8;   /* card border, rules, chip outline */
-  --ink: #13201d;    /* transcript */
-  --ink-2: #45534f;  /* reply */
-  --ink-3: #66736f;  /* hint, chip text idle */
-  --mint: #9fe3d2;   /* orb mid */
-  --teal: #2e8c7c;   /* orb edge, idle and speaking bars, focus, reply dot */
-  --deep: #1d5e55;   /* orb rim, result chip text */
-  --coral: #f0764a;  /* listening only: bars, caret */
-
-  --sans: "Sora", system-ui, sans-serif;
-  --serif: "Newsreader", Georgia, serif;
-
-  --card-w: 400px; --r-card: 36px;
-  --orb: 168px; --stage: 280px; --bar-r: 100px; --bars: 56;
-  --shadow-card: 0 1px 0 #fff inset, 0 40px 70px -40px rgba(19, 32, 29, .35);
-  --shadow-orb: 0 30px 60px -22px rgba(46, 140, 124, .55), inset 0 -10px 30px rgba(29, 94, 85, .35);
-
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-word: 260ms;
-  --t-think: 900ms;
-  --t-breathe: 4.8s;
-  --t-swirl: 9s;  --t-swirl-think: 1.2s;
-}
-```
-
-Orb fill: `radial-gradient(circle at 34% 28%, #fff 0 6%, #d8f6ee 18%, var(--mint) 42%, var(--teal) 76%, var(--deep))`. Inner swirl (`::before`, inset −20%): a conic gradient of two white highlights at 55% and 35%, blurred 14px, `mix-blend-mode: soft-light`, rotating. Listening glow (`::after`): `radial-gradient(circle at 50% 115%, rgba(255,180,146,.85), transparent 64%)` with `mix-blend-mode: screen`, opacity 0 → 1.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Wordmark | Sora | 15px | 600 | 1.5 | -0.01em | Title |
-| State chip | Sora | 11px | 500 | 1.5 | 0.08em | UPPER |
-| Hint | Sora | 12px | 400 | 1.5 | 0 | Sentence |
-| Transcript | Newsreader italic (opsz auto) | 26px | 400 | 1.2 | -0.01em | Sentence |
-| Reply | Sora | 15px | 400 | 1.5 | 0 | Sentence |
-| Result chip | Sora | 12px | 500 | 1.5 | 0 | Sentence |
-
-What you said is serif italic and large because it is the thing being captured; the assistant's answer is the plain grotesk. Don't swap them.
 
 ## Motion
 
@@ -171,6 +106,77 @@ What you said is serif italic and large because it is the thing being captured; 
 - [ ] Coral `#f0764a` bars while listening, teal `#2e8c7c` otherwise.
 - [ ] Transcript in Newsreader italic 26px; everything else Sora.
 - [ ] Thinking lasts 900ms; reply words every 110ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: idle, chip "READY". A previous exchange is already shown: "Remind me to water the tulsi plant tomorrow at seven", the reply "Done. Tomorrow at 7:00 am I'll remind you to water the tulsi plant.", and the chip "Reminder · Sun 4 Oct, 7:00". Its words fade up on load (60ms stagger for the question, 40ms for the reply after 600ms). The orb breathes between 0.97 and 1.02 scale over 4.8s. The bars sit at about 4px, teal, 55% opacity.
+2. Pointer down on the orb (mouse, touch, pen) or Space/Enter keydown while it has focus: state becomes listening. Chip "LISTENING" in coral tint. The transcript and reply clear. A coral caret blinks. The hint reads "Listening. Let go when you are done." `aria-pressed="true"`.
+3. While held: after 380ms the first word appears, then one word every 230–340ms (random). Each word fades up from 6px below with a 4px blur over 260ms, and sets `pulseAt = now`. For 220ms after each pulse the target amplitude is 0.55–1.0; between words it falls to about 0.12–0.18. The bars lengthen to as much as 37px, and the orb scales up to 1.09.
+4. Holding past the last word: the waveform settles to the quiet level; nothing more appears.
+5. Release (pointer up, pointer cancel, or key up): if fewer than 2 words were heard, the transcript clears, state returns to idle, and the hint reads "Hold a little longer, then speak". Otherwise any unheard words are filled in at once, the caret goes, and the state becomes thinking (chip "THINKING", the orb's inner swirl speeds from 9s to 1.2s per turn, the bars pulse at 0.25 ± 0.15).
+6. After 900ms: state speaking (chip "ANSWERING"). The reply appears one word every 110ms with the same fade, each word kicking the amplitude (bars teal).
+7. When the reply ends: the result chip fades and slides up over 300ms, the live region reads the reply, state returns to idle, hint "Hold again to ask something else". The next hold uses the next script (three, looping).
+8. Starting a new hold during thinking or speaking cancels the old answer.
+9. Reduced motion: no breathing, swirl, word fades, caret blink, or orb scale. The bars stay at their idle length. The words and reply still appear in sequence, thinking lasts 200ms.
+
+Scripts:
+
+| # | Heard | Reply | Chip |
+|---|-------|-------|------|
+| 1 | Remind me to water the tulsi plant tomorrow at seven | Done. Tomorrow at 7:00 am I'll remind you to water the tulsi plant. | Reminder · Sun 4 Oct, 7:00 |
+| 2 | What's the weather in Pokhara this evening | Clear until nine, then light rain. 19° at sunset, so take a thin jacket. | Pokhara · 19° · rain after 21:00 |
+| 3 | Play something quiet for reading | Playing Slow Paper, a quiet piano mix. It runs 42 minutes. | Slow Paper · 42 min |
+
+## Tokens
+
+```css
+:root {
+  --page: #e4e9e4;   /* sage page, radial lift to #f1f4f0 at 50% 40% */
+  --card: #f6f7f3;
+  --line: #d9dfd8;   /* card border, rules, chip outline */
+  --ink: #13201d;    /* transcript */
+  --ink-2: #45534f;  /* reply */
+  --ink-3: #66736f;  /* hint, chip text idle */
+  --mint: #9fe3d2;   /* orb mid */
+  --teal: #2e8c7c;   /* orb edge, idle and speaking bars, focus, reply dot */
+  --deep: #1d5e55;   /* orb rim, result chip text */
+  --coral: #f0764a;  /* listening only: bars, caret */
+
+  --sans: "Sora", system-ui, sans-serif;
+  --serif: "Newsreader", Georgia, serif;
+
+  --card-w: 400px; --r-card: 36px;
+  --orb: 168px; --stage: 280px; --bar-r: 100px; --bars: 56;
+  --shadow-card: 0 1px 0 #fff inset, 0 40px 70px -40px rgba(19, 32, 29, .35);
+  --shadow-orb: 0 30px 60px -22px rgba(46, 140, 124, .55), inset 0 -10px 30px rgba(29, 94, 85, .35);
+
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-word: 260ms;
+  --t-think: 900ms;
+  --t-breathe: 4.8s;
+  --t-swirl: 9s;  --t-swirl-think: 1.2s;
+}
+```
+
+Orb fill: `radial-gradient(circle at 34% 28%, #fff 0 6%, #d8f6ee 18%, var(--mint) 42%, var(--teal) 76%, var(--deep))`. Inner swirl (`::before`, inset −20%): a conic gradient of two white highlights at 55% and 35%, blurred 14px, `mix-blend-mode: soft-light`, rotating. Listening glow (`::after`): `radial-gradient(circle at 50% 115%, rgba(255,180,146,.85), transparent 64%)` with `mix-blend-mode: screen`, opacity 0 → 1.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Wordmark | Sora | 15px | 600 | 1.5 | -0.01em | Title |
+| State chip | Sora | 11px | 500 | 1.5 | 0.08em | UPPER |
+| Hint | Sora | 12px | 400 | 1.5 | 0 | Sentence |
+| Transcript | Newsreader italic (opsz auto) | 26px | 400 | 1.2 | -0.01em | Sentence |
+| Reply | Sora | 15px | 400 | 1.5 | 0 | Sentence |
+| Result chip | Sora | 12px | 500 | 1.5 | 0 | Sentence |
+
+What you said is serif italic and large because it is the thing being captured; the assistant's answer is the plain grotesk. Don't swap them.
 
 ## Implementation notes
 

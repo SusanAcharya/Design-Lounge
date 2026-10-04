@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The above-the-fold hero of a quarterly design magazine called *Marrow*. Warm paper background, a 56px hairline top nav, a small uppercase issue index, a two-line 104px Fraunces headline in weight 300 whose words rise one by one out of a clipped baseline, a 19px manifesto paragraph and exactly one outlined pill CTA. A footer hairline draws itself in from the left. The feeling is print: unhurried, low-contrast lines, one oxblood accent on a single italic word. The detail worth copying is the word-by-word rise, clipped per word so descenders never peek out early.
-
-## Reference behaviour
-
-1. First frame (t = 0): nav, index line and empty headline area are visible. Headline words are hidden below their own clip boxes; manifesto and CTA are at opacity 0; the footer rule has `scaleX(0)`.
-2. t = 120ms: word 1 ("Make") starts rising from `translateY(112%)` to `0` over 760ms with expo-out easing. Each following word starts 70ms after the previous one (10 words, last starts at 120 + 9×70 = 750ms).
-3. t = 400ms: footer hairline begins scaling from 0 to 1 over 900ms, origin left.
-4. t = 1010ms: the manifesto + CTA row fades from 0 to 1 over 700ms.
-5. By ~1.9s the page is fully settled. Nothing loops.
-6. Hover a nav link: colour goes from `--ink-2` to `--ink` (160ms) and a 1px underline scales in from the left (240ms).
-7. Hover the CTA: fills `--ink`, text becomes `--paper`, the arrow icon translates 4px right over 240ms. Active (mousedown) fills `--accent` instead.
-8. Click anywhere on the main area that is not a link or button, or click the 32px round replay button bottom-right: the whole reveal replays from step 1.
-9. With `prefers-reduced-motion: reduce` every element is in its final position from the first frame; replay does nothing visible.
 
 ## Structure
 
@@ -46,58 +36,6 @@ The above-the-fold hero of a quarterly design magazine called *Marrow*. Warm pap
   - `<section class="hero">` — `<h1>` with each word wrapped as `<span class="w"><span>word</span></span>`; `<br>` after the fourth word; then `.row` holding `<p class="manifesto">` and `<button class="cta">`.
   - `<footer>` — 3-column grid of meta spans; the rule is `footer::before`.
 - `<button class="replay">` — fixed bottom-right, replays the reveal.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm paper, near-black ink, one oxblood accent */
-  --paper:   #f3efe6;  /* page */
-  --paper-2: #ebe6db;  /* reserved: hover surfaces */
-  --ink:     #1c1a17;  /* headline, CTA border, nav hover */
-  --ink-2:   #5f5a52;  /* manifesto, nav links, footer labels */
-  --ink-3:   #9a948a;  /* index caps, footer meta, replay icon */
-  --line:    #d9d3c7;  /* hairlines */
-  --accent:  #8a2b1d;  /* italic word, issue number, Subscribe, focus ring */
-
-  /* type */
-  --serif: "Fraunces", Georgia, serif;          /* opsz 144 for the headline */
-  --sans:  "Instrument Sans", system-ui, sans-serif;
-  --h1: 104px;                                  /* 84px ≤1100, 60px ≤820 */
-
-  /* layout */
-  --nav-h: 56px;
-  --gutter: 56px;                               /* 40 ≤1100, 24 ≤820 */
-  --cta-h: 52px;
-  --r-pill: 999px;
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-word: 760ms;
-  --t-rule: 900ms;
-  --t-fade: 700ms;
-  --stagger: 70ms;
-  --delay-words: 120ms;
-  --delay-rule: 400ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role          | Family          | Size  | Weight | Line-height | Tracking | Case      |
-|---------------|-----------------|------:|-------:|------------:|---------:|-----------|
-| Headline      | Fraunces, opsz 144 | 104px | 300 | 0.98        | −0.035em | sentence  |
-| Headline em   | Fraunces italic | 104px | 300    | 0.98        | −0.035em | sentence, `--accent` |
-| Wordmark      | Fraunces italic | 22px  | 300    | 1           | −0.01em  | sentence  |
-| Nav links     | Instrument Sans | 13px  | 500    | 1.5         | +0.02em  | sentence  |
-| Issue index   | Instrument Sans | 12px  | 400 (number 500) | 1 | +0.14em | UPPERCASE |
-| Manifesto     | Instrument Sans | 19px  | 400 (lead sentence 500) | 1.45 | −0.005em | sentence |
-| CTA           | Instrument Sans | 14px  | 500    | 1           | +0.02em  | sentence  |
-| Footer meta   | Instrument Sans | 12px  | 400 (labels 500) | 1.5 | +0.02em | sentence |
-
-Headline measure is capped at 1120px so the copy breaks after "outlast" at 1280 wide; force the break with `<br>` rather than relying on wrapping.
 
 ## Motion
 
@@ -160,6 +98,74 @@ Reduced motion: `.w > span, .row, footer::before { animation: none; transform: n
 - [ ] Focus rings (2px accent, 4px offset) are visible on every link and button.
 - [ ] With reduced motion, the first frame equals the settled frame.
 - [ ] Demo contains no images; the only network request is Google Fonts.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame (t = 0): nav, index line and empty headline area are visible. Headline words are hidden below their own clip boxes; manifesto and CTA are at opacity 0; the footer rule has `scaleX(0)`.
+2. t = 120ms: word 1 ("Make") starts rising from `translateY(112%)` to `0` over 760ms with expo-out easing. Each following word starts 70ms after the previous one (10 words, last starts at 120 + 9×70 = 750ms).
+3. t = 400ms: footer hairline begins scaling from 0 to 1 over 900ms, origin left.
+4. t = 1010ms: the manifesto + CTA row fades from 0 to 1 over 700ms.
+5. By ~1.9s the page is fully settled. Nothing loops.
+6. Hover a nav link: colour goes from `--ink-2` to `--ink` (160ms) and a 1px underline scales in from the left (240ms).
+7. Hover the CTA: fills `--ink`, text becomes `--paper`, the arrow icon translates 4px right over 240ms. Active (mousedown) fills `--accent` instead.
+8. Click anywhere on the main area that is not a link or button, or click the 32px round replay button bottom-right: the whole reveal replays from step 1.
+9. With `prefers-reduced-motion: reduce` every element is in its final position from the first frame; replay does nothing visible.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm paper, near-black ink, one oxblood accent */
+  --paper:   #f3efe6;  /* page */
+  --paper-2: #ebe6db;  /* reserved: hover surfaces */
+  --ink:     #1c1a17;  /* headline, CTA border, nav hover */
+  --ink-2:   #5f5a52;  /* manifesto, nav links, footer labels */
+  --ink-3:   #9a948a;  /* index caps, footer meta, replay icon */
+  --line:    #d9d3c7;  /* hairlines */
+  --accent:  #8a2b1d;  /* italic word, issue number, Subscribe, focus ring */
+
+  /* type */
+  --serif: "Fraunces", Georgia, serif;          /* opsz 144 for the headline */
+  --sans:  "Instrument Sans", system-ui, sans-serif;
+  --h1: 104px;                                  /* 84px ≤1100, 60px ≤820 */
+
+  /* layout */
+  --nav-h: 56px;
+  --gutter: 56px;                               /* 40 ≤1100, 24 ≤820 */
+  --cta-h: 52px;
+  --r-pill: 999px;
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-word: 760ms;
+  --t-rule: 900ms;
+  --t-fade: 700ms;
+  --stagger: 70ms;
+  --delay-words: 120ms;
+  --delay-rule: 400ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role          | Family          | Size  | Weight | Line-height | Tracking | Case      |
+|---------------|-----------------|------:|-------:|------------:|---------:|-----------|
+| Headline      | Fraunces, opsz 144 | 104px | 300 | 0.98        | −0.035em | sentence  |
+| Headline em   | Fraunces italic | 104px | 300    | 0.98        | −0.035em | sentence, `--accent` |
+| Wordmark      | Fraunces italic | 22px  | 300    | 1           | −0.01em  | sentence  |
+| Nav links     | Instrument Sans | 13px  | 500    | 1.5         | +0.02em  | sentence  |
+| Issue index   | Instrument Sans | 12px  | 400 (number 500) | 1 | +0.14em | UPPERCASE |
+| Manifesto     | Instrument Sans | 19px  | 400 (lead sentence 500) | 1.45 | −0.005em | sentence |
+| CTA           | Instrument Sans | 14px  | 500    | 1           | +0.02em  | sentence  |
+| Footer meta   | Instrument Sans | 12px  | 400 (labels 500) | 1.5 | +0.02em | sentence |
+
+Headline measure is capped at 1120px so the copy breaks after "outlast" at 1280 wide; force the break with `<br>` rather than relying on wrapping.
 
 ## Implementation notes
 

@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A folder of yard notes. It starts open: Hold list, Night book, and Month close sit in a fan. The folder tab reads Yard notes · 3 cards. Clicking the folder closes the fan flat and opens it again. The move is 420ms. Reduced motion shows the open or closed pose with no transition. This is not a 3D flip. That flip is `card-flip-3d`. This is not a content card grid. A card is `content-card`.
-
-## Reference behaviour
-
-1. The first frame is open. aria-expanded is true.
-2. The three cards are Hold list, Night book, and Month close.
-3. Open poses: left card translate -36px -8px rotate -7deg, middle translate 0 -28px, right translate 36px -8px rotate 7deg.
-4. Closed pose: the cards share one stacked position.
-5. Clicking the folder toggles data-open and aria-expanded.
-6. The cards are articles. Only the folder is a button.
-7. Nothing is deleted when the folder closes.
 
 ## Structure
 
@@ -31,23 +23,6 @@ fan of 3 cards
 - Folder is absolute, bottom 36px, height 150px, fill #e7d7b6.
 - The tab is a ::before, 140×24, top -22px, fill #f3e6c8.
 - Titles are Fraunces 22px.
-
-## Tokens
-
-```css
-:root {
-  --bg:#f4f1ea; --surface:#fffdf8; --ink:#1a1814; --ink-2:#5c564c;
-  --line:#e3ddd2; --folder:#e7d7b6; --tab:#f3e6c8; --primary:#1f4d3a;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Card title | Fraunces | 22px | 560 | 1.15 | 0 |
-| Card body | Public Sans | 14px | 400 | 1.4 | 0 |
-| Folder | Public Sans | 14px | 500 | 1 | 0 |
 
 ## Motion
 
@@ -95,16 +70,6 @@ fan of 3 cards
 - [ ] Folder fill is #e7d7b6.
 - [ ] Display is Fraunces. Text is Public Sans.
 
-## Implementation notes
-
-Drive the fan from a data attribute on the stage, not from three class toggles.
-
-```css
-.stage[data-open="true"] .c1 { transform: translate(0,-28px); }
-```
-
-Do not use a 3D perspective. The rotate is a small 2D fan.
-
 ## Measurements to keep
 
 - Stage 560×420. Cards height 180px, padding 16px 18px.
@@ -149,6 +114,47 @@ Do not use a 3D perspective. The rotate is a small 2D fan.
 - Display type is Fraunces.
 - Text type is Public Sans.
 - The folder fill stays #e7d7b6.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is open. aria-expanded is true.
+2. The three cards are Hold list, Night book, and Month close.
+3. Open poses: left card translate -36px -8px rotate -7deg, middle translate 0 -28px, right translate 36px -8px rotate 7deg.
+4. Closed pose: the cards share one stacked position.
+5. Clicking the folder toggles data-open and aria-expanded.
+6. The cards are articles. Only the folder is a button.
+7. Nothing is deleted when the folder closes.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f4f1ea; --surface:#fffdf8; --ink:#1a1814; --ink-2:#5c564c;
+  --line:#e3ddd2; --folder:#e7d7b6; --tab:#f3e6c8; --primary:#1f4d3a;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Card title | Fraunces | 22px | 560 | 1.15 | 0 |
+| Card body | Public Sans | 14px | 400 | 1.4 | 0 |
+| Folder | Public Sans | 14px | 500 | 1 | 0 |
+
+## Implementation notes
+
+Drive the fan from a data attribute on the stage, not from three class toggles.
+
+```css
+.stage[data-open="true"] .c1 { transform: translate(0,-28px); }
+```
+
+Do not use a 3D perspective. The rotate is a small 2D fan.
 
 ---
 

@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the four filters and the row anatomy.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The activity screen for an ops tool. A title "Activity" and four pills: All, Access, Changes, Denied. All starts pressed. Below, six events. Each row is a mono timestamp, an 8px dot, a bold verb plus a sentence, and a badge. Filtering hides rows that are not that kind. Nothing animates. It should read like a yard log, not a social feed.
-
-## Reference behaviour
-
-1. Initial state: All is `aria-pressed="true"`. Six rows visible, newest conceptually at the top as listed: 09:41 sign-in through 10:22 password failure.
-2. Click Access: only rows with kind info remain. Changes shows warning rows. Denied shows danger rows. All shows every row.
-3. The pressed pill is ink fill with background-coloured text. The others are white with a hairline.
-4. Dots: info `#1e4f78`, warning `#8a5a10`, danger `#8d2f2f`. Badges use the matching soft fill and the same ink.
-5. Rows that do not match get `display: none`. Do not remove them from the DOM.
-6. There is no pagination and no search in this piece.
-7. Focus ring is 2px `--focus` with 2px offset on the pills.
 
 ## Structure
 
@@ -29,37 +21,6 @@ ol
 - Filters are a group labelled "Filter events". Each pill is a `button` with `aria-pressed`.
 - The log is an `ol` of `li`.
 - Time is a `time` element. The visible text is HH:MM:SS. A full datetime attribute is optional.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #8a847a;
-  --line: #e4dfd4;
-  --primary: #1f4d3a;
-  --danger: #8d2f2f;
-  --danger-soft: #f8e8e6;
-  --warning: #8a5a10;
-  --warning-soft: #f8efd8;
-  --info: #1e4f78;
-  --info-soft: #e7f0f7;
-  --focus: #1f4d3a;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-}
-```
-
-## Typography
-
-- Title: IBM Plex Sans 500, 28px, tracking -0.03em.
-- Verb: 14px, weight 600. The rest of the sentence is 14px, `--ink-2`.
-- Timestamp: IBM Plex Mono 12px, `--ink-3`, column width 148px.
-- Badge: 11px, weight 600, height 22px, padding 0 8px, pill radius.
-- Pills: 12px, weight 500, height 32px.
 
 ## Motion
 
@@ -95,6 +56,51 @@ None. Filtering is instant. Reduced motion changes nothing.
 - [ ] Pressed pill is ink on background, not a second palette.
 - [ ] Hidden rows stay in the DOM.
 - [ ] No motion, no emoji, no avatar images.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: All is `aria-pressed="true"`. Six rows visible, newest conceptually at the top as listed: 09:41 sign-in through 10:22 password failure.
+2. Click Access: only rows with kind info remain. Changes shows warning rows. Denied shows danger rows. All shows every row.
+3. The pressed pill is ink fill with background-coloured text. The others are white with a hairline.
+4. Dots: info `#1e4f78`, warning `#8a5a10`, danger `#8d2f2f`. Badges use the matching soft fill and the same ink.
+5. Rows that do not match get `display: none`. Do not remove them from the DOM.
+6. There is no pagination and no search in this piece.
+7. Focus ring is 2px `--focus` with 2px offset on the pills.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #8a847a;
+  --line: #e4dfd4;
+  --primary: #1f4d3a;
+  --danger: #8d2f2f;
+  --danger-soft: #f8e8e6;
+  --warning: #8a5a10;
+  --warning-soft: #f8efd8;
+  --info: #1e4f78;
+  --info-soft: #e7f0f7;
+  --focus: #1f4d3a;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+```
+
+## Typography
+
+- Title: IBM Plex Sans 500, 28px, tracking -0.03em.
+- Verb: 14px, weight 600. The rest of the sentence is 14px, `--ink-2`.
+- Timestamp: IBM Plex Mono 12px, `--ink-3`, column width 148px.
+- Badge: 11px, weight 600, height 22px, padding 0 8px, pill radius.
+- Pills: 12px, weight 500, height 32px.
 
 ## Implementation notes
 

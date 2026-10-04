@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, moss becomes the kit's primary and clay its danger or secondary accent.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The toolbar above a stock table in Fernery, a plant nursery's back office. Filter opens a 320px popover with a search field, three groups of checkable options (Light, Category, Care & stock) and a count beside every option that updates as you pick. Sort opens a small menu of radio items, Sort by and Order, and a square button beside it flips the direction in one click. Applied filters live inline in the toolbar as moss chips with × buttons and a clay Clear all, so they stay visible while the popover is open. The detail worth copying is the faceted counts: each number says how many rows you would see if you ticked that option, given everything else already ticked, and options that would give zero are dimmed and skipped by the keyboard.
-
-## Reference behaviour
-
-1. First frame: the Filter popover is open under Filter, focus in Search filters. Bright indirect, Medium and Pet safe are ticked. Bright direct is the active option. The toolbar shows Filter with a 3 badge, Sort Price, the direction button (ascending), three chips (Light: Bright indirect, Light: Medium, Pet safe), Clear all, and "Showing 8 of 18 plants". The table lists those 8 sorted by price, low to high.
-2. Typing in Search filters narrows the options to those whose name or group name contains the text; the matched part is highlighted `#f3e3a6`. Groups with no matches disappear. No matches shows "No filter called “…”".
-3. ArrowDown/ArrowUp move the active option and wrap; PageUp/PageDown jump to first/last. Focus stays in the search field; the active option is exposed with `aria-activedescendant` and drawn with a moss-soft fill and a 1.5px moss inset ring.
-4. Enter toggles the active option. Space toggles it too while the field is empty (otherwise Space types a space). Clicking an option toggles it and keeps focus in the field.
-5. Every toggle immediately re-filters the table, updates the badge, chips, "Showing N of 18", the footer button ("Show 8 plants"), and every option count.
-6. Options whose count is 0 and are not ticked render muted with `aria-disabled="true"`, cannot be toggled, and are skipped by the arrow keys.
-7. Escape in the field clears the search if there is text; a second Escape closes the popover and focuses Filter. Clear unticks everything and keeps the popover open. Show N plants closes it. Clicking outside or tabbing out closes it without moving focus back.
-8. Chips: × removes that filter and moves focus to the chip now in the same position, else the previous chip, else Filter. Clear all removes all and focuses Filter. With no filters the chip area reads "No filters. All bay 3 stock is listed."
-9. Sort: pressing Sort, or ArrowDown on it, opens the menu with focus on the checked Sort by item; ArrowUp opens on the last item. Items: Sort by Name (A–Z), Price (€), Stock (units), Newest (added); separator; Order with two radios whose words follow the field: "A to Z / Z to A", "Low to high / High to low", "Newest first / Oldest first".
-10. In the Sort menu: ArrowUp/Down wrap, Home/End jump, typeahead (500ms buffer), Enter/Space choose and close, Escape closes, Tab closes and moves on. Focus returns to Sort. Choosing a new field resets the order to the first option.
-11. The direction button flips the order. Its icon arrow flips vertically over 240ms. Its label reads "Sort ascending, press to reverse" or "Sort descending, press to reverse". The sorted column header gets `aria-sort` and moss ink.
-12. Rows fade up 4px over 220ms after each change, staggered 18ms, capped at 8 rows.
-13. Placement: both popovers open 6px below their trigger, left-aligned, clamped 8px inside the viewport. If there is more room above than below and the popover doesn't fit below, it opens above. Whichever side it takes, if it's still too tall it gets `max-height` equal to the space and the option list scrolls inside, with the search and footer fixed.
 
 ## Structure
 
@@ -72,50 +58,6 @@ Sort menu 228
 - Chips: a `role="group" aria-label="Applied filters"`, each chip a span with a named × button.
 - Count: `role="status" aria-live="polite"`.
 - Table: a real `<table>` with `scope="col"` headers and `aria-sort` on the active column.
-
-## Tokens
-
-```css
-:root {
-  --bg: #edf0e8;        /* page */
-  --surface: #fbfcf8;   /* card, popovers, buttons */
-  --sunk: #f3f5ef;      /* table header, hover, tags */
-  --ink: #1e2a22;
-  --ink-2: #4a584e;
-  --ink-3: #65716a;     /* latin names, counts, group labels */
-  --line: #d5dccf;
-  --line-2: #e4e9de;
-  --moss: #2f6b4f;      /* primary: badge, ticks, Show button, focus */
-  --moss-soft: #dcebdf; /* chips, active option, expanded ring */
-  --moss-ink: #1f4f39;  /* chip text, brand, sorted header */
-  --clay: #a8482a;      /* Clear all, Sold out */
-  --hit: #f3e3a6;       /* search match highlight */
-
-  --serif: "Young Serif", Georgia, serif;
-  --sans: "Libre Franklin", system-ui, sans-serif;
-
-  --r-card: 10px; --r-pop: 12px; --r-btn: 8px; --r-option: 7px;
-  --pop-w: 320px; --menu-w: 228px; --option-h: 34px; --menu-item-h: 32px; --btn-h: 38px;
-  --shadow: 0 1px 2px rgba(30,42,34,.06), 0 16px 36px -10px rgba(30,42,34,.22);
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Notes |
-| --- | --- | --- | --- | --- |
-| Brand | Young Serif | 22px | 400 | `--moss-ink` |
-| Page title | Young Serif | 36px | 400 | line-height 1.05, -0.01em |
-| Latin name | Young Serif | 12.5px | 400 | `--ink-3`, not italic |
-| Empty state title | Young Serif | 20px | 400 | |
-| Toolbar buttons | Libre Franklin | 13.5px | 600 | "Sort" prefix 400 `--ink-2` |
-| Table header | Libre Franklin | 11.5px | 600 | uppercase, 0.06em |
-| Cells | Libre Franklin | 14px | 400 / 600 names | numbers tabular, right-aligned |
-| Group label | Libre Franklin | 11px | 700 | uppercase, 0.08em, `--ink-3` |
-| Option | Libre Franklin | 14px | 400 | count 12px tabular `--ink-3` |
-| Chip | Libre Franklin | 12.5px | 600 | facet prefix 400 in `--moss` |
 
 ## Motion
 
@@ -185,6 +127,70 @@ Reduced motion: all durations 1ms, no translate. The table still updates and the
 - [ ] Typing "fern" leaves only Category › Fern with its highlighted match.
 - [ ] Sort fields: Name, Price, Stock, Newest; order words change with the field.
 - [ ] Popover 320px, radius 12, options 34px, footer button reads "Show 8 plants".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the Filter popover is open under Filter, focus in Search filters. Bright indirect, Medium and Pet safe are ticked. Bright direct is the active option. The toolbar shows Filter with a 3 badge, Sort Price, the direction button (ascending), three chips (Light: Bright indirect, Light: Medium, Pet safe), Clear all, and "Showing 8 of 18 plants". The table lists those 8 sorted by price, low to high.
+2. Typing in Search filters narrows the options to those whose name or group name contains the text; the matched part is highlighted `#f3e3a6`. Groups with no matches disappear. No matches shows "No filter called “…”".
+3. ArrowDown/ArrowUp move the active option and wrap; PageUp/PageDown jump to first/last. Focus stays in the search field; the active option is exposed with `aria-activedescendant` and drawn with a moss-soft fill and a 1.5px moss inset ring.
+4. Enter toggles the active option. Space toggles it too while the field is empty (otherwise Space types a space). Clicking an option toggles it and keeps focus in the field.
+5. Every toggle immediately re-filters the table, updates the badge, chips, "Showing N of 18", the footer button ("Show 8 plants"), and every option count.
+6. Options whose count is 0 and are not ticked render muted with `aria-disabled="true"`, cannot be toggled, and are skipped by the arrow keys.
+7. Escape in the field clears the search if there is text; a second Escape closes the popover and focuses Filter. Clear unticks everything and keeps the popover open. Show N plants closes it. Clicking outside or tabbing out closes it without moving focus back.
+8. Chips: × removes that filter and moves focus to the chip now in the same position, else the previous chip, else Filter. Clear all removes all and focuses Filter. With no filters the chip area reads "No filters. All bay 3 stock is listed."
+9. Sort: pressing Sort, or ArrowDown on it, opens the menu with focus on the checked Sort by item; ArrowUp opens on the last item. Items: Sort by Name (A–Z), Price (€), Stock (units), Newest (added); separator; Order with two radios whose words follow the field: "A to Z / Z to A", "Low to high / High to low", "Newest first / Oldest first".
+10. In the Sort menu: ArrowUp/Down wrap, Home/End jump, typeahead (500ms buffer), Enter/Space choose and close, Escape closes, Tab closes and moves on. Focus returns to Sort. Choosing a new field resets the order to the first option.
+11. The direction button flips the order. Its icon arrow flips vertically over 240ms. Its label reads "Sort ascending, press to reverse" or "Sort descending, press to reverse". The sorted column header gets `aria-sort` and moss ink.
+12. Rows fade up 4px over 220ms after each change, staggered 18ms, capped at 8 rows.
+13. Placement: both popovers open 6px below their trigger, left-aligned, clamped 8px inside the viewport. If there is more room above than below and the popover doesn't fit below, it opens above. Whichever side it takes, if it's still too tall it gets `max-height` equal to the space and the option list scrolls inside, with the search and footer fixed.
+
+## Tokens
+
+```css
+:root {
+  --bg: #edf0e8;        /* page */
+  --surface: #fbfcf8;   /* card, popovers, buttons */
+  --sunk: #f3f5ef;      /* table header, hover, tags */
+  --ink: #1e2a22;
+  --ink-2: #4a584e;
+  --ink-3: #65716a;     /* latin names, counts, group labels */
+  --line: #d5dccf;
+  --line-2: #e4e9de;
+  --moss: #2f6b4f;      /* primary: badge, ticks, Show button, focus */
+  --moss-soft: #dcebdf; /* chips, active option, expanded ring */
+  --moss-ink: #1f4f39;  /* chip text, brand, sorted header */
+  --clay: #a8482a;      /* Clear all, Sold out */
+  --hit: #f3e3a6;       /* search match highlight */
+
+  --serif: "Young Serif", Georgia, serif;
+  --sans: "Libre Franklin", system-ui, sans-serif;
+
+  --r-card: 10px; --r-pop: 12px; --r-btn: 8px; --r-option: 7px;
+  --pop-w: 320px; --menu-w: 228px; --option-h: 34px; --menu-item-h: 32px; --btn-h: 38px;
+  --shadow: 0 1px 2px rgba(30,42,34,.06), 0 16px 36px -10px rgba(30,42,34,.22);
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Notes |
+| --- | --- | --- | --- | --- |
+| Brand | Young Serif | 22px | 400 | `--moss-ink` |
+| Page title | Young Serif | 36px | 400 | line-height 1.05, -0.01em |
+| Latin name | Young Serif | 12.5px | 400 | `--ink-3`, not italic |
+| Empty state title | Young Serif | 20px | 400 | |
+| Toolbar buttons | Libre Franklin | 13.5px | 600 | "Sort" prefix 400 `--ink-2` |
+| Table header | Libre Franklin | 11.5px | 600 | uppercase, 0.06em |
+| Cells | Libre Franklin | 14px | 400 / 600 names | numbers tabular, right-aligned |
+| Group label | Libre Franklin | 11px | 700 | uppercase, 0.08em, `--ink-3` |
+| Option | Libre Franklin | 14px | 400 | count 12px tabular `--ink-3` |
+| Chip | Libre Franklin | 12.5px | 600 | facet prefix 400 in `--moss` |
 
 ## Implementation notes
 

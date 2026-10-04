@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The home index of a fictional Kathmandu architect, N. Rimal. The first frame is a 120px condensed wordmark, an eight-row numbered list on a 12-column grid, and a sticky right-hand plate that always shows a geometric floor-plan drawing. Hovering or focusing a row crossfades the plan (320ms) and turns that row's index number vermilion. The page is paper-gray with one red. It is a drawing board, not a photography site: imagery is SVG linework only.
-
-## Reference behaviour
-
-1. Initial state: row 01 "Court House" is pressed (`aria-pressed="true"`, class `on`). Its plan is visible at full opacity. The caption reads `01 · Court House · Patan Durbar square edge`. Other rows are at full opacity until the list is dimmed.
-2. Pointer enters any row: that row becomes active. Its number turns `--red`. Its project name translates 6px right over 320ms (`--expo`). All other rows drop to opacity 0.34. The matching SVG in `.stage` fades to 1; the previous fades to 0 over 320ms. Caption and `aria-live` region update.
-3. Keyboard focus on a row (Tab) does the same as hover. ArrowDown / ArrowUp move the active row, call `preventDefault`, and move focus.
-4. Clicking a row sets it pressed and keeps it active after the pointer leaves if that row still has focus. If the pointer leaves the list and focus is outside the list, dimming clears and row 01 is restored (hero state).
-5. The plan plate stays 456px tall and sticky at `top: 64px`. It never follows the cursor.
-6. A north arrow (1px stem, 4×6 triangle, "N") sits at the top-right of the plate. A 48px caption bar is locked to the bottom edge with `1 : 200` in red on the right.
-7. Nav "Index" is the current page (1px red underline). Other links have no underline until hover, when text turns `--red`.
 
 ## Structure
 
@@ -46,44 +38,6 @@ The home index of a fictional Kathmandu architect, N. Rimal. The first frame is 
 - `<section class="board g" aria-label="Selected works">`
   - `.list` cols 1–7: `.thead` (28px) + eight `<button class="row">` (52px). Columns inside a row: 48px / 1fr / 110px / 48px.
   - `<aside class="plan" aria-live="polite">` cols 8–12: stacked SVGs, north arrow, caption.
-
-## Tokens
-
-```css
-:root {
-  --bg: #e6e2d8;          /* paper-gray page */
-  --ink: #161412;         /* primary text + plan stroke */
-  --ink-2: #6a655c;       /* secondary / coordinates */
-  --ink-3: #9a9488;       /* thead */
-  --line: #c8c2b4;        /* hairlines */
-  --red: #c8102e;         /* wordmark, active number, scale, focus */
-
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  --pad: 40px;
-  --g: 16px;
-  --nav: 48px;
-  --row: 52px;
-  --plan-h: 456px;
-
-  --t: 180ms;
-  --t-swap: 320ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Wordmark | Schibsted Grotesk | 120px | 700 | 0.78 | −0.055em | as written |
-| Nav / thead / caption | IBM Plex Mono | 10–11px | 400–500 | 1 | +0.10–0.12em | UPPERCASE |
-| Intro sentence | Schibsted Grotesk | 15px | 400 | 1.35 | 0 | sentence |
-| Project name | Schibsted Grotesk | 20px | 500 | 1 | −0.02em | title |
-| Row number | IBM Plex Mono | 12px | 500 | 1 | 0 | tabular |
-| Type / year | IBM Plex Mono | 11px | 400 | 1 | +0.04em | sentence / 2-digit |
 
 ## Motion
 
@@ -136,6 +90,58 @@ Reduced motion: all `transition-duration` 1ms. Name offset removed (`transform: 
 - [ ] Focus rings are 2px `#C8102E` on every interactive control.
 - [ ] `prefers-reduced-motion: reduce` makes swaps instant and removes the 6px name shift.
 - [ ] No photographs, no emoji, no placeholder copy, no real practices.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: row 01 "Court House" is pressed (`aria-pressed="true"`, class `on`). Its plan is visible at full opacity. The caption reads `01 · Court House · Patan Durbar square edge`. Other rows are at full opacity until the list is dimmed.
+2. Pointer enters any row: that row becomes active. Its number turns `--red`. Its project name translates 6px right over 320ms (`--expo`). All other rows drop to opacity 0.34. The matching SVG in `.stage` fades to 1; the previous fades to 0 over 320ms. Caption and `aria-live` region update.
+3. Keyboard focus on a row (Tab) does the same as hover. ArrowDown / ArrowUp move the active row, call `preventDefault`, and move focus.
+4. Clicking a row sets it pressed and keeps it active after the pointer leaves if that row still has focus. If the pointer leaves the list and focus is outside the list, dimming clears and row 01 is restored (hero state).
+5. The plan plate stays 456px tall and sticky at `top: 64px`. It never follows the cursor.
+6. A north arrow (1px stem, 4×6 triangle, "N") sits at the top-right of the plate. A 48px caption bar is locked to the bottom edge with `1 : 200` in red on the right.
+7. Nav "Index" is the current page (1px red underline). Other links have no underline until hover, when text turns `--red`.
+
+## Tokens
+
+```css
+:root {
+  --bg: #e6e2d8;          /* paper-gray page */
+  --ink: #161412;         /* primary text + plan stroke */
+  --ink-2: #6a655c;       /* secondary / coordinates */
+  --ink-3: #9a9488;       /* thead */
+  --line: #c8c2b4;        /* hairlines */
+  --red: #c8102e;         /* wordmark, active number, scale, focus */
+
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --pad: 40px;
+  --g: 16px;
+  --nav: 48px;
+  --row: 52px;
+  --plan-h: 456px;
+
+  --t: 180ms;
+  --t-swap: 320ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Wordmark | Schibsted Grotesk | 120px | 700 | 0.78 | −0.055em | as written |
+| Nav / thead / caption | IBM Plex Mono | 10–11px | 400–500 | 1 | +0.10–0.12em | UPPERCASE |
+| Intro sentence | Schibsted Grotesk | 15px | 400 | 1.35 | 0 | sentence |
+| Project name | Schibsted Grotesk | 20px | 500 | 1 | −0.02em | title |
+| Row number | IBM Plex Mono | 12px | 500 | 1 | 0 | tabular |
+| Type / year | IBM Plex Mono | 11px | 400 | 1 | +0.04em | sentence / 2-digit |
 
 ## Implementation notes
 

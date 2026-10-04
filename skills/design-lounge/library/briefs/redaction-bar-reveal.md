@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from f-list.cleancreatives.org: the "We are exposing" block, where each line of a paragraph starts behind a solid black redaction bar and the bars shrink away line by line as the section comes into view. This version is the findings block of a fictional investigative desk, Blackline Desk, on a grey-green newsprint page. Three paragraphs are set in 34px Antonio, a tall condensed face. On load, the bars over the first two paragraphs lift top to bottom with a 90ms stagger; the third paragraph stays covered until the reader clicks a bar, presses "Declassify next line", or "Declassify all". One phrase inside it is withheld for good: its bar never lifts, and hovering or focusing it shows a red "Withheld pending legal review" tag. When every line is lifted, a red double-ruled DECLASSIFIED stamp thumps onto the side column. The detail worth copying: bars are measured from the real rendered lines, so they fit any width, and they shrink toward the right edge, which reads like a marker being peeled back.
-
-## Reference behaviour
-
-1. First frame: a 64px mono strip (file label left; counter and three buttons right); a 340px side column with a 68px uppercase headline "What the filings show", a four-row meta list and a hint; and the text column. Within 450ms + 7 × 90ms the bars over paragraphs 1 and 2 (7 lines at 1280) have lifted. Paragraph 3 (3 lines) is still behind bars.
-2. Bars are built after `document.fonts.ready`. Each word is wrapped in a span; spans are grouped into lines by their rect top (within 8px). One bar per line spans the leftmost to the rightmost word, plus 4px each side, plus a small fixed jitter of `(i × 37) mod 13` px on the right so the ragged edge looks hand-drawn.
-3. Bar height is 95% of the computed line-height, offset 11% of the line-height down from the line box top. Adjacent bars leave a 2px seam of paper.
-4. Lifting a bar: `transform: scaleX(1 → 0)`, origin right centre, 520ms expo-out. The line's text is revealed left to right.
-5. Clicking any covered bar lifts just that line. Bars cannot be clicked once lifted.
-6. "Declassify next line" lifts the first covered line in reading order. "Declassify all" lifts all covered lines with a 90ms stagger, top to bottom.
-7. "Redact all" re-covers every lifted line, bottom to top, 90ms stagger. Re-covering grows from the left (`transform-origin: 0 50%`), as if a marker is drawn again.
-8. The counter reads "7 / 10 lines declassified" and updates after each action (polite live region). Buttons disable when they have nothing to do.
-9. The withheld phrase ("a name we are not yet allowed to print") has its own bar per rendered fragment, above the line bars. It never lifts. Hover or keyboard focus shows a red mono tag above it.
-10. When all lines are lifted, the stamp scales from 1.6 to 1 at −8°, 320ms expo-out, at 90% opacity with `mix-blend-mode: multiply`. It hides again as soon as any line is covered.
-11. On resize, bars are rebuilt and each line keeps its lifted state by index.
 
 ## Structure
 
@@ -49,47 +37,6 @@ grid: 340px | 1fr, column gap 72px, rows 1fr | auto
 - `main.doc`: a grid. `aside.side` spans both rows: `h2`, `ul.meta`, the stamp `div` (`aria-hidden`), `p.hint`.
 - `article.text` labelled by the `h2`: three `p`, then `div.bars` (absolute overlay, `inset: 0`). The withheld phrase is a `span.withheld` with `tabindex="0"` and `aria-describedby` pointing at a visually hidden note.
 - `footer.sources`: four mono facts with square bullets, under a hairline.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --paper: #dcdfd6;     /* page, grey-green newsprint */
-  --paper-2: #e8eae3;   /* reserved for a lighter panel */
-  --ink: #111111;       /* text, button borders */
-  --ink-2: #3d403a;     /* meta labels, counter, sources */
-  --line: #b9bdb2;      /* hairlines */
-  --bar: #0d0d0d;       /* redaction bar */
-  --bar-hover: #2b2b2b; /* bar under the pointer */
-  --stamp: #d7261e;     /* stamp, file number, withheld tag, focus */
-  --focus: #d7261e;
-
-  /* type */
-  --cond: "Antonio", "Arial Narrow", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --lift: 520ms;
-  --stagger: 90ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Headline h2 | Antonio | 68px | 700 | 0.95 | −0.01em | UPPER |
-| Body paragraphs | Antonio | 34px | 500 | 1.2 | −0.005em | Sentence |
-| Stamp | Antonio | 28px | 700 | 1 | 0.08em | UPPER |
-| Strip label, buttons | IBM Plex Mono | 12px | 500 / 600 | 1 | 0.08em | UPPER |
-| Meta list | IBM Plex Mono | 13px | 400 | 1.5 | 0 | Sentence |
-| Sources, hint | IBM Plex Mono | 12px | 400 | 1.5 | 0.04em | Sentence |
-| Withheld tag | IBM Plex Mono | 11px | 600 | 1 | 0.06em | UPPER |
-
-The body is the condensed face, not the mono. Bars over 34px condensed text read as a dossier; bars over mono read as a code block.
 
 ## Motion
 
@@ -154,6 +101,65 @@ The body is the condensed face, not the mono. Bars over 34px condensed text read
 - [ ] Body 34px Antonio 500, line-height 1.2.
 - [ ] First frame ends at "7 / 10 lines declassified" with paragraph 3 covered.
 - [ ] The stamp reads DECLASSIFIED and appears only at 10 / 10.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a 64px mono strip (file label left; counter and three buttons right); a 340px side column with a 68px uppercase headline "What the filings show", a four-row meta list and a hint; and the text column. Within 450ms + 7 × 90ms the bars over paragraphs 1 and 2 (7 lines at 1280) have lifted. Paragraph 3 (3 lines) is still behind bars.
+2. Bars are built after `document.fonts.ready`. Each word is wrapped in a span; spans are grouped into lines by their rect top (within 8px). One bar per line spans the leftmost to the rightmost word, plus 4px each side, plus a small fixed jitter of `(i × 37) mod 13` px on the right so the ragged edge looks hand-drawn.
+3. Bar height is 95% of the computed line-height, offset 11% of the line-height down from the line box top. Adjacent bars leave a 2px seam of paper.
+4. Lifting a bar: `transform: scaleX(1 → 0)`, origin right centre, 520ms expo-out. The line's text is revealed left to right.
+5. Clicking any covered bar lifts just that line. Bars cannot be clicked once lifted.
+6. "Declassify next line" lifts the first covered line in reading order. "Declassify all" lifts all covered lines with a 90ms stagger, top to bottom.
+7. "Redact all" re-covers every lifted line, bottom to top, 90ms stagger. Re-covering grows from the left (`transform-origin: 0 50%`), as if a marker is drawn again.
+8. The counter reads "7 / 10 lines declassified" and updates after each action (polite live region). Buttons disable when they have nothing to do.
+9. The withheld phrase ("a name we are not yet allowed to print") has its own bar per rendered fragment, above the line bars. It never lifts. Hover or keyboard focus shows a red mono tag above it.
+10. When all lines are lifted, the stamp scales from 1.6 to 1 at −8°, 320ms expo-out, at 90% opacity with `mix-blend-mode: multiply`. It hides again as soon as any line is covered.
+11. On resize, bars are rebuilt and each line keeps its lifted state by index.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --paper: #dcdfd6;     /* page, grey-green newsprint */
+  --paper-2: #e8eae3;   /* reserved for a lighter panel */
+  --ink: #111111;       /* text, button borders */
+  --ink-2: #3d403a;     /* meta labels, counter, sources */
+  --line: #b9bdb2;      /* hairlines */
+  --bar: #0d0d0d;       /* redaction bar */
+  --bar-hover: #2b2b2b; /* bar under the pointer */
+  --stamp: #d7261e;     /* stamp, file number, withheld tag, focus */
+  --focus: #d7261e;
+
+  /* type */
+  --cond: "Antonio", "Arial Narrow", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --lift: 520ms;
+  --stagger: 90ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Headline h2 | Antonio | 68px | 700 | 0.95 | −0.01em | UPPER |
+| Body paragraphs | Antonio | 34px | 500 | 1.2 | −0.005em | Sentence |
+| Stamp | Antonio | 28px | 700 | 1 | 0.08em | UPPER |
+| Strip label, buttons | IBM Plex Mono | 12px | 500 / 600 | 1 | 0.08em | UPPER |
+| Meta list | IBM Plex Mono | 13px | 400 | 1.5 | 0 | Sentence |
+| Sources, hint | IBM Plex Mono | 12px | 400 | 1.5 | 0.04em | Sentence |
+| Withheld tag | IBM Plex Mono | 11px | 600 | 1 | 0.06em | UPPER |
+
+The body is the condensed face, not the mono. Bars over 34px condensed text read as a dossier; bars over mono read as a code block.
 
 ## Implementation notes
 

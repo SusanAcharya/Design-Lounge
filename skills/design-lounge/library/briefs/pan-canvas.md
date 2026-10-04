@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A frame of 960 by 560 over a 1600 by 1000 grid of sixteen yard rooms. Drag pans the grid. Arrow keys move it 40px. The rooms are local samples. This is not a masonry of photos. That gallery is `masonry-gallery-captions`. The pan is the piece.
-
-## Reference behaviour
-
-1. The grid starts translated -80px, -40px.
-2. Pointer drag updates the translation.
-3. Arrow keys move 40px.
-4. The frame clips the grid.
-5. Each cell names a room and says the sample is local.
-6. The cursor is grab, and grabbing while down.
-7. Nothing is fetched.
 
 ## Structure
 
@@ -30,20 +22,6 @@ A frame of 960 by 560 over a 1600 by 1000 grid of sixteen yard rooms. Drag pans 
 - Cells min-height 220px.
 - The hint Drag the map sits in the corner and does not capture the pointer.
 - The frame is role application with a name.
-
-## Tokens
-
-```css
-:root { --bg:#141311; --cell:#1c1b19; --ink:#f4f1ea; --ink-2:#a39b90; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Room | IBM Plex Sans | 20px | 600 |
-| Note | IBM Plex Sans | 14px | 500 |
-| Hint | IBM Plex Sans | 14px | 500 |
 
 ## Motion
 
@@ -88,16 +66,6 @@ A frame of 960 by 560 over a 1600 by 1000 grid of sixteen yard rooms. Drag pans 
 - [ ] Start offset is -80, -40.
 - [ ] Arrow step is 40px.
 - [ ] Ground of the frame is near-black.
-
-## Implementation notes
-
-Store the pointer offset on pointerdown.
-
-```js
-x = e.clientX - drag.x;
-```
-
-Do not use a map library.
 
 ## Measurements to keep
 
@@ -166,6 +134,44 @@ Do not use a map library.
 - While rebuilding, remember: Do not inertia-spin forever.
 - While rebuilding, remember: Do not hide the names.
 - While rebuilding, remember: Do not use a scrollbar as the only pan.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The grid starts translated -80px, -40px.
+2. Pointer drag updates the translation.
+3. Arrow keys move 40px.
+4. The frame clips the grid.
+5. Each cell names a room and says the sample is local.
+6. The cursor is grab, and grabbing while down.
+7. Nothing is fetched.
+
+## Tokens
+
+```css
+:root { --bg:#141311; --cell:#1c1b19; --ink:#f4f1ea; --ink-2:#a39b90; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Room | IBM Plex Sans | 20px | 600 |
+| Note | IBM Plex Sans | 14px | 500 |
+| Hint | IBM Plex Sans | 14px | 500 |
+
+## Implementation notes
+
+Store the pointer offset on pointerdown.
+
+```js
+x = e.clientX - drag.x;
+```
+
+Do not use a map library.
 
 ---
 

@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from moremedia.at: the services block where each discipline is a tall column with its name set vertically, and pointing at one widens it into a list of what that discipline includes. This rebuild is for **Quillon**, a fictional brand and web studio, on a cool sage page with deep green ink instead of warm white. It is a horizontal accordion: one column is always open (2.6× the width of the others, a slightly darker fill), and the closed ones are rotated 40px labels with a mono number under them. The detail worth copying is that the closed state still reads as a strong typographic composition, so the section looks finished before anyone touches it.
-
-## Reference behaviour
-
-1. First frame: 76px header (tracked caps wordmark "QUILLON", "EN", "Menu" with a two-line icon). Eyebrow "SERVICES", then "Four disciplines. / One desk." at 50px.
-2. A 476px-tall box, 64px side margins, 1px border, 14px radius, split into four columns by 1px rules: Strategy 01, Identity 02, Build 03, Intelligence 04.
-3. Identity starts open: fill `#D4DDD2`, width ≈ 2.6× a closed column. Its panel shows "02 Identity" (38px), four service rows with ↗ arrows, a 15px description, and a mono footer "6–10 weeks · ends in a brand book" / "5 people on this desk".
-4. Closed columns show the name rotated to read bottom-to-top, 40px Bricolage 700, bottom-aligned 30px from the floor, with the number 26px under it.
-5. Pointer enters a closed column (fine pointers only): after a 90ms intent delay it opens; the open one closes. Widths animate with `flex-grow` over 640ms expo out. Leaving the box keeps the last one open.
-6. Opening: the vertical label and number fade out (250ms); the panel fades in after a 200ms delay (380ms) and its title rises 10px.
-7. Click (or tap) a closed column: it opens immediately. Enter/Space on its button opens it and moves focus to its first service link.
-8. Hover a service row: text slides 6px right, arrow turns vermilion and nudges 2px up-right.
-9. Hover a closed column (before it opens): its label nudges 6px.
-10. Reduced motion: widths and fades switch instantly.
 
 ## Structure
 
@@ -50,48 +39,6 @@ Studied from moremedia.at: the services block where each discipline is a tall co
   - `button.tab[aria-expanded][aria-controls]` filling the column, containing `.vlabel` and `.num`.
   - `div.panel[role=region][aria-label]` absolutely filling the column: `h2` (with `small` number), `ul` of four links, `p.desc`, `p.foot`. Closed panels are `inert`.
 - Panels have `min-width: 400px` so text never reflows while the column is still growing; the column's `overflow` clips it.
-
-## Tokens
-
-```css
-:root {
-  --page: #e4e9e2;    /* cool sage page */
-  --open: #d4ddd2;    /* fill of the open column */
-  --line: #bfcabd;    /* box border, column rules, row rules */
-  --ink: #13201a;     /* deep green-black */
-  --ink-2: #44524a;   /* eyebrow, description, footer */
-  --ink-3: #57645c;   /* numbers, idle arrows */
-  --accent: #d8432a;  /* arrow hover, focus ring */
-
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  --pad-x: 64px;
-  --box-h: 476px;
-  --radius: 14px;
-  --grow-open: 2.6;
-  --row-h: 54px;
-
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --t-grow: 640ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-|---|---|---:|---:|---:|---:|---|
-| Wordmark | Bricolage Grotesque, opsz 24 | 22px | 700 | 1 | 0.26em | UPPER |
-| Header links | Bricolage Grotesque | 15px | 500 | 1 | 0 | — |
-| Lang / eyebrow | JetBrains Mono | 11px | 500 | 1 | 0.10 / 0.16em | UPPER |
-| H1 | Bricolage Grotesque, opsz 96 | 50px | 700 | 1.04 | −0.035em | two lines |
-| Vertical label | Bricolage Grotesque, opsz 72 | 40px | 700 | 1 | −0.03em | `writing-mode: vertical-rl` + rotate 180° |
-| Column number | JetBrains Mono | 13px | 400 | 1 | 0 | vertical too |
-| Panel title | Bricolage Grotesque, opsz 72 | 38px | 700 | 1 | −0.03em | number 12px mono before it |
-| Service row | Bricolage Grotesque | 18px | 600 | 1 | −0.01em | 54px rows |
-| Description | Bricolage Grotesque | 15px | 400 | 1.5 | 0 | max 40ch |
-| Footer | JetBrains Mono | 12px | 400 / 500 | 1.5 | 0 | — |
 
 ## Motion
 
@@ -157,6 +104,65 @@ Hover-to-open waits 90ms so sweeping the pointer across the box does not open ev
 - [ ] H1 "Four disciplines. / One desk." at 50px Bricolage Grotesque 700.
 - [ ] Open grow 2.6, 640ms expo out; box 476px tall, 14px radius.
 - [ ] Page `#E4E9E2`, open fill `#D4DDD2`, accent `#D8432A`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: 76px header (tracked caps wordmark "QUILLON", "EN", "Menu" with a two-line icon). Eyebrow "SERVICES", then "Four disciplines. / One desk." at 50px.
+2. A 476px-tall box, 64px side margins, 1px border, 14px radius, split into four columns by 1px rules: Strategy 01, Identity 02, Build 03, Intelligence 04.
+3. Identity starts open: fill `#D4DDD2`, width ≈ 2.6× a closed column. Its panel shows "02 Identity" (38px), four service rows with ↗ arrows, a 15px description, and a mono footer "6–10 weeks · ends in a brand book" / "5 people on this desk".
+4. Closed columns show the name rotated to read bottom-to-top, 40px Bricolage 700, bottom-aligned 30px from the floor, with the number 26px under it.
+5. Pointer enters a closed column (fine pointers only): after a 90ms intent delay it opens; the open one closes. Widths animate with `flex-grow` over 640ms expo out. Leaving the box keeps the last one open.
+6. Opening: the vertical label and number fade out (250ms); the panel fades in after a 200ms delay (380ms) and its title rises 10px.
+7. Click (or tap) a closed column: it opens immediately. Enter/Space on its button opens it and moves focus to its first service link.
+8. Hover a service row: text slides 6px right, arrow turns vermilion and nudges 2px up-right.
+9. Hover a closed column (before it opens): its label nudges 6px.
+10. Reduced motion: widths and fades switch instantly.
+
+## Tokens
+
+```css
+:root {
+  --page: #e4e9e2;    /* cool sage page */
+  --open: #d4ddd2;    /* fill of the open column */
+  --line: #bfcabd;    /* box border, column rules, row rules */
+  --ink: #13201a;     /* deep green-black */
+  --ink-2: #44524a;   /* eyebrow, description, footer */
+  --ink-3: #57645c;   /* numbers, idle arrows */
+  --accent: #d8432a;  /* arrow hover, focus ring */
+
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --pad-x: 64px;
+  --box-h: 476px;
+  --radius: 14px;
+  --grow-open: 2.6;
+  --row-h: 54px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-grow: 640ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+|---|---|---:|---:|---:|---:|---|
+| Wordmark | Bricolage Grotesque, opsz 24 | 22px | 700 | 1 | 0.26em | UPPER |
+| Header links | Bricolage Grotesque | 15px | 500 | 1 | 0 | — |
+| Lang / eyebrow | JetBrains Mono | 11px | 500 | 1 | 0.10 / 0.16em | UPPER |
+| H1 | Bricolage Grotesque, opsz 96 | 50px | 700 | 1.04 | −0.035em | two lines |
+| Vertical label | Bricolage Grotesque, opsz 72 | 40px | 700 | 1 | −0.03em | `writing-mode: vertical-rl` + rotate 180° |
+| Column number | JetBrains Mono | 13px | 400 | 1 | 0 | vertical too |
+| Panel title | Bricolage Grotesque, opsz 72 | 38px | 700 | 1 | −0.03em | number 12px mono before it |
+| Service row | Bricolage Grotesque | 18px | 600 | 1 | −0.01em | 54px rows |
+| Description | Bricolage Grotesque | 15px | 400 | 1.5 | 0 | max 40ch |
+| Footer | JetBrains Mono | 12px | 400 / 500 | 1.5 | 0 | — |
 
 ## Implementation notes
 

@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the wash and the ink are the theme's warning pair. A page shows one message.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A warning in the page, not a toast. It says Gate 2 closes at 18:00 and tells the reader to move the Asar loads to Gate 4. The wash is `--warning-soft`. The sentence is `--warning-on-soft`. Dismiss hides the alert and leaves the line "Alert dismissed. The loads stay on the list." Under the alert, three short swatches show Cleared, Refused, and Booked. They are a key, marked `aria-hidden`. They are not three extra messages on the page. A product ships one alert.
-
-## Reference behaviour
-
-1. The warning is visible. Dismiss is a 40px outline button in the same ink as the sentence.
-2. Clicking Dismiss hides the alert and shows the dismissed line.
-3. The three swatches do not dismiss and are not buttons.
-4. There is no timer. The alert does not vanish on its own.
-5. Focus ring is 2px `--focus`, offset 3px, on Dismiss.
-6. There is no animation.
 
 ## Structure
 
@@ -32,41 +25,6 @@ note: The row under the alert is the tone key.
 - The alert is `role="status"`.
 - The dismissed line is a second `role="status"`, hidden until dismiss.
 - The key row is `aria-hidden="true"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --focus: #1f4d3a;
-  --warning-soft: #f3e6d0;
-  --warning-on-soft: #7d470e;
-  --success-soft: #d6e8dc;
-  --success-on-soft: #1b5e3d;
-  --danger-soft: #f8e4e2;
-  --danger-on-soft: #8a1f1f;
-  --info-soft: #e4eef5;
-  --info-on-soft: #1a4060;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px in this yard demo. The family replaces the alert radius and the button radius. The button on a warning stays outline in the on-soft ink. It is not a second primary.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Alert | sans | 14px | 400 | `--warning-on-soft` |
-| Lead-in | sans | 14px | 500 | `--warning-on-soft` |
-| Button | sans | 13px | 500 | currentColor |
-| Key | sans | 13px | 500 | the matching on-soft |
-| Note | sans | 12px | 400 | `--ink-2` |
-
-The first sentence of the alert is a `strong` at weight 500. The measure of the sentence is about 46ch.
 
 ## Motion
 
@@ -114,6 +72,54 @@ None. Dismiss removes the alert in one frame. Reduced motion has nothing to remo
 - [ ] Focus ring is 2px, offset 3px.
 - [ ] There is no toast and no second alert.
 - [ ] There is no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The warning is visible. Dismiss is a 40px outline button in the same ink as the sentence.
+2. Clicking Dismiss hides the alert and shows the dismissed line.
+3. The three swatches do not dismiss and are not buttons.
+4. There is no timer. The alert does not vanish on its own.
+5. Focus ring is 2px `--focus`, offset 3px, on Dismiss.
+6. There is no animation.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --focus: #1f4d3a;
+  --warning-soft: #f3e6d0;
+  --warning-on-soft: #7d470e;
+  --success-soft: #d6e8dc;
+  --success-on-soft: #1b5e3d;
+  --danger-soft: #f8e4e2;
+  --danger-on-soft: #8a1f1f;
+  --info-soft: #e4eef5;
+  --info-on-soft: #1a4060;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px in this yard demo. The family replaces the alert radius and the button radius. The button on a warning stays outline in the on-soft ink. It is not a second primary.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Alert | sans | 14px | 400 | `--warning-on-soft` |
+| Lead-in | sans | 14px | 500 | `--warning-on-soft` |
+| Button | sans | 13px | 500 | currentColor |
+| Key | sans | 13px | 500 | the matching on-soft |
+| Note | sans | 12px | 400 | `--ink-2` |
+
+The first sentence of the alert is a `strong` at weight 500. The measure of the sentence is about 46ch.
 
 ## Implementation notes
 

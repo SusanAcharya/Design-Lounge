@@ -4,23 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The top of a member's profile on a professional network, cut down to one 580px card: a sage contour-line banner, a 132px avatar wrapped in an orange "OPEN TO WORK" arc, name with a connection-degree badge, an italic serif headline, a meta line, three actions, an "Open to work" note, and a three-row experience timeline. The fictional network is Plyline; the member is Ama Mensah, an infrastructure engineer in Accra.
 
 The feeling is calm and credible: sage neutrals, black ink buttons, one signal orange used only for the job-seeking state. The detail worth copying is the ring: an SVG circle stroke with a 240-unit dash centred on the bottom of the avatar and the words set on a `textPath` inside it, so the badge is real vector type, not a baked image. On hover it lengthens symmetrically.
-
-## Reference behaviour
-
-1. First frame: card centred on a `#E3E6DF` page. Connect is a solid ink pill, the degree badge reads "2nd", the first experience row (Hearthline Energy) is expanded, the other two are collapsed.
-2. Hovering or focusing the avatar lengthens the orange arc from 240 to 272 units (it grows from both ends) over 500ms and shows a dark tooltip to the right: "Open to work — Visible to all Plyline members. Seeking staff platform and infrastructure lead roles."
-3. Clicking Connect turns it into an outlined "Pending" pill. A polite live region says "Invitation sent to Ama Mensah."
-4. While Pending, clicking it again withdraws the invite: back to "Connect", live region says "Invitation withdrawn."
-5. If not withdrawn, after 2400ms the invite is accepted: the button becomes a solid green "Connected" pill, the degree badge flips to a green "1st", and "812 connections" becomes "813 connections". The live region announces the acceptance. Connected is a terminal state; clicking it does nothing.
-6. Clicking Message toggles an inline composer under the actions. It opens by animating `grid-template-rows` 0fr → 1fr over 320ms, then focuses the textarea with the caret at the end of the prefilled text.
-7. In the composer, Send (or Enter on the button) closes it, returns focus to Message, relabels Message to "Sent" for 1800ms, and announces "Message sent to Ama Mensah." An empty message does not send. Escape closes the composer and returns focus to Message.
-8. Each experience row is a disclosure button. Clicking toggles its description open/closed (300ms row-height animation) and rotates the chevron 180°. Rows are independent; several can be open.
-9. The "812 connections" link is inert in the demo (prevents navigation).
 
 ## Structure
 
@@ -56,63 +46,6 @@ page 1280×800, card centred, padding 24px 16px
 - Open-to note: `div` with a decorative dot and a `p`.
 - Experience: `section` with `h2`, then an `ol` of `li.role`; each row's header is a `button aria-expanded aria-controls` and the description is a sibling `div`.
 - A visually hidden `p aria-live="polite"` for announcements.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #e3e6df;          /* page, sage-grey */
-  --card: #fbfbf7;        /* card surface */
-  --ink: #17201b;         /* text, primary button */
-  --ink-2: #46514b;       /* secondary text */
-  --ink-3: #5f6a64;       /* meta, timeline dots */
-  --line: #d6dbd2;        /* hairlines, badge border */
-  --soft: #eef1ea;        /* hover wash */
-  --accent: #d4511b;      /* open-to-work ring, current-role dot, focus */
-  --accent-soft: #fbe6dc; /* open-to-work panel */
-  --ok: #2d6a4a;          /* connected state, 1st badge */
-  --banner: linear-gradient(120deg, #c9d3c4, #aebfb0 55%, #97ab9b);
-
-  /* type */
-  --serif: "Spectral", Georgia, serif;
-  --sans: "Albert Sans", system-ui, sans-serif;
-
-  /* space (4 base) */
-  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s7: 28px;
-
-  /* shape */
-  --r: 10px;              /* panels, composer */
-  --r-card: 14px;
-  --r-pill: 999px;
-  --shadow-card: 0 1px 0 rgba(23,32,27,.04), 0 24px 48px -32px rgba(23,32,27,.35);
-
-  /* motion */
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --t-micro: 160ms;
-  --t-layout: 320ms;
-  --t-ring: 500ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size / line-height | Weight | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Name | Spectral | 28px / 1.1 | 600 | -0.01em | `--ink` |
-| Pronouns | Albert Sans | 13px | 500 | 0 | `--ink-3`, 6px left margin |
-| Degree badge | Albert Sans | 11px | 600 | 0 | 1px border, radius 4 |
-| Headline | Spectral italic | 17px / 1.35 | 500 | 0 | max-width 440px |
-| Meta | Albert Sans | 13px | 400 | 0 | count link 600 with 1px underline in `--line` |
-| Button | Albert Sans | 14px | 600 | 0 | 40px tall pills |
-| Section label | Albert Sans | 12px | 600 | 0.1em | uppercase, `--ink-3` |
-| Role title | Albert Sans | 14px | 600 | 0 | |
-| Role meta / years | Albert Sans | 12.5px / 12px | 400 | 0 | years use `tabular-nums` |
-| Ring text | Albert Sans | 9.5px | 700 | 0.16em | white on orange stroke |
-| Body copy | Albert Sans | 13px / 1.45 | 400 | 0 | |
-
-The serif is only for the person (name and headline). Every control is the sans.
 
 ## Motion
 
@@ -180,6 +113,79 @@ Reduced motion: set every transition to 0.01ms. All state changes still happen; 
 - [ ] "812 connections" → "813 connections" after 2400ms in Pending.
 - [ ] Roles: Hearthline Energy (2022 – now, open), Kessock Rail (2019 – 2022), Ossory Water (2016 – 2019).
 - [ ] Ring stroke `#d4511b`, 9 units wide, r=61 in a 132 viewBox.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: card centred on a `#E3E6DF` page. Connect is a solid ink pill, the degree badge reads "2nd", the first experience row (Hearthline Energy) is expanded, the other two are collapsed.
+2. Hovering or focusing the avatar lengthens the orange arc from 240 to 272 units (it grows from both ends) over 500ms and shows a dark tooltip to the right: "Open to work — Visible to all Plyline members. Seeking staff platform and infrastructure lead roles."
+3. Clicking Connect turns it into an outlined "Pending" pill. A polite live region says "Invitation sent to Ama Mensah."
+4. While Pending, clicking it again withdraws the invite: back to "Connect", live region says "Invitation withdrawn."
+5. If not withdrawn, after 2400ms the invite is accepted: the button becomes a solid green "Connected" pill, the degree badge flips to a green "1st", and "812 connections" becomes "813 connections". The live region announces the acceptance. Connected is a terminal state; clicking it does nothing.
+6. Clicking Message toggles an inline composer under the actions. It opens by animating `grid-template-rows` 0fr → 1fr over 320ms, then focuses the textarea with the caret at the end of the prefilled text.
+7. In the composer, Send (or Enter on the button) closes it, returns focus to Message, relabels Message to "Sent" for 1800ms, and announces "Message sent to Ama Mensah." An empty message does not send. Escape closes the composer and returns focus to Message.
+8. Each experience row is a disclosure button. Clicking toggles its description open/closed (300ms row-height animation) and rotates the chevron 180°. Rows are independent; several can be open.
+9. The "812 connections" link is inert in the demo (prevents navigation).
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #e3e6df;          /* page, sage-grey */
+  --card: #fbfbf7;        /* card surface */
+  --ink: #17201b;         /* text, primary button */
+  --ink-2: #46514b;       /* secondary text */
+  --ink-3: #5f6a64;       /* meta, timeline dots */
+  --line: #d6dbd2;        /* hairlines, badge border */
+  --soft: #eef1ea;        /* hover wash */
+  --accent: #d4511b;      /* open-to-work ring, current-role dot, focus */
+  --accent-soft: #fbe6dc; /* open-to-work panel */
+  --ok: #2d6a4a;          /* connected state, 1st badge */
+  --banner: linear-gradient(120deg, #c9d3c4, #aebfb0 55%, #97ab9b);
+
+  /* type */
+  --serif: "Spectral", Georgia, serif;
+  --sans: "Albert Sans", system-ui, sans-serif;
+
+  /* space (4 base) */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s7: 28px;
+
+  /* shape */
+  --r: 10px;              /* panels, composer */
+  --r-card: 14px;
+  --r-pill: 999px;
+  --shadow-card: 0 1px 0 rgba(23,32,27,.04), 0 24px 48px -32px rgba(23,32,27,.35);
+
+  /* motion */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --t-micro: 160ms;
+  --t-layout: 320ms;
+  --t-ring: 500ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size / line-height | Weight | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Name | Spectral | 28px / 1.1 | 600 | -0.01em | `--ink` |
+| Pronouns | Albert Sans | 13px | 500 | 0 | `--ink-3`, 6px left margin |
+| Degree badge | Albert Sans | 11px | 600 | 0 | 1px border, radius 4 |
+| Headline | Spectral italic | 17px / 1.35 | 500 | 0 | max-width 440px |
+| Meta | Albert Sans | 13px | 400 | 0 | count link 600 with 1px underline in `--line` |
+| Button | Albert Sans | 14px | 600 | 0 | 40px tall pills |
+| Section label | Albert Sans | 12px | 600 | 0.1em | uppercase, `--ink-3` |
+| Role title | Albert Sans | 14px | 600 | 0 | |
+| Role meta / years | Albert Sans | 12.5px / 12px | 400 | 0 | years use `tabular-nums` |
+| Ring text | Albert Sans | 9.5px | 700 | 0.16em | white on orange stroke |
+| Body copy | Albert Sans | 13px / 1.45 | 400 | 0 | |
+
+The serif is only for the person (name and headline). Every control is the sans.
 
 ## Implementation notes
 

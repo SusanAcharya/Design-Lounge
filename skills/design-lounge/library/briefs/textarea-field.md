@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the radius and the focus ring follow the family. A single line is `text-field`. This is the note.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One note for the dock. The label is Note. The area starts with "Leave the rice at Gate 4 before 18:00." The hint under it says the driver reads it at the gate. A count at the right reads the length of 160. The area is at least 96px tall and 420px wide, padding 12px, radius 2px. Past 160 characters the hint hides, the border becomes danger, and the line "Keep the note under 160 characters." shows. The person can still type. The count tells the truth. This is not a comment thread and not a chat composer.
-
-## Reference behaviour
-
-1. The first frame is under the limit. The hint is visible. The error is hidden. The count matches the text length.
-2. Each key updates the count as "n of 160".
-3. When the length passes 160, `aria-invalid` is true, the hint hides, and the error shows. Dropping back to 160 or under reverses that.
-4. The area can grow vertically. The width stays 420px on this frame.
-5. There is no submit button and no animation.
-6. Focus ring is 2px `--focus`, offset 2px.
 
 ## Structure
 
@@ -31,37 +24,6 @@ width 420
 - The label is tied to the textarea with `for` and `id`.
 - Hint and error share the left side. Only one is visible.
 - The count is always visible.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #5c564e;
-  --line-strong: #cfc6b8;
-  --danger: #9b2c2c;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px in this yard. The family replaces it. Do not pill a note.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 12px | 500 | `--ink-2` |
-| Note | sans | 14px | 400 | `--ink` |
-| Hint | sans | 12px | 400 | `--ink-3` |
-| Error | sans | 12px | 400 | `--danger` |
-| Count | sans | 12px | 400 | `--ink-2` |
-
-The note line-height is 1.45. The count uses tabular numbers. The where-line letter-spacing is 0.04em.
 
 ## Motion
 
@@ -112,6 +74,50 @@ None. The error replaces the hint in one frame. Reduced motion has nothing to re
 - [ ] Typing is not blocked at 160.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is no submit button and no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is under the limit. The hint is visible. The error is hidden. The count matches the text length.
+2. Each key updates the count as "n of 160".
+3. When the length passes 160, `aria-invalid` is true, the hint hides, and the error shows. Dropping back to 160 or under reverses that.
+4. The area can grow vertically. The width stays 420px on this frame.
+5. There is no submit button and no animation.
+6. Focus ring is 2px `--focus`, offset 2px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #5c564e;
+  --line-strong: #cfc6b8;
+  --danger: #9b2c2c;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px in this yard. The family replaces it. Do not pill a note.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 12px | 500 | `--ink-2` |
+| Note | sans | 14px | 400 | `--ink` |
+| Hint | sans | 12px | 400 | `--ink-3` |
+| Error | sans | 12px | 400 | `--danger` |
+| Count | sans | 12px | 400 | `--ink-2` |
+
+The note line-height is 1.45. The count uses tabular numbers. The where-line letter-spacing is 0.04em.
 
 ## Implementation notes
 

@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Three small "take this with you" controls on an essay page in "Vellum", a fictional quarterly of letters. The page is warm paper with a serif text column. A **Share** pill on the byline row opens a compact menu: Copy link (with the short URL shown), Email to a friend, and Send as a text. A **Copy** button sits beside a "Cite this essay" block. On click it writes the citation to the clipboard, its two-squares icon spins out while a check draws in, the pill fills forest green, and a tooltip says "Copied to clipboard" for 1.6s. At the foot, an **email chip** "letters@vellum.press" copies the address. Its text slides up to "Copied. Paste anywhere" and slides back after 1.8s.
@@ -11,24 +13,6 @@ Three small "take this with you" controls on an essay page in "Vellum", a fictio
 The detail worth copying is the honest fallback. If the clipboard API is refused, which happens in iframes, on insecure origins and with permissions off, the button selects the text and tells you to press Ctrl or ⌘ + C. It never claims "Copied" when nothing was copied.
 
 `contact-giant-email-copy` is a whole contact section built around one giant address. This piece is the set of small inline controls.
-
-## Reference behaviour
-
-1. First frame: a 680px column centred on paper. There are two faint 1px vertical rules at ±400px from centre, like page edges.
-2. Masthead: "*Vellum*" (italic 28px/700) left, "No. 41 · Autumn letters" right (12px uppercase), over a 2px ink rule.
-3. Kicker "ESSAY" in forest, title "The case for slow correspondence" (50px/500), dek in italic 21px.
-4. Byline row between two hairlines: "By **Margit Sallow** · 12 min read · 3 Oct 2026" left, and a 40px outline pill "Share" with an arrow-out icon right.
-5. One paragraph of body text (18px/1.6) with a forest drop cap spanning two lines.
-6. The cite block: surface fill, 1px line, 3px forest left rule. "CITE THIS ESSAY" label, then "Sallow, M. (2026). The case for slow correspondence. *Vellum*, 41, 12–19." On the right, a 40px outline pill with a copy icon and "Copy", min-width 104px.
-7. Foot row: "Write back. Letters run in the winter issue." left, and the email chip right (36px: mail icon, address, 26px round copy badge).
-8. **Hover or focus Copy:** a dark tooltip "Copy citation" fades in 10px above, rising 4px (160ms), with a 5px arrow.
-9. **Click Copy:** the citation text goes to the clipboard. The copy icon fades and turns −12° while scaling to .6, and the check stroke draws (320ms after 60ms). The label crossfades "Copy" → "Copied" (6px vertical slide). The pill fills `--accent` with paper text. The tooltip text becomes "Copied to clipboard" and stays visible. After 1600ms everything reverts and the tooltip text resets. Clicking again within the hold restarts it.
-10. **Copy refused:** the citation paragraph is selected, the tooltip reads "Selected. Press Ctrl or ⌘ + C", and no check is shown.
-11. **Click Share** (or ArrowDown on it): the menu opens under the button, right-aligned, 264px wide. It scales .96 → 1 and moves −4px → 0 from the top-right origin over 180ms. The button inverts to an ink fill. Focus goes to "Copy link". ArrowUp on the button opens it with focus on the last item.
-12. In the menu: ArrowDown and ArrowUp cycle, Home and End jump, Escape closes and refocuses Share, and Tab closes and moves on. Clicking outside closes it. Hover and focus both paint the item `--accent-soft`.
-13. **Copy link:** copies "vellum.press/41/slow". The item label becomes "Link copied" and its link icon morphs to a check. 650ms later the menu closes, focus returns to Share, and Share's tooltip shows "Link copied" for 1400ms.
-14. **Email to a friend** is a `mailto:` link with the subject and the URL in the body. **Send as a text** is an `sms:` link. Each closes the menu.
-15. **Click the chip:** copies "letters@vellum.press". The chip fills forest, the address slides up out of a 36px window while "Copied. Paste anywhere" slides up into it (240ms), and the badge icon turns to a check. It reverts after 1800ms.
 
 ## Structure
 
@@ -58,58 +42,6 @@ The detail worth copying is the honest fallback. If the clipboard API is refused
 - Tooltips are `span.tip[aria-hidden]` inside their buttons. The live region carries the real announcement.
 - The icon morph `.ico` holds two absolutely stacked SVGs: `.cp` (copy or link) and `.ok` (check).
 - The chip's `.swap` is a 36px `overflow: hidden` grid window with two spans in one cell.
-
-## Tokens
-
-```css
-:root {
-  --paper: #f1ebdf;         /* page */
-  --surface: #f9f5ec;       /* cite block, menu, chip */
-  --line: #d9cfbd;
-  --ink: #1e1b16;           /* text, tooltip, open Share fill */
-  --ink-2: #575043;         /* dek, byline */
-  --ink-3: #71695a;         /* labels, outline ring of pills */
-  --accent: #2e5a43;        /* forest: drop cap, kicker, copied fill, focus */
-  --accent-soft: #dce6dc;   /* menu item hover/focus */
-  --on-accent: #f9f5ec;
-
-  --serif: "Alegreya", Georgia, serif;
-  --ui: "Commissioner", system-ui, sans-serif;
-
-  --r: 6px;                 /* tooltip, menu items */
-  --r-menu: 10px;
-  --r-pill: 999px;
-
-  --t-micro: 160ms;
-  --t-menu: 180ms;
-  --t-check: 320ms;
-  --hold-copy: 1600ms;
-  --hold-chip: 1800ms;
-  --hold-link: 1400ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --shadow-menu: 0 18px 40px rgba(30, 27, 22, .16), 0 2px 6px rgba(30, 27, 22, .08);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Masthead | Alegreya italic | 28px | 700 | 1 | −0.01em | |
-| Issue line | Commissioner | 12px | 500 | 1 | 0.12em | UPPERCASE `--ink-2` |
-| Kicker | Commissioner | 12px | 600 | 1 | 0.14em | UPPERCASE `--accent` |
-| Title | Alegreya | 50px | 500 | 1.04 | −0.02em | 36px under 640px |
-| Dek | Alegreya italic | 21px | 400 | 1.4 | 0 | `--ink-2` |
-| Body | Alegreya | 18px | 400 | 1.6 | 0 | drop cap 62px/500 forest |
-| Byline | Commissioner | 14px | 400 | 1.4 | 0 | name 600 `--ink` |
-| Cite label | Commissioner | 11px | 600 | 1 | 0.14em | UPPERCASE `--ink-3` |
-| Citation | Alegreya | 16px | 400 | 1.45 | 0 | journal title italic |
-| Button / chip | Commissioner | 14px | 500 | 1 | 0 | |
-| Tooltip | Commissioner | 12.5px | 500 | 1.2 | 0 | paper on ink |
-| Menu item | Commissioner | 14px | 500 | 1.25 | 0 | hint 12.5px/400 `--ink-3` |
-
-The serif carries the reading. Every control is in Commissioner.
 
 ## Motion
 
@@ -177,6 +109,80 @@ Restart a confirmation on a repeat click: clear the timer, remove `.done`, read 
 - [ ] Holds: 1600ms (copy), 1400ms (link), 1800ms (chip). Menu opens 180ms. Check draws 320ms.
 - [ ] Menu items: Copy link, Email to a friend, Send as a text.
 - [ ] The accent is `#2e5a43` on `#f1ebdf` paper. The tooltip is `#1e1b16`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a 680px column centred on paper. There are two faint 1px vertical rules at ±400px from centre, like page edges.
+2. Masthead: "*Vellum*" (italic 28px/700) left, "No. 41 · Autumn letters" right (12px uppercase), over a 2px ink rule.
+3. Kicker "ESSAY" in forest, title "The case for slow correspondence" (50px/500), dek in italic 21px.
+4. Byline row between two hairlines: "By **Margit Sallow** · 12 min read · 3 Oct 2026" left, and a 40px outline pill "Share" with an arrow-out icon right.
+5. One paragraph of body text (18px/1.6) with a forest drop cap spanning two lines.
+6. The cite block: surface fill, 1px line, 3px forest left rule. "CITE THIS ESSAY" label, then "Sallow, M. (2026). The case for slow correspondence. *Vellum*, 41, 12–19." On the right, a 40px outline pill with a copy icon and "Copy", min-width 104px.
+7. Foot row: "Write back. Letters run in the winter issue." left, and the email chip right (36px: mail icon, address, 26px round copy badge).
+8. **Hover or focus Copy:** a dark tooltip "Copy citation" fades in 10px above, rising 4px (160ms), with a 5px arrow.
+9. **Click Copy:** the citation text goes to the clipboard. The copy icon fades and turns −12° while scaling to .6, and the check stroke draws (320ms after 60ms). The label crossfades "Copy" → "Copied" (6px vertical slide). The pill fills `--accent` with paper text. The tooltip text becomes "Copied to clipboard" and stays visible. After 1600ms everything reverts and the tooltip text resets. Clicking again within the hold restarts it.
+10. **Copy refused:** the citation paragraph is selected, the tooltip reads "Selected. Press Ctrl or ⌘ + C", and no check is shown.
+11. **Click Share** (or ArrowDown on it): the menu opens under the button, right-aligned, 264px wide. It scales .96 → 1 and moves −4px → 0 from the top-right origin over 180ms. The button inverts to an ink fill. Focus goes to "Copy link". ArrowUp on the button opens it with focus on the last item.
+12. In the menu: ArrowDown and ArrowUp cycle, Home and End jump, Escape closes and refocuses Share, and Tab closes and moves on. Clicking outside closes it. Hover and focus both paint the item `--accent-soft`.
+13. **Copy link:** copies "vellum.press/41/slow". The item label becomes "Link copied" and its link icon morphs to a check. 650ms later the menu closes, focus returns to Share, and Share's tooltip shows "Link copied" for 1400ms.
+14. **Email to a friend** is a `mailto:` link with the subject and the URL in the body. **Send as a text** is an `sms:` link. Each closes the menu.
+15. **Click the chip:** copies "letters@vellum.press". The chip fills forest, the address slides up out of a 36px window while "Copied. Paste anywhere" slides up into it (240ms), and the badge icon turns to a check. It reverts after 1800ms.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f1ebdf;         /* page */
+  --surface: #f9f5ec;       /* cite block, menu, chip */
+  --line: #d9cfbd;
+  --ink: #1e1b16;           /* text, tooltip, open Share fill */
+  --ink-2: #575043;         /* dek, byline */
+  --ink-3: #71695a;         /* labels, outline ring of pills */
+  --accent: #2e5a43;        /* forest: drop cap, kicker, copied fill, focus */
+  --accent-soft: #dce6dc;   /* menu item hover/focus */
+  --on-accent: #f9f5ec;
+
+  --serif: "Alegreya", Georgia, serif;
+  --ui: "Commissioner", system-ui, sans-serif;
+
+  --r: 6px;                 /* tooltip, menu items */
+  --r-menu: 10px;
+  --r-pill: 999px;
+
+  --t-micro: 160ms;
+  --t-menu: 180ms;
+  --t-check: 320ms;
+  --hold-copy: 1600ms;
+  --hold-chip: 1800ms;
+  --hold-link: 1400ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --shadow-menu: 0 18px 40px rgba(30, 27, 22, .16), 0 2px 6px rgba(30, 27, 22, .08);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Masthead | Alegreya italic | 28px | 700 | 1 | −0.01em | |
+| Issue line | Commissioner | 12px | 500 | 1 | 0.12em | UPPERCASE `--ink-2` |
+| Kicker | Commissioner | 12px | 600 | 1 | 0.14em | UPPERCASE `--accent` |
+| Title | Alegreya | 50px | 500 | 1.04 | −0.02em | 36px under 640px |
+| Dek | Alegreya italic | 21px | 400 | 1.4 | 0 | `--ink-2` |
+| Body | Alegreya | 18px | 400 | 1.6 | 0 | drop cap 62px/500 forest |
+| Byline | Commissioner | 14px | 400 | 1.4 | 0 | name 600 `--ink` |
+| Cite label | Commissioner | 11px | 600 | 1 | 0.14em | UPPERCASE `--ink-3` |
+| Citation | Alegreya | 16px | 400 | 1.45 | 0 | journal title italic |
+| Button / chip | Commissioner | 14px | 500 | 1 | 0 | |
+| Tooltip | Commissioner | 12.5px | 500 | 1.2 | 0 | paper on ink |
+| Menu item | Commissioner | 14px | 500 | 1.25 | 0 | hint 12.5px/400 `--ink-3` |
+
+The serif carries the reading. Every control is in Commissioner.
 
 ## Implementation notes
 

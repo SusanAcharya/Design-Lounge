@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A floating presence dock for a collaborative document editor, Tessera. The document is a bone-coloured workspace with a single paper sheet in a book serif. Pinned 24px above the bottom is a near-black 60px pill: "5 here", your own avatar, four collaborators ringed in their cursor colours with live status dots, a hairline, and a lime "Invite" button. Each collaborator's named arrow cursor drifts through the section they're working in. Clicking a face turns on follow mode: the viewport gains a 3px frame in that person's colour, a pill says who you're following, and the page scrolls to keep their cursor in view until you scroll yourself or press Escape. The detail worth copying is that follow mode ends the moment the user takes over scrolling. That's how it should feel in a real editor.
-
-## Reference behaviour
-
-1. First frame: the document is at the top. Asha's coral cursor and Leo's faded amber (idle) cursor are moving in the introduction and §1. Sunita's mint cursor is in §2, just behind the dock. Dev's blue cursor is below the fold in §3, where his selection is highlighted in blue.
-2. Each active cursor picks a new target every 1.3–3.2s, a random point inside a paragraph, heading or list item of its section, and eases there with an exponential approach (time constant 260ms). Dev picks his own selection half the time. The idle cursor moves every 7s and sits at 70% opacity.
-3. Hovering or focusing a collaborator avatar lifts it 2px and shows a dark tooltip card: name, location ("Selecting in §3 · Risks"), and "Click to follow" in their colour.
-4. Clicking an avatar starts follow mode. The avatar fills with its colour and pulses an expanding ring every 1.8s. A 3px viewport frame fades in over 200ms in the same colour. A pill at the top centre reads "Following Dev Raman · Esc to stop". The scroller eases (time constant 180ms) so the cursor sits 42% down the viewport. A status toast reads "Following Dev Raman".
-5. Clicking the same avatar again, pressing Escape, wheeling, touch-scrolling, or pressing PageUp/PageDown/arrows/Home/End/Space in the page stops following. The toast reads "Stopped following".
-6. Clicking a different avatar switches the follow target directly.
-7. Invite opens a 320px popover above the button with the email field focused, an access select (Can edit / Can comment / Can view), and "Send invite".
-8. Sending with an invalid email marks the field `aria-invalid`, turns its border rust, and shows "Enter an email address, like name@studio.np".
-9. Sending a valid email closes the popover, appends a dashed-ring "pending" avatar with the first two letters of the address, returns focus to Invite, and toasts "Invite sent to kiran@studio.np".
-10. Escape or a click outside closes the popover.
-11. "Your" avatar (YO) is not a button. You can't follow yourself.
 
 ## Structure
 
@@ -50,48 +38,6 @@ A floating presence dock for a collaborative document editor, Tessera. The docum
 - Frame: a fixed `div` with a 3px border and a centred `b` label, `aria-hidden` (the toast carries the message).
 - Dock: `div role="region" aria-label="People in this document"`, a `ul` of avatars, a separator, and the Invite button with a `form role="dialog"` popover.
 - Toast: `p role="status"` fixed at 72px from the top.
-
-## Tokens
-
-```css
-:root {
-  --bone: #ece9e1;      /* workspace and top bar */
-  --sheet: #fbfaf6;     /* paper, popover */
-  --ink: #17181c;       /* text, dock */
-  --ink-2: #4a4b52;
-  --ink-3: #6e6f76;     /* meta */
-  --line: #dcd8cd;      /* hairlines */
-  --dock: #17181c; --dock-2: #2a2b31;  /* pill, avatar fill, separator */
-  --dock-ink: #f3f1ea; --dock-mute: #a3a29b;
-  --lime: #d4f25a;      /* Invite, focus on dark */
-  --p1: #ff7a59;  /* Asha  */
-  --p2: #6aa8ff;  /* Dev   */
-  --p3: #3fd0a0;  /* Sunita */
-  --p4: #f5b82e;  /* Leo   */
-  --serif: "Literata", Georgia, serif;
-  --ui: "Albert Sans", system-ui, sans-serif;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --avatar: 42px; --dock-h: 60px; --frame: 3px;
-}
-```
-
-Presence colours are chosen so ink text passes on all four (each above 7:1). Name tags and the follow pill use ink text, never white.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height |
-| --- | --- | --- | --- | --- |
-| Doc title | Literata | 44px | 600 | 1.08, −0.02em |
-| Section heading | Literata | 22px | 600 | 1.25 |
-| Body / list | Literata | 17px | 400 | 1.65, max 62ch |
-| Meta line | Albert Sans | 13px | 500 | `--ink-3` |
-| Breadcrumbs | Albert Sans | 13.5px | 400, current 600 | |
-| Avatar initials | Albert Sans | 13px | 600 | |
-| Cursor tag | Albert Sans | 12px | 600 | ink on person colour |
-| Tooltip | Albert Sans | 13px name / 12px meta / 11.5px hint | 600 / 400 | |
-| Invite | Albert Sans | 14px | 700 | |
-| Popover title | Literata | 18px | 600 | |
 
 ## Motion
 
@@ -161,6 +107,66 @@ Run cursors and follow scroll from one `requestAnimationFrame` loop with a real 
 - [ ] Invite is lime `#d4f25a` with ink text.
 - [ ] Dev's selection in §3 is highlighted in blue.
 - [ ] The doc is "Field notes: the Pokhara pop-up" in Literata.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the document is at the top. Asha's coral cursor and Leo's faded amber (idle) cursor are moving in the introduction and §1. Sunita's mint cursor is in §2, just behind the dock. Dev's blue cursor is below the fold in §3, where his selection is highlighted in blue.
+2. Each active cursor picks a new target every 1.3–3.2s, a random point inside a paragraph, heading or list item of its section, and eases there with an exponential approach (time constant 260ms). Dev picks his own selection half the time. The idle cursor moves every 7s and sits at 70% opacity.
+3. Hovering or focusing a collaborator avatar lifts it 2px and shows a dark tooltip card: name, location ("Selecting in §3 · Risks"), and "Click to follow" in their colour.
+4. Clicking an avatar starts follow mode. The avatar fills with its colour and pulses an expanding ring every 1.8s. A 3px viewport frame fades in over 200ms in the same colour. A pill at the top centre reads "Following Dev Raman · Esc to stop". The scroller eases (time constant 180ms) so the cursor sits 42% down the viewport. A status toast reads "Following Dev Raman".
+5. Clicking the same avatar again, pressing Escape, wheeling, touch-scrolling, or pressing PageUp/PageDown/arrows/Home/End/Space in the page stops following. The toast reads "Stopped following".
+6. Clicking a different avatar switches the follow target directly.
+7. Invite opens a 320px popover above the button with the email field focused, an access select (Can edit / Can comment / Can view), and "Send invite".
+8. Sending with an invalid email marks the field `aria-invalid`, turns its border rust, and shows "Enter an email address, like name@studio.np".
+9. Sending a valid email closes the popover, appends a dashed-ring "pending" avatar with the first two letters of the address, returns focus to Invite, and toasts "Invite sent to kiran@studio.np".
+10. Escape or a click outside closes the popover.
+11. "Your" avatar (YO) is not a button. You can't follow yourself.
+
+## Tokens
+
+```css
+:root {
+  --bone: #ece9e1;      /* workspace and top bar */
+  --sheet: #fbfaf6;     /* paper, popover */
+  --ink: #17181c;       /* text, dock */
+  --ink-2: #4a4b52;
+  --ink-3: #6e6f76;     /* meta */
+  --line: #dcd8cd;      /* hairlines */
+  --dock: #17181c; --dock-2: #2a2b31;  /* pill, avatar fill, separator */
+  --dock-ink: #f3f1ea; --dock-mute: #a3a29b;
+  --lime: #d4f25a;      /* Invite, focus on dark */
+  --p1: #ff7a59;  /* Asha  */
+  --p2: #6aa8ff;  /* Dev   */
+  --p3: #3fd0a0;  /* Sunita */
+  --p4: #f5b82e;  /* Leo   */
+  --serif: "Literata", Georgia, serif;
+  --ui: "Albert Sans", system-ui, sans-serif;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --avatar: 42px; --dock-h: 60px; --frame: 3px;
+}
+```
+
+Presence colours are chosen so ink text passes on all four (each above 7:1). Name tags and the follow pill use ink text, never white.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height |
+| --- | --- | --- | --- | --- |
+| Doc title | Literata | 44px | 600 | 1.08, −0.02em |
+| Section heading | Literata | 22px | 600 | 1.25 |
+| Body / list | Literata | 17px | 400 | 1.65, max 62ch |
+| Meta line | Albert Sans | 13px | 500 | `--ink-3` |
+| Breadcrumbs | Albert Sans | 13.5px | 400, current 600 | |
+| Avatar initials | Albert Sans | 13px | 600 | |
+| Cursor tag | Albert Sans | 12px | 600 | ink on person colour |
+| Tooltip | Albert Sans | 13px name / 12px meta / 11.5px hint | 600 / 400 | |
+| Invite | Albert Sans | 14px | 700 | |
+| Popover title | Literata | 18px | 600 | |
 
 ## Implementation notes
 

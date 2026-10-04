@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A repository card for an invented code host. Use it as an embed, a search result or a profile "pinned" item. The repo is `heronry / brackwater`, an embedded time-series store. Everything structural is in IBM Plex Mono: the repo path, counts, topics, labels and the last-commit line. The description alone is set in Plex Sans so it reads as prose. One amber accent (`#F2B84B`) marks things you can act on or that belong to you: topics, the starred state and the sparkline. Language colours are the only other hues. The details worth copying are the sparkline, which draws itself once and can be scrubbed by pointer or arrow keys with the header readout changing to "Week of 29 Jun · 71 commits", and the language legend, which dims every other segment when you point at one.
-
-## Reference behaviour
-
-1. Initial state: card centred on a near-black page with a 24px dot grid. The language bar segments grow from 0 to their share over 600ms. The sparkline stroke draws left to right over 1200ms (200ms delay), and its amber area fill fades in at 700ms.
-2. The header readout to the right of "COMMIT ACTIVITY · 52 WEEKS" shows the total, "1,721 commits".
-3. Click Star. The button turns amber-tinted (border `rgba(242,184,75,.5)`, fill `rgba(242,184,75,.14)`, text amber), the star icon fills, the label becomes "Starred", the count goes 12,418 → 12,419. The icon pops (scale .6 → 1.2 → 1, rotate −30° → 0, 420ms) and a 20px amber ring expands to 1.7× and fades over 500ms.
-4. Click again to unstar. The label goes back to "Star", the count to 12,418, and there is no pop.
-5. Hover or focus a language in the legend, or hover its bar segment. Every other segment and legend item drops to 28% opacity over 200ms.
-6. Move the pointer over the sparkline. A dashed vertical cursor and a 4px amber-ringed dot snap to the nearest of 52 weeks, and the readout says "Week of {d Mon} · {n} commits". Leaving restores the total.
-7. Tab to the sparkline. The cursor appears on the last week. ←/→ move one week, Home/End jump to the ends, and a polite live region repeats the readout.
-8. Hover a topic chip and its tint deepens from 14% to 24% amber.
-9. Reduced motion: bars render at full width, the line and area are fully drawn, and there is no pop or ring.
 
 ## Structure
 
@@ -50,48 +40,6 @@ page 1280 × 800, #0C1011 + 24px dot grid; card 580 wide, radius 8, centred
 - Activity: `section` with an `output` readout and a focusable `div role="img"` wrapping the SVG.
 - Last commit: one row. The message truncates with an ellipsis.
 - Footer: metadata spans with 14px icons.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0c1011;          /* page */
-  --card: #12181a;        /* card */
-  --raise: #182023;       /* buttons, commit row */
-  --ink: #dfe6e3;
-  --ink-2: #a3aeab;
-  --ink-3: #7c8784;
-  --line: #243033;        /* section rules */
-  --line-2: #2f3d40;      /* button borders */
-  --accent: #f2b84b;      /* amber: star, topics, sparkline, focus */
-  --accent-dim: rgba(242,184,75,.14);
-  --l1: #e08a5b;          /* Rust */
-  --l2: #5fb3b3;          /* Go */
-  --l3: #7a9cdb;          /* TypeScript */
-  --l4: #9bb56a;          /* Shell */
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --r-card: 8px; --r-btn: 6px; --r-chip: 999px;
-  --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 22px;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Repo path | Plex Mono | 17 / 1.3 | 500 (owner 400) | −0.01em | ink, owner ink-2, slash ink-3 |
-| Badge | Plex Mono | 11px | 500 | 0 | ink-3, 1px line-2 border |
-| Button | Plex Mono | 13px | 500 | 0 | ink, count ink-2 on bg chip |
-| Description | Plex Sans | 14.5 / 1.5 | 400 | 0 | ink-2, max 52ch |
-| Topic | Plex Mono | 12px | 500 | 0 | accent on accent-dim |
-| Section label | Plex Mono | 11px | 500 | 0.08em | ink-3, uppercase |
-| Readout | Plex Mono | 12px | 500 | 0 | ink-2 |
-| Legend | Plex Mono | 12.5px | 400, name 500 | 0 | ink-2 / ink |
-| Commit row | Plex Mono | 12.5 / 1.3 | 400 | 0 | author ink 500, hash ink-3 |
-| Footer | Plex Mono | 12px | 400 | 0 | ink-3 |
 
 ## Motion
 
@@ -154,6 +102,64 @@ page 1280 × 800, #0C1011 + 24px dot grid; card 580 wide, radius 8, centred
 - [ ] Topics: time-series, embedded, storage-engine, wal, edge.
 - [ ] Last commit: orla-f, "fix(wal): close compaction race on segment rotate", a3f9c1e, 2h ago.
 - [ ] Footer: 37 issues, 9 pull requests, Apache-2.0, v0.14.2.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: card centred on a near-black page with a 24px dot grid. The language bar segments grow from 0 to their share over 600ms. The sparkline stroke draws left to right over 1200ms (200ms delay), and its amber area fill fades in at 700ms.
+2. The header readout to the right of "COMMIT ACTIVITY · 52 WEEKS" shows the total, "1,721 commits".
+3. Click Star. The button turns amber-tinted (border `rgba(242,184,75,.5)`, fill `rgba(242,184,75,.14)`, text amber), the star icon fills, the label becomes "Starred", the count goes 12,418 → 12,419. The icon pops (scale .6 → 1.2 → 1, rotate −30° → 0, 420ms) and a 20px amber ring expands to 1.7× and fades over 500ms.
+4. Click again to unstar. The label goes back to "Star", the count to 12,418, and there is no pop.
+5. Hover or focus a language in the legend, or hover its bar segment. Every other segment and legend item drops to 28% opacity over 200ms.
+6. Move the pointer over the sparkline. A dashed vertical cursor and a 4px amber-ringed dot snap to the nearest of 52 weeks, and the readout says "Week of {d Mon} · {n} commits". Leaving restores the total.
+7. Tab to the sparkline. The cursor appears on the last week. ←/→ move one week, Home/End jump to the ends, and a polite live region repeats the readout.
+8. Hover a topic chip and its tint deepens from 14% to 24% amber.
+9. Reduced motion: bars render at full width, the line and area are fully drawn, and there is no pop or ring.
+
+## Tokens
+
+```css
+:root {
+  --bg: #0c1011;          /* page */
+  --card: #12181a;        /* card */
+  --raise: #182023;       /* buttons, commit row */
+  --ink: #dfe6e3;
+  --ink-2: #a3aeab;
+  --ink-3: #7c8784;
+  --line: #243033;        /* section rules */
+  --line-2: #2f3d40;      /* button borders */
+  --accent: #f2b84b;      /* amber: star, topics, sparkline, focus */
+  --accent-dim: rgba(242,184,75,.14);
+  --l1: #e08a5b;          /* Rust */
+  --l2: #5fb3b3;          /* Go */
+  --l3: #7a9cdb;          /* TypeScript */
+  --l4: #9bb56a;          /* Shell */
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --r-card: 8px; --r-btn: 6px; --r-chip: 999px;
+  --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 22px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Repo path | Plex Mono | 17 / 1.3 | 500 (owner 400) | −0.01em | ink, owner ink-2, slash ink-3 |
+| Badge | Plex Mono | 11px | 500 | 0 | ink-3, 1px line-2 border |
+| Button | Plex Mono | 13px | 500 | 0 | ink, count ink-2 on bg chip |
+| Description | Plex Sans | 14.5 / 1.5 | 400 | 0 | ink-2, max 52ch |
+| Topic | Plex Mono | 12px | 500 | 0 | accent on accent-dim |
+| Section label | Plex Mono | 11px | 500 | 0.08em | ink-3, uppercase |
+| Readout | Plex Mono | 12px | 500 | 0 | ink-2 |
+| Legend | Plex Mono | 12.5px | 400, name 500 | 0 | ink-2 / ink |
+| Commit row | Plex Mono | 12.5 / 1.3 | 400 | 0 | author ink 500, hash ink-3 |
+| Footer | Plex Mono | 12px | 400 | 0 | ink-3 |
 
 ## Implementation notes
 

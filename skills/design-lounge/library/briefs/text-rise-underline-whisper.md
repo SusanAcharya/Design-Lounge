@@ -4,28 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from acharyasusan.com.np: the hero headline intro, where two serif lines rise into place one after the other and, a beat later, a rough hand-drawn stroke underlines the one italic word, next to a faint italic aside that only comes up when you hover it. This rebuild isolates that sequence on a light editorial page for **Vessa Rooms**, a fictional restoration practice in Porto. A cue sheet at the bottom shows when each part starts, with a playhead, a replay button, three headline takes and a "Slow ×4" switch, so the timing can be studied. The feeling is calm and confident: nothing bounces, and the underline is the one moment of hand-made warmth. The detail worth copying is the gap: lines land by about 1060ms, and the underline waits until 1000ms, so it reads as a second thought, not part of the entrance.
-
-## Reference behaviour
-
-1. First frame (1280×800): chalk page, a 76px top bar with the wordmark "Vessa Rooms" plus a small cobalt dot, and "RESTORATION PRACTICE, PORTO" in caps at right.
-2. Main area, vertically centred: a cobalt kicker with a 28px rule ("HOUSES BROUGHT BACK SINCE 2014"), the headline "Rooms that keep" / "the *light* longer.", and a 17px paragraph with bold numbers. At right, bottom-aligned, the aside note in faint italic serif with a cobalt hairline above.
-3. On load the intro plays once:
-   - 0ms: kicker fades up 18px (700ms). Line 1 rises 0.35em and fades in (900ms).
-   - 160ms: line 2 does the same (900ms).
-   - 1000ms: the underline under the italic word draws left to right (800ms).
-   - 1150ms: the paragraph fades up 18px (700ms).
-   - 1400ms: the aside note fades up 18px (700ms) to its faint resting colour.
-4. The cue sheet below shows a 2px rail with five cue dots placed by time over a 2100ms span (0%, 7.6%, 47.6%, 54.8%, 66.7%). Labels alternate below and above the rail so close cues never collide. A cobalt playhead fills the rail from left to right over 2100ms. Each dot fills cobalt when the playhead passes it. A mono readout counts "0 ms" up to "2100 ms".
-5. **Replay** re-runs the whole sequence from the hidden state.
-6. **Takes 1 / 2 / 3** (a radio group) swap the headline and replay:
-   - 1: "Rooms that keep" / "the *light* longer."
-   - 2: "We draw the stair" / "*before* the facade."
-   - 3: "Old walls, new" / "*reasons* to stay."
-7. **Slow ×4** (toggle) multiplies every duration and delay by 4 and replays. The playhead and readout slow with it; the readout still counts in real-time-equivalent milliseconds (0 → 2100).
-8. Hovering or focusing the aside note raises it from 32% to 92% ink and turns its rule full cobalt over 500ms.
 
 ## Structure
 
@@ -50,53 +33,6 @@ Studied from acharyasusan.com.np: the hero headline intro, where two serif lines
 - `h1` holds two `span.line > span` wrappers; the second contains `span.ul > em + svg`.
 - `section.cues[aria-label="Intro timing"]`: `div.ctrl` (`button#replay`, `div.takes[role=radiogroup]` with three `button[role=radio]`), `div.track[aria-hidden]` (`div.rail`, `div.head`, five `div.cue[data-t]`), `div.ctrl` (`span#time`, `button#slow[aria-pressed]`).
 - The intro runs whenever `body` gets the class `play`. Replay = remove the class, force a reflow, add it again.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --chalk: #f3eee4;        /* page */
-  --card: #fbf8f2;         /* cue sheet, chip fill */
-  --ink: #1e2633;          /* headline, text */
-  --ink-2: #4a5263;        /* paragraph */
-  --ink-3: #7c8292;        /* meta, idle cue labels */
-  --line: rgba(30,38,51,.14);
-  --accent: #2f55c8;       /* cobalt: italic word, underline, kicker, playhead */
-  --accent-soft: rgba(47,85,200,.1);
-  --note-rest: rgba(30,38,51,.32);
-  --note-on: rgba(30,38,51,.92);
-
-  /* type */
-  --serif: "Cormorant Garamond", Georgia, serif;
-  --sans: "Karla", system-ui, sans-serif;
-
-  /* motion */
-  --ease: cubic-bezier(.22, 1, .36, 1);
-  --k: 1;                  /* time multiplier: 1 normal, 4 slow */
-  --t-line: 900ms;   --t-line-gap: 160ms;
-  --t-draw: 800ms;   --t-draw-at: 1000ms;
-  --t-up: 700ms;     --t-sub-at: 1150ms;  --t-note-at: 1400ms;
-  --t-span: 2100ms;  /* cue sheet length */
-}
-```
-
-The page also has two soft background washes on a fixed `body::before`: `radial-gradient(ellipse 70% 60% at 90% 0%, rgba(47,85,200,.07), transparent 60%)` and `radial-gradient(ellipse 50% 50% at 0% 100%, rgba(196,160,110,.14), transparent 60%)`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Letter-spacing | Case |
-|---|---|---|---|---|---|---|
-| Headline | Cormorant Garamond | clamp(48px, 7.6vw, 98px) | 500 | 0.95 | −0.03em | Sentence |
-| Italic word | Cormorant Garamond italic | inherit | 600 | inherit | inherit | lower, cobalt |
-| Kicker | Karla | 11px | 700 | 1 | 0.18em | UPPER, cobalt |
-| Paragraph | Karla | 17px | 400 (numbers 700) | 1.6 | 0 | Sentence |
-| Aside note | Cormorant Garamond italic | 19px | 500 | 1.45 | 0 | Sentence |
-| Wordmark | Cormorant Garamond | 24px | 600 | 1 | −0.01em | Title |
-| Meta | Karla | 11px | 700 | 1 | 0.18em | UPPER |
-| Buttons | Karla | 14px | 700 | 1 | 0 | Sentence |
-| Cue labels | Karla | 11px | 500 | 1 | 0 | Sentence |
-| Readout | Karla | 12px | 700, tabular | 1 | 0 | — |
 
 ## Motion
 
@@ -163,6 +99,76 @@ All `forwards` fill mode, so nothing snaps back after the intro.
 - [ ] Take 1 reads "Rooms that keep / the *light* longer."
 - [ ] Paragraph has bold "31" and "9".
 - [ ] Cue labels read "Line 1 · 0", "Line 2 · 160", "Underline · 1000", "Sub · 1150", "Note · 1400".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame (1280×800): chalk page, a 76px top bar with the wordmark "Vessa Rooms" plus a small cobalt dot, and "RESTORATION PRACTICE, PORTO" in caps at right.
+2. Main area, vertically centred: a cobalt kicker with a 28px rule ("HOUSES BROUGHT BACK SINCE 2014"), the headline "Rooms that keep" / "the *light* longer.", and a 17px paragraph with bold numbers. At right, bottom-aligned, the aside note in faint italic serif with a cobalt hairline above.
+3. On load the intro plays once:
+   - 0ms: kicker fades up 18px (700ms). Line 1 rises 0.35em and fades in (900ms).
+   - 160ms: line 2 does the same (900ms).
+   - 1000ms: the underline under the italic word draws left to right (800ms).
+   - 1150ms: the paragraph fades up 18px (700ms).
+   - 1400ms: the aside note fades up 18px (700ms) to its faint resting colour.
+4. The cue sheet below shows a 2px rail with five cue dots placed by time over a 2100ms span (0%, 7.6%, 47.6%, 54.8%, 66.7%). Labels alternate below and above the rail so close cues never collide. A cobalt playhead fills the rail from left to right over 2100ms. Each dot fills cobalt when the playhead passes it. A mono readout counts "0 ms" up to "2100 ms".
+5. **Replay** re-runs the whole sequence from the hidden state.
+6. **Takes 1 / 2 / 3** (a radio group) swap the headline and replay:
+   - 1: "Rooms that keep" / "the *light* longer."
+   - 2: "We draw the stair" / "*before* the facade."
+   - 3: "Old walls, new" / "*reasons* to stay."
+7. **Slow ×4** (toggle) multiplies every duration and delay by 4 and replays. The playhead and readout slow with it; the readout still counts in real-time-equivalent milliseconds (0 → 2100).
+8. Hovering or focusing the aside note raises it from 32% to 92% ink and turns its rule full cobalt over 500ms.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --chalk: #f3eee4;        /* page */
+  --card: #fbf8f2;         /* cue sheet, chip fill */
+  --ink: #1e2633;          /* headline, text */
+  --ink-2: #4a5263;        /* paragraph */
+  --ink-3: #7c8292;        /* meta, idle cue labels */
+  --line: rgba(30,38,51,.14);
+  --accent: #2f55c8;       /* cobalt: italic word, underline, kicker, playhead */
+  --accent-soft: rgba(47,85,200,.1);
+  --note-rest: rgba(30,38,51,.32);
+  --note-on: rgba(30,38,51,.92);
+
+  /* type */
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Karla", system-ui, sans-serif;
+
+  /* motion */
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --k: 1;                  /* time multiplier: 1 normal, 4 slow */
+  --t-line: 900ms;   --t-line-gap: 160ms;
+  --t-draw: 800ms;   --t-draw-at: 1000ms;
+  --t-up: 700ms;     --t-sub-at: 1150ms;  --t-note-at: 1400ms;
+  --t-span: 2100ms;  /* cue sheet length */
+}
+```
+
+The page also has two soft background washes on a fixed `body::before`: `radial-gradient(ellipse 70% 60% at 90% 0%, rgba(47,85,200,.07), transparent 60%)` and `radial-gradient(ellipse 50% 50% at 0% 100%, rgba(196,160,110,.14), transparent 60%)`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Letter-spacing | Case |
+|---|---|---|---|---|---|---|
+| Headline | Cormorant Garamond | clamp(48px, 7.6vw, 98px) | 500 | 0.95 | −0.03em | Sentence |
+| Italic word | Cormorant Garamond italic | inherit | 600 | inherit | inherit | lower, cobalt |
+| Kicker | Karla | 11px | 700 | 1 | 0.18em | UPPER, cobalt |
+| Paragraph | Karla | 17px | 400 (numbers 700) | 1.6 | 0 | Sentence |
+| Aside note | Cormorant Garamond italic | 19px | 500 | 1.45 | 0 | Sentence |
+| Wordmark | Cormorant Garamond | 24px | 600 | 1 | −0.01em | Title |
+| Meta | Karla | 11px | 700 | 1 | 0.18em | UPPER |
+| Buttons | Karla | 14px | 700 | 1 | 0 | Sentence |
+| Cue labels | Karla | 11px | 500 | 1 | 0 | Sentence |
+| Readout | Karla | 12px | 700, tabular | 1 | 0 | — |
 
 ## Implementation notes
 

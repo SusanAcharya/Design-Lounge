@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The navigation for Ruma Office, a fictional two-person print studio in Patan. Instead of a top bar, a fixed 88px rail runs down the left edge with a 2px black rule. The wordmark is rotated to read bottom to top. Four numbered links (01 Work, 02 About, 03 Notes, 04 Contact) sit in the middle. A fluorescent pink block slides behind the link for the section in view. The foot of the rail shows the studio's local time and a pink dot for "Booking Jan 2027". The content scrolls to the right of the rail. The detail worth copying: one indicator element moves with `transform`, so the active state reads like ink sliding along the rail, not four boxes blinking.
-
-## Reference behaviour
-
-1. First frame: scroll is 0. "01 Work" is active. The pink block sits behind it and the link has `aria-current="true"`.
-2. The rail is 88px wide, full height, cream `#f2ebdd`, with a 2px `#141414` right border. It does not scroll.
-3. At the top of the rail the wordmark "RUMA OFFICE" reads bottom to top in Big Shoulders Display 900, 30px. "OFFICE" sits on a pink ground.
-4. In the middle, four links stack. Each is 72px tall and fills the rail width. The number is 26px display, the label is 10px mono below it. A 1px rule separates links. A 2px rule sits above and below the group.
-5. At the foot: "PATAN", then the time "22:13" in 22px display, then a 10px pink dot with a 2px black ring, then "BOOKING JAN 2027".
-6. The time is real. It reads Asia/Kathmandu in 24-hour format and updates every 30 seconds. The `time` element's `datetime` updates with it.
-7. The dot pulses: scale 1 to 0.7 and back over 2.4s, forever. It is calm enough to sit beside other pieces.
-8. The user scrolls. An IntersectionObserver watches the four sections. The section crossing a band 45% from the top becomes active.
-9. When the active section changes, the pink block moves to the new link with `translateY` over 420ms on `cubic-bezier(.16,1,.3,1)`. `aria-current` moves with it.
-10. Clicking a link smooth-scrolls to its section. The observer then moves the block. The click does not move it directly.
-11. A 6px black bar sits on the right edge of the pink block, over the rail border, so the active link looks like a tab cut into the rule.
-12. Below 760px wide the rail becomes a 56px top bar with the wordmark horizontal and a 44px menu button on the right. The numbered links and the clock hide. The button opens a panel of the four links in 28px display type; the active one has a pink ground. Escape closes it.
 
 ## Structure
 
@@ -63,75 +50,6 @@ The navigation for Ruma Office, a fictional two-person print studio in Patan. In
 - The foot is a `div` with a `time` element and the availability line.
 - The menu button and the mobile panel exist in the DOM but are `display: none` above 760px.
 - `main` holds four `section` elements with ids `work`, `about`, `notes`, `contact`. Each has one heading. The first is the `h1`.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces */
-  --cream: #f2ebdd;        /* page, rail */
-  --cream-2: #e9e0cd;      /* art grounds, focus fill */
-
-  /* ink */
-  --ink: #141414;          /* text, rules */
-  --ink-2: #3d3a35;        /* secondary text */
-  --line: #141414;         /* every rule is ink */
-
-  /* accent */
-  --pink: #ff48b0;         /* indicator, dot, highlights. Never text. */
-
-  /* type */
-  --display: "Big Shoulders Display", Impact, sans-serif;
-  --mono: "Space Mono", ui-monospace, monospace;
-  --fs-word: 30px;
-  --fs-num: 26px;
-  --fs-label: 10px;
-  --fs-time: 22px;
-  --fs-h1: 132px;
-  --fs-h2: 96px;
-  --fs-body: 15px;
-
-  /* space */
-  --space-1: 8px;
-  --space-2: 16px;
-  --space-3: 24px;
-  --space-6: 48px;
-  --space-7: 56px;
-  --space-8: 64px;
-
-  /* rail */
-  --rail: 88px;
-  --item: 72px;
-  --rule: 2px;
-
-  /* radius and shadow */
-  --radius: 0;
-  --shadow: none;
-
-  /* motion */
-  --ease: cubic-bezier(.16,1,.3,1);
-  --dur: 420ms;
-  --pulse: 2.4s;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Wordmark | Big Shoulders Display | 30px | 900 | 1 | 0.06em | upper |
-| Link number | Big Shoulders Display | 26px | 700 | 1 | 0.02em | — |
-| Link label | Space Mono | 10px | 400 | 1.6 | 0.12em | upper |
-| Time | Big Shoulders Display | 22px | 700 | 1 | 0.02em | — |
-| Foot text | Space Mono | 10px | 400 | 1.4 | 0.06em | upper |
-| Section tag | Space Mono | 12px | 400 | 1.6 | 0.14em | upper |
-| h1 | Big Shoulders Display | 132px | 900 | 0.86 | -0.005em | upper |
-| h2 | Big Shoulders Display | 96px | 900 | 0.86 | -0.005em | upper |
-| Project title | Big Shoulders Display | 28px | 700 | 1 | 0 | upper |
-| Body | Space Mono | 15px | 400 | 1.6 | 0 | sentence |
-| Email | Big Shoulders Display | 112px | 900 | 0.9 | 0 | upper |
-
-Two families only. The condensed display is for everything big. The mono is for everything small. Never set body copy in the display face.
 
 ## Motion
 
@@ -205,6 +123,94 @@ Two families only. The condensed display is for everything big. The mono is for 
 - [ ] The foot reads "PATAN" and "BOOKING JAN 2027".
 - [ ] The observer uses `rootMargin: "-45% 0px -50% 0px"`.
 - [ ] The rail collapses below 760px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: scroll is 0. "01 Work" is active. The pink block sits behind it and the link has `aria-current="true"`.
+2. The rail is 88px wide, full height, cream `#f2ebdd`, with a 2px `#141414` right border. It does not scroll.
+3. At the top of the rail the wordmark "RUMA OFFICE" reads bottom to top in Big Shoulders Display 900, 30px. "OFFICE" sits on a pink ground.
+4. In the middle, four links stack. Each is 72px tall and fills the rail width. The number is 26px display, the label is 10px mono below it. A 1px rule separates links. A 2px rule sits above and below the group.
+5. At the foot: "PATAN", then the time "22:13" in 22px display, then a 10px pink dot with a 2px black ring, then "BOOKING JAN 2027".
+6. The time is real. It reads Asia/Kathmandu in 24-hour format and updates every 30 seconds. The `time` element's `datetime` updates with it.
+7. The dot pulses: scale 1 to 0.7 and back over 2.4s, forever. It is calm enough to sit beside other pieces.
+8. The user scrolls. An IntersectionObserver watches the four sections. The section crossing a band 45% from the top becomes active.
+9. When the active section changes, the pink block moves to the new link with `translateY` over 420ms on `cubic-bezier(.16,1,.3,1)`. `aria-current` moves with it.
+10. Clicking a link smooth-scrolls to its section. The observer then moves the block. The click does not move it directly.
+11. A 6px black bar sits on the right edge of the pink block, over the rail border, so the active link looks like a tab cut into the rule.
+12. Below 760px wide the rail becomes a 56px top bar with the wordmark horizontal and a 44px menu button on the right. The numbered links and the clock hide. The button opens a panel of the four links in 28px display type; the active one has a pink ground. Escape closes it.
+
+## Tokens
+
+```css
+:root {
+  /* surfaces */
+  --cream: #f2ebdd;        /* page, rail */
+  --cream-2: #e9e0cd;      /* art grounds, focus fill */
+
+  /* ink */
+  --ink: #141414;          /* text, rules */
+  --ink-2: #3d3a35;        /* secondary text */
+  --line: #141414;         /* every rule is ink */
+
+  /* accent */
+  --pink: #ff48b0;         /* indicator, dot, highlights. Never text. */
+
+  /* type */
+  --display: "Big Shoulders Display", Impact, sans-serif;
+  --mono: "Space Mono", ui-monospace, monospace;
+  --fs-word: 30px;
+  --fs-num: 26px;
+  --fs-label: 10px;
+  --fs-time: 22px;
+  --fs-h1: 132px;
+  --fs-h2: 96px;
+  --fs-body: 15px;
+
+  /* space */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-6: 48px;
+  --space-7: 56px;
+  --space-8: 64px;
+
+  /* rail */
+  --rail: 88px;
+  --item: 72px;
+  --rule: 2px;
+
+  /* radius and shadow */
+  --radius: 0;
+  --shadow: none;
+
+  /* motion */
+  --ease: cubic-bezier(.16,1,.3,1);
+  --dur: 420ms;
+  --pulse: 2.4s;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Wordmark | Big Shoulders Display | 30px | 900 | 1 | 0.06em | upper |
+| Link number | Big Shoulders Display | 26px | 700 | 1 | 0.02em | — |
+| Link label | Space Mono | 10px | 400 | 1.6 | 0.12em | upper |
+| Time | Big Shoulders Display | 22px | 700 | 1 | 0.02em | — |
+| Foot text | Space Mono | 10px | 400 | 1.4 | 0.06em | upper |
+| Section tag | Space Mono | 12px | 400 | 1.6 | 0.14em | upper |
+| h1 | Big Shoulders Display | 132px | 900 | 0.86 | -0.005em | upper |
+| h2 | Big Shoulders Display | 96px | 900 | 0.86 | -0.005em | upper |
+| Project title | Big Shoulders Display | 28px | 700 | 1 | 0 | upper |
+| Body | Space Mono | 15px | 400 | 1.6 | 0 | sentence |
+| Email | Big Shoulders Display | 112px | 900 | 0.9 | 0 | upper |
+
+Two families only. The condensed display is for everything big. The mono is for everything small. Never set body copy in the display face.
 
 ## Implementation notes
 

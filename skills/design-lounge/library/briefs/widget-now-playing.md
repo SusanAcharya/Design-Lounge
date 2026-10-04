@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A home-screen style music widget for a fictional player, "Turntide", in two sizes. The page is cream with horizontal 70s stripes. The widget is espresso brown with a cream fat-italic display face and a mono for everything else. In the medium size, a square album sleeve sits on the left with a black record sliding out of it; the record spins while music plays and stops dead on pause. The right side has a four-bar equaliser, the title, the artist, a scrubber, times, and three round controls. The small size is a 212px square: the art fills it, the title and a play button sit on a dark fade at the bottom, and a 3px line shows progress. The detail worth copying: all three album covers are pure CSS gradients, swapped by one class on the widget, so the piece ships with no images.
-
-## Reference behaviour
-
-1. First frame: medium size, playing. Track "Monsoon Radio" by The Marigold Hours, album "Low Sun Over Patan", 3:48 long, at 1:14. The record spins (3.2s per turn). The four equaliser bars bounce. The size switch above reads Small | **Medium**.
-2. Every second while playing, position advances one second: the scrubber thumb and orange fill move, elapsed counts up, remaining (`-m:ss`) counts down.
-3. Play/pause (48px orange circle): toggles. On pause the record and the bars freeze where they are (`animation-play-state: paused`), the label above the title reads "Paused", the icon becomes a triangle, the button label becomes "Play".
-4. Next: loads the next track at 0:00 and swaps the cover by class. Previous: if more than 3 seconds in, restarts the track; otherwise loads the previous track. Tracks loop.
-5. Dragging the scrubber or pressing arrow keys on it seeks. While dragging, the clock does not move the thumb.
-6. When a track ends it loads the next one automatically and a polite live region announces "Late Tram by Nilo Sato".
-7. Hovering the sleeve (medium only) slides the record 12px further out of the sleeve over 420ms.
-8. Small: the widget animates from 580 × 212 to 212 × 212 over 420ms expo out. The record fades out, the cover goes edge to edge, the medium body hides, and the mini overlay shows title, a small equaliser with the artist, a 44px play button, and the 3px progress line. Medium reverses it.
-9. Reduced motion: no spin, no bouncing bars (they sit still at 70% height while playing), the size change is instant. The clock still runs.
 
 ## Structure
 
@@ -50,62 +40,6 @@ small: 212 × 212, padding 0
 - `.body`: top line (equaliser + state word), `p.title`, `p.artist`, `.scrub` (`input[type=range]` + times row), `.ctrls` (prev, play/pause, next, wordmark).
 - `.mini`: shown only in small. It repeats title, artist, play/pause, and a decorative progress bar.
 - One `p[aria-live=polite]`, visually hidden.
-
-## Tokens
-
-```css
-:root {
-  --page: #e9dcc0;     /* cream page */
-  --stripe: #e2d2b1;   /* 4px stripes every 26px */
-  --card: #2b1d14;     /* espresso widget */
-  --card-2: #3a281c;   /* scrubber track, button hover */
-  --ink: #f3e7cf;      /* title, icons on orange */
-  --ink-2: #d2c1a2;    /* artist, idle icons */
-  --ink-3: #a8957a;    /* labels, times, wordmark */
-  --orange: #d9541e;   /* accent: play button, scrubber fill, record label, focus */
-  --mustard: #e3a92b;  /* equaliser, selected size */
-  --olive: #7b7a33;    /* cover 2 */
-  --vinyl: #141010;
-
-  --disp: "Shrikhand", Georgia, serif;
-  --mono: "Space Mono", ui-monospace, monospace;
-
-  --medium-w: 580px; --medium-h: 212px; --small: 212px;
-  --pad: 20px; --r-widget: 28px; --r-cover: 10px;
-  --cover: 172px; --record: 160px; --record-left: 80px;
-  --shadow: 0 2px 0 #1a110b, 0 30px 50px -30px rgba(43, 29, 20, .7);
-
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-size: 420ms;
-  --t-spin: 3.2s;   /* linear, one turn */
-}
-```
-
-Covers, set as `--art` on the widget class:
-
-```css
-.t1 { --art: radial-gradient(circle at 50% 118%, #f3e7cf 0 14%, #e3a92b 14% 26%, #d9541e 26% 38%,
-        #a5371a 38% 50%, #5a2a17 50% 62%, transparent 62%), linear-gradient(#efd9a8, #efd9a8); --ac: #2b1d14; }
-.t2 { --art: radial-gradient(circle at 70% 30%, #e3a92b 0 18%, transparent 18.5%),
-        repeating-linear-gradient(90deg, #7b7a33 0 18px, #5f5e26 18px 36px); --ac: #f3e7cf; }
-.t3 { --art: repeating-radial-gradient(circle at 30% 70%, #f3e7cf 0 8px, #d9541e 8px 16px, #2b1d14 16px 24px); --ac: #f3e7cf; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Title | Shrikhand | 28px | 400 | 1.05 | 0 | Title, ellipsis |
-| Cover album name | Shrikhand | 19px | 400 | 1 | -0.01em | Title, colour `--ac` |
-| Mini title | Shrikhand | 18px | 400 | 1.05 | 0 | Title, ellipsis |
-| Wordmark | Shrikhand | 14px | 400 | 1 | 0 | Title |
-| State label | Space Mono | 10px | 700 | 1.4 | 0.16em | UPPER |
-| Artist | Space Mono | 13px | 400 | 1.4 | 0 | Title, ellipsis |
-| Times | Space Mono | 11px | 400 | 1.4 | 0 | tabular |
-| Size switch | Space Mono | 12px | 700 | 1 | 0.08em | UPPER |
-
-Shrikhand has one weight. Do not fake bold it. It is the only display face; everything else is Space Mono.
 
 ## Motion
 
@@ -175,6 +109,78 @@ Linear is right for the spin: a record turns at constant speed. Every UI move us
 - [ ] Widget `#2b1d14`, r 28px; page `#e9dcc0` with `#e2d2b1` stripes 4px every 26px.
 - [ ] Play button 48px `#d9541e`; equaliser `#e3a92b`.
 - [ ] Shrikhand for title and cover text; Space Mono for the rest.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: medium size, playing. Track "Monsoon Radio" by The Marigold Hours, album "Low Sun Over Patan", 3:48 long, at 1:14. The record spins (3.2s per turn). The four equaliser bars bounce. The size switch above reads Small | **Medium**.
+2. Every second while playing, position advances one second: the scrubber thumb and orange fill move, elapsed counts up, remaining (`-m:ss`) counts down.
+3. Play/pause (48px orange circle): toggles. On pause the record and the bars freeze where they are (`animation-play-state: paused`), the label above the title reads "Paused", the icon becomes a triangle, the button label becomes "Play".
+4. Next: loads the next track at 0:00 and swaps the cover by class. Previous: if more than 3 seconds in, restarts the track; otherwise loads the previous track. Tracks loop.
+5. Dragging the scrubber or pressing arrow keys on it seeks. While dragging, the clock does not move the thumb.
+6. When a track ends it loads the next one automatically and a polite live region announces "Late Tram by Nilo Sato".
+7. Hovering the sleeve (medium only) slides the record 12px further out of the sleeve over 420ms.
+8. Small: the widget animates from 580 × 212 to 212 × 212 over 420ms expo out. The record fades out, the cover goes edge to edge, the medium body hides, and the mini overlay shows title, a small equaliser with the artist, a 44px play button, and the 3px progress line. Medium reverses it.
+9. Reduced motion: no spin, no bouncing bars (they sit still at 70% height while playing), the size change is instant. The clock still runs.
+
+## Tokens
+
+```css
+:root {
+  --page: #e9dcc0;     /* cream page */
+  --stripe: #e2d2b1;   /* 4px stripes every 26px */
+  --card: #2b1d14;     /* espresso widget */
+  --card-2: #3a281c;   /* scrubber track, button hover */
+  --ink: #f3e7cf;      /* title, icons on orange */
+  --ink-2: #d2c1a2;    /* artist, idle icons */
+  --ink-3: #a8957a;    /* labels, times, wordmark */
+  --orange: #d9541e;   /* accent: play button, scrubber fill, record label, focus */
+  --mustard: #e3a92b;  /* equaliser, selected size */
+  --olive: #7b7a33;    /* cover 2 */
+  --vinyl: #141010;
+
+  --disp: "Shrikhand", Georgia, serif;
+  --mono: "Space Mono", ui-monospace, monospace;
+
+  --medium-w: 580px; --medium-h: 212px; --small: 212px;
+  --pad: 20px; --r-widget: 28px; --r-cover: 10px;
+  --cover: 172px; --record: 160px; --record-left: 80px;
+  --shadow: 0 2px 0 #1a110b, 0 30px 50px -30px rgba(43, 29, 20, .7);
+
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-size: 420ms;
+  --t-spin: 3.2s;   /* linear, one turn */
+}
+```
+
+Covers, set as `--art` on the widget class:
+
+```css
+.t1 { --art: radial-gradient(circle at 50% 118%, #f3e7cf 0 14%, #e3a92b 14% 26%, #d9541e 26% 38%,
+        #a5371a 38% 50%, #5a2a17 50% 62%, transparent 62%), linear-gradient(#efd9a8, #efd9a8); --ac: #2b1d14; }
+.t2 { --art: radial-gradient(circle at 70% 30%, #e3a92b 0 18%, transparent 18.5%),
+        repeating-linear-gradient(90deg, #7b7a33 0 18px, #5f5e26 18px 36px); --ac: #f3e7cf; }
+.t3 { --art: repeating-radial-gradient(circle at 30% 70%, #f3e7cf 0 8px, #d9541e 8px 16px, #2b1d14 16px 24px); --ac: #f3e7cf; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Title | Shrikhand | 28px | 400 | 1.05 | 0 | Title, ellipsis |
+| Cover album name | Shrikhand | 19px | 400 | 1 | -0.01em | Title, colour `--ac` |
+| Mini title | Shrikhand | 18px | 400 | 1.05 | 0 | Title, ellipsis |
+| Wordmark | Shrikhand | 14px | 400 | 1 | 0 | Title |
+| State label | Space Mono | 10px | 700 | 1.4 | 0.16em | UPPER |
+| Artist | Space Mono | 13px | 400 | 1.4 | 0 | Title, ellipsis |
+| Times | Space Mono | 11px | 400 | 1.4 | 0 | tabular |
+| Size switch | Space Mono | 12px | 700 | 1 | 0.08em | UPPER |
+
+Shrikhand has one weight. Do not fake bold it. It is the only display face; everything else is Space Mono.
 
 ## Implementation notes
 

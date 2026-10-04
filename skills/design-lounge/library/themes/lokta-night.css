@@ -1,6 +1,7 @@
 /* Lokta Night · dark · pair: lokta
    The same crimson on navy after dark. The paper colour moves into the type.
    Best for: Nepal, Personal finance, Civic */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Lokta Night · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Noto Serif Devanagari", Georgia, serif;
-  --font-text: "Mukta", system-ui, sans-serif;
-  --radius: 6px;
-  --shadow: none;
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The header of a fictional daily, "Nord Post". Five section labels (World, Business, Culture, Science, Opinion) sit beside a serif masthead. Hovering or focusing a label opens a full-width panel under the 64px bar: four columns of section links plus a 300px featured-story card on a tinted ground. The two details worth copying are (1) the panel does not close and reopen between sections — it stays open and **animates its height** to the next section's content while the columns crossfade — and (2) a 2px oxblood underline slides along the nav to the hovered label instead of appearing under each one. Paper-coloured, hairline-separated, no drop shadows except a soft one under the panel.
-
-## Reference behaviour
-
-1. Initial state: the **Culture** panel is open. Its label is `--ink`, the underline sits beneath it, the front page below is dimmed by an 18% ink scrim. The panel shows Sections / Columns / Guides / Podcasts columns and a card titled "A season of small, *stubborn* films".
-2. Hover another label (e.g. **Business**): after 0ms (panel already open) the underline slides to that label over 240ms, the Culture columns fade out over 160ms while the Business columns fade in, and the panel's height animates to the Business content height over 280ms on the expo-out curve. Business has six-link columns so the panel grows by roughly 30px; Opinion is shorter and it shrinks.
-3. Hover a label when the panel is closed: an 80ms intent delay, then the panel opens from height 0 to the section height (280ms), fading in over 120ms; the underline fades in (120ms) at the label.
-4. Move the mouse from the bar into the panel: nothing changes; the panel is part of the header hover region.
-5. Move the mouse off the header entirely: after a 150ms grace period the panel closes (height → 0 over 280ms, opacity → 0 over 120ms), the underline fades out, the scrim clears. Re-entering within 150ms cancels the close.
-6. Click a label: toggles its panel (click on the open section closes it).
-7. Keyboard: Tab to a label opens its panel (`:focus-visible` only — a mouse click's focus must not trigger this). ← → move between labels (wrapping) and switch panels. ↓ moves focus to the first link of the open section. Tab continues into the panel's links, then the card, then to the Search and Subscribe controls; when focus leaves the header the panel closes. Esc closes and returns focus to the label that was open.
-8. Link hover: text `--ink-2` → `--ink` and a 1px underline in `--accent` appears 4px below the baseline (via `text-decoration-color` transition, 120ms). The "Norway votes: live" link carries a 7px accent dot before it.
-9. Featured card hover: no motion; the arrow icon in its corner is the only affordance (it's one `<a>`).
 
 ## Structure
 
@@ -75,6 +65,81 @@ Section contents (links per column, top to bottom):
 - Leaving while an open timer is pending (< 80ms hover): the open timer is cleared; the panel never appears.
 - Keyboard ← → while a panel is open: the underline moves and the panel height animates exactly as with hover, with no delay.
 - `resize`: re-run `show(cur)` so the underline is re-measured against the label's new box and the panel height against the reflowed section.
+
+## Motion
+
+| Element        | Trigger                | Property            | From → To              | Duration | Easing       | Delay |
+|----------------|------------------------|---------------------|------------------------|---------:|--------------|-------|
+| `.panel`       | open                   | height              | 0 → section height     | 280ms    | `--ease-out` | 80ms hover intent (0 via keyboard/click) |
+| `.panel`       | open                   | opacity             | 0 → 1                  | 120ms    | `--ease`     | with height |
+| `.panel`       | switch section         | height              | h(A) → h(B)            | 280ms    | `--ease-out` | 0 |
+| `.sec`         | switch section         | opacity             | 1 → 0 (old), 0 → 1 (new) | 160ms  | `--ease`     | simultaneous; `visibility` flips after 160ms on the old one |
+| `.ind`         | switch section         | left, width         | label A box → label B box | 240ms | `--ease`     | 0 |
+| `.ind`         | open / close           | opacity             | 0 ↔ 1                  | 120ms    | `--ease`     | 0 |
+| `.panel`       | close                  | height, opacity     | h → 0, 1 → 0           | 280ms / 120ms | `--ease-out` / `--ease` | 150ms grace |
+| `main::after`  | open / close           | opacity             | 0 ↔ 1                  | 280ms    | `--ease`     | 0 |
+| link           | hover                  | color, text-decoration-color | `--ink-2`/transparent → `--ink`/`--accent` | 120ms | `--ease` | 0 |
+
+Reduced motion: all transition durations 1ms; the panel's height transition is removed entirely (`transition: none`) so no height animation occurs. Hover-intent delays remain.
+
+## States
+
+- **Label default:** `--ink-2`. **Hover / expanded (`aria-expanded="true"`):** `--ink`. No background.
+- **Label focus-visible:** 2px `--accent` outline, `outline-offset:-6px`, 4px radius (inset so it sits inside the 64px bar).
+- **Underline:** 2px, `--accent`, exactly the label's width, at `bottom:-1px` of the nav (overlapping the bar's hairline).
+- **Panel closed:** `height:0; opacity:0; overflow:hidden` (stays in DOM).
+- **Link hover:** `--ink` + accent underline at 4px offset. **Focus-visible:** 2px accent outline, 2px offset, 2px radius.
+- **Live link:** 7px accent dot inline before the text, 8px gap.
+- **Search icon hover:** `--tint` circular background. **Subscribe hover:** background `--accent`.
+- **Page behind:** `body.menu` adds the 18% scrim over `<main>`; `pointer-events:none` on the scrim.
+
+## Accessibility
+
+- Nav labels are `<button aria-expanded aria-controls>` — not links — because they open a panel; the section landing pages should be the first link inside each panel if you need them.
+- Each panel is a `<section aria-label="<Section>">`; inactive ones are `visibility:hidden` so they are not in the tab order.
+- Keyboard map: Tab (open on focus-visible), ← → (move between labels, opens each), ↓ (focus first link in panel), Esc (close + refocus label), Tab through panel then out (closing on `focusout` when `relatedTarget` is outside the header).
+- Hover intent: 80ms to open, 150ms grace to close, so diagonal mouse travel toward the card doesn't collapse the panel.
+- Contrast: `--ink-2` on `--panel` 7.1:1; `--ink-3` on `--panel` 3.9:1 — used only for ≥ 10px uppercase tracked headings and 12px bylines (non-body); if your target is strict AA for all text, darken `--ink-3` to `#6f675c`.
+- Hit targets: labels 64px tall × (text + 28px); tool buttons 36px.
+- The underline `<li>` is `aria-hidden="true"`.
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- 1024–1279: gutter 32px; card column 260px; column gap 24px.
+- 768–1023: panel becomes 3 columns + card (the fourth column wraps under the first three); h1 40px.
+- < 768: no hover panels. Labels become a horizontally scrolling row; tapping a label toggles an accordion beneath the bar showing that section's links stacked (card last). Underline still slides. Scrim removed.
+
+## Acceptance checklist
+
+- [ ] Bar is 64px with 48px side padding; masthead is Fraunces 26/600 with `"opsz" 144`.
+- [ ] Culture panel is open on first paint with the underline under "Culture" and the page dimmed.
+- [ ] Hovering another label while open slides the underline over 240ms and animates panel height over 280ms — the panel never collapses in between.
+- [ ] Section columns crossfade over 160ms; the outgoing section becomes `visibility:hidden` only after the fade.
+- [ ] Opening from closed waits 80ms of hover; leaving the header waits 150ms before closing; re-entry cancels the close.
+- [ ] Panel grid is `repeat(4,1fr) 300px` with 32px gaps and `32px 48px 40px` padding.
+- [ ] Featured card is one `<a>` with tinted `#efe4d8` ground, 4px radius, min-height 200px, arrow icon bottom-right.
+- [ ] Tab onto a label opens it; a mouse click's focus does not double-fire (click on an open label closes it).
+- [ ] ← → move between labels and switch panels; ↓ focuses the first panel link; Esc closes and refocuses the label.
+- [ ] Focus leaving the header closes the panel.
+- [ ] Link hover shows a 1px accent underline offset 4px, transitioned 120ms.
+- [ ] With reduced motion, the panel height snaps and the underline jumps; intent delays unchanged.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: the **Culture** panel is open. Its label is `--ink`, the underline sits beneath it, the front page below is dimmed by an 18% ink scrim. The panel shows Sections / Columns / Guides / Podcasts columns and a card titled "A season of small, *stubborn* films".
+2. Hover another label (e.g. **Business**): after 0ms (panel already open) the underline slides to that label over 240ms, the Culture columns fade out over 160ms while the Business columns fade in, and the panel's height animates to the Business content height over 280ms on the expo-out curve. Business has six-link columns so the panel grows by roughly 30px; Opinion is shorter and it shrinks.
+3. Hover a label when the panel is closed: an 80ms intent delay, then the panel opens from height 0 to the section height (280ms), fading in over 120ms; the underline fades in (120ms) at the label.
+4. Move the mouse from the bar into the panel: nothing changes; the panel is part of the header hover region.
+5. Move the mouse off the header entirely: after a 150ms grace period the panel closes (height → 0 over 280ms, opacity → 0 over 120ms), the underline fades out, the scrim clears. Re-entering within 150ms cancels the close.
+6. Click a label: toggles its panel (click on the open section closes it).
+7. Keyboard: Tab to a label opens its panel (`:focus-visible` only — a mouse click's focus must not trigger this). ← → move between labels (wrapping) and switch panels. ↓ moves focus to the first link of the open section. Tab continues into the panel's links, then the card, then to the Search and Subscribe controls; when focus leaves the header the panel closes. Esc closes and returns focus to the label that was open.
+8. Link hover: text `--ink-2` → `--ink` and a 1px underline in `--accent` appears 4px below the baseline (via `text-decoration-color` transition, 120ms). The "Norway votes: live" link carries a 7px accent dot before it.
+9. Featured card hover: no motion; the arrow icon in its corner is the only affordance (it's one `<a>`).
 
 ## Tokens
 
@@ -135,65 +200,6 @@ Section contents (links per column, top to bottom):
 | Deck              | Fraunces        | 19px | 400    | 1.4         | 0        | `"opsz" 20`, `--ink-2`, max-width 640px |
 | Teaser h2         | Fraunces        | 20px | 600    | 1.2         | −0.01em  | |
 | Subscribe button  | Instrument Sans | 13px | 500    | 1           | +0.01em  | |
-
-## Motion
-
-| Element        | Trigger                | Property            | From → To              | Duration | Easing       | Delay |
-|----------------|------------------------|---------------------|------------------------|---------:|--------------|-------|
-| `.panel`       | open                   | height              | 0 → section height     | 280ms    | `--ease-out` | 80ms hover intent (0 via keyboard/click) |
-| `.panel`       | open                   | opacity             | 0 → 1                  | 120ms    | `--ease`     | with height |
-| `.panel`       | switch section         | height              | h(A) → h(B)            | 280ms    | `--ease-out` | 0 |
-| `.sec`         | switch section         | opacity             | 1 → 0 (old), 0 → 1 (new) | 160ms  | `--ease`     | simultaneous; `visibility` flips after 160ms on the old one |
-| `.ind`         | switch section         | left, width         | label A box → label B box | 240ms | `--ease`     | 0 |
-| `.ind`         | open / close           | opacity             | 0 ↔ 1                  | 120ms    | `--ease`     | 0 |
-| `.panel`       | close                  | height, opacity     | h → 0, 1 → 0           | 280ms / 120ms | `--ease-out` / `--ease` | 150ms grace |
-| `main::after`  | open / close           | opacity             | 0 ↔ 1                  | 280ms    | `--ease`     | 0 |
-| link           | hover                  | color, text-decoration-color | `--ink-2`/transparent → `--ink`/`--accent` | 120ms | `--ease` | 0 |
-
-Reduced motion: all transition durations 1ms; the panel's height transition is removed entirely (`transition: none`) so no height animation occurs. Hover-intent delays remain.
-
-## States
-
-- **Label default:** `--ink-2`. **Hover / expanded (`aria-expanded="true"`):** `--ink`. No background.
-- **Label focus-visible:** 2px `--accent` outline, `outline-offset:-6px`, 4px radius (inset so it sits inside the 64px bar).
-- **Underline:** 2px, `--accent`, exactly the label's width, at `bottom:-1px` of the nav (overlapping the bar's hairline).
-- **Panel closed:** `height:0; opacity:0; overflow:hidden` (stays in DOM).
-- **Link hover:** `--ink` + accent underline at 4px offset. **Focus-visible:** 2px accent outline, 2px offset, 2px radius.
-- **Live link:** 7px accent dot inline before the text, 8px gap.
-- **Search icon hover:** `--tint` circular background. **Subscribe hover:** background `--accent`.
-- **Page behind:** `body.menu` adds the 18% scrim over `<main>`; `pointer-events:none` on the scrim.
-
-## Accessibility
-
-- Nav labels are `<button aria-expanded aria-controls>` — not links — because they open a panel; the section landing pages should be the first link inside each panel if you need them.
-- Each panel is a `<section aria-label="<Section>">`; inactive ones are `visibility:hidden` so they are not in the tab order.
-- Keyboard map: Tab (open on focus-visible), ← → (move between labels, opens each), ↓ (focus first link in panel), Esc (close + refocus label), Tab through panel then out (closing on `focusout` when `relatedTarget` is outside the header).
-- Hover intent: 80ms to open, 150ms grace to close, so diagonal mouse travel toward the card doesn't collapse the panel.
-- Contrast: `--ink-2` on `--panel` 7.1:1; `--ink-3` on `--panel` 3.9:1 — used only for ≥ 10px uppercase tracked headings and 12px bylines (non-body); if your target is strict AA for all text, darken `--ink-3` to `#6f675c`.
-- Hit targets: labels 64px tall × (text + 28px); tool buttons 36px.
-- The underline `<li>` is `aria-hidden="true"`.
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- 1024–1279: gutter 32px; card column 260px; column gap 24px.
-- 768–1023: panel becomes 3 columns + card (the fourth column wraps under the first three); h1 40px.
-- < 768: no hover panels. Labels become a horizontally scrolling row; tapping a label toggles an accordion beneath the bar showing that section's links stacked (card last). Underline still slides. Scrim removed.
-
-## Acceptance checklist
-
-- [ ] Bar is 64px with 48px side padding; masthead is Fraunces 26/600 with `"opsz" 144`.
-- [ ] Culture panel is open on first paint with the underline under "Culture" and the page dimmed.
-- [ ] Hovering another label while open slides the underline over 240ms and animates panel height over 280ms — the panel never collapses in between.
-- [ ] Section columns crossfade over 160ms; the outgoing section becomes `visibility:hidden` only after the fade.
-- [ ] Opening from closed waits 80ms of hover; leaving the header waits 150ms before closing; re-entry cancels the close.
-- [ ] Panel grid is `repeat(4,1fr) 300px` with 32px gaps and `32px 48px 40px` padding.
-- [ ] Featured card is one `<a>` with tinted `#efe4d8` ground, 4px radius, min-height 200px, arrow icon bottom-right.
-- [ ] Tab onto a label opens it; a mouse click's focus does not double-fire (click on an open label closes it).
-- [ ] ← → move between labels and switch panels; ↓ focuses the first panel link; Esc closes and refocuses the label.
-- [ ] Focus leaving the header closes the panel.
-- [ ] Link hover shows a 1px accent underline offset 4px, transitioned 120ms.
-- [ ] With reduced motion, the panel height snaps and the underline jumps; intent delays unchanged.
 
 ## Implementation notes
 

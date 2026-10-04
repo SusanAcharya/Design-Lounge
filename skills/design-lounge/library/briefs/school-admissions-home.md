@@ -4,29 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The home page of Ashcombe Vale College, a made-up day and boarding college for Grades 11 and 12. It is a long, scrolling page aimed at parents and students who are deciding where to apply for the 2027 intake. The ground is warm cream, the ink is navy, and two loud colours are rationed: tomato for the main action and the deadline, mustard for the next date, the scholarship note, and small dots. Headings are set in a book serif, everything else in a geometric sans. The detail worth copying: the campus drawing and the section icons are built only from circles, squares, and triangles in the four brand colours, so the page feels like a school with a point of view rather than a stock template.
-
-## Reference behaviour
-
-1. First frame at 1280x800: sticky nav, the hero (headline, lede, two buttons, three facts, campus drawing), and the top of Key dates with the timeline line in view.
-2. The nav is sticky at the top, 68px tall, with a 1px hairline under it. It holds the logo, five links, and an "Apply for 2027" button in tomato.
-3. Hero buttons: "Apply for 2027" (tomato fill, arrow icon) and "Book a campus visit" (navy 2px outline, calendar icon). Both jump to the enquiry form. Scrolling is smooth unless reduced motion is on.
-4. Key dates shows five dates on one horizontal line: 1 Nov 2026 Applications open, 12-13 Dec Open days, 31 Jan 2027 Deadline, 20 Feb Entrance test, 15 Mar Results.
-5. The next date (Applications open) has a mustard dot and a "Next" tag. The deadline has a tomato diamond instead of a circle. Other dates have hollow navy circles.
-6. A line above the timeline reads "Today is 3 October 2026. Applications open in 29 days."
-7. Programmes shows 9 cards in a 3-column grid, three per stream. Filter chips sit top right: All, Science, Arts, Commerce. All starts pressed.
-8. Clicking a chip shows only that stream's 3 cards and updates the count line, for example "Showing 3 programmes in Science". All restores 9. The count line is a polite live region.
-9. Each card shows a stream mark (navy circle for Science, tomato triangle for Arts, mustard square for Commerce), the stream name, the programme name, its subjects, then seats and "2 years" under a hairline.
-10. Fees shows a table: Science, Arts, Commerce, and a one-off admission fee. Columns: Per term, Lab or studio, Per year. Per year is term times three plus lab. A caption under the table says amounts are in NPR and boarding adds NPR 210,000 a year.
-11. Beside the table, a mustard-tint scholarship card explains merit and need-based aid, with a link to the FAQ.
-12. Student life is a 4-cell strip inside one navy 1px frame: 38 clubs, 11 sports teams, 220 boarding places, 96% go on to university. The second cell is inverted (navy ground, cream text).
-13. Parent FAQ has five questions in `details` elements. The first starts open. Its round plus icon rotates 45 degrees and fills mustard when open.
-14. The enquiry form sits beside the FAQ: Parent name, Email, Phone, Student enters (select), I would like to (select), Message, a prospectus checkbox, and "Send enquiry".
-15. Submitting with errors marks each bad field with a tomato border and a message under it, and moves focus to the first bad field. Required: name (2+ characters), email (has @ and a dot), grade.
-16. A valid submit shows a mustard-tint status line: "Thank you, [name]. We have your request to [choice]. Admissions will reply within two working days."
-17. Footer is a navy band with the address, office hours, email, and phone.
 
 ## Structure
 
@@ -67,67 +49,6 @@ The home page of Ashcombe Vale College, a made-up day and boarding college for G
 - Student life is an `ul` of four `li`.
 - FAQ uses native `details` and `summary`.
 - The form uses `label for`, `aria-describedby` to error spans, and a `role="status"` paragraph for the thank-you.
-
-## Tokens
-
-```css
-:root {
-  /* ground */
-  --cream: #f4eee1;      /* page */
-  --paper: #fbf8f1;      /* cards, form, life cells */
-  --sand: #e8dfcc;       /* drawing ground, chip hover */
-  --line: #d6cbb4;       /* hairlines, input borders */
-
-  /* ink */
-  --navy: #1b2a4a;       /* text, frames, buttons outline */
-  --navy-2: #34466e;     /* italic word, drawing wing */
-  --ink-2: #46526b;      /* lede, card body */
-  --ink-3: #5f6a80;      /* captions, meta */
-
-  /* rationed accents */
-  --tomato: #c8402a;     /* primary action, deadline, focus */
-  --mustard: #e2a72e;    /* next date, eyebrow dots, open FAQ icon */
-  --mustard-bg: #f6e6bd; /* scholarship card, tags, success, input glow */
-
-  --serif: "Libre Caslon Text", Georgia, serif;
-  --sans: "Jost", system-ui, sans-serif;
-
-  /* type scale */
-  --t-12: 12px; --t-13: 13px; --t-14: 14px; --t-15: 15px; --t-16: 16px;
-  --t-17: 17px; --t-19: 19px; --t-22: 22px; --t-24: 24px; --t-30: 30px;
-  --t-36: 36px; --t-56: 56px;
-
-  /* spacing, 4px base */
-  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
-  --s-7: 28px; --s-8: 32px; --s-10: 40px; --s-14: 56px; --s-18: 72px;
-
-  --r: 6px;              /* buttons, cards, inputs, drawing */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --fast: 150ms;
-  --med: 240ms;
-}
-```
-
-No shadows except the 3px mustard-tint focus glow on inputs. No gradients.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Hero h1 | Libre Caslon Text | 56px | 400 | 1.06 | -0.01em | sentence, one italic word |
-| Section h2 | Libre Caslon Text | 36px | 400 | 1.15 | -0.01em | sentence |
-| Card h3 | Libre Caslon Text | 22px | 400 | 1.2 | -0.01em | title |
-| Timeline date | Libre Caslon Text | 24px | 400 | 1.2 | 0 | - |
-| Fact and life numbers | Libre Caslon Text | 30px / 34px | 400 | 1.1 / 1 | 0 | - |
-| Eyebrow | Jost | 13px | 600 | 1.5 | 0.12em | upper |
-| Lede | Jost | 19px | 400 | 1.55 | 0 | sentence |
-| Body | Jost | 16px | 400 | 1.55 | 0 | sentence |
-| Card body | Jost | 15px | 400 | 1.55 | 0 | sentence |
-| Stream label, table head | Jost | 12-13px | 600 | 1.5 | 0.06-0.1em | upper |
-| Buttons, nav | Jost | 15-16px | 500-600 | 1 | 0 | sentence |
-| Meta, caption | Jost | 13-14px | 400 | 1.5 | 0 | sentence |
-
-The italic word in the h1 ("your") is `--navy-2`. Serif is for headings and numbers only. Never set body in the serif.
 
 ## Motion
 
@@ -198,6 +119,91 @@ Nothing animates on load. The page is calm on purpose.
 - [ ] Fees per year 186,000, 155,000, 156,000 NPR, admission 25,000.
 - [ ] Sixty merit scholarships of 25-100 percent.
 - [ ] Five FAQ items. The first is open.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 1280x800: sticky nav, the hero (headline, lede, two buttons, three facts, campus drawing), and the top of Key dates with the timeline line in view.
+2. The nav is sticky at the top, 68px tall, with a 1px hairline under it. It holds the logo, five links, and an "Apply for 2027" button in tomato.
+3. Hero buttons: "Apply for 2027" (tomato fill, arrow icon) and "Book a campus visit" (navy 2px outline, calendar icon). Both jump to the enquiry form. Scrolling is smooth unless reduced motion is on.
+4. Key dates shows five dates on one horizontal line: 1 Nov 2026 Applications open, 12-13 Dec Open days, 31 Jan 2027 Deadline, 20 Feb Entrance test, 15 Mar Results.
+5. The next date (Applications open) has a mustard dot and a "Next" tag. The deadline has a tomato diamond instead of a circle. Other dates have hollow navy circles.
+6. A line above the timeline reads "Today is 3 October 2026. Applications open in 29 days."
+7. Programmes shows 9 cards in a 3-column grid, three per stream. Filter chips sit top right: All, Science, Arts, Commerce. All starts pressed.
+8. Clicking a chip shows only that stream's 3 cards and updates the count line, for example "Showing 3 programmes in Science". All restores 9. The count line is a polite live region.
+9. Each card shows a stream mark (navy circle for Science, tomato triangle for Arts, mustard square for Commerce), the stream name, the programme name, its subjects, then seats and "2 years" under a hairline.
+10. Fees shows a table: Science, Arts, Commerce, and a one-off admission fee. Columns: Per term, Lab or studio, Per year. Per year is term times three plus lab. A caption under the table says amounts are in NPR and boarding adds NPR 210,000 a year.
+11. Beside the table, a mustard-tint scholarship card explains merit and need-based aid, with a link to the FAQ.
+12. Student life is a 4-cell strip inside one navy 1px frame: 38 clubs, 11 sports teams, 220 boarding places, 96% go on to university. The second cell is inverted (navy ground, cream text).
+13. Parent FAQ has five questions in `details` elements. The first starts open. Its round plus icon rotates 45 degrees and fills mustard when open.
+14. The enquiry form sits beside the FAQ: Parent name, Email, Phone, Student enters (select), I would like to (select), Message, a prospectus checkbox, and "Send enquiry".
+15. Submitting with errors marks each bad field with a tomato border and a message under it, and moves focus to the first bad field. Required: name (2+ characters), email (has @ and a dot), grade.
+16. A valid submit shows a mustard-tint status line: "Thank you, [name]. We have your request to [choice]. Admissions will reply within two working days."
+17. Footer is a navy band with the address, office hours, email, and phone.
+
+## Tokens
+
+```css
+:root {
+  /* ground */
+  --cream: #f4eee1;      /* page */
+  --paper: #fbf8f1;      /* cards, form, life cells */
+  --sand: #e8dfcc;       /* drawing ground, chip hover */
+  --line: #d6cbb4;       /* hairlines, input borders */
+
+  /* ink */
+  --navy: #1b2a4a;       /* text, frames, buttons outline */
+  --navy-2: #34466e;     /* italic word, drawing wing */
+  --ink-2: #46526b;      /* lede, card body */
+  --ink-3: #5f6a80;      /* captions, meta */
+
+  /* rationed accents */
+  --tomato: #c8402a;     /* primary action, deadline, focus */
+  --mustard: #e2a72e;    /* next date, eyebrow dots, open FAQ icon */
+  --mustard-bg: #f6e6bd; /* scholarship card, tags, success, input glow */
+
+  --serif: "Libre Caslon Text", Georgia, serif;
+  --sans: "Jost", system-ui, sans-serif;
+
+  /* type scale */
+  --t-12: 12px; --t-13: 13px; --t-14: 14px; --t-15: 15px; --t-16: 16px;
+  --t-17: 17px; --t-19: 19px; --t-22: 22px; --t-24: 24px; --t-30: 30px;
+  --t-36: 36px; --t-56: 56px;
+
+  /* spacing, 4px base */
+  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+  --s-7: 28px; --s-8: 32px; --s-10: 40px; --s-14: 56px; --s-18: 72px;
+
+  --r: 6px;              /* buttons, cards, inputs, drawing */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --fast: 150ms;
+  --med: 240ms;
+}
+```
+
+No shadows except the 3px mustard-tint focus glow on inputs. No gradients.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Hero h1 | Libre Caslon Text | 56px | 400 | 1.06 | -0.01em | sentence, one italic word |
+| Section h2 | Libre Caslon Text | 36px | 400 | 1.15 | -0.01em | sentence |
+| Card h3 | Libre Caslon Text | 22px | 400 | 1.2 | -0.01em | title |
+| Timeline date | Libre Caslon Text | 24px | 400 | 1.2 | 0 | - |
+| Fact and life numbers | Libre Caslon Text | 30px / 34px | 400 | 1.1 / 1 | 0 | - |
+| Eyebrow | Jost | 13px | 600 | 1.5 | 0.12em | upper |
+| Lede | Jost | 19px | 400 | 1.55 | 0 | sentence |
+| Body | Jost | 16px | 400 | 1.55 | 0 | sentence |
+| Card body | Jost | 15px | 400 | 1.55 | 0 | sentence |
+| Stream label, table head | Jost | 12-13px | 600 | 1.5 | 0.06-0.1em | upper |
+| Buttons, nav | Jost | 15-16px | 500-600 | 1 | 0 | sentence |
+| Meta, caption | Jost | 13-14px | 400 | 1.5 | 0 | sentence |
+
+The italic word in the h1 ("your") is `--navy-2`. Serif is for headings and numbers only. Never set body in the serif.
 
 ## Implementation notes
 

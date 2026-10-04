@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A short product page for Sprout, a fictional houseplant starter kit, framed at **390×844** (`mobile-web`). The Lounge draws the phone chrome, so the page leaves **54px** at the top and **34px** at the bottom clear of fixed UI. A sticky bottom bar sits on that 34px inset: expanded it shows a one-line description, the price, and "Add to bag"; after the page scrolls **72px** the description collapses to `max-height: 0` and the bar shortens. Price and button never leave. One family, Sora. Coral `#d4533e` is the only saturated colour; leaf green is reserved for the kicker and icons.
-
-## Reference behaviour
-
-1. Initial state: cool off-white `#f4f5f2`. Top inset 54px, then a 52px sticky nav ("Sprout" + Kit). Hero: 11px uppercase kicker "Houseplant kit · ships Thursday", 32px/600 title "Starter kit for a first windowsill", 15px lede, a 168px CSS seedling illustration, `$48` with "one kit · free post over $40".
-2. Sticky CTA bar is `position: fixed; left: 0; right: 0; bottom: 34px` (or `env(safe-area-inset-bottom, 34px)`). Surface white, 1px top hairline, padding 12/20, grid `1fr auto` with the description spanning both columns on row 1. Description: "Starter kit · 12 weeks of seed. Ships Thursday." Price `$48` + "incl. post". Button 48px tall, pill, coral, 14px/600 "Add to bag", min-width 128px.
-3. On `scroll`, if `scrollY > 72`, add `.compact` to the bar: padding 10/20, description `max-height: 0; opacity: 0`, hide the "incl. post" small. Price and button stay on one row. If `scrollY ≤ 72`, remove `.compact`. Nav gets `.stuck` (1px bottom border) when `scrollY > 8`.
-4. Body padding-bottom is `34px + 92px + 8px` so the last review is not hidden behind the expanded bar.
-5. Add to bag writes "Starter kit added · $48" into a toast (`role="status"`) above the bar, shown 2200ms. Toast does not persist.
-6. Reduced motion: `scroll-behavior: auto`; bar, description, toast and button transitions become 1ms. Compact still toggles, no lag.
-7. Hit targets: nav links 40px-class padding, button 48px, bar remains tappable in compact (button stays 48px).
 
 ## Structure
 
@@ -53,50 +45,6 @@ A short product page for Sprout, a fictional houseplant starter kit, framed at *
 - `<div class="toast" id="toast" role="status" aria-live="polite">`.
 
 Viewport meta: `width=device-width, initial-scale=1`. First HTML comment: `platform: mobile-web · 390x844`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f5f2;               /* page */
-  --surface: #fff;             /* bar, reviews */
-  --sunk: #e8ebe4;
-  --ink: #171c18;
-  --ink-2: #5a635c;
-  --ink-3: #8b928c;
-  --line: #d8ddd4;
-  --accent: #d4533e;           /* Add to bag */
-  --accent-ink: #fff;
-  --leaf: #3f6b48;             /* kicker, icons, logo dot */
-  --sans: "Sora", system-ui, sans-serif;
-  --safe-top: 54px;
-  --safe-bot: 34px;
-  --gutter: 20px;
-  --r: 12px;
-  --r-pill: 999px;
-  --bar-h: 108px;              /* expanded, for body padding */
-  --t-fast: 160ms;
-  --t-bar: 280ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role        | Family | Size | Weight | Line-height | Tracking | Case      |
-|-------------|--------|-----:|-------:|------------:|---------:|-----------|
-| Title       | Sora   | 32px | 600    | 1.12        | −0.04em  | sentence  |
-| Price (hero)| Sora   | 28px | 600    | 1           | −0.03em  |           |
-| Price (bar) | Sora   | 20px | 600    | 1           | −0.03em  |           |
-| Logo        | Sora   | 16px | 600    | 1           | −0.03em  | Title     |
-| Lede        | Sora   | 15px | 400    | 1.5         | 0        | sentence  |
-| Feature title | Sora | 14px | 600    | 1           | −0.02em  | sentence  |
-| Button      | Sora   | 14px | 600    | 1           | 0        | Title     |
-| Bar desc    | Sora   | 12px | 500    | 1.4         | 0        | sentence  |
-| Kicker / h2 | Sora   | 11/13px | 500/600 | 1       | +0.12–.14em | UPPERCASE |
-
-One family only. Do not add a serif.
 
 ## Motion
 
@@ -147,6 +95,64 @@ This piece is specified at 390×844. If shown elsewhere:
 - [ ] Focus rings are 2px `#d4533e` with a 3px offset.
 - [ ] Reduced motion: compact still happens, transitions 1ms, no smooth scroll.
 - [ ] Last review is not hidden behind the expanded bar (body padding-bottom includes `--bar-h`).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: cool off-white `#f4f5f2`. Top inset 54px, then a 52px sticky nav ("Sprout" + Kit). Hero: 11px uppercase kicker "Houseplant kit · ships Thursday", 32px/600 title "Starter kit for a first windowsill", 15px lede, a 168px CSS seedling illustration, `$48` with "one kit · free post over $40".
+2. Sticky CTA bar is `position: fixed; left: 0; right: 0; bottom: 34px` (or `env(safe-area-inset-bottom, 34px)`). Surface white, 1px top hairline, padding 12/20, grid `1fr auto` with the description spanning both columns on row 1. Description: "Starter kit · 12 weeks of seed. Ships Thursday." Price `$48` + "incl. post". Button 48px tall, pill, coral, 14px/600 "Add to bag", min-width 128px.
+3. On `scroll`, if `scrollY > 72`, add `.compact` to the bar: padding 10/20, description `max-height: 0; opacity: 0`, hide the "incl. post" small. Price and button stay on one row. If `scrollY ≤ 72`, remove `.compact`. Nav gets `.stuck` (1px bottom border) when `scrollY > 8`.
+4. Body padding-bottom is `34px + 92px + 8px` so the last review is not hidden behind the expanded bar.
+5. Add to bag writes "Starter kit added · $48" into a toast (`role="status"`) above the bar, shown 2200ms. Toast does not persist.
+6. Reduced motion: `scroll-behavior: auto`; bar, description, toast and button transitions become 1ms. Compact still toggles, no lag.
+7. Hit targets: nav links 40px-class padding, button 48px, bar remains tappable in compact (button stays 48px).
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f5f2;               /* page */
+  --surface: #fff;             /* bar, reviews */
+  --sunk: #e8ebe4;
+  --ink: #171c18;
+  --ink-2: #5a635c;
+  --ink-3: #8b928c;
+  --line: #d8ddd4;
+  --accent: #d4533e;           /* Add to bag */
+  --accent-ink: #fff;
+  --leaf: #3f6b48;             /* kicker, icons, logo dot */
+  --sans: "Sora", system-ui, sans-serif;
+  --safe-top: 54px;
+  --safe-bot: 34px;
+  --gutter: 20px;
+  --r: 12px;
+  --r-pill: 999px;
+  --bar-h: 108px;              /* expanded, for body padding */
+  --t-fast: 160ms;
+  --t-bar: 280ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role        | Family | Size | Weight | Line-height | Tracking | Case      |
+|-------------|--------|-----:|-------:|------------:|---------:|-----------|
+| Title       | Sora   | 32px | 600    | 1.12        | −0.04em  | sentence  |
+| Price (hero)| Sora   | 28px | 600    | 1           | −0.03em  |           |
+| Price (bar) | Sora   | 20px | 600    | 1           | −0.03em  |           |
+| Logo        | Sora   | 16px | 600    | 1           | −0.03em  | Title     |
+| Lede        | Sora   | 15px | 400    | 1.5         | 0        | sentence  |
+| Feature title | Sora | 14px | 600    | 1           | −0.02em  | sentence  |
+| Button      | Sora   | 14px | 600    | 1           | 0        | Title     |
+| Bar desc    | Sora   | 12px | 500    | 1.4         | 0        | sentence  |
+| Kicker / h2 | Sora   | 11/13px | 500/600 | 1       | +0.12–.14em | UPPERCASE |
+
+One family only. Do not add a serif.
 
 ## Implementation notes
 

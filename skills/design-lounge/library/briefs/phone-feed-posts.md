@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The home feed of "Hubbub", a social app for people who make things. From the top: a sticky bar with the lowercase wordmark "hubbub." (the dot is coral), a black New post button and an Activity bell with a coral dot. Then a sideways row of stories with a coral ring for unseen and a grey ring for seen. Then the feed: a picture post, a text-only post, a suggested-accounts carousel, and a second picture post. A flat tab bar sits at the bottom in the `phone-tab-plain` style.
@@ -11,24 +13,6 @@ The home feed of "Hubbub", a social app for people who make things. From the top
 The look is playful and bright: off-white page, near-black ink, one hot coral, a chunky rounded grotesk (Fredoka) for names, numbers and the wordmark, Nunito for body text, 18px radii. Pictures are drawn in CSS, not loaded. The detail worth copying is the double-tap: two taps on a picture within 300ms fill the like button, add one to the count, and play a 96px coral heart with six small dots flying out, all in under 800ms.
 
 No pull-to-refresh. The feed just scrolls.
-
-## Reference behaviour
-
-1. First frame: the bar, the stories row (Your story plus seven people, the first five unseen), and the first post with its picture, actions and two lines of caption. "Home" is the current tab.
-2. Stories: Your story has a dashed grey ring and a black + badge. Unseen stories have a 3px coral ring with a 3px off-white gap. Seen stories have a grey ring and muted name. The last two (marlo, kit.and.co) start seen.
-3. Tap an unseen story: its ring turns grey over 240ms, it moves to the end of the row, and keeps focus. A seen story does nothing here; the viewer is `mobile-story-viewer`.
-4. Each post has an author row: 40px initials avatar, name (Fredoka 16/600), real name and age (13px muted), and a 44px "more options" button.
-5. Picture post 1, "juno.makes": three glazed mugs on a black shelf over peach, a "Glaze test 14" pill bottom-left.
-6. Double-tap a picture (two pointer-ups within 300ms and 30px): the like button turns on (it never turns off by double-tap), the count rises by one, and the heart burst plays in the centre of the picture.
-7. Tap the heart button: toggles like. On: coral, filled, a 1.3× thump over 360ms, count +1. Off: ink outline, count back.
-8. Comment button shows the count. Share shows a toast "Link copied". Save toggles a filled bookmark and shows "Saved to your collection" or "Removed from saved". Toasts sit 68px above the bar's safe area and hide after 1.8s.
-9. Captions clamp to two lines. A "more" link sits at the end of line two over a 30px fade. Tapping it opens the full caption and moves focus to the text.
-10. Text post, "marlo": a black card, off-white Fredoka 24/500 text, the last two words in coral. It supports double-tap like too.
-11. Suggested accounts: heading "Accounts you might like" and "See all". Five 156px cards scroll sideways with snap. Each card: dismiss X (44px), 64px avatar, name, reason line, and a full-width black Follow pill.
-12. Tap Follow: it becomes "Following", white with a 1.5px ink inset ring. Tap again to undo.
-13. Tap X: the card fades and scales to 0.9 over 200ms, then is removed. Focus moves to the next card's X. If the last card goes, the whole section goes.
-14. Picture post 2, "oro.studio": a riso poster, coral sun behind teal scalloped waves on butter, "LOW TIDE" in spaced Fredoka. It starts saved.
-15. Tab bar: four tabs with a 3px coral top mark on the current tab. Tapping Home while on Home scrolls the feed to the top.
 
 ## Structure
 
@@ -68,66 +52,6 @@ No pull-to-refresh. The feed just scrolls.
 - The suggestion block is a `section` labelled by its `h2`.
 - The tab bar is a `nav aria-label="Sections"` of four buttons with `aria-current="page"` on the current one.
 - One `div role="status"` toast.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #faf7f2;       /* off-white page */
-  --surface: #ffffff;  /* tab bar, suggestion cards */
-  --ink: #141210;      /* text, black buttons, text-post card */
-  --ink-2: #46413b;    /* story names */
-  --ink-3: #6c655d;    /* meta, muted tabs */
-  --line: #e8e1d6;     /* rules, card borders */
-  --seen: #d6cec3;     /* seen story ring */
-  --hot: #ff4b36;      /* the one accent */
-  --focus: #141210;
-
-  /* picture and avatar fills (content, not UI) */
-  --butter: #ffe27a;
-  --peach: #ffd5c4;
-  --mint: #cfe8e2;
-  --teal: #1d5b57;
-  --oat: #ece5da;
-
-  /* type */
-  --round: "Fredoka", "Nunito", system-ui, sans-serif;
-  --sans: "Nunito", system-ui, sans-serif;
-
-  /* space: 4px base */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px;
-  --top-clear: 54px;
-  --bottom-clear: 34px;
-
-  /* shape */
-  --r: 18px;
-  --pill: 999px;
-
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Wordmark | Fredoka | 30px | 700 | 1 | -0.02em, lowercase, coral full stop |
-| Author name | Fredoka | 16px | 600 | 1.2 | |
-| Author meta | Nunito | 13px | 400 | 1.45 | `--ink-3` |
-| Story name | Nunito | 12px | 600 | 1.45 | ellipsis at 68px |
-| Avatar initials | Fredoka | 16 / 20 / 24px | 600 | — | by avatar size 40 / 62 / 64 |
-| Action count | Fredoka | 14px | 600 | — | tabular, en-GB commas |
-| Caption | Nunito | 15px | 400 | 1.45 | handle in Fredoka 15/600 |
-| Text post | Fredoka | 24px | 500 | 1.25 | -0.01em, off-white on ink |
-| Section heading | Fredoka | 18px | 600 | 1.45 | |
-| Follow pill | Fredoka | 15px | 600 | — | |
-| Tab label | Fredoka | 11px | 600 | — | |
-| Toast | Fredoka | 14px | 600 | — | |
-
-Fredoka is the voice. Long reading text is Nunito. Never set captions in Fredoka.
 
 ## Motion
 
@@ -203,6 +127,88 @@ The burst dots sit at 0°, 60°, 120°, 180°, 240° and 300°. They are off-whi
 - [ ] Suggested: nell.sews, bike.shed.co, ana.ferments, the.tile.guy, wren.plants.
 - [ ] Last post is oro.studio "LOW TIDE" and starts saved.
 - [ ] Radii 18px on pictures and cards; Fredoka and Nunito only.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the bar, the stories row (Your story plus seven people, the first five unseen), and the first post with its picture, actions and two lines of caption. "Home" is the current tab.
+2. Stories: Your story has a dashed grey ring and a black + badge. Unseen stories have a 3px coral ring with a 3px off-white gap. Seen stories have a grey ring and muted name. The last two (marlo, kit.and.co) start seen.
+3. Tap an unseen story: its ring turns grey over 240ms, it moves to the end of the row, and keeps focus. A seen story does nothing here; the viewer is `mobile-story-viewer`.
+4. Each post has an author row: 40px initials avatar, name (Fredoka 16/600), real name and age (13px muted), and a 44px "more options" button.
+5. Picture post 1, "juno.makes": three glazed mugs on a black shelf over peach, a "Glaze test 14" pill bottom-left.
+6. Double-tap a picture (two pointer-ups within 300ms and 30px): the like button turns on (it never turns off by double-tap), the count rises by one, and the heart burst plays in the centre of the picture.
+7. Tap the heart button: toggles like. On: coral, filled, a 1.3× thump over 360ms, count +1. Off: ink outline, count back.
+8. Comment button shows the count. Share shows a toast "Link copied". Save toggles a filled bookmark and shows "Saved to your collection" or "Removed from saved". Toasts sit 68px above the bar's safe area and hide after 1.8s.
+9. Captions clamp to two lines. A "more" link sits at the end of line two over a 30px fade. Tapping it opens the full caption and moves focus to the text.
+10. Text post, "marlo": a black card, off-white Fredoka 24/500 text, the last two words in coral. It supports double-tap like too.
+11. Suggested accounts: heading "Accounts you might like" and "See all". Five 156px cards scroll sideways with snap. Each card: dismiss X (44px), 64px avatar, name, reason line, and a full-width black Follow pill.
+12. Tap Follow: it becomes "Following", white with a 1.5px ink inset ring. Tap again to undo.
+13. Tap X: the card fades and scales to 0.9 over 200ms, then is removed. Focus moves to the next card's X. If the last card goes, the whole section goes.
+14. Picture post 2, "oro.studio": a riso poster, coral sun behind teal scalloped waves on butter, "LOW TIDE" in spaced Fredoka. It starts saved.
+15. Tab bar: four tabs with a 3px coral top mark on the current tab. Tapping Home while on Home scrolls the feed to the top.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #faf7f2;       /* off-white page */
+  --surface: #ffffff;  /* tab bar, suggestion cards */
+  --ink: #141210;      /* text, black buttons, text-post card */
+  --ink-2: #46413b;    /* story names */
+  --ink-3: #6c655d;    /* meta, muted tabs */
+  --line: #e8e1d6;     /* rules, card borders */
+  --seen: #d6cec3;     /* seen story ring */
+  --hot: #ff4b36;      /* the one accent */
+  --focus: #141210;
+
+  /* picture and avatar fills (content, not UI) */
+  --butter: #ffe27a;
+  --peach: #ffd5c4;
+  --mint: #cfe8e2;
+  --teal: #1d5b57;
+  --oat: #ece5da;
+
+  /* type */
+  --round: "Fredoka", "Nunito", system-ui, sans-serif;
+  --sans: "Nunito", system-ui, sans-serif;
+
+  /* space: 4px base */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px;
+  --top-clear: 54px;
+  --bottom-clear: 34px;
+
+  /* shape */
+  --r: 18px;
+  --pill: 999px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Wordmark | Fredoka | 30px | 700 | 1 | -0.02em, lowercase, coral full stop |
+| Author name | Fredoka | 16px | 600 | 1.2 | |
+| Author meta | Nunito | 13px | 400 | 1.45 | `--ink-3` |
+| Story name | Nunito | 12px | 600 | 1.45 | ellipsis at 68px |
+| Avatar initials | Fredoka | 16 / 20 / 24px | 600 | — | by avatar size 40 / 62 / 64 |
+| Action count | Fredoka | 14px | 600 | — | tabular, en-GB commas |
+| Caption | Nunito | 15px | 400 | 1.45 | handle in Fredoka 15/600 |
+| Text post | Fredoka | 24px | 500 | 1.25 | -0.01em, off-white on ink |
+| Section heading | Fredoka | 18px | 600 | 1.45 | |
+| Follow pill | Fredoka | 15px | 600 | — | |
+| Tab label | Fredoka | 11px | 600 | — | |
+| Toast | Fredoka | 14px | 600 | — | |
+
+Fredoka is the voice. Long reading text is Nunito. Never set captions in Fredoka.
 
 ## Implementation notes
 

@@ -4,24 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The one-page home for a fictional family dental practice, Larkfield Dental Studio, in Manchester. It must feel calm and trustworthy, not like a hospital. Pale aqua page, white cards, deep teal type, a rounded humanist sans, 12px radii. The hero answers the three questions a nervous patient has before they call: can I get in soon, how do I book, and who will I see. The detail worth copying is the **live next-slot card** in the hero: it shows "Today 16:30", four time chips, a treatment select and a "Hold this slot" button. Holding a slot strikes it out and moves "Next available" to the next free time.
 
 Below the hero sit five bands: treatments with prices from, dentists with credentials, insurers next to opening hours (today highlighted), a location block with an SVG map, and a review summary. Then a one-line footer.
-
-## Reference behaviour
-
-1. Initial state: the hero shows the headline "Unhurried dental care, close to home." on the left and the slot card on the right. The card reads "Next available", a green "Live" dot, then "Today 16:30" at 30px.
-2. The time chips are 14:10, 16:30, 17:00, 17:40. 14:10 is disabled and struck through. 16:30 is selected (teal fill, white text).
-3. The "Live" dot pulses: a green ring grows from 0 to 8px and fades over 2400ms, forever. Reduced motion: no pulse, the dot stays solid.
-4. Click a free chip: it becomes selected. Any old confirmation text clears.
-5. Click "Hold this slot": prevent default. The selected chip becomes disabled and struck through. The status line under the button reads "Held: today 16:30. We will text you to confirm within 10 minutes." The first remaining free chip becomes selected and "Next available" updates to it ("Today 17:00").
-6. When no chip is free, "Next available" reads "Tomorrow 08:20" and the button is disabled (opacity 0.5).
-7. The opening hours table highlights today's row with an aqua fill and a small teal "Today" pill. Today comes from `new Date().getDay()`. The row also gets `aria-current="date"`.
-8. Header: "Book" and the phone number are always visible at 1280. Nav links scroll to their bands. Scroll is smooth unless reduced motion is on.
-9. Treatment cards lift 2px and the border turns `--aqua-2` on hover, over 180ms.
-10. At 900px and below, the nav and phone hide and a 44px menu button appears. It toggles a full-width dropdown under the header and sets `aria-expanded`. Tapping a link closes it.
 
 ## Structure
 
@@ -58,73 +47,6 @@ below: dentists 4-up · insurers | hours · map | address · reviews · footer
 - Location: `minmax(0,1.3fr) minmax(0,1fr)`. The map is a `div role="img"` with an `aria-label`, holding an inline SVG. The address card sits right.
 - Reviews: three columns `.8fr 1.2fr 1.2fr`. A teal score card, then two `<blockquote>` with a `<footer>`.
 - Alternate bands use a white surface with 1px rules top and bottom. The others sit on the aqua page.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f2f9f8;        /* page, pale aqua */
-  --surface: #ffffff;   /* cards, alternate bands */
-  --aqua: #d6efec;      /* icon wells, today row, avatars */
-  --aqua-2: #b7e2dd;    /* hover border, ghost button ring */
-  --teal: #0e4f55;      /* headline, primary button, focus */
-  --teal-2: #1d6b70;    /* kickers, hover on primary */
-  --ink: #12302f;       /* body text */
-  --ink-2: #45605f;     /* secondary text */
-  --ink-3: #6a8180;     /* meta, disabled */
-  --line: #d5e6e3;      /* hairlines and card borders */
-  --warm: #d98a3d;      /* review stars only */
-  --ok: #1f8a6d;        /* live dot, insurer checks, held note */
-
-  --display: "Nunito", system-ui, sans-serif;
-  --sans: "Nunito Sans", system-ui, sans-serif;
-
-  --fs-h1: 54px;
-  --fs-h2: 34px;
-  --fs-next: 30px;
-  --fs-lede: 18px;
-  --fs-body: 16px;
-  --fs-small: 14px;
-  --fs-kick: 13px;
-
-  --space-1: 8px;
-  --space-2: 16px;
-  --space-3: 24px;
-  --space-4: 32px;
-  --space-5: 48px;
-  --band: 72px;
-  --pad: 56px;
-  --max: 1168px;
-
-  --r: 12px;
-  --r-lg: 18px;
-  --shadow-card: 0 1px 0 var(--line), 0 18px 40px -28px rgba(14, 79, 85, .35);
-
-  --t: 180ms;
-  --t-pulse: 2400ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-Only the slot card has a shadow. Every other region is split by 1px `--line` rules.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | ---: | ---: | ---: | ---: | --- |
-| Hero headline | Nunito | 54px | 800 | 1.06 | -0.015em | sentence |
-| Section heading | Nunito | 34px | 800 | 1.15 | -0.015em | sentence |
-| Next slot | Nunito | 30px | 800 | 1.15 | 0 | sentence |
-| Card title | Nunito | 18–19px | 800 | 1.3 | 0 | sentence |
-| Price | Nunito | 20px | 800 | 1 | 0 | numerals |
-| Review score | Nunito | 56px | 800 | 1 | 0 | numerals |
-| Kicker | Nunito Sans | 13px | 700 | 1.4 | 0.06em | UPPERCASE |
-| Lede | Nunito Sans | 18px | 400 | 1.55 | 0 | sentence |
-| Body | Nunito Sans | 15–16px | 400 | 1.55 | 0 | sentence |
-| Buttons | Nunito Sans | 15–16px | 700 | 1 | 0 | sentence |
-| Credential pill | Nunito Sans | 12px | 700 | 1.4 | 0 | as written |
-
-The hero headline is teal, not ink. Keep it to three lines at 1280 with `max-width: 13ch`.
 
 ## Motion
 
@@ -201,6 +123,90 @@ Nothing else moves. No scroll reveals, no counters, no parallax. A clinic page s
 - [ ] Four clinicians: Dr Amara Osei, Dr Tomasz Lewicki, Dr Priya Raman, Hannah Brook.
 - [ ] Six insurers, hours Mon–Sat with Sunday closed, address 14 Briar Lane, Manchester M19 4LD.
 - [ ] Review score 4.9 from 612 reviews, bars 91% / 7% / 2%, two quotes.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: the hero shows the headline "Unhurried dental care, close to home." on the left and the slot card on the right. The card reads "Next available", a green "Live" dot, then "Today 16:30" at 30px.
+2. The time chips are 14:10, 16:30, 17:00, 17:40. 14:10 is disabled and struck through. 16:30 is selected (teal fill, white text).
+3. The "Live" dot pulses: a green ring grows from 0 to 8px and fades over 2400ms, forever. Reduced motion: no pulse, the dot stays solid.
+4. Click a free chip: it becomes selected. Any old confirmation text clears.
+5. Click "Hold this slot": prevent default. The selected chip becomes disabled and struck through. The status line under the button reads "Held: today 16:30. We will text you to confirm within 10 minutes." The first remaining free chip becomes selected and "Next available" updates to it ("Today 17:00").
+6. When no chip is free, "Next available" reads "Tomorrow 08:20" and the button is disabled (opacity 0.5).
+7. The opening hours table highlights today's row with an aqua fill and a small teal "Today" pill. Today comes from `new Date().getDay()`. The row also gets `aria-current="date"`.
+8. Header: "Book" and the phone number are always visible at 1280. Nav links scroll to their bands. Scroll is smooth unless reduced motion is on.
+9. Treatment cards lift 2px and the border turns `--aqua-2` on hover, over 180ms.
+10. At 900px and below, the nav and phone hide and a 44px menu button appears. It toggles a full-width dropdown under the header and sets `aria-expanded`. Tapping a link closes it.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f2f9f8;        /* page, pale aqua */
+  --surface: #ffffff;   /* cards, alternate bands */
+  --aqua: #d6efec;      /* icon wells, today row, avatars */
+  --aqua-2: #b7e2dd;    /* hover border, ghost button ring */
+  --teal: #0e4f55;      /* headline, primary button, focus */
+  --teal-2: #1d6b70;    /* kickers, hover on primary */
+  --ink: #12302f;       /* body text */
+  --ink-2: #45605f;     /* secondary text */
+  --ink-3: #6a8180;     /* meta, disabled */
+  --line: #d5e6e3;      /* hairlines and card borders */
+  --warm: #d98a3d;      /* review stars only */
+  --ok: #1f8a6d;        /* live dot, insurer checks, held note */
+
+  --display: "Nunito", system-ui, sans-serif;
+  --sans: "Nunito Sans", system-ui, sans-serif;
+
+  --fs-h1: 54px;
+  --fs-h2: 34px;
+  --fs-next: 30px;
+  --fs-lede: 18px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-kick: 13px;
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --band: 72px;
+  --pad: 56px;
+  --max: 1168px;
+
+  --r: 12px;
+  --r-lg: 18px;
+  --shadow-card: 0 1px 0 var(--line), 0 18px 40px -28px rgba(14, 79, 85, .35);
+
+  --t: 180ms;
+  --t-pulse: 2400ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+Only the slot card has a shadow. Every other region is split by 1px `--line` rules.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Hero headline | Nunito | 54px | 800 | 1.06 | -0.015em | sentence |
+| Section heading | Nunito | 34px | 800 | 1.15 | -0.015em | sentence |
+| Next slot | Nunito | 30px | 800 | 1.15 | 0 | sentence |
+| Card title | Nunito | 18–19px | 800 | 1.3 | 0 | sentence |
+| Price | Nunito | 20px | 800 | 1 | 0 | numerals |
+| Review score | Nunito | 56px | 800 | 1 | 0 | numerals |
+| Kicker | Nunito Sans | 13px | 700 | 1.4 | 0.06em | UPPERCASE |
+| Lede | Nunito Sans | 18px | 400 | 1.55 | 0 | sentence |
+| Body | Nunito Sans | 15–16px | 400 | 1.55 | 0 | sentence |
+| Buttons | Nunito Sans | 15–16px | 700 | 1 | 0 | sentence |
+| Credential pill | Nunito Sans | 12px | 700 | 1.4 | 0 | as written |
+
+The hero headline is teal, not ink. Keep it to three lines at 1280 with `max-width: 13ch`.
 
 ## Implementation notes
 

@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A features section for a deploy platform ("Orbital"): twelve 164px-tall cards in four columns on charcoal, each with a 24px line icon, a title and one sentence. When the pointer is over the grid, a white light follows it: the 1px borders of every card brighten where they are within ~420px of the pointer, and the card surfaces receive a faint (6%) wash within ~640px. Because every card is lit by the same pointer coordinates, the light crosses card boundaries as one continuous shape rather than switching on per card. There is no colour, no blur, no scale. The detail worth copying is the border ring: a radial gradient painted into a 1px padding band and masked with `mask-composite: exclude`, so the glow only ever appears on the border line.
-
-## Reference behaviour
-
-1. Initial state: heading "Everything Orbital does for a deploy", a subtitle, a "Platform · v2.14" tag on the right, the 4 × 3 grid, and a footer caption. All cards flat: `#1f1f1f` on `#1a1a1a` with `#2c2c2c` 1px borders. No light.
-2. Pointer enters the grid: card rectangles are measured once (`getBoundingClientRect`), and the grid gets class `lit`; both glow layers on every card fade from opacity 0 to 1 over 320ms.
-3. Pointer moves (rAF-throttled): for each of the 12 cards, `--mx` and `--my` are set to the pointer's position relative to *that card's* top-left corner, in px (values may be negative or larger than the card — that is what lets the light spill across neighbours).
-4. Each card's `::before` paints `radial-gradient(420px circle at var(--mx) var(--my), rgba(255,255,255,.55), transparent 60%)` masked to its 1px border ring. Its `::after` paints `radial-gradient(640px circle at …, rgba(255,255,255,.06), transparent 50%)` over the surface.
-5. Hover a specific card: its icon lifts 2px (160ms). Nothing else changes per card — the light is global.
-6. Pointer leaves the grid: `lit` is removed; both layers fade out over 320ms; coordinates are left as they were (invisible).
-7. Keyboard focus on a card: its border becomes `#a3a3a3`, and its own two glow layers show at opacity 1 centred on the card (`--mx: 50%; --my: 50%`), so keyboard users see a lit card. The neighbours are not lit by focus.
-8. Cards are links (`<a href>`); in the demo clicks are prevented. In a product they navigate to the feature page.
-9. With `prefers-reduced-motion: reduce`: the light still follows the pointer (it is a position, not a motion) but the opacity transitions and icon lift are removed. If your accessibility policy treats pointer-following light as motion, gate the `pointermove` handler on the same media query.
 
 ## Structure
 
@@ -66,53 +56,6 @@ Card copy (title · sentence):
 12. SSO · SAML and OIDC on every plan, including the free one.
 
 Icons (24px grid, 1.5px stroke, `currentColor`): globe, padlock, branch, bolt, document, clock, key, chart, rotate, people, link, shield-check.
-
-## Tokens
-
-```css
-:root {
-  /* colour — neutral charcoal only; the "accent" is white light */
-  --bg: #1a1a1a;
-  --card: #1f1f1f;
-  --line: #2c2c2c;
-  --ink: #f2f2f2;          /* titles, icons */
-  --ink-2: #a3a3a3;        /* descriptions, subtitle, focus border */
-  --ink-3: #6b6b6b;        /* tag, footer */
-  --glow-border: rgba(255,255,255,.55);
-  --glow-surface: rgba(255,255,255,.06);
-
-  /* type */
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-
-  /* layout */
-  --pad: 44px 48px;
-  --card-h: 164px;
-  --card-pad: 20px;
-  --gap: 12px;
-  --r: 10px;
-  --icon: 24px;
-  --spot-border: 420px;    /* radius of the border light */
-  --spot-surface: 640px;   /* radius of the surface wash */
-
-  /* motion */
-  --t-glow: 320ms;         /* layers fade in/out */
-  --t-micro: 160ms;        /* icon lift */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role        | Family            | Size | Weight | Line-height | Tracking | Case      |
-|-------------|-------------------|-----:|-------:|------------:|---------:|-----------|
-| Heading     | Schibsted Grotesk | 30px | 600    | 1.15        | −0.02em  | sentence  |
-| Subtitle    | Schibsted Grotesk | 15px | 400    | 1.5         | 0        | sentence  |
-| Tag         | Schibsted Grotesk | 12px | 400    | 1.5         | +0.06em  | UPPERCASE |
-| Card title  | Schibsted Grotesk | 16px | 500    | 1.5         | −0.01em  | sentence  |
-| Card text   | Schibsted Grotesk | 13px | 400    | 1.45        | 0        | sentence  |
-| Footer      | Schibsted Grotesk | 12px | 400    | 1.5         | 0        | sentence  |
-
-One family, three weights. The `<code>git push</code>` in the subtitle inherits the family (no mono) at the same size.
 
 ## Motion
 
@@ -178,6 +121,69 @@ Reduced motion: `transition: none` on the pseudo-elements and the icon.
 - [ ] Icon lifts 2px on card hover over 160ms.
 - [ ] Listeners are attached only when `(hover: hover)` matches; focus styling works regardless.
 - [ ] The card has no `overflow: hidden` (it would clip the ring that sits on the border).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: heading "Everything Orbital does for a deploy", a subtitle, a "Platform · v2.14" tag on the right, the 4 × 3 grid, and a footer caption. All cards flat: `#1f1f1f` on `#1a1a1a` with `#2c2c2c` 1px borders. No light.
+2. Pointer enters the grid: card rectangles are measured once (`getBoundingClientRect`), and the grid gets class `lit`; both glow layers on every card fade from opacity 0 to 1 over 320ms.
+3. Pointer moves (rAF-throttled): for each of the 12 cards, `--mx` and `--my` are set to the pointer's position relative to *that card's* top-left corner, in px (values may be negative or larger than the card — that is what lets the light spill across neighbours).
+4. Each card's `::before` paints `radial-gradient(420px circle at var(--mx) var(--my), rgba(255,255,255,.55), transparent 60%)` masked to its 1px border ring. Its `::after` paints `radial-gradient(640px circle at …, rgba(255,255,255,.06), transparent 50%)` over the surface.
+5. Hover a specific card: its icon lifts 2px (160ms). Nothing else changes per card — the light is global.
+6. Pointer leaves the grid: `lit` is removed; both layers fade out over 320ms; coordinates are left as they were (invisible).
+7. Keyboard focus on a card: its border becomes `#a3a3a3`, and its own two glow layers show at opacity 1 centred on the card (`--mx: 50%; --my: 50%`), so keyboard users see a lit card. The neighbours are not lit by focus.
+8. Cards are links (`<a href>`); in the demo clicks are prevented. In a product they navigate to the feature page.
+9. With `prefers-reduced-motion: reduce`: the light still follows the pointer (it is a position, not a motion) but the opacity transitions and icon lift are removed. If your accessibility policy treats pointer-following light as motion, gate the `pointermove` handler on the same media query.
+
+## Tokens
+
+```css
+:root {
+  /* colour — neutral charcoal only; the "accent" is white light */
+  --bg: #1a1a1a;
+  --card: #1f1f1f;
+  --line: #2c2c2c;
+  --ink: #f2f2f2;          /* titles, icons */
+  --ink-2: #a3a3a3;        /* descriptions, subtitle, focus border */
+  --ink-3: #6b6b6b;        /* tag, footer */
+  --glow-border: rgba(255,255,255,.55);
+  --glow-surface: rgba(255,255,255,.06);
+
+  /* type */
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+
+  /* layout */
+  --pad: 44px 48px;
+  --card-h: 164px;
+  --card-pad: 20px;
+  --gap: 12px;
+  --r: 10px;
+  --icon: 24px;
+  --spot-border: 420px;    /* radius of the border light */
+  --spot-surface: 640px;   /* radius of the surface wash */
+
+  /* motion */
+  --t-glow: 320ms;         /* layers fade in/out */
+  --t-micro: 160ms;        /* icon lift */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role        | Family            | Size | Weight | Line-height | Tracking | Case      |
+|-------------|-------------------|-----:|-------:|------------:|---------:|-----------|
+| Heading     | Schibsted Grotesk | 30px | 600    | 1.15        | −0.02em  | sentence  |
+| Subtitle    | Schibsted Grotesk | 15px | 400    | 1.5         | 0        | sentence  |
+| Tag         | Schibsted Grotesk | 12px | 400    | 1.5         | +0.06em  | UPPERCASE |
+| Card title  | Schibsted Grotesk | 16px | 500    | 1.5         | −0.01em  | sentence  |
+| Card text   | Schibsted Grotesk | 13px | 400    | 1.45        | 0        | sentence  |
+| Footer      | Schibsted Grotesk | 12px | 400    | 1.5         | 0        | sentence  |
+
+One family, three weights. The `<code>git push</code>` in the subtitle inherits the family (no mono) at the same size.
 
 ## Implementation notes
 

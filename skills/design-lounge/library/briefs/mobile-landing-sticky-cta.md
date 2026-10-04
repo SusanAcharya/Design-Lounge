@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A single-scroll mobile marketing page for a fictional savings product ("Loam"). It stacks a sticky translucent header, a serif hero with the rate as the proof point, a horizontally scroll-snapping carousel of four feature cards, a social-proof block, a four-item FAQ accordion and a legal footer. The detail worth copying: a fixed conversion bar (rate + button) that stays hidden while the hero's own button is on screen and slides up from the bottom the moment the hero scrolls out, so the page never shows two primary buttons at once. Warm cream paper, one deep green accent, no shadows except under the bar.
-
-## Reference behaviour
-
-1. Initial state: header at the top (below the 54px status-bar reserve), hero visible with eyebrow, 44px headline, lede, two buttons and the rate row. No bottom bar is visible.
-2. Scroll down 1px or more: the header gains a 1px `--line` bottom border (it stays sticky at `top:0`, translucent with a 10px blur).
-3. Keep scrolling until the hero's bottom edge passes under the header: the bottom bar slides up from `translateY(100% + 80px)` to `translateY(0)` over 320ms `--ease-out`. Its `aria-hidden` flips to `false`.
-4. Scroll back so any part of the hero is visible again: the bar slides down and `aria-hidden` returns to `true`. This is the replay.
-5. Swipe the feature carousel: cards are 300px wide with a 12px gap and snap to the left gutter (`scroll-snap-align: start`). Four dot indicators below update as the nearest card changes; the current dot stretches from a 6px circle to an 18×6 pill in `--accent`.
-6. Tap a dot: the carousel scrolls smoothly to that card.
-7. Tap an FAQ question: its answer appears with a 4px rise + fade over 320ms; the plus icon rotates 45° into a cross and turns `--accent`. Opening one question closes any other open question.
-8. Tap either "Open an account" button: no navigation in the demo (href `#`), but it is the only primary action on the page.
 
 ## Structure
 
@@ -76,6 +67,79 @@ A single-scroll mobile marketing page for a fictional savings product ("Loam"). 
 - FAQ: "Is the 4.35% rate fixed?", "Can I withdraw whenever I want?", "How do round-ups work with shared cards?", "What does Loam cost?" — each with a two-sentence answer.
 - Footer: "Loam Savings Ltd" + a two-line fictional regulatory notice.
 - Bar: "4.35% AER variable" / "Four minutes to open. No minimum." / "Open an account".
+
+## Motion
+
+| Element            | Trigger                    | Property          | From → To                          | Duration | Easing       | Notes |
+|--------------------|----------------------------|-------------------|------------------------------------|---------:|--------------|-------|
+| `.bar`             | hero leaves viewport       | transform         | `translateY(calc(100% + 80px))` → `0` | 320ms | `--ease-out` | reverse on hero re-entering |
+| `.top` border      | scroll > 0                 | border-color      | transparent → `--line`             | 160ms    | `--ease`     | |
+| `.dot::before`     | nearest card changes       | width, background | 6px `--line-strong` → 18px `--accent` | 160ms | `--ease`     | |
+| carousel           | dot tap                    | scrollLeft        | current → card offset − 20px       | native smooth | —       | `scroll-snap-type: x mandatory` |
+| `details p`        | open                       | opacity, translateY | 0, −4px → 1, 0                   | 320ms    | `--ease-out` | `@keyframes rise` |
+| `summary svg`      | open                       | rotate, stroke    | 0 → 45°, `--ink-3` → `--accent`    | 320ms    | `--ease-out` | |
+| `.btn-primary`     | hover / active             | background / scale | `--accent` → `--accent-2` / 1 → .98 | 160ms  | `--ease`     | |
+
+Reduced motion: every transition and animation duration becomes 1ms; `scroll-behavior` becomes `auto`. The bar still appears and disappears, instantly.
+
+## States
+
+- **Header stuck:** `.stuck` class adds the 1px bottom hairline. Background is `--bg` at 86% with `backdrop-filter: blur(10px)`.
+- **Primary button hover:** background `--accent-2`. **Active:** `scale(.98)`.
+- **Ghost button:** transparent, 1px `--line-strong` border, `--ink` text. Hover: no change (touch-first).
+- **Focus-visible (links, buttons, dots, summaries):** `outline: 2px solid var(--accent); outline-offset: 3px`.
+- **Dot current:** `aria-current="true"`, 18×6 pill in `--accent`. Others: 6px circle in `--line-strong`.
+- **FAQ open:** `details[open]` — icon rotated 45° and green; answer visible with rise animation. Only one open at a time.
+- **Bar hidden:** `aria-hidden="true"`, translated fully below the viewport (including the 80px reserve) so it never peeks.
+- **Bar shown:** `.show`, `aria-hidden="false"`.
+
+## Accessibility
+
+- Header is a `<header>`; content lives in `<main>`; each block is a `<section>` with `aria-labelledby` pointing at its `<h2>` (proof block uses `aria-label`).
+- The carousel container is keyboard-scrollable (`tabindex="0"`, `aria-roledescription="carousel"`, `aria-label="Features"`). Arrow keys scroll it natively; dots are `<button role="tab">` with `aria-label="Slide n of 4"` and `aria-current`.
+- FAQ uses native `<details>`, so Enter/Space toggle and the state is exposed without ARIA. Hide the marker with `summary { list-style: none }` and `::-webkit-details-marker { display: none }`.
+- The star row has `aria-label="Rated 4.8 out of 5"`; the SVGs are decorative.
+- The sticky bar is `role="region"` with `aria-label`; toggle `aria-hidden` with visibility so the duplicate CTA is not announced while off screen.
+- Hit targets: buttons 52px (bar button 44px), summaries ≥ 56px, dots 24px visual inside a 24px button spaced 6px apart (acceptable as secondary controls; the carousel itself is swipeable).
+- Contrast: `--ink-2` on `--bg` 7.4:1; `--ink-3` on `--bg` 4.6:1 (used ≥ 12px); `--accent-ink` on `--accent` 7.1:1.
+
+## Responsive rules
+
+- 390 (reference): as specified. Cards 300px, so ~1.15 cards visible, hinting there is more.
+- 360 wide: gutter stays 20px; cards shrink to `min(300px, 100vw - 60px)` so the peek is preserved; H1 drops to 40px.
+- ≥ 600 (tablet or desktop preview): cap the content column at 560px centred, keep the bar full-width with the same 560px inner column, and set `--safe-bottom: 0` because there is no bottom browser bar. Carousel cards stay 300px so the snap behaviour is still demonstrable.
+- Landscape phone (height < 500): the bar keeps its position; reduce its vertical padding to 8px.
+
+## Acceptance checklist
+
+- [ ] Header is sticky at `top:0` with a 54px top margin, 56px tall, and shows a `--line` bottom border only once the page has scrolled.
+- [ ] The bottom bar is fixed at `bottom: 80px`, hidden by `translateY(calc(100% + 80px))`, and becomes visible only when no part of the hero is on screen.
+- [ ] Bar show/hide animates over 320ms `cubic-bezier(.16,1,.3,1)` and toggles `aria-hidden`.
+- [ ] Carousel uses `scroll-snap-type: x mandatory`; cards are 300px wide with a 12px gap and `scroll-snap-align: start`.
+- [ ] Four dots reflect the nearest card; the current dot is an 18×6px green pill.
+- [ ] Tapping a dot scrolls the carousel to that card.
+- [ ] FAQ is native `<details>`; opening one closes the others; the plus icon rotates 45°.
+- [ ] Hero buttons sit side by side in a two-column grid, each 52px tall, neither wrapping its label at 390px.
+- [ ] H1 is Fraunces 44px, line-height 1.02, tracking −0.025em, with the italic word in `--accent` at weight 600.
+- [ ] Only one primary button is visible at any scroll position (hero button or bar button, never both).
+- [ ] All interactive elements show a 2px `--accent` outline on `:focus-visible`.
+- [ ] No fixed element occupies the top 54px or bottom 80px.
+- [ ] Reduced motion: bar and accordion still work, with ≤ 1ms motion.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header at the top (below the 54px status-bar reserve), hero visible with eyebrow, 44px headline, lede, two buttons and the rate row. No bottom bar is visible.
+2. Scroll down 1px or more: the header gains a 1px `--line` bottom border (it stays sticky at `top:0`, translucent with a 10px blur).
+3. Keep scrolling until the hero's bottom edge passes under the header: the bottom bar slides up from `translateY(100% + 80px)` to `translateY(0)` over 320ms `--ease-out`. Its `aria-hidden` flips to `false`.
+4. Scroll back so any part of the hero is visible again: the bar slides down and `aria-hidden` returns to `true`. This is the replay.
+5. Swipe the feature carousel: cards are 300px wide with a 12px gap and snap to the left gutter (`scroll-snap-align: start`). Four dot indicators below update as the nearest card changes; the current dot stretches from a 6px circle to an 18×6 pill in `--accent`.
+6. Tap a dot: the carousel scrolls smoothly to that card.
+7. Tap an FAQ question: its answer appears with a 4px rise + fade over 320ms; the plus icon rotates 45° into a cross and turns `--accent`. Opening one question closes any other open question.
+8. Tap either "Open an account" button: no navigation in the demo (href `#`), but it is the only primary action on the page.
 
 ## Tokens
 
@@ -137,64 +201,6 @@ A single-scroll mobile marketing page for a fictional savings product ("Loam"). 
 | FAQ answer, card body | Instrument Sans | 14px | 400 | 1.5       | 0        | sentence  |
 | Bar title       | Instrument Sans | 15px | 600    | 1.2         | 0        | sentence  |
 | Footer          | Instrument Sans | 12px | 400    | 1.6         | 0        | sentence  |
-
-## Motion
-
-| Element            | Trigger                    | Property          | From → To                          | Duration | Easing       | Notes |
-|--------------------|----------------------------|-------------------|------------------------------------|---------:|--------------|-------|
-| `.bar`             | hero leaves viewport       | transform         | `translateY(calc(100% + 80px))` → `0` | 320ms | `--ease-out` | reverse on hero re-entering |
-| `.top` border      | scroll > 0                 | border-color      | transparent → `--line`             | 160ms    | `--ease`     | |
-| `.dot::before`     | nearest card changes       | width, background | 6px `--line-strong` → 18px `--accent` | 160ms | `--ease`     | |
-| carousel           | dot tap                    | scrollLeft        | current → card offset − 20px       | native smooth | —       | `scroll-snap-type: x mandatory` |
-| `details p`        | open                       | opacity, translateY | 0, −4px → 1, 0                   | 320ms    | `--ease-out` | `@keyframes rise` |
-| `summary svg`      | open                       | rotate, stroke    | 0 → 45°, `--ink-3` → `--accent`    | 320ms    | `--ease-out` | |
-| `.btn-primary`     | hover / active             | background / scale | `--accent` → `--accent-2` / 1 → .98 | 160ms  | `--ease`     | |
-
-Reduced motion: every transition and animation duration becomes 1ms; `scroll-behavior` becomes `auto`. The bar still appears and disappears, instantly.
-
-## States
-
-- **Header stuck:** `.stuck` class adds the 1px bottom hairline. Background is `--bg` at 86% with `backdrop-filter: blur(10px)`.
-- **Primary button hover:** background `--accent-2`. **Active:** `scale(.98)`.
-- **Ghost button:** transparent, 1px `--line-strong` border, `--ink` text. Hover: no change (touch-first).
-- **Focus-visible (links, buttons, dots, summaries):** `outline: 2px solid var(--accent); outline-offset: 3px`.
-- **Dot current:** `aria-current="true"`, 18×6 pill in `--accent`. Others: 6px circle in `--line-strong`.
-- **FAQ open:** `details[open]` — icon rotated 45° and green; answer visible with rise animation. Only one open at a time.
-- **Bar hidden:** `aria-hidden="true"`, translated fully below the viewport (including the 80px reserve) so it never peeks.
-- **Bar shown:** `.show`, `aria-hidden="false"`.
-
-## Accessibility
-
-- Header is a `<header>`; content lives in `<main>`; each block is a `<section>` with `aria-labelledby` pointing at its `<h2>` (proof block uses `aria-label`).
-- The carousel container is keyboard-scrollable (`tabindex="0"`, `aria-roledescription="carousel"`, `aria-label="Features"`). Arrow keys scroll it natively; dots are `<button role="tab">` with `aria-label="Slide n of 4"` and `aria-current`.
-- FAQ uses native `<details>`, so Enter/Space toggle and the state is exposed without ARIA. Hide the marker with `summary { list-style: none }` and `::-webkit-details-marker { display: none }`.
-- The star row has `aria-label="Rated 4.8 out of 5"`; the SVGs are decorative.
-- The sticky bar is `role="region"` with `aria-label`; toggle `aria-hidden` with visibility so the duplicate CTA is not announced while off screen.
-- Hit targets: buttons 52px (bar button 44px), summaries ≥ 56px, dots 24px visual inside a 24px button spaced 6px apart (acceptable as secondary controls; the carousel itself is swipeable).
-- Contrast: `--ink-2` on `--bg` 7.4:1; `--ink-3` on `--bg` 4.6:1 (used ≥ 12px); `--accent-ink` on `--accent` 7.1:1.
-
-## Responsive rules
-
-- 390 (reference): as specified. Cards 300px, so ~1.15 cards visible, hinting there is more.
-- 360 wide: gutter stays 20px; cards shrink to `min(300px, 100vw - 60px)` so the peek is preserved; H1 drops to 40px.
-- ≥ 600 (tablet or desktop preview): cap the content column at 560px centred, keep the bar full-width with the same 560px inner column, and set `--safe-bottom: 0` because there is no bottom browser bar. Carousel cards stay 300px so the snap behaviour is still demonstrable.
-- Landscape phone (height < 500): the bar keeps its position; reduce its vertical padding to 8px.
-
-## Acceptance checklist
-
-- [ ] Header is sticky at `top:0` with a 54px top margin, 56px tall, and shows a `--line` bottom border only once the page has scrolled.
-- [ ] The bottom bar is fixed at `bottom: 80px`, hidden by `translateY(calc(100% + 80px))`, and becomes visible only when no part of the hero is on screen.
-- [ ] Bar show/hide animates over 320ms `cubic-bezier(.16,1,.3,1)` and toggles `aria-hidden`.
-- [ ] Carousel uses `scroll-snap-type: x mandatory`; cards are 300px wide with a 12px gap and `scroll-snap-align: start`.
-- [ ] Four dots reflect the nearest card; the current dot is an 18×6px green pill.
-- [ ] Tapping a dot scrolls the carousel to that card.
-- [ ] FAQ is native `<details>`; opening one closes the others; the plus icon rotates 45°.
-- [ ] Hero buttons sit side by side in a two-column grid, each 52px tall, neither wrapping its label at 390px.
-- [ ] H1 is Fraunces 44px, line-height 1.02, tracking −0.025em, with the italic word in `--accent` at weight 600.
-- [ ] Only one primary button is visible at any scroll position (hero button or bar button, never both).
-- [ ] All interactive elements show a 2px `--accent` outline on `:focus-visible`.
-- [ ] No fixed element occupies the top 54px or bottom 80px.
-- [ ] Reduced motion: bar and accordion still work, with ≤ 1ms motion.
 
 ## Implementation notes
 

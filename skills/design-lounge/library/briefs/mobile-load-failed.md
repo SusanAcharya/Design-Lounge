@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the iOS list language of the yard phone, not Material, and not a toast.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The failed state of a phone list. The frame is 390 by 844. The top 54px and the bottom 34px stay clear. "Runs" is a 13px label. The answer is a banner: "Could not load runs. The yard desk did not answer." The sentence is 20px, larger than the label. Retry is a 44px outline button, full width of the banner, in the danger colour. It is not the copper primary. Tapping Retry hides the banner and shows three runs. "Show the failure" returns to the banner so the demo can be replayed. A product omits "Show the failure". Empty means zero rows and uses `mobile-list-empty`. This piece means the load did not arrive.
-
-## Reference behaviour
-
-1. The first frame is the failure. The banner is visible. The list is hidden. "Show the failure" is hidden.
-2. The banner is `role="alert"`.
-3. Tapping Retry sets the banner to `hidden`, shows the three rows, and shows "Show the failure".
-4. The rows are Bay 14, 2,400 kg · 06:40; Bay 3, 860 kg · 07:10; Bay 9, 1,120 kg · 07:40.
-5. Tapping "Show the failure" restores the banner and hides the list and that button.
-6. Retry does not use the primary fill. It is an outline on the danger colour.
-7. There is no toast, no spinner, and no empty heading on this screen.
-8. Focus ring is 2px `--focus`, offset 2px.
-9. "Show the failure" is a demo control. Do not ship it in the product.
 
 ## Structure
 
@@ -38,38 +28,6 @@ list, hidden, margin 16px 20px 0, radius 10
 - The list is a surface with a 1px border. Rows separate with the same border. The first row has no top border.
 - Bay name is weight 600. The weight and time are mono, 13px, `--ink-2`.
 - Do not draw a status bar.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f1ea;
-  --surface: #fffdf8;
-  --ink: #1b1814;
-  --ink-2: #5e574e;
-  --line: #e3dbcf;
-  --danger: #9b2c2c;
-  --danger-soft: #f8e8e6;
-  --focus: #8a4b12;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-}
-```
-
-The focus colour is the yard copper, matching `mobile-run-detail`. The banner does not use copper. Failure stays on the danger pair.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Where | sans | 13px | 600 | 0.04em | `--ink-2` |
-| Failure | sans | 20px | 600 | -0.02em | `--danger` |
-| Retry | sans | 15px | 600 | 0 | `--danger` |
-| Bay | sans | 15px | 600 | 0 | `--ink` |
-| Meta | mono | 13px | 400 | 0 | `--ink-2` |
-| Demo return | sans | 15px | 600 | 0 | `--ink-2` |
-
-The failure line-height is 1.3. Body line-height is 1.4.
 
 ## Motion
 
@@ -120,6 +78,54 @@ None. The banner hides and the list shows in the same frame. Do not slide the li
 - [ ] There is no toast, no spinner, and no "No runs today" heading.
 - [ ] Row min-height is 56px.
 - [ ] Focus ring is 2px, offset 2px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is the failure. The banner is visible. The list is hidden. "Show the failure" is hidden.
+2. The banner is `role="alert"`.
+3. Tapping Retry sets the banner to `hidden`, shows the three rows, and shows "Show the failure".
+4. The rows are Bay 14, 2,400 kg · 06:40; Bay 3, 860 kg · 07:10; Bay 9, 1,120 kg · 07:40.
+5. Tapping "Show the failure" restores the banner and hides the list and that button.
+6. Retry does not use the primary fill. It is an outline on the danger colour.
+7. There is no toast, no spinner, and no empty heading on this screen.
+8. Focus ring is 2px `--focus`, offset 2px.
+9. "Show the failure" is a demo control. Do not ship it in the product.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f1ea;
+  --surface: #fffdf8;
+  --ink: #1b1814;
+  --ink-2: #5e574e;
+  --line: #e3dbcf;
+  --danger: #9b2c2c;
+  --danger-soft: #f8e8e6;
+  --focus: #8a4b12;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+```
+
+The focus colour is the yard copper, matching `mobile-run-detail`. The banner does not use copper. Failure stays on the danger pair.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Where | sans | 13px | 600 | 0.04em | `--ink-2` |
+| Failure | sans | 20px | 600 | -0.02em | `--danger` |
+| Retry | sans | 15px | 600 | 0 | `--danger` |
+| Bay | sans | 15px | 600 | 0 | `--ink` |
+| Meta | mono | 13px | 400 | 0 | `--ink-2` |
+| Demo return | sans | 15px | 600 | 0 | `--ink-2` |
+
+The failure line-height is 1.3. Body line-height is 1.4.
 
 ## Implementation notes
 

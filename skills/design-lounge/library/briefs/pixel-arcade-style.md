@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A kit sheet for "Stardrift", a fictional 8-bit shooter, that teaches a pixel dialect: a 4px grid, 0 radii, `image-rendering: pixelated`, `-webkit-font-smoothing: none`, and sprites built from `box-shadow` (and 4px background-image rects) — **no raster images, no emoji**. The first row is a pause / start-screen fragment: CRT scan 8px, four 4px stars, a 13-pixel ship, SCORE / HI in green Silkscreen, a 40px yellow "STARDRIFT" with a 4px red text-shadow, and CONTINUE / RESTART / OPTIONS as a vertical menu. Below: type specimen, five chips, hard-offset buttons, chips, a callsign field, a sound switch, three surface plates, four grammar cards. The detail worth copying: **easing is `steps(2)`**. Nothing eases. Selection is a yellow fill, not a glow.
-
-## Reference behaviour
-
-1. Initial state: 48px screen header, 16px RGB mark (red square + yellow/green/blue 4px shadows), "STARDRIFT / PIXEL KIT 06", four anchors, "1UP 000420". Sheet gap is 4px `#2060C8`. First 800px shows the 436px hero + specimen.
-2. Hero background is CRT `#12121A` with a repeating 7px clear / 1px black scan. Four 4px stars are a `background-image` of four 4×4 gradients. The ship is a 4×4 red pixel plus a `box-shadow` list (white nose, yellow tip, blue wings), scaled 2.4 so it reads at poster size.
-3. Hover a menu row or a `.btn`: fill becomes yellow, text CRT, over 80ms `steps(2)`. Ghost hover fills blue.
-4. Click CONTINUE / RESTART / OPTIONS (`role="tablist"`). `aria-selected` moves; selected row is yellow on CRT. `#menu-copy` swaps: continue from last beacon; restart stage 03 from hangar; options (CRT scan 8px, pixel snap, sound).
-5. Click 1UP / 2UP / HARD chips: pressed fills blue.
-6. Focus the callsign input: border yellow. Font is Space Mono 14px, yellow on CRT, max 8 chars.
-7. Click SOUND: `aria-checked` flips; track fills green; 12px knob jumps 18px (`steps(2)`).
-8. Header link hover: yellow. "QUIT" is red fill, white text.
-9. Reduced motion: transitions 1ms, animations none. Menu still selects.
 
 ## Structure
 
@@ -47,42 +37,6 @@ A kit sheet for "Stardrift", a fictional 8-bit shooter, that teaches a pixel dia
 - Score block is `position: absolute; left: 16px; top: 12px`, two lines, green Silkscreen 12px: `SCORE 000420` / `HI 009900`.
 - Copy column starts at `top: 150px` so it clears the ship. Menu gap is 8px (two pixel units).
 - Callsign input is `maxlength="8"` and `spellcheck="false"` so a six-to-eight character tag stays on one line.
-
-## Tokens
-
-```css
-:root {
-  --crt: #12121a;       /* field, 60 % */
-  --screen: #1c1c28;    /* cells */
-  --white: #e8e4d4;     /* type, 15 % */
-  --red: #e04020;       /* ship, quit, title shadow */
-  --green: #40a848;     /* score, sound on */
-  --yellow: #f0c820;    /* title, select */
-  --blue: #2060c8;      /* grid, chips */
-  --dim: #6a6878;
-  --display: "Silkscreen", monospace;
-  --mono: "Space Mono", ui-monospace, monospace;
-  --fs-display: 40px; --fs-aa: 64px; --fs-h2: 20px; --fs-body: 13px; --fs-label: 11px;
-  --px: 4px; --ctl: 40px; --pad: 16px; --radius: 0;
-  --t-micro: 80ms;
-  --ease: steps(2);
-}
-```
-
-Blue `#2060C8` is a sixth working colour used as the grid; it may be omitted from the published 5-swatch strip but must exist as a token. The five published swatches are CRT, white, red, yellow, green.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Hero headline | Silkscreen | 40px | 400 | .95 | 0 | UPPERCASE, yellow, 4px red `text-shadow` |
-| Specimen glyph | Silkscreen | 64px | 400 | .8 | 0 | "Aa", same shadow |
-| Menu / button | Silkscreen | 13–14px | 400 | 1 | 0 | UPPERCASE |
-| Score / label | Silkscreen | 11–12px | 400 | 1 | +0.04–0.12em | UPPERCASE, green |
-| Body / input | Space Mono | 13–14px | 400 | 1.4 | 0 | sentence in body, UPPERCASE callsign |
-| Chip | Silkscreen | 11px | 400 | 1 | 0 | UPPERCASE |
-
-Silkscreen is bitmap. Do not enable antialiasing (`-webkit-font-smoothing: none` on `body`). Scores are six digits with leading zeros.
 
 ## Motion
 
@@ -133,6 +87,58 @@ No looping animation. The scanlines are a static repeating gradient. Reduced mot
 - [ ] Scanlines are a static repeating gradient (7px clear, 1px black), not an animation.
 - [ ] Only Silkscreen and Space Mono are loaded.
 - [ ] `image-rendering: pixelated` and `-webkit-font-smoothing: none` are set on `body`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 48px screen header, 16px RGB mark (red square + yellow/green/blue 4px shadows), "STARDRIFT / PIXEL KIT 06", four anchors, "1UP 000420". Sheet gap is 4px `#2060C8`. First 800px shows the 436px hero + specimen.
+2. Hero background is CRT `#12121A` with a repeating 7px clear / 1px black scan. Four 4px stars are a `background-image` of four 4×4 gradients. The ship is a 4×4 red pixel plus a `box-shadow` list (white nose, yellow tip, blue wings), scaled 2.4 so it reads at poster size.
+3. Hover a menu row or a `.btn`: fill becomes yellow, text CRT, over 80ms `steps(2)`. Ghost hover fills blue.
+4. Click CONTINUE / RESTART / OPTIONS (`role="tablist"`). `aria-selected` moves; selected row is yellow on CRT. `#menu-copy` swaps: continue from last beacon; restart stage 03 from hangar; options (CRT scan 8px, pixel snap, sound).
+5. Click 1UP / 2UP / HARD chips: pressed fills blue.
+6. Focus the callsign input: border yellow. Font is Space Mono 14px, yellow on CRT, max 8 chars.
+7. Click SOUND: `aria-checked` flips; track fills green; 12px knob jumps 18px (`steps(2)`).
+8. Header link hover: yellow. "QUIT" is red fill, white text.
+9. Reduced motion: transitions 1ms, animations none. Menu still selects.
+
+## Tokens
+
+```css
+:root {
+  --crt: #12121a;       /* field, 60 % */
+  --screen: #1c1c28;    /* cells */
+  --white: #e8e4d4;     /* type, 15 % */
+  --red: #e04020;       /* ship, quit, title shadow */
+  --green: #40a848;     /* score, sound on */
+  --yellow: #f0c820;    /* title, select */
+  --blue: #2060c8;      /* grid, chips */
+  --dim: #6a6878;
+  --display: "Silkscreen", monospace;
+  --mono: "Space Mono", ui-monospace, monospace;
+  --fs-display: 40px; --fs-aa: 64px; --fs-h2: 20px; --fs-body: 13px; --fs-label: 11px;
+  --px: 4px; --ctl: 40px; --pad: 16px; --radius: 0;
+  --t-micro: 80ms;
+  --ease: steps(2);
+}
+```
+
+Blue `#2060C8` is a sixth working colour used as the grid; it may be omitted from the published 5-swatch strip but must exist as a token. The five published swatches are CRT, white, red, yellow, green.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Hero headline | Silkscreen | 40px | 400 | .95 | 0 | UPPERCASE, yellow, 4px red `text-shadow` |
+| Specimen glyph | Silkscreen | 64px | 400 | .8 | 0 | "Aa", same shadow |
+| Menu / button | Silkscreen | 13–14px | 400 | 1 | 0 | UPPERCASE |
+| Score / label | Silkscreen | 11–12px | 400 | 1 | +0.04–0.12em | UPPERCASE, green |
+| Body / input | Space Mono | 13–14px | 400 | 1.4 | 0 | sentence in body, UPPERCASE callsign |
+| Chip | Silkscreen | 11px | 400 | 1 | 0 | UPPERCASE |
+
+Silkscreen is bitmap. Do not enable antialiasing (`-webkit-font-smoothing: none` on `body`). Scores are six digits with leading zeros.
 
 ## Implementation notes
 

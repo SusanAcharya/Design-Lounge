@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The screen a passwordless product shows straight after the user asks for a sign-in link. A tall peach tile on the left holds a CSS envelope that receives a letter, folds its flap shut and gets stamped, while a dotted flight trail draws itself above it. On the right a 104px "Check your inbox." headline sits over the address the link went to (editable inline), three "open your mail app" shortcuts and a ring that counts 30 seconds down before resend unlocks. It should feel warm and a little cheeky, and above all calm: the user knows exactly what to do next. The detail worth copying is that "wrong address" and "didn't arrive" are both fixed on this screen, with no trip back to the form.
-
-## Reference behaviour
-
-1. Initial state: on load the envelope sequence plays once (letter slides in at 250ms, flap closes at 850ms, stamp pops at 1300ms, trail draws at 1400ms), then the envelope bobs gently on a 4.8s loop starting at 2.2s.
-2. The headline, address chip, app shortcuts and resend row are static and fully visible from frame one.
-3. The resend ring starts full and loses 1/30 of its arc every second; the label reads "Didn't arrive? You can resend in 0:30" and counts down in tabular numerals.
-4. At 0:00 the label is replaced by a tomato pill button "Resend link".
-5. Click "Resend link": the envelope sequence replays from the start, the countdown resets to 0:30, and a dark toast slides up from the bottom centre: "New link sent to maya.okafor@tidepool.studio". It auto-hides after 2600ms.
-6. Click "Edit" in the address chip: the chip is replaced by an inline form (same 48px pill height, 1.5px ink border) with the address pre-selected and a dark "Send link" button.
-7. Submit a valid address: the chip returns with the new address, focus goes back to "Edit", and everything in step 5 happens.
-8. Submit an invalid address: the field border turns tomato, the pill shakes ±6px over 300ms, `aria-invalid="true"` is set. Esc cancels editing and returns focus to "Edit".
-9. Click anywhere on the illustration tile: the envelope sequence replays (it is a `<button>`), with a handwritten "tap to send again" hint in the tile's bottom-right corner.
-10. Hovering an app shortcut lifts it 2px, darkens its border to ink and adds the soft shadow.
 
 ## Structure
 
@@ -48,6 +37,83 @@ The screen a passwordless product shows straight after the user asks for a sign-
 - Envelope layers, back to front: `.back` (#F2B896), `.flap` (triangle, starts rotated open), `.letter` (paper card with three skeleton lines and a tomato CTA pill), `.pocket` (V-cut front via `clip-path`), `.stamp`.
 - `<section class="copy">`: eyebrow, `<h1>`, lede, `.who` (chip or form), `.apps` group of three `<a>`, `.resend` row, `.fine` footer row pushed to the bottom with `margin-top:auto`.
 - `.toast` fixed bottom centre, `role="status"`.
+
+## Motion
+
+| Element        | Trigger            | Property              | From → To                    | Duration | Easing       | Delay |
+|----------------|--------------------|-----------------------|------------------------------|---------:|--------------|------:|
+| `.letter`      | load / replay      | translateY            | −120px → 16px                | 600ms    | `--ease-out` | 250ms |
+| `.flap`        | load / replay      | rotateX, z-index      | 180° (z 1) → 0° (z 5)        | 420ms    | `--ease`     | 850ms |
+| `.stamp`       | load / replay      | scale, rotate         | 0, −20° → 1, 8°              | 380ms    | `--spring`   | 1300ms |
+| trail path     | load / replay      | stroke-dashoffset, opacity | 120, 0 → 0, .35         | 1400ms   | `--ease`     | 1400ms |
+| `.env-wrap`    | after sequence     | translateY, rotate    | 0 → −8px, −1.5° → 0 (loop)   | 4800ms   | `--ease`     | 2200ms, infinite |
+| ring `.fg`     | every second       | stroke-dashoffset     | +100.5/30 per tick           | 1000ms   | linear (it is a clock) | — |
+| `.app`         | hover              | translateY, shadow    | 0 → −2px                     | 160ms    | `--ease`     | — |
+| `.form.bad`    | invalid submit     | translateX            | 0 → −6 → 6 → 0               | 300ms    | `--ease`     | — |
+| `.toast`       | send               | opacity, translateY   | 0, 24px → 1, 0               | 240ms    | `--ease-out` | hides after 2600ms |
+
+Reduced motion: all animations collapse to 1ms with no delay and a single iteration, so the envelope appears sealed and stamped, the bob loop stops, and transitions are instant. The countdown still counts.
+
+## States
+
+- **Sending (default):** green status dot with a 4px 16%-alpha halo; ring counting.
+- **Ready to resend:** `.resend.ready`; countdown copy hidden, tomato "Resend link" pill shown (40px tall, hover scale 1.04 with the spring curve).
+- **Editing:** `.who.editing`; chip hidden, form shown with 1.5px ink border.
+- **Invalid email:** form border `--accent`, shake, `aria-invalid="true"`.
+- **Hover:** chip "Edit" button background `--bg` → `--tile`; app shortcut lift + ink border; header links `--ink-2` → `--ink`.
+- **Focus-visible:** 3px tomato outline, 3px offset, 8px radius, on every interactive element including the tile.
+- **Toast visible:** `.toast.on`.
+
+## Accessibility
+
+- The illustration is a real `<button aria-label="Replay the envelope animation">`; every visual child inside it is `aria-hidden`.
+- The page heading is the `<h1>`; the copy column is a `<section aria-labelledby>`.
+- "Edit" has `aria-label="Edit email address"`. The inline input has an accessible name and `autocomplete="email"`.
+- Keyboard: Tab order is header links, tile, Edit, apps, resend, footer links. Enter submits the inline form; Esc cancels and restores focus to Edit.
+- The toast is `role="status" aria-live="polite"`, so "New link sent to …" is announced.
+- Do not announce every countdown tick; the countdown text is not a live region.
+- Contrast: `--ink` on `--bg` 14.8:1; `--ink-2` on `--bg` 6.2:1; `--ink-3` is only used for 12–13px fine print on `--bg` (4.6:1). White on `--accent` passes at the 15px bold size used.
+- Hit targets: app buttons 60px tall, chip and form 48px, resend 40px.
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- 1024–1279: tile column shrinks to 440px; h1 drops to 88px.
+- 768–1023: single column; tile becomes a 280px-tall banner above the copy with the envelope at 0.8 scale; h1 72px.
+- < 640: tile 200px tall, h1 52px with `line-height:.95`; app shortcuts stack full-width (56px each); the address chip may wrap, so let the address ellipsize with `text-overflow:ellipsis` and keep Edit visible.
+
+## Acceptance checklist
+
+- [ ] The envelope sequence plays on load in the order letter, flap, stamp, trail, then bobs on a 4.8s loop.
+- [ ] The flap is behind the letter while open and in front of it once closed (no letter visible through the flap).
+- [ ] The letter never pokes out below the envelope at its resting position.
+- [ ] The h1 is 104px / 800 with −0.055em tracking and a tomato full stop.
+- [ ] The countdown starts at 0:30, uses tabular numerals, and the ring empties in step with it.
+- [ ] At 0:00 a "Resend link" button replaces the countdown copy.
+- [ ] Resend replays the envelope, resets the countdown and shows a toast for 2600ms.
+- [ ] Edit swaps to an inline form with the address pre-selected; Enter saves and Esc cancels.
+- [ ] An invalid address shakes the field, turns its border tomato and sets `aria-invalid`.
+- [ ] Clicking the illustration tile replays the sequence.
+- [ ] Every interactive element shows a 3px tomato focus ring.
+- [ ] With reduced motion, the envelope is shown sealed and stamped with no bob loop.
+- [ ] No emoji; all icons are inline SVG with `currentColor` strokes.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: on load the envelope sequence plays once (letter slides in at 250ms, flap closes at 850ms, stamp pops at 1300ms, trail draws at 1400ms), then the envelope bobs gently on a 4.8s loop starting at 2.2s.
+2. The headline, address chip, app shortcuts and resend row are static and fully visible from frame one.
+3. The resend ring starts full and loses 1/30 of its arc every second; the label reads "Didn't arrive? You can resend in 0:30" and counts down in tabular numerals.
+4. At 0:00 the label is replaced by a tomato pill button "Resend link".
+5. Click "Resend link": the envelope sequence replays from the start, the countdown resets to 0:30, and a dark toast slides up from the bottom centre: "New link sent to maya.okafor@tidepool.studio". It auto-hides after 2600ms.
+6. Click "Edit" in the address chip: the chip is replaced by an inline form (same 48px pill height, 1.5px ink border) with the address pre-selected and a dark "Send link" button.
+7. Submit a valid address: the chip returns with the new address, focus goes back to "Edit", and everything in step 5 happens.
+8. Submit an invalid address: the field border turns tomato, the pill shakes ±6px over 300ms, `aria-invalid="true"` is set. Esc cancels editing and returns focus to "Edit".
+9. Click anywhere on the illustration tile: the envelope sequence replays (it is a `<button>`), with a handwritten "tap to send again" hint in the tile's bottom-right corner.
+10. Hovering an app shortcut lifts it 2px, darkens its border to ink and adds the soft shadow.
 
 ## Tokens
 
@@ -113,66 +179,6 @@ The screen a passwordless product shows straight after the user asks for a sign-
 | Replay hint     | Caveat              | 22px | 700    | 1           | 0        | lowercase |
 
 The h1 full stop is coloured `--accent`; it is the only accent in the headline.
-
-## Motion
-
-| Element        | Trigger            | Property              | From → To                    | Duration | Easing       | Delay |
-|----------------|--------------------|-----------------------|------------------------------|---------:|--------------|------:|
-| `.letter`      | load / replay      | translateY            | −120px → 16px                | 600ms    | `--ease-out` | 250ms |
-| `.flap`        | load / replay      | rotateX, z-index      | 180° (z 1) → 0° (z 5)        | 420ms    | `--ease`     | 850ms |
-| `.stamp`       | load / replay      | scale, rotate         | 0, −20° → 1, 8°              | 380ms    | `--spring`   | 1300ms |
-| trail path     | load / replay      | stroke-dashoffset, opacity | 120, 0 → 0, .35         | 1400ms   | `--ease`     | 1400ms |
-| `.env-wrap`    | after sequence     | translateY, rotate    | 0 → −8px, −1.5° → 0 (loop)   | 4800ms   | `--ease`     | 2200ms, infinite |
-| ring `.fg`     | every second       | stroke-dashoffset     | +100.5/30 per tick           | 1000ms   | linear (it is a clock) | — |
-| `.app`         | hover              | translateY, shadow    | 0 → −2px                     | 160ms    | `--ease`     | — |
-| `.form.bad`    | invalid submit     | translateX            | 0 → −6 → 6 → 0               | 300ms    | `--ease`     | — |
-| `.toast`       | send               | opacity, translateY   | 0, 24px → 1, 0               | 240ms    | `--ease-out` | hides after 2600ms |
-
-Reduced motion: all animations collapse to 1ms with no delay and a single iteration, so the envelope appears sealed and stamped, the bob loop stops, and transitions are instant. The countdown still counts.
-
-## States
-
-- **Sending (default):** green status dot with a 4px 16%-alpha halo; ring counting.
-- **Ready to resend:** `.resend.ready`; countdown copy hidden, tomato "Resend link" pill shown (40px tall, hover scale 1.04 with the spring curve).
-- **Editing:** `.who.editing`; chip hidden, form shown with 1.5px ink border.
-- **Invalid email:** form border `--accent`, shake, `aria-invalid="true"`.
-- **Hover:** chip "Edit" button background `--bg` → `--tile`; app shortcut lift + ink border; header links `--ink-2` → `--ink`.
-- **Focus-visible:** 3px tomato outline, 3px offset, 8px radius, on every interactive element including the tile.
-- **Toast visible:** `.toast.on`.
-
-## Accessibility
-
-- The illustration is a real `<button aria-label="Replay the envelope animation">`; every visual child inside it is `aria-hidden`.
-- The page heading is the `<h1>`; the copy column is a `<section aria-labelledby>`.
-- "Edit" has `aria-label="Edit email address"`. The inline input has an accessible name and `autocomplete="email"`.
-- Keyboard: Tab order is header links, tile, Edit, apps, resend, footer links. Enter submits the inline form; Esc cancels and restores focus to Edit.
-- The toast is `role="status" aria-live="polite"`, so "New link sent to …" is announced.
-- Do not announce every countdown tick; the countdown text is not a live region.
-- Contrast: `--ink` on `--bg` 14.8:1; `--ink-2` on `--bg` 6.2:1; `--ink-3` is only used for 12–13px fine print on `--bg` (4.6:1). White on `--accent` passes at the 15px bold size used.
-- Hit targets: app buttons 60px tall, chip and form 48px, resend 40px.
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- 1024–1279: tile column shrinks to 440px; h1 drops to 88px.
-- 768–1023: single column; tile becomes a 280px-tall banner above the copy with the envelope at 0.8 scale; h1 72px.
-- < 640: tile 200px tall, h1 52px with `line-height:.95`; app shortcuts stack full-width (56px each); the address chip may wrap, so let the address ellipsize with `text-overflow:ellipsis` and keep Edit visible.
-
-## Acceptance checklist
-
-- [ ] The envelope sequence plays on load in the order letter, flap, stamp, trail, then bobs on a 4.8s loop.
-- [ ] The flap is behind the letter while open and in front of it once closed (no letter visible through the flap).
-- [ ] The letter never pokes out below the envelope at its resting position.
-- [ ] The h1 is 104px / 800 with −0.055em tracking and a tomato full stop.
-- [ ] The countdown starts at 0:30, uses tabular numerals, and the ring empties in step with it.
-- [ ] At 0:00 a "Resend link" button replaces the countdown copy.
-- [ ] Resend replays the envelope, resets the countdown and shows a toast for 2600ms.
-- [ ] Edit swaps to an inline form with the address pre-selected; Enter saves and Esc cancels.
-- [ ] An invalid address shakes the field, turns its border tomato and sets `aria-invalid`.
-- [ ] Clicking the illustration tile replays the sequence.
-- [ ] Every interactive element shows a 3px tomato focus ring.
-- [ ] With reduced motion, the envelope is shown sealed and stamped with no bob loop.
-- [ ] No emoji; all icons are inline SVG with `currentColor` strokes.
 
 ## Implementation notes
 

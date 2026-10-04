@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A features section for a kitchen-garden planner ("Loam"). Four long steps live in the left column; a 600px garden-plot card sticks in the right column and restyles itself as each step crosses the middle of the viewport. Step one is empty dashed beds and a sun disc; two fills them with companion crops; three stamps checkmarks and a Mar–Oct calendar; four drops kilogram tallies and a 12-bar sparkline. The feeling is paper, soil and serif: warm `#F4EFE6`, terracotta `#C65D3B` on one word of the 76px headline. The detail worth copying is that the sticky card is one DOM figure whose `data-step` drives every visual — no four stacked mockups, no image swaps.
-
-## Reference behaviour
-
-1. Initial state: step 1 is `.on` (opacity 1, numeral filled `--ink`). Steps 2–4 sit at opacity 0.38. The figure `data-step="1"`: six dashed empty beds, a 6.20 m ruler, a butter sun in the top-left, bed 2 (courgette slot) highlighted with a terracotta border and two 9px corner handles. Footer legend: 6 beds / 7 h 40 m sun / loam pH 6.8 / last frost 12 May.
-2. Scrolling until a step's block intersects a band from 45% from the top to 50% from the bottom (`rootMargin: -45% 0px -50% 0px`) calls `set(n)`. The matching numeral gets `aria-current="step"`.
-3. Clicking a numeral `scrollIntoView({ block: 'center' })` and sets that step immediately.
-4. **Step 2:** dashed borders become solid fills using each bed's `--c`; crop names and row textures fade in; sun and ruler hide; legend becomes crop families (legumes, cucurbits, nightshades, roots).
-5. **Step 3:** 22px ink check discs appear on the first three beds; beds 4–6 scale to 0.97 and hide their ticks. Footer is a 12-column calendar (Mar–Oct) with Sow / Thin / Feed / Harvest bars and a "Today · 2 Jun" hairline at 41% of the plot width.
-6. **Step 4:** kilogram figures (9.2, 11.6, 7.8, 4.1, 3.9, 1.8) scale in at the top-right of each bed; row texture drops to 0.35 opacity; footer shows **38.4 kg** and a 12-bar sparkline that grows from `scaleY(0)` with 30ms stagger. Bars 9–12 are terracotta; 1–8 sage.
-7. Morphs use 560ms `--ease` on colour/opacity and `--ease-out` on transform. Last step is 86vh tall so it can reach the observer band; others 62vh.
-8. Reduced motion: `scroll-behavior: auto`; all transitions 1ms. IntersectionObserver still updates `data-step`.
 
 ## Structure
 
@@ -47,6 +38,80 @@ A features section for a kitchen-garden planner ("Loam"). Four long steps live i
 - `.sticky` — `position:sticky; top:48px; height:704px; padding-top:16px`.
 - `<figure class="viz" data-step aria-label="Plot planner preview">` — `.vh` header, `.plot` (sun + 6 `.bed` + `.ruler`), `.foot` with four `.panel.p1–p4`.
 - Beds in DOM order: runner beans `#c9d3b9`, courgette `#efd79c`, tomatoes `#efc3b2`, kale `#d6dcc8`, carrots `#e6d3b6`, beetroot `#dcc9d6`. Each has `.rows`, `.dim`, `.crop`, `.tick` (check SVG), `.kg`.
+
+## Motion
+
+| Element              | Trigger     | Property                    | From → To                    | Duration | Easing      | Notes |
+|----------------------|-------------|-----------------------------|--------------------------------|---------:|-------------|-------|
+| `.step` opacity      | IO / click  | opacity                     | 0.38 → 1                       | 560ms    | `--ease`    | inactive stay 0.38, not 0 |
+| Numeral fill         | same        | background, color, border   | paper/line → ink/bg            | 180ms    | `--ease`    | |
+| Bed fill / border    | leave step 1| background, border-color    | dashed empty → solid `--c`     | 560ms    | `--ease`    | |
+| Crop + rows          | leave step 1| opacity, translateY         | 0, 6px → 1, 0                  | 560ms    | ease / out  | |
+| Tick discs           | step 3      | opacity, scale              | 0, .5 → 1, 1                   | 180 / 560| — / out     | beds 4–6 stay hidden |
+| kg figures           | step 4      | opacity, scale              | 0, .8 → 1, 1                   | 560ms    | ease / out  | origin right top |
+| Spark bars           | step 4      | transform scaleY            | 0 → 1                          | 560ms    | `--ease-out`| delay `i * 30ms` |
+| Footer panels        | data-step   | opacity, translateY         | 0, 12px → 1, 0                 | 560ms    | ease / out  | only matching `.pN` |
+| Beds 4–6             | step 3      | scale                       | 1 → 0.97                       | 560ms    | `--ease-out`| |
+| html                 | anchors     | scroll-behavior             | smooth                         | —        | —           | `auto` if reduced |
+
+Do not animate `data-step` itself. CSS selectors: `.viz[data-step="1"] .p1` (etc.) set the visible panel; `.viz:not([data-step="1"])` fills beds.
+
+## States
+
+- **Active step:** `.step.on`, opacity 1, numeral `--ink` fill and `--bg` type, `aria-current="step"` on the button. Others `aria-current="false"`.
+- **Step 1 exclusive:** sun opacity 1; ruler visible; bed 2 (`nth-child(2)`) 1.5px solid `--terra` and `rgba(198,93,59,.06)` fill; its `.dim` terracotta 600; two 9px square handles (`::before` top-right, `::after` bottom-right).
+- **Steps 2–4:** `.dim` opacity 0; `.crop` and `.rows` visible; bed border solid transparent (colour comes from background `--c`).
+- **Step 3 ticks:** first three beds only (`.bed:nth-child(n+4) .tick { opacity: 0 }`).
+- **Step 4 rows:** opacity 0.35; `.kg` visible.
+- **Numeral focus-visible:** 2px terracotta outline, 3px offset.
+- **Spark:** `.spark i:nth-child(n+9)` terracotta; heights 12, 18, 26, 40, 52, 70, 88, 100, 84, 61, 37, 20%.
+
+## Accessibility
+
+- Steps are an `<ol>`. Each numeral is a real `<button>` with `aria-label="Go to step N"`.
+- Figure has `aria-label="Plot planner preview"`. Calendar "Today · 2 Jun" and sparkline are `aria-hidden` where decorative.
+- Keyboard: Tab through 1–4; Enter/Space on a numeral scrolls that step to centre. No arrow-key requirement.
+- Contrast: `--ink-2` on `--bg` is ~5.8:1; `--ink-3` is used only for 11–12px meta. Numeral in the on-state is `--bg` on `--ink`.
+- Hit target: 40×40px numerals. Step blocks themselves are not buttons.
+- If `IntersectionObserver` is missing, clicking numerals still calls `set`.
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- ≤ 1100: grid `1fr 480px`, gap 40px, padding 0 40px, headline 60px, plot height 300px.
+- 768–1023: stack — copy first, sticky card becomes static under the intro (or sticky with `top: 16px` and height auto). Steps keep 62vh so IO still works.
+- < 640: single column, padding 20px, headline 48px, hide the 6.20 m ruler text if it clips. Spark bars stay 12px wide.
+- `scroll-behavior: smooth` off under reduced motion.
+
+## Acceptance checklist
+
+- [ ] Layout is `1fr / 600px` with 72px gap at 1280; the right card is sticky at `top: 48px` and 704px tall.
+- [ ] Exactly four steps; inactive opacity is 0.38; last step min-height 86vh.
+- [ ] IntersectionObserver uses `rootMargin: '-45% 0px -50% 0px'` and writes `data-step` plus `aria-current="step"`.
+- [ ] Clicking a numeral centres that step and updates the card without waiting for the observer.
+- [ ] Step 1 shows dashed beds, sun, ruler "6.20 m", and a terracotta selection on the courgette bed.
+- [ ] Step 2 fills beds with the six crop colours and names listed in Structure.
+- [ ] Step 3 shows checks on the first three beds only and the Mar–Oct calendar with "Today · 2 Jun".
+- [ ] Step 4 shows kg tallies, **38.4 kg**, and 12 spark bars that grow with 30ms stagger.
+- [ ] Morph duration is 560ms; reduced motion is 1ms and still changes step.
+- [ ] Headline is 76px Young Serif; "full basket." is terracotta.
+- [ ] Copy matches Loam: 6.2 × 4.0 m, 7 h 40 m, 14 crops, 12 min/week, 38.4 kg, £212.
+- [ ] Numeral focus rings are 2px terracotta.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: step 1 is `.on` (opacity 1, numeral filled `--ink`). Steps 2–4 sit at opacity 0.38. The figure `data-step="1"`: six dashed empty beds, a 6.20 m ruler, a butter sun in the top-left, bed 2 (courgette slot) highlighted with a terracotta border and two 9px corner handles. Footer legend: 6 beds / 7 h 40 m sun / loam pH 6.8 / last frost 12 May.
+2. Scrolling until a step's block intersects a band from 45% from the top to 50% from the bottom (`rootMargin: -45% 0px -50% 0px`) calls `set(n)`. The matching numeral gets `aria-current="step"`.
+3. Clicking a numeral `scrollIntoView({ block: 'center' })` and sets that step immediately.
+4. **Step 2:** dashed borders become solid fills using each bed's `--c`; crop names and row textures fade in; sun and ruler hide; legend becomes crop families (legumes, cucurbits, nightshades, roots).
+5. **Step 3:** 22px ink check discs appear on the first three beds; beds 4–6 scale to 0.97 and hide their ticks. Footer is a 12-column calendar (Mar–Oct) with Sow / Thin / Feed / Harvest bars and a "Today · 2 Jun" hairline at 41% of the plot width.
+6. **Step 4:** kilogram figures (9.2, 11.6, 7.8, 4.1, 3.9, 1.8) scale in at the top-right of each bed; row texture drops to 0.35 opacity; footer shows **38.4 kg** and a 12-bar sparkline that grows from `scaleY(0)` with 30ms stagger. Bars 9–12 are terracotta; 1–8 sage.
+7. Morphs use 560ms `--ease` on colour/opacity and `--ease-out` on transform. Last step is 86vh tall so it can reach the observer band; others 62vh.
+8. Reduced motion: `scroll-behavior: auto`; all transitions 1ms. IntersectionObserver still updates `data-step`.
 
 ## Tokens
 
@@ -107,65 +172,6 @@ A features section for a kitchen-garden planner ("Loam"). Four long steps live i
 | Tally          | Young Serif | 92px | 400    | 0.9         | −0.04em  | numerals  |
 | Calendar       | Figtree     | 11px | 400/500/600 | 1     | 0        | mixed     |
 | Note           | Figtree     | 13px | 400    | 1.6         | 0        | sentence  |
-
-## Motion
-
-| Element              | Trigger     | Property                    | From → To                    | Duration | Easing      | Notes |
-|----------------------|-------------|-----------------------------|--------------------------------|---------:|-------------|-------|
-| `.step` opacity      | IO / click  | opacity                     | 0.38 → 1                       | 560ms    | `--ease`    | inactive stay 0.38, not 0 |
-| Numeral fill         | same        | background, color, border   | paper/line → ink/bg            | 180ms    | `--ease`    | |
-| Bed fill / border    | leave step 1| background, border-color    | dashed empty → solid `--c`     | 560ms    | `--ease`    | |
-| Crop + rows          | leave step 1| opacity, translateY         | 0, 6px → 1, 0                  | 560ms    | ease / out  | |
-| Tick discs           | step 3      | opacity, scale              | 0, .5 → 1, 1                   | 180 / 560| — / out     | beds 4–6 stay hidden |
-| kg figures           | step 4      | opacity, scale              | 0, .8 → 1, 1                   | 560ms    | ease / out  | origin right top |
-| Spark bars           | step 4      | transform scaleY            | 0 → 1                          | 560ms    | `--ease-out`| delay `i * 30ms` |
-| Footer panels        | data-step   | opacity, translateY         | 0, 12px → 1, 0                 | 560ms    | ease / out  | only matching `.pN` |
-| Beds 4–6             | step 3      | scale                       | 1 → 0.97                       | 560ms    | `--ease-out`| |
-| html                 | anchors     | scroll-behavior             | smooth                         | —        | —           | `auto` if reduced |
-
-Do not animate `data-step` itself. CSS selectors: `.viz[data-step="1"] .p1` (etc.) set the visible panel; `.viz:not([data-step="1"])` fills beds.
-
-## States
-
-- **Active step:** `.step.on`, opacity 1, numeral `--ink` fill and `--bg` type, `aria-current="step"` on the button. Others `aria-current="false"`.
-- **Step 1 exclusive:** sun opacity 1; ruler visible; bed 2 (`nth-child(2)`) 1.5px solid `--terra` and `rgba(198,93,59,.06)` fill; its `.dim` terracotta 600; two 9px square handles (`::before` top-right, `::after` bottom-right).
-- **Steps 2–4:** `.dim` opacity 0; `.crop` and `.rows` visible; bed border solid transparent (colour comes from background `--c`).
-- **Step 3 ticks:** first three beds only (`.bed:nth-child(n+4) .tick { opacity: 0 }`).
-- **Step 4 rows:** opacity 0.35; `.kg` visible.
-- **Numeral focus-visible:** 2px terracotta outline, 3px offset.
-- **Spark:** `.spark i:nth-child(n+9)` terracotta; heights 12, 18, 26, 40, 52, 70, 88, 100, 84, 61, 37, 20%.
-
-## Accessibility
-
-- Steps are an `<ol>`. Each numeral is a real `<button>` with `aria-label="Go to step N"`.
-- Figure has `aria-label="Plot planner preview"`. Calendar "Today · 2 Jun" and sparkline are `aria-hidden` where decorative.
-- Keyboard: Tab through 1–4; Enter/Space on a numeral scrolls that step to centre. No arrow-key requirement.
-- Contrast: `--ink-2` on `--bg` is ~5.8:1; `--ink-3` is used only for 11–12px meta. Numeral in the on-state is `--bg` on `--ink`.
-- Hit target: 40×40px numerals. Step blocks themselves are not buttons.
-- If `IntersectionObserver` is missing, clicking numerals still calls `set`.
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- ≤ 1100: grid `1fr 480px`, gap 40px, padding 0 40px, headline 60px, plot height 300px.
-- 768–1023: stack — copy first, sticky card becomes static under the intro (or sticky with `top: 16px` and height auto). Steps keep 62vh so IO still works.
-- < 640: single column, padding 20px, headline 48px, hide the 6.20 m ruler text if it clips. Spark bars stay 12px wide.
-- `scroll-behavior: smooth` off under reduced motion.
-
-## Acceptance checklist
-
-- [ ] Layout is `1fr / 600px` with 72px gap at 1280; the right card is sticky at `top: 48px` and 704px tall.
-- [ ] Exactly four steps; inactive opacity is 0.38; last step min-height 86vh.
-- [ ] IntersectionObserver uses `rootMargin: '-45% 0px -50% 0px'` and writes `data-step` plus `aria-current="step"`.
-- [ ] Clicking a numeral centres that step and updates the card without waiting for the observer.
-- [ ] Step 1 shows dashed beds, sun, ruler "6.20 m", and a terracotta selection on the courgette bed.
-- [ ] Step 2 fills beds with the six crop colours and names listed in Structure.
-- [ ] Step 3 shows checks on the first three beds only and the Mar–Oct calendar with "Today · 2 Jun".
-- [ ] Step 4 shows kg tallies, **38.4 kg**, and 12 spark bars that grow with 30ms stagger.
-- [ ] Morph duration is 560ms; reduced motion is 1ms and still changes step.
-- [ ] Headline is 76px Young Serif; "full basket." is terracotta.
-- [ ] Copy matches Loam: 6.2 × 4.0 m, 7 h 40 m, 14 crops, 12 min/week, 38.4 kg, £212.
-- [ ] Numeral focus rings are 2px terracotta.
 
 ## Implementation notes
 

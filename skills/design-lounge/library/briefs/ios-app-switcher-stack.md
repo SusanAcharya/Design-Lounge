@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 An iOS-style app switcher on a near-black background. Five 300×600 app cards (Fjord Bank, Nord Post, Orbital, Marrow, Halden — all fictional, each a flat two-tone gradient with real-looking screen content) are laid out as a horizontal fan: each card sits 80px to the right of the previous one, rotated −7° around Y inside a 1400px perspective, so the front card is fully visible and the older ones peek out on the left. Dragging horizontally scrolls the fan; dragging a card upward and releasing past 120px (or faster than 0.6px/ms) flings it off the top and the remaining cards reflow; tapping a card expands it to the full 390×844 frame in 420ms with the radius collapsing from 40px to 0. The detail worth copying is the single-transform layout: every card's position is three custom properties (`--x`, `--y`, `--s`) written by one `layout()` function, so drag, fling, reflow and expand all use the same CSS transition.
-
-## Reference behaviour
-
-1. Initial state: heading "Recent" (Syne 22/600) top-left at y = 76px with "5 apps" at the right; the fan is scrolled to its end so the newest card (Halden, purple) sits at x = 60px and the four older cards peek 80px each to its left; a caption "Drag to browse · swipe up to close · tap to open" sits at 64px from the bottom.
-2. Pointer down on a card captures the pointer. After 6px of movement the gesture axis is locked to whichever of |dx|, |dy| is larger; the card gets `.drag`, which disables its transition so it tracks the finger 1:1.
-3. Horizontal drag: `scroll = startScroll − dx`, clamped to `[0, (n−1) × 80]`. All cards recompute `--x = 60 + i × 80 − scroll` and move together (no transition while dragging).
-4. Vertical drag: only the touched card moves; `--y = min(0, dy)` (cannot be dragged down).
-5. Release after a vertical drag with `dy < −120px` or velocity `< −0.6px/ms`: the card gets `.gone` — it flies to `translateY(−900px)`, scales to .9 and fades to 0 over 320ms — and is removed from the list. The remaining cards reflow to their new `--x` over 380ms with `cubic-bezier(.2,.7,.2,1)`. The "N apps" counter updates.
-6. Release after any drag that does not meet the fling threshold: the card springs back to `--y: 0` and the fan settles over 380ms.
-7. Release with no movement (a tap): the card gets `.full` — `left/top` go to 0, `width/height` to 390×844, `border-radius` 40 → 0, transform to identity (no rotateY, scale 1) — all over 420ms with `cubic-bezier(.32,.72,0,1)`. The app content padding-top grows 28 → 70px on the same clock so the app title clears the status bar. Heading and caption fade out over 160ms. After the expansion, a footer line "Tap anywhere to return to the switcher" fades in.
-8. Tapping the expanded card (any tap that arrives more than 400ms after opening) removes `.full`; the card shrinks back into its fan slot over 420ms; heading and caption return.
-9. Keyboard: cards are `tabindex="0"`. Enter/Space toggles expand/collapse; Delete or Backspace flings the focused card; ArrowLeft/ArrowRight move focus and scroll that card to x = 60px; Escape collapses.
-10. When every card has been flung: a centred "No recent apps" message with a 44px pill "Replay" button fades in over 240ms. Replay restores all five cards, scrolled to the end again.
 
 ## Structure
 
@@ -55,65 +44,6 @@ An iOS-style app switcher on a near-black background. Five 300×600 app cards (F
     - `.done` — absolute bottom caption inside the card, visible only in `.full`.
 - `<p class="foot">` — absolute, `bottom: 64px`, centred, 12px/500 tertiary ink.
 - `<div class="empty">` — absolute inset 0 grid, hidden until the list is empty; contains `<p>` and `<button id="replay">`.
-
-## Tokens
-
-```css
-:root {
-  /* colour — near-black stage, cool neutrals, five app pairs (top / bottom of gradient) */
-  --bg: #0b0b10;            /* stage base; radial highlight #1b1b26 at top */
-  --bg-2: #17171f;
-  --ink: #f4f3f7;           /* heading, empty-state text, replay button fill */
-  --ink-2: #a09fae;         /* counter, empty-state secondary */
-  --ink-3: #5d5c6b;         /* caption */
-  --line: rgba(255,255,255,.08);
-  --a1: #1f6f5a; --a1-2: #0f3b30;   /* Fjord Bank, green */
-  --a2: #e0632a; --a2-2: #6d2a10;   /* Nord Post, orange */
-  --a3: #2b62d9; --a3-2: #0e2354;   /* Orbital, blue */
-  --a4: #b83c4e; --a4-2: #4b1420;   /* Marrow, red */
-  --a5: #6c4fd3; --a5-2: #2a1c5a;   /* Halden, violet */
-
-  /* type */
-  --font: "Manrope", system-ui, sans-serif;
-  --display: "Syne", system-ui, sans-serif;
-
-  /* layout */
-  --card-w: 300px;
-  --card-h: 600px;
-  --card-top: 150px;
-  --card-x0: 60px;          /* x of the card scrolled into front position */
-  --step: 80px;             /* horizontal gap between stacked cards */
-  --r-card: 40px;
-
-  /* elevation */
-  --shadow-card: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
-
-  /* motion */
-  --t-reflow: 380ms;
-  --t-fling: 320ms;
-  --t-expand: 420ms;
-  --t-micro: 160ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --sheet: cubic-bezier(.32, .72, 0, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role               | Family  | Size | Weight | Line-height | Tracking | Case     |
-|--------------------|---------|-----:|-------:|------------:|---------:|----------|
-| Switcher heading   | Syne    | 22px | 600    | 1.1         | −0.02em  | sentence |
-| App name           | Syne    | 18px | 700    | 1.1         | −0.01em  | sentence |
-| App icon letter    | Syne    | 18px | 700    | 1           | 0        | UPPER    |
-| Big figure         | Syne    | 40px | 600    | 1           | −0.03em  | numerals |
-| Empty-state title  | Syne    | 20px | 600    | 1.2         | 0        | sentence |
-| App subtitle       | Manrope | 12px | 400    | 1.3         | 0        | sentence |
-| Figure caption     | Manrope | 13px | 400    | 1.4         | 0        | sentence |
-| Row text           | Manrope | 14px | 500    | 1.3         | 0        | sentence |
-| Row value          | Manrope | 14px | 600    | 1.3         | 0        | numerals |
-| Counter / caption  | Manrope | 12px | 500    | 1.3         | 0        | sentence |
-| Replay button      | Manrope | 14px | 600    | 1           | 0        | sentence |
 
 ## Motion
 
@@ -175,6 +105,82 @@ Reduced motion: all transition durations and delays become 1ms and the `rotateY(
 - [ ] When all cards are flung, "No recent apps" and a 44px Replay button appear; Replay restores all five.
 - [ ] Under `prefers-reduced-motion: reduce`, cards are flat (no rotateY) and every transition is 1ms.
 - [ ] No console errors when flinging during a reflow or tapping during an expansion.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: heading "Recent" (Syne 22/600) top-left at y = 76px with "5 apps" at the right; the fan is scrolled to its end so the newest card (Halden, purple) sits at x = 60px and the four older cards peek 80px each to its left; a caption "Drag to browse · swipe up to close · tap to open" sits at 64px from the bottom.
+2. Pointer down on a card captures the pointer. After 6px of movement the gesture axis is locked to whichever of |dx|, |dy| is larger; the card gets `.drag`, which disables its transition so it tracks the finger 1:1.
+3. Horizontal drag: `scroll = startScroll − dx`, clamped to `[0, (n−1) × 80]`. All cards recompute `--x = 60 + i × 80 − scroll` and move together (no transition while dragging).
+4. Vertical drag: only the touched card moves; `--y = min(0, dy)` (cannot be dragged down).
+5. Release after a vertical drag with `dy < −120px` or velocity `< −0.6px/ms`: the card gets `.gone` — it flies to `translateY(−900px)`, scales to .9 and fades to 0 over 320ms — and is removed from the list. The remaining cards reflow to their new `--x` over 380ms with `cubic-bezier(.2,.7,.2,1)`. The "N apps" counter updates.
+6. Release after any drag that does not meet the fling threshold: the card springs back to `--y: 0` and the fan settles over 380ms.
+7. Release with no movement (a tap): the card gets `.full` — `left/top` go to 0, `width/height` to 390×844, `border-radius` 40 → 0, transform to identity (no rotateY, scale 1) — all over 420ms with `cubic-bezier(.32,.72,0,1)`. The app content padding-top grows 28 → 70px on the same clock so the app title clears the status bar. Heading and caption fade out over 160ms. After the expansion, a footer line "Tap anywhere to return to the switcher" fades in.
+8. Tapping the expanded card (any tap that arrives more than 400ms after opening) removes `.full`; the card shrinks back into its fan slot over 420ms; heading and caption return.
+9. Keyboard: cards are `tabindex="0"`. Enter/Space toggles expand/collapse; Delete or Backspace flings the focused card; ArrowLeft/ArrowRight move focus and scroll that card to x = 60px; Escape collapses.
+10. When every card has been flung: a centred "No recent apps" message with a 44px pill "Replay" button fades in over 240ms. Replay restores all five cards, scrolled to the end again.
+
+## Tokens
+
+```css
+:root {
+  /* colour — near-black stage, cool neutrals, five app pairs (top / bottom of gradient) */
+  --bg: #0b0b10;            /* stage base; radial highlight #1b1b26 at top */
+  --bg-2: #17171f;
+  --ink: #f4f3f7;           /* heading, empty-state text, replay button fill */
+  --ink-2: #a09fae;         /* counter, empty-state secondary */
+  --ink-3: #5d5c6b;         /* caption */
+  --line: rgba(255,255,255,.08);
+  --a1: #1f6f5a; --a1-2: #0f3b30;   /* Fjord Bank, green */
+  --a2: #e0632a; --a2-2: #6d2a10;   /* Nord Post, orange */
+  --a3: #2b62d9; --a3-2: #0e2354;   /* Orbital, blue */
+  --a4: #b83c4e; --a4-2: #4b1420;   /* Marrow, red */
+  --a5: #6c4fd3; --a5-2: #2a1c5a;   /* Halden, violet */
+
+  /* type */
+  --font: "Manrope", system-ui, sans-serif;
+  --display: "Syne", system-ui, sans-serif;
+
+  /* layout */
+  --card-w: 300px;
+  --card-h: 600px;
+  --card-top: 150px;
+  --card-x0: 60px;          /* x of the card scrolled into front position */
+  --step: 80px;             /* horizontal gap between stacked cards */
+  --r-card: 40px;
+
+  /* elevation */
+  --shadow-card: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+
+  /* motion */
+  --t-reflow: 380ms;
+  --t-fling: 320ms;
+  --t-expand: 420ms;
+  --t-micro: 160ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --sheet: cubic-bezier(.32, .72, 0, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role               | Family  | Size | Weight | Line-height | Tracking | Case     |
+|--------------------|---------|-----:|-------:|------------:|---------:|----------|
+| Switcher heading   | Syne    | 22px | 600    | 1.1         | −0.02em  | sentence |
+| App name           | Syne    | 18px | 700    | 1.1         | −0.01em  | sentence |
+| App icon letter    | Syne    | 18px | 700    | 1           | 0        | UPPER    |
+| Big figure         | Syne    | 40px | 600    | 1           | −0.03em  | numerals |
+| Empty-state title  | Syne    | 20px | 600    | 1.2         | 0        | sentence |
+| App subtitle       | Manrope | 12px | 400    | 1.3         | 0        | sentence |
+| Figure caption     | Manrope | 13px | 400    | 1.4         | 0        | sentence |
+| Row text           | Manrope | 14px | 500    | 1.3         | 0        | sentence |
+| Row value          | Manrope | 14px | 600    | 1.3         | 0        | numerals |
+| Counter / caption  | Manrope | 12px | 500    | 1.3         | 0        | sentence |
+| Replay button      | Manrope | 14px | 600    | 1           | 0        | sentence |
 
 ## Implementation notes
 

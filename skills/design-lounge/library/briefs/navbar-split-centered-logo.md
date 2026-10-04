@@ -4,30 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The top bar for Verane, a fictional lake hotel with a dining room. The wordmark sits in the exact centre. Three links sit to its left (Rooms, Dining, Garden). Two links and an outlined "Reserve a table" button sit to its right (Events, Journal). At the top of the page the bar is transparent and its text is ivory over a deep green hero drawn in CSS: a radial gradient, three brass hairline arches, and a brass sun. After 80px of scroll the bar fills with paper, the text turns dark, a 1px hairline appears under it, and the wordmark scales from 40px to 24px. The detail worth copying: a three-column grid of `minmax(0,1fr) auto minmax(0,1fr)` keeps the wordmark in the true centre no matter how long each side is.
-
-## Reference behaviour
-
-1. First frame: scroll is 0. The bar is 104px tall, transparent, with ivory text `#f7f2e8` and a 1px bottom line in `rgba(247,242,232,.18)`.
-2. The wordmark "VERANE" is Cormorant Garamond 500, 40px, tracked 0.32em, uppercase. Under it sits "EST. 1931" in Jost 9px, tracked 0.5em, at 80% opacity.
-3. "Dining" is the current page. It has `aria-current="page"` and a 1px underline 4px below the text.
-4. The hero fills the viewport (100vh, min 640px). Its headline "Supper under the long arches" is 76px serif, centred, 72px from the bottom. "long arches" is italic brass `#d9b878`.
-5. The user scrolls. When `scrollY` passes 80, the bar gets the class `solid`. Over 320ms on `cubic-bezier(.2,.7,.2,1)`:
-   - height goes 104px to 68px,
-   - background goes transparent to paper `#f4efe4`,
-   - text goes ivory to ink `#1b1f1c`,
-   - the bottom line goes to `#d8cfbb`,
-   - the wordmark scales from 1 to 0.6 (40px to 24px),
-   - "EST. 1931" fades to 0 over 200ms.
-6. The button "Reserve a table" is outlined in `currentColor` over the hero. In the solid bar its border and text turn deep green `#1d3a2f`.
-7. Scrolling back above 80px reverses every change on the same timing.
-8. Hovering a link draws the 1px underline from left to right over 200ms.
-9. Hovering the button fills it. Over the hero: ivory fill, green text. In the solid bar: green fill, paper text.
-10. The page scrolls through real sections below the hero: Dining (menu with prices), Rooms (three room cards), Garden, Reserve. Each section is a two-column band with a 1px rule under it.
-11. Below 900px wide the links and the button hide. A 44px square menu button appears on the left. The wordmark stays centred.
-12. Clicking the menu button opens a paper panel under the bar with all five links and the button at full width. `aria-expanded` flips. Escape closes it and returns focus to the button. Clicking a link closes it.
 
 ## Structure
 
@@ -61,78 +42,6 @@ grid: minmax(0,1fr) | auto | minmax(0,1fr), gap 32px
 - The mobile panel is a sibling of the header, fixed under it.
 - The hero is a `section` with decorative `div`s for the arches, sun and floor shade. They carry no text.
 - The sections below use `section` with an `h2` each. The hero `h1` is the only `h1`.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces */
-  --paper: #f4efe4;        /* solid bar, page */
-  --paper-2: #ebe4d4;      /* card swatches */
-  --green: #1d3a2f;        /* hero, button in solid bar */
-  --green-2: #142a22;      /* hero edge */
-
-  /* ink */
-  --ink: #1b1f1c;          /* text in solid bar */
-  --ink-2: #4a524c;        /* body copy */
-  --on-dark: #f7f2e8;      /* text over hero */
-  --on-dark-2: rgba(247,242,232,.72);
-
-  /* accent */
-  --brass: #b08d4a;        /* arches, sun, focus ring */
-  --brass-2: #8a6a2f;      /* kicker text on paper */
-  --line: #d8cfbb;         /* hairline */
-
-  /* type */
-  --serif: "Cormorant Garamond", Georgia, serif;
-  --sans: "Jost", system-ui, sans-serif;
-  --fs-mark: 40px;
-  --fs-link: 12px;
-  --fs-h1: 76px;
-  --fs-h2: 52px;
-  --fs-body: 16px;
-
-  /* space */
-  --space-1: 8px;
-  --space-2: 16px;
-  --space-3: 24px;
-  --space-4: 32px;
-  --space-6: 48px;
-  --space-8: 64px;
-
-  /* bar */
-  --bar-h: 104px;
-  --bar-h-solid: 68px;
-  --mark-scale-solid: 0.6;
-  --threshold: 80px;
-
-  /* radius and shadow */
-  --radius: 0;
-  --shadow: none;
-
-  /* motion */
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --dur: 320ms;
-  --dur-micro: 200ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Wordmark | Cormorant Garamond | 40px, scaled to 24px | 500 | 1 | 0.32em | upper |
-| Wordmark sub | Jost | 9px | 500 | 1 | 0.5em | upper |
-| Nav link | Jost | 12px | 500 | 1.6 | 0.22em | upper |
-| Button | Jost | 12px | 500 | 1 | 0.2em | upper |
-| Hero eyebrow | Jost | 12px | 400 | 1.6 | 0.32em | upper |
-| Hero h1 | Cormorant Garamond | 76px | 500 | 1 | -0.01em | sentence |
-| Section kicker | Jost | 12px | 400 | 1.6 | 0.28em | upper |
-| Section h2 | Cormorant Garamond | 52px | 500 | 1.05 | 0 | sentence |
-| Body | Jost | 16px | 400 | 1.6 | 0 | sentence |
-| Menu item | Cormorant Garamond | 22px | 500 | 1.6 | 0 | sentence |
-
-The serif is only for the wordmark, headings and menu items. Links and buttons stay in the sans. Add `margin-right: -0.32em` to the wordmark so its trailing tracking does not push it off centre.
 
 ## Motion
 
@@ -213,6 +122,103 @@ The serif is only for the wordmark, headings and menu items. Links and buttons s
 - [ ] Hero is `#1d3a2f` with three brass arches and a brass sun, no images.
 - [ ] The solid bar is `#f4efe4` with a `#d8cfbb` hairline.
 - [ ] The menu collapses below 900px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: scroll is 0. The bar is 104px tall, transparent, with ivory text `#f7f2e8` and a 1px bottom line in `rgba(247,242,232,.18)`.
+2. The wordmark "VERANE" is Cormorant Garamond 500, 40px, tracked 0.32em, uppercase. Under it sits "EST. 1931" in Jost 9px, tracked 0.5em, at 80% opacity.
+3. "Dining" is the current page. It has `aria-current="page"` and a 1px underline 4px below the text.
+4. The hero fills the viewport (100vh, min 640px). Its headline "Supper under the long arches" is 76px serif, centred, 72px from the bottom. "long arches" is italic brass `#d9b878`.
+5. The user scrolls. When `scrollY` passes 80, the bar gets the class `solid`. Over 320ms on `cubic-bezier(.2,.7,.2,1)`:
+   - height goes 104px to 68px,
+   - background goes transparent to paper `#f4efe4`,
+   - text goes ivory to ink `#1b1f1c`,
+   - the bottom line goes to `#d8cfbb`,
+   - the wordmark scales from 1 to 0.6 (40px to 24px),
+   - "EST. 1931" fades to 0 over 200ms.
+6. The button "Reserve a table" is outlined in `currentColor` over the hero. In the solid bar its border and text turn deep green `#1d3a2f`.
+7. Scrolling back above 80px reverses every change on the same timing.
+8. Hovering a link draws the 1px underline from left to right over 200ms.
+9. Hovering the button fills it. Over the hero: ivory fill, green text. In the solid bar: green fill, paper text.
+10. The page scrolls through real sections below the hero: Dining (menu with prices), Rooms (three room cards), Garden, Reserve. Each section is a two-column band with a 1px rule under it.
+11. Below 900px wide the links and the button hide. A 44px square menu button appears on the left. The wordmark stays centred.
+12. Clicking the menu button opens a paper panel under the bar with all five links and the button at full width. `aria-expanded` flips. Escape closes it and returns focus to the button. Clicking a link closes it.
+
+## Tokens
+
+```css
+:root {
+  /* surfaces */
+  --paper: #f4efe4;        /* solid bar, page */
+  --paper-2: #ebe4d4;      /* card swatches */
+  --green: #1d3a2f;        /* hero, button in solid bar */
+  --green-2: #142a22;      /* hero edge */
+
+  /* ink */
+  --ink: #1b1f1c;          /* text in solid bar */
+  --ink-2: #4a524c;        /* body copy */
+  --on-dark: #f7f2e8;      /* text over hero */
+  --on-dark-2: rgba(247,242,232,.72);
+
+  /* accent */
+  --brass: #b08d4a;        /* arches, sun, focus ring */
+  --brass-2: #8a6a2f;      /* kicker text on paper */
+  --line: #d8cfbb;         /* hairline */
+
+  /* type */
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Jost", system-ui, sans-serif;
+  --fs-mark: 40px;
+  --fs-link: 12px;
+  --fs-h1: 76px;
+  --fs-h2: 52px;
+  --fs-body: 16px;
+
+  /* space */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+  --space-8: 64px;
+
+  /* bar */
+  --bar-h: 104px;
+  --bar-h-solid: 68px;
+  --mark-scale-solid: 0.6;
+  --threshold: 80px;
+
+  /* radius and shadow */
+  --radius: 0;
+  --shadow: none;
+
+  /* motion */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --dur: 320ms;
+  --dur-micro: 200ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Wordmark | Cormorant Garamond | 40px, scaled to 24px | 500 | 1 | 0.32em | upper |
+| Wordmark sub | Jost | 9px | 500 | 1 | 0.5em | upper |
+| Nav link | Jost | 12px | 500 | 1.6 | 0.22em | upper |
+| Button | Jost | 12px | 500 | 1 | 0.2em | upper |
+| Hero eyebrow | Jost | 12px | 400 | 1.6 | 0.32em | upper |
+| Hero h1 | Cormorant Garamond | 76px | 500 | 1 | -0.01em | sentence |
+| Section kicker | Jost | 12px | 400 | 1.6 | 0.28em | upper |
+| Section h2 | Cormorant Garamond | 52px | 500 | 1.05 | 0 | sentence |
+| Body | Jost | 16px | 400 | 1.6 | 0 | sentence |
+| Menu item | Cormorant Garamond | 22px | 500 | 1.6 | 0 | sentence |
+
+The serif is only for the wordmark, headings and menu items. Links and buttons stay in the sans. Add `margin-right: -0.32em` to the wordmark so its trailing tracking does not push it off centre.
 
 ## Implementation notes
 

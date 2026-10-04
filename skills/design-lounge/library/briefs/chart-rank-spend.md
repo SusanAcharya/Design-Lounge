@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep one series.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A ranked list of where money went in Asar. The answer is the selected amount, set in Noto Serif Devanagari so the रु and the digits are one face. Under it, five rows: a name, a horizontal bar, and the same amount again at row size. Rent starts selected at रु 1,24,000, the longest bar. The other bars are the same crimson, shorter. There is no pie, no donut, no legend, and no second colour for a second series. The page background carries a faint paper grain. The rows are flat surface. This is the "where it went" view a personal finance app was missing. It is not a staff analytics chart.
-
-## Reference behaviour
-
-1. The first frame reads रु 1,24,000 at 56px. The subtitle is "Rent, the largest share". Rent's row is `aria-pressed="true"`.
-2. Clicking a row selects it, rewrites the heading to that row's amount in lakh grouping, and rewrites the subtitle to the row's name. Rent is the only row whose subtitle keeps "the largest share".
-3. Only one row is pressed. The others return to the flat surface.
-4. Bar widths are the amount divided by 1,24,000: Rent 100%, Bhatbhateni 14.8%, NEA 3.4%, Bus 1.7%, Tea 0.7%.
-5. Bars grow from the left on load, 420ms, `cubic-bezier(0.2, 0.7, 0.2, 1)`. Reduced motion removes the transition. Widths are final on first paint.
-6. The whole row is the button. Do not add a tooltip. The heading is the value.
-7. Focus ring is 2px `--focus`, offset 2px.
-8. Do not sort the list again on click. Rank stays longest at the top.
 
 ## Structure
 
@@ -38,37 +29,6 @@ Rent, the largest share
 - The track is 8px tall. The bar is an `i` inside it.
 - Max width of the list is 720px. The rest of the 1280 frame stays empty.
 - Grain sits on the page background only. Rows use `--surface` and cover the grain.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4ead6;
-  --surface: #fbf6ea;
-  --ink: #1c2744;
-  --ink-2: #3e4a66;
-  --line: #d9cbb3;
-  --primary: #c8102e;
-  --primary-soft: #f3d2c8;
-  --focus: #c8102e;
-  --display: "Noto Serif Devanagari", Georgia, serif;
-  --sans: "Mukta", system-ui, sans-serif;
-}
-```
-
-The grain is `radial-gradient(rgba(28,39,68,.05) 0.6px, transparent 0.6px)` at `background-size: 3px 3px` on the page only.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Label | Mukta | 12px | 600 | 0.06em | `--ink-2` |
-| Answer | Noto Serif Devanagari | 56px | 600 | -0.02em | `--ink` |
-| Subtitle | Mukta | 16px | 400 | 0 | `--ink-2` |
-| Row name | Mukta | 16px | 600 | 0 | `--ink` |
-| Row amount | Noto Serif Devanagari | 16px | 600 | 0 | `--ink` |
-
-The answer and every amount that contains रु use the display face, `font-variant-numeric: tabular-nums`. Do not set the digits in a mono face. A mono that lacks रु will swap the currency word to a fallback and the line will look broken.
 
 ## Motion
 
@@ -125,6 +85,52 @@ No count-up on the heading. The amount is already the answer.
 - [ ] Clicking Tea sets the heading to रु 900 and the subtitle to Tea.
 - [ ] The list max-width is 720px, the pass column. Another screen in the same pass does not get a different width.
 - [ ] Focus ring is 2px, offset 2px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame reads रु 1,24,000 at 56px. The subtitle is "Rent, the largest share". Rent's row is `aria-pressed="true"`.
+2. Clicking a row selects it, rewrites the heading to that row's amount in lakh grouping, and rewrites the subtitle to the row's name. Rent is the only row whose subtitle keeps "the largest share".
+3. Only one row is pressed. The others return to the flat surface.
+4. Bar widths are the amount divided by 1,24,000: Rent 100%, Bhatbhateni 14.8%, NEA 3.4%, Bus 1.7%, Tea 0.7%.
+5. Bars grow from the left on load, 420ms, `cubic-bezier(0.2, 0.7, 0.2, 1)`. Reduced motion removes the transition. Widths are final on first paint.
+6. The whole row is the button. Do not add a tooltip. The heading is the value.
+7. Focus ring is 2px `--focus`, offset 2px.
+8. Do not sort the list again on click. Rank stays longest at the top.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4ead6;
+  --surface: #fbf6ea;
+  --ink: #1c2744;
+  --ink-2: #3e4a66;
+  --line: #d9cbb3;
+  --primary: #c8102e;
+  --primary-soft: #f3d2c8;
+  --focus: #c8102e;
+  --display: "Noto Serif Devanagari", Georgia, serif;
+  --sans: "Mukta", system-ui, sans-serif;
+}
+```
+
+The grain is `radial-gradient(rgba(28,39,68,.05) 0.6px, transparent 0.6px)` at `background-size: 3px 3px` on the page only.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Label | Mukta | 12px | 600 | 0.06em | `--ink-2` |
+| Answer | Noto Serif Devanagari | 56px | 600 | -0.02em | `--ink` |
+| Subtitle | Mukta | 16px | 400 | 0 | `--ink-2` |
+| Row name | Mukta | 16px | 600 | 0 | `--ink` |
+| Row amount | Noto Serif Devanagari | 16px | 600 | 0 | `--ink` |
+
+The answer and every amount that contains रु use the display face, `font-variant-numeric: tabular-nums`. Do not set the digits in a mono face. A mono that lacks रु will swap the currency word to a fallback and the line will look broken.
 
 ## Implementation notes
 

@@ -4,23 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the three column widths, the 68ch measure and the scrollspy line.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A documentation page for Larkspur, a fictional background job runner. The page is "Retries and backoff". Three columns sit on warm paper: a 240px left nav with four groups and the current page marked in red, a centre article capped at 68ch with serif headings and sans body, and a 200px "On this page" list on the right. As you read, the list marks the heading in view and a 2px red line grows down its left edge to show how far you are. A small mono readout under the list says how much you have read. It should feel like a printed manual, not a dashboard. The detail worth copying is the progress line drawn on the TOC rail itself, so position and progress are one mark.
 
 `docs-three-column` is the neutral white version with a top bar and a copy button. This piece is the paper one with no top bar.
-
-## Reference behaviour
-
-1. First frame: article at the top. "Retries and backoff" in the left nav has `aria-current="page"`, a 2px red left rule, weight 600 and a soft red wash fading to the right. In the TOC, "How a retry is scheduled" is current. The progress line is 0% tall. The readout says "0% read".
-2. Scroll the article: the TOC item for the last heading whose top has passed 120px below the scroller's top becomes current. It turns `--ink`, weight 500, and gets a 5px red dot on the rail.
-3. While scrolling, the red line's height equals `scrollTop / (scrollHeight - clientHeight)` as a percentage of the list height. The readout updates to the rounded percent.
-4. At the very bottom of the article, the last TOC item becomes current even if its heading has not reached the 120px line.
-5. Click a TOC item: the article scrolls so the heading sits 32px below the top. Use smooth scrolling. Under reduced motion, jump with no animation. Focus moves to the heading with `preventScroll`, so screen readers land there.
-6. Click "Back to top": same behaviour, target is the `h1`.
-7. Hover a left nav link or TOC link: text goes from muted to `--ink` over 160ms. No underline, no background.
-8. Hover a pager card at the foot: its border turns `--ink`.
-9. Only the centre column scrolls. The left nav and the TOC stay put.
 
 ## Structure
 
@@ -50,67 +40,6 @@ A documentation page for Larkspur, a fictional background job runner. The page i
 - Article order: breadcrumb `p`, `h1`, lede `p`, meta row, then sections. Each section is an `h2` with an `id`, prose, and sometimes an `h3`, a `pre`, a `table` or a note.
 - Foot of the article: a two-column pager, Previous and Next.
 - Right: `aside` labelled by its "On this page" label. Padding 56px 24px 32px 0. Inside: a positioned wrapper holding the 1px track, the 2px fill and an `ol` of links. `h3` links are indented 12px more. Then the readout and Back to top.
-
-## Tokens
-
-```css
-:root {
-  --paper: #f6f1e7;        /* page ground, side columns */
-  --sheet: #fbf8f1;        /* article column */
-  --code: #efe8da;         /* code blocks and inline code */
-  --ink: #1f1b16;          /* headings and body */
-  --ink-2: #4a443a;        /* nav links, lede */
-  --ink-3: #6e6658;        /* labels, meta, idle TOC */
-  --line: #e3d9c7;         /* column rules, table rules */
-  --line-2: #d4c8b2;       /* TOC track, pager border */
-  --accent: #b8321f;       /* current page rule, TOC dot and fill, note rule */
-  --accent-soft: #f3e2d9;  /* current page wash */
-  --string: #5b6b2f;       /* string colour in code */
-  --focus: #b8321f;
-
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-
-  --measure: 68ch;
-  --col-nav: 240px;
-  --col-toc: 200px;
-  --spy-line: 120px;
-  --anchor-gap: 32px;
-
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
-  --space-5: 20px; --space-6: 24px; --space-10: 40px; --space-12: 48px;
-  --r-code: 4px; --r-inline: 3px;
-
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --fast: 160ms;
-}
-```
-
-The mono is a system stack on purpose. Two Google families is the limit, and the serif and sans carry the page.
-
-## Typography
-
-| Role | Family | Size / line-height | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Brand | Newsreader | 22px / 1 | 600 | -0.01em | `--ink` |
-| Version | mono | 12px | 400 | 0 | `--ink-3` |
-| Nav group label | IBM Plex Sans | 11px / 1.4 | 600 | 0.08em, uppercase | `--ink-3` |
-| Nav link | IBM Plex Sans | 14px / 1.45 | 400, current 600 | 0 | `--ink-2`, current `--ink` |
-| Breadcrumb | IBM Plex Sans | 13px | 400 | 0 | `--ink-3` |
-| h1 | Newsreader, opsz 72 | 46px / 1.05 | 600 | -0.02em | `--ink` |
-| Lede | Newsreader | 20px / 1.5 | 500 | 0 | `--ink-2` |
-| h2 | Newsreader, opsz 36 | 28px / 1.2 | 600 | -0.01em | `--ink` |
-| h3 | IBM Plex Sans | 15px / 1.4 | 600 | 0 | `--ink` |
-| Body | IBM Plex Sans | 15px / 1.65 | 400 | 0 | `--ink` |
-| Code block | mono | 13px / 1.6 | 400 | 0 | `--ink` |
-| Inline code | mono | 13.5px | 400 | 0 | `--ink` on `--code` |
-| Table head | IBM Plex Sans | 12px | 600 | 0.06em, uppercase | `--ink-3` |
-| TOC label | IBM Plex Sans | 11px | 600 | 0.08em, uppercase | `--ink-3` |
-| TOC link | IBM Plex Sans | 13px / 1.4, sub 12.5px | 400, current 500 | 0 | `--ink-3`, current `--ink` |
-| Readout | mono | 12px | 400 | 0 | `--ink-3` |
-
-Headings are serif. Everything you scan or click is sans. Code is mono. Do not set the nav or the TOC in the serif.
 
 ## Motion
 
@@ -185,6 +114,83 @@ Batch scroll work in `requestAnimationFrame`. Do not put a CSS transition on the
 - [ ] TOC has five `h2` items and two `h3` items: What counts as a failure, Alerting on dead jobs.
 - [ ] Paper `#f6f1e7`, sheet `#fbf8f1`, accent `#b8321f`.
 - [ ] Fonts are Newsreader and IBM Plex Sans.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: article at the top. "Retries and backoff" in the left nav has `aria-current="page"`, a 2px red left rule, weight 600 and a soft red wash fading to the right. In the TOC, "How a retry is scheduled" is current. The progress line is 0% tall. The readout says "0% read".
+2. Scroll the article: the TOC item for the last heading whose top has passed 120px below the scroller's top becomes current. It turns `--ink`, weight 500, and gets a 5px red dot on the rail.
+3. While scrolling, the red line's height equals `scrollTop / (scrollHeight - clientHeight)` as a percentage of the list height. The readout updates to the rounded percent.
+4. At the very bottom of the article, the last TOC item becomes current even if its heading has not reached the 120px line.
+5. Click a TOC item: the article scrolls so the heading sits 32px below the top. Use smooth scrolling. Under reduced motion, jump with no animation. Focus moves to the heading with `preventScroll`, so screen readers land there.
+6. Click "Back to top": same behaviour, target is the `h1`.
+7. Hover a left nav link or TOC link: text goes from muted to `--ink` over 160ms. No underline, no background.
+8. Hover a pager card at the foot: its border turns `--ink`.
+9. Only the centre column scrolls. The left nav and the TOC stay put.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f6f1e7;        /* page ground, side columns */
+  --sheet: #fbf8f1;        /* article column */
+  --code: #efe8da;         /* code blocks and inline code */
+  --ink: #1f1b16;          /* headings and body */
+  --ink-2: #4a443a;        /* nav links, lede */
+  --ink-3: #6e6658;        /* labels, meta, idle TOC */
+  --line: #e3d9c7;         /* column rules, table rules */
+  --line-2: #d4c8b2;       /* TOC track, pager border */
+  --accent: #b8321f;       /* current page rule, TOC dot and fill, note rule */
+  --accent-soft: #f3e2d9;  /* current page wash */
+  --string: #5b6b2f;       /* string colour in code */
+  --focus: #b8321f;
+
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --measure: 68ch;
+  --col-nav: 240px;
+  --col-toc: 200px;
+  --spy-line: 120px;
+  --anchor-gap: 32px;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-10: 40px; --space-12: 48px;
+  --r-code: 4px; --r-inline: 3px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --fast: 160ms;
+}
+```
+
+The mono is a system stack on purpose. Two Google families is the limit, and the serif and sans carry the page.
+
+## Typography
+
+| Role | Family | Size / line-height | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Brand | Newsreader | 22px / 1 | 600 | -0.01em | `--ink` |
+| Version | mono | 12px | 400 | 0 | `--ink-3` |
+| Nav group label | IBM Plex Sans | 11px / 1.4 | 600 | 0.08em, uppercase | `--ink-3` |
+| Nav link | IBM Plex Sans | 14px / 1.45 | 400, current 600 | 0 | `--ink-2`, current `--ink` |
+| Breadcrumb | IBM Plex Sans | 13px | 400 | 0 | `--ink-3` |
+| h1 | Newsreader, opsz 72 | 46px / 1.05 | 600 | -0.02em | `--ink` |
+| Lede | Newsreader | 20px / 1.5 | 500 | 0 | `--ink-2` |
+| h2 | Newsreader, opsz 36 | 28px / 1.2 | 600 | -0.01em | `--ink` |
+| h3 | IBM Plex Sans | 15px / 1.4 | 600 | 0 | `--ink` |
+| Body | IBM Plex Sans | 15px / 1.65 | 400 | 0 | `--ink` |
+| Code block | mono | 13px / 1.6 | 400 | 0 | `--ink` |
+| Inline code | mono | 13.5px | 400 | 0 | `--ink` on `--code` |
+| Table head | IBM Plex Sans | 12px | 600 | 0.06em, uppercase | `--ink-3` |
+| TOC label | IBM Plex Sans | 11px | 600 | 0.08em, uppercase | `--ink-3` |
+| TOC link | IBM Plex Sans | 13px / 1.4, sub 12.5px | 400, current 500 | 0 | `--ink-3`, current `--ink` |
+| Readout | mono | 12px | 400 | 0 | `--ink-3` |
+
+Headings are serif. Everything you scan or click is sans. Code is mono. Do not set the nav or the TOC in the serif.
 
 ## Implementation notes
 

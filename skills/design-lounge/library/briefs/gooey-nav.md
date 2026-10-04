@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A row of four links: Yard, Holds, Night book, Month close. Yard starts current. A green pill matches the current link and slides when another is chosen. The pill is filtered so its edge softens. The words sit outside the filter. This is not a round action menu. That menu is `gooey-menu`. This is not a segmented control for a view. That control is `segmented-control-sliding`. These are navigation links.
-
-## Reference behaviour
-
-1. Yard is current. The pill sits under it.
-2. Clicking a link prevents navigation and moves aria-current.
-3. The pill width and x match the link.
-4. The slide is 320ms.
-5. Current text is #fffdf8. Other text is #161513.
-6. Reduced motion removes the filter and the transition. The pill still jumps.
-7. The links do not leave the page.
 
 ## Structure
 
@@ -30,18 +22,6 @@ Yard  Holds  Night book  Month close
 - The blob is absolute, height 44px, radius 999px, fill #1f4d3a.
 - Filter stdDeviation is 6.
 - Current link is aria-current page.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --primary:#1f4d3a; --ink:#161513; --on:#fffdf8; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Link | IBM Plex Sans | 14px | 500 |
 
 ## Motion
 
@@ -86,16 +66,6 @@ Yard  Holds  Night book  Month close
 - [ ] Fill is #1f4d3a.
 - [ ] Ground is #f6f4ef.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Measure the link against the nav, not the page.
-
-```js
-blob.style.setProperty("--x", (r.left - nav.left - 8) + "px");
-```
-
-Keep the filter on the blob only.
 
 ## Measurements to keep
 
@@ -164,6 +134,42 @@ Keep the filter on the blob only.
 - While rebuilding, remember: Do not animate a wobble loop.
 - While rebuilding, remember: Do not add a logo in this piece.
 - While rebuilding, remember: Do not make every link current.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Yard is current. The pill sits under it.
+2. Clicking a link prevents navigation and moves aria-current.
+3. The pill width and x match the link.
+4. The slide is 320ms.
+5. Current text is #fffdf8. Other text is #161513.
+6. Reduced motion removes the filter and the transition. The pill still jumps.
+7. The links do not leave the page.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --primary:#1f4d3a; --ink:#161513; --on:#fffdf8; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Link | IBM Plex Sans | 14px | 500 |
+
+## Implementation notes
+
+Measure the link against the nav, not the page.
+
+```js
+blob.style.setProperty("--x", (r.left - nav.left - 8) + "px");
+```
+
+Keep the filter on the blob only.
 
 ---
 

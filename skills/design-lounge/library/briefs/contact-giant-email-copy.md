@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-viewport contact section for a sound-and-spatial studio ("Ferro Works"). The email **HI@FERRO.WORK** is the page: 200px condensed Anton, one line, flush left. Clicking it copies `hi@ferro.work`, inverts the whole page to black-on-cream for 1.6s, and runs a glyph scramble that resolves to **COPIED TO CLIPBOARD** then back to the address. A pill that says "Copy ↗" replaces the cursor over the address. The feeling is loud, physical, poster-like: 2px rules, four-column meta, a 52px inverted ticker of services. The detail worth copying is the fit-to-width resize — the display size is computed from a hidden probe so "COPIED TO CLIPBOARD" never overflows, even though it is longer than the email.
-
-## Reference behaviour
-
-1. Initial state: orange field `#FF4F1A`. Top strip of four cells (studio, cities + live Lisbon clock, booking, response time). Giant address. Four contact cells. Black ticker rolling services.
-2. Hovering the address: custom cursor hidden; a black pill "Copy ↗" tracks 14px down-right of the pointer; a 14px black underline wipes left → right in 420ms (`scaleX` 0 → 1, origin left).
-3. Clicking the address copies `hi@ferro.work` (lowercase) via `navigator.clipboard.writeText`, with a `textarea` + `execCommand('copy')` fallback. `aria-live="assertive"` announces "Copied hi@ferro.work to clipboard" (or the failure string with the address spoken).
-4. On success: `body` gets `.flash` (background `--ink`, colour `--paper`); the address gets `.copied` (type and underline become `--paper`); chip text becomes "Copied"; glyphs scramble to `COPIED TO CLIPBOARD` over 720ms.
-5. After 1600ms hold, flash and `.copied` drop; chip returns to "Copy ↗"; glyphs scramble back to `HI@FERRO.WORK` over 640ms. Further clicks during the hold restart the timeout.
-6. Clicking a `data-copy` link in the grid (phone, press, jobs) copies that string, swaps the link text to "Copied" for 1400ms, and announces via the same live region. Studio address is not copyable.
-7. Lisbon clock (`#clock`) formats `Europe/Lisbon` as `Lisbon HH:MM` with `en-GB`, 2-digit hour and minute, and refreshes every 30s.
-8. Display size: `font-size = min(260px, 200px * mail.clientWidth / probeWidth)` so the current string always fits. Recalculate on font load and resize.
-9. Ticker: duplicated phrase list scrolls `translateX(-50%)` over 38s linear infinite.
-10. Reduced motion: scramble snaps to the target string; ticker animation is `none`; transitions 1ms. Pointer-coarse (`hover:none`): native pointer on the address, chip hidden.
 
 ## Structure
 
@@ -51,54 +40,6 @@ A full-viewport contact section for a sound-and-spatial studio ("Ferro Works"). 
 - `<section class="grid" aria-label="Other contacts">` — four cells. Copyable items are `<a href="#" data-copy="…">`.
 - `.tick` — `aria-hidden`, inner flex row duplicated so the 38s loop is gapless. Each item has a 14px diamond `::after` (rotated 45° square).
 - `.chip` — `aria-hidden`, not in the tab order.
-
-## Tokens
-
-```css
-:root {
-  /* colour — safety-orange field, near-black ink, cream flash */
-  --bg: #ff4f1a;          /* page */
-  --ink: #0d0d0d;         /* type, rules, ticker, chip */
-  --paper: #f2efe6;       /* flash type, copied address */
-  --line: rgba(13, 13, 13, .9);  /* 2px rules */
-  --ink-2: #3a1a0e;       /* declared; body colour is --ink */
-
-  /* type */
-  --display: "Anton", Impact, sans-serif;
-  --mono: "Space Mono", ui-monospace, monospace;
-
-  /* layout */
-  --pad: 40px;
-  --rule: 2px;
-  --mail-fs: 200px;       /* base; JS may raise to 260px cap */
-  --tick-h: 52px;
-
-  /* motion */
-  --t-micro: 140ms;
-  --t-wipe: 420ms;
-  --t-scramble-out: 720ms;
-  --t-hold: 1600ms;
-  --t-scramble-in: 640ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --roll: 38s;
-}
-```
-
-## Typography
-
-| Role             | Family     | Size | Weight | Line-height | Tracking | Case      |
-|------------------|------------|-----:|-------:|------------:|---------:|-----------|
-| Address / copied | Anton      | 200px (fit) | 400 | 0.86   | −0.01em  | UPPERCASE |
-| Ticker           | Anton      | 28px | 400    | 1           | +0.02em  | UPPERCASE |
-| Body / meta      | Space Mono | 13px | 400    | 1.5         | 0        | sentence  |
-| Top labels       | Space Mono | 13px | 400/700| 1.5         | +0.04em  | UPPERCASE |
-| Kick             | Space Mono | 13px | 700/400| 1.5         | +0.04em  | UPPERCASE |
-| Grid headings    | Space Mono | 12px | 700    | 1           | +0.06em  | UPPERCASE |
-| Chip             | Space Mono | 12px | 700    | 1           | +0.06em  | UPPERCASE |
-| Grid links       | Space Mono | 13px | 400    | 1.5         | 0        | as written|
-
-Kick right label is weight 400; left is 700. Top cells: `<b>` 700, second line 400.
 
 ## Motion
 
@@ -158,6 +99,71 @@ Scramble: for target string of length `n` and duration `dur`, char `i` locks at 
 - [ ] Focus-visible rings are present on the address and every copy link.
 - [ ] On touch (`hover: none`) the address uses `cursor: pointer` and the chip is not shown.
 - [ ] Rules are 2px and invert with the flash.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: orange field `#FF4F1A`. Top strip of four cells (studio, cities + live Lisbon clock, booking, response time). Giant address. Four contact cells. Black ticker rolling services.
+2. Hovering the address: custom cursor hidden; a black pill "Copy ↗" tracks 14px down-right of the pointer; a 14px black underline wipes left → right in 420ms (`scaleX` 0 → 1, origin left).
+3. Clicking the address copies `hi@ferro.work` (lowercase) via `navigator.clipboard.writeText`, with a `textarea` + `execCommand('copy')` fallback. `aria-live="assertive"` announces "Copied hi@ferro.work to clipboard" (or the failure string with the address spoken).
+4. On success: `body` gets `.flash` (background `--ink`, colour `--paper`); the address gets `.copied` (type and underline become `--paper`); chip text becomes "Copied"; glyphs scramble to `COPIED TO CLIPBOARD` over 720ms.
+5. After 1600ms hold, flash and `.copied` drop; chip returns to "Copy ↗"; glyphs scramble back to `HI@FERRO.WORK` over 640ms. Further clicks during the hold restart the timeout.
+6. Clicking a `data-copy` link in the grid (phone, press, jobs) copies that string, swaps the link text to "Copied" for 1400ms, and announces via the same live region. Studio address is not copyable.
+7. Lisbon clock (`#clock`) formats `Europe/Lisbon` as `Lisbon HH:MM` with `en-GB`, 2-digit hour and minute, and refreshes every 30s.
+8. Display size: `font-size = min(260px, 200px * mail.clientWidth / probeWidth)` so the current string always fits. Recalculate on font load and resize.
+9. Ticker: duplicated phrase list scrolls `translateX(-50%)` over 38s linear infinite.
+10. Reduced motion: scramble snaps to the target string; ticker animation is `none`; transitions 1ms. Pointer-coarse (`hover:none`): native pointer on the address, chip hidden.
+
+## Tokens
+
+```css
+:root {
+  /* colour — safety-orange field, near-black ink, cream flash */
+  --bg: #ff4f1a;          /* page */
+  --ink: #0d0d0d;         /* type, rules, ticker, chip */
+  --paper: #f2efe6;       /* flash type, copied address */
+  --line: rgba(13, 13, 13, .9);  /* 2px rules */
+  --ink-2: #3a1a0e;       /* declared; body colour is --ink */
+
+  /* type */
+  --display: "Anton", Impact, sans-serif;
+  --mono: "Space Mono", ui-monospace, monospace;
+
+  /* layout */
+  --pad: 40px;
+  --rule: 2px;
+  --mail-fs: 200px;       /* base; JS may raise to 260px cap */
+  --tick-h: 52px;
+
+  /* motion */
+  --t-micro: 140ms;
+  --t-wipe: 420ms;
+  --t-scramble-out: 720ms;
+  --t-hold: 1600ms;
+  --t-scramble-in: 640ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --roll: 38s;
+}
+```
+
+## Typography
+
+| Role             | Family     | Size | Weight | Line-height | Tracking | Case      |
+|------------------|------------|-----:|-------:|------------:|---------:|-----------|
+| Address / copied | Anton      | 200px (fit) | 400 | 0.86   | −0.01em  | UPPERCASE |
+| Ticker           | Anton      | 28px | 400    | 1           | +0.02em  | UPPERCASE |
+| Body / meta      | Space Mono | 13px | 400    | 1.5         | 0        | sentence  |
+| Top labels       | Space Mono | 13px | 400/700| 1.5         | +0.04em  | UPPERCASE |
+| Kick             | Space Mono | 13px | 700/400| 1.5         | +0.04em  | UPPERCASE |
+| Grid headings    | Space Mono | 12px | 700    | 1           | +0.06em  | UPPERCASE |
+| Chip             | Space Mono | 12px | 700    | 1           | +0.06em  | UPPERCASE |
+| Grid links       | Space Mono | 13px | 400    | 1.5         | 0        | as written|
+
+Kick right label is weight 400; left is 700. Top cells: `<b>` 700, second line 400.
 
 ## Implementation notes
 

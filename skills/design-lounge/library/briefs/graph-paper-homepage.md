@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from bermawy.com: the whole page is a desk. Graph paper behind everything, a typewriter face for all text, a photo with torn edges, project cards held by paperclips, and a table of articles that reads like a lab notebook. This piece is the homepage of a fictional bookbinder, Hana Kettleby. It opens with "hello, reader" typed out letter by letter in oxblood, an ink drawing in a torn, taped print, a three-paragraph introduction with one handwritten margin note, then "in the works" (three clipped slips) and "notebook" (four dated entries), and ends with her surname drawn in pencil hatching. The detail worth copying is restraint: one typewriter face, one accent, one handwritten note. The paper props do the personality, so the copy can stay short and plain.
-
-## Reference behaviour
-
-1. On load the `h1` types "hello, reader" one character at a time: 70–130ms per character, with a 260ms pause after the comma. A 4px underscore caret blinks after the text.
-2. Clicking or pressing Enter on the heading clears it and types it again. Reduced motion shows the full text at once.
-3. 900ms after load, the handwritten note "yes, all by hand." draws its curved arrow toward the first paragraph (stroke-dashoffset 120 → 0, 900ms expo-out).
-4. The header is sticky, 92% paper, with a 2px oxblood rule under it.
-5. Hovering or focusing a project card lifts it 6px and tilts it from the paperclip (top centre): -1.2deg, 1deg, -0.8deg for cards one to three. Shadow grows under it. 500ms expo-out.
-6. Hovering or focusing a notebook row turns its border oxblood, its fill white, draws a 1px oxblood underline under the title from left to right (300ms), and nudges the spectacles icon 3px right with a -8deg tilt.
-7. The photo and the three project slips have torn edges, generated once from a seeded random so they look the same on every load.
-8. The footer wordmark "KETTLEBY" is SVG text filled with a -35deg hatch pattern and a 1.4px graphite stroke, like a pencil sketch.
 
 ## Structure
 
@@ -52,64 +43,6 @@ Studied from bermawy.com: the whole page is a desk. Graph paper behind everythin
 - `ul.works > li > a.work`: paperclip SVG, `.slip` (torn, `aria-hidden`, holds the display name and a handwritten sub-line), `p` with the bold name and one sentence.
 - `ol.log > li > a`: `time`, `.t` title, `.g` spectacles icon.
 - `footer` with the hatched SVG wordmark, `role="img"`.
-
-## Tokens
-
-```css
-:root {
-  --paper: #ecf0e1;        /* engineering-pad green */
-  --grid: #d6e0c8;         /* 16px minor grid */
-  --grid-major: #c3d2b2;   /* 80px major grid */
-  --card: #fafaf4;         /* cards, rows, photo sheet */
-  --card-2: #f1f1e6;       /* slip inside a card */
-  --ink: #26271f;          /* body text */
-  --ink-2: #4a4c40;        /* card copy, captions */
-  --ink-3: #6b6e5e;        /* dates, hatch */
-  --line: #b9c4a8;         /* card borders, row dividers */
-  --accent: #9c3324;       /* oxblood: name, nav, h1, bold words, rules */
-  --focus: #9c3324;
-  --tape: rgba(214,196,150,.72);
-
-  --type: "Courier Prime", "Courier New", monospace;
-  --hand: "Caveat", "Bradley Hand", cursive;
-
-  --fs-h1: 56px; --fs-body: 15px; --fs-row: 14.5px; --fs-small: 13px;
-  --space: 4px 8px 16px 18px 22px 28px 32px 44px 72px;
-  --radius: 0;             /* nothing is rounded; paper is square */
-  --shadow-print: drop-shadow(0 6px 8px rgba(38,39,31,.16));
-  --shadow-lift: 0 18px 24px -14px rgba(38,39,31,.35);
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-}
-body {
-  background-color: var(--paper);
-  background-image:
-    linear-gradient(var(--grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
-}
-```
-
-## Typography
-
-| Role | Family | Size / LH | Weight | Tracking | Case / colour |
-| --- | --- | --- | --- | --- | --- |
-| Name mark | Courier Prime | 17px | 700 | 0.16em | uppercase, accent |
-| Nav | Courier Prime | 14px | 400 | 0.08em | uppercase, in [brackets], accent |
-| Greeting h1 | Courier Prime | 56px / 1 | 700 | -0.01em | lowercase, accent |
-| Body | Courier Prime | 15px / 1.6 | 400 | 0 | `--ink`; key phrases 700 accent |
-| Section label | Courier Prime | 13px | 400 | 0.1em | lowercase, accent |
-| Slip name | Courier Prime | 30px / 1 | 700 | 0.04em | uppercase, `--ink-2`, 1px white text-shadow (debossed) |
-| Card copy | Courier Prime | 13.5px / 1.6 | 400 | 0 | `--ink-2`, name bold accent |
-| Log date | Courier Prime | 14px | 400 | 0 | ISO `YYYY-MM-DD`, `--ink-3` |
-| Log title | Courier Prime | 14.5px | 400 | 0 | sentence case, `--ink` |
-| Handwriting | Caveat | 20–24px / 1.05 | 500–700 | 0 | caption `--ink-2`, note accent |
-| Wordmark | Courier Prime (SVG) | 196 units | 700 | -6 | uppercase, hatched |
-
-Handwriting appears in three places only: the photo caption, the margin note, and the slip sub-lines. It never carries a heading or a link.
 
 ## Motion
 
@@ -172,6 +105,79 @@ Handwriting appears in three places only: the photo caption, the margin note, an
 - [ ] Projects: Weatherbook, Grain School, Spine & Co.
 - [ ] Four notebook rows, first dated 2026-09-28.
 - [ ] Footer wordmark "KETTLEBY" hatched at -35deg.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. On load the `h1` types "hello, reader" one character at a time: 70–130ms per character, with a 260ms pause after the comma. A 4px underscore caret blinks after the text.
+2. Clicking or pressing Enter on the heading clears it and types it again. Reduced motion shows the full text at once.
+3. 900ms after load, the handwritten note "yes, all by hand." draws its curved arrow toward the first paragraph (stroke-dashoffset 120 → 0, 900ms expo-out).
+4. The header is sticky, 92% paper, with a 2px oxblood rule under it.
+5. Hovering or focusing a project card lifts it 6px and tilts it from the paperclip (top centre): -1.2deg, 1deg, -0.8deg for cards one to three. Shadow grows under it. 500ms expo-out.
+6. Hovering or focusing a notebook row turns its border oxblood, its fill white, draws a 1px oxblood underline under the title from left to right (300ms), and nudges the spectacles icon 3px right with a -8deg tilt.
+7. The photo and the three project slips have torn edges, generated once from a seeded random so they look the same on every load.
+8. The footer wordmark "KETTLEBY" is SVG text filled with a -35deg hatch pattern and a 1.4px graphite stroke, like a pencil sketch.
+
+## Tokens
+
+```css
+:root {
+  --paper: #ecf0e1;        /* engineering-pad green */
+  --grid: #d6e0c8;         /* 16px minor grid */
+  --grid-major: #c3d2b2;   /* 80px major grid */
+  --card: #fafaf4;         /* cards, rows, photo sheet */
+  --card-2: #f1f1e6;       /* slip inside a card */
+  --ink: #26271f;          /* body text */
+  --ink-2: #4a4c40;        /* card copy, captions */
+  --ink-3: #6b6e5e;        /* dates, hatch */
+  --line: #b9c4a8;         /* card borders, row dividers */
+  --accent: #9c3324;       /* oxblood: name, nav, h1, bold words, rules */
+  --focus: #9c3324;
+  --tape: rgba(214,196,150,.72);
+
+  --type: "Courier Prime", "Courier New", monospace;
+  --hand: "Caveat", "Bradley Hand", cursive;
+
+  --fs-h1: 56px; --fs-body: 15px; --fs-row: 14.5px; --fs-small: 13px;
+  --space: 4px 8px 16px 18px 22px 28px 32px 44px 72px;
+  --radius: 0;             /* nothing is rounded; paper is square */
+  --shadow-print: drop-shadow(0 6px 8px rgba(38,39,31,.16));
+  --shadow-lift: 0 18px 24px -14px rgba(38,39,31,.35);
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+}
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+}
+```
+
+## Typography
+
+| Role | Family | Size / LH | Weight | Tracking | Case / colour |
+| --- | --- | --- | --- | --- | --- |
+| Name mark | Courier Prime | 17px | 700 | 0.16em | uppercase, accent |
+| Nav | Courier Prime | 14px | 400 | 0.08em | uppercase, in [brackets], accent |
+| Greeting h1 | Courier Prime | 56px / 1 | 700 | -0.01em | lowercase, accent |
+| Body | Courier Prime | 15px / 1.6 | 400 | 0 | `--ink`; key phrases 700 accent |
+| Section label | Courier Prime | 13px | 400 | 0.1em | lowercase, accent |
+| Slip name | Courier Prime | 30px / 1 | 700 | 0.04em | uppercase, `--ink-2`, 1px white text-shadow (debossed) |
+| Card copy | Courier Prime | 13.5px / 1.6 | 400 | 0 | `--ink-2`, name bold accent |
+| Log date | Courier Prime | 14px | 400 | 0 | ISO `YYYY-MM-DD`, `--ink-3` |
+| Log title | Courier Prime | 14.5px | 400 | 0 | sentence case, `--ink` |
+| Handwriting | Caveat | 20–24px / 1.05 | 500–700 | 0 | caption `--ink-2`, note accent |
+| Wordmark | Courier Prime (SVG) | 196 units | 700 | -6 | uppercase, hatched |
+
+Handwriting appears in three places only: the photo caption, the margin note, and the slip sub-lines. It never carries a heading or a link.
 
 ## Implementation notes
 

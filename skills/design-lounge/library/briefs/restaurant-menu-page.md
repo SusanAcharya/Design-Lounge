@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The menu page of a fictional Norwich bistro, Lanterne. It looks like a riso-printed menu card: cream paper with a fine dot grain, an oxblood band at the top, mustard used as a second ink, and a 136px condensed serif name printed slightly off-register. Type for everything else is a typewriter mono. Under the hero, a category bar sticks to the top and follows your scroll. Dishes sit in two columns with dotted leaders running to the price, the way a printed menu does. The detail worth copying is the leader: a flex spacer with a dotted bottom border, so prices line up on the right at every width without a table.
-
-## Reference behaviour
-
-1. First frame at 1280×800: 56px oxblood top bar, the hero band (name, today's hours, address, `Reserve a table`), the category bar, and the first three rows of Small plates. `Small plates` is the current category.
-2. The hero shows `Open until 23:00` with a 10px mustard dot, then `Saturday · kitchen 12:00–22:30`, then `112 Carrow Street, Norwich NR1 2HQ`.
-3. Scroll down. When the category bar reaches the top it sticks there (`top: 0`). The current category follows the section under the bar: a section becomes current when its top passes 24px below the bar's bottom edge. At the very bottom of the page, the last category (Drinks) is current.
-4. Click a category. The page scrolls to that section (smooth unless reduced motion). The section heading lands 60px from the top, just under the bar. The category becomes current.
-5. On narrow screens the bar scrolls sideways. When the current category changes, the bar scrolls so the current link sits in the middle.
-6. Every dish row is: name (24px serif), a dotted leader, price (16px mono bold). Under it, one line of description in 13px mono and any dietary tags.
-7. Dietary tags are small bordered text badges: `V`, `VG`, `GF`. Each is an `abbr` with a full-word title. A legend in the allergy note repeats what they mean.
-8. The Grill section opens with one Chef's pick: Whole grilled plaice, £26.00. It has a mustard tint, a 2px ink border, a 4px oxblood offset shadow, and an oxblood `Chef's pick` stamp tilted -2° over its top edge.
-9. Click `Reserve a table`. A popover opens under the button (right-aligned on desktop, left-aligned under 820px) with a 220ms fade and 6px drop. Focus moves to the minus button.
-10. In the popover: party size stepper (1–8, starts at 2; minus disables at 1, plus at 8), Date select (Sat 3 Oct first), Time select (19:30 selected), and `Find a table`.
-11. Submit. No reload. A polite live line reads `Held: 3 at 19:30, Sat 3 Oct. We will text to confirm.` Any change clears it.
-12. Esc closes the popover and returns focus to the button. A click outside closes it without moving focus. Clicking the button again closes it.
-13. Reduced motion: no smooth scroll, no popover animation, transitions 1ms.
 
 ## Structure
 
@@ -59,59 +45,6 @@ The menu page of a fictional Norwich bistro, Lanterne. It looks like a riso-prin
 - `nav.cats aria-label="Menu sections"` is a sibling of the hero, so it sticks across the whole page. It holds a `ul` of five anchor links.
 - `main` holds five `section.menu` elements, each with `id`, `scroll-margin-top: 60px`, and an `h2`. Dishes are `li.it` in a `ul.items` grid with an `h3` name.
 - The allergy note is an `aside` at the end of `main`.
-
-## Tokens
-
-```css
-:root {
-  --cream: #f2e6cf;      /* page paper */
-  --paper: #f8efdc;      /* category bar, popover, note */
-  --ox: #6b1e23;         /* oxblood: bands, headings, tags, focus on cream */
-  --ox-2: #86292f;       /* oxblood hover */
-  --ink: #2a1a17;        /* text, rules, offset shadows */
-  --ink-2: #5b4440;      /* descriptions, labels */
-  --mustard: #d79b22;    /* second ink: misregister, CTA, dot, halftone, focus on oxblood */
-  --mustard-t: #f0d79a;  /* Chef's pick fill, eyebrow on oxblood */
-  --rule: #d8c6a6;       /* section and row rules */
-
-  --display: "Instrument Serif", Georgia, serif;
-  --mono: "Courier Prime", "Courier New", monospace;
-
-  --fs-10: 10px; --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-15: 15px; --fs-16: 16px;
-  --fs-22: 22px; --fs-24: 24px; --fs-30: 30px; --fs-52: 52px; --fs-136: 136px;
-
-  --s-4: 4px; --s-8: 8px; --s-16: 16px; --s-24: 24px; --s-40: 40px; --s-56: 56px;
-
-  --r: 3px;
-  --offset-sm: 3px 3px 0 var(--ink);   /* CTA */
-  --offset-md: 4px 4px 0 var(--ox);    /* Chef's pick */
-  --offset-lg: 6px 6px 0 var(--ox);    /* popover */
-  --t-micro: 150ms; --t-pop: 220ms;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-```
-
-Grain: `background: var(--cream) radial-gradient(rgba(107,30,35,.07) .7px, transparent .8px) 0 0 / 4px 4px` on `body`.
-
-Halftone: a `::before` on the hero, right-aligned, 520px wide, full height, with `radial-gradient(var(--mustard) 1.6px, transparent 1.9px) 0 0 / 9px 9px`, masked by a radial fade, opacity 0.55.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Name `h1` | Instrument Serif | 136px | 400 | 0.86 | -0.02em | Title, mustard shadow 4px 3px |
-| Open line | Instrument Serif | 30px | 400 | 1 | 0 | Sentence |
-| Section `h2` | Instrument Serif | 52px | 400 | 1 | 0 | Sentence, `--ox` |
-| Dish `h3` | Instrument Serif | 24px | 400 | 1.15 | 0 | Sentence |
-| Popover title | Instrument Serif | 30px | 400 | 1 | 0 | Sentence |
-| Body | Courier Prime | 15px | 400 | 1.55 | 0 | Sentence |
-| Description | Courier Prime | 13px | 400 | 1.55 | 0 | Sentence, max 44ch |
-| Price | Courier Prime | 16px | 700 | 1 | 0 | `£0.00` |
-| Category link | Courier Prime | 13px | 400, current 700 | 1 | 0.1em | UPPER |
-| Eyebrow, labels | Courier Prime | 11–12px | 400 | 1.4 | 0.14–0.18em | UPPER |
-| Tag badge | Courier Prime | 10px | 700 | 16px | 0.06em | UPPER |
-
-Always print prices with two decimals so the leaders end at the same visual width. The serif is display only; never set a description in it.
 
 ## Motion
 
@@ -179,6 +112,79 @@ The press looks like a stamp pushed into paper: the button moves toward its shad
 - [ ] Categories are numbered 01–05: Small plates, Grill, Sides, Desserts, Drinks.
 - [ ] Chef's pick is Whole grilled plaice at £26.00.
 - [ ] Popover starts at 2 guests, Sat 3 Oct, 19:30.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 1280×800: 56px oxblood top bar, the hero band (name, today's hours, address, `Reserve a table`), the category bar, and the first three rows of Small plates. `Small plates` is the current category.
+2. The hero shows `Open until 23:00` with a 10px mustard dot, then `Saturday · kitchen 12:00–22:30`, then `112 Carrow Street, Norwich NR1 2HQ`.
+3. Scroll down. When the category bar reaches the top it sticks there (`top: 0`). The current category follows the section under the bar: a section becomes current when its top passes 24px below the bar's bottom edge. At the very bottom of the page, the last category (Drinks) is current.
+4. Click a category. The page scrolls to that section (smooth unless reduced motion). The section heading lands 60px from the top, just under the bar. The category becomes current.
+5. On narrow screens the bar scrolls sideways. When the current category changes, the bar scrolls so the current link sits in the middle.
+6. Every dish row is: name (24px serif), a dotted leader, price (16px mono bold). Under it, one line of description in 13px mono and any dietary tags.
+7. Dietary tags are small bordered text badges: `V`, `VG`, `GF`. Each is an `abbr` with a full-word title. A legend in the allergy note repeats what they mean.
+8. The Grill section opens with one Chef's pick: Whole grilled plaice, £26.00. It has a mustard tint, a 2px ink border, a 4px oxblood offset shadow, and an oxblood `Chef's pick` stamp tilted -2° over its top edge.
+9. Click `Reserve a table`. A popover opens under the button (right-aligned on desktop, left-aligned under 820px) with a 220ms fade and 6px drop. Focus moves to the minus button.
+10. In the popover: party size stepper (1–8, starts at 2; minus disables at 1, plus at 8), Date select (Sat 3 Oct first), Time select (19:30 selected), and `Find a table`.
+11. Submit. No reload. A polite live line reads `Held: 3 at 19:30, Sat 3 Oct. We will text to confirm.` Any change clears it.
+12. Esc closes the popover and returns focus to the button. A click outside closes it without moving focus. Clicking the button again closes it.
+13. Reduced motion: no smooth scroll, no popover animation, transitions 1ms.
+
+## Tokens
+
+```css
+:root {
+  --cream: #f2e6cf;      /* page paper */
+  --paper: #f8efdc;      /* category bar, popover, note */
+  --ox: #6b1e23;         /* oxblood: bands, headings, tags, focus on cream */
+  --ox-2: #86292f;       /* oxblood hover */
+  --ink: #2a1a17;        /* text, rules, offset shadows */
+  --ink-2: #5b4440;      /* descriptions, labels */
+  --mustard: #d79b22;    /* second ink: misregister, CTA, dot, halftone, focus on oxblood */
+  --mustard-t: #f0d79a;  /* Chef's pick fill, eyebrow on oxblood */
+  --rule: #d8c6a6;       /* section and row rules */
+
+  --display: "Instrument Serif", Georgia, serif;
+  --mono: "Courier Prime", "Courier New", monospace;
+
+  --fs-10: 10px; --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-15: 15px; --fs-16: 16px;
+  --fs-22: 22px; --fs-24: 24px; --fs-30: 30px; --fs-52: 52px; --fs-136: 136px;
+
+  --s-4: 4px; --s-8: 8px; --s-16: 16px; --s-24: 24px; --s-40: 40px; --s-56: 56px;
+
+  --r: 3px;
+  --offset-sm: 3px 3px 0 var(--ink);   /* CTA */
+  --offset-md: 4px 4px 0 var(--ox);    /* Chef's pick */
+  --offset-lg: 6px 6px 0 var(--ox);    /* popover */
+  --t-micro: 150ms; --t-pop: 220ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+```
+
+Grain: `background: var(--cream) radial-gradient(rgba(107,30,35,.07) .7px, transparent .8px) 0 0 / 4px 4px` on `body`.
+
+Halftone: a `::before` on the hero, right-aligned, 520px wide, full height, with `radial-gradient(var(--mustard) 1.6px, transparent 1.9px) 0 0 / 9px 9px`, masked by a radial fade, opacity 0.55.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Name `h1` | Instrument Serif | 136px | 400 | 0.86 | -0.02em | Title, mustard shadow 4px 3px |
+| Open line | Instrument Serif | 30px | 400 | 1 | 0 | Sentence |
+| Section `h2` | Instrument Serif | 52px | 400 | 1 | 0 | Sentence, `--ox` |
+| Dish `h3` | Instrument Serif | 24px | 400 | 1.15 | 0 | Sentence |
+| Popover title | Instrument Serif | 30px | 400 | 1 | 0 | Sentence |
+| Body | Courier Prime | 15px | 400 | 1.55 | 0 | Sentence |
+| Description | Courier Prime | 13px | 400 | 1.55 | 0 | Sentence, max 44ch |
+| Price | Courier Prime | 16px | 700 | 1 | 0 | `£0.00` |
+| Category link | Courier Prime | 13px | 400, current 700 | 1 | 0.1em | UPPER |
+| Eyebrow, labels | Courier Prime | 11–12px | 400 | 1.4 | 0.14–0.18em | UPPER |
+| Tag badge | Courier Prime | 10px | 700 | 16px | 0.06em | UPPER |
+
+Always print prices with two decimals so the leaders end at the same visual width. The serif is display only; never set a description in it.
 
 ## Implementation notes
 

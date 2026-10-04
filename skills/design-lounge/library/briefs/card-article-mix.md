@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The "This week" block of a magazine site, "Tributary", issue 41. Three columns hold three kinds of card: one large lead story with a drawn cover, two "Most read" text cards with big cobalt numbers, and three small cards with square thumbnails. It reads like a newsprint page: cream stock, black ink, hairline rules between columns, one cobalt accent, a display serif for every title, and a grotesk for everything else. The detail worth copying is the link model. Each card has exactly one link, on the title, and that link is stretched over the whole card. Hovering anywhere on the card underlines the title and nudges the cover 4px up and to the right.
-
-## Reference behaviour
-
-1. First frame: masthead, a "This week" heading row, a 1px ink rule, then three columns. Every card is in its resting state.
-2. The lead column holds one card: a 290px cover, the kicker "WATER", a 44px serif title, a 16px dek, and a byline.
-3. The middle column holds two numbered cards, "01" and "02", split by a 1px rule. Each has a kicker, a 30px serif title, a 14px dek, and a byline. No image.
-4. The right column holds three small cards, each a 96 × 96 thumbnail beside a kicker, a 21px serif title, and a read time. Below them sits an "All of issue 41 →" text link.
-5. Hover any card: the title underline fades in from transparent to ink in 160ms. The underline is 1px with a 0.14em offset.
-6. Hover a card with a cover (lead and small cards): the drawn art inside the cover moves `translate(4px, -4px)` in 240ms. The cover frame stays still; only the art inside moves. The art is 8px larger than the frame on every side so no gap shows.
-7. Tab to a card: focus lands on the title link. A 2px cobalt outline is drawn around the whole card with a 6px offset. The cover nudges the same as on hover.
-8. Click anywhere on a card (cover, kicker, dek, byline, blank space): it follows the title link.
-9. Numbers "01" and "02" are decorative. Screen readers hear the kicker "Most read · Work" and then the title.
-10. With reduced motion: the underline still appears, without a fade. The cover does not move.
 
 ## Structure
 
@@ -66,62 +55,6 @@ Card copy:
 | Small | Water | What a dry well tells a geologist | none | 7 min read |
 
 Masthead: "Issue 41 · October 2026", wordmark "Tributary" in italic serif, nav "Cities, Water, Work, Food, Archive". Heading row: "This week" and "6 stories · Updated 3 October".
-
-## Tokens
-
-```css
-:root {
-  /* colour: newsprint cream, black ink, one cobalt */
-  --paper: #f2ecdf;    /* page */
-  --paper-2: #e8e0cf;  /* cover wells */
-  --ink: #16140f;      /* titles, rules, cover ink */
-  --ink-2: #4b463c;    /* dek, issue line, byline name */
-  --ink-3: #6e685c;    /* byline, read time */
-  --rule: #d3c9b4;     /* column and card dividers */
-  --cobalt: #1f44c4;   /* kickers, big numbers, river, current nav, focus */
-
-  /* type */
-  --serif: "Instrument Serif", Georgia, serif;
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-
-  /* space (4px base) */
-  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-12: 48px;
-
-  /* layout */
-  --cols: minmax(0, 1.62fr) minmax(0, 1fr) minmax(0, 1.08fr);
-  --cover-h: 290px;
-  --thumb: 96px;
-  --nudge: 4px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --t-micro: 160ms;    /* underline */
-  --t-nudge: 240ms;    /* cover art */
-}
-```
-
-No shadows and no radii. Every corner is square. Regions are split by rules only.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Wordmark | Instrument Serif italic | 36px | 400 | 1 | -0.01em | Title |
-| Issue line | Schibsted Grotesk | 12px | 400 | 1.5 | 0.06em | UPPER |
-| Nav | Schibsted Grotesk | 13px | 500 | 1.5 | 0 | Title |
-| Section heading | Instrument Serif | 40px | 400 | 1 | -0.01em | sentence |
-| Heading meta | Schibsted Grotesk | 12px | 400 | 1.5 | 0.06em | UPPER |
-| Kicker | Schibsted Grotesk | 11px | 700 | 1.5 | 0.12em | UPPER, cobalt |
-| Lead title | Instrument Serif | 44px | 400 | 1.02 | -0.01em | sentence |
-| Lead dek | Schibsted Grotesk | 16px | 400 | 1.5 | 0 | sentence, max 56ch |
-| Big number | Instrument Serif | 84px | 400 | 0.8 | -0.03em | figures, cobalt |
-| Numbered title | Instrument Serif | 30px | 400 | 1.06 | -0.01em | sentence |
-| Numbered dek | Schibsted Grotesk | 14px | 400 | 1.5 | 0 | sentence |
-| Small title | Instrument Serif | 21px | 400 | 1.12 | -0.01em | sentence |
-| Byline | Schibsted Grotesk | 12px | 400 (name 500) | 1.5 | 0 | sentence |
-| Caption chip | Schibsted Grotesk | 10px | 400 | 1 | 0.08em | UPPER |
-
-Every title is the serif at weight 400. Do not bold the serif. Every label is the grotesk.
 
 ## Motion
 
@@ -185,6 +118,79 @@ There is no entrance animation. The page is still on load.
 - [ ] Numbers "01" and "02" in Instrument Serif 84px cobalt.
 - [ ] Small cards: Cities, Archive, Water, with 96 × 96 drawn thumbnails.
 - [ ] Page `#f2ecdf`, cover wells `#e8e0cf`, rules `#d3c9b4`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: masthead, a "This week" heading row, a 1px ink rule, then three columns. Every card is in its resting state.
+2. The lead column holds one card: a 290px cover, the kicker "WATER", a 44px serif title, a 16px dek, and a byline.
+3. The middle column holds two numbered cards, "01" and "02", split by a 1px rule. Each has a kicker, a 30px serif title, a 14px dek, and a byline. No image.
+4. The right column holds three small cards, each a 96 × 96 thumbnail beside a kicker, a 21px serif title, and a read time. Below them sits an "All of issue 41 →" text link.
+5. Hover any card: the title underline fades in from transparent to ink in 160ms. The underline is 1px with a 0.14em offset.
+6. Hover a card with a cover (lead and small cards): the drawn art inside the cover moves `translate(4px, -4px)` in 240ms. The cover frame stays still; only the art inside moves. The art is 8px larger than the frame on every side so no gap shows.
+7. Tab to a card: focus lands on the title link. A 2px cobalt outline is drawn around the whole card with a 6px offset. The cover nudges the same as on hover.
+8. Click anywhere on a card (cover, kicker, dek, byline, blank space): it follows the title link.
+9. Numbers "01" and "02" are decorative. Screen readers hear the kicker "Most read · Work" and then the title.
+10. With reduced motion: the underline still appears, without a fade. The cover does not move.
+
+## Tokens
+
+```css
+:root {
+  /* colour: newsprint cream, black ink, one cobalt */
+  --paper: #f2ecdf;    /* page */
+  --paper-2: #e8e0cf;  /* cover wells */
+  --ink: #16140f;      /* titles, rules, cover ink */
+  --ink-2: #4b463c;    /* dek, issue line, byline name */
+  --ink-3: #6e685c;    /* byline, read time */
+  --rule: #d3c9b4;     /* column and card dividers */
+  --cobalt: #1f44c4;   /* kickers, big numbers, river, current nav, focus */
+
+  /* type */
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+
+  /* space (4px base) */
+  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-12: 48px;
+
+  /* layout */
+  --cols: minmax(0, 1.62fr) minmax(0, 1fr) minmax(0, 1.08fr);
+  --cover-h: 290px;
+  --thumb: 96px;
+  --nudge: 4px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-micro: 160ms;    /* underline */
+  --t-nudge: 240ms;    /* cover art */
+}
+```
+
+No shadows and no radii. Every corner is square. Regions are split by rules only.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Wordmark | Instrument Serif italic | 36px | 400 | 1 | -0.01em | Title |
+| Issue line | Schibsted Grotesk | 12px | 400 | 1.5 | 0.06em | UPPER |
+| Nav | Schibsted Grotesk | 13px | 500 | 1.5 | 0 | Title |
+| Section heading | Instrument Serif | 40px | 400 | 1 | -0.01em | sentence |
+| Heading meta | Schibsted Grotesk | 12px | 400 | 1.5 | 0.06em | UPPER |
+| Kicker | Schibsted Grotesk | 11px | 700 | 1.5 | 0.12em | UPPER, cobalt |
+| Lead title | Instrument Serif | 44px | 400 | 1.02 | -0.01em | sentence |
+| Lead dek | Schibsted Grotesk | 16px | 400 | 1.5 | 0 | sentence, max 56ch |
+| Big number | Instrument Serif | 84px | 400 | 0.8 | -0.03em | figures, cobalt |
+| Numbered title | Instrument Serif | 30px | 400 | 1.06 | -0.01em | sentence |
+| Numbered dek | Schibsted Grotesk | 14px | 400 | 1.5 | 0 | sentence |
+| Small title | Instrument Serif | 21px | 400 | 1.12 | -0.01em | sentence |
+| Byline | Schibsted Grotesk | 12px | 400 (name 500) | 1.5 | 0 | sentence |
+| Caption chip | Schibsted Grotesk | 10px | 400 | 1 | 0.08em | UPPER |
+
+Every title is the serif at weight 400. Do not bold the serif. Every label is the grotesk.
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One case study from the portfolio of Noor Halabi, a fictional product designer: "Ebb", a ferry-pass app for Kelda Ferries. The page reads like a long magazine feature on a soft sage ground: a 250px italic serif title, a phone mockup floating over a gradient fjord, a four-column facts strip, then numbered sections (Problem, Process, Outcome) with sticky side labels, three hand-drawn SVG sketches that draw themselves on scroll, count-up metrics, a coral pull-quote card and a large next-project link. The detail worth copying is the restraint of the system: one serif, one sans, one coral accent, a 3/9 column split that never changes, and motion only where it explains something (sketches drawing, numbers arriving).
-
-## Reference behaviour
-
-1. Initial state (scrollTop 0): sticky 60px bar, hero with eyebrow, "Ebb", lede, the phone art card, and the facts strip all inside the first 800px.
-2. A 2px coral progress line along the bar's bottom edge grows from 0 to 100% width as the page scrolls.
-3. Scroll to Problem: left column shows "01" (64px coral serif) over the uppercase label; it is `position:sticky; top:84px` so it stays beside the text while the section scrolls.
-4. Scroll to Process: when the sketch row is 35% visible, all strokes in the three SVG sketches draw in over 1400ms (stroke-dashoffset to 0). Accent shapes are coral and 2.2px; the rest are ink and 1.6px.
-5. Clicking the sketch row replays the drawing (dashoffset resets with transitions disabled for one frame, then draws again).
-6. Scroll to Outcome: when the metric row is 35% visible, four numbers count up over 1200ms with ease-out-quart: −38%, 61%, 4.8, 212k. Suffixes render at 32px next to the 72px figure.
-7. Below: a coral-tint quote card, then the "Next case study" band. Hovering it moves the round arrow button 8px left and rotates it −45° over 360ms.
-8. The "Next project" link in the bar smooth-scrolls to the band.
 
 ## Structure
 
@@ -49,6 +40,72 @@ below the fold (each section is a 3fr / 9fr grid, 96px top padding):
 - Sketches are `<figure>` with an inline SVG (`aria-hidden`) and a `<figcaption>`.
 - `<blockquote>` with quote SVG, `<p>` and `<footer>` for attribution.
 - `<a class="next">` as the closing band.
+
+## Motion
+
+| Element          | Trigger                    | Property            | From → To          | Duration | Easing         |
+|------------------|----------------------------|---------------------|--------------------|---------:|----------------|
+| `.prog`          | scroll                     | width               | 0 → 100%           | live     | —              |
+| sketch strokes   | sketch row 35% in view     | stroke-dashoffset   | `--len` → 0        | 1400ms   | `--ease`       |
+| sketch replay    | click sketch row           | dashoffset reset, then draw | instant → 1400ms | — | `--ease`   |
+| metric figures   | metric row 35% in view     | text value          | 0 → target         | 1200ms   | ease-out-quart `1-(1-t)^4` |
+| next arrow       | hover `.next`              | translateX, rotate  | 0,0 → −8px,−45°    | 360ms    | `--ease-out`   |
+| anchor jump      | click "Next project"       | scroll              | smooth             | browser  | —              |
+
+Reduced motion: transitions become 1ms, count-up duration 1ms (numbers appear final), `scroll-behavior:auto`.
+
+## States
+
+- **Bar links:** `--ink-2` at rest, `--ink` on hover; "Next project" is always `--ink` 600.
+- **Focus-visible:** 2px coral outline, 3px offset, 4px radius on every link and the sketch row.
+- **Sketches before reveal:** strokes invisible (fully dashed out); pads and captions are visible so the row never looks empty.
+- **Metrics before reveal:** show "0%", "0.0", "0k" in final typography so layout doesn't shift.
+- **Next band hover:** arrow disc shifts and rotates; band background unchanged.
+
+## Accessibility
+
+- Facts use a `<dl>`; each fact is a `<div>` with `<dt>`/`<dd>`.
+- Section labels are real `<h2>`s; the big statement in each section is an `<h3>`.
+- Sketch SVGs are `aria-hidden`; the caption carries the meaning.
+- The metric count-up changes text content; it is not a live region (it runs once and would be noisy). Final values are reached within 1.2s.
+- Body copy `--ink-2` on `--bg` is 6.4:1; `--ink-3` labels are 3.6:1 and only used at 12px+ uppercase 600 for non-essential labels.
+- The phone art is `aria-label`led as one image; its fake UI is not focusable.
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- 1024–1279: title 200px; art card 440px tall; section grid 2fr/10fr.
+- 768–1023: hero stacks (text above, art card full width at 420px tall); facts 2×2; section labels stop being sticky and sit above content; sketches stay 3-up.
+- < 640: title 140px; lede 26px; sketches 1-up; metrics 2×2 at 56px; quote 26px with the mark above the text; side padding 20px.
+
+## Acceptance checklist
+
+- [ ] Title is italic Literata at 250px, colour `#2f5a57`, line-height .8.
+- [ ] Hero, phone mockup and the full facts strip are visible within the first 800px.
+- [ ] Facts strip has a 1px ink top rule and 1px `--line` dividers between four columns.
+- [ ] Progress line on the bar tracks scroll from 0 to 100%.
+- [ ] Section labels stick at `top:84px` beside their section.
+- [ ] Sketches draw in over 1400ms when 35% visible, and clicking the row replays them.
+- [ ] Metrics count up once over 1200ms to −38%, 61%, 4.8, 212k with 32px suffixes.
+- [ ] The QR code has three finder squares and is built in SVG, not an image.
+- [ ] Next band arrow moves −8px and rotates −45° on hover.
+- [ ] Every link shows a coral focus ring.
+- [ ] With reduced motion, everything is visible in its final state with no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state (scrollTop 0): sticky 60px bar, hero with eyebrow, "Ebb", lede, the phone art card, and the facts strip all inside the first 800px.
+2. A 2px coral progress line along the bar's bottom edge grows from 0 to 100% width as the page scrolls.
+3. Scroll to Problem: left column shows "01" (64px coral serif) over the uppercase label; it is `position:sticky; top:84px` so it stays beside the text while the section scrolls.
+4. Scroll to Process: when the sketch row is 35% visible, all strokes in the three SVG sketches draw in over 1400ms (stroke-dashoffset to 0). Accent shapes are coral and 2.2px; the rest are ink and 1.6px.
+5. Clicking the sketch row replays the drawing (dashoffset resets with transitions disabled for one frame, then draws again).
+6. Scroll to Outcome: when the metric row is 35% visible, four numbers count up over 1200ms with ease-out-quart: −38%, 61%, 4.8, 212k. Suffixes render at 32px next to the 72px figure.
+7. Below: a coral-tint quote card, then the "Next case study" band. Hovering it moves the round arrow button 8px left and rotates it −45° over 360ms.
+8. The "Next project" link in the bar smooth-scrolls to the band.
 
 ## Tokens
 
@@ -107,57 +164,6 @@ below the fold (each section is a 3fr / 9fr grid, 96px top padding):
 | Facts value       | Figtree  | 15px  | 400    | 1.45        | 0        | sentence  |
 | Labels (dt, h2)   | Figtree  | 12–13px | 600  | 1.2         | +0.08em  | UPPERCASE |
 | Bar links         | Figtree  | 14px  | 400    | 1           | 0        | Title     |
-
-## Motion
-
-| Element          | Trigger                    | Property            | From → To          | Duration | Easing         |
-|------------------|----------------------------|---------------------|--------------------|---------:|----------------|
-| `.prog`          | scroll                     | width               | 0 → 100%           | live     | —              |
-| sketch strokes   | sketch row 35% in view     | stroke-dashoffset   | `--len` → 0        | 1400ms   | `--ease`       |
-| sketch replay    | click sketch row           | dashoffset reset, then draw | instant → 1400ms | — | `--ease`   |
-| metric figures   | metric row 35% in view     | text value          | 0 → target         | 1200ms   | ease-out-quart `1-(1-t)^4` |
-| next arrow       | hover `.next`              | translateX, rotate  | 0,0 → −8px,−45°    | 360ms    | `--ease-out`   |
-| anchor jump      | click "Next project"       | scroll              | smooth             | browser  | —              |
-
-Reduced motion: transitions become 1ms, count-up duration 1ms (numbers appear final), `scroll-behavior:auto`.
-
-## States
-
-- **Bar links:** `--ink-2` at rest, `--ink` on hover; "Next project" is always `--ink` 600.
-- **Focus-visible:** 2px coral outline, 3px offset, 4px radius on every link and the sketch row.
-- **Sketches before reveal:** strokes invisible (fully dashed out); pads and captions are visible so the row never looks empty.
-- **Metrics before reveal:** show "0%", "0.0", "0k" in final typography so layout doesn't shift.
-- **Next band hover:** arrow disc shifts and rotates; band background unchanged.
-
-## Accessibility
-
-- Facts use a `<dl>`; each fact is a `<div>` with `<dt>`/`<dd>`.
-- Section labels are real `<h2>`s; the big statement in each section is an `<h3>`.
-- Sketch SVGs are `aria-hidden`; the caption carries the meaning.
-- The metric count-up changes text content; it is not a live region (it runs once and would be noisy). Final values are reached within 1.2s.
-- Body copy `--ink-2` on `--bg` is 6.4:1; `--ink-3` labels are 3.6:1 and only used at 12px+ uppercase 600 for non-essential labels.
-- The phone art is `aria-label`led as one image; its fake UI is not focusable.
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- 1024–1279: title 200px; art card 440px tall; section grid 2fr/10fr.
-- 768–1023: hero stacks (text above, art card full width at 420px tall); facts 2×2; section labels stop being sticky and sit above content; sketches stay 3-up.
-- < 640: title 140px; lede 26px; sketches 1-up; metrics 2×2 at 56px; quote 26px with the mark above the text; side padding 20px.
-
-## Acceptance checklist
-
-- [ ] Title is italic Literata at 250px, colour `#2f5a57`, line-height .8.
-- [ ] Hero, phone mockup and the full facts strip are visible within the first 800px.
-- [ ] Facts strip has a 1px ink top rule and 1px `--line` dividers between four columns.
-- [ ] Progress line on the bar tracks scroll from 0 to 100%.
-- [ ] Section labels stick at `top:84px` beside their section.
-- [ ] Sketches draw in over 1400ms when 35% visible, and clicking the row replays them.
-- [ ] Metrics count up once over 1200ms to −38%, 61%, 4.8, 212k with 32px suffixes.
-- [ ] The QR code has three finder squares and is built in SVG, not an image.
-- [ ] Next band arrow moves −8px and rotates −45° on hover.
-- [ ] Every link shows a coral focus ring.
-- [ ] With reduced motion, everything is visible in its final state with no animation.
 
 ## Implementation notes
 

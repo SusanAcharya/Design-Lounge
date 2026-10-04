@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens; keep the code panels dark in both themes.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from tailwindcss.com/docs/installation: the numbered install steps where each step's short explanation sits beside its own dark code panel, and the lines you must add are highlighted. This version documents Wrenpack, a fictional build-time image optimiser. Above the steps, three tabs switch between whole guides (Build plugin, Standalone CLI, Script tag). Each step number is a small bracket-cornered tile that the reader can click to tick the step off, and a thin meter at the top counts "2 of 5 done". It is the content block inside a docs page; the shell around it is `docs-hatched-gutter-shell`, the three-column layout is `docs-three-column`, and a single multi-language sample is `code-snippet-tabs`. The detail worth copying is the highlighted line treatment: a faint blue wash across the full panel width plus a 2px blue bar at the left edge, so a reader sees what changes in a config file without a diff.
-
-## Reference behaviour
-
-1. First frame at 1280×800: mono eyebrow "INSTALLATION", 32px title "Get started with Wrenpack", two lede paragraphs, the 19px "Installation" heading, the tab row with Build plugin selected (2px ink underline), the intro sentence, the meta line "5 steps · about 6 minutes" on the left and "1 of 5 done" plus a 120×4px meter on the right, then steps 01 and the top of 02.
-2. Step 01 starts ticked: its tile is teal with a white check. The others show "02", "03"… in mono.
-3. Each step is a three-column row: 44px number column, the text (15px/600 title, 14.5px body with inline code chips), and a 400px dark code panel. A 1px vertical line runs from each number down to the next.
-4. Code panel: outer frame `#101214` with 12px radius and 4px padding, a 12px label row (filename or "Terminal") with a Copy button on the right, then an inner `#181b1e` panel with 9px radius holding the code.
-5. Lines that start with `+` in the source are drawn highlighted (wash + left bar) and the `+` is stripped. Step 03 highlights the import and the plugin call; step 04 highlights the two `img` lines.
-6. Clicking a number toggles that step done: tile fills teal, number becomes a check, the step title dims to `--ink-2`, the meter and "N of M done" update. Done state is remembered per guide while the page is open.
-7. Copy: writes the snippet (without `+` markers) to the clipboard, the button turns green and reads "Copied" for 1.6s. If the clipboard is blocked (sandboxed iframe), it selects the code text instead and reads "Selected".
-8. Tabs: click or ArrowLeft/ArrowRight/Home/End switch guides. The panel re-renders and fades up 6px over 260ms. Standalone CLI has 4 steps, Script tag has 3.
-9. Below the steps, a bordered note "Stuck on a step?" with a pill button "Browse setup guides".
 
 ## Structure
 
@@ -45,54 +35,6 @@ intro (66ch)
 - Tabs: `div[role=tablist][aria-labelledby=inst]`, three `button[role=tab]`; one `div[role=tabpanel]` re-rendered on change.
 - Steps: `ol.steps` of `li.step`. Number: `button.num[aria-pressed]`. Text: `div.txt > h3 + p`. Code: `div.code > div.code-h + pre > code > span.ln` (one span per line).
 - Note: `div.note` with an icon, a `p` and a `button`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f7f5f0;          /* page, warm ivory */
-  --ink: #1d1f1b;         /* headings, selected tab, inline code text */
-  --ink-2: #55584f;       /* body */
-  --ink-3: #7a7d73;       /* meta, icon */
-  --rule: #e2ded3;        /* tab rule, note border, meter track */
-  --rule-2: #d2cdc0;      /* step connector line, number tile border */
-  --accent: #0e7c66;      /* done tile, meter, link underline, focus */
-  --chip: #ece8de;        /* inline code background */
-  --code-frame: #101214;  /* outer panel */
-  --code-bg: #181b1e;     /* inner panel */
-  --code-ink: #e6e3da;    /* plain code */
-  --code-dim: #8b9086;    /* label row, comments, flags */
-  --code-line: #2a2f33;   /* inner panel 1px inset edge */
-  --t-key: #f28b6b;       /* keywords, shell command, tag names */
-  --t-str: #b4dc8f;       /* strings, copied state */
-  --t-fn: #86cbe6;        /* calls, shell args */
-  --t-attr: #e7c87a;      /* html attributes */
-  --hl-bg: rgba(134,203,230,.11);  /* highlighted line wash */
-  --hl-bar: #86cbe6;               /* highlighted line left bar */
-  --sans: "Geist", system-ui, sans-serif;
-  --mono: "Geist Mono", ui-monospace, monospace;
-  --r-frame: 12px; --r-inner: 9px; --r-tile: 6px; --r-chip: 4px;
-  --step-gap: 40px; --col-num: 44px; --col-code: 400px; --col-gap: 28px;
-  --ease: cubic-bezier(.2,.7,.2,1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Eyebrow | Geist Mono | 12px | 500 | 1 | 0.12em, upper |
-| H1 | Geist | 32px | 600 | 1.15 | -0.025em |
-| Lede | Geist | 16.5px | 400 | 1.7 | 0 |
-| H2 | Geist | 19px | 600 | 1.4 | -0.015em |
-| Tab | Geist | 14.5px | 500 | 1 | 0 |
-| Meta, meter text | Geist Mono | 12px | 400 | 1 | 0 |
-| Step number | Geist Mono | 11px | 500 | 1 | 0 |
-| Step title | Geist | 15px | 600 | 1.4 | -0.005em |
-| Step body | Geist | 14.5px | 400 | 1.75 | 0 |
-| Inline code | Geist Mono | 13px | 500 | 1 | 0, chip `--chip` |
-| Panel label, Copy | Geist | 12px | 400 | 1 | 0 |
-| Code | Geist Mono | 13px | 400 | 1.7 | 0 |
 
 ## Motion
 
@@ -152,6 +94,70 @@ Reduced motion: no fade, no width tween. State still changes.
 - [ ] Build plugin has 5 steps, step 01 starts done, meta reads "1 of 5 done".
 - [ ] Step 03 file label `build.config.ts` with two highlighted lines.
 - [ ] Code inner panel `#181b1e`, highlight bar `#86cbe6`, done tile `#0e7c66`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 1280×800: mono eyebrow "INSTALLATION", 32px title "Get started with Wrenpack", two lede paragraphs, the 19px "Installation" heading, the tab row with Build plugin selected (2px ink underline), the intro sentence, the meta line "5 steps · about 6 minutes" on the left and "1 of 5 done" plus a 120×4px meter on the right, then steps 01 and the top of 02.
+2. Step 01 starts ticked: its tile is teal with a white check. The others show "02", "03"… in mono.
+3. Each step is a three-column row: 44px number column, the text (15px/600 title, 14.5px body with inline code chips), and a 400px dark code panel. A 1px vertical line runs from each number down to the next.
+4. Code panel: outer frame `#101214` with 12px radius and 4px padding, a 12px label row (filename or "Terminal") with a Copy button on the right, then an inner `#181b1e` panel with 9px radius holding the code.
+5. Lines that start with `+` in the source are drawn highlighted (wash + left bar) and the `+` is stripped. Step 03 highlights the import and the plugin call; step 04 highlights the two `img` lines.
+6. Clicking a number toggles that step done: tile fills teal, number becomes a check, the step title dims to `--ink-2`, the meter and "N of M done" update. Done state is remembered per guide while the page is open.
+7. Copy: writes the snippet (without `+` markers) to the clipboard, the button turns green and reads "Copied" for 1.6s. If the clipboard is blocked (sandboxed iframe), it selects the code text instead and reads "Selected".
+8. Tabs: click or ArrowLeft/ArrowRight/Home/End switch guides. The panel re-renders and fades up 6px over 260ms. Standalone CLI has 4 steps, Script tag has 3.
+9. Below the steps, a bordered note "Stuck on a step?" with a pill button "Browse setup guides".
+
+## Tokens
+
+```css
+:root {
+  --bg: #f7f5f0;          /* page, warm ivory */
+  --ink: #1d1f1b;         /* headings, selected tab, inline code text */
+  --ink-2: #55584f;       /* body */
+  --ink-3: #7a7d73;       /* meta, icon */
+  --rule: #e2ded3;        /* tab rule, note border, meter track */
+  --rule-2: #d2cdc0;      /* step connector line, number tile border */
+  --accent: #0e7c66;      /* done tile, meter, link underline, focus */
+  --chip: #ece8de;        /* inline code background */
+  --code-frame: #101214;  /* outer panel */
+  --code-bg: #181b1e;     /* inner panel */
+  --code-ink: #e6e3da;    /* plain code */
+  --code-dim: #8b9086;    /* label row, comments, flags */
+  --code-line: #2a2f33;   /* inner panel 1px inset edge */
+  --t-key: #f28b6b;       /* keywords, shell command, tag names */
+  --t-str: #b4dc8f;       /* strings, copied state */
+  --t-fn: #86cbe6;        /* calls, shell args */
+  --t-attr: #e7c87a;      /* html attributes */
+  --hl-bg: rgba(134,203,230,.11);  /* highlighted line wash */
+  --hl-bar: #86cbe6;               /* highlighted line left bar */
+  --sans: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+  --r-frame: 12px; --r-inner: 9px; --r-tile: 6px; --r-chip: 4px;
+  --step-gap: 40px; --col-num: 44px; --col-code: 400px; --col-gap: 28px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Eyebrow | Geist Mono | 12px | 500 | 1 | 0.12em, upper |
+| H1 | Geist | 32px | 600 | 1.15 | -0.025em |
+| Lede | Geist | 16.5px | 400 | 1.7 | 0 |
+| H2 | Geist | 19px | 600 | 1.4 | -0.015em |
+| Tab | Geist | 14.5px | 500 | 1 | 0 |
+| Meta, meter text | Geist Mono | 12px | 400 | 1 | 0 |
+| Step number | Geist Mono | 11px | 500 | 1 | 0 |
+| Step title | Geist | 15px | 600 | 1.4 | -0.005em |
+| Step body | Geist | 14.5px | 400 | 1.75 | 0 |
+| Inline code | Geist Mono | 13px | 500 | 1 | 0, chip `--chip` |
+| Panel label, Copy | Geist | 12px | 400 | 1 | 0 |
+| Code | Geist Mono | 13px | 400 | 1.7 | 0 |
 
 ## Implementation notes
 

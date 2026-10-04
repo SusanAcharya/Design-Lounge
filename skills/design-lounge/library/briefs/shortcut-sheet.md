@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A shortcut sheet for the yard desk. It starts open. Groups are General, Loads, and View. Each row is an action and a kbd. Pressing that key marks the row. Escape closes the sheet and shows a button to open it again. Question mark opens it. This is not the command palette. That palette searches actions. This sheet only lists the keys.
-
-## Reference behaviour
-
-1. The sheet starts visible. The open button is hidden.
-2. Rows: This sheet (?), Search loads (⌘K), New note (N), Hold the load (H), Export the selection (E), Today (1), The week (2).
-3. Pressing a listed key sets data-on on that row and clears the others.
-4. Escape hides the sheet and shows Show shortcuts.
-5. Show shortcuts opens the sheet again.
-6. Pressing ? while closed opens the sheet.
-7. The marked row uses the green wash. Nothing else moves.
 
 ## Structure
 
@@ -34,23 +26,6 @@ VIEW
 - Each row is 40px min-height with a top border.
 - kbd is IBM Plex Mono 12px, border-bottom 2px.
 - The reopen button is 40px, fill #1f4d3a.
-
-## Tokens
-
-```css
-:root {
-  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
-  --line:#e4dfd4; --line-2:#cfc6b8; --primary:#1f4d3a; --soft:#e7f2ec;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Title | IBM Plex Sans | 22px | 600 | 1.2 | 0 |
-| Group | IBM Plex Sans | 12px | 500 | 1 | 0.08em |
-| Key | IBM Plex Mono | 12px | 500 | 1 | 0 |
 
 ## Motion
 
@@ -98,16 +73,6 @@ VIEW
 - [ ] The wash is #e7f2ec.
 - [ ] Sans is IBM Plex Sans. Keys are IBM Plex Mono.
 
-## Implementation notes
-
-Compare event.key lowercased to data-key. Ignore keys longer than one character except Escape.
-
-```js
-if (e.key === "Escape") { sheet.hidden = true; open.hidden = false; }
-```
-
-⌘K is displayed as a kbd. The listener in this demo marks K, because event.key is k. Say that in the row if you need the modifier to be required.
-
 ## Measurements to keep
 
 - Sheet 480px, padding 24px 24px 12px, radius 2px.
@@ -152,6 +117,47 @@ if (e.key === "Escape") { sheet.hidden = true; open.hidden = false; }
 - Group headings are not buttons.
 - The sheet starts open.
 - Type for keys is IBM Plex Mono.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The sheet starts visible. The open button is hidden.
+2. Rows: This sheet (?), Search loads (⌘K), New note (N), Hold the load (H), Export the selection (E), Today (1), The week (2).
+3. Pressing a listed key sets data-on on that row and clears the others.
+4. Escape hides the sheet and shows Show shortcuts.
+5. Show shortcuts opens the sheet again.
+6. Pressing ? while closed opens the sheet.
+7. The marked row uses the green wash. Nothing else moves.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
+  --line:#e4dfd4; --line-2:#cfc6b8; --primary:#1f4d3a; --soft:#e7f2ec;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Title | IBM Plex Sans | 22px | 600 | 1.2 | 0 |
+| Group | IBM Plex Sans | 12px | 500 | 1 | 0.08em |
+| Key | IBM Plex Mono | 12px | 500 | 1 | 0 |
+
+## Implementation notes
+
+Compare event.key lowercased to data-key. Ignore keys longer than one character except Escape.
+
+```js
+if (e.key === "Escape") { sheet.hidden = true; open.hidden = false; }
+```
+
+⌘K is displayed as a kbd. The listener in this demo marks K, because event.key is k. Say that in the row if you need the modifier to be required.
 
 ---
 

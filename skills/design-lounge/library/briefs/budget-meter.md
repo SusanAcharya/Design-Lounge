@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Warning is for the row that is over, not for the list.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A short list of budgets for a personal month. The answer is how far the one broken line is over: रु 700 over, at 56px. Under it, three meters. Groceries and tea are inside their line, drawn in the primary. NEA is over, so that row alone sits on the warning wash, and its meter and its "over" words use the ink that passes on that wash. If every row were amber, the warning colour would mean nothing. This piece exists so a budget list can tell the truth. It is not a dashboard of four equal tiles.
-
-## Reference behaviour
-
-1. The first frame reads रु 700 over at 56px. The sentence is "NEA is past 3,500. Groceries and tea are still inside their line."
-2. Groceries shows रु 18,400 of 20,000 and a meter at 92% in `--primary`.
-3. NEA shows रु 4,200 of 3,500 · over. The row background is `--warning-soft`. The meta text is `--warning-on-soft`. The meter is full and uses `--warning-on-soft`, not the solid warning fill.
-4. Tea shows रु 900 of 2,000 and a meter at 45% in `--primary`.
-5. Nothing is clickable in this frame. Selecting a budget is another screen.
-6. There is no animation. Reduced motion has nothing to remove.
-7. Do not colour groceries amber because it is "close". Close is still inside. Only over uses warning.
 
 ## Structure
 
@@ -37,38 +29,6 @@ NEA is past 3,500. …
 - The list is a `ul`. Each item is a name, a meta line, and an 8px track.
 - The list max-width is 720px, the same column as the other screens in the pass.
 - Grain is on the page background only. Quiet rows use `--surface`. The over row uses the warning wash and covers the grain.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4ead6;
-  --surface: #fbf6ea;
-  --ink: #1c2744;
-  --ink-2: #3e4a66;
-  --line: #d9cbb3;
-  --primary: #c8102e;
-  --warning-soft: #e8d6bb;
-  --warning-on-soft: #7d470e;
-  --display: "Noto Serif Devanagari", Georgia, serif;
-  --sans: "Mukta", system-ui, sans-serif;
-}
-```
-
-Text on a wash uses `--warning-on-soft`. Do not put the solid `--warning` on `--warning-soft`, and do not invent a third hex. When a theme is locked, both tokens come from that theme. The solid fill is for a button or a solid badge. This row is a wash.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Label | Mukta | 12px | 600 | 0.06em | `--ink-2` |
-| Answer | Noto Serif Devanagari | 56px | 600 | -0.02em | `--ink` |
-| Sentence | Mukta | 16px | 400 | 0 | `--ink-2` |
-| Name | Mukta | 16px | 600 | 0 | `--ink` |
-| Meta, quiet | Mukta | 14px | 400 | 0 | `--ink-2` |
-| Meta, over | Mukta | 14px | 600 | 0 | `--warning-on-soft` |
-
-The heading that contains रु uses the display face for the whole string. The row amounts can stay in Mukta, still one face for रु and the digits. Do not introduce a mono for the digits.
 
 ## Motion
 
@@ -122,6 +82,52 @@ None. A meter that animates on load delays the fact that NEA is over. Reduced mo
 - [ ] No row other than NEA uses the warning wash.
 - [ ] The list is 720px wide, the pass column. Do not keep 640 because an older note said so.
 - [ ] There is no button on this frame.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame reads रु 700 over at 56px. The sentence is "NEA is past 3,500. Groceries and tea are still inside their line."
+2. Groceries shows रु 18,400 of 20,000 and a meter at 92% in `--primary`.
+3. NEA shows रु 4,200 of 3,500 · over. The row background is `--warning-soft`. The meta text is `--warning-on-soft`. The meter is full and uses `--warning-on-soft`, not the solid warning fill.
+4. Tea shows रु 900 of 2,000 and a meter at 45% in `--primary`.
+5. Nothing is clickable in this frame. Selecting a budget is another screen.
+6. There is no animation. Reduced motion has nothing to remove.
+7. Do not colour groceries amber because it is "close". Close is still inside. Only over uses warning.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4ead6;
+  --surface: #fbf6ea;
+  --ink: #1c2744;
+  --ink-2: #3e4a66;
+  --line: #d9cbb3;
+  --primary: #c8102e;
+  --warning-soft: #e8d6bb;
+  --warning-on-soft: #7d470e;
+  --display: "Noto Serif Devanagari", Georgia, serif;
+  --sans: "Mukta", system-ui, sans-serif;
+}
+```
+
+Text on a wash uses `--warning-on-soft`. Do not put the solid `--warning` on `--warning-soft`, and do not invent a third hex. When a theme is locked, both tokens come from that theme. The solid fill is for a button or a solid badge. This row is a wash.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Label | Mukta | 12px | 600 | 0.06em | `--ink-2` |
+| Answer | Noto Serif Devanagari | 56px | 600 | -0.02em | `--ink` |
+| Sentence | Mukta | 16px | 400 | 0 | `--ink-2` |
+| Name | Mukta | 16px | 600 | 0 | `--ink` |
+| Meta, quiet | Mukta | 14px | 400 | 0 | `--ink-2` |
+| Meta, over | Mukta | 14px | 600 | 0 | `--warning-on-soft` |
+
+The heading that contains रु uses the display face for the whole string. The row amounts can stay in Mukta, still one face for रु and the digits. Do not introduce a mono for the digits.
 
 ## Implementation notes
 

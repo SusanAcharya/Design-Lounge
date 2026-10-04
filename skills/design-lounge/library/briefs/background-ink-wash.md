@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-frame sumi-e background behind the landing section of a fictional gallery, "Kasumi Hall", announcing an exhibition of ink scrolls. The ground is warm rice paper with visible kozo fibres. Clicking the paper drops ink: a bloom spreads out over 2.6 seconds, darkest where it landed and pale at its reach, then dries with a faint darker tide line at its edge and a scatter of pigment grains. One or two smaller satellite blooms bleed out from it a moment later. The detail worth copying is that **each bloom is painted, not tweened**: every frame adds one more translucent, slightly wobbling layer at a growing radius into a canvas that is never cleared, so the gradient, the soft edge and the tonal pooling all come from accumulation. A floating panel picks the ink (sumi black, indigo, vermilion), sets how much water (bloom size), drops ink by keyboard, and rinses the paper.
-
-## Reference behaviour
-
-1. First frame: rice paper, four dried blooms on the right half: a large sumi wash near (76%, 36%) with a satellite, an indigo wash at (92%, 72%) with a satellite, a small sumi bloom at (62%, 80%), and a small vermilion spot at (68%, 17%). The left half, under the copy, is clear paper.
-2. Click (pointerdown) anywhere that is not a link, button, input, label or the panel: a bloom of radius `water × (0.85…1.15)` starts at the pointer, plus 1–2 satellites at 55–95% of that radius away, sized 22–40% of it, starting 0.5–1.1s later.
-3. A bloom grows with a cubic ease-out from 10% to 100% of its radius over 2.6s. Its edge wobbles a little as it spreads.
-4. When a bloom finishes, draw its tide line (two soft strokes just inside the edge) and a pigment grain of `radius × 1.4` specks.
-5. The loop runs only while blooms are spreading; when the last one dries, `requestAnimationFrame` stops.
-6. The ink canvas is masked: ink is held at 28% strength over the left 40% of the frame and reaches full strength by 58%. Blooms can cross under the copy without hurting legibility.
-7. Swatches: Sumi `#1b1a17` (default), Indigo `#2e3f5c`, Vermilion `#b5332a`. The pressed swatch has a 1.5px ink ring.
-8. Water slider: 70–280px, step 10, default 150. It sets the radius of the next bloom.
-9. "Drop ink" places a bloom at a random point in the clear right side (60–92% x, 20–80% y), so keyboard users get the effect. A live region says "Ink dropped".
-10. "Rinse" fades the ink canvas to 0 over 700ms, clears it and restores opacity. A live region says "Paper rinsed".
-11. Resize: the paper is regenerated from the same seed, and every stored bloom (the last 24) is repainted dry, so a resize never loses the painting.
-12. Reduced motion: clicks and Drop ink paint the finished bloom in one frame (all layers drawn synchronously). Rinse is instant.
 
 ## Structure
 
@@ -51,50 +38,6 @@ A full-frame sumi-e background behind the landing section of a fictional gallery
 - `<main class="copy">`: kicker, `<h1>`, sub, two links, `<dl class="facts">`.
 - `.tate`: vertical Japanese line, `writing-mode: vertical-rl`, `lang="ja"`, decorative.
 - `.panel role="group"`: swatch group, labelled range, two tool buttons. A visually hidden `aria-live` paragraph.
-
-## Tokens
-
-```css
-:root {
-  --paper: #eee7d8;        /* rice paper ground */
-  --paper-2: #f6f1e6;      /* panel, text on dark */
-  --ink: #1b1a17;          /* type, primary button */
-  --ink-2: #4b463d;        /* sub-copy, nav */
-  --ink-3: #6f685b;        /* labels, hint */
-  --line: rgba(27, 26, 23, .18);
-
-  --sumi: #1b1a17;         /* inks */
-  --ai: #2e3f5c;
-  --shu: #b5332a;          /* seal, kicker date, focus ring; never body text */
-
-  --serif: "Shippori Mincho", Georgia, serif;
-  --sans: "Zen Kaku Gothic New", system-ui, sans-serif;
-
-  --bloom-dur: 2.6s;
-  --bloom-points: 64;      /* vertices per blob outline */
-  --water-min: 70px; --water-default: 150px; --water-max: 280px;
-  --blooms-kept: 24;
-  --mask-quiet: .28;       /* ink strength over the copy */
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --t-fast: 160ms;
-  --t-rinse: 700ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|---|---|---:|---:|---:|---:|---|
-| Headline | Shippori Mincho | 68px | 500 | 1.12 | −0.01em | sentence |
-| Vertical line | Shippori Mincho | 22px | 500 | 1.6 | 0.3em | Japanese |
-| Fact value | Shippori Mincho | 17px | 500 | 1.4 | 0 | as written |
-| Name | Shippori Mincho | 17px | 700 | 1 | 0.04em | Title |
-| Sub-copy | Zen Kaku Gothic New | 16px | 400 | 1.7 | 0 | sentence |
-| Kicker | Zen Kaku Gothic New | 13px | 400 | 1.7 | 0.12em | sentence |
-| Buttons | Zen Kaku Gothic New | 14px | 500 | 1 | 0.04em | sentence |
-| Fact label | Zen Kaku Gothic New | 11px | 400 | 1.4 | 0.14em | UPPER |
-| Panel | Zen Kaku Gothic New | 12px | 400 | 1 | 0.06em | sentence |
 
 ## Motion
 
@@ -157,6 +100,69 @@ A full-frame sumi-e background behind the landing section of a fictional gallery
 - [ ] Four pre-dried blooms on the right half on first paint, including one small vermilion spot.
 - [ ] Inks: Sumi `#1b1a17`, Indigo `#2e3f5c`, Vermilion `#b5332a`; Water default 150px.
 - [ ] Facts: Hall 3, east wing · Tue–Sun, 10–18 · ¥1,200.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: rice paper, four dried blooms on the right half: a large sumi wash near (76%, 36%) with a satellite, an indigo wash at (92%, 72%) with a satellite, a small sumi bloom at (62%, 80%), and a small vermilion spot at (68%, 17%). The left half, under the copy, is clear paper.
+2. Click (pointerdown) anywhere that is not a link, button, input, label or the panel: a bloom of radius `water × (0.85…1.15)` starts at the pointer, plus 1–2 satellites at 55–95% of that radius away, sized 22–40% of it, starting 0.5–1.1s later.
+3. A bloom grows with a cubic ease-out from 10% to 100% of its radius over 2.6s. Its edge wobbles a little as it spreads.
+4. When a bloom finishes, draw its tide line (two soft strokes just inside the edge) and a pigment grain of `radius × 1.4` specks.
+5. The loop runs only while blooms are spreading; when the last one dries, `requestAnimationFrame` stops.
+6. The ink canvas is masked: ink is held at 28% strength over the left 40% of the frame and reaches full strength by 58%. Blooms can cross under the copy without hurting legibility.
+7. Swatches: Sumi `#1b1a17` (default), Indigo `#2e3f5c`, Vermilion `#b5332a`. The pressed swatch has a 1.5px ink ring.
+8. Water slider: 70–280px, step 10, default 150. It sets the radius of the next bloom.
+9. "Drop ink" places a bloom at a random point in the clear right side (60–92% x, 20–80% y), so keyboard users get the effect. A live region says "Ink dropped".
+10. "Rinse" fades the ink canvas to 0 over 700ms, clears it and restores opacity. A live region says "Paper rinsed".
+11. Resize: the paper is regenerated from the same seed, and every stored bloom (the last 24) is repainted dry, so a resize never loses the painting.
+12. Reduced motion: clicks and Drop ink paint the finished bloom in one frame (all layers drawn synchronously). Rinse is instant.
+
+## Tokens
+
+```css
+:root {
+  --paper: #eee7d8;        /* rice paper ground */
+  --paper-2: #f6f1e6;      /* panel, text on dark */
+  --ink: #1b1a17;          /* type, primary button */
+  --ink-2: #4b463d;        /* sub-copy, nav */
+  --ink-3: #6f685b;        /* labels, hint */
+  --line: rgba(27, 26, 23, .18);
+
+  --sumi: #1b1a17;         /* inks */
+  --ai: #2e3f5c;
+  --shu: #b5332a;          /* seal, kicker date, focus ring; never body text */
+
+  --serif: "Shippori Mincho", Georgia, serif;
+  --sans: "Zen Kaku Gothic New", system-ui, sans-serif;
+
+  --bloom-dur: 2.6s;
+  --bloom-points: 64;      /* vertices per blob outline */
+  --water-min: 70px; --water-default: 150px; --water-max: 280px;
+  --blooms-kept: 24;
+  --mask-quiet: .28;       /* ink strength over the copy */
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-fast: 160ms;
+  --t-rinse: 700ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|---|---|---:|---:|---:|---:|---|
+| Headline | Shippori Mincho | 68px | 500 | 1.12 | −0.01em | sentence |
+| Vertical line | Shippori Mincho | 22px | 500 | 1.6 | 0.3em | Japanese |
+| Fact value | Shippori Mincho | 17px | 500 | 1.4 | 0 | as written |
+| Name | Shippori Mincho | 17px | 700 | 1 | 0.04em | Title |
+| Sub-copy | Zen Kaku Gothic New | 16px | 400 | 1.7 | 0 | sentence |
+| Kicker | Zen Kaku Gothic New | 13px | 400 | 1.7 | 0.12em | sentence |
+| Buttons | Zen Kaku Gothic New | 14px | 500 | 1 | 0.04em | sentence |
+| Fact label | Zen Kaku Gothic New | 11px | 400 | 1.4 | 0.14em | UPPER |
+| Panel | Zen Kaku Gothic New | 12px | 400 | 1 | 0.06em | sentence |
 
 ## Implementation notes
 

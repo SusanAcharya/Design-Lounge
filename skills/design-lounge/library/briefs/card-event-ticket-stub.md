@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The "your tickets" view after buying three seats for a fictional gig: Static Bloom, Low Orbit Tour, with Moth Radio, at Foundry Hall on Friday 23 October. Three paper tickets lie in a loose pile on a charcoal table. Each is 600 × 230 with a riso-printed art panel (pink and blue halftone dots overprinted with multiply), the band name in Dela Gothic One, a facts row, and a 150px stub behind a dotted perforation. The stub carries a 30px holographic foil strip, a mini seat map with section B filled pink and a dot for the seat, and a red serial number. Moving the pointer anywhere slides the foil's colour bands and sweeps a white sheen across it. "Fan out" spreads the pile like a hand of cards so all three stubs show; clicking a ticket lifts it. The ticket stocks are tinted cream, pink and blue so the three read apart. The detail worth copying is that the foil is driven by two global custom properties, so all strips catch the same light.
-
-## Reference behaviour
-
-1. First frame: stacked. Seat 12 (cream) is on top, flat. Seat 13 (pink) is 10px right, 12px up, rotated −3.5°. Seat 14 (blue) is 20px right, 24px up, rotated 3°. Header: "Your tickets ×3 · Foundry Hall · Fri 23 Oct". Controls: "Fan out" button and the hint.
-2. Pointer moves anywhere on the page: `--mx` and `--my` (0–1 across the viewport) update once per animation frame. Each foil's band gradient (400% tall) shifts with `--my`, and a 115° white sheen slides with `--mx`. Each ticket offsets its bands by `--h` (0%, 35%, 70%) so the three strips show different colours.
-3. Stacked, click the top ticket: it goes to the bottom of the pile and the next one rises. All three move to their new pile positions over 560ms expo out. The live region says "Seat 13 on top."
-4. Stacked, click a ticket that peeks out behind: it comes to the top.
-5. Click "Fan out": `aria-pressed="true"`, label "Stack", pink fill. Tickets rotate around a point 380% of their height below their centre: seat 12 to −9° and 34px left, seat 13 to 0°, seat 14 to 9° and 34px right. The top ticket is also lifted 26px. Hint changes to "click a ticket to lift it".
-6. Fanned, click any ticket: it becomes the top (highest z-index, lifted 26px); the others keep their fan slots.
-7. Arrow keys while a ticket has focus: Left/Up selects the previous seat, Right/Down the next, wrapping, in both modes. Focus follows.
-8. Click "Stack": back to the pile, keeping the current top.
-9. Reduced motion: moves are instant. The foil still follows the pointer because it is direct feedback with no autonomous motion.
 
 ## Structure
 
@@ -45,42 +35,6 @@ The "your tickets" view after buying three seats for a fictional gig: Static Blo
 - `.foil` is `aria-hidden` and holds the vertical micro-text "GENUINE · FH".
 - The seat map is an inline SVG (100 × 64 viewBox): a stage bar, three arc sections, section B filled pink, a seat dot whose `cx` is 44, 50 or 56.
 - A visually hidden live region announces the top ticket and mode.
-
-## Tokens
-
-```css
-:root {
-  --bg: #22201d;      --bg-2: #2c2925;   /* table */
-  --stock: #f6efe0;                       /* ticket a; b #f4e2e4; c #e0e7ee */
-  --ink: #1b1a17;     --ink-2: #5d574d;
-  --pink: #ff4f8b;                        /* riso pink: art, kicker, map, fan button, focus */
-  --blue: #3255ff;                        /* riso blue: art overprint only */
-  --serial: #d02b2b;
-  --text: #ece5d6;    --text-2: #a39b8c;  /* on the table */
-  --display: "Dela Gothic One", Impact, sans-serif;
-  --mono: "Martian Mono", ui-monospace, monospace;
-  --foil: linear-gradient(180deg, #ff9ec7, #8fe3f5, #f7ea8a, #b9a6ff, #93ecc0, #ff9ec7, #8fe3f5);
-  --mx: .5; --my: .5;                     /* pointer, 0–1 */
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --std: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --t-move: 560ms;
-  --ticket-r: 10px;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Header | Martian Mono | 12px | 400 / 600 | .14em | caps, `--text-2`, values `--text` |
-| Kicker | Martian Mono | 9px | 600 | .24em | caps, `--pink` |
-| Band | Dela Gothic One | 34px / .95 | 400 | −.01em | caps, two lines |
-| Tour line | Martian Mono | 10px | 400 | 0 | `--ink-2` |
-| Fact label | Martian Mono | 8px | 400 | .2em | caps |
-| Fact value | Martian Mono | 14px | 600 | 0 | |
-| Serial | Martian Mono | 13px | 600 | .06em | `--serial`, tabular |
-| Art side text | Martian Mono | 9px | 600 | .2em | vertical |
-| Buttons | Martian Mono | 12px | 600 | .12em | caps |
 
 ## Motion
 
@@ -142,6 +96,58 @@ Reduced motion: no transitions; foil still tracks the pointer.
 - [ ] Serials FH-004417, FH-004418, FH-004419 in `#d02b2b`.
 - [ ] Ticket 600 × 230, art 150px, stub 150px with a 30px foil strip, notches at 450px.
 - [ ] Fan slots ±9° and ±34px, lift 26px, pivot `50% 380%`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: stacked. Seat 12 (cream) is on top, flat. Seat 13 (pink) is 10px right, 12px up, rotated −3.5°. Seat 14 (blue) is 20px right, 24px up, rotated 3°. Header: "Your tickets ×3 · Foundry Hall · Fri 23 Oct". Controls: "Fan out" button and the hint.
+2. Pointer moves anywhere on the page: `--mx` and `--my` (0–1 across the viewport) update once per animation frame. Each foil's band gradient (400% tall) shifts with `--my`, and a 115° white sheen slides with `--mx`. Each ticket offsets its bands by `--h` (0%, 35%, 70%) so the three strips show different colours.
+3. Stacked, click the top ticket: it goes to the bottom of the pile and the next one rises. All three move to their new pile positions over 560ms expo out. The live region says "Seat 13 on top."
+4. Stacked, click a ticket that peeks out behind: it comes to the top.
+5. Click "Fan out": `aria-pressed="true"`, label "Stack", pink fill. Tickets rotate around a point 380% of their height below their centre: seat 12 to −9° and 34px left, seat 13 to 0°, seat 14 to 9° and 34px right. The top ticket is also lifted 26px. Hint changes to "click a ticket to lift it".
+6. Fanned, click any ticket: it becomes the top (highest z-index, lifted 26px); the others keep their fan slots.
+7. Arrow keys while a ticket has focus: Left/Up selects the previous seat, Right/Down the next, wrapping, in both modes. Focus follows.
+8. Click "Stack": back to the pile, keeping the current top.
+9. Reduced motion: moves are instant. The foil still follows the pointer because it is direct feedback with no autonomous motion.
+
+## Tokens
+
+```css
+:root {
+  --bg: #22201d;      --bg-2: #2c2925;   /* table */
+  --stock: #f6efe0;                       /* ticket a; b #f4e2e4; c #e0e7ee */
+  --ink: #1b1a17;     --ink-2: #5d574d;
+  --pink: #ff4f8b;                        /* riso pink: art, kicker, map, fan button, focus */
+  --blue: #3255ff;                        /* riso blue: art overprint only */
+  --serial: #d02b2b;
+  --text: #ece5d6;    --text-2: #a39b8c;  /* on the table */
+  --display: "Dela Gothic One", Impact, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+  --foil: linear-gradient(180deg, #ff9ec7, #8fe3f5, #f7ea8a, #b9a6ff, #93ecc0, #ff9ec7, #8fe3f5);
+  --mx: .5; --my: .5;                     /* pointer, 0–1 */
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --std: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-move: 560ms;
+  --ticket-r: 10px;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Header | Martian Mono | 12px | 400 / 600 | .14em | caps, `--text-2`, values `--text` |
+| Kicker | Martian Mono | 9px | 600 | .24em | caps, `--pink` |
+| Band | Dela Gothic One | 34px / .95 | 400 | −.01em | caps, two lines |
+| Tour line | Martian Mono | 10px | 400 | 0 | `--ink-2` |
+| Fact label | Martian Mono | 8px | 400 | .2em | caps |
+| Fact value | Martian Mono | 14px | 600 | 0 | |
+| Serial | Martian Mono | 13px | 600 | .06em | `--serial`, tabular |
+| Art side text | Martian Mono | 9px | 600 | .2em | vertical |
+| Buttons | Martian Mono | 12px | 600 | .12em | caps |
 
 ## Implementation notes
 

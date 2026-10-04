@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The top of a website for Raster, a fictional wayfinding and identity office in Zürich and Rotterdam. The 12-column layout grid is drawn on the page as 1px hairlines, and every element sits on it. The wordmark "RASTER" is set at 304px. Each of its six letters fills exactly two columns, and on load each letter slides up out of its own clipped cell with a 70ms stagger. Hovering any column tints it ultramarine, numbers it in blue and recolours the letter inside it. The detail worth copying: the grid is the interaction. Your pointer finds a column, and the column answers.
-
-## Reference behaviour
-
-1. Initial state: warm paper page (`#eeede7`) with 12 full-height column bands, each with 1px hairlines on both edges and a mono column number (`01`–`12`) 14px from the bottom.
-2. On load, a 2px ink rule under the wordmark draws left to right (scaleX 0 → 1, 900ms, expo-out, 80ms delay).
-3. At the same time, letters R-A-S-T-E-R rise from `translateY(105%)` to 0 inside cells with `overflow:hidden`. The cells are 2 columns wide and 237px tall. Each letter lasts 820ms on expo-out, with a 120ms base delay plus 70ms per letter. The last letter lands at about 1290ms.
-4. Moving the pointer over any column (hit-tested against the column rect, gutters excluded) gives that column a `rgba(29,51,240,.07)` fill, turns its number `--blue`, and turns the wordmark letter that occupies it `--blue`. Columns 1–2 map to letter 0, columns 3–4 to letter 1, and so on. The tint changes over 200ms. Only one column is ever active.
-5. When the pointer leaves the document or sits in a gutter, the tint clears.
-6. Clicking anywhere except a link replays the full entrance (rule plus letters). The bottom-right "Replay" button does the same. Links `preventDefault` in the demo.
-7. Nav links get a 1px ink underline and full-ink colour on hover. The black "Start a project" button turns `--blue` on hover.
-8. The bottom "Recent" index has 5 projects, each spanning 2 columns with a 1px ink top rule that turns blue on hover.
 
 ## Structure
 
@@ -47,59 +38,6 @@ rotated side label at x=12, vertically centred
 - `.lower` holds a `<p class="lede">` (columns 1–5), an `<ol class="svc">` (7–9) and `.now` (10–12) with the project plate.
 - `.idx` is an absolutely positioned grid row at `bottom:44px`: a label plus five `<a>`s.
 - `<button class="replay">` is absolute at `right:40px; bottom:118px`.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --paper: #eeede7;              /* page */
-  --paper-2: #e4e3dc;            /* reserved surface */
-  --ink: #111110;                /* type, rules, CTA */
-  --ink-2: #4a4a46;              /* meta + nav text */
-  --ink-3: #85847d;              /* mono captions, column numbers */
-  --hair: rgba(17,17,16,.14);    /* column hairlines */
-  --hair-strong: rgba(17,17,16,.32); /* nav rule, replay border */
-  --blue: #1d33f0;               /* the one accent */
-  --blue-tint: rgba(29,51,240,.07); /* hovered column fill */
-  --blue-ink: #f3f4ff;           /* text on blue/ink */
-
-  /* type */
-  --sans: "Familjen Grotesk", Helvetica, Arial, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  --word: 304px;                 /* wordmark size */
-
-  /* layout */
-  --m: 40px;                     /* page margin */
-  --gap: 16px;                   /* gutter */
-  --nav-h: 56px;
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-tint: 200ms;
-  --t-letter: 820ms;
-  --t-rule: 900ms;
-  --stagger: 70ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role             | Family           | Size  | Weight | Line-height | Tracking | Case      |
-|------------------|------------------|------:|-------:|------------:|---------:|-----------|
-| Wordmark letter  | Familjen Grotesk | 304px | 700    | 0.78        | −0.06em  | UPPERCASE |
-| Lede             | Familjen Grotesk | 26px  | 500    | 1.18        | −0.018em | sentence  |
-| Nav links        | Familjen Grotesk | 14px  | 400    | 1.45        | 0        | Title     |
-| Brand / CTA      | Familjen Grotesk | 15/13px | 700/500 | 1       | −0.01em  | Title     |
-| Services, index  | Familjen Grotesk | 14/13px | 400  | 1.3         | 0        | sentence  |
-| Meta caption     | JetBrains Mono   | 10px  | 500    | 1.5         | +0.08em  | UPPERCASE |
-| Meta value       | JetBrains Mono   | 11px  | 400    | 1.5         | +0.02em  | sentence  |
-| Column numbers   | JetBrains Mono   | 10px  | 500    | 1           | +0.04em  | numerals  |
-| Side label       | JetBrains Mono   | 10px  | 500    | 1           | +0.14em  | UPPERCASE |
-
-Give each letter `margin-left:-.035em` so the R's stem sits on the column's left hairline.
 
 ## Motion
 
@@ -153,6 +91,74 @@ Replay works by removing the `.play` class from `<body>`, forcing a reflow (`voi
 - [ ] Reduced motion shows the final frame with no movement, and tinting still works.
 - [ ] Nothing overlaps at 1280×800: the bottom index sits clear of the column numbers and the Replay button.
 - [ ] Only two font families load, and no radius appears anywhere.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: warm paper page (`#eeede7`) with 12 full-height column bands, each with 1px hairlines on both edges and a mono column number (`01`–`12`) 14px from the bottom.
+2. On load, a 2px ink rule under the wordmark draws left to right (scaleX 0 → 1, 900ms, expo-out, 80ms delay).
+3. At the same time, letters R-A-S-T-E-R rise from `translateY(105%)` to 0 inside cells with `overflow:hidden`. The cells are 2 columns wide and 237px tall. Each letter lasts 820ms on expo-out, with a 120ms base delay plus 70ms per letter. The last letter lands at about 1290ms.
+4. Moving the pointer over any column (hit-tested against the column rect, gutters excluded) gives that column a `rgba(29,51,240,.07)` fill, turns its number `--blue`, and turns the wordmark letter that occupies it `--blue`. Columns 1–2 map to letter 0, columns 3–4 to letter 1, and so on. The tint changes over 200ms. Only one column is ever active.
+5. When the pointer leaves the document or sits in a gutter, the tint clears.
+6. Clicking anywhere except a link replays the full entrance (rule plus letters). The bottom-right "Replay" button does the same. Links `preventDefault` in the demo.
+7. Nav links get a 1px ink underline and full-ink colour on hover. The black "Start a project" button turns `--blue` on hover.
+8. The bottom "Recent" index has 5 projects, each spanning 2 columns with a 1px ink top rule that turns blue on hover.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --paper: #eeede7;              /* page */
+  --paper-2: #e4e3dc;            /* reserved surface */
+  --ink: #111110;                /* type, rules, CTA */
+  --ink-2: #4a4a46;              /* meta + nav text */
+  --ink-3: #85847d;              /* mono captions, column numbers */
+  --hair: rgba(17,17,16,.14);    /* column hairlines */
+  --hair-strong: rgba(17,17,16,.32); /* nav rule, replay border */
+  --blue: #1d33f0;               /* the one accent */
+  --blue-tint: rgba(29,51,240,.07); /* hovered column fill */
+  --blue-ink: #f3f4ff;           /* text on blue/ink */
+
+  /* type */
+  --sans: "Familjen Grotesk", Helvetica, Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --word: 304px;                 /* wordmark size */
+
+  /* layout */
+  --m: 40px;                     /* page margin */
+  --gap: 16px;                   /* gutter */
+  --nav-h: 56px;
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-tint: 200ms;
+  --t-letter: 820ms;
+  --t-rule: 900ms;
+  --stagger: 70ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role             | Family           | Size  | Weight | Line-height | Tracking | Case      |
+|------------------|------------------|------:|-------:|------------:|---------:|-----------|
+| Wordmark letter  | Familjen Grotesk | 304px | 700    | 0.78        | −0.06em  | UPPERCASE |
+| Lede             | Familjen Grotesk | 26px  | 500    | 1.18        | −0.018em | sentence  |
+| Nav links        | Familjen Grotesk | 14px  | 400    | 1.45        | 0        | Title     |
+| Brand / CTA      | Familjen Grotesk | 15/13px | 700/500 | 1       | −0.01em  | Title     |
+| Services, index  | Familjen Grotesk | 14/13px | 400  | 1.3         | 0        | sentence  |
+| Meta caption     | JetBrains Mono   | 10px  | 500    | 1.5         | +0.08em  | UPPERCASE |
+| Meta value       | JetBrains Mono   | 11px  | 400    | 1.5         | +0.02em  | sentence  |
+| Column numbers   | JetBrains Mono   | 10px  | 500    | 1           | +0.04em  | numerals  |
+| Side label       | JetBrains Mono   | 10px  | 500    | 1           | +0.14em  | UPPERCASE |
+
+Give each letter `margin-left:-.035em` so the R's stem sits on the column's left hairline.
 
 ## Implementation notes
 

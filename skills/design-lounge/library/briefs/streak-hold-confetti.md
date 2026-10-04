@@ -4,31 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from 60fps.design, a gallery of mobile micro-interaction clips: this piece takes the streak, reward and "complete confetti" ideas from its games and habit shots and rebuilds them as one working success state. It is the daily screen of a fictional reading app called Paath. The user presses and holds a 64px pill for one second; a gold fill sweeps across it and the label turns dark exactly where the gold has reached. On completion the two-digit streak rolls from 11 to 12 (tens and ones on separate spring timings), a "Longest yet" badge pops, Sunday's dashed ring fills gold with a check, and 26 confetti pieces burst from the number and fall away in 1.6 seconds. The detail worth copying is the restraint: one burst, three colours from the palette, no loop, and the hold gesture means the reward is earned, not tapped by accident.
 
 The language is dark and bookish: deep forest ground, cream type, one gold accent, a chunky display serif for the number and a geometric grotesk for everything else.
-
-## Reference behaviour
-
-1. First frame: "Paath" and "Sunday, 4 October" in the header; a gold flame; "11" at 132px; "DAY READING STREAK"; a week row Mon–Sat filled cream with dark checks and Sun as a dashed gold ring; a card "TODAY · 10 PAGES / Seto Bagh, chapter 4 / Pages 41 to 50 · about 14 minutes"; and a pill "Hold to log today" with a book icon.
-2. The number does not roll on load; it appears at 11.
-3. Pointer down on the pill: it scales to 0.97 and gains a 6px gold halo at 14% alpha. `navigator.vibrate(10)` fires where available. The pointer is captured.
-4. While held, a gold gradient (`#a8802a` → `#f2c14e`) reveals left to right over exactly 1000ms, driven by `requestAnimationFrame`. A dark copy of the label sits inside the gold layer, so text is cream over green and dark over gold, split at the fill edge.
-5. Release before 1000ms: the fill drains back to 0 over 450ms with `cubic-bezier(.2,.7,.2,1)`. Nothing is logged. Holding again starts from 0.
-6. At 1000ms the action completes without waiting for release:
-   - the pill turns solid gold with the label "Logged · 09:46";
-   - the tens and ones columns roll to 1 and 2 (700ms spring, ones delayed 60ms);
-   - the flame plays a 700ms pop (scale 1.25, rotate -8°);
-   - Sunday's ring fills gold and scales to 1.12 (200ms delay), its check appears (320ms delay), then it settles back to 1 (700ms);
-   - "Longest yet" scales in from 0.4 (450ms delay);
-   - 26 confetti pieces burst upward from the number in a 140° fan and fall under gravity, fading out over the last 40% of 1.6s;
-   - a vibration pattern `[12, 40, 18]` fires;
-   - a live region says "Logged. 12 day streak, your longest yet."
-7. "Undo, I have not read yet" appears under the pill. It restores 11, removes all success states, and returns focus to the pill.
-8. Keyboard: holding Space or Enter on the focused pill behaves like holding the pointer; keyup cancels. Key repeat does not restart the timer.
-9. Right-click / long-press context menus are suppressed on the pill so a long touch does not open the system menu.
 
 ## Structure
 
@@ -64,52 +46,6 @@ Canvas overlay covers the whole app (pointer-events none).
 - The week is an `ol` labelled "This week"; Sunday has `aria-current="date"`.
 - The goal card is a `section` labelled "Today's reading" with `small`, `h2`, `p`, the hold `button`, a hidden help line, and the undo `button`.
 - Inside the hold button: the cream label, then an `aria-hidden` gold layer containing a dark copy of the label.
-
-## Tokens
-
-```css
-:root {
-  --bg: #10261f;         /* forest ground */
-  --surface: #173229;    /* goal card */
-  --surface-2: #1f3d33;  /* hold pill at rest */
-  --line: #2a4a3f;       /* borders, empty dot ring */
-  --cream: #f6efdf;      /* primary text, past dots */
-  --cream-2: #c9c2b0;    /* secondary text */
-  --cream-3: #9fae9f;    /* muted text */
-  --gold: #f2c14e;       /* accent: flame, today, fill end, badge */
-  --gold-deep: #a8802a;  /* fill start */
-  --sage: #8fb59a;       /* third confetti colour */
-  --serif: "Young Serif", Georgia, serif;
-  --sans: "Space Grotesk", system-ui, sans-serif;
-  --num: 132px;
-  --dot: 36px;
-  --hold-h: 64px;
-  --r-card: 22px;
-  --r-pill: 999px;
-  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 18px; --s-6: 20px; --s-8: 34px;
-  --spring: cubic-bezier(.34, 1.56, .64, 1);
-  --out: cubic-bezier(.16, 1, .3, 1);
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --t-hold: 1000ms;
-  --t-drain: 450ms;
-  --t-roll: 700ms;
-  --t-confetti: 1600ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Streak number | Young Serif | 132px | 400 | 1 (132px cells) | -0.04em | tabular |
-| Brand | Young Serif | 15px | 400 | 1 | 0.01em | sentence |
-| Book title (h2) | Young Serif | 22px | 400 | 1.2 | 0 | sentence |
-| Streak unit | Space Grotesk | 13px | 500 | 1.45 | 0.16em | upper |
-| Card label | Space Grotesk | 12px | 400 | 1.45 | 0.08em | upper |
-| Card body | Space Grotesk | 13px | 400 | 1.45 | 0 | sentence |
-| Hold label | Space Grotesk | 16px | 600 | 1 | 0 | sentence |
-| Badge | Space Grotesk | 12px | 600 | 1 | 0.04em | sentence |
-| Day labels | Space Grotesk | 12px | 400 | 1 | 0 | title |
 
 ## Motion
 
@@ -183,6 +119,76 @@ The number cells use the same height as the font size so `translateY(-digit × c
 - [ ] Card "Seto Bagh, chapter 4", "Pages 41 to 50 · about 14 minutes".
 - [ ] Pill "Hold to log today" → "Logged · 09:46"; hold time 1000ms.
 - [ ] Badge "Longest yet"; confetti colours `#f2c14e`, `#f6efdf`, `#8fb59a`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: "Paath" and "Sunday, 4 October" in the header; a gold flame; "11" at 132px; "DAY READING STREAK"; a week row Mon–Sat filled cream with dark checks and Sun as a dashed gold ring; a card "TODAY · 10 PAGES / Seto Bagh, chapter 4 / Pages 41 to 50 · about 14 minutes"; and a pill "Hold to log today" with a book icon.
+2. The number does not roll on load; it appears at 11.
+3. Pointer down on the pill: it scales to 0.97 and gains a 6px gold halo at 14% alpha. `navigator.vibrate(10)` fires where available. The pointer is captured.
+4. While held, a gold gradient (`#a8802a` → `#f2c14e`) reveals left to right over exactly 1000ms, driven by `requestAnimationFrame`. A dark copy of the label sits inside the gold layer, so text is cream over green and dark over gold, split at the fill edge.
+5. Release before 1000ms: the fill drains back to 0 over 450ms with `cubic-bezier(.2,.7,.2,1)`. Nothing is logged. Holding again starts from 0.
+6. At 1000ms the action completes without waiting for release:
+   - the pill turns solid gold with the label "Logged · 09:46";
+   - the tens and ones columns roll to 1 and 2 (700ms spring, ones delayed 60ms);
+   - the flame plays a 700ms pop (scale 1.25, rotate -8°);
+   - Sunday's ring fills gold and scales to 1.12 (200ms delay), its check appears (320ms delay), then it settles back to 1 (700ms);
+   - "Longest yet" scales in from 0.4 (450ms delay);
+   - 26 confetti pieces burst upward from the number in a 140° fan and fall under gravity, fading out over the last 40% of 1.6s;
+   - a vibration pattern `[12, 40, 18]` fires;
+   - a live region says "Logged. 12 day streak, your longest yet."
+7. "Undo, I have not read yet" appears under the pill. It restores 11, removes all success states, and returns focus to the pill.
+8. Keyboard: holding Space or Enter on the focused pill behaves like holding the pointer; keyup cancels. Key repeat does not restart the timer.
+9. Right-click / long-press context menus are suppressed on the pill so a long touch does not open the system menu.
+
+## Tokens
+
+```css
+:root {
+  --bg: #10261f;         /* forest ground */
+  --surface: #173229;    /* goal card */
+  --surface-2: #1f3d33;  /* hold pill at rest */
+  --line: #2a4a3f;       /* borders, empty dot ring */
+  --cream: #f6efdf;      /* primary text, past dots */
+  --cream-2: #c9c2b0;    /* secondary text */
+  --cream-3: #9fae9f;    /* muted text */
+  --gold: #f2c14e;       /* accent: flame, today, fill end, badge */
+  --gold-deep: #a8802a;  /* fill start */
+  --sage: #8fb59a;       /* third confetti colour */
+  --serif: "Young Serif", Georgia, serif;
+  --sans: "Space Grotesk", system-ui, sans-serif;
+  --num: 132px;
+  --dot: 36px;
+  --hold-h: 64px;
+  --r-card: 22px;
+  --r-pill: 999px;
+  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 18px; --s-6: 20px; --s-8: 34px;
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --out: cubic-bezier(.16, 1, .3, 1);
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --t-hold: 1000ms;
+  --t-drain: 450ms;
+  --t-roll: 700ms;
+  --t-confetti: 1600ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Streak number | Young Serif | 132px | 400 | 1 (132px cells) | -0.04em | tabular |
+| Brand | Young Serif | 15px | 400 | 1 | 0.01em | sentence |
+| Book title (h2) | Young Serif | 22px | 400 | 1.2 | 0 | sentence |
+| Streak unit | Space Grotesk | 13px | 500 | 1.45 | 0.16em | upper |
+| Card label | Space Grotesk | 12px | 400 | 1.45 | 0.08em | upper |
+| Card body | Space Grotesk | 13px | 400 | 1.45 | 0 | sentence |
+| Hold label | Space Grotesk | 16px | 600 | 1 | 0 | sentence |
+| Badge | Space Grotesk | 12px | 600 | 1 | 0.04em | sentence |
+| Day labels | Space Grotesk | 12px | 400 | 1 | 0 | title |
 
 ## Implementation notes
 

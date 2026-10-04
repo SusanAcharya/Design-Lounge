@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-width type specimen hero for a fictional foundry ("Tessel Type"). Three 176px-tall rows of uppercase 136px text scroll horizontally like a marquee: row one moves left at 80px/s, row two (outlined, not filled) moves right at 56px/s, row three moves left at 112px/s. Hovering or keyboard-focusing a row eases its velocity down to a quarter of its base speed, and eases back up on leave — no jump, no pause. Underneath all of that, the variable font's weight axis breathes between 300 and 720 on a 7s alternating cycle, so the text slowly thickens and thins while it moves. The detail worth copying is the velocity easing: speed is a JS-driven number that lerps toward a target each frame, which is what makes the slowdown feel physical instead of switching between two CSS animations.
-
-## Reference behaviour
-
-1. Initial state: header (72px) with brand and four spec facts; three rows stacked in the middle separated by 1px hairlines; footer (56px) with a hint and a caption. All three rows are already moving on first paint. Row 2 is outlined (transparent fill, 1.5px stroke).
-2. Row 1 scrolls left at 80px/s. Row 2 scrolls right at 56px/s. Row 3 scrolls left at 112px/s. Each row's content repeats seamlessly: the track holds two identical copies and wraps when one copy's width has passed.
-3. Weight breathes continuously: `font-variation-settings` `"wght"` goes 300 → 720 → 300 over 14s total (7s each way, `ease-in-out`, `alternate`). Each row starts at a different phase (delays 0, −2.3s, −4.6s) so they never pulse in unison.
-4. Hover a row: cursor is `ew-resize`; velocity eases toward 25% of its base (80 → 20px/s) using a per-frame lerp factor of 0.06 (≈ 90% of the way in 600ms at 60fps). A small uppercase label at the row's top-right fades in over 160ms showing the base speed ("80 px/s").
-5. Leave the row: velocity eases back to base with the same lerp. Nothing snaps.
-6. Tab to a row (rows are `tabindex="0"`): a 2px accent rectangle inset 4px shows inside the row, the row slows exactly as on hover, and the speed label appears. Blur restores speed.
-7. The separator glyphs ("·") between phrases are the only accent-coloured elements in the rows; in the outlined row they are filled accent, not stroked.
-8. Resize the window: the `ResizeObserver` on each first copy updates the wrap width; because `x` is kept in `[−w, 0)` by the modulo, the track never jumps to a blank region.
-9. Tab hidden then shown: `dt` is clamped to 48ms per frame, so the rows advance by at most ~5px on the first frame back instead of teleporting.
-10. Web font arrives after first paint: the copy re-measures via the same `ResizeObserver`; there is no visible jump because the rows are already moving and the wrap width simply changes.
-11. With `prefers-reduced-motion: reduce`: rows do not move (JS loop never starts), weight does not breathe, text sits at its resting weight (420). The layout is otherwise identical.
 
 ## Structure
 
@@ -59,53 +47,6 @@ Exact copy (each row's `.copy`, separators shown as `·`):
 Header meta, left to right: `Specimen No. 04` · `Tessel Grotesk Variable` · `wght 200–800` · `opsz 12–96` (the bold part is the value). Footer left: "Hover or focus a row to slow it to a quarter speed"; footer right: "Weight breathes 300 → 720 every 7 s".
 
 Each `.copy` is one flex item; two per track. The `em` separators carry `padding: 0 .22em` so the dot sits centred between phrases at every weight.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm paper, near-black ink, one red accent */
-  --bg: #efebe3;        /* page */
-  --bg-2: #e6e1d7;      /* reserved: pressed / secondary surface */
-  --ink: #15140f;       /* text, stroke */
-  --ink-2: #5f5b52;     /* meta text */
-  --ink-3: #8f8a7f;     /* speed label */
-  --line: #d4cec2;      /* hairlines */
-  --accent: #d8432b;    /* dot, separators, focus ring */
-
-  /* type */
-  --font: "Bricolage Grotesque", system-ui, sans-serif;
-  --type: 136px;        /* marquee glyph size */
-  --stroke: 1.5px;      /* outline row stroke */
-  --gap: .5em;          /* trailing gap after each copy */
-
-  /* layout */
-  --row-h: 176px;
-  --header-h: 72px;
-  --footer-h: 56px;
-  --pad-x: 32px;
-
-  /* motion */
-  --t-micro: 160ms;     /* label fade */
-  --t-breathe: 7s;      /* one direction of the weight cycle */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --lerp: 0.06;         /* JS: per-frame velocity easing factor */
-  --slow: 0.25;         /* JS: hover speed multiplier */
-}
-```
-
-## Typography
-
-| Role          | Family              | Size  | Weight (wght axis) | Line-height | Tracking | Case      | Notes |
-|---------------|---------------------|------:|-------------------:|------------:|---------:|-----------|-------|
-| Marquee row   | Bricolage Grotesque | 136px | 300 ↔ 720 (animated), rest 420 | 1 | −0.03em | UPPERCASE | `"opsz" 96` |
-| Outlined row  | same                | 136px | same               | 1           | −0.03em  | UPPERCASE | `color: transparent; -webkit-text-stroke: 1.5px var(--ink)` |
-| Brand         | Bricolage Grotesque | 15px  | 600                | 1.4         | −0.01em  | sentence  | `"opsz" 14` |
-| Header meta   | Bricolage Grotesque | 12px  | 400 / values 500   | 1.4         | +0.02em  | sentence  | |
-| Speed label   | Bricolage Grotesque | 11px  | 400                | 1.4         | +0.06em  | UPPERCASE | |
-| Footer        | Bricolage Grotesque | 12px  | 400                | 1.4         | 0        | sentence  | |
-
-Load the font as a variable range: `family=Bricolage+Grotesque:opsz,wght@12..96,200..800`. Without the range syntax the weight animation will snap between static instances.
 
 ## Motion
 
@@ -169,6 +110,71 @@ There are no disabled, loading, empty or error states.
 - [ ] Second copy of every track has `aria-hidden="true"`.
 - [ ] After the web font loads, the wrap width is re-measured (no visible seam at the first loop after font swap).
 - [ ] Velocity reaches 90% of its target within ~600ms of hover in/out (lerp 0.06 per frame at 60fps).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header (72px) with brand and four spec facts; three rows stacked in the middle separated by 1px hairlines; footer (56px) with a hint and a caption. All three rows are already moving on first paint. Row 2 is outlined (transparent fill, 1.5px stroke).
+2. Row 1 scrolls left at 80px/s. Row 2 scrolls right at 56px/s. Row 3 scrolls left at 112px/s. Each row's content repeats seamlessly: the track holds two identical copies and wraps when one copy's width has passed.
+3. Weight breathes continuously: `font-variation-settings` `"wght"` goes 300 → 720 → 300 over 14s total (7s each way, `ease-in-out`, `alternate`). Each row starts at a different phase (delays 0, −2.3s, −4.6s) so they never pulse in unison.
+4. Hover a row: cursor is `ew-resize`; velocity eases toward 25% of its base (80 → 20px/s) using a per-frame lerp factor of 0.06 (≈ 90% of the way in 600ms at 60fps). A small uppercase label at the row's top-right fades in over 160ms showing the base speed ("80 px/s").
+5. Leave the row: velocity eases back to base with the same lerp. Nothing snaps.
+6. Tab to a row (rows are `tabindex="0"`): a 2px accent rectangle inset 4px shows inside the row, the row slows exactly as on hover, and the speed label appears. Blur restores speed.
+7. The separator glyphs ("·") between phrases are the only accent-coloured elements in the rows; in the outlined row they are filled accent, not stroked.
+8. Resize the window: the `ResizeObserver` on each first copy updates the wrap width; because `x` is kept in `[−w, 0)` by the modulo, the track never jumps to a blank region.
+9. Tab hidden then shown: `dt` is clamped to 48ms per frame, so the rows advance by at most ~5px on the first frame back instead of teleporting.
+10. Web font arrives after first paint: the copy re-measures via the same `ResizeObserver`; there is no visible jump because the rows are already moving and the wrap width simply changes.
+11. With `prefers-reduced-motion: reduce`: rows do not move (JS loop never starts), weight does not breathe, text sits at its resting weight (420). The layout is otherwise identical.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm paper, near-black ink, one red accent */
+  --bg: #efebe3;        /* page */
+  --bg-2: #e6e1d7;      /* reserved: pressed / secondary surface */
+  --ink: #15140f;       /* text, stroke */
+  --ink-2: #5f5b52;     /* meta text */
+  --ink-3: #8f8a7f;     /* speed label */
+  --line: #d4cec2;      /* hairlines */
+  --accent: #d8432b;    /* dot, separators, focus ring */
+
+  /* type */
+  --font: "Bricolage Grotesque", system-ui, sans-serif;
+  --type: 136px;        /* marquee glyph size */
+  --stroke: 1.5px;      /* outline row stroke */
+  --gap: .5em;          /* trailing gap after each copy */
+
+  /* layout */
+  --row-h: 176px;
+  --header-h: 72px;
+  --footer-h: 56px;
+  --pad-x: 32px;
+
+  /* motion */
+  --t-micro: 160ms;     /* label fade */
+  --t-breathe: 7s;      /* one direction of the weight cycle */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --lerp: 0.06;         /* JS: per-frame velocity easing factor */
+  --slow: 0.25;         /* JS: hover speed multiplier */
+}
+```
+
+## Typography
+
+| Role          | Family              | Size  | Weight (wght axis) | Line-height | Tracking | Case      | Notes |
+|---------------|---------------------|------:|-------------------:|------------:|---------:|-----------|-------|
+| Marquee row   | Bricolage Grotesque | 136px | 300 ↔ 720 (animated), rest 420 | 1 | −0.03em | UPPERCASE | `"opsz" 96` |
+| Outlined row  | same                | 136px | same               | 1           | −0.03em  | UPPERCASE | `color: transparent; -webkit-text-stroke: 1.5px var(--ink)` |
+| Brand         | Bricolage Grotesque | 15px  | 600                | 1.4         | −0.01em  | sentence  | `"opsz" 14` |
+| Header meta   | Bricolage Grotesque | 12px  | 400 / values 500   | 1.4         | +0.02em  | sentence  | |
+| Speed label   | Bricolage Grotesque | 11px  | 400                | 1.4         | +0.06em  | UPPERCASE | |
+| Footer        | Bricolage Grotesque | 12px  | 400                | 1.4         | 0        | sentence  | |
+
+Load the font as a variable range: `family=Bricolage+Grotesque:opsz,wght@12..96,200..800`. Without the range syntax the weight animation will snap between static instances.
 
 ## Implementation notes
 

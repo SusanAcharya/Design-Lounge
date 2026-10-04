@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The deployments feed of "Orbital", an infrastructure console, with a custom pull-to-refresh. Pulling the list down (pointer drag from `scrollTop === 0`, or a mouse drag on desktop) moves the list with 55% of the finger's travel and reveals a 28px ring above it; the ring's arc is drawn in step with the pull and reaches a full circle at the 80px threshold. Release past the threshold and the list holds at 64px while the ring becomes a 75% arc spinning at 800ms per turn; after 1.2s a new row is inserted at the top, entering with an 8px drop and a mint highlight that fades out over 1.2s, and the list springs back to 0. A circular refresh button in the header triggers the same sequence for replay.
-
-## Reference behaviour
-
-1. Initial state: header "ORBITAL · EU-1 / Deployments" with a 40px round refresh button; nine deployment rows, the first with a pulsing live ring around its status dot. The ring indicator is invisible (opacity 0).
-2. Press on the list at `scrollTop 0` and drag down: the list translates by `min(120, dy × .55)` px with no transition. The ring fades in over 160ms and its `stroke-dashoffset` goes from the full circumference (62.83) to 0 as pull goes 0 → 80px; it also scales from 0.6 to 1.
-3. Drag back up above 0: the list returns to 0 and the ring hides.
-4. Release under 80px: the list springs back to 0 over 420ms `cubic-bezier(.32,.72,0,1)`.
-5. Release at or beyond 80px: the list snaps to 64px (same spring); the stage gets `loading`; the ring's arc jumps to `stroke-dashoffset 16` (about 75%) and rotates continuously, 800ms per revolution, linear. `aria-busy="true"` is set on the feed.
-6. After 1200ms a new row ("checkout v3.2.0 · Deploying · 3 of 6 pods") is prepended. It animates in (`translateY(-8px)`, opacity 0 → 1, 360ms spring) and its background/border flash mint (`rgba(94,234,212,.18)` / `#5eead4`) holding for the first 25% then fading to the row surface by 1200ms. The list springs back to 0 and `aria-busy` returns to false.
-7. Pulling again while loading does nothing. Each refresh cycles through three prepared rows so repeated pulls keep adding.
-8. Tap the header refresh button: identical to step 5 onward.
-9. The feed scrolls normally otherwise; a drag that starts with `scrollTop > 0` is a scroll, not a pull.
 
 ## Structure
 
@@ -49,62 +39,6 @@ The deployments feed of "Orbital", an infrastructure console, with a custom pull
 - `.ptr` (aria-hidden): absolute, `top:0; height:64px`, centred `<svg class="ring">` with a track circle and a progress circle, r=10.
 - `<main id="feed" aria-live="polite" aria-busy>`: `height:100%; overflow-y:auto; padding:0 16px 40px; overscroll-behavior:contain; touch-action:pan-y`; transformed by the pull.
 - `<ul class="list">` of `<li class="row">`: grid `auto 1fr auto`; `.dot` (col 1, rows 1–2), `.svc` name + version (col 2, row 1), `.meta` (col 2, row 2), `.when` (col 3, rows 1–2).
-
-## Tokens
-
-```css
-:root {
-  /* colour — charcoal surfaces, mint accent, three status hues */
-  --bg: #14161a;
-  --surface: #1c1f25;       /* rows */
-  --surface-2: #23272f;
-  --line: #2b3039;          /* row border, ring track, header hairline */
-  --ink: #ecebe6;
-  --ink-2: #a3a59e;         /* meta, relative time */
-  --ink-3: #6c6f6a;         /* eyebrow, durations */
-  --accent: #5eead4;        /* ring, refresh hover, highlight border */
-  --accent-ink: #062a24;
-  --ok: #5eead4;  --warn: #f2c14e;  --bad: #f0665b;
-  --highlight: rgba(94,234,212,.18);
-
-  /* type */
-  --font: "Sora", system-ui, -apple-system, sans-serif;
-
-  /* gesture geometry */
-  --threshold: 80px;        /* pull needed to trigger */
-  --hold: 64px;             /* list offset while loading */
-  --max-pull: 120px;        /* cap on translate */
-  --pull-ratio: .55;        /* list travel per finger px */
-  --ring: 28px;  --ring-r: 10;  --ring-c: 62.83;  --ring-stroke: 2.5px;
-  --ring-spin-offset: 16;   /* ≈ 75 % arc while loading */
-
-  /* layout */
-  --r-row: 14px;  --row-gap: 8px;  --row-pad: 12px 14px;  --gutter: 16px;
-  --dot: 10px;
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-enter: 360ms;
-  --t-snap: 420ms;
-  --t-spin: 800ms;
-  --t-highlight: 1200ms;
-  --t-load: 1200ms;         /* simulated network */
-  --spring: cubic-bezier(.32, .72, 0, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role          | Family | Size | Weight | Line-height | Tracking | Case |
-|---------------|--------|-----:|-------:|------------:|---------:|------|
-| Body / meta   | Sora   | 12px | 400    | 1.45        | 0        | sentence |
-| Eyebrow       | Sora   | 12px | 500    | 1.2         | +0.08em  | UPPERCASE |
-| Page title    | Sora   | 24px | 600    | 1.1         | −0.02em  | sentence |
-| Service name  | Sora   | 14px | 600    | 1.45        | −0.01em  | as written (kebab-case) |
-| Version       | Sora   | 14px | 400    | 1.45        | 0        | `tabular-nums`, `--ink-3` |
-| Relative time | Sora   | 12px | 500    | 1.3         | 0        | `--ink-2`, right-aligned |
-| Duration      | Sora   | 12px | 400    | 1.3         | 0        | `--ink-3`, `tabular-nums` |
 
 ## Motion
 
@@ -162,6 +96,78 @@ Reduced motion: snaps are 1ms, the spin slows to 2s per turn (still communicates
 - [ ] Row surface `#1c1f25`, border `#2b3039`, radius 14px, 8px gap, 16px gutters.
 - [ ] Reduced motion: no drop-in, slow spin, no live pulse; the highlight still fades.
 - [ ] No timers under 16ms and no scroll-jacking outside the pull.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header "ORBITAL · EU-1 / Deployments" with a 40px round refresh button; nine deployment rows, the first with a pulsing live ring around its status dot. The ring indicator is invisible (opacity 0).
+2. Press on the list at `scrollTop 0` and drag down: the list translates by `min(120, dy × .55)` px with no transition. The ring fades in over 160ms and its `stroke-dashoffset` goes from the full circumference (62.83) to 0 as pull goes 0 → 80px; it also scales from 0.6 to 1.
+3. Drag back up above 0: the list returns to 0 and the ring hides.
+4. Release under 80px: the list springs back to 0 over 420ms `cubic-bezier(.32,.72,0,1)`.
+5. Release at or beyond 80px: the list snaps to 64px (same spring); the stage gets `loading`; the ring's arc jumps to `stroke-dashoffset 16` (about 75%) and rotates continuously, 800ms per revolution, linear. `aria-busy="true"` is set on the feed.
+6. After 1200ms a new row ("checkout v3.2.0 · Deploying · 3 of 6 pods") is prepended. It animates in (`translateY(-8px)`, opacity 0 → 1, 360ms spring) and its background/border flash mint (`rgba(94,234,212,.18)` / `#5eead4`) holding for the first 25% then fading to the row surface by 1200ms. The list springs back to 0 and `aria-busy` returns to false.
+7. Pulling again while loading does nothing. Each refresh cycles through three prepared rows so repeated pulls keep adding.
+8. Tap the header refresh button: identical to step 5 onward.
+9. The feed scrolls normally otherwise; a drag that starts with `scrollTop > 0` is a scroll, not a pull.
+
+## Tokens
+
+```css
+:root {
+  /* colour — charcoal surfaces, mint accent, three status hues */
+  --bg: #14161a;
+  --surface: #1c1f25;       /* rows */
+  --surface-2: #23272f;
+  --line: #2b3039;          /* row border, ring track, header hairline */
+  --ink: #ecebe6;
+  --ink-2: #a3a59e;         /* meta, relative time */
+  --ink-3: #6c6f6a;         /* eyebrow, durations */
+  --accent: #5eead4;        /* ring, refresh hover, highlight border */
+  --accent-ink: #062a24;
+  --ok: #5eead4;  --warn: #f2c14e;  --bad: #f0665b;
+  --highlight: rgba(94,234,212,.18);
+
+  /* type */
+  --font: "Sora", system-ui, -apple-system, sans-serif;
+
+  /* gesture geometry */
+  --threshold: 80px;        /* pull needed to trigger */
+  --hold: 64px;             /* list offset while loading */
+  --max-pull: 120px;        /* cap on translate */
+  --pull-ratio: .55;        /* list travel per finger px */
+  --ring: 28px;  --ring-r: 10;  --ring-c: 62.83;  --ring-stroke: 2.5px;
+  --ring-spin-offset: 16;   /* ≈ 75 % arc while loading */
+
+  /* layout */
+  --r-row: 14px;  --row-gap: 8px;  --row-pad: 12px 14px;  --gutter: 16px;
+  --dot: 10px;
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-enter: 360ms;
+  --t-snap: 420ms;
+  --t-spin: 800ms;
+  --t-highlight: 1200ms;
+  --t-load: 1200ms;         /* simulated network */
+  --spring: cubic-bezier(.32, .72, 0, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role          | Family | Size | Weight | Line-height | Tracking | Case |
+|---------------|--------|-----:|-------:|------------:|---------:|------|
+| Body / meta   | Sora   | 12px | 400    | 1.45        | 0        | sentence |
+| Eyebrow       | Sora   | 12px | 500    | 1.2         | +0.08em  | UPPERCASE |
+| Page title    | Sora   | 24px | 600    | 1.1         | −0.02em  | sentence |
+| Service name  | Sora   | 14px | 600    | 1.45        | −0.01em  | as written (kebab-case) |
+| Version       | Sora   | 14px | 400    | 1.45        | 0        | `tabular-nums`, `--ink-3` |
+| Relative time | Sora   | 12px | 500    | 1.3         | 0        | `--ink-2`, right-aligned |
+| Duration      | Sora   | 12px | 400    | 1.3         | 0        | `--ink-3`, `tabular-nums` |
 
 ## Implementation notes
 

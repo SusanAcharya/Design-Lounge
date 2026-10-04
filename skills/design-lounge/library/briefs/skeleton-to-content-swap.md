@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A three-column feed of six post cards for an internal publication ("Nord Post"). On load every card shows a skeleton: grey bars with a slow shimmer, laid out with the exact same padding, heights and margins as the content they stand in for. After 1.4s the skeleton fades out (160ms) and the content rises 10px and fades in (360ms, expo-out), one card after another at 40ms intervals. A "Reload" button in the header replays the whole sequence and the status pill reports the load time. The detail worth copying is that nothing shifts by a pixel when the swap happens — the skeleton is an overlay drawn on top of the real content, not a substitute for it.
-
-## Reference behaviour
-
-1. Initial state: header (64px, white, 1px bottom hairline) with the masthead "Nord Post", four feed tabs ("Latest" current), a status pill reading "Loading feed…" with a grey dot, and a "Reload" button (disabled while loading). Below, a 3 × 2 grid of cards, each showing its skeleton with a shimmer sweeping left → right every 1.6s. `<main aria-busy="true">`.
-2. At t = 1400ms all cards receive the `on` class simultaneously. Per card `i` (0–5): the skeleton layer's opacity goes 1 → 0 over 160ms starting at `i × 40ms`; the content layer's opacity goes 0 → 1 and `translateY(10px)` → 0 over 360ms starting at `i × 40ms + 80ms`. Card 5's content therefore lands at 1400 + 200 + 80 + 360 = 2040ms.
-3. `aria-busy` flips to `false` when the swap starts. 600ms after that (all cards done) the status pill reads "6 posts · 1.4 s" (measured from the click), its dot turns teal, and the Reload button re-enables.
-4. Each loaded card shows: a 40px coloured initials avatar, author name and "Team · age" line, a two-line serif title (clamped to exactly two lines), a three-line excerpt (clamped to three), and a footer with a "replies" chip, a "Save" chip and a read-time on the right.
-5. Hover a footer chip: text becomes primary ink and the border darkens. No motion.
-6. Click Reload: the icon rotates 180° while pressed (600ms); all cards drop `on` at once (skeleton reappears instantly, content hides instantly), status returns to "Loading feed…", button disables, and the sequence in steps 2–3 runs again after 1400ms.
-7. Clicking Reload while a load is running is impossible (button disabled); pending timers are cleared defensively anyway.
-8. With `prefers-reduced-motion: reduce`: no shimmer; the swap is a 1ms opacity change with the same stagger timing and no translate.
 
 ## Structure
 
@@ -56,64 +47,6 @@ Card copy (author · meta · title · excerpt · replies · read time):
 6. Jonas Ohlin · Ops · 12h · "Rotating 1,200 API keys in one afternoon" · 7 replies · 3 min
 
 Avatar fills, in order: `#0f766e`, `#3b5b8c`, `#8c5a3b`, `#5b3b8c`, `#3b8c6b`, `#8c3b4d`, white initials.
-
-## Tokens
-
-```css
-:root {
-  /* colour — cool light neutrals, one teal accent */
-  --bg: #f3f5f7;        /* page */
-  --card: #ffffff;      /* cards, header */
-  --line: #e2e6ea;      /* hairlines, chip borders */
-  --bone: #e9edf0;      /* skeleton bars */
-  --bone-hi: #f6f8fa;   /* shimmer highlight */
-  --ink: #151a20;       /* primary text */
-  --ink-2: #5b6570;     /* excerpt, chips */
-  --ink-3: #8a939c;     /* meta, read time, status */
-  --accent: #0f766e;    /* focus rings, loaded dot, avatar 1 */
-  --accent-ink: #ffffff;
-
-  /* type */
-  --serif: "DM Serif Display", Georgia, serif;
-  --sans: "DM Sans", system-ui, sans-serif;
-
-  /* geometry shared by content and skeleton */
-  --avatar: 40px;
-  --lh-meta: 18px;      /* name and meta line boxes */
-  --lh-title: 26px;     /* h2 line-height; h2 height = 2 lines */
-  --lh-body: 20px;      /* p line-height; p height = 3 lines */
-  --card-pad: 20px;
-  --r: 12px;            /* card */
-  --r-s: 6px;           /* chips */
-  --grid-gap: 16px;
-
-  /* motion */
-  --t-out: 160ms;       /* skeleton fade */
-  --t-in: 360ms;        /* content rise */
-  --t-shimmer: 1.6s;
-  --stagger: 40ms;
-  --delay-in: 80ms;     /* content starts after skeleton begins fading */
-  --load-ms: 1400ms;    /* simulated fetch */
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role          | Family          | Size | Weight | Line-height | Tracking | Case     |
-|---------------|-----------------|-----:|-------:|------------:|---------:|----------|
-| Masthead      | DM Serif Display| 22px | 400    | 1           | −0.01em  | sentence |
-| Tab           | DM Sans         | 13px | 500    | 1.45        | 0        | sentence |
-| Author name   | DM Sans         | 14px | 600    | 18px        | 0        | sentence |
-| Author meta   | DM Sans         | 12px | 400    | 18px        | 0        | sentence |
-| Card title    | DM Serif Display| 21px | 400    | 26px        | −0.01em  | sentence |
-| Excerpt       | DM Sans         | 14px | 400    | 20px        | 0        | sentence |
-| Chip          | DM Sans         | 12px | 500    | 30px box    | 0        | sentence |
-| Read time / status | DM Sans    | 12px | 400    | 1.45        | 0        | sentence |
-| Avatar initials | DM Sans       | 13px | 600    | 1           | 0        | UPPERCASE |
-| Status pill   | DM Sans         | 12px | 400    | 1.45        | 0        | sentence |
-| Reload button | DM Sans         | 13px | 500    | 36px box    | 0        | sentence |
 
 ## Motion
 
@@ -189,6 +122,79 @@ Reduced motion: `.b::after { animation: none }`, `.ct { transform: none; transit
 - [ ] With `prefers-reduced-motion: reduce` the shimmer stops and the swap has no translate.
 - [ ] Reload re-enables at 2000ms after the click (1400 + 6 × 40 + 360), never earlier.
 - [ ] The card count (6), column count (3) and card height (266px) are unchanged between skeleton and loaded states.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header (64px, white, 1px bottom hairline) with the masthead "Nord Post", four feed tabs ("Latest" current), a status pill reading "Loading feed…" with a grey dot, and a "Reload" button (disabled while loading). Below, a 3 × 2 grid of cards, each showing its skeleton with a shimmer sweeping left → right every 1.6s. `<main aria-busy="true">`.
+2. At t = 1400ms all cards receive the `on` class simultaneously. Per card `i` (0–5): the skeleton layer's opacity goes 1 → 0 over 160ms starting at `i × 40ms`; the content layer's opacity goes 0 → 1 and `translateY(10px)` → 0 over 360ms starting at `i × 40ms + 80ms`. Card 5's content therefore lands at 1400 + 200 + 80 + 360 = 2040ms.
+3. `aria-busy` flips to `false` when the swap starts. 600ms after that (all cards done) the status pill reads "6 posts · 1.4 s" (measured from the click), its dot turns teal, and the Reload button re-enables.
+4. Each loaded card shows: a 40px coloured initials avatar, author name and "Team · age" line, a two-line serif title (clamped to exactly two lines), a three-line excerpt (clamped to three), and a footer with a "replies" chip, a "Save" chip and a read-time on the right.
+5. Hover a footer chip: text becomes primary ink and the border darkens. No motion.
+6. Click Reload: the icon rotates 180° while pressed (600ms); all cards drop `on` at once (skeleton reappears instantly, content hides instantly), status returns to "Loading feed…", button disables, and the sequence in steps 2–3 runs again after 1400ms.
+7. Clicking Reload while a load is running is impossible (button disabled); pending timers are cleared defensively anyway.
+8. With `prefers-reduced-motion: reduce`: no shimmer; the swap is a 1ms opacity change with the same stagger timing and no translate.
+
+## Tokens
+
+```css
+:root {
+  /* colour — cool light neutrals, one teal accent */
+  --bg: #f3f5f7;        /* page */
+  --card: #ffffff;      /* cards, header */
+  --line: #e2e6ea;      /* hairlines, chip borders */
+  --bone: #e9edf0;      /* skeleton bars */
+  --bone-hi: #f6f8fa;   /* shimmer highlight */
+  --ink: #151a20;       /* primary text */
+  --ink-2: #5b6570;     /* excerpt, chips */
+  --ink-3: #8a939c;     /* meta, read time, status */
+  --accent: #0f766e;    /* focus rings, loaded dot, avatar 1 */
+  --accent-ink: #ffffff;
+
+  /* type */
+  --serif: "DM Serif Display", Georgia, serif;
+  --sans: "DM Sans", system-ui, sans-serif;
+
+  /* geometry shared by content and skeleton */
+  --avatar: 40px;
+  --lh-meta: 18px;      /* name and meta line boxes */
+  --lh-title: 26px;     /* h2 line-height; h2 height = 2 lines */
+  --lh-body: 20px;      /* p line-height; p height = 3 lines */
+  --card-pad: 20px;
+  --r: 12px;            /* card */
+  --r-s: 6px;           /* chips */
+  --grid-gap: 16px;
+
+  /* motion */
+  --t-out: 160ms;       /* skeleton fade */
+  --t-in: 360ms;        /* content rise */
+  --t-shimmer: 1.6s;
+  --stagger: 40ms;
+  --delay-in: 80ms;     /* content starts after skeleton begins fading */
+  --load-ms: 1400ms;    /* simulated fetch */
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role          | Family          | Size | Weight | Line-height | Tracking | Case     |
+|---------------|-----------------|-----:|-------:|------------:|---------:|----------|
+| Masthead      | DM Serif Display| 22px | 400    | 1           | −0.01em  | sentence |
+| Tab           | DM Sans         | 13px | 500    | 1.45        | 0        | sentence |
+| Author name   | DM Sans         | 14px | 600    | 18px        | 0        | sentence |
+| Author meta   | DM Sans         | 12px | 400    | 18px        | 0        | sentence |
+| Card title    | DM Serif Display| 21px | 400    | 26px        | −0.01em  | sentence |
+| Excerpt       | DM Sans         | 14px | 400    | 20px        | 0        | sentence |
+| Chip          | DM Sans         | 12px | 500    | 30px box    | 0        | sentence |
+| Read time / status | DM Sans    | 12px | 400    | 1.45        | 0        | sentence |
+| Avatar initials | DM Sans       | 13px | 600    | 1           | 0        | UPPERCASE |
+| Status pill   | DM Sans         | 12px | 400    | 1.45        | 0        | sentence |
+| Reload button | DM Sans         | 13px | 500    | 36px box    | 0        | sentence |
 
 ## Implementation notes
 

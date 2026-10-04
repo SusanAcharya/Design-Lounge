@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A long-read article page for *Tidewater Review*. Warm paper background, body set in Newsreader at 19px / 1.6 on a 66ch measure, a 92px drop cap on the first paragraph, an italic 30px pull quote with a 2px moss rule, a small data table, and three numbered margin notes that float into a 220px column to the right of the text when the viewport is at least 1100px wide (they fall inline below their reference otherwise). A 52px sticky header carries the masthead, section links, a percentage counter and a 2px moss progress hairline that scales with scroll. The detail worth copying is the margin note: it is placed in the paragraph immediately after its superscript, so the float lands on the same line as the reference and never drifts.
-
-## Reference behaviour
-
-1. Initial state: header at top with "0 %", progress bar at `scaleX(0)`; kicker, 56px title, italic dek, byline rule, then the article. Note 1 sits in the right margin level with the line that contains superscript 1.
-2. Scroll the article (the scroll container is a full-height `div`, not the window): the header stays fixed at the top with a 92% paper, 6px blur backdrop; the progress bar's `scaleX` equals `scrollTop / (scrollHeight − clientHeight)`; the counter shows the rounded percentage with tabular figures.
-3. Hover a section link in the header: colour `--ink-2` → `--ink`.
-4. Hover the in-text link: its underline colour changes from `--line` to `--accent` over 160ms.
-5. At the end, a small 8px rotated square marks the article end; progress reads "100 %".
-6. Resize below 1100px: notes leave the margin and render as indented blocks (2px left rule) directly after the sentence that references them.
-7. Reduced motion: smooth scrolling off; the progress bar still updates (transition 1ms).
 
 ## Structure
 
@@ -49,6 +41,77 @@ A long-read article page for *Tidewater Review*. Warm paper background, body set
   - `<header class="bar">` — `position:sticky; top:0`; `<b>` masthead, `<nav>` links, `.pct` counter, `.progress[role="progressbar"]` absolutely positioned on the header's bottom edge.
   - `<article>` — `.kicker`, `<h1>`, `.dek`, `.byline`, paragraphs (`p.first` carries the drop cap), `<h2>`s, `blockquote.pull`, `figure.tbl` with a `<table>` and `<figcaption>`, `.end` marker.
   - Notes are `<span class="note" role="note">` placed inside the paragraph right after their `<sup>`.
+
+## Motion
+
+| Element       | Trigger  | Property  | From → To               | Duration | Easing  | Notes |
+|---------------|----------|-----------|-------------------------|---------:|---------|-------|
+| `.progress`   | scroll   | transform | `scaleX(p)`             | 80ms     | linear  | `p` recomputed on every scroll event (passive listener) |
+| `.pct`        | scroll   | text      | "n %"                   | 0        | —       | tabular numerals, `min-width: 5ch` |
+| `.scroll`     | anchor / keyboard | scroll position | —          | UA smooth| —       | `scroll-behavior: smooth`; `auto` under reduced motion |
+| `a.ref`       | hover    | text-decoration-color | `--line` → `--accent` | 160ms | `--ease` | |
+| header links  | hover    | color     | `--ink-2` → `--ink`     | 0        | —       | |
+
+Nothing animates on load; the page is still by design.
+
+## States
+
+- **Header:** sticky, translucent paper with `backdrop-filter: blur(6px)` and a 1px `--line` bottom rule; the progress bar overlaps that rule (`bottom: -1px`).
+- **Progress bar:** `--accent`, 2px, `transform-origin: left`; `aria-valuenow` mirrors the percentage.
+- **In-text link:** underline 1px `--line`, offset 4px; hover underline `--accent`; focus-visible 2px `--accent` outline, 3px offset.
+- **Margin note (≥1100):** floated right, no rule, number in `--accent`.
+- **Margin note (<1100):** block, `margin: 14px 0`, 14px left padding, 2px `--line` left rule.
+- **Table row:** no hover state (it is a figure, not a data grid).
+- **End marker:** 8px `--accent` square rotated 45°, centred, `aria-hidden`.
+- **Selection:** leave the UA default or set `::selection { background: var(--accent-soft) }`.
+
+## Accessibility
+
+- The reading progress element has `role="progressbar"`, `aria-label="Reading progress"`, `aria-valuemin/max/now`. The visible counter is `aria-live="off"` so it is never announced on scroll.
+- Margin notes are `<span role="note">` inside the paragraph after the superscript, so screen readers hear the note right after its reference, in reading order, at every viewport width.
+- Superscripts are plain text (not links) in the demo; if notes need to be reachable by keyboard, make each `<sup>` an `<a href="#n1">` and give the note an `id`.
+- `<article>` contains one `<h1>`, then `<h2>`s; the pull quote is a `<blockquote>` with a `<small>` attribution; the table is a `<figure>` with `<figcaption>` and a proper `<thead>`.
+- Keyboard: Tab reaches the three header links and the one in-text link; Space / arrows scroll the `.scroll` container once it or a child has focus. Give `.scroll` `tabindex="0"` if your framework prevents body focus.
+- Contrast: `--ink` on paper 12.4:1; `--ink-2` 5.2:1; `--ink-3` 3.3:1 (used only for 12–13px captions and the counter); `--accent` 5.0:1 on paper.
+- The drop cap is generated with `::first-letter`, so the paragraph text is unchanged for assistive tech.
+
+## Responsive rules
+
+- ≥ 1280: as specified. Text column 66ch (~ 690px), shifted 130px left of centre; notes 220px wide, 40px to the right.
+- 1100–1279: identical; the shift still fits because 690 + 260 + 80 < 1100.
+- 820–1099: notes go inline (block with left rule); column centred at 66ch.
+- < 820: body 17px, title 40px, header padding 20px, section nav hidden, column `100% − 80px`.
+- < 480: side padding 20px (`width: 100% − 40px`), drop cap 72px, pull quote 24px.
+
+## Acceptance checklist
+
+- [ ] Page background `#f7f2e8`; body text `#2a2420` in Newsreader at 19px with line-height 1.6.
+- [ ] Article column is exactly `min(66ch, 100% − 80px)` wide.
+- [ ] At ≥ 1100px the column is offset 130px left of centre and margin notes float into a 220px column with a 40px gap; at < 1100px notes render inline with a 2px left rule.
+- [ ] Each margin note's top aligns within ±4px with the line containing its superscript.
+- [ ] Drop cap is 92px, spans four lines, with `margin: 6px 10px 0 -2px`.
+- [ ] Title is 56px/1.05 with `text-wrap: balance`; dek is 24px italic in `#6b625a`.
+- [ ] Pull quote is 30px italic with a 2px `#4a6b45` left rule and 28px padding.
+- [ ] Sticky header is 52px, translucent (`rgba(247,242,232,.92)` + 6px blur) with a 1px `#dcd3c3` rule.
+- [ ] Progress hairline is 2px `#4a6b45`, scales from 0 to 1 with scroll, and `aria-valuenow` plus the "n %" counter track it.
+- [ ] Counter uses tabular figures and does not shift the header layout between "0 %" and "100 %".
+- [ ] In-text link underline is 1px `#dcd3c3` at 4px offset and turns `#4a6b45` on hover.
+- [ ] Table headers are 12px uppercase with a 1px `#2a2420` rule; numeric cells are right-aligned tabular.
+- [ ] No animation runs on load; reduced motion disables smooth scroll.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header at top with "0 %", progress bar at `scaleX(0)`; kicker, 56px title, italic dek, byline rule, then the article. Note 1 sits in the right margin level with the line that contains superscript 1.
+2. Scroll the article (the scroll container is a full-height `div`, not the window): the header stays fixed at the top with a 92% paper, 6px blur backdrop; the progress bar's `scaleX` equals `scrollTop / (scrollHeight − clientHeight)`; the counter shows the rounded percentage with tabular figures.
+3. Hover a section link in the header: colour `--ink-2` → `--ink`.
+4. Hover the in-text link: its underline colour changes from `--line` to `--accent` over 160ms.
+5. At the end, a small 8px rotated square marks the article end; progress reads "100 %".
+6. Resize below 1100px: notes leave the margin and render as indented blocks (2px left rule) directly after the sentence that references them.
+7. Reduced motion: smooth scrolling off; the progress bar still updates (transition 1ms).
 
 ## Tokens
 
@@ -107,63 +170,6 @@ A long-read article page for *Tidewater Review*. Warm paper background, body set
 | Table head    | Public Sans | 12px | 500    | 1.3         | +0.06em  | UPPERCASE, `--ink-3`, 1px `--ink` bottom rule |
 | Table cells   | Public Sans | 14px | 400    | 1.4         | 0        | tabular numerals, 1px `--line` rules |
 | Figcaption    | Public Sans | 12px | 400    | 1.4         | 0        | `--ink-3` |
-
-## Motion
-
-| Element       | Trigger  | Property  | From → To               | Duration | Easing  | Notes |
-|---------------|----------|-----------|-------------------------|---------:|---------|-------|
-| `.progress`   | scroll   | transform | `scaleX(p)`             | 80ms     | linear  | `p` recomputed on every scroll event (passive listener) |
-| `.pct`        | scroll   | text      | "n %"                   | 0        | —       | tabular numerals, `min-width: 5ch` |
-| `.scroll`     | anchor / keyboard | scroll position | —          | UA smooth| —       | `scroll-behavior: smooth`; `auto` under reduced motion |
-| `a.ref`       | hover    | text-decoration-color | `--line` → `--accent` | 160ms | `--ease` | |
-| header links  | hover    | color     | `--ink-2` → `--ink`     | 0        | —       | |
-
-Nothing animates on load; the page is still by design.
-
-## States
-
-- **Header:** sticky, translucent paper with `backdrop-filter: blur(6px)` and a 1px `--line` bottom rule; the progress bar overlaps that rule (`bottom: -1px`).
-- **Progress bar:** `--accent`, 2px, `transform-origin: left`; `aria-valuenow` mirrors the percentage.
-- **In-text link:** underline 1px `--line`, offset 4px; hover underline `--accent`; focus-visible 2px `--accent` outline, 3px offset.
-- **Margin note (≥1100):** floated right, no rule, number in `--accent`.
-- **Margin note (<1100):** block, `margin: 14px 0`, 14px left padding, 2px `--line` left rule.
-- **Table row:** no hover state (it is a figure, not a data grid).
-- **End marker:** 8px `--accent` square rotated 45°, centred, `aria-hidden`.
-- **Selection:** leave the UA default or set `::selection { background: var(--accent-soft) }`.
-
-## Accessibility
-
-- The reading progress element has `role="progressbar"`, `aria-label="Reading progress"`, `aria-valuemin/max/now`. The visible counter is `aria-live="off"` so it is never announced on scroll.
-- Margin notes are `<span role="note">` inside the paragraph after the superscript, so screen readers hear the note right after its reference, in reading order, at every viewport width.
-- Superscripts are plain text (not links) in the demo; if notes need to be reachable by keyboard, make each `<sup>` an `<a href="#n1">` and give the note an `id`.
-- `<article>` contains one `<h1>`, then `<h2>`s; the pull quote is a `<blockquote>` with a `<small>` attribution; the table is a `<figure>` with `<figcaption>` and a proper `<thead>`.
-- Keyboard: Tab reaches the three header links and the one in-text link; Space / arrows scroll the `.scroll` container once it or a child has focus. Give `.scroll` `tabindex="0"` if your framework prevents body focus.
-- Contrast: `--ink` on paper 12.4:1; `--ink-2` 5.2:1; `--ink-3` 3.3:1 (used only for 12–13px captions and the counter); `--accent` 5.0:1 on paper.
-- The drop cap is generated with `::first-letter`, so the paragraph text is unchanged for assistive tech.
-
-## Responsive rules
-
-- ≥ 1280: as specified. Text column 66ch (~ 690px), shifted 130px left of centre; notes 220px wide, 40px to the right.
-- 1100–1279: identical; the shift still fits because 690 + 260 + 80 < 1100.
-- 820–1099: notes go inline (block with left rule); column centred at 66ch.
-- < 820: body 17px, title 40px, header padding 20px, section nav hidden, column `100% − 80px`.
-- < 480: side padding 20px (`width: 100% − 40px`), drop cap 72px, pull quote 24px.
-
-## Acceptance checklist
-
-- [ ] Page background `#f7f2e8`; body text `#2a2420` in Newsreader at 19px with line-height 1.6.
-- [ ] Article column is exactly `min(66ch, 100% − 80px)` wide.
-- [ ] At ≥ 1100px the column is offset 130px left of centre and margin notes float into a 220px column with a 40px gap; at < 1100px notes render inline with a 2px left rule.
-- [ ] Each margin note's top aligns within ±4px with the line containing its superscript.
-- [ ] Drop cap is 92px, spans four lines, with `margin: 6px 10px 0 -2px`.
-- [ ] Title is 56px/1.05 with `text-wrap: balance`; dek is 24px italic in `#6b625a`.
-- [ ] Pull quote is 30px italic with a 2px `#4a6b45` left rule and 28px padding.
-- [ ] Sticky header is 52px, translucent (`rgba(247,242,232,.92)` + 6px blur) with a 1px `#dcd3c3` rule.
-- [ ] Progress hairline is 2px `#4a6b45`, scales from 0 to 1 with scroll, and `aria-valuenow` plus the "n %" counter track it.
-- [ ] Counter uses tabular figures and does not shift the header layout between "0 %" and "100 %".
-- [ ] In-text link underline is 1px `#dcd3c3` at 4px offset and turns `#4a6b45` on hover.
-- [ ] Table headers are 12px uppercase with a 1px `#2a2420` rule; numeric cells are right-aligned tabular.
-- [ ] No animation runs on load; reduced motion disables smooth scroll.
 
 ## Implementation notes
 

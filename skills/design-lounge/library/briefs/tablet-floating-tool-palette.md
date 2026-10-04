@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A floating, draggable tool palette for a fictional vector sketch app ("Plotter") on a landscape tablet. The palette is a 56px-wide dark column with a grip handle, five 44px tool buttons, a colour swatch button that opens a popover with six swatches and a stroke-width slider, and undo/clear actions. The active tool is marked by a sky-blue rounded square that slides between buttons rather than each button lighting up separately. Behind it is a full-bleed canvas with a 24px dot grid that you can draw on with pen, marker (translucent, 3× width), eraser (destination-out, 4× width) and a straight-line tool; a small file chip sits top-left and a mono status line bottom-right reports tool, size and zoom. The palette can be dragged anywhere by its grip and nudged with arrow keys.
-
-## Reference behaviour
-
-1. Initial state: canvas shows a blue bezier stroke and a translucent dark marker line (seeded so the first frame is not empty). Palette at `left: 28px; top: 150px` with Pen active (indicator behind the second button). Status reads "tool Pen · size 3 · zoom 100%".
-2. Draw on the canvas with the pointer: a round-capped stroke follows the pointer in the current colour and width. Pen: `w` px, opaque. Marker: `3w` px at 40% alpha. Eraser: `4w` px, `destination-out`. Line: a rubber-band straight line from the down point that commits on release (the canvas is restored from a snapshot on every move).
-3. Click a tool (or press V / P / M / E / L): its `aria-pressed` becomes true, the indicator slides to it (`translateY(index × 46px)`) over 260ms, the icon turns white, the status updates, and the cursor becomes crosshair (default for Select). Select does not draw.
-4. Click the swatch button: a 200px popover appears 12px to the right of the palette, sliding in 6px and scaling from .98 over 260ms with a 10px notch pointing at the button; focus moves to the current swatch. Choose a swatch: the swatch button's dot changes colour and the pressed ring moves. Drag the range: the label reads "n px" and the status "size n" update live.
-5. Click outside, press Escape, or click the swatch button again: the popover closes; `aria-expanded` returns to false.
-6. Press Z or click Undo: the last stroke is removed (up to 20 steps). Clear empties the canvas (undoable).
-7. Drag the grip: the palette follows the pointer (offset preserved), its shadow deepens, and it is clamped 8px inside the viewport. Release: shadow returns. With the grip focused, arrow keys move the palette 16px per press.
-8. Hover any tool: icon brightens to `--ink` on a `--panel-2` background; the pressed tool keeps the indicator instead.
 
 ## Structure
 
@@ -56,6 +47,80 @@ dot grid 24px · buttons 44px, gap 2 · indicator 44×44 r10 · palette r14
 - Tools in order (label · key): Select · V, Pen · P (default), Marker · M, Eraser · E, Line · L. Actions: Undo (Z), Clear canvas.
 - Swatches in order: `--c1` #1f2126 (default), `--c2` #0ea5e9, `--c3` #ef4444, `--c4` #f59e0b, `--c5` #22c55e, `--c6` #a855f7. Popover heading "COLOUR"; label "Stroke" + "3 px"; range 1–24.
 - Seeded drawing: a 3px `#0ea5e9` cubic bezier from (420,300) with controls (520,180) and (640,420) to (760,300); a 10px `#1f2126` line at 40% alpha from (440,470) to (720,470).
+
+## Motion
+
+| Element        | Trigger          | Property            | From → To                     | Duration | Easing       | Notes |
+|----------------|------------------|---------------------|-------------------------------|---------:|--------------|-------|
+| `.ind`         | tool change      | transform           | `translateY(i × 46px)`        | 260ms    | `--ease-out` | 44px button + 2px gap |
+| `.tool`        | hover / press    | color               | `--ink-2` → `--ink` / white   | 140ms    | linear       | background is instant |
+| `.pop`         | open             | opacity, transform  | 0, `translateX(-6px) scale(.98)` → 1, none | 140ms / 260ms | linear / `--ease-out` | `visibility` follows |
+| `.sw i`        | popover open     | scale               | 1 → 1.1                       | 140ms    | `--ease-out` | |
+| `.swatch`      | hover            | scale               | 1 → 1.12                      | 140ms    | `--ease-out` | |
+| `.pal`         | drag start / end | box-shadow          | `--shadow-pal` ↔ `--shadow-drag` | 140ms | linear       | position updates have no transition |
+| canvas strokes | pointer          | —                   | drawn immediately             | 0        | —            | no smoothing lag |
+
+Reduced motion: all transitions 1ms; the indicator jumps; drawing is unaffected.
+
+## States
+
+- **Tool pressed:** `aria-pressed="true"`, icon `--accent-ink`, indicator positioned behind it; background transparent (the indicator is the fill).
+- **Tool hover (unpressed):** `--panel-2` background, `--ink` icon.
+- **Swatch button expanded:** `aria-expanded="true"`, dot scaled 1.1.
+- **Popover open:** `.on`; closed is `visibility: hidden; pointer-events: none`.
+- **Swatch pressed:** `aria-pressed="true"`, 2px `--ink` ring 4px outside the 24px dot.
+- **Palette dragging:** `.drag`, deeper shadow, `cursor: grabbing`.
+- **Grip:** `cursor: grab`; hover raises colour to `--ink-2`.
+- **Focus-visible (grip, tools, swatch button, swatches, actions):** 2px `--accent` outline, 2px offset.
+- **Cursor on canvas:** crosshair for drawing tools, default for Select.
+
+## Accessibility
+
+- The palette is `role="toolbar" aria-label="Tools" aria-orientation="vertical"`; each tool is a `<button aria-pressed>` with an `aria-label` that includes its shortcut ("Pen (P)"). The visible key hint is decorative.
+- The grip is focusable (`tabindex="0"`) with `aria-label="Move palette (arrow keys)"`; arrow keys move it 16px and are `preventDefault`ed.
+- The popover is `role="dialog" aria-label="Colour and size"`; opening moves focus to the pressed swatch; Escape and outside-click close it. Swatches are `aria-pressed` buttons labelled with their hex; the range has a visible `<label>` whose value text updates.
+- The status line is `aria-live="polite"` so tool and size changes are announced; it is the only live region.
+- The canvas is `role="img"` with a label explaining it is drawable; drawing is pointer-only by design, and the piece exposes undo and clear as buttons with labels.
+- Shortcuts (V P M E L Z) are ignored while focus is in the range input and when a modifier is held.
+- Contrast: `--ink-2` on `--panel` 7.2:1; `--ink-3` on `--panel` 3.9:1 (key hints and 10px headings only); white on `--accent` 3.2:1 for a 20px icon on a 44px fill (large graphic, plus the `aria-pressed` state and the slide make it non-colour-only).
+- Hit targets: all buttons 44px; grip 56×22 (secondary; keyboard alternative provided); swatches 24px with 6px gaps inside a popover (raise to 32px if the product is touch-first).
+
+## Responsive rules
+
+- 1180 (reference): as specified.
+- 1024: identical; the popover still opens to the right (it flips to the left when the palette is within 220px of the right edge).
+- 768 (portrait): the palette snaps to `left: 16px; top: 120px` on load; the chip and status shrink to 11px.
+- < 640: the palette becomes a horizontal bar docked at the bottom (`flex-direction: row`, indicator slides on X), the grip is hidden, and the popover opens upward.
+
+## Acceptance checklist
+
+- [ ] Palette is 56px wide, `#1f2126`, 14px radius, with `0 12px 32px rgba(31,33,38,.28)` shadow, initially at 28/150.
+- [ ] Five 44px tools with 2px gaps; the active indicator is a 44×44 `#0ea5e9` square with 10px radius that slides `translateY(i × 46px)` over 260ms `cubic-bezier(.16,1,.3,1)`.
+- [ ] V / P / M / E / L select tools; `aria-pressed` and the status line update.
+- [ ] Pen draws round-capped strokes at the chosen width; marker is 3× width at 40% alpha; eraser is 4× width using `destination-out`; line rubber-bands and commits on release.
+- [ ] The dot grid is a CSS background on the canvas element and survives erasing and clearing.
+- [ ] Undo (Z) restores up to 20 previous states; Clear is itself undoable.
+- [ ] Swatch popover is 200px wide, 12px right of the palette, with a 10px notch; six 24px swatches; a 1–24 range whose value is mirrored in the label and status.
+- [ ] Popover closes on outside pointerdown, Escape and re-click; focus lands on the pressed swatch on open.
+- [ ] Dragging the grip moves the palette with the pointer, clamped 8px from every edge, and deepens the shadow while dragging.
+- [ ] Arrow keys on the focused grip move the palette 16px.
+- [ ] Canvas is DPR-aware (bitmap = CSS size × `devicePixelRatio`, context scaled) so strokes are sharp.
+- [ ] Every control shows a 2px accent focus ring; shortcuts do not fire inside the range input.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: canvas shows a blue bezier stroke and a translucent dark marker line (seeded so the first frame is not empty). Palette at `left: 28px; top: 150px` with Pen active (indicator behind the second button). Status reads "tool Pen · size 3 · zoom 100%".
+2. Draw on the canvas with the pointer: a round-capped stroke follows the pointer in the current colour and width. Pen: `w` px, opaque. Marker: `3w` px at 40% alpha. Eraser: `4w` px, `destination-out`. Line: a rubber-band straight line from the down point that commits on release (the canvas is restored from a snapshot on every move).
+3. Click a tool (or press V / P / M / E / L): its `aria-pressed` becomes true, the indicator slides to it (`translateY(index × 46px)`) over 260ms, the icon turns white, the status updates, and the cursor becomes crosshair (default for Select). Select does not draw.
+4. Click the swatch button: a 200px popover appears 12px to the right of the palette, sliding in 6px and scaling from .98 over 260ms with a 10px notch pointing at the button; focus moves to the current swatch. Choose a swatch: the swatch button's dot changes colour and the pressed ring moves. Drag the range: the label reads "n px" and the status "size n" update live.
+5. Click outside, press Escape, or click the swatch button again: the popover closes; `aria-expanded` returns to false.
+6. Press Z or click Undo: the last stroke is removed (up to 20 steps). Clear empties the canvas (undoable).
+7. Drag the grip: the palette follows the pointer (offset preserved), its shadow deepens, and it is clamped 8px inside the viewport. Release: shadow returns. With the grip focused, arrow keys move the palette 16px per press.
+8. Hover any tool: icon brightens to `--ink` on a `--panel-2` background; the pressed tool keeps the indicator instead.
 
 ## Tokens
 
@@ -121,65 +186,6 @@ dot grid 24px · buttons 44px, gap 2 · indicator 44×44 r10 · palette r14
 | Key hint        | IBM Plex Mono | 8px  | 500    | 1           | 0        | UPPERCASE |
 | Popover heading | IBM Plex Mono | 10px | 500    | 1           | +0.10em  | UPPERCASE |
 | Popover label   | IBM Plex Mono | 11px | 400    | 1           | 0        | sentence  |
-
-## Motion
-
-| Element        | Trigger          | Property            | From → To                     | Duration | Easing       | Notes |
-|----------------|------------------|---------------------|-------------------------------|---------:|--------------|-------|
-| `.ind`         | tool change      | transform           | `translateY(i × 46px)`        | 260ms    | `--ease-out` | 44px button + 2px gap |
-| `.tool`        | hover / press    | color               | `--ink-2` → `--ink` / white   | 140ms    | linear       | background is instant |
-| `.pop`         | open             | opacity, transform  | 0, `translateX(-6px) scale(.98)` → 1, none | 140ms / 260ms | linear / `--ease-out` | `visibility` follows |
-| `.sw i`        | popover open     | scale               | 1 → 1.1                       | 140ms    | `--ease-out` | |
-| `.swatch`      | hover            | scale               | 1 → 1.12                      | 140ms    | `--ease-out` | |
-| `.pal`         | drag start / end | box-shadow          | `--shadow-pal` ↔ `--shadow-drag` | 140ms | linear       | position updates have no transition |
-| canvas strokes | pointer          | —                   | drawn immediately             | 0        | —            | no smoothing lag |
-
-Reduced motion: all transitions 1ms; the indicator jumps; drawing is unaffected.
-
-## States
-
-- **Tool pressed:** `aria-pressed="true"`, icon `--accent-ink`, indicator positioned behind it; background transparent (the indicator is the fill).
-- **Tool hover (unpressed):** `--panel-2` background, `--ink` icon.
-- **Swatch button expanded:** `aria-expanded="true"`, dot scaled 1.1.
-- **Popover open:** `.on`; closed is `visibility: hidden; pointer-events: none`.
-- **Swatch pressed:** `aria-pressed="true"`, 2px `--ink` ring 4px outside the 24px dot.
-- **Palette dragging:** `.drag`, deeper shadow, `cursor: grabbing`.
-- **Grip:** `cursor: grab`; hover raises colour to `--ink-2`.
-- **Focus-visible (grip, tools, swatch button, swatches, actions):** 2px `--accent` outline, 2px offset.
-- **Cursor on canvas:** crosshair for drawing tools, default for Select.
-
-## Accessibility
-
-- The palette is `role="toolbar" aria-label="Tools" aria-orientation="vertical"`; each tool is a `<button aria-pressed>` with an `aria-label` that includes its shortcut ("Pen (P)"). The visible key hint is decorative.
-- The grip is focusable (`tabindex="0"`) with `aria-label="Move palette (arrow keys)"`; arrow keys move it 16px and are `preventDefault`ed.
-- The popover is `role="dialog" aria-label="Colour and size"`; opening moves focus to the pressed swatch; Escape and outside-click close it. Swatches are `aria-pressed` buttons labelled with their hex; the range has a visible `<label>` whose value text updates.
-- The status line is `aria-live="polite"` so tool and size changes are announced; it is the only live region.
-- The canvas is `role="img"` with a label explaining it is drawable; drawing is pointer-only by design, and the piece exposes undo and clear as buttons with labels.
-- Shortcuts (V P M E L Z) are ignored while focus is in the range input and when a modifier is held.
-- Contrast: `--ink-2` on `--panel` 7.2:1; `--ink-3` on `--panel` 3.9:1 (key hints and 10px headings only); white on `--accent` 3.2:1 for a 20px icon on a 44px fill (large graphic, plus the `aria-pressed` state and the slide make it non-colour-only).
-- Hit targets: all buttons 44px; grip 56×22 (secondary; keyboard alternative provided); swatches 24px with 6px gaps inside a popover (raise to 32px if the product is touch-first).
-
-## Responsive rules
-
-- 1180 (reference): as specified.
-- 1024: identical; the popover still opens to the right (it flips to the left when the palette is within 220px of the right edge).
-- 768 (portrait): the palette snaps to `left: 16px; top: 120px` on load; the chip and status shrink to 11px.
-- < 640: the palette becomes a horizontal bar docked at the bottom (`flex-direction: row`, indicator slides on X), the grip is hidden, and the popover opens upward.
-
-## Acceptance checklist
-
-- [ ] Palette is 56px wide, `#1f2126`, 14px radius, with `0 12px 32px rgba(31,33,38,.28)` shadow, initially at 28/150.
-- [ ] Five 44px tools with 2px gaps; the active indicator is a 44×44 `#0ea5e9` square with 10px radius that slides `translateY(i × 46px)` over 260ms `cubic-bezier(.16,1,.3,1)`.
-- [ ] V / P / M / E / L select tools; `aria-pressed` and the status line update.
-- [ ] Pen draws round-capped strokes at the chosen width; marker is 3× width at 40% alpha; eraser is 4× width using `destination-out`; line rubber-bands and commits on release.
-- [ ] The dot grid is a CSS background on the canvas element and survives erasing and clearing.
-- [ ] Undo (Z) restores up to 20 previous states; Clear is itself undoable.
-- [ ] Swatch popover is 200px wide, 12px right of the palette, with a 10px notch; six 24px swatches; a 1–24 range whose value is mirrored in the label and status.
-- [ ] Popover closes on outside pointerdown, Escape and re-click; focus lands on the pressed swatch on open.
-- [ ] Dragging the grip moves the palette with the pointer, clamped 8px from every edge, and deepens the shadow while dragging.
-- [ ] Arrow keys on the focused grip move the palette 16px.
-- [ ] Canvas is DPR-aware (bitmap = CSS size × `devicePixelRatio`, context scaled) so strokes are sharp.
-- [ ] Every control shows a 2px accent focus ring; shortcuts do not fire inside the range input.
 
 ## Implementation notes
 

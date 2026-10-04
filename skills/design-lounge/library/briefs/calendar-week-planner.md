@@ -4,32 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map the neutrals and the four calendar colours onto the kit tokens and keep the 15-minute grid.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full calendar app screen for a small pottery studio, called Tidewell. A mini month and calendar toggles sit on the left. A 7-day time grid from 8:00 to 19:00 fills the rest. Events snap to 15 minutes. Events that overlap sit side by side. A red line marks the time now. You can drag an event to move it, drag its bottom edge to resize it, click an empty slot to add a quick event, and move the selected event with the arrow keys. The look is soft and quiet: warm white, graphite ink, and four muted calendar colours. The detail worth copying is the overlap layout plus the snapping maths. Both are small and both are easy to get wrong.
 
 This is not `week-schedule`. That piece is a static board of seven day cards with no time axis. This is not `calendar-month`. That piece is a date picker. This piece is the working week view of a calendar product.
-
-## Reference behaviour
-
-1. The first frame shows the week of 28 Sep to 4 Oct 2026. The header reads "28 Sep – 4 Oct 2026" and "Week 40".
-2. Today is Thursday 1 October. Its date sits in a 30px graphite circle in the day header. The mini month marks 1 October the same way.
-3. The time now is fixed at 14:20 in the demo. A 2px red line crosses the Thursday column at 14:20, with a 10px red dot at its left end. The gutter shows a red "14:20" pill on the same line. In a product, update the line once a minute.
-4. 27 events are on the grid. "Shop shoot" (Thursday 14:00 to 15:30, Studio) starts selected. It has a 2px ring in its calendar colour and a small resize grip at the bottom.
-5. Events that overlap in time share the column width. Two overlapping events split it into two lanes. Wednesday 13:00 to 15:00 shows Design crit, Courier pickup and Firing log in two lanes.
-6. An event that is not in the last lane is drawn 1.7 lanes wide. The next lane sits on top of it. This keeps titles readable at 110px column width. A 1.5px ring in the page colour separates the stacked events.
-7. Pointer down on an event selects it and focuses it. Moving the pointer more than 4px starts a drag. The event follows the pointer. Vertical moves snap to 15 minutes. Horizontal moves snap to whole days. The event keeps its length.
-8. Pointer down on the bottom 8px of an event starts a resize. Only the end time changes. It snaps to 15 minutes. The shortest event is 15 minutes.
-9. Events cannot go above 8:00 or below 19:00. A drag cannot leave the visible days.
-10. On pointer up after a drag, the live region says the new time, for example "Shop shoot, Friday 2 October, 14:30 to 16:30".
-11. Clicking an empty slot opens a popover next to that column. The start time is the clicked slot, rounded down to 15 minutes. The end time is 60 minutes later. A dashed ghost block shows the slot in the column. The title field takes focus.
-12. The popover has a title field, a start select, an end select, four calendar chips (Work, Studio, Health, Home) with Studio checked, Cancel, and Save. Typing in the title updates the ghost block text.
-13. Save adds the event, selects it, closes the popover, and announces "Added …". An empty title saves as "New event". Cancel or Escape closes it and returns focus to where it came from. Clicking outside the popover closes it.
-14. The "New event" button in the sidebar opens the same popover at 15:00 today.
-15. With an event focused, Arrow Up and Arrow Down move it by 15 minutes. Arrow Left and Arrow Right move it by one day. If it leaves the visible range, the view moves with it. Each move is announced. Delete or Backspace removes the event.
-16. Unchecking a calendar in the sidebar hides its events. The count next to each calendar shows how many of its events fall in the visible days.
-17. Today, Previous and Next change the visible range. Clicking a day in the mini month jumps to the week that holds it. The mini month shades the visible days as one band.
-18. At 768px and below the grid shows 3 days, with today in the middle.
 
 ## Structure
 
@@ -64,74 +45,6 @@ This is not `week-schedule`. That piece is a static board of seven day cards wit
 - Each event is a `div` with `role="button"`, `tabindex="0"`, `aria-pressed`, and an `aria-label` that holds the title, calendar, day and times. It is absolutely positioned inside its day column.
 - The popover is a `form` with `role="dialog"` and `aria-labelledby` pointing at its heading. It is absolutely positioned inside `main`.
 - A visually hidden `p` with `aria-live="polite"` carries every announcement.
-
-## Tokens
-
-```css
-:root {
-  /* neutrals */
-  --bg: #faf8f4;          /* page, warm white */
-  --surface: #fffefb;     /* top bar, sidebar, popover */
-  --weekend: #f5f2ec;     /* Saturday and Sunday columns */
-  --ink: #2b2a28;         /* graphite text, today circle, primary button */
-  --ink-2: #55524d;       /* secondary text */
-  --ink-3: #6f6b64;       /* hour labels, weekday labels */
-  --line: #e8e4dc;        /* hour lines, column borders */
-  --line-2: #f1ede6;      /* half-hour lines, hover */
-  --now: #d6402f;         /* now line */
-  --focus: #2b2a28;
-
-  /* calendars: stroke, tint, text */
-  --sage: #6f8f72;    --sage-t: #e6eee4;    --sage-k: #2f4a33;    /* Health */
-  --clay: #b5694b;    --clay-t: #f5e4da;    --clay-k: #6b3320;    /* Studio */
-  --slate: #5e7088;   --slate-t: #e3e8ef;   --slate-k: #2c3a4e;   /* Work */
-  --mustard: #c29a2e; --mustard-t: #f6edcf; --mustard-k: #5e4a0e; /* Home */
-
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-
-  --r: 8px;          /* events, buttons, popover */
-  --hh: 60px;        /* one hour */
-  --gut: 56px;       /* time gutter */
-
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
-
-  --shadow-sel: 0 0 0 2px var(--c), 0 8px 18px -8px rgba(43,42,40,.45);
-  --shadow-lift: 0 0 0 2px var(--c), 0 14px 28px -10px rgba(43,42,40,.5);
-  --shadow-pop: 0 18px 40px -18px rgba(43,42,40,.45);
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --dur-micro: 160ms;
-  --dur-pop: 180ms;
-}
-```
-
-Each event sets three local variables from its calendar: `--c` (stroke), `--t` (tint background), `--k` (text). A class per calendar does it:
-
-```css
-.sage { --c: var(--sage); --t: var(--sage-t); --k: var(--sage-k); }
-```
-
-## Typography
-
-One family, Hanken Grotesk, with `font-variant-numeric: tabular-nums` on the body so times line up.
-
-| Role | Size | Weight | Line height | Tracking | Case | Colour |
-| --- | --- | --- | --- | --- | --- | --- |
-| Brand | 16px | 700 | 1.2 | -0.01em | as written | `--ink` |
-| Range title (h1) | 20px | 600 | 1.2 | -0.02em | as written | `--ink` |
-| Week label | 12px | 600 | 1.2 | 0.06em | upper | `--ink-3` |
-| Day name | 12px | 600 | 1.2 | 0.06em | upper | `--ink-3`, today `--ink` |
-| Day number | 20px | 600 | 30px | -0.02em | — | `--ink`, today `--surface` on `--ink` |
-| Hour label | 11px | 400 | 1 | 0 | — | `--ink-3` |
-| Event title | 12.5px | 600 | 1.3 | 0 | as written | `--k` |
-| Event time | 12px | 400 | 1.3 | 0 | — | `--k` at 85% opacity |
-| Sidebar heading | 13px | 600 | 1.3 | 0 | as written | `--ink` |
-| Mini month day | 12px | 400 | 28px | 0 | — | `--ink`, other month `#a19c94` |
-| Calendar row | 13.5px | 400 | 34px | 0 | as written | `--ink` |
-| Popover label | 12px | 600 | 1.3 | 0.04em | upper | `--ink-3` |
-| Popover title input | 15px | 600 | 40px | 0 | — | `--ink` |
-
-Titles and times use ellipsis on one line. An event shorter than 45 minutes puts title and time on the same line.
 
 ## Motion
 
@@ -209,6 +122,99 @@ Turn the transition off while a drag is active. Put a `dragging` class on `body`
 - [ ] The calendars are Work (slate), Studio (clay), Health (sage) and Home (mustard), with counts 11, 7, 5 and 4.
 - [ ] The grid runs from 8:00 to 19:00 at 60px per hour.
 - [ ] Event radius is 8px with a 3px left stripe.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the week of 28 Sep to 4 Oct 2026. The header reads "28 Sep – 4 Oct 2026" and "Week 40".
+2. Today is Thursday 1 October. Its date sits in a 30px graphite circle in the day header. The mini month marks 1 October the same way.
+3. The time now is fixed at 14:20 in the demo. A 2px red line crosses the Thursday column at 14:20, with a 10px red dot at its left end. The gutter shows a red "14:20" pill on the same line. In a product, update the line once a minute.
+4. 27 events are on the grid. "Shop shoot" (Thursday 14:00 to 15:30, Studio) starts selected. It has a 2px ring in its calendar colour and a small resize grip at the bottom.
+5. Events that overlap in time share the column width. Two overlapping events split it into two lanes. Wednesday 13:00 to 15:00 shows Design crit, Courier pickup and Firing log in two lanes.
+6. An event that is not in the last lane is drawn 1.7 lanes wide. The next lane sits on top of it. This keeps titles readable at 110px column width. A 1.5px ring in the page colour separates the stacked events.
+7. Pointer down on an event selects it and focuses it. Moving the pointer more than 4px starts a drag. The event follows the pointer. Vertical moves snap to 15 minutes. Horizontal moves snap to whole days. The event keeps its length.
+8. Pointer down on the bottom 8px of an event starts a resize. Only the end time changes. It snaps to 15 minutes. The shortest event is 15 minutes.
+9. Events cannot go above 8:00 or below 19:00. A drag cannot leave the visible days.
+10. On pointer up after a drag, the live region says the new time, for example "Shop shoot, Friday 2 October, 14:30 to 16:30".
+11. Clicking an empty slot opens a popover next to that column. The start time is the clicked slot, rounded down to 15 minutes. The end time is 60 minutes later. A dashed ghost block shows the slot in the column. The title field takes focus.
+12. The popover has a title field, a start select, an end select, four calendar chips (Work, Studio, Health, Home) with Studio checked, Cancel, and Save. Typing in the title updates the ghost block text.
+13. Save adds the event, selects it, closes the popover, and announces "Added …". An empty title saves as "New event". Cancel or Escape closes it and returns focus to where it came from. Clicking outside the popover closes it.
+14. The "New event" button in the sidebar opens the same popover at 15:00 today.
+15. With an event focused, Arrow Up and Arrow Down move it by 15 minutes. Arrow Left and Arrow Right move it by one day. If it leaves the visible range, the view moves with it. Each move is announced. Delete or Backspace removes the event.
+16. Unchecking a calendar in the sidebar hides its events. The count next to each calendar shows how many of its events fall in the visible days.
+17. Today, Previous and Next change the visible range. Clicking a day in the mini month jumps to the week that holds it. The mini month shades the visible days as one band.
+18. At 768px and below the grid shows 3 days, with today in the middle.
+
+## Tokens
+
+```css
+:root {
+  /* neutrals */
+  --bg: #faf8f4;          /* page, warm white */
+  --surface: #fffefb;     /* top bar, sidebar, popover */
+  --weekend: #f5f2ec;     /* Saturday and Sunday columns */
+  --ink: #2b2a28;         /* graphite text, today circle, primary button */
+  --ink-2: #55524d;       /* secondary text */
+  --ink-3: #6f6b64;       /* hour labels, weekday labels */
+  --line: #e8e4dc;        /* hour lines, column borders */
+  --line-2: #f1ede6;      /* half-hour lines, hover */
+  --now: #d6402f;         /* now line */
+  --focus: #2b2a28;
+
+  /* calendars: stroke, tint, text */
+  --sage: #6f8f72;    --sage-t: #e6eee4;    --sage-k: #2f4a33;    /* Health */
+  --clay: #b5694b;    --clay-t: #f5e4da;    --clay-k: #6b3320;    /* Studio */
+  --slate: #5e7088;   --slate-t: #e3e8ef;   --slate-k: #2c3a4e;   /* Work */
+  --mustard: #c29a2e; --mustard-t: #f6edcf; --mustard-k: #5e4a0e; /* Home */
+
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+
+  --r: 8px;          /* events, buttons, popover */
+  --hh: 60px;        /* one hour */
+  --gut: 56px;       /* time gutter */
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
+
+  --shadow-sel: 0 0 0 2px var(--c), 0 8px 18px -8px rgba(43,42,40,.45);
+  --shadow-lift: 0 0 0 2px var(--c), 0 14px 28px -10px rgba(43,42,40,.5);
+  --shadow-pop: 0 18px 40px -18px rgba(43,42,40,.45);
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --dur-micro: 160ms;
+  --dur-pop: 180ms;
+}
+```
+
+Each event sets three local variables from its calendar: `--c` (stroke), `--t` (tint background), `--k` (text). A class per calendar does it:
+
+```css
+.sage { --c: var(--sage); --t: var(--sage-t); --k: var(--sage-k); }
+```
+
+## Typography
+
+One family, Hanken Grotesk, with `font-variant-numeric: tabular-nums` on the body so times line up.
+
+| Role | Size | Weight | Line height | Tracking | Case | Colour |
+| --- | --- | --- | --- | --- | --- | --- |
+| Brand | 16px | 700 | 1.2 | -0.01em | as written | `--ink` |
+| Range title (h1) | 20px | 600 | 1.2 | -0.02em | as written | `--ink` |
+| Week label | 12px | 600 | 1.2 | 0.06em | upper | `--ink-3` |
+| Day name | 12px | 600 | 1.2 | 0.06em | upper | `--ink-3`, today `--ink` |
+| Day number | 20px | 600 | 30px | -0.02em | — | `--ink`, today `--surface` on `--ink` |
+| Hour label | 11px | 400 | 1 | 0 | — | `--ink-3` |
+| Event title | 12.5px | 600 | 1.3 | 0 | as written | `--k` |
+| Event time | 12px | 400 | 1.3 | 0 | — | `--k` at 85% opacity |
+| Sidebar heading | 13px | 600 | 1.3 | 0 | as written | `--ink` |
+| Mini month day | 12px | 400 | 28px | 0 | — | `--ink`, other month `#a19c94` |
+| Calendar row | 13.5px | 400 | 34px | 0 | as written | `--ink` |
+| Popover label | 12px | 600 | 1.3 | 0.04em | upper | `--ink-3` |
+| Popover title input | 15px | 600 | 40px | 0 | — | `--ink` |
+
+Titles and times use ellipsis on one line. An event shorter than 45 minutes puts title and time on the same line.
 
 ## Implementation notes
 

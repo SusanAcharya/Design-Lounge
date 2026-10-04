@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A square, watch-face style health tile for a fictional tracker called Pulsewire. It sits on a home screen, a watch, or a dashboard rail and answers one question: what is my heart doing right now. The live view shows a huge condensed BPM, an ECG trace drawn by a sweeping write-head (like a bedside monitor, not a scrolling ticker), and min/avg/max. Tapping the tile cycles to a 7-day resting view and a zones-today view. The detail worth copying is the sweep: new signal is written left to right over the old one, with a 10-sample gap ahead of the head and the old trace dimmed to 38%, so it reads as a real instrument.
-
-## Reference behaviour
-
-1. Initial state: Live view. BPM reads 72, the ECG trace is already two-thirds drawn (head at sample 118 of 180), the old trace to the right of the gap is dim.
-2. The write-head advances continuously: one full width every 3200ms. Each sample is computed from a synthetic PQRST waveform at the current BPM.
-3. On every R peak the small heart glyph in the top-left scales 1 → 1.35 → 1 over 300ms.
-4. Every third beat, BPM random-walks by −2…+2 inside 64–84 and the number replays a 260ms settle animation (6% drop + fade from 0.35).
-5. Click or tap anywhere on the tile face, or press Enter/Space while it is focused: advance to the next view (Live → Resting → Zones → Live).
-6. ArrowRight / ArrowLeft while the face is focused: next / previous view.
-7. The three pager dots at the bottom jump straight to a view. The current dot stretches from 6px to 18px wide and turns `--ink`.
-8. View change: the outgoing view fades and slides 4% left, the incoming one fades in from 4% right, 320ms.
-9. Leaving Live pauses the sweep (no rAF while hidden). Returning resumes from where it stopped. Hidden tabs also pause.
-10. Resting view: 54 BPM, "−3 BPM vs last week", seven day bars S–S, today (Saturday) in signal red.
-11. Zones view: "77 min in zone", five rows Z5 → Z1 with minute counts 2/9/26/18/22 and bars scaled to the largest (26m = 100%), plus a footer line "Now 72 BPM · Z1 starts at 95" that follows the live number.
-12. A polite live region announces "Live view", "Resting view" or "Zones view" on change.
 
 ## Structure
 
@@ -46,50 +33,6 @@ A square, watch-face style health tile for a fictional tracker called Pulsewire.
 - `button.face` covers the whole tile (`position:absolute; inset:0`). It holds three `span.view` panels stacked in one grid cell. Use spans inside the button (buttons only allow phrasing content).
 - `nav.pager` (labelled "Widget views") is a sibling of the face, positioned over it with `z-index:2`, holding three `button.dot`.
 - The trace is an inline `svg` (`viewBox 0 0 300 80`, `preserveAspectRatio="none"`) with a dashed baseline at y=58, two `polyline`s (new, old) and a 3px `circle` head.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0a0c0b;          /* stage */
-  --tile: #121513;        /* tile surface */
-  --tile-2: #181c19;
-  --line: #232924;        /* grid, rules */
-  --line-2: #2f3631;      /* tile border, idle bars, idle dots */
-  --ink: #eef2ec;         /* numerals */
-  --ink-2: #a3aca2;       /* secondary text */
-  --ink-3: #717a70;       /* labels */
-  --signal: #ff4632;      /* the one accent: trace, heart, live pill, today bar */
-  --signal-soft: rgba(255, 70, 50, .16);
-  --z1: #3a423b; --z2: #5d675d; --z3: #a3aca2; --z4: #ff9a80; --z5: #ff4632;
-  --display: "Teko", "Arial Narrow", sans-serif;
-  --mono: "Azeret Mono", ui-monospace, monospace;
-  --tile-size: min(400px, calc(100vw - 48px));
-  --tile-radius: 23%;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --t-micro: 160ms;
-  --t-view: 320ms;
-  --sweep: 3200ms;        /* one trace width */
-}
-```
-
-Type scale (container units, tile = 100cqw): 37cqw live numeral, 30cqw resting numeral, 15cqw zones total, 7.4cqw stat values, 3.1cqw unit, 2.9cqw top row, 2.5–2.8cqw labels. Spacing is in cqw too: padding 7cqw top, 7.5cqw sides, 13cqw bottom (room for the pager).
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Live BPM | Teko | 37cqw (148px at 400) | 600 | .78 | −0.025em | tabular nums |
-| Resting BPM | Teko | 30cqw | 600 | .78 | −0.025em | — |
-| Zones total | Teko | 15cqw | 600 | .9 | 0 | — |
-| Stat value | Teko | 7.4cqw | 600 | 1 | 0 | — |
-| Top row | Azeret Mono | 2.9cqw | 400 | 1 | 0.14em | uppercase |
-| Unit "BPM" | Azeret Mono | 3.1cqw | 400 | 1 | 0.12em | uppercase |
-| Labels / rows | Azeret Mono | 2.5–2.8cqw | 400/500 | 1.2 | 0.06–0.14em | mixed |
-| Hint | Azeret Mono | 11px | 400 | 2 | 0.14em | uppercase |
-
-Numbers are the condensed face. Everything else is mono. Do not set labels in the condensed face.
 
 ## Motion
 
@@ -155,6 +98,69 @@ The sweep is the only continuous movement on the page. It is calm: one pass per 
 - [ ] Stats read Min 58, Avg 71, Max 124.
 - [ ] Resting view: 54 BPM, "−3 BPM vs last week", Saturday bar red.
 - [ ] Zones: 77 min total, 2 / 9 / 26 / 18 / 22 minutes for Z5 → Z1.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: Live view. BPM reads 72, the ECG trace is already two-thirds drawn (head at sample 118 of 180), the old trace to the right of the gap is dim.
+2. The write-head advances continuously: one full width every 3200ms. Each sample is computed from a synthetic PQRST waveform at the current BPM.
+3. On every R peak the small heart glyph in the top-left scales 1 → 1.35 → 1 over 300ms.
+4. Every third beat, BPM random-walks by −2…+2 inside 64–84 and the number replays a 260ms settle animation (6% drop + fade from 0.35).
+5. Click or tap anywhere on the tile face, or press Enter/Space while it is focused: advance to the next view (Live → Resting → Zones → Live).
+6. ArrowRight / ArrowLeft while the face is focused: next / previous view.
+7. The three pager dots at the bottom jump straight to a view. The current dot stretches from 6px to 18px wide and turns `--ink`.
+8. View change: the outgoing view fades and slides 4% left, the incoming one fades in from 4% right, 320ms.
+9. Leaving Live pauses the sweep (no rAF while hidden). Returning resumes from where it stopped. Hidden tabs also pause.
+10. Resting view: 54 BPM, "−3 BPM vs last week", seven day bars S–S, today (Saturday) in signal red.
+11. Zones view: "77 min in zone", five rows Z5 → Z1 with minute counts 2/9/26/18/22 and bars scaled to the largest (26m = 100%), plus a footer line "Now 72 BPM · Z1 starts at 95" that follows the live number.
+12. A polite live region announces "Live view", "Resting view" or "Zones view" on change.
+
+## Tokens
+
+```css
+:root {
+  --bg: #0a0c0b;          /* stage */
+  --tile: #121513;        /* tile surface */
+  --tile-2: #181c19;
+  --line: #232924;        /* grid, rules */
+  --line-2: #2f3631;      /* tile border, idle bars, idle dots */
+  --ink: #eef2ec;         /* numerals */
+  --ink-2: #a3aca2;       /* secondary text */
+  --ink-3: #717a70;       /* labels */
+  --signal: #ff4632;      /* the one accent: trace, heart, live pill, today bar */
+  --signal-soft: rgba(255, 70, 50, .16);
+  --z1: #3a423b; --z2: #5d675d; --z3: #a3aca2; --z4: #ff9a80; --z5: #ff4632;
+  --display: "Teko", "Arial Narrow", sans-serif;
+  --mono: "Azeret Mono", ui-monospace, monospace;
+  --tile-size: min(400px, calc(100vw - 48px));
+  --tile-radius: 23%;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --t-micro: 160ms;
+  --t-view: 320ms;
+  --sweep: 3200ms;        /* one trace width */
+}
+```
+
+Type scale (container units, tile = 100cqw): 37cqw live numeral, 30cqw resting numeral, 15cqw zones total, 7.4cqw stat values, 3.1cqw unit, 2.9cqw top row, 2.5–2.8cqw labels. Spacing is in cqw too: padding 7cqw top, 7.5cqw sides, 13cqw bottom (room for the pager).
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Live BPM | Teko | 37cqw (148px at 400) | 600 | .78 | −0.025em | tabular nums |
+| Resting BPM | Teko | 30cqw | 600 | .78 | −0.025em | — |
+| Zones total | Teko | 15cqw | 600 | .9 | 0 | — |
+| Stat value | Teko | 7.4cqw | 600 | 1 | 0 | — |
+| Top row | Azeret Mono | 2.9cqw | 400 | 1 | 0.14em | uppercase |
+| Unit "BPM" | Azeret Mono | 3.1cqw | 400 | 1 | 0.12em | uppercase |
+| Labels / rows | Azeret Mono | 2.5–2.8cqw | 400/500 | 1.2 | 0.06–0.14em | mixed |
+| Hint | Azeret Mono | 11px | 400 | 2 | 0.14em | uppercase |
+
+Numbers are the condensed face. Everything else is mono. Do not set labels in the condensed face.
 
 ## Implementation notes
 

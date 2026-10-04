@@ -2,6 +2,18 @@
 
 Read this after [practice.md](practice.md) when the job is a website: a portfolio, a landing page, a product page, a studio, a personal site.
 
+## When rules disagree
+
+Some rules pull against each other. Settle them in this order, top wins.
+
+1. Their words.
+2. The Idea and the Signature.
+3. The Look fails in [practice.md](practice.md), the three-label limit, and the studio template limit.
+4. A Named look in [taste.md](taste.md), then the locked family.
+5. The piece brief.
+
+So a sharp or brutalist look may use tracked uppercase labels, but they count toward the three, and they are one of the two studio-template moves you are allowed. A hero brief with five labels keeps three. A brief's scroll cue goes. A section list never makes every section move: rule 6 in Sections, one by one.
+
 ## Stand out
 
 This is for every website: a portfolio, a landing page, a product page, a personal site. It is not for a dashboard or a tool someone opens every day.
@@ -31,12 +43,12 @@ The idea decides the hero and the proof block. If you cannot write it, you are n
 To find it, look in their material, not in the library:
 
 - A thing from their work: the object they make, the screen they are proud of, the tool they built. Can the site be that thing? A ledger designer's work sits in ledger rows. A typeface maker's name is set in their face.
-- A habit: how they work. Someone who writes about explicit gates gets a site you move through gate by gate.
+- A habit: how they work. A cook who folds every dumpling in front of you gets a menu that folds open. A translator who works line by line gets lines that turn from one language to the other.
 - A place or a time: their city, their trade, the hour they work.
 
 Write three candidates. Keep the one that changes the hero. An idea that only changes the copy is not the idea.
 
-Then make one signature: one element built only for this site, from the Idea, that no piece in the library has. It uses the locked tokens, so it still belongs. Everything else may come from pieces. Name it on the sheet: `Signature: the project cards open like gates`. This is where the site stops rhyming with every other Lounge site.
+Then make one signature: one element built only for this site, from the Idea, that no piece in the library has. It uses the locked tokens, so it still belongs. Everything else may come from pieces. Name it on the sheet: `Signature: each dish card folds shut like a momo when you pass it`. This is where the site stops rhyming with every other Lounge site.
 
 ### Show the work
 
@@ -89,9 +101,10 @@ The direction picks the hero and one effect. It does not pick the other sections
 
 1. If their words point at one option ("a big email to copy", "a timeline of my work"), take it.
 2. Fit the content you have. Work: three projects of different kinds suit cards or a horizontal rail, one product with steps suits a sticky scroll, many small things suit a bento. About: a long story suits a sticky split, a short belief suits a word highlight. Contact: a freelancer who takes briefs suits the brief steps, someone who just wants mail suits the giant email. Drop every option the content does not fit.
-3. Several still fit. Use the name number from the direction, plus the section's step: work +1, about +2, contact +3, footer +4. Divide by the number of options in that section's list below. The remainder picks it, counting from 0. Write each on the sheet: `Footer: footer-centered-colophon (76 + 4 = 80, 80 mod 4 = 0)`.
+3. Several still fit. Use the name number from the direction, plus the section's step: work +1, about +2, contact +3, footer +4. Count only the options still in the running after step 2, in the order the list gives them. Divide by that count. The remainder picks one, counting from 0. Write it on the sheet: `Footer: 3 left, 92 + 4 = 96, 96 mod 3 = 0, so the first of the three`.
 4. Skip an option that clashes with the locked family, or that needs something they don't have, such as real photos. Move to the next one, and say why.
 5. Never use the same piece for two sections.
+6. Only the lead effect moves as its brief says. Every other section piece is built in its still form: its layout, its states, and the sheet's entry fade, with no scroll story of its own. A word highlight in about plus stacking cards in work plus a giant email reveal is three effects. Add a second moving section only when the dials or their words allow it (More than one effect, below).
 
 The lists, for a website:
 

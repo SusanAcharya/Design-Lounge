@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A logos section for **Tally**, a payroll product. Two 96px rows of monochrome wordmarks — names set in Schibsted Grotesk or IBM Plex Mono, some with a 14px geometric prefix (square, circle, bars, plus) built from CSS, never from image files. Row A scrolls left in 42s; row B scrolls right in 54s. Hover or focus a row pauses that row only. Under `prefers-reduced-motion: reduce` both tracks are static and the duplicate set is hidden. This is a quiet swiss strip, not a kinetic type specimen: 18px marks on `#F4F4F0`, hairlines, no colour logos.
-
-## Reference behaviour
-
-1. Initial state: 56px nav (7px square + Tally + Payroll / Tax / Pricing in mono + “Open a book”). Lead: kicker “USED IN 48 PAYROLLS”, 40px heading “Teams that run the book on Tally”, right meta “**Two rows** / Monochrome type / Hover a row to pause”. Two hairline-boxed rows already moving. Footer hint names the 42 s / 54 s clocks.
-2. Hover row A: `animation-play-state: paused` on that track only. Row B keeps moving.
-3. Hover row B: same, only B pauses.
-4. Keyboard-focus a row (`tabindex="0"`): same pause via `:focus-within`.
-5. Leave the row: that track resumes from the same offset (CSS animation, not a JS restart).
-6. Hover “Open a book”: invert to `#111` fill, `#F4F4F0` text.
-7. Reduced motion: both animations `none`, transform none, the cloned `.set` is `display:none`. Eight wordmarks per row sit in document flow and may clip at the right edge — do not wrap them onto a second line inside the row.
 
 ## Structure
 
@@ -49,50 +41,6 @@ Row A names, in order: Northline (sq), Harbor & Co (caps), Vale Civic (mono + ci
 Row B names, in order: Westbound (caps), Ledger & Son (ci), Moth House (mono + bars), Brine, Oak & Hour (caps + plus), Second Shift, Quarry (mono + sq), Redoubt.
 
 Do not use real brand names. Do not draw SVG logos.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f4f0;          /* page */
-  --ink: #111111;         /* type, CTA, focus, brand square */
-  --ink-2: #6e6e6a;       /* kicker, links, meta */
-  --ink-3: #9a9a94;       /* hint */
-  --line: #d8d8d2;        /* hairlines */
-  --mark: #3a3a38;        /* wordmarks + icons */
-
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  --nav-h: 56px;
-  --row-h: 96px;
-  --pad: 64px;
-  --logo-pad-x: 36px;
-  --ico: 14px;
-
-  --t-fast: 160ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --dur-a: 42s;
-  --dur-b: 54s;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Body | Schibsted Grotesk | 14px | 400 | 1.45 | 0 | sentence |
-| Brand | Schibsted Grotesk | 15px | 600 | 1 | −0.03em | sentence |
-| Nav links | IBM Plex Mono | 12px | 400 | 1 | 0 | sentence |
-| CTA | IBM Plex Mono | 11px | 500 | 1 | +0.06em | UPPERCASE |
-| Kicker / hint | IBM Plex Mono | 11px | 400 | 1–1.4 | +0.14em / +0.04em | UPPERCASE |
-| Heading | Schibsted Grotesk | 40px | 600 | 1.1 | −0.03em | sentence |
-| Meta | IBM Plex Mono | 12px | 400 / 500 | 1.5 | 0 | sentence |
-| Wordmark default | Schibsted Grotesk | 18px | 500 | 1 | −0.02em | sentence |
-| Wordmark caps | Schibsted Grotesk | 13px | 600 | 1 | +0.18em | UPPERCASE |
-| Wordmark mono | IBM Plex Mono | 13px | 500 | 1 | +0.08em | UPPERCASE |
-
-Heading measure is `max-width: 16ch` so it breaks onto two lines at 1280.
 
 ## Motion
 
@@ -151,6 +99,64 @@ No easing on the scroll. No speed-up. No colour pulse.
 - [ ] CTA inverts on hover; focus rings are 2px `#111`, 3px offset.
 - [ ] Palette stays near-white / black / grey — no accent colour on the marks.
 - [ ] Demo fills 1280×800, starts with the piece header comment, and uses only Schibsted Grotesk + IBM Plex Mono.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 56px nav (7px square + Tally + Payroll / Tax / Pricing in mono + “Open a book”). Lead: kicker “USED IN 48 PAYROLLS”, 40px heading “Teams that run the book on Tally”, right meta “**Two rows** / Monochrome type / Hover a row to pause”. Two hairline-boxed rows already moving. Footer hint names the 42 s / 54 s clocks.
+2. Hover row A: `animation-play-state: paused` on that track only. Row B keeps moving.
+3. Hover row B: same, only B pauses.
+4. Keyboard-focus a row (`tabindex="0"`): same pause via `:focus-within`.
+5. Leave the row: that track resumes from the same offset (CSS animation, not a JS restart).
+6. Hover “Open a book”: invert to `#111` fill, `#F4F4F0` text.
+7. Reduced motion: both animations `none`, transform none, the cloned `.set` is `display:none`. Eight wordmarks per row sit in document flow and may clip at the right edge — do not wrap them onto a second line inside the row.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f4f0;          /* page */
+  --ink: #111111;         /* type, CTA, focus, brand square */
+  --ink-2: #6e6e6a;       /* kicker, links, meta */
+  --ink-3: #9a9a94;       /* hint */
+  --line: #d8d8d2;        /* hairlines */
+  --mark: #3a3a38;        /* wordmarks + icons */
+
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --nav-h: 56px;
+  --row-h: 96px;
+  --pad: 64px;
+  --logo-pad-x: 36px;
+  --ico: 14px;
+
+  --t-fast: 160ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --dur-a: 42s;
+  --dur-b: 54s;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Body | Schibsted Grotesk | 14px | 400 | 1.45 | 0 | sentence |
+| Brand | Schibsted Grotesk | 15px | 600 | 1 | −0.03em | sentence |
+| Nav links | IBM Plex Mono | 12px | 400 | 1 | 0 | sentence |
+| CTA | IBM Plex Mono | 11px | 500 | 1 | +0.06em | UPPERCASE |
+| Kicker / hint | IBM Plex Mono | 11px | 400 | 1–1.4 | +0.14em / +0.04em | UPPERCASE |
+| Heading | Schibsted Grotesk | 40px | 600 | 1.1 | −0.03em | sentence |
+| Meta | IBM Plex Mono | 12px | 400 / 500 | 1.5 | 0 | sentence |
+| Wordmark default | Schibsted Grotesk | 18px | 500 | 1 | −0.02em | sentence |
+| Wordmark caps | Schibsted Grotesk | 13px | 600 | 1 | +0.18em | UPPERCASE |
+| Wordmark mono | IBM Plex Mono | 13px | 500 | 1 | +0.08em | UPPERCASE |
+
+Heading measure is `max-width: 16ch` so it breaks onto two lines at 1280.
 
 ## Implementation notes
 

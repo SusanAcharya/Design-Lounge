@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The app dock of an invented desktop OS, sitting 8px above the bottom edge of a full-screen desert-dune wallpaper, under a 30px translucent menu bar and two open app windows. Ten invented apps (Cobble, Gannet, Pipit, Wicket, Murrel, Sundial, Glint, Shale, Gully, and Bin after a separator) are drawn entirely in CSS and inline SVG. As the pointer travels along the dock, icons grow from 52px to 91px on a cosine falloff measured from each icon's resting centre, so neighbours swell too and the row widens like a lens. The detail worth copying is that the dock's frosted slab stays a fixed 68px tall while the icons grow out of it upward, and that the falloff uses resting positions so the lens never jitters.
-
-## Reference behaviour
-
-1. First frame: Gannet's window (Inbox, 3 unread) is in front of Shale's terminal window. The menu bar reads "Gannet". Cobble, Gannet and Shale show running dots. Gannet carries a red "3" badge. On a hover-capable device the dock opens mid-magnify centred on Murrel with its tooltip showing; the peek ends on the first pointer entry or focus.
-2. Pointer moves over the dock: every icon's width becomes `B + (M − B) × (cos(π·d/R) + 1) / 2` where `d` is the horizontal distance from the pointer to that icon's resting centre, `B = 52`, `M = 91` (1.75 × B), `R = 156` (3 × B). Icons further than R stay at B. Updates are throttled to one per animation frame.
-3. Hovering an icon shows its name in a dark tooltip 12px above the icon, fading in over 120ms with a 4px rise.
-4. Pointer leaves the dock: every icon returns to 52px over 260ms.
-5. Clicking an app that isn't running: the icon bounces twice (560ms each, peak at 42% of the keyframe, height 0.55 × B), then the running dot fades in, the app's window opens and comes to the front, and the menu bar name changes.
-6. Clicking a running app brings its window to the front, or reopens it if it was closed.
-7. The red light in a window's title bar closes the window. The app keeps its running dot. The menu bar falls back to the next window in z-order, or "Cobble".
-8. Clicking anywhere on a window brings it to the front. Back windows desaturate slightly and their traffic lights turn grey.
-9. Keyboard: Tab enters the dock on one icon (roving tabindex). Left/Right move between icons and wrap. Home/End jump to the first and last. The focused icon magnifies its neighbourhood exactly like the pointer and shows its tooltip. Enter or Space launches.
-10. The menu bar clock shows the real day, date and time and refreshes every 10 seconds.
-11. Touch pointers never magnify. Taps launch.
 
 ## Structure
 
@@ -46,68 +34,6 @@ The app dock of an invented desktop OS, sitting 8px above the bottom edge of a f
 - Windows: `main` labelled "Desktop" containing `section` elements, each with `aria-label="<App> window"`, a 38px title `header` with one real close `button` and two decorative lights, and an `h2` title.
 - Dock: `ul role="toolbar" aria-label="Dock"`. Each `li.it` holds a `button.app` (the squircle icon inside), a `.tip` and a `.dot`. The separator is `li role="separator" aria-orientation="vertical"`.
 - An `aria-live="polite"` visually hidden paragraph announces "Opening Pipit" and then "Pipit is open".
-
-## Tokens
-
-```css
-:root {
-  /* wallpaper */
-  --sky-1: #f6d9b8;  --sky-2: #efa77a;  --sun: #fbe9cf;
-  --dune-1: #e3945f; --dune-2: #c4643f; --dune-3: #8a3a2c; --dune-4: #4a1f1f;
-  /* chrome */
-  --bar: rgba(58, 24, 20, .30);        /* menu bar */
-  --dock: rgba(46, 20, 18, .34);       /* dock slab */
-  --dock-line: rgba(255, 236, 214, .30);
-  --cream: #fff1df;                    /* text on chrome, running dot, focus ring */
-  /* windows */
-  --win: #fff8f0; --win-line: #ecdccb;
-  --ink: #2b1a1e; --ink-2: #5b3a30; --ink-3: #8a6a5e;
-  --accent: #c4643f; --badge: #e5483a;
-  /* type */
-  --sans: "Familjen Grotesk", system-ui, sans-serif;
-  --mono: "Martian Mono", ui-monospace, monospace;
-  /* dock geometry */
-  --b: 52px;          /* resting icon size, recomputed in JS */
-  --gap: 6px;         /* 4px under 640px */
-  --dock-pad: 7px 9px 9px;
-  --slab-r: 20px;
-  --icon-r: 23%;
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-tip: 120ms; --t-rest: 260ms; --t-track: 80ms; --t-bounce: 560ms; --t-win: 360ms;
-}
-```
-
-Icon faces (top → bottom gradients, glyph colour):
-
-| App | Face | Glyph |
-| --- | --- | --- |
-| Cobble (files) | `#f5bf66 → #e0892f` | folder, `#3a1f12` |
-| Gannet (mail) | `#fbf6ee → #e7d8c5` | envelope, `#b5543a` |
-| Pipit (notes) | `#ffe896 → #f4c540` | page with lines, `#5a4210` |
-| Wicket (browser) | `#2a706d → #123f3e` | compass, `#e9f7f2` |
-| Murrel (music) | `#ea6a5d → #b3352e` | two notes, `#fff4ec` |
-| Sundial (calendar) | `#fffdf8`, red `#d8473a` month band | live month + day number |
-| Glint (photos) | `#fffaf2 → #f1e4d4` | five overlapping coloured petals |
-| Shale (terminal) | `#3a383e → #1f1e22` | `>_` in Martian Mono, `#a8eba0` |
-| Gully (maps) | `#d9ebcd → #b9d6a6` | folded map, `#2f5a3a` |
-| Bin | translucent cream `.42 → .16` | bin, `--cream` |
-
-Every face: `border-radius: 23%`, `box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -1px 0 rgba(0,0,0,.14), 0 7px 14px -6px rgba(40,10,6,.6)`. Glyph SVG is 58% of the icon, stroke 1.8, round caps.
-
-## Typography
-
-| Role | Family | Size | Weight | Notes |
-| --- | --- | --- | --- | --- |
-| Menu bar | Familjen Grotesk | 13px | 400, app name 700 | `--cream` |
-| Clock | Martian Mono | 12px | 500 | letter-spacing −0.02em |
-| Tooltip | Familjen Grotesk | 12.5px | 500 | `--cream` on `rgba(43,26,30,.9)` |
-| Badge | Familjen Grotesk | 11px | 700 | white on `--badge`, 19px pill |
-| Window title | Familjen Grotesk | 13px | 600 | `--ink-2`, centred |
-| Window body | Familjen Grotesk | 14px | 400 / 600 | meta 12px `--ink-3` |
-| Terminal | Martian Mono | 12px | 400 | line-height 1.8 |
-| Calendar face | Familjen Grotesk | 0.17 × icon (month), 0.48 × icon (day) | 700 / 600 | scales with magnification |
 
 ## Motion
 
@@ -175,6 +101,86 @@ The bounce runs on the `button`, not on the `li`, so the lens width and the boun
 - [ ] Sundial's face shows today's month and day.
 - [ ] The menu bar name follows the front window.
 - [ ] Wallpaper is four dune layers from `#e3945f` to `#4a1f1f` under a `#fbe9cf` sun.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Gannet's window (Inbox, 3 unread) is in front of Shale's terminal window. The menu bar reads "Gannet". Cobble, Gannet and Shale show running dots. Gannet carries a red "3" badge. On a hover-capable device the dock opens mid-magnify centred on Murrel with its tooltip showing; the peek ends on the first pointer entry or focus.
+2. Pointer moves over the dock: every icon's width becomes `B + (M − B) × (cos(π·d/R) + 1) / 2` where `d` is the horizontal distance from the pointer to that icon's resting centre, `B = 52`, `M = 91` (1.75 × B), `R = 156` (3 × B). Icons further than R stay at B. Updates are throttled to one per animation frame.
+3. Hovering an icon shows its name in a dark tooltip 12px above the icon, fading in over 120ms with a 4px rise.
+4. Pointer leaves the dock: every icon returns to 52px over 260ms.
+5. Clicking an app that isn't running: the icon bounces twice (560ms each, peak at 42% of the keyframe, height 0.55 × B), then the running dot fades in, the app's window opens and comes to the front, and the menu bar name changes.
+6. Clicking a running app brings its window to the front, or reopens it if it was closed.
+7. The red light in a window's title bar closes the window. The app keeps its running dot. The menu bar falls back to the next window in z-order, or "Cobble".
+8. Clicking anywhere on a window brings it to the front. Back windows desaturate slightly and their traffic lights turn grey.
+9. Keyboard: Tab enters the dock on one icon (roving tabindex). Left/Right move between icons and wrap. Home/End jump to the first and last. The focused icon magnifies its neighbourhood exactly like the pointer and shows its tooltip. Enter or Space launches.
+10. The menu bar clock shows the real day, date and time and refreshes every 10 seconds.
+11. Touch pointers never magnify. Taps launch.
+
+## Tokens
+
+```css
+:root {
+  /* wallpaper */
+  --sky-1: #f6d9b8;  --sky-2: #efa77a;  --sun: #fbe9cf;
+  --dune-1: #e3945f; --dune-2: #c4643f; --dune-3: #8a3a2c; --dune-4: #4a1f1f;
+  /* chrome */
+  --bar: rgba(58, 24, 20, .30);        /* menu bar */
+  --dock: rgba(46, 20, 18, .34);       /* dock slab */
+  --dock-line: rgba(255, 236, 214, .30);
+  --cream: #fff1df;                    /* text on chrome, running dot, focus ring */
+  /* windows */
+  --win: #fff8f0; --win-line: #ecdccb;
+  --ink: #2b1a1e; --ink-2: #5b3a30; --ink-3: #8a6a5e;
+  --accent: #c4643f; --badge: #e5483a;
+  /* type */
+  --sans: "Familjen Grotesk", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+  /* dock geometry */
+  --b: 52px;          /* resting icon size, recomputed in JS */
+  --gap: 6px;         /* 4px under 640px */
+  --dock-pad: 7px 9px 9px;
+  --slab-r: 20px;
+  --icon-r: 23%;
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-tip: 120ms; --t-rest: 260ms; --t-track: 80ms; --t-bounce: 560ms; --t-win: 360ms;
+}
+```
+
+Icon faces (top → bottom gradients, glyph colour):
+
+| App | Face | Glyph |
+| --- | --- | --- |
+| Cobble (files) | `#f5bf66 → #e0892f` | folder, `#3a1f12` |
+| Gannet (mail) | `#fbf6ee → #e7d8c5` | envelope, `#b5543a` |
+| Pipit (notes) | `#ffe896 → #f4c540` | page with lines, `#5a4210` |
+| Wicket (browser) | `#2a706d → #123f3e` | compass, `#e9f7f2` |
+| Murrel (music) | `#ea6a5d → #b3352e` | two notes, `#fff4ec` |
+| Sundial (calendar) | `#fffdf8`, red `#d8473a` month band | live month + day number |
+| Glint (photos) | `#fffaf2 → #f1e4d4` | five overlapping coloured petals |
+| Shale (terminal) | `#3a383e → #1f1e22` | `>_` in Martian Mono, `#a8eba0` |
+| Gully (maps) | `#d9ebcd → #b9d6a6` | folded map, `#2f5a3a` |
+| Bin | translucent cream `.42 → .16` | bin, `--cream` |
+
+Every face: `border-radius: 23%`, `box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -1px 0 rgba(0,0,0,.14), 0 7px 14px -6px rgba(40,10,6,.6)`. Glyph SVG is 58% of the icon, stroke 1.8, round caps.
+
+## Typography
+
+| Role | Family | Size | Weight | Notes |
+| --- | --- | --- | --- | --- |
+| Menu bar | Familjen Grotesk | 13px | 400, app name 700 | `--cream` |
+| Clock | Martian Mono | 12px | 500 | letter-spacing −0.02em |
+| Tooltip | Familjen Grotesk | 12.5px | 500 | `--cream` on `rgba(43,26,30,.9)` |
+| Badge | Familjen Grotesk | 11px | 700 | white on `--badge`, 19px pill |
+| Window title | Familjen Grotesk | 13px | 600 | `--ink-2`, centred |
+| Window body | Familjen Grotesk | 14px | 400 / 600 | meta 12px `--ink-3` |
+| Terminal | Martian Mono | 12px | 400 | line-height 1.8 |
+| Calendar face | Familjen Grotesk | 0.17 × icon (month), 0.48 × icon (day) | 700 / 600 | scales with magnification |
 
 ## Implementation notes
 

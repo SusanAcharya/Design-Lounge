@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A wide essay card for a fictional literary quarterly, The Lantern Review. The left panel holds the masthead strip, kicker, headline, italic standfirst, byline with a reading-time chip, and at the bottom a "Typeset in" tray that switches the whole card between three classic type pairings. The right panel is the opening of the essay set in two columns with a 1px column rule. It has a 96px ultramarine drop cap tile and a pull quote that spans both columns between hairline rules. The details worth copying: the drop cap is a decorated tile (hatch texture, inset hairline frame, a small diamond notch) that wipes down into place, and the pairing switch crossfades the type so the reflow never shows.
-
-## Reference behaviour
-
-1. First frame: pairing "Didone & Gothic" (Libre Bodoni headlines, Libre Franklin body) is checked. The drop cap tile wipes in from the top over 640ms; its letter rises 14px and fades in, 120ms behind the tile.
-2. The byline row reads "By Wren Hollis" and a chip with a clock icon reading "10 min read". The value is computed as `ceil(2140 / 230)`.
-3. The body shows two balanced columns, then a full-width pull quote, then two more balanced columns. The last paragraph ends with a 9px ultramarine square end mark.
-4. The footer row reads "2,140 words · excerpt" on the left and a "Continue reading" link with an arrow on the right.
-5. Clicking a pairing in the tray fades the headline block and the body to 0 opacity and down 4px over 140ms. Then it swaps the font variables, replays the drop cap wipe, and fades back in over 280ms.
-6. The tray label on the right updates to the pairing's spec ("Palatino / Palatino") through a polite live region.
-7. Arrow keys inside the tray move and select (roving tabindex, wrapping). Only the checked pairing is tabbable.
-8. Selecting the already-checked pairing does nothing.
 
 ## Structure
 
@@ -46,64 +37,6 @@ A wide essay card for a fictional literary quarterly, The Lantern Review. The le
 - `.pairs` is `role="radiogroup"`, a 3-column grid with a 1px ink border and 1px ink dividers. Each `button[role=radio]` shows "Aa" in its own display face over a 10px uppercase name.
 - `.body` has padding 40/44/28. It holds `.cols` (CSS multi-column) and `.foot`.
 - In `.cols`: `p` with the drop cap, `p`, `blockquote` (`column-span: all`), `p`, `p`.
-
-## Tokens
-
-```css
-:root {
-  --stage: #e6e0d3;
-  --paper: #faf7f0;
-  --ink: #1d1b18;
-  --ink-2: #4b463e;
-  --ink-3: #6a645a;
-  --line: #d6cfc0;
-  --accent: #2b3a9e;       /* ultramarine: drop cap, kicker, quote mark, end mark, link */
-  --accent-ink: #faf7f0;
-
-  --display: "Libre Bodoni", Didot, "Bodoni 72", serif;
-  --body: "Libre Franklin", "Franklin Gothic Book", system-ui, sans-serif;
-  --ui: "Libre Franklin", system-ui, sans-serif;   /* never changes with the pairing */
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --t-out: 140ms;
-  --t-in: 280ms;
-  --t-cap: 640ms;
-
-  --col-gap: 48px;
-  --lh: 26px;              /* body line box; the cap is sized against it */
-  --cap: 96px;
-}
-```
-
-Pairings override `--display` and `--body` on `body[data-pair]`:
-
-| id | Name | Display | Body | Body size | `--cap-y` |
-| --- | --- | --- | --- | --- | --- |
-| `didone` | Didone & Gothic | Libre Bodoni | Libre Franklin | 15.5px | 4px |
-| `old` | Old style | Palatino Linotype, Palatino, Book Antiqua | same | 16.5px | 2px |
-| `trans` | Baskerville & Gill | Baskerville, Libre Baskerville, Georgia | Gill Sans, Gill Sans MT, Seravek, Optima | 16px | 6px |
-
-Only the first pairing loads from Google Fonts (two-family limit). The other two use system stacks that exist on macOS and Windows. If the reader's stack can load more fonts, use EB Garamond for Old style and Libre Baskerville + Gill-like Lato for the third.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Masthead strip | `--ui` | 11px | 600 | 1 | .16em | upper |
-| Kicker | `--ui` | 11px | 600 | 1 | .18em | upper, accent |
-| Headline | `--display` | 46px | 400 | 1.02 | -.015em | sentence |
-| Standfirst | `--display` italic | 17px | 400 | 1.45 | 0 | sentence, `--ink-2` |
-| Byline | `--ui` | 12px | 500 (name 600) | 1.4 | 0 | — |
-| Body | `--body` | 15.5px (per pairing) | 400 | 26px fixed | 0 | — |
-| Drop cap | `--display` | 84px | 400 | 1 | 0 | upper |
-| Pull quote | `--display` italic | 27px | 400 | 1.25 | -.005em | max 30ch |
-| Quote mark | `--display` | 88px | 400 | 1 | 0 | accent |
-| Attribution | `--ui` | 11px | 600 | 1 | .14em | upper |
-| Tray "Aa" | each pairing's display | 26px | 400 | 1 | 0 | — |
-| Tray name | `--ui` | 10px | 500 | 1.2 | .06em | upper |
-
-Body paragraphs after the first get `text-indent: 1.4em` and a 13px bottom margin (half a line). `hyphens: auto`, ragged right.
 
 ## Motion
 
@@ -165,6 +98,79 @@ Reduced motion: no fades and no cap wipe. The pairing swaps instantly.
 - [ ] Pull quote: "Nobody thanks a ferry for arriving. They only notice the morning it doesn't." Attribution: Ines Varga, deckhand, twenty-two years.
 - [ ] Pairings in order: Didone & Gothic, Old style, Baskerville & Gill.
 - [ ] Accent `#2b3a9e` on `#faf7f0` paper, stage `#e6e0d3`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: pairing "Didone & Gothic" (Libre Bodoni headlines, Libre Franklin body) is checked. The drop cap tile wipes in from the top over 640ms; its letter rises 14px and fades in, 120ms behind the tile.
+2. The byline row reads "By Wren Hollis" and a chip with a clock icon reading "10 min read". The value is computed as `ceil(2140 / 230)`.
+3. The body shows two balanced columns, then a full-width pull quote, then two more balanced columns. The last paragraph ends with a 9px ultramarine square end mark.
+4. The footer row reads "2,140 words · excerpt" on the left and a "Continue reading" link with an arrow on the right.
+5. Clicking a pairing in the tray fades the headline block and the body to 0 opacity and down 4px over 140ms. Then it swaps the font variables, replays the drop cap wipe, and fades back in over 280ms.
+6. The tray label on the right updates to the pairing's spec ("Palatino / Palatino") through a polite live region.
+7. Arrow keys inside the tray move and select (roving tabindex, wrapping). Only the checked pairing is tabbable.
+8. Selecting the already-checked pairing does nothing.
+
+## Tokens
+
+```css
+:root {
+  --stage: #e6e0d3;
+  --paper: #faf7f0;
+  --ink: #1d1b18;
+  --ink-2: #4b463e;
+  --ink-3: #6a645a;
+  --line: #d6cfc0;
+  --accent: #2b3a9e;       /* ultramarine: drop cap, kicker, quote mark, end mark, link */
+  --accent-ink: #faf7f0;
+
+  --display: "Libre Bodoni", Didot, "Bodoni 72", serif;
+  --body: "Libre Franklin", "Franklin Gothic Book", system-ui, sans-serif;
+  --ui: "Libre Franklin", system-ui, sans-serif;   /* never changes with the pairing */
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --t-out: 140ms;
+  --t-in: 280ms;
+  --t-cap: 640ms;
+
+  --col-gap: 48px;
+  --lh: 26px;              /* body line box; the cap is sized against it */
+  --cap: 96px;
+}
+```
+
+Pairings override `--display` and `--body` on `body[data-pair]`:
+
+| id | Name | Display | Body | Body size | `--cap-y` |
+| --- | --- | --- | --- | --- | --- |
+| `didone` | Didone & Gothic | Libre Bodoni | Libre Franklin | 15.5px | 4px |
+| `old` | Old style | Palatino Linotype, Palatino, Book Antiqua | same | 16.5px | 2px |
+| `trans` | Baskerville & Gill | Baskerville, Libre Baskerville, Georgia | Gill Sans, Gill Sans MT, Seravek, Optima | 16px | 6px |
+
+Only the first pairing loads from Google Fonts (two-family limit). The other two use system stacks that exist on macOS and Windows. If the reader's stack can load more fonts, use EB Garamond for Old style and Libre Baskerville + Gill-like Lato for the third.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Masthead strip | `--ui` | 11px | 600 | 1 | .16em | upper |
+| Kicker | `--ui` | 11px | 600 | 1 | .18em | upper, accent |
+| Headline | `--display` | 46px | 400 | 1.02 | -.015em | sentence |
+| Standfirst | `--display` italic | 17px | 400 | 1.45 | 0 | sentence, `--ink-2` |
+| Byline | `--ui` | 12px | 500 (name 600) | 1.4 | 0 | — |
+| Body | `--body` | 15.5px (per pairing) | 400 | 26px fixed | 0 | — |
+| Drop cap | `--display` | 84px | 400 | 1 | 0 | upper |
+| Pull quote | `--display` italic | 27px | 400 | 1.25 | -.005em | max 30ch |
+| Quote mark | `--display` | 88px | 400 | 1 | 0 | accent |
+| Attribution | `--ui` | 11px | 600 | 1 | .14em | upper |
+| Tray "Aa" | each pairing's display | 26px | 400 | 1 | 0 | — |
+| Tray name | `--ui` | 10px | 500 | 1.2 | .06em | upper |
+
+Body paragraphs after the first get `text-indent: 1.4em` and a 13px bottom margin (half a line). `hyphens: auto`, ragged right.
 
 ## Implementation notes
 

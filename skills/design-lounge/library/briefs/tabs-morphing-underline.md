@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A tab strip for a newsletter publication's settings ("Wren · Morning Dispatch"): nine tabs (some with count pills) in a 720px strip that scrolls horizontally, and a 2px olive underline that morphs rather than jumps. On change the underline first **stretches** to cover both the old and the new tab (180ms, expo-out), then **settles** onto the new tab (200ms, standard ease). The panel below crossfades over 200ms with a 4px rise. Where tabs overflow, the strip's edges fade to transparent via a mask that only appears on the side that actually has more content. Dark warm brown, serif headings, one olive accent.
-
-## Reference behaviour
-
-1. Initial state: "Overview" selected; underline exactly under it; the Overview panel shows three stat tiles (Open rate 58.2 %, Click rate 14.9 %, Net new +1,204). The strip is scrolled to the start: no left fade, a 40px right fade (tabs 7–9 are partly hidden).
-2. Click "Revenue" (three tabs to the right): phase 1 — the underline's `left` snaps to Overview's left and its `width` grows to reach Revenue's right edge over 180ms; phase 2 — after 180ms `left` moves to Revenue's left and `width` shrinks to Revenue's width over 200ms. Total 380ms. The Overview panel fades out while Revenue fades in (200ms, the incoming panel also rises from `translateY(4px)`).
-3. Click a tab to the left: same two phases; phase 1 grows leftward (left moves, width grows), phase 2 the right edge retracts.
-4. Click a partly hidden tab (e.g. "Team"): it scrolls into view (smooth) and the underline morphs across the scrolling strip; the left fade appears once `scrollLeft > 2px`; the right fade disappears when the end is reached.
-5. Keyboard: Tab focuses the selected tab only. → / ← move to the next/previous tab (wrapping) and select it immediately (automatic activation); Home / End go to first/last. Selection scrolls the tab into view. Tab again moves focus into the visible panel (`tabindex="0"`).
-6. Hover a tab: text brightens to `--ink` and the tab gets a `--panel` background with 8px top radii. The count pill on the selected tab inverts to olive with dark text.
-7. Resizing re-measures the underline without animation; fonts loading late also re-place it.
 
 ## Structure
 
@@ -70,6 +62,74 @@ Selecting a tab to the **left** (Revenue → Overview): stretch sets `left: 0; w
 | no overflow (wide viewport)          | 0        | 0        | none |
 
 `edges()` runs on `scroll` (passive), on `resize`, and once after initial placement and after `document.fonts.ready` (font swap changes `scrollWidth`).
+
+## Motion
+
+| Element      | Trigger        | Property        | From → To                                   | Duration | Easing       | Notes |
+|--------------|----------------|-----------------|---------------------------------------------|---------:|--------------|-------|
+| `.ink`       | select (phase 1)| left, width    | old box → `min(oldL,newL)`, `max(oldR,newR) − min(…)` | 180ms | `--ease-out` | `.stretch` class swaps the transition |
+| `.ink`       | select (phase 2)| left, width    | span → new tab's `offsetLeft`/`offsetWidth` | 200ms    | `--ease`     | starts at t = 180ms via `setTimeout` |
+| `.panel` out | select         | opacity         | 1 → 0                                       | 200ms    | `--ease`     | `visibility` hidden after 200ms |
+| `.panel` in  | select         | opacity, transform | 0, `translateY(4px)` → 1, none           | 200ms    | opacity `--ease`, transform `--ease-out` | |
+| `.tab`       | hover / select | color           | `--ink-2` → `--ink`                         | 140ms    | `--ease`     | background snaps |
+| `.scroll`    | select hidden tab | scrollLeft   | native smooth                               | native   | —            | `scrollIntoView({inline:'nearest'})` |
+| masks        | scroll         | `mask-image`    | attribute-driven, no transition             | 0        | —            | |
+
+Reduced motion: transitions 1ms; `scrollIntoView` uses `behavior:'auto'`. The two-phase timing collapses to an instant jump.
+
+## States
+
+- **Tab default:** `--ink-2`, transparent. **Hover:** `--ink`, `--panel` background, radius `8px 8px 0 0`. **Selected (`aria-selected="true"`):** `--ink`, pill inverted (`--accent` bg, `--accent-ink` text).
+- **Tab focus-visible:** `box-shadow: inset 0 0 0 2px var(--accent)` (inset so it isn't clipped by the scroll container).
+- **Panel focus-visible:** 2px accent outline, 8px offset.
+- **Overflow masks:** `data-l="1"` → left 40px fade; `data-r="1"` → right 40px fade; both → both; neither → no mask. Thresholds: left when `scrollLeft > 2`, right when `scrollLeft + clientWidth < scrollWidth − 2`.
+- **Status dots (lists):** `--accent` active, `--line-2` inactive/paused.
+
+## Accessibility
+
+- `role="tablist"` with `aria-label`; tabs `role="tab"`, `aria-selected`, `aria-controls`, ids; panels `role="tabpanel"`, `aria-labelledby`, `tabindex="0"`.
+- Roving tabindex: selected tab `0`, others `−1`. Arrow keys select (automatic activation) — if your panels are expensive, switch to manual activation (arrows move focus, Enter/Space selects) and say so.
+- `scrollIntoView` on select with `block:'nearest'` so the page doesn't jump; focus with `preventScroll:true` to avoid a second scroll.
+- Inactive panels are `visibility:hidden`, so only the active panel's content is in the tab order.
+- The underline is `aria-hidden`.
+- Masks are purely visual; hidden tabs remain reachable via keyboard and scroll.
+- Contrast: `--ink-2` on `--bg` 9.8:1; `--ink-3` on `--bg` 4.6:1; `--accent-ink` on `--accent` 10:1.
+- Hit targets: tabs 44px tall; pills are not interactive.
+
+## Responsive rules
+
+- ≥ 1280: as specified (720px strip).
+- 1024–1279: unchanged.
+- 768–1023: column and strip `calc(100vw − 64px)`; more tabs overflow; masks do the work.
+- < 640: strip full-bleed with 16px gutters; tab padding 12px; tiles become one column; the count pills hide except on the selected tab.
+
+## Acceptance checklist
+
+- [ ] Strip is 720px with a 1px `#2d2822` bottom rule; tabs 44px tall, `0 14px` padding, 4px gaps; underline 2px `#b5c27a`.
+- [ ] Changing tabs runs two phases: stretch to span both tabs over 180ms `cubic-bezier(.16,1,.3,1)`, then settle over 200ms `cubic-bezier(.2,.7,.2,1)`.
+- [ ] The stretch covers `min(left)` to `max(right)` regardless of direction.
+- [ ] Panels crossfade over 200ms; the incoming panel rises 4px; inactive panels are `visibility:hidden`.
+- [ ] Right fade (40px) visible on load; left fade appears after scrolling > 2px; right fade disappears at the end.
+- [ ] Scrollbar is hidden but the strip scrolls with trackpad/wheel and via `scrollIntoView`.
+- [ ] → ← Home End move and select with wrapping; only the selected tab is tabbable; Tab then enters the panel.
+- [ ] Selected tab's count pill is olive with dark text; others are `#26211b` with `#7d7467` text.
+- [ ] Focus ring is an inset 2px olive box-shadow (not clipped by the scroll container).
+- [ ] Underline is placed without animation on load, on resize and after `document.fonts.ready`.
+- [ ] Reduced motion: no stretch/settle, no smooth scroll.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: "Overview" selected; underline exactly under it; the Overview panel shows three stat tiles (Open rate 58.2 %, Click rate 14.9 %, Net new +1,204). The strip is scrolled to the start: no left fade, a 40px right fade (tabs 7–9 are partly hidden).
+2. Click "Revenue" (three tabs to the right): phase 1 — the underline's `left` snaps to Overview's left and its `width` grows to reach Revenue's right edge over 180ms; phase 2 — after 180ms `left` moves to Revenue's left and `width` shrinks to Revenue's width over 200ms. Total 380ms. The Overview panel fades out while Revenue fades in (200ms, the incoming panel also rises from `translateY(4px)`).
+3. Click a tab to the left: same two phases; phase 1 grows leftward (left moves, width grows), phase 2 the right edge retracts.
+4. Click a partly hidden tab (e.g. "Team"): it scrolls into view (smooth) and the underline morphs across the scrolling strip; the left fade appears once `scrollLeft > 2px`; the right fade disappears when the end is reached.
+5. Keyboard: Tab focuses the selected tab only. → / ← move to the next/previous tab (wrapping) and select it immediately (automatic activation); Home / End go to first/last. Selection scrolls the tab into view. Tab again moves focus into the visible panel (`tabindex="0"`).
+6. Hover a tab: text brightens to `--ink` and the tab gets a `--panel` background with 8px top radii. The count pill on the selected tab inverts to olive with dark text.
+7. Resizing re-measures the underline without animation; fonts loading late also re-place it.
 
 ## Tokens
 
@@ -126,60 +186,6 @@ Selecting a tab to the **left** (Revenue → Overview): stretch sets `left: 0; w
 | Tile label      | Work Sans         | 12px | 400    | 1.4         | 0        | `--ink-3` |
 | List row        | Work Sans         | 13px | 400    | 1.5         | 0        | name 500; meta `--ink-2`; right `--ink-3` `tabular-nums` |
 | Prose           | Work Sans         | 14px | 400    | 1.5         | 0        | `--ink-2`, strong `--ink` 500 |
-
-## Motion
-
-| Element      | Trigger        | Property        | From → To                                   | Duration | Easing       | Notes |
-|--------------|----------------|-----------------|---------------------------------------------|---------:|--------------|-------|
-| `.ink`       | select (phase 1)| left, width    | old box → `min(oldL,newL)`, `max(oldR,newR) − min(…)` | 180ms | `--ease-out` | `.stretch` class swaps the transition |
-| `.ink`       | select (phase 2)| left, width    | span → new tab's `offsetLeft`/`offsetWidth` | 200ms    | `--ease`     | starts at t = 180ms via `setTimeout` |
-| `.panel` out | select         | opacity         | 1 → 0                                       | 200ms    | `--ease`     | `visibility` hidden after 200ms |
-| `.panel` in  | select         | opacity, transform | 0, `translateY(4px)` → 1, none           | 200ms    | opacity `--ease`, transform `--ease-out` | |
-| `.tab`       | hover / select | color           | `--ink-2` → `--ink`                         | 140ms    | `--ease`     | background snaps |
-| `.scroll`    | select hidden tab | scrollLeft   | native smooth                               | native   | —            | `scrollIntoView({inline:'nearest'})` |
-| masks        | scroll         | `mask-image`    | attribute-driven, no transition             | 0        | —            | |
-
-Reduced motion: transitions 1ms; `scrollIntoView` uses `behavior:'auto'`. The two-phase timing collapses to an instant jump.
-
-## States
-
-- **Tab default:** `--ink-2`, transparent. **Hover:** `--ink`, `--panel` background, radius `8px 8px 0 0`. **Selected (`aria-selected="true"`):** `--ink`, pill inverted (`--accent` bg, `--accent-ink` text).
-- **Tab focus-visible:** `box-shadow: inset 0 0 0 2px var(--accent)` (inset so it isn't clipped by the scroll container).
-- **Panel focus-visible:** 2px accent outline, 8px offset.
-- **Overflow masks:** `data-l="1"` → left 40px fade; `data-r="1"` → right 40px fade; both → both; neither → no mask. Thresholds: left when `scrollLeft > 2`, right when `scrollLeft + clientWidth < scrollWidth − 2`.
-- **Status dots (lists):** `--accent` active, `--line-2` inactive/paused.
-
-## Accessibility
-
-- `role="tablist"` with `aria-label`; tabs `role="tab"`, `aria-selected`, `aria-controls`, ids; panels `role="tabpanel"`, `aria-labelledby`, `tabindex="0"`.
-- Roving tabindex: selected tab `0`, others `−1`. Arrow keys select (automatic activation) — if your panels are expensive, switch to manual activation (arrows move focus, Enter/Space selects) and say so.
-- `scrollIntoView` on select with `block:'nearest'` so the page doesn't jump; focus with `preventScroll:true` to avoid a second scroll.
-- Inactive panels are `visibility:hidden`, so only the active panel's content is in the tab order.
-- The underline is `aria-hidden`.
-- Masks are purely visual; hidden tabs remain reachable via keyboard and scroll.
-- Contrast: `--ink-2` on `--bg` 9.8:1; `--ink-3` on `--bg` 4.6:1; `--accent-ink` on `--accent` 10:1.
-- Hit targets: tabs 44px tall; pills are not interactive.
-
-## Responsive rules
-
-- ≥ 1280: as specified (720px strip).
-- 1024–1279: unchanged.
-- 768–1023: column and strip `calc(100vw − 64px)`; more tabs overflow; masks do the work.
-- < 640: strip full-bleed with 16px gutters; tab padding 12px; tiles become one column; the count pills hide except on the selected tab.
-
-## Acceptance checklist
-
-- [ ] Strip is 720px with a 1px `#2d2822` bottom rule; tabs 44px tall, `0 14px` padding, 4px gaps; underline 2px `#b5c27a`.
-- [ ] Changing tabs runs two phases: stretch to span both tabs over 180ms `cubic-bezier(.16,1,.3,1)`, then settle over 200ms `cubic-bezier(.2,.7,.2,1)`.
-- [ ] The stretch covers `min(left)` to `max(right)` regardless of direction.
-- [ ] Panels crossfade over 200ms; the incoming panel rises 4px; inactive panels are `visibility:hidden`.
-- [ ] Right fade (40px) visible on load; left fade appears after scrolling > 2px; right fade disappears at the end.
-- [ ] Scrollbar is hidden but the strip scrolls with trackpad/wheel and via `scrollIntoView`.
-- [ ] → ← Home End move and select with wrapping; only the selected tab is tabbable; Tab then enters the panel.
-- [ ] Selected tab's count pill is olive with dark text; others are `#26211b` with `#7d7467` text.
-- [ ] Focus ring is an inset 2px olive box-shadow (not clipped by the scroll container).
-- [ ] Underline is placed without animation on load, on resize and after `document.fonts.ready`.
-- [ ] Reduced motion: no stretch/settle, no smooth scroll.
 
 ## Implementation notes
 

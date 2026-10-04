@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the iOS large-title list language used by the yard phone, not Material, and not a glass tab bar.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The empty state of a phone list. The frame is 390 by 844. The top 54px is left clear for the status bar the Lounge draws. The bottom 34px is left clear for the home indicator. "Runs" is a 13px label, so the reader knows where they are. The answer is the heading "No runs today" at 28px. One sentence explains that the yard is clear. One primary button, "New run", is 44px tall and sits with the sentence, not in a second toolbar. There is no illustration, no tab bar, and no header competing with the heading. This is the phone pair of `list-empty-plain`. Use it when the list has zero rows. A failed load is `mobile-load-failed`.
-
-## Reference behaviour
-
-1. The first frame is the empty state. Do not start on a list and then clear it.
-2. "Runs" is visible as a label. "No runs today" is the only heading, and it is the largest type.
-3. The sentence reads "The yard is clear. A new load shows up in this list."
-4. Tapping "New run" changes the button to "Run opened" and disables it.
-5. The tap does not insert a row. Opening a run is a different screen.
-6. There is no animation.
-7. Focus ring is 2px `--focus`, offset 2px.
-8. Disabled opacity is 0.55.
 
 ## Structure
 
@@ -36,34 +27,6 @@ The yard is clear. …         15px, max-width 300
 - The heading is an `h1`. The word "Runs" is a paragraph, not a navigation bar.
 - The button is `align-self: flex-start`. It is not full width. Height is 44px, padding 0 18px.
 - Do not draw a status bar, a notch, or a home indicator.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f1ea;
-  --surface: #fffdf8;
-  --ink: #1b1814;
-  --ink-2: #5e574e;
-  --primary: #8a4b12;
-  --primary-ink: #fffdf8;
-  --focus: #8a4b12;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-These match `mobile-run-detail`. When a kit is locked, replace them with the theme. Keep the type sizes.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Where | sans | 13px | 600 | 0.04em | `--ink-2` |
-| Answer | sans | 28px | 600 | -0.03em | `--ink` |
-| Sentence | sans | 15px | 400 | 0 | `--ink-2` |
-| Button | sans | 15px | 600 | 0 | `--primary-ink` |
-
-Body line-height is 1.4. The heading margin is 0 0 8px. The sentence margin is 0 0 20px.
 
 ## Motion
 
@@ -112,6 +75,49 @@ None. Reduced motion has nothing to remove. Do not fade the heading in.
 - [ ] There is no illustration, no tab bar, and no second button.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] The heading is larger than the word "Runs".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is the empty state. Do not start on a list and then clear it.
+2. "Runs" is visible as a label. "No runs today" is the only heading, and it is the largest type.
+3. The sentence reads "The yard is clear. A new load shows up in this list."
+4. Tapping "New run" changes the button to "Run opened" and disables it.
+5. The tap does not insert a row. Opening a run is a different screen.
+6. There is no animation.
+7. Focus ring is 2px `--focus`, offset 2px.
+8. Disabled opacity is 0.55.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f1ea;
+  --surface: #fffdf8;
+  --ink: #1b1814;
+  --ink-2: #5e574e;
+  --primary: #8a4b12;
+  --primary-ink: #fffdf8;
+  --focus: #8a4b12;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+These match `mobile-run-detail`. When a kit is locked, replace them with the theme. Keep the type sizes.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Where | sans | 13px | 600 | 0.04em | `--ink-2` |
+| Answer | sans | 28px | 600 | -0.03em | `--ink` |
+| Sentence | sans | 15px | 400 | 0 | `--ink-2` |
+| Button | sans | 15px | 600 | 0 | `--primary-ink` |
+
+Body line-height is 1.4. The heading margin is 0 0 8px. The sentence margin is 0 0 20px.
 
 ## Implementation notes
 

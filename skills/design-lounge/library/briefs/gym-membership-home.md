@@ -4,24 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The one-page home for a fictional boxing and strength gym, Graftworks, under a railway arch in Leeds. It is a fight poster first and a website second: black page, off-white type, one blood orange, ultra-condensed Anton display, JetBrains Mono for everything else, 0 radius, 2px borders. The hero headline "Hit harder. Lift heavy." runs at 190px with a −7° orange stripe crossing behind it carrying a slow ticker.
 
 The page does the four jobs a gym site must do: show when classes are (a timetable with day tabs and two filters), show what it costs (three tiers with a monthly/annual toggle), show who coaches (four cards), and convert (a free-trial form plus a sticky "Book free class" button). The detail worth copying is the **timetable**: real tabs, two selects, a live count, a waitlist state, and an empty state, all from one data array.
-
-## Reference behaviour
-
-1. Initial state: hero visible. The orange stripe ticker scrolls left at a 38s loop. The sticky button is hidden because the hero is on screen.
-2. Scroll past the hero: the sticky "Book free class" button slides up into the bottom-right corner (240ms). When the free-trial section enters the viewport it slides away again. Hidden means `aria-hidden="true"`, `tabindex="-1"` and `pointer-events: none`.
-3. Timetable starts on Mon with all levels and all coaches: 5 classes. The count reads "5 classes".
-4. Click a day tab (or press Left/Right while a tab is focused): that tab becomes selected (black fill, white text), focus moves with arrow keys, and the rows redraw for that day.
-5. Change Level or Coach: rows filter at once. The count updates ("1 class" singular). With no match the table shows one row: "No classes match. Clear a filter or pick another day."
-6. Each row: time, class name, level tag (Advanced is inverted), coach, spaces ("4 of 14 spaces") and a "Book" button. A class with 0 spaces shows orange "Waitlist" and the button reads "Join list".
-7. Membership toggle: Monthly is pressed on load. Click Annual: prices become £390 / £690 / £1,190 and "/ month" becomes "/ year". The Annual button carries an orange "2 months free" note.
-8. Free-trial form: submit empty and each missing field gets an orange border and a message under it. Focus moves to the first bad field. Fill first name, a valid email and tick the box: the status line reads "Booked, Sam. Boxing Fundamentals · Mon 18:30. Check your email for the door code."
-9. Buttons press 2px down-right on `:active`.
-10. At 960px and below the nav hides and a 44px square menu button opens a full-width black dropdown.
 
 ## Structure
 
@@ -56,64 +45,6 @@ fixed: [BOOK FREE CLASS] bottom-right 24px, 56 tall, 6px white offset shadow
 - Coaches: four `<article>` in a 2px bordered 4-column grid. Each has a 220px striped portrait block with initials, then text.
 - Free trial: 2 columns. Left: 120px headline "First class is free." Right: `<form novalidate>` in a 2-column grid.
 - Bands alternate black and `#f3f1ec` and are split by 2px off-white rules.
-
-## Tokens
-
-```css
-:root {
-  --black: #0c0c0c;     /* page, dark bands */
-  --black-2: #161616;   /* portrait stripe dark */
-  --white: #f3f1ec;     /* type on black, light bands */
-  --grey: #a19d95;      /* labels on black */
-  --grey-2: #6f6c66;    /* labels on light */
-  --line: #2c2c2c;      /* hairline on black (menu rows) */
-  --line-l: #d6d2ca;    /* hairline on light (table rows) */
-  --orange: #ff4b1f;    /* the one accent */
-
-  --display: "Anton", Impact, "Arial Narrow", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  --fs-hero: 190px;
-  --fs-h2: 88px;
-  --fs-trial: 120px;
-  --fs-price: 84px;
-  --fs-tier: 44px;
-  --fs-body: 14px;
-  --fs-label: 12px;
-
-  --pad: 48px;
-  --band: 80px;
-  --border: 2px;
-  --radius: 0;
-
-  --t: 140ms;
-  --t-sticky: 240ms;
-  --ticker: 38s;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-Set `border-radius: 0` on `*`. The only "shadow" is the sticky button's hard `6px 6px 0` offset.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | ---: | ---: | ---: | ---: | --- |
-| Hero headline | Anton | 190px | 400 | 0.88 | -0.005em | UPPERCASE |
-| Section heading | Anton | 88px | 400 | 0.88 | 0.005em | UPPERCASE |
-| Trial headline | Anton | 120px | 400 | 0.88 | 0.005em | UPPERCASE |
-| Price | Anton | 84px | 400 | 0.85 | 0 | numerals |
-| Big stat | Anton | 64px | 400 | 0.9 | 0 | sentence, orange |
-| Tier / coach name | Anton | 44px / 34px | 400 | 0.88 | 0 | UPPERCASE |
-| Timetable time | Anton | 30px | 400 | 1 | 0 | numerals |
-| Class name | Anton | 26px | 400 | 1 | 0 | UPPERCASE |
-| Ticker | Anton | 44px | 400 | 1 | 0.02em | UPPERCASE, black on orange |
-| Body | JetBrains Mono | 14px | 400 | 1.55 | 0 | sentence |
-| Labels | JetBrains Mono | 12px | 400 | 1.55 | 0.14em | UPPERCASE |
-| Buttons | JetBrains Mono | 13px | 700 | 1 | 0.08em | UPPERCASE |
-| Level tag | JetBrains Mono | 11px | 700 | 1 | 0.1em | UPPERCASE |
-
-Never set body copy in Anton. Never set a heading in the mono.
 
 ## Motion
 
@@ -191,6 +122,81 @@ The ticker text is the phrase repeated three times plus a trailing space, so mov
 - [ ] Monday shows 5 classes from 06:30 Conditioning to 19:30 Open Boxing.
 - [ ] Tiers Day shift £39, Unlimited £69 (orange), Fight camp £119. Annual £390 / £690 / £1,190.
 - [ ] Coaches Dee Achebe, Marcus Vale, Ines Roca, Rob Keane.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: hero visible. The orange stripe ticker scrolls left at a 38s loop. The sticky button is hidden because the hero is on screen.
+2. Scroll past the hero: the sticky "Book free class" button slides up into the bottom-right corner (240ms). When the free-trial section enters the viewport it slides away again. Hidden means `aria-hidden="true"`, `tabindex="-1"` and `pointer-events: none`.
+3. Timetable starts on Mon with all levels and all coaches: 5 classes. The count reads "5 classes".
+4. Click a day tab (or press Left/Right while a tab is focused): that tab becomes selected (black fill, white text), focus moves with arrow keys, and the rows redraw for that day.
+5. Change Level or Coach: rows filter at once. The count updates ("1 class" singular). With no match the table shows one row: "No classes match. Clear a filter or pick another day."
+6. Each row: time, class name, level tag (Advanced is inverted), coach, spaces ("4 of 14 spaces") and a "Book" button. A class with 0 spaces shows orange "Waitlist" and the button reads "Join list".
+7. Membership toggle: Monthly is pressed on load. Click Annual: prices become £390 / £690 / £1,190 and "/ month" becomes "/ year". The Annual button carries an orange "2 months free" note.
+8. Free-trial form: submit empty and each missing field gets an orange border and a message under it. Focus moves to the first bad field. Fill first name, a valid email and tick the box: the status line reads "Booked, Sam. Boxing Fundamentals · Mon 18:30. Check your email for the door code."
+9. Buttons press 2px down-right on `:active`.
+10. At 960px and below the nav hides and a 44px square menu button opens a full-width black dropdown.
+
+## Tokens
+
+```css
+:root {
+  --black: #0c0c0c;     /* page, dark bands */
+  --black-2: #161616;   /* portrait stripe dark */
+  --white: #f3f1ec;     /* type on black, light bands */
+  --grey: #a19d95;      /* labels on black */
+  --grey-2: #6f6c66;    /* labels on light */
+  --line: #2c2c2c;      /* hairline on black (menu rows) */
+  --line-l: #d6d2ca;    /* hairline on light (table rows) */
+  --orange: #ff4b1f;    /* the one accent */
+
+  --display: "Anton", Impact, "Arial Narrow", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --fs-hero: 190px;
+  --fs-h2: 88px;
+  --fs-trial: 120px;
+  --fs-price: 84px;
+  --fs-tier: 44px;
+  --fs-body: 14px;
+  --fs-label: 12px;
+
+  --pad: 48px;
+  --band: 80px;
+  --border: 2px;
+  --radius: 0;
+
+  --t: 140ms;
+  --t-sticky: 240ms;
+  --ticker: 38s;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+Set `border-radius: 0` on `*`. The only "shadow" is the sticky button's hard `6px 6px 0` offset.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Hero headline | Anton | 190px | 400 | 0.88 | -0.005em | UPPERCASE |
+| Section heading | Anton | 88px | 400 | 0.88 | 0.005em | UPPERCASE |
+| Trial headline | Anton | 120px | 400 | 0.88 | 0.005em | UPPERCASE |
+| Price | Anton | 84px | 400 | 0.85 | 0 | numerals |
+| Big stat | Anton | 64px | 400 | 0.9 | 0 | sentence, orange |
+| Tier / coach name | Anton | 44px / 34px | 400 | 0.88 | 0 | UPPERCASE |
+| Timetable time | Anton | 30px | 400 | 1 | 0 | numerals |
+| Class name | Anton | 26px | 400 | 1 | 0 | UPPERCASE |
+| Ticker | Anton | 44px | 400 | 1 | 0.02em | UPPERCASE, black on orange |
+| Body | JetBrains Mono | 14px | 400 | 1.55 | 0 | sentence |
+| Labels | JetBrains Mono | 12px | 400 | 1.55 | 0.14em | UPPERCASE |
+| Buttons | JetBrains Mono | 13px | 700 | 1 | 0.08em | UPPERCASE |
+| Level tag | JetBrains Mono | 11px | 700 | 1 | 0.1em | UPPERCASE |
+
+Never set body copy in Anton. Never set a heading in the mono.
 
 ## Implementation notes
 

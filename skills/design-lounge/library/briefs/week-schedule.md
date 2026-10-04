@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A week board for Hollis. The title is Week of 28 Sep. Seven columns, Monday through Sunday. Four blocks: Yard lead on Tuesday, Month close on Wednesday, Biratnagar call on Thursday, Type review on Friday. Tuesday is today and its block starts pressed. The line under the title names the pressed block. This is not a month grid. A month is `calendar-month`. This is not a range picker. That picker is `date-range-picker`.
-
-## Reference behaviour
-
-1. Tuesday carries data-today and its block is aria-pressed true.
-2. The line reads "Yard lead · Tuesday · 09:00".
-3. Clicking another block moves aria-pressed and rewrites the line with the full weekday and the time.
-4. Empty days stay empty. They are not disabled buttons.
-5. Saturday and Sunday have no blocks.
-6. The board does not create events.
-7. One block is pressed at a time.
 
 ## Structure
 
@@ -33,23 +25,6 @@ Mon Tue Wed Thu Fri Sat Sun
 - Each day is a surface card, padding 10px, radius 2px.
 - An event is a button with a 3px left border.
 - The title is Fraunces 40px.
-
-## Tokens
-
-```css
-:root {
-  --bg:#f4f1ea; --surface:#fffdf8; --ink:#1a1814; --ink-2:#5c564c;
-  --line:#e3ddd2; --primary:#1f4d3a; --soft:#e7f2ec;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Title | Fraunces | 40px | 560 | 1 | 0 |
-| Day | Public Sans | 12px | 500 | 1 | 0.06em |
-| Event | Public Sans | 13px | 400 | 1.3 | 0 |
 
 ## Motion
 
@@ -97,17 +72,6 @@ Mon Tue Wed Thu Fri Sat Sun
 - [ ] The first line is Yard lead · Tuesday · 09:00.
 - [ ] Display is Fraunces. Text is Public Sans.
 
-## Implementation notes
-
-Write the weekday from a full-name list, not by appending "day" to Tue.
-
-```js
-const full = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"][i];
-sub.textContent = ev.name + " · " + full + " · " + ev.t;
-```
-
-Do not store the events in localStorage.
-
 ## Measurements to keep
 
 - Board 1080px. Title 40px. Subtitle margin 0 0 18px.
@@ -152,6 +116,48 @@ Do not store the events in localStorage.
 - Do not open a popover on press. The line is the detail.
 - Display type is Fraunces.
 - Text type is Public Sans.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Tuesday carries data-today and its block is aria-pressed true.
+2. The line reads "Yard lead · Tuesday · 09:00".
+3. Clicking another block moves aria-pressed and rewrites the line with the full weekday and the time.
+4. Empty days stay empty. They are not disabled buttons.
+5. Saturday and Sunday have no blocks.
+6. The board does not create events.
+7. One block is pressed at a time.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f4f1ea; --surface:#fffdf8; --ink:#1a1814; --ink-2:#5c564c;
+  --line:#e3ddd2; --primary:#1f4d3a; --soft:#e7f2ec;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Title | Fraunces | 40px | 560 | 1 | 0 |
+| Day | Public Sans | 12px | 500 | 1 | 0.06em |
+| Event | Public Sans | 13px | 400 | 1.3 | 0 |
+
+## Implementation notes
+
+Write the weekday from a full-name list, not by appending "day" to Tue.
+
+```js
+const full = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"][i];
+sub.textContent = ev.name + " · " + full + " · " + ev.t;
+```
+
+Do not store the events in localStorage.
 
 ---
 

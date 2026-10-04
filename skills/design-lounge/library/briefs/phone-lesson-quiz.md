@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One lesson card from Burrow, a fictional language app teaching Spanish. A coral mascot says an English sentence in a speech bubble. The learner taps word tiles in a bank to build the Spanish on a two-line ruled answer area. Tiles fly from the bank to the line and back. Each leaves a sunken slot behind, so the bank never reflows. Check becomes a green banner when right or a coral banner when wrong. A miss costs a heart. The style is clay: cream paper, chunky rounded type, and tiles with a 4px darker bottom edge that squashes when pressed. The detail worth copying is the empty slot. It keeps every tile where the learner's eye last saw it.
-
-## Reference behaviour
-
-1. Initial state: question 1 of 4, "Where is the bus stop?". "Dónde" and "está" are already on the answer line, and their bank slots are empty. Progress is 6 of 10 (60%). Streak 13, hearts 5. Check is enabled.
-2. Tap a bank tile. It flies along the path from its slot to the end of the answer line in 360ms with a small overshoot. Its slot stays as a sunken shape of the same size.
-3. Tap a tile on the answer line. It flies back to its own slot. The tiles after it slide left to close the gap in 260ms.
-4. Check is disabled when the answer line is empty. The label is CHECK.
-5. Tap Check with the right words in the right order. Compare words without case. The tiles lock. A green banner rises 24px from behind the footer over the bottom of the bank: a check badge, "Nice one!", the label MEANING, and "¿Dónde está la parada de autobús?". The button turns into CONTINUE. Progress grows by 10%.
-6. Tap Check with a wrong answer. A coral banner rises: a cross badge, "Not quite", the label CORRECT ANSWER, and the correct sentence. The heart counter drops by one and the heart shakes for 500ms. The button turns coral and reads GOT IT. Progress still grows by 10%.
-7. Continue loads the next question with an empty answer line and a full bank.
-8. After question 4, the end screen fades in: a 132px flame pops in from 40% scale, the streak number reads 14, "Day streak!", "Lesson complete. Come back tomorrow to make it 15.", a week row with Monday to Saturday ticked and Saturday ringed, then two cards: Total XP (+10 per right answer) and Accuracy (right ÷ answered). The header flame also reads 14.
-9. If hearts reach 0, Continue goes to the end screen titled "Out of hearts". The streak stays at 13 and the button reads TRY AGAIN.
-10. The end button resets everything to the first frame.
 
 ## Structure
 
@@ -55,65 +44,6 @@ One lesson card from Burrow, a fictional language app teaching Spanish. A coral 
 - Footer: `position: relative; z-index: 4`. It holds the result block (absolutely placed above it) and one button that is Check, Continue, or Got it.
 - Live region: a visually hidden `p aria-live="assertive"`.
 - End screen: a fixed `section` labelled by its heading, `aria-hidden` until shown.
-
-## Tokens
-
-```css
-:root {
-  --bg: #fbf4e6;          /* cream page */
-  --card: #fffdf7;        /* tiles, bubble, cards */
-  --well: #efe5d3;        /* empty slot, empty week day */
-  --line: #e5d8c1;        /* tile border, ruled lines */
-  --line2: #d6c5a8;       /* tile bottom edge */
-  --ink: #3a2e22;         /* warm brown, never black */
-  --ink2: #76664f;
-
-  --grass: #5bc236;       /* check button, progress */
-  --grass-dk: #3e9a1c;    /* its bottom edge */
-  --on-grass: #0f2e05;
-  --ok-bg: #ddf5c8;       /* right banner */
-  --ok-ink: #2a730d;
-
-  --coral: #ff7a59;       /* wrong button, mascot */
-  --coral-dk: #d9573a;    /* its bottom edge, eyebrow */
-  --on-coral: #3d0f04;
-  --no-bg: #ffe3da;       /* wrong banner */
-  --no-ink: #ad371c;
-
-  --flame: #ff9a1f; --flame-in: #ffd23f; --flame-ink: #b35400;
-  --heart: #ff5a4e;
-  --focus: #2f6fdb;
-
-  --round: "Fredoka", system-ui, sans-serif;
-  --sans: "Nunito", system-ui, sans-serif;
-
-  --tile-h: 50px;         /* includes 2px top border and 4px bottom border */
-  --r-tile: 14px; --r-btn: 16px; --r-bubble: 18px; --r-card: 18px; --r-banner: 24px;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
-
-  --boing: cubic-bezier(.34, 1.36, .64, 1);   /* overshoot for tiles, banner, bar */
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --dur-fly: 360ms; --dur-shift: 260ms; --dur-banner: 380ms; --dur-bar: 600ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case | Colour |
-| --- | --- | --- | --- | --- | --- | --- |
-| Heading | Fredoka | 26px, line-height 1.1 | 700 | 0 | sentence | `--ink` |
-| Prompt | Fredoka | 20px, line-height 1.25 | 500 | 0 | sentence | `--ink` |
-| Tile | Fredoka | 19px | 500 | 0 | as written | `--ink` |
-| Button | Fredoka | 18px | 700 | 0.06em | upper | `--on-grass` or `--on-coral` |
-| Banner title | Fredoka | 22px | 700 | 0 | sentence | `--ok-ink` or `--no-ink` |
-| Streak / hearts | Fredoka | 18px | 700 | 0 | | `--flame-ink`, `--heart` |
-| End number | Fredoka | 84px, line-height 0.9 | 700 | 0 | | `--flame-ink` |
-| Eyebrow | Nunito | 13px | 900 | 0.08em | upper | `--coral-dk` |
-| Banner label | Nunito | 13px | 900 | 0.04em | upper | banner ink |
-| Banner sentence | Nunito | 16px | 700 | 0 | sentence | banner ink |
-| Body | Nunito | 16px | 700 | 0 | sentence | `--ink2` |
-
-Keep the Spanish accents and the opening ¿ in both fonts. Both families include them.
 
 ## Motion
 
@@ -191,6 +121,82 @@ Tiles move with the FLIP method: measure the start, move the element in the DOM,
 - [ ] The four questions are the bus stop, a ticket, the nine o'clock train, and "Is it far from here?".
 - [ ] A full right run ends on 14, +40 XP, 100%.
 - [ ] Right titles cycle: "Nice one!", "Spot on!", "Exactly right!", "You nailed it!". Wrong title is "Not quite".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: question 1 of 4, "Where is the bus stop?". "Dónde" and "está" are already on the answer line, and their bank slots are empty. Progress is 6 of 10 (60%). Streak 13, hearts 5. Check is enabled.
+2. Tap a bank tile. It flies along the path from its slot to the end of the answer line in 360ms with a small overshoot. Its slot stays as a sunken shape of the same size.
+3. Tap a tile on the answer line. It flies back to its own slot. The tiles after it slide left to close the gap in 260ms.
+4. Check is disabled when the answer line is empty. The label is CHECK.
+5. Tap Check with the right words in the right order. Compare words without case. The tiles lock. A green banner rises 24px from behind the footer over the bottom of the bank: a check badge, "Nice one!", the label MEANING, and "¿Dónde está la parada de autobús?". The button turns into CONTINUE. Progress grows by 10%.
+6. Tap Check with a wrong answer. A coral banner rises: a cross badge, "Not quite", the label CORRECT ANSWER, and the correct sentence. The heart counter drops by one and the heart shakes for 500ms. The button turns coral and reads GOT IT. Progress still grows by 10%.
+7. Continue loads the next question with an empty answer line and a full bank.
+8. After question 4, the end screen fades in: a 132px flame pops in from 40% scale, the streak number reads 14, "Day streak!", "Lesson complete. Come back tomorrow to make it 15.", a week row with Monday to Saturday ticked and Saturday ringed, then two cards: Total XP (+10 per right answer) and Accuracy (right ÷ answered). The header flame also reads 14.
+9. If hearts reach 0, Continue goes to the end screen titled "Out of hearts". The streak stays at 13 and the button reads TRY AGAIN.
+10. The end button resets everything to the first frame.
+
+## Tokens
+
+```css
+:root {
+  --bg: #fbf4e6;          /* cream page */
+  --card: #fffdf7;        /* tiles, bubble, cards */
+  --well: #efe5d3;        /* empty slot, empty week day */
+  --line: #e5d8c1;        /* tile border, ruled lines */
+  --line2: #d6c5a8;       /* tile bottom edge */
+  --ink: #3a2e22;         /* warm brown, never black */
+  --ink2: #76664f;
+
+  --grass: #5bc236;       /* check button, progress */
+  --grass-dk: #3e9a1c;    /* its bottom edge */
+  --on-grass: #0f2e05;
+  --ok-bg: #ddf5c8;       /* right banner */
+  --ok-ink: #2a730d;
+
+  --coral: #ff7a59;       /* wrong button, mascot */
+  --coral-dk: #d9573a;    /* its bottom edge, eyebrow */
+  --on-coral: #3d0f04;
+  --no-bg: #ffe3da;       /* wrong banner */
+  --no-ink: #ad371c;
+
+  --flame: #ff9a1f; --flame-in: #ffd23f; --flame-ink: #b35400;
+  --heart: #ff5a4e;
+  --focus: #2f6fdb;
+
+  --round: "Fredoka", system-ui, sans-serif;
+  --sans: "Nunito", system-ui, sans-serif;
+
+  --tile-h: 50px;         /* includes 2px top border and 4px bottom border */
+  --r-tile: 14px; --r-btn: 16px; --r-bubble: 18px; --r-card: 18px; --r-banner: 24px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
+
+  --boing: cubic-bezier(.34, 1.36, .64, 1);   /* overshoot for tiles, banner, bar */
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --dur-fly: 360ms; --dur-shift: 260ms; --dur-banner: 380ms; --dur-bar: 600ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case | Colour |
+| --- | --- | --- | --- | --- | --- | --- |
+| Heading | Fredoka | 26px, line-height 1.1 | 700 | 0 | sentence | `--ink` |
+| Prompt | Fredoka | 20px, line-height 1.25 | 500 | 0 | sentence | `--ink` |
+| Tile | Fredoka | 19px | 500 | 0 | as written | `--ink` |
+| Button | Fredoka | 18px | 700 | 0.06em | upper | `--on-grass` or `--on-coral` |
+| Banner title | Fredoka | 22px | 700 | 0 | sentence | `--ok-ink` or `--no-ink` |
+| Streak / hearts | Fredoka | 18px | 700 | 0 | | `--flame-ink`, `--heart` |
+| End number | Fredoka | 84px, line-height 0.9 | 700 | 0 | | `--flame-ink` |
+| Eyebrow | Nunito | 13px | 900 | 0.08em | upper | `--coral-dk` |
+| Banner label | Nunito | 13px | 900 | 0.04em | upper | banner ink |
+| Banner sentence | Nunito | 16px | 700 | 0 | sentence | banner ink |
+| Body | Nunito | 16px | 700 | 0 | sentence | `--ink2` |
+
+Keep the Spanish accents and the opening ¿ in both fonts. Both families include them.
 
 ## Implementation notes
 

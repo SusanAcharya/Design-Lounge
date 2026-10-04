@@ -4,23 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A Live Activity for a fictional ride app, "Wend", sitting on a phone lock screen. The wallpaper is a pale paper street map. Under a large clock, a warm off-white card tracks the driver: a 320 × 120 mini map with an orange route, a small top-down car that drives along it, a countdown in mono orange, the driver, and a yellow number plate. Tapping the card's header folds it to a 64px row with a thin progress bar, the way a live activity shrinks. When the countdown hits zero, the ETA reads "Here", the pin pulses, and the plate grows slightly so you look for it. The detail worth copying: the car's position, the filled part of the route, and the compact progress bar all come from one number, `p`, so the three can never disagree.
 
 The language is iOS 26-ish without glass: 26px card radius, an SF-like grotesk, sheet easing on the fold. The card is opaque because it sits on a busy map.
-
-## Reference behaviour
-
-1. First frame: expanded card. Header reads "Ramesh is on the way", "Silver hatchback · ends 4821", ETA `4:00` "MIN AWAY". The car sits at the left end of the route. The countdown starts at once.
-2. The simulated trip lasts 240 seconds, run at 4× speed: one simulated second per 250ms of real time, so the demo arrives in 60 real seconds.
-3. Every tick: ETA text becomes `m:ss`, the solid orange route grows from the start toward the pin, the car moves along the path and rotates to face the direction of travel, and (in compact mode) the progress bar widens.
-4. At 30 seconds left: the label reads "ARRIVING", the headline becomes "Ramesh is turning in".
-5. At zero: ETA reads "Here" / "NOW", headline "Ramesh has arrived", status line "Look for the yellow plate, he waits 3 min". The pin's orange ring pings outward every 1.6s, the plate scales to 1.08. The timer stops.
-6. Tap the header (or focus it and press Enter/Space): the card folds to compact. The map, status, driver row, and actions collapse to 0 height over 360ms; the chevron turns 180°; a 4px progress bar appears under the header. Tap again to expand.
-7. "Share trip" swaps its label to "Link copied" for 1.6s.
-8. "Replay pickup" (a pill at the bottom of the screen) restarts the trip from 4:00 and clears the arrived state.
-9. Reduced motion: the countdown and positions still update (they are information), but every transition is instant and the ring does not pulse. It sits static at 1.6× scale, 80% opacity.
 
 ## Structure
 
@@ -56,62 +46,6 @@ compact: header row + 4px bar (margin 0 16px 14px), r 22px
 - Driver row: initials avatar (40px circle), name and rating, plate chip.
 - Two action buttons: Message (tonal), Share trip (ink, primary).
 - A visually hidden `p[aria-live=polite]`.
-
-## Tokens
-
-```css
-:root {
-  /* map wallpaper */
-  --paper: #ece6d8;     /* land */
-  --street: #f7f3ea;    /* road lines on the wallpaper */
-  --park: #cfd9b4;
-  --water: #bcd3d6;
-
-  /* card */
-  --card: #fbf9f4;
-  --ink: #191b1f;       /* text, app mark, primary button, car */
-  --ink-2: #4a4d54;     /* date, driver meta */
-  --ink-3: #6c6f76;     /* subline, ETA label, chevron */
-  --line: #e2dccd;      /* rule, progress track */
-  --accent: #f2551d;    /* route, ETA, pin, focus */
-  --accent-soft: #f9c7b2; /* route not yet driven */
-  --plate: #f5d548;     /* number plate */
-
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "Martian Mono", ui-monospace, monospace;
-
-  --r-card: 26px;  --r-card-compact: 22px;
-  --r-map: 16px;   --r-btn: 14px;  --r-mark: 11px;
-  --shadow-card: 0 18px 40px -22px rgba(25, 27, 31, .45);
-
-  --sheet: cubic-bezier(.32, .72, 0, 1);  /* fold */
-  --std: cubic-bezier(.2, .7, .2, 1);     /* ticks, buttons */
-  --t-fold: 360ms;
-  --t-tick: 240ms;
-  --tick-real: 250ms;  /* one simulated second */
-  --trip: 240;         /* simulated seconds */
-}
-```
-
-The wallpaper is four stacked backgrounds: a 130px-wide repeating vertical street, a 170px-tall repeating horizontal street, a park ellipse at 82% 78%, a diagonal river band at 118°, over `--paper`. A fixed `::before` fades it from 92% paper at the top to 20% at the bottom so the clock stays readable.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Date | Bricolage Grotesque | 17px | 600 | 1.4 | 0.01em | Sentence |
-| Clock | Bricolage Grotesque (opsz 96) | 96px | 700 | 0.95 | -0.045em | — |
-| Headline | Bricolage Grotesque | 15px | 700 | 1.4 | -0.01em | Sentence |
-| Subline | Bricolage Grotesque | 13px | 400 | 1.4 | 0 | Sentence, ellipsis |
-| ETA | Martian Mono | 20px | 600 | 1.1 | -0.04em | tabular |
-| ETA label | Bricolage Grotesque | 11px | 600 | 1.4 | 0.08em | UPPER |
-| Status | Bricolage Grotesque (opsz 32) | 22px | 700 | 1.15 | -0.02em | Sentence, place in accent |
-| Driver name | Bricolage Grotesque | 15px | 700 | 1.4 | 0 | — |
-| Plate | Martian Mono | 13px | 600 | 1 | 0.04em | UPPER |
-| Button | Bricolage Grotesque | 14px | 600 | 1 | 0 | Sentence |
-| Map label | Martian Mono | 8px | 600 | — | 0 | UPPER |
-
-Load Bricolage with the optical size axis (`opsz,wght@12..96,400..800`). The clock at opsz 96 is tighter and sharper than the 15px text.
 
 ## Motion
 
@@ -182,6 +116,78 @@ The car is not on an SVG `<animateMotion>`. JS samples the path with `getPointAt
 - [ ] Route `#f2551d` over `#f9c7b2`; plate `#f5d548` with a 1.5px ink border.
 - [ ] Clock 23:54 at 96px Bricolage Grotesque.
 - [ ] Card `#fbf9f4`, radius 26px expanded, 22px compact.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: expanded card. Header reads "Ramesh is on the way", "Silver hatchback · ends 4821", ETA `4:00` "MIN AWAY". The car sits at the left end of the route. The countdown starts at once.
+2. The simulated trip lasts 240 seconds, run at 4× speed: one simulated second per 250ms of real time, so the demo arrives in 60 real seconds.
+3. Every tick: ETA text becomes `m:ss`, the solid orange route grows from the start toward the pin, the car moves along the path and rotates to face the direction of travel, and (in compact mode) the progress bar widens.
+4. At 30 seconds left: the label reads "ARRIVING", the headline becomes "Ramesh is turning in".
+5. At zero: ETA reads "Here" / "NOW", headline "Ramesh has arrived", status line "Look for the yellow plate, he waits 3 min". The pin's orange ring pings outward every 1.6s, the plate scales to 1.08. The timer stops.
+6. Tap the header (or focus it and press Enter/Space): the card folds to compact. The map, status, driver row, and actions collapse to 0 height over 360ms; the chevron turns 180°; a 4px progress bar appears under the header. Tap again to expand.
+7. "Share trip" swaps its label to "Link copied" for 1.6s.
+8. "Replay pickup" (a pill at the bottom of the screen) restarts the trip from 4:00 and clears the arrived state.
+9. Reduced motion: the countdown and positions still update (they are information), but every transition is instant and the ring does not pulse. It sits static at 1.6× scale, 80% opacity.
+
+## Tokens
+
+```css
+:root {
+  /* map wallpaper */
+  --paper: #ece6d8;     /* land */
+  --street: #f7f3ea;    /* road lines on the wallpaper */
+  --park: #cfd9b4;
+  --water: #bcd3d6;
+
+  /* card */
+  --card: #fbf9f4;
+  --ink: #191b1f;       /* text, app mark, primary button, car */
+  --ink-2: #4a4d54;     /* date, driver meta */
+  --ink-3: #6c6f76;     /* subline, ETA label, chevron */
+  --line: #e2dccd;      /* rule, progress track */
+  --accent: #f2551d;    /* route, ETA, pin, focus */
+  --accent-soft: #f9c7b2; /* route not yet driven */
+  --plate: #f5d548;     /* number plate */
+
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+
+  --r-card: 26px;  --r-card-compact: 22px;
+  --r-map: 16px;   --r-btn: 14px;  --r-mark: 11px;
+  --shadow-card: 0 18px 40px -22px rgba(25, 27, 31, .45);
+
+  --sheet: cubic-bezier(.32, .72, 0, 1);  /* fold */
+  --std: cubic-bezier(.2, .7, .2, 1);     /* ticks, buttons */
+  --t-fold: 360ms;
+  --t-tick: 240ms;
+  --tick-real: 250ms;  /* one simulated second */
+  --trip: 240;         /* simulated seconds */
+}
+```
+
+The wallpaper is four stacked backgrounds: a 130px-wide repeating vertical street, a 170px-tall repeating horizontal street, a park ellipse at 82% 78%, a diagonal river band at 118°, over `--paper`. A fixed `::before` fades it from 92% paper at the top to 20% at the bottom so the clock stays readable.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Date | Bricolage Grotesque | 17px | 600 | 1.4 | 0.01em | Sentence |
+| Clock | Bricolage Grotesque (opsz 96) | 96px | 700 | 0.95 | -0.045em | — |
+| Headline | Bricolage Grotesque | 15px | 700 | 1.4 | -0.01em | Sentence |
+| Subline | Bricolage Grotesque | 13px | 400 | 1.4 | 0 | Sentence, ellipsis |
+| ETA | Martian Mono | 20px | 600 | 1.1 | -0.04em | tabular |
+| ETA label | Bricolage Grotesque | 11px | 600 | 1.4 | 0.08em | UPPER |
+| Status | Bricolage Grotesque (opsz 32) | 22px | 700 | 1.15 | -0.02em | Sentence, place in accent |
+| Driver name | Bricolage Grotesque | 15px | 700 | 1.4 | 0 | — |
+| Plate | Martian Mono | 13px | 600 | 1 | 0.04em | UPPER |
+| Button | Bricolage Grotesque | 14px | 600 | 1 | 0 | Sentence |
+| Map label | Martian Mono | 8px | 600 | — | 0 | UPPER |
+
+Load Bricolage with the optical size axis (`opsz,wght@12..96,400..800`). The clock at opsz 96 is tighter and sharper than the 15px text.
 
 ## Implementation notes
 

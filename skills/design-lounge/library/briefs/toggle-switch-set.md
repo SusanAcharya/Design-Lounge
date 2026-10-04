@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A preferences card for a fictional smart-home app, Nook, where each of six rows uses a different toggle switch style: classic pill, Material-style icon thumb, day/night scene switch, squish-on-press, labelled ON/OFF, and a three-way segmented control. To the left, a 128px display headline ("Tune your home.") sits over a mono index that reads back every switch's live value. The feeling is warm, tactile and a little cheeky: peach paper, tomato accent, springy thumbs. The detail worth copying is that every switch is a real `role="switch"` button whose look is driven entirely by `aria-checked`, so state, styling and accessibility can never drift apart.
-
-## Reference behaviour
-
-1. Initial state: Away mode ON, Doorbell alerts ON, Evening scene NIGHT, Child lock OFF, Eco heating ON, Hallway motion AUTO. The index on the left mirrors these six values; ON-ish values are tomato, OFF/DAY are muted.
-2. Click (or Space/Enter on) any switch: `aria-checked` flips, the switch animates to its new state, the matching index row updates its value, and the card footer reads "Saved HH:MM · <Row name> <value>" with the text flashing tomato for 900ms.
-3. **01 Classic** (52×32): white 28px thumb slides 20px with a slight overshoot; track fills tomato.
-4. **02 Icon thumb** (52×32, 2px outline): a 24px thumb shows an × when off (taupe thumb on outlined track) and a check when on (white thumb on a tomato track). Icons cross-fade with a 45° counter-rotation. While pressed, a 8px tomato halo (16% alpha) rings the thumb.
-5. **03 Day / night** (76×36): day is a sky gradient with a cloud and a sun thumb with two soft halo rings; night cross-fades to a navy sky with four star dots while the thumb springs 40px right, turns bone and reveals three craters. The cloud sinks 20px and fades.
-6. **04 Squish** (58×32): pressing stretches the thumb 10px toward its destination; releasing springs it across. Track goes ink when on.
-7. **05 Labelled** (84×34, 9px radius, 1.5px ink border): off shows a dark 38×25 thumb on the left and "OFF" on the right; on fills the track tomato, the thumb turns white and slides 38px right, and "ON" appears on the left in white.
-8. **06 Segmented** (Off / Auto / On, 3×64px): a white pill slides under the chosen option with an overshoot spring; choosing On turns the pill tomato with white text.
-9. Hovering a card row highlights the corresponding index row (text goes from `--ink-2` to `--ink`).
 
 ## Structure
 
@@ -44,61 +34,6 @@ A preferences card for a fictional smart-home app, Nook, where each of six rows 
 - Each `.row`: 44px icon tile, `.txt` (title `<b id>` with a mono style tag `<small>`, description `<p>`), then the control.
 - Switches 01–05: `<button class="sw …" role="switch" aria-checked aria-labelledby="lN">` with inner `<span class="k">` thumb where needed.
 - Switch 06: `<fieldset class="seg">` with a visually hidden `<legend>`, a decorative `.pill` span and three radio `input`+`label` pairs.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces */
-  --bg: #f7ede4;          /* peach paper page */
-  --card: #fffbf7;        /* panel */
-  --tile: #fbe2d4;        /* icon tiles */
-  --off: #e6d6c9;         /* off track */
-  --line: #ecdccf;        /* hairlines */
-  --seg-bg: #f0e1d4;      /* segmented track */
-  --m3-off: #f3e6db;      /* icon-thumb off track */
-  /* ink */
-  --ink: #2a1d17;
-  --ink-2: #6b574b;
-  --ink-3: #8c7466;
-  /* accent */
-  --accent: #f0552e;      /* tomato: on tracks, em, live values */
-  --ok: #3fae6a;          /* saved dot */
-  /* day / night */
-  --sky: #8fd0f0;  --sky-2: #c9ecfb;
-  --night: #1d2346; --night-top: #141a3a;
-  --sun: #ffc23a;  --moon: #efe7d6; --crater: #d8ccb3;
-  /* type */
-  --font: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-  --fs-display: 128px; --fs-h2: 20px; --fs-row: 16px; --fs-body: 15px;
-  --fs-desc: 13.5px; --fs-meta: 12px; --fs-tag: 10px;
-  /* space & radius */
-  --pad-page: 56px 64px; --pad-row: 16px 28px;
-  --r-card: 24px; --r-tile: 12px;
-  /* shadow */
-  --shadow-card: 0 1px 0 var(--line), 0 30px 60px -30px rgba(120,60,30,.25);
-  --shadow-thumb: 0 3px 8px rgba(42,29,23,.18), 0 1px 1px rgba(42,29,23,.1);
-  /* motion */
-  --t-fast: 160ms; --t: 240ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --spring: cubic-bezier(.34,1.56,.64,1);
-}
-```
-
-## Typography
-
-| Role              | Family              | Size   | Weight | Line-height | Tracking | Case      |
-|-------------------|---------------------|-------:|-------:|------------:|---------:|-----------|
-| Display h1        | Bricolage Grotesque (opsz 96) | 128px | 800 | 0.86 | −0.055em | sentence |
-| Panel title       | Bricolage Grotesque | 20px   | 700    | 1.2         | −0.02em  | sentence  |
-| Row title         | Bricolage Grotesque | 16px   | 600    | 1.3         | −0.01em  | sentence  |
-| Row description   | Bricolage Grotesque | 13.5px | 400    | 1.45        | 0        | sentence  |
-| Lede              | Bricolage Grotesque | 16px   | 400    | 1.45        | 0        | sentence  |
-| Eyebrow           | DM Mono             | 12px   | 500    | 1           | +0.14em  | UPPERCASE |
-| Style tag         | DM Mono             | 10px   | 500    | 1           | +0.10em  | UPPERCASE |
-| Index rows        | DM Mono             | 12px   | 400/500| 1           | 0 / +0.08em values | sentence / UPPERCASE |
-| Switch labels     | DM Mono             | 11–12px| 500    | 1           | +0.10em  | ON/OFF caps, segment sentence |
 
 ## Motion
 
@@ -157,6 +92,77 @@ Reduced motion: all transitions to 1ms and the flash keyframe removed. Every sta
 - [ ] Focus ring visible on every switch and segment.
 - [ ] Reduced motion removes animation but keeps every state.
 - [ ] No borders lost on the outlined switches (check reset specificity).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: Away mode ON, Doorbell alerts ON, Evening scene NIGHT, Child lock OFF, Eco heating ON, Hallway motion AUTO. The index on the left mirrors these six values; ON-ish values are tomato, OFF/DAY are muted.
+2. Click (or Space/Enter on) any switch: `aria-checked` flips, the switch animates to its new state, the matching index row updates its value, and the card footer reads "Saved HH:MM · <Row name> <value>" with the text flashing tomato for 900ms.
+3. **01 Classic** (52×32): white 28px thumb slides 20px with a slight overshoot; track fills tomato.
+4. **02 Icon thumb** (52×32, 2px outline): a 24px thumb shows an × when off (taupe thumb on outlined track) and a check when on (white thumb on a tomato track). Icons cross-fade with a 45° counter-rotation. While pressed, a 8px tomato halo (16% alpha) rings the thumb.
+5. **03 Day / night** (76×36): day is a sky gradient with a cloud and a sun thumb with two soft halo rings; night cross-fades to a navy sky with four star dots while the thumb springs 40px right, turns bone and reveals three craters. The cloud sinks 20px and fades.
+6. **04 Squish** (58×32): pressing stretches the thumb 10px toward its destination; releasing springs it across. Track goes ink when on.
+7. **05 Labelled** (84×34, 9px radius, 1.5px ink border): off shows a dark 38×25 thumb on the left and "OFF" on the right; on fills the track tomato, the thumb turns white and slides 38px right, and "ON" appears on the left in white.
+8. **06 Segmented** (Off / Auto / On, 3×64px): a white pill slides under the chosen option with an overshoot spring; choosing On turns the pill tomato with white text.
+9. Hovering a card row highlights the corresponding index row (text goes from `--ink-2` to `--ink`).
+
+## Tokens
+
+```css
+:root {
+  /* surfaces */
+  --bg: #f7ede4;          /* peach paper page */
+  --card: #fffbf7;        /* panel */
+  --tile: #fbe2d4;        /* icon tiles */
+  --off: #e6d6c9;         /* off track */
+  --line: #ecdccf;        /* hairlines */
+  --seg-bg: #f0e1d4;      /* segmented track */
+  --m3-off: #f3e6db;      /* icon-thumb off track */
+  /* ink */
+  --ink: #2a1d17;
+  --ink-2: #6b574b;
+  --ink-3: #8c7466;
+  /* accent */
+  --accent: #f0552e;      /* tomato: on tracks, em, live values */
+  --ok: #3fae6a;          /* saved dot */
+  /* day / night */
+  --sky: #8fd0f0;  --sky-2: #c9ecfb;
+  --night: #1d2346; --night-top: #141a3a;
+  --sun: #ffc23a;  --moon: #efe7d6; --crater: #d8ccb3;
+  /* type */
+  --font: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  --fs-display: 128px; --fs-h2: 20px; --fs-row: 16px; --fs-body: 15px;
+  --fs-desc: 13.5px; --fs-meta: 12px; --fs-tag: 10px;
+  /* space & radius */
+  --pad-page: 56px 64px; --pad-row: 16px 28px;
+  --r-card: 24px; --r-tile: 12px;
+  /* shadow */
+  --shadow-card: 0 1px 0 var(--line), 0 30px 60px -30px rgba(120,60,30,.25);
+  --shadow-thumb: 0 3px 8px rgba(42,29,23,.18), 0 1px 1px rgba(42,29,23,.1);
+  /* motion */
+  --t-fast: 160ms; --t: 240ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --spring: cubic-bezier(.34,1.56,.64,1);
+}
+```
+
+## Typography
+
+| Role              | Family              | Size   | Weight | Line-height | Tracking | Case      |
+|-------------------|---------------------|-------:|-------:|------------:|---------:|-----------|
+| Display h1        | Bricolage Grotesque (opsz 96) | 128px | 800 | 0.86 | −0.055em | sentence |
+| Panel title       | Bricolage Grotesque | 20px   | 700    | 1.2         | −0.02em  | sentence  |
+| Row title         | Bricolage Grotesque | 16px   | 600    | 1.3         | −0.01em  | sentence  |
+| Row description   | Bricolage Grotesque | 13.5px | 400    | 1.45        | 0        | sentence  |
+| Lede              | Bricolage Grotesque | 16px   | 400    | 1.45        | 0        | sentence  |
+| Eyebrow           | DM Mono             | 12px   | 500    | 1           | +0.14em  | UPPERCASE |
+| Style tag         | DM Mono             | 10px   | 500    | 1           | +0.10em  | UPPERCASE |
+| Index rows        | DM Mono             | 12px   | 400/500| 1           | 0 / +0.08em values | sentence / UPPERCASE |
+| Switch labels     | DM Mono             | 11–12px| 500    | 1           | +0.10em  | ON/OFF caps, segment sentence |
 
 ## Implementation notes
 

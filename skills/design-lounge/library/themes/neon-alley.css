@@ -1,6 +1,7 @@
 /* Neon Alley · dark · no pair
    Black wet street, magenta and cyan tubes.
    Best for: Music, Nightlife, Games */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Neon Alley · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Monoton", Georgia, serif;
-  --font-text: "Josefin Sans", system-ui, sans-serif;
-  --radius: 4px;
-  --shadow: 0 0 24px -6px rgba(255,79,163,.45);
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

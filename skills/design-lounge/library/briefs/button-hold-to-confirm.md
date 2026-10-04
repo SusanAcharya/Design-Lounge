@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Two friction patterns that replace "Are you sure?" dialogs, shown on the settings page of a fictional finance tool, "Tallyhut". On the left, hold-to-confirm: a red button fills with a darker red from left to right while it is held and shows a countdown; let go early and the fill drains back in 260ms; only a full fill acts, then an Undo appears. A smaller outline version and a 56px icon version with a progress ring show the same behaviour at shorter durations. On the right, slide-to-confirm: an ink pill with a cream thumb you drag to the end to pay; a green trail follows the thumb; released before 92% it springs home; at the end the track turns green and reads "Paid · ref TH-20931". The point worth copying is the keyboard path: holding Space or Enter fills the hold button exactly like a pointer, and the slider is a real `role="slider"` that arrow keys and End can complete.
-
-## Reference behaviour
-
-1. First frame: a light panel with a header "Tallyhut" and mono "Settings · Danger zone & payouts", plus a hint line with key caps: "Hold: pointer, or Space/Enter held · Slide: drag, or → End". Two columns below, a states sheet at the bottom.
-2. Hold column: "Hold to delete workspace" (red, 56px, min 300px, trash icon, 1600ms), "Hold to remove card ·· 4417" (outline red, 48px, 1000ms), and a 56px round trash button on a pale red disc (900ms). Each has a mono caption.
-3. Pointer down (primary button only) on a hold button: pointer capture, scale .985, label becomes "Keep holding", a tabular countdown shows the seconds left ("0.8s"), and the fill's `scaleX` follows elapsed / duration.
-4. Release, pointer cancel, losing capture, or blur before full: the fill drains from its current value to 0 at a rate of a full bar per 260ms; label returns to idle; countdown clears.
-5. Holding to 100%: the button turns ink with cream text, label "Workspace deleted" / "Card removed"; the round one shows a check and its `aria-label` becomes "Draft discarded". An "Undo" text button appears beside it. A polite live region announces e.g. "Workspace Northfield deleted. Undo available."
-6. Undo restores the idle state, announces "Restored.", and returns focus to the button. Without Undo, the button resets after 6000ms.
-7. Keyboard: Space or Enter keydown (ignoring repeats) begins the hold; keyup cancels. The click event is suppressed so a quick press never acts.
-8. Slide column: "Slide to pay £1,240.00 to Odalys Print Co." (64px track, 56px thumb, max 400px) and "Slide to move £85 to Savings" (52px, 44px thumb, max 320px), then a "Reset sliders" link.
-9. Dragging the thumb moves it 1:1 with the pointer; the green trail grows behind it; the track label fades out as `1 − progress × 1.4`.
-10. Release at ≥ 92% of travel: thumb snaps to the end, track goes green, label becomes the done text, arrow becomes a check, live region says "Payment of 1,240 pounds sent. Reference TH-20931." Release earlier: the thumb and trail spring back over 420ms with a slight overshoot.
-11. Slider keys: Right/Up +10%, PageUp +25%, Left/Down −10%, PageDown −25%, Home or Escape back to 0, End completes. Reaching 100% by arrows also completes.
-12. States sheet: hold buttons at Default, Hover, Pressed 60%, Disabled, Focus, Done, plus the ring at 60%; sliders at Default, Hover, Dragging 55%, Disabled, Focus, Done.
-13. Reduced motion: no press scale, no spring; the fill and drain still track time because they are the feedback.
 
 ## Structure
 
@@ -50,44 +36,6 @@ Two friction patterns that replace "Are you sure?" dialogs, shown on the setting
 - Each slider is a `div.slide` holding a trail span, a label span (`aria-hidden`), and a `span.thumb` with `role="slider"`, `tabindex="0"`, `aria-label`, `aria-valuemin/max/now` and `aria-valuetext`.
 - One visually hidden `p aria-live="polite"` serves both columns.
 - The states sheet is `inert`, `aria-hidden`, with a visually hidden description.
-
-## Tokens
-
-```css
-:root {
-  --bg: #eeede7;        /* page */
-  --panel: #fafaf6;     /* panel */
-  --ink: #151613;       /* text, slider track, done state */
-  --ink-2: #5c5e57;     /* captions ~6:1 */
-  --line: #d9d8d0;
-  --red: #c42a1c;       /* destructive; white text 5.7:1 */
-  --red-deep: #7e1409;  /* hold fill */
-  --red-tint: #f6dcd7;  /* outline fill, ring disc */
-  --go: #1e7a4a;        /* slide trail and done; cream text ~4.9:1 */
-  --cream: #f4f1e6;     /* thumb, text on ink */
-  --off: #e4e3dc;  --off-ink: #8c8d86;   /* disabled */
-  --sans: "Commissioner", system-ui, sans-serif;
-  --mono: "Fragment Mono", ui-monospace, monospace;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --spring: cubic-bezier(.34,1.4,.64,1);
-}
-```
-
-Sizes: hold L 56px / radius 12 / padding 24 / min-width 300; hold M 48px outline (inset 1.5px ring). Ring button 56px, arc svg 66px (r 31, stroke 3, dasharray 194.8). Slider L 64px track, 56px thumb inset 4px; M 52 / 44. Durations: L 1600ms, M 1000ms, icon 900ms. Completion threshold for slide: 92%.
-
-Spacing: 4, 6, 10, 14, 16, 18, 22, 28, 32.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Brand | Commissioner | 22px | 700 | −0.02em | Title |
-| Column heading | Commissioner | 17px | 600 | −0.01em | Sentence |
-| Description | Commissioner | 13px | 400 | 0 | Sentence |
-| Button / slider label | Commissioner | 15px (M 14) | 600 | 0 | Sentence |
-| Countdown | Commissioner | 15px | 600, tabular-nums | 0 | — |
-| Captions, hint, payee tag | Fragment Mono | 11–12px | 400 | 0 | Sentence |
-| Sheet labels | Fragment Mono | 10px | 400 | 0.06em | Upper |
 
 ## Motion
 
@@ -154,6 +102,64 @@ Linear is correct here because the fill is a clock, not a UI move. Drive it with
 - [ ] Labels "Hold to delete workspace", "Hold to remove card ·· 4417", "Slide to pay £1,240.00", "Slide to move £85 to Savings".
 - [ ] Done labels "Workspace deleted", "Card removed", "Paid · ref TH-20931", "Moved £85".
 - [ ] Red `#c42a1c` with fill `#7e1409`; slide track `#151613`, done `#1e7a4a`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a light panel with a header "Tallyhut" and mono "Settings · Danger zone & payouts", plus a hint line with key caps: "Hold: pointer, or Space/Enter held · Slide: drag, or → End". Two columns below, a states sheet at the bottom.
+2. Hold column: "Hold to delete workspace" (red, 56px, min 300px, trash icon, 1600ms), "Hold to remove card ·· 4417" (outline red, 48px, 1000ms), and a 56px round trash button on a pale red disc (900ms). Each has a mono caption.
+3. Pointer down (primary button only) on a hold button: pointer capture, scale .985, label becomes "Keep holding", a tabular countdown shows the seconds left ("0.8s"), and the fill's `scaleX` follows elapsed / duration.
+4. Release, pointer cancel, losing capture, or blur before full: the fill drains from its current value to 0 at a rate of a full bar per 260ms; label returns to idle; countdown clears.
+5. Holding to 100%: the button turns ink with cream text, label "Workspace deleted" / "Card removed"; the round one shows a check and its `aria-label` becomes "Draft discarded". An "Undo" text button appears beside it. A polite live region announces e.g. "Workspace Northfield deleted. Undo available."
+6. Undo restores the idle state, announces "Restored.", and returns focus to the button. Without Undo, the button resets after 6000ms.
+7. Keyboard: Space or Enter keydown (ignoring repeats) begins the hold; keyup cancels. The click event is suppressed so a quick press never acts.
+8. Slide column: "Slide to pay £1,240.00 to Odalys Print Co." (64px track, 56px thumb, max 400px) and "Slide to move £85 to Savings" (52px, 44px thumb, max 320px), then a "Reset sliders" link.
+9. Dragging the thumb moves it 1:1 with the pointer; the green trail grows behind it; the track label fades out as `1 − progress × 1.4`.
+10. Release at ≥ 92% of travel: thumb snaps to the end, track goes green, label becomes the done text, arrow becomes a check, live region says "Payment of 1,240 pounds sent. Reference TH-20931." Release earlier: the thumb and trail spring back over 420ms with a slight overshoot.
+11. Slider keys: Right/Up +10%, PageUp +25%, Left/Down −10%, PageDown −25%, Home or Escape back to 0, End completes. Reaching 100% by arrows also completes.
+12. States sheet: hold buttons at Default, Hover, Pressed 60%, Disabled, Focus, Done, plus the ring at 60%; sliders at Default, Hover, Dragging 55%, Disabled, Focus, Done.
+13. Reduced motion: no press scale, no spring; the fill and drain still track time because they are the feedback.
+
+## Tokens
+
+```css
+:root {
+  --bg: #eeede7;        /* page */
+  --panel: #fafaf6;     /* panel */
+  --ink: #151613;       /* text, slider track, done state */
+  --ink-2: #5c5e57;     /* captions ~6:1 */
+  --line: #d9d8d0;
+  --red: #c42a1c;       /* destructive; white text 5.7:1 */
+  --red-deep: #7e1409;  /* hold fill */
+  --red-tint: #f6dcd7;  /* outline fill, ring disc */
+  --go: #1e7a4a;        /* slide trail and done; cream text ~4.9:1 */
+  --cream: #f4f1e6;     /* thumb, text on ink */
+  --off: #e4e3dc;  --off-ink: #8c8d86;   /* disabled */
+  --sans: "Commissioner", system-ui, sans-serif;
+  --mono: "Fragment Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --spring: cubic-bezier(.34,1.4,.64,1);
+}
+```
+
+Sizes: hold L 56px / radius 12 / padding 24 / min-width 300; hold M 48px outline (inset 1.5px ring). Ring button 56px, arc svg 66px (r 31, stroke 3, dasharray 194.8). Slider L 64px track, 56px thumb inset 4px; M 52 / 44. Durations: L 1600ms, M 1000ms, icon 900ms. Completion threshold for slide: 92%.
+
+Spacing: 4, 6, 10, 14, 16, 18, 22, 28, 32.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Brand | Commissioner | 22px | 700 | −0.02em | Title |
+| Column heading | Commissioner | 17px | 600 | −0.01em | Sentence |
+| Description | Commissioner | 13px | 400 | 0 | Sentence |
+| Button / slider label | Commissioner | 15px (M 14) | 600 | 0 | Sentence |
+| Countdown | Commissioner | 15px | 600, tabular-nums | 0 | — |
+| Captions, hint, payee tag | Fragment Mono | 11–12px | 400 | 0 | Sentence |
+| Sheet labels | Fragment Mono | 10px | 400 | 0.06em | Upper |
 
 ## Implementation notes
 

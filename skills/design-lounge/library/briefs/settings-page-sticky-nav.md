@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The account-settings page of *Halden Post*, a parcel-logistics product. A 56px top bar, then a centred two-column layout: a 220px left column that sticks to the top of the scroll container and lists six sections along a 1px hairline (the current section gets a 2px teal bar and weight 500), and a 720px right column of six sections, each a heading, a one-line description and a white card of rows. Rows hold a label + hint on the left and one control on the right: a 40 × 24 switch, a 36px select, a text input or a small button. The last section is a danger zone with red-tinted borders and a "Delete workspace" button that arms an inline confirmation requiring the workspace name to be typed. The feeling is neutral, quiet and trustworthy: one teal, one red, no other colour.
-
-## Reference behaviour
-
-1. Initial state: "Profile" is current in the nav; the Profile and Notifications cards are visible; two of four notification switches are on; "All changes saved" with a 6px teal dot sits at the right of the top bar.
-2. Scroll the right column (the whole page area below the top bar is one scroll container; the nav is `position: sticky; top: 0` inside it): the current nav item updates to the last section whose top is ≤ scrollTop + 120px. At the very bottom, "Danger zone" becomes current regardless.
-3. Click a nav item: the container scrolls smoothly so that section's top sits 24px below the top of the scroll area; the item becomes current.
-4. Hover a nav item: colour `--ink-2` → `--ink` over 150ms. "Danger zone" is always `--danger`.
-5. Click a switch: the track animates `--line-2` → `--accent` over 200ms and the 18px knob slides 16px right with expo-out easing. Space toggles it when focused; focus draws a 2px teal ring around the track.
-6. Focus a select or text input: border becomes `--accent` with a 3px `--accent-soft` ring; hover darkens the border to `--ink-3`.
-7. Hover a secondary button: background `--bg`, border `--ink-3`. Hover a danger button: fills `--danger` with white text.
-8. Click "Delete workspace": the card gets `.armed`, a confirmation row appears beneath (text input + disabled red "Permanently delete" + "Cancel"), `aria-expanded` becomes true, focus moves to the input. Typing exactly `halden-post` enables the red button. Cancel collapses the row, clears the input and returns focus to the trigger.
-9. Reduced motion: smooth scroll becomes instant; switch transitions 1ms.
 
 ## Structure
 
@@ -50,65 +40,6 @@ The account-settings page of *Halden Post*, a parcel-logistics product. A 56px t
     - `<aside class="side">` — `position:sticky; top:0`; `<h1>`, `<ul id="nav">` of six `<a href="#id">`, `.meta` paragraph.
     - `<main>` — six `<section id>` each with `<h2>`, `<p>`, `.card` of `.row`s. Danger card also has `.confirm` row.
 - Switch markup: `<label class="sw"><input type="checkbox"><i></i></label>` — the `<i>` is the track, its `::after` the knob.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm neutral greys, one teal, one red */
-  --bg:          #f5f5f4;  /* page */
-  --surface:     #ffffff;  /* cards, top bar, inputs */
-  --line:        #e6e5e2;  /* card borders, row rules, nav hairline */
-  --line-2:      #d4d3cf;  /* input borders, switch off-track */
-  --ink:         #1c1c1a;
-  --ink-2:       #5f5e5a;  /* hints, nav rest */
-  --ink-3:       #8b8a85;  /* meta, saved status, hover borders */
-  --accent:      #0f766e;  /* current-section bar, switch on, focus */
-  --accent-soft: #e2f1ef;  /* focus ring, "Enabled" tag */
-  --danger:      #b42318;
-  --danger-soft: #fdf1f0;
-  --danger-line: #f0c4bf;
-
-  /* type */
-  --sans: "Onest", system-ui, sans-serif;
-
-  /* layout */
-  --top-h: 56px;
-  --nav-w: 220px;
-  --content-w: 720px;
-  --col-gap: 48px;
-  --row-pad: 16px 20px;
-  --control-h: 36px;
-  --switch-w: 40px; --switch-h: 24px; --knob: 18px; --knob-travel: 16px;
-  --r: 10px;      /* cards */
-  --r-sm: 6px;    /* controls */
-  --shadow: 0 1px 2px rgba(28, 28, 26, .04);
-  --spy-offset: 120px;
-  --scroll-margin: 24px;
-
-  /* motion */
-  --t-micro: 150ms;
-  --t-switch: 200ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role            | Family | Size | Weight | Line-height | Tracking | Notes |
-|-----------------|--------|-----:|-------:|------------:|---------:|-------|
-| Page title (h1) | Onest  | 22px | 600    | 1.2         | −0.02em  | in the sticky column |
-| Section title   | Onest  | 17px | 600    | 1.3         | −0.01em  | |
-| Section lede    | Onest  | 14px | 400    | 1.5         | 0        | `--ink-2` |
-| Nav item        | Onest  | 14px | 400 / 500 current | 1.5 | 0     | 7px 14px padding |
-| Row label       | Onest  | 14px | 500    | 1.5         | 0        | |
-| Row hint        | Onest  | 13px | 400    | 1.5         | 0        | `--ink-2` |
-| Controls        | Onest  | 14px | 400    | 1           | 0        | selects, inputs |
-| Buttons         | Onest  | 13px | 500    | 1           | 0        | 36px tall, 14px side padding |
-| Tag             | Onest  | 11px | 500    | 1.4         | 0        | teal on `--accent-soft`, pill |
-| Meta / saved    | Onest  | 12–13px | 400 | 1.6         | 0        | `--ink-3` |
-| Top bar         | Onest  | 14px | 500    | 1           | 0        | |
 
 ## Motion
 
@@ -168,6 +99,81 @@ Reduced motion: `scroll-behavior: auto` and `behavior: 'auto'` in `scrollTo`; al
 - [ ] Cancel hides the row, clears the input and returns focus to the trigger.
 - [ ] All controls show a visible focus ring (2px teal, 2px offset; ring on inputs).
 - [ ] Reduced motion: nav clicks jump instantly.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: "Profile" is current in the nav; the Profile and Notifications cards are visible; two of four notification switches are on; "All changes saved" with a 6px teal dot sits at the right of the top bar.
+2. Scroll the right column (the whole page area below the top bar is one scroll container; the nav is `position: sticky; top: 0` inside it): the current nav item updates to the last section whose top is ≤ scrollTop + 120px. At the very bottom, "Danger zone" becomes current regardless.
+3. Click a nav item: the container scrolls smoothly so that section's top sits 24px below the top of the scroll area; the item becomes current.
+4. Hover a nav item: colour `--ink-2` → `--ink` over 150ms. "Danger zone" is always `--danger`.
+5. Click a switch: the track animates `--line-2` → `--accent` over 200ms and the 18px knob slides 16px right with expo-out easing. Space toggles it when focused; focus draws a 2px teal ring around the track.
+6. Focus a select or text input: border becomes `--accent` with a 3px `--accent-soft` ring; hover darkens the border to `--ink-3`.
+7. Hover a secondary button: background `--bg`, border `--ink-3`. Hover a danger button: fills `--danger` with white text.
+8. Click "Delete workspace": the card gets `.armed`, a confirmation row appears beneath (text input + disabled red "Permanently delete" + "Cancel"), `aria-expanded` becomes true, focus moves to the input. Typing exactly `halden-post` enables the red button. Cancel collapses the row, clears the input and returns focus to the trigger.
+9. Reduced motion: smooth scroll becomes instant; switch transitions 1ms.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm neutral greys, one teal, one red */
+  --bg:          #f5f5f4;  /* page */
+  --surface:     #ffffff;  /* cards, top bar, inputs */
+  --line:        #e6e5e2;  /* card borders, row rules, nav hairline */
+  --line-2:      #d4d3cf;  /* input borders, switch off-track */
+  --ink:         #1c1c1a;
+  --ink-2:       #5f5e5a;  /* hints, nav rest */
+  --ink-3:       #8b8a85;  /* meta, saved status, hover borders */
+  --accent:      #0f766e;  /* current-section bar, switch on, focus */
+  --accent-soft: #e2f1ef;  /* focus ring, "Enabled" tag */
+  --danger:      #b42318;
+  --danger-soft: #fdf1f0;
+  --danger-line: #f0c4bf;
+
+  /* type */
+  --sans: "Onest", system-ui, sans-serif;
+
+  /* layout */
+  --top-h: 56px;
+  --nav-w: 220px;
+  --content-w: 720px;
+  --col-gap: 48px;
+  --row-pad: 16px 20px;
+  --control-h: 36px;
+  --switch-w: 40px; --switch-h: 24px; --knob: 18px; --knob-travel: 16px;
+  --r: 10px;      /* cards */
+  --r-sm: 6px;    /* controls */
+  --shadow: 0 1px 2px rgba(28, 28, 26, .04);
+  --spy-offset: 120px;
+  --scroll-margin: 24px;
+
+  /* motion */
+  --t-micro: 150ms;
+  --t-switch: 200ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role            | Family | Size | Weight | Line-height | Tracking | Notes |
+|-----------------|--------|-----:|-------:|------------:|---------:|-------|
+| Page title (h1) | Onest  | 22px | 600    | 1.2         | −0.02em  | in the sticky column |
+| Section title   | Onest  | 17px | 600    | 1.3         | −0.01em  | |
+| Section lede    | Onest  | 14px | 400    | 1.5         | 0        | `--ink-2` |
+| Nav item        | Onest  | 14px | 400 / 500 current | 1.5 | 0     | 7px 14px padding |
+| Row label       | Onest  | 14px | 500    | 1.5         | 0        | |
+| Row hint        | Onest  | 13px | 400    | 1.5         | 0        | `--ink-2` |
+| Controls        | Onest  | 14px | 400    | 1           | 0        | selects, inputs |
+| Buttons         | Onest  | 13px | 500    | 1           | 0        | 36px tall, 14px side padding |
+| Tag             | Onest  | 11px | 500    | 1.4         | 0        | teal on `--accent-soft`, pill |
+| Meta / saved    | Onest  | 12–13px | 400 | 1.6         | 0        | `--ink-3` |
+| Top bar         | Onest  | 14px | 500    | 1           | 0        | |
 
 ## Implementation notes
 

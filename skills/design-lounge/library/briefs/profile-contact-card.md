@@ -4,22 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A shareable contact page that is just the card: a 560×320 (7:4) business card on a warm stone ground. The front is deep teal with brass-foil serif type, a hairline arch monogram, faint concentric arches, and two tap-to-copy rows (email, phone). The back is bone paper with a QR code, the address, and a Save contact button. Underneath sit two pills, Show back and Download .vcf, and a one-line status.
 
 It should feel like a letterpressed card in your hand: the whole card tilts a few degrees toward the pointer, the flip uses an iOS-sheet curve, and the name's brass gradient drifts slowly like foil catching light. The detail worth copying is that Save actually works: it builds an RFC 2426 vCard 3.0 string with CRLF line endings, wraps it in a `text/vcard` Blob, and downloads `teodora-ashgrove.vcf`. The card belongs to Teodora Ashgrove, principal at Kilnworth Studio.
-
-## Reference behaviour
-
-1. First frame: front face up. Name "Teodora / Ashgrove" in brass foil, the foil gradient sliding back and forth over 6s. Status reads "Tap the email or phone to copy. Flip for the QR."
-2. Moving the pointer over the card tilts it: rotateX = −y × 8°, rotateY = x × 10° (x, y from −0.5 to 0.5 across the card), easing over 500ms. Leaving resets to flat.
-3. Clicking the email row copies `teodora@kilnworth.studio`. A small brass "Copied" tag rises 4px into view above the row's right end for 1600ms, the row shows its hover wash, and the status reads "Email copied. teodora@kilnworth.studio". Same for phone (`+44 20 7946 0321`, "Phone number copied.").
-4. If the Clipboard API is refused, fall back to a hidden readonly textarea + `execCommand('copy')`. If that fails too, the status says "Copy blocked here. Select … manually." and no tag appears.
-5. Clicking Show back (or any non-button area of the card) rotates the card 180° on Y over 800ms. The button label becomes "Show front" with `aria-pressed="true"`. The hidden face is `inert`, so its buttons leave the tab order.
-6. On the back, Save contact (and Download .vcf below, on either side) generates the vCard, triggers a download named `teodora-ashgrove.vcf`, revokes the object URL after 1s, and sets the status to "teodora-ashgrove.vcf created · 291 bytes · vCard 3.0" (size from `blob.size`).
-7. The QR is drawn as one SVG `path` on a 29×29 grid: three finder squares, timing rows, an alignment square at (22,22), and data modules seeded from a hash of the vCard text. It is illustrative; production should encode the vCard or a profile URL with a real QR encoder.
-8. Reduced motion: no tilt, no foil drift, no 3D. Flipping swaps faces instantly (opacity/visibility).
 
 ## Structure
 
@@ -47,64 +38,6 @@ back    │ ┌─────────┐  Scan to save   (Gloock 30)       
 - Back: `div.qr` containing `svg role="img"` with a label; `h2`, address `p`, Save `button`, fine-print `p`.
 - Controls: Show back `button aria-pressed aria-controls="card"`, Download `button`.
 - Status: `p role="status" aria-live="polite"`.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #cdc8bd;          /* stone ground, centre */
-  --bg-2: #bfb9ad;        /* stone ground, edge */
-  --teal: #11302d;        /* card front, primary buttons */
-  --teal-2: #1b423e;      /* hover on teal */
-  --brass: #d6a25a;       /* foil base, icons, rule, focus */
-  --brass-2: #f0c98a;     /* foil highlight, studio text, copied tag */
-  --bone: #f1ece2;        /* card back, text on teal */
-  --bone-ink: #132a27;    /* text and QR on bone */
-  --bone-3: #5a6662;      /* address text */
-  --ink: #1d1f1c;         /* page text */
-  --ink-2: #45473f;       /* status text */
-
-  /* type */
-  --serif: "Gloock", Georgia, serif;
-  --mono: "Azeret Mono", ui-monospace, monospace;
-
-  /* card unit: 1 design px at 560px card width */
-  --u: calc(100cqw / 560);
-
-  /* shape */
-  --r-card: calc(var(--u) * 14);
-  --r-qr: calc(var(--u) * 10);
-  --r-pill: 999px;
-  --shadow-card: 0 1px 0 rgba(255,255,255,.25) inset,
-                 0 calc(var(--u)*30) calc(var(--u)*50) calc(var(--u)*-24) rgba(20,24,20,.55),
-                 0 calc(var(--u)*4) calc(var(--u)*10) rgba(20,24,20,.18);
-
-  /* motion */
-  --flip: cubic-bezier(.32,.72,0,1);
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --t-flip: 800ms; --t-tilt: 500ms; --t-foil: 6s;
-}
-```
-
-## Typography
-
-All card sizes are `calc(var(--u) * N)` with N below, so the card scales as one object.
-
-| Role | Family | Size (N) | Weight | Tracking / case | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Name | Gloock | 52 / lh 0.92 | 400 | -0.01em | brass foil gradient |
-| Studio | Azeret Mono | 10 / 1.5 | 500 | 0.22em upper | `--brass-2` |
-| Title | Azeret Mono | 11 | 400 | 0.08em upper | `#b9c8c3` |
-| Copy rows | Azeret Mono | 12.5 | 500 | 0 | `--bone` |
-| Copied tag | Azeret Mono | 10 | 500 | 0.1em upper | `--teal` on `--brass-2` |
-| Back heading | Gloock | 30 / 1 | 400 | 0 | `--bone-ink` |
-| Address | Azeret Mono | 11.5 / 1.55 | 400 | 0 | `--bone-3` |
-| Save button | Azeret Mono | 12.5 | 600 | 0 | `--bone` on teal |
-| Fine print | Azeret Mono | 10 | 400 | 0.06em | `--bone-3` |
-| Page controls | Azeret Mono | 13px | 500 | 0 | |
-| Status | Azeret Mono | 12px | 400 / 600 for the subject | 0 | `--ink-2` |
 
 ## Motion
 
@@ -166,6 +99,79 @@ The foil loop is slow and low contrast so it can sit in a grid. Reduced motion: 
 - [ ] File `teodora-ashgrove.vcf`, 291 bytes.
 - [ ] Front `#11302d` with brass `#d6a25a`→`#f0c98a` foil; back `#f1ece2`.
 - [ ] QR is 29×29 modules on white with three finder squares.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: front face up. Name "Teodora / Ashgrove" in brass foil, the foil gradient sliding back and forth over 6s. Status reads "Tap the email or phone to copy. Flip for the QR."
+2. Moving the pointer over the card tilts it: rotateX = −y × 8°, rotateY = x × 10° (x, y from −0.5 to 0.5 across the card), easing over 500ms. Leaving resets to flat.
+3. Clicking the email row copies `teodora@kilnworth.studio`. A small brass "Copied" tag rises 4px into view above the row's right end for 1600ms, the row shows its hover wash, and the status reads "Email copied. teodora@kilnworth.studio". Same for phone (`+44 20 7946 0321`, "Phone number copied.").
+4. If the Clipboard API is refused, fall back to a hidden readonly textarea + `execCommand('copy')`. If that fails too, the status says "Copy blocked here. Select … manually." and no tag appears.
+5. Clicking Show back (or any non-button area of the card) rotates the card 180° on Y over 800ms. The button label becomes "Show front" with `aria-pressed="true"`. The hidden face is `inert`, so its buttons leave the tab order.
+6. On the back, Save contact (and Download .vcf below, on either side) generates the vCard, triggers a download named `teodora-ashgrove.vcf`, revokes the object URL after 1s, and sets the status to "teodora-ashgrove.vcf created · 291 bytes · vCard 3.0" (size from `blob.size`).
+7. The QR is drawn as one SVG `path` on a 29×29 grid: three finder squares, timing rows, an alignment square at (22,22), and data modules seeded from a hash of the vCard text. It is illustrative; production should encode the vCard or a profile URL with a real QR encoder.
+8. Reduced motion: no tilt, no foil drift, no 3D. Flipping swaps faces instantly (opacity/visibility).
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #cdc8bd;          /* stone ground, centre */
+  --bg-2: #bfb9ad;        /* stone ground, edge */
+  --teal: #11302d;        /* card front, primary buttons */
+  --teal-2: #1b423e;      /* hover on teal */
+  --brass: #d6a25a;       /* foil base, icons, rule, focus */
+  --brass-2: #f0c98a;     /* foil highlight, studio text, copied tag */
+  --bone: #f1ece2;        /* card back, text on teal */
+  --bone-ink: #132a27;    /* text and QR on bone */
+  --bone-3: #5a6662;      /* address text */
+  --ink: #1d1f1c;         /* page text */
+  --ink-2: #45473f;       /* status text */
+
+  /* type */
+  --serif: "Gloock", Georgia, serif;
+  --mono: "Azeret Mono", ui-monospace, monospace;
+
+  /* card unit: 1 design px at 560px card width */
+  --u: calc(100cqw / 560);
+
+  /* shape */
+  --r-card: calc(var(--u) * 14);
+  --r-qr: calc(var(--u) * 10);
+  --r-pill: 999px;
+  --shadow-card: 0 1px 0 rgba(255,255,255,.25) inset,
+                 0 calc(var(--u)*30) calc(var(--u)*50) calc(var(--u)*-24) rgba(20,24,20,.55),
+                 0 calc(var(--u)*4) calc(var(--u)*10) rgba(20,24,20,.18);
+
+  /* motion */
+  --flip: cubic-bezier(.32,.72,0,1);
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --t-flip: 800ms; --t-tilt: 500ms; --t-foil: 6s;
+}
+```
+
+## Typography
+
+All card sizes are `calc(var(--u) * N)` with N below, so the card scales as one object.
+
+| Role | Family | Size (N) | Weight | Tracking / case | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Name | Gloock | 52 / lh 0.92 | 400 | -0.01em | brass foil gradient |
+| Studio | Azeret Mono | 10 / 1.5 | 500 | 0.22em upper | `--brass-2` |
+| Title | Azeret Mono | 11 | 400 | 0.08em upper | `#b9c8c3` |
+| Copy rows | Azeret Mono | 12.5 | 500 | 0 | `--bone` |
+| Copied tag | Azeret Mono | 10 | 500 | 0.1em upper | `--teal` on `--brass-2` |
+| Back heading | Gloock | 30 / 1 | 400 | 0 | `--bone-ink` |
+| Address | Azeret Mono | 11.5 / 1.55 | 400 | 0 | `--bone-3` |
+| Save button | Azeret Mono | 12.5 | 600 | 0 | `--bone` on teal |
+| Fine print | Azeret Mono | 10 | 400 | 0.06em | `--bone-3` |
+| Page controls | Azeret Mono | 13px | 500 | 0 | |
+| Status | Azeret Mono | 12px | 400 / 600 for the subject | 0 | `--ink-2` |
 
 ## Implementation notes
 

@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A kit sheet for "Orbit Watch", a fictional navigation/ops console, that teaches a HUD dialect: near-black void, 2px teal-dim grid, 8–10px clipped corners (never a radius), a page-wide 3px scanline overlay, and signal teal `#2EE6C8` as the only live colour. The first row is a Sector 7-K console fragment: L-bracket frame, a sweeping scan band, a 210px radar with three blips, and Nav / Comms / Ops tabs that rewrite the briefing. Below: type specimen, five chips, cut-corner buttons, chips, a callsign field, a scan switch, three surface plates, four grammar cards. The detail worth copying: **teal is live, dim teal is structure, amber is late**. Nothing else glows. No purple, no cyan-magenta gradients.
-
-## Reference behaviour
-
-1. Initial state: 48px panel header, 18px diamond mark (a 1px teal square rotated 45deg), "Orbit Watch / HUD kit 03", four anchors, an 8px teal pulse, "UPLINK 04:12:08". Sheet on a 2px `--line` grid. First 800px shows the 436px hero + specimen.
-2. A repeating 2px/1px scanline overlay covers the whole page (`mix-blend-mode: multiply`, `pointer-events: none`, `z-index: 9`). Inside the HUD, a 40%-tall teal band travels top → bottom over 8s, linear, infinite.
-3. Hover a cut-corner button: fill becomes teal, text becomes void. Primary is already filled; hover inverts to readout `#C8EDE6` on void.
-4. Click Nav / Comms / Ops. `aria-selected` moves. `#panel-copy` swaps: Nav (three contacts, Relay 6 late 4.2s); Comms (open channel, lattice-7, 2 packets); Ops (61 % power, coolant loop B, thrusters armed).
-5. Click Relay chips: `aria-pressed` toggles teal fill + `--teal-soft` background.
-6. Focus the callsign input: 1px teal border plus a 1px teal inset. No glow.
-7. Click Scan sweep: `aria-checked` flips; when off, `.scan { animation-play-state: paused }`. Knob slides 22px and glows 6px teal.
-8. Header link hover: teal text + 1px teal underline.
-9. Reduced motion: all animations `none`, transitions 1ms. Scan switch still pauses/resumes (there is nothing to pause).
 
 ## Structure
 
@@ -46,45 +36,6 @@ A kit sheet for "Orbit Watch", a fictional navigation/ops console, that teaches 
 - `.hero` padding 0. Inner `.hud` is `inset: 12px` with the same 10px clip as controls.
 - Radar is a 210px circle, conic 90deg teal wash, two dashed inner rings, three 6px blips.
 - Grid gap is 2px `--line` (`#1A3A38`), not a drop shadow.
-
-## Tokens
-
-```css
-:root {
-  --void: #070b0c;          /* field, 70 % */
-  --panel: #0e171a;         /* cells, 15 % */
-  --panel-2: #122024;       /* inner rules */
-  --line: #1a3a38;          /* grid + hairlines */
-  --teal: #2ee6c8;          /* live signal, 10 % */
-  --teal-dim: #1a6b62;      /* structure, corners */
-  --teal-soft: rgba(46,230,200,.12);
-  --ink: #c8ede6;           /* readout body */
-  --ink-2: #7aa8a0;
-  --ink-3: #4a6e68;
-  --warn: #e8b84a;          /* late only */
-  --cut: 10px;
-  --display: "Chakra Petch", Impact, sans-serif;
-  --mono: "Share Tech Mono", ui-monospace, monospace;
-  --fs-display: 42px; --fs-aa: 88px; --fs-h2: 22px; --fs-body: 13px; --fs-label: 11px;
-  --ctl: 40px; --pad: 16px;
-  --t-micro: 120ms; --t-scan: 8s; --t-switch: 200ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Hero headline | Chakra Petch | 42px | 700 | .9 | +0.04em | UPPERCASE |
-| Specimen glyph | Chakra Petch | 88px | 700 | .75 | −0.04em | "Aa", teal |
-| H2 | Chakra Petch | 22px | 700 | 1 | +0.06em | UPPERCASE |
-| Button / tab | Chakra Petch | 12–13px | 600 | 1 | +0.08–0.12em | UPPERCASE |
-| Section label | Chakra Petch | 11px | 600 | 1 | +0.18em | UPPERCASE, teal |
-| Body / input | Share Tech Mono | 13–14px | 400 | 1.45 | 0 | as written |
-| Meta / chips | Share Tech Mono | 10–11px | 400 | 1 | +0.08–0.14em | UPPERCASE |
-
-Chakra Petch is the only display face. Share Tech Mono is every number, every label, every input. Do not use a grotesk.
 
 ## Motion
 
@@ -138,6 +89,61 @@ Reduced motion: `animation: none` on scan and pulse. The overlay scanlines remai
 - [ ] Focus-visible is 1px teal, 3px offset.
 - [ ] Reduced motion kills the scan band and pulse; the static overlay remains.
 - [ ] Only Chakra Petch and Share Tech Mono are loaded.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 48px panel header, 18px diamond mark (a 1px teal square rotated 45deg), "Orbit Watch / HUD kit 03", four anchors, an 8px teal pulse, "UPLINK 04:12:08". Sheet on a 2px `--line` grid. First 800px shows the 436px hero + specimen.
+2. A repeating 2px/1px scanline overlay covers the whole page (`mix-blend-mode: multiply`, `pointer-events: none`, `z-index: 9`). Inside the HUD, a 40%-tall teal band travels top → bottom over 8s, linear, infinite.
+3. Hover a cut-corner button: fill becomes teal, text becomes void. Primary is already filled; hover inverts to readout `#C8EDE6` on void.
+4. Click Nav / Comms / Ops. `aria-selected` moves. `#panel-copy` swaps: Nav (three contacts, Relay 6 late 4.2s); Comms (open channel, lattice-7, 2 packets); Ops (61 % power, coolant loop B, thrusters armed).
+5. Click Relay chips: `aria-pressed` toggles teal fill + `--teal-soft` background.
+6. Focus the callsign input: 1px teal border plus a 1px teal inset. No glow.
+7. Click Scan sweep: `aria-checked` flips; when off, `.scan { animation-play-state: paused }`. Knob slides 22px and glows 6px teal.
+8. Header link hover: teal text + 1px teal underline.
+9. Reduced motion: all animations `none`, transitions 1ms. Scan switch still pauses/resumes (there is nothing to pause).
+
+## Tokens
+
+```css
+:root {
+  --void: #070b0c;          /* field, 70 % */
+  --panel: #0e171a;         /* cells, 15 % */
+  --panel-2: #122024;       /* inner rules */
+  --line: #1a3a38;          /* grid + hairlines */
+  --teal: #2ee6c8;          /* live signal, 10 % */
+  --teal-dim: #1a6b62;      /* structure, corners */
+  --teal-soft: rgba(46,230,200,.12);
+  --ink: #c8ede6;           /* readout body */
+  --ink-2: #7aa8a0;
+  --ink-3: #4a6e68;
+  --warn: #e8b84a;          /* late only */
+  --cut: 10px;
+  --display: "Chakra Petch", Impact, sans-serif;
+  --mono: "Share Tech Mono", ui-monospace, monospace;
+  --fs-display: 42px; --fs-aa: 88px; --fs-h2: 22px; --fs-body: 13px; --fs-label: 11px;
+  --ctl: 40px; --pad: 16px;
+  --t-micro: 120ms; --t-scan: 8s; --t-switch: 200ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Hero headline | Chakra Petch | 42px | 700 | .9 | +0.04em | UPPERCASE |
+| Specimen glyph | Chakra Petch | 88px | 700 | .75 | −0.04em | "Aa", teal |
+| H2 | Chakra Petch | 22px | 700 | 1 | +0.06em | UPPERCASE |
+| Button / tab | Chakra Petch | 12–13px | 600 | 1 | +0.08–0.12em | UPPERCASE |
+| Section label | Chakra Petch | 11px | 600 | 1 | +0.18em | UPPERCASE, teal |
+| Body / input | Share Tech Mono | 13–14px | 400 | 1.45 | 0 | as written |
+| Meta / chips | Share Tech Mono | 10–11px | 400 | 1 | +0.08–0.14em | UPPERCASE |
+
+Chakra Petch is the only display face. Share Tech Mono is every number, every label, every input. Do not use a grotesk.
 
 ## Implementation notes
 

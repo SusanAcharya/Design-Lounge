@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the spinners pure CSS (plus two tiny inline SVGs); JS only drives the controls and the copy button.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A specimen sheet for Whirl, a small spinner library. Eight spinners sit in a 4 × 2 grid of hairline tiles on warm near-black: arc, dots, bars, pulse, morph, segments, clock, infinity. A control strip above the grid sets size, colour and speed for all eight at once through three CSS custom properties. Each tile ends in a full-width copy row that puts a ready-to-paste rule on the clipboard, e.g. `.spin-morph { --size: 56px; --color: #C9E265; --speed: 1.25; }`. The detail worth copying is that every spinner is driven by the same three variables, so one dial retunes the whole set, and the copy line records the current settings rather than a fixed snippet.
-
-## Reference behaviour
-
-1. First frame: eight spinners running at 48px, signal orange `#FF5B2E`, speed 1×. Tiles are numbered 01–08 top left, named top right in the display face.
-2. Dragging Size (16–72px, step 4) resizes every spinner live. The readout says `48px`.
-3. Clicking a colour swatch (Signal orange, Chalk, Pear, Sky) recolours all eight. The swatch group is a radio group with a 1.5px ring around the checked swatch.
-4. Dragging Speed (0.5×–2×, step 0.25) changes every animation duration. Durations are `base / speed`, so 2× halves them. The readout says `1.00×`.
-5. "Pause all" pauses every animation in place (`animation-play-state: paused`). The button becomes "Play all" with a play icon and `aria-pressed="true"`.
-6. Hovering a tile lifts its background one step (`#1A1814` → `#211F1A`).
-7. Clicking a copy row writes the rule for that spinner with the current size, colour and speed. The row swaps its label and icon for an orange "Copied" for 1400ms. A polite live region says "Copied .spin-morph at 56px, 1.25× speed".
-8. If the Clipboard API is blocked (sandboxed iframe), fall back to a hidden textarea and `execCommand('copy')`. The "Copied" feedback shows either way.
-9. Reduced motion: every spinner stops moving and instead fades between 100% and 45% opacity over 2.4s. The arc shows a fixed 70-unit dash. The pulse and the motion still read as "busy".
 
 ## Structure
 
@@ -48,54 +38,6 @@ A specimen sheet for Whirl, a small spinner library. Eight spinners sit in a 4 �
 - Each tile is an `article`: number `span`, name `h2`, a centred stage holding the spinner `span.sp.sp-<name>` with `role="img"` and `aria-label="<name> spinner"`, then the copy `button`.
 - The colour swatches are four `button role="radio"` in a `role="radiogroup"` labelled "Colour".
 - One visually hidden `p aria-live="polite"` for copy confirmations.
-
-## Tokens
-
-```css
-:root {
-  --bg: #13120f;        /* page */
-  --tile: #1a1814;      /* tile resting */
-  --tile-2: #211f1a;    /* tile hover */
-  --line: #2d2a24;      /* hairlines */
-  --line-2: #433f37;    /* control borders, slider track */
-  --ink: #ece6d8;       /* chalk text */
-  --ink-2: #b3ab9b;     /* copy row text, slider fill */
-  --ink-3: #8a8374;     /* labels, numbers */
-  --accent: #ff5b2e;    /* signal orange: default spinner colour, "Copied", h1 accent */
-  --focus: #ff5b2e;
-
-  --display: "Unbounded", system-ui, sans-serif;
-  --mono: "Azeret Mono", ui-monospace, Menlo, monospace;
-
-  /* the three dials every spinner reads */
-  --size: 48px;
-  --color: var(--accent);
-  --speed: 1;
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --ease-morph: cubic-bezier(.76,0,.24,1);
-
-  --pad-x: 40px;
-  --row-copy: 44px;
-  --tile-min: 220px;
-}
-```
-
-Swatch values: Signal orange `#FF5B2E`, Chalk `#ECE6D8`, Pear `#C9E265`, Sky `#7CB7FF`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Page title | Unbounded | 40px | 500 | 1 | -0.03em | Sentence, "vol. 1" in accent |
-| Wordmark | Unbounded | 13px | 700 | 1 | 0.04em | Upper |
-| Tile name | Unbounded | 13px | 500 | 1 | -0.01em | Lower |
-| Tile number | Azeret Mono | 11px | 400 | 1 | 0.06em | 01–08 |
-| Control label | Azeret Mono | 11px | 400 | 1 | 0.08em | Upper |
-| Readouts | Azeret Mono | 13px | 400 | 1.5 | 0 | tabular-nums |
-| Copy row | Azeret Mono | 12px | 400 | 1.5 | 0 | `.spin-name` |
-| Header meta | Azeret Mono | 12px | 400 | 1.7 | 0 | Sentence |
 
 ## Motion
 
@@ -167,6 +109,70 @@ Reduced motion: replace every spinner animation with `fade 2.4s ease-in-out infi
 - [ ] Names in order: arc, dots, bars, pulse, morph, segments, clock, infinity.
 - [ ] Defaults 48px, `#FF5B2E`, 1×; size range 16–72, speed 0.5–2.
 - [ ] Page `#13120F`, tile `#1A1814`, ink `#ECE6D8`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: eight spinners running at 48px, signal orange `#FF5B2E`, speed 1×. Tiles are numbered 01–08 top left, named top right in the display face.
+2. Dragging Size (16–72px, step 4) resizes every spinner live. The readout says `48px`.
+3. Clicking a colour swatch (Signal orange, Chalk, Pear, Sky) recolours all eight. The swatch group is a radio group with a 1.5px ring around the checked swatch.
+4. Dragging Speed (0.5×–2×, step 0.25) changes every animation duration. Durations are `base / speed`, so 2× halves them. The readout says `1.00×`.
+5. "Pause all" pauses every animation in place (`animation-play-state: paused`). The button becomes "Play all" with a play icon and `aria-pressed="true"`.
+6. Hovering a tile lifts its background one step (`#1A1814` → `#211F1A`).
+7. Clicking a copy row writes the rule for that spinner with the current size, colour and speed. The row swaps its label and icon for an orange "Copied" for 1400ms. A polite live region says "Copied .spin-morph at 56px, 1.25× speed".
+8. If the Clipboard API is blocked (sandboxed iframe), fall back to a hidden textarea and `execCommand('copy')`. The "Copied" feedback shows either way.
+9. Reduced motion: every spinner stops moving and instead fades between 100% and 45% opacity over 2.4s. The arc shows a fixed 70-unit dash. The pulse and the motion still read as "busy".
+
+## Tokens
+
+```css
+:root {
+  --bg: #13120f;        /* page */
+  --tile: #1a1814;      /* tile resting */
+  --tile-2: #211f1a;    /* tile hover */
+  --line: #2d2a24;      /* hairlines */
+  --line-2: #433f37;    /* control borders, slider track */
+  --ink: #ece6d8;       /* chalk text */
+  --ink-2: #b3ab9b;     /* copy row text, slider fill */
+  --ink-3: #8a8374;     /* labels, numbers */
+  --accent: #ff5b2e;    /* signal orange: default spinner colour, "Copied", h1 accent */
+  --focus: #ff5b2e;
+
+  --display: "Unbounded", system-ui, sans-serif;
+  --mono: "Azeret Mono", ui-monospace, Menlo, monospace;
+
+  /* the three dials every spinner reads */
+  --size: 48px;
+  --color: var(--accent);
+  --speed: 1;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-morph: cubic-bezier(.76,0,.24,1);
+
+  --pad-x: 40px;
+  --row-copy: 44px;
+  --tile-min: 220px;
+}
+```
+
+Swatch values: Signal orange `#FF5B2E`, Chalk `#ECE6D8`, Pear `#C9E265`, Sky `#7CB7FF`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Page title | Unbounded | 40px | 500 | 1 | -0.03em | Sentence, "vol. 1" in accent |
+| Wordmark | Unbounded | 13px | 700 | 1 | 0.04em | Upper |
+| Tile name | Unbounded | 13px | 500 | 1 | -0.01em | Lower |
+| Tile number | Azeret Mono | 11px | 400 | 1 | 0.06em | 01–08 |
+| Control label | Azeret Mono | 11px | 400 | 1 | 0.08em | Upper |
+| Readouts | Azeret Mono | 13px | 400 | 1.5 | 0 | tabular-nums |
+| Copy row | Azeret Mono | 12px | 400 | 1.5 | 0 | `.spin-name` |
+| Header meta | Azeret Mono | 12px | 400 | 1.7 | 0 | Sentence |
 
 ## Implementation notes
 

@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A daily journal drawn as a sheet of ruled notepad paper on a kraft desk. The page has a pink margin line, three punched holes, a typewriter entry label and a handwritten date. The writing area is a real `textarea` set in Caveat, and its ruled lines scroll with the text, so every line of writing sits on a rule no matter how long the entry gets. Beside the page are two paper slips: a mood sticker sheet (five die-cut circle stickers) and an ink tray (four colours). Picking a mood sticks a large version onto the page's top-right corner with a small overshoot. Each day keeps its own page, and the entry autosaves 600ms after you stop typing. The detail worth copying is the rule alignment: one `repeating-linear-gradient` with `background-attachment: local`, sized to the line-height.
-
-## Reference behaviour
-
-1. First frame: today's date as "Sunday 4 October" (weekday, day, month, en-GB) in 44px Caveat. Above it, "ENTRY 278 · 2026 · TODAY" (day of year). The Next-day arrow is disabled.
-2. On first visit, today's page holds a three-paragraph sample entry in Indigo ink with the Calm sticker on the page. The footer reads "54 words" and "Not saved yet".
-3. Typing updates the word count live. The status becomes "Saving…" at once, and 600ms after the last keystroke it becomes "✓ Saved on this device · 00:23".
-4. Clicking a mood sticker in the sheet sticks it onto the page. It lands at its own fixed tilt between −6° and +10°, from 1.35 scale and −14° extra rotation, over 420ms with overshoot. The chosen sticker in the sheet fades to 35% and shrinks to .9, as if it was peeled off.
-5. Clicking the chosen mood again removes the sticker. Arrow keys in the mood group move and select but never deselect.
-6. Clicking an ink changes the text and caret colour over 240ms and moves the ring to that swatch. The choice saves with the entry.
-7. Previous day saves any pending edit first, then loads that day's page. Empty days show "Nothing written on this day yet." as a placeholder, no sticker, and Indigo ink. You can't go past today.
-8. Text, mood, ink and save time are stored per date under `journal:YYYY-MM-DD`.
-9. If storage is unavailable (sandboxed iframe, private mode), saving falls back to memory and the status says "Saved for this session" instead.
 
 ## Structure
 
@@ -46,52 +36,6 @@ A daily journal drawn as a sheet of ruled notepad paper on a kraft desk. The pag
 - `.holes` holds three 22px circles in desk colour with an inner shadow, spaced with `justify-content: space-around` and 90px vertical padding.
 - `.placed` is absolutely positioned at top 20, right 30 in the header and holds the stuck sticker.
 - `aside.tray` holds two `.slip` cards, each with an `h2` label and a radiogroup, plus a tip line.
-
-## Tokens
-
-```css
-:root {
-  --desk: #b89f7b;        /* kraft */
-  --desk-2: #a98f6a;
-  --paper: #fbf6e9;
-  --paper-2: #f2ead8;     /* sheet behind */
-  --card: #fffdf6;        /* tray slips */
-  --rule: #b9cde0;        /* blue rules */
-  --margin: #e2908c;      /* pink margin + double header rule */
-  --label: #5e5243;
-  --label-2: #6f6353;
-  --ink: #233067;         /* current ink, swapped at runtime */
-
-  --hand: "Caveat", "Bradley Hand", cursive;
-  --type: "Courier Prime", "Courier New", monospace;
-
-  --lh: 34px;             /* line pitch: line-height AND rule spacing */
-  --rule-at: 29px;        /* rule offset inside each 34px band, sits just under the baseline */
-  --margin-x: 88px;
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --stick: cubic-bezier(.34,1.4,.64,1);   /* overshoot, stickers only */
-
-  --save-debounce: 600ms;
-}
-```
-
-Inks: Indigo `#233067`, Sepia `#6b4226`, Forest `#2f5b3a`, Oxblood `#8a2432`.
-Stickers (fill, then a 4px white die-cut border): Bright `#f6c945` sun, Calm `#9ccb9a` leaf, Meh `#cfd6dc` cloud, Low `#8fb3d9` rain cloud, Wired `#f08a5d` bolt. Icons are 24-grid strokes at 2px in `#2a2620`, 56% of the sticker.
-Desk texture: two repeating gradients, `87deg rgba(255,255,255,.035) 0 2px, transparent 2px 7px` and `3deg rgba(0,0,0,.03) 0 1px, transparent 1px 5px`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Entry label | Courier Prime | 11px | 700 | 1 | .18em | upper, `--label-2` |
-| Date | Caveat | 44px | 600 | 1.05 | 0 | — `#2a2620` |
-| Writing | Caveat | 27px | 400 | 34px (`--lh`) | 0 | — `--ink` |
-| Placeholder | Caveat | 27px | 400 | 34px | 0 | `#766b59` |
-| Footer / status | Courier Prime | 12px | 400 | 1.5 | 0 | `--label-2` |
-| Slip label | Courier Prime | 11px | 700 | 1 | .18em | upper |
-| Sticker / ink names | Courier Prime | 11px | 400 | 1.1 | 0 | — |
 
 ## Motion
 
@@ -154,6 +98,68 @@ Loading a different day never animates the sticker; only a pick does. Reduced mo
 - [ ] Five stickers: Bright, Calm, Meh, Low, Wired. Four inks: Indigo, Sepia, Forest, Oxblood.
 - [ ] Today's sample entry starts "Walked the long way to the bakery." and opens with Calm and Indigo.
 - [ ] Storage keys are `journal:YYYY-MM-DD`, holding JSON `{text, mood, ink, at}`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: today's date as "Sunday 4 October" (weekday, day, month, en-GB) in 44px Caveat. Above it, "ENTRY 278 · 2026 · TODAY" (day of year). The Next-day arrow is disabled.
+2. On first visit, today's page holds a three-paragraph sample entry in Indigo ink with the Calm sticker on the page. The footer reads "54 words" and "Not saved yet".
+3. Typing updates the word count live. The status becomes "Saving…" at once, and 600ms after the last keystroke it becomes "✓ Saved on this device · 00:23".
+4. Clicking a mood sticker in the sheet sticks it onto the page. It lands at its own fixed tilt between −6° and +10°, from 1.35 scale and −14° extra rotation, over 420ms with overshoot. The chosen sticker in the sheet fades to 35% and shrinks to .9, as if it was peeled off.
+5. Clicking the chosen mood again removes the sticker. Arrow keys in the mood group move and select but never deselect.
+6. Clicking an ink changes the text and caret colour over 240ms and moves the ring to that swatch. The choice saves with the entry.
+7. Previous day saves any pending edit first, then loads that day's page. Empty days show "Nothing written on this day yet." as a placeholder, no sticker, and Indigo ink. You can't go past today.
+8. Text, mood, ink and save time are stored per date under `journal:YYYY-MM-DD`.
+9. If storage is unavailable (sandboxed iframe, private mode), saving falls back to memory and the status says "Saved for this session" instead.
+
+## Tokens
+
+```css
+:root {
+  --desk: #b89f7b;        /* kraft */
+  --desk-2: #a98f6a;
+  --paper: #fbf6e9;
+  --paper-2: #f2ead8;     /* sheet behind */
+  --card: #fffdf6;        /* tray slips */
+  --rule: #b9cde0;        /* blue rules */
+  --margin: #e2908c;      /* pink margin + double header rule */
+  --label: #5e5243;
+  --label-2: #6f6353;
+  --ink: #233067;         /* current ink, swapped at runtime */
+
+  --hand: "Caveat", "Bradley Hand", cursive;
+  --type: "Courier Prime", "Courier New", monospace;
+
+  --lh: 34px;             /* line pitch: line-height AND rule spacing */
+  --rule-at: 29px;        /* rule offset inside each 34px band, sits just under the baseline */
+  --margin-x: 88px;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --stick: cubic-bezier(.34,1.4,.64,1);   /* overshoot, stickers only */
+
+  --save-debounce: 600ms;
+}
+```
+
+Inks: Indigo `#233067`, Sepia `#6b4226`, Forest `#2f5b3a`, Oxblood `#8a2432`.
+Stickers (fill, then a 4px white die-cut border): Bright `#f6c945` sun, Calm `#9ccb9a` leaf, Meh `#cfd6dc` cloud, Low `#8fb3d9` rain cloud, Wired `#f08a5d` bolt. Icons are 24-grid strokes at 2px in `#2a2620`, 56% of the sticker.
+Desk texture: two repeating gradients, `87deg rgba(255,255,255,.035) 0 2px, transparent 2px 7px` and `3deg rgba(0,0,0,.03) 0 1px, transparent 1px 5px`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Entry label | Courier Prime | 11px | 700 | 1 | .18em | upper, `--label-2` |
+| Date | Caveat | 44px | 600 | 1.05 | 0 | — `#2a2620` |
+| Writing | Caveat | 27px | 400 | 34px (`--lh`) | 0 | — `--ink` |
+| Placeholder | Caveat | 27px | 400 | 34px | 0 | `#766b59` |
+| Footer / status | Courier Prime | 12px | 400 | 1.5 | 0 | `--label-2` |
+| Slip label | Courier Prime | 11px | 700 | 1 | .18em | upper |
+| Sticker / ink names | Courier Prime | 11px | 400 | 1.1 | 0 | — |
 
 ## Implementation notes
 

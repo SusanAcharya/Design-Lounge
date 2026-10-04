@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A letter titled Gate 4 sits in front of a charcoal sleeve, slightly turned. Tuck slides it down into the sleeve. Pull brings it back. The sleeve covers the lower part because it is stacked above the letter. This is not a fan of notes. That fan is `folder-reveal`. This is not a page turn. That turn is `book-page-flip`.
-
-## Reference behaviour
-
-1. The letter starts out. The button reads Tuck the letter. aria-expanded is true.
-2. Out pose is translateY 20px and rotate -2deg.
-3. Tuck sets data-tuck and the letter moves to translateY 150px and rotate 0.
-4. The button reads Pull the letter. aria-expanded is false.
-5. Pull clears the tuck.
-6. The move is 480ms.
-7. Reduced motion snaps.
 
 ## Structure
 
@@ -32,20 +24,6 @@ Tuck the letter
 - The sleeve is left 20px, right 20px, bottom 48px, height 120px, fill #1c1b19, z-index 2.
 - The letter is z-index 1, so the sleeve covers its lower half when tucked.
 - The button is 40px, at the bottom of the stage.
-
-## Tokens
-
-```css
-:root { --bg:#f4f1ea; --paper:#fffdf8; --sleeve:#1c1b19; --ink:#1a1814; --ink-2:#5c564c; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Title | Fraunces | 28px | 560 |
-| Body | Public Sans | 16px | 400 |
-| Button | Public Sans | 14px | 500 |
 
 ## Motion
 
@@ -90,16 +68,6 @@ Tuck the letter
 - [ ] The sleeve is #1c1b19.
 - [ ] The out rotation is -2deg.
 - [ ] Display is Fraunces. Text is Public Sans.
-
-## Implementation notes
-
-Toggle data-tuck on the stage.
-
-```css
-.stage[data-tuck="true"] .letter { transform: translateY(150px) rotate(0deg); }
-```
-
-Keep the sleeve above the letter.
 
 ## Measurements to keep
 
@@ -154,6 +122,44 @@ Keep the sleeve above the letter.
 - Honour reduced motion.
 - Do not add a second accent.
 - Do not add a second type family.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The letter starts out. The button reads Tuck the letter. aria-expanded is true.
+2. Out pose is translateY 20px and rotate -2deg.
+3. Tuck sets data-tuck and the letter moves to translateY 150px and rotate 0.
+4. The button reads Pull the letter. aria-expanded is false.
+5. Pull clears the tuck.
+6. The move is 480ms.
+7. Reduced motion snaps.
+
+## Tokens
+
+```css
+:root { --bg:#f4f1ea; --paper:#fffdf8; --sleeve:#1c1b19; --ink:#1a1814; --ink-2:#5c564c; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Title | Fraunces | 28px | 560 |
+| Body | Public Sans | 16px | 400 |
+| Button | Public Sans | 14px | 500 |
+
+## Implementation notes
+
+Toggle data-tuck on the stage.
+
+```css
+.stage[data-tuck="true"] .letter { transform: translateY(150px) rotate(0deg); }
+```
+
+Keep the sleeve above the letter.
 
 ---
 

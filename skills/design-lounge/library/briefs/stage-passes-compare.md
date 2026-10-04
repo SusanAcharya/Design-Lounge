@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from gmxdigital.com: the idea is the "from an image to an experience" block, where one frame steps through base image, atmosphere and film while three numbered tabs underneath keep time. This version is the method section of Siltworks, a fictional visualisation studio, on a warm paper ground instead of a dark one. The same 400×520 frame of a lake pavilion is shown in three passes: 01 Sketch (line drawing on a grid), 02 Light (flat colour, sun, shadows) and 03 Motion (dusk grade, drifting clouds, birds, water shimmer, a lamp glow and a ticking REC timecode). The detail worth copying is the compare line: from pass 02 on, the previous pass sits under the current one, and a draggable divider shows how much the new pass changed. The page opens on pass 02 with the line at 50%, so the point is visible in the first frame.
-
-## Reference behaviour
-
-1. Load: pass 02 "Light" is selected. Tab 01 shows a full grey line (done). Tab 02's 2px green line starts filling over 6000ms.
-2. The frame shows pass 01 on the left of the divider and pass 02 on the right. The divider wipes in from 100% to 50% over 700ms (ease-out quart). Chips: "Pass 01" (paper chip) top-left, "Pass 02 · Light" (ink chip) top-right.
-3. Left column shows "02 / 03", the italic step title "Light and weather", a 3-line description, and a link "Read the light study ↗". The step block fades up 8px over 420ms on each change.
-4. When tab 02's line completes, pass 03 becomes selected and the wipe runs again with pass 02 now underneath. After 03 it wraps to 01.
-5. Pass 01 has no previous pass: no divider, no knob, no left chip. The frame shows the sketch alone.
-6. Pass 03 adds the moving layer: clouds drift ±30px (26s and 34s alternate), two birds cross the frame every 9s, five water lines shimmer, the window glow breathes between 55% and 100%, the scene pushes in to scale 1.04 over 6s, and "REC 00:SS:FF" counts at 24 frames per second with a blinking red dot.
-7. Drag the 44px knob (or click anywhere in the frame) to move the divider. Dragging also turns autoplay off (Pause becomes Play).
-8. Hovering the frame pauses the tab timer. Leaving resumes it unless Pause is on.
-9. Pause button (40px pill, right of the tabs) toggles autoplay. The current tab's line freezes in place.
-10. Keyboard: tabs are a tablist. Left / Right arrows move and select, Home / End jump. The knob is a slider: Left / Right ±5, PageUp / PageDown ±20, Home 0, End 100.
-11. A polite live region announces "Pass 3 of 3: The moving frame".
-12. Reduced motion: autoplay starts paused, the wipe jumps straight to 50%, no clouds, birds, shimmer, push or blinking; the timecode still updates as text.
 
 ## Structure
 
@@ -50,49 +37,6 @@ body grid: 520px | 1fr, gap 56px
 - Body right: `figure.frame` with two absolute layers (`#under` previous pass, `#over` current pass, clipped), two chips, a divider holding a `button role="slider"`, and the REC label.
 - Tabs row: a `role="tablist"` of three buttons (number + name + absolute 2px bar), then the pause button.
 - The scene is one SVG template, cloned into both layers. The pass is a class on the SVG root: `sk`, `lt`, `mo`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ece7dc;        /* paper ground */
-  --paper: #f6f2ea;     /* frame and chips */
-  --ink: #1d211c;       /* headings, sketch lines */
-  --ink-2: #474d45;     /* body text */
-  --ink-3: #6a7067;     /* counters, idle tabs */
-  --line: #d3ccbe;      /* rules, idle tab lines, sketch grid */
-  --line-2: #b9b1a1;    /* frame edge, done tab lines, button borders */
-  --accent: #2f6b4f;    /* forest green: italic word, active tab, focus */
-  --accent-2: #e3b45a;  /* lamp and sun, used only inside the scene */
-
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-  --serif: "Literata", Georgia, serif;  /* italic only */
-
-  --space: 4px 8px 12px 16px 24px 28px 56px;
-  --frame-w: 400px; --frame-h: 520px;
-  --shadow-frame: 0 0 0 1px var(--line-2), 0 30px 60px -30px rgba(29,33,28,.35);
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --dwell: 6000ms;      /* per pass */
-  --wipe: 700ms;        /* divider 100% → 50% */
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Section heading | Hanken Grotesk | 60px | 500 | 1.02 | -0.035em | Last words in Literata italic 400, green |
-| Step title | Literata italic | 34px | 400 | 1.1 | -0.015em | `--ink` |
-| Body | Hanken Grotesk | 16px | 400 | 1.55 | 0 | `--ink-2`, max 440px |
-| Counter "02 / 03" | Hanken Grotesk | 12px | 600 | 1 | 0.12em | `--ink-3` |
-| Head row | Hanken Grotesk | 13px | 500–600 | 1 | 0 | Label green with 28px rule |
-| Tab number | Hanken Grotesk | 26px | 400 | 1 | -0.02em | Green when selected |
-| Tab name | Hanken Grotesk | 14px | 600 | 1 | 0 | |
-| Chips, REC | Hanken Grotesk | 12px | 600 | 1 | 0.02–0.08em | REC uses tabular numerals |
-
-Serif italic is used for exactly two things: the end of the heading and the step title. Nothing else.
 
 ## Motion
 
@@ -162,6 +106,68 @@ Serif italic is used for exactly two things: the end of the heading and the step
 - [ ] Heading "From a sketch to a moving frame." with "moving frame." in Literata italic `#2f6b4f`.
 - [ ] Pass 03 shows "REC 00:SS:FF" counting at 24fps with a red dot.
 - [ ] Frame is 400×520 on `#f6f2ea` with a 1px `#b9b1a1` edge.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Load: pass 02 "Light" is selected. Tab 01 shows a full grey line (done). Tab 02's 2px green line starts filling over 6000ms.
+2. The frame shows pass 01 on the left of the divider and pass 02 on the right. The divider wipes in from 100% to 50% over 700ms (ease-out quart). Chips: "Pass 01" (paper chip) top-left, "Pass 02 · Light" (ink chip) top-right.
+3. Left column shows "02 / 03", the italic step title "Light and weather", a 3-line description, and a link "Read the light study ↗". The step block fades up 8px over 420ms on each change.
+4. When tab 02's line completes, pass 03 becomes selected and the wipe runs again with pass 02 now underneath. After 03 it wraps to 01.
+5. Pass 01 has no previous pass: no divider, no knob, no left chip. The frame shows the sketch alone.
+6. Pass 03 adds the moving layer: clouds drift ±30px (26s and 34s alternate), two birds cross the frame every 9s, five water lines shimmer, the window glow breathes between 55% and 100%, the scene pushes in to scale 1.04 over 6s, and "REC 00:SS:FF" counts at 24 frames per second with a blinking red dot.
+7. Drag the 44px knob (or click anywhere in the frame) to move the divider. Dragging also turns autoplay off (Pause becomes Play).
+8. Hovering the frame pauses the tab timer. Leaving resumes it unless Pause is on.
+9. Pause button (40px pill, right of the tabs) toggles autoplay. The current tab's line freezes in place.
+10. Keyboard: tabs are a tablist. Left / Right arrows move and select, Home / End jump. The knob is a slider: Left / Right ±5, PageUp / PageDown ±20, Home 0, End 100.
+11. A polite live region announces "Pass 3 of 3: The moving frame".
+12. Reduced motion: autoplay starts paused, the wipe jumps straight to 50%, no clouds, birds, shimmer, push or blinking; the timecode still updates as text.
+
+## Tokens
+
+```css
+:root {
+  --bg: #ece7dc;        /* paper ground */
+  --paper: #f6f2ea;     /* frame and chips */
+  --ink: #1d211c;       /* headings, sketch lines */
+  --ink-2: #474d45;     /* body text */
+  --ink-3: #6a7067;     /* counters, idle tabs */
+  --line: #d3ccbe;      /* rules, idle tab lines, sketch grid */
+  --line-2: #b9b1a1;    /* frame edge, done tab lines, button borders */
+  --accent: #2f6b4f;    /* forest green: italic word, active tab, focus */
+  --accent-2: #e3b45a;  /* lamp and sun, used only inside the scene */
+
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --serif: "Literata", Georgia, serif;  /* italic only */
+
+  --space: 4px 8px 12px 16px 24px 28px 56px;
+  --frame-w: 400px; --frame-h: 520px;
+  --shadow-frame: 0 0 0 1px var(--line-2), 0 30px 60px -30px rgba(29,33,28,.35);
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --dwell: 6000ms;      /* per pass */
+  --wipe: 700ms;        /* divider 100% → 50% */
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Section heading | Hanken Grotesk | 60px | 500 | 1.02 | -0.035em | Last words in Literata italic 400, green |
+| Step title | Literata italic | 34px | 400 | 1.1 | -0.015em | `--ink` |
+| Body | Hanken Grotesk | 16px | 400 | 1.55 | 0 | `--ink-2`, max 440px |
+| Counter "02 / 03" | Hanken Grotesk | 12px | 600 | 1 | 0.12em | `--ink-3` |
+| Head row | Hanken Grotesk | 13px | 500–600 | 1 | 0 | Label green with 28px rule |
+| Tab number | Hanken Grotesk | 26px | 400 | 1 | -0.02em | Green when selected |
+| Tab name | Hanken Grotesk | 14px | 600 | 1 | 0 | |
+| Chips, REC | Hanken Grotesk | 12px | 600 | 1 | 0.02–0.08em | REC uses tabular numerals |
+
+Serif italic is used for exactly two things: the end of the heading and the step title. Nothing else.
 
 ## Implementation notes
 

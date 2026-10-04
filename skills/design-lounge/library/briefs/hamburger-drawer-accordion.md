@@ -4,24 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The mobile menu of a homeware shop, "Loam & Linen". A hamburger in the shop header slides a warm white drawer in from the left. It covers 86% of the screen over a brown scrim. The drawer has a search field at the top, five shop sections, a tan promo row and two pinned links at the bottom: Account and Help. Sections with children open as accordions. Only one is open at a time, and the height animates. The detail worth copying is the pinned footer: the section list scrolls, but Account and Help never scroll away.
 
 This is not `m3-navigation-drawer`. That is a native Material app drawer with destinations and a tonal active pill. This one is a website shop menu with search, nested categories and a promo.
-
-## Reference behaviour
-
-1. First frame (hero): the drawer is open with "Kitchen & dining" expanded. The body has `.open`, the hamburger has `aria-expanded="true"`, and the page is `inert`. No animation plays on load.
-2. Tap the close button (top right of the drawer), tap the scrim, or press Esc: the drawer slides to `translateX(-104%)` over 260ms `cubic-bezier(.4,0,1,1)`. The scrim fades on the same clock. The drawer turns `visibility: hidden` at 260ms. Focus returns to the hamburger. Body scroll unlocks.
-3. Tap the hamburger: the drawer slides from `-104%` to `0` over 380ms `cubic-bezier(.32,.72,0,1)`. The scrim fades from 0 to 1 (`rgba(58,42,31,.48)`) over 380ms. 60ms later focus moves to the close button.
-4. Tap a closed section ("Bedroom"): its panel grows from 0 to its full height over 280ms, its chevron turns 180 degrees, and whichever section was open closes on the same clock.
-5. Tap the open section again: it closes. Zero sections open is allowed.
-6. Collapsed panels are `inert`, so their links are not in the tab order.
-7. Tap a submenu link, "New in", the promo or a footer link: the drawer closes. The demo has no routing.
-8. Typing in search and pressing Enter does nothing in the demo. A product sends it to its search results page.
-9. The section list scrolls inside the drawer if it is taller than the space. The head, search and footer stay put.
-10. Tab and Shift+Tab cycle only through visible controls inside the drawer.
 
 ## Structure
 
@@ -67,60 +56,6 @@ gutter 20px · right corners radius 12px
 - Promo: "Free delivery over $120", "Until Sunday 12 October".
 - Footer: Account, Help.
 - Page: eyebrow "Autumn edit · 38 pieces", heading "The long table", line "Stoneware, washed linen and oiled oak for dinners that run past eleven.", button "Shop the edit"; products Ridge stoneware plate $28, Washed linen napkins set of 4 $36, Oak pouring jug $64, Amber tumbler $14.
-
-## Tokens
-
-```css
-:root {
-  /* colour: warm white, tan, deep brown */
-  --page: #fbf7f1;          /* page and input background */
-  --surface: #fffdf9;       /* drawer */
-  --tan: #d8c2a3;           /* promo row, submenu rule */
-  --tan-soft: #f1e6d6;      /* close disc, tags, hero card */
-  --tan-deep: #b8996f;      /* product art only */
-  --ink: #3a2a1f;           /* text, primary button, focus */
-  --ink-2: #6e5a49;         /* secondary text, chevrons, sub links */
-  --line: #e8dccb;          /* hairlines and borders */
-  --scrim: rgba(58, 42, 31, .48);
-
-  /* type */
-  --serif: "Fraunces", Georgia, serif;
-  --sans: "Source Sans 3", system-ui, sans-serif;
-
-  /* layout */
-  --top: 54px;
-  --chrome-bottom: 84px;    /* browser bar over the frame; env(safe-area-inset-bottom) in production */
-  --gutter: 20px;
-  --r: 12px;
-  --r-sm: 8px;
-  --shadow: 0 0 0 1px rgba(58, 42, 31, .06), 24px 0 48px -24px rgba(58, 42, 31, .35);
-
-  /* motion */
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --sheet: cubic-bezier(.32, .72, 0, 1);
-  --t-drawer: 380ms;
-  --t-drawer-out: 260ms;
-  --t-acc: 280ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Drawer logo | Fraunces | 20px / 1 | 600 | -0.01em | `--ink` |
-| Section row | Fraunces | 19px / 1.2 | 500 | -0.01em | `--ink` |
-| Promo title | Fraunces | 16px / 1.25 | 600 | 0 | `--ink` |
-| Sub link | Source Sans 3 | 16px | 400 | 0 | `--ink-2` |
-| Sub "Shop all" | Source Sans 3 | 16px | 600 | 0 | `--ink` |
-| Tag pill | Source Sans 3 | 12px / 1 | 600 | 0.04em | `--ink-2` |
-| Search input | Source Sans 3 | 16px | 400 | 0 | `--ink` |
-| Footer link | Source Sans 3 | 15px | 600 | 0 | `--ink` |
-| Promo date | Source Sans 3 | 13px | 400 | 0 | `--ink` |
-| Page heading | Fraunces | 34px / 1.05 | 600 | -0.02em | `--ink` |
-| Eyebrow | Source Sans 3 | 13px | 600 | 0.06em, upper | `--ink-2` |
-
-Keep the search input at 16px. Smaller input text makes iOS Safari zoom the page on focus.
 
 ## Motion
 
@@ -197,6 +132,77 @@ Reduced motion: the drawer does not slide. It fades `opacity 0 → 1` over 150ms
 - [ ] The promo row is `#d8c2a3` and reads "Free delivery over $120".
 - [ ] The footer reads Account and Help.
 - [ ] Drawer `#fffdf9`, text `#3a2a1f`, radius 12px on the right corners.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame (hero): the drawer is open with "Kitchen & dining" expanded. The body has `.open`, the hamburger has `aria-expanded="true"`, and the page is `inert`. No animation plays on load.
+2. Tap the close button (top right of the drawer), tap the scrim, or press Esc: the drawer slides to `translateX(-104%)` over 260ms `cubic-bezier(.4,0,1,1)`. The scrim fades on the same clock. The drawer turns `visibility: hidden` at 260ms. Focus returns to the hamburger. Body scroll unlocks.
+3. Tap the hamburger: the drawer slides from `-104%` to `0` over 380ms `cubic-bezier(.32,.72,0,1)`. The scrim fades from 0 to 1 (`rgba(58,42,31,.48)`) over 380ms. 60ms later focus moves to the close button.
+4. Tap a closed section ("Bedroom"): its panel grows from 0 to its full height over 280ms, its chevron turns 180 degrees, and whichever section was open closes on the same clock.
+5. Tap the open section again: it closes. Zero sections open is allowed.
+6. Collapsed panels are `inert`, so their links are not in the tab order.
+7. Tap a submenu link, "New in", the promo or a footer link: the drawer closes. The demo has no routing.
+8. Typing in search and pressing Enter does nothing in the demo. A product sends it to its search results page.
+9. The section list scrolls inside the drawer if it is taller than the space. The head, search and footer stay put.
+10. Tab and Shift+Tab cycle only through visible controls inside the drawer.
+
+## Tokens
+
+```css
+:root {
+  /* colour: warm white, tan, deep brown */
+  --page: #fbf7f1;          /* page and input background */
+  --surface: #fffdf9;       /* drawer */
+  --tan: #d8c2a3;           /* promo row, submenu rule */
+  --tan-soft: #f1e6d6;      /* close disc, tags, hero card */
+  --tan-deep: #b8996f;      /* product art only */
+  --ink: #3a2a1f;           /* text, primary button, focus */
+  --ink-2: #6e5a49;         /* secondary text, chevrons, sub links */
+  --line: #e8dccb;          /* hairlines and borders */
+  --scrim: rgba(58, 42, 31, .48);
+
+  /* type */
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Source Sans 3", system-ui, sans-serif;
+
+  /* layout */
+  --top: 54px;
+  --chrome-bottom: 84px;    /* browser bar over the frame; env(safe-area-inset-bottom) in production */
+  --gutter: 20px;
+  --r: 12px;
+  --r-sm: 8px;
+  --shadow: 0 0 0 1px rgba(58, 42, 31, .06), 24px 0 48px -24px rgba(58, 42, 31, .35);
+
+  /* motion */
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --sheet: cubic-bezier(.32, .72, 0, 1);
+  --t-drawer: 380ms;
+  --t-drawer-out: 260ms;
+  --t-acc: 280ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Drawer logo | Fraunces | 20px / 1 | 600 | -0.01em | `--ink` |
+| Section row | Fraunces | 19px / 1.2 | 500 | -0.01em | `--ink` |
+| Promo title | Fraunces | 16px / 1.25 | 600 | 0 | `--ink` |
+| Sub link | Source Sans 3 | 16px | 400 | 0 | `--ink-2` |
+| Sub "Shop all" | Source Sans 3 | 16px | 600 | 0 | `--ink` |
+| Tag pill | Source Sans 3 | 12px / 1 | 600 | 0.04em | `--ink-2` |
+| Search input | Source Sans 3 | 16px | 400 | 0 | `--ink` |
+| Footer link | Source Sans 3 | 15px | 600 | 0 | `--ink` |
+| Promo date | Source Sans 3 | 13px | 400 | 0 | `--ink` |
+| Page heading | Fraunces | 34px / 1.05 | 600 | -0.02em | `--ink` |
+| Eyebrow | Source Sans 3 | 13px | 600 | 0.06em, upper | `--ink-2` |
+
+Keep the search input at 16px. Smaller input text makes iOS Safari zoom the page on focus.
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A ⌘K command palette for an incident-management web app ("Halden"). It floats 120px from the top of the viewport over a dimmed app, 640px wide, and lists ~20 commands in five groups (Recent, Navigate, Actions, Settings, People). Typing fuzzy-filters the list and highlights the matched letters in the accent colour; arrow keys move a selection that never leaves the keyboard; each row shows its shortcut as mono key-caps on the right. The one detail worth copying is the opening motion: 200ms, scale 0.96 → 1 with an 8px downward settle, on an expo-out curve, while the scrim fades on the standard curve — fast enough to feel like a keystroke, not a modal.
-
-## Reference behaviour
-
-1. Initial state: the palette is **already open** over the app. The app behind (top bar with brand, nav, and a "Search or run a command ⌘K" button; a table of four open incidents) is dimmed by a `rgba(6,8,12,.62)` scrim. The input has focus and shows the placeholder "Type a command or search…". The first row ("Acknowledge INC-2291" under Recent) is selected. The footer's right side reads "20 of 20".
-2. Typing filters every group by subsequence match (each typed character must appear in order in the label, case-insensitive). Matched characters render in the accent colour at weight 500. The **Recent** group is hidden as soon as the query is non-empty. Groups with no matches disappear with their heading. Within a group, results sort by the index of the first matched character. Selection resets to the first visible row on every keystroke. The footer count updates, e.g. "3 of 20".
-3. A query with no matches shows a centred empty state: "No commands match **query**" in `--ink-3` with the query in `--ink-2`, 36px vertical padding.
-4. ↓ / ↑ move the selection; the list scrolls so the selected row stays in view (`scrollIntoView({block:'nearest'})`). Home / End jump to first / last. Selection wraps at neither end (clamps).
-5. Moving the mouse over a row selects it (mousemove, not mouseenter, so a scrolling list does not steal selection).
-6. Enter or click runs the selected command: the palette closes (200ms reverse of the open motion) and the top bar's live-region status text shows "Ran · <label>" in accent mono, fading in over 140ms. Focus returns to the top-bar search button.
-7. Esc closes; clicking the scrim closes. ⌘K (macOS) / Ctrl+K (elsewhere) toggles from anywhere; clicking the top-bar search button opens. Opening always clears the query, re-renders and focuses the input.
-8. Rows are 40px tall; a selected row gets `--panel-2` background, `--ink` text, accent icon and a 2px accent bar on its left edge (top and bottom inset 10px).
 
 ## Structure
 
@@ -82,58 +73,6 @@ Render exactly these 20 commands, in this order. Keys are space-separated; each 
 
 The app behind the palette lists four incidents: INC-2291 "Checkout latency above 900ms p95" (payments-api, critical, 14 min ago, Ines Okafor); INC-2290 "Elevated 5xx from image resizer" (media-edge, acknowledged, 1 h ago, Tomas Vieira); INC-2289 "Webhook retries backing up (eu-1)" (events, acknowledged, 3 h ago, Mara Lindqvist); INC-2286 "Search index lag 40s on staging" (search, monitoring, Yesterday, Unassigned). Rows are 44px with 1px `--line` dividers; the subtitle reads "4 open · 1 critical · median time to acknowledge 3m 12s this week".
 
-## Tokens
-
-```css
-:root {
-  /* colour — cool near-black, one mint accent */
-  --bg: #0b0d12;          /* page */
-  --panel: #12151c;       /* palette body, search button */
-  --panel-2: #181c25;     /* selected row, kbd fill */
-  --line: #232833;        /* hairlines, ring */
-  --line-2: #2e3441;      /* kbd + input borders */
-  --ink: #e8eaf0;         /* primary text */
-  --ink-2: #9aa3b5;       /* row text, kbd text */
-  --ink-3: #6b7386;       /* headings, placeholder, icons */
-  --accent: #6ee7b7;      /* matches, selected icon, left bar, status */
-  --accent-ink: #04140d;  /* text on accent (unused here, reserved) */
-  --warn: #f5b14c;        /* acknowledged pill */
-  --scrim: rgba(6, 8, 12, .62);
-
-  /* type */
-  --font: "Space Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  /* layout */
-  --w: 640px;             /* palette width */
-  --top: 120px;           /* palette offset from viewport top */
-  --row: 40px;            /* option row height */
-  --r: 12px;              /* palette radius */
-  --r-item: 8px;          /* row radius */
-  --shadow: 0 24px 64px -16px rgba(0,0,0,.75), 0 0 0 1px var(--line);
-
-  /* motion */
-  --t-fast: 140ms;        /* status fade, hover */
-  --t-open: 200ms;        /* open / close */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role              | Family         | Size | Weight | Line-height | Tracking | Case      |
-|-------------------|----------------|-----:|-------:|------------:|---------:|-----------|
-| Body / rows       | Space Grotesk  | 14px | 400    | 1.45        | 0        | sentence  |
-| Search input      | Space Grotesk  | 16px | 400    | 1           | 0        | sentence  |
-| Brand             | Space Grotesk  | 14px | 600    | 1.2         | −0.01em  | sentence  |
-| Page title        | Space Grotesk  | 22px | 600    | 1.2         | −0.02em  | sentence  |
-| Group heading     | IBM Plex Mono  | 10px | 500    | 1           | +0.12em  | UPPERCASE |
-| Key-cap `<kbd>`   | IBM Plex Mono  | 11px | 500    | 1           | 0        | as-is     |
-| Footer hints      | IBM Plex Mono  | 12px | 400    | 1.4         | 0        | sentence  |
-| Status (top bar)  | IBM Plex Mono  | 12px | 400    | 1.4         | 0        | sentence  |
-| Matched letters   | inherit        | —    | 500    | —           | —        | colour `--accent`, no background |
-
 ## Motion
 
 | Element        | Trigger       | Property            | From → To                          | Duration | Easing       | Notes |
@@ -192,6 +131,73 @@ Reduced motion: every `transition-duration` becomes 1ms and `.pal` drops the sca
 - [ ] Every shortcut renders as separate `<kbd>` chips (11px mono, 5px radius, `#2e3441` border).
 - [ ] No results state renders the query text (escaped) and the count shows "0 of 20".
 - [ ] With reduced motion the open/close is instantaneous.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: the palette is **already open** over the app. The app behind (top bar with brand, nav, and a "Search or run a command ⌘K" button; a table of four open incidents) is dimmed by a `rgba(6,8,12,.62)` scrim. The input has focus and shows the placeholder "Type a command or search…". The first row ("Acknowledge INC-2291" under Recent) is selected. The footer's right side reads "20 of 20".
+2. Typing filters every group by subsequence match (each typed character must appear in order in the label, case-insensitive). Matched characters render in the accent colour at weight 500. The **Recent** group is hidden as soon as the query is non-empty. Groups with no matches disappear with their heading. Within a group, results sort by the index of the first matched character. Selection resets to the first visible row on every keystroke. The footer count updates, e.g. "3 of 20".
+3. A query with no matches shows a centred empty state: "No commands match **query**" in `--ink-3` with the query in `--ink-2`, 36px vertical padding.
+4. ↓ / ↑ move the selection; the list scrolls so the selected row stays in view (`scrollIntoView({block:'nearest'})`). Home / End jump to first / last. Selection wraps at neither end (clamps).
+5. Moving the mouse over a row selects it (mousemove, not mouseenter, so a scrolling list does not steal selection).
+6. Enter or click runs the selected command: the palette closes (200ms reverse of the open motion) and the top bar's live-region status text shows "Ran · <label>" in accent mono, fading in over 140ms. Focus returns to the top-bar search button.
+7. Esc closes; clicking the scrim closes. ⌘K (macOS) / Ctrl+K (elsewhere) toggles from anywhere; clicking the top-bar search button opens. Opening always clears the query, re-renders and focuses the input.
+8. Rows are 40px tall; a selected row gets `--panel-2` background, `--ink` text, accent icon and a 2px accent bar on its left edge (top and bottom inset 10px).
+
+## Tokens
+
+```css
+:root {
+  /* colour — cool near-black, one mint accent */
+  --bg: #0b0d12;          /* page */
+  --panel: #12151c;       /* palette body, search button */
+  --panel-2: #181c25;     /* selected row, kbd fill */
+  --line: #232833;        /* hairlines, ring */
+  --line-2: #2e3441;      /* kbd + input borders */
+  --ink: #e8eaf0;         /* primary text */
+  --ink-2: #9aa3b5;       /* row text, kbd text */
+  --ink-3: #6b7386;       /* headings, placeholder, icons */
+  --accent: #6ee7b7;      /* matches, selected icon, left bar, status */
+  --accent-ink: #04140d;  /* text on accent (unused here, reserved) */
+  --warn: #f5b14c;        /* acknowledged pill */
+  --scrim: rgba(6, 8, 12, .62);
+
+  /* type */
+  --font: "Space Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* layout */
+  --w: 640px;             /* palette width */
+  --top: 120px;           /* palette offset from viewport top */
+  --row: 40px;            /* option row height */
+  --r: 12px;              /* palette radius */
+  --r-item: 8px;          /* row radius */
+  --shadow: 0 24px 64px -16px rgba(0,0,0,.75), 0 0 0 1px var(--line);
+
+  /* motion */
+  --t-fast: 140ms;        /* status fade, hover */
+  --t-open: 200ms;        /* open / close */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role              | Family         | Size | Weight | Line-height | Tracking | Case      |
+|-------------------|----------------|-----:|-------:|------------:|---------:|-----------|
+| Body / rows       | Space Grotesk  | 14px | 400    | 1.45        | 0        | sentence  |
+| Search input      | Space Grotesk  | 16px | 400    | 1           | 0        | sentence  |
+| Brand             | Space Grotesk  | 14px | 600    | 1.2         | −0.01em  | sentence  |
+| Page title        | Space Grotesk  | 22px | 600    | 1.2         | −0.02em  | sentence  |
+| Group heading     | IBM Plex Mono  | 10px | 500    | 1           | +0.12em  | UPPERCASE |
+| Key-cap `<kbd>`   | IBM Plex Mono  | 11px | 500    | 1           | 0        | as-is     |
+| Footer hints      | IBM Plex Mono  | 12px | 400    | 1.4         | 0        | sentence  |
+| Status (top bar)  | IBM Plex Mono  | 12px | 400    | 1.4         | 0        | sentence  |
+| Matched letters   | inherit        | —    | 500    | —           | —        | colour `--accent`, no background |
 
 ## Implementation notes
 

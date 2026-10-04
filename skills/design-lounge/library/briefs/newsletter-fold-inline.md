@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A newsletter capture sitting **inside** an essay, not in a footer and not as a hero. The host is **The Loam Letter**, a monthly soil journal. The first frame is a 720px column on olive paper: masthead, a 34px Caslon headline, one drop-capped paragraph, then a fold band (`#F3EEE3`, 2px moss rule on top) with “No. 41”, the italic title, a one-sentence promise, and a hairline email + Subscribe row. On a valid submit the input and button hide and the italic line “You’re on the list” takes their place. A second paragraph continues under the fold so it reads as a mid-article interrupt.
-
-## Reference behaviour
-
-1. Initial state: masthead “THE LOAM LETTER / No. 41 · April 2026 / FIELD NOTES” with a 1px ink rule under it. Headline “What the frost left in the north bed”. Byline “By *Ida Marum* · 12 April 2026 · 9 min read”. Opening paragraph with a 62px moss drop cap. Fold already visible in the first 800px. Form empty, placeholder `you@garden.mail`, button “Subscribe”. Second paragraph visible below the fold.
-2. Focus the input: default focus ring (2px moss, 3px offset). The hairline stays `--ink`.
-3. Submit empty or invalid: `preventDefault`, form gets `.bad` (hairline `--rust` `#9A4A2C`), `#msg` reads “A full address, please — the letter does not go to a first name.” Focus returns to the input. Button still says “Subscribe”.
-4. Submit a value matching `^[^\s@]+@[^\s@]+\.[^\s@]+$`: form gets `.done` (hairline moss), input and button `display:none`, `.done-label` displays as a flex row: italic 18px Caslon “You’re on the list”. Input is `disabled`. Live region: “You’re on the list. No. 42 leaves on 12 May.”
-5. Hover Subscribe (enabled): colour `--ink` from `--moss`.
-6. No other animation. The fold does not slide in.
-7. Reduced motion: form border-color transition is 1ms. Morph is a class swap (no height animation), so it is already instant.
 
 ## Structure
 
@@ -57,55 +49,6 @@ Copy, exact:
 - Opening: “The cloches came off on a Tuesday that still felt like March. Under the glass the soil was dark and a little sweet, the way it gets when the worms have been working the leaf mould we put down in November. I had expected a bare patch. I got mustard seedlings the size of a fingernail and one stubborn chard that had kept its colour.”
 - Promise: “Field notes on soil, once a month, from one garden. No ads, no product list.”
 - After: “I left the chard. The mustard I thinned with two fingers and ate on the walk back to the shed, because that is the whole argument of this letter: the garden is already feeding you if you are willing to put your hands in it before the plan for May is written down.”
-
-## Tokens
-
-```css
-:root {
-  --bg: #e7e2d4;          /* page olive paper */
-  --fold: #f3eee3;        /* fold panel */
-  --ink: #242018;
-  --ink-2: #5c5648;
-  --ink-3: #8a8374;
-  --line: #c9c2b0;
-  --line-2: #b4ad98;
-  --moss: #3d5340;        /* issue, drop cap, button, success */
-  --rust: #9a4a2c;        /* invalid hairline + message */
-  --ok: #3d5340;
-
-  --serif: "Libre Caslon Text", Georgia, serif;
-  --sans: "Karla", system-ui, sans-serif;
-
-  --col: 720px;
-  --fold-pad: 28px 32px 24px;
-  --iss-col: 140px;
-  --row-h: 44px;
-
-  --t-fast: 160ms;
-  --t-morph: 320ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Body / article | Libre Caslon Text | 16px | 400 | 1.55 | 0 | sentence |
-| Mast / issue kicker | Karla | 11px | 500–600 | 1 | +0.14–0.16em | UPPERCASE |
-| Headline | Libre Caslon Text | 34px | 700 | 1.15 | −0.015em | sentence |
-| Byline | Karla + italic Caslon name | 13 / 15px | 400 | 1.4 | 0 | sentence |
-| Drop cap | Libre Caslon Text | 62px | 700 | 0.8 | 0 | the letter T |
-| Issue number | Libre Caslon Text | 40px | 700 | 1 | −0.02em | “No. 41” |
-| Fold title | Libre Caslon Text italic | 22px | 400 | 1.2 | 0 | sentence |
-| Promise | Karla | 15px | 400 | 1.45 | 0 | sentence |
-| Input | Libre Caslon Text italic | 17px | 400 | 1 | 0 | as typed |
-| Button | Karla | 13px | 600 | 1 | +0.08em | UPPERCASE |
-| Done line | Libre Caslon Text italic | 18px | 400 | 1 | 0 | sentence |
-| Message | Karla | 12px | 400 | 1.3 | 0 | sentence |
-
-Article measure is the 720px column, about 62–68 characters at 16px Caslon.
 
 ## Motion
 
@@ -159,6 +102,69 @@ Reduced motion: border transition 1ms. Do not fade the done label — a fade wou
 - [ ] Fold is an `<aside>` with an accessible name; label is present for the email.
 - [ ] `prefers-reduced-motion: reduce` does not break submit.
 - [ ] No images, no emoji, no dummy latin. Demo starts with the piece header comment.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: masthead “THE LOAM LETTER / No. 41 · April 2026 / FIELD NOTES” with a 1px ink rule under it. Headline “What the frost left in the north bed”. Byline “By *Ida Marum* · 12 April 2026 · 9 min read”. Opening paragraph with a 62px moss drop cap. Fold already visible in the first 800px. Form empty, placeholder `you@garden.mail`, button “Subscribe”. Second paragraph visible below the fold.
+2. Focus the input: default focus ring (2px moss, 3px offset). The hairline stays `--ink`.
+3. Submit empty or invalid: `preventDefault`, form gets `.bad` (hairline `--rust` `#9A4A2C`), `#msg` reads “A full address, please — the letter does not go to a first name.” Focus returns to the input. Button still says “Subscribe”.
+4. Submit a value matching `^[^\s@]+@[^\s@]+\.[^\s@]+$`: form gets `.done` (hairline moss), input and button `display:none`, `.done-label` displays as a flex row: italic 18px Caslon “You’re on the list”. Input is `disabled`. Live region: “You’re on the list. No. 42 leaves on 12 May.”
+5. Hover Subscribe (enabled): colour `--ink` from `--moss`.
+6. No other animation. The fold does not slide in.
+7. Reduced motion: form border-color transition is 1ms. Morph is a class swap (no height animation), so it is already instant.
+
+## Tokens
+
+```css
+:root {
+  --bg: #e7e2d4;          /* page olive paper */
+  --fold: #f3eee3;        /* fold panel */
+  --ink: #242018;
+  --ink-2: #5c5648;
+  --ink-3: #8a8374;
+  --line: #c9c2b0;
+  --line-2: #b4ad98;
+  --moss: #3d5340;        /* issue, drop cap, button, success */
+  --rust: #9a4a2c;        /* invalid hairline + message */
+  --ok: #3d5340;
+
+  --serif: "Libre Caslon Text", Georgia, serif;
+  --sans: "Karla", system-ui, sans-serif;
+
+  --col: 720px;
+  --fold-pad: 28px 32px 24px;
+  --iss-col: 140px;
+  --row-h: 44px;
+
+  --t-fast: 160ms;
+  --t-morph: 320ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Body / article | Libre Caslon Text | 16px | 400 | 1.55 | 0 | sentence |
+| Mast / issue kicker | Karla | 11px | 500–600 | 1 | +0.14–0.16em | UPPERCASE |
+| Headline | Libre Caslon Text | 34px | 700 | 1.15 | −0.015em | sentence |
+| Byline | Karla + italic Caslon name | 13 / 15px | 400 | 1.4 | 0 | sentence |
+| Drop cap | Libre Caslon Text | 62px | 700 | 0.8 | 0 | the letter T |
+| Issue number | Libre Caslon Text | 40px | 700 | 1 | −0.02em | “No. 41” |
+| Fold title | Libre Caslon Text italic | 22px | 400 | 1.2 | 0 | sentence |
+| Promise | Karla | 15px | 400 | 1.45 | 0 | sentence |
+| Input | Libre Caslon Text italic | 17px | 400 | 1 | 0 | as typed |
+| Button | Karla | 13px | 600 | 1 | +0.08em | UPPERCASE |
+| Done line | Libre Caslon Text italic | 18px | 400 | 1 | 0 | sentence |
+| Message | Karla | 12px | 400 | 1.3 | 0 | sentence |
+
+Article measure is the 720px column, about 62–68 characters at 16px Caslon.
 
 ## Implementation notes
 

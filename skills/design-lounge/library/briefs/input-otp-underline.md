@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the underline variant. For boxed cells use `otp-code`; do not mix the two on one screen.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The second sign-in step of Quaystone Private, a private bank. Six digits sit on six hairline underlines with no boxes, set in a 54px high-contrast serif, on deep bottle green framed by a thin inset rule with corner captions like a letterhead. Typing moves forward, Backspace moves back, pasting "482 916" fills all six. A full code is checked automatically: a wrong one turns the underlines and digits coral and shakes the row; the right one turns everything gold and lifts the digits one after another. A resend countdown ticks under the row and becomes a link at zero. The detail worth copying is the underline itself: a faint resting line, a cream line once filled, and a 3px gold line that grows from the centre on the focused cell.
-
-## Reference behaviour
-
-1. First frame: digits 4 and 8 are already in cells 1 and 2. Cell 3 is focused: gold underline, blinking gold caret. Cells 4–6 are empty with faint lines. A short dash separates the two groups of three. "Resend code in 0:30" starts counting down. A hint line shows "Demo code 482916".
-2. Typing a digit fills the current cell and moves focus to the next. Non-digits are blocked. Typing into a filled cell replaces it (the cell selects its contents on focus).
-3. Backspace clears the current cell; on an empty cell it clears the previous one and moves there. Delete clears in place. Left and Right arrows move between cells; Home and End jump to the ends.
-4. Pasting anywhere in the row strips non-digits. Six digits fill from cell 1; fewer fill from the current cell. Focus lands on the last filled cell.
-5. When all six are filled, the row enters "checking": the six resting lines pulse gold in a wave (80ms stagger) and the message says "Checking code…" for 700ms. Input is locked while checking.
-6. Wrong code: underlines and digits turn coral, the row shakes (420ms, ±10px decaying), the message reads "That code doesn't match. 2 attempts left." with an alert icon. After 520ms the cells clear and focus returns to cell 1. Typing again clears the coral.
-7. After three wrong codes the message reads "Too many tries. We sent you a fresh code.", a new code is issued (shown in the hint) and the countdown restarts.
-8. Right code (482916): underlines turn gold, digits turn gold and lift 8px one after another (60ms stagger), a check draws itself, and the message reads "Verified. Opening your accounts…". The countdown is replaced by "Code accepted". The cells become read-only. "Start again" appears and takes focus.
-9. Countdown: once per second, "Resend code in 0:29" … "0:01". At zero it becomes an underlined "Resend code" button. Pressing it issues a new code, restarts at 0:30, clears the cells and says "New code sent to +351 ••• ••• 417."
-10. "Call me instead" says "Calling +351 ••• ••• 417 now. The voice will read six digits twice."
-11. Reduced motion: no shake, no lift, no wave (lines go solid gold while checking), the caret is solid, the check appears drawn.
 
 ## Structure
 
@@ -49,55 +37,6 @@ panel: 520px max, centred
 - Each cell holds one `input` (`inputmode="numeric"`, `maxlength="1"`, `aria-label="Digit n of 6"`; the first has `autocomplete="one-time-code"`) and a `span.blink` caret.
 - The message is `p role="status" aria-live="polite"` under the row.
 - A footer row: countdown `span` (later holding the Resend `button`) and "Call me instead" `button`. Under it, the demo hint and the "Start again" button.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0e2622;          /* bottle green */
-  --bg-2: #123029;        /* top of the radial wash */
-  --line: #2a4a42;        /* frame and divider */
-  --ink: #f2ebdd;         /* cream digits and headline */
-  --ink-2: #c3c0b2;       /* body copy, filled underline */
-  --ink-3: #93a198;       /* captions, countdown */
-  --rest: rgba(242,235,221,.22);  /* empty underline */
-  --gold: #d9b26f;        /* focus line, caret, success, eyebrow */
-  --err: #f08a6c;         /* wrong code */
-  --focus: #d9b26f;
-
-  --serif: "Prata", Georgia, serif;
-  --sans: "Albert Sans", system-ui, sans-serif;
-
-  --cell-w: 64px;
-  --cell-h: 88px;
-  --cell-gap: 16px;
-  --line-rest: 2px;
-  --line-focus: 3px;
-  --frame-inset: 24px;
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --t-grow: 280ms;
-  --t-shake: 420ms;
-  --t-check: 700ms;
-  --resend: 30s;
-}
-```
-
-Page background: `radial-gradient(120% 90% at 50% 0%, var(--bg-2), var(--bg) 70%)`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Digits | Prata | 54px | 400 | 1 | 0 | Numerals |
-| Headline | Prata | 40px | 400 | 1.12 | -0.01em | Sentence |
-| Eyebrow | Albert Sans | 12px | 400 | 1 | 0.14em | Upper, 24px gold rule before |
-| Body | Albert Sans | 15px | 400 | 1.5 | 0 | Sentence; masked number 500 weight, 0.04em |
-| Message | Albert Sans | 14px | 400 | 1.5 | 0 | Sentence |
-| Countdown, links | Albert Sans | 14px | 400 | 1.5 | 0 | tabular-nums |
-| Corner captions | Albert Sans | 11px | 400 | 1 | 0.14em | Upper |
-| Demo hint code | Prata | 14px | 400 | 1 | 0.18em | Numerals |
 
 ## Motion
 
@@ -161,6 +100,73 @@ Page background: `radial-gradient(120% 90% at 50% 0%, var(--bg-2), var(--bg) 70%
 - [ ] Code 482916, masked number "+351 ••• ••• 417", three attempts.
 - [ ] First frame shows 4 and 8 typed and cell 3 focused.
 - [ ] Bottle green `#0E2622`, cream `#F2EBDD`, gold `#D9B26F`, coral `#F08A6C`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: digits 4 and 8 are already in cells 1 and 2. Cell 3 is focused: gold underline, blinking gold caret. Cells 4–6 are empty with faint lines. A short dash separates the two groups of three. "Resend code in 0:30" starts counting down. A hint line shows "Demo code 482916".
+2. Typing a digit fills the current cell and moves focus to the next. Non-digits are blocked. Typing into a filled cell replaces it (the cell selects its contents on focus).
+3. Backspace clears the current cell; on an empty cell it clears the previous one and moves there. Delete clears in place. Left and Right arrows move between cells; Home and End jump to the ends.
+4. Pasting anywhere in the row strips non-digits. Six digits fill from cell 1; fewer fill from the current cell. Focus lands on the last filled cell.
+5. When all six are filled, the row enters "checking": the six resting lines pulse gold in a wave (80ms stagger) and the message says "Checking code…" for 700ms. Input is locked while checking.
+6. Wrong code: underlines and digits turn coral, the row shakes (420ms, ±10px decaying), the message reads "That code doesn't match. 2 attempts left." with an alert icon. After 520ms the cells clear and focus returns to cell 1. Typing again clears the coral.
+7. After three wrong codes the message reads "Too many tries. We sent you a fresh code.", a new code is issued (shown in the hint) and the countdown restarts.
+8. Right code (482916): underlines turn gold, digits turn gold and lift 8px one after another (60ms stagger), a check draws itself, and the message reads "Verified. Opening your accounts…". The countdown is replaced by "Code accepted". The cells become read-only. "Start again" appears and takes focus.
+9. Countdown: once per second, "Resend code in 0:29" … "0:01". At zero it becomes an underlined "Resend code" button. Pressing it issues a new code, restarts at 0:30, clears the cells and says "New code sent to +351 ••• ••• 417."
+10. "Call me instead" says "Calling +351 ••• ••• 417 now. The voice will read six digits twice."
+11. Reduced motion: no shake, no lift, no wave (lines go solid gold while checking), the caret is solid, the check appears drawn.
+
+## Tokens
+
+```css
+:root {
+  --bg: #0e2622;          /* bottle green */
+  --bg-2: #123029;        /* top of the radial wash */
+  --line: #2a4a42;        /* frame and divider */
+  --ink: #f2ebdd;         /* cream digits and headline */
+  --ink-2: #c3c0b2;       /* body copy, filled underline */
+  --ink-3: #93a198;       /* captions, countdown */
+  --rest: rgba(242,235,221,.22);  /* empty underline */
+  --gold: #d9b26f;        /* focus line, caret, success, eyebrow */
+  --err: #f08a6c;         /* wrong code */
+  --focus: #d9b26f;
+
+  --serif: "Prata", Georgia, serif;
+  --sans: "Albert Sans", system-ui, sans-serif;
+
+  --cell-w: 64px;
+  --cell-h: 88px;
+  --cell-gap: 16px;
+  --line-rest: 2px;
+  --line-focus: 3px;
+  --frame-inset: 24px;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --t-grow: 280ms;
+  --t-shake: 420ms;
+  --t-check: 700ms;
+  --resend: 30s;
+}
+```
+
+Page background: `radial-gradient(120% 90% at 50% 0%, var(--bg-2), var(--bg) 70%)`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Digits | Prata | 54px | 400 | 1 | 0 | Numerals |
+| Headline | Prata | 40px | 400 | 1.12 | -0.01em | Sentence |
+| Eyebrow | Albert Sans | 12px | 400 | 1 | 0.14em | Upper, 24px gold rule before |
+| Body | Albert Sans | 15px | 400 | 1.5 | 0 | Sentence; masked number 500 weight, 0.04em |
+| Message | Albert Sans | 14px | 400 | 1.5 | 0 | Sentence |
+| Countdown, links | Albert Sans | 14px | 400 | 1.5 | 0 | tabular-nums |
+| Corner captions | Albert Sans | 11px | 400 | 1 | 0.14em | Upper |
+| Demo hint code | Prata | 14px | 400 | 1 | 0.18em | Numerals |
 
 ## Implementation notes
 

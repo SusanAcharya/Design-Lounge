@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The contribution calendar on a developer's profile at "Mossgrid", an invented code host. It is set like a printed almanac rather than a dashboard: a warm paper sheet, a serif headline ("1,312 contributions *in 2025*"), monospaced labels, and 53 × 7 squares in five steps of one ink. A year switcher (2024 / 2025 / 2026) rebuilds the grid with a left-to-right wave. Three theme swatches (Meadow green, Clay terracotta, Tide blue) recolour every cell, staggered 4ms per week, so the change sweeps across the year instead of snapping. Below the grid sit four stats: current streak, longest streak, busiest day and active days. The detail worth copying is that the grid is one tab stop: focus it, then move day by day with arrow keys while the same tooltip used for hover follows the focused day.
-
-## Reference behaviour
-
-1. Initial state: year 2025, theme Meadow. Cells rise in (opacity 0 → 1, translateY 4px → 0, scale .6 → 1, 500ms expo out) staggered 7ms per week column. The headline total and the stats count up over 700ms (cubic out).
-2. Hover a day. A dark tooltip appears 10px above the cell, centred, with "**14 contributions** · Tue 12 Aug 2025" (or "No contributions · …"). The hovered cell gets a 1.5px ink ring. The tooltip is clamped 8px inside the sheet edges.
-3. Leave the grid and the tooltip fades out in 120ms.
-4. Tab to the grid. The last past day becomes active: it scales to 1.35 with a paper gap and an ink ring, and the tooltip shows. ↑/↓ move one day, ←/→ move one week, Home/End jump to the first and last past day. A polite live region reads the tooltip text. On narrow screens the scroller follows the active day.
-5. Click 2026 (or use arrows inside the year radiogroup). The grid rebuilds with the wave. Days after today (3 Oct 2026) render as empty 1px-outlined squares and cannot be focused. The scroller jumps to the end so today is visible. The first stat label reads "Current streak". For 2024 and 2025 it reads "Streak at year end".
-6. Click the Clay swatch. Cell colours, the italic year in the headline, and the streak number crossfade over 300ms, each cell delayed by `week × 4ms`.
-7. Reduced motion: no rise-in, no ripple, no count-up. Values and colours apply at once.
 
 ## Structure
 
@@ -45,44 +37,6 @@ page 1280 × 800, #F3EFE3 + 4px paper grain; sheet 968 max, radius 3, padding 36
 - Month labels are absolutely positioned at `week × 16px` above the first week containing the 1st.
 - Stats: `dl` with four groups split by 1px rules.
 - Tooltip: one absolutely positioned `div` in the sheet, `aria-hidden`. The live region carries the text.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f3efe3;        /* page */
-  --paper: #faf7ee;     /* sheet */
-  --ink: #22302a;       /* text, tooltip, active year */
-  --ink-2: #46544c;
-  --ink-3: #6b7770;     /* labels */
-  --line: #ddd6c3;      /* rules, future-day outline */
-  --c0: #e6e1d0;        /* zero */
-  --c1: #c5d9a6; --c2: #8fbf6a; --c3: #4f9a45; --c4: #24642f;   /* Meadow */
-  --serif: "Spectral", Georgia, serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-  --cell: 13px; --gap: 3px;            /* column pitch 16px */
-  --r-sheet: 3px; --r-cell: 2px; --r-pill: 999px;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-body[data-theme="clay"] { --c1: #efc9a8; --c2: #e09a6b; --c3: #c0603a; --c4: #7f3420; }
-body[data-theme="tide"] { --c1: #bcd6dc; --c2: #7fb2c0; --c3: #3f8399; --c4: #1d4f63; }
-```
-
-Level thresholds: 0 → c0, 1–2 → c1, 3–5 → c2, 6–10 → c3, 11+ → c4.
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Owner line | DM Mono | 12px | 400, handle 500 | 0.06em | ink-3 |
-| Headline | Spectral | 40 / 1.05 | 400, number 600 | −0.015em | "in 2025" italic in `--c4` |
-| Year pill | DM Mono | 13px | 400 | 0 | 34px tall |
-| Month / day labels | DM Mono | 11px / 10px | 400 | 0 | ink-3 |
-| Hint, legend | DM Mono | 11px | 400 | 0 | ink-3 |
-| Stat label | DM Mono | 11px | 400 | 0.08em | uppercase |
-| Stat value | Spectral | 30 / 1 | 400 | 0 | lining tabular nums. Unit in 12px mono |
-| Tooltip | DM Mono | 12 / 1.3 | 400, count 500 | 0 | paper on ink |
 
 ## Motion
 
@@ -147,6 +101,58 @@ Level thresholds: 0 → c0, 1–2 → c1, 3–5 → c2, 6–10 → c3, 11+ → c
 - [ ] Years 2024, 2025, 2026, and 2025 starts selected.
 - [ ] Themes Meadow, Clay, Tide with the hexes in Tokens.
 - [ ] Stats: streak, longest streak, busiest day (value + date), active days "of N".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: year 2025, theme Meadow. Cells rise in (opacity 0 → 1, translateY 4px → 0, scale .6 → 1, 500ms expo out) staggered 7ms per week column. The headline total and the stats count up over 700ms (cubic out).
+2. Hover a day. A dark tooltip appears 10px above the cell, centred, with "**14 contributions** · Tue 12 Aug 2025" (or "No contributions · …"). The hovered cell gets a 1.5px ink ring. The tooltip is clamped 8px inside the sheet edges.
+3. Leave the grid and the tooltip fades out in 120ms.
+4. Tab to the grid. The last past day becomes active: it scales to 1.35 with a paper gap and an ink ring, and the tooltip shows. ↑/↓ move one day, ←/→ move one week, Home/End jump to the first and last past day. A polite live region reads the tooltip text. On narrow screens the scroller follows the active day.
+5. Click 2026 (or use arrows inside the year radiogroup). The grid rebuilds with the wave. Days after today (3 Oct 2026) render as empty 1px-outlined squares and cannot be focused. The scroller jumps to the end so today is visible. The first stat label reads "Current streak". For 2024 and 2025 it reads "Streak at year end".
+6. Click the Clay swatch. Cell colours, the italic year in the headline, and the streak number crossfade over 300ms, each cell delayed by `week × 4ms`.
+7. Reduced motion: no rise-in, no ripple, no count-up. Values and colours apply at once.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f3efe3;        /* page */
+  --paper: #faf7ee;     /* sheet */
+  --ink: #22302a;       /* text, tooltip, active year */
+  --ink-2: #46544c;
+  --ink-3: #6b7770;     /* labels */
+  --line: #ddd6c3;      /* rules, future-day outline */
+  --c0: #e6e1d0;        /* zero */
+  --c1: #c5d9a6; --c2: #8fbf6a; --c3: #4f9a45; --c4: #24642f;   /* Meadow */
+  --serif: "Spectral", Georgia, serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  --cell: 13px; --gap: 3px;            /* column pitch 16px */
+  --r-sheet: 3px; --r-cell: 2px; --r-pill: 999px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+body[data-theme="clay"] { --c1: #efc9a8; --c2: #e09a6b; --c3: #c0603a; --c4: #7f3420; }
+body[data-theme="tide"] { --c1: #bcd6dc; --c2: #7fb2c0; --c3: #3f8399; --c4: #1d4f63; }
+```
+
+Level thresholds: 0 → c0, 1–2 → c1, 3–5 → c2, 6–10 → c3, 11+ → c4.
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Owner line | DM Mono | 12px | 400, handle 500 | 0.06em | ink-3 |
+| Headline | Spectral | 40 / 1.05 | 400, number 600 | −0.015em | "in 2025" italic in `--c4` |
+| Year pill | DM Mono | 13px | 400 | 0 | 34px tall |
+| Month / day labels | DM Mono | 11px / 10px | 400 | 0 | ink-3 |
+| Hint, legend | DM Mono | 11px | 400 | 0 | ink-3 |
+| Stat label | DM Mono | 11px | 400 | 0.08em | uppercase |
+| Stat value | Spectral | 30 / 1 | 400 | 0 | lining tabular nums. Unit in 12px mono |
+| Tooltip | DM Mono | 12 / 1.3 | 400, count 500 | 0 | paper on ink |
 
 ## Implementation notes
 

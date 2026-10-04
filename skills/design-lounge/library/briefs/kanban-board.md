@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A sprint board for a product team ("Fjord Bank · Mobile 4.2"): four columns — Backlog, In progress, Review, Done — each with a coloured status dot, a live card count, a scrollable card list and an "Add card" button. Cards carry coloured label pills, a title, an issue ID, a due date and an initials avatar. Drag-and-drop is written with pointer events (no HTML5 DnD): after 4px of movement the card is replaced by a dashed placeholder and a tilted ghost copy follows the pointer; the column under the pointer tints teal; releasing drops the card where the placeholder is. Cards are focusable and `[` / `]` move them between columns for keyboard users. Below 1280 the board scrolls horizontally with snap points. Single family (Schibsted Grotesk) at four weights; one teal accent.
-
-## Reference behaviour
-
-1. Initial state: 60px white header (title, "Sprint 31 · 12 cards", a keyboard hint at right, "Filter" and a teal "New card" button). Board with four columns: counts 4 / 3 / 2 / 3. Cards at rest have a 1px `--line` border and a 1px shadow; cursor is `grab`.
-2. Hover a card: border darkens to `--line-2`. No lift.
-3. Press and move a card ≥ 4px: a **ghost** (a clone, `position: fixed`, rotated 3° and scaled 1.02, teal border, deep shadow) appears under the pointer offset by the original grab point; the original card is removed from flow (`display: none`) and a **placeholder** (dashed 1.5px `--line-2` border, 6 % teal fill, same height as the card) takes its place.
-4. Move across columns: the column whose list is under the pointer gets class `over` (background `--accent-soft`). The placeholder moves to the position before the first card whose vertical midpoint is below the pointer, or to the end of the list.
-5. Release: the placeholder is replaced by the card, the ghost is removed, tints clear, both column counts update, the card receives focus and a polite live region says "<title> moved to <column>".
-6. Pointer cancel (e.g. window blur) behaves like release at the current placeholder position.
-7. Keyboard: Tab to a card (2px teal outline), press `]` to move it to the top of the next column or `[` to the previous; counts update; focus stays on the card; the live region announces the move.
-8. "Add card": appends a card titled "Untitled card" with a fresh ID (FB-4xx), no labels, and focuses it; the count increments.
-9. At widths where four 292px columns don't fit, the board scrolls horizontally with `scroll-snap-type: x proximity`; column lists scroll vertically on their own.
 
 ## Structure
 
@@ -48,64 +38,6 @@ columns 292px wide, 16px gap, 28px board padding; 4 × 292 + 3 × 16 + 56 = 1272
   - `<article class="card" tabindex="0">`: `.labels` (0–2 `.lab` pills), `<p>` title, `.meta` (`.id`, 14px calendar or check icon, date, `.av` avatar with `--a` colour).
 - Drag artefacts created at runtime: `.card.ghost` appended to `<body>`, `.ph` placeholder inserted into a list.
 - `<p class="sr" aria-live="polite">` visually hidden status line.
-
-## Tokens
-
-```css
-:root {
-  /* colour — cool light greys, white cards, teal accent, four label hues */
-  --bg: #f3f4f6;          /* page */
-  --col: #e9ebee;         /* column surface */
-  --card: #ffffff;        /* card, header */
-  --line: #d9dce2;        /* card border, header rule */
-  --line-2: #c3c8d0;      /* hover border, placeholder dash, button border */
-  --ink: #161a1f;
-  --ink-2: #5b6470;       /* ids, counts */
-  --ink-3: #8a929e;       /* dates, hint, Backlog dot */
-  --accent: #0e7c7b;      /* primary button, focus, ghost border, Done dot */
-  --accent-soft: #d7efec; /* column "over" tint */
-  --accent-ink: #f2fbfa;
-  --ph-fill: rgba(14, 124, 123, .06);
-  --l-bug: #b42318;    --l-bug-bg: #fde8e6;
-  --l-feat: #175cd3;   --l-feat-bg: #e3ecfb;     /* also the In progress dot */
-  --l-design: #8a3ffc; --l-design-bg: #efe6ff;
-  --l-infra: #b54708;  --l-infra-bg: #fdefd9;    /* also the Review dot */
-  --av-1: #0e7c7b; --av-2: #8a3ffc; --av-3: #b54708; --av-4: #175cd3;
-
-  /* type */
-  --font: "Schibsted Grotesk", system-ui, sans-serif;
-  --fs-h1: 17px; --fs-col: 13px; --fs-card: 14px; --fs-meta: 12px; --fs-label: 11px; --fs-av: 10px;
-
-  /* layout */
-  --col-w: 292px; --gap: 16px; --board-pad: 24px 28px; --header-h: 60px;
-  --r: 10px;        /* column */
-  --r-card: 8px; --r-btn: 8px; --r-s: 6px;
-  --card-pad: 12px 12px 10px; --list-gap: 8px; --av: 24px; --dot: 8px;
-  --drag-threshold: 4px; --ghost-tilt: 3deg; --ghost-scale: 1.02;
-
-  /* elevation */
-  --shadow-card: 0 1px 2px rgba(22, 26, 31, .06);
-  --shadow-ghost: 0 18px 40px -12px rgba(22, 26, 31, .35), 0 2px 6px rgba(22, 26, 31, .12);
-
-  /* motion */
-  --t-micro: 140ms; --t-layout: 240ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role          | Family            | Size | Weight | Line-height | Tracking | Case / notes |
-|---------------|-------------------|-----:|-------:|------------:|---------:|--------------|
-| Board title   | Schibsted Grotesk | 17px | 600    | 1.2         | −0.01em  | sentence |
-| Crumb / hint  | Schibsted Grotesk | 13px / 12px | 400 | 1.4      | 0        | `--ink-3`; `<kbd>` 1px `--line-2` border, 4px radius |
-| Buttons       | Schibsted Grotesk | 13px | 500    | 1           | 0        | 34px tall, 14px side padding |
-| Column name   | Schibsted Grotesk | 13px | 600    | 1.2         | +0.01em  | sentence; 8px dot before |
-| Count pill    | Schibsted Grotesk | 12px | 500    | 1.4         | 0        | tabular; white pill, 1px `--line` border, min-width 22px |
-| Card title    | Schibsted Grotesk | 14px | 500    | 1.35        | 0        | sentence, wraps to 2 lines |
-| Label pill    | Schibsted Grotesk | 11px | 600    | 1.4         | +0.01em  | sentence; padding `2px 7px`, radius 999px |
-| Meta (id/date)| Schibsted Grotesk | 12px | 500 / 400 | 1.4      | 0        | tabular; id `--ink-2`, date `--ink-3` |
-| Avatar        | Schibsted Grotesk | 10px | 700    | 1           | 0        | UPPERCASE initials on 24px circle |
 
 ## Motion
 
@@ -165,6 +97,80 @@ Reduced motion: transitions 1ms; the ghost is not rotated or scaled (`transform:
 - [ ] Below 1272px the board scrolls horizontally with `scroll-snap-type: x proximity`; lists scroll vertically independently.
 - [ ] Cards use `user-select: none` and `touch-action: none` so text selection and page panning do not fight the drag.
 - [ ] No HTML5 `draggable` attribute is used; behaviour is identical with mouse, pen and touch.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 60px white header (title, "Sprint 31 · 12 cards", a keyboard hint at right, "Filter" and a teal "New card" button). Board with four columns: counts 4 / 3 / 2 / 3. Cards at rest have a 1px `--line` border and a 1px shadow; cursor is `grab`.
+2. Hover a card: border darkens to `--line-2`. No lift.
+3. Press and move a card ≥ 4px: a **ghost** (a clone, `position: fixed`, rotated 3° and scaled 1.02, teal border, deep shadow) appears under the pointer offset by the original grab point; the original card is removed from flow (`display: none`) and a **placeholder** (dashed 1.5px `--line-2` border, 6 % teal fill, same height as the card) takes its place.
+4. Move across columns: the column whose list is under the pointer gets class `over` (background `--accent-soft`). The placeholder moves to the position before the first card whose vertical midpoint is below the pointer, or to the end of the list.
+5. Release: the placeholder is replaced by the card, the ghost is removed, tints clear, both column counts update, the card receives focus and a polite live region says "<title> moved to <column>".
+6. Pointer cancel (e.g. window blur) behaves like release at the current placeholder position.
+7. Keyboard: Tab to a card (2px teal outline), press `]` to move it to the top of the next column or `[` to the previous; counts update; focus stays on the card; the live region announces the move.
+8. "Add card": appends a card titled "Untitled card" with a fresh ID (FB-4xx), no labels, and focuses it; the count increments.
+9. At widths where four 292px columns don't fit, the board scrolls horizontally with `scroll-snap-type: x proximity`; column lists scroll vertically on their own.
+
+## Tokens
+
+```css
+:root {
+  /* colour — cool light greys, white cards, teal accent, four label hues */
+  --bg: #f3f4f6;          /* page */
+  --col: #e9ebee;         /* column surface */
+  --card: #ffffff;        /* card, header */
+  --line: #d9dce2;        /* card border, header rule */
+  --line-2: #c3c8d0;      /* hover border, placeholder dash, button border */
+  --ink: #161a1f;
+  --ink-2: #5b6470;       /* ids, counts */
+  --ink-3: #8a929e;       /* dates, hint, Backlog dot */
+  --accent: #0e7c7b;      /* primary button, focus, ghost border, Done dot */
+  --accent-soft: #d7efec; /* column "over" tint */
+  --accent-ink: #f2fbfa;
+  --ph-fill: rgba(14, 124, 123, .06);
+  --l-bug: #b42318;    --l-bug-bg: #fde8e6;
+  --l-feat: #175cd3;   --l-feat-bg: #e3ecfb;     /* also the In progress dot */
+  --l-design: #8a3ffc; --l-design-bg: #efe6ff;
+  --l-infra: #b54708;  --l-infra-bg: #fdefd9;    /* also the Review dot */
+  --av-1: #0e7c7b; --av-2: #8a3ffc; --av-3: #b54708; --av-4: #175cd3;
+
+  /* type */
+  --font: "Schibsted Grotesk", system-ui, sans-serif;
+  --fs-h1: 17px; --fs-col: 13px; --fs-card: 14px; --fs-meta: 12px; --fs-label: 11px; --fs-av: 10px;
+
+  /* layout */
+  --col-w: 292px; --gap: 16px; --board-pad: 24px 28px; --header-h: 60px;
+  --r: 10px;        /* column */
+  --r-card: 8px; --r-btn: 8px; --r-s: 6px;
+  --card-pad: 12px 12px 10px; --list-gap: 8px; --av: 24px; --dot: 8px;
+  --drag-threshold: 4px; --ghost-tilt: 3deg; --ghost-scale: 1.02;
+
+  /* elevation */
+  --shadow-card: 0 1px 2px rgba(22, 26, 31, .06);
+  --shadow-ghost: 0 18px 40px -12px rgba(22, 26, 31, .35), 0 2px 6px rgba(22, 26, 31, .12);
+
+  /* motion */
+  --t-micro: 140ms; --t-layout: 240ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role          | Family            | Size | Weight | Line-height | Tracking | Case / notes |
+|---------------|-------------------|-----:|-------:|------------:|---------:|--------------|
+| Board title   | Schibsted Grotesk | 17px | 600    | 1.2         | −0.01em  | sentence |
+| Crumb / hint  | Schibsted Grotesk | 13px / 12px | 400 | 1.4      | 0        | `--ink-3`; `<kbd>` 1px `--line-2` border, 4px radius |
+| Buttons       | Schibsted Grotesk | 13px | 500    | 1           | 0        | 34px tall, 14px side padding |
+| Column name   | Schibsted Grotesk | 13px | 600    | 1.2         | +0.01em  | sentence; 8px dot before |
+| Count pill    | Schibsted Grotesk | 12px | 500    | 1.4         | 0        | tabular; white pill, 1px `--line` border, min-width 22px |
+| Card title    | Schibsted Grotesk | 14px | 500    | 1.35        | 0        | sentence, wraps to 2 lines |
+| Label pill    | Schibsted Grotesk | 11px | 600    | 1.4         | +0.01em  | sentence; padding `2px 7px`, radius 999px |
+| Meta (id/date)| Schibsted Grotesk | 12px | 500 / 400 | 1.4      | 0        | tabular; id `--ink-2`, date `--ink-3` |
+| Avatar        | Schibsted Grotesk | 10px | 700    | 1           | 0        | UPPERCASE initials on 24px circle |
 
 ## Implementation notes
 

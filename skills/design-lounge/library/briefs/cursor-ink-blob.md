@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 An issue index for Field Notes, a fictional garden journal. Six editorial cards sit on warm paper. A 168px gooey ink blot — three dark-green SVG circles blurred together with an SVG `feColorMatrix` "goo" filter — follows the pointer with a 0.14 lerp lag. When the blot's centre sits inside a card (8px inset), that card fills with ink `#0f2e22`, type flips to paper, and the card lifts 8px. The system cursor is hidden. Replay recenters the blot and clears hits. The one idea is ink moving over paper, not a generic spotlight.
-
-## Reference behaviour
-
-1. Initial state: paper `#efe8d8`, 64px nav with italic 26px "Field Notes", links Essays (current) / Garden / Archive, Replay on the right. Title "Letters from the plot" plus "Issue 09 · Autumn 2026". Six cards in two rows of three.
-2. The blob starts at 62% × 48% of the viewport. `body { cursor: none }`. The blob is `pointer-events: none` and does not steal clicks.
-3. `pointermove` writes target coordinates. A `requestAnimationFrame` loop lerps current x/y toward the target by **0.14** per frame (~14% of the remaining distance). The blob's `transform: translate(x px, y px)` uses a −84px margin so the 168px square is centred on that point.
-4. Each frame, for every `[data-card]`, if the blob centre is inside the card rect inset by 8px, add class `hit`. Otherwise remove it. Multiple cards can theoretically hit if they overlap; they do not overlap here, so one at a time.
-5. `.hit`: background `--ink`, colour `--paper`, border `--ink`, `translateY(-8px)` over 280ms expo-out. Index, paragraph and time go paper at 78% opacity.
-6. The SVG circles keep a slow `animate` on r / cx / cy (5s, 6s, 4.5s) so the blot breathes while idle.
-7. Replay sets current and target to the start position, applies the transform, and removes `.hit` from every card.
-8. Reduced motion: lerp factor becomes **1** (blob sticks to the pointer), circle SMIL animation is off, card transition is 1ms. Hit-testing still runs.
-9. Nav links `href="#"` preventDefault. Focus-visible restores a default cursor on the focused control so keyboard users can see it.
 
 ## Structure
 
@@ -56,39 +46,6 @@ An issue index for Field Notes, a fictional garden journal. Six editorial cards 
 | 04 · Tool  | A hoe with a name    | Ash handle, worn where Marta’s thumb sits. Oil it on Sundays; it will outlast the fence. | 1 Oct |
 | 05 · Kitchen | First quince jelly | Four fruits, too hard to bite, cooked down to a rose slab that cuts like cheese. | 2 Oct |
 | 06 · Note  | Leave the seed heads | Goldfinches found the fennel. The plot is not only ours, and the calendar can wait. | 2 Oct |
-
-## Tokens
-
-```css
-:root {
-  --paper: #efe8d8;            /* page */
-  --paper-2: #e4dcc8;          /* card rest */
-  --ink: #0f2e22;              /* type, hit fill */
-  --ink-2: #3d5a45;            /* card body */
-  --ink-3: #7a8f7e;            /* index, dates, replay */
-  --line: rgba(15, 46, 34, .16);
-  --blob: #143d2c;             /* circle fill */
-  --serif: "Instrument Serif", Georgia, serif;
-  --sans: "Inter", system-ui, sans-serif;
-  --gutter: 48px;
-  --t-micro: 160ms;
-  --t-card: 280ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role       | Family           | Size | Weight | Line-height | Tracking | Case      |
-|------------|------------------|-----:|-------:|------------:|---------:|-----------|
-| Page title | Instrument Serif | 36px | italic 400 | 1.1     | −0.02em  | sentence  |
-| Card title | Instrument Serif | 26px | italic 400 | 1.15    | −0.02em  | sentence  |
-| Brand      | Instrument Serif | 26px | italic 400 | 1       | 0        | Title     |
-| Card body  | Inter            | 13.5px | 400  | 1.5         | 0        | sentence  |
-| Nav        | Inter            | 12px | 500    | 1           | +0.04em  | Title     |
-| Index/date | Inter            | 11px | 500    | 1           | +0.06–.14em | UPPERCASE |
-| Replay     | Inter            | 11px | 500    | 1           | +0.12em  | UPPERCASE |
 
 ## Motion
 
@@ -134,6 +91,55 @@ Do not use mix-blend-mode difference (it turns the paper a strange complementary
 - [ ] Six cards with the copy in the table, Instrument Serif titles, Inter body.
 - [ ] No emoji, no purple, no glassmorphism.
 - [ ] Only Instrument Serif and Inter load.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: paper `#efe8d8`, 64px nav with italic 26px "Field Notes", links Essays (current) / Garden / Archive, Replay on the right. Title "Letters from the plot" plus "Issue 09 · Autumn 2026". Six cards in two rows of three.
+2. The blob starts at 62% × 48% of the viewport. `body { cursor: none }`. The blob is `pointer-events: none` and does not steal clicks.
+3. `pointermove` writes target coordinates. A `requestAnimationFrame` loop lerps current x/y toward the target by **0.14** per frame (~14% of the remaining distance). The blob's `transform: translate(x px, y px)` uses a −84px margin so the 168px square is centred on that point.
+4. Each frame, for every `[data-card]`, if the blob centre is inside the card rect inset by 8px, add class `hit`. Otherwise remove it. Multiple cards can theoretically hit if they overlap; they do not overlap here, so one at a time.
+5. `.hit`: background `--ink`, colour `--paper`, border `--ink`, `translateY(-8px)` over 280ms expo-out. Index, paragraph and time go paper at 78% opacity.
+6. The SVG circles keep a slow `animate` on r / cx / cy (5s, 6s, 4.5s) so the blot breathes while idle.
+7. Replay sets current and target to the start position, applies the transform, and removes `.hit` from every card.
+8. Reduced motion: lerp factor becomes **1** (blob sticks to the pointer), circle SMIL animation is off, card transition is 1ms. Hit-testing still runs.
+9. Nav links `href="#"` preventDefault. Focus-visible restores a default cursor on the focused control so keyboard users can see it.
+
+## Tokens
+
+```css
+:root {
+  --paper: #efe8d8;            /* page */
+  --paper-2: #e4dcc8;          /* card rest */
+  --ink: #0f2e22;              /* type, hit fill */
+  --ink-2: #3d5a45;            /* card body */
+  --ink-3: #7a8f7e;            /* index, dates, replay */
+  --line: rgba(15, 46, 34, .16);
+  --blob: #143d2c;             /* circle fill */
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Inter", system-ui, sans-serif;
+  --gutter: 48px;
+  --t-micro: 160ms;
+  --t-card: 280ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role       | Family           | Size | Weight | Line-height | Tracking | Case      |
+|------------|------------------|-----:|-------:|------------:|---------:|-----------|
+| Page title | Instrument Serif | 36px | italic 400 | 1.1     | −0.02em  | sentence  |
+| Card title | Instrument Serif | 26px | italic 400 | 1.15    | −0.02em  | sentence  |
+| Brand      | Instrument Serif | 26px | italic 400 | 1       | 0        | Title     |
+| Card body  | Inter            | 13.5px | 400  | 1.5         | 0        | sentence  |
+| Nav        | Inter            | 12px | 500    | 1           | +0.04em  | Title     |
+| Index/date | Inter            | 11px | 500    | 1           | +0.06–.14em | UPPERCASE |
+| Replay     | Inter            | 11px | 500    | 1           | +0.12em  | UPPERCASE |
 
 ## Implementation notes
 

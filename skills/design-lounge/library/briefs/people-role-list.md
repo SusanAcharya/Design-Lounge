@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the four people, the role pills, and the empty line.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The people screen for a yard company. A title, one primary Invite button, a search field, and pills for All, Dispatch, Finance, and Yard. Four people in a white card: initials, name, email, role badge, last seen. Search and the role pill combine. If nobody matches, the card stays and a line under it reads "No one in that role. Clear the filter." Invite changes its label to "Invite sent". No modal in this piece.
-
-## Reference behaviour
-
-1. All is pressed. Four rows visible. Search is empty.
-2. Typing filters by the row's visible text, case-insensitive.
-3. A role pill shows only that role. All clears the role constraint. Search still applies.
-4. Zero matches shows the empty line. Rows that fail are `display: none` and stay in the DOM.
-5. Invite sets its own text to "Invite sent" and disables nothing else. It does not append a person.
-6. Pressed pill is ink fill with background-coloured text. Others are white with a hairline.
-7. Avatars are initials on `#2c241c`. No photos.
-8. Focus ring 2px `--focus`, offset 2px.
 
 ## Structure
 
@@ -31,35 +22,6 @@ empty paragraph
 - Search is `type="search"` labelled "Search by name".
 - Pills are buttons with `aria-pressed`.
 - Each person is an `li`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f1ea;
-  --surface: #fffdf8;
-  --ink: #1c1915;
-  --ink-2: #5e574e;
-  --ink-3: #8a8176;
-  --line: #e0d8cc;
-  --primary: #8a4b12;
-  --primary-ink: #fffdf8;
-  --primary-soft: #f3e6d8;
-  --focus: #8a4b12;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --radius: 8px;
-}
-```
-
-## Typography
-
-- Title: IBM Plex Sans 500, 28px, tracking -0.03em.
-- Invite: 14px weight 500, height 36, radius 6, fill `#8a4b12`, ink `#fffdf8`.
-- Name: 14px weight 600. Email: 12px `--ink-2`.
-- Role badge: 11px weight 600, height 22, fill `#f3e6d8`.
-- Last seen: 12px `--ink-3`.
-- Pills: 12px, height 32.
-- One face only. No mono.
 
 ## Motion
 
@@ -99,6 +61,50 @@ None. Filtering is instant.
 - [ ] The card radius is 8px. The pills are fully round.
 - [ ] One typeface, IBM Plex Sans.
 - [ ] One solid button, the invite.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. All is pressed. Four rows visible. Search is empty.
+2. Typing filters by the row's visible text, case-insensitive.
+3. A role pill shows only that role. All clears the role constraint. Search still applies.
+4. Zero matches shows the empty line. Rows that fail are `display: none` and stay in the DOM.
+5. Invite sets its own text to "Invite sent" and disables nothing else. It does not append a person.
+6. Pressed pill is ink fill with background-coloured text. Others are white with a hairline.
+7. Avatars are initials on `#2c241c`. No photos.
+8. Focus ring 2px `--focus`, offset 2px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f1ea;
+  --surface: #fffdf8;
+  --ink: #1c1915;
+  --ink-2: #5e574e;
+  --ink-3: #8a8176;
+  --line: #e0d8cc;
+  --primary: #8a4b12;
+  --primary-ink: #fffdf8;
+  --primary-soft: #f3e6d8;
+  --focus: #8a4b12;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 8px;
+}
+```
+
+## Typography
+
+- Title: IBM Plex Sans 500, 28px, tracking -0.03em.
+- Invite: 14px weight 500, height 36, radius 6, fill `#8a4b12`, ink `#fffdf8`.
+- Name: 14px weight 600. Email: 12px `--ink-2`.
+- Role badge: 11px weight 600, height 22, fill `#f3e6d8`.
+- Last seen: 12px `--ink-3`.
+- Pills: 12px, height 32.
+- One face only. No mono.
 
 ## Implementation notes
 

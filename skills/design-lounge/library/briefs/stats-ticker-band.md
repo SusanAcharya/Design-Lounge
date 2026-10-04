@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-bleed stats section for a climate data product called Meridian. Four readings sit in equal columns under a 48px condensed headline. Each figure is 112px Big Shoulders Display and counts from 0 to its target in 1200ms with a cubic ease-out, staggered 90ms. A 1px mint hairline grows to 48px on the same clock. Replay runs the count again. The feeling is a newsroom ticker: dense, dark, one mint accent, numbers doing the talking.
-
-## Reference behaviour
-
-1. Initial state: 56px nav with "MERIDIAN" wordmark, three text links (Series, Stations, Methods) and a live pill "Hour 14 · 2 Oct 2026" with a 7px mint dot. Section kicker "Readings · this hour", headline "The hour, counted", Replay button on the right. Four columns already show their final numbers after the first 1200ms run.
-2. On first paint the script starts a run: each `.num` goes from 0 to `data-to` over 1200ms. Ease is `1 - (1-p)^3`. Columns do not wait on each other for the number (they share one clock) but the mint hairline uses `--d` of 0 / 90 / 180 / 270ms.
-3. When the run finishes, Replay is enabled and `.stats` gets class `run`, which grows each `::before` hairline to 48px.
-4. Click Replay: numbers snap to 0, `run` is removed (hairlines collapse), Replay disables, the count plays again.
-5. Hover Replay: border and text become mint. Focus-visible: 2px mint outline, 3px offset, on Replay and nav links.
-6. `prefers-reduced-motion: reduce`: first paint and Replay set the final numbers immediately; hairline transition is 1ms.
-7. Screen-reader text inside each article announces the full reading (e.g. "1.48 degrees Celsius, global mean anomaly versus 1880 to 1900").
-8. The degree suffix on the first figure is a 48px `<small>` in `--ink-2`. The fourth figure uses a thousands comma (`3,842`).
 
 ## Structure
 
@@ -40,44 +31,6 @@ A full-bleed stats section for a climate data product called Meridian. Four read
 - `<section aria-label="Climate readings">`
   - `.lead` with kicker, `h1`, `#replay` button (icon + label).
   - `#stats` grid of four `<article class="stat">`. Each: `.sr` (visually hidden), `.num` with `data-to`, `data-dec`, optional `data-suf` / `data-sep`, `.unit`, `.label`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #08110e;
-  --ink: #e6f3ec;
-  --ink-2: #8aa396;
-  --ink-3: #5a6e64;
-  --line: #1c2a24;
-  --mint: #3dcf9a;
-  --mint-ink: #062016;
-  --display: "Big Shoulders Display", Impact, sans-serif;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --nav-h: 56px;
-  --pad: 64px;
-  --t-fast: 160ms;
-  --t-count: 1200ms;
-  --stagger: 90ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|---|---|---|---|---|---|---|
-| Brand | display | 18 | 700 | 1 | 0.04em | uppercase |
-| Nav links | sans | 13 | 400 | 1.45 | 0 | sentence |
-| Live pill | sans | 11 | 500 | 1 | 0.1em | uppercase |
-| Kicker | sans | 11 | 500 | 1 | 0.16em | uppercase, mint |
-| Headline | display | 48 | 700 | 0.95 | -0.01em | uppercase |
-| Replay | sans | 12 | 500 | 1 | 0.08em | uppercase |
-| Figure | display | 112 | 700 | 0.85 | -0.03em | tabular-nums |
-| Degree small | display | 48 | 700 | 1 | 0 | ink-2 |
-| Unit | sans | 12 | 500 | 1 | 0.14em | uppercase, mint |
-| Label | sans | 14 | 400 | 1.4 | 0 | ink-2, max 18ch |
 
 ## Motion
 
@@ -125,6 +78,59 @@ A full-bleed stats section for a climate data product called Meridian. Four read
 - [ ] Reduced motion skips the count and still shows final numbers and hairlines.
 - [ ] Focus rings are 2px mint on Replay and nav links.
 - [ ] At 768px the grid is 2×2 and nav links are hidden.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 56px nav with "MERIDIAN" wordmark, three text links (Series, Stations, Methods) and a live pill "Hour 14 · 2 Oct 2026" with a 7px mint dot. Section kicker "Readings · this hour", headline "The hour, counted", Replay button on the right. Four columns already show their final numbers after the first 1200ms run.
+2. On first paint the script starts a run: each `.num` goes from 0 to `data-to` over 1200ms. Ease is `1 - (1-p)^3`. Columns do not wait on each other for the number (they share one clock) but the mint hairline uses `--d` of 0 / 90 / 180 / 270ms.
+3. When the run finishes, Replay is enabled and `.stats` gets class `run`, which grows each `::before` hairline to 48px.
+4. Click Replay: numbers snap to 0, `run` is removed (hairlines collapse), Replay disables, the count plays again.
+5. Hover Replay: border and text become mint. Focus-visible: 2px mint outline, 3px offset, on Replay and nav links.
+6. `prefers-reduced-motion: reduce`: first paint and Replay set the final numbers immediately; hairline transition is 1ms.
+7. Screen-reader text inside each article announces the full reading (e.g. "1.48 degrees Celsius, global mean anomaly versus 1880 to 1900").
+8. The degree suffix on the first figure is a 48px `<small>` in `--ink-2`. The fourth figure uses a thousands comma (`3,842`).
+
+## Tokens
+
+```css
+:root {
+  --bg: #08110e;
+  --ink: #e6f3ec;
+  --ink-2: #8aa396;
+  --ink-3: #5a6e64;
+  --line: #1c2a24;
+  --mint: #3dcf9a;
+  --mint-ink: #062016;
+  --display: "Big Shoulders Display", Impact, sans-serif;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --nav-h: 56px;
+  --pad: 64px;
+  --t-fast: 160ms;
+  --t-count: 1200ms;
+  --stagger: 90ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|---|---|---|---|---|---|---|
+| Brand | display | 18 | 700 | 1 | 0.04em | uppercase |
+| Nav links | sans | 13 | 400 | 1.45 | 0 | sentence |
+| Live pill | sans | 11 | 500 | 1 | 0.1em | uppercase |
+| Kicker | sans | 11 | 500 | 1 | 0.16em | uppercase, mint |
+| Headline | display | 48 | 700 | 0.95 | -0.01em | uppercase |
+| Replay | sans | 12 | 500 | 1 | 0.08em | uppercase |
+| Figure | display | 112 | 700 | 0.85 | -0.03em | tabular-nums |
+| Degree small | display | 48 | 700 | 1 | 0 | ink-2 |
+| Unit | sans | 12 | 500 | 1 | 0.14em | uppercase, mint |
+| Label | sans | 14 | 400 | 1.4 | 0 | ink-2, max 18ch |
 
 ## Implementation notes
 

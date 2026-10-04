@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A load name that reads as a heading until it is clicked. Then it is an input on the same baseline. Enter or blur saves a non-empty trim. Escape restores the previous name and blur must not overwrite that restore. This is not a form field with a label above. That field is `text-field`. This is the name itself.
-
-## Reference behaviour
-
-1. The first frame reads Gate 4 hold. The hint says click to edit.
-2. Click replaces the button with an input, focused and selected.
-3. Enter saves the trimmed value and returns to the button.
-4. Escape restores the previous name.
-5. Blur saves, unless Escape just cancelled.
-6. An empty trim does not replace the saved name.
-7. The hint says Saved on this page after a save.
 
 ## Structure
 
@@ -32,20 +24,6 @@ hint
 - The input has a 1px bottom border in #1f4d3a.
 - The button name has a transparent bottom border so the line does not jump.
 - maxlength is 40.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --ink:#161513; --ink-2:#5a554c; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Kicker | IBM Plex Sans | 12px | 500 |
-| Name | IBM Plex Sans | 32px | 600 |
-| Hint | IBM Plex Sans | 14px | 400 |
 
 ## Motion
 
@@ -90,16 +68,6 @@ hint
 - [ ] The hint mentions Enter and Escape.
 - [ ] Type is IBM Plex Sans.
 - [ ] The underline on edit is #1f4d3a.
-
-## Implementation notes
-
-Set a cancel flag before blur runs.
-
-```js
-if (e.key === "Escape") { cancel = true; close(false); }
-```
-
-close() returns immediately if the input is already hidden, so blur after Enter does not double-save.
 
 ## Measurements to keep
 
@@ -168,6 +136,44 @@ close() returns immediately if the input is already hidden, so blur after Enter 
 - While rebuilding, remember: Do not animate the swap.
 - While rebuilding, remember: Do not send the name anywhere.
 - While rebuilding, remember: Do not use a textarea.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame reads Gate 4 hold. The hint says click to edit.
+2. Click replaces the button with an input, focused and selected.
+3. Enter saves the trimmed value and returns to the button.
+4. Escape restores the previous name.
+5. Blur saves, unless Escape just cancelled.
+6. An empty trim does not replace the saved name.
+7. The hint says Saved on this page after a save.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --ink:#161513; --ink-2:#5a554c; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Kicker | IBM Plex Sans | 12px | 500 |
+| Name | IBM Plex Sans | 32px | 600 |
+| Hint | IBM Plex Sans | 14px | 400 |
+
+## Implementation notes
+
+Set a cancel flag before blur runs.
+
+```js
+if (e.key === "Escape") { cancel = true; close(false); }
+```
+
+close() returns immediately if the input is already hidden, so blur after Enter does not double-save.
 
 ---
 

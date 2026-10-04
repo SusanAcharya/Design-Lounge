@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The map screen of "Tarn", a booking app for stays in small old towns. The whole screen is a hand-drawn town map in SVG: sand ground, cream streets, a sage park, a grey-teal river, italic serif street names. There are no map tiles. Terracotta price pills mark ten stays. A sheet at the bottom rests at three heights. Peek shows only the count. Half shows a sideways carousel of cards. Full shows a plain list.
@@ -11,23 +13,6 @@ The map screen of "Tarn", a booking app for stays in small old towns. The whole 
 The look is editorial travel: a warm paper palette, serif titles (Newsreader), a plain sans for data (Instrument Sans), 14px radii. Terracotta is used only for pins and the selected row underline. The detail worth copying is the sync: tapping a pin enlarges it and turns it ink, the carousel scrolls to its card, and scrolling the carousel moves the selection back onto the pins. Dragging the map shows a "Search this area" pill. Tapping it recounts the stays that are actually on screen.
 
 This is not `ios-bottom-sheet-detents`. That piece is about the sheet gesture over a CSS map. This one is about pins, cards and the area search. The sheet here changes its content per detent.
-
-## Reference behaviour
-
-1. First frame: map offset so eight pins fit between the search bar and the sheet. Sheet at **half**. Heading "8 stays". The first card, "The Rope Walk Rooms", has a 2px ink ring, and its pin (€142) is ink and 1.22× larger.
-2. Top bar, 54px from the top: a 48px tall search button "Alfaro old town / 12 – 15 Nov · 2 guests" and a 48×48 filters button. Both cream, 14px radius, soft shadow.
-3. A locate button (48×48) floats 16px from the right, 12px above the sheet top. It follows the sheet as it moves and hides at full.
-4. Tap a pin: it becomes `aria-pressed="true"`, ink fill, scale 1.22 over 240ms. The previous pin returns to terracotta at 1×. The carousel scrolls smoothly to that card and rings it. If the sheet was at peek it rises to half.
-5. Swipe the carousel: cards snap to their left edge. 120ms after scrolling stops, the card nearest the left edge becomes selected and its pin enlarges.
-6. Tap a card or a list row: it becomes selected and its pin enlarges.
-7. Drag the map with a finger or mouse: the map follows 1:1, clamped to its 960×1240 edges. Movement under 6px counts as a tap, not a drag. After a real drag, the "Search this area" pill slides down 12px and fades in over 300ms, centred under the top bar.
-8. Tap "Search this area": its icon spins and the label reads "Searching" for 650ms. Then the pill hides, the heading shows the number of pins now in the open map area, the carousel and list hold only those stays, and pins outside it fade to 45%.
-9. If no pins are in the area, the carousel says "No stays in this area. Move the map or zoom out."
-10. Tap locate: the map glides back to the start offset over 520ms with expo-out easing. The "Search this area" pill shows, because the area changed.
-11. Drag the sheet header up or down: it follows the finger. Past the top or bottom detent it moves at 25% (rubber band). On release it snaps to the nearest detent over 420ms. A fast flick (over 0.4px/ms) moves one detent in that direction.
-12. Tap the grabber: cycles peek → half → full → peek. With the grabber focused, ArrowUp and ArrowDown move one detent.
-13. Peek: heading and subline only. The carousel is hidden. Half: carousel visible. Full: carousel hidden, the vertical list fades in and scrolls inside the sheet. The selected row has a 2px terracotta underline on its title.
-14. The "you are here" dot is ink with a 3px cream ring. A thin ring grows and fades every 2.8s. It stops under reduced motion.
 
 ## Structure
 
@@ -65,73 +50,6 @@ full: sheet top 112px from the top, list rows 88px thumb + text
 - The top bar is a flex row of two buttons. "Search this area" is a separate button.
 - The sheet is a `section` labelled by its `h1`. Children: a header (grabber button, heading row, subline) and a body holding the carousel (`role="list"`) and the full list (`role="list"`), stacked in the same box.
 - One visually hidden `aria-live="polite"` paragraph.
-
-## Tokens
-
-```css
-:root {
-  /* map */
-  --sand: #e8dcc2;        /* ground */
-  --block: #e1d3b6;       /* building blocks */
-  --street: #f7f1e3;      /* minor streets */
-  --road: #fbf8f0;        /* main roads */
-  --road-edge: #d6c6a6;
-  --park: #c7cfa2;
-  --tree: #b3bf8a;
-  --river: #aec4c1;
-  --river-bank: #9db6b3;
-  --map-label: #7a6c58;
-  --river-label: #4f6866;
-
-  /* ui */
-  --surface: #fbf7ee;     /* bars, sheet */
-  --card: #ffffff;
-  --ink: #1e1a16;
-  --ink-2: #4f463c;
-  --ink-3: #73685a;
-  --line: #e2d6c0;
-  --grabber: #cdbfa6;
-  --pin: #b84a26;         /* terracotta */
-  --pin-ink: #fff8ef;
-  --focus: #b84a26;
-
-  /* type */
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Instrument Sans", system-ui, sans-serif;
-
-  /* shape and depth */
-  --r: 14px;
-  --r-sheet: 20px;
-  --shadow: 0 1px 2px rgba(30,26,22,.12), 0 6px 18px rgba(30,26,22,.12);
-  --shadow-sheet: 0 -1px 0 var(--line), 0 -8px 28px rgba(30,26,22,.14);
-
-  /* layout */
-  --top-clear: 54px;
-  --bottom-clear: 34px;
-  --full-top: 112px;
-
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --sheet-ease: cubic-bezier(0.32, 0.72, 0, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Sheet heading | Newsreader | 24px | 600 | 1.15 | -0.01em, "8 stays" |
-| Card / row title | Newsreader | 18px | 600 | 1.2 | ellipsis, curly apostrophes |
-| Search place | Newsreader | 16px | 600 | 1.2 | ellipsis |
-| Map labels | Newsreader italic | 13px | 500 | — | 0.02em; river label 0.2em caps |
-| Pin price | Instrument Sans | 14px | 600 | 30px box | tabular figures |
-| Meta | Instrument Sans | 13px | 400 | 1.4 | `--ink-2` |
-| Price | Instrument Sans | 15px / 14px | 600 / 400 | 1.4 | "€142" ink, "night" `--ink-3` |
-| Search dates, note | Instrument Sans | 12px | 400 | 1.4 | `--ink-3` |
-| Area pill | Instrument Sans | 14px | 600 | 1.4 | cream on ink |
-
-Serif carries names and places. Numbers stay in the sans.
 
 ## Motion
 
@@ -205,6 +123,94 @@ While a finger is on the map or the sheet, remove transitions so movement is 1:1
 - [ ] Pins terracotta `#b84a26`, selected pin `#1e1a16` at 1.22×.
 - [ ] Full detent top edge is 112px from the top of the screen.
 - [ ] Ten stays exist; two start off screen (Tanners Row No. 4, The Ferry Lofts).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: map offset so eight pins fit between the search bar and the sheet. Sheet at **half**. Heading "8 stays". The first card, "The Rope Walk Rooms", has a 2px ink ring, and its pin (€142) is ink and 1.22× larger.
+2. Top bar, 54px from the top: a 48px tall search button "Alfaro old town / 12 – 15 Nov · 2 guests" and a 48×48 filters button. Both cream, 14px radius, soft shadow.
+3. A locate button (48×48) floats 16px from the right, 12px above the sheet top. It follows the sheet as it moves and hides at full.
+4. Tap a pin: it becomes `aria-pressed="true"`, ink fill, scale 1.22 over 240ms. The previous pin returns to terracotta at 1×. The carousel scrolls smoothly to that card and rings it. If the sheet was at peek it rises to half.
+5. Swipe the carousel: cards snap to their left edge. 120ms after scrolling stops, the card nearest the left edge becomes selected and its pin enlarges.
+6. Tap a card or a list row: it becomes selected and its pin enlarges.
+7. Drag the map with a finger or mouse: the map follows 1:1, clamped to its 960×1240 edges. Movement under 6px counts as a tap, not a drag. After a real drag, the "Search this area" pill slides down 12px and fades in over 300ms, centred under the top bar.
+8. Tap "Search this area": its icon spins and the label reads "Searching" for 650ms. Then the pill hides, the heading shows the number of pins now in the open map area, the carousel and list hold only those stays, and pins outside it fade to 45%.
+9. If no pins are in the area, the carousel says "No stays in this area. Move the map or zoom out."
+10. Tap locate: the map glides back to the start offset over 520ms with expo-out easing. The "Search this area" pill shows, because the area changed.
+11. Drag the sheet header up or down: it follows the finger. Past the top or bottom detent it moves at 25% (rubber band). On release it snaps to the nearest detent over 420ms. A fast flick (over 0.4px/ms) moves one detent in that direction.
+12. Tap the grabber: cycles peek → half → full → peek. With the grabber focused, ArrowUp and ArrowDown move one detent.
+13. Peek: heading and subline only. The carousel is hidden. Half: carousel visible. Full: carousel hidden, the vertical list fades in and scrolls inside the sheet. The selected row has a 2px terracotta underline on its title.
+14. The "you are here" dot is ink with a 3px cream ring. A thin ring grows and fades every 2.8s. It stops under reduced motion.
+
+## Tokens
+
+```css
+:root {
+  /* map */
+  --sand: #e8dcc2;        /* ground */
+  --block: #e1d3b6;       /* building blocks */
+  --street: #f7f1e3;      /* minor streets */
+  --road: #fbf8f0;        /* main roads */
+  --road-edge: #d6c6a6;
+  --park: #c7cfa2;
+  --tree: #b3bf8a;
+  --river: #aec4c1;
+  --river-bank: #9db6b3;
+  --map-label: #7a6c58;
+  --river-label: #4f6866;
+
+  /* ui */
+  --surface: #fbf7ee;     /* bars, sheet */
+  --card: #ffffff;
+  --ink: #1e1a16;
+  --ink-2: #4f463c;
+  --ink-3: #73685a;
+  --line: #e2d6c0;
+  --grabber: #cdbfa6;
+  --pin: #b84a26;         /* terracotta */
+  --pin-ink: #fff8ef;
+  --focus: #b84a26;
+
+  /* type */
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Instrument Sans", system-ui, sans-serif;
+
+  /* shape and depth */
+  --r: 14px;
+  --r-sheet: 20px;
+  --shadow: 0 1px 2px rgba(30,26,22,.12), 0 6px 18px rgba(30,26,22,.12);
+  --shadow-sheet: 0 -1px 0 var(--line), 0 -8px 28px rgba(30,26,22,.14);
+
+  /* layout */
+  --top-clear: 54px;
+  --bottom-clear: 34px;
+  --full-top: 112px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --sheet-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Sheet heading | Newsreader | 24px | 600 | 1.15 | -0.01em, "8 stays" |
+| Card / row title | Newsreader | 18px | 600 | 1.2 | ellipsis, curly apostrophes |
+| Search place | Newsreader | 16px | 600 | 1.2 | ellipsis |
+| Map labels | Newsreader italic | 13px | 500 | — | 0.02em; river label 0.2em caps |
+| Pin price | Instrument Sans | 14px | 600 | 30px box | tabular figures |
+| Meta | Instrument Sans | 13px | 400 | 1.4 | `--ink-2` |
+| Price | Instrument Sans | 15px / 14px | 600 / 400 | 1.4 | "€142" ink, "night" `--ink-3` |
+| Search dates, note | Instrument Sans | 12px | 400 | 1.4 | `--ink-3` |
+| Area pill | Instrument Sans | 14px | 600 | 1.4 | cream on ink |
+
+Serif carries names and places. Numbers stay in the sans.
 
 ## Implementation notes
 

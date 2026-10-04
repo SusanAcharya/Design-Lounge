@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A one-page site for a fictional identity and motion studio, Ostra, in Porto. The page scrolls with weight: the real scrollbar moves at once, and the content follows it, closing 10% of the gap every frame. Work images skew up to 4 degrees while the page moves fast and settle flat when it stops. The art inside each frame drifts slower than the frame, so every image has depth. The page ends on a giant "Ostra." word that rises into place at the very bottom. The detail worth copying is that nothing is faked: the native scrollbar, keyboard scrolling, anchor links, Tab focus and find-in-page all still work, and reduced motion gets plain native scroll.
@@ -23,22 +25,6 @@ Do not use it on:
 5. Infinite feeds and very long pages, more than about 12 screens. The whole page sits in one composited layer, which costs memory.
 6. Touch devices. Phones already have momentum scrolling. This demo turns itself off when `(pointer: coarse)` matches.
 7. Any user with `prefers-reduced-motion: reduce`. They get native scroll, no skew, no parallax. Not a shorter version. None.
-
-## Reference behaviour
-
-1. Load: the hero fills the first 800px. A 72px fixed header shows "Ostra." on the left, links Work, Method, Contact, and a "Smooth scroll" switch that starts on (`aria-pressed="true"`, red track).
-2. The page content lives in one wrapper, `#view`. In smooth mode the wrapper is `position: fixed` at the top of the viewport. An empty `#spacer` after it gets the wrapper's height, so the document is as tall as the content and the native scrollbar is real.
-3. Wheel or trackpad: `window.scrollY` changes at once. Each animation frame, `current += (scrollY - current) * 0.1`. The wrapper gets `transform: translate3d(0, -current px, 0)`. When the gap is under 0.1px, `current` snaps to `scrollY` and the loop stops. No loop runs while the page is still.
-4. Velocity skew: each frame, `v = scrollY - current` (the gap, in px). Every work frame gets `skewY(clamp(v * 0.025, -4, 4) deg)`. A 160px gap is the full 4 degrees. At rest the skew is 0.
-5. Inner parallax: each work frame clips an art layer that is 124% of the frame's height, starting at -12%. Each frame, `rel = (frameCenter - viewportCenter) / viewportHeight`. If `rel` is between -1.4 and 1.4, the art gets `translateY(rel * -0.1 * frameHeight px)`. Frames off-screen are skipped.
-6. Footer word: "Ostra." at 27.4vw sits in a clipping box. It starts pushed down and reaches `translateY(0)` exactly when the page hits the bottom. Formula below.
-7. Keyboard scroll: Space, Shift+Space, Page Up, Page Down, arrows, Home and End change `window.scrollY` natively, because the document is spacer-tall. The wrapper follows with the same lerp.
-8. Anchor links (Work, Method, Contact, "Selected work", the logo): the click is caught. The target's top inside the wrapper, minus 72px for the header, becomes the new `scrollY` in one jump. The lerp turns the jump into a glide. The hash is updated with `history.replaceState`. Focus moves to the target section (`tabindex="-1"`) with `preventScroll: true`.
-9. Tab focus: the browser cannot scroll a fixed wrapper into view, so a `focusin` handler does it. If the focused element's top is above `scrollY + 72`, or its first 120px reach below `scrollY + viewportHeight - 40`, set `scrollY` so the element sits at 30% of the viewport height.
-10. Find in page: Cmd+F or Ctrl+F switches to native mode before the find bar opens. The wrapper becomes `position: relative`, the spacer height becomes 0, and the transform is cleared. The layout is identical, so the scroll position does not move. A status line at bottom left reads "Native scroll while you search" for 2200ms. The next wheel event turns smooth mode back on, unless the user turned it off with the switch.
-11. The switch: click turns smooth mode off or on. Status reads "Native scroll" or "Smooth scroll, lerp 0.1". With reduced motion it stays off and reads "Reduced motion is on: native scroll".
-12. Resize and font load: re-measure the wrapper height and every frame's offset. A `ResizeObserver` on the wrapper does this.
-13. A URL that arrives with a hash scrolls to that section on load.
 
 ## Structure
 
@@ -87,68 +73,6 @@ Copy:
 | 04 Northbound | Type family and campaign | Northbound Ferries, 2023 |
 
 Method steps: "Listen: Three weeks of interviews, archives and site visits before a single sketch." "Draw: Marks, type and motion rules drawn together, tested at 16 pixels and at 16 metres." "Hand over: A system your team runs without us: source files, motion rules and a 40-page manual."
-
-## Tokens
-
-```css
-:root {
-  /* colour: off-black ground, bone ink, one signal red */
-  --bg: #0e0d0c;        /* page */
-  --bg-2: #171513;      /* empty frame behind art */
-  --ink: #eae4d8;       /* headings, primary text */
-  --ink-2: #a8a195;     /* body copy, nav resting */
-  --ink-3: #8a8478;     /* meta, legal, switch knob off */
-  --line: #2a2826;      /* hairlines, switch track off */
-  --red: #ea3a22;       /* the one accent: full stops, indices, switch on, focus */
-
-  /* type */
-  --sans: "Inter Tight", system-ui, sans-serif;
-  --serif: "Instrument Serif", Georgia, serif;
-
-  /* layout */
-  --pad: 48px;          /* 20px under 768 */
-  --nav-h: 72px;        /* 64px under 768 */
-  --col-gap: 24px;
-  --section-pad: 120px; /* 80px under 768 */
-
-  /* scroll engine */
-  --lerp: 0.1;          /* share of the gap closed each frame */
-  --skew-max: 4;        /* degrees */
-  --skew-gain: 0.025;   /* degrees per px of gap */
-  --parallax: 0.1;      /* art travel, share of frame height per viewport */
-  --art-overscan: 12%;  /* art is 124% tall, top -12% */
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-switch: 200ms;
-  --t-status: 300ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Logo | Inter Tight | 22px | 800 | 1 | -0.04em | sentence, red full stop |
-| Nav link | Inter Tight | 14px | 500 | 1.55 | 0 | sentence |
-| Switch label | Inter Tight | 13px | 400 | 1 | 0 | sentence |
-| Eyebrow | Inter Tight | 13px | 400 | 1.55 | +0.14em | UPPERCASE |
-| Hero title | Inter Tight | clamp(64px, 14.8vw, 188px) | 800 | 0.88 | -0.055em | sentence |
-| Hero italic word | Instrument Serif italic | 1.08em of title | 400 | — | -0.02em | lowercase |
-| Body | Inter Tight | 16px | 400 | 1.55 | 0 | sentence, max 40ch |
-| Section head | Inter Tight | 40px | 700 | 1 | -0.04em | sentence, italic word in serif at 1.1em |
-| Caption name | Inter Tight | 20px | 700 | 1.3 | -0.02em | sentence |
-| Caption meta | Inter Tight | 14px | 400 | 1.55 | 0 | sentence |
-| Statement | Inter Tight | clamp(40px, 5.6vw, 72px) | 700 | 1 | -0.045em | sentence, max 17ch |
-| Step numeral | Instrument Serif italic | 28px | 400 | 1 | 0 | roman, red |
-| Step title | Inter Tight | 22px | 700 | 1.3 | -0.02em | sentence |
-| Contact heading | Inter Tight | 56px | 700 | 1 | -0.04em | sentence |
-| Email | Inter Tight | 24px | 500 | 1.3 | 0 | lowercase, red underline 6px offset |
-| Footer word | Inter Tight | 27.4vw | 800 | 0.8 | -0.07em | sentence, red full stop |
-| Legal | Inter Tight | 13px | 400 | 1.55 | 0 | sentence |
-
-The italic serif appears once per heading, never for a whole line. Red appears on full stops, indices, step numerals, the switch, focus rings and one slab in one artwork. Nowhere else.
 
 ## Motion
 
@@ -220,6 +144,88 @@ There is no time-based easing on the scroll itself. The lerp is the easing: each
 - [ ] Four projects: Salt Archive, Lumen Rail, Kiln Week, Northbound, with CSS-only art.
 - [ ] The footer word "Ostra." reaches `translateY(0)` exactly at the bottom of the page.
 - [ ] Colours: ground `#0e0d0c`, ink `#eae4d8`, accent `#ea3a22`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Load: the hero fills the first 800px. A 72px fixed header shows "Ostra." on the left, links Work, Method, Contact, and a "Smooth scroll" switch that starts on (`aria-pressed="true"`, red track).
+2. The page content lives in one wrapper, `#view`. In smooth mode the wrapper is `position: fixed` at the top of the viewport. An empty `#spacer` after it gets the wrapper's height, so the document is as tall as the content and the native scrollbar is real.
+3. Wheel or trackpad: `window.scrollY` changes at once. Each animation frame, `current += (scrollY - current) * 0.1`. The wrapper gets `transform: translate3d(0, -current px, 0)`. When the gap is under 0.1px, `current` snaps to `scrollY` and the loop stops. No loop runs while the page is still.
+4. Velocity skew: each frame, `v = scrollY - current` (the gap, in px). Every work frame gets `skewY(clamp(v * 0.025, -4, 4) deg)`. A 160px gap is the full 4 degrees. At rest the skew is 0.
+5. Inner parallax: each work frame clips an art layer that is 124% of the frame's height, starting at -12%. Each frame, `rel = (frameCenter - viewportCenter) / viewportHeight`. If `rel` is between -1.4 and 1.4, the art gets `translateY(rel * -0.1 * frameHeight px)`. Frames off-screen are skipped.
+6. Footer word: "Ostra." at 27.4vw sits in a clipping box. It starts pushed down and reaches `translateY(0)` exactly when the page hits the bottom. Formula below.
+7. Keyboard scroll: Space, Shift+Space, Page Up, Page Down, arrows, Home and End change `window.scrollY` natively, because the document is spacer-tall. The wrapper follows with the same lerp.
+8. Anchor links (Work, Method, Contact, "Selected work", the logo): the click is caught. The target's top inside the wrapper, minus 72px for the header, becomes the new `scrollY` in one jump. The lerp turns the jump into a glide. The hash is updated with `history.replaceState`. Focus moves to the target section (`tabindex="-1"`) with `preventScroll: true`.
+9. Tab focus: the browser cannot scroll a fixed wrapper into view, so a `focusin` handler does it. If the focused element's top is above `scrollY + 72`, or its first 120px reach below `scrollY + viewportHeight - 40`, set `scrollY` so the element sits at 30% of the viewport height.
+10. Find in page: Cmd+F or Ctrl+F switches to native mode before the find bar opens. The wrapper becomes `position: relative`, the spacer height becomes 0, and the transform is cleared. The layout is identical, so the scroll position does not move. A status line at bottom left reads "Native scroll while you search" for 2200ms. The next wheel event turns smooth mode back on, unless the user turned it off with the switch.
+11. The switch: click turns smooth mode off or on. Status reads "Native scroll" or "Smooth scroll, lerp 0.1". With reduced motion it stays off and reads "Reduced motion is on: native scroll".
+12. Resize and font load: re-measure the wrapper height and every frame's offset. A `ResizeObserver` on the wrapper does this.
+13. A URL that arrives with a hash scrolls to that section on load.
+
+## Tokens
+
+```css
+:root {
+  /* colour: off-black ground, bone ink, one signal red */
+  --bg: #0e0d0c;        /* page */
+  --bg-2: #171513;      /* empty frame behind art */
+  --ink: #eae4d8;       /* headings, primary text */
+  --ink-2: #a8a195;     /* body copy, nav resting */
+  --ink-3: #8a8478;     /* meta, legal, switch knob off */
+  --line: #2a2826;      /* hairlines, switch track off */
+  --red: #ea3a22;       /* the one accent: full stops, indices, switch on, focus */
+
+  /* type */
+  --sans: "Inter Tight", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+
+  /* layout */
+  --pad: 48px;          /* 20px under 768 */
+  --nav-h: 72px;        /* 64px under 768 */
+  --col-gap: 24px;
+  --section-pad: 120px; /* 80px under 768 */
+
+  /* scroll engine */
+  --lerp: 0.1;          /* share of the gap closed each frame */
+  --skew-max: 4;        /* degrees */
+  --skew-gain: 0.025;   /* degrees per px of gap */
+  --parallax: 0.1;      /* art travel, share of frame height per viewport */
+  --art-overscan: 12%;  /* art is 124% tall, top -12% */
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-switch: 200ms;
+  --t-status: 300ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Logo | Inter Tight | 22px | 800 | 1 | -0.04em | sentence, red full stop |
+| Nav link | Inter Tight | 14px | 500 | 1.55 | 0 | sentence |
+| Switch label | Inter Tight | 13px | 400 | 1 | 0 | sentence |
+| Eyebrow | Inter Tight | 13px | 400 | 1.55 | +0.14em | UPPERCASE |
+| Hero title | Inter Tight | clamp(64px, 14.8vw, 188px) | 800 | 0.88 | -0.055em | sentence |
+| Hero italic word | Instrument Serif italic | 1.08em of title | 400 | — | -0.02em | lowercase |
+| Body | Inter Tight | 16px | 400 | 1.55 | 0 | sentence, max 40ch |
+| Section head | Inter Tight | 40px | 700 | 1 | -0.04em | sentence, italic word in serif at 1.1em |
+| Caption name | Inter Tight | 20px | 700 | 1.3 | -0.02em | sentence |
+| Caption meta | Inter Tight | 14px | 400 | 1.55 | 0 | sentence |
+| Statement | Inter Tight | clamp(40px, 5.6vw, 72px) | 700 | 1 | -0.045em | sentence, max 17ch |
+| Step numeral | Instrument Serif italic | 28px | 400 | 1 | 0 | roman, red |
+| Step title | Inter Tight | 22px | 700 | 1.3 | -0.02em | sentence |
+| Contact heading | Inter Tight | 56px | 700 | 1 | -0.04em | sentence |
+| Email | Inter Tight | 24px | 500 | 1.3 | 0 | lowercase, red underline 6px offset |
+| Footer word | Inter Tight | 27.4vw | 800 | 0.8 | -0.07em | sentence, red full stop |
+| Legal | Inter Tight | 13px | 400 | 1.55 | 0 | sentence |
+
+The italic serif appears once per heading, never for a whole line. Red appears on full stops, indices, step numerals, the switch, focus rings and one slab in one artwork. Nowhere else.
 
 ## Implementation notes
 

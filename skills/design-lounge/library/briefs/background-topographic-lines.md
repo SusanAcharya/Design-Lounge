@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-bleed `<canvas>` topographic map for a print-survey publisher ("Ridgeline Atlas"). Contour lines are drawn with marching squares over six drifting Gaussian hills, so the field reads as a real 1:25 000 sheet that is slowly breathing. Every fifth contour is heavier (an index line). Copy and a survey card sit in a pale elliptical scrim so the lines never fight the 112px headline. The detail worth copying: changing the contour interval (10 / 20 / 40 m) only changes the number of isolevels — the same height field is re-stroked instantly, like swapping the interval on a printed sheet.
-
-## Reference behaviour
-
-1. Initial state: the map is already drifting. Thin olive contours fill the frame; index contours (every 5th) are thicker and darker. A radial paper scrim sits under the left-hand copy. The 20 m interval chip is pressed.
-2. Hills wander slowly (tens of pixels) so ridges slide rather than pulse. A faint sine ripple is added to the field so flats are never empty.
-3. The bottom-right card ("Survey sheet 14 · Cairn Valley, north face") lists contour interval, highest point **2,814 m**, and relief **1,560 – 2,814 m**.
-4. Clicking **10 m / 20 m / 40 m** sets `aria-pressed` on that chip only and redraws with 44 / 22 / 11 levels. Default is 22 (20 m).
-5. **Pause drift** stops the animation loop and swaps the icon to a play triangle; label becomes "Resume drift". Click again to continue from the same phase.
-6. A 14px amber ring at `right:226px; top:360px` is labelled "Cairn 2,814".
-7. While the tab is hidden the loop is cancelled; it resumes on visibility without a jump.
-8. Rendering is capped at 60fps. Phase `t` starts at 20 so the first frame is an interesting ridge, not a blank field.
-9. With `prefers-reduced-motion: reduce`, drift starts paused (`playing = false`). Interval chips still retile. Colour transitions drop to 1ms.
 
 ## Structure
 
@@ -57,65 +47,6 @@ canvas (fixed, inset 0) + radial scrim + 20px neatline with map ticks
 - `<main class="hero">` — padding 76px 44px 0, max-width 780px: eyebrow, `<h1>` with italic `<em>patient</em>`, sub, two `.btn`.
 - `.mark` — decorative cairn pip, `aria-hidden`.
 - `<aside class="sheet" aria-label="Survey sheet">` — interval `role="group"`, three `<button aria-pressed>`, play `<button id="play">`.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm map paper, forest ink, one ochre accent */
-  --paper: #e8e9dd;       /* page + tick chips */
-  --paper-2: #f3f3ea;     /* sheet, secondary button, cairn fill */
-  --ink: #1f3326;         /* headline, primary button, contours source */
-  --ink-2: #4a5b4e;       /* sub, nav links, ticks, row labels */
-  --ink-3: #6c7a6e;       /* sheet kicker */
-  --line: rgba(31, 51, 38, .18);   /* sheet row rules */
-  --line-2: rgba(31, 51, 38, .32); /* neatline, buttons, sheet border */
-  --accent: #b8661a;      /* eyebrow, cairn, brand inner ridge */
-  --accent-ink: #fff8ee;  /* unused on type; keep for SVG fills if needed */
-  --contour-thin: rgba(31, 51, 38, .26);
-  --contour-index: rgba(31, 51, 38, .5);
-
-  /* type */
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-
-  /* layout */
-  --inset: 20px;
-  --r: 4px;
-  --nav-h: 72px;
-  --sheet-w: 320px;
-  --cell: 10px;           /* marching-squares cell */
-
-  /* field */
-  --levels-default: 22;   /* 20 m */
-  --iso-span: 1.15;       /* isolevel range / levels */
-  --index-every: 5;       /* heavier stroke */
-
-  /* motion */
-  --t-fast: 160ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --drift: 3.5;           /* phase units per second */
-}
-```
-
-## Typography
-
-| Role            | Family         | Size | Weight | Line-height | Tracking | Case      |
-|-----------------|----------------|-----:|-------:|------------:|---------:|-----------|
-| Body            | Hanken Grotesk | 15px | 400    | 1.5         | 0        | sentence  |
-| Wordmark        | Newsreader     | 20px | 500    | 1           | −0.01em  | sentence  |
-| Nav links       | Hanken Grotesk | 14px | 400    | 1.5         | 0        | sentence  |
-| Eyebrow / sheet kicker | Hanken Grotesk | 11px / 10px | 600 | 1 | +0.16em | UPPERCASE |
-| Headline        | Newsreader     | 112px| 400    | 0.94        | −0.035em | sentence  |
-| Headline em     | Newsreader     | 112px| 400 italic | 0.94    | −0.035em | sentence  |
-| Sub-copy        | Hanken Grotesk | 17px | 400    | 1.55        | 0        | sentence  |
-| Buttons         | Hanken Grotesk | 14px | 600    | 44px h      | 0        | sentence  |
-| Sheet title     | Newsreader     | 26px | 400    | 1.1         | −0.01em  | sentence  |
-| Sheet rows      | Hanken Grotesk | 13px | 400/500| 1           | 0        | sentence  |
-| Interval chips  | Hanken Grotesk | 12px | 500    | 28px h      | 0        | sentence  |
-| Play control    | Hanken Grotesk | 12px | 500    | 36px h      | 0        | sentence  |
-| Map ticks       | Hanken Grotesk | 10px | 500    | 1           | +0.08em  | mixed     |
-| Cairn label     | Hanken Grotesk | 11px | 600    | 1           | +0.04em  | sentence  |
 
 ## Motion
 
@@ -196,6 +127,81 @@ Reduced motion: `playing` starts false; still call `resize()` + `draw()` once. I
 - [ ] Focus rings are 2px ochre on every control.
 - [ ] Canvas stays sharp on retina (transform scaled by DPR, max 2).
 - [ ] Neatline ticks read 46°34′N, 8°11′E, 46°29′N, SHEET 14 · 1:25 000, 8°02′E.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: the map is already drifting. Thin olive contours fill the frame; index contours (every 5th) are thicker and darker. A radial paper scrim sits under the left-hand copy. The 20 m interval chip is pressed.
+2. Hills wander slowly (tens of pixels) so ridges slide rather than pulse. A faint sine ripple is added to the field so flats are never empty.
+3. The bottom-right card ("Survey sheet 14 · Cairn Valley, north face") lists contour interval, highest point **2,814 m**, and relief **1,560 – 2,814 m**.
+4. Clicking **10 m / 20 m / 40 m** sets `aria-pressed` on that chip only and redraws with 44 / 22 / 11 levels. Default is 22 (20 m).
+5. **Pause drift** stops the animation loop and swaps the icon to a play triangle; label becomes "Resume drift". Click again to continue from the same phase.
+6. A 14px amber ring at `right:226px; top:360px` is labelled "Cairn 2,814".
+7. While the tab is hidden the loop is cancelled; it resumes on visibility without a jump.
+8. Rendering is capped at 60fps. Phase `t` starts at 20 so the first frame is an interesting ridge, not a blank field.
+9. With `prefers-reduced-motion: reduce`, drift starts paused (`playing = false`). Interval chips still retile. Colour transitions drop to 1ms.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm map paper, forest ink, one ochre accent */
+  --paper: #e8e9dd;       /* page + tick chips */
+  --paper-2: #f3f3ea;     /* sheet, secondary button, cairn fill */
+  --ink: #1f3326;         /* headline, primary button, contours source */
+  --ink-2: #4a5b4e;       /* sub, nav links, ticks, row labels */
+  --ink-3: #6c7a6e;       /* sheet kicker */
+  --line: rgba(31, 51, 38, .18);   /* sheet row rules */
+  --line-2: rgba(31, 51, 38, .32); /* neatline, buttons, sheet border */
+  --accent: #b8661a;      /* eyebrow, cairn, brand inner ridge */
+  --accent-ink: #fff8ee;  /* unused on type; keep for SVG fills if needed */
+  --contour-thin: rgba(31, 51, 38, .26);
+  --contour-index: rgba(31, 51, 38, .5);
+
+  /* type */
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+
+  /* layout */
+  --inset: 20px;
+  --r: 4px;
+  --nav-h: 72px;
+  --sheet-w: 320px;
+  --cell: 10px;           /* marching-squares cell */
+
+  /* field */
+  --levels-default: 22;   /* 20 m */
+  --iso-span: 1.15;       /* isolevel range / levels */
+  --index-every: 5;       /* heavier stroke */
+
+  /* motion */
+  --t-fast: 160ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --drift: 3.5;           /* phase units per second */
+}
+```
+
+## Typography
+
+| Role            | Family         | Size | Weight | Line-height | Tracking | Case      |
+|-----------------|----------------|-----:|-------:|------------:|---------:|-----------|
+| Body            | Hanken Grotesk | 15px | 400    | 1.5         | 0        | sentence  |
+| Wordmark        | Newsreader     | 20px | 500    | 1           | −0.01em  | sentence  |
+| Nav links       | Hanken Grotesk | 14px | 400    | 1.5         | 0        | sentence  |
+| Eyebrow / sheet kicker | Hanken Grotesk | 11px / 10px | 600 | 1 | +0.16em | UPPERCASE |
+| Headline        | Newsreader     | 112px| 400    | 0.94        | −0.035em | sentence  |
+| Headline em     | Newsreader     | 112px| 400 italic | 0.94    | −0.035em | sentence  |
+| Sub-copy        | Hanken Grotesk | 17px | 400    | 1.55        | 0        | sentence  |
+| Buttons         | Hanken Grotesk | 14px | 600    | 44px h      | 0        | sentence  |
+| Sheet title     | Newsreader     | 26px | 400    | 1.1         | −0.01em  | sentence  |
+| Sheet rows      | Hanken Grotesk | 13px | 400/500| 1           | 0        | sentence  |
+| Interval chips  | Hanken Grotesk | 12px | 500    | 28px h      | 0        | sentence  |
+| Play control    | Hanken Grotesk | 12px | 500    | 36px h      | 0        | sentence  |
+| Map ticks       | Hanken Grotesk | 10px | 500    | 1           | +0.08em  | mixed     |
+| Cairn label     | Hanken Grotesk | 11px | 600    | 1           | +0.04em  | sentence  |
 
 ## Implementation notes
 

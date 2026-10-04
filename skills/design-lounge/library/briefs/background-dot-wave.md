@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-bleed `<canvas>` background for a dark infrastructure-product hero ("Tidewater"). Dots sit on a strict 24px grid; a slow diagonal sine wave rolls across them, and each dot's radius, opacity and vertical offset follow the wave height, so the field reads like swell seen from above. The detail worth copying is the **quiet zone**: an elliptical mask centred on the headline drops dot opacity to 30% behind the copy, so the motion lives in the empty right half and never competes with the 96px headline. Clicking empty space sends a single ring-shaped ripple out from the pointer.
-
-## Reference behaviour
-
-1. Initial state: the page is already animating. A bright diagonal crest crosses the right half of the frame; dots at the very top of the crest are tinted mint `#8FE3B9`, the rest are pale `#CFE0D6`.
-2. The wave travels continuously from lower-right to upper-left at a calm pace (one full crest passes any point every ~10.5s).
-3. Behind the headline, sub-copy and buttons the dots are dimmed to 30% of their normal opacity, fading back to 100% by the edge of a 1040 × 480 ellipse centred at (400, 340).
-4. Click (pointerdown) anywhere that isn't a link or button: a ring ripple expands from that point at 160px/s, decays over ~6s, and stacks with the base wave. At most 4 ripples are alive; the oldest is dropped.
-5. The round 40px button at the top-right (next to the hint "Click the field to send a ripple") pauses and resumes the field. Its icon swaps between pause bars and a play triangle; `aria-pressed` and `aria-label` follow.
-6. While the tab is hidden the animation loop is cancelled; it resumes from the same phase when visible (no jump).
-7. Rendering is capped at 60fps even on 120Hz displays.
-8. With `prefers-reduced-motion: reduce` the field draws a single static frame and the button starts in the "Play background" state. Ripples still draw one static ring if clicked.
-9. Nav links, sign-in and buttons have hover colour shifts (160ms) and 2px mint focus rings.
 
 ## Structure
 
@@ -48,64 +38,6 @@ A full-bleed `<canvas>` background for a dark infrastructure-product hero ("Tide
 - `<main class="hero">`: pill, `<h1>` with one `<em>` word in accent, `<p class="sub">`, two buttons.
 - `<dl class="stats">`: 4 equal columns, each `<div><dt><dd>`; units in a `<small>`.
 - `.ctl`: hint `<span>` + `<button aria-pressed>`.
-
-## Tokens
-
-```css
-:root {
-  /* colour — near-black with a green bias, one mint accent */
-  --bg: #0a0c0b;          /* page */
-  --ink: #eef2ef;         /* headline, stat values */
-  --ink-2: #9aa39e;       /* sub-copy, nav links, hint */
-  --ink-3: #6b746f;       /* mono labels, units */
-  --line: #1e2422;        /* hairlines */
-  --line-2: #2b3330;      /* button borders */
-  --dot: #cfe0d6;         /* base dot colour */
-  --accent: #8fe3b9;      /* crest dots, em word, primary button, focus */
-  --accent-ink: #06140d;  /* text on accent */
-  --scrim: rgba(10, 12, 11, .7);  /* backing behind pill, hint, outline buttons */
-
-  /* type */
-  --font: "Geist", system-ui, sans-serif;
-  --mono: "Geist Mono", ui-monospace, monospace;
-  --fs-display: 96px;
-  --fs-stat: 26px;
-  --fs-sub: 18px;
-  --fs-body: 14px;
-  --fs-label: 11px;
-
-  /* layout */
-  --grid: 24px;           /* dot pitch */
-  --pad-x: 64px;
-  --nav-h: 72px;
-  --r: 10px;              /* buttons */
-  --r-pill: 999px;
-
-  /* field */
-  --dot-r-min: .6px;
-  --dot-r-max: 2.7px;
-  --dot-lift: 8px;        /* max vertical displacement */
-  --quiet-floor: .3;      /* opacity multiplier at the centre of the quiet zone */
-
-  /* motion */
-  --t-fast: 160ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --fps-cap: 60;
-}
-```
-
-## Typography
-
-| Role          | Family     | Size | Weight | Line-height | Tracking | Case      |
-|---------------|------------|-----:|-------:|------------:|---------:|-----------|
-| Headline      | Geist      | 96px | 500    | 0.98        | −0.045em | sentence  |
-| Sub-copy      | Geist      | 18px | 400    | 1.55        | 0        | sentence  |
-| Nav / buttons | Geist      | 14px | 400/500| 1.5         | 0        | sentence  |
-| Wordmark      | Geist      | 16px | 600    | 1           | −0.01em  | sentence  |
-| Stat value    | Geist      | 26px | 500    | 1.2         | −0.03em  | numerals  |
-| Stat label    | Geist Mono | 11px | 500    | 1.3         | +0.1em   | UPPERCASE |
-| Pill / hint   | Geist Mono | 12px | 500/400| 1           | 0        | sentence  |
-| Units         | Geist Mono | 13px | 400    | 1           | 0        | lowercase |
 
 ## Motion
 
@@ -171,6 +103,80 @@ Reduced motion: draw one frame at t = 1, never start the loop; buttons' colour t
 - [ ] Reduced motion renders a still frame and starts in the paused state.
 - [ ] Every interactive element shows a 2px mint focus ring.
 - [ ] Canvas stays sharp on retina (backing store scaled by DPR, max 2).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: the page is already animating. A bright diagonal crest crosses the right half of the frame; dots at the very top of the crest are tinted mint `#8FE3B9`, the rest are pale `#CFE0D6`.
+2. The wave travels continuously from lower-right to upper-left at a calm pace (one full crest passes any point every ~10.5s).
+3. Behind the headline, sub-copy and buttons the dots are dimmed to 30% of their normal opacity, fading back to 100% by the edge of a 1040 × 480 ellipse centred at (400, 340).
+4. Click (pointerdown) anywhere that isn't a link or button: a ring ripple expands from that point at 160px/s, decays over ~6s, and stacks with the base wave. At most 4 ripples are alive; the oldest is dropped.
+5. The round 40px button at the top-right (next to the hint "Click the field to send a ripple") pauses and resumes the field. Its icon swaps between pause bars and a play triangle; `aria-pressed` and `aria-label` follow.
+6. While the tab is hidden the animation loop is cancelled; it resumes from the same phase when visible (no jump).
+7. Rendering is capped at 60fps even on 120Hz displays.
+8. With `prefers-reduced-motion: reduce` the field draws a single static frame and the button starts in the "Play background" state. Ripples still draw one static ring if clicked.
+9. Nav links, sign-in and buttons have hover colour shifts (160ms) and 2px mint focus rings.
+
+## Tokens
+
+```css
+:root {
+  /* colour — near-black with a green bias, one mint accent */
+  --bg: #0a0c0b;          /* page */
+  --ink: #eef2ef;         /* headline, stat values */
+  --ink-2: #9aa39e;       /* sub-copy, nav links, hint */
+  --ink-3: #6b746f;       /* mono labels, units */
+  --line: #1e2422;        /* hairlines */
+  --line-2: #2b3330;      /* button borders */
+  --dot: #cfe0d6;         /* base dot colour */
+  --accent: #8fe3b9;      /* crest dots, em word, primary button, focus */
+  --accent-ink: #06140d;  /* text on accent */
+  --scrim: rgba(10, 12, 11, .7);  /* backing behind pill, hint, outline buttons */
+
+  /* type */
+  --font: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+  --fs-display: 96px;
+  --fs-stat: 26px;
+  --fs-sub: 18px;
+  --fs-body: 14px;
+  --fs-label: 11px;
+
+  /* layout */
+  --grid: 24px;           /* dot pitch */
+  --pad-x: 64px;
+  --nav-h: 72px;
+  --r: 10px;              /* buttons */
+  --r-pill: 999px;
+
+  /* field */
+  --dot-r-min: .6px;
+  --dot-r-max: 2.7px;
+  --dot-lift: 8px;        /* max vertical displacement */
+  --quiet-floor: .3;      /* opacity multiplier at the centre of the quiet zone */
+
+  /* motion */
+  --t-fast: 160ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --fps-cap: 60;
+}
+```
+
+## Typography
+
+| Role          | Family     | Size | Weight | Line-height | Tracking | Case      |
+|---------------|------------|-----:|-------:|------------:|---------:|-----------|
+| Headline      | Geist      | 96px | 500    | 0.98        | −0.045em | sentence  |
+| Sub-copy      | Geist      | 18px | 400    | 1.55        | 0        | sentence  |
+| Nav / buttons | Geist      | 14px | 400/500| 1.5         | 0        | sentence  |
+| Wordmark      | Geist      | 16px | 600    | 1           | −0.01em  | sentence  |
+| Stat value    | Geist      | 26px | 500    | 1.2         | −0.03em  | numerals  |
+| Stat label    | Geist Mono | 11px | 500    | 1.3         | +0.1em   | UPPERCASE |
+| Pill / hint   | Geist Mono | 12px | 500/400| 1           | 0        | sentence  |
+| Units         | Geist Mono | 13px | 400    | 1           | 0        | lowercase |
 
 ## Implementation notes
 

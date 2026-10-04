@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from f-list.cleancreatives.org: the "Introducing the F-Badges" block, a dark band of outlined cards that each wear a diamond-framed icon breaking the top border, scrolled sideways and tracked by a thick two-tone progress bar. This version is the badge glossary of a fictional watchdog index, Plainsight's Tracker Index, which tags data brokers with proven habits (Repeat seller, Opt-out maze, Shadow profile…). Eight 264×300 cards sit in a scroll-snap rail that bleeds off the right edge. Each card has a 56px diamond straddling its top border, a condensed uppercase title, a two-line definition, and a footer with the broker count. Hover lifts the card 4px, turns its border lime and spins the diamond a quarter turn as it fills lime. Clicking a card makes it the active filter: it gets a dark-lime fill and a lime ring, and the status line above the rail reads "Showing 48 brokers with Opt-out maze". Below the rail, a 6px scrubber shows how much of the rail is visible and where you are; drag it, click it, or use the arrow keys. The detail worth copying: the diamond is a rotated pseudo-element behind an unrotated icon, so the icon stays upright while the frame spins.
-
-## Reference behaviour
-
-1. First frame: a 76px two-line headline "Every broker / earns its badges" with "badges" in lime, a 16px lede, and a "View the index" button with a hard 4px offset shadow on the right. Under it, the status line reads "Showing 48 brokers with Opt-out maze" with a Clear filter button, because Opt-out maze starts as the active filter. Four and a half cards are visible; the fifth is cut by the right edge.
-2. The rail scrolls horizontally with `scroll-snap-type: x mandatory`; each card snaps at its start. The native scrollbar is hidden.
-3. The scrubber thumb width is `track × clientWidth / scrollWidth`, minimum 48px. Its x is `(track − thumb) × scrollLeft / (scrollWidth − clientWidth)`. It updates on every rail scroll frame.
-4. Pointer down anywhere on the track jumps the rail so the thumb centres on the pointer, then follows the drag. During the drag, snapping and smooth scrolling are switched off; they come back on release. The thumb thickens from 6px to 10px while hovered, focused or dragged.
-5. With the track focused: ArrowRight/ArrowDown scroll one card forward, ArrowLeft/ArrowUp one card back, Home to the start, End to the end. `aria-valuenow` reports 0–100.
-6. The two 44px square arrow buttons scroll two cards at a time. Previous is disabled at the start, Next at the end.
-7. Hovering or focusing a card: border `#2c343a` → lime, translateY 0 → −4px, diamond frame fills lime and rotates 45° → 135° in 400ms, icon turns near-black and scales to 1.08.
-8. Clicking a card sets `aria-pressed="true"` on it and false on all others. Its footer word changes from "Filter" to "Filtering" in lime. The status line updates (polite live region) and Clear filter appears.
-9. Clicking the active card again, or Clear filter, removes the filter: "Showing all 214 brokers", Clear filter hides, focus returns to the rail.
 
 ## Structure
 
@@ -46,51 +36,6 @@ Studied from f-list.cleancreatives.org: the "Introducing the F-Badges" block, a 
 - `.status`: a `span` with `aria-live="polite"` and `button.clear`.
 - `ul.rail` with `tabindex="0"` and `aria-label="Badges"`: eight `li`, each holding one `button.card` with `aria-pressed`. Inside: `span.dia` (icon SVG), `h3`, `p`, `span.foot` (count + state word).
 - `.scrub`: `div.track` with `role="slider"`, `tabindex="0"`, `aria-valuemin/max/now/text`, holding `div.thumb`; then two arrow `button`s.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #0f1316;          /* page, diamond interior at rest */
-  --surface: #161b1f;     /* card */
-  --surface-on: #1c2412;  /* active filter card */
-  --ink: #eef1ea;         /* text, button borders, offset shadow */
-  --ink-2: #9aa39c;       /* lede, definitions, resting diamond frame */
-  --line: #2c343a;        /* card borders, track, rules */
-  --lime: #c5f04a;        /* accent: hover, active, thumb, headline word */
-  --lime-ink: #11160a;    /* icon colour on lime */
-  --focus: #c5f04a;
-
-  /* type */
-  --display: "Big Shoulders Display", Impact, sans-serif;
-  --sans: "Space Grotesk", system-ui, sans-serif;
-
-  /* layout */
-  --card-w: 264px;
-  --card-h: 300px;
-  --gap: 20px;
-  --dia: 56px;
-
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-No border radius anywhere. Corners are square on cards, buttons, track and thumb.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Headline h2 | Big Shoulders Display | 76px | 800 | 0.9 | −0.005em | Sentence |
-| Card title h3 | Big Shoulders Display | 30px | 700 | 0.95 | 0.01em | UPPER |
-| View button | Big Shoulders Display | 18px | 700 | 1 | 0.04em | UPPER |
-| Lede | Space Grotesk | 16px | 400 | 1.5 | 0 | Sentence |
-| Card definition | Space Grotesk | 15px | 400 | 1.45 | 0 | Sentence |
-| Status line | Space Grotesk | 14px | 400, numbers 600 | 1.5 | 0 | Sentence |
-| Card footer | Space Grotesk | 13px | 600 / 500 | 1.5 | 0 | Sentence |
 
 ## Motion
 
@@ -157,6 +102,67 @@ No border radius anywhere. Corners are square on cards, buttons, track and thumb
 - [ ] Opt-out maze is pressed in the first frame.
 - [ ] Cards 264×300, gap 20, diamond 56px.
 - [ ] Track 6px `#2c343a`, thumb lime.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a 76px two-line headline "Every broker / earns its badges" with "badges" in lime, a 16px lede, and a "View the index" button with a hard 4px offset shadow on the right. Under it, the status line reads "Showing 48 brokers with Opt-out maze" with a Clear filter button, because Opt-out maze starts as the active filter. Four and a half cards are visible; the fifth is cut by the right edge.
+2. The rail scrolls horizontally with `scroll-snap-type: x mandatory`; each card snaps at its start. The native scrollbar is hidden.
+3. The scrubber thumb width is `track × clientWidth / scrollWidth`, minimum 48px. Its x is `(track − thumb) × scrollLeft / (scrollWidth − clientWidth)`. It updates on every rail scroll frame.
+4. Pointer down anywhere on the track jumps the rail so the thumb centres on the pointer, then follows the drag. During the drag, snapping and smooth scrolling are switched off; they come back on release. The thumb thickens from 6px to 10px while hovered, focused or dragged.
+5. With the track focused: ArrowRight/ArrowDown scroll one card forward, ArrowLeft/ArrowUp one card back, Home to the start, End to the end. `aria-valuenow` reports 0–100.
+6. The two 44px square arrow buttons scroll two cards at a time. Previous is disabled at the start, Next at the end.
+7. Hovering or focusing a card: border `#2c343a` → lime, translateY 0 → −4px, diamond frame fills lime and rotates 45° → 135° in 400ms, icon turns near-black and scales to 1.08.
+8. Clicking a card sets `aria-pressed="true"` on it and false on all others. Its footer word changes from "Filter" to "Filtering" in lime. The status line updates (polite live region) and Clear filter appears.
+9. Clicking the active card again, or Clear filter, removes the filter: "Showing all 214 brokers", Clear filter hides, focus returns to the rail.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #0f1316;          /* page, diamond interior at rest */
+  --surface: #161b1f;     /* card */
+  --surface-on: #1c2412;  /* active filter card */
+  --ink: #eef1ea;         /* text, button borders, offset shadow */
+  --ink-2: #9aa39c;       /* lede, definitions, resting diamond frame */
+  --line: #2c343a;        /* card borders, track, rules */
+  --lime: #c5f04a;        /* accent: hover, active, thumb, headline word */
+  --lime-ink: #11160a;    /* icon colour on lime */
+  --focus: #c5f04a;
+
+  /* type */
+  --display: "Big Shoulders Display", Impact, sans-serif;
+  --sans: "Space Grotesk", system-ui, sans-serif;
+
+  /* layout */
+  --card-w: 264px;
+  --card-h: 300px;
+  --gap: 20px;
+  --dia: 56px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+No border radius anywhere. Corners are square on cards, buttons, track and thumb.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Headline h2 | Big Shoulders Display | 76px | 800 | 0.9 | −0.005em | Sentence |
+| Card title h3 | Big Shoulders Display | 30px | 700 | 0.95 | 0.01em | UPPER |
+| View button | Big Shoulders Display | 18px | 700 | 1 | 0.04em | UPPER |
+| Lede | Space Grotesk | 16px | 400 | 1.5 | 0 | Sentence |
+| Card definition | Space Grotesk | 15px | 400 | 1.45 | 0 | Sentence |
+| Status line | Space Grotesk | 14px | 400, numbers 600 | 1.5 | 0 | Sentence |
+| Card footer | Space Grotesk | 13px | 600 / 500 | 1.5 | 0 | Sentence |
 
 ## Implementation notes
 

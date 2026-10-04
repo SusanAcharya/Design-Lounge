@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A custom **install prompt** for "Loam", a plant-care PWA, shown as a modal bottom sheet over the app's plant grid. It replaces the browser's default mini-infobar: a 64px CSS-drawn app icon, name and size line, three benefits with tinted icon tiles, a plum "Install" button and a quiet "Not now". The sheet rises with a spring (a 560ms overshoot curve); on Install, a 4px progress bar fills along the button's bottom edge for 1.4s, the sheet drops away, a dark "Added to Home Screen" chip springs up from the bottom and a small home-screen icon pops in beside the "Show install prompt" control. The detail worth copying is the button-as-progress: no spinner, no modal swap — the CTA itself reports the install.
-
-## Reference behaviour
-
-1. Initial state: the sheet is already up (`body.show`), scrim at `rgba(36,30,26,.45)` over a page with a 30px serif "Loam" title and a 2×2 grid of plant cards. The Install button holds focus.
-2. Tap **Install**: `body.busy`; label changes to "Installing…"; the button's bottom bar grows from 0 to 100% width over 1400ms `cubic-bezier(.2,.7,.2,1)` at 90% opacity; pointer events on the button are disabled.
-3. At 1400ms: `show` and `busy` are removed, `done` is added. Sheet translates to 110% over 260ms `cubic-bezier(.4,0,1,1)`; scrim fades on the same clock. The chip (44px pill, `--ink` background, green check) springs from `translate(-50%, 24px)` and opacity 0 to rest over 560ms; a 52px home-screen icon with the label "Loam" scales from .6 to 1 in the tools row.
-4. At 4400ms: `done` is removed; chip and icon fade out over 260ms.
-5. Tap **Not now**, the scrim, or press Esc: sheet and scrim exit as in step 3 with no chip; focus returns to "Show install prompt".
-6. Tap **Show install prompt**: `show` is added; the sheet rises from 110% to 0 over 560ms `cubic-bezier(.22,1.2,.36,1)` (visible overshoot of ~6px); scrim fades in over 560ms standard; the Install button takes focus after 100ms. Any pending timers from a previous install are cancelled.
 
 ## Structure
 
@@ -65,6 +58,77 @@ Sample content:
 - Benefits: "Opens from your Home Screen — Full-screen, no browser bar, launches in under a second."; "Watering schedule works offline — Your plants and reminders are cached on this phone."; "Reminders when they are thirsty — A nudge at 08:00 on watering days. Off by default."
 - Buttons: "Install" → "Installing…"; "Not now". Chip: "Added to Home Screen". Tools: "Show install prompt".
 - App icon drawing: 64px `--plum` square, 18px radius; a `--leaf-soft` leaf (`::before`, 28×44, `border-radius:50% 50% 0 0 / 70% 70% 0 0`, rotated −18°, bottom −8px, left 18px) with a 2px plum midrib (`::after`).
+
+## Motion
+
+| Element      | Trigger        | Property             | From → To                     | Duration | Easing          | Delay |
+|--------------|----------------|----------------------|-------------------------------|---------:|-----------------|------:|
+| `.sheet`     | show           | translateY           | 110% → 0                      | 560ms    | `--ease-spring` | 0 |
+| `.sheet`     | hide / done    | translateY           | 0 → 110%                      | 260ms    | `--ease-exit`   | 0 |
+| `.scrim`     | show           | opacity              | 0 → 1                         | 560ms    | `--ease-std`    | 0 |
+| `.scrim`     | hide           | opacity              | 1 → 0                         | 260ms    | `--ease-exit`   | 0 |
+| `.btn .bar`  | install        | width                | 0 → 100%                      | 1400ms   | `--ease-std`    | 0 |
+| `.btn`       | :active        | scale                | 1 → .98                       | 160ms    | `--ease-std`    | 0 |
+| `.chip`      | done           | opacity, translateY  | 0, 24px → 1, 0                | 300 / 560ms | `--ease-spring` | 0 (fires at 1400ms) |
+| `.chip`      | done removed   | opacity, translateY  | 1, 0 → 0, 24px                | 260ms    | `--ease-exit`   | 0 (fires at 4400ms) |
+| `.home`      | done           | opacity, scale       | 0, .6 → 1, 1                  | 300 / 560ms | `--ease-spring` | 0 |
+
+Reduced motion: all transitions 1ms. The progress bar jumps to full and the sheet/chip states still sequence on the same timers so the flow is legible.
+
+## States
+
+- **Shown:** `body.show` — sheet at rest, scrim interactive, Install focused.
+- **Busy:** `body.busy` — Install label "Installing…", bar filling, button `pointer-events:none`.
+- **Done:** `body.done` — sheet hidden, chip and home icon visible for 3s.
+- **Hidden:** none of the above — sheet `visibility:hidden` after its exit.
+- **Hover:** ghost and Not now buttons take `--paper-2`.
+- **Focus-visible:** 3px `--plum` outline, 2px offset, on all buttons.
+- **Pressed (Install):** scale .98.
+
+## Accessibility
+
+- Sheet is `role="dialog" aria-modal="true"` labelled by the `<h2>` and described by the meta line.
+- Focus moves to Install 100ms after opening; Esc, scrim, and Not now close it and return focus to "Show install prompt".
+- Chip is `role="status" aria-live="polite"` so "Added to Home Screen" is announced once.
+- The Install label change ("Installing…") is inside the button, so the busy state is announced on re-read; add `aria-busy="true"` on the button if the framework supports it.
+- Decorative icon and leaf shapes are `aria-hidden`.
+- Contrast: `--ink-2` on `--paper` 5.6:1; `--plum-ink` on `--plum` 10.9:1; `--plum` on `--plum-soft` 7.2:1.
+- Hit targets: Install 52px, Not now 48px, ghost 44px, chip 44px.
+
+## Responsive rules
+
+- 390 wide: as specified.
+- 360 wide: sheet padding 20px; benefit body text may wrap to three lines — allow it, don't clamp.
+- ≥ 600 wide: sheet becomes a centred card 420px wide, 28px radius on all corners, `bottom:32px`; the chip stays bottom-centre.
+- Short viewports (< 700px tall): the plant grid is hidden behind the sheet anyway; make the sheet `max-height:calc(100% - 54px)` and scroll its benefits.
+
+## Acceptance checklist
+
+- [ ] Sheet has 28px top radii, 24px side padding, 44px bottom padding and casts `0 -12px 40px rgba(36,30,26,.18)`.
+- [ ] Sheet enters over 560ms with `cubic-bezier(.22,1.2,.36,1)` and visibly overshoots; exits over 260ms with `cubic-bezier(.4,0,1,1)`.
+- [ ] App icon is 64px, 18px radius, `#5B2A4E`, drawn in CSS (no image).
+- [ ] Three benefits each have a 40px `#EADBE4` tile with a plum icon, a 15px/600 title and 13px `#6B625A` body.
+- [ ] Install button is 52px, `#5B2A4E`, and shows a 4px progress bar along its bottom edge filling over 1400ms.
+- [ ] After the bar fills, the sheet drops and a 44px `#241E1A` chip reading "Added to Home Screen" springs in at bottom 52px.
+- [ ] Chip and home icon disappear 3s later.
+- [ ] Not now, scrim and Esc dismiss without the chip; focus returns to the trigger.
+- [ ] "Show install prompt" re-opens the sheet and cancels stale timers.
+- [ ] Dialog semantics present: `role="dialog" aria-modal="true" aria-labelledby`.
+- [ ] Focus rings are visible on every button.
+- [ ] Reduced motion collapses all transitions to 1ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: the sheet is already up (`body.show`), scrim at `rgba(36,30,26,.45)` over a page with a 30px serif "Loam" title and a 2×2 grid of plant cards. The Install button holds focus.
+2. Tap **Install**: `body.busy`; label changes to "Installing…"; the button's bottom bar grows from 0 to 100% width over 1400ms `cubic-bezier(.2,.7,.2,1)` at 90% opacity; pointer events on the button are disabled.
+3. At 1400ms: `show` and `busy` are removed, `done` is added. Sheet translates to 110% over 260ms `cubic-bezier(.4,0,1,1)`; scrim fades on the same clock. The chip (44px pill, `--ink` background, green check) springs from `translate(-50%, 24px)` and opacity 0 to rest over 560ms; a 52px home-screen icon with the label "Loam" scales from .6 to 1 in the tools row.
+4. At 4400ms: `done` is removed; chip and icon fade out over 260ms.
+5. Tap **Not now**, the scrim, or press Esc: sheet and scrim exit as in step 3 with no chip; focus returns to "Show install prompt".
+6. Tap **Show install prompt**: `show` is added; the sheet rises from 110% to 0 over 560ms `cubic-bezier(.22,1.2,.36,1)` (visible overshoot of ~6px); scrim fades in over 560ms standard; the Install button takes focus after 100ms. Any pending timers from a previous install are cancelled.
 
 ## Tokens
 
@@ -135,64 +199,6 @@ Sample content:
 | Chip              | Instrument Sans | 14px | 500    | 1           | 0        | |
 | "Water today" pill| Instrument Sans | 11px | 600    | 1.4         | 0        | |
 | Home icon label   | Instrument Sans | 10px | 400    | 1.3         | 0        | |
-
-## Motion
-
-| Element      | Trigger        | Property             | From → To                     | Duration | Easing          | Delay |
-|--------------|----------------|----------------------|-------------------------------|---------:|-----------------|------:|
-| `.sheet`     | show           | translateY           | 110% → 0                      | 560ms    | `--ease-spring` | 0 |
-| `.sheet`     | hide / done    | translateY           | 0 → 110%                      | 260ms    | `--ease-exit`   | 0 |
-| `.scrim`     | show           | opacity              | 0 → 1                         | 560ms    | `--ease-std`    | 0 |
-| `.scrim`     | hide           | opacity              | 1 → 0                         | 260ms    | `--ease-exit`   | 0 |
-| `.btn .bar`  | install        | width                | 0 → 100%                      | 1400ms   | `--ease-std`    | 0 |
-| `.btn`       | :active        | scale                | 1 → .98                       | 160ms    | `--ease-std`    | 0 |
-| `.chip`      | done           | opacity, translateY  | 0, 24px → 1, 0                | 300 / 560ms | `--ease-spring` | 0 (fires at 1400ms) |
-| `.chip`      | done removed   | opacity, translateY  | 1, 0 → 0, 24px                | 260ms    | `--ease-exit`   | 0 (fires at 4400ms) |
-| `.home`      | done           | opacity, scale       | 0, .6 → 1, 1                  | 300 / 560ms | `--ease-spring` | 0 |
-
-Reduced motion: all transitions 1ms. The progress bar jumps to full and the sheet/chip states still sequence on the same timers so the flow is legible.
-
-## States
-
-- **Shown:** `body.show` — sheet at rest, scrim interactive, Install focused.
-- **Busy:** `body.busy` — Install label "Installing…", bar filling, button `pointer-events:none`.
-- **Done:** `body.done` — sheet hidden, chip and home icon visible for 3s.
-- **Hidden:** none of the above — sheet `visibility:hidden` after its exit.
-- **Hover:** ghost and Not now buttons take `--paper-2`.
-- **Focus-visible:** 3px `--plum` outline, 2px offset, on all buttons.
-- **Pressed (Install):** scale .98.
-
-## Accessibility
-
-- Sheet is `role="dialog" aria-modal="true"` labelled by the `<h2>` and described by the meta line.
-- Focus moves to Install 100ms after opening; Esc, scrim, and Not now close it and return focus to "Show install prompt".
-- Chip is `role="status" aria-live="polite"` so "Added to Home Screen" is announced once.
-- The Install label change ("Installing…") is inside the button, so the busy state is announced on re-read; add `aria-busy="true"` on the button if the framework supports it.
-- Decorative icon and leaf shapes are `aria-hidden`.
-- Contrast: `--ink-2` on `--paper` 5.6:1; `--plum-ink` on `--plum` 10.9:1; `--plum` on `--plum-soft` 7.2:1.
-- Hit targets: Install 52px, Not now 48px, ghost 44px, chip 44px.
-
-## Responsive rules
-
-- 390 wide: as specified.
-- 360 wide: sheet padding 20px; benefit body text may wrap to three lines — allow it, don't clamp.
-- ≥ 600 wide: sheet becomes a centred card 420px wide, 28px radius on all corners, `bottom:32px`; the chip stays bottom-centre.
-- Short viewports (< 700px tall): the plant grid is hidden behind the sheet anyway; make the sheet `max-height:calc(100% - 54px)` and scroll its benefits.
-
-## Acceptance checklist
-
-- [ ] Sheet has 28px top radii, 24px side padding, 44px bottom padding and casts `0 -12px 40px rgba(36,30,26,.18)`.
-- [ ] Sheet enters over 560ms with `cubic-bezier(.22,1.2,.36,1)` and visibly overshoots; exits over 260ms with `cubic-bezier(.4,0,1,1)`.
-- [ ] App icon is 64px, 18px radius, `#5B2A4E`, drawn in CSS (no image).
-- [ ] Three benefits each have a 40px `#EADBE4` tile with a plum icon, a 15px/600 title and 13px `#6B625A` body.
-- [ ] Install button is 52px, `#5B2A4E`, and shows a 4px progress bar along its bottom edge filling over 1400ms.
-- [ ] After the bar fills, the sheet drops and a 44px `#241E1A` chip reading "Added to Home Screen" springs in at bottom 52px.
-- [ ] Chip and home icon disappear 3s later.
-- [ ] Not now, scrim and Esc dismiss without the chip; focus returns to the trigger.
-- [ ] "Show install prompt" re-opens the sheet and cancels stale timers.
-- [ ] Dialog semantics present: `role="dialog" aria-modal="true" aria-labelledby`.
-- [ ] Focus rings are visible on every button.
-- [ ] Reduced motion collapses all transitions to 1ms.
 
 ## Implementation notes
 

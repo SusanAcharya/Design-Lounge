@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The last screen of a long essay in *Quarterly 41*, a fictional Lisbon literary magazine. The article is a scrollable column above a footer that never moves: centered italic wordmark "Quarterly", the issue name "Forty-one" in 13px uppercase grotesk, three text links, "Lisbon · MMXXVI", and a back-to-top control. The last paragraph of the essay is masked with a linear fade to paper so the type dissolves before the colophon. Back-to-top smoothly scrolls the article to its heading. The feeling is a printed magazine closing its last page — quiet, centered, no sitemap.
-
-## Reference behaviour
-
-1. Initial state: cool olive paper (`#e8e4d6`). The article column (`#top`) is `overflow-y: auto` in the space above the footer. On load, JS sets `essay.scrollTop = essay.scrollHeight`, so the first frame is the faded last paragraph sitting on the colophon, not the title.
-2. The last `<p class="last">` uses a CSS mask `linear-gradient(180deg, #000 0%, transparent 92%)` so the type fades into the paper.
-3. Footer is centered, full width, not a grid of columns. A 48×1px ink rule at 45% opacity sits 36px above the wordmark.
-4. Wordmark is italic 52px EB Garamond "Quarterly". Under it, "Forty-one" is 13px Hanken Grotesk, uppercase, letter-spacing 0.16em, colour `--ink-2`.
-5. Three links in a row, 28px apart: Index, Masthead, Submit. Hover: colour `--ink`, 1px ink underline. No current-route state.
-6. Place line: italic 16px serif "Lisbon · MMXXVI", `--ink-2`, 36px above the button.
-7. Back-to-top is a `<button>`: 18px chevron-up SVG over 11px uppercase "Back to top". Clicking it runs `essay.scrollTo({ top: 0, behavior: 'smooth' })`. Hover colour `--pine` (`#2f4a3c`).
-8. Reduced motion: `scroll-behavior: auto` on both `html` and the JS call (`behavior: 'auto'`). The last-paragraph mask starts later (20% opaque) so more of the sentence stays readable.
 
 ## Structure
 
@@ -50,45 +41,6 @@ The last screen of a long essay in *Quarterly 41*, a fictional Lisbon literary m
 - `<footer>` is `flex: none`, column, `align-items: center`, padding `56px 32px 40px`.
   - `.rule` 48×1px.
   - `.mark` `<p>`, `.issue` `<p>`, `<ul class="links">` of three `<a>`, `.place` `<p>`, `<button class="top" id="topbtn">`.
-
-## Tokens
-
-```css
-:root {
-  --paper: #e8e4d6;            /* page */
-  --paper-2: #ddd8c8;
-  --ink: #1c1b18;              /* type, rule, hover */
-  --ink-2: #5c574e;            /* issue, links, place */
-  --ink-3: #8a8478;            /* back-to-top rest */
-  --line: rgba(28, 27, 24, .18);
-  --pine: #2f4a3c;             /* kicker, drop cap, top hover */
-  --pine-soft: #d5ddd6;
-  --serif: "EB Garamond", "Palatino Linotype", Palatino, serif;
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-  --measure: 62ch;
-  --pad: 80px;
-  --t-micro: 160ms;
-  --t-fade: 900ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role           | Family          | Size | Weight | Line-height | Tracking | Case      |
-|----------------|-----------------|-----:|-------:|------------:|---------:|-----------|
-| Essay title    | EB Garamond     | 42px | 500    | 1.15        | −0.02em  | sentence  |
-| Body           | EB Garamond     | 18px | 400    | 1.6         | 0        | sentence  |
-| Drop cap       | EB Garamond     | 64px | italic 400 | 0.8     | 0        |           |
-| Wordmark       | EB Garamond     | 52px | italic 400 | 1       | −0.03em  | Title     |
-| Place          | EB Garamond     | 16px | italic 400 | 1.4     | 0        | Title     |
-| Issue          | Hanken Grotesk  | 13px | 500    | 1           | +0.16em  | UPPERCASE |
-| Links          | Hanken Grotesk  | 14px | 500    | 1           | 0        | Title     |
-| Kicker         | Hanken Grotesk  | 11px | 500    | 1           | +0.18em  | UPPERCASE |
-| Back to top    | Hanken Grotesk  | 11px | 500    | 1           | +0.14em  | UPPERCASE |
-
-Measure 62ch. Body never full-bleeds.
 
 ## Motion
 
@@ -134,6 +86,60 @@ The fade is a static CSS mask, not an animation. Reduced motion: JS uses `behavi
 - [ ] Body type is 18px/1.6 EB Garamond on a 62ch measure.
 - [ ] Palette is olive paper `#e8e4d6` and pine `#2f4a3c`, not warm apricot and not amber-on-black.
 - [ ] Only EB Garamond and Hanken Grotesk load.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: cool olive paper (`#e8e4d6`). The article column (`#top`) is `overflow-y: auto` in the space above the footer. On load, JS sets `essay.scrollTop = essay.scrollHeight`, so the first frame is the faded last paragraph sitting on the colophon, not the title.
+2. The last `<p class="last">` uses a CSS mask `linear-gradient(180deg, #000 0%, transparent 92%)` so the type fades into the paper.
+3. Footer is centered, full width, not a grid of columns. A 48×1px ink rule at 45% opacity sits 36px above the wordmark.
+4. Wordmark is italic 52px EB Garamond "Quarterly". Under it, "Forty-one" is 13px Hanken Grotesk, uppercase, letter-spacing 0.16em, colour `--ink-2`.
+5. Three links in a row, 28px apart: Index, Masthead, Submit. Hover: colour `--ink`, 1px ink underline. No current-route state.
+6. Place line: italic 16px serif "Lisbon · MMXXVI", `--ink-2`, 36px above the button.
+7. Back-to-top is a `<button>`: 18px chevron-up SVG over 11px uppercase "Back to top". Clicking it runs `essay.scrollTo({ top: 0, behavior: 'smooth' })`. Hover colour `--pine` (`#2f4a3c`).
+8. Reduced motion: `scroll-behavior: auto` on both `html` and the JS call (`behavior: 'auto'`). The last-paragraph mask starts later (20% opaque) so more of the sentence stays readable.
+
+## Tokens
+
+```css
+:root {
+  --paper: #e8e4d6;            /* page */
+  --paper-2: #ddd8c8;
+  --ink: #1c1b18;              /* type, rule, hover */
+  --ink-2: #5c574e;            /* issue, links, place */
+  --ink-3: #8a8478;            /* back-to-top rest */
+  --line: rgba(28, 27, 24, .18);
+  --pine: #2f4a3c;             /* kicker, drop cap, top hover */
+  --pine-soft: #d5ddd6;
+  --serif: "EB Garamond", "Palatino Linotype", Palatino, serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --measure: 62ch;
+  --pad: 80px;
+  --t-micro: 160ms;
+  --t-fade: 900ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role           | Family          | Size | Weight | Line-height | Tracking | Case      |
+|----------------|-----------------|-----:|-------:|------------:|---------:|-----------|
+| Essay title    | EB Garamond     | 42px | 500    | 1.15        | −0.02em  | sentence  |
+| Body           | EB Garamond     | 18px | 400    | 1.6         | 0        | sentence  |
+| Drop cap       | EB Garamond     | 64px | italic 400 | 0.8     | 0        |           |
+| Wordmark       | EB Garamond     | 52px | italic 400 | 1       | −0.03em  | Title     |
+| Place          | EB Garamond     | 16px | italic 400 | 1.4     | 0        | Title     |
+| Issue          | Hanken Grotesk  | 13px | 500    | 1           | +0.16em  | UPPERCASE |
+| Links          | Hanken Grotesk  | 14px | 500    | 1           | 0        | Title     |
+| Kicker         | Hanken Grotesk  | 11px | 500    | 1           | +0.18em  | UPPERCASE |
+| Back to top    | Hanken Grotesk  | 11px | 500    | 1           | +0.14em  | UPPERCASE |
+
+Measure 62ch. Body never full-bleeds.
 
 ## Implementation notes
 

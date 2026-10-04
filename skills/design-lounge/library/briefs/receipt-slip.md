@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A slot and a slip. Print slip sets max-height from 0 to 280px over 700ms. The slip names Hollis Yard, 3 Oct 2026 18:40, Load 18 Gate 4, Held 6h, and says Not a tax bill. The button becomes Reprint. Reprint collapses the slip. This is not a checkout. That summary is `mobile-one-page-checkout`.
-
-## Reference behaviour
-
-1. The slip starts at max-height 0. The button reads Print slip.
-2. Click sets data-out true. The slip grows to 280px.
-3. The button reads Reprint.
-4. Click again sets data-out false and the button reads Print slip.
-5. The type on the slip is IBM Plex Mono, 14px, line-height 1.7.
-6. The grow is 700ms. Reduced motion snaps.
-7. The slot is a 28px dark bar and does not move.
 
 ## Structure
 
@@ -32,19 +24,6 @@ Print slip
 - The slip is #fffdf8, border #e4dfd4, border-top 0, overflow hidden.
 - The pre is padding 16px 18px 20px, text-align left.
 - The button is 44px, fill #1f4d3a, text #fffdf8, margin-top 16px.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --slip:#fffdf8; --ink:#161513; --slot:#1c1b19; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Slip | IBM Plex Mono | 14px | 400 |
-| Button | IBM Plex Sans | 14px | 500 |
 
 ## Motion
 
@@ -89,17 +68,6 @@ Print slip
 - [ ] The line is Load 18 Gate 4.
 - [ ] Held is 6h.
 - [ ] The last line is Not a tax bill.
-
-## Implementation notes
-
-Toggle data-out.
-
-```js
-slip.dataset.out = String(on);
-go.textContent = on ? "Reprint" : "Print slip";
-```
-
-Use max-height so the slip can grow without a fixed height animation library.
 
 ## Measurements to keep
 
@@ -168,6 +136,44 @@ Use max-height so the slip can grow without a fixed height animation library.
 - While rebuilding, remember: Do not fetch a receipt.
 - While rebuilding, remember: Do not use a second button.
 - While rebuilding, remember: Do not animate the slot.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The slip starts at max-height 0. The button reads Print slip.
+2. Click sets data-out true. The slip grows to 280px.
+3. The button reads Reprint.
+4. Click again sets data-out false and the button reads Print slip.
+5. The type on the slip is IBM Plex Mono, 14px, line-height 1.7.
+6. The grow is 700ms. Reduced motion snaps.
+7. The slot is a 28px dark bar and does not move.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --slip:#fffdf8; --ink:#161513; --slot:#1c1b19; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Slip | IBM Plex Mono | 14px | 400 |
+| Button | IBM Plex Sans | 14px | 500 |
+
+## Implementation notes
+
+Toggle data-out.
+
+```js
+slip.dataset.out = String(on);
+go.textContent = on ? "Reprint" : "Print slip";
+```
+
+Use max-height so the slip can grow without a fixed height animation library.
 
 ---
 

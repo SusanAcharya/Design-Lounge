@@ -4,17 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A connections block for Field ledger. Six tools sit in a grid of three. Each card is a name, one sentence, and one button. The button reads Connect or Connected. This is not a logo marquee. A marquee of customer marks is `logos-mono-marquee`. This is not a feature tour with a preview. A tabbed preview is `features-tabbed-preview`.
-
-## Reference behaviour
-
-1. The first frame has Gate mail, Night book, and Month close pressed. Their buttons read Connected.
-2. Yard map, Store tally, and Desk chat are off. Their buttons read Connect.
-3. Clicking a button toggles that card only. The others stay as they were.
-4. Pressed text is Connected. Unpressed text is Connect.
-5. Nothing else on the card is a control. The name is a heading.
 
 ## Structure
 
@@ -32,34 +26,6 @@ card, surface, border, padding 22px 20px, min-height 168px
 
 - Six `article` elements. Each has an `h2`, a `p`, and a `button`.
 - The button sits at the bottom of the card because the card is a column and the button has `margin-top: auto`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f1ea;
-  --surface: #fffdf8;
-  --ink: #1a1814;
-  --ink-2: #5c564c;
-  --line: #e3ddd2;
-  --primary: #1f4d3a;
-  --soft: #e7f2ec;
-  --display: "Fraunces", Georgia, serif;
-  --sans: "Public Sans", system-ui, sans-serif;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Kicker | Public Sans | 11px | 500 | 1 | 0.14em, upper |
-| Title | Fraunces | 44px | 560 | 1 | -0.02em |
-| Card name | Fraunces | 22px | 560 | 1.2 | 0 |
-| Sentence | Public Sans | 14px | 400 | 1.45 | 0 |
-| Button | Public Sans | 12px | 500 | 36px | 0.06em, upper |
-
-The sentence colour is `--ink-2`. The card name is `--ink`.
 
 ## Motion
 
@@ -107,6 +73,46 @@ None. The button fill changes at once. Do not animate a checkmark into the label
 - [ ] Yard map, Store tally, and Desk chat start as Connect.
 - [ ] Month close mentions रु and lakh grouping.
 - [ ] Gate mail mentions the note when a load is booked.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame has Gate mail, Night book, and Month close pressed. Their buttons read Connected.
+2. Yard map, Store tally, and Desk chat are off. Their buttons read Connect.
+3. Clicking a button toggles that card only. The others stay as they were.
+4. Pressed text is Connected. Unpressed text is Connect.
+5. Nothing else on the card is a control. The name is a heading.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f1ea;
+  --surface: #fffdf8;
+  --ink: #1a1814;
+  --ink-2: #5c564c;
+  --line: #e3ddd2;
+  --primary: #1f4d3a;
+  --soft: #e7f2ec;
+  --display: "Fraunces", Georgia, serif;
+  --sans: "Public Sans", system-ui, sans-serif;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Kicker | Public Sans | 11px | 500 | 1 | 0.14em, upper |
+| Title | Fraunces | 44px | 560 | 1 | -0.02em |
+| Card name | Fraunces | 22px | 560 | 1.2 | 0 |
+| Sentence | Public Sans | 14px | 400 | 1.45 | 0 |
+| Button | Public Sans | 12px | 500 | 36px | 0.06em, upper |
+
+The sentence colour is `--ink-2`. The card name is `--ink`.
 
 ## Implementation notes
 

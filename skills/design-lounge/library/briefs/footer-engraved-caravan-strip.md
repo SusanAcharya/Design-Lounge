@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from acharyasusan.com.np: the closing footer, a dark brown sitemap with a ticking local time and an email box, that melts into an engraved mountain plain where a rider and pack horse slowly cross the page. This rebuild is for **Páramo Post**, a fictional slow-travel newsletter written on foot across the high Andes. The footer has five columns on deep moss, then an SVG strip: stars, two gliding birds, three hatched ridges, grass clumps, a cairn with fluttering flags, and a herder leading two pack llamas from left to right over 95 seconds. Legs step, bodies bob, necks nod and tails swish. The far and mid ridges sink a little as the footer scrolls into view. It should feel like the last page of a travel journal. The detail worth copying is how much life comes from tiny alternating CSS keyframes (0.55s leg swings, 1.4px bobs) on top of one very slow walk.
-
-## Reference behaviour
-
-1. On load the page jumps (no animation) to the very bottom. The first frame shows the tail of the page above (a cream band with "Letter no. 38 is packed") and the whole footer.
-2. Footer grid, 64px top padding: column 1 is the brand (sun-on-horizon mark + "Páramo Post" in 30px serif), an italic tagline, three contact rows with 18px line icons (email, place, "On the trail at 16:22"), and three 40px icon links. Columns 2–4 are link lists "Letters", "Route", "Desk". Column 5 "Say hola" has an italic line, the email form and a status line.
-3. Each column heading is 12px caps with 0.18em tracking and a 38px persimmon rule under it.
-4. The local time shows America/La_Paz as `HH:MM`, refreshed every 30s. The colon blinks (2s cycle, 25% at half).
-5. Hovering a sitemap link brightens it from 84% to 100% oat and nudges it 3px right (250ms).
-6. Hovering an icon link turns it persimmon and lifts it 2px.
-7. The form is one bordered box (1.5px, 90% oat) with an italic serif input and a 48px oat square button with an arrow. Focus inside the form adds a 3px persimmon glow. Hovering the button fills it persimmon and slides the arrow 3px right.
-8. Submitting an invalid email shows "That address looks short a letter or two." in pale coral and puts focus back in the field. A valid one shows "Added. Letter no. 38 leaves on the first." and clears the field. Both go through a polite live region.
-9. Legal row: italic serif "© 2026 Páramo Post, carried on foot." at left, three links with slashes at right.
-10. Art strip (`viewBox 0 0 1600 380`, slice, height clamp(200px, 27vw, 360px)) starts right under the legal row with a −6px overlap.
-11. The caravan walks from x −220 to x 1820 in 95s, starting at −52s so it is mid-page on load. Order from front: herder (hat, poncho, staff), llama 1 tied by a thin rope, llama 2 slightly smaller.
-12. Ambient loops: 46 stars twinkle, two birds glide across in 64s and 80s with 1.3s wing flaps, every grass clump sways, seven flags on a rope flutter with a 0.2s offset each.
-13. Scroll parallax: progress `p = (vh − art.top) / (vh + art.height)` clamped to 0–1. The far ridge shifts `(1 − p) × 40px` down, the mid ridge `(1 − p) × 18px`. Scrolling up a little pushes the mountains down behind the plain.
 
 ## Structure
 
@@ -51,69 +37,6 @@ Studied from acharyasusan.com.np: the closing footer, a dark brown sitemap with 
 - `div.say`: `h3`, `p`, `form#form[novalidate]` (hidden `label`, `input#email[type=email]`, `button.go[aria-label=Subscribe]`), `p#status[role=status][aria-live=polite]`.
 - `div.legal`: a `span` and `nav[aria-label=Legal]`.
 - `svg.art[aria-hidden=true]`: `g#stars`, two `g.bird-track`, `g#far`, `g#mid`, and an un-shifted near group with the plain, tufts, cairn and flags, and `g.walk` (herder + two `<use href="#llama">`).
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --moss: #17211b;            /* footer ground, hatch ink, silhouettes */
-  --moss-2: #1e2a22;          /* reserve surface */
-  --oat: #ebe3cc;             /* text and ridges */
-  --oat-2: rgba(235,227,204,.84);  /* links, tagline */
-  --oat-3: rgba(235,227,204,.6);   /* placeholder, status */
-  --line: rgba(235,227,204,.16);
-  --accent: #e0623e;          /* persimmon: rules, sun mark, flags, hover */
-  --page: #efe8d6;            /* the page above the footer */
-  --ink: #17211b;             /* text on the page above */
-  --ok: #f0a184;              /* success status */
-  --bad: #f4b9a6;             /* error status */
-
-  /* type */
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Figtree", system-ui, sans-serif;
-
-  /* layout */
-  --wrap: 1080px;
-  --pad: clamp(20px, 4.5vw, 36px);
-  --art-h: clamp(200px, 27vw, 360px);
-
-  /* motion */
-  --ease: cubic-bezier(.22, 1, .36, 1);
-  --walk: 95s;      /* one crossing */
-  --stride: .55s;   /* one leg swing (alternate) */
-}
-```
-
-Footer background also carries `radial-gradient(ellipse 60% 70% at 85% 0%, rgba(224,98,62,.12), transparent 60%)`, a faint warm glow in the top right.
-
-Art numbers (viewBox 1600×380):
-
-| Thing | Value |
-|---|---|
-| Far ridge | baseline 230, amp 140, step ~80, oat 30% + 5px hatch at −62° |
-| Mid ridge | baseline 275, amp 70, step ~90, oat 62% + 7px hatch at −28° |
-| Near plain | baseline 312, amp 14, step ~140, solid oat + 9px hatch at 18° (20%) |
-| Stars | 46 in the top 150 units, r 0.7–1.7 |
-| Grass clumps | 52, y 322–378, scale 0.7 + (y−322)/40, five strokes each |
-| Cairn + flags | at 330,300; poles 70 and 64 tall, 160 apart; seven 10×12 flags |
-| Caravan | ground y 324, scaled 1.22; herder at 0, llama 1 at −70, llama 2 at −150 (×0.92) |
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Letter-spacing | Case |
-|---|---|---|---|---|---|---|
-| Wordmark | Newsreader | 30px | 500 | 1 | −0.025em | Title |
-| Tagline | Newsreader italic | 17px | 400 | 1.5 | 0 | Sentence |
-| Column heading | Figtree | 12px | 650 | 1 | 0.18em | UPPER |
-| Sitemap link | Newsreader | 16.5px | 400 | 1.35 | 0 | Sentence |
-| Contact rows | Figtree | 14.5px | 400 (time 650, tabular) | 1.6 | 0 | Sentence |
-| Form line | Newsreader italic | 16px | 400 | 1.5 | 0 | Sentence |
-| Input | Newsreader italic | 16px | 400 | 1.2 | 0 | Sentence |
-| Status | Figtree | 13px | 400 | 1.6 | 0 | Sentence |
-| Legal | Newsreader italic | 15px | 400 | 1.4 | 0 | Sentence |
-| Page-tail kicker | Figtree | 11px | 650 | 1 | 0.2em | UPPER |
-| Page-tail h2 | Newsreader | clamp(30px, 4vw, 44px) | 400 | 1.1 | −0.02em | Sentence |
 
 ## Motion
 
@@ -184,6 +107,89 @@ Art numbers (viewBox 1600×380):
 - [ ] Clock row reads "On the trail at HH:MM" in America/La_Paz time.
 - [ ] Columns are Letters, Route, Desk and Say hola.
 - [ ] The caravan is one herder and two pack llamas with persimmon-strapped packs.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. On load the page jumps (no animation) to the very bottom. The first frame shows the tail of the page above (a cream band with "Letter no. 38 is packed") and the whole footer.
+2. Footer grid, 64px top padding: column 1 is the brand (sun-on-horizon mark + "Páramo Post" in 30px serif), an italic tagline, three contact rows with 18px line icons (email, place, "On the trail at 16:22"), and three 40px icon links. Columns 2–4 are link lists "Letters", "Route", "Desk". Column 5 "Say hola" has an italic line, the email form and a status line.
+3. Each column heading is 12px caps with 0.18em tracking and a 38px persimmon rule under it.
+4. The local time shows America/La_Paz as `HH:MM`, refreshed every 30s. The colon blinks (2s cycle, 25% at half).
+5. Hovering a sitemap link brightens it from 84% to 100% oat and nudges it 3px right (250ms).
+6. Hovering an icon link turns it persimmon and lifts it 2px.
+7. The form is one bordered box (1.5px, 90% oat) with an italic serif input and a 48px oat square button with an arrow. Focus inside the form adds a 3px persimmon glow. Hovering the button fills it persimmon and slides the arrow 3px right.
+8. Submitting an invalid email shows "That address looks short a letter or two." in pale coral and puts focus back in the field. A valid one shows "Added. Letter no. 38 leaves on the first." and clears the field. Both go through a polite live region.
+9. Legal row: italic serif "© 2026 Páramo Post, carried on foot." at left, three links with slashes at right.
+10. Art strip (`viewBox 0 0 1600 380`, slice, height clamp(200px, 27vw, 360px)) starts right under the legal row with a −6px overlap.
+11. The caravan walks from x −220 to x 1820 in 95s, starting at −52s so it is mid-page on load. Order from front: herder (hat, poncho, staff), llama 1 tied by a thin rope, llama 2 slightly smaller.
+12. Ambient loops: 46 stars twinkle, two birds glide across in 64s and 80s with 1.3s wing flaps, every grass clump sways, seven flags on a rope flutter with a 0.2s offset each.
+13. Scroll parallax: progress `p = (vh − art.top) / (vh + art.height)` clamped to 0–1. The far ridge shifts `(1 − p) × 40px` down, the mid ridge `(1 − p) × 18px`. Scrolling up a little pushes the mountains down behind the plain.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --moss: #17211b;            /* footer ground, hatch ink, silhouettes */
+  --moss-2: #1e2a22;          /* reserve surface */
+  --oat: #ebe3cc;             /* text and ridges */
+  --oat-2: rgba(235,227,204,.84);  /* links, tagline */
+  --oat-3: rgba(235,227,204,.6);   /* placeholder, status */
+  --line: rgba(235,227,204,.16);
+  --accent: #e0623e;          /* persimmon: rules, sun mark, flags, hover */
+  --page: #efe8d6;            /* the page above the footer */
+  --ink: #17211b;             /* text on the page above */
+  --ok: #f0a184;              /* success status */
+  --bad: #f4b9a6;             /* error status */
+
+  /* type */
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Figtree", system-ui, sans-serif;
+
+  /* layout */
+  --wrap: 1080px;
+  --pad: clamp(20px, 4.5vw, 36px);
+  --art-h: clamp(200px, 27vw, 360px);
+
+  /* motion */
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --walk: 95s;      /* one crossing */
+  --stride: .55s;   /* one leg swing (alternate) */
+}
+```
+
+Footer background also carries `radial-gradient(ellipse 60% 70% at 85% 0%, rgba(224,98,62,.12), transparent 60%)`, a faint warm glow in the top right.
+
+Art numbers (viewBox 1600×380):
+
+| Thing | Value |
+|---|---|
+| Far ridge | baseline 230, amp 140, step ~80, oat 30% + 5px hatch at −62° |
+| Mid ridge | baseline 275, amp 70, step ~90, oat 62% + 7px hatch at −28° |
+| Near plain | baseline 312, amp 14, step ~140, solid oat + 9px hatch at 18° (20%) |
+| Stars | 46 in the top 150 units, r 0.7–1.7 |
+| Grass clumps | 52, y 322–378, scale 0.7 + (y−322)/40, five strokes each |
+| Cairn + flags | at 330,300; poles 70 and 64 tall, 160 apart; seven 10×12 flags |
+| Caravan | ground y 324, scaled 1.22; herder at 0, llama 1 at −70, llama 2 at −150 (×0.92) |
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Letter-spacing | Case |
+|---|---|---|---|---|---|---|
+| Wordmark | Newsreader | 30px | 500 | 1 | −0.025em | Title |
+| Tagline | Newsreader italic | 17px | 400 | 1.5 | 0 | Sentence |
+| Column heading | Figtree | 12px | 650 | 1 | 0.18em | UPPER |
+| Sitemap link | Newsreader | 16.5px | 400 | 1.35 | 0 | Sentence |
+| Contact rows | Figtree | 14.5px | 400 (time 650, tabular) | 1.6 | 0 | Sentence |
+| Form line | Newsreader italic | 16px | 400 | 1.5 | 0 | Sentence |
+| Input | Newsreader italic | 16px | 400 | 1.2 | 0 | Sentence |
+| Status | Figtree | 13px | 400 | 1.6 | 0 | Sentence |
+| Legal | Newsreader italic | 15px | 400 | 1.4 | 0 | Sentence |
+| Page-tail kicker | Figtree | 11px | 650 | 1 | 0.2em | UPPER |
+| Page-tail h2 | Newsreader | clamp(30px, 4vw, 44px) | 400 | 1.1 | −0.02em | Sentence |
 
 ## Implementation notes
 

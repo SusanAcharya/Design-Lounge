@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The "Chapter II — The house" section of a fictional lakeside hotel, Maison Ardent. A 112px Bodoni Moda headline, "The quiet art of / *staying* a little / longer than / planned.", is set as four hand-broken lines with stepped indents. Each line sits in its own `overflow:hidden` mask and slides up from 112% below with a 3° tilt that straightens as it lands, on a long expo-out curve. After the lines, a hairline rule draws left to right and three numbered notes fade up. It is the classic agency reveal done carefully: masks are padded so italic overhangs and descenders are never clipped at rest, and the tilt pivots from the bottom-left corner so letters "unfold" rather than simply translate.
-
-## Reference behaviour
-
-1. Initial state on load: masks are empty (each line is below its mask) and begin revealing at 150ms.
-2. Line `i` (0–3) starts at `150ms + i × 110ms` and takes 1100ms with `cubic-bezier(.16,1,.3,1)`. It travels from `translateY(112%) rotate(3deg)` to rest, pivoting at `0 100%`.
-3. At 600ms the hairline under the headline scales from `scaleX(0)` to full width over 1200ms (expo out), from the left.
-4. At `800ms + d × 90ms` (d = 0, 1, 2) each note fades from opacity 0 and `translateY(10px)` to rest over 900ms.
-5. Everything has settled by about 2.2s; nothing loops.
-6. "staying" is italic and rose (`--rose`); the rest of the headline is champagne (`--ink`).
-7. Lines are indented 0, 2.1em, 0.9em and 3.6em, giving a ragged, set-by-hand left edge.
-8. Clicking "Replay" (bottom right) restarts the whole sequence from empty masks.
-9. "Reserve a suite" (top right) is an underlined link with a 1px rose rule 4px below the text.
 
 ## Structure
 
@@ -44,50 +34,6 @@ The "Chapter II — The house" section of a fictional lakeside hotel, Maison Ard
 - `<main>`: grid `120px 1fr`. `.side` holds a page index "02 / 05" at top and a vertical label (`writing-mode: vertical-rl; rotate(180deg)`) at bottom; `aria-hidden`.
 - `.copy`: `<h1>` with four `.ln` mask spans, each containing one inner `<span>` that moves; `.rule`; `.notes` grid of three `<p>`.
 - `<footer>`: address label and the Replay `<button>`.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #2A0C10;          /* oxblood page */
-  --bg-2: #3A1218;        /* top-right radial glow */
-  --ink: #EFE2CA;         /* champagne headline + emphasis */
-  --ink-2: #BFA79A;       /* body notes, labels */
-  --ink-3: #8E7570;       /* footer meta, index */
-  --rose: #E39A86;        /* italic accent, note labels, link rule, focus */
-  --line: rgba(239, 226, 202, .16); /* hairlines */
-
-  /* type */
-  --serif: "Bodoni Moda", Didot, serif;
-  --sans: "Manrope", system-ui, sans-serif;
-  --fs-display: 112px;
-  --fs-body: 15px;
-  --fs-label: 11px;
-
-  /* motion */
-  --reveal: 1100ms;
-  --stagger: 110ms;
-  --ease-expo: cubic-bezier(.16, 1, .3, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-Background: `--bg` with radial `1100×700 at 100% 0` of `--bg-2` and `500×300 at 8% 100%` of `rgba(227,154,134,.08)`. Radii are 0 everywhere, including the Replay button.
-
-## Typography
-
-| Role            | Family      | Size  | Weight | Line-height | Tracking | Case      |
-|-----------------|-------------|------:|-------:|------------:|---------:|-----------|
-| Headline        | Bodoni Moda (opsz 96) | 112px | 400 | 1.0 | −0.025em | sentence |
-| Headline accent | Bodoni Moda italic | 112px | 400 | 1.0     | −0.01em  | lowercase |
-| Wordmark        | Bodoni Moda | 20px  | 500    | 1           | +0.32em  | UPPERCASE |
-| Labels / nav    | Manrope     | 11px  | 500    | 1           | +0.2em   | UPPERCASE |
-| Note label      | Manrope     | 11px  | 500    | 1           | +0.2em   | UPPERCASE, rose |
-| Note body       | Manrope     | 15px  | 400 / 500 strong | 1.6 | 0      | sentence  |
-| Page index      | Manrope     | 13px  | 400 / 500 | 1        | +0.08em  | numerals  |
-
-Load Bodoni Moda with the `opsz` axis (`6..96`) and set `font-variation-settings: "opsz" 96` on the headline so hairlines get the display cut.
 
 ## Motion
 
@@ -137,6 +83,66 @@ Reduced motion: no line or rule animation (content is at rest on first paint); n
 - [ ] "staying" is italic in `#E39A86`.
 - [ ] With reduced motion the section is complete and static on first paint.
 - [ ] All interactive elements have a visible rose focus outline.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state on load: masks are empty (each line is below its mask) and begin revealing at 150ms.
+2. Line `i` (0–3) starts at `150ms + i × 110ms` and takes 1100ms with `cubic-bezier(.16,1,.3,1)`. It travels from `translateY(112%) rotate(3deg)` to rest, pivoting at `0 100%`.
+3. At 600ms the hairline under the headline scales from `scaleX(0)` to full width over 1200ms (expo out), from the left.
+4. At `800ms + d × 90ms` (d = 0, 1, 2) each note fades from opacity 0 and `translateY(10px)` to rest over 900ms.
+5. Everything has settled by about 2.2s; nothing loops.
+6. "staying" is italic and rose (`--rose`); the rest of the headline is champagne (`--ink`).
+7. Lines are indented 0, 2.1em, 0.9em and 3.6em, giving a ragged, set-by-hand left edge.
+8. Clicking "Replay" (bottom right) restarts the whole sequence from empty masks.
+9. "Reserve a suite" (top right) is an underlined link with a 1px rose rule 4px below the text.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #2A0C10;          /* oxblood page */
+  --bg-2: #3A1218;        /* top-right radial glow */
+  --ink: #EFE2CA;         /* champagne headline + emphasis */
+  --ink-2: #BFA79A;       /* body notes, labels */
+  --ink-3: #8E7570;       /* footer meta, index */
+  --rose: #E39A86;        /* italic accent, note labels, link rule, focus */
+  --line: rgba(239, 226, 202, .16); /* hairlines */
+
+  /* type */
+  --serif: "Bodoni Moda", Didot, serif;
+  --sans: "Manrope", system-ui, sans-serif;
+  --fs-display: 112px;
+  --fs-body: 15px;
+  --fs-label: 11px;
+
+  /* motion */
+  --reveal: 1100ms;
+  --stagger: 110ms;
+  --ease-expo: cubic-bezier(.16, 1, .3, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+Background: `--bg` with radial `1100×700 at 100% 0` of `--bg-2` and `500×300 at 8% 100%` of `rgba(227,154,134,.08)`. Radii are 0 everywhere, including the Replay button.
+
+## Typography
+
+| Role            | Family      | Size  | Weight | Line-height | Tracking | Case      |
+|-----------------|-------------|------:|-------:|------------:|---------:|-----------|
+| Headline        | Bodoni Moda (opsz 96) | 112px | 400 | 1.0 | −0.025em | sentence |
+| Headline accent | Bodoni Moda italic | 112px | 400 | 1.0     | −0.01em  | lowercase |
+| Wordmark        | Bodoni Moda | 20px  | 500    | 1           | +0.32em  | UPPERCASE |
+| Labels / nav    | Manrope     | 11px  | 500    | 1           | +0.2em   | UPPERCASE |
+| Note label      | Manrope     | 11px  | 500    | 1           | +0.2em   | UPPERCASE, rose |
+| Note body       | Manrope     | 15px  | 400 / 500 strong | 1.6 | 0      | sentence  |
+| Page index      | Manrope     | 13px  | 400 / 500 | 1        | +0.08em  | numerals  |
+
+Load Bodoni Moda with the `opsz` axis (`6..96`) and set `font-variation-settings: "opsz" 96` on the headline so hairlines get the display cut.
 
 ## Implementation notes
 

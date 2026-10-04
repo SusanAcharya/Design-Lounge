@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens and keep the hard 0-blur shadows.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from usearticle.com: the first screen, where the product is shown working inside a drawn browser window instead of as a static screenshot. This version is Ovenlight, a fictional service that publishes a recipe blog on a schedule. Left: a green live badge, a 64px headline with "cooking itself." in cobalt on a yellow marker stripe, a lede, two big hard-shadow buttons and three feature chips. Right: a browser frame with an 8px ink shadow, a tilted yellow sticker on its corner, and a schedule card that is visibly running: every 4.2 seconds the post count goes up by one, the progress bar grows, a new title drops into Recent posts and a "New post live" toast pops over the window's lower-left edge. The detail worth copying is that the mockup is alive but calm, with a real pause button, so the hero shows the product's promise ("it runs while you sleep") instead of claiming it.
-
-## Reference behaviour
-
-1. First frame: nav (logo, four links, cobalt "Start a kitchen" button), badge "Recipe autopublish · live" with a pulsing white dot, headline "Your recipe blog, cooking itself. Fresh every morning.", lede, buttons "Start a 14-day kitchen" (cobalt) and "Watch a post get made" (surface), chips "Daily at 7:00", "11 recipe formats", "9 languages", and mono fine print.
-2. The browser shows "app.ovenlight.co/schedules" in the URL pill. The card: Live pill, pause and Edit buttons, "Weeknight Suppers", "weeknightsuppers.blog", progress "18 / 40 posts" at 45%, three stats (6 formats, 14 pans linked, 1/d for 40 days). Recent posts lists four titles with green dots and "1d ago" to "4d ago".
-3. 1.6s after load, then every 4.2s: count +1, bar width animates, percentage updates, a new title is prepended with "just now", the older times shift (1d, 2d, 3d…), the list keeps four rows, and the toast shows for 2.2s.
-4. At 40 / 40 the next tick wraps back to 18. Titles cycle through a list of eight.
-5. Pause button: toggles `aria-pressed`, swaps the icon to a play triangle, the Live pill turns grey and reads "Paused", ticking stops. Pressing again resumes.
-6. When the tab is hidden the interval is cleared; it restarts when visible unless paused.
-7. Buttons press into their shadow on hover and flat on active. The sticker straightens from 9° to -3° and scales 1.06 on hover.
 
 ## Structure
 
@@ -45,49 +37,6 @@ hero max 1180, padding 28/40/48, grid minmax(0,1fr) | minmax(0,560px), gap 56, c
 - The window is `role=region` labelled "Product preview: a running recipe schedule". The traffic lights and URL are `aria-hidden`.
 - Recent posts is an `ol` with `aria-live="polite"` and `aria-relevant="additions"`.
 - The toast and sticker are `aria-hidden` decoration; the list announcement carries the news.
-
-## Tokens
-
-```css
-:root {
-  --bg: #eef3ea;         /* page, pale sage, with a #d3ddd0 1px dot every 24px */
-  --surface: #fcfdf9;    /* window, cards, secondary button */
-  --ink: #0f1e19;        /* text, borders, shadows */
-  --ink-2: #44524c;      /* lede, nav links */
-  --ink-3: #6b7871;      /* mono meta */
-  --rule: #d7e0d4;       /* stat and list borders */
-  --primary: #2443f0;    /* cobalt: headline accent, primary buttons, focus */
-  --mark: #ffe14d;       /* marker stripe, sticker */
-  --live: #15a05c;       /* badge, progress, dots, toast check */
-  --live-soft: #d6f2e2;  /* live pill */
-  --sans: "Familjen Grotesk", system-ui, sans-serif;
-  --mono: "Fragment Mono", ui-monospace, monospace;
-  --hard-sm: 3px 3px 0 var(--ink);
-  --hard: 5px 5px 0 var(--ink);
-  --hard-lg: 8px 8px 0 var(--ink);
-  --r-btn: 10px; --r-cta: 12px; --r-win: 14px; --r-card: 12px;
-  --micro: 150ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --tick: 4200ms; --toast-hold: 2200ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Logo | Familjen Grotesk | 21px | 700 | 1 | -0.02em |
-| Nav link | Familjen Grotesk | 15px | 500 | 1.5 | 0 |
-| Badge | Fragment Mono | 12px | 400 | 1 | 0.06em, upper |
-| H1 | Familjen Grotesk | 64px | 700 | 0.98 | -0.035em |
-| Lede | Familjen Grotesk | 19px | 400, bold run 600 | 1.55 | 0 |
-| Hero buttons | Familjen Grotesk | 17px | 700 | 1 | 0 |
-| Feature chip | Familjen Grotesk | 14px | 600 | 1 | 0 |
-| Card title | Familjen Grotesk | 22px | 700 | 1.2 | -0.02em |
-| Count | Familjen Grotesk | 15px | 700 | 1 | 0 |
-| Labels, URL, times, domain | Fragment Mono | 11–12px | 400 | 1.4 | 0.06em when upper |
-| List row | Familjen Grotesk | 13.5px | 500 | 30px rows | 0 |
 
 ## Motion
 
@@ -150,6 +99,63 @@ Reduced motion: all transitions and keyframes are removed. Ticking continues so 
 - [ ] Headline accent "cooking itself." is `#2443f0` on a `#ffe14d` stripe.
 - [ ] Window shadow 8px 8px 0 `#0f1e19`; sticker rotated 9°.
 - [ ] Toast reads "New post live / Email sent · just now".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: nav (logo, four links, cobalt "Start a kitchen" button), badge "Recipe autopublish · live" with a pulsing white dot, headline "Your recipe blog, cooking itself. Fresh every morning.", lede, buttons "Start a 14-day kitchen" (cobalt) and "Watch a post get made" (surface), chips "Daily at 7:00", "11 recipe formats", "9 languages", and mono fine print.
+2. The browser shows "app.ovenlight.co/schedules" in the URL pill. The card: Live pill, pause and Edit buttons, "Weeknight Suppers", "weeknightsuppers.blog", progress "18 / 40 posts" at 45%, three stats (6 formats, 14 pans linked, 1/d for 40 days). Recent posts lists four titles with green dots and "1d ago" to "4d ago".
+3. 1.6s after load, then every 4.2s: count +1, bar width animates, percentage updates, a new title is prepended with "just now", the older times shift (1d, 2d, 3d…), the list keeps four rows, and the toast shows for 2.2s.
+4. At 40 / 40 the next tick wraps back to 18. Titles cycle through a list of eight.
+5. Pause button: toggles `aria-pressed`, swaps the icon to a play triangle, the Live pill turns grey and reads "Paused", ticking stops. Pressing again resumes.
+6. When the tab is hidden the interval is cleared; it restarts when visible unless paused.
+7. Buttons press into their shadow on hover and flat on active. The sticker straightens from 9° to -3° and scales 1.06 on hover.
+
+## Tokens
+
+```css
+:root {
+  --bg: #eef3ea;         /* page, pale sage, with a #d3ddd0 1px dot every 24px */
+  --surface: #fcfdf9;    /* window, cards, secondary button */
+  --ink: #0f1e19;        /* text, borders, shadows */
+  --ink-2: #44524c;      /* lede, nav links */
+  --ink-3: #6b7871;      /* mono meta */
+  --rule: #d7e0d4;       /* stat and list borders */
+  --primary: #2443f0;    /* cobalt: headline accent, primary buttons, focus */
+  --mark: #ffe14d;       /* marker stripe, sticker */
+  --live: #15a05c;       /* badge, progress, dots, toast check */
+  --live-soft: #d6f2e2;  /* live pill */
+  --sans: "Familjen Grotesk", system-ui, sans-serif;
+  --mono: "Fragment Mono", ui-monospace, monospace;
+  --hard-sm: 3px 3px 0 var(--ink);
+  --hard: 5px 5px 0 var(--ink);
+  --hard-lg: 8px 8px 0 var(--ink);
+  --r-btn: 10px; --r-cta: 12px; --r-win: 14px; --r-card: 12px;
+  --micro: 150ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --tick: 4200ms; --toast-hold: 2200ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Logo | Familjen Grotesk | 21px | 700 | 1 | -0.02em |
+| Nav link | Familjen Grotesk | 15px | 500 | 1.5 | 0 |
+| Badge | Fragment Mono | 12px | 400 | 1 | 0.06em, upper |
+| H1 | Familjen Grotesk | 64px | 700 | 0.98 | -0.035em |
+| Lede | Familjen Grotesk | 19px | 400, bold run 600 | 1.55 | 0 |
+| Hero buttons | Familjen Grotesk | 17px | 700 | 1 | 0 |
+| Feature chip | Familjen Grotesk | 14px | 600 | 1 | 0 |
+| Card title | Familjen Grotesk | 22px | 700 | 1.2 | -0.02em |
+| Count | Familjen Grotesk | 15px | 700 | 1 | 0 |
+| Labels, URL, times, domain | Fragment Mono | 11–12px | 400 | 1.4 | 0.06em when upper |
+| List row | Familjen Grotesk | 13.5px | 500 | 30px rows | 0 |
 
 ## Implementation notes
 

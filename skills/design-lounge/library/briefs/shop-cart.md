@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This screen opens from `shop-product`. Its button opens checkout.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The bag for the Kiln shop. The page is fired-clay paper. "Bag" is a 12px label. The answer is the total, Rs 5,600, at 56px. Two lines sit under it: Ash bowl at Rs 2,400, quantity 1, and Night plate at Rs 3,200, quantity 1. Each line has a minus and a plus. Minus at quantity 1 removes the line. Plus adds one. The total is the sum of price times quantity. One primary button, "Check out", sits under the lines. When both lines are gone, the total is replaced by "The bag is empty." and a sentence, and the checkout button hides. There is no promo code, no shipping estimator, and no second total. Checkout is `mobile-one-page-checkout` even on the web frame: use its structure, on this sheet.
-
-## Reference behaviour
-
-1. The first frame shows Rs 5,600, both lines at quantity 1, and "Check out".
-2. Plus on a line increases its quantity by 1 and rewrites that line's amount and the total.
-3. Minus decreases quantity by 1. At quantity 1, minus removes the line.
-4. The total is always the sum of the remaining lines. Ash bowl is 2400. Night plate is 3200.
-5. Clicking "Check out" sets "Checkout opened" and disables the button. Changing a quantity after that re-enables it and restores "Check out", because the bag changed.
-6. When no lines remain, the heading reads "The bag is empty." at 40px. The sentence is "Nothing in the bag. The firing is still on the table." The checkout button is `hidden`.
-7. There is no animation.
-8. Focus ring is 2px `--focus`, offset 2px.
-9. Minus and plus have accessible names: "Fewer {name}" and "More {name}".
 
 ## Structure
 
@@ -36,38 +26,6 @@ empty sentence, hidden until the bag is clear
 - The stepper is minus, the quantity, plus. Buttons are 36px.
 - The empty sentence is hidden while any line remains.
 - One family on this page: Hanken Grotesk. The total is the text face at display size, because the answer is a number and this screen does not load a second face.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f3e6d4;
-  --surface: #faefe0;
-  --ink: #2a1b14;
-  --ink-2: #6a4e3e;
-  --line: #d8c0a4;
-  --primary: #c45c2a;
-  --primary-ink: #fffdf8;
-  --focus: #c45c2a;
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-}
-```
-
-Money uses tabular numerals. Format with a thousands separator: 5600 is "Rs 5,600".
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Where | sans | 12px | 600 | 0.06em | `--ink-2` |
-| Total | sans | 56px | 500 | -0.04em | `--ink` |
-| Empty title | sans | 40px | 500 | -0.03em | `--ink` |
-| Name | sans | 15px | 600 | 0 | `--ink` |
-| Amount | sans | 15px | 400 | 0 | `--ink-2` |
-| Sentence | sans | 16px | 400 | 0 | `--ink-2` |
-| Button | sans | 15px | 600 | 0 | `--primary-ink` |
-
-The total line-height is 1. The empty sentence max-width is 360px.
 
 ## Motion
 
@@ -120,6 +78,54 @@ None. Quantity and the total update in the same frame. Reduced motion has nothin
 - [ ] A quantity change after that restores "Check out" and enables the button.
 - [ ] Stepper buttons are 36px. Checkout is 44px.
 - [ ] There is no promo field and no second total.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows Rs 5,600, both lines at quantity 1, and "Check out".
+2. Plus on a line increases its quantity by 1 and rewrites that line's amount and the total.
+3. Minus decreases quantity by 1. At quantity 1, minus removes the line.
+4. The total is always the sum of the remaining lines. Ash bowl is 2400. Night plate is 3200.
+5. Clicking "Check out" sets "Checkout opened" and disables the button. Changing a quantity after that re-enables it and restores "Check out", because the bag changed.
+6. When no lines remain, the heading reads "The bag is empty." at 40px. The sentence is "Nothing in the bag. The firing is still on the table." The checkout button is `hidden`.
+7. There is no animation.
+8. Focus ring is 2px `--focus`, offset 2px.
+9. Minus and plus have accessible names: "Fewer {name}" and "More {name}".
+
+## Tokens
+
+```css
+:root {
+  --bg: #f3e6d4;
+  --surface: #faefe0;
+  --ink: #2a1b14;
+  --ink-2: #6a4e3e;
+  --line: #d8c0a4;
+  --primary: #c45c2a;
+  --primary-ink: #fffdf8;
+  --focus: #c45c2a;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+}
+```
+
+Money uses tabular numerals. Format with a thousands separator: 5600 is "Rs 5,600".
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Where | sans | 12px | 600 | 0.06em | `--ink-2` |
+| Total | sans | 56px | 500 | -0.04em | `--ink` |
+| Empty title | sans | 40px | 500 | -0.03em | `--ink` |
+| Name | sans | 15px | 600 | 0 | `--ink` |
+| Amount | sans | 15px | 400 | 0 | `--ink-2` |
+| Sentence | sans | 16px | 400 | 0 | `--ink-2` |
+| Button | sans | 15px | 600 | 0 | `--primary-ink` |
+
+The total line-height is 1. The empty sentence max-width is 360px.
 
 ## Implementation notes
 

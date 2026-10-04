@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the radius is `--radius-card` and the shadow is the family's shadow. This yard's shadow is none. A card that tilts toward the pointer is `hover-tilt-cards`. This one sits still.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One load, as a card you can open. The kicker is Gate 4. The title is Rice. The weight is 2,400 kg. The meta is Mira Shrestha · 17 October. The card is 360px wide, padding 16px, radius 2px, a 1px line, white on the paper. It starts closed. Activating it sets `aria-pressed` true, fills it with the soft green, turns the border to the yard green, and shows "Load 1842 is open." Activating again closes it and hides that line. Hover uses the warm surface. There is no tilt, no flip, and no second card.
-
-## Reference behaviour
-
-1. The first frame is closed. `aria-pressed` is false. The status is hidden.
-2. Click sets pressed true. The status becomes visible: "Load 1842 is open."
-3. Click again sets pressed false and hides the status.
-4. Hover, while not pressed, uses `--surface-2`. Pressed uses `--primary-soft` and a `--primary` border. Pressed and hovered uses `--surface-3`.
-5. Focus-visible is a 2px outline, offset 2px.
-6. There is no image, no badge, and no animation.
 
 ## Structure
 
@@ -33,40 +26,6 @@ status, under the card
 - The card is one button. The four lines are spans inside it.
 - The status is outside the button so closing the card does not remove the live region.
 - The status starts hidden.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --surface-2: #f0ebe3;
-  --surface-3: #d7ebe1;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #5c564e;
-  --line: #e4dfd4;
-  --primary: #1f4d3a;
-  --primary-soft: #e7f2ec;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px here. A locked family uses `--radius-card`. Do not also apply the button radius. Hover is `--surface-2`. Selected is `--primary-soft`.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Kicker | sans | 12px | 500 | `--ink-2` |
-| Title | sans | 20px | 500 | `--ink` |
-| Weight | sans | 14px | 400 | `--ink` |
-| Meta | sans | 12px | 400 | `--ink-3` |
-| Status | sans | 12px | 400 | `--ink` |
-
-The kicker letter-spacing is 0.04em. The weight is tabular. The title is the largest type on the card. Do not set a second line at 20px.
 
 ## Motion
 
@@ -118,6 +77,53 @@ None. Pressed and closed swap in one frame. Reduced motion has nothing to remove
 - [ ] There is no image, no badge, no tilt, and no shadow.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] Mira, Gate 4, 17 October, 2,400 kg, and 1842 match the property list.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is closed. `aria-pressed` is false. The status is hidden.
+2. Click sets pressed true. The status becomes visible: "Load 1842 is open."
+3. Click again sets pressed false and hides the status.
+4. Hover, while not pressed, uses `--surface-2`. Pressed uses `--primary-soft` and a `--primary` border. Pressed and hovered uses `--surface-3`.
+5. Focus-visible is a 2px outline, offset 2px.
+6. There is no image, no badge, and no animation.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --surface-2: #f0ebe3;
+  --surface-3: #d7ebe1;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #5c564e;
+  --line: #e4dfd4;
+  --primary: #1f4d3a;
+  --primary-soft: #e7f2ec;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px here. A locked family uses `--radius-card`. Do not also apply the button radius. Hover is `--surface-2`. Selected is `--primary-soft`.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Kicker | sans | 12px | 500 | `--ink-2` |
+| Title | sans | 20px | 500 | `--ink` |
+| Weight | sans | 14px | 400 | `--ink` |
+| Meta | sans | 12px | 400 | `--ink-3` |
+| Status | sans | 12px | 400 | `--ink` |
+
+The kicker letter-spacing is 0.04em. The weight is tabular. The title is the largest type on the card. Do not set a second line at 20px.
 
 ## Implementation notes
 

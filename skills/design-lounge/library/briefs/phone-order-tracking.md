@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the map, the ETA, the four steps, the courier card, and the folding summary.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The screen a hungry person opens after they pay. A food app called Tocco shows order TC-4821 from Nonna Vela. The top half is a flat cartoon map with a thick black frame. A tomato-red courier dot rides a black route from the restaurant to the house. Below the map the answer sits in 42px black type: "Arrives 19:42", then "12 min" in tomato on its own line. A four-part bar shows Confirmed, Preparing, On the way, Delivered, and the current part pulses. Then a courier card with call and message, a folding order summary, and a "Help with this order" link.
@@ -11,22 +13,6 @@ The screen a hungry person opens after they pay. A food app called Tocco shows o
 The look is loud food packaging: cream paper, tomato red, near-black ink, heavy rounded Rubik at weight 900, 20px corners. The language is iOS-ish in structure (one column, large type, 44px round buttons) with no glass and no blur.
 
 The detail worth copying: the ETA is the biggest thing on the screen, bigger than the map labels and the brand. People open this screen to read one number.
-
-## Reference behaviour
-
-1. First frame: the map shows the courier about halfway along the route. The part already driven is a solid 6px black line. The rest is a dotted 4px line.
-2. The courier dot moves forward along the route path over 16 seconds, from 46% to 74% of the route length. It holds for 2 seconds at the end, then starts again from 46%.
-3. While it moves, the minutes count down from 12 to 7. The clock time "19:42" never changes.
-4. When the minutes reach 7, a hidden live region says "Arriving in 7 minutes". It does not announce every minute.
-5. A small black "Live" chip sits top-left on the map. Its red dot pulses every 1.6 seconds.
-6. The progress bar has four equal parts. Confirmed and Preparing are solid black. On the way is a pale tomato track with a tomato fill that grows from 20% to 62% every 2.4 seconds. Delivered is an empty beige track.
-7. The On the way label is tomato with a 7px pulsing dot before it. It has `aria-current="step"`.
-8. The courier card shows a 48px tomato tile with the initials "RT", the name "Ravi Thapa", a star, "4.9 · Scooter 7314", a message button, and a call button.
-9. Tapping call shows a black toast "Calling Ravi through Tocco" for 2.4 seconds. Tapping message shows "Message sent: Gate code is 2210".
-10. The order summary row reads "Order summary" and "3 items · Rs 1,400" with a chevron. Tapping it opens the list in 320ms and turns the chevron 180 degrees. Tapping again folds it.
-11. The open list: 1 × Burrata pizza Rs 780, 2 × Garlic knots Rs 360, 1 × Blood orange soda Rs 180, Delivery Rs 80, Paid by card Rs 1,400.
-12. "Help with this order" is a tomato underlined link. In the demo it shows the toast "Opening help for TC-4821". In a product it opens the help flow.
-13. With reduced motion, the courier sits still at 46%, nothing pulses, and the summary opens without a slide.
 
 ## Structure
 
@@ -71,73 +57,6 @@ padding-bottom 34px
 - Summary: a card with a `button aria-expanded aria-controls` and a region holding a `dl`.
 - Help: an `a` element. It is a link because it goes somewhere.
 - Toast: one fixed `div role="status" aria-live="polite"` near the bottom.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #f6eedf;          /* cream page */
-  --surface: #fffaf1;     /* cards, roads, buttons */
-  --map: #efe3cc;         /* map ground */
-  --road: #fffaf1;        /* roads */
-  --block: #e7d8bb;       /* city blocks */
-  --ink: #17120d;         /* text, route, map frame */
-  --ink-2: #4a3f33;       /* secondary text */
-  --ink-3: #7a6b5a;       /* future step label */
-  --line: #e3d4b9;        /* card borders, empty track */
-  --tomato: #d6341f;      /* accent: courier, minutes, current step, link */
-  --tomato-ink: #ffffff;  /* text on tomato */
-  --tomato-soft: #fbe0d6; /* current step track */
-
-  /* type */
-  --font: "Rubik", system-ui, sans-serif;
-  --fs-eta: 42px;
-  --fs-name: 16px;
-  --fs-body: 15px;
-  --fs-meta: 13px;
-  --fs-step: 12px;
-
-  /* space: 4px base */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px;
-
-  /* shape */
-  --r: 20px;      /* map, cards */
-  --r-sm: 14px;   /* toast */
-  --r-tile: 16px; /* initials tile */
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --courier-run: 16000ms;
-  --courier-hold: 2000ms;
-  --pulse: 1600ms;
-  --fill: 2400ms;
-  --fold: 320ms;
-}
-```
-
-The accent is used in five places only: brand word, courier dot and home pin, minutes, current step, help link. The call button is ink, not tomato, so the minutes stay the loudest red.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Brand | Rubik | 13px | 900 | 1.4 | 0.08em | upper |
-| Order line | Rubik | 13px | 500 | 1.4 | 0 | sentence |
-| ETA time | Rubik | 42px | 900 | 1.0 | -0.03em | sentence |
-| ETA minutes | Rubik | 42px | 900 | 1.0 | -0.03em | lower |
-| ETA note | Rubik | 14px | 500 | 1.4 | 0 | sentence |
-| Step label | Rubik | 12px | 700 | 1.4 | 0 | sentence |
-| Courier name | Rubik | 16px | 800 | 1.4 | 0 | sentence |
-| Courier meta | Rubik | 13px | 400 | 1.4 | 0 | sentence |
-| Initials | Rubik | 18px | 900 | 1 | 0 | upper |
-| Summary title | Rubik | 15px | 800 | 1.4 | 0 | sentence |
-| Summary list | Rubik | 14px | 400 / 700 | 1.4 | 0 | sentence, tabular numbers |
-| Help link | Rubik | 15px | 700 | 1.4 | 0 | sentence |
-| Toast | Rubik | 14px | 700 | 1.4 | 0 | sentence |
-
-One family, five weights: 400, 500, 700, 800, 900. Do not add a second face. Prices use `font-variant-numeric: tabular-nums`.
 
 ## Motion
 
@@ -219,6 +138,93 @@ Loops are slow. This screen sits open for minutes. Nothing flashes faster than o
 - [ ] Summary "3 items · Rs 1,400". Lines: Burrata pizza Rs 780, Garlic knots ×2 Rs 360, Blood orange soda Rs 180, Delivery Rs 80.
 - [ ] Map frame is a 2px `#17120d` border with a 20px radius.
 - [ ] Courier runs from 46% to 74% of the route in 16 seconds, holds 2 seconds, then repeats.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the map shows the courier about halfway along the route. The part already driven is a solid 6px black line. The rest is a dotted 4px line.
+2. The courier dot moves forward along the route path over 16 seconds, from 46% to 74% of the route length. It holds for 2 seconds at the end, then starts again from 46%.
+3. While it moves, the minutes count down from 12 to 7. The clock time "19:42" never changes.
+4. When the minutes reach 7, a hidden live region says "Arriving in 7 minutes". It does not announce every minute.
+5. A small black "Live" chip sits top-left on the map. Its red dot pulses every 1.6 seconds.
+6. The progress bar has four equal parts. Confirmed and Preparing are solid black. On the way is a pale tomato track with a tomato fill that grows from 20% to 62% every 2.4 seconds. Delivered is an empty beige track.
+7. The On the way label is tomato with a 7px pulsing dot before it. It has `aria-current="step"`.
+8. The courier card shows a 48px tomato tile with the initials "RT", the name "Ravi Thapa", a star, "4.9 · Scooter 7314", a message button, and a call button.
+9. Tapping call shows a black toast "Calling Ravi through Tocco" for 2.4 seconds. Tapping message shows "Message sent: Gate code is 2210".
+10. The order summary row reads "Order summary" and "3 items · Rs 1,400" with a chevron. Tapping it opens the list in 320ms and turns the chevron 180 degrees. Tapping again folds it.
+11. The open list: 1 × Burrata pizza Rs 780, 2 × Garlic knots Rs 360, 1 × Blood orange soda Rs 180, Delivery Rs 80, Paid by card Rs 1,400.
+12. "Help with this order" is a tomato underlined link. In the demo it shows the toast "Opening help for TC-4821". In a product it opens the help flow.
+13. With reduced motion, the courier sits still at 46%, nothing pulses, and the summary opens without a slide.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #f6eedf;          /* cream page */
+  --surface: #fffaf1;     /* cards, roads, buttons */
+  --map: #efe3cc;         /* map ground */
+  --road: #fffaf1;        /* roads */
+  --block: #e7d8bb;       /* city blocks */
+  --ink: #17120d;         /* text, route, map frame */
+  --ink-2: #4a3f33;       /* secondary text */
+  --ink-3: #7a6b5a;       /* future step label */
+  --line: #e3d4b9;        /* card borders, empty track */
+  --tomato: #d6341f;      /* accent: courier, minutes, current step, link */
+  --tomato-ink: #ffffff;  /* text on tomato */
+  --tomato-soft: #fbe0d6; /* current step track */
+
+  /* type */
+  --font: "Rubik", system-ui, sans-serif;
+  --fs-eta: 42px;
+  --fs-name: 16px;
+  --fs-body: 15px;
+  --fs-meta: 13px;
+  --fs-step: 12px;
+
+  /* space: 4px base */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px;
+
+  /* shape */
+  --r: 20px;      /* map, cards */
+  --r-sm: 14px;   /* toast */
+  --r-tile: 16px; /* initials tile */
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --courier-run: 16000ms;
+  --courier-hold: 2000ms;
+  --pulse: 1600ms;
+  --fill: 2400ms;
+  --fold: 320ms;
+}
+```
+
+The accent is used in five places only: brand word, courier dot and home pin, minutes, current step, help link. The call button is ink, not tomato, so the minutes stay the loudest red.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Brand | Rubik | 13px | 900 | 1.4 | 0.08em | upper |
+| Order line | Rubik | 13px | 500 | 1.4 | 0 | sentence |
+| ETA time | Rubik | 42px | 900 | 1.0 | -0.03em | sentence |
+| ETA minutes | Rubik | 42px | 900 | 1.0 | -0.03em | lower |
+| ETA note | Rubik | 14px | 500 | 1.4 | 0 | sentence |
+| Step label | Rubik | 12px | 700 | 1.4 | 0 | sentence |
+| Courier name | Rubik | 16px | 800 | 1.4 | 0 | sentence |
+| Courier meta | Rubik | 13px | 400 | 1.4 | 0 | sentence |
+| Initials | Rubik | 18px | 900 | 1 | 0 | upper |
+| Summary title | Rubik | 15px | 800 | 1.4 | 0 | sentence |
+| Summary list | Rubik | 14px | 400 / 700 | 1.4 | 0 | sentence, tabular numbers |
+| Help link | Rubik | 15px | 700 | 1.4 | 0 | sentence |
+| Toast | Rubik | 14px | 700 | 1.4 | 0 | sentence |
+
+One family, five weights: 400, 500, 700, 800, 900. Do not add a second face. Prices use `font-variant-numeric: tabular-nums`.
 
 ## Implementation notes
 

@@ -4,26 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from 60fps.design, a gallery of about 2,100 short clips of mobile micro-interactions: this piece takes the gallery itself (a giant pale wordmark sitting above a hairline nav, numbered shot cards with an app chip and a phone on a tile, and tag filters by gesture, pattern and effect) and rebuilds it as a dark page for a fictional library called Framewell. Each card holds a CSS-drawn phone whose screen plays a three-second loop of one micro-interaction: a swipe slider, a tab pill, a card stack, pull to refresh, a digit ticker, confetti, a pill morph, a hold ring, a skeleton shimmer, a glowing border, a stagger, a streak, a timer, a splash. Loops play only while the card is at least 60% in view (or hovered, or focused), so the grid is never 24 busy screens at once. The detail worth copying is the playback model: one `play` class per card toggles `animation-play-state` for everything inside, and a 2px progress line under the tile tells you a loop is running, like a video scrubber.
-
-## Reference behaviour
-
-1. First frame at 1280×800: a 214px condensed "FRAMEWELL" in `#17171a` (barely visible on `#0b0b0c`), its bottom edge resting on the nav's top hairline.
-2. The nav is a 52px three-column grid: left "Shots 1,284 · Apps 312 · Patterns 46" with mono superscript counts; centre a 32px cream "FW" tile; right "Glossary · Submit · Search". It sticks to the top with 92% opaque background and an 8px blur.
-3. Intro row: a 22px line, bold first sentence in cream, rest in grey: "Small moments from apps that feel right. One loop at a time, tagged by the gesture, the pattern and the effect." On the right, "Autoplay in view" with a 40×24 switch, on (cobalt) by default.
-4. Filter bar: a three-option segmented control (Gesture, Pattern, Effect) and a horizontally scrolling row of chips for the chosen group. Each chip shows a mono count of shots that would match if added.
-5. Gesture chips: drag, flick, hold, long press, pull, scrub, swipe, tap. Pattern: card stack, onboarding, streak, reward, success state, timer, splash, loading. Effect: morph, spring, stagger, ticker, glow, shimmer, confetti, fade.
-6. Tapping a chip toggles it (cobalt fill, navy text). Filters combine with AND across and within groups. Chips whose count is 0 dim to 45% but remain pressable.
-7. The status line reads "24 shots · newest first", or "2 of 24 shots · card stack + spring" with a "Clear filters" link when tags are active. It is a polite live region.
-8. The grid is four columns at 1280, gap 14px. Each card: top row with a four-digit mono number (1284…1261) and an app chip (14px rounded swatch + name); a 300px tile with the phone (132×272, 26px radius, 5px black bezel, tiny island) and a faint "FW" mark bottom-right; the title ("Kosi Pay slide to send"); and a mono tag line truncated with an ellipsis.
-9. Cards at least 60% visible play their loop (when autoplay is on). Others show the paused frame and a round play button top-left.
-10. Hover or focus within a card: it lifts 3px, its border brightens, a deep shadow appears, a chevron slides in after the title, and the loop plays regardless of autoplay.
-11. The play/pause button on each card forces play, or forces pause (a paused card stays paused even in view until pressed again).
-12. Switching autoplay off changes the label to "Play on hover"; only hovered, focused or pinned cards play.
-13. Clicking a card opens a modal viewer: the phone at 1.45× on the left tile, and on the right the number and app, a 30px condensed title, a one-sentence description of the interaction, tag pills, and Previous / Next / Close. Arrow keys step through the currently filtered list; Escape or a backdrop click closes; focus returns to the card.
-14. With reduced motion, autoplay starts off, so nothing moves until the user hovers or presses play, and card lift and dialog entrance are removed.
 
 ## Structure
 
@@ -56,52 +41,6 @@ Studied from 60fps.design, a gallery of about 2,100 short clips of mobile micro-
 - Group selector: `div role="tablist"` of three `button role="tab"`. Chips: `div role="group"` labelled "Tags", each `button` with `aria-pressed`.
 - The grid is `main` labelled "Shots"; each card is an `article` with an `h3` title, a stretched invisible `button.open` covering the card (`aria-label="Open …"`), and a `button.pp` above it (`z-index` 2) for play/pause.
 - The viewer is a native `dialog` opened with `showModal()`, labelled by its `h2`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0b0b0c;      /* page */
-  --card: #131315;    /* card, dialog */
-  --tile: #1a1a1d;    /* phone tile */
-  --line: #242428;    /* hairlines, card borders */
-  --line-2: #34343a;  /* hover border, chip border, switch off */
-  --ink: #ededE8;     /* primary text, logo tile, selected group */
-  --ink-2: #a6a6a0;   /* secondary text, chips */
-  --ink-3: #85857f;   /* numbers, counts, tags */
-  --mark: #17171a;    /* giant wordmark */
-  --accent: #7aa2ff;  /* cobalt: chips on, switch on, progress line, focus */
-  --sans: "Archivo", system-ui, sans-serif;   /* variable width 62–125 */
-  --mono: "Geist Mono", ui-monospace, monospace;
-  --wrap: 1200px; --gutter: 24px; --gap: 14px;
-  --nav-h: 52px; --tile-h: 300px;
-  --phone-w: 132px; --phone-h: 272px; --phone-r: 26px; --bezel: 5px;
-  --r-card: 18px; --r-tile: 12px; --r-pill: 999px; --r-dialog: 22px;
-  --loop: 3s;
-  --spring: cubic-bezier(.34, 1.56, .64, 1);
-  --out: cubic-bezier(.16, 1, .3, 1);
-  --std: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-Each card also sets `--a` (the app accent) and each phone sets `--s` (screen), `--m` (muted blocks) and `--a`. App colours in this demo: Kosi Pay `#0f1a14 / #2a3a31 / #5cf29a`, Gufa `#101322 / #262c48 / #8aa2ff`, Doko `#f2ede4 / #d9d1c3 / #e2552d`, Lahar `#0d2024 / #1e3c42 / #5fd3c9`, Masi `#faf6ee / #e4dccd / #b08d57`, Nimbu `#f4f7e6 / #dfe5c3 / #9bbf1f`, Paila `#1b1410 / #3a2b22 / #ffb547`, Imli `#160f1a / #33233b / #ff7ac1`, Kasrat `#0b0b0b / #262626 / #ff5a36`, Tiffin `#fff4e8 / #f1dcc6 / #e0782f`, Lanta `#eef1f6 / #d3d9e4 / #3b5bdb`, Ujyalo `#1a1508 / #3a301a / #f2c94c`. These are screen colours inside phones, not page colours; the page keeps one accent.
-
-## Typography
-
-| Role | Family | Size | Weight | Width | Line-height | Tracking |
-| --- | --- | --- | --- | --- | --- | --- |
-| Wordmark | Archivo | clamp(64px, 17.2vw, 214px) | 900 | 62% | 0.8 | -0.01em |
-| Intro (h1) | Archivo | 22px | 600 lead / 500 rest | 100% | 1.3 | -0.01em |
-| Nav links | Archivo | 14px | 500 | 100% | 1.45 | 0 |
-| Nav counts | Geist Mono | 10px | 400 | — | 1 | 0 |
-| Logo tile | Archivo | 14px | 900 | 70% | 1 | 0 |
-| Group tabs, chips | Archivo | 14px | 500 / 400 | 100% | 1 | 0 |
-| Chip counts, status, card numbers, tags | Geist Mono | 11–12px | 400 | — | 1.45 | 0 |
-| Card title (h3) | Archivo | 14px | 500 | 100% | 1.45 | 0 |
-| Dialog title (h2) | Archivo | 30px | 700 | 80% | 1.05 | -0.01em |
-| Ticker digits inside a phone | Archivo | 36px | 800 | 100% | 40px | 0 |
-
-Mono is for anything that counts or tags. The condensed width is only for the wordmark, logo and dialog title.
 
 ## Motion
 
@@ -189,6 +128,73 @@ Loop recipes (all 3s, so the progress line matches):
 - [ ] 24 shots numbered 1284 to 1261, first "Kosi Pay slide to send", last "Nimbu menu skeleton".
 - [ ] Filtering Pattern "card stack" + Effect "spring" shows exactly 2 shots (Doko deck dismiss, Paila trail card stack).
 - [ ] Accent `#7aa2ff` (cobalt) on `#0b0b0c`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 1280×800: a 214px condensed "FRAMEWELL" in `#17171a` (barely visible on `#0b0b0c`), its bottom edge resting on the nav's top hairline.
+2. The nav is a 52px three-column grid: left "Shots 1,284 · Apps 312 · Patterns 46" with mono superscript counts; centre a 32px cream "FW" tile; right "Glossary · Submit · Search". It sticks to the top with 92% opaque background and an 8px blur.
+3. Intro row: a 22px line, bold first sentence in cream, rest in grey: "Small moments from apps that feel right. One loop at a time, tagged by the gesture, the pattern and the effect." On the right, "Autoplay in view" with a 40×24 switch, on (cobalt) by default.
+4. Filter bar: a three-option segmented control (Gesture, Pattern, Effect) and a horizontally scrolling row of chips for the chosen group. Each chip shows a mono count of shots that would match if added.
+5. Gesture chips: drag, flick, hold, long press, pull, scrub, swipe, tap. Pattern: card stack, onboarding, streak, reward, success state, timer, splash, loading. Effect: morph, spring, stagger, ticker, glow, shimmer, confetti, fade.
+6. Tapping a chip toggles it (cobalt fill, navy text). Filters combine with AND across and within groups. Chips whose count is 0 dim to 45% but remain pressable.
+7. The status line reads "24 shots · newest first", or "2 of 24 shots · card stack + spring" with a "Clear filters" link when tags are active. It is a polite live region.
+8. The grid is four columns at 1280, gap 14px. Each card: top row with a four-digit mono number (1284…1261) and an app chip (14px rounded swatch + name); a 300px tile with the phone (132×272, 26px radius, 5px black bezel, tiny island) and a faint "FW" mark bottom-right; the title ("Kosi Pay slide to send"); and a mono tag line truncated with an ellipsis.
+9. Cards at least 60% visible play their loop (when autoplay is on). Others show the paused frame and a round play button top-left.
+10. Hover or focus within a card: it lifts 3px, its border brightens, a deep shadow appears, a chevron slides in after the title, and the loop plays regardless of autoplay.
+11. The play/pause button on each card forces play, or forces pause (a paused card stays paused even in view until pressed again).
+12. Switching autoplay off changes the label to "Play on hover"; only hovered, focused or pinned cards play.
+13. Clicking a card opens a modal viewer: the phone at 1.45× on the left tile, and on the right the number and app, a 30px condensed title, a one-sentence description of the interaction, tag pills, and Previous / Next / Close. Arrow keys step through the currently filtered list; Escape or a backdrop click closes; focus returns to the card.
+14. With reduced motion, autoplay starts off, so nothing moves until the user hovers or presses play, and card lift and dialog entrance are removed.
+
+## Tokens
+
+```css
+:root {
+  --bg: #0b0b0c;      /* page */
+  --card: #131315;    /* card, dialog */
+  --tile: #1a1a1d;    /* phone tile */
+  --line: #242428;    /* hairlines, card borders */
+  --line-2: #34343a;  /* hover border, chip border, switch off */
+  --ink: #ededE8;     /* primary text, logo tile, selected group */
+  --ink-2: #a6a6a0;   /* secondary text, chips */
+  --ink-3: #85857f;   /* numbers, counts, tags */
+  --mark: #17171a;    /* giant wordmark */
+  --accent: #7aa2ff;  /* cobalt: chips on, switch on, progress line, focus */
+  --sans: "Archivo", system-ui, sans-serif;   /* variable width 62–125 */
+  --mono: "Geist Mono", ui-monospace, monospace;
+  --wrap: 1200px; --gutter: 24px; --gap: 14px;
+  --nav-h: 52px; --tile-h: 300px;
+  --phone-w: 132px; --phone-h: 272px; --phone-r: 26px; --bezel: 5px;
+  --r-card: 18px; --r-tile: 12px; --r-pill: 999px; --r-dialog: 22px;
+  --loop: 3s;
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --out: cubic-bezier(.16, 1, .3, 1);
+  --std: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+Each card also sets `--a` (the app accent) and each phone sets `--s` (screen), `--m` (muted blocks) and `--a`. App colours in this demo: Kosi Pay `#0f1a14 / #2a3a31 / #5cf29a`, Gufa `#101322 / #262c48 / #8aa2ff`, Doko `#f2ede4 / #d9d1c3 / #e2552d`, Lahar `#0d2024 / #1e3c42 / #5fd3c9`, Masi `#faf6ee / #e4dccd / #b08d57`, Nimbu `#f4f7e6 / #dfe5c3 / #9bbf1f`, Paila `#1b1410 / #3a2b22 / #ffb547`, Imli `#160f1a / #33233b / #ff7ac1`, Kasrat `#0b0b0b / #262626 / #ff5a36`, Tiffin `#fff4e8 / #f1dcc6 / #e0782f`, Lanta `#eef1f6 / #d3d9e4 / #3b5bdb`, Ujyalo `#1a1508 / #3a301a / #f2c94c`. These are screen colours inside phones, not page colours; the page keeps one accent.
+
+## Typography
+
+| Role | Family | Size | Weight | Width | Line-height | Tracking |
+| --- | --- | --- | --- | --- | --- | --- |
+| Wordmark | Archivo | clamp(64px, 17.2vw, 214px) | 900 | 62% | 0.8 | -0.01em |
+| Intro (h1) | Archivo | 22px | 600 lead / 500 rest | 100% | 1.3 | -0.01em |
+| Nav links | Archivo | 14px | 500 | 100% | 1.45 | 0 |
+| Nav counts | Geist Mono | 10px | 400 | — | 1 | 0 |
+| Logo tile | Archivo | 14px | 900 | 70% | 1 | 0 |
+| Group tabs, chips | Archivo | 14px | 500 / 400 | 100% | 1 | 0 |
+| Chip counts, status, card numbers, tags | Geist Mono | 11–12px | 400 | — | 1.45 | 0 |
+| Card title (h3) | Archivo | 14px | 500 | 100% | 1.45 | 0 |
+| Dialog title (h2) | Archivo | 30px | 700 | 80% | 1.05 | -0.01em |
+| Ticker digits inside a phone | Archivo | 36px | 800 | 100% | 40px | 0 |
+
+Mono is for anything that counts or tags. The condensed width is only for the wordmark, logo and dialog title.
 
 ## Implementation notes
 

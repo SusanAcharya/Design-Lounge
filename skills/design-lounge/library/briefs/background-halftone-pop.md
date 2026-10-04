@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-frame halftone screen drawn on one `<canvas>`, shown here behind the hero of "Inkpot Fest", a two-day zine and comics fair. Dots sit on a grid rotated 45° (the classic screen angle) and their radius encodes a tone that is the sum of a slow travelling band, a drifting radial bloom and a soft swell under the pointer, so the field looks like a printed gradient that is alive. Only two inks are ever on screen: a paper colour and a dot colour, with black for type. The copy sits in cream caption boxes with 2–3px black borders and hard offset shadows, which keeps it legible over any dot density. The detail worth copying is area-true dots: radius is `maxR × √tone`, so the printed coverage tracks the tone the way a real halftone does.
-
-## Reference behaviour
-
-1. Initial state (Cherry on lemon): paper `#FFE14A`, dots `#E8302A`. The left third has tiny dots; density rises to full coverage toward the right, with a darker bloom drifting around the right half.
-2. The field animates continuously: the travelling band moves along a direction that itself rotates slowly (±0.35 rad around 0.6 rad), and the bloom centre drifts on a slow ellipse (x 52–88% of width, y 20–80% of height).
-3. Moving the pointer anywhere swells dots in a soft circle (Gaussian, σ = 170 + 4 × pitch px). The swell centre eases toward the pointer (`k ≈ 1 − 0.001^dt`, ×1.6 for position) and fades out when the pointer leaves the window.
-4. Panel (bottom-right, 256px): title "Screen", a 36px square pause button, Pitch slider (10–24px, default 14), Speed slider (0–2×, default 1.0×), three ink swatches (40px squares split diagonally), and the hint "Move the pointer to swell the dots."
-5. Pitch changes the grid spacing live; maximum dot radius is always `pitch × 0.51`, so dots just touch at full tone.
-6. Inks: Cherry on lemon (`#FFE14A` / `#E8302A`), Cobalt on blush (`#FFC9D2` / `#1F3FBF`), Black on mint (`#8FF0C8` / `#141010`). Switching repaints paper, dots, the accent word, the button shadow and slider thumbs immediately.
-7. Pause stops the loop; the pointer still repaints a single frame with the swell under it.
-8. Hidden tab cancels the loop; it resumes in phase.
-9. `prefers-reduced-motion: reduce`: one static frame, loop never starts, button starts as "Play background". Pointer moves still redraw a single frame (user-driven, no easing).
 
 ## Structure
 
@@ -47,50 +37,6 @@ padding 48px; panel 24px from right and bottom
 - `<nav aria-label="Main">`: boxed wordmark with a 22px ink-pot glyph, three boxed links.
 - `<main class="hero">`: `p.tag`, `h1 > span` (caption boxes via `box-decoration-break: clone`) with one `<em>`, `p.sub`, `a.btn` with a `<small>` price.
 - `<form class="ctl" aria-label="Halftone controls">`: header, two range rows, `<fieldset>` of three radio swatches with `aria-label`s, hint.
-
-## Tokens
-
-```css
-:root {
-  --paper: #ffe14a;       /* canvas background, tag text, pause button fill */
-  --dot: #e8302a;         /* halftone ink, accent word, button shadow, thumbs */
-  --ink: #141010;         /* type, borders, hard shadows */
-  --card: #fffaf0;        /* caption boxes, panel */
-  --hint: #3a3330;
-  --display: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "Courier Prime", ui-monospace, monospace;
-  --fs-display: 128px;
-  --fs-btn: 18px;
-  --fs-body: 16px;
-  --fs-tag: 13px;
-  --pad: 48px;
-  --border-heavy: 3px;    /* headline boxes */
-  --border: 2px;          /* everything else */
-  --shadow: 4px 4px 0 var(--ink);
-  --shadow-btn: 6px 6px 0 var(--dot);
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --t: 160ms;
-  /* field */
-  --pitch: 14px;          /* 10–24 */
-  --screen-angle: 45deg;
-  --max-r: calc(var(--pitch) * .51);
-}
-[data-palette="cobalt"] { --paper: #ffc9d2; --dot: #1f3fbf; }
-[data-palette="mint"]   { --paper: #8ff0c8; --dot: #141010; --pop: #fffaf0; }  /* button shadow uses --pop */
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|---|---|---:|---:|---:|---:|---|
-| Headline | Bricolage Grotesque (opsz 96) | 128px | 800 | 0.9 | −0.045em | sentence |
-| Wordmark | Bricolage Grotesque | 22px | 800 | 1 | −0.02em | Title |
-| Button | Bricolage Grotesque | 18px | 800 | 1 | −0.01em | sentence |
-| Panel title | Bricolage Grotesque | 16px | 800 | 1 | −0.01em | Title |
-| Body / sub | Courier Prime | 16px | 400 | 1.5 | 0 | sentence |
-| Tag | Courier Prime | 13px | 700 | 1 | +0.06em | UPPERCASE |
-| Nav links | Courier Prime | 14px | 700 | 1 | 0 | Title |
-| Readouts | Courier Prime | 13px | 700 | 1 | 0 | tabular |
 
 ## Motion
 
@@ -163,6 +109,66 @@ r  = 0.51·pitch·√min(1, g)    skip if g < 0.04
 - [ ] Pitch default 14px (10–24), Speed default 1.0× (0–2).
 - [ ] Headline "Print is *loud* again." at 128px Bricolage Grotesque 800 in caption boxes.
 - [ ] Button "Get a weekend pass £18" with a 6px dot-colour shadow (cream in the mint preset).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state (Cherry on lemon): paper `#FFE14A`, dots `#E8302A`. The left third has tiny dots; density rises to full coverage toward the right, with a darker bloom drifting around the right half.
+2. The field animates continuously: the travelling band moves along a direction that itself rotates slowly (±0.35 rad around 0.6 rad), and the bloom centre drifts on a slow ellipse (x 52–88% of width, y 20–80% of height).
+3. Moving the pointer anywhere swells dots in a soft circle (Gaussian, σ = 170 + 4 × pitch px). The swell centre eases toward the pointer (`k ≈ 1 − 0.001^dt`, ×1.6 for position) and fades out when the pointer leaves the window.
+4. Panel (bottom-right, 256px): title "Screen", a 36px square pause button, Pitch slider (10–24px, default 14), Speed slider (0–2×, default 1.0×), three ink swatches (40px squares split diagonally), and the hint "Move the pointer to swell the dots."
+5. Pitch changes the grid spacing live; maximum dot radius is always `pitch × 0.51`, so dots just touch at full tone.
+6. Inks: Cherry on lemon (`#FFE14A` / `#E8302A`), Cobalt on blush (`#FFC9D2` / `#1F3FBF`), Black on mint (`#8FF0C8` / `#141010`). Switching repaints paper, dots, the accent word, the button shadow and slider thumbs immediately.
+7. Pause stops the loop; the pointer still repaints a single frame with the swell under it.
+8. Hidden tab cancels the loop; it resumes in phase.
+9. `prefers-reduced-motion: reduce`: one static frame, loop never starts, button starts as "Play background". Pointer moves still redraw a single frame (user-driven, no easing).
+
+## Tokens
+
+```css
+:root {
+  --paper: #ffe14a;       /* canvas background, tag text, pause button fill */
+  --dot: #e8302a;         /* halftone ink, accent word, button shadow, thumbs */
+  --ink: #141010;         /* type, borders, hard shadows */
+  --card: #fffaf0;        /* caption boxes, panel */
+  --hint: #3a3330;
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "Courier Prime", ui-monospace, monospace;
+  --fs-display: 128px;
+  --fs-btn: 18px;
+  --fs-body: 16px;
+  --fs-tag: 13px;
+  --pad: 48px;
+  --border-heavy: 3px;    /* headline boxes */
+  --border: 2px;          /* everything else */
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-btn: 6px 6px 0 var(--dot);
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --t: 160ms;
+  /* field */
+  --pitch: 14px;          /* 10–24 */
+  --screen-angle: 45deg;
+  --max-r: calc(var(--pitch) * .51);
+}
+[data-palette="cobalt"] { --paper: #ffc9d2; --dot: #1f3fbf; }
+[data-palette="mint"]   { --paper: #8ff0c8; --dot: #141010; --pop: #fffaf0; }  /* button shadow uses --pop */
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|---|---|---:|---:|---:|---:|---|
+| Headline | Bricolage Grotesque (opsz 96) | 128px | 800 | 0.9 | −0.045em | sentence |
+| Wordmark | Bricolage Grotesque | 22px | 800 | 1 | −0.02em | Title |
+| Button | Bricolage Grotesque | 18px | 800 | 1 | −0.01em | sentence |
+| Panel title | Bricolage Grotesque | 16px | 800 | 1 | −0.01em | Title |
+| Body / sub | Courier Prime | 16px | 400 | 1.5 | 0 | sentence |
+| Tag | Courier Prime | 13px | 700 | 1 | +0.06em | UPPERCASE |
+| Nav links | Courier Prime | 14px | 700 | 1 | 0 | Title |
+| Readouts | Courier Prime | 13px | 700 | 1 | 0 | tabular |
 
 ## Implementation notes
 

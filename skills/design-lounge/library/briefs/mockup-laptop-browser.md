@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A front-view laptop mockup, the fictional Torva Book 14, for presenting a website in a case study. It is drawn in CSS: an aluminium lid with a notch, a black bezel, a dark hinge strip and a thin base with a thumb scoop. On load the lid swings up from flat to upright in 1.5s, then the screen boots: a desktop wallpaper and menu bar fade in, and a browser window rises into place. The browser has three working tabs that swap three small pages of a type studio called Brask and update the address bar. The stage is a pale sage wall meeting a desk surface exactly at the base of the laptop. The detail worth copying is the two-faced lid: the screen face and an aluminium back face share one 3D plane with `backface-visibility: hidden`, so mid-swing you see the right side at every angle.
-
-## Reference behaviour
-
-1. Load: the lid starts at `rotateX(-90deg)` (lying flat toward the viewer, back face up) and opens to `0deg` over 1500ms with expo-out easing.
-2. At 1000ms the screen gets class `on`: the wallpaper and menu bar fade in over 500ms; the browser window fades in and rises from `translateY(1.2cqw) scale(.97)` over 450ms/600ms with a 150ms delay.
-3. First frame after the animation: Index tab selected, address bar reads `brask.studio/work`.
-4. Clicking a tab (or ArrowLeft/ArrowRight/Home/End with a tab focused) selects it, swaps the page with a 280ms fade and 0.8cqw rise, and sets the path: `/work`, `/pricing`, `/changelog`.
-5. Hovering an unselected tab tints it `rgba(255,255,255,.4)` and reveals its close glyph at 60% opacity.
-6. Finish toggle (Silver, Space) recolours the lid rim, the lid back, and the base gradient. The bezel stays black.
-7. "Open lid again" resets the screen to black, restarts the lid animation and the boot sequence.
-8. A polite live region announces "Space finish" or "Lid opening".
 
 ## Structure
 
@@ -48,42 +39,6 @@ A front-view laptop mockup, the fictional Torva Book 14, for presenting a websit
 - `.screen` holds `.desk-ui` (wallpaper + menu bar) and `.win` (browser chrome + `.pages`).
 - Tabs are `role="tablist"` with `button role="tab"`; each page is a `section role="tabpanel"`.
 - Below the lid: `.hinge` (84% width), `.base` (full rig width), `.shadow` (blurred ellipse).
-
-## Tokens
-
-```css
-:root {
-  --wall: #cfd5d0;
-  --desk: #b4bcb5;  --desk-2: #a6afa8;
-  --ink: #131714;   --ink-2: #3f4842;  --ink-3: #5c665f;
-  --line: #a9b2ab;
-  --accent: #2346d8;   /* cobalt: in-page accent and focus ring */
-  --paper: #f3f1ec;    /* browser page */
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --open: 1500ms;
-  /* aluminium ramp — Silver */
-  --al-1: #f2f3f4; --al-2: #d6d8db; --al-3: #a9adb2; --al-4: #7d8187;
-}
-[data-finish="space"] { --al-1: #9a9ea4; --al-2: #5f6368; --al-3: #45484c; --al-4: #2a2c2f; }
-```
-
-Geometry in `cqw` of the rig: lid radius 2.4cqw top / 0.9cqw bottom, rim 0.32cqw, bezel padding 1.25cqw sides and top / 1.6cqw bottom, notch 10% × 2.5cqw with 0.9cqw bottom radii, hinge 0.75cqw tall, base 1.55cqw tall with a 13% × 55% scoop. Browser: tab strip 3.4cqw, tabs 2.6cqw tall, address field 2.4cqw.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Caption title | Bricolage Grotesque | 22px | 800 | 1.1 | −0.01em | — |
-| Caption sub, controls | JetBrains Mono | 12px | 400 | 1.4 | 0.02–0.06em | controls uppercase |
-| Menu bar | Bricolage Grotesque | 1cqw | 500 / 800 for app name | 1 | 0 | — |
-| Tab label | Bricolage Grotesque | 1cqw | 500 | 1 | 0 | — |
-| Address | JetBrains Mono | 1.05cqw | 400 | 1 | 0 | lowercase |
-| Page headline | Bricolage Grotesque | 4.6cqw | 800 | 0.95 | −0.035em | sentence |
-| Page body | Bricolage Grotesque | 1.25cqw | 400 | 1.45 | 0 | sentence |
-| Changelog dates | JetBrains Mono | 1cqw | 400 | 1 | 0 | — |
 
 ## Motion
 
@@ -141,6 +96,57 @@ Geometry in `cqw` of the rig: lid radius 2.4cqw top / 0.9cqw bottom, rim 0.32cqw
 - [ ] Index headline "Type and tools for *slow, careful* reading." with three cards (Aa, ring, barcode stripes).
 - [ ] Pricing €40 / €180 / €600; Changelog v3.2, v3.1, v3.0.
 - [ ] Lid opens over 1500ms; boot at 1000ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Load: the lid starts at `rotateX(-90deg)` (lying flat toward the viewer, back face up) and opens to `0deg` over 1500ms with expo-out easing.
+2. At 1000ms the screen gets class `on`: the wallpaper and menu bar fade in over 500ms; the browser window fades in and rises from `translateY(1.2cqw) scale(.97)` over 450ms/600ms with a 150ms delay.
+3. First frame after the animation: Index tab selected, address bar reads `brask.studio/work`.
+4. Clicking a tab (or ArrowLeft/ArrowRight/Home/End with a tab focused) selects it, swaps the page with a 280ms fade and 0.8cqw rise, and sets the path: `/work`, `/pricing`, `/changelog`.
+5. Hovering an unselected tab tints it `rgba(255,255,255,.4)` and reveals its close glyph at 60% opacity.
+6. Finish toggle (Silver, Space) recolours the lid rim, the lid back, and the base gradient. The bezel stays black.
+7. "Open lid again" resets the screen to black, restarts the lid animation and the boot sequence.
+8. A polite live region announces "Space finish" or "Lid opening".
+
+## Tokens
+
+```css
+:root {
+  --wall: #cfd5d0;
+  --desk: #b4bcb5;  --desk-2: #a6afa8;
+  --ink: #131714;   --ink-2: #3f4842;  --ink-3: #5c665f;
+  --line: #a9b2ab;
+  --accent: #2346d8;   /* cobalt: in-page accent and focus ring */
+  --paper: #f3f1ec;    /* browser page */
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --open: 1500ms;
+  /* aluminium ramp — Silver */
+  --al-1: #f2f3f4; --al-2: #d6d8db; --al-3: #a9adb2; --al-4: #7d8187;
+}
+[data-finish="space"] { --al-1: #9a9ea4; --al-2: #5f6368; --al-3: #45484c; --al-4: #2a2c2f; }
+```
+
+Geometry in `cqw` of the rig: lid radius 2.4cqw top / 0.9cqw bottom, rim 0.32cqw, bezel padding 1.25cqw sides and top / 1.6cqw bottom, notch 10% × 2.5cqw with 0.9cqw bottom radii, hinge 0.75cqw tall, base 1.55cqw tall with a 13% × 55% scoop. Browser: tab strip 3.4cqw, tabs 2.6cqw tall, address field 2.4cqw.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Caption title | Bricolage Grotesque | 22px | 800 | 1.1 | −0.01em | — |
+| Caption sub, controls | JetBrains Mono | 12px | 400 | 1.4 | 0.02–0.06em | controls uppercase |
+| Menu bar | Bricolage Grotesque | 1cqw | 500 / 800 for app name | 1 | 0 | — |
+| Tab label | Bricolage Grotesque | 1cqw | 500 | 1 | 0 | — |
+| Address | JetBrains Mono | 1.05cqw | 400 | 1 | 0 | lowercase |
+| Page headline | Bricolage Grotesque | 4.6cqw | 800 | 0.95 | −0.035em | sentence |
+| Page body | Bricolage Grotesque | 1.25cqw | 400 | 1.45 | 0 | sentence |
+| Changelog dates | JetBrains Mono | 1cqw | 400 | 1 | 0 | — |
 
 ## Implementation notes
 

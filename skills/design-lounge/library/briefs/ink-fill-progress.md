@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The blocking "uploading" screen of a media tool ("Anvil"). The product's wordmark is set at 168px in Unbounded Black as a 2px outline; a second, solid copy of the same word sits exactly on top and is revealed from the bottom with `clip-path: inset()` as the upload progresses, so the letters appear to fill with ink. A faint 2px horizontal rule marks the ink level across the whole stage. Left: the three files with checkboxes that tick as each finishes. Right: a 56px tabular percentage with a seconds-remaining line. Bottom: a 3px progress hairline and the transfer speed. At 100 % the status dot turns green, a pill toast rises ("All files uploaded") and the hairline turns green. Clicking anywhere (or pressing R) replays the 7.2s sequence. The mechanism worth copying is the two-layer wordmark with negative clip insets so the outline and fill never disagree.
-
-## Reference behaviour
-
-1. On load the upload starts at 0 %: hollow wordmark, no ink line visible above the baseline, percentage "0", ETA "calculating", speed "— MB/s", first file row marked live (dark checkbox border), status "Uploading" with a pulsing dot.
-2. Progress runs for 7,200ms along an ease-in-out curve with a slight wobble in the first half (so speed reads as variable), reaching 100 exactly at the end. Every frame: `--p` on `<body>` is set to the integer percentage; the percentage text, `aria-valuenow`, ETA ("N s remaining"), speed (`total / duration × (0.7–1.3)` MB/s) and the bottom hairline width update.
-3. The solid wordmark is clipped from the top by `(100 − p) %`, so the ink rises from the baseline; the ink-level rule follows at the same height with 25 % opacity.
-4. File rows complete at thresholds 57 % and 92 % (file 1 and 2); the last completes at 100 %. A completed row shows a green filled checkbox with a white check; the current row shows a dark outline.
-5. At 100 %: `<body>` gains `done`; the status dot turns green and stops pulsing; status reads "Complete"; ETA reads "done"; speed reads "230 MB sent"; hairline turns green; the ink-level rule fades; the toast slides up 12px and fades in over 600ms.
-6. Click anywhere, press R, or activate the visually hidden "Replay upload" button: everything resets and the sequence starts again from 0 (the ink drains instantly, then fills).
-7. Hover anywhere: the "Click anywhere to replay" hint brightens from `--ink-3` to `--ink`.
 
 ## Structure
 
@@ -45,53 +37,6 @@ The blocking "uploading" screen of a media tool ("Anvil"). The product's wordmar
   - `.toast` (pill) and a visually hidden `<button class="sr">Replay upload</button>`.
 - `.bar` (1px hairline, `::after` is the 3px progress).
 - `.bottom`: `#speed` and `.replay` hint with a 14px rotate-ccw icon.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm paper, navy ink, one green for completion */
-  --paper: #f4efe6;
-  --paper-2: #eae3d6;      /* reserved: hover surfaces */
-  --ink: #101a2e;          /* wordmark, numerals, hairline fill */
-  --ink-2: #4e5566;        /* labels */
-  --ink-3: #8b8f99;        /* hint, unit sign, summary */
-  --line: #d8d1c4;         /* hairline, empty checkbox */
-  --done: #1f6f4a;         /* completed state */
-
-  /* type */
-  --display: "Unbounded", system-ui, sans-serif;   /* weight 900 only */
-  --mono: "DM Mono", ui-monospace, monospace;
-  --word-size: 168px; --fs-pct: 56px; --fs-unit: 22px; --fs-label: 12px; --fs-file: 12px;
-  --word-tracking: -.04em; --word-stroke: 2px;
-
-  /* layout */
-  --gutter: 40px; --bar-pad: 28px 40px; --stage-cols: 260px 1fr 180px;
-  --check: 14px; --dot: 8px; --hairline: 1px; --progress-h: 3px; --toast-bottom: 24px;
-  --clip-bleed: -8px -4px -8px;   /* right / bottom / left negative insets on the fill clip */
-
-  /* progress */
-  --p: 0;                /* 0–100, integer, written by JS each frame */
-  --upload-ms: 7200; --file-1-at: 57; --file-2-at: 92; --total-mb: 230;
-
-  /* motion */
-  --t-micro: 160ms; --t-fill: 120ms; --t-done: 600ms; --pulse: 1600ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role            | Family    | Size  | Weight | Line-height | Tracking | Case |
-|-----------------|-----------|------:|-------:|------------:|---------:|------|
-| Wordmark        | Unbounded | 168px | 900    | .95         | −0.04em  | UPPERCASE; hollow = transparent fill + 2px `--ink` stroke; fill = `--ink` + same stroke |
-| Percentage      | DM Mono   | 56px  | 500    | 1           | −0.04em  | tabular; "%" via `::after` at 22px in `--ink-3` |
-| ETA / status    | DM Mono   | 12px  | 400    | 1.5         | +0.06em  | UPPERCASE `--ink-2` |
-| Top / bottom bars | DM Mono | 12px  | 400    | 1.5         | +0.06em  | UPPERCASE; brand 500 `--ink` |
-| File rows       | DM Mono   | 12px  | 400    | 1.9         | +0.04em  | filename 500 `--ink`, size `--ink-2` |
-| Summary line    | DM Mono   | 12px  | 400    | 1.9         | +0.04em  | `--ink-3` |
-| Toast           | DM Mono   | 12px  | 400    | 1           | +0.06em  | UPPERCASE `--paper` on `--ink` |
 
 ## Motion
 
@@ -145,6 +90,67 @@ Reduced motion: the status dot does not pulse; clip, hairline and toast transiti
 - [ ] The status dot pulses (1.6s) only while uploading and never under reduced motion.
 - [ ] No `setInterval`; a single `requestAnimationFrame` loop drives the run.
 - [ ] Page fits 1280 × 800 without scrolling; the wordmark never overlaps the file list or percentage.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. On load the upload starts at 0 %: hollow wordmark, no ink line visible above the baseline, percentage "0", ETA "calculating", speed "— MB/s", first file row marked live (dark checkbox border), status "Uploading" with a pulsing dot.
+2. Progress runs for 7,200ms along an ease-in-out curve with a slight wobble in the first half (so speed reads as variable), reaching 100 exactly at the end. Every frame: `--p` on `<body>` is set to the integer percentage; the percentage text, `aria-valuenow`, ETA ("N s remaining"), speed (`total / duration × (0.7–1.3)` MB/s) and the bottom hairline width update.
+3. The solid wordmark is clipped from the top by `(100 − p) %`, so the ink rises from the baseline; the ink-level rule follows at the same height with 25 % opacity.
+4. File rows complete at thresholds 57 % and 92 % (file 1 and 2); the last completes at 100 %. A completed row shows a green filled checkbox with a white check; the current row shows a dark outline.
+5. At 100 %: `<body>` gains `done`; the status dot turns green and stops pulsing; status reads "Complete"; ETA reads "done"; speed reads "230 MB sent"; hairline turns green; the ink-level rule fades; the toast slides up 12px and fades in over 600ms.
+6. Click anywhere, press R, or activate the visually hidden "Replay upload" button: everything resets and the sequence starts again from 0 (the ink drains instantly, then fills).
+7. Hover anywhere: the "Click anywhere to replay" hint brightens from `--ink-3` to `--ink`.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm paper, navy ink, one green for completion */
+  --paper: #f4efe6;
+  --paper-2: #eae3d6;      /* reserved: hover surfaces */
+  --ink: #101a2e;          /* wordmark, numerals, hairline fill */
+  --ink-2: #4e5566;        /* labels */
+  --ink-3: #8b8f99;        /* hint, unit sign, summary */
+  --line: #d8d1c4;         /* hairline, empty checkbox */
+  --done: #1f6f4a;         /* completed state */
+
+  /* type */
+  --display: "Unbounded", system-ui, sans-serif;   /* weight 900 only */
+  --mono: "DM Mono", ui-monospace, monospace;
+  --word-size: 168px; --fs-pct: 56px; --fs-unit: 22px; --fs-label: 12px; --fs-file: 12px;
+  --word-tracking: -.04em; --word-stroke: 2px;
+
+  /* layout */
+  --gutter: 40px; --bar-pad: 28px 40px; --stage-cols: 260px 1fr 180px;
+  --check: 14px; --dot: 8px; --hairline: 1px; --progress-h: 3px; --toast-bottom: 24px;
+  --clip-bleed: -8px -4px -8px;   /* right / bottom / left negative insets on the fill clip */
+
+  /* progress */
+  --p: 0;                /* 0–100, integer, written by JS each frame */
+  --upload-ms: 7200; --file-1-at: 57; --file-2-at: 92; --total-mb: 230;
+
+  /* motion */
+  --t-micro: 160ms; --t-fill: 120ms; --t-done: 600ms; --pulse: 1600ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role            | Family    | Size  | Weight | Line-height | Tracking | Case |
+|-----------------|-----------|------:|-------:|------------:|---------:|------|
+| Wordmark        | Unbounded | 168px | 900    | .95         | −0.04em  | UPPERCASE; hollow = transparent fill + 2px `--ink` stroke; fill = `--ink` + same stroke |
+| Percentage      | DM Mono   | 56px  | 500    | 1           | −0.04em  | tabular; "%" via `::after` at 22px in `--ink-3` |
+| ETA / status    | DM Mono   | 12px  | 400    | 1.5         | +0.06em  | UPPERCASE `--ink-2` |
+| Top / bottom bars | DM Mono | 12px  | 400    | 1.5         | +0.06em  | UPPERCASE; brand 500 `--ink` |
+| File rows       | DM Mono   | 12px  | 400    | 1.9         | +0.04em  | filename 500 `--ink`, size `--ink-2` |
+| Summary line    | DM Mono   | 12px  | 400    | 1.9         | +0.04em  | `--ink-3` |
+| Toast           | DM Mono   | 12px  | 400    | 1           | +0.06em  | UPPERCASE `--paper` on `--ink` |
 
 ## Implementation notes
 

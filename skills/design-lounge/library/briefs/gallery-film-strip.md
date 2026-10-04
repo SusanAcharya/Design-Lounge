@@ -4,24 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A photographer's roll review screen, set in a darkroom. A horizontal 35mm strip runs across the bottom of the frame: a near-black film base, a row of rounded sprocket holes top and bottom, and amber edge print ("14 ▸ 14A", "PELLHAM 400") between the holes and the pictures. Twelve frames sit on the strip. The selected one is enlarged above on a glowing light box, and a 176px circular loupe magnifies it 3× under the pointer. A Positive/Negative toggle flips every picture to an orange-based colour negative. The detail worth copying is the red grease-pencil ring around the chosen frame: a 3px, slightly rotated, irregularly rounded outline, the way a photographer marks a keeper.
 
 The pictures are illustrated SVG scenes (pier at dusk, lighthouse, dunes, sails, beach huts, night ferry). No image files, no fetched URLs.
-
-## Reference behaviour
-
-1. First frame: frame 14A, "Pier at dusk", is selected and enlarged. The loupe sits over the pier at 42% across, 60% down. The strip is scrolled so 14A is centred. Positive is pressed.
-2. Moving the pointer over the enlarged frame moves the loupe centre to the pointer. The cursor is hidden over the frame (the loupe is the cursor). The loupe never leaves the frame bounds (its centre is clamped to 0–100% of width and height).
-3. With the enlarged frame focused, arrow keys move the loupe by 3% of the frame; Shift+arrow moves 10%.
-4. Dragging the strip horizontally scrolls it. A drag starts after 5px of movement; a press that moved less than 5px counts as a click. The cursor is `grab`, and `grabbing` while dragging.
-5. A vertical mouse wheel over the strip scrolls it horizontally.
-6. Clicking a frame selects it: the grease-pencil ring moves to it, the light box shows it, the meta column updates (frame number, A suffix, title, exposure), the counter reads "Frame N of 12", and the strip smooth-scrolls to centre it.
-7. On selection the enlarged image grows out of the clicked strip frame (a FLIP from the strip frame's rect to the light box) over 460ms.
-8. With a strip frame focused, ← and → step to the previous and next frame (wrapping), select it and move focus.
-9. Negative: every scene (strip, light box, loupe) is shown as a colour negative, and the film base turns orange-brown `#5B2C12`. Positive restores.
-10. Frame 15 is a bracketed exposure of 14A, rendered 18% brighter. In negative mode it reads denser, not lighter.
 
 ## Structure
 
@@ -50,50 +39,6 @@ The pictures are illustrated SVG scenes (pier at dusk, lighthouse, dunes, sails,
 - `section.rail` (labelled "Film strip"): a horizontal scroller containing the strip; the strip holds 12 `button.frame`.
 - The body grid needs `grid-template-columns: minmax(0,1fr)` or the strip's intrinsic width widens the page.
 - The scroller fades its ends with a horizontal mask (transparent → black at 6% and 94%).
-
-## Tokens
-
-```css
-:root {
-  --bg: #121010;          /* darkroom */
-  --bg-2: #1a1715;        /* toggle track */
-  --line: #2c2724;        /* hairlines */
-  --ink: #f1ebe2;         /* primary text */
-  --ink-2: #a89f94;
-  --ink-3: #7d746a;       /* hints, dt */
-  --edge: #e9a23b;        /* edge print, kicker, focus */
-  --mark: #d8402f;        /* grease pencil */
-  --table: #f4f1ea;       /* light box */
-  --base: #0b0a09;        /* slide film base */
-  --base-neg: #5b2c12;    /* negative film base */
-  --display: "Anton", Impact, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --frame-w: 200px;
-  --frame-h: 133px;
-  --loupe: 176px;
-  --zoom: 3;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --space: 4px 8px 14px 22px 40px;
-}
-```
-
-Shadows: light box `0 0 0 1px #fff3, 0 0 80px -10px #f4f1ea55, 0 30px 60px -20px #000`. Loupe ring `0 0 0 5px #1c1a18, 0 0 0 6px #4a4540, 0 18px 30px -8px #000c`.
-
-The page background is `radial-gradient(120% 80% at 50% 30%, #1d1916 0, #121010 60%)`.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case / colour |
-| --- | --- | --- | --- | --- | --- |
-| Kicker | IBM Plex Mono | 11px | 400 | 0.14em | upper, `--edge` |
-| Title h1 | Anton | 44px / 1 | 400 | 0.01em | upper, `--ink` |
-| Toggle | IBM Plex Mono | 11px | 400 | 0.12em | upper |
-| Frame number | Anton | 64px / 1 | 400 | 0 | `--ink`, suffix 12px mono `--edge` |
-| Frame title | IBM Plex Mono | 15px | 400 | 0 | `--ink` |
-| dt | IBM Plex Mono | 11px | 400 | 0.1em | upper, `--ink-3` |
-| dd / body | IBM Plex Mono | 13px / 1.5 | 400 | 0 | `--ink` |
-| Edge print | IBM Plex Mono | 10px | 500 number, 400 rest | 0.08em (stock 0.14em) | `--edge` |
 
 ## Motion
 
@@ -158,6 +103,67 @@ The loupe is never eased. A lagging loupe feels broken.
 - [ ] Frame 15 is the 14A scene 18% brighter.
 - [ ] Loupe is 176px with a 5px `#1c1a18` ring.
 - [ ] Ring colour `#d8402f`, edge print `#e9a23b`, negative base `#5b2c12`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: frame 14A, "Pier at dusk", is selected and enlarged. The loupe sits over the pier at 42% across, 60% down. The strip is scrolled so 14A is centred. Positive is pressed.
+2. Moving the pointer over the enlarged frame moves the loupe centre to the pointer. The cursor is hidden over the frame (the loupe is the cursor). The loupe never leaves the frame bounds (its centre is clamped to 0–100% of width and height).
+3. With the enlarged frame focused, arrow keys move the loupe by 3% of the frame; Shift+arrow moves 10%.
+4. Dragging the strip horizontally scrolls it. A drag starts after 5px of movement; a press that moved less than 5px counts as a click. The cursor is `grab`, and `grabbing` while dragging.
+5. A vertical mouse wheel over the strip scrolls it horizontally.
+6. Clicking a frame selects it: the grease-pencil ring moves to it, the light box shows it, the meta column updates (frame number, A suffix, title, exposure), the counter reads "Frame N of 12", and the strip smooth-scrolls to centre it.
+7. On selection the enlarged image grows out of the clicked strip frame (a FLIP from the strip frame's rect to the light box) over 460ms.
+8. With a strip frame focused, ← and → step to the previous and next frame (wrapping), select it and move focus.
+9. Negative: every scene (strip, light box, loupe) is shown as a colour negative, and the film base turns orange-brown `#5B2C12`. Positive restores.
+10. Frame 15 is a bracketed exposure of 14A, rendered 18% brighter. In negative mode it reads denser, not lighter.
+
+## Tokens
+
+```css
+:root {
+  --bg: #121010;          /* darkroom */
+  --bg-2: #1a1715;        /* toggle track */
+  --line: #2c2724;        /* hairlines */
+  --ink: #f1ebe2;         /* primary text */
+  --ink-2: #a89f94;
+  --ink-3: #7d746a;       /* hints, dt */
+  --edge: #e9a23b;        /* edge print, kicker, focus */
+  --mark: #d8402f;        /* grease pencil */
+  --table: #f4f1ea;       /* light box */
+  --base: #0b0a09;        /* slide film base */
+  --base-neg: #5b2c12;    /* negative film base */
+  --display: "Anton", Impact, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --frame-w: 200px;
+  --frame-h: 133px;
+  --loupe: 176px;
+  --zoom: 3;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --space: 4px 8px 14px 22px 40px;
+}
+```
+
+Shadows: light box `0 0 0 1px #fff3, 0 0 80px -10px #f4f1ea55, 0 30px 60px -20px #000`. Loupe ring `0 0 0 5px #1c1a18, 0 0 0 6px #4a4540, 0 18px 30px -8px #000c`.
+
+The page background is `radial-gradient(120% 80% at 50% 30%, #1d1916 0, #121010 60%)`.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case / colour |
+| --- | --- | --- | --- | --- | --- |
+| Kicker | IBM Plex Mono | 11px | 400 | 0.14em | upper, `--edge` |
+| Title h1 | Anton | 44px / 1 | 400 | 0.01em | upper, `--ink` |
+| Toggle | IBM Plex Mono | 11px | 400 | 0.12em | upper |
+| Frame number | Anton | 64px / 1 | 400 | 0 | `--ink`, suffix 12px mono `--edge` |
+| Frame title | IBM Plex Mono | 15px | 400 | 0 | `--ink` |
+| dt | IBM Plex Mono | 11px | 400 | 0.1em | upper, `--ink-3` |
+| dd / body | IBM Plex Mono | 13px / 1.5 | 400 | 0 | `--ink` |
+| Edge print | IBM Plex Mono | 10px | 500 number, 400 rest | 0.08em (stock 0.14em) | `--edge` |
 
 ## Implementation notes
 

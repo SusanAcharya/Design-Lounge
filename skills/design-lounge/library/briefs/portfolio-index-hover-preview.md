@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The home page of a fictional Lisbon art director, Ines Varga. The whole site is an index: a giant serif "Index" headline, a one-sentence pitch, discipline filters, and a hairline table of twelve projects (number, project, client, discipline, year). Hovering a row dims every other row to 32% and floats a 300×380 "plate" (a CSS-gradient composition standing in for the project's key image) that chases the cursor with a lerp and tilts with its velocity. The detail worth copying is the lag: the plate eases toward the pointer at 11% of the remaining distance per frame and rotates up to ±6° in the direction of travel, so it feels like a print being slid across a table.
-
-## Reference behaviour
-
-1. Initial state: row 03 "Lumen No. 4" is active (hero state), its plate visible at ~62% of the row width, vertically centred on the row (clamped to at least 266px from the top). Other rows are at 32% opacity.
-2. Move the pointer onto any row: that row becomes active (full opacity, project name slides 14px right over 420ms, number turns vermilion). All other rows drop to opacity .32 over 160ms.
-3. The plate targets `pointerX + 165px, pointerY`, clamped so it never leaves the viewport (16px margin; top clamp 76px below the sticky header). Each animation frame moves `x += (tx − x) × 0.11`, same for y. Rotation is `clamp((tx − x) × 0.04, −6°, 6°)`. The rAF loop stops itself when the remaining distance is under 0.4px.
-4. When the active row changes, the new plate reveals over the old one with a bottom-up clip-path wipe (`inset(100% 0 0 0)` → `inset(0)`, 420ms expo-out). Plates are stacked; the active one has `z-index:2`.
-5. Leaving the list: plate fades to 0 over 240ms and scales to .92; all rows return to full opacity.
-6. Keyboard focus on a row (Tab) activates it the same way and parks the plate at 68% of the row width, centred on the row.
-7. Filter pills (All 12 / Identity 3 / Editorial 4 / Packaging 3 / Motion 2): click sets `aria-pressed` and hides non-matching rows (`display:none`).
-8. Header clock shows Lisbon time (UTC+1 in October) as `LIS HH:MM`, refreshed every 30s.
-9. The page scrolls: after row 12 comes a footer with an 88px serif sign-off "Have a slow thing to make? Write." (the last word underlined 3px vermilion) and contact meta. Scrolling while not hovering hides the plate.
 
 ## Structure
 
@@ -47,56 +37,6 @@ columns: No. 1/2 · Project 2/7 · Client 7/10 · Discipline 10/12 · Year 12/13
 - `.thead` (aria-hidden column labels) then `<ol id="list" aria-label="Projects">`; each `<li>` holds one `<a class="row" data-a="N">` with five spans.
 - `<footer>` sign-off and meta.
 - `.pv` fixed-position preview, `aria-hidden="true"`, `pointer-events:none`, containing `.pv-in` (shadow + scale) and twelve stacked `.art` plates.
-
-## Tokens
-
-```css
-:root {
-  /* colour: bone paper, near-black ink, one vermilion accent */
-  --bg: #ece9e2;        /* page */
-  --ink: #141414;       /* text, active row, header rule */
-  --ink-2: #5b574f;     /* client, discipline, meta (6.2:1 on bg) */
-  --ink-3: #8a857b;     /* column labels only */
-  --line: #cdc8bd;      /* row hairlines, pill borders */
-  --accent: #d9411e;    /* active number, count sup, footer underline, focus */
-  --ok: #3d9a5b;        /* availability dot */
-
-  /* type */
-  --serif: "Gloock", Georgia, serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-
-  /* layout */
-  --pad: 40px;
-  --row-h: 50px;
-  --pv-w: 300px;
-  --pv-h: 380px;
-  --pv-shadow: 0 30px 60px -20px rgba(20, 20, 20, .35);
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-swap: 420ms;
-  --t-fade: 240ms;
-  --lerp: .11;
-  --tilt-max: 6deg;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role             | Family  | Size  | Weight | Line-height | Tracking | Case      |
-|------------------|---------|------:|-------:|------------:|---------:|-----------|
-| Display "Index"  | Gloock  | 172px | 400    | .82         | −0.045em | Title     |
-| Count sup        | DM Mono | 15px  | 400    | 1           | 0        | (12)      |
-| Pitch            | Gloock  | 22px  | 400    | 1.28        | −0.005em | sentence  |
-| Project name     | Gloock  | 26px  | 400    | 1           | −0.015em | Title     |
-| Body / cells     | DM Mono | 13px  | 400    | 1.5         | 0        | sentence  |
-| Column labels    | DM Mono | 11px  | 400    | 1           | +0.1em   | UPPERCASE |
-| Brand            | Gloock  | 20px  | 400    | 1           | −0.01em  | Title     |
-| Plate caption    | DM Mono | 10px  | 400    | 1.5         | +0.08em  | UPPERCASE |
-| Plate glyph      | Gloock  | 140px (92px for long words) | 400 | .8 | −0.05em | as set |
-| Footer sign-off  | Gloock  | 88px  | 400    | .9          | −0.035em | sentence  |
 
 ## Motion
 
@@ -152,6 +92,72 @@ Reduced motion: lerp factor becomes 1 (plate snaps to the target, no tilt), ever
 - [ ] Filter pills toggle `aria-pressed` and hide non-matching rows.
 - [ ] Reduced motion: no lag, no tilt, still fully functional.
 - [ ] No raster images: every plate is CSS gradients plus type.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: row 03 "Lumen No. 4" is active (hero state), its plate visible at ~62% of the row width, vertically centred on the row (clamped to at least 266px from the top). Other rows are at 32% opacity.
+2. Move the pointer onto any row: that row becomes active (full opacity, project name slides 14px right over 420ms, number turns vermilion). All other rows drop to opacity .32 over 160ms.
+3. The plate targets `pointerX + 165px, pointerY`, clamped so it never leaves the viewport (16px margin; top clamp 76px below the sticky header). Each animation frame moves `x += (tx − x) × 0.11`, same for y. Rotation is `clamp((tx − x) × 0.04, −6°, 6°)`. The rAF loop stops itself when the remaining distance is under 0.4px.
+4. When the active row changes, the new plate reveals over the old one with a bottom-up clip-path wipe (`inset(100% 0 0 0)` → `inset(0)`, 420ms expo-out). Plates are stacked; the active one has `z-index:2`.
+5. Leaving the list: plate fades to 0 over 240ms and scales to .92; all rows return to full opacity.
+6. Keyboard focus on a row (Tab) activates it the same way and parks the plate at 68% of the row width, centred on the row.
+7. Filter pills (All 12 / Identity 3 / Editorial 4 / Packaging 3 / Motion 2): click sets `aria-pressed` and hides non-matching rows (`display:none`).
+8. Header clock shows Lisbon time (UTC+1 in October) as `LIS HH:MM`, refreshed every 30s.
+9. The page scrolls: after row 12 comes a footer with an 88px serif sign-off "Have a slow thing to make? Write." (the last word underlined 3px vermilion) and contact meta. Scrolling while not hovering hides the plate.
+
+## Tokens
+
+```css
+:root {
+  /* colour: bone paper, near-black ink, one vermilion accent */
+  --bg: #ece9e2;        /* page */
+  --ink: #141414;       /* text, active row, header rule */
+  --ink-2: #5b574f;     /* client, discipline, meta (6.2:1 on bg) */
+  --ink-3: #8a857b;     /* column labels only */
+  --line: #cdc8bd;      /* row hairlines, pill borders */
+  --accent: #d9411e;    /* active number, count sup, footer underline, focus */
+  --ok: #3d9a5b;        /* availability dot */
+
+  /* type */
+  --serif: "Gloock", Georgia, serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+
+  /* layout */
+  --pad: 40px;
+  --row-h: 50px;
+  --pv-w: 300px;
+  --pv-h: 380px;
+  --pv-shadow: 0 30px 60px -20px rgba(20, 20, 20, .35);
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-swap: 420ms;
+  --t-fade: 240ms;
+  --lerp: .11;
+  --tilt-max: 6deg;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role             | Family  | Size  | Weight | Line-height | Tracking | Case      |
+|------------------|---------|------:|-------:|------------:|---------:|-----------|
+| Display "Index"  | Gloock  | 172px | 400    | .82         | −0.045em | Title     |
+| Count sup        | DM Mono | 15px  | 400    | 1           | 0        | (12)      |
+| Pitch            | Gloock  | 22px  | 400    | 1.28        | −0.005em | sentence  |
+| Project name     | Gloock  | 26px  | 400    | 1           | −0.015em | Title     |
+| Body / cells     | DM Mono | 13px  | 400    | 1.5         | 0        | sentence  |
+| Column labels    | DM Mono | 11px  | 400    | 1           | +0.1em   | UPPERCASE |
+| Brand            | Gloock  | 20px  | 400    | 1           | −0.01em  | Title     |
+| Plate caption    | DM Mono | 10px  | 400    | 1.5         | +0.08em  | UPPERCASE |
+| Plate glyph      | Gloock  | 140px (92px for long words) | 400 | .8 | −0.05em | as set |
+| Footer sign-off  | Gloock  | 88px  | 400    | .9          | −0.035em | sentence  |
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A **search bar → search view container transform** for "Fjord Bank", a mobile banking app, in Material 3 Expressive on a dark green-tinted scheme. A pill search bar (56px, 28px radius) floats in the top app bar region above a balance card and recent transactions. Tapping the bar makes the *same element* grow to fill the screen — its inset goes 16px→0, top 62px→0, height 56px→100%, radius 28px→0 — while the search icon rotates into a back arrow, the avatar shrinks away and the suggestions body fades up 200ms later. Typing filters transactions live with highlighted matches. The back arrow or Esc runs the transform in reverse on a faster accelerate curve. The detail worth copying is that nothing is duplicated: one container, one input, one leading icon button that morphs its glyph.
-
-## Reference behaviour
-
-1. Initial state: search pill at `top:62px; left:16px; right:16px; height:56px`, background `--surface-high`, with a search glyph, the placeholder "Search transactions" (17px) and a 32px avatar "LN". Behind it: a primary-container balance card ("24 318,40" at 40px) and a list of six transactions.
-2. Tap anywhere on the pill: `body.open` is set. Over 500ms `cubic-bezier(.2,0,0,1)` the container moves to `inset:0`, height 100%, radius 0, background `--surface-c`. The input row gains 54px top margin (status clearance) on the same clock.
-3. The leading button's search glyph fades out and rotates +90°, the back arrow fades in from −90° (150ms opacity, 500ms rotate). The avatar scales to .6 and fades in 150ms. The input receives focus at ~120ms.
-4. The body (recent-search chips + "Suggestions" list of 4 transactions) fades from 0 and rises 8px, starting 200ms after the tap: opacity 300ms, transform 400ms, emphasized.
-5. Type: the list filters transactions whose name contains the query (case-insensitive); the matched substring is rendered in `--primary` at weight 600. The heading becomes "2 results" / "1 result". A clear (×) button appears at the right of the input. No match: list empties and "No transactions match "xyz"." shows.
-6. Tap a recent-search chip: its text fills the input and filters immediately.
-7. Tap the back arrow, press Esc: container returns to the pill geometry over 300ms `cubic-bezier(.3,0,.8,.15)`; body fades out in 150ms with no delay; glyphs and avatar reverse; the query is cleared; focus returns to the pill.
-8. While open, the page behind is `aria-hidden="true"` and its list is fully covered.
 
 ## Structure
 
@@ -58,6 +49,79 @@ Sample data (six transactions; `[name, meta, amount, tile initials]`; positive a
 | Mira Pharmacy | Card · 22 Sep | −312,50 | MP |
 
 Recent-search chips: "Halden Ceramics", "rent", "coffee". Balance card: "Everyday · SEK" / "24 318,40" / "Available · payday in 4 days". Closed suggestions show the first four rows.
+
+## Motion
+
+| Element        | Trigger | Property                       | From → To                          | Duration | Easing        | Delay |
+|----------------|---------|--------------------------------|------------------------------------|---------:|---------------|------:|
+| `.sv`          | open    | top, left, right, height, border-radius, background | 62/16/16/56px/28px/high → 0/0/0/100%/0/surface-c | 500ms | `--ease-emph` | 0 |
+| `.sv`          | close   | same                           | reverse                            | 300ms    | `--ease-exit` | 0 |
+| `.row`         | open    | margin-top                     | 0 → 54px                           | 500ms    | `--ease-emph` | 0 |
+| `.lens`        | open    | opacity, rotate                | 1, 0 → 0, 90°                      | 150 / 500ms | `--ease-emph` | 0 |
+| `.back`        | open    | opacity, rotate                | 0, −90° → 1, 0                     | 150 / 500ms | `--ease-emph` | 0 |
+| `.av`          | open    | opacity, scale                 | 1, 1 → 0, .6                       | 150ms    | linear        | 0 |
+| `.body`        | open    | opacity, translateY            | 0, 8px → 1, 0                      | 300 / 400ms | `--ease-emph` | 200ms |
+| `.body`        | close   | opacity, translateY            | 1, 0 → 0, 8px                      | 150ms    | `--ease-exit` | 0 |
+| `.clr`         | typing  | opacity                        | 0 → 1                              | 150ms    | linear        | 0 |
+| `.res li`      | hover   | background                     | transparent → surface-high         | 0        | —             | instant |
+
+Reduced motion: all durations 1ms, delays 0. The view still swaps between pill and full screen; focus still moves into the input.
+
+## States
+
+- **Closed:** container is the pill; `.hit` covers the row and is the only tab stop; input and leading button are `tabindex="-1"`; leading button labelled "Search".
+- **Open:** `body.open`; `.hit` is `display:none`; input `tabindex="0"` and focused; leading button labelled "Back"; `main` is `aria-hidden="true"`.
+- **Has query:** `.row.has` — clear button visible; heading shows result count; matches highlighted.
+- **Empty result:** `.res` empty, `.empty` visible with the quoted query.
+- **Focus-visible:** 3px `--primary` outline, −3px offset on buttons, chips, the hit area and result rows.
+- **Positive amount:** `.in` colour `--primary`.
+
+## Accessibility
+
+- Container is `role="search"`; the input has `aria-label="Search transactions"` and `type="search"`.
+- Closed, the entire pill is one `<button aria-label="Open search">` in the tab order; open, the order is Back → input → Clear (when visible) → chips → results (rows are `tabindex="0"`).
+- Esc closes and returns focus to the pill's hit button.
+- Results list is `aria-live="polite"` so counts and matches are announced as you type; the heading text ("3 results") changes with it.
+- The page behind gets `aria-hidden="true"` while open.
+- Contrast: `--on-surface-v` on `--surface-c` 9.4:1; `--primary` on `--surface-c` 9.6:1; `--on-primary-c` on `--primary-c` 8.5:1.
+- Hit targets: leading and clear buttons 48px, pill 56px, chips 36px (allow 44px row spacing), result rows 56px.
+
+## Responsive rules
+
+- 390 wide: as specified.
+- 360 wide: identical geometry; the balance figure drops to 36px so it fits with the labels.
+- ≥ 600 wide: keep the pill at `max-width:560px` centred (`left/right:auto; margin:0 auto`), and open to a 560px centred sheet with 28px radius rather than full-bleed; the scrim behind is `rgba(15,21,18,.5)`.
+- Landscape: the open row still reserves the top safe area; the body scrolls internally.
+
+## Acceptance checklist
+
+- [ ] Closed pill is 56px tall, 28px radius, inset 16px, top 62px, `#252E2A`.
+- [ ] Opening transitions top/left/right/height/border-radius on one element over 500ms `cubic-bezier(.2,0,0,1)` to `inset:0; radius:0`.
+- [ ] Closing uses 300ms `cubic-bezier(.3,0,.8,.15)`.
+- [ ] The search glyph rotates +90° out while the back arrow rotates in from −90°; both share the 500ms clock, opacity 150ms.
+- [ ] The suggestions body starts fading in 200ms after the tap and rises 8px.
+- [ ] Input is focused within 150ms of opening; Esc and the back arrow close.
+- [ ] Typing filters by substring, highlights the match in `#9AD6A8`, and updates the heading to "N result(s)".
+- [ ] A clear button appears only when the input has text; it empties the input and keeps focus there.
+- [ ] Empty results show "No transactions match "…"." and the list is empty.
+- [ ] The page behind is `aria-hidden` while the view is open.
+- [ ] Focus rings are visible on the pill, back, clear, chips and result rows.
+- [ ] Reduced motion: state change still completes; no residual delays.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: search pill at `top:62px; left:16px; right:16px; height:56px`, background `--surface-high`, with a search glyph, the placeholder "Search transactions" (17px) and a 32px avatar "LN". Behind it: a primary-container balance card ("24 318,40" at 40px) and a list of six transactions.
+2. Tap anywhere on the pill: `body.open` is set. Over 500ms `cubic-bezier(.2,0,0,1)` the container moves to `inset:0`, height 100%, radius 0, background `--surface-c`. The input row gains 54px top margin (status clearance) on the same clock.
+3. The leading button's search glyph fades out and rotates +90°, the back arrow fades in from −90° (150ms opacity, 500ms rotate). The avatar scales to .6 and fades in 150ms. The input receives focus at ~120ms.
+4. The body (recent-search chips + "Suggestions" list of 4 transactions) fades from 0 and rises 8px, starting 200ms after the tap: opacity 300ms, transform 400ms, emphasized.
+5. Type: the list filters transactions whose name contains the query (case-insensitive); the matched substring is rendered in `--primary` at weight 600. The heading becomes "2 results" / "1 result". A clear (×) button appears at the right of the input. No match: list empties and "No transactions match "xyz"." shows.
+6. Tap a recent-search chip: its text fills the input and filters immediately.
+7. Tap the back arrow, press Esc: container returns to the pill geometry over 300ms `cubic-bezier(.3,0,.8,.15)`; body fades out in 150ms with no delay; glyphs and avatar reverse; the query is cleared; focus returns to the pill.
+8. While open, the page behind is `aria-hidden="true"` and its list is fully covered.
 
 ## Tokens
 
@@ -118,64 +182,6 @@ Recent-search chips: "Halden Ceramics", "rent", "coffee". Balance card: "Everyda
 | Chip              | Gabarito | 14px | 500    | 1           | 0        | as typed  |
 | Icon tile initials| Gabarito | 12px | 700    | 1           | 0        | UPPERCASE |
 | Match highlight   | Gabarito | 15px | 600    | —           | 0        | colour `--primary` |
-
-## Motion
-
-| Element        | Trigger | Property                       | From → To                          | Duration | Easing        | Delay |
-|----------------|---------|--------------------------------|------------------------------------|---------:|---------------|------:|
-| `.sv`          | open    | top, left, right, height, border-radius, background | 62/16/16/56px/28px/high → 0/0/0/100%/0/surface-c | 500ms | `--ease-emph` | 0 |
-| `.sv`          | close   | same                           | reverse                            | 300ms    | `--ease-exit` | 0 |
-| `.row`         | open    | margin-top                     | 0 → 54px                           | 500ms    | `--ease-emph` | 0 |
-| `.lens`        | open    | opacity, rotate                | 1, 0 → 0, 90°                      | 150 / 500ms | `--ease-emph` | 0 |
-| `.back`        | open    | opacity, rotate                | 0, −90° → 1, 0                     | 150 / 500ms | `--ease-emph` | 0 |
-| `.av`          | open    | opacity, scale                 | 1, 1 → 0, .6                       | 150ms    | linear        | 0 |
-| `.body`        | open    | opacity, translateY            | 0, 8px → 1, 0                      | 300 / 400ms | `--ease-emph` | 200ms |
-| `.body`        | close   | opacity, translateY            | 1, 0 → 0, 8px                      | 150ms    | `--ease-exit` | 0 |
-| `.clr`         | typing  | opacity                        | 0 → 1                              | 150ms    | linear        | 0 |
-| `.res li`      | hover   | background                     | transparent → surface-high         | 0        | —             | instant |
-
-Reduced motion: all durations 1ms, delays 0. The view still swaps between pill and full screen; focus still moves into the input.
-
-## States
-
-- **Closed:** container is the pill; `.hit` covers the row and is the only tab stop; input and leading button are `tabindex="-1"`; leading button labelled "Search".
-- **Open:** `body.open`; `.hit` is `display:none`; input `tabindex="0"` and focused; leading button labelled "Back"; `main` is `aria-hidden="true"`.
-- **Has query:** `.row.has` — clear button visible; heading shows result count; matches highlighted.
-- **Empty result:** `.res` empty, `.empty` visible with the quoted query.
-- **Focus-visible:** 3px `--primary` outline, −3px offset on buttons, chips, the hit area and result rows.
-- **Positive amount:** `.in` colour `--primary`.
-
-## Accessibility
-
-- Container is `role="search"`; the input has `aria-label="Search transactions"` and `type="search"`.
-- Closed, the entire pill is one `<button aria-label="Open search">` in the tab order; open, the order is Back → input → Clear (when visible) → chips → results (rows are `tabindex="0"`).
-- Esc closes and returns focus to the pill's hit button.
-- Results list is `aria-live="polite"` so counts and matches are announced as you type; the heading text ("3 results") changes with it.
-- The page behind gets `aria-hidden="true"` while open.
-- Contrast: `--on-surface-v` on `--surface-c` 9.4:1; `--primary` on `--surface-c` 9.6:1; `--on-primary-c` on `--primary-c` 8.5:1.
-- Hit targets: leading and clear buttons 48px, pill 56px, chips 36px (allow 44px row spacing), result rows 56px.
-
-## Responsive rules
-
-- 390 wide: as specified.
-- 360 wide: identical geometry; the balance figure drops to 36px so it fits with the labels.
-- ≥ 600 wide: keep the pill at `max-width:560px` centred (`left/right:auto; margin:0 auto`), and open to a 560px centred sheet with 28px radius rather than full-bleed; the scrim behind is `rgba(15,21,18,.5)`.
-- Landscape: the open row still reserves the top safe area; the body scrolls internally.
-
-## Acceptance checklist
-
-- [ ] Closed pill is 56px tall, 28px radius, inset 16px, top 62px, `#252E2A`.
-- [ ] Opening transitions top/left/right/height/border-radius on one element over 500ms `cubic-bezier(.2,0,0,1)` to `inset:0; radius:0`.
-- [ ] Closing uses 300ms `cubic-bezier(.3,0,.8,.15)`.
-- [ ] The search glyph rotates +90° out while the back arrow rotates in from −90°; both share the 500ms clock, opacity 150ms.
-- [ ] The suggestions body starts fading in 200ms after the tap and rises 8px.
-- [ ] Input is focused within 150ms of opening; Esc and the back arrow close.
-- [ ] Typing filters by substring, highlights the match in `#9AD6A8`, and updates the heading to "N result(s)".
-- [ ] A clear button appears only when the input has text; it empties the input and keeps focus there.
-- [ ] Empty results show "No transactions match "…"." and the list is empty.
-- [ ] The page behind is `aria-hidden` while the view is open.
-- [ ] Focus rings are visible on the pill, back, clear, chips and result rows.
-- [ ] Reduced motion: state change still completes; no residual delays.
 
 ## Implementation notes
 

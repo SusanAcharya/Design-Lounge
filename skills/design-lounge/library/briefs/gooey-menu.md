@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A round menu for three yard actions: Hold, Note, and Call. It starts open, so the blobs are already apart and the SVG goo joins them to the main circle. Clicking Menu pulls the three back and hides their buttons. Clicking an action writes "Hold · Gate 4" or the same shape for Note and Call. Reduced motion removes the filter and the travel. This is not a material FAB menu. That menu is `m3-fab-menu`. This is not a split button. That control is `split-button`.
-
-## Reference behaviour
-
-1. The first frame is open. aria-expanded is true. Hold, Note, and Call are visible.
-2. The three blobs sit at translate(-88px,-20px), translate(0,-96px), and translate(88px,-20px).
-3. Menu toggles data-open. Closed hides the three action buttons.
-4. An action sets the line above to the action plus "· Gate 4".
-5. The goo filter is on the blob layer only. The labels sit above it.
-6. Reduced motion sets filter none and transition none.
-7. The menu does not navigate.
 
 ## Structure
 
@@ -33,21 +25,6 @@ status line
 - The filter is feGaussianBlur stdDeviation 8 and a colour matrix with alpha 20 and -8.
 - Hit buttons are 64px and transparent, sitting on the blobs.
 - Closed actions use the hidden attribute.
-
-## Tokens
-
-```css
-:root {
-  --bg:#f6f4ef; --ink:#161513; --primary:#1f4d3a; --primary-ink:#fffdf8;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Action | IBM Plex Sans | 12px | 500 | 1 | 0 |
-| Status | IBM Plex Sans | 14px | 400 | 1.4 | 0 |
 
 ## Motion
 
@@ -95,18 +72,6 @@ status line
 - [ ] The ground is #f6f4ef.
 - [ ] Type is IBM Plex Sans.
 
-## Implementation notes
-
-Keep labels outside the filtered layer or the goo eats the words.
-
-```html
-<filter id="goo"><feGaussianBlur stdDeviation="8"/>
-<feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8"/>
-</filter>
-```
-
-Sync the hidden attribute with data-open so keyboard users cannot reach a closed action.
-
 ## Measurements to keep
 
 - Stage 280px. Blob 64px. Main blob left 108px top 168px.
@@ -151,6 +116,47 @@ Sync the hidden attribute with data-open so keyboard users cannot reach a closed
 - Do not add a fourth action in this demo.
 - Type is IBM Plex Sans.
 - The ground is #f6f4ef.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is open. aria-expanded is true. Hold, Note, and Call are visible.
+2. The three blobs sit at translate(-88px,-20px), translate(0,-96px), and translate(88px,-20px).
+3. Menu toggles data-open. Closed hides the three action buttons.
+4. An action sets the line above to the action plus "· Gate 4".
+5. The goo filter is on the blob layer only. The labels sit above it.
+6. Reduced motion sets filter none and transition none.
+7. The menu does not navigate.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f6f4ef; --ink:#161513; --primary:#1f4d3a; --primary-ink:#fffdf8;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Action | IBM Plex Sans | 12px | 500 | 1 | 0 |
+| Status | IBM Plex Sans | 14px | 400 | 1.4 | 0 |
+
+## Implementation notes
+
+Keep labels outside the filtered layer or the goo eats the words.
+
+```html
+<filter id="goo"><feGaussianBlur stdDeviation="8"/>
+<feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8"/>
+</filter>
+```
+
+Sync the hidden attribute with data-open so keyboard users cannot reach a closed action.
 
 ---
 

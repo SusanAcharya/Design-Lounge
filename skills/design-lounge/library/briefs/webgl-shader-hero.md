@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. Use raw WebGL 1. Do not add three.js, regl, OGL, or any other library for one full-screen triangle.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The landing hero for Firn, a fictional cold-archive company that seals data on glass inside the Svalbard permafrost. The whole background is one fragment shader: domain-warped fractal noise that flows like ice fog under a polar night, in deep navy, glacier blue and near-white ice. The copy sits on the left over a scrim, and the motion lives in the right half. The pointer pulls the fog gently toward itself, about a tenth of the frame, never a spotlight. The detail worth copying is the discipline around the shader: DPR capped at 1.5, a frame loop that stops when the tab is hidden or the canvas leaves the screen, a still frame for reduced motion, and a CSS gradient that is already painted underneath if WebGL fails.
-
-## Reference behaviour
-
-1. First frame: the page is already showing the shader. Ice-white fog curls in from the right edge and the lower right. The left 40% is dark navy behind the headline.
-2. The fog drifts all the time. One visible curl takes about 20 to 30 seconds to change shape. Nothing moves faster than that.
-3. Move the pointer over the hero. A soft region about 0.45 of the frame height across, centred on the pointer, pulls the noise toward the pointer and brightens by up to 5%. The pull follows the pointer with an easing factor of 0.05 per frame, so it trails by about half a second.
-4. Move the pointer out of the hero. The pull point eases back to its rest position at 72% across and 50% down.
-5. Click "Pause motion" at the left end of the bottom band. The shader freezes on the current frame. The label becomes "Play motion", the icon becomes a play triangle, and `aria-pressed="true"`. Click again to resume from the same time with no jump.
-6. Switch tabs. The loop is cancelled. Come back and it resumes from the same time.
-7. Scroll the hero off-screen (in a longer page). An IntersectionObserver cancels the loop. Scroll back and it resumes.
-8. If `getContext('webgl')` returns null, the shader fails to compile, the program fails to link, or the context is lost, the canvas stays hidden and the CSS gradient fallback shows. The pause button is hidden because nothing moves.
-9. With `prefers-reduced-motion: reduce` the shader draws one still frame at time 14 s and stops. The button reads "Play motion" so the user can opt in.
-10. The canvas fades in over 800ms after the first draw, so a failed start never flashes black.
-11. Nav links, "Sign in" and both buttons have 160 to 200ms colour shifts and a 2px ice-blue focus ring.
 
 ## Structure
 
@@ -48,69 +36,6 @@ layers, back to front: .fallback (CSS gradient) → canvas → scrim → content
 - `header` holds the logo link, a `nav` labelled "Primary", and the "Sign in" link.
 - `section.copy` holds the eyebrow `p`, the only `h1`, the sub `p`, and the two CTA links.
 - `.meta` is the bottom band: the pause `button` first, then three mono facts, 40px apart. Keep the button at the left end. The bottom-right corner is where hosts and cookie bars put overlays.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --navy: #06102a;          /* page background, shader base */
-  --deep: #0f2b4f;          /* shader mid tone */
-  --glacier: #4f8fbf;       /* shader blue ribbons */
-  --ice: #d8eaf5;           /* shader highlight, eyebrow, accent words */
-  --snow: #f4f9fc;          /* headline, primary button fill */
-  --ink-on-dark: #f4f9fc;
-  --muted-on-dark: #b6cbdc; /* sub copy, nav, meta */
-  --rule: rgba(216, 234, 245, .18);
-  --scrim: rgba(4, 11, 28, .82);
-  --focus: #9fd3f5;
-
-  /* type */
-  --sans: "Instrument Sans", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --fs-hero: 80px;
-  --fs-sub: 18px;
-  --fs-body: 15px;
-  --fs-nav: 14px;
-  --fs-meta: 12px;
-
-  /* space (8 base) */
-  --s-1: 8px; --s-2: 12px; --s-3: 24px; --s-4: 28px; --s-5: 40px; --s-6: 56px;
-
-  /* radius */
-  --r-pill: 999px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-micro: 160ms;
-  --t-btn: 200ms;
-  --t-fade: 800ms;
-
-  /* shader */
-  --shader-dpr-max: 1.5;
-  --shader-octaves: 5;       /* 3 under 640px */
-  --shader-speed: .035;      /* time multiplier */
-  --pointer-ease: .05;       /* per frame */
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Logo | Instrument Sans | 18px | 600 | 1 | 0.24em | upper |
-| Nav | Instrument Sans | 14px | 400 | 1.5 | 0 | sentence |
-| Eyebrow | IBM Plex Mono | 12px | 500 | 1 | 0.14em | upper |
-| Headline | Instrument Sans | 80px | 500 | 0.98 | -0.035em | sentence |
-| Sub | Instrument Sans | 18px | 400 | 1.55 | 0 | sentence |
-| Button | Instrument Sans | 15px | 500 | 1 | 0 | sentence |
-| Meta | IBM Plex Mono | 12px | 400 | 1 | 0.06em | as written |
-| Meta value | IBM Plex Mono | 12px | 500 | 1 | 0.06em | as written |
-
-- The headline wraps with `text-wrap: balance` into three lines at 1280. "a hundred winters." is in `--ice`, not italic.
-- The sub copy measure is 460px. Do not widen it.
-- Do not set the headline in the mono face. Mono is for facts only.
 
 ## Motion
 
@@ -182,6 +107,87 @@ layers, back to front: .fallback (CSS gradient) → canvas → scrim → content
 - [ ] The CTAs read "Request a vault" (filled) and "How sealing works" (outline).
 - [ ] The meta band reads "78°13′N 15°38′E", "Vault temp −18 °C", "Next sealing 14 Nov".
 - [ ] Shader speed is 0.035 and 5 octaves on desktop, 3 under 640px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the page is already showing the shader. Ice-white fog curls in from the right edge and the lower right. The left 40% is dark navy behind the headline.
+2. The fog drifts all the time. One visible curl takes about 20 to 30 seconds to change shape. Nothing moves faster than that.
+3. Move the pointer over the hero. A soft region about 0.45 of the frame height across, centred on the pointer, pulls the noise toward the pointer and brightens by up to 5%. The pull follows the pointer with an easing factor of 0.05 per frame, so it trails by about half a second.
+4. Move the pointer out of the hero. The pull point eases back to its rest position at 72% across and 50% down.
+5. Click "Pause motion" at the left end of the bottom band. The shader freezes on the current frame. The label becomes "Play motion", the icon becomes a play triangle, and `aria-pressed="true"`. Click again to resume from the same time with no jump.
+6. Switch tabs. The loop is cancelled. Come back and it resumes from the same time.
+7. Scroll the hero off-screen (in a longer page). An IntersectionObserver cancels the loop. Scroll back and it resumes.
+8. If `getContext('webgl')` returns null, the shader fails to compile, the program fails to link, or the context is lost, the canvas stays hidden and the CSS gradient fallback shows. The pause button is hidden because nothing moves.
+9. With `prefers-reduced-motion: reduce` the shader draws one still frame at time 14 s and stops. The button reads "Play motion" so the user can opt in.
+10. The canvas fades in over 800ms after the first draw, so a failed start never flashes black.
+11. Nav links, "Sign in" and both buttons have 160 to 200ms colour shifts and a 2px ice-blue focus ring.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --navy: #06102a;          /* page background, shader base */
+  --deep: #0f2b4f;          /* shader mid tone */
+  --glacier: #4f8fbf;       /* shader blue ribbons */
+  --ice: #d8eaf5;           /* shader highlight, eyebrow, accent words */
+  --snow: #f4f9fc;          /* headline, primary button fill */
+  --ink-on-dark: #f4f9fc;
+  --muted-on-dark: #b6cbdc; /* sub copy, nav, meta */
+  --rule: rgba(216, 234, 245, .18);
+  --scrim: rgba(4, 11, 28, .82);
+  --focus: #9fd3f5;
+
+  /* type */
+  --sans: "Instrument Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --fs-hero: 80px;
+  --fs-sub: 18px;
+  --fs-body: 15px;
+  --fs-nav: 14px;
+  --fs-meta: 12px;
+
+  /* space (8 base) */
+  --s-1: 8px; --s-2: 12px; --s-3: 24px; --s-4: 28px; --s-5: 40px; --s-6: 56px;
+
+  /* radius */
+  --r-pill: 999px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-micro: 160ms;
+  --t-btn: 200ms;
+  --t-fade: 800ms;
+
+  /* shader */
+  --shader-dpr-max: 1.5;
+  --shader-octaves: 5;       /* 3 under 640px */
+  --shader-speed: .035;      /* time multiplier */
+  --pointer-ease: .05;       /* per frame */
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Logo | Instrument Sans | 18px | 600 | 1 | 0.24em | upper |
+| Nav | Instrument Sans | 14px | 400 | 1.5 | 0 | sentence |
+| Eyebrow | IBM Plex Mono | 12px | 500 | 1 | 0.14em | upper |
+| Headline | Instrument Sans | 80px | 500 | 0.98 | -0.035em | sentence |
+| Sub | Instrument Sans | 18px | 400 | 1.55 | 0 | sentence |
+| Button | Instrument Sans | 15px | 500 | 1 | 0 | sentence |
+| Meta | IBM Plex Mono | 12px | 400 | 1 | 0.06em | as written |
+| Meta value | IBM Plex Mono | 12px | 500 | 1 | 0.06em | as written |
+
+- The headline wraps with `text-wrap: balance` into three lines at 1280. "a hundred winters." is in `--ice`, not italic.
+- The sub copy measure is 460px. Do not widen it.
+- Do not set the headline in the mono face. Mono is for facts only.
 
 ## Implementation notes
 

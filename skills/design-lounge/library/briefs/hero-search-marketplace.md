@@ -4,28 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The top of a booking site for Saltroad, a fictional travel marketplace of small stays chosen by editors. It reads like the cover of a travel magazine: a big serif headline with one italic word in terracotta, set on sand. Under it, the search bar does the work. It has three fields: a text input for Where, a When button that opens a two-month date-range calendar, and a Guests button that opens a stepper. Under the bar there is a row of category chips. Under that sit four destination tiles with flat drawn landscapes, prices and stay counts. The detail worth copying: both popovers are real, keyboard-complete dialogs, so the hero is a working search form, not a picture of one.
-
-## Reference behaviour
-
-1. Initial state: sand page. Nav 64px with a 1px rule under it. An eyebrow "Autumn issue · 1,180 stays checked in person" in terracotta caps. Headline "Slow places, booked fast." at 88px on one line, with "booked" in terracotta italic. A 3-line lede sits to the right, aligned to the headline's baseline.
-2. The search bar shows Where "Alentejo, Portugal", When "Oct 16 – Oct 19", Guests "2 adults", and a terracotta Search button.
-3. Chips row: Farmhouses (selected, ink fill), Coastal, Vineyards, Cabins, Riads, Off-grid, Pets welcome. Each chip shows a count in smaller type.
-4. Four tiles: Comporta (Portugal, 6 stays, €142), Val d'Orcia (Italy, 11 stays, €188), Agafay (Morocco, 4 stays, €96), Lofoten (Norway, 8 stays, €210). Comporta has an "Editor's pick" badge and Agafay has a "New" badge.
-5. Clicking When opens the date popover under the field. It fades in and drops 6px into place over 180ms. `aria-expanded` turns true. Focus moves to the check-in day, 16 October.
-6. The popover shows October 2026 and November 2026 side by side. Weeks start on Monday. Days before today (3 October 2026) are disabled and struck through. Previous and next arrow buttons sit in the top corners. Previous is disabled on October.
-7. The selected range draws as a pale terracotta band. The two ends are filled terracotta circles with paper text. The band runs half into the end cells so it meets the circles.
-8. Picking dates: the first click sets check-in and clears check-out. The next click on a later day sets check-out. A click on the same day or an earlier day moves check-in there instead. The footer reads "Oct 16 – Oct 19 · 3 nights", or "Oct 16 · pick a check-out date" while half-picked. The When field updates live.
-9. Arrow keys move focus by one day (left and right) or one week (up and down). Moving past the second month pages the view forward. Enter or Space picks the focused day.
-10. Clear empties the range and the field shows "Add dates" in a muted colour. Done closes the popover.
-11. Clicking Guests opens the guests popover, right-aligned under its field. Rows: Adults (age 13 and up, minimum 1), Children (age 2 to 12), Pets (maximum 2). Each row has a minus button, a count and a plus button. Minus disables at the minimum. Plus disables at the maximum, or when adults plus children reach 12.
-12. The Guests field updates live: "2 adults", "3 guests" once a child is added, and "· 1 pet" appended when pets are above 0.
-13. Esc closes the open popover and returns focus to its trigger. Clicking or tabbing outside closes it without moving focus. Opening one popover closes the other. Clicking the trigger again closes it.
-14. Clicking a chip selects it and deselects the rest. Only one is selected at a time.
-15. Hovering a tile scales its scene to 1.03 over 500ms. The caption does not move.
-16. Search submits the form. The demo cancels navigation.
 
 ## Structure
 
@@ -57,72 +40,6 @@ The top of a booking site for Saltroad, a fictional travel marketplace of small 
 - Guests popover: `div role="dialog" aria-label="Choose guests"`, three rows, each with a label block and a stepper (`button`, `output`, `button`).
 - Chips: `div role="group" aria-label="Kind of stay"` holding `button`s with `aria-pressed`.
 - Tiles: a `ul` of 4 `li > a`. Each holds a scene `div` with an inline SVG and an optional badge, then a caption row.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #efe6d6;          /* sand page */
-  --paper: #f8f2e7;       /* search bar, popovers, badges */
-  --ink: #1f1a15;         /* text, bar border, selected chip */
-  --ink-2: #584d42;       /* lede, labels, meta */
-  --ink-3: #7a6d60;       /* placeholder, chip counts, weekday letters */
-  --line: #d6c7ae;        /* dividers, chip borders */
-  --terra: #b4502c;       /* accent: italic word, Search, range ends */
-  --terra-deep: #8f3d1f;  /* eyebrow, Search hover, focus */
-  --terra-soft: #ecd3c3;  /* range band */
-  --focus: #8f3d1f;
-
-  /* type */
-  --serif: "Instrument Serif", Georgia, serif;
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --fs-h1: 88px;
-  --fs-month: 22px;
-  --fs-tile: 22px;
-  --fs-value: 17px;
-  --fs-body: 15px;
-  --fs-label: 11px;
-
-  /* space (4px base) */
-  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 28px; --s-7: 40px; --s-8: 64px;
-
-  /* shape */
-  --r: 10px;     /* bar, popovers, scenes */
-  --r-sm: 6px;   /* fields, Search, Done, Sign in */
-  --shadow: 0 18px 40px -18px rgba(31,26,21,.35), 0 2px 6px rgba(31,26,21,.06);
-
-  /* motion */
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --t-pop: 180ms;
-  --t-micro: 160ms;
-  --t-day: 120ms;
-  --t-tile: 500ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Logo | Instrument Serif italic | 28px | 400 | 1 | -0.01em | as typed |
-| Eyebrow | Schibsted Grotesk | 12px | 600 | 1.5 | 0.12em | upper |
-| Headline | Instrument Serif | 88px | 400 | 0.94 | -0.025em | sentence |
-| Headline accent | Instrument Serif italic | 88px | 400 | 0.94 | -0.025em | sentence |
-| Lede | Schibsted Grotesk | 16px | 400 | 1.55 | 0 | sentence |
-| Field label | Schibsted Grotesk | 11px | 700 | 1.4 | 0.1em | upper |
-| Field value | Schibsted Grotesk | 17px | 500 | 1.4 | 0 | sentence |
-| Search button | Schibsted Grotesk | 16px | 700 | 1 | 0 | sentence |
-| Month title | Instrument Serif | 22px | 400 | 1.2 | 0 | sentence |
-| Weekday | Schibsted Grotesk | 11px | 700 | 1 | 0.06em | Mo Tu We |
-| Day | Schibsted Grotesk | 14px | 500, ends 700 | 1 | 0, tabular | numerals |
-| Chip | Schibsted Grotesk | 14px, count 12px | 500 | 1 | 0 | sentence |
-| Tile name | Instrument Serif | 22px | 400 | 1.1 | 0 | sentence |
-| Tile meta and price unit | Schibsted Grotesk | 13px | 400 | 1.4 | 0 | sentence |
-| Tile price | Schibsted Grotesk | 16px | 700 | 1.2 | 0 | € + number |
-
-- The serif is display only: headline, logo, month titles and tile names. Everything you click is set in the grotesk.
-- The italic accent is a colour and a style change on one word. Do not italicise more than one word.
 
 ## Motion
 
@@ -201,6 +118,95 @@ The top of a booking site for Saltroad, a fictional travel marketplace of small 
 - [ ] Guests limits: adults 1 to 12, children 0 to 8, pets 0 to 2, and no more than 12 people in total.
 - [ ] Chips: Farmhouses 214 (selected), Coastal 188, Vineyards 96, Cabins 142, Riads 61, Off-grid 73, Pets welcome 305.
 - [ ] Tiles: Comporta €142, Val d'Orcia €188, Agafay €96, Lofoten €210.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: sand page. Nav 64px with a 1px rule under it. An eyebrow "Autumn issue · 1,180 stays checked in person" in terracotta caps. Headline "Slow places, booked fast." at 88px on one line, with "booked" in terracotta italic. A 3-line lede sits to the right, aligned to the headline's baseline.
+2. The search bar shows Where "Alentejo, Portugal", When "Oct 16 – Oct 19", Guests "2 adults", and a terracotta Search button.
+3. Chips row: Farmhouses (selected, ink fill), Coastal, Vineyards, Cabins, Riads, Off-grid, Pets welcome. Each chip shows a count in smaller type.
+4. Four tiles: Comporta (Portugal, 6 stays, €142), Val d'Orcia (Italy, 11 stays, €188), Agafay (Morocco, 4 stays, €96), Lofoten (Norway, 8 stays, €210). Comporta has an "Editor's pick" badge and Agafay has a "New" badge.
+5. Clicking When opens the date popover under the field. It fades in and drops 6px into place over 180ms. `aria-expanded` turns true. Focus moves to the check-in day, 16 October.
+6. The popover shows October 2026 and November 2026 side by side. Weeks start on Monday. Days before today (3 October 2026) are disabled and struck through. Previous and next arrow buttons sit in the top corners. Previous is disabled on October.
+7. The selected range draws as a pale terracotta band. The two ends are filled terracotta circles with paper text. The band runs half into the end cells so it meets the circles.
+8. Picking dates: the first click sets check-in and clears check-out. The next click on a later day sets check-out. A click on the same day or an earlier day moves check-in there instead. The footer reads "Oct 16 – Oct 19 · 3 nights", or "Oct 16 · pick a check-out date" while half-picked. The When field updates live.
+9. Arrow keys move focus by one day (left and right) or one week (up and down). Moving past the second month pages the view forward. Enter or Space picks the focused day.
+10. Clear empties the range and the field shows "Add dates" in a muted colour. Done closes the popover.
+11. Clicking Guests opens the guests popover, right-aligned under its field. Rows: Adults (age 13 and up, minimum 1), Children (age 2 to 12), Pets (maximum 2). Each row has a minus button, a count and a plus button. Minus disables at the minimum. Plus disables at the maximum, or when adults plus children reach 12.
+12. The Guests field updates live: "2 adults", "3 guests" once a child is added, and "· 1 pet" appended when pets are above 0.
+13. Esc closes the open popover and returns focus to its trigger. Clicking or tabbing outside closes it without moving focus. Opening one popover closes the other. Clicking the trigger again closes it.
+14. Clicking a chip selects it and deselects the rest. Only one is selected at a time.
+15. Hovering a tile scales its scene to 1.03 over 500ms. The caption does not move.
+16. Search submits the form. The demo cancels navigation.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #efe6d6;          /* sand page */
+  --paper: #f8f2e7;       /* search bar, popovers, badges */
+  --ink: #1f1a15;         /* text, bar border, selected chip */
+  --ink-2: #584d42;       /* lede, labels, meta */
+  --ink-3: #7a6d60;       /* placeholder, chip counts, weekday letters */
+  --line: #d6c7ae;        /* dividers, chip borders */
+  --terra: #b4502c;       /* accent: italic word, Search, range ends */
+  --terra-deep: #8f3d1f;  /* eyebrow, Search hover, focus */
+  --terra-soft: #ecd3c3;  /* range band */
+  --focus: #8f3d1f;
+
+  /* type */
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --fs-h1: 88px;
+  --fs-month: 22px;
+  --fs-tile: 22px;
+  --fs-value: 17px;
+  --fs-body: 15px;
+  --fs-label: 11px;
+
+  /* space (4px base) */
+  --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 28px; --s-7: 40px; --s-8: 64px;
+
+  /* shape */
+  --r: 10px;     /* bar, popovers, scenes */
+  --r-sm: 6px;   /* fields, Search, Done, Sign in */
+  --shadow: 0 18px 40px -18px rgba(31,26,21,.35), 0 2px 6px rgba(31,26,21,.06);
+
+  /* motion */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --t-pop: 180ms;
+  --t-micro: 160ms;
+  --t-day: 120ms;
+  --t-tile: 500ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Logo | Instrument Serif italic | 28px | 400 | 1 | -0.01em | as typed |
+| Eyebrow | Schibsted Grotesk | 12px | 600 | 1.5 | 0.12em | upper |
+| Headline | Instrument Serif | 88px | 400 | 0.94 | -0.025em | sentence |
+| Headline accent | Instrument Serif italic | 88px | 400 | 0.94 | -0.025em | sentence |
+| Lede | Schibsted Grotesk | 16px | 400 | 1.55 | 0 | sentence |
+| Field label | Schibsted Grotesk | 11px | 700 | 1.4 | 0.1em | upper |
+| Field value | Schibsted Grotesk | 17px | 500 | 1.4 | 0 | sentence |
+| Search button | Schibsted Grotesk | 16px | 700 | 1 | 0 | sentence |
+| Month title | Instrument Serif | 22px | 400 | 1.2 | 0 | sentence |
+| Weekday | Schibsted Grotesk | 11px | 700 | 1 | 0.06em | Mo Tu We |
+| Day | Schibsted Grotesk | 14px | 500, ends 700 | 1 | 0, tabular | numerals |
+| Chip | Schibsted Grotesk | 14px, count 12px | 500 | 1 | 0 | sentence |
+| Tile name | Instrument Serif | 22px | 400 | 1.1 | 0 | sentence |
+| Tile meta and price unit | Schibsted Grotesk | 13px | 400 | 1.4 | 0 | sentence |
+| Tile price | Schibsted Grotesk | 16px | 700 | 1.2 | 0 | € + number |
+
+- The serif is display only: headline, logo, month titles and tile names. Everything you click is set in the grotesk.
+- The italic accent is a colour and a style change on one word. Do not italicise more than one word.
 
 ## Implementation notes
 

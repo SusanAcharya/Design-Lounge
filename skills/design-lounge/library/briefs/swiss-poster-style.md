@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A poster for a fictional exhibition ("Neue Ordnung — 100 Jahre Raster" at Kunsthalle Sørvik) built in the International Typographic Style: one grotesk (Archivo at 900/700/500), three colours (off-white, near-black, red), a 12-column × 8-row grid inside a 48px margin with a 1px frame, tiny uppercase margin notes, a huge word rotated −90° running up the left edge, a red block with the title broken across three lines, a 2px rule, a bold lead sentence, a black circle, and a three-column info block pinned to the bottom. Hovering the page reveals the column and row guides at 18 % opacity; a "Grid" button (or the G key) pins them. Clicking anywhere cycles three colour schemes (paper / red / black) by swapping three custom properties — everything else is untouched. The lesson is the grid: nothing sits off a column or row edge.
-
-## Reference behaviour
-
-1. Initial state (scheme 1): off-white page, 1px black frame at 48px inset, "ORDNUNG" rotated −90° along the left edge of columns 1–3 with "NUNG" in red, red block over columns 4–12 / rows 1–4 with "NEUE / ORD- / NUNG" in off-white at 96px and "1926 — 2026" bottom-right, 2px black rule at the top of row 5, lead sentence in columns 4–7, 112px black circle at the right of columns 10–12, info block (Dates / Venue / Hours · Entry) at the bottom of columns 4–12. Margin notes: top-left "Plakat 07 / 12 · 1280 × 800 · 12 Spalten", top-right "Kunsthalle Sørvik", right edge (vertical) the exhibition name and dates, bottom-left the type and colour spec. Bottom-right: two small outlined buttons, "Grid" and "Scheme 1 / 3".
-2. Move the pointer over the page: 12 column guides and 8 row guides fade in over 240ms at `--grid` opacity (18 % black). Leave the page: they fade out.
-3. Click "Grid" (or press G): guides stay visible regardless of hover; `aria-pressed` becomes true and the button inverts. Click again to release.
-4. Click anywhere else (or press Space / Enter while no button is focused): the scheme cycles 1 → 2 → 3 → 1. Scheme 2 is red paper with off-white type and black accents (the word's suffix, the block, the circle); scheme 3 is black paper with off-white type and red accents. Background, text, frame, block, circle and guides all transition over 360ms. The "Scheme n / 3" label updates.
-5. Hover a control button: opacity .75 → 1. Focus: 2px accent outline.
-6. Nothing else moves. There is no animation on load.
 
 ## Structure
 
@@ -47,48 +40,6 @@ A poster for a fictional exhibition ("Neue Ordnung — 100 Jahre Raster" at Kuns
   - `.rule` (col 4–12, row 5): 2px top border, `align-self: start`.
   - `.lead` (col 4–7, row 5–6), `.dot` (col 10–12, row 5–6, `justify-self: end`), `.info` (col 4–12, row 7–8, `align-self: end`) — a 9-column sub-grid with three `<dl>`s spanning 3 each.
 - `.ctl`: two `<button>`s at bottom-right, on the margin line.
-
-## Tokens
-
-```css
-:root {
-  /* the three colours */
-  --paper: #f4f3ef;
-  --ink: #121212;
-  --red: #e1251b;
-  /* roles — re-pointed per scheme */
-  --bg: var(--paper);  --fg: var(--ink);  --ac: var(--red);
-  --grid: rgba(18, 18, 18, .18);
-
-  /* type — one family */
-  --font: "Archivo", Helvetica, Arial, sans-serif;
-  --fs-word: 130px; --fs-title: 96px; --fs-lead: 26px; --fs-year: 22px; --fs-info: 14px; --fs-marg: 10px;
-  --tr-word: -.06em; --tr-title: -.05em; --tr-lead: -.03em; --tr-marg: .12em;
-
-  /* grid */
-  --m: 48px; --cols: 12; --rows: 8; --gap: 16px; --frame: 1px; --rule: 2px; --dot: 112px;
-  --block-pad: 20px 24px; --marg-offset: 18px;
-
-  /* motion */
-  --t-micro: 160ms; --t-grid: 240ms; --t-scheme: 360ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-[data-scheme="2"] { --bg: var(--red);  --fg: var(--paper); --ac: var(--ink); --grid: rgba(244, 243, 239, .28); }
-[data-scheme="3"] { --bg: var(--ink);  --fg: var(--paper); --ac: var(--red); --grid: rgba(244, 243, 239, .22); }
-```
-
-## Typography
-
-| Role          | Family  | Size  | Weight | Line-height | Tracking | Case |
-|---------------|---------|------:|-------:|------------:|---------:|------|
-| Rotated word  | Archivo | 130px | 900    | .8          | −0.06em  | UPPERCASE; `<b>` suffix in `--ac` |
-| Block title   | Archivo | 96px  | 900    | .85         | −0.05em  | UPPERCASE, hyphenated across 3 lines with `<br>` and a real hyphen |
-| Year range    | Archivo | 22px  | 700    | 1           | −0.02em  | numerals with an em dash |
-| Lead          | Archivo | 26px  | 700    | 1.1         | −0.03em  | sentence, `text-wrap: balance` |
-| Info label    | Archivo | 10px  | 500    | 1           | +0.12em  | UPPERCASE, 65 % opacity |
-| Info value    | Archivo | 14px  | 500 (first line 700) | 1.35 | 0  | sentence |
-| Margin notes  | Archivo | 10px  | 500    | 1           | +0.12em  | UPPERCASE, 70 % opacity |
-| Buttons       | Archivo | 10px  | 500    | 1           | +0.12em  | UPPERCASE, 1px `currentColor` border, `6px 10px` padding |
 
 ## Motion
 
@@ -141,6 +92,61 @@ Reduced motion: all transitions 1ms; guides and schemes still switch.
 - [ ] Only one font family is loaded (Archivo 400/500/700/900).
 - [ ] Both buttons have visible focus rings and the Grid button reports `aria-pressed`.
 - [ ] No element has a border-radius except the circle.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state (scheme 1): off-white page, 1px black frame at 48px inset, "ORDNUNG" rotated −90° along the left edge of columns 1–3 with "NUNG" in red, red block over columns 4–12 / rows 1–4 with "NEUE / ORD- / NUNG" in off-white at 96px and "1926 — 2026" bottom-right, 2px black rule at the top of row 5, lead sentence in columns 4–7, 112px black circle at the right of columns 10–12, info block (Dates / Venue / Hours · Entry) at the bottom of columns 4–12. Margin notes: top-left "Plakat 07 / 12 · 1280 × 800 · 12 Spalten", top-right "Kunsthalle Sørvik", right edge (vertical) the exhibition name and dates, bottom-left the type and colour spec. Bottom-right: two small outlined buttons, "Grid" and "Scheme 1 / 3".
+2. Move the pointer over the page: 12 column guides and 8 row guides fade in over 240ms at `--grid` opacity (18 % black). Leave the page: they fade out.
+3. Click "Grid" (or press G): guides stay visible regardless of hover; `aria-pressed` becomes true and the button inverts. Click again to release.
+4. Click anywhere else (or press Space / Enter while no button is focused): the scheme cycles 1 → 2 → 3 → 1. Scheme 2 is red paper with off-white type and black accents (the word's suffix, the block, the circle); scheme 3 is black paper with off-white type and red accents. Background, text, frame, block, circle and guides all transition over 360ms. The "Scheme n / 3" label updates.
+5. Hover a control button: opacity .75 → 1. Focus: 2px accent outline.
+6. Nothing else moves. There is no animation on load.
+
+## Tokens
+
+```css
+:root {
+  /* the three colours */
+  --paper: #f4f3ef;
+  --ink: #121212;
+  --red: #e1251b;
+  /* roles — re-pointed per scheme */
+  --bg: var(--paper);  --fg: var(--ink);  --ac: var(--red);
+  --grid: rgba(18, 18, 18, .18);
+
+  /* type — one family */
+  --font: "Archivo", Helvetica, Arial, sans-serif;
+  --fs-word: 130px; --fs-title: 96px; --fs-lead: 26px; --fs-year: 22px; --fs-info: 14px; --fs-marg: 10px;
+  --tr-word: -.06em; --tr-title: -.05em; --tr-lead: -.03em; --tr-marg: .12em;
+
+  /* grid */
+  --m: 48px; --cols: 12; --rows: 8; --gap: 16px; --frame: 1px; --rule: 2px; --dot: 112px;
+  --block-pad: 20px 24px; --marg-offset: 18px;
+
+  /* motion */
+  --t-micro: 160ms; --t-grid: 240ms; --t-scheme: 360ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+[data-scheme="2"] { --bg: var(--red);  --fg: var(--paper); --ac: var(--ink); --grid: rgba(244, 243, 239, .28); }
+[data-scheme="3"] { --bg: var(--ink);  --fg: var(--paper); --ac: var(--red); --grid: rgba(244, 243, 239, .22); }
+```
+
+## Typography
+
+| Role          | Family  | Size  | Weight | Line-height | Tracking | Case |
+|---------------|---------|------:|-------:|------------:|---------:|------|
+| Rotated word  | Archivo | 130px | 900    | .8          | −0.06em  | UPPERCASE; `<b>` suffix in `--ac` |
+| Block title   | Archivo | 96px  | 900    | .85         | −0.05em  | UPPERCASE, hyphenated across 3 lines with `<br>` and a real hyphen |
+| Year range    | Archivo | 22px  | 700    | 1           | −0.02em  | numerals with an em dash |
+| Lead          | Archivo | 26px  | 700    | 1.1         | −0.03em  | sentence, `text-wrap: balance` |
+| Info label    | Archivo | 10px  | 500    | 1           | +0.12em  | UPPERCASE, 65 % opacity |
+| Info value    | Archivo | 14px  | 500 (first line 700) | 1.35 | 0  | sentence |
+| Margin notes  | Archivo | 10px  | 500    | 1           | +0.12em  | UPPERCASE, 70 % opacity |
+| Buttons       | Archivo | 10px  | 500    | 1           | +0.12em  | UPPERCASE, 1px `currentColor` border, `6px 10px` padding |
 
 ## Implementation notes
 

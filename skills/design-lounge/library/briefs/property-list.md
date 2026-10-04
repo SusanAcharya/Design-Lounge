@@ -4,17 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the list uses `--surface`, `--line`, and `--radius-card`. A whole record page with a path and a primary action is `record-detail-header`. This is the list of facts.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Four facts for load 1842, in a definition list. Gate is Gate 4. Driver is Mira Shrestha. Slot is 17 October. Weight is 2,400 kg. Each row is at least 48px, with the label in a 140px column of `--ink-2` and the value in `--ink`. The list is 420px wide, on the surface, with a hairline between rows and none under the last. There is no button, no edit, and no badge. A badge for a state is `status-badge`. A page around this list is the record header.
-
-## Reference behaviour
-
-1. The four rows show in that order, with those values.
-2. Nothing toggles. The list is the piece.
-3. The weight uses tabular numbers and a thousands separator: 2,400 kg.
-4. There is no animation and no hover that changes a row into a button.
-5. The rows are not links. A product that navigates from a fact uses a real link and says so. This demo does not.
 
 ## Structure
 
@@ -32,31 +26,6 @@ each row min-height 48, label column 140
 - The element is a `dl`. Each pair is a `dt` and a `dd` inside a row.
 - The where-line is the load's name. It is not one of the facts.
 - Do not use a table for two columns of label and value. The definition list is the meaning.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-List radius is 2px. The family's card radius replaces it. Do not add a shadow if the family's shadow is none. The label column stays 140px on this frame.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 14px | 500 | `--ink-2` |
-| Value | sans | 14px | 400 | `--ink` |
-
-The where-line letter-spacing is 0.04em. The weight is tabular. Labels are not uppercase. Values are not a second face unless a pairing locks the number face, and then only the weight uses it if the rest of the value is words. "2,400 kg" can stay in the text face because the unit is words. Do not set kg in mono and the digits in another face.
 
 ## Motion
 
@@ -103,6 +72,43 @@ None. Reduced motion has nothing to remove.
 - [ ] There is no badge, no edit control, and no animation.
 - [ ] The where-line is Load 1842.
 - [ ] Mira Shrestha is the same driver named elsewhere in the yard.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The four rows show in that order, with those values.
+2. Nothing toggles. The list is the piece.
+3. The weight uses tabular numbers and a thousands separator: 2,400 kg.
+4. There is no animation and no hover that changes a row into a button.
+5. The rows are not links. A product that navigates from a fact uses a real link and says so. This demo does not.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+List radius is 2px. The family's card radius replaces it. Do not add a shadow if the family's shadow is none. The label column stays 140px on this frame.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 14px | 500 | `--ink-2` |
+| Value | sans | 14px | 400 | `--ink` |
+
+The where-line letter-spacing is 0.04em. The weight is tabular. Labels are not uppercase. Values are not a second face unless a pairing locks the number face, and then only the weight uses it if the rest of the value is words. "2,400 kg" can stay in the text face because the unit is words. Do not set kg in mono and the digits in another face.
 
 ## Implementation notes
 

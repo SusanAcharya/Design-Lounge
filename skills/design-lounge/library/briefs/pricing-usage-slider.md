@@ -4,35 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The pricing section for "Meterly", a fictional event analytics product that charges by volume. The visitor drags one slider for monthly events, from 10k to 10M on a log scale with 11 snapping ticks. Three plan columns recalculate on every step, the prices count to their new value, and the cheapest plan that fits gets a 2px cobalt border and a "Recommended for 500k" tag. Past the last tick, the section switches to a "Talk to sales" state. The look is Swiss: white, black, one cobalt, mono numbers, 6px radii, hairlines. The detail worth copying: the recommendation is computed from real plan maths, so it moves for a reason, and the slider speaks that reason through `aria-valuetext`.
-
-## Reference behaviour
-
-1. Initial state: slider on step 5 of 0–10, which is 500,000 events. Monthly billing. Growth is recommended. Starter shows $139, Growth $79, Scale $349.
-2. The readout on the left reads "500,000" at 48px mono, then "events / month".
-3. Under the slider, 11 tick labels: 10k, 25k, 50k, 100k, 250k, 500k, 1M, 2.5M, 5M, 10M, 10M+. The current one is black and bold. "10M+" is always cobalt.
-4. Dragging or using arrow keys moves one step at a time. There are no values between ticks.
-5. Clicking a tick label jumps the slider to that step.
-6. On every step change, each available plan's price counts from its old value to its new one over 420ms with an expo-out curve. Digits are tabular so the width does not jitter.
-7. The cheapest available plan becomes recommended. Its card border turns cobalt with a 1px cobalt outer ring (2px total), the tag fades in above the top-left corner, and its button fills cobalt. The old recommended card fades back to a grey border over 260ms.
-8. Each card's sub line explains the price, for example "$19 base + 400k × $0.30/1k · billed monthly", or "$79 base, all included · billed monthly".
-9. When the volume is above a plan's limit, that card shows "Above plan limit" in grey 22px mono, the sub line reads "Starter tops out at 1M events a month.", and the button is disabled with the text "Up to 1M events".
-10. Step 10 ("10M+") is the sales state. Readout "10M+". Starter and Growth are above limit. Scale shows "Custom", the sub line "Volume pricing from 10M events, annual contract.", its button reads "Talk to sales", and the tag reads "Recommended above 10M".
-11. The Monthly / Yearly toggle is a two-option radio group. Yearly takes 20% off and shows the monthly equivalent; the sub line ends with "billed $X yearly" (the monthly figure × 12). The prices count to the new values.
-12. A comparison list sits inside each card under the button: Included events, Then per 1,000, Data retention, Seats, Single sign-on.
-13. A mono footnote under the cards: "Prices in USD, excluding tax. Overage is billed per 1,000 events at the end of the month."
-
-Price rule: `price = base + max(0, events − included) / 1000 × rate`, rounded to whole dollars, then × 0.8 for yearly.
-
-| Plan | Base | Included | Per 1k after | Max | Retention | Seats | SSO |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Starter | $19 | 100k | $0.30 | 1M | 7 days | 3 | Not included |
-| Growth | $79 | 500k | $0.22 | 5M | 30 days | 10 | Google |
-| Scale | $349 | 2.5M | $0.11 | 10M | 90 days | Unlimited | SAML |
-
-Recommendations this gives: 10k to 250k Starter, 500k and 1M Growth, 2.5M to 10M Scale, 10M+ Scale (sales).
 
 ## Structure
 
@@ -63,53 +39,6 @@ Recommendations this gives: 10k to 250k Starter, 500k and 1M Growth, 2.5M to 10M
 - Slider: `input type="range" min="0" max="10" step="1"`. The value is a step index, not an event count.
 - Ticks: a `div aria-hidden="true"` with 11 absolutely positioned spans.
 - Plans: three `article`s, each labelled by its `h2`. Each has a tag `span`, `h2`, description `p`, price `p > b + span`, sub `p`, `button`, and a `dl` of five rows.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ffffff;          /* page */
-  --ink: #0b0b0c;         /* text, rules, selected toggle */
-  --ink-2: #4a4a4f;       /* descriptions, labels */
-  --ink-3: #6b6b70;       /* ticks, meta, disabled text */
-  --line: #dcdcdf;        /* hairlines, track, card border */
-  --soft: #f4f4f5;        /* toggle well, disabled button */
-  --accent: #1f4fe0;      /* cobalt: fill, recommended, focus */
-  --accent-ink: #ffffff;  /* text on cobalt */
-  --accent-soft: #eaf0ff; /* -20% chip */
-
-  --sans: "Inter Tight", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  --r: 6px;
-  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
-
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --fast: 160ms;
-  --layout: 260ms;
-  --roll: 420ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Eyebrow | JetBrains Mono | 12px | 500 | 1.45 | 0.08em | upper, `--ink-3` |
-| h1 | Inter Tight | 44px | 700 | 1.02 | -0.035em | two lines with a `br` |
-| Toggle | Inter Tight | 14px | 600 | 1 | 0 | |
-| Readout number | JetBrains Mono | 48px | 700 | 1 | -0.04em | tabular-nums |
-| Readout unit | JetBrains Mono | 13px | 400 | 1.45 | 0 | `--ink-2` |
-| Tick label | JetBrains Mono | 11px | 400 / 700 current | 1 | 0 | |
-| Plan name | Inter Tight | 18px | 700 | 1.2 | -0.01em | |
-| Plan description | Inter Tight | 13px | 400 | 1.45 | 0 | `--ink-2` |
-| Price | JetBrains Mono | 44px | 700 | 1 | -0.04em | tabular-nums |
-| Price unit, sub line | JetBrains Mono | 13px / 12px | 400 | 1.5 | 0 | |
-| Compare label / value | Inter Tight 13px / JetBrains Mono 12px | | 400 / 500 | 1.45 | 0 | value right-aligned |
-| Tag | JetBrains Mono | 11px | 500 | 18px | 0.02em | white on cobalt |
-
-Every number on the page is mono. Every word that is not a number is Inter Tight, except the eyebrow, ticks and footnote.
 
 ## Motion
 
@@ -183,6 +112,83 @@ Every number on the page is mono. Every word that is not a number is Inter Tight
 - [ ] At 250k Starter is $64 and recommended. At 2.5M Scale is $349 and recommended.
 - [ ] Yearly at 500k shows Growth $63 and "billed $756 yearly".
 - [ ] Cobalt is `#1f4fe0`, radius 6px, the rule under the header is 2px `#0b0b0c`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: slider on step 5 of 0–10, which is 500,000 events. Monthly billing. Growth is recommended. Starter shows $139, Growth $79, Scale $349.
+2. The readout on the left reads "500,000" at 48px mono, then "events / month".
+3. Under the slider, 11 tick labels: 10k, 25k, 50k, 100k, 250k, 500k, 1M, 2.5M, 5M, 10M, 10M+. The current one is black and bold. "10M+" is always cobalt.
+4. Dragging or using arrow keys moves one step at a time. There are no values between ticks.
+5. Clicking a tick label jumps the slider to that step.
+6. On every step change, each available plan's price counts from its old value to its new one over 420ms with an expo-out curve. Digits are tabular so the width does not jitter.
+7. The cheapest available plan becomes recommended. Its card border turns cobalt with a 1px cobalt outer ring (2px total), the tag fades in above the top-left corner, and its button fills cobalt. The old recommended card fades back to a grey border over 260ms.
+8. Each card's sub line explains the price, for example "$19 base + 400k × $0.30/1k · billed monthly", or "$79 base, all included · billed monthly".
+9. When the volume is above a plan's limit, that card shows "Above plan limit" in grey 22px mono, the sub line reads "Starter tops out at 1M events a month.", and the button is disabled with the text "Up to 1M events".
+10. Step 10 ("10M+") is the sales state. Readout "10M+". Starter and Growth are above limit. Scale shows "Custom", the sub line "Volume pricing from 10M events, annual contract.", its button reads "Talk to sales", and the tag reads "Recommended above 10M".
+11. The Monthly / Yearly toggle is a two-option radio group. Yearly takes 20% off and shows the monthly equivalent; the sub line ends with "billed $X yearly" (the monthly figure × 12). The prices count to the new values.
+12. A comparison list sits inside each card under the button: Included events, Then per 1,000, Data retention, Seats, Single sign-on.
+13. A mono footnote under the cards: "Prices in USD, excluding tax. Overage is billed per 1,000 events at the end of the month."
+
+Price rule: `price = base + max(0, events − included) / 1000 × rate`, rounded to whole dollars, then × 0.8 for yearly.
+
+| Plan | Base | Included | Per 1k after | Max | Retention | Seats | SSO |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Starter | $19 | 100k | $0.30 | 1M | 7 days | 3 | Not included |
+| Growth | $79 | 500k | $0.22 | 5M | 30 days | 10 | Google |
+| Scale | $349 | 2.5M | $0.11 | 10M | 90 days | Unlimited | SAML |
+
+Recommendations this gives: 10k to 250k Starter, 500k and 1M Growth, 2.5M to 10M Scale, 10M+ Scale (sales).
+
+## Tokens
+
+```css
+:root {
+  --bg: #ffffff;          /* page */
+  --ink: #0b0b0c;         /* text, rules, selected toggle */
+  --ink-2: #4a4a4f;       /* descriptions, labels */
+  --ink-3: #6b6b70;       /* ticks, meta, disabled text */
+  --line: #dcdcdf;        /* hairlines, track, card border */
+  --soft: #f4f4f5;        /* toggle well, disabled button */
+  --accent: #1f4fe0;      /* cobalt: fill, recommended, focus */
+  --accent-ink: #ffffff;  /* text on cobalt */
+  --accent-soft: #eaf0ff; /* -20% chip */
+
+  --sans: "Inter Tight", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --r: 6px;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --fast: 160ms;
+  --layout: 260ms;
+  --roll: 420ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Eyebrow | JetBrains Mono | 12px | 500 | 1.45 | 0.08em | upper, `--ink-3` |
+| h1 | Inter Tight | 44px | 700 | 1.02 | -0.035em | two lines with a `br` |
+| Toggle | Inter Tight | 14px | 600 | 1 | 0 | |
+| Readout number | JetBrains Mono | 48px | 700 | 1 | -0.04em | tabular-nums |
+| Readout unit | JetBrains Mono | 13px | 400 | 1.45 | 0 | `--ink-2` |
+| Tick label | JetBrains Mono | 11px | 400 / 700 current | 1 | 0 | |
+| Plan name | Inter Tight | 18px | 700 | 1.2 | -0.01em | |
+| Plan description | Inter Tight | 13px | 400 | 1.45 | 0 | `--ink-2` |
+| Price | JetBrains Mono | 44px | 700 | 1 | -0.04em | tabular-nums |
+| Price unit, sub line | JetBrains Mono | 13px / 12px | 400 | 1.5 | 0 | |
+| Compare label / value | Inter Tight 13px / JetBrains Mono 12px | | 400 / 500 | 1.45 | 0 | value right-aligned |
+| Tag | JetBrains Mono | 11px | 500 | 18px | 0.02em | white on cobalt |
+
+Every number on the page is mono. Every word that is not a number is Inter Tight, except the eyebrow, ticks and footnote.
 
 ## Implementation notes
 

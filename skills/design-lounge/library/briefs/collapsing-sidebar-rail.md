@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A left-hand navigation sidebar for a dashboard-style web app. It has two widths: **open** (240px, icon + label + count badges) and **rail** (64px, icons only, labels become tooltips). A small round toggle button sits on the sidebar's outer edge; ⌘B / Ctrl+B also toggles. The width animates, labels fade and slide out slightly ahead of the width change so nothing wraps mid-transition. The active route is marked by a 2px amber bar hugging the left edge, not by a filled pill. The feeling is quiet, dense, engineered: a tool you live in for hours.
-
-## Reference behaviour
-
-1. Initial state: sidebar is open at 240px. First nav item ("Dashboard") is the current route. Main content shows a greeting, three stat cards and a bar chart.
-2. Hover any nav link: background changes to `--panel-2`, text becomes full `--ink`. No movement.
-3. Click the round toggle on the sidebar's right edge (24px, straddling the border at `right:-12px; top:66px`): the sidebar shrinks to 64px over 320ms; labels, group headings and count badges disappear (opacity 0 + 6px leftward slide over 160ms, starting immediately); the chevron inside the toggle rotates 180°. Main content expands to fill the freed space.
-4. In rail state, hovering or keyboard-focusing a nav link shows a tooltip to the right of the rail: dark pill (`--ink` background, `--bg` text, 12px/500), 10px from the rail edge, with a 4px caret. It fades in and slides 4px over 160ms.
-5. Pressing ⌘B (macOS) or Ctrl+B (elsewhere) toggles the state exactly like the button.
-6. Click the toggle again: sidebar returns to 240px; labels fade in after the width starts growing.
-7. The toggle's `aria-expanded` mirrors the state; its `title` reads "Collapse sidebar (⌘B)" or "Expand sidebar (⌘B)".
-8. Hovering a bar in the chart tints it amber and shows its value in a native tooltip.
 
 ## Structure
 
@@ -46,55 +37,6 @@ A left-hand navigation sidebar for a dashboard-style web app. It has two widths:
   - One `.group` per section: `<h6>` mono uppercase heading + `<ul class="nav">` of `<a>` links. Each link: 18px SVG icon, `.label` span, optional `.count` badge, `.tip` tooltip span.
   - `.spacer` (flex 1) then `.foot` with the user row.
 - `<main>` — flex 1, `min-width:0`. `.top` 56px bar with breadcrumb and shortcut hint. `.content` is a 3-column grid of `.card`s; the chart card spans all three.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm near-black surfaces, one amber accent */
-  --bg: #0f0f0e;          /* page */
-  --panel: #161615;       /* sidebar + cards */
-  --panel-2: #1d1d1b;     /* hover / active surface */
-  --line: #2a2a27;        /* hairlines */
-  --line-strong: #3a3a36; /* toggle border */
-  --ink: #f2f0ea;         /* primary text */
-  --ink-2: #a8a69e;       /* secondary text */
-  --ink-3: #6f6e68;       /* tertiary / mono meta */
-  --accent: #e0a34b;      /* active bar, toggle hover, bar hover */
-  --accent-ink: #1a1400;  /* text on accent */
-  --positive: #8fbf7a;    /* deltas */
-
-  /* type */
-  --font: "Inter", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  /* layout */
-  --w-open: 240px;
-  --w-rail: 64px;
-  --bar-h: 56px;          /* brand + topbar height */
-  --r: 8px;               /* nav item radius */
-  --r-card: 12px;
-
-  /* motion */
-  --t-fast: 160ms;
-  --t-layout: 320ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role            | Family         | Size | Weight | Line-height | Tracking | Case      |
-|-----------------|----------------|-----:|-------:|------------:|---------:|-----------|
-| Body / nav      | Inter          | 14px | 400    | 1.45        | 0        | sentence  |
-| Brand name      | Inter          | 14px | 600    | 1.2         | −0.01em  | sentence  |
-| Group heading   | JetBrains Mono | 10px | 500    | 1           | +0.12em  | UPPERCASE |
-| Count badge     | JetBrains Mono | 11px | 500    | 1.4         | 0        | numerals  |
-| Tooltip         | Inter          | 12px | 500    | 1.3         | 0        | sentence  |
-| Page title      | Inter          | 22px | 600    | 1.2         | −0.02em  | sentence  |
-| Stat value      | Inter          | 28px | 600    | 1.1         | −0.03em  | numerals  |
-| Card label      | JetBrains Mono | 12px | 500    | 1.3         | +0.06em  | UPPERCASE |
 
 ## Motion
 
@@ -148,6 +90,70 @@ Reduced motion: set all `transition-duration` to 1ms. State changes still happen
 - [ ] With `prefers-reduced-motion: reduce`, toggling is instantaneous but complete.
 - [ ] Main content reflows to use the freed space (no fixed left margin).
 - [ ] Body text contrast ≥ 4.5:1 on all surfaces.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: sidebar is open at 240px. First nav item ("Dashboard") is the current route. Main content shows a greeting, three stat cards and a bar chart.
+2. Hover any nav link: background changes to `--panel-2`, text becomes full `--ink`. No movement.
+3. Click the round toggle on the sidebar's right edge (24px, straddling the border at `right:-12px; top:66px`): the sidebar shrinks to 64px over 320ms; labels, group headings and count badges disappear (opacity 0 + 6px leftward slide over 160ms, starting immediately); the chevron inside the toggle rotates 180°. Main content expands to fill the freed space.
+4. In rail state, hovering or keyboard-focusing a nav link shows a tooltip to the right of the rail: dark pill (`--ink` background, `--bg` text, 12px/500), 10px from the rail edge, with a 4px caret. It fades in and slides 4px over 160ms.
+5. Pressing ⌘B (macOS) or Ctrl+B (elsewhere) toggles the state exactly like the button.
+6. Click the toggle again: sidebar returns to 240px; labels fade in after the width starts growing.
+7. The toggle's `aria-expanded` mirrors the state; its `title` reads "Collapse sidebar (⌘B)" or "Expand sidebar (⌘B)".
+8. Hovering a bar in the chart tints it amber and shows its value in a native tooltip.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm near-black surfaces, one amber accent */
+  --bg: #0f0f0e;          /* page */
+  --panel: #161615;       /* sidebar + cards */
+  --panel-2: #1d1d1b;     /* hover / active surface */
+  --line: #2a2a27;        /* hairlines */
+  --line-strong: #3a3a36; /* toggle border */
+  --ink: #f2f0ea;         /* primary text */
+  --ink-2: #a8a69e;       /* secondary text */
+  --ink-3: #6f6e68;       /* tertiary / mono meta */
+  --accent: #e0a34b;      /* active bar, toggle hover, bar hover */
+  --accent-ink: #1a1400;  /* text on accent */
+  --positive: #8fbf7a;    /* deltas */
+
+  /* type */
+  --font: "Inter", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* layout */
+  --w-open: 240px;
+  --w-rail: 64px;
+  --bar-h: 56px;          /* brand + topbar height */
+  --r: 8px;               /* nav item radius */
+  --r-card: 12px;
+
+  /* motion */
+  --t-fast: 160ms;
+  --t-layout: 320ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role            | Family         | Size | Weight | Line-height | Tracking | Case      |
+|-----------------|----------------|-----:|-------:|------------:|---------:|-----------|
+| Body / nav      | Inter          | 14px | 400    | 1.45        | 0        | sentence  |
+| Brand name      | Inter          | 14px | 600    | 1.2         | −0.01em  | sentence  |
+| Group heading   | JetBrains Mono | 10px | 500    | 1           | +0.12em  | UPPERCASE |
+| Count badge     | JetBrains Mono | 11px | 500    | 1.4         | 0        | numerals  |
+| Tooltip         | Inter          | 12px | 500    | 1.3         | 0        | sentence  |
+| Page title      | Inter          | 22px | 600    | 1.2         | −0.02em  | sentence  |
+| Stat value      | Inter          | 28px | 600    | 1.1         | −0.03em  | numerals  |
+| Card label      | JetBrains Mono | 12px | 500    | 1.3         | +0.06em  | UPPERCASE |
 
 ## Implementation notes
 

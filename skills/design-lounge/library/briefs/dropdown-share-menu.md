@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, keep the structure and the keyboard model and map the colours onto the kit; the offset shadow becomes the kit's popover shadow.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The Share popover of Pressleaf, a small editor for printed community newsletters. It hangs from a pink Share button in the top bar and holds everything sharing needs in one 400px panel: invite by email (chips plus an access-level menu), the people who already have access, a copy-link row that turns green and says Copied for 2 seconds, a four-button Send to toolbar, and a QR switch that shows a code sized for the noticeboard. It looks printed: cream paper, navy ink, 1.5px ink borders, 4px corners and a solid pink offset shadow like a misregistered second colour. The detail worth copying is the layering: the panel is a non-modal dialog, the access picker inside it is a real `role="menu"` of `menuitemradio`, and Escape peels them off one at a time.
-
-## Reference behaviour
-
-1. First frame: the panel is open under Share, right edges aligned, 8px gap. Two chips are in the invite field: rhea@tidepool.org and jun@fieldpost.net. Invite access reads Can edit. The QR switch is on and the code is visible. Share shows its pressed state.
-2. Clicking Share toggles the panel. Opening by click or keyboard focuses the email input.
-3. Typing an email and pressing Enter, comma, semicolon or Space turns it into a chip. Leaving the field with text in it does the same. Valid means `x@y.zz`. Invalid text stays in the field, the field shakes 4px twice over 260ms, and the line under it reads "“bad-address” is not an email address". A duplicate reads "… is already on the list".
-4. Backspace in an empty field removes the last chip. Each chip has a 22px × button labelled "Remove <email>". Removals are announced.
-5. The Send button reads "Send 2 invites", tracks the count, and is disabled at zero. Sending clears the chips and announces "2 invites sent · can edit".
-6. The access select (Can edit ▾) and Tomas Bell's quiet select (Can comment ▾) open the same access menu: Can view, Can comment, Can edit, each with a one-line description. The current value has a pink check and focus starts on it. ArrowDown on the select opens it; ArrowUp opens it on the last item.
-7. In the access menu: ArrowUp/Down wrap, Home/End jump, typeahead matches the first word or the second word ("v" → Can view, "e" → Can edit), Enter/Space picks and closes, Escape closes only the menu and returns focus to its select, Tab closes it and returns focus to the select.
-8. Copy link writes `https://pressleaf.page/plot22/allotment-14` to the clipboard where allowed, turns the button `--ok` green with a check and the word Copied, announces "Link copied to clipboard", and reverts after 2000ms. Clicking again restarts the 2000ms.
-9. Send to is a toolbar: Email, Message, Broadcast, Embed. One tab stop; ArrowLeft/Right move and wrap; Home/End jump. Each button announces what it opened, shown in green next to the Send to label.
-10. The QR switch toggles the code and re-places the panel because its height changed.
-11. Escape with the panel open (and no menu open) closes the panel and returns focus to Share. Clicking outside the panel closes it without moving focus. Tabbing out of the panel closes it.
-12. Placement: below the button if it fits; above if it doesn't fit below and does fit above; otherwise below with `max-height` equal to the space left and internal scroll. Left is clamped 8px inside the viewport. The access menu uses the same function with a 4px gap, so near the bottom it opens upward.
 
 ## Structure
 
@@ -55,52 +42,6 @@ The Share popover of Pressleaf, a small editor for printed community newsletters
 - Access menu: one `role="menu"` element at body level (not inside the panel, because the panel's transform would capture `position: fixed`), items `role="menuitemradio"` with `aria-checked`.
 - Copy row: an `<output>` with the URL and a button. Toolbar: `role="toolbar" aria-labelledby` with roving tabindex. QR: `<button role="switch" aria-checked aria-controls="qr">`, the code is an `<svg role="img" aria-label="QR code for …">`.
 - Status: one `role="status"` span in the Send to label row.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f1e8d6;        /* desk, with a 6px navy dot screen at 7% */
-  --paper: #fffaf0;     /* top bar, page, panel, menu */
-  --ink: #1f2a55;       /* text, 1.5px borders, Send button */
-  --ink-2: #4d5577;
-  --ink-3: #69708f;     /* labels, descriptions */
-  --line: #d9cdb4;      /* section rules, dashed URL box */
-  --line-2: #e8dfcc;
-  --pink: #c8264f;      /* Share, offset shadow, switch on, focus */
-  --pink-soft: #fbdde3; /* chips, menu focus, page shadow */
-  --pink-ink: #a3173c;  /* chip text, errors, check marks */
-  --ok: #1f6e5a;        /* Copied state, status text */
-
-  --display: "Gloock", Georgia, serif;
-  --sans: "Atkinson Hyperlegible", system-ui, sans-serif;
-
-  --r: 4px;
-  --border: 1.5px solid var(--ink);
-  --shadow-panel: 6px 6px 0 var(--pink);
-  --shadow-menu: 4px 4px 0 var(--ink);
-  --shadow-btn: 3px 3px 0 var(--ink);
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Notes |
-| --- | --- | --- | --- | --- |
-| Logo | Gloock | 22px | 400 | "leaf" in `--pink` |
-| Page title | Gloock | 64px | 400 | line-height .95, -0.02em |
-| Panel title | Gloock | 22px | 400 | -0.01em, followed by a 12px `--ink-3` subtitle |
-| QR caption title | Gloock | 18px | 400 | |
-| Section label | Atkinson Hyperlegible | 11.5px | 700 | uppercase, 0.08em, `--ink-3` |
-| Body, inputs | Atkinson Hyperlegible | 13–14px | 400 | |
-| Chip | Atkinson Hyperlegible | 12.5px | 700 | `--pink-ink` on `--pink-soft` |
-| Buttons | Atkinson Hyperlegible | 13–14px | 700 | |
-| Menu item | Atkinson Hyperlegible | 13.5px / 12px | 700 / 400 | title / description |
-
-Atkinson is chosen for legibility of email addresses (l, I, 1 and 0, O are distinct). Do not set addresses in the display face.
 
 ## Motion
 
@@ -169,6 +110,71 @@ The access menu has no animation; it is a quick pick inside an already-animated 
 - [ ] Link is pressleaf.page/plot22/allotment-14; label "Anyone with the link can view".
 - [ ] Targets: Email, Message, Broadcast, Embed.
 - [ ] Panel 400px, 1.5px ink border, radius 4, 6px pink offset shadow.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the panel is open under Share, right edges aligned, 8px gap. Two chips are in the invite field: rhea@tidepool.org and jun@fieldpost.net. Invite access reads Can edit. The QR switch is on and the code is visible. Share shows its pressed state.
+2. Clicking Share toggles the panel. Opening by click or keyboard focuses the email input.
+3. Typing an email and pressing Enter, comma, semicolon or Space turns it into a chip. Leaving the field with text in it does the same. Valid means `x@y.zz`. Invalid text stays in the field, the field shakes 4px twice over 260ms, and the line under it reads "“bad-address” is not an email address". A duplicate reads "… is already on the list".
+4. Backspace in an empty field removes the last chip. Each chip has a 22px × button labelled "Remove <email>". Removals are announced.
+5. The Send button reads "Send 2 invites", tracks the count, and is disabled at zero. Sending clears the chips and announces "2 invites sent · can edit".
+6. The access select (Can edit ▾) and Tomas Bell's quiet select (Can comment ▾) open the same access menu: Can view, Can comment, Can edit, each with a one-line description. The current value has a pink check and focus starts on it. ArrowDown on the select opens it; ArrowUp opens it on the last item.
+7. In the access menu: ArrowUp/Down wrap, Home/End jump, typeahead matches the first word or the second word ("v" → Can view, "e" → Can edit), Enter/Space picks and closes, Escape closes only the menu and returns focus to its select, Tab closes it and returns focus to the select.
+8. Copy link writes `https://pressleaf.page/plot22/allotment-14` to the clipboard where allowed, turns the button `--ok` green with a check and the word Copied, announces "Link copied to clipboard", and reverts after 2000ms. Clicking again restarts the 2000ms.
+9. Send to is a toolbar: Email, Message, Broadcast, Embed. One tab stop; ArrowLeft/Right move and wrap; Home/End jump. Each button announces what it opened, shown in green next to the Send to label.
+10. The QR switch toggles the code and re-places the panel because its height changed.
+11. Escape with the panel open (and no menu open) closes the panel and returns focus to Share. Clicking outside the panel closes it without moving focus. Tabbing out of the panel closes it.
+12. Placement: below the button if it fits; above if it doesn't fit below and does fit above; otherwise below with `max-height` equal to the space left and internal scroll. Left is clamped 8px inside the viewport. The access menu uses the same function with a 4px gap, so near the bottom it opens upward.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f1e8d6;        /* desk, with a 6px navy dot screen at 7% */
+  --paper: #fffaf0;     /* top bar, page, panel, menu */
+  --ink: #1f2a55;       /* text, 1.5px borders, Send button */
+  --ink-2: #4d5577;
+  --ink-3: #69708f;     /* labels, descriptions */
+  --line: #d9cdb4;      /* section rules, dashed URL box */
+  --line-2: #e8dfcc;
+  --pink: #c8264f;      /* Share, offset shadow, switch on, focus */
+  --pink-soft: #fbdde3; /* chips, menu focus, page shadow */
+  --pink-ink: #a3173c;  /* chip text, errors, check marks */
+  --ok: #1f6e5a;        /* Copied state, status text */
+
+  --display: "Gloock", Georgia, serif;
+  --sans: "Atkinson Hyperlegible", system-ui, sans-serif;
+
+  --r: 4px;
+  --border: 1.5px solid var(--ink);
+  --shadow-panel: 6px 6px 0 var(--pink);
+  --shadow-menu: 4px 4px 0 var(--ink);
+  --shadow-btn: 3px 3px 0 var(--ink);
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Notes |
+| --- | --- | --- | --- | --- |
+| Logo | Gloock | 22px | 400 | "leaf" in `--pink` |
+| Page title | Gloock | 64px | 400 | line-height .95, -0.02em |
+| Panel title | Gloock | 22px | 400 | -0.01em, followed by a 12px `--ink-3` subtitle |
+| QR caption title | Gloock | 18px | 400 | |
+| Section label | Atkinson Hyperlegible | 11.5px | 700 | uppercase, 0.08em, `--ink-3` |
+| Body, inputs | Atkinson Hyperlegible | 13–14px | 400 | |
+| Chip | Atkinson Hyperlegible | 12.5px | 700 | `--pink-ink` on `--pink-soft` |
+| Buttons | Atkinson Hyperlegible | 13–14px | 700 | |
+| Menu item | Atkinson Hyperlegible | 13.5px / 12px | 700 / 400 | title / description |
+
+Atkinson is chosen for legibility of email addresses (l, I, 1 and 0, O are distinct). Do not set addresses in the display face.
 
 ## Implementation notes
 

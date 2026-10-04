@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A row of four product cards for a small streetwear label, "Halftone Supply Co.", under a 64px header with a bag counter. Each card shows product art, a tag, a name, a price, and colour swatches. On hover or keyboard focus a black "Quick add" bar slides up over the bottom of the art with size buttons. Picking a size flashes "Added" in tomato red and bumps the bag count from 2 to 3. The look is retro paper: off-white stock with a dot grain, black ink, one tomato red, a condensed grotesk in capitals, mono prices, and square corners everywhere. The detail worth copying is that the bar is never hover-only. A 40px "+" toggle in each card opens it for touch, and focus inside the card opens it for keyboard.
-
-## Reference behaviour
-
-1. First frame: four cards in one row. Card 2 (Ridge crew sweat) already has its quick-add bar open and its toggle shows "×". The bag shows 2.
-2. Each card's art is drawn with CSS shapes. There are no images. A tee, a crew sweat, a cap, and a tote.
-3. Hover a card (pointer devices): the art swaps to a second angle (the back) in 240ms. The front slides 8px left and fades out. The back slides in from 8px right and fades in.
-4. Hover a card: the quick-add bar slides up from below the art in 280ms (expo out).
-5. Tab into a card: the "+" toggle gets focus. Focus inside the card opens the bar, so the next Tab reaches the size buttons. Focus inside the art area also shows the back angle.
-6. Tap the "+" toggle (touch, mouse, or Enter): the card gets the class `open`, the bar stays up, `aria-expanded` becomes `true`, and the "+" icon rotates 45° into "×". Tap again to close.
-7. Click a swatch: the art recolours in 160ms. The colour name under the product name updates (for example "Ink" becomes "Tomato"). The pressed swatch gets a 2px paper gap and a 1px ink ring.
-8. Click a size: the bar is covered by a tomato panel with a check icon and "Added" for 1600ms. The bar stays up during that time even if the pointer leaves. Then the panel fades out.
-9. At the same moment the bag count goes up by 1. The count square scales to 1.35 and flashes tomato, then returns, in 420ms.
-10. A polite live region says, for example: "Added Monsoon heavy tee, Ink, M. Bag has 3 items."
-11. Sold-out sizes are disabled, shown in a muted grey with a line through, and cannot be clicked.
-12. One-size products (the tote) show one wide button, "Add one size".
-13. With reduced motion: no slide, no swap slide, no bump. The bar and the back angle still appear, instantly.
 
 ## Structure
 
@@ -68,71 +54,6 @@ Card copy:
 | 4 | -20% | Market tote No. 2 | ~~$34~~ $27 | Moss, Ink, Stone | one size | One size, 18 L | handle and dashed pocket |
 
 Page copy: header nav "Drop 07, Tees, Layers, Carry" with Drop 07 current. Heading "Drop 07 / Monsoon" with the slash in tomato. Meta "4 pieces · 340 gsm cotton / Ships from Lalitpur in 2 days". Strip: "Free returns within 30 days", "Printed and sewn in Lalitpur", "Drop 08 lands 24 October".
-
-## Tokens
-
-```css
-:root {
-  /* colour: warm paper, black ink, one tomato */
-  --paper: #f1ede4;   /* page */
-  --media: #e6e0d2;   /* art well behind each product */
-  --ink: #151412;     /* text, borders, bar, tags */
-  --ink-2: #4a463f;   /* meta, colour name, strip text */
-  --ink-3: #6f6a60;   /* struck price, sold-out size */
-  --line: #cfc7b6;    /* rule under the heading */
-  --tomato: #c2321c;  /* sale tag, sale price, Added panel, current nav underline */
-  --stone: #b6ae9d;   /* swatch and fit note on the bar */
-  --moss: #5d5e3c;    /* swatch only */
-
-  /* art colour, set per card by the selected swatch */
-  --c: var(--ink);    /* garment */
-  --p: var(--paper);  /* print on the garment */
-
-  /* type */
-  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-
-  /* space (4px base) */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-7: 28px; --s-12: 48px;
-
-  /* shape */
-  --radius: 0;        /* every corner is square */
-  --border: 1px solid var(--ink);
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-micro: 160ms;   /* swatch recolour, size hover, Added fade */
-  --t-swap: 240ms;    /* art angle swap */
-  --t-bar: 280ms;     /* quick-add slide */
-  --t-bump: 420ms;    /* bag count */
-  --t-added: 1600ms;  /* how long Added stays */
-}
-```
-
-Page grain: `background-image: radial-gradient(rgba(21,20,18,.06) .6px, transparent .7px); background-size: 4px 4px` on the body. Art well halftone: `radial-gradient(rgba(21,20,18,.09) 1px, transparent 1.2px)` at `7px 7px` on `.media::before`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Wordmark | Barlow Condensed | 26px | 800 | 1 | 0.02em | UPPER |
-| Wordmark suffix | DM Mono | 11px | 500 | 1 | 0.08em | UPPER |
-| Nav, bag label | Barlow Condensed | 16px | 600 | 1 | 0.06em | UPPER |
-| Page heading | Barlow Condensed | 64px | 800 | 0.86 | -0.01em | UPPER |
-| Meta, strip | DM Mono | 12px | 400 | 1.6 | 0.04em | sentence |
-| Tag | Barlow Condensed | 14px | 600 | 1 | 0.08em | UPPER |
-| Product name | Barlow Condensed | 22px | 600 | 1 | 0.01em | UPPER |
-| Price | DM Mono | 14px | 500 | 1.2 | 0 | numerals |
-| Struck price | DM Mono | 12px | 500 | 1.2 | 0 | numerals |
-| Colour name | DM Mono | 12px | 400 | 1.4 | 0 | sentence |
-| Bar label | Barlow Condensed | 14px | 600 | 1 | 0.08em | UPPER |
-| Fit note | DM Mono | 11px | 400 | 1 | 0.04em | sentence |
-| Size button | DM Mono | 12px | 500 | 1 | 0 | as written |
-| Added | Barlow Condensed | 18px | 600 | 1 | 0.08em | UPPER |
-| Bag count | DM Mono | 13px | 500 | 1 | 0 | numerals |
-
-Prices are always mono. Names are always the condensed face. Do not set prices in the condensed face.
 
 ## Motion
 
@@ -211,6 +132,91 @@ Restart the bump each time: remove the class, read `offsetWidth`, add the class 
 - [ ] Art is 4:5 on `#e6e0d2` with a 7px halftone, and the page is `#f1ede4` with a 4px grain.
 - [ ] Names in Barlow Condensed 22px/600 capitals; prices in DM Mono 14px.
 - [ ] The bar slides in 280ms on `cubic-bezier(.16,1,.3,1)`; the art swap is 240ms with an 8px slide.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: four cards in one row. Card 2 (Ridge crew sweat) already has its quick-add bar open and its toggle shows "×". The bag shows 2.
+2. Each card's art is drawn with CSS shapes. There are no images. A tee, a crew sweat, a cap, and a tote.
+3. Hover a card (pointer devices): the art swaps to a second angle (the back) in 240ms. The front slides 8px left and fades out. The back slides in from 8px right and fades in.
+4. Hover a card: the quick-add bar slides up from below the art in 280ms (expo out).
+5. Tab into a card: the "+" toggle gets focus. Focus inside the card opens the bar, so the next Tab reaches the size buttons. Focus inside the art area also shows the back angle.
+6. Tap the "+" toggle (touch, mouse, or Enter): the card gets the class `open`, the bar stays up, `aria-expanded` becomes `true`, and the "+" icon rotates 45° into "×". Tap again to close.
+7. Click a swatch: the art recolours in 160ms. The colour name under the product name updates (for example "Ink" becomes "Tomato"). The pressed swatch gets a 2px paper gap and a 1px ink ring.
+8. Click a size: the bar is covered by a tomato panel with a check icon and "Added" for 1600ms. The bar stays up during that time even if the pointer leaves. Then the panel fades out.
+9. At the same moment the bag count goes up by 1. The count square scales to 1.35 and flashes tomato, then returns, in 420ms.
+10. A polite live region says, for example: "Added Monsoon heavy tee, Ink, M. Bag has 3 items."
+11. Sold-out sizes are disabled, shown in a muted grey with a line through, and cannot be clicked.
+12. One-size products (the tote) show one wide button, "Add one size".
+13. With reduced motion: no slide, no swap slide, no bump. The bar and the back angle still appear, instantly.
+
+## Tokens
+
+```css
+:root {
+  /* colour: warm paper, black ink, one tomato */
+  --paper: #f1ede4;   /* page */
+  --media: #e6e0d2;   /* art well behind each product */
+  --ink: #151412;     /* text, borders, bar, tags */
+  --ink-2: #4a463f;   /* meta, colour name, strip text */
+  --ink-3: #6f6a60;   /* struck price, sold-out size */
+  --line: #cfc7b6;    /* rule under the heading */
+  --tomato: #c2321c;  /* sale tag, sale price, Added panel, current nav underline */
+  --stone: #b6ae9d;   /* swatch and fit note on the bar */
+  --moss: #5d5e3c;    /* swatch only */
+
+  /* art colour, set per card by the selected swatch */
+  --c: var(--ink);    /* garment */
+  --p: var(--paper);  /* print on the garment */
+
+  /* type */
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+
+  /* space (4px base) */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-7: 28px; --s-12: 48px;
+
+  /* shape */
+  --radius: 0;        /* every corner is square */
+  --border: 1px solid var(--ink);
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-micro: 160ms;   /* swatch recolour, size hover, Added fade */
+  --t-swap: 240ms;    /* art angle swap */
+  --t-bar: 280ms;     /* quick-add slide */
+  --t-bump: 420ms;    /* bag count */
+  --t-added: 1600ms;  /* how long Added stays */
+}
+```
+
+Page grain: `background-image: radial-gradient(rgba(21,20,18,.06) .6px, transparent .7px); background-size: 4px 4px` on the body. Art well halftone: `radial-gradient(rgba(21,20,18,.09) 1px, transparent 1.2px)` at `7px 7px` on `.media::before`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Wordmark | Barlow Condensed | 26px | 800 | 1 | 0.02em | UPPER |
+| Wordmark suffix | DM Mono | 11px | 500 | 1 | 0.08em | UPPER |
+| Nav, bag label | Barlow Condensed | 16px | 600 | 1 | 0.06em | UPPER |
+| Page heading | Barlow Condensed | 64px | 800 | 0.86 | -0.01em | UPPER |
+| Meta, strip | DM Mono | 12px | 400 | 1.6 | 0.04em | sentence |
+| Tag | Barlow Condensed | 14px | 600 | 1 | 0.08em | UPPER |
+| Product name | Barlow Condensed | 22px | 600 | 1 | 0.01em | UPPER |
+| Price | DM Mono | 14px | 500 | 1.2 | 0 | numerals |
+| Struck price | DM Mono | 12px | 500 | 1.2 | 0 | numerals |
+| Colour name | DM Mono | 12px | 400 | 1.4 | 0 | sentence |
+| Bar label | Barlow Condensed | 14px | 600 | 1 | 0.08em | UPPER |
+| Fit note | DM Mono | 11px | 400 | 1 | 0.04em | sentence |
+| Size button | DM Mono | 12px | 500 | 1 | 0 | as written |
+| Added | Barlow Condensed | 18px | 600 | 1 | 0.08em | UPPER |
+| Bag count | DM Mono | 13px | 500 | 1 | 0 | numerals |
+
+Prices are always mono. Names are always the condensed face. Do not set prices in the condensed face.
 
 ## Implementation notes
 

@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A **modal navigation drawer** for "Nord Post", a parcel-and-mail app, in Material 3 Expressive on a cool light scheme. A hamburger in the top app bar slides a 360px drawer in from the left over a 40% scrim. The drawer holds a product header, two labelled sections divided by hairlines, nine destinations, count badges and one tertiary "3 today" pill. The active destination is a full-width 56px pill in the secondary container colour — a wide, tonal shape rather than an indicator line. The detail worth copying is the asymmetric timing: 400ms emphasized in, 250ms accelerated out, with focus trapped inside while open and returned to the hamburger on close.
-
-## Reference behaviour
-
-1. Initial state (hero): the drawer is **already open** (`body.open` in the markup, hamburger `aria-expanded="true"`) over the inbox: top app bar (surface-low, 118px including the 54px status clearance) with hamburger, "Inbox" title (22px), search and account icons; grouped rows of deliveries and letters with 40px badge tiles behind the scrim. No focus is moved on load.
-2. After closing it (step 6), tap the hamburger (48px round icon button): `body.open` is set, `aria-expanded` becomes true. Scrim fades in to `rgba(27,27,34,.4)` and the drawer translates from −100% to 0 over 400ms `cubic-bezier(.2,0,0,1)`, gaining a soft shadow. Focus moves to the current-page link.
-3. The drawer: 360px wide, rounded 16px on its right corners only, 54px top padding, 34px bottom padding, scrolls internally if needed. Header row: 36px indigo mark "NP", product name (18px/600), user line (12px), and a close icon button. Then `h2` "Mail" with four links, a divider, `h2` "Sending" with three links, a divider, two utility links.
-4. Hover a link: a 6% `--on-surface` state layer appears; pressing raises it to 12%.
-5. Tap a link: it becomes `aria-current="page"` (pill fill `--secondary-c`, text `--on-secondary-c`, weight 600, icon stroke 2.2); the app bar title changes to the link's label; the drawer closes; a dark snackbar "Opened Deliveries" rises at the bottom for 1.6s.
-6. Tap the scrim, the drawer's close button or press Esc: drawer translates back to −100% over 250ms `cubic-bezier(.3,0,.8,.15)`, scrim fades on the same clock, focus returns to the element that opened it.
-7. Tab and Shift+Tab cycle only through the close button and the nine links while open.
 
 ## Structure
 
@@ -65,6 +57,78 @@ open state (drawer 360 over a scrim, 30px of scrim visible on the right)
 - `<button class="scrim" tabindex="-1">` — `inset:0`.
 - `<nav class="drawer" id="drawer" aria-label="Main">` — `.head`, then `h2` + `<ul>` of `<a>` per section, `<hr>` dividers. Each `<a>`: 24px SVG, label text, optional `.n` count or `.pill` badge.
 - `<div class="pop" role="status" aria-live="polite">` — snackbar.
+
+## Motion
+
+| Element         | Trigger | Property        | From → To              | Duration | Easing        | Notes |
+|-----------------|---------|-----------------|------------------------|---------:|---------------|-------|
+| `.drawer`       | open    | translateX      | −100% → 0              | 400ms    | `--ease-emph` | shadow appears at the same time |
+| `.drawer`       | close   | translateX      | 0 → −100%              | 250ms    | `--ease-exit` | |
+| `.scrim`        | open    | opacity         | 0 → 1                  | 400ms    | `--ease-emph` | |
+| `.scrim`        | close   | opacity         | 1 → 0                  | 250ms    | `--ease-exit` | |
+| link state layer| hover / press | opacity    | 0 → .06 / .12          | 160ms    | linear        | `::before` pseudo |
+| active pill     | select  | background, color | transparent → secondary-c | 160ms | linear        | no movement |
+| `.pop`          | select  | opacity, translateY | 0, 12px → 1, 0     | 160ms    | `--ease-emph` | auto-hides after 1600ms |
+| `.icon`         | hover   | background      | transparent → surface-high | 160ms | linear        | |
+
+Reduced motion: all transitions 1ms. The drawer appears and disappears instantly; the scrim still shows.
+
+## States
+
+- **Closed:** drawer `visibility:hidden; transform:translateX(-100%)`; scrim `opacity:0; pointer-events:none`.
+- **Open:** `body.open`; drawer visible with `--shadow-1`; scrim interactive; hamburger `aria-expanded="true"`.
+- **Link hover:** 6% on-surface layer. **Link pressed:** 12%.
+- **Link current:** `aria-current="page"`, pill `--secondary-c`, text `--on-secondary-c`, weight 600, icon stroke 2.2px, count badge takes the same text colour.
+- **Focus-visible (all controls):** 3px `--primary` outline, −3px offset (inside the pill so it isn't clipped by `overflow:hidden`).
+- **Row hover:** background `--surface-high`.
+- **Snackbar showing:** `.pop.on`.
+
+## Accessibility
+
+- Hamburger: `<button aria-label="Open navigation" aria-expanded aria-controls="drawer">`.
+- Drawer: `<nav aria-label="Main">`; sections use `<h2>` headings; destinations are `<a>` with `aria-current="page"` on the active one.
+- Focus trap while open: Tab from the last link wraps to the close button; Shift+Tab from the close button wraps to the last link. Esc closes. On open, focus goes to the current link; on close it returns to whatever opened the drawer.
+- The scrim button has `tabindex="-1"` and an `aria-label`, so pointer users can close it without adding a tab stop.
+- Snackbar is `role="status" aria-live="polite"`.
+- Contrast: `--on-surface-v` on `--surface-low` 9.1:1; `--on-secondary-c` on `--secondary-c` 11.7:1; white on `--tertiary` 6.4:1.
+- Hit targets: icon buttons 48px, drawer links 56px, rows ≥ 64px.
+
+## Responsive rules
+
+- 390 wide: drawer 360px, 30px of scrim visible.
+- 360 wide: drawer becomes `min(360px, 100% - 24px)` = 336px so the scrim edge stays tappable.
+- ≥ 840 wide: switch to a **standard** (non-modal) drawer: no scrim, no translate, `position:static`, 360px column beside the content, hamburger hidden.
+- Short viewports: the drawer scrolls internally (`overflow-y:auto`); header stays at the top of the scroll content, not sticky.
+
+## Acceptance checklist
+
+- [ ] Drawer is exactly 360px wide with `border-radius: 0 16px 16px 0` and `#F4F1FB` background.
+- [ ] Opening translates from −100% to 0 over 400ms `cubic-bezier(.2,0,0,1)`; closing takes 250ms `cubic-bezier(.3,0,.8,.15)`.
+- [ ] Scrim is `rgba(27,27,34,.4)` and closes the drawer on tap.
+- [ ] Active item is a full-width 56px pill filled `#DFE1FF` with `#121A5C` text at weight 600.
+- [ ] Two `<h2>` section headers and two 1px `#C8C4D5` dividers separate the groups.
+- [ ] Count badges ("24", "2", "118") right-align at 13px/600; "3 today" is a `#7A4F7D` pill with white 11px/700 text.
+- [ ] Hamburger `aria-expanded` mirrors the state; Esc closes; focus returns to the hamburger on close.
+- [ ] Tab is trapped to the close button + nine links while open.
+- [ ] Selecting a destination updates the app bar title, closes the drawer and shows a snackbar for 1.6s.
+- [ ] Hover shows a 6% state layer, press 12%, on drawer links.
+- [ ] No fixed control sits within the top 54px; drawer content starts below it.
+- [ ] The first frame shows the drawer open; closing and reopening replays the slide.
+- [ ] Reduced motion collapses all transitions to 1ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state (hero): the drawer is **already open** (`body.open` in the markup, hamburger `aria-expanded="true"`) over the inbox: top app bar (surface-low, 118px including the 54px status clearance) with hamburger, "Inbox" title (22px), search and account icons; grouped rows of deliveries and letters with 40px badge tiles behind the scrim. No focus is moved on load.
+2. After closing it (step 6), tap the hamburger (48px round icon button): `body.open` is set, `aria-expanded` becomes true. Scrim fades in to `rgba(27,27,34,.4)` and the drawer translates from −100% to 0 over 400ms `cubic-bezier(.2,0,0,1)`, gaining a soft shadow. Focus moves to the current-page link.
+3. The drawer: 360px wide, rounded 16px on its right corners only, 54px top padding, 34px bottom padding, scrolls internally if needed. Header row: 36px indigo mark "NP", product name (18px/600), user line (12px), and a close icon button. Then `h2` "Mail" with four links, a divider, `h2` "Sending" with three links, a divider, two utility links.
+4. Hover a link: a 6% `--on-surface` state layer appears; pressing raises it to 12%.
+5. Tap a link: it becomes `aria-current="page"` (pill fill `--secondary-c`, text `--on-secondary-c`, weight 600, icon stroke 2.2); the app bar title changes to the link's label; the drawer closes; a dark snackbar "Opened Deliveries" rises at the bottom for 1.6s.
+6. Tap the scrim, the drawer's close button or press Esc: drawer translates back to −100% over 250ms `cubic-bezier(.3,0,.8,.15)`, scrim fades on the same clock, focus returns to the element that opened it.
+7. Tab and Shift+Tab cycle only through the close button and the nine links while open.
 
 ## Tokens
 
@@ -140,64 +204,6 @@ open state (drawer 360 over a scrim, 30px of scrim visible on the right)
 | Row subtitle     | Roboto Flex | 13px | 400    | 1.4         | 0        | sentence  |
 | Badge tile       | Roboto Flex | 11px | 700    | 1           | +0.04em  | UPPERCASE |
 | Snackbar         | Roboto Flex | 14px | 500    | 1.4         | 0        | sentence  |
-
-## Motion
-
-| Element         | Trigger | Property        | From → To              | Duration | Easing        | Notes |
-|-----------------|---------|-----------------|------------------------|---------:|---------------|-------|
-| `.drawer`       | open    | translateX      | −100% → 0              | 400ms    | `--ease-emph` | shadow appears at the same time |
-| `.drawer`       | close   | translateX      | 0 → −100%              | 250ms    | `--ease-exit` | |
-| `.scrim`        | open    | opacity         | 0 → 1                  | 400ms    | `--ease-emph` | |
-| `.scrim`        | close   | opacity         | 1 → 0                  | 250ms    | `--ease-exit` | |
-| link state layer| hover / press | opacity    | 0 → .06 / .12          | 160ms    | linear        | `::before` pseudo |
-| active pill     | select  | background, color | transparent → secondary-c | 160ms | linear        | no movement |
-| `.pop`          | select  | opacity, translateY | 0, 12px → 1, 0     | 160ms    | `--ease-emph` | auto-hides after 1600ms |
-| `.icon`         | hover   | background      | transparent → surface-high | 160ms | linear        | |
-
-Reduced motion: all transitions 1ms. The drawer appears and disappears instantly; the scrim still shows.
-
-## States
-
-- **Closed:** drawer `visibility:hidden; transform:translateX(-100%)`; scrim `opacity:0; pointer-events:none`.
-- **Open:** `body.open`; drawer visible with `--shadow-1`; scrim interactive; hamburger `aria-expanded="true"`.
-- **Link hover:** 6% on-surface layer. **Link pressed:** 12%.
-- **Link current:** `aria-current="page"`, pill `--secondary-c`, text `--on-secondary-c`, weight 600, icon stroke 2.2px, count badge takes the same text colour.
-- **Focus-visible (all controls):** 3px `--primary` outline, −3px offset (inside the pill so it isn't clipped by `overflow:hidden`).
-- **Row hover:** background `--surface-high`.
-- **Snackbar showing:** `.pop.on`.
-
-## Accessibility
-
-- Hamburger: `<button aria-label="Open navigation" aria-expanded aria-controls="drawer">`.
-- Drawer: `<nav aria-label="Main">`; sections use `<h2>` headings; destinations are `<a>` with `aria-current="page"` on the active one.
-- Focus trap while open: Tab from the last link wraps to the close button; Shift+Tab from the close button wraps to the last link. Esc closes. On open, focus goes to the current link; on close it returns to whatever opened the drawer.
-- The scrim button has `tabindex="-1"` and an `aria-label`, so pointer users can close it without adding a tab stop.
-- Snackbar is `role="status" aria-live="polite"`.
-- Contrast: `--on-surface-v` on `--surface-low` 9.1:1; `--on-secondary-c` on `--secondary-c` 11.7:1; white on `--tertiary` 6.4:1.
-- Hit targets: icon buttons 48px, drawer links 56px, rows ≥ 64px.
-
-## Responsive rules
-
-- 390 wide: drawer 360px, 30px of scrim visible.
-- 360 wide: drawer becomes `min(360px, 100% - 24px)` = 336px so the scrim edge stays tappable.
-- ≥ 840 wide: switch to a **standard** (non-modal) drawer: no scrim, no translate, `position:static`, 360px column beside the content, hamburger hidden.
-- Short viewports: the drawer scrolls internally (`overflow-y:auto`); header stays at the top of the scroll content, not sticky.
-
-## Acceptance checklist
-
-- [ ] Drawer is exactly 360px wide with `border-radius: 0 16px 16px 0` and `#F4F1FB` background.
-- [ ] Opening translates from −100% to 0 over 400ms `cubic-bezier(.2,0,0,1)`; closing takes 250ms `cubic-bezier(.3,0,.8,.15)`.
-- [ ] Scrim is `rgba(27,27,34,.4)` and closes the drawer on tap.
-- [ ] Active item is a full-width 56px pill filled `#DFE1FF` with `#121A5C` text at weight 600.
-- [ ] Two `<h2>` section headers and two 1px `#C8C4D5` dividers separate the groups.
-- [ ] Count badges ("24", "2", "118") right-align at 13px/600; "3 today" is a `#7A4F7D` pill with white 11px/700 text.
-- [ ] Hamburger `aria-expanded` mirrors the state; Esc closes; focus returns to the hamburger on close.
-- [ ] Tab is trapped to the close button + nine links while open.
-- [ ] Selecting a destination updates the app bar title, closes the drawer and shows a snackbar for 1.6s.
-- [ ] Hover shows a 6% state layer, press 12%, on drawer links.
-- [ ] No fixed control sits within the top 54px; drawer content starts below it.
-- [ ] The first frame shows the drawer open; closing and reopening replays the slide.
-- [ ] Reduced motion collapses all transitions to 1ms.
 
 ## Implementation notes
 

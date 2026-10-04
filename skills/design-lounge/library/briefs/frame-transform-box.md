@@ -4,28 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The selection box from a design editor, "Kerf", drawn around a poster on a dark dotted canvas. It has eight square resize handles, a round rotate handle on a 28px stem, and an orange badge under the shape that reads the live size, position or angle depending on what you drag. Resizing works in the shape's own rotated frame, so a rotated poster resizes along its edges, not the screen axes. Shift keeps the ratio while resizing, locks the axis while moving, and snaps rotation to 15°. A segmented control swaps the handles for a crosshair variant: plus marks at the corners, a dashed outline and a centre cross. The detail worth copying is the anchor maths: the opposite corner or edge never moves, at any angle.
-
-## Reference behaviour
-
-1. First frame: a 520 × 600 cream artboard in the centre of the canvas, labelled "Poster A · 520 × 600" above its top-left corner. On it, a blue "Solstice" poster (300 × 380, rotated -4°) is selected and a black pill "Live set 22:00" (220 × 56, rotated 6°) sits below it. The badge under the poster reads "300 × 380".
-2. Hover an unselected layer: a 1px orange outline at 55% opacity traces it.
-3. Press on a layer: it becomes selected and the drag moves it. The badge reads its top-left position "x, y" while moving. With Shift held, movement locks to the axis with the larger travel.
-4. Drag a corner handle: width and height change; the opposite corner stays fixed. The badge reads "W × H". With Shift held, the ratio is kept, using the larger of the two scale factors.
-5. Drag an edge handle: only that dimension changes; the opposite edge stays fixed. With Shift, the other dimension scales with it, centred.
-6. With Alt held while resizing, the shape resizes from its centre (both sides move).
-7. The minimum size is 24 × 24.
-8. Drag the rotate handle: the shape turns around its centre following the pointer angle. The badge reads the angle, for example "24°". With Shift, the angle snaps to multiples of 15°. Angles are kept in (-180°, 180°].
-9. Handle cursors follow the rotation: each handle's resize cursor is picked from its angle plus the shape's rotation, rounded to 45°.
-10. The badge stays upright and sits 12px under the shape's axis-aligned bounding box, centred.
-11. The inspector shows X, Y, W, H and R. They update live during drags. Typing a value and pressing Enter (change) applies it. W and H keep the top-left fixed.
-12. The "Shift keeps ratio · snaps 15°" row turns orange while Shift is held.
-13. The Layers list (Live set tag, Solstice poster) selects a layer on click and moves focus to it.
-14. Keyboard on a focused layer: arrows move 1px (Shift 10px). Alt + arrows change width (left/right) and height (up/down). `[` and `]` rotate 1° (Shift 15°). Esc deselects. A polite live region reads the result 500ms after the last key.
-15. Click empty canvas or press Esc to deselect: the box and badge hide and the inspector clears.
-16. "Crosshair" in the top bar switches the variant. "Handles" switches back. Interaction is identical.
 
 ## Structure
 
@@ -59,58 +42,6 @@ The selection box from a design editor, "Kerf", drawn around a poster on a dark 
 - A visually hidden `p[role=status][aria-live=polite]` reports the result of each drag or key run.
 
 Geometry model: each layer is `{cx, cy, w, h, r}`, centre in canvas pixels relative to the canvas centre, rotation in degrees. Both the layer and `.sel` are placed with `left = cx - w/2`, `top = cy - h/2`, `width`, `height`, `transform: rotate(r)`.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --canvas: #1a1c20;   /* canvas, input wells */
-  --panel: #22252b;    /* top bar, inspector */
-  --panel-2: #2a2e35;  /* hover rows, pressed segment */
-  --line: #33373f;     /* hairlines, input borders */
-  --text: #e8e6e1;     /* primary text */
-  --muted: #9aa0a9;    /* labels, secondary text */
-  --sel: #ff6b2c;      /* selection outline, handle stroke, badge, focus */
-  --handle: #fbfaf7;   /* handle fill */
-  --dot: #3a3e46;      /* canvas grid dots */
-  --board: #f3ecdf;    /* artboard */
-
-  /* type */
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  /* space */
-  --s-2: 8px; --s-3: 12px; --s-4: 16px;
-
-  /* geometry */
-  --handle-size: 9px;      /* visible square, 1.5px stroke, 2px radius */
-  --handle-hit: 24px;      /* invisible hit area */
-  --rot-stem: 28px;
-  --rot-size: 11px;
-  --min-size: 24px;
-  --grid: 24px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --t: 160ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Wordmark | Bricolage Grotesque | 17px | 800 | 1 | -0.02em | title |
-| File path | Bricolage Grotesque | 13px | 400, file 600 | 1.4 | 0 | sentence |
-| Segment | Bricolage Grotesque | 12px | 600 | 1 | 0 | title |
-| Section label | Bricolage Grotesque | 11px | 600 | 1 | 0.08em | UPPER |
-| Layer row | Bricolage Grotesque | 13px | 400 | 1.4 | 0 | sentence |
-| Field label, value | JetBrains Mono | 11px / 12px | 500 | 1 | 0 | X Y W H R |
-| Badge | JetBrains Mono | 11px | 500 | 1 | 0 | `300 × 380` with a real × |
-| Artboard label, zoom | JetBrains Mono | 11px / 12px | 500 | 1 | 0 | as written |
-
-Every number is mono. Labels and names are the grotesk.
 
 ## Motion
 
@@ -177,6 +108,81 @@ Do not tween the layer while dragging. Any lag reads as a broken tool.
 - [ ] Canvas `#1a1c20` with `#3a3e46` dots every 24px; artboard `#f3ecdf`, 520 × 600.
 - [ ] Selection, handles and badge use `#ff6b2c`; handles fill `#fbfaf7`.
 - [ ] Inspector 272px wide on `#22252b`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a 520 × 600 cream artboard in the centre of the canvas, labelled "Poster A · 520 × 600" above its top-left corner. On it, a blue "Solstice" poster (300 × 380, rotated -4°) is selected and a black pill "Live set 22:00" (220 × 56, rotated 6°) sits below it. The badge under the poster reads "300 × 380".
+2. Hover an unselected layer: a 1px orange outline at 55% opacity traces it.
+3. Press on a layer: it becomes selected and the drag moves it. The badge reads its top-left position "x, y" while moving. With Shift held, movement locks to the axis with the larger travel.
+4. Drag a corner handle: width and height change; the opposite corner stays fixed. The badge reads "W × H". With Shift held, the ratio is kept, using the larger of the two scale factors.
+5. Drag an edge handle: only that dimension changes; the opposite edge stays fixed. With Shift, the other dimension scales with it, centred.
+6. With Alt held while resizing, the shape resizes from its centre (both sides move).
+7. The minimum size is 24 × 24.
+8. Drag the rotate handle: the shape turns around its centre following the pointer angle. The badge reads the angle, for example "24°". With Shift, the angle snaps to multiples of 15°. Angles are kept in (-180°, 180°].
+9. Handle cursors follow the rotation: each handle's resize cursor is picked from its angle plus the shape's rotation, rounded to 45°.
+10. The badge stays upright and sits 12px under the shape's axis-aligned bounding box, centred.
+11. The inspector shows X, Y, W, H and R. They update live during drags. Typing a value and pressing Enter (change) applies it. W and H keep the top-left fixed.
+12. The "Shift keeps ratio · snaps 15°" row turns orange while Shift is held.
+13. The Layers list (Live set tag, Solstice poster) selects a layer on click and moves focus to it.
+14. Keyboard on a focused layer: arrows move 1px (Shift 10px). Alt + arrows change width (left/right) and height (up/down). `[` and `]` rotate 1° (Shift 15°). Esc deselects. A polite live region reads the result 500ms after the last key.
+15. Click empty canvas or press Esc to deselect: the box and badge hide and the inspector clears.
+16. "Crosshair" in the top bar switches the variant. "Handles" switches back. Interaction is identical.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --canvas: #1a1c20;   /* canvas, input wells */
+  --panel: #22252b;    /* top bar, inspector */
+  --panel-2: #2a2e35;  /* hover rows, pressed segment */
+  --line: #33373f;     /* hairlines, input borders */
+  --text: #e8e6e1;     /* primary text */
+  --muted: #9aa0a9;    /* labels, secondary text */
+  --sel: #ff6b2c;      /* selection outline, handle stroke, badge, focus */
+  --handle: #fbfaf7;   /* handle fill */
+  --dot: #3a3e46;      /* canvas grid dots */
+  --board: #f3ecdf;    /* artboard */
+
+  /* type */
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* space */
+  --s-2: 8px; --s-3: 12px; --s-4: 16px;
+
+  /* geometry */
+  --handle-size: 9px;      /* visible square, 1.5px stroke, 2px radius */
+  --handle-hit: 24px;      /* invisible hit area */
+  --rot-stem: 28px;
+  --rot-size: 11px;
+  --min-size: 24px;
+  --grid: 24px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t: 160ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Wordmark | Bricolage Grotesque | 17px | 800 | 1 | -0.02em | title |
+| File path | Bricolage Grotesque | 13px | 400, file 600 | 1.4 | 0 | sentence |
+| Segment | Bricolage Grotesque | 12px | 600 | 1 | 0 | title |
+| Section label | Bricolage Grotesque | 11px | 600 | 1 | 0.08em | UPPER |
+| Layer row | Bricolage Grotesque | 13px | 400 | 1.4 | 0 | sentence |
+| Field label, value | JetBrains Mono | 11px / 12px | 500 | 1 | 0 | X Y W H R |
+| Badge | JetBrains Mono | 11px | 500 | 1 | 0 | `300 × 380` with a real × |
+| Artboard label, zoom | JetBrains Mono | 11px / 12px | 500 | 1 | 0 | as written |
+
+Every number is mono. Labels and names are the grotesk.
 
 ## Implementation notes
 

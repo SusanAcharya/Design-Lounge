@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The menu board of a fictional café, Juniper & Ash, hung on a warm plaster wall. It is one card in a wooden frame with two faces. The chalkboard face is a dark green slate with hand lettering in Caveat, roughened by an SVG chalk filter, yellow chalk prices, a pink "Today's special" label inside a wobbly hand-drawn box, and a small coffee-cup doodle. The letterboard face swaps the frame to light oak and the board to black ribbed felt, and every word becomes white Antonio capitals that sit slightly crooked, like pushed-in plastic letters. Today's special writes itself in on the chalkboard: a chalk stick runs left to right and the words appear behind it. The detail worth copying is that the same DOM serves both faces; only a `data-mode` attribute and per-letter custom properties change.
-
-## Reference behaviour
-
-1. First frame: chalkboard mode. "Smoked maple oat latte — 5.20" writes in over 1900ms (clip reveal left to right), while a 22 × 8px chalk stick tilted −28° travels along with the reveal edge and fades out at the end.
-2. Hovering a menu row lifts it with `rgba(255,255,255,.05)` behind it (160ms).
-3. "Next special": the current special smudges out (opacity 0, blur 4px, 10px right, 380ms), then the next one writes in. Three specials cycle: Smoked maple oat latte 5.20, Pear & ginger galette 4.40, Miso caramel cortado 4.60.
-4. Choose "Letterboard" in the segmented control: the body's `data-mode` becomes `letter`. The frame becomes oak, the board becomes ribbed felt, the chalk filter and dust are removed, all text switches to Antonio capitals, and each letter pops in (from 8px above, opacity 0) over 360ms with a 14ms stagger per letter within its line.
-5. In letterboard mode "Next special" swaps the line and its letters pop in. There is no chalk stick.
-6. Choose "Chalkboard": back to chalk; the special writes in again.
-7. In the segmented control, arrow keys switch mode and move focus (roving tabindex).
-8. Reduced motion: no write-in (the special is fully visible), no smudge, no letter pop, no hover or frame transitions. The mode switch still works instantly.
 
 ## Structure
 
@@ -50,48 +41,6 @@ The menu board of a fictional café, Juniper & Ash, hung on a warm plaster wall.
 - Two columns, each an `h2` and a `ul`. Each `li` is name, a flex-grow dotted leader, and price. Sub-notes are `small` under the name.
 - The special is a `div` with an absolutely placed SVG box path, the label, the `.write` span (`aria-live="polite"`) and the chalk stick span.
 - Controls: a `radiogroup` of two `role="radio"` buttons and a plain "Next special" button.
-
-## Tokens
-
-```css
-:root {
-  --wall: #cdbba0;
-  --wood: #6b4528; --wood-2: #8a5d39;     /* chalkboard frame */
-  --oak: #b98a57;  --oak-2: #d2a874;      /* letterboard frame */
-  --slate: #1f2a26;                        /* chalkboard; also selected segment */
-  --chalk: #ece8df; --chalk-2: #b9b8ae;   /* chalk text, muted chalk */
-  --yellow: #f2d57e;                       /* prices, special, box */
-  --pink: #e9a6a0;                         /* special label */
-  --felt: #161616;                         /* letterboard */
-  --letter: #f4f1ea; --letter-2: #a9a59c;  /* plastic letters, muted */
-  --red: #d9452b;                          /* letterboard headings */
-  --hand: "Caveat", cursive;
-  --block: "Antonio", "Arial Narrow", sans-serif;
-  --std: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --t-write: 1900ms;  --ease-write: cubic-bezier(.45, .05, .55, .95);
-  --t-erase: 380ms;   --t-pop: 360ms;  --stagger: 14ms;
-}
-```
-
-Felt grooves: `repeating-linear-gradient(180deg, #0c0c0c 0 2px, #1d1d1d 2px 3px, var(--felt) 3px 12px)`. Wood grain: a 92° repeating gradient of dark and light hairlines on a vertical `--wood-2 → --wood` gradient.
-
-## Typography
-
-| Role | Chalk mode | Letterboard mode |
-| --- | --- | --- |
-| Café name | Caveat 700, 58px / .95 | Antonio 400, 44px, .14em, caps |
-| Sub-line | Caveat 500, 22px, `--chalk-2` | Antonio 15px, .3em, `--letter-2` |
-| Special label | Caveat 700, 20px, `--pink` | Antonio 14px, .3em, `--red` |
-| Special | Caveat 700, 34px, `--yellow` | Antonio 24px, .08em, `--letter` |
-| Section heading | Caveat 700, 30px, 2px chalk underline | Antonio 18px, .3em, `--red`, no rule |
-| Item | Caveat 500, 26px / 1.45 | Antonio 19px / 2.1, .08em |
-| Price | Caveat 700, `--yellow` | Antonio, `--letter` |
-| Sub-note | Caveat 18px, `--chalk-2` | Antonio 12px, `--letter-2` |
-| Footer | Caveat 500, 21px | Antonio 13px, .2em |
-| Controls | Antonio 600, 14px, .14em, caps | same |
-
-In letterboard mode all weights are 400: plastic letters come in one weight.
 
 ## Motion
 
@@ -152,6 +101,63 @@ Reduced motion: every animation and transition above is off.
 - [ ] Bakes: Morning bun 3.60, Brown butter cookie 2.80, Rye banana loaf 3.40, Fig toast 6.20 (ricotta, honey).
 - [ ] Specials cycle: Smoked maple oat latte 5.20 → Pear & ginger galette 4.40 → Miso caramel cortado 4.60.
 - [ ] Footer "oat or almond +0.50 · ask us about the beans".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: chalkboard mode. "Smoked maple oat latte — 5.20" writes in over 1900ms (clip reveal left to right), while a 22 × 8px chalk stick tilted −28° travels along with the reveal edge and fades out at the end.
+2. Hovering a menu row lifts it with `rgba(255,255,255,.05)` behind it (160ms).
+3. "Next special": the current special smudges out (opacity 0, blur 4px, 10px right, 380ms), then the next one writes in. Three specials cycle: Smoked maple oat latte 5.20, Pear & ginger galette 4.40, Miso caramel cortado 4.60.
+4. Choose "Letterboard" in the segmented control: the body's `data-mode` becomes `letter`. The frame becomes oak, the board becomes ribbed felt, the chalk filter and dust are removed, all text switches to Antonio capitals, and each letter pops in (from 8px above, opacity 0) over 360ms with a 14ms stagger per letter within its line.
+5. In letterboard mode "Next special" swaps the line and its letters pop in. There is no chalk stick.
+6. Choose "Chalkboard": back to chalk; the special writes in again.
+7. In the segmented control, arrow keys switch mode and move focus (roving tabindex).
+8. Reduced motion: no write-in (the special is fully visible), no smudge, no letter pop, no hover or frame transitions. The mode switch still works instantly.
+
+## Tokens
+
+```css
+:root {
+  --wall: #cdbba0;
+  --wood: #6b4528; --wood-2: #8a5d39;     /* chalkboard frame */
+  --oak: #b98a57;  --oak-2: #d2a874;      /* letterboard frame */
+  --slate: #1f2a26;                        /* chalkboard; also selected segment */
+  --chalk: #ece8df; --chalk-2: #b9b8ae;   /* chalk text, muted chalk */
+  --yellow: #f2d57e;                       /* prices, special, box */
+  --pink: #e9a6a0;                         /* special label */
+  --felt: #161616;                         /* letterboard */
+  --letter: #f4f1ea; --letter-2: #a9a59c;  /* plastic letters, muted */
+  --red: #d9452b;                          /* letterboard headings */
+  --hand: "Caveat", cursive;
+  --block: "Antonio", "Arial Narrow", sans-serif;
+  --std: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-write: 1900ms;  --ease-write: cubic-bezier(.45, .05, .55, .95);
+  --t-erase: 380ms;   --t-pop: 360ms;  --stagger: 14ms;
+}
+```
+
+Felt grooves: `repeating-linear-gradient(180deg, #0c0c0c 0 2px, #1d1d1d 2px 3px, var(--felt) 3px 12px)`. Wood grain: a 92° repeating gradient of dark and light hairlines on a vertical `--wood-2 → --wood` gradient.
+
+## Typography
+
+| Role | Chalk mode | Letterboard mode |
+| --- | --- | --- |
+| Café name | Caveat 700, 58px / .95 | Antonio 400, 44px, .14em, caps |
+| Sub-line | Caveat 500, 22px, `--chalk-2` | Antonio 15px, .3em, `--letter-2` |
+| Special label | Caveat 700, 20px, `--pink` | Antonio 14px, .3em, `--red` |
+| Special | Caveat 700, 34px, `--yellow` | Antonio 24px, .08em, `--letter` |
+| Section heading | Caveat 700, 30px, 2px chalk underline | Antonio 18px, .3em, `--red`, no rule |
+| Item | Caveat 500, 26px / 1.45 | Antonio 19px / 2.1, .08em |
+| Price | Caveat 700, `--yellow` | Antonio, `--letter` |
+| Sub-note | Caveat 18px, `--chalk-2` | Antonio 12px, `--letter-2` |
+| Footer | Caveat 500, 21px | Antonio 13px, .2em |
+| Controls | Antonio 600, 14px, .14em, caps | same |
+
+In letterboard mode all weights are 400: plastic letters come in one weight.
 
 ## Implementation notes
 

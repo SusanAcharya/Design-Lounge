@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The booking landing for a fictional twelve-guest house, Loam House, on a fold of land above the River Usk. The first frame is sand-coloured paper, a 76px Young Serif headline, a pill-shaped date strip (arrive / depart / guests / Check dates), and three stay cards with short botanical SVGs. Colour is earth: sand, soil, moss, one terracotta kicker. The date strip is the interaction — plus/minus steppers, not a calendar overlay — and checking dates writes a live sentence under the pill.
-
-## Reference behaviour
-
-1. Initial state: Arrive `12 Oct`, Depart `15 Oct`, Guests `2`. The Loft card is `aria-pressed="true"`. The live region under the strip is empty. "Check dates" is enabled.
-2. Click + / − on Arrive: day moves between 8 and 28 October. Depart + / − moves a day number from 9 Oct through 4 Nov (internal 9–35; values > 31 display as November). Guests move 1–4.
-3. If Depart is on or before Arrive, "Check dates" is `disabled` (opacity 0.55).
-4. Submit the strip (click "Check dates"): prevent default. If valid, the live region reads `{n} nights · The Loft and Field Room are held for those dates.` If disabled, do not submit. Changing any stepper clears the note.
-5. Click a stay card: that card is pressed; the others are not. Pressed and hover: 1px moss border and a −3px lift over 280ms. Pressed also gets an inset 1px moss ring.
-6. Nav "Book" is a 40px moss pill; hover turns it soil. Stays / Baths / Table are text links to `#stays`.
-7. Reduced motion: transitions 1ms; cards do not lift.
 
 ## Structure
 
@@ -45,45 +37,6 @@ The booking landing for a fictional twelve-guest house, Loam House, on a fold of
 - `<section class="hero">` — kicker, h1, lede, `<form class="strip" aria-label="Booking dates">`, `#note` live region.
 - Strip: 4 columns `1fr 1fr 140px 180px`, 10px gap, clay fill, 999px radius, 10px padding. Each `.field` is a sand inner pill, min-height 64px.
 - `<section class="stays" aria-label="Stays">` — 3 columns, 16px gap. Each card is a `<button>`.
-
-## Tokens
-
-```css
-:root {
-  --sand: #f1eadc;        /* page + inner fields */
-  --clay: #e4d4bc;        /* strip well */
-  --soil: #3a2e24;        /* type, primary button */
-  --soil-2: #6a5a48;      /* lede / meta */
-  --moss: #3f5340;        /* logo, Book, SVG stroke, focus */
-  --leaf: #6d8a62;        /* reserved lighter moss */
-  --terra: #b86a42;       /* kicker, Check-dates hover */
-  --line: #d7c9b0;        /* card border, stepper ring */
-
-  --serif: "Young Serif", Georgia, serif;
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-
-  --pad: 52px;
-  --nav: 58px;
-  --r: 18px;
-  --strip-max: 840px;
-
-  --t: 180ms;
-  --t-card: 280ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Headline | Young Serif | 76px | 400 | 0.96 | −0.025em | sentence |
-| Logo / card title | Young Serif | 22–28px | 400 | 1–1.1 | 0 | title |
-| Price | Young Serif | 22px | 400 | 1 | 0 | numerals |
-| Body / lede | Hanken Grotesk | 15–17px | 400 | 1.5 | 0 | sentence |
-| Kicker / field label | Hanken Grotesk | 11–12px | 600 | 1 | +0.10–0.14em | UPPERCASE |
-| Nav / Book | Hanken Grotesk | 14px | 400–500 | 1 | 0 | sentence |
 
 ## Motion
 
@@ -134,6 +87,59 @@ Reduced motion: durations 1ms; `transform: none` on cards; `scroll-behavior: aut
 - [ ] Focus rings are 2px moss on nav, steppers, submit, and cards.
 - [ ] `prefers-reduced-motion: reduce` removes the card lift.
 - [ ] No photographs, no emoji, no placeholder copy.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: Arrive `12 Oct`, Depart `15 Oct`, Guests `2`. The Loft card is `aria-pressed="true"`. The live region under the strip is empty. "Check dates" is enabled.
+2. Click + / − on Arrive: day moves between 8 and 28 October. Depart + / − moves a day number from 9 Oct through 4 Nov (internal 9–35; values > 31 display as November). Guests move 1–4.
+3. If Depart is on or before Arrive, "Check dates" is `disabled` (opacity 0.55).
+4. Submit the strip (click "Check dates"): prevent default. If valid, the live region reads `{n} nights · The Loft and Field Room are held for those dates.` If disabled, do not submit. Changing any stepper clears the note.
+5. Click a stay card: that card is pressed; the others are not. Pressed and hover: 1px moss border and a −3px lift over 280ms. Pressed also gets an inset 1px moss ring.
+6. Nav "Book" is a 40px moss pill; hover turns it soil. Stays / Baths / Table are text links to `#stays`.
+7. Reduced motion: transitions 1ms; cards do not lift.
+
+## Tokens
+
+```css
+:root {
+  --sand: #f1eadc;        /* page + inner fields */
+  --clay: #e4d4bc;        /* strip well */
+  --soil: #3a2e24;        /* type, primary button */
+  --soil-2: #6a5a48;      /* lede / meta */
+  --moss: #3f5340;        /* logo, Book, SVG stroke, focus */
+  --leaf: #6d8a62;        /* reserved lighter moss */
+  --terra: #b86a42;       /* kicker, Check-dates hover */
+  --line: #d7c9b0;        /* card border, stepper ring */
+
+  --serif: "Young Serif", Georgia, serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+
+  --pad: 52px;
+  --nav: 58px;
+  --r: 18px;
+  --strip-max: 840px;
+
+  --t: 180ms;
+  --t-card: 280ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Headline | Young Serif | 76px | 400 | 0.96 | −0.025em | sentence |
+| Logo / card title | Young Serif | 22–28px | 400 | 1–1.1 | 0 | title |
+| Price | Young Serif | 22px | 400 | 1 | 0 | numerals |
+| Body / lede | Hanken Grotesk | 15–17px | 400 | 1.5 | 0 | sentence |
+| Kicker / field label | Hanken Grotesk | 11–12px | 600 | 1 | +0.10–0.14em | UPPERCASE |
+| Nav / Book | Hanken Grotesk | 14px | 400–500 | 1 | 0 | sentence |
 
 ## Implementation notes
 

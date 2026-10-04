@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A classic pocket music player, the fictional Aubade 160, drawn in CSS on an acid-lime poster stage with a giant "Spin to scroll." headline. The player has a chrome rim, a hold switch and a headphone jack on the top edge, a colour LCD with a pixel-font menu, and a working click wheel. Drag your finger around the wheel and the highlight moves one row per 22° of rotation; press the centre to go in; press MENU to go back. Choosing a song opens Now Playing, where the wheel becomes a volume control. Finishes are White and Black. The detail worth copying is the angular accumulator: rotation is measured as the signed change in `atan2` between pointer events, unwrapped across ±180°, so the wheel works in both directions, at any speed, from any starting point.
-
-## Reference behaviour
-
-1. First frame: White finish, main menu with "Music" highlighted, a split screen with the menu on the left 52% and album art on the right. A track is paused at 1:04.
-2. Main menu items: Music, Playlists, Artists, Settings, Shuffle Songs, Now Playing. All but Now Playing and the toggles show a `›` chevron.
-3. Pointer down on the wheel ring, then move around it: once total rotation passes 12°, the gesture becomes a drag (pointer captured, a soft shaded arc appears under the finger). Every 22° clockwise moves the highlight down one row; anticlockwise moves it up. It stops at the ends, no wrap.
-4. The right-hand art preview changes with the highlighted item.
-5. A press on the ring without dragging hits the button under it: MENU (top) back, ⏮ (left) previous, ⏭ (right) next, ⏯ (bottom) play/pause.
-6. Centre button: in a list, enter the item. Music → Songs (7). Playlists → 4 playlists. Artists → 3 artists. Settings → Shuffle / Repeat / Backlight, where pressing the centre cycles the value shown on the right of the row. Shuffle Songs plays a random track. A song, playlist or artist starts playback and opens Now Playing.
-7. Now Playing: art (27cqw square), "3 of 7", title, artist, album, a progress bar with elapsed and `-remaining`. The header icon shows play when playing, pause when paused. Time advances once per second; at the end the next track starts.
-8. Rotating the wheel in Now Playing changes volume by 4 per step; the progress bar is replaced by a volume bar for 1400ms after the last step.
-9. Centre in Now Playing toggles play/pause. MENU goes back up the stack, one level per press.
-10. Lists show six rows and scroll the window to keep the highlight visible.
-11. Finish toggle: White or Black recolours the front, wheel, centre button, glyphs and rim.
-12. A polite live region announces the highlighted item, "Now playing Paper Engines by The Velours", "Paused", or the finish.
 
 ## Structure
 
@@ -47,40 +34,6 @@ A classic pocket music player, the fictional Aubade 160, drawn in CSS on an acid
 - `.shell` (aspect 0.6, radius 9cqw, 1cqw chrome rim gradient) > `.hold`, `.jack`, `.front`.
 - `.front` > `.lcd` (84 × 64cqw, black surround) > `.disp` > `.hdr` + `#v-list` (`ul role="listbox"` + `.peek`) + `#v-np`.
 - `.wheel` (72cqw circle, 12cqw from the bottom) > `.ring` (`role="slider"`, `tabindex=0`, covers the wheel), four `button.wb`, `button.center` (27cqw).
-
-## Tokens
-
-```css
-:root {
-  --stage: #d6f03b;     /* acid lime poster */
-  --ink: #0f0f0e;  --ink-2: #2c3010;
-  --hl: #ff4fa3;        /* selection bar, progress, wheel focus */
-  --sans: "Familjen Grotesk", system-ui, sans-serif;
-  --pix: "Pixelify Sans", ui-monospace, monospace;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --step: 22deg;        /* rotation per menu row */
-  /* White finish */
-  --front: #f6f6f3; --front-2: #e4e4df; --wheel: #fbfbf9; --wheel-2: #e9e9e4;
-  --glyph: #a4a4a0; --rim-1: #f4f5f6; --rim-2: #9ea2a7;
-}
-[data-finish="black"] { --front: #1d1d1f; --front-2: #0d0d0e; --wheel: #2b2b2e; --wheel-2: #1f1f22;
-  --glyph: #8a8a8f; --rim-1: #7a7d82; --rim-2: #2a2b2e; }
-```
-
-LCD palette: page `#f7f8f6`, text `#141414`, header gradient `#fdfdfd → #d9dbd8` with a `#a9aca8` rule, selection gradient `#ff7cbc → #ff4fa3` with white text. Album art is CSS only: teal with a yellow sun (`a0`), red and cream stripes (`a1`), black with a yellow disc (`a2`).
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Headline | Familjen Grotesk | clamp(64px, 10.5vw, 148px) | 700 | 0.86 | −0.045em | sentence; line 2 outlined 2px |
-| Sub | Familjen Grotesk | 17px | 500 | 1.4 | 0 | sentence |
-| Labels, segmented | Familjen Grotesk | 12–14px | 700 | 1 | 0.14em for labels | uppercase labels |
-| LCD menu | Pixelify Sans | 5.1cqw | 400 | 1 | 0 | title case |
-| LCD header | Pixelify Sans | 5.1cqw | 600 | 1 | 0 | — |
-| LCD meta / times | Pixelify Sans | 4–4.4cqw | 400 | 1 | 0 | — |
-| Wheel MENU | Familjen Grotesk | 4.4cqw | 700 | 1 | 0.06em | uppercase |
 
 ## Motion
 
@@ -143,6 +96,59 @@ The menu itself does not animate. A real click-wheel highlight jumps; easing it 
 - [ ] Seven songs: Salt Lines, Harbour Bells, Paper Engines, Ribbon Road, Night Bus to Vale, Sodium Glow, Last Ferry (artists Marit Sand, The Velours, Odun).
 - [ ] 22° per row, volume step 4, volume bar shown 1400ms.
 - [ ] Headline "Spin / to scroll." with the second line outlined.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: White finish, main menu with "Music" highlighted, a split screen with the menu on the left 52% and album art on the right. A track is paused at 1:04.
+2. Main menu items: Music, Playlists, Artists, Settings, Shuffle Songs, Now Playing. All but Now Playing and the toggles show a `›` chevron.
+3. Pointer down on the wheel ring, then move around it: once total rotation passes 12°, the gesture becomes a drag (pointer captured, a soft shaded arc appears under the finger). Every 22° clockwise moves the highlight down one row; anticlockwise moves it up. It stops at the ends, no wrap.
+4. The right-hand art preview changes with the highlighted item.
+5. A press on the ring without dragging hits the button under it: MENU (top) back, ⏮ (left) previous, ⏭ (right) next, ⏯ (bottom) play/pause.
+6. Centre button: in a list, enter the item. Music → Songs (7). Playlists → 4 playlists. Artists → 3 artists. Settings → Shuffle / Repeat / Backlight, where pressing the centre cycles the value shown on the right of the row. Shuffle Songs plays a random track. A song, playlist or artist starts playback and opens Now Playing.
+7. Now Playing: art (27cqw square), "3 of 7", title, artist, album, a progress bar with elapsed and `-remaining`. The header icon shows play when playing, pause when paused. Time advances once per second; at the end the next track starts.
+8. Rotating the wheel in Now Playing changes volume by 4 per step; the progress bar is replaced by a volume bar for 1400ms after the last step.
+9. Centre in Now Playing toggles play/pause. MENU goes back up the stack, one level per press.
+10. Lists show six rows and scroll the window to keep the highlight visible.
+11. Finish toggle: White or Black recolours the front, wheel, centre button, glyphs and rim.
+12. A polite live region announces the highlighted item, "Now playing Paper Engines by The Velours", "Paused", or the finish.
+
+## Tokens
+
+```css
+:root {
+  --stage: #d6f03b;     /* acid lime poster */
+  --ink: #0f0f0e;  --ink-2: #2c3010;
+  --hl: #ff4fa3;        /* selection bar, progress, wheel focus */
+  --sans: "Familjen Grotesk", system-ui, sans-serif;
+  --pix: "Pixelify Sans", ui-monospace, monospace;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --step: 22deg;        /* rotation per menu row */
+  /* White finish */
+  --front: #f6f6f3; --front-2: #e4e4df; --wheel: #fbfbf9; --wheel-2: #e9e9e4;
+  --glyph: #a4a4a0; --rim-1: #f4f5f6; --rim-2: #9ea2a7;
+}
+[data-finish="black"] { --front: #1d1d1f; --front-2: #0d0d0e; --wheel: #2b2b2e; --wheel-2: #1f1f22;
+  --glyph: #8a8a8f; --rim-1: #7a7d82; --rim-2: #2a2b2e; }
+```
+
+LCD palette: page `#f7f8f6`, text `#141414`, header gradient `#fdfdfd → #d9dbd8` with a `#a9aca8` rule, selection gradient `#ff7cbc → #ff4fa3` with white text. Album art is CSS only: teal with a yellow sun (`a0`), red and cream stripes (`a1`), black with a yellow disc (`a2`).
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Headline | Familjen Grotesk | clamp(64px, 10.5vw, 148px) | 700 | 0.86 | −0.045em | sentence; line 2 outlined 2px |
+| Sub | Familjen Grotesk | 17px | 500 | 1.4 | 0 | sentence |
+| Labels, segmented | Familjen Grotesk | 12–14px | 700 | 1 | 0.14em for labels | uppercase labels |
+| LCD menu | Pixelify Sans | 5.1cqw | 400 | 1 | 0 | title case |
+| LCD header | Pixelify Sans | 5.1cqw | 600 | 1 | 0 | — |
+| LCD meta / times | Pixelify Sans | 4–4.4cqw | 400 | 1 | 0 | — |
+| Wheel MENU | Familjen Grotesk | 4.4cqw | 700 | 1 | 0.06em | uppercase |
 
 ## Implementation notes
 

@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A daily activity widget for a fictional app called Hoopla, drawn like a sticker: cream card, 2.5px ink border, hard 8px offset shadow, on a sunflower dotted ground. Three concentric rings track Burn (kcal), Hustle (hard minutes) and Rise (hours with movement). They spring-fill on load with a slight overshoot, staggered outside-in. Tapping a ring, or one of three pill buttons, focuses it: the other rings fade to 32%, the chosen ring thickens from 26 to 30, and the panel swaps to its number, a one-line nudge, and 12 hourly bars. A black step-count chip hangs off the card's bottom edge, tilted −3°. The detail worth copying is the overshoot fill plus the thickening on focus; together they make the rings feel like rubber bands.
-
-## Reference behaviour
-
-1. Initial state: rings empty, Burn selected (pill pressed), panel shows Burn with the number counting up.
-2. Two frames after load, rings fill: Burn → 87% (520/600), Hustle → 60% (27/45), Rise → 83% (10/12). Delays 0 / 140 / 280ms, each 1000ms on `cubic-bezier(.34,1.56,.64,1)` (overshoots then settles).
-3. The panel number counts 0 → value over 900ms (cubic ease out) with thousands separators.
-4. Click a pill (Burn / Hustle / Rise) or click on a ring's stroke or track: that ring is selected and focused. Non-selected progress strokes go to opacity .32; the selected one goes to stroke-width 30.
-5. The panel replays a 320ms pop: from opacity 0, translateY 10px, rotate −1° to rest, on the springy easing. Number counts up again from 0.
-6. Hourly bars (7 am → 6 pm, 12 bars) animate to the new heights (320ms, springy). Hours with zero activity show an empty outlined stub (8px tall, card fill).
-7. Selecting the already-focused ring again clears focus: all rings back to full opacity and 26 stroke.
-8. Replay (top-right of the panel) empties the rings with no transition, then refills with the stagger, and clears focus.
-9. Each ring has a white glyph at 12 o'clock inside the stroke: flame (Burn), bolt (Hustle), up arrow (Rise).
 
 ## Structure
 
@@ -41,46 +31,6 @@ A daily activity widget for a fictional app called Hoopla, drawn like a sticker:
 - `.rings` holds one `svg viewBox="0 0 300 300"` (`aria-hidden`): three track circles, three progress circles, three glyph paths. Circles respond to clicks via `pointer-events: stroke`.
 - `.side`: top row (`p.eyebrow`, `button.replay`), `div.picker` (`role="group"`, "Choose a ring") with three `button.pick[aria-pressed]`, and `div.detail` (`aria-live="polite"`) containing `.big`, `p.note`, `.hours`, `.hlabels`.
 - `p.steps` is absolutely positioned at left 32px, bottom −22px.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ffd447;        /* sunflower ground */
-  --card: #fff7e4;      /* sticker */
-  --ink: #1b1a17;       /* border, text, shadow */
-  --ink-2: #4a463d;
-  --ink-3: #6b6558;
-  --burn: #ff5b3a;   --burn-t: #ffd9cd;
-  --hustle: #2f5bff; --hustle-t: #d5ddff;
-  --rise: #13b07a;   --rise-t: #c6eedc;
-  --display: "Bowlby One", "Arial Black", sans-serif;
-  --sans: "Outfit", system-ui, sans-serif;
-  --r-card: 32px; --r-pill: 999px; --r-bar: 5px 5px 2px 2px;
-  --border: 2.5px solid var(--ink);
-  --shadow: 8px 8px 0 var(--ink);
-  --ring-stroke: 26px; --ring-stroke-on: 30px;
-  --ring-r: 126px 94px 62px;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
-  --t-micro: 160ms; --t-swap: 320ms; --t-fill: 1000ms; --stagger: 140ms;
-}
-```
-
-Spacing runs 4 / 8 / 12 / 16 / 20 / 32 / 36. Ring colours appear only in strokes, swatches, bars and the highlighter under the nudge, never as text colour.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Panel number | Bowlby One | 76px | 400 | .95 | −0.01em | tabular nums |
-| Goal "/ 600 kcal" | Outfit | 20px | 600 | 1 | 0 | — |
-| Eyebrow | Outfit | 12px | 700 | 1 | 0.16em | uppercase |
-| Pill label | Outfit | 15px | 600 | 1 | 0 | — |
-| Nudge | Outfit | 16px | 400, strong 700 | 1.45 | 0 | max 34ch |
-| Hour labels | Outfit | 12px | 500 | 1 | 0 | — |
-| Steps number | Bowlby One | 16px | 400 | 1 | 0.02em | — |
 
 ## Motion
 
@@ -138,6 +88,62 @@ Spacing runs 4 / 8 / 12 / 16 / 20 / 32 / 36. Ring colours appear only in strokes
 - [ ] Ring radii 126 / 94 / 62 in a 300 viewBox, stroke 26 (30 when focused).
 - [ ] Step chip "8,412 steps", tilted −3°, overlapping the bottom border.
 - [ ] Nudge for Burn: "80 kcal to close Burn. A brisk 15-minute walk does it."
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: rings empty, Burn selected (pill pressed), panel shows Burn with the number counting up.
+2. Two frames after load, rings fill: Burn → 87% (520/600), Hustle → 60% (27/45), Rise → 83% (10/12). Delays 0 / 140 / 280ms, each 1000ms on `cubic-bezier(.34,1.56,.64,1)` (overshoots then settles).
+3. The panel number counts 0 → value over 900ms (cubic ease out) with thousands separators.
+4. Click a pill (Burn / Hustle / Rise) or click on a ring's stroke or track: that ring is selected and focused. Non-selected progress strokes go to opacity .32; the selected one goes to stroke-width 30.
+5. The panel replays a 320ms pop: from opacity 0, translateY 10px, rotate −1° to rest, on the springy easing. Number counts up again from 0.
+6. Hourly bars (7 am → 6 pm, 12 bars) animate to the new heights (320ms, springy). Hours with zero activity show an empty outlined stub (8px tall, card fill).
+7. Selecting the already-focused ring again clears focus: all rings back to full opacity and 26 stroke.
+8. Replay (top-right of the panel) empties the rings with no transition, then refills with the stagger, and clears focus.
+9. Each ring has a white glyph at 12 o'clock inside the stroke: flame (Burn), bolt (Hustle), up arrow (Rise).
+
+## Tokens
+
+```css
+:root {
+  --bg: #ffd447;        /* sunflower ground */
+  --card: #fff7e4;      /* sticker */
+  --ink: #1b1a17;       /* border, text, shadow */
+  --ink-2: #4a463d;
+  --ink-3: #6b6558;
+  --burn: #ff5b3a;   --burn-t: #ffd9cd;
+  --hustle: #2f5bff; --hustle-t: #d5ddff;
+  --rise: #13b07a;   --rise-t: #c6eedc;
+  --display: "Bowlby One", "Arial Black", sans-serif;
+  --sans: "Outfit", system-ui, sans-serif;
+  --r-card: 32px; --r-pill: 999px; --r-bar: 5px 5px 2px 2px;
+  --border: 2.5px solid var(--ink);
+  --shadow: 8px 8px 0 var(--ink);
+  --ring-stroke: 26px; --ring-stroke-on: 30px;
+  --ring-r: 126px 94px 62px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
+  --t-micro: 160ms; --t-swap: 320ms; --t-fill: 1000ms; --stagger: 140ms;
+}
+```
+
+Spacing runs 4 / 8 / 12 / 16 / 20 / 32 / 36. Ring colours appear only in strokes, swatches, bars and the highlighter under the nudge, never as text colour.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Panel number | Bowlby One | 76px | 400 | .95 | −0.01em | tabular nums |
+| Goal "/ 600 kcal" | Outfit | 20px | 600 | 1 | 0 | — |
+| Eyebrow | Outfit | 12px | 700 | 1 | 0.16em | uppercase |
+| Pill label | Outfit | 15px | 600 | 1 | 0 | — |
+| Nudge | Outfit | 16px | 400, strong 700 | 1.45 | 0 | max 34ch |
+| Hour labels | Outfit | 12px | 500 | 1 | 0 | — |
+| Steps number | Bowlby One | 16px | 400 | 1 | 0.02em | — |
 
 ## Implementation notes
 

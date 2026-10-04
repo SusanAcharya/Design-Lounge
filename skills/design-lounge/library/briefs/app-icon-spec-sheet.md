@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from icon.museum: its detail view puts one icon large on a quiet page with its facts and palette underneath, and this piece turns that into the page a designer uses to sign off an icon. The invented app is "Kitefield", a wind forecast app whose icon is a faceted kite on open sky. One screen shows the 1024 master with a magenta keyline overlay, the four sizes people actually see at 1:1 pixels, the icon in a row of four on a light and a dark home screen, the export file list and four review checks. The detail worth copying is the honesty of the real-size row: 180, 120, 60 and 29 pixels with no scaling, so you see at once whether the idea survives at 29.
-
-## Reference behaviour
-
-1. First frame at 1280×800: a 60px tool bar, then a 440px left card (master, legend, export list) and a right column (real sizes, two home screens, review checks). Everything fits without scrolling.
-2. The master is drawn at 78% of a 380px stage, about 29% of 1024. The caption computes that percentage from the real width and reads "Shown at 29% · OS applies the mask".
-3. The Keylines switch starts off. Turning it on (click, or the G key anywhere) shows the overlay: outer square, both diagonals, centre cross, circles of diameter 88, 50 and 26, a 74 square, a 62×80 portrait and an 80×62 landscape rectangle, and a dashed 80 safe zone. Each line draws in with a stroke-dash reveal, 700ms, staggered 45ms.
-4. The switch thumb slides 16px and the track turns magenta. A polite live region says "Keylines shown" or "Keylines hidden".
-5. The Mask segmented control has Squircle (default) and Full bleed. Full bleed shows the master as the square artwork you deliver, with the squircle drawn as a dashed line on top. The caption changes to "Deliver the square · dash = mask".
-6. Mask only changes the master. The real-size row and the home screens are always masked, because that is what the system shows.
-7. The real-size row shows 180, 120, 60 and 29 pixel icons bottom-aligned, each with a mono size label and a two-line use note.
-8. The light home screen shows a row of four 60px icons on a pale sky-to-sand gradient: Parcel, Kitefield, Tram, Lark. The dark home screen shows the same row on a night gradient; neighbours turn to dark plates with coloured glyphs and Kitefield uses its dark variant (night plate, same kite).
-9. The export list shows five files with pixel size and use: icon-1024.png, icon-180.png, icon-120.png, icon-60.png, icon-29.png.
-10. "Export 5 sizes" changes its label to "5 files ready" for 1.8s and announces "Export set ready: five PNG files".
-11. The Review checks card lists four passed checks with ticks: One idea, No words, Light from above, Holds at 29 px.
 
 ## Structure
 
@@ -50,62 +38,6 @@ Studied from icon.museum: its detail view puts one icon large on a quiet page wi
 - The master is an `svg role="img"` with `aria-label="Kitefield icon at 1024 pixels"`; the overlay is a second absolutely-positioned `svg` with `aria-hidden="true"` and `pointer-events: none`.
 - The export list is a `ul` with one `li` per file in a three-column grid.
 - The review checks are a `ul`; each tick is a CSS pseudo-element, not an image.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #e7e8e3;          /* stone */
-  --panel: #f5f5f1;       /* cards */
-  --ink: #121417;
-  --ink-2: #454950;
-  --ink-3: #5f646b;       /* eyebrows, captions */
-  --line: #d3d5ce;
-  --key: #ff2e88;         /* keyline magenta, switch on */
-  --focus: #121417;
-  /* the icon */
-  --sky-top: #9edbff; --sky-bottom: #2f7fd6;
-  --night-top: #22303e; --night-bottom: #0b1016;
-  --kite-1: #fff6e6; --kite-2: #ff8a66; --kite-3: #f0dcc0; --kite-4: #e5533a; --bow: #ffd166;
-  /* home wallpapers */
-  --wall-light: linear-gradient(160deg, #dbe7ef, #f3ede2);
-  --wall-dark: linear-gradient(160deg, #25313c, #0f1317);
-  /* type */
-  --sans: "Manrope", system-ui, sans-serif;
-  --mono: "Martian Mono", ui-monospace, monospace;
-  /* space */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 28px; --s-7: 32px;
-  /* shape */
-  --r-card: 18px; --r-stage: 12px; --r-seg: 9px; --r-switch: 999px;
-  /* shadow */
-  --sh-master: drop-shadow(0 24px 28px rgba(18,20,23,.2)) drop-shadow(0 3px 4px rgba(18,20,23,.12));
-  --sh-size: drop-shadow(0 6px 10px rgba(18,20,23,.16));
-  /* motion */
-  --ease: cubic-bezier(.16,1,.3,1);
-  --std: cubic-bezier(.2,.7,.2,1);
-  --t-draw: 700ms; --t-stagger: 45ms; --t-switch: 250ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Breadcrumb app name | Manrope | 15px | 700 | 1.5 | 0 | Title |
-| Breadcrumb trail | Manrope | 15px | 500 | 1.5 | 0 | Title, `--ink-3` |
-| Version chip | Martian Mono | 11px | 500 | 1 | 0 | Lower, ink fill |
-| Switch and segment labels | Manrope | 13px | 600 | 1 | 0 | Title |
-| Export button | Manrope | 13px | 700 | 1 | 0 | Sentence |
-| Card eyebrow | Martian Mono | 11px | 500 | 1 | 0.08em | Uppercase |
-| Caption, file rows | Martian Mono | 11–11.5px | 400 (file name 500) | 1.5 | 0 | As written |
-| Size label | Martian Mono | 12px | 500 | 1 | 0 | Numerals |
-| Use note | Manrope | 12px | 400 | 1.3 | 0 | Sentence |
-| App label on home screen | Manrope | 11px | 600 | 1.2 | 0 | Title |
-| Check title | Manrope | 13px | 700 | 1.4 | 0 | Sentence |
-| Check note | Manrope | 13px | 400 | 1.4 | 0 | Sentence |
-
-Numbers that are measurements (1024, 180, px) are always in the mono. Words people read are in Manrope.
 
 ## Motion
 
@@ -168,6 +100,80 @@ Nothing moves on load. The page is a reference sheet; the only motion explains t
 - [ ] Neighbours on the home screens are Parcel, Tram and Lark.
 - [ ] Use notes: 180 Home @3x 60 pt; 120 Home @2x, Spotlight @3x; 60 Notification @3x 20 pt; 29 Settings @1x 29 pt.
 - [ ] Export button reads "5 files ready" for 1.8s after a click.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 1280×800: a 60px tool bar, then a 440px left card (master, legend, export list) and a right column (real sizes, two home screens, review checks). Everything fits without scrolling.
+2. The master is drawn at 78% of a 380px stage, about 29% of 1024. The caption computes that percentage from the real width and reads "Shown at 29% · OS applies the mask".
+3. The Keylines switch starts off. Turning it on (click, or the G key anywhere) shows the overlay: outer square, both diagonals, centre cross, circles of diameter 88, 50 and 26, a 74 square, a 62×80 portrait and an 80×62 landscape rectangle, and a dashed 80 safe zone. Each line draws in with a stroke-dash reveal, 700ms, staggered 45ms.
+4. The switch thumb slides 16px and the track turns magenta. A polite live region says "Keylines shown" or "Keylines hidden".
+5. The Mask segmented control has Squircle (default) and Full bleed. Full bleed shows the master as the square artwork you deliver, with the squircle drawn as a dashed line on top. The caption changes to "Deliver the square · dash = mask".
+6. Mask only changes the master. The real-size row and the home screens are always masked, because that is what the system shows.
+7. The real-size row shows 180, 120, 60 and 29 pixel icons bottom-aligned, each with a mono size label and a two-line use note.
+8. The light home screen shows a row of four 60px icons on a pale sky-to-sand gradient: Parcel, Kitefield, Tram, Lark. The dark home screen shows the same row on a night gradient; neighbours turn to dark plates with coloured glyphs and Kitefield uses its dark variant (night plate, same kite).
+9. The export list shows five files with pixel size and use: icon-1024.png, icon-180.png, icon-120.png, icon-60.png, icon-29.png.
+10. "Export 5 sizes" changes its label to "5 files ready" for 1.8s and announces "Export set ready: five PNG files".
+11. The Review checks card lists four passed checks with ticks: One idea, No words, Light from above, Holds at 29 px.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #e7e8e3;          /* stone */
+  --panel: #f5f5f1;       /* cards */
+  --ink: #121417;
+  --ink-2: #454950;
+  --ink-3: #5f646b;       /* eyebrows, captions */
+  --line: #d3d5ce;
+  --key: #ff2e88;         /* keyline magenta, switch on */
+  --focus: #121417;
+  /* the icon */
+  --sky-top: #9edbff; --sky-bottom: #2f7fd6;
+  --night-top: #22303e; --night-bottom: #0b1016;
+  --kite-1: #fff6e6; --kite-2: #ff8a66; --kite-3: #f0dcc0; --kite-4: #e5533a; --bow: #ffd166;
+  /* home wallpapers */
+  --wall-light: linear-gradient(160deg, #dbe7ef, #f3ede2);
+  --wall-dark: linear-gradient(160deg, #25313c, #0f1317);
+  /* type */
+  --sans: "Manrope", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+  /* space */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 28px; --s-7: 32px;
+  /* shape */
+  --r-card: 18px; --r-stage: 12px; --r-seg: 9px; --r-switch: 999px;
+  /* shadow */
+  --sh-master: drop-shadow(0 24px 28px rgba(18,20,23,.2)) drop-shadow(0 3px 4px rgba(18,20,23,.12));
+  --sh-size: drop-shadow(0 6px 10px rgba(18,20,23,.16));
+  /* motion */
+  --ease: cubic-bezier(.16,1,.3,1);
+  --std: cubic-bezier(.2,.7,.2,1);
+  --t-draw: 700ms; --t-stagger: 45ms; --t-switch: 250ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Breadcrumb app name | Manrope | 15px | 700 | 1.5 | 0 | Title |
+| Breadcrumb trail | Manrope | 15px | 500 | 1.5 | 0 | Title, `--ink-3` |
+| Version chip | Martian Mono | 11px | 500 | 1 | 0 | Lower, ink fill |
+| Switch and segment labels | Manrope | 13px | 600 | 1 | 0 | Title |
+| Export button | Manrope | 13px | 700 | 1 | 0 | Sentence |
+| Card eyebrow | Martian Mono | 11px | 500 | 1 | 0.08em | Uppercase |
+| Caption, file rows | Martian Mono | 11–11.5px | 400 (file name 500) | 1.5 | 0 | As written |
+| Size label | Martian Mono | 12px | 500 | 1 | 0 | Numerals |
+| Use note | Manrope | 12px | 400 | 1.3 | 0 | Sentence |
+| App label on home screen | Manrope | 11px | 600 | 1.2 | 0 | Title |
+| Check title | Manrope | 13px | 700 | 1.4 | 0 | Sentence |
+| Check note | Manrope | 13px | 400 | 1.4 | 0 | Sentence |
+
+Numbers that are measurements (1024, 180, px) are always in the mono. Words people read are in Manrope.
 
 ## Implementation notes
 

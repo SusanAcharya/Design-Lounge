@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The empty state of a mail inbox in a web app ("Nord Post"). Instead of a grey box that says "No items", the centre of the list area shows a 220×160 line illustration (a mail tray and a paper plane) that draws itself stroke-by-stroke over 1.2s the first time it appears, followed by a serif heading with one italic accent word, one sentence of guidance and two buttons. A switch in the header simulates incoming mail so the transition *out* of the empty state can be seen: the empty block lifts and fades, and four rows rise in with a 60ms stagger. The detail worth copying is the stroke draw: `pathLength="1"` on every path so a single `stroke-dasharray:1` animation works regardless of path length.
-
-## Reference behaviour
-
-1. Initial state: header (56px) with brand, a search field, and a "Simulate incoming mail" switch (off). Left folder nav (220px) with "Inbox" as the current route and count `0`. Main shows a 52px title bar ("Inbox", meta "Nothing waiting · synced 09:14") and the empty state centred in the remaining area.
-2. On load the five illustration paths draw themselves. Each path animates `stroke-dashoffset` 1 → 0 over 560ms; delays are 0, 140, 300, 460 and 640ms, so the last stroke finishes at 1200ms. The paper plane path is drawn in the accent colour; everything else in `--ink-2`.
-3. Below the illustration: heading "Your inbox is *clear*" (28px Fraunces, "clear" italic in accent), one sentence of guidance (15px, `--ink-2`, max-width 380px), then two buttons side by side: primary "Compose message" (filled accent with a plus icon) and secondary "Connect a mailbox" (outlined). A 12px hint line under them says "Click the illustration to replay the draw".
-4. Clicking the illustration replays the draw from zero (all five paths restart with their delays).
-5. Hovering the primary button darkens it to `--accent-hover`; hovering the secondary fills it with `--surface-2`. Pressing either nudges it down 1px.
-6. Turning the switch **on**: the whole empty block transitions to `opacity:0; transform:translateY(-8px) scale(.98)` over 240ms, then is hidden. Four inbox rows (avatar initials, sender, subject + preview, time) appear, each animating from `opacity:0; translateY(8px)` to rest over 240ms with a 60ms per-row stagger. The Inbox count becomes `4` and the meta reads "2 unread · synced just now". Unread rows show a 6px accent dot before the sender.
-7. Turning the switch **off**: rows hide immediately, the empty block is un-hidden and fades back in over 240ms, the illustration replays, the count returns to `0`.
-8. The switch is a `role="switch"` button; its `aria-checked` mirrors the state.
 
 ## Structure
 
@@ -44,6 +35,77 @@ The empty state of a mail inbox in a web app ("Nord Post"). Instead of a grey bo
 - `<main>` — `.bar` (52px, `<h1>` + meta) then `.stage` (`position:relative; flex:1`).
   - `<section class="empty" aria-labelledby>` — absolutely fills `.stage`, flex column centred. Contains the `<svg class="art" role="img">`, `<h2>`, `<p>`, `.actions` (two `<button>`s) and `.hint`.
   - `<ul class="list" hidden aria-live="polite">` — populated rows; each `<li class="row">` is a 4-column grid `36px 200px 1fr 64px`, 56px tall.
+
+## Motion
+
+| Element              | Trigger                | Property              | From → To                  | Duration | Easing       | Delay / stagger |
+|----------------------|------------------------|-----------------------|----------------------------|---------:|--------------|-----------------|
+| `.art path` (×5)     | mount / click replay   | stroke-dashoffset     | 1 → 0                      | 560ms    | `--ease-out` | 0, 140, 300, 460, 640ms |
+| `.empty`             | switch on              | opacity, transform    | 1, none → 0, translateY(−8px) scale(.98) | 240ms | `--ease` | none; `hidden` set after 240ms |
+| `.empty`             | switch off             | opacity, transform    | 0 → 1, none                | 240ms    | `--ease`     | next frame after unhiding |
+| `.row` (×4)          | list shown             | opacity, translateY   | 0, 8px → 1, 0              | 240ms    | `--ease-out` | `calc(var(--i) * 60ms)` |
+| `.switch::after`     | toggle                 | translateX            | 0 → 18px                   | 160ms    | `--ease`     | track colour on same clock |
+| `.btn`               | hover / active         | background / translateY | — / 0 → 1px              | 160ms    | `--ease`     | |
+
+Reduced motion: stroke animations run 1ms with zero delay (illustration appears fully drawn), rows appear at once, all transitions 1ms. The click-to-replay still "works" (it re-renders instantly).
+
+## States
+
+- **Nav link hover:** background `--surface-2`, text `--ink`.
+- **Nav current route:** `aria-current="page"`, background `--accent-soft`, text `--accent`, weight 500.
+- **Nav / button / switch focus-visible:** 2px `--accent` outline; nav links use `outline-offset:-2px`, buttons and switch `+2px`.
+- **Primary button hover:** `--accent-hover` fill and border. **Secondary hover:** `--surface-2` fill.
+- **Button active:** `translateY(1px)`.
+- **Switch on:** track `--accent`, knob at `translateX(18px)`.
+- **Row hover:** background `--surface`. **Unread row:** 6px accent dot inline before the sender name.
+- **Empty (the piece itself):** as described; **populated:** empty block hidden, list visible, count and meta updated.
+
+## Accessibility
+
+- The illustration is `<svg role="img" aria-label="An empty mail tray with a paper plane flying away. Click to replay the drawing.">`. Because it is clickable, also make it keyboard reachable in production (`tabindex="0"` + Enter/Space → replay) or move the replay onto the hint as a real button.
+- The empty section is `<section aria-labelledby="eh">` where `eh` is the `<h2>` id.
+- The list is `aria-live="polite"` so the four rows are announced when they arrive; the folder count next to "Inbox" also updates in the DOM.
+- The switch is `<button role="switch" aria-checked>` with a visible `<label for>`; Space and Enter toggle it.
+- Focus order: brand → switch → nav links → primary button → secondary button. All have visible rings.
+- Contrast: `--ink-2` on `--bg` is 6.4:1; `--ink-3` (8.0px+ meta) on `--bg` is 3.6:1 and only used at ≥ 12px for non-essential text; `--on-accent` on `--accent` is 5.9:1.
+- Hit targets: buttons 38px tall; switch 40×22 visual with a 40×40 hit area through the surrounding label row.
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- 1024–1279: nav collapses to 64px icon rail; the search shrinks to 260px; empty state unchanged.
+- 768–1023: nav becomes a drawer behind a menu button; row grid becomes `36px 1fr 64px` with subject under sender on a second line (row height 64px).
+- < 640: illustration scales to 176×128; heading 24px; the two actions stack vertically at full width (max 320px); hint hidden.
+
+## Acceptance checklist
+
+- [ ] Every illustration path has `pathLength="1"` and animates `stroke-dashoffset` 1 → 0 over 560ms.
+- [ ] Path delays are 0/140/300/460/640ms so the drawing completes at exactly 1200ms.
+- [ ] The paper-plane path is stroked in `--accent`; all other paths in `--ink-2`; stroke width 1.75, round caps and joins.
+- [ ] Heading is 28px Fraunces with one italic accent word; guidance is 15px `--ink-2` capped at 380px.
+- [ ] Clicking the illustration restarts the draw from zero (not from mid-way).
+- [ ] Turning the switch on fades and lifts the empty block over 240ms *before* rows appear.
+- [ ] Rows rise with a 60ms stagger and the Inbox count updates to 4.
+- [ ] Turning the switch off restores the empty state and replays the draw.
+- [ ] `role="switch"` + `aria-checked` on the toggle; `aria-live="polite"` on the list.
+- [ ] Focus rings are visible on nav links, both buttons and the switch.
+- [ ] Under `prefers-reduced-motion: reduce` the illustration is fully drawn on first paint.
+- [ ] Nothing in the empty state is clipped at 1024×640 (−20%).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header (56px) with brand, a search field, and a "Simulate incoming mail" switch (off). Left folder nav (220px) with "Inbox" as the current route and count `0`. Main shows a 52px title bar ("Inbox", meta "Nothing waiting · synced 09:14") and the empty state centred in the remaining area.
+2. On load the five illustration paths draw themselves. Each path animates `stroke-dashoffset` 1 → 0 over 560ms; delays are 0, 140, 300, 460 and 640ms, so the last stroke finishes at 1200ms. The paper plane path is drawn in the accent colour; everything else in `--ink-2`.
+3. Below the illustration: heading "Your inbox is *clear*" (28px Fraunces, "clear" italic in accent), one sentence of guidance (15px, `--ink-2`, max-width 380px), then two buttons side by side: primary "Compose message" (filled accent with a plus icon) and secondary "Connect a mailbox" (outlined). A 12px hint line under them says "Click the illustration to replay the draw".
+4. Clicking the illustration replays the draw from zero (all five paths restart with their delays).
+5. Hovering the primary button darkens it to `--accent-hover`; hovering the secondary fills it with `--surface-2`. Pressing either nudges it down 1px.
+6. Turning the switch **on**: the whole empty block transitions to `opacity:0; transform:translateY(-8px) scale(.98)` over 240ms, then is hidden. Four inbox rows (avatar initials, sender, subject + preview, time) appear, each animating from `opacity:0; translateY(8px)` to rest over 240ms with a 60ms per-row stagger. The Inbox count becomes `4` and the meta reads "2 unread · synced just now". Unread rows show a 6px accent dot before the sender.
+7. Turning the switch **off**: rows hide immediately, the empty block is un-hidden and fades back in over 240ms, the illustration replays, the count returns to `0`.
+8. The switch is a `role="switch"` button; its `aria-checked` mirrors the state.
 
 ## Tokens
 
@@ -105,62 +167,6 @@ The empty state of a mail inbox in a web app ("Nord Post"). Instead of a grey bo
 | Avatar initials   | Instrument Sans | 12px | 600    | 1           | 0        | UPPERCASE |
 
 Load Fraunces with `opsz` 9..144 and both roman and italic at weight 500 so the italic accent word is a true italic.
-
-## Motion
-
-| Element              | Trigger                | Property              | From → To                  | Duration | Easing       | Delay / stagger |
-|----------------------|------------------------|-----------------------|----------------------------|---------:|--------------|-----------------|
-| `.art path` (×5)     | mount / click replay   | stroke-dashoffset     | 1 → 0                      | 560ms    | `--ease-out` | 0, 140, 300, 460, 640ms |
-| `.empty`             | switch on              | opacity, transform    | 1, none → 0, translateY(−8px) scale(.98) | 240ms | `--ease` | none; `hidden` set after 240ms |
-| `.empty`             | switch off             | opacity, transform    | 0 → 1, none                | 240ms    | `--ease`     | next frame after unhiding |
-| `.row` (×4)          | list shown             | opacity, translateY   | 0, 8px → 1, 0              | 240ms    | `--ease-out` | `calc(var(--i) * 60ms)` |
-| `.switch::after`     | toggle                 | translateX            | 0 → 18px                   | 160ms    | `--ease`     | track colour on same clock |
-| `.btn`               | hover / active         | background / translateY | — / 0 → 1px              | 160ms    | `--ease`     | |
-
-Reduced motion: stroke animations run 1ms with zero delay (illustration appears fully drawn), rows appear at once, all transitions 1ms. The click-to-replay still "works" (it re-renders instantly).
-
-## States
-
-- **Nav link hover:** background `--surface-2`, text `--ink`.
-- **Nav current route:** `aria-current="page"`, background `--accent-soft`, text `--accent`, weight 500.
-- **Nav / button / switch focus-visible:** 2px `--accent` outline; nav links use `outline-offset:-2px`, buttons and switch `+2px`.
-- **Primary button hover:** `--accent-hover` fill and border. **Secondary hover:** `--surface-2` fill.
-- **Button active:** `translateY(1px)`.
-- **Switch on:** track `--accent`, knob at `translateX(18px)`.
-- **Row hover:** background `--surface`. **Unread row:** 6px accent dot inline before the sender name.
-- **Empty (the piece itself):** as described; **populated:** empty block hidden, list visible, count and meta updated.
-
-## Accessibility
-
-- The illustration is `<svg role="img" aria-label="An empty mail tray with a paper plane flying away. Click to replay the drawing.">`. Because it is clickable, also make it keyboard reachable in production (`tabindex="0"` + Enter/Space → replay) or move the replay onto the hint as a real button.
-- The empty section is `<section aria-labelledby="eh">` where `eh` is the `<h2>` id.
-- The list is `aria-live="polite"` so the four rows are announced when they arrive; the folder count next to "Inbox" also updates in the DOM.
-- The switch is `<button role="switch" aria-checked>` with a visible `<label for>`; Space and Enter toggle it.
-- Focus order: brand → switch → nav links → primary button → secondary button. All have visible rings.
-- Contrast: `--ink-2` on `--bg` is 6.4:1; `--ink-3` (8.0px+ meta) on `--bg` is 3.6:1 and only used at ≥ 12px for non-essential text; `--on-accent` on `--accent` is 5.9:1.
-- Hit targets: buttons 38px tall; switch 40×22 visual with a 40×40 hit area through the surrounding label row.
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- 1024–1279: nav collapses to 64px icon rail; the search shrinks to 260px; empty state unchanged.
-- 768–1023: nav becomes a drawer behind a menu button; row grid becomes `36px 1fr 64px` with subject under sender on a second line (row height 64px).
-- < 640: illustration scales to 176×128; heading 24px; the two actions stack vertically at full width (max 320px); hint hidden.
-
-## Acceptance checklist
-
-- [ ] Every illustration path has `pathLength="1"` and animates `stroke-dashoffset` 1 → 0 over 560ms.
-- [ ] Path delays are 0/140/300/460/640ms so the drawing completes at exactly 1200ms.
-- [ ] The paper-plane path is stroked in `--accent`; all other paths in `--ink-2`; stroke width 1.75, round caps and joins.
-- [ ] Heading is 28px Fraunces with one italic accent word; guidance is 15px `--ink-2` capped at 380px.
-- [ ] Clicking the illustration restarts the draw from zero (not from mid-way).
-- [ ] Turning the switch on fades and lifts the empty block over 240ms *before* rows appear.
-- [ ] Rows rise with a 60ms stagger and the Inbox count updates to 4.
-- [ ] Turning the switch off restores the empty state and replays the draw.
-- [ ] `role="switch"` + `aria-checked` on the toggle; `aria-live="polite"` on the list.
-- [ ] Focus rings are visible on nav links, both buttons and the switch.
-- [ ] Under `prefers-reduced-motion: reduce` the illustration is fully drawn on first paint.
-- [ ] Nothing in the empty state is clipped at 1024×640 (−20%).
 
 ## Implementation notes
 

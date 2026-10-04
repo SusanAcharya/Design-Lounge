@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A single dashboard row for Harbor Ops, a fictional container-terminal tool. Four cards in a 12px gap: Throughput, Berth util., Avg. delay, Fuel / move. Each card is a 11px mono label, a 40px tabular number with a unit, a signed delta versus the prior shift, and a 56px-tall SVG sparkline of the last 12 hours. On load each polyline draws itself with `pathLength="1"` and a dashoffset animation. Hovering the spark snaps a 3.5px cobalt dot and a mono tooltip to the nearest of the 12 points. One cobalt, cool gray paper, 2px radii. Replay rebuilds the cards so the lines draw again.
-
-## Reference behaviour
-
-1. Initial state: cool gray page `#e6e8ec`. Header 56px: 10px cobalt square + "Harbor Ops" 14/600, then mono "Berth 12 · **Shift 06:00–14:00** · 2 Oct 2026", then a Replay button.
-2. Kicker under the header: "Live KPIs · last 12 hours", 11px mono uppercase `--ink-3`.
-3. Four cards, `repeat(4, 1fr)`, gap 12, min-height 220, padding 22/18, background `#f4f5f7`, 1px `#cfd3da` border, radius 2.
-4. Card contents, top to bottom: label, number, delta, spark (margin-top auto).
-5. Deltas: Throughput `+6.2%` green + chevron-up; Berth util. `+1.1 pt` green + up; Avg. delay `−4 min` green + chevron-down (delay fell, which is good); Fuel / move `−0.18 t` green + down. Colour is `--up` (`#2a7a5a`) for all four because every change is an improvement. Arrow direction follows the sign of the number.
-6. On load each spark path uses `pathLength="1"`, `stroke-dasharray: 1`, `stroke-dashoffset: 1`, then animates dashoffset to 0 over 900ms expo-out. Stroke cobalt, 1.75px, round caps.
-7. Pointer-move on the SVG: convert clientX into viewBox X (0–160), pick the closest of 12 points, show `.hi` circle and `.tip` with the formatted value (`148 TEU`, `86.4%`, `12 min`, `2.41 t`). Pointer-leave hides the highlight.
-8. Replay empties `#row` and rebuilds the four cards so the draw animation runs again.
-9. Reduced motion: no draw animation; paths render complete (`stroke-dashoffset: 0`). Hover highlight still works.
 
 ## Structure
 
@@ -54,44 +44,6 @@ A single dashboard row for Harbor Ops, a fictional container-terminal tool. Four
 | Fuel / move  | 2.41   | t    | −0.18 t   | down| 2.8, 2.74, 2.7, 2.66, 2.62, 2.58, 2.55, 2.52, 2.5, 2.47, 2.44, 2.41 |
 
 Tooltip formatters: `v + ' TEU'`, `v.toFixed(1) + '%'`, `v + ' min'`, `v.toFixed(2) + ' t'`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #e6e8ec;               /* page */
-  --card: #f4f5f7;             /* card surface */
-  --ink: #16191e;
-  --ink-2: #5a616b;
-  --ink-3: #8b929c;
-  --line: #cfd3da;
-  --cobalt: #1f4ebf;           /* the one accent, spark stroke, mark */
-  --up: #2a7a5a;               /* improving delta */
-  --down: #b5473a;             /* reserved; unused in this data set */
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --gutter: 40px;
-  --r: 2px;
-  --t-micro: 160ms;
-  --t-draw: 900ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role       | Family        | Size | Weight | Line-height | Tracking | Case      |
-|------------|---------------|-----:|-------:|------------:|---------:|-----------|
-| Number     | IBM Plex Sans | 40px | 600    | 1           | −0.04em  | tabular   |
-| Unit       | IBM Plex Sans | 16px | 500    | 1           | 0        | as-is     |
-| Brand      | IBM Plex Sans | 14px | 600    | 1           | −0.01em  | Title     |
-| Label      | IBM Plex Mono | 11px | 500    | 1           | +0.1em   | UPPERCASE |
-| Delta      | IBM Plex Mono | 12px | 500    | 1           | 0        | as-is     |
-| Shift / tip| IBM Plex Mono | 12/11px | 400/500 | 1       | 0        | as-is     |
-| Kicker     | IBM Plex Mono | 11px | 500    | 1           | +0.12em  | UPPERCASE |
-
-Numbers use `font-variant-numeric: tabular-nums`.
 
 ## Motion
 
@@ -137,6 +89,60 @@ Numbers use `font-variant-numeric: tabular-nums`.
 - [ ] Shift line reads Berth 12, 06:00–14:00, 2 Oct 2026.
 - [ ] Only IBM Plex Sans and IBM Plex Mono load.
 - [ ] No chart library, no canvas, no purple.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: cool gray page `#e6e8ec`. Header 56px: 10px cobalt square + "Harbor Ops" 14/600, then mono "Berth 12 · **Shift 06:00–14:00** · 2 Oct 2026", then a Replay button.
+2. Kicker under the header: "Live KPIs · last 12 hours", 11px mono uppercase `--ink-3`.
+3. Four cards, `repeat(4, 1fr)`, gap 12, min-height 220, padding 22/18, background `#f4f5f7`, 1px `#cfd3da` border, radius 2.
+4. Card contents, top to bottom: label, number, delta, spark (margin-top auto).
+5. Deltas: Throughput `+6.2%` green + chevron-up; Berth util. `+1.1 pt` green + up; Avg. delay `−4 min` green + chevron-down (delay fell, which is good); Fuel / move `−0.18 t` green + down. Colour is `--up` (`#2a7a5a`) for all four because every change is an improvement. Arrow direction follows the sign of the number.
+6. On load each spark path uses `pathLength="1"`, `stroke-dasharray: 1`, `stroke-dashoffset: 1`, then animates dashoffset to 0 over 900ms expo-out. Stroke cobalt, 1.75px, round caps.
+7. Pointer-move on the SVG: convert clientX into viewBox X (0–160), pick the closest of 12 points, show `.hi` circle and `.tip` with the formatted value (`148 TEU`, `86.4%`, `12 min`, `2.41 t`). Pointer-leave hides the highlight.
+8. Replay empties `#row` and rebuilds the four cards so the draw animation runs again.
+9. Reduced motion: no draw animation; paths render complete (`stroke-dashoffset: 0`). Hover highlight still works.
+
+## Tokens
+
+```css
+:root {
+  --bg: #e6e8ec;               /* page */
+  --card: #f4f5f7;             /* card surface */
+  --ink: #16191e;
+  --ink-2: #5a616b;
+  --ink-3: #8b929c;
+  --line: #cfd3da;
+  --cobalt: #1f4ebf;           /* the one accent, spark stroke, mark */
+  --up: #2a7a5a;               /* improving delta */
+  --down: #b5473a;             /* reserved; unused in this data set */
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --gutter: 40px;
+  --r: 2px;
+  --t-micro: 160ms;
+  --t-draw: 900ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role       | Family        | Size | Weight | Line-height | Tracking | Case      |
+|------------|---------------|-----:|-------:|------------:|---------:|-----------|
+| Number     | IBM Plex Sans | 40px | 600    | 1           | −0.04em  | tabular   |
+| Unit       | IBM Plex Sans | 16px | 500    | 1           | 0        | as-is     |
+| Brand      | IBM Plex Sans | 14px | 600    | 1           | −0.01em  | Title     |
+| Label      | IBM Plex Mono | 11px | 500    | 1           | +0.1em   | UPPERCASE |
+| Delta      | IBM Plex Mono | 12px | 500    | 1           | 0        | as-is     |
+| Shift / tip| IBM Plex Mono | 12/11px | 400/500 | 1       | 0        | as-is     |
+| Kicker     | IBM Plex Mono | 11px | 500    | 1           | +0.12em  | UPPERCASE |
+
+Numbers use `font-variant-numeric: tabular-nums`.
 
 ## Implementation notes
 

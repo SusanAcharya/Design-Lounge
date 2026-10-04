@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The not-found page for the developer docs of *Kestrel*, styled as a terminal window. A 40px title strip with three hollow dots, the session name and a "replay" button; below it, a 48px-padded log area where the 404 message types itself out line by line at 22ms per character: the failed request in grey, the status line in green, a 88px "404", three lines of explanation, and a list of four commands. A real prompt follows ("visitor@kestrel:~$ ") with a blinking 0.62em × 1.15em green block cursor that tracks the typed text. Typing `home`, `back`, `search <query>`, `help`, `ls` or `clear` produces typed responses; anything else prints an amber "command not found". No scanlines, no glow, no CRT curvature; the restraint is the point.
-
-## Reference behaviour
-
-1. Load: the log is empty; lines type in sequence. Line 1 `$ GET /docs/v2/webhooks/retries` (grey), line 2 `HTTP/1.1 404 Not Found` (green), then `404` appears at once (not typed) at 88px, then six body/list lines type. Total intro ≈ 4.5s. The cursor does not blink while typing.
-2. When the intro finishes, the input receives focus and the cursor blinks (1s period, hard steps: 500ms on, 500ms off).
-3. Typing: characters appear in `--ink`; the block cursor moves right by the measured width of the typed text (a hidden mirror span). The native caret is hidden.
-4. Enter: the command echoes as a grey line `visitor@kestrel:~$ <cmd>`, the input clears, and the response types out. `help` lists six commands; `ls` prints a directory line; `home`, `back` and `search` print a green "→ redirecting …" line (navigation disabled in the demo; wire them to real navigation in your product); `clear` empties the log; unknown words print amber `command not found: <word>` and a grey hint.
-5. Clicking anywhere in the log area focuses the input. When the input loses focus the cursor stops blinking and becomes a hollow outline.
-6. Click "replay" in the title strip: the log clears and the intro types again. Any typing in progress is cancelled by a token check.
-7. Reduced motion: lines appear whole (no per-character typing) and the cursor does not blink.
 
 ## Structure
 
@@ -48,58 +40,6 @@ The not-found page for the developer docs of *Kestrel*, styled as a terminal win
 - `.term` — `role="log" aria-live="polite" aria-label="Terminal"`, `flex:1; overflow-y:auto; padding:48px; cursor:text`.
   - `<pre class="out">` — output; each line is a `<span>` (class `d` grey, `g` green, `a` amber, `k` green 500, `big` for the 404) followed by a text node `\n`.
   - `<form class="line">` — `<label class="ps" for="cmd">` prompt, `.in` wrapper containing `<input id="cmd">`, a hidden mirror `<span class="m">`, and the `.cur` block.
-
-## Tokens
-
-```css
-:root {
-  /* colour — near-black with a green cast, one green, grey-green text, amber for errors */
-  --bg:      #0b0f0c;  /* page */
-  --panel:   #0e1410;  /* reserved: raised surfaces */
-  --line:    #1c2a20;  /* title-strip rule, replay border */
-  --green:   #5ef08a;  /* status, 404, commands, cursor */
-  --green-2: #3d9a5c;  /* prompt, replay hover border, idle cursor outline */
-  --green-3: #25553a;  /* dot outlines */
-  --ink:     #d7e3da;  /* body text, typed input */
-  --ink-2:   #8fa596;  /* grey lines, chrome text */
-  --amber:   #e3b04b;  /* command not found */
-
-  /* type */
-  --mono: "Chivo Mono", ui-monospace, monospace;
-  --fs: 15px;          /* 14 ≤820 */
-  --lh: 1.7;
-  --fs-big: 88px;      /* 56 ≤820 */
-
-  /* layout */
-  --chrome-h: 40px;
-  --pad: 48px;         /* 24 ≤820 */
-  --cursor-w: .62em;
-  --cursor-h: 1.15em;
-  --radius: 4px;       /* replay button only */
-
-  /* motion */
-  --char-ms: 22ms;     /* per character; total intro ≈ 4.5s */
-  --blink: 1000ms;     /* steps(1): 50% duty */
-  --t-micro: 140ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role            | Family     | Size | Weight | Line-height | Tracking | Colour |
-|-----------------|------------|-----:|-------:|------------:|---------:|--------|
-| Body lines      | Chivo Mono | 15px | 400    | 1.7         | 0        | `--ink` |
-| Grey lines      | Chivo Mono | 15px | 400    | 1.7         | 0        | `--ink-2` |
-| Status / redirect | Chivo Mono | 15px | 400  | 1.7         | 0        | `--green` |
-| Command names   | Chivo Mono | 15px | 500    | 1.7         | 0        | `--green` |
-| Error           | Chivo Mono | 15px | 400    | 1.7         | 0        | `--amber` |
-| 404             | Chivo Mono | 88px | 500    | 1           | −0.04em  | `--green`, `margin: 8px 0 18px` |
-| Prompt          | Chivo Mono | 15px | 400    | 1.7         | 0        | `--green-2` |
-| Chrome title    | Chivo Mono | 12px | 400    | 1           | +0.04em  | `--ink-2` |
-| Replay button   | Chivo Mono | 12px | 400    | 1           | 0        | `--ink-2`, 1px `--line` border, 4px radius |
-
-All output is `white-space: pre-wrap` inside a `<pre>` so the two-space indents and column alignment of the command list are literal.
 
 ## Motion
 
@@ -156,6 +96,72 @@ Reduced motion: `reduce` flag short-circuits the typer (`s.textContent = text` i
 - [ ] The log auto-scrolls so the prompt stays visible after long output.
 - [ ] Reduced motion: lines appear instantly and the cursor is static.
 - [ ] No timer runs faster than 16ms; no `console` output; no errors when submitting an empty command.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Load: the log is empty; lines type in sequence. Line 1 `$ GET /docs/v2/webhooks/retries` (grey), line 2 `HTTP/1.1 404 Not Found` (green), then `404` appears at once (not typed) at 88px, then six body/list lines type. Total intro ≈ 4.5s. The cursor does not blink while typing.
+2. When the intro finishes, the input receives focus and the cursor blinks (1s period, hard steps: 500ms on, 500ms off).
+3. Typing: characters appear in `--ink`; the block cursor moves right by the measured width of the typed text (a hidden mirror span). The native caret is hidden.
+4. Enter: the command echoes as a grey line `visitor@kestrel:~$ <cmd>`, the input clears, and the response types out. `help` lists six commands; `ls` prints a directory line; `home`, `back` and `search` print a green "→ redirecting …" line (navigation disabled in the demo; wire them to real navigation in your product); `clear` empties the log; unknown words print amber `command not found: <word>` and a grey hint.
+5. Clicking anywhere in the log area focuses the input. When the input loses focus the cursor stops blinking and becomes a hollow outline.
+6. Click "replay" in the title strip: the log clears and the intro types again. Any typing in progress is cancelled by a token check.
+7. Reduced motion: lines appear whole (no per-character typing) and the cursor does not blink.
+
+## Tokens
+
+```css
+:root {
+  /* colour — near-black with a green cast, one green, grey-green text, amber for errors */
+  --bg:      #0b0f0c;  /* page */
+  --panel:   #0e1410;  /* reserved: raised surfaces */
+  --line:    #1c2a20;  /* title-strip rule, replay border */
+  --green:   #5ef08a;  /* status, 404, commands, cursor */
+  --green-2: #3d9a5c;  /* prompt, replay hover border, idle cursor outline */
+  --green-3: #25553a;  /* dot outlines */
+  --ink:     #d7e3da;  /* body text, typed input */
+  --ink-2:   #8fa596;  /* grey lines, chrome text */
+  --amber:   #e3b04b;  /* command not found */
+
+  /* type */
+  --mono: "Chivo Mono", ui-monospace, monospace;
+  --fs: 15px;          /* 14 ≤820 */
+  --lh: 1.7;
+  --fs-big: 88px;      /* 56 ≤820 */
+
+  /* layout */
+  --chrome-h: 40px;
+  --pad: 48px;         /* 24 ≤820 */
+  --cursor-w: .62em;
+  --cursor-h: 1.15em;
+  --radius: 4px;       /* replay button only */
+
+  /* motion */
+  --char-ms: 22ms;     /* per character; total intro ≈ 4.5s */
+  --blink: 1000ms;     /* steps(1): 50% duty */
+  --t-micro: 140ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role            | Family     | Size | Weight | Line-height | Tracking | Colour |
+|-----------------|------------|-----:|-------:|------------:|---------:|--------|
+| Body lines      | Chivo Mono | 15px | 400    | 1.7         | 0        | `--ink` |
+| Grey lines      | Chivo Mono | 15px | 400    | 1.7         | 0        | `--ink-2` |
+| Status / redirect | Chivo Mono | 15px | 400  | 1.7         | 0        | `--green` |
+| Command names   | Chivo Mono | 15px | 500    | 1.7         | 0        | `--green` |
+| Error           | Chivo Mono | 15px | 400    | 1.7         | 0        | `--amber` |
+| 404             | Chivo Mono | 88px | 500    | 1           | −0.04em  | `--green`, `margin: 8px 0 18px` |
+| Prompt          | Chivo Mono | 15px | 400    | 1.7         | 0        | `--green-2` |
+| Chrome title    | Chivo Mono | 12px | 400    | 1           | +0.04em  | `--ink-2` |
+| Replay button   | Chivo Mono | 12px | 400    | 1           | 0        | `--ink-2`, 1px `--line` border, 4px radius |
+
+All output is `white-space: pre-wrap` inside a `<pre>` so the two-space indents and column alignment of the command list are literal.
 
 ## Implementation notes
 

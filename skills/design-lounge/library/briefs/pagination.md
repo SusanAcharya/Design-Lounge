@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the current page uses `--primary-soft` and the control height follows the family. Do not draw a second radius on the page buttons.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The control under a long list. Forty-eight rows, ten per page, five pages. The demo starts on page 2 so Previous is alive and the current page is not the first. The count reads "11–20 of 48". The current page sits on the soft green. Previous and Next are words, not icons alone. This list does not render the rows. `dense-data-table` and `people-role-list` are the rows. People-role-list is short and has no pages. Add this piece when the list is longer than one screen.
-
-## Reference behaviour
-
-1. Page 2 has `aria-current="page"`. The count is 11–20 of 48. Previous and Next are enabled.
-2. Clicking a number goes to that page. The count becomes the matching slice: page 1 is 1–10, page 5 is 41–48.
-3. Next adds one page. Previous subtracts one.
-4. On page 1, Previous is disabled. On page 5, Next is disabled.
-5. There is no animation. The count changes in one frame.
-6. Focus ring is 2px `--focus`, offset 2px.
 
 ## Structure
 
@@ -29,31 +22,6 @@ each control min 40px, height 40
 - `nav` with `aria-label="Pages"`.
 - Number buttons carry `data-page`. The current one carries `aria-current="page"`.
 - Previous and Next are buttons, not links, in this demo.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --primary-soft: #e7f2ec;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px in this yard demo. The family replaces it. The current page is `--primary-soft`, the same selected treatment as a row. It is not a solid primary button.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Count | sans | 14px | 400 | `--ink-2` |
-| Page | sans | 13px | 500 | `--ink` |
-
-The count uses tabular numbers and an en dash between the start and the end. Letter-spacing on the buttons is 0.
 
 ## Motion
 
@@ -103,6 +71,44 @@ None. Reduced motion has nothing to remove. Do not slide the row of numbers.
 - [ ] The current page is not a solid primary.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Page 2 has `aria-current="page"`. The count is 11–20 of 48. Previous and Next are enabled.
+2. Clicking a number goes to that page. The count becomes the matching slice: page 1 is 1–10, page 5 is 41–48.
+3. Next adds one page. Previous subtracts one.
+4. On page 1, Previous is disabled. On page 5, Next is disabled.
+5. There is no animation. The count changes in one frame.
+6. Focus ring is 2px `--focus`, offset 2px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --primary-soft: #e7f2ec;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px in this yard demo. The family replaces it. The current page is `--primary-soft`, the same selected treatment as a row. It is not a solid primary button.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Count | sans | 14px | 400 | `--ink-2` |
+| Page | sans | 13px | 500 | `--ink` |
+
+The count uses tabular numbers and an en dash between the start and the end. Letter-spacing on the buttons is 0.
 
 ## Implementation notes
 

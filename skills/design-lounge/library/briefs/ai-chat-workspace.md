@@ -4,31 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the serif answer, the one clay accent, and the paper ground.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The full screen of an AI assistant called Slipway, used by a small pottery studio. A history sidebar sits on the left. The conversation sits in a 720px centre column. A sources panel slides in on the right when you press a citation. On load, the answer to "how long should I wait before opening the kiln" streams in word by word, with a Stop button in the composer. The answer is set in a serif, like a letter. The interface is set in a sans. Code is mono. The ground is ivory paper, not grey. There is one accent, a clay red, and it is used only for the brand dot, citations, the caret, the send button, and the selected source. The detail worth copying is that citations are small numbered chips inside the sentence that open the exact source card, with its quote, in a side panel.
-
-## Reference behaviour
-
-1. On load, the user message is already there. Below it, the label "Slipway" and an empty answer.
-2. The answer streams in. Every 34ms, two more words appear. A 0.5em clay caret blinks at the end of the newest word.
-3. Each paragraph and the code block appear only when the stream reaches them. Nothing jumps in later above the caret.
-4. While streaming, the round send button becomes a charcoal Stop button with a filled square icon. Its label is "Stop generating".
-5. The live region says "Slipway is writing an answer" when the stream starts and "Answer ready" when it ends.
-6. When the stream ends, the caret goes away and a row of three icon buttons appears under the answer: Copy answer, Good answer, Bad answer.
-7. Press Stop mid-stream: the stream halts, the partial text stays, empty blocks are removed, the action row appears with the word "Stopped", and the live region says "Stopped. Partial answer kept."
-8. The answer has three citation chips, 1, 2 and 3, placed right after the claim they support.
-9. Press a citation chip: the sources panel opens on the right (340px), the matching card gets a clay border and a 3px inner left bar, and focus moves to that card. The chip turns solid clay.
-10. Press "Sources 3" in the top bar: the panel opens with no card selected. Press it again, press the close button, or press Escape: the panel closes and focus goes back to the control that opened it.
-11. The code block has a header "Controller program · cone 6 slow cool" and a Copy button. Pressing Copy puts the code text on the clipboard, changes the label to "Copied" for 1600ms, and announces "Copied to clipboard".
-12. Good answer and Bad answer are toggle buttons. Pressing one sets `aria-pressed="true"` on it and false on the other. A note appears: "Thanks. Noted for this chat." Pressing the pressed one again clears it.
-13. The composer textarea grows with its content up to 180px, then scrolls.
-14. Enter sends. Shift+Enter adds a new line. Send is disabled while the field is empty.
-15. Sending adds your message on the right, clears the field, and adds a Slipway block with three pulsing clay dots and the italic line "Reading the firing log". After 1100ms the dots are replaced by a short reply that streams the same way.
-16. The paperclip button opens the real file picker. Each chosen file shows as a 28px chip with its name above the textarea. The live region says "2 files attached".
-17. The model button reads "Slipway 3 · Careful". It opens a menu upward with Swift, Careful and Long. Each has a one-line description. The checked one has a clay title. Choosing one updates the button text.
-18. History items: pressing one moves `aria-current="page"` to it. "New chat" clears the thread, shows "What are we firing today?" in 34px serif, sets the title to "New chat", and focuses the composer.
-19. Reduced motion: the whole answer appears at once, no caret, no pulsing dots, no panel slide.
 
 ## Structure
 
@@ -59,65 +39,6 @@ The full screen of an AI assistant called Slipway, used by a small pottery studi
 - The composer is a `form` with a visually hidden `label` "Message Slipway", a `textarea`, an attach button, a hidden `input type="file" multiple`, the model menu, a hint, and a submit button.
 - The sources panel is an `aside` labelled "Sources" with an `ol` of cards. Each card is an `li` with `tabindex="-1"`, an `h3`, a publisher line, and a `blockquote`.
 - One visually hidden `p` with `aria-live="polite"` sits at the end of the body.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f7f2e8;          /* ivory page */
-  --side: #efe8da;        /* sidebar and user bubble */
-  --surface: #fcf9f3;     /* composer, panel, current history item */
-  --well: #f1eadd;        /* code block, file chips */
-  --ink: #1f1b16;         /* charcoal text */
-  --ink-2: #544c42;       /* secondary text */
-  --ink-3: #6b6155;       /* labels, hints */
-  --line: #e0d6c4;        /* hairlines */
-  --line-2: #d3c7b2;      /* control borders */
-  --clay: #a8491f;        /* the one accent */
-  --clay-soft: #f3e2d6;   /* citation chip fill */
-  --focus: #a8491f;
-
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Instrument Sans", system-ui, sans-serif;
-  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-
-  --r-sm: 6px;
-  --r: 10px;
-  --r-lg: 16px;
-
-  --space-1: 4px; --space-2: 8px; --space-3: 12px;
-  --space-4: 16px; --space-5: 24px; --space-6: 28px;
-
-  --shadow-composer: 0 1px 0 rgba(31,27,22,.04), 0 8px 24px -16px rgba(31,27,22,.25);
-  --shadow-menu: 0 12px 32px -12px rgba(31,27,22,.3);
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --t-micro: 160ms;
-  --t-panel: 320ms;
-  --t-word: 34ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Brand | Newsreader | 22px | 500 | 1 | -0.01em | Title |
-| Answer body | Newsreader | 17px | 400 | 1.6 | 0 | Sentence |
-| Thinking line | Newsreader italic | 16px | 400 | 1 | 0 | Sentence |
-| Source quote | Newsreader italic | 15px | 400 | 1.5 | 0 | Sentence |
-| Empty state | Newsreader | 34px | 400 | 1.2 | 0 | Sentence |
-| Chat title | Instrument Sans | 15px | 500 | 1.2 | 0 | Sentence |
-| User message | Instrument Sans | 15px | 400 | 1.5 | 0 | Sentence |
-| UI text | Instrument Sans | 14px | 400-500 | 1.45 | 0 | Sentence |
-| Group label, "Slipway" label | Instrument Sans | 11-12px | 600 | 1 | 0.06-0.08em | Upper |
-| Citation chip | Instrument Sans | 11px | 600 | 1 | 0 | Number |
-| Code | system mono | 13px | 400 | 1.65 | 0 | As typed |
-
-- The answer is the only long text, and it is serif. Never set UI controls in the serif.
-- Keep the answer measure at 66ch max.
-- In code, segment names are clay and the comment line is `--ink-3`. No other syntax colours.
 
 ## Motion
 
@@ -195,6 +116,91 @@ The full screen of an AI assistant called Slipway, used by a small pottery studi
 - [ ] The answer cites "Firing log, 2019 to 2024", "Silica inversions and dunting", and "Slow cooling for matte surfaces".
 - [ ] The model button reads "Slipway 3 · Careful".
 - [ ] The page is `#f7f2e8`, text `#1f1b16`, accent `#a8491f`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. On load, the user message is already there. Below it, the label "Slipway" and an empty answer.
+2. The answer streams in. Every 34ms, two more words appear. A 0.5em clay caret blinks at the end of the newest word.
+3. Each paragraph and the code block appear only when the stream reaches them. Nothing jumps in later above the caret.
+4. While streaming, the round send button becomes a charcoal Stop button with a filled square icon. Its label is "Stop generating".
+5. The live region says "Slipway is writing an answer" when the stream starts and "Answer ready" when it ends.
+6. When the stream ends, the caret goes away and a row of three icon buttons appears under the answer: Copy answer, Good answer, Bad answer.
+7. Press Stop mid-stream: the stream halts, the partial text stays, empty blocks are removed, the action row appears with the word "Stopped", and the live region says "Stopped. Partial answer kept."
+8. The answer has three citation chips, 1, 2 and 3, placed right after the claim they support.
+9. Press a citation chip: the sources panel opens on the right (340px), the matching card gets a clay border and a 3px inner left bar, and focus moves to that card. The chip turns solid clay.
+10. Press "Sources 3" in the top bar: the panel opens with no card selected. Press it again, press the close button, or press Escape: the panel closes and focus goes back to the control that opened it.
+11. The code block has a header "Controller program · cone 6 slow cool" and a Copy button. Pressing Copy puts the code text on the clipboard, changes the label to "Copied" for 1600ms, and announces "Copied to clipboard".
+12. Good answer and Bad answer are toggle buttons. Pressing one sets `aria-pressed="true"` on it and false on the other. A note appears: "Thanks. Noted for this chat." Pressing the pressed one again clears it.
+13. The composer textarea grows with its content up to 180px, then scrolls.
+14. Enter sends. Shift+Enter adds a new line. Send is disabled while the field is empty.
+15. Sending adds your message on the right, clears the field, and adds a Slipway block with three pulsing clay dots and the italic line "Reading the firing log". After 1100ms the dots are replaced by a short reply that streams the same way.
+16. The paperclip button opens the real file picker. Each chosen file shows as a 28px chip with its name above the textarea. The live region says "2 files attached".
+17. The model button reads "Slipway 3 · Careful". It opens a menu upward with Swift, Careful and Long. Each has a one-line description. The checked one has a clay title. Choosing one updates the button text.
+18. History items: pressing one moves `aria-current="page"` to it. "New chat" clears the thread, shows "What are we firing today?" in 34px serif, sets the title to "New chat", and focuses the composer.
+19. Reduced motion: the whole answer appears at once, no caret, no pulsing dots, no panel slide.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f7f2e8;          /* ivory page */
+  --side: #efe8da;        /* sidebar and user bubble */
+  --surface: #fcf9f3;     /* composer, panel, current history item */
+  --well: #f1eadd;        /* code block, file chips */
+  --ink: #1f1b16;         /* charcoal text */
+  --ink-2: #544c42;       /* secondary text */
+  --ink-3: #6b6155;       /* labels, hints */
+  --line: #e0d6c4;        /* hairlines */
+  --line-2: #d3c7b2;      /* control borders */
+  --clay: #a8491f;        /* the one accent */
+  --clay-soft: #f3e2d6;   /* citation chip fill */
+  --focus: #a8491f;
+
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Instrument Sans", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --r-sm: 6px;
+  --r: 10px;
+  --r-lg: 16px;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px;
+  --space-4: 16px; --space-5: 24px; --space-6: 28px;
+
+  --shadow-composer: 0 1px 0 rgba(31,27,22,.04), 0 8px 24px -16px rgba(31,27,22,.25);
+  --shadow-menu: 0 12px 32px -12px rgba(31,27,22,.3);
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --t-micro: 160ms;
+  --t-panel: 320ms;
+  --t-word: 34ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Brand | Newsreader | 22px | 500 | 1 | -0.01em | Title |
+| Answer body | Newsreader | 17px | 400 | 1.6 | 0 | Sentence |
+| Thinking line | Newsreader italic | 16px | 400 | 1 | 0 | Sentence |
+| Source quote | Newsreader italic | 15px | 400 | 1.5 | 0 | Sentence |
+| Empty state | Newsreader | 34px | 400 | 1.2 | 0 | Sentence |
+| Chat title | Instrument Sans | 15px | 500 | 1.2 | 0 | Sentence |
+| User message | Instrument Sans | 15px | 400 | 1.5 | 0 | Sentence |
+| UI text | Instrument Sans | 14px | 400-500 | 1.45 | 0 | Sentence |
+| Group label, "Slipway" label | Instrument Sans | 11-12px | 600 | 1 | 0.06-0.08em | Upper |
+| Citation chip | Instrument Sans | 11px | 600 | 1 | 0 | Number |
+| Code | system mono | 13px | 400 | 1.65 | 0 | As typed |
+
+- The answer is the only long text, and it is serif. Never set UI controls in the serif.
+- Keep the answer measure at 66ch max.
+- In code, segment names are clay and the comment line is `--ink-3`. No other syntax colours.
 
 ## Implementation notes
 

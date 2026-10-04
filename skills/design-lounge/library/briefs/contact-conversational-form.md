@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The new-enquiry page of a small film and motion studio ("Odd/Hours"). It asks four questions one at a time: name, project type, budget and email. Each question is set in 64px Young Serif beside a 200px tomato step numeral. The page is a flat sunflower yellow with ink type, and a 4px progress bar runs along the bottom edge of the header. Enter advances, A–D pick choices, and a review step lists every answer with an Edit link. The detail worth copying is that the form talks back: question two greets the visitor by the first name typed in question one, and the success screen does too.
-
-## Reference behaviour
-
-1. Initial state: step 01 "Hello. Who are we talking to?" with the name prefilled as "Maya Okafor" and the input focused (400ms after load). The progress bar is at 0%, the counter reads "01 / 04", and the rotated side label reads "INTRODUCTIONS". The back button is disabled at 30% opacity. A "what happens next" strip with three columns (Today / Within 48 h / Week one) sits above the footer.
-2. Press Enter (or click OK). If the name has fewer than 2 characters, the inline error "Just a first name is fine." appears under the underline. Otherwise the current question leaves, moving up 48px and fading over 520ms, and step 02 enters from 48px below with a 120ms delay.
-3. Step 02's heading reads "Nice to meet you, *Maya*. What are we making?" The first name is in tomato. Four 60px choice buttons sit in a 2 × 2 grid, each with a letter key cap.
-4. Press A, B, C or D, or click a choice: that choice fills ink with yellow text and a check, the others clear, and after 260ms the form advances automatically. Enter on a focused choice selects it. Enter with nothing selected shows "Pick one, or press A to D."
-5. Step 03 asks for the budget (four ranges in euros, plus a hint line) and behaves the same way.
-6. Step 04 asks for the email. An invalid address shows "That address looks incomplete." Typing clears the error.
-7. Step 05 is the review: the numeral reads 05, the counter "Review", the bar 100% of the questions. A list shows four rows (label, answer in 26px serif, Edit). The primary button now reads "Send it over".
-8. Clicking Edit jumps back to that step. When the form is completed again, the next valid answer skips straight back to the review instead of walking through the remaining steps.
-9. The back button (52px circle, up arrow) goes to the previous step.
-10. "Send it over" shows "Sending" for 1300ms. Then an ink panel opens over everything below the header with a circular clip-path from the bottom-right over 800ms. The panel shows a tomato asterisk, "Thanks, Maya. Talk Thursday." in 72px yellow serif, and a producer note. The counter reads "Sent".
-11. "Start a new enquiry" clears all answers and returns to step 01.
 
 ## Structure
 
@@ -53,53 +41,6 @@ The new-enquiry page of a small film and motion studio ("Odd/Hours"). It asks fo
 - `<ol class="steps">` is the next-steps strip, absolutely positioned at left 348px, right 88px, bottom 8px.
 - `<footer>` 104px tall, left padding 348px: OK button, Enter hint, back button pushed right.
 - `.done[role=status]` is fixed from top 72px to the bottom of the viewport.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ffd84d;          /* sunflower page */
-  --bg-2: #f6cb2f;        /* hover wash on choices and the back button */
-  --ink: #1b1a17;
-  --ink-2: #4a4535;       /* secondary text, meta */
-  --ink-3: #7a6f45;
-  --line: rgba(27,26,23,.18);
-  --accent: #e5402a;      /* numeral, name echo, caret, focus */
-  --error: #a3200e;       /* inline error text, 5.6:1 on yellow */
-  --done-copy: #d8d2bd;   /* body text on the ink panel */
-
-  --serif: "Young Serif", Georgia, serif;
-  --sans: "Figtree", system-ui, sans-serif;
-
-  --r: 12px;              /* choice buttons */
-  --header-h: 72px;
-  --footer-h: 104px;
-  --col-num: 300px;
-
-  --t-micro: 160ms;
-  --t-step: 520ms;
-  --t-reveal: 800ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-}
-```
-
-## Typography
-
-| Role            | Family      | Size  | Weight | Line-height | Tracking | Case      |
-|-----------------|-------------|------:|-------:|------------:|---------:|-----------|
-| Step numeral    | Young Serif | 200px | 400    | 1           | −0.05em  | numerals  |
-| Question        | Young Serif | 64px  | 400    | 1.04        | −0.025em | sentence  |
-| Success title   | Young Serif | 72px  | 400    | 1.02        | −0.03em  | sentence  |
-| Text input      | Young Serif | 40px  | 400    | 1.2         | 0        | as typed  |
-| Review answer   | Young Serif | 26px  | 400    | 1.2         | 0        | as typed  |
-| Next-step title | Young Serif | 22px  | 400    | 1.3         | 0        | sentence  |
-| Logo            | Young Serif | 22px  | 400    | 1           | −0.01em  | —         |
-| Choice label    | Figtree     | 18px  | 500    | 1           | 0        | sentence  |
-| Hint / body     | Figtree     | 17px  | 400    | 1.5         | 0        | sentence  |
-| Buttons         | Figtree     | 16px  | 700    | 1           | 0        | sentence  |
-| Error           | Figtree     | 14px  | 600    | 24px        | 0        | sentence  |
-| Meta / labels   | Figtree     | 12px  | 600    | 1.4         | +0.14em  | UPPERCASE |
 
 ## Motion
 
@@ -157,6 +98,71 @@ Reduced motion: every transition is 1ms with no delay. Steps swap instantly and 
 - [ ] "Start a new enquiry" clears all state and returns to step 01.
 - [ ] Focus is visible on every control, and moves to the active step's control after each change.
 - [ ] The page uses no emoji or dingbat glyphs: the asterisk and check are SVG/CSS.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: step 01 "Hello. Who are we talking to?" with the name prefilled as "Maya Okafor" and the input focused (400ms after load). The progress bar is at 0%, the counter reads "01 / 04", and the rotated side label reads "INTRODUCTIONS". The back button is disabled at 30% opacity. A "what happens next" strip with three columns (Today / Within 48 h / Week one) sits above the footer.
+2. Press Enter (or click OK). If the name has fewer than 2 characters, the inline error "Just a first name is fine." appears under the underline. Otherwise the current question leaves, moving up 48px and fading over 520ms, and step 02 enters from 48px below with a 120ms delay.
+3. Step 02's heading reads "Nice to meet you, *Maya*. What are we making?" The first name is in tomato. Four 60px choice buttons sit in a 2 × 2 grid, each with a letter key cap.
+4. Press A, B, C or D, or click a choice: that choice fills ink with yellow text and a check, the others clear, and after 260ms the form advances automatically. Enter on a focused choice selects it. Enter with nothing selected shows "Pick one, or press A to D."
+5. Step 03 asks for the budget (four ranges in euros, plus a hint line) and behaves the same way.
+6. Step 04 asks for the email. An invalid address shows "That address looks incomplete." Typing clears the error.
+7. Step 05 is the review: the numeral reads 05, the counter "Review", the bar 100% of the questions. A list shows four rows (label, answer in 26px serif, Edit). The primary button now reads "Send it over".
+8. Clicking Edit jumps back to that step. When the form is completed again, the next valid answer skips straight back to the review instead of walking through the remaining steps.
+9. The back button (52px circle, up arrow) goes to the previous step.
+10. "Send it over" shows "Sending" for 1300ms. Then an ink panel opens over everything below the header with a circular clip-path from the bottom-right over 800ms. The panel shows a tomato asterisk, "Thanks, Maya. Talk Thursday." in 72px yellow serif, and a producer note. The counter reads "Sent".
+11. "Start a new enquiry" clears all answers and returns to step 01.
+
+## Tokens
+
+```css
+:root {
+  --bg: #ffd84d;          /* sunflower page */
+  --bg-2: #f6cb2f;        /* hover wash on choices and the back button */
+  --ink: #1b1a17;
+  --ink-2: #4a4535;       /* secondary text, meta */
+  --ink-3: #7a6f45;
+  --line: rgba(27,26,23,.18);
+  --accent: #e5402a;      /* numeral, name echo, caret, focus */
+  --error: #a3200e;       /* inline error text, 5.6:1 on yellow */
+  --done-copy: #d8d2bd;   /* body text on the ink panel */
+
+  --serif: "Young Serif", Georgia, serif;
+  --sans: "Figtree", system-ui, sans-serif;
+
+  --r: 12px;              /* choice buttons */
+  --header-h: 72px;
+  --footer-h: 104px;
+  --col-num: 300px;
+
+  --t-micro: 160ms;
+  --t-step: 520ms;
+  --t-reveal: 800ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+```
+
+## Typography
+
+| Role            | Family      | Size  | Weight | Line-height | Tracking | Case      |
+|-----------------|-------------|------:|-------:|------------:|---------:|-----------|
+| Step numeral    | Young Serif | 200px | 400    | 1           | −0.05em  | numerals  |
+| Question        | Young Serif | 64px  | 400    | 1.04        | −0.025em | sentence  |
+| Success title   | Young Serif | 72px  | 400    | 1.02        | −0.03em  | sentence  |
+| Text input      | Young Serif | 40px  | 400    | 1.2         | 0        | as typed  |
+| Review answer   | Young Serif | 26px  | 400    | 1.2         | 0        | as typed  |
+| Next-step title | Young Serif | 22px  | 400    | 1.3         | 0        | sentence  |
+| Logo            | Young Serif | 22px  | 400    | 1           | −0.01em  | —         |
+| Choice label    | Figtree     | 18px  | 500    | 1           | 0        | sentence  |
+| Hint / body     | Figtree     | 17px  | 400    | 1.5         | 0        | sentence  |
+| Buttons         | Figtree     | 16px  | 700    | 1           | 0        | sentence  |
+| Error           | Figtree     | 14px  | 600    | 24px        | 0        | sentence  |
+| Meta / labels   | Figtree     | 12px  | 600    | 1.4         | +0.14em  | UPPERCASE |
 
 ## Implementation notes
 

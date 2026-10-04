@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A knob for how many hours a load may stay on hold. The range is 0 to 12. It starts at 6. The needle sweeps from -140 degrees to 140 degrees. Dragging around the dial sets the hour. Arrow keys step by one. This is not a linear slider. A slider is `slider-field`. This is not a clock field. A clock field is `time-field`. The value is a count of hours.
-
-## Reference behaviour
-
-1. The first frame reads 6. The needle sits at the angle for 6.
-2. Pointer down and move map the angle to a rounded hour and clamp between 0 and 12.
-3. ArrowUp and ArrowRight add one hour. ArrowDown and ArrowLeft subtract one.
-4. Home sets 0. End sets 12.
-5. The number under the dial matches aria-valuenow.
-6. The caption stays "hours before a load is released".
-7. The value does not wrap past 12 or below 0.
 
 ## Structure
 
@@ -33,23 +25,6 @@ caption
 - Needle is 2×72, origin at the hub.
 - Hub is 14px.
 - The number is 40px.
-
-## Tokens
-
-```css
-:root {
-  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
-  --line:#e4dfd4; --line-2:#cfc6b8; --primary:#1f4d3a;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Title | IBM Plex Sans | 22px | 600 | 1.2 | 0 |
-| Number | IBM Plex Sans | 40px | 600 | 1 | 0 |
-| Caption | IBM Plex Sans | 14px | 400 | 1.4 | 0 |
 
 ## Motion
 
@@ -97,17 +72,6 @@ caption
 - [ ] The needle is #1f4d3a.
 - [ ] Type is IBM Plex Sans.
 
-## Implementation notes
-
-atan2(x, -y) gives degrees from up. Clamp to ±140, then map into 0–12.
-
-```js
-const deg = -140 + (val / 12) * 280;
-needle.style.transform = "rotate(" + deg + "deg)";
-```
-
-Round to an integer hour. Do not show decimals.
-
 ## Measurements to keep
 
 - Card 360px, padding 28px. Dial 180px.
@@ -152,6 +116,48 @@ Round to an integer hour. Do not show decimals.
 - Reduced motion changes nothing.
 - Start at 6.
 - Type is IBM Plex Sans.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame reads 6. The needle sits at the angle for 6.
+2. Pointer down and move map the angle to a rounded hour and clamp between 0 and 12.
+3. ArrowUp and ArrowRight add one hour. ArrowDown and ArrowLeft subtract one.
+4. Home sets 0. End sets 12.
+5. The number under the dial matches aria-valuenow.
+6. The caption stays "hours before a load is released".
+7. The value does not wrap past 12 or below 0.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
+  --line:#e4dfd4; --line-2:#cfc6b8; --primary:#1f4d3a;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Title | IBM Plex Sans | 22px | 600 | 1.2 | 0 |
+| Number | IBM Plex Sans | 40px | 600 | 1 | 0 |
+| Caption | IBM Plex Sans | 14px | 400 | 1.4 | 0 |
+
+## Implementation notes
+
+atan2(x, -y) gives degrees from up. Clamp to ±140, then map into 0–12.
+
+```js
+const deg = -140 + (val / 12) * 280;
+needle.style.transform = "rotate(" + deg + "deg)";
+```
+
+Round to an integer hour. Do not show decimals.
 
 ---
 

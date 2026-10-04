@@ -4,24 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The one-page home for a fictional eleven-lawyer disputes and advisory firm, Thorne & Aldridge, with offices in London, Edinburgh and Bristol. It reads like the front of a serious newspaper, not like a SaaS page. Ivory paper, ink navy, one oxblood, Bodoni Moda at display sizes, Schibsted Grotesk for everything else, 1px hairline rules, 0–2px radii, no shadows.
 
 The hero is one sentence: "We are the firm you call when the outcome *cannot* be undone." at 88px, with "cannot" in oxblood italic. Below it: six numbered practice areas that reveal a one-line description on hover, a navy band of four case results, three partner profiles, an insights list, a confidential consultation form with a privacy note, and three offices. The detail worth copying is the **practice list**: a numbered table of contents where hover slides the title 8px, fades in a description, turns the arrow 45° and draws an oxblood rule under the row, with no layout shift.
-
-## Reference behaviour
-
-1. Initial state: the hero sentence fills the left of the first frame. A 280px aside on the right holds a 15px note and a "Speak to a partner today" underlined link. A hairline row under both lists three facts.
-2. Header: logo "Thorne & Aldridge" with an oxblood italic ampersand, five text links, and a navy "Confidential consultation" button on the right. The header is sticky at 72px.
-3. Practice areas: six rows, each a link to the form. On hover or keyboard focus of a row: the title moves right 8px (320ms, expo out), the description fades in and rises 6px into place (opacity 200ms, transform 320ms), the arrow rotates −45° and turns oxblood, and a 1px oxblood rule grows from 0 to full width under the row (320ms). Moving away reverses all four.
-4. The description holds its space when hidden (opacity 0), so rows never change height.
-5. Case results: a full-width navy band. Four numbers at 64px: "£41.2m", "48hrs", "0", "No action", each with a category label and one sentence. A fine-print line under them says past results do not guarantee outcomes.
-6. Partners: three columns. Each has a 4:5 monogram panel (italic Bodoni initials at 96px inside an inset hairline frame), a role label, a name, a sentence, and a two-row definition list.
-7. Insights: four rows. Date, title, category, read time. Hover turns the title oxblood.
-8. Consultation form: submit with name, email or outline missing: each bad field's underline turns oxblood, focus moves to the first one, and the status line says "Please complete your name, a valid email and a short outline." With all three valid: the status reads "Received. A partner will contact you by email by the end of the next working day." The phrase follows the chosen reply method. The button then disables.
-9. Offices: three columns split by hairlines. City in Bodoni 30px, address, phone link.
-10. At 1023px and below, the nav hides and a 44px menu button opens a dropdown. Practice descriptions show at all times (no hover on touch).
 
 ## Structure
 
@@ -55,68 +44,6 @@ below: results (navy) · partners · insights · consultation · offices · foot
 - Insights: `<ul>` of links laid out `140px minmax(0,1fr) 160px 100px`, each with a `<time datetime>`.
 - Consultation: 2 columns `.9fr 1.1fr`, 72px gap. Left: label, 52px heading, paragraph, privacy box. Right: `<form novalidate>` in a 2-column grid, 22px row gap, 24px column gap.
 - Offices: 3 columns, 1px navy top rule, 1px `--rule` left dividers, each an `<address>`.
-
-## Tokens
-
-```css
-:root {
-  --ivory: #f6f1e7;     /* page */
-  --paper: #fbf8f1;     /* monogram panels, privacy box, text on navy */
-  --ink: #14213a;       /* text, primary button, results band */
-  --ink-2: #46506a;     /* secondary text */
-  --ink-3: #6c7385;     /* labels, dates, hints */
-  --rule: #d9d0bf;      /* hairlines */
-  --rule-2: #14213a;    /* strong top rules on lists */
-  --ox: #6e1f24;        /* the one accent: kicker, italics, hover, focus */
-  --ox-2: #8a2a30;      /* reserved */
-
-  --serif: "Bodoni Moda", Didot, Georgia, serif;
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-
-  --fs-hero: 88px;
-  --fs-h2: 52px;
-  --fs-area: 34px;
-  --fs-result: 64px;
-  --fs-mono: 96px;
-  --fs-body: 16px;
-  --fs-small: 15px;
-  --fs-label: 12px;
-
-  --pad: 64px;
-  --band: 88px;
-  --gap-head: 64px;
-
-  --r: 2px;
-
-  --t: 200ms;
-  --t-open: 320ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-No `box-shadow` anywhere. Regions are split by 1px `--rule`. Lists that start a region get a 1px `--rule-2` top rule.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | ---: | ---: | ---: | ---: | --- |
-| Hero sentence | Bodoni Moda | 88px | 400 | 1.0 | -0.025em | sentence, "cannot" italic oxblood |
-| Section heading | Bodoni Moda | 52px | 400 | 1.05 | -0.01em | sentence |
-| Practice title | Bodoni Moda | 34px | 400 | 1.1 | -0.01em | sentence |
-| Practice number | Bodoni Moda | 20px | 400 italic | 1 | 0 | "01" oxblood |
-| Result number | Bodoni Moda | 64px | 400 | 1 | -0.02em | unit at 0.5em |
-| Monogram | Bodoni Moda | 96px | 400 italic | 1 | 0 | initials |
-| Partner / office name | Bodoni Moda | 28px / 30px | 400 | 1.1 | -0.01em | title |
-| Insight title | Bodoni Moda | 24px | 400 | 1.25 | -0.01em | sentence |
-| Logo | Bodoni Moda | 24px | 500 | 1 | 0.01em | "&" italic oxblood |
-| Body | Schibsted Grotesk | 16px | 400 | 1.6 | 0 | sentence |
-| Small / descriptions | Schibsted Grotesk | 15px | 400 | 1.5 | 0 | sentence |
-| Label | Schibsted Grotesk | 12px | 600 | 1.4 | 0.14em | UPPERCASE |
-| Form label | Schibsted Grotesk | 13px | 600 | 1.4 | 0 | sentence |
-| Button | Schibsted Grotesk | 14–16px | 500 | 1 | 0 | sentence |
-
-Load Bodoni Moda with the optical size axis (`opsz 6..96`) so the 88px hero uses the high-contrast cut and the 20px numbers stay sturdy.
 
 ## Motion
 
@@ -191,6 +118,85 @@ No scroll reveals. No counting numbers in the results band. The numbers are fact
 - [ ] Results £41.2m, 48hrs, 0, No action.
 - [ ] Partners Eleanor Thorne KC, James Aldridge, Nadia Okafor.
 - [ ] Offices London EC4A 2BN, Edinburgh EH2 4QX, Bristol BS1 6SU.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: the hero sentence fills the left of the first frame. A 280px aside on the right holds a 15px note and a "Speak to a partner today" underlined link. A hairline row under both lists three facts.
+2. Header: logo "Thorne & Aldridge" with an oxblood italic ampersand, five text links, and a navy "Confidential consultation" button on the right. The header is sticky at 72px.
+3. Practice areas: six rows, each a link to the form. On hover or keyboard focus of a row: the title moves right 8px (320ms, expo out), the description fades in and rises 6px into place (opacity 200ms, transform 320ms), the arrow rotates −45° and turns oxblood, and a 1px oxblood rule grows from 0 to full width under the row (320ms). Moving away reverses all four.
+4. The description holds its space when hidden (opacity 0), so rows never change height.
+5. Case results: a full-width navy band. Four numbers at 64px: "£41.2m", "48hrs", "0", "No action", each with a category label and one sentence. A fine-print line under them says past results do not guarantee outcomes.
+6. Partners: three columns. Each has a 4:5 monogram panel (italic Bodoni initials at 96px inside an inset hairline frame), a role label, a name, a sentence, and a two-row definition list.
+7. Insights: four rows. Date, title, category, read time. Hover turns the title oxblood.
+8. Consultation form: submit with name, email or outline missing: each bad field's underline turns oxblood, focus moves to the first one, and the status line says "Please complete your name, a valid email and a short outline." With all three valid: the status reads "Received. A partner will contact you by email by the end of the next working day." The phrase follows the chosen reply method. The button then disables.
+9. Offices: three columns split by hairlines. City in Bodoni 30px, address, phone link.
+10. At 1023px and below, the nav hides and a 44px menu button opens a dropdown. Practice descriptions show at all times (no hover on touch).
+
+## Tokens
+
+```css
+:root {
+  --ivory: #f6f1e7;     /* page */
+  --paper: #fbf8f1;     /* monogram panels, privacy box, text on navy */
+  --ink: #14213a;       /* text, primary button, results band */
+  --ink-2: #46506a;     /* secondary text */
+  --ink-3: #6c7385;     /* labels, dates, hints */
+  --rule: #d9d0bf;      /* hairlines */
+  --rule-2: #14213a;    /* strong top rules on lists */
+  --ox: #6e1f24;        /* the one accent: kicker, italics, hover, focus */
+  --ox-2: #8a2a30;      /* reserved */
+
+  --serif: "Bodoni Moda", Didot, Georgia, serif;
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+
+  --fs-hero: 88px;
+  --fs-h2: 52px;
+  --fs-area: 34px;
+  --fs-result: 64px;
+  --fs-mono: 96px;
+  --fs-body: 16px;
+  --fs-small: 15px;
+  --fs-label: 12px;
+
+  --pad: 64px;
+  --band: 88px;
+  --gap-head: 64px;
+
+  --r: 2px;
+
+  --t: 200ms;
+  --t-open: 320ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+No `box-shadow` anywhere. Regions are split by 1px `--rule`. Lists that start a region get a 1px `--rule-2` top rule.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Hero sentence | Bodoni Moda | 88px | 400 | 1.0 | -0.025em | sentence, "cannot" italic oxblood |
+| Section heading | Bodoni Moda | 52px | 400 | 1.05 | -0.01em | sentence |
+| Practice title | Bodoni Moda | 34px | 400 | 1.1 | -0.01em | sentence |
+| Practice number | Bodoni Moda | 20px | 400 italic | 1 | 0 | "01" oxblood |
+| Result number | Bodoni Moda | 64px | 400 | 1 | -0.02em | unit at 0.5em |
+| Monogram | Bodoni Moda | 96px | 400 italic | 1 | 0 | initials |
+| Partner / office name | Bodoni Moda | 28px / 30px | 400 | 1.1 | -0.01em | title |
+| Insight title | Bodoni Moda | 24px | 400 | 1.25 | -0.01em | sentence |
+| Logo | Bodoni Moda | 24px | 500 | 1 | 0.01em | "&" italic oxblood |
+| Body | Schibsted Grotesk | 16px | 400 | 1.6 | 0 | sentence |
+| Small / descriptions | Schibsted Grotesk | 15px | 400 | 1.5 | 0 | sentence |
+| Label | Schibsted Grotesk | 12px | 600 | 1.4 | 0.14em | UPPERCASE |
+| Form label | Schibsted Grotesk | 13px | 600 | 1.4 | 0 | sentence |
+| Button | Schibsted Grotesk | 14–16px | 500 | 1 | 0 | sentence |
+
+Load Bodoni Moda with the optical size axis (`opsz 6..96`) so the 88px hero uses the high-contrast cut and the 20px numbers stay sturdy.
 
 ## Implementation notes
 

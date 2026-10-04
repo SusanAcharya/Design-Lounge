@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from hauntedbouldercity.com: the "You'll learn about..." list, where every topic is a giant outlined condensed word and only the one in the middle of the screen fills in, steps to the right behind a coloured bar, and changes the photo behind it. This piece is the "what you'll hear" section of a fictional cemetery night walk, Hollinsmoor After Dark. Eight topics, each a number, an 88px name and one sentence. A sticky backdrop on the right shows a large monoline drawing for the current topic, a soft colour wash that shifts per topic, and a big counter "01/08". The detail worth copying is that a plain features list becomes a reading pace: the page shows one topic at full voice and keeps the others as quiet outlines, so eight items never feel like a wall.
-
-## Reference behaviour
-
-1. First frame: the kicker "04 / On the walk · 90 minutes · 1.2 km · lanterns provided", the heading "You'll hear" (solid) / "about..." (outlined), then topic 01 "The iron gate" already filled, stepped 160px right, with a 2px mint bar on its left and mint number. Topic 02 shows below as an outline. The backdrop shows the gate drawing at 20% opacity and the counter reads 01/08 "The iron gate".
-2. As you scroll, the topic whose vertical centre is closest to the viewport centre becomes current. Only one is current.
-3. Becoming current: name fill goes from transparent to bone (450ms), outline from 50% to full bone, description opacity 0.55 → 1, the block slides right 0 → 160px (600ms expo-out), the mint bar grows from the top (scaleY 0 → 1, 500ms).
-4. Losing current reverses all of it at the same speeds.
-5. The backdrop crossfades: old drawing fades to 0 and shrinks to 0.94, new one fades to 0.2 and scales to 1 (700ms opacity, 1000ms scale). The radial colour wash interpolates to the topic's colour over 800ms. The counter and caption change.
-6. A fixed rail of eight short ticks sits at the left edge, vertically centred. The current tick is mint and 40% taller. Clicking a tick or a topic name scrolls that topic to the centre (smooth, or instant under reduced motion).
-7. Tabbing onto a topic name also centres it, so keyboard users get the same filled state.
-8. After topic 08 the backdrop releases and a booking strip ("Find a night") scrolls up.
 
 ## Structure
 
@@ -46,55 +37,6 @@ Studied from hauntedbouldercity.com: the "You'll learn about..." list, where eve
 - `ol.rail aria-label="Topics"`, fixed, generated from the items: `a` with an `aria-label` like "03 The stone choir" and `aria-current`.
 - `section.end` with a sentence and the booking link.
 - A visually hidden polite live region.
-
-## Tokens
-
-```css
-@property --w { syntax: "<color>"; inherits: true; initial-value: #3a2226; }
-
-:root {
-  --ash: #140d0e;            /* page */
-  --ash-2: #1d1415;          /* bottom of page gradient */
-  --bone: #eae0cf;           /* filled names, heading */
-  --bone-2: #bfb5a6;         /* sentences */
-  --bone-3: #8f8579;         /* numbers, kicker, caption */
-  --stroke: rgba(234,224,207,.5);   /* outline names */
-  --line: rgba(234,224,207,.14);    /* rail ticks, end rule */
-  --mint: #7fd1c3;           /* spectral accent: bar, current number, rail, button */
-  --mint-2: #b5e6dc;         /* button hover */
-  --focus: #7fd1c3;
-
-  --display: "Big Shoulders Display", Impact, "Arial Narrow", sans-serif;
-  --mono: "Spline Sans Mono", ui-monospace, monospace;
-
-  --h2: clamp(56px, 8vw, 112px);
-  --h3: clamp(48px, 6.4vw, 88px);
-  --step: 160px;             /* current indent; 48px ≤900, 14px ≤560 */
-  --gutter: 48px;
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --t-fill: 450ms; --t-step: 600ms; --t-bar: 500ms;
-  --t-glyph: 700ms; --t-glyph-scale: 1000ms; --t-wash: 800ms;
-}
-```
-
-Wash colours, topics 01–08: `#3a2226`, `#1f3134`, `#3a2c1f`, `#2a2238`, `#3a3020`, `#22301f`, `#1a2a36`, `#34212a`. Each is a radial gradient (60% × 70% at 72% 50%) fading to transparent at 70% over the page gradient.
-
-## Typography
-
-| Role | Family | Size / LH | Weight | Tracking | Case / colour |
-| --- | --- | --- | --- | --- | --- |
-| Kicker | Spline Sans Mono | 11px | 400 / 500 | 0.16em | uppercase, `--bone-3`; "04" mint |
-| Section h2 | Big Shoulders Display | `--h2` / 0.88 | 900 | 0.005em | uppercase; line 2 outlined 1.5px bone |
-| Topic number | Spline Sans Mono | 11px | 400 | 0.16em | "01 /", `--bone-3`, current mint |
-| Topic name h3 | Big Shoulders Display | `--h3` / 0.9 | 700 | 0.01em | uppercase; outline 1px `--stroke`, current solid bone |
-| Sentence | Spline Sans Mono | 14.5px / 1.6 | 400 | 0 | `--bone-2`, max 440px |
-| Counter | Big Shoulders Display | 64px | 900 | 0 | tabular, "/08" 28px 700 `--bone-3` |
-| Caption | Spline Sans Mono | 11px | 400 | 0.16em | uppercase, `--bone-3` |
-| Button | Spline Sans Mono | 14px | 500 | 0 | `--ash` on `--mint` |
-
-Outlined type uses `color: transparent` plus `-webkit-text-stroke`. Keep outline width 1px for names and 1.5px for the bigger heading so both read the same weight.
 
 ## Motion
 
@@ -157,6 +99,70 @@ Nothing animates on its own. Every change follows scroll position, so the list n
 - [ ] Accent `#7fd1c3`; page `#140d0e`.
 - [ ] Counter shows "01/08" in the first frame.
 - [ ] Booking link reads "Find a night".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the kicker "04 / On the walk · 90 minutes · 1.2 km · lanterns provided", the heading "You'll hear" (solid) / "about..." (outlined), then topic 01 "The iron gate" already filled, stepped 160px right, with a 2px mint bar on its left and mint number. Topic 02 shows below as an outline. The backdrop shows the gate drawing at 20% opacity and the counter reads 01/08 "The iron gate".
+2. As you scroll, the topic whose vertical centre is closest to the viewport centre becomes current. Only one is current.
+3. Becoming current: name fill goes from transparent to bone (450ms), outline from 50% to full bone, description opacity 0.55 → 1, the block slides right 0 → 160px (600ms expo-out), the mint bar grows from the top (scaleY 0 → 1, 500ms).
+4. Losing current reverses all of it at the same speeds.
+5. The backdrop crossfades: old drawing fades to 0 and shrinks to 0.94, new one fades to 0.2 and scales to 1 (700ms opacity, 1000ms scale). The radial colour wash interpolates to the topic's colour over 800ms. The counter and caption change.
+6. A fixed rail of eight short ticks sits at the left edge, vertically centred. The current tick is mint and 40% taller. Clicking a tick or a topic name scrolls that topic to the centre (smooth, or instant under reduced motion).
+7. Tabbing onto a topic name also centres it, so keyboard users get the same filled state.
+8. After topic 08 the backdrop releases and a booking strip ("Find a night") scrolls up.
+
+## Tokens
+
+```css
+@property --w { syntax: "<color>"; inherits: true; initial-value: #3a2226; }
+
+:root {
+  --ash: #140d0e;            /* page */
+  --ash-2: #1d1415;          /* bottom of page gradient */
+  --bone: #eae0cf;           /* filled names, heading */
+  --bone-2: #bfb5a6;         /* sentences */
+  --bone-3: #8f8579;         /* numbers, kicker, caption */
+  --stroke: rgba(234,224,207,.5);   /* outline names */
+  --line: rgba(234,224,207,.14);    /* rail ticks, end rule */
+  --mint: #7fd1c3;           /* spectral accent: bar, current number, rail, button */
+  --mint-2: #b5e6dc;         /* button hover */
+  --focus: #7fd1c3;
+
+  --display: "Big Shoulders Display", Impact, "Arial Narrow", sans-serif;
+  --mono: "Spline Sans Mono", ui-monospace, monospace;
+
+  --h2: clamp(56px, 8vw, 112px);
+  --h3: clamp(48px, 6.4vw, 88px);
+  --step: 160px;             /* current indent; 48px ≤900, 14px ≤560 */
+  --gutter: 48px;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --t-fill: 450ms; --t-step: 600ms; --t-bar: 500ms;
+  --t-glyph: 700ms; --t-glyph-scale: 1000ms; --t-wash: 800ms;
+}
+```
+
+Wash colours, topics 01–08: `#3a2226`, `#1f3134`, `#3a2c1f`, `#2a2238`, `#3a3020`, `#22301f`, `#1a2a36`, `#34212a`. Each is a radial gradient (60% × 70% at 72% 50%) fading to transparent at 70% over the page gradient.
+
+## Typography
+
+| Role | Family | Size / LH | Weight | Tracking | Case / colour |
+| --- | --- | --- | --- | --- | --- |
+| Kicker | Spline Sans Mono | 11px | 400 / 500 | 0.16em | uppercase, `--bone-3`; "04" mint |
+| Section h2 | Big Shoulders Display | `--h2` / 0.88 | 900 | 0.005em | uppercase; line 2 outlined 1.5px bone |
+| Topic number | Spline Sans Mono | 11px | 400 | 0.16em | "01 /", `--bone-3`, current mint |
+| Topic name h3 | Big Shoulders Display | `--h3` / 0.9 | 700 | 0.01em | uppercase; outline 1px `--stroke`, current solid bone |
+| Sentence | Spline Sans Mono | 14.5px / 1.6 | 400 | 0 | `--bone-2`, max 440px |
+| Counter | Big Shoulders Display | 64px | 900 | 0 | tabular, "/08" 28px 700 `--bone-3` |
+| Caption | Spline Sans Mono | 11px | 400 | 0.16em | uppercase, `--bone-3` |
+| Button | Spline Sans Mono | 14px | 500 | 0 | `--ash` on `--mint` |
+
+Outlined type uses `color: transparent` plus `-webkit-text-stroke`. Keep outline width 1px for names and 1.5px for the bigger heading so both read the same weight.
 
 ## Implementation notes
 

@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 An approval card for a back-office queue, drawn as a real paper form. A typed mooring permit from the "Port Ellery Harbour Authority" lies on a dark green leather blotter, tilted −1.2°, with a receipt slip paperclipped behind its top-left corner and two faint fold lines across it. The left column is the in-tray: four progress steps and three buttons. Sign draws a blue ballpoint signature along the line in 1.5s. Stamp thumps a red APPROVED rubber stamp onto the paper. Ink soaks into the fibres: the edges are rough and speckled, and a soft blur bleeds out over 1.3s. Clicking anywhere on the paper stamps it right there at a fresh angle. The detail worth copying is the ink: one SVG filter roughens and pits the stamp, and a second blurred copy bleeds under it.
-
-## Reference behaviour
-
-1. First frame: the permit is already signed and stamped, and the stamp plays its thump on load. All four steps are ticked. "Sign" is disabled because it is done.
-2. "Next form" clears the signature, the stamp, the date, and steps 3 and 4. It enables "Sign".
-3. "Sign": the signature path draws with `stroke-dashoffset 1 → 0` over 1500ms on `cubic-bezier(.45,.05,.4,1)`. The date field types in "4 October 2026". Step 3 ticks with "04 Oct". The button disables.
-4. "Stamp approved", or Enter/Space on the focused permit: the stamp lands centred over the date field, at −7°.
-5. Click anywhere on the permit: the stamp lands centred on the click, at a random angle from −10° to +4°. It is clamped 14px inside the paper on every side. There is one stamp; a new click moves it and replays the thump.
-6. Thump: the stamp drops from 26px above at scale 1.55 and 0 opacity, overshoots to 0.96 at 42%, rebounds to 1.015 at 70%, and settles at scale 1 and 0.9 opacity in 520ms. 190ms in, the paper dips 3px and to 0.996 scale for 280ms. The bleed layer fades in and blurs from 0 to 1.3px over 1300ms, starting at 140ms.
-7. While the pointer is over the paper the cursor is hidden and a dashed red outline the size of the stamp (230 × 92, rotate −4°) follows it, so you see where it will land.
-8. Steps tick with a 220ms scale-in check. A polite live region says "Signed by the harbour master.", "Stamped approved.", or "Permit reset: unsigned and unstamped."
-9. Reduced motion: the signature appears whole, the stamp appears in place with no drop, no dip, no bleed animation (the bleed is drawn static).
 
 ## Structure
 
@@ -58,55 +48,6 @@ Copy:
 | Receipt slip | Receipt / No. 0884 / Mooring fee, 5 months / 412.00 paid in full |
 | Terms | The vessel shall be kept in a seaworthy state, display this permit number on the port quarter, and leave the berth within 48 hours of a gale notice from the harbour office. |
 | Stamp | APPROVED, sub-line PORT ELLERY · 04 OCT 2026 |
-
-## Tokens
-
-```css
-:root {
-  --blotter: #2e3a33;   --blotter-2: #36443b;   /* desk, radial lift */
-  --on-blotter: #e9e2cf; --on-blotter-2: #a9b3a3; /* tray text, secondary */
-  --paper: #f2ebd9;     --paper-2: #e8dfc8;     /* form, fibre tint */
-  --rule: #cdbf9f;
-  --ink: #2a2723;       --ink-2: #5e574b;       /* typed and printed text */
-  --stamp: #c0262d;     /* accent: stamp ink, primary button */
-  --pen: #1f3a8a;       /* ballpoint */
-  --brass: #c9a35b;     /* focus ring */
-
-  --serif: "Old Standard TT", "Times New Roman", serif;   /* printed form */
-  --type: "Special Elite", "Courier New", monospace;      /* typed entries */
-
-  --doc-w: 560px; --doc-pad: 42px 46px 38px; --doc-tilt: -1.2deg;
-  --stamp-w: 230px; --stamp-ratio: 230 / 92;
-  --sig-w: 230px;
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-stamp: 520ms; --t-bleed: 1300ms; --t-thud: 280ms; --t-sign: 1500ms;
-  --shadow-doc: 0 1px 0 rgba(255,255,255,.4) inset, 0 28px 50px -26px rgba(0,0,0,.8), 0 4px 10px -4px rgba(0,0,0,.4);
-}
-```
-
-Paper surface: two fold lines at 33.3% and 66.6% (a 1px darker band then a 0.3% highlight), a vignette `radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(120,95,50,.16))`, and a `::before` layer filled with `--paper-2` through a fibre filter (`feTurbulence baseFrequency=".9 .05"`, so the noise streaks horizontally) at 0.55 opacity, `multiply`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Tray eyebrow | Special Elite | 11px | 400 | 1 | 0.16em | UPPER |
-| Tray title | Old Standard TT | 34px | 400 italic | 1.05 | 0 | sentence |
-| Step | Old Standard TT | 15px | 400 | 1.5 | 0 | sentence |
-| Step date | Special Elite | 11px | 400 | 1 | 0.06em | — |
-| Button | Special Elite | 13px | 400 | 1 | 0.08em | UPPER |
-| Organisation | Old Standard TT | 11px | 700 / 400 | 1.35 | 0.2em / 0.12em | UPPER |
-| Form number | Special Elite | 12px | 400 | 1 | 0.06em | — |
-| Document title | Old Standard TT | 40px | 400 italic | 1 | −0.01em | Title |
-| Field label | Old Standard TT | 9.5px | 700 | 1 | 0.2em | UPPER, `--ink-2` |
-| Field value | Special Elite | 16px | 400 | 1.2 | 0 | as typed |
-| Terms | Old Standard TT | 12.5px | 400 | 1.55 | 0 | sentence, 44ch |
-| Stamp word | Old Standard TT | 40 (SVG units) | 700 | — | 5 | UPPER |
-| Stamp sub-line | Special Elite | 10.5 (SVG units) | 400 | — | 2.5 | UPPER |
-
-Printed parts of the form are the serif; anything filled in by a person or a typewriter is Special Elite. Never swap them.
 
 ## Motion
 
@@ -172,6 +113,71 @@ The stamp's position and angle live in three custom properties (`--x`, `--y`, `-
 - [ ] Stamp reads "APPROVED" over "PORT ELLERY · 04 OCT 2026", 230 × 92, double border.
 - [ ] Default stamp angle −7°; click angles between −10° and +4°.
 - [ ] Permit rotated −1.2°; slip rotated −6°.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the permit is already signed and stamped, and the stamp plays its thump on load. All four steps are ticked. "Sign" is disabled because it is done.
+2. "Next form" clears the signature, the stamp, the date, and steps 3 and 4. It enables "Sign".
+3. "Sign": the signature path draws with `stroke-dashoffset 1 → 0` over 1500ms on `cubic-bezier(.45,.05,.4,1)`. The date field types in "4 October 2026". Step 3 ticks with "04 Oct". The button disables.
+4. "Stamp approved", or Enter/Space on the focused permit: the stamp lands centred over the date field, at −7°.
+5. Click anywhere on the permit: the stamp lands centred on the click, at a random angle from −10° to +4°. It is clamped 14px inside the paper on every side. There is one stamp; a new click moves it and replays the thump.
+6. Thump: the stamp drops from 26px above at scale 1.55 and 0 opacity, overshoots to 0.96 at 42%, rebounds to 1.015 at 70%, and settles at scale 1 and 0.9 opacity in 520ms. 190ms in, the paper dips 3px and to 0.996 scale for 280ms. The bleed layer fades in and blurs from 0 to 1.3px over 1300ms, starting at 140ms.
+7. While the pointer is over the paper the cursor is hidden and a dashed red outline the size of the stamp (230 × 92, rotate −4°) follows it, so you see where it will land.
+8. Steps tick with a 220ms scale-in check. A polite live region says "Signed by the harbour master.", "Stamped approved.", or "Permit reset: unsigned and unstamped."
+9. Reduced motion: the signature appears whole, the stamp appears in place with no drop, no dip, no bleed animation (the bleed is drawn static).
+
+## Tokens
+
+```css
+:root {
+  --blotter: #2e3a33;   --blotter-2: #36443b;   /* desk, radial lift */
+  --on-blotter: #e9e2cf; --on-blotter-2: #a9b3a3; /* tray text, secondary */
+  --paper: #f2ebd9;     --paper-2: #e8dfc8;     /* form, fibre tint */
+  --rule: #cdbf9f;
+  --ink: #2a2723;       --ink-2: #5e574b;       /* typed and printed text */
+  --stamp: #c0262d;     /* accent: stamp ink, primary button */
+  --pen: #1f3a8a;       /* ballpoint */
+  --brass: #c9a35b;     /* focus ring */
+
+  --serif: "Old Standard TT", "Times New Roman", serif;   /* printed form */
+  --type: "Special Elite", "Courier New", monospace;      /* typed entries */
+
+  --doc-w: 560px; --doc-pad: 42px 46px 38px; --doc-tilt: -1.2deg;
+  --stamp-w: 230px; --stamp-ratio: 230 / 92;
+  --sig-w: 230px;
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-stamp: 520ms; --t-bleed: 1300ms; --t-thud: 280ms; --t-sign: 1500ms;
+  --shadow-doc: 0 1px 0 rgba(255,255,255,.4) inset, 0 28px 50px -26px rgba(0,0,0,.8), 0 4px 10px -4px rgba(0,0,0,.4);
+}
+```
+
+Paper surface: two fold lines at 33.3% and 66.6% (a 1px darker band then a 0.3% highlight), a vignette `radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(120,95,50,.16))`, and a `::before` layer filled with `--paper-2` through a fibre filter (`feTurbulence baseFrequency=".9 .05"`, so the noise streaks horizontally) at 0.55 opacity, `multiply`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Tray eyebrow | Special Elite | 11px | 400 | 1 | 0.16em | UPPER |
+| Tray title | Old Standard TT | 34px | 400 italic | 1.05 | 0 | sentence |
+| Step | Old Standard TT | 15px | 400 | 1.5 | 0 | sentence |
+| Step date | Special Elite | 11px | 400 | 1 | 0.06em | — |
+| Button | Special Elite | 13px | 400 | 1 | 0.08em | UPPER |
+| Organisation | Old Standard TT | 11px | 700 / 400 | 1.35 | 0.2em / 0.12em | UPPER |
+| Form number | Special Elite | 12px | 400 | 1 | 0.06em | — |
+| Document title | Old Standard TT | 40px | 400 italic | 1 | −0.01em | Title |
+| Field label | Old Standard TT | 9.5px | 700 | 1 | 0.2em | UPPER, `--ink-2` |
+| Field value | Special Elite | 16px | 400 | 1.2 | 0 | as typed |
+| Terms | Old Standard TT | 12.5px | 400 | 1.55 | 0 | sentence, 44ch |
+| Stamp word | Old Standard TT | 40 (SVG units) | 700 | — | 5 | UPPER |
+| Stamp sub-line | Special Elite | 10.5 (SVG units) | 400 | — | 2.5 | UPPER |
+
+Printed parts of the form are the serif; anything filled in by a person or a typewriter is Special Elite. Never swap them.
 
 ## Implementation notes
 

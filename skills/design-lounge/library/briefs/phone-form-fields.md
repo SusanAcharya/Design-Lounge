@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the industrial form family: 2px radii, hard borders, one safety yellow.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full phone screen for booking a skip bag collection in a fictional app called Kerbstone. It holds seven controls: contact name, mobile with a country code select, street, postcode, collection day, a three-way bag size choice, a driver note with a character counter, and an SMS switch. Labels are condensed grotesk in caps. Typed values are mono. Fields check themselves when you leave them. Pressing Save shows an error summary at the top and moves focus to the first bad field. The Save button is fixed above the 34px home area and always shows the day and the price.
@@ -11,28 +13,6 @@ A full phone screen for booking a skip bag collection in a fictional app called 
 The detail worth copying is the honest error. The message says what to type and what you typed: "Enter 10 digits after +44. You typed 6." It is not "Invalid input".
 
 This piece is the native-feel phone form with no glass. It uses neither iOS 26 Liquid Glass nor Material 3. It is its own industrial language, built on the same 44px touch rules.
-
-## Reference behaviour
-
-1. The first frame shows the whole form filled in except Street. Mobile is already in the error state, as if the user left it. It shows `7700 90` and the message "Enter 10 digits after +44. You typed 6."
-2. Contact name, Postcode and Collection day show a green tick on the right. Their border is the darker `--ink-2`.
-3. A 6px hazard stripe runs across the top of the page, under the 54px top clearance.
-4. Above the title sits an eyebrow: "Kerbstone · Collection" on the left, and the booking code `KS-40817` in mono on the right.
-5. The title reads "Book a collection" in 34px condensed caps. A 12px mono line under it reads "Skip bag pickup. Driver needs a clear 3 m kerb."
-6. Focus on any field turns its border to ink and adds a 3px yellow ring outside it.
-7. Leaving a field (blur) runs its rule. A failing field gets a red border, a pale red fill, `aria-invalid="true"` and an error line with a triangle icon.
-8. While a field is in error, each keystroke re-runs the rule. The error clears the moment the value passes. A field that is not in error does not nag while typing.
-9. Changing the country code re-checks Mobile if it has a value. The message names the new code.
-10. Leaving Postcode upper-cases it and collapses spaces. `yo1  6jr` becomes `YO1 6JR`.
-11. The collection day rejects dates before Mon 5 Oct and any Sunday. The native picker is limited by `min` and `max`.
-12. Bag size is a three-cell segmented control: Mini £89, Midi £119, Mega £149. Midi starts selected. The selected cell fills yellow.
-13. The note counter reads `38/140` at the start. It turns red at 120 and above. The textarea stops at 140 with `maxlength`.
-14. The switch "Text me on the way" starts on. Tapping it flips `aria-checked`. The knob slides 24px.
-15. The Save button shows "Save booking" on the left and "Wed 7 Oct · £119" in mono on the right. Changing the day or the size updates that text at once.
-16. Pressing Save with errors runs every rule. A summary box appears above the form: "Fix 2 fields", then one link per bad field. Focus moves to the first bad field in page order, not to the summary.
-17. Each summary link moves focus to its field.
-18. Pressing Save with no errors hides the summary, turns the button ink with yellow text and a tick, and reads "Booked". A polite live region says "Booking saved for Wed 7 Oct · £119".
-19. Editing any field after "Booked" returns the button to "Save booking".
 
 ## Structure
 
@@ -76,53 +56,6 @@ padding-top 54px (status bar is drawn by the Lounge)
 - The switch is a `button role="switch"` labelled by the row text.
 - The error summary is a `div role="alert"` with an `h2` and a `ul` of links.
 - The dock is `position: fixed`, full width, `--surface`, with a 2px ink top border.
-
-## Tokens
-
-```css
-:root {
-  --bg: #d3d1cb;          /* concrete page */
-  --surface: #e4e2dd;     /* dock */
-  --field: #f0efeb;       /* input fill */
-  --ink: #1a1a18;         /* text, strong border */
-  --ink-2: #45443f;       /* secondary text, valid border */
-  --ink-3: #55534d;       /* hints, counter */
-  --line: #a8a59d;        /* resting border */
-  --accent: #ffd400;      /* safety yellow */
-  --accent-ink: #1a1a18;
-  --error: #a3200f;
-  --error-bg: #f4dcd4;
-  --ok: #2f5d2a;          /* tick */
-  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  --r: 2px;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
-  --field-h: 48px;
-  --ring: 0 0 0 3px var(--accent);
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --fast: 140ms;
-  --mid: 240ms;
-}
-```
-
-The page carries a fine grain: two dot grids, `rgba(26,26,24,.07)` at 5px and `rgba(255,255,255,.18)` at 7px, offset by 2px 3px. Keep it under 8% so it reads as concrete, not noise.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Title | Barlow Condensed | 34px | 700 | 0.95 | 0.01em | caps |
-| Eyebrow | Barlow Condensed | 13px | 600 | 1 | 0.12em | caps |
-| Field label | Barlow Condensed | 13px | 600 | 1 | 0.12em | caps |
-| Label hint | JetBrains Mono | 11px | 500 | 1 | 0 | sentence |
-| Value | JetBrains Mono | 15px | 400 | 1.4 | 0 | as typed |
-| Error | JetBrains Mono | 12px | 400 | 1.35 | 0 | sentence |
-| Segment name | Barlow Condensed | 16px | 700 | 1 | 0.06em | caps |
-| Segment price | JetBrains Mono | 10px | 400 | 1 | 0 | as is |
-| Save label | Barlow Condensed | 19px | 700 | 1 | 0.1em | caps |
-| Save meta | JetBrains Mono | 12px | 500 | 1 | 0 | sentence |
-
-Values are 15px or more so iOS does not zoom on focus. Never set an input under 16px on a product that has to support older iOS Safari. In this demo 15px is fine because the frame is an app shell.
 
 ## Motion
 
@@ -207,6 +140,79 @@ Replay the summary animation on every failed submit. Remove the class, force a r
 - [ ] The note counter starts at 38/140 and turns red at 120.
 - [ ] Save reads "Save booking" and "Wed 7 Oct · £119", and turns into "Booked" on success.
 - [ ] The hazard stripe is 6px of 10px yellow and ink diagonal bands.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the whole form filled in except Street. Mobile is already in the error state, as if the user left it. It shows `7700 90` and the message "Enter 10 digits after +44. You typed 6."
+2. Contact name, Postcode and Collection day show a green tick on the right. Their border is the darker `--ink-2`.
+3. A 6px hazard stripe runs across the top of the page, under the 54px top clearance.
+4. Above the title sits an eyebrow: "Kerbstone · Collection" on the left, and the booking code `KS-40817` in mono on the right.
+5. The title reads "Book a collection" in 34px condensed caps. A 12px mono line under it reads "Skip bag pickup. Driver needs a clear 3 m kerb."
+6. Focus on any field turns its border to ink and adds a 3px yellow ring outside it.
+7. Leaving a field (blur) runs its rule. A failing field gets a red border, a pale red fill, `aria-invalid="true"` and an error line with a triangle icon.
+8. While a field is in error, each keystroke re-runs the rule. The error clears the moment the value passes. A field that is not in error does not nag while typing.
+9. Changing the country code re-checks Mobile if it has a value. The message names the new code.
+10. Leaving Postcode upper-cases it and collapses spaces. `yo1  6jr` becomes `YO1 6JR`.
+11. The collection day rejects dates before Mon 5 Oct and any Sunday. The native picker is limited by `min` and `max`.
+12. Bag size is a three-cell segmented control: Mini £89, Midi £119, Mega £149. Midi starts selected. The selected cell fills yellow.
+13. The note counter reads `38/140` at the start. It turns red at 120 and above. The textarea stops at 140 with `maxlength`.
+14. The switch "Text me on the way" starts on. Tapping it flips `aria-checked`. The knob slides 24px.
+15. The Save button shows "Save booking" on the left and "Wed 7 Oct · £119" in mono on the right. Changing the day or the size updates that text at once.
+16. Pressing Save with errors runs every rule. A summary box appears above the form: "Fix 2 fields", then one link per bad field. Focus moves to the first bad field in page order, not to the summary.
+17. Each summary link moves focus to its field.
+18. Pressing Save with no errors hides the summary, turns the button ink with yellow text and a tick, and reads "Booked". A polite live region says "Booking saved for Wed 7 Oct · £119".
+19. Editing any field after "Booked" returns the button to "Save booking".
+
+## Tokens
+
+```css
+:root {
+  --bg: #d3d1cb;          /* concrete page */
+  --surface: #e4e2dd;     /* dock */
+  --field: #f0efeb;       /* input fill */
+  --ink: #1a1a18;         /* text, strong border */
+  --ink-2: #45443f;       /* secondary text, valid border */
+  --ink-3: #55534d;       /* hints, counter */
+  --line: #a8a59d;        /* resting border */
+  --accent: #ffd400;      /* safety yellow */
+  --accent-ink: #1a1a18;
+  --error: #a3200f;
+  --error-bg: #f4dcd4;
+  --ok: #2f5d2a;          /* tick */
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --r: 2px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
+  --field-h: 48px;
+  --ring: 0 0 0 3px var(--accent);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --fast: 140ms;
+  --mid: 240ms;
+}
+```
+
+The page carries a fine grain: two dot grids, `rgba(26,26,24,.07)` at 5px and `rgba(255,255,255,.18)` at 7px, offset by 2px 3px. Keep it under 8% so it reads as concrete, not noise.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Title | Barlow Condensed | 34px | 700 | 0.95 | 0.01em | caps |
+| Eyebrow | Barlow Condensed | 13px | 600 | 1 | 0.12em | caps |
+| Field label | Barlow Condensed | 13px | 600 | 1 | 0.12em | caps |
+| Label hint | JetBrains Mono | 11px | 500 | 1 | 0 | sentence |
+| Value | JetBrains Mono | 15px | 400 | 1.4 | 0 | as typed |
+| Error | JetBrains Mono | 12px | 400 | 1.35 | 0 | sentence |
+| Segment name | Barlow Condensed | 16px | 700 | 1 | 0.06em | caps |
+| Segment price | JetBrains Mono | 10px | 400 | 1 | 0 | as is |
+| Save label | Barlow Condensed | 19px | 700 | 1 | 0.1em | caps |
+| Save meta | JetBrains Mono | 12px | 500 | 1 | 0 | sentence |
+
+Values are 15px or more so iOS does not zoom on focus. Never set an input under 16px on a product that has to support older iOS Safari. In this demo 15px is fine because the frame is an app shell.
 
 ## Implementation notes
 

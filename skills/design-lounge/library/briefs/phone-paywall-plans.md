@@ -4,25 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the 2px radii. This is the editorial family, not glass.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The members screen of Plainsong, a fictional long-read magazine app. It opens when a reader hits the free article limit. It sells one thing: the full archive, offline, with no ads. The headline says that in plain words. Three benefit rows back it up. Two plan cards sit side by side. Yearly starts selected and wears a "Save 38%" tab. A small timeline shows how the 7-day trial works: today, a reminder on day 5, the first charge on day 7. The primary button repeats the price of the selected plan. The worth-copying detail is honesty. The price, the date of the charge, and the way out are all on the first frame.
 
 The look is paper and ink. The page is warm off-white. The display face is a high-contrast serif. Body text is a narrow grotesk. One deep oxblood accent marks the brand word, the selected radio dot, the "Save" tab, the trial rail, and the button. Nothing else is red.
-
-## Reference behaviour
-
-1. First frame: Yearly is checked. The button reads "Start 7-day free trial" with a second line "Then $59.49 a year". The timeline's day 7 line reads "Billed $59.49".
-2. The trial rail draws from the Today dot toward Day 5 over 700ms after a 200ms delay. It stops at 34% of the rail. This shows "you are here".
-3. Tap Monthly. The Monthly card gets the strong border. Its radio dot fills. The Yearly card goes back to the thin border.
-4. On the same tap, the button's second line becomes "Then $7.99 a month". It slides up 4px and fades in over 220ms. The day 7 line becomes "Billed $7.99".
-5. A polite live region announces "Selected monthly plan. Then $7.99 a month after the trial."
-6. Arrow keys move between the two plans, because they are real radio inputs in one group.
-7. Tap the primary button. It turns `--ink-2` and reads "Starting your trial" for 1200ms. It sets `aria-busy="true"`. A second tap during that time does nothing. Then the label returns and the live region says "Trial started. We will remind you on day 5."
-8. Tap "Restore purchase". The live region says "No earlier purchase found on this account." In a real product, call the store's restore API here.
-9. "Terms" and "Privacy" are buttons in this demo. In a product they open the documents.
-10. The close button sits top right. It is always visible. Its label is "Close and keep reading free articles".
-11. Nothing on the screen counts down, flashes, or blocks the close button.
 
 ## Structure
 
@@ -62,73 +50,6 @@ The look is paper and ink. The page is warm off-white. The display face is a hig
 - The timeline is an `ol` with `aria-label="How the free trial works"`.
 - The CTA block has `margin-top: auto`, so it sits at the bottom on tall screens.
 - The live region is a visually hidden `p role="status" aria-live="polite"`.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces */
-  --bg: #f3eee4;          /* paper */
-  --surface: #fbf8f2;     /* plan card */
-  --line: #d8cfc0;        /* hairlines, resting card border */
-  --line-strong: #1a1714; /* selected card border */
-  /* ink */
-  --ink: #1a1714;
-  --ink-2: #4a433b;
-  --ink-3: #6b6358;
-  /* accent */
-  --accent: #6b1e23;      /* oxblood */
-  --accent-press: #561419;
-  --accent-soft: #efe1dd;
-  --on-accent: #fbf8f2;
-  --focus: #6b1e23;
-  /* type */
-  --display: "Instrument Serif", Georgia, serif;
-  --sans: "Inter Tight", system-ui, sans-serif;
-  --fs-display: 36px;
-  --fs-price: 30px;
-  --fs-body: 15px;
-  --fs-small: 13px;
-  --fs-micro: 11px;
-  /* space, 4px base */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
-  --page-x: 22px;
-  /* shape */
-  --r: 2px;
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --micro: 160ms;
-  --layout: 320ms;
-}
-```
-
-No shadows. The selected card uses a 1px border plus a 1px inset shadow in `--line-strong`. That reads as a 2px rule without moving the layout.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Wordmark | Instrument Serif | 22px | 400 | 1 | -0.01em | "song" in accent italic |
-| Kicker | Inter Tight | 11px | 600 | 1.45 | 0.14em | upper |
-| Headline | Instrument Serif | 36px | 400 | 1.02 | -0.02em | sentence |
-| Headline stress | Instrument Serif italic | 36px | 400 | 1.02 | -0.02em | accent colour |
-| Benefit title | Inter Tight | 14px | 600 | 1.3 | 0 | sentence |
-| Benefit line | Inter Tight | 13px | 400 | 1.35 | 0 | `--ink-3` |
-| Legend | Inter Tight | 11px | 600 | 1.45 | 0.14em | upper |
-| Plan name | Inter Tight | 13px | 600 | 1.45 | 0 | sentence |
-| Price | Instrument Serif | 30px | 400 | 1 | -0.02em | tabular lining nums |
-| Price unit | Inter Tight | 12px | 400 | 1 | 0 | `--ink-3` |
-| Save tab | Inter Tight | 10px | 700 | 1 | 0.1em | upper |
-| Timeline label | Inter Tight | 11px | 600 | 1.45 | 0.1em | upper |
-| Timeline text | Inter Tight | 13px | 400 | 1.45 | 0 | sentence |
-| Button line 1 | Inter Tight | 16px | 600 | 1.2 | 0 | sentence |
-| Button line 2 | Inter Tight | 12px | 400 | 1.2 | 0 | 82% opacity |
-| Links | Inter Tight | 13px | 500 | 1 | 0 | underlined |
-
-- Load two families only. One Google Fonts link.
-- Use `font-variant-numeric: tabular-nums` on every price and on the billed amount.
-- The headline is three short lines at 390px. Do not let it run to four. If it does, cut words, not size.
 
 ## Motion
 
@@ -203,6 +124,91 @@ No shadows. The selected card uses a 1px border plus a 1px inset shadow in `--li
 - [ ] Yearly is checked on load. The button reads "Then $59.49 a year".
 - [ ] The timeline reads Today, Day 5, Day 7, with "Billed $59.49" on Day 7.
 - [ ] Background `#f3eee4`, cards `#fbf8f2`, hairlines `#d8cfc0`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Yearly is checked. The button reads "Start 7-day free trial" with a second line "Then $59.49 a year". The timeline's day 7 line reads "Billed $59.49".
+2. The trial rail draws from the Today dot toward Day 5 over 700ms after a 200ms delay. It stops at 34% of the rail. This shows "you are here".
+3. Tap Monthly. The Monthly card gets the strong border. Its radio dot fills. The Yearly card goes back to the thin border.
+4. On the same tap, the button's second line becomes "Then $7.99 a month". It slides up 4px and fades in over 220ms. The day 7 line becomes "Billed $7.99".
+5. A polite live region announces "Selected monthly plan. Then $7.99 a month after the trial."
+6. Arrow keys move between the two plans, because they are real radio inputs in one group.
+7. Tap the primary button. It turns `--ink-2` and reads "Starting your trial" for 1200ms. It sets `aria-busy="true"`. A second tap during that time does nothing. Then the label returns and the live region says "Trial started. We will remind you on day 5."
+8. Tap "Restore purchase". The live region says "No earlier purchase found on this account." In a real product, call the store's restore API here.
+9. "Terms" and "Privacy" are buttons in this demo. In a product they open the documents.
+10. The close button sits top right. It is always visible. Its label is "Close and keep reading free articles".
+11. Nothing on the screen counts down, flashes, or blocks the close button.
+
+## Tokens
+
+```css
+:root {
+  /* surfaces */
+  --bg: #f3eee4;          /* paper */
+  --surface: #fbf8f2;     /* plan card */
+  --line: #d8cfc0;        /* hairlines, resting card border */
+  --line-strong: #1a1714; /* selected card border */
+  /* ink */
+  --ink: #1a1714;
+  --ink-2: #4a433b;
+  --ink-3: #6b6358;
+  /* accent */
+  --accent: #6b1e23;      /* oxblood */
+  --accent-press: #561419;
+  --accent-soft: #efe1dd;
+  --on-accent: #fbf8f2;
+  --focus: #6b1e23;
+  /* type */
+  --display: "Instrument Serif", Georgia, serif;
+  --sans: "Inter Tight", system-ui, sans-serif;
+  --fs-display: 36px;
+  --fs-price: 30px;
+  --fs-body: 15px;
+  --fs-small: 13px;
+  --fs-micro: 11px;
+  /* space, 4px base */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+  --page-x: 22px;
+  /* shape */
+  --r: 2px;
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --micro: 160ms;
+  --layout: 320ms;
+}
+```
+
+No shadows. The selected card uses a 1px border plus a 1px inset shadow in `--line-strong`. That reads as a 2px rule without moving the layout.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Wordmark | Instrument Serif | 22px | 400 | 1 | -0.01em | "song" in accent italic |
+| Kicker | Inter Tight | 11px | 600 | 1.45 | 0.14em | upper |
+| Headline | Instrument Serif | 36px | 400 | 1.02 | -0.02em | sentence |
+| Headline stress | Instrument Serif italic | 36px | 400 | 1.02 | -0.02em | accent colour |
+| Benefit title | Inter Tight | 14px | 600 | 1.3 | 0 | sentence |
+| Benefit line | Inter Tight | 13px | 400 | 1.35 | 0 | `--ink-3` |
+| Legend | Inter Tight | 11px | 600 | 1.45 | 0.14em | upper |
+| Plan name | Inter Tight | 13px | 600 | 1.45 | 0 | sentence |
+| Price | Instrument Serif | 30px | 400 | 1 | -0.02em | tabular lining nums |
+| Price unit | Inter Tight | 12px | 400 | 1 | 0 | `--ink-3` |
+| Save tab | Inter Tight | 10px | 700 | 1 | 0.1em | upper |
+| Timeline label | Inter Tight | 11px | 600 | 1.45 | 0.1em | upper |
+| Timeline text | Inter Tight | 13px | 400 | 1.45 | 0 | sentence |
+| Button line 1 | Inter Tight | 16px | 600 | 1.2 | 0 | sentence |
+| Button line 2 | Inter Tight | 12px | 400 | 1.2 | 0 | 82% opacity |
+| Links | Inter Tight | 13px | 500 | 1 | 0 | underlined |
+
+- Load two families only. One Google Fonts link.
+- Use `font-variant-numeric: tabular-nums` on every price and on the billed amount.
+- The headline is three short lines at 390px. Do not let it run to four. If it does, cut words, not size.
 
 ## Implementation notes
 

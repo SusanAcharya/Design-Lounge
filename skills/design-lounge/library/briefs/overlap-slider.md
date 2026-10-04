@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Five portrait cards in a row: Gate 1, Gate 2, Gate 4, Night, Month. Gate 4 starts as the forward card, so the two on its left are scale .82 and 18px down. Moving to a card scales every card to its left. This is not a coverflow. That strip is `coverflow-strip`. This is not a tilt. That tilt is `hover-tilt-cards`.
-
-## Reference behaviour
-
-1. data-i starts at 2, Gate 4.
-2. Cards with an index lower than data-i scale to .82 and translateY 18px.
-3. The card at data-i and the cards to its right stay full size.
-4. Pointer enter sets data-i.
-5. Focus sets data-i.
-6. The scale origin is center bottom.
-7. The move is 280ms. Reduced motion snaps.
 
 ## Structure
 
@@ -30,19 +22,6 @@ left cards smaller when a later card is current
 - The name is 18px at the bottom. The caption is #a39b90.
 - Fills are #24362e, #2a2926, #3a342c, #1f4d3a, #4a3b22.
 - Text is #f4f1ea.
-
-## Tokens
-
-```css
-:root { --bg:#141311; --ink:#f4f1ea; --ink-2:#a39b90; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Name | IBM Plex Sans | 18px | 600 |
-| Caption | IBM Plex Sans | 14px | 500 |
 
 ## Motion
 
@@ -87,16 +66,6 @@ left cards smaller when a later card is current
 - [ ] Start index is 2.
 - [ ] Scale is .82. Drop is 18px.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Drive every card from one data-i on the row.
-
-```js
-row.dataset.i = c.dataset.i;
-```
-
-Do not scale the current card.
 
 ## Measurements to keep
 
@@ -151,6 +120,43 @@ Do not scale the current card.
 - Honour reduced motion.
 - Do not add a second accent.
 - Do not add a second type family.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. data-i starts at 2, Gate 4.
+2. Cards with an index lower than data-i scale to .82 and translateY 18px.
+3. The card at data-i and the cards to its right stay full size.
+4. Pointer enter sets data-i.
+5. Focus sets data-i.
+6. The scale origin is center bottom.
+7. The move is 280ms. Reduced motion snaps.
+
+## Tokens
+
+```css
+:root { --bg:#141311; --ink:#f4f1ea; --ink-2:#a39b90; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Name | IBM Plex Sans | 18px | 600 |
+| Caption | IBM Plex Sans | 14px | 500 |
+
+## Implementation notes
+
+Drive every card from one data-i on the row.
+
+```js
+row.dataset.i = c.dataset.i;
+```
+
+Do not scale the current card.
 
 ---
 

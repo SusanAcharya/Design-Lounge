@@ -4,30 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep this layout.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The search screen of a job board called Placard. A search bar sits across the top: role, location, a Remote only switch, and a Search button. Below it are three columns: filters on the left (232px), the result list in the middle, and a detail pane on the right (440px). The look is quiet Swiss: white page, black ink, one green, hairline rules, 6px corners, a grotesk for words and a mono for every salary and count. The detail worth copying is that every number moves at once. Change a filter and the result count, each filter's own count, and the list all update on the same input event, with no Apply button.
-
-## Reference behaviour
-
-1. The first frame has "designer" in the role field. Experience has Mid, Senior, and Lead ticked. Salary runs $60k to $200k. The list shows 10 roles, newest first.
-2. The first row, Senior Product Designer at Northline Freight, is selected. It has a soft grey fill and a 3px black bar on its left edge. Its details fill the right pane.
-3. Typing in the role field filters by title, company, and tags. Typing in the location field filters by city. Both filter on every keystroke.
-4. The Remote only switch toggles `aria-checked`. When on, only rows with mode Remote stay.
-5. Job type and Experience are checkbox groups. Posted within is a radio group: Any time, Past 24 hours, Past 3 days, Past week, Past month.
-6. Each filter option shows a mono count on the right. The count is how many rows would match if that option were the only one in its group, with all other filters applied.
-7. The salary filter is one track with two thumbs, $40k to $220k, step $5k. The thumbs cannot get closer than $10k. The value line above reads "$60k – $200k". At the top end it reads "$220k+".
-8. A row matches salary when its band overlaps the chosen range, not when it sits fully inside it.
-9. The heading reads "10 roles". The number is mono. It says "1 role" for one.
-10. Each row shows: a 40px initials tile, the title, a New badge when posted today or yesterday, company · city · mode, the salary band in mono, tags, the age ("Today", "1d ago"), and a save button.
-11. Clicking anywhere on a row selects it. The detail pane swaps to that job. The save button inside the row does not select the row.
-12. The save button toggles `aria-pressed`. Pressed is a filled green bookmark. The row and the detail pane share the saved state: saving in one updates the other.
-13. The detail pane shows: a 52px tile, title, company · city, the salary band at 18px mono with "per year, before tax", a four-cell fact row (Type, Level, Where, Posted), a green Apply button and a save button, then About the role, What you will do, What you bring, and Similar jobs.
-14. Similar jobs lists three other roles that share the level, a tag, or the mode. Clicking one selects it and scrolls the pane to the top.
-15. Apply turns black and reads "Application started" with a check. It does not leave the page in this demo.
-16. If the selected job is filtered out, the first remaining row is selected.
-17. If nothing matches, the list shows an empty state: an icon, "No roles match these filters", one line of advice, and a Clear filters button. The detail pane reads "Pick a role to see the details."
-18. Clear all filters, and Clear filters in the empty state, tick every box, set Any time, and reset salary to $40k – $220k. They do not clear the search text.
 
 ## Structure
 
@@ -58,63 +39,6 @@ The search screen of a job board called Placard. A search bar sits across the to
 - Results are a `section` with an `h1` and an `ol`. Each row is an `li` with one `button.pick` (the title). The button's `::after` covers the row so the whole row is clickable.
 - The list header is sticky at the top of the middle column.
 - The detail pane is a `section aria-label="Job details"` with an `h2`, a `dl` for the facts, and `h3` section labels.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #ffffff;          /* page */
-  --soft: #f5f5f4;        /* hover, selected row, tile fill */
-  --ink: #0b0b0b;         /* text, selected bar, Search button */
-  --ink-2: #454545;       /* secondary text */
-  --ink-3: #6b6b6b;       /* labels, counts, ages */
-  --line: #e6e6e6;        /* hairlines */
-  --line-2: #d0d0d0;      /* input border, unticked box */
-  --green: #0b7a3e;       /* the only accent: Apply, switch on, slider fill, saved, New */
-  --green-tint: #e8f3ec;  /* New badge fill */
-  --focus: #0b7a3e;
-
-  /* type */
-  --sans: "Inter Tight", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  --t-11: 11px; --t-12: 12px; --t-13: 13px; --t-14: 14px;
-  --t-15: 15px; --t-18: 18px; --t-22: 22px; --t-24: 24px;
-
-  /* space (4px base) */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
-
-  /* shape */
-  --r: 6px;
-  --r-tag: 4px;
-
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --fast: 140ms;
-}
-```
-
-No shadows. Regions are split by 1px `--line` rules. The selected row uses `box-shadow: inset 3px 0 0 var(--ink)` as a bar, not as depth.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Brand | Inter Tight | 18px | 700 | 1 | -0.03em | Title |
-| Result heading word | Inter Tight | 22px | 600 | 1.2 | -0.025em | Sentence |
-| Result count number | JetBrains Mono | 20px | 500 | 1.2 | -0.02em | — |
-| Row title | Inter Tight | 15px | 600 | 1.35 | -0.01em | Title |
-| Row meta | Inter Tight | 13px | 400 | 1.45 | 0 | Sentence |
-| Salary band (row) | JetBrains Mono | 13px | 500 | 1.4 | 0 | — |
-| Tag | Inter Tight | 12px | 400 | 1.4 | 0 | Sentence |
-| New badge | Inter Tight | 11px | 600 | 1.4 | 0.04em | Upper |
-| Filter legend, detail h3 | Inter Tight | 11px | 600 | 1.4 | 0.08em | Upper |
-| Filter count, age | JetBrains Mono | 12px | 400 | 1.4 | 0 | — |
-| Detail title | Inter Tight | 24px | 600 | 1.15 | -0.03em | Title |
-| Detail salary | JetBrains Mono | 18px | 500 | 1.3 | -0.02em | — |
-| Body | Inter Tight | 14px | 400 | 1.45 | 0 | Sentence |
-
-Rule: every money figure and every count is mono. Words are never mono.
 
 ## Motion
 
@@ -193,6 +117,88 @@ Nothing else moves. The list and the detail pane swap content with no fade or sl
 - [ ] Quillworks' Design Systems Designer starts saved.
 - [ ] Apply reads "Apply on Northline" and becomes "Application started".
 - [ ] Columns are 232px / fluid / 440px. Radius is 6px. Green is `#0b7a3e`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame has "designer" in the role field. Experience has Mid, Senior, and Lead ticked. Salary runs $60k to $200k. The list shows 10 roles, newest first.
+2. The first row, Senior Product Designer at Northline Freight, is selected. It has a soft grey fill and a 3px black bar on its left edge. Its details fill the right pane.
+3. Typing in the role field filters by title, company, and tags. Typing in the location field filters by city. Both filter on every keystroke.
+4. The Remote only switch toggles `aria-checked`. When on, only rows with mode Remote stay.
+5. Job type and Experience are checkbox groups. Posted within is a radio group: Any time, Past 24 hours, Past 3 days, Past week, Past month.
+6. Each filter option shows a mono count on the right. The count is how many rows would match if that option were the only one in its group, with all other filters applied.
+7. The salary filter is one track with two thumbs, $40k to $220k, step $5k. The thumbs cannot get closer than $10k. The value line above reads "$60k – $200k". At the top end it reads "$220k+".
+8. A row matches salary when its band overlaps the chosen range, not when it sits fully inside it.
+9. The heading reads "10 roles". The number is mono. It says "1 role" for one.
+10. Each row shows: a 40px initials tile, the title, a New badge when posted today or yesterday, company · city · mode, the salary band in mono, tags, the age ("Today", "1d ago"), and a save button.
+11. Clicking anywhere on a row selects it. The detail pane swaps to that job. The save button inside the row does not select the row.
+12. The save button toggles `aria-pressed`. Pressed is a filled green bookmark. The row and the detail pane share the saved state: saving in one updates the other.
+13. The detail pane shows: a 52px tile, title, company · city, the salary band at 18px mono with "per year, before tax", a four-cell fact row (Type, Level, Where, Posted), a green Apply button and a save button, then About the role, What you will do, What you bring, and Similar jobs.
+14. Similar jobs lists three other roles that share the level, a tag, or the mode. Clicking one selects it and scrolls the pane to the top.
+15. Apply turns black and reads "Application started" with a check. It does not leave the page in this demo.
+16. If the selected job is filtered out, the first remaining row is selected.
+17. If nothing matches, the list shows an empty state: an icon, "No roles match these filters", one line of advice, and a Clear filters button. The detail pane reads "Pick a role to see the details."
+18. Clear all filters, and Clear filters in the empty state, tick every box, set Any time, and reset salary to $40k – $220k. They do not clear the search text.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #ffffff;          /* page */
+  --soft: #f5f5f4;        /* hover, selected row, tile fill */
+  --ink: #0b0b0b;         /* text, selected bar, Search button */
+  --ink-2: #454545;       /* secondary text */
+  --ink-3: #6b6b6b;       /* labels, counts, ages */
+  --line: #e6e6e6;        /* hairlines */
+  --line-2: #d0d0d0;      /* input border, unticked box */
+  --green: #0b7a3e;       /* the only accent: Apply, switch on, slider fill, saved, New */
+  --green-tint: #e8f3ec;  /* New badge fill */
+  --focus: #0b7a3e;
+
+  /* type */
+  --sans: "Inter Tight", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --t-11: 11px; --t-12: 12px; --t-13: 13px; --t-14: 14px;
+  --t-15: 15px; --t-18: 18px; --t-22: 22px; --t-24: 24px;
+
+  /* space (4px base) */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+
+  /* shape */
+  --r: 6px;
+  --r-tag: 4px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --fast: 140ms;
+}
+```
+
+No shadows. Regions are split by 1px `--line` rules. The selected row uses `box-shadow: inset 3px 0 0 var(--ink)` as a bar, not as depth.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Brand | Inter Tight | 18px | 700 | 1 | -0.03em | Title |
+| Result heading word | Inter Tight | 22px | 600 | 1.2 | -0.025em | Sentence |
+| Result count number | JetBrains Mono | 20px | 500 | 1.2 | -0.02em | — |
+| Row title | Inter Tight | 15px | 600 | 1.35 | -0.01em | Title |
+| Row meta | Inter Tight | 13px | 400 | 1.45 | 0 | Sentence |
+| Salary band (row) | JetBrains Mono | 13px | 500 | 1.4 | 0 | — |
+| Tag | Inter Tight | 12px | 400 | 1.4 | 0 | Sentence |
+| New badge | Inter Tight | 11px | 600 | 1.4 | 0.04em | Upper |
+| Filter legend, detail h3 | Inter Tight | 11px | 600 | 1.4 | 0.08em | Upper |
+| Filter count, age | JetBrains Mono | 12px | 400 | 1.4 | 0 | — |
+| Detail title | Inter Tight | 24px | 600 | 1.15 | -0.03em | Title |
+| Detail salary | JetBrains Mono | 18px | 500 | 1.3 | -0.02em | — |
+| Body | Inter Tight | 14px | 400 | 1.45 | 0 | Sentence |
+
+Rule: every money figure and every count is mono. Words are never mono.
 
 ## Implementation notes
 

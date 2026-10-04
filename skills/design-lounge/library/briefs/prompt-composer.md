@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the fill is `--primary` and the tone chip uses `--primary-soft`. The radius follows the family. This demo uses 2px.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One question box for Hollis, a yard desk. The label is Ask. The field holds up to 240 characters. Three tone chips sit under it: Plain, Short, Formal. Send is off until the field has text that is not only space. Sending does not invent an answer. It prints the tone and the count. This is not a chat. A chat is `chat-thread`. This is not a hero that types by itself. That hero is `hero-ai-prompt-cycle`. A plain note with a 160 limit is `textarea-field`.
-
-## Reference behaviour
-
-1. The first frame field is empty. The placeholder is "Which loads are still at Gate 4?". Plain is pressed. Send is disabled.
-2. The status line under the row is empty.
-3. Typing any non-space character enables Send. Clearing the field disables Send and clears the status line.
-4. Clicking Short or Formal moves `aria-pressed` to that chip. One tone is pressed.
-5. Submit prints `Sent · Plain · 12 characters` using the pressed tone and the trimmed length. The field keeps the text.
-6. A second edit clears the status line until the next submit.
-7. Past 240 characters the field stops. `maxlength` is 240. Do not show an error sentence. The limit is the attribute.
 
 ## Structure
 
@@ -34,40 +26,6 @@ form, 640px, surface, border, radius 2px, padding 20px
 - The form is the only region. No nav and no second column.
 - Tone chips are `type="button"` so they do not submit.
 - Send is `type="submit"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --surface-2: #f0ebe3;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #5c564e;
-  --line: #e4dfd4;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --primary-ink: #fffdf8;
-  --primary-soft: #e7f2ec;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --radius: 2px;
-}
-```
-
-The chip radius stays 999px. The field and the send button use `--radius`. A family that uses pills for buttons may pill the send button. The chips are already pills.
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Label | IBM Plex Sans | 13px | 500 | 1 | 0 |
-| Field | IBM Plex Sans | 16px | 400 | 1.45 | 0 |
-| Chip | IBM Plex Sans | 13px | 500 | 32px | 0 |
-| Send | IBM Plex Sans | 14px | 500 | 40px | 0 |
-| Status | IBM Plex Sans | 14px | 400 | 1.4 | 0 |
-
-Placeholder colour is `--ink-3`. Typed text is `--ink`.
 
 ## Motion
 
@@ -119,6 +77,54 @@ None. Send does not morph. The status line replaces its text. Reduced motion has
 - [ ] Plain starts pressed.
 - [ ] The sent line begins with "Sent ·".
 - [ ] The type is IBM Plex Sans. The radius of the field is 2px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame field is empty. The placeholder is "Which loads are still at Gate 4?". Plain is pressed. Send is disabled.
+2. The status line under the row is empty.
+3. Typing any non-space character enables Send. Clearing the field disables Send and clears the status line.
+4. Clicking Short or Formal moves `aria-pressed` to that chip. One tone is pressed.
+5. Submit prints `Sent · Plain · 12 characters` using the pressed tone and the trimmed length. The field keeps the text.
+6. A second edit clears the status line until the next submit.
+7. Past 240 characters the field stops. `maxlength` is 240. Do not show an error sentence. The limit is the attribute.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --surface-2: #f0ebe3;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #5c564e;
+  --line: #e4dfd4;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --primary-ink: #fffdf8;
+  --primary-soft: #e7f2ec;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 2px;
+}
+```
+
+The chip radius stays 999px. The field and the send button use `--radius`. A family that uses pills for buttons may pill the send button. The chips are already pills.
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Label | IBM Plex Sans | 13px | 500 | 1 | 0 |
+| Field | IBM Plex Sans | 16px | 400 | 1.45 | 0 |
+| Chip | IBM Plex Sans | 13px | 500 | 32px | 0 |
+| Send | IBM Plex Sans | 14px | 500 | 40px | 0 |
+| Status | IBM Plex Sans | 14px | 400 | 1.4 | 0 |
+
+Placeholder colour is `--ink-3`. Typed text is `--ink`.
 
 ## Implementation notes
 

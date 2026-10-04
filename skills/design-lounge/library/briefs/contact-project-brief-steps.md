@@ -4,26 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The "Start a project" section of a design studio site, for the fictional "Okaro Studio" in Leeds. One page, one card, four steps: what you need (service chips), budget (five segments), timeline (four radio cards) and about you (four fields). Then a review screen and a success screen that says "We reply within 1 working day." The look is warm brutalist: cream paper, black ink, one tomato red, 0 radius, 2px black borders, a hard 8px offset shadow on the card, and huge condensed uppercase headings. The detail worth copying: every step is a real `fieldset` with a `legend`, each step checks itself before moving on, and the first broken field gets focus.
-
-## Reference behaviour
-
-1. Initial state at 1280×800: left column shows "OKARO/STUDIO", the heading "START A" in black and "PROJECT." in tomato at 136px, and a 4-row step rail at the bottom. The right column is the card on step 1.
-2. The card's top bar reads "STEP 1 OF 4" on the left and shows four 40×12px boxes on the right. The current box is tomato, done boxes are black, later boxes are empty.
-3. Step 1 "WHAT DO YOU NEED?": eight chips. Brand identity and Website start checked (tomato fill, a check icon). Clicking toggles a chip. Any number can be picked.
-4. Next with no chip checked: an error line appears under the chips, "Pick at least one service, or choose Not sure yet.", and focus moves to the first chip.
-5. Changing any chip in a step with an error clears the error.
-6. Valid Next: the step slides in from 24px right with a fade (300ms), the label becomes "STEP 2 OF 4", the rail moves, and focus goes to the new step heading.
-7. Step 2 "WHAT IS THE BUDGET?": five segments in one bordered row: Under £15k, £15–30k, £30–60k, £60–120k, £120k+. One choice. The selected segment fills black with cream text. Error text: "Choose a budget range to continue."
-8. Step 3 "WHEN SHOULD WE START?": four radio cards in a 2×2 grid: As soon as possible (Start within 2 weeks), Next month (Start in 3 to 6 weeks), This quarter (Start in 2 to 3 months), Flexible (No fixed date yet). The selected card fills tomato and its square dot shows a black 10px square. Error text: "Choose when you would like to start."
-9. Step 4 "WHO ARE YOU?": Name and Email side by side, Company (optional) full width, "Tell us about it" textarea full width with a counter "0 / 800 · at least 20 characters". The Next button now reads "REVIEW".
-10. Review with bad fields: every bad field gets a red border, a 4px red offset shadow and its own error line. Focus moves to the first bad field in order name, email, message. Typing in a field clears its error.
-11. Step 5 "CHECK YOUR BRIEF.": the label reads "REVIEW", all four boxes are black, and a list shows What you need, Budget, Timeline and About you, each with an "Edit" button. Edit jumps straight to that step. The Next button reads "SEND BRIEF".
-12. Send brief: the button reads "SENDING" with `aria-busy="true"` for 700ms, then the card swaps to the success screen.
-13. Success: label "SENT". "BRIEF" in black and "RECEIVED." in tomato at 104px, then "WE REPLY WITHIN 1 WORKING DAY.", "Reference OK-2610-047. A copy is on its way to [email].", three numbered next steps, and a "START ANOTHER BRIEF" button that resets the form to step 1. Focus goes to the success heading.
-14. Back appears from step 2 onwards and goes one step back without checking.
 
 ## Structure
 
@@ -55,55 +40,6 @@ The "Start a project" section of a design studio site, for the fictional "Okaro 
 - Step 4: `div.f` per field with `label`, `input` or `textarea`, and an error `p`.
 - Review: `h2`, hint, `dl.review` with rows of `dt`, `dd`, `button.edit`.
 - Success: `div.sent` outside the form, with `h2 tabindex="-1"`, two `p`s, an `ol`, and a reset `button`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f2e8d5;      /* cream page */
-  --card: #fbf5ea;    /* card paper */
-  --ink: #141210;     /* text, borders, shadow, black fills */
-  --ink-2: #4a443c;   /* hints, muted rail rows */
-  --line: #141210;    /* every border is ink */
-  --accent: #e5432a;  /* tomato: selected chip, current step, button shadow */
-  --accent-ink: #141210;
-  --error: #a8240f;   /* error text and invalid border */
-  --hover: #efe3cc;   /* hover fill on chips, segments, cards */
-  --field: #ffffff;   /* text input fill */
-
-  --display: "Big Shoulders Display", Impact, sans-serif;
-  --sans: "Archivo", system-ui, sans-serif;
-
-  --b: 2px;           /* the only border width */
-  --radius: 0;
-  --shadow-card: 8px 8px 0 var(--ink);
-  --shadow-btn: 4px 4px 0 var(--accent);
-  --shadow-field: 4px 4px 0 var(--accent);
-
-  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 28px; --s7: 40px; --s8: 56px;
-
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --fast: 140ms;
-  --layout: 300ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Page heading | Big Shoulders Display | 136px | 900 | 0.84 | -0.01em | upper |
-| Step heading | Big Shoulders Display | 64px | 900 | 0.9 | -0.005em | upper |
-| Success heading | Big Shoulders Display | 104px | 900 | 0.9 | 0 | upper |
-| Rail row, segment, card title | Big Shoulders Display | 22px / 24px / 26px | 800 | 1 | 0.02em | upper |
-| Buttons | Big Shoulders Display | 22px | 800 | 1 | 0.04em | upper |
-| Mark, step label, field label | Archivo | 13px / 13px / 12px | 700 | 1.45 | 0.1–0.14em | upper |
-| Body, hint | Archivo | 15px | 400 | 1.45 | 0 | sentence |
-| Chip | Archivo | 16px | 500, 700 checked | 1 | 0 | sentence |
-| Error | Archivo | 14px (13px under fields) | 700 | 1.45 | 0 | sentence |
-
-The display face is only ever uppercase. Body copy is never in the display face.
 
 ## Motion
 
@@ -179,6 +115,76 @@ The display face is only ever uppercase. Body copy is never in the display face.
 - [ ] Budgets are Under £15k, £15–30k, £30–60k, £60–120k, £120k+.
 - [ ] The message needs at least 20 characters and caps at 800.
 - [ ] Success reads "We reply within 1 working day." and "Reference OK-2610-047".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state at 1280×800: left column shows "OKARO/STUDIO", the heading "START A" in black and "PROJECT." in tomato at 136px, and a 4-row step rail at the bottom. The right column is the card on step 1.
+2. The card's top bar reads "STEP 1 OF 4" on the left and shows four 40×12px boxes on the right. The current box is tomato, done boxes are black, later boxes are empty.
+3. Step 1 "WHAT DO YOU NEED?": eight chips. Brand identity and Website start checked (tomato fill, a check icon). Clicking toggles a chip. Any number can be picked.
+4. Next with no chip checked: an error line appears under the chips, "Pick at least one service, or choose Not sure yet.", and focus moves to the first chip.
+5. Changing any chip in a step with an error clears the error.
+6. Valid Next: the step slides in from 24px right with a fade (300ms), the label becomes "STEP 2 OF 4", the rail moves, and focus goes to the new step heading.
+7. Step 2 "WHAT IS THE BUDGET?": five segments in one bordered row: Under £15k, £15–30k, £30–60k, £60–120k, £120k+. One choice. The selected segment fills black with cream text. Error text: "Choose a budget range to continue."
+8. Step 3 "WHEN SHOULD WE START?": four radio cards in a 2×2 grid: As soon as possible (Start within 2 weeks), Next month (Start in 3 to 6 weeks), This quarter (Start in 2 to 3 months), Flexible (No fixed date yet). The selected card fills tomato and its square dot shows a black 10px square. Error text: "Choose when you would like to start."
+9. Step 4 "WHO ARE YOU?": Name and Email side by side, Company (optional) full width, "Tell us about it" textarea full width with a counter "0 / 800 · at least 20 characters". The Next button now reads "REVIEW".
+10. Review with bad fields: every bad field gets a red border, a 4px red offset shadow and its own error line. Focus moves to the first bad field in order name, email, message. Typing in a field clears its error.
+11. Step 5 "CHECK YOUR BRIEF.": the label reads "REVIEW", all four boxes are black, and a list shows What you need, Budget, Timeline and About you, each with an "Edit" button. Edit jumps straight to that step. The Next button reads "SEND BRIEF".
+12. Send brief: the button reads "SENDING" with `aria-busy="true"` for 700ms, then the card swaps to the success screen.
+13. Success: label "SENT". "BRIEF" in black and "RECEIVED." in tomato at 104px, then "WE REPLY WITHIN 1 WORKING DAY.", "Reference OK-2610-047. A copy is on its way to [email].", three numbered next steps, and a "START ANOTHER BRIEF" button that resets the form to step 1. Focus goes to the success heading.
+14. Back appears from step 2 onwards and goes one step back without checking.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f2e8d5;      /* cream page */
+  --card: #fbf5ea;    /* card paper */
+  --ink: #141210;     /* text, borders, shadow, black fills */
+  --ink-2: #4a443c;   /* hints, muted rail rows */
+  --line: #141210;    /* every border is ink */
+  --accent: #e5432a;  /* tomato: selected chip, current step, button shadow */
+  --accent-ink: #141210;
+  --error: #a8240f;   /* error text and invalid border */
+  --hover: #efe3cc;   /* hover fill on chips, segments, cards */
+  --field: #ffffff;   /* text input fill */
+
+  --display: "Big Shoulders Display", Impact, sans-serif;
+  --sans: "Archivo", system-ui, sans-serif;
+
+  --b: 2px;           /* the only border width */
+  --radius: 0;
+  --shadow-card: 8px 8px 0 var(--ink);
+  --shadow-btn: 4px 4px 0 var(--accent);
+  --shadow-field: 4px 4px 0 var(--accent);
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 28px; --s7: 40px; --s8: 56px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --fast: 140ms;
+  --layout: 300ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Page heading | Big Shoulders Display | 136px | 900 | 0.84 | -0.01em | upper |
+| Step heading | Big Shoulders Display | 64px | 900 | 0.9 | -0.005em | upper |
+| Success heading | Big Shoulders Display | 104px | 900 | 0.9 | 0 | upper |
+| Rail row, segment, card title | Big Shoulders Display | 22px / 24px / 26px | 800 | 1 | 0.02em | upper |
+| Buttons | Big Shoulders Display | 22px | 800 | 1 | 0.04em | upper |
+| Mark, step label, field label | Archivo | 13px / 13px / 12px | 700 | 1.45 | 0.1–0.14em | upper |
+| Body, hint | Archivo | 15px | 400 | 1.45 | 0 | sentence |
+| Chip | Archivo | 16px | 500, 700 checked | 1 | 0 | sentence |
+| Error | Archivo | 14px (13px under fields) | 700 | 1.45 | 0 | sentence |
+
+The display face is only ever uppercase. Body copy is never in the display face.
 
 ## Implementation notes
 

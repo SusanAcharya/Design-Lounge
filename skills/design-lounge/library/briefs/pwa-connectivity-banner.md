@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 An **offline / back-online banner** for "Marrow", a recipe PWA. When connectivity drops, a 40px amber strip slides down directly beneath the status bar reading "You're offline — showing saved items" with a pulsing dot and a right-aligned "5 saved" count, all on one line (`white-space:nowrap`, message ellipsises before the count would); the list pushes down by the same 40px. Recipes cached by the service worker keep their colour at 85% and grow a small mono "cached" tag; uncached ones drop to 40% opacity and grayscale. A corner switch simulates connectivity. On reconnect the same strip turns green "Back online · synced", holds 2s, then retracts while the list slides back up. The detail worth copying is that the banner is in the layout, not over it: content moves with it, so nothing is hidden.
-
-## Reference behaviour
-
-1. Initial state (hero): `body.offline`, banner shown in the amber offline style, list of seven recipe cards with four cached (tagged) and three greyed. The switch reads "offline" and is unchecked.
-2. The dot (8px, `#E39A00`) has a 2px ring that scales from .5 to 1.4 and fades over 1.6s, looping.
-3. Tap the switch (44px pill, bottom-right, 46px from the bottom): `aria-checked` flips to true, label reads "online". `body.offline` is removed and `body.reconnect` added. Banner text becomes "Back online", right label "synced"; background `#DCF3E3`, text `#1C6B3C`, dot `#25A35A` with no ring. Colour change takes 160ms.
-4. Cached tags fade out (160ms); greyed rows return to full colour over 320ms.
-5. After 2000ms the banner translates to −100% and fades over 320ms `cubic-bezier(.4,0,1,1)`; `main` padding-top returns from 94px to 54px on the same clock with `cubic-bezier(.16,1,.3,1)`.
-6. Tap the switch again: `body.offline` returns; banner slides in from −100% over 320ms `cubic-bezier(.16,1,.3,1)`; `main` padding-top grows to 94px; tags fade in after the banner lands (delay 320ms); uncached rows grey out over 320ms.
-7. Toggling online while the banner is already hidden does nothing visible (guard).
 
 ## Structure
 
@@ -60,6 +52,76 @@ Sample content (title · meta · cached? · thumb colours `--t1/--t2/--t3`):
 | Overnight oats, three ways | 10 min · 1 serving | yes | #E8E3D3 / #A89A6A / #6D6040 |
 
 Header: "Marrow" / "12 recipes · 5 offline". Banner strings: offline "You're offline — showing saved items" + "5 saved"; online "Back online" + "synced". The thumb is `--t1` fill, a `--t2` ellipse (`::before`, inset 12px sides, 20px tall at top 14px) and a `--t3` bar (`::after`, 14px tall, bottom 10px, rounded 8px at the bottom).
+
+## Motion
+
+| Element            | Trigger        | Property             | From → To            | Duration | Easing       | Delay |
+|--------------------|----------------|----------------------|----------------------|---------:|--------------|------:|
+| `.banner`          | go offline     | translateY, opacity  | −100%, 0 → 0, 1      | 320ms    | `--ease-out` | 0 |
+| `.banner`          | retract        | translateY, opacity  | 0, 1 → −100%, 0      | 320ms    | `--ease-in`  | 2000ms after reconnect (JS) |
+| `.banner`          | reconnect      | background, color    | amber → green         | 160ms    | linear       | 0 |
+| `main`             | offline / retract | padding-top       | 54px ↔ 94px          | 320ms    | `--ease-out` | 0 |
+| `.dot::after`      | while offline  | scale, opacity       | .5, .9 → 1.4, 0      | 1600ms loop | `--ease-std` | 0 |
+| `.item:not(.cached)` | offline      | opacity, filter      | 1, none → .4, grayscale(1) | 320ms | `--ease-std` | 0 |
+| `.item.cached`     | offline        | opacity              | 1 → .85              | 320ms    | `--ease-std` | 0 |
+| `.tag`             | offline        | opacity, translateY  | 0, 4px → 1, 0        | 160ms    | `--ease-std` | 320ms |
+| `.sw::after`       | toggle         | left                 | 3px ↔ 19px           | 160ms    | `--ease-std` | 0 |
+
+Reduced motion: transitions 1ms, the pulse ring is removed (`animation:none`), the static dot remains.
+
+## States
+
+- **Offline:** `body.offline`, banner `.on.off`, switch `aria-checked="false"` labelled "offline", track `--ink-3`.
+- **Reconnecting (2s window):** `body.reconnect`, banner `.on.back` green; list already restored; padding stays 94px.
+- **Online:** no body class; banner hidden; padding 54px; switch `aria-checked="true"`, track `--online-dot`.
+- **Cached item offline:** opacity .85 + tag with check icon.
+- **Uncached item offline:** opacity .4, `grayscale(1)`, tag stays hidden (its dashed border is only for the online "not saved" style if you choose to show it).
+- **Switch focus-visible:** 3px `--accent` outline, 2px offset.
+
+## Accessibility
+
+- Banner is `role="status" aria-live="polite"`; its text changes ("You're offline — showing saved items" → "Back online") are announced without stealing focus.
+- Switch is `<button role="switch" aria-checked aria-label="Simulate connectivity">`; Space/Enter toggle.
+- In production, drive the same `setOnline()` from `navigator.onLine` plus `online`/`offline` window events; keep the switch for demos and QA only.
+- Cached state is conveyed by the tag text, not only by opacity; the tag includes a check icon and the word "cached".
+- Contrast: `--offline` on `--offline-bg` 6.3:1; `--online` on `--online-bg` 6.9:1; `--ink-2` on white 5.9:1. Dimmed rows are intentionally below AA — they are disabled content.
+- Hit target: switch 44px tall; cards ≥ 88px.
+
+## Responsive rules
+
+- 390 wide: as specified.
+- 360 wide: the message ellipsises (`#msg { overflow:hidden; text-overflow:ellipsis; min-width:0 }`) and the right count stays visible (`flex:none`).
+- ≥ 600 wide: cap the list at 560px centred; banner stays full-bleed; switch keeps its viewport corner.
+- With a real status bar (`env(safe-area-inset-top)`), set `top: env(safe-area-inset-top, 54px)` on the banner and the same base for `main` padding.
+
+## Acceptance checklist
+
+- [ ] Banner is 40px tall at `top:54px`, full width, `#FFF1CF` with `#8A5A00` 12px mono text on a single line while offline.
+- [ ] Banner enters over 320ms `cubic-bezier(.16,1,.3,1)` and retracts over 320ms `cubic-bezier(.4,0,1,1)`.
+- [ ] `main` padding-top moves 54px ↔ 94px in sync so no card is hidden under the banner.
+- [ ] The offline dot pulses a 2px ring from scale .5 to 1.4 every 1.6s; the online dot does not pulse.
+- [ ] Cached rows show a "cached" tag with a check icon 320ms after the banner lands; uncached rows sit at 40% opacity in grayscale.
+- [ ] Reconnecting turns the banner `#DCF3E3`/`#1C6B3C` reading "Back online" and retracts it exactly 2s later.
+- [ ] Toggling to online when the banner is already hidden does nothing.
+- [ ] Switch has `role="switch"` and its `aria-checked` and label ("online"/"offline") track the state.
+- [ ] Banner is a polite live region.
+- [ ] Focus ring visible on the switch.
+- [ ] Nothing fixed sits within the top 54px; the switch is 46px from the bottom.
+- [ ] Reduced motion removes the pulse and collapses transitions.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state (hero): `body.offline`, banner shown in the amber offline style, list of seven recipe cards with four cached (tagged) and three greyed. The switch reads "offline" and is unchecked.
+2. The dot (8px, `#E39A00`) has a 2px ring that scales from .5 to 1.4 and fades over 1.6s, looping.
+3. Tap the switch (44px pill, bottom-right, 46px from the bottom): `aria-checked` flips to true, label reads "online". `body.offline` is removed and `body.reconnect` added. Banner text becomes "Back online", right label "synced"; background `#DCF3E3`, text `#1C6B3C`, dot `#25A35A` with no ring. Colour change takes 160ms.
+4. Cached tags fade out (160ms); greyed rows return to full colour over 320ms.
+5. After 2000ms the banner translates to −100% and fades over 320ms `cubic-bezier(.4,0,1,1)`; `main` padding-top returns from 94px to 54px on the same clock with `cubic-bezier(.16,1,.3,1)`.
+6. Tap the switch again: `body.offline` returns; banner slides in from −100% over 320ms `cubic-bezier(.16,1,.3,1)`; `main` padding-top grows to 94px; tags fade in after the banner lands (delay 320ms); uncached rows grey out over 320ms.
+7. Toggling online while the banner is already hidden does nothing visible (guard).
 
 ## Tokens
 
@@ -127,62 +189,6 @@ Header: "Marrow" / "12 recipes · 5 offline". Banner strings: offline "You're of
 | Recipe meta   | IBM Plex Mono | 12px | 400    | 1.4         | 0        | lowercase |
 | Tag           | IBM Plex Mono | 11px | 500    | 1.4         | 0        | lowercase |
 | Switch label  | IBM Plex Mono | 12px | 500    | 1           | 0        | lowercase |
-
-## Motion
-
-| Element            | Trigger        | Property             | From → To            | Duration | Easing       | Delay |
-|--------------------|----------------|----------------------|----------------------|---------:|--------------|------:|
-| `.banner`          | go offline     | translateY, opacity  | −100%, 0 → 0, 1      | 320ms    | `--ease-out` | 0 |
-| `.banner`          | retract        | translateY, opacity  | 0, 1 → −100%, 0      | 320ms    | `--ease-in`  | 2000ms after reconnect (JS) |
-| `.banner`          | reconnect      | background, color    | amber → green         | 160ms    | linear       | 0 |
-| `main`             | offline / retract | padding-top       | 54px ↔ 94px          | 320ms    | `--ease-out` | 0 |
-| `.dot::after`      | while offline  | scale, opacity       | .5, .9 → 1.4, 0      | 1600ms loop | `--ease-std` | 0 |
-| `.item:not(.cached)` | offline      | opacity, filter      | 1, none → .4, grayscale(1) | 320ms | `--ease-std` | 0 |
-| `.item.cached`     | offline        | opacity              | 1 → .85              | 320ms    | `--ease-std` | 0 |
-| `.tag`             | offline        | opacity, translateY  | 0, 4px → 1, 0        | 160ms    | `--ease-std` | 320ms |
-| `.sw::after`       | toggle         | left                 | 3px ↔ 19px           | 160ms    | `--ease-std` | 0 |
-
-Reduced motion: transitions 1ms, the pulse ring is removed (`animation:none`), the static dot remains.
-
-## States
-
-- **Offline:** `body.offline`, banner `.on.off`, switch `aria-checked="false"` labelled "offline", track `--ink-3`.
-- **Reconnecting (2s window):** `body.reconnect`, banner `.on.back` green; list already restored; padding stays 94px.
-- **Online:** no body class; banner hidden; padding 54px; switch `aria-checked="true"`, track `--online-dot`.
-- **Cached item offline:** opacity .85 + tag with check icon.
-- **Uncached item offline:** opacity .4, `grayscale(1)`, tag stays hidden (its dashed border is only for the online "not saved" style if you choose to show it).
-- **Switch focus-visible:** 3px `--accent` outline, 2px offset.
-
-## Accessibility
-
-- Banner is `role="status" aria-live="polite"`; its text changes ("You're offline — showing saved items" → "Back online") are announced without stealing focus.
-- Switch is `<button role="switch" aria-checked aria-label="Simulate connectivity">`; Space/Enter toggle.
-- In production, drive the same `setOnline()` from `navigator.onLine` plus `online`/`offline` window events; keep the switch for demos and QA only.
-- Cached state is conveyed by the tag text, not only by opacity; the tag includes a check icon and the word "cached".
-- Contrast: `--offline` on `--offline-bg` 6.3:1; `--online` on `--online-bg` 6.9:1; `--ink-2` on white 5.9:1. Dimmed rows are intentionally below AA — they are disabled content.
-- Hit target: switch 44px tall; cards ≥ 88px.
-
-## Responsive rules
-
-- 390 wide: as specified.
-- 360 wide: the message ellipsises (`#msg { overflow:hidden; text-overflow:ellipsis; min-width:0 }`) and the right count stays visible (`flex:none`).
-- ≥ 600 wide: cap the list at 560px centred; banner stays full-bleed; switch keeps its viewport corner.
-- With a real status bar (`env(safe-area-inset-top)`), set `top: env(safe-area-inset-top, 54px)` on the banner and the same base for `main` padding.
-
-## Acceptance checklist
-
-- [ ] Banner is 40px tall at `top:54px`, full width, `#FFF1CF` with `#8A5A00` 12px mono text on a single line while offline.
-- [ ] Banner enters over 320ms `cubic-bezier(.16,1,.3,1)` and retracts over 320ms `cubic-bezier(.4,0,1,1)`.
-- [ ] `main` padding-top moves 54px ↔ 94px in sync so no card is hidden under the banner.
-- [ ] The offline dot pulses a 2px ring from scale .5 to 1.4 every 1.6s; the online dot does not pulse.
-- [ ] Cached rows show a "cached" tag with a check icon 320ms after the banner lands; uncached rows sit at 40% opacity in grayscale.
-- [ ] Reconnecting turns the banner `#DCF3E3`/`#1C6B3C` reading "Back online" and retracts it exactly 2s later.
-- [ ] Toggling to online when the banner is already hidden does nothing.
-- [ ] Switch has `role="switch"` and its `aria-checked` and label ("online"/"offline") track the state.
-- [ ] Banner is a polite live region.
-- [ ] Focus ring visible on the switch.
-- [ ] Nothing fixed sits within the top 54px; the switch is 46px from the bottom.
-- [ ] Reduced motion removes the pulse and collapses transitions.
 
 ## Implementation notes
 

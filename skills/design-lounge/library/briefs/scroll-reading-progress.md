@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A reading page for a farm journal ("Loam Journal"): a 640px measure of 19px Newsreader under a sticky 56px masthead, with a 240px sticky table of contents to the left. Two things are driven by scroll position. A 3px mint bar pinned to the top of the viewport scales from 0 to full width as the reader moves from the top of the document to the bottom — with CSS `animation-timeline: scroll(root)` where supported, so it runs off the main thread, and a `scroll` listener otherwise. The table of contents marks whichever heading has most recently crossed a line 30% down the viewport, with a 1px accent rule on its left edge, and shows "% read" and "minutes left" figures. The detail worth copying is the progressive enhancement: the same keyframes and the same transform are used by both the CSS timeline and the JS fallback, so there is one visual definition.
-
-## Reference behaviour
-
-1. Initial state (scrollY = 0): bar at `scaleX(0)`; masthead reads "Loam Journal · Issue 12 · Field notes · 0 % read"; TOC lists six sections with the first marked current; stat reads "7 min left · 1,140 words". Article header: kicker, 46px title, italic dek, byline.
-2. Scroll: the bar's `scaleX` equals `scrollY / (scrollHeight − innerHeight)`, linear. In browsers with scroll-driven animations this is the `grow` keyframe on `animation-timeline: scroll(root)`; otherwise JS sets `transform: scaleX(p)` on each scroll event (passive listener).
-3. On every scroll event (both paths) JS updates: `aria-valuenow` on the bar (0–100), the "% read" figure, and "min left" = `ceil(7 × (1 − p))`.
-4. TOC current section: the last `<h2>` whose top is at or above 30% of the viewport height. `aria-current="true"` moves to its link; the link's text goes `--ink-2` → `--ink` and its left border `transparent` → `--accent`, both over 240ms.
-5. Click a TOC link: smooth scroll to the heading (`scroll-behavior: smooth` on `html`), landing with the heading 24px below the masthead (`scroll-padding-top: 80px`). The current mark follows as the page moves.
-6. Hover a TOC link: text `--ink`, no border change. Focus-visible: 2px accent outline inset.
-7. Reaching the end: bar full width, "100 % read", "0 min left", last section current. The "End of piece" line is inside the article bottom padding so the last heading can become current before the page stops.
-8. Masthead is `position: sticky`, 88% opaque with an 8px backdrop blur, 1px bottom hairline. The bar sits above it (`z-index` 20 vs 10).
-9. With `prefers-reduced-motion: reduce`: smooth scroll becomes instant, TOC transitions are removed, backdrop blur is removed. The progress bar still tracks scroll — it is a position indicator, not a motion effect.
 
 ## Structure
 
@@ -48,59 +38,6 @@ A reading page for a farm journal ("Loam Journal"): a 640px measure of 19px News
   - `<article>` — `<header>` (kicker, `<h1>`, `.dek`, `.by`), then six `<h2 id="sN">` each followed by two `<p>`, one `<blockquote>` after section 2, and a `.end` line.
 
 Section titles, in order: The dry spring · What the soil test said · Cover crops, not compost · Where the water went · Counting worms in August · Next year's plan. Title: "On rebuilding soil in a dry year". Byline: Ida Strand · Loam Farm, Jæren · 21 September 2026. Word count ≈ 1,140; reading time 7 min at 160 wpm. Write two paragraphs of 70–90 words per section in the register of a farm season report (rain in mm, organic-matter %, worm counts per 20 cm block).
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm near-black, parchment ink, one mint accent */
-  --bg: #18171a;
-  --bg-2: #1e1d21;
-  --line: #2c2b30;        /* hairlines, TOC rail */
-  --ink: #ece6da;         /* body text, current TOC link */
-  --ink-2: #a09a8f;       /* dek, TOC links, masthead text */
-  --ink-3: #6c675f;       /* byline, TOC label, stat, end line */
-  --accent: #8fc1a9;      /* progress bar, kicker, TOC current rule, blockquote rule, focus */
-
-  /* type */
-  --serif: "Newsreader", Georgia, serif;   /* opsz 6–72 */
-  --sans: "Inter", system-ui, sans-serif;
-  --body-size: 19px;
-  --body-lh: 1.6;
-
-  /* layout */
-  --bar-h: 3px;
-  --top-h: 56px;
-  --toc-w: 240px;
-  --measure: 640px;
-  --col-gap: 80px;
-  --toc-top: calc(var(--top-h) + 56px);   /* 112px */
-  --scroll-pad: calc(var(--top-h) + 24px);/* 80px */
-  --current-line: 30vh;                    /* JS: heading crossing line */
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-toc: 240ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role         | Family     | Size | Weight | Line-height | Tracking | Case      | Notes |
-|--------------|------------|-----:|-------:|------------:|---------:|-----------|-------|
-| Body         | Newsreader | 19px | 400    | 1.6         | 0        | sentence  | `"opsz" 18`; first paragraph's first letter 1.15em/500 |
-| Title        | Newsreader | 46px | 400    | 1.12        | −0.015em | sentence  | `"opsz" 72` |
-| Dek          | Newsreader | 22px | 400 italic | 1.6     | 0        | sentence  | colour `--ink-2` |
-| Section h2   | Newsreader | 27px | 500    | 1.25        | −0.01em  | sentence  | `"opsz" 36`, margin 48px 0 14px |
-| Blockquote   | Newsreader | 23px | 400 italic | 1.4     | 0        | sentence  | 2px accent left rule, 20px padding |
-| Kicker       | Inter      | 12px | 500    | 1.5         | +0.12em  | UPPERCASE | colour `--accent` |
-| Byline / end | Inter      | 13px | 400    | 1.5         | 0        | sentence  | name 500 `--ink-2` |
-| Masthead     | Inter      | 13px | 400    | 1.5         | 0        | sentence  | journal name Newsreader 15px/500 |
-| TOC label    | Inter      | 11px | 500    | 1.5         | +0.12em  | UPPERCASE | |
-| TOC link     | Inter      | 13px | 400    | 1.5         | 0        | sentence  | padding 7px 0 7px 16px |
-| TOC stat     | Inter      | 13px | 400    | 1.5         | 0        | sentence  | `tabular-nums` |
-| Drop cap     | Newsreader | 1.15em | 500  | inherit     | 0        | —         | `::first-letter` of the first paragraph only |
 
 ## Motion
 
@@ -171,6 +108,75 @@ Reduced motion: `html { scroll-behavior: auto }`, `.toc a { transition: none }`,
 - [ ] Focus rings are visible on all six TOC links.
 - [ ] `aria-valuenow` reaches exactly 100 at the bottom of the document (the `min(1, …)` clamp handles overscroll).
 - [ ] Headings carry `scroll-margin-top: 80px` so keyboard activation of a TOC link never hides the heading under the masthead.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state (scrollY = 0): bar at `scaleX(0)`; masthead reads "Loam Journal · Issue 12 · Field notes · 0 % read"; TOC lists six sections with the first marked current; stat reads "7 min left · 1,140 words". Article header: kicker, 46px title, italic dek, byline.
+2. Scroll: the bar's `scaleX` equals `scrollY / (scrollHeight − innerHeight)`, linear. In browsers with scroll-driven animations this is the `grow` keyframe on `animation-timeline: scroll(root)`; otherwise JS sets `transform: scaleX(p)` on each scroll event (passive listener).
+3. On every scroll event (both paths) JS updates: `aria-valuenow` on the bar (0–100), the "% read" figure, and "min left" = `ceil(7 × (1 − p))`.
+4. TOC current section: the last `<h2>` whose top is at or above 30% of the viewport height. `aria-current="true"` moves to its link; the link's text goes `--ink-2` → `--ink` and its left border `transparent` → `--accent`, both over 240ms.
+5. Click a TOC link: smooth scroll to the heading (`scroll-behavior: smooth` on `html`), landing with the heading 24px below the masthead (`scroll-padding-top: 80px`). The current mark follows as the page moves.
+6. Hover a TOC link: text `--ink`, no border change. Focus-visible: 2px accent outline inset.
+7. Reaching the end: bar full width, "100 % read", "0 min left", last section current. The "End of piece" line is inside the article bottom padding so the last heading can become current before the page stops.
+8. Masthead is `position: sticky`, 88% opaque with an 8px backdrop blur, 1px bottom hairline. The bar sits above it (`z-index` 20 vs 10).
+9. With `prefers-reduced-motion: reduce`: smooth scroll becomes instant, TOC transitions are removed, backdrop blur is removed. The progress bar still tracks scroll — it is a position indicator, not a motion effect.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm near-black, parchment ink, one mint accent */
+  --bg: #18171a;
+  --bg-2: #1e1d21;
+  --line: #2c2b30;        /* hairlines, TOC rail */
+  --ink: #ece6da;         /* body text, current TOC link */
+  --ink-2: #a09a8f;       /* dek, TOC links, masthead text */
+  --ink-3: #6c675f;       /* byline, TOC label, stat, end line */
+  --accent: #8fc1a9;      /* progress bar, kicker, TOC current rule, blockquote rule, focus */
+
+  /* type */
+  --serif: "Newsreader", Georgia, serif;   /* opsz 6–72 */
+  --sans: "Inter", system-ui, sans-serif;
+  --body-size: 19px;
+  --body-lh: 1.6;
+
+  /* layout */
+  --bar-h: 3px;
+  --top-h: 56px;
+  --toc-w: 240px;
+  --measure: 640px;
+  --col-gap: 80px;
+  --toc-top: calc(var(--top-h) + 56px);   /* 112px */
+  --scroll-pad: calc(var(--top-h) + 24px);/* 80px */
+  --current-line: 30vh;                    /* JS: heading crossing line */
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-toc: 240ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role         | Family     | Size | Weight | Line-height | Tracking | Case      | Notes |
+|--------------|------------|-----:|-------:|------------:|---------:|-----------|-------|
+| Body         | Newsreader | 19px | 400    | 1.6         | 0        | sentence  | `"opsz" 18`; first paragraph's first letter 1.15em/500 |
+| Title        | Newsreader | 46px | 400    | 1.12        | −0.015em | sentence  | `"opsz" 72` |
+| Dek          | Newsreader | 22px | 400 italic | 1.6     | 0        | sentence  | colour `--ink-2` |
+| Section h2   | Newsreader | 27px | 500    | 1.25        | −0.01em  | sentence  | `"opsz" 36`, margin 48px 0 14px |
+| Blockquote   | Newsreader | 23px | 400 italic | 1.4     | 0        | sentence  | 2px accent left rule, 20px padding |
+| Kicker       | Inter      | 12px | 500    | 1.5         | +0.12em  | UPPERCASE | colour `--accent` |
+| Byline / end | Inter      | 13px | 400    | 1.5         | 0        | sentence  | name 500 `--ink-2` |
+| Masthead     | Inter      | 13px | 400    | 1.5         | 0        | sentence  | journal name Newsreader 15px/500 |
+| TOC label    | Inter      | 11px | 500    | 1.5         | +0.12em  | UPPERCASE | |
+| TOC link     | Inter      | 13px | 400    | 1.5         | 0        | sentence  | padding 7px 0 7px 16px |
+| TOC stat     | Inter      | 13px | 400    | 1.5         | 0        | sentence  | `tabular-nums` |
+| Drop cap     | Newsreader | 1.15em | 500  | inherit     | 0        | —         | `::first-letter` of the first paragraph only |
 
 ## Implementation notes
 

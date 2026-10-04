@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A kit sheet for "Morrow Seed Co.", a fictional open-pollinated seed house in the Tule valley. It teaches a botanical dialect: warm soil paper `#F3EDE1` on a moss `#3D5C45` field, 8px gaps, 18px cell rounding, and imagery made of irregular four-value `border-radius` blobs — never circles, never rectangles. The first row is a seed-shop fragment: a 48px Young Serif headline, Spring / Autumn tabs, three overlapping blobs, and a 280px packet card (Bronze fennel, $4.50). Below: type specimen, five chips (themselves blob-shaped), a soft button set (moss, ghost, clay), chips, a postcode field, a sowing-calendar link, an "Organic only" switch, three blob plates, four grammar cards. The detail worth copying: **clay terracotta is one mark per view** — the mid hero blob in spring, or the autumn morph, or the gift button in the kit. Never all three competing. The product-scene eyebrow is moss.
-
-## Reference behaviour
-
-1. Initial state: 56px soil header, 22px leaf blob mark, "Morrow / garden language 02", four anchors, "Autumn 2026 · Lot 14". Sheet on moss with 8px padding and 8px gap. First 800px shows the 424px hero + specimen.
-2. Three blobs sit on the right of the hero: leaf 280×260, clay 160×150, moss 90×90, all using `--r-blob` (`64% 36% 48% 52% / 42% 58% 42% 58%`).
-3. Hover a moss button: fill becomes leaf `#6B8F71`, lift `translateY(-1px)` over 160ms. Press: `translateY(1px)`. Ghost hover: `#DDD0B8`.
-4. Click Spring / Autumn tabs. `aria-selected` moves. `hero.dataset.season` becomes `spring` or `autumn`. Autumn: the large blob turns clay and translates `(-30px, 20px)` with a new radius over 700ms expo-out; the clay blob turns moss and translates `(20px, -40px)`. The card becomes "Winter rye", "Cover crop, 80 g. Sow before the first hard frost.", "$3.80". Spring restores Bronze fennel / $4.50.
-5. Click Herb / Flower / Root chips: `aria-pressed` toggles leaf fill and soil text.
-6. Focus the postcode input: leaf border + 3px `rgba(107,143,113,.25)` ring.
-7. Click Organic only: knob slides 20px over 220ms; track fills leaf.
-8. Header link hover: moss. Card "Add packet" is a 36px-tall moss pill.
-9. Reduced motion: blob morph is 1ms; still swaps season content.
 
 ## Structure
 
@@ -47,45 +37,6 @@ A kit sheet for "Morrow Seed Co.", a fictional open-pollinated seed house in the
 - Copy column is `left: 28px; top: 28px; width: 340px; z-index: 2`. The card must clear the tabs; keep at least 16px between the tab row and the card top.
 - Header mark is a 22px leaf blob, same `--r-blob` as the large hero shape, so the language starts in the chrome.
 - In the spring scene the only terracotta is the mid clay blob. The eyebrow is moss. The gift button in cell 03 is the kit's sample of a clay control, not a second mark in the product scene.
-
-## Tokens
-
-```css
-:root {
-  --soil: #f3ede1;     /* paper, 55 % */
-  --soil-2: #e8dcc8;   /* inner rules, ghost fill */
-  --leaf: #6b8f71;     /* blobs, chips, switch on */
-  --moss: #3d5c45;     /* primary button, field, 15 % */
-  --clay: #c4785b;     /* one accent per view */
-  --seed: #5c4033;
-  --ink: #3a2a22;      /* text */
-  --ink-2: #6a574c;
-  --ink-3: #8e7a6c;
-  --display: "Young Serif", Georgia, serif;
-  --text: "Hanken Grotesk", system-ui, sans-serif;
-  --fs-display: 48px; --fs-aa: 96px; --fs-h2: 28px; --fs-card: 22px; --fs-body: 15px; --fs-label: 11px;
-  --pad: 20px; --ctl: 44px; --cell-r: 18px; --pill: 22px;
-  --r-blob: 64% 36% 48% 52% / 42% 58% 42% 58%;
-  --t-micro: 160ms; --t-blob: 700ms; --t-switch: 220ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Hero headline | Young Serif | 48px | 400 | .95 | 0 | sentence |
-| Specimen glyph | Young Serif | 96px | 400 | .8 | 0 | "Aa" |
-| Brand / card title | Young Serif | 22px | 400 | 1–1.1 | 0 | sentence |
-| Grammar title | Young Serif | 20px | 400 | 1 | 0 | sentence |
-| H3 / UI strong | Hanken Grotesk | 15–18px | 600–700 | 1.2 | 0 | sentence |
-| Body | Hanken Grotesk | 15px | 400 | 1.5 | 0 | sentence |
-| Button | Hanken Grotesk | 14px | 600 | 1 | 0 | sentence |
-| Label / eyebrow | Hanken Grotesk | 11px | 600 | 1 | +0.14em | UPPERCASE, moss |
-
-Young Serif is 400 only. Do not bold it; use size for hierarchy.
 
 ## Motion
 
@@ -139,6 +90,61 @@ Reduced motion: transitions 1ms. Season still swaps copy and blob colours.
 - [ ] Palette chips are blob-shaped, not squares.
 - [ ] Only Young Serif and Hanken Grotesk are loaded.
 - [ ] No emoji, no placeholder copy, no cool grey paper. Young Serif stays at weight 400.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 56px soil header, 22px leaf blob mark, "Morrow / garden language 02", four anchors, "Autumn 2026 · Lot 14". Sheet on moss with 8px padding and 8px gap. First 800px shows the 424px hero + specimen.
+2. Three blobs sit on the right of the hero: leaf 280×260, clay 160×150, moss 90×90, all using `--r-blob` (`64% 36% 48% 52% / 42% 58% 42% 58%`).
+3. Hover a moss button: fill becomes leaf `#6B8F71`, lift `translateY(-1px)` over 160ms. Press: `translateY(1px)`. Ghost hover: `#DDD0B8`.
+4. Click Spring / Autumn tabs. `aria-selected` moves. `hero.dataset.season` becomes `spring` or `autumn`. Autumn: the large blob turns clay and translates `(-30px, 20px)` with a new radius over 700ms expo-out; the clay blob turns moss and translates `(20px, -40px)`. The card becomes "Winter rye", "Cover crop, 80 g. Sow before the first hard frost.", "$3.80". Spring restores Bronze fennel / $4.50.
+5. Click Herb / Flower / Root chips: `aria-pressed` toggles leaf fill and soil text.
+6. Focus the postcode input: leaf border + 3px `rgba(107,143,113,.25)` ring.
+7. Click Organic only: knob slides 20px over 220ms; track fills leaf.
+8. Header link hover: moss. Card "Add packet" is a 36px-tall moss pill.
+9. Reduced motion: blob morph is 1ms; still swaps season content.
+
+## Tokens
+
+```css
+:root {
+  --soil: #f3ede1;     /* paper, 55 % */
+  --soil-2: #e8dcc8;   /* inner rules, ghost fill */
+  --leaf: #6b8f71;     /* blobs, chips, switch on */
+  --moss: #3d5c45;     /* primary button, field, 15 % */
+  --clay: #c4785b;     /* one accent per view */
+  --seed: #5c4033;
+  --ink: #3a2a22;      /* text */
+  --ink-2: #6a574c;
+  --ink-3: #8e7a6c;
+  --display: "Young Serif", Georgia, serif;
+  --text: "Hanken Grotesk", system-ui, sans-serif;
+  --fs-display: 48px; --fs-aa: 96px; --fs-h2: 28px; --fs-card: 22px; --fs-body: 15px; --fs-label: 11px;
+  --pad: 20px; --ctl: 44px; --cell-r: 18px; --pill: 22px;
+  --r-blob: 64% 36% 48% 52% / 42% 58% 42% 58%;
+  --t-micro: 160ms; --t-blob: 700ms; --t-switch: 220ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Hero headline | Young Serif | 48px | 400 | .95 | 0 | sentence |
+| Specimen glyph | Young Serif | 96px | 400 | .8 | 0 | "Aa" |
+| Brand / card title | Young Serif | 22px | 400 | 1–1.1 | 0 | sentence |
+| Grammar title | Young Serif | 20px | 400 | 1 | 0 | sentence |
+| H3 / UI strong | Hanken Grotesk | 15–18px | 600–700 | 1.2 | 0 | sentence |
+| Body | Hanken Grotesk | 15px | 400 | 1.5 | 0 | sentence |
+| Button | Hanken Grotesk | 14px | 600 | 1 | 0 | sentence |
+| Label / eyebrow | Hanken Grotesk | 11px | 600 | 1 | +0.14em | UPPERCASE, moss |
+
+Young Serif is 400 only. Do not bold it; use size for hierarchy.
 
 ## Implementation notes
 

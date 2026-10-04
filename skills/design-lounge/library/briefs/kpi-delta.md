@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep one number at display size.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One metric for an ops home. The page is warm paper, with a wide empty field around a single figure. The label "Runs today" is 12px. The answer is 46, set in mono at 72px. Under it, a soft green badge reads +8, then the words "more than yesterday". A sentence says Friday closed at 38. One primary button, "See the week", sits under that sentence. There is no sparkline in this piece, no row of four equal cards, and no chart palette. If the screen needs several figures, only one of them uses this display size. The others step down. This is the hierarchy, not a widget skin.
-
-## Reference behaviour
-
-1. The first frame shows the label, 46, the +8 badge, the comparison sentence, and the button "See the week".
-2. The button is the only control. Clicking it sets the label to "Week opened" and disables the button.
-3. The number does not animate, count up, or flip.
-4. The badge is not a button.
-5. Nothing else is on the page. Do not add a chart, a table, or a second metric to make the frame feel full.
-6. Focus ring is 2px `--focus`, offset 2px, on the button.
-7. Disabled button opacity is 0.55. It stays in place.
 
 ## Structure
 
@@ -34,39 +26,6 @@ Friday closed at 38. The yard is ahead of that close.
 - The explanation is a paragraph, max-width 360px.
 - The button is under the explanation, not in a corner of a card.
 - There is no card. The paper is the surface. A card around this number makes it look like one tile in a row of tiles.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #8a847a;
-  --primary: #1f4d3a;
-  --primary-ink: #f6f4ef;
-  --success: #1f4d3a;
-  --success-soft: #e7f2ec;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-}
-```
-
-A negative delta uses `--danger` on `--danger-soft` (`#9b2c2c` on `#f8e8e6`). This frame is the positive case. Do not show both on one screen.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Label | sans | 12px | 500 | 0.04em | `--ink-2` |
-| Answer | mono | 72px | 500 | -0.04em | `--ink` |
-| Delta words | sans | 14px | 400 | 0 | `--ink-2` |
-| Badge | mono | 12px | 500 | 0 | `--success` |
-| Explanation | sans | 14px | 400 | 0 | `--ink-2` |
-| Button | sans | 14px | 500 | 0 | `--primary-ink` |
-
-The answer line-height is 1. This demo uses mono. When the locked pairing sets `numbers` to `display`, the amount uses that display face instead. Do not force mono onto a pairing whose CSS keeps `.num` off mono.
 
 ## Motion
 
@@ -114,6 +73,53 @@ None. The number is already the answer when the screen opens. A count-up delays 
 - [ ] The number does not count up.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] The number is the only heading.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the label, 46, the +8 badge, the comparison sentence, and the button "See the week".
+2. The button is the only control. Clicking it sets the label to "Week opened" and disables the button.
+3. The number does not animate, count up, or flip.
+4. The badge is not a button.
+5. Nothing else is on the page. Do not add a chart, a table, or a second metric to make the frame feel full.
+6. Focus ring is 2px `--focus`, offset 2px, on the button.
+7. Disabled button opacity is 0.55. It stays in place.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #8a847a;
+  --primary: #1f4d3a;
+  --primary-ink: #f6f4ef;
+  --success: #1f4d3a;
+  --success-soft: #e7f2ec;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+```
+
+A negative delta uses `--danger` on `--danger-soft` (`#9b2c2c` on `#f8e8e6`). This frame is the positive case. Do not show both on one screen.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Label | sans | 12px | 500 | 0.04em | `--ink-2` |
+| Answer | mono | 72px | 500 | -0.04em | `--ink` |
+| Delta words | sans | 14px | 400 | 0 | `--ink-2` |
+| Badge | mono | 12px | 500 | 0 | `--success` |
+| Explanation | sans | 14px | 400 | 0 | `--ink-2` |
+| Button | sans | 14px | 500 | 0 | `--primary-ink` |
+
+The answer line-height is 1. This demo uses mono. When the locked pairing sets `numbers` to `display`, the amount uses that display face instead. Do not force mono onto a pairing whose CSS keeps `.num` off mono.
 
 ## Implementation notes
 

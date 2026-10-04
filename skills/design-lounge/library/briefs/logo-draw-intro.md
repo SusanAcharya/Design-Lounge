@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A first-visit intro for a courier brand's marketing site. Two full-bleed black panels cover the page. A 140px "NP" monogram draws its own outline in white over 900ms, fills red for 250ms, then the panels slide apart (top up, bottom down) over 700ms while the monogram fades. Underneath, the page is already laid out; its uppercase Archivo Black headline rises letter by letter with a 45ms stagger, followed by a stats row. A small "Replay intro" button in the bottom-right corner (or a click on empty page) re-runs the whole 2.9s sequence. The whole thing is a single CSS animation timeline driven by one `.play` class on `<body>`; the JS only splits the headline and toggles the class.
-
-## Reference behaviour
-
-1. t = 0 (page load): both panels cover the viewport (each 50% tall, `#000`). Monogram stroke is invisible (`stroke-dashoffset: 640` on a 640 dash). Page content beneath is present but headline letters are at `translateY(110%)`, opacity 0, clipped by their word wrappers; the stats row is opacity 0.
-2. 0–900ms: the monogram path's `stroke-dashoffset` animates 640 → 0 with `cubic-bezier(.65,0,.35,1)`; 3px white stroke, round joins.
-3. 900–1150ms: `fill-opacity` 0 → 1, fill `--red`. The white stroke stays.
-4. 1250–1950ms: top panel `translateY(-100%)`, bottom panel `translateY(100%)`, 700ms expo-out. Simultaneously the monogram fades to 0 and scales to 0.9 over 300ms.
-5. 1500ms onward: each headline letter animates `translateY(110%) → 0`, opacity 0 → 1, 640ms expo-out, delay `1500ms + index × 45ms` (31 letters, last one starts at ~2.9s).
-6. 2400ms: the stats row and CTA fade in over 500ms.
-7. Clicking "Replay intro" (fixed, bottom-right 20px, 1px black outline pill, uppercase 12px) removes `.play`, forces a reflow, re-adds it: everything restarts from step 1. Clicking anywhere on the page that is not a link or button does the same.
-8. Hover: nav links turn `--red`; CTA background `#000` → `--red`; Replay inverts to black with white text.
-9. `prefers-reduced-motion`: the panels open at 400ms with a 1ms duration, the monogram appears fully drawn and filled instantly, headline letters and stats row are visible with no animation.
 
 ## Structure
 
@@ -44,56 +34,6 @@ replay button: fixed, right 20 / bottom 20, z 20
 - `<main>` — flex 1, vertically centred. `.eyebrow` `<p>`, `<h1 id="hl">` (JS wraps each word in `<span class="w">` (overflow hidden) and each letter in `<span class="c" style="--i:n">`), `.row` with `.stats` (three `b` + `span` pairs) and `<button class="btn">`.
 - `.intro` — `position: fixed; inset: 0; pointer-events: none; aria-hidden="true"`, holding `.panel.t`, `.panel.b`, and `<svg class="mark" viewBox="0 0 100 100">` with one path: `M18 82V18l32 40V18M62 82V18h14a20 20 0 0 1 0 40H62` (an N and a P).
 - `<button class="replay" id="replay">` — outside `.intro` so it stays clickable.
-
-## Tokens
-
-```css
-:root {
-  /* colour — pure black/white is the point; one red */
-  --bg: #ffffff;        /* page */
-  --ink: #000000;       /* text, panels, CTA */
-  --ink-2: #5c5c5c;     /* stat labels */
-  --line: #e3e3e3;      /* hairlines */
-  --red: #e0261a;       /* eyebrow, monogram fill, hovers, focus */
-  --panel: #000000;     /* intro panels */
-  --mark: #ffffff;      /* monogram stroke */
-
-  /* type */
-  --display: "Archivo Black", Impact, sans-serif;
-  --sans: "Archivo", system-ui, sans-serif;
-
-  /* layout */
-  --header-h: 72px;
-  --gutter: 56px;
-  --mark-size: 140px;
-  --h1-size: 100px;
-
-  /* motion */
-  --t-draw: 900ms;      /* stroke draw */
-  --t-fill: 250ms;      /* fill in, starts at --t-draw */
-  --t-split: 700ms;     /* panels open */
-  --t-letter: 640ms;    /* each headline letter */
-  --stagger: 45ms;      /* per letter */
-  --d-split: 1250ms;    /* when panels start */
-  --d-letters: 1500ms;  /* when the first letter starts */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --ease-draw: cubic-bezier(.65, 0, .35, 1);
-}
-```
-
-## Typography
-
-| Role        | Family        | Size  | Weight | Line-height | Tracking | Case      |
-|-------------|---------------|------:|-------:|------------:|---------:|-----------|
-| Headline    | Archivo Black | 100px | 400    | 0.94        | −0.035em | UPPERCASE |
-| Wordmark    | Archivo Black | 18px  | 400    | 1           | −0.02em  | sentence  |
-| Stat value  | Archivo Black | 28px  | 400    | 1           | −0.02em  | numerals  |
-| Eyebrow     | Archivo       | 13px  | 500    | 1.5         | +0.10em  | UPPERCASE |
-| Nav         | Archivo       | 14px  | 500    | 1.5         | 0        | sentence  |
-| Stat label  | Archivo       | 13px  | 400    | 1.5         | 0        | sentence  |
-| CTA         | Archivo       | 14px  | 500    | 1           | 0        | sentence  |
-| Replay      | Archivo       | 12px  | 500    | 1           | +0.06em  | UPPERCASE |
 
 ## Motion
 
@@ -148,6 +88,72 @@ All animations use `animation-fill-mode: forwards`. Reduced motion: panels and m
 - [ ] Focus outlines are 2px red with 3px offset on every link and button.
 - [ ] With `prefers-reduced-motion: reduce` the page is fully visible within 400ms and no letter animates.
 - [ ] Only pure `#000`, `#fff`, one grey and one red appear anywhere.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. t = 0 (page load): both panels cover the viewport (each 50% tall, `#000`). Monogram stroke is invisible (`stroke-dashoffset: 640` on a 640 dash). Page content beneath is present but headline letters are at `translateY(110%)`, opacity 0, clipped by their word wrappers; the stats row is opacity 0.
+2. 0–900ms: the monogram path's `stroke-dashoffset` animates 640 → 0 with `cubic-bezier(.65,0,.35,1)`; 3px white stroke, round joins.
+3. 900–1150ms: `fill-opacity` 0 → 1, fill `--red`. The white stroke stays.
+4. 1250–1950ms: top panel `translateY(-100%)`, bottom panel `translateY(100%)`, 700ms expo-out. Simultaneously the monogram fades to 0 and scales to 0.9 over 300ms.
+5. 1500ms onward: each headline letter animates `translateY(110%) → 0`, opacity 0 → 1, 640ms expo-out, delay `1500ms + index × 45ms` (31 letters, last one starts at ~2.9s).
+6. 2400ms: the stats row and CTA fade in over 500ms.
+7. Clicking "Replay intro" (fixed, bottom-right 20px, 1px black outline pill, uppercase 12px) removes `.play`, forces a reflow, re-adds it: everything restarts from step 1. Clicking anywhere on the page that is not a link or button does the same.
+8. Hover: nav links turn `--red`; CTA background `#000` → `--red`; Replay inverts to black with white text.
+9. `prefers-reduced-motion`: the panels open at 400ms with a 1ms duration, the monogram appears fully drawn and filled instantly, headline letters and stats row are visible with no animation.
+
+## Tokens
+
+```css
+:root {
+  /* colour — pure black/white is the point; one red */
+  --bg: #ffffff;        /* page */
+  --ink: #000000;       /* text, panels, CTA */
+  --ink-2: #5c5c5c;     /* stat labels */
+  --line: #e3e3e3;      /* hairlines */
+  --red: #e0261a;       /* eyebrow, monogram fill, hovers, focus */
+  --panel: #000000;     /* intro panels */
+  --mark: #ffffff;      /* monogram stroke */
+
+  /* type */
+  --display: "Archivo Black", Impact, sans-serif;
+  --sans: "Archivo", system-ui, sans-serif;
+
+  /* layout */
+  --header-h: 72px;
+  --gutter: 56px;
+  --mark-size: 140px;
+  --h1-size: 100px;
+
+  /* motion */
+  --t-draw: 900ms;      /* stroke draw */
+  --t-fill: 250ms;      /* fill in, starts at --t-draw */
+  --t-split: 700ms;     /* panels open */
+  --t-letter: 640ms;    /* each headline letter */
+  --stagger: 45ms;      /* per letter */
+  --d-split: 1250ms;    /* when panels start */
+  --d-letters: 1500ms;  /* when the first letter starts */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-draw: cubic-bezier(.65, 0, .35, 1);
+}
+```
+
+## Typography
+
+| Role        | Family        | Size  | Weight | Line-height | Tracking | Case      |
+|-------------|---------------|------:|-------:|------------:|---------:|-----------|
+| Headline    | Archivo Black | 100px | 400    | 0.94        | −0.035em | UPPERCASE |
+| Wordmark    | Archivo Black | 18px  | 400    | 1           | −0.02em  | sentence  |
+| Stat value  | Archivo Black | 28px  | 400    | 1           | −0.02em  | numerals  |
+| Eyebrow     | Archivo       | 13px  | 500    | 1.5         | +0.10em  | UPPERCASE |
+| Nav         | Archivo       | 14px  | 500    | 1.5         | 0        | sentence  |
+| Stat label  | Archivo       | 13px  | 400    | 1.5         | 0        | sentence  |
+| CTA         | Archivo       | 14px  | 500    | 1           | 0        | sentence  |
+| Replay      | Archivo       | 12px  | 500    | 1           | +0.06em  | UPPERCASE |
 
 ## Implementation notes
 

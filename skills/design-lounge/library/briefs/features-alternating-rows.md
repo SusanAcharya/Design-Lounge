@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The features section of a marketing site for Ferrous, a fictional monitoring tool for CNC machine shops. A heavy condensed headline sits over a 2px black rule. Below it come three rows. Each row pairs a block of copy with a large product panel, and the panels swap sides: right, left, right. The panels are drawn in HTML and SVG like instrument screens: a vibration chart, a shift board of 12 machines, a tool-wear list. Safety orange appears only where a machine needs attention. Each panel slides 24px toward the centre and fades in the first time it enters the view. The detail worth copying: the orange is data, not decoration. The alert line, the machine in alarm and the worn tool are the only orange things on the page, apart from the small marks.
-
-## Reference behaviour
-
-1. Initial state at 1280 x 800: the header and all of row 1 are visible. The row 1 panel slides in from 24px to the right as the page loads.
-2. Header: a mono eyebrow "Ferrous platform / 03 modules" with a 10px orange square, a 72px two-line uppercase headline "Your machines already know. / Now you will.", and a right-aligned mono note "Fig. 01–03 / Live data, Plant 4, Floor B". A 2px black rule closes the header.
-3. Row 1, Spindle health: copy on the left (5 of 12 parts), panel on the right (7 of 12). The panel shows a 30-day vibration line that rises toward a dashed orange alert line at 4.5 mm/s, with one spike that crosses it, ringed in orange and tagged "+21 days warning". A 3-cell readout sits underneath: RMS now 2.8, Peak 24 h 4.9 (orange-brown), Bearing temp 41 °C.
-4. Row 2, Shift board: panel on the left, copy on the right. A 4 x 3 grid of machine tiles: 8 running (white, black bar), 3 idle (grey), 1 in alarm (M-05, solid orange). The readout shows OEE 78.4%, Running 9 / 12, Alarms 1.
-5. Row 3, Tool life: copy on the left, panel on the right. Eight tool rows (T01 to T08) with a wear bar, a thin black limit tick at 85%, and a percent. T07 at 92% has an orange bar and bold text. A white side readout says "T07 92%" in 76px type with "Ø10 drill. Swap at the end of this cycle, 6 min."
-6. Scrolling down: when at least 25% of a panel is in view (with the bottom 40px of the viewport ignored), it slides from 24px to 0 and fades from 0 to 1 over 700ms on expo-out. Panels on the right come from the right. Panels on the left come from the left. Each plays once.
-7. Each row has a text link in mono caps with a 2px orange underline. Hovering moves its arrow 4px right over 160ms.
-8. Nothing else moves. There is no loop and no scroll-linked motion.
-9. With reduced motion, every panel is fully visible from the start.
-10. Without JavaScript, the panels are visible. The hidden start state applies only once a `js` class is on `<html>`.
 
 ## Structure
 
@@ -55,67 +44,6 @@ The features section of a marketing site for Ferrous, a fictional monitoring too
 - Flipped row: the same markup order (copy, then panel). Set `order: 2` on the copy so the panel shows first. Keep the copy first in the DOM so reading order stays heading first.
 - Copy block: eyebrow `div` (a boxed number and a label), `h3`, `p`, `ul.checks` with 3 `li`, `a.more`.
 - Panel: a `figure` with an `aria-label` describing what it shows. Inside: a black title bar (live label with an orange square, then a muted right label), the body (SVG chart, tile grid, or tool list), and a readout strip of 3 cells where it applies.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #e8e8e5;          /* light grey page */
-  --panel: #f5f5f2;       /* panel body, number boxes */
-  --ink: #111111;         /* text, rules, panel borders, title bars */
-  --ink-2: #45453f;       /* body copy, eyebrow labels */
-  --ink-3: #6b6b64;       /* readout labels, idle tiles */
-  --line: #bdbdb6;        /* row rules, dashed tool dividers */
-  --rule: #111111;        /* 2px header rule */
-  --signal: #ff5b1a;      /* safety orange: alerts, marks, underlines */
-  --signal-ink: #a83300;  /* orange used as text on light grounds */
-  --focus: #ff5b1a;
-
-  /* type */
-  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  --fs-h2: 72px;
-  --fs-h3: 44px;
-  --fs-body: 20px;
-  --fs-check: 18px;
-  --fs-mono: 12px;
-  --fs-readout: 20px;
-
-  /* space (8px base) */
-  --s-1: 8px; --s-2: 16px; --s-3: 24px; --s-4: 32px; --s-5: 48px; --s-6: 56px; --s-7: 72px; --s-8: 80px;
-
-  /* shape */
-  --r: 2px;  /* everything: panels, tiles, number boxes, check squares */
-
-  /* motion */
-  --expo: cubic-bezier(.16,1,.3,1);
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --t-reveal: 700ms;
-  --t-micro: 160ms;
-  --reveal-shift: 24px;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Eyebrow, labels, notes | JetBrains Mono | 12px | 500 | 1.4 | 0.06em | upper |
-| Section headline `h2` | Barlow Condensed | 72px | 700 | 0.92 | -0.01em | upper |
-| Row number box | JetBrains Mono | 12px | 700 | 1 | 0.06em | 01 02 03 |
-| Row heading `h3` | Barlow Condensed | 44px | 700 | 0.98 | -0.005em | upper |
-| Body | Barlow Condensed | 20px | 500 | 1.4 | 0 | sentence |
-| Check item | Barlow Condensed | 18px | 600 | 1.4 | 0 | sentence |
-| Text link | JetBrains Mono | 13px | 700 | 1 | 0.06em | upper |
-| Panel bar | JetBrains Mono | 12px | 500 | 1 | 0.06em | upper |
-| Readout label | JetBrains Mono | 11px | 500 | 1.4 | 0.06em | upper |
-| Readout value | JetBrains Mono | 20px | 700 | 1.2 | -0.02em | numerals |
-| Tile and tool text | JetBrains Mono | 11-12px | 500, 700 for ids | 1.3 | 0 | as typed |
-| Tool readout | Barlow Condensed | 76px, % at 32px | 700 | 0.85 | -0.02em | upper |
-
-- Cap body copy at 34ch so it runs to 2 or 3 lines.
-- Headings are uppercase condensed. Mono is for anything a machine would print: ids, labels, units, links.
 
 ## Motion
 
@@ -184,6 +112,84 @@ The features section of a marketing site for Ferrous, a fictional monitoring too
 - [ ] The shift board shows M-01 to M-12 with M-05 in alarm, OEE 78.4%, Running 9 / 12.
 - [ ] The tool list shows T01 to T08 with a limit tick at 85%, and T07 at 92% in `#ff5b1a`.
 - [ ] Page `#e8e8e5`, ink `#111111`, accent `#ff5b1a`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state at 1280 x 800: the header and all of row 1 are visible. The row 1 panel slides in from 24px to the right as the page loads.
+2. Header: a mono eyebrow "Ferrous platform / 03 modules" with a 10px orange square, a 72px two-line uppercase headline "Your machines already know. / Now you will.", and a right-aligned mono note "Fig. 01–03 / Live data, Plant 4, Floor B". A 2px black rule closes the header.
+3. Row 1, Spindle health: copy on the left (5 of 12 parts), panel on the right (7 of 12). The panel shows a 30-day vibration line that rises toward a dashed orange alert line at 4.5 mm/s, with one spike that crosses it, ringed in orange and tagged "+21 days warning". A 3-cell readout sits underneath: RMS now 2.8, Peak 24 h 4.9 (orange-brown), Bearing temp 41 °C.
+4. Row 2, Shift board: panel on the left, copy on the right. A 4 x 3 grid of machine tiles: 8 running (white, black bar), 3 idle (grey), 1 in alarm (M-05, solid orange). The readout shows OEE 78.4%, Running 9 / 12, Alarms 1.
+5. Row 3, Tool life: copy on the left, panel on the right. Eight tool rows (T01 to T08) with a wear bar, a thin black limit tick at 85%, and a percent. T07 at 92% has an orange bar and bold text. A white side readout says "T07 92%" in 76px type with "Ø10 drill. Swap at the end of this cycle, 6 min."
+6. Scrolling down: when at least 25% of a panel is in view (with the bottom 40px of the viewport ignored), it slides from 24px to 0 and fades from 0 to 1 over 700ms on expo-out. Panels on the right come from the right. Panels on the left come from the left. Each plays once.
+7. Each row has a text link in mono caps with a 2px orange underline. Hovering moves its arrow 4px right over 160ms.
+8. Nothing else moves. There is no loop and no scroll-linked motion.
+9. With reduced motion, every panel is fully visible from the start.
+10. Without JavaScript, the panels are visible. The hidden start state applies only once a `js` class is on `<html>`.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #e8e8e5;          /* light grey page */
+  --panel: #f5f5f2;       /* panel body, number boxes */
+  --ink: #111111;         /* text, rules, panel borders, title bars */
+  --ink-2: #45453f;       /* body copy, eyebrow labels */
+  --ink-3: #6b6b64;       /* readout labels, idle tiles */
+  --line: #bdbdb6;        /* row rules, dashed tool dividers */
+  --rule: #111111;        /* 2px header rule */
+  --signal: #ff5b1a;      /* safety orange: alerts, marks, underlines */
+  --signal-ink: #a83300;  /* orange used as text on light grounds */
+  --focus: #ff5b1a;
+
+  /* type */
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --fs-h2: 72px;
+  --fs-h3: 44px;
+  --fs-body: 20px;
+  --fs-check: 18px;
+  --fs-mono: 12px;
+  --fs-readout: 20px;
+
+  /* space (8px base) */
+  --s-1: 8px; --s-2: 16px; --s-3: 24px; --s-4: 32px; --s-5: 48px; --s-6: 56px; --s-7: 72px; --s-8: 80px;
+
+  /* shape */
+  --r: 2px;  /* everything: panels, tiles, number boxes, check squares */
+
+  /* motion */
+  --expo: cubic-bezier(.16,1,.3,1);
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --t-reveal: 700ms;
+  --t-micro: 160ms;
+  --reveal-shift: 24px;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Eyebrow, labels, notes | JetBrains Mono | 12px | 500 | 1.4 | 0.06em | upper |
+| Section headline `h2` | Barlow Condensed | 72px | 700 | 0.92 | -0.01em | upper |
+| Row number box | JetBrains Mono | 12px | 700 | 1 | 0.06em | 01 02 03 |
+| Row heading `h3` | Barlow Condensed | 44px | 700 | 0.98 | -0.005em | upper |
+| Body | Barlow Condensed | 20px | 500 | 1.4 | 0 | sentence |
+| Check item | Barlow Condensed | 18px | 600 | 1.4 | 0 | sentence |
+| Text link | JetBrains Mono | 13px | 700 | 1 | 0.06em | upper |
+| Panel bar | JetBrains Mono | 12px | 500 | 1 | 0.06em | upper |
+| Readout label | JetBrains Mono | 11px | 500 | 1.4 | 0.06em | upper |
+| Readout value | JetBrains Mono | 20px | 700 | 1.2 | -0.02em | numerals |
+| Tile and tool text | JetBrains Mono | 11-12px | 500, 700 for ids | 1.3 | 0 | as typed |
+| Tool readout | Barlow Condensed | 76px, % at 32px | 700 | 0.85 | -0.02em | upper |
+
+- Cap body copy at 34ch so it runs to 2 or 3 lines.
+- Headings are uppercase condensed. Mono is for anything a machine would print: ids, labels, units, links.
 
 ## Implementation notes
 

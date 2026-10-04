@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Flags are emoji built from the ISO code at runtime (regional indicator letters), at the user's request; there are no flag images.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The contact step of Parcelry's checkout. One field holds a country button (flag, dial code, chevron) and a mono number input. The button opens a searchable list of 27 countries with Suggested on top. The number formats itself as you type using each country's pattern, a trunk 0 is dropped, and pasting a full international number like "+977 984 123 4567" switches the country for you. A hint line under the field counts digits, says what is missing, and turns green or red; a grey strip shows the number exactly as it will be saved in E.164. The detail worth copying is that formatting and validation come from one pattern string per country, e.g. Nepal `XXX-XXXXXXX`, United Kingdom `XXXX XXXXXX`.
-
-## Reference behaviour
-
-1. First frame: United Kingdom selected, number "7700 900123", field border green with a check, hint "Valid United Kingdom mobile." and count "10/10". The picker is open below the field with no focus moved into it, showing Suggested (United Kingdom checked and highlighted, Nepal, United States) and the start of All countries.
-2. Clicking the country button toggles the picker. Opening it focuses the search input. ArrowDown or ArrowUp on the button also opens it.
-3. Typing in search filters by name substring ("nep" → Nepal, with "Nep" highlighted in blue), ISO code ("np"), or dial digits ("977" or "+977"). Suggested hides while searching. No match shows "No country matches “xyz”."
-4. ArrowUp/Down move the highlight (wrapping), Home/End jump, Enter selects, Escape closes and returns focus to the country button, Tab closes. Hovering an option highlights it; clicking selects it. Clicking outside closes.
-5. Selecting a country updates the flag and dial code, trims digits to the new length, updates the placeholder to that country's example (Nepal "984-1234567"), and moves focus to the number.
-6. Typing digits formats live with the caret kept after the same digit. Letters are blocked; spaces, dashes, brackets and dots are allowed and normalised away. A leading 0 is dropped (except Italy). Input stops at the country's digit count.
-7. Typing or pasting a value that starts with "+" or "00" finds the longest matching dial code, switches country, and keeps the rest as the national number. If the current country already shares the code (+1 for US and Canada), it stays; otherwise +1 goes to United States.
-8. While typing an incomplete number the hint says "3 more digits" in grey. On blur with an incomplete number it turns red: "Nepal mobile numbers have 10 digits. You've entered 7." with a red border and a 3px pale red ring.
-9. If the digits don't start the way that country's mobiles start (UK `7`, Nepal `96/97/98`, India `6–9` and so on), the hint goes red: "That doesn't look like a United Kingdom mobile. Try 7700 900123."
-10. Valid: green border, check fades and scales in, hint "Valid Nepal mobile.", strip "Saved as +9779841234567", Continue enabled.
-11. Incomplete: strip shows the formatted partial with an ellipsis, Continue disabled at 35% opacity.
-12. Continue writes "Saved. The courier will text +977 984-1234567." in the hint.
-13. Reduced motion: the picker appears without the 220ms drop, and border, chevron and check changes are instant.
 
 ## Structure
 
@@ -54,55 +40,6 @@ The contact step of Parcelry's checkout. One field holds a country button (flag,
 - The phone row is a positioned wrapper: `label for="tel"`, `div.field` (country `button`, `input type="tel"`, status check), the popover `div.pop`, then `p.hint` with message and count.
 - The popover has a search `input role="combobox"` and a `ul role="listbox"` of `li role="option"`. Group headings are `li role="presentation"`.
 - Under the field: the E.164 strip (`aria-live="polite"`), a checkbox, and the Continue button.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f1ea;           /* warm paper */
-  --card: #fffdf8;         /* card, field, popover */
-  --sunk: #f7f4ed;         /* E.164 strip, country hover */
-  --line: #e2ddd1;         /* card border, inner dividers */
-  --line-2: #cbc5b7;       /* field border, popover border */
-  --ink: #1a1916;
-  --ink-2: #55524a;
-  --ink-3: #716d64;
-  --accent: #2443d6;       /* cobalt: focus, highlight, match */
-  --accent-soft: #e8ecfc;  /* focus ring, active option */
-  --ok: #1f7a4d;
-  --err: #c2412d;
-  --err-ring: #f6e1dc;
-  --focus: #2443d6;
-
-  --sans: "Rethink Sans", system-ui, sans-serif;
-  --mono: "Fragment Mono", ui-monospace, Menlo, monospace;
-
-  --r: 10px;               /* fields, buttons */
-  --r-card: 16px;
-  --r-pop: 12px;
-  --field-h: 52px;
-  --option-h: 44px;
-  --list-max: 240px;
-  --shadow-pop: 0 18px 40px -18px rgba(26,25,22,.35), 0 2px 6px rgba(26,25,22,.06);
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Headline | Rethink Sans | 60px | 600 | 0.98 | -0.04em | Sentence, max 10ch |
-| Card title | Rethink Sans | 22px | 600 | 1.2 | -0.02em | Sentence |
-| Label | Rethink Sans | 13px | 600 | 1.5 | 0 | Sentence |
-| Body, options | Rethink Sans | 15px | 400 | 1.5 | 0 | Sentence |
-| Phone number | Fragment Mono | 16px | 400 | 1 | 0.02em | Digits |
-| Dial code | Fragment Mono | 15px (13px in list) | 400 | 1 | 0 | +NN |
-| Hint | Rethink Sans | 13px | 400 | 1.5 | 0 | Sentence; count in mono 12px |
-| Group heading, steps, E.164 | Fragment Mono | 11–13px | 400 | 1.4 | 0.08em on headings | Upper headings |
-| Flag | system emoji | 20px | — | 1 | — | — |
 
 ## Motion
 
@@ -169,6 +106,75 @@ The contact step of Parcelry's checkout. One field holds a country button (flag,
 - [ ] 27 countries; Suggested is United Kingdom, Nepal, United States.
 - [ ] First frame: UK, "7700 900123", valid, picker open.
 - [ ] Nepal pattern `XXX-XXXXXXX`, example 984-1234567, mobiles start 96/97/98.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: United Kingdom selected, number "7700 900123", field border green with a check, hint "Valid United Kingdom mobile." and count "10/10". The picker is open below the field with no focus moved into it, showing Suggested (United Kingdom checked and highlighted, Nepal, United States) and the start of All countries.
+2. Clicking the country button toggles the picker. Opening it focuses the search input. ArrowDown or ArrowUp on the button also opens it.
+3. Typing in search filters by name substring ("nep" → Nepal, with "Nep" highlighted in blue), ISO code ("np"), or dial digits ("977" or "+977"). Suggested hides while searching. No match shows "No country matches “xyz”."
+4. ArrowUp/Down move the highlight (wrapping), Home/End jump, Enter selects, Escape closes and returns focus to the country button, Tab closes. Hovering an option highlights it; clicking selects it. Clicking outside closes.
+5. Selecting a country updates the flag and dial code, trims digits to the new length, updates the placeholder to that country's example (Nepal "984-1234567"), and moves focus to the number.
+6. Typing digits formats live with the caret kept after the same digit. Letters are blocked; spaces, dashes, brackets and dots are allowed and normalised away. A leading 0 is dropped (except Italy). Input stops at the country's digit count.
+7. Typing or pasting a value that starts with "+" or "00" finds the longest matching dial code, switches country, and keeps the rest as the national number. If the current country already shares the code (+1 for US and Canada), it stays; otherwise +1 goes to United States.
+8. While typing an incomplete number the hint says "3 more digits" in grey. On blur with an incomplete number it turns red: "Nepal mobile numbers have 10 digits. You've entered 7." with a red border and a 3px pale red ring.
+9. If the digits don't start the way that country's mobiles start (UK `7`, Nepal `96/97/98`, India `6–9` and so on), the hint goes red: "That doesn't look like a United Kingdom mobile. Try 7700 900123."
+10. Valid: green border, check fades and scales in, hint "Valid Nepal mobile.", strip "Saved as +9779841234567", Continue enabled.
+11. Incomplete: strip shows the formatted partial with an ellipsis, Continue disabled at 35% opacity.
+12. Continue writes "Saved. The courier will text +977 984-1234567." in the hint.
+13. Reduced motion: the picker appears without the 220ms drop, and border, chevron and check changes are instant.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f1ea;           /* warm paper */
+  --card: #fffdf8;         /* card, field, popover */
+  --sunk: #f7f4ed;         /* E.164 strip, country hover */
+  --line: #e2ddd1;         /* card border, inner dividers */
+  --line-2: #cbc5b7;       /* field border, popover border */
+  --ink: #1a1916;
+  --ink-2: #55524a;
+  --ink-3: #716d64;
+  --accent: #2443d6;       /* cobalt: focus, highlight, match */
+  --accent-soft: #e8ecfc;  /* focus ring, active option */
+  --ok: #1f7a4d;
+  --err: #c2412d;
+  --err-ring: #f6e1dc;
+  --focus: #2443d6;
+
+  --sans: "Rethink Sans", system-ui, sans-serif;
+  --mono: "Fragment Mono", ui-monospace, Menlo, monospace;
+
+  --r: 10px;               /* fields, buttons */
+  --r-card: 16px;
+  --r-pop: 12px;
+  --field-h: 52px;
+  --option-h: 44px;
+  --list-max: 240px;
+  --shadow-pop: 0 18px 40px -18px rgba(26,25,22,.35), 0 2px 6px rgba(26,25,22,.06);
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Headline | Rethink Sans | 60px | 600 | 0.98 | -0.04em | Sentence, max 10ch |
+| Card title | Rethink Sans | 22px | 600 | 1.2 | -0.02em | Sentence |
+| Label | Rethink Sans | 13px | 600 | 1.5 | 0 | Sentence |
+| Body, options | Rethink Sans | 15px | 400 | 1.5 | 0 | Sentence |
+| Phone number | Fragment Mono | 16px | 400 | 1 | 0.02em | Digits |
+| Dial code | Fragment Mono | 15px (13px in list) | 400 | 1 | 0 | +NN |
+| Hint | Rethink Sans | 13px | 400 | 1.5 | 0 | Sentence; count in mono 12px |
+| Group heading, steps, E.164 | Fragment Mono | 11–13px | 400 | 1.4 | 0.08em on headings | Upper headings |
+| Flag | system emoji | 20px | — | 1 | — | — |
 
 ## Implementation notes
 

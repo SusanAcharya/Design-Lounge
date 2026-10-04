@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A case-study proof section for **Keel**, a subscription billing product. Four customer wordmarks sit in a tab row. The open tab shows one big result ("−38%"), what it means, two small supporting numbers, a quote, the person, and a **Read the case** button. The tabs move on by themselves every 7 seconds. A 2px mint line fills along the bottom of the open tab to show the time left. It pauses while the pointer is over the section or focus is inside it, and there is a pause button. The feeling is a quiet dark SaaS page: ink navy, white, one mint. The detail worth copying is that the progress line is a CSS animation, and its `animationend` event is the timer. Pausing is just `animation-play-state`.
-
-## Reference behaviour
-
-1. First frame: kicker "CUSTOMER RESULTS" in mint, then a 44px heading on two lines: "Billing teams that moved to Keel." in white and "In their numbers." in muted grey. On the right: "Auto-advance · 7s" and a 40px pause button.
-2. Below, a tab row of four equal cells, 84px tall: **northvane** (heavy lowercase with a dot), **OKAPI** (spaced mono caps with a diamond), *Fernhouse* (italic serif), **Brightloop** (two linked rings + grotesk). Each cell has a small index 01–04 on the right.
-3. Northvane is open. Its cell is the panel colour and white. A 2px track runs along its bottom edge, and a mint line fills that track from left to right over 7000ms, linear.
-4. The panel under the tabs has two columns, 5 : 6. Left: "−38%" at 112px mono with the minus sign in mint, then "voluntary churn in two quarters after switching dunning to Keel", then a rule and two small stats: "CARDS RECOVERED 11,420" and "LIVE IN 9 days". Right: the quote with mint curly quote marks, then a rule, the person (initials disc, "Ines Okafor", "VP Finance, Northvane Freight") and the mint **Read the case** button.
-5. When the line is full, the next tab opens. After Brightloop it wraps to Northvane.
-6. Opening a tab: the new panel's left column fades up from 8px below over 360ms; the right column follows 60ms later. The new tab's line starts again from 0.
-7. Pointer over any part of the section: the line stops where it is. Pointer leaves: it continues from the same point. It does not restart.
-8. Focus anywhere inside the section: same pause as hover.
-9. Click the pause button: it becomes a play button, `aria-pressed="true"`, the label text reads "Paused". The line stays still even after the pointer leaves. Click again to resume.
-10. Click a tab: it opens at once. Arrow Right and Arrow Left move between tabs and open them. Home opens the first, End the last. Focus follows.
-11. Reduced motion: the line is drawn full and still. The tabs still move on every 7s, but the panel swaps with no fade. Pause still works.
 
 ## Structure
 
@@ -55,6 +43,96 @@ A case-study proof section for **Keel**, a subscription billing product. Four cu
 - `.panels` holds four `div role="tabpanel"` with `aria-labelledby` and `tabindex="0"`. Closed panels have `hidden`.
 - `.panels` is `display: flex; flex: 1` so the open panel fills the frame height and the person row sits at the bottom. Under 1024 set `.panels { flex: none }` so a tall screen does not leave an empty block.
 - Each panel: `.metric` (big number `p`, meaning `p`, `dl` of two stats) and `.story` (`blockquote`, then `.person` with disc, name, role and the link).
+
+## Motion
+
+| Thing | Trigger | Property | From → to | Duration | Easing | Reduced motion |
+| --- | --- | --- | --- | --- | --- | --- |
+| Progress line | tab opens | `transform: scaleX` | 0 → 1, origin left | 7000ms | linear (it is a clock) | full and still, still fires end |
+| Auto-advance | line `animationend` | open next tab | — | — | — | same, every 7s |
+| Pause | section hover or focus-within | `animation-play-state` | running → paused | — | — | same |
+| Pause button | click | `data-paused` on section | — | — | — | same |
+| Metric column | panel opens | opacity, `translateY` | 0, 8px → 1, 0 | 360ms | standard | none |
+| Story column | panel opens | opacity, `translateY` | 0, 8px → 1, 0 | 360ms, +60ms | standard | none |
+| Tab colour | hover, select | color, background | — | 200ms | standard | none |
+| Link arrow | hover | `gap` | 8px → 12px | 200ms | standard | none |
+
+Linear is correct for the progress line only. It is time, not a move. Everything else uses the standard curve.
+
+## States
+
+- Tab closed: text `--ink-3`, no fill, no track.
+- Tab hover: text `--ink-2`, background 2% white.
+- Tab open: text `--ink`, background `--panel`, 2px track `--line-2` with the mint fill on top.
+- Tab focus-visible: 2px mint outline drawn inside the cell (offset -4px), radius 12px. The tab bar's `overflow: hidden` would cut an outside ring.
+- Section paused (hover, focus, or button): the mint fill stops at its current width.
+- Pause button: shows two bars while running, a play triangle while paused. Label text beside it reads "Auto-advance · 7s" or "Paused". Hover: border `--ink-3`, fill `--panel`.
+- Read the case: mint fill, navy text, 44px tall. Hover: the arrow moves 4px further away.
+- Empty: with one customer, drop the tab row and the timer. Show the panel alone.
+- Loading: not drawn. Do not show a spinner inside the panel.
+
+## Accessibility
+
+- Tab pattern: `role="tablist"`, `role="tab"`, `role="tabpanel"`. Each tab has `aria-controls`; each panel has `aria-labelledby`.
+- Roving tabindex: the open tab is `tabindex="0"`, the others `-1`. Tab moves from the tab row into the open panel, then to its link.
+- Keys on a tab: Arrow Right next, Arrow Left previous (both wrap), Home first, End last. Opening follows focus.
+- Auto-advance never moves focus. It only changes which tab is open.
+- Focus inside the section pauses the clock, so a keyboard user is never moved on while reading. This plus the pause button covers WCAG 2.2.2.
+- Pause button: `aria-pressed` and an `aria-label` that says what a press will do ("Pause auto-advance" / "Resume auto-advance").
+- Do not add `aria-live` to the panel. A region that changes every 7s and talks each time is noise.
+- The wordmark text is the tab name. The diamond and the rings are `aria-hidden`. The index number is `aria-hidden`.
+- Contrast on `#111a2e`: `#f3f5f9` is about 16:1, `#b4bccb` about 9:1, `#8590a6` about 5.4:1. Navy on mint is about 11:1.
+- Targets: tabs 84px tall (64px under 640), pause 40px, link 44px.
+
+## Responsive rules
+
+- ≥1280: as drawn. Section padding 56px 64px. Four tabs in a row. Panel 5 : 6.
+- 1024 (up to 1023): padding 40px 32px. Tab index numbers hidden. Metric 88px, quote 21px, panel padding 36px 28px / 36px 32px.
+- 768 (up to 767): tabs become a 2 × 2 grid with a 1px rule between rows. The panel becomes one column: metric on top, a rule, then the story.
+- <640: padding 32px 16px. The head stacks; the pause control sits under the heading. Heading 32px. Tabs 64px tall, wordmarks 18px. Metric 72px. Quote 19px. The case button takes the full row under the person.
+- At every width, `scrollWidth` equals the viewport. Wordmarks never wrap; they shrink with the breakpoints.
+- Do not turn the tabs into a horizontal scroller on phones. The 2 × 2 grid keeps every customer visible.
+
+## Acceptance checklist
+
+### Always
+
+- [ ] The tab row is a real tablist with roving tabindex and arrow, Home and End keys.
+- [ ] Exactly one tab is open. Its panel is the only one without `hidden`.
+- [ ] The progress line is a CSS animation on the open tab, and `animationend` opens the next tab.
+- [ ] Hover or focus inside the section pauses the line, and it resumes from the same point.
+- [ ] A visible pause button with `aria-pressed` stops auto-advance until pressed again.
+- [ ] Auto-advance never moves focus.
+- [ ] Each panel has one big metric, one meaning line, a quote, a person, and one link.
+- [ ] One accent colour. Mint is used for the line, the metric unit, quote marks, the kicker, the button and focus only.
+- [ ] Four tabs in a row at 768 and up. A 2 × 2 grid under 768.
+- [ ] Reduced motion: no fade and no moving line, but the tabs still change every 7s.
+
+### This demo
+
+- [ ] Customers in order: northvane, OKAPI, Fernhouse, Brightloop.
+- [ ] Metrics: "−38%", "4.2×", "$1.9M", "11d".
+- [ ] People: Ines Okafor (VP Finance, Northvane Freight), Daniel Kowalczyk (Controller, Okapi Robotics), Priya Raman (Head of Growth, Fernhouse), Mateo Silva (Staff Engineer, Brightloop).
+- [ ] The dwell is 7s and the control label reads "Auto-advance · 7s".
+- [ ] Heading reads "Billing teams that moved to Keel. In their numbers."
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: kicker "CUSTOMER RESULTS" in mint, then a 44px heading on two lines: "Billing teams that moved to Keel." in white and "In their numbers." in muted grey. On the right: "Auto-advance · 7s" and a 40px pause button.
+2. Below, a tab row of four equal cells, 84px tall: **northvane** (heavy lowercase with a dot), **OKAPI** (spaced mono caps with a diamond), *Fernhouse* (italic serif), **Brightloop** (two linked rings + grotesk). Each cell has a small index 01–04 on the right.
+3. Northvane is open. Its cell is the panel colour and white. A 2px track runs along its bottom edge, and a mint line fills that track from left to right over 7000ms, linear.
+4. The panel under the tabs has two columns, 5 : 6. Left: "−38%" at 112px mono with the minus sign in mint, then "voluntary churn in two quarters after switching dunning to Keel", then a rule and two small stats: "CARDS RECOVERED 11,420" and "LIVE IN 9 days". Right: the quote with mint curly quote marks, then a rule, the person (initials disc, "Ines Okafor", "VP Finance, Northvane Freight") and the mint **Read the case** button.
+5. When the line is full, the next tab opens. After Brightloop it wraps to Northvane.
+6. Opening a tab: the new panel's left column fades up from 8px below over 360ms; the right column follows 60ms later. The new tab's line starts again from 0.
+7. Pointer over any part of the section: the line stops where it is. Pointer leaves: it continues from the same point. It does not restart.
+8. Focus anywhere inside the section: same pause as hover.
+9. Click the pause button: it becomes a play button, `aria-pressed="true"`, the label text reads "Paused". The line stays still even after the pointer leaves. Click again to resume.
+10. Click a tab: it opens at once. Arrow Right and Arrow Left move between tabs and open them. Home opens the first, End the last. Focus follows.
+11. Reduced motion: the line is drawn full and still. The tabs still move on every 7s, but the panel swaps with no fade. Pause still works.
 
 ## Tokens
 
@@ -129,78 +207,6 @@ Wordmarks are fictional and drawn in CSS text. Each uses a different style, all 
 | Brightloop | Geist 500, 21px, 22px SVG of two linked circles before it |
 
 All numbers use mono so the digits line up. Use `font-variant-numeric: tabular-nums` on the metric.
-
-## Motion
-
-| Thing | Trigger | Property | From → to | Duration | Easing | Reduced motion |
-| --- | --- | --- | --- | --- | --- | --- |
-| Progress line | tab opens | `transform: scaleX` | 0 → 1, origin left | 7000ms | linear (it is a clock) | full and still, still fires end |
-| Auto-advance | line `animationend` | open next tab | — | — | — | same, every 7s |
-| Pause | section hover or focus-within | `animation-play-state` | running → paused | — | — | same |
-| Pause button | click | `data-paused` on section | — | — | — | same |
-| Metric column | panel opens | opacity, `translateY` | 0, 8px → 1, 0 | 360ms | standard | none |
-| Story column | panel opens | opacity, `translateY` | 0, 8px → 1, 0 | 360ms, +60ms | standard | none |
-| Tab colour | hover, select | color, background | — | 200ms | standard | none |
-| Link arrow | hover | `gap` | 8px → 12px | 200ms | standard | none |
-
-Linear is correct for the progress line only. It is time, not a move. Everything else uses the standard curve.
-
-## States
-
-- Tab closed: text `--ink-3`, no fill, no track.
-- Tab hover: text `--ink-2`, background 2% white.
-- Tab open: text `--ink`, background `--panel`, 2px track `--line-2` with the mint fill on top.
-- Tab focus-visible: 2px mint outline drawn inside the cell (offset -4px), radius 12px. The tab bar's `overflow: hidden` would cut an outside ring.
-- Section paused (hover, focus, or button): the mint fill stops at its current width.
-- Pause button: shows two bars while running, a play triangle while paused. Label text beside it reads "Auto-advance · 7s" or "Paused". Hover: border `--ink-3`, fill `--panel`.
-- Read the case: mint fill, navy text, 44px tall. Hover: the arrow moves 4px further away.
-- Empty: with one customer, drop the tab row and the timer. Show the panel alone.
-- Loading: not drawn. Do not show a spinner inside the panel.
-
-## Accessibility
-
-- Tab pattern: `role="tablist"`, `role="tab"`, `role="tabpanel"`. Each tab has `aria-controls`; each panel has `aria-labelledby`.
-- Roving tabindex: the open tab is `tabindex="0"`, the others `-1`. Tab moves from the tab row into the open panel, then to its link.
-- Keys on a tab: Arrow Right next, Arrow Left previous (both wrap), Home first, End last. Opening follows focus.
-- Auto-advance never moves focus. It only changes which tab is open.
-- Focus inside the section pauses the clock, so a keyboard user is never moved on while reading. This plus the pause button covers WCAG 2.2.2.
-- Pause button: `aria-pressed` and an `aria-label` that says what a press will do ("Pause auto-advance" / "Resume auto-advance").
-- Do not add `aria-live` to the panel. A region that changes every 7s and talks each time is noise.
-- The wordmark text is the tab name. The diamond and the rings are `aria-hidden`. The index number is `aria-hidden`.
-- Contrast on `#111a2e`: `#f3f5f9` is about 16:1, `#b4bccb` about 9:1, `#8590a6` about 5.4:1. Navy on mint is about 11:1.
-- Targets: tabs 84px tall (64px under 640), pause 40px, link 44px.
-
-## Responsive rules
-
-- ≥1280: as drawn. Section padding 56px 64px. Four tabs in a row. Panel 5 : 6.
-- 1024 (up to 1023): padding 40px 32px. Tab index numbers hidden. Metric 88px, quote 21px, panel padding 36px 28px / 36px 32px.
-- 768 (up to 767): tabs become a 2 × 2 grid with a 1px rule between rows. The panel becomes one column: metric on top, a rule, then the story.
-- <640: padding 32px 16px. The head stacks; the pause control sits under the heading. Heading 32px. Tabs 64px tall, wordmarks 18px. Metric 72px. Quote 19px. The case button takes the full row under the person.
-- At every width, `scrollWidth` equals the viewport. Wordmarks never wrap; they shrink with the breakpoints.
-- Do not turn the tabs into a horizontal scroller on phones. The 2 × 2 grid keeps every customer visible.
-
-## Acceptance checklist
-
-### Always
-
-- [ ] The tab row is a real tablist with roving tabindex and arrow, Home and End keys.
-- [ ] Exactly one tab is open. Its panel is the only one without `hidden`.
-- [ ] The progress line is a CSS animation on the open tab, and `animationend` opens the next tab.
-- [ ] Hover or focus inside the section pauses the line, and it resumes from the same point.
-- [ ] A visible pause button with `aria-pressed` stops auto-advance until pressed again.
-- [ ] Auto-advance never moves focus.
-- [ ] Each panel has one big metric, one meaning line, a quote, a person, and one link.
-- [ ] One accent colour. Mint is used for the line, the metric unit, quote marks, the kicker, the button and focus only.
-- [ ] Four tabs in a row at 768 and up. A 2 × 2 grid under 768.
-- [ ] Reduced motion: no fade and no moving line, but the tabs still change every 7s.
-
-### This demo
-
-- [ ] Customers in order: northvane, OKAPI, Fernhouse, Brightloop.
-- [ ] Metrics: "−38%", "4.2×", "$1.9M", "11d".
-- [ ] People: Ines Okafor (VP Finance, Northvane Freight), Daniel Kowalczyk (Controller, Okapi Robotics), Priya Raman (Head of Growth, Fernhouse), Mateo Silva (Staff Engineer, Brightloop).
-- [ ] The dwell is 7s and the control label reads "Auto-advance · 7s".
-- [ ] Heading reads "Billing teams that moved to Keel. In their numbers."
 
 ## Implementation notes
 

@@ -1,6 +1,7 @@
 /* Harbour Ledger · light · pair: harbour-night
    Navy wool, cream paper, a brass stamp.
    Best for: Finance, Insurance, Civic */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Harbour Ledger · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Libre Caslon Text", Georgia, serif;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --radius: 2px;
-  --shadow: 0 1px 0 rgba(21,32,51,.06);
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

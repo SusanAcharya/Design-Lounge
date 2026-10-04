@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A sheet titled Gate 4 note. Scan sends an 8px beam from the top of the sheet to the bottom in 1.1 seconds, then the line under the button reads Read · Gate 4 note · 2 lines. The note text is already visible. The beam does not hide it. This is not a skeleton that swaps to content. That swap is `skeleton-to-content-swap`.
-
-## Reference behaviour
-
-1. The sheet shows the title and one sentence. The status is empty.
-2. Scan sets data-scan, restarts the beam, and clears the status.
-3. The beam is 8px, #1f4d3a, opacity .9, and travels top to bottom in 1.1s.
-4. After 1100ms the status reads Read · Gate 4 note · 2 lines.
-5. A second click restarts the beam and clears the status first.
-6. Reduced motion skips the beam animation and writes the status immediately.
-7. The note text never leaves the sheet.
 
 ## Structure
 
@@ -32,20 +24,6 @@ status
 - The button is 44px, fill #1f4d3a, text #fffdf8.
 - The status is 14px, min-height 22px, aria-live polite.
 - The wrap is centered.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c; --line:#e4dfd4; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Title | IBM Plex Sans | 24px | 600 |
-| Body | IBM Plex Sans | 16px | 400 |
-| Status | IBM Plex Sans | 14px | 400 |
 
 ## Motion
 
@@ -90,18 +68,6 @@ status
 - [ ] The status is Read · Gate 4 note · 2 lines.
 - [ ] The beam is 8px and #1f4d3a.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Reset the attribute so the animation can restart.
-
-```js
-sheet.dataset.scan = "false";
-void sheet.offsetWidth;
-sheet.dataset.scan = "true";
-```
-
-The timeout matches the 1.1s travel.
 
 ## Measurements to keep
 
@@ -170,6 +136,46 @@ The timeout matches the 1.1s travel.
 - While rebuilding, remember: Do not leave the status up through the next scan.
 - While rebuilding, remember: Do not loop the beam.
 - While rebuilding, remember: Do not use a camera.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The sheet shows the title and one sentence. The status is empty.
+2. Scan sets data-scan, restarts the beam, and clears the status.
+3. The beam is 8px, #1f4d3a, opacity .9, and travels top to bottom in 1.1s.
+4. After 1100ms the status reads Read · Gate 4 note · 2 lines.
+5. A second click restarts the beam and clears the status first.
+6. Reduced motion skips the beam animation and writes the status immediately.
+7. The note text never leaves the sheet.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c; --line:#e4dfd4; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Title | IBM Plex Sans | 24px | 600 |
+| Body | IBM Plex Sans | 16px | 400 |
+| Status | IBM Plex Sans | 14px | 400 |
+
+## Implementation notes
+
+Reset the attribute so the animation can restart.
+
+```js
+sheet.dataset.scan = "false";
+void sheet.offsetWidth;
+sheet.dataset.scan = "true";
+```
+
+The timeout matches the 1.1s travel.
 
 ---
 

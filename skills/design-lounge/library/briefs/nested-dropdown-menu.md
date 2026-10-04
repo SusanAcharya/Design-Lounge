@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The menubar of a design-tool ("Ferro") over a dotted canvas: File, Edit, Arrange, Help. Menus open on click, 236px wide, 32px items with a 14px check/radio gutter, a label, and a right-aligned shortcut column in the system mono. The Edit menu has three levels: Paste special ▸ Paste properties ▸ Fill only. Submenus open on hover after 120ms; if the pointer is heading diagonally toward an open submenu, other items wait 300ms before stealing it (a safe triangle between the previous pointer position and the submenu's left edge). Check items (Show rulers, Snap to grid, Pixel grid), a radio group (Zoom 50/100/200 %), disabled items and separators are all present. Keyboard does everything: arrows, Home/End, Right/Left for submenus, Esc per level, Enter/Space, Tab to close, and typeahead. Cool graphite, one sky-blue highlight.
-
-## Reference behaviour
-
-1. Initial state: the **Edit** menu is open beneath its menubar button (button highlighted `--panel-2`), showing 20 rows: Undo move ⌘Z · Redo (disabled) ⇧⌘Z · — · Cut · Copy · Paste · Paste special ▸ · Duplicate · Delete ⌫ · — · Select all ⌘A · Select same ▸ · — · VIEW heading · ✓ Show rulers ⇧R · ✓ Snap to grid · Pixel grid ⌘' · — · ZOOM heading · 50 % · ● 100 % ⌘0 · 200 % · — · Preferences… ⌘,. The status line top-right reads "Last action: —".
-2. Hover an item: it fills `--accent` with `--accent-ink` text; the shortcut goes 80% opaque dark. Focus follows hover.
-3. Hover "Paste special": after 120ms its submenu opens to the right (`left: calc(100% − 4px); top: −6px`) with a 120ms pop (opacity 0 → 1, `scale(.98) translateY(−2px)` → none). The parent item stays highlighted while the submenu is open.
-4. Move the pointer diagonally from "Paste special" down-right toward the submenu, crossing "Duplicate": Duplicate does **not** take the highlight for 300ms because the pointer is inside the triangle (previous pointer position, submenu top-left, submenu bottom-left). Moving straight down onto Duplicate (outside the triangle) switches immediately and closes the submenu.
-5. Hover "Paste properties" inside the submenu: a third-level menu opens the same way. Hovering another item in the second level closes the third level.
-6. Click "Show rulers": its check toggles (`aria-checked`), the status line reads "Edit › Show rulers (off)", and the menu **stays open** (check/radio items don't dismiss). Click "200 %": the radio moves, status "Edit › 200 % (on)", menu stays open.
-7. Click "Copy": status "Edit › Copy"; the menu closes and focus returns to the Edit button. Click "Fill only" (third level): status "Edit › Paste special › Paste properties › Fill only" and everything closes.
-8. With a menu open, hovering another menubar button (File, Arrange, Help) switches to that menu without a click. Clicking the open menu's button closes it. Clicking anywhere outside the bar closes.
-9. Keyboard, on a menubar button: ↓ / Enter / Space opens the menu and focuses its first item; → / ← move between buttons (and switch open menus if one is open).
-10. Keyboard, in a menu: ↓ ↑ move with wrap; Home / End; → on an item with a submenu opens it and focuses its first item (→ on a plain item in a top-level menu switches to the next menubar menu); ← closes the current submenu and refocuses its parent item (← in a top-level menu switches to the previous menubar menu); Esc closes one level (submenu → parent item; top-level → menubar button); Enter / Space activate; Tab closes everything and continues; typing letters jumps to the next item whose label starts with the buffered prefix (700ms buffer).
-11. Disabled items (Redo, Print) don't highlight on hover and don't activate, but they are still focusable via keyboard so their shortcut can be read.
 
 ## Structure
 
@@ -54,6 +42,80 @@ The menubar of a design-tool ("Ferro") over a dotted canvas: File, Edit, Arrange
   - Submenu: `<div class="sub">` (`position:relative`) wrapping the trigger `.it[aria-haspopup="menu"][aria-expanded]` and its own `.menu` (absolute `left: calc(100% − 4px); top: −6px`). Nest `.sub` again for a third level.
 - `.canvas` — flex 1, `--canvas` with a `radial-gradient` 1px dot every 20px; an inline SVG of four rounded frames (one with a dashed accent selection) and small labels. `aria-hidden`.
 - `<p class="status" aria-live="polite">` — absolute top-right.
+
+## Motion
+
+| Element         | Trigger            | Property           | From → To                                  | Duration | Easing       | Notes |
+|-----------------|--------------------|--------------------|--------------------------------------------|---------:|--------------|-------|
+| `.menu`         | open (any level)   | opacity, transform | 0, `scale(.98) translateY(-2px)` → 1, none | 120ms    | `--ease-out` | keyframes `pop`; `transform-origin: top left` |
+| `.menu`         | close              | display            | block → none                               | 0        | —            | no exit animation — menus should vanish on activation |
+| submenu         | hover parent       | open               | after 120ms                                | —        | —            | cancelled if the pointer leaves before |
+| other items     | hover while sub open | highlight        | after 300ms if inside the safe triangle, else 0 | —   | —            | re-evaluated on each `mouseover` |
+| item highlight  | hover / focus      | background, color  | instant                                    | 0        | —            | never transition menu highlights |
+
+Reduced motion: the pop keyframe runs at 1ms. Delays are interaction logic, not motion, and stay.
+
+## States
+
+- **Item default:** `--ink` on transparent. **Highlighted** (`:hover`, `:focus-visible`, or parent of an open submenu `.sub.open > .it`): `--accent` background, `--accent-ink` text, shortcut `--accent-ink` at 80% opacity, 5px radius.
+- **Checkbox item:** `role="menuitemcheckbox"`, `aria-checked`; the `.chk` gutter shows a check SVG only when checked (`visibility`), so labels stay aligned.
+- **Radio item:** `role="menuitemradio"`, `data-group="zoom"`; a 6px `currentColor` dot when checked.
+- **Submenu trigger:** `aria-haspopup="menu"`, `aria-expanded` mirrors open state; chevron 14px on the right instead of a shortcut.
+- **Disabled:** `aria-disabled="true"`, text `--ink-3`, no hover fill, activation ignored.
+- **Menubar button open:** `--panel-2` background, `--ink` text, `aria-expanded="true"`.
+- **Menubar button focus-visible:** 2px accent box-shadow ring.
+- **Separator:** 1px `--line`, `5px 4px` margins. **Heading:** non-interactive, skipped by keyboard navigation.
+
+## Accessibility
+
+- Roles: `menubar` › `menuitem` buttons with `aria-haspopup="menu"` + `aria-expanded` › `menu` (with `aria-label`) › `menuitem` / `menuitemcheckbox` / `menuitemradio` / `separator`. Submenu triggers are `menuitem` + `aria-haspopup="menu"` + `aria-expanded`, and their `menu` is the next sibling.
+- Keyboard map is in Reference behaviour 9–10. Handle keys on each `.menu` and `stopPropagation` so a nested menu's keys never reach the parent handler.
+- Hover moves focus to the item (`it.focus()`), so keyboard and pointer share one notion of "current item".
+- Activation of a plain `menuitem` closes all menus and returns focus to the menubar button; check/radio items keep the menu open and update `aria-checked`.
+- Status line is `aria-live="polite"` and reports the full path ("Edit › Paste special › Paste properties › Fill only") plus "(on)/(off)" for toggles.
+- Disabled items remain focusable (`aria-disabled`, not `disabled`) so screen readers can discover them.
+- Contrast: `--ink` on `--panel` 12:1; `--accent-ink` on `--accent` 8.9:1; `--ink-3` on `--panel` 3.6:1 (shortcuts and headings — non-essential); disabled items intentionally low.
+- Hit targets: items 32px × full width; menubar buttons 28px (bar is 44px — extend the hit area to the bar height if you need it).
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- 1024–1279: unchanged.
+- 768–1023: submenus flip to the left (`right: calc(100% − 4px)`) when `rect.right + 236 > viewport width`; otherwise identical.
+- < 640: the menubar collapses to a single "Menu" button; each top-level menu becomes a full-height sheet from the left (`position:fixed; inset:0 auto 0 0; width:280px`); submenus replace the sheet's content with a "‹ Back" row instead of opening beside it; hover logic disabled (tap only).
+
+## Acceptance checklist
+
+- [ ] Menus are 236px min-width, 8px radius, 6px padding, with a 1px `#363c46` ring and `0 12px 32px -8px rgba(0,0,0,.6)` shadow; items are 32px with 5px radius.
+- [ ] The Edit menu is open on first paint with the 20 rows listed, ✓ on Show rulers and Snap to grid, ● on 100 %.
+- [ ] Hovering a submenu trigger opens its submenu after 120ms at `left: calc(100% − 4px); top: −6px` with a 120ms pop.
+- [ ] Moving diagonally toward an open submenu across another item does not switch highlight for 300ms; moving outside the triangle switches at once.
+- [ ] Three levels open and close correctly; opening a sibling closes any deeper level.
+- [ ] Check items toggle `aria-checked` and keep the menu open; radio items are exclusive within `data-group` and keep the menu open; plain items close everything and refocus the menubar button.
+- [ ] ↓ ↑ wrap; Home/End; → opens a submenu (or switches menubar menu); ← closes a submenu (or switches menubar menu); Esc closes one level; Tab closes all.
+- [ ] Typing "pa" focuses "Paste", typing "pas" again within 700ms keeps the prefix and stays on "Paste"/"Paste special" as appropriate; after 700ms the buffer resets.
+- [ ] Hovering another menubar button while a menu is open switches menus without a click; clicking outside closes.
+- [ ] Disabled items (Redo, Print) do not highlight or activate but are focusable.
+- [ ] The status line announces the full path of the last activated item.
+- [ ] Highlight colours never transition; menus have no exit animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: the **Edit** menu is open beneath its menubar button (button highlighted `--panel-2`), showing 20 rows: Undo move ⌘Z · Redo (disabled) ⇧⌘Z · — · Cut · Copy · Paste · Paste special ▸ · Duplicate · Delete ⌫ · — · Select all ⌘A · Select same ▸ · — · VIEW heading · ✓ Show rulers ⇧R · ✓ Snap to grid · Pixel grid ⌘' · — · ZOOM heading · 50 % · ● 100 % ⌘0 · 200 % · — · Preferences… ⌘,. The status line top-right reads "Last action: —".
+2. Hover an item: it fills `--accent` with `--accent-ink` text; the shortcut goes 80% opaque dark. Focus follows hover.
+3. Hover "Paste special": after 120ms its submenu opens to the right (`left: calc(100% − 4px); top: −6px`) with a 120ms pop (opacity 0 → 1, `scale(.98) translateY(−2px)` → none). The parent item stays highlighted while the submenu is open.
+4. Move the pointer diagonally from "Paste special" down-right toward the submenu, crossing "Duplicate": Duplicate does **not** take the highlight for 300ms because the pointer is inside the triangle (previous pointer position, submenu top-left, submenu bottom-left). Moving straight down onto Duplicate (outside the triangle) switches immediately and closes the submenu.
+5. Hover "Paste properties" inside the submenu: a third-level menu opens the same way. Hovering another item in the second level closes the third level.
+6. Click "Show rulers": its check toggles (`aria-checked`), the status line reads "Edit › Show rulers (off)", and the menu **stays open** (check/radio items don't dismiss). Click "200 %": the radio moves, status "Edit › 200 % (on)", menu stays open.
+7. Click "Copy": status "Edit › Copy"; the menu closes and focus returns to the Edit button. Click "Fill only" (third level): status "Edit › Paste special › Paste properties › Fill only" and everything closes.
+8. With a menu open, hovering another menubar button (File, Arrange, Help) switches to that menu without a click. Clicking the open menu's button closes it. Clicking anywhere outside the bar closes.
+9. Keyboard, on a menubar button: ↓ / Enter / Space opens the menu and focuses its first item; → / ← move between buttons (and switch open menus if one is open).
+10. Keyboard, in a menu: ↓ ↑ move with wrap; Home / End; → on an item with a submenu opens it and focuses its first item (→ on a plain item in a top-level menu switches to the next menubar menu); ← closes the current submenu and refocuses its parent item (← in a top-level menu switches to the previous menubar menu); Esc closes one level (submenu → parent item; top-level → menubar button); Enter / Space activate; Tab closes everything and continues; typing letters jumps to the next item whose label starts with the buffered prefix (700ms buffer).
+11. Disabled items (Redo, Print) don't highlight on hover and don't activate, but they are still focusable via keyboard so their shortcut can be read.
 
 ## Tokens
 
@@ -112,62 +174,6 @@ The menubar of a design-tool ("Ferro") over a dotted canvas: File, Edit, Arrange
 | Group heading   | Archivo        | 10px | 500    | 1.3         | +0.12em  | UPPERCASE `--ink-3`, padding `6px 8px 3px` |
 | Status          | Archivo        | 12px | 400    | 1.4         | 0        | `--ink-3`; value `--ink-2` 500 |
 | Canvas labels   | Archivo (SVG)  | 12px | 400    | —           | 0        | `--ink-3` |
-
-## Motion
-
-| Element         | Trigger            | Property           | From → To                                  | Duration | Easing       | Notes |
-|-----------------|--------------------|--------------------|--------------------------------------------|---------:|--------------|-------|
-| `.menu`         | open (any level)   | opacity, transform | 0, `scale(.98) translateY(-2px)` → 1, none | 120ms    | `--ease-out` | keyframes `pop`; `transform-origin: top left` |
-| `.menu`         | close              | display            | block → none                               | 0        | —            | no exit animation — menus should vanish on activation |
-| submenu         | hover parent       | open               | after 120ms                                | —        | —            | cancelled if the pointer leaves before |
-| other items     | hover while sub open | highlight        | after 300ms if inside the safe triangle, else 0 | —   | —            | re-evaluated on each `mouseover` |
-| item highlight  | hover / focus      | background, color  | instant                                    | 0        | —            | never transition menu highlights |
-
-Reduced motion: the pop keyframe runs at 1ms. Delays are interaction logic, not motion, and stay.
-
-## States
-
-- **Item default:** `--ink` on transparent. **Highlighted** (`:hover`, `:focus-visible`, or parent of an open submenu `.sub.open > .it`): `--accent` background, `--accent-ink` text, shortcut `--accent-ink` at 80% opacity, 5px radius.
-- **Checkbox item:** `role="menuitemcheckbox"`, `aria-checked`; the `.chk` gutter shows a check SVG only when checked (`visibility`), so labels stay aligned.
-- **Radio item:** `role="menuitemradio"`, `data-group="zoom"`; a 6px `currentColor` dot when checked.
-- **Submenu trigger:** `aria-haspopup="menu"`, `aria-expanded` mirrors open state; chevron 14px on the right instead of a shortcut.
-- **Disabled:** `aria-disabled="true"`, text `--ink-3`, no hover fill, activation ignored.
-- **Menubar button open:** `--panel-2` background, `--ink` text, `aria-expanded="true"`.
-- **Menubar button focus-visible:** 2px accent box-shadow ring.
-- **Separator:** 1px `--line`, `5px 4px` margins. **Heading:** non-interactive, skipped by keyboard navigation.
-
-## Accessibility
-
-- Roles: `menubar` › `menuitem` buttons with `aria-haspopup="menu"` + `aria-expanded` › `menu` (with `aria-label`) › `menuitem` / `menuitemcheckbox` / `menuitemradio` / `separator`. Submenu triggers are `menuitem` + `aria-haspopup="menu"` + `aria-expanded`, and their `menu` is the next sibling.
-- Keyboard map is in Reference behaviour 9–10. Handle keys on each `.menu` and `stopPropagation` so a nested menu's keys never reach the parent handler.
-- Hover moves focus to the item (`it.focus()`), so keyboard and pointer share one notion of "current item".
-- Activation of a plain `menuitem` closes all menus and returns focus to the menubar button; check/radio items keep the menu open and update `aria-checked`.
-- Status line is `aria-live="polite"` and reports the full path ("Edit › Paste special › Paste properties › Fill only") plus "(on)/(off)" for toggles.
-- Disabled items remain focusable (`aria-disabled`, not `disabled`) so screen readers can discover them.
-- Contrast: `--ink` on `--panel` 12:1; `--accent-ink` on `--accent` 8.9:1; `--ink-3` on `--panel` 3.6:1 (shortcuts and headings — non-essential); disabled items intentionally low.
-- Hit targets: items 32px × full width; menubar buttons 28px (bar is 44px — extend the hit area to the bar height if you need it).
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- 1024–1279: unchanged.
-- 768–1023: submenus flip to the left (`right: calc(100% − 4px)`) when `rect.right + 236 > viewport width`; otherwise identical.
-- < 640: the menubar collapses to a single "Menu" button; each top-level menu becomes a full-height sheet from the left (`position:fixed; inset:0 auto 0 0; width:280px`); submenus replace the sheet's content with a "‹ Back" row instead of opening beside it; hover logic disabled (tap only).
-
-## Acceptance checklist
-
-- [ ] Menus are 236px min-width, 8px radius, 6px padding, with a 1px `#363c46` ring and `0 12px 32px -8px rgba(0,0,0,.6)` shadow; items are 32px with 5px radius.
-- [ ] The Edit menu is open on first paint with the 20 rows listed, ✓ on Show rulers and Snap to grid, ● on 100 %.
-- [ ] Hovering a submenu trigger opens its submenu after 120ms at `left: calc(100% − 4px); top: −6px` with a 120ms pop.
-- [ ] Moving diagonally toward an open submenu across another item does not switch highlight for 300ms; moving outside the triangle switches at once.
-- [ ] Three levels open and close correctly; opening a sibling closes any deeper level.
-- [ ] Check items toggle `aria-checked` and keep the menu open; radio items are exclusive within `data-group` and keep the menu open; plain items close everything and refocus the menubar button.
-- [ ] ↓ ↑ wrap; Home/End; → opens a submenu (or switches menubar menu); ← closes a submenu (or switches menubar menu); Esc closes one level; Tab closes all.
-- [ ] Typing "pa" focuses "Paste", typing "pas" again within 700ms keeps the prefix and stays on "Paste"/"Paste special" as appropriate; after 700ms the buffer resets.
-- [ ] Hovering another menubar button while a menu is open switches menus without a click; clicking outside closes.
-- [ ] Disabled items (Redo, Print) do not highlight or activate but are focusable.
-- [ ] The status line announces the full path of the last activated item.
-- [ ] Highlight colours never transition; menus have no exit animation.
 
 ## Implementation notes
 

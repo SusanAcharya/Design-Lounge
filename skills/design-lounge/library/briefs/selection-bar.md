@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A table of six yard loads. Two start checked, so the bar is already on screen. The bar reads the count and offers Clear, Export, and Archive. Archive hides the checked rows. Clear unchecks. Export writes a count and leaves the checks. This is not the dense table. That table is `dense-data-table`. This is the bar that appears when a table has a selection. Zero selected hides the bar.
-
-## Reference behaviour
-
-1. Loads 18 and 19 start checked. The bar says 2 selected.
-2. Checking or unchecking updates the count. At zero the bar hides.
-3. Clear unchecks every box and clears the status line.
-4. Export writes "Exported N loads on this page" and keeps the checks.
-5. Archive hides the checked rows, unchecks them, and writes "Archived N loads".
-6. The bar is fixed to the bottom centre.
-7. Hidden rows stay out of the count.
 
 ## Structure
 
@@ -32,23 +24,6 @@ fixed bar 420px min
 - Checkboxes are 18px with accent #1f4d3a.
 - The bar is position fixed, min-width 420px, height 52px.
 - Archive is the solid button. Clear and Export are outline.
-
-## Tokens
-
-```css
-:root {
-  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
-  --line:#e4dfd4; --primary:#1f4d3a; --primary-ink:#fffdf8;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Title | IBM Plex Sans | 28px | 600 | 1.1 | 0 |
-| Cell | IBM Plex Sans | 16px | 400 | 1.45 | 0 |
-| Bar | IBM Plex Sans | 14px | 400 | 1 | 0 |
 
 ## Motion
 
@@ -96,17 +71,6 @@ fixed bar 420px min
 - [ ] Export says "on this page".
 - [ ] Type is IBM Plex Sans. Radius is 2px.
 
-## Implementation notes
-
-Count checked boxes that are still in the document. A hidden row should be unchecked before it is hidden so it cannot count.
-
-```js
-const n = boxes.filter((b) => b.checked).length;
-bar.hidden = n === 0;
-```
-
-Do not select every row with a header checkbox in this piece. Add one only if the product has it, and it must set every visible box.
-
 ## Measurements to keep
 
 - Sheet 640px. Bar min-width 420px, height 52px, bottom 24px.
@@ -151,6 +115,48 @@ Do not select every row with a header checkbox in this piece. Add one only if th
 - Archive does not ask a second time. The selection was the confirmation.
 - Export does not hide rows.
 - The type is IBM Plex Sans.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Loads 18 and 19 start checked. The bar says 2 selected.
+2. Checking or unchecking updates the count. At zero the bar hides.
+3. Clear unchecks every box and clears the status line.
+4. Export writes "Exported N loads on this page" and keeps the checks.
+5. Archive hides the checked rows, unchecks them, and writes "Archived N loads".
+6. The bar is fixed to the bottom centre.
+7. Hidden rows stay out of the count.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
+  --line:#e4dfd4; --primary:#1f4d3a; --primary-ink:#fffdf8;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Title | IBM Plex Sans | 28px | 600 | 1.1 | 0 |
+| Cell | IBM Plex Sans | 16px | 400 | 1.45 | 0 |
+| Bar | IBM Plex Sans | 14px | 400 | 1 | 0 |
+
+## Implementation notes
+
+Count checked boxes that are still in the document. A hidden row should be unchecked before it is hidden so it cannot count.
+
+```js
+const n = boxes.filter((b) => b.checked).length;
+bar.hidden = n === 0;
+```
+
+Do not select every row with a header checkbox in this piece. Add one only if the product has it, and it must set every visible box.
 
 ---
 

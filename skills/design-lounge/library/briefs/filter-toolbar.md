@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the field and the chips use `--control` and `--radius`. A chip is a pill only when the family's button is already a pill.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The bar above a list, 720px wide, the pass column. A search field, then All, Out, In, and Held. All starts pressed, on `--primary-soft`. The list has four loads: Rice Out, Oil Held, Tea In, Salt Out. The count at the right reads "4 loads". Typing matches the name. A chip shows one kind. When nothing matches, the list hides those rows and the line "No loads match." appears. This is not the search results page. That page is `search-results-filters`. This is the bar you put on a table you already have.
-
-## Reference behaviour
-
-1. All is `aria-pressed="true"`. Four rows show. The count is 4 loads.
-2. Out leaves Rice and Salt. The count is 2 loads. In leaves Tea. Held leaves Oil.
-3. One chip is pressed. Pressing another releases the rest.
-4. The search matches the start of the data name: "ri" leaves Rice. It is case-insensitive. It combines with the chip.
-5. A query and a chip that exclude everything hide every row and show "No loads match." The count is 0 loads.
-6. Clearing the search restores the rows the chip allows.
-7. Focus ring is 2px `--focus`, offset 2px, on the field and the chips.
-8. There is no animation.
 
 ## Structure
 
@@ -37,36 +28,6 @@ No loads match.              hidden until zero
 - Chips are buttons with `aria-pressed`.
 - Rows are `li` elements. Hide a row with the `hidden` attribute.
 - The empty line is a paragraph, hidden while any row shows.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --line-strong: #cfc6b8;
-  --primary-soft: #e7f2ec;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px. A locked family replaces it on the field, the chips, and the list. Do not leave the chips as pills unless that family's button is a pill. Selected is `--primary-soft`, not a solid primary.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Field | sans | 14px | 400 | `--ink` |
-| Chip | sans | 13px | 500 | `--ink` |
-| Count | sans | 13px | 400 | `--ink-2` |
-| Row | sans | 14px | 400 | `--ink` |
-| Empty | sans | 14px | 400 | `--ink` |
-
-The count uses tabular numbers. The placeholder "Find a load" is `--ink-2` if you colour it. The label is the aria-label. Do not add a second visible label in the bar.
 
 ## Motion
 
@@ -118,6 +79,51 @@ None. Rows hide in one frame. Reduced motion has nothing to remove. Do not fade 
 - [ ] Hidden rows use the hidden attribute.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is no animation and no pill unless the family button is a pill.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. All is `aria-pressed="true"`. Four rows show. The count is 4 loads.
+2. Out leaves Rice and Salt. The count is 2 loads. In leaves Tea. Held leaves Oil.
+3. One chip is pressed. Pressing another releases the rest.
+4. The search matches the start of the data name: "ri" leaves Rice. It is case-insensitive. It combines with the chip.
+5. A query and a chip that exclude everything hide every row and show "No loads match." The count is 0 loads.
+6. Clearing the search restores the rows the chip allows.
+7. Focus ring is 2px `--focus`, offset 2px, on the field and the chips.
+8. There is no animation.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --line-strong: #cfc6b8;
+  --primary-soft: #e7f2ec;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px. A locked family replaces it on the field, the chips, and the list. Do not leave the chips as pills unless that family's button is a pill. Selected is `--primary-soft`, not a solid primary.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Field | sans | 14px | 400 | `--ink` |
+| Chip | sans | 13px | 500 | `--ink` |
+| Count | sans | 13px | 400 | `--ink-2` |
+| Row | sans | 14px | 400 | `--ink` |
+| Empty | sans | 14px | 400 | `--ink` |
+
+The count uses tabular numbers. The placeholder "Find a load" is `--ink-2` if you colour it. The label is the aria-label. Do not add a second visible label in the bar.
 
 ## Implementation notes
 

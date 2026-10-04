@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from lamalama.com: the agency hero where a halftone dot screen covers the whole viewport and organic black blobs eat into it, with a heavy caps headline bottom-left, bracketed mono labels, and a footer strip with a live clock. This rebuild is for **Hollowmill**, a fictional Lisbon studio for moving brands. There is no video under the dots. A canvas draws a staggered grid of square dots, and a metaball field of 16 slowly drifting blobs decides each dot's size and colour. Inside a blob there is no dot (black). At the rim, dots are full size and signal orange. Far from blobs, dots are small and cool grey. The pointer is one more blob, so moving it pushes a hole through the screen, and a click drops a seed blob that swells and fades over 2.6s. The detail worth copying is the colour bucketing: dots go into six `Path2D` batches by colour, so a 1280×800 frame is six `fill()` calls, not 12,000.
-
-## Reference behaviour
-
-1. First frame: a blue-black page `#0D1013` covered by a staggered square-dot grid (9px pitch, odd rows offset 4.5px). Organic black shapes sit across the upper two-thirds, each outlined by a ring of orange dots. A vertical scrim darkens the bottom 40% so the headline reads.
-2. Top bar at 24px from the top and 32px from the sides: a pixel "H" mark and "[ STUDIO FOR MOVING BRANDS ]" on a dark panel at left. At right, Work, Studio, Journal on a dark panel, then a mist-filled "START A BRIEF ↗" button.
-3. The hint "( MOVE TO STIR · CLICK TO SEED )" sits at right, 96px from the top.
-4. The hero block is 84px above the bottom. At left: the kicker "[ HOLLOWMILL / EST. 2014 ]" and the 84px caps headline "WE MAKE BRANDS / THAT REFUSE TO / SIT STILL." with an orange full stop. At right, in a 300px column: a 17px paragraph and an outlined "SEE THE REEL ↗" button.
-5. Footer strip, 56px tall, with a hairline top and four columns: "17 RESTLESS MAKERS", "LISBON, PT", "[ ■ 14 : 02 : 37 ]" (a live clock in Europe/Lisbon time with a blinking orange square), and a "HOLD FIELD" toggle.
-6. The field animates at about 30fps. Each blob drifts on sine and cosine paths (±6% of width, ±7% of height) and breathes ±12% in radius.
-7. Pointer move: a pointer blob grows toward 7% of `min(W,H)` with a lerp of 0.12 per frame. Leaving the window shrinks it to 0.
-8. Click or tap on the field: a seed blob appears at the point. Its radius follows `sin(progress × π) × 11% of min(W,H)` over 2600ms, so it swells and closes again. At most six seeds exist at once.
-9. "HOLD FIELD" (`aria-pressed`) freezes the drift. The pointer and clicks still redraw a still frame.
-10. The loop stops when the tab is hidden.
-11. Reduced motion: one still frame. The pointer still carves its hole by redrawing on move. Clicks stamp a seed at full size that stays. No blinking clock square, no transitions.
 
 ## Structure
 
@@ -45,38 +33,6 @@ Studied from lamalama.com: the agency hero where a halftone dot screen covers th
 - `header.top` holds `a.mark` and `nav.links[aria-label=Main]`, including `a.brief`.
 - `main.hero` is a two-column grid (`1fr 300px`, gap 40px, `align-items: end`) with the kicker, `h1`, and `.side` (paragraph and link).
 - `footer.foot` is a four-column grid with the clock span (`aria-label="Local studio time"`) and `button#pause[aria-pressed]`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0D1013;                      /* page, blob interiors */
-  --mist: #DCE3E6;                    /* headline, body, button fill */
-  --mist-2: #8C979C;                  /* mono labels, inactive links */
-  --line: rgba(220,227,230,.18);      /* footer rule, outlined button */
-  --signal: #FF5A1F;                  /* blob rim dots, full stop, focus, clock square */
-  --teal: #2A6F7A;                    /* low-mid dot bucket */
-  --panel: rgba(13,16,19,.72);        /* behind small text over the field */
-  --sans: "Familjen Grotesk", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  --pad: 32px;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  /* field (JS constants) */
-  --dot-step: 9px;  --dot-max: 3.6px;
-  --dot-buckets: #22313A, #2A6F7A, #5E8E92, #A7B9BC, #DCE3E6, #FF5A1F;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Headline | Familjen Grotesk | 84px | 700 | 0.86 | −0.03em | Upper |
-| Side paragraph | Familjen Grotesk | 17px | 400 | 1.4 | 0 | Sentence |
-| Mono labels, nav, footer, buttons | JetBrains Mono | 11px | 400 | 1 | 0.08em | Upper |
-
-Bracket the labels with literal square brackets and spaces: "[ LABEL ]". Wrap hints in round brackets.
 
 ## Motion
 
@@ -141,6 +97,56 @@ Clamp the frame delta to 64ms so a background tab does not jump the seeds when i
 - [ ] Labels are in JetBrains Mono 11px caps: "[ STUDIO FOR MOVING BRANDS ]" and "[ HOLLOWMILL / EST. 2014 ]".
 - [ ] The footer reads "17 RESTLESS MAKERS · LISBON, PT · [ ■ hh : mm : ss ] · HOLD FIELD", with the clock in Europe/Lisbon time.
 - [ ] A seed lasts 2600ms and peaks at 11% of `min(W,H)`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a blue-black page `#0D1013` covered by a staggered square-dot grid (9px pitch, odd rows offset 4.5px). Organic black shapes sit across the upper two-thirds, each outlined by a ring of orange dots. A vertical scrim darkens the bottom 40% so the headline reads.
+2. Top bar at 24px from the top and 32px from the sides: a pixel "H" mark and "[ STUDIO FOR MOVING BRANDS ]" on a dark panel at left. At right, Work, Studio, Journal on a dark panel, then a mist-filled "START A BRIEF ↗" button.
+3. The hint "( MOVE TO STIR · CLICK TO SEED )" sits at right, 96px from the top.
+4. The hero block is 84px above the bottom. At left: the kicker "[ HOLLOWMILL / EST. 2014 ]" and the 84px caps headline "WE MAKE BRANDS / THAT REFUSE TO / SIT STILL." with an orange full stop. At right, in a 300px column: a 17px paragraph and an outlined "SEE THE REEL ↗" button.
+5. Footer strip, 56px tall, with a hairline top and four columns: "17 RESTLESS MAKERS", "LISBON, PT", "[ ■ 14 : 02 : 37 ]" (a live clock in Europe/Lisbon time with a blinking orange square), and a "HOLD FIELD" toggle.
+6. The field animates at about 30fps. Each blob drifts on sine and cosine paths (±6% of width, ±7% of height) and breathes ±12% in radius.
+7. Pointer move: a pointer blob grows toward 7% of `min(W,H)` with a lerp of 0.12 per frame. Leaving the window shrinks it to 0.
+8. Click or tap on the field: a seed blob appears at the point. Its radius follows `sin(progress × π) × 11% of min(W,H)` over 2600ms, so it swells and closes again. At most six seeds exist at once.
+9. "HOLD FIELD" (`aria-pressed`) freezes the drift. The pointer and clicks still redraw a still frame.
+10. The loop stops when the tab is hidden.
+11. Reduced motion: one still frame. The pointer still carves its hole by redrawing on move. Clicks stamp a seed at full size that stays. No blinking clock square, no transitions.
+
+## Tokens
+
+```css
+:root {
+  --bg: #0D1013;                      /* page, blob interiors */
+  --mist: #DCE3E6;                    /* headline, body, button fill */
+  --mist-2: #8C979C;                  /* mono labels, inactive links */
+  --line: rgba(220,227,230,.18);      /* footer rule, outlined button */
+  --signal: #FF5A1F;                  /* blob rim dots, full stop, focus, clock square */
+  --teal: #2A6F7A;                    /* low-mid dot bucket */
+  --panel: rgba(13,16,19,.72);        /* behind small text over the field */
+  --sans: "Familjen Grotesk", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --pad: 32px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  /* field (JS constants) */
+  --dot-step: 9px;  --dot-max: 3.6px;
+  --dot-buckets: #22313A, #2A6F7A, #5E8E92, #A7B9BC, #DCE3E6, #FF5A1F;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Headline | Familjen Grotesk | 84px | 700 | 0.86 | −0.03em | Upper |
+| Side paragraph | Familjen Grotesk | 17px | 400 | 1.4 | 0 | Sentence |
+| Mono labels, nav, footer, buttons | JetBrains Mono | 11px | 400 | 1 | 0.08em | Upper |
+
+Bracket the labels with literal square brackets and spaces: "[ LABEL ]". Wrap hints in round brackets.
 
 ## Implementation notes
 

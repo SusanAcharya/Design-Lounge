@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A complete mobile checkout for a fictional homeware shop ("Tessel") on one scrolling page: a collapsible order summary pinned at the top, a contact + delivery address form whose inputs use the right `type`, `inputmode` and `autocomplete` tokens so browsers autofill it in one tap, three payment-method radio cards, and a fixed Pay button that carries the total. Validation is inline and calm: fields are only marked after you leave them, green hairlines confirm good input, and a submit with errors scrolls to the first one and reports the count in a toast. One family (Public Sans) at four weights; one terracotta accent used for the selected card and the Pay button only.
-
-## Reference behaviour
-
-1. Initial state: header "TESSEL · Secure checkout", order summary **open** showing two items and the totals (£148.00), then Contact, Delivery address and Payment fieldsets. "Debit or credit card" is pre-selected and its card-number fields are visible. The Pay bar sits at `bottom: 80px` with "Pay now" left and "£148.00" right.
-2. Tap the summary row: the body collapses; the chevron rotates 180° over 280ms. The total stays visible in the collapsed row. Tap again to reopen (the body fades in with a 4px rise).
-3. Focus an input: border becomes `--ink` and a 3px `rgba(24,24,27,.10)` ring appears. No label movement.
-4. Leave a required input empty (blur): the field turns invalid — border and 12px message in `--error`, background `--error-soft`, message row fades in over 160ms. Typing in it re-validates on every keystroke; once valid, the error clears and the border turns `--ok` green.
-5. Choose "Device wallet" or "Pay by bank": the selected card gets an accent border + inset ring + `--accent-soft` fill, the radio dot scales in over 160ms, and the card-number fields hide (their `required` flag is removed). Choosing "Debit or credit card" shows them again with a fade.
-6. Tap "Pay now" with errors: every visible required field is validated, a toast at the top reads "3 fields need attention", the first invalid field receives focus and scrolls to the vertical centre.
-7. Tap "Pay now" with everything valid: the button turns `--ink` and reads "Processing" for 1200ms, then turns `--ok` green and reads "Order placed · tap to reset".
-8. Tap the green button: the form resets to the initial state (replay).
 
 ## Structure
 
@@ -72,6 +63,83 @@ A complete mobile checkout for a fictional homeware shop ("Tessel") on one scrol
 - Error messages: "Enter a valid email address", "Required", "Enter your street address", "Enter a UK postcode", "Enter the 16-digit card number", "MM / YY", "3 or 4 digits".
 - Bar: "Pay now" + "£148.00"; note "By paying you agree to Tessel's terms. Returns within 30 days."
 - Button states: "Processing", "Order placed · tap to reset". Toast: "n field(s) need(s) attention".
+
+## Motion
+
+| Element              | Trigger              | Property              | From → To                       | Duration | Easing       | Notes |
+|----------------------|----------------------|-----------------------|---------------------------------|---------:|--------------|-------|
+| summary chevron      | details toggle       | rotate                | 0 → 180°                        | 280ms    | `--ease-out` | |
+| summary `.body`      | open                 | opacity, translateY   | 0, −4px → 1, 0                  | 280ms    | `--ease-out` | `@keyframes fade` |
+| input border/ring    | focus                | border-color, box-shadow | `--line-strong` → `--ink`, ring | 160ms | linear (colour) | |
+| `.msg`               | field becomes invalid | opacity, translateY  | 0, −4px → 1, 0                  | 160ms    | `--ease`     | |
+| radio dot `::after`  | checked              | scale                 | 0 → 1                           | 160ms    | `--ease-out` | |
+| card border/fill     | checked              | border, background    | `--line-strong` → `--accent`, white → `--accent-soft` | 160ms | linear | |
+| `#cardfields`        | scheme = card        | opacity, translateY   | 0, −4px → 1, 0                  | 280ms    | `--ease-out` | display toggles first |
+| pay button           | submit valid         | background            | `--accent` → `--ink` → `--ok`   | 160ms each, 1200ms apart | linear | |
+| pay button           | active               | scale                 | 1 → .985                        | 160ms    | `--ease`     | |
+| toast                | invalid submit       | opacity, translateY   | 0, −12px → 1, 0                 | 280ms    | `--ease-out` | auto-hides after 2600ms |
+
+Reduced motion: all durations 1ms; the 1200ms processing delay stays (it is feedback, not decoration).
+
+## States
+
+- **Input default:** 48px tall, 1px `--line-strong` border, `--surface` background, radius 10px.
+- **Input focus:** border `--ink`, `box-shadow: var(--ring-focus)`, no outline.
+- **Input invalid** (`.f.invalid`, `aria-invalid="true"`): border `--error`, background `--error-soft`, message shown; focus ring becomes `--ring-error`.
+- **Input valid with content** (`.f.valid`): border `--ok`.
+- **Radio card default / checked:** see Motion; checked adds `box-shadow: inset 0 0 0 1px var(--accent)` so the border reads as 2px without layout shift.
+- **Radio card focus-visible:** 2px `--accent` outline, 2px offset, applied to the label via `input:focus-visible + label`.
+- **Pay button:** default `--accent`; hover `--accent-2`; `.busy` → `--ink` and `pointer-events: none`; `.done` → `--ok`.
+- **Summary collapsed:** body removed from flow (native `<details>`), total still in the summary row.
+
+## Accessibility
+
+- Every input has a visible `<label for>`; `placeholder` is never the only label. Fieldsets have `<legend>`s.
+- Input attributes: email → `type=email inputmode=email autocomplete=email`; names → `autocomplete="shipping given-name" / "shipping family-name"`; address → `shipping address-line1`, `shipping address-level2`, `shipping postal-code`, `shipping country`; phone → `type=tel inputmode=tel autocomplete=tel`; card → `cc-number`, `cc-exp`, `cc-csc` with `inputmode=numeric`.
+- `novalidate` on the form so the native bubbles do not fire; validity is still read with `checkValidity()` and mirrored to `aria-invalid`.
+- Error messages are `role="alert"` spans that become visible when the field is invalid; they sit directly after the input in DOM order.
+- Payment radios are real `<input type=radio>` in a `role="radiogroup"`; arrow keys move selection natively.
+- Toast uses `role="status" aria-live="polite"`.
+- The Pay button is `type="submit"` with `form="form"` so Enter in any field submits.
+- Hit targets: inputs 48px, radio cards 56px, Pay 52px, summary row 56px.
+- Contrast: `--ink-2` on white 6.9:1; `--ink-3` 3.9:1 used only for 11–12px meta and placeholders; `--accent-ink` on `--accent` 5.4:1; `--error` on `--error-soft` 6.2:1.
+
+## Responsive rules
+
+- 390 (reference): two-column grid for name, city/postcode and expiry/CVC.
+- 360 wide: same grid; legend 16px; scheme chips shrink to 32×22.
+- ≥ 600: centre a 560px column; the bar keeps a full-width background but its button is capped at 560px and centred; `--safe-bottom: 0`.
+- Landscape (height < 500): the bar's note is hidden so the button plus 12px padding is the whole bar.
+
+## Acceptance checklist
+
+- [ ] Order summary is a native `<details open>`; its chevron rotates 180° over 280ms and the total stays visible when collapsed.
+- [ ] Every input carries the listed `type`, `inputmode` and `autocomplete` values; browser autofill populates the whole address.
+- [ ] Inputs are 48px tall with a 10px radius and show a 3px focus ring without an outline.
+- [ ] Blurring an empty required field marks it invalid (red border, soft red fill, 12px message with icon); typing a valid value clears it and turns the border green.
+- [ ] Selecting a payment card animates its radio dot (scale 0 → 1, 160ms) and fills the card with `#fdeee6` + accent border.
+- [ ] Card-number fields are shown only for the card scheme and lose `required` when hidden.
+- [ ] Submitting with errors shows a toast naming the count, focuses the first invalid field and scrolls it to centre.
+- [ ] Submitting valid data shows "Processing" on a `--ink` button for 1200ms, then "Order placed" on `--ok`.
+- [ ] Tapping the done button resets the form to its initial state.
+- [ ] The Pay bar is fixed at `bottom: 80px`, the main content has enough bottom padding (`80px + 92px`) that the last field can scroll clear of it.
+- [ ] Nothing fixed sits in the top 54px or bottom 80px; the toast starts at 62px.
+- [ ] Keyboard-only: Tab reaches every field, radio and the Pay button; focus is visible everywhere.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header "TESSEL · Secure checkout", order summary **open** showing two items and the totals (£148.00), then Contact, Delivery address and Payment fieldsets. "Debit or credit card" is pre-selected and its card-number fields are visible. The Pay bar sits at `bottom: 80px` with "Pay now" left and "£148.00" right.
+2. Tap the summary row: the body collapses; the chevron rotates 180° over 280ms. The total stays visible in the collapsed row. Tap again to reopen (the body fades in with a 4px rise).
+3. Focus an input: border becomes `--ink` and a 3px `rgba(24,24,27,.10)` ring appears. No label movement.
+4. Leave a required input empty (blur): the field turns invalid — border and 12px message in `--error`, background `--error-soft`, message row fades in over 160ms. Typing in it re-validates on every keystroke; once valid, the error clears and the border turns `--ok` green.
+5. Choose "Device wallet" or "Pay by bank": the selected card gets an accent border + inset ring + `--accent-soft` fill, the radio dot scales in over 160ms, and the card-number fields hide (their `required` flag is removed). Choosing "Debit or credit card" shows them again with a fade.
+6. Tap "Pay now" with errors: every visible required field is validated, a toast at the top reads "3 fields need attention", the first invalid field receives focus and scrolls to the vertical centre.
+7. Tap "Pay now" with everything valid: the button turns `--ink` and reads "Processing" for 1200ms, then turns `--ok` green and reads "Order placed · tap to reset".
+8. Tap the green button: the form resets to the initial state (replay).
 
 ## Tokens
 
@@ -135,68 +203,6 @@ A complete mobile checkout for a fictional homeware shop ("Tessel") on one scrol
 | Pay button        | Public Sans | 16px | 600    | 1           | 0        | sentence  |
 
 All prices use `font-variant-numeric: tabular-nums`.
-
-## Motion
-
-| Element              | Trigger              | Property              | From → To                       | Duration | Easing       | Notes |
-|----------------------|----------------------|-----------------------|---------------------------------|---------:|--------------|-------|
-| summary chevron      | details toggle       | rotate                | 0 → 180°                        | 280ms    | `--ease-out` | |
-| summary `.body`      | open                 | opacity, translateY   | 0, −4px → 1, 0                  | 280ms    | `--ease-out` | `@keyframes fade` |
-| input border/ring    | focus                | border-color, box-shadow | `--line-strong` → `--ink`, ring | 160ms | linear (colour) | |
-| `.msg`               | field becomes invalid | opacity, translateY  | 0, −4px → 1, 0                  | 160ms    | `--ease`     | |
-| radio dot `::after`  | checked              | scale                 | 0 → 1                           | 160ms    | `--ease-out` | |
-| card border/fill     | checked              | border, background    | `--line-strong` → `--accent`, white → `--accent-soft` | 160ms | linear | |
-| `#cardfields`        | scheme = card        | opacity, translateY   | 0, −4px → 1, 0                  | 280ms    | `--ease-out` | display toggles first |
-| pay button           | submit valid         | background            | `--accent` → `--ink` → `--ok`   | 160ms each, 1200ms apart | linear | |
-| pay button           | active               | scale                 | 1 → .985                        | 160ms    | `--ease`     | |
-| toast                | invalid submit       | opacity, translateY   | 0, −12px → 1, 0                 | 280ms    | `--ease-out` | auto-hides after 2600ms |
-
-Reduced motion: all durations 1ms; the 1200ms processing delay stays (it is feedback, not decoration).
-
-## States
-
-- **Input default:** 48px tall, 1px `--line-strong` border, `--surface` background, radius 10px.
-- **Input focus:** border `--ink`, `box-shadow: var(--ring-focus)`, no outline.
-- **Input invalid** (`.f.invalid`, `aria-invalid="true"`): border `--error`, background `--error-soft`, message shown; focus ring becomes `--ring-error`.
-- **Input valid with content** (`.f.valid`): border `--ok`.
-- **Radio card default / checked:** see Motion; checked adds `box-shadow: inset 0 0 0 1px var(--accent)` so the border reads as 2px without layout shift.
-- **Radio card focus-visible:** 2px `--accent` outline, 2px offset, applied to the label via `input:focus-visible + label`.
-- **Pay button:** default `--accent`; hover `--accent-2`; `.busy` → `--ink` and `pointer-events: none`; `.done` → `--ok`.
-- **Summary collapsed:** body removed from flow (native `<details>`), total still in the summary row.
-
-## Accessibility
-
-- Every input has a visible `<label for>`; `placeholder` is never the only label. Fieldsets have `<legend>`s.
-- Input attributes: email → `type=email inputmode=email autocomplete=email`; names → `autocomplete="shipping given-name" / "shipping family-name"`; address → `shipping address-line1`, `shipping address-level2`, `shipping postal-code`, `shipping country`; phone → `type=tel inputmode=tel autocomplete=tel`; card → `cc-number`, `cc-exp`, `cc-csc` with `inputmode=numeric`.
-- `novalidate` on the form so the native bubbles do not fire; validity is still read with `checkValidity()` and mirrored to `aria-invalid`.
-- Error messages are `role="alert"` spans that become visible when the field is invalid; they sit directly after the input in DOM order.
-- Payment radios are real `<input type=radio>` in a `role="radiogroup"`; arrow keys move selection natively.
-- Toast uses `role="status" aria-live="polite"`.
-- The Pay button is `type="submit"` with `form="form"` so Enter in any field submits.
-- Hit targets: inputs 48px, radio cards 56px, Pay 52px, summary row 56px.
-- Contrast: `--ink-2` on white 6.9:1; `--ink-3` 3.9:1 used only for 11–12px meta and placeholders; `--accent-ink` on `--accent` 5.4:1; `--error` on `--error-soft` 6.2:1.
-
-## Responsive rules
-
-- 390 (reference): two-column grid for name, city/postcode and expiry/CVC.
-- 360 wide: same grid; legend 16px; scheme chips shrink to 32×22.
-- ≥ 600: centre a 560px column; the bar keeps a full-width background but its button is capped at 560px and centred; `--safe-bottom: 0`.
-- Landscape (height < 500): the bar's note is hidden so the button plus 12px padding is the whole bar.
-
-## Acceptance checklist
-
-- [ ] Order summary is a native `<details open>`; its chevron rotates 180° over 280ms and the total stays visible when collapsed.
-- [ ] Every input carries the listed `type`, `inputmode` and `autocomplete` values; browser autofill populates the whole address.
-- [ ] Inputs are 48px tall with a 10px radius and show a 3px focus ring without an outline.
-- [ ] Blurring an empty required field marks it invalid (red border, soft red fill, 12px message with icon); typing a valid value clears it and turns the border green.
-- [ ] Selecting a payment card animates its radio dot (scale 0 → 1, 160ms) and fills the card with `#fdeee6` + accent border.
-- [ ] Card-number fields are shown only for the card scheme and lose `required` when hidden.
-- [ ] Submitting with errors shows a toast naming the count, focuses the first invalid field and scrolls it to centre.
-- [ ] Submitting valid data shows "Processing" on a `--ink` button for 1200ms, then "Order placed" on `--ok`.
-- [ ] Tapping the done button resets the form to its initial state.
-- [ ] The Pay bar is fixed at `bottom: 80px`, the main content has enough bottom padding (`80px + 92px`) that the last field can scroll clear of it.
-- [ ] Nothing fixed sits in the top 54px or bottom 80px; the toast starts at 62px.
-- [ ] Keyboard-only: Tab reaches every field, radio and the Pay button; focus is visible everywhere.
 
 ## Implementation notes
 

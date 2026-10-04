@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-frame mesh-gradient background for a hero, shown here behind the landing page of "Polarmark", a small-group aurora trip operator. Four large radial-gradient blobs (teal, green, rose, deep sea blue) are squashed into wide ellipses, rotated a few degrees, and drift on slow Lissajous paths in the upper-right of the frame, so they read as curtains of light rather than "glowing orbs". A fixed SVG fractal-noise layer sits on top in `overlay` blend, a horizontal scrim keeps the left column dark for the copy, and a flat mountain-ridge silhouette anchors the bottom edge. The detail worth copying: no CSS `filter: blur()` anywhere. Softness comes from the gradient itself, and the only per-frame work is four `transform` writes, so the whole thing stays on the compositor. A floating panel switches between the Night preset and a warm Dawn preset and tunes drift speed and intensity.
-
-## Reference behaviour
-
-1. Initial state (Night): page background `#060A12`; teal and green light fill the top-right quadrant, a rose patch sits right of centre; the left 45% of the frame is dark behind the copy.
-2. The blobs drift continuously. Each blob's centre follows `x = cx + ax·sin(t·fx + p)`, `y = cy + ay·cos(t·fy + 0.7p)` in viewport fractions; its rotation wobbles ±8° and its horizontal scale breathes ±0.25. One visible "shape change" takes 20–40s at 1× drift.
-3. Grain (SVG `feTurbulence`, 220px tile) is static, at 16% opacity in Night and 24% in Dawn.
-4. The panel (bottom-right, 248px wide) contains: title "Sky", a 32px round pause button, a Night/Dawn segmented control, a Drift slider (0–3×, step 0.1, default 1.0×) and an Intensity slider (20–100, step 5, default 80).
-5. Choosing Dawn swaps every colour token: background `#F4ECE4`, blobs peach/honey/rose/sage, blend mode `multiply` instead of `screen`, ink goes dark, the button becomes ink-on-cream, the ridge goes `#E6D6C8`. Colour properties cross-fade over 700ms.
-6. Drift changes the speed multiplier immediately without a jump (time accumulates, it is not recomputed from the clock). Drift 0 freezes the field.
-7. Intensity sets blob opacity (`value / 100`) live; readouts update as the thumb moves.
-8. Pause toggles the loop. Icon swaps between two bars and a play triangle; `aria-pressed` and `aria-label` ("Pause background" / "Play background") follow.
-9. When the tab is hidden the `requestAnimationFrame` loop is cancelled; when visible it resumes from the same phase.
-10. Under `prefers-reduced-motion: reduce` the blobs are placed once at t = 8 and the loop never starts; the button starts in the "Play background" state. Presets and intensity still work.
 
 ## Structure
 
@@ -44,6 +33,86 @@ side padding 64px; panel 24px from right and bottom
 - `.sky` (`position: fixed; inset: 0; overflow: hidden; pointer-events: none; aria-hidden="true"`): four `.blob` divs, `.grain`, `.scrim`, and an inline `<svg class="ridge">` with one path.
 - `.page`: `<nav aria-label="Main">` → `<main class="hero">` with `p.eyebrow`, `h1` (one `<em>`), `p.sub`, `a.btn`.
 - `<form class="ctl" aria-label="Background controls">`: header row, `<fieldset>` with visually hidden `<legend>Preset</legend>` and two radios, two `label + input[type=range] + output` rows.
+
+## Motion
+
+| Element | Trigger | Property | From → To | Duration | Easing | Reduced motion |
+|---|---|---|---|---|---|---|
+| Blobs | rAF loop | `transform` translate/rotate/scale | Lissajous paths above | continuous, `t += dt·speed` | sine | one frame at t = 8, no loop |
+| Preset swap | radio change | background, color, fill, blob colours | Night ↔ Dawn tokens | 700ms | `--ease` | 1ms |
+| Intensity | slider input | blob `opacity` | 0.2 → 1.0 | 700ms transition | `--ease` | 1ms |
+| Button | hover / active | `transform` | 0 → translateY(−2px) / scale(.98) | 180ms | `--ease` | 1ms |
+| Segment | radio change | background, color | — | 180ms | `--ease` | 1ms |
+
+Loop rules: cap at 60fps (skip frames that arrive < 15.7ms after the last); clamp `dt` to 50ms so a long frame never jumps; cancel on `visibilitychange` hidden.
+
+## States
+
+- **Playing (default):** pause bars, `aria-pressed="false"`, label "Pause background".
+- **Paused:** play triangle, `aria-pressed="true"`, label "Play background"; blobs hold position.
+- **Drift 0:** loop runs but nothing moves; acceptable, pause is the real stop.
+- **Night / Dawn selected:** active segment is ink-filled with background-coloured text.
+- **Link hover:** `--ink-2` → `--ink`, 180ms.
+- **Button hover:** lifts 2px; active presses to scale .98.
+- **Focus-visible:** `outline: 2px solid var(--ink); outline-offset: 3px` on links, buttons, range inputs, and the segment's span when its radio has focus.
+- **Hidden tab:** loop cancelled.
+
+## Accessibility
+
+- The whole `.sky` is decorative: `aria-hidden="true"`, `pointer-events: none`.
+- The panel is a `<form>` with `aria-label="Background controls"`; the preset is a radio group inside a `<fieldset>` with a visually hidden legend "Preset". Arrow keys move between Night and Dawn natively.
+- Sliders are native `input[type=range]` with `<label for>`; their `<output for>` readouts show "1.0×" and "80".
+- The pause button satisfies WCAG 2.2.2 for continuous motion.
+- Tab order: wordmark → 4 nav links → Sign in → Find a night → pause → preset radios → Drift → Intensity.
+- Contrast: headline `#eef3f1` over the scrimmed left column stays above 12:1; sub `#a9b6b8` above 7:1. In Dawn, `#1f1a1c` on `#f4ece4` is 14.7:1 and `#55494b` is 7.4:1. Keep the copy inside the left 50%; the blobs are placed right of 55% by design.
+- Panel hit targets: segment 30px tall with full-width labels, pause 32px; on touch layouts raise the pause button to 40px.
+
+## Responsive rules
+
+- ≥ 1280: as specified. Blob sizes are in `vmax`, so the mesh scales with the window.
+- 1024–1279: headline 88px; nothing else changes.
+- 768–1023: headline 72px; nav links stay; panel stays bottom-right.
+- < 760: nav links hide, side padding 20px, headline 60px, sub 16px; panel spans the bottom (12px insets); the horizontal scrim becomes a flat 45% wash of `--bg` over the whole frame, because the blobs now sit behind the copy.
+- Keep the ridge 160px tall at every width (`preserveAspectRatio="none"`).
+
+## Acceptance checklist
+
+### Always
+
+- [ ] Background is four radial-gradient elements; no `filter: blur()` and no canvas.
+- [ ] Per frame, only `transform` is written (four elements); nothing triggers layout.
+- [ ] Grain is a static SVG `feTurbulence` data-URI tile in `overlay` blend.
+- [ ] A scrim keeps the copy column legible; copy contrast ≥ 4.5:1 in both presets.
+- [ ] Loop capped at 60fps, `dt` clamped to 50ms, cancelled while the tab is hidden.
+- [ ] Reduced motion draws one still frame and starts paused.
+- [ ] Pause button toggles `aria-pressed` and its label.
+- [ ] Preset is a real radio group; sliders are native ranges with visible values.
+- [ ] Every control shows a 2px focus ring.
+
+### This demo
+
+- [ ] Night background `#060A12`; blobs `#2BD9B4`, `#8BF06A`, `#E2577F`, `#1E6FA8` in `screen`.
+- [ ] Dawn background `#F4ECE4`; blobs `#F7A27A`, `#F3C969`, `#E9879B`, `#B9D6C6` in `multiply`.
+- [ ] Headline "Chase the lights, *not* the forecast." at 104px Instrument Serif.
+- [ ] Panel defaults: Night, Drift 1.0×, Intensity 80.
+- [ ] Preset colours cross-fade over 700ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state (Night): page background `#060A12`; teal and green light fill the top-right quadrant, a rose patch sits right of centre; the left 45% of the frame is dark behind the copy.
+2. The blobs drift continuously. Each blob's centre follows `x = cx + ax·sin(t·fx + p)`, `y = cy + ay·cos(t·fy + 0.7p)` in viewport fractions; its rotation wobbles ±8° and its horizontal scale breathes ±0.25. One visible "shape change" takes 20–40s at 1× drift.
+3. Grain (SVG `feTurbulence`, 220px tile) is static, at 16% opacity in Night and 24% in Dawn.
+4. The panel (bottom-right, 248px wide) contains: title "Sky", a 32px round pause button, a Night/Dawn segmented control, a Drift slider (0–3×, step 0.1, default 1.0×) and an Intensity slider (20–100, step 5, default 80).
+5. Choosing Dawn swaps every colour token: background `#F4ECE4`, blobs peach/honey/rose/sage, blend mode `multiply` instead of `screen`, ink goes dark, the button becomes ink-on-cream, the ridge goes `#E6D6C8`. Colour properties cross-fade over 700ms.
+6. Drift changes the speed multiplier immediately without a jump (time accumulates, it is not recomputed from the clock). Drift 0 freezes the field.
+7. Intensity sets blob opacity (`value / 100`) live; readouts update as the thumb moves.
+8. Pause toggles the loop. Icon swaps between two bars and a play triangle; `aria-pressed` and `aria-label` ("Pause background" / "Play background") follow.
+9. When the tab is hidden the `requestAnimationFrame` loop is cancelled; when visible it resumes from the same phase.
+10. Under `prefers-reduced-motion: reduce` the blobs are placed once at t = 8 and the loop never starts; the button starts in the "Play background" state. Presets and intensity still work.
 
 ## Tokens
 
@@ -113,69 +182,6 @@ Paint order bottom to top: b4, b1, b2, b3, grain, scrim, ridge.
 | Button | Space Grotesk | 15px | 600 | 1 | 0 | sentence |
 | Panel title | Space Grotesk | 11px | 600 | 1 | +0.08em | UPPERCASE |
 | Panel labels | Space Grotesk | 12px | 400/500 | 1.5 | 0 | sentence, tabular readouts |
-
-## Motion
-
-| Element | Trigger | Property | From → To | Duration | Easing | Reduced motion |
-|---|---|---|---|---|---|---|
-| Blobs | rAF loop | `transform` translate/rotate/scale | Lissajous paths above | continuous, `t += dt·speed` | sine | one frame at t = 8, no loop |
-| Preset swap | radio change | background, color, fill, blob colours | Night ↔ Dawn tokens | 700ms | `--ease` | 1ms |
-| Intensity | slider input | blob `opacity` | 0.2 → 1.0 | 700ms transition | `--ease` | 1ms |
-| Button | hover / active | `transform` | 0 → translateY(−2px) / scale(.98) | 180ms | `--ease` | 1ms |
-| Segment | radio change | background, color | — | 180ms | `--ease` | 1ms |
-
-Loop rules: cap at 60fps (skip frames that arrive < 15.7ms after the last); clamp `dt` to 50ms so a long frame never jumps; cancel on `visibilitychange` hidden.
-
-## States
-
-- **Playing (default):** pause bars, `aria-pressed="false"`, label "Pause background".
-- **Paused:** play triangle, `aria-pressed="true"`, label "Play background"; blobs hold position.
-- **Drift 0:** loop runs but nothing moves; acceptable, pause is the real stop.
-- **Night / Dawn selected:** active segment is ink-filled with background-coloured text.
-- **Link hover:** `--ink-2` → `--ink`, 180ms.
-- **Button hover:** lifts 2px; active presses to scale .98.
-- **Focus-visible:** `outline: 2px solid var(--ink); outline-offset: 3px` on links, buttons, range inputs, and the segment's span when its radio has focus.
-- **Hidden tab:** loop cancelled.
-
-## Accessibility
-
-- The whole `.sky` is decorative: `aria-hidden="true"`, `pointer-events: none`.
-- The panel is a `<form>` with `aria-label="Background controls"`; the preset is a radio group inside a `<fieldset>` with a visually hidden legend "Preset". Arrow keys move between Night and Dawn natively.
-- Sliders are native `input[type=range]` with `<label for>`; their `<output for>` readouts show "1.0×" and "80".
-- The pause button satisfies WCAG 2.2.2 for continuous motion.
-- Tab order: wordmark → 4 nav links → Sign in → Find a night → pause → preset radios → Drift → Intensity.
-- Contrast: headline `#eef3f1` over the scrimmed left column stays above 12:1; sub `#a9b6b8` above 7:1. In Dawn, `#1f1a1c` on `#f4ece4` is 14.7:1 and `#55494b` is 7.4:1. Keep the copy inside the left 50%; the blobs are placed right of 55% by design.
-- Panel hit targets: segment 30px tall with full-width labels, pause 32px; on touch layouts raise the pause button to 40px.
-
-## Responsive rules
-
-- ≥ 1280: as specified. Blob sizes are in `vmax`, so the mesh scales with the window.
-- 1024–1279: headline 88px; nothing else changes.
-- 768–1023: headline 72px; nav links stay; panel stays bottom-right.
-- < 760: nav links hide, side padding 20px, headline 60px, sub 16px; panel spans the bottom (12px insets); the horizontal scrim becomes a flat 45% wash of `--bg` over the whole frame, because the blobs now sit behind the copy.
-- Keep the ridge 160px tall at every width (`preserveAspectRatio="none"`).
-
-## Acceptance checklist
-
-### Always
-
-- [ ] Background is four radial-gradient elements; no `filter: blur()` and no canvas.
-- [ ] Per frame, only `transform` is written (four elements); nothing triggers layout.
-- [ ] Grain is a static SVG `feTurbulence` data-URI tile in `overlay` blend.
-- [ ] A scrim keeps the copy column legible; copy contrast ≥ 4.5:1 in both presets.
-- [ ] Loop capped at 60fps, `dt` clamped to 50ms, cancelled while the tab is hidden.
-- [ ] Reduced motion draws one still frame and starts paused.
-- [ ] Pause button toggles `aria-pressed` and its label.
-- [ ] Preset is a real radio group; sliders are native ranges with visible values.
-- [ ] Every control shows a 2px focus ring.
-
-### This demo
-
-- [ ] Night background `#060A12`; blobs `#2BD9B4`, `#8BF06A`, `#E2577F`, `#1E6FA8` in `screen`.
-- [ ] Dawn background `#F4ECE4`; blobs `#F7A27A`, `#F3C969`, `#E9879B`, `#B9D6C6` in `multiply`.
-- [ ] Headline "Chase the lights, *not* the forecast." at 104px Instrument Serif.
-- [ ] Panel defaults: Night, Drift 1.0×, Intensity 80.
-- [ ] Preset colours cross-fade over 700ms.
 
 ## Implementation notes
 

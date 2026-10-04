@@ -1,6 +1,7 @@
 /* Greenhouse · light · no pair
    Leaf-filtered light. Soft, wet, growing.
    Best for: Gardens, Kids, Habits */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Greenhouse · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Baloo 2", Georgia, serif;
-  --font-text: "Nunito", system-ui, sans-serif;
-  --radius: 16px;
-  --shadow: 0 10px 24px -12px rgba(29,46,24,.2);
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

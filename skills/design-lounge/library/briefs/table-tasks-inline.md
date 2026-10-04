@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A sprint board for a small web team ("Quillo"), drawn as a table instead of columns. Ten tasks are grouped under To do, In progress and Done, each group behind a pill-shaped toggle that collapses it. Every cell is editable where it sits: click a title to rename it, pick an assignee from an inline menu, nudge the due date a day at a time, click the priority flag to raise it. Rows drag by a grip handle, within a group or across into another, which changes the task's status. The look is chunky and cheerful: butter page with a dot grid, a 2px ink border and a hard 6px offset shadow on the board, chips with ink outlines. The detail worth copying is that drag-to-reorder has a full keyboard twin: focus a handle and press the arrows, and the task walks up and down, crossing group headers into the next status.
-
-## Reference behaviour
-
-1. First frame: To do (3) and In progress (4) are open; Done (3) is collapsed. Manual order. The header progress reads "3 of 10 done" with a mint fill at 30%.
-2. Clicking a group toggle collapses or expands it. The chevron rotates −90° when collapsed.
-3. Clicking a title turns it into a text input with the text selected and a 3px tomato offset shadow. Enter saves, Escape cancels, blur saves. An empty value is ignored. Focus returns to the title button.
-4. The assignee cell shows a coloured initial avatar and a borderless native select (Mo, Kit, Juno, Ravi, Sol). Changing it updates the avatar colour.
-5. The due date is a pill: "Today", "Tomorrow" or "6 Oct". Overdue dates (before today, 4 Oct) are tomato on a pale tint; today and tomorrow are sun yellow with an ink outline. Small ‹ › buttons appear on row hover or focus and move the date by one day. With the pill focused, ArrowUp/Right add a day, ArrowDown/Left subtract one. Done tasks are never overdue.
-6. The priority pill cycles Low → Medium → High → Urgent → Low on each press, with a flag icon in the priority colour. Urgent fills tomato with white text and an ink border. The pill squashes to 92% on press.
-7. Dragging a grip lifts the row: white fill, 2px ink ring, 5px/6px hard shadow, rotated −0.6° and scaled 1.01. As the pointer crosses rows, the row moves live into the slot above or below the midpoint. Hovering a group header drops it into that group, or into the end of the previous group if the pointer is in the header's upper half. On release the row lands with a sun-yellow flash fading over 500ms, and its status becomes the group it sits in. Dropping into a collapsed group expands it.
-8. Keyboard reorder: focus a grip, press ArrowUp/ArrowDown. The task swaps with its neighbour; at a group boundary it moves to the end of the previous group or the start of the next one and the status changes. Each move is announced ("Moved to In progress").
-9. Clicking Task, Assignee, Due or Priority sorts within each group: first click ascending, second descending, third returns to manual order. While sorted, dragging or keyboard-moving a task first freezes the sorted order as the new manual order.
-10. Done titles are struck through with a 2px mint line and set in `--ink-3`.
-11. The progress bar animates its width with a slight overshoot whenever a task enters or leaves Done.
 
 ## Structure
 
@@ -49,49 +37,6 @@ page #FFF1C9 + 22px dot grid, padding 28px; board max-width 1080px, radius 22px,
 - Task rows: handle button, title button (or input while editing), assignee select, due pill with two nudge buttons, priority button.
 - An empty open group shows one row: "Nothing here. Drag a task in."
 - A hidden polite live region.
-
-## Tokens
-
-```css
-:root {
-  --bg: #fff1c9;        /* butter */
-  --surface: #fffdf4;
-  --sunk: #fff7dc;      /* thead, hover */
-  --ink: #1f1a2e;
-  --ink-2: #4a4458;
-  --ink-3: #6b6478;
-  --line: #efe2b8;
-  --accent: #ff5a36;    /* tomato: focus, edit shadow, header dot */
-  --todo: #bfe0ff;  --doing: #ffd34d;  --done: #9fe3c4;
-  --p-low: #8a8496; --p-med: #2f7de1; --p-high: #e8890c; --p-urgent: #cf3319;
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-  --r-board: 22px; --r-sm: 9px; --r-pill: 99px;
-  --border: 2px solid var(--ink);
-  --shadow-board: 6px 6px 0 var(--ink);
-  --shadow-lift: 0 0 0 2px var(--ink), 5px 6px 0 var(--ink);
-  --row: 50px; --group: 46px; --thead: 40px;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --spring: cubic-bezier(.34,1.56,.64,1);
-}
-```
-
-Assignee colours: Mo `#ffb4a2`, Kit `#bfe0ff`, Juno `#c9f0a8`, Ravi `#ffd34d`, Sol `#e8c8ff`.
-
-## Typography
-
-| Role | Family | Size | Weight | Notes |
-| --- | --- | --- | --- | --- |
-| Title | Bricolage Grotesque | 30px | 800 | -0.03em, line-height 1 |
-| Sub | DM Mono | 12px | 400 | `--ink-3` |
-| Column header | DM Mono | 11px | 500 | 0.06em, upper |
-| Group chip | Bricolage | 13px | 700 | 26px pill, ink outline |
-| Group count | DM Mono | 12px | 500 | `--ink-3` |
-| Task title | Bricolage | 15px | 700 | -0.01em |
-| Assignee | Bricolage | 14px | 500 | — |
-| Due pill | DM Mono | 12px | 500 | 30px tall |
-| Priority pill | Bricolage | 13px | 700 | 30px tall |
-| Foot | DM Mono | 12px | 400 | `kbd` with 1.5px border |
 
 ## Motion
 
@@ -159,6 +104,67 @@ Reduced motion: transitions 1ms, landing flash removed, the dragged row keeps it
 - [ ] "Fix double-submit on checkout button" is Urgent and overdue (3 Oct).
 - [ ] Board: 2px ink border, 22px radius, 6px 6px 0 ink shadow; rows 50px.
 - [ ] Today is 4 Oct 2026; Today and Tomorrow pills are sun yellow.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: To do (3) and In progress (4) are open; Done (3) is collapsed. Manual order. The header progress reads "3 of 10 done" with a mint fill at 30%.
+2. Clicking a group toggle collapses or expands it. The chevron rotates −90° when collapsed.
+3. Clicking a title turns it into a text input with the text selected and a 3px tomato offset shadow. Enter saves, Escape cancels, blur saves. An empty value is ignored. Focus returns to the title button.
+4. The assignee cell shows a coloured initial avatar and a borderless native select (Mo, Kit, Juno, Ravi, Sol). Changing it updates the avatar colour.
+5. The due date is a pill: "Today", "Tomorrow" or "6 Oct". Overdue dates (before today, 4 Oct) are tomato on a pale tint; today and tomorrow are sun yellow with an ink outline. Small ‹ › buttons appear on row hover or focus and move the date by one day. With the pill focused, ArrowUp/Right add a day, ArrowDown/Left subtract one. Done tasks are never overdue.
+6. The priority pill cycles Low → Medium → High → Urgent → Low on each press, with a flag icon in the priority colour. Urgent fills tomato with white text and an ink border. The pill squashes to 92% on press.
+7. Dragging a grip lifts the row: white fill, 2px ink ring, 5px/6px hard shadow, rotated −0.6° and scaled 1.01. As the pointer crosses rows, the row moves live into the slot above or below the midpoint. Hovering a group header drops it into that group, or into the end of the previous group if the pointer is in the header's upper half. On release the row lands with a sun-yellow flash fading over 500ms, and its status becomes the group it sits in. Dropping into a collapsed group expands it.
+8. Keyboard reorder: focus a grip, press ArrowUp/ArrowDown. The task swaps with its neighbour; at a group boundary it moves to the end of the previous group or the start of the next one and the status changes. Each move is announced ("Moved to In progress").
+9. Clicking Task, Assignee, Due or Priority sorts within each group: first click ascending, second descending, third returns to manual order. While sorted, dragging or keyboard-moving a task first freezes the sorted order as the new manual order.
+10. Done titles are struck through with a 2px mint line and set in `--ink-3`.
+11. The progress bar animates its width with a slight overshoot whenever a task enters or leaves Done.
+
+## Tokens
+
+```css
+:root {
+  --bg: #fff1c9;        /* butter */
+  --surface: #fffdf4;
+  --sunk: #fff7dc;      /* thead, hover */
+  --ink: #1f1a2e;
+  --ink-2: #4a4458;
+  --ink-3: #6b6478;
+  --line: #efe2b8;
+  --accent: #ff5a36;    /* tomato: focus, edit shadow, header dot */
+  --todo: #bfe0ff;  --doing: #ffd34d;  --done: #9fe3c4;
+  --p-low: #8a8496; --p-med: #2f7de1; --p-high: #e8890c; --p-urgent: #cf3319;
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  --r-board: 22px; --r-sm: 9px; --r-pill: 99px;
+  --border: 2px solid var(--ink);
+  --shadow-board: 6px 6px 0 var(--ink);
+  --shadow-lift: 0 0 0 2px var(--ink), 5px 6px 0 var(--ink);
+  --row: 50px; --group: 46px; --thead: 40px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --spring: cubic-bezier(.34,1.56,.64,1);
+}
+```
+
+Assignee colours: Mo `#ffb4a2`, Kit `#bfe0ff`, Juno `#c9f0a8`, Ravi `#ffd34d`, Sol `#e8c8ff`.
+
+## Typography
+
+| Role | Family | Size | Weight | Notes |
+| --- | --- | --- | --- | --- |
+| Title | Bricolage Grotesque | 30px | 800 | -0.03em, line-height 1 |
+| Sub | DM Mono | 12px | 400 | `--ink-3` |
+| Column header | DM Mono | 11px | 500 | 0.06em, upper |
+| Group chip | Bricolage | 13px | 700 | 26px pill, ink outline |
+| Group count | DM Mono | 12px | 500 | `--ink-3` |
+| Task title | Bricolage | 15px | 700 | -0.01em |
+| Assignee | Bricolage | 14px | 500 | — |
+| Due pill | DM Mono | 12px | 500 | 30px tall |
+| Priority pill | Bricolage | 13px | 700 | 30px tall |
+| Foot | DM Mono | 12px | 400 | `kbd` with 1.5px border |
 
 ## Implementation notes
 

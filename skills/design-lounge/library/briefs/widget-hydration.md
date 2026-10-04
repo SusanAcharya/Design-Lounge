@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A water-intake widget for a fictional habit app called Sipwell, set like a page from a notebook: warm paper, a single hairline-bordered card, a light serif numeral, and one ink button. On the left an outlined tumbler holds the day's water as a blue liquid with a two-layer wave. Tapping "+ 250 ml" logs a glass: the liquid rises toward the new level, and the surface sloshes (a damped tilt plus a bigger wave that settles back to a gentle idle ripple). Undo removes the last glass with a smaller slosh. The detail worth copying is that the slosh is physical, not decorative: the tilt oscillates and decays, so the water looks like it was just poured.
-
-## Reference behaviour
-
-1. Initial state: 1,250 ml logged from five glasses (7:40, 9:15, 11:02, 13:30, 15:10). Liquid at 62.5% of the tumbler. Text: "of 2,000 ml · 750 ml to go". Progress hairline at 62.5%.
-2. The surface ripples gently all the time (amplitude 1.6, phase +0.035/frame). A paler back wave runs 2px higher, out of phase, for depth.
-3. Click "+ 250 ml": a 250 ml entry is logged at the next simulated time (16:05, then +40 min each). The number updates immediately, the log's newest row slides in from −6px, the progress hairline grows over 600ms.
-4. On the same click the liquid eases toward the new level (7% of the remaining distance per frame) and sloshes: wave amplitude jumps to 6.6 and decays back toward 1.6; a tilt of ±9px oscillates and decays with a ~70-frame time constant.
-5. At 2,000 ml: text becomes "Goal met · right on 2 L", a cream check appears near the top of the liquid. Over 2 L: "Goal met · 250 ml over"; the liquid stays at the brim.
-6. "+ 250 ml" disables at 3,500 ml.
-7. Click "Undo": removes the newest entry (any entry, back to zero), steps the simulated clock back 40 min, slosh at 45% strength, liquid falls.
-8. Undo is disabled when nothing is logged; the log shows "Nothing logged yet · 0 ml".
-9. The log shows the four newest entries, newest first. The header counts all glasses ("5 glasses", "1 glass").
-10. A polite live region says "Logged 250 ml. 1,500 of 2,000 ml." or "Removed 250 ml. …".
 
 ## Structure
 
@@ -45,45 +34,6 @@ A water-intake widget for a fictional habit app called Sipwell, set like a page 
 - Tumbler outline: top 20→160 at y=10, tapering to 36→144 at y≈254, 8px rounded base to y=262. Interior clip is inset ~4px.
 - Ticks sit outside the right wall at 500 / 1000 / 1500 / 2 L, each a 6px line plus a 10px label.
 - `.side`: `p.eyebrow` (brand left, date right), `p.amount`, `p.of`, `.bar`, `.actions` (two buttons), `p.log-h`, `ul.log`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #eeeae0;         /* paper */
-  --card: #f8f6f0;       /* sheet */
-  --line: #dbd4c5;       /* hairlines */
-  --line-2: #c9c0ae;     /* undo border */
-  --ink: #22262a;        /* text, outline, primary button */
-  --ink-2: #4f5459;
-  --ink-3: #73787c;
-  --water: #2f5fd0;      /* the one accent: liquid, progress, focus */
-  --water-back: #a9c0ee; /* back wave */
-  --serif: "Spectral", Georgia, serif;
-  --sans: "Albert Sans", system-ui, sans-serif;
-  --r: 6px; --r-btn: 4px;
-  --space: 4px 8px 12px 18px 22px 28px 36px;
-  --shadow-card: 0 1px 0 #fff inset, 0 24px 40px -32px rgba(34, 38, 42, .35);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --t-micro: 140ms; --t-row: 320ms; --t-bar: 600ms;
-  --goal-ml: 2000; --step-ml: 250; --max-ml: 3500;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Amount | Spectral | 76px | 300 | .9 | −0.03em | lining, tabular nums |
-| Unit "ml" | Spectral italic | 24px | 300 | 1 | 0 | `--ink-2` |
-| Goal line | Albert Sans | 15px | 400, strong 600 | 1.5 | 0 | — |
-| Buttons | Albert Sans | 15px | 600 | 1 | 0 | — |
-| Eyebrow / log header | Albert Sans | 11px | 600 | 1 | 0.16em | uppercase, `--ink-3` |
-| Log rows | Albert Sans | 14px | 400 | 1.5 | 0 | tabular nums |
-| Tick labels | Albert Sans | 10px | 500 | 1 | 0.04em | `--ink-3` |
-
-The serif is used only for the amount and unit. Everything else is the grotesk.
 
 ## Motion
 
@@ -146,6 +96,62 @@ The idle ripple is calm enough to sit in a grid of other pieces: under 2px of tr
 - [ ] Goal 2,000 ml, step 250 ml, ceiling 3,500 ml.
 - [ ] First new glass is logged at 16:05, then every +40 min.
 - [ ] Ticks at 500, 1000, 1500 and "2 L".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 1,250 ml logged from five glasses (7:40, 9:15, 11:02, 13:30, 15:10). Liquid at 62.5% of the tumbler. Text: "of 2,000 ml · 750 ml to go". Progress hairline at 62.5%.
+2. The surface ripples gently all the time (amplitude 1.6, phase +0.035/frame). A paler back wave runs 2px higher, out of phase, for depth.
+3. Click "+ 250 ml": a 250 ml entry is logged at the next simulated time (16:05, then +40 min each). The number updates immediately, the log's newest row slides in from −6px, the progress hairline grows over 600ms.
+4. On the same click the liquid eases toward the new level (7% of the remaining distance per frame) and sloshes: wave amplitude jumps to 6.6 and decays back toward 1.6; a tilt of ±9px oscillates and decays with a ~70-frame time constant.
+5. At 2,000 ml: text becomes "Goal met · right on 2 L", a cream check appears near the top of the liquid. Over 2 L: "Goal met · 250 ml over"; the liquid stays at the brim.
+6. "+ 250 ml" disables at 3,500 ml.
+7. Click "Undo": removes the newest entry (any entry, back to zero), steps the simulated clock back 40 min, slosh at 45% strength, liquid falls.
+8. Undo is disabled when nothing is logged; the log shows "Nothing logged yet · 0 ml".
+9. The log shows the four newest entries, newest first. The header counts all glasses ("5 glasses", "1 glass").
+10. A polite live region says "Logged 250 ml. 1,500 of 2,000 ml." or "Removed 250 ml. …".
+
+## Tokens
+
+```css
+:root {
+  --bg: #eeeae0;         /* paper */
+  --card: #f8f6f0;       /* sheet */
+  --line: #dbd4c5;       /* hairlines */
+  --line-2: #c9c0ae;     /* undo border */
+  --ink: #22262a;        /* text, outline, primary button */
+  --ink-2: #4f5459;
+  --ink-3: #73787c;
+  --water: #2f5fd0;      /* the one accent: liquid, progress, focus */
+  --water-back: #a9c0ee; /* back wave */
+  --serif: "Spectral", Georgia, serif;
+  --sans: "Albert Sans", system-ui, sans-serif;
+  --r: 6px; --r-btn: 4px;
+  --space: 4px 8px 12px 18px 22px 28px 36px;
+  --shadow-card: 0 1px 0 #fff inset, 0 24px 40px -32px rgba(34, 38, 42, .35);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --t-micro: 140ms; --t-row: 320ms; --t-bar: 600ms;
+  --goal-ml: 2000; --step-ml: 250; --max-ml: 3500;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Amount | Spectral | 76px | 300 | .9 | −0.03em | lining, tabular nums |
+| Unit "ml" | Spectral italic | 24px | 300 | 1 | 0 | `--ink-2` |
+| Goal line | Albert Sans | 15px | 400, strong 600 | 1.5 | 0 | — |
+| Buttons | Albert Sans | 15px | 600 | 1 | 0 | — |
+| Eyebrow / log header | Albert Sans | 11px | 600 | 1 | 0.16em | uppercase, `--ink-3` |
+| Log rows | Albert Sans | 14px | 400 | 1.5 | 0 | tabular nums |
+| Tick labels | Albert Sans | 10px | 500 | 1 | 0.04em | `--ink-3` |
+
+The serif is used only for the amount and unit. Everything else is the grotesk.
 
 ## Implementation notes
 

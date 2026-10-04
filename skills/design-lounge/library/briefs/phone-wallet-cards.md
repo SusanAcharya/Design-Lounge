@@ -4,29 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The home screen of "Carrow", a phone wallet. Four passes sit in a stack on a near-black page: a Meridian debit card, a Lune Transit pass, a Brasa Coffee loyalty card and a Halcyon Hall concert ticket. Each card shows only its top 56px, except the last, which shows in full. Each card has its own quiet colour: graphite, deep teal, oxblood and sand. Tap a card and it rises to the top while the other three slide down into a small pile at the bottom. The space between fills with that card's details. The payment cards end in a "Hold near reader" state with a pulsing ring, then a gold tick. The detail to copy: every card is readable from its 56px strip alone, because the brand and one key number sit in that strip.
 
 The language is iOS 26-ish without glass: 18px card radii, a sheet-style spring for layout moves, no translucent bars. Type is a wide grotesk (Archivo at 125% width) with mono numbers (JetBrains Mono).
-
-## Reference behaviour
-
-1. First frame: the stack is closed. Eyebrow "CARROW", heading "Wallet", a 44px round add button. Cards top to bottom: Meridian (€4,218.60), Lune Transit (€23.40), Brasa Coffee (7/10), Halcyon Hall (17 OCT). The ticket shows in full.
-2. Under the stack: two hairline rows, "Brasa Coffee / Last payment · Meridian · 08:41 / −€4.80" and "Night Shift Orchestra / Next event · Halcyon Hall / Sat 19:00". Then "Default card · Meridian ••4821" and a full-width gold button "Pay with Meridian".
-3. Tap any card's visible strip: that card moves to y 0 over 420ms on the sheet spring. The other three move to the bottom of the stack area, scale to 0.94 and sit 12px apart, so only their top edges show. The heading becomes the card's first word (Meridian, Lune, Brasa, Halcyon). The add button becomes a "Done" pill.
-4. The details fade in 120ms after the move starts, rising 16px over 320ms. What they show depends on the card:
-   - Meridian: "Available / €4,218.60", then three transactions: Fenwick Market −€38.20, Brasa Coffee −€4.80, Odell & Pryce +€3,100.00 (green). Button "Pay with this card".
-   - Lune Transit: "Pass balance / €23.40", trips Harbour St → Mill Lane −€2.10, Mill Lane → Harbour St −€2.10, Top-up +€20.00. Button "Tap to ride".
-   - Brasa Coffee: a white tile with an SVG barcode and "0811 4402 7719". Under it: "7 of 10 stamps" and "3 to a free cortado".
-   - Halcyon Hall: a white tile with a 25×25 SVG QR code. Under it: "Row F · Seat 14" and "Doors 19:00".
-5. The bottom bar (recent rows and the gold button) fades out and drops 20px while a card is open.
-6. Tap the open card again, tap "Done", or press Escape: everything returns to the closed stack. Focus goes back to the card that was open.
-7. Tap "Pay with this card": the pile slides off the bottom and fades. The details fade out. The pay panel fades in: a 112px ring with a contactless glyph, two gold rings pulsing out from it, "Hold near reader", "Meridian ••4821" in mono, and a "Cancel" pill.
-8. After 2600ms the reader "answers": the ring fills gold, the glyph swaps for a tick that draws itself over 420ms, the text reads "Paid €4.80 / Brasa Coffee · 22:51", and the pill becomes "Done" and takes focus. Lune Transit shows "Gate open / Harbour St · €2.10".
-9. "Cancel" or "Done" returns to the open card with its details.
-10. The gold "Pay with Meridian" button on the closed stack opens Meridian and goes straight to the pay state.
-11. Taps on cards do nothing while the pay panel is showing. The pile cards leave the tab order.
 
 ## Structure
 
@@ -71,70 +55,6 @@ open state
 - `#detail` is a `section` with `aria-live="polite"`. It is filled from data when a card opens.
 - `#pay` is a `section` with `aria-live="assertive"` and a `data-s` of `idle`, `hold` or `done`.
 - The bottom bar is a `div` outside the stack, absolutely placed 34px from the bottom.
-
-## Tokens
-
-```css
-:root {
-  /* page */
-  --bg: #0a0a0b;          /* page, and the ticket notches */
-  --surface: #151517;
-  --surface-2: #1d1d20;
-  --line: #2a2a2e;        /* hairlines and pill borders */
-  --ink: #f2efe9;         /* primary text */
-  --ink-2: #b9b5ad;       /* secondary text */
-  --ink-3: #8a867f;       /* labels, meta */
-  --gold: #d9c8a3;        /* the one accent: pay button, pay ring, focus */
-  --gold-ink: #16130c;    /* text on gold */
-  --pos: #9cc7a4;         /* incoming money */
-
-  /* card bodies, one each */
-  --bank: #2b2d31;        /* graphite, gold text */
-  --transit: #163f3c;     /* deep teal, #cfe6dc text */
-  --loyal: #4e1d1a;       /* oxblood, #f0e2cf text */
-  --ticket: #d6c7a6;      /* sand, #1d1a14 text */
-
-  /* type */
-  --wide: "Archivo", system-ui, sans-serif;            /* font-stretch 112–125% */
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  /* layout */
-  --peek: 56px;
-  --r-card: 18px;
-  --r-pill: 26px;
-  --card-ratio: 1.586;    /* ID-1 card */
-  --gap-pile: 12px;
-
-  /* motion */
-  --ease: cubic-bezier(.32, .72, 0, 1);   /* sheet spring, layout */
-  --std: cubic-bezier(.2, .7, .2, 1);     /* fades */
-  --t-layout: 420ms;
-  --t-micro: 160ms;
-}
-```
-
-Card shadow: `0 -1px 0 rgba(255,255,255,.08) inset, 0 -8px 24px rgba(0,0,0,.45)`. The upward shadow is what separates one strip from the next. Do not add borders between cards.
-
-## Typography
-
-| Role | Family | Size | Weight | Width | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Eyebrow | JetBrains Mono | 11px | 500 | — | 0.14em | upper |
-| Heading | Archivo | 30px | 650 | 125% | -0.01em | sentence |
-| Card brand | Archivo | 13px | 650 | 125% | 0.06em | upper |
-| Card figure | JetBrains Mono | 14px | 500 | — | -0.01em | as set |
-| Card label | JetBrains Mono | 10px | 500 | — | 0.12em | upper, 70% opacity |
-| Card number | JetBrains Mono | 15px | 400 | — | 0.08em | — |
-| Ticket show | Archivo | 22px | 650 | 118% | -0.01em | title |
-| Transit line | Archivo | 30px | 600 | 125% | 0 | upper |
-| Balance | JetBrains Mono | 30px | 500 | — | -0.02em | — |
-| Row title | Archivo | 14px | 550 | 100% | 0 | sentence |
-| Row meta | Archivo | 12px | 400 | 100% | 0 | sentence |
-| Row amount | JetBrains Mono | 14px | 400 | — | -0.01em | — |
-| Pay status | Archivo | 22px | 650 | 125% | 0 | sentence |
-| Buttons | Archivo | 14–15px | 600–650 | 112% | 0 | sentence |
-
-Every number is mono with `font-variant-numeric: tabular-nums`. Every word is the wide grotesk. Load Archivo with the width axis: `family=Archivo:wdth,wght@62..125,400..700`, then use `font-stretch`. Minus signs are U+2212, not hyphens.
 
 ## Motion
 
@@ -211,6 +131,92 @@ Reduced motion: layout and micro durations drop to 1ms, so cards jump into place
 - [ ] "Hold near reader" turns into "Paid €4.80 / Brasa Coffee · 22:51" after 2600ms.
 - [ ] Layout moves are 420ms on `cubic-bezier(.32,.72,0,1)`.
 - [ ] The only accent is `#d9c8a3`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the stack is closed. Eyebrow "CARROW", heading "Wallet", a 44px round add button. Cards top to bottom: Meridian (€4,218.60), Lune Transit (€23.40), Brasa Coffee (7/10), Halcyon Hall (17 OCT). The ticket shows in full.
+2. Under the stack: two hairline rows, "Brasa Coffee / Last payment · Meridian · 08:41 / −€4.80" and "Night Shift Orchestra / Next event · Halcyon Hall / Sat 19:00". Then "Default card · Meridian ••4821" and a full-width gold button "Pay with Meridian".
+3. Tap any card's visible strip: that card moves to y 0 over 420ms on the sheet spring. The other three move to the bottom of the stack area, scale to 0.94 and sit 12px apart, so only their top edges show. The heading becomes the card's first word (Meridian, Lune, Brasa, Halcyon). The add button becomes a "Done" pill.
+4. The details fade in 120ms after the move starts, rising 16px over 320ms. What they show depends on the card:
+   - Meridian: "Available / €4,218.60", then three transactions: Fenwick Market −€38.20, Brasa Coffee −€4.80, Odell & Pryce +€3,100.00 (green). Button "Pay with this card".
+   - Lune Transit: "Pass balance / €23.40", trips Harbour St → Mill Lane −€2.10, Mill Lane → Harbour St −€2.10, Top-up +€20.00. Button "Tap to ride".
+   - Brasa Coffee: a white tile with an SVG barcode and "0811 4402 7719". Under it: "7 of 10 stamps" and "3 to a free cortado".
+   - Halcyon Hall: a white tile with a 25×25 SVG QR code. Under it: "Row F · Seat 14" and "Doors 19:00".
+5. The bottom bar (recent rows and the gold button) fades out and drops 20px while a card is open.
+6. Tap the open card again, tap "Done", or press Escape: everything returns to the closed stack. Focus goes back to the card that was open.
+7. Tap "Pay with this card": the pile slides off the bottom and fades. The details fade out. The pay panel fades in: a 112px ring with a contactless glyph, two gold rings pulsing out from it, "Hold near reader", "Meridian ••4821" in mono, and a "Cancel" pill.
+8. After 2600ms the reader "answers": the ring fills gold, the glyph swaps for a tick that draws itself over 420ms, the text reads "Paid €4.80 / Brasa Coffee · 22:51", and the pill becomes "Done" and takes focus. Lune Transit shows "Gate open / Harbour St · €2.10".
+9. "Cancel" or "Done" returns to the open card with its details.
+10. The gold "Pay with Meridian" button on the closed stack opens Meridian and goes straight to the pay state.
+11. Taps on cards do nothing while the pay panel is showing. The pile cards leave the tab order.
+
+## Tokens
+
+```css
+:root {
+  /* page */
+  --bg: #0a0a0b;          /* page, and the ticket notches */
+  --surface: #151517;
+  --surface-2: #1d1d20;
+  --line: #2a2a2e;        /* hairlines and pill borders */
+  --ink: #f2efe9;         /* primary text */
+  --ink-2: #b9b5ad;       /* secondary text */
+  --ink-3: #8a867f;       /* labels, meta */
+  --gold: #d9c8a3;        /* the one accent: pay button, pay ring, focus */
+  --gold-ink: #16130c;    /* text on gold */
+  --pos: #9cc7a4;         /* incoming money */
+
+  /* card bodies, one each */
+  --bank: #2b2d31;        /* graphite, gold text */
+  --transit: #163f3c;     /* deep teal, #cfe6dc text */
+  --loyal: #4e1d1a;       /* oxblood, #f0e2cf text */
+  --ticket: #d6c7a6;      /* sand, #1d1a14 text */
+
+  /* type */
+  --wide: "Archivo", system-ui, sans-serif;            /* font-stretch 112–125% */
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* layout */
+  --peek: 56px;
+  --r-card: 18px;
+  --r-pill: 26px;
+  --card-ratio: 1.586;    /* ID-1 card */
+  --gap-pile: 12px;
+
+  /* motion */
+  --ease: cubic-bezier(.32, .72, 0, 1);   /* sheet spring, layout */
+  --std: cubic-bezier(.2, .7, .2, 1);     /* fades */
+  --t-layout: 420ms;
+  --t-micro: 160ms;
+}
+```
+
+Card shadow: `0 -1px 0 rgba(255,255,255,.08) inset, 0 -8px 24px rgba(0,0,0,.45)`. The upward shadow is what separates one strip from the next. Do not add borders between cards.
+
+## Typography
+
+| Role | Family | Size | Weight | Width | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Eyebrow | JetBrains Mono | 11px | 500 | — | 0.14em | upper |
+| Heading | Archivo | 30px | 650 | 125% | -0.01em | sentence |
+| Card brand | Archivo | 13px | 650 | 125% | 0.06em | upper |
+| Card figure | JetBrains Mono | 14px | 500 | — | -0.01em | as set |
+| Card label | JetBrains Mono | 10px | 500 | — | 0.12em | upper, 70% opacity |
+| Card number | JetBrains Mono | 15px | 400 | — | 0.08em | — |
+| Ticket show | Archivo | 22px | 650 | 118% | -0.01em | title |
+| Transit line | Archivo | 30px | 600 | 125% | 0 | upper |
+| Balance | JetBrains Mono | 30px | 500 | — | -0.02em | — |
+| Row title | Archivo | 14px | 550 | 100% | 0 | sentence |
+| Row meta | Archivo | 12px | 400 | 100% | 0 | sentence |
+| Row amount | JetBrains Mono | 14px | 400 | — | -0.01em | — |
+| Pay status | Archivo | 22px | 650 | 125% | 0 | sentence |
+| Buttons | Archivo | 14–15px | 600–650 | 112% | 0 | sentence |
+
+Every number is mono with `font-variant-numeric: tabular-nums`. Every word is the wide grotesk. Load Archivo with the width axis: `family=Archivo:wdth,wght@62..125,400..700`, then use `font-stretch`. Minus signs are U+2212, not hyphens.
 
 ## Implementation notes
 

@@ -4,26 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from icon.museum: the idea of a curated app-icon collection where every icon sits on a long frosted glass shelf with a faint reflection underneath, and one click opens a quiet label card with the icon large, its details and its colour palette. This rebuild is "Vitrine", an invented collection of 36 original icons drawn in inline SVG (no copied artwork). The page is warm bone paper with near-black ink and one vermilion accent. The detail worth copying is the shelf: a 15px translucent plank with backdrop blur that sits in front of each icon's `-webkit-box-reflect`, so the reflection reads as glass, not as a second icon.
-
-## Reference behaviour
-
-1. First frame at 1280×800: a 64px sticky header, a two-part intro (serif headline left, 15px paragraph right), a filter bar, and three full shelves of eight icons visible.
-2. The header search field shows a rotating hint: "Search 36 icons", "Search 9 categories", "Search 9 colours", "Search 9 studios". It swaps every 2.6s with a 250ms fade-and-rise. Under reduced motion it stays on "Search 36 icons".
-3. Pressing `/` anywhere (outside the dialog) focuses the search field. Typing filters by app name, category or colour family as you type.
-4. The category chips row starts with "All 36" pressed. Each chip shows its count in a lighter weight. Clicking a chip makes it the only pressed chip.
-5. The colour row has nine 24px swatches: red, orange, yellow, green, teal, blue, violet, pink, black and white. Clicking a swatch selects it (2px ink ring at 4px offset). Clicking it again clears it.
-6. The finish segmented control has All, Flat, Glossy, Dark. Exactly one is pressed.
-7. All filters combine with AND. The count at the right of the filter bar reads "36 on display", "5 on display", "1 on display".
-8. When the filters match nothing, the shelves are replaced by an empty state: serif heading "These shelves are bare.", one sentence, and a "Clear filters" link button that resets everything.
-9. Each re-render fades icons in from 10px below at 94% scale, 500ms expo-out, staggered 18ms by position.
-10. Hovering or focusing an icon lifts it 8px and scales it to 1.08 over 320ms. Its drop shadow deepens. A dark name pill appears 10px above it.
-11. Clicking an icon opens a modal detail sheet: "Close Esc" at top left, previous and next round buttons at top right, the icon at 176px, the app name, a category pill, four detail rows (Studio, Released, Finish, Platform) and a four-swatch palette strip with hex keys.
-12. In the sheet, ArrowLeft and ArrowRight move through the currently filtered list and wrap at both ends. Esc, the Close button, or a click on the backdrop closes it.
-13. When the sheet closes, focus returns to the tile of the icon that was last shown.
-14. The shelf column count follows the available width: 8 at 1040px and up, 6 at 780px, 4 at 520px, 3 below. It re-chunks only when the count changes.
 
 ## Structure
 
@@ -68,61 +53,6 @@ Detail dialog, 540px wide, radius 22
 - The hall is a `section`; each shelf is a `div` grid; each icon is a `button` with an accessible name "Name, Category".
 - The detail sheet is a native `dialog` opened with `showModal()`, labelled by its `h2`. The details are a `dl`.
 - A hidden zero-size `svg` holds the shared `defs`: the squircle `clipPath`, the light gradient, the rim gradient, the gloss gradient and the glyph shadow filter.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #f4f2ee;        /* bone paper */
-  --paper: #fbfaf7;     /* dialog, chips, pressed segment */
-  --well: #ebe8e2;      /* search field, segmented track, pill */
-  --ink: #1c1b19;
-  --ink-2: #4f4c46;
-  --ink-3: #6b675f;     /* meta text; 4.9:1 on --bg */
-  --line: #e0dcd4;
-  --accent: #d9480f;    /* the one vermilion */
-  --focus: #d9480f;
-  /* type */
-  --serif: "Instrument Serif", Georgia, serif;
-  --sans: "Onest", system-ui, sans-serif;
-  --fs-display: 54px; --fs-empty: 34px; --fs-name: 24px;
-  --fs-body: 15px; --fs-ui: 14px; --fs-chip: 13px; --fs-meta: 12px;
-  /* space (4/8 base) */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 40px; --s-7: 62px;
-  /* shape */
-  --tile: 84px;          /* 62px under 640px */
-  --r-chip: 999px; --r-field: 10px; --r-seg: 9px; --r-dialog: 22px; --r-strip: 10px;
-  /* shadow */
-  --sh-tile: drop-shadow(0 6px 8px rgba(40,30,10,.16)) drop-shadow(0 1px 1px rgba(40,30,10,.12));
-  --sh-tile-hover: drop-shadow(0 14px 16px rgba(40,30,10,.22)) drop-shadow(0 2px 2px rgba(40,30,10,.12));
-  --sh-dialog: 0 30px 80px rgba(30,20,5,.28);
-  /* motion */
-  --ease: cubic-bezier(.16,1,.3,1);
-  --std: cubic-bezier(.2,.7,.2,1);
-  --t-lift: 320ms; --t-in: 500ms; --t-stagger: 18ms; --t-hint: 2600ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Brand | Instrument Serif | 28px | 400 | 1 | -0.01em | Title |
-| Brand count (sup) | Onest | 10px | 500 | 1 | 0.04em | Numerals |
-| Headline | Instrument Serif | 54px | 400 | 1 | -0.02em | Sentence, one word in italic accent |
-| Intro paragraph | Onest | 15px | 400 | 1.5 | 0 | Sentence, max 330px |
-| Nav links | Onest | 14px | 400 | 1.5 | 0 | Title |
-| Chip | Onest | 13px | 500 | 1 | 0 | Title, count at 55% opacity |
-| Segmented | Onest | 13px | 400 | 1 | 0 | Title |
-| Count | Onest | 13px | 400 | 1.5 | 0 | tabular-nums |
-| Name pill | Onest | 12px | 500 | 1.2 | 0 | Title |
-| Dialog name | Onest | 24px | 600 | 1.2 | -0.01em | Title |
-| Detail rows | Onest | 14px | 400 label / 500 value | 1.5 | 0 | Sentence |
-| Palette heading | Onest | 12px | 500 | 1 | 0.04em | Uppercase |
-| Empty heading | Instrument Serif | 34px | 400 | 1.1 | 0 | Sentence |
-
-The serif is only for the brand, the headline and the empty-state heading. Everything a user clicks is in Onest.
 
 ## Motion
 
@@ -193,6 +123,82 @@ Use `animation-fill-mode: backwards` on the tile entry, not `both`. With `both` 
 - [ ] Tiles are 84px; shelves have a 62px bottom gap and a 15px plank 16px below the tiles.
 - [ ] Selecting Blue shows "5 on display"; adding Dark shows "1 on display"; adding Reading shows the empty state.
 - [ ] Opening the ninth icon shows "Ambergrain", category Photo, studio "Mabel Ito", palette `#EE6A2C #AB4C20 #2A1A12 #FFF3EA`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 1280×800: a 64px sticky header, a two-part intro (serif headline left, 15px paragraph right), a filter bar, and three full shelves of eight icons visible.
+2. The header search field shows a rotating hint: "Search 36 icons", "Search 9 categories", "Search 9 colours", "Search 9 studios". It swaps every 2.6s with a 250ms fade-and-rise. Under reduced motion it stays on "Search 36 icons".
+3. Pressing `/` anywhere (outside the dialog) focuses the search field. Typing filters by app name, category or colour family as you type.
+4. The category chips row starts with "All 36" pressed. Each chip shows its count in a lighter weight. Clicking a chip makes it the only pressed chip.
+5. The colour row has nine 24px swatches: red, orange, yellow, green, teal, blue, violet, pink, black and white. Clicking a swatch selects it (2px ink ring at 4px offset). Clicking it again clears it.
+6. The finish segmented control has All, Flat, Glossy, Dark. Exactly one is pressed.
+7. All filters combine with AND. The count at the right of the filter bar reads "36 on display", "5 on display", "1 on display".
+8. When the filters match nothing, the shelves are replaced by an empty state: serif heading "These shelves are bare.", one sentence, and a "Clear filters" link button that resets everything.
+9. Each re-render fades icons in from 10px below at 94% scale, 500ms expo-out, staggered 18ms by position.
+10. Hovering or focusing an icon lifts it 8px and scales it to 1.08 over 320ms. Its drop shadow deepens. A dark name pill appears 10px above it.
+11. Clicking an icon opens a modal detail sheet: "Close Esc" at top left, previous and next round buttons at top right, the icon at 176px, the app name, a category pill, four detail rows (Studio, Released, Finish, Platform) and a four-swatch palette strip with hex keys.
+12. In the sheet, ArrowLeft and ArrowRight move through the currently filtered list and wrap at both ends. Esc, the Close button, or a click on the backdrop closes it.
+13. When the sheet closes, focus returns to the tile of the icon that was last shown.
+14. The shelf column count follows the available width: 8 at 1040px and up, 6 at 780px, 4 at 520px, 3 below. It re-chunks only when the count changes.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #f4f2ee;        /* bone paper */
+  --paper: #fbfaf7;     /* dialog, chips, pressed segment */
+  --well: #ebe8e2;      /* search field, segmented track, pill */
+  --ink: #1c1b19;
+  --ink-2: #4f4c46;
+  --ink-3: #6b675f;     /* meta text; 4.9:1 on --bg */
+  --line: #e0dcd4;
+  --accent: #d9480f;    /* the one vermilion */
+  --focus: #d9480f;
+  /* type */
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Onest", system-ui, sans-serif;
+  --fs-display: 54px; --fs-empty: 34px; --fs-name: 24px;
+  --fs-body: 15px; --fs-ui: 14px; --fs-chip: 13px; --fs-meta: 12px;
+  /* space (4/8 base) */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 40px; --s-7: 62px;
+  /* shape */
+  --tile: 84px;          /* 62px under 640px */
+  --r-chip: 999px; --r-field: 10px; --r-seg: 9px; --r-dialog: 22px; --r-strip: 10px;
+  /* shadow */
+  --sh-tile: drop-shadow(0 6px 8px rgba(40,30,10,.16)) drop-shadow(0 1px 1px rgba(40,30,10,.12));
+  --sh-tile-hover: drop-shadow(0 14px 16px rgba(40,30,10,.22)) drop-shadow(0 2px 2px rgba(40,30,10,.12));
+  --sh-dialog: 0 30px 80px rgba(30,20,5,.28);
+  /* motion */
+  --ease: cubic-bezier(.16,1,.3,1);
+  --std: cubic-bezier(.2,.7,.2,1);
+  --t-lift: 320ms; --t-in: 500ms; --t-stagger: 18ms; --t-hint: 2600ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Brand | Instrument Serif | 28px | 400 | 1 | -0.01em | Title |
+| Brand count (sup) | Onest | 10px | 500 | 1 | 0.04em | Numerals |
+| Headline | Instrument Serif | 54px | 400 | 1 | -0.02em | Sentence, one word in italic accent |
+| Intro paragraph | Onest | 15px | 400 | 1.5 | 0 | Sentence, max 330px |
+| Nav links | Onest | 14px | 400 | 1.5 | 0 | Title |
+| Chip | Onest | 13px | 500 | 1 | 0 | Title, count at 55% opacity |
+| Segmented | Onest | 13px | 400 | 1 | 0 | Title |
+| Count | Onest | 13px | 400 | 1.5 | 0 | tabular-nums |
+| Name pill | Onest | 12px | 500 | 1.2 | 0 | Title |
+| Dialog name | Onest | 24px | 600 | 1.2 | -0.01em | Title |
+| Detail rows | Onest | 14px | 400 label / 500 value | 1.5 | 0 | Sentence |
+| Palette heading | Onest | 12px | 500 | 1 | 0.04em | Uppercase |
+| Empty heading | Instrument Serif | 34px | 400 | 1.1 | 0 | Sentence |
+
+The serif is only for the brand, the headline and the empty-state heading. Everything a user clicks is in Onest.
 
 ## Implementation notes
 

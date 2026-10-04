@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The now-playing sheet of "Marrow", a music app. There is no image: the 326px album art is a layered CSS gradient (a warm orange-to-plum diagonal with a gold radial at the top-left) with an inline SVG `feTurbulence` grain blended in soft-light at 28%. The same gradient, blurred 48px and darkened, fills the screen behind everything so the UI sits in the record's colour. Below the art: title and artist, a scrubber whose 6px thumb grows to 18px while dragging and whose track thickens, a play/pause button whose SVG path morphs between the two glyphs over 280ms, a thumbless volume slider, and four lines of lyrics that highlight and scroll as playback time passes. Pausing shrinks the art to 86%; playing grows it back with a spring.
-
-## Reference behaviour
-
-1. Initial state: playing. Art at scale 1 with a deep shadow; "Copper Wire / Marrow · Low Tide Radio"; scrubber at 1:08 of 3:34 (31.8%); remaining time "−2:26"; the second lyric line is highlighted, the first dimmed; volume at 62%.
-2. Time advances in real time via `requestAnimationFrame` only while playing (no loop when paused). The scrubber, both time labels and `aria-valuenow` update every frame.
-3. Lyric lines have timestamps (60, 66, 73, 80 s). The latest line whose time ≤ current is `on` (full ink); earlier lines are `past` (38% ink at 50% opacity); later lines are 38% ink at 70% opacity. When the current line index ≥ 2 the block translates up by `(index − 1) × 23px` so the current line stays second from the top. Colour and position transition over 280ms.
-4. Tap play/pause: the glyph morphs (two bars ↔ two triangle halves) over 280ms `cubic-bezier(.32,.72,0,1)`; `aria-label` and `aria-pressed` flip; the art scales to 0.86 (paused) or 1 (playing) over 520ms with the same spring, and its shadow follows.
-5. Press on the scrubber: the track grows from 6px to 10px and the thumb from 6px to 18px with a shadow, over 160ms; the position jumps to the pointer. Drag: position follows the pointer (clamped to 0–214 s); time labels update live; playback resumes from the released position. Release: track and thumb return to their rest sizes.
-6. With the scrubber focused, ArrowLeft/ArrowRight nudge ±5 s.
-7. Drag the volume slider: the filled portion follows (`--v`), no visible thumb.
-8. At 3:34 playback stops and the button shows the play glyph; tapping it resumes from the end (the demo does not loop).
-9. "Previous", "Next" and "More" are present with press states but do not change the track.
 
 ## Structure
 
@@ -52,55 +42,6 @@ The now-playing sheet of "Marrow", a music app. There is no image: the 326px alb
 - `.meta`: `<h1>` + `<p>` and a 40px glass "More" `<button>`.
 - `.scrub[role=slider tabindex=0]`: 36px tall hit area, `.bar` → `.fill` (width `--pct`) and `.thumb` (left `--pct`).
 - `.times`, `.ctls` (Previous / Play / Next), `.vol` (`<input type=range>` between two SVGs), `.lyrics` (`<p data-t>` × 4).
-
-## Tokens
-
-```css
-:root {
-  /* album art gradient */
-  --art-a: #f2683b;  --art-b: #8e1f4a;  --art-c: #2a1230;  --art-d: #f7b955;
-  --art-gradient: radial-gradient(120% 90% at 20% 15%, var(--art-d), transparent 45%),
-                  linear-gradient(150deg, var(--art-a), var(--art-b) 58%, var(--art-c));
-  --grain-opacity: .28;                    /* feTurbulence baseFrequency .9, 2 octaves, soft-light */
-
-  /* surface + text (on the blurred art) */
-  --bg: #1a0f16;
-  --ink: #fff5ee;
-  --ink-2: rgba(255,245,238,.66);          /* artist line */
-  --ink-3: rgba(255,245,238,.38);          /* times, upcoming lyrics, volume icons */
-  --track: rgba(255,245,238,.22);          /* scrubber + volume track, grabber */
-  --accent: #ffb28a;                       /* focus rings only */
-  --glass: rgba(255,245,238,.10);  --glass-line: rgba(255,245,238,.16);
-
-  /* type */
-  --font: "Familjen Grotesk", system-ui, -apple-system, sans-serif;
-
-  /* geometry */
-  --art: 326px;  --r-art: 14px;  --art-paused: .86;
-  --art-shadow: 0 24px 60px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.3);
-  --track-h: 6px;  --track-h-drag: 10px;  --thumb: 6px;  --thumb-drag: 18px;
-  --play: 72px;  --skip-icon: 34px;  --play-icon: 40px;  --ctl-gap: 40px;
-  --lyric-line: 23px;  --lyric-window: 90px;
-  --duration: 214;                         /* seconds */
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-morph: 280ms;
-  --t-art: 520ms;
-  --spring: cubic-bezier(.32, .72, 0, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role          | Family           | Size | Weight | Line-height | Tracking | Case |
-|---------------|------------------|-----:|-------:|------------:|---------:|------|
-| Song title    | Familjen Grotesk | 22px | 600    | 1.2         | −0.015em | sentence |
-| Artist line   | Familjen Grotesk | 16px | 400    | 1.4         | 0        | sentence, `--ink-2` |
-| Wordmark      | Familjen Grotesk | 13px | 700    | 1           | +0.18em  | UPPERCASE, 85% ink |
-| Times         | Familjen Grotesk | 12px | 500    | 1.4         | 0        | `tabular-nums`, U+2212 for remaining |
-| Lyrics        | Familjen Grotesk | 17px | 500    | 1.35        | 0        | sentence |
 
 ## Motion
 
@@ -156,6 +97,71 @@ Reduced motion: all transitions 1ms (the glyph swaps instantly, art snaps betwee
 - [ ] Scrubber has `role="slider"` with live `aria-valuenow`/`aria-valuetext` and responds to arrow keys.
 - [ ] Volume is a native range input, 28px tall hit area, thumb hidden, fill drawn from `--v`.
 - [ ] Every control shows a visible focus ring; Reduced motion collapses all transitions to 1ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: playing. Art at scale 1 with a deep shadow; "Copper Wire / Marrow · Low Tide Radio"; scrubber at 1:08 of 3:34 (31.8%); remaining time "−2:26"; the second lyric line is highlighted, the first dimmed; volume at 62%.
+2. Time advances in real time via `requestAnimationFrame` only while playing (no loop when paused). The scrubber, both time labels and `aria-valuenow` update every frame.
+3. Lyric lines have timestamps (60, 66, 73, 80 s). The latest line whose time ≤ current is `on` (full ink); earlier lines are `past` (38% ink at 50% opacity); later lines are 38% ink at 70% opacity. When the current line index ≥ 2 the block translates up by `(index − 1) × 23px` so the current line stays second from the top. Colour and position transition over 280ms.
+4. Tap play/pause: the glyph morphs (two bars ↔ two triangle halves) over 280ms `cubic-bezier(.32,.72,0,1)`; `aria-label` and `aria-pressed` flip; the art scales to 0.86 (paused) or 1 (playing) over 520ms with the same spring, and its shadow follows.
+5. Press on the scrubber: the track grows from 6px to 10px and the thumb from 6px to 18px with a shadow, over 160ms; the position jumps to the pointer. Drag: position follows the pointer (clamped to 0–214 s); time labels update live; playback resumes from the released position. Release: track and thumb return to their rest sizes.
+6. With the scrubber focused, ArrowLeft/ArrowRight nudge ±5 s.
+7. Drag the volume slider: the filled portion follows (`--v`), no visible thumb.
+8. At 3:34 playback stops and the button shows the play glyph; tapping it resumes from the end (the demo does not loop).
+9. "Previous", "Next" and "More" are present with press states but do not change the track.
+
+## Tokens
+
+```css
+:root {
+  /* album art gradient */
+  --art-a: #f2683b;  --art-b: #8e1f4a;  --art-c: #2a1230;  --art-d: #f7b955;
+  --art-gradient: radial-gradient(120% 90% at 20% 15%, var(--art-d), transparent 45%),
+                  linear-gradient(150deg, var(--art-a), var(--art-b) 58%, var(--art-c));
+  --grain-opacity: .28;                    /* feTurbulence baseFrequency .9, 2 octaves, soft-light */
+
+  /* surface + text (on the blurred art) */
+  --bg: #1a0f16;
+  --ink: #fff5ee;
+  --ink-2: rgba(255,245,238,.66);          /* artist line */
+  --ink-3: rgba(255,245,238,.38);          /* times, upcoming lyrics, volume icons */
+  --track: rgba(255,245,238,.22);          /* scrubber + volume track, grabber */
+  --accent: #ffb28a;                       /* focus rings only */
+  --glass: rgba(255,245,238,.10);  --glass-line: rgba(255,245,238,.16);
+
+  /* type */
+  --font: "Familjen Grotesk", system-ui, -apple-system, sans-serif;
+
+  /* geometry */
+  --art: 326px;  --r-art: 14px;  --art-paused: .86;
+  --art-shadow: 0 24px 60px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.3);
+  --track-h: 6px;  --track-h-drag: 10px;  --thumb: 6px;  --thumb-drag: 18px;
+  --play: 72px;  --skip-icon: 34px;  --play-icon: 40px;  --ctl-gap: 40px;
+  --lyric-line: 23px;  --lyric-window: 90px;
+  --duration: 214;                         /* seconds */
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-morph: 280ms;
+  --t-art: 520ms;
+  --spring: cubic-bezier(.32, .72, 0, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role          | Family           | Size | Weight | Line-height | Tracking | Case |
+|---------------|------------------|-----:|-------:|------------:|---------:|------|
+| Song title    | Familjen Grotesk | 22px | 600    | 1.2         | −0.015em | sentence |
+| Artist line   | Familjen Grotesk | 16px | 400    | 1.4         | 0        | sentence, `--ink-2` |
+| Wordmark      | Familjen Grotesk | 13px | 700    | 1           | +0.18em  | UPPERCASE, 85% ink |
+| Times         | Familjen Grotesk | 12px | 500    | 1.4         | 0        | `tabular-nums`, U+2212 for remaining |
+| Lyrics        | Familjen Grotesk | 17px | 500    | 1.35        | 0        | sentence |
 
 ## Implementation notes
 

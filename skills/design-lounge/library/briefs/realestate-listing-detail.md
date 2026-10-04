@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The detail page for one house on a fictional estate agent site, Ashlar & Vane. The house is 7 Corbel Row, Clifton, Bristol, guide price £845,000. The page reads like an architect's drawing set: stone paper, charcoal ink, 1px rules, 2px corners, and one bronze accent. The gallery is five rooms drawn in CSS, not photos. Below it, a facts row, a short description, a floor plan where each room is a button that shows its size, an amenities list, a mortgage estimate, and a map drawn in SVG. On the right, a 360px card to book a viewing stays in view while the page scrolls. The detail worth copying is the floor plan: rooms are real controls, and the size readout updates beside the plan.
-
-## Reference behaviour
-
-1. First frame at 1280×800: header (64px), address title and price, the five-tile gallery, the facts row, and the top of the viewing card are all visible. No action is needed to see the point.
-2. The Living room is selected on the floor plan at load. It is filled bronze tint. The readout reads `Living room` and `6.0 × 4.6 m · 27.6 m²`.
-3. Click or press Enter/Space on another room. That room fills with bronze tint, the old one clears, and the readout updates. Only one room is selected at a time.
-4. Hovering a room that is not selected tints it `#ede6dc`.
-5. The Hall is drawn but is not a control. It has a 12px grey label only.
-6. Click `Show all 24 photos` (bottom-right of the gallery). A modal dialog opens with a 4-column sheet of room tiles. Close with the × button, Esc, or a click on the backdrop. Focus returns to the button.
-7. The viewing card starts with Tue 6 selected and 12:30 in the time select. Picking another day chip moves the dark fill to it.
-8. Submit `Request viewing`. The page does not reload. A polite live line under the button reads `Requested Tue 6 Oct at 12:30. Imogen will confirm by email.` Changing any field clears the line.
-9. The mortgage estimate starts at price 845,000, deposit 20%, rate 4.35%, term 25 years. It shows £3,700 a month on a £676,000 loan.
-10. Dragging the deposit slider (5–50%, step 1) updates the percent, the deposit amount, the monthly figure and the loan line on every input event. Editing price, rate or term does the same.
-11. The `Save` button in the header toggles `aria-pressed`. Pressed fills the heart bronze.
-12. The viewing card is `position: sticky; top: 24px` and stays in view until the end of the main column.
-13. Reduced motion: all transitions drop to 1ms. Nothing else changes.
 
 ## Structure
 
@@ -57,53 +43,6 @@ The detail page for one house on a fictional estate agent site, Ashlar & Vane. T
 - `main` holds a `dl.facts` (4 columns) and five `section`s, each labelled by its `h2`.
 - `aside` holds a `form.card`. The day chips are a `fieldset` of four radio inputs with labels. Time is a `select`.
 - The photos sheet is a native `dialog` opened with `showModal()`.
-
-## Tokens
-
-```css
-:root {
-  --stone: #ebe6de;      /* page */
-  --surface: #f5f2ec;    /* cards, plan paper, dialog */
-  --wall: #d9d2c6;       /* tile base, avatar */
-  --line: #d2cabd;       /* 1px rules, inputs */
-  --ink: #22201e;        /* charcoal text, walls, strong rules */
-  --ink-2: #55504a;      /* body copy */
-  --ink-3: #6e675f;      /* labels, meta */
-  --bronze: #8a5a2b;     /* the one accent: button, focus, slider, pin */
-  --bronze-hover: #6f4720;
-  --bronze-t: #e6d6c3;   /* selected room fill */
-
-  --serif: "Cormorant Garamond", Georgia, serif;
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-
-  --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-15: 15px;
-  --fs-20: 20px; --fs-26: 26px; --fs-28: 28px; --fs-34: 34px; --fs-40: 40px; --fs-44: 44px;
-
-  --s-6: 6px; --s-8: 8px; --s-12: 12px; --s-16: 16px; --s-24: 24px;
-  --s-36: 36px; --s-48: 48px; --s-56: 56px;
-
-  --r: 2px;
-  --shadow: none;        /* rules separate regions, not shadows */
-  --t-micro: 150ms; --t-fill: 180ms;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Brand | Cormorant Garamond | 22px | 600 | 1 | 0.02em | Title |
-| Address `h1` | Cormorant Garamond | 40px | 500 | 1.05 | -0.01em | Title |
-| Price | Cormorant Garamond | 34px | 600 | 1 | 0 | lining nums |
-| Section `h2` | Cormorant Garamond | 28px | 500 | 1.15 | 0 | Sentence |
-| Fact value | Cormorant Garamond | 28px | 600 | 1.1 | 0 | lining nums |
-| Monthly figure | Cormorant Garamond | 44px | 600 | 1 | 0 | lining nums |
-| Eyebrow / labels | Schibsted Grotesk | 11–12px | 400 | 1.4 | 0.06–0.12em | UPPER |
-| Body | Schibsted Grotesk | 15px | 400 | 1.55 | 0 | Sentence |
-| Lists, buttons | Schibsted Grotesk | 14px | 500 | 1.4 | 0 | Sentence |
-
-Set `font-variant-numeric: lining-nums` on every serif number. Cormorant defaults to old-style figures, which make `£845,000` look uneven. Never set body text in the serif. It is too thin below 20px.
 
 ## Motion
 
@@ -177,6 +116,73 @@ No scroll effects, no parallax on the gallery, no count-up on the price. The pag
 - [ ] Defaults 845,000 / 20% / 4.35% / 25 years give £3,700 a month on £676,000.
 - [ ] Chips are Tue 6, Wed 7, Thu 8, Sat 10; time defaults to 12:30.
 - [ ] Agent is Imogen Reyes; map list is Clifton Village 4 min, Christ Church Primary 7 min, Clifton Down station 11 min, Harbourside 14 min.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 1280×800: header (64px), address title and price, the five-tile gallery, the facts row, and the top of the viewing card are all visible. No action is needed to see the point.
+2. The Living room is selected on the floor plan at load. It is filled bronze tint. The readout reads `Living room` and `6.0 × 4.6 m · 27.6 m²`.
+3. Click or press Enter/Space on another room. That room fills with bronze tint, the old one clears, and the readout updates. Only one room is selected at a time.
+4. Hovering a room that is not selected tints it `#ede6dc`.
+5. The Hall is drawn but is not a control. It has a 12px grey label only.
+6. Click `Show all 24 photos` (bottom-right of the gallery). A modal dialog opens with a 4-column sheet of room tiles. Close with the × button, Esc, or a click on the backdrop. Focus returns to the button.
+7. The viewing card starts with Tue 6 selected and 12:30 in the time select. Picking another day chip moves the dark fill to it.
+8. Submit `Request viewing`. The page does not reload. A polite live line under the button reads `Requested Tue 6 Oct at 12:30. Imogen will confirm by email.` Changing any field clears the line.
+9. The mortgage estimate starts at price 845,000, deposit 20%, rate 4.35%, term 25 years. It shows £3,700 a month on a £676,000 loan.
+10. Dragging the deposit slider (5–50%, step 1) updates the percent, the deposit amount, the monthly figure and the loan line on every input event. Editing price, rate or term does the same.
+11. The `Save` button in the header toggles `aria-pressed`. Pressed fills the heart bronze.
+12. The viewing card is `position: sticky; top: 24px` and stays in view until the end of the main column.
+13. Reduced motion: all transitions drop to 1ms. Nothing else changes.
+
+## Tokens
+
+```css
+:root {
+  --stone: #ebe6de;      /* page */
+  --surface: #f5f2ec;    /* cards, plan paper, dialog */
+  --wall: #d9d2c6;       /* tile base, avatar */
+  --line: #d2cabd;       /* 1px rules, inputs */
+  --ink: #22201e;        /* charcoal text, walls, strong rules */
+  --ink-2: #55504a;      /* body copy */
+  --ink-3: #6e675f;      /* labels, meta */
+  --bronze: #8a5a2b;     /* the one accent: button, focus, slider, pin */
+  --bronze-hover: #6f4720;
+  --bronze-t: #e6d6c3;   /* selected room fill */
+
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+
+  --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-15: 15px;
+  --fs-20: 20px; --fs-26: 26px; --fs-28: 28px; --fs-34: 34px; --fs-40: 40px; --fs-44: 44px;
+
+  --s-6: 6px; --s-8: 8px; --s-12: 12px; --s-16: 16px; --s-24: 24px;
+  --s-36: 36px; --s-48: 48px; --s-56: 56px;
+
+  --r: 2px;
+  --shadow: none;        /* rules separate regions, not shadows */
+  --t-micro: 150ms; --t-fill: 180ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Brand | Cormorant Garamond | 22px | 600 | 1 | 0.02em | Title |
+| Address `h1` | Cormorant Garamond | 40px | 500 | 1.05 | -0.01em | Title |
+| Price | Cormorant Garamond | 34px | 600 | 1 | 0 | lining nums |
+| Section `h2` | Cormorant Garamond | 28px | 500 | 1.15 | 0 | Sentence |
+| Fact value | Cormorant Garamond | 28px | 600 | 1.1 | 0 | lining nums |
+| Monthly figure | Cormorant Garamond | 44px | 600 | 1 | 0 | lining nums |
+| Eyebrow / labels | Schibsted Grotesk | 11–12px | 400 | 1.4 | 0.06–0.12em | UPPER |
+| Body | Schibsted Grotesk | 15px | 400 | 1.55 | 0 | Sentence |
+| Lists, buttons | Schibsted Grotesk | 14px | 500 | 1.4 | 0 | Sentence |
+
+Set `font-variant-numeric: lining-nums` on every serif number. Cormorant defaults to old-style figures, which make `£845,000` look uneven. Never set body text in the serif. It is too thin below 20px.
 
 ## Implementation notes
 

@@ -11,15 +11,15 @@ User: "Payroll app for a Kathmandu studio. Next.js and Tailwind."
 3. Put the theme page, the type page, and the demo link for each screen at the top of the reply. Write them into `DESIGN.md` under Sources.
 4. Build in the same turn. Open the screens. Run Look, then One correction. They can still say "swap the palette" or "change the table" after.
 
-## A portfolio with no mood words
+## A site with no mood words
 
-User: "Build my portfolio. I'm Sunim, a product engineer. I care about quiet interfaces, clear state, and explicit gates." Plus three projects.
+User: "Site for Tsering's, a twelve-seat momo counter in Boudha. We fold every momo in front of you. No freezer. Open 11 to 8, closed Tuesday."
 
-1. Recipe `portfolio-builder`. No mood word like dark or playful, but his own words say a lot. Three words: quiet, explicit, systems.
-2. Compare with the four directions' moods. Cobalt desk is "precise, systems thinker, a visible grid". Lock it. Do not run the name number: there is no tie.
-3. Idea from his habit: the site moves gate by gate, each project opens only when you pass the one before. Signature: the project gates, built only for this site.
-4. Sections by content. Three different projects suit `stacking-cards-scroll` or `case-file-horizontal-scroll`, not a single-figure sticky scroll. A short belief suits `scroll-word-highlight` for about.
-5. Cobalt desk leans on the studio template (grid lines, mono labels, giant wordmark). Keep two of those, not all of them.
+1. Recipe `restaurant`. No mood word like dark or loud, but the owner's words say a lot. Three words: small, made in front of you, slow.
+2. Compare with the three directions' moods. Garden supper is "olive, cream, slow food". Lock it. Do not run the name number: there is no tie.
+3. Idea from the habit: the menu is the counter, and each dish is shown being folded. Signature: each dish card folds shut like a momo as you scroll past it.
+4. Sections by content. A short menu suits a still bento, not a sticky scroll. A place people visit suits `contact-booking-hours`. Only the hero and the signature move.
+5. Real content only: no invented reviews, no star rating, no "since 1998" unless they said it.
 
 ## They want to choose first
 

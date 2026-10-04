@@ -4,26 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from acharyasusan.com.np: the small game of catch in her hero valley, where two tiny figures throw a glowing disc back and forth along a curved path and the disc leaves a faint streak. This rebuild makes that the main event, in daylight, for **Fenmoor Disc Club**, a fictional Sunday pickup group. It is a living illustration you can drop behind a hero or a section. Everything (arm wind-up, release, the disc's flight, its wobble, the trail, the catch) runs on a single CSS custom property `--t: 14s`, and the second player is the same animation shifted by half a cycle. A bottom bar adds play/pause, speed and a "show flight path" switch, and reads out the current phase and a throw count. The details worth copying are `offset-path` for the flight and the half-cycle delay trick, which keeps two players in step without any JS timing.
-
-## Reference behaviour
-
-1. First frame (1280×800): a 68px header ("Fenmoor Disc Club" with a pink disc mark at left, "SUN 10:00 · FENMOOR COMMON · FREE" in mono at right). Below it the stage fills the rest, with a 72px control bar at the bottom.
-2. Headline at the top left of the stage: "Throw it long." / "Catch it *late.*" ("late." in pink), with a 16px line under it.
-3. Scene (SVG, `viewBox 160 180 1280 520`, slice): a hatched sun with an ink outline (r 78), two outline clouds drifting, a far hill band (solid sage + hatch), a mid band (pale sage + hatch), a cream near field with a light hatch and 44 grass tufts, a small tent with a rope of nine bunting flags, and two players about 750 units apart.
-4. Ada (left, facing right) holds the disc. At 6–12% of the cycle her arm winds back to 115°; at 14% it snaps forward to −60° and the disc leaves her hand.
-5. From 14% to 40% the disc flies along an S-shaped path (rises, dips, rises, drops into Jun's hand), tilting through a scripted wobble, with a white glint flicking across it every 0.35s. A pink comet trail follows: a soft 5px stroke (16 units long) and a 1.6px core (7 units long).
-6. At 40% Jun (right, mirrored) reaches −80° and catches. The flying disc hides; the disc in Jun's hand shows.
-7. Jun's cycle is the same, shifted by half: he winds up at 56–62% and throws at 64%. The disc flies the same path backwards to Ada (64% → 90%), and Ada catches at 90%.
-8. Ambient: the sun rises 60px on load (1.6s), clouds drift (110s and 150s), every third tuft sways, the bunting flutters with a 0.17s offset per flag.
-9. Control bar:
-   - Pause/Play (44px square button) pauses and resumes every animation in place.
-   - Speed (radio group 0.5× / 1× / 2×) changes `playbackRate` on every animation, so nothing restarts or drifts out of sync.
-   - "Show flight path" (switch) fades in a dashed guide of the path with a filled dot at the release point, a ring at the catch point, and mono labels "release 14%" and "catch 40%".
-   - Readout at right: "Now" with the current phase (Ada holds, Ada winds up, Disc in flight, Jun has it, Jun winds up, Disc coming back, Ada catches) and "Throws" counting each release.
-10. Reduced motion: no animation. The disc is shown frozen at 55% of the path with its trail behind it, both held discs hidden, the play button disabled, and the phase reads "Held mid-flight".
 
 ## Structure
 
@@ -49,63 +34,6 @@ Studied from acharyasusan.com.np: the small game of catch in her hero valley, wh
 - `section.stage[aria-labelledby=h]`: `div.copy` (h1, p) and `svg.scene[role=img][aria-label]`.
 - In the SVG: `g.sun`, a cloud group, three hill pairs (fill + hatch), `g#tufts`, tent group with `g#flags`, `g.guide`, `g.p-a` and `g.p-b` (the players; each has a `g.arm` holding a `use.held` disc), two `path.trail`, `g.fly > g.tilt > use + path.shine`.
 - `div.bar[role=group][aria-label="Throw controls"]`: `button#play`, `div.seg[role=radiogroup]`, `button#path[aria-pressed]`, `div.read`.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --sky: #dfe7e2;          /* stage, lower sky */
-  --sky-2: #e9eee9;        /* upper sky, cloud fill */
-  --ground: #f1ece0;       /* near field, control bar */
-  --hill-far: #a7b7ad;     /* far band */
-  --hill-mid: #cdd6cd;     /* mid band */
-  --sun: #f6ead2;
-  --ink: #22312c;          /* figures, hatch lines, text */
-  --ink-2: #4d5b55;        /* paragraph, mono labels */
-  --ink-3: #7a8680;
-  --line: rgba(34,49,44,.16);
-  --accent: #d6336c;       /* the disc, trail, flags, "late." */
-  --accent-dk: #a3204f;    /* disc rim */
-
-  /* type */
-  --display: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "Spline Sans Mono", ui-monospace, monospace;
-
-  /* motion */
-  --t: 14s;                                  /* one full there-and-back */
-  --ease: cubic-bezier(.22, 1, .36, 1);      /* UI and sun rise */
-  --flight: cubic-bezier(.3, .55, .55, 1);   /* fast release, floating finish */
-  --wind: cubic-bezier(.6, 0, .9, .5);       /* arm snap at release */
-}
-```
-
-Scene numbers (SVG user units):
-
-| Thing | Value |
-|---|---|
-| Flight path | `M452 574C540 470 660 420 780 430C880 438 940 470 1010 456C1080 444 1120 500 1148 574` |
-| Ada | head r 8 at 424,530; shoulder 432,556; hand and held disc at 452,574 |
-| Jun | the same drawing mirrored with `translate(1600 0) scale(-1 1)` |
-| Disc | ellipse rx 9 ry 3 pink over a rim ellipse 1.2 lower; inner ring rx 5.2 at 60% |
-| Trail | same path, `pathLength="100"`, `stroke-dasharray: var(--len) 300` |
-| Hills | far baseline 470 amp 140; mid baseline 540 amp 80; near baseline 612 amp 16 (quadratic bumps) |
-| Hatches | 5px at −62° (45%), 7px at −28° (45%), 9px at 18° (20%), sun 6px at 35% (30%) |
-| Narrow view | below 760px: `viewBox 390 380 820 260`, `xMidYMax meet`, `overflow: visible` |
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Letter-spacing | Case |
-|---|---|---|---|---|---|---|
-| Headline | Bricolage Grotesque | clamp(36px, 5.4vw, 68px) | 700 | 0.98 | −0.035em | Sentence |
-| Headline accent | same | inherit | 700 | — | — | pink |
-| Paragraph | Bricolage Grotesque | 16px | 500 | 1.5 | 0 | Sentence |
-| Wordmark | Bricolage Grotesque | 18px | 700 | 1 | −0.01em | Title |
-| Header meta | Spline Sans Mono | 12px | 500 | 1 | 0.02em | UPPER |
-| Buttons, switch | Bricolage Grotesque | 14px | 700 / 500 | 1 | 0 | Sentence |
-| Speed chips | Spline Sans Mono | 13px | 500 | 1 | 0 | — |
-| Readout label / value | Spline Sans Mono | 12px / 13px | 500 | 1.3 | 0 | Sentence |
-| Guide labels (SVG) | Spline Sans Mono | 15 units | 400 | — | — | lower |
 
 ## Motion
 
@@ -173,6 +101,84 @@ Controls act on the running animations through the Web Animations API (`document
 - [ ] Players are named Ada (left) and Jun (right) in the phase readout.
 - [ ] Guide labels read "release 14%" and "catch 40%".
 - [ ] Nine bunting flags alternate pink and ink.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame (1280×800): a 68px header ("Fenmoor Disc Club" with a pink disc mark at left, "SUN 10:00 · FENMOOR COMMON · FREE" in mono at right). Below it the stage fills the rest, with a 72px control bar at the bottom.
+2. Headline at the top left of the stage: "Throw it long." / "Catch it *late.*" ("late." in pink), with a 16px line under it.
+3. Scene (SVG, `viewBox 160 180 1280 520`, slice): a hatched sun with an ink outline (r 78), two outline clouds drifting, a far hill band (solid sage + hatch), a mid band (pale sage + hatch), a cream near field with a light hatch and 44 grass tufts, a small tent with a rope of nine bunting flags, and two players about 750 units apart.
+4. Ada (left, facing right) holds the disc. At 6–12% of the cycle her arm winds back to 115°; at 14% it snaps forward to −60° and the disc leaves her hand.
+5. From 14% to 40% the disc flies along an S-shaped path (rises, dips, rises, drops into Jun's hand), tilting through a scripted wobble, with a white glint flicking across it every 0.35s. A pink comet trail follows: a soft 5px stroke (16 units long) and a 1.6px core (7 units long).
+6. At 40% Jun (right, mirrored) reaches −80° and catches. The flying disc hides; the disc in Jun's hand shows.
+7. Jun's cycle is the same, shifted by half: he winds up at 56–62% and throws at 64%. The disc flies the same path backwards to Ada (64% → 90%), and Ada catches at 90%.
+8. Ambient: the sun rises 60px on load (1.6s), clouds drift (110s and 150s), every third tuft sways, the bunting flutters with a 0.17s offset per flag.
+9. Control bar:
+   - Pause/Play (44px square button) pauses and resumes every animation in place.
+   - Speed (radio group 0.5× / 1× / 2×) changes `playbackRate` on every animation, so nothing restarts or drifts out of sync.
+   - "Show flight path" (switch) fades in a dashed guide of the path with a filled dot at the release point, a ring at the catch point, and mono labels "release 14%" and "catch 40%".
+   - Readout at right: "Now" with the current phase (Ada holds, Ada winds up, Disc in flight, Jun has it, Jun winds up, Disc coming back, Ada catches) and "Throws" counting each release.
+10. Reduced motion: no animation. The disc is shown frozen at 55% of the path with its trail behind it, both held discs hidden, the play button disabled, and the phase reads "Held mid-flight".
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --sky: #dfe7e2;          /* stage, lower sky */
+  --sky-2: #e9eee9;        /* upper sky, cloud fill */
+  --ground: #f1ece0;       /* near field, control bar */
+  --hill-far: #a7b7ad;     /* far band */
+  --hill-mid: #cdd6cd;     /* mid band */
+  --sun: #f6ead2;
+  --ink: #22312c;          /* figures, hatch lines, text */
+  --ink-2: #4d5b55;        /* paragraph, mono labels */
+  --ink-3: #7a8680;
+  --line: rgba(34,49,44,.16);
+  --accent: #d6336c;       /* the disc, trail, flags, "late." */
+  --accent-dk: #a3204f;    /* disc rim */
+
+  /* type */
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "Spline Sans Mono", ui-monospace, monospace;
+
+  /* motion */
+  --t: 14s;                                  /* one full there-and-back */
+  --ease: cubic-bezier(.22, 1, .36, 1);      /* UI and sun rise */
+  --flight: cubic-bezier(.3, .55, .55, 1);   /* fast release, floating finish */
+  --wind: cubic-bezier(.6, 0, .9, .5);       /* arm snap at release */
+}
+```
+
+Scene numbers (SVG user units):
+
+| Thing | Value |
+|---|---|
+| Flight path | `M452 574C540 470 660 420 780 430C880 438 940 470 1010 456C1080 444 1120 500 1148 574` |
+| Ada | head r 8 at 424,530; shoulder 432,556; hand and held disc at 452,574 |
+| Jun | the same drawing mirrored with `translate(1600 0) scale(-1 1)` |
+| Disc | ellipse rx 9 ry 3 pink over a rim ellipse 1.2 lower; inner ring rx 5.2 at 60% |
+| Trail | same path, `pathLength="100"`, `stroke-dasharray: var(--len) 300` |
+| Hills | far baseline 470 amp 140; mid baseline 540 amp 80; near baseline 612 amp 16 (quadratic bumps) |
+| Hatches | 5px at −62° (45%), 7px at −28° (45%), 9px at 18° (20%), sun 6px at 35% (30%) |
+| Narrow view | below 760px: `viewBox 390 380 820 260`, `xMidYMax meet`, `overflow: visible` |
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Letter-spacing | Case |
+|---|---|---|---|---|---|---|
+| Headline | Bricolage Grotesque | clamp(36px, 5.4vw, 68px) | 700 | 0.98 | −0.035em | Sentence |
+| Headline accent | same | inherit | 700 | — | — | pink |
+| Paragraph | Bricolage Grotesque | 16px | 500 | 1.5 | 0 | Sentence |
+| Wordmark | Bricolage Grotesque | 18px | 700 | 1 | −0.01em | Title |
+| Header meta | Spline Sans Mono | 12px | 500 | 1 | 0.02em | UPPER |
+| Buttons, switch | Bricolage Grotesque | 14px | 700 / 500 | 1 | 0 | Sentence |
+| Speed chips | Spline Sans Mono | 13px | 500 | 1 | 0 | — |
+| Readout label / value | Spline Sans Mono | 12px / 13px | 500 | 1.3 | 0 | Sentence |
+| Guide labels (SVG) | Spline Sans Mono | 15 units | 400 | — | — | lower |
 
 ## Implementation notes
 

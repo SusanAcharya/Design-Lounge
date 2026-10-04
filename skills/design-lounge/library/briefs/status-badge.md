@@ -4,16 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the washes are the theme's soft colours and the words use the matching on-soft ink. A badge is state, not decoration.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A short queue of Asar loads. Each row is a name, a gate, and one badge. Rice is Cleared. Oil is Held. Salt is Refused. Tea is Booked. The four badges use four different washes because the four loads are in four different states. A list where every row is Held has no Held. The badge is 22px tall, a full pill, 11px type. The row is 56px. This is not a button. Clicking a row is a different piece.
-
-## Reference behaviour
-
-1. The first frame shows the four rows in that order.
-2. Nothing toggles. The badges do not filter the list. Filtering is `filter-toolbar`.
-3. There is no animation and no hover that changes the badge colour.
-4. The badge text is the state. The wash agrees with it. Do not add a second icon that repeats the word.
 
 ## Structure
 
@@ -31,40 +26,6 @@ each row min-height 56, padding 0 16
 - The list is a `ul`. Each row is an `li`.
 - The badge is a `span`. It is not a button.
 - Name is 14px weight 500. Gate is 12px `--ink-2` under the name.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --success-soft: #d6e8dc;
-  --success-on-soft: #1b5e3d;
-  --warning-soft: #f3e6d0;
-  --warning-on-soft: #7d470e;
-  --danger-soft: #f8e4e2;
-  --danger-on-soft: #8a1f1f;
-  --info-soft: #e4eef5;
-  --info-on-soft: #1a4060;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-The badge radius is 999px because a badge is a pill in the component sheet, even when the family's button is square. Do not square it to match the button. The list radius is 2px and does follow the family's card radius.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Name | sans | 14px | 500 | `--ink` |
-| Gate | sans | 12px | 400 | `--ink-2` |
-| Badge | sans | 11px | 500 | the on-soft ink |
-
-Badge letter-spacing is 0.04em. Line-height is 22px, matching the height. The words are not uppercase.
 
 ## Motion
 
@@ -111,6 +72,51 @@ None. Reduced motion has nothing to remove.
 - [ ] The list is 560px. Rows are at least 56px.
 - [ ] Badges are not buttons and do not share one wash.
 - [ ] There is no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the four rows in that order.
+2. Nothing toggles. The badges do not filter the list. Filtering is `filter-toolbar`.
+3. There is no animation and no hover that changes the badge colour.
+4. The badge text is the state. The wash agrees with it. Do not add a second icon that repeats the word.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --success-soft: #d6e8dc;
+  --success-on-soft: #1b5e3d;
+  --warning-soft: #f3e6d0;
+  --warning-on-soft: #7d470e;
+  --danger-soft: #f8e4e2;
+  --danger-on-soft: #8a1f1f;
+  --info-soft: #e4eef5;
+  --info-on-soft: #1a4060;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+The badge radius is 999px because a badge is a pill in the component sheet, even when the family's button is square. Do not square it to match the button. The list radius is 2px and does follow the family's card radius.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Name | sans | 14px | 500 | `--ink` |
+| Gate | sans | 12px | 400 | `--ink-2` |
+| Badge | sans | 11px | 500 | the on-soft ink |
+
+Badge letter-spacing is 0.04em. Line-height is 22px, matching the height. The words are not uppercase.
 
 ## Implementation notes
 

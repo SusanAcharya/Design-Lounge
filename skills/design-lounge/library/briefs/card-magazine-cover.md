@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A back-issue shelf for a fictional coast-and-craft quarterly called Saltgrass. The left column has a big condensed heading and an issue picker with three rows. The right column has one magazine cover at 3:4, drawn completely in HTML, CSS and inline SVG: a full-bleed masthead, an issue strip, a flat poster illustration, a main cover line, three side lines and a printed barcode. Two other issues peek out behind it as rotated coloured sheets. The detail worth copying is the corner: the cover has a real cut corner made with `clip-path`, and a folded flap that grows from 18px to 68px on hover or focus while the whole card lifts 10px. Everything on the cover is sized in container query units, so the cover scales as one printed object.
-
-## Reference behaviour
-
-1. First frame: issue No. 41, "The Heat Issue", June 2026, tomato red. The picker row for No. 41 is checked. A blue and a saffron sheet peek out behind the cover, rotated +3.5deg and -2.5deg.
-2. The cover's bottom-right corner already shows an 18px curl at rest, so the viewer knows it's paper.
-3. Hovering or keyboard-focusing the cover lifts it `translateY(-10px) rotate(-0.6deg)`, deepens its drop shadow, and grows the curl to 68px over 320ms with expo-out. Leaving reverses it.
-4. Clicking a picker row switches the issue. The current cover content fades out and shifts left 4% over 180ms, then the new issue's content fades in from 5% right and 1.02 scale over 420ms. The cover colour changes at the swap point.
-5. The two sheets behind always show the two issues that are not on top.
-6. In the picker, Up/Left and Down/Right arrows move to the previous/next issue, wrapping, and move focus with it (roving tabindex). Only the checked row is in the tab order.
-7. The checked row gets a darker tint and its swatch tilts -4deg and rises 4px.
-8. A visually hidden live region announces "Showing number 42, Night Swimming".
-9. Issue No. 42 uses the mirrored layout: cover lines right-aligned bottom-right, barcode bottom-left, no side lines.
-10. Clicking the cover does nothing (it is a product link in a real shop; here default is prevented).
 
 ## Structure
 
@@ -46,61 +35,6 @@ A back-issue shelf for a fictional coast-and-craft quarterly called Saltgrass. T
 - `.cover`: `aspect-ratio: 3/4`, `container-type: inline-size`, `overflow: hidden`, clipped corner.
 - Inside `.cover > .content`: `.top` strip (issue no, month, price), `p.mast` (`aria-hidden`, the link has the accessible name), `svg.art` (viewBox 0 0 400 300), `.lines` with kicker, `h2.main`, `p.sub`, `.side` with three `p`, `.bar` barcode block.
 - Z-order inside the cover: masthead 1, art 2 (so the sun or moon overlaps the masthead's lower edge), text 3.
-
-## Tokens
-
-```css
-:root {
-  --stage: #d8d1c3;      /* warm concrete */
-  --stage-2: #cbc3b2;
-  --ink: #1c1a17;
-  --ink-2: #4a453d;
-  --line: rgba(28,26,23,.18);
-  --paper: #fbf8f1;      /* barcode label, flap tip */
-  --fold-1: #cfc5b1;     /* flap near the crease */
-  --fold-2: #f3eee3;     /* flap mid */
-
-  /* per issue, set on .cover */
-  --bg: #e84f2f; --fg: #141210; --mast: #f6ebd9; --accent: #f6ebd9; --kick: #141210;   /* No.41 */
-  /* No.42: bg #1e3bb3, fg #f2e9d8, mast #f2e9d8, accent #f2c14e */
-  /* No.43: bg #e8a722, fg #1f2a1e, mast #1f2a1e, accent #6e2810 */
-
-  --display: "Anton", Impact, sans-serif;
-  --sans: "Rethink Sans", system-ui, sans-serif;
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --t-lift: 320ms;
-  --t-out: 180ms;
-  --t-in: 420ms;
-  --curl-rest: 18px;
-  --curl-hover: 68px;
-
-  --space: 4px 8px 16px 24px 32px 48px 80px;
-}
-```
-
-The stage has a 5px dot grain: `radial-gradient(rgba(28,26,23,.05) 1px, transparent 1.2px)` at `5px 5px`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Eyebrow | Rethink Sans | 12px | 600 | 1 | .16em | upper |
-| Page heading | Anton | 88px | 400 | .9 | -.005em | upper |
-| Lede | Rethink Sans | 16px | 400 | 1.55 | 0 | sentence |
-| Picker title | Anton | 20px | 400 | 1.1 | .01em | upper |
-| Picker meta | Rethink Sans | 13px / 12px | 400 / 600 | — | 0 / .12em | — |
-| Cover strip | Rethink Sans | 2.7cqw | 600 | 1 | .14em | upper |
-| Masthead | Anton | 22.4cqw | 400 | .84 | -.01em | upper |
-| Kicker | Rethink Sans | 2.8cqw | 600 | 1 | .16em | upper, `--kick` (falls back to `--accent`) |
-| Main cover line | Anton | 9.6cqw | 400 | .9 | 0 | upper |
-| Sub line | Rethink Sans italic | 3.2cqw | 400 | 1.3 | 0 | sentence |
-| Side line head | Anton | 4.6cqw | 400 | 1 | 0 | upper, `--accent` |
-| Side line body | Rethink Sans | 3cqw | 600 | 1.2 | 0 | sentence |
-| Barcode digits | Rethink Sans | 1.9cqw | 600 | 1 | .12em | — |
-
-At 440px wide, 22.4cqw is ~98px: the masthead spans edge to edge with 4cqw side margins. Do not set the masthead in a fixed px size.
 
 ## Motion
 
@@ -162,6 +96,78 @@ Reduced motion: all durations become 1ms, the lift transform is removed, and the
 - [ ] No. 42 mirrors the layout: lines right, barcode left.
 - [ ] Barcode label `#fbf8f1` reads "9 772031 0451 41" for No. 41.
 - [ ] Stage `#d8d1c3` with a 5px dot grain.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: issue No. 41, "The Heat Issue", June 2026, tomato red. The picker row for No. 41 is checked. A blue and a saffron sheet peek out behind the cover, rotated +3.5deg and -2.5deg.
+2. The cover's bottom-right corner already shows an 18px curl at rest, so the viewer knows it's paper.
+3. Hovering or keyboard-focusing the cover lifts it `translateY(-10px) rotate(-0.6deg)`, deepens its drop shadow, and grows the curl to 68px over 320ms with expo-out. Leaving reverses it.
+4. Clicking a picker row switches the issue. The current cover content fades out and shifts left 4% over 180ms, then the new issue's content fades in from 5% right and 1.02 scale over 420ms. The cover colour changes at the swap point.
+5. The two sheets behind always show the two issues that are not on top.
+6. In the picker, Up/Left and Down/Right arrows move to the previous/next issue, wrapping, and move focus with it (roving tabindex). Only the checked row is in the tab order.
+7. The checked row gets a darker tint and its swatch tilts -4deg and rises 4px.
+8. A visually hidden live region announces "Showing number 42, Night Swimming".
+9. Issue No. 42 uses the mirrored layout: cover lines right-aligned bottom-right, barcode bottom-left, no side lines.
+10. Clicking the cover does nothing (it is a product link in a real shop; here default is prevented).
+
+## Tokens
+
+```css
+:root {
+  --stage: #d8d1c3;      /* warm concrete */
+  --stage-2: #cbc3b2;
+  --ink: #1c1a17;
+  --ink-2: #4a453d;
+  --line: rgba(28,26,23,.18);
+  --paper: #fbf8f1;      /* barcode label, flap tip */
+  --fold-1: #cfc5b1;     /* flap near the crease */
+  --fold-2: #f3eee3;     /* flap mid */
+
+  /* per issue, set on .cover */
+  --bg: #e84f2f; --fg: #141210; --mast: #f6ebd9; --accent: #f6ebd9; --kick: #141210;   /* No.41 */
+  /* No.42: bg #1e3bb3, fg #f2e9d8, mast #f2e9d8, accent #f2c14e */
+  /* No.43: bg #e8a722, fg #1f2a1e, mast #1f2a1e, accent #6e2810 */
+
+  --display: "Anton", Impact, sans-serif;
+  --sans: "Rethink Sans", system-ui, sans-serif;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --t-lift: 320ms;
+  --t-out: 180ms;
+  --t-in: 420ms;
+  --curl-rest: 18px;
+  --curl-hover: 68px;
+
+  --space: 4px 8px 16px 24px 32px 48px 80px;
+}
+```
+
+The stage has a 5px dot grain: `radial-gradient(rgba(28,26,23,.05) 1px, transparent 1.2px)` at `5px 5px`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Eyebrow | Rethink Sans | 12px | 600 | 1 | .16em | upper |
+| Page heading | Anton | 88px | 400 | .9 | -.005em | upper |
+| Lede | Rethink Sans | 16px | 400 | 1.55 | 0 | sentence |
+| Picker title | Anton | 20px | 400 | 1.1 | .01em | upper |
+| Picker meta | Rethink Sans | 13px / 12px | 400 / 600 | — | 0 / .12em | — |
+| Cover strip | Rethink Sans | 2.7cqw | 600 | 1 | .14em | upper |
+| Masthead | Anton | 22.4cqw | 400 | .84 | -.01em | upper |
+| Kicker | Rethink Sans | 2.8cqw | 600 | 1 | .16em | upper, `--kick` (falls back to `--accent`) |
+| Main cover line | Anton | 9.6cqw | 400 | .9 | 0 | upper |
+| Sub line | Rethink Sans italic | 3.2cqw | 400 | 1.3 | 0 | sentence |
+| Side line head | Anton | 4.6cqw | 400 | 1 | 0 | upper, `--accent` |
+| Side line body | Rethink Sans | 3cqw | 600 | 1.2 | 0 | sentence |
+| Barcode digits | Rethink Sans | 1.9cqw | 600 | 1 | .12em | — |
+
+At 440px wide, 22.4cqw is ~98px: the masthead spans edge to edge with 4cqw side margins. Do not set the masthead in a fixed px size.
 
 ## Implementation notes
 

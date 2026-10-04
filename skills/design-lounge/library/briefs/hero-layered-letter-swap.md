@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from wickret.cuberto.com: the huge centred headline whose letters break into offset coloured copies and re-form into a new word, with floating cards and dots drifting around it. This rebuild is for **Brisa**, a fictional travel money card. The hero reads "Money, / Unfolded" and the second word cycles to "Unstuck" and "Unhurried". During a swap, each letter of the old word drops its ink colour and shows two copies, coral up-left and butter down-right, staggered left to right. Then the new word appears scattered and the copies slide home, so the ink letter is whole again. The feeling is a fintech that smiles. The detail worth copying is that the colour copies are pseudo-elements of each letter (`content: attr(data-c)`), so the effect costs no extra DOM and works on any word length.
-
-## Reference behaviour
-
-1. First frame: warm off-white page `#FBF7EF`. Top bar with the two-circle Brisa mark at left, links Cards, Travel, Security, and a mint "Get the app" pill at right. The centre stack reads eyebrow "ONE CARD · 38 CURRENCIES", then the headline "Money," over "Unfolded" at 112px, then a two-line lede, then a three-option segmented control. The top of a white phone card peeks up from the bottom edge.
-2. On load, the letters of "Unfolded" start scattered and gather into place (620ms, 38ms stagger per letter).
-3. Every 3600ms the second word advances: Unfolded → Unstuck → Unhurried → Unfolded. The segmented control follows, with `aria-pressed` on the current word.
-4. A swap has two halves. Scatter: each old letter turns transparent and its coral and butter copies fly out to a random offset (coral −0.04 to −0.14em on x and −0.04 to −0.16em on y, butter +0.04 to +0.14em and +0.04 to +0.16em), 420ms expo-out, 38ms stagger. After `260 + letters × 38` ms the new word is built already scattered, and on the next frame the scatter class is removed, so the copies glide back and fade out over 620ms while the ink colour returns. The stagger is the same.
-5. Clicking a segment swaps to that word right away and restarts the 3600ms timer. Clicking the current word does nothing. Clicks during a swap are ignored until it finishes.
-6. Moving the pointer moves the nine floaters (six dots, three mini cards) by `pointer offset × depth`. Depth runs from −34 to +34px, and each mini card also rotates up to ±8° more. The phone card moves the other way (up to ±10px on x) and lifts 24px. All of it uses 900ms expo-out transitions. Leaving the window settles everything back.
-7. Hovering "Get the app": a dark ink circle grows from the point where the pointer entered (scale 0 → 1.6, 360ms expo-out), the label turns off-white, and the label starts a ticker loop (four copies, 2.4s per loop).
-8. The timer pauses when the tab is hidden.
-9. Reduced motion: no auto-cycle, no scatter. A segment click replaces the word at once. No parallax, no ticker.
 
 ## Structure
 
@@ -43,50 +33,6 @@ Studied from wickret.cuberto.com: the huge centred headline whose letters break 
 - `main.stage` is the whole viewport (`position: absolute; inset: 0; display: grid; place-items: center`). It holds `p.eyebrow`, `h1`, `p.lede`, `div.swap[role=group]`, and a visually hidden `p#live[aria-live=polite]`.
 - `h1` has two `span.line`. The second holds `span.w#word`, which JS fills with one `span.ch[data-c]` per letter, each with `--i`, `--dx1`, `--dy1`, `--dx2`, `--dy2`.
 - `div.phone` is `aria-hidden`. It shows a balance label, "€4,812.60", and three coloured card chips.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #FBF7EF;        /* page */
-  --ink: #0F3D2E;       /* headline, primary text, active segment */
-  --ink-2: #3F5E52;     /* lede, eyebrow, inactive segment */
-  --line: #E8E0D0;      /* segmented control border, phone border */
-  --coral: #FF6B4A;     /* first letter copy, focus, link underline */
-  --butter: #FFC94D;    /* second letter copy */
-  --mint: #BFE6D3;      /* pill rest, mini cards */
-  --card: #FFFFFF;      /* phone, segmented control */
-  /* type */
-  --display: "Unbounded", system-ui, sans-serif;
-  --sans: "Figtree", system-ui, sans-serif;
-  /* space */
-  --s1: 4px; --s2: 8px; --s3: 16px; --s4: 24px; --s5: 40px; --s6: 64px;
-  /* radii */
-  --r-pill: 999px; --r-card: 14px;
-  /* motion */
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --t-scatter: 420ms;
-  --t-gather: 620ms;
-  --stagger: 38ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Headline | Unbounded | 112px | 700 | 0.98 | −0.055em | Sentence |
-| Brand | Unbounded | 20px | 700 | 1 | −0.02em | Title |
-| Phone balance | Unbounded | 30px | 700 | 1.1 | −0.04em | — |
-| Eyebrow | Figtree | 13px | 600 | 1 | 0.14em | Upper |
-| Lede | Figtree | 18px | 400 | 1.5 | 0 | Sentence, max 440px |
-| Nav links | Figtree | 15px | 600 | 1.5 | 0 | Title |
-| Pill / segments | Figtree | 15px / 14px | 700 / 600 | 1 | 0 | Title |
-| Phone label | Figtree | 11px | 600 | 1.4 | 0.06em | Upper |
-
-Unbounded is wide. Keep its tracking negative, or "Unhurried" will not fit at 112px inside 1280px.
 
 ## Motion
 
@@ -157,6 +103,66 @@ A word with N letters fully gathers after about `620 + N × 38` ms. Unlock click
 - [ ] Scatter takes 420ms, gather 620ms, stagger 38ms, all expo-out `cubic-bezier(.16,1,.3,1)`.
 - [ ] The "Get the app" pill is mint `#BFE6D3`. Its ink fill grows from the entry point and the label tickers.
 - [ ] The phone card shows "€4,812.60" and three chips (ink, coral, butter).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: warm off-white page `#FBF7EF`. Top bar with the two-circle Brisa mark at left, links Cards, Travel, Security, and a mint "Get the app" pill at right. The centre stack reads eyebrow "ONE CARD · 38 CURRENCIES", then the headline "Money," over "Unfolded" at 112px, then a two-line lede, then a three-option segmented control. The top of a white phone card peeks up from the bottom edge.
+2. On load, the letters of "Unfolded" start scattered and gather into place (620ms, 38ms stagger per letter).
+3. Every 3600ms the second word advances: Unfolded → Unstuck → Unhurried → Unfolded. The segmented control follows, with `aria-pressed` on the current word.
+4. A swap has two halves. Scatter: each old letter turns transparent and its coral and butter copies fly out to a random offset (coral −0.04 to −0.14em on x and −0.04 to −0.16em on y, butter +0.04 to +0.14em and +0.04 to +0.16em), 420ms expo-out, 38ms stagger. After `260 + letters × 38` ms the new word is built already scattered, and on the next frame the scatter class is removed, so the copies glide back and fade out over 620ms while the ink colour returns. The stagger is the same.
+5. Clicking a segment swaps to that word right away and restarts the 3600ms timer. Clicking the current word does nothing. Clicks during a swap are ignored until it finishes.
+6. Moving the pointer moves the nine floaters (six dots, three mini cards) by `pointer offset × depth`. Depth runs from −34 to +34px, and each mini card also rotates up to ±8° more. The phone card moves the other way (up to ±10px on x) and lifts 24px. All of it uses 900ms expo-out transitions. Leaving the window settles everything back.
+7. Hovering "Get the app": a dark ink circle grows from the point where the pointer entered (scale 0 → 1.6, 360ms expo-out), the label turns off-white, and the label starts a ticker loop (four copies, 2.4s per loop).
+8. The timer pauses when the tab is hidden.
+9. Reduced motion: no auto-cycle, no scatter. A segment click replaces the word at once. No parallax, no ticker.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #FBF7EF;        /* page */
+  --ink: #0F3D2E;       /* headline, primary text, active segment */
+  --ink-2: #3F5E52;     /* lede, eyebrow, inactive segment */
+  --line: #E8E0D0;      /* segmented control border, phone border */
+  --coral: #FF6B4A;     /* first letter copy, focus, link underline */
+  --butter: #FFC94D;    /* second letter copy */
+  --mint: #BFE6D3;      /* pill rest, mini cards */
+  --card: #FFFFFF;      /* phone, segmented control */
+  /* type */
+  --display: "Unbounded", system-ui, sans-serif;
+  --sans: "Figtree", system-ui, sans-serif;
+  /* space */
+  --s1: 4px; --s2: 8px; --s3: 16px; --s4: 24px; --s5: 40px; --s6: 64px;
+  /* radii */
+  --r-pill: 999px; --r-card: 14px;
+  /* motion */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --t-scatter: 420ms;
+  --t-gather: 620ms;
+  --stagger: 38ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Headline | Unbounded | 112px | 700 | 0.98 | −0.055em | Sentence |
+| Brand | Unbounded | 20px | 700 | 1 | −0.02em | Title |
+| Phone balance | Unbounded | 30px | 700 | 1.1 | −0.04em | — |
+| Eyebrow | Figtree | 13px | 600 | 1 | 0.14em | Upper |
+| Lede | Figtree | 18px | 400 | 1.5 | 0 | Sentence, max 440px |
+| Nav links | Figtree | 15px | 600 | 1.5 | 0 | Title |
+| Pill / segments | Figtree | 15px / 14px | 700 / 600 | 1 | 0 | Title |
+| Phone label | Figtree | 11px | 600 | 1.4 | 0.06em | Upper |
+
+Unbounded is wide. Keep its tracking negative, or "Unhurried" will not fit at 112px inside 1280px.
 
 ## Implementation notes
 

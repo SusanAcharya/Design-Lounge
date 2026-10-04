@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A ring of connections for the yard. The hub says Yard. Eight pills sit on a dashed circle: Gate mail, Night book, Month close, Yard map, Store tally, Desk chat, Load bell, Cold room. Gate mail starts pressed and the line reads "Gate mail is connected." Choosing another moves aria-pressed and rewrites the line. The ring does not spin. A grid of the same idea is `integrations-connect`. A logo tape is `logos-mono-marquee`.
-
-## Reference behaviour
-
-1. Gate mail is aria-pressed true.
-2. The caption is "Gate mail is connected."
-3. Clicking a pill presses it and unpresses the others.
-4. The caption becomes the pill name plus " is connected."
-5. The hub is not a button.
-6. The pills do not navigate.
-7. Positions use --i from 0 to 7, 45 degrees apart, 200px from the centre.
 
 ## Structure
 
@@ -33,23 +25,6 @@ caption
 - Hub 120px, fill #1f4d3a.
 - Each node is 92×40, radius 999px.
 - Transform is rotate(i * 45deg) translateY(-200px) rotate(i * -45deg).
-
-## Tokens
-
-```css
-:root {
-  --bg:#f4f1ea; --surface:#fffdf8; --ink:#1a1814; --ink-2:#5c564c;
-  --line:#e3ddd2; --primary:#1f4d3a; --soft:#e7f2ec;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Title | Fraunces | 40px | 560 | 1 | 0 |
-| Node | Public Sans | 13px | 500 | 1 | 0 |
-| Caption | Public Sans | 15px | 400 | 1.4 | 0 |
 
 ## Motion
 
@@ -97,16 +72,6 @@ caption
 - [ ] The hub word is Yard.
 - [ ] Display is Fraunces. Text is Public Sans.
 
-## Implementation notes
-
-Counter-rotate the pill so the label stays upright.
-
-```css
-transform: rotate(calc(var(--i) * 45deg)) translateY(-200px) rotate(calc(var(--i) * -45deg));
-```
-
-Do not animate --i. A moving target is hard to press.
-
 ## Measurements to keep
 
 - Orbit 520px. Ring inset 50px, dashed.
@@ -151,6 +116,47 @@ Do not animate --i. A moving target is hard to press.
 - Display type is Fraunces.
 - Text type is Public Sans.
 - There are eight nodes.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Gate mail is aria-pressed true.
+2. The caption is "Gate mail is connected."
+3. Clicking a pill presses it and unpresses the others.
+4. The caption becomes the pill name plus " is connected."
+5. The hub is not a button.
+6. The pills do not navigate.
+7. Positions use --i from 0 to 7, 45 degrees apart, 200px from the centre.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f4f1ea; --surface:#fffdf8; --ink:#1a1814; --ink-2:#5c564c;
+  --line:#e3ddd2; --primary:#1f4d3a; --soft:#e7f2ec;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Title | Fraunces | 40px | 560 | 1 | 0 |
+| Node | Public Sans | 13px | 500 | 1 | 0 |
+| Caption | Public Sans | 15px | 400 | 1.4 | 0 |
+
+## Implementation notes
+
+Counter-rotate the pill so the label stays upright.
+
+```css
+transform: rotate(calc(var(--i) * 45deg)) translateY(-200px) rotate(calc(var(--i) * -45deg));
+```
+
+Do not animate --i. A moving target is hard to press.
 
 ---
 

@@ -4,26 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A single ticket card for a small music night, "Lowtide Sessions 04", sitting on a night-blue page. The left third is a riso-style tangerine poster with a striped setting sun and a stacked condensed title. A dashed perforation with two half-circle notches separates it from the cream stub. The stub carries the event name, a split-flap countdown to Sat 21 Nov 2026 19:30 Kathmandu time (+05:45), the venue with door times, an "Add to calendar" menu, ticket tiers, a quantity stepper, and a tangerine "Get tickets" button that turns into a ten-minute seat hold. The detail worth copying is the flip digit: each digit is four half-tiles, and only the digits that change flip, so the seconds tick on their own and the days only move at midnight.
-
-## Reference behaviour
-
-1. First frame: the countdown already shows real remaining time (for example `48 : 19 : 15 : 16`). No zeros flash on load; the first render is instant, without flips.
-2. Every second, aligned to the wall clock (`setTimeout(tick, 1000 - Date.now() % 1000 + 5)`), the countdown re-renders. Only digits whose value changed flip.
-3. A flip: the top half of the old digit folds down to 90° in 260ms (ease-in), then the bottom half of the new digit unfolds from 90° to 0 in 300ms (expo out). Total 560ms. The old digit's bottom stays visible until the new bottom lands.
-4. The countdown is computed from `new Date('2026-11-21T19:30:00+05:45')`. Never from a hard-coded day count. When the remaining time reaches 0, every tile reads 00 and the label changes from "Doors open in" to "Doors are open".
-5. A 7px tangerine dot before the label pulses opacity 1 → 0.25 → 1 over 2s, forever. It is the only loop.
-6. "Add to calendar" (40px pill, 1.5px ink outline) opens a menu below it, right-aligned, scale 0.96 → 1 and fade, 240ms expo. Focus moves to the first item.
-7. Menu item 1, "Download calendar file (.ics)", is a real link with `download` and a Blob URL holding a VEVENT (DTSTART 20261121T134500Z, DTEND 20261121T174500Z). Item 2, "Copy date and venue", writes a one-line summary with the Clipboard API.
-8. After either item, the menu closes, focus returns to the button, the button fills ink with cream text, reads "Saved · Sat 21 Nov", and its plus icon becomes a check. If the clipboard is blocked, the live region reads the text aloud instead.
-9. Tiers are radio cards: Standing NPR 1,800 (selected), Balcony NPR 2,600, Early bird (disabled, struck, "Sold out").
-10. The quantity stepper starts at 2, range 1–6. Minus is disabled at 1, plus at 6.
-11. The CTA label and price follow the selection live: "Get 2 standing tickets · NPR 3,600". Prices use `toLocaleString('en-US')` with an "NPR " prefix.
-12. Press the CTA: it reads "Holding seats…" with `aria-busy` for 700ms, then turns ink, reads "Held · 10:00 to pay", and the right side reads "Release". The timer counts down every second. Pressing again releases the hold and restores the price label. At 0:00 the hold releases itself.
-13. Under the CTA, a 4px meter shows 85% sold with "212 of 250 sold · max 6 per order".
-14. Reduced motion: digits swap without flipping, the dot does not pulse, the menu appears without scaling.
 
 ## Structure
 
@@ -55,65 +40,6 @@ A single ticket card for a small music night, "Lowtide Sessions 04", sitting on 
 - `.venue`: a two-column grid, details left and the calendar menu button right.
 - `form.buy`: a `fieldset` of radio cards, a quantity group, the submit button, and the meter.
 - One `p[role=status]` for announcements.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --night: #0f1633;     /* page */
-  --paper: #f1e9d8;     /* stub, digits, sun */
-  --paper-2: #e6dcc6;   /* menu hover, meter track */
-  --ink: #141a33;       /* text, tile bottoms, held CTA */
-  --ink-2: #4a4f66;     /* captions, address */
-  --line: #cdbfa3;      /* rules, perforation, idle tier border */
-  --tang: #ff6a2b;      /* poster, CTA, focus ring, live dot */
-  --tang-ink: #b8410f;  /* colons, CTA bottom edge */
-  --tile: #141a33;      /* flip bottom half */
-  --tile-2: #1d2547;    /* flip top half, a shade lighter */
-  --digit: #f1e9d8;
-
-  /* type */
-  --disp: "Anybody", "Arial Narrow", sans-serif;   /* variable width 50–150 */
-  --mono: "Reddit Mono", ui-monospace, monospace;
-
-  /* flip tile */
-  --fw: 48px; --fh: 72px; --fs: 60px;
-
-  /* space: 4px base */
-  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 18px; --s6: 24px; --s7: 28px;
-
-  /* radius */
-  --r-card: 6px; --r-tile: 6px; --r-field: 8px; --r-menu: 10px; --r-pill: 999px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --fold: cubic-bezier(.55, 0, .9, .4);   /* top half falling */
-  --t-fold: 260ms; --t-land: 300ms; --t-menu: 240ms; --t-micro: 160ms;
-}
-```
-
-Grain: `radial-gradient(rgba(241,233,216,.06) 1px, transparent 1.2px)` at 6px on the page; `radial-gradient(rgba(15,22,51,.22) 1px, transparent 1.4px)` at 5px with `mix-blend-mode: multiply` on the poster.
-
-## Typography
-
-| Role | Family | Size | Weight | Width (`font-stretch`) | Tracking | Case |
-|------|--------|-----:|-------:|------:|---------:|------|
-| Poster title (LOW / TIDE) | Anybody | 108px, lh 0.78 | 900 | 62% | -0.01em | UPPER |
-| Poster "Sessions" | Anybody | 40px | 900 | 140% | 0 | UPPER, cream |
-| Kicker, lineup | Reddit Mono | 11–12px | 600 | – | 0.06–0.14em | UPPER |
-| Event name `h1` | Anybody | 30px | 800 | 110% | 0.01em | UPPER |
-| Date line | Reddit Mono | 12px | 400 | – | 0.04em | sentence |
-| Section labels | Reddit Mono | 11px | 600 | – | 0.14em | UPPER |
-| Flip digit | Anybody | 60px / 72px | 800 | 80% | 0 | numerals |
-| Unit caption | Reddit Mono | 10px | 600 | – | 0.16em | UPPER |
-| Venue name | Anybody | 22px | 800 | 100% | 0 | UPPER |
-| Tier price | Anybody | 18px | 800 | 100% | 0 | as written |
-| CTA | Anybody | 18px | 800 | 115% | 0.02em | UPPER |
-| CTA price | Reddit Mono | 14px | 600 | – | 0 | as written |
-
-Anybody's width axis is the whole voice: narrow for the poster, normal for names, wide for "Sessions" and the CTA. Load it with `wdth,wght@50..150,500..900`.
 
 ## Motion
 
@@ -182,6 +108,86 @@ Tile perspective is 320px on each `.flip`. The 1px dark seam (`::after` at 50%) 
 - [ ] Standing NPR 1,800, Balcony NPR 2,600, Early bird sold out; quantity starts at 2.
 - [ ] Poster `#ff6a2b`, stub `#f1e9d8`, page `#0f1633`, tiles `#1d2547` over `#141a33`.
 - [ ] Hold timer starts at 10:00; meter reads 212 of 250.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the countdown already shows real remaining time (for example `48 : 19 : 15 : 16`). No zeros flash on load; the first render is instant, without flips.
+2. Every second, aligned to the wall clock (`setTimeout(tick, 1000 - Date.now() % 1000 + 5)`), the countdown re-renders. Only digits whose value changed flip.
+3. A flip: the top half of the old digit folds down to 90° in 260ms (ease-in), then the bottom half of the new digit unfolds from 90° to 0 in 300ms (expo out). Total 560ms. The old digit's bottom stays visible until the new bottom lands.
+4. The countdown is computed from `new Date('2026-11-21T19:30:00+05:45')`. Never from a hard-coded day count. When the remaining time reaches 0, every tile reads 00 and the label changes from "Doors open in" to "Doors are open".
+5. A 7px tangerine dot before the label pulses opacity 1 → 0.25 → 1 over 2s, forever. It is the only loop.
+6. "Add to calendar" (40px pill, 1.5px ink outline) opens a menu below it, right-aligned, scale 0.96 → 1 and fade, 240ms expo. Focus moves to the first item.
+7. Menu item 1, "Download calendar file (.ics)", is a real link with `download` and a Blob URL holding a VEVENT (DTSTART 20261121T134500Z, DTEND 20261121T174500Z). Item 2, "Copy date and venue", writes a one-line summary with the Clipboard API.
+8. After either item, the menu closes, focus returns to the button, the button fills ink with cream text, reads "Saved · Sat 21 Nov", and its plus icon becomes a check. If the clipboard is blocked, the live region reads the text aloud instead.
+9. Tiers are radio cards: Standing NPR 1,800 (selected), Balcony NPR 2,600, Early bird (disabled, struck, "Sold out").
+10. The quantity stepper starts at 2, range 1–6. Minus is disabled at 1, plus at 6.
+11. The CTA label and price follow the selection live: "Get 2 standing tickets · NPR 3,600". Prices use `toLocaleString('en-US')` with an "NPR " prefix.
+12. Press the CTA: it reads "Holding seats…" with `aria-busy` for 700ms, then turns ink, reads "Held · 10:00 to pay", and the right side reads "Release". The timer counts down every second. Pressing again releases the hold and restores the price label. At 0:00 the hold releases itself.
+13. Under the CTA, a 4px meter shows 85% sold with "212 of 250 sold · max 6 per order".
+14. Reduced motion: digits swap without flipping, the dot does not pulse, the menu appears without scaling.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --night: #0f1633;     /* page */
+  --paper: #f1e9d8;     /* stub, digits, sun */
+  --paper-2: #e6dcc6;   /* menu hover, meter track */
+  --ink: #141a33;       /* text, tile bottoms, held CTA */
+  --ink-2: #4a4f66;     /* captions, address */
+  --line: #cdbfa3;      /* rules, perforation, idle tier border */
+  --tang: #ff6a2b;      /* poster, CTA, focus ring, live dot */
+  --tang-ink: #b8410f;  /* colons, CTA bottom edge */
+  --tile: #141a33;      /* flip bottom half */
+  --tile-2: #1d2547;    /* flip top half, a shade lighter */
+  --digit: #f1e9d8;
+
+  /* type */
+  --disp: "Anybody", "Arial Narrow", sans-serif;   /* variable width 50–150 */
+  --mono: "Reddit Mono", ui-monospace, monospace;
+
+  /* flip tile */
+  --fw: 48px; --fh: 72px; --fs: 60px;
+
+  /* space: 4px base */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 18px; --s6: 24px; --s7: 28px;
+
+  /* radius */
+  --r-card: 6px; --r-tile: 6px; --r-field: 8px; --r-menu: 10px; --r-pill: 999px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --fold: cubic-bezier(.55, 0, .9, .4);   /* top half falling */
+  --t-fold: 260ms; --t-land: 300ms; --t-menu: 240ms; --t-micro: 160ms;
+}
+```
+
+Grain: `radial-gradient(rgba(241,233,216,.06) 1px, transparent 1.2px)` at 6px on the page; `radial-gradient(rgba(15,22,51,.22) 1px, transparent 1.4px)` at 5px with `mix-blend-mode: multiply` on the poster.
+
+## Typography
+
+| Role | Family | Size | Weight | Width (`font-stretch`) | Tracking | Case |
+|------|--------|-----:|-------:|------:|---------:|------|
+| Poster title (LOW / TIDE) | Anybody | 108px, lh 0.78 | 900 | 62% | -0.01em | UPPER |
+| Poster "Sessions" | Anybody | 40px | 900 | 140% | 0 | UPPER, cream |
+| Kicker, lineup | Reddit Mono | 11–12px | 600 | – | 0.06–0.14em | UPPER |
+| Event name `h1` | Anybody | 30px | 800 | 110% | 0.01em | UPPER |
+| Date line | Reddit Mono | 12px | 400 | – | 0.04em | sentence |
+| Section labels | Reddit Mono | 11px | 600 | – | 0.14em | UPPER |
+| Flip digit | Anybody | 60px / 72px | 800 | 80% | 0 | numerals |
+| Unit caption | Reddit Mono | 10px | 600 | – | 0.16em | UPPER |
+| Venue name | Anybody | 22px | 800 | 100% | 0 | UPPER |
+| Tier price | Anybody | 18px | 800 | 100% | 0 | as written |
+| CTA | Anybody | 18px | 800 | 115% | 0.02em | UPPER |
+| CTA price | Reddit Mono | 14px | 600 | – | 0 | as written |
+
+Anybody's width axis is the whole voice: narrow for the poster, normal for names, wide for "Sessions" and the CTA. Load it with `wdth,wght@50..150,500..900`.
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The boarding pass screen of a fictional airline, Cirrus Air, for flight CA 417 from Kathmandu (KTM) to Bangkok (BKK). The pass is an 800px paper card on a pale sky ground. The left part shows the route in 64px codes with a dotted arc between them and an orange plane that glides halfway along it. Below sit gate, boarding time, group and seat. A dashed tear line with two round notches separates a 240px stub holding the passenger name and a QR code. Under the card, "Unfold details" folds a second sheet down from the card's bottom edge like folded paper, and "Add to Wallet" saves the pass with a short confirmation. The detail worth copying is the fold: the sheet rotates down from `rotateX(-88deg)` while its row grows from `0fr` to `1fr`, so it looks hinged rather than slid.
-
-## Reference behaviour
-
-1. First frame: pass centred, details folded away, button reads "Unfold details", wallet button reads "Add to Wallet". The plane starts at KTM and glides to the middle of the arc over 1600ms (quartic ease out). The solid part of the arc follows behind it.
-2. Pointer enters the pass: the plane replays from the start to the middle over 1200ms.
-3. The "On time" chip has a 6px dot that fades to 25% and back every 2.4s.
-4. Click "Unfold details": `aria-expanded` becomes true, label "Fold details", chevron turns 180°. The details row grows from `0fr` to `1fr` over 420ms and the sheet rotates from `rotateX(-88deg)` to `none` over 520ms, both expo out, hinge at the top edge, perspective 1100px.
-5. Click "Fold details": the reverse.
-6. Click "Add to Wallet": the button shows a spinner and "Adding…" for 700ms, then turns green (`--ok`), shows a check and reads "In Wallet · Remove", `aria-pressed="true"`. The pass dips 10px and back over 620ms. The live region says the pass was added.
-7. Click again while added: it returns to "Add to Wallet", `aria-pressed="false"`, live region "Removed from Wallet." Clicks during the 700ms busy state are ignored.
-8. Reduced motion: plane is placed at the middle at once, no blink, no dip, no fold animation (the sheet appears and disappears instantly), wallet confirms immediately.
 
 ## Structure
 
@@ -42,49 +33,6 @@ The boarding pass screen of a fictional airline, Cirrus Air, for flight CA 417 f
 - Notches: `::before` and `::after` on the pass, 28px circles in `--bg`, centred on the dashed line at top and bottom.
 - `.fold` wrapper (`id="fold-panel"`) holds a `dl.sheet` of eight pairs.
 - `.actions`: two buttons, space-between.
-
-## Tokens
-
-```css
-:root {
-  --bg: #dce5ea;          /* sky ground; notch fill */
-  --paper: #fbfbf8;       /* pass */
-  --paper-2: #f2f3ef;     /* details sheet */
-  --ink: #0f2130;
-  --ink-2: #4f6170;       /* labels */
-  --line: #d3dadf;        /* hairlines, dashed tear line, arc track */
-  --accent: #ff5a1f;      /* plane, group, brand mark, focus */
-  --ok: #1f7a55;          /* on-time chip text, wallet added */
-  --sans: "Familjen Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --r: 18px;
-  --shadow: 0 1px 0 rgba(15,33,48,.06), 0 24px 48px -24px rgba(15,33,48,.35);
-  --std: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --t-fold-row: 420ms;
-  --t-fold-sheet: 520ms;
-  --t-fly: 1600ms;
-}
-```
-
-Spacing: main padding 24px 30px 26px, gap 22px. Stub padding 24px 26px, gap 14px. Sheet padding 20px 26px 22px, gap 16px 20px.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Brand | Familjen Grotesk | 17px | 700 | −.01em | |
-| Labels (GATE, PASSENGER) | IBM Plex Mono | 11px | 500 | .12em | upper, `--ink-2` |
-| Airport code | Familjen Grotesk | 64px / 0.9 | 700 | −.04em | |
-| City + time | Familjen 14px + Plex Mono 14px 500 | | | | time in `--ink` |
-| Duration | IBM Plex Mono | 12px | 500 | 0 | `--ink-2` |
-| Fact value | Familjen Grotesk | 28px | 600 | −.02em | group in `--accent` |
-| Passenger | Familjen Grotesk | 18px | 700 | .02em | upper |
-| Sequence | IBM Plex Mono | 12px / 1.5 | 500 | 0 | |
-| Sheet value | Familjen Grotesk | 15px | 500 | 0 | sub-line 13px `--ink-2` |
-| Buttons | Familjen Grotesk | 15px | 600 | 0 | |
-
-Codes, times and identifiers are mono. Words are grotesk.
 
 ## Motion
 
@@ -149,6 +97,64 @@ Reduced motion: no plane flight (placed at 0.5), no blink, no dip, no fold trans
 - [ ] Details: Terminal 1 International, Gate closes 07:55, 1 × 23 kg checked, Vegetarian, ticket 217 4402 938156, booking QX7RLM, A321neo, Stratus Silver.
 - [ ] Pass 800px wide, stub 240px, radius 18px, notches 28px.
 - [ ] Wallet busy for 700ms then green `#1f7a55`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: pass centred, details folded away, button reads "Unfold details", wallet button reads "Add to Wallet". The plane starts at KTM and glides to the middle of the arc over 1600ms (quartic ease out). The solid part of the arc follows behind it.
+2. Pointer enters the pass: the plane replays from the start to the middle over 1200ms.
+3. The "On time" chip has a 6px dot that fades to 25% and back every 2.4s.
+4. Click "Unfold details": `aria-expanded` becomes true, label "Fold details", chevron turns 180°. The details row grows from `0fr` to `1fr` over 420ms and the sheet rotates from `rotateX(-88deg)` to `none` over 520ms, both expo out, hinge at the top edge, perspective 1100px.
+5. Click "Fold details": the reverse.
+6. Click "Add to Wallet": the button shows a spinner and "Adding…" for 700ms, then turns green (`--ok`), shows a check and reads "In Wallet · Remove", `aria-pressed="true"`. The pass dips 10px and back over 620ms. The live region says the pass was added.
+7. Click again while added: it returns to "Add to Wallet", `aria-pressed="false"`, live region "Removed from Wallet." Clicks during the 700ms busy state are ignored.
+8. Reduced motion: plane is placed at the middle at once, no blink, no dip, no fold animation (the sheet appears and disappears instantly), wallet confirms immediately.
+
+## Tokens
+
+```css
+:root {
+  --bg: #dce5ea;          /* sky ground; notch fill */
+  --paper: #fbfbf8;       /* pass */
+  --paper-2: #f2f3ef;     /* details sheet */
+  --ink: #0f2130;
+  --ink-2: #4f6170;       /* labels */
+  --line: #d3dadf;        /* hairlines, dashed tear line, arc track */
+  --accent: #ff5a1f;      /* plane, group, brand mark, focus */
+  --ok: #1f7a55;          /* on-time chip text, wallet added */
+  --sans: "Familjen Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --r: 18px;
+  --shadow: 0 1px 0 rgba(15,33,48,.06), 0 24px 48px -24px rgba(15,33,48,.35);
+  --std: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fold-row: 420ms;
+  --t-fold-sheet: 520ms;
+  --t-fly: 1600ms;
+}
+```
+
+Spacing: main padding 24px 30px 26px, gap 22px. Stub padding 24px 26px, gap 14px. Sheet padding 20px 26px 22px, gap 16px 20px.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Brand | Familjen Grotesk | 17px | 700 | −.01em | |
+| Labels (GATE, PASSENGER) | IBM Plex Mono | 11px | 500 | .12em | upper, `--ink-2` |
+| Airport code | Familjen Grotesk | 64px / 0.9 | 700 | −.04em | |
+| City + time | Familjen 14px + Plex Mono 14px 500 | | | | time in `--ink` |
+| Duration | IBM Plex Mono | 12px | 500 | 0 | `--ink-2` |
+| Fact value | Familjen Grotesk | 28px | 600 | −.02em | group in `--accent` |
+| Passenger | Familjen Grotesk | 18px | 700 | .02em | upper |
+| Sequence | IBM Plex Mono | 12px / 1.5 | 500 | 0 | |
+| Sheet value | Familjen Grotesk | 15px | 500 | 0 | sub-line 13px `--ink-2` |
+| Buttons | Familjen Grotesk | 15px | 600 | 0 | |
+
+Codes, times and identifiers are mono. Words are grotesk.
 
 ## Implementation notes
 

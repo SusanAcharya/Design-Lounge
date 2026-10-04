@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A code deck for a yard loads request. Three languages share one panel: curl, JavaScript, Python. The gate number 4 is marked. Copy writes the visible panel and the button reads Copied for 1.6 seconds. This is not the docs layout. That layout is `docs-three-column`. This is the fenced sample inside it. Arrow keys move the selected tab.
-
-## Reference behaviour
-
-1. curl is selected. Its panel is visible. The other panels are hidden.
-2. Clicking JavaScript or Python moves aria-selected and shows that panel.
-3. ArrowRight selects the next tab. ArrowLeft selects the previous. Both wrap.
-4. Copy writes the visible text. The button reads Copied, then Copy after 1600ms.
-5. The marked gate number is 4 in every panel.
-6. Nothing is fetched. The samples are text.
-7. There is no line-number gutter.
 
 ## Structure
 
@@ -31,23 +23,6 @@ panel, mono 14px, padding 20px
 - Panels are role tabpanel. Hidden panels use the hidden attribute.
 - Copy sits at the right of the header.
 - The gate number sits in a span with class mark.
-
-## Tokens
-
-```css
-:root {
-  --surface:#161513; --ink:#f4f1ea; --ink-2:#cfc6b8; --line:#3a342c;
-  --primary:#1f4d3a; --mark-bg:#2c3a32; --mark:#d7efe4;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Tab | IBM Plex Sans | 13px | 500 | 1 | 0 |
-| Code | IBM Plex Mono | 14px | 400 | 1.6 | 0 |
-| Copy | IBM Plex Sans | 13px | 500 | 1 | 0 |
 
 ## Motion
 
@@ -95,16 +70,6 @@ panel, mono 14px, padding 20px
 - [ ] Copy becomes Copied.
 - [ ] Mono is IBM Plex Mono. Sans is IBM Plex Sans.
 
-## Implementation notes
-
-Read innerText of the visible panel so the marked number is included.
-
-```js
-await navigator.clipboard.writeText(panels[i].innerText);
-```
-
-If the clipboard is blocked, still flip the label. Do not alert.
-
 ## Measurements to keep
 
 - Deck 640px. Header padding 10px 12px. Tab height 32px.
@@ -149,6 +114,47 @@ If the clipboard is blocked, still flip the label. Do not alert.
 - There is no search inside the deck.
 - Focus ring stays visible on the dark surface.
 - Reduced motion changes nothing, because there is no transition.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. curl is selected. Its panel is visible. The other panels are hidden.
+2. Clicking JavaScript or Python moves aria-selected and shows that panel.
+3. ArrowRight selects the next tab. ArrowLeft selects the previous. Both wrap.
+4. Copy writes the visible text. The button reads Copied, then Copy after 1600ms.
+5. The marked gate number is 4 in every panel.
+6. Nothing is fetched. The samples are text.
+7. There is no line-number gutter.
+
+## Tokens
+
+```css
+:root {
+  --surface:#161513; --ink:#f4f1ea; --ink-2:#cfc6b8; --line:#3a342c;
+  --primary:#1f4d3a; --mark-bg:#2c3a32; --mark:#d7efe4;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Tab | IBM Plex Sans | 13px | 500 | 1 | 0 |
+| Code | IBM Plex Mono | 14px | 400 | 1.6 | 0 |
+| Copy | IBM Plex Sans | 13px | 500 | 1 | 0 |
+
+## Implementation notes
+
+Read innerText of the visible panel so the marked number is included.
+
+```js
+await navigator.clipboard.writeText(panels[i].innerText);
+```
+
+If the clipboard is blocked, still flip the label. Do not alert.
 
 ---
 

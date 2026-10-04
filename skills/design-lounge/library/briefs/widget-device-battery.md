@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A large home-screen widget for Merrow, a household of connected devices, showing every battery at once. Four squishy clay tiles hold progress rings around raised cream pucks: phone, earbuds (three small rings for left, right and case), watch and pen. Charging rings carry a moving highlight and a pulsing bolt badge, and the percentages really climb while you watch. Tapping a tile slides in a detail view with a chunky pill bar per battery, a 24-hour history and three fact chips. The thing worth copying is the clay material: two outer shadows (warm dark bottom-right, light top-left) plus two inset shadows, so every surface looks moulded, and pressing a tile flips it to an inset dent.
-
-## Reference behaviour
-
-1. First frame: header "Batteries", summary "2 charging · 1 low". Tiles in a 2×2 grid: Phone 82% "Charging · 34 min to full"; Pebblepod Pro 61% "Case charging" with L 64%, R 61%, C 38%; Watch 23% "Low · about 3 h left" in terracotta; Pen 91% "Attached to tablet".
-2. Phone ring and Case ring show the charging highlight (a 10-unit dash travelling round the ring every 2.4s) and a sage bolt badge pulsing 1 → 1.12 → 1.
-3. Every 6000ms each charging battery gains 1% (until 100). The ring's dash offset tweens over 600ms, the tile percentage and note update ("34 min" recalculates), and the tile's accessible name updates.
-4. Reaching 100% stops the highlight and badge, and the live region says "Phone fully charged" or "Earbuds Case fully charged". The phone note becomes "Charged".
-5. Earbuds tile shows min(left, right) as its big number, because that is the number that runs out first.
-6. Hover lifts a tile 2px. Pressing squashes it to 0.96 and swaps the outer shadows for inset ones. Release springs back with an overshoot curve.
-7. Clicking a tile: the grid fades and scales to 0.96, the header hides, and the detail view slides in from 28px right. Focus moves to the device name heading.
-8. Detail view: back button (44px clay disc), name and model, big percentage, a status pill ("Charging", "Case charging", "Low battery", "On battery"), one bar per battery (one "Level" bar for single-battery devices), a 12-bar 24-hour history with the latest bar in sage, and three chips: Full in / Lasts, Input / Use, Health.
-9. Charging bars carry a white sweep moving left to right every 1.8s. Low bars (≤ 25%) are terracotta.
-10. Back button or Escape returns to the grid and puts focus back on the tile that was opened.
 
 ## Structure
 
@@ -53,66 +42,6 @@ Detail (replaces grid in the same box):
 - Detail: `div role="region"` labelled by the device `h2` (`tabindex="-1"`), absolutely filling the widget's padding box.
 - While the detail is open, the grid gets `inert` so tiles cannot be tabbed behind it.
 - A visually hidden `aria-live="polite"` paragraph for "fully charged".
-
-## Tokens
-
-```css
-:root {
-  /* clay surfaces */
-  --bg: #dfcfbd;       /* page */
-  --body: #ecdfd0;     /* widget slab */
-  --tile: #f3e9dd;     /* tiles, chips, back button */
-  --puck: #fbf4ea;     /* ring centre */
-  --groove: #e1d2c1;   /* ring track, bar track, history bars */
-
-  /* ink */
-  --ink: #3a2c23;      /* cocoa */
-  --ink-2: #6e5a4b;    /* secondary */
-  --low-ink: #9e4426;  /* low note text */
-
-  /* charge colours */
-  --sage: #5f9468;     /* fill, bolt badge */
-  --sage-hi: #9fcaa2;  /* highlight dash, bar top, current history bar */
-  --clay: #c8603c;     /* low fill */
-  --clay-hi: #eaa284;
-
-  /* light */
-  --hi: rgba(255, 250, 243, .85);
-  --lo: rgba(132, 96, 68, .28);
-  --shadow-slab: 18px 22px 44px rgba(120,86,60,.32), -14px -14px 30px rgba(255,248,238,.6),
-                 inset 3px 3px 6px var(--hi), inset -5px -6px 12px rgba(150,112,82,.2);
-  --shadow-tile: 7px 9px 16px var(--lo), -5px -5px 12px var(--hi),
-                 inset 2px 2px 3px var(--hi), inset -3px -4px 6px rgba(150,112,82,.16);
-  --shadow-pressed: 3px 4px 8px var(--lo), -2px -2px 6px var(--hi),
-                 inset 3px 3px 6px rgba(150,112,82,.22), inset -2px -2px 4px var(--hi);
-
-  /* type */
-  --display: "Fredoka", ui-rounded, system-ui, sans-serif;
-  --sans: "Nunito Sans", system-ui, sans-serif;
-
-  /* shape */
-  --r-slab: 40px; --r-tile: 28px; --r-chip: 20px; --r-bar: 12px;
-  --s-gap: 14px; --s-pad: 22px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --spring: cubic-bezier(.34, 1.56, .64, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Widget title | Fredoka | 22px | 600 | 1 | "Batteries" |
-| Tile percentage | Fredoka | 30px, "%" at 16px | 600 | 1 | tabular |
-| Detail percentage | Fredoka | 64px, "%" at 28px | 600 | 1 | 52px under 480px |
-| Detail name | Fredoka | 22px | 600 | 1.1 | — |
-| Bar value, chip value | Fredoka | 15px / 18px | 600 | 1.3 | tabular |
-| Ring letter (L/R/C) | Fredoka | 12px | 600 | — | — |
-| Device name | Nunito Sans | 14px | 700 | 1.45 | — |
-| Note, summary | Nunito Sans | 12.5px / 13px | 600 | 1.45 | `--ink-2`, low = `--low-ink` |
-| Small labels | Nunito Sans | 11–11.5px | 600–700 | — | `--ink-2` |
 
 ## Motion
 
@@ -176,6 +105,83 @@ The 6-second charge tick is data, not decoration; it keeps running under reduced
 - [ ] Charging batteries gain 1% every 6000ms.
 - [ ] Sage `#5f9468`, terracotta `#c8603c`, cocoa ink `#3a2c23` on clay `#ecdfd0`.
 - [ ] Fredoka for numbers and headings, Nunito Sans for labels.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: header "Batteries", summary "2 charging · 1 low". Tiles in a 2×2 grid: Phone 82% "Charging · 34 min to full"; Pebblepod Pro 61% "Case charging" with L 64%, R 61%, C 38%; Watch 23% "Low · about 3 h left" in terracotta; Pen 91% "Attached to tablet".
+2. Phone ring and Case ring show the charging highlight (a 10-unit dash travelling round the ring every 2.4s) and a sage bolt badge pulsing 1 → 1.12 → 1.
+3. Every 6000ms each charging battery gains 1% (until 100). The ring's dash offset tweens over 600ms, the tile percentage and note update ("34 min" recalculates), and the tile's accessible name updates.
+4. Reaching 100% stops the highlight and badge, and the live region says "Phone fully charged" or "Earbuds Case fully charged". The phone note becomes "Charged".
+5. Earbuds tile shows min(left, right) as its big number, because that is the number that runs out first.
+6. Hover lifts a tile 2px. Pressing squashes it to 0.96 and swaps the outer shadows for inset ones. Release springs back with an overshoot curve.
+7. Clicking a tile: the grid fades and scales to 0.96, the header hides, and the detail view slides in from 28px right. Focus moves to the device name heading.
+8. Detail view: back button (44px clay disc), name and model, big percentage, a status pill ("Charging", "Case charging", "Low battery", "On battery"), one bar per battery (one "Level" bar for single-battery devices), a 12-bar 24-hour history with the latest bar in sage, and three chips: Full in / Lasts, Input / Use, Health.
+9. Charging bars carry a white sweep moving left to right every 1.8s. Low bars (≤ 25%) are terracotta.
+10. Back button or Escape returns to the grid and puts focus back on the tile that was opened.
+
+## Tokens
+
+```css
+:root {
+  /* clay surfaces */
+  --bg: #dfcfbd;       /* page */
+  --body: #ecdfd0;     /* widget slab */
+  --tile: #f3e9dd;     /* tiles, chips, back button */
+  --puck: #fbf4ea;     /* ring centre */
+  --groove: #e1d2c1;   /* ring track, bar track, history bars */
+
+  /* ink */
+  --ink: #3a2c23;      /* cocoa */
+  --ink-2: #6e5a4b;    /* secondary */
+  --low-ink: #9e4426;  /* low note text */
+
+  /* charge colours */
+  --sage: #5f9468;     /* fill, bolt badge */
+  --sage-hi: #9fcaa2;  /* highlight dash, bar top, current history bar */
+  --clay: #c8603c;     /* low fill */
+  --clay-hi: #eaa284;
+
+  /* light */
+  --hi: rgba(255, 250, 243, .85);
+  --lo: rgba(132, 96, 68, .28);
+  --shadow-slab: 18px 22px 44px rgba(120,86,60,.32), -14px -14px 30px rgba(255,248,238,.6),
+                 inset 3px 3px 6px var(--hi), inset -5px -6px 12px rgba(150,112,82,.2);
+  --shadow-tile: 7px 9px 16px var(--lo), -5px -5px 12px var(--hi),
+                 inset 2px 2px 3px var(--hi), inset -3px -4px 6px rgba(150,112,82,.16);
+  --shadow-pressed: 3px 4px 8px var(--lo), -2px -2px 6px var(--hi),
+                 inset 3px 3px 6px rgba(150,112,82,.22), inset -2px -2px 4px var(--hi);
+
+  /* type */
+  --display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --sans: "Nunito Sans", system-ui, sans-serif;
+
+  /* shape */
+  --r-slab: 40px; --r-tile: 28px; --r-chip: 20px; --r-bar: 12px;
+  --s-gap: 14px; --s-pad: 22px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Widget title | Fredoka | 22px | 600 | 1 | "Batteries" |
+| Tile percentage | Fredoka | 30px, "%" at 16px | 600 | 1 | tabular |
+| Detail percentage | Fredoka | 64px, "%" at 28px | 600 | 1 | 52px under 480px |
+| Detail name | Fredoka | 22px | 600 | 1.1 | — |
+| Bar value, chip value | Fredoka | 15px / 18px | 600 | 1.3 | tabular |
+| Ring letter (L/R/C) | Fredoka | 12px | 600 | — | — |
+| Device name | Nunito Sans | 14px | 700 | 1.45 | — |
+| Note, summary | Nunito Sans | 12.5px / 13px | 600 | 1.45 | `--ink-2`, low = `--low-ink` |
+| Small labels | Nunito Sans | 11–11.5px | 600–700 | — | `--ink-2` |
 
 ## Implementation notes
 

@@ -1,6 +1,7 @@
 /* Y2K Chrome · light · no pair
    Ice silver, bevels, one electric blue. Millennium optimism.
    Best for: Music drops, Fashion, Nightlife */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Y2K Chrome · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Michroma", Georgia, serif;
-  --font-text: "Figtree", system-ui, sans-serif;
-  --radius: 14px;
-  --shadow: inset 0 1px 0 #fff, 0 8px 20px -10px rgba(16,19,26,.3);
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

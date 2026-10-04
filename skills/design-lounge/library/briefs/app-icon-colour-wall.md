@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from icon.museum: its "Wall of Icons" page fills the screen edge to edge with icons and shows a name only on hover, and its search indexes icons by colour family. This piece is "Hueboard", which joins those two ideas: a dark wall of 96 generated icons that you can re-sort by hue, from light to dark, or by shape, and every icon flies to its new place. It belongs on a collection or design-tool site where colour is the way people browse. The detail worth copying is the FLIP re-sort with a tiny 4ms stagger, which turns sorting into a single readable sweep instead of a jump.
-
-## Reference behaviour
-
-1. First frame at 1280×800: a 96px-cell grid of 64px icons fills the page under a fading top bar with the wordmark and one line of copy. A floating control bar sits 24px from the bottom centre.
-2. The wall starts "Shuffled", a fixed scatter of hues, plates and shapes.
-3. The control bar has a "Sort" label, a four-button segmented control (Shuffled, By hue, Light to dark, By shape) with the active one in lime, and a pin readout that starts as "Click an icon to pin it".
-4. Clicking a sort button moves every icon from its old position to its new one in 720ms (expo-out), each starting 4ms after the one before (capped at 300ms). Clicking the active button does nothing.
-5. By hue: coloured plates first, ordered by hue from red round to pink; then white plates by glyph hue; then black plates by glyph hue. A 3px spectrum line fades in under the top bar while this sort is active.
-6. Light to dark: white plates, then coloured plates from lightest to darkest, then black plates.
-7. By shape: icons grouped by glyph (Ring, Pair, Peak, Bars, Arch, Cross, Half, Spark, Drop, Bolt, Leaf, Gem), each group ordered by hue.
-8. Hovering the wall dims every icon to 50%. The icon under the pointer stays at 100%, lifts 6px, scales to 1.14 and shows its name 8px below.
-9. Clicking an icon pins it: a 2px lime ring appears around it, and the pin readout shows a 34px copy of the icon, its name and its colour as hex plus shape, in the form "Juniper Deck · #3FA86B · Leaf". Clicking the same icon again unpins it. Only one icon is pinned.
-10. Reduced motion: icons jump to their new place with no flight, there is no lift, and dimming is instant.
 
 ## Structure
 
@@ -45,63 +34,6 @@ Studied from icon.museum: its "Wall of Icons" page fills the screen edge to edge
 - Each cell is a `div` (the element that moves); inside it a `button` with `aria-pressed` for the pin and an `aria-label` like "Moss Loop, peak on colour".
 - The control bar is a fixed `div role="group"` labelled "Wall controls"; the segmented control is buttons with `aria-pressed`; the pin readout is `aria-live="polite"`.
 - The spectrum line is a decorative fixed `div`.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #0e0e10;
-  --panel: #1a1a1d;
-  --ink: #edeae3;
-  --ink-2: #a8a49b;     /* secondary copy; 7.6:1 on --bg */
-  --line: #2a2a2e;
-  --accent: #c8f169;    /* lime: active sort, pin ring, wordmark half */
-  --on-accent: #141a06;
-  --focus: #c8f169;
-  --white-plate: #f2f0ea;
-  --black-plate: #161618;
-  /* type */
-  --display: "Syne", system-ui, sans-serif;
-  --mono: "Azeret Mono", ui-monospace, monospace;
-  /* layout */
-  --tile: 64px; --cell: 100px; --row: 96px;
-  /* shape */
-  --r-bar: 18px; --r-seg: 12px; --r-seg-btn: 9px; --r-pin: 30%;
-  /* shadow */
-  --sh-tile: drop-shadow(0 6px 10px rgba(0,0,0,.45));
-  --sh-bar: 0 20px 50px rgba(0,0,0,.5);
-  /* motion */
-  --expo: cubic-bezier(.16,1,.3,1);
-  --std: cubic-bezier(.2,.7,.2,1);
-  --t-flip: 720ms; --t-stagger: 4ms; --t-stagger-cap: 300ms; --t-hover: 300ms;
-}
-```
-
-Icon generation (seeded, so every visitor sees the same wall):
-
-| Field | Rule |
-| --- | --- |
-| hue | `(i × 137.508 + rand × 20) mod 360` — golden-angle spread |
-| saturation | 50–82% |
-| lightness | 44–60% |
-| plate kind | 64% coloured plate, 20% white plate `#f2f0ea`, 16% black plate `#161618` |
-| glyph colour | white on coloured plates (near-black when lightness > 56 and hue 40–190); the hue on white plates (lightness − 4); the hue lifted +10 lightness on black plates |
-| glyph | `(i × 5 + rand × 12) mod 12` from the twelve shapes |
-| name | prefix from 16 words × suffix from 14 words, e.g. "Saffron Post", "Juniper Deck" |
-| seed | Park–Miller, `seed = seed × 16807 mod 2147483647`, start 7 |
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Wordmark | Syne | 26px | 800 | 1 | -0.02em | Title, "board" in lime |
-| Tagline | Azeret Mono | 12px | 400 | 1.5 | 0 | Sentence, `--ink-2` |
-| Sort label | Azeret Mono | 11px | 400 | 1 | 0.1em | Uppercase, `--ink-2` |
-| Segment | Azeret Mono | 12px | 400 (active 500) | 1 | 0 | Sentence |
-| Hover name | Azeret Mono | 11px | 400 | 1 | 0 | Title |
-| Pin name | Syne | 13px | 600 | 1.2 | 0 | Title |
-| Pin meta | Azeret Mono | 11px | 400 | 1.5 | 0 | Hex uppercase |
 
 ## Motion
 
@@ -165,6 +97,80 @@ The FLIP uses the Web Animations API on the cell, not on the button, so the hove
 - [ ] Sort options read Shuffled, By hue, Light to dark, By shape; Shuffled starts active.
 - [ ] FLIP lasts 720ms with a 4ms stagger capped at 300ms.
 - [ ] Pinning shows "Name · #HEX · Shape" with a 34px icon.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 1280×800: a 96px-cell grid of 64px icons fills the page under a fading top bar with the wordmark and one line of copy. A floating control bar sits 24px from the bottom centre.
+2. The wall starts "Shuffled", a fixed scatter of hues, plates and shapes.
+3. The control bar has a "Sort" label, a four-button segmented control (Shuffled, By hue, Light to dark, By shape) with the active one in lime, and a pin readout that starts as "Click an icon to pin it".
+4. Clicking a sort button moves every icon from its old position to its new one in 720ms (expo-out), each starting 4ms after the one before (capped at 300ms). Clicking the active button does nothing.
+5. By hue: coloured plates first, ordered by hue from red round to pink; then white plates by glyph hue; then black plates by glyph hue. A 3px spectrum line fades in under the top bar while this sort is active.
+6. Light to dark: white plates, then coloured plates from lightest to darkest, then black plates.
+7. By shape: icons grouped by glyph (Ring, Pair, Peak, Bars, Arch, Cross, Half, Spark, Drop, Bolt, Leaf, Gem), each group ordered by hue.
+8. Hovering the wall dims every icon to 50%. The icon under the pointer stays at 100%, lifts 6px, scales to 1.14 and shows its name 8px below.
+9. Clicking an icon pins it: a 2px lime ring appears around it, and the pin readout shows a 34px copy of the icon, its name and its colour as hex plus shape, in the form "Juniper Deck · #3FA86B · Leaf". Clicking the same icon again unpins it. Only one icon is pinned.
+10. Reduced motion: icons jump to their new place with no flight, there is no lift, and dimming is instant.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #0e0e10;
+  --panel: #1a1a1d;
+  --ink: #edeae3;
+  --ink-2: #a8a49b;     /* secondary copy; 7.6:1 on --bg */
+  --line: #2a2a2e;
+  --accent: #c8f169;    /* lime: active sort, pin ring, wordmark half */
+  --on-accent: #141a06;
+  --focus: #c8f169;
+  --white-plate: #f2f0ea;
+  --black-plate: #161618;
+  /* type */
+  --display: "Syne", system-ui, sans-serif;
+  --mono: "Azeret Mono", ui-monospace, monospace;
+  /* layout */
+  --tile: 64px; --cell: 100px; --row: 96px;
+  /* shape */
+  --r-bar: 18px; --r-seg: 12px; --r-seg-btn: 9px; --r-pin: 30%;
+  /* shadow */
+  --sh-tile: drop-shadow(0 6px 10px rgba(0,0,0,.45));
+  --sh-bar: 0 20px 50px rgba(0,0,0,.5);
+  /* motion */
+  --expo: cubic-bezier(.16,1,.3,1);
+  --std: cubic-bezier(.2,.7,.2,1);
+  --t-flip: 720ms; --t-stagger: 4ms; --t-stagger-cap: 300ms; --t-hover: 300ms;
+}
+```
+
+Icon generation (seeded, so every visitor sees the same wall):
+
+| Field | Rule |
+| --- | --- |
+| hue | `(i × 137.508 + rand × 20) mod 360` — golden-angle spread |
+| saturation | 50–82% |
+| lightness | 44–60% |
+| plate kind | 64% coloured plate, 20% white plate `#f2f0ea`, 16% black plate `#161618` |
+| glyph colour | white on coloured plates (near-black when lightness > 56 and hue 40–190); the hue on white plates (lightness − 4); the hue lifted +10 lightness on black plates |
+| glyph | `(i × 5 + rand × 12) mod 12` from the twelve shapes |
+| name | prefix from 16 words × suffix from 14 words, e.g. "Saffron Post", "Juniper Deck" |
+| seed | Park–Miller, `seed = seed × 16807 mod 2147483647`, start 7 |
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Wordmark | Syne | 26px | 800 | 1 | -0.02em | Title, "board" in lime |
+| Tagline | Azeret Mono | 12px | 400 | 1.5 | 0 | Sentence, `--ink-2` |
+| Sort label | Azeret Mono | 11px | 400 | 1 | 0.1em | Uppercase, `--ink-2` |
+| Segment | Azeret Mono | 12px | 400 (active 500) | 1 | 0 | Sentence |
+| Hover name | Azeret Mono | 11px | 400 | 1 | 0 | Title |
+| Pin name | Syne | 13px | 600 | 1.2 | 0 | Title |
+| Pin meta | Azeret Mono | 11px | 400 | 1.5 | 0 | Hex uppercase |
 
 ## Implementation notes
 

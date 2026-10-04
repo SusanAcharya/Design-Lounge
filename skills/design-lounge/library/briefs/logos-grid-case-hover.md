@@ -4,24 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A client logos section for **Hallam & Rowe**, a brand and interiors studio. Eight fictional client wordmarks sit in a 4 × 2 grid, split by brass hairlines on bone paper. Every wordmark is drawn in type or a small inline SVG, each in a different style, all in one near-black ink. Hover, focus or tap a cell and its content slides up by one full cell height: the wordmark leaves at the top and a one-line result comes in from below ("Shipped in 6 weeks"). Above the grid sits a 64px serif heading, "Trusted by *140* teams who build things to last." The feeling is a quiet hotel lobby wall. The detail worth copying is the two-row slide inside each cell: one transform, no fades, no swap of `display`.
 
 This is not `logos-mono-marquee`. Nothing scrolls on its own here. The grid is still until a person asks.
-
-## Reference behaviour
-
-1. First frame: bone page. Kicker "HALLAM & ROWE · SELECTED CLIENTS" in dark brass. Heading on two lines at 64px Cormorant: "Trusted by *140* teams" / "who build things to last." The number is italic 500.
-2. On the right of the heading, a 280px note: "Brand, interiors and digital work for hotels, makers and quiet software since 2014. Hover, focus or tap a name to read the result." Under it an "ALL CASE NOTES →" link with a brass underline.
-3. The grid fills the rest of the frame. 1px solid brass rules at its top and bottom. Inside, 1px brass lines at 55% opacity between cells. No outer side borders.
-4. Each cell shows a small index (01–08) in its top-left corner and the wordmark in the centre.
-5. Hover a cell: its inner stack moves `translateY(-100%)` over 520ms with expo-out. The result face comes up. It has a slightly darker bone fill, a dark brass label ("ORLA · RETAIL"), a 30px serif line ("+64% online orders"), and a small "Read the note →".
-6. Leave the cell: the stack slides back down on the same clock.
-7. Keyboard focus a cell: same slide, plus a 1.5px ink frame inset 6px inside the cell.
-8. Tap a cell on a touch screen: the first tap shows the result and does not follow the link. A second tap on the same cell follows the link. Tapping another cell closes the first.
-9. The index stays fixed in the corner while the faces slide under it.
-10. Reduced motion: the slide is instant. The result still replaces the wordmark.
 
 ## Structure
 
@@ -64,6 +53,87 @@ translateY(0) at rest, translateY(-100%) on hover, focus or .on
 - `.grid`: `ul` with `aria-label="Clients and results"`, `grid-template-columns: repeat(4, minmax(0,1fr))`, `grid-auto-rows: minmax(180px, 1fr)`, `flex: 1` so it takes the rest of the height.
 - Each `li` holds one `a.cell` with `href="#<client>"` and an `aria-label` like "Orla: +64% online orders".
 - Inside the link: `.idx` (aria-hidden), and `.slide` with two `.face` spans.
+
+## Motion
+
+| Thing | Trigger | Property | From → to | Duration | Easing | Reduced motion |
+| --- | --- | --- | --- | --- | --- | --- |
+| Cell stack | hover, focus-visible, `.on` | `transform` | `translateY(0)` → `translateY(-100%)` | 520ms | expo | instant |
+| Cell stack | leave, blur | `transform` | back to 0 | 520ms | expo | instant |
+| Note link arrow | hover | `translateX` | 0 → 3px | 200ms | standard | instant |
+
+No entrance animation. No stagger across cells. The grid is still on load.
+
+## States
+
+- Cell rest: wordmark face shows. Index in the corner.
+- Cell hover: result face shows on `--bone-2`.
+- Cell focus-visible: result face shows, plus a 1.5px ink frame inset 6px. The browser outline is off on the cell because the frame replaces it.
+- Cell tapped once (`.on`): result face shows; the click is cancelled. Blur or a tap on another cell removes `.on`.
+- Cell active (second tap or click): follows the link to the case note.
+- Note link hover: arrow moves 3px right.
+- Empty: with fewer than eight clients, use a 3 × 2 or 2 × 2 grid. Never leave an empty cell.
+- Disabled: not used. Every cell has a result.
+
+## Accessibility
+
+- The grid is a `ul` with a label. Each cell is a link, so it is in tab order and works with Enter.
+- Each link has an `aria-label` of "Client: result", for example "Maison Verre: Shipped in 6 weeks". Without it, the name reads twice (logo and label) plus "Read the note".
+- The index number is `aria-hidden="true"`.
+- The LUMEN SVG has `role="img"` and `aria-label="Lumen"`. Other SVG marks are `aria-hidden` next to real text.
+- No hover-only content: the result shows on hover, on keyboard focus, and on first tap. All three paths are wired.
+- Focus order: note link, then cells 01 to 08 left to right, top to bottom.
+- Contrast: `#17150f` on `#efe9df` is about 15:1. `#4b463c` on `#efe9df` is about 7.8:1. Light brass `#a8874a` is only 2.5:1 on `#e7dfd2`, so it is used for lines only. Small brass text uses `#755a2a`: 5.3:1 on bone, 4.9:1 on the result face.
+- Cells are at least 132px tall on phones, well over a 44px target.
+
+## Responsive rules
+
+- ≥1280: as drawn. 4 × 2, rows `minmax(180px, 1fr)`, padding 64px 72px 56px, heading 64px.
+- 1024 (up to 1279): heading 56px so it stays on two lines. Maison Verre shrinks with its clamp to 16px. Nothing else changes.
+- Up to 1023: padding 48px 40px, heading 52px, result line 25px. Wordmarks step down: orla 34px, Kestrel 30px, Sable 38px.
+- 768 (up to 767): grid becomes 2 × 4. Reset the inner lines: left line on every even cell, top line on every cell after the first two.
+- <640: padding 36px 20px. The head stacks: heading 42px, then the note. Rows are a fixed 132px. Result line 21px, label 10px, and "Read the note" is hidden. Wordmarks step down again so the widest fits a 175px cell.
+- At every width, `scrollWidth` equals the viewport. Wordmarks never wrap inside a cell.
+- Do not switch to a marquee on phones. The point is that every client is visible at once.
+
+## Acceptance checklist
+
+### Always
+
+- [ ] Eight cells in a 4 × 2 grid at 768 and up, 2 × 4 under 768.
+- [ ] Every wordmark is text or inline SVG, one ink colour, and each uses a different type idea.
+- [ ] Brass rules: solid at the grid top and bottom, 55% between cells, none on the outer sides.
+- [ ] Each cell slides its two-face stack by exactly one cell height with one transform.
+- [ ] The slide works on hover, on keyboard focus, and on the first tap.
+- [ ] A second tap follows the link. Tapping another cell closes the first.
+- [ ] Focused cells show an ink frame inset 6px.
+- [ ] Each link has an `aria-label` that reads "Client: result".
+- [ ] Reduced motion makes the slide instant.
+- [ ] No horizontal scroll at 390. No wordmark touches a cell edge at 1280.
+
+### This demo
+
+- [ ] Heading reads "Trusted by 140 teams who build things to last." with 140 in italic.
+- [ ] Clients in order: Maison Verre, Orla, Kestrel & Bow, Halden, North Quay, Sable, Lumen, Ostra Hotels.
+- [ ] Results: "Shipped in 6 weeks", "+64% online orders", "Four stores, one voice", "Won 3 tenders in a year", "Bookings up 2.3×", "Live in 11 markets", "Catalogue in 9 days", "Direct stays +41%".
+- [ ] Labels read "CLIENT · SECTOR", for example "ORLA · RETAIL".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: bone page. Kicker "HALLAM & ROWE · SELECTED CLIENTS" in dark brass. Heading on two lines at 64px Cormorant: "Trusted by *140* teams" / "who build things to last." The number is italic 500.
+2. On the right of the heading, a 280px note: "Brand, interiors and digital work for hotels, makers and quiet software since 2014. Hover, focus or tap a name to read the result." Under it an "ALL CASE NOTES →" link with a brass underline.
+3. The grid fills the rest of the frame. 1px solid brass rules at its top and bottom. Inside, 1px brass lines at 55% opacity between cells. No outer side borders.
+4. Each cell shows a small index (01–08) in its top-left corner and the wordmark in the centre.
+5. Hover a cell: its inner stack moves `translateY(-100%)` over 520ms with expo-out. The result face comes up. It has a slightly darker bone fill, a dark brass label ("ORLA · RETAIL"), a 30px serif line ("+64% online orders"), and a small "Read the note →".
+6. Leave the cell: the stack slides back down on the same clock.
+7. Keyboard focus a cell: same slide, plus a 1.5px ink frame inset 6px inside the cell.
+8. Tap a cell on a touch screen: the first tap shows the result and does not follow the link. A second tap on the same cell follows the link. Tapping another cell closes the first.
+9. The index stays fixed in the corner while the faces slide under it.
+10. Reduced motion: the slide is instant. The result still replaces the wordmark.
 
 ## Tokens
 
@@ -136,70 +206,6 @@ The eight wordmarks. Each one is a different typographic idea. All are `--ink`, 
 | 08 | OSTRA / HOTELS | stacked: Cormorant 600, 30px, 0.08em caps; under it a 1px rule and Jost 10px, 0.5em caps |
 
 Keep the eight optically equal. Wide marks are smaller, short marks are bigger. None should touch the cell edge at 1280.
-
-## Motion
-
-| Thing | Trigger | Property | From → to | Duration | Easing | Reduced motion |
-| --- | --- | --- | --- | --- | --- | --- |
-| Cell stack | hover, focus-visible, `.on` | `transform` | `translateY(0)` → `translateY(-100%)` | 520ms | expo | instant |
-| Cell stack | leave, blur | `transform` | back to 0 | 520ms | expo | instant |
-| Note link arrow | hover | `translateX` | 0 → 3px | 200ms | standard | instant |
-
-No entrance animation. No stagger across cells. The grid is still on load.
-
-## States
-
-- Cell rest: wordmark face shows. Index in the corner.
-- Cell hover: result face shows on `--bone-2`.
-- Cell focus-visible: result face shows, plus a 1.5px ink frame inset 6px. The browser outline is off on the cell because the frame replaces it.
-- Cell tapped once (`.on`): result face shows; the click is cancelled. Blur or a tap on another cell removes `.on`.
-- Cell active (second tap or click): follows the link to the case note.
-- Note link hover: arrow moves 3px right.
-- Empty: with fewer than eight clients, use a 3 × 2 or 2 × 2 grid. Never leave an empty cell.
-- Disabled: not used. Every cell has a result.
-
-## Accessibility
-
-- The grid is a `ul` with a label. Each cell is a link, so it is in tab order and works with Enter.
-- Each link has an `aria-label` of "Client: result", for example "Maison Verre: Shipped in 6 weeks". Without it, the name reads twice (logo and label) plus "Read the note".
-- The index number is `aria-hidden="true"`.
-- The LUMEN SVG has `role="img"` and `aria-label="Lumen"`. Other SVG marks are `aria-hidden` next to real text.
-- No hover-only content: the result shows on hover, on keyboard focus, and on first tap. All three paths are wired.
-- Focus order: note link, then cells 01 to 08 left to right, top to bottom.
-- Contrast: `#17150f` on `#efe9df` is about 15:1. `#4b463c` on `#efe9df` is about 7.8:1. Light brass `#a8874a` is only 2.5:1 on `#e7dfd2`, so it is used for lines only. Small brass text uses `#755a2a`: 5.3:1 on bone, 4.9:1 on the result face.
-- Cells are at least 132px tall on phones, well over a 44px target.
-
-## Responsive rules
-
-- ≥1280: as drawn. 4 × 2, rows `minmax(180px, 1fr)`, padding 64px 72px 56px, heading 64px.
-- 1024 (up to 1279): heading 56px so it stays on two lines. Maison Verre shrinks with its clamp to 16px. Nothing else changes.
-- Up to 1023: padding 48px 40px, heading 52px, result line 25px. Wordmarks step down: orla 34px, Kestrel 30px, Sable 38px.
-- 768 (up to 767): grid becomes 2 × 4. Reset the inner lines: left line on every even cell, top line on every cell after the first two.
-- <640: padding 36px 20px. The head stacks: heading 42px, then the note. Rows are a fixed 132px. Result line 21px, label 10px, and "Read the note" is hidden. Wordmarks step down again so the widest fits a 175px cell.
-- At every width, `scrollWidth` equals the viewport. Wordmarks never wrap inside a cell.
-- Do not switch to a marquee on phones. The point is that every client is visible at once.
-
-## Acceptance checklist
-
-### Always
-
-- [ ] Eight cells in a 4 × 2 grid at 768 and up, 2 × 4 under 768.
-- [ ] Every wordmark is text or inline SVG, one ink colour, and each uses a different type idea.
-- [ ] Brass rules: solid at the grid top and bottom, 55% between cells, none on the outer sides.
-- [ ] Each cell slides its two-face stack by exactly one cell height with one transform.
-- [ ] The slide works on hover, on keyboard focus, and on the first tap.
-- [ ] A second tap follows the link. Tapping another cell closes the first.
-- [ ] Focused cells show an ink frame inset 6px.
-- [ ] Each link has an `aria-label` that reads "Client: result".
-- [ ] Reduced motion makes the slide instant.
-- [ ] No horizontal scroll at 390. No wordmark touches a cell edge at 1280.
-
-### This demo
-
-- [ ] Heading reads "Trusted by 140 teams who build things to last." with 140 in italic.
-- [ ] Clients in order: Maison Verre, Orla, Kestrel & Bow, Halden, North Quay, Sable, Lumen, Ostra Hotels.
-- [ ] Results: "Shipped in 6 weeks", "+64% online orders", "Four stores, one voice", "Won 3 tenders in a year", "Bookings up 2.3×", "Live in 11 markets", "Catalogue in 9 days", "Direct stays +41%".
-- [ ] Labels read "CLIENT · SECTOR", for example "ORLA · RETAIL".
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The home screen of "Mira", a daily planner, in the **Material 3 Expressive** language: warm tonal surfaces instead of hairlines, 28px card radii, a segmented "button group" whose selected segment grows into a full pill, a bottom **floating toolbar** (a detached pill with five icon actions) and an **extended FAB** stacked above it. The feeling is warm and physical: things squash when pressed, shapes morph rather than fade. The detail worth copying is the segmented group: the pressed segment takes 1.7× the flex share and rounds from 16px to a full pill over 500ms with emphasized easing, while a small morphing "loading shape" opens a 44px slot above the cards and the cards dip and return.
-
-## Reference behaviour
-
-1. Initial state: greeting "Morning, Noor." (36px) with the date above it, a 48px avatar button at right. Below: segmented group with **Today** selected, then three tonal cards (primary-container hero, surface-high stats, tertiary-container habits). A floating toolbar pill sits centred 46px from the bottom; an extended FAB "New task" sits at right, 118px from the bottom.
-2. Tap **Week** or **Month**: the previously selected segment shrinks back to flex 1 and 16px radius; the tapped one grows to flex 1.7 and 999px radius, fills `--primary`. Both over 500ms `cubic-bezier(.2,0,0,1)`.
-3. At the same instant a loader slot expands from 0 to 44px height (500ms, same easing) showing a 22px primary-coloured blob that morphs between three border-radius shapes while rotating 180° (1.2s loop). The card stack fades to opacity 0 and moves down 14px / scales to .98.
-4. After 700ms the hero and stats headlines swap to that range's copy ("4 meetings, 2 free afternoons" / "Avg. sleep 6h 48m" for Week; "September: 11 focus days" / "Avg. sleep 7h 02m" for Month), the loader slot collapses and the cards return.
-5. Tap any habit row: the 26px checkbox fills `--tertiary`, morphs from 9px radius to a circle, a check scales in from .5; the label strikes through at 60% opacity. Tap again to undo.
-6. Tap a toolbar action: it becomes the pressed one — background `--primary`, icon white, radius eases from 999px to 16px (500ms). Only one pressed at a time. Inbox carries a "3" badge.
-7. Press-and-hold the FAB or the "Join call" pill: it scales to .95/.96 and its radius rounds further (18→28px, 999→14px respectively) over 160ms, then releases.
-8. The content scrolls beneath the toolbar and FAB; 150px of bottom padding keeps the last card reachable.
 
 ## Structure
 
@@ -73,6 +64,78 @@ Sample content per range (the two swapped headlines are `#c1` in the hero card a
 | Month | September: 11 focus days | Avg. sleep 7h 02m |
 
 Fixed copy: date "Tuesday, 29 September"; greeting "Morning, Noor."; hero eyebrow "Next up · 10:30", body "Room 4B · 3 joined · agenda: onboarding v3." (one line), pill "Join call"; stats eyebrow "Body", tiles 6,420 steps / 5 / 8 glasses / 61 resting bpm; habits eyebrow "Habits · 1 of 3", h2 "14-day streak" (kept short so it clears the FAB's left edge at x≈241), rows "10 minutes of reading" (checked), "Walk after lunch", "Lights out by 23:00"; FAB "New task"; toolbar labels Home, Calendar, Inbox (badge 3), Stats, Profile.
+
+## Motion
+
+| Element              | Trigger        | Property              | From → To                    | Duration | Easing         | Notes |
+|----------------------|----------------|-----------------------|------------------------------|---------:|----------------|-------|
+| `.seg button`        | select         | flex, border-radius   | 1, 16px → 1.7, 999px         | 500ms    | `--ease-emph`  | background/colour swap in 160ms |
+| `.loader`            | select         | height                | 0 → 44px, then back          | 500ms    | `--ease-emph`  | `overflow:hidden` |
+| `.blob`              | while loading  | border-radius, rotate | circle → blob A → blob B → circle, 0→180° | 1200ms loop | `--ease-emph` | 3 keyframes |
+| `.stack .card`       | select         | opacity, transform    | 1, none → 0, translateY(14px) scale(.98) | 500ms | `--ease-emph` | reversed after 700ms |
+| `.chk`               | toggle         | background, radius    | transparent, 9px → tertiary, 50% | 160ms | `--ease-emph` | |
+| `.chk svg`           | toggle         | opacity, scale        | 0, .5 → 1, 1                 | 160ms    | `--ease-emph`  | |
+| `.bar button`        | select         | border-radius         | 999px → 16px                 | 500ms    | `--ease-emph`  | colour 160ms |
+| `.fab`, `.pill`      | :active        | scale, border-radius  | 1, 18px → .95, 28px          | 160ms    | `--ease-emph`  | pill: 999→14px, .96 |
+
+Reduced motion: all transitions and animations to 1ms; the card stack does not dip (opacity stays 1, transform none). The loader slot still opens and closes so the copy swap has a visible cause.
+
+## States
+
+- **Segment selected:** `aria-pressed="true"`, fill `--primary`, text `--on-primary`, flex 1.7, full pill.
+- **Segment pressed (`:active`):** scale .97.
+- **Toolbar action pressed:** `aria-pressed="true"`, fill `--primary`, icon white, 16px radius. Others: transparent, `--on-surface-v`.
+- **Habit checked:** `aria-checked="true"`, checkbox filled circle, label line-through at 60% opacity.
+- **Habit row active:** background `rgba(21,32,5,.08)` (state layer on the tertiary container).
+- **Focus-visible (all buttons):** 3px `--primary` outline, 2px offset.
+- **Loading:** `.loader.on` and `.stack.swap` present together for 700ms.
+
+## Accessibility
+
+- Segmented group: `role="group" aria-label="Range"`, each segment a `<button aria-pressed>`. Do not use radio semantics unless you also implement arrow-key movement.
+- Toolbar: `<nav aria-label="Primary">`, each action has an `aria-label`; the badge count is folded into the label ("Inbox, 3 unread").
+- Habits: `<button role="checkbox" aria-checked>`; Space/Enter toggles natively.
+- The card stack is `aria-live="polite"` so the copy swap is announced once.
+- The loader is `aria-hidden`; loading is implicit from the live region update.
+- Contrast: `--on-surface-v` on `--surface-high` 7.3:1; `--on-primary-c` on `--primary-c` 12:1; white on `--primary` 7.4:1.
+- Hit targets: segments 48px, toolbar actions 56×48, habit rows ≥44px, avatar 48px, FAB 56px.
+
+## Responsive rules
+
+- 390 wide: as specified.
+- 360 wide: toolbar shrinks its actions to 48×48 (total 264px); FAB keeps 56px height; h1 drops to 32px; tiles stay 3-up.
+- ≥ 600 (tablet or large phone): cap content at 480px centred; the toolbar stays centred; the FAB aligns to the content's right edge, not the viewport's.
+- Landscape/short heights: reduce top clearance to `env(safe-area-inset-top)` and allow the toolbar to overlap the last card (padding-bottom stays 150px).
+
+## Acceptance checklist
+
+- [ ] Selected segment has flex 1.7 and 999px radius; unselected have flex 1 and 16px; the change eases over 500ms `cubic-bezier(.2,0,0,1)`.
+- [ ] Selecting a range opens a 44px loader slot with a morphing 22px blob and swaps the two headlines after 700ms.
+- [ ] Cards use 28px radii and are separated only by tonal surface changes (no borders, no shadows).
+- [ ] Hero card is `#FFDBC8` with `#341100` text; habits card is `#DFE9C8` with `#152005` text.
+- [ ] Floating toolbar is a detached 64px pill, centred, bottom edge 46px from the viewport bottom, casting `0 8px 24px rgba(52,17,0,.14)`.
+- [ ] Extended FAB sits at `right:16px; bottom:118px`, 56px tall, 18px radius, and rounds to 28px while pressed.
+- [ ] Only one toolbar action is `aria-pressed="true"` at a time; the pressed one is `#8A4A1D` with a 16px radius.
+- [ ] Habit checkbox morphs from a 9px-radius square to a filled circle on check.
+- [ ] Every button shows a 3px terracotta focus ring on keyboard focus.
+- [ ] Nothing fixed sits within the top 54px or bottom 34px.
+- [ ] `prefers-reduced-motion` removes the blob animation and the card dip while keeping the copy swap.
+- [ ] Content scrolls under the toolbar with 150px bottom padding.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: greeting "Morning, Noor." (36px) with the date above it, a 48px avatar button at right. Below: segmented group with **Today** selected, then three tonal cards (primary-container hero, surface-high stats, tertiary-container habits). A floating toolbar pill sits centred 46px from the bottom; an extended FAB "New task" sits at right, 118px from the bottom.
+2. Tap **Week** or **Month**: the previously selected segment shrinks back to flex 1 and 16px radius; the tapped one grows to flex 1.7 and 999px radius, fills `--primary`. Both over 500ms `cubic-bezier(.2,0,0,1)`.
+3. At the same instant a loader slot expands from 0 to 44px height (500ms, same easing) showing a 22px primary-coloured blob that morphs between three border-radius shapes while rotating 180° (1.2s loop). The card stack fades to opacity 0 and moves down 14px / scales to .98.
+4. After 700ms the hero and stats headlines swap to that range's copy ("4 meetings, 2 free afternoons" / "Avg. sleep 6h 48m" for Week; "September: 11 focus days" / "Avg. sleep 7h 02m" for Month), the loader slot collapses and the cards return.
+5. Tap any habit row: the 26px checkbox fills `--tertiary`, morphs from 9px radius to a circle, a check scales in from .5; the label strikes through at 60% opacity. Tap again to undo.
+6. Tap a toolbar action: it becomes the pressed one — background `--primary`, icon white, radius eases from 999px to 16px (500ms). Only one pressed at a time. Inbox carries a "3" badge.
+7. Press-and-hold the FAB or the "Join call" pill: it scales to .95/.96 and its radius rounds further (18→28px, 999→14px respectively) over 160ms, then releases.
+8. The content scrolls beneath the toolbar and FAB; 150px of bottom padding keeps the last card reachable.
 
 ## Tokens
 
@@ -144,63 +207,6 @@ Fixed copy: date "Tuesday, 29 September"; greeting "Morning, Noor."; hero eyebro
 | Tile label      | Rubik  | 12px | 400    | 1.3         | 0        | lowercase |
 | Pill / FAB      | Rubik  | 15px | 500    | 1           | 0        | sentence  |
 | Badge           | Rubik  | 10px | 600    | 16px        | 0        | numerals  |
-
-## Motion
-
-| Element              | Trigger        | Property              | From → To                    | Duration | Easing         | Notes |
-|----------------------|----------------|-----------------------|------------------------------|---------:|----------------|-------|
-| `.seg button`        | select         | flex, border-radius   | 1, 16px → 1.7, 999px         | 500ms    | `--ease-emph`  | background/colour swap in 160ms |
-| `.loader`            | select         | height                | 0 → 44px, then back          | 500ms    | `--ease-emph`  | `overflow:hidden` |
-| `.blob`              | while loading  | border-radius, rotate | circle → blob A → blob B → circle, 0→180° | 1200ms loop | `--ease-emph` | 3 keyframes |
-| `.stack .card`       | select         | opacity, transform    | 1, none → 0, translateY(14px) scale(.98) | 500ms | `--ease-emph` | reversed after 700ms |
-| `.chk`               | toggle         | background, radius    | transparent, 9px → tertiary, 50% | 160ms | `--ease-emph` | |
-| `.chk svg`           | toggle         | opacity, scale        | 0, .5 → 1, 1                 | 160ms    | `--ease-emph`  | |
-| `.bar button`        | select         | border-radius         | 999px → 16px                 | 500ms    | `--ease-emph`  | colour 160ms |
-| `.fab`, `.pill`      | :active        | scale, border-radius  | 1, 18px → .95, 28px          | 160ms    | `--ease-emph`  | pill: 999→14px, .96 |
-
-Reduced motion: all transitions and animations to 1ms; the card stack does not dip (opacity stays 1, transform none). The loader slot still opens and closes so the copy swap has a visible cause.
-
-## States
-
-- **Segment selected:** `aria-pressed="true"`, fill `--primary`, text `--on-primary`, flex 1.7, full pill.
-- **Segment pressed (`:active`):** scale .97.
-- **Toolbar action pressed:** `aria-pressed="true"`, fill `--primary`, icon white, 16px radius. Others: transparent, `--on-surface-v`.
-- **Habit checked:** `aria-checked="true"`, checkbox filled circle, label line-through at 60% opacity.
-- **Habit row active:** background `rgba(21,32,5,.08)` (state layer on the tertiary container).
-- **Focus-visible (all buttons):** 3px `--primary` outline, 2px offset.
-- **Loading:** `.loader.on` and `.stack.swap` present together for 700ms.
-
-## Accessibility
-
-- Segmented group: `role="group" aria-label="Range"`, each segment a `<button aria-pressed>`. Do not use radio semantics unless you also implement arrow-key movement.
-- Toolbar: `<nav aria-label="Primary">`, each action has an `aria-label`; the badge count is folded into the label ("Inbox, 3 unread").
-- Habits: `<button role="checkbox" aria-checked>`; Space/Enter toggles natively.
-- The card stack is `aria-live="polite"` so the copy swap is announced once.
-- The loader is `aria-hidden`; loading is implicit from the live region update.
-- Contrast: `--on-surface-v` on `--surface-high` 7.3:1; `--on-primary-c` on `--primary-c` 12:1; white on `--primary` 7.4:1.
-- Hit targets: segments 48px, toolbar actions 56×48, habit rows ≥44px, avatar 48px, FAB 56px.
-
-## Responsive rules
-
-- 390 wide: as specified.
-- 360 wide: toolbar shrinks its actions to 48×48 (total 264px); FAB keeps 56px height; h1 drops to 32px; tiles stay 3-up.
-- ≥ 600 (tablet or large phone): cap content at 480px centred; the toolbar stays centred; the FAB aligns to the content's right edge, not the viewport's.
-- Landscape/short heights: reduce top clearance to `env(safe-area-inset-top)` and allow the toolbar to overlap the last card (padding-bottom stays 150px).
-
-## Acceptance checklist
-
-- [ ] Selected segment has flex 1.7 and 999px radius; unselected have flex 1 and 16px; the change eases over 500ms `cubic-bezier(.2,0,0,1)`.
-- [ ] Selecting a range opens a 44px loader slot with a morphing 22px blob and swaps the two headlines after 700ms.
-- [ ] Cards use 28px radii and are separated only by tonal surface changes (no borders, no shadows).
-- [ ] Hero card is `#FFDBC8` with `#341100` text; habits card is `#DFE9C8` with `#152005` text.
-- [ ] Floating toolbar is a detached 64px pill, centred, bottom edge 46px from the viewport bottom, casting `0 8px 24px rgba(52,17,0,.14)`.
-- [ ] Extended FAB sits at `right:16px; bottom:118px`, 56px tall, 18px radius, and rounds to 28px while pressed.
-- [ ] Only one toolbar action is `aria-pressed="true"` at a time; the pressed one is `#8A4A1D` with a 16px radius.
-- [ ] Habit checkbox morphs from a 9px-radius square to a filled circle on check.
-- [ ] Every button shows a 3px terracotta focus ring on keyboard focus.
-- [ ] Nothing fixed sits within the top 54px or bottom 34px.
-- [ ] `prefers-reduced-motion` removes the blob animation and the card dip while keeping the copy swap.
-- [ ] Content scrolls under the toolbar with 150px bottom padding.
 
 ## Implementation notes
 

@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The members page of a workspace admin console ("Keystone"). Twenty-four people in a crisp white panel, eight per page. A checkbox column supports shift-click range selection like a mail client; each role is a borderless native select that saves the moment it changes; an invite row sits at the top of the body so adding someone happens in the table, not in a modal. Selection shows in the header as a count with Select all 24, Clear and Remove. The detail worth copying is the range selection: shift-click, Shift+Space and Shift+Arrow all extend from an anchor, and it works the same with mouse and keyboard.
-
-## Reference behaviour
-
-1. First frame: sorted by Name, ascending; page 1 of 3; Chloe Varga, Dario Monti and Elif Aydin are selected. The header shows "3 selected", Select all 24, Clear, Remove. The select-all checkbox is indeterminate.
-2. Clicking a checkbox toggles that member and sets it as the anchor.
-3. Shift-clicking another checkbox on the same page sets every row between the anchor and it to the clicked box's new state. The live region says "5 rows selected. 5 selected."
-4. Keyboard: on a row checkbox, ArrowUp/ArrowDown move focus to the neighbouring row checkbox. Shift+ArrowDown/Up selects the current and next row and moves focus. Shift+Space selects the range from the anchor to the focused row.
-5. The select-all checkbox toggles the current page only. When anything is selected and not everything, a Select all 24 button selects every member across pages.
-6. Remove deletes the selected members except the Owner and announces the count. Clear empties the selection and returns focus to select-all.
-7. With nothing selected, the header shows a hint: "Shift + click selects a range".
-8. Each role cell is a native `select` with no visible border until hover. Changing it updates the member, flashes a green "saved" label beside it for 1.4s, and announces "Dario Monti is now Admin". The Owner's select is disabled and has no chevron. Owner is not offered in other menus.
-9. Invite row: an email field, a role select (default Editor) and a black Send invite button. An invalid address shows "Enter a full email address, like sam@keystone.co" in red under the field and sets `aria-invalid`. A duplicate shows "That person is already a member". A valid address adds an Invited member, sorts by Last active descending so they appear first, flashes the new row pale yellow for 1.2s, keeps focus in the email field, and announces it.
-10. Name, Role, Status and Last active sort; a second click reverses. Role sorts by rank (Owner, Admin, Editor, Viewer, Billing). Sorting returns to page 1.
-11. Pagination shows "1–8 of 24", previous, numbered pages, next. The current page has an ink outline and `aria-current="page"`. Previous is disabled on page 1, next on the last page. Selection persists across pages.
 
 ## Structure
 
@@ -48,50 +36,6 @@ page #EEF0F3, padding 28px, panel max-width 1100px, radius 10px
 - Each member row: checkbox, identity (avatar square, name, mono email), role `select`, team text, status dot, mono last-active.
 - Footer: a range `span` and `nav aria-label="Pages"` with buttons.
 - A hidden polite live region.
-
-## Tokens
-
-```css
-:root {
-  --bg: #eef0f3;
-  --surface: #fdfdfe;
-  --sunk: #f6f7f9;          /* thead, row hover */
-  --ink: #0d0f14;
-  --ink-2: #454b57;
-  --ink-3: #626977;
-  --line: #e3e6eb;
-  --line-2: #cfd3da;
-  --accent: #1747e5;        /* cobalt: checks, focus, active sort */
-  --accent-soft: #edf1ff;   /* selected row */
-  --accent-line: #c4d0fb;   /* selected row rule */
-  --ok: #127a4a;  --warn: #9a5b00;  --bad: #b42318;
-  --flash: #fff6d6;
-  --sans: "Geist", system-ui, sans-serif;
-  --mono: "Geist Mono", ui-monospace, monospace;
-  --r: 6px; --r-panel: 10px;
-  --row: 52px; --thead: 38px; --control: 32px;
-  --ease: cubic-bezier(.2,.7,.2,1);
-}
-```
-
-Avatar tints cycle: `#dfe6ff`, `#e3f1e8`, `#fbe9d0`, `#f3e0ea`, `#e4e7ec`, `#dff2f4`.
-
-## Typography
-
-| Role | Family | Size | Weight | Notes |
-| --- | --- | --- | --- | --- |
-| Breadcrumb | Geist Mono | 12px | 400 | `--ink-3` |
-| Title | Geist | 20px | 600 | -0.015em |
-| Count badge | Geist Mono | 12px | 500 | 1px `--line` box |
-| Column header | Geist | 12px | 500 | sentence case, `--ink-3` |
-| Name | Geist | 14px | 500 | — |
-| Email, last active, range | Geist Mono | 12px | 400 | `--ink-3` |
-| Role select | Geist | 14px | 500 | — |
-| Status | Geist | 13px | 400 | 6px dot |
-| Buttons | Geist | 13px | 500 | 32px tall |
-| Page numbers | Geist Mono | 13px | 500 | 32px squares |
-
-Column headers are sentence case, not caps. The mono face carries every machine value: emails, times, ranges, page numbers.
 
 ## Motion
 
@@ -154,6 +98,68 @@ Nothing slides. Reduced motion: transitions 1ms, flash removed.
 - [ ] Ada Brennan is Owner with a disabled role.
 - [ ] Rows 52px, thead 38px, invite row 56px, panel radius 10px.
 - [ ] Inviting noor.ali@keystone.co puts Noor Ali first as Invited, role Editor.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: sorted by Name, ascending; page 1 of 3; Chloe Varga, Dario Monti and Elif Aydin are selected. The header shows "3 selected", Select all 24, Clear, Remove. The select-all checkbox is indeterminate.
+2. Clicking a checkbox toggles that member and sets it as the anchor.
+3. Shift-clicking another checkbox on the same page sets every row between the anchor and it to the clicked box's new state. The live region says "5 rows selected. 5 selected."
+4. Keyboard: on a row checkbox, ArrowUp/ArrowDown move focus to the neighbouring row checkbox. Shift+ArrowDown/Up selects the current and next row and moves focus. Shift+Space selects the range from the anchor to the focused row.
+5. The select-all checkbox toggles the current page only. When anything is selected and not everything, a Select all 24 button selects every member across pages.
+6. Remove deletes the selected members except the Owner and announces the count. Clear empties the selection and returns focus to select-all.
+7. With nothing selected, the header shows a hint: "Shift + click selects a range".
+8. Each role cell is a native `select` with no visible border until hover. Changing it updates the member, flashes a green "saved" label beside it for 1.4s, and announces "Dario Monti is now Admin". The Owner's select is disabled and has no chevron. Owner is not offered in other menus.
+9. Invite row: an email field, a role select (default Editor) and a black Send invite button. An invalid address shows "Enter a full email address, like sam@keystone.co" in red under the field and sets `aria-invalid`. A duplicate shows "That person is already a member". A valid address adds an Invited member, sorts by Last active descending so they appear first, flashes the new row pale yellow for 1.2s, keeps focus in the email field, and announces it.
+10. Name, Role, Status and Last active sort; a second click reverses. Role sorts by rank (Owner, Admin, Editor, Viewer, Billing). Sorting returns to page 1.
+11. Pagination shows "1–8 of 24", previous, numbered pages, next. The current page has an ink outline and `aria-current="page"`. Previous is disabled on page 1, next on the last page. Selection persists across pages.
+
+## Tokens
+
+```css
+:root {
+  --bg: #eef0f3;
+  --surface: #fdfdfe;
+  --sunk: #f6f7f9;          /* thead, row hover */
+  --ink: #0d0f14;
+  --ink-2: #454b57;
+  --ink-3: #626977;
+  --line: #e3e6eb;
+  --line-2: #cfd3da;
+  --accent: #1747e5;        /* cobalt: checks, focus, active sort */
+  --accent-soft: #edf1ff;   /* selected row */
+  --accent-line: #c4d0fb;   /* selected row rule */
+  --ok: #127a4a;  --warn: #9a5b00;  --bad: #b42318;
+  --flash: #fff6d6;
+  --sans: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+  --r: 6px; --r-panel: 10px;
+  --row: 52px; --thead: 38px; --control: 32px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+```
+
+Avatar tints cycle: `#dfe6ff`, `#e3f1e8`, `#fbe9d0`, `#f3e0ea`, `#e4e7ec`, `#dff2f4`.
+
+## Typography
+
+| Role | Family | Size | Weight | Notes |
+| --- | --- | --- | --- | --- |
+| Breadcrumb | Geist Mono | 12px | 400 | `--ink-3` |
+| Title | Geist | 20px | 600 | -0.015em |
+| Count badge | Geist Mono | 12px | 500 | 1px `--line` box |
+| Column header | Geist | 12px | 500 | sentence case, `--ink-3` |
+| Name | Geist | 14px | 500 | — |
+| Email, last active, range | Geist Mono | 12px | 400 | `--ink-3` |
+| Role select | Geist | 14px | 500 | — |
+| Status | Geist | 13px | 400 | 6px dot |
+| Buttons | Geist | 13px | 500 | 32px tall |
+| Page numbers | Geist Mono | 13px | 500 | 32px squares |
+
+Column headers are sentence case, not caps. The mono face carries every machine value: emails, times, ranges, page numbers.
 
 ## Implementation notes
 

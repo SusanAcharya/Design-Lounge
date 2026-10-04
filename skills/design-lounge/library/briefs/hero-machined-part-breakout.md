@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from mwdtinc.com: the dark rounded hero card with a machined part that hangs out of the card's bottom edge, and the headline set as one light caps line over one heavy caps line. This rebuild is for **Kestrom**, a fictional precision machine shop. The part is an isometric steel manifold block drawn in inline SVG, and it carries three numbered hotspots; picking one draws an amber leader line to a callout with the real tolerance for that feature. The feeling is a spec sheet with a pulse: graphite, bone and one hi-vis amber. The detail worth copying is the breakout — the part's z-index sits above the card, so its lower third lands on the light page and casts a floor shadow there.
-
-## Reference behaviour
-
-1. First frame: bone page `#E9E6DF`, a graphite card inset 16px on all sides, 620px tall, 18px radius. Nav inside the card. Headline "MACHINED TO THE" (Archivo 300) over "LAST MICRON" (Archivo 900), both 84px caps.
-2. The steel block sits bottom-left, 440×440px, starting 320px down the card. Its lower ~150px hangs below the card onto the bone page. A soft elliptical floor shadow sits under it on the page.
-3. Hotspot 1 (centre bore) starts pressed: amber dot, amber leader line, callout "01 · CENTRE BORE / Ø 24.000 / H7 · +0.021 / −0.000 mm" to the right of the block.
-4. Hover or click hotspot 2 or 3: the leader line redraws from the new dot (stroke-dashoffset 360 → 0, 500ms expo out), the callout fades out (200ms), its text swaps after 140ms, and it slides to the new `top` (450ms expo out) while fading back in.
-5. Hotspot copy: 2 = "02 · Flange port / Ø 46.000 / 6 × M5 on a 60 mm PCD"; 3 = "03 · Milled pocket / Ra 0.4 / µm finish · flat to 0.004".
-6. Moving the pointer anywhere tilts the block up to ±5° rotateY and ±3.5° rotateX (perspective 1400px), 500ms expo out. The faint hexagon linework behind the headline drifts the opposite way up to 9px. Leaving the window resets both.
-7. Right column: a 19px lede, a bone "REQUEST A QUOTE →" button and a text link "OR UPLOAD A STEP FILE". The arrow nudges 3px right on hover.
-8. Under the lede, a 3-column spec row with a hairline top: "±0.003 mm held on bores", "48 h first article", "AS9100 rev D certified".
-9. On the bone page below the card, right side: "Parts in service with 140 teams in" then five industries in 12px tracked caps.
-10. Reduced motion: no tilt, no drift, no line draw; a hotspot swaps the callout instantly.
 
 ## Structure
 
@@ -46,57 +35,6 @@ Studied from mwdtinc.com: the dark rounded hero card with a machined part that h
 - `.stage` is a sibling of the card, absolutely placed at left 72px, top 336px, 640×460, `z-index: 4` so it paints over the card and the page.
 - Inside `.stage`, `.part` (the tilting layer) holds: `.floor` shadow, the block `svg[role=img]`, the `svg.leader` overlay, three `button.hot`, and `div.callout[role=status]`.
 - `p.below` sits on the bone page at left 776px, top 668px.
-
-## Tokens
-
-```css
-:root {
-  --page: #e9e6df;      /* bone page outside the card */
-  --card: #1d1e20;      /* graphite hero card */
-  --bone: #f1eee7;      /* primary button fill, type on card */
-  --ink: #1d1e20;       /* type on page */
-  --ink-2: #55575b;     /* industry list */
-  --on-card: #f1eee7;
-  --on-card-2: #a9aaa6; /* spec captions, callout key */
-  --line-card: rgba(241, 238, 231, 0.14);
-  --amber: #f2a900;     /* the one accent: active hotspot, leader, logo chevrons, focus */
-
-  --display: "Archivo", "Arial Narrow", sans-serif;  /* wdth 112 */
-  --sans: "Barlow", system-ui, sans-serif;
-
-  --r-card: 18px;
-  --r-btn: 5px;
-  --card-h: 620px;
-  --inset: 16px;
-
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --t-micro: 160ms;
-  --t-line: 500ms;
-  --t-slide: 450ms;
-}
-```
-
-Steel gradients (SVG): top face `#F3F3F1 → #CFD1D2 → #B3B6B9` (diagonal), left face `#8D9196 → #B9BCBF → #9A9EA2`, right face `#4C5157 → #6C7176 → #3B3F44`. Holes use a radial `#15171A → #2B2E32 → #5D6166`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|---|---|---:|---:|---:|---:|---|
-| Headline line 1 | Archivo wdth 112 | 84px | 300 | 0.94 | 0.01em | UPPER |
-| Headline line 2 | Archivo wdth 112 | 84px | 900 | 0.94 | 0.01em | UPPER |
-| Wordmark | Archivo | 22px | 900 | 1 | 0.02em | UPPER |
-| Nav links | Barlow | 13px | 600 | 1 | 0.12em | UPPER |
-| Lede | Barlow | 19px | 400 (name 600) | 1.38 | 0 | sentence |
-| Button | Barlow | 15px | 600 | 1 | 0.06em | UPPER |
-| Text link | Barlow | 13px | 600 | 1 | 0.10em | UPPER |
-| Spec value | Archivo | 22px | 900 | 1 | 0, tabular | as written |
-| Spec caption | Barlow | 13px | 400 | 1.45 | 0.02em | sentence |
-| Callout key | Barlow | 11px | 600 | 1 | 0.14em | UPPER |
-| Callout value | Archivo | 28px | 800 | 1 | −0.01em, tabular | as written |
-| Callout tolerance | Barlow | 13px | 400 | 1.45 | tabular | as written |
-
-The two headline lines are the same size. Only weight changes. Do not shrink the light line.
 
 ## Motion
 
@@ -161,6 +99,74 @@ Pointer events are coalesced in `requestAnimationFrame`. Touch pointers do not t
 - [ ] Hotspot copy is Ø 24.000 / Ø 46.000 / Ra 0.4 as listed in Reference behaviour.
 - [ ] Spec row reads ±0.003, 48 h, AS9100.
 - [ ] Accent `#F2A900`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: bone page `#E9E6DF`, a graphite card inset 16px on all sides, 620px tall, 18px radius. Nav inside the card. Headline "MACHINED TO THE" (Archivo 300) over "LAST MICRON" (Archivo 900), both 84px caps.
+2. The steel block sits bottom-left, 440×440px, starting 320px down the card. Its lower ~150px hangs below the card onto the bone page. A soft elliptical floor shadow sits under it on the page.
+3. Hotspot 1 (centre bore) starts pressed: amber dot, amber leader line, callout "01 · CENTRE BORE / Ø 24.000 / H7 · +0.021 / −0.000 mm" to the right of the block.
+4. Hover or click hotspot 2 or 3: the leader line redraws from the new dot (stroke-dashoffset 360 → 0, 500ms expo out), the callout fades out (200ms), its text swaps after 140ms, and it slides to the new `top` (450ms expo out) while fading back in.
+5. Hotspot copy: 2 = "02 · Flange port / Ø 46.000 / 6 × M5 on a 60 mm PCD"; 3 = "03 · Milled pocket / Ra 0.4 / µm finish · flat to 0.004".
+6. Moving the pointer anywhere tilts the block up to ±5° rotateY and ±3.5° rotateX (perspective 1400px), 500ms expo out. The faint hexagon linework behind the headline drifts the opposite way up to 9px. Leaving the window resets both.
+7. Right column: a 19px lede, a bone "REQUEST A QUOTE →" button and a text link "OR UPLOAD A STEP FILE". The arrow nudges 3px right on hover.
+8. Under the lede, a 3-column spec row with a hairline top: "±0.003 mm held on bores", "48 h first article", "AS9100 rev D certified".
+9. On the bone page below the card, right side: "Parts in service with 140 teams in" then five industries in 12px tracked caps.
+10. Reduced motion: no tilt, no drift, no line draw; a hotspot swaps the callout instantly.
+
+## Tokens
+
+```css
+:root {
+  --page: #e9e6df;      /* bone page outside the card */
+  --card: #1d1e20;      /* graphite hero card */
+  --bone: #f1eee7;      /* primary button fill, type on card */
+  --ink: #1d1e20;       /* type on page */
+  --ink-2: #55575b;     /* industry list */
+  --on-card: #f1eee7;
+  --on-card-2: #a9aaa6; /* spec captions, callout key */
+  --line-card: rgba(241, 238, 231, 0.14);
+  --amber: #f2a900;     /* the one accent: active hotspot, leader, logo chevrons, focus */
+
+  --display: "Archivo", "Arial Narrow", sans-serif;  /* wdth 112 */
+  --sans: "Barlow", system-ui, sans-serif;
+
+  --r-card: 18px;
+  --r-btn: 5px;
+  --card-h: 620px;
+  --inset: 16px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-micro: 160ms;
+  --t-line: 500ms;
+  --t-slide: 450ms;
+}
+```
+
+Steel gradients (SVG): top face `#F3F3F1 → #CFD1D2 → #B3B6B9` (diagonal), left face `#8D9196 → #B9BCBF → #9A9EA2`, right face `#4C5157 → #6C7176 → #3B3F44`. Holes use a radial `#15171A → #2B2E32 → #5D6166`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|---|---|---:|---:|---:|---:|---|
+| Headline line 1 | Archivo wdth 112 | 84px | 300 | 0.94 | 0.01em | UPPER |
+| Headline line 2 | Archivo wdth 112 | 84px | 900 | 0.94 | 0.01em | UPPER |
+| Wordmark | Archivo | 22px | 900 | 1 | 0.02em | UPPER |
+| Nav links | Barlow | 13px | 600 | 1 | 0.12em | UPPER |
+| Lede | Barlow | 19px | 400 (name 600) | 1.38 | 0 | sentence |
+| Button | Barlow | 15px | 600 | 1 | 0.06em | UPPER |
+| Text link | Barlow | 13px | 600 | 1 | 0.10em | UPPER |
+| Spec value | Archivo | 22px | 900 | 1 | 0, tabular | as written |
+| Spec caption | Barlow | 13px | 400 | 1.45 | 0.02em | sentence |
+| Callout key | Barlow | 11px | 600 | 1 | 0.14em | UPPER |
+| Callout value | Archivo | 28px | 800 | 1 | −0.01em, tabular | as written |
+| Callout tolerance | Barlow | 13px | 400 | 1.45 | tabular | as written |
+
+The two headline lines are the same size. Only weight changes. Do not shrink the light line.
 
 ## Implementation notes
 

@@ -4,27 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the delays, the column count and the keyboard rules.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The header of Ordinal, a fictional analytics product. A 64px white bar holds the logo, five links and two actions. The first link, Product, opens a full-width panel under the bar. The panel has three product columns (Collect, Model, Act) with three products each, a "Solutions by team" column, and a release card on the right with a small chart drawn in CSS. A 44px strip at the panel foot shows system status and a Compare plans link. The look is Swiss and bright: white, near-black, one tomato accent, a grotesk, 8px radii, hairlines everywhere and one soft shadow under the panel. The detail worth copying is the timing: 120ms of hover intent before it opens, 200ms of grace before it closes, so a pointer crossing the bar does not flash the panel.
 
 `editorial-mega-menu` is the newspaper version that morphs height between sections. This piece has one panel and a product grid.
-
-## Reference behaviour
-
-1. First frame: the panel is open. Product has `aria-expanded="true"` and a `--tint` background, and its chevron is turned 180deg. A 5% ink scrim covers the page below the bar. The hero headline shows under the panel.
-2. Pointer leaves Product and the panel: after 200ms the panel closes. It fades to 0 and moves up 8px over 200ms. The scrim fades out. The chevron turns back.
-3. Pointer returns to Product or the panel within 200ms: the close is cancelled.
-4. Pointer rests on Product while closed: after 120ms the panel opens. It fades in and moves from -8px to 0 over 200ms on expo-out. If the pointer leaves before 120ms, nothing happens.
-5. Click Product: toggles the panel at once, no delay.
-6. Keyboard on Product: Enter and Space toggle. Arrow Down opens the panel and moves focus to the first product, Pipelines.
-7. In the panel, Arrow Down and Arrow Up move through every link in reading order: the nine products, the six team links, the card, Compare plans. They stop at the ends. Home and End jump to the first and last. Tab works too.
-8. Escape anywhere in the header closes the panel and puts focus on Product.
-9. Focus leaving the header closes the panel. A pointer press outside the panel and outside Product closes it.
-10. Hover a product: row background `--tint`. Its icon tile border turns `--ink` and the icon turns `--accent`. Text does not move.
-11. Hover a team link: a 1px tomato underline appears 4px under the text.
-12. Hover the card: border turns `--ink`. The arrow in "Read the release note" moves 3px right.
-13. Touch: a tap on Product toggles. Hover intent only runs for `pointerType === 'mouse'`.
 
 ## Structure
 
@@ -60,63 +46,6 @@ The header of Ordinal, a fictional analytics product. A 64px white bar holds the
 - The card is one `a`. Inside: a 148px preview, a mono meta line, an 18px title, a line of text, and a "Read the release note" label with an arrow.
 - The foot strip is a 44px row with a 1px top rule.
 - The scrim is a fixed layer from 64px down, under the header.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ffffff;           /* bar, panel */
-  --tint: #f4f4f1;         /* hover rows, card ground */
-  --ink: #0d0d0d;          /* text, logo, primary button */
-  --ink-2: #4b4b48;        /* nav links, card text */
-  --ink-3: #73736e;        /* descriptions, column labels */
-  --line: #e6e6e1;         /* hairlines */
-  --line-2: #d2d2cc;       /* icon tile border, preview border */
-  --accent: #f0441c;       /* tomato: logo notch, hover icon, NEW, chart bar, underline */
-  --accent-soft: #fde9e3;  /* NEW badge ground */
-  --ok: #1f9d55;           /* status dot */
-  --focus: #f0441c;
-  --scrim: rgba(13, 13, 13, .05);
-
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  --bar: 64px;
-  --r: 8px; --r-small: 6px; --r-badge: 3px;
-  --shadow-panel: 0 28px 48px -28px rgba(13, 13, 13, .28);
-
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
-  --space-6: 24px; --space-8: 32px; --space-10: 40px;
-
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --panel-in: 200ms;
-  --micro: 140ms;
-  --open-delay: 120ms;
-  --close-delay: 200ms;
-}
-```
-
-The shadow is the only shadow in the piece. Everything else is separated by 1px lines.
-
-## Typography
-
-| Role | Family | Size / line-height | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Logo | Schibsted Grotesk | 19px | 700 | -0.03em | `--ink` |
-| Nav link | Schibsted Grotesk | 14.5px | 500 | 0 | `--ink-2`, open `--ink` |
-| Start free | Schibsted Grotesk | 14.5px | 600 | 0 | white on `--ink` |
-| Column label | IBM Plex Mono | 11px / 1 | 500 | 0.08em, uppercase | `--ink-3` |
-| Product name | Schibsted Grotesk | 14.5px | 600 | -0.01em | `--ink` |
-| Product description | Schibsted Grotesk | 13px / 1.4 | 400 | 0 | `--ink-3` |
-| Team link | Schibsted Grotesk | 14.5px | 500 | 0 | `--ink-2` |
-| NEW badge | IBM Plex Mono | 10px / 16px | 500 | 0.06em, uppercase | `--accent` on `--accent-soft` |
-| Card meta | IBM Plex Mono | 11px | 500 | 0.04em | `--ink-3` |
-| Card title | Schibsted Grotesk | 18px / 1.2 | 700 | -0.02em | `--ink` |
-| Card text | Schibsted Grotesk | 13px | 400 | 0 | `--ink-2` |
-| Hero headline | Schibsted Grotesk | 80px / 0.96 | 700 | -0.045em | `--ink`, last phrase `--accent` |
-
-Labels and dates are mono. Everything a person reads as a name is the grotesk.
 
 ## Motion
 
@@ -197,6 +126,83 @@ Delay the `visibility` change on close, not on open. That way links cannot be cl
 - [ ] Team links are Engineering, Product, Finance, Growth, Support, All solutions.
 - [ ] The card reads "Release 7.4 · 30 Sep 2026" and "Live notebooks are here", with one tomato bar in the chart.
 - [ ] The panel starts open. Accent is `#f0441c`. Radii are 8px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the panel is open. Product has `aria-expanded="true"` and a `--tint` background, and its chevron is turned 180deg. A 5% ink scrim covers the page below the bar. The hero headline shows under the panel.
+2. Pointer leaves Product and the panel: after 200ms the panel closes. It fades to 0 and moves up 8px over 200ms. The scrim fades out. The chevron turns back.
+3. Pointer returns to Product or the panel within 200ms: the close is cancelled.
+4. Pointer rests on Product while closed: after 120ms the panel opens. It fades in and moves from -8px to 0 over 200ms on expo-out. If the pointer leaves before 120ms, nothing happens.
+5. Click Product: toggles the panel at once, no delay.
+6. Keyboard on Product: Enter and Space toggle. Arrow Down opens the panel and moves focus to the first product, Pipelines.
+7. In the panel, Arrow Down and Arrow Up move through every link in reading order: the nine products, the six team links, the card, Compare plans. They stop at the ends. Home and End jump to the first and last. Tab works too.
+8. Escape anywhere in the header closes the panel and puts focus on Product.
+9. Focus leaving the header closes the panel. A pointer press outside the panel and outside Product closes it.
+10. Hover a product: row background `--tint`. Its icon tile border turns `--ink` and the icon turns `--accent`. Text does not move.
+11. Hover a team link: a 1px tomato underline appears 4px under the text.
+12. Hover the card: border turns `--ink`. The arrow in "Read the release note" moves 3px right.
+13. Touch: a tap on Product toggles. Hover intent only runs for `pointerType === 'mouse'`.
+
+## Tokens
+
+```css
+:root {
+  --bg: #ffffff;           /* bar, panel */
+  --tint: #f4f4f1;         /* hover rows, card ground */
+  --ink: #0d0d0d;          /* text, logo, primary button */
+  --ink-2: #4b4b48;        /* nav links, card text */
+  --ink-3: #73736e;        /* descriptions, column labels */
+  --line: #e6e6e1;         /* hairlines */
+  --line-2: #d2d2cc;       /* icon tile border, preview border */
+  --accent: #f0441c;       /* tomato: logo notch, hover icon, NEW, chart bar, underline */
+  --accent-soft: #fde9e3;  /* NEW badge ground */
+  --ok: #1f9d55;           /* status dot */
+  --focus: #f0441c;
+  --scrim: rgba(13, 13, 13, .05);
+
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --bar: 64px;
+  --r: 8px; --r-small: 6px; --r-badge: 3px;
+  --shadow-panel: 0 28px 48px -28px rgba(13, 13, 13, .28);
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-10: 40px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --panel-in: 200ms;
+  --micro: 140ms;
+  --open-delay: 120ms;
+  --close-delay: 200ms;
+}
+```
+
+The shadow is the only shadow in the piece. Everything else is separated by 1px lines.
+
+## Typography
+
+| Role | Family | Size / line-height | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Logo | Schibsted Grotesk | 19px | 700 | -0.03em | `--ink` |
+| Nav link | Schibsted Grotesk | 14.5px | 500 | 0 | `--ink-2`, open `--ink` |
+| Start free | Schibsted Grotesk | 14.5px | 600 | 0 | white on `--ink` |
+| Column label | IBM Plex Mono | 11px / 1 | 500 | 0.08em, uppercase | `--ink-3` |
+| Product name | Schibsted Grotesk | 14.5px | 600 | -0.01em | `--ink` |
+| Product description | Schibsted Grotesk | 13px / 1.4 | 400 | 0 | `--ink-3` |
+| Team link | Schibsted Grotesk | 14.5px | 500 | 0 | `--ink-2` |
+| NEW badge | IBM Plex Mono | 10px / 16px | 500 | 0.06em, uppercase | `--accent` on `--accent-soft` |
+| Card meta | IBM Plex Mono | 11px | 500 | 0.04em | `--ink-3` |
+| Card title | Schibsted Grotesk | 18px / 1.2 | 700 | -0.02em | `--ink` |
+| Card text | Schibsted Grotesk | 13px | 400 | 0 | `--ink-2` |
+| Hero headline | Schibsted Grotesk | 80px / 0.96 | 700 | -0.045em | `--ink`, last phrase `--accent` |
+
+Labels and dates are mono. Everything a person reads as a name is the grotesk.
 
 ## Implementation notes
 

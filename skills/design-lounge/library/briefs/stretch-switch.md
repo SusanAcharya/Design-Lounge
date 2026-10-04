@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One checkbox. It starts checked. The label reads Hold is on. The thumb is 28px and, while the pointer is down, it grows to 36px. Checked, the thumb sits 28px to the right. Checked and pressed, it sits 20px to the right so the wider thumb stays in the track. This is not a settings row. That row is `switch-row`. A set of switches is `toggle-switch-set`.
-
-## Reference behaviour
-
-1. The box starts checked. The label is Hold is on.
-2. The track is 64 by 36, radius 999px, fill #e4dfd4, and #1f4d3a when checked.
-3. The thumb is 28 by 28, white, 4px from the top and left.
-4. Checked translates the thumb 28px.
-5. Active grows the thumb to 36px. Checked and active translates 20px.
-6. Change sets the label to Hold is on or Hold is off.
-7. Reduced motion removes the transitions. The thumb still moves.
 
 ## Structure
 
@@ -29,18 +21,6 @@ One checkbox. It starts checked. The label reads Hold is on. The thumb is 28px a
 - The track is aria-hidden. The input carries the state.
 - Focus-visible on the input draws the outline on the track.
 - The label text is 16px, weight 500.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --ink:#161513; --line:#cfc6b8; --track:#e4dfd4; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Label | IBM Plex Sans | 16px | 500 |
 
 ## Motion
 
@@ -85,16 +65,6 @@ One checkbox. It starts checked. The label reads Hold is on. The thumb is 28px a
 - [ ] Track 64 by 36. Thumb 28, pressed 36.
 - [ ] Checked travel is 28px. Pressed checked travel is 20px.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Keep the wider thumb inside the track.
-
-```css
-input:checked:active + .track .thumb { transform: translateX(20px); }
-```
-
-28 + 36 would pass the end of a 64px track. 20 + 36 + 4 fits.
 
 ## Measurements to keep
 
@@ -163,6 +133,42 @@ input:checked:active + .track .thumb { transform: translateX(20px); }
 - While rebuilding, remember: Do not let the thumb leave the track.
 - While rebuilding, remember: Do not animate under reduced motion.
 - While rebuilding, remember: Do not add a second switch.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The box starts checked. The label is Hold is on.
+2. The track is 64 by 36, radius 999px, fill #e4dfd4, and #1f4d3a when checked.
+3. The thumb is 28 by 28, white, 4px from the top and left.
+4. Checked translates the thumb 28px.
+5. Active grows the thumb to 36px. Checked and active translates 20px.
+6. Change sets the label to Hold is on or Hold is off.
+7. Reduced motion removes the transitions. The thumb still moves.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --ink:#161513; --line:#cfc6b8; --track:#e4dfd4; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Label | IBM Plex Sans | 16px | 500 |
+
+## Implementation notes
+
+Keep the wider thumb inside the track.
+
+```css
+input:checked:active + .track .thumb { transform: translateX(20px); }
+```
+
+28 + 36 would pass the end of a 64px track. 20 + 36 + 4 fits.
 
 ---
 

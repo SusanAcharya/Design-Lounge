@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The top of the site for Quarto, a fictional Lisbon poetry press. The brand name is the composition: **QUA** sits in columns 1–8 at 160px italic Playfair Display, **RTO** sits in columns 6–13 on the next row, right-aligned and pulled up 28px so the two halves almost lock. A 14px Karla paragraph occupies the leftover cell (columns 9–13 of the first row), tucked against the A. One underline text button is the only CTA. Letters rise on load with a 70ms stagger; Replay and a click on the stage restart them.
-
-## Reference behaviour
-
-1. Initial state: warm apricot paper (`#f3e4d2`). A 64px nav with italic "Quarto" mark, three links (Catalogue is current), and a brick "Subscribe" on the right. Below: an 11px uppercase kicker "Poetry in print · Lisbon".
-2. On load, body has class `play`. The three letters of QUA rise from `translateY(108%)` + opacity 0 to rest, 720ms expo-out, delays 0 / 70 / 140ms. RTO uses the same animation with a 240ms base delay (240 / 310 / 380ms).
-3. The nest paragraph fades and rises 10px over 640ms, delay 620ms. The CTA does the same, delay 780ms.
-4. Hovering the CTA turns text and underline `--accent` (`#a33a24`); the 16px arrow translates 4px right over 160ms.
-5. Nav links: hover or `aria-current` turns colour `--ink` and draws a 1px ink underline. Subscribe hover adds a 1px accent underline.
-6. Clicking Replay, or clicking the stage anywhere except a link, removes `play`, forces reflow, and adds `play` again so every entrance restarts from zero.
-7. Links with `href="#"` call `preventDefault` in the demo.
-8. Reduced motion: letters, nest and CTA render in their final position with no animation.
 
 ## Structure
 
@@ -46,46 +37,6 @@ The top of the site for Quarto, a fictional Lisbon poetry press. The brand name 
 - `.nest` is a `<p>` at columns 9–13, `grid-row: 1`, `align-self: end`.
 - `.cta` is a text `<a>` at columns 1–6 with an inline SVG arrow.
 - `.meta` is four `<div>`s on the same 12-column subgrid. Replay is `position:absolute; right:48px; bottom:86px` inside `main` (`position:relative`).
-
-## Tokens
-
-```css
-:root {
-  --paper: #f3e4d2;            /* page */
-  --paper-2: #ead6c0;          /* reserved */
-  --ink: #27170f;              /* primary type */
-  --ink-2: #6a4e3e;            /* nest, nav rest */
-  --ink-3: #9a7d6a;            /* kicker, meta, replay */
-  --line: rgba(39, 23, 15, .16);
-  --accent: #a33a24;           /* subscribe, CTA hover */
-  --accent-soft: #e8c4b4;
-  --serif: "Playfair Display", Georgia, "Times New Roman", serif;
-  --sans: "Karla", system-ui, sans-serif;
-  --gutter: 48px;
-  --gap: 16px;
-  --nav-h: 64px;
-  --display: 160px;
-  --t-micro: 160ms;
-  --t-letter: 720ms;
-  --t-copy: 640ms;
-  --stagger: 70ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role        | Family           | Size | Weight | Line-height | Tracking | Case      |
-|-------------|------------------|-----:|-------:|------------:|---------:|-----------|
-| Lockup      | Playfair Display | 160px | italic 700 | 0.82    | −0.045em | UPPERCASE |
-| Brand mark  | Playfair Display | 22px | italic 500 | 1       | −0.02em  | Title     |
-| Nest copy   | Karla            | 14px | 400    | 1.55        | 0        | sentence  |
-| CTA         | Karla            | 15px | 500    | 1           | 0        | sentence  |
-| Nav         | Karla            | 13px | 500    | 1           | +0.04em  | Title     |
-| Kicker      | Karla            | 11px | 500    | 1           | +0.18em  | UPPERCASE |
-| Meta        | Karla            | 12px | 500    | 1.4         | +0.04em  | mixed     |
-| Replay      | Karla            | 11px | 500    | 1           | +0.12em  | UPPERCASE |
 
 ## Motion
 
@@ -135,6 +86,61 @@ Replay: `body.classList.remove('play'); void body.offsetWidth; body.classList.ad
 - [ ] Reduced motion shows the finished lockup with no movement.
 - [ ] Palette is apricot paper `#f3e4d2`, walnut `#27170f`, brick `#a33a24` — not Fraunces, not amber-on-black.
 - [ ] Only Playfair Display and Karla load.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: warm apricot paper (`#f3e4d2`). A 64px nav with italic "Quarto" mark, three links (Catalogue is current), and a brick "Subscribe" on the right. Below: an 11px uppercase kicker "Poetry in print · Lisbon".
+2. On load, body has class `play`. The three letters of QUA rise from `translateY(108%)` + opacity 0 to rest, 720ms expo-out, delays 0 / 70 / 140ms. RTO uses the same animation with a 240ms base delay (240 / 310 / 380ms).
+3. The nest paragraph fades and rises 10px over 640ms, delay 620ms. The CTA does the same, delay 780ms.
+4. Hovering the CTA turns text and underline `--accent` (`#a33a24`); the 16px arrow translates 4px right over 160ms.
+5. Nav links: hover or `aria-current` turns colour `--ink` and draws a 1px ink underline. Subscribe hover adds a 1px accent underline.
+6. Clicking Replay, or clicking the stage anywhere except a link, removes `play`, forces reflow, and adds `play` again so every entrance restarts from zero.
+7. Links with `href="#"` call `preventDefault` in the demo.
+8. Reduced motion: letters, nest and CTA render in their final position with no animation.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f3e4d2;            /* page */
+  --paper-2: #ead6c0;          /* reserved */
+  --ink: #27170f;              /* primary type */
+  --ink-2: #6a4e3e;            /* nest, nav rest */
+  --ink-3: #9a7d6a;            /* kicker, meta, replay */
+  --line: rgba(39, 23, 15, .16);
+  --accent: #a33a24;           /* subscribe, CTA hover */
+  --accent-soft: #e8c4b4;
+  --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --sans: "Karla", system-ui, sans-serif;
+  --gutter: 48px;
+  --gap: 16px;
+  --nav-h: 64px;
+  --display: 160px;
+  --t-micro: 160ms;
+  --t-letter: 720ms;
+  --t-copy: 640ms;
+  --stagger: 70ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role        | Family           | Size | Weight | Line-height | Tracking | Case      |
+|-------------|------------------|-----:|-------:|------------:|---------:|-----------|
+| Lockup      | Playfair Display | 160px | italic 700 | 0.82    | −0.045em | UPPERCASE |
+| Brand mark  | Playfair Display | 22px | italic 500 | 1       | −0.02em  | Title     |
+| Nest copy   | Karla            | 14px | 400    | 1.55        | 0        | sentence  |
+| CTA         | Karla            | 15px | 500    | 1           | 0        | sentence  |
+| Nav         | Karla            | 13px | 500    | 1           | +0.04em  | Title     |
+| Kicker      | Karla            | 11px | 500    | 1           | +0.18em  | UPPERCASE |
+| Meta        | Karla            | 12px | 500    | 1.4         | +0.04em  | mixed     |
+| Replay      | Karla            | 11px | 500    | 1           | +0.12em  | UPPERCASE |
 
 ## Implementation notes
 

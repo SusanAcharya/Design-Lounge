@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A sticky stage. Three panels share one width and start with no gap, so they read as one board. Scroll opens the gap up to 16px across the first 240px of scroll. The copy under the stage is the thing you scroll. Reduced motion shows the 16px gap immediately. This is not a two-column story. That story is `sticky-split-story`. This is not a step list. Those steps are `features-sticky-scroll-steps`.
-
-## Reference behaviour
-
-1. The stage is sticky, 100vh.
-2. Three panels sit in a flex row. --gap starts at 0.
-3. ScrollY divided by 240, times 16, capped at 16, sets the gap.
-4. The listener is passive. It is not an animation frame loop.
-5. Panel one is Gate 4 on #1f4d3a. Panel two is Night book on #3a342c. Panel three is Month close on #1c1b19.
-6. The names are Fraunces 28px. The lines are Public Sans.
-7. Reduced motion forces gap 16px and the script returns.
 
 ## Structure
 
@@ -31,19 +23,6 @@ then a 62ch column
 - The column is max-width 62ch, padding 8vh 32px 50vh.
 - Body is Public Sans 18px.
 - The stage background is the page ground, #f4f1ea.
-
-## Tokens
-
-```css
-:root { --bg:#f4f1ea; --ink:#1a1814; --a:#1f4d3a; --b:#3a342c; --c:#1c1b19; --on:#fffdf8; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Panel name | Fraunces | 28px | 560 |
-| Body | Public Sans | 18px | 400 |
 
 ## Motion
 
@@ -88,16 +67,6 @@ then a 62ch column
 - [ ] Full gap is 16px at 240px of scroll.
 - [ ] Fills are #1f4d3a, #3a342c, #1c1b19.
 - [ ] Display is Fraunces. Body is Public Sans.
-
-## Implementation notes
-
-Set a custom property from scrollY.
-
-```js
-const gap = Math.min(16, (y / 240) * 16);
-```
-
-Use a passive listener. Do not request animation frames in a loop.
 
 ## Measurements to keep
 
@@ -152,6 +121,43 @@ Use a passive listener. Do not request animation frames in a loop.
 - Honour reduced motion.
 - Do not add a second accent.
 - Do not add a second type family.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The stage is sticky, 100vh.
+2. Three panels sit in a flex row. --gap starts at 0.
+3. ScrollY divided by 240, times 16, capped at 16, sets the gap.
+4. The listener is passive. It is not an animation frame loop.
+5. Panel one is Gate 4 on #1f4d3a. Panel two is Night book on #3a342c. Panel three is Month close on #1c1b19.
+6. The names are Fraunces 28px. The lines are Public Sans.
+7. Reduced motion forces gap 16px and the script returns.
+
+## Tokens
+
+```css
+:root { --bg:#f4f1ea; --ink:#1a1814; --a:#1f4d3a; --b:#3a342c; --c:#1c1b19; --on:#fffdf8; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Panel name | Fraunces | 28px | 560 |
+| Body | Public Sans | 18px | 400 |
+
+## Implementation notes
+
+Set a custom property from scrollY.
+
+```js
+const gap = Math.min(16, (y / 240) * 16);
+```
+
+Use a passive listener. Do not request animation frames in a loop.
 
 ---
 

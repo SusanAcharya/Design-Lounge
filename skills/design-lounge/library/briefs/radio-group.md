@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. The selected row uses `--primary-soft`. The radius and row height follow the family.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One question, Shift, with three answers a person can see at once: Morning, Swing, Night. Morning starts selected. The selected row sits on the soft green. The control is a native radio, drawn as an 18px circle with an 8px dot. A status line under the group reads "Morning is on the gate." Choosing another shift rewrites that line. This is not a select. The list is short enough to stay open. It is not a checkbox. One shift is on the gate.
-
-## Reference behaviour
-
-1. Morning is checked. Its row background is `--primary-soft`. The status line names Morning.
-2. Clicking Swing or Night checks that radio, clears the others, paints that row, and updates the status line to "Swing is on the gate." or "Night is on the gate."
-3. Arrow keys move the selection. The browser does this for radios that share a name. Do not rebuild arrow keys in script.
-4. Tab enters the group once, on the checked radio, and leaves the group. Tab does not stop on every row.
-5. There is no animation and no error in the first frame. A product shows an error under the legend only after submit if nothing is checked. This demo always has a selection.
-6. Focus ring is 2px `--focus`, offset 2px, on the radio.
 
 ## Structure
 
@@ -33,36 +26,6 @@ Morning is on the gate.     12px status
 - `fieldset` and `legend`. The legend is the question.
 - Each row is a `label` wrapping the radio and the word, so the whole row is the hit target.
 - The radios share `name="shift"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --primary-soft: #e7f2ec;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Row radius is 2px in this yard demo. A locked family replaces it. The selected fill stays `--primary-soft`, not a solid primary button.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Legend | sans | 12px | 500 | `--ink-2` |
-| Option | sans | 14px | 400 | `--ink` |
-| Status | sans | 12px | 400 | `--ink-2` |
-
-The where-line letter-spacing is 0.04em. Option text is vertically centered in the 44px row.
 
 ## Motion
 
@@ -110,6 +73,49 @@ None. Selection changes in one frame. Reduced motion has nothing to remove. Do n
 - [ ] The group is 320px wide. Radius is 2px.
 - [ ] There is no animation and no second selected row.
 - [ ] The control is a native radio, not a button with aria-pressed.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Morning is checked. Its row background is `--primary-soft`. The status line names Morning.
+2. Clicking Swing or Night checks that radio, clears the others, paints that row, and updates the status line to "Swing is on the gate." or "Night is on the gate."
+3. Arrow keys move the selection. The browser does this for radios that share a name. Do not rebuild arrow keys in script.
+4. Tab enters the group once, on the checked radio, and leaves the group. Tab does not stop on every row.
+5. There is no animation and no error in the first frame. A product shows an error under the legend only after submit if nothing is checked. This demo always has a selection.
+6. Focus ring is 2px `--focus`, offset 2px, on the radio.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --primary-soft: #e7f2ec;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Row radius is 2px in this yard demo. A locked family replaces it. The selected fill stays `--primary-soft`, not a solid primary button.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Legend | sans | 12px | 500 | `--ink-2` |
+| Option | sans | 14px | 400 | `--ink` |
+| Status | sans | 12px | 400 | `--ink-2` |
+
+The where-line letter-spacing is 0.04em. Option text is vertically centered in the 44px row.
 
 ## Implementation notes
 

@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the thumb uses `--primary` and the track uses `--line-strong`. Do not import a second slider skin.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One slider for the hour a load arrives at the dock. The range is 8 to 18. It starts at 16, shown as 16:00 beside the label. The track is 4px, the thumb is 20px, and the whole control is 40px tall so the hit target matches the other fields. A hint under it says the dock closes after 18:00. Arrow keys step one hour. This is a native range input, drawn to the yard. It is not a chart scrubber.
-
-## Reference behaviour
-
-1. The output reads 16:00. `aria-valuenow` is 16. `aria-valuetext` is 16:00.
-2. Dragging the thumb, or pressing ArrowLeft and ArrowRight, steps by 1 hour and rewrites the output as HH:00.
-3. The value never leaves 08:00 to 18:00. Home and End, if the browser provides them, jump to the ends.
-4. There is no animation. The thumb does not glide past the step.
-5. Focus ring is 2px `--focus`, offset 2px, around the control.
-6. There is no second handle. A date span is `date-range-picker`.
 
 ## Structure
 
@@ -30,34 +23,6 @@ width 320
 
 - The label's `for` matches the input id. The output's `for` matches it too.
 - The input is `type="range"` with `min="8"` `max="18"` `step="1"` `value="16"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #5c564e;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-The thumb is a circle because it is a thumb, not because the family is a pill. The family's radius does not turn the thumb into a square. The track radius stays 2px.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 12px | 500 | `--ink-2` |
-| Value | sans | 14px | 500 | `--ink` |
-| Hint | sans | 12px | 400 | `--ink-3` |
-
-The value uses tabular numbers so 08:00 and 18:00 occupy the same width. Letter-spacing on the where-line is 0.04em.
 
 ## Motion
 
@@ -105,6 +70,47 @@ None on a timer. The thumb follows the pointer. Reduced motion has nothing to re
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is one thumb and no animation.
 - [ ] The hour is not drawn inside the thumb.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The output reads 16:00. `aria-valuenow` is 16. `aria-valuetext` is 16:00.
+2. Dragging the thumb, or pressing ArrowLeft and ArrowRight, steps by 1 hour and rewrites the output as HH:00.
+3. The value never leaves 08:00 to 18:00. Home and End, if the browser provides them, jump to the ends.
+4. There is no animation. The thumb does not glide past the step.
+5. Focus ring is 2px `--focus`, offset 2px, around the control.
+6. There is no second handle. A date span is `date-range-picker`.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #5c564e;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+The thumb is a circle because it is a thumb, not because the family is a pill. The family's radius does not turn the thumb into a square. The track radius stays 2px.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 12px | 500 | `--ink-2` |
+| Value | sans | 14px | 500 | `--ink` |
+| Hint | sans | 12px | 400 | `--ink-3` |
+
+The value uses tabular numbers so 08:00 and 18:00 occupy the same width. Letter-spacing on the where-line is 0.04em.
 
 ## Implementation notes
 

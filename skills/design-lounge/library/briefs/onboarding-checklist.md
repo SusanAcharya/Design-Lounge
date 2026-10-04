@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A "get set up" card that sits in the right column of a product's home page ("Tarn", an analytics tool). It lists five activation tasks with a 44px progress ring in the header. Only one task is expanded at a time (the next incomplete one), showing a sentence and an action button; completing it fills its circle, draws a tick over 280ms, strikes the title, collapses its body and expands the next. When all five are done the list and header fade out and a quiet "You're set" panel fades in with a 64px tinted circle whose check draws itself. No confetti. The card can be dismissed from the X or the final button. The detail worth copying is the single-source-of-truth `update()`: task classes, the ring, the copy and the celebration are all derived from a count of `.done` rows.
-
-## Reference behaviour
-
-1. Initial state: left column shows a greeting, three stat tiles and a recent-activity list. Right column shows the card with the ring at 40 % (label "2/5"), title "Get set up with Tarn", subtitle "3 steps left · about 6 minutes", an X button. Tasks 1–2 are done (filled accent circle with a white tick, struck-through grey title, no body). Task 3 is open (description + "Connect a source" button). Tasks 4–5 are collapsed to their 46px title rows with empty circles.
-2. Hover the action button: `--accent-hover`. Hover the X: `--card-2` background, `--ink` icon.
-3. Click the open task's button: its circle fills `--accent` and the tick draws (stroke-dashoffset 1 → 0 over 280ms, 80ms after the fill). 300ms after the click, `update()` runs: the body collapses (`grid-template-rows: 1fr → 0fr` + opacity, 320ms), the title turns `--ink-3` with a line-through, the next task's body expands over 320ms, the ring animates to the new fraction over 480ms, the label reads "3/5" and the subtitle recomputes ("2 steps left · about 4 minutes").
-4. Repeat for tasks 4 and 5. Minutes per task: 2, 3, 1 for tasks 3–5.
-5. When the fifth task completes: 320ms after the tick, the card gets `.complete`. The header and task list fade to 0 over 320ms; the "You're set" layer (absolutely covering the card) fades in and rises 6px → 0 over 520ms after a 320ms delay; its 30px check draws over 360ms starting at 520ms. Copy: "You're set" (24px), "Tarn is connected, charting and reporting. This card won't show again.", ghost button "Go to my dashboard".
-6. Clicking the X at any time, or "Go to my dashboard" at the end: the card fades and drops (`opacity 0; translateY(8px) scale(.98)`, 320ms) and a small "bring the checklist back" text link appears beneath it.
-7. Clicking that link restores the initial state (tasks 1–2 done, ring 40 %) and re-arms the tick animations.
-8. The ring is `role="progressbar"` with `aria-valuenow` updated on every change; the done layer is `aria-live="polite"`.
 
 ## Structure
 
@@ -45,66 +36,6 @@ A "get set up" card that sits in the right column of a product's home page ("Tar
   - `<ol class="tasks">` → `<li class="task done|open|next">` each with `.trow` (22px `.chk` SVG: circle + tick path `pathLength="1"`, `.title`) and `.body` (`display:grid` collapse wrapper → inner `<div>` → `<p>` + `<button class="btn" data-done>`).
   - `.done-state[aria-live=polite]` absolutely positioned over the card: `.big` circle with check SVG, `<h2>`, `<p>`, ghost button.
   - `<p class="replay" hidden>` under the card with a text button.
-
-## Tokens
-
-```css
-:root {
-  /* colour — cool-green tinted neutrals, one green accent */
-  --bg: #f4f6f2;
-  --card: #ffffff;
-  --card-2: #f7f9f5;        /* hover surface */
-  --line: #e1e6de;          /* hairlines, ring track */
-  --line-2: #cdd5ca;        /* empty check circle, strike colour */
-  --ink: #1c231d;
-  --ink-2: #5e6a60;         /* descriptions, subtitle */
-  --ink-3: #8d978f;         /* tile labels, done titles, X */
-  --accent: #2e7d4f;
-  --accent-hover: #256841;
-  --accent-soft: #e3f0e7;   /* done-state circle, ghost hover */
-  --on-accent: #ffffff;
-
-  /* type — one variable family at two optical sizes */
-  --font: "Bricolage Grotesque", system-ui, sans-serif;
-
-  /* layout */
-  --card-w: 400px;
-  --ring: 44px;
-  --ring-w: 4px;
-  --ring-r: 19px;           /* in a 44 viewBox */
-  --chk: 22px;
-  --row-h: 46px;
-  --btn-h: 34px;
-  --r: 8px;
-  --r-lg: 16px;
-  --shadow: 0 1px 2px rgba(28, 35, 29, .06), 0 12px 32px rgba(28, 35, 29, .08);
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-tick: 280ms;
-  --t-collapse: 320ms;
-  --t-ring: 480ms;
-  --t-celebrate: 520ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role              | Family              | Size   | Weight | Line-height | Tracking | Notes |
-|-------------------|---------------------|-------:|-------:|------------:|---------:|-------|
-| Body              | Bricolage Grotesque | 14px   | 400    | 1.5         | 0        | opsz auto |
-| Page greeting     | Bricolage Grotesque | 30px   | 600    | 1.15        | −0.02em  | `font-variation-settings: "opsz" 96` |
-| Tile label        | Bricolage Grotesque | 12px   | 500    | 1           | +0.06em  | UPPERCASE `--ink-3` |
-| Tile value        | Bricolage Grotesque | 26px   | 600    | 1           | −0.02em  | opsz 96 |
-| Card title        | Bricolage Grotesque | 17px   | 600    | 1.2         | −0.01em  | |
-| Card subtitle     | Bricolage Grotesque | 13px   | 400    | 1.5         | 0        | `--ink-2` |
-| Ring label        | Bricolage Grotesque | 11px   | 600    | 1           | 0        | "2/5" |
-| Task title        | Bricolage Grotesque | 14px   | 500    | 1.5         | 0        | done: `--ink-3` + line-through |
-| Task description  | Bricolage Grotesque | 13px   | 400    | 1.5         | 0        | `--ink-2` |
-| Button            | Bricolage Grotesque | 13px   | 500    | 1           | 0        | |
-| Done heading      | Bricolage Grotesque | 24px   | 600    | 1.15        | −0.02em  | opsz 96 |
 
 ## Motion
 
@@ -165,6 +96,81 @@ Reduced motion: tick and check animations 1ms with no delay; all transitions 1ms
 - [ ] The replay link restores the initial state including re-armed tick animations.
 - [ ] Focus rings are visible on X, task buttons, the ghost button and the replay link.
 - [ ] Reduced motion: no delays; ticks and checks appear immediately.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: left column shows a greeting, three stat tiles and a recent-activity list. Right column shows the card with the ring at 40 % (label "2/5"), title "Get set up with Tarn", subtitle "3 steps left · about 6 minutes", an X button. Tasks 1–2 are done (filled accent circle with a white tick, struck-through grey title, no body). Task 3 is open (description + "Connect a source" button). Tasks 4–5 are collapsed to their 46px title rows with empty circles.
+2. Hover the action button: `--accent-hover`. Hover the X: `--card-2` background, `--ink` icon.
+3. Click the open task's button: its circle fills `--accent` and the tick draws (stroke-dashoffset 1 → 0 over 280ms, 80ms after the fill). 300ms after the click, `update()` runs: the body collapses (`grid-template-rows: 1fr → 0fr` + opacity, 320ms), the title turns `--ink-3` with a line-through, the next task's body expands over 320ms, the ring animates to the new fraction over 480ms, the label reads "3/5" and the subtitle recomputes ("2 steps left · about 4 minutes").
+4. Repeat for tasks 4 and 5. Minutes per task: 2, 3, 1 for tasks 3–5.
+5. When the fifth task completes: 320ms after the tick, the card gets `.complete`. The header and task list fade to 0 over 320ms; the "You're set" layer (absolutely covering the card) fades in and rises 6px → 0 over 520ms after a 320ms delay; its 30px check draws over 360ms starting at 520ms. Copy: "You're set" (24px), "Tarn is connected, charting and reporting. This card won't show again.", ghost button "Go to my dashboard".
+6. Clicking the X at any time, or "Go to my dashboard" at the end: the card fades and drops (`opacity 0; translateY(8px) scale(.98)`, 320ms) and a small "bring the checklist back" text link appears beneath it.
+7. Clicking that link restores the initial state (tasks 1–2 done, ring 40 %) and re-arms the tick animations.
+8. The ring is `role="progressbar"` with `aria-valuenow` updated on every change; the done layer is `aria-live="polite"`.
+
+## Tokens
+
+```css
+:root {
+  /* colour — cool-green tinted neutrals, one green accent */
+  --bg: #f4f6f2;
+  --card: #ffffff;
+  --card-2: #f7f9f5;        /* hover surface */
+  --line: #e1e6de;          /* hairlines, ring track */
+  --line-2: #cdd5ca;        /* empty check circle, strike colour */
+  --ink: #1c231d;
+  --ink-2: #5e6a60;         /* descriptions, subtitle */
+  --ink-3: #8d978f;         /* tile labels, done titles, X */
+  --accent: #2e7d4f;
+  --accent-hover: #256841;
+  --accent-soft: #e3f0e7;   /* done-state circle, ghost hover */
+  --on-accent: #ffffff;
+
+  /* type — one variable family at two optical sizes */
+  --font: "Bricolage Grotesque", system-ui, sans-serif;
+
+  /* layout */
+  --card-w: 400px;
+  --ring: 44px;
+  --ring-w: 4px;
+  --ring-r: 19px;           /* in a 44 viewBox */
+  --chk: 22px;
+  --row-h: 46px;
+  --btn-h: 34px;
+  --r: 8px;
+  --r-lg: 16px;
+  --shadow: 0 1px 2px rgba(28, 35, 29, .06), 0 12px 32px rgba(28, 35, 29, .08);
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-tick: 280ms;
+  --t-collapse: 320ms;
+  --t-ring: 480ms;
+  --t-celebrate: 520ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role              | Family              | Size   | Weight | Line-height | Tracking | Notes |
+|-------------------|---------------------|-------:|-------:|------------:|---------:|-------|
+| Body              | Bricolage Grotesque | 14px   | 400    | 1.5         | 0        | opsz auto |
+| Page greeting     | Bricolage Grotesque | 30px   | 600    | 1.15        | −0.02em  | `font-variation-settings: "opsz" 96` |
+| Tile label        | Bricolage Grotesque | 12px   | 500    | 1           | +0.06em  | UPPERCASE `--ink-3` |
+| Tile value        | Bricolage Grotesque | 26px   | 600    | 1           | −0.02em  | opsz 96 |
+| Card title        | Bricolage Grotesque | 17px   | 600    | 1.2         | −0.01em  | |
+| Card subtitle     | Bricolage Grotesque | 13px   | 400    | 1.5         | 0        | `--ink-2` |
+| Ring label        | Bricolage Grotesque | 11px   | 600    | 1           | 0        | "2/5" |
+| Task title        | Bricolage Grotesque | 14px   | 500    | 1.5         | 0        | done: `--ink-3` + line-through |
+| Task description  | Bricolage Grotesque | 13px   | 400    | 1.5         | 0        | `--ink-2` |
+| Button            | Bricolage Grotesque | 13px   | 500    | 1           | 0        | |
+| Done heading      | Bricolage Grotesque | 24px   | 600    | 1.15        | −0.02em  | opsz 96 |
 
 ## Implementation notes
 

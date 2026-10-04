@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A bottom navigation bar for a phone website, not a native app. The site is "Depot 41", a strength gym in an old tram depot in Porto. Five items sit in a 64px bar with a 2px black top rule: Home, Coaches, Book, Prices, Visit. Book is a raised 60px safety-orange square with a hard black offset shadow. The active item gets a 4px orange mark on the top rule and follows the section you are reading. The bar hides when you scroll down and comes back when you scroll up or reach the end. The detail worth copying is that it behaves like a website: items are anchor links to page sections, and it sits above the browser's own bottom toolbar.
@@ -14,20 +16,6 @@ A bottom navigation bar for a phone website, not a native app. The site is "Depo
 - Use it when there are three to five places people jump between, and one action that matters most (Book, Order).
 - Do not use it on a marketing page, a portfolio, a launch page or an article. People read those once from top to bottom. Use a header with a hamburger there (`hamburger-circle-reveal` or `mobile-fullscreen-menu`).
 - Do not use it with a sticky bottom call-to-action bar (`cta-sticky-mobile-bar`) on the same page. Pick one.
-
-## Reference behaviour
-
-1. First frame: the page is at the top. The bar is visible. Home has `aria-current="true"` and the orange mark.
-2. Scroll down more than 6px past 80px from the top: the bar slides down out of view over 220ms `cubic-bezier(.4,0,1,1)`.
-3. Scroll up more than 6px: the bar slides back over 280ms `cubic-bezier(.16,1,.3,1)`.
-4. Reach the end of the page (within 8px): the bar comes back, even if you were scrolling down, and Visit becomes current.
-5. Scroll position under 80px: the bar is always shown.
-6. While scrolling, the current item is the last section whose top is above 40% of the screen height. Its mark grows from `scaleX(0)` to `scaleX(1)` over 160ms.
-7. Tap an item: the page smooth-scrolls to that section. The current item updates as the section arrives.
-8. Tap Book: the page scrolls to "Today", the class list. When Book is current, its label gets a 2px orange underline.
-9. Press Book: the orange square moves 3px right and 3px down and its shadow shrinks from 4px to 1px, like a key being pressed.
-10. Tab into the bar while it is hidden: it slides back so focus is never on something off screen.
-11. In the class list, "Book" buttons toggle to "Booked" (`aria-pressed`). "Full" is disabled.
 
 ## Structure
 
@@ -67,57 +55,6 @@ A bottom navigation bar for a phone website, not a native app. The site is "Depo
 - Prices: Open gym €39/mo, Coached €69/mo (orange offset shadow), Ten pass €95.
 - Visit: Rua do Depósito 41, Porto; week 06:00 to 22:00; weekend 08:00 to 18:00; 12 parking bays.
 - Bar: Home, Coaches, Book, Prices, Visit.
-
-## Tokens
-
-```css
-:root {
-  /* colour: concrete, black, safety orange */
-  --concrete: #ecebe7;      /* page */
-  --surface: #f7f6f3;       /* bar, cards */
-  --ink: #111111;           /* text, rules, shadows */
-  --ink-2: #4f4d48;         /* secondary text, resting labels */
-  --line: #c9c7c0;          /* list hairlines, disabled border */
-  --orange: #ff5a00;        /* Book fill, current mark, focus halo */
-  --on-orange: #111111;     /* icon on orange */
-
-  /* type */
-  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --sans: "Barlow", system-ui, sans-serif;
-
-  /* layout */
-  --top: 54px;
-  --chrome-bottom: 84px;    /* browser toolbar in the Lounge frame; 0 in production */
-  --gutter: 20px;
-  --r: 2px;                 /* every radius */
-  --bar-h: 64px;
-  --fab: 60px;
-  --lift: 18px;             /* how far Book rises above the bar */
-
-  /* motion */
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-bar: 280ms;           /* show */
-  --t-micro: 160ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Bar label | Barlow Condensed | 11px / 1 | 700 | 0.1em | upper |
-| Logo | Barlow Condensed | 26px / 1 | 800 | -0.01em | upper |
-| Hero headline | Barlow Condensed | 64px / 0.86 | 800 | -0.01em | upper |
-| Section heading | Barlow Condensed | 32px / 1 | 800 | 0 | upper |
-| Section meta | Barlow Condensed | 13px | 700 | 0.08em | upper |
-| Slot time | Barlow Condensed | 18px / 1 | 700 | 0 | digits |
-| Slot button | Barlow Condensed | 14px / 1 | 700 | 0.08em | upper |
-| Price | Barlow Condensed | 28px / 1 | 800 | 0 | digits |
-| Body | Barlow | 16px / 1.5 | 400 | 0 | sentence |
-| Small body | Barlow | 13px | 400 | 0 | sentence |
-
-Labels are always visible. Do not ship an icon-only bar.
 
 ## Motion
 
@@ -190,6 +127,75 @@ Reduced motion: the bar never hides. Scroll is instant (`scroll-behavior: auto`)
 - [ ] The bar is 64px, `#f7f6f3`, with a 2px `#111111` top rule.
 - [ ] The current mark is 28×4px orange on the top rule.
 - [ ] Labels are Barlow Condensed 700, 11px, 0.1em, uppercase.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the page is at the top. The bar is visible. Home has `aria-current="true"` and the orange mark.
+2. Scroll down more than 6px past 80px from the top: the bar slides down out of view over 220ms `cubic-bezier(.4,0,1,1)`.
+3. Scroll up more than 6px: the bar slides back over 280ms `cubic-bezier(.16,1,.3,1)`.
+4. Reach the end of the page (within 8px): the bar comes back, even if you were scrolling down, and Visit becomes current.
+5. Scroll position under 80px: the bar is always shown.
+6. While scrolling, the current item is the last section whose top is above 40% of the screen height. Its mark grows from `scaleX(0)` to `scaleX(1)` over 160ms.
+7. Tap an item: the page smooth-scrolls to that section. The current item updates as the section arrives.
+8. Tap Book: the page scrolls to "Today", the class list. When Book is current, its label gets a 2px orange underline.
+9. Press Book: the orange square moves 3px right and 3px down and its shadow shrinks from 4px to 1px, like a key being pressed.
+10. Tab into the bar while it is hidden: it slides back so focus is never on something off screen.
+11. In the class list, "Book" buttons toggle to "Booked" (`aria-pressed`). "Full" is disabled.
+
+## Tokens
+
+```css
+:root {
+  /* colour: concrete, black, safety orange */
+  --concrete: #ecebe7;      /* page */
+  --surface: #f7f6f3;       /* bar, cards */
+  --ink: #111111;           /* text, rules, shadows */
+  --ink-2: #4f4d48;         /* secondary text, resting labels */
+  --line: #c9c7c0;          /* list hairlines, disabled border */
+  --orange: #ff5a00;        /* Book fill, current mark, focus halo */
+  --on-orange: #111111;     /* icon on orange */
+
+  /* type */
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --sans: "Barlow", system-ui, sans-serif;
+
+  /* layout */
+  --top: 54px;
+  --chrome-bottom: 84px;    /* browser toolbar in the Lounge frame; 0 in production */
+  --gutter: 20px;
+  --r: 2px;                 /* every radius */
+  --bar-h: 64px;
+  --fab: 60px;
+  --lift: 18px;             /* how far Book rises above the bar */
+
+  /* motion */
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-bar: 280ms;           /* show */
+  --t-micro: 160ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Bar label | Barlow Condensed | 11px / 1 | 700 | 0.1em | upper |
+| Logo | Barlow Condensed | 26px / 1 | 800 | -0.01em | upper |
+| Hero headline | Barlow Condensed | 64px / 0.86 | 800 | -0.01em | upper |
+| Section heading | Barlow Condensed | 32px / 1 | 800 | 0 | upper |
+| Section meta | Barlow Condensed | 13px | 700 | 0.08em | upper |
+| Slot time | Barlow Condensed | 18px / 1 | 700 | 0 | digits |
+| Slot button | Barlow Condensed | 14px / 1 | 700 | 0.08em | upper |
+| Price | Barlow Condensed | 28px / 1 | 800 | 0 | digits |
+| Body | Barlow | 16px / 1.5 | 400 | 0 | sentence |
+| Small body | Barlow | 13px | 400 | 0 | sentence |
+
+Labels are always visible. Do not ship an icon-only bar.
 
 ## Implementation notes
 

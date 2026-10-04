@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A button set that behaves like mechanical keycaps. Each button has a face and a solid bottom edge drawn with a zero-blur offset shadow. On press the face travels down onto the edge (6px at medium size) in 60ms and springs back up in 220ms on release, so a click feels like it bottomed out, without any sound. Three faces (orange primary, charcoal, cream) come in three sizes, plus square 60px icon keys. One icon key is a toggle that latches half-way down with a small LED, like a caps-lock key. Every live key carries a tiny mono legend in its top-left corner, and pressing that letter on a real keyboard sinks the on-screen key. A state sheet under the live row shows each face at default, hover, pressed, disabled and focus.
-
-## Reference behaviour
-
-1. First frame: the putty page with a centred deck card. Header reads "Klakk." with an orange-brown full stop, a mono subline, and a readout pill on the right: "Last: none yet · 0 presses".
-2. Live row, left group "Text keys · L / M / M / S": "Ship build" (orange, large, legend S), "Run tests" (charcoal, medium, play icon, legend R), "Save draft" (cream, medium, legend D), "Cancel" (cream, small, legend X).
-3. Live row, right group "Icon keys · 60px": Play preview (charcoal, P), Mute microphone (cream toggle with LED, M), New track (cream, N), Undo (orange, Z).
-4. Hover: the key rises 1px and its edge grows by 1px.
-5. Pointer down: the face drops to `translateY(depth − 1px)`, the edge collapses to 1px, the drop shadow tightens. 60ms, standard easing.
-6. Release: the face springs back to rest over 220ms on an overshooting curve.
-7. Each activation updates the readout: "Last: Ship build · 1 press", pluralised after the first.
-8. The microphone key toggles `aria-pressed`. When on it latches at half depth (3px) and its LED turns orange with a soft 2px halo; the readout says "(on)" or "(off)".
-9. Pressing S, R, D, X, P, M, N or Z on the keyboard (no modifier) adds the pressed class on keydown and fires the key on keyup. Holding the letter keeps it down; auto-repeat is ignored.
-10. Enter on a focused key also shows the pressed travel (browsers give Space an `:active` state but not Enter).
-11. State sheet below: four rows (Primary, Dark, Cream, Icon · latched) by five columns (Default, Hover, Pressed, Disabled, Focus). The sheet is inert reference art.
-12. Reduced motion: no transitions and no hover lift. The pressed position still changes so the state reads.
 
 ## Structure
 
@@ -49,51 +36,6 @@ A button set that behaves like mechanical keycaps. Each button has a face and a 
 - The live row is a `section aria-label="Try the buttons"` holding two groups of `button type="button"`.
 - Icon keys have `aria-label`; their SVG and legend spans are `aria-hidden`.
 - The state sheet is a `section` with an `h2` "States", a visually hidden sentence describing it, and a grid with `inert` and `aria-hidden="true"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #e7e1d5;          /* page putty */
-  --deck: #d6cebf;        /* stage card */
-  --deck-lo: #c4bbaa;     /* deck bottom inner lip */
-  --ink: #1f1b17;         /* text, focus ring */
-  --ink-2: #5a5248;       /* captions, 5:1 on deck */
-  --line: #c2b8a6;        /* hairlines */
-  --cream: #f7f2e8;       --cream-edge: #b8ac98;
-  --orange: #ff6b1a;      --orange-edge: #b8460b;   /* primary */
-  --char: #2b2825;        --char-edge: #0e0c0b;
-  --off: #e4ddd0;         --off-edge: #c9c0b1;  --off-ink: #8f867a;  /* disabled */
-  --sans: "Gabarito", system-ui, sans-serif;
-  --mono: "Reddit Mono", ui-monospace, monospace;
-  --press: cubic-bezier(.2,.7,.2,1);
-  --spring: cubic-bezier(.34,1.56,.64,1);
-}
-```
-
-Sizes (height / padding-x / font / radius / depth `--d`):
-
-| Size | Height | Padding | Font | Radius | Depth |
-| --- | --- | --- | --- | --- | --- |
-| L | 60px | 30px | 18px | 14px | 7px |
-| M | 52px | 24px | 16px | 12px | 6px |
-| S | 40px | 16px (20px left) | 14px | 10px | 4px |
-| Icon | 60×60 | 0 | — | 14px | 6px |
-| Sheet | 44px (icon 48) | 18px | 15px | 12px | 5px |
-
-Spacing: 6, 10, 12, 14, 16, 20, 28, 30. Every key reserves `margin-bottom: var(--d)` so the edge never collides with the next row.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Wordmark | Gabarito | 30px / 1 | 800 | −0.03em | Title |
-| Key label | Gabarito | 14 / 16 / 18px | 700 | −0.01em | Sentence |
-| Subline, readout | Reddit Mono | 12px | 500 (values 700) | 0.02em | Sentence |
-| Group captions, column heads | Reddit Mono | 10px | 500 | 0.08em | Upper |
-| Key legend | Reddit Mono | 9px | 700 | 0.04em | Upper, 55% opacity |
-
-Ink on orange is about 7:1. Never put cream text on the orange face; it is under 3:1.
 
 ## Motion
 
@@ -154,6 +96,70 @@ The press and release use different durations. Set the long spring on the base r
 - [ ] Live keys: Ship build (L, orange, S), Run tests (M, charcoal, R), Save draft (M, cream, D), Cancel (S, cream, X), plus icon keys P, M (toggle), N, Z.
 - [ ] Orange `#ff6b1a` with edge `#b8460b`; cream `#f7f2e8` with edge `#b8ac98`.
 - [ ] Pressing the M key on a keyboard latches the mic and the readout reads "Mute microphone (on)".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the putty page with a centred deck card. Header reads "Klakk." with an orange-brown full stop, a mono subline, and a readout pill on the right: "Last: none yet · 0 presses".
+2. Live row, left group "Text keys · L / M / M / S": "Ship build" (orange, large, legend S), "Run tests" (charcoal, medium, play icon, legend R), "Save draft" (cream, medium, legend D), "Cancel" (cream, small, legend X).
+3. Live row, right group "Icon keys · 60px": Play preview (charcoal, P), Mute microphone (cream toggle with LED, M), New track (cream, N), Undo (orange, Z).
+4. Hover: the key rises 1px and its edge grows by 1px.
+5. Pointer down: the face drops to `translateY(depth − 1px)`, the edge collapses to 1px, the drop shadow tightens. 60ms, standard easing.
+6. Release: the face springs back to rest over 220ms on an overshooting curve.
+7. Each activation updates the readout: "Last: Ship build · 1 press", pluralised after the first.
+8. The microphone key toggles `aria-pressed`. When on it latches at half depth (3px) and its LED turns orange with a soft 2px halo; the readout says "(on)" or "(off)".
+9. Pressing S, R, D, X, P, M, N or Z on the keyboard (no modifier) adds the pressed class on keydown and fires the key on keyup. Holding the letter keeps it down; auto-repeat is ignored.
+10. Enter on a focused key also shows the pressed travel (browsers give Space an `:active` state but not Enter).
+11. State sheet below: four rows (Primary, Dark, Cream, Icon · latched) by five columns (Default, Hover, Pressed, Disabled, Focus). The sheet is inert reference art.
+12. Reduced motion: no transitions and no hover lift. The pressed position still changes so the state reads.
+
+## Tokens
+
+```css
+:root {
+  --bg: #e7e1d5;          /* page putty */
+  --deck: #d6cebf;        /* stage card */
+  --deck-lo: #c4bbaa;     /* deck bottom inner lip */
+  --ink: #1f1b17;         /* text, focus ring */
+  --ink-2: #5a5248;       /* captions, 5:1 on deck */
+  --line: #c2b8a6;        /* hairlines */
+  --cream: #f7f2e8;       --cream-edge: #b8ac98;
+  --orange: #ff6b1a;      --orange-edge: #b8460b;   /* primary */
+  --char: #2b2825;        --char-edge: #0e0c0b;
+  --off: #e4ddd0;         --off-edge: #c9c0b1;  --off-ink: #8f867a;  /* disabled */
+  --sans: "Gabarito", system-ui, sans-serif;
+  --mono: "Reddit Mono", ui-monospace, monospace;
+  --press: cubic-bezier(.2,.7,.2,1);
+  --spring: cubic-bezier(.34,1.56,.64,1);
+}
+```
+
+Sizes (height / padding-x / font / radius / depth `--d`):
+
+| Size | Height | Padding | Font | Radius | Depth |
+| --- | --- | --- | --- | --- | --- |
+| L | 60px | 30px | 18px | 14px | 7px |
+| M | 52px | 24px | 16px | 12px | 6px |
+| S | 40px | 16px (20px left) | 14px | 10px | 4px |
+| Icon | 60×60 | 0 | — | 14px | 6px |
+| Sheet | 44px (icon 48) | 18px | 15px | 12px | 5px |
+
+Spacing: 6, 10, 12, 14, 16, 20, 28, 30. Every key reserves `margin-bottom: var(--d)` so the edge never collides with the next row.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Wordmark | Gabarito | 30px / 1 | 800 | −0.03em | Title |
+| Key label | Gabarito | 14 / 16 / 18px | 700 | −0.01em | Sentence |
+| Subline, readout | Reddit Mono | 12px | 500 (values 700) | 0.02em | Sentence |
+| Group captions, column heads | Reddit Mono | 10px | 500 | 0.08em | Upper |
+| Key legend | Reddit Mono | 9px | 700 | 0.04em | Upper, 55% opacity |
+
+Ink on orange is about 7:1. Never put cream text on the orange face; it is under 3:1.
 
 ## Implementation notes
 

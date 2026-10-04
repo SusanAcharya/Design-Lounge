@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Five pills on a 760 by 460 stage: Yard, Gate mail, Night book, Hold list, Month close. Lines join Yard to the other four, and Gate mail to Hold list. Yard starts pressed. Its lines are #1f4d3a. Clicking another node presses that node and lights only the lines that touch it. This is not an orbit of links. That orbit is `link-orbit`.
-
-## Reference behaviour
-
-1. Yard starts aria-pressed true. Lines from Yard are class on.
-2. A pressed node is fill #e7f2ec, border #1f4d3a, text #1f4d3a.
-3. Other nodes are white, border #cfc6b8, text #161513.
-4. Clicking a node presses only that node.
-5. A line is on when either end is the pressed node.
-6. The SVG is aria-hidden. The buttons carry the names.
-7. There is no drag and no animation.
 
 ## Structure
 
@@ -32,18 +24,6 @@ Hold list          Month close
 - Positions: Yard 340,210. Gate mail 80,80. Night book 600,70. Hold list 90,360. Month close 600,350. Buttons offset by -50px and -22px.
 - Lines are 1.5px #cfc6b8, and 2.5px #1f4d3a when on.
 - Edges are 0-1, 0-2, 0-3, 0-4, 1-3.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --ink:#161513; --line:#cfc6b8; --primary:#1f4d3a; --soft:#e7f2ec; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Node | IBM Plex Sans | 14px | 500 |
 
 ## Motion
 
@@ -88,16 +68,6 @@ Hold list          Month close
 - [ ] On lines are #1f4d3a at 2.5px.
 - [ ] Rest lines are #cfc6b8 at 1.5px.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Store edge ends on the line.
-
-```js
-l.classList.toggle("on", l.dataset.a == i || l.dataset.b == i);
-```
-
-Create the SVG line with the SVG namespace.
 
 ## Measurements to keep
 
@@ -166,6 +136,42 @@ Create the SVG line with the SVG namespace.
 - While rebuilding, remember: Do not hide the names.
 - While rebuilding, remember: Do not use a canvas.
 - While rebuilding, remember: Do not make every line green at once.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Yard starts aria-pressed true. Lines from Yard are class on.
+2. A pressed node is fill #e7f2ec, border #1f4d3a, text #1f4d3a.
+3. Other nodes are white, border #cfc6b8, text #161513.
+4. Clicking a node presses only that node.
+5. A line is on when either end is the pressed node.
+6. The SVG is aria-hidden. The buttons carry the names.
+7. There is no drag and no animation.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --ink:#161513; --line:#cfc6b8; --primary:#1f4d3a; --soft:#e7f2ec; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Node | IBM Plex Sans | 14px | 500 |
+
+## Implementation notes
+
+Store edge ends on the line.
+
+```js
+l.classList.toggle("on", l.dataset.a == i || l.dataset.b == i);
+```
+
+Create the SVG line with the SVG namespace.
 
 ---
 

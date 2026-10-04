@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the column stays the pass column, the amount uses the pairing's number face, and Paid uses the success wash with the on-soft ink.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The page after checkout. A small flag says Paid, on the success wash. The kicker is Order 1842. The amount is रु 4,200 at 56px. The sentence says it leaves today from Koteshwor. Three lines and a total sit in a 720px column: Rice रु 2,400, Oil रु 1,200, Tea रु 600, total रु 4,200. One button, Track this order. Clicking it writes "Tracking opened for order 1842." and disables the button. The receipt does not become a toast. A save that is only a banner is `saved-banner`. The cart before this page is `shop-cart`.
-
-## Reference behaviour
-
-1. The first frame shows Paid, the amount, the three lines, the total, and the enabled button.
-2. The lines sum to the total: 2400 + 1200 + 600 = 4200.
-3. Clicking the button sets the status, changes the label to Tracking opened, and disables the button.
-4. A second click does nothing.
-5. There is no animation and no confetti.
-6. Focus ring is 2px `--focus`, offset 3px.
-7. Amounts that contain रु are one string in one face. This demo uses Noto Sans because that face has the glyph. When a pairing is locked, use the face that contains रु. Do not set the amount in a mono face that drops the glyph.
 
 ## Structure
 
@@ -39,42 +31,6 @@ status                       empty until click
 - The column is the pass column, 720px.
 - Amounts are text, tabular numbers.
 - The flag is a paragraph, not a badge component on a row. A row badge is `status-badge`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --primary: #1f4d3a;
-  --primary-ink: #fffdf8;
-  --success-soft: #d6e8dc;
-  --success-on-soft: #1b5e3d;
-  --focus: #1f4d3a;
-  --sans: "Noto Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px on the flag, the list, and the button in this demo. The family replaces it. The list is a card radius. The button is the control radius. They match in this yard. They can differ when the family says so: `--radius` on the button, `--radius-card` on the list.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Flag | sans | 14px | 500 | `--success-on-soft` |
-| Kicker | sans | 12px | 500 | `--ink-2` |
-| Amount | sans | 56px | 600 | `--ink` |
-| Lead | sans | 16px | 400 | `--ink` |
-| Line | sans | 16px | 400 | `--ink` |
-| Total | sans | 16px | 500 | `--ink` |
-| Button | sans | 13px | 500 | `--primary-ink` |
-
-The amount letter-spacing is -0.02em in this demo. When a pairing is locked, use that pairing's display tracking only. Do not keep -0.02em as a second rule. The kicker letter-spacing is 0.04em.
-
-Grouping: 4,200 and 2,400 and 1,200. Under 1000, Tea is रु 600 with no comma. Do not write 4.200. Nepal and India group by lakh only once the number reaches a lakh. 4,200 is still thousands.
 
 ## Motion
 
@@ -126,6 +82,56 @@ None. The status replaces the idle line in one frame. Reduced motion has nothing
 - [ ] Amounts that include रु use one face.
 - [ ] Focus ring is 2px, offset 3px.
 - [ ] There is no animation and no second solid button.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows Paid, the amount, the three lines, the total, and the enabled button.
+2. The lines sum to the total: 2400 + 1200 + 600 = 4200.
+3. Clicking the button sets the status, changes the label to Tracking opened, and disables the button.
+4. A second click does nothing.
+5. There is no animation and no confetti.
+6. Focus ring is 2px `--focus`, offset 3px.
+7. Amounts that contain रु are one string in one face. This demo uses Noto Sans because that face has the glyph. When a pairing is locked, use the face that contains रु. Do not set the amount in a mono face that drops the glyph.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --primary: #1f4d3a;
+  --primary-ink: #fffdf8;
+  --success-soft: #d6e8dc;
+  --success-on-soft: #1b5e3d;
+  --focus: #1f4d3a;
+  --sans: "Noto Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px on the flag, the list, and the button in this demo. The family replaces it. The list is a card radius. The button is the control radius. They match in this yard. They can differ when the family says so: `--radius` on the button, `--radius-card` on the list.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Flag | sans | 14px | 500 | `--success-on-soft` |
+| Kicker | sans | 12px | 500 | `--ink-2` |
+| Amount | sans | 56px | 600 | `--ink` |
+| Lead | sans | 16px | 400 | `--ink` |
+| Line | sans | 16px | 400 | `--ink` |
+| Total | sans | 16px | 500 | `--ink` |
+| Button | sans | 13px | 500 | `--primary-ink` |
+
+The amount letter-spacing is -0.02em in this demo. When a pairing is locked, use that pairing's display tracking only. Do not keep -0.02em as a second rule. The kicker letter-spacing is 0.04em.
+
+Grouping: 4,200 and 2,400 and 1,200. Under 1000, Tea is रु 600 with no comma. Do not write 4.200. Nepal and India group by lakh only once the number reaches a lakh. 4,200 is still thousands.
 
 ## Implementation notes
 

@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A profile page for a fictional Kathmandu essayist, Mira Joshi. The first frame is a paper-coloured masthead: a 13px olive kicker, a 104px Literata name, four role chips, a one-sentence italic bio, then a 3-up strip of recent work and a subscribe row for "The Sunday letter". Public Sans carries the UI. Do not use Fraunces — that is the Lounge house face. Olive is the single accent. The page should feel like the front of a slim journal, not a social profile.
-
-## Reference behaviour
-
-1. Initial state: chips "Essayist" and "Editor" are `aria-pressed="true"` (ink fill, paper type). "Speaker" and "Teacher" are unpressed (1px `--line` border). The email field is empty. Subscribe is enabled.
-2. Click a chip: it toggles pressed independently (these are roles she claims, not exclusive filters). Pressed: `#1C1914` fill, `#F6F1E6` type. Unpressed hover: border and type go `--ink`.
-3. Hover a work card: 1px border becomes `--ink`, the card lifts 3px over 320ms. Focus-visible uses the same lift plus the olive ring.
-4. Submit subscribe with an empty or invalid value: the live region reads `Enter a full address.` and the field is focused. Valid pattern: one `@`, a dot in the domain, no spaces.
-5. Valid submit: button label becomes `Subscribed`, class `ok` (ink fill), button and input `disabled`. Live region: `Next letter: Sunday 4 Oct.`
-6. Nav "Essays" is current (1px olive underline). Index and Subscribe scroll to `#work` and `#sub`.
-7. Reduced motion: durations 1ms; cards do not lift.
 
 ## Structure
 
@@ -42,47 +34,6 @@ A profile page for a fictional Kathmandu essayist, Mira Joshi. The first frame i
 - `<header class="mast">` — kicker, `h1`, `.chips` (`role="group"`), bio paragraph.
 - `<section class="work" id="work" aria-label="Recent work">` — three `<a class="card">`. Each: 120px CSS plate, 11px olive label, 22px italic title, 13px deck.
 - `<section class="sub" id="sub">` — 2 columns. Left: title + count. Right: `<form novalidate>` + `#msg` live region.
-
-## Tokens
-
-```css
-:root {
-  --paper: #f6f1e6;       /* page */
-  --ink: #1c1914;         /* name, pressed chip, rules */
-  --ink-2: #5c564c;       /* bio, deck, nav */
-  --ink-3: #8a8376;       /* unused tertiary */
-  --line: #d8d0c0;        /* hairlines, chip/card border */
-  --olive: #3d4f3a;       /* kicker, labels, subscribe, focus */
-  --olive-2: #2c3a2a;     /* subscribe hover */
-
-  --serif: "Literata", Georgia, serif;
-  --sans: "Public Sans", system-ui, sans-serif;
-
-  --pad: 56px;
-  --nav: 54px;
-  --chip-h: 32px;
-  --plate-h: 120px;
-  --card-min: 248px;
-  --field-h: 48px;
-
-  --t: 180ms;
-  --t-swap: 320ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Name | Literata | 104px | 400 | 0.82 | −0.035em | title |
-| Bio | Literata italic | 20px | 400 | 1.4 | 0 | sentence |
-| Card title / subscribe h3 | Literata italic | 22–28px | 400 | 1.15–1.2 | 0 | sentence |
-| Nav mark | Literata italic | 18px | 400 | 1 | 0 | title |
-| UI / body | Public Sans | 13–15px | 400–600 | 1.55 | 0 | sentence |
-| Kicker / card label | Public Sans | 11–13px | 600 | 1 | +0.10–0.12em | UPPERCASE |
-| Chip | Public Sans | 12px | 400 | 1 | +0.04em | title |
 
 ## Motion
 
@@ -133,6 +84,61 @@ Reduced motion: 1ms durations; no card lift.
 - [ ] Focus rings are 2px olive on chips, cards, input, and the button.
 - [ ] `prefers-reduced-motion: reduce` removes the 3px card lift.
 - [ ] Subject is Mira Joshi, not the Lounge curator. No emoji, no placeholder copy.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: chips "Essayist" and "Editor" are `aria-pressed="true"` (ink fill, paper type). "Speaker" and "Teacher" are unpressed (1px `--line` border). The email field is empty. Subscribe is enabled.
+2. Click a chip: it toggles pressed independently (these are roles she claims, not exclusive filters). Pressed: `#1C1914` fill, `#F6F1E6` type. Unpressed hover: border and type go `--ink`.
+3. Hover a work card: 1px border becomes `--ink`, the card lifts 3px over 320ms. Focus-visible uses the same lift plus the olive ring.
+4. Submit subscribe with an empty or invalid value: the live region reads `Enter a full address.` and the field is focused. Valid pattern: one `@`, a dot in the domain, no spaces.
+5. Valid submit: button label becomes `Subscribed`, class `ok` (ink fill), button and input `disabled`. Live region: `Next letter: Sunday 4 Oct.`
+6. Nav "Essays" is current (1px olive underline). Index and Subscribe scroll to `#work` and `#sub`.
+7. Reduced motion: durations 1ms; cards do not lift.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f6f1e6;       /* page */
+  --ink: #1c1914;         /* name, pressed chip, rules */
+  --ink-2: #5c564c;       /* bio, deck, nav */
+  --ink-3: #8a8376;       /* unused tertiary */
+  --line: #d8d0c0;        /* hairlines, chip/card border */
+  --olive: #3d4f3a;       /* kicker, labels, subscribe, focus */
+  --olive-2: #2c3a2a;     /* subscribe hover */
+
+  --serif: "Literata", Georgia, serif;
+  --sans: "Public Sans", system-ui, sans-serif;
+
+  --pad: 56px;
+  --nav: 54px;
+  --chip-h: 32px;
+  --plate-h: 120px;
+  --card-min: 248px;
+  --field-h: 48px;
+
+  --t: 180ms;
+  --t-swap: 320ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Name | Literata | 104px | 400 | 0.82 | −0.035em | title |
+| Bio | Literata italic | 20px | 400 | 1.4 | 0 | sentence |
+| Card title / subscribe h3 | Literata italic | 22–28px | 400 | 1.15–1.2 | 0 | sentence |
+| Nav mark | Literata italic | 18px | 400 | 1 | 0 | title |
+| UI / body | Public Sans | 13–15px | 400–600 | 1.55 | 0 | sentence |
+| Kicker / card label | Public Sans | 11–13px | 600 | 1 | +0.10–0.12em | UPPERCASE |
+| Chip | Public Sans | 12px | 400 | 1 | +0.04em | title |
 
 ## Implementation notes
 

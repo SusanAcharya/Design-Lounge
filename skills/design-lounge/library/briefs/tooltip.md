@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the tip is `--ink` with `--primary-ink` or the theme's light ink. Do not put a tooltip on a chart.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One outline button, Hold, with a tip under it: "Keeps the load on the dock until 18:00." The tip starts visible so the piece can be read without a hover. Moving the pointer off the button hides it. Focusing the button shows it. The tip is 240px wide, ink fill, cream text, 13px, radius 2px. It is a description of the control. It is not a toast, not a menu, and not the value of a bar.
-
-## Reference behaviour
-
-1. The first frame shows the tip under Hold.
-2. Pointer leave hides it. Pointer enter shows it.
-3. Focus shows it. Blur hides it.
-4. There is no click action. Hold does not open a dialog in this piece.
-5. The tip has no close button and no timer.
-6. Focus ring is 2px `--focus`, offset 3px, on the button.
-7. There is no animation. It appears in one frame.
 
 ## Structure
 
@@ -30,31 +22,6 @@ wrap, position relative, inline-block
 - The button has `aria-describedby="tip"`.
 - The tip is `role="tooltip"`.
 - Hide it with the `hidden` attribute.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line-strong: #cfc6b8;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-The tip uses `--ink` and `#fffdf8`. When a theme is locked, the tip background is `--ink` and the text is the light ink that clears 4.5 on it, the same cream the primary label uses when that cream passes. Do not use the brand red as the tip.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Button | sans | 13px | 500 | `--ink` |
-| Tip | sans | 13px | 400 | `#fffdf8` |
-
-The tip line-height is 1.4. Padding is 8px 12px. It is one sentence.
 
 ## Motion
 
@@ -102,6 +69,45 @@ None. Reduced motion has nothing to remove. Do not delay the tip by 400ms in thi
 - [ ] Focus ring is 2px, offset 3px.
 - [ ] There is no close button, no timer, and no chart.
 - [ ] There is no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the tip under Hold.
+2. Pointer leave hides it. Pointer enter shows it.
+3. Focus shows it. Blur hides it.
+4. There is no click action. Hold does not open a dialog in this piece.
+5. The tip has no close button and no timer.
+6. Focus ring is 2px `--focus`, offset 3px, on the button.
+7. There is no animation. It appears in one frame.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line-strong: #cfc6b8;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+The tip uses `--ink` and `#fffdf8`. When a theme is locked, the tip background is `--ink` and the text is the light ink that clears 4.5 on it, the same cream the primary label uses when that cream passes. Do not use the brand red as the tip.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Button | sans | 13px | 500 | `--ink` |
+| Tip | sans | 13px | 400 | `#fffdf8` |
+
+The tip line-height is 1.4. Padding is 8px 12px. It is one sentence.
 
 ## Implementation notes
 

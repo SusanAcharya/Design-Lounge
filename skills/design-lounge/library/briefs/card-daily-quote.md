@@ -4,26 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The home card of a small motivation app, "Dayleaf". One tall card holds the quote of the day, the author and the source, over a sky gradient that matches the reader's local time: dawn peach and rose, day butter to teal, dusk amber to plum, night navy with stars and a crescent moon. Two cards peek from behind it as a stack. You swipe it away for the next quote, save it with a bookmark, or open a share sheet with a square or story-sized image preview. The detail worth copying is that the four skies are registered colour properties on the root, so the card, the stack, the page tint and the share preview all crossfade together in 900ms from one attribute change.
-
-## Reference behaviour
-
-1. First frame: the card shows quote 1 of 6, Seneca, with the sky for the current local hour. 05–10 is dawn, 10–16 day, 16–20 dusk, 20–05 night. The pill above reads "Now HH:MM". No time button is pressed. The save count reads 2.
-2. The card meta reads "Dayleaf" on the left and "No. <day of year> · <Sun 4 Oct>" on the right, computed from today.
-3. Press a time button (Dawn, Day, Dusk, Night): the sky crossfades in 900ms. The sun or moon slides to that period's spot. Stars fade in only at night. The pill reads "Preview HH:MM" and the button is pressed. Press the pressed button again to return to Auto.
-4. The clock refreshes every 30 s. In Auto, crossing a period boundary changes the sky by itself.
-5. Drag the card sideways: it follows the pointer and rotates `dx / 22` degrees. Release beyond 100px: it flies out (130% of its width, 14° rotation, 280ms, accelerating). Left goes to the next quote, right to the previous. Under 100px it springs back in 420ms.
-6. After a fly-out the card reappears in the second stack slot (translateY 16px, scale 0.94, invisible) with the new quote and rises to the top in 420ms. That reads as the stack moving up.
-7. The round arrow buttons on either side, and ← / → while the card has focus, do the same as a swipe. Quotes wrap from 6 back to 1.
-8. The pips under the quote show the position. The current pip widens from 6px to 18px in 300ms. "1 of 6" updates.
-9. Save toggles the bookmark for the current quote. When saved, the button fills ink with paper text, the label reads "Saved", the icon fills and pops to 1.35 and back in 380ms, and the count updates.
-10. "Share as image" opens a modal sheet, "Share today's leaf". It holds a format toggle (Square 1:1, Story 9:16), a preview on a checkerboard well, and two buttons: Copy image and Save PNG. The preview uses the same live sky, the quote, and "AUTHOR · DAYLEAF NO. 277".
-11. Story 9:16 changes the preview's aspect ratio in 360ms. The text drops from 19px to 15px.
-12. Copy image changes its label to "Copied". Save PNG changes to "Saved". Both announce through a live region. Closing the sheet resets the labels.
-13. Esc, the close button, or a click on the scrim closes the sheet. Focus returns to the Share button. Tab cycles inside the sheet.
-14. With reduced motion, the sky changes at once and the card swaps without flying. There is no pop and no slide. The content is the same.
 
 ## Structure
 
@@ -70,60 +55,6 @@ Quotes, in order:
 | 6 | Rather than love, than money, than fame, give me truth. | Henry David Thoreau | Walden |
 
 Quotes 4 and 6 start saved.
-
-## Tokens
-
-```css
-/* registered so they can tween */
-@property --g1  { syntax: "<color>"; inherits: true; initial-value: #0f1a33; }
-@property --g2  { syntax: "<color>"; inherits: true; initial-value: #1e3358; }
-@property --g3  { syntax: "<color>"; inherits: true; initial-value: #3b4f7a; }
-@property --ink { syntax: "<color>"; inherits: true; initial-value: #f2ebdd; }
-@property --acc { syntax: "<color>"; inherits: true; initial-value: #e9c46a; }
-@property --sun { syntax: "<color>"; inherits: true; initial-value: #e9c46a; }
-@property --p1  { syntax: "<color>"; inherits: true; initial-value: #e6e8ef; }
-@property --p2  { syntax: "<color>"; inherits: true; initial-value: #c3cadc; }
-
-:root {
-  --serif: "Young Serif", Georgia, serif;
-  --sans: "Figtree", system-ui, sans-serif;
-  --chrome-ink: #1f1c19;      /* pills, buttons, sheet text */
-  --chrome-ink-2: #4b443d;    /* unpressed time labels, hint */
-  --sheet: #f7f3ec;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-sky: 900ms;
-  --radius-card: 28px;
-  transition: --g1 var(--t-sky) var(--ease), --g2 var(--t-sky) var(--ease), --g3 var(--t-sky) var(--ease),
-              --ink var(--t-sky) var(--ease), --acc var(--t-sky) var(--ease), --sun var(--t-sky) var(--ease),
-              --p1 var(--t-sky) var(--ease), --p2 var(--t-sky) var(--ease);
-}
-/* sky g1 → g2 → g3, card ink, quote-mark accent, sun or moon, page tint top → bottom */
-:root[data-t=dawn]  { --g1:#f6c9a8; --g2:#e7a3a6; --g3:#a4b8d8; --ink:#3a2230; --acc:#b5413f; --sun:#ffe0bf; --p1:#fbeee4; --p2:#efd3d2; }
-:root[data-t=day]   { --g1:#fbe7b2; --g2:#a3d5cf; --g3:#4d97b3; --ink:#12303a; --acc:#b85a1e; --sun:#fff1bd; --p1:#fbf4df; --p2:#cfe6e0; }
-:root[data-t=dusk]  { --g1:#f4b05a; --g2:#b84a3a; --g3:#4e2a46; --ink:#fff4e6; --acc:#ffd38a; --sun:#ffd38a; --p1:#fbe6cc; --p2:#ecc0ae; }
-:root[data-t=night] { --g1:#0f1a33; --g2:#1e3358; --g3:#3b4f7a; --ink:#f2ebdd; --acc:#e9c46a; --sun:#e9c46a; --p1:#e6e8ef; --p2:#c3cadc; }
-```
-
-Card: `background: linear-gradient(165deg, var(--g1), var(--g2) 55%, var(--g3))`, shadow `0 1px 0 rgba(255,255,255,.35) inset, 0 24px 50px -18px rgba(31,20,30,.45)`. Page: `linear-gradient(var(--p1), var(--p2))` under a white radial glow at the bottom. The grain is `radial-gradient(rgba(255,255,255,.08) .6px, transparent .8px)` at 3px with `mix-blend-mode: overlay`.
-
-Orb (120px): dawn at `left 60%, top 24%`. Day at `62%, -44px` (it hangs off the top edge). Dusk at `68%, 15%`. Night at `66%, 62px`, drawn as a crescent: `radial-gradient(circle at 64% 40%, transparent 38%, var(--sun) 39%)`. Suns use `radial-gradient(circle at 40% 38%, color-mix(in srgb, var(--sun) 40%, #fff), var(--sun) 62%)` and a 70px glow.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Quote | Young Serif | 32px | 400 | 1.18 | -0.01em | sentence, `text-wrap: balance` |
-| Opening mark “ | Young Serif | 96px | 400 | 0.6 | 0 | in `--acc` |
-| Wordmark on card | Young Serif | 18px | 400 | 1 | 0 | title |
-| Card meta | Figtree | 12px | 600 | 1 | 0.08em | UPPER |
-| Author / source | Figtree | 14px | 600 / 400 | 1.5 | 0 | title |
-| Position, pips | Figtree | 12px | 400 | 1 | 0 | tabular numerals |
-| Time pill | Figtree | 13px | 600 | 1 | 0 | title; clock 12px/500 tabular |
-| Action pills | Figtree | 14px | 600 | 1 | 0 | sentence |
-| Sheet title | Young Serif | 20px | 400 | 1 | 0 | sentence |
-| Preview quote | Young Serif | 19px (story 15px) | 400 | 1.2 | 0 | sentence |
-| Preview credit | Figtree | 10px | 600 | 1.4 | 0.08em | UPPER |
 
 ## Motion
 
@@ -195,6 +126,81 @@ Orb (120px): dawn at `left 60%, top 24%`. Day at `62%, -44px` (it hangs off the 
 - [ ] Night sky `#0f1a33 → #1e3358 → #3b4f7a` with a `#e9c46a` crescent. Dusk is `#f4b05a → #b84a3a → #4e2a46`.
 - [ ] The quote is Young Serif 32px/1.18 with a 96px accent mark. UI text is Figtree.
 - [ ] The meta shows the day-of-year number and the short date.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the card shows quote 1 of 6, Seneca, with the sky for the current local hour. 05–10 is dawn, 10–16 day, 16–20 dusk, 20–05 night. The pill above reads "Now HH:MM". No time button is pressed. The save count reads 2.
+2. The card meta reads "Dayleaf" on the left and "No. <day of year> · <Sun 4 Oct>" on the right, computed from today.
+3. Press a time button (Dawn, Day, Dusk, Night): the sky crossfades in 900ms. The sun or moon slides to that period's spot. Stars fade in only at night. The pill reads "Preview HH:MM" and the button is pressed. Press the pressed button again to return to Auto.
+4. The clock refreshes every 30 s. In Auto, crossing a period boundary changes the sky by itself.
+5. Drag the card sideways: it follows the pointer and rotates `dx / 22` degrees. Release beyond 100px: it flies out (130% of its width, 14° rotation, 280ms, accelerating). Left goes to the next quote, right to the previous. Under 100px it springs back in 420ms.
+6. After a fly-out the card reappears in the second stack slot (translateY 16px, scale 0.94, invisible) with the new quote and rises to the top in 420ms. That reads as the stack moving up.
+7. The round arrow buttons on either side, and ← / → while the card has focus, do the same as a swipe. Quotes wrap from 6 back to 1.
+8. The pips under the quote show the position. The current pip widens from 6px to 18px in 300ms. "1 of 6" updates.
+9. Save toggles the bookmark for the current quote. When saved, the button fills ink with paper text, the label reads "Saved", the icon fills and pops to 1.35 and back in 380ms, and the count updates.
+10. "Share as image" opens a modal sheet, "Share today's leaf". It holds a format toggle (Square 1:1, Story 9:16), a preview on a checkerboard well, and two buttons: Copy image and Save PNG. The preview uses the same live sky, the quote, and "AUTHOR · DAYLEAF NO. 277".
+11. Story 9:16 changes the preview's aspect ratio in 360ms. The text drops from 19px to 15px.
+12. Copy image changes its label to "Copied". Save PNG changes to "Saved". Both announce through a live region. Closing the sheet resets the labels.
+13. Esc, the close button, or a click on the scrim closes the sheet. Focus returns to the Share button. Tab cycles inside the sheet.
+14. With reduced motion, the sky changes at once and the card swaps without flying. There is no pop and no slide. The content is the same.
+
+## Tokens
+
+```css
+/* registered so they can tween */
+@property --g1  { syntax: "<color>"; inherits: true; initial-value: #0f1a33; }
+@property --g2  { syntax: "<color>"; inherits: true; initial-value: #1e3358; }
+@property --g3  { syntax: "<color>"; inherits: true; initial-value: #3b4f7a; }
+@property --ink { syntax: "<color>"; inherits: true; initial-value: #f2ebdd; }
+@property --acc { syntax: "<color>"; inherits: true; initial-value: #e9c46a; }
+@property --sun { syntax: "<color>"; inherits: true; initial-value: #e9c46a; }
+@property --p1  { syntax: "<color>"; inherits: true; initial-value: #e6e8ef; }
+@property --p2  { syntax: "<color>"; inherits: true; initial-value: #c3cadc; }
+
+:root {
+  --serif: "Young Serif", Georgia, serif;
+  --sans: "Figtree", system-ui, sans-serif;
+  --chrome-ink: #1f1c19;      /* pills, buttons, sheet text */
+  --chrome-ink-2: #4b443d;    /* unpressed time labels, hint */
+  --sheet: #f7f3ec;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-sky: 900ms;
+  --radius-card: 28px;
+  transition: --g1 var(--t-sky) var(--ease), --g2 var(--t-sky) var(--ease), --g3 var(--t-sky) var(--ease),
+              --ink var(--t-sky) var(--ease), --acc var(--t-sky) var(--ease), --sun var(--t-sky) var(--ease),
+              --p1 var(--t-sky) var(--ease), --p2 var(--t-sky) var(--ease);
+}
+/* sky g1 → g2 → g3, card ink, quote-mark accent, sun or moon, page tint top → bottom */
+:root[data-t=dawn]  { --g1:#f6c9a8; --g2:#e7a3a6; --g3:#a4b8d8; --ink:#3a2230; --acc:#b5413f; --sun:#ffe0bf; --p1:#fbeee4; --p2:#efd3d2; }
+:root[data-t=day]   { --g1:#fbe7b2; --g2:#a3d5cf; --g3:#4d97b3; --ink:#12303a; --acc:#b85a1e; --sun:#fff1bd; --p1:#fbf4df; --p2:#cfe6e0; }
+:root[data-t=dusk]  { --g1:#f4b05a; --g2:#b84a3a; --g3:#4e2a46; --ink:#fff4e6; --acc:#ffd38a; --sun:#ffd38a; --p1:#fbe6cc; --p2:#ecc0ae; }
+:root[data-t=night] { --g1:#0f1a33; --g2:#1e3358; --g3:#3b4f7a; --ink:#f2ebdd; --acc:#e9c46a; --sun:#e9c46a; --p1:#e6e8ef; --p2:#c3cadc; }
+```
+
+Card: `background: linear-gradient(165deg, var(--g1), var(--g2) 55%, var(--g3))`, shadow `0 1px 0 rgba(255,255,255,.35) inset, 0 24px 50px -18px rgba(31,20,30,.45)`. Page: `linear-gradient(var(--p1), var(--p2))` under a white radial glow at the bottom. The grain is `radial-gradient(rgba(255,255,255,.08) .6px, transparent .8px)` at 3px with `mix-blend-mode: overlay`.
+
+Orb (120px): dawn at `left 60%, top 24%`. Day at `62%, -44px` (it hangs off the top edge). Dusk at `68%, 15%`. Night at `66%, 62px`, drawn as a crescent: `radial-gradient(circle at 64% 40%, transparent 38%, var(--sun) 39%)`. Suns use `radial-gradient(circle at 40% 38%, color-mix(in srgb, var(--sun) 40%, #fff), var(--sun) 62%)` and a 70px glow.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Quote | Young Serif | 32px | 400 | 1.18 | -0.01em | sentence, `text-wrap: balance` |
+| Opening mark “ | Young Serif | 96px | 400 | 0.6 | 0 | in `--acc` |
+| Wordmark on card | Young Serif | 18px | 400 | 1 | 0 | title |
+| Card meta | Figtree | 12px | 600 | 1 | 0.08em | UPPER |
+| Author / source | Figtree | 14px | 600 / 400 | 1.5 | 0 | title |
+| Position, pips | Figtree | 12px | 400 | 1 | 0 | tabular numerals |
+| Time pill | Figtree | 13px | 600 | 1 | 0 | title; clock 12px/500 tabular |
+| Action pills | Figtree | 14px | 600 | 1 | 0 | sentence |
+| Sheet title | Young Serif | 20px | 400 | 1 | 0 | sentence |
+| Preview quote | Young Serif | 19px (story 15px) | 400 | 1.2 | 0 | sentence |
+| Preview credit | Figtree | 10px | 600 | 1.4 | 0.08em | UPPER |
 
 ## Implementation notes
 

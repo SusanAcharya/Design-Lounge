@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A mid-page testimonials section for **Fieldnote**, a B2B field-research tool. One quote fills the viewport at a time: a 72px decorative opening mark, a 48px Newsreader sentence (one italic clay word), then a 40px initials disc and a name/role line. Controls sit on a single row: 44px prev/next squares and four 8px dots. It is a carousel, not a wall — the point is the scale of a single sentence and the quiet wrap from 04 back to 01. The first frame already shows quote 01.
-
-## Reference behaviour
-
-1. Initial state: paper page, 56px nav (Fieldnote mark + Product / Methods / Pricing + “Request a seat”), then the section. Index reads **01 / 04**. Kicker on the right: “WHAT TEAMS WRITE BACK”. Quote 01 is on: “We stopped losing the week *after* the site visit.” Author Priya Sen, Research lead · Northline Labs, pine disc “PS”. Dot 1 has `aria-current="true"`.
-2. Click Next (or press ArrowRight): quote 01 fades and slides 28px left over 420ms; quote 02 enters from 28px right. Index becomes **02 / 04**. Live region announces “Quote 2 of 4, Tomas Brekke”.
-3. Click Prev (or press ArrowLeft) from 01: wraps to 04 (Jonah Ndiaye) with a reverse 28px slide. Index **04 / 04**.
-4. Click a dot: jump to that quote. Direction is `back` if the target index is lower, `fwd` if higher.
-5. Clicks during the 420ms lock are ignored so slides cannot stack.
-6. Hover a nav square: fill `--ink`, icon `--bg`, border `--ink`. Hover a closed dot: `--ink-2`. Active dot is `--pine` at scale 1.15.
-7. Hover “Request a seat”: invert to `--ink` fill, `--bg` text.
-8. With `prefers-reduced-motion: reduce`, the slide duration is 1ms and transforms are forced to none; state still updates.
 
 ## Structure
 
@@ -56,54 +47,6 @@ Quotes, in order:
 | 02 | Four cities, one thread, tagged before the *debrief*. | Tomas Brekke | Operations · Harbor & Co | `#3D4A62` TB |
 | 03 | Friday used to be transcripts. Now I leave the field *done*. | Elena Voss | Partner · Kite Field | `#B5522A` EV |
 | 04 | The codebook stopped living in a *private* spreadsheet. | Jonah Ndiaye | Director of insight · Vale Civic | `#5A4638` JN |
-
-## Tokens
-
-```css
-:root {
-  --bg: #efe6d4;          /* page */
-  --paper: #f6efe2;       /* button faces */
-  --ink: #1a241e;         /* primary text */
-  --ink-2: #5a5648;       /* secondary */
-  --ink-3: #8a8374;       /* index / meta */
-  --line: #d4cbb8;        /* nav rule */
-  --line-2: #c4b9a4;      /* button border, idle dots */
-  --pine: #2c5a45;        /* kicker, active dot, focus, mark fill */
-  --clay: #b5522a;        /* italic word in the quote */
-  --mark: #d8cbb4;        /* giant opening quote */
-
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Work Sans", system-ui, sans-serif;
-
-  --nav-h: 56px;
-  --pad: 72px;
-  --quote: 48px;
-  --qmark: 72px;
-  --btn: 44px;
-
-  --t-fast: 160ms;
-  --t-slide: 420ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Body / nav links | Work Sans | 13–14px | 400 | 1.45 | 0 | sentence |
-| Brand | Work Sans | 15px | 600 | 1 | −0.02em | sentence |
-| CTA | Work Sans | 12px | 500 | 1 | +0.04em | UPPERCASE |
-| Index / kicker | Work Sans | 12px | 500 | 1 | +0.14–0.16em | UPPERCASE |
-| Opening mark | Newsreader | 72px | 600 | 0.7 | −0.06em | — |
-| Quote | Newsreader | 48px | 400 | 1.12 | −0.025em | sentence |
-| Quote emphasis | Newsreader | 48px | 600 italic | 1.12 | −0.025em | sentence |
-| Author | Work Sans | 15px | 500 | 1.2 | 0 | sentence |
-| Role line | Work Sans | 13px | 400 | 1.3 | 0 | sentence |
-| Avatar initials | Work Sans | 13px | 500 | 1 | +0.02em | UPPERCASE |
-
-Quote measure is `max-width: 22ch` on the 48px `<p>` (not the blockquote — `ch` on a 14px parent is ~144px and wraps every word). The line breaks at two or three lines, never a full-bleed ribbon.
 
 ## Motion
 
@@ -158,6 +101,69 @@ Reduced motion: `.slide { transition-duration: 1ms; transform: none !important }
 - [ ] `prefers-reduced-motion: reduce` swaps instantly; wrap and announcement still work.
 - [ ] No images, no emoji, no dummy copy, no amber-on-black palette.
 - [ ] Demo starts with the piece header comment and fills 1280×800 without a vertical scrollbar.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: paper page, 56px nav (Fieldnote mark + Product / Methods / Pricing + “Request a seat”), then the section. Index reads **01 / 04**. Kicker on the right: “WHAT TEAMS WRITE BACK”. Quote 01 is on: “We stopped losing the week *after* the site visit.” Author Priya Sen, Research lead · Northline Labs, pine disc “PS”. Dot 1 has `aria-current="true"`.
+2. Click Next (or press ArrowRight): quote 01 fades and slides 28px left over 420ms; quote 02 enters from 28px right. Index becomes **02 / 04**. Live region announces “Quote 2 of 4, Tomas Brekke”.
+3. Click Prev (or press ArrowLeft) from 01: wraps to 04 (Jonah Ndiaye) with a reverse 28px slide. Index **04 / 04**.
+4. Click a dot: jump to that quote. Direction is `back` if the target index is lower, `fwd` if higher.
+5. Clicks during the 420ms lock are ignored so slides cannot stack.
+6. Hover a nav square: fill `--ink`, icon `--bg`, border `--ink`. Hover a closed dot: `--ink-2`. Active dot is `--pine` at scale 1.15.
+7. Hover “Request a seat”: invert to `--ink` fill, `--bg` text.
+8. With `prefers-reduced-motion: reduce`, the slide duration is 1ms and transforms are forced to none; state still updates.
+
+## Tokens
+
+```css
+:root {
+  --bg: #efe6d4;          /* page */
+  --paper: #f6efe2;       /* button faces */
+  --ink: #1a241e;         /* primary text */
+  --ink-2: #5a5648;       /* secondary */
+  --ink-3: #8a8374;       /* index / meta */
+  --line: #d4cbb8;        /* nav rule */
+  --line-2: #c4b9a4;      /* button border, idle dots */
+  --pine: #2c5a45;        /* kicker, active dot, focus, mark fill */
+  --clay: #b5522a;        /* italic word in the quote */
+  --mark: #d8cbb4;        /* giant opening quote */
+
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Work Sans", system-ui, sans-serif;
+
+  --nav-h: 56px;
+  --pad: 72px;
+  --quote: 48px;
+  --qmark: 72px;
+  --btn: 44px;
+
+  --t-fast: 160ms;
+  --t-slide: 420ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Body / nav links | Work Sans | 13–14px | 400 | 1.45 | 0 | sentence |
+| Brand | Work Sans | 15px | 600 | 1 | −0.02em | sentence |
+| CTA | Work Sans | 12px | 500 | 1 | +0.04em | UPPERCASE |
+| Index / kicker | Work Sans | 12px | 500 | 1 | +0.14–0.16em | UPPERCASE |
+| Opening mark | Newsreader | 72px | 600 | 0.7 | −0.06em | — |
+| Quote | Newsreader | 48px | 400 | 1.12 | −0.025em | sentence |
+| Quote emphasis | Newsreader | 48px | 600 italic | 1.12 | −0.025em | sentence |
+| Author | Work Sans | 15px | 500 | 1.2 | 0 | sentence |
+| Role line | Work Sans | 13px | 400 | 1.3 | 0 | sentence |
+| Avatar initials | Work Sans | 13px | 500 | 1 | +0.02em | UPPERCASE |
+
+Quote measure is `max-width: 22ch` on the 48px `<p>` (not the blockquote — `ch` on a 14px parent is ~144px and wraps every word). The line breaks at two or three lines, never a full-bleed ribbon.
 
 ## Implementation notes
 

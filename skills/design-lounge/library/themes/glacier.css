@@ -1,6 +1,7 @@
 /* Glacier · light · no pair
    Almost white, a glacial blue, slate type.
    Best for: Health, Climate, Architecture */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Glacier · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Sora", Georgia, serif;
-  --font-text: "Sora", system-ui, sans-serif;
-  --radius: 14px;
-  --shadow: 0 10px 24px -16px rgba(26,36,48,.16);
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

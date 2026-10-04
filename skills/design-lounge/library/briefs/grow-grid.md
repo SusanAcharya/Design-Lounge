@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Six rooms: Gate 4, Night book, Month close, Yard map, Hold list, Biratnagar. They share a 840 by 460 grid. Pointer or focus on a cell grows that column to 1.7fr and that row to 1.7fr. The other tracks become 0.65fr. Leaving the grid evens the tracks. This is not a feature bento with fixed spans. That grid is `bento-feature-grid`. This is not a lens. That lens is `lens-bento`.
-
-## Reference behaviour
-
-1. The grid starts even: three columns, two rows.
-2. Pointer enter on a cell sets data-c and data-r.
-3. Focus does the same.
-4. The matching column becomes 1.7fr. The other columns become 0.65fr.
-5. The matching row becomes 1.7fr. The other row becomes 0.65fr.
-6. The change is 280ms.
-7. Leaving the grid deletes both data attributes. Reduced motion snaps.
 
 ## Structure
 
@@ -31,19 +23,6 @@ Yard map | Hold list | Biratnagar
 - The name is 18px. The line is 13px, #5a554c.
 - Column index is data-c. Row index is data-r.
 - Even tracks are 1fr.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c; --line:#e4dfd4; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Name | IBM Plex Sans | 18px | 600 |
-| Line | IBM Plex Sans | 13px | 500 |
 
 ## Motion
 
@@ -88,17 +67,6 @@ Yard map | Hold list | Biratnagar
 - [ ] Gap is 8px.
 - [ ] The grid starts even.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Set the indexes from the cell.
-
-```js
-grid.dataset.c = b.dataset.c;
-grid.dataset.r = b.dataset.r;
-```
-
-Delete the attributes on pointerleave of the grid, not of the cell, or the tracks flicker between cells.
 
 ## Measurements to keep
 
@@ -153,6 +121,44 @@ Delete the attributes on pointerleave of the grid, not of the cell, or the track
 - Honour reduced motion.
 - Do not add a second accent.
 - Do not add a second type family.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The grid starts even: three columns, two rows.
+2. Pointer enter on a cell sets data-c and data-r.
+3. Focus does the same.
+4. The matching column becomes 1.7fr. The other columns become 0.65fr.
+5. The matching row becomes 1.7fr. The other row becomes 0.65fr.
+6. The change is 280ms.
+7. Leaving the grid deletes both data attributes. Reduced motion snaps.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c; --line:#e4dfd4; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Name | IBM Plex Sans | 18px | 600 |
+| Line | IBM Plex Sans | 13px | 500 |
+
+## Implementation notes
+
+Set the indexes from the cell.
+
+```js
+grid.dataset.c = b.dataset.c;
+grid.dataset.r = b.dataset.r;
+```
+
+Delete the attributes on pointerleave of the grid, not of the cell, or the tracks flicker between cells.
 
 ---
 

@@ -1,6 +1,7 @@
 /* Observatory · dark · no pair
    Deep navy, star-gold, a little ice on the glass.
    Best for: Science, Maps, Night products */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Observatory · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Instrument Serif", Georgia, serif;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --radius: 6px;
-  --shadow: 0 18px 40px -18px rgba(0,0,0,.55);
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

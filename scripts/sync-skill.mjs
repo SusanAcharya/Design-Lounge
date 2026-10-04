@@ -66,11 +66,24 @@ const sourceOf = new Map(pieces.map((piece) => [piece.id, studyPiece(piece, site
 fs.rmSync(briefsDir, { recursive: true, force: true });
 fs.mkdirSync(briefsDir, { recursive: true });
 
+// Briefs ship with the parts every build needs first. The demo's own paint and the long notes go below a marker.
+const OPTIONAL = ['Reference behaviour', 'Tokens', 'Typography', 'Implementation notes'];
+const briefNote = '> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo\'s colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.';
+function reorderBrief(body) {
+  const parts = body.split(/\n(?=## )/);
+  const title = parts.shift();
+  const name = (p) => p.split('\n', 1)[0].slice(3).trim();
+  const core = parts.filter((p) => !OPTIONAL.includes(name(p)));
+  const rest = OPTIONAL.map((o) => parts.find((p) => name(p) === o)).filter(Boolean);
+  const out = [title.trimEnd() + '\n\n' + briefNote, ...core.map((p) => p.trimEnd())];
+  if (rest.length) out.push('---\n\n**Optional below this line.** Open it when you build the motion, get stuck, or want the demo\'s exact paint.', ...rest.map((p) => p.trimEnd()));
+  return out.join('\n\n');
+}
 for (const piece of pieces) {
   const n = String(pieces.indexOf(piece) + 1).padStart(3, '0');
   const head = `<!-- Design Lounge Nº ${n} · "${piece.data.title}" · designlounge.vercel.app -->\n\n`;
   const foot = `\n\n---\n\n*From Design Lounge (https://designlounge.vercel.app). Free to use in your products. Credit line: Designed using Design Lounge.*\n`;
-  fs.writeFileSync(path.join(briefsDir, `${piece.id}.md`), head + piece.body + foot);
+  fs.writeFileSync(path.join(briefsDir, `${piece.id}.md`), head + reorderBrief(piece.body) + foot);
 }
 
 const index = {
@@ -202,7 +215,13 @@ for (const dir of ['starts', 'themes', 'pairings']) {
 for (const s of STARTS) fs.writeFileSync(path.join(skillLib, 'starts', `${s.id}.json`), JSON.stringify(s, null, 1));
 for (const t of index.themes) {
   const head = `/* ${t.name} · ${t.mode}${t.pair ? ` · pair: ${t.pair}` : ' · no pair'}\n   ${t.mood}\n   Best for: ${(t.bestFor || []).join(', ')} */\n`;
-  fs.writeFileSync(path.join(skillLib, 'themes', `${t.id}.css`), head + t.css + '\n');
+  const colourOnly = t.css
+    .split('\n')
+    .filter((line) => !/--(font-(display|text|mono)|radius|shadow)\s*:/.test(line))
+    .map((line) => line.replace(/\s*font-family:\s*var\(--font-[a-z]+\);?/g, ''))
+    .filter((line) => !/^\s*(h1, h2, h3, \.display|body)\s*\{\s*\}\s*$/.test(line))
+    .join('\n');
+  fs.writeFileSync(path.join(skillLib, 'themes', `${t.id}.css`), head + '/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */\n' + colourOnly + '\n');
 }
 for (const p of index.pairings) {
   const head = `/* ${p.name} · display ${p.display} · text ${p.text}${p.mono ? ` · mono ${p.mono}` : ' · no mono'} · numbers ${p.numbers}\n   ${p.mood}${p.caution ? `\n   Caution: ${p.caution}` : ''} */\n`;

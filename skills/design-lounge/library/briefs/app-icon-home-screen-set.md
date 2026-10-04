@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from icon.museum: the craft of the icons it collects (continuous-corner squircles, light from the top, a soft rim, one idea per icon) applied to a set of twelve original icons that belong together. They sit on an iOS 26-style home screen over a dusk landscape wallpaper, with a weather widget, a page indicator and a glass dock. A glass panel switches the whole set between Light, Dark and Tinted, the three appearances the system asks icon makers to supply, and Tinted adds a hue slider. The detail worth copying is that every icon is built from three colour roles (plate, glyph, accent), so one rule per appearance recolours the entire set and the colours cross-fade.
-
-## Reference behaviour
-
-1. First frame at 390×844: the screen starts 66px from the top (the Lounge draws the status bar). A 2×2 weather widget sits top-left; eight icons fill the rest of three rows; the wallpaper sun sits in the empty middle; the appearance panel, two page dots and the dock sit at the bottom.
-2. Grid icons, in order: Brightday (weather), Waymark (maps), Fernbook (plant journal), Hearthly (recipes), Pennyroyal (money), Emberly (focus timer), Tidecall (tides), Beatwell (metronome). Dock: Postling (mail), Snapjar (camera), Jotwell (notes), Wavelet (radio). Twelve icons in total.
-3. Every icon is 62px with an 11.5px label 6px under it. Dock icons have no visible label.
-4. The appearance panel has three radio options, each with a 40px preview of the Hearthly icon in that appearance. Light starts checked.
-5. Choosing Dark: plates become `#1c1c1f`, glyphs take each app's bright colour, the wallpaper cross-fades to night, the widget and dock darken. Each icon's colour change is delayed 28ms more than the previous one, so the switch ripples across the grid.
-6. Choosing Tinted: plates become a very dark version of the tint hue, glyphs a light version, accents a mid version. The wallpaper fades to a tinted night. The panel grows to reveal a "Tint" hue slider (0–360, starts at 28).
-7. Dragging the slider recolours icons, widget, wallpaper and the slider thumb live.
-8. The radio group is keyboard operable: Arrow keys move and select with wrap-around; only the checked option is in the tab order.
-9. Pressing any icon shrinks it to 88% in 120ms and springs back in 350ms on release.
-10. Reduced motion: appearances switch instantly, no ripple, no press spring, no panel growth animation.
 
 ## Structure
 
@@ -58,6 +47,87 @@ Studied from icon.museum: the craft of the icons it collects (continuous-corner 
 - Each icon is a `button` with `aria-label` set to the app name; the SVG is `aria-hidden`.
 - The panel is a `role="group"` labelled by its `h2`; the options are `role="radio"` inside a `role="radiogroup"`.
 - The dock is a `nav aria-label="Dock"`.
+
+## Motion
+
+| Thing | Trigger | Property | From → to | Duration | Easing | Reduced motion |
+| --- | --- | --- | --- | --- | --- | --- |
+| Icon colours | appearance change | --b, --g, --a (registered colours) | old → new | 500ms, delay index × 28ms | std | instant |
+| Wallpaper | appearance change | opacity of three layers | 0 ↔ 1 | 600ms | std | instant |
+| Widget, dock | appearance change | background, colour, border | old → new | 500ms | linear | instant |
+| Tint row | Tinted on/off | grid-template-rows | 0fr ↔ 1fr | 350ms | iOS sheet | instant |
+| Icon press | pointer down | transform | 1 → .88 | 120ms | iOS sheet | none |
+| Icon release | pointer up | transform | .88 → 1 | 350ms | iOS sheet | none |
+| Hue slider | input | --h | live | none | none | same |
+
+The ripple comes from `transition-delay: calc(var(--i) * 28ms)` with `--i` set 1–12 in reading order (grid, then dock).
+
+## States
+
+- Option checked: 18% white fill and a 1px 30% white inset ring, `aria-checked="true"`, `tabindex="0"`. Unchecked: no fill, `tabindex="-1"`.
+- Icon pressed: 88% scale. There is no hover state on a phone.
+- Focus-visible: 2px white outline, 3px offset, 16px radius, on icons, options and the slider.
+- Light: colourful plates, warm dusk wallpaper, frosted white widget and dock with dark widget ink.
+- Dark: `#1c1c1f` plates with brand-colour glyphs, night wallpaper with a small moon, smoked widget and dock with light text. The top-light layer drops to 60%.
+- Tinted: one hue across plates, glyphs, accents, widget text, wallpaper and the slider thumb.
+- Loading, empty, error: not used.
+
+## Accessibility
+
+- Each icon is a button named by its app ("Hearthly"); the visible label is `aria-hidden` to avoid a double read. Dock labels are visually hidden, not removed.
+- The widget is one `role="img"` with "Brightday weather: Larkspur Bay, 18 degrees, clear until 9 pm".
+- The appearance options follow the radio pattern: `role="radiogroup"` with `aria-label="Appearance"`, roving `tabindex`, Arrow keys select and move focus, wrapping at both ends.
+- The slider is a native `input type="range"` with `aria-label="Tint hue"` and a visible "Tint" label.
+- A polite live region announces "Light icons", "Dark icons", "Tinted icons".
+- Hit targets: icons 62px, options at least 44px tall, slider 44px tall.
+- Labels are white with a text shadow on every wallpaper. Check the lightest point of the light wallpaper (`#f6dcae`) at the top rows: the shadow carries the contrast there. If a product wallpaper is lighter, raise the shadow to 50%.
+
+## Responsive rules
+
+- 390 wide is the design. Grid is 4 × 62px with space-between inside 27px side padding.
+- At 360 and below: icon 58px, side padding 22px, panel 296px. Four columns stay.
+- At tablet width do not stretch the phone grid. A tablet home screen has 6 columns with 76px icons; rebuild the grid rather than scaling this one.
+- Keep 66px top clearance and 34px home clearance. Do not draw the status bar, notch or home indicator.
+- Never drop below four columns; drop the widget to 2×1 first.
+
+## Acceptance checklist
+
+### Always
+
+- [ ] The set has 8–12 icons that share one construction: squircle clip, flat plate, top-light gradient, rim stroke, glyph shadow.
+- [ ] Each icon has one idea and no words or letters.
+- [ ] Each icon defines plate, glyph and accent colours, plus dark glyph and dark accent.
+- [ ] Light, Dark and Tinted are offered as a radio group and recolour every icon, the wallpaper, widget and dock.
+- [ ] Tinted exposes a hue control and every element follows it live.
+- [ ] Colours cross-fade with a short per-icon delay; reduced motion switches instantly.
+- [ ] Icons are 62px in a four-column grid with 92px rows; the dock is glass, 92px tall, 34px above the bottom.
+- [ ] Icons are buttons with names; the radio group works with Arrow keys.
+- [ ] No status bar is drawn.
+
+### This demo
+
+- [ ] Twelve apps: Brightday, Waymark, Fernbook, Hearthly, Pennyroyal, Emberly, Tidecall, Beatwell in the grid; Postling, Snapjar, Jotwell, Wavelet in the dock.
+- [ ] The widget reads Larkspur Bay, 18°, Clear until 9 pm, H 21° L 12°.
+- [ ] The tint slider starts at hue 28; at 200 the set turns ice blue.
+- [ ] Dark plate is `#1c1c1f`; the light wallpaper runs `#f6dcae` → `#e8b26a` → `#d98f58` with teal hills.
+- [ ] Previews in the panel use the Hearthly icon.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 390×844: the screen starts 66px from the top (the Lounge draws the status bar). A 2×2 weather widget sits top-left; eight icons fill the rest of three rows; the wallpaper sun sits in the empty middle; the appearance panel, two page dots and the dock sit at the bottom.
+2. Grid icons, in order: Brightday (weather), Waymark (maps), Fernbook (plant journal), Hearthly (recipes), Pennyroyal (money), Emberly (focus timer), Tidecall (tides), Beatwell (metronome). Dock: Postling (mail), Snapjar (camera), Jotwell (notes), Wavelet (radio). Twelve icons in total.
+3. Every icon is 62px with an 11.5px label 6px under it. Dock icons have no visible label.
+4. The appearance panel has three radio options, each with a 40px preview of the Hearthly icon in that appearance. Light starts checked.
+5. Choosing Dark: plates become `#1c1c1f`, glyphs take each app's bright colour, the wallpaper cross-fades to night, the widget and dock darken. Each icon's colour change is delayed 28ms more than the previous one, so the switch ripples across the grid.
+6. Choosing Tinted: plates become a very dark version of the tint hue, glyphs a light version, accents a mid version. The wallpaper fades to a tinted night. The panel grows to reveal a "Tint" hue slider (0–360, starts at 28).
+7. Dragging the slider recolours icons, widget, wallpaper and the slider thumb live.
+8. The radio group is keyboard operable: Arrow keys move and select with wrap-around; only the checked option is in the tab order.
+9. Pressing any icon shrinks it to 88% in 120ms and springs back in 350ms on release.
+10. Reduced motion: appearances switch instantly, no ripple, no press spring, no panel growth animation.
 
 ## Tokens
 
@@ -126,70 +196,6 @@ Tinted, for every icon: plate `hsl(var(--h) 24% 13%)`, glyph `hsl(var(--h) 85% 7
 | Slider label | Albert Sans | 12px | 600 | 1 | 0 | |
 
 Fraunces appears once, for the temperature. Everything else is Albert Sans, which stands in for the system face.
-
-## Motion
-
-| Thing | Trigger | Property | From → to | Duration | Easing | Reduced motion |
-| --- | --- | --- | --- | --- | --- | --- |
-| Icon colours | appearance change | --b, --g, --a (registered colours) | old → new | 500ms, delay index × 28ms | std | instant |
-| Wallpaper | appearance change | opacity of three layers | 0 ↔ 1 | 600ms | std | instant |
-| Widget, dock | appearance change | background, colour, border | old → new | 500ms | linear | instant |
-| Tint row | Tinted on/off | grid-template-rows | 0fr ↔ 1fr | 350ms | iOS sheet | instant |
-| Icon press | pointer down | transform | 1 → .88 | 120ms | iOS sheet | none |
-| Icon release | pointer up | transform | .88 → 1 | 350ms | iOS sheet | none |
-| Hue slider | input | --h | live | none | none | same |
-
-The ripple comes from `transition-delay: calc(var(--i) * 28ms)` with `--i` set 1–12 in reading order (grid, then dock).
-
-## States
-
-- Option checked: 18% white fill and a 1px 30% white inset ring, `aria-checked="true"`, `tabindex="0"`. Unchecked: no fill, `tabindex="-1"`.
-- Icon pressed: 88% scale. There is no hover state on a phone.
-- Focus-visible: 2px white outline, 3px offset, 16px radius, on icons, options and the slider.
-- Light: colourful plates, warm dusk wallpaper, frosted white widget and dock with dark widget ink.
-- Dark: `#1c1c1f` plates with brand-colour glyphs, night wallpaper with a small moon, smoked widget and dock with light text. The top-light layer drops to 60%.
-- Tinted: one hue across plates, glyphs, accents, widget text, wallpaper and the slider thumb.
-- Loading, empty, error: not used.
-
-## Accessibility
-
-- Each icon is a button named by its app ("Hearthly"); the visible label is `aria-hidden` to avoid a double read. Dock labels are visually hidden, not removed.
-- The widget is one `role="img"` with "Brightday weather: Larkspur Bay, 18 degrees, clear until 9 pm".
-- The appearance options follow the radio pattern: `role="radiogroup"` with `aria-label="Appearance"`, roving `tabindex`, Arrow keys select and move focus, wrapping at both ends.
-- The slider is a native `input type="range"` with `aria-label="Tint hue"` and a visible "Tint" label.
-- A polite live region announces "Light icons", "Dark icons", "Tinted icons".
-- Hit targets: icons 62px, options at least 44px tall, slider 44px tall.
-- Labels are white with a text shadow on every wallpaper. Check the lightest point of the light wallpaper (`#f6dcae`) at the top rows: the shadow carries the contrast there. If a product wallpaper is lighter, raise the shadow to 50%.
-
-## Responsive rules
-
-- 390 wide is the design. Grid is 4 × 62px with space-between inside 27px side padding.
-- At 360 and below: icon 58px, side padding 22px, panel 296px. Four columns stay.
-- At tablet width do not stretch the phone grid. A tablet home screen has 6 columns with 76px icons; rebuild the grid rather than scaling this one.
-- Keep 66px top clearance and 34px home clearance. Do not draw the status bar, notch or home indicator.
-- Never drop below four columns; drop the widget to 2×1 first.
-
-## Acceptance checklist
-
-### Always
-
-- [ ] The set has 8–12 icons that share one construction: squircle clip, flat plate, top-light gradient, rim stroke, glyph shadow.
-- [ ] Each icon has one idea and no words or letters.
-- [ ] Each icon defines plate, glyph and accent colours, plus dark glyph and dark accent.
-- [ ] Light, Dark and Tinted are offered as a radio group and recolour every icon, the wallpaper, widget and dock.
-- [ ] Tinted exposes a hue control and every element follows it live.
-- [ ] Colours cross-fade with a short per-icon delay; reduced motion switches instantly.
-- [ ] Icons are 62px in a four-column grid with 92px rows; the dock is glass, 92px tall, 34px above the bottom.
-- [ ] Icons are buttons with names; the radio group works with Arrow keys.
-- [ ] No status bar is drawn.
-
-### This demo
-
-- [ ] Twelve apps: Brightday, Waymark, Fernbook, Hearthly, Pennyroyal, Emberly, Tidecall, Beatwell in the grid; Postling, Snapjar, Jotwell, Wavelet in the dock.
-- [ ] The widget reads Larkspur Bay, 18°, Clear until 9 pm, H 21° L 12°.
-- [ ] The tint slider starts at hue 28; at 200 the set turns ice blue.
-- [ ] Dark plate is `#1c1c1f`; the light wallpaper runs `#f6dcae` → `#e8b26a` → `#d98f58` with teal hills.
-- [ ] Previews in the panel use the Hearthly icon.
 
 ## Implementation notes
 

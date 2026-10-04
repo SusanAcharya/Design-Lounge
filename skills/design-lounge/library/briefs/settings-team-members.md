@@ -4,30 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep black and white for everything, and red only for destructive actions and errors.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The Members page in the settings of a design studio workspace called Halden Studio. It lets an owner invite people by email, change roles in place, see who has not accepted yet, and remove someone after a confirm. The look is Swiss: white page, black type, a 48px bold heading, a 2px black rule under the header, 1px hairlines between rows, 6px radii, and one red that only appears on Revoke, the remove hover, the Remove button, and errors. The detail worth copying is the seat meter: ten segments, solid for members, hatched for pending invites, grey for free, so the reader sees at once why an invite might be blocked.
-
-## Reference behaviour
-
-1. First frame: the header reads "Members" with "8 of 10 seats", the meter shows 6 solid, 2 hatched, 2 grey, and the legend reads "6 active  2 invited  2 free".
-2. The invite field already holds two chips, dev@harbourline.io and rosa.amaral@halden.studio. The role select reads Member. The button reads "Send 2 invites".
-3. Typing in the invite field and pressing Enter, comma, or semicolon turns the text into a chip. Pasting "a@x.co, b@y.co" makes two chips. Leaving the field commits any text.
-4. Backspace in an empty field removes the last chip. Each chip has a 22px remove button.
-5. An address that is not a valid email becomes a red chip with a red outline. The hint under the field turns red: "One address is not valid. Fix or remove it." Send is disabled.
-6. If valid chips are more than the free seats, the hint turns red: "Only 2 seats are free. Remove 1 or upgrade the plan." With no free seats it reads "No seats are free. Revoke an invite or upgrade the plan." Send is disabled.
-7. Duplicates are ignored: an address already in the chips, the members, or the pending list is not added again.
-8. Send label: no valid chips is "Send invites" (disabled), one is "Send invite", more is "Send N invites".
-9. Pressing Send adds each address to the top of Pending invites with the chosen role and "Sent just now", clears the chips, updates the meter, and shows the toast "2 invites sent as Member."
-10. The members table has six rows: Name with initials, Email, Role, Last active, and a remove icon button.
-11. Changing a role select applies at once. The toast reads "Mateo Ruiz is now Member." with an Undo button. Undo restores the old role and focuses that select.
-12. The Owner row has a disabled role select (it only says Owner, with the title "Transfer ownership in Security") and a disabled remove button. Other rows cannot pick Owner.
-13. The search field filters by name or email as you type. The role filter shows All roles, Owner, Admin, Member, Viewer. The two combine. No match shows one row: 'No members match "zz".'
-14. Pressing a remove button opens a modal: "Remove Jonas Weber?", the line "Jonas loses access to Halden Studio right away. Their drawings and comments stay. The seat becomes free.", Cancel (focused) and a red "Remove member".
-15. Remove member deletes the row, frees the seat, and shows the toast "Jonas Weber was removed." with Undo. Undo puts the row back in the same place. Cancel or Escape closes and returns focus to the remove button.
-16. Pending invites list each address, role, sent time, Resend, and a red Revoke.
-17. Resend changes the time to "Sent just now" and shows "Invite sent again to lena.vogt@halden.studio." Revoke removes the invite, frees the seat, and shows a toast with Undo.
-18. The toast is black, centred 24px above the bottom, and leaves after 6s. A 2px grey line at its bottom drains over those 6s. Hovering pauses it, and leaving gives it 2.5s more. A new toast replaces the old one.
 
 ## Structure
 
@@ -64,61 +45,6 @@ The Members page in the settings of a design studio workspace called Halden Stud
 - Pending invites are a `ul` of grid rows: `minmax(0,1fr) 100px 140px auto`.
 - The toast is one `div role="status" aria-live="polite"` reused for every message.
 - The confirm is a native `dialog` opened with `showModal()`, holding a `form method="dialog"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ffffff;        /* page */
-  --ink: #000000;       /* type, primary button, rules, solid seats */
-  --ink-2: #3d3d3d;     /* body copy, email column */
-  --ink-3: #6b6b6b;     /* labels, hints, last active */
-  --line: #e6e6e6;      /* row hairlines, free seats */
-  --line-2: #cfcfcf;    /* input borders */
-  --wash: #f5f5f5;      /* chips, avatars, hover */
-  --red: #d7261e;       /* destructive and errors only */
-  --red-wash: #fdeceb;  /* red hover fill, bad chip fill */
-  --focus: #000000;
-
-  --sans: "Inter", system-ui, sans-serif;
-  --r: 6px;             /* every control */
-  --r-chip: 4px;
-  --r-seat: 2px;
-
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
-  --space-5: 24px; --space-6: 28px; --space-7: 36px; --space-8: 40px; --space-9: 56px;
-
-  --h-control: 44px;    /* invite row */
-  --h-tool: 38px;       /* search and filter */
-  --h-row-btn: 34px;    /* role select, remove, Resend, Revoke */
-
-  --shadow-dialog: 0 24px 64px -24px rgba(0,0,0,.45);
-  --scrim: rgba(0,0,0,.4);
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --t-micro: 160ms;
-  --t-toast: 240ms;
-  --toast-life: 6000ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Page title | Inter | 48px | 700 | 0.95 | -0.035em | Title |
-| Section title | Inter | 18px | 700 | 1.3 | -0.015em | Sentence |
-| Section count | Inter | 18px | 500 | 1.3 | -0.015em | `--ink-3` |
-| Dialog title | Inter | 22px | 700 | 1.3 | -0.02em | Sentence |
-| Body, table | Inter | 14px | 400 | 1.45 | 0 | Sentence |
-| Member name | Inter | 14px | 600 | 1.45 | 0 | Name |
-| Column head, nav group | Inter | 11px | 600 | 1 | 0.08em | Upper |
-| Hint, legend, crumb | Inter | 12px | 400-500 | 1.45 | 0 | Sentence |
-| Initials | Inter | 12px | 600 | 1 | 0 | Upper |
-
-- Turn on tabular figures (`font-feature-settings: "tnum" 1`) so counts and dates line up.
-- One family only. Weight and size do the work.
 
 ## Motion
 
@@ -196,6 +122,86 @@ The Members page in the settings of a design studio workspace called Halden Stud
 - [ ] Six members: Ingrid Solberg, Mateo Ruiz, Priya Raman, Jonas Weber, Kofi Mensah, Aiko Tanaka.
 - [ ] Two pending: lena.vogt@halden.studio (Member) and sam@northpier.co (Viewer).
 - [ ] The page is `#ffffff`, type `#000000`, destructive `#d7261e`, radius 6px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the header reads "Members" with "8 of 10 seats", the meter shows 6 solid, 2 hatched, 2 grey, and the legend reads "6 active  2 invited  2 free".
+2. The invite field already holds two chips, dev@harbourline.io and rosa.amaral@halden.studio. The role select reads Member. The button reads "Send 2 invites".
+3. Typing in the invite field and pressing Enter, comma, or semicolon turns the text into a chip. Pasting "a@x.co, b@y.co" makes two chips. Leaving the field commits any text.
+4. Backspace in an empty field removes the last chip. Each chip has a 22px remove button.
+5. An address that is not a valid email becomes a red chip with a red outline. The hint under the field turns red: "One address is not valid. Fix or remove it." Send is disabled.
+6. If valid chips are more than the free seats, the hint turns red: "Only 2 seats are free. Remove 1 or upgrade the plan." With no free seats it reads "No seats are free. Revoke an invite or upgrade the plan." Send is disabled.
+7. Duplicates are ignored: an address already in the chips, the members, or the pending list is not added again.
+8. Send label: no valid chips is "Send invites" (disabled), one is "Send invite", more is "Send N invites".
+9. Pressing Send adds each address to the top of Pending invites with the chosen role and "Sent just now", clears the chips, updates the meter, and shows the toast "2 invites sent as Member."
+10. The members table has six rows: Name with initials, Email, Role, Last active, and a remove icon button.
+11. Changing a role select applies at once. The toast reads "Mateo Ruiz is now Member." with an Undo button. Undo restores the old role and focuses that select.
+12. The Owner row has a disabled role select (it only says Owner, with the title "Transfer ownership in Security") and a disabled remove button. Other rows cannot pick Owner.
+13. The search field filters by name or email as you type. The role filter shows All roles, Owner, Admin, Member, Viewer. The two combine. No match shows one row: 'No members match "zz".'
+14. Pressing a remove button opens a modal: "Remove Jonas Weber?", the line "Jonas loses access to Halden Studio right away. Their drawings and comments stay. The seat becomes free.", Cancel (focused) and a red "Remove member".
+15. Remove member deletes the row, frees the seat, and shows the toast "Jonas Weber was removed." with Undo. Undo puts the row back in the same place. Cancel or Escape closes and returns focus to the remove button.
+16. Pending invites list each address, role, sent time, Resend, and a red Revoke.
+17. Resend changes the time to "Sent just now" and shows "Invite sent again to lena.vogt@halden.studio." Revoke removes the invite, frees the seat, and shows a toast with Undo.
+18. The toast is black, centred 24px above the bottom, and leaves after 6s. A 2px grey line at its bottom drains over those 6s. Hovering pauses it, and leaving gives it 2.5s more. A new toast replaces the old one.
+
+## Tokens
+
+```css
+:root {
+  --bg: #ffffff;        /* page */
+  --ink: #000000;       /* type, primary button, rules, solid seats */
+  --ink-2: #3d3d3d;     /* body copy, email column */
+  --ink-3: #6b6b6b;     /* labels, hints, last active */
+  --line: #e6e6e6;      /* row hairlines, free seats */
+  --line-2: #cfcfcf;    /* input borders */
+  --wash: #f5f5f5;      /* chips, avatars, hover */
+  --red: #d7261e;       /* destructive and errors only */
+  --red-wash: #fdeceb;  /* red hover fill, bad chip fill */
+  --focus: #000000;
+
+  --sans: "Inter", system-ui, sans-serif;
+  --r: 6px;             /* every control */
+  --r-chip: 4px;
+  --r-seat: 2px;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 28px; --space-7: 36px; --space-8: 40px; --space-9: 56px;
+
+  --h-control: 44px;    /* invite row */
+  --h-tool: 38px;       /* search and filter */
+  --h-row-btn: 34px;    /* role select, remove, Resend, Revoke */
+
+  --shadow-dialog: 0 24px 64px -24px rgba(0,0,0,.45);
+  --scrim: rgba(0,0,0,.4);
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --t-micro: 160ms;
+  --t-toast: 240ms;
+  --toast-life: 6000ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Page title | Inter | 48px | 700 | 0.95 | -0.035em | Title |
+| Section title | Inter | 18px | 700 | 1.3 | -0.015em | Sentence |
+| Section count | Inter | 18px | 500 | 1.3 | -0.015em | `--ink-3` |
+| Dialog title | Inter | 22px | 700 | 1.3 | -0.02em | Sentence |
+| Body, table | Inter | 14px | 400 | 1.45 | 0 | Sentence |
+| Member name | Inter | 14px | 600 | 1.45 | 0 | Name |
+| Column head, nav group | Inter | 11px | 600 | 1 | 0.08em | Upper |
+| Hint, legend, crumb | Inter | 12px | 400-500 | 1.45 | 0 | Sentence |
+| Initials | Inter | 12px | 600 | 1 | 0 | Upper |
+
+- Turn on tabular figures (`font-feature-settings: "tnum" 1`) so counts and dates line up.
+- One family only. Weight and size do the work.
 
 ## Implementation notes
 

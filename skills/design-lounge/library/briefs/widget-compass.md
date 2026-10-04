@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A home-screen style compass widget for a hiking app called Tarnline, shown on a sheet of topographic map paper. A forest-green card holds a cream compass card that rotates under a fixed safety-orange lubber line. Below it the heading reads in a tall condensed numeral with its 16-point cardinal, and a three-cell stat row tells you how far off the bearing to the next hut you are. In the centre of the dial a level vial holds a bubble that drifts toward the pointer, so the widget feels like an instrument held in a hand. The detail worth copying is the damped spring on the card: it overshoots by a few degrees and settles like a liquid-filled compass.
-
-## Reference behaviour
-
-1. First frame: heading 247°, cardinal WSW, long name "West-southwest". The card is rotated so 247 sits under the lubber line at 12 o'clock. The orange target triangle at 252° sits just right of the lubber. "Off course" reads "5° R". Status top-right reads "Level".
-2. Idle: every 1600ms the target heading wanders by a random amount in ±0.7°, and the spring follows. This only happens in Drag mode, when not dragging and when the dial does not have keyboard focus.
-3. Drag mode (default): pointer-down on the dial captures the pointer. Moving the pointer around the dial centre rotates the card by the same angle as the pointer, so the card sticks to the finger. Heading = start heading − angular delta.
-4. Releasing with angular velocity above 0.6°/frame throws the card: target += velocity × 9, velocity clamped to ±6°/frame. The spring then settles.
-5. Follow mode: the heading becomes the bearing from the dial centre to the pointer (0° = pointer straight above). The card turns to face it, always through the shortest arc.
-6. Level bubble: on every pointer move anywhere on the page the bubble's target offset is toward the pointer, magnitude = min(1, distance / max(viewport side) × 1.6) × 24 SVG units. When the pointer leaves the document the bubble returns to centre. While dragging the dial the bubble holds still.
-7. Tilt readout = bubble offset / 25 × 6°. Under 0.8° the bubble turns green `#2f7a4f` and status reads "Level"; otherwise it is ink and status reads "Tilt 2.3°".
-8. Every frame updates: the zero-padded three-digit heading (e.g. "008"), the 16-point cardinal, the long name, and "Off course": signed difference to 252°, rounded, shown as "N° R" or "N° L", or "On line" at 0.
-9. Keyboard on the focused dial: ←/↓ −1°, →/↑ +1°, with Shift ±10°, PageUp/PageDown ±15°, Home snaps to north, End snaps to the target bearing 252°.
-10. The segmented control below switches Drag dial / Follow pointer. The hint line updates: "Drag the dial or use arrow keys" or "Move the pointer; the widget faces it".
 
 ## Structure
 
@@ -51,59 +40,6 @@ A home-screen style compass widget for a hiking app called Tarnline, shown on a 
 - Stats: a 3-column grid separated by 1px rules at 14% cream.
 - Mode switch: `role="radiogroup"` with two `role="radio"` buttons.
 - A visually hidden `aria-live="polite"` paragraph announces the heading after drag release and key presses.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces */
-  --paper: #ece4cf;        /* map paper, page background */
-  --contour: #cdbf9b;      /* ordinary contour line */
-  --contour-2: #b5a47a;    /* index contour + elevation labels */
-  --ink: #1d3428;          /* forest card, dial ink */
-  --ink-2: #2b4a39;        /* dial degree numbers */
-  --cream: #f4eedd;        /* compass card, widget text */
-  --cream-2: #b8c3ad;      /* muted labels on the green card */
-  --orange: #e5562a;       /* lubber, north letter, target, degree sign */
-  --level: #2f7a4f;        /* bubble when level */
-  --line: rgba(244, 238, 221, .14);
-
-  /* type */
-  --display: "Saira Condensed", "Arial Narrow", sans-serif;
-  --mono: "Martian Mono", ui-monospace, monospace;
-  --fs-hero: 68px; --fs-card: 26px; --fs-letter: 24px;
-  --fs-stat: 17px; --fs-label: 10px; --fs-num: 11px;
-
-  /* space + shape */
-  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s6: 22px;
-  --r-widget: 34px; --r-pill: 999px;
-  --shadow-widget: inset 0 1px 0 rgba(255,255,255,.07), 0 2px 0 #142419, 0 34px 60px -28px rgba(29,52,40,.6);
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --dur-micro: 160ms;
-  --spring-k: 0.11;        /* per-frame stiffness */
-  --spring-damp: 0.74;     /* per-frame velocity retention */
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Heading numeral | Saira Condensed | 68px | 600 | 0.9 | -0.01em | tabular |
-| Degree sign | Saira Condensed | 0.42em, raised 0.95em | 600 | — | — | orange |
-| Cardinal | Saira Condensed | 26px | 600 | 1 | 0.04em | upper |
-| Cardinal long | Martian Mono | 10px | 400 | 1.4 | 0.06em | upper |
-| Dial letters N E S W | Saira Condensed | 24px | 700 | — | — | N in orange |
-| Dial numbers | Martian Mono | 11px | 500 | — | — | every 30° |
-| Stat label | Martian Mono | 9.5px | 400 | 1.5 | 0.1em | upper |
-| Stat value | Saira Condensed | 17px | 600 | 1.2 | 0.02em | tabular |
-| Brand + status | Martian Mono | 10px | 500/400 | 1.5 | 0.12em | upper |
-| Mode buttons | Martian Mono | 11px | 500 | — | 0.06em | upper |
-| Contour labels | Martian Mono | 9px | 400 | — | 0.08em | `--contour-2` |
-
-The numeral is zero-padded to three digits so the width never jumps.
 
 ## Motion
 
@@ -165,6 +101,76 @@ The animation loop is a single `requestAnimationFrame` that stops itself once ve
 - [ ] Bubble turns `#2f7a4f` under 0.8° tilt.
 - [ ] Mode labels "Drag dial" and "Follow pointer".
 - [ ] Ticks every 5°, mid ticks every 10°, major ticks and labels every 30°.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: heading 247°, cardinal WSW, long name "West-southwest". The card is rotated so 247 sits under the lubber line at 12 o'clock. The orange target triangle at 252° sits just right of the lubber. "Off course" reads "5° R". Status top-right reads "Level".
+2. Idle: every 1600ms the target heading wanders by a random amount in ±0.7°, and the spring follows. This only happens in Drag mode, when not dragging and when the dial does not have keyboard focus.
+3. Drag mode (default): pointer-down on the dial captures the pointer. Moving the pointer around the dial centre rotates the card by the same angle as the pointer, so the card sticks to the finger. Heading = start heading − angular delta.
+4. Releasing with angular velocity above 0.6°/frame throws the card: target += velocity × 9, velocity clamped to ±6°/frame. The spring then settles.
+5. Follow mode: the heading becomes the bearing from the dial centre to the pointer (0° = pointer straight above). The card turns to face it, always through the shortest arc.
+6. Level bubble: on every pointer move anywhere on the page the bubble's target offset is toward the pointer, magnitude = min(1, distance / max(viewport side) × 1.6) × 24 SVG units. When the pointer leaves the document the bubble returns to centre. While dragging the dial the bubble holds still.
+7. Tilt readout = bubble offset / 25 × 6°. Under 0.8° the bubble turns green `#2f7a4f` and status reads "Level"; otherwise it is ink and status reads "Tilt 2.3°".
+8. Every frame updates: the zero-padded three-digit heading (e.g. "008"), the 16-point cardinal, the long name, and "Off course": signed difference to 252°, rounded, shown as "N° R" or "N° L", or "On line" at 0.
+9. Keyboard on the focused dial: ←/↓ −1°, →/↑ +1°, with Shift ±10°, PageUp/PageDown ±15°, Home snaps to north, End snaps to the target bearing 252°.
+10. The segmented control below switches Drag dial / Follow pointer. The hint line updates: "Drag the dial or use arrow keys" or "Move the pointer; the widget faces it".
+
+## Tokens
+
+```css
+:root {
+  /* surfaces */
+  --paper: #ece4cf;        /* map paper, page background */
+  --contour: #cdbf9b;      /* ordinary contour line */
+  --contour-2: #b5a47a;    /* index contour + elevation labels */
+  --ink: #1d3428;          /* forest card, dial ink */
+  --ink-2: #2b4a39;        /* dial degree numbers */
+  --cream: #f4eedd;        /* compass card, widget text */
+  --cream-2: #b8c3ad;      /* muted labels on the green card */
+  --orange: #e5562a;       /* lubber, north letter, target, degree sign */
+  --level: #2f7a4f;        /* bubble when level */
+  --line: rgba(244, 238, 221, .14);
+
+  /* type */
+  --display: "Saira Condensed", "Arial Narrow", sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+  --fs-hero: 68px; --fs-card: 26px; --fs-letter: 24px;
+  --fs-stat: 17px; --fs-label: 10px; --fs-num: 11px;
+
+  /* space + shape */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s6: 22px;
+  --r-widget: 34px; --r-pill: 999px;
+  --shadow-widget: inset 0 1px 0 rgba(255,255,255,.07), 0 2px 0 #142419, 0 34px 60px -28px rgba(29,52,40,.6);
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --dur-micro: 160ms;
+  --spring-k: 0.11;        /* per-frame stiffness */
+  --spring-damp: 0.74;     /* per-frame velocity retention */
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Heading numeral | Saira Condensed | 68px | 600 | 0.9 | -0.01em | tabular |
+| Degree sign | Saira Condensed | 0.42em, raised 0.95em | 600 | — | — | orange |
+| Cardinal | Saira Condensed | 26px | 600 | 1 | 0.04em | upper |
+| Cardinal long | Martian Mono | 10px | 400 | 1.4 | 0.06em | upper |
+| Dial letters N E S W | Saira Condensed | 24px | 700 | — | — | N in orange |
+| Dial numbers | Martian Mono | 11px | 500 | — | — | every 30° |
+| Stat label | Martian Mono | 9.5px | 400 | 1.5 | 0.1em | upper |
+| Stat value | Saira Condensed | 17px | 600 | 1.2 | 0.02em | tabular |
+| Brand + status | Martian Mono | 10px | 500/400 | 1.5 | 0.12em | upper |
+| Mode buttons | Martian Mono | 11px | 500 | — | 0.06em | upper |
+| Contour labels | Martian Mono | 9px | 400 | — | 0.08em | `--contour-2` |
+
+The numeral is zero-padded to three digits so the width never jumps.
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A flight status widget for a fictional airline, "Aerovale", tracking AV 218 from Kathmandu (KTM) to Bangkok (BKK). It borrows from airport wayfinding: a signage-yellow band, black board, condensed capitals, and split-flap cells for times, gate, terminal, belt, and status. A plane icon rides a dotted great-circle arc; the flown part is solid yellow. A "Simulate delay" switch under the widget pushes the arrival 45 minutes later and moves the gate. Every changed cell flips through the alphabet to its new character, so the board itself shows that something changed. The detail worth copying: the flaps are four half-height spans with two Web Animations, and the status colour is the only colour that changes; everything else stays signage black and yellow.
-
-## Reference behaviour
-
-1. First frame: the widget is centred on a dark floor with a faint 96px grid. Band reads "ARRIVALS · AEROVALE AV 218 · ● LIVE". The plane sits 63% along the arc (117 of 185 minutes flown). Flaps: Scheduled `14:35`, Estimated `14:35`, Gate `B7`, Term `1`, Belt `4`, Status `ON TIME` in green. Right of status, "LANDS IN 1h 08m" in 40px condensed. Footer: "Cruising at 11,600 m over the Bay of Bengal" and "Seat 14A · Mina Gurung". Under the widget: the switch and "Local 13:27".
-2. On load every cell flips from blank to its value, staggered 40ms per cell inside each field.
-3. A simulated clock advances one minute every 1.5s. Each minute: the plane and the solid arc move forward (600ms expo out), "Lands in" counts down, the clock text updates. The LIVE dot blinks on a 2s step.
-4. Toggle "Simulate delay" on: the switch thumb slides and turns orange. Estimated flips to `15:20` and turns yellow, Gate flips to `C2`, Status flips to `DELAYED` in orange. Progress is now measured against the later arrival, so the plane eases back along the arc. The footer reads "Holding east of BKK for runway slot". A live region says "AV 218 delayed 45 minutes. New arrival 15:20, gate C2."
-5. Toggle off: everything flips back to the on-time values and the region says "AV 218 back on time. Arrival 14:35, gate B7."
-6. When the clock reaches the arrival: plane at BKK, arc fully yellow, Status flips to `LANDED`, label reads "LANDED" with the arrival time, footer "Taxiing to gate B7". Five seconds later the clock resets to 13:27 and the board flips back.
-7. A cell flips at most 12 steps toward its target, 120ms per step (60ms top half down, 60ms bottom half up). If a new value arrives mid-flip, the cell finishes and then flips on to the newest value.
-8. Reduced motion: cells change instantly, the plane and arc jump, the LIVE dot does not blink, the switch snaps. The clock still runs.
 
 ## Structure
 
@@ -47,57 +38,6 @@ A flight status widget for a fictional airline, "Aerovale", tracking AV 218 from
 - Lands-in fact: `margin-left: auto`, right-aligned, plain text, not flaps.
 - `footer.foot`: note and passenger.
 - Below: `button.tog[aria-pressed]` with a 32 × 18 switch, and the clock span.
-
-## Tokens
-
-```css
-:root {
-  --floor: #24231f;    /* page */
-  --board: #121211;    /* widget */
-  --cell: #1f1f1d;     /* flap bottom half */
-  --cell-hi: #2a2a27;  /* flap top half, catches light */
-  --seam: #050505;     /* 1px split line */
-  --ink: #f4f1e6;      /* flap characters, codes */
-  --ink-2: #b9b5a8;    /* city names, footer */
-  --ink-3: #8e8a7e;    /* labels, dotted arc */
-  --line: #2e2d29;     /* rules */
-  --sign: #ffc72c;     /* band, flown arc, focus, changed estimate */
-  --sign-ink: #141310; /* text on the band */
-  --ok: #8fd694;       /* ON TIME */
-  --warn: #ff7a45;     /* DELAYED, switch on */
-
-  --cond: "Barlow Condensed", system-ui, sans-serif;
-  --mono: "Overpass Mono", ui-monospace, monospace;
-
-  --cw: 30px; --ch: 44px; --cf: 30px;   /* cell width, height, glyph */
-  --cell-gap: 3px;
-  --r-widget: 20px; --r-cell: 4px;
-
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-flip-half: 60ms;   /* ×2 per step */
-  --t-stagger: 40ms;     /* per cell */
-  --t-plane: 600ms;
-  --tick: 1500ms;        /* one simulated minute */
-}
-```
-
-Widget shadow: `0 40px 80px -40px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.05)`. Floor: two 96px grids of 1px lines at 3.5% white over a radial `#2f2d27 → --floor`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Band label, flight | Barlow Condensed | 20px | 700 / 600 | 1 | 0.06em / 0.04em | UPPER |
-| LIVE | Overpass Mono | 11px | 600 | 1 | 0.1em | UPPER |
-| Airport code | Barlow Condensed | 48px | 700 | 0.9 | 0.01em | UPPER |
-| City | Overpass Mono | 12px | 400 | 1.4 | 0 | Title |
-| Arc caption | Overpass Mono | 10px | 400 | — | 0.06em | UPPER |
-| Fact label | Overpass Mono | 10px | 600 | 1.4 | 0.14em | UPPER |
-| Flap glyph | Barlow Condensed | 30px | 600 | 44px | 0 | UPPER |
-| Lands in | Barlow Condensed | 40px | 700 | 44px | 0.01em | tabular |
-| Footer | Overpass Mono | 12px | 400 | 1.4 | 0 | Sentence |
-| Switch label | Overpass Mono | 12px | 600 | 1 | 0.06em | UPPER |
 
 ## Motion
 
@@ -166,6 +106,72 @@ Cells flip through the sequence `" ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"`, start
 - [ ] Band `#ffc72c` 48px; board `#121211`; cells 30 × 44.
 - [ ] ON TIME `#8fd694`, DELAYED `#ff7a45`, delayed estimate `#ffc72c`.
 - [ ] Clock starts at 13:27 and advances one minute per 1.5s.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the widget is centred on a dark floor with a faint 96px grid. Band reads "ARRIVALS · AEROVALE AV 218 · ● LIVE". The plane sits 63% along the arc (117 of 185 minutes flown). Flaps: Scheduled `14:35`, Estimated `14:35`, Gate `B7`, Term `1`, Belt `4`, Status `ON TIME` in green. Right of status, "LANDS IN 1h 08m" in 40px condensed. Footer: "Cruising at 11,600 m over the Bay of Bengal" and "Seat 14A · Mina Gurung". Under the widget: the switch and "Local 13:27".
+2. On load every cell flips from blank to its value, staggered 40ms per cell inside each field.
+3. A simulated clock advances one minute every 1.5s. Each minute: the plane and the solid arc move forward (600ms expo out), "Lands in" counts down, the clock text updates. The LIVE dot blinks on a 2s step.
+4. Toggle "Simulate delay" on: the switch thumb slides and turns orange. Estimated flips to `15:20` and turns yellow, Gate flips to `C2`, Status flips to `DELAYED` in orange. Progress is now measured against the later arrival, so the plane eases back along the arc. The footer reads "Holding east of BKK for runway slot". A live region says "AV 218 delayed 45 minutes. New arrival 15:20, gate C2."
+5. Toggle off: everything flips back to the on-time values and the region says "AV 218 back on time. Arrival 14:35, gate B7."
+6. When the clock reaches the arrival: plane at BKK, arc fully yellow, Status flips to `LANDED`, label reads "LANDED" with the arrival time, footer "Taxiing to gate B7". Five seconds later the clock resets to 13:27 and the board flips back.
+7. A cell flips at most 12 steps toward its target, 120ms per step (60ms top half down, 60ms bottom half up). If a new value arrives mid-flip, the cell finishes and then flips on to the newest value.
+8. Reduced motion: cells change instantly, the plane and arc jump, the LIVE dot does not blink, the switch snaps. The clock still runs.
+
+## Tokens
+
+```css
+:root {
+  --floor: #24231f;    /* page */
+  --board: #121211;    /* widget */
+  --cell: #1f1f1d;     /* flap bottom half */
+  --cell-hi: #2a2a27;  /* flap top half, catches light */
+  --seam: #050505;     /* 1px split line */
+  --ink: #f4f1e6;      /* flap characters, codes */
+  --ink-2: #b9b5a8;    /* city names, footer */
+  --ink-3: #8e8a7e;    /* labels, dotted arc */
+  --line: #2e2d29;     /* rules */
+  --sign: #ffc72c;     /* band, flown arc, focus, changed estimate */
+  --sign-ink: #141310; /* text on the band */
+  --ok: #8fd694;       /* ON TIME */
+  --warn: #ff7a45;     /* DELAYED, switch on */
+
+  --cond: "Barlow Condensed", system-ui, sans-serif;
+  --mono: "Overpass Mono", ui-monospace, monospace;
+
+  --cw: 30px; --ch: 44px; --cf: 30px;   /* cell width, height, glyph */
+  --cell-gap: 3px;
+  --r-widget: 20px; --r-cell: 4px;
+
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-flip-half: 60ms;   /* ×2 per step */
+  --t-stagger: 40ms;     /* per cell */
+  --t-plane: 600ms;
+  --tick: 1500ms;        /* one simulated minute */
+}
+```
+
+Widget shadow: `0 40px 80px -40px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.05)`. Floor: two 96px grids of 1px lines at 3.5% white over a radial `#2f2d27 → --floor`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Band label, flight | Barlow Condensed | 20px | 700 / 600 | 1 | 0.06em / 0.04em | UPPER |
+| LIVE | Overpass Mono | 11px | 600 | 1 | 0.1em | UPPER |
+| Airport code | Barlow Condensed | 48px | 700 | 0.9 | 0.01em | UPPER |
+| City | Overpass Mono | 12px | 400 | 1.4 | 0 | Title |
+| Arc caption | Overpass Mono | 10px | 400 | — | 0.06em | UPPER |
+| Fact label | Overpass Mono | 10px | 600 | 1.4 | 0.14em | UPPER |
+| Flap glyph | Barlow Condensed | 30px | 600 | 44px | 0 | UPPER |
+| Lands in | Barlow Condensed | 40px | 700 | 44px | 0.01em | tabular |
+| Footer | Overpass Mono | 12px | 400 | 1.4 | 0 | Sentence |
+| Switch label | Overpass Mono | 12px | 600 | 1 | 0.06em | UPPER |
 
 ## Implementation notes
 

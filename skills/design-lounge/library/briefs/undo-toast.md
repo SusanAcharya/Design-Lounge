@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A short list of yard notes. Archive hides one note and shows a toast: what was archived, an Undo button, and a 3px bar that shrinks over 6 seconds. Undo puts the note back and dismisses the toast. When the six seconds end, the toast leaves and the note stays archived. This is not a stack of several toasts. That stack is `toast-stack`. This is not a banner that stays on the page. A staying confirmation is `saved-banner`. One toast, one undo, one clock.
-
-## Reference behaviour
-
-1. The first frame has already archived "Gate 4 still holds twelve loads". The toast is visible. The note row is hidden.
-2. The toast text is "Archived · Gate 4 still holds twelve loads".
-3. The bar scales from full width to zero over 6 seconds.
-4. Undo restores that row, hides the toast, and clears the timer.
-5. Archiving a second note first undoes the current toast, then archives the new note, so only one toast exists.
-6. After 6 seconds the toast hides and Undo is no longer available. The row stays hidden.
-7. Reduced motion does not run the bar animation. The toast still dismisses at 6 seconds.
 
 ## Structure
 
@@ -34,23 +26,6 @@ fixed toast, 420px, bottom 28px, centered
 - The toast is position fixed, left 50%, translateX -50%, bottom 28px, width 420px.
 - The bar is 3px, transform-origin left.
 - The toast has role status.
-
-## Tokens
-
-```css
-:root {
-  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
-  --line:#e4dfd4; --primary:#1f4d3a; --primary-ink:#fffdf8;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Title | IBM Plex Sans | 28px | 600 | 1.1 | 0 |
-| Row | IBM Plex Sans | 16px | 400 | 1.45 | 0 |
-| Toast | IBM Plex Sans | 14px | 400 | 1.4 | 0 |
 
 ## Motion
 
@@ -98,18 +73,6 @@ fixed toast, 420px, bottom 28px, centered
 - [ ] Undo label is Undo.
 - [ ] The bar is #1f4d3a on #161513.
 
-## Implementation notes
-
-Restart the CSS animation by setting it to none, reading offsetWidth, then clearing the inline style.
-
-```js
-bar.style.animation = "none";
-void bar.offsetWidth;
-bar.style.animation = "";
-```
-
-Clear the previous timeout before starting another. Do not stack timers.
-
 ## Measurements to keep
 
 - Toast width 420px, bottom 28px, row padding 12px 14px.
@@ -154,6 +117,49 @@ Clear the previous timeout before starting another. Do not stack timers.
 - Only one current id is stored.
 - A second archive calls undo on the first before showing the next.
 - The type is IBM Plex Sans.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame has already archived "Gate 4 still holds twelve loads". The toast is visible. The note row is hidden.
+2. The toast text is "Archived · Gate 4 still holds twelve loads".
+3. The bar scales from full width to zero over 6 seconds.
+4. Undo restores that row, hides the toast, and clears the timer.
+5. Archiving a second note first undoes the current toast, then archives the new note, so only one toast exists.
+6. After 6 seconds the toast hides and Undo is no longer available. The row stays hidden.
+7. Reduced motion does not run the bar animation. The toast still dismisses at 6 seconds.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
+  --line:#e4dfd4; --primary:#1f4d3a; --primary-ink:#fffdf8;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Title | IBM Plex Sans | 28px | 600 | 1.1 | 0 |
+| Row | IBM Plex Sans | 16px | 400 | 1.45 | 0 |
+| Toast | IBM Plex Sans | 14px | 400 | 1.4 | 0 |
+
+## Implementation notes
+
+Restart the CSS animation by setting it to none, reading offsetWidth, then clearing the inline style.
+
+```js
+bar.style.animation = "none";
+void bar.offsetWidth;
+bar.style.animation = "";
+```
+
+Clear the previous timeout before starting another. Do not stack timers.
 
 ---
 

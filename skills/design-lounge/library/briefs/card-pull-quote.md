@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One testimonial at a time, set like a magazine pull quote on a dark olive card. A 300px solid chartreuse opening quote mark hangs off the card's top-left edge. A 220px outlined closing mark sits faint at the bottom right. The quote is 46px Gloock, and one phrase in it is the point of the testimonial. That phrase gets a highlighter sweep: a chartreuse block draws left to right across its lines, and the text inside turns dark as it lands. Below the quote are a monogram attribution, five segment indicators, and round prev/next buttons. It sits on a pricing or landing page for a fictional small-business bookkeeping app, Tallybook. The detail worth copying is the highlight: it runs line by line across wrapped text using one inline background, with no per-line markup.
-
-## Reference behaviour
-
-1. First frame: testimonial 1 of 5, Priya Raman. The counter reads "01 / 05" with "01" in chartreuse. The first segment is chartreuse, the other four are `--line`.
-2. On load, the highlight on "The books close themselves by Thursday lunch," sweeps from 0% to 100% width over 720ms after a 260ms delay. The phrase's text colour goes from cream to `#191b16` over 240ms, starting 380ms in.
-3. Clicking Next fades the slide out and up 10px over 200ms. It swaps content, then the slide fades in from 14px below over 460ms. The new highlight resets to 0% and redraws.
-4. Prev and Next wrap: Next on 05 goes to 01.
-5. Clicking a segment jumps straight to that testimonial with the same transition. Clicking the current one does nothing.
-6. With focus anywhere in the card, Left and Right arrows act as Prev and Next.
-7. The slide keeps a fixed 360px minimum height, so the card never changes height between quotes.
-8. Prev/Next press: scale to .94 and fill chartreuse with dark icon while held.
 
 ## Structure
 
@@ -44,47 +35,6 @@ One testimonial at a time, set like a magazine pull quote on a dark olive card. 
 - `div[aria-live=polite][aria-atomic=true]` wraps `figure.slide` (`aria-roledescription="slide"`, `aria-label="1 of 5"`). Inside: `blockquote > p` with one `mark`, and `figcaption.who` with monogram, name and role.
 - `.bar` is a flex row with a top hairline: segment buttons (a group, max 260px), a hint, and the nav (two 48px round buttons).
 - The 152px left padding gives the hanging mark its gutter. The quote measure is `max-width: 22ch`.
-
-## Tokens
-
-```css
-:root {
-  --stage: #141611;
-  --card: #1d2019;
-  --line: #323729;
-  --ink: #edeadf;
-  --ink-2: #b4b5a3;
-  --ink-3: #8d8f7c;
-  --marker: #d4ee4e;       /* chartreuse: open mark, highlight, current segment, monogram ring */
-  --marker-ink: #191b16;   /* text on the highlight */
-  --ghost: #3b4130;        /* closing mark outline */
-
-  --serif: "Gloock", Georgia, serif;
-  --sans: "Albert Sans", system-ui, sans-serif;
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --t-out: 200ms;
-  --t-in: 460ms;
-  --t-draw: 720ms;
-  --d-draw: 260ms;
-}
-```
-
-The stage has a soft top glow: `radial-gradient(120% 80% at 50% 0%, #1b1e17 0%, transparent 60%)`. There is no shadow on the card. A 1px `--line` border separates it.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Open mark | Gloock | 300px | 400 | 1 | — | `--marker` |
-| Close mark | Gloock | 220px | 400 | .6 | — | transparent fill, 1.5px `--ghost` stroke |
-| Eyebrow / counter | Albert Sans | 12px | 600 | 1 | .16em | upper, tabular numbers |
-| Quote | Gloock | 46px | 400 | 1.16 | -.01em | max 22ch, `text-wrap: pretty` |
-| Monogram | Gloock | 19px | 400 | 1 | — | in a 52px circle, 1.5px marker ring |
-| Name | Albert Sans | 16px | 600 | 1.3 | 0 | `--ink` |
-| Role | Albert Sans | 14px | 400 | 1.5 | 0 | `--ink-2` |
-| Hint | Albert Sans | 12px | 400 | 1.5 | 0 | `--ink-3` |
 
 ## Motion
 
@@ -146,6 +96,62 @@ Reduced motion: no slide transitions and no sweep. The highlight is drawn fully 
 - [ ] Quote 46px Gloock in `#edeadf` on `#1d2019`; marker `#d4ee4e`.
 - [ ] Open mark 300px; close mark 220px, stroke `#3b4130`.
 - [ ] Monograms are initials ("PR", "TF", …) in a 52px chartreuse ring.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: testimonial 1 of 5, Priya Raman. The counter reads "01 / 05" with "01" in chartreuse. The first segment is chartreuse, the other four are `--line`.
+2. On load, the highlight on "The books close themselves by Thursday lunch," sweeps from 0% to 100% width over 720ms after a 260ms delay. The phrase's text colour goes from cream to `#191b16` over 240ms, starting 380ms in.
+3. Clicking Next fades the slide out and up 10px over 200ms. It swaps content, then the slide fades in from 14px below over 460ms. The new highlight resets to 0% and redraws.
+4. Prev and Next wrap: Next on 05 goes to 01.
+5. Clicking a segment jumps straight to that testimonial with the same transition. Clicking the current one does nothing.
+6. With focus anywhere in the card, Left and Right arrows act as Prev and Next.
+7. The slide keeps a fixed 360px minimum height, so the card never changes height between quotes.
+8. Prev/Next press: scale to .94 and fill chartreuse with dark icon while held.
+
+## Tokens
+
+```css
+:root {
+  --stage: #141611;
+  --card: #1d2019;
+  --line: #323729;
+  --ink: #edeadf;
+  --ink-2: #b4b5a3;
+  --ink-3: #8d8f7c;
+  --marker: #d4ee4e;       /* chartreuse: open mark, highlight, current segment, monogram ring */
+  --marker-ink: #191b16;   /* text on the highlight */
+  --ghost: #3b4130;        /* closing mark outline */
+
+  --serif: "Gloock", Georgia, serif;
+  --sans: "Albert Sans", system-ui, sans-serif;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --t-out: 200ms;
+  --t-in: 460ms;
+  --t-draw: 720ms;
+  --d-draw: 260ms;
+}
+```
+
+The stage has a soft top glow: `radial-gradient(120% 80% at 50% 0%, #1b1e17 0%, transparent 60%)`. There is no shadow on the card. A 1px `--line` border separates it.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Open mark | Gloock | 300px | 400 | 1 | — | `--marker` |
+| Close mark | Gloock | 220px | 400 | .6 | — | transparent fill, 1.5px `--ghost` stroke |
+| Eyebrow / counter | Albert Sans | 12px | 600 | 1 | .16em | upper, tabular numbers |
+| Quote | Gloock | 46px | 400 | 1.16 | -.01em | max 22ch, `text-wrap: pretty` |
+| Monogram | Gloock | 19px | 400 | 1 | — | in a 52px circle, 1.5px marker ring |
+| Name | Albert Sans | 16px | 600 | 1.3 | 0 | `--ink` |
+| Role | Albert Sans | 14px | 400 | 1.5 | 0 | `--ink-2` |
+| Hint | Albert Sans | 12px | 400 | 1.5 | 0 | `--ink-3` |
 
 ## Implementation notes
 

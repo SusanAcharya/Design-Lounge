@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A 2 by 2 board. Gate 4, Night book, Month close, Yard map. Pressing a card sets aria-pressed and dims the others to .35. Pressing the same card clears the press and the dim. This is not a spotlight that follows the pointer. That grid is `spotlight-hover-grid`. The dim is a choice.
-
-## Reference behaviour
-
-1. No card starts pressed. Opacity is 1.
-2. Click sets aria-pressed true on that card and data-focus true on the grid.
-3. Other cards go to opacity .35.
-4. The pressed card stays at opacity 1.
-5. Clicking the pressed card clears every aria-pressed and sets data-focus false.
-6. Only one card is pressed.
-7. There is no transition.
 
 ## Structure
 
@@ -31,19 +23,6 @@ A 2 by 2 board. Gate 4, Night book, Month close, Yard map. Pressing a card sets 
 - The name is 20px, weight 600. The line under it is 14px, #5a554c.
 - data-focus true sets button opacity .35, except the pressed button.
 - The ground is #f6f4ef. Cards are white.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c; --line:#e4dfd4; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Name | IBM Plex Sans | 20px | 600 |
-| Line | IBM Plex Sans | 14px | 500 |
 
 ## Motion
 
@@ -88,17 +67,6 @@ A 2 by 2 board. Gate 4, Night book, Month close, Yard map. Pressing a card sets 
 - [ ] Dim is opacity .35.
 - [ ] None start pressed.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Clear every press, then set the clicked card if it was off.
-
-```js
-if (!on) b.setAttribute("aria-pressed", "true");
-grid.dataset.focus = String(buttons.some((x) => x.getAttribute("aria-pressed") === "true"));
-```
-
-Set aria-pressed false on all buttons first.
 
 ## Measurements to keep
 
@@ -167,6 +135,44 @@ Set aria-pressed false on all buttons first.
 - While rebuilding, remember: Do not follow the pointer.
 - While rebuilding, remember: Do not select more than one.
 - While rebuilding, remember: Do not animate a glow.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. No card starts pressed. Opacity is 1.
+2. Click sets aria-pressed true on that card and data-focus true on the grid.
+3. Other cards go to opacity .35.
+4. The pressed card stays at opacity 1.
+5. Clicking the pressed card clears every aria-pressed and sets data-focus false.
+6. Only one card is pressed.
+7. There is no transition.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c; --line:#e4dfd4; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Name | IBM Plex Sans | 20px | 600 |
+| Line | IBM Plex Sans | 14px | 500 |
+
+## Implementation notes
+
+Clear every press, then set the clicked card if it was off.
+
+```js
+if (!on) b.setAttribute("aria-pressed", "true");
+grid.dataset.focus = String(buttons.some((x) => x.getAttribute("aria-pressed") === "true"));
+```
+
+Set aria-pressed false on all buttons first.
 
 ---
 

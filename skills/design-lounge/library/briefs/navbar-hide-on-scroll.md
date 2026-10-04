@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The header of Kestrel, a fictional feature-flag service. A 36px black announcement bar sits on top and can be dismissed. Under it is a 64px navbar with the logo, five section links, "Sign in" and a cobalt "Start free" button. Scroll down more than 8px and the whole header slides up out of view. Scroll up and it slides back with a soft shadow. As you pass each section, its link gets a 2px cobalt underline. The detail worth copying: the header only moves when the scroll delta passes 8px, so trackpad jitter never makes it flicker.
-
-## Reference behaviour
-
-1. First frame: scroll is 0. The announcement bar and the navbar are both visible. There is no shadow.
-2. The announcement reads "NEW Kestrel 4.2 evaluates flags at the edge in 11 regions. Read the changelog". "NEW" is a cobalt tag. "Read the changelog" is an underlined link. An X button on the right dismisses it.
-3. "Product" is the active link. It has `aria-current="true"`, ink text and a 2px cobalt underline.
-4. The user scrolls down. Each scroll event compares `scrollY` with the last recorded position. When the difference is more than 8px and the direction is down, and `scrollY` is past the header's own height, the header gets `translateY(-100%)` over 280ms.
-5. The user scrolls up by more than 8px. The header returns to `translateY(0)` over 280ms and shows a shadow because the page is not at the top.
-6. At `scrollY` 0 the header is always shown and the shadow goes away.
-7. Moves under 8px do nothing. The last recorded position only updates when a move passes 8px.
-8. The header does not hide while the mobile menu is open, or while keyboard focus is inside it. If focus moves into a hidden header, it slides back in.
-9. As the reader scrolls, an IntersectionObserver watches the five sections. The section crossing a band 40% from the top of the viewport becomes active. Its link gets `aria-current="true"` and the underline grows from the left over 200ms. The old link loses both.
-10. Clicking a link scrolls to its section. Sections have `scroll-margin-top: 64px` so the heading clears the navbar when it reappears.
-11. Clicking the X removes the announcement bar from the page. The main content's top padding animates from 100px to 64px over 280ms. Focus moves to the logo.
-12. Below 760px wide the five links, "Sign in" and "Start free" hide. A 44px menu button appears on the right. It opens a panel under the navbar with all links, "Sign in", and "Start free" at full width. Escape closes it and returns focus to the button.
 
 ## Structure
 
@@ -52,79 +39,6 @@ announcement grid: 40px | minmax(0,1fr) | 40px
 - The actions group holds the "Sign in" link, the "Start free" link styled as a button, and the menu button.
 - `main` has top padding equal to the header height so the hero is not hidden on load.
 - Each section has an `id` matching a link `href` and a `data-spy` attribute.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces */
-  --bg: #f6f5f1;           /* page */
-  --surface: #fbfaf7;      /* navbar, cells, panel */
-  --note-bg: #141414;      /* announcement */
-  --note-ink: #f6f5f1;
-
-  /* ink */
-  --ink: #141414;
-  --ink-2: #4b4b48;        /* links at rest, body */
-  --ink-3: #6b6b66;        /* labels, dates */
-  --line: #e2e0d8;
-
-  /* accent */
-  --accent: #1f4fd8;       /* underline, button, tag, focus */
-  --accent-hover: #173fb3;
-  --accent-ink: #ffffff;
-
-  /* type */
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --fs-note: 13px;
-  --fs-link: 14px;
-  --fs-logo: 18px;
-  --fs-h1: 64px;
-  --fs-h2: 40px;
-  --fs-body: 16px;
-
-  /* space */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-
-  /* sizes */
-  --note-h: 36px;
-  --nav-h: 64px;
-  --delta: 8px;
-
-  /* radius and shadow */
-  --radius: 6px;
-  --shadow: 0 1px 0 rgba(20,20,20,.06), 0 8px 24px -12px rgba(20,20,20,.18);
-
-  /* motion */
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --dur: 280ms;
-  --dur-micro: 200ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Announcement | IBM Plex Mono | 13px | 400 | 1 | 0 | sentence |
-| NEW tag | IBM Plex Mono | 11px | 400 | 1 | 0.06em | upper |
-| Logo | Hanken Grotesk | 18px | 700 | 1 | -0.02em | title |
-| Nav link | Hanken Grotesk | 14px | 500 | 1.55 | 0 | title |
-| Sign in | Hanken Grotesk | 14px | 500 | 1.55 | 0 | title |
-| Start free | Hanken Grotesk | 14px | 600 | 1 | 0 | title |
-| Label | IBM Plex Mono | 12px | 400 | 1 | 0.08em | upper |
-| h1 | Hanken Grotesk | 64px | 700 | 1.02 | -0.035em | sentence |
-| h2 | Hanken Grotesk | 40px | 700 | 1.05 | -0.03em | sentence |
-| Body | Hanken Grotesk | 16px | 400 | 1.55 | 0 | sentence |
-
-Mono is for the announcement, labels, dates and code. Everything a user clicks in the navbar is in the grotesk.
 
 ## Motion
 
@@ -203,6 +117,98 @@ Mono is for the announcement, labels, dates and code. Everything a user clicks i
 - [ ] The observer uses `rootMargin: "-40% 0px -55% 0px"`.
 - [ ] "Start free" is cobalt `#1f4fd8`, 40px tall, radius 6px.
 - [ ] Menu collapses below 760px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: scroll is 0. The announcement bar and the navbar are both visible. There is no shadow.
+2. The announcement reads "NEW Kestrel 4.2 evaluates flags at the edge in 11 regions. Read the changelog". "NEW" is a cobalt tag. "Read the changelog" is an underlined link. An X button on the right dismisses it.
+3. "Product" is the active link. It has `aria-current="true"`, ink text and a 2px cobalt underline.
+4. The user scrolls down. Each scroll event compares `scrollY` with the last recorded position. When the difference is more than 8px and the direction is down, and `scrollY` is past the header's own height, the header gets `translateY(-100%)` over 280ms.
+5. The user scrolls up by more than 8px. The header returns to `translateY(0)` over 280ms and shows a shadow because the page is not at the top.
+6. At `scrollY` 0 the header is always shown and the shadow goes away.
+7. Moves under 8px do nothing. The last recorded position only updates when a move passes 8px.
+8. The header does not hide while the mobile menu is open, or while keyboard focus is inside it. If focus moves into a hidden header, it slides back in.
+9. As the reader scrolls, an IntersectionObserver watches the five sections. The section crossing a band 40% from the top of the viewport becomes active. Its link gets `aria-current="true"` and the underline grows from the left over 200ms. The old link loses both.
+10. Clicking a link scrolls to its section. Sections have `scroll-margin-top: 64px` so the heading clears the navbar when it reappears.
+11. Clicking the X removes the announcement bar from the page. The main content's top padding animates from 100px to 64px over 280ms. Focus moves to the logo.
+12. Below 760px wide the five links, "Sign in" and "Start free" hide. A 44px menu button appears on the right. It opens a panel under the navbar with all links, "Sign in", and "Start free" at full width. Escape closes it and returns focus to the button.
+
+## Tokens
+
+```css
+:root {
+  /* surfaces */
+  --bg: #f6f5f1;           /* page */
+  --surface: #fbfaf7;      /* navbar, cells, panel */
+  --note-bg: #141414;      /* announcement */
+  --note-ink: #f6f5f1;
+
+  /* ink */
+  --ink: #141414;
+  --ink-2: #4b4b48;        /* links at rest, body */
+  --ink-3: #6b6b66;        /* labels, dates */
+  --line: #e2e0d8;
+
+  /* accent */
+  --accent: #1f4fd8;       /* underline, button, tag, focus */
+  --accent-hover: #173fb3;
+  --accent-ink: #ffffff;
+
+  /* type */
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --fs-note: 13px;
+  --fs-link: 14px;
+  --fs-logo: 18px;
+  --fs-h1: 64px;
+  --fs-h2: 40px;
+  --fs-body: 16px;
+
+  /* space */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* sizes */
+  --note-h: 36px;
+  --nav-h: 64px;
+  --delta: 8px;
+
+  /* radius and shadow */
+  --radius: 6px;
+  --shadow: 0 1px 0 rgba(20,20,20,.06), 0 8px 24px -12px rgba(20,20,20,.18);
+
+  /* motion */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --dur: 280ms;
+  --dur-micro: 200ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Announcement | IBM Plex Mono | 13px | 400 | 1 | 0 | sentence |
+| NEW tag | IBM Plex Mono | 11px | 400 | 1 | 0.06em | upper |
+| Logo | Hanken Grotesk | 18px | 700 | 1 | -0.02em | title |
+| Nav link | Hanken Grotesk | 14px | 500 | 1.55 | 0 | title |
+| Sign in | Hanken Grotesk | 14px | 500 | 1.55 | 0 | title |
+| Start free | Hanken Grotesk | 14px | 600 | 1 | 0 | title |
+| Label | IBM Plex Mono | 12px | 400 | 1 | 0.08em | upper |
+| h1 | Hanken Grotesk | 64px | 700 | 1.02 | -0.035em | sentence |
+| h2 | Hanken Grotesk | 40px | 700 | 1.05 | -0.03em | sentence |
+| Body | Hanken Grotesk | 16px | 400 | 1.55 | 0 | sentence |
+
+Mono is for the announcement, labels, dates and code. Everything a user clicks in the navbar is in the grotesk.
 
 ## Implementation notes
 

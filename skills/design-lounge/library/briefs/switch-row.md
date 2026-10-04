@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the track colour follows the theme. One setting that is on or off is this row. Six switch costumes are `toggle-switch-set`. Do not ship all six.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One setting for Gate 4. The label is Hold the gate. The switch starts off. The status reads "The gate is open." Turning it on sets `aria-checked` true, fills the track with the yard green, moves the thumb, and rewrites the status to "The gate is held." Turning it off restores the open sentence. The track is 44 by 24 with a 20px thumb. The row is at least 40px and 420px wide. There is one switch, not a set of temperaments, and it does not change the page theme.
-
-## Reference behaviour
-
-1. The first frame is off. `aria-checked` is false. The status is "The gate is open."
-2. Click or Space or Enter toggles the switch. It is a button, so those keys come free.
-3. On: the track is `--primary`, the thumb sits at the right, the status is "The gate is held."
-4. Off: the track is `--line-strong`, the thumb sits at the left, the status is "The gate is open."
-5. The thumb moves 20px. With reduced motion the move is instant. Otherwise it takes 160ms.
-6. Focus-visible is a 2px outline, offset 3px.
-7. There is no second switch and no submit.
 
 ## Structure
 
@@ -32,35 +24,6 @@ status
 - The label and the switch are one row. The button is labelled by the label's id.
 - The thumb is `aria-hidden` by being inside the button with no text of its own.
 - The status is `role="status"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #5c564e;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --primary-ink: #fffdf8;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-The track is a pill because a thumb travels inside it. That pill is the switch, not the family's button radius. Do not square the track into a checkbox.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 14px | 500 | `--ink` |
-| Status | sans | 12px | 400 | `--ink` |
-
-The where-line letter-spacing is 0.04em. The switch has no text inside it. On and off are the status sentence, not the words ON and OFF printed on the track.
 
 ## Motion
 
@@ -117,6 +80,49 @@ Do not bounce the thumb. Do not fade the whole page.
 - [ ] Reduced motion removes the thumb transition.
 - [ ] There is one switch, no ON/OFF lettering, and no theme change.
 - [ ] The where-line is Gate 4.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is off. `aria-checked` is false. The status is "The gate is open."
+2. Click or Space or Enter toggles the switch. It is a button, so those keys come free.
+3. On: the track is `--primary`, the thumb sits at the right, the status is "The gate is held."
+4. Off: the track is `--line-strong`, the thumb sits at the left, the status is "The gate is open."
+5. The thumb moves 20px. With reduced motion the move is instant. Otherwise it takes 160ms.
+6. Focus-visible is a 2px outline, offset 3px.
+7. There is no second switch and no submit.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #5c564e;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --primary-ink: #fffdf8;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+The track is a pill because a thumb travels inside it. That pill is the switch, not the family's button radius. Do not square the track into a checkbox.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 14px | 500 | `--ink` |
+| Status | sans | 12px | 400 | `--ink` |
+
+The where-line letter-spacing is 0.04em. The switch has no text inside it. On and off are the status sentence, not the words ON and OFF printed on the track.
 
 ## Implementation notes
 

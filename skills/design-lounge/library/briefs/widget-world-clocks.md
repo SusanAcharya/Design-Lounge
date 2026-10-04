@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A meeting-planner widget for distributed teams. Each city is one row: name, UTC offset, big local time, weekday and a status word (Working, Morning, Evening, Asleep), then a 24-cell band that shades that city's hours as night, edge or day, with working hours underlined in cobalt. All bands share one absolute timeline, so a single vertical cursor crosses every row at the same instant. Drag on any band, or move the slider under them, and every clock scrubs together in 15-minute steps. It lives in a calendar's "find a time" panel. The look is Swiss utility: warm paper, black rules, one cobalt accent, a grotesk for words and a monospace for every number.
-
-## Reference behaviour
-
-1. On load the planner is live: the cursor sits at the current moment, times tick each second, the header reads the current UTC time and "Live, now", and "Back to now" is disabled.
-2. The timeline spans 24 hours, starting 6 hours before the current hour (floored). A dashed line marks the real "now"; it stays put while you scrub.
-3. Each band has 24 cells. Each cell shows that city's local hour for that slot. The cell whose local hour is 0 shows the weekday ("Sun") in bold instead of 0.
-4. Cell shading by local hour: 22:00–05:59 night (dark), 06:00–07:59 and 19:00–21:59 edge (grey), otherwise day (paper). 09:00–17:59 cells also get a 3px cobalt underline.
-5. Pressing on any band moves the cursor to that x, snapped to 15 minutes; dragging keeps scrubbing (pointer capture). The cursor follows the pointer with no easing while dragging.
-6. The range slider below has 97 positions (0–96, 15-minute steps) aligned to the band column. Arrow keys move 15 minutes; Page Up / Page Down move about 10% of the range (native browser behaviour, roughly 2.5 hours); Home / End jump to the ends.
-7. While scrubbed, every row shows the time at the cursor, the header shows the cursor time in UTC and an offset ("+3 h 15 min from now"), and "Back to now" is enabled.
-8. Rows whose city is in working hours at the cursor get a cobalt-tinted left gradient and the status word turns cobalt.
-9. If a city's date differs from the viewer's own date, a bordered "+1 day" or "−1 day" tag appears after the status word.
-10. The footer summary reads "2 of 6 in working hours: San Francisco, New York." It switches to "Everyone is in working hours." or "No one is in working hours. Try another slot." at the extremes.
-11. "Back to now" returns to live mode and moves focus to the slider.
 
 ## Structure
 
@@ -47,45 +35,6 @@ columns: 208px | 168px | 1fr, gap 24px
 - The cursor and now line live in one absolutely positioned overlay inside the list, sized to the first band's rect.
 - The scrub row reuses the same grid columns so the slider sits exactly under the bands.
 - The summary is a `p` whose first span is `aria-live="polite"`.
-
-## Tokens
-
-```css
-:root {
-  --paper: #ecebe5;      /* page */
-  --card: #f7f6f1;       /* planner surface, also day cells */
-  --ink: #141414;        /* text, heavy rules */
-  --ink-2: #5f5e58;      /* meta text */
-  --rule: #cfcdc4;       /* row rules */
-  --night: #1b1c21;      /* night cells */
-  --night-ink: #9c9b94;  /* hour numbers on night */
-  --shoulder: #c9c7bd;   /* edge hours */
-  --day: #f7f6f1;
-  --accent: #2441d6;     /* cobalt: cursor, working underline, thumb */
-  --accent-soft: #dfe3fa;/* working-row tint */
-  --sans: "Familjen Grotesk", system-ui, sans-serif;
-  --mono: "Martian Mono", ui-monospace, monospace;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --cols: 208px 168px 1fr;
-}
-```
-
-Spacing: 4, 8, 12, 16, 20, 24, 28, 32. Radii: 0 everywhere. This is a square piece; do not round the cells, the button or the slider thumb.
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Title | Familjen Grotesk | 44px / 1 | 700 | −0.035em | Sentence |
-| Wordmark | Familjen Grotesk | 15px | 700 | −0.01em | Title |
-| City | Familjen Grotesk | 21px / 1.1 | 500 | −0.02em | Title |
-| Day line, summary | Familjen Grotesk | 12.5px / 14px | 400 | 0 | Sentence |
-| Local time | Martian Mono | 30px / 1 | 500 | −0.05em | tabular |
-| Header time | Martian Mono | 28px / 1 | 500 | −0.04em | — |
-| Offset, labels | Martian Mono | 10.5–11px | 400–500 | 0.04–0.06em | Upper |
-| Cell hour | Martian Mono | 9px | 400 (500 for weekday) | 0 | — |
-
-Every digit on screen is Martian Mono so columns of times align.
 
 ## Motion
 
@@ -145,6 +94,63 @@ Nothing loops. The only continuous change is the live time text once per second.
 - [ ] Cities in order: San Francisco, New York, Lisbon, Berlin, Kathmandu, Tokyo.
 - [ ] Working hours 09:00–18:00 underlined in `#2441d6`.
 - [ ] Timeline starts 6 hours before the current hour.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. On load the planner is live: the cursor sits at the current moment, times tick each second, the header reads the current UTC time and "Live, now", and "Back to now" is disabled.
+2. The timeline spans 24 hours, starting 6 hours before the current hour (floored). A dashed line marks the real "now"; it stays put while you scrub.
+3. Each band has 24 cells. Each cell shows that city's local hour for that slot. The cell whose local hour is 0 shows the weekday ("Sun") in bold instead of 0.
+4. Cell shading by local hour: 22:00–05:59 night (dark), 06:00–07:59 and 19:00–21:59 edge (grey), otherwise day (paper). 09:00–17:59 cells also get a 3px cobalt underline.
+5. Pressing on any band moves the cursor to that x, snapped to 15 minutes; dragging keeps scrubbing (pointer capture). The cursor follows the pointer with no easing while dragging.
+6. The range slider below has 97 positions (0–96, 15-minute steps) aligned to the band column. Arrow keys move 15 minutes; Page Up / Page Down move about 10% of the range (native browser behaviour, roughly 2.5 hours); Home / End jump to the ends.
+7. While scrubbed, every row shows the time at the cursor, the header shows the cursor time in UTC and an offset ("+3 h 15 min from now"), and "Back to now" is enabled.
+8. Rows whose city is in working hours at the cursor get a cobalt-tinted left gradient and the status word turns cobalt.
+9. If a city's date differs from the viewer's own date, a bordered "+1 day" or "−1 day" tag appears after the status word.
+10. The footer summary reads "2 of 6 in working hours: San Francisco, New York." It switches to "Everyone is in working hours." or "No one is in working hours. Try another slot." at the extremes.
+11. "Back to now" returns to live mode and moves focus to the slider.
+
+## Tokens
+
+```css
+:root {
+  --paper: #ecebe5;      /* page */
+  --card: #f7f6f1;       /* planner surface, also day cells */
+  --ink: #141414;        /* text, heavy rules */
+  --ink-2: #5f5e58;      /* meta text */
+  --rule: #cfcdc4;       /* row rules */
+  --night: #1b1c21;      /* night cells */
+  --night-ink: #9c9b94;  /* hour numbers on night */
+  --shoulder: #c9c7bd;   /* edge hours */
+  --day: #f7f6f1;
+  --accent: #2441d6;     /* cobalt: cursor, working underline, thumb */
+  --accent-soft: #dfe3fa;/* working-row tint */
+  --sans: "Familjen Grotesk", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --cols: 208px 168px 1fr;
+}
+```
+
+Spacing: 4, 8, 12, 16, 20, 24, 28, 32. Radii: 0 everywhere. This is a square piece; do not round the cells, the button or the slider thumb.
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Title | Familjen Grotesk | 44px / 1 | 700 | −0.035em | Sentence |
+| Wordmark | Familjen Grotesk | 15px | 700 | −0.01em | Title |
+| City | Familjen Grotesk | 21px / 1.1 | 500 | −0.02em | Title |
+| Day line, summary | Familjen Grotesk | 12.5px / 14px | 400 | 0 | Sentence |
+| Local time | Martian Mono | 30px / 1 | 500 | −0.05em | tabular |
+| Header time | Martian Mono | 28px / 1 | 500 | −0.04em | — |
+| Offset, labels | Martian Mono | 10.5–11px | 400–500 | 0.04–0.06em | Upper |
+| Cell hour | Martian Mono | 9px | 400 (500 for weekday) | 0 | — |
+
+Every digit on screen is Martian Mono so columns of times align.
 
 ## Implementation notes
 

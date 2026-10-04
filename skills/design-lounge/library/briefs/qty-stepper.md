@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the buttons are `--control` tall and use `--radius`. The bag that holds several of these is `shop-cart`. The cart's own 36px stepper loses to this height.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One line in a bag. Rice, at रु 1,200 a bag, quantity 2, line रु 2,400. Minus and plus are 40px buttons. The number sits between them. Minus stops at 1. Plus stops at 8. The line amount is 28px and uses the same face as the unit price, because both contain रु. This is the control. It is not the whole cart, and it is not a guest counter on a booking page.
-
-## Reference behaviour
-
-1. The first frame is quantity 2 and the line रु 2,400. Both buttons are enabled.
-2. Plus adds one bag. The number and the line update together: 3 is रु 3,600, 8 is रु 9,600.
-3. At 8, plus is disabled. Further clicks do nothing.
-4. Minus removes one bag. At 1, minus is disabled and the line is रु 1,200.
-5. The quantity never reaches 0 in this piece. Removing the line from the bag is a different action, on the cart, and it is not this minus button.
-6. There is no animation. Focus ring is 2px `--focus`, offset 2px.
-7. Amounts use en-IN grouping: 1,200 and 2,400 and 9,600. Six hundred would have no comma. These prices are all above 999.
 
 ## Structure
 
@@ -33,37 +25,6 @@ row, width 420, min-height 72, surface, radius 2
 - Minus is `aria-label="Remove one bag"`. Plus is `aria-label="Add one bag"`.
 - The number is text, not an input, in this demo. A product may make it an input. If it does, the same min and max apply on blur.
 - The line amount is a paragraph under the row.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --focus: #1f4d3a;
-  --sans: "Noto Sans", system-ui, sans-serif;
-}
-```
-
-Noto Sans is this demo because the amount contains रु. When a pairing is locked, use the face that contains the glyph. Do not set the amount in a mono face that drops it. Button radius is 2px. The family replaces it. The buttons are outline, not a solid primary. The page's one primary, on a cart, is the checkout button, which is not in this piece.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Name | sans | 16px | 500 | `--ink` |
-| Unit | sans | 13px | 400 | `--ink-2` |
-| Quantity | sans | 16px | 500 | `--ink` |
-| Button | sans | 16px | 500 | `--ink` |
-| Line | sans | 28px | 500 | `--ink` |
-
-The quantity and the line use tabular numbers. The where-line letter-spacing is 0.04em. The line is the largest type on this view. It is not 56px, because this is one line in a bag, not the order total. The order total is `order-confirmed`.
 
 ## Motion
 
@@ -113,6 +74,51 @@ None. The number changes in one frame. Reduced motion has nothing to remove. Do 
 - [ ] Grouping is 1,200 and 2,400 and 9,600.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is no animation and no second product in the row.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is quantity 2 and the line रु 2,400. Both buttons are enabled.
+2. Plus adds one bag. The number and the line update together: 3 is रु 3,600, 8 is रु 9,600.
+3. At 8, plus is disabled. Further clicks do nothing.
+4. Minus removes one bag. At 1, minus is disabled and the line is रु 1,200.
+5. The quantity never reaches 0 in this piece. Removing the line from the bag is a different action, on the cart, and it is not this minus button.
+6. There is no animation. Focus ring is 2px `--focus`, offset 2px.
+7. Amounts use en-IN grouping: 1,200 and 2,400 and 9,600. Six hundred would have no comma. These prices are all above 999.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --focus: #1f4d3a;
+  --sans: "Noto Sans", system-ui, sans-serif;
+}
+```
+
+Noto Sans is this demo because the amount contains रु. When a pairing is locked, use the face that contains the glyph. Do not set the amount in a mono face that drops it. Button radius is 2px. The family replaces it. The buttons are outline, not a solid primary. The page's one primary, on a cart, is the checkout button, which is not in this piece.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Name | sans | 16px | 500 | `--ink` |
+| Unit | sans | 13px | 400 | `--ink-2` |
+| Quantity | sans | 16px | 500 | `--ink` |
+| Button | sans | 16px | 500 | `--ink` |
+| Line | sans | 28px | 500 | `--ink` |
+
+The quantity and the line use tabular numbers. The where-line letter-spacing is 0.04em. The line is the largest type on this view. It is not 56px, because this is one line in a bag, not the order total. The order total is `order-confirmed`.
 
 ## Implementation notes
 

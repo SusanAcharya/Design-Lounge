@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A single travel postcard on a deep sea-green desk. The front is a flat, screen-printed illustration of a fictional harbour town, "Cala Verdena", with a striped setting sun, white houses with terracotta roofs, a lighthouse and a sailboat, and a "Greetings from" title in fat display type with a two-step offset shadow. Turn it over and the back is a real postcard layout: handwritten message on the left, a hairline divider, a perforated stamp top right, ruled address lines, and a round postmark with wavy cancellation lines. The postmark is the moment: it thumps onto the card with a blur-to-sharp scale, a wet ink blot that dries off, and the card dips 1.5% under the pressure. Use it for travel, gifting, "send a card" flows, or a thank-you screen.
-
-## Reference behaviour
-
-1. First frame: the picture side faces the viewer, centred, 720px wide, aspect 640:420. Eyebrow above reads "Post No. 07 / Summer 2026". Two buttons below ("Turn over", "Postmark again") and a handwritten hint "drag it sideways, or press Enter, to turn it over".
-2. Click (pointer moves under 6px between down and up) on the card, the "Turn over" button, Enter or Space on the focused card: the card turns 180° around the Y axis in 820ms on expo out.
-3. Arrow Right turns it +180°, Arrow Left −180°. The angle accumulates (0, 180, 360…), so the turn always continues in the direction you asked for.
-4. Drag horizontally: once the pointer has moved 6px, the card follows the hand at 0.55° per pixel with no transition, updated once per animation frame. On release it snaps to the nearest multiple of 180°. If you dragged more than 50° but the nearest multiple is still the start angle, it completes the turn in the drag direction anyway.
-5. The first time the back faces the viewer, 520ms after the turn starts (so the turn has nearly settled), the postmark stamps on. It never stamps again on its own.
-6. "Postmark again": if the back is showing, restamp immediately (remove the class, force reflow, add it back). If the front is showing, turn the card over and stamp on arrival.
-7. The flip button label swaps between "Turn over" and "Show the picture". `aria-pressed` on the card is true when the back is showing.
-8. Reduced motion: the turn is instant, drag does not rotate the card (release turns it in the drag direction), the postmark appears with no thump, no blot, no dip.
 
 ## Structure
 
@@ -58,60 +49,6 @@ Copy, exactly:
 - Address: "Ama Thapa", "14 Juniper Row", "Harrow Fold  HF3 9QL".
 - Postmark ring: "CALA VERDENA · PORTO VECCHIO · 1·", centre "12 AUG" over "2026".
 - Stamp: "38" top left, "VERDENA" bottom, a lighthouse on teal with a sun.
-
-## Tokens
-
-```css
-:root {
-  /* desk */
-  --desk: #173840;        /* page */
-  --desk-2: #1f4952;      /* radial lift behind the card */
-  --on-desk: #f4e9d3;     /* button text */
-  --on-desk-2: #a9c3c2;   /* eyebrow, hint */
-
-  /* card stock */
-  --card: #f4e9d3;        /* both faces, front border */
-  --card-2: #ece0c4;
-  --rule: #cbb994;        /* divider, address rules */
-  --ink: #24323a;         /* "Greetings from", deep shadow, boat */
-  --ink-2: #5b5a4e;       /* printed labels on the back */
-  --pen: #24366e;         /* handwriting */
-  --post: #2c3f78;        /* postmark ink */
-
-  /* scene */
-  --coral: #e2553f;       /* sun, roofs, first shadow step */
-  --sun: #f0b14a;         /* accent: primary button, focus ring, sail */
-  --sea: #2b7a78;         /* sea, stamp ground */
-
-  --display: "Abril Fatface", Georgia, serif;
-  --hand: "Reenie Beanie", "Bradley Hand", cursive;
-
-  --card-w: 720px;  --card-ratio: 640 / 420;  --radius: 6px;
-  --persp: 1800px;
-  --flip: 820ms;    --ease: cubic-bezier(.16, 1, .3, 1);
-  --drag-rate: .55; /* degrees per pixel */
-  --shadow-card: 0 1px 0 rgba(255,255,255,.5) inset, 0 30px 50px -24px rgba(0,0,0,.7), 0 6px 14px -6px rgba(0,0,0,.45);
-}
-```
-
-Paper grain on both faces: `::after` with `radial-gradient(rgba(70,50,20,.07) .6px, transparent .7px) 0 0 / 3px 3px`, `mix-blend-mode: multiply`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case / colour |
-|------|--------|-----:|-------:|------------:|---------:|---------------|
-| Eyebrow | Abril Fatface | 12px | 400 | 1.5 | 0.24em | UPPER, `--on-desk-2`, slash in `--sun` |
-| "Greetings from" | Reenie Beanie | 6.4cqw | 400 | 1 | 0 | `--ink`, rotate −4° |
-| Place name | Abril Fatface | 10.2cqw | 400 | 0.86 | −0.01em | `--card`, shadow `.45cqw .45cqw 0 coral, .9cqw .9cqw 0 ink` |
-| Front caption | Abril Fatface | 1.7cqw | 400 | 1 | 0.2em | UPPER, `--card` |
-| "POST CARD" | Abril Fatface | 1.75cqw | 400 | 1 | 0.42em | UPPER, `--ink-2` |
-| Message | Reenie Beanie | 4.15cqw | 400 | 1.16 | 0 | `--pen`, rotate −1.2° |
-| Address | Reenie Beanie | 3.8cqw | 400 | 1.25 | 0 | `--pen` on 1px `--rule` lines |
-| Small print | Abril Fatface | 1.45cqw | 400 | 1.3 | 0.14em | UPPER, `--ink-2` |
-| Buttons | Abril Fatface | 13px | 400 | 1 | 0.12em | UPPER |
-| Hint | Reenie Beanie | 22px | 400 | 1 | 0 | `--on-desk-2` |
-
-At 720px wide, 1cqw = 7.2px: the place name is about 73px and the message about 30px.
 
 ## Motion
 
@@ -175,6 +112,75 @@ The postmark keeps its own `rotate(-9deg)` in every keyframe so the scale does n
 - [ ] Back message starts "Dear Ama," and ends "back Thursday, R."; address "Ama Thapa, 14 Juniper Row, Harrow Fold HF3 9QL".
 - [ ] Postmark reads "12 AUG 2026" in a 46px-radius double ring, rotated −9°, four wavy lines running over the stamp.
 - [ ] Stamp shows "38" and "VERDENA" with a lighthouse, rotated 2°.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the picture side faces the viewer, centred, 720px wide, aspect 640:420. Eyebrow above reads "Post No. 07 / Summer 2026". Two buttons below ("Turn over", "Postmark again") and a handwritten hint "drag it sideways, or press Enter, to turn it over".
+2. Click (pointer moves under 6px between down and up) on the card, the "Turn over" button, Enter or Space on the focused card: the card turns 180° around the Y axis in 820ms on expo out.
+3. Arrow Right turns it +180°, Arrow Left −180°. The angle accumulates (0, 180, 360…), so the turn always continues in the direction you asked for.
+4. Drag horizontally: once the pointer has moved 6px, the card follows the hand at 0.55° per pixel with no transition, updated once per animation frame. On release it snaps to the nearest multiple of 180°. If you dragged more than 50° but the nearest multiple is still the start angle, it completes the turn in the drag direction anyway.
+5. The first time the back faces the viewer, 520ms after the turn starts (so the turn has nearly settled), the postmark stamps on. It never stamps again on its own.
+6. "Postmark again": if the back is showing, restamp immediately (remove the class, force reflow, add it back). If the front is showing, turn the card over and stamp on arrival.
+7. The flip button label swaps between "Turn over" and "Show the picture". `aria-pressed` on the card is true when the back is showing.
+8. Reduced motion: the turn is instant, drag does not rotate the card (release turns it in the drag direction), the postmark appears with no thump, no blot, no dip.
+
+## Tokens
+
+```css
+:root {
+  /* desk */
+  --desk: #173840;        /* page */
+  --desk-2: #1f4952;      /* radial lift behind the card */
+  --on-desk: #f4e9d3;     /* button text */
+  --on-desk-2: #a9c3c2;   /* eyebrow, hint */
+
+  /* card stock */
+  --card: #f4e9d3;        /* both faces, front border */
+  --card-2: #ece0c4;
+  --rule: #cbb994;        /* divider, address rules */
+  --ink: #24323a;         /* "Greetings from", deep shadow, boat */
+  --ink-2: #5b5a4e;       /* printed labels on the back */
+  --pen: #24366e;         /* handwriting */
+  --post: #2c3f78;        /* postmark ink */
+
+  /* scene */
+  --coral: #e2553f;       /* sun, roofs, first shadow step */
+  --sun: #f0b14a;         /* accent: primary button, focus ring, sail */
+  --sea: #2b7a78;         /* sea, stamp ground */
+
+  --display: "Abril Fatface", Georgia, serif;
+  --hand: "Reenie Beanie", "Bradley Hand", cursive;
+
+  --card-w: 720px;  --card-ratio: 640 / 420;  --radius: 6px;
+  --persp: 1800px;
+  --flip: 820ms;    --ease: cubic-bezier(.16, 1, .3, 1);
+  --drag-rate: .55; /* degrees per pixel */
+  --shadow-card: 0 1px 0 rgba(255,255,255,.5) inset, 0 30px 50px -24px rgba(0,0,0,.7), 0 6px 14px -6px rgba(0,0,0,.45);
+}
+```
+
+Paper grain on both faces: `::after` with `radial-gradient(rgba(70,50,20,.07) .6px, transparent .7px) 0 0 / 3px 3px`, `mix-blend-mode: multiply`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case / colour |
+|------|--------|-----:|-------:|------------:|---------:|---------------|
+| Eyebrow | Abril Fatface | 12px | 400 | 1.5 | 0.24em | UPPER, `--on-desk-2`, slash in `--sun` |
+| "Greetings from" | Reenie Beanie | 6.4cqw | 400 | 1 | 0 | `--ink`, rotate −4° |
+| Place name | Abril Fatface | 10.2cqw | 400 | 0.86 | −0.01em | `--card`, shadow `.45cqw .45cqw 0 coral, .9cqw .9cqw 0 ink` |
+| Front caption | Abril Fatface | 1.7cqw | 400 | 1 | 0.2em | UPPER, `--card` |
+| "POST CARD" | Abril Fatface | 1.75cqw | 400 | 1 | 0.42em | UPPER, `--ink-2` |
+| Message | Reenie Beanie | 4.15cqw | 400 | 1.16 | 0 | `--pen`, rotate −1.2° |
+| Address | Reenie Beanie | 3.8cqw | 400 | 1.25 | 0 | `--pen` on 1px `--rule` lines |
+| Small print | Abril Fatface | 1.45cqw | 400 | 1.3 | 0.14em | UPPER, `--ink-2` |
+| Buttons | Abril Fatface | 13px | 400 | 1 | 0.12em | UPPER |
+| Hint | Reenie Beanie | 22px | 400 | 1 | 0 | `--on-desk-2` |
+
+At 720px wide, 1cqw = 7.2px: the place name is about 73px and the message about 30px.
 
 ## Implementation notes
 

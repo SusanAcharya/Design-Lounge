@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The hero of a fictional observability product, Nightjar. The visible layer is a dark, reassuring page: "EVERYTHING LOOKS FINE." in 172px Anton, a green status pill and a green 90-day uptime strip. Under the cursor, a 168px-radius disc with a hard edge (1px anti-aliased, no feather, no glow) cuts through to a second layer printed on light grid paper: "412 THINGS AREN'T." with the last word in alarm red, red failure bars in the same strip, and hairline annotations naming the incidents. Both layers share the exact same layout, so the torch reads like an x-ray. A "Reveal all · R" button expands the disc to cover the whole hero, which is the keyboard and touch fallback.
-
-## Reference behaviour
-
-1. Initial state: the torch sits at (380, 330) in hero coordinates, already cutting through the headline so the red "'T." of "AREN'T." shows inside the disc. A red 14px crosshair marks its centre and a mono readout "X 0380 · Y 0330" sits just outside its lower-right edge.
-2. Move the pointer over the hero: the disc follows the pointer exactly (updated once per animation frame, no easing, no lag). The system cursor is hidden inside the hero; the crosshair replaces it.
-3. Inside the disc, everything is the hidden layer: light paper `#EFECE4` with a 40px grid, black type, red accents. Outside, everything is the dark layer.
-4. The hidden layer has three annotations (hairline leader + red title + 11px body) that are only ever seen through the torch: "retry storm", "200 OK, empty body", "cron skipped 6×".
-5. Leaving the hero leaves the torch where it was.
-6. Focus the hero (it is `tabindex="0"`) and press the arrow keys: the torch moves 32px per press, 96px with Shift, clamped to the hero bounds.
-7. Click "Reveal all · R" (or press R anywhere): the radius animates from 168px to 1600px over 700ms on expo-out, revealing the full hidden page. The button turns red and reads "Torch mode · R"; the hint text reads "Everything, lit". Crosshair and readout fade out.
-8. Click again (or press R): the disc shrinks back to 168px at the current pointer position.
-9. The real CTAs ("Start a 14-day trial", "Book a demo") live in the dark layer and stay clickable through the torch, because the hidden layer has `pointer-events: none`.
-10. On touch, dragging a finger moves the torch (`touch-action: none` on the hero); the button is the primary way to see everything.
 
 ## Structure
 
@@ -47,6 +36,74 @@ The hero of a fictional observability product, Nightjar. The visible layer is a 
   - `.cross` and `.readout`: decorative, positioned with `transform` from `--px/--py`.
   - `.hint` with the toggle button (`aria-pressed`).
   - A visually hidden paragraph summarising the hidden layer, referenced by `aria-describedby`.
+
+## Motion
+
+| Element        | Trigger        | Property             | From → To            | Duration | Easing   | Notes |
+|----------------|----------------|----------------------|----------------------|---------:|----------|-------|
+| torch position | pointermove    | `--x`, `--y`         | pointer position     | 1 frame  | none     | rAF-throttled, no smoothing: a torch is held, not dragged |
+| torch radius   | Reveal toggle  | `--r` (registered)   | 168px ↔ 1600px       | 700ms    | `--expo` | needs `@property` to interpolate |
+| crosshair, readout | Reveal toggle | opacity           | 1 ↔ 0                | 160ms    | `--ease` | |
+| toggle         | hover / pressed | border, background  | `--line-d` → ink / `--alarm` | 160ms | `--ease` | |
+
+There are no loops. Reduced motion: remove the `--r` transition so the reveal is instant; pointer tracking stays (it is direct manipulation, not animation).
+
+## States
+
+- **Torch (default):** radius 168px; crosshair and readout visible.
+- **Revealed:** radius 1600px; toggle `aria-pressed="true"`, red fill, label "Torch mode · R"; hint "Everything, lit".
+- **Hero focus-visible:** 2px inset `--ok` ring around the whole hero; arrows move the torch.
+- **Buttons hover:** ghost buttons border becomes `--ink-d`; the nav "Start free" goes to `#fff`.
+- **Links/buttons focus-visible:** 2px `--ok` outline, 3px offset.
+- **No hover device:** `@media (hover: none)` restores the normal cursor.
+
+## Accessibility
+
+- The hidden layer is `aria-hidden`; its meaning is given once via a visually hidden paragraph linked with `aria-describedby` on the hero, so screen-reader users get the punchline without hunting.
+- The hero has `aria-label="Hero. Move the pointer, or use arrow keys, to shine the torch."`.
+- Toggle is a `<button aria-pressed>`; R toggles globally (ignored when Cmd/Ctrl/Alt is held).
+- Focus order: nav links → hero → hero CTAs → toggle.
+- Contrast: `--ink-d2` on `--night` is 7.3:1; `--ink-b2` on `--beam` is 7.6:1; alarm red is only used at 172px or as a bar colour.
+- The toggle is 40px tall; CTAs are 44px.
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- 1024–1279: headline 140px; annotations move 120px left; torch radius 150px.
+- 768–1023: headline 112px; bottom row stacks (lede and buttons, then strip); annotations shift to the right column at 60% width.
+- < 640: headline 72px, torch radius 110px. Do not start revealed (it gives the punchline away). Park the torch over the headline, let a finger drag it, and show the toggle full-width under the hint.
+
+## Acceptance checklist
+
+- [ ] The disc edge is hard: the mask uses a 1px stop gap, no blur, no glow, no shadow.
+- [ ] Torch radius is 168px and follows the pointer with no easing.
+- [ ] Both layers align exactly; the pill, headline, lede, buttons and strip sit at the same coordinates.
+- [ ] The nav is never masked.
+- [ ] The base CTAs remain clickable inside the torch.
+- [ ] Arrow keys move the torch 32px (96px with Shift) when the hero is focused.
+- [ ] R and the toggle animate the radius 168 → 1600px over 700ms with expo-out, and back.
+- [ ] `aria-pressed`, toggle label and hint text update with the state.
+- [ ] Crosshair and readout follow the torch and fade out when revealed.
+- [ ] Ninety uptime bars render in both layers; eleven are red in the hidden layer.
+- [ ] Reduced motion makes the reveal instant.
+- [ ] The hidden copy is reachable by screen readers through `aria-describedby`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: the torch sits at (380, 330) in hero coordinates, already cutting through the headline so the red "'T." of "AREN'T." shows inside the disc. A red 14px crosshair marks its centre and a mono readout "X 0380 · Y 0330" sits just outside its lower-right edge.
+2. Move the pointer over the hero: the disc follows the pointer exactly (updated once per animation frame, no easing, no lag). The system cursor is hidden inside the hero; the crosshair replaces it.
+3. Inside the disc, everything is the hidden layer: light paper `#EFECE4` with a 40px grid, black type, red accents. Outside, everything is the dark layer.
+4. The hidden layer has three annotations (hairline leader + red title + 11px body) that are only ever seen through the torch: "retry storm", "200 OK, empty body", "cron skipped 6×".
+5. Leaving the hero leaves the torch where it was.
+6. Focus the hero (it is `tabindex="0"`) and press the arrow keys: the torch moves 32px per press, 96px with Shift, clamped to the hero bounds.
+7. Click "Reveal all · R" (or press R anywhere): the radius animates from 168px to 1600px over 700ms on expo-out, revealing the full hidden page. The button turns red and reads "Torch mode · R"; the hint text reads "Everything, lit". Crosshair and readout fade out.
+8. Click again (or press R): the disc shrinks back to 168px at the current pointer position.
+9. The real CTAs ("Start a 14-day trial", "Book a demo") live in the dark layer and stay clickable through the torch, because the hidden layer has `pointer-events: none`.
+10. On touch, dragging a finger moves the torch (`touch-action: none` on the hero); the button is the primary way to see everything.
 
 ## Tokens
 
@@ -105,57 +162,6 @@ The hero of a fictional observability product, Nightjar. The visible layer is a 
 | Strip heading    | Geist Mono | 11px  | 500    | 1           | +0.12em  | UPPERCASE |
 | Annotation       | Geist Mono | 11px  | 500    | 1.35        | 0        | sentence  |
 | Readout          | Geist Mono | 10px  | 500    | 1           | +0.08em  | UPPERCASE |
-
-## Motion
-
-| Element        | Trigger        | Property             | From → To            | Duration | Easing   | Notes |
-|----------------|----------------|----------------------|----------------------|---------:|----------|-------|
-| torch position | pointermove    | `--x`, `--y`         | pointer position     | 1 frame  | none     | rAF-throttled, no smoothing: a torch is held, not dragged |
-| torch radius   | Reveal toggle  | `--r` (registered)   | 168px ↔ 1600px       | 700ms    | `--expo` | needs `@property` to interpolate |
-| crosshair, readout | Reveal toggle | opacity           | 1 ↔ 0                | 160ms    | `--ease` | |
-| toggle         | hover / pressed | border, background  | `--line-d` → ink / `--alarm` | 160ms | `--ease` | |
-
-There are no loops. Reduced motion: remove the `--r` transition so the reveal is instant; pointer tracking stays (it is direct manipulation, not animation).
-
-## States
-
-- **Torch (default):** radius 168px; crosshair and readout visible.
-- **Revealed:** radius 1600px; toggle `aria-pressed="true"`, red fill, label "Torch mode · R"; hint "Everything, lit".
-- **Hero focus-visible:** 2px inset `--ok` ring around the whole hero; arrows move the torch.
-- **Buttons hover:** ghost buttons border becomes `--ink-d`; the nav "Start free" goes to `#fff`.
-- **Links/buttons focus-visible:** 2px `--ok` outline, 3px offset.
-- **No hover device:** `@media (hover: none)` restores the normal cursor.
-
-## Accessibility
-
-- The hidden layer is `aria-hidden`; its meaning is given once via a visually hidden paragraph linked with `aria-describedby` on the hero, so screen-reader users get the punchline without hunting.
-- The hero has `aria-label="Hero. Move the pointer, or use arrow keys, to shine the torch."`.
-- Toggle is a `<button aria-pressed>`; R toggles globally (ignored when Cmd/Ctrl/Alt is held).
-- Focus order: nav links → hero → hero CTAs → toggle.
-- Contrast: `--ink-d2` on `--night` is 7.3:1; `--ink-b2` on `--beam` is 7.6:1; alarm red is only used at 172px or as a bar colour.
-- The toggle is 40px tall; CTAs are 44px.
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- 1024–1279: headline 140px; annotations move 120px left; torch radius 150px.
-- 768–1023: headline 112px; bottom row stacks (lede and buttons, then strip); annotations shift to the right column at 60% width.
-- < 640: headline 72px, torch radius 110px. Do not start revealed (it gives the punchline away). Park the torch over the headline, let a finger drag it, and show the toggle full-width under the hint.
-
-## Acceptance checklist
-
-- [ ] The disc edge is hard: the mask uses a 1px stop gap, no blur, no glow, no shadow.
-- [ ] Torch radius is 168px and follows the pointer with no easing.
-- [ ] Both layers align exactly; the pill, headline, lede, buttons and strip sit at the same coordinates.
-- [ ] The nav is never masked.
-- [ ] The base CTAs remain clickable inside the torch.
-- [ ] Arrow keys move the torch 32px (96px with Shift) when the hero is focused.
-- [ ] R and the toggle animate the radius 168 → 1600px over 700ms with expo-out, and back.
-- [ ] `aria-pressed`, toggle label and hint text update with the state.
-- [ ] Crosshair and readout follow the torch and fade out when revealed.
-- [ ] Ninety uptime bars render in both layers; eleven are red in the hidden layer.
-- [ ] Reduced motion makes the reveal instant.
-- [ ] The hidden copy is reachable by screen readers through `aria-describedby`.
 
 ## Implementation notes
 

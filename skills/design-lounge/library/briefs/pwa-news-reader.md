@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The front page of "Meridian", an installed news PWA. Cream paper, a 30px Newsreader masthead, a horizontally scrolling row of section chips, a lead card whose image area is a CSS-drawn landscape (sky gradient, sun disc, two hills), and a hairline-separated list of six stories with 17px serif headlines, reading time and a green "saved" mark for anything cached for offline. Chips filter the list with a 280ms dip; bookmark buttons toggle the saved state and update the badge on the Saved tab. The detail worth copying is the offline affordance: saved stories say so inline in the meta line, in the same colour as the bookmark, not with a separate icon column.
-
-## Reference behaviour
-
-1. Initial state: "Top stories" chip pressed; lead card (Climate) with "saved"; six stories, two of them saved; Saved tab badge reads 3 (lead + 2).
-2. Swipe the chip row: it scrolls horizontally with the scrollbar hidden and proximity snap on each chip.
-3. Tap a chip (e.g. "Technology"): the previously pressed chip returns to outline; the tapped one fills `--ink` with paper text (160ms). The list dips to opacity 0 / 6px down over 280ms. At 280ms, stories not in that section are hidden, the section label changes to "Technology · 1 story", and the list returns.
-4. Tap "Top stories" to show all six again; label returns to "Latest".
-5. Tap a story's bookmark (40px round button, right column): `aria-pressed` flips; the icon fills `--saved` green; a "· saved" fragment with a download-check icon is appended to (or removed from) the story's meta line; the Saved badge recounts.
-6. Tap a bottom-nav item: it becomes `aria-current="page"` (ink colour); others stay `--ink-3`. Only visual in this piece.
-7. The lead card is a single link; tapping it would open the article (out of scope).
 
 ## Structure
 
@@ -72,6 +64,74 @@ Sample content:
 | Fjord Bank to stop cash handling at 40 branches | World | 4 min | no | #E5DCD0 / #A58A68 / #2F6B4F |
 
 Thumb drawing: `--c1` fill; `::before` a `--c2` half-ellipse rising from the bottom (inset −20% sides, −30% bottom, 70% tall); `::after` a 16px `--c3` disc at top-right (12px inset).
+
+## Motion
+
+| Element        | Trigger     | Property            | From → To         | Duration | Easing       | Notes |
+|----------------|-------------|---------------------|-------------------|---------:|--------------|-------|
+| `.chips button`| select      | background, color, border-color | outline → ink fill | 160ms | linear | |
+| `.list.swap .story` | chip select | opacity, translateY | 1, 0 → 0, 6px | 280ms | `--ease-std` / `--ease-out` | reversed after the filter |
+| `.save`        | toggle      | color, fill         | ink-3 → saved     | 0        | —            | instant |
+| `.chips`       | swipe       | scroll-snap         | —                 | native   | —            | `scroll-snap-type:x proximity` |
+| nav item       | select      | color               | ink-3 → ink       | 0        | —            | instant |
+
+Reduced motion: the list swap dip is removed (`opacity:1; transform:none`), the filter still applies after 280ms; all transitions 1ms.
+
+## States
+
+- **Chip pressed:** `aria-pressed="true"`, fill `--ink`, text `--paper`, border `--ink`.
+- **Chip idle:** transparent, 1px `--line` border, text `--ink-2`.
+- **Story saved:** bookmark `aria-pressed="true"`, icon filled `--saved`; meta gains "· saved" with a 14px download-check icon in `--saved`.
+- **Story hidden (filtered):** `hidden` attribute → `display:none`.
+- **Nav current:** `aria-current="page"`, colour `--ink`.
+- **Focus-visible:** 3px `--red` outline, 2px offset on chips, bookmarks, nav and the lead link.
+- **Empty section:** not reachable with the sample data; if a section has zero stories, show the label "Technology · 0 stories" and leave the list empty.
+
+## Accessibility
+
+- Chips: `role="group" aria-label="Sections"` with `aria-pressed` buttons (toggle semantics, not tabs, because the list below is filtered rather than replaced).
+- Bookmarks: `<button aria-pressed aria-label="Save for offline">`; the visible "saved" text in the meta line duplicates the state for sighted users.
+- The lead card is one `<a>` with heading, dek and meta inside, so its accessible name is the headline (put `aria-labelledby` on it pointing at the `<h2>` if your framework flattens link names).
+- Thumbnails and the landscape are `aria-hidden` decorative CSS.
+- Badge count is inside the "Saved" button so its name reads "Saved 3".
+- Contrast: `--ink-2` on `--paper` 7.0:1; `--ink-3` on `--paper` 3.6:1 — used only for 11–12px meta at weight 500, so bump to `#7d756a` (4.6:1) if AA on meta is required; `--red` on `--paper` 5.9:1; `--saved` on `--paper` 5.7:1.
+- Hit targets: chips 36px tall with 8px gaps (allow 44px row), bookmarks 40px, nav items ≥ 88×52.
+
+## Responsive rules
+
+- 390 wide: as specified.
+- 360 wide: gutter 16px; lead headline 24px; thumbs 64px.
+- ≥ 600 wide: two-column story grid under a full-width lead; chips stay a single scrolling row.
+- ≥ 840 wide (tablet): lead card and list side by side (lead 5/12, list 7/12); bottom nav becomes a left rail.
+
+## Acceptance checklist
+
+- [ ] Background is `#FAF6EE`; headlines are Newsreader 600 at 30 / 26 / 17px; UI text is Inter.
+- [ ] Chip row scrolls horizontally with no visible scrollbar and proximity snapping; pressed chip is `#1C1A17` with paper text.
+- [ ] Selecting a chip dips the list 6px / opacity 0 over 280ms, filters, then restores; the section label reports "Section · N stories".
+- [ ] Lead card is `#F1EBDF`, 18px radius, with a 190px CSS-drawn landscape (gradient sky, 64px sun, two hills) — no image files.
+- [ ] Each story row has a 72px thumb, a serif headline, a meta line with section and reading time, and a 40px bookmark button.
+- [ ] Saved stories show "· saved" in `#2F6B4F` with a download-check icon; the bookmark is filled.
+- [ ] Toggling a bookmark updates the meta line and the Saved tab badge count.
+- [ ] Stories are separated by 1px `#E3DCCD` hairlines, not cards.
+- [ ] Bottom nav is 64px plus 34px clearance; current item is ink-coloured with `aria-current="page"`.
+- [ ] Focus rings visible on chips, lead link, bookmarks and nav.
+- [ ] Reduced motion removes the list dip but keeps filtering.
+- [ ] No fixed control inside the top 54px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: "Top stories" chip pressed; lead card (Climate) with "saved"; six stories, two of them saved; Saved tab badge reads 3 (lead + 2).
+2. Swipe the chip row: it scrolls horizontally with the scrollbar hidden and proximity snap on each chip.
+3. Tap a chip (e.g. "Technology"): the previously pressed chip returns to outline; the tapped one fills `--ink` with paper text (160ms). The list dips to opacity 0 / 6px down over 280ms. At 280ms, stories not in that section are hidden, the section label changes to "Technology · 1 story", and the list returns.
+4. Tap "Top stories" to show all six again; label returns to "Latest".
+5. Tap a story's bookmark (40px round button, right column): `aria-pressed` flips; the icon fills `--saved` green; a "· saved" fragment with a download-check icon is appended to (or removed from) the story's meta line; the Saved badge recounts.
+6. Tap a bottom-nav item: it becomes `aria-current="page"` (ink colour); others stay `--ink-3`. Only visual in this piece.
+7. The lead card is a single link; tapping it would open the article (out of scope).
 
 ## Tokens
 
@@ -136,60 +196,6 @@ Thumb drawing: `--c1` fill; `::before` a `--c2` half-ellipse rising from the bot
 | Badge           | Inter      | 10px | 600    | 16px        | 0        | numerals  |
 
 Set the serif with `font-optical-sizing:auto` so 17px and 26–30px get different optical sizes.
-
-## Motion
-
-| Element        | Trigger     | Property            | From → To         | Duration | Easing       | Notes |
-|----------------|-------------|---------------------|-------------------|---------:|--------------|-------|
-| `.chips button`| select      | background, color, border-color | outline → ink fill | 160ms | linear | |
-| `.list.swap .story` | chip select | opacity, translateY | 1, 0 → 0, 6px | 280ms | `--ease-std` / `--ease-out` | reversed after the filter |
-| `.save`        | toggle      | color, fill         | ink-3 → saved     | 0        | —            | instant |
-| `.chips`       | swipe       | scroll-snap         | —                 | native   | —            | `scroll-snap-type:x proximity` |
-| nav item       | select      | color               | ink-3 → ink       | 0        | —            | instant |
-
-Reduced motion: the list swap dip is removed (`opacity:1; transform:none`), the filter still applies after 280ms; all transitions 1ms.
-
-## States
-
-- **Chip pressed:** `aria-pressed="true"`, fill `--ink`, text `--paper`, border `--ink`.
-- **Chip idle:** transparent, 1px `--line` border, text `--ink-2`.
-- **Story saved:** bookmark `aria-pressed="true"`, icon filled `--saved`; meta gains "· saved" with a 14px download-check icon in `--saved`.
-- **Story hidden (filtered):** `hidden` attribute → `display:none`.
-- **Nav current:** `aria-current="page"`, colour `--ink`.
-- **Focus-visible:** 3px `--red` outline, 2px offset on chips, bookmarks, nav and the lead link.
-- **Empty section:** not reachable with the sample data; if a section has zero stories, show the label "Technology · 0 stories" and leave the list empty.
-
-## Accessibility
-
-- Chips: `role="group" aria-label="Sections"` with `aria-pressed` buttons (toggle semantics, not tabs, because the list below is filtered rather than replaced).
-- Bookmarks: `<button aria-pressed aria-label="Save for offline">`; the visible "saved" text in the meta line duplicates the state for sighted users.
-- The lead card is one `<a>` with heading, dek and meta inside, so its accessible name is the headline (put `aria-labelledby` on it pointing at the `<h2>` if your framework flattens link names).
-- Thumbnails and the landscape are `aria-hidden` decorative CSS.
-- Badge count is inside the "Saved" button so its name reads "Saved 3".
-- Contrast: `--ink-2` on `--paper` 7.0:1; `--ink-3` on `--paper` 3.6:1 — used only for 11–12px meta at weight 500, so bump to `#7d756a` (4.6:1) if AA on meta is required; `--red` on `--paper` 5.9:1; `--saved` on `--paper` 5.7:1.
-- Hit targets: chips 36px tall with 8px gaps (allow 44px row), bookmarks 40px, nav items ≥ 88×52.
-
-## Responsive rules
-
-- 390 wide: as specified.
-- 360 wide: gutter 16px; lead headline 24px; thumbs 64px.
-- ≥ 600 wide: two-column story grid under a full-width lead; chips stay a single scrolling row.
-- ≥ 840 wide (tablet): lead card and list side by side (lead 5/12, list 7/12); bottom nav becomes a left rail.
-
-## Acceptance checklist
-
-- [ ] Background is `#FAF6EE`; headlines are Newsreader 600 at 30 / 26 / 17px; UI text is Inter.
-- [ ] Chip row scrolls horizontally with no visible scrollbar and proximity snapping; pressed chip is `#1C1A17` with paper text.
-- [ ] Selecting a chip dips the list 6px / opacity 0 over 280ms, filters, then restores; the section label reports "Section · N stories".
-- [ ] Lead card is `#F1EBDF`, 18px radius, with a 190px CSS-drawn landscape (gradient sky, 64px sun, two hills) — no image files.
-- [ ] Each story row has a 72px thumb, a serif headline, a meta line with section and reading time, and a 40px bookmark button.
-- [ ] Saved stories show "· saved" in `#2F6B4F` with a download-check icon; the bookmark is filled.
-- [ ] Toggling a bookmark updates the meta line and the Saved tab badge count.
-- [ ] Stories are separated by 1px `#E3DCCD` hairlines, not cards.
-- [ ] Bottom nav is 64px plus 34px clearance; current item is ink-coloured with `aria-current="page"`.
-- [ ] Focus rings visible on chips, lead link, bookmarks and nav.
-- [ ] Reduced motion removes the list dip but keeps filtering.
-- [ ] No fixed control inside the top 54px.
 
 ## Implementation notes
 

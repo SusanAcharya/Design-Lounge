@@ -4,28 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The big footer at the end of a product site for "Corvel", a fictional logs and metrics tool. It sits on dark warm charcoal and holds a lot: a short call to action, a brand block with a one-line mission and a newsletter field, five link columns, a status line, two selects, social links and a legal row. It stays calm because there is one accent (amber) and almost everything else is warm grey text on charcoal. The one detail worth copying: under 640px the five columns become five accordions with real buttons, and above 640px the same markup is plain open lists that are not in the tab order.
-
-## Reference behaviour
-
-1. Initial state at 1280×800: the footer fills the frame. Nothing is open, nothing is focused. The status dot pulses softly.
-2. Top row: "Find the slow query before the pager finds you." at 36px, with "before" in amber. On the right, two buttons: "Book a demo" (outline) and "Start free for 14 days" (amber fill).
-3. A 1px rule, then the main grid: brand block on the left, five link columns on the right.
-4. Brand block: a 28px logo mark, the word "Corvel", the mission line "Logs, metrics and traces for teams who would rather be asleep at 3am.", then the newsletter form labelled "Monthly changelog".
-5. Newsletter submit with an empty or bad email: the input border turns `--danger`, `aria-invalid="true"` is set, the hint under the field changes to an error sentence, and focus returns to the input.
-6. Typing in the invalid input clears the error and restores the hint "One email a month. Unsubscribe in one click."
-7. Newsletter submit with a valid email: the hint turns `--ok` and reads "Subscribed. The next changelog lands on 1 November." The input clears.
-8. Link columns: Product (6 links), Solutions (5), Resources (6), Company (5), Legal (5). Product > Incidents carries an amber outline badge "New". Only one link has a badge.
-9. Link hover: colour goes from `--text-2` to `--text`, a 1px underline appears 4px below the text in `--line-2`.
-10. The bottom area is pushed to the bottom of the footer with `margin-top: auto`. It holds the status pill, two selects and the social links in one row.
-11. Status pill: an 8px green dot, "All systems normal", then a mono "· checked 2 min ago". The dot sends a ring outward every 2.8s.
-12. Language select (English, Deutsch, Français, Español, 日本語) and Data region select (EU · Frankfurt, UK · London, US · Virginia, APAC · Sydney). Both are native `select`s with visible labels.
-13. Social links are text, not icons: GitHub, Mastodon, LinkedIn, YouTube, each with a 12px north-east arrow. Hover turns them amber.
-14. Legal row: copyright and company number on the left in mono 12px; Cookie settings, Accessibility, Sitemap on the right.
-15. Under 640px: each column heading becomes a 52px tall button with a chevron. All five start closed. Tapping one opens its list (rows 0fr → 1fr) and rotates the chevron 180°. Several can be open at once.
-16. Resizing from mobile to desktop opens every list again and removes the buttons from the tab order. Resizing back closes them all.
 
 ## Structure
 
@@ -55,53 +38,6 @@ The big footer at the end of a product site for "Corvel", a fictional logs and m
 - Each column: `nav aria-labelledby` its heading. Inside: `h2 > button[aria-controls]`, then `div.panel > div > ul`.
 - Mid row: `div.mid`, `grid-template-columns: minmax(0,1fr) auto auto`, `align-items:end`. Status is a link. Selects are `label` + `select`. Social is `nav aria-label="Social"`.
 - Legal row: `p` plus `nav aria-label="Legal shortcuts"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #1a1918;        /* page and footer */
-  --surface: #222120;   /* select fill */
-  --field: #2a2826;     /* input fill */
-  --line: #34322f;      /* rules */
-  --line-2: #45423e;    /* control borders, underline */
-  --text: #ece7df;      /* primary text */
-  --text-2: #b0a99f;    /* links, mission */
-  --text-3: #8f897f;    /* labels, legal, hints */
-  --accent: #f0a63a;    /* amber, one use per area */
-  --ok: #6cc488;        /* status dot, success hint */
-  --danger: #ff8a70;    /* error border and text */
-
-  --sans: "Space Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px;
-  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
-  --r: 4px;
-
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --fast: 160ms;
-  --layout: 260ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Pre row statement | Space Grotesk | 36px | 500 | 1.15 | -0.02em | sentence |
-| Wordmark | Space Grotesk | 20px | 600 | 1 | -0.01em | sentence |
-| Mission | Space Grotesk | 15px | 400 | 1.5 | 0 | sentence |
-| Column heading | IBM Plex Mono | 12px | 500 | 1.5 | 0.08em | upper |
-| Link | Space Grotesk | 14px | 400 | 1.5 | 0 | sentence |
-| Field label | IBM Plex Mono | 11px | 400 | 1.5 | 0.08em | upper |
-| Badge | IBM Plex Mono | 10px | 500 | 1.5 | 0.06em | upper |
-| Status meta, legal | IBM Plex Mono | 12px | 400 | 1.6 | 0 | sentence |
-| Buttons | Space Grotesk | 14px | 600 | 1 | 0 | sentence |
-
-- The mission line has a 34ch max width.
-- The pre row statement has a 22ch max width so it breaks into two lines.
-- Keep mono for labels, meta and legal only. Links stay in the grotesk.
 
 ## Motion
 
@@ -180,6 +116,76 @@ The big footer at the end of a product site for "Corvel", a fictional logs and m
 - [ ] The status reads "All systems normal · checked 2 min ago" with an 8px `#6cc488` dot.
 - [ ] Background `#1a1918`, accent `#f0a63a`, link text `#b0a99f`.
 - [ ] Legal reads "© 2026 Corvel Systems Ltd. Registered in Scotland, SC614072. 9 Commercial Quay, Leith."
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state at 1280×800: the footer fills the frame. Nothing is open, nothing is focused. The status dot pulses softly.
+2. Top row: "Find the slow query before the pager finds you." at 36px, with "before" in amber. On the right, two buttons: "Book a demo" (outline) and "Start free for 14 days" (amber fill).
+3. A 1px rule, then the main grid: brand block on the left, five link columns on the right.
+4. Brand block: a 28px logo mark, the word "Corvel", the mission line "Logs, metrics and traces for teams who would rather be asleep at 3am.", then the newsletter form labelled "Monthly changelog".
+5. Newsletter submit with an empty or bad email: the input border turns `--danger`, `aria-invalid="true"` is set, the hint under the field changes to an error sentence, and focus returns to the input.
+6. Typing in the invalid input clears the error and restores the hint "One email a month. Unsubscribe in one click."
+7. Newsletter submit with a valid email: the hint turns `--ok` and reads "Subscribed. The next changelog lands on 1 November." The input clears.
+8. Link columns: Product (6 links), Solutions (5), Resources (6), Company (5), Legal (5). Product > Incidents carries an amber outline badge "New". Only one link has a badge.
+9. Link hover: colour goes from `--text-2` to `--text`, a 1px underline appears 4px below the text in `--line-2`.
+10. The bottom area is pushed to the bottom of the footer with `margin-top: auto`. It holds the status pill, two selects and the social links in one row.
+11. Status pill: an 8px green dot, "All systems normal", then a mono "· checked 2 min ago". The dot sends a ring outward every 2.8s.
+12. Language select (English, Deutsch, Français, Español, 日本語) and Data region select (EU · Frankfurt, UK · London, US · Virginia, APAC · Sydney). Both are native `select`s with visible labels.
+13. Social links are text, not icons: GitHub, Mastodon, LinkedIn, YouTube, each with a 12px north-east arrow. Hover turns them amber.
+14. Legal row: copyright and company number on the left in mono 12px; Cookie settings, Accessibility, Sitemap on the right.
+15. Under 640px: each column heading becomes a 52px tall button with a chevron. All five start closed. Tapping one opens its list (rows 0fr → 1fr) and rotates the chevron 180°. Several can be open at once.
+16. Resizing from mobile to desktop opens every list again and removes the buttons from the tab order. Resizing back closes them all.
+
+## Tokens
+
+```css
+:root {
+  --bg: #1a1918;        /* page and footer */
+  --surface: #222120;   /* select fill */
+  --field: #2a2826;     /* input fill */
+  --line: #34322f;      /* rules */
+  --line-2: #45423e;    /* control borders, underline */
+  --text: #ece7df;      /* primary text */
+  --text-2: #b0a99f;    /* links, mission */
+  --text-3: #8f897f;    /* labels, legal, hints */
+  --accent: #f0a63a;    /* amber, one use per area */
+  --ok: #6cc488;        /* status dot, success hint */
+  --danger: #ff8a70;    /* error border and text */
+
+  --sans: "Space Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+  --r: 4px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --fast: 160ms;
+  --layout: 260ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Pre row statement | Space Grotesk | 36px | 500 | 1.15 | -0.02em | sentence |
+| Wordmark | Space Grotesk | 20px | 600 | 1 | -0.01em | sentence |
+| Mission | Space Grotesk | 15px | 400 | 1.5 | 0 | sentence |
+| Column heading | IBM Plex Mono | 12px | 500 | 1.5 | 0.08em | upper |
+| Link | Space Grotesk | 14px | 400 | 1.5 | 0 | sentence |
+| Field label | IBM Plex Mono | 11px | 400 | 1.5 | 0.08em | upper |
+| Badge | IBM Plex Mono | 10px | 500 | 1.5 | 0.06em | upper |
+| Status meta, legal | IBM Plex Mono | 12px | 400 | 1.6 | 0 | sentence |
+| Buttons | Space Grotesk | 14px | 600 | 1 | 0 | sentence |
+
+- The mission line has a 34ch max width.
+- The pre row statement has a 22ch max width so it breaks into two lines.
+- Keep mono for labels, meta and legal only. Links stay in the grotesk.
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The closing block of a literary magazine site ("The Margin"). Above the footer, the last paragraph of an essay sits centred with a terracotta end-stop square and a byline. The footer itself is a 7fr / 5fr split under a double top rule (1px plus a 4px inset echo): left is the Sunday letter subscribe form — 60px serif headline, an underline-only email field, latest-issue teaser with a CSS shopfront; right is a three-column sitemap and an 84px italic wordmark. The feeling is print: Munken-warm paper, hairlines, italic Newsreader. The detail worth copying is the form chrome — no box, just a 1.5px ink underline that turns terracotta on error and green on success, with a polite live message and an SVG icon.
-
-## Reference behaviour
-
-1. On load, `requestAnimationFrame` scrolls the document to `scrollHeight` so the first frame is the footer (essay remnant above, then the split). Do not start at the top of the essay.
-2. Default message under the field: "Free, every Sunday at 07:00. 41,208 readers. One-click unsubscribe."
-3. Submit empty: form gets `.bad`, underline `--accent`, message terracotta with an info-circle SVG: "Enter an email address to subscribe." Focus returns to the input; `aria-invalid="true"`.
-4. Submit a string that fails `/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/`: same error chrome, copy "That address is missing an @ or a domain, like name@studio.pt."
-5. Submit a valid address: form `.done`, underline `--ok` `#3d6b3a`, message green with a check path: "Check your inbox. We sent a confirmation link to {value}." `novalidate` on the form so the custom copy wins over the browser bubble.
-6. Any `input` event while `.bad` or `.done` clears the state and restores the default sentence.
-7. Subscribe button: arrow SVG translates +5px on hover (280ms expo-out). Issue title underline grows 0 → 100% width over 360ms. Sitemap links go terracotta and italic on hover.
-8. Reduced motion: all transition-durations 1ms. Validation still runs.
 
 ## Structure
 
@@ -55,6 +46,76 @@ Sitemap:
 - Read: Essays, Dispatches, Interviews, The Index, Archive
 - About: Masthead, Write for us, Corrections, Advertise, Contact
 - Elsewhere: Print edition, Podcast, RSS feed, Shop
+
+## Motion
+
+| Element           | Trigger        | Property              | From → To                 | Duration | Easing      | Notes |
+|-------------------|----------------|-----------------------|---------------------------|---------:|-------------|-------|
+| Form underline    | error / done  | border-color          | ink → accent or ok        | 150ms    | `--ease`    | |
+| Arrow             | hover         | translateX            | 0 → 5px                   | 280ms    | `--ease-out`| |
+| Issue title rule  | hover / focus | background-size       | 0 1px → 100% 1px          | 360ms    | `--ease-out`| gradient underline |
+| Sitemap link      | hover         | color, font-style     | ink → accent + italic     | 150ms    | `--ease`    | |
+| Legal link        | hover         | color, underline      | ink-2 → ink, 3px offset   | instant  | —           | |
+| Page              | load          | scrollTop             | → scrollHeight            | 1 frame  | —           | show footer first |
+
+Reduced motion: `* { transition-duration: 1ms !important }`.
+
+## States
+
+- **Idle:** underline `--ink`; message `--ink-2`, no icon.
+- **Error `.bad`:** underline `--accent`; message `--accent` with circle + stem/dot SVG; `aria-invalid="true"`.
+- **Success `.done`:** underline `--ok`; message `--ok` with check path.
+- **Input after error/success:** classes cleared, default sentence restored, `aria-invalid="false"`.
+- **Subscribe hover:** arrow +5px. Focus-visible: 2px `--accent` outline, 3px offset (global); submit uses `outline-offset: -2px`.
+- **Issue title hover / focus-visible:** 1px accent underline grows from the left (`background-size` 0 → 100% 1px).
+- **Sitemap hover:** colour `--accent`, italic.
+
+## Accessibility
+
+- Footer `aria-label="Site footer"`; subscribe heading `id="sub-h"` referenced by `aria-labelledby`.
+- Email has a clipped `<label for="email">`. Message is `aria-live="polite"` and `aria-describedby` on the input.
+- `novalidate` plus JS so error copy is specific, not the native "Please include an '@'".
+- Illustration has `role="img"` and a text label. Initials disc `aria-hidden`.
+- Tab order: essay (not interactive) → email → Subscribe → issue title link → 14 sitemap links → Privacy → Terms.
+- Contrast: `--ink-2` on `--paper` ~7:1; error terracotta on paper ~5.5:1; `--ok` on paper ~4.6:1 for 13px (keep the icon).
+- Hit targets: input and submit 52px tall; sitemap lines ~22px with 8px gap — acceptable for a desktop footer.
+
+## Responsive rules
+
+- ≥ 1280: as specified, `--pad: 56px`.
+- ≤ 1023: footer one column; `.sub` loses the right border, gains a bottom `--line-2` rule; headline 48px.
+- ≤ 640: `--pad: 20px`; issue stacks (image above copy); sitemap 2 columns; legal wraps; essay padding 28px 20px.
+- Always scroll to the footer on first paint so the 800px frame shows the split, not the essay.
+
+## Acceptance checklist
+
+- [ ] Footer grid is 7fr / 5fr with a double top rule (1px + 4px inset echo) and a 1px column rule.
+- [ ] First paint is scrolled to the bottom so the essay remnant and footer share the 800px frame.
+- [ ] Headline is 60px Newsreader; "slowly." is terracotta italic via `<em>`.
+- [ ] Email field is 22px italic serif, 52px tall, no box — only a 1.5px bottom rule.
+- [ ] Empty submit shows the exact empty-field sentence and terracotta underline; invalid format shows the @/domain sentence.
+- [ ] Valid submit shows the confirmation sentence including the typed address, green underline, check icon.
+- [ ] Typing after error or success restores the Sunday-letter sentence.
+- [ ] Latest issue is No. 214, 27 Sep 2026, "The street that refused to widen", 18 min, with a CSS shopfront labelled "No. 214".
+- [ ] Wordmark "The Margin" is 84px italic Newsreader; legal line names both font families.
+- [ ] Focus rings are 2px oxblood; the live region is polite.
+- [ ] At 1023px the split stacks; at 640px the issue image stacks and padding is 20px.
+- [ ] Reduced motion keeps validation, drops transition time to 1ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. On load, `requestAnimationFrame` scrolls the document to `scrollHeight` so the first frame is the footer (essay remnant above, then the split). Do not start at the top of the essay.
+2. Default message under the field: "Free, every Sunday at 07:00. 41,208 readers. One-click unsubscribe."
+3. Submit empty: form gets `.bad`, underline `--accent`, message terracotta with an info-circle SVG: "Enter an email address to subscribe." Focus returns to the input; `aria-invalid="true"`.
+4. Submit a string that fails `/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/`: same error chrome, copy "That address is missing an @ or a domain, like name@studio.pt."
+5. Submit a valid address: form `.done`, underline `--ok` `#3d6b3a`, message green with a check path: "Check your inbox. We sent a confirmation link to {value}." `novalidate` on the form so the custom copy wins over the browser bubble.
+6. Any `input` event while `.bad` or `.done` clears the state and restores the default sentence.
+7. Subscribe button: arrow SVG translates +5px on hover (280ms expo-out). Issue title underline grows 0 → 100% width over 360ms. Sitemap links go terracotta and italic on hover.
+8. Reduced motion: all transition-durations 1ms. Validation still runs.
 
 ## Tokens
 
@@ -112,61 +173,6 @@ Sitemap:
 | Legal           | Instrument Sans | 12px | 400    | 1.5         | 0        | sentence  |
 
 Headline and wordmark set `font-variation-settings: "opsz" 72`. Essay remnant uses `"opsz" 18`.
-
-## Motion
-
-| Element           | Trigger        | Property              | From → To                 | Duration | Easing      | Notes |
-|-------------------|----------------|-----------------------|---------------------------|---------:|-------------|-------|
-| Form underline    | error / done  | border-color          | ink → accent or ok        | 150ms    | `--ease`    | |
-| Arrow             | hover         | translateX            | 0 → 5px                   | 280ms    | `--ease-out`| |
-| Issue title rule  | hover / focus | background-size       | 0 1px → 100% 1px          | 360ms    | `--ease-out`| gradient underline |
-| Sitemap link      | hover         | color, font-style     | ink → accent + italic     | 150ms    | `--ease`    | |
-| Legal link        | hover         | color, underline      | ink-2 → ink, 3px offset   | instant  | —           | |
-| Page              | load          | scrollTop             | → scrollHeight            | 1 frame  | —           | show footer first |
-
-Reduced motion: `* { transition-duration: 1ms !important }`.
-
-## States
-
-- **Idle:** underline `--ink`; message `--ink-2`, no icon.
-- **Error `.bad`:** underline `--accent`; message `--accent` with circle + stem/dot SVG; `aria-invalid="true"`.
-- **Success `.done`:** underline `--ok`; message `--ok` with check path.
-- **Input after error/success:** classes cleared, default sentence restored, `aria-invalid="false"`.
-- **Subscribe hover:** arrow +5px. Focus-visible: 2px `--accent` outline, 3px offset (global); submit uses `outline-offset: -2px`.
-- **Issue title hover / focus-visible:** 1px accent underline grows from the left (`background-size` 0 → 100% 1px).
-- **Sitemap hover:** colour `--accent`, italic.
-
-## Accessibility
-
-- Footer `aria-label="Site footer"`; subscribe heading `id="sub-h"` referenced by `aria-labelledby`.
-- Email has a clipped `<label for="email">`. Message is `aria-live="polite"` and `aria-describedby` on the input.
-- `novalidate` plus JS so error copy is specific, not the native "Please include an '@'".
-- Illustration has `role="img"` and a text label. Initials disc `aria-hidden`.
-- Tab order: essay (not interactive) → email → Subscribe → issue title link → 14 sitemap links → Privacy → Terms.
-- Contrast: `--ink-2` on `--paper` ~7:1; error terracotta on paper ~5.5:1; `--ok` on paper ~4.6:1 for 13px (keep the icon).
-- Hit targets: input and submit 52px tall; sitemap lines ~22px with 8px gap — acceptable for a desktop footer.
-
-## Responsive rules
-
-- ≥ 1280: as specified, `--pad: 56px`.
-- ≤ 1023: footer one column; `.sub` loses the right border, gains a bottom `--line-2` rule; headline 48px.
-- ≤ 640: `--pad: 20px`; issue stacks (image above copy); sitemap 2 columns; legal wraps; essay padding 28px 20px.
-- Always scroll to the footer on first paint so the 800px frame shows the split, not the essay.
-
-## Acceptance checklist
-
-- [ ] Footer grid is 7fr / 5fr with a double top rule (1px + 4px inset echo) and a 1px column rule.
-- [ ] First paint is scrolled to the bottom so the essay remnant and footer share the 800px frame.
-- [ ] Headline is 60px Newsreader; "slowly." is terracotta italic via `<em>`.
-- [ ] Email field is 22px italic serif, 52px tall, no box — only a 1.5px bottom rule.
-- [ ] Empty submit shows the exact empty-field sentence and terracotta underline; invalid format shows the @/domain sentence.
-- [ ] Valid submit shows the confirmation sentence including the typed address, green underline, check icon.
-- [ ] Typing after error or success restores the Sunday-letter sentence.
-- [ ] Latest issue is No. 214, 27 Sep 2026, "The street that refused to widen", 18 min, with a CSS shopfront labelled "No. 214".
-- [ ] Wordmark "The Margin" is 84px italic Newsreader; legal line names both font families.
-- [ ] Focus rings are 2px oxblood; the live region is polite.
-- [ ] At 1023px the split stacks; at 640px the issue image stacks and padding is 20px.
-- [ ] Reduced motion keeps validation, drops transition time to 1ms.
 
 ## Implementation notes
 

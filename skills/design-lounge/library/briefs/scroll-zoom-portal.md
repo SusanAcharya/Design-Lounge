@@ -4,25 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The opening of a fictional architecture festival site, Open House Kreis. The hero is the word OPEN drawn from flat shapes: a red ring O with a small yellow centre, and P, E, N in blue. Scrolling scales the whole hero around the centre of the O. The yellow centre grows until it covers the screen, about 25–30 times its size. That yellow is the background of the next section, so you have gone through the O into the programme. A headline fades up on the yellow, the pin ends, and the venue list scrolls in as normal content.
 
 The detail worth copying: the scale target is worked out from the real geometry. On resize, measure the centre of the hole and its radius, then compute the scale that makes the circle reach the farthest corner of the screen. It always ends exactly full, at any size.
-
-## Reference behaviour
-
-1. First frame (progress 0): fixed 64px cream nav with a 3px blue bottom rule: red dot + "KREIS", three links, a blue "Free pass" button. In the middle of the screen, OPEN spans up to 1136px wide and about 390px tall. Under it a 3px blue rule and a meta row: "House Weekend", "17–18 October 2026" in red, "42 buildings · free entry". A yellow triangle sits top-right, a blue quarter circle bottom-left, a red square bottom-right. "Scroll to step inside" with a bobbing red dot sits 28px from the bottom.
-2. The section is 300vh with a 100vh sticky stage. Progress = (scrollY − section top) / (section height − viewport height), clamped 0–1. At 1280×800 that is 1600px of scroll.
-3. 0 → 0.05: the hint fades out.
-4. 0.04 → 0.70: the hero layer scales from 1 to S around the centre of the O. The scale is geometric: `scale = S ^ t`, with t = smoothstep of that range. Geometric scale makes the zoom feel steady instead of slow then sudden.
-5. S = 1.12 × (distance from hole centre to the farthest stage corner) / (hole radius). At 1280×800 this is about 27. On a 390-wide phone it is about 40.
-6. 0.62 → 0.72: a yellow panel above the hero fades from 0 to 1. By then the hole already fills the screen, so you see no change. It hides any soft edge left from scaling.
-7. 0.72 → 0.90: the headline block fades in and rises 32px → 0. Kicker "Two days · every door unlocked" in red, headline "Forty-two rooms you are never let into." in blue, bottom-left.
-8. 0.90 → 1.00: hold. Then the pin ends and the sticky stage scrolls up. The programme section below is the same yellow, so there is no seam.
-9. Programme: a 3px blue rule, a label "Saturday and Sunday highlights" and a short paragraph, then six venues, each with a number, a shape (circle tower, square house, triangle hall), name, year and district, and opening times. Then two buttons and a blue footer.
-10. Scrolling back up runs the zoom out in reverse.
-11. Reduced motion: no pin and no zoom. The hero shows at rest, then a yellow block with the kicker and headline, then the programme.
 
 ## Structure
 
@@ -52,60 +40,6 @@ then: programme (yellow), footer (blue)
 - `div.after` sits above `.zoom`, `position: absolute; inset: 0`, yellow, with the kicker and `h2` inside a `.lift` wrapper.
 - The `h1` "Open House Kreis" is visually hidden. The SVG is `aria-hidden`.
 - The programme is a `section` with an `ol` of six `li`. Each row has a 5-column grid: 56px number, 40px shape, name, 160px place, 220px times.
-
-## Tokens
-
-```css
-:root {
-  --cream: #f2ebdd;   /* page, nav */
-  --blue: #1d3b8c;    /* ink, P E N, rules, buttons */
-  --red: #d9402b;     /* O ring, date, kicker, focus */
-  --yellow: #f2b630;  /* hole, next section */
-  --ink: var(--blue);
-
-  --sans: "League Spartan", system-ui, sans-serif;
-
-  --text-h2: clamp(44px, 7.2vw, 104px);
-  --text-h3: 28px;
-  --text-meta: 22px;
-  --text-body: 18px;
-  --text-small: 15px;
-  --text-label: 13px;
-
-  --space-2: 16px; --space-3: 24px; --space-5: 40px; --space-9: 72px;
-  --rule: 3px;
-  --radius: 0;
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --hint-loop: 1600ms;
-
-  --pin: 300vh;
-  --zoom-start: .04; --zoom-end: .70;
-  --cover-start: .62; --cover-end: .72;
-  --lift-start: .72; --lift-end: .90;
-  --hole-cx: 190; --hole-cy: 190; --hole-r: 46;   /* in SVG units */
-}
-```
-
-Three colours and cream. No black, no grey. Text is the blue.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Word OPEN | drawn in SVG | 380 units tall | — | — | — | Upper |
-| Portal headline | League Spartan | 104px (clamp 44–104) | 800 | 0.92 | -0.02em | Sentence, max 13ch |
-| Kicker | League Spartan | 15px | 800 | 1.2 | 0.16em | Upper, red |
-| Meta row | League Spartan | 22px | 800 | 1.1 | 0 | Title |
-| Venue name | League Spartan | 28px | 800 | 1.05 | 0 | Title |
-| Venue place | League Spartan | 15px | 600 | 1.3 | 0 | Title |
-| Venue times | League Spartan | 16px | 400 | 1.3 | 0 | Title, right-aligned |
-| Body | League Spartan | 18–19px | 400 | 1.45 | 0 | Sentence, max 44ch |
-| Nav link | League Spartan | 16px | 600 | 1 | 0 | Title |
-| Button | League Spartan | 15–16px | 800 | 1 | 0.06em | Upper |
-| Hint | League Spartan | 13px | 600 | 1 | 0.16em | Upper |
-
-League Spartan sits low in its box. Add 4px top padding to buttons so caps look centred.
 
 ## Motion
 
@@ -173,6 +107,78 @@ No easing curve on the scroll itself. Scroll is already the user's own speed. Sh
 - [ ] The meta row reads "House Weekend", "17–18 October 2026", "42 buildings · free entry".
 - [ ] The portal headline is "Forty-two rooms you are never let into." with the kicker "Two days · every door unlocked".
 - [ ] Six venues are listed, starting with Tannenhof Water Tower (1928, Altstadt).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame (progress 0): fixed 64px cream nav with a 3px blue bottom rule: red dot + "KREIS", three links, a blue "Free pass" button. In the middle of the screen, OPEN spans up to 1136px wide and about 390px tall. Under it a 3px blue rule and a meta row: "House Weekend", "17–18 October 2026" in red, "42 buildings · free entry". A yellow triangle sits top-right, a blue quarter circle bottom-left, a red square bottom-right. "Scroll to step inside" with a bobbing red dot sits 28px from the bottom.
+2. The section is 300vh with a 100vh sticky stage. Progress = (scrollY − section top) / (section height − viewport height), clamped 0–1. At 1280×800 that is 1600px of scroll.
+3. 0 → 0.05: the hint fades out.
+4. 0.04 → 0.70: the hero layer scales from 1 to S around the centre of the O. The scale is geometric: `scale = S ^ t`, with t = smoothstep of that range. Geometric scale makes the zoom feel steady instead of slow then sudden.
+5. S = 1.12 × (distance from hole centre to the farthest stage corner) / (hole radius). At 1280×800 this is about 27. On a 390-wide phone it is about 40.
+6. 0.62 → 0.72: a yellow panel above the hero fades from 0 to 1. By then the hole already fills the screen, so you see no change. It hides any soft edge left from scaling.
+7. 0.72 → 0.90: the headline block fades in and rises 32px → 0. Kicker "Two days · every door unlocked" in red, headline "Forty-two rooms you are never let into." in blue, bottom-left.
+8. 0.90 → 1.00: hold. Then the pin ends and the sticky stage scrolls up. The programme section below is the same yellow, so there is no seam.
+9. Programme: a 3px blue rule, a label "Saturday and Sunday highlights" and a short paragraph, then six venues, each with a number, a shape (circle tower, square house, triangle hall), name, year and district, and opening times. Then two buttons and a blue footer.
+10. Scrolling back up runs the zoom out in reverse.
+11. Reduced motion: no pin and no zoom. The hero shows at rest, then a yellow block with the kicker and headline, then the programme.
+
+## Tokens
+
+```css
+:root {
+  --cream: #f2ebdd;   /* page, nav */
+  --blue: #1d3b8c;    /* ink, P E N, rules, buttons */
+  --red: #d9402b;     /* O ring, date, kicker, focus */
+  --yellow: #f2b630;  /* hole, next section */
+  --ink: var(--blue);
+
+  --sans: "League Spartan", system-ui, sans-serif;
+
+  --text-h2: clamp(44px, 7.2vw, 104px);
+  --text-h3: 28px;
+  --text-meta: 22px;
+  --text-body: 18px;
+  --text-small: 15px;
+  --text-label: 13px;
+
+  --space-2: 16px; --space-3: 24px; --space-5: 40px; --space-9: 72px;
+  --rule: 3px;
+  --radius: 0;
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --hint-loop: 1600ms;
+
+  --pin: 300vh;
+  --zoom-start: .04; --zoom-end: .70;
+  --cover-start: .62; --cover-end: .72;
+  --lift-start: .72; --lift-end: .90;
+  --hole-cx: 190; --hole-cy: 190; --hole-r: 46;   /* in SVG units */
+}
+```
+
+Three colours and cream. No black, no grey. Text is the blue.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Word OPEN | drawn in SVG | 380 units tall | — | — | — | Upper |
+| Portal headline | League Spartan | 104px (clamp 44–104) | 800 | 0.92 | -0.02em | Sentence, max 13ch |
+| Kicker | League Spartan | 15px | 800 | 1.2 | 0.16em | Upper, red |
+| Meta row | League Spartan | 22px | 800 | 1.1 | 0 | Title |
+| Venue name | League Spartan | 28px | 800 | 1.05 | 0 | Title |
+| Venue place | League Spartan | 15px | 600 | 1.3 | 0 | Title |
+| Venue times | League Spartan | 16px | 400 | 1.3 | 0 | Title, right-aligned |
+| Body | League Spartan | 18–19px | 400 | 1.45 | 0 | Sentence, max 44ch |
+| Nav link | League Spartan | 16px | 600 | 1 | 0 | Title |
+| Button | League Spartan | 15–16px | 800 | 1 | 0.06em | Upper |
+| Hint | League Spartan | 13px | 600 | 1 | 0.16em | Upper |
+
+League Spartan sits low in its box. Add 4px top padding to buttons so caps look centred.
 
 ## Implementation notes
 

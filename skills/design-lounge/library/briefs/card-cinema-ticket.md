@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A single cinema ticket for a fictional art deco picture house, the Marlowe Picture House, est. 1931. It lies on an oxblood velvet stage under a warm spotlight. The left part is the ticket: house name, a poster panel with a gold sunburst and the film title "The Lantern at Low Tide" in Limelight, and a row of facts (date, doors, screen, fare). The right part is a 180px stub with "Admit one", row F, seat 14 and serial Nº 031742, joined to the ticket by a dotted perforation with two semicircle notches. The user grabs the stub and pulls it away. It hinges open from the top, and once pulled far enough it tears: both edges go ragged, the stub drops a little to the side and stays as a keepsake, and a red double-ruled "Admitted" stamp lands on the ticket. The detail worth copying is that the tear happens on release, not on threshold, so a hesitant pull snaps back.
-
-## Reference behaviour
-
-1. First frame: the ticket is whole and centred, 700 × 340 at scale 1.22 on a 1280 frame (854 × 415 on screen). Above it, the eyebrow "Tonight in the Gilt Room". Below, the hint "Pull the stub away to tear it · → nudges · Enter tears".
-2. Pointer down on the stub captures the pointer. Moving right or down opens the stub. Progress `p = (max(0, dx) + max(0, dy) × 0.5) / 150`, clamped 0–1, with `dx`/`dy` divided by the current scale.
-3. While dragging, the stub's transform is `translateX(p × 6px) rotate(p × 12deg)` with `transform-origin: 0 100%` (bottom of the perforation). The gap opens at the top first, as paper does. No transition while dragging.
-4. Release with `p < 1`: the stub springs back to 0 over 420ms on expo out.
-5. Release with `p ≥ 1`: tear. Both the ticket's right edge and the stub's left edge get a ragged `clip-path` polygon (a point every 10px, inset 3–10px from the line, seeded so it is the same every time). The stub moves to `translate(48px, 34px) rotate(7deg)` over 640ms expo out and is disabled.
-6. On tear, the "Admitted" stamp fades from 0 to 0.85 opacity and settles from `rotate(-11deg) scale(1.6)` to `scale(1)` over 320ms expo out, 260ms after the tear.
-7. On tear, the hint changes to "Stub kept. Enjoy the picture." and a "Reprint ticket" button appears and takes focus.
-8. Reprint: clip-paths clear, stamp fades out, stub returns to the perforation, the stub is enabled and focused again.
-9. Keyboard on the stub: ArrowRight or ArrowDown adds 0.25 to `p` (four presses tear). ArrowLeft, ArrowUp or Escape resets to 0. Enter or Space tears at once.
-10. Reduced motion: no transitions. Drag still previews the hinge (it follows the finger), tear and reprint jump to their end states.
 
 ## Structure
 
@@ -46,52 +35,6 @@ A single cinema ticket for a fictional art deco picture house, the Marlowe Pictu
 - `.stub` is a `button` (it is the control), absolutely placed at left 520px. It holds "Admit one", a `dl` for row and seat, and the serial.
 - `.stub-ring` is a sibling span that draws the focus ring, because the stub's own outline is clipped by its mask.
 - A visually hidden `p[aria-live=polite]` announces progress and the tear.
-
-## Tokens
-
-```css
-:root {
-  --stage: #3b1418;        /* velvet, top */
-  --stage-2: #24090c;      /* velvet, bottom */
-  --paper: #f2e4c4;        /* ticket stock */
-  --paper-2: #e8d5ab;
-  --ink: #2b1b14;          /* black print */
-  --ink-2: #5a4334;        /* labels */
-  --print: #9c2a22;        /* second print colour: title, stamp, serial */
-  --gold: #b8862f;         /* sunburst, focus, button rule */
-  --chalk: #f6ead0;        /* text on the stage */
-  --display: "Limelight", Georgia, serif;
-  --text: "Spectral", Georgia, serif;
-  --notch: 14px;           /* notch radius */
-  --perf-dot: 2.6px;       /* perforation hole radius, 13px pitch */
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --std: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --t-spring: 420ms;
-  --t-tear: 640ms;
-  --t-stamp: 320ms;
-}
-```
-
-Stage background: a radial warm spot `rgba(255,196,120,.16)` at 50% 42%, a vertical curtain stripe (`repeating-linear-gradient(90deg, …)` with a 92px period), over a `--stage → --stage-2` gradient.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case / colour |
-| --- | --- | --- | --- | --- | --- |
-| Eyebrow | Spectral | 13px | 400 | .32em | upper, `#d9b97a` |
-| House row | Spectral | 11px | 400 | .28em | upper, `--print` |
-| Tagline | Spectral italic | 13px | 400 | 0 | `--ink-2` |
-| Film title | Limelight | 42px / 0.95 | 400 | .02em | upper, `--print` |
-| Title "at" | Limelight | 20px | 400 | .3em | upper, `--ink` |
-| Cast | Spectral | 11px | 400 | .24em | upper, `--ink-2` |
-| Fact label | Spectral | 10px | 400 | .24em | upper, `--ink-2` |
-| Fact value | Spectral | 19px / 1.2 | 600 | 0 | lining numerals |
-| Admit one | Limelight | 26px | 400 | .06em | upper, `--print` |
-| Row / seat | Limelight | 40px | 400 | 0 | `--ink` |
-| Serial | Spectral | 15px | 600 | .14em | `--print`, tabular |
-| Stamp | Limelight | 24px | 400 | .12em | upper, `--print`, multiply |
-
-Limelight is the period poster face. Use it only for the title, "Admit one", the seat and the stamp. Everything else is Spectral.
 
 ## Motion
 
@@ -153,6 +96,69 @@ Reduced motion: all transitions removed. The hinge still follows the pointer bec
 - [ ] Ticket is 700 × 340, main 520px, stub 180px, scale 1.22 at 1280.
 - [ ] Stamp reads "Admitted / Usher 07 · 7:32 pm" in `#9c2a22`, rotated −11°.
 - [ ] Progress formula uses 150px and halves the vertical component.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the ticket is whole and centred, 700 × 340 at scale 1.22 on a 1280 frame (854 × 415 on screen). Above it, the eyebrow "Tonight in the Gilt Room". Below, the hint "Pull the stub away to tear it · → nudges · Enter tears".
+2. Pointer down on the stub captures the pointer. Moving right or down opens the stub. Progress `p = (max(0, dx) + max(0, dy) × 0.5) / 150`, clamped 0–1, with `dx`/`dy` divided by the current scale.
+3. While dragging, the stub's transform is `translateX(p × 6px) rotate(p × 12deg)` with `transform-origin: 0 100%` (bottom of the perforation). The gap opens at the top first, as paper does. No transition while dragging.
+4. Release with `p < 1`: the stub springs back to 0 over 420ms on expo out.
+5. Release with `p ≥ 1`: tear. Both the ticket's right edge and the stub's left edge get a ragged `clip-path` polygon (a point every 10px, inset 3–10px from the line, seeded so it is the same every time). The stub moves to `translate(48px, 34px) rotate(7deg)` over 640ms expo out and is disabled.
+6. On tear, the "Admitted" stamp fades from 0 to 0.85 opacity and settles from `rotate(-11deg) scale(1.6)` to `scale(1)` over 320ms expo out, 260ms after the tear.
+7. On tear, the hint changes to "Stub kept. Enjoy the picture." and a "Reprint ticket" button appears and takes focus.
+8. Reprint: clip-paths clear, stamp fades out, stub returns to the perforation, the stub is enabled and focused again.
+9. Keyboard on the stub: ArrowRight or ArrowDown adds 0.25 to `p` (four presses tear). ArrowLeft, ArrowUp or Escape resets to 0. Enter or Space tears at once.
+10. Reduced motion: no transitions. Drag still previews the hinge (it follows the finger), tear and reprint jump to their end states.
+
+## Tokens
+
+```css
+:root {
+  --stage: #3b1418;        /* velvet, top */
+  --stage-2: #24090c;      /* velvet, bottom */
+  --paper: #f2e4c4;        /* ticket stock */
+  --paper-2: #e8d5ab;
+  --ink: #2b1b14;          /* black print */
+  --ink-2: #5a4334;        /* labels */
+  --print: #9c2a22;        /* second print colour: title, stamp, serial */
+  --gold: #b8862f;         /* sunburst, focus, button rule */
+  --chalk: #f6ead0;        /* text on the stage */
+  --display: "Limelight", Georgia, serif;
+  --text: "Spectral", Georgia, serif;
+  --notch: 14px;           /* notch radius */
+  --perf-dot: 2.6px;       /* perforation hole radius, 13px pitch */
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --std: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-spring: 420ms;
+  --t-tear: 640ms;
+  --t-stamp: 320ms;
+}
+```
+
+Stage background: a radial warm spot `rgba(255,196,120,.16)` at 50% 42%, a vertical curtain stripe (`repeating-linear-gradient(90deg, …)` with a 92px period), over a `--stage → --stage-2` gradient.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case / colour |
+| --- | --- | --- | --- | --- | --- |
+| Eyebrow | Spectral | 13px | 400 | .32em | upper, `#d9b97a` |
+| House row | Spectral | 11px | 400 | .28em | upper, `--print` |
+| Tagline | Spectral italic | 13px | 400 | 0 | `--ink-2` |
+| Film title | Limelight | 42px / 0.95 | 400 | .02em | upper, `--print` |
+| Title "at" | Limelight | 20px | 400 | .3em | upper, `--ink` |
+| Cast | Spectral | 11px | 400 | .24em | upper, `--ink-2` |
+| Fact label | Spectral | 10px | 400 | .24em | upper, `--ink-2` |
+| Fact value | Spectral | 19px / 1.2 | 600 | 0 | lining numerals |
+| Admit one | Limelight | 26px | 400 | .06em | upper, `--print` |
+| Row / seat | Limelight | 40px | 400 | 0 | `--ink` |
+| Serial | Spectral | 15px | 600 | .14em | `--print`, tabular |
+| Stamp | Limelight | 24px | 400 | .12em | upper, `--print`, multiply |
+
+Limelight is the period poster face. Use it only for the title, "Admit one", the seat and the stamp. Everything else is Spectral.
 
 ## Implementation notes
 

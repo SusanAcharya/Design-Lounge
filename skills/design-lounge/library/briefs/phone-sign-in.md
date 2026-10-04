@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the Sharp family: radius 0 on every control. It is not glass.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The sign-in screen of Margin, a fictional long-read magazine app. The top third is a masthead. A thin rule carries the issue number and the date. Under it sits the word "Margin." at 112px in Instrument Serif, with an orange full stop. The form below is plain: two underlined fields, a forgot link, one orange button, one outlined passkey button, and a create-account link at the foot. Every corner is square. The colours are off-white paper, near-black ink and one signal orange. The detail worth copying is the primary button. It shows three square loading bars, then turns ink with a drawn orange tick and greets the reader by name.
-
-## Reference behaviour
-
-1. First frame. The masthead reads "No. 214" on the left and "Saturday 3 October" on the right. "Margin." is at 112px. The dek reads "Long reads, read to the end." Both fields are empty with placeholders. No errors show.
-2. Focus a field. Its 1.5px ink underline turns orange and thickens to 3px. The label above stays put.
-3. Leave the email field empty and blur it before any submit. Nothing happens. Do not scold a user who only tabbed past.
-4. Type "asha@" and blur. The error "Enter an email like name@example.com." appears under the field in `--accent-ink`, with a 6px square marker. The underline turns `--accent-ink`. `aria-invalid="true"` is set.
-5. Fix the email while an error shows. The error clears on the keystroke that makes the value valid.
-6. Tap "Sign in" with an empty email. The error reads "Enter your email address." Focus moves to the email field. The password is checked too.
-7. Tap "Sign in" with a valid email and an empty password. The error reads "Enter your password." Focus moves to the password field.
-8. Tap the eye button. The password shows as text. The icon gains a slash. The button label becomes "Hide password" and `aria-pressed="true"`. Tap again to reverse.
-9. Tap "Sign in" with both fields valid. The button turns ink in 280ms. The label reads "Signing in". Three 4px orange bars pulse on the right. `aria-busy="true"` is set.
-10. After 1200ms the button reads "Welcome back, Asha" (the first part of the email, capitalised). An orange tick draws in 360ms on the right.
-11. At 3600ms after submit the button returns to "Sign in" in orange. In a product, navigate instead.
-12. Tap "Continue with passkey". Its border turns dashed. The label reads "Check your phone" for 1800ms, then returns.
-13. "Forgot password?" and "Create an account" are links. In the demo they announce through the status region and do not navigate.
 
 ## Structure
 
@@ -57,60 +43,6 @@ The sign-in screen of Margin, a fictional long-read magazine app. The top third 
 - The passkey button sits outside the form so Enter never fires it.
 - The foot is a `p` with `margin-top: auto`, so it sinks to the bottom of the column.
 - A visually hidden `p` with `role="status"` speaks loading, success and passkey changes.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #f2efe8;          /* paper */
-  --surface: #faf8f3;     /* text on ink button */
-  --ink: #121110;         /* body, rules, focus ring */
-  --ink-2: #47443e;       /* labels, dek, date */
-  --ink-3: #6b665d;       /* the "or" divider */
-  --line: #d6d0c4;        /* hairlines */
-  --accent: #ff4f00;      /* signal orange: button fill, full stop, focus underline */
-  --accent-ink: #b3380a;  /* orange that passes as text: errors */
-  --on-accent: #121110;   /* text on the orange button */
-
-  /* type */
-  --serif: "Instrument Serif", Georgia, serif;
-  --sans: "Inter Tight", system-ui, sans-serif;
-
-  /* shape */
-  --radius: 0;
-  --control: 56px;
-  --field: 48px;
-  --hit: 44px;
-
-  /* space: 4px base */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
-
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --fast: 160ms;
-  --mid: 280ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Masthead row | Inter Tight | 11px | 600 | 1.45 | 0.12em | upper |
-| Wordmark | Instrument Serif | 112px | 400 | 0.82 | -0.045em | as set |
-| Dek | Instrument Serif italic | 22px | 400 | 1.15 | 0 | sentence |
-| Section ("Sign in") | Inter Tight | 13px | 700 | 1.45 | 0.12em | upper |
-| Field label | Inter Tight | 11px | 600 | 1.45 | 0.1em | upper |
-| Input text | Inter Tight | 18px | 500 | 48px box | 0 | as typed |
-| Placeholder | Inter Tight | 18px | 400 | 48px box | 0 | `#9b958a` |
-| Error | Inter Tight | 13px | 500 | 1.45 | 0 | sentence |
-| Buttons | Inter Tight | 16px | 600 | 1 | 0.01em | sentence |
-| Links | Inter Tight | 14px | 600 | 1 | 0 | sentence |
-
-- The wordmark is the only serif display. Do not set the button in the serif.
-- The full stop after "Margin" is `--accent`. It is the only orange in the masthead.
-- Under 760px of height, drop the wordmark to 92px. Keep everything else.
 
 ## Motion
 
@@ -190,6 +122,80 @@ The sign-in screen of Margin, a fictional long-read magazine app. The top third 
 - [ ] The bad email error reads "Enter an email like name@example.com."
 - [ ] The loading label reads "Signing in" for 1200ms, then "Welcome back, Asha" for the email asha@….
 - [ ] The foot reads "New to Margin? Create an account".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame. The masthead reads "No. 214" on the left and "Saturday 3 October" on the right. "Margin." is at 112px. The dek reads "Long reads, read to the end." Both fields are empty with placeholders. No errors show.
+2. Focus a field. Its 1.5px ink underline turns orange and thickens to 3px. The label above stays put.
+3. Leave the email field empty and blur it before any submit. Nothing happens. Do not scold a user who only tabbed past.
+4. Type "asha@" and blur. The error "Enter an email like name@example.com." appears under the field in `--accent-ink`, with a 6px square marker. The underline turns `--accent-ink`. `aria-invalid="true"` is set.
+5. Fix the email while an error shows. The error clears on the keystroke that makes the value valid.
+6. Tap "Sign in" with an empty email. The error reads "Enter your email address." Focus moves to the email field. The password is checked too.
+7. Tap "Sign in" with a valid email and an empty password. The error reads "Enter your password." Focus moves to the password field.
+8. Tap the eye button. The password shows as text. The icon gains a slash. The button label becomes "Hide password" and `aria-pressed="true"`. Tap again to reverse.
+9. Tap "Sign in" with both fields valid. The button turns ink in 280ms. The label reads "Signing in". Three 4px orange bars pulse on the right. `aria-busy="true"` is set.
+10. After 1200ms the button reads "Welcome back, Asha" (the first part of the email, capitalised). An orange tick draws in 360ms on the right.
+11. At 3600ms after submit the button returns to "Sign in" in orange. In a product, navigate instead.
+12. Tap "Continue with passkey". Its border turns dashed. The label reads "Check your phone" for 1800ms, then returns.
+13. "Forgot password?" and "Create an account" are links. In the demo they announce through the status region and do not navigate.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #f2efe8;          /* paper */
+  --surface: #faf8f3;     /* text on ink button */
+  --ink: #121110;         /* body, rules, focus ring */
+  --ink-2: #47443e;       /* labels, dek, date */
+  --ink-3: #6b665d;       /* the "or" divider */
+  --line: #d6d0c4;        /* hairlines */
+  --accent: #ff4f00;      /* signal orange: button fill, full stop, focus underline */
+  --accent-ink: #b3380a;  /* orange that passes as text: errors */
+  --on-accent: #121110;   /* text on the orange button */
+
+  /* type */
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Inter Tight", system-ui, sans-serif;
+
+  /* shape */
+  --radius: 0;
+  --control: 56px;
+  --field: 48px;
+  --hit: 44px;
+
+  /* space: 4px base */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --fast: 160ms;
+  --mid: 280ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Masthead row | Inter Tight | 11px | 600 | 1.45 | 0.12em | upper |
+| Wordmark | Instrument Serif | 112px | 400 | 0.82 | -0.045em | as set |
+| Dek | Instrument Serif italic | 22px | 400 | 1.15 | 0 | sentence |
+| Section ("Sign in") | Inter Tight | 13px | 700 | 1.45 | 0.12em | upper |
+| Field label | Inter Tight | 11px | 600 | 1.45 | 0.1em | upper |
+| Input text | Inter Tight | 18px | 500 | 48px box | 0 | as typed |
+| Placeholder | Inter Tight | 18px | 400 | 48px box | 0 | `#9b958a` |
+| Error | Inter Tight | 13px | 500 | 1.45 | 0 | sentence |
+| Buttons | Inter Tight | 16px | 600 | 1 | 0.01em | sentence |
+| Links | Inter Tight | 14px | 600 | 1 | 0 | sentence |
+
+- The wordmark is the only serif display. Do not set the button in the serif.
+- The full stop after "Margin" is `--accent`. It is the only orange in the masthead.
+- Under 760px of height, drop the wordmark to 92px. Keep everything else.
 
 ## Implementation notes
 

@@ -4,26 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A stats section for **Halyard**, an edge hosting company that publishes the same four numbers every quarter. The band is deep green `#0F2A22`. Four figures in cream Fraunces at 96px sit in equal columns split by 1px hairlines: 2.4M deploys, 99.98% uptime, 38 ms median response, 140 edge cities. When the band scrolls into view, every figure counts up from zero once, over 1200ms, with a cubic ease-out and tabular numerals so nothing shifts. A small sparkline or bar chart under each figure draws in at the same time. One copper `#D08452` accent marks the units and the last point of each chart.
 
 The feeling is an annual report, not a dashboard. The detail worth copying is the quiet split of roles: serif for the numbers, mono for every label, and copper only where the eye should land.
-
-## Reference behaviour
-
-1. First frame: kicker "HALYARD · EDGE HOSTING · YEAR TO DATE 2026" in 12px mono, "Halyard" in copper. Headline "Four numbers we / publish every quarter" in 56px Fraunces 300, "every quarter" in italic. On the right, a 14px mono intro and a "Replay count" pill button.
-2. The band is in view on load, so the count starts at once. Each figure starts at 0 with the same decimals as its target: "0.0", "0.00", "0", "0".
-3. Over 1200ms, all four figures rise on one shared clock with `1 - (1 - p)^3`. They land on "2.4", "99.98", "38", "140" at the same moment.
-4. Numbers are formatted with `toLocaleString('en-US')` and a fixed number of decimals, so any value of 1,000 or more gets commas.
-5. Units sit beside the number: "M" and "%" as 56px Fraunces in copper, "ms" as 15px mono in copper. "140" has no unit.
-6. The charts draw on the same trigger. Lines (deploys rising, latency falling) draw with `stroke-dashoffset` over 900ms. Their copper end dot fades in after the line ends. Bars (uptime by month, cities by month) grow from the baseline over 600ms, staggered 40ms per bar.
-7. Each column has its own start delay for the chart: 0, 90, 180, 270ms. The numbers do not use this delay.
-8. The count runs once. Scrolling away and back does not run it again. The observer disconnects after the first hit.
-9. Click "Replay count": the figures snap to zero, the charts reset, and the whole run plays again.
-10. Reduced motion: the figures show their final values at once, the charts show fully drawn, Replay sets the final values again with no count.
-11. Screen readers hear the final value of each figure in words ("2.4 million", "99.98 percent", "38 milliseconds", "140 cities"), never the counting digits.
-12. Under the band, a source line in 11.5px mono: "* Source: Halyard status ledger, 1 Jan to 30 Sep 2026. Uptime is measured per region and averaged by traffic. Latency is p50 over 1,284,000,000 sampled requests. Figures checked by Morrow & Pike LLP on 2 Oct 2026." On the right: "Next reading: 6 Jan 2027".
 
 ## Structure
 
@@ -54,65 +41,6 @@ column padding 32 28 30; first column no left pad, last no right pad.
 - The description is a `p`, max 26ch.
 - The chart is an inline `svg` 200 by 36, `aria-hidden="true"`. Lines use one `path` with `pathLength="1"` and one end `circle`. Bars are `rect`s on a 1px baseline.
 - The footnote is a `div` with two `p`s.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #0f2a22;                    /* deep green band */
-  --cream: #f2e8d5;                 /* figures, headline */
-  --cream-2: #c9c2ae;               /* descriptions, chart strokes, intro */
-  --cream-3: #93a395;               /* labels, footnote, kicker */
-  --line: rgba(242, 232, 213, .16); /* hairlines */
-  --copper: #d08452;                /* units, end dots, hot bars, kicker brand */
-  --focus: #d08452;
-
-  /* type */
-  --serif: "Fraunces", Georgia, serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --fs-figure: clamp(60px, 7.3vw, 96px);
-  --fs-unit-big: .58em;      /* of the figure */
-  --fs-unit-small: 15px;
-  --fs-h2: 56px;
-  --fs-intro: 14px;
-  --fs-desc: 13px;
-  --fs-label: 11.5px;
-
-  /* space */
-  --pad: 64px;
-  --gap: 48px;
-  --col-pad: 32px 28px 30px;
-  --chart-w: 200px;
-  --chart-h: 36px;
-
-  /* motion */
-  --count: 1200ms;
-  --draw: 900ms;
-  --bar: 600ms;
-  --col-stagger: 90ms;
-  --bar-stagger: 40ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Kicker | IBM Plex Mono | 12px | 400 | 1.5 | 0.14em | upper, `--cream-3`, brand copper |
-| Headline | Fraunces | 56px | 300 | 1.02 | -0.02em | opsz 144, italic phrase in `--cream-2` |
-| Intro | IBM Plex Mono | 14px | 400 | 1.65 | 0 | `--cream-2`, max 42ch |
-| Label | IBM Plex Mono | 11.5px | 400 | 1.5 | 0.12em | upper, `--cream-3` |
-| Figure | Fraunces | clamp(60px, 7.3vw, 96px) | 300 | 1 | -0.035em | opsz 144, `tabular-nums lining-nums`, nowrap |
-| Big unit (M, %) | Fraunces | 0.58em of the figure | 300 | 1 | -0.02em | copper, baseline |
-| Small unit (ms) | IBM Plex Mono | 15px | 400 | 1 | 0.04em | copper, raised 0.25em |
-| Description | IBM Plex Mono | 13px | 400 | 1.5 | 0 | `--cream-2`, max 26ch |
-| Footnote | IBM Plex Mono | 11.5px | 400 | 1.6 | 0 | `--cream-3`, asterisk copper |
-| Replay | IBM Plex Mono | 12px | 500 | 1 | 0.08em | upper |
-
-Load Fraunces with the `opsz` axis (9..144) at 300 and 400, and IBM Plex Mono at 400 and 500, from one Google Fonts link.
 
 ## Motion
 
@@ -179,6 +107,84 @@ Use `requestAnimationFrame` for the count. Do not use `setInterval`.
 - [ ] Figures 2.4M, 99.98%, 38 ms, 140, with labels Deploys shipped, Uptime, Median response, Edge cities.
 - [ ] Headline "Four numbers we / publish every quarter" with the italic phrase.
 - [ ] Footnote cites "Halyard status ledger, 1 Jan to 30 Sep 2026" and "Next reading: 6 Jan 2027".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: kicker "HALYARD · EDGE HOSTING · YEAR TO DATE 2026" in 12px mono, "Halyard" in copper. Headline "Four numbers we / publish every quarter" in 56px Fraunces 300, "every quarter" in italic. On the right, a 14px mono intro and a "Replay count" pill button.
+2. The band is in view on load, so the count starts at once. Each figure starts at 0 with the same decimals as its target: "0.0", "0.00", "0", "0".
+3. Over 1200ms, all four figures rise on one shared clock with `1 - (1 - p)^3`. They land on "2.4", "99.98", "38", "140" at the same moment.
+4. Numbers are formatted with `toLocaleString('en-US')` and a fixed number of decimals, so any value of 1,000 or more gets commas.
+5. Units sit beside the number: "M" and "%" as 56px Fraunces in copper, "ms" as 15px mono in copper. "140" has no unit.
+6. The charts draw on the same trigger. Lines (deploys rising, latency falling) draw with `stroke-dashoffset` over 900ms. Their copper end dot fades in after the line ends. Bars (uptime by month, cities by month) grow from the baseline over 600ms, staggered 40ms per bar.
+7. Each column has its own start delay for the chart: 0, 90, 180, 270ms. The numbers do not use this delay.
+8. The count runs once. Scrolling away and back does not run it again. The observer disconnects after the first hit.
+9. Click "Replay count": the figures snap to zero, the charts reset, and the whole run plays again.
+10. Reduced motion: the figures show their final values at once, the charts show fully drawn, Replay sets the final values again with no count.
+11. Screen readers hear the final value of each figure in words ("2.4 million", "99.98 percent", "38 milliseconds", "140 cities"), never the counting digits.
+12. Under the band, a source line in 11.5px mono: "* Source: Halyard status ledger, 1 Jan to 30 Sep 2026. Uptime is measured per region and averaged by traffic. Latency is p50 over 1,284,000,000 sampled requests. Figures checked by Morrow & Pike LLP on 2 Oct 2026." On the right: "Next reading: 6 Jan 2027".
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #0f2a22;                    /* deep green band */
+  --cream: #f2e8d5;                 /* figures, headline */
+  --cream-2: #c9c2ae;               /* descriptions, chart strokes, intro */
+  --cream-3: #93a395;               /* labels, footnote, kicker */
+  --line: rgba(242, 232, 213, .16); /* hairlines */
+  --copper: #d08452;                /* units, end dots, hot bars, kicker brand */
+  --focus: #d08452;
+
+  /* type */
+  --serif: "Fraunces", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --fs-figure: clamp(60px, 7.3vw, 96px);
+  --fs-unit-big: .58em;      /* of the figure */
+  --fs-unit-small: 15px;
+  --fs-h2: 56px;
+  --fs-intro: 14px;
+  --fs-desc: 13px;
+  --fs-label: 11.5px;
+
+  /* space */
+  --pad: 64px;
+  --gap: 48px;
+  --col-pad: 32px 28px 30px;
+  --chart-w: 200px;
+  --chart-h: 36px;
+
+  /* motion */
+  --count: 1200ms;
+  --draw: 900ms;
+  --bar: 600ms;
+  --col-stagger: 90ms;
+  --bar-stagger: 40ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Kicker | IBM Plex Mono | 12px | 400 | 1.5 | 0.14em | upper, `--cream-3`, brand copper |
+| Headline | Fraunces | 56px | 300 | 1.02 | -0.02em | opsz 144, italic phrase in `--cream-2` |
+| Intro | IBM Plex Mono | 14px | 400 | 1.65 | 0 | `--cream-2`, max 42ch |
+| Label | IBM Plex Mono | 11.5px | 400 | 1.5 | 0.12em | upper, `--cream-3` |
+| Figure | Fraunces | clamp(60px, 7.3vw, 96px) | 300 | 1 | -0.035em | opsz 144, `tabular-nums lining-nums`, nowrap |
+| Big unit (M, %) | Fraunces | 0.58em of the figure | 300 | 1 | -0.02em | copper, baseline |
+| Small unit (ms) | IBM Plex Mono | 15px | 400 | 1 | 0.04em | copper, raised 0.25em |
+| Description | IBM Plex Mono | 13px | 400 | 1.5 | 0 | `--cream-2`, max 26ch |
+| Footnote | IBM Plex Mono | 11.5px | 400 | 1.6 | 0 | `--cream-3`, asterisk copper |
+| Replay | IBM Plex Mono | 12px | 500 | 1 | 0.08em | upper |
+
+Load Fraunces with the `opsz` axis (9..144) at 300 and 400, and IBM Plex Mono at 400 and 500, from one Google Fonts link.
 
 ## Implementation notes
 

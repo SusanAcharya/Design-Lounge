@@ -4,30 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A help centre FAQ for **Brightwell**, a coffee subscription. A 240px category list sits on the left: Billing (4), Accounts (3), Shipping (4), Security (3). The right column shows the questions for the chosen category as an accordion. A search field at the top right filters all 14 questions across every category as you type, groups the hits under category headings, and wraps each match in a green `<mark>`. Under the list, a grey card says "Still stuck? Talk to a person." with a live median reply time.
 
 The feeling is quiet: white, slate text, one green, 8px radii, hairlines instead of shadows. The detail worth copying is that search ignores the chosen category, and the category counts turn into hit counts while you type.
-
-## Reference behaviour
-
-1. First frame: Billing is selected (`aria-pressed="true"`, green tint). The right column shows Billing's 4 questions. The second question, "How do I get a refund for a bag I did not like?", is open. The other three are closed.
-2. The count line under the search reads "4 questions in Billing · 14 in total".
-3. Click a closed question: its panel opens over 280ms by animating `grid-template-rows` from `0fr` to `1fr`. The chevron turns 180deg and goes green. Other open items stay open.
-4. Click an open question: it closes on the same clock. The chevron turns back and goes grey.
-5. Click "Shipping" in the list: Shipping becomes pressed. The right column shows its 4 questions. Open/closed state is kept per question, so going back to Billing still shows the refund question open.
-6. Type `card` in the search: the category selection is ignored. All 14 questions are checked against question and answer text, case-insensitive.
-7. Hits show grouped under small upper-case category headings (BILLING, SECURITY). Each match in the question or answer is wrapped in `<mark>`.
-8. If the match is only in the answer, that item opens so the highlight is visible. If the match is in the question, the item keeps its own state.
-9. While searching, no category is pressed. Each category's pill shows its hit count. Categories with 0 hits turn light grey (`#94A3B8`).
-10. The count line reads "4 questions match “card” in 2 categories". It is a polite live region.
-11. A clear button (X, 32px) appears inside the right end of the search field.
-12. Type `zzzz`: no groups show. An empty block appears: "Nothing matches that search", "Try a shorter word, like refund, login, or tracking.", and a "Clear search" button. The count reads "No questions match “zzzz”".
-13. Click Clear search, the X, or press Escape in the field: the field empties, the previous category view returns, focus goes to the field.
-14. Click a category while searching: the search clears and that category is selected.
-15. The "Still stuck?" card always sits under the list. It has three overlapping 36px avatars, the title, "Online now. Median first reply 6 min, Mon to Sat, 07:00 to 21:00 GMT." with a 7px green dot, a green "Start a chat" button and an outline "Email us" button.
-16. Reduced motion: panels and chevrons change in 1ms. Search and categories behave the same.
 
 ## Structure
 
@@ -62,65 +45,6 @@ body: columns 240px minmax(0,1fr), gap 56, padding-top 28
 - Each item: `div.item`, then `h4 > button.q` with `aria-expanded` and `aria-controls`, then `div.panel` with `role="region"` and `aria-labelledby` pointing back at the button.
 - The panel wraps one `div` with `overflow: hidden; min-height: 0`, and that wraps the answer `p`.
 - The card is an `aside` named by its title.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #ffffff;          /* page */
-  --soft: #f6f7f9;        /* hover fill, count pill, card */
-  --ink: #0f172a;         /* headings, questions */
-  --ink-2: #334155;       /* answers, category labels */
-  --ink-3: #64748b;       /* meta, chevrons, group heads */
-  --ink-4: #94a3b8;       /* placeholder, zero-hit category */
-  --line: #e2e8f0;        /* hairlines between items */
-  --line-2: #cbd5e1;      /* input and outline-button border */
-  --accent: #15803d;      /* the one green */
-  --accent-hover: #166534;
-  --accent-soft: #ecfdf3; /* selected category fill */
-  --mark: #dcfce7;        /* search highlight */
-  --focus: #15803d;
-
-  /* type */
-  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-
-  /* space and shape */
-  --r: 8px;
-  --pad-x: 64px;
-  --gap-cols: 56px;
-  --rail: 240px;
-  --row-min: 56px;
-  --cat-h: 40px;
-  --input-h: 44px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --micro: 160ms;
-  --layout: 280ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- | --- |
-| Kicker | Inter | 13px | 600 | 1.55 | 0 | `--accent` |
-| Heading | Inter | 36px | 700 | 1.15 | -0.025em | `--ink` |
-| Sub | Inter | 15px | 400 | 1.55 | 0 | `--ink-3` |
-| Search input | Inter | 15px | 400 | 1 | 0 | `--ink` |
-| Count line | Inter | 13px | 400 | 1.55 | 0 | `--ink-3` |
-| Rail label | Inter | 12px | 600 | 1.55 | 0.06em upper | `--ink-3` |
-| Category | Inter | 15px | 500, selected 600 | 40px box | 0 | `--ink-2`, selected `--accent` |
-| Count pill | Inter | 12px | 600 tabular | 22px box | 0 | `--ink-3` |
-| Group head | Inter | 12px | 600 | 1.55 | 0.06em upper | `--ink-3` |
-| Question | Inter | 16px | 500 | 1.4 | 0 | `--ink` |
-| Answer | Inter | 15px | 400 | 1.55 | 0 | `--ink-2`, max 68ch |
-| Card title | Inter | 15px | 600 | 1.55 | 0 | `--ink` |
-| Card meta | Inter | 13px | 400 | 1.55 | 0 | `--ink-3`, time in `--accent` 600 |
-| Buttons | Inter | 14px | 600 | 40px box | 0 | - |
-
-One family, four weights: 400, 500, 600, 700.
 
 ## Motion
 
@@ -196,6 +120,88 @@ Search results replace the list at once. Do not animate items in and out on each
 - [ ] Searching `card` gives "4 questions match “card” in 2 categories".
 - [ ] Card text "Still stuck? Talk to a person." and "Median first reply 6 min".
 - [ ] Green `#15803D`, ink `#0F172A`, hairline `#E2E8F0`, radius 8px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Billing is selected (`aria-pressed="true"`, green tint). The right column shows Billing's 4 questions. The second question, "How do I get a refund for a bag I did not like?", is open. The other three are closed.
+2. The count line under the search reads "4 questions in Billing · 14 in total".
+3. Click a closed question: its panel opens over 280ms by animating `grid-template-rows` from `0fr` to `1fr`. The chevron turns 180deg and goes green. Other open items stay open.
+4. Click an open question: it closes on the same clock. The chevron turns back and goes grey.
+5. Click "Shipping" in the list: Shipping becomes pressed. The right column shows its 4 questions. Open/closed state is kept per question, so going back to Billing still shows the refund question open.
+6. Type `card` in the search: the category selection is ignored. All 14 questions are checked against question and answer text, case-insensitive.
+7. Hits show grouped under small upper-case category headings (BILLING, SECURITY). Each match in the question or answer is wrapped in `<mark>`.
+8. If the match is only in the answer, that item opens so the highlight is visible. If the match is in the question, the item keeps its own state.
+9. While searching, no category is pressed. Each category's pill shows its hit count. Categories with 0 hits turn light grey (`#94A3B8`).
+10. The count line reads "4 questions match “card” in 2 categories". It is a polite live region.
+11. A clear button (X, 32px) appears inside the right end of the search field.
+12. Type `zzzz`: no groups show. An empty block appears: "Nothing matches that search", "Try a shorter word, like refund, login, or tracking.", and a "Clear search" button. The count reads "No questions match “zzzz”".
+13. Click Clear search, the X, or press Escape in the field: the field empties, the previous category view returns, focus goes to the field.
+14. Click a category while searching: the search clears and that category is selected.
+15. The "Still stuck?" card always sits under the list. It has three overlapping 36px avatars, the title, "Online now. Median first reply 6 min, Mon to Sat, 07:00 to 21:00 GMT." with a 7px green dot, a green "Start a chat" button and an outline "Email us" button.
+16. Reduced motion: panels and chevrons change in 1ms. Search and categories behave the same.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #ffffff;          /* page */
+  --soft: #f6f7f9;        /* hover fill, count pill, card */
+  --ink: #0f172a;         /* headings, questions */
+  --ink-2: #334155;       /* answers, category labels */
+  --ink-3: #64748b;       /* meta, chevrons, group heads */
+  --ink-4: #94a3b8;       /* placeholder, zero-hit category */
+  --line: #e2e8f0;        /* hairlines between items */
+  --line-2: #cbd5e1;      /* input and outline-button border */
+  --accent: #15803d;      /* the one green */
+  --accent-hover: #166534;
+  --accent-soft: #ecfdf3; /* selected category fill */
+  --mark: #dcfce7;        /* search highlight */
+  --focus: #15803d;
+
+  /* type */
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* space and shape */
+  --r: 8px;
+  --pad-x: 64px;
+  --gap-cols: 56px;
+  --rail: 240px;
+  --row-min: 56px;
+  --cat-h: 40px;
+  --input-h: 44px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --micro: 160ms;
+  --layout: 280ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- | --- |
+| Kicker | Inter | 13px | 600 | 1.55 | 0 | `--accent` |
+| Heading | Inter | 36px | 700 | 1.15 | -0.025em | `--ink` |
+| Sub | Inter | 15px | 400 | 1.55 | 0 | `--ink-3` |
+| Search input | Inter | 15px | 400 | 1 | 0 | `--ink` |
+| Count line | Inter | 13px | 400 | 1.55 | 0 | `--ink-3` |
+| Rail label | Inter | 12px | 600 | 1.55 | 0.06em upper | `--ink-3` |
+| Category | Inter | 15px | 500, selected 600 | 40px box | 0 | `--ink-2`, selected `--accent` |
+| Count pill | Inter | 12px | 600 tabular | 22px box | 0 | `--ink-3` |
+| Group head | Inter | 12px | 600 | 1.55 | 0.06em upper | `--ink-3` |
+| Question | Inter | 16px | 500 | 1.4 | 0 | `--ink` |
+| Answer | Inter | 15px | 400 | 1.55 | 0 | `--ink-2`, max 68ch |
+| Card title | Inter | 15px | 600 | 1.55 | 0 | `--ink` |
+| Card meta | Inter | 13px | 400 | 1.55 | 0 | `--ink-3`, time in `--accent` 600 |
+| Buttons | Inter | 14px | 600 | 40px box | 0 | - |
+
+One family, four weights: 400, 500, 600, 700.
 
 ## Implementation notes
 

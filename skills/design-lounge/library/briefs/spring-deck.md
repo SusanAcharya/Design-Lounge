@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Three cards. Night book and Month close sit turned underneath. Gate 4 is in front. Drag Gate 4 and it follows. Release clears the transform and it springs back over 420ms. It does not dismiss. This is not a scroll stack. That stack is `stacking-cards-scroll`. This is not a flip. That flip is `card-flip-3d`.
-
-## Reference behaviour
-
-1. Gate 4 is on top. The line says to drag it and that it returns.
-2. Pointer down adds a drag class that turns the transition off.
-3. Pointer move sets translate and rotate -2deg, unless motion is reduced.
-4. Pointer up and pointer cancel remove the drag class and clear the transform.
-5. The return is 420ms.
-6. The cards underneath do not move.
-7. Reduced motion does not follow the pointer. Release still clears.
 
 ## Structure
 
@@ -32,19 +24,6 @@ Gate 4, front
 - Night book is rotate -3deg, translate -8px 6px.
 - Month close is rotate 2deg, translate 8px 4px.
 - The front card is z-index 2 and tabbable, role group.
-
-## Tokens
-
-```css
-:root { --bg:#f4f1ea; --card:#fffdf8; --ink:#1a1814; --ink-2:#5c564c; --line:#e3ddd2; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Title | Fraunces | 28px | 560 |
-| Body | Public Sans | 16px | 400 |
 
 ## Motion
 
@@ -89,17 +68,6 @@ Gate 4, front
 - [ ] The return is 420ms.
 - [ ] Drag rotate is -2deg.
 - [ ] Display is Fraunces. Text is Public Sans.
-
-## Implementation notes
-
-Drop the transition while dragging so the card sticks to the pointer.
-
-```js
-front.classList.add("drag");
-front.style.transform = "";
-```
-
-Clear the transform on pointer up so the CSS transition can run back to identity.
 
 ## Measurements to keep
 
@@ -154,6 +122,44 @@ Clear the transform on pointer up so the CSS transition can run back to identity
 - Honour reduced motion.
 - Do not add a second accent.
 - Do not add a second type family.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Gate 4 is on top. The line says to drag it and that it returns.
+2. Pointer down adds a drag class that turns the transition off.
+3. Pointer move sets translate and rotate -2deg, unless motion is reduced.
+4. Pointer up and pointer cancel remove the drag class and clear the transform.
+5. The return is 420ms.
+6. The cards underneath do not move.
+7. Reduced motion does not follow the pointer. Release still clears.
+
+## Tokens
+
+```css
+:root { --bg:#f4f1ea; --card:#fffdf8; --ink:#1a1814; --ink-2:#5c564c; --line:#e3ddd2; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Title | Fraunces | 28px | 560 |
+| Body | Public Sans | 16px | 400 |
+
+## Implementation notes
+
+Drop the transition while dragging so the card sticks to the pointer.
+
+```js
+front.classList.add("drag");
+front.style.transform = "";
+```
+
+Clear the transform on pointer up so the CSS transition can run back to identity.
 
 ---
 

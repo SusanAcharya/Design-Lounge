@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the Industrial family: 2px radii, mono labels, one acid accent.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The launch moment of Gantry, a fictional yard-operations app for truck docks. A near-black splash fills the phone. A square G mark draws itself in acid green in three strokes. The word GANTRY rises letter by letter out of a mask. A mono line reads "Yard operations". After a short hold, the whole splash slides up and off, trailing a 1px acid edge, and the real home screen settles in underneath. The home is not a placeholder. It greets the shift lead, shows inbound trailers with a bar strip and the next free dock with a progress bar. The whole run is 1520ms. The detail worth copying is that the home is already rendered under the splash, so the lift reveals content, not a blank screen that then loads.
-
-## Reference behaviour
-
-1. Load. The splash covers the frame. Background `#0c0d0b`. The home sits under it, scaled to 0.965, moved down 12px, at 35% opacity.
-2. 0ms. Stroke 1 of the mark (top bar, left side, bottom bar, length 176) starts drawing. 440ms, expo out.
-3. 70ms. Stroke 2 (the right side going up, length 28) starts. 440ms.
-4. 140ms. Stroke 3 (the inner bar, length 26) starts. 440ms. The mark is done at 580ms.
-5. 260ms. G rises from 105% below its mask in 380ms. A, N, T, R, Y follow at 40ms steps. Y lands at 840ms.
-6. 700ms. "Yard operations" and the footer line ("v4.2.0", "Yard 4 · online") fade in over 220ms.
-7. 920ms to 1100ms. Hold. Nothing moves.
-8. 1100ms. The splash lifts to translateY(-101%) in 420ms with the iOS sheet curve. Its 1px acid bottom border sweeps up the screen. At the same time the home scales to 1, moves to 0 and fades to full in 420ms.
-9. 1520ms. Done. The home is fully interactive. A hidden status line says "Gantry home loaded".
-10. Tap "Replay" (bottom right, above the main button). The class that runs the timeline is removed, a reflow is forced, and the class is added back. The run starts again from step 1.
-11. Reduced motion. No splash is shown. The home fades in from 0 to 1 in 200ms. Replay repeats the fade.
 
 ## Structure
 
@@ -63,66 +51,6 @@ Splash (on top, fixed, inset 0)
 - The splash is a fixed `div` with `aria-hidden="true"` and `pointer-events: none`. It holds an inline SVG with three `path` elements, a `div` of six letter `span`s, and two mono lines.
 - Each letter span sets `--i` from 0 to 5. Each path sets `--l` to its length.
 - The Replay button is fixed, above the splash in z-order, so it is always reachable.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --splash: #0c0d0b;     /* splash plate */
-  --bg: #141513;         /* home page */
-  --surface: #1b1c1a;    /* cards */
-  --surface-2: #232421;  /* bar track, meter track, replay chip */
-  --ink: #ecece6;        /* headings, numbers */
-  --ink-2: #a3a59c;      /* sub text, card titles */
-  --ink-3: #7d8077;      /* mono meta, legends */
-  --line: #2c2e2a;       /* card borders */
-  --accent: #c8f031;     /* acid: mark, late bars, CTA, lift edge, focus */
-  --on-accent: #0c0d0b;
-
-  /* type */
-  --sans: "Archivo", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  /* shape */
-  --radius: 2px;
-  --hit: 44px;
-
-  /* space: 4px base */
-  --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
-
-  /* motion */
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --sheet: cubic-bezier(0.32, 0.72, 0, 1);
-  --std: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --t-draw: 440ms;
-  --t-rise: 380ms;
-  --t-stagger: 40ms;
-  --t-hold-end: 1100ms;
-  --t-lift: 420ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Splash word | Archivo | 44px | 800 | 1.05 | 0.16em | upper |
-| Splash line | JetBrains Mono | 11px | 500 | 1 | 0.16em | upper |
-| Splash footer | JetBrains Mono | 11px | 400 | 1 | 0 | as set |
-| Home brand | Archivo | 15px | 800 | 1 | 0.14em | upper |
-| Meta line | JetBrains Mono | 11px | 500 | 1 | 0.08em | upper |
-| Greeting | Archivo | 40px | 700 | 1 | -0.03em | sentence |
-| Sub | Archivo | 15px | 400 | 1.4 | 0 | sentence |
-| Card title, tag | JetBrains Mono | 11px | 500 | 1 | 0.08em | upper |
-| Big number | Archivo | 52px | 700 | 0.9 | -0.04em | figures |
-| Dock name | Archivo | 28px | 700 | 1 | -0.02em | title |
-| Legend | JetBrains Mono | 11px | 400 | 1 | 0 | as set |
-| CTA | Archivo | 15px | 700 | 1 | 0.02em | sentence |
-| Replay | JetBrains Mono | 12px | 500 | 1 | 0.06em | upper |
-
-- Mono is for labels, times and codes. Archivo is for words and numbers people read.
-- The splash word has `padding-left: 0.16em` so its tracking stays optically centred.
 
 ## Motion
 
@@ -196,6 +124,84 @@ Splash (on top, fixed, inset 0)
 - [ ] The lift starts at 1100ms and lasts 420ms with `cubic-bezier(0.32, 0.72, 0, 1)`.
 - [ ] The home greets "Morning, Dev." with 38 trailers, 6 late, and Dock 7 free in 12 min.
 - [ ] Every radius is 2px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Load. The splash covers the frame. Background `#0c0d0b`. The home sits under it, scaled to 0.965, moved down 12px, at 35% opacity.
+2. 0ms. Stroke 1 of the mark (top bar, left side, bottom bar, length 176) starts drawing. 440ms, expo out.
+3. 70ms. Stroke 2 (the right side going up, length 28) starts. 440ms.
+4. 140ms. Stroke 3 (the inner bar, length 26) starts. 440ms. The mark is done at 580ms.
+5. 260ms. G rises from 105% below its mask in 380ms. A, N, T, R, Y follow at 40ms steps. Y lands at 840ms.
+6. 700ms. "Yard operations" and the footer line ("v4.2.0", "Yard 4 · online") fade in over 220ms.
+7. 920ms to 1100ms. Hold. Nothing moves.
+8. 1100ms. The splash lifts to translateY(-101%) in 420ms with the iOS sheet curve. Its 1px acid bottom border sweeps up the screen. At the same time the home scales to 1, moves to 0 and fades to full in 420ms.
+9. 1520ms. Done. The home is fully interactive. A hidden status line says "Gantry home loaded".
+10. Tap "Replay" (bottom right, above the main button). The class that runs the timeline is removed, a reflow is forced, and the class is added back. The run starts again from step 1.
+11. Reduced motion. No splash is shown. The home fades in from 0 to 1 in 200ms. Replay repeats the fade.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --splash: #0c0d0b;     /* splash plate */
+  --bg: #141513;         /* home page */
+  --surface: #1b1c1a;    /* cards */
+  --surface-2: #232421;  /* bar track, meter track, replay chip */
+  --ink: #ecece6;        /* headings, numbers */
+  --ink-2: #a3a59c;      /* sub text, card titles */
+  --ink-3: #7d8077;      /* mono meta, legends */
+  --line: #2c2e2a;       /* card borders */
+  --accent: #c8f031;     /* acid: mark, late bars, CTA, lift edge, focus */
+  --on-accent: #0c0d0b;
+
+  /* type */
+  --sans: "Archivo", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* shape */
+  --radius: 2px;
+  --hit: 44px;
+
+  /* space: 4px base */
+  --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+
+  /* motion */
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --sheet: cubic-bezier(0.32, 0.72, 0, 1);
+  --std: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-draw: 440ms;
+  --t-rise: 380ms;
+  --t-stagger: 40ms;
+  --t-hold-end: 1100ms;
+  --t-lift: 420ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Splash word | Archivo | 44px | 800 | 1.05 | 0.16em | upper |
+| Splash line | JetBrains Mono | 11px | 500 | 1 | 0.16em | upper |
+| Splash footer | JetBrains Mono | 11px | 400 | 1 | 0 | as set |
+| Home brand | Archivo | 15px | 800 | 1 | 0.14em | upper |
+| Meta line | JetBrains Mono | 11px | 500 | 1 | 0.08em | upper |
+| Greeting | Archivo | 40px | 700 | 1 | -0.03em | sentence |
+| Sub | Archivo | 15px | 400 | 1.4 | 0 | sentence |
+| Card title, tag | JetBrains Mono | 11px | 500 | 1 | 0.08em | upper |
+| Big number | Archivo | 52px | 700 | 0.9 | -0.04em | figures |
+| Dock name | Archivo | 28px | 700 | 1 | -0.02em | title |
+| Legend | JetBrains Mono | 11px | 400 | 1 | 0 | as set |
+| CTA | Archivo | 15px | 700 | 1 | 0.02em | sentence |
+| Replay | JetBrains Mono | 12px | 500 | 1 | 0.06em | upper |
+
+- Mono is for labels, times and codes. Archivo is for words and numbers people read.
+- The splash word has `padding-left: 0.16em` so its tracking stays optically centred.
 
 ## Implementation notes
 

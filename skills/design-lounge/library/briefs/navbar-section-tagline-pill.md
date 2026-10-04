@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from lamalama.com: the small dark nav bar fixed at top centre whose middle text changes to a different cheeky line for each section you scroll into. The hamburger expands the same bar into a menu, and a column of small dark "( + )" cards in the top-right corner open in place. This rebuild is for **Brightwork**, a fictional product studio, on a pale stone page. The pill is 440×48px with a pixel logo, a mono caps tagline, and a burger. As each section crosses the middle of the viewport, the tagline rolls up and the next one rolls in from below ("Let's break something nice" → "Receipts, not promises" → "How the lights stay on" → "People who came back" → "Your move"). The detail worth copying is that the menu is the pill itself growing (grid-rows 0fr → 1fr), not a separate overlay, and it marks the section you are in.
-
-## Reference behaviour
-
-1. First frame: a stone page `#E4E6E1` showing the hero. "[ BRIGHTWORK / PRODUCT STUDIO ]" sits over a 104px heavy headline "Interfaces with a pulse, built by people who answer the phone." with "pulse" on a lime highlight. Below it, a lede and "SCROLL — THE PILL KEEPS UP".
-2. The pill is fixed 14px from the top, centred, 440×48, `#111311`, radius 6. Left: a 22px pixel logo (link to top). Centre: the tagline "LET'S BREAK SOMETHING NICE" in 11px mono caps. Right: a 40px burger.
-3. The right stack is fixed 14px from the top and right, 220px wide, with 4px gaps: a lime "MV · BOOK A CALL WITH MIRA" link, a dark "STUDIO REEL ( + )" card, and a dark "HOW WE WORK ( + )" card.
-4. Scrolling: an IntersectionObserver with `rootMargin: -45% 0px -50% 0px` picks the section crossing the middle band. When the section changes, the old tagline translates −110% and fades, and the new one starts at +110% and slides to 0 (420ms expo-out, opacity 300ms). The old node is removed after 440ms.
-5. Burger click: the burger's lines morph into a single minus (outer bars collapse onto the middle, 240ms). The pill's drawer opens (grid-template-rows 0fr → 1fr, 420ms expo-out) and shows five 44px rows (Home 00, Work 01, Services 02, Clients 03, Contact 04) and two buttons, "BOOK A CALL" (outline) and "START A PROJECT" (lime). The page behind gets a veil, 28% ink with a 10px backdrop blur, fading in over 320ms.
-6. The row for the current section shows a 6px lime square instead of its number and carries `aria-current="true"`. Focus moves to that row 120ms after opening.
-7. The drawer closes on Escape (focus returns to the burger), a veil click, a row click (which also jumps to the anchor), or the burger again. Tab and Shift+Tab cycle inside the pill while it is open.
-8. Stack card click: the card's body opens (grid-rows 0fr → 1fr, 380ms expo-out), and the sign reads "( – )". "Studio reel" shows a 118px striped preview with a lime sheen sweeping every 2.6s and the caption "01:12 · 2026 CUT". "How we work" shows three numbered lines. The cards open independently.
-9. Work rows on the page: name, black mono chips, "( + )". Hovering a row nudges the name 8px right (240ms expo-out).
-10. Reduced motion: the tagline swaps instantly, the drawer and cards open without transition, the reel sheen stops, and smooth scroll is off.
 
 ## Structure
 
@@ -45,42 +34,6 @@ Studied from lamalama.com: the small dark nav bar fixed at top centre whose midd
 - `div.veil` is a fixed full-screen layer under the pill (z 15 vs 20).
 - `aside.stack[aria-label="Quick links"]` holds `a.call` and two `div.card[data-open]`, each with a `button[aria-expanded][aria-controls]` and `div.body`.
 - `main` holds `section[id][data-tag]`: top, work, services, clients, contact. Each is at least 92vh tall (the hero 100vh) with a 1px bottom rule.
-
-## Tokens
-
-```css
-:root {
-  --bg: #E4E6E1;        /* page */
-  --ink: #111311;       /* page text, chips */
-  --ink-2: #4A4F4A;     /* labels, lede */
-  --line: #C9CCC5;      /* page rules */
-  --pill: #111311;      /* pill, cards */
-  --pill-2: #1E211E;    /* row and burger hover */
-  --pill-line: #2C302C; /* rules inside pill and cards */
-  --on-pill: #E9ECE6;   /* text on pill */
-  --on-pill-2: #8E958D; /* row numbers, ( + ) signs */
-  --lime: #C8F04A;      /* primary CTA, current marker, highlight, focus */
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --r: 6px; --pad: 32px;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-}
-```
-
-Fixed sizes: pill 440×48, bar padding 0 6px 0 14px, burger 40×40, menu rows 44px with 22px inset, CTA buttons 40px, stack 220px wide with 44px card heads and 4px gaps.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Tagline, labels, chips, CTAs, card heads | IBM Plex Mono | 11px | 500 | 1 | 0.08em | Upper |
-| Menu rows | Schibsted Grotesk | 15px | 400 | 44px row | 0 | Title |
-| Hero headline | Schibsted Grotesk | 104px | 800 | 0.9 | −0.045em | Sentence |
-| Section statement | Schibsted Grotesk | 40px | 500 | 1.12 | −0.02em | Sentence |
-| Work row name | Schibsted Grotesk | 22px | 500 | 1.45 | 0 | Title |
-| Contact headline | Schibsted Grotesk | 96px | 800 | 0.9 | −0.045em | Sentence |
-| Manifesto lines | Schibsted Grotesk | 13px | 400 | 1.35 | 0 | Sentence |
 
 ## Motion
 
@@ -146,6 +99,59 @@ Fixed sizes: pill 440×48, bar padding 0 6px 0 14px, burger 40×40, menu rows 44
 - [ ] CTAs: "BOOK A CALL" outline and "START A PROJECT" lime `#C8F04A`.
 - [ ] The stack is 220px wide: "BOOK A CALL WITH MIRA" (lime), "STUDIO REEL ( + )", "HOW WE WORK ( + )".
 - [ ] The headline is Schibsted Grotesk 800 at 104px, with "pulse" highlighted lime.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a stone page `#E4E6E1` showing the hero. "[ BRIGHTWORK / PRODUCT STUDIO ]" sits over a 104px heavy headline "Interfaces with a pulse, built by people who answer the phone." with "pulse" on a lime highlight. Below it, a lede and "SCROLL — THE PILL KEEPS UP".
+2. The pill is fixed 14px from the top, centred, 440×48, `#111311`, radius 6. Left: a 22px pixel logo (link to top). Centre: the tagline "LET'S BREAK SOMETHING NICE" in 11px mono caps. Right: a 40px burger.
+3. The right stack is fixed 14px from the top and right, 220px wide, with 4px gaps: a lime "MV · BOOK A CALL WITH MIRA" link, a dark "STUDIO REEL ( + )" card, and a dark "HOW WE WORK ( + )" card.
+4. Scrolling: an IntersectionObserver with `rootMargin: -45% 0px -50% 0px` picks the section crossing the middle band. When the section changes, the old tagline translates −110% and fades, and the new one starts at +110% and slides to 0 (420ms expo-out, opacity 300ms). The old node is removed after 440ms.
+5. Burger click: the burger's lines morph into a single minus (outer bars collapse onto the middle, 240ms). The pill's drawer opens (grid-template-rows 0fr → 1fr, 420ms expo-out) and shows five 44px rows (Home 00, Work 01, Services 02, Clients 03, Contact 04) and two buttons, "BOOK A CALL" (outline) and "START A PROJECT" (lime). The page behind gets a veil, 28% ink with a 10px backdrop blur, fading in over 320ms.
+6. The row for the current section shows a 6px lime square instead of its number and carries `aria-current="true"`. Focus moves to that row 120ms after opening.
+7. The drawer closes on Escape (focus returns to the burger), a veil click, a row click (which also jumps to the anchor), or the burger again. Tab and Shift+Tab cycle inside the pill while it is open.
+8. Stack card click: the card's body opens (grid-rows 0fr → 1fr, 380ms expo-out), and the sign reads "( – )". "Studio reel" shows a 118px striped preview with a lime sheen sweeping every 2.6s and the caption "01:12 · 2026 CUT". "How we work" shows three numbered lines. The cards open independently.
+9. Work rows on the page: name, black mono chips, "( + )". Hovering a row nudges the name 8px right (240ms expo-out).
+10. Reduced motion: the tagline swaps instantly, the drawer and cards open without transition, the reel sheen stops, and smooth scroll is off.
+
+## Tokens
+
+```css
+:root {
+  --bg: #E4E6E1;        /* page */
+  --ink: #111311;       /* page text, chips */
+  --ink-2: #4A4F4A;     /* labels, lede */
+  --line: #C9CCC5;      /* page rules */
+  --pill: #111311;      /* pill, cards */
+  --pill-2: #1E211E;    /* row and burger hover */
+  --pill-line: #2C302C; /* rules inside pill and cards */
+  --on-pill: #E9ECE6;   /* text on pill */
+  --on-pill-2: #8E958D; /* row numbers, ( + ) signs */
+  --lime: #C8F04A;      /* primary CTA, current marker, highlight, focus */
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --r: 6px; --pad: 32px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+}
+```
+
+Fixed sizes: pill 440×48, bar padding 0 6px 0 14px, burger 40×40, menu rows 44px with 22px inset, CTA buttons 40px, stack 220px wide with 44px card heads and 4px gaps.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Tagline, labels, chips, CTAs, card heads | IBM Plex Mono | 11px | 500 | 1 | 0.08em | Upper |
+| Menu rows | Schibsted Grotesk | 15px | 400 | 44px row | 0 | Title |
+| Hero headline | Schibsted Grotesk | 104px | 800 | 0.9 | −0.045em | Sentence |
+| Section statement | Schibsted Grotesk | 40px | 500 | 1.12 | −0.02em | Sentence |
+| Work row name | Schibsted Grotesk | 22px | 500 | 1.45 | 0 | Title |
+| Contact headline | Schibsted Grotesk | 96px | 800 | 0.9 | −0.045em | Sentence |
+| Manifesto lines | Schibsted Grotesk | 13px | 400 | 1.35 | 0 | Sentence |
 
 ## Implementation notes
 

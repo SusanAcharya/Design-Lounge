@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, a filled mark is `--primary` and an empty mark is `--line-strong`. The marks are a radio group. They are not a like button.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A score for the handoff, from 1 to 5. Four starts filled in `--primary`. The fifth is `--line-strong`. The status line reads "4 of 5." Choosing another value fills every mark up to that value and rewrites the line. The marks are native radios, so arrow keys move the score. Each hit target is 40px. The mark itself is a 20px shape. There is no half score and no average of other people. This is one person's score.
-
-## Reference behaviour
-
-1. The fourth radio is checked. Marks 1 through 4 are `#1f4d3a`. Mark 5 is `#cfc6b8`. The status line is "4 of 5."
-2. Choosing 2 fills 1 and 2 and clears the rest. The line reads "2 of 5."
-3. Choosing 5 fills all five. The line reads "5 of 5."
-4. Arrow keys move between the radios and update the line, because they share a name.
-5. There is no animation.
-6. Focus ring is 2px `--focus`, offset 3px, on the focused mark.
 
 ## Structure
 
@@ -32,32 +25,6 @@ fieldset, border 0
 - Each control is a native radio with an accessible name "1 of 5" through "5 of 5".
 - The shape is decorative and `aria-hidden`.
 - The status line is `role="status"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-The mark is a shape, so the family's button radius does not turn it into a square or a pill. The 40px target can take the family's radius if you draw a hit box. The shape stays.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Legend | sans | 12px | 500 | `--ink-2` |
-| Status | sans | 14px | 400 | `--ink` |
-
-The score is not only a colour. The status sentence names the number. The where-line letter-spacing is 0.04em.
 
 ## Motion
 
@@ -107,6 +74,45 @@ None. The fill changes in one frame. Reduced motion has nothing to remove. Do no
 - [ ] Arrow keys move the score.
 - [ ] Focus ring is 2px, offset 3px.
 - [ ] There is no half mark and no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The fourth radio is checked. Marks 1 through 4 are `#1f4d3a`. Mark 5 is `#cfc6b8`. The status line is "4 of 5."
+2. Choosing 2 fills 1 and 2 and clears the rest. The line reads "2 of 5."
+3. Choosing 5 fills all five. The line reads "5 of 5."
+4. Arrow keys move between the radios and update the line, because they share a name.
+5. There is no animation.
+6. Focus ring is 2px `--focus`, offset 3px, on the focused mark.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+The mark is a shape, so the family's button radius does not turn it into a square or a pill. The 40px target can take the family's radius if you draw a hit box. The shape stays.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Legend | sans | 12px | 500 | `--ink-2` |
+| Status | sans | 14px | 400 | `--ink` |
+
+The score is not only a colour. The status sentence names the number. The where-line letter-spacing is 0.04em.
 
 ## Implementation notes
 

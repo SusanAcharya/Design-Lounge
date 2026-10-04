@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens and use the component field and tab rules. Keep the list, the sheet, and the tab bar.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The inbox of a yard operations app on a phone. The Lounge draws the device chrome, so this screen does not draw a status bar. It leaves 54px at the top. A 32px title "Inbox", a 40px search field, then message rows at least 72px tall. Unread rows use `--primary-soft` and an 8px dot. Tapping a row opens a sheet with the sender and the full line, and clears the unread state. A 64px tab bar sits at the bottom with 18px of that reserved above the home indicator. Inbox is current.
-
-## Reference behaviour
-
-1. Initial state: two unread rows (Mira Lama, Yard desk) and two read rows. Inbox tab is `aria-current="page"`.
-2. Typing in search filters rows by their visible text, case-insensitive. Non-matches are `display: none`.
-3. Tap a row: remove the unread class and hide the dot, show the sheet with that sender as the title and `data-body` as the paragraph.
-4. Back hides the sheet and shows the list again. The row stays read.
-5. Tab buttons set `aria-current` on the pressed one and clear it on the others. They do not navigate away in the demo. The list stays.
-6. Search field height 40px, radius 10px, fill `--surface-2`, no border.
-7. Avatar is initials on `#2c241c`, 44px circle. No photos.
-8. Do not draw a notch, a clock, or a browser bar.
 
 ## Structure
 
@@ -34,37 +25,6 @@ sheet covers the list, from top 54 to bottom 64, when open
 - Rows are `button` elements so they are in the tab order.
 - Tabs are a `nav` labelled "Sections".
 - The sheet starts hidden.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4f1ea;
-  --surface: #fffdf8;
-  --surface-2: #efeae0;
-  --ink: #1b1814;
-  --ink-2: #5e574e;
-  --ink-3: #8d857a;
-  --line: #e3dbcf;
-  --primary: #8a4b12;
-  --primary-soft: #f4e4d4;
-  --focus: #8a4b12;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --safe-top: 54px;
-  --tab: 64px;
-  --row: 72px;
-}
-```
-
-## Typography
-
-- Title: IBM Plex Sans 600, 32px, tracking -0.03em.
-- Name: 15px, weight 600.
-- Preview: 13px, `--ink-2`, one line, ellipsis.
-- Time: 12px, `--ink-3`.
-- Tabs: 11px, weight 500. Current tab weight 600, colour `--primary`.
-- Sheet title: 28px, weight 600, tracking -0.03em.
-- Back: 15px, weight 600, `--primary`, height 40px.
 
 ## Motion
 
@@ -105,6 +65,52 @@ None in this piece. The sheet appears. Do not add a spring. Reduced motion chang
 - [ ] Tab bar is 64px with Inbox current.
 - [ ] Type is IBM Plex Sans only.
 - [ ] Avatars are initials, 44px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: two unread rows (Mira Lama, Yard desk) and two read rows. Inbox tab is `aria-current="page"`.
+2. Typing in search filters rows by their visible text, case-insensitive. Non-matches are `display: none`.
+3. Tap a row: remove the unread class and hide the dot, show the sheet with that sender as the title and `data-body` as the paragraph.
+4. Back hides the sheet and shows the list again. The row stays read.
+5. Tab buttons set `aria-current` on the pressed one and clear it on the others. They do not navigate away in the demo. The list stays.
+6. Search field height 40px, radius 10px, fill `--surface-2`, no border.
+7. Avatar is initials on `#2c241c`, 44px circle. No photos.
+8. Do not draw a notch, a clock, or a browser bar.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4f1ea;
+  --surface: #fffdf8;
+  --surface-2: #efeae0;
+  --ink: #1b1814;
+  --ink-2: #5e574e;
+  --ink-3: #8d857a;
+  --line: #e3dbcf;
+  --primary: #8a4b12;
+  --primary-soft: #f4e4d4;
+  --focus: #8a4b12;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --safe-top: 54px;
+  --tab: 64px;
+  --row: 72px;
+}
+```
+
+## Typography
+
+- Title: IBM Plex Sans 600, 32px, tracking -0.03em.
+- Name: 15px, weight 600.
+- Preview: 13px, `--ink-2`, one line, ellipsis.
+- Time: 12px, `--ink-3`.
+- Tabs: 11px, weight 500. Current tab weight 600, colour `--primary`.
+- Sheet title: 28px, weight 600, tracking -0.03em.
+- Back: 15px, weight 600, `--primary`, height 40px.
 
 ## Implementation notes
 

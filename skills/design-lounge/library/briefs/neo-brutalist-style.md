@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A component style sheet for a link shortener ("Blok") in a neo-brutalist language: every interactive element has a 2.5px black border, zero radius and a hard offset shadow (`4px 4px 0 0 #111`) instead of any blur. Fills are flat: paper-white, one yellow, one blue, and black for pressed states. The only motion is the defining one: on hover the element translates by exactly its shadow offset while the shadow collapses to zero, so it reads as being pushed *into* the page rather than lifted off it. Type is Archivo Black for display numbers and the card band, Archivo for everything else, uppercase and tracked for labels. The detail worth copying is the paired transform/shadow transition: both must use the same 120ms clock or the element appears to slide off its shadow.
-
-## Reference behaviour
-
-1. Initial state: title "BLOK" in a yellow bordered block, a tagline, a mono-ish token badge at the right ("2.5px · 4px 4px 0"). Three columns: Buttons + Inputs (330px), Card (330px), Toggles + Tags + Numbers (rest).
-2. Hover any `.btn`: `transform: translate(4px, 4px)`, shadow `0 0 0 0`. Active: same plus grey (`--grey`) fill. Release: returns over 120ms.
-3. "Watch clicks" toggles `aria-pressed`; pressed = black fill with white text.
-4. Focus an input: it moves up-left by 4px and gains a blue `4px 4px 0` shadow (the opposite of the button, so text fields "rise" for typing).
-5. Tags have a 3px shadow; hover pushes them 3px; pressed = blue fill, white text. Click toggles.
-6. Toggles are 64×32 bordered rectangles with a 24px black square knob; on = yellow track, knob translated 32px over 160ms. Click toggles `aria-checked`.
-7. The card has a 6px shadow; hover pushes it 2px and shrinks the shadow to 4px (a gentler version of the button rule, since the whole card isn't a control).
-8. Nothing animates on load. All state changes are instant except the transform/shadow pairs and the knob slide.
 
 ## Structure
 
@@ -47,59 +38,6 @@ A component style sheet for a link shortener ("Blok") in a neo-brutalist languag
 - `<article class="card">` → `.band` (blue) + `.body` with `.row`s and `.act` buttons.
 - `.tg` rows: `<label for>` + `<button class="sw" role="switch" aria-checked>`.
 - `.tag` buttons with `aria-pressed`; `.stat` two bordered tiles.
-
-## Tokens
-
-```css
-:root {
-  /* colour — flat, no tints */
-  --bg: #f5f5f0;            /* page */
-  --white: #ffffff;         /* default fills */
-  --black: #111111;         /* borders, shadows, text, pressed fill */
-  --yellow: #ffd23f;        /* primary fill, toggle on, stat tile */
-  --blue: #3a86ff;          /* secondary fill, card band, focus */
-  --blue-ink: #ffffff;      /* text on blue */
-  --grey: #d9d9d2;          /* active (pressed-down) fill */
-  --ink-2: #4a4a46;         /* secondary text */
-
-  /* type */
-  --display: "Archivo Black", Impact, sans-serif;
-  --sans: "Archivo", system-ui, sans-serif;
-
-  /* structure */
-  --bw: 2.5px;              /* border weight everywhere */
-  --off: 4px;               /* shadow offset for controls */
-  --off-sm: 3px;            /* tags, toggles */
-  --off-lg: 6px;            /* card at rest */
-  --shadow: var(--off) var(--off) 0 0 var(--black);
-  --r: 0px;                 /* no radius, ever */
-  --btn-h: 44px;
-  --input-h: 44px;
-  --sw-w: 64px;  --sw-h: 32px;  --sw-knob: 24px;
-
-  /* motion */
-  --t-micro: 120ms;
-  --t-knob: 160ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role            | Family        | Size | Weight | Line-height | Tracking | Case |
-|-----------------|---------------|-----:|-------:|------------:|---------:|------|
-| Page title      | Archivo Black | 44px | 400    | 1           | −0.01em  | UPPERCASE in a bordered block |
-| Card band       | Archivo Black | 30px | 400    | 1           | −0.01em  | UPPERCASE |
-| Stat value      | Archivo Black | 32px | 400    | 1           | −0.02em  | numerals |
-| Row value       | Archivo Black | 16px | 400    | 1           | 0        | |
-| Body            | Archivo       | 15px | 400/500 | 1.45       | 0        | sentence |
-| Button          | Archivo       | 15px | 700    | 1           | +0.02em  | UPPERCASE |
-| Section label   | Archivo       | 12px | 700    | 1           | +0.12em  | UPPERCASE, 2.5px rule after |
-| Field label     | Archivo       | 12px | 700    | 1           | +0.08em  | UPPERCASE |
-| Tag             | Archivo       | 12px | 700    | 1           | +0.08em  | UPPERCASE |
-| Row label       | Archivo       | 13px | 700    | 1           | +0.04em  | UPPERCASE |
-| Stat label / badge | Archivo    | 11–13px | 700 | 1           | +0.06–0.1em | UPPERCASE |
-| Helper          | Archivo       | 12.5px | 500  | 1.45        | 0        | sentence `--ink-2` |
 
 ## Motion
 
@@ -156,6 +94,74 @@ Reduced motion: all transitions 1ms; the states are the same.
 - [ ] Display numbers and the card band are Archivo Black; all labels are uppercase Archivo 700.
 - [ ] Focus rings are blue, 2.5px, offset 3px, visible on every control.
 - [ ] No gradients, no radius, no blurred shadows anywhere on the page.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: title "BLOK" in a yellow bordered block, a tagline, a mono-ish token badge at the right ("2.5px · 4px 4px 0"). Three columns: Buttons + Inputs (330px), Card (330px), Toggles + Tags + Numbers (rest).
+2. Hover any `.btn`: `transform: translate(4px, 4px)`, shadow `0 0 0 0`. Active: same plus grey (`--grey`) fill. Release: returns over 120ms.
+3. "Watch clicks" toggles `aria-pressed`; pressed = black fill with white text.
+4. Focus an input: it moves up-left by 4px and gains a blue `4px 4px 0` shadow (the opposite of the button, so text fields "rise" for typing).
+5. Tags have a 3px shadow; hover pushes them 3px; pressed = blue fill, white text. Click toggles.
+6. Toggles are 64×32 bordered rectangles with a 24px black square knob; on = yellow track, knob translated 32px over 160ms. Click toggles `aria-checked`.
+7. The card has a 6px shadow; hover pushes it 2px and shrinks the shadow to 4px (a gentler version of the button rule, since the whole card isn't a control).
+8. Nothing animates on load. All state changes are instant except the transform/shadow pairs and the knob slide.
+
+## Tokens
+
+```css
+:root {
+  /* colour — flat, no tints */
+  --bg: #f5f5f0;            /* page */
+  --white: #ffffff;         /* default fills */
+  --black: #111111;         /* borders, shadows, text, pressed fill */
+  --yellow: #ffd23f;        /* primary fill, toggle on, stat tile */
+  --blue: #3a86ff;          /* secondary fill, card band, focus */
+  --blue-ink: #ffffff;      /* text on blue */
+  --grey: #d9d9d2;          /* active (pressed-down) fill */
+  --ink-2: #4a4a46;         /* secondary text */
+
+  /* type */
+  --display: "Archivo Black", Impact, sans-serif;
+  --sans: "Archivo", system-ui, sans-serif;
+
+  /* structure */
+  --bw: 2.5px;              /* border weight everywhere */
+  --off: 4px;               /* shadow offset for controls */
+  --off-sm: 3px;            /* tags, toggles */
+  --off-lg: 6px;            /* card at rest */
+  --shadow: var(--off) var(--off) 0 0 var(--black);
+  --r: 0px;                 /* no radius, ever */
+  --btn-h: 44px;
+  --input-h: 44px;
+  --sw-w: 64px;  --sw-h: 32px;  --sw-knob: 24px;
+
+  /* motion */
+  --t-micro: 120ms;
+  --t-knob: 160ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role            | Family        | Size | Weight | Line-height | Tracking | Case |
+|-----------------|---------------|-----:|-------:|------------:|---------:|------|
+| Page title      | Archivo Black | 44px | 400    | 1           | −0.01em  | UPPERCASE in a bordered block |
+| Card band       | Archivo Black | 30px | 400    | 1           | −0.01em  | UPPERCASE |
+| Stat value      | Archivo Black | 32px | 400    | 1           | −0.02em  | numerals |
+| Row value       | Archivo Black | 16px | 400    | 1           | 0        | |
+| Body            | Archivo       | 15px | 400/500 | 1.45       | 0        | sentence |
+| Button          | Archivo       | 15px | 700    | 1           | +0.02em  | UPPERCASE |
+| Section label   | Archivo       | 12px | 700    | 1           | +0.12em  | UPPERCASE, 2.5px rule after |
+| Field label     | Archivo       | 12px | 700    | 1           | +0.08em  | UPPERCASE |
+| Tag             | Archivo       | 12px | 700    | 1           | +0.08em  | UPPERCASE |
+| Row label       | Archivo       | 13px | 700    | 1           | +0.04em  | UPPERCASE |
+| Stat label / badge | Archivo    | 11–13px | 700 | 1           | +0.06–0.1em | UPPERCASE |
+| Helper          | Archivo       | 12.5px | 500  | 1.45        | 0        | sentence `--ink-2` |
 
 ## Implementation notes
 

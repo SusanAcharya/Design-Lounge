@@ -4,26 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from 60fps.design, a gallery of mobile micro-interaction clips: this piece takes the "pill morphs and expands into a card" idea from its mood-logging and menu-morph shots and rebuilds it as a working check-in. It is the morning screen of a fictional journal called Mannata. Five tall capsules (Heavy, Low, Steady, Bright, Glowing) sit in a row. Tapping one grows that same element into a 216×340 card with a serif mood name, a one-line note, feeling chips, place chips and a round submit button; the other four shrink to 20px slivers and dim. A soft radial light behind the row takes the mood's hue. Submitting collapses the card back into its pill with a little pop and adds a chip to "Today". The detail worth copying is that nothing is swapped: the pill itself changes width, height and radius on one spring, and its contents stagger in after the shape has mostly arrived.
 
 The language is soft and warm, not glass: tonal fills, a faint inner bottom shadow for "pressable" depth, Fraunces for feeling, Figtree for controls.
-
-## Reference behaviour
-
-1. First frame: brand "MANNATA" and "Sun, 4 Oct · 09:46" in the header; heading "How does this *morning* sit with you?" at 34px; Bright is already open as a card (the hero state); the ambient glow is amber.
-2. "Today" at the bottom lists two earlier check-ins: "Steady · Calm 08:12" and "Low · Foggy 06:40", each a pill with a colour dot.
-3. When no pill is open, the row shows five 56×148 capsules with a 24px stroke icon and an 11px label each, and a hint line "Tap the one that fits. You can add a word or two." under the heading.
-4. Pressing a capsule squeezes it to scale 0.95 (200ms spring) for tactile feedback.
-5. Tapping a capsule opens it: width 56 → 216, height 148 → 340, radius 28 → 30, over 520ms on `cubic-bezier(.34,1.36,.64,1)` (slight overshoot). The others go to 20×104, radius 10, opacity 0.4, and their labels fade. The hint fades out.
-6. The face (icon + label) slides to the top-left; the icon scales to 1.25. The panel fades in at 140ms, and its children rise 8px and fade in one after another: title 160ms, note 200ms, chips 240ms, "Where" label 280ms, place chips 300ms, submit and close 320ms.
-7. The ambient light (a 60%×45% radial gradient behind the row) cross-fades to the mood's hue at 55% opacity over 600ms.
-8. Chips toggle `aria-pressed`. Pressed chips are ink with paper text.
-9. Tapping another dimmed sliver opens that mood instead; the first one collapses on the same spring. Only one is open.
-10. Close (×), Escape, or tapping outside the card collapses it. Escape and × return focus to the mood's face button.
-11. The submit button (arrow up) logs the mood: the card collapses, the pill plays a 500ms pop to 1.08, chips reset, and a new pill slides into "Today" from the left with the mood name, up to two picked words, and the current time. The list keeps four.
-12. A hidden live region announces "Logged Bright at 09:51".
 
 ## Structure
 
@@ -57,62 +44,6 @@ The language is soft and warm, not glass: tonal fills, a faint inner bottom shad
 - Each mood is a `div.mood` holding a `button.face` (`aria-expanded`, `aria-controls`) and a `div.panel` (`role="group"`, labelled "<Mood> details"). The face and the panel are siblings, so no button sits inside a button.
 - The panel holds `h2`, `p`, a chip group "Feelings", an `h4` "Where", a chip group "Where", the submit button and the close button (absolutely placed at top 12, right 12).
 - "Today" is a `section` with an `h3` and an `ol` with `aria-live="polite"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f2eee7;        /* warm paper page */
-  --paper: #fbf8f3;     /* log pills, pressed-chip text */
-  --ink: #1d1a27;       /* text, submit, pressed chip */
-  --ink-2: #4b4757;     /* secondary text */
-  --ink-3: #6e6a78;     /* muted text, timestamps */
-  --line: #ddd6ca;      /* hairline, pill borders */
-  --hue: #f0b44a;       /* ambient light, set per mood */
-  /* mood fills (pill/card) and ambient hues */
-  --heavy: #9fb3cf;   --heavy-amb: #7f9cc6;
-  --low: #b9c7c9;     --low-amb: #97b1b4;
-  --steady: #c4d2ad;  --steady-amb: #a9c288;
-  --bright: #f1cf8a;  --bright-amb: #f0b44a;
-  --glowing: #f2aa92; --glowing-amb: #ee7f5c;
-  /* type */
-  --serif: "Fraunces", Georgia, serif;
-  --sans: "Figtree", system-ui, sans-serif;
-  /* sizes */
-  --pill-w: 56px; --pill-h: 148px;
-  --card-w: 216px; --card-h: 340px;
-  --sliver-w: 20px; --sliver-h: 104px;
-  --r-pill: 28px; --r-card: 30px; --r-sliver: 10px;
-  /* spacing */
-  --s-1: 4px; --s-2: 6px; --s-3: 10px; --s-4: 14px; --s-5: 18px; --s-6: 22px;
-  /* depth */
-  --press-depth: inset 0 -3px 0 rgba(29,26,39,.08), inset 0 1px 0 rgba(255,255,255,.6);
-  --pill-shadow: 0 6px 16px -8px rgba(29,26,39,.35);
-  --card-shadow: 0 24px 40px -18px rgba(29,26,39,.45);
-  /* motion */
-  --spring: cubic-bezier(.34, 1.36, .64, 1);
-  --out: cubic-bezier(.16, 1, .3, 1);
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --t-morph: 520ms;
-  --t-ambient: 600ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Heading (h1) | Fraunces, opsz 96 | 34px | 400, italic for one word | 1.08 | -0.02em | sentence |
-| Card title (h2) | Fraunces, opsz 72 | 30px | 600 | 1 | -0.02em | sentence |
-| Brand | Figtree | 13px | 600 | 1 | 0.08em | upper |
-| Date | Figtree | 13px | 400 | 1.45 | 0 | sentence |
-| Hint, card note | Figtree | 14px / 13px | 400 | 1.45 | 0 | sentence |
-| Pill label | Figtree | 11px | 600 | 1 | 0.02em | sentence |
-| Chip | Figtree | 13px | 500 | 1 | 0 | sentence |
-| Section label (h3, h4) | Figtree | 12px / 11px | 600 | 1 | 0.08em | upper |
-| Log pill | Figtree | 13px | 400 | 1 | 0 | sentence, time in `--ink-3` |
-
-The serif is only for words that carry feeling: the question and the mood name. Every control is Figtree.
 
 ## Motion
 
@@ -185,6 +116,81 @@ Close uses the same transitions in reverse; there is no separate close animation
 - [ ] Bright is open on first load with chips Hopeful, Social, Curious, Warm and Where: Home, Work, Out.
 - [ ] Card 216×340, pills 56×148, slivers 20×104.
 - [ ] Submitting adds a log pill like "Bright · Social 09:51".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: brand "MANNATA" and "Sun, 4 Oct · 09:46" in the header; heading "How does this *morning* sit with you?" at 34px; Bright is already open as a card (the hero state); the ambient glow is amber.
+2. "Today" at the bottom lists two earlier check-ins: "Steady · Calm 08:12" and "Low · Foggy 06:40", each a pill with a colour dot.
+3. When no pill is open, the row shows five 56×148 capsules with a 24px stroke icon and an 11px label each, and a hint line "Tap the one that fits. You can add a word or two." under the heading.
+4. Pressing a capsule squeezes it to scale 0.95 (200ms spring) for tactile feedback.
+5. Tapping a capsule opens it: width 56 → 216, height 148 → 340, radius 28 → 30, over 520ms on `cubic-bezier(.34,1.36,.64,1)` (slight overshoot). The others go to 20×104, radius 10, opacity 0.4, and their labels fade. The hint fades out.
+6. The face (icon + label) slides to the top-left; the icon scales to 1.25. The panel fades in at 140ms, and its children rise 8px and fade in one after another: title 160ms, note 200ms, chips 240ms, "Where" label 280ms, place chips 300ms, submit and close 320ms.
+7. The ambient light (a 60%×45% radial gradient behind the row) cross-fades to the mood's hue at 55% opacity over 600ms.
+8. Chips toggle `aria-pressed`. Pressed chips are ink with paper text.
+9. Tapping another dimmed sliver opens that mood instead; the first one collapses on the same spring. Only one is open.
+10. Close (×), Escape, or tapping outside the card collapses it. Escape and × return focus to the mood's face button.
+11. The submit button (arrow up) logs the mood: the card collapses, the pill plays a 500ms pop to 1.08, chips reset, and a new pill slides into "Today" from the left with the mood name, up to two picked words, and the current time. The list keeps four.
+12. A hidden live region announces "Logged Bright at 09:51".
+
+## Tokens
+
+```css
+:root {
+  --bg: #f2eee7;        /* warm paper page */
+  --paper: #fbf8f3;     /* log pills, pressed-chip text */
+  --ink: #1d1a27;       /* text, submit, pressed chip */
+  --ink-2: #4b4757;     /* secondary text */
+  --ink-3: #6e6a78;     /* muted text, timestamps */
+  --line: #ddd6ca;      /* hairline, pill borders */
+  --hue: #f0b44a;       /* ambient light, set per mood */
+  /* mood fills (pill/card) and ambient hues */
+  --heavy: #9fb3cf;   --heavy-amb: #7f9cc6;
+  --low: #b9c7c9;     --low-amb: #97b1b4;
+  --steady: #c4d2ad;  --steady-amb: #a9c288;
+  --bright: #f1cf8a;  --bright-amb: #f0b44a;
+  --glowing: #f2aa92; --glowing-amb: #ee7f5c;
+  /* type */
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Figtree", system-ui, sans-serif;
+  /* sizes */
+  --pill-w: 56px; --pill-h: 148px;
+  --card-w: 216px; --card-h: 340px;
+  --sliver-w: 20px; --sliver-h: 104px;
+  --r-pill: 28px; --r-card: 30px; --r-sliver: 10px;
+  /* spacing */
+  --s-1: 4px; --s-2: 6px; --s-3: 10px; --s-4: 14px; --s-5: 18px; --s-6: 22px;
+  /* depth */
+  --press-depth: inset 0 -3px 0 rgba(29,26,39,.08), inset 0 1px 0 rgba(255,255,255,.6);
+  --pill-shadow: 0 6px 16px -8px rgba(29,26,39,.35);
+  --card-shadow: 0 24px 40px -18px rgba(29,26,39,.45);
+  /* motion */
+  --spring: cubic-bezier(.34, 1.36, .64, 1);
+  --out: cubic-bezier(.16, 1, .3, 1);
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --t-morph: 520ms;
+  --t-ambient: 600ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Heading (h1) | Fraunces, opsz 96 | 34px | 400, italic for one word | 1.08 | -0.02em | sentence |
+| Card title (h2) | Fraunces, opsz 72 | 30px | 600 | 1 | -0.02em | sentence |
+| Brand | Figtree | 13px | 600 | 1 | 0.08em | upper |
+| Date | Figtree | 13px | 400 | 1.45 | 0 | sentence |
+| Hint, card note | Figtree | 14px / 13px | 400 | 1.45 | 0 | sentence |
+| Pill label | Figtree | 11px | 600 | 1 | 0.02em | sentence |
+| Chip | Figtree | 13px | 500 | 1 | 0 | sentence |
+| Section label (h3, h4) | Figtree | 12px / 11px | 600 | 1 | 0.08em | upper |
+| Log pill | Figtree | 13px | 400 | 1 | 0 | sentence, time in `--ink-3` |
+
+The serif is only for words that carry feeling: the question and the mood name. Every control is Figtree.
 
 ## Implementation notes
 

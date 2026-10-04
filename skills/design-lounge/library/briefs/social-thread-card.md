@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A thread view for an invented text network called Murmur, styled loud and friendly: butter-yellow dotted stage, cream card with a 2px ink outline and a hard 6px offset shadow, bright flat avatar discs. It reads instantly as the familiar threaded format: parent post with photos, replies stacked under it, and a continuous vertical line running from avatar to avatar. The line ends in a curved hook that points at the "Show 4 more replies" pill. One reply embeds a quoted post. The details worth copying are the line, which is drawn per post so it survives any content height, and the repost button, which offers Repost or Quote; Quote loads the post into the composer as a chip and posts a new reply carrying the quote card.
-
-## Reference behaviour
-
-1. First frame: header "Thread" and a mint "312 replies" pill. Parent post by juno.bakes (4h) with two painted photos and 1.2K likes, 312 replies, 48 reposts. Two replies follow: tomas.kneads, and wren.eats quoting fermentfriday. The thread line joins the three avatars and curves into the hook beside "Show 4 more replies". The composer is pinned at the bottom.
-2. Hover any action: a cream tint pill appears behind it. Press scales it to 0.94.
-3. Click a heart: it fills tomato and squishes (0.6×0.8 → 1.3×1.15 rotated −8° → 1), the count ticks down into place. Click again to unlike.
-4. Click "Show 4 more replies": the hidden block grows from 0 to its height in 420ms, and each of the four replies fades and drops in with a 70ms stagger. The chevron flips, the label becomes "Hide replies", and the list scrolls so the first new reply is visible. The last reply is from the author with a tomato "Author" badge. Click again to collapse.
-5. Collapsed replies are `inert`, so Tab skips them.
-6. Click a repost button: a small menu pops with a slight −1° tilt: Repost, Quote. Focus goes to Repost; Arrow Up/Down move; Escape closes and refocuses the button.
-7. Repost: the button turns green, count +1, the item reads "Undo repost".
-8. Quote: the menu closes, a chip "Quoting juno.bakes: Hot take: sourdough discard pancakes…" appears above the composer with a remove button, the placeholder becomes "Add your take…", and the field takes focus.
-9. Type and press Post: a new reply from "you · now" drops in at the end of the thread with the quoted post embedded below the text, gets its own working action row, and scrolls into view. The chip clears.
-10. Without a quote, Post adds a plain reply. Reply buttons focus the composer. Post is disabled until there is text.
 
 ## Structure
 
@@ -54,55 +43,6 @@ stage 1280×800, #ffe38a with 22px dot grid
 - Quote card: a `button` (it would open the quoted post) whose `aria-label` reads the quoted author and text.
 - Expand: `button aria-expanded aria-controls` pointing at the hidden block.
 - Composer: `form` with a hidden `label`, an input and a submit; the quote chip sits above it.
-
-## Tokens
-
-```css
-:root {
-  --stage: #ffe38a;         /* butter, with a rgba(29,22,56,.14) 1.2px dot every 22px */
-  --card: #fffaf0;
-  --sunk: #fff1d6;          /* hover tint, quote cards, chip */
-  --ink: #1d1638;           /* text, outlines, thread line, shadows */
-  --ink-2: #4a4366;         /* action counts */
-  --ink-3: #6a6385;         /* timestamps, placeholder */
-  --tomato: #d0391f;        /* liked heart, Post, Author badge, focus */
-  --mint: #6fd3a8;          /* replies pill, menu hover, "You" avatar */
-  --lilac: #c4b2ff;         /* avatar, expand hover */
-  --sky: #8fd0ff;           /* avatar, photo background */
-  --peach: #ffb38a;         /* avatar, photo background */
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-  --b: 2px solid var(--ink);
-  --r: 24px;
-  --shadow: 6px 6px 0 var(--ink);
-  --av: 40px;
-  --t-micro: 140ms;
-  --t-expand: 420ms;
-  --stagger: 70ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --ease-pop: cubic-bezier(.34,1.56,.64,1);
-}
-```
-
-Every bordered thing uses `--b`. Shadows are always hard and ink: card 6/6, quote card and Post 3/3, menu 4/4. No blur shadows anywhere.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Header "Thread" | Bricolage Grotesque | 20px | 800 | 1 | -0.02em |
-| Parent text | Bricolage Grotesque | 18px | 500 | 1.4 | -0.01em |
-| Reply text | Bricolage Grotesque | 15px | 400 | 1.45 | |
-| Handle | Bricolage Grotesque | 15px | 800 | | -0.01em |
-| Avatar initials | Bricolage Grotesque | 14px | 800 | | -0.02em |
-| Timestamp | DM Mono | 12px | 400 | | `--ink-3` |
-| Action count | DM Mono | 13px | 500 | | `--ink-2` |
-| Replies pill, Author badge | DM Mono | 12px / 10.5px | 500 | | |
-| Expand label, menu | Bricolage Grotesque | 14px | 600 | | |
-| Post button | Bricolage Grotesque | 15px | 800 | | cream on tomato |
-
-Mono carries numbers and time only. Zero counts render as nothing, not "0".
 
 ## Motion
 
@@ -173,6 +113,72 @@ Mono carries numbers and time only. Zero counts render as nothing, not "0".
 - [ ] Hidden replies: ada.k, basil.ok, mo.cooks, juno.bakes with an Author badge.
 - [ ] Header pill reads "312 replies".
 - [ ] Liking the parent makes its label "Like, 1205 likes".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: header "Thread" and a mint "312 replies" pill. Parent post by juno.bakes (4h) with two painted photos and 1.2K likes, 312 replies, 48 reposts. Two replies follow: tomas.kneads, and wren.eats quoting fermentfriday. The thread line joins the three avatars and curves into the hook beside "Show 4 more replies". The composer is pinned at the bottom.
+2. Hover any action: a cream tint pill appears behind it. Press scales it to 0.94.
+3. Click a heart: it fills tomato and squishes (0.6×0.8 → 1.3×1.15 rotated −8° → 1), the count ticks down into place. Click again to unlike.
+4. Click "Show 4 more replies": the hidden block grows from 0 to its height in 420ms, and each of the four replies fades and drops in with a 70ms stagger. The chevron flips, the label becomes "Hide replies", and the list scrolls so the first new reply is visible. The last reply is from the author with a tomato "Author" badge. Click again to collapse.
+5. Collapsed replies are `inert`, so Tab skips them.
+6. Click a repost button: a small menu pops with a slight −1° tilt: Repost, Quote. Focus goes to Repost; Arrow Up/Down move; Escape closes and refocuses the button.
+7. Repost: the button turns green, count +1, the item reads "Undo repost".
+8. Quote: the menu closes, a chip "Quoting juno.bakes: Hot take: sourdough discard pancakes…" appears above the composer with a remove button, the placeholder becomes "Add your take…", and the field takes focus.
+9. Type and press Post: a new reply from "you · now" drops in at the end of the thread with the quoted post embedded below the text, gets its own working action row, and scrolls into view. The chip clears.
+10. Without a quote, Post adds a plain reply. Reply buttons focus the composer. Post is disabled until there is text.
+
+## Tokens
+
+```css
+:root {
+  --stage: #ffe38a;         /* butter, with a rgba(29,22,56,.14) 1.2px dot every 22px */
+  --card: #fffaf0;
+  --sunk: #fff1d6;          /* hover tint, quote cards, chip */
+  --ink: #1d1638;           /* text, outlines, thread line, shadows */
+  --ink-2: #4a4366;         /* action counts */
+  --ink-3: #6a6385;         /* timestamps, placeholder */
+  --tomato: #d0391f;        /* liked heart, Post, Author badge, focus */
+  --mint: #6fd3a8;          /* replies pill, menu hover, "You" avatar */
+  --lilac: #c4b2ff;         /* avatar, expand hover */
+  --sky: #8fd0ff;           /* avatar, photo background */
+  --peach: #ffb38a;         /* avatar, photo background */
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  --b: 2px solid var(--ink);
+  --r: 24px;
+  --shadow: 6px 6px 0 var(--ink);
+  --av: 40px;
+  --t-micro: 140ms;
+  --t-expand: 420ms;
+  --stagger: 70ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-pop: cubic-bezier(.34,1.56,.64,1);
+}
+```
+
+Every bordered thing uses `--b`. Shadows are always hard and ink: card 6/6, quote card and Post 3/3, menu 4/4. No blur shadows anywhere.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Header "Thread" | Bricolage Grotesque | 20px | 800 | 1 | -0.02em |
+| Parent text | Bricolage Grotesque | 18px | 500 | 1.4 | -0.01em |
+| Reply text | Bricolage Grotesque | 15px | 400 | 1.45 | |
+| Handle | Bricolage Grotesque | 15px | 800 | | -0.01em |
+| Avatar initials | Bricolage Grotesque | 14px | 800 | | -0.02em |
+| Timestamp | DM Mono | 12px | 400 | | `--ink-3` |
+| Action count | DM Mono | 13px | 500 | | `--ink-2` |
+| Replies pill, Author badge | DM Mono | 12px / 10.5px | 500 | | |
+| Expand label, menu | Bricolage Grotesque | 14px | 600 | | |
+| Post button | Bricolage Grotesque | 15px | 800 | | cream on tomato |
+
+Mono carries numbers and time only. Zero counts render as nothing, not "0".
 
 ## Implementation notes
 

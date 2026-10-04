@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from stripe.com: the first screen where a fibrous gradient ribbon bleeds in from the top-right corner behind a light-weight, two-tone headline, with a live counter above it and a customer logo strip pinned to the bottom edge. This version is for an invented marketplace-payments company, Tallyfold, in teal → pistachio → saffron → coral on warm paper. It should feel calm, expensive and engineered: one big moving object, everything else still and exact. The detail worth copying is the ribbon: about 150 one-pixel fibres drawn along a twisting band on a 2D canvas, over a soft filled body, so it reads as silk instead of a blurry blob.
-
-## Reference behaviour
-
-1. On load the ribbon is already drawn. The ticker, headline and buttons rise 14px and fade in over 700ms, staggered 80ms.
-2. The ribbon twists slowly and forever: its phase advances 0.00022 rad per ms, so one full twist takes about 28 seconds. Nothing else loops except the ticker dot pulse.
-3. Moving the pointer over the hero parts the fibres near it: points within 180px are pushed away by up to 34px with a squared falloff. The pointer position is eased (12% per frame), so the parting trails the cursor softly. Leaving the hero lets the fibres close again.
-4. The ticker reads "Seller payouts settled today €4,812,906.37" and adds €0.80 to €24.80 every 120ms. The figure is in a monospaced face with tabular numerals so the line never jitters.
-5. The headline has two tones in one `h1`: the first sentence in full ink, the continuation in a muted ink. They wrap together as one paragraph.
-6. Hovering or focusing any button grows the chevron into an arrow: a 7px stem scales in from the left and the chevron head slides 3px right, 150–200ms.
-7. Hovering or focusing the logo strip blurs the six logos by 5px at 45% opacity and fades in a dark pill in the centre, "Read 6 marketplace stories →". The whole strip is one link.
-8. Two hairline guides frame the 1120px content column from the nav down, with a dashed guide at its midline. They are structure you can see, not decoration.
-9. With reduced motion, the ribbon is drawn once and stays still, there is no pointer parting, the entrance is instant and the ticker updates once a second with bigger steps.
 
 ## Structure
 
@@ -48,55 +38,6 @@ Studied from stripe.com: the first screen where a fibrous gradient ribbon bleeds
 - `header` holds the brand link, a `nav` with five links, and two action links. Its background is the paper at 70% so the ribbon tip shows faintly through it.
 - `main` holds `.copy` (ticker `p`, `h1`, CTA row) and, pushed to the bottom with `margin-top: auto`, the logo strip `a`.
 - The ticker number is an `output` element.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces and ink */
-  --paper: #FBFAF7;         /* page */
-  --ink: #0F2421;           /* headline lead, nav */
-  --ink-2: #55645F;         /* headline continuation */
-  --ink-3: #7C8984;         /* ticker figure */
-  --line: #E4E6E0;          /* guides, rules */
-  --line-strong: #D3D7D0;   /* ghost button border */
-
-  /* action */
-  --accent: #0B5D5E;        /* primary button, ghost text */
-  --accent-hover: #08494A;
-  --accent-tint: #E3EFEE;   /* ghost hover ring */
-
-  /* ribbon stops, in order along the length */
-  --r1: #0F8B8D; --r2: #3FA98A; --r3: #8CCB5E;
-  --r4: #F2C14E; --r5: #F07856; --r6: #E0533D;
-
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  --col: 1120px;
-  --nav: 64px;
-  --radius: 6px;
-  --space-1: 8px; --space-2: 12px; --space-3: 24px; --space-4: 34px; --space-5: 72px;
-
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --t-micro: 150ms; --t-layout: 300ms; --t-hero: 700ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Brand | Hanken Grotesk | 19px | 600 | -0.02em | `--ink` |
-| Nav link | Hanken Grotesk | 14px | 500 | 0 | `--ink` |
-| Ticker label | Hanken Grotesk | 13px | 500 | 0 | `--ink` |
-| Ticker figure | IBM Plex Mono | 13px | 400, tabular | -0.01em | `--ink-3` |
-| Headline | Hanken Grotesk | 46px / 1.13 | 300 | -0.022em | lead `--ink`, rest `--ink-2` |
-| Button | Hanken Grotesk | 15px (14px in nav) | 500 | 0 | white / `--accent` |
-| Logos | Hanken Grotesk or Plex Mono | 14–20px | 300–600 | varied | `#2B3B37` |
-
-The headline is weight 300. That lightness is the voice of the page; at 500 it turns into a generic SaaS header. Use `text-wrap: balance` on it.
 
 ## Motion
 
@@ -161,6 +102,71 @@ Pause the rAF loop when `document.hidden`; restart on `visibilitychange`.
 - [ ] Ribbon runs teal `#0F8B8D` → coral `#E0533D` along its length through six stops.
 - [ ] Logos are Northloom, Parcelhaus, Mosswell, brightyard_, tidewren, Calloway Market.
 - [ ] Primary button fill is `#0B5D5E`; paper is `#FBFAF7`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. On load the ribbon is already drawn. The ticker, headline and buttons rise 14px and fade in over 700ms, staggered 80ms.
+2. The ribbon twists slowly and forever: its phase advances 0.00022 rad per ms, so one full twist takes about 28 seconds. Nothing else loops except the ticker dot pulse.
+3. Moving the pointer over the hero parts the fibres near it: points within 180px are pushed away by up to 34px with a squared falloff. The pointer position is eased (12% per frame), so the parting trails the cursor softly. Leaving the hero lets the fibres close again.
+4. The ticker reads "Seller payouts settled today €4,812,906.37" and adds €0.80 to €24.80 every 120ms. The figure is in a monospaced face with tabular numerals so the line never jitters.
+5. The headline has two tones in one `h1`: the first sentence in full ink, the continuation in a muted ink. They wrap together as one paragraph.
+6. Hovering or focusing any button grows the chevron into an arrow: a 7px stem scales in from the left and the chevron head slides 3px right, 150–200ms.
+7. Hovering or focusing the logo strip blurs the six logos by 5px at 45% opacity and fades in a dark pill in the centre, "Read 6 marketplace stories →". The whole strip is one link.
+8. Two hairline guides frame the 1120px content column from the nav down, with a dashed guide at its midline. They are structure you can see, not decoration.
+9. With reduced motion, the ribbon is drawn once and stays still, there is no pointer parting, the entrance is instant and the ticker updates once a second with bigger steps.
+
+## Tokens
+
+```css
+:root {
+  /* surfaces and ink */
+  --paper: #FBFAF7;         /* page */
+  --ink: #0F2421;           /* headline lead, nav */
+  --ink-2: #55645F;         /* headline continuation */
+  --ink-3: #7C8984;         /* ticker figure */
+  --line: #E4E6E0;          /* guides, rules */
+  --line-strong: #D3D7D0;   /* ghost button border */
+
+  /* action */
+  --accent: #0B5D5E;        /* primary button, ghost text */
+  --accent-hover: #08494A;
+  --accent-tint: #E3EFEE;   /* ghost hover ring */
+
+  /* ribbon stops, in order along the length */
+  --r1: #0F8B8D; --r2: #3FA98A; --r3: #8CCB5E;
+  --r4: #F2C14E; --r5: #F07856; --r6: #E0533D;
+
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --col: 1120px;
+  --nav: 64px;
+  --radius: 6px;
+  --space-1: 8px; --space-2: 12px; --space-3: 24px; --space-4: 34px; --space-5: 72px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-micro: 150ms; --t-layout: 300ms; --t-hero: 700ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Brand | Hanken Grotesk | 19px | 600 | -0.02em | `--ink` |
+| Nav link | Hanken Grotesk | 14px | 500 | 0 | `--ink` |
+| Ticker label | Hanken Grotesk | 13px | 500 | 0 | `--ink` |
+| Ticker figure | IBM Plex Mono | 13px | 400, tabular | -0.01em | `--ink-3` |
+| Headline | Hanken Grotesk | 46px / 1.13 | 300 | -0.022em | lead `--ink`, rest `--ink-2` |
+| Button | Hanken Grotesk | 15px (14px in nav) | 500 | 0 | white / `--accent` |
+| Logos | Hanken Grotesk or Plex Mono | 14–20px | 300–600 | varied | `#2B3B37` |
+
+The headline is weight 300. That lightness is the voice of the page; at 500 it turns into a generic SaaS header. Use `text-wrap: balance` on it.
 
 ## Implementation notes
 

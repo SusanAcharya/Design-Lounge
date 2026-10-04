@@ -4,27 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the quiet dark family: 6px radii, warm greys, mono numerals, one amber accent.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The comments sheet in Ridgeline, a fictional hiking app. Behind it is a post by Kesh Gurung: a sunrise over Poon Hill, drawn with three SVG ridges on a gradient. A scrim dims the post. The sheet rises from the bottom and covers about two thirds of the screen. It holds a title with the count, a Top/Newest toggle, a threaded list, and a composer. Replies go one level deep. They are indented under a thin thread line. Tap Reply and a "Replying to @name" chip appears above the field. The Send button stays disabled until there is text. A new comment lands at the top of the list and glows amber for a moment. The detail worth copying is calm: warm greys, numbers in mono, and one accent that only means "you did this".
 
 This is not a chat. A one-to-one thread is `chat-thread`. A draggable sheet with three detents is `ios-bottom-sheet-detents`. This sheet has two heights and no drag physics.
-
-## Reference behaviour
-
-1. First frame: the post shows at the top, dimmed by a 62% scrim. The sheet is `100% - 268px` tall (576px in the frame). The title reads "Comments 128". Top is pressed. Four comments show, sorted by likes: Bikash Thapa (140), Anjali Rai (86), Mika Sato (12), Priya Menon (1).
-2. Anjali's comment has two replies, Kesh (marked "Author") and Tom. Bikash's has one reply, Lena. Replies sit under a 1px thread line, 32px in from the parent's left edge.
-3. The field is empty. Its placeholder is "Add a comment for Kesh". Send is disabled.
-4. Tap Newest. The list re-sorts by age, newest first: Priya (3m), Mika (8m), Anjali (42m), Bikash (1h). Replies keep their own order, oldest first. The list scrolls to the top.
-5. Tap a heart. It fills amber. Its count goes up by 1. The heart scales to 1.25 and back over 220ms. Tap again to undo.
-6. Tap Reply under any comment or reply. The chip "Replying to @handle" appears above the field. The placeholder becomes "Reply to Firstname". Focus moves to the field.
-7. Reply on a reply attaches to the top-level parent. The chip still names the person you tapped. There is never a second level.
-8. Tap the chip's × or press Escape in the field. The chip goes away and the placeholder resets.
-9. Type any non-space character. Send turns amber and becomes enabled. Clear the field and it goes grey and disabled again.
-10. Press Send or Enter with no reply chip. The comment is added at the top of the list, above every sort. It is from Sam Okoro, the viewer, with "now" as the time. The count becomes 129. The row's background goes amber at 16% and fades out over 1400ms.
-11. Press Send with a reply chip. The reply is added at the end of that thread with the same highlight. The list scrolls it into view. The chip clears.
-12. The field clears and Send disables after each post. A polite live region says "Comment posted." or "Reply posted."
-13. Tap the handle at the top of the sheet. The sheet grows to `100% - 64px` over 360ms. Tap again to shrink. Tapping the scrim also shrinks it.
 
 ## Structure
 
@@ -62,69 +48,6 @@ This is not a chat. A one-to-one thread is `chat-thread`. A draggable sheet with
 - The list is a `ul`. Each comment is an `li` holding a row grid (avatar, body) and, when it has replies, a nested `ul.replies`.
 - The composer is a `form`. The field has a visually hidden `label` "Add a comment". Send is `type="submit"` with `aria-label="Post comment"`.
 - Comment text is set with `textContent`, never `innerHTML`.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces */
-  --page: #0f0e0d;                       /* behind the post */
-  --sheet: #1c1a18;                      /* sheet */
-  --raised: #262320;                     /* field, chip, sort track */
-  --line: #33302c;                       /* hairlines, thread line, handle */
-  --scrim: rgba(8, 7, 6, 0.62);
-  /* ink */
-  --ink: #ede8e1;
-  --ink-2: #b8b0a5;
-  --ink-3: #948b80;
-  /* accent */
-  --accent: #e9a23b;                     /* amber */
-  --on-accent: #1c1a18;
-  --accent-wash: rgba(233, 162, 59, 0.16);
-  --focus: #e9a23b;
-  /* type */
-  --sans: "Instrument Sans", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  /* space, 4px base */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
-  --page-x: 16px;
-  /* shape */
-  --r: 6px;
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --sheet-ease: cubic-bezier(0.32, 0.72, 0, 1);
-  --micro: 160ms;
-  --layout: 360ms;
-  /* insets */
-  --top: max(54px, env(safe-area-inset-top));
-  --bottom: max(34px, env(safe-area-inset-bottom));
-}
-```
-
-Avatar fills are per-person muted tints, set inline: `#9db8a0`, `#d9b36c`, `#c98a7a`, `#b8c48f`, `#8fb1c4`, `#a9a3c9`, `#c9a27a`. Initials sit on them in `--sheet`. The viewer's avatar is `--accent`.
-
-No shadows. The sheet is separated from the post by its lighter surface and a 1px `--line` top border.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- | --- |
-| Sheet title | Instrument Sans | 16px | 600 | 1.2 | -0.005em | `--ink` |
-| Title count | JetBrains Mono | 13px | 400 | 1.2 | 0 | `--ink-3` |
-| Sort label | Instrument Sans | 13px | 500 | 1 | 0 | `--ink-3`, pressed `--ink` |
-| Name | Instrument Sans | 13px | 600 | 1.3 | 0 | `--ink` |
-| Author tag | Instrument Sans | 10px | 600 | 1 | 0.08em | `--accent`, upper |
-| Time | JetBrains Mono | 11px | 400 | 1.3 | 0 | `--ink-3` |
-| Comment text | Instrument Sans | 14px | 400 | 1.45 | 0 | `--ink` |
-| Action label | Instrument Sans | 12px | 500 | 1 | 0 | `--ink-3` |
-| Like count | JetBrains Mono | 12px | 400 | 1 | 0 | inherits, min 3ch |
-| Chip | Instrument Sans | 12px | 400 | 1.3 | 0 | `--ink-2`, handle `--ink` 500 |
-| Field | Instrument Sans | 15px | 400 | 1.2 | 0 | `--ink`, placeholder `--ink-3` |
-| Avatar initials | Instrument Sans | 11px (9px reply) | 600 | 1 | 0 | `--sheet` |
-
-- Every number is mono with `tabular-nums`: the count, times, and likes. Words are sans.
-- Give the like count `min-width: 3ch`, so 99 → 100 does not push Reply.
-- The field is 15px or more. Smaller text makes iOS Safari zoom on focus.
 
 ## Motion
 
@@ -208,6 +131,89 @@ No shadows. The sheet is separated from the post by its lighter surface and a 1p
 - [ ] New comments post as Sam Okoro with the time "now".
 - [ ] Sheet `#1c1a18`, field `#262320`, line `#33302c`, accent `#e9a23b`.
 - [ ] The handle grows the sheet to `100% - 64px` over 360ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the post shows at the top, dimmed by a 62% scrim. The sheet is `100% - 268px` tall (576px in the frame). The title reads "Comments 128". Top is pressed. Four comments show, sorted by likes: Bikash Thapa (140), Anjali Rai (86), Mika Sato (12), Priya Menon (1).
+2. Anjali's comment has two replies, Kesh (marked "Author") and Tom. Bikash's has one reply, Lena. Replies sit under a 1px thread line, 32px in from the parent's left edge.
+3. The field is empty. Its placeholder is "Add a comment for Kesh". Send is disabled.
+4. Tap Newest. The list re-sorts by age, newest first: Priya (3m), Mika (8m), Anjali (42m), Bikash (1h). Replies keep their own order, oldest first. The list scrolls to the top.
+5. Tap a heart. It fills amber. Its count goes up by 1. The heart scales to 1.25 and back over 220ms. Tap again to undo.
+6. Tap Reply under any comment or reply. The chip "Replying to @handle" appears above the field. The placeholder becomes "Reply to Firstname". Focus moves to the field.
+7. Reply on a reply attaches to the top-level parent. The chip still names the person you tapped. There is never a second level.
+8. Tap the chip's × or press Escape in the field. The chip goes away and the placeholder resets.
+9. Type any non-space character. Send turns amber and becomes enabled. Clear the field and it goes grey and disabled again.
+10. Press Send or Enter with no reply chip. The comment is added at the top of the list, above every sort. It is from Sam Okoro, the viewer, with "now" as the time. The count becomes 129. The row's background goes amber at 16% and fades out over 1400ms.
+11. Press Send with a reply chip. The reply is added at the end of that thread with the same highlight. The list scrolls it into view. The chip clears.
+12. The field clears and Send disables after each post. A polite live region says "Comment posted." or "Reply posted."
+13. Tap the handle at the top of the sheet. The sheet grows to `100% - 64px` over 360ms. Tap again to shrink. Tapping the scrim also shrinks it.
+
+## Tokens
+
+```css
+:root {
+  /* surfaces */
+  --page: #0f0e0d;                       /* behind the post */
+  --sheet: #1c1a18;                      /* sheet */
+  --raised: #262320;                     /* field, chip, sort track */
+  --line: #33302c;                       /* hairlines, thread line, handle */
+  --scrim: rgba(8, 7, 6, 0.62);
+  /* ink */
+  --ink: #ede8e1;
+  --ink-2: #b8b0a5;
+  --ink-3: #948b80;
+  /* accent */
+  --accent: #e9a23b;                     /* amber */
+  --on-accent: #1c1a18;
+  --accent-wash: rgba(233, 162, 59, 0.16);
+  --focus: #e9a23b;
+  /* type */
+  --sans: "Instrument Sans", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  /* space, 4px base */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+  --page-x: 16px;
+  /* shape */
+  --r: 6px;
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --sheet-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --micro: 160ms;
+  --layout: 360ms;
+  /* insets */
+  --top: max(54px, env(safe-area-inset-top));
+  --bottom: max(34px, env(safe-area-inset-bottom));
+}
+```
+
+Avatar fills are per-person muted tints, set inline: `#9db8a0`, `#d9b36c`, `#c98a7a`, `#b8c48f`, `#8fb1c4`, `#a9a3c9`, `#c9a27a`. Initials sit on them in `--sheet`. The viewer's avatar is `--accent`.
+
+No shadows. The sheet is separated from the post by its lighter surface and a 1px `--line` top border.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- | --- |
+| Sheet title | Instrument Sans | 16px | 600 | 1.2 | -0.005em | `--ink` |
+| Title count | JetBrains Mono | 13px | 400 | 1.2 | 0 | `--ink-3` |
+| Sort label | Instrument Sans | 13px | 500 | 1 | 0 | `--ink-3`, pressed `--ink` |
+| Name | Instrument Sans | 13px | 600 | 1.3 | 0 | `--ink` |
+| Author tag | Instrument Sans | 10px | 600 | 1 | 0.08em | `--accent`, upper |
+| Time | JetBrains Mono | 11px | 400 | 1.3 | 0 | `--ink-3` |
+| Comment text | Instrument Sans | 14px | 400 | 1.45 | 0 | `--ink` |
+| Action label | Instrument Sans | 12px | 500 | 1 | 0 | `--ink-3` |
+| Like count | JetBrains Mono | 12px | 400 | 1 | 0 | inherits, min 3ch |
+| Chip | Instrument Sans | 12px | 400 | 1.3 | 0 | `--ink-2`, handle `--ink` 500 |
+| Field | Instrument Sans | 15px | 400 | 1.2 | 0 | `--ink`, placeholder `--ink-3` |
+| Avatar initials | Instrument Sans | 11px (9px reply) | 600 | 1 | 0 | `--sheet` |
+
+- Every number is mono with `tabular-nums`: the count, times, and likes. Words are sans.
+- Give the like count `min-width: 3ch`, so 99 → 100 does not push Reply.
+- The field is 15px or more. Smaller text makes iOS Safari zoom on focus.
 
 ## Implementation notes
 

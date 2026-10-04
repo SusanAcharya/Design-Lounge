@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The top of a marketing site for Tendwell, a fictional booking tool for clinics. The left half sells: a small "New" pill, a 62px headline with one word marked in butter yellow, a subline, two buttons, and a trust line that says "Used by 2,400 clinics". The right half shows the product instead of describing it: three real UI cards built from HTML and CSS, stacked and overlapping. A day schedule sits at the back, a patient text message sits in the middle, and a weekly fill-rate card sits in front. The cards settle in one after another on load, then drift a few pixels with the pointer, so the stack feels like paper on a desk. The detail worth copying: the three cards tell one story. The waitlist slot on the schedule, the text that filled it, and the number that went up are the same event.
-
-## Reference behaviour
-
-1. Initial state: warm white page. Nav at the top, 72px tall. Below it, a two-column hero fills the rest of the 800px frame and is centred vertically.
-2. Left column, top to bottom: pill "New · Waitlist autofill for group practices", headline "Every open slot, filled by morning." with "filled" marked, subline (3 lines at 1280), two buttons, trust line with four small round initials and the text "Used by 2,400 clinics across 11 countries".
-3. Right column: a 540px tall stage holding three cards at absolute positions. The schedule card is at the back, top left, 76% of the stage width. The message card is on the right, 58% wide, 186px from the top. The metric card is in front, bottom left, 44% wide, 330px from the top.
-4. On load, each card rises from 28px below and scales from 0.96 to 1 while it fades in. Each takes 800ms on expo-out. Delays are 150ms, 300ms and 450ms, back to front.
-5. Moving the pointer anywhere on the page shifts the cards. The back card moves up to 2px, the middle card up to 4px, the front card up to 6px. The direction follows the pointer: pointer at the right edge moves cards right, pointer at the top moves cards up.
-6. Each card follows the pointer through a 700ms expo-out transition, so the drift lags behind the pointer and never jitters.
-7. When the pointer leaves the page, the cards ease back to 0, 0.
-8. Hovering a button darkens its fill over 160ms. Pressing a button nudges it down 1px.
-9. The stage is not interactive. The cards are pictures of the product, not controls.
-10. With reduced motion, the cards are in place on the first frame and do not drift.
 
 ## Structure
 
@@ -53,73 +42,6 @@ padding 24 72 40, column gap 48
 - Schedule card: a header row (title, doctor, a 5-day strip with Thursday filled), then a `ul` of 4 appointment rows. Each row is a grid: time 52px, a 4px colour bar, name and type, a status tag.
 - Message card: avatar and name row, an outgoing teal bubble, an incoming "YES" bubble aligned right, a teal status line with a check icon.
 - Metric card: label, a 40px number with a delta pill, 6 bars, 6 day letters.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #fbf8f2;          /* warm white page */
-  --surface: #ffffff;     /* cards */
-  --sunk: #f3eee4;        /* tags, incoming bubble, secondary hover */
-  --ink: #16302e;         /* headings, names */
-  --ink-2: #4a5b58;       /* body, subline */
-  --ink-3: #6f7d7a;       /* meta, times */
-  --line: #e6dfd1;        /* card borders, dividers */
-  --teal: #0f4c4a;        /* primary, outgoing bubble, bars */
-  --teal-2: #0b3a38;      /* primary hover */
-  --teal-soft: #e2eeec;   /* pill, delta, low bars */
-  --butter: #f6d97a;      /* headline mark, autofilled tag */
-  --butter-soft: #fbefc4; /* autofilled row */
-  --focus: #0f4c4a;
-
-  /* type */
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-  --fs-h1: 62px;
-  --fs-sub: 19px;
-  --fs-body: 16px;
-  --fs-card: 14px;
-  --fs-meta: 12px;
-
-  /* space (4px base) */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 72px;
-
-  /* shape */
-  --r: 14px;      /* cards, big buttons */
-  --r-sm: 10px;   /* schedule rows */
-  --r-pill: 999px;
-  --shadow: 0 1px 0 rgba(22,48,46,.04), 0 12px 32px -12px rgba(22,48,46,.22);
-
-  /* motion */
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --t-micro: 160ms;
-  --t-enter: 800ms;
-  --t-drift: 700ms;
-}
-```
-
-## Typography
-
-One family, Hanken Grotesk, at 400, 500, 600, 700 and 800. It is a grotesk with open, humanist shapes, which keeps the page friendly without going round and bubbly.
-
-| Role | Size | Weight | Line-height | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Logo | 19px | 800 | 1 | -0.02em | `--ink` |
-| Nav links | 15px | 500 | 1.5 | 0 | `--ink-2` |
-| Pill | 14px | 600 | 1 | 0 | `--teal` |
-| Headline `h1` | 62px | 800 | 1.02 | -0.035em | `--ink` |
-| Subline | 19px | 400 | 1.55 | 0 | `--ink-2` |
-| Button | 16px | 700 | 1 | 0 | per variant |
-| Trust line | 15px | 400, number part 700 | 1.5 | 0 | `--ink-2`, bold part `--ink` |
-| Card title | 15px | 700 | 1.3 | 0 | `--ink` |
-| Card row name | 14px | 600 | 1.3 | 0 | `--ink` |
-| Card meta | 12-13px | 500-600 | 1.3 | 0 | `--ink-3` |
-| Metric number | 40px | 800 | 1 | -0.03em | `--ink` |
-
-- Cap the headline at 13ch so it breaks into two lines at 1280: "Every open slot," then "filled by morning."
-- Cap the subline at 30em.
-- Use `font-variant-numeric: tabular-nums` on the schedule times.
 
 ## Motion
 
@@ -191,6 +113,90 @@ One family, Hanken Grotesk, at 400, 500, 600, 700 and 800. It is a grotesk with 
 - [ ] The message offers the 10:30 slot. The reply is "YES". The status reads "Booked in 41 seconds".
 - [ ] The metric card reads 96% with "+14 pts" and has 6 bars, Friday filled in teal.
 - [ ] Card radius is 14px. Primary is `#0f4c4a` on a `#fbf8f2` page.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: warm white page. Nav at the top, 72px tall. Below it, a two-column hero fills the rest of the 800px frame and is centred vertically.
+2. Left column, top to bottom: pill "New · Waitlist autofill for group practices", headline "Every open slot, filled by morning." with "filled" marked, subline (3 lines at 1280), two buttons, trust line with four small round initials and the text "Used by 2,400 clinics across 11 countries".
+3. Right column: a 540px tall stage holding three cards at absolute positions. The schedule card is at the back, top left, 76% of the stage width. The message card is on the right, 58% wide, 186px from the top. The metric card is in front, bottom left, 44% wide, 330px from the top.
+4. On load, each card rises from 28px below and scales from 0.96 to 1 while it fades in. Each takes 800ms on expo-out. Delays are 150ms, 300ms and 450ms, back to front.
+5. Moving the pointer anywhere on the page shifts the cards. The back card moves up to 2px, the middle card up to 4px, the front card up to 6px. The direction follows the pointer: pointer at the right edge moves cards right, pointer at the top moves cards up.
+6. Each card follows the pointer through a 700ms expo-out transition, so the drift lags behind the pointer and never jitters.
+7. When the pointer leaves the page, the cards ease back to 0, 0.
+8. Hovering a button darkens its fill over 160ms. Pressing a button nudges it down 1px.
+9. The stage is not interactive. The cards are pictures of the product, not controls.
+10. With reduced motion, the cards are in place on the first frame and do not drift.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #fbf8f2;          /* warm white page */
+  --surface: #ffffff;     /* cards */
+  --sunk: #f3eee4;        /* tags, incoming bubble, secondary hover */
+  --ink: #16302e;         /* headings, names */
+  --ink-2: #4a5b58;       /* body, subline */
+  --ink-3: #6f7d7a;       /* meta, times */
+  --line: #e6dfd1;        /* card borders, dividers */
+  --teal: #0f4c4a;        /* primary, outgoing bubble, bars */
+  --teal-2: #0b3a38;      /* primary hover */
+  --teal-soft: #e2eeec;   /* pill, delta, low bars */
+  --butter: #f6d97a;      /* headline mark, autofilled tag */
+  --butter-soft: #fbefc4; /* autofilled row */
+  --focus: #0f4c4a;
+
+  /* type */
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --fs-h1: 62px;
+  --fs-sub: 19px;
+  --fs-body: 16px;
+  --fs-card: 14px;
+  --fs-meta: 12px;
+
+  /* space (4px base) */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 72px;
+
+  /* shape */
+  --r: 14px;      /* cards, big buttons */
+  --r-sm: 10px;   /* schedule rows */
+  --r-pill: 999px;
+  --shadow: 0 1px 0 rgba(22,48,46,.04), 0 12px 32px -12px rgba(22,48,46,.22);
+
+  /* motion */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --t-micro: 160ms;
+  --t-enter: 800ms;
+  --t-drift: 700ms;
+}
+```
+
+## Typography
+
+One family, Hanken Grotesk, at 400, 500, 600, 700 and 800. It is a grotesk with open, humanist shapes, which keeps the page friendly without going round and bubbly.
+
+| Role | Size | Weight | Line-height | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Logo | 19px | 800 | 1 | -0.02em | `--ink` |
+| Nav links | 15px | 500 | 1.5 | 0 | `--ink-2` |
+| Pill | 14px | 600 | 1 | 0 | `--teal` |
+| Headline `h1` | 62px | 800 | 1.02 | -0.035em | `--ink` |
+| Subline | 19px | 400 | 1.55 | 0 | `--ink-2` |
+| Button | 16px | 700 | 1 | 0 | per variant |
+| Trust line | 15px | 400, number part 700 | 1.5 | 0 | `--ink-2`, bold part `--ink` |
+| Card title | 15px | 700 | 1.3 | 0 | `--ink` |
+| Card row name | 14px | 600 | 1.3 | 0 | `--ink` |
+| Card meta | 12-13px | 500-600 | 1.3 | 0 | `--ink-3` |
+| Metric number | 40px | 800 | 1 | -0.03em | `--ink` |
+
+- Cap the headline at 13ch so it breaks into two lines at 1280: "Every open slot," then "filled by morning."
+- Cap the subline at 30em.
+- Use `font-variant-numeric: tabular-nums` on the schedule times.
 
 ## Implementation notes
 

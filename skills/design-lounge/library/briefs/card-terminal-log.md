@@ -4,26 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The log tail of one worker inside an infrastructure console, set as a single card on a warm graphite page. New lines stream in every 0.4–1.3s, each with a timestamp, a coloured level, a source, and a message. Four level chips filter the stream, a search box filters and highlights, and the moment the pointer rests over the log the autoscroll holds so you can read. A pill counts what arrived while you were reading and jumps you back. Any line can be copied with its timestamp and level. The detail worth copying is the hold: autoscroll stops on hover, focus, or scroll-up, never on a timer, and the header badge says which state you are in (LIVE, HOLDING, PAUSED).
 
 This is not `terminal-ui-style` (a whole visual language) and not `audit-activity-log` (a human audit trail). It is one data card for a machine stream.
-
-## Reference behaviour
-
-1. First frame: 46 lines already in the log, scrolled to the bottom. Header reads `ninefold / eu-west-2 / deploy 4812` above `ingest-worker-3` and a cyan `LIVE` badge with a pulsing 6px dot. Right side shows the line rate (`1.0/s`, lines in the last 10s) and a `Pause stream` button. All four level chips are on, each with its count.
-2. Streaming: a new line is appended every 380–1300ms (random). Level mix: 28% debug, 52% info, 14% warn, 6% error. Each new line fades and rises 6px over 380ms. The log keeps the last 240 lines; older lines are removed from the top.
-3. Following: while the log is following, every new line scrolls the log to the bottom instantly.
-4. Hold: pointer enters the log body (mouse only), or focus enters the log, or the user scrolls more than 24px up from the bottom. Autoscroll stops. The badge turns amber and reads `HOLDING`. Lines still arrive. Each new visible line increments an amber pill at the bottom centre: `3 new lines`.
-5. Release: pointer leaves and focus is outside and the log is at the bottom → badge back to `LIVE`, unseen count resets, log jumps to the bottom. Clicking the pill scrolls to the bottom (smooth, or instant with reduced motion) and clears the count.
-6. Pause stream: the header button toggles generation. Pressed state is a filled amber button labelled `Resume stream` with a play icon. Badge reads `PAUSED` in muted grey with a still dot. Resuming restarts the stream after 300ms.
-7. Level chips: each toggles its level (multi-select). Off chips show a hollow square and muted text. Hidden lines are `display: none`, counts keep counting.
-8. Search: typing filters to lines whose message contains the query (case-insensitive, 90ms debounce) and wraps every match in an amber `<mark>`. Escape clears. `/` anywhere focuses the search.
-9. Copy: hovering a line reveals a copy icon at the right edge. Clicking copies `HH:MM:SS.mmm LEVEL [source] message`. The icon becomes a cyan check for 1.6s, and the footer status reads `Copied line 00:14:45.934` for the same 1.6s. If the clipboard is blocked, the status says so instead of pretending.
-10. Keyboard in the log: Tab to the log, then Up/Down move a current-line marker (amber left border, tinted row), Home/End jump, `C` or Enter copies the current line, Escape clears the marker and leaves.
-11. Footer status always describes the state: `52 lines · 14 matches for "partition" · autoscroll held`.
-12. Empty filter result: a centred line reads `No lines match "x" at the selected levels.` or `All levels are hidden. Turn one back on above.`
 
 ## Structure
 
@@ -61,61 +48,6 @@ Message copy is generated from templates per level. Use these so the stream read
 | error | writer, api, consumer | `write failed: connection reset by peer (pg-replica-2:5432) req=hex6` · `payload rejected: 413 body N.NMB > 5MB limit` · `deadline exceeded after 30000ms on partition=N` |
 
 Table names and source names inside messages are wrapped in `<em>` and coloured cyan.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces: warm graphite, never pure black */
-  --bg: #161513;        /* page */
-  --card: #1e1d1a;      /* card head, tools, foot */
-  --well: #191816;      /* log body and search field */
-  --line: #2e2c28;      /* hairlines between regions */
-  --line-2: #3a3833;    /* control borders */
-
-  /* ink */
-  --ink: #ebe6da;       /* messages, title */
-  --ink-2: #aaa395;     /* sources, debug messages, footer bold */
-  --ink-3: #8e877a;     /* timestamps, crumb, placeholders */
-
-  /* levels */
-  --debug: #948e82;
-  --info: #7fbcc8;      /* also <em> highlights and the LIVE badge */
-  --warn: #e6b350;
-  --error: #f0705a;     /* level label; error messages use #f6c7bc */
-
-  --accent: #e6b350;    /* focus, mark, pill, current line, pressed pause */
-
-  --ui: "Familjen Grotesk", system-ui, sans-serif;
-  --mono: "Martian Mono", ui-monospace, monospace;   /* at font-stretch 87.5% */
-
-  --r-card: 10px; --r-ctl: 6px; --r-chip: 5px;
-  --pad-x: 20px;
-  --row-cols: 104px 54px 124px minmax(0, 1fr) 36px;
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-line: 380ms;  --t-pill: 240ms;  --t-micro: 150ms;
-  --shadow-card: 0 40px 80px -40px rgba(0, 0, 0, .7);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Crumb | Martian Mono 87.5% | 11px | 500 | 1.4 | 0.02em | lower |
-| Worker name (h1) | Familjen Grotesk | 22px | 700 | 1.15 | -0.01em | as written |
-| Badge | Martian Mono 87.5% | 11px | 500 | 1 | 0.04em | UPPER |
-| Rate number | Martian Mono 87.5% | 15px | 500 | 1.3 | 0 | — |
-| Button | Familjen Grotesk | 13px | 600 | 1 | 0 | Sentence |
-| Chip | Martian Mono 87.5% | 11px | 500 (count 400) | 1 | 0.06em | UPPER |
-| Search | Martian Mono 87.5% | 12px | 400 | 1 | 0 | — |
-| Log line | Martian Mono 87.5% | 12.5px | 400 (level 500) | 1.6 | level 0.04em | level UPPER |
-| Footer | Martian Mono 87.5% | 11px | 400 (bold 500) | 1.4 | 0 | sentence |
-| Pill | Familjen Grotesk | 12px | 600 | 1 | 0 | sentence |
-
-Load Martian Mono with the width axis: `family=Martian+Mono:wdth,wght@87.5,400;87.5,500`. At 100% width the columns get too wide for 960px.
 
 ## Motion
 
@@ -187,6 +119,80 @@ No other motion. Autoscroll is never animated: smooth-scrolling every 600ms make
 - [ ] Levels: debug `#948e82`, info `#7fbcc8`, warn `#e6b350`, error `#f0705a`.
 - [ ] Martian Mono at 87.5% width for all log text; Familjen Grotesk for the title, buttons, pill.
 - [ ] 46 seed lines, 240-line cap, 380–1300ms between lines.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: 46 lines already in the log, scrolled to the bottom. Header reads `ninefold / eu-west-2 / deploy 4812` above `ingest-worker-3` and a cyan `LIVE` badge with a pulsing 6px dot. Right side shows the line rate (`1.0/s`, lines in the last 10s) and a `Pause stream` button. All four level chips are on, each with its count.
+2. Streaming: a new line is appended every 380–1300ms (random). Level mix: 28% debug, 52% info, 14% warn, 6% error. Each new line fades and rises 6px over 380ms. The log keeps the last 240 lines; older lines are removed from the top.
+3. Following: while the log is following, every new line scrolls the log to the bottom instantly.
+4. Hold: pointer enters the log body (mouse only), or focus enters the log, or the user scrolls more than 24px up from the bottom. Autoscroll stops. The badge turns amber and reads `HOLDING`. Lines still arrive. Each new visible line increments an amber pill at the bottom centre: `3 new lines`.
+5. Release: pointer leaves and focus is outside and the log is at the bottom → badge back to `LIVE`, unseen count resets, log jumps to the bottom. Clicking the pill scrolls to the bottom (smooth, or instant with reduced motion) and clears the count.
+6. Pause stream: the header button toggles generation. Pressed state is a filled amber button labelled `Resume stream` with a play icon. Badge reads `PAUSED` in muted grey with a still dot. Resuming restarts the stream after 300ms.
+7. Level chips: each toggles its level (multi-select). Off chips show a hollow square and muted text. Hidden lines are `display: none`, counts keep counting.
+8. Search: typing filters to lines whose message contains the query (case-insensitive, 90ms debounce) and wraps every match in an amber `<mark>`. Escape clears. `/` anywhere focuses the search.
+9. Copy: hovering a line reveals a copy icon at the right edge. Clicking copies `HH:MM:SS.mmm LEVEL [source] message`. The icon becomes a cyan check for 1.6s, and the footer status reads `Copied line 00:14:45.934` for the same 1.6s. If the clipboard is blocked, the status says so instead of pretending.
+10. Keyboard in the log: Tab to the log, then Up/Down move a current-line marker (amber left border, tinted row), Home/End jump, `C` or Enter copies the current line, Escape clears the marker and leaves.
+11. Footer status always describes the state: `52 lines · 14 matches for "partition" · autoscroll held`.
+12. Empty filter result: a centred line reads `No lines match "x" at the selected levels.` or `All levels are hidden. Turn one back on above.`
+
+## Tokens
+
+```css
+:root {
+  /* surfaces: warm graphite, never pure black */
+  --bg: #161513;        /* page */
+  --card: #1e1d1a;      /* card head, tools, foot */
+  --well: #191816;      /* log body and search field */
+  --line: #2e2c28;      /* hairlines between regions */
+  --line-2: #3a3833;    /* control borders */
+
+  /* ink */
+  --ink: #ebe6da;       /* messages, title */
+  --ink-2: #aaa395;     /* sources, debug messages, footer bold */
+  --ink-3: #8e877a;     /* timestamps, crumb, placeholders */
+
+  /* levels */
+  --debug: #948e82;
+  --info: #7fbcc8;      /* also <em> highlights and the LIVE badge */
+  --warn: #e6b350;
+  --error: #f0705a;     /* level label; error messages use #f6c7bc */
+
+  --accent: #e6b350;    /* focus, mark, pill, current line, pressed pause */
+
+  --ui: "Familjen Grotesk", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;   /* at font-stretch 87.5% */
+
+  --r-card: 10px; --r-ctl: 6px; --r-chip: 5px;
+  --pad-x: 20px;
+  --row-cols: 104px 54px 124px minmax(0, 1fr) 36px;
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-line: 380ms;  --t-pill: 240ms;  --t-micro: 150ms;
+  --shadow-card: 0 40px 80px -40px rgba(0, 0, 0, .7);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Crumb | Martian Mono 87.5% | 11px | 500 | 1.4 | 0.02em | lower |
+| Worker name (h1) | Familjen Grotesk | 22px | 700 | 1.15 | -0.01em | as written |
+| Badge | Martian Mono 87.5% | 11px | 500 | 1 | 0.04em | UPPER |
+| Rate number | Martian Mono 87.5% | 15px | 500 | 1.3 | 0 | — |
+| Button | Familjen Grotesk | 13px | 600 | 1 | 0 | Sentence |
+| Chip | Martian Mono 87.5% | 11px | 500 (count 400) | 1 | 0.06em | UPPER |
+| Search | Martian Mono 87.5% | 12px | 400 | 1 | 0 | — |
+| Log line | Martian Mono 87.5% | 12.5px | 400 (level 500) | 1.6 | level 0.04em | level UPPER |
+| Footer | Martian Mono 87.5% | 11px | 400 (bold 500) | 1.4 | 0 | sentence |
+| Pill | Familjen Grotesk | 12px | 600 | 1 | 0 | sentence |
+
+Load Martian Mono with the width axis: `family=Martian+Mono:wdth,wght@87.5,400;87.5,500`. At 100% width the columns get too wide for 960px.
 
 ## Implementation notes
 

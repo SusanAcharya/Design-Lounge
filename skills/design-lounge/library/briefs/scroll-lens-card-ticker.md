@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from wickret.cuberto.com: the benefits strip where one line of big text slides sideways behind a fixed rounded card in the middle of the screen, and the card shows a new picture for each line. This rebuild is for **Fernly**, a fictional houseplant care membership, on a charcoal page. Vertical scroll drives four benefit lines across the viewport, one at a time. The centre card works like a lens. Text outside it is bone, and the same text seen through it is ink on the card's colour. As each line settles in the card, the card recolours (sage, clay, sky, mustard), crossfades its line icon, and updates a counter and two small facts. The detail worth copying is the second, clipped copy of the track inside the card, offset by the card's position, so the colour change lines up exactly at the card edge without any blend modes.
-
-## Reference behaviour
-
-1. First frame: a charcoal stage `#161514` pinned to the viewport. Fernly mark top-left and an outlined "Start a membership" pill top-right. Eyebrow "THE MEMBERSHIP" at top-left, with the italic serif line "Four things you will never have to think about." under it. In the centre, a 280×360 sage card with radius 28. "Watered on your schedule" is centred on it at 64px, bone outside the card and ink inside. A four-option rail sits at the bottom centre, with "Watering" current. A small "SCROLL" cue with a dripping line sits bottom-right.
-2. The page is 520vh tall. The stage is `position: sticky; top: 0; height: 100vh`, so the stage stays and scroll progress `p` (0 → 1) drives the track.
-3. The track's x is chosen so the centre of a phrase sits at the viewport centre. Between phrase i and i+1, the centre is interpolated with smoothstep `t*t*(3-2t)`, so each phrase lingers in the card and then moves on.
-4. The displayed x eases toward the target each frame (`cur += (target - cur) * 0.14`) for inertia. It stops when within 0.3px.
-5. The active index is `round(p × 3)`. On change: card background crossfades over 500ms, the icon swaps (old fades out, new scales 0.92 → 1 and rotates −4° → 0 over 600ms expo-out), the counter reads "02 / 04", the bottom facts update, the rail moves `aria-current="step"`, and the live region announces the phrase.
-6. The four phrases and facts are: "Watered on your schedule" (Weekly visit · Included, sage `#B9CBA4`); "Repotted when it outgrows" (Soil + pot · Included, clay `#E79B72`); "Swap any plant, any month" (1 swap / month · Free, sky `#A9C8DE`); "A botanist on call" (Reply in 2 h · 7 days, mustard `#E8C35A`).
-7. Clicking a rail option scrolls to that phrase's progress (`maxScroll × i / 3`) with smooth scroll. Left and right arrow keys on a focused rail option move to the neighbour and focus it.
-8. Resizing re-measures phrase centres and the inner track offset.
-9. Reduced motion: no inertia (x snaps to target), no card or icon transitions, no drip. Rail clicks jump.
 
 ## Structure
 
@@ -42,42 +32,6 @@ Studied from wickret.cuberto.com: the benefits strip where one line of big text 
 - `div.track.out` is `aria-hidden`, absolute, `top: 50%`, `display: flex`, `white-space: nowrap`. Each phrase is a `span` with `margin-right: 220px`.
 - `div.card` is `aria-hidden`, absolutely centred, `overflow: hidden`. It contains `span.num`, four `div.art` (one inline SVG each), `div.track.in` (the same phrases), and `div.tag` with two spans.
 - `nav.rail` holds four `button`s whose visible label is the short name and whose `aria-label` is the full phrase.
-
-## Tokens
-
-```css
-:root {
-  --bg: #161514;        /* stage, card ink text */
-  --bone: #EDE6D8;      /* outside text, active rail fill */
-  --bone-2: #A8A194;    /* eyebrow, inactive rail, cue */
-  --line: #2C2A27;      /* rail border, cue track */
-  --ink: #161514;       /* text inside the card */
-  --sage: #B9CBA4;      /* benefit 1 */
-  --clay: #E79B72;      /* benefit 2 */
-  --sky: #A9C8DE;       /* benefit 3 */
-  --mustard: #E8C35A;   /* benefit 4, focus ring */
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --serif: "Instrument Serif", Georgia, serif;
-  --card-w: 280px; --card-h: 360px; --r-card: 28px;
-  --phrase: 64px; --gap: 220px;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-}
-```
-
-Spacing follows 4/8: 6px rail padding, 16px rail button padding, 20px card insets, 28px and 48px page insets.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Track phrase | Bricolage Grotesque | 64px | 600 | 1 | −0.035em | Sentence |
-| Section line | Instrument Serif italic | 34px | 400 | 1.1 | −0.01em | Sentence |
-| Card counter | Instrument Serif italic | 22px | 400 | 1 | 0 | "01 / 04" |
-| Brand | Bricolage Grotesque | 22px | 700 | 1 | −0.03em | Title |
-| Eyebrow / cue | Bricolage Grotesque | 13px | 400 | 1 | 0.12–0.14em | Upper |
-| Card facts | Bricolage Grotesque | 12px | 600 | 1 | 0.1em | Upper |
-| Rail / pill | Bricolage Grotesque | 14px / 15px | 600 | 1 | 0 | Title |
 
 ## Motion
 
@@ -137,6 +91,58 @@ Spacing follows 4/8: 6px rail padding, 16px rail button padding, 20px card inset
 - [ ] The counter reads "01 / 04" in Instrument Serif italic.
 - [ ] The rail reads Watering, Repotting, Swaps, Botanist.
 - [ ] The document is 520vh, and the lerp factor is 0.14.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a charcoal stage `#161514` pinned to the viewport. Fernly mark top-left and an outlined "Start a membership" pill top-right. Eyebrow "THE MEMBERSHIP" at top-left, with the italic serif line "Four things you will never have to think about." under it. In the centre, a 280×360 sage card with radius 28. "Watered on your schedule" is centred on it at 64px, bone outside the card and ink inside. A four-option rail sits at the bottom centre, with "Watering" current. A small "SCROLL" cue with a dripping line sits bottom-right.
+2. The page is 520vh tall. The stage is `position: sticky; top: 0; height: 100vh`, so the stage stays and scroll progress `p` (0 → 1) drives the track.
+3. The track's x is chosen so the centre of a phrase sits at the viewport centre. Between phrase i and i+1, the centre is interpolated with smoothstep `t*t*(3-2t)`, so each phrase lingers in the card and then moves on.
+4. The displayed x eases toward the target each frame (`cur += (target - cur) * 0.14`) for inertia. It stops when within 0.3px.
+5. The active index is `round(p × 3)`. On change: card background crossfades over 500ms, the icon swaps (old fades out, new scales 0.92 → 1 and rotates −4° → 0 over 600ms expo-out), the counter reads "02 / 04", the bottom facts update, the rail moves `aria-current="step"`, and the live region announces the phrase.
+6. The four phrases and facts are: "Watered on your schedule" (Weekly visit · Included, sage `#B9CBA4`); "Repotted when it outgrows" (Soil + pot · Included, clay `#E79B72`); "Swap any plant, any month" (1 swap / month · Free, sky `#A9C8DE`); "A botanist on call" (Reply in 2 h · 7 days, mustard `#E8C35A`).
+7. Clicking a rail option scrolls to that phrase's progress (`maxScroll × i / 3`) with smooth scroll. Left and right arrow keys on a focused rail option move to the neighbour and focus it.
+8. Resizing re-measures phrase centres and the inner track offset.
+9. Reduced motion: no inertia (x snaps to target), no card or icon transitions, no drip. Rail clicks jump.
+
+## Tokens
+
+```css
+:root {
+  --bg: #161514;        /* stage, card ink text */
+  --bone: #EDE6D8;      /* outside text, active rail fill */
+  --bone-2: #A8A194;    /* eyebrow, inactive rail, cue */
+  --line: #2C2A27;      /* rail border, cue track */
+  --ink: #161514;       /* text inside the card */
+  --sage: #B9CBA4;      /* benefit 1 */
+  --clay: #E79B72;      /* benefit 2 */
+  --sky: #A9C8DE;       /* benefit 3 */
+  --mustard: #E8C35A;   /* benefit 4, focus ring */
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+  --card-w: 280px; --card-h: 360px; --r-card: 28px;
+  --phrase: 64px; --gap: 220px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+}
+```
+
+Spacing follows 4/8: 6px rail padding, 16px rail button padding, 20px card insets, 28px and 48px page insets.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Track phrase | Bricolage Grotesque | 64px | 600 | 1 | −0.035em | Sentence |
+| Section line | Instrument Serif italic | 34px | 400 | 1.1 | −0.01em | Sentence |
+| Card counter | Instrument Serif italic | 22px | 400 | 1 | 0 | "01 / 04" |
+| Brand | Bricolage Grotesque | 22px | 700 | 1 | −0.03em | Title |
+| Eyebrow / cue | Bricolage Grotesque | 13px | 400 | 1 | 0.12–0.14em | Upper |
+| Card facts | Bricolage Grotesque | 12px | 600 | 1 | 0.1em | Upper |
+| Rail / pill | Bricolage Grotesque | 14px / 15px | 600 | 1 | 0 | Title |
 
 ## Implementation notes
 

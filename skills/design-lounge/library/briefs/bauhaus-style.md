@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A kit sheet for "formhaus", a fictional Bauhaus-revival furniture brand, that doubles as a style guide you can apply to a whole product. The page is a 12-column grid of paper cells separated by 3px ink rules (the grid's `gap` shows the black body behind it). The first row is a live landing hero for "Regal 25" modular shelving, with a red circle, blue square, yellow triangle, ink bar and ink dot composed on the right, next to a type specimen with a 150px "Aa". The second row holds the palette with roles, buttons in four states, tags, inputs and a product card; the third row states the shape grammar (circle acts, square holds, triangle points, rule divides). The detail worth copying: **shape carries meaning**. Circles are only ever actions or status, squares are containers, triangles point; nothing is rounded unless it is a circle.
-
-## Reference behaviour
-
-1. Initial state: header bar (56px) with a three-shape mark, "formhaus / design language 01", four section anchors and "Kit v1.4 · Weimar · Oct 2026". Below it the sheet; the first 800px show the hero, specimen and the whole component row.
-2. Hover any rectangular button: it lifts `translate(-3px, -3px)` and gains a hard `3px 3px 0` ink shadow over 120ms. Press: it drops back to 0/0 with no shadow. The "States" strip shows Rest / Hover / Pressed / Disabled statically using forced classes, so the states are readable without interacting.
-3. Click the yellow round button in the hero's bottom-right corner ("Recompose"): the five shapes move to arrangement 2 over 520ms with expo-out easing (circle shrinks to .62 and drops left, square rotates 90° and grows to 1.3, triangle flips 180°, bar goes horizontal, dot grows). Click again: arrangement 3. Again: back to 1. The copy column never moves.
-4. Focus a text input or the select: a 5px yellow offset block appears behind it, outlined by a 2px ink edge (a "printed" focus shadow). No radius, no glow.
-5. The email field ships in its error state: red 2px border, pale red fill `#F6DDD6`, 12px red message under it, `aria-invalid="true"`.
-6. Click the checkbox: a 10px red square scales from 0 → 1 in 120ms. Click a radio: a 10px blue disc does the same.
-7. Click the switch: the track fills yellow and the knob slides 24px right **and morphs from an ink square to a red circle** (240ms expo-out). Off again: back to an ink square.
-8. Hover the product card: it lifts 4px with a 4px hard ink shadow.
-9. Header anchors jump to sections; their hover state is a 2px red underline.
 
 ## Structure
 
@@ -52,64 +42,6 @@ A kit sheet for "formhaus", a fictional Bauhaus-revival furniture brand, that do
 - `.spec` (cols 8–12, 424px): `<h2 class="lbl">`, `.aa` row (glyph + two family notes), `<ul class="scale">` of five rows (`<em>` meta + sample).
 - `.pal`, `.ctl`, `.inp`, `.crd`: span 3 columns each. `.gram` × 4 span 3 each. `.foot` spans 12.
 - Section labels are `<h2 class="lbl">` with a 9px shape before them; the shape class (`c`, `s`, `t`) picks circle/red, square/blue or triangle/yellow.
-
-## Tokens
-
-```css
-:root {
-  /* colour: paper + ink + three primaries */
-  --paper: #f0ebe0;      /* surface, 60 % of any screen */
-  --paper-2: #e4dccb;    /* inner list rules, disabled fill */
-  --ink: #151412;        /* text, all borders, hard shadows, 20 % */
-  --ink-2: #4a463f;      /* secondary text */
-  --ink-3: #6e685d;      /* meta labels, disabled text */
-  --red: #d52b1e;        /* primary action, circles, errors (8 %) */
-  --yellow: #f3b61f;     /* highlight, focus fill, "new" (7 %) */
-  --blue: #1d4f9c;       /* info, links, focus ring, secondary action (5 %) */
-  --on-color: #f0ebe0;   /* text on red / blue */
-  --error-fill: #f6ddd6;
-
-  /* type */
-  --display: "Josefin Sans", Futura, "Century Gothic", sans-serif;
-  --text: "Work Sans", system-ui, sans-serif;
-  --fs-display: 76px; --fs-aa: 150px; --fs-h2: 26px; --fs-h3: 18px; --fs-body: 15px; --fs-ui: 14px; --fs-label: 11px; --fs-meta: 10px;
-
-  /* geometry */
-  --rule: 3px;           /* between regions */
-  --line: 2px;           /* around controls */
-  --pad: 20px;           /* cell padding */
-  --ctl: 44px;           /* control height */
-  --radius: 0;           /* the only exception is a full circle (50 %) */
-  --lift: 3px;           /* button hover lift; cards use 4px */
-  --shadow-hard: 3px 3px 0 var(--ink);
-  --focus-block: 5px 5px 0 var(--yellow), 5px 5px 0 2px var(--ink);
-  --space: 4px 8px 12px 16px 20px 24px 32px;
-
-  /* motion */
-  --t-micro: 120ms;
-  --t-switch: 240ms;
-  --t-shape: 520ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role            | Family       | Size  | Weight | Line-height | Tracking | Case |
-|-----------------|--------------|------:|-------:|------------:|---------:|------|
-| Hero headline   | Josefin Sans | 76px  | 700    | .88         | −0.025em | **lowercase** (universal-lowercase nod) |
-| Specimen glyph  | Josefin Sans | 150px | 700    | .8          | −0.04em  | "Aa" |
-| H2              | Josefin Sans | 26px  | 700    | 1.1         | −0.01em  | sentence |
-| H3 / card title | Josefin Sans | 18–22px | 600–700 | 1.1–1.3   | 0        | sentence |
-| Brand           | Josefin Sans | 19px  | 700 + 400 | 1        | −0.01em  | lowercase |
-| Body            | Work Sans    | 15px  | 400    | 1.5         | 0        | sentence, `--ink-2` |
-| Button          | Work Sans    | 14px  | 600    | 1           | +0.01em  | sentence |
-| Section label / eyebrow | Work Sans | 11px | 600 | 1          | +0.16em  | UPPERCASE |
-| Meta / state captions | Work Sans | 10px | 500  | 1           | +0.08–0.1em | UPPERCASE |
-| Tag             | Work Sans    | 10px  | 600    | 1           | +0.14em  | UPPERCASE |
-
-Josefin Sans sits low in its em box; add `padding-top: 2–4px` to any Josefin text that is vertically centred against a box (brand, card title, price) so it looks optically centred.
 
 ## Motion
 
@@ -172,6 +104,80 @@ Reduced motion: every transition 1ms. Recompose still swaps arrangements, instan
 - [ ] Focus is visible on every link, button and input (3px blue, 3px offset).
 - [ ] With reduced motion, all state changes still happen instantly.
 - [ ] No font other than Josefin Sans and Work Sans is loaded.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header bar (56px) with a three-shape mark, "formhaus / design language 01", four section anchors and "Kit v1.4 · Weimar · Oct 2026". Below it the sheet; the first 800px show the hero, specimen and the whole component row.
+2. Hover any rectangular button: it lifts `translate(-3px, -3px)` and gains a hard `3px 3px 0` ink shadow over 120ms. Press: it drops back to 0/0 with no shadow. The "States" strip shows Rest / Hover / Pressed / Disabled statically using forced classes, so the states are readable without interacting.
+3. Click the yellow round button in the hero's bottom-right corner ("Recompose"): the five shapes move to arrangement 2 over 520ms with expo-out easing (circle shrinks to .62 and drops left, square rotates 90° and grows to 1.3, triangle flips 180°, bar goes horizontal, dot grows). Click again: arrangement 3. Again: back to 1. The copy column never moves.
+4. Focus a text input or the select: a 5px yellow offset block appears behind it, outlined by a 2px ink edge (a "printed" focus shadow). No radius, no glow.
+5. The email field ships in its error state: red 2px border, pale red fill `#F6DDD6`, 12px red message under it, `aria-invalid="true"`.
+6. Click the checkbox: a 10px red square scales from 0 → 1 in 120ms. Click a radio: a 10px blue disc does the same.
+7. Click the switch: the track fills yellow and the knob slides 24px right **and morphs from an ink square to a red circle** (240ms expo-out). Off again: back to an ink square.
+8. Hover the product card: it lifts 4px with a 4px hard ink shadow.
+9. Header anchors jump to sections; their hover state is a 2px red underline.
+
+## Tokens
+
+```css
+:root {
+  /* colour: paper + ink + three primaries */
+  --paper: #f0ebe0;      /* surface, 60 % of any screen */
+  --paper-2: #e4dccb;    /* inner list rules, disabled fill */
+  --ink: #151412;        /* text, all borders, hard shadows, 20 % */
+  --ink-2: #4a463f;      /* secondary text */
+  --ink-3: #6e685d;      /* meta labels, disabled text */
+  --red: #d52b1e;        /* primary action, circles, errors (8 %) */
+  --yellow: #f3b61f;     /* highlight, focus fill, "new" (7 %) */
+  --blue: #1d4f9c;       /* info, links, focus ring, secondary action (5 %) */
+  --on-color: #f0ebe0;   /* text on red / blue */
+  --error-fill: #f6ddd6;
+
+  /* type */
+  --display: "Josefin Sans", Futura, "Century Gothic", sans-serif;
+  --text: "Work Sans", system-ui, sans-serif;
+  --fs-display: 76px; --fs-aa: 150px; --fs-h2: 26px; --fs-h3: 18px; --fs-body: 15px; --fs-ui: 14px; --fs-label: 11px; --fs-meta: 10px;
+
+  /* geometry */
+  --rule: 3px;           /* between regions */
+  --line: 2px;           /* around controls */
+  --pad: 20px;           /* cell padding */
+  --ctl: 44px;           /* control height */
+  --radius: 0;           /* the only exception is a full circle (50 %) */
+  --lift: 3px;           /* button hover lift; cards use 4px */
+  --shadow-hard: 3px 3px 0 var(--ink);
+  --focus-block: 5px 5px 0 var(--yellow), 5px 5px 0 2px var(--ink);
+  --space: 4px 8px 12px 16px 20px 24px 32px;
+
+  /* motion */
+  --t-micro: 120ms;
+  --t-switch: 240ms;
+  --t-shape: 520ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role            | Family       | Size  | Weight | Line-height | Tracking | Case |
+|-----------------|--------------|------:|-------:|------------:|---------:|------|
+| Hero headline   | Josefin Sans | 76px  | 700    | .88         | −0.025em | **lowercase** (universal-lowercase nod) |
+| Specimen glyph  | Josefin Sans | 150px | 700    | .8          | −0.04em  | "Aa" |
+| H2              | Josefin Sans | 26px  | 700    | 1.1         | −0.01em  | sentence |
+| H3 / card title | Josefin Sans | 18–22px | 600–700 | 1.1–1.3   | 0        | sentence |
+| Brand           | Josefin Sans | 19px  | 700 + 400 | 1        | −0.01em  | lowercase |
+| Body            | Work Sans    | 15px  | 400    | 1.5         | 0        | sentence, `--ink-2` |
+| Button          | Work Sans    | 14px  | 600    | 1           | +0.01em  | sentence |
+| Section label / eyebrow | Work Sans | 11px | 600 | 1          | +0.16em  | UPPERCASE |
+| Meta / state captions | Work Sans | 10px | 500  | 1           | +0.08–0.1em | UPPERCASE |
+| Tag             | Work Sans    | 10px  | 600    | 1           | +0.14em  | UPPERCASE |
+
+Josefin Sans sits low in its em box; add `padding-top: 2–4px` to any Josefin text that is vertically centred against a box (brand, card title, price) so it looks optically centred.
 
 ## Implementation notes
 

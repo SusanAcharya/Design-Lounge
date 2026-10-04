@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A single post from a square-photo feed, for an invented network called Weft, in a dark theme. A ceramicist's post holds four slides: a blue glazed bowl, an open kiln, a grid of glaze test tiles, and clay on the wheel. Every "photo" is painted with CSS gradients, so the piece ships with no images. It reads at a glance as the familiar format: story-ring avatar, handle with Follow, square media with a 1/4 pill, heart-comment-send on the left, dots in the middle, save on the right, then likes, caption with "more", and an add-comment row. The detail worth copying is the double-tap: a big white heart pops at the exact point you tapped, while a tap-drag swipes slides, and the two never confuse each other.
-
-## Reference behaviour
-
-1. First frame: slide 1 (the bowl), counter "1/4", first dot coral, Next arrow present but hidden until hover, Prev absent. Likes "Liked by tiago.m and 2,318 others".
-2. Hover the photo: round 32px Prev/Next arrows fade in at the left and right edges. Prev is removed on slide 1, Next on slide 4.
-3. Drag the photo horizontally: the track follows the pointer 1:1 with no transition. Past the first or last slide it follows at 30% (rubber band). Release: if the drag passed 20% of the width or moved faster than 0.5px/ms, go to the neighbouring slide; else snap back. Snap is 420ms expo-out.
-4. Arrow keys on the focused photo move slides. The counter and dots follow; the active dot is coral and 1.2× size.
-5. Double-tap the photo (two taps within 300ms, each moving less than 8px): a 96px white heart pops at the tap point, scales 0.2 → 1.15 → 0.95 → 1, holds, then floats up 30px and fades over 900ms. If the post was not liked, the like button fills red with a bump and the count ticks to 2,319. Double-tapping an already-liked post replays the heart but does not unlike.
-6. Press L on the focused photo: same as a double-tap at the centre.
-7. Click the heart button: toggles like and unlike. No big heart.
-8. Click Save: bookmark fills, bumps, toast "Saved to Glazes". Again: "Removed from Glazes".
-9. Click Follow: text becomes "Following" in muted ink.
-10. Click "more": the rest of the caption appears inline with two hashtags and focus moves to it. The ellipsis and button are removed.
-11. Type in "Add a comment…": Post enables. Submit: the comment appears under the caption as "you" with a rise-in, and "View all 86 comments" becomes 87.
-12. Click the comment icon: focuses the comment field.
 
 ## Structure
 
@@ -53,51 +40,6 @@ stage 1280×800, dark radial, card centred
 - Caption: `p` with the handle in bold; "more" is a button with `aria-expanded` and `aria-controls`.
 - Comment row: `form` with a visually hidden label, an input, and a submit button.
 - Toast: `role="status"` live region.
-
-## Tokens
-
-```css
-:root {
-  --stage: #0b0b0c;        /* page; behind a radial of #17151a at 50% 40% */
-  --card: #141416;
-  --raise: #1d1d20;        /* comment row on focus */
-  --line: #28282c;
-  --ink: #f2efe9;          /* warm white, never #fff for text */
-  --ink-2: #b4b0a9;
-  --ink-3: #8d8983;        /* meta, placeholders, idle dots */
-  --accent: #ff6a4d;       /* Follow, active dot, Post, focus */
-  --accent-2: #ffb547;     /* second stop of the story ring */
-  --heart: #ff4f5e;        /* liked heart */
-  --sans: "Manrope", system-ui, sans-serif;
-  --serif: "Instrument Serif", Georgia, serif;   /* only inside painted photos */
-  --r: 20px;
-  --w: 440px;
-  --t-micro: 160ms;
-  --t-slide: 420ms;
-  --t-heart: 900ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --ease-pop: cubic-bezier(.34,1.56,.64,1);
-}
-```
-
-Card shadow `0 30px 60px -30px rgba(0,0,0,.8)`. Story ring: `conic-gradient(from 200deg, --accent, --accent-2, --accent)`, 2px padding, then a 2px card-coloured border on the avatar.
-
-## Typography
-
-| Role | Family | Size | Weight | Notes |
-| --- | --- | --- | --- | --- |
-| Handle | Manrope | 14px | 700 | header and caption |
-| Follow | Manrope | 14px | 700 | coral; "Following" muted |
-| Location | Manrope | 12px | 400 | `--ink-2` |
-| Likes line | Manrope | 14px | 700 | |
-| Caption | Manrope | 14px/1.45 | 400 | |
-| "more", View all | Manrope | 14px | 600 / 500 | `--ink-3` |
-| Age | Manrope | 11px | 400 | uppercase, 0.06em |
-| Counter pill | Manrope | 12px | 600 | 0.02em, on 62% black |
-| Photo captions | Instrument Serif italic | 20–22px | 400 | "Tidepool, cone 10", "Throwing day" |
-
-The serif lives inside the pictures, as if hand-labelled. The UI chrome stays in Manrope.
 
 ## Motion
 
@@ -163,6 +105,70 @@ The serif lives inside the pictures, as if hand-labelled. The UI chrome stays in
 - [ ] Save toast reads "Saved to Glazes".
 - [ ] Comments read "View all 86 comments" and become 87 after posting.
 - [ ] Slide 3 caption reads "Tidepool, cone 10" in italic serif.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: slide 1 (the bowl), counter "1/4", first dot coral, Next arrow present but hidden until hover, Prev absent. Likes "Liked by tiago.m and 2,318 others".
+2. Hover the photo: round 32px Prev/Next arrows fade in at the left and right edges. Prev is removed on slide 1, Next on slide 4.
+3. Drag the photo horizontally: the track follows the pointer 1:1 with no transition. Past the first or last slide it follows at 30% (rubber band). Release: if the drag passed 20% of the width or moved faster than 0.5px/ms, go to the neighbouring slide; else snap back. Snap is 420ms expo-out.
+4. Arrow keys on the focused photo move slides. The counter and dots follow; the active dot is coral and 1.2× size.
+5. Double-tap the photo (two taps within 300ms, each moving less than 8px): a 96px white heart pops at the tap point, scales 0.2 → 1.15 → 0.95 → 1, holds, then floats up 30px and fades over 900ms. If the post was not liked, the like button fills red with a bump and the count ticks to 2,319. Double-tapping an already-liked post replays the heart but does not unlike.
+6. Press L on the focused photo: same as a double-tap at the centre.
+7. Click the heart button: toggles like and unlike. No big heart.
+8. Click Save: bookmark fills, bumps, toast "Saved to Glazes". Again: "Removed from Glazes".
+9. Click Follow: text becomes "Following" in muted ink.
+10. Click "more": the rest of the caption appears inline with two hashtags and focus moves to it. The ellipsis and button are removed.
+11. Type in "Add a comment…": Post enables. Submit: the comment appears under the caption as "you" with a rise-in, and "View all 86 comments" becomes 87.
+12. Click the comment icon: focuses the comment field.
+
+## Tokens
+
+```css
+:root {
+  --stage: #0b0b0c;        /* page; behind a radial of #17151a at 50% 40% */
+  --card: #141416;
+  --raise: #1d1d20;        /* comment row on focus */
+  --line: #28282c;
+  --ink: #f2efe9;          /* warm white, never #fff for text */
+  --ink-2: #b4b0a9;
+  --ink-3: #8d8983;        /* meta, placeholders, idle dots */
+  --accent: #ff6a4d;       /* Follow, active dot, Post, focus */
+  --accent-2: #ffb547;     /* second stop of the story ring */
+  --heart: #ff4f5e;        /* liked heart */
+  --sans: "Manrope", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;   /* only inside painted photos */
+  --r: 20px;
+  --w: 440px;
+  --t-micro: 160ms;
+  --t-slide: 420ms;
+  --t-heart: 900ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-pop: cubic-bezier(.34,1.56,.64,1);
+}
+```
+
+Card shadow `0 30px 60px -30px rgba(0,0,0,.8)`. Story ring: `conic-gradient(from 200deg, --accent, --accent-2, --accent)`, 2px padding, then a 2px card-coloured border on the avatar.
+
+## Typography
+
+| Role | Family | Size | Weight | Notes |
+| --- | --- | --- | --- | --- |
+| Handle | Manrope | 14px | 700 | header and caption |
+| Follow | Manrope | 14px | 700 | coral; "Following" muted |
+| Location | Manrope | 12px | 400 | `--ink-2` |
+| Likes line | Manrope | 14px | 700 | |
+| Caption | Manrope | 14px/1.45 | 400 | |
+| "more", View all | Manrope | 14px | 600 / 500 | `--ink-3` |
+| Age | Manrope | 11px | 400 | uppercase, 0.06em |
+| Counter pill | Manrope | 12px | 600 | 0.02em, on 62% black |
+| Photo captions | Instrument Serif italic | 20–22px | 400 | "Tidepool, cone 10", "Throwing day" |
+
+The serif lives inside the pictures, as if hand-labelled. The UI chrome stays in Manrope.
 
 ## Implementation notes
 

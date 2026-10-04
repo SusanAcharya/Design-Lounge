@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The word HOLD, Fraunces 120px, fill transparent, 2px stroke #f4f1ea, on #141311. Drag it. Every 28px, an outline in #a39b90 is left behind, up to eight. Release returns the word and removes the trail. Reduced motion does not drag. This is not a scramble. That reveal is `text-scramble-reveal`. This is not scroll tracking. That tracking is `scroll-velocity-type`.
-
-## Reference behaviour
-
-1. The word sits at left 40px, top 70px.
-2. Pointer down starts a drag unless motion is reduced.
-3. Pointer move translates the word.
-4. A ghost is added when the pointer has moved 28px and fewer than 8 ghosts exist.
-5. Ghosts copy the word and the current transform. They do not take the pointer.
-6. Pointer up clears the transform and removes the ghosts.
-7. Reduced motion returns on pointer down. The word stays put.
 
 ## Structure
 
@@ -30,18 +22,6 @@ HOLD
 - Stroke is 2px. Fill is transparent.
 - Ghosts are #a39b90 at opacity .45.
 - The cursor is grab, and grabbing is unused because release is immediate.
-
-## Tokens
-
-```css
-:root { --bg:#141311; --ink:#f4f1ea; --ghost:#a39b90; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Word | Fraunces | 120px | 560 |
 
 ## Motion
 
@@ -86,16 +66,6 @@ HOLD
 - [ ] Ghost stroke is #a39b90.
 - [ ] The step is 28px. The cap is 8.
 - [ ] The face is Fraunces.
-
-## Implementation notes
-
-Cap the ghosts.
-
-```js
-if (dist < 28 || ghosts.length > 7) return;
-```
-
-Remove every ghost on pointer up. Do not leave them on a timer.
 
 ## Measurements to keep
 
@@ -150,6 +120,42 @@ Remove every ghost on pointer up. Do not leave them on a timer.
 - Honour reduced motion.
 - Do not add a second accent.
 - Do not add a second type family.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The word sits at left 40px, top 70px.
+2. Pointer down starts a drag unless motion is reduced.
+3. Pointer move translates the word.
+4. A ghost is added when the pointer has moved 28px and fewer than 8 ghosts exist.
+5. Ghosts copy the word and the current transform. They do not take the pointer.
+6. Pointer up clears the transform and removes the ghosts.
+7. Reduced motion returns on pointer down. The word stays put.
+
+## Tokens
+
+```css
+:root { --bg:#141311; --ink:#f4f1ea; --ghost:#a39b90; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Word | Fraunces | 120px | 560 |
+
+## Implementation notes
+
+Cap the ghosts.
+
+```js
+if (dist < 28 || ghosts.length > 7) return;
+```
+
+Remove every ghost on pointer up. Do not leave them on a timer.
 
 ---
 

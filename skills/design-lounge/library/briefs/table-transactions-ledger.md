@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The account history of a fictional bank, "Ordwell Bank", for an everyday account. A bottle-green band holds the account name and the available balance; below it sit a search field and an All / Money in / Money out switch, then a ledger of thirteen transactions grouped under day headers. Each row has a merchant icon, a category swatch, the time, a signed amount, and the balance after that transaction. It should feel like a passbook: serif text, mono numbers, hairline rules, no cards, no shadows inside. The detail worth copying is the money column: every amount is set in tabular mono with two decimals and a real minus sign (U+2212), right-aligned, so the decimal points line up down the page without any per-cell padding tricks.
-
-## Reference behaviour
-
-1. First frame: sorted by Date, newest first, grouped by day (Saturday 3 October at the top). All thirteen transactions show. The counter reads "13 of 13 · net +982.79". The balance reads 3,301.21 with ".21" in a lighter, smaller weight.
-2. Each day header shows the long date on the left ("Saturday 3 October") and "2 items · day net +4.30" on the right.
-3. Typing in search filters rows whose merchant, reference or category contains the text, case-insensitive. Matching text is wrapped in a `mark` with a pale brass fill. Day headers re-group around what is left. The counter updates ("2 of 13 · net −140.26").
-4. Pressing `/` anywhere focuses search. `Escape` in a non-empty search clears it.
-5. No matches: one full-width row reads "No transactions match "zzz"" with a hint and a Clear search button that empties the field and refocuses it.
-6. The direction switch filters credits (Money in) or debits (Money out). It combines with search.
-7. Clicking Merchant, Category, Date or Amount sorts by that column; a second click reverses. Date and Amount start descending; text columns start ascending. Sorting by anything other than Date drops the day headers and shows a flat list. Returning to Date restores the groups.
-8. The balance column is not sortable. Each row's balance is the balance after that transaction in date order; it travels with the row when the list is filtered or re-sorted.
-9. Credits are green with a "+" and a green-tinted icon tile. Debits are ink with "−".
-10. The table body scrolls inside the card. The column header row is sticky. The page itself never scrolls sideways.
 
 ## Structure
 
@@ -47,53 +36,6 @@ page #E7E3D8, padding 28px, card max-width 1080px, full height
 - Search is a `label` wrapping the icon, a hidden label text and `input type="search"`.
 - The direction switch is a `div role="radiogroup"` of three native radios styled as a segmented control.
 - The counter is a `span aria-live="polite"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #e7e3d8;        /* desk */
-  --surface: #f7f5ef;   /* ledger paper */
-  --sunk: #efece3;      /* row hover */
-  --band: #12332a;      /* account band */
-  --band-ink: #f1ede2;
-  --band-2: #a9bdb3;    /* band labels */
-  --ink: #13201c;
-  --ink-2: #3d4a45;
-  --ink-3: #5b6762;
-  --line: #d8d3c6;
-  --line-2: #c4bdac;
-  --accent: #1d4a3c;    /* selected segment, search ring */
-  --credit: #1c6a44;
-  --credit-bg: #e1ece4;
-  --brass: #8a6a2f;     /* sort marks, focus */
-  --focus: #8a6a2f;
-  --mark: #f0dfae;      /* search highlight */
-  --serif: "Spectral", Georgia, serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --r: 4px;
-  --row: 54px; --thead: 40px; --control: 40px;
-  --ease: cubic-bezier(.2,.7,.2,1);
-}
-```
-
-Category swatches: Groceries `#6f8f5a`, Dining `#b07a3a`, Income `#1c6a44`, Transit `#3d6b86`, Housing `#7a5c48`, Utilities `#c09a2c`, Health `#9a4a4a`, Books `#5a5a80`, Transfer `#7d8580`.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Band label | Plex Mono | 11px | 500 | 0.12em | upper, `--band-2` |
-| Title | Spectral | 28px | 500 | -0.01em | — |
-| Balance | Plex Mono | 34px | 500 | -0.02em | tabular; cents 22px `--band-2` |
-| Column header | Plex Mono | 11px | 500 | 0.1em | upper, `--ink-3` |
-| Day header | Spectral | 15px | 600 | 0 | day net in mono 12px |
-| Merchant | Spectral | 15px | 500 | 0 | reference in mono 11px |
-| Category | Plex Mono | 12px | 400 | 0 | 7px square swatch |
-| Date | Plex Mono | 12px | 400 | 0 | "3 Oct · 20:31" |
-| Amount | Plex Mono | 15px | 500 | 0 | tabular, right, U+2212 minus |
-| Balance cell | Plex Mono | 14px | 400 | 0 | tabular, `--ink-3` |
-| Segmented control | Plex Mono | 12px | 500 | 0.04em | upper |
 
 ## Motion
 
@@ -153,6 +95,70 @@ Nothing else moves. A ledger should not animate its numbers. Reduced motion: tra
 - [ ] Counter "13 of 13 · net +982.79".
 - [ ] Band `#12332a`, rows 54px, header rule 1px `--ink`.
 - [ ] Searching "groc" leaves two Greenleaf Grocers rows.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: sorted by Date, newest first, grouped by day (Saturday 3 October at the top). All thirteen transactions show. The counter reads "13 of 13 · net +982.79". The balance reads 3,301.21 with ".21" in a lighter, smaller weight.
+2. Each day header shows the long date on the left ("Saturday 3 October") and "2 items · day net +4.30" on the right.
+3. Typing in search filters rows whose merchant, reference or category contains the text, case-insensitive. Matching text is wrapped in a `mark` with a pale brass fill. Day headers re-group around what is left. The counter updates ("2 of 13 · net −140.26").
+4. Pressing `/` anywhere focuses search. `Escape` in a non-empty search clears it.
+5. No matches: one full-width row reads "No transactions match "zzz"" with a hint and a Clear search button that empties the field and refocuses it.
+6. The direction switch filters credits (Money in) or debits (Money out). It combines with search.
+7. Clicking Merchant, Category, Date or Amount sorts by that column; a second click reverses. Date and Amount start descending; text columns start ascending. Sorting by anything other than Date drops the day headers and shows a flat list. Returning to Date restores the groups.
+8. The balance column is not sortable. Each row's balance is the balance after that transaction in date order; it travels with the row when the list is filtered or re-sorted.
+9. Credits are green with a "+" and a green-tinted icon tile. Debits are ink with "−".
+10. The table body scrolls inside the card. The column header row is sticky. The page itself never scrolls sideways.
+
+## Tokens
+
+```css
+:root {
+  --bg: #e7e3d8;        /* desk */
+  --surface: #f7f5ef;   /* ledger paper */
+  --sunk: #efece3;      /* row hover */
+  --band: #12332a;      /* account band */
+  --band-ink: #f1ede2;
+  --band-2: #a9bdb3;    /* band labels */
+  --ink: #13201c;
+  --ink-2: #3d4a45;
+  --ink-3: #5b6762;
+  --line: #d8d3c6;
+  --line-2: #c4bdac;
+  --accent: #1d4a3c;    /* selected segment, search ring */
+  --credit: #1c6a44;
+  --credit-bg: #e1ece4;
+  --brass: #8a6a2f;     /* sort marks, focus */
+  --focus: #8a6a2f;
+  --mark: #f0dfae;      /* search highlight */
+  --serif: "Spectral", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --r: 4px;
+  --row: 54px; --thead: 40px; --control: 40px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+```
+
+Category swatches: Groceries `#6f8f5a`, Dining `#b07a3a`, Income `#1c6a44`, Transit `#3d6b86`, Housing `#7a5c48`, Utilities `#c09a2c`, Health `#9a4a4a`, Books `#5a5a80`, Transfer `#7d8580`.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Band label | Plex Mono | 11px | 500 | 0.12em | upper, `--band-2` |
+| Title | Spectral | 28px | 500 | -0.01em | — |
+| Balance | Plex Mono | 34px | 500 | -0.02em | tabular; cents 22px `--band-2` |
+| Column header | Plex Mono | 11px | 500 | 0.1em | upper, `--ink-3` |
+| Day header | Spectral | 15px | 600 | 0 | day net in mono 12px |
+| Merchant | Spectral | 15px | 500 | 0 | reference in mono 11px |
+| Category | Plex Mono | 12px | 400 | 0 | 7px square swatch |
+| Date | Plex Mono | 12px | 400 | 0 | "3 Oct · 20:31" |
+| Amount | Plex Mono | 15px | 500 | 0 | tabular, right, U+2212 minus |
+| Balance cell | Plex Mono | 14px | 400 | 0 | tabular, `--ink-3` |
+| Segmented control | Plex Mono | 12px | 500 | 0.04em | upper |
 
 ## Implementation notes
 

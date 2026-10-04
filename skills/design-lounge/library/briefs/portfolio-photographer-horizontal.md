@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-page portfolio for photographer Yuki Halloran, series **Salt Year**. The viewport is a horizontal track: a 500px-wide intro, ten 500px-tall plates at three widths (720 / 560 / 380), and a 520px closer. Wheel, drag, arrow keys and a 10-tick scrubber all ease the track with a 9% lerp. The plate nearest the centre is opacity 1; others 0.5. Each plate is a CSS "photograph" (gradients, not files) with a 5% opposite parallax. A fractal-noise grain overlay at 12% overlay-blend sits on top. Gold `#C9A66B` is the only accent. The detail worth copying is treating vertical wheel delta as horizontal travel, so a mouse wheel "just works" on a sideways gallery.
-
-## Reference behaviour
-
-1. Initial state: intro in view. Title **Salt / Year** (second word padded 96px). Hint arrow nudges 8px every 2.4s. Index reads **01 / 10** and tick 01 is `aria-current`. While `x < 200` the first two figures also get `.on` so the open does not look dim.
-2. Wheel: `preventDefault`, add `1.1 * (the larger of |deltaY| and |deltaX|)` to target `tx`, clamped `[0, max]`. `max = track.scrollWidth − view.clientWidth`.
-3. Pointer drag: grabbing cursor, capture pointer, `tx = startTx − (clientX − startX) * 1.4`.
-4. Each frame: `x += (tx − x) * (reduce ? 1 : 0.09)`. Stop the rAF when `|tx − x| < 0.3`. Apply `translate3d(-x, 0, 0)` on the track.
-5. For each figure, compute the delta from plate centre to viewport centre. The nearest is current: pad the index to two digits, set `aria-current="true"` on that tick, `.on` on that figure (and on 0–1 while `x < 200`). Inner photo `i` parallax `translate3d((-d * 0.05)px, 0, 0)`. Fill bar width = `x / max * 100%`.
-6. Tick buttons: `to(i)` sets `tx` so plate `i` is centred (`offsetLeft + width/2 − view.clientWidth/2`).
-7. Keyboard when `.view` is focused: ArrowRight / ArrowLeft step one plate; Home `tx = 0`; End `tx = max`.
-8. Resize remeasures `max` and reclamps.
-9. `document.fonts.ready` remeasures so Bodoni metrics do not leave the track short.
-10. Reduced motion: lerp factor 1 (snap), hint animation none, transitions 1ms. Parallax still updates (it is a position, not a loop).
 
 ## Structure
 
@@ -61,6 +50,81 @@ Plates (width class, title, meta, image recipe):
 
 Intro: `Series · 2024–2026 · 10 plates`. Deck: "Twelve months on the Wadden coast, from Rømø to Læsø, photographed only in the hour either side of low water."
 Outro: on show Galleri Havn, Copenhagen, 14 November 2026 to 10 January 2027. Pigment prints editions of 7, from DKK 9,800.
+
+## Motion
+
+| Element        | Trigger     | Property              | From → To                  | Duration / factor | Easing | Notes |
+|----------------|-------------|-----------------------|----------------------------|-------------------|--------|-------|
+| Track          | wheel/drag/keys | translate3d x     | lerp toward `tx`           | 0.09 / frame      | —      | 1.0 if reduced |
+| Figure opacity | nearest     | opacity               | 0.5 → 1                    | 600ms             | `--ease` | two on while x<200 |
+| Photo parallax | scroll      | translate3d x         | −0.05 × (centre − mid)     | per frame         | —      | inner `i` is inset −40px so it can slide |
+| Hint arrow     | loop        | translateX            | 0 ↔ 8px                    | 2.4s              | `--ease` | infinite |
+| Tick mark      | hover/current | height, colour      | 9px ink-3 → 17px accent    | 200ms             | `--ease` | |
+| Fill bar       | scroll      | width %               | 0 → 100 of max             | per frame         | —      | 1px gold on the rule |
+| Enquiries      | hover       | border, color         | line/ink → accent          | 200ms             | `--ease` | |
+
+Wheel listener `{ passive: false }`. View class `.drag` while pointer is down (`cursor: grabbing`).
+
+## States
+
+- **Resting plates:** opacity 0.5. **Current (and 01–02 at start):** opacity 1.
+- **Current tick:** `aria-current="true"`, 17px gold mark.
+- **Nav current / hover:** `--ink` (from `--ink-2`).
+- **Enquiries hover:** gold border and type.
+- **View focus:** 1px gold outline, 4px offset (the gallery itself is a region).
+- **Drag:** `.drag` grabbing cursor.
+- **Index:** `01`–`10`, live region polite.
+
+## Accessibility
+
+- Gallery region has a name that mentions arrow keys. It is `tabindex="0"` so keyboard users can move it.
+- Ticks are buttons with `aria-label="Go to plate N"`. Index is `aria-live="polite"`.
+- Series nav uses `aria-current="page"` on Salt Year.
+- Grain SVG `aria-hidden`. Hint SVG `aria-hidden`.
+- Tab order: name → 4 series links → Enquiries → view (then arrows operate) → 10 ticks → price-list link (when scrolled to the end; it is in the track).
+- Contrast: bone on near-black; `--ink-2` for 14px deck (~6:1); `--ink-3` for 11–13px meta.
+- Hit targets: Enquiries ~40px tall; ticks are 28px tall flex-1 (wide). The view is the remaining viewport.
+
+## Responsive rules
+
+- ≥ 1280: as specified, photo height 500, gap 72, side pad 48.
+- 1024–1279: photo height 440; `.w-l` 640; name 20px; title 120px.
+- 768–1023: photo height 360; gap 48; intro 380; hide the help legend or wrap it. Drag remains the primary gesture.
+- < 640: photo height 280; `.w-l` 100vw − 48px; ticks stay 10 buttons (thin). Keep horizontal-only — do not restack into a vertical masonry.
+- On every size, remeasure `max` on resize and after fonts.ready.
+- Reduced motion snaps (`lerp = 1`) and kills the hint loop.
+
+## Acceptance checklist
+
+- [ ] Header 72px, footer 96px, photo height 500px, gap 72px at 1280×800.
+- [ ] Ten plates at widths 720 / 380 / 560 / 380 / 380 / 720 / 560 / 720 / 380 / 720 in that order.
+- [ ] Wheel (vertical or horizontal) moves the track; drag with 1.4× multiplier; lerp 0.09.
+- [ ] Current plate is the one whose centre is nearest the viewport centre; index is two digits; ticks `aria-current`.
+- [ ] Inner photographs parallax by 5% against their centre delta.
+- [ ] While `x < 200`, plates 01 and 02 are both at opacity 1.
+- [ ] Arrow keys step plates; Home/End jump; view is focusable.
+- [ ] Footer fill bar equals `x / max`; grain overlay is fractal noise at 12% opacity.
+- [ ] Title is 156px Bodoni; "Year" is on the second line padded 96px.
+- [ ] Copy matches Salt Year, Wadden, Galleri Havn, DKK 9,800, editions of 7.
+- [ ] Reduced motion snaps without the 9% glide.
+- [ ] Focus rings are 1px gold, 4px offset.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: intro in view. Title **Salt / Year** (second word padded 96px). Hint arrow nudges 8px every 2.4s. Index reads **01 / 10** and tick 01 is `aria-current`. While `x < 200` the first two figures also get `.on` so the open does not look dim.
+2. Wheel: `preventDefault`, add `1.1 * (the larger of |deltaY| and |deltaX|)` to target `tx`, clamped `[0, max]`. `max = track.scrollWidth − view.clientWidth`.
+3. Pointer drag: grabbing cursor, capture pointer, `tx = startTx − (clientX − startX) * 1.4`.
+4. Each frame: `x += (tx − x) * (reduce ? 1 : 0.09)`. Stop the rAF when `|tx − x| < 0.3`. Apply `translate3d(-x, 0, 0)` on the track.
+5. For each figure, compute the delta from plate centre to viewport centre. The nearest is current: pad the index to two digits, set `aria-current="true"` on that tick, `.on` on that figure (and on 0–1 while `x < 200`). Inner photo `i` parallax `translate3d((-d * 0.05)px, 0, 0)`. Fill bar width = `x / max * 100%`.
+6. Tick buttons: `to(i)` sets `tx` so plate `i` is centred (`offsetLeft + width/2 − view.clientWidth/2`).
+7. Keyboard when `.view` is focused: ArrowRight / ArrowLeft step one plate; Home `tx = 0`; End `tx = max`.
+8. Resize remeasures `max` and reclamps.
+9. `document.fonts.ready` remeasures so Bodoni metrics do not leave the track short.
+10. Reduced motion: lerp factor 1 (snap), hint animation none, transitions 1ms. Parallax still updates (it is a position, not a loop).
 
 ## Tokens
 
@@ -121,64 +185,6 @@ Outro: on show Galleri Havn, Copenhagen, 14 November 2026 to 10 January 2027. Pi
 
 Enquiries: 11px pad 11 18, border `--line`, hover border+colour `--accent`.
 Price CTA: `--bg` type on `--accent` fill, pad 14 22.
-
-## Motion
-
-| Element        | Trigger     | Property              | From → To                  | Duration / factor | Easing | Notes |
-|----------------|-------------|-----------------------|----------------------------|-------------------|--------|-------|
-| Track          | wheel/drag/keys | translate3d x     | lerp toward `tx`           | 0.09 / frame      | —      | 1.0 if reduced |
-| Figure opacity | nearest     | opacity               | 0.5 → 1                    | 600ms             | `--ease` | two on while x<200 |
-| Photo parallax | scroll      | translate3d x         | −0.05 × (centre − mid)     | per frame         | —      | inner `i` is inset −40px so it can slide |
-| Hint arrow     | loop        | translateX            | 0 ↔ 8px                    | 2.4s              | `--ease` | infinite |
-| Tick mark      | hover/current | height, colour      | 9px ink-3 → 17px accent    | 200ms             | `--ease` | |
-| Fill bar       | scroll      | width %               | 0 → 100 of max             | per frame         | —      | 1px gold on the rule |
-| Enquiries      | hover       | border, color         | line/ink → accent          | 200ms             | `--ease` | |
-
-Wheel listener `{ passive: false }`. View class `.drag` while pointer is down (`cursor: grabbing`).
-
-## States
-
-- **Resting plates:** opacity 0.5. **Current (and 01–02 at start):** opacity 1.
-- **Current tick:** `aria-current="true"`, 17px gold mark.
-- **Nav current / hover:** `--ink` (from `--ink-2`).
-- **Enquiries hover:** gold border and type.
-- **View focus:** 1px gold outline, 4px offset (the gallery itself is a region).
-- **Drag:** `.drag` grabbing cursor.
-- **Index:** `01`–`10`, live region polite.
-
-## Accessibility
-
-- Gallery region has a name that mentions arrow keys. It is `tabindex="0"` so keyboard users can move it.
-- Ticks are buttons with `aria-label="Go to plate N"`. Index is `aria-live="polite"`.
-- Series nav uses `aria-current="page"` on Salt Year.
-- Grain SVG `aria-hidden`. Hint SVG `aria-hidden`.
-- Tab order: name → 4 series links → Enquiries → view (then arrows operate) → 10 ticks → price-list link (when scrolled to the end; it is in the track).
-- Contrast: bone on near-black; `--ink-2` for 14px deck (~6:1); `--ink-3` for 11–13px meta.
-- Hit targets: Enquiries ~40px tall; ticks are 28px tall flex-1 (wide). The view is the remaining viewport.
-
-## Responsive rules
-
-- ≥ 1280: as specified, photo height 500, gap 72, side pad 48.
-- 1024–1279: photo height 440; `.w-l` 640; name 20px; title 120px.
-- 768–1023: photo height 360; gap 48; intro 380; hide the help legend or wrap it. Drag remains the primary gesture.
-- < 640: photo height 280; `.w-l` 100vw − 48px; ticks stay 10 buttons (thin). Keep horizontal-only — do not restack into a vertical masonry.
-- On every size, remeasure `max` on resize and after fonts.ready.
-- Reduced motion snaps (`lerp = 1`) and kills the hint loop.
-
-## Acceptance checklist
-
-- [ ] Header 72px, footer 96px, photo height 500px, gap 72px at 1280×800.
-- [ ] Ten plates at widths 720 / 380 / 560 / 380 / 380 / 720 / 560 / 720 / 380 / 720 in that order.
-- [ ] Wheel (vertical or horizontal) moves the track; drag with 1.4× multiplier; lerp 0.09.
-- [ ] Current plate is the one whose centre is nearest the viewport centre; index is two digits; ticks `aria-current`.
-- [ ] Inner photographs parallax by 5% against their centre delta.
-- [ ] While `x < 200`, plates 01 and 02 are both at opacity 1.
-- [ ] Arrow keys step plates; Home/End jump; view is focusable.
-- [ ] Footer fill bar equals `x / max`; grain overlay is fractal noise at 12% opacity.
-- [ ] Title is 156px Bodoni; "Year" is on the second line padded 96px.
-- [ ] Copy matches Salt Year, Wadden, Galleri Havn, DKK 9,800, editions of 7.
-- [ ] Reduced motion snaps without the 9% glide.
-- [ ] Focus rings are 1px gold, 4px offset.
 
 ## Implementation notes
 

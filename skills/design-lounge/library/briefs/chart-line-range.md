@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. The line stays one series.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A quarter line chart for yard tonnage. The page is warm paper. The answer is the number, set in mono at 56px: 186 t, the week of 28 Sep. A 12px label above it says what the number is. A 14px line under it names the week and the range. The chart sits in a white card under that number. One green stroke, twelve dots, an axis of 240 / 120 / 0. No area fill, no legend, no second series, no imported chart theme. The line is evidence for the number. It is not a second headline. This sits under a single metric on an ops home, or on its own when the question is how the quarter moved.
-
-## Reference behaviour
-
-1. The first frame shows 186 t. The subtitle is "Week of 28 Sep · 13 Jul – 28 Sep". The last dot is pressed.
-2. Pointer enter or click on a dot selects that week. The number becomes "{n} t". The subtitle becomes "Week of {date} · 13 Jul – 28 Sep".
-3. Only one dot is pressed. The others return to a hollow ring.
-4. The matching date label under the plot turns ink and weight 600. The other labels stay muted.
-5. The stroke draws once on load, 700ms, `cubic-bezier(0.2, 0.7, 0.2, 1)`, from empty to full.
-6. Reduced motion: the draw is removed. The stroke is complete. Selection still works.
-7. Leaving the plot keeps the last selected week. There is no mouseleave reset.
-8. The axis and the date labels are `aria-hidden`. Each dot button has an accessible name: "Week of {date}, {n} tonnes".
-9. There is no floating tooltip. The 56px number is the value.
-10. Focus ring is 2px `--focus`, offset 2px.
 
 ## Structure
 
@@ -41,38 +30,6 @@ card, max-width 880, radius 2, pad 20 16 12
 - The plot is a grid: 40px axis, then the stage.
 - The svg is `preserveAspectRatio="none"` so the stroke stretches with the card. Dots are HTML buttons, not svg circles, so they stay round.
 - Date labels are a flex row. Each label is `flex: 1` and centered.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #8a847a;
-  --line: #e4dfd4;
-  --primary: #1f4d3a;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-```
-
-Map these onto the locked theme when a kit is on. The stroke uses `--primary`. Do not introduce a blue series.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Label | sans | 12px | 500 | 0.04em | `--ink-2` |
-| Answer | mono | 56px | 500 | -0.04em | `--ink` |
-| Subtitle | sans | 14px | 400 | 0 | `--ink-2` |
-| Axis | mono | 11px | 400 | 0 | `--ink-3` |
-| Date | sans | 11px | 400, 600 if selected | 0 | `--ink-3`, `--ink` if selected |
-
-Line-height of the answer is 1. The subtitle line-height is 1.45.
 
 ## Motion
 
@@ -124,6 +81,55 @@ The stroke does not loop. Dots do not bounce.
 - [ ] The stroke draws once. Reduced motion shows the full stroke immediately.
 - [ ] Dots stay circles when the card width changes.
 - [ ] Card radius is 2px. Max width 880px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows 186 t. The subtitle is "Week of 28 Sep · 13 Jul – 28 Sep". The last dot is pressed.
+2. Pointer enter or click on a dot selects that week. The number becomes "{n} t". The subtitle becomes "Week of {date} · 13 Jul – 28 Sep".
+3. Only one dot is pressed. The others return to a hollow ring.
+4. The matching date label under the plot turns ink and weight 600. The other labels stay muted.
+5. The stroke draws once on load, 700ms, `cubic-bezier(0.2, 0.7, 0.2, 1)`, from empty to full.
+6. Reduced motion: the draw is removed. The stroke is complete. Selection still works.
+7. Leaving the plot keeps the last selected week. There is no mouseleave reset.
+8. The axis and the date labels are `aria-hidden`. Each dot button has an accessible name: "Week of {date}, {n} tonnes".
+9. There is no floating tooltip. The 56px number is the value.
+10. Focus ring is 2px `--focus`, offset 2px.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #8a847a;
+  --line: #e4dfd4;
+  --primary: #1f4d3a;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+```
+
+Map these onto the locked theme when a kit is on. The stroke uses `--primary`. Do not introduce a blue series.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Label | sans | 12px | 500 | 0.04em | `--ink-2` |
+| Answer | mono | 56px | 500 | -0.04em | `--ink` |
+| Subtitle | sans | 14px | 400 | 0 | `--ink-2` |
+| Axis | mono | 11px | 400 | 0 | `--ink-3` |
+| Date | sans | 11px | 400, 600 if selected | 0 | `--ink-3`, `--ink` if selected |
+
+Line-height of the answer is 1. The subtitle line-height is 1.45.
 
 ## Implementation notes
 

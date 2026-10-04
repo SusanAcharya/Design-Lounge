@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A one-screen style sheet for an operations console ("halden-ctl") that behaves like a full-screen terminal program: every measurement is in `ch` or line-heights, the type is IBM Plex Mono at 14/20 throughout, panels are 1px boxes with titles that break the border using box-drawing characters ("┤ Buttons ├"), buttons are wrapped in square brackets, checkboxes are `[x]`, and the selected list row is a solid amber bar with a `>` marker. A vim-style status line (mode block, branch, summary, encoding, clock) and a `:` command input close the screen. It demonstrates buttons, inputs, a list, key-value rows, a table and the command line in that one language. The thing worth copying is the discipline: one font, one size, one accent, zero radii, and a grid you can count in characters.
-
-## Reference behaviour
-
-1. Initial state: top line with the product name, environment in amber and node count; three columns of boxed panels; row 01 ("api") selected in the Processes list; status line reads `NORMAL  main *2  halden-ctl · 8 processes · 1 failed … utf-8 22:41:07`; the command line shows `:` and a dim "type help".
-2. Hover a button: border brightens to `--ink-2`; the primary lightens to `#F7C454`. Press: the button shifts down 1px. The disabled button ("Roll back") is dimmed with `cursor: not-allowed`.
-3. Tab into a text field: the field gets a 1px dashed amber outline at 2px offset; the caret is amber. Selecting text anywhere shows amber selection with dark text.
-4. Click a checkbox label: `[ ]` becomes `[x]` in amber.
-5. Press `j` / `↓` or `k` / `↑` (when no input is focused): the selection moves down/up through the process list, wrapping at the ends; the selected row turns amber with `> ` before it; the hint under the list updates ("selected: 03 cron · …"). Clicking a row also selects it.
-6. Press `Enter`: the command output reads "inspect <name> → pid <n>". Press `r`: "restarted <name>". Press `?`: a key legend.
-7. Press `:`: the command input is focused and the mode block changes to `COMMAND`. Type `help`, `status`, `restart worker` or `clear` and press Enter: the output line shows the response; unknown input shows "unknown command: …". `Escape` blurs the input and the mode returns to `NORMAL`.
-8. Hover a table row: the row's cells take the `--line` background.
 
 ## Structure
 
@@ -51,6 +42,67 @@ columns: 36ch | 1fr | 42ch, 3ch gaps, one line-height between stacked boxes
   - Processes: `<ul role="listbox" tabindex="0">` of `<li role="option" aria-selected>`; each row is a grid `2ch 2ch 8ch minmax(0, 1fr) 8ch 8ch`: marker, index, name, command (ellipsised), state, age.
   - Table: `<table>` with `<thead>`; numeric columns right-aligned; 1px `--line-2` rule under the header only.
 - `<footer>`: `.status` grid (`auto auto 1fr auto auto`) and `.cmd` row (`:` prompt, `<input>`, output span).
+
+## Motion
+
+Motion is `none` by design. The only transitions are 100ms colour changes on buttons (`background`, `color`, `border-color`) and a 1px `translateY` on `:active`. Selection, focus and mode changes are instant. Under `prefers-reduced-motion` the 100ms transitions become 1ms.
+
+## States
+
+- **Button rest:** 1px `--line-2` border, no fill, `[ label ]`. **Hover:** border `--ink-2`. **Active:** `translateY(1px)`. **Primary:** `--amber` fill, `--amber-ink` text, weight 600; hover `--amber-hover`. **Disabled:** text `--ink-3`, border `--line`, `cursor: not-allowed`, no hover change.
+- **Focus-visible (everything):** `outline: 1px dashed --amber; outline-offset: 2px` — on buttons, fields (`:focus-within`), the checkbox glyph (via the hidden input's `:focus-visible ~ .bx`), the listbox and the command row.
+- **Field:** 1px `--line-2` border, `2px 1ch` padding; placeholder `--ink-3`.
+- **Checkbox checked:** `[x]` in `--amber`.
+- **List row rest:** two-space marker, transparent. **Hover:** `--line` background. **Selected:** `--amber` background, `--amber-ink` text (all semantic colours inherit), marker `> `.
+- **Table row hover:** cells `--line` background.
+- **Status mode:** `NORMAL` (amber block) ↔ `COMMAND` while the command input is focused.
+- **Command output:** response text, "unknown command: …", or empty after `clear`.
+
+## Accessibility
+
+- The process list is `role="listbox"` with `tabindex="0"`; rows are `role="option"` with `aria-selected`. Arrow keys and j/k move the selection; the hint text under the list mirrors the selection for screen readers (make it `aria-live="polite"` in production).
+- Checkboxes are real `<input type="checkbox">` inside `<label>`; the native box is visually hidden (opacity 0, 0×0) and the `[x]` glyph is CSS-generated, so they remain keyboard-toggleable with Space.
+- Text fields have `aria-label`s (host, port); the command input has `aria-label="Command"` and `autocomplete="off"`.
+- Global shortcuts ignore keystrokes while any input is focused; `Escape` returns to normal mode.
+- Contrast: `--ink` on `--bg` 13.9:1; `--ink-2` on `--panel` 6.2:1; `--ink-3` on `--panel` 3.2:1 (dim text — indices, hints, empty bars; treat as decorative or raise to `--ink-2` for AA); `--amber-ink` on `--amber` 10.7:1; `--green`, `--blue`, `--red` on `--panel` all ≥ 6:1.
+- Box titles are `<h2>`s; the box-drawing brackets are generated content and ignored by most screen readers. Buttons' `[ ]` are also generated content.
+
+## Responsive rules
+
+- > 1100: three columns `36ch 1fr 42ch`; the middle column absorbs the difference and commands ellipsise.
+- 768–1100: two columns (`1fr 1fr`); the Table column spans both below; the page scrolls.
+- < 640: single column in DOM order; status line wraps to two rows (mode + branch, then summary); the table gets `overflow-x: auto`.
+
+## Acceptance checklist
+
+- [ ] One font family (IBM Plex Mono), one size (14px) and one line-height (20px) everywhere; no other font sizes exist in the CSS.
+- [ ] All horizontal measurements are in `ch` and all vertical ones in multiples of the 20px line-height; `border-radius` is 0 everywhere.
+- [ ] Panel titles break the top border and read "┤ Title ├" with the brackets in `--line-2` and the word in `--ink-2` on a `--panel` backplate.
+- [ ] Buttons render as `[ Label ]` using generated content; primary is amber-filled; disabled uses `cursor: not-allowed`.
+- [ ] Checkboxes render as `[ ]` / `[x]` and toggle with click and Space.
+- [ ] j / k / arrow keys move the list selection with wrap-around; the selected row is a solid amber bar with a `> ` marker and dark text.
+- [ ] `:` focuses the command input and switches the mode block to `COMMAND`; `Escape` returns to `NORMAL`.
+- [ ] `help`, `status`, `restart <name>` and `clear` produce the specified outputs; anything else shows "unknown command: …".
+- [ ] `::selection` is amber with `--amber-ink` text.
+- [ ] Every interactive element shows a 1px dashed amber focus outline at 2px offset.
+- [ ] Table numeric columns are right-aligned; only the header has a rule; rows highlight on hover.
+- [ ] Key-value bars are text glyphs (`█`/`░`) totalling 10 cells, filled cells in amber.
+- [ ] Page fits 1280 × 800 with no scrollbars.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: top line with the product name, environment in amber and node count; three columns of boxed panels; row 01 ("api") selected in the Processes list; status line reads `NORMAL  main *2  halden-ctl · 8 processes · 1 failed … utf-8 22:41:07`; the command line shows `:` and a dim "type help".
+2. Hover a button: border brightens to `--ink-2`; the primary lightens to `#F7C454`. Press: the button shifts down 1px. The disabled button ("Roll back") is dimmed with `cursor: not-allowed`.
+3. Tab into a text field: the field gets a 1px dashed amber outline at 2px offset; the caret is amber. Selecting text anywhere shows amber selection with dark text.
+4. Click a checkbox label: `[ ]` becomes `[x]` in amber.
+5. Press `j` / `↓` or `k` / `↑` (when no input is focused): the selection moves down/up through the process list, wrapping at the ends; the selected row turns amber with `> ` before it; the hint under the list updates ("selected: 03 cron · …"). Clicking a row also selects it.
+6. Press `Enter`: the command output reads "inspect <name> → pid <n>". Press `r`: "restarted <name>". Press `?`: a key legend.
+7. Press `:`: the command input is focused and the mode block changes to `COMMAND`. Type `help`, `status`, `restart worker` or `clear` and press Enter: the output line shows the response; unknown input shows "unknown command: …". `Escape` blurs the input and the mode returns to `NORMAL`.
+8. Hover a table row: the row's cells take the `--line` background.
 
 ## Tokens
 
@@ -117,52 +169,6 @@ Every element is IBM Plex Mono 14px / 20px, `font-variant-ligatures: none`, lett
 | Status branch        | 400    | `--ink-2` on `--line` | |
 | Command prompt       | 400    | `--amber`     | `:` |
 | Command output       | 400    | `--ink-2`     | |
-
-## Motion
-
-Motion is `none` by design. The only transitions are 100ms colour changes on buttons (`background`, `color`, `border-color`) and a 1px `translateY` on `:active`. Selection, focus and mode changes are instant. Under `prefers-reduced-motion` the 100ms transitions become 1ms.
-
-## States
-
-- **Button rest:** 1px `--line-2` border, no fill, `[ label ]`. **Hover:** border `--ink-2`. **Active:** `translateY(1px)`. **Primary:** `--amber` fill, `--amber-ink` text, weight 600; hover `--amber-hover`. **Disabled:** text `--ink-3`, border `--line`, `cursor: not-allowed`, no hover change.
-- **Focus-visible (everything):** `outline: 1px dashed --amber; outline-offset: 2px` — on buttons, fields (`:focus-within`), the checkbox glyph (via the hidden input's `:focus-visible ~ .bx`), the listbox and the command row.
-- **Field:** 1px `--line-2` border, `2px 1ch` padding; placeholder `--ink-3`.
-- **Checkbox checked:** `[x]` in `--amber`.
-- **List row rest:** two-space marker, transparent. **Hover:** `--line` background. **Selected:** `--amber` background, `--amber-ink` text (all semantic colours inherit), marker `> `.
-- **Table row hover:** cells `--line` background.
-- **Status mode:** `NORMAL` (amber block) ↔ `COMMAND` while the command input is focused.
-- **Command output:** response text, "unknown command: …", or empty after `clear`.
-
-## Accessibility
-
-- The process list is `role="listbox"` with `tabindex="0"`; rows are `role="option"` with `aria-selected`. Arrow keys and j/k move the selection; the hint text under the list mirrors the selection for screen readers (make it `aria-live="polite"` in production).
-- Checkboxes are real `<input type="checkbox">` inside `<label>`; the native box is visually hidden (opacity 0, 0×0) and the `[x]` glyph is CSS-generated, so they remain keyboard-toggleable with Space.
-- Text fields have `aria-label`s (host, port); the command input has `aria-label="Command"` and `autocomplete="off"`.
-- Global shortcuts ignore keystrokes while any input is focused; `Escape` returns to normal mode.
-- Contrast: `--ink` on `--bg` 13.9:1; `--ink-2` on `--panel` 6.2:1; `--ink-3` on `--panel` 3.2:1 (dim text — indices, hints, empty bars; treat as decorative or raise to `--ink-2` for AA); `--amber-ink` on `--amber` 10.7:1; `--green`, `--blue`, `--red` on `--panel` all ≥ 6:1.
-- Box titles are `<h2>`s; the box-drawing brackets are generated content and ignored by most screen readers. Buttons' `[ ]` are also generated content.
-
-## Responsive rules
-
-- > 1100: three columns `36ch 1fr 42ch`; the middle column absorbs the difference and commands ellipsise.
-- 768–1100: two columns (`1fr 1fr`); the Table column spans both below; the page scrolls.
-- < 640: single column in DOM order; status line wraps to two rows (mode + branch, then summary); the table gets `overflow-x: auto`.
-
-## Acceptance checklist
-
-- [ ] One font family (IBM Plex Mono), one size (14px) and one line-height (20px) everywhere; no other font sizes exist in the CSS.
-- [ ] All horizontal measurements are in `ch` and all vertical ones in multiples of the 20px line-height; `border-radius` is 0 everywhere.
-- [ ] Panel titles break the top border and read "┤ Title ├" with the brackets in `--line-2` and the word in `--ink-2` on a `--panel` backplate.
-- [ ] Buttons render as `[ Label ]` using generated content; primary is amber-filled; disabled uses `cursor: not-allowed`.
-- [ ] Checkboxes render as `[ ]` / `[x]` and toggle with click and Space.
-- [ ] j / k / arrow keys move the list selection with wrap-around; the selected row is a solid amber bar with a `> ` marker and dark text.
-- [ ] `:` focuses the command input and switches the mode block to `COMMAND`; `Escape` returns to `NORMAL`.
-- [ ] `help`, `status`, `restart <name>` and `clear` produce the specified outputs; anything else shows "unknown command: …".
-- [ ] `::selection` is amber with `--amber-ink` text.
-- [ ] Every interactive element shows a 1px dashed amber focus outline at 2px offset.
-- [ ] Table numeric columns are right-aligned; only the header has a rule; rows highlight on hover.
-- [ ] Key-value bars are text glyphs (`█`/`░`) totalling 10 cells, filled cells in amber.
-- [ ] Page fits 1280 × 800 with no scrollbars.
 
 ## Implementation notes
 

@@ -4,29 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The watch screen of "Frameline", a video app for long travel films. A 16:9 player sits at the top under a black band. Below it are the title, the channel row with Follow, a description that expands into a chapter list, and an Up next list. The "video" is an animated SVG scene of salt flats at night: stars, a moon, two dune layers drifting at different speeds and a pair of headlights crossing. Pausing freezes the scene. The feel is cinematic and quiet: near-black, white text, one red for progress. The detail to copy: the scrubber is split into chapter segments with 3px gaps, and dragging shows a bubble with the time and the chapter name.
 
 The language is iOS-ish dark: 44px round icon buttons, a 64px play button on a dark disc, sheet-spring easing for layout moves, no glass.
-
-## Reference behaviour
-
-1. First frame: playing at 6:12 of 18:42. Controls are showing: "The crossing · Chapter 2" top left, CC and "1x" top right, back 10, pause and forward 10 in the middle, "6:12 / 18:42" and the full-screen button bottom, the chaptered scrubber on the bottom edge. The time counts up in real time.
-2. After 3000ms with no input, the controls fade out over 200ms. A 2px red line on the bottom edge of the video keeps showing progress.
-3. A single tap on the video shows the controls and restarts the 3000ms timer. A single tap while they show hides them at once.
-4. Taps in the left 35% or right 35% wait 300ms before acting, so a second tap can be a double tap. A tap in the middle 30% acts at once.
-5. Double tap left: seek −10s. Double tap right: seek +10s. A half-ellipse ripple grows from that edge with two chevrons and "10 s". Each extra tap inside 320ms adds 10s and the label becomes "20 s", "30 s".
-6. The back 10 and forward 10 buttons do the same seek and show the same ripple.
-7. Play/pause swaps the glyph and the label. Paused: the scene freezes with `animation-play-state: paused`, and the controls stay up until the user hides them.
-8. Press on the scrubber: the track grows from 3px to 5px and the thumb scales to 1.4 over 160ms. The time jumps to the pointer. Drag: the time follows. A bubble above the thumb shows the time in 17px bold and the chapter name in 11px. The bubble is clamped inside the scrubber. Release: the track and thumb shrink back and the 3000ms timer starts again.
-9. Ahead of the red fill, the next 90 seconds show as a lighter "buffered" fill.
-10. The top-left label always names the current chapter: Arrival 0:00, The crossing 3:10, Camp 7:45, Night sky 12:20, Dawn 16:05.
-11. CC toggles captions. A caption sits 12px above the bottom edge. While the controls show, it moves to 48px from the top so it never sits on the play button. Cues change every 5 seconds of video time.
-12. "1x" opens a speed panel over the video: "Playback speed" and six 44px chips, 0.5x, 0.75x, 1x, 1.25x, 1.5x, 2x. Picking one sets the rate, updates the button text and closes the panel. Tapping outside the chips or pressing Escape closes it without a change.
-13. The full-screen button rotates the player 90° into landscape over 420ms. The video letterboxes to 16:9 on black. The icon swaps to "exit". Tap it or press Escape to return.
-14. Below the video: Follow toggles to "Following" on a dark pill. "more" expands the description and shows the five chapters as rows. Tapping a chapter row seeks to it.
-15. Tapping an Up next item restarts the player at 0:00 and scrolls to the top.
 
 ## Structure
 
@@ -67,59 +51,6 @@ The language is iOS-ish dark: 44px round icon buttons, a 64px play button on a d
 - The scrubber is a `div role="slider"` with `tabindex="0"`, `aria-valuemin`, `aria-valuemax`, `aria-valuenow` and `aria-valuetext`.
 - The speed panel is a `div role="dialog"` holding a `role="radiogroup"` of buttons with `role="radio"`.
 - The info area is `main`: an `h1`, a meta `p`, the channel row, the description box with its `ul` of chapter buttons, an `h2` "Up next" and a `ul` of item buttons.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0b0b0c;          /* page */
-  --surface: #161618;     /* description box */
-  --surface-2: #202023;   /* avatar, Following pill */
-  --line: #26262a;        /* hairlines */
-  --ink: #f5f5f4;         /* text, icons, Follow pill */
-  --ink-2: #c4c4c7;       /* secondary text on video */
-  --ink-3: #9a9a9f;       /* meta */
-  --red: #e5322d;         /* progress, thumb, chapter times. The only colour. */
-  --track: rgba(255,255,255,.24);
-  --buffer: rgba(255,255,255,.4);
-  --scrim: linear-gradient(rgba(0,0,0,.6), transparent 34%, transparent 58%, rgba(0,0,0,.72));
-
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 22px;
-  --r-thumb: 8px; --r-box: 12px; --r-pill: 22px;
-
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --ios: cubic-bezier(.32, .72, 0, 1);
-  --micro: 160ms;
-  --layout: 320ms;
-  --hide-after: 3000ms;
-  --double-tap: 300ms;
-}
-```
-
-Scene colours (inside the SVG only): sky `#05070d → #121a29 → #3a2b2b`, far dune `#1b1f28`, salt `#2b2f38 → #0c0e12`, near dune `#07080b`, moon `#e9e5da`, headlights `#ffd9a0`.
-
-## Typography
-
-| Role | Size | Weight | Line-height | Colour |
-| --- | --- | --- | --- | --- |
-| Video title | 18px | 700 | 1.3 | `--ink`, tracking -0.01em |
-| Meta | 13px | 400 | 1.45 | `--ink-3` |
-| Channel name | 15px | 600 | 1.45 | `--ink` |
-| Followers | 12px | 400 | 1.45 | `--ink-3` |
-| Follow pill | 14px | 700 | 44px box | black on `--ink` |
-| Description | 14px | 400 | 1.45 | `--ink-2` |
-| Chapter label on video | 13px | 600, suffix 500 | — | `--ink`, suffix `--ink-2` |
-| Time on video | 13px | 600, total 500 | — | `--ink`, total `--ink-2` |
-| Bubble time | 17px | 700 | — | `--ink` |
-| Bubble chapter | 11px | 500 | — | `--ink-2` |
-| Caption | 14px | 500 | 1.45 | `--ink` on rgba(0,0,0,.72) |
-| Up next title | 14px | 600 | 1.3, 2-line clamp | `--ink` |
-| Duration badge | 11px | 600 | 1.5 | `--ink` on rgba(0,0,0,.78) |
-| Section head | 15px | 700 | — | `--ink` |
-
-One family, Hanken Grotesk, 400 to 700. All times use `font-variant-numeric: tabular-nums`, so the clock does not jitter.
 
 ## Motion
 
@@ -203,6 +134,81 @@ Reduced motion: every scene animation is removed, so the frame is a still. All t
 - [ ] Title "Salt Flats After Dark: Three Nights on the Rann", channel "Tidewater Films", 1.2M followers.
 - [ ] Four Up next items with CSS thumbnails and duration badges.
 - [ ] Hanken Grotesk is the only family.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: playing at 6:12 of 18:42. Controls are showing: "The crossing · Chapter 2" top left, CC and "1x" top right, back 10, pause and forward 10 in the middle, "6:12 / 18:42" and the full-screen button bottom, the chaptered scrubber on the bottom edge. The time counts up in real time.
+2. After 3000ms with no input, the controls fade out over 200ms. A 2px red line on the bottom edge of the video keeps showing progress.
+3. A single tap on the video shows the controls and restarts the 3000ms timer. A single tap while they show hides them at once.
+4. Taps in the left 35% or right 35% wait 300ms before acting, so a second tap can be a double tap. A tap in the middle 30% acts at once.
+5. Double tap left: seek −10s. Double tap right: seek +10s. A half-ellipse ripple grows from that edge with two chevrons and "10 s". Each extra tap inside 320ms adds 10s and the label becomes "20 s", "30 s".
+6. The back 10 and forward 10 buttons do the same seek and show the same ripple.
+7. Play/pause swaps the glyph and the label. Paused: the scene freezes with `animation-play-state: paused`, and the controls stay up until the user hides them.
+8. Press on the scrubber: the track grows from 3px to 5px and the thumb scales to 1.4 over 160ms. The time jumps to the pointer. Drag: the time follows. A bubble above the thumb shows the time in 17px bold and the chapter name in 11px. The bubble is clamped inside the scrubber. Release: the track and thumb shrink back and the 3000ms timer starts again.
+9. Ahead of the red fill, the next 90 seconds show as a lighter "buffered" fill.
+10. The top-left label always names the current chapter: Arrival 0:00, The crossing 3:10, Camp 7:45, Night sky 12:20, Dawn 16:05.
+11. CC toggles captions. A caption sits 12px above the bottom edge. While the controls show, it moves to 48px from the top so it never sits on the play button. Cues change every 5 seconds of video time.
+12. "1x" opens a speed panel over the video: "Playback speed" and six 44px chips, 0.5x, 0.75x, 1x, 1.25x, 1.5x, 2x. Picking one sets the rate, updates the button text and closes the panel. Tapping outside the chips or pressing Escape closes it without a change.
+13. The full-screen button rotates the player 90° into landscape over 420ms. The video letterboxes to 16:9 on black. The icon swaps to "exit". Tap it or press Escape to return.
+14. Below the video: Follow toggles to "Following" on a dark pill. "more" expands the description and shows the five chapters as rows. Tapping a chapter row seeks to it.
+15. Tapping an Up next item restarts the player at 0:00 and scrolls to the top.
+
+## Tokens
+
+```css
+:root {
+  --bg: #0b0b0c;          /* page */
+  --surface: #161618;     /* description box */
+  --surface-2: #202023;   /* avatar, Following pill */
+  --line: #26262a;        /* hairlines */
+  --ink: #f5f5f4;         /* text, icons, Follow pill */
+  --ink-2: #c4c4c7;       /* secondary text on video */
+  --ink-3: #9a9a9f;       /* meta */
+  --red: #e5322d;         /* progress, thumb, chapter times. The only colour. */
+  --track: rgba(255,255,255,.24);
+  --buffer: rgba(255,255,255,.4);
+  --scrim: linear-gradient(rgba(0,0,0,.6), transparent 34%, transparent 58%, rgba(0,0,0,.72));
+
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 22px;
+  --r-thumb: 8px; --r-box: 12px; --r-pill: 22px;
+
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --ios: cubic-bezier(.32, .72, 0, 1);
+  --micro: 160ms;
+  --layout: 320ms;
+  --hide-after: 3000ms;
+  --double-tap: 300ms;
+}
+```
+
+Scene colours (inside the SVG only): sky `#05070d → #121a29 → #3a2b2b`, far dune `#1b1f28`, salt `#2b2f38 → #0c0e12`, near dune `#07080b`, moon `#e9e5da`, headlights `#ffd9a0`.
+
+## Typography
+
+| Role | Size | Weight | Line-height | Colour |
+| --- | --- | --- | --- | --- |
+| Video title | 18px | 700 | 1.3 | `--ink`, tracking -0.01em |
+| Meta | 13px | 400 | 1.45 | `--ink-3` |
+| Channel name | 15px | 600 | 1.45 | `--ink` |
+| Followers | 12px | 400 | 1.45 | `--ink-3` |
+| Follow pill | 14px | 700 | 44px box | black on `--ink` |
+| Description | 14px | 400 | 1.45 | `--ink-2` |
+| Chapter label on video | 13px | 600, suffix 500 | — | `--ink`, suffix `--ink-2` |
+| Time on video | 13px | 600, total 500 | — | `--ink`, total `--ink-2` |
+| Bubble time | 17px | 700 | — | `--ink` |
+| Bubble chapter | 11px | 500 | — | `--ink-2` |
+| Caption | 14px | 500 | 1.45 | `--ink` on rgba(0,0,0,.72) |
+| Up next title | 14px | 600 | 1.3, 2-line clamp | `--ink` |
+| Duration badge | 11px | 600 | 1.5 | `--ink` on rgba(0,0,0,.78) |
+| Section head | 15px | 700 | — | `--ink` |
+
+One family, Hanken Grotesk, 400 to 700. All times use `font-variant-numeric: tabular-nums`, so the clock does not jitter.
 
 ## Implementation notes
 

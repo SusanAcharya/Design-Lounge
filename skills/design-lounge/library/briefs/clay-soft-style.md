@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A kit sheet for "Pebble Days", a fictional kids' habit app, that teaches a clay dialect: cream `#FFF1E4` puffy surfaces, a white inner lip on the top edge, a 6–8px deep colour shelf underneath, and 20–28px radii. The first row is a home fragment: "Good morning, Nico.", Today / Week tabs, two habit tiles (Water done, Stretch waiting), and two clay blobs (sky 180px, butter 110px) with the same inner-light treatment. Below: type specimen, five puffy chips, a button set (coral, sky, ghost), place chips, a pebble-name field, a stretch-done switch that paints the Stretch tile mint, three puff plates, four grammar cards. The detail worth copying: **press is physical**. Active buttons `translateY(4px)` and shrink the shelf from 6px to 2px, as if the clay compressed.
-
-## Reference behaviour
-
-1. Initial state: 60px cream header, 28px coral sphere mark, "Pebble / clay kit 07", four anchors, "Day 12 of 21". Sheet on `#F3D7C4` with 14px gap. First 800px shows the 420px hero + specimen.
-2. Hero has two clay spheres: sky 180×180, top-right, inner white 10px lip + 10px `#5EA3D0` shelf; butter 110×110, inner 6px + 8px `#E0B84A` shelf.
-3. Hover a coral button: `translateY(-2px)` over 160ms. Press: `translateY(4px)`, shelf 2px. Sky and ghost use the same press math with their own shelf colours.
-4. Click Today / Week. `aria-selected` moves; selected tab is coral with a 3px `#E55A3C` shelf. `#day-copy` swaps: two pebbles left today; this week 9 of 14, best day Tuesday, streak 13.
-5. Click the Stretch done switch: `aria-checked` flips; the Stretch tile's 18px dot turns mint and the caption becomes "done for today". Off restores cream-2 and "not yet".
-6. Click Home / Park / Bed chips: pressed fills mint with a `#5AA05E` shelf.
-7. Focus the pebble-name input: 3px sky ring around an inset well (`inset 0 4px 6px rgba(61,43,36,.08)`).
-8. Header link hover: coral-deep. "Add pebble" is the primary coral puff.
-9. Reduced motion: transitions 1ms. The switch still recolors the tile.
 
 ## Structure
 
@@ -44,47 +34,6 @@ A kit sheet for "Pebble Days", a fictional kids' habit app, that teaches a clay 
 - Cells: `border-radius: 28px`, cream fill, `box-shadow: inset 0 3px 0 rgba(255,255,255,.7), 0 8px 0 rgba(61,43,36,.08)`.
 - Habit tiles: 22px radius, 360px-wide 2-col grid, 18px status dots.
 - Page field is `#F3D7C4` (a darker cream), not grey and not the cell cream — the cells have to sit up.
-
-## Tokens
-
-```css
-:root {
-  --cream: #fff1e4;       /* clay surface, 50 % */
-  --cream-2: #ffe4cc;     /* wells, ghost, chips */
-  --coral: #ff7a59;       /* primary */
-  --coral-deep: #e55a3c;  /* coral shelf */
-  --sky: #8ec5e8;         /* secondary */
-  --sky-deep: #5ea3d0;    /* sky shelf, focus */
-  --butter: #ffd56a;      /* highlight blob */
-  --mint: #7bc47f;        /* done */
-  --ink: #3d2b24;
-  --ink-2: #7a5c50;
-  --field: #f3d7c4;
-  --display: "Bagel Fat One", system-ui, sans-serif;
-  --text: "Fredoka", system-ui, sans-serif;
-  --fs-display: 44px; --fs-aa: 88px; --fs-h2: 26px; --fs-body: 15px; --fs-label: 12px;
-  --r: 28px; --ctl: 48px; --pad: 18px;
-  --t-micro: 160ms; --t-switch: 220ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-Ink `#3D2B24` is required for text but is not one of the five published swatches (those are the clay colours). Document it in tokens anyway.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Hero headline | Bagel Fat One | 44px | 400 | .95 | 0 | sentence |
-| Specimen glyph | Bagel Fat One | 88px | 400 | .8 | 0 | "Aa", coral |
-| Brand / habit title | Bagel Fat One | 18–26px | 400 | 1 | 0 | sentence |
-| Grammar title | Bagel Fat One | 20px | 400 | 1 | 0 | sentence |
-| Button / tab | Fredoka | 14–15px | 600 | 1 | 0 | sentence |
-| Body | Fredoka | 15px | 400 | 1.4 | 0 | sentence |
-| Label | Fredoka | 12px | 700 | 1 | +0.06em | UPPERCASE, coral-deep |
-
-Bagel Fat One is 400 only and very heavy. Use it for names and greetings, not for paragraphs. Fredoka carries UI.
 
 ## Motion
 
@@ -138,6 +87,63 @@ Reduced motion: 1ms. Press still happens (the 4px drop is the language; it just 
 - [ ] Page field is `#F3D7C4`, darker than the cells, so the clay sits up.
 - [ ] Only Bagel Fat One and Fredoka are loaded.
 - [ ] No purple-blue gradient, no glass blur.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: 60px cream header, 28px coral sphere mark, "Pebble / clay kit 07", four anchors, "Day 12 of 21". Sheet on `#F3D7C4` with 14px gap. First 800px shows the 420px hero + specimen.
+2. Hero has two clay spheres: sky 180×180, top-right, inner white 10px lip + 10px `#5EA3D0` shelf; butter 110×110, inner 6px + 8px `#E0B84A` shelf.
+3. Hover a coral button: `translateY(-2px)` over 160ms. Press: `translateY(4px)`, shelf 2px. Sky and ghost use the same press math with their own shelf colours.
+4. Click Today / Week. `aria-selected` moves; selected tab is coral with a 3px `#E55A3C` shelf. `#day-copy` swaps: two pebbles left today; this week 9 of 14, best day Tuesday, streak 13.
+5. Click the Stretch done switch: `aria-checked` flips; the Stretch tile's 18px dot turns mint and the caption becomes "done for today". Off restores cream-2 and "not yet".
+6. Click Home / Park / Bed chips: pressed fills mint with a `#5AA05E` shelf.
+7. Focus the pebble-name input: 3px sky ring around an inset well (`inset 0 4px 6px rgba(61,43,36,.08)`).
+8. Header link hover: coral-deep. "Add pebble" is the primary coral puff.
+9. Reduced motion: transitions 1ms. The switch still recolors the tile.
+
+## Tokens
+
+```css
+:root {
+  --cream: #fff1e4;       /* clay surface, 50 % */
+  --cream-2: #ffe4cc;     /* wells, ghost, chips */
+  --coral: #ff7a59;       /* primary */
+  --coral-deep: #e55a3c;  /* coral shelf */
+  --sky: #8ec5e8;         /* secondary */
+  --sky-deep: #5ea3d0;    /* sky shelf, focus */
+  --butter: #ffd56a;      /* highlight blob */
+  --mint: #7bc47f;        /* done */
+  --ink: #3d2b24;
+  --ink-2: #7a5c50;
+  --field: #f3d7c4;
+  --display: "Bagel Fat One", system-ui, sans-serif;
+  --text: "Fredoka", system-ui, sans-serif;
+  --fs-display: 44px; --fs-aa: 88px; --fs-h2: 26px; --fs-body: 15px; --fs-label: 12px;
+  --r: 28px; --ctl: 48px; --pad: 18px;
+  --t-micro: 160ms; --t-switch: 220ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+Ink `#3D2B24` is required for text but is not one of the five published swatches (those are the clay colours). Document it in tokens anyway.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Hero headline | Bagel Fat One | 44px | 400 | .95 | 0 | sentence |
+| Specimen glyph | Bagel Fat One | 88px | 400 | .8 | 0 | "Aa", coral |
+| Brand / habit title | Bagel Fat One | 18–26px | 400 | 1 | 0 | sentence |
+| Grammar title | Bagel Fat One | 20px | 400 | 1 | 0 | sentence |
+| Button / tab | Fredoka | 14–15px | 600 | 1 | 0 | sentence |
+| Body | Fredoka | 15px | 400 | 1.4 | 0 | sentence |
+| Label | Fredoka | 12px | 700 | 1 | +0.06em | UPPERCASE, coral-deep |
+
+Bagel Fat One is 400 only and very heavy. Use it for names and greetings, not for paragraphs. Fredoka carries UI.
 
 ## Implementation notes
 

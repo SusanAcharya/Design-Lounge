@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 An operations overview for a fictional platform team ("Halden Ops") on a landscape tablet: a 60px top bar with a health dot, environment label and a four-segment time control, then a 3-column × 2-row card grid. The wide card is a single-series requests line chart with a soft area fill, a dashed crosshair and a tooltip that follows the pointer; next to it a half-circle gauge draws its arc with a stroke-dashoffset transition; the second row holds a live event feed that prepends a row every 4 seconds with a slide-in, a p95 latency bar strip and a region availability list. Everything numeric is Chivo Mono; headings and big numbers are Chivo. One teal series colour; green, amber and red are reserved for status and always paired with text or an icon.
-
-## Reference behaviour
-
-1. Initial state: "1h" pressed. Chart shows 24 points, big number "48.2k" with "+6.1% vs. previous period". The gauge arc animates from 0 to 92% over 800ms on load. The feed already holds three rows; the clock in the top bar shows the current time and ticks every second.
-2. Every 4000ms a new event row is prepended to the feed: it slides in from −10px with a fade over 360ms while its height grows from 0 to 40px; the list is capped at six rows (the oldest is removed). Rows carry an 8px status dot (green ok, amber warn, red crit), a title, a mono sub-line and a mono timestamp.
-3. Click a time segment (6h / 24h / 7d): the pressed segment turns off-white with dark text; the line and area paths morph to the new series over 400ms (same point count, `transition: d`); the big number, delta and "last 6h" label update instantly.
-4. Move the pointer over the chart: a dashed vertical crosshair snaps to the nearest of the 24 points, a 10px teal marker with a 2px panel-coloured ring sits on the line, and a tooltip ("52,000 rpm") floats above the point. Leaving the chart hides all three over 160ms.
-5. Hover a latency bar: it turns teal and shows its value in a native tooltip; the last bar is always teal (the current bucket).
-6. The region list shows four availability bars; us-e1 is amber at 97.40 and the card footer reads "us-e1 degraded since 13:50" with a warning icon in amber.
-7. Nothing else is clickable; the piece is a live screen. Reloading replays the gauge draw.
 
 ## Structure
 
@@ -59,6 +51,76 @@ grid: 3 cols, 2 rows, 16px gap, 24px side padding; cards 20px padding, 12px radi
 - Feed events (title · meta · status), cycled in order: "Deploy finished" · "api · v2.14.3" · ok; "Autoscaled to 14 pods" · "workers · cpu 71%" · ok; "Latency spike cleared" · "us-e1 · 412ms → 190ms" · ok; "Queue depth over 5k" · "billing-jobs" · warn; "Certificate renewed" · "edge · 90 days" · ok; "5xx burst" · "checkout · 38 in 60s" · crit; "Cache warmed" · "catalog · 2.1M keys" · ok; "Node drained" · "eu-n1 · ip-10-4-2-17" · warn.
 - Latency card: "184ms", "−12ms after v2.14"; 24 bars with heights from `150 + |sin(i / 2.3)| × 60 + (i mod 5) × 4` ms on a 260ms scale.
 - Regions: eu-n1 99.98 · eu-w2 99.95 · us-e1 97.40 (warn) · ap-s1 99.91; footer "us-e1 degraded since 13:50".
+
+## Motion
+
+| Element           | Trigger         | Property            | From → To                    | Duration | Easing       | Notes |
+|-------------------|-----------------|---------------------|------------------------------|---------:|--------------|-------|
+| `.gauge .arc`     | load            | stroke-dashoffset   | 236 → 236 × (1 − 0.92)       | 800ms    | `--ease-out` | set in a `requestAnimationFrame` after first paint |
+| `path.ln`, `path.area` | segment change | `d`              | previous → new series        | 400ms    | `--ease`     | needs identical command count; browsers without `d` transitions cut |
+| `.feed li`        | prepend         | opacity, translateX, max-height, padding | 0, −10px, 0, 0 → 1, 0, 40px, 8px | 360ms | `--ease-out` | `@keyframes slide`, plays once per row |
+| `.chart .xh/.pt/.tip` | pointer enter / leave | opacity        | 0 ↔ 1                        | 160ms    | linear       | crosshair/marker position updates instantly |
+| `.seg button`     | pressed         | background, color   | transparent/`--ink-2` → `--seg-on`/`--seg-on-ink` | 160ms | linear | |
+| `.bars span`      | hover           | background          | `--panel-2` → `--series`     | 160ms    | linear       | |
+| `.clock`          | every 1000ms    | text                | —                            | 0        | —            | `aria-live="off"` |
+
+Reduced motion: every transition and animation is 1ms (the gauge appears full; rows appear in place). The 4s feed interval is unchanged.
+
+## States
+
+- **Segment pressed:** `aria-pressed="true"`, `--seg-on` pill with `--seg-on-ink` text; hover on unpressed raises text to `--ink`.
+- **Chart hover:** `.chart.hover` shows the crosshair (1px dashed `3 3`, `--line-strong`), the 10px marker (teal, 2px `--panel` ring) and the tooltip (`--ink` background, `--bg` text, 6px radius, positioned `translate(-50%, -110%)` from the point).
+- **Feed dot:** `--good` default, `.warn` amber, `.crit` red; the title text carries the meaning ("5xx burst"), the dot only reinforces it.
+- **Region bar warn:** `.warn` fill amber; value stays `--ink`.
+- **Status line:** green check + "Within SLO", or amber triangle + message; colour is never the only signal.
+- **Focus-visible (segments, cards if made focusable):** 2px `--series` outline, 2px offset.
+
+## Accessibility
+
+- Each card is a `<section aria-labelledby>` its `<h2>` so the grid reads as five named regions.
+- The time control is `role="group" aria-label="Time range"` of toggle buttons with `aria-pressed`; only one is pressed.
+- Chart SVGs are `aria-hidden`; the card's big number, delta and range label already convey the headline. If a table view is required, add a visually hidden `<table>` of the 24 values under the chart.
+- The feed is deliberately `aria-live="off"`: a row every 4 seconds would be disruptive if announced. Expose a "pause feed" control if screen-reader users need to read it.
+- The clock is `aria-live="off"`.
+- Latency bars each carry a `title` with the value; the strip has an `aria-label`.
+- Contrast: `--ink-2` on `--panel` 8.6:1; `--ink-3` on `--panel` 4.5:1 (used for ≥ 10px mono labels); `--series` on `--panel` 9.4:1; `--warn` on `--panel` 10.2:1; `--seg-on-ink` on `--seg-on` 15.8:1.
+- Hit targets: segments 28px tall × ≥ 44px wide; on touch tablets raise segment height to 36px.
+
+## Responsive rules
+
+- 1180 (reference): 3 × 2 grid; the chart card spans two columns.
+- 1024: same grid; card padding 16px; gauge SVG 160×98.
+- 768 (portrait): 2 columns × 3 rows; the chart card spans both columns in row 1; segments shrink to `padding: 0 10px`.
+- < 640: single column; cards get a fixed 220px height (chart 260px) and the page scrolls; the top bar wraps the segment control onto a second line.
+
+## Acceptance checklist
+
+- [ ] Top bar is 60px; the grid is `repeat(3, 1fr)` × `1fr 1fr` with a 16px gap and 24px side padding; the chart card spans two columns.
+- [ ] Segmented control has four `aria-pressed` buttons in Chivo Mono 12px; the pressed one is `#e8edf2` with `#0c1117` text.
+- [ ] Changing the range morphs the 24-point line and area over 400ms and updates the big number, delta and "last …" label.
+- [ ] The line is 2px `#5ad1b3` with `vector-effect: non-scaling-stroke`; the area is the same hue at 14% alpha.
+- [ ] Hovering the chart shows a dashed crosshair snapped to the nearest point, a 10px marker with a 2px panel ring, and a tooltip with the value in rpm; all hide within 160ms of leaving.
+- [ ] The gauge arc animates `stroke-dashoffset` from 236 to 18.9 over 800ms on load; the value reads "92%".
+- [ ] A new feed row is prepended every 4000ms, slides in over 360ms and the list never exceeds six rows.
+- [ ] Feed dots use green / amber / red only for status, and every row has descriptive text.
+- [ ] Latency strip has 24 bars; the last bar and any hovered bar are teal; each bar has a `title`.
+- [ ] Region rows are `52px 1fr 48px` grids; us-e1 bar is amber and the footer warning has an icon.
+- [ ] No `setInterval` faster than 1000ms; the feed uses 4000ms.
+- [ ] Reduced motion: no slide, gauge appears drawn, chart still updates.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: "1h" pressed. Chart shows 24 points, big number "48.2k" with "+6.1% vs. previous period". The gauge arc animates from 0 to 92% over 800ms on load. The feed already holds three rows; the clock in the top bar shows the current time and ticks every second.
+2. Every 4000ms a new event row is prepended to the feed: it slides in from −10px with a fade over 360ms while its height grows from 0 to 40px; the list is capped at six rows (the oldest is removed). Rows carry an 8px status dot (green ok, amber warn, red crit), a title, a mono sub-line and a mono timestamp.
+3. Click a time segment (6h / 24h / 7d): the pressed segment turns off-white with dark text; the line and area paths morph to the new series over 400ms (same point count, `transition: d`); the big number, delta and "last 6h" label update instantly.
+4. Move the pointer over the chart: a dashed vertical crosshair snaps to the nearest of the 24 points, a 10px teal marker with a 2px panel-coloured ring sits on the line, and a tooltip ("52,000 rpm") floats above the point. Leaving the chart hides all three over 160ms.
+5. Hover a latency bar: it turns teal and shows its value in a native tooltip; the last bar is always teal (the current bucket).
+6. The region list shows four availability bars; us-e1 is amber at 97.40 and the card footer reads "us-e1 degraded since 13:50" with a warning icon in amber.
+7. Nothing else is clickable; the piece is a live screen. Reloading replays the gauge draw.
 
 ## Tokens
 
@@ -130,62 +192,6 @@ grid: 3 cols, 2 rows, 16px gap, 24px side padding; cards 20px padding, 12px radi
 | Axis labels       | Chivo Mono | 10px | 400    | 1           | 0        | numerals  |
 | Region rows       | Chivo Mono | 12px | 400    | 1.3         | 0        | as written |
 | Tooltip           | Chivo Mono | 11px | 500    | 1.3         | 0        | numerals  |
-
-## Motion
-
-| Element           | Trigger         | Property            | From → To                    | Duration | Easing       | Notes |
-|-------------------|-----------------|---------------------|------------------------------|---------:|--------------|-------|
-| `.gauge .arc`     | load            | stroke-dashoffset   | 236 → 236 × (1 − 0.92)       | 800ms    | `--ease-out` | set in a `requestAnimationFrame` after first paint |
-| `path.ln`, `path.area` | segment change | `d`              | previous → new series        | 400ms    | `--ease`     | needs identical command count; browsers without `d` transitions cut |
-| `.feed li`        | prepend         | opacity, translateX, max-height, padding | 0, −10px, 0, 0 → 1, 0, 40px, 8px | 360ms | `--ease-out` | `@keyframes slide`, plays once per row |
-| `.chart .xh/.pt/.tip` | pointer enter / leave | opacity        | 0 ↔ 1                        | 160ms    | linear       | crosshair/marker position updates instantly |
-| `.seg button`     | pressed         | background, color   | transparent/`--ink-2` → `--seg-on`/`--seg-on-ink` | 160ms | linear | |
-| `.bars span`      | hover           | background          | `--panel-2` → `--series`     | 160ms    | linear       | |
-| `.clock`          | every 1000ms    | text                | —                            | 0        | —            | `aria-live="off"` |
-
-Reduced motion: every transition and animation is 1ms (the gauge appears full; rows appear in place). The 4s feed interval is unchanged.
-
-## States
-
-- **Segment pressed:** `aria-pressed="true"`, `--seg-on` pill with `--seg-on-ink` text; hover on unpressed raises text to `--ink`.
-- **Chart hover:** `.chart.hover` shows the crosshair (1px dashed `3 3`, `--line-strong`), the 10px marker (teal, 2px `--panel` ring) and the tooltip (`--ink` background, `--bg` text, 6px radius, positioned `translate(-50%, -110%)` from the point).
-- **Feed dot:** `--good` default, `.warn` amber, `.crit` red; the title text carries the meaning ("5xx burst"), the dot only reinforces it.
-- **Region bar warn:** `.warn` fill amber; value stays `--ink`.
-- **Status line:** green check + "Within SLO", or amber triangle + message; colour is never the only signal.
-- **Focus-visible (segments, cards if made focusable):** 2px `--series` outline, 2px offset.
-
-## Accessibility
-
-- Each card is a `<section aria-labelledby>` its `<h2>` so the grid reads as five named regions.
-- The time control is `role="group" aria-label="Time range"` of toggle buttons with `aria-pressed`; only one is pressed.
-- Chart SVGs are `aria-hidden`; the card's big number, delta and range label already convey the headline. If a table view is required, add a visually hidden `<table>` of the 24 values under the chart.
-- The feed is deliberately `aria-live="off"`: a row every 4 seconds would be disruptive if announced. Expose a "pause feed" control if screen-reader users need to read it.
-- The clock is `aria-live="off"`.
-- Latency bars each carry a `title` with the value; the strip has an `aria-label`.
-- Contrast: `--ink-2` on `--panel` 8.6:1; `--ink-3` on `--panel` 4.5:1 (used for ≥ 10px mono labels); `--series` on `--panel` 9.4:1; `--warn` on `--panel` 10.2:1; `--seg-on-ink` on `--seg-on` 15.8:1.
-- Hit targets: segments 28px tall × ≥ 44px wide; on touch tablets raise segment height to 36px.
-
-## Responsive rules
-
-- 1180 (reference): 3 × 2 grid; the chart card spans two columns.
-- 1024: same grid; card padding 16px; gauge SVG 160×98.
-- 768 (portrait): 2 columns × 3 rows; the chart card spans both columns in row 1; segments shrink to `padding: 0 10px`.
-- < 640: single column; cards get a fixed 220px height (chart 260px) and the page scrolls; the top bar wraps the segment control onto a second line.
-
-## Acceptance checklist
-
-- [ ] Top bar is 60px; the grid is `repeat(3, 1fr)` × `1fr 1fr` with a 16px gap and 24px side padding; the chart card spans two columns.
-- [ ] Segmented control has four `aria-pressed` buttons in Chivo Mono 12px; the pressed one is `#e8edf2` with `#0c1117` text.
-- [ ] Changing the range morphs the 24-point line and area over 400ms and updates the big number, delta and "last …" label.
-- [ ] The line is 2px `#5ad1b3` with `vector-effect: non-scaling-stroke`; the area is the same hue at 14% alpha.
-- [ ] Hovering the chart shows a dashed crosshair snapped to the nearest point, a 10px marker with a 2px panel ring, and a tooltip with the value in rpm; all hide within 160ms of leaving.
-- [ ] The gauge arc animates `stroke-dashoffset` from 236 to 18.9 over 800ms on load; the value reads "92%".
-- [ ] A new feed row is prepended every 4000ms, slides in over 360ms and the list never exceeds six rows.
-- [ ] Feed dots use green / amber / red only for status, and every row has descriptive text.
-- [ ] Latency strip has 24 bars; the last bar and any hovered bar are teal; each bar has a `title`.
-- [ ] Region rows are `52px 1fr 48px` grids; us-e1 bar is amber and the footer warning has an icon.
-- [ ] No `setInterval` faster than 1000ms; the feed uses 4000ms.
-- [ ] Reduced motion: no slide, gauge appears drawn, chart still updates.
 
 ## Implementation notes
 

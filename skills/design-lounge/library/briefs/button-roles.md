@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, height is `--control` and radius is `--radius`. One solid primary per view.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Five buttons in one row on the shift screen. Save is the solid primary. Cancel is outline. Preview is a soft fill. Remove is outline with danger text and a danger border, not a second solid. Export is disabled. A status line under the row reports the last click. Remove's status says it stays outline. This is the component sheet's button, shown as a set so the roles do not drift apart.
-
-## Reference behaviour
-
-1. The first frame has no status text. Save is the only solid button.
-2. Save writes "Shift saved."
-3. Cancel writes "Left the shift as it was."
-4. Preview writes "Preview opened."
-5. Remove writes "Remove stays outline. It is not a second primary."
-6. Export does not fire. It is disabled.
-7. Focus ring is 2px `--focus`, offset 3px.
-8. There is no menu, no icon, and no animation.
 
 ## Structure
 
@@ -31,35 +22,6 @@ status line                  14px, empty until a click
 - The row is a flex line, gap 8px, wrap allowed.
 - Each control is a `button type="button"`.
 - Export has the `disabled` attribute.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --primary-ink: #fffdf8;
-  --primary-soft: #e7f2ec;
-  --danger: #9b2c2c;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px in this yard demo. Quiet becomes 6px. Soft becomes 14px, and Soft's primary may be a pill because that family's button is a pill. Do not pill these buttons on Quiet, Sharp, Editorial, or Industrial.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Button | sans | 13px | 500 | see states |
-| Status | sans | 14px | 400 | `--ink` |
-
-Buttons are 13px on web and 15px on a phone. Line-height is 1. The label is vertically centered by the fixed height.
 
 ## Motion
 
@@ -108,6 +70,50 @@ None. The status text replaces itself in one frame. Reduced motion has nothing t
 - [ ] Buttons are 40px tall, radius 2px, label 13px weight 500.
 - [ ] Focus ring is 2px, offset 3px.
 - [ ] There is no second solid button and no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame has no status text. Save is the only solid button.
+2. Save writes "Shift saved."
+3. Cancel writes "Left the shift as it was."
+4. Preview writes "Preview opened."
+5. Remove writes "Remove stays outline. It is not a second primary."
+6. Export does not fire. It is disabled.
+7. Focus ring is 2px `--focus`, offset 3px.
+8. There is no menu, no icon, and no animation.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --primary-ink: #fffdf8;
+  --primary-soft: #e7f2ec;
+  --danger: #9b2c2c;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px in this yard demo. Quiet becomes 6px. Soft becomes 14px, and Soft's primary may be a pill because that family's button is a pill. Do not pill these buttons on Quiet, Sharp, Editorial, or Industrial.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Button | sans | 13px | 500 | see states |
+| Status | sans | 14px | 400 | `--ink` |
+
+Buttons are 13px on web and 15px on a phone. Line-height is 1. The label is vertically centered by the fixed height.
 
 ## Implementation notes
 

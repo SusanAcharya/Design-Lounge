@@ -4,32 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The outbox of "Tern Survey", a field-notes app used by crews on sites with weak signal. Anything the crew saves with no signal goes into a queue on the phone. The outbox is a bottom sheet that shows each queued change, its state, and what to do about it. When signal returns, items send one at a time with a progress bar. The look is industrial field kit: sand and khaki, black ink, one signal orange, a mono face for data, a condensed sans for names, and 2px corners. The detail worth copying is the conflict card: when an edit was changed on another device, it shows both versions side by side and asks one plain question with two buttons.
-
-## Reference behaviour
-
-1. First frame, offline. Behind the sheet: the "TERN SURVEY" bar, a chip "● OFFLINE · 3 IN OUTBOX", "SITE 14 · MARSH LANE · CREW B", and a "Field notes" list, under a 28% dark scrim.
-2. The sheet is open from 184px down to the bottom. Top: a 40×4 grabber, "OUTBOX" at 26px with "3 waiting", and a 44px close button.
-3. A network switch row: crossed-out signal icon, "OFFLINE · NO SIGNAL", "Changes are saved on this phone", and a square toggle, off.
-4. An overall bar: "0 OF 3 SENT" on the left, "WAITING FOR SIGNAL" on the right, a 6px track with a black fill at 0%.
-5. Three cards, in queue order:
-   - "Culvert C-14 outflow", "PHOTO NOTE · 2 PHOTOS · 4.2 MB · 09:14". State FAILED (orange chip, orange border, 4px orange left bar). Message "Failed at 62%. Signal lost at 09:21." A black "Retry" button.
-   - "Daily site log, 3 Oct", "FORM · 14 FIELDS · 09:30". State QUEUED (dashed chip). "Sends when signal returns."
-   - "Plot 7 boundary note", "EDIT · 1 FIELD · 09:36". State QUEUED.
-6. Tap Retry while offline: the card becomes QUEUED with "Still offline. Sends when signal returns." Focus moves to the network switch. The live region says "Culvert C-14 outflow queued. Still offline."
-7. Tap the network switch. It turns orange, the icon gets signal bars, the text becomes "ONLINE · 2 BARS" and "Sending queued changes". The chip dot turns black. The live region says "Back online. Sending outbox."
-8. Items send one at a time, top first. The sending card gets a black "SENDING 62%" chip and a 4px orange progress bar. The photo resumes from 62% and gains 6% every 160ms. Others start at 0% and gain 12% every 160ms.
-9. At 100% the card becomes SENT: transparent fill, khaki border, grey title, a check icon before "SENT", no message. The overall bar grows by a third. 300ms later the next item starts.
-10. The form fails once at 48%: FAILED, "Server did not answer. Retrying in 2s.", then "1s", then it goes back to QUEUED and sends again from 0%. No button shows during the countdown.
-11. The edit reaches 60% and stops: CONFLICT (orange chip). Message "Changed on another device." Two boxes: "YOURS · 09:36 — Post 7 leans 15° north. Reset needed." and "THEIRS · R. ADEYEMI · 09:52 — Post 7 replaced and reset on 3 Oct." Two 44px buttons: "Keep mine" (black) and "Keep theirs" (outlined). The list scrolls so the whole card is in view. The right label reads "NEEDS YOUR CHOICE".
-12. Keep mine: the edit sends from 60% to 100%, then shows SENT with "Your note replaced theirs."
-13. Keep theirs: the edit becomes SENT at once with "Their note kept. Yours discarded."
-14. When all three are sent: "3 OF 3 SENT", "ALL SENT", the count reads "Empty", the switch sub line reads "Up to date", the chip reads "ONLINE · ALL SENT", and the live region says "Outbox empty. All 3 changes sent."
-15. Go offline mid-send: the sending card returns to QUEUED with "Paused at 40%. Resumes with signal." Going offline during a retry countdown stops it and shows the Retry button.
-16. Close (×), tap the scrim, press Escape, or tap the chip: the sheet slides down over 360ms. Tap the chip again to open it. Focus goes to the chip on close and the network switch on open.
-17. "Reset demo" puts everything back to the first frame.
 
 ## Structure
 
@@ -67,66 +46,6 @@ The outbox of "Tern Survey", a field-notes app used by crews on sites with weak 
 - The network control is `<button role="switch" aria-checked>`.
 - The list is a `ul`; each card is an `li` grid `36px minmax(0,1fr) auto`, gap 4px 12px. Row two spans columns 2 to the end and holds the bar, the message, the diff, and buttons.
 - A visually hidden `aria-live="polite" aria-atomic="true"` paragraph.
-
-## Tokens
-
-```css
-:root {
-  /* field neutrals */
-  --sand: #d9cdae;        /* page, inner wells */
-  --sand-2: #cdbf9b;      /* switch row */
-  --paper: #ece4cd;       /* sheet, cards, chip */
-  --line: #b3a47f;        /* list hairlines */
-  --line-2: #8f8162;      /* grabber, sent border, wells */
-  --ink: #16140f;         /* text, borders, primary buttons */
-  --ink-2: #3d382c;       /* meta, quiet messages */
-  --ink-3: #5c5442;       /* sent titles */
-
-  /* the one accent */
-  --sig: #e4571b;         /* failed, conflict, item bar, switch on */
-  --sig-ink: #16140f;     /* text on orange */
-  --sig-text: #a63a0a;    /* orange text on paper */
-
-  /* type */
-  --cond: "Archivo Narrow", "Arial Narrow", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  /* shape and space */
-  --r: 2px;
-  --border: 1.5px;
-  --sheet-top: 184px;
-  --pad-x: 16px;
-  --top-clear: 54px;
-  --bottom-clear: 34px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --sheet: cubic-bezier(.32, .72, 0, 1);
-  --t-sheet: 360ms;
-  --t-total: 400ms;
-  --t-item: 200ms;
-  --tick: 160ms;          /* demo upload tick */
-  --backoff-1: 2s;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | ---: | ---: | ---: | ---: | --- |
-| Screen heading | Archivo Narrow | 30px | 700 | 1 | −0.01em | sentence |
-| Sheet title | Archivo Narrow | 26px | 700 | 1 | 0.02em | upper |
-| Wordmark | Archivo Narrow | 20px | 700 | 1 | 0.04em | upper |
-| Card title | Archivo Narrow | 16px | 700 | 1.2 | 0 | sentence |
-| Network label | Archivo Narrow | 15px | 700 | 1.1 | 0.04em | upper |
-| Button | Archivo Narrow | 13px | 700 | 1 | 0.06em | upper |
-| Count | JetBrains Mono | 12px | 500 | 1 | 0 | sentence |
-| Chip / totals | JetBrains Mono | 11px | 500 | 1 | 0.04em | upper |
-| Message, diff | JetBrains Mono | 11px | 400 | 1.45 | 0 | sentence |
-| Card meta | JetBrains Mono | 10.5px | 400 | 1.5 | 0.02em | upper |
-| State chip | JetBrains Mono | 10.5px | 700 | 1 | 0.06em | upper |
-
-Names of things are condensed sans. Anything a machine produced (times, sizes, states, counts) is mono.
 
 ## Motion
 
@@ -202,6 +121,93 @@ The queue still runs in order under reduced motion. Only the tweening goes. Line
 - [ ] The form fails once at 48% and retries after 2s.
 - [ ] The edit conflicts at 60% with R. Adeyemi's 09:52 version.
 - [ ] Sand `#d9cdae`, sheet `#ece4cd`, ink `#16140f`, signal `#e4571b`, 2px corners.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame, offline. Behind the sheet: the "TERN SURVEY" bar, a chip "● OFFLINE · 3 IN OUTBOX", "SITE 14 · MARSH LANE · CREW B", and a "Field notes" list, under a 28% dark scrim.
+2. The sheet is open from 184px down to the bottom. Top: a 40×4 grabber, "OUTBOX" at 26px with "3 waiting", and a 44px close button.
+3. A network switch row: crossed-out signal icon, "OFFLINE · NO SIGNAL", "Changes are saved on this phone", and a square toggle, off.
+4. An overall bar: "0 OF 3 SENT" on the left, "WAITING FOR SIGNAL" on the right, a 6px track with a black fill at 0%.
+5. Three cards, in queue order:
+   - "Culvert C-14 outflow", "PHOTO NOTE · 2 PHOTOS · 4.2 MB · 09:14". State FAILED (orange chip, orange border, 4px orange left bar). Message "Failed at 62%. Signal lost at 09:21." A black "Retry" button.
+   - "Daily site log, 3 Oct", "FORM · 14 FIELDS · 09:30". State QUEUED (dashed chip). "Sends when signal returns."
+   - "Plot 7 boundary note", "EDIT · 1 FIELD · 09:36". State QUEUED.
+6. Tap Retry while offline: the card becomes QUEUED with "Still offline. Sends when signal returns." Focus moves to the network switch. The live region says "Culvert C-14 outflow queued. Still offline."
+7. Tap the network switch. It turns orange, the icon gets signal bars, the text becomes "ONLINE · 2 BARS" and "Sending queued changes". The chip dot turns black. The live region says "Back online. Sending outbox."
+8. Items send one at a time, top first. The sending card gets a black "SENDING 62%" chip and a 4px orange progress bar. The photo resumes from 62% and gains 6% every 160ms. Others start at 0% and gain 12% every 160ms.
+9. At 100% the card becomes SENT: transparent fill, khaki border, grey title, a check icon before "SENT", no message. The overall bar grows by a third. 300ms later the next item starts.
+10. The form fails once at 48%: FAILED, "Server did not answer. Retrying in 2s.", then "1s", then it goes back to QUEUED and sends again from 0%. No button shows during the countdown.
+11. The edit reaches 60% and stops: CONFLICT (orange chip). Message "Changed on another device." Two boxes: "YOURS · 09:36 — Post 7 leans 15° north. Reset needed." and "THEIRS · R. ADEYEMI · 09:52 — Post 7 replaced and reset on 3 Oct." Two 44px buttons: "Keep mine" (black) and "Keep theirs" (outlined). The list scrolls so the whole card is in view. The right label reads "NEEDS YOUR CHOICE".
+12. Keep mine: the edit sends from 60% to 100%, then shows SENT with "Your note replaced theirs."
+13. Keep theirs: the edit becomes SENT at once with "Their note kept. Yours discarded."
+14. When all three are sent: "3 OF 3 SENT", "ALL SENT", the count reads "Empty", the switch sub line reads "Up to date", the chip reads "ONLINE · ALL SENT", and the live region says "Outbox empty. All 3 changes sent."
+15. Go offline mid-send: the sending card returns to QUEUED with "Paused at 40%. Resumes with signal." Going offline during a retry countdown stops it and shows the Retry button.
+16. Close (×), tap the scrim, press Escape, or tap the chip: the sheet slides down over 360ms. Tap the chip again to open it. Focus goes to the chip on close and the network switch on open.
+17. "Reset demo" puts everything back to the first frame.
+
+## Tokens
+
+```css
+:root {
+  /* field neutrals */
+  --sand: #d9cdae;        /* page, inner wells */
+  --sand-2: #cdbf9b;      /* switch row */
+  --paper: #ece4cd;       /* sheet, cards, chip */
+  --line: #b3a47f;        /* list hairlines */
+  --line-2: #8f8162;      /* grabber, sent border, wells */
+  --ink: #16140f;         /* text, borders, primary buttons */
+  --ink-2: #3d382c;       /* meta, quiet messages */
+  --ink-3: #5c5442;       /* sent titles */
+
+  /* the one accent */
+  --sig: #e4571b;         /* failed, conflict, item bar, switch on */
+  --sig-ink: #16140f;     /* text on orange */
+  --sig-text: #a63a0a;    /* orange text on paper */
+
+  /* type */
+  --cond: "Archivo Narrow", "Arial Narrow", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* shape and space */
+  --r: 2px;
+  --border: 1.5px;
+  --sheet-top: 184px;
+  --pad-x: 16px;
+  --top-clear: 54px;
+  --bottom-clear: 34px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --sheet: cubic-bezier(.32, .72, 0, 1);
+  --t-sheet: 360ms;
+  --t-total: 400ms;
+  --t-item: 200ms;
+  --tick: 160ms;          /* demo upload tick */
+  --backoff-1: 2s;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Screen heading | Archivo Narrow | 30px | 700 | 1 | −0.01em | sentence |
+| Sheet title | Archivo Narrow | 26px | 700 | 1 | 0.02em | upper |
+| Wordmark | Archivo Narrow | 20px | 700 | 1 | 0.04em | upper |
+| Card title | Archivo Narrow | 16px | 700 | 1.2 | 0 | sentence |
+| Network label | Archivo Narrow | 15px | 700 | 1.1 | 0.04em | upper |
+| Button | Archivo Narrow | 13px | 700 | 1 | 0.06em | upper |
+| Count | JetBrains Mono | 12px | 500 | 1 | 0 | sentence |
+| Chip / totals | JetBrains Mono | 11px | 500 | 1 | 0.04em | upper |
+| Message, diff | JetBrains Mono | 11px | 400 | 1.45 | 0 | sentence |
+| Card meta | JetBrains Mono | 10.5px | 400 | 1.5 | 0.02em | upper |
+| State chip | JetBrains Mono | 10.5px | 700 | 1 | 0.06em | upper |
+
+Names of things are condensed sans. Anything a machine produced (times, sizes, states, counts) is mono.
 
 ## Implementation notes
 

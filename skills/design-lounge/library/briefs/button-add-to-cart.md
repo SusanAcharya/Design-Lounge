@@ -4,27 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The add-to-basket control on a product card for "Larder", a small-batch provisions shop. Three cards sit on a warm paper page under a header with a pill-shaped basket button. Each card shows one of the three states at first paint. Wildflower honey is idle with a terracotta "Add to basket" button. Smoked paprika is already a stepper reading "2 in basket". Stoneground rye is sold out and offers "Notify me". Clicking Add shows a short adding state. Then a round token with the product drawing flies in an arc to the basket icon, the badge bumps when it lands, and the button has already turned into a − / count / + stepper in the same 48px slot. The detail worth copying is that the control never changes size or position. The card does not reflow, the stepper owns the same box as the button, and focus moves to + so a keyboard user can keep adding.
 
 This is not `qty-stepper` (a standalone stepper) and not `shop-cart` (the drawer). It is the moment between them.
-
-## Reference behaviour
-
-1. First frame: header with "Larder" wordmark, "Provisions · Week 40", and a basket pill on the right showing a badge "2" and "£12.40". Heading "This week's shelf", sub-line "Small batches, delivered Thursday." Three cards in a row.
-2. Card 1, Wildflower honey, £9.50, "Ridge Farm, Powys · 340g jar": a filled terracotta button "+ Add to basket". Note under it: "6 jars this week".
-3. Card 2, Smoked paprika, £6.20, "La Vera, oak-smoked · 75g tin": a stepper with − on the left, "2 in basket" centred, + on the right. Note: "9 tins this week".
-4. Card 3, Stoneground rye, £4.80, "Harrow Lane Mill · 1.5kg bag": the tile is desaturated to 35 % with a "Back 15 Oct" stamp. Its control is an outlined button "Sold out · Notify me" with a bell icon. Note: "Next mill run is Tuesday".
-5. Click Add on honey: the button enters **adding**. The label slides up 6px and fades, three 6px dots bounce in its place, the fill darkens to `--accent-press`, and `aria-busy="true"` is set. This lasts 450ms (fake request).
-6. When adding resolves, on the same frame: quantity becomes 1, the button cross-fades into the stepper (opacity 200ms, scaleX .9 → 1 over 280ms), the − and + buttons slide 24px outward from the centre, focus moves to +, and a 40px round token launches from the button's centre.
-7. The token carries a small copy of the product drawing on the card's tile colour, with a 2px surface ring and a soft shadow. It travels to the basket icon centre in 720ms on an arc. X and Y are animated on two nested elements with different easings. It rises 56px in the first 22 % while scaling .6 → 1.12, then falls into the icon while shrinking to .42. Then it is removed.
-8. On landing: the badge number updates and pops (scale 1 → 1.45 → 1, 380ms, overshoot easing), the basket glyph tilts (−12° → 6° → 0, 420ms), and the subtotal updates to "£21.90". A polite live region says "Wildflower honey added. Basket has 3 items."
-9. At quantity 1 the − button shows a trash icon and is labelled "Remove Wildflower honey from basket". Above 1 it shows a minus and is labelled "One fewer Wildflower honey".
-10. + increments, the count rolls in from 8px below (240ms), the badge bumps, and the subtotal updates. At stock (6 jars) + is disabled at 35 % opacity, focus moves to −, and the note turns olive and bold: "That's every one of our 6 jars".
-11. − at quantity 1 removes the item. The stepper fades back to the Add button, focus returns to Add, and the live region says "Wildflower honey removed. Basket has N items."
-12. Notify on the sold-out card toggles `aria-pressed`. On, it reads "We'll email you on the 15th" with a check, on `--accent-soft` with an accent ring. Off, it returns to "Sold out · Notify me".
-13. The badge hides when the basket total is 0.
 
 ## Structure
 
@@ -51,62 +37,6 @@ This is not `qty-stepper` (a standalone stepper) and not `shop-cart` (the drawer
 - The sold-out card has only `button.notify[aria-pressed]` in its slot.
 - `.note` is a 12.5px line under the slot, `min-height: 18px` so cards stay aligned.
 - One visually hidden `<p aria-live="polite">` for announcements.
-
-## Tokens
-
-```css
-:root {
-  /* colour: warm paper, terracotta accent, olive for "you've got them all" */
-  --bg: #f2e8d8;            /* page, with a 4px dot grain at 4.5% ink */
-  --surface: #fbf6ec;       /* cards, cart pill */
-  --line: #e2d4be;
-  --tile-1: #ecc982;        /* honey */
-  --tile-2: #dc8f67;        /* paprika */
-  --tile-3: #dcd0b6;        /* rye */
-  --ink: #2a1d14;
-  --ink-2: #5e4b3c;
-  --ink-3: #77624f;         /* origin, notes */
-  --accent: #b4492a;        /* add button, badge, stepper ring */
-  --accent-press: #943a20;  /* hover, adding, stepper glyphs */
-  --accent-soft: #f4dccb;   /* stepper fill, notify-on fill */
-  --on-accent: #fff7ee;
-  --ok: #4f6b33;            /* max-stock note */
-
-  --display: "Gloock", Georgia, serif;
-  --sans: "Rethink Sans", system-ui, sans-serif;
-
-  --r: 12px;                /* button, stepper */
-  --r-card: 16px;
-  --slot-h: 48px;
-
-  --t-micro: 160ms;
-  --t-morph: 280ms;
-  --t-adding: 450ms;        /* fake request */
-  --t-fly: 720ms;
-  --t-bump: 380ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Wordmark | Gloock | 30px | 400 | 1 | −0.01em | |
-| Page heading | Gloock | 42px | 400 | 1.05 | −0.015em | 34px under 760px |
-| Price | Gloock | 21px | 400 | 1 | 0 | right-aligned on the name row |
-| Product name | Rethink Sans | 17px | 600 | 1.45 | −0.005em | |
-| Origin | Rethink Sans | 13px | 400 | 1.45 | 0 | `--ink-3` |
-| Button label | Rethink Sans | 15px | 600 | 1 | 0 | |
-| Stepper count | Rethink Sans | 17px | 700 | 1 | 0 | `tabular-nums` |
-| "in basket" | Rethink Sans | 13px | 400 | 1 | 0 | `--ink-2` |
-| Cart subtotal | Rethink Sans | 15px | 600 | 1 | 0 | `tabular-nums` |
-| Badge | Rethink Sans | 11.5px | 700 | 20px | 0 | |
-| Note | Rethink Sans | 12.5px | 400 | 1.45 | 0 | max state 600 `--ok` |
-
-The serif is only for the wordmark, heading and prices. Never set button labels in Gloock.
 
 ## Motion
 
@@ -177,6 +107,82 @@ Badge and count animations restart on every change: remove the class, read `offs
 - [ ] The badge pops to 1.45× over 380ms.
 - [ ] The max note reads "That's every one of our 6 jars" in `#4f6b33`.
 - [ ] Notify on reads "We'll email you on the 15th".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: header with "Larder" wordmark, "Provisions · Week 40", and a basket pill on the right showing a badge "2" and "£12.40". Heading "This week's shelf", sub-line "Small batches, delivered Thursday." Three cards in a row.
+2. Card 1, Wildflower honey, £9.50, "Ridge Farm, Powys · 340g jar": a filled terracotta button "+ Add to basket". Note under it: "6 jars this week".
+3. Card 2, Smoked paprika, £6.20, "La Vera, oak-smoked · 75g tin": a stepper with − on the left, "2 in basket" centred, + on the right. Note: "9 tins this week".
+4. Card 3, Stoneground rye, £4.80, "Harrow Lane Mill · 1.5kg bag": the tile is desaturated to 35 % with a "Back 15 Oct" stamp. Its control is an outlined button "Sold out · Notify me" with a bell icon. Note: "Next mill run is Tuesday".
+5. Click Add on honey: the button enters **adding**. The label slides up 6px and fades, three 6px dots bounce in its place, the fill darkens to `--accent-press`, and `aria-busy="true"` is set. This lasts 450ms (fake request).
+6. When adding resolves, on the same frame: quantity becomes 1, the button cross-fades into the stepper (opacity 200ms, scaleX .9 → 1 over 280ms), the − and + buttons slide 24px outward from the centre, focus moves to +, and a 40px round token launches from the button's centre.
+7. The token carries a small copy of the product drawing on the card's tile colour, with a 2px surface ring and a soft shadow. It travels to the basket icon centre in 720ms on an arc. X and Y are animated on two nested elements with different easings. It rises 56px in the first 22 % while scaling .6 → 1.12, then falls into the icon while shrinking to .42. Then it is removed.
+8. On landing: the badge number updates and pops (scale 1 → 1.45 → 1, 380ms, overshoot easing), the basket glyph tilts (−12° → 6° → 0, 420ms), and the subtotal updates to "£21.90". A polite live region says "Wildflower honey added. Basket has 3 items."
+9. At quantity 1 the − button shows a trash icon and is labelled "Remove Wildflower honey from basket". Above 1 it shows a minus and is labelled "One fewer Wildflower honey".
+10. + increments, the count rolls in from 8px below (240ms), the badge bumps, and the subtotal updates. At stock (6 jars) + is disabled at 35 % opacity, focus moves to −, and the note turns olive and bold: "That's every one of our 6 jars".
+11. − at quantity 1 removes the item. The stepper fades back to the Add button, focus returns to Add, and the live region says "Wildflower honey removed. Basket has N items."
+12. Notify on the sold-out card toggles `aria-pressed`. On, it reads "We'll email you on the 15th" with a check, on `--accent-soft` with an accent ring. Off, it returns to "Sold out · Notify me".
+13. The badge hides when the basket total is 0.
+
+## Tokens
+
+```css
+:root {
+  /* colour: warm paper, terracotta accent, olive for "you've got them all" */
+  --bg: #f2e8d8;            /* page, with a 4px dot grain at 4.5% ink */
+  --surface: #fbf6ec;       /* cards, cart pill */
+  --line: #e2d4be;
+  --tile-1: #ecc982;        /* honey */
+  --tile-2: #dc8f67;        /* paprika */
+  --tile-3: #dcd0b6;        /* rye */
+  --ink: #2a1d14;
+  --ink-2: #5e4b3c;
+  --ink-3: #77624f;         /* origin, notes */
+  --accent: #b4492a;        /* add button, badge, stepper ring */
+  --accent-press: #943a20;  /* hover, adding, stepper glyphs */
+  --accent-soft: #f4dccb;   /* stepper fill, notify-on fill */
+  --on-accent: #fff7ee;
+  --ok: #4f6b33;            /* max-stock note */
+
+  --display: "Gloock", Georgia, serif;
+  --sans: "Rethink Sans", system-ui, sans-serif;
+
+  --r: 12px;                /* button, stepper */
+  --r-card: 16px;
+  --slot-h: 48px;
+
+  --t-micro: 160ms;
+  --t-morph: 280ms;
+  --t-adding: 450ms;        /* fake request */
+  --t-fly: 720ms;
+  --t-bump: 380ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Wordmark | Gloock | 30px | 400 | 1 | −0.01em | |
+| Page heading | Gloock | 42px | 400 | 1.05 | −0.015em | 34px under 760px |
+| Price | Gloock | 21px | 400 | 1 | 0 | right-aligned on the name row |
+| Product name | Rethink Sans | 17px | 600 | 1.45 | −0.005em | |
+| Origin | Rethink Sans | 13px | 400 | 1.45 | 0 | `--ink-3` |
+| Button label | Rethink Sans | 15px | 600 | 1 | 0 | |
+| Stepper count | Rethink Sans | 17px | 700 | 1 | 0 | `tabular-nums` |
+| "in basket" | Rethink Sans | 13px | 400 | 1 | 0 | `--ink-2` |
+| Cart subtotal | Rethink Sans | 15px | 600 | 1 | 0 | `tabular-nums` |
+| Badge | Rethink Sans | 11.5px | 700 | 20px | 0 | |
+| Note | Rethink Sans | 12.5px | 400 | 1.45 | 0 | max state 600 `--ok` |
+
+The serif is only for the wordmark, heading and prices. Never set button labels in Gloock.
 
 ## Implementation notes
 

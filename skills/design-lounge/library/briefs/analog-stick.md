@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A round well with a dark cap labelled Hold. Moving the pointer leans the cap toward that side. The matching label lights: Night, Gate, Month, or Yard. Leaving the well centers the cap. Arrow keys lean it too. This is not a 0 to 12 knob. That knob is `dial-knob`. This is not a minute wheel. That wheel is `minute-wheel`. The lean is the choice.
-
-## Reference behaviour
-
-1. The cap starts centered. No label is lit.
-2. Pointer move measures from the well center.
-3. The cap translates 0.28 of that offset.
-4. If the offset is past 12px, the stronger axis lights one label.
-5. Right lights Gate. Left lights Yard. Down lights Month. Up lights Night.
-6. Leaving the well centers the cap and clears the label.
-7. Arrow keys lean 80px on that axis and prevent page scroll.
 
 ## Structure
 
@@ -32,19 +24,6 @@ Month
 - Labels are 36px pills.
 - A lit label is border #d7b15e, text #6a4e16, fill #f8f1de.
 - The well is role application and tabbable.
-
-## Tokens
-
-```css
-:root { --bg:#f6f4ef; --well:#fff; --cap:#1c1b19; --ink:#161513; --mark:#d7b15e; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Cap | IBM Plex Sans | 15px | 600 |
-| Label | IBM Plex Sans | 13px | 500 |
 
 ## Motion
 
@@ -89,16 +68,6 @@ Month
 - [ ] The lean factor is 0.28.
 - [ ] The dead zone is 12px.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Measure from the well center.
-
-```js
-lean(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));
-```
-
-Pick the axis with the larger absolute value.
 
 ## Measurements to keep
 
@@ -153,6 +122,43 @@ Pick the axis with the larger absolute value.
 - Honour reduced motion.
 - Do not add a second accent.
 - Do not add a second type family.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The cap starts centered. No label is lit.
+2. Pointer move measures from the well center.
+3. The cap translates 0.28 of that offset.
+4. If the offset is past 12px, the stronger axis lights one label.
+5. Right lights Gate. Left lights Yard. Down lights Month. Up lights Night.
+6. Leaving the well centers the cap and clears the label.
+7. Arrow keys lean 80px on that axis and prevent page scroll.
+
+## Tokens
+
+```css
+:root { --bg:#f6f4ef; --well:#fff; --cap:#1c1b19; --ink:#161513; --mark:#d7b15e; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Cap | IBM Plex Sans | 15px | 600 |
+| Label | IBM Plex Sans | 13px | 500 |
+
+## Implementation notes
+
+Measure from the well center.
+
+```js
+lean(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));
+```
+
+Pick the axis with the larger absolute value.
 
 ---
 

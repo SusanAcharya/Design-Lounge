@@ -4,32 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A self check-in kiosk for the front desk of "Millyard", a co-working building. It runs on a landscape tablet fixed to a stand. A visitor walks up, taps a big black panel, finds their booking with a 6-digit code or their name, confirms the details, watches a badge print, and leaves. The screen then resets itself so the next person never sees the last person's name. The look is industrial and calm: concrete grey, black, one green, large condensed type, and 4px corners. The detail worth copying is that every exit is timed and visible: a 10 second countdown with a draining bar on the done screen, and a "Still there?" warning before an idle reset.
-
-## Reference behaviour
-
-1. First frame is the attract screen. Left: a label "Welcome to Millyard", the current time at 230px, the date "Saturday 3 October", a members note, and two facts at the bottom ("Open today 07:30 – 20:00", "Visitors expected 14 today"). Right: a full-height black button reading "Tap to check in" at 120px, with a 112px green arrow square in its bottom-right corner.
-2. The header shows the wordmark "Millyard" and "Reception · Floor 2". On the attract screen the header clock is hidden because the big clock is on the page. The step rail is hidden but keeps its space.
-3. The green arrow nudges 10px right once every 2.4s. Nothing else moves on the attract screen.
-4. Tap the black panel. The find screen enters: opacity 0 → 1 and 12px up → 0 over 320ms. The header now shows the step rail "01 Find / 02 Confirm / 03 Badge" with Find current, a "Start over" button, and the clock.
-5. Find screen, code mode (default). Left: "Step 1 of 3", the heading "Find your booking", a two-part toggle "Booking code | Name", six digit slots split 3 + 3 by a short dash, a help line, and an error line. Right: a 3 × 4 keypad: 1–9, "Clear", 0, and a delete key.
-6. Each key press fills the next slot. The current empty slot has a black border and a 6px green bar inside its bottom edge. Physical keys 0–9 and Backspace also work.
-7. When the sixth digit lands, look the code up. If it matches, wait 260ms and go to the confirm screen. If not, wait 200ms, shake the slots (±8px over 360ms), turn the slot borders red, and show "No booking matches 123 456. Check the email or search by name." After 900ms clear the slots. The message stays until the next key press.
-8. Ignore key presses after the sixth digit until the slots clear.
-9. Tap "Name". The keypad becomes an A–Z grid of 7 columns plus "Space" and delete. The left side shows a 96px text field with a green blinking caret and the hint "Type your first or last name".
-10. With fewer than 2 letters the results area says "Type 2 letters to see today's bookings." With 2 or more letters, list every booking where any word of the name starts with the typed text. Typing "Mi" shows "Mira Okonkwo" and "Mirela Ivanova". No match shows "No booking today under "Xy". Ask at the desk."
-11. Switching between Code and Name clears what was typed in both.
-12. Tap a result. Go to the confirm screen with that booking.
-13. Confirm screen: a card on the left with "Step 2 of 3 · Is this you?", the name at 84px, four rows (Host, Where, When, Badge), and "Booking 418 207" at the bottom of the card. On the right: a short note, a 120px green button "Yes, print badge", and an 80px outlined button "Not me, search again".
-14. "Not me" returns to a fresh find screen.
-15. "Yes, print badge" goes to the print screen. A badge slides down out of a black printer slot over 3000ms. The progress bar runs 0% → 8% (0ms) → 30% (600ms) → 62% (1500ms) → 88% (2400ms) → 100% (3200ms). A four-step list ticks along: "Sending to printer", "Printing", "Telling your host", "Take your badge from the slot". At 3600ms all four are ticked. At 4200ms go to the done screen.
-16. Done screen: a 96px green tick square, "You're in, Mira." at 120px, and "Daniel Reyes knows you are here. Take the lift to Floor 2. Studio B is on your left." On the right: "This screen resets in", a number counting 10 → 0 once per second at 140px, a 12px bar that drains from full to empty over 10s, and a 120px black "Done" button.
-17. At 0, or on "Done", return to the attract screen. The step rail marks all three steps green on the done screen. "Start over" is hidden on done.
-18. "Start over" in the header returns to the attract screen from find, confirm, or print.
-19. Inactivity: on find and confirm, any 30s without a touch or key opens a "Still there?" dialog. It counts 10 → 0. "I'm still here" closes it and restarts the 30s. At 0 return to attract. Attract, print, and done never show the dialog (print is busy, done has its own countdown).
-20. The header clock and the big clock show the real time, updated every 15s.
 
 ## Structure
 
@@ -84,71 +63,6 @@ Sample bookings:
 | 418 207 | Mira Okonkwo | Daniel Reyes, Lumen Studio | Studio B, Floor 2 | Today, 11:00 – 12:30 | Visitor, escorted |
 | 556 120 | Mirela Ivanova | Ana Torres, Fieldnote Press | Bench desk 14, Floor 2 | Today, all day | Day pass |
 | 902 314 | Tomas Lindqvist | Priya Shah, Northbound Legal | Room 2.04, Floor 2 | Today, 11:30 – 12:00 | Visitor, escorted |
-
-## Tokens
-
-```css
-:root {
-  /* concrete neutrals */
-  --bg: #dddbd6;        /* page, with a 1px rule every 40px */
-  --panel: #ebeae6;     /* header */
-  --raise: #f5f4f1;     /* keys, slots, cards */
-  --line: #c4c1ba;      /* hairlines, page rules */
-  --line-2: #a9a59d;    /* empty slot border, secondary key border */
-  --ink: #111111;       /* text, borders, black panel */
-  --ink-2: #3d3b37;     /* body copy */
-  --ink-3: #5f5c56;     /* labels */
-
-  /* the one accent */
-  --go: #1d7039;        /* primary action, caret, progress, ticks */
-  --go-ink: #ffffff;
-  --go-tint: #d3e4d6;   /* pressed result row */
-  --err: #a3271c;       /* wrong code only */
-
-  /* type */
-  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --sans: "Barlow", system-ui, sans-serif;
-
-  /* shape and size */
-  --r: 4px;
-  --key: 88px;          /* numeric key height; never below 64px */
-  --header: 80px;
-  --pad: 40px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --out: cubic-bezier(.16, 1, .3, 1);
-  --t-enter: 320ms;
-  --t-key: 120ms;
-  --t-print: 3000ms;
-  --t-reset: 10s;
-  --t-idle: 30s;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | ---: | ---: | ---: | ---: | --- |
-| Big clock | Barlow Condensed | 230px | 600 | 0.82 | −0.03em | numerals, tabular |
-| Tap panel | Barlow Condensed | 120px | 700 | 0.86 | −0.02em | upper |
-| Done heading | Barlow Condensed | 120px | 700 | 0.95 | −0.01em | sentence |
-| Countdown | Barlow Condensed | 140px | 600 | 0.9 | 0 | numerals, tabular |
-| Confirm name | Barlow Condensed | 84px | 700 | 0.95 | −0.01em | sentence |
-| Screen heading | Barlow Condensed | 72px | 700 | 0.95 | −0.01em | sentence |
-| Digit slot | Barlow Condensed | 64px | 600 | 1 | 0 | numerals |
-| Keypad digit | Barlow Condensed | 44px | 600 | 1 | 0 | numerals |
-| Primary button | Barlow Condensed | 40–44px | 700 | 1 | 0.02em | upper |
-| Detail value | Barlow Condensed | 30px | 600 | 1.1 | 0 | sentence |
-| Letter key | Barlow Condensed | 30px | 600 | 1 | 0 | upper |
-| Header clock | Barlow Condensed | 30px | 600 | 1 | 0.02em | numerals |
-| Wordmark | Barlow Condensed | 28px | 700 | 1 | 0.06em | upper |
-| Segment / steps | Barlow Condensed | 15–20px | 600 | 1 | 0.1–0.12em | upper |
-| Label | Barlow Condensed | 15px | 600 | 1 | 0.16em | upper |
-| Body / help | Barlow | 19px | 400 | 1.4 | 0 | sentence |
-| Header sub | Barlow | 15px | 500 | 1 | 0 | sentence |
-
-Everything a visitor must read from one metre away is 19px or larger. Labels are the only small type.
 
 ## Motion
 
@@ -230,6 +144,98 @@ The progress percentages are data, so the timeline stays the same with reduced m
 - [ ] Background `#dddbd6` with a `#c4c1ba` rule every 40px. Accent `#1d7039`.
 - [ ] Print reaches 100% at 3200ms and the done screen appears at 4200ms.
 - [ ] Done text reads "You're in, Mira." and the countdown starts at 10.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame is the attract screen. Left: a label "Welcome to Millyard", the current time at 230px, the date "Saturday 3 October", a members note, and two facts at the bottom ("Open today 07:30 – 20:00", "Visitors expected 14 today"). Right: a full-height black button reading "Tap to check in" at 120px, with a 112px green arrow square in its bottom-right corner.
+2. The header shows the wordmark "Millyard" and "Reception · Floor 2". On the attract screen the header clock is hidden because the big clock is on the page. The step rail is hidden but keeps its space.
+3. The green arrow nudges 10px right once every 2.4s. Nothing else moves on the attract screen.
+4. Tap the black panel. The find screen enters: opacity 0 → 1 and 12px up → 0 over 320ms. The header now shows the step rail "01 Find / 02 Confirm / 03 Badge" with Find current, a "Start over" button, and the clock.
+5. Find screen, code mode (default). Left: "Step 1 of 3", the heading "Find your booking", a two-part toggle "Booking code | Name", six digit slots split 3 + 3 by a short dash, a help line, and an error line. Right: a 3 × 4 keypad: 1–9, "Clear", 0, and a delete key.
+6. Each key press fills the next slot. The current empty slot has a black border and a 6px green bar inside its bottom edge. Physical keys 0–9 and Backspace also work.
+7. When the sixth digit lands, look the code up. If it matches, wait 260ms and go to the confirm screen. If not, wait 200ms, shake the slots (±8px over 360ms), turn the slot borders red, and show "No booking matches 123 456. Check the email or search by name." After 900ms clear the slots. The message stays until the next key press.
+8. Ignore key presses after the sixth digit until the slots clear.
+9. Tap "Name". The keypad becomes an A–Z grid of 7 columns plus "Space" and delete. The left side shows a 96px text field with a green blinking caret and the hint "Type your first or last name".
+10. With fewer than 2 letters the results area says "Type 2 letters to see today's bookings." With 2 or more letters, list every booking where any word of the name starts with the typed text. Typing "Mi" shows "Mira Okonkwo" and "Mirela Ivanova". No match shows "No booking today under "Xy". Ask at the desk."
+11. Switching between Code and Name clears what was typed in both.
+12. Tap a result. Go to the confirm screen with that booking.
+13. Confirm screen: a card on the left with "Step 2 of 3 · Is this you?", the name at 84px, four rows (Host, Where, When, Badge), and "Booking 418 207" at the bottom of the card. On the right: a short note, a 120px green button "Yes, print badge", and an 80px outlined button "Not me, search again".
+14. "Not me" returns to a fresh find screen.
+15. "Yes, print badge" goes to the print screen. A badge slides down out of a black printer slot over 3000ms. The progress bar runs 0% → 8% (0ms) → 30% (600ms) → 62% (1500ms) → 88% (2400ms) → 100% (3200ms). A four-step list ticks along: "Sending to printer", "Printing", "Telling your host", "Take your badge from the slot". At 3600ms all four are ticked. At 4200ms go to the done screen.
+16. Done screen: a 96px green tick square, "You're in, Mira." at 120px, and "Daniel Reyes knows you are here. Take the lift to Floor 2. Studio B is on your left." On the right: "This screen resets in", a number counting 10 → 0 once per second at 140px, a 12px bar that drains from full to empty over 10s, and a 120px black "Done" button.
+17. At 0, or on "Done", return to the attract screen. The step rail marks all three steps green on the done screen. "Start over" is hidden on done.
+18. "Start over" in the header returns to the attract screen from find, confirm, or print.
+19. Inactivity: on find and confirm, any 30s without a touch or key opens a "Still there?" dialog. It counts 10 → 0. "I'm still here" closes it and restarts the 30s. At 0 return to attract. Attract, print, and done never show the dialog (print is busy, done has its own countdown).
+20. The header clock and the big clock show the real time, updated every 15s.
+
+## Tokens
+
+```css
+:root {
+  /* concrete neutrals */
+  --bg: #dddbd6;        /* page, with a 1px rule every 40px */
+  --panel: #ebeae6;     /* header */
+  --raise: #f5f4f1;     /* keys, slots, cards */
+  --line: #c4c1ba;      /* hairlines, page rules */
+  --line-2: #a9a59d;    /* empty slot border, secondary key border */
+  --ink: #111111;       /* text, borders, black panel */
+  --ink-2: #3d3b37;     /* body copy */
+  --ink-3: #5f5c56;     /* labels */
+
+  /* the one accent */
+  --go: #1d7039;        /* primary action, caret, progress, ticks */
+  --go-ink: #ffffff;
+  --go-tint: #d3e4d6;   /* pressed result row */
+  --err: #a3271c;       /* wrong code only */
+
+  /* type */
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --sans: "Barlow", system-ui, sans-serif;
+
+  /* shape and size */
+  --r: 4px;
+  --key: 88px;          /* numeric key height; never below 64px */
+  --header: 80px;
+  --pad: 40px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --out: cubic-bezier(.16, 1, .3, 1);
+  --t-enter: 320ms;
+  --t-key: 120ms;
+  --t-print: 3000ms;
+  --t-reset: 10s;
+  --t-idle: 30s;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Big clock | Barlow Condensed | 230px | 600 | 0.82 | −0.03em | numerals, tabular |
+| Tap panel | Barlow Condensed | 120px | 700 | 0.86 | −0.02em | upper |
+| Done heading | Barlow Condensed | 120px | 700 | 0.95 | −0.01em | sentence |
+| Countdown | Barlow Condensed | 140px | 600 | 0.9 | 0 | numerals, tabular |
+| Confirm name | Barlow Condensed | 84px | 700 | 0.95 | −0.01em | sentence |
+| Screen heading | Barlow Condensed | 72px | 700 | 0.95 | −0.01em | sentence |
+| Digit slot | Barlow Condensed | 64px | 600 | 1 | 0 | numerals |
+| Keypad digit | Barlow Condensed | 44px | 600 | 1 | 0 | numerals |
+| Primary button | Barlow Condensed | 40–44px | 700 | 1 | 0.02em | upper |
+| Detail value | Barlow Condensed | 30px | 600 | 1.1 | 0 | sentence |
+| Letter key | Barlow Condensed | 30px | 600 | 1 | 0 | upper |
+| Header clock | Barlow Condensed | 30px | 600 | 1 | 0.02em | numerals |
+| Wordmark | Barlow Condensed | 28px | 700 | 1 | 0.06em | upper |
+| Segment / steps | Barlow Condensed | 15–20px | 600 | 1 | 0.1–0.12em | upper |
+| Label | Barlow Condensed | 15px | 600 | 1 | 0.16em | upper |
+| Body / help | Barlow | 19px | 400 | 1.4 | 0 | sentence |
+| Header sub | Barlow | 15px | 500 | 1 | 0 | sentence |
+
+Everything a visitor must read from one metre away is 19px or larger. Labels are the only small type.
 
 ## Implementation notes
 

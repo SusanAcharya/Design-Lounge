@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The first two seconds of a site for a fictional print and zine fair, Grainroom, in Leeds. A black screen counts from 0 to 100 in huge condensed numerals while four small print swatches (riso, letterpress, screen, zines) pop in one by one. At 100 the number turns acid green, holds for 150ms, and the whole loader splits along its middle: the top half slides up, the bottom half slides down, cutting the number in two. Behind it, the cream hero is already laid out, and the headline "Ink on everything" rises letter by letter. The detail worth copying is that the loader is drawn twice, once in each half, so the split cuts straight through the number instead of sliding two empty panels.
@@ -17,20 +19,6 @@ This is not `logo-draw-intro`. That piece draws an SVG mark. This one is a count
 3. If everything is ready in under 300ms, skip the loader. Show the hero with its letter entrance only.
 4. Skip it on repeat visits. In production, set `sessionStorage.setItem('intro-seen', '1')` after the first run and check it before showing the loader. The demo does not do this: it runs in a sandbox where storage throws, and it must replay for viewers.
 5. Reduced motion: no count, no pop, no split. Show 100 for 300ms, fade the loader out over 200ms.
-
-## Reference behaviour
-
-1. t = 0 (load): the loader covers the viewport. Both halves are `#141310`. Counter reads "0" at the right edge. The progress line is empty. The four blocks are hidden. Labels sit in the corners: "Grainroom / Fair guide 2026" top-left, "14—16.11.26" top-right, "Leeds Corn Exchange" bottom-left, "Loading tables" bottom-right in acid.
-2. 0 to 1800ms: the value goes from 0 to 100 with ease-in-out cubic, read every animation frame and rounded. The digits sit in three fixed-width slots, so the number never shifts sideways. The progress line's `scaleX` follows value / 100.
-3. Blocks pop as the value crosses 18, 42, 66 and 88: opacity 0 → 1 over 200ms, `scale(.6)` → `scale(1)` over 360ms with a small overshoot, each keeping its own tilt (-4, 5, 3, -6 degrees).
-4. 1800ms: the value is 100. The counter turns `--acid`.
-5. 1950ms: the halves split. Top half `translateY(-100%)`, bottom half `translateY(100%)`, 700ms, `cubic-bezier(.76,0,.24,1)`. The same moment, the hero gets `.in`.
-6. Hero letters: 15 letters across three words, each rising from `translateY(105%)` inside its word's clip, 650ms, `cubic-bezier(.16,1,.3,1)`, delay `150ms + i × 30ms`. The last letter starts 570ms after the split and lands at 1220ms after the split.
-7. Kicker line and bottom row: opacity 0 → 1 over 400ms, `translateY(12px)` → 0 over 500ms, delay 500ms after the split.
-8. 2650ms: the loader is set to `hidden`. `<main>` loses `inert`. "Replay intro" appears at bottom-left, 20px from both edges. Bottom-left keeps it clear of host overlays and chat widgets that live bottom-right. A status line says "Fair guide loaded".
-9. Replay: click "Replay intro". Every timer and frame is cancelled, the counter resets to 0, the hero letters snap back down with no transition, and the sequence runs again from step 1. When it ends, focus returns to the Replay button.
-10. During the intro, the page under the loader is `inert`, and the Replay button is `visibility: hidden`.
-11. Reduced motion: value set to 100 at once, all four blocks shown, counter acid. After 300ms the loader fades to 0 over 200ms. No split. Hero text is in place with no movement.
 
 ## Structure
 
@@ -68,63 +56,6 @@ hero underneath (cream)
 - `.site` holds `<header>` (logo, nav, pass link) and `<main>`: kicker, `<h1 aria-label="Ink on everything">` with one `.w` per word and one `.ch` per letter (`aria-hidden`), and `.row` with the date block and four `<figure>` swatches.
 - The Replay `<button>` sits outside `.site` so it is not made inert.
 - The four swatch arts are CSS only, used both in the loader (as `.pop`) and in the hero row. Riso: a black circle and an acid circle overlapping with multiply. Letterpress: a 112px Anton "A" on `--cream-2`. Screen: a 12px black halftone grid on acid. Zines: 135 degree black stripes on cream with a tilted acid card.
-
-## Tokens
-
-```css
-:root {
-  /* colour: warm cream, near-black, one acid green */
-  --cream: #f1eadb;     /* hero ground, loader type, block borders */
-  --cream-2: #e6dcc8;   /* letterpress swatch */
-  --ink: #141310;       /* loader ground, all hero type, rules */
-  --ink-2: #4f4a40;     /* small meta on cream */
-  --acid: #c6f432;      /* counter at 100, %, progress, "ON" block, swatches, hover */
-  --track: #3a3730;     /* empty progress line */
-
-  /* type */
-  --display: "Anton", Impact, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-
-  /* layout */
-  --pad: 40px;          /* 20px under 768 */
-  --head-h: 64px;
-  --rule: 2px;
-
-  /* timing */
-  --count-dur: 1800ms;
-  --hold: 150ms;
-  --t-split: 700ms;
-  --cap: 2000ms;        /* count + hold never passes this */
-  --t-letter: 650ms;
-  --letter-step: 30ms;
-  --letter-delay: 150ms;
-  --block-delay: 500ms;
-
-  /* easing */
-  --ease-split: cubic-bezier(.76, 0, .24, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Counter | Anton | clamp(160px, 34vw, 420px) | 400 | 1 | 0, slots 0.47em wide | numerals |
-| Percent | JetBrains Mono | clamp(18px, 2.6vw, 32px) | 700 | 1 | 0 | symbol |
-| Loader label | JetBrains Mono | 12px | 400 | 1.5 | +0.08em | UPPERCASE |
-| Logo | Anton | 30px | 400 | 1 | +0.01em | UPPERCASE |
-| Nav link | JetBrains Mono | 13px | 400 | 1.5 | +0.06em | UPPERCASE |
-| Pass button | JetBrains Mono | 13px | 700 | 40px box | +0.04em | UPPERCASE |
-| Kicker | JetBrains Mono | 13px | 400 | 1.5 | +0.06em | UPPERCASE |
-| Headline | Anton | clamp(72px, 18.4vw, 236px) | 400 | 0.86 | -0.005em | UPPERCASE |
-| Date, venue | Anton | 34px | 400 | 1 | 0 | UPPERCASE |
-| Meta, caption | JetBrains Mono | 12px | 400 / 500 | 1.5 | +0.04em | UPPERCASE |
-| Replay | JetBrains Mono | 12px | 700 | 40px box | +0.06em | UPPERCASE |
-
-Anton has no true tabular figures, so give every digit its own fixed-width box. Keep `font-variant-numeric: tabular-nums` on as well, for fonts that do.
 
 ## Motion
 
@@ -214,6 +145,81 @@ Reduced motion: value 100 at t = 0, blocks visible, loader fades out from 300ms 
 - [ ] Split at 1950ms; loader gone at 2650ms.
 - [ ] Headline reads "INK ON EVERYTHING" with "ON" on an acid block.
 - [ ] Date "14—16 Nov 2026", venue "Leeds Corn Exchange", pass "Day pass £12".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. t = 0 (load): the loader covers the viewport. Both halves are `#141310`. Counter reads "0" at the right edge. The progress line is empty. The four blocks are hidden. Labels sit in the corners: "Grainroom / Fair guide 2026" top-left, "14—16.11.26" top-right, "Leeds Corn Exchange" bottom-left, "Loading tables" bottom-right in acid.
+2. 0 to 1800ms: the value goes from 0 to 100 with ease-in-out cubic, read every animation frame and rounded. The digits sit in three fixed-width slots, so the number never shifts sideways. The progress line's `scaleX` follows value / 100.
+3. Blocks pop as the value crosses 18, 42, 66 and 88: opacity 0 → 1 over 200ms, `scale(.6)` → `scale(1)` over 360ms with a small overshoot, each keeping its own tilt (-4, 5, 3, -6 degrees).
+4. 1800ms: the value is 100. The counter turns `--acid`.
+5. 1950ms: the halves split. Top half `translateY(-100%)`, bottom half `translateY(100%)`, 700ms, `cubic-bezier(.76,0,.24,1)`. The same moment, the hero gets `.in`.
+6. Hero letters: 15 letters across three words, each rising from `translateY(105%)` inside its word's clip, 650ms, `cubic-bezier(.16,1,.3,1)`, delay `150ms + i × 30ms`. The last letter starts 570ms after the split and lands at 1220ms after the split.
+7. Kicker line and bottom row: opacity 0 → 1 over 400ms, `translateY(12px)` → 0 over 500ms, delay 500ms after the split.
+8. 2650ms: the loader is set to `hidden`. `<main>` loses `inert`. "Replay intro" appears at bottom-left, 20px from both edges. Bottom-left keeps it clear of host overlays and chat widgets that live bottom-right. A status line says "Fair guide loaded".
+9. Replay: click "Replay intro". Every timer and frame is cancelled, the counter resets to 0, the hero letters snap back down with no transition, and the sequence runs again from step 1. When it ends, focus returns to the Replay button.
+10. During the intro, the page under the loader is `inert`, and the Replay button is `visibility: hidden`.
+11. Reduced motion: value set to 100 at once, all four blocks shown, counter acid. After 300ms the loader fades to 0 over 200ms. No split. Hero text is in place with no movement.
+
+## Tokens
+
+```css
+:root {
+  /* colour: warm cream, near-black, one acid green */
+  --cream: #f1eadb;     /* hero ground, loader type, block borders */
+  --cream-2: #e6dcc8;   /* letterpress swatch */
+  --ink: #141310;       /* loader ground, all hero type, rules */
+  --ink-2: #4f4a40;     /* small meta on cream */
+  --acid: #c6f432;      /* counter at 100, %, progress, "ON" block, swatches, hover */
+  --track: #3a3730;     /* empty progress line */
+
+  /* type */
+  --display: "Anton", Impact, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* layout */
+  --pad: 40px;          /* 20px under 768 */
+  --head-h: 64px;
+  --rule: 2px;
+
+  /* timing */
+  --count-dur: 1800ms;
+  --hold: 150ms;
+  --t-split: 700ms;
+  --cap: 2000ms;        /* count + hold never passes this */
+  --t-letter: 650ms;
+  --letter-step: 30ms;
+  --letter-delay: 150ms;
+  --block-delay: 500ms;
+
+  /* easing */
+  --ease-split: cubic-bezier(.76, 0, .24, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Counter | Anton | clamp(160px, 34vw, 420px) | 400 | 1 | 0, slots 0.47em wide | numerals |
+| Percent | JetBrains Mono | clamp(18px, 2.6vw, 32px) | 700 | 1 | 0 | symbol |
+| Loader label | JetBrains Mono | 12px | 400 | 1.5 | +0.08em | UPPERCASE |
+| Logo | Anton | 30px | 400 | 1 | +0.01em | UPPERCASE |
+| Nav link | JetBrains Mono | 13px | 400 | 1.5 | +0.06em | UPPERCASE |
+| Pass button | JetBrains Mono | 13px | 700 | 40px box | +0.04em | UPPERCASE |
+| Kicker | JetBrains Mono | 13px | 400 | 1.5 | +0.06em | UPPERCASE |
+| Headline | Anton | clamp(72px, 18.4vw, 236px) | 400 | 0.86 | -0.005em | UPPERCASE |
+| Date, venue | Anton | 34px | 400 | 1 | 0 | UPPERCASE |
+| Meta, caption | JetBrains Mono | 12px | 400 / 500 | 1.5 | +0.04em | UPPERCASE |
+| Replay | JetBrains Mono | 12px | 700 | 40px box | +0.06em | UPPERCASE |
+
+Anton has no true tabular figures, so give every digit its own fixed-width box. Keep `font-variant-numeric: tabular-nums` on as well, for fonts that do.
 
 ## Implementation notes
 

@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens and the family's radius. Do not style the browser's native popup.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One select on a quiet form. The page is warm paper. "People" is a 12px label for where the field sits. The field label is "Role". The closed control is a 40px button, 320px wide, radius 2px, showing Dispatch. The list opens under it with four options: Dispatch, Finance, Yard, Studio. The list uses the same surface, the same line, and the same 2px radius as the field. The selected option sits on a soft green. Hover, and the keyboard highlight, sit on a warmer surface. The first frame is the open list, so the piece is visible without a click. Clearing the value closes the list and shows "Choose a role." in danger red under the field. That error is how an empty submit looks. It is not a toast.
-
-## Reference behaviour
-
-1. The list starts open. Dispatch is selected and highlighted. The button reads Dispatch. `aria-expanded` is true.
-2. Clicking an option sets the button to that role, marks it selected, hides the error, and closes the list.
-3. Clicking the button toggles the list.
-4. ArrowDown and ArrowUp move the highlight. They open the list if it is closed. They do not change the committed value until Enter.
-5. Enter on an open list commits the highlighted option and closes the list.
-6. Escape closes the list and keeps the committed value.
-7. "Clear" sets the value to empty, the button reads "Choose a role", the error shows, and the list closes. Clear is a demo control. In a product, the error appears when the form is submitted with an empty value. Do not ship a Clear button beside every select.
-8. There is no animation.
-9. Focus ring is 2px `--focus`, offset 2px, on the button and on Clear.
 
 ## Structure
 
@@ -37,40 +27,6 @@ field, width 320, position relative
 - The list is a `ul` with `role="listbox"`. Options are `li` with `role="option"`.
 - The button points at the list with `aria-controls` and `aria-haspopup="listbox"`.
 - The error paragraph is `hidden` until the value is empty.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --surface-2: #f0ebe3;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --primary-soft: #e7f2ec;
-  --danger: #9b2c2c;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px because this demo sits with the industrial yard controls. A locked family replaces the radius. Quiet is 6px. Soft is 14px. Do not keep 2px after the family is locked.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 12px | 500 | `--ink-2` |
-| Value | sans | 14px | 500 | `--ink` |
-| Option | sans | 14px | 400 | `--ink` |
-| Error | sans | 12px | 400 | `--danger` |
-| Clear | sans | 14px | 400 | `--ink-2` |
-
-The label letter-spacing on the where-line is 0.04em. Options are 14px, vertically centered in a 40px row.
 
 ## Motion
 
@@ -130,6 +86,56 @@ None. The list appears and disappears in one frame. Reduced motion has nothing t
 - [ ] The error is under the field, not a toast.
 - [ ] Clear is not a filled primary button.
 - [ ] Focus ring is 2px, offset 2px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The list starts open. Dispatch is selected and highlighted. The button reads Dispatch. `aria-expanded` is true.
+2. Clicking an option sets the button to that role, marks it selected, hides the error, and closes the list.
+3. Clicking the button toggles the list.
+4. ArrowDown and ArrowUp move the highlight. They open the list if it is closed. They do not change the committed value until Enter.
+5. Enter on an open list commits the highlighted option and closes the list.
+6. Escape closes the list and keeps the committed value.
+7. "Clear" sets the value to empty, the button reads "Choose a role", the error shows, and the list closes. Clear is a demo control. In a product, the error appears when the form is submitted with an empty value. Do not ship a Clear button beside every select.
+8. There is no animation.
+9. Focus ring is 2px `--focus`, offset 2px, on the button and on Clear.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --surface-2: #f0ebe3;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --primary-soft: #e7f2ec;
+  --danger: #9b2c2c;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px because this demo sits with the industrial yard controls. A locked family replaces the radius. Quiet is 6px. Soft is 14px. Do not keep 2px after the family is locked.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 12px | 500 | `--ink-2` |
+| Value | sans | 14px | 500 | `--ink` |
+| Option | sans | 14px | 400 | `--ink` |
+| Error | sans | 12px | 400 | `--danger` |
+| Clear | sans | 14px | 400 | `--ink-2` |
+
+The label letter-spacing on the where-line is 0.04em. Options are 14px, vertically centered in a 40px row.
 
 ## Implementation notes
 

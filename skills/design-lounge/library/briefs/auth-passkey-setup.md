@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The last step of an onboarding flow in a fictional banking app, Wren, where the user creates a passkey. It uses an iOS 26 language: liquid-glass pill buttons and cards over a dark, softly lit background (teal light from the top left, ember from the bottom right). The centrepiece is a 216px ring of 72 ticks around a Face-ID-style glyph. When scanning starts the ticks light up mint one after another, the glyph nods left and right, and then the ticks dissolve into one solid ring with a check drawn inside it. The detail worth copying is that the headline, sub-copy and primary button all change with the ring's state, so the screen reads as one continuous conversation.
-
-## Reference behaviour
-
-1. Initial state (t = 0): ticks are 18%-white, the glyph is 68%-white, the state label reads "Ready", the headline reads "Sign in with a glance", and the primary button reads "Create passkey".
-2. At 350ms the sequence auto-starts and enters **scanning**: ticks turn mint clockwise from 12 o'clock with a 22ms stagger (72 × 22 = 1584ms for the full sweep). The glyph brightens to full ink and does a 1.6s nod (−5px/−3° then +5px/+3°). A soft mint halo fades in behind it. The label reads "Scanning" in ink; the button turns translucent mint, reads "Look at your iPhone" and gets `aria-busy="true"`.
-3. At 2200ms the screen enters **done**: ticks fade out with a fast 4ms stagger; the glyph scales to 0.7 and fades; a solid 5px mint circle (r 86) draws itself from 12 o'clock over 700ms (120ms delay); the check draws over 480ms (520ms delay).
-4. In the done state the label reads "Passkey saved" in mint, the headline becomes "You're all set", the sub-copy names the saved passkey ("Wren · iPhone 17"), and the button reads "Continue to Wren".
-5. Tapping the ring at any time restarts the sequence from step 1.
-6. In the idle state, tapping "Create passkey" runs the sequence. In the done state, tapping "Continue to Wren" returns the demo to idle (in a real product it would navigate onward).
-7. "Use a password instead" is a quiet text button below the CTA; "Skip" is a glass pill top right; Back is a 44px glass circle top left.
 
 ## Structure
 
@@ -52,63 +44,6 @@ The last step of an onboarding flow in a fictional banking app, Wren, where the 
 - `<button class="ringwrap" aria-label="Replay passkey scan">` holds `.halo` and one inline SVG (`viewBox 0 0 216 216`) with `<g id="ticks">` (72 generated `<line>`s), `circle.solid`, `g.face` and `path.check`.
 - `.state` label (decorative, `aria-hidden`); a separate visually-hidden `aria-live` paragraph announces state changes.
 - `.card role="list"`: three `.row role="listitem"`, each a 34px tinted icon tile plus a bold title and a 13px explanation.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #0b1315;                         /* base under the lighting */
-  --light-teal: #1d4b47;                 /* radial light, top left */
-  --light-ember: #3b2a1a;                /* radial light, bottom right */
-  --ink: #eef6f3;
-  --ink-2: rgba(238,246,243,.68);        /* body */
-  --ink-3: rgba(238,246,243,.46);        /* step label, idle state */
-  --mint: #7df0c8;                       /* the single accent */
-  --mint-ink: #062019;                   /* text on mint */
-  --tick: rgba(238,246,243,.18);         /* idle ticks */
-
-  /* glass */
-  --glass: rgba(255,255,255,.07);
-  --glass-2: rgba(255,255,255,.12);
-  --glass-line: rgba(255,255,255,.14);
-  --glass-hi: inset 0 1px 0 rgba(255,255,255,.18);
-  --blur: blur(24px) saturate(160%);
-
-  /* type */
-  --font: "Figtree", -apple-system, system-ui, sans-serif;
-  --fs-h1: 30px; --fs-body: 15px; --fs-small: 13px; --fs-cta: 17px;
-
-  /* shape */
-  --r-card: 22px;
-  --r-tile: 10px;
-  --r-pill: 999px;
-  --ring: 216px;
-  --cta-h: 56px;
-
-  /* motion */
-  --t-micro: 160ms;
-  --t-move: 360ms;
-  --t-hero: 700ms;
-  --tick-stagger: 22ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --sheet: cubic-bezier(.32,.72,0,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-}
-```
-
-## Typography
-
-One family, Figtree, at five roles. Tracking tightens as size grows.
-
-| Role           | Size | Weight | Line-height | Tracking | Notes |
-|----------------|-----:|-------:|------------:|---------:|-------|
-| Headline h1    | 30px | 800    | 1.08        | −0.03em  | centred, swaps text with state |
-| CTA            | 17px | 700    | 1           | −0.01em  | on mint |
-| Row title      | 15px | 600    | 1.4         | −0.01em  | |
-| Body / sub     | 15px | 400    | 1.4         | 0        | `--ink-2`, max-width 310px |
-| Row detail     | 13px | 400    | 1.4         | 0        | `--ink-2` |
-| Step / state   | 13px | 600    | 1           | +0.02em  | `--ink-3`, ink or mint by state |
 
 ## Motion
 
@@ -166,6 +101,77 @@ Reduced motion: no nod, no staggers; all transitions are 1ms. Scan starts at 0ms
 - [ ] Nothing interactive sits in the top 54px or bottom 34px.
 - [ ] State changes are announced by a polite live region.
 - [ ] Reduced motion shows the finished check immediately with no nod.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state (t = 0): ticks are 18%-white, the glyph is 68%-white, the state label reads "Ready", the headline reads "Sign in with a glance", and the primary button reads "Create passkey".
+2. At 350ms the sequence auto-starts and enters **scanning**: ticks turn mint clockwise from 12 o'clock with a 22ms stagger (72 × 22 = 1584ms for the full sweep). The glyph brightens to full ink and does a 1.6s nod (−5px/−3° then +5px/+3°). A soft mint halo fades in behind it. The label reads "Scanning" in ink; the button turns translucent mint, reads "Look at your iPhone" and gets `aria-busy="true"`.
+3. At 2200ms the screen enters **done**: ticks fade out with a fast 4ms stagger; the glyph scales to 0.7 and fades; a solid 5px mint circle (r 86) draws itself from 12 o'clock over 700ms (120ms delay); the check draws over 480ms (520ms delay).
+4. In the done state the label reads "Passkey saved" in mint, the headline becomes "You're all set", the sub-copy names the saved passkey ("Wren · iPhone 17"), and the button reads "Continue to Wren".
+5. Tapping the ring at any time restarts the sequence from step 1.
+6. In the idle state, tapping "Create passkey" runs the sequence. In the done state, tapping "Continue to Wren" returns the demo to idle (in a real product it would navigate onward).
+7. "Use a password instead" is a quiet text button below the CTA; "Skip" is a glass pill top right; Back is a 44px glass circle top left.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #0b1315;                         /* base under the lighting */
+  --light-teal: #1d4b47;                 /* radial light, top left */
+  --light-ember: #3b2a1a;                /* radial light, bottom right */
+  --ink: #eef6f3;
+  --ink-2: rgba(238,246,243,.68);        /* body */
+  --ink-3: rgba(238,246,243,.46);        /* step label, idle state */
+  --mint: #7df0c8;                       /* the single accent */
+  --mint-ink: #062019;                   /* text on mint */
+  --tick: rgba(238,246,243,.18);         /* idle ticks */
+
+  /* glass */
+  --glass: rgba(255,255,255,.07);
+  --glass-2: rgba(255,255,255,.12);
+  --glass-line: rgba(255,255,255,.14);
+  --glass-hi: inset 0 1px 0 rgba(255,255,255,.18);
+  --blur: blur(24px) saturate(160%);
+
+  /* type */
+  --font: "Figtree", -apple-system, system-ui, sans-serif;
+  --fs-h1: 30px; --fs-body: 15px; --fs-small: 13px; --fs-cta: 17px;
+
+  /* shape */
+  --r-card: 22px;
+  --r-tile: 10px;
+  --r-pill: 999px;
+  --ring: 216px;
+  --cta-h: 56px;
+
+  /* motion */
+  --t-micro: 160ms;
+  --t-move: 360ms;
+  --t-hero: 700ms;
+  --tick-stagger: 22ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --sheet: cubic-bezier(.32,.72,0,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+```
+
+## Typography
+
+One family, Figtree, at five roles. Tracking tightens as size grows.
+
+| Role           | Size | Weight | Line-height | Tracking | Notes |
+|----------------|-----:|-------:|------------:|---------:|-------|
+| Headline h1    | 30px | 800    | 1.08        | −0.03em  | centred, swaps text with state |
+| CTA            | 17px | 700    | 1           | −0.01em  | on mint |
+| Row title      | 15px | 600    | 1.4         | −0.01em  | |
+| Body / sub     | 15px | 400    | 1.4         | 0        | `--ink-2`, max-width 310px |
+| Row detail     | 13px | 400    | 1.4         | 0        | `--ink-2` |
+| Step / state   | 13px | 600    | 1           | +0.02em  | `--ink-3`, ink or mint by state |
 
 ## Implementation notes
 

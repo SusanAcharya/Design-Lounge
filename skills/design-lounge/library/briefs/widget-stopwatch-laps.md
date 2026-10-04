@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A lap timer drawn as a piece of track-side hardware: a dark bolted housing with four screws, an engraved plate, a hazard stripe, two recessed amber-phosphor screens and three physical keycaps. The left screen shows the running time in a big pixel face with centiseconds, plus current lap, best lap and average lap. The right screen is a lap log, newest first, with the best lap in green and the worst in red, each tagged in text. Space starts and stops, L laps, R resets. It fits a coaching tool, a speed-run overlay or a lab bench app. The detail worth copying is that the keycaps physically depress when you use the keyboard shortcut, so the hardware and the keys feel like one device.
-
-## Reference behaviour
-
-1. The first frame is a session in progress and running: total around 03:54, five laps logged (41.82, 40.95, 42.37, 39.88, 41.10), current lap about 27 seconds in, RUN LED blinking, "Lap 06" on the status line.
-2. The main readout updates every animation frame: `mm:ss` at 168px and `.cc` at 96px.
-3. Below it: Current lap (`mm:ss.cc`), Best lap (`ss.cc`) and Avg lap (`ss.cc`).
-4. Lap (button or L) is only active while running. It appends the time since the previous lap, re-ranks best and worst, and slides the new row in at the top of the log (260ms, from −8px and transparent).
-5. With two or more laps, the fastest row is green with a "BEST" tag and the slowest is red with a "WORST" tag. With one lap, neither is flagged.
-6. Stop (button or Space) freezes the readout, lights the HOLD LED, turns the go key amber with the label "Resume", disables Lap and enables Reset.
-7. Reset (button or R) only works while stopped. It clears the laps, sets 00:00.00, the go key reads "Start", best and average show "--", and the log shows "No laps yet · press L while running".
-8. A keyboard shortcut visibly presses the matching keycap for 120ms (`.down` class) as if it were clicked.
-9. Auto-repeat is ignored: holding L does not add a lap per repeat.
-10. Reduced motion: the RUN LED stops blinking (stays lit), rows appear without sliding, keys don't travel. The digits still update; they are information.
 
 ## Structure
 
@@ -45,45 +34,6 @@ padding 28px 32px 30px; bay gap 16px; keys gap 14px, margin-top 20px
 - The lap log is an `ol` labelled "Laps, newest first"; each `li` is a 3-column grid (number, lap, total).
 - Keys are three `button`s with `aria-keyshortcuts` and a visible `kbd` legend.
 - A visually hidden `aria-live="polite"` paragraph announces laps and state changes.
-
-## Tokens
-
-```css
-:root {
-  --room: #2a2b2d;       /* page, with 45° hairline hatching */
-  --body: #1b1c1e;       /* housing bottom */
-  --body-2: #232427;     /* housing top */
-  --screen: #0d0e0f;     /* phosphor screen */
-  --steel: #8d9198;      /* engraved labels */
-  --steel-2: #5c6066;
-  --line: #33353a;
-  --amber: #ffb23f;      /* phosphor, go key */
-  --amber-dim: #3a2a12;  /* unlit LED */
-  --amber-mid: #a8742b;  /* secondary screen text */
-  --best: #8ee07a;
-  --worst: #ff6a55;
-  --pixel: "VT323", ui-monospace, monospace;
-  --mono: "Red Hat Mono", ui-monospace, monospace;
-  --ease: cubic-bezier(.2,.7,.2,1);
-}
-```
-
-Spacing: 2, 4, 7, 8, 12, 14, 16, 18, 20, 24, 28, 32. Radii: housing 14px, screens 8px, keys 8px, tags 2px.
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Main mm:ss | VT323 | 168px (min with 22vw) / .8 | 400 | 0 | tabular |
-| Centiseconds | VT323 | 96px (min with 13vw) | 400 | 0 | — |
-| Split values | VT323 | 34px / 1 | 400 | 0 | — |
-| Lap rows | VT323 | 24px / 1 | 400 | 0 | — |
-| Plate, status, headers | Red Hat Mono | 10.5–11px | 400–700 | .12–.2em | Upper |
-| Key labels | Red Hat Mono | 14px | 700 | .12em | Upper |
-| Key legends | Red Hat Mono | 10.5px | 500 | .12em | — |
-| Best/Worst tags | Red Hat Mono | 9px | 700 | .1em | Upper |
-
-Phosphor text gets `text-shadow: 0 0 12px rgba(255,178,63,.45)` (8px and .35 on smaller sizes). Do not add a ghost "88:88" layer behind the readout; VT323 is not a segment font and the overlap makes digits unreadable.
 
 ## Motion
 
@@ -141,6 +91,62 @@ Phosphor text gets `text-shadow: 0 0 12px rgba(255,178,63,.45)` (8px and .35 on 
 - [ ] Seed laps 41.82, 40.95, 42.37, 39.88, 41.10; best is lap 04, worst is lap 03.
 - [ ] Phosphor amber `#ffb23f` on `#0d0e0f`, best `#8ee07a`, worst `#ff6a55`.
 - [ ] Go key 1.6fr wide, Lap and Reset 1fr.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame is a session in progress and running: total around 03:54, five laps logged (41.82, 40.95, 42.37, 39.88, 41.10), current lap about 27 seconds in, RUN LED blinking, "Lap 06" on the status line.
+2. The main readout updates every animation frame: `mm:ss` at 168px and `.cc` at 96px.
+3. Below it: Current lap (`mm:ss.cc`), Best lap (`ss.cc`) and Avg lap (`ss.cc`).
+4. Lap (button or L) is only active while running. It appends the time since the previous lap, re-ranks best and worst, and slides the new row in at the top of the log (260ms, from −8px and transparent).
+5. With two or more laps, the fastest row is green with a "BEST" tag and the slowest is red with a "WORST" tag. With one lap, neither is flagged.
+6. Stop (button or Space) freezes the readout, lights the HOLD LED, turns the go key amber with the label "Resume", disables Lap and enables Reset.
+7. Reset (button or R) only works while stopped. It clears the laps, sets 00:00.00, the go key reads "Start", best and average show "--", and the log shows "No laps yet · press L while running".
+8. A keyboard shortcut visibly presses the matching keycap for 120ms (`.down` class) as if it were clicked.
+9. Auto-repeat is ignored: holding L does not add a lap per repeat.
+10. Reduced motion: the RUN LED stops blinking (stays lit), rows appear without sliding, keys don't travel. The digits still update; they are information.
+
+## Tokens
+
+```css
+:root {
+  --room: #2a2b2d;       /* page, with 45° hairline hatching */
+  --body: #1b1c1e;       /* housing bottom */
+  --body-2: #232427;     /* housing top */
+  --screen: #0d0e0f;     /* phosphor screen */
+  --steel: #8d9198;      /* engraved labels */
+  --steel-2: #5c6066;
+  --line: #33353a;
+  --amber: #ffb23f;      /* phosphor, go key */
+  --amber-dim: #3a2a12;  /* unlit LED */
+  --amber-mid: #a8742b;  /* secondary screen text */
+  --best: #8ee07a;
+  --worst: #ff6a55;
+  --pixel: "VT323", ui-monospace, monospace;
+  --mono: "Red Hat Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+```
+
+Spacing: 2, 4, 7, 8, 12, 14, 16, 18, 20, 24, 28, 32. Radii: housing 14px, screens 8px, keys 8px, tags 2px.
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Main mm:ss | VT323 | 168px (min with 22vw) / .8 | 400 | 0 | tabular |
+| Centiseconds | VT323 | 96px (min with 13vw) | 400 | 0 | — |
+| Split values | VT323 | 34px / 1 | 400 | 0 | — |
+| Lap rows | VT323 | 24px / 1 | 400 | 0 | — |
+| Plate, status, headers | Red Hat Mono | 10.5–11px | 400–700 | .12–.2em | Upper |
+| Key labels | Red Hat Mono | 14px | 700 | .12em | Upper |
+| Key legends | Red Hat Mono | 10.5px | 500 | .12em | — |
+| Best/Worst tags | Red Hat Mono | 9px | 700 | .1em | Upper |
+
+Phosphor text gets `text-shadow: 0 0 12px rgba(255,178,63,.45)` (8px and .35 on smaller sizes). Do not add a ghost "88:88" layer behind the readout; VT323 is not a segment font and the overlap makes digits unreadable.
 
 ## Implementation notes
 

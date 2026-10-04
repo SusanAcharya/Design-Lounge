@@ -4,23 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A product card dressed as the physical swing tag on a garment, for a store's markdown page or an in-store kiosk. A brass hook sits at the top of the frame; a loden-green string drops to the grommet of a kraft tag with clipped top corners. The tag carries the brand (Pike & Ollerton, est. 1931), the product (Brushed cotton overshirt), the old price struck with a red diagonal, the sale price in a 68px Didone, a round "−35% OFF" sticker, five size chips (XL sold out), a "Hold size M · 24 h" button, and a perforated stub with a real EAN-13 barcode. Brush the pointer across the tag and it swings like a pendulum in the direction you pushed, then settles. The detail worth copying is that the swing is a damped spring driven by the pointer's horizontal velocity at entry, not a canned keyframe, so it feels pushed rather than animated.
 
 Not `receipt-slip` (a till receipt) and not `card-product-quick-add` (a grid product card). This is one item's tag.
-
-## Reference behaviour
-
-1. First frame: tag hangs at the rest angle of −3° (bottom slightly right). 500ms after load it gets one small push and swings, then settles within about 3s. Left column: "Store 14 · Rack C · Menswear", "Autumn markdown" (76px italic Didone), a two-line note, an "Ends Sunday, 11 October" pill with a red dot, and a hint "Brush past the tag to swing it." (hidden on touch-only devices).
-2. Brush: when the pointer enters the swing element, take the pointer's horizontal speed from the last move (px/ms). Impulse = `(0.35 + min(1, |vx| / 1.2) × 0.9) × 0.045` deg/ms, signed so the tag's bottom moves the same way as the pointer. If there was no movement, push away from the side of entry.
-3. Pendulum: angular acceleration = `−(a − rest) × 0.00005 − v × 0.0026` per ms². That gives a period of about 890ms and settles from an 8° swing in about 3s. Velocity is clamped to ±0.07 deg/ms (about ±10°). The loop stops when `|a − rest| < .02°` and `|v| < .0005`.
-4. Hovering does not keep it swinging; only entering does. The chips stay clickable because the swing decays quickly.
-5. Sizes: XS (2), S (6), M (3, selected), L (1), XL (0, sold out). Clicking a chip selects it, nudges the tag (±2.2°), and updates the stock line: "Only 3 left in M", "6 in S on this rack", "Last one in L on this rack" (bold with a red dot). Sold-out XL is dashed, struck, and cannot be selected.
-6. Arrow keys in the size group move the selection and skip sold-out sizes, wrapping at the ends.
-7. Hold: the button reads "Hold size M · 24 h" with a bookmark icon. Pressing it fills it ink, swaps to a check, and reads "Held till 5 Oct, 6 pm"; the stock line says "Size M is held at the fitting rooms until tomorrow, 6 pm". Pressing again releases. Changing size while held releases the hold quietly and relabels the button.
-8. Keyboard: the tag itself is focusable. Focus gives a small nudge (±2°). Space or Enter on the tag gives a bigger one (±5°). Focus shows an inset ink ring inside the clipped shape.
-9. Reduced motion: the tag stays at −3°, never swings; everything else works.
 
 ## Structure
 
@@ -53,68 +43,6 @@ Not `receipt-slip` (a till receipt) and not `card-product-quick-add` (a grid pro
 - Right: `.rack` (relative, full height) with `.rail` (decorative) and `.swing`: absolute, top 66px, centred, 330px wide, `transform-origin: 50% 0`, `rotate: var(--a)`. Inside: the string SVG (two cubic strands from the hook to the grommet), then a shadow wrapper, then `article.tag[tabindex=0]` labelled by the product name and described by the price block.
 - Tag: `clip-path: polygon(18% 0, 82% 0, 100% 7%, 100% 100%, 0 100%, 0 7%)`, padding 58px 28px 0. Contents in order: grommet `span`, brand `p`, hairline, `h2` product, meta `p`, `.prices` (was, now, sticker), `fieldset.sizes` with `legend` and a `div[role=radiogroup]` of five `button[role=radio]`, stock `p[aria-live=polite]`, hold `button[aria-pressed]`, `.stub` with the barcode SVG (`role=img`) and the sale reference.
 - The shadow lives on a wrapper `div` around the tag, because `clip-path` clips the tag's own `filter`.
-
-## Tokens
-
-```css
-:root {
-  --wall: #e3ded2;      /* page */
-  --kraft-3: #d8b88f;   /* tag top */
-  --kraft: #c9a47a;     /* tag middle */
-  --kraft-2: #c29a6c;   /* tag bottom */
-  --ink: #2a2017;       /* text, barcode, selected chip, held button */
-  --ink-2: #3f3022;     /* brand line, legend, stock, sku */
-  --ink-3: #4a3a2a;     /* meta, struck price, eyebrow */
-  --sale: #8f2010;      /* sale price, strike line, sticker, low-stock dot, ends dot */
-  --string: #4f6b3a;    /* loden-green string */
-  --brass: #a8843f;     /* rail and hook */
-  --focus: #2a2017;
-
-  --serif: "Bodoni Moda", Didot, Georgia, serif;   /* opsz 6–96 */
-  --mono: "Courier Prime", ui-monospace, monospace;
-
-  --tw: 330px;          /* tag width */
-  --rest: -3deg;
-  --k: 0.00005;         /* spring, per ms² */
-  --damp: 0.0026;       /* per ms */
-  --vmax: 0.07;         /* deg per ms */
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --t-micro: 150ms;
-}
-```
-
-Kraft surface, top to bottom of the stack:
-
-```css
-background:
-  radial-gradient(circle at 20% 30%, rgba(255,255,255,.12), transparent 40%),
-  repeating-linear-gradient(17deg, rgba(90,60,30,.05) 0 1px, transparent 1px 4px),
-  repeating-linear-gradient(-71deg, rgba(255,240,210,.06) 0 1px, transparent 1px 5px),
-  linear-gradient(170deg, var(--kraft-3), var(--kraft) 40%, var(--kraft-2));
-```
-
-Shadow wrapper: `drop-shadow(0 22px 22px rgba(42,32,23,.2)) drop-shadow(0 2px 2px rgba(42,32,23,.15))`. Grommet: 26px circle filled with the wall colour, ring `0 0 0 5px #d9c9a8`, outer hairline `0 0 0 6px rgba(42,32,23,.3)`, inner shade `inset 0 2px 3px rgba(42,32,23,.35)`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Eyebrow | Courier Prime | 12px | 400 | 1.5 | 0.18em | UPPER |
-| Headline | Bodoni Moda italic, opsz 96 | 76px | 500 | 0.95 | -0.02em | Title |
-| Note body | Courier Prime | 14px | 400 | 1.6 | 0 | sentence, 36ch |
-| Brand est. | Bodoni Moda italic | 13px | 500 | 1 | 0.02em | lower |
-| Brand name | Bodoni Moda | 22px | 700 | 1 | 0.14em | UPPER |
-| Product | Bodoni Moda | 24px | 500 | 1.1 | -0.005em | Sentence |
-| Meta | Courier Prime | 12px | 400 | 1.5 | 0.04em | as written |
-| Was price | Courier Prime | 16px | 400 | 1.5 | 0 | — |
-| Sale price | Bodoni Moda, opsz 96 | 68px ($ 30px, .00 26px superscript) | 700 | 0.9 | -0.02em | lining |
-| Sticker | Courier Prime | 20px (OFF 10px, 0.12em) | 700 | 0.9 | 0 | UPPER |
-| Legend | Courier Prime | 11px | 400 | 1 | 0.16em | UPPER |
-| Chip, hold | Courier Prime | 13px | 700 | 1 | 0 / 0.08em | UPPER |
-| Barcode digits | Courier Prime | 10px | 400 | 1.5 | 0.2em | — |
-| Sale ref. | Courier Prime | 15px 700 over 10px labels | | 1.2 | 0.02em | UPPER |
 
 ## Motion
 
@@ -182,6 +110,84 @@ The string rotates with the tag because it is inside `.swing`; the rail does not
 - [ ] Barcode 5 012345 447186; sale ref. MD-26-35, Rack C · 14.
 - [ ] Wall `#e3ded2`, kraft `#c9a47a`, sale `#8f2010`, string `#4f6b3a`.
 - [ ] Bodoni Moda for brand, product and prices; Courier Prime for everything typed.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: tag hangs at the rest angle of −3° (bottom slightly right). 500ms after load it gets one small push and swings, then settles within about 3s. Left column: "Store 14 · Rack C · Menswear", "Autumn markdown" (76px italic Didone), a two-line note, an "Ends Sunday, 11 October" pill with a red dot, and a hint "Brush past the tag to swing it." (hidden on touch-only devices).
+2. Brush: when the pointer enters the swing element, take the pointer's horizontal speed from the last move (px/ms). Impulse = `(0.35 + min(1, |vx| / 1.2) × 0.9) × 0.045` deg/ms, signed so the tag's bottom moves the same way as the pointer. If there was no movement, push away from the side of entry.
+3. Pendulum: angular acceleration = `−(a − rest) × 0.00005 − v × 0.0026` per ms². That gives a period of about 890ms and settles from an 8° swing in about 3s. Velocity is clamped to ±0.07 deg/ms (about ±10°). The loop stops when `|a − rest| < .02°` and `|v| < .0005`.
+4. Hovering does not keep it swinging; only entering does. The chips stay clickable because the swing decays quickly.
+5. Sizes: XS (2), S (6), M (3, selected), L (1), XL (0, sold out). Clicking a chip selects it, nudges the tag (±2.2°), and updates the stock line: "Only 3 left in M", "6 in S on this rack", "Last one in L on this rack" (bold with a red dot). Sold-out XL is dashed, struck, and cannot be selected.
+6. Arrow keys in the size group move the selection and skip sold-out sizes, wrapping at the ends.
+7. Hold: the button reads "Hold size M · 24 h" with a bookmark icon. Pressing it fills it ink, swaps to a check, and reads "Held till 5 Oct, 6 pm"; the stock line says "Size M is held at the fitting rooms until tomorrow, 6 pm". Pressing again releases. Changing size while held releases the hold quietly and relabels the button.
+8. Keyboard: the tag itself is focusable. Focus gives a small nudge (±2°). Space or Enter on the tag gives a bigger one (±5°). Focus shows an inset ink ring inside the clipped shape.
+9. Reduced motion: the tag stays at −3°, never swings; everything else works.
+
+## Tokens
+
+```css
+:root {
+  --wall: #e3ded2;      /* page */
+  --kraft-3: #d8b88f;   /* tag top */
+  --kraft: #c9a47a;     /* tag middle */
+  --kraft-2: #c29a6c;   /* tag bottom */
+  --ink: #2a2017;       /* text, barcode, selected chip, held button */
+  --ink-2: #3f3022;     /* brand line, legend, stock, sku */
+  --ink-3: #4a3a2a;     /* meta, struck price, eyebrow */
+  --sale: #8f2010;      /* sale price, strike line, sticker, low-stock dot, ends dot */
+  --string: #4f6b3a;    /* loden-green string */
+  --brass: #a8843f;     /* rail and hook */
+  --focus: #2a2017;
+
+  --serif: "Bodoni Moda", Didot, Georgia, serif;   /* opsz 6–96 */
+  --mono: "Courier Prime", ui-monospace, monospace;
+
+  --tw: 330px;          /* tag width */
+  --rest: -3deg;
+  --k: 0.00005;         /* spring, per ms² */
+  --damp: 0.0026;       /* per ms */
+  --vmax: 0.07;         /* deg per ms */
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --t-micro: 150ms;
+}
+```
+
+Kraft surface, top to bottom of the stack:
+
+```css
+background:
+  radial-gradient(circle at 20% 30%, rgba(255,255,255,.12), transparent 40%),
+  repeating-linear-gradient(17deg, rgba(90,60,30,.05) 0 1px, transparent 1px 4px),
+  repeating-linear-gradient(-71deg, rgba(255,240,210,.06) 0 1px, transparent 1px 5px),
+  linear-gradient(170deg, var(--kraft-3), var(--kraft) 40%, var(--kraft-2));
+```
+
+Shadow wrapper: `drop-shadow(0 22px 22px rgba(42,32,23,.2)) drop-shadow(0 2px 2px rgba(42,32,23,.15))`. Grommet: 26px circle filled with the wall colour, ring `0 0 0 5px #d9c9a8`, outer hairline `0 0 0 6px rgba(42,32,23,.3)`, inner shade `inset 0 2px 3px rgba(42,32,23,.35)`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Eyebrow | Courier Prime | 12px | 400 | 1.5 | 0.18em | UPPER |
+| Headline | Bodoni Moda italic, opsz 96 | 76px | 500 | 0.95 | -0.02em | Title |
+| Note body | Courier Prime | 14px | 400 | 1.6 | 0 | sentence, 36ch |
+| Brand est. | Bodoni Moda italic | 13px | 500 | 1 | 0.02em | lower |
+| Brand name | Bodoni Moda | 22px | 700 | 1 | 0.14em | UPPER |
+| Product | Bodoni Moda | 24px | 500 | 1.1 | -0.005em | Sentence |
+| Meta | Courier Prime | 12px | 400 | 1.5 | 0.04em | as written |
+| Was price | Courier Prime | 16px | 400 | 1.5 | 0 | — |
+| Sale price | Bodoni Moda, opsz 96 | 68px ($ 30px, .00 26px superscript) | 700 | 0.9 | -0.02em | lining |
+| Sticker | Courier Prime | 20px (OFF 10px, 0.12em) | 700 | 0.9 | 0 | UPPER |
+| Legend | Courier Prime | 11px | 400 | 1 | 0.16em | UPPER |
+| Chip, hold | Courier Prime | 13px | 700 | 1 | 0 / 0.08em | UPPER |
+| Barcode digits | Courier Prime | 10px | 400 | 1.5 | 0.2em | — |
+| Sale ref. | Courier Prime | 15px 700 over 10px labels | | 1.2 | 0.02em | UPPER |
 
 ## Implementation notes
 

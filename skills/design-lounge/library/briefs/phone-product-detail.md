@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This page is paper and retro. It is not glass.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The product page of a small pottery shop, Okra Studio, on a phone. The product is a stoneware cup called Tumbler No. 4. The top 404px is a swipeable gallery of three plates. The art is drawn in CSS, not photos. Under it sit the name, the price, the rating, four glaze swatches, four size chips, and a three-part accordion. A bar stays fixed at the bottom with the total and a big clay button, Add to bag.
@@ -11,21 +13,6 @@ The product page of a small pottery shop, Okra Studio, on a phone. The product i
 The look is warm clay on cream. Every box has a 2px ink border, a 2px radius and a hard offset shadow, like a printed shop card. Type is a wide, heavy grotesk with a serif italic for the soft lines.
 
 The detail worth copying is the glaze swatch. Picking a glaze recolours the drawn cup over 420ms, because the colour is one registered custom property that the gradients read. The second detail is Add to bag. A small dot flies from the button to the bag icon, then the badge count goes up and bumps.
-
-## Reference behaviour
-
-1. Initial state: plate 1 (front view) is showing. Dot 1 is current. Glaze is Kiln red. Size is 260 ml. Price and total read $38. The bag badge reads 2. Details is open. Care and Shipping are closed.
-2. Swipe the gallery left or right. It snaps one plate at a time. The current dot widens from 8px to 20px and fills with ink over 240ms.
-3. Tap a dot. The gallery scrolls to that plate. Smooth scroll, or instant under reduced motion.
-4. Tap the heart. It fills clay. `aria-pressed` becomes true and the label becomes "Saved to wishlist". Tap again to undo.
-5. Tap a glaze swatch. The selected swatch gets a 2px ink ring. The legend text changes to the glaze name. All cups in the gallery recolour over 420ms. The small cup on plate 3 keeps its own Moss glaze.
-6. Tap a size chip. It fills ink with cream text. The legend shows the size. Price and total change: 180 ml $32, 260 ml $38, 420 ml $46.
-7. The 340 ml chip is sold out. It has a dashed muted border and struck-through text. It cannot be chosen. A note under the chips says "340 ml is sold out. Next firing 14 October."
-8. Tap an accordion header. The panel opens by animating its row from 0fr to 1fr over 280ms. The plus icon turns 45 degrees into an x. More than one panel can be open.
-9. Tap Add to bag. The button turns ink, its icon becomes a tick and its label becomes "Added". A 14px dot in the current glaze flies from the button centre to the bag icon in 640ms on a curved path. When it lands, the badge goes from 2 to 3 and scales to 1.35 and back over 360ms.
-10. After 1400ms the button goes back to clay, plus icon, "Add to bag". Taps during that time do nothing.
-11. A polite live region says "Added Tumbler No. 4, Kiln red, 260 ml to your bag."
-12. The page scrolls under the fixed bar. The last accordion row stays reachable above it.
 
 ## Structure
 
@@ -70,70 +57,6 @@ The detail worth copying is the glaze swatch. Picking a glaze recolours the draw
 - The accordion uses `h2 > button[aria-expanded][aria-controls]` and a `div role="region"` panel.
 - The bar is a `div` fixed to the bottom. It holds the total and the Add to bag `button`.
 - A visually hidden `p aria-live="polite"` announces the add.
-
-## Tokens
-
-```css
-@property --glaze { syntax: '<color>'; inherits: true; initial-value: #b5532f; }
-
-:root {
-  /* colour */
-  --bg: #f3e9d8;        /* page cream */
-  --surface: #fbf5ea;   /* bar, buttons, chips */
-  --stage: #e7d3b6;     /* gallery backdrop */
-  --ink: #2a1e16;       /* text, borders, shadows */
-  --ink-2: #5a4637;     /* secondary text */
-  --ink-3: #7a6553;     /* muted, sold out */
-  --line: #d8c6aa;      /* hairlines */
-  --clay: #b5532f;      /* primary button, heart, badge */
-  --clay-ink: #fff6ec;  /* text on clay */
-  --raw: #dcb994;       /* unglazed foot of the cup */
-  --glaze: #b5532f;     /* current glaze, drives the art */
-
-  /* type */
-  --grot: "Archivo", system-ui, sans-serif;
-  --serif: "Instrument Serif", Georgia, serif;
-
-  /* shape */
-  --r: 2px;
-  --border: 2px solid var(--ink);
-  --shadow-sm: 2px 2px 0 var(--ink);
-  --shadow-lg: 4px 4px 0 var(--ink);
-
-  /* space: 4px base. Used: 4 6 8 12 16 20 22 */
-  --pad: 20px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-  --micro: 160ms;
-  --layout: 280ms;
-  --recolour: 420ms;
-  --flight: 640ms;
-}
-```
-
-The font link loads Archivo with the width axis (100 to 125) and weights 500 to 800, and Instrument Serif italic only.
-
-## Typography
-
-| Role | Family | Size | Weight | Width | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Eyebrow | Archivo | 11px | 700 | 100% | 0.14em | upper |
-| Product name | Archivo | 36px / 1 | 800 | 118% | -0.02em | sentence |
-| Subline | Instrument Serif italic | 21px / 1.2 | 400 | | 0 | lower |
-| Price | Archivo | 26px | 800 | 110% | 0, tabular | |
-| Rating | Archivo | 13px | 600 | 100% | 0 | |
-| Legend | Archivo | 12px | 700 | 100% | 0.10em | upper |
-| Legend value | Instrument Serif italic | 17px | 400 | | 0 | as written |
-| Chip | Archivo | 14px | 700 | 100% | 0, tabular | |
-| Accordion header | Archivo | 14px | 700 | 100% | 0.08em | upper |
-| Body | Archivo | 14px / 1.45 | 400 | 100% | 0 | max 34ch |
-| Plate tag | Archivo 11px 700 upper, then serif italic 15px | | | | 0.12em | |
-| Bar total | Archivo | 22px | 800 | 110% | tabular | |
-| Button | Archivo | 16px | 800 | 112% | 0.02em | sentence |
-
-The serif italic is only for soft lines: the subline, legend values, plate captions. Never set a price or a button in the serif.
 
 ## Motion
 
@@ -214,6 +137,89 @@ Nothing loops. The only motion at rest is none.
 - [ ] Bag badge starts at 2 and reads 3 after one add.
 - [ ] Button shows "Added" for 1400ms.
 - [ ] Panels are Details (open), Care, Shipping.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: plate 1 (front view) is showing. Dot 1 is current. Glaze is Kiln red. Size is 260 ml. Price and total read $38. The bag badge reads 2. Details is open. Care and Shipping are closed.
+2. Swipe the gallery left or right. It snaps one plate at a time. The current dot widens from 8px to 20px and fills with ink over 240ms.
+3. Tap a dot. The gallery scrolls to that plate. Smooth scroll, or instant under reduced motion.
+4. Tap the heart. It fills clay. `aria-pressed` becomes true and the label becomes "Saved to wishlist". Tap again to undo.
+5. Tap a glaze swatch. The selected swatch gets a 2px ink ring. The legend text changes to the glaze name. All cups in the gallery recolour over 420ms. The small cup on plate 3 keeps its own Moss glaze.
+6. Tap a size chip. It fills ink with cream text. The legend shows the size. Price and total change: 180 ml $32, 260 ml $38, 420 ml $46.
+7. The 340 ml chip is sold out. It has a dashed muted border and struck-through text. It cannot be chosen. A note under the chips says "340 ml is sold out. Next firing 14 October."
+8. Tap an accordion header. The panel opens by animating its row from 0fr to 1fr over 280ms. The plus icon turns 45 degrees into an x. More than one panel can be open.
+9. Tap Add to bag. The button turns ink, its icon becomes a tick and its label becomes "Added". A 14px dot in the current glaze flies from the button centre to the bag icon in 640ms on a curved path. When it lands, the badge goes from 2 to 3 and scales to 1.35 and back over 360ms.
+10. After 1400ms the button goes back to clay, plus icon, "Add to bag". Taps during that time do nothing.
+11. A polite live region says "Added Tumbler No. 4, Kiln red, 260 ml to your bag."
+12. The page scrolls under the fixed bar. The last accordion row stays reachable above it.
+
+## Tokens
+
+```css
+@property --glaze { syntax: '<color>'; inherits: true; initial-value: #b5532f; }
+
+:root {
+  /* colour */
+  --bg: #f3e9d8;        /* page cream */
+  --surface: #fbf5ea;   /* bar, buttons, chips */
+  --stage: #e7d3b6;     /* gallery backdrop */
+  --ink: #2a1e16;       /* text, borders, shadows */
+  --ink-2: #5a4637;     /* secondary text */
+  --ink-3: #7a6553;     /* muted, sold out */
+  --line: #d8c6aa;      /* hairlines */
+  --clay: #b5532f;      /* primary button, heart, badge */
+  --clay-ink: #fff6ec;  /* text on clay */
+  --raw: #dcb994;       /* unglazed foot of the cup */
+  --glaze: #b5532f;     /* current glaze, drives the art */
+
+  /* type */
+  --grot: "Archivo", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+
+  /* shape */
+  --r: 2px;
+  --border: 2px solid var(--ink);
+  --shadow-sm: 2px 2px 0 var(--ink);
+  --shadow-lg: 4px 4px 0 var(--ink);
+
+  /* space: 4px base. Used: 4 6 8 12 16 20 22 */
+  --pad: 20px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+  --micro: 160ms;
+  --layout: 280ms;
+  --recolour: 420ms;
+  --flight: 640ms;
+}
+```
+
+The font link loads Archivo with the width axis (100 to 125) and weights 500 to 800, and Instrument Serif italic only.
+
+## Typography
+
+| Role | Family | Size | Weight | Width | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Eyebrow | Archivo | 11px | 700 | 100% | 0.14em | upper |
+| Product name | Archivo | 36px / 1 | 800 | 118% | -0.02em | sentence |
+| Subline | Instrument Serif italic | 21px / 1.2 | 400 | | 0 | lower |
+| Price | Archivo | 26px | 800 | 110% | 0, tabular | |
+| Rating | Archivo | 13px | 600 | 100% | 0 | |
+| Legend | Archivo | 12px | 700 | 100% | 0.10em | upper |
+| Legend value | Instrument Serif italic | 17px | 400 | | 0 | as written |
+| Chip | Archivo | 14px | 700 | 100% | 0, tabular | |
+| Accordion header | Archivo | 14px | 700 | 100% | 0.08em | upper |
+| Body | Archivo | 14px / 1.45 | 400 | 100% | 0 | max 34ch |
+| Plate tag | Archivo 11px 700 upper, then serif italic 15px | | | | 0.12em | |
+| Bar total | Archivo | 22px | 800 | 110% | tabular | |
+| Button | Archivo | 16px | 800 | 112% | 0.02em | sentence |
+
+The serif italic is only for soft lines: the subline, legend values, plate captions. Never set a price or a button in the serif.
 
 ## Implementation notes
 

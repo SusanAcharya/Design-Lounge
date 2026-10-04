@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A short ledger for Hollis. One page shows at a time. Next page rotates the sheet on its left edge, then the next note is there. Previous goes back. This is not a curtain between routes. That curtain is `page-transition-curtain`. This is not a long article. A reader is `paper-article-reader`. Three notes, a turn, a count.
-
-## Reference behaviour
-
-1. The first page is Gate 4. The count is 1 of 3. Previous is disabled.
-2. Next page plays a 640ms rotateY from 0 to -180, origin left center.
-3. Halfway, the title and sentence swap to the next note.
-4. Page 2 is Night book. Page 3 is Month close. Next is disabled on page 3.
-5. Previous walks back and enables Next.
-6. Reduced motion swaps the text with no rotation.
-7. A turn in progress ignores another click.
 
 ## Structure
 
@@ -32,20 +24,6 @@ Previous    1 of 3    Next page
 - The nav sits 56px under the book.
 - Buttons are 40px.
 - The count is 13px.
-
-## Tokens
-
-```css
-:root { --bg:#f4f1ea; --paper:#fffdf8; --ink:#1a1814; --ink-2:#5c564c; --line:#e3ddd2; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Title | Fraunces | 36px | 560 |
-| Body | Public Sans | 16px | 400 |
-| Count | Public Sans | 13px | 400 |
 
 ## Motion
 
@@ -90,16 +68,6 @@ Previous    1 of 3    Next page
 - [ ] Month close names Rs 18,42,000.
 - [ ] Display is Fraunces. Text is Public Sans.
 - [ ] Ground is #f4f1ea.
-
-## Implementation notes
-
-Swap the text at half the duration, while the page is edge-on.
-
-```js
-setTimeout(() => { i = n; paint(); page.classList.remove("turn"); }, 320);
-```
-
-Do not fetch pages. Three strings are enough.
 
 ## Measurements to keep
 
@@ -168,6 +136,44 @@ Do not fetch pages. Three strings are enough.
 - While rebuilding, remember: Do not leave both buttons enabled on an end page.
 - While rebuilding, remember: Do not animate under reduced motion.
 - While rebuilding, remember: Do not add a fourth note in this demo.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first page is Gate 4. The count is 1 of 3. Previous is disabled.
+2. Next page plays a 640ms rotateY from 0 to -180, origin left center.
+3. Halfway, the title and sentence swap to the next note.
+4. Page 2 is Night book. Page 3 is Month close. Next is disabled on page 3.
+5. Previous walks back and enables Next.
+6. Reduced motion swaps the text with no rotation.
+7. A turn in progress ignores another click.
+
+## Tokens
+
+```css
+:root { --bg:#f4f1ea; --paper:#fffdf8; --ink:#1a1814; --ink-2:#5c564c; --line:#e3ddd2; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Title | Fraunces | 36px | 560 |
+| Body | Public Sans | 16px | 400 |
+| Count | Public Sans | 13px | 400 |
+
+## Implementation notes
+
+Swap the text at half the duration, while the page is edge-on.
+
+```js
+setTimeout(() => { i = n; paint(); page.classList.remove("turn"); }, 320);
+```
+
+Do not fetch pages. Three strings are enough.
 
 ---
 

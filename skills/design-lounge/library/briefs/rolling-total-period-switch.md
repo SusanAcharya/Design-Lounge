@@ -4,27 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from 60fps.design, a gallery of mobile micro-interaction clips: this piece takes the "number of transactions" idea from its finance shots (a numeric segmented control whose pill springs between options while the account preview reveals or hides rows) and the "ticker" effect tag, and rebuilds them as one working screen. It is the spending view of a fictional money app called Lekha. A dark five-option switch (Day, Week, Month, Quarter, Year) sits above the home clearance. Choosing a period slides a lime pill with a jelly squash proportional to the distance travelled; the big total rolls every digit in its own column, right to left; digit columns open or collapse when the number gets longer or shorter (8,915 → 1,36,480); the transaction count rolls the same way in mono; seven bars spring to new heights with a stagger; and the "Top places" list grows from two to five rows. The detail worth copying is the roller: it keys columns from the right, so the ones digit is always the same element and only the leading columns are added or removed.
 
 The language is calm finance: cool grey page, one deep teal card, ink switch, lime as the single accent, Indian digit grouping.
-
-## Reference behaviour
-
-1. First frame: "Lekha" and an "SA" avatar; "Spent this week"; "Rs 8,915" at 56px; a green chip "↓ 12% less" and "23 transactions"; a teal card "Mon to Sun / avg Rs 1,274" with seven bars M–S, Friday lime; "TOP PLACES" with three rows; the switch with Week selected.
-2. Nothing animates on load. Transitions are disabled until 120ms after first paint.
-3. Tapping an option scales it to 0.94 while pressed and `navigator.vibrate(6)` fires where available.
-4. Selecting moves the lime pill with `translateX` over 500ms on `cubic-bezier(.34,1.56,.64,1)`. At the same time its inner layer plays a 500ms jelly: at 30% it is `scaleX(1 + 0.12 × distance)` (capped at 1.45) and `scaleY(.84)`; at 65% `scaleX(.96) scaleY(1.04)`; then rest.
-5. The selected label turns ink on lime; others are `#aeb8c2` on ink.
-6. The period label changes immediately: today, this week, in October, Aug to Oct, in 2026.
-7. The total rolls: each digit column translates to its new digit over 700ms on `cubic-bezier(.3,1.3,.6,1)`, with a 35ms delay per column counted from the right. New leading columns grow from width 0 and fade in over 450ms; removed columns collapse to 0 and are deleted after 460ms. Commas are fixed-width separators that also grow in or collapse.
-8. The transaction count rolls with the same component at 13px mono: 4, 23, 126, 371, 1,488.
-9. The delta chip flips between green "↓ 12% less" and rust "↑ 6% more"; its arrow rotates 180° on a 400ms spring.
-10. Bars spring to new heights over 600ms, staggered 30ms left to right. The highest-spend bar is lime. Periods with fewer buckets hide unused bars (Quarter shows Aug, Sep, Oct; Month shows W1–W5).
-11. The list's visible height animates over 500ms (expo-out) to show 2, 3, 4, 5, 5 rows for Day → Year. Rows beyond the count fade out and lift 6px; rows coming in fade down into place, staggered 40ms.
-12. A polite live region announces "Quarter: Rs 1,36,480 spent Aug to Oct, 371 transactions".
-13. Keyboard: the switch is a radiogroup with roving tabindex; arrows move and select (wrapping), Home/End jump.
 
 ## Structure
 
@@ -59,56 +45,6 @@ The language is calm finance: cool grey page, one deep teal card, ink switch, li
 - The chart is a `section` labelled "Spending by day" with seven `div.bar` (an `i` for the bar, a `small` for the label).
 - The list is a `section` labelled "Top places", a one-row CSS grid whose row height is set in px, with an inner `div` (overflow hidden) holding `h3` and `ul`.
 - The switch is a `div role="radiogroup"` labelled "Period" with five `button role="radio"` and an `aria-hidden` pill span holding an inner `i` for the jelly.
-
-## Tokens
-
-```css
-:root {
-  --bg: #eef1f4;      /* page */
-  --card: #0f3b3a;    /* chart card */
-  --card-2: #175150;  /* resting bars */
-  --ink: #0e1a26;     /* text, switch track */
-  --ink-2: #3d4a57;
-  --ink-3: #5f6b77;   /* labels, units */
-  --line: #d6dce2;    /* row hairlines */
-  --white: #fbfcfd;   /* row badges */
-  --lime: #c8f25a;    /* accent: pill, top bar, avatar initials */
-  --teal-ink: #d7ece9;
-  --teal-3: #8fb8b4;  /* card labels */
-  --down: #1f7a52;    /* spend fell: chip text on #dcefe4 */
-  --up: #9a3d16;      /* spend rose: chip text on #f6e3d8 */
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-  --total: 56px; --cell: 1.08em; --digit-w: .57em; --sep-w: .31em;
-  --seg-h: 52px; --row-h: 52px; --bars-h: 96px;
-  --r-card: 24px; --r-bar: 8px 8px 4px 4px; --r-pill: 999px;
-  --s-2: 8px; --s-3: 12px; --s-4: 14px; --s-5: 18px; --s-6: 20px;
-  --spring: cubic-bezier(.34, 1.56, .64, 1);  /* pill slide, arrow */
-  --soft: cubic-bezier(.3, 1.3, .6, 1);       /* digit roll, bars */
-  --out: cubic-bezier(.16, 1, .3, 1);         /* list height, slot width */
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --t-pill: 500ms; --t-roll: 700ms; --t-col-stagger: 35ms;
-  --t-bars: 600ms; --t-bar-stagger: 30ms; --t-list: 500ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Total digits | Schibsted Grotesk | 56px | 800 | 1.08em cells | 0 in roller, tabular |
-| Currency | Schibsted Grotesk | 26px | 700 | 1 | -0.02em |
-| Brand | Schibsted Grotesk | 17px | 800 | 1 | -0.02em |
-| Period label | Schibsted Grotesk | 13px | 400 / 500 | 1.4 | 0 |
-| Delta chip | Schibsted Grotesk | 13px | 500 | 1 | 0 |
-| Count | DM Mono | 13px | 500 number / 400 word | 1 | 0 |
-| Card labels | Schibsted Grotesk | 13px | 500 | 1.4 | 0 |
-| Bar labels, badges, row counts | DM Mono | 10–12px | 400–500 | 1 | 0 |
-| Row name | Schibsted Grotesk | 15px | 500 | 1.4 | 0 |
-| Row amount | Schibsted Grotesk | 15px | 700 | 1.4 | tabular |
-| Switch | Schibsted Grotesk | 13px | 500 | 1 | 0 |
-
-Set letter-spacing to 0 inside the roller. Negative tracking on fixed-width cells pushes glyphs left and makes commas look misplaced.
 
 ## Motion
 
@@ -174,6 +110,76 @@ Set letter-spacing to 0 inside the roller. Negative tracking on fixed-width cell
 - [ ] Places Bhojan Kitchen, Thamel Mart, Sajha Rides, Nanglo Bakery, Kapan Chiya; 2/3/4/5/5 rows shown.
 - [ ] Lime `#c8f25a` pill on an ink `#0e1a26` track; teal card `#0f3b3a`.
 - [ ] Week selected on load with Friday's bar lime.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: "Lekha" and an "SA" avatar; "Spent this week"; "Rs 8,915" at 56px; a green chip "↓ 12% less" and "23 transactions"; a teal card "Mon to Sun / avg Rs 1,274" with seven bars M–S, Friday lime; "TOP PLACES" with three rows; the switch with Week selected.
+2. Nothing animates on load. Transitions are disabled until 120ms after first paint.
+3. Tapping an option scales it to 0.94 while pressed and `navigator.vibrate(6)` fires where available.
+4. Selecting moves the lime pill with `translateX` over 500ms on `cubic-bezier(.34,1.56,.64,1)`. At the same time its inner layer plays a 500ms jelly: at 30% it is `scaleX(1 + 0.12 × distance)` (capped at 1.45) and `scaleY(.84)`; at 65% `scaleX(.96) scaleY(1.04)`; then rest.
+5. The selected label turns ink on lime; others are `#aeb8c2` on ink.
+6. The period label changes immediately: today, this week, in October, Aug to Oct, in 2026.
+7. The total rolls: each digit column translates to its new digit over 700ms on `cubic-bezier(.3,1.3,.6,1)`, with a 35ms delay per column counted from the right. New leading columns grow from width 0 and fade in over 450ms; removed columns collapse to 0 and are deleted after 460ms. Commas are fixed-width separators that also grow in or collapse.
+8. The transaction count rolls with the same component at 13px mono: 4, 23, 126, 371, 1,488.
+9. The delta chip flips between green "↓ 12% less" and rust "↑ 6% more"; its arrow rotates 180° on a 400ms spring.
+10. Bars spring to new heights over 600ms, staggered 30ms left to right. The highest-spend bar is lime. Periods with fewer buckets hide unused bars (Quarter shows Aug, Sep, Oct; Month shows W1–W5).
+11. The list's visible height animates over 500ms (expo-out) to show 2, 3, 4, 5, 5 rows for Day → Year. Rows beyond the count fade out and lift 6px; rows coming in fade down into place, staggered 40ms.
+12. A polite live region announces "Quarter: Rs 1,36,480 spent Aug to Oct, 371 transactions".
+13. Keyboard: the switch is a radiogroup with roving tabindex; arrows move and select (wrapping), Home/End jump.
+
+## Tokens
+
+```css
+:root {
+  --bg: #eef1f4;      /* page */
+  --card: #0f3b3a;    /* chart card */
+  --card-2: #175150;  /* resting bars */
+  --ink: #0e1a26;     /* text, switch track */
+  --ink-2: #3d4a57;
+  --ink-3: #5f6b77;   /* labels, units */
+  --line: #d6dce2;    /* row hairlines */
+  --white: #fbfcfd;   /* row badges */
+  --lime: #c8f25a;    /* accent: pill, top bar, avatar initials */
+  --teal-ink: #d7ece9;
+  --teal-3: #8fb8b4;  /* card labels */
+  --down: #1f7a52;    /* spend fell: chip text on #dcefe4 */
+  --up: #9a3d16;      /* spend rose: chip text on #f6e3d8 */
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  --total: 56px; --cell: 1.08em; --digit-w: .57em; --sep-w: .31em;
+  --seg-h: 52px; --row-h: 52px; --bars-h: 96px;
+  --r-card: 24px; --r-bar: 8px 8px 4px 4px; --r-pill: 999px;
+  --s-2: 8px; --s-3: 12px; --s-4: 14px; --s-5: 18px; --s-6: 20px;
+  --spring: cubic-bezier(.34, 1.56, .64, 1);  /* pill slide, arrow */
+  --soft: cubic-bezier(.3, 1.3, .6, 1);       /* digit roll, bars */
+  --out: cubic-bezier(.16, 1, .3, 1);         /* list height, slot width */
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --t-pill: 500ms; --t-roll: 700ms; --t-col-stagger: 35ms;
+  --t-bars: 600ms; --t-bar-stagger: 30ms; --t-list: 500ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Total digits | Schibsted Grotesk | 56px | 800 | 1.08em cells | 0 in roller, tabular |
+| Currency | Schibsted Grotesk | 26px | 700 | 1 | -0.02em |
+| Brand | Schibsted Grotesk | 17px | 800 | 1 | -0.02em |
+| Period label | Schibsted Grotesk | 13px | 400 / 500 | 1.4 | 0 |
+| Delta chip | Schibsted Grotesk | 13px | 500 | 1 | 0 |
+| Count | DM Mono | 13px | 500 number / 400 word | 1 | 0 |
+| Card labels | Schibsted Grotesk | 13px | 500 | 1.4 | 0 |
+| Bar labels, badges, row counts | DM Mono | 10–12px | 400–500 | 1 | 0 |
+| Row name | Schibsted Grotesk | 15px | 500 | 1.4 | 0 |
+| Row amount | Schibsted Grotesk | 15px | 700 | 1.4 | tabular |
+| Switch | Schibsted Grotesk | 13px | 500 | 1 | 0 |
+
+Set letter-spacing to 0 inside the roller. Negative tracking on fixed-width cells pushes glyphs left and makes commas look misplaced.
 
 ## Implementation notes
 

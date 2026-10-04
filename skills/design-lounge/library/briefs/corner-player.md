@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A night-shift page with a small player fixed in the corner. Open grows it to the middle of the frame. Play starts an 8 second bar. There is no media file. The bar is the progress. This is not a music screen. Now playing is `ios-now-playing`. A full player is `m3-music-player-expressive`. This is the corner clip.
-
-## Reference behaviour
-
-1. The player starts 220 by 124, 28px from the right and bottom.
-2. The title reads Gate 4 · 0:42.
-3. Play sets aria-pressed and the bar animates to full over 8 seconds. Pause stops the attribute.
-4. Open sets aria-expanded and grows the player to 640 by 360, centered.
-5. Close returns it to the corner.
-6. The grow is 360ms.
-7. Reduced motion snaps the size and does not run the bar.
 
 ## Structure
 
@@ -31,20 +23,6 @@ fixed player, corner
 - Buttons are 36px.
 - The track is 4px, mark #d7b15e.
 - The page title is 40px.
-
-## Tokens
-
-```css
-:root { --bg:#f4f1ea; --player:#1a1814; --ink:#f4f1ea; --mark:#d7b15e; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Page title | IBM Plex Sans | 40px | 600 |
-| Clip title | IBM Plex Sans | 14px | 400 |
-| Button | IBM Plex Sans | 13px | 500 |
 
 ## Motion
 
@@ -89,16 +67,6 @@ fixed player, corner
 - [ ] Open size is 640 by 360.
 - [ ] The bar is #d7b15e on #3a342c.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Toggle data-open and data-play. The bar animation is gated on data-play.
-
-```css
-.player[data-play="true"] .track i { animation: go 8s linear; }
-```
-
-Do not point the player at a network video.
 
 ## Measurements to keep
 
@@ -167,6 +135,44 @@ Do not point the player at a network video.
 - While rebuilding, remember: Do not loop the bar in this demo.
 - While rebuilding, remember: Do not use a native video element with a remote src.
 - While rebuilding, remember: Do not start expanded.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The player starts 220 by 124, 28px from the right and bottom.
+2. The title reads Gate 4 · 0:42.
+3. Play sets aria-pressed and the bar animates to full over 8 seconds. Pause stops the attribute.
+4. Open sets aria-expanded and grows the player to 640 by 360, centered.
+5. Close returns it to the corner.
+6. The grow is 360ms.
+7. Reduced motion snaps the size and does not run the bar.
+
+## Tokens
+
+```css
+:root { --bg:#f4f1ea; --player:#1a1814; --ink:#f4f1ea; --mark:#d7b15e; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Page title | IBM Plex Sans | 40px | 600 |
+| Clip title | IBM Plex Sans | 14px | 400 |
+| Button | IBM Plex Sans | 13px | 500 |
+
+## Implementation notes
+
+Toggle data-open and data-play. The bar animation is gated on data-play.
+
+```css
+.player[data-play="true"] .track i { animation: go 8s linear; }
+```
+
+Do not point the player at a network video.
 
 ---
 

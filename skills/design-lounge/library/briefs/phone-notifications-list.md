@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. Keep the groups, the filter, the unread rules and the empty state.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The notification screen of Plinth, a fictional app where architects share drawings. It is a full phone screen. A fixed header holds the title, an unread count, a Mark all read link and a three-part filter. Below it a list scrolls, grouped by Today, This week and Earlier.
@@ -13,19 +15,6 @@ The look is Swiss and quiet. White page, black type, one red. Red is only for un
 There are four row types. A mention shows a short quote with a 2px black left rule. A like batch shows two stacked squares and "Mira Okafor and 4 others". A follow has an inline Follow back button. A system row is about billing and uses a black square with a card icon.
 
 The detail worth copying is Mark all read. The red dots shrink away one after another, 60ms apart, top to bottom. The text drops from weight 500 black to weight 400 grey at the same time. Then the count and the badge update once.
-
-## Reference behaviour
-
-1. Initial state: All is selected. 10 rows in three groups. 5 are unread: Anaya Rai, Mira Okafor, Tenzin Doma, Studio plan (Today) and Priya Nair (This week). The count reads "5 unread" with the 5 in red. The Unread segment shows a red 5 badge.
-2. Unread rows have an 8px red dot 8px from the left edge, 32px from the row top, and text at weight 500 in `--ink`. Read rows have no dot and text at weight 400 in `--ink-2`. Names are always 600 `--ink`.
-3. Tap any unread row. Its dot scales from 1 to 0 over 160ms. Its text goes to read style over 200ms. The count and badge drop by one.
-4. Tap Follow back on Tenzin Doma. The button turns from black fill to white with a 1px black inset ring and reads "Following". The row is also marked read. Tap again to undo the follow. Oskar Lind starts as "Following".
-5. Tap Mentions. The black indicator slides under Mentions over 240ms. Only mention rows show: Anaya Rai, Jonas Berg, Lena Park. Groups with no visible rows are hidden. The list scrolls to the top.
-6. Tap Unread. Only unread rows show. Tapping one marks it read, and 360ms later it leaves the list.
-7. Tap Mark all read. Visible unread dots clear one by one, 60ms apart. Hidden unread rows clear at once. When the last one is done, the count reads "No unread", the badge disappears, Mark all read becomes disabled grey, and a live region says "All notifications marked as read."
-8. If the filter is Unread when the list becomes empty, the groups hide 240ms later and the empty state shows: a 48px outlined tick square, "All caught up", one line of help, and a "Show all notifications" button.
-9. "Show all notifications" switches the filter to All and moves focus to the All segment.
-10. Group headers are sticky at the top of the scroll area.
 
 ## Structure
 
@@ -64,64 +53,6 @@ The detail worth copying is Mark all read. The red dots shrink away one after an
 - The row button is a 3-column grid: 40px avatar, 1fr text, auto time. Gap 16px.
 - Follow rows add 64px bottom padding to the row button. The follow button sits absolute at left 80px, bottom 16px.
 - The empty state is a `div role="status"` at the end of `main`, hidden until needed.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #ffffff;      /* page and sticky headers */
-  --ink: #0a0a0a;     /* text, rules, indicator, buttons */
-  --ink-2: #525252;   /* read text, quotes */
-  --ink-3: #737373;   /* times, group labels, disabled */
-  --line: #e5e5e5;    /* row rules */
-  --fill: #f4f4f4;    /* avatar fill, row hover */
-  --red: #e10600;     /* unread only */
-  --focus: #0a0a0a;
-
-  /* type */
-  --sans: "Inter", system-ui, -apple-system, sans-serif;
-
-  /* grid: 8px. Allowed steps 8 16 24 32 40 48 56 64 72 80 */
-  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 40px; --s6: 48px;
-
-  /* shape */
-  --r: 6px;          /* avatars, segmented, buttons */
-  --r-inner: 3px;    /* indicator, type badge, filter badge */
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --dot: 160ms;
-  --text: 200ms;
-  --slide: 240ms;
-  --stagger: 60ms;
-}
-```
-
-The only exceptions to the 8px grid are the 3px inset inside the segmented control and the 4px offset of the type badge. Every row, gap and padding is a multiple of 8.
-
-## Typography
-
-One family, Inter, with `cv11` and `ss01` on for single-storey a and straight digits.
-
-| Role | Size / line | Weight | Tracking | Colour | Case |
-| --- | --- | --- | --- | --- | --- |
-| Title | 32 / 40 | 700 | -0.025em | `--ink` | sentence |
-| Count | 13 / 24 | 400, number 600 | 0 | `--ink-2`, number `--red` | |
-| Mark all read | 14 / 48 | 600 | 0 | `--ink`, 1px underline at 4px | sentence |
-| Segment | 14 | 600 | 0 | `--ink`, selected `#fff` | sentence |
-| Filter badge | 11 / 16 | 400 | 0 | `#fff` on `--red` | tabular |
-| Group label | 11 / 16 | 600 | 0.1em | `--ink-3` | upper |
-| Row text unread | 14 / 24 | 500 | 0 | `--ink` | |
-| Row text read | 14 / 24 | 400 | 0 | `--ink-2` | |
-| Name | 14 / 24 | 600 | 0 | `--ink` | |
-| Quote | 13 / 16 | 400 | 0 | `--ink-2` | |
-| Time | 12 / 24 | 400 | 0 | `--ink-3` | tabular |
-| Initials | 13 | 600 | 0.02em | `--ink` | upper |
-| Follow button | 13 | 600 | 0 | `#fff` on `--ink` | sentence |
-| Empty title | 24 / 32 | 700 | -0.02em | `--ink` | |
-
-Line heights are 16, 24, 32 or 40 so text sits on the 8px grid.
 
 ## Motion
 
@@ -201,6 +132,81 @@ Weight change from 500 to 400 is not animated. Only colour moves. Nothing loops.
 - [ ] Tenzin Doma shows Follow back. Oskar Lind shows Following.
 - [ ] The billing row reads "Studio plan renews on 12 October. $96.00 will be charged to the card ending 4421."
 - [ ] Stagger is 60ms per row. Dot shrink is 160ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: All is selected. 10 rows in three groups. 5 are unread: Anaya Rai, Mira Okafor, Tenzin Doma, Studio plan (Today) and Priya Nair (This week). The count reads "5 unread" with the 5 in red. The Unread segment shows a red 5 badge.
+2. Unread rows have an 8px red dot 8px from the left edge, 32px from the row top, and text at weight 500 in `--ink`. Read rows have no dot and text at weight 400 in `--ink-2`. Names are always 600 `--ink`.
+3. Tap any unread row. Its dot scales from 1 to 0 over 160ms. Its text goes to read style over 200ms. The count and badge drop by one.
+4. Tap Follow back on Tenzin Doma. The button turns from black fill to white with a 1px black inset ring and reads "Following". The row is also marked read. Tap again to undo the follow. Oskar Lind starts as "Following".
+5. Tap Mentions. The black indicator slides under Mentions over 240ms. Only mention rows show: Anaya Rai, Jonas Berg, Lena Park. Groups with no visible rows are hidden. The list scrolls to the top.
+6. Tap Unread. Only unread rows show. Tapping one marks it read, and 360ms later it leaves the list.
+7. Tap Mark all read. Visible unread dots clear one by one, 60ms apart. Hidden unread rows clear at once. When the last one is done, the count reads "No unread", the badge disappears, Mark all read becomes disabled grey, and a live region says "All notifications marked as read."
+8. If the filter is Unread when the list becomes empty, the groups hide 240ms later and the empty state shows: a 48px outlined tick square, "All caught up", one line of help, and a "Show all notifications" button.
+9. "Show all notifications" switches the filter to All and moves focus to the All segment.
+10. Group headers are sticky at the top of the scroll area.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #ffffff;      /* page and sticky headers */
+  --ink: #0a0a0a;     /* text, rules, indicator, buttons */
+  --ink-2: #525252;   /* read text, quotes */
+  --ink-3: #737373;   /* times, group labels, disabled */
+  --line: #e5e5e5;    /* row rules */
+  --fill: #f4f4f4;    /* avatar fill, row hover */
+  --red: #e10600;     /* unread only */
+  --focus: #0a0a0a;
+
+  /* type */
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* grid: 8px. Allowed steps 8 16 24 32 40 48 56 64 72 80 */
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 40px; --s6: 48px;
+
+  /* shape */
+  --r: 6px;          /* avatars, segmented, buttons */
+  --r-inner: 3px;    /* indicator, type badge, filter badge */
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --dot: 160ms;
+  --text: 200ms;
+  --slide: 240ms;
+  --stagger: 60ms;
+}
+```
+
+The only exceptions to the 8px grid are the 3px inset inside the segmented control and the 4px offset of the type badge. Every row, gap and padding is a multiple of 8.
+
+## Typography
+
+One family, Inter, with `cv11` and `ss01` on for single-storey a and straight digits.
+
+| Role | Size / line | Weight | Tracking | Colour | Case |
+| --- | --- | --- | --- | --- | --- |
+| Title | 32 / 40 | 700 | -0.025em | `--ink` | sentence |
+| Count | 13 / 24 | 400, number 600 | 0 | `--ink-2`, number `--red` | |
+| Mark all read | 14 / 48 | 600 | 0 | `--ink`, 1px underline at 4px | sentence |
+| Segment | 14 | 600 | 0 | `--ink`, selected `#fff` | sentence |
+| Filter badge | 11 / 16 | 400 | 0 | `#fff` on `--red` | tabular |
+| Group label | 11 / 16 | 600 | 0.1em | `--ink-3` | upper |
+| Row text unread | 14 / 24 | 500 | 0 | `--ink` | |
+| Row text read | 14 / 24 | 400 | 0 | `--ink-2` | |
+| Name | 14 / 24 | 600 | 0 | `--ink` | |
+| Quote | 13 / 16 | 400 | 0 | `--ink-2` | |
+| Time | 12 / 24 | 400 | 0 | `--ink-3` | tabular |
+| Initials | 13 | 600 | 0.02em | `--ink` | upper |
+| Follow button | 13 | 600 | 0 | `#fff` on `--ink` | sentence |
+| Empty title | 24 / 32 | 700 | -0.02em | `--ink` | |
+
+Line heights are 16, 24, 32 or 40 so text sits on the 8px grid.
 
 ## Implementation notes
 

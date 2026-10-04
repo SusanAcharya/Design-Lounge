@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A segmented control for a banking account page ("Fjord Bank"): a dark 36px track with 3px inset, and one ivory pill that slides to the chosen option. Three variants are shown in a 560px column — two segments (Personal / Business), three segments stretched to full width (Balance / Activity / Cards) and five compact segments (1W / 1M / 3M / 1Y / All) — each switching a small piece of content beneath it with a 140ms crossfade. The detail worth copying is the pill's travel: `left` and `width` transition over 260ms while a keyframe scales it to 1.08 × 0.9 at 40% of the journey and back, so it reads as a physical object being pushed rather than a highlight being re-drawn. Serif numerals for the money; a humanist grotesk for everything else.
-
-## Reference behaviour
-
-1. Initial state: three cards. Card 1: Personal selected; text "3 accounts · kr 212 480,15 combined" beside the control. Card 2: Balance selected; below, "kr 184 320,50" in Cormorant 44px with a green delta line. Card 3: 1M selected; a filled sparkline for the last month.
-2. Click another segment: its label turns `--pill-ink` (dark) and the previous turns `--ink-2`; the pill's `left` and `width` animate to the new button's box over 260ms; simultaneously the squash keyframe runs (scale 1,1 → 1.08,.9 at 40% → 1,1 at 100%). The content pane crossfades: the old pane fades out over 140ms while the new fades in.
-3. Hover a non-selected segment: label brightens to `--ink`. No pill movement.
-4. Keyboard: Tab lands on the selected segment only (roving tabindex). → / ↓ select the next segment (wrapping), ← / ↑ the previous, Home / End the first / last. Selection follows focus (radio semantics), so the pill slides on every key press.
-5. Focus-visible on a segment: a two-ring box-shadow (2px track colour, then 2px `--accent` coral).
-6. Card 2's Activity pane lists four transactions with negative amounts in coral; Cards pane shows two card tiles. Card 3's five panes are five different sparklines (the same 520×96 viewBox, different point sets).
-7. Resize: the pill is re-measured and re-placed without animation. Fonts loading late also re-place it.
 
 ## Structure
 
@@ -73,6 +65,70 @@ The fill path is the same points followed by `V96 H0 Z`.
 - Pane switching toggles `.on`; the `.panes` container's height follows the active pane, so a card may change height between panes — acceptable, no height animation.
 - Initial placement happens before first paint (script at end of body) and again on `document.fonts.ready`, because Karla's metrics differ from the fallback and shift every button's width.
 
+## Motion
+
+| Element        | Trigger          | Property        | From → To                          | Duration | Easing    | Notes |
+|----------------|------------------|-----------------|------------------------------------|---------:|-----------|-------|
+| `.pill`        | select           | left, width     | old button box → new button box    | 260ms    | `--ease`  | measured with `offsetLeft` / `offsetWidth` |
+| `.pill`        | select           | transform (keyframes `squash`) | `scale(1,1)` → `scale(1.08,.9)` @40% → `scale(1,1)` | 260ms | `--ease` | restarted by removing/re-adding `.go` after a reflow |
+| segment label  | select / hover   | color           | `--ink-2` ↔ `--pill-ink` / `--ink` | 140ms    | `--ease`  | |
+| `.pane`        | select           | opacity         | 1 → 0 (old), 0 → 1 (new)           | 140ms    | `--ease`  | old pane's `visibility` flips after 140ms |
+| `.pill`        | resize / fonts   | left, width     | re-measured                        | 0        | —         | no `.go`; the `transition` still applies unless you disable it — acceptable |
+
+Reduced motion: all transitions 1ms and the squash animation removed (`animation: none`).
+
+## States
+
+- **Segment unselected:** `--ink-2`, transparent. **Hover:** `--ink`. **Selected (`aria-checked="true"`):** `--pill-ink` over the pill.
+- **Focus-visible:** `box-shadow: 0 0 0 2px var(--track), 0 0 0 4px var(--accent)`; the ring is on the button, above the pill (`z-index:1`).
+- **Pill:** always exactly one, always under the selected segment, never hidden.
+- **Disabled (not shown):** if you need it, `--ink-3` label with `cursor:default` and skip it in arrow-key traversal.
+- **Negative amount:** `--accent`. **Positive delta:** `--positive`.
+
+## Accessibility
+
+- Pattern: a radio group. Container `role="radiogroup" aria-label="Account view"`; options `role="radio" aria-checked="true|false"`.
+- Roving tabindex: the checked option has `tabindex="0"`, others `-1`. Arrow keys move **and** select (matching native radios); Home/End jump.
+- The pill is `aria-hidden="true"`; state is conveyed by `aria-checked` only.
+- Content panes: inactive panes are `visibility:hidden` so their contents leave the accessibility tree and tab order. If the panes contain focusable content, prefer `role="tablist"` / `role="tab"` / `role="tabpanel"` semantics instead — the visual is identical.
+- Sparklines have `aria-label`s ("Balance, last month"); treat them as decorative if the numbers are stated elsewhere.
+- Contrast: `--pill-ink` on `--pill` 15:1; `--ink-2` on `--track` 7.4:1; `--ink-3` on `--panel` 3.9:1 (captions only).
+- Hit targets: segments 30px tall inside the 36px track (26px in the compact variant) — for touch, bump `--seg-h` to 40px.
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- 1024–1279: unchanged.
+- 768–1023: column `min(560px, calc(100vw − 48px))`; the 2-segment card stacks its text under the control.
+- < 640: all controls `display:grid` (full width); the 5-segment variant's labels drop to 12px; `--seg-h: 40px` for touch.
+
+## Acceptance checklist
+
+- [ ] Track is 36px tall (32px compact), 3px padding, 10px radius, 1px `#2f2b26` border on `#26231f`.
+- [ ] Pill is `#f2ede4`, 7px radius, spans exactly the selected button's `offsetLeft`/`offsetWidth`.
+- [ ] Selecting a segment slides the pill over 260ms `cubic-bezier(.2,.7,.2,1)` and the squash reaches `scale(1.08,.9)` at 40%.
+- [ ] Labels transition colour over 140ms; selected label is dark on the pill.
+- [ ] Only the selected segment is in the Tab order; → ← ↓ ↑ Home End move selection with wrapping.
+- [ ] Focus ring is a 2px track-coloured gap plus 2px coral ring.
+- [ ] Each control switches its own pane group; panes crossfade over 140ms and hidden panes are `visibility:hidden`.
+- [ ] Three variants render: 2 segments inline, 3 segments full-width, 5 segments compact.
+- [ ] Pill is re-measured on `resize` and after `document.fonts.ready`.
+- [ ] Reduced motion: no squash, no slide; state changes still happen.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: three cards. Card 1: Personal selected; text "3 accounts · kr 212 480,15 combined" beside the control. Card 2: Balance selected; below, "kr 184 320,50" in Cormorant 44px with a green delta line. Card 3: 1M selected; a filled sparkline for the last month.
+2. Click another segment: its label turns `--pill-ink` (dark) and the previous turns `--ink-2`; the pill's `left` and `width` animate to the new button's box over 260ms; simultaneously the squash keyframe runs (scale 1,1 → 1.08,.9 at 40% → 1,1 at 100%). The content pane crossfades: the old pane fades out over 140ms while the new fades in.
+3. Hover a non-selected segment: label brightens to `--ink`. No pill movement.
+4. Keyboard: Tab lands on the selected segment only (roving tabindex). → / ↓ select the next segment (wrapping), ← / ↑ the previous, Home / End the first / last. Selection follows focus (radio semantics), so the pill slides on every key press.
+5. Focus-visible on a segment: a two-ring box-shadow (2px track colour, then 2px `--accent` coral).
+6. Card 2's Activity pane lists four transactions with negative amounts in coral; Cards pane shows two card tiles. Card 3's five panes are five different sparklines (the same 520×96 viewBox, different point sets).
+7. Resize: the pill is re-measured and re-placed without animation. Fonts loading late also re-place it.
+
 ## Tokens
 
 ```css
@@ -124,56 +180,6 @@ The fill path is the same points followed by `V96 H0 Z`.
 | Meta / list       | Karla              | 13px | 400    | 1.5         | 0        | amounts 500 `tabular-nums` |
 | Card tile number  | Cormorant Garamond | 16px | 600    | 1.3         | +0.06em  | |
 | Header meta       | Karla              | 13px | 400    | 1.5         | 0        | `--ink-3` |
-
-## Motion
-
-| Element        | Trigger          | Property        | From → To                          | Duration | Easing    | Notes |
-|----------------|------------------|-----------------|------------------------------------|---------:|-----------|-------|
-| `.pill`        | select           | left, width     | old button box → new button box    | 260ms    | `--ease`  | measured with `offsetLeft` / `offsetWidth` |
-| `.pill`        | select           | transform (keyframes `squash`) | `scale(1,1)` → `scale(1.08,.9)` @40% → `scale(1,1)` | 260ms | `--ease` | restarted by removing/re-adding `.go` after a reflow |
-| segment label  | select / hover   | color           | `--ink-2` ↔ `--pill-ink` / `--ink` | 140ms    | `--ease`  | |
-| `.pane`        | select           | opacity         | 1 → 0 (old), 0 → 1 (new)           | 140ms    | `--ease`  | old pane's `visibility` flips after 140ms |
-| `.pill`        | resize / fonts   | left, width     | re-measured                        | 0        | —         | no `.go`; the `transition` still applies unless you disable it — acceptable |
-
-Reduced motion: all transitions 1ms and the squash animation removed (`animation: none`).
-
-## States
-
-- **Segment unselected:** `--ink-2`, transparent. **Hover:** `--ink`. **Selected (`aria-checked="true"`):** `--pill-ink` over the pill.
-- **Focus-visible:** `box-shadow: 0 0 0 2px var(--track), 0 0 0 4px var(--accent)`; the ring is on the button, above the pill (`z-index:1`).
-- **Pill:** always exactly one, always under the selected segment, never hidden.
-- **Disabled (not shown):** if you need it, `--ink-3` label with `cursor:default` and skip it in arrow-key traversal.
-- **Negative amount:** `--accent`. **Positive delta:** `--positive`.
-
-## Accessibility
-
-- Pattern: a radio group. Container `role="radiogroup" aria-label="Account view"`; options `role="radio" aria-checked="true|false"`.
-- Roving tabindex: the checked option has `tabindex="0"`, others `-1`. Arrow keys move **and** select (matching native radios); Home/End jump.
-- The pill is `aria-hidden="true"`; state is conveyed by `aria-checked` only.
-- Content panes: inactive panes are `visibility:hidden` so their contents leave the accessibility tree and tab order. If the panes contain focusable content, prefer `role="tablist"` / `role="tab"` / `role="tabpanel"` semantics instead — the visual is identical.
-- Sparklines have `aria-label`s ("Balance, last month"); treat them as decorative if the numbers are stated elsewhere.
-- Contrast: `--pill-ink` on `--pill` 15:1; `--ink-2` on `--track` 7.4:1; `--ink-3` on `--panel` 3.9:1 (captions only).
-- Hit targets: segments 30px tall inside the 36px track (26px in the compact variant) — for touch, bump `--seg-h` to 40px.
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- 1024–1279: unchanged.
-- 768–1023: column `min(560px, calc(100vw − 48px))`; the 2-segment card stacks its text under the control.
-- < 640: all controls `display:grid` (full width); the 5-segment variant's labels drop to 12px; `--seg-h: 40px` for touch.
-
-## Acceptance checklist
-
-- [ ] Track is 36px tall (32px compact), 3px padding, 10px radius, 1px `#2f2b26` border on `#26231f`.
-- [ ] Pill is `#f2ede4`, 7px radius, spans exactly the selected button's `offsetLeft`/`offsetWidth`.
-- [ ] Selecting a segment slides the pill over 260ms `cubic-bezier(.2,.7,.2,1)` and the squash reaches `scale(1.08,.9)` at 40%.
-- [ ] Labels transition colour over 140ms; selected label is dark on the pill.
-- [ ] Only the selected segment is in the Tab order; → ← ↓ ↑ Home End move selection with wrapping.
-- [ ] Focus ring is a 2px track-coloured gap plus 2px coral ring.
-- [ ] Each control switches its own pane group; panes crossfade over 140ms and hidden panes are `visibility:hidden`.
-- [ ] Three variants render: 2 segments inline, 3 segments full-width, 5 segments compact.
-- [ ] Pill is re-measured on `resize` and after `document.fonts.ready`.
-- [ ] Reduced motion: no squash, no slide; state changes still happen.
 
 ## Implementation notes
 

@@ -4,25 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, keep the two-plate idea: the kit's ink for the key plate and its accent for the offset plate.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A 404 page for a small riso print studio, Inkwell Print Co. The number 404 is set huge in a serif, printed twice: a fluoro pink plate sits 11px right and 8px up from the black plate, like a sheet that went through the press out of register. The middle 0 is printed as a halftone. A torn paper strip crosses the numerals with "Page not found × misprint" in mono. Under it, one sentence says sorry in plain words. On the right, a search field is already filled from the broken address and shows live matches from the site map. Four popular links and a "Report a broken link" button finish the page. The detail worth copying is that the page helps: it guesses the search, and the report confirms inline without leaving.
 
 This is not `terminal-404`. That piece is a dark command line. This one is a printed page.
-
-## Reference behaviour
-
-1. The first frame shows the composition, the apology, and the search field holding "zine fair". Three matches are already listed: "Zine fair 2026, table list", "Spring zine fair 2025, photos", "Zine fair stall applications". The count line says "3 pages match".
-2. A hint under the field says "We filled this in from the address you followed." After the first edit it says "Results update as you type. Press Enter to open the first one."
-3. On load the pink plate slides from no offset to its offset, `translate(11px,-8px) rotate(-0.6deg)`, over 900ms after 150ms. The strip text slides in from -40px over 1100ms after 300ms. Nothing loops.
-4. Typing filters the site map on every keystroke. A page matches when every word typed appears in its title, section or path. Show at most 4 matches. Matched words get a pink highlighter underline.
-5. Arrow Down and Arrow Up move the active match. The active row gets a `--sheet` background and a 3px pink bar on its left. Enter opens the active match, or the first match when none is active.
-6. Opening a match sets the status line to "Opening How we mix fluoro pink at /journal/mixing-fluoro-pink". In a product, navigate.
-7. When nothing matches, one row says "No pages match “xyzzy”. Try workshop, paper or ink." The count line says "No matches".
-8. An empty field hides the list. The clear button (×) appears only when the field has text. Escape clears the field.
-9. The "Most visited" list has 4 numbered links: Riso basics, a Saturday class; Paper packs and offcuts; Zine fair 2026, table list; Book the studio by the hour.
-10. "Report a broken link" turns into a confirmation in place: a pink circle stamp with a tick, and "Thanks. Report TP-0419 logged for /journal/spring-zine-fair-2025. We fix broken links within two working days." The stamp lands from 1.4 scale over 260ms. Focus moves to the confirmation.
-11. Registration marks sit in the two top corners of the page, one black, one pink.
 
 ## Structure
 
@@ -55,58 +43,6 @@ This is not `terminal-404`. That piece is a dark command line. This one is a pri
 - The right column is a `section` labelled "Find your way". It holds the search block, the popular list, and the report block.
 - The search input is a `role="combobox"` that controls a `ul role="listbox"`. A `p role="status"` holds the count and the opening message.
 - `main` has `overflow-x: clip` so the strip can bleed into the page padding without causing sideways scroll.
-
-## Tokens
-
-```css
-:root {
-  --paper: #f2ebdd;       /* page */
-  --sheet: #f8f3e8;       /* search field, torn strip, active row */
-  --ink: #161412;         /* key plate, text, rules */
-  --ink-2: #4a443c;       /* secondary text */
-  --ink-3: #6b6358;       /* placeholder, numbers */
-  --rule: #d8cdb8;        /* light rules between matches */
-  --pink: #ff4fa3;        /* fluoro plate, field offset, stamp */
-  --pink-soft: #ffd3e8;   /* highlighter */
-  --focus: #161412;
-
-  --serif: "Fraunces", Georgia, serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  --step-404: 320px;      /* display numerals */
-  --step-h1: 36px;
-  --step-row: 17px;       /* match titles; popular links 18px */
-  --step-input: 18px;
-  --step-mono: 12px;
-
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
-  --space-6: 24px; --space-8: 32px; --space-14: 56px; --space-16: 64px;
-
-  --r: 2px;                       /* field and buttons, nearly square */
-  --offset: 4px 4px 0 var(--pink); /* the field's printed shadow */
-
-  --expo: cubic-bezier(.16,1,.3,1);
-  --ease: cubic-bezier(.2,.7,.2,1);
-}
-```
-
-Paper grain is two dot patterns on the body: black dots at 7% on a 4px grid and pink dots at 6% on a 7px grid, offset 2px 3px.
-
-## Typography
-
-| Role | Family | Size | Weight | Line height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Numerals | Fraunces, opsz 144 | 320px | 800 | 0.86 | -0.05em | — |
-| Apology h1 | Fraunces | 36px | 400, italic for the second half | 1.12 | -0.02em | sentence |
-| Wordmark | Fraunces | 22px | 600, "Print Co." italic 400 | 1.2 | -0.02em | as written |
-| Match title | Fraunces | 17px | 600 | 1.25 | 0 | sentence |
-| Popular link | Fraunces | 18px | 400 | 1.25 | 0 | sentence |
-| Search input | Fraunces | 18px | 400 | 52px | 0 | — |
-| Nav, labels, section tags | IBM Plex Mono | 11–12px | 500–600 | 1.2 | 0.08em | upper |
-| Paths, hint, status | IBM Plex Mono | 12px | 400 | 1.5 | 0 | lower |
-| Torn strip | IBM Plex Mono | 13px | 600 | 1 | 0.24em | upper |
-
-The h1 is capped at 20ch. The italic half carries the pink highlighter: `box-shadow: inset 0 -0.32em 0 var(--pink-soft)`.
 
 ## Motion
 
@@ -175,6 +111,76 @@ No loops. The misregistration is the one moment of delight.
 - [ ] The middle 0 is a 6px halftone and sits 6px low with a 2deg tilt.
 - [ ] The torn strip is rotated -3.5deg and reads "Page not found × misprint".
 - [ ] The report id is TP-0419.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the composition, the apology, and the search field holding "zine fair". Three matches are already listed: "Zine fair 2026, table list", "Spring zine fair 2025, photos", "Zine fair stall applications". The count line says "3 pages match".
+2. A hint under the field says "We filled this in from the address you followed." After the first edit it says "Results update as you type. Press Enter to open the first one."
+3. On load the pink plate slides from no offset to its offset, `translate(11px,-8px) rotate(-0.6deg)`, over 900ms after 150ms. The strip text slides in from -40px over 1100ms after 300ms. Nothing loops.
+4. Typing filters the site map on every keystroke. A page matches when every word typed appears in its title, section or path. Show at most 4 matches. Matched words get a pink highlighter underline.
+5. Arrow Down and Arrow Up move the active match. The active row gets a `--sheet` background and a 3px pink bar on its left. Enter opens the active match, or the first match when none is active.
+6. Opening a match sets the status line to "Opening How we mix fluoro pink at /journal/mixing-fluoro-pink". In a product, navigate.
+7. When nothing matches, one row says "No pages match “xyzzy”. Try workshop, paper or ink." The count line says "No matches".
+8. An empty field hides the list. The clear button (×) appears only when the field has text. Escape clears the field.
+9. The "Most visited" list has 4 numbered links: Riso basics, a Saturday class; Paper packs and offcuts; Zine fair 2026, table list; Book the studio by the hour.
+10. "Report a broken link" turns into a confirmation in place: a pink circle stamp with a tick, and "Thanks. Report TP-0419 logged for /journal/spring-zine-fair-2025. We fix broken links within two working days." The stamp lands from 1.4 scale over 260ms. Focus moves to the confirmation.
+11. Registration marks sit in the two top corners of the page, one black, one pink.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f2ebdd;       /* page */
+  --sheet: #f8f3e8;       /* search field, torn strip, active row */
+  --ink: #161412;         /* key plate, text, rules */
+  --ink-2: #4a443c;       /* secondary text */
+  --ink-3: #6b6358;       /* placeholder, numbers */
+  --rule: #d8cdb8;        /* light rules between matches */
+  --pink: #ff4fa3;        /* fluoro plate, field offset, stamp */
+  --pink-soft: #ffd3e8;   /* highlighter */
+  --focus: #161412;
+
+  --serif: "Fraunces", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --step-404: 320px;      /* display numerals */
+  --step-h1: 36px;
+  --step-row: 17px;       /* match titles; popular links 18px */
+  --step-input: 18px;
+  --step-mono: 12px;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-14: 56px; --space-16: 64px;
+
+  --r: 2px;                       /* field and buttons, nearly square */
+  --offset: 4px 4px 0 var(--pink); /* the field's printed shadow */
+
+  --expo: cubic-bezier(.16,1,.3,1);
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+```
+
+Paper grain is two dot patterns on the body: black dots at 7% on a 4px grid and pink dots at 6% on a 7px grid, offset 2px 3px.
+
+## Typography
+
+| Role | Family | Size | Weight | Line height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Numerals | Fraunces, opsz 144 | 320px | 800 | 0.86 | -0.05em | — |
+| Apology h1 | Fraunces | 36px | 400, italic for the second half | 1.12 | -0.02em | sentence |
+| Wordmark | Fraunces | 22px | 600, "Print Co." italic 400 | 1.2 | -0.02em | as written |
+| Match title | Fraunces | 17px | 600 | 1.25 | 0 | sentence |
+| Popular link | Fraunces | 18px | 400 | 1.25 | 0 | sentence |
+| Search input | Fraunces | 18px | 400 | 52px | 0 | — |
+| Nav, labels, section tags | IBM Plex Mono | 11–12px | 500–600 | 1.2 | 0.08em | upper |
+| Paths, hint, status | IBM Plex Mono | 12px | 400 | 1.5 | 0 | lower |
+| Torn strip | IBM Plex Mono | 13px | 600 | 1 | 0.24em | upper |
+
+The h1 is capped at 20ch. The italic half carries the pink highlighter: `box-shadow: inset 0 -0.32em 0 var(--pink-soft)`.
 
 ## Implementation notes
 

@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. A save confirmation stays. A failure is a different piece.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The screen after a bill is saved. The first frame is already the success, because that is the point of the piece. A wash in the success colour holds one word, Saved., at 56px in the ink colour, then a sentence in the on-soft success ink, then one primary button back to the month. It does not fade out. It is not a toast in the corner. A toast is how a failure gets missed, and this library already refuses a toast for a failed load. A success that matters gets the same respect: it stays until the person leaves. The page grain sits behind the banner. The banner itself is flat.
-
-## Reference behaviour
-
-1. The first frame shows the banner. The heading is Saved. The sentence is "The NEA bill is in Asar. It stays on this screen until you leave."
-2. The banner is `role="status"`. It is visible without a click.
-3. The button reads "Back to Asar". Clicking it sets the label to "Month opened" and disables it at opacity 0.55.
-4. The banner does not unmount, slide away, or start a timer.
-5. There is no second button. Undo, if the product has it, replaces this button. It does not sit beside it on this frame.
-6. No motion. Reduced motion has nothing to remove.
-7. Do not play a checkmark animation. The word is the confirmation.
 
 ## Structure
 
@@ -33,35 +25,6 @@ padding 48px 64px
 - The banner is one region. The heading is the only `h1`, and it uses the page ink so the word stays the answer. The sentence uses the on-soft ink.
 - The button is inside the banner, under the sentence.
 - Nothing else is on the page. Do not show the form that was just saved. That form is the previous screen.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4ead6;
-  --ink: #1c2744;
-  --primary: #c8102e;
-  --primary-ink: #fffdf8;
-  --focus: #c8102e;
-  --success-soft: #d6d8c2;
-  --success-on-soft: #1b5e3d;
-  --display: "Noto Serif Devanagari", Georgia, serif;
-  --sans: "Mukta", system-ui, sans-serif;
-}
-```
-
-Sentence text is `--success-on-soft` on `--success-soft`. The heading stays `--ink` on that same wash. Both pairs clear 4.5. Do not invent a green.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Label | Mukta | 12px | 600 | 0.06em | `--success-on-soft` |
-| Answer | Noto Serif Devanagari | 56px | 600 | -0.02em | `--ink` |
-| Sentence | Mukta | 16px | 400 | 0 | `--success-on-soft` |
-| Button | Mukta | 16px | 600 | 0 | `--primary-ink` |
-
-Saved. is a Latin word in a Devanagari display face. That is allowed: the face contains the Latin letters. Do not switch the heading to a third family to "fix" it.
 
 ## Motion
 
@@ -115,6 +78,49 @@ None. A banner that fades after 2 seconds is a toast. Reduced motion has nothing
 - [ ] The banner remains after the click.
 - [ ] No timer, no checkmark animation, no second button.
 - [ ] The banner max-width is 720px, the same column as the list screens.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the banner. The heading is Saved. The sentence is "The NEA bill is in Asar. It stays on this screen until you leave."
+2. The banner is `role="status"`. It is visible without a click.
+3. The button reads "Back to Asar". Clicking it sets the label to "Month opened" and disables it at opacity 0.55.
+4. The banner does not unmount, slide away, or start a timer.
+5. There is no second button. Undo, if the product has it, replaces this button. It does not sit beside it on this frame.
+6. No motion. Reduced motion has nothing to remove.
+7. Do not play a checkmark animation. The word is the confirmation.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4ead6;
+  --ink: #1c2744;
+  --primary: #c8102e;
+  --primary-ink: #fffdf8;
+  --focus: #c8102e;
+  --success-soft: #d6d8c2;
+  --success-on-soft: #1b5e3d;
+  --display: "Noto Serif Devanagari", Georgia, serif;
+  --sans: "Mukta", system-ui, sans-serif;
+}
+```
+
+Sentence text is `--success-on-soft` on `--success-soft`. The heading stays `--ink` on that same wash. Both pairs clear 4.5. Do not invent a green.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Label | Mukta | 12px | 600 | 0.06em | `--success-on-soft` |
+| Answer | Noto Serif Devanagari | 56px | 600 | -0.02em | `--ink` |
+| Sentence | Mukta | 16px | 400 | 0 | `--success-on-soft` |
+| Button | Mukta | 16px | 600 | 0 | `--primary-ink` |
+
+Saved. is a Latin word in a Devanagari display face. That is allowed: the face contains the Latin letters. Do not switch the heading to a third family to "fix" it.
 
 ## Implementation notes
 

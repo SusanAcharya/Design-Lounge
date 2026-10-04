@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from linear.app: the "Intake" feature band, where a chat thread panel overlaps a dimmed, edge-faded issue board, so the page shows conversation turning into work. This version is for an invented issue tracker, Tracewell, in cool graphite with a single mint accent. It is fully live: press Send on the prefilled "@Tracewell file these and assign to me", a bot reads the thread, and two issues slide into the Todo column behind the panel, with chips in the reply that light up their cards. The detail worth copying is the two-layer scene: a crisp foreground UI over a background UI that is masked away at its right and bottom edges, so it reads as "the product, continuing beyond the frame".
-
-## Reference behaviour
-
-1. First frame: a 46px two-line heading "Intake that / files itself" on the left; on the right an 18px lede with a bold first sentence and a "How intake works →" link.
-2. Below, the scene: a board with four 252px columns (Backlog 12, Todo 7, In progress 3, In review 2) starting 260px from the left, masked to transparent from 62% → 98% across and 58% → 96% down, at 90% opacity.
-3. A 392px thread panel floats at the left over the Backlog column with a deep shadow. Header "# Thread #mobile-feedback". Three messages from Maya Okafor, Dev Patel and Lu Chen sit at the bottom of the panel (chat order, bottom-aligned).
-4. The composer shows a draft: a mint "@Tracewell" mention pill, then "file these and assign to me". The mint Send button pulses a soft ring every 2.2s, so the viewer knows where to press.
-5. Pressing Send: the pulse stops, the button disables, the draft becomes a grey placeholder "Message #mobile-feedback", and "You 10:46" appears with the same text (rises 8px, 400ms).
-6. After 500ms a Tracewell message appears with a shimmering "Reading 3 messages…" (gradient text sweep, 1.2s loop).
-7. After 1100ms the shimmer is replaced by "Filed 2 issues in Mobile, assigned to you, labelled Bug." and two chips: "TRW-412 Offline banner persists after reconnect" and "TRW-413 Upload retry is inert until relaunch".
-8. For each chip, a card is inserted at the top of Todo: the slot opens from 0 to its height (grid-rows 0fr → 1fr, 450ms) while the card drops 10px and scales from 0.97 (600ms) with a mint border and 3px mint ring. Cards arrive 320ms apart. The Todo count goes 7 → 8 → 9 and turns mint.
-9. 1.6s later the new cards settle to normal borders, the count returns to grey, and a "Reset demo" button fades into the thread header.
-10. Hovering or focusing a chip outlines its card on the board in mint; clicking flashes it for 900ms.
-11. The thread keeps at most four messages; older ones drop off the top.
-12. Reset restores the original messages, Todo cards, count and draft, re-enables Send and moves focus to it.
-13. With reduced motion, delays shrink to 120ms, nothing slides or shimmers, and the outcome is identical.
 
 ## Structure
 
@@ -51,51 +37,6 @@ Studied from linear.app: the "Intake" feature band, where a chat thread panel ov
 - `.board` is `role="region"` labelled "Mobile team board": a four-column grid of `.col`, each a header row plus `article.issue` cards. Todo's cards live in `#todo` so new ones can be prepended.
 - `.thread` is `role="region"` labelled "Thread in studio-feedback": header, `ol.msgs` (live region), and a `form.composer` with the draft `div`, decorative tool icons and a submit button.
 - New cards are wrapped in a `.slot` whose grid rows animate from `0fr` to `1fr`, so the column below slides down rather than jumping.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0D0F12;        /* page */
-  --panel: #15181D;     /* thread */
-  --raised: #1B1F25;    /* composer, chips, reset */
-  --card: #171A1F;      /* board cards */
-  --line: #262B33;      /* borders */
-  --line-2: #1F242B;    /* inner rules */
-  --text: #EEF0F3;
-  --text-2: #A3ABB7;    /* body copy, lede */
-  --text-3: #6C7480;    /* times, ids, counts */
-  --mint: #5BE3B0;      /* the only accent: send, mention, bot, new items */
-  --mint-ink: #0B2A1F;  /* text on mint */
-  --mint-tint: rgba(91,227,176,.12);
-
-  /* label dots: semantic, 7px only */
-  --bug: #EF6F6C; --design: #6FA8FF; --backend: #E6B450;
-  --perf: #8BD3E6; --feature: #B79CFF; --android: #A4D96C;
-
-  --sans: "Onest", system-ui, sans-serif;
-  --mono: "Fragment Mono", ui-monospace, monospace;
-
-  --r-card: 8px; --r-panel: 12px; --r-ctl: 7px;
-  --shadow-panel: 0 30px 60px -20px rgba(0,0,0,.7), 0 0 0 1px rgba(0,0,0,.4);
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Heading | Onest | 46px / 1.04 | 500 | -0.035em | `--text` |
-| Lede | Onest | 18px / 1.45 | 400, lead 500 | 0 | `--text-2`, lead `--text` |
-| Column header | Onest | 13px | 500 | 0 | `--text`; count Fragment Mono 12px `--text-3` |
-| Card id | Fragment Mono | 12px | 400 | 0 | `--text-3` |
-| Card title | Onest | 13px | 500 | 0 | `--text`, one line, ellipsis |
-| Label chip | Onest | 11px | 400 | 0 | `--text-2` |
-| Message name | Onest | 13px | 600 | 0 | `--text`; time 12px `--text-3` |
-| Message body | Onest | 13.5px / 1.45 | 400 | 0 | `--text-2` |
-| Send | Onest | 13px | 600 | 0 | `--mint-ink` on `--mint` |
 
 ## Motion
 
@@ -164,6 +105,71 @@ The shimmer's linear timing is fine: it is a texture, not a move.
 - [ ] Board columns Backlog 12, Todo 7, In progress 3, In review 2.
 - [ ] Filed issues TRW-412 "Offline banner persists after reconnect" (Bug, Android) and TRW-413 "Upload retry is inert until relaunch" (Bug, Uploads); Todo becomes 9.
 - [ ] Accent `#5BE3B0` on `#0D0F12`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a 46px two-line heading "Intake that / files itself" on the left; on the right an 18px lede with a bold first sentence and a "How intake works →" link.
+2. Below, the scene: a board with four 252px columns (Backlog 12, Todo 7, In progress 3, In review 2) starting 260px from the left, masked to transparent from 62% → 98% across and 58% → 96% down, at 90% opacity.
+3. A 392px thread panel floats at the left over the Backlog column with a deep shadow. Header "# Thread #mobile-feedback". Three messages from Maya Okafor, Dev Patel and Lu Chen sit at the bottom of the panel (chat order, bottom-aligned).
+4. The composer shows a draft: a mint "@Tracewell" mention pill, then "file these and assign to me". The mint Send button pulses a soft ring every 2.2s, so the viewer knows where to press.
+5. Pressing Send: the pulse stops, the button disables, the draft becomes a grey placeholder "Message #mobile-feedback", and "You 10:46" appears with the same text (rises 8px, 400ms).
+6. After 500ms a Tracewell message appears with a shimmering "Reading 3 messages…" (gradient text sweep, 1.2s loop).
+7. After 1100ms the shimmer is replaced by "Filed 2 issues in Mobile, assigned to you, labelled Bug." and two chips: "TRW-412 Offline banner persists after reconnect" and "TRW-413 Upload retry is inert until relaunch".
+8. For each chip, a card is inserted at the top of Todo: the slot opens from 0 to its height (grid-rows 0fr → 1fr, 450ms) while the card drops 10px and scales from 0.97 (600ms) with a mint border and 3px mint ring. Cards arrive 320ms apart. The Todo count goes 7 → 8 → 9 and turns mint.
+9. 1.6s later the new cards settle to normal borders, the count returns to grey, and a "Reset demo" button fades into the thread header.
+10. Hovering or focusing a chip outlines its card on the board in mint; clicking flashes it for 900ms.
+11. The thread keeps at most four messages; older ones drop off the top.
+12. Reset restores the original messages, Todo cards, count and draft, re-enables Send and moves focus to it.
+13. With reduced motion, delays shrink to 120ms, nothing slides or shimmers, and the outcome is identical.
+
+## Tokens
+
+```css
+:root {
+  --bg: #0D0F12;        /* page */
+  --panel: #15181D;     /* thread */
+  --raised: #1B1F25;    /* composer, chips, reset */
+  --card: #171A1F;      /* board cards */
+  --line: #262B33;      /* borders */
+  --line-2: #1F242B;    /* inner rules */
+  --text: #EEF0F3;
+  --text-2: #A3ABB7;    /* body copy, lede */
+  --text-3: #6C7480;    /* times, ids, counts */
+  --mint: #5BE3B0;      /* the only accent: send, mention, bot, new items */
+  --mint-ink: #0B2A1F;  /* text on mint */
+  --mint-tint: rgba(91,227,176,.12);
+
+  /* label dots: semantic, 7px only */
+  --bug: #EF6F6C; --design: #6FA8FF; --backend: #E6B450;
+  --perf: #8BD3E6; --feature: #B79CFF; --android: #A4D96C;
+
+  --sans: "Onest", system-ui, sans-serif;
+  --mono: "Fragment Mono", ui-monospace, monospace;
+
+  --r-card: 8px; --r-panel: 12px; --r-ctl: 7px;
+  --shadow-panel: 0 30px 60px -20px rgba(0,0,0,.7), 0 0 0 1px rgba(0,0,0,.4);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Heading | Onest | 46px / 1.04 | 500 | -0.035em | `--text` |
+| Lede | Onest | 18px / 1.45 | 400, lead 500 | 0 | `--text-2`, lead `--text` |
+| Column header | Onest | 13px | 500 | 0 | `--text`; count Fragment Mono 12px `--text-3` |
+| Card id | Fragment Mono | 12px | 400 | 0 | `--text-3` |
+| Card title | Onest | 13px | 500 | 0 | `--text`, one line, ellipsis |
+| Label chip | Onest | 11px | 400 | 0 | `--text-2` |
+| Message name | Onest | 13px | 600 | 0 | `--text`; time 12px `--text-3` |
+| Message body | Onest | 13.5px / 1.45 | 400 | 0 | `--text-2` |
+| Send | Onest | 13px | 600 | 0 | `--mint-ink` on `--mint` |
 
 ## Implementation notes
 

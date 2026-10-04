@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-screen navigation for a design studio's mobile site ("Marrow"). The header stays put while everything else changes: the three-line hamburger folds into an X, the page body colour animates from warm cream to deep navy, the underlying page fades and shrinks 2%, and five oversized Instrument Serif links slide up out of clipped rows one after another. Below them a row of small utility links and a pill-shaped language switch fade in last. The detail worth copying is that nothing is a separate panel; the page itself becomes the menu by changing colour, so there is no sheet edge and no scrim.
-
-## Reference behaviour
-
-1. Initial state: cream page. Header row (60px, starting at 54px from the top) holds the wordmark "Marrow" (30px serif) on the left and a 44px hamburger on the right. Below: a kicker, a 52px serif headline with an orange italic word, one paragraph and a three-row "Selected work" list.
-2. Tap the hamburger: `body` gets `.open`. Over 420ms the background goes `#efe9df → #14213d` and text goes dark → cream. Over 240ms the top and bottom hamburger lines move to the middle (`top: 21px`) and rotate ±45°; the middle line fades and shrinks to 20% width over 160ms.
-3. Simultaneously the page content fades to 0 and scales to .98 over 420ms and becomes `inert`.
-4. Menu links (Work, Studio, Journal, Shop, Contact; 64px serif, superscript counts on Work and Journal) rise from `translateY(110%)` to `0` over 520ms `--ease-out`, each delayed 55ms more than the last (55, 110, 165, 220, 275ms). Each `<li>` has `overflow: hidden` so the link appears to rise out of the row.
-5. The footer block (small links row + language switch) fades in and rises 12px over 420ms with a 330ms delay.
-6. Focus moves to the first menu link 120ms after opening. Escape or the X closes the menu; focus returns to the hamburger.
-7. Tap a menu link: the menu closes (demo has no routing).
-8. Tap EN / NO / DE: the white thumb slides to the pressed segment over 240ms with the sheet easing; `aria-pressed` updates.
-9. Closing reverses everything with the same durations and no stagger; the menu becomes `visibility: hidden` after the 520ms link transition ends.
 
 ## Structure
 
@@ -54,6 +44,80 @@ gutter 24px both states · links 64/1.08, gap 4 · switch 3×52×34 in a 1px pil
 - Menu links: "Work" (sup 24), "Studio", "Journal" (sup 03), "Shop", "Contact".
 - Small links: "Careers", "Press kit", "Newsletter", "Privacy".
 - Language row: label "Language"; segments "EN" (pressed), "NO", "DE" with matching `lang` attributes.
+
+## Motion
+
+| Element                 | Trigger  | Property               | From → To                              | Duration | Easing         | Delay |
+|-------------------------|----------|------------------------|----------------------------------------|---------:|----------------|-------|
+| `body`                  | open     | background, color      | `#efe9df`/`#1c1a17` → `#14213d`/`#efe9df` | 420ms | `--ease`       | 0 |
+| burger line 1 / 3       | open     | top, rotate            | 15px/27px → 21px, 0 → ±45°             | 240ms    | `--ease`       | 0 |
+| burger line 2           | open     | opacity, scaleX        | 1, 1 → 0, .2                           | 160ms    | `--ease`       | 0 |
+| `.page`                 | open     | opacity, scale         | 1, 1 → 0, .98                          | 420ms    | `--ease`       | 0 |
+| `.links a` (n = 1…5)    | open     | translateY, opacity    | 110%, 0 → 0, 1                         | 520ms / 160ms | `--ease-out` / linear | n × 55ms |
+| `.foot`                 | open     | opacity, translateY    | 0, 12px → 1, 0                         | 420ms    | `--ease` / `--ease-out` | 330ms |
+| `.menu`                 | close    | visibility             | visible → hidden                       | 0ms      | —              | 520ms |
+| `.seg .thumb`           | segment tap | translateX          | 0 → 52px × index                       | 240ms    | `--ease-sheet` | 0 |
+| link colour             | hover/focus | color               | `--ink-menu` → `--accent`              | 160ms    | linear         | 0 |
+
+Reduced motion: all durations 1ms and all delays 0; the colour change and X still happen. Do not remove the `visibility` toggle.
+
+## States
+
+- **Closed:** `body` without `.open`; menu `visibility: hidden`; page interactive.
+- **Open:** `body.open`; hamburger `aria-expanded="true"`, `aria-label="Close menu"`; page `inert`, opacity 0.
+- **Hamburger focus-visible:** 2px `currentColor` outline, 2px offset, on the 44px circle.
+- **Menu link hover / focus-visible:** colour `--accent`; focus-visible also underlines with 2px thickness and 8px offset.
+- **Small link hover / focus-visible:** colour `--ink-menu`, underline 4px offset.
+- **Segment pressed:** `aria-pressed="true"`, text `--bg-menu` on the cream thumb; unpressed text `--ink-menu-2`.
+- **Segment focus-visible:** 2px `--ink-menu` outline.
+
+## Accessibility
+
+- The toggle is a `<button>` with `aria-expanded`, `aria-controls="menu"` and an `aria-label` that flips between "Open menu" and "Close menu".
+- The menu is a `<nav aria-label="Main menu">` containing a real `<ul>` of links; `visibility: hidden` when closed removes it from the tab order and the accessibility tree.
+- The page content receives the `inert` attribute while the menu is open so Tab cannot reach it and screen readers skip it.
+- Focus management: first link receives focus 120ms after open (after the row has started rising); on close, focus returns to the toggle. Escape closes.
+- Language switch is `role="group" aria-label="Language"` of three buttons with `aria-pressed`; each carries a `lang` attribute matching its code.
+- Superscript counts are `<sup>` inside the link so they are read as part of the link name ("Work 24").
+- Hit targets: hamburger 44px, menu links ≥ 44px rows, small links 40px tall, segments 52×34 inside a 40px-tall pill.
+- Contrast: cream on navy 12.8:1; `--ink-menu-2` on navy 5.1:1; `--ink-2` on cream 5.0:1; `--accent` on navy 4.6:1 (used only for 64px links).
+
+## Responsive rules
+
+- 390 (reference): links 64px; five rows plus the footer fit in the 622px between the header and the bottom reserve.
+- 360 wide: links 56px, gutter 20px, wordmark 28px.
+- Height < 720: links 52px and gap 0 so the footer stays above the reserve; if it still overflows, the `.menu` scrolls (`overflow-y: auto`) and the footer is no longer `margin-top: auto`.
+- ≥ 600 wide: cap the link column at 560px centred; the colour shift still applies to the whole viewport.
+
+## Acceptance checklist
+
+- [ ] Header is fixed at `top: 54px`, 60px tall; the hamburger is a 44px button with three 22×2px lines at `top` 15/21/27px.
+- [ ] Opening moves lines 1 and 3 to `top: 21px` and rotates them +45°/−45° over 240ms; line 2 fades out over 160ms.
+- [ ] `body` background transitions `#efe9df → #14213d` over 420ms with `cubic-bezier(.2,.7,.2,1)`.
+- [ ] Page content fades to 0, scales to .98 and is `inert` while open.
+- [ ] Five links are Instrument Serif 64px, line-height 1.08, and rise from `translateY(110%)` inside `overflow: hidden` rows over 520ms with a 55ms stagger.
+- [ ] Footer block appears 330ms after open with a 12px rise.
+- [ ] Escape closes the menu and returns focus to the hamburger; opening moves focus to the first link.
+- [ ] The menu is `visibility: hidden` when closed, delayed by 520ms on close so links finish leaving.
+- [ ] Language thumb slides 52px per segment over 240ms `cubic-bezier(.32,.72,0,1)`; `aria-pressed` follows.
+- [ ] Nothing fixed occupies the top 54px or bottom 80px; the menu's bottom padding is 80px.
+- [ ] Reduced motion: no stagger, ≤ 1ms transitions, all states still reachable.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: cream page. Header row (60px, starting at 54px from the top) holds the wordmark "Marrow" (30px serif) on the left and a 44px hamburger on the right. Below: a kicker, a 52px serif headline with an orange italic word, one paragraph and a three-row "Selected work" list.
+2. Tap the hamburger: `body` gets `.open`. Over 420ms the background goes `#efe9df → #14213d` and text goes dark → cream. Over 240ms the top and bottom hamburger lines move to the middle (`top: 21px`) and rotate ±45°; the middle line fades and shrinks to 20% width over 160ms.
+3. Simultaneously the page content fades to 0 and scales to .98 over 420ms and becomes `inert`.
+4. Menu links (Work, Studio, Journal, Shop, Contact; 64px serif, superscript counts on Work and Journal) rise from `translateY(110%)` to `0` over 520ms `--ease-out`, each delayed 55ms more than the last (55, 110, 165, 220, 275ms). Each `<li>` has `overflow: hidden` so the link appears to rise out of the row.
+5. The footer block (small links row + language switch) fades in and rises 12px over 420ms with a 330ms delay.
+6. Focus moves to the first menu link 120ms after opening. Escape or the X closes the menu; focus returns to the hamburger.
+7. Tap a menu link: the menu closes (demo has no routing).
+8. Tap EN / NO / DE: the white thumb slides to the pressed segment over 240ms with the sheet easing; `aria-pressed` updates.
+9. Closing reverses everything with the same durations and no stagger; the menu becomes `visibility: hidden` after the 520ms link transition ends.
 
 ## Tokens
 
@@ -113,64 +177,6 @@ gutter 24px both states · links 64/1.08, gap 4 · switch 3×52×34 in a 1px pil
 | Small links     | Schibsted Grotesk | 14px | 400    | 1.4         | 0        | sentence  |
 | Language label  | Schibsted Grotesk | 12px | 400    | 1           | +0.10em  | UPPERCASE |
 | Segment button  | Schibsted Grotesk | 13px | 500    | 1           | 0        | UPPERCASE |
-
-## Motion
-
-| Element                 | Trigger  | Property               | From → To                              | Duration | Easing         | Delay |
-|-------------------------|----------|------------------------|----------------------------------------|---------:|----------------|-------|
-| `body`                  | open     | background, color      | `#efe9df`/`#1c1a17` → `#14213d`/`#efe9df` | 420ms | `--ease`       | 0 |
-| burger line 1 / 3       | open     | top, rotate            | 15px/27px → 21px, 0 → ±45°             | 240ms    | `--ease`       | 0 |
-| burger line 2           | open     | opacity, scaleX        | 1, 1 → 0, .2                           | 160ms    | `--ease`       | 0 |
-| `.page`                 | open     | opacity, scale         | 1, 1 → 0, .98                          | 420ms    | `--ease`       | 0 |
-| `.links a` (n = 1…5)    | open     | translateY, opacity    | 110%, 0 → 0, 1                         | 520ms / 160ms | `--ease-out` / linear | n × 55ms |
-| `.foot`                 | open     | opacity, translateY    | 0, 12px → 1, 0                         | 420ms    | `--ease` / `--ease-out` | 330ms |
-| `.menu`                 | close    | visibility             | visible → hidden                       | 0ms      | —              | 520ms |
-| `.seg .thumb`           | segment tap | translateX          | 0 → 52px × index                       | 240ms    | `--ease-sheet` | 0 |
-| link colour             | hover/focus | color               | `--ink-menu` → `--accent`              | 160ms    | linear         | 0 |
-
-Reduced motion: all durations 1ms and all delays 0; the colour change and X still happen. Do not remove the `visibility` toggle.
-
-## States
-
-- **Closed:** `body` without `.open`; menu `visibility: hidden`; page interactive.
-- **Open:** `body.open`; hamburger `aria-expanded="true"`, `aria-label="Close menu"`; page `inert`, opacity 0.
-- **Hamburger focus-visible:** 2px `currentColor` outline, 2px offset, on the 44px circle.
-- **Menu link hover / focus-visible:** colour `--accent`; focus-visible also underlines with 2px thickness and 8px offset.
-- **Small link hover / focus-visible:** colour `--ink-menu`, underline 4px offset.
-- **Segment pressed:** `aria-pressed="true"`, text `--bg-menu` on the cream thumb; unpressed text `--ink-menu-2`.
-- **Segment focus-visible:** 2px `--ink-menu` outline.
-
-## Accessibility
-
-- The toggle is a `<button>` with `aria-expanded`, `aria-controls="menu"` and an `aria-label` that flips between "Open menu" and "Close menu".
-- The menu is a `<nav aria-label="Main menu">` containing a real `<ul>` of links; `visibility: hidden` when closed removes it from the tab order and the accessibility tree.
-- The page content receives the `inert` attribute while the menu is open so Tab cannot reach it and screen readers skip it.
-- Focus management: first link receives focus 120ms after open (after the row has started rising); on close, focus returns to the toggle. Escape closes.
-- Language switch is `role="group" aria-label="Language"` of three buttons with `aria-pressed`; each carries a `lang` attribute matching its code.
-- Superscript counts are `<sup>` inside the link so they are read as part of the link name ("Work 24").
-- Hit targets: hamburger 44px, menu links ≥ 44px rows, small links 40px tall, segments 52×34 inside a 40px-tall pill.
-- Contrast: cream on navy 12.8:1; `--ink-menu-2` on navy 5.1:1; `--ink-2` on cream 5.0:1; `--accent` on navy 4.6:1 (used only for 64px links).
-
-## Responsive rules
-
-- 390 (reference): links 64px; five rows plus the footer fit in the 622px between the header and the bottom reserve.
-- 360 wide: links 56px, gutter 20px, wordmark 28px.
-- Height < 720: links 52px and gap 0 so the footer stays above the reserve; if it still overflows, the `.menu` scrolls (`overflow-y: auto`) and the footer is no longer `margin-top: auto`.
-- ≥ 600 wide: cap the link column at 560px centred; the colour shift still applies to the whole viewport.
-
-## Acceptance checklist
-
-- [ ] Header is fixed at `top: 54px`, 60px tall; the hamburger is a 44px button with three 22×2px lines at `top` 15/21/27px.
-- [ ] Opening moves lines 1 and 3 to `top: 21px` and rotates them +45°/−45° over 240ms; line 2 fades out over 160ms.
-- [ ] `body` background transitions `#efe9df → #14213d` over 420ms with `cubic-bezier(.2,.7,.2,1)`.
-- [ ] Page content fades to 0, scales to .98 and is `inert` while open.
-- [ ] Five links are Instrument Serif 64px, line-height 1.08, and rise from `translateY(110%)` inside `overflow: hidden` rows over 520ms with a 55ms stagger.
-- [ ] Footer block appears 330ms after open with a 12px rise.
-- [ ] Escape closes the menu and returns focus to the hamburger; opening moves focus to the first link.
-- [ ] The menu is `visibility: hidden` when closed, delayed by 520ms on close so links finish leaving.
-- [ ] Language thumb slides 52px per segment over 240ms `cubic-bezier(.32,.72,0,1)`; `aria-pressed` follows.
-- [ ] Nothing fixed occupies the top 54px or bottom 80px; the menu's bottom padding is 80px.
-- [ ] Reduced motion: no stagger, ≤ 1ms transitions, all states still reachable.
 
 ## Implementation notes
 

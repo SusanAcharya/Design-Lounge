@@ -4,26 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. These are words, not spinners: the loader is the sentence that tells the person what is happening.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A sheet of four text loaders for Verdure, a tenancy-law research assistant. Each card shows one way to say "still working" in a 32px serif line, and resolves into the finished sentence: a shimmer sweep for a known search, a "Thinking..." ellipsis with real elapsed seconds for open-ended reasoning, a typewriter that types, holds and deletes named steps for multi-stage jobs, and a scramble of mono glyphs that settles into a matched record. Each card has its own Resolve / Replay button, and a header button resolves or replays all four. The detail worth copying is that every loader has a matching done state with the same line, the same position and a copper check, so the answer replaces the wait without the layout moving.
-
-## Reference behaviour
-
-1. First frame: all four cards loading at once. Card 01 sweeps light across "Searching 2,418 case files". Card 02 reads "Thinking" with three breathing dots and a counter from "0s". Card 03 is typing "Reading 14 sources…" with a copper caret. Card 04 is scrambling into "INV-20931 → Harbour Joinery".
-2. 01 Shimmer: a bright band crosses grey text left to right every 2.2s. The footer says "Running".
-3. 02 Thinking: dots fade up in turn (0, 0.2, 0.4s offsets over 1.2s). Seconds tick every 1000ms in mono beside the word.
-4. 03 Typewriter: each step types at 38ms per character, holds 1400ms, deletes at 18ms per character, waits 220ms, then types the next. Steps: "Reading 14 sources…", "Comparing deposit clauses…", "Checking dates against the 2024 act…", "Drafting a summary…", then loop. The footer counts "Step 2 of 4".
-5. 04 Scramble: the record starts as all random glyphs. After 8 frames (45ms each) one more character locks every second frame, left to right. Locked characters are ink, the arrow is copper, unresolved glyphs are pale. Held 1600ms, then the next record: "INV-20944 → Pellow & Daughters", "INV-20958 → Marlow Glazing". The footer counts "Record 1 of 3".
-6. Clicking Resolve on a card stops its timers, fills the leading circle copper with a white check, and replaces the line with the result, rising 6px into place over 500ms:
-   - 01 "Found 37 filings that cite clause 4.2", footer "Done in 3.8 s".
-   - 02 "Thought for N seconds" (N = elapsed, at least 2), footer "Reasoning hidden · expand".
-   - 03 "Summary ready · 312 words", caret hidden, footer "4 of 4 steps".
-   - 04 "INV-20931 → Harbour Joinery", footer "Matched · 98% confidence".
-   The button becomes Replay. A polite live region reads the result.
-7. Replay restarts that card's loader from its first state.
-8. The header "Resolve all" resolves every card still loading and becomes "Replay all". Once all are done, "Replay all" restarts all four. The live region says "All four resolved" / "All four running again".
-9. Reduced motion: no sweep (the text sits in `--ink-2`), dots are static, the caret does not blink, the typewriter shows each whole step for 2200ms, and the scramble shows each whole record for 2400ms. Results appear without the rise.
 
 ## Structure
 
@@ -53,52 +38,6 @@ cards: 2 x 2, gap 16, radius 6, padding 20 24 16
 - Each card is a `section` with `aria-labelledby` on its title, and `data-state="loading" | "done"`.
 - Card anatomy: top row (number + name left, use-case tag right), the line (28px leading circle + text), caption `p`, footer (status text + action button) above a 1px rule.
 - One visually hidden `p aria-live="polite"` for results.
-
-## Tokens
-
-```css
-:root {
-  --bg: #eceee6;          /* sage paper */
-  --card: #f6f7f1;        /* card */
-  --line: #d3d8cc;        /* card border, footer rule */
-  --line-2: #b9c0b2;      /* button border, lead circle */
-  --ink: #1e2a22;         /* moss ink, resolved text, shimmer highlight */
-  --ink-2: #4c5a50;       /* captions */
-  --ink-3: #6f7b72;       /* labels, footer status */
-  --ghost: #a3ada4;       /* shimmer base, unresolved glyphs */
-  --accent: #b5562a;      /* copper: caret, arrow, done circle */
-  --focus: #b5562a;
-
-  --serif: "Spectral", Georgia, serif;
-  --mono: "Spline Sans Mono", ui-monospace, Menlo, monospace;
-
-  --radius: 6px;
-  --gap: 16px;
-  --sweep: 2.2s;
-  --type-ms: 38ms;
-  --delete-ms: 18ms;
-  --hold-ms: 1400ms;
-  --scramble-frame: 45ms;
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Page title | Spectral | 44px | 400 | 1.02 | -0.02em | Sentence; quoted phrase italic in `--ink-3` |
-| Loader line | Spectral | 32px | 400 | 1.15 | -0.01em | Sentence |
-| Scramble line | Spline Sans Mono | 26px | 400 | 1.2 | -0.01em | Upper ID + name |
-| Elapsed seconds | Spline Sans Mono | 13px | 400 | 1 | 0 | tabular-nums |
-| Card label, tag | Spline Sans Mono | 11px | 400 (number 500) | 1.5 | 0.08em | Upper |
-| Caption | Spline Sans Mono | 12px | 400 | 1.5 | 0 | Sentence |
-| Footer, buttons | Spline Sans Mono | 12px | 400 | 1.5 | 0 | Sentence |
-| Brand line | Spline Sans Mono | 12px | 400 | 1.5 | 0.08em | Upper |
-
-The loading sentence is serif because it is content. The scramble is mono because the glyphs must not change width while they churn.
 
 ## Motion
 
@@ -160,6 +99,73 @@ Gradient for the shimmer: `linear-gradient(100deg, ghost 0%, ghost 40%, ink 50%,
 - [ ] Lines and results exactly as quoted in Reference behaviour.
 - [ ] Shimmer 2.2s; type 38ms, hold 1400ms, delete 18ms; scramble frames 45ms.
 - [ ] Paper `#ECEEE6`, card `#F6F7F1`, ink `#1E2A22`, copper `#B5562A`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: all four cards loading at once. Card 01 sweeps light across "Searching 2,418 case files". Card 02 reads "Thinking" with three breathing dots and a counter from "0s". Card 03 is typing "Reading 14 sources…" with a copper caret. Card 04 is scrambling into "INV-20931 → Harbour Joinery".
+2. 01 Shimmer: a bright band crosses grey text left to right every 2.2s. The footer says "Running".
+3. 02 Thinking: dots fade up in turn (0, 0.2, 0.4s offsets over 1.2s). Seconds tick every 1000ms in mono beside the word.
+4. 03 Typewriter: each step types at 38ms per character, holds 1400ms, deletes at 18ms per character, waits 220ms, then types the next. Steps: "Reading 14 sources…", "Comparing deposit clauses…", "Checking dates against the 2024 act…", "Drafting a summary…", then loop. The footer counts "Step 2 of 4".
+5. 04 Scramble: the record starts as all random glyphs. After 8 frames (45ms each) one more character locks every second frame, left to right. Locked characters are ink, the arrow is copper, unresolved glyphs are pale. Held 1600ms, then the next record: "INV-20944 → Pellow & Daughters", "INV-20958 → Marlow Glazing". The footer counts "Record 1 of 3".
+6. Clicking Resolve on a card stops its timers, fills the leading circle copper with a white check, and replaces the line with the result, rising 6px into place over 500ms:
+   - 01 "Found 37 filings that cite clause 4.2", footer "Done in 3.8 s".
+   - 02 "Thought for N seconds" (N = elapsed, at least 2), footer "Reasoning hidden · expand".
+   - 03 "Summary ready · 312 words", caret hidden, footer "4 of 4 steps".
+   - 04 "INV-20931 → Harbour Joinery", footer "Matched · 98% confidence".
+   The button becomes Replay. A polite live region reads the result.
+7. Replay restarts that card's loader from its first state.
+8. The header "Resolve all" resolves every card still loading and becomes "Replay all". Once all are done, "Replay all" restarts all four. The live region says "All four resolved" / "All four running again".
+9. Reduced motion: no sweep (the text sits in `--ink-2`), dots are static, the caret does not blink, the typewriter shows each whole step for 2200ms, and the scramble shows each whole record for 2400ms. Results appear without the rise.
+
+## Tokens
+
+```css
+:root {
+  --bg: #eceee6;          /* sage paper */
+  --card: #f6f7f1;        /* card */
+  --line: #d3d8cc;        /* card border, footer rule */
+  --line-2: #b9c0b2;      /* button border, lead circle */
+  --ink: #1e2a22;         /* moss ink, resolved text, shimmer highlight */
+  --ink-2: #4c5a50;       /* captions */
+  --ink-3: #6f7b72;       /* labels, footer status */
+  --ghost: #a3ada4;       /* shimmer base, unresolved glyphs */
+  --accent: #b5562a;      /* copper: caret, arrow, done circle */
+  --focus: #b5562a;
+
+  --serif: "Spectral", Georgia, serif;
+  --mono: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+
+  --radius: 6px;
+  --gap: 16px;
+  --sweep: 2.2s;
+  --type-ms: 38ms;
+  --delete-ms: 18ms;
+  --hold-ms: 1400ms;
+  --scramble-frame: 45ms;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Page title | Spectral | 44px | 400 | 1.02 | -0.02em | Sentence; quoted phrase italic in `--ink-3` |
+| Loader line | Spectral | 32px | 400 | 1.15 | -0.01em | Sentence |
+| Scramble line | Spline Sans Mono | 26px | 400 | 1.2 | -0.01em | Upper ID + name |
+| Elapsed seconds | Spline Sans Mono | 13px | 400 | 1 | 0 | tabular-nums |
+| Card label, tag | Spline Sans Mono | 11px | 400 (number 500) | 1.5 | 0.08em | Upper |
+| Caption | Spline Sans Mono | 12px | 400 | 1.5 | 0 | Sentence |
+| Footer, buttons | Spline Sans Mono | 12px | 400 | 1.5 | 0 | Sentence |
+| Brand line | Spline Sans Mono | 12px | 400 | 1.5 | 0.08em | Upper |
+
+The loading sentence is serif because it is content. The scramble is mono because the glyphs must not change width while they churn.
 
 ## Implementation notes
 

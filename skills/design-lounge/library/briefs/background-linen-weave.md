@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-frame woven-textile background behind a product section for a fictional mill, "Hollin Linen Co.". The cloth is a real plain weave built from one 14px SVG `<pattern>`: two warp threads and two weft threads that pass over and under each other, each shaded round, with a darker dip where a thread dives under its neighbour. Slub streaks from two stretched `feTurbulence` layers make it read as linen, not as a checkerboard. The copy sits on a sewn-in label with a dashed stitch line. A broad, elongated sheen follows the pointer like light across cloth. The detail worth copying is that **thread colours are only two CSS custom properties**: swap `--warp` and `--weft` and the whole weave, the gap shadow between threads, and the spec line ("Rust warp × Oat weft") change together. A second surface, "Paper fold", replaces the cloth with a sheet folded 4 × 3 whose twelve facets brighten or darken as the light moves.
-
-## Reference behaviour
-
-1. First frame: Rust warp `#a4532e` × Oat weft `#d9cbb0`, a shot-cloth look. The sheen rests at (70%, 40%). The label is on the left, vertically centred; the panel is bottom-right.
-2. Pointer move sets a target; the sheen eases toward it at 12% per frame and the loop stops once it is within 0.5px. An idle page has no running loop.
-3. The sheen is three gradients blended with `overlay`: a 560 × 150px horizontal ellipse (light along the weft), a 150 × 480px vertical ellipse (light along the warp), and a 900px circle that darkens the far cloth.
-4. Warp row and Weft row each have five swatches: Oat `#d9cbb0`, Sage `#8f9e83`, Rust `#a4532e`, Ink `#2f3540`, Chalk `#eee9df`. Clicking one sets `--warp` or `--weft` on `:root`; the gap colour is derived, so no other code changes.
-5. The spec line on the label updates in a polite live region: "Ink warp × Sage weft · 185 gsm · plain weave". The two-colour chip beside it shows warp | weft.
-6. "Linen" / "Paper fold" cross-fades the cloth and the paper in 360ms. The sheen drops to 45% strength on paper.
-7. In Paper fold, the sheet is a 4 × 3 grid of facets. Columns alternate facing right/left, rows alternate facing down/up. Each facet's tint comes from the dot product of its tilt and the direction to the pointer: toward the light it gains up to 45% warm white, away from it up to 16% brown.
-8. Creases: vertical at 25% (valley), 50% (mountain), 75% (valley); horizontal at 33.3% (mountain), 66.7% (valley). Valleys are a soft shadow line; mountains are a bright 1px ridge with shadow on the far side.
-9. The paper stock is tinted from the weft colour (24% weft into `#f6f2ea`), so the swatches still matter, and the spec line reads "Sage stock · folded 4 × 3 · 120 gsm".
-10. Reduced motion: the sheen and facet light stay fixed at (70%, 40%) and do not follow the pointer. Surface and colour changes are instant.
 
 ## Structure
 
@@ -47,51 +36,6 @@ A full-frame woven-textile background behind a product section for a fictional m
 - `div.sheen` (fixed, `pointer-events: none`, `mix-blend-mode: overlay`) reading `--mx`/`--my`.
 - `<section class="label" aria-labelledby>` with mark row, `<h1>`, sub, spec `<p aria-live="polite">`, two links.
 - `.panel role="group"`: two swatch groups labelled by their row titles, one segmented pair.
-
-## Tokens
-
-```css
-:root {
-  --warp: #a4532e;                 /* vertical threads */
-  --weft: #d9cbb0;                 /* horizontal threads */
-  --gap: color-mix(in srgb, color-mix(in srgb, var(--warp) 50%, var(--weft)) 62%, #1c140d);
-  --paper: color-mix(in srgb, var(--weft) 24%, #f6f2ea);
-
-  --label: #fbf8f2;                /* label, panel */
-  --ink: #2a221b;                  /* headline, primary, pressed segment */
-  --ink-2: #5a4e43;                /* sub, mark, panel text */
-  --ink-3: #7a6d60;
-  --line: #e2d9cb;                 /* label hairline */
-  --stitch: #b9a68c;               /* dashed stitch */
-  --accent: #8a3f1f;               /* italic words, primary hover, focus */
-
-  --serif: "Gelasio", Georgia, serif;
-  --sans: "Atkinson Hyperlegible", system-ui, sans-serif;
-
-  --tile: 14px;                    /* one repeat = 2 warp + 2 weft */
-  --thread: 6.5px;                 /* thread width; 0.5px gap shows --gap */
-  --sheen-follow: .12;             /* per-frame approach */
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --t-fast: 160ms;
-  --t-mode: 360ms;
-}
-```
-
-Threads: Oat `#d9cbb0`, Sage `#8f9e83`, Rust `#a4532e`, Ink `#2f3540`, Chalk `#eee9df`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|---|---|---:|---:|---:|---:|---|
-| Headline | Gelasio | 56px | 500 | 1.04 | −0.02em | sentence; last two words italic in `--accent` |
-| Mark (brand) | Atkinson Hyperlegible | 11px | 700 | 1 | 0.16em | UPPER |
-| Mark (issue) | Atkinson Hyperlegible | 11px | 400 | 1 | 0.08em | UPPER |
-| Sub-copy | Atkinson Hyperlegible | 16px | 400 | 1.55 | 0 | sentence |
-| Spec line | Atkinson Hyperlegible | 13px | 400/700 | 1.4 | 0 | thread names bold |
-| Buttons | Atkinson Hyperlegible | 14px | 700 | 1 | 0 | sentence |
-| Panel row label | Atkinson Hyperlegible | 10px | 700 | 1 | 0.12em | UPPER |
-| Segments | Atkinson Hyperlegible | 12px | 700 | 1 | 0.04em | sentence |
 
 ## Motion
 
@@ -152,6 +96,68 @@ Threads: Oat `#d9cbb0`, Sage `#8f9e83`, Rust `#a4532e`, Ink `#2f3540`, Chalk `#e
 - [ ] Five threads: Oat, Sage, Rust, Ink, Chalk.
 - [ ] Paper fold is 4 × 3 with creases at 25 / 50 / 75% and 33.3 / 66.7%.
 - [ ] Spec line reads "185 gsm · plain weave" on cloth and "folded 4 × 3 · 120 gsm" on paper.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Rust warp `#a4532e` × Oat weft `#d9cbb0`, a shot-cloth look. The sheen rests at (70%, 40%). The label is on the left, vertically centred; the panel is bottom-right.
+2. Pointer move sets a target; the sheen eases toward it at 12% per frame and the loop stops once it is within 0.5px. An idle page has no running loop.
+3. The sheen is three gradients blended with `overlay`: a 560 × 150px horizontal ellipse (light along the weft), a 150 × 480px vertical ellipse (light along the warp), and a 900px circle that darkens the far cloth.
+4. Warp row and Weft row each have five swatches: Oat `#d9cbb0`, Sage `#8f9e83`, Rust `#a4532e`, Ink `#2f3540`, Chalk `#eee9df`. Clicking one sets `--warp` or `--weft` on `:root`; the gap colour is derived, so no other code changes.
+5. The spec line on the label updates in a polite live region: "Ink warp × Sage weft · 185 gsm · plain weave". The two-colour chip beside it shows warp | weft.
+6. "Linen" / "Paper fold" cross-fades the cloth and the paper in 360ms. The sheen drops to 45% strength on paper.
+7. In Paper fold, the sheet is a 4 × 3 grid of facets. Columns alternate facing right/left, rows alternate facing down/up. Each facet's tint comes from the dot product of its tilt and the direction to the pointer: toward the light it gains up to 45% warm white, away from it up to 16% brown.
+8. Creases: vertical at 25% (valley), 50% (mountain), 75% (valley); horizontal at 33.3% (mountain), 66.7% (valley). Valleys are a soft shadow line; mountains are a bright 1px ridge with shadow on the far side.
+9. The paper stock is tinted from the weft colour (24% weft into `#f6f2ea`), so the swatches still matter, and the spec line reads "Sage stock · folded 4 × 3 · 120 gsm".
+10. Reduced motion: the sheen and facet light stay fixed at (70%, 40%) and do not follow the pointer. Surface and colour changes are instant.
+
+## Tokens
+
+```css
+:root {
+  --warp: #a4532e;                 /* vertical threads */
+  --weft: #d9cbb0;                 /* horizontal threads */
+  --gap: color-mix(in srgb, color-mix(in srgb, var(--warp) 50%, var(--weft)) 62%, #1c140d);
+  --paper: color-mix(in srgb, var(--weft) 24%, #f6f2ea);
+
+  --label: #fbf8f2;                /* label, panel */
+  --ink: #2a221b;                  /* headline, primary, pressed segment */
+  --ink-2: #5a4e43;                /* sub, mark, panel text */
+  --ink-3: #7a6d60;
+  --line: #e2d9cb;                 /* label hairline */
+  --stitch: #b9a68c;               /* dashed stitch */
+  --accent: #8a3f1f;               /* italic words, primary hover, focus */
+
+  --serif: "Gelasio", Georgia, serif;
+  --sans: "Atkinson Hyperlegible", system-ui, sans-serif;
+
+  --tile: 14px;                    /* one repeat = 2 warp + 2 weft */
+  --thread: 6.5px;                 /* thread width; 0.5px gap shows --gap */
+  --sheen-follow: .12;             /* per-frame approach */
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-fast: 160ms;
+  --t-mode: 360ms;
+}
+```
+
+Threads: Oat `#d9cbb0`, Sage `#8f9e83`, Rust `#a4532e`, Ink `#2f3540`, Chalk `#eee9df`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|---|---|---:|---:|---:|---:|---|
+| Headline | Gelasio | 56px | 500 | 1.04 | −0.02em | sentence; last two words italic in `--accent` |
+| Mark (brand) | Atkinson Hyperlegible | 11px | 700 | 1 | 0.16em | UPPER |
+| Mark (issue) | Atkinson Hyperlegible | 11px | 400 | 1 | 0.08em | UPPER |
+| Sub-copy | Atkinson Hyperlegible | 16px | 400 | 1.55 | 0 | sentence |
+| Spec line | Atkinson Hyperlegible | 13px | 400/700 | 1.4 | 0 | thread names bold |
+| Buttons | Atkinson Hyperlegible | 14px | 700 | 1 | 0 | sentence |
+| Panel row label | Atkinson Hyperlegible | 10px | 700 | 1 | 0.12em | UPPER |
+| Segments | Atkinson Hyperlegible | 12px | 700 | 1 | 0.04em | sentence |
 
 ## Implementation notes
 

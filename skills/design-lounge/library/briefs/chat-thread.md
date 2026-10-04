@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the theme. Incoming and outgoing stay two surfaces, not two brand colours. Phone insets use max(), not an env() fallback.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The conversation you open from an inbox. The screen name is Yard desk. The title is Mira. Three messages are on screen: Mira says Gate 4 is clear for the rice. You say send the truck at 16:10. Mira says the driver is Mira and the plate is NA 4 123. Your lines sit on the right on `--primary-soft`. Hers sit on the left on a white surface. The composer is a field and a Send button. Send stays disabled until there is text. This is not the inbox. The inbox is `mobile-inbox-list`. A tablet mail split is `tablet-split-view-mail`.
-
-## Reference behaviour
-
-1. The thread shows those three messages. The field is empty. Send is disabled.
-2. Typing anything but whitespace enables Send.
-3. Submit, by button or Enter, appends your text as a right-hand message labeled You, clears the field, and disables Send.
-4. An empty submit does nothing.
-5. There is no typing indicator, no delivered tick, and no animation.
-6. Focus ring is 2px `--focus`, offset 2px.
-7. The top inset is at least 54px. The bottom inset is at least 34px. Use `max(54px, env(safe-area-inset-top))` and `max(34px, env(safe-area-inset-bottom))`. A plain env() fallback collapses to 0 in a desktop browser.
 
 ## Structure
 
@@ -37,39 +29,6 @@ form
 - The thread is a `ul`.
 - Each message is an `li`. The speaker is a span. The text is a text node, so a message cannot inject markup.
 - The form submit is prevented. This demo does not post anywhere.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line: #e4dfd4;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --primary-ink: #fffdf8;
-  --primary-soft: #e7f2ec;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Bubble radius is 2px in this yard demo. The family replaces it. Do not use a 20px chat bubble on a square family. Your bubble is `--primary-soft` with `--ink` text, not a solid primary with light text. Send is the one solid button.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Title | sans | 28px | 500 | `--ink` |
-| Speaker | sans | 12px | 400 | `--ink-2` |
-| Message | sans | 15px | 400 | `--ink` |
-| Field | sans | 15px | 400 | `--ink` |
-| Send | sans | 15px | 500 | `--primary-ink` |
-
-Phone body type is 15px. The where-line letter-spacing is 0.04em.
 
 ## Motion
 
@@ -121,6 +80,53 @@ None. A new message appears in one frame. Reduced motion has nothing to remove. 
 - [ ] Bubbles are radius 2px, not a large pill, until a family says otherwise.
 - [ ] There is no tick, no typing indicator, and no animation.
 - [ ] The new message is text, not HTML.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The thread shows those three messages. The field is empty. Send is disabled.
+2. Typing anything but whitespace enables Send.
+3. Submit, by button or Enter, appends your text as a right-hand message labeled You, clears the field, and disables Send.
+4. An empty submit does nothing.
+5. There is no typing indicator, no delivered tick, and no animation.
+6. Focus ring is 2px `--focus`, offset 2px.
+7. The top inset is at least 54px. The bottom inset is at least 34px. Use `max(54px, env(safe-area-inset-top))` and `max(34px, env(safe-area-inset-bottom))`. A plain env() fallback collapses to 0 in a desktop browser.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line: #e4dfd4;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --primary-ink: #fffdf8;
+  --primary-soft: #e7f2ec;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Bubble radius is 2px in this yard demo. The family replaces it. Do not use a 20px chat bubble on a square family. Your bubble is `--primary-soft` with `--ink` text, not a solid primary with light text. Send is the one solid button.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Title | sans | 28px | 500 | `--ink` |
+| Speaker | sans | 12px | 400 | `--ink-2` |
+| Message | sans | 15px | 400 | `--ink` |
+| Field | sans | 15px | 400 | `--ink` |
+| Send | sans | 15px | 500 | `--primary-ink` |
+
+Phone body type is 15px. The where-line letter-spacing is 0.04em.
 
 ## Implementation notes
 

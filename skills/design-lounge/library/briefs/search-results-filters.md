@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens and take buttons from the component grammar. Keep this layout.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The results page for Index, a clothing catalogue. A 64px header holds the wordmark and a search field already filled with "wool". A 240px filter column lists cloth and price. The main column lists matching pieces: a 72×56 swatch, a serif name, one line of description, a cloth tag, and a price. Filters and the query apply together. When nothing matches, the list hides and a short empty state shows. It should feel like a shop desk, not a dashboard.
-
-## Reference behaviour
-
-1. Initial state: query "wool", all three cloth boxes checked, price "Any". Four rows visible. Count reads "4".
-2. Typing in the search field filters immediately on the row's visible text. Matching is case-insensitive substring. The count updates.
-3. Unchecking a cloth hides rows of that cloth. At least the boxes that remain checked stay. If every cloth is unchecked, the count is 0.
-4. Choosing "Under $180" hides rows whose price is 180 or more. "Any" removes that constraint.
-5. All three constraints combine with AND.
-6. Count 0 shows the empty state: "Nothing in that cut." and the line "Clear a cloth filter, or search a shorter word." The list is hidden.
-7. Pressing "/" focuses the search field and selects its text, unless the field is already focused.
-8. Focus rings are 2px `--focus` with 2px offset on the field and the checkboxes.
 
 ## Structure
 
@@ -33,39 +24,6 @@ row: 72×56 swatch | text | price
 - Aside is `aside` labelled "Filters".
 - Each result is an `article`.
 - Empty state is a sibling of the list, hidden until the count is 0.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f3efe6;
-  --surface: #fffdf8;
-  --surface-2: #e7e1d4;
-  --ink: #171512;
-  --ink-2: #5c564c;
-  --ink-3: #8a8378;
-  --line: #ddd6c8;
-  --line-strong: #c9c0b0;
-  --primary: #8a4b12;
-  --primary-ink: #fffdf8;
-  --primary-soft: #f0e2d2;
-  --focus: #8a4b12;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-text: "Instrument Sans", system-ui, sans-serif;
-  --header: 64px;
-  --aside: 240px;
-  --field: 40px;
-  --radius: 6px;
-}
-```
-
-## Typography
-
-- Wordmark: Fraunces 500, 22px, tracking -0.02em.
-- Result name: Fraunces 500, 18px, line-height 1.15.
-- Body and descriptions: Instrument Sans 400, 13–14px, colour `--ink-2`.
-- Filter labels: Instrument Sans 600, 11px, uppercase, tracking 0.12em, `--ink-3`.
-- Price: Instrument Sans 600, 14px, `--ink`.
 
 ## Motion
 
@@ -106,6 +64,54 @@ No animation. Filtering updates the DOM immediately. Reduced motion changes noth
 - [ ] "/" focuses and selects the search field.
 - [ ] Names are Fraunces. UI text is Instrument Sans.
 - [ ] No second button style, no emoji, no shadow on the rows.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: query "wool", all three cloth boxes checked, price "Any". Four rows visible. Count reads "4".
+2. Typing in the search field filters immediately on the row's visible text. Matching is case-insensitive substring. The count updates.
+3. Unchecking a cloth hides rows of that cloth. At least the boxes that remain checked stay. If every cloth is unchecked, the count is 0.
+4. Choosing "Under $180" hides rows whose price is 180 or more. "Any" removes that constraint.
+5. All three constraints combine with AND.
+6. Count 0 shows the empty state: "Nothing in that cut." and the line "Clear a cloth filter, or search a shorter word." The list is hidden.
+7. Pressing "/" focuses the search field and selects its text, unless the field is already focused.
+8. Focus rings are 2px `--focus` with 2px offset on the field and the checkboxes.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f3efe6;
+  --surface: #fffdf8;
+  --surface-2: #e7e1d4;
+  --ink: #171512;
+  --ink-2: #5c564c;
+  --ink-3: #8a8378;
+  --line: #ddd6c8;
+  --line-strong: #c9c0b0;
+  --primary: #8a4b12;
+  --primary-ink: #fffdf8;
+  --primary-soft: #f0e2d2;
+  --focus: #8a4b12;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-text: "Instrument Sans", system-ui, sans-serif;
+  --header: 64px;
+  --aside: 240px;
+  --field: 40px;
+  --radius: 6px;
+}
+```
+
+## Typography
+
+- Wordmark: Fraunces 500, 22px, tracking -0.02em.
+- Result name: Fraunces 500, 18px, line-height 1.15.
+- Body and descriptions: Instrument Sans 400, 13–14px, colour `--ink-2`.
+- Filter labels: Instrument Sans 600, 11px, uppercase, tracking 0.12em, `--ink-3`.
+- Price: Instrument Sans 600, 14px, `--ink`.
 
 ## Implementation notes
 

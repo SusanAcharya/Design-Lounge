@@ -1,6 +1,7 @@
 /* Circuit · dark · no pair
    Engineered and a little expensive. Lime on charcoal.
    Best for: Hardware, Mobility, Energy */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Circuit · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Unbounded", Georgia, serif;
-  --font-text: "Onest", system-ui, sans-serif;
-  --radius: 8px;
-  --shadow: 0 16px 36px -18px rgba(0,0,0,.55);
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

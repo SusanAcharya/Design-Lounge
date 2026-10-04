@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The sales page for one online course on a fictional learning site, Lectern. The course is "Data journalism: from spreadsheet to story" by Dr Amara Okonjo. It reads like a university press page: warm white paper, deep navy serif headings, 8px corners, 1px rules, and one green used only for checks, preview links and the free-lesson icon. The hero has a price card with a CSS-drawn video poster. Below it, a learning checklist, a six-module curriculum accordion, an FAQ, and an instructor card. Once the hero's Enroll button scrolls away, a navy enroll bar slides up from the bottom. The detail worth copying is the honest discount: a dated price with a plain sentence about when it ends, and no countdown timer.
-
-## Reference behaviour
-
-1. First frame at 1280×800: header (64px), the hero with title, subtitle, instructor and rating row, two buttons, a four-fact strip, and the price card on the right. The top of "What you'll learn" shows at the bottom edge.
-2. The price card shows `$129`, struck `$189`, a green `Save $60` pill, and the sentence `Autumn term price, the same for everyone until 31 October. After that it returns to $189.`
-3. Click `Preview lesson`, the poster in the card, or any `Preview` link in the curriculum. A modal dialog opens with a 320ms rise (opacity 0 → 1, translateY 12px → 0). Its header reads `Lesson preview` and the lesson name with its length. Below is a 16:9 CSS-drawn video poster with a play disc, a green progress bar at 18%, `01:23` and the lesson length.
-4. Close the modal with the × button, Esc, or a click on the backdrop. Focus returns to the control that opened it.
-5. The curriculum header reads `6 modules · 31 lessons · 5 h` and has an `Expand all` text button. These totals are computed from the lesson data, never typed.
-6. Module 01 is open at load. Every other module is closed.
-7. Click a module header. Its panel opens or closes over 320ms (grid rows 0fr → 1fr) and the chevron turns 180° over 280ms. Several modules may be open at once.
-8. When every module is open the text button reads `Collapse all`; clicking it closes all. Otherwise it reads `Expand all` and opens all.
-9. Each lesson row shows an icon, `1.2 Lesson name`, a right-side action, and a tabular duration. Free lessons have a green play-circle icon and a green underlined `Preview` button. Locked lessons have a grey lock icon and the word `Locked`.
-10. The FAQ has four questions, all closed. Each opens and closes the same way as a module.
-11. Scroll until the hero's `Enroll for $129` button is above the viewport. The enroll bar slides up from the bottom over 340ms (expo out). Scroll back up until the button is visible and the bar slides away. While hidden, the bar is `visibility: hidden` so it cannot be tabbed into.
-12. The instructor card in the right rail is sticky at `top: 24px` on desktop.
-13. Reduced motion: no rise, no slide, no row animation. Panels and the bar switch instantly.
 
 ## Structure
 
@@ -60,60 +46,6 @@ The sales page for one online course on a fictional learning site, Lectern. The 
 - Each FAQ item is `div.q > h3 > button.qb` plus `div.panel[role=region] > div > p`.
 - The enroll bar is `div.bar[role=region][aria-label=Enroll]`, `position: fixed`, bottom 0.
 - The preview is a native `dialog` opened with `showModal()`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #faf7f1;        /* warm white page */
-  --surface: #fffdf8;   /* cards, accordion, dialog */
-  --navy: #15234a;      /* headings, text, primary button, bar */
-  --navy-2: #24356a;    /* primary hover */
-  --ink-2: #4a5068;     /* body copy */
-  --ink-3: #6b7086;     /* meta, durations, lock icon */
-  --line: #e3ddd0;      /* 1px rules and borders */
-  --green: #2e6b4e;     /* the one accent: checks, preview, eyebrow, focus */
-  --green-t: #e3efe7;   /* Save pill */
-  --gold: #b7862c;      /* rating stars only */
-  --poster-hi: #8fc2a6; /* highlighted bar and progress on navy */
-
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Public Sans", system-ui, sans-serif;
-
-  --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-15: 15px;
-  --fs-17: 17px; --fs-18: 18px; --fs-19: 19px; --fs-21: 21px; --fs-22: 22px;
-  --fs-32: 32px; --fs-40: 40px; --fs-52: 52px;
-
-  --s-8: 8px; --s-12: 12px; --s-16: 16px; --s-24: 24px; --s-36: 36px;
-  --s-48: 48px; --s-56: 56px;
-
-  --r: 8px;
-  --shadow: none;
-  --t-micro: 160ms; --t-chev: 280ms; --t-panel: 320ms; --t-bar: 340ms;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --out: cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Logo | Newsreader | 22px | 600 | 1 | 0 | Title |
-| `h1` | Newsreader | 52px | 500 | 1.04 | -0.015em | Sentence, max 16ch |
-| Subtitle | Newsreader | 21px | 500 | 1.45 | 0 | Sentence, max 44ch |
-| `h2` | Newsreader | 32px | 500 | 1.15 | 0 | Sentence |
-| Module title | Newsreader | 19px | 600 | 1.3 | 0 | Sentence |
-| FAQ question | Newsreader | 18px | 500 | 1.35 | 0 | Sentence |
-| Price | Newsreader | 40px | 600 | 1 | 0 | `$129` |
-| Glance value | Newsreader | 17px | 500 | 1.3 | 0 | Sentence |
-| Eyebrow | Public Sans | 12px | 600 | 1.4 | 0.14em | UPPER, green |
-| Labels | Public Sans | 11px | 600 | 1.4 | 0.14em | UPPER |
-| Body | Public Sans | 15px | 400 | 1.6 | 0 | Sentence |
-| Lesson row | Public Sans | 14px | 400 | 1.5 | 0 | Sentence |
-| Buttons | Public Sans | 15px | 600 | 1 | 0 | Sentence |
-
-Durations use `font-variant-numeric: tabular-nums` so the column lines up.
 
 ## Motion
 
@@ -183,6 +115,80 @@ The bar hides with `visibility` delayed by 340ms so it finishes sliding before i
 - [ ] Curriculum summary reads `6 modules · 31 lessons · 5 h`; module 01 is open with 5 lessons · 42 min.
 - [ ] Free previews are 1.1, 1.2 and 2.2.
 - [ ] FAQ has four questions, including `Is the discount real?`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame at 1280×800: header (64px), the hero with title, subtitle, instructor and rating row, two buttons, a four-fact strip, and the price card on the right. The top of "What you'll learn" shows at the bottom edge.
+2. The price card shows `$129`, struck `$189`, a green `Save $60` pill, and the sentence `Autumn term price, the same for everyone until 31 October. After that it returns to $189.`
+3. Click `Preview lesson`, the poster in the card, or any `Preview` link in the curriculum. A modal dialog opens with a 320ms rise (opacity 0 → 1, translateY 12px → 0). Its header reads `Lesson preview` and the lesson name with its length. Below is a 16:9 CSS-drawn video poster with a play disc, a green progress bar at 18%, `01:23` and the lesson length.
+4. Close the modal with the × button, Esc, or a click on the backdrop. Focus returns to the control that opened it.
+5. The curriculum header reads `6 modules · 31 lessons · 5 h` and has an `Expand all` text button. These totals are computed from the lesson data, never typed.
+6. Module 01 is open at load. Every other module is closed.
+7. Click a module header. Its panel opens or closes over 320ms (grid rows 0fr → 1fr) and the chevron turns 180° over 280ms. Several modules may be open at once.
+8. When every module is open the text button reads `Collapse all`; clicking it closes all. Otherwise it reads `Expand all` and opens all.
+9. Each lesson row shows an icon, `1.2 Lesson name`, a right-side action, and a tabular duration. Free lessons have a green play-circle icon and a green underlined `Preview` button. Locked lessons have a grey lock icon and the word `Locked`.
+10. The FAQ has four questions, all closed. Each opens and closes the same way as a module.
+11. Scroll until the hero's `Enroll for $129` button is above the viewport. The enroll bar slides up from the bottom over 340ms (expo out). Scroll back up until the button is visible and the bar slides away. While hidden, the bar is `visibility: hidden` so it cannot be tabbed into.
+12. The instructor card in the right rail is sticky at `top: 24px` on desktop.
+13. Reduced motion: no rise, no slide, no row animation. Panels and the bar switch instantly.
+
+## Tokens
+
+```css
+:root {
+  --bg: #faf7f1;        /* warm white page */
+  --surface: #fffdf8;   /* cards, accordion, dialog */
+  --navy: #15234a;      /* headings, text, primary button, bar */
+  --navy-2: #24356a;    /* primary hover */
+  --ink-2: #4a5068;     /* body copy */
+  --ink-3: #6b7086;     /* meta, durations, lock icon */
+  --line: #e3ddd0;      /* 1px rules and borders */
+  --green: #2e6b4e;     /* the one accent: checks, preview, eyebrow, focus */
+  --green-t: #e3efe7;   /* Save pill */
+  --gold: #b7862c;      /* rating stars only */
+  --poster-hi: #8fc2a6; /* highlighted bar and progress on navy */
+
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Public Sans", system-ui, sans-serif;
+
+  --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-15: 15px;
+  --fs-17: 17px; --fs-18: 18px; --fs-19: 19px; --fs-21: 21px; --fs-22: 22px;
+  --fs-32: 32px; --fs-40: 40px; --fs-52: 52px;
+
+  --s-8: 8px; --s-12: 12px; --s-16: 16px; --s-24: 24px; --s-36: 36px;
+  --s-48: 48px; --s-56: 56px;
+
+  --r: 8px;
+  --shadow: none;
+  --t-micro: 160ms; --t-chev: 280ms; --t-panel: 320ms; --t-bar: 340ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Logo | Newsreader | 22px | 600 | 1 | 0 | Title |
+| `h1` | Newsreader | 52px | 500 | 1.04 | -0.015em | Sentence, max 16ch |
+| Subtitle | Newsreader | 21px | 500 | 1.45 | 0 | Sentence, max 44ch |
+| `h2` | Newsreader | 32px | 500 | 1.15 | 0 | Sentence |
+| Module title | Newsreader | 19px | 600 | 1.3 | 0 | Sentence |
+| FAQ question | Newsreader | 18px | 500 | 1.35 | 0 | Sentence |
+| Price | Newsreader | 40px | 600 | 1 | 0 | `$129` |
+| Glance value | Newsreader | 17px | 500 | 1.3 | 0 | Sentence |
+| Eyebrow | Public Sans | 12px | 600 | 1.4 | 0.14em | UPPER, green |
+| Labels | Public Sans | 11px | 600 | 1.4 | 0.14em | UPPER |
+| Body | Public Sans | 15px | 400 | 1.6 | 0 | Sentence |
+| Lesson row | Public Sans | 14px | 400 | 1.5 | 0 | Sentence |
+| Buttons | Public Sans | 15px | 600 | 1 | 0 | Sentence |
+
+Durations use `font-variant-numeric: tabular-nums` so the column lines up.
 
 ## Implementation notes
 

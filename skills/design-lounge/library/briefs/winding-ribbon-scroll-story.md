@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from mindmarket.com: the big green ribbon that swoops down behind the "No more chaos / One brief / Global, for real" cards, tying the page into one path with flat illustrated figures riding along it. This version is a "how a move works" section for a fictional international moving company, Overlook. A 96px orange road with a dashed centre line winds from the hero down through four numbered stops (Survey, Pack, Cross, Unpack). Each stop has a white card on the opposite side and a small flat illustration (boxes, a plant, a suitcase, a sofa) next to the road. The road draws itself as you scroll; ahead of it a faint dotted line shows the route still to come; a little cobalt van rides the drawn tip, turning with the curve. The detail worth copying: the path is built in JavaScript from the real positions of the cards, so the road always passes beside its card at any width, and scroll position is mapped to path length through the path's own y-coordinates, so the van stays level with the reader's eye line.
-
-## Reference behaviour
-
-1. First frame (scrollY 0): a 72px nav, a centred hero ("One crew. / One long road." at 104px with a handwritten "door to door, 38 countries" tilted −3° above), then the start of the road: about 120px of orange ribbon under the hero with the van on it, a dotted guide running on to a hollow pin "1", the Day 1 Survey card on the left, and a stack of kraft boxes to the right of the pin.
-2. The route: start at the story's horizontal centre, 40px from its top. Stop anchors are at the vertical centre of each 560px row, at 70% of the width when the card is on the left and 30% when it is on the right. The end anchor is at the centre, 16px into the closing block.
-3. Between anchors, each segment is a cubic Bézier with vertical control handles of 55% of the segment's height. This makes y strictly increase along the path, which the scroll mapping depends on.
-4. On scroll, the eye line is `scrollY + 0.72 × innerHeight`. The drawn length is the path length whose y equals the eye line, found by binary search over samples taken every 6px of length. Minimum drawn length is 28px.
-5. The drawn road is revealed by a mask: a white stroke 8px wider than the road, with `stroke-dasharray: <drawn> <total + 200>`. The road and the centre dashes both sit inside the masked group.
-6. The undrawn route is a 3px dotted line (`stroke-dasharray: 1 12`, round caps) in ink at 28% opacity, always visible.
-7. The van sits at the drawn tip, rotated to the tangent (angle from the point at `len` to `len + 2`). When the angle passes ±90°, it is mirrored vertically so it never drives upside down.
-8. A stop's pin turns from white to sun yellow when the van's y reaches the pin. A polite live region says "Stop 2 of 4: Pack".
-9. A card fades and rises into place when the eye line is within 260px above its anchor: opacity 0 → 1, translateY 32px → 0 while keeping its resting tilt (−1.2° left, 1° right). The illustration pops from scale 0.6 when the eye line is within 200px.
-10. Pins are buttons. Clicking pin n scrolls so the van lands just past that pin.
-11. Scrolling back up undraws the road and hides cards again. Everything is reversible.
-12. The road ends in a round cap above "keys in hand / Home, again." and an orange Get a moving quote pill.
 
 ## Structure
 
@@ -54,57 +41,6 @@ SVG overlay: absolute, inset 0, viewBox = story's pixel box.
 - `section.hero` with the only `h1`.
 - `section.story` labelled "How a move works": an `svg.route` (`aria-hidden`) holding the mask, the dotted guide, the masked road group and the van group; four `div.row` each holding an `article.card` with `h2`; four `svg.deco` illustrations; pins injected as `button.pin`; and a closing `div.end`.
 - Card: `p.day` (handwritten), `h2`, `p`, `div.meta` with two facts.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #e4efe6;        /* mint paper */
-  --card: #fffdf8;      /* cards, pin fill */
-  --ink: #1d2b26;       /* text, pin ring, guide line */
-  --ink-2: #4a5a53;     /* body copy */
-  --line: #c6d6ca;      /* card border, rules, nav rule */
-  --road: #f05a28;      /* ribbon, handwritten notes, end CTA */
-  --road-mark: #fff3e6; /* centre dashes */
-  --cobalt: #2f4bd8;    /* van, focus ring, nav CTA hover */
-  --sun: #ffc93c;       /* reached pin, sofa */
-  --kraft: #d9a066;     /* boxes */
-  --leaf: #3e9b5f;      /* plant */
-
-  /* type */
-  --display: "Bricolage Grotesque", system-ui, sans-serif;
-  --hand: "Caveat", cursive;
-
-  /* shape */
-  --road-w: 96px;
-  --r-card: 24px;
-  --row-h: 560px;
-  --card-w: 420px;
-  --pin: 48px;
-
-  /* motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Hero h1 | Bricolage Grotesque, opsz 96 | 104px | 800 | 0.92 | −0.045em |
-| Closing h2 | Bricolage Grotesque | 88px | 800 | 0.95 | −0.045em |
-| Card h2 | Bricolage Grotesque | 44px | 800 | 1 | −0.035em |
-| Body | Bricolage Grotesque | 17px | 400 | 1.5 | 0 |
-| Card meta | Bricolage Grotesque | 14px | 600 | 1.5 | 0 |
-| End CTA label | Bricolage Grotesque | 19px | 800 | 1 | 0 |
-| Nav CTA label | Bricolage Grotesque | 15px | 600 | 1 | 0 |
-| Pin number | Bricolage Grotesque | 18px | 800 | 1 | 0 |
-| Brand | Bricolage Grotesque | 22px | 800 | 1 | −0.03em |
-| Handwritten notes | Caveat | 26–28px | 600 | 1 | 0, in `--road` |
-
-Handwriting is only for the small day labels and the two hero/closing notes. Never set a heading in Caveat.
 
 ## Motion
 
@@ -171,6 +107,76 @@ Run all scroll work inside one requestAnimationFrame per burst. Never put a CSS 
 - [ ] Stops: Day 1 Survey, Day 9 Pack, Day 12 Cross, Day 31 Unpack.
 - [ ] Eye line at 72% of the viewport height.
 - [ ] Van is cobalt `#2f4bd8`, 68×42.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame (scrollY 0): a 72px nav, a centred hero ("One crew. / One long road." at 104px with a handwritten "door to door, 38 countries" tilted −3° above), then the start of the road: about 120px of orange ribbon under the hero with the van on it, a dotted guide running on to a hollow pin "1", the Day 1 Survey card on the left, and a stack of kraft boxes to the right of the pin.
+2. The route: start at the story's horizontal centre, 40px from its top. Stop anchors are at the vertical centre of each 560px row, at 70% of the width when the card is on the left and 30% when it is on the right. The end anchor is at the centre, 16px into the closing block.
+3. Between anchors, each segment is a cubic Bézier with vertical control handles of 55% of the segment's height. This makes y strictly increase along the path, which the scroll mapping depends on.
+4. On scroll, the eye line is `scrollY + 0.72 × innerHeight`. The drawn length is the path length whose y equals the eye line, found by binary search over samples taken every 6px of length. Minimum drawn length is 28px.
+5. The drawn road is revealed by a mask: a white stroke 8px wider than the road, with `stroke-dasharray: <drawn> <total + 200>`. The road and the centre dashes both sit inside the masked group.
+6. The undrawn route is a 3px dotted line (`stroke-dasharray: 1 12`, round caps) in ink at 28% opacity, always visible.
+7. The van sits at the drawn tip, rotated to the tangent (angle from the point at `len` to `len + 2`). When the angle passes ±90°, it is mirrored vertically so it never drives upside down.
+8. A stop's pin turns from white to sun yellow when the van's y reaches the pin. A polite live region says "Stop 2 of 4: Pack".
+9. A card fades and rises into place when the eye line is within 260px above its anchor: opacity 0 → 1, translateY 32px → 0 while keeping its resting tilt (−1.2° left, 1° right). The illustration pops from scale 0.6 when the eye line is within 200px.
+10. Pins are buttons. Clicking pin n scrolls so the van lands just past that pin.
+11. Scrolling back up undraws the road and hides cards again. Everything is reversible.
+12. The road ends in a round cap above "keys in hand / Home, again." and an orange Get a moving quote pill.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #e4efe6;        /* mint paper */
+  --card: #fffdf8;      /* cards, pin fill */
+  --ink: #1d2b26;       /* text, pin ring, guide line */
+  --ink-2: #4a5a53;     /* body copy */
+  --line: #c6d6ca;      /* card border, rules, nav rule */
+  --road: #f05a28;      /* ribbon, handwritten notes, end CTA */
+  --road-mark: #fff3e6; /* centre dashes */
+  --cobalt: #2f4bd8;    /* van, focus ring, nav CTA hover */
+  --sun: #ffc93c;       /* reached pin, sofa */
+  --kraft: #d9a066;     /* boxes */
+  --leaf: #3e9b5f;      /* plant */
+
+  /* type */
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --hand: "Caveat", cursive;
+
+  /* shape */
+  --road-w: 96px;
+  --r-card: 24px;
+  --row-h: 560px;
+  --card-w: 420px;
+  --pin: 48px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Hero h1 | Bricolage Grotesque, opsz 96 | 104px | 800 | 0.92 | −0.045em |
+| Closing h2 | Bricolage Grotesque | 88px | 800 | 0.95 | −0.045em |
+| Card h2 | Bricolage Grotesque | 44px | 800 | 1 | −0.035em |
+| Body | Bricolage Grotesque | 17px | 400 | 1.5 | 0 |
+| Card meta | Bricolage Grotesque | 14px | 600 | 1.5 | 0 |
+| End CTA label | Bricolage Grotesque | 19px | 800 | 1 | 0 |
+| Nav CTA label | Bricolage Grotesque | 15px | 600 | 1 | 0 |
+| Pin number | Bricolage Grotesque | 18px | 800 | 1 | 0 |
+| Brand | Bricolage Grotesque | 22px | 800 | 1 | −0.03em |
+| Handwritten notes | Caveat | 26–28px | 600 | 1 | 0, in `--road` |
+
+Handwriting is only for the small day labels and the two hero/closing notes. Never set a heading in Caveat.
 
 ## Implementation notes
 

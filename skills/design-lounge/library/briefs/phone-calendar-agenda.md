@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The home screen of Ochre, a fictional personal calendar, in a Material 3 Expressive language. The top half is a month grid on a tonal card. Each day shows up to three coloured dots for its events. Drag the card up, tap the grab handle, or tap the month title, and the grid folds into a single week strip. The bottom half is an agenda list grouped by day, with day headers that stick to the top while you scroll, events with a colour bar, and a terracotta Now line between today's events. A large rounded FAB opens a quick-add sheet. You type "Lunch with Asha Fri 1pm" and it turns into chips: title, date, time, guest. The detail worth copying is the parser preview. The user sees what the app understood before they save.
-
-## Reference behaviour
-
-1. Initial state: October 2026, month view open. Today is Saturday 3 October and is selected. The agenda is scrolled so the Saturday header sits at the top of the list.
-2. The Saturday group shows four events. The Now line reads 14:10 and sits between the 12:30 brunch and the 16:00 pottery class.
-3. Tap any date in the grid. That date becomes selected (tonal container shape), and the agenda smooth-scrolls so the first group on or after that date sits at the top. Dates with no events scroll to the next date that has events.
-4. Scroll the agenda by hand. When a new day header reaches the top, the grid selection follows it. Programmatic scrolls lock this for 700ms so the selection does not flicker through the days in between.
-5. Tap the month title, tap the grab handle, or drag the calendar card up more than 30px. The grid folds to one 44px row, the row that holds the selected date. The chevron turns 180°. Drag down more than 30px, or tap again, to unfold.
-6. While folded, selecting a date in another week slides the strip to that week.
-7. Tap Today. The agenda scrolls back to Saturday 3 and Saturday is selected again.
-8. Tap the FAB ("New"). A modal sheet slides up from the bottom over a 36% scrim. The field is focused and holds "Lunch with Asha Fri 1pm". Under it four chips read: "Lunch with Asha", "Fri 9 Oct", "13:00 – 14:00", "Asha". The save button reads "Add to Fri 9 Oct".
-9. Edit the field. The chips rebuild on every keystroke. Empty field: no chips, save is disabled and reads "Add".
-10. Tap a suggestion ("Standup tomorrow 9am", "Dentist Tue 4:30pm", "Climbing Thu 6pm at Hattiban Wall"). It fills the field and the preview updates.
-11. Tap save. The sheet closes, the event joins the right day, the grid dots update, the agenda scrolls to that day, and the new event card is tinted primary container for 2.4s. A snackbar reads "Added Climbing to Thu 8 Oct" for 3.2s.
-12. Cancel, Escape, or a tap on the scrim closes the sheet. Focus returns to the FAB.
 
 ## Structure
 
@@ -58,76 +45,6 @@ The home screen of Ochre, a fictional personal calendar, in a Material 3 Express
 - FAB: a `button` with `aria-haspopup="dialog"`. Fixed, right 16px, bottom 34px + 12px.
 - Quick add: a native `dialog` opened with `showModal()`. A `form` holds a labelled `input`, a polite live region for the chips, a suggestion group, and the two actions.
 - Snackbar: a `div role="status"`, fixed above the FAB.
-
-## Tokens
-
-```css
-:root {
-  /* tonal scheme from seed #B4532F (terracotta) */
-  --primary: #9a4524;          /* today, Now line, save button, focus */
-  --on-primary: #ffffff;
-  --pc: #ffdbcf;               /* primary container: FAB, selected day, new event */
-  --on-pc: #3a0b00;
-  --sc: #f5ded5;               /* secondary container: suggestions, avatar */
-  --on-sc: #2c160e;
-  --surface: #fff8f5;          /* page */
-  --s1: #fcf0eb;               /* event cards, sheet */
-  --s2: #f7e8e1;               /* calendar card */
-  --s3: #f1e1d9;               /* day number tile */
-  --s4: #ead9d0;               /* text field */
-  --ink: #231915;
-  --ink2: #55433d;             /* secondary text */
-  --outline: #86736c;
-  --ov: #dac2b9;               /* outline variant: chip borders */
-  --inverse: #392e2a;          /* snackbar */
-  --on-inverse: #ffede7;
-
-  /* event categories */
-  --work: #b4532f;
-  --social: #2e6b5f;
-  --health: #8f6c00;
-
-  --font: "Roboto Flex", system-ui, sans-serif;
-
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
-  --r-chip: 12px; --r-field: 20px; --r-event: 20px; --r-fab: 22px; --r-card: 28px; --r-sheet: 28px;
-
-  --fab-shadow: 0 3px 8px rgba(58, 11, 0, .18), 0 1px 2px rgba(58, 11, 0, .12);
-  --scrim: rgba(35, 25, 21, .36);
-
-  --emph: cubic-bezier(.2, 0, 0, 1);         /* emphasized */
-  --emph-dec: cubic-bezier(.05, .7, .1, 1);  /* emphasized decelerate, enter */
-  --emph-acc: cubic-bezier(.3, 0, .8, .15);  /* emphasized accelerate, exit */
-  --dur-fold: 420ms;
-  --dur-sheet-in: 450ms;
-  --dur-sheet-out: 200ms;
-}
-```
-
-## Typography
-
-One variable family, Roboto Flex, at two optical sizes. The month title uses the wide axis and the big optical size. Everything else is text size.
-
-| Role | Size | Weight | Axes | Colour |
-| --- | --- | --- | --- | --- |
-| Month name | clamp(26px, 7.6vw, 32px) | 760 | wdth 112, opsz 72, tracking -0.02em | `--ink` |
-| Year | same as month | 400 | wdth 100, opsz 72 | `--ink2` |
-| Weekday initials | 12px | 650 | default | `--ink2` |
-| Date number | 15px | 500, 700 when selected or today | default | `--ink` |
-| Day header number | 20px | 720 | wdth 110 | `--ink` or `--on-primary` |
-| Day header weekday | 16px | 680 | default | `--ink` |
-| Day header sub line | 12.5px | 500 | default | `--ink2` |
-| Event time start | 14px | 700 | tabular numbers | `--ink` |
-| Event time end | 12.5px | 400 | tabular numbers | `--ink2` |
-| Event title | 16px | 620 | default, one line, ellipsis | `--ink` |
-| Event meta | 13px | 400 | default | `--ink2` |
-| Now label | 12px | 750 | default | `--primary` |
-| FAB label | 17px | 700 | default | `--on-pc` |
-| Sheet title | 24px | 720 | wdth 108 | `--ink` |
-| Field text | 19px | 500 | default | `--ink` |
-| Chip | 14px | 600 | default | `--ink` |
-
-Load the font with the `opsz,wdth,wght` axes: `opsz 8..144`, `wdth 25..151`, `wght 400..800`.
 
 ## Motion
 
@@ -207,6 +124,95 @@ Nothing loops. The screen is still when nobody touches it.
 - [ ] "Lunch with Asha Fri 1pm" parses to "Lunch with Asha", "Fri 9 Oct", "13:00 – 14:00", "Asha".
 - [ ] "Climbing Thu 6pm at Hattiban Wall" lands on Thursday 8 October with place Hattiban Wall.
 - [ ] After save, the snackbar reads "Added <title> to <date>" for 3.2s.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: October 2026, month view open. Today is Saturday 3 October and is selected. The agenda is scrolled so the Saturday header sits at the top of the list.
+2. The Saturday group shows four events. The Now line reads 14:10 and sits between the 12:30 brunch and the 16:00 pottery class.
+3. Tap any date in the grid. That date becomes selected (tonal container shape), and the agenda smooth-scrolls so the first group on or after that date sits at the top. Dates with no events scroll to the next date that has events.
+4. Scroll the agenda by hand. When a new day header reaches the top, the grid selection follows it. Programmatic scrolls lock this for 700ms so the selection does not flicker through the days in between.
+5. Tap the month title, tap the grab handle, or drag the calendar card up more than 30px. The grid folds to one 44px row, the row that holds the selected date. The chevron turns 180°. Drag down more than 30px, or tap again, to unfold.
+6. While folded, selecting a date in another week slides the strip to that week.
+7. Tap Today. The agenda scrolls back to Saturday 3 and Saturday is selected again.
+8. Tap the FAB ("New"). A modal sheet slides up from the bottom over a 36% scrim. The field is focused and holds "Lunch with Asha Fri 1pm". Under it four chips read: "Lunch with Asha", "Fri 9 Oct", "13:00 – 14:00", "Asha". The save button reads "Add to Fri 9 Oct".
+9. Edit the field. The chips rebuild on every keystroke. Empty field: no chips, save is disabled and reads "Add".
+10. Tap a suggestion ("Standup tomorrow 9am", "Dentist Tue 4:30pm", "Climbing Thu 6pm at Hattiban Wall"). It fills the field and the preview updates.
+11. Tap save. The sheet closes, the event joins the right day, the grid dots update, the agenda scrolls to that day, and the new event card is tinted primary container for 2.4s. A snackbar reads "Added Climbing to Thu 8 Oct" for 3.2s.
+12. Cancel, Escape, or a tap on the scrim closes the sheet. Focus returns to the FAB.
+
+## Tokens
+
+```css
+:root {
+  /* tonal scheme from seed #B4532F (terracotta) */
+  --primary: #9a4524;          /* today, Now line, save button, focus */
+  --on-primary: #ffffff;
+  --pc: #ffdbcf;               /* primary container: FAB, selected day, new event */
+  --on-pc: #3a0b00;
+  --sc: #f5ded5;               /* secondary container: suggestions, avatar */
+  --on-sc: #2c160e;
+  --surface: #fff8f5;          /* page */
+  --s1: #fcf0eb;               /* event cards, sheet */
+  --s2: #f7e8e1;               /* calendar card */
+  --s3: #f1e1d9;               /* day number tile */
+  --s4: #ead9d0;               /* text field */
+  --ink: #231915;
+  --ink2: #55433d;             /* secondary text */
+  --outline: #86736c;
+  --ov: #dac2b9;               /* outline variant: chip borders */
+  --inverse: #392e2a;          /* snackbar */
+  --on-inverse: #ffede7;
+
+  /* event categories */
+  --work: #b4532f;
+  --social: #2e6b5f;
+  --health: #8f6c00;
+
+  --font: "Roboto Flex", system-ui, sans-serif;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
+  --r-chip: 12px; --r-field: 20px; --r-event: 20px; --r-fab: 22px; --r-card: 28px; --r-sheet: 28px;
+
+  --fab-shadow: 0 3px 8px rgba(58, 11, 0, .18), 0 1px 2px rgba(58, 11, 0, .12);
+  --scrim: rgba(35, 25, 21, .36);
+
+  --emph: cubic-bezier(.2, 0, 0, 1);         /* emphasized */
+  --emph-dec: cubic-bezier(.05, .7, .1, 1);  /* emphasized decelerate, enter */
+  --emph-acc: cubic-bezier(.3, 0, .8, .15);  /* emphasized accelerate, exit */
+  --dur-fold: 420ms;
+  --dur-sheet-in: 450ms;
+  --dur-sheet-out: 200ms;
+}
+```
+
+## Typography
+
+One variable family, Roboto Flex, at two optical sizes. The month title uses the wide axis and the big optical size. Everything else is text size.
+
+| Role | Size | Weight | Axes | Colour |
+| --- | --- | --- | --- | --- |
+| Month name | clamp(26px, 7.6vw, 32px) | 760 | wdth 112, opsz 72, tracking -0.02em | `--ink` |
+| Year | same as month | 400 | wdth 100, opsz 72 | `--ink2` |
+| Weekday initials | 12px | 650 | default | `--ink2` |
+| Date number | 15px | 500, 700 when selected or today | default | `--ink` |
+| Day header number | 20px | 720 | wdth 110 | `--ink` or `--on-primary` |
+| Day header weekday | 16px | 680 | default | `--ink` |
+| Day header sub line | 12.5px | 500 | default | `--ink2` |
+| Event time start | 14px | 700 | tabular numbers | `--ink` |
+| Event time end | 12.5px | 400 | tabular numbers | `--ink2` |
+| Event title | 16px | 620 | default, one line, ellipsis | `--ink` |
+| Event meta | 13px | 400 | default | `--ink2` |
+| Now label | 12px | 750 | default | `--primary` |
+| FAB label | 17px | 700 | default | `--on-pc` |
+| Sheet title | 24px | 720 | wdth 108 | `--ink` |
+| Field text | 19px | 500 | default | `--ink` |
+| Chip | 14px | 600 | default | `--ink` |
+
+Load the font with the `opsz,wdth,wght` axes: `opsz 8..144`, `wdth 25..151`, `wght 400..800`.
 
 ## Implementation notes
 

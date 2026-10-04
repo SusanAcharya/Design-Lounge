@@ -4,26 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The opening of a site for Kiln, a motion studio in Lisbon. The page is black. The studio name KILN fills the middle at 26vw in Archivo Black Expanded, and the letters are windows onto a looping CSS-drawn sunset: an orange sky, an amber striped sun, a crimson ridge, a black ridge and dashed light on black water, all drifting. As you scroll, the word scales up around the centre of its I. The I grows until it covers the screen, so the scene fills the frame. Then the next headline, "Title sequences and brand films for things that need to move first.", rises over the scene in black. The detail worth copying is the knockout: a black layer with white text, set to `mix-blend-mode: multiply` over the scene, so the mask is a normal text element you can scale with `transform`.
 
 This is not `footer-giant-wordmark-reveal`, where letters rise out of an edge. It is not `hero-flashlight-reveal`, where a cursor spotlight reveals a layer. Here the word is the mask, and scale is the reveal.
-
-## Reference behaviour
-
-1. Initial state, scroll 0, 1280×800: black page. Fixed top bar: "KILN" logo on the left, "Work Studio Contact" in 12px mono on the right, bone colour. KILN at 26vw (333px) is centred, the scene moving inside the letters. The sun sits behind the I and L. Bottom row: "Motion & title design / Lisbon, since 2014" left, a down arrow and "Scroll" centre, "212 films / 9 people, one kiln" right.
-2. The scene loops all the time: the sun rises 4vmin and back every 18s, the crimson ridge drifts one tile left every 64s, the black ridge every 30s, and three dashed light bands every 7s, 4.5s and 3s.
-3. The section is a 420vh runway. The stage inside is `position: sticky; top: 0; height: 100vh; overflow: hidden`.
-4. Progress `t` runs 0 to 1 over the runway's 320vh of travel.
-5. t 0 to 0.06: the bottom row fades out.
-6. t 0.04 to 0.60: the knockout scales from 1 to `maxScale` with a cubic ease-in on the exponent. It grows slowly at first, then rushes. The transform origin is the centre of the I, so the I stays under the viewer's eye and swallows the screen.
-7. By t 0.58 the I covers the whole viewport, so the frame shows the full scene. t 0.58 to 0.64: the knockout fades to opacity 0, then gets `visibility: hidden`. This step is invisible, because white over the scene in multiply already shows the scene.
-8. t > 0.5: the top bar text turns black so it reads on the orange sky.
-9. t 0.64 to 0.82: the next headline block fades in and rises 48px, with a cubic ease-out. It holds from 0.82 to 1.
-10. After the runway, a black "Selected work" section scrolls up over the end of the scene: four numbered rows with title and type, then a big email link with a 4px orange underline. The top bar turns back to bone.
-11. Scrolling back up runs everything in reverse.
-12. With reduced motion: no pinning, no scaling. The word shows as solid amber on black for one screen. The scene follows below it as a still picture, with the headline already on it.
 
 ## Structure
 
@@ -53,60 +40,6 @@ then: section.work (black), list + email
 - The knockout is `aria-hidden`. A visually hidden `h1` reads "Kiln, a motion studio in Lisbon".
 - The I is wrapped in `span#stem` so JS can measure it.
 - The ridges are inline SVGs, 200% wide, each path holding two identical periods so a −50% translate loops.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --black: #000;        /* page and knockout. Must be pure black for multiply */
-  --bone: #f4ede4;      /* text on black */
-  --bone-2: #a89f94;    /* secondary text on black */
-  --line: #2a2522;      /* row rules */
-  --flame: #ff5b14;     /* sky */
-  --sun: #ffb21e;       /* sun, light bands, reduced-motion word */
-  --ember: #b3122e;     /* far ridge, light bands */
-  --focus: #ffb21e;
-
-  /* type */
-  --grot: "Archivo", system-ui, sans-serif;   /* wdth 100 and 125 */
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --size-word: 26vw;
-  --size-over: clamp(30px, 4.6vw, 64px);
-  --size-work: clamp(22px, 3vw, 40px);
-  --size-mail: clamp(24px, 4vw, 52px);
-  --size-label: 12px;
-
-  /* space */
-  --pad-x: clamp(20px, 4vw, 48px);
-  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 56px; --space-5: 96px;
-
-  /* scroll */
-  --runway: 420vh;
-
-  /* motion */
-  --ease: cubic-bezier(.16, 1, .3, 1);
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --sun-cycle: 9s;      /* one way, alternate */
-  --ridge-far: 64s;
-  --ridge-near: 30s;
-  --band-1: 7s; --band-2: 4.5s; --band-3: 3s;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight / width | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Mask word | Archivo | 26vw (28vw under 640px) | 900, `font-stretch: 125%` | 0.74 | -0.045em | Upper |
-| Logo | Archivo | 18px | 900, 125% | 1 | -0.02em | Upper |
-| Next headline | Archivo | clamp(30px, 4.6vw, 64px) | 900, 125% | 0.98 | -0.03em | Sentence, max 15em |
-| Service chip | Archivo | 13px | 700, 100% | 1.2 | 0.04em | Upper, 2px border |
-| Work title | Archivo | clamp(22px, 3vw, 40px) | 800, 125% | 1.05 | -0.02em | Sentence |
-| Email | Archivo | clamp(24px, 4vw, 52px) | 900, 125% | 1.1 | -0.03em | Lower, 4px flame underline |
-| Labels, nav, meta | IBM Plex Mono | 12px | 500 | 1.5 | 0.08em | Upper |
-
-Load Archivo with the width axis: `family=Archivo:wdth,wght@100,500;100,700;125,800;125,900`. Without the expanded cut the I is too thin to fill the screen at a sane scale.
 
 ## Motion
 
@@ -180,6 +113,79 @@ Linear easing is used only for the endless drifts. Every scrubbed value is eased
 - [ ] Scene colours: sky `#ff5b14`, sun `#ffb21e`, far ridge `#b3122e`, near ridge and water `#000`.
 - [ ] The headline reads "Title sequences and brand films for things that need to move first."
 - [ ] The work list shows Salt Year, Tramline 28, Orla Ferries and The Long Kitchen, then fire@kiln.studio.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state, scroll 0, 1280×800: black page. Fixed top bar: "KILN" logo on the left, "Work Studio Contact" in 12px mono on the right, bone colour. KILN at 26vw (333px) is centred, the scene moving inside the letters. The sun sits behind the I and L. Bottom row: "Motion & title design / Lisbon, since 2014" left, a down arrow and "Scroll" centre, "212 films / 9 people, one kiln" right.
+2. The scene loops all the time: the sun rises 4vmin and back every 18s, the crimson ridge drifts one tile left every 64s, the black ridge every 30s, and three dashed light bands every 7s, 4.5s and 3s.
+3. The section is a 420vh runway. The stage inside is `position: sticky; top: 0; height: 100vh; overflow: hidden`.
+4. Progress `t` runs 0 to 1 over the runway's 320vh of travel.
+5. t 0 to 0.06: the bottom row fades out.
+6. t 0.04 to 0.60: the knockout scales from 1 to `maxScale` with a cubic ease-in on the exponent. It grows slowly at first, then rushes. The transform origin is the centre of the I, so the I stays under the viewer's eye and swallows the screen.
+7. By t 0.58 the I covers the whole viewport, so the frame shows the full scene. t 0.58 to 0.64: the knockout fades to opacity 0, then gets `visibility: hidden`. This step is invisible, because white over the scene in multiply already shows the scene.
+8. t > 0.5: the top bar text turns black so it reads on the orange sky.
+9. t 0.64 to 0.82: the next headline block fades in and rises 48px, with a cubic ease-out. It holds from 0.82 to 1.
+10. After the runway, a black "Selected work" section scrolls up over the end of the scene: four numbered rows with title and type, then a big email link with a 4px orange underline. The top bar turns back to bone.
+11. Scrolling back up runs everything in reverse.
+12. With reduced motion: no pinning, no scaling. The word shows as solid amber on black for one screen. The scene follows below it as a still picture, with the headline already on it.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --black: #000;        /* page and knockout. Must be pure black for multiply */
+  --bone: #f4ede4;      /* text on black */
+  --bone-2: #a89f94;    /* secondary text on black */
+  --line: #2a2522;      /* row rules */
+  --flame: #ff5b14;     /* sky */
+  --sun: #ffb21e;       /* sun, light bands, reduced-motion word */
+  --ember: #b3122e;     /* far ridge, light bands */
+  --focus: #ffb21e;
+
+  /* type */
+  --grot: "Archivo", system-ui, sans-serif;   /* wdth 100 and 125 */
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --size-word: 26vw;
+  --size-over: clamp(30px, 4.6vw, 64px);
+  --size-work: clamp(22px, 3vw, 40px);
+  --size-mail: clamp(24px, 4vw, 52px);
+  --size-label: 12px;
+
+  /* space */
+  --pad-x: clamp(20px, 4vw, 48px);
+  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 56px; --space-5: 96px;
+
+  /* scroll */
+  --runway: 420vh;
+
+  /* motion */
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --sun-cycle: 9s;      /* one way, alternate */
+  --ridge-far: 64s;
+  --ridge-near: 30s;
+  --band-1: 7s; --band-2: 4.5s; --band-3: 3s;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight / width | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Mask word | Archivo | 26vw (28vw under 640px) | 900, `font-stretch: 125%` | 0.74 | -0.045em | Upper |
+| Logo | Archivo | 18px | 900, 125% | 1 | -0.02em | Upper |
+| Next headline | Archivo | clamp(30px, 4.6vw, 64px) | 900, 125% | 0.98 | -0.03em | Sentence, max 15em |
+| Service chip | Archivo | 13px | 700, 100% | 1.2 | 0.04em | Upper, 2px border |
+| Work title | Archivo | clamp(22px, 3vw, 40px) | 800, 125% | 1.05 | -0.02em | Sentence |
+| Email | Archivo | clamp(24px, 4vw, 52px) | 900, 125% | 1.1 | -0.03em | Lower, 4px flame underline |
+| Labels, nav, meta | IBM Plex Mono | 12px | 500 | 1.5 | 0.08em | Upper |
+
+Load Archivo with the width axis: `family=Archivo:wdth,wght@100,500;100,700;125,800;125,900`. Without the expanded cut the I is too thin to fill the screen at a sane scale.
 
 ## Implementation notes
 

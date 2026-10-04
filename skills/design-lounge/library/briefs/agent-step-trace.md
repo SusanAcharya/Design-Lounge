@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A trace of how a yard note was drafted. Four steps: read the gate note, check the hold rule, draft the reply, wait for a person. The first is expanded and names the tool ledger.get. The others collapse. Opening one closes the rest. The last step has no tool and says the draft stays until someone sends it. This is not a human audit log. That log is `audit-activity-log`. This is not a chat. A chat is `chat-thread`. A question box that does not answer is `prompt-composer`.
-
-## Reference behaviour
-
-1. The first step is aria-expanded true and its body is visible.
-2. The body names the tool and one result sentence.
-3. Clicking another step closes the open one and opens the clicked step.
-4. Clicking the open step closes it, so zero steps may be open.
-5. Tools are ledger.get, rules.hold, and notes.draft. The fourth step has no tool.
-6. Every result says the work stayed on the page. Nothing was sent.
-7. The status words are Done, Done, Done, and Waiting.
 
 ## Structure
 
@@ -33,23 +25,6 @@ step row
 - The body sits under the button and hides with the hidden attribute.
 - Tool names are code in IBM Plex Mono on #e7f2ec.
 - One step open at a time, or none.
-
-## Tokens
-
-```css
-:root {
-  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
-  --line:#e4dfd4; --primary:#1f4d3a; --soft:#e7f2ec;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Title | IBM Plex Sans | 22px | 600 | 1.2 | 0 |
-| Step | IBM Plex Sans | 15px | 500 | 1.45 | 0 |
-| Tool | IBM Plex Mono | 13px | 500 | 1 | 0 |
 
 ## Motion
 
@@ -97,16 +72,6 @@ step row
 - [ ] Third tool is notes.draft.
 - [ ] Fourth status is Waiting.
 
-## Implementation notes
-
-Close every body, then open the clicked one only if it was closed.
-
-```js
-const open = b.getAttribute("aria-expanded") !== "true";
-```
-
-Do not invent a model response. The trace is the record of tools, not a paragraph of advice.
-
 ## Measurements to keep
 
 - Card 640px, radius 2px.
@@ -151,6 +116,47 @@ Do not invent a model response. The trace is the record of tools, not a paragrap
 - Sans is IBM Plex Sans.
 - Mono is IBM Plex Mono.
 - There are four steps.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first step is aria-expanded true and its body is visible.
+2. The body names the tool and one result sentence.
+3. Clicking another step closes the open one and opens the clicked step.
+4. Clicking the open step closes it, so zero steps may be open.
+5. Tools are ledger.get, rules.hold, and notes.draft. The fourth step has no tool.
+6. Every result says the work stayed on the page. Nothing was sent.
+7. The status words are Done, Done, Done, and Waiting.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
+  --line:#e4dfd4; --primary:#1f4d3a; --soft:#e7f2ec;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Title | IBM Plex Sans | 22px | 600 | 1.2 | 0 |
+| Step | IBM Plex Sans | 15px | 500 | 1.45 | 0 |
+| Tool | IBM Plex Mono | 13px | 500 | 1 | 0 |
+
+## Implementation notes
+
+Close every body, then open the clicked one only if it was closed.
+
+```js
+const open = b.getAttribute("aria-expanded") !== "true";
+```
+
+Do not invent a model response. The trace is the record of tools, not a paragraph of advice.
 
 ---
 

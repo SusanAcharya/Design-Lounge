@@ -4,25 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The "Pick a time" screen of Willowmere Studio, a massage and bodywork studio on Canal Street. A service card names the treatment and the price. Under it, a 14-day date strip scrolls sideways, with fully booked days drawn dashed and struck through. Times are grouped Morning, Afternoon and Evening as chips, with taken times dashed and struck through too. A row of therapist avatars, with "Any" first, sits under the times. Once a time is chosen, a bar slides up from the bottom: "Thu 8 Oct, 14:30 · Confirm" with the price on the right. The feel is calm and soft: cream paper, sage, a deep green for anything chosen. The detail to copy: unavailable things stay in place, dashed and struck, so the grid never reflows when availability changes.
 
 The language is iOS-ish: 16px radii, a sheet spring for the bar, no glass. Headings are a soft serif (Fraunces with SOFT 100). Body is a humanist sans (Source Sans 3).
-
-## Reference behaviour
-
-1. First frame: Thursday 8 October is the chosen day and 14:30 the chosen time. The bar is up and reads "Thu 8 Oct, 14:30 · Confirm" and "€78". The line above the button reads "Any therapist · 60 min" and "Pay at the studio".
-2. The date strip runs from Saturday 3 October ("Today") to Friday 16 October. On load it scrolls so the chosen day sits in the middle. Sunday 4, Wednesday 7, Sunday 11 and Tuesday 13 are fully booked: transparent, dashed border, date struck through, disabled.
-3. The "Time" heading names the chosen day in serif on the right: "Thursday 8".
-4. Each time group shows its name and a count: "Morning 3 open". If no time in a group is free, the count reads "full" and a sage note replaces the chips: "No morning times with any therapist on this day."
-5. Tap a free day: it fills deep green. The time grid redraws for that day. If the chosen time is still free on the new day, it stays chosen and the bar updates its date. If not, the time clears and the bar slides down.
-6. Tap a free time chip: it fills deep green, any other chip clears, and the bar slides up (if down) and updates its label.
-7. Taken chips and booked days do nothing.
-8. Tap a therapist: a 2px deep green ring appears around the avatar with a 2px cream gap, and the name turns bold. Availability redraws for that person. The service card subtitle becomes "60 min · with Ada". Ada is senior, so the price becomes €88 on the card and in the bar.
-9. Tap Confirm: the button turns a lighter green and shows a 20px SVG tick and "Booked · Thu 8 Oct, 14:30". A polite live region announces "Booked for Thursday 8 October at 14:30". Changing the day, time or therapist after that resets the button to Confirm.
-10. Timezone note under the therapists: "Times are Berlin time, CEST (UTC+2). Free to move up to 24 hours before."
-11. The back button is present and does nothing in the demo.
 
 ## Structure
 
@@ -65,58 +53,6 @@ The language is iOS-ish: 16px radii, a sheet spring for the bar, no glass. Headi
 - The therapist row is a `div role="radiogroup"` of `button role="radio"` with `aria-checked` and a roving `tabindex`.
 - The bar is a fixed `div` at the bottom, made `inert` while hidden.
 - The page ends with a `::after` spacer of 156px plus the bottom clearance, so the last rows can scroll clear of the bar.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4efe4;          /* cream page and bar */
-  --surface: #fbf8f1;     /* card, days, chips */
-  --sage: #b7c4ab;        /* hover border, weekday on chosen day, Any ring */
-  --sage-soft: #e1e7d8;   /* leaf tile, "full" note, Maren's avatar */
-  --green: #23402f;       /* chosen day, chosen time, Confirm, focus */
-  --green-2: #36573f;     /* Booked */
-  --on-green: #f4efe4;
-  --ink: #1f2a22;
-  --ink-2: #4b574e;
-  --ink-3: #6c766f;
-  --line: #e0d9c9;        /* borders and the bar's top rule */
-  --av-clay: #ecdcc8; --av-mist: #dbe3e3; --av-sand: #e8e0cf;
-
-  --serif: "Fraunces", Georgia, serif;          /* font-variation-settings "SOFT" 100, "WONK" 0 */
-  --sans: "Source Sans 3", system-ui, sans-serif;
-
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
-  --r: 16px;              /* card, days, Confirm */
-  --r-chip: 14px;         /* time chips */
-  --r-tile: 14px;         /* leaf tile */
-
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --ios: cubic-bezier(.32, .72, 0, 1);
-  --micro: 160ms;
-  --layout: 320ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Notes |
-| --- | --- | --- | --- | --- |
-| Heading | Fraunces SOFT 100 | 30px | 560 | line-height 1.1, -0.01em |
-| Service name | Fraunces SOFT 100 | 18px | 560 | line-height 1.2 |
-| Price | Fraunces SOFT 100 | 20px | 600 | `--green`, tabular |
-| Section label | Source Sans 3 | 13px | 700 | caps, 0.08em, `--ink-2` |
-| Section value | Fraunces SOFT 100 | 16px | 560 | `--ink` |
-| Day weekday | Source Sans 3 | 12px | 600 | `--ink-3` |
-| Day date | Fraunces SOFT 100 | 22px | 560 | tabular |
-| Group name | Source Sans 3 | 14px | 600 | count 400 `--ink-3` |
-| Time chip | Source Sans 3 | 16px | 600 | tabular; taken 400 struck |
-| Avatar initials | Fraunces SOFT 100 | 18px | 560 | `--green` |
-| Avatar name | Source Sans 3 | 13px | 400 | chosen 700 `--ink` |
-| Body, notes | Source Sans 3 | 14–16px | 400 | line-height 1.45 |
-| Confirm | Source Sans 3 | 17px | 700 | price in Fraunces 19px 600 |
-
-Load Fraunces with its SOFT axis: `family=Fraunces:opsz,wght,SOFT@9..144,500..600,100`. Without SOFT 100 the serif is sharp and the piece loses its tone.
 
 ## Motion
 
@@ -193,6 +129,76 @@ Nothing loops. Reduced motion: every transition drops to 1ms. The bar appears an
 - [ ] Therapists: Any, Maren (MO), Jonah (JR), Ada (AL, €88), Teo (TK).
 - [ ] Chosen fill `#23402f`, page `#f4efe4`, radii 16px and 14px.
 - [ ] Headings in Fraunces SOFT 100, body in Source Sans 3.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Thursday 8 October is the chosen day and 14:30 the chosen time. The bar is up and reads "Thu 8 Oct, 14:30 · Confirm" and "€78". The line above the button reads "Any therapist · 60 min" and "Pay at the studio".
+2. The date strip runs from Saturday 3 October ("Today") to Friday 16 October. On load it scrolls so the chosen day sits in the middle. Sunday 4, Wednesday 7, Sunday 11 and Tuesday 13 are fully booked: transparent, dashed border, date struck through, disabled.
+3. The "Time" heading names the chosen day in serif on the right: "Thursday 8".
+4. Each time group shows its name and a count: "Morning 3 open". If no time in a group is free, the count reads "full" and a sage note replaces the chips: "No morning times with any therapist on this day."
+5. Tap a free day: it fills deep green. The time grid redraws for that day. If the chosen time is still free on the new day, it stays chosen and the bar updates its date. If not, the time clears and the bar slides down.
+6. Tap a free time chip: it fills deep green, any other chip clears, and the bar slides up (if down) and updates its label.
+7. Taken chips and booked days do nothing.
+8. Tap a therapist: a 2px deep green ring appears around the avatar with a 2px cream gap, and the name turns bold. Availability redraws for that person. The service card subtitle becomes "60 min · with Ada". Ada is senior, so the price becomes €88 on the card and in the bar.
+9. Tap Confirm: the button turns a lighter green and shows a 20px SVG tick and "Booked · Thu 8 Oct, 14:30". A polite live region announces "Booked for Thursday 8 October at 14:30". Changing the day, time or therapist after that resets the button to Confirm.
+10. Timezone note under the therapists: "Times are Berlin time, CEST (UTC+2). Free to move up to 24 hours before."
+11. The back button is present and does nothing in the demo.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4efe4;          /* cream page and bar */
+  --surface: #fbf8f1;     /* card, days, chips */
+  --sage: #b7c4ab;        /* hover border, weekday on chosen day, Any ring */
+  --sage-soft: #e1e7d8;   /* leaf tile, "full" note, Maren's avatar */
+  --green: #23402f;       /* chosen day, chosen time, Confirm, focus */
+  --green-2: #36573f;     /* Booked */
+  --on-green: #f4efe4;
+  --ink: #1f2a22;
+  --ink-2: #4b574e;
+  --ink-3: #6c766f;
+  --line: #e0d9c9;        /* borders and the bar's top rule */
+  --av-clay: #ecdcc8; --av-mist: #dbe3e3; --av-sand: #e8e0cf;
+
+  --serif: "Fraunces", Georgia, serif;          /* font-variation-settings "SOFT" 100, "WONK" 0 */
+  --sans: "Source Sans 3", system-ui, sans-serif;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
+  --r: 16px;              /* card, days, Confirm */
+  --r-chip: 14px;         /* time chips */
+  --r-tile: 14px;         /* leaf tile */
+
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --ios: cubic-bezier(.32, .72, 0, 1);
+  --micro: 160ms;
+  --layout: 320ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Notes |
+| --- | --- | --- | --- | --- |
+| Heading | Fraunces SOFT 100 | 30px | 560 | line-height 1.1, -0.01em |
+| Service name | Fraunces SOFT 100 | 18px | 560 | line-height 1.2 |
+| Price | Fraunces SOFT 100 | 20px | 600 | `--green`, tabular |
+| Section label | Source Sans 3 | 13px | 700 | caps, 0.08em, `--ink-2` |
+| Section value | Fraunces SOFT 100 | 16px | 560 | `--ink` |
+| Day weekday | Source Sans 3 | 12px | 600 | `--ink-3` |
+| Day date | Fraunces SOFT 100 | 22px | 560 | tabular |
+| Group name | Source Sans 3 | 14px | 600 | count 400 `--ink-3` |
+| Time chip | Source Sans 3 | 16px | 600 | tabular; taken 400 struck |
+| Avatar initials | Fraunces SOFT 100 | 18px | 560 | `--green` |
+| Avatar name | Source Sans 3 | 13px | 400 | chosen 700 `--ink` |
+| Body, notes | Source Sans 3 | 14–16px | 400 | line-height 1.45 |
+| Confirm | Source Sans 3 | 17px | 700 | price in Fraunces 19px 600 |
+
+Load Fraunces with its SOFT axis: `family=Fraunces:opsz,wght,SOFT@9..144,500..600,100`. Without SOFT 100 the serif is sharp and the piece loses its tone.
 
 ## Implementation notes
 

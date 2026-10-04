@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the box uses `--radius` and `--control` as its minimum height. A chip that filters a list is `filter-toolbar`. A chip here is a value the person typed.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A field that holds several names. The label is "On the truck." Rice and Oil start as chips. The input says "Add a load." Enter commits the typed name as a new chip and clears the input. A name already on the truck is not added again, ignoring case. Each chip has a remove control, 24px inside a 28px chip, named "Remove Rice" or "Remove Oil". Backspace on an empty input removes the last chip. The hint says Enter adds a load and a repeated name is kept once. The box is 420px wide, at least 40px tall, radius 2px.
-
-## Reference behaviour
-
-1. The chips are Rice and Oil, in that order. The input is empty.
-2. Typing Tea and pressing Enter adds Tea and clears the input.
-3. Typing rice again does not add a second Rice.
-4. Remove on a chip drops that name only.
-5. Backspace while the input is empty drops the last chip.
-6. Backspace while the input has text deletes text, and does not drop a chip.
-7. An empty Enter does nothing.
-8. There is no animation. The box shows a 2px focus ring while focus is inside it.
 
 ## Structure
 
@@ -33,35 +24,6 @@ Enter adds a load. A repeated name is kept once.
 - The input is labelled by the paragraph "On the truck."
 - Each chip is a span plus a button.
 - The hint is under the box.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --surface-2: #f0ebe3;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line-strong: #cfc6b8;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Chip radius is 2px, the same as the box in this yard. The family replaces both. A pill chip survives only when the family's button is already a pill. The chip fill is `--surface-2`, not `--primary-soft`. These are values, not a selection.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 12px | 500 | `--ink-2` |
-| Chip | sans | 14px | 400 | `--ink` |
-| Input | sans | 14px | 400 | `--ink` |
-| Hint | sans | 12px | 400 | `--ink-2` |
-
-The where-line letter-spacing is 0.04em. The input has no visible border of its own. The box is the field.
 
 ## Motion
 
@@ -113,6 +75,50 @@ None. A chip appears in one frame. Reduced motion has nothing to remove.
 - [ ] Chips are `#f0ebe3`, not a soft primary.
 - [ ] The focus ring is on the box, 2px, offset 2px.
 - [ ] There is no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The chips are Rice and Oil, in that order. The input is empty.
+2. Typing Tea and pressing Enter adds Tea and clears the input.
+3. Typing rice again does not add a second Rice.
+4. Remove on a chip drops that name only.
+5. Backspace while the input is empty drops the last chip.
+6. Backspace while the input has text deletes text, and does not drop a chip.
+7. An empty Enter does nothing.
+8. There is no animation. The box shows a 2px focus ring while focus is inside it.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --surface-2: #f0ebe3;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line-strong: #cfc6b8;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Chip radius is 2px, the same as the box in this yard. The family replaces both. A pill chip survives only when the family's button is already a pill. The chip fill is `--surface-2`, not `--primary-soft`. These are values, not a selection.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 12px | 500 | `--ink-2` |
+| Chip | sans | 14px | 400 | `--ink` |
+| Input | sans | 14px | 400 | `--ink` |
+| Hint | sans | 12px | 400 | `--ink-2` |
+
+The where-line letter-spacing is 0.04em. The input has no visible border of its own. The box is the field.
 
 ## Implementation notes
 

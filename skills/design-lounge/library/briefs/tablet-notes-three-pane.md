@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A writing app ("Lekh") on a landscape tablet. Three panes sit side by side: folders, a list of notes, and an editor. The editor is a sheet of warm paper with serif text, a checklist you can tick, a pull quote, and a highlight that looks like red pencil. A dark format bar floats at the bottom of the editor. Two toggles fold the panes away: one hides the folders, focus mode hides folders and list together with a slide, so only the page is left. The detail worth copying is the single red pencil accent. It marks the selected note with a hand-drawn underline, ticks the checklist, edges the quote and nothing else.
-
-## Reference behaviour
-
-1. First frame: three panes. Folders show three groups, all open: Writing (Essays 4, Drafts 1, Letters 0), Studio (Clients 0, Meeting notes 1), Home (Recipes 1, Garden 1). Essays is current. The list shows four notes. "On keeping a commonplace book" is selected and open in the editor. Two of its four checklist items are ticked. The format bar shows "158 words". The status reads "Saved".
-2. Click a group header: its folders collapse to zero height over 380ms and the chevron turns −90°. Click again to open. Collapsed folders cannot take focus.
-3. Click a folder: it becomes current. The list title and count change. The first note in that folder opens. An empty folder shows "Nothing here yet. New notes in Letters will land here." and keeps the last note in the editor.
-4. Type in the search field: the list filters by title and body as you type. No match shows "No match. Try a shorter word."
-5. Click a note in the list: it gets the paper background and a red pencil squiggle under its title. The editor shows its title, folder, edit date and body. The page scrolls to the top.
-6. Tick a checklist box: the box fills red, a white tick draws in, and the text turns grey with a red strike line. Click again to untick.
-7. Type in the title or body: the status reads "Saving". 700ms after the last key it reads "Saved", the edit date becomes "Edited 3 Oct 2026, 22:43", and the list snippet updates. The word count updates on every key.
-8. Format bar: B and I toggle bold and italic on the selection. H turns the current block into a heading, or back into a paragraph. The checklist button inserts a new unticked item after the current block, with "New item" selected. The quote button turns the block into a quote, or back. The pencil button wraps the selection in a red pencil highlight. B, I, H and quote show a pressed state when the caret sits inside that format.
-9. Click the panel toggle in the editor header: the folders pane slides out to 0 and the list and editor move left (two panes). Click again to bring it back.
-10. Click the focus toggle: folders and list both slide out and the editor takes the full width. The text column stays 640px and centred. Click again, press Escape, or press Cmd/Ctrl + . to return to the panes you had before.
-11. The new note button (pencil, list header) adds "Untitled" at the top of the current folder, opens it, and selects the title text.
 
 ## Structure
 
@@ -56,55 +44,6 @@ A writing app ("Lekh") on a landscape tablet. Three panes sit side by side: fold
 - Essays: "On keeping a commonplace book" (22:41), "Walking the ring road at dawn" (29 Sep), "Against the tidy desk" (21 Sep), "Notes on monsoon light" (2 Sep).
 - Drafts: "Talk outline for the paper fair". Meeting notes: "Kiran, packaging review". Recipes: "Gundruk soup, the slow way". Garden: "What to sow in October".
 - The open note has: an opening paragraph, heading "What goes in", one paragraph, a four-item checklist, a quote with a cite line ("Mira Thapa, in a letter, March 2025"), heading "The rule of the margin", and a closing paragraph with "Correct in red pencil." highlighted.
-
-## Tokens
-
-```css
-:root {
-  --paper: #f6f1e7;        /* page and list background */
-  --paper-2: #efe8da;      /* folders pane */
-  --sheet: #fbf8f1;        /* editor, selected rows, search field */
-  --line: #ddd3c1;         /* pane rules, row rules */
-  --line-2: #cbbfa9;
-  --ink: #23201b;          /* text and the format bar */
-  --ink-2: #58524a;        /* snippets, icons */
-  --ink-3: #71695d;        /* dates, counts, labels */
-  --pencil: #b8402b;       /* the one accent */
-  --pencil-soft: #f1d9cf;  /* highlight fill */
-  --serif: "Literata", Georgia, serif;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-  --w-folders: 232px;
-  --w-list: 316px;
-  --r: 10px;
-  --t-fast: 150ms;
-  --t-pane: 380ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-}
-```
-
-Spacing runs on 4: 4, 8, 12, 16, 20, 24, 28, 32, 48. No drop shadows between panes, only 1px `--line` rules. The format bar is the only thing with a shadow.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Brand | Literata | 22px | 600 | 1.2 | the full stop is `--pencil` |
-| Group header | IBM Plex Sans | 12px | 600 | 1.2 | uppercase, 0.08em, `--ink-3` |
-| Folder | IBM Plex Sans | 15px | 400, current 500 | 1.45 | count 12px tabular |
-| List title | Literata | 24px | 600 | 1.2 | -0.01em; count 12.5px sans |
-| Row title | Literata | 16.5px | 600 | 1.3 | |
-| Row date | IBM Plex Sans | 12px | 400 | 1.2 | tabular, `--ink-3` |
-| Row snippet | IBM Plex Sans | 13.5px | 400 | 1.45 | two lines, clamped |
-| Note title | Literata | 38px | 600 | 1.15 | -0.015em |
-| Meta | IBM Plex Sans | 13px | 400 | 1.45 | parts split by a middle dot |
-| Body | Literata | 19px | 400 | 1.65 | measure 640px max |
-| Body heading | Literata | 24px | 600 | 1.25 | 32px above, 10px below |
-| Quote | Literata italic | 21px | 400 | 1.55 | cite 13px sans |
-| Format bar letters | Literata | 16px | 600 | 1 | B bold, I italic |
-| Word count | IBM Plex Sans | 12px | 400 | 1 | tabular |
-
-The UI is sans. Everything the person wrote is serif. Do not mix them inside a note.
 
 ## Motion
 
@@ -180,6 +119,73 @@ Nothing loops. The status text change is not animated.
 - [ ] Essays is current with four notes. "On keeping a commonplace book" is open with two of four items ticked.
 - [ ] The accent is `#b8402b`: the selected row squiggle, ticked boxes, the quote rule, the highlight and the brand full stop.
 - [ ] The editor title is Literata 38px. Body is Literata 19px/1.65.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: three panes. Folders show three groups, all open: Writing (Essays 4, Drafts 1, Letters 0), Studio (Clients 0, Meeting notes 1), Home (Recipes 1, Garden 1). Essays is current. The list shows four notes. "On keeping a commonplace book" is selected and open in the editor. Two of its four checklist items are ticked. The format bar shows "158 words". The status reads "Saved".
+2. Click a group header: its folders collapse to zero height over 380ms and the chevron turns −90°. Click again to open. Collapsed folders cannot take focus.
+3. Click a folder: it becomes current. The list title and count change. The first note in that folder opens. An empty folder shows "Nothing here yet. New notes in Letters will land here." and keeps the last note in the editor.
+4. Type in the search field: the list filters by title and body as you type. No match shows "No match. Try a shorter word."
+5. Click a note in the list: it gets the paper background and a red pencil squiggle under its title. The editor shows its title, folder, edit date and body. The page scrolls to the top.
+6. Tick a checklist box: the box fills red, a white tick draws in, and the text turns grey with a red strike line. Click again to untick.
+7. Type in the title or body: the status reads "Saving". 700ms after the last key it reads "Saved", the edit date becomes "Edited 3 Oct 2026, 22:43", and the list snippet updates. The word count updates on every key.
+8. Format bar: B and I toggle bold and italic on the selection. H turns the current block into a heading, or back into a paragraph. The checklist button inserts a new unticked item after the current block, with "New item" selected. The quote button turns the block into a quote, or back. The pencil button wraps the selection in a red pencil highlight. B, I, H and quote show a pressed state when the caret sits inside that format.
+9. Click the panel toggle in the editor header: the folders pane slides out to 0 and the list and editor move left (two panes). Click again to bring it back.
+10. Click the focus toggle: folders and list both slide out and the editor takes the full width. The text column stays 640px and centred. Click again, press Escape, or press Cmd/Ctrl + . to return to the panes you had before.
+11. The new note button (pencil, list header) adds "Untitled" at the top of the current folder, opens it, and selects the title text.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f6f1e7;        /* page and list background */
+  --paper-2: #efe8da;      /* folders pane */
+  --sheet: #fbf8f1;        /* editor, selected rows, search field */
+  --line: #ddd3c1;         /* pane rules, row rules */
+  --line-2: #cbbfa9;
+  --ink: #23201b;          /* text and the format bar */
+  --ink-2: #58524a;        /* snippets, icons */
+  --ink-3: #71695d;        /* dates, counts, labels */
+  --pencil: #b8402b;       /* the one accent */
+  --pencil-soft: #f1d9cf;  /* highlight fill */
+  --serif: "Literata", Georgia, serif;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --w-folders: 232px;
+  --w-list: 316px;
+  --r: 10px;
+  --t-fast: 150ms;
+  --t-pane: 380ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+```
+
+Spacing runs on 4: 4, 8, 12, 16, 20, 24, 28, 32, 48. No drop shadows between panes, only 1px `--line` rules. The format bar is the only thing with a shadow.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Brand | Literata | 22px | 600 | 1.2 | the full stop is `--pencil` |
+| Group header | IBM Plex Sans | 12px | 600 | 1.2 | uppercase, 0.08em, `--ink-3` |
+| Folder | IBM Plex Sans | 15px | 400, current 500 | 1.45 | count 12px tabular |
+| List title | Literata | 24px | 600 | 1.2 | -0.01em; count 12.5px sans |
+| Row title | Literata | 16.5px | 600 | 1.3 | |
+| Row date | IBM Plex Sans | 12px | 400 | 1.2 | tabular, `--ink-3` |
+| Row snippet | IBM Plex Sans | 13.5px | 400 | 1.45 | two lines, clamped |
+| Note title | Literata | 38px | 600 | 1.15 | -0.015em |
+| Meta | IBM Plex Sans | 13px | 400 | 1.45 | parts split by a middle dot |
+| Body | Literata | 19px | 400 | 1.65 | measure 640px max |
+| Body heading | Literata | 24px | 600 | 1.25 | 32px above, 10px below |
+| Quote | Literata italic | 21px | 400 | 1.55 | cite 13px sans |
+| Format bar letters | Literata | 16px | 600 | 1 | B bold, I italic |
+| Word count | IBM Plex Sans | 12px | 400 | 1 | tabular |
+
+The UI is sans. Everything the person wrote is serif. Do not mix them inside a note.
 
 ## Implementation notes
 

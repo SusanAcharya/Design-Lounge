@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A post from a professional network, for an invented product called Commons, dressed in warm paper and a book serif instead of corporate blue. It reads instantly as the familiar format: author with connection degree, role and company, age with an audience globe, text clamped to three lines with "see more", a document carousel with page counter and progress bar, a reaction summary with stacked badges and counts, and the four-button bar React, Comment, Repost, Send. The detail worth copying is the reaction picker: hover React for 350ms and a pill of five coloured reactions rises with a 30ms stagger; each lifts and shows its name on hover; the one you pick takes over the React button's icon, label and colour.
-
-## Reference behaviour
-
-1. First frame: Priya Raman, "· 2nd", "Head of Yard Operations at Halden Freight · Rotterdam", "3d · Edited · globe". Text clamped to three lines with "see more" right-aligned below. Document on page 1 of 6, progress 1/6, Prev disabled. Summary: three badges (Like, Insightful, Celebrate), "Tomas Brandt and 1,284 others", "212 comments · 48 reposts". React reads "Like".
-2. Click "see more": the clamp lifts, the button is removed, focus moves to the text.
-3. Click Follow: icon becomes a check and the label "Following" in muted ink.
-4. Document: Next/Prev buttons, Left/Right keys on the focused page, or a horizontal swipe over 40px change page. The track slides 380ms, the progress bar grows to (page/6), the counter reads "n / 6", the end button disables.
-5. Hover the React button with a mouse for 350ms: the picker opens above it. Leaving the React area for 300ms closes it; re-entering cancels the close.
-6. Hover a reaction: it lifts 6px and scales 1.18, and a dark label pill (Like, Celebrate, Support, Insightful, Curious) appears above it.
-7. Click a reaction: the picker closes, React shows that icon and label in the reaction's colour with a pop, the summary reads "You, Tomas Brandt and 1,284 others", and if the reaction is not already in the badge stack it takes the first badge slot.
-8. Click React without opening the picker: toggles Like on, or removes whatever reaction you had.
-9. Keyboard: on React press Arrow Up to open the picker with focus on your current reaction (or Like). Left/Right move between reactions (wrapping), Enter/Space choose, Escape or Arrow Down close and return focus to React. Tab out closes it.
-10. Touch: press and hold React for 450ms to open the picker without reacting.
-11. Click Comment: the comment section opens and the field is focused. Click "212 comments" to toggle the section. Posting a comment prepends it as "You · Just now" and the count rolls 212 → 213.
-12. Click Repost: toggles green.
 
 ## Structure
 
@@ -56,63 +43,6 @@ stage 1280×800, warm paper, card centred
 - Actions: `role="group"` of four buttons. React has `aria-haspopup`, `aria-expanded`, `aria-pressed`, and `aria-describedby` pointing at a hidden "Press Arrow Up for more reactions" hint.
 - Picker: `role="toolbar" aria-label="Reactions"` of five buttons with `aria-pressed`, roving tabindex.
 - Comments: `section` with a `form` (hidden label, input, submit) and a `ul`.
-
-## Tokens
-
-```css
-:root {
-  --stage: #ebe3d4;        /* page */
-  --card: #fbf7ef;         /* card */
-  --sunk: #f3ecdf;         /* document band, hover, comment bubbles */
-  --line: #e0d5c2;
-  --line-2: #cfc2ab;
-  --ink: #24201b;
-  --ink-2: #544d45;
-  --ink-3: #71685e;
-  --accent: #2f5e4b;       /* Follow, links, focus, Post, repost on */
-  --accent-soft: rgba(47,94,75,.1);
-  --inkblue: #2e3f7a;      /* avatar, kickers, italic words, big numerals */
-  --paper: #f6eedd;        /* document sheets */
-  /* reactions: each one colour, all ≥ 4.5:1 on the card */
-  --r-like: #2f5e8c;
-  --r-celebrate: #3d7f4f;
-  --r-support: #b4492f;
-  --r-insight: #93680f;
-  --r-curious: #6b5a8e;
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Public Sans", system-ui, sans-serif;
-  --r: 10px;
-  --t-micro: 150ms;
-  --t-picker: 260ms;
-  --t-slide: 380ms;
-  --hover-delay: 350ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --ease-pop: cubic-bezier(.34,1.56,.64,1);
-}
-```
-
-Sheet shadow `0 8px 20px -14px rgba(36,32,27,.5)`; picker shadow `0 12px 28px -12px rgba(36,32,27,.45)`. The card itself only has a 1px bottom lip, `0 1px 0 rgba(36,32,27,.05)`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Author name | Newsreader | 17px | 600 | 1.2 | -0.005em |
-| Degree | Public Sans | 13px | 400 | | `--ink-3` |
-| Role | Public Sans | 13px | 400 | 1.35 | `--ink-2` |
-| Age | Public Sans | 12px | 400 | | `--ink-3` |
-| Body | Public Sans | 14.5px | 400 | 1.5 | 3-line clamp |
-| Avatar initials | Newsreader italic | 22px | 500 | 1 | paper on ink blue |
-| Doc kicker | Public Sans | 10.5px | 600 | | 0.14em uppercase, ink blue |
-| Doc headline | Newsreader | clamp(22px, 5.4vw, 34px) | 500 | 1.08 | -0.015em, max 16ch |
-| Doc numeral | Newsreader italic | 150px | 400 | 1 | ink blue at 13% |
-| Doc quote | Newsreader italic | clamp(18px, 4.2vw, 25px) | 400 | 1.25 | max 24ch |
-| Action label | Public Sans | 14px | 600 | | |
-| Reaction tooltip | Public Sans | 11.5px | 600 | | card on ink pill |
-| Comment author | Newsreader | 14px | 600 | | |
-
-Serif is for people and documents; sans is for UI. Keep that split.
 
 ## Motion
 
@@ -182,6 +112,82 @@ Serif is for people and documents; sans is for UI. Keep that split.
 - [ ] Summary starts "Tomas Brandt and 1,284 others · 212 comments · 48 reposts".
 - [ ] Reactions in order: Like, Celebrate, Support, Insightful, Curious.
 - [ ] The seeded comment is from Elif Demir, Depot Manager, Kestrow Logistics.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Priya Raman, "· 2nd", "Head of Yard Operations at Halden Freight · Rotterdam", "3d · Edited · globe". Text clamped to three lines with "see more" right-aligned below. Document on page 1 of 6, progress 1/6, Prev disabled. Summary: three badges (Like, Insightful, Celebrate), "Tomas Brandt and 1,284 others", "212 comments · 48 reposts". React reads "Like".
+2. Click "see more": the clamp lifts, the button is removed, focus moves to the text.
+3. Click Follow: icon becomes a check and the label "Following" in muted ink.
+4. Document: Next/Prev buttons, Left/Right keys on the focused page, or a horizontal swipe over 40px change page. The track slides 380ms, the progress bar grows to (page/6), the counter reads "n / 6", the end button disables.
+5. Hover the React button with a mouse for 350ms: the picker opens above it. Leaving the React area for 300ms closes it; re-entering cancels the close.
+6. Hover a reaction: it lifts 6px and scales 1.18, and a dark label pill (Like, Celebrate, Support, Insightful, Curious) appears above it.
+7. Click a reaction: the picker closes, React shows that icon and label in the reaction's colour with a pop, the summary reads "You, Tomas Brandt and 1,284 others", and if the reaction is not already in the badge stack it takes the first badge slot.
+8. Click React without opening the picker: toggles Like on, or removes whatever reaction you had.
+9. Keyboard: on React press Arrow Up to open the picker with focus on your current reaction (or Like). Left/Right move between reactions (wrapping), Enter/Space choose, Escape or Arrow Down close and return focus to React. Tab out closes it.
+10. Touch: press and hold React for 450ms to open the picker without reacting.
+11. Click Comment: the comment section opens and the field is focused. Click "212 comments" to toggle the section. Posting a comment prepends it as "You · Just now" and the count rolls 212 → 213.
+12. Click Repost: toggles green.
+
+## Tokens
+
+```css
+:root {
+  --stage: #ebe3d4;        /* page */
+  --card: #fbf7ef;         /* card */
+  --sunk: #f3ecdf;         /* document band, hover, comment bubbles */
+  --line: #e0d5c2;
+  --line-2: #cfc2ab;
+  --ink: #24201b;
+  --ink-2: #544d45;
+  --ink-3: #71685e;
+  --accent: #2f5e4b;       /* Follow, links, focus, Post, repost on */
+  --accent-soft: rgba(47,94,75,.1);
+  --inkblue: #2e3f7a;      /* avatar, kickers, italic words, big numerals */
+  --paper: #f6eedd;        /* document sheets */
+  /* reactions: each one colour, all ≥ 4.5:1 on the card */
+  --r-like: #2f5e8c;
+  --r-celebrate: #3d7f4f;
+  --r-support: #b4492f;
+  --r-insight: #93680f;
+  --r-curious: #6b5a8e;
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Public Sans", system-ui, sans-serif;
+  --r: 10px;
+  --t-micro: 150ms;
+  --t-picker: 260ms;
+  --t-slide: 380ms;
+  --hover-delay: 350ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-pop: cubic-bezier(.34,1.56,.64,1);
+}
+```
+
+Sheet shadow `0 8px 20px -14px rgba(36,32,27,.5)`; picker shadow `0 12px 28px -12px rgba(36,32,27,.45)`. The card itself only has a 1px bottom lip, `0 1px 0 rgba(36,32,27,.05)`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Author name | Newsreader | 17px | 600 | 1.2 | -0.005em |
+| Degree | Public Sans | 13px | 400 | | `--ink-3` |
+| Role | Public Sans | 13px | 400 | 1.35 | `--ink-2` |
+| Age | Public Sans | 12px | 400 | | `--ink-3` |
+| Body | Public Sans | 14.5px | 400 | 1.5 | 3-line clamp |
+| Avatar initials | Newsreader italic | 22px | 500 | 1 | paper on ink blue |
+| Doc kicker | Public Sans | 10.5px | 600 | | 0.14em uppercase, ink blue |
+| Doc headline | Newsreader | clamp(22px, 5.4vw, 34px) | 500 | 1.08 | -0.015em, max 16ch |
+| Doc numeral | Newsreader italic | 150px | 400 | 1 | ink blue at 13% |
+| Doc quote | Newsreader italic | clamp(18px, 4.2vw, 25px) | 400 | 1.25 | max 24ch |
+| Action label | Public Sans | 14px | 600 | | |
+| Reaction tooltip | Public Sans | 11.5px | 600 | | card on ink pill |
+| Comment author | Newsreader | 14px | 600 | | |
+
+Serif is for people and documents; sans is for UI. Keep that split.
 
 ## Implementation notes
 

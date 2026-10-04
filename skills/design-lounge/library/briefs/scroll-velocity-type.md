@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A sticky headline, Hold the line. While the page scrolls, letter-spacing grows by 0.03em per event, up to 0.2em. When scrolling stops, an interval multiplies the spacing by 0.75 every 48ms until it is under 0.008em, then it returns to 0. Reduced motion keeps the spacing at 0. This is not a chapter stack. That stack is `features-sticky-scroll-steps`. The tracking is the piece.
-
-## Reference behaviour
-
-1. The headline is sticky, 180px tall, Fraunces 64px.
-2. Scroll adds 0.03 to the spacing, capped at 0.2.
-3. The value is set as --ls in em.
-4. A settle interval starts on each scroll and replaces the previous one.
-5. Each tick multiplies spacing by 0.75. Under 0.008 it becomes 0 and the interval clears.
-6. Reduced motion returns from the scroll handler. CSS also forces letter-spacing 0.
-7. The body copy stays in a 62ch column and does not track out.
 
 ## Structure
 
@@ -30,19 +22,6 @@ sticky: Hold the line
 - The section is max-width 62ch, padding 0 32px 40vh, so the page can scroll.
 - Body is Public Sans 18px, line-height 1.5, colour #5c564c on the paragraphs.
 - The interval is 48ms. It is not a perpetual animation frame.
-
-## Tokens
-
-```css
-:root { --bg:#f4f1ea; --ink:#1a1814; --ink-2:#5c564c; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Headline | Fraunces | 64px | 560 |
-| Body | Public Sans | 18px | 400 |
 
 ## Motion
 
@@ -87,17 +66,6 @@ sticky: Hold the line
 - [ ] The add per scroll is 0.03.
 - [ ] The cap is 0.2em.
 - [ ] Display is Fraunces. Body is Public Sans.
-
-## Implementation notes
-
-Replace the settle timer on every scroll event.
-
-```js
-space = Math.min(0.2, space + 0.03);
-settle = setInterval(() => { space *= 0.75; }, 48);
-```
-
-Clear the previous interval first. Do not use requestAnimationFrame in a loop.
 
 ## Measurements to keep
 
@@ -166,6 +134,44 @@ Clear the previous interval first. Do not use requestAnimationFrame in a loop.
 - While rebuilding, remember: Do not run under reduced motion.
 - While rebuilding, remember: Do not pin the headline over a second page.
 - While rebuilding, remember: Do not scramble the letters.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The headline is sticky, 180px tall, Fraunces 64px.
+2. Scroll adds 0.03 to the spacing, capped at 0.2.
+3. The value is set as --ls in em.
+4. A settle interval starts on each scroll and replaces the previous one.
+5. Each tick multiplies spacing by 0.75. Under 0.008 it becomes 0 and the interval clears.
+6. Reduced motion returns from the scroll handler. CSS also forces letter-spacing 0.
+7. The body copy stays in a 62ch column and does not track out.
+
+## Tokens
+
+```css
+:root { --bg:#f4f1ea; --ink:#1a1814; --ink-2:#5c564c; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Headline | Fraunces | 64px | 560 |
+| Body | Public Sans | 18px | 400 |
+
+## Implementation notes
+
+Replace the settle timer on every scroll event.
+
+```js
+space = Math.min(0.2, space + 0.03);
+settle = setInterval(() => { space *= 0.75; }, 48);
+```
+
+Clear the previous interval first. Do not use requestAnimationFrame in a loop.
 
 ---
 

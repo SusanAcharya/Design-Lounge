@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The public landing for a fictional Paris atelier, Atelier Lumen. The first viewport is the argument: a 92px Didone headline, a 460×520 "garment" still built from layered gradients (no photographs), and a single charcoal CTA. Below the hero, a four-look strip swaps the still. Further down, a two-column atelier note and the same CTA again. Colour is bone paper, charcoal type, one wine. The garment is the product shot — a highlight ridge and a vertical seam should read as draped cloth, not a generic blob.
-
-## Reference behaviour
-
-1. Initial state: Look 01 "Column" is pressed. The hero plate shows `.g0` (wine-to-bone silk column) at opacity 1. Caption: `Look 01 · Column` / `Silk faille`. Headline reads "Cloth that *holds* a room." with *holds* in wine italic.
-2. Click Look 02, 03 or 04: that button gets `aria-pressed="true"` and lifts 4px; the matching `.fold` fades in over 480ms; others fade out. Caption and `aria-label` on the figure update. Only one look is pressed.
-3. Hover a look: it lifts 4px even if not pressed. Pressed look also has a 1px charcoal border.
-4. Hover the CTA: background changes from `--char` to `--wine` over 180ms. Active: scale 0.98.
-5. Nav "Lookbook" is current (1px wine underline). Links scroll to `#looks` and `#atelier`.
-6. The page scrolls. First 800px must include: nav, full hero (type + plate), and the look-strip heading plus the four tiles (tiles may clip slightly at 800; they must be recognizable).
-7. Reduced motion: transitions 1ms; no lift; `scroll-behavior: auto`.
 
 ## Structure
 
@@ -45,47 +37,6 @@ Below the fold:
 - `<figure class="garment">` — 520px tall, fill `#CFC3B0`. Inner `.drape` clipped to a column-dress polygon (`30% 7%` … `12% 100%`). Four stacked `.fold` layers, a 54×28 neck cutout, a centre seam, and a caption.
 - `<section class="looks" id="looks">` — h2 11px uppercase + 4-col `.strip`.
 - `<section class="atelier" id="atelier">` — 2-col, 64px gap, 64px top pad, 1px `--line` above.
-
-## Tokens
-
-```css
-:root {
-  --bone: #efe7da;        /* page */
-  --bone-2: #e4d9c8;      /* deeper bone in folds */
-  --char: #2a2420;        /* type, CTA, pressed border */
-  --char-2: #4a433c;      /* lede, inactive nav */
-  --line: #d4c9b6;        /* hairlines */
-  --wine: #7a2436;        /* italic word, kicker, CTA hover */
-  --wine-2: #5c1a28;      /* reserved deeper wine */
-
-  --serif: "Bodoni Moda", Didot, serif;
-  --sans: "Tenor Sans", Georgia, sans-serif;
-
-  --pad: 56px;
-  --nav: 60px;
-  --plate-w: 460px;
-  --plate-h: 520px;
-  --look-h: 168px;
-  --cta-h: 52px;
-
-  --t: 180ms;
-  --t-swap: 480ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Logo | Bodoni Moda | 18px | 500 | 1 | +0.22em | UPPERCASE |
-| Headline | Bodoni Moda | 92px | 400 | 0.90 | −0.03em | sentence |
-| Headline italic | Bodoni Moda italic | 92px | 400 | 0.90 | −0.03em | sentence |
-| Atelier title | Bodoni Moda italic | 56px | 400 | 0.95 | −0.02em | sentence |
-| Nav / CTA / kicker | Tenor Sans | 11–12px | 400 | 1 | +0.14–0.20em | UPPERCASE |
-| Lede / body | Tenor Sans | 15–16px | 400 | 1.5 | 0 | sentence |
-| Look labels | Tenor Sans | 11px | 400 | 1 | +0.12em | UPPERCASE |
 
 ## Motion
 
@@ -138,6 +89,61 @@ Reduced motion: all durations 1ms; lifts removed; smooth scroll off.
 - [ ] Focus rings are 2px wine on every control.
 - [ ] `prefers-reduced-motion: reduce` removes lifts and makes the swap instant.
 - [ ] No real fashion houses, no emoji, no placeholder copy.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: Look 01 "Column" is pressed. The hero plate shows `.g0` (wine-to-bone silk column) at opacity 1. Caption: `Look 01 · Column` / `Silk faille`. Headline reads "Cloth that *holds* a room." with *holds* in wine italic.
+2. Click Look 02, 03 or 04: that button gets `aria-pressed="true"` and lifts 4px; the matching `.fold` fades in over 480ms; others fade out. Caption and `aria-label` on the figure update. Only one look is pressed.
+3. Hover a look: it lifts 4px even if not pressed. Pressed look also has a 1px charcoal border.
+4. Hover the CTA: background changes from `--char` to `--wine` over 180ms. Active: scale 0.98.
+5. Nav "Lookbook" is current (1px wine underline). Links scroll to `#looks` and `#atelier`.
+6. The page scrolls. First 800px must include: nav, full hero (type + plate), and the look-strip heading plus the four tiles (tiles may clip slightly at 800; they must be recognizable).
+7. Reduced motion: transitions 1ms; no lift; `scroll-behavior: auto`.
+
+## Tokens
+
+```css
+:root {
+  --bone: #efe7da;        /* page */
+  --bone-2: #e4d9c8;      /* deeper bone in folds */
+  --char: #2a2420;        /* type, CTA, pressed border */
+  --char-2: #4a433c;      /* lede, inactive nav */
+  --line: #d4c9b6;        /* hairlines */
+  --wine: #7a2436;        /* italic word, kicker, CTA hover */
+  --wine-2: #5c1a28;      /* reserved deeper wine */
+
+  --serif: "Bodoni Moda", Didot, serif;
+  --sans: "Tenor Sans", Georgia, sans-serif;
+
+  --pad: 56px;
+  --nav: 60px;
+  --plate-w: 460px;
+  --plate-h: 520px;
+  --look-h: 168px;
+  --cta-h: 52px;
+
+  --t: 180ms;
+  --t-swap: 480ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Logo | Bodoni Moda | 18px | 500 | 1 | +0.22em | UPPERCASE |
+| Headline | Bodoni Moda | 92px | 400 | 0.90 | −0.03em | sentence |
+| Headline italic | Bodoni Moda italic | 92px | 400 | 0.90 | −0.03em | sentence |
+| Atelier title | Bodoni Moda italic | 56px | 400 | 0.95 | −0.02em | sentence |
+| Nav / CTA / kicker | Tenor Sans | 11–12px | 400 | 1 | +0.14–0.20em | UPPERCASE |
+| Lede / body | Tenor Sans | 15–16px | 400 | 1.5 | 0 | sentence |
+| Look labels | Tenor Sans | 11px | 400 | 1 | +0.12em | UPPERCASE |
 
 ## Implementation notes
 

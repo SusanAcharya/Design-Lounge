@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The profile card of a writer on "Thatch", an invented newsletter-and-essays platform. It sits in a sidebar, a hover preview or a "Who to follow" rail. The cover reads like the masthead of a printed issue: an oxblood block with a small-caps issue line, a two-line italic serif kicker and a huge ghosted italic "41" bleeding off the bottom-right edge. An 88px ochre avatar with italic initials overlaps the cover. Below it come the name, handle, bio, three stats in hairline columns, the latest letter, and a mutuals row. The detail worth copying is how quiet the motion is. The stats count up once on load with a quartic ease-out, and following someone ticks the follower count by exactly one with the same counter. No confetti, no bounce.
-
-## Reference behaviour
-
-1. Initial state: the card is centred on a warm paper page ruled with faint 32px horizontal lines. Stats show 0 and count up to 48,213 / 312 / 141 over 1100ms each, staggered by 90ms, starting 120ms after load.
-2. The Follow button is a 40px ink pill with a plus icon and the word "Follow". `aria-pressed="false"`.
-3. Click Follow. The button becomes outlined (transparent fill, ink border, ink text), the icon becomes a check and the label reads "Following". `aria-pressed="true"`. The follower count animates from 48,213 to 48,214 over 380ms. A polite live region says "You now follow Juno Achterberg".
-4. Hover the button while following. Label swaps to "Unfollow", the check hides, and text and border turn oxblood `#8C2F1B`. This is the confirmation affordance. It is not a second button.
-5. Click again to unfollow. Back to the filled ink pill, count 48,214 → 48,213, live region "You unfollowed Juno Achterberg".
-6. Hover the "Latest" title. A 1px oxblood underline grows from left to right over 300ms.
-7. Hover the mutuals row. The second and third face fan out by 4px and 8px over 200ms, as if the stack loosened.
-8. Press on the button scales it to 0.96 for 120ms.
-9. Reduced motion: counters render final values immediately, and all transitions are removed.
 
 ## Structure
 
@@ -51,54 +41,6 @@ page 1280 × 800, paper #ECE5D8 with 32px rule lines, card centred
 - "Latest" is a `p` with a link.
 - Mutuals are a decorative face stack plus a `p` with two `strong` names.
 - One visually hidden `p aria-live="polite"` for follow announcements.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ece5d8;          /* page paper */
-  --card: #fbf8f2;        /* card surface */
-  --ink: #1f1a17;         /* primary text, filled button */
-  --ink-2: #4a423b;       /* bio */
-  --ink-3: #6f665d;       /* meta, labels */
-  --line: #ddd3c4;        /* hairlines, card border */
-  --accent: #8c2f1b;      /* oxblood: cover, focus, unfollow hover, emphasis */
-  --accent-ink: #f6e9dc;  /* text on cover */
-  --ochre: #d9a441;       /* avatar */
-  --online: #3f7a4a;      /* presence dot */
-  --serif: "Fraunces", Georgia, serif;
-  --sans: "Instrument Sans", system-ui, sans-serif;
-  --r: 6px;
-  --pill: 999px;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px;
-  --shadow-card: 0 1px 0 rgba(31,26,23,.04), 0 24px 48px -28px rgba(60,36,20,.35);
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --t-micro: 180ms;
-  --t-count: 1100ms;
-  --t-tick: 380ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Issue line | Instrument Sans | 11px | 600 | 0.14em | uppercase, `--accent-ink` |
-| Kicker | Fraunces italic | 24 / 1.12 | 400 | 0 | opsz 48, max-width 270px |
-| Ghost numeral | Fraunces italic | 150 / 1 | 400 | −0.06em | `rgba(246,233,220,.16)`, opsz 144 |
-| Avatar initials | Fraunces italic | 34px | 600 | −0.04em | "Ja", mixed case on purpose |
-| Name | Fraunces | 30 / 1.05 | 600 | −0.02em | opsz 72 |
-| Handle | Instrument Sans | 13px | 400 | 0 | `--ink-3` |
-| Bio | Instrument Sans | 15 / 1.5 | 400 | 0 | `--ink-2`, 36ch |
-| Bio emphasis | Fraunces italic | 16px | 400 | 0 | `--accent` |
-| Stat number | Fraunces | 26 / 1 | 400 | −0.02em | tabular lining numerals |
-| Stat label | Instrument Sans | 11px | 600 | 0.12em | uppercase |
-| Latest title | Fraunces italic | 17 / 1.25 | 400 | 0 | |
-| Button | Instrument Sans | 14px | 600 | 0 | |
-| Mutual initials | Instrument Sans | 9px | 600 | 0.02em | |
-
-Use `font-variant-numeric: tabular-nums lining-nums` on stat numbers so the count-up does not wobble horizontally.
 
 ## Motion
 
@@ -160,6 +102,70 @@ Use `font-variant-numeric: tabular-nums lining-nums` on stat numbers so the coun
 - [ ] Cover reads "LETTERS FROM THE EDGE · VOL. 4" and "Field notes on slow cities and who keeps them".
 - [ ] Latest letter "The bench as infrastructure".
 - [ ] Mutuals: MS, TB, RA faces, "Followed by Mira Sato, Teo Brandt and 14 others you follow".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: the card is centred on a warm paper page ruled with faint 32px horizontal lines. Stats show 0 and count up to 48,213 / 312 / 141 over 1100ms each, staggered by 90ms, starting 120ms after load.
+2. The Follow button is a 40px ink pill with a plus icon and the word "Follow". `aria-pressed="false"`.
+3. Click Follow. The button becomes outlined (transparent fill, ink border, ink text), the icon becomes a check and the label reads "Following". `aria-pressed="true"`. The follower count animates from 48,213 to 48,214 over 380ms. A polite live region says "You now follow Juno Achterberg".
+4. Hover the button while following. Label swaps to "Unfollow", the check hides, and text and border turn oxblood `#8C2F1B`. This is the confirmation affordance. It is not a second button.
+5. Click again to unfollow. Back to the filled ink pill, count 48,214 → 48,213, live region "You unfollowed Juno Achterberg".
+6. Hover the "Latest" title. A 1px oxblood underline grows from left to right over 300ms.
+7. Hover the mutuals row. The second and third face fan out by 4px and 8px over 200ms, as if the stack loosened.
+8. Press on the button scales it to 0.96 for 120ms.
+9. Reduced motion: counters render final values immediately, and all transitions are removed.
+
+## Tokens
+
+```css
+:root {
+  --bg: #ece5d8;          /* page paper */
+  --card: #fbf8f2;        /* card surface */
+  --ink: #1f1a17;         /* primary text, filled button */
+  --ink-2: #4a423b;       /* bio */
+  --ink-3: #6f665d;       /* meta, labels */
+  --line: #ddd3c4;        /* hairlines, card border */
+  --accent: #8c2f1b;      /* oxblood: cover, focus, unfollow hover, emphasis */
+  --accent-ink: #f6e9dc;  /* text on cover */
+  --ochre: #d9a441;       /* avatar */
+  --online: #3f7a4a;      /* presence dot */
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Instrument Sans", system-ui, sans-serif;
+  --r: 6px;
+  --pill: 999px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px;
+  --shadow-card: 0 1px 0 rgba(31,26,23,.04), 0 24px 48px -28px rgba(60,36,20,.35);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-micro: 180ms;
+  --t-count: 1100ms;
+  --t-tick: 380ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Issue line | Instrument Sans | 11px | 600 | 0.14em | uppercase, `--accent-ink` |
+| Kicker | Fraunces italic | 24 / 1.12 | 400 | 0 | opsz 48, max-width 270px |
+| Ghost numeral | Fraunces italic | 150 / 1 | 400 | −0.06em | `rgba(246,233,220,.16)`, opsz 144 |
+| Avatar initials | Fraunces italic | 34px | 600 | −0.04em | "Ja", mixed case on purpose |
+| Name | Fraunces | 30 / 1.05 | 600 | −0.02em | opsz 72 |
+| Handle | Instrument Sans | 13px | 400 | 0 | `--ink-3` |
+| Bio | Instrument Sans | 15 / 1.5 | 400 | 0 | `--ink-2`, 36ch |
+| Bio emphasis | Fraunces italic | 16px | 400 | 0 | `--accent` |
+| Stat number | Fraunces | 26 / 1 | 400 | −0.02em | tabular lining numerals |
+| Stat label | Instrument Sans | 11px | 600 | 0.12em | uppercase |
+| Latest title | Fraunces italic | 17 / 1.25 | 400 | 0 | |
+| Button | Instrument Sans | 14px | 600 | 0 | |
+| Mutual initials | Instrument Sans | 9px | 600 | 0.02em | |
+
+Use `font-variant-numeric: tabular-nums lining-nums` on stat numbers so the count-up does not wobble horizontally.
 
 ## Implementation notes
 

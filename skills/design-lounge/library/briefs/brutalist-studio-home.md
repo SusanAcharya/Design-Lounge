@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The homepage of *Halden*, a six-person design studio. Pure `#000` on pure `#fff` (this piece is about that contrast, so no off-whites). Four 320px columns are drawn as 1px vertical hairlines at 18% opacity across the whole page. A 48px header bar, a three-line 96px Archivo Black statement with the last line outlined, a six-row project list where each row inverts to solid black on hover or focus, and a black marquee footer that scrolls at a calm 36-second period. There are no shadows, no radii, no colour. The detail worth copying is the row inversion: the whole row flips instantly and an arrow slides in from the left, which is all the feedback the page needs.
-
-## Reference behaviour
-
-1. Initial state: header shows studio name, location, a live clock (HH:MM:SS CEST, ticking each second) and four nav links. The statement reads "DESIGN FOR / THINGS THAT / HAVE TO WORK." with the third line as a 2px outlined stroke. Row 01 ("Nord Post wayfinding") is pre-selected (`aria-current="true"`) so the first frame already shows one inverted row.
-2. Hover a nav link: 2px underline, 4px offset. No colour change.
-3. Hover any project row: background becomes `#000`, all text becomes `#fff` (including the grey client/year columns), and the "Open" arrow moves from `translateX(-8px)`/opacity 0 to rest/opacity 1 in 100ms. Leaving the row reverses instantly.
-4. Keyboard-focus a row: same as hover, plus a 3px inset black outline.
-5. Click a row: it becomes the selected row (`aria-current="true"`), stays inverted after the pointer leaves, and gains an 8px black square before its number. The previously selected row returns to white. Navigation is prevented in the demo.
-6. The footer marquee scrolls left continuously; the content is duplicated once so the loop has no visible join at `translateX(-50%)`. Hovering the footer pauses it.
-7. The clock updates every 1000ms with tabular numerals so the header never shifts.
-8. With `prefers-reduced-motion: reduce` the marquee is static (first copy visible) and the arrow appears without transition.
 
 ## Structure
 
@@ -47,52 +38,6 @@ The homepage of *Halden*, a six-person design studio. Pure `#000` on pure `#fff`
 - `<section class="hero">` — grid `3fr 1fr`. Left `<h1>` with three `<span>` lines; right `.intro` column with 1px left border holding two `.tag` rows and a paragraph.
 - `<section class="work" aria-label="Selected work">` — `<ol>` of `<li><a>` rows. Each row is a grid `320px 2fr 1fr 1fr 160px`: number, title, client, year, "Open" + arrow.
 - `<footer aria-label="Ticker">` — black, 52px, `overflow: hidden`, containing `.track` with two identical runs of seven `<span>`s.
-
-## Tokens
-
-```css
-:root {
-  /* colour — pure black and white by design */
-  --bg:    #ffffff;   /* page, inverted-row text */
-  --ink:   #000000;   /* text, rules, grid lines, inverted-row fill, marquee */
-  --ink-2: #555555;   /* client and year columns at rest (7.5:1 on white) */
-  --line:  #000000;   /* every hairline is full black; the grid is faded via opacity .18 */
-
-  /* type */
-  --display: "Archivo Black", Impact, sans-serif;
-  --sans:    "Archivo", Helvetica, Arial, sans-serif;
-  --display-size: 96px;    /* 80 ≤1100, 64 ≤820 */
-
-  /* layout */
-  --col: 320px;            /* grid column; 25% ≤1100 */
-  --bar-h: 48px;
-  --row-h: 56px;
-  --marquee-h: 52px;
-  --cell-pad: 16px;
-  --radius: 0;
-
-  /* motion */
-  --t-micro: 100ms;        /* arrow slide only */
-  --t-marquee: 36s;        /* one full loop of the doubled track */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role             | Family        | Size  | Weight | Line-height | Tracking | Case      |
-|------------------|---------------|------:|-------:|------------:|---------:|-----------|
-| Statement        | Archivo Black | 96px  | 400    | 0.9         | −0.02em, word-spacing −0.05em | UPPERCASE |
-| Statement line 3 | Archivo Black | 96px  | 400    | 0.9         | same     | UPPERCASE, `-webkit-text-stroke: 2px #000; color: transparent` |
-| Studio name      | Archivo Black | 16px  | 400    | 1           | +0.04em  | UPPERCASE |
-| Header cells     | Archivo       | 12px  | 500    | 1           | +0.08em  | UPPERCASE |
-| Row title        | Archivo Black | 22px  | 400    | 1           | 0        | UPPERCASE |
-| Row number       | Archivo       | 12px  | 400    | 1           | +0.10em  | tabular numerals |
-| Row client/year  | Archivo       | 12px  | 400    | 1           | +0.10em  | UPPERCASE, `--ink-2` |
-| Row "Open"       | Archivo       | 12px  | 400    | 1           | +0.10em  | UPPERCASE |
-| Intro paragraph  | Archivo       | 14px  | 400    | 1.45        | 0        | sentence, max 26ch |
-| Intro tags       | Archivo       | 11px  | 400 (label 500) | 1  | +0.12em  | UPPERCASE |
-| Marquee          | Archivo Black | 20px  | 400    | 1           | +0.02em  | UPPERCASE |
 
 ## Motion
 
@@ -147,6 +92,67 @@ Reduced motion: `.track { animation: none }` (the first run of items stays visib
 - [ ] Marquee pauses on hover and is static under reduced motion.
 - [ ] Focus is visible on every link (3px inset outline on rows, default outline on nav).
 - [ ] No border-radius, no box-shadow, no gradient other than the grid lines.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header shows studio name, location, a live clock (HH:MM:SS CEST, ticking each second) and four nav links. The statement reads "DESIGN FOR / THINGS THAT / HAVE TO WORK." with the third line as a 2px outlined stroke. Row 01 ("Nord Post wayfinding") is pre-selected (`aria-current="true"`) so the first frame already shows one inverted row.
+2. Hover a nav link: 2px underline, 4px offset. No colour change.
+3. Hover any project row: background becomes `#000`, all text becomes `#fff` (including the grey client/year columns), and the "Open" arrow moves from `translateX(-8px)`/opacity 0 to rest/opacity 1 in 100ms. Leaving the row reverses instantly.
+4. Keyboard-focus a row: same as hover, plus a 3px inset black outline.
+5. Click a row: it becomes the selected row (`aria-current="true"`), stays inverted after the pointer leaves, and gains an 8px black square before its number. The previously selected row returns to white. Navigation is prevented in the demo.
+6. The footer marquee scrolls left continuously; the content is duplicated once so the loop has no visible join at `translateX(-50%)`. Hovering the footer pauses it.
+7. The clock updates every 1000ms with tabular numerals so the header never shifts.
+8. With `prefers-reduced-motion: reduce` the marquee is static (first copy visible) and the arrow appears without transition.
+
+## Tokens
+
+```css
+:root {
+  /* colour — pure black and white by design */
+  --bg:    #ffffff;   /* page, inverted-row text */
+  --ink:   #000000;   /* text, rules, grid lines, inverted-row fill, marquee */
+  --ink-2: #555555;   /* client and year columns at rest (7.5:1 on white) */
+  --line:  #000000;   /* every hairline is full black; the grid is faded via opacity .18 */
+
+  /* type */
+  --display: "Archivo Black", Impact, sans-serif;
+  --sans:    "Archivo", Helvetica, Arial, sans-serif;
+  --display-size: 96px;    /* 80 ≤1100, 64 ≤820 */
+
+  /* layout */
+  --col: 320px;            /* grid column; 25% ≤1100 */
+  --bar-h: 48px;
+  --row-h: 56px;
+  --marquee-h: 52px;
+  --cell-pad: 16px;
+  --radius: 0;
+
+  /* motion */
+  --t-micro: 100ms;        /* arrow slide only */
+  --t-marquee: 36s;        /* one full loop of the doubled track */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role             | Family        | Size  | Weight | Line-height | Tracking | Case      |
+|------------------|---------------|------:|-------:|------------:|---------:|-----------|
+| Statement        | Archivo Black | 96px  | 400    | 0.9         | −0.02em, word-spacing −0.05em | UPPERCASE |
+| Statement line 3 | Archivo Black | 96px  | 400    | 0.9         | same     | UPPERCASE, `-webkit-text-stroke: 2px #000; color: transparent` |
+| Studio name      | Archivo Black | 16px  | 400    | 1           | +0.04em  | UPPERCASE |
+| Header cells     | Archivo       | 12px  | 500    | 1           | +0.08em  | UPPERCASE |
+| Row title        | Archivo Black | 22px  | 400    | 1           | 0        | UPPERCASE |
+| Row number       | Archivo       | 12px  | 400    | 1           | +0.10em  | tabular numerals |
+| Row client/year  | Archivo       | 12px  | 400    | 1           | +0.10em  | UPPERCASE, `--ink-2` |
+| Row "Open"       | Archivo       | 12px  | 400    | 1           | +0.10em  | UPPERCASE |
+| Intro paragraph  | Archivo       | 14px  | 400    | 1.45        | 0        | sentence, max 26ch |
+| Intro tags       | Archivo       | 11px  | 400 (label 500) | 1  | +0.12em  | UPPERCASE |
+| Marquee          | Archivo Black | 20px  | 400    | 1           | +0.02em  | UPPERCASE |
 
 ## Implementation notes
 

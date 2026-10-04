@@ -81,7 +81,7 @@ The full method is long. For a website, these are the steps that matter, in orde
 2. Lock the recipe and the direction whose mood matches those words. The name number only breaks a tie.
 3. Write the Idea and the Signature (Write the idea in [website.md](website.md)). Name the default look you are avoiding, including the studio template.
 4. Pick work, about, contact, and footer by what content they have (Sections, one by one in [website.md](website.md)).
-5. Open the brief of every piece you build, including the menu and any copy button.
+5. Open the brief of every piece you build, including the menu and any copy button. Read each down to "Optional below this line".
 6. Build with real content only. Links go where they say. Drawn data says "Example".
 7. Screenshot web and phone, then scroll through each effect (Opening the page in [reference.md](reference.md)). Fix what you see. Make one correction.
 8. End with the closing block in The reply.

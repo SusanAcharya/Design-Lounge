@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A coverflow of five yard loads on a dark ground. The center card is forward. Cards to the side shift 180px, drop back, and rotate. Previous and Next step the index. Clicking a card centers it. This is not a quote carousel. That carousel is `testimonials-quote-carousel`. This is not a tilt on hover. That tilt is `hover-tilt-cards`.
-
-## Reference behaviour
-
-1. The first center card is load 20, Clear · Gate 2. Index starts at 2.
-2. Side cards translate 180px per step, rotateY by -18deg per step, and sit back in Z.
-3. Cards more than two steps away are opacity 0.
-4. Previous and Next disable at the ends.
-5. Clicking a card sets it as center.
-6. The center card has aria-current true.
-7. The move is 420ms. Reduced motion snaps.
 
 ## Structure
 
@@ -31,20 +23,6 @@ Previous  Next
 - The number is 28px.
 - The caption is 14px in #a39b90.
 - Buttons are 40px.
-
-## Tokens
-
-```css
-:root { --bg:#141311; --card:#1c1b19; --ink:#f4f1ea; --ink-2:#a39b90; --primary:#d7b15e; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Number | IBM Plex Sans | 28px | 600 |
-| Caption | IBM Plex Sans | 14px | 500 |
-| Button | IBM Plex Sans | 14px | 500 |
 
 ## Motion
 
@@ -89,16 +67,6 @@ Previous  Next
 - [ ] Captions name Held, Clear, or Due and a gate.
 - [ ] Ground is #141311. Card is #1c1b19.
 - [ ] Type is IBM Plex Sans.
-
-## Implementation notes
-
-Translate from the center, not from a flex row, so the math stays one index.
-
-```js
-const x = (n - i) * 180;
-```
-
-Do not loop from the last card to the first.
 
 ## Measurements to keep
 
@@ -167,6 +135,44 @@ Do not loop from the last card to the first.
 - While rebuilding, remember: Do not use photographs of real people.
 - While rebuilding, remember: Do not add a scrollbar.
 - While rebuilding, remember: Do not rotate on hover as well as on index.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first center card is load 20, Clear · Gate 2. Index starts at 2.
+2. Side cards translate 180px per step, rotateY by -18deg per step, and sit back in Z.
+3. Cards more than two steps away are opacity 0.
+4. Previous and Next disable at the ends.
+5. Clicking a card sets it as center.
+6. The center card has aria-current true.
+7. The move is 420ms. Reduced motion snaps.
+
+## Tokens
+
+```css
+:root { --bg:#141311; --card:#1c1b19; --ink:#f4f1ea; --ink-2:#a39b90; --primary:#d7b15e; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Number | IBM Plex Sans | 28px | 600 |
+| Caption | IBM Plex Sans | 14px | 500 |
+| Button | IBM Plex Sans | 14px | 500 |
+
+## Implementation notes
+
+Translate from the center, not from a flex row, so the math stays one index.
+
+```js
+const x = (n - i) * 180;
+```
+
+Do not loop from the last card to the first.
 
 ---
 

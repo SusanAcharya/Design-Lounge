@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the tab bar for families that are not glass.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A phone shell for a personal app that is not using the glass language. Four tabs sit on a flat surface at the bottom: Home, Spend, Budgets, You. Spend starts current. The current tab is navy ink with a 2px crimson mark on its top edge. The others are muted. There is no blur, no translucent pill, and no floating capsule. Above the bar, the screen name is a 13px label and the current section is a 40px heading. The bar respects the home indicator with 34px of padding under the labels, and the page starts 54px below the top. The Lounge draws the status bar. Do not draw one here.
-
-## Reference behaviour
-
-1. Spend starts with `aria-current="page"`. The heading reads Spend.
-2. Tapping a tab moves `aria-current` to it and sets the heading to that tab's name. The others lose the mark.
-3. Only one tab is current.
-4. The bar does not hide on scroll. This frame does not scroll.
-5. No motion. Reduced motion has nothing to remove.
-6. Icons are inline SVG, 22px, stroke 1.75, round caps, `currentColor`. No emoji.
-7. Each tab's hit target is at least 44px tall, before the 34px home padding.
 
 ## Structure
 
@@ -35,33 +27,6 @@ padding-bottom 34px
 - The bar is `position: fixed` at the bottom, full width, `--surface`, `border-top: 1px solid --line`.
 - Page padding-bottom is 96px so the heading can never sit under the bar.
 - Grain is on the page. The bar is opaque surface, so the grain stops at the hairline.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f4ead6;
-  --surface: #fbf6ea;
-  --ink: #1c2744;
-  --ink-2: #3e4a66;
-  --ink-3: #6d768c;
-  --line: #d9cbb3;
-  --primary: #c8102e;
-  --focus: #c8102e;
-  --display: "Noto Serif Devanagari", Georgia, serif;
-  --sans: "Mukta", system-ui, sans-serif;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Label | Mukta | 13px | 600 | 0.04em | `--ink-2` |
-| Section | Noto Serif Devanagari | 40px | 600 | -0.02em | `--ink` |
-| Tab | Mukta | 11px | 600 | 0 | `--ink-3`, current `--ink` |
-
-The section heading is the largest type. The tab labels stay 11px. Do not set the tabs in the display face.
 
 ## Motion
 
@@ -118,6 +83,47 @@ None. A tab change replaces the heading immediately. A sliding pill is the glass
 - [ ] Page padding-top is max(54px, env(safe-area-inset-top)). Bar padding-bottom is max(34px, env(safe-area-inset-bottom)).
 - [ ] No status bar is drawn.
 - [ ] Focus ring is 2px, offset 2px.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Spend starts with `aria-current="page"`. The heading reads Spend.
+2. Tapping a tab moves `aria-current` to it and sets the heading to that tab's name. The others lose the mark.
+3. Only one tab is current.
+4. The bar does not hide on scroll. This frame does not scroll.
+5. No motion. Reduced motion has nothing to remove.
+6. Icons are inline SVG, 22px, stroke 1.75, round caps, `currentColor`. No emoji.
+7. Each tab's hit target is at least 44px tall, before the 34px home padding.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f4ead6;
+  --surface: #fbf6ea;
+  --ink: #1c2744;
+  --ink-2: #3e4a66;
+  --ink-3: #6d768c;
+  --line: #d9cbb3;
+  --primary: #c8102e;
+  --focus: #c8102e;
+  --display: "Noto Serif Devanagari", Georgia, serif;
+  --sans: "Mukta", system-ui, sans-serif;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Label | Mukta | 13px | 600 | 0.04em | `--ink-2` |
+| Section | Noto Serif Devanagari | 40px | 600 | -0.02em | `--ink` |
+| Tab | Mukta | 11px | 600 | 0 | `--ink-3`, current `--ink` |
+
+The section heading is the largest type. The tab labels stay 11px. Do not set the tabs in the display face.
 
 ## Implementation notes
 

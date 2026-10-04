@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A departure board for 3 Oct. Three rows settle from a middle dot into KTM, BIR, and PKR with their gate and time. Each glyph is a 36×52 flap with a hairline through the middle. Replay runs the settle again. Reduced motion shows the final text and does not flip. This is not a scramble. A scramble is `text-scramble-reveal`. This is not a marquee. A marquee is `kinetic-type-marquee`.
-
-## Reference behaviour
-
-1. The board title is Departures · 3 Oct.
-2. Row one ends as KTM, GATE 4, 06:40.
-3. Row two ends as BIR, HELD, 07:15.
-4. Row three ends as PKR, CLEAR, 08:05.
-5. On play, each visible glyph shows a dot, then its letter after 40ms plus 28ms times its index, with a 160ms flip.
-6. Replay clears the previous timers and plays again.
-7. Reduced motion paints the final letters and skips timers.
 
 ## Structure
 
@@ -32,23 +24,6 @@ Replay
 - Flip is rotateX from -80deg to 0 over 160ms.
 - Replay is a 36px button.
 - The board width is 860px.
-
-## Tokens
-
-```css
-:root {
-  --bg:#141311; --flap:#1c1b19; --ink:#f4f1ea; --ink-2:#a39b90;
-  --line:#2c2a26; --primary:#d7b15e;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Kicker | IBM Plex Sans | 12px | 500 | 1 | 0.14em |
-| Glyph | IBM Plex Mono | 28px | 500 | 1 | 0 |
-| Replay | IBM Plex Sans | 13px | 500 | 1 | 0 |
 
 ## Motion
 
@@ -96,16 +71,6 @@ Replay
 - [ ] Gate words are GATE 4, HELD, CLEAR.
 - [ ] Ground is #141311. Flap is #1c1b19.
 
-## Implementation notes
-
-Store timers and clear them on replay or two plays overlap.
-
-```js
-timers.forEach(clearTimeout);
-```
-
-Do not step through the whole alphabet. One flip from the dot to the letter is the settle.
-
 ## Measurements to keep
 
 - Cell 36×52, radius 2px, gap 8px. Space width 12px.
@@ -150,6 +115,47 @@ Do not step through the whole alphabet. One flip from the dot to the letter is t
 - Do not read localStorage.
 - Mono is IBM Plex Mono.
 - Sans is IBM Plex Sans.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The board title is Departures · 3 Oct.
+2. Row one ends as KTM, GATE 4, 06:40.
+3. Row two ends as BIR, HELD, 07:15.
+4. Row three ends as PKR, CLEAR, 08:05.
+5. On play, each visible glyph shows a dot, then its letter after 40ms plus 28ms times its index, with a 160ms flip.
+6. Replay clears the previous timers and plays again.
+7. Reduced motion paints the final letters and skips timers.
+
+## Tokens
+
+```css
+:root {
+  --bg:#141311; --flap:#1c1b19; --ink:#f4f1ea; --ink-2:#a39b90;
+  --line:#2c2a26; --primary:#d7b15e;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Kicker | IBM Plex Sans | 12px | 500 | 1 | 0.14em |
+| Glyph | IBM Plex Mono | 28px | 500 | 1 | 0 |
+| Replay | IBM Plex Sans | 13px | 500 | 1 | 0 |
+
+## Implementation notes
+
+Store timers and clear them on replay or two plays overlap.
+
+```js
+timers.forEach(clearTimeout);
+```
+
+Do not step through the whole alphabet. One flip from the dot to the letter is the settle.
 
 ---
 

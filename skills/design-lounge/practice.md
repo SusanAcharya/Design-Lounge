@@ -109,8 +109,8 @@ Every recipe has three to five `directions`. Each one is a complete look: theme,
 
 1. They named a theme, a pairing, a colour, or a site they like. Lock the direction closest to it, then swap in what they named.
 2. Their words carry a mood, an audience, or a world: dark, light, playful, calm, luxury, technical, for developers, for kids, loud, Nepali, retro, AI. Lock the direction whose `mood` says it.
-3. Read the person. Most messages carry more than they say: a bio, a tagline, project names, their job, their own site or GitHub, the way they write. Write three words that describe that material, in their words where you can ("quiet, explicit, systems"). Compare them with each direction's `mood` and lock the closest. Write it on the sheet: `Direction: cobalt-desk (their words: quiet interfaces, clear state, explicit gates; mood: precise, systems thinker)`. A designer starts from the person, not from a number.
-4. Two or more directions fit equally, or there is truly nothing to read (a bare "make me a portfolio"). Only then use the name number, and only among the directions that fit. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: kiln-workbench (Sunim = 19+21+14+9+13 = 76, 76 mod 4 = 0)`. The name number keeps one product consistent and keeps two products apart. It does not know who they are, so it never overrules rule 3. Counting letters is not enough, because names of the same length would always land together.
+3. Read the person. Most messages carry more than they say: a bio, a tagline, project names, their job, their own site or GitHub, the way they write. Write three words that describe that material, in their words where you can. Compare them with each direction's `mood` and lock the closest. Write it on the sheet. For a twelve-seat momo counter whose owner wrote "we fold every momo in front of you, no freezer": `Direction: garden-supper (their words: small, made in front of you, slow; mood: olive, cream, slow food)`. A designer starts from the person, not from a number.
+4. Two or more directions fit equally, or there is truly nothing to read (a bare "make me a portfolio"). Only then use the name number, and only among the directions that fit. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: garden-supper (Tsering = 20+19+5+18+9+14+7 = 92, 92 mod 3 = 2)`. The name number keeps one product consistent and keeps two products apart. It does not know who they are, so it never overrules rule 3. Counting letters is not enough, because names of the same length would always land together.
 
 Do not take the first direction because it is first. Do not mix two directions. If the hero is unset, use the recipe's first piece. If the effect is null, the register stays quiet.
 
@@ -136,7 +136,7 @@ Two themes can both fit. Pick the closer mood. Name the other one as rejected. D
 
 A brand colour they already have replaces `--primary` only, after the theme is locked. The surfaces stay the theme's. The brand does not choose a second theme.
 
-The theme CSS includes a sample `--radius` and `--shadow`. Ignore them. Family sets radius and shadow. Theme sets colour only. Harbour Ledger's 2px sample loses to Quiet's 6px.
+The theme file is colour only. The family sets radius and shadow, and the pairing sets the fonts. Harbour Ledger's 2px sample loses to Quiet's 6px.
 
 ## Adapting a brief
 
@@ -153,6 +153,8 @@ Briefs are written for their demo's palette and mode. Your theme may be the oppo
 - A brief's gradient or sky uses the theme's own colours: `--bg` to `--surface-2`, with `--primary` or `--accent` as the one bright stop. A dusk parallax on a light theme becomes a daylight parallax with the same layers and speeds.
 - A brief's fonts become the pairing's roles. Display stays display, body stays `--font-text`. Where the brief uses mono for labels or numbers and the pairing has no mono, labels use `--font-text` small caps or tracked caps, numbers use `.num` (the text face with even-width digits), and only code uses the system mono. Do not add a Google mono font.
 - Keep from the brief: structure, counts, sizes, motion timing, states, and hit targets.
+- Display type is the exception to sizes. A brief's 304px wordmark was fitted to its demo word. Fit yours instead: the real word fills the same width, set with `clamp()` and `vw`, and no letter is clipped. Check the descenders and a lowercase word on the screenshot.
+- Read a brief down to "Optional below this line". Below it are the demo's paint and long notes. Open them only for the motion, or when stuck.
 
 When the content does not fit the brief's shape, do not force it. A sticky scroll written for one figure that morphs does not suit three unrelated projects. Either keep the shape by giving every step the same frame (one device frame whose screen changes, so the morph still reads), or go back to the section list and take the next option that fits. Say which you did. A crossfade between unrelated pictures is the brief broken, not translated.
 
@@ -342,7 +344,7 @@ These are fails. They are the tells of a page that was generated and not designe
 - On a phone, a pinned panel or sticky block that covers more than a third of the screen. Unpin it below 720px and let it scroll with its section.
 - Pure `#000` black. A custom cursor on a daily tool. A grey box standing in for the product. Draw the product as a small working screen, as Show the work in [website.md](website.md) says, or leave it out.
 
-A piece you locked may use one of these on purpose. For example, a footer piece may show a live clock. Then it is allowed, because you chose it. Do not add one on your own.
+A piece you locked may use one of these when it is the piece's whole point: a clock footer may show the clock. Decoration a brief adds around its point is not that. A scroll cue, a numbered eyebrow, a version tag, or extra small labels in a brief are dropped, like anything you would have added yourself.
 
 Uniform means the column, the page padding, the button, the filter, the field, the radius, the type roles, the sidebar, the panel, and the nav labels match on every screen of this pass, and on the phone form of that nav. Screen two inventing its own card, its own width, or its own rail is a fail.
 

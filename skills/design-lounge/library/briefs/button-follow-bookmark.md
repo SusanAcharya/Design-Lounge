@@ -4,27 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The relationship buttons of "Driftline", a community for film photographers, shown on a cool grey page. On the left is a creator card for Wren Achebe with a primary Follow button and an "Also on Driftline" list with three compact follow pills. On the right is a story card with a Save (bookmark) button. Follow turns into Following with a drawn check. The button keeps its width because all three labels share one grid cell. Unfollow is offered only when the pointer comes back after leaving, so the click that followed can never accidentally unfollow. Following also reveals a 44px bell for post notifications. Save fills its ribbon top to bottom in cobalt, nudges it down 3px, ticks the count, and raises a dark toast with Undo. These are the four social verbs, follow, unfollow, notify and save, done crisply in one family.
 
 The heart and like burst are `optimistic-like-button`. Do not add a like here.
-
-## Reference behaviour
-
-1. First frame: the creator card (360px) and the story card (500px) side by side, centred, gap 24px.
-2. Creator card: a 64px avatar "WA" on `#c9d3ff`, "Wren Achebe" (23px), "@wren.achebe · Lisbon", a three-line bio, then "**12,408** followers  **311** following". Then a black pill "+ Follow", 44px tall, min-width 128px. The bell is collapsed to width 0 and is `inert`.
-3. "Also on Driftline" lists Ilse Varga (already Following), Noor Castell (Follow) and Mateo Brandt (Follow). These are 36px compact pills.
-4. Story card: kicker "**Story** · 8 min read · 2 Oct" with "Story" in cobalt, title "Forty mornings on the river, one roll each" (30px), a two-line excerpt, a four-frame contact strip, then a footer with "Save 214" on the left and "38 replies · 1.9k reads" on the right.
-5. Click **Follow**: the label "+ Follow" slides up 6px and fades. "Following" with a check icon slides in from 6px below, and the check stroke draws over 320ms after an 80ms delay. The fill goes from ink to white with a 1px `--line` inset ring. The followers count becomes 12,409 and drops in from 8px above. The bell expands from width 0 to 44px with a fade. `aria-pressed="true"`.
-6. While the pointer stays on the button after that click, it keeps reading Following. When the pointer leaves (or focus blurs), the button is **armed**.
-7. Hover an armed Following button: the label crossfades to "Unfollow", the background goes to `--danger-soft`, the text goes to `--danger`, and the ring becomes `rgba(207,42,31,.35)`. Mouse out returns it to Following.
-8. Click while following: the button returns to Follow immediately, the count decrements, the bell collapses and resets to off, and a toast appears: "Unfollowed Wren" with **Undo**. Undo restores Following (already armed) and the count.
-9. Click the **bell**: it fills cobalt with a white filled glyph and rings (rotate 16° → −12° → 7° → −3° → 0 over 600ms). `aria-pressed="true"`. Toast: "You'll hear when Wren posts" (no Undo). Clicking again turns it off with the toast "Notifications off for Wren".
-10. Compact pills in the list follow the same rules (Follow → Following → armed → Unfollow + toast with Undo). They don't affect the follower count or the bell.
-11. Click **Save**: the ribbon's filled copy is revealed top to bottom with `clip-path` over 380ms. The ribbon drops 3px and stretches to 1.06 in Y, then settles (420ms after a 200ms delay, overshoot easing). The label becomes "Saved", the count becomes 215 and rolls, and the pill turns `--accent-soft` with cobalt text. Toast: "Saved to Reading list" with **Undo**.
-12. Click Saved: it un-saves (ribbon empties, 214, "Save"). Toast: "Removed from Reading list" with Undo, which re-saves.
-13. The toast slides up 14px and fades in over 280ms at `bottom: 28px`, centred. It hides after 4000ms. Hovering pauses the timer, and leaving restarts a 2000ms timer. Escape hides it. A new toast replaces the current one.
 
 ## Structure
 
@@ -54,57 +40,6 @@ The heart and like burst are `optimistic-like-button`. Do not add a like here.
 - `button.follow > .lab > span.l1 | span.l2 | span.l3`, all stacked in one grid cell.
 - `button.save > .rib` holds two identical ribbon SVGs: an outline, and a filled copy above it that is clipped.
 - `.toast[role=status]` is fixed at bottom centre: icon, text, `button#undo`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ebedf1;            /* cool page */
-  --surface: #ffffff;       /* cards, Following fill */
-  --surface-2: #f4f5f8;     /* hovers, list dividers */
-  --line: #dfe3ea;
-  --ink: #0d1015;           /* Follow fill, toast */
-  --ink-2: #4b5261;         /* bio, excerpt */
-  --ink-3: #687080;         /* handles, meta, counts at rest */
-  --accent: #2443f5;        /* saved ribbon, bell on, focus ring, kicker */
-  --accent-soft: #e7ebff;   /* saved pill */
-  --danger: #cf2a1f;        /* unfollow hover text */
-  --danger-soft: #fdeceb;   /* unfollow hover fill */
-
-  --display: "Funnel Display", system-ui, sans-serif;
-  --sans: "Funnel Sans", system-ui, sans-serif;
-
-  --r-card: 20px;
-  --r-pill: 999px;
-  --h-btn: 44px;
-  --h-btn-sm: 36px;
-
-  --t-micro: 160ms;
-  --t-morph: 240ms;
-  --t-fill: 380ms;
-  --t-toast: 280ms;
-  --hold-toast: 4000ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Creator name | Funnel Display | 23px | 600 | 1.15 | −0.015em | |
-| Story title | Funnel Display | 30px | 600 | 1.12 | −0.02em | 25px under 480px |
-| Avatar initials | Funnel Display | 22px / 13px | 600 | 1 | 0 | large / list |
-| Bio | Funnel Sans | 14.5px | 400 | 1.55 | 0 | `--ink-2` |
-| Excerpt | Funnel Sans | 15px | 400 | 1.6 | 0 | `--ink-2` |
-| Handle, meta | Funnel Sans | 13–14px | 400 | 1.5 | 0 | `--ink-3` |
-| Stats numbers | Funnel Sans | 14px | 600 | 1.5 | 0 | `tabular-nums`, `--ink` |
-| Follow label | Funnel Sans | 15px / 13.5px | 600 | 1 | 0 | main / compact |
-| Save label | Funnel Sans | 14.5px | 600 | 1 | 0 | count 500 `tabular-nums` |
-| Section label | Funnel Sans | 12px | 600 | 1 | 0.08em | UPPERCASE `--ink-3` |
-| Toast | Funnel Sans | 14.5px | 400 | 1.5 | 0 | Undo 600 `#c3ceff` |
 
 ## Motion
 
@@ -176,6 +111,77 @@ The roll animations restart on every change (remove class, reflow, add). The red
 - [ ] The Follow min-width is 128px. The bell grows 0 → 44px.
 - [ ] Toast copy: "Saved to Reading list", "Unfollowed Wren", "You'll hear when Wren posts".
 - [ ] The accent is `#2443f5`. Unfollow uses `#cf2a1f` on `#fdeceb`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the creator card (360px) and the story card (500px) side by side, centred, gap 24px.
+2. Creator card: a 64px avatar "WA" on `#c9d3ff`, "Wren Achebe" (23px), "@wren.achebe · Lisbon", a three-line bio, then "**12,408** followers  **311** following". Then a black pill "+ Follow", 44px tall, min-width 128px. The bell is collapsed to width 0 and is `inert`.
+3. "Also on Driftline" lists Ilse Varga (already Following), Noor Castell (Follow) and Mateo Brandt (Follow). These are 36px compact pills.
+4. Story card: kicker "**Story** · 8 min read · 2 Oct" with "Story" in cobalt, title "Forty mornings on the river, one roll each" (30px), a two-line excerpt, a four-frame contact strip, then a footer with "Save 214" on the left and "38 replies · 1.9k reads" on the right.
+5. Click **Follow**: the label "+ Follow" slides up 6px and fades. "Following" with a check icon slides in from 6px below, and the check stroke draws over 320ms after an 80ms delay. The fill goes from ink to white with a 1px `--line` inset ring. The followers count becomes 12,409 and drops in from 8px above. The bell expands from width 0 to 44px with a fade. `aria-pressed="true"`.
+6. While the pointer stays on the button after that click, it keeps reading Following. When the pointer leaves (or focus blurs), the button is **armed**.
+7. Hover an armed Following button: the label crossfades to "Unfollow", the background goes to `--danger-soft`, the text goes to `--danger`, and the ring becomes `rgba(207,42,31,.35)`. Mouse out returns it to Following.
+8. Click while following: the button returns to Follow immediately, the count decrements, the bell collapses and resets to off, and a toast appears: "Unfollowed Wren" with **Undo**. Undo restores Following (already armed) and the count.
+9. Click the **bell**: it fills cobalt with a white filled glyph and rings (rotate 16° → −12° → 7° → −3° → 0 over 600ms). `aria-pressed="true"`. Toast: "You'll hear when Wren posts" (no Undo). Clicking again turns it off with the toast "Notifications off for Wren".
+10. Compact pills in the list follow the same rules (Follow → Following → armed → Unfollow + toast with Undo). They don't affect the follower count or the bell.
+11. Click **Save**: the ribbon's filled copy is revealed top to bottom with `clip-path` over 380ms. The ribbon drops 3px and stretches to 1.06 in Y, then settles (420ms after a 200ms delay, overshoot easing). The label becomes "Saved", the count becomes 215 and rolls, and the pill turns `--accent-soft` with cobalt text. Toast: "Saved to Reading list" with **Undo**.
+12. Click Saved: it un-saves (ribbon empties, 214, "Save"). Toast: "Removed from Reading list" with Undo, which re-saves.
+13. The toast slides up 14px and fades in over 280ms at `bottom: 28px`, centred. It hides after 4000ms. Hovering pauses the timer, and leaving restarts a 2000ms timer. Escape hides it. A new toast replaces the current one.
+
+## Tokens
+
+```css
+:root {
+  --bg: #ebedf1;            /* cool page */
+  --surface: #ffffff;       /* cards, Following fill */
+  --surface-2: #f4f5f8;     /* hovers, list dividers */
+  --line: #dfe3ea;
+  --ink: #0d1015;           /* Follow fill, toast */
+  --ink-2: #4b5261;         /* bio, excerpt */
+  --ink-3: #687080;         /* handles, meta, counts at rest */
+  --accent: #2443f5;        /* saved ribbon, bell on, focus ring, kicker */
+  --accent-soft: #e7ebff;   /* saved pill */
+  --danger: #cf2a1f;        /* unfollow hover text */
+  --danger-soft: #fdeceb;   /* unfollow hover fill */
+
+  --display: "Funnel Display", system-ui, sans-serif;
+  --sans: "Funnel Sans", system-ui, sans-serif;
+
+  --r-card: 20px;
+  --r-pill: 999px;
+  --h-btn: 44px;
+  --h-btn-sm: 36px;
+
+  --t-micro: 160ms;
+  --t-morph: 240ms;
+  --t-fill: 380ms;
+  --t-toast: 280ms;
+  --hold-toast: 4000ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Creator name | Funnel Display | 23px | 600 | 1.15 | −0.015em | |
+| Story title | Funnel Display | 30px | 600 | 1.12 | −0.02em | 25px under 480px |
+| Avatar initials | Funnel Display | 22px / 13px | 600 | 1 | 0 | large / list |
+| Bio | Funnel Sans | 14.5px | 400 | 1.55 | 0 | `--ink-2` |
+| Excerpt | Funnel Sans | 15px | 400 | 1.6 | 0 | `--ink-2` |
+| Handle, meta | Funnel Sans | 13–14px | 400 | 1.5 | 0 | `--ink-3` |
+| Stats numbers | Funnel Sans | 14px | 600 | 1.5 | 0 | `tabular-nums`, `--ink` |
+| Follow label | Funnel Sans | 15px / 13.5px | 600 | 1 | 0 | main / compact |
+| Save label | Funnel Sans | 14.5px | 600 | 1 | 0 | count 500 `tabular-nums` |
+| Section label | Funnel Sans | 12px | 600 | 1 | 0.08em | UPPERCASE `--ink-3` |
+| Toast | Funnel Sans | 14.5px | 400 | 1.5 | 0 | Undo 600 `#c3ceff` |
 
 ## Implementation notes
 

@@ -4,21 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A checkout confirmation button inside a 420px order card for a bakery pickup ("Halden", order 2418, $48.00). One `<button>` moves through four states without ever being replaced: **idle** ("Pay $48.00", 220 × 44 black pill) → **loading** (width collapses to 44px in 200ms while the label fades; a ring spinner turns) → **success** (a checkmark path draws itself from `stroke-dashoffset: 24` to 0 in 400ms) → **paid** (the pill widens to 140px in 300ms, turns green, the check slides left and "Paid" fades in beside it). Two seconds after "Paid", a hint appears and clicking the button resets it to idle and replays. The detail worth copying is that width, colour, label and icon each have their own transition clock, all attached to one `data-state` attribute — there is no DOM swapping, so focus never leaves the button.
-
-## Reference behaviour
-
-1. Initial state: card with order heading, three line items with quantity sub-lines, a "Total, incl. tax $48.00" row, the idle button centred, and a status line "Card ending 4471 · no charge until you confirm". Hint text is hidden (opacity 0).
-2. Hover the idle button: lifts 1px (`translateY(-1px)`, 120ms). Active: `scale(.98)`. Focus-visible: 2px `--ink` outline, 3px offset.
-3. Click (t = 0): `data-state="loading"`, `aria-disabled="true"`, `aria-label="Processing payment"`. Width 220 → 44px over 200ms `cubic-bezier(.2,.7,.2,1)`; label opacity 1 → 0 and `translateX(−6px)` over 120ms; spinner opacity 0 → 1 over 120ms and its dash rotates 360° every 900ms, linear. Status: "Contacting Fjord Bank…".
-4. t = 1600ms: `data-state="success"`. Spinner opacity → 0 (120ms). Checkmark opacity → 1 (120ms) and its path's `stroke-dashoffset` transitions 24 → 0 over 400ms `cubic-bezier(.16,1,.3,1)` with a 60ms delay. Status: "Confirmed". `aria-label="Payment confirmed"`.
-5. t = 2200ms: `data-state="paid"`. Width 44 → 140px over 300ms `cubic-bezier(.16,1,.3,1)`; background `#14201a` → `#1e8a5a` over 240ms; check translates `−30px` over 300ms (same clock as the width); "Paid" label fades in and settles at `translateX(12px)` over 120ms after a 120ms delay. `aria-disabled` removed; `aria-label="Paid"`. Status turns green with a 6px dot: "Paid · receipt sent to mara@halden.no".
-6. t = 4200ms: hint "Click the button again to replay" fades in (240ms). Clicks on the button before this moment are ignored.
-7. Click while paid and ready: state → idle (width 140 → 220 over 200ms, background back to black, "Paid" label out, "Pay $48.00" label in), status resets, hint hides; 350ms later the sequence from step 3 runs again.
-8. Clicks during loading or success do nothing (`aria-disabled`, not `disabled`, so keyboard focus stays on the button through the whole sequence).
-9. With `prefers-reduced-motion: reduce`: all transitions are 1ms (states still cut through in the same order and timing); the spinner slows to one rotation per 2s.
 
 ## Structure
 
@@ -54,69 +44,6 @@ A checkout confirmation button inside a 420px order card for a bakery pickup ("H
     - `<button class="pay" type="button" data-state="idle">` containing `.lbl.idle`, `.lbl.paid`, `<svg class="ico spin">` (circle r 9) and `<svg class="ico check">` (path `M5 12.5l4.5 4.5L19 7.5`, length ≈ 24).
     - `.status` (`role="status"`) with a dot and `<span id="stxt">`.
     - `.hint`.
-
-## Tokens
-
-```css
-:root {
-  /* colour — sage-tinted page, white card, near-black button, one green */
-  --bg: #eef1ec;
-  --card: #ffffff;
-  --line: #dce2db;        /* card border */
-  --line-2: #eef1ec;      /* item separators */
-  --ink: #14201a;
-  --ink-2: #5f6b64;       /* status, total label */
-  --ink-3: #8f9a93;       /* meta, hint */
-  --btn: #14201a;         /* idle / loading / success fill */
-  --btn-ink: #ffffff;
-  --ok: #1e8a5a;          /* paid fill, status text, dot */
-  --ok-soft: #e3f2ea;
-
-  /* type */
-  --display: "Gabarito", system-ui, sans-serif;
-  --sans: "Onest", system-ui, sans-serif;
-
-  /* geometry */
-  --w-idle: 220px;
-  --w-busy: 44px;
-  --w-paid: 140px;
-  --h: 44px;              /* radius = h / 2 = 22px, constant across states */
-  --icon: 22px;
-  --card-w: 420px;
-  --r-card: 16px;
-  --shadow-card: 0 1px 2px rgba(20,32,26,.04), 0 12px 32px -16px rgba(20,32,26,.18);
-
-  /* motion */
-  --t-collapse: 200ms;    /* 220 → 44 */
-  --t-expand: 300ms;      /* 44 → 140 */
-  --t-label: 120ms;       /* label / icon fades */
-  --t-draw: 400ms;        /* checkmark */
-  --draw-delay: 60ms;
-  --t-spin: 900ms;        /* one rotation */
-  --spin-for: 1400ms;     /* loading dwell */
-  --hold: 600ms;          /* success dwell before paid */
-  --ready-after: 2000ms;  /* paid → replay allowed */
-  --reset: 350ms;         /* idle dwell before replay */
-  --t-color: 240ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role         | Family  | Size | Weight | Line-height | Tracking | Case      |
-|--------------|---------|-----:|-------:|------------:|---------:|-----------|
-| Order title  | Gabarito| 20px | 600    | 1.2         | −0.01em  | sentence  |
-| Pickup note  | Onest   | 12px | 400    | 1.5         | 0        | sentence  |
-| Item name    | Onest   | 14px | 400    | 1.5         | 0        | sentence  |
-| Item qty     | Onest   | 12px | 400    | 1.5         | 0        | sentence  |
-| Item price   | Onest   | 14px | 500    | 1.5         | 0        | numerals (tabular) |
-| Total label  | Onest   | 14px | 400    | 1.5         | 0        | sentence  |
-| Total amount | Gabarito| 22px | 600    | 1.2         | −0.01em  | numerals (tabular) |
-| Button label | Gabarito| 15px | 600    | 44px box    | 0        | sentence  |
-| Status       | Onest   | 13px | 400    | 1.5         | 0        | sentence  |
-| Hint         | Onest   | 12px | 400    | 1.5         | 0        | sentence  |
 
 ## Motion
 
@@ -195,6 +122,85 @@ Reduced motion: `transition-duration: 1ms !important` on the button, labels, ico
 - [ ] Clicking during loading/success does nothing; clicking after the hint resets to idle then replays after 350ms.
 - [ ] Reduced motion: state changes are instant but the sequence and timings are unchanged.
 - [ ] Hover lift (−1px) and active scale (.98) apply in idle and paid only; loading/success show `cursor: progress` and no transform.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: card with order heading, three line items with quantity sub-lines, a "Total, incl. tax $48.00" row, the idle button centred, and a status line "Card ending 4471 · no charge until you confirm". Hint text is hidden (opacity 0).
+2. Hover the idle button: lifts 1px (`translateY(-1px)`, 120ms). Active: `scale(.98)`. Focus-visible: 2px `--ink` outline, 3px offset.
+3. Click (t = 0): `data-state="loading"`, `aria-disabled="true"`, `aria-label="Processing payment"`. Width 220 → 44px over 200ms `cubic-bezier(.2,.7,.2,1)`; label opacity 1 → 0 and `translateX(−6px)` over 120ms; spinner opacity 0 → 1 over 120ms and its dash rotates 360° every 900ms, linear. Status: "Contacting Fjord Bank…".
+4. t = 1600ms: `data-state="success"`. Spinner opacity → 0 (120ms). Checkmark opacity → 1 (120ms) and its path's `stroke-dashoffset` transitions 24 → 0 over 400ms `cubic-bezier(.16,1,.3,1)` with a 60ms delay. Status: "Confirmed". `aria-label="Payment confirmed"`.
+5. t = 2200ms: `data-state="paid"`. Width 44 → 140px over 300ms `cubic-bezier(.16,1,.3,1)`; background `#14201a` → `#1e8a5a` over 240ms; check translates `−30px` over 300ms (same clock as the width); "Paid" label fades in and settles at `translateX(12px)` over 120ms after a 120ms delay. `aria-disabled` removed; `aria-label="Paid"`. Status turns green with a 6px dot: "Paid · receipt sent to mara@halden.no".
+6. t = 4200ms: hint "Click the button again to replay" fades in (240ms). Clicks on the button before this moment are ignored.
+7. Click while paid and ready: state → idle (width 140 → 220 over 200ms, background back to black, "Paid" label out, "Pay $48.00" label in), status resets, hint hides; 350ms later the sequence from step 3 runs again.
+8. Clicks during loading or success do nothing (`aria-disabled`, not `disabled`, so keyboard focus stays on the button through the whole sequence).
+9. With `prefers-reduced-motion: reduce`: all transitions are 1ms (states still cut through in the same order and timing); the spinner slows to one rotation per 2s.
+
+## Tokens
+
+```css
+:root {
+  /* colour — sage-tinted page, white card, near-black button, one green */
+  --bg: #eef1ec;
+  --card: #ffffff;
+  --line: #dce2db;        /* card border */
+  --line-2: #eef1ec;      /* item separators */
+  --ink: #14201a;
+  --ink-2: #5f6b64;       /* status, total label */
+  --ink-3: #8f9a93;       /* meta, hint */
+  --btn: #14201a;         /* idle / loading / success fill */
+  --btn-ink: #ffffff;
+  --ok: #1e8a5a;          /* paid fill, status text, dot */
+  --ok-soft: #e3f2ea;
+
+  /* type */
+  --display: "Gabarito", system-ui, sans-serif;
+  --sans: "Onest", system-ui, sans-serif;
+
+  /* geometry */
+  --w-idle: 220px;
+  --w-busy: 44px;
+  --w-paid: 140px;
+  --h: 44px;              /* radius = h / 2 = 22px, constant across states */
+  --icon: 22px;
+  --card-w: 420px;
+  --r-card: 16px;
+  --shadow-card: 0 1px 2px rgba(20,32,26,.04), 0 12px 32px -16px rgba(20,32,26,.18);
+
+  /* motion */
+  --t-collapse: 200ms;    /* 220 → 44 */
+  --t-expand: 300ms;      /* 44 → 140 */
+  --t-label: 120ms;       /* label / icon fades */
+  --t-draw: 400ms;        /* checkmark */
+  --draw-delay: 60ms;
+  --t-spin: 900ms;        /* one rotation */
+  --spin-for: 1400ms;     /* loading dwell */
+  --hold: 600ms;          /* success dwell before paid */
+  --ready-after: 2000ms;  /* paid → replay allowed */
+  --reset: 350ms;         /* idle dwell before replay */
+  --t-color: 240ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role         | Family  | Size | Weight | Line-height | Tracking | Case      |
+|--------------|---------|-----:|-------:|------------:|---------:|-----------|
+| Order title  | Gabarito| 20px | 600    | 1.2         | −0.01em  | sentence  |
+| Pickup note  | Onest   | 12px | 400    | 1.5         | 0        | sentence  |
+| Item name    | Onest   | 14px | 400    | 1.5         | 0        | sentence  |
+| Item qty     | Onest   | 12px | 400    | 1.5         | 0        | sentence  |
+| Item price   | Onest   | 14px | 500    | 1.5         | 0        | numerals (tabular) |
+| Total label  | Onest   | 14px | 400    | 1.5         | 0        | sentence  |
+| Total amount | Gabarito| 22px | 600    | 1.2         | −0.01em  | numerals (tabular) |
+| Button label | Gabarito| 15px | 600    | 44px box    | 0        | sentence  |
+| Status       | Onest   | 13px | 400    | 1.5         | 0        | sentence  |
+| Hint         | Onest   | 12px | 400    | 1.5         | 0        | sentence  |
 
 ## Implementation notes
 

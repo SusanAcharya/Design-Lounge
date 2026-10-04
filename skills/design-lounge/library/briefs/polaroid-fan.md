@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Five yard prints in a pile. The first frame is the open fan. Click stacks them. Click opens the arc again. Each print is a white card with a colour block and a name: Gate, Night, Month, Yard, Hold. This is not a folder of notes. That folder is `folder-reveal`. This is not a 3D flip. That flip is `card-flip-3d`.
-
-## Reference behaviour
-
-1. The fan starts open. aria-expanded is true.
-2. Open offsets run from translate -150px rotate -16deg to translate 160px rotate 16deg.
-3. Click sets data-open false and the prints share one stack.
-4. Click again opens the fan.
-5. The whole pile is one button.
-6. The move is 480ms.
-7. Reduced motion snaps between poses.
 
 ## Structure
 
@@ -30,19 +22,6 @@ five 200×240 prints
 - The name is Fraunces 16px at the bottom.
 - Open class rules live on data-open true.
 - The button label changes between fan open and stacked.
-
-## Tokens
-
-```css
-:root { --bg:#f4f1ea; --ink:#1a1814; --primary:#1f4d3a; }
-```
-
-## Typography
-
-| Role | Family | Size | Weight |
-| --- | --- | --- | --- |
-| Name | Fraunces | 16px | 560 |
-| Button | Public Sans | 14px | 500 |
 
 ## Motion
 
@@ -87,16 +66,6 @@ five 200×240 prints
 - [ ] The label starts as Yard prints, fan open.
 - [ ] Ground is #f4f1ea.
 - [ ] Names are Fraunces.
-
-## Implementation notes
-
-Drive every print from data-open on the pile.
-
-```css
-.pile[data-open="true"] .s0 { transform: translate(-150px,20px) rotate(-16deg); }
-```
-
-Do not start closed. The fan is the picture.
 
 ## Measurements to keep
 
@@ -165,6 +134,43 @@ Do not start closed. The fan is the picture.
 - While rebuilding, remember: Do not flip them over.
 - While rebuilding, remember: Do not add a sixth print.
 - While rebuilding, remember: Do not autoplay the fan.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The fan starts open. aria-expanded is true.
+2. Open offsets run from translate -150px rotate -16deg to translate 160px rotate 16deg.
+3. Click sets data-open false and the prints share one stack.
+4. Click again opens the fan.
+5. The whole pile is one button.
+6. The move is 480ms.
+7. Reduced motion snaps between poses.
+
+## Tokens
+
+```css
+:root { --bg:#f4f1ea; --ink:#1a1814; --primary:#1f4d3a; }
+```
+
+## Typography
+
+| Role | Family | Size | Weight |
+| --- | --- | --- | --- |
+| Name | Fraunces | 16px | 560 |
+| Button | Public Sans | 14px | 500 |
+
+## Implementation notes
+
+Drive every print from data-open on the pile.
+
+```css
+.pile[data-open="true"] .s0 { transform: translate(-150px,20px) rotate(-16deg); }
+```
+
+Do not start closed. The fan is the picture.
 
 ---
 

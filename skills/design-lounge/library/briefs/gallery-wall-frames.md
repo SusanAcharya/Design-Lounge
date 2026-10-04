@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A gallery-wall planner for a home décor app called Hangline. A sage plaster wall, drawn to scale (900×600px = 450×300 cm), holds seven framed prints in a salon cluster above a rust sofa, with a floor lamp at the right. Each frame hangs from a visible wire and nail. You pick a frame up and drag it. A dotted 10 cm grid fades in, and a dashed outline shows where it will land. The frame tilts with your hand while it moves. When you let go it snaps to the grid and swings on its nail, the swing dying away over one second. A left panel picks the frame finish (black ash, natural oak, gilt, white lacquer) for the selected frame or all frames. The detail worth copying is the hang swing. It uses the CSS `rotate` property around a `transform-origin` 22px above the frame (the nail), so it never fights the position transitions.
-
-## Reference behaviour
-
-1. First frame: seven frames hang in a cluster. Harbour light (gilt, 100×70 cm) is selected and has a 2px ink ring. The panel shows its name, size and position. The style radio follows the selected frame, so Gilt is checked. Snap is on.
-2. Pressing a frame selects it, raises it (z-index), scales it to 1.03 and deepens its shadow. The wall shows a 20px dot grid (opacity 0 → 0.7, 200ms).
-3. Dragging moves the frame 1:1 with the pointer (compensated for the wall's scale). The frame tilts by horizontal speed: `rotate = clamp(dx × 0.5, −6°, 6°)` per move event, eased over 120ms.
-4. A dashed 2px outline previews the snapped landing spot. If that spot overlaps another frame, the outline turns terracotta `#c4532e`.
-5. Frames are clamped inside the wall: x from 0 to 900 − w, y from 30 to 440 − h (they never sink behind the sofa).
-6. Release: the frame snaps to the grid (left/top transition 240ms expo-out), the tilt returns to 0, and after 180ms it swings: rotate 5° → −3° → 1.6° → −0.7° → 0 over 1000ms. The status line announces the new position, and warns if it overlaps.
-7. Clicking a finish swatch re-frames the selected print (border thickness and colour change) and gives it a small 2.4° swing. "Apply to all frames" copies the selected finish to all seven, swinging each with a 50ms stagger.
-8. Snap switch off: the grid dots stay hidden, drops land where released, and arrow-key nudges use 1 cm (2px).
-9. Keyboard: focus a frame (Tab) to select it. Arrows nudge one grid step (10 cm). Shift+arrow nudges five. Each nudge gives a 1.6° swing. Enter/Space re-hangs it with a full swing.
-10. "Rehang all" swings all seven frames at 6°, staggered by 70ms.
-11. Reduced motion: no tilt, no swing, no snap slide; positions change instantly.
 
 ## Structure
 
@@ -47,57 +35,6 @@ A gallery-wall planner for a home décor app called Hangline. A sage plaster wal
 - `main.stage` → `.fit` (reserves `900×600 × --s`) → `.wall` (900×600, `transform: scale(var(--s))`, origin 0 0).
 - Wall decor (`aria-hidden`): lamp, sofa, floor, and the `.ghost` outline.
 - Seven `.fr` frames (`role="button"`, `tabindex="0"`, `aria-pressed` for the selection), each with an SVG wire, a `.body` (the moulding), a `.mat`, and an inline SVG print. The nail is `::after`.
-
-## Tokens
-
-```css
-:root {
-  --paper: #f1ede4;     /* panel */
-  --paper-2: #e7e2d6;   /* stage, selected card */
-  --line: #d6cfbf;
-  --ink: #22251f;
-  --ink-2: #575a50;
-  --ink-3: #7a7c70;
-  --wall: #b9c0a8;      /* sage plaster */
-  --wall-2: #aeb69c;
-  --accent: #c4532e;    /* terracotta: CTA, links, overlap warning, focus */
-  --accent-ink: #fff8f2;
-  --sofa: #8f5e4a;
-  --floor: #9a8a72;
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --serif: "Instrument Serif", Georgia, serif;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --grid: 20px;         /* = 10 cm */
-  --radius-card: 12px;
-  --radius-swatch: 10px;
-}
-```
-
-Finishes (per frame, via `data-style`):
-
-| Finish | Moulding `--t` | Fill |
-| --- | --- | --- |
-| Black ash | 9px | `linear-gradient(135deg, #2a2926, #161513)` |
-| Natural oak | 11px | `linear-gradient(135deg, #c79a63, #a87a46 60%, #b98a54)` + 1px grain stripes `#7a52281a` every 4px |
-| Gilt | 12px | `linear-gradient(135deg, #ead08f, #c29a55 35%, #8f6d35 60%, #e0bf78)` + inset rings `2px #7a5a26`, `4px #f0d79a` |
-| White lacquer | 9px | `linear-gradient(135deg, #fdfcf8, #ebe7dd)` + inset `1px #0000001a` |
-
-Mats are `#faf7f0` with `inset 0 1px 3px #0003`, 0–14px per print. Frame shadow `drop-shadow(0 8px 10px #2a2a1e40)`; dragging `drop-shadow(0 22px 22px #2a2a1e55)`.
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Brand | Bricolage Grotesque | 15px | 600 | −0.01em | `--ink` |
-| h1 | Instrument Serif | 38px / 1 | 400 | −0.01em | `--ink` |
-| Size line | Bricolage Grotesque | 14px | 400 | 0 | `--ink-2` |
-| Section label | Bricolage Grotesque | 11px | 500 | 0.14em, upper | `--ink-3` |
-| Swatch | Bricolage Grotesque | 13px | 400 | 0 | `--ink` |
-| Selected h2 | Instrument Serif | 24px / 1.1 | 400 | 0 | `--ink` |
-| Measurements | Bricolage Grotesque | 13px, tabular | 400 | 0 | `--ink-2` |
-| Status | Bricolage Grotesque | 12px | 400 | 0 | `--ink-3` |
-| CTA | Bricolage Grotesque | 14px | 500 | 0 | `--accent-ink` |
 
 ## Motion
 
@@ -161,6 +98,75 @@ Mats are `#faf7f0` with `inset 0 1px 3px #0003`, 0–14px per print. Frame shado
 - [ ] Harbour light starts selected in gilt at 175 cm from left, 60 cm from top.
 - [ ] Wall `#b9c0a8`, accent `#c4532e`, panel `#f1ede4`.
 - [ ] Hang swing 5° → 0 in 1000ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: seven frames hang in a cluster. Harbour light (gilt, 100×70 cm) is selected and has a 2px ink ring. The panel shows its name, size and position. The style radio follows the selected frame, so Gilt is checked. Snap is on.
+2. Pressing a frame selects it, raises it (z-index), scales it to 1.03 and deepens its shadow. The wall shows a 20px dot grid (opacity 0 → 0.7, 200ms).
+3. Dragging moves the frame 1:1 with the pointer (compensated for the wall's scale). The frame tilts by horizontal speed: `rotate = clamp(dx × 0.5, −6°, 6°)` per move event, eased over 120ms.
+4. A dashed 2px outline previews the snapped landing spot. If that spot overlaps another frame, the outline turns terracotta `#c4532e`.
+5. Frames are clamped inside the wall: x from 0 to 900 − w, y from 30 to 440 − h (they never sink behind the sofa).
+6. Release: the frame snaps to the grid (left/top transition 240ms expo-out), the tilt returns to 0, and after 180ms it swings: rotate 5° → −3° → 1.6° → −0.7° → 0 over 1000ms. The status line announces the new position, and warns if it overlaps.
+7. Clicking a finish swatch re-frames the selected print (border thickness and colour change) and gives it a small 2.4° swing. "Apply to all frames" copies the selected finish to all seven, swinging each with a 50ms stagger.
+8. Snap switch off: the grid dots stay hidden, drops land where released, and arrow-key nudges use 1 cm (2px).
+9. Keyboard: focus a frame (Tab) to select it. Arrows nudge one grid step (10 cm). Shift+arrow nudges five. Each nudge gives a 1.6° swing. Enter/Space re-hangs it with a full swing.
+10. "Rehang all" swings all seven frames at 6°, staggered by 70ms.
+11. Reduced motion: no tilt, no swing, no snap slide; positions change instantly.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f1ede4;     /* panel */
+  --paper-2: #e7e2d6;   /* stage, selected card */
+  --line: #d6cfbf;
+  --ink: #22251f;
+  --ink-2: #575a50;
+  --ink-3: #7a7c70;
+  --wall: #b9c0a8;      /* sage plaster */
+  --wall-2: #aeb69c;
+  --accent: #c4532e;    /* terracotta: CTA, links, overlap warning, focus */
+  --accent-ink: #fff8f2;
+  --sofa: #8f5e4a;
+  --floor: #9a8a72;
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --grid: 20px;         /* = 10 cm */
+  --radius-card: 12px;
+  --radius-swatch: 10px;
+}
+```
+
+Finishes (per frame, via `data-style`):
+
+| Finish | Moulding `--t` | Fill |
+| --- | --- | --- |
+| Black ash | 9px | `linear-gradient(135deg, #2a2926, #161513)` |
+| Natural oak | 11px | `linear-gradient(135deg, #c79a63, #a87a46 60%, #b98a54)` + 1px grain stripes `#7a52281a` every 4px |
+| Gilt | 12px | `linear-gradient(135deg, #ead08f, #c29a55 35%, #8f6d35 60%, #e0bf78)` + inset rings `2px #7a5a26`, `4px #f0d79a` |
+| White lacquer | 9px | `linear-gradient(135deg, #fdfcf8, #ebe7dd)` + inset `1px #0000001a` |
+
+Mats are `#faf7f0` with `inset 0 1px 3px #0003`, 0–14px per print. Frame shadow `drop-shadow(0 8px 10px #2a2a1e40)`; dragging `drop-shadow(0 22px 22px #2a2a1e55)`.
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Brand | Bricolage Grotesque | 15px | 600 | −0.01em | `--ink` |
+| h1 | Instrument Serif | 38px / 1 | 400 | −0.01em | `--ink` |
+| Size line | Bricolage Grotesque | 14px | 400 | 0 | `--ink-2` |
+| Section label | Bricolage Grotesque | 11px | 500 | 0.14em, upper | `--ink-3` |
+| Swatch | Bricolage Grotesque | 13px | 400 | 0 | `--ink` |
+| Selected h2 | Instrument Serif | 24px / 1.1 | 400 | 0 | `--ink` |
+| Measurements | Bricolage Grotesque | 13px, tabular | 400 | 0 | `--ink-2` |
+| Status | Bricolage Grotesque | 12px | 400 | 0 | `--ink-3` |
+| CTA | Bricolage Grotesque | 14px | 500 | 0 | `--accent-ink` |
 
 ## Implementation notes
 

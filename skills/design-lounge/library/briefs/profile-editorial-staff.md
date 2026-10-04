@@ -4,22 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The author block a newspaper puts at the top of a journalist's staff page, laid out as a 1020px three-column card on newsprint: a stipple "hedcut" portrait with caption and facts, the name and bio with stats, and a tabbed list of the writer's articles ending in a signature. The paper is The Wexcombe Courier; the journalist is Idris Penhallow, senior climate correspondent.
 
 It should feel like print: a 6px black top rule, column rules in warm grey, a double rule above the numbers, Old Standard TT for anything a sub-editor would set, Libre Franklin for furniture. Blue ink (`#2340A8`) is the only colour, used for the kicker, section labels, the selected tab and the fountain-pen signature. The detail worth copying is the portrait: no image file, just layered radial gradients masked by a 4px dot screen, so it reads as an engraved newspaper hedcut and tightens to a 3px screen on hover.
-
-## Reference behaviour
-
-1. First frame: the masthead row reads "The Wexcombe Courier · Staff & contributors · Climate desk". Recent tab selected. The byline number counts from 1,224 to 1,284 over 1400ms (quartic ease-out). After 500ms the signature starts drawing in blue: the name stroke over 2200ms, then the underline flourish over 600ms starting at 1900ms.
-2. Hovering the portrait tightens the dot screen from 4px to 3px over 600ms, so the face sharpens.
-3. Hovering or focusing an article: the serif headline gets a 1px ink underline that grows from 0 to 100% width over 300ms, and a blue arrow fades in and slides 4px left-to-right at the row's right edge.
-4. Clicking "Most read" swaps the list for a ranked list (large grey numerals 1–3, reader counts). List items rise 6px and fade in, staggered 40ms.
-5. Left/Right on a tab moves to the other tab and selects it.
-6. Clicking "Follow Idris" toggles to "Following Idris": pale blue fill, blue text, 1px blue inset ring, plus icon becomes a check. A polite live region announces it.
-7. Clicking the email button copies `idris.penhallow@wexcourier.co.uk` (Clipboard API, falling back to a hidden textarea + `execCommand('copy')`). The label reads "Address copied" for 1600ms. If both fail, the address stays visible and the live region says copy is unavailable.
-8. Clicking Replay restarts both signature strokes from blank.
 
 ## Structure
 
@@ -47,64 +38,6 @@ column gutters 26px each side of 1px #CFC6B3 rules
 - Centre column: kicker `div`, `h1`, italic `p.role`, `p.bio` with a `::first-letter` drop cap, stats block (`aria-label="Byline statistics"`), follow toggle `button aria-pressed`, email `button`.
 - Right column: `div role="tablist"` with two `role="tab"` buttons; two `ol role="tabpanel"` lists of article links. Signature is an inline SVG `role="img"` with a label; Replay is a button.
 - Hidden `p aria-live="polite"`.
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --bg: #e9e3d5;         /* newsprint page */
-  --paper: #f8f4ea;      /* card */
-  --ink: #1c1a16;        /* text, rules, primary button */
-  --ink-2: #4b463d;      /* role line, facts */
-  --ink-3: #6b6558;      /* captions, meta, idle tab */
-  --rule: #cfc6b3;       /* column and row hairlines, rank numerals */
-  --blue: #2340a8;       /* kicker, section labels, selected tab, signature, focus */
-  --blue-soft: #e3e6f2;  /* following state */
-  --portrait-ground: #efe9db;
-
-  /* type */
-  --serif: "Old Standard TT", Georgia, serif;
-  --sans: "Libre Franklin", system-ui, sans-serif;
-
-  /* space */
-  --gutter: 26px; --pad-x: 36px; --pad-top: 28px; --s2: 8px; --s3: 12px; --s4: 18px;
-
-  /* rules */
-  --top-rule: 6px solid var(--ink);
-  --double: 3px double var(--ink);
-  --shadow-card: 0 30px 60px -40px rgba(28,26,22,.45);
-
-  /* stipple */
-  --dot-pitch: 4px; --dot-pitch-hover: 3px; --dot-r: 1.15px;
-
-  /* motion */
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --pen: cubic-bezier(.45,.05,.35,1);
-}
-```
-
-## Typography
-
-| Role | Family | Size / lh | Weight | Tracking / case | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Masthead title | Old Standard TT italic | 20px | 700 | 0 | `--ink` |
-| Masthead labels | Libre Franklin | 11px | 600 | 0.14em upper | `--ink-2` |
-| Kicker | Libre Franklin | 11px | 700 | 0.16em upper | `--blue` |
-| Name | Old Standard TT | 52px / 0.98 | 400 | -0.015em | `--ink` |
-| Role line | Old Standard TT italic | 19px / 1.35 | 400 | 0 | `--ink-2` |
-| Bio | Libre Franklin | 15px / 1.5 | 400 | 0 | max 400px |
-| Drop cap | Old Standard TT | 54px / 0.82 | 700 | 0 | floated, 8px right |
-| Byline count | Old Standard TT | 40px / 1 | 700 | tabular lining nums | |
-| Small stats | Old Standard TT | 28px | 700 | | |
-| Stat labels | Libre Franklin | 11px | 600 | 0.12em upper | `--ink-3` |
-| Tab | Libre Franklin | 12px | 600 | 0.12em upper | `--ink-3` / `--ink` |
-| Section label | Libre Franklin | 10.5px | 700 | 0.14em upper | `--blue` |
-| Headline | Old Standard TT | 17px / 1.22 | 700 | 0 | |
-| Meta | Libre Franklin | 12px | 400 | 0 | `--ink-3` |
-| Rank numeral | Old Standard TT | 26px | 700 | | `--rule` |
-| Caption | Old Standard TT italic | 13px / 1.4 | 400 | | `--ink-3` |
 
 ## Motion
 
@@ -169,6 +102,79 @@ Reduced motion: no count animation (final number from the start), signature show
 - [ ] Facts: Plymouth, 2014, EN, CY, PT.
 - [ ] Recent: "The village that voted to let the sea in", "Why flood maps are always a year late", "Salt in the orchards of the Tamar valley".
 - [ ] Most read leads with "Who pays when the sea wall is sold" (412k readers).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the masthead row reads "The Wexcombe Courier · Staff & contributors · Climate desk". Recent tab selected. The byline number counts from 1,224 to 1,284 over 1400ms (quartic ease-out). After 500ms the signature starts drawing in blue: the name stroke over 2200ms, then the underline flourish over 600ms starting at 1900ms.
+2. Hovering the portrait tightens the dot screen from 4px to 3px over 600ms, so the face sharpens.
+3. Hovering or focusing an article: the serif headline gets a 1px ink underline that grows from 0 to 100% width over 300ms, and a blue arrow fades in and slides 4px left-to-right at the row's right edge.
+4. Clicking "Most read" swaps the list for a ranked list (large grey numerals 1–3, reader counts). List items rise 6px and fade in, staggered 40ms.
+5. Left/Right on a tab moves to the other tab and selects it.
+6. Clicking "Follow Idris" toggles to "Following Idris": pale blue fill, blue text, 1px blue inset ring, plus icon becomes a check. A polite live region announces it.
+7. Clicking the email button copies `idris.penhallow@wexcourier.co.uk` (Clipboard API, falling back to a hidden textarea + `execCommand('copy')`). The label reads "Address copied" for 1600ms. If both fail, the address stays visible and the live region says copy is unavailable.
+8. Clicking Replay restarts both signature strokes from blank.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --bg: #e9e3d5;         /* newsprint page */
+  --paper: #f8f4ea;      /* card */
+  --ink: #1c1a16;        /* text, rules, primary button */
+  --ink-2: #4b463d;      /* role line, facts */
+  --ink-3: #6b6558;      /* captions, meta, idle tab */
+  --rule: #cfc6b3;       /* column and row hairlines, rank numerals */
+  --blue: #2340a8;       /* kicker, section labels, selected tab, signature, focus */
+  --blue-soft: #e3e6f2;  /* following state */
+  --portrait-ground: #efe9db;
+
+  /* type */
+  --serif: "Old Standard TT", Georgia, serif;
+  --sans: "Libre Franklin", system-ui, sans-serif;
+
+  /* space */
+  --gutter: 26px; --pad-x: 36px; --pad-top: 28px; --s2: 8px; --s3: 12px; --s4: 18px;
+
+  /* rules */
+  --top-rule: 6px solid var(--ink);
+  --double: 3px double var(--ink);
+  --shadow-card: 0 30px 60px -40px rgba(28,26,22,.45);
+
+  /* stipple */
+  --dot-pitch: 4px; --dot-pitch-hover: 3px; --dot-r: 1.15px;
+
+  /* motion */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --pen: cubic-bezier(.45,.05,.35,1);
+}
+```
+
+## Typography
+
+| Role | Family | Size / lh | Weight | Tracking / case | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Masthead title | Old Standard TT italic | 20px | 700 | 0 | `--ink` |
+| Masthead labels | Libre Franklin | 11px | 600 | 0.14em upper | `--ink-2` |
+| Kicker | Libre Franklin | 11px | 700 | 0.16em upper | `--blue` |
+| Name | Old Standard TT | 52px / 0.98 | 400 | -0.015em | `--ink` |
+| Role line | Old Standard TT italic | 19px / 1.35 | 400 | 0 | `--ink-2` |
+| Bio | Libre Franklin | 15px / 1.5 | 400 | 0 | max 400px |
+| Drop cap | Old Standard TT | 54px / 0.82 | 700 | 0 | floated, 8px right |
+| Byline count | Old Standard TT | 40px / 1 | 700 | tabular lining nums | |
+| Small stats | Old Standard TT | 28px | 700 | | |
+| Stat labels | Libre Franklin | 11px | 600 | 0.12em upper | `--ink-3` |
+| Tab | Libre Franklin | 12px | 600 | 0.12em upper | `--ink-3` / `--ink` |
+| Section label | Libre Franklin | 10.5px | 700 | 0.14em upper | `--blue` |
+| Headline | Old Standard TT | 17px / 1.22 | 700 | 0 | |
+| Meta | Libre Franklin | 12px | 400 | 0 | `--ink-3` |
+| Rank numeral | Old Standard TT | 26px | 700 | | `--rule` |
+| Caption | Old Standard TT italic | 13px / 1.4 | 400 | | `--ink-3` |
 
 ## Implementation notes
 

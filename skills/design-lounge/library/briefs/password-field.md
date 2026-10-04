@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the field and Show share `--control` and `--radius`. This is `text-field` plus the reveal. Do not invent a second input style.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The password on the yard account. It starts as `type="password"` with the value gate-1842, so the glyphs are masked. Show sits to the right of the field, same 40px height, outline. Pressing Show sets the type to text, the button to Hide, and `aria-pressed` to true. Pressing Hide masks it again. The hint under the field says the yard issued it and it is not the badge number. There is no strength meter and no second rule about symbols.
-
-## Reference behaviour
-
-1. The field is masked. Show is not pressed. The hint is visible.
-2. Show reveals gate-1842 and the button reads Hide.
-3. Hide masks it again and the button reads Show.
-4. The value does not change when you toggle. Only the type changes.
-5. There is no animation and no submit.
-6. Focus ring is 2px `--focus`, offset 2px, on the field and on the button.
 
 ## Structure
 
@@ -31,35 +24,6 @@ width 320
 - The label is tied to the input.
 - Show has `aria-controls` pointing at the input and `aria-pressed`.
 - The hint is a paragraph under the row.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #5c564e;
-  --line-strong: #cfc6b8;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Radius is 2px. The family replaces it on both controls. Show is outline. It is not a second primary. The screen's primary, if this sits on a sign-in, is the submit, which is not in this piece.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 12px | 500 | `--ink-2` |
-| Value | sans | 14px | 400 | `--ink` |
-| Show | sans | 13px | 500 | `--ink` |
-| Hint | sans | 12px | 400 | `--ink-3` |
-
-The where-line letter-spacing is 0.04em. The masked value uses the browser's password glyphs. Do not draw dots in a second font.
 
 ## Motion
 
@@ -107,6 +71,48 @@ None. The type swaps in one frame. Reduced motion has nothing to remove.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] There is no strength meter and no animation.
 - [ ] The value is unchanged by the toggle.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The field is masked. Show is not pressed. The hint is visible.
+2. Show reveals gate-1842 and the button reads Hide.
+3. Hide masks it again and the button reads Show.
+4. The value does not change when you toggle. Only the type changes.
+5. There is no animation and no submit.
+6. Focus ring is 2px `--focus`, offset 2px, on the field and on the button.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #5c564e;
+  --line-strong: #cfc6b8;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Radius is 2px. The family replaces it on both controls. Show is outline. It is not a second primary. The screen's primary, if this sits on a sign-in, is the submit, which is not in this piece.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 12px | 500 | `--ink-2` |
+| Value | sans | 14px | 400 | `--ink` |
+| Show | sans | 13px | 500 | `--ink` |
+| Hint | sans | 12px | 400 | `--ink-3` |
+
+The where-line letter-spacing is 0.04em. The masked value uses the browser's password glyphs. Do not draw dots in a second font.
 
 ## Implementation notes
 

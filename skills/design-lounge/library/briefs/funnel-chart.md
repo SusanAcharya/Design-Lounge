@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, use that kit's colour and radius. This demo uses the numbers below.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A stage count for the yard week. The number on arrival is 71, the loads that were billed. Five rows narrow from Arrived 240 to Billed 71. One colour. Clicking a stage puts that count in the big number and names the stage. This is not a pie. This is not two series. A ranked money list is `chart-rank-spend`. A week of bars is `chart-bar-week`.
-
-## Reference behaviour
-
-1. The first frame number is 71. The caption is "Billed · of 240 that arrived". Billed is current.
-2. Rows are Arrived 240, Checked 210, Held 96, Released 88, Billed 71.
-3. Bar width is the count divided by 240.
-4. Clicking a stage sets aria-current on that row and writes its count and name.
-5. Only one row is current.
-6. There is no legend and no second colour.
-7. The bars do not animate.
 
 ## Structure
 
@@ -33,23 +25,6 @@ label · bar · count
 - Each row is a grid: 120px label, 1fr bar, 48px count, min-height 44px.
 - The bar track is 10px, fill #f0ebe3, the mark is #1f4d3a.
 - The stage name is a button.
-
-## Tokens
-
-```css
-:root {
-  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
-  --line:#e4dfd4; --primary:#1f4d3a; --track:#f0ebe3;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Kicker | IBM Plex Sans | 12px | 500 | 1 | 0.08em |
-| Number | IBM Plex Sans | 64px | 600 | 1 | 0 |
-| Stage | IBM Plex Sans | 14px | 400 | 1 | 0 |
 
 ## Motion
 
@@ -97,16 +72,6 @@ label · bar · count
 - [ ] The kicker is This week.
 - [ ] Type is IBM Plex Sans.
 
-## Implementation notes
-
-Width percent is Math.round(n / 240 * 100). Set it as a custom property on the mark.
-
-```js
-row.innerHTML = '<button type="button">'+name+'</button>';
-```
-
-Build the button with createElement if the names ever come from outside the file. These names are fixed.
-
 ## Measurements to keep
 
 - Card 640px, padding 32px, radius 2px.
@@ -151,6 +116,47 @@ Build the button with createElement if the names ever come from outside the file
 - Billed starts current.
 - The type is IBM Plex Sans.
 - Do not add a sixth stage in this demo.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame number is 71. The caption is "Billed · of 240 that arrived". Billed is current.
+2. Rows are Arrived 240, Checked 210, Held 96, Released 88, Billed 71.
+3. Bar width is the count divided by 240.
+4. Clicking a stage sets aria-current on that row and writes its count and name.
+5. Only one row is current.
+6. There is no legend and no second colour.
+7. The bars do not animate.
+
+## Tokens
+
+```css
+:root {
+  --bg:#f6f4ef; --surface:#fff; --ink:#161513; --ink-2:#5a554c;
+  --line:#e4dfd4; --primary:#1f4d3a; --track:#f0ebe3;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Kicker | IBM Plex Sans | 12px | 500 | 1 | 0.08em |
+| Number | IBM Plex Sans | 64px | 600 | 1 | 0 |
+| Stage | IBM Plex Sans | 14px | 400 | 1 | 0 |
+
+## Implementation notes
+
+Width percent is Math.round(n / 240 * 100). Set it as a custom property on the mark.
+
+```js
+row.innerHTML = '<button type="button">'+name+'</button>';
+```
+
+Build the button with createElement if the names ever come from outside the file. These names are fixed.
 
 ---
 

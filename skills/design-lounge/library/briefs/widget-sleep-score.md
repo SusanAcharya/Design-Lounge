@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The morning card of a fictional sleep app called Lullow. A 168px ring shows last night's score, a serif headline says what the night was like in plain words, four stage totals sit under it, and a stepped hypnogram spans the card below. You drag across the hypnogram (or arrow through it) and a moon-cream cursor reads out the clock time and stage, outlines the segment under it, and dims the three stage totals that don't apply. It should feel quiet and bedside: low-contrast navy, one warm cream accent, an italic serif for numbers. The detail worth copying is the link between scrubbing and the totals: the legend becomes a live answer to "what was I doing at 3:20".
-
-## Reference behaviour
-
-1. Initial state: ring at 0 fills to 84/100 over 1100ms while the number counts up 0 → 84 with a quartic ease out.
-2. The cursor is parked at 3:20 am (minute 242 of 453) on a Deep segment. Readout says "3:20 am · DEEP". The Deep segment carries a 1px ink ring. Legend is not dimmed yet.
-3. Hovering the hypnogram moves the cursor with the pointer. Pressing and dragging captures the pointer so you can leave the plot and keep scrubbing.
-4. While scrubbing: readout updates to the minute, the segment under the cursor gets the ring, the matching legend item stays at full opacity and the other three fall to 40%.
-5. Pointer leaves (not dragging) or focus leaves: legend returns to full opacity. The cursor stays where it was.
-6. Keyboard on the focused hypnogram: ArrowRight/ArrowUp +5 min, ArrowLeft/ArrowDown −5 min, Shift+arrow ±30 min, PageUp/PageDown ±60 min, Home = 11:18 pm, End = 6:51 am.
-7. Cursor clamps to 0…453 minutes.
-8. Totals are computed from the segment data, not typed: Awake 21m, REM 2h 00m, Core 3h 38m, Deep 1h 34m. Under each, a 3px bar shows its share (awake share of time in bed; the three sleep stages as share of time asleep: 28 / 50 / 22%).
 
 ## Structure
 
@@ -45,49 +36,6 @@ The morning card of a fictional sleep app called Lullow. A 168px ring shows last
 - `section.hyp` ("Hypnogram"): readout + hint row, then a grid `52px 1fr` with lane labels and the plot.
 - `.plot` is `role="slider"`, 104px tall, with absolutely positioned `.seg` divs (left/width in %), `.link` hairlines between lanes, and a `.cursor`.
 - `.axis` under the plot with five labels positioned in %.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0e141c;       /* night */
-  --card: #151d28;     /* card */
-  --card-2: #1b2532;   /* ring track */
-  --line: #243142;     /* rules, lane lines, legend tracks */
-  --line-2: #2f3e52;   /* stage links */
-  --ink: #f1e9d6;      /* headline, values (warm, not white) */
-  --ink-2: #aab5c5;    /* meta */
-  --ink-3: #8190a6;    /* labels */
-  --moon: #ead9b0;     /* the accent: ring, cursor, focus, headline italic */
-  --awake: #e7a37a;
-  --rem: #a9c4ee;
-  --core: #5e86c2;
-  --deep: #3d63ab;
-  --serif: "Petrona", Georgia, serif;
-  --sans: "Mulish", system-ui, sans-serif;
-  --r-card: 28px; --r-seg: 4px; --r-plot: 8px;
-  --lane: 26px; --seg-h: 16px;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 20px; --space-5: 28px;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --t-micro: 160ms; --t-ring: 1100ms;
-}
-```
-
-Stage colours run warm (awake) → pale → deep blue, so depth of sleep reads as depth of colour. The accent cream is never a stage colour.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Score | Petrona italic | 58px | 500 | 1 | −0.02em | tabular nums |
-| Headline | Petrona | 28px | 400 | 1.15 | −0.01em | second clause italic in `--moon` |
-| Readout time | Petrona italic | 20px | 400 | 1 | 0 | — |
-| Legend value | Petrona | 19px | 500 | 1.2 | 0 | nowrap |
-| Eyebrow / legend label | Mulish | 11px | 700 | 1 | 0.10–0.16em | uppercase |
-| Meta | Mulish | 14px | 400, bold 600 | 1.5 | 0 | — |
-| Lane labels, axis | Mulish | 11px | 600 / 400 | 1 | 0 | tabular nums |
-| Hint | Mulish | 12px | 400 | 1.5 | 0 | `--ink-3` |
 
 ## Motion
 
@@ -146,6 +94,64 @@ The cursor follows the finger with no easing. Smoothing it makes the readout lag
 - [ ] Totals: Awake 21m, REM 2h 00m, Core 3h 38m, Deep 1h 34m.
 - [ ] Cursor starts at 3:20 am on Deep.
 - [ ] Arrow = 5 min, Shift+arrow = 30 min, PageUp/Down = 60 min.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: ring at 0 fills to 84/100 over 1100ms while the number counts up 0 → 84 with a quartic ease out.
+2. The cursor is parked at 3:20 am (minute 242 of 453) on a Deep segment. Readout says "3:20 am · DEEP". The Deep segment carries a 1px ink ring. Legend is not dimmed yet.
+3. Hovering the hypnogram moves the cursor with the pointer. Pressing and dragging captures the pointer so you can leave the plot and keep scrubbing.
+4. While scrubbing: readout updates to the minute, the segment under the cursor gets the ring, the matching legend item stays at full opacity and the other three fall to 40%.
+5. Pointer leaves (not dragging) or focus leaves: legend returns to full opacity. The cursor stays where it was.
+6. Keyboard on the focused hypnogram: ArrowRight/ArrowUp +5 min, ArrowLeft/ArrowDown −5 min, Shift+arrow ±30 min, PageUp/PageDown ±60 min, Home = 11:18 pm, End = 6:51 am.
+7. Cursor clamps to 0…453 minutes.
+8. Totals are computed from the segment data, not typed: Awake 21m, REM 2h 00m, Core 3h 38m, Deep 1h 34m. Under each, a 3px bar shows its share (awake share of time in bed; the three sleep stages as share of time asleep: 28 / 50 / 22%).
+
+## Tokens
+
+```css
+:root {
+  --bg: #0e141c;       /* night */
+  --card: #151d28;     /* card */
+  --card-2: #1b2532;   /* ring track */
+  --line: #243142;     /* rules, lane lines, legend tracks */
+  --line-2: #2f3e52;   /* stage links */
+  --ink: #f1e9d6;      /* headline, values (warm, not white) */
+  --ink-2: #aab5c5;    /* meta */
+  --ink-3: #8190a6;    /* labels */
+  --moon: #ead9b0;     /* the accent: ring, cursor, focus, headline italic */
+  --awake: #e7a37a;
+  --rem: #a9c4ee;
+  --core: #5e86c2;
+  --deep: #3d63ab;
+  --serif: "Petrona", Georgia, serif;
+  --sans: "Mulish", system-ui, sans-serif;
+  --r-card: 28px; --r-seg: 4px; --r-plot: 8px;
+  --lane: 26px; --seg-h: 16px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 20px; --space-5: 28px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --t-micro: 160ms; --t-ring: 1100ms;
+}
+```
+
+Stage colours run warm (awake) → pale → deep blue, so depth of sleep reads as depth of colour. The accent cream is never a stage colour.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Score | Petrona italic | 58px | 500 | 1 | −0.02em | tabular nums |
+| Headline | Petrona | 28px | 400 | 1.15 | −0.01em | second clause italic in `--moon` |
+| Readout time | Petrona italic | 20px | 400 | 1 | 0 | — |
+| Legend value | Petrona | 19px | 500 | 1.2 | 0 | nowrap |
+| Eyebrow / legend label | Mulish | 11px | 700 | 1 | 0.10–0.16em | uppercase |
+| Meta | Mulish | 14px | 400, bold 600 | 1.5 | 0 | — |
+| Lane labels, axis | Mulish | 11px | 600 / 400 | 1 | 0 | tabular nums |
+| Hint | Mulish | 12px | 400 | 1.5 | 0 | `--ink-3` |
 
 ## Implementation notes
 

@@ -4,27 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A three-page site for a fictional Basel design studio, Raster: Home, Work, Studio. Clicking a nav link covers the whole screen with 24 cobalt squares that spin and grow in on a diagonal wave, holds for a beat with the next page's name on the blue, swaps the page underneath, and spins the squares out in the same direction. The new title then rises one line at a time from behind a clip. The URL hash changes on every page, and the browser's Back and Forward buttons run the same transition. The detail worth copying is direction: going forward in the nav, the wave starts top-left; going back, it starts bottom-right. The wipe always reads as moving through the site, not just covering it.
 
 This is not `page-transition-curtain`. That piece uses two panels and letter-by-letter titles in a luxe serif. This one is a grid wipe with whole lines of grotesk type.
-
-## Reference behaviour
-
-1. Load: the page in the hash (`#home`, `#work` or `#studio`) renders. No hash means Home. There is no wipe on first load. The two title lines rise, then the lede and panel fade up.
-2. Header (64px, 1px black rule): cobalt-and-black mark plus "Raster" on the left; nav links "01 Home", "02 Work", "03 Studio"; "Basel, CH · 47.56° N" in mono on the right. The current link is ink with an 8px cobalt square before it. Others are grey.
-3. Nav links are real anchors with hash hrefs. Clicking one changes the hash. A `hashchange` listener runs the transition. Back and Forward also fire `hashchange`, so they run it too. No element on the page has an id equal to a hash, so the browser never jumps.
-4. t = 0: the tiles pick their order. Forward (new page later in the nav): delay step `d = col + row`, so the top-left tile starts first. Backward: `d = (cols - 1 - col) + (rows - 1 - row)`, so the bottom-right tile starts first.
-5. 0 to 660ms: each tile goes from `scale(0) rotate(-90deg)` to `scale(1.02) rotate(0)` over 380ms with `cubic-bezier(.65,0,.35,1)`, delay `d × 35ms`. On 6×4 the last diagonal is `d = 8`, so cover is complete at 280 + 380 = 660ms. Scale 1.02 hides the hairline seams between tiles.
-6. 560ms: the label in the middle of the blue fades in over 160ms: "02 / 03" in 13px mono above "Work" in 72px white grotesk.
-7. 800ms: the page content swaps behind the full cover. Use `document.startViewTransition(render)` when it exists, with the root view-transition animation set to `none`, so the swap commits in one frame. Without the API, call `render` directly. Focus moves to the new `<h1>` (`tabindex="-1"`, `preventScroll`).
-8. 800 to 1480ms: tiles leave from `scale(1.02) rotate(0)` to `scale(0) rotate(90deg)`, same 380ms, same easing, same diagonal order. They keep turning the same way they came in. The label fades out over 160ms.
-9. Title lines: each line sits in an `overflow: hidden` box and rises from `translateY(105%)` to 0 over 700ms with `cubic-bezier(.16,1,.3,1)`, delay `200ms + line × 90ms` after the swap. Line 0 starts at 1000ms, line 1 at 1090ms, the last lands at 1790ms.
-10. Lede and panel: opacity 0 → 1 over 400ms and `translateY(10px)` → 0 over 500ms, delay 380ms after the swap.
-11. 1480ms: tiles snap back to their hidden state with transitions off. The lock is released.
-12. A hash change during a transition is queued. Only the last one runs, right after the current transition ends. Clicking the current page does nothing.
-13. Reduced motion: no tiles. With the View Transitions API the swap runs as a 240ms root crossfade. Without it, `<main>` fades to 0 over 180ms, swaps, and fades back over 180ms. Title lines, lede and panel appear with no movement. Focus still moves to the `<h1>`.
 
 ## Structure
 
@@ -60,70 +46,6 @@ Page data:
 | home | 01 | Studio für Gestaltung | Form follows / the **grid.** | We design posters, signage and type systems on a twelve-column grid that has not changed since 1994. | 3 stats: 1994 Founded in Basel, 412 Posters printed, 06 People, one table |
 | work | 02 | Selected work, 2021 to 2026 | Thirty years / of **posters.** | Every sheet starts as a pencil grid on A0 paper. Five recent projects, newest first. | 5 rows: 2026 Kunsthalle Rhein, Season identity · 2025 Basel Jazz Tage, 14 posters · 2024 Regio Nord Rail, Wayfinding · 2023 Typo Bern, Type system · 2021 Museum Klang, Exhibition |
 | studio | 03 | Klybeckstrasse 141, third floor | Six people, / one **table.** | We work at one long table in a former print shop. Visits by appointment, Tuesday to Thursday. | 6 people in 2 columns: Anna Reiter Partner, type · Jonas Mäder Partner, motion · Lea Frei Designer · Nico Baumann Designer · Mira Sutter Producer · Tim Vogt Studio manager |
-
-## Tokens
-
-```css
-:root {
-  /* colour: white paper, black ink, one cobalt */
-  --paper: #ffffff;     /* page */
-  --ink: #0a0a0a;       /* type, header rule, panel top rules */
-  --ink-2: #5c5c5c;     /* nav resting, mono meta */
-  --line: #dcdcdc;      /* row rules, footer rule */
-  --cobalt: #1f3fff;    /* tiles, current marker, cobalt word, first stat, focus */
-  --on-cobalt: #ffffff; /* label on the tiles */
-
-  /* type */
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --title: 168px;
-
-  /* layout */
-  --pad: 48px;
-  --head-h: 64px;
-  --foot-h: 48px;
-  --col-gap: 24px;
-
-  /* tiles */
-  --cols: 6;
-  --rows: 4;
-  --t-tile: 380ms;
-  --stagger: 35ms;      /* per diagonal step */
-  --cover-at: 660ms;    /* 8 steps × 35 + 380 */
-  --swap-at: 800ms;     /* cover + 140ms hold for the label */
-  --leave: 680ms;
-
-  /* text */
-  --t-line: 700ms;
-  --line-gap: 90ms;
-  --line-delay: 200ms;
-  --block-delay: 380ms;
-
-  /* easing */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --ease-tile: cubic-bezier(.65, 0, .35, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Wordmark | Schibsted Grotesk | 22px | 800 | 1 | -0.04em | sentence |
-| Nav link | Schibsted Grotesk | 15px | 500 | 40px box | 0 | sentence |
-| Nav number | IBM Plex Mono | 11px | 500 | 1 | +0.04em | numerals |
-| Location, footer | IBM Plex Mono | 12px | 400 | 1.5 | +0.04em | sentence |
-| Index, kicker | IBM Plex Mono | 12px | 500 | 1.5 | +0.06em | UPPERCASE |
-| Page title | Schibsted Grotesk | 168px | 800 | 0.92 | -0.055em | sentence |
-| Lede | Schibsted Grotesk | 19px | 400 | 1.45 | 0 | sentence, max 30ch |
-| Stat number | Schibsted Grotesk | 56px | 800 | 1 | -0.05em | tabular numerals |
-| Row name | Schibsted Grotesk | 15px | 500 | 40px row | 0 | sentence |
-| Row meta | IBM Plex Mono | 12px | 400 | 1.5 | +0.04em | sentence |
-| Tile label | Schibsted Grotesk | 72px | 800 | 1 | -0.05em | sentence |
-| Tile label number | IBM Plex Mono | 13px | 500 | 1 | +0.08em | numerals |
-
-The cobalt word is the last word of the title and inherits weight 800. Do not italicise it.
 
 ## Motion
 
@@ -213,6 +135,90 @@ Reduced motion: no tiles. View Transitions: `::view-transition-old(root), ::view
 - [ ] Tile timing: 380ms, 35ms per diagonal, swap at 800ms, done at 1480ms.
 - [ ] The label reads "02 / 03" over "Work" in white on the cobalt.
 - [ ] Titles: "Form follows the grid.", "Thirty years of posters.", "Six people, one table.", with the last word cobalt.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Load: the page in the hash (`#home`, `#work` or `#studio`) renders. No hash means Home. There is no wipe on first load. The two title lines rise, then the lede and panel fade up.
+2. Header (64px, 1px black rule): cobalt-and-black mark plus "Raster" on the left; nav links "01 Home", "02 Work", "03 Studio"; "Basel, CH · 47.56° N" in mono on the right. The current link is ink with an 8px cobalt square before it. Others are grey.
+3. Nav links are real anchors with hash hrefs. Clicking one changes the hash. A `hashchange` listener runs the transition. Back and Forward also fire `hashchange`, so they run it too. No element on the page has an id equal to a hash, so the browser never jumps.
+4. t = 0: the tiles pick their order. Forward (new page later in the nav): delay step `d = col + row`, so the top-left tile starts first. Backward: `d = (cols - 1 - col) + (rows - 1 - row)`, so the bottom-right tile starts first.
+5. 0 to 660ms: each tile goes from `scale(0) rotate(-90deg)` to `scale(1.02) rotate(0)` over 380ms with `cubic-bezier(.65,0,.35,1)`, delay `d × 35ms`. On 6×4 the last diagonal is `d = 8`, so cover is complete at 280 + 380 = 660ms. Scale 1.02 hides the hairline seams between tiles.
+6. 560ms: the label in the middle of the blue fades in over 160ms: "02 / 03" in 13px mono above "Work" in 72px white grotesk.
+7. 800ms: the page content swaps behind the full cover. Use `document.startViewTransition(render)` when it exists, with the root view-transition animation set to `none`, so the swap commits in one frame. Without the API, call `render` directly. Focus moves to the new `<h1>` (`tabindex="-1"`, `preventScroll`).
+8. 800 to 1480ms: tiles leave from `scale(1.02) rotate(0)` to `scale(0) rotate(90deg)`, same 380ms, same easing, same diagonal order. They keep turning the same way they came in. The label fades out over 160ms.
+9. Title lines: each line sits in an `overflow: hidden` box and rises from `translateY(105%)` to 0 over 700ms with `cubic-bezier(.16,1,.3,1)`, delay `200ms + line × 90ms` after the swap. Line 0 starts at 1000ms, line 1 at 1090ms, the last lands at 1790ms.
+10. Lede and panel: opacity 0 → 1 over 400ms and `translateY(10px)` → 0 over 500ms, delay 380ms after the swap.
+11. 1480ms: tiles snap back to their hidden state with transitions off. The lock is released.
+12. A hash change during a transition is queued. Only the last one runs, right after the current transition ends. Clicking the current page does nothing.
+13. Reduced motion: no tiles. With the View Transitions API the swap runs as a 240ms root crossfade. Without it, `<main>` fades to 0 over 180ms, swaps, and fades back over 180ms. Title lines, lede and panel appear with no movement. Focus still moves to the `<h1>`.
+
+## Tokens
+
+```css
+:root {
+  /* colour: white paper, black ink, one cobalt */
+  --paper: #ffffff;     /* page */
+  --ink: #0a0a0a;       /* type, header rule, panel top rules */
+  --ink-2: #5c5c5c;     /* nav resting, mono meta */
+  --line: #dcdcdc;      /* row rules, footer rule */
+  --cobalt: #1f3fff;    /* tiles, current marker, cobalt word, first stat, focus */
+  --on-cobalt: #ffffff; /* label on the tiles */
+
+  /* type */
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --title: 168px;
+
+  /* layout */
+  --pad: 48px;
+  --head-h: 64px;
+  --foot-h: 48px;
+  --col-gap: 24px;
+
+  /* tiles */
+  --cols: 6;
+  --rows: 4;
+  --t-tile: 380ms;
+  --stagger: 35ms;      /* per diagonal step */
+  --cover-at: 660ms;    /* 8 steps × 35 + 380 */
+  --swap-at: 800ms;     /* cover + 140ms hold for the label */
+  --leave: 680ms;
+
+  /* text */
+  --t-line: 700ms;
+  --line-gap: 90ms;
+  --line-delay: 200ms;
+  --block-delay: 380ms;
+
+  /* easing */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-tile: cubic-bezier(.65, 0, .35, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Wordmark | Schibsted Grotesk | 22px | 800 | 1 | -0.04em | sentence |
+| Nav link | Schibsted Grotesk | 15px | 500 | 40px box | 0 | sentence |
+| Nav number | IBM Plex Mono | 11px | 500 | 1 | +0.04em | numerals |
+| Location, footer | IBM Plex Mono | 12px | 400 | 1.5 | +0.04em | sentence |
+| Index, kicker | IBM Plex Mono | 12px | 500 | 1.5 | +0.06em | UPPERCASE |
+| Page title | Schibsted Grotesk | 168px | 800 | 0.92 | -0.055em | sentence |
+| Lede | Schibsted Grotesk | 19px | 400 | 1.45 | 0 | sentence, max 30ch |
+| Stat number | Schibsted Grotesk | 56px | 800 | 1 | -0.05em | tabular numerals |
+| Row name | Schibsted Grotesk | 15px | 500 | 40px row | 0 | sentence |
+| Row meta | IBM Plex Mono | 12px | 400 | 1.5 | +0.04em | sentence |
+| Tile label | Schibsted Grotesk | 72px | 800 | 1 | -0.05em | sentence |
+| Tile label number | IBM Plex Mono | 13px | 500 | 1 | +0.08em | numerals |
+
+The cobalt word is the last word of the title and inherits weight 800. Do not italicise it.
 
 ## Implementation notes
 

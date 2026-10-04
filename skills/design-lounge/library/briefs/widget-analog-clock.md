@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A clock widget drawn as a 38mm dress watch: a gold case, a green lacquer sunburst dial, applied baton indices, faceted dauphine hands and a needle seconds hand that sweeps continuously instead of ticking. It reads the real local time. Two complications sit on the dial: a date window at 3 o'clock and a 24-hour sub-dial at 6 o'clock that shows a second city. Tapping the dial changes the dial colour (four options), the way a collector would swap watches. It lives on a dashboard, a "travel" page or a personal start page. The detail worth copying is the faceted hand: each hand is two triangles in two tones of the same metal, which reads as light catching a ridge.
-
-## Reference behaviour
-
-1. On load the hands show the current local time. The seconds hand moves continuously (60 fps), not in one-second steps.
-2. The minute hand also advances smoothly (seconds / 60), and the hour hand advances with minutes (minutes / 60), so the hour hand sits between indices at half past.
-3. The date window at 3 o'clock shows today's day of the month in 14px bold. It updates when the date changes.
-4. The sub-dial at 6 o'clock is a 24-hour dial: 24 at top, 6 right, 12 bottom, 18 left. Its single hand points to the second zone's hour (hour + minute / 60) × 15°. The top half of the sub-dial is shaded darker for night.
-5. The sub-dial shows the city code under its centre (TYO by default).
-6. Clicking the dial, or pressing Enter / Space when it is focused, cycles the dial: Verde sunburst → Salmone → Ardoise → Grand feu enamel → Verde. The dial colour, index colour, hand colours and seconds-hand colour cross-fade over 500ms and the dial artwork does a 520ms settle (opacity 0.55 → 1, rotate −4° → 0).
-7. A panel beside the watch shows the brand line, model name, the dial name with a one-line description, four dial swatches (radio group) and four second-zone cities (radio group) with their live local times.
-8. Picking a swatch sets that dial directly. Picking a city changes the sub-dial hand and code immediately.
-9. A visually hidden status line updates once a minute with the spoken time: "Local time 23:56, date 3. Tokyo 03:11."
-10. With reduced motion, the seconds hand jumps once per second (driven by a 1000ms interval instead of rAF) and colour changes are instant.
 
 ## Structure
 
@@ -45,46 +34,6 @@ panel width 300px
 - `button.dial` holds a visually hidden label span and one inline SVG with `viewBox="-200 -200 400 400"` so (0,0) is the pivot.
 - SVG layers in order: minute track + indices group, brand text, sub-dial group at `translate(0 82)`, date window, hands group.
 - `.panel` is a `section` labelled by the `h1`. Dial and zone pickers are `fieldset` + `legend` with native radio inputs.
-
-## Tokens
-
-```css
-:root {
-  --stage: #0a1411;        /* page, deep green-black */
-  --stage-2: #15241f;      /* spotlight centre */
-  --text: #ece2c8;         /* panel text */
-  --text-2: #a99f86;       /* muted panel text */
-  --line: rgba(236,226,200,.14);
-  --gold-1: #7d6436; --gold-2: #e8d29c; --gold-3: #a2834b; --gold-4: #f4e3b4;
-  --display: "Marcellus", Georgia, serif;
-  --sans: "Mulish", system-ui, sans-serif;
-  --size: min(470px, 84vw);
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-}
-/* per dial, set on .watch[data-dial] */
-[data-dial="verde"]   { --dial:#143f33; --ink:#eadfc1; --hand:#d8b673; --hand-2:#9c7b3f; --accent:#e2c27f; --sub:rgba(0,0,0,.18) }
-[data-dial="salmone"] { --dial:#d99a7d; --ink:#3b2219; --hand:#2a3a5a; --hand-2:#141e33; --accent:#1d2b4a; --sub:rgba(80,30,10,.10) }
-[data-dial="ardoise"] { --dial:#2b2f34; --ink:#efe9dc; --hand:#dfe1e3; --hand-2:#8d9195; --accent:#e3a43b; --sub:rgba(0,0,0,.22) }
-[data-dial="email"]   { --dial:#f1e9d8; --ink:#1d1a16; --hand:#24407e; --hand-2:#122452; --accent:#a8322a; --sub:rgba(60,40,10,.07) }
-```
-
-Spacing runs on 4/8: 8, 12, 20, 24, 28, 88. Radii: 50% for case, dial and swatches; 6px for zone tiles; 4px for the crown and `kbd`.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Case |
-| --- | --- | --- | --- | --- | --- |
-| Model name (h1) | Marcellus | 40px / 1.05 | 400 | 0.01em | Title |
-| Brand on dial | Marcellus | 15 SVG units | 400 | 0.32em | Upper |
-| Dial sub-line | Mulish | 6.4 units | 700 | 0.28em | Upper |
-| Sub-dial numerals | Mulish | 7 units | 700 | 0 | — |
-| Date | Mulish | 14 units | 700 | 0 | — |
-| Eyebrow, legends | Mulish | 11px | 700 | 0.24em | Upper |
-| Dial name line | Mulish | 15px | 600 name / 400 note | 0 | Sentence |
-| Zone city / time | Mulish | 14px 600 / 12px tabular | — | 0 | — |
-
-Marcellus is a flared, engraved-feeling roman. Use it only for the brand and the model name. Everything functional is Mulish.
 
 ## Motion
 
@@ -145,6 +94,63 @@ Do not add a CSS rotation animation to the hands. Rotation is computed from `Dat
 - [ ] Cities: Tokyo (TYO, default), New York (NYC), Lisbon (LIS), Kathmandu (KTM).
 - [ ] Case is a 470px conic gold gradient; dial inset 5.6%.
 - [ ] Index at 3 o'clock is replaced by the 38×26 date window.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. On load the hands show the current local time. The seconds hand moves continuously (60 fps), not in one-second steps.
+2. The minute hand also advances smoothly (seconds / 60), and the hour hand advances with minutes (minutes / 60), so the hour hand sits between indices at half past.
+3. The date window at 3 o'clock shows today's day of the month in 14px bold. It updates when the date changes.
+4. The sub-dial at 6 o'clock is a 24-hour dial: 24 at top, 6 right, 12 bottom, 18 left. Its single hand points to the second zone's hour (hour + minute / 60) × 15°. The top half of the sub-dial is shaded darker for night.
+5. The sub-dial shows the city code under its centre (TYO by default).
+6. Clicking the dial, or pressing Enter / Space when it is focused, cycles the dial: Verde sunburst → Salmone → Ardoise → Grand feu enamel → Verde. The dial colour, index colour, hand colours and seconds-hand colour cross-fade over 500ms and the dial artwork does a 520ms settle (opacity 0.55 → 1, rotate −4° → 0).
+7. A panel beside the watch shows the brand line, model name, the dial name with a one-line description, four dial swatches (radio group) and four second-zone cities (radio group) with their live local times.
+8. Picking a swatch sets that dial directly. Picking a city changes the sub-dial hand and code immediately.
+9. A visually hidden status line updates once a minute with the spoken time: "Local time 23:56, date 3. Tokyo 03:11."
+10. With reduced motion, the seconds hand jumps once per second (driven by a 1000ms interval instead of rAF) and colour changes are instant.
+
+## Tokens
+
+```css
+:root {
+  --stage: #0a1411;        /* page, deep green-black */
+  --stage-2: #15241f;      /* spotlight centre */
+  --text: #ece2c8;         /* panel text */
+  --text-2: #a99f86;       /* muted panel text */
+  --line: rgba(236,226,200,.14);
+  --gold-1: #7d6436; --gold-2: #e8d29c; --gold-3: #a2834b; --gold-4: #f4e3b4;
+  --display: "Marcellus", Georgia, serif;
+  --sans: "Mulish", system-ui, sans-serif;
+  --size: min(470px, 84vw);
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+}
+/* per dial, set on .watch[data-dial] */
+[data-dial="verde"]   { --dial:#143f33; --ink:#eadfc1; --hand:#d8b673; --hand-2:#9c7b3f; --accent:#e2c27f; --sub:rgba(0,0,0,.18) }
+[data-dial="salmone"] { --dial:#d99a7d; --ink:#3b2219; --hand:#2a3a5a; --hand-2:#141e33; --accent:#1d2b4a; --sub:rgba(80,30,10,.10) }
+[data-dial="ardoise"] { --dial:#2b2f34; --ink:#efe9dc; --hand:#dfe1e3; --hand-2:#8d9195; --accent:#e3a43b; --sub:rgba(0,0,0,.22) }
+[data-dial="email"]   { --dial:#f1e9d8; --ink:#1d1a16; --hand:#24407e; --hand-2:#122452; --accent:#a8322a; --sub:rgba(60,40,10,.07) }
+```
+
+Spacing runs on 4/8: 8, 12, 20, 24, 28, 88. Radii: 50% for case, dial and swatches; 6px for zone tiles; 4px for the crown and `kbd`.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Case |
+| --- | --- | --- | --- | --- | --- |
+| Model name (h1) | Marcellus | 40px / 1.05 | 400 | 0.01em | Title |
+| Brand on dial | Marcellus | 15 SVG units | 400 | 0.32em | Upper |
+| Dial sub-line | Mulish | 6.4 units | 700 | 0.28em | Upper |
+| Sub-dial numerals | Mulish | 7 units | 700 | 0 | — |
+| Date | Mulish | 14 units | 700 | 0 | — |
+| Eyebrow, legends | Mulish | 11px | 700 | 0.24em | Upper |
+| Dial name line | Mulish | 15px | 600 name / 400 note | 0 | Sentence |
+| Zone city / time | Mulish | 14px 600 / 12px tabular | — | 0 | — |
+
+Marcellus is a flared, engraved-feeling roman. Use it only for the brand and the model name. Everything functional is Mulish.
 
 ## Implementation notes
 

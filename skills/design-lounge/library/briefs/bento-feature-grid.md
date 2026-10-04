@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A marketing "features" section for a developer platform ("Tessel"), laid out as a bento grid: six cells of different spans on a strict 4 × 3 grid, on a warm off-white page. Each cell carries a **small live illustration built from CSS only** — a 24-bar chart that grows in, a keycap row that lights up when you press the keys, a real toggle switch, a sparkline that draws itself, an avatar stack with a typing indicator, and a release timeline with one spinning step. Hovering a cell lifts it 2px and brightens its hairline border; nothing else moves. The detail worth copying is the restraint: one accent green, hairlines instead of shadows, and illustrations that behave like the product instead of decorating it.
-
-## Reference behaviour
-
-1. Initial state: header (eyebrow, 36px serif headline with an italic accent phrase, right-aligned lede) above a 4-column × 3-row grid of six cells. The bar chart in cell A grows from the baseline over 700ms, each bar staggered 22ms; the sparkline in cell D draws its stroke over 1.2s then fades in its fill. Everything else is already in its final state.
-2. Hover any cell: it translates up 2px, the border changes from `#E2DED4` to `#B8B2A4`, and a faint shadow (`0 8px 20px -14px rgba(28,27,24,.25)`) appears. 160ms.
-3. Hover a bar in the chart: it fills with the accent green (the last six bars are already accent, marking the "current window").
-4. Keycap row (cell B): every 3.2s the page animates the chord ⌘ K → G → I by pressing keycaps in sequence (each press lasts 220ms, the "then" steps are 520ms apart). Pressing those keys on a real keyboard lights the matching keycap; holding ⌘/Ctrl keeps the ⌘ cap pressed until key-up.
-5. Toggle (cell C): a real `role="switch"` button. Clicking flips `aria-checked`, slides the knob 22px and turns the track green; the "pods" figure changes 6 ↔ 3.
-6. Presence (cell E): three dots blink in sequence beside "Noor is editing" on a 1.4s loop.
-7. Release train (cell F): steps Build and Test are done (filled green dot with check), Canary shows a spinning ring (1.1s linear), Sign-off is an empty ring.
-8. Keyboard: Tab reaches the toggle; a cell containing a focused control shows a green border (`:focus-within`).
 
 ## Structure
 
@@ -46,61 +37,6 @@ A: col 1–2, row 1–2 · B: col 3–4, row 1 · C: col 3, row 2 · D: col 4, r
 - `<section class="grid" aria-label="Product features">`: CSS grid, `flex: 1`, `min-height: 0` so rows share the remaining height.
 - Each `<article class="cell">`: `<h3>` (serif), `<p>` (description), then a `.art` box (`flex: 1`) holding the illustration. Cell A also has a `.tag` pill absolutely positioned top-right.
 - Illustrations: A — `<div class="bars" role="img">` filled with 24 `<span class="bar">` by JS. B — `.keys` row of `.key` spans (`aria-hidden`). C — `<button role="switch">`. D — inline `<svg class="spark">` with a fill path and a stroke path. E — `.faces` avatar stack + `.typing` dots. F — `.steps` row of `.step` items separated by `.rail` hairlines.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm paper neutrals, one green accent */
-  --bg: #f5f3ee;            /* page */
-  --cell: #fffdf9;          /* cell surface */
-  --cell-2: #f0ede6;        /* keycap face, empty avatar */
-  --line: #e2ded4;          /* hairlines, resting cell border */
-  --line-hover: #b8b2a4;    /* hovered cell border, switch off track, step rings */
-  --ink: #1c1b18;           /* headings, stats */
-  --ink-2: #5f5b52;         /* body copy */
-  --ink-3: #8f8a7e;         /* labels, meta */
-  --accent: #2f6b4f;        /* green: bars, switch on, sparkline, done steps */
-  --accent-soft: #dcebe1;   /* resting bars, sparkline fill, tag pill */
-  --accent-ink: #f5fbf7;    /* text on accent */
-  --shadow-hover: 0 8px 20px -14px rgba(28, 27, 24, .25);
-
-  /* type */
-  --serif: "Fraunces", Georgia, serif;          /* opsz 72 for the h1 */
-  --sans: "Instrument Sans", system-ui, sans-serif;
-  --fs-h1: 36px; --fs-h3: 17px; --fs-body: 14px; --fs-small: 13px; --fs-label: 11px;
-  --fs-stat: 22px; --fs-stat-lg: 26px;
-
-  /* spacing & shape */
-  --gutter: 48px; --gap: 16px; --cell-pad: 20px 22px;
-  --r: 16px;        /* cell */
-  --r-s: 8px;
-  --r-key: 7px;
-  --key-h: 34px; --switch-w: 52px; --switch-h: 30px; --knob: 24px; --avatar: 32px;
-
-  /* motion */
-  --t-micro: 160ms; --t-layout: 320ms; --t-hero: 700ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role            | Family          | Size | Weight | Line-height | Tracking | Case      |
-|-----------------|-----------------|-----:|-------:|------------:|---------:|-----------|
-| Eyebrow         | Instrument Sans | 12px | 500    | 1           | +0.14em  | UPPERCASE |
-| Headline        | Fraunces        | 36px | 500    | 1.1         | −0.02em  | sentence; `<em>` italic 600 in `--accent`, `font-variation-settings: "opsz" 72` |
-| Lede            | Instrument Sans | 15px | 400    | 1.5         | 0        | sentence, `text-wrap: balance`, max 34ch |
-| Cell title      | Fraunces        | 17px | 600    | 1.2         | −0.01em  | sentence  |
-| Cell body       | Instrument Sans | 13px | 400    | 1.5         | 0        | sentence, max 40ch |
-| Big stat (A)    | Fraunces        | 26px | 600    | 1           | −0.02em  | numerals with thousands separators |
-| Stat (C, D)     | Fraunces        | 22px | 600    | 1           | −0.02em  | numerals + unit |
-| Stat caption    | Instrument Sans | 11px | 500    | 1.4         | +0.06em  | UPPERCASE |
-| Meta label      | Instrument Sans | 11px | 500    | 1           | +0.08em  | UPPERCASE |
-| Keycap          | Instrument Sans | 12px | 500    | 1           | 0        | as typed  |
-| "then" word     | Fraunces        | 13px | 500 italic | 1       | 0        | lowercase |
-| Step label      | Instrument Sans | 12px | 500    | 1           | 0        | sentence  |
 
 ## Motion
 
@@ -164,6 +100,76 @@ Reduced motion: all animation and transition durations become 1ms and iteration 
 - [ ] No image files; every illustration is DOM + CSS or inline SVG.
 - [ ] Body text contrast ≥ 4.5:1 on cell surfaces.
 - [ ] Under reduced motion the page is complete on first paint (bars full height, sparkline drawn, spinner static).
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header (eyebrow, 36px serif headline with an italic accent phrase, right-aligned lede) above a 4-column × 3-row grid of six cells. The bar chart in cell A grows from the baseline over 700ms, each bar staggered 22ms; the sparkline in cell D draws its stroke over 1.2s then fades in its fill. Everything else is already in its final state.
+2. Hover any cell: it translates up 2px, the border changes from `#E2DED4` to `#B8B2A4`, and a faint shadow (`0 8px 20px -14px rgba(28,27,24,.25)`) appears. 160ms.
+3. Hover a bar in the chart: it fills with the accent green (the last six bars are already accent, marking the "current window").
+4. Keycap row (cell B): every 3.2s the page animates the chord ⌘ K → G → I by pressing keycaps in sequence (each press lasts 220ms, the "then" steps are 520ms apart). Pressing those keys on a real keyboard lights the matching keycap; holding ⌘/Ctrl keeps the ⌘ cap pressed until key-up.
+5. Toggle (cell C): a real `role="switch"` button. Clicking flips `aria-checked`, slides the knob 22px and turns the track green; the "pods" figure changes 6 ↔ 3.
+6. Presence (cell E): three dots blink in sequence beside "Noor is editing" on a 1.4s loop.
+7. Release train (cell F): steps Build and Test are done (filled green dot with check), Canary shows a spinning ring (1.1s linear), Sign-off is an empty ring.
+8. Keyboard: Tab reaches the toggle; a cell containing a focused control shows a green border (`:focus-within`).
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm paper neutrals, one green accent */
+  --bg: #f5f3ee;            /* page */
+  --cell: #fffdf9;          /* cell surface */
+  --cell-2: #f0ede6;        /* keycap face, empty avatar */
+  --line: #e2ded4;          /* hairlines, resting cell border */
+  --line-hover: #b8b2a4;    /* hovered cell border, switch off track, step rings */
+  --ink: #1c1b18;           /* headings, stats */
+  --ink-2: #5f5b52;         /* body copy */
+  --ink-3: #8f8a7e;         /* labels, meta */
+  --accent: #2f6b4f;        /* green: bars, switch on, sparkline, done steps */
+  --accent-soft: #dcebe1;   /* resting bars, sparkline fill, tag pill */
+  --accent-ink: #f5fbf7;    /* text on accent */
+  --shadow-hover: 0 8px 20px -14px rgba(28, 27, 24, .25);
+
+  /* type */
+  --serif: "Fraunces", Georgia, serif;          /* opsz 72 for the h1 */
+  --sans: "Instrument Sans", system-ui, sans-serif;
+  --fs-h1: 36px; --fs-h3: 17px; --fs-body: 14px; --fs-small: 13px; --fs-label: 11px;
+  --fs-stat: 22px; --fs-stat-lg: 26px;
+
+  /* spacing & shape */
+  --gutter: 48px; --gap: 16px; --cell-pad: 20px 22px;
+  --r: 16px;        /* cell */
+  --r-s: 8px;
+  --r-key: 7px;
+  --key-h: 34px; --switch-w: 52px; --switch-h: 30px; --knob: 24px; --avatar: 32px;
+
+  /* motion */
+  --t-micro: 160ms; --t-layout: 320ms; --t-hero: 700ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role            | Family          | Size | Weight | Line-height | Tracking | Case      |
+|-----------------|-----------------|-----:|-------:|------------:|---------:|-----------|
+| Eyebrow         | Instrument Sans | 12px | 500    | 1           | +0.14em  | UPPERCASE |
+| Headline        | Fraunces        | 36px | 500    | 1.1         | −0.02em  | sentence; `<em>` italic 600 in `--accent`, `font-variation-settings: "opsz" 72` |
+| Lede            | Instrument Sans | 15px | 400    | 1.5         | 0        | sentence, `text-wrap: balance`, max 34ch |
+| Cell title      | Fraunces        | 17px | 600    | 1.2         | −0.01em  | sentence  |
+| Cell body       | Instrument Sans | 13px | 400    | 1.5         | 0        | sentence, max 40ch |
+| Big stat (A)    | Fraunces        | 26px | 600    | 1           | −0.02em  | numerals with thousands separators |
+| Stat (C, D)     | Fraunces        | 22px | 600    | 1           | −0.02em  | numerals + unit |
+| Stat caption    | Instrument Sans | 11px | 500    | 1.4         | +0.06em  | UPPERCASE |
+| Meta label      | Instrument Sans | 11px | 500    | 1           | +0.08em  | UPPERCASE |
+| Keycap          | Instrument Sans | 12px | 500    | 1           | 0        | as typed  |
+| "then" word     | Fraunces        | 13px | 500 italic | 1       | 0        | lowercase |
+| Step label      | Instrument Sans | 12px | 500    | 1           | 0        | sentence  |
 
 ## Implementation notes
 

@@ -4,27 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from 60fps.design, a gallery of mobile micro-interaction clips: this piece takes the "tactile tab button" idea from its travel shots (pills that squash when tapped while the highlight slides and the feed reloads) and rebuilds it as working tabs. It is the explore screen of a fictional Nepali travel app called Basera. Four raised chips (Stays, Homestays, Treks, Food walks) sit under a raised search pill. Each chip has a 3px "lip" under it, so pressing it sinks 3px and loses the lip like a physical key. The selected chip sits inside a dark well that travels to the new chip by stretching: the leading edge leaves first and the trailing edge follows 60ms later on a slower spring. The grid then shows four shimmering skeleton cards for 650ms and the real cards rise in. The detail worth copying is the two-edge stretch: animating `left` and `right` on different timings makes the indicator feel elastic without any physics library.
 
 The language is clay: warm grey ground, cream raised surfaces with a hard lip and a soft drop shadow, inset shadows for wells, one brick accent for focus and saved hearts.
-
-## Reference behaviour
-
-1. First frame: search pill "Where to next? / Any week · 2 guests" with a sunken filter button; chips Stays 128, Homestays 46, Treks 31, Food walks 19; Stays is selected (cream text in the dark well); heading "Stays" in serif with "128 near Pokhara"; a 2×2 grid of listings.
-2. The chip row scrolls horizontally inside itself (scrollbar hidden). At 390 wide the third chip is cut off at the edge, which tells the user it scrolls. The page never scrolls sideways.
-3. Pointer down on a chip: it moves 3px down and scales to 0.95 in 90ms; its lip shadow goes to 0 and its drop shadow shrinks. `navigator.vibrate(6)` fires where supported.
-4. Pointer up or leave: the chip returns in 320ms on `cubic-bezier(.34,1.56,.64,1)`, overshooting slightly upward.
-5. Click selects the chip. The well moves: if moving right, its right edge animates over 300ms and its left edge over 460ms with a 60ms delay; moving left, the reverse. Both use `cubic-bezier(.34,1.3,.64,1)`. Mid-move the well is wider than either chip.
-6. Selected text turns cream (`#faf7f0`) and its count turns `#b8b2a5`; the previously selected chip regains its raised cream surface.
-7. If the chosen chip is partly out of view, the row scrolls smoothly to bring it in, with 40px to spare on the left.
-8. The heading and count line change immediately (e.g. "Treks / 31 guided routes").
-9. The grid becomes four skeleton cards (photo block + two bones) with a 1.1s left-to-right shimmer. The panel has `aria-busy="true"`.
-10. After 650ms the real cards replace the skeletons; each rises 10px and fades in over 420ms, staggered 0, 50, 100, 150ms. `aria-busy` returns to false and a live region announces the count line.
-11. Selecting quickly again cancels the pending swap; only the latest tab's cards appear.
-12. Each card has a 40px heart button; tapping toggles `aria-pressed`, fills it brick, and squeezes it to 0.86 while pressed.
-13. Keyboard: the chips are a tablist with roving tabindex. Arrow Left/Right wrap, Home and End jump; selection follows focus. Enter or Space plays the press animation for 120ms.
 
 ## Structure
 
@@ -57,57 +43,6 @@ The language is clay: warm grey ground, cream raised surfaces with a hard lip an
 - The heading row has the `h1` (current tab name) and the count line.
 - The panel is a `section role="tabpanel"` labelled by the `h1`, with `aria-busy`.
 - Each listing is an `article` with an art block (inline SVG landscape), a heart `button`, `h2`, place `p` and price `p`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #e6e1d6;        /* clay ground */
-  --chip: #f3efe6;      /* raised surfaces */
-  --lip: #cbc3b3;       /* 3px key lip under raised surfaces */
-  --ink: #2b2a26;       /* text, the well */
-  --ink-2: #55524a;     /* search secondary */
-  --ink-3: #6f6b61;     /* counts, meta */
-  --line: #d3ccbe;
-  --brick: #c2412d;     /* focus ring, saved heart */
-  --paper: #faf7f0;     /* text on the well */
-  --skel: #dcd6ca;      /* skeleton base */
-  --skel-hi: #ebe6dc;   /* skeleton shimmer */
-  --sans: "Bricolage Grotesque", system-ui, sans-serif;
-  --serif: "Instrument Serif", Georgia, serif;
-  --chip-h: 46px;
-  --search-h: 58px;
-  --r-pill: 999px;
-  --r-card: 18px;
-  --s-2: 8px; --s-3: 12px; --s-4: 14px; --s-5: 18px; --s-6: 20px;
-  --raised: inset 0 1px 0 #fff, 0 3px 0 var(--lip), 0 8px 14px -8px rgba(43,42,38,.35);
-  --pressed: inset 0 1px 0 #fff, 0 0 0 var(--lip), 0 2px 4px -2px rgba(43,42,38,.3);
-  --well: inset 0 2px 4px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5);
-  --spring: cubic-bezier(.34, 1.56, .64, 1);   /* chip release */
-  --soft: cubic-bezier(.34, 1.3, .64, 1);      /* well edges */
-  --out: cubic-bezier(.16, 1, .3, 1);
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --t-press: 90ms; --t-release: 320ms;
-  --t-lead: 300ms; --t-trail: 460ms; --t-trail-delay: 60ms;
-  --t-skeleton: 650ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Section heading (h1) | Instrument Serif | 30px | 400 | 1 | -0.01em |
-| Card title (h2) | Instrument Serif | 20px | 400 | 1.1 | 0 |
-| Search title | Bricolage Grotesque | 15px | 700 | 1.4 | 0 |
-| Search sub | Bricolage Grotesque | 12px | 400 | 1.4 | 0 |
-| Chip label | Bricolage Grotesque | 15px | 500 | 1 | 0 |
-| Chip count | Bricolage Grotesque | 12px | 400 | 1 | 0 |
-| Count line | Bricolage Grotesque | 13px | 400 | 1.4 | 0 |
-| Card meta | Bricolage Grotesque | 12px | 400 | 1.4 | 0 |
-| Price | Bricolage Grotesque | 13px | 700 amount / 400 unit | 1.4 | 0 |
-
-The serif names places. The grotesk does every control and number.
 
 ## Motion
 
@@ -176,6 +111,77 @@ The serif names places. The grotesk does every control and number.
 - [ ] Ground `#e6e1d6`, chips `#f3efe6`, lip `#cbc3b3`, well `#2b2a26`, brick `#c2412d`.
 - [ ] First grid: Lakeside Loft, Phewa Glass House, Annapurna Rooftop, Old Bazaar Rooms with prices in Rs per night.
 - [ ] Skeleton duration 650ms; well edges 300ms and 460ms with 60ms delay.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: search pill "Where to next? / Any week · 2 guests" with a sunken filter button; chips Stays 128, Homestays 46, Treks 31, Food walks 19; Stays is selected (cream text in the dark well); heading "Stays" in serif with "128 near Pokhara"; a 2×2 grid of listings.
+2. The chip row scrolls horizontally inside itself (scrollbar hidden). At 390 wide the third chip is cut off at the edge, which tells the user it scrolls. The page never scrolls sideways.
+3. Pointer down on a chip: it moves 3px down and scales to 0.95 in 90ms; its lip shadow goes to 0 and its drop shadow shrinks. `navigator.vibrate(6)` fires where supported.
+4. Pointer up or leave: the chip returns in 320ms on `cubic-bezier(.34,1.56,.64,1)`, overshooting slightly upward.
+5. Click selects the chip. The well moves: if moving right, its right edge animates over 300ms and its left edge over 460ms with a 60ms delay; moving left, the reverse. Both use `cubic-bezier(.34,1.3,.64,1)`. Mid-move the well is wider than either chip.
+6. Selected text turns cream (`#faf7f0`) and its count turns `#b8b2a5`; the previously selected chip regains its raised cream surface.
+7. If the chosen chip is partly out of view, the row scrolls smoothly to bring it in, with 40px to spare on the left.
+8. The heading and count line change immediately (e.g. "Treks / 31 guided routes").
+9. The grid becomes four skeleton cards (photo block + two bones) with a 1.1s left-to-right shimmer. The panel has `aria-busy="true"`.
+10. After 650ms the real cards replace the skeletons; each rises 10px and fades in over 420ms, staggered 0, 50, 100, 150ms. `aria-busy` returns to false and a live region announces the count line.
+11. Selecting quickly again cancels the pending swap; only the latest tab's cards appear.
+12. Each card has a 40px heart button; tapping toggles `aria-pressed`, fills it brick, and squeezes it to 0.86 while pressed.
+13. Keyboard: the chips are a tablist with roving tabindex. Arrow Left/Right wrap, Home and End jump; selection follows focus. Enter or Space plays the press animation for 120ms.
+
+## Tokens
+
+```css
+:root {
+  --bg: #e6e1d6;        /* clay ground */
+  --chip: #f3efe6;      /* raised surfaces */
+  --lip: #cbc3b3;       /* 3px key lip under raised surfaces */
+  --ink: #2b2a26;       /* text, the well */
+  --ink-2: #55524a;     /* search secondary */
+  --ink-3: #6f6b61;     /* counts, meta */
+  --line: #d3ccbe;
+  --brick: #c2412d;     /* focus ring, saved heart */
+  --paper: #faf7f0;     /* text on the well */
+  --skel: #dcd6ca;      /* skeleton base */
+  --skel-hi: #ebe6dc;   /* skeleton shimmer */
+  --sans: "Bricolage Grotesque", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+  --chip-h: 46px;
+  --search-h: 58px;
+  --r-pill: 999px;
+  --r-card: 18px;
+  --s-2: 8px; --s-3: 12px; --s-4: 14px; --s-5: 18px; --s-6: 20px;
+  --raised: inset 0 1px 0 #fff, 0 3px 0 var(--lip), 0 8px 14px -8px rgba(43,42,38,.35);
+  --pressed: inset 0 1px 0 #fff, 0 0 0 var(--lip), 0 2px 4px -2px rgba(43,42,38,.3);
+  --well: inset 0 2px 4px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);   /* chip release */
+  --soft: cubic-bezier(.34, 1.3, .64, 1);      /* well edges */
+  --out: cubic-bezier(.16, 1, .3, 1);
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --t-press: 90ms; --t-release: 320ms;
+  --t-lead: 300ms; --t-trail: 460ms; --t-trail-delay: 60ms;
+  --t-skeleton: 650ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Section heading (h1) | Instrument Serif | 30px | 400 | 1 | -0.01em |
+| Card title (h2) | Instrument Serif | 20px | 400 | 1.1 | 0 |
+| Search title | Bricolage Grotesque | 15px | 700 | 1.4 | 0 |
+| Search sub | Bricolage Grotesque | 12px | 400 | 1.4 | 0 |
+| Chip label | Bricolage Grotesque | 15px | 500 | 1 | 0 |
+| Chip count | Bricolage Grotesque | 12px | 400 | 1 | 0 |
+| Count line | Bricolage Grotesque | 13px | 400 | 1.4 | 0 |
+| Card meta | Bricolage Grotesque | 12px | 400 | 1.4 | 0 |
+| Price | Bricolage Grotesque | 13px | 700 amount / 400 unit | 1.4 | 0 |
+
+The serif names places. The grotesk does every control and number.
 
 ## Implementation notes
 

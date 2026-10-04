@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The orders screen of a small studio shop ("Hearthmade"). Seven orders sit in a cream card on a parchment page. Each row shows the order number, the customer, the date, the total, a payment pill, and a fulfilment bar split into one segment per line item. A chevron opens the row into a tray of item tiles, each with its own Pack toggle, and packing items fills the segments. Checking rows raises a dark pill-shaped bulk bar at the bottom of the card. The detail worth copying is the segmented fulfilment bar: it is a progress bar whose segments are the actual items, so "2 of 3" reads at a glance and changes the moment one item is packed.
-
-## Reference behaviour
-
-1. First frame: sorted by Order, descending (#HM-2047 at the top). #HM-2047 is expanded. #HM-2046 and #HM-2044 are checked, so the bulk bar is visible and reads "2 selected". The select-all checkbox is indeterminate.
-2. Clicking a sortable header (Order, Customer, Placed, Total, Payment, Fulfilment) sorts by that column. A second click reverses it. Customer and Payment start ascending; the others start descending. Only the active header has `aria-sort` other than `none`.
-3. Clicking a row checkbox toggles that order. The row tints `--accent-soft`. The header checkbox shows checked when all seven are selected, indeterminate for one to six, empty for zero.
-4. Clicking the header checkbox selects all seven or clears all.
-5. The bulk bar slides up 24px and fades in when the selection goes from 0 to 1, and leaves the same way at 0. It shows the count, Print slips, Put on hold, Clear, and the primary Mark packed.
-6. Mark packed sets every item in every selected, non-refunded order to packed. The segments turn olive and the label reads "Ready to ship". Put on hold changes the payment pill to On hold. Print slips only announces. Clear empties the selection and returns focus to the select-all checkbox.
-7. The chevron button toggles a detail row under the order. Opening it drops the item tray 6px into place over 320ms. The chevron rotates 180° and the button fills ink.
-8. In the tray, each item tile has a Pack toggle (`aria-pressed`). Pressing it flips the item to Packed (olive pill with a tick) and lights one segment in the bar. When every item is packed, all segments turn olive and the label becomes "Ready to ship". Refunded orders have disabled toggles and read "Cancelled".
-9. The "to pack" figure in the header counts orders that are not refunded and not fully packed. It updates live.
-10. Every change is announced in a polite live region ("Sorted by Total, descending", "Linen tea towels packed. 2 of 3 packed.", "3 orders marked packed").
 
 ## Structure
 
@@ -48,54 +37,6 @@ page bg #F3EADB, padding 32px, card centred, max-width 1120px
 - The tray is a `ul` with one `li` per item.
 - The bulk bar is a `div role="region" aria-label="Bulk actions"`, absolutely positioned inside the table wrapper. A 72px spacer under the table keeps the last row clear of it.
 - A visually hidden `p aria-live="polite"` carries announcements.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f3eadb;          /* parchment page */
-  --surface: #fffbf4;     /* card */
-  --sunk: #f8f0e3;        /* thead band */
-  --ink: #2a1e16;
-  --ink-2: #5e4b3c;
-  --ink-3: #76614f;       /* muted labels, 4.9:1 on surface */
-  --line: #e6d8c3;
-  --line-2: #d6c3a8;
-  --accent: #b9472a;      /* terracotta */
-  --accent-ink: #fffbf4;
-  --accent-soft: #f6e1d6; /* selected row */
-  --paid: #3f5a22;    --paid-bg: #e5ebd2;
-  --pend: #80520a;    --pend-bg: #f7e5bf;
-  --hold: #9b2f1d;    --hold-bg: #f6dcd3;
-  --ref: #5e4b3c;     --ref-bg: #ece2d3;
-  --display: "Fraunces", Georgia, serif;
-  --sans: "Work Sans", system-ui, sans-serif;
-  --r-card: 18px; --r-pill: 999px; --r-sm: 8px;
-  --row: 60px; --thead: 44px;
-  --space: 4px 8px 12px 16px 24px 28px 32px;
-  --shadow-card: 0 24px 48px -32px rgba(74,44,20,.35);
-  --shadow-bar: 0 18px 40px -16px rgba(42,30,22,.6);
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Eyebrow | Work Sans | 12px | 600 | 1.45 | 0.08em | upper, `--accent` |
-| Title | Fraunces (opsz 96) | 30px | 600 | 1.1 | -0.02em | sentence |
-| Summary figure | Fraunces | 20px | 600 | 1.1 | 0 | — |
-| Column header | Work Sans | 12px | 600 | 1 | 0.04em | upper, `--ink-3` |
-| Order number | Work Sans | 14px | 600 | 1.45 | 0 | tabular-nums |
-| Body cell | Work Sans | 14px | 400 | 1.45 | 0 | — |
-| Sub-line | Work Sans | 12px | 400 | 1.45 | 0 | `--ink-3` |
-| Total | Work Sans | 14px | 500 | — | 0 | tabular-nums, right |
-| Pill | Work Sans | 12px | 600 | 24px | 0 | — |
-| Bulk bar | Work Sans | 13px | 500 | — | 0 | count 600 |
-
-Fraunces only appears in the title and the two summary figures. Every cell is Work Sans.
 
 ## Motion
 
@@ -161,6 +102,71 @@ The tray animates only when it is opened, not on every re-render. Reduced motion
 - [ ] Header shows "4 to pack" and "$1,010 gross".
 - [ ] Rows are 60px, header band 44px, card radius 18px.
 - [ ] Mark packed turns selected orders' segments olive and labels them "Ready to ship".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: sorted by Order, descending (#HM-2047 at the top). #HM-2047 is expanded. #HM-2046 and #HM-2044 are checked, so the bulk bar is visible and reads "2 selected". The select-all checkbox is indeterminate.
+2. Clicking a sortable header (Order, Customer, Placed, Total, Payment, Fulfilment) sorts by that column. A second click reverses it. Customer and Payment start ascending; the others start descending. Only the active header has `aria-sort` other than `none`.
+3. Clicking a row checkbox toggles that order. The row tints `--accent-soft`. The header checkbox shows checked when all seven are selected, indeterminate for one to six, empty for zero.
+4. Clicking the header checkbox selects all seven or clears all.
+5. The bulk bar slides up 24px and fades in when the selection goes from 0 to 1, and leaves the same way at 0. It shows the count, Print slips, Put on hold, Clear, and the primary Mark packed.
+6. Mark packed sets every item in every selected, non-refunded order to packed. The segments turn olive and the label reads "Ready to ship". Put on hold changes the payment pill to On hold. Print slips only announces. Clear empties the selection and returns focus to the select-all checkbox.
+7. The chevron button toggles a detail row under the order. Opening it drops the item tray 6px into place over 320ms. The chevron rotates 180° and the button fills ink.
+8. In the tray, each item tile has a Pack toggle (`aria-pressed`). Pressing it flips the item to Packed (olive pill with a tick) and lights one segment in the bar. When every item is packed, all segments turn olive and the label becomes "Ready to ship". Refunded orders have disabled toggles and read "Cancelled".
+9. The "to pack" figure in the header counts orders that are not refunded and not fully packed. It updates live.
+10. Every change is announced in a polite live region ("Sorted by Total, descending", "Linen tea towels packed. 2 of 3 packed.", "3 orders marked packed").
+
+## Tokens
+
+```css
+:root {
+  --bg: #f3eadb;          /* parchment page */
+  --surface: #fffbf4;     /* card */
+  --sunk: #f8f0e3;        /* thead band */
+  --ink: #2a1e16;
+  --ink-2: #5e4b3c;
+  --ink-3: #76614f;       /* muted labels, 4.9:1 on surface */
+  --line: #e6d8c3;
+  --line-2: #d6c3a8;
+  --accent: #b9472a;      /* terracotta */
+  --accent-ink: #fffbf4;
+  --accent-soft: #f6e1d6; /* selected row */
+  --paid: #3f5a22;    --paid-bg: #e5ebd2;
+  --pend: #80520a;    --pend-bg: #f7e5bf;
+  --hold: #9b2f1d;    --hold-bg: #f6dcd3;
+  --ref: #5e4b3c;     --ref-bg: #ece2d3;
+  --display: "Fraunces", Georgia, serif;
+  --sans: "Work Sans", system-ui, sans-serif;
+  --r-card: 18px; --r-pill: 999px; --r-sm: 8px;
+  --row: 60px; --thead: 44px;
+  --space: 4px 8px 12px 16px 24px 28px 32px;
+  --shadow-card: 0 24px 48px -32px rgba(74,44,20,.35);
+  --shadow-bar: 0 18px 40px -16px rgba(42,30,22,.6);
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Eyebrow | Work Sans | 12px | 600 | 1.45 | 0.08em | upper, `--accent` |
+| Title | Fraunces (opsz 96) | 30px | 600 | 1.1 | -0.02em | sentence |
+| Summary figure | Fraunces | 20px | 600 | 1.1 | 0 | — |
+| Column header | Work Sans | 12px | 600 | 1 | 0.04em | upper, `--ink-3` |
+| Order number | Work Sans | 14px | 600 | 1.45 | 0 | tabular-nums |
+| Body cell | Work Sans | 14px | 400 | 1.45 | 0 | — |
+| Sub-line | Work Sans | 12px | 400 | 1.45 | 0 | `--ink-3` |
+| Total | Work Sans | 14px | 500 | — | 0 | tabular-nums, right |
+| Pill | Work Sans | 12px | 600 | 24px | 0 | — |
+| Bulk bar | Work Sans | 13px | 500 | — | 0 | count 600 |
+
+Fraunces only appears in the title and the two summary figures. Every cell is Work Sans.
 
 ## Implementation notes
 

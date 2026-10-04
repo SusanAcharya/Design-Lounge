@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, each cell uses `--control` width at least 40px and the family's radius. A password is `password-field`. A link in an email is `auth-magic-link-sent`.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Six cells for a code from a letter. The label is "Code from the letter." The first three cells are 1, 8, and 4. The last three are empty. The status line reads "3 of 6." A digit moves focus to the next cell. Backspace on an empty cell moves to the previous. Paste of digits fills from the start. Check the code stays disabled until six digits. The code that passes is 184219. Any other six digits turns the borders danger and shows "The code is 184219." A pass writes "Code accepted." and disables the button. Check is the one solid primary.
-
-## Reference behaviour
-
-1. Cells 1, 8, 4 are filled. Cells 4, 5, and 6 are empty. The status line is "3 of 6." Check is disabled.
-2. Typing a digit keeps one character, strips anything that is not a digit, and focuses the next cell.
-3. Backspace on an empty cell focuses the previous cell.
-4. Pasting 184219 fills all six and enables Check.
-5. Check with 184219 hides the error, writes "Code accepted.", and disables the button.
-6. Check with any other six digits shows the error and sets `aria-invalid` on the cells.
-7. There is no animation. Focus ring is 2px `--focus`, offset 2px on a cell and offset 3px on the button.
 
 ## Structure
 
@@ -32,38 +24,6 @@ Code from the letter         12px label
 - The six inputs are a group labelled by the sentence.
 - Each input has its own name: Digit 1 through Digit 6.
 - The first input may use `autocomplete="one-time-code"`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --line-strong: #cfc6b8;
-  --primary: #1f4d3a;
-  --primary-ink: #fffdf8;
-  --danger: #9b2c2c;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-Cell radius is 2px. The family replaces it. Do not join the six cells into one rounded track unless the family is already a pill, and even then keep a gap of 8px so they stay six targets.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Where | sans | 12px | 500 | `--ink-2` |
-| Label | sans | 12px | 500 | `--ink-2` |
-| Digit | sans | 20px | 500 | `--ink` |
-| Button | sans | 13px | 500 | `--primary-ink` |
-| Status | sans | 14px | 400 | `--ink` |
-| Error | sans | 14px | 400 | `--danger` |
-
-Digits are centered and tabular. The where-line letter-spacing is 0.04em.
 
 ## Motion
 
@@ -116,6 +76,52 @@ None. Focus moves in one frame. Reduced motion has nothing to remove. Do not fli
 - [ ] Check is the only solid button.
 - [ ] Focus ring is 2px.
 - [ ] There is no animation.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Cells 1, 8, 4 are filled. Cells 4, 5, and 6 are empty. The status line is "3 of 6." Check is disabled.
+2. Typing a digit keeps one character, strips anything that is not a digit, and focuses the next cell.
+3. Backspace on an empty cell focuses the previous cell.
+4. Pasting 184219 fills all six and enables Check.
+5. Check with 184219 hides the error, writes "Code accepted.", and disables the button.
+6. Check with any other six digits shows the error and sets `aria-invalid` on the cells.
+7. There is no animation. Focus ring is 2px `--focus`, offset 2px on a cell and offset 3px on the button.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --line-strong: #cfc6b8;
+  --primary: #1f4d3a;
+  --primary-ink: #fffdf8;
+  --danger: #9b2c2c;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Cell radius is 2px. The family replaces it. Do not join the six cells into one rounded track unless the family is already a pill, and even then keep a gap of 8px so they stay six targets.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Where | sans | 12px | 500 | `--ink-2` |
+| Label | sans | 12px | 500 | `--ink-2` |
+| Digit | sans | 20px | 500 | `--ink` |
+| Button | sans | 13px | 500 | `--primary-ink` |
+| Status | sans | 14px | 400 | `--ink` |
+| Error | sans | 14px | 400 | `--danger` |
+
+Digits are centered and tabular. The where-line letter-spacing is 0.04em.
 
 ## Implementation notes
 

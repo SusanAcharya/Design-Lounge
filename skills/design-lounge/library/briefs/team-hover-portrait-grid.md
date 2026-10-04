@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A team section for **Halden**, an Oslo design studio. Six people sit in a 3×2 grid. Each cell is a geometric “portrait” — layered SVG rectangles, circles, and gradients in wine, gold, and cream — not photographs and not initials discs. At rest only the italic Bodoni name sits on the picture. Hover or keyboard focus drops a 78% ink veil over 320ms and reveals role (gold uppercase), a one-line bio, and a `mailto:` link. No JavaScript. The first frame is the six pictures with names already on them.
-
-## Reference behaviour
-
-1. Initial state: cream page `#F3EBE3`, 56px nav (italic “Halden” 22px Bodoni, Work / Index / Visit, wine `studio@halden.studio`). Lead: kicker “THE STUDIO · OSLO”, heading “Six people, one room”, right meta “HOVER A PORTRAIT”. Six portraits fill the remaining height. Names visible; role, bio, and email hidden (`max-height:0; opacity:0`).
-2. Hover a card: `.veil` opacity 0 → 1 over 320ms; `.more` max-height 0 → 140px, opacity 0 → 1, translateY 8px → 0 over 320ms / 180ms. The SVG stays put underneath.
-3. Focus-within a card (tab onto the card, then onto the email): same reveal. A 2px wine outline, 3px offset, sits on the card.
-4. Hover the email: colour `--gold`. The underline is gold at rest (`text-decoration-color: var(--gold)`, offset 3px).
-5. Leave the card: veil and `.more` reverse on the same clocks.
-6. Tab order: brand → Work → Index → Visit → studio email → Mira card → Mira mail → Jonas card → Jonas mail → … through Henrik.
-7. Reduced motion: veil and `.more` durations become 1ms; translate is forced to none. Reveal still happens.
 
 ## Structure
 
@@ -56,52 +48,6 @@ People, exact copy:
 | Henrik Dahl | Production | Schedules the press and the couriers. Answers the studio line after 16:00. | henrik@halden.studio | Gold-to-ink vertical gradient + wine circle + two cream hairlines |
 
 SVG viewBox is `0 0 400 280` with `preserveAspectRatio="xMidYMid slice"` so the composition crops, it does not letterbox.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f3ebe3;          /* page */
-  --ink: #1a1412;         /* type */
-  --ink-2: #6a5a52;       /* nav links */
-  --ink-3: #9a8a80;       /* meta */
-  --line: #ddd2c6;
-  --wine: #5c2430;        /* kicker, focus, card fallback */
-  --gold: #b8954a;        /* role, mail hover, portrait metal */
-  --cream: #f7f0e8;       /* name + bio on the veil */
-  --veil: rgba(26, 20, 18, .78);
-
-  --serif: "Bodoni Moda", Georgia, serif;
-  --sans: "Tenor Sans", Georgia, serif;
-
-  --nav-h: 56px;
-  --pad: 56px;
-  --gap: 14px;
-
-  --t-fast: 180ms;
-  --t-reveal: 320ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-Tenor Sans is a display sans that sits next to Bodoni; do not substitute Inter.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Body | Tenor Sans | 16px | 400 | 1.4 | 0 | sentence |
-| Brand | Bodoni Moda italic | 22px | 500 | 1 | −0.02em | sentence |
-| Nav links / CTA | Tenor Sans | 13px | 400 | 1 | +0.08–0.1em | UPPERCASE |
-| Kicker | Tenor Sans | 12px | 400 | 1 | +0.16em | UPPERCASE |
-| Heading | Bodoni Moda | 36px | 500 | 1 | −0.02em | sentence |
-| Meta | Tenor Sans | 13px | 400 | 1 | +0.08em | UPPERCASE |
-| Name | Bodoni Moda italic | 22px | 500 | 1 | −0.015em | sentence |
-| Role | Tenor Sans | 12px | 400 | 1 | +0.12em | UPPERCASE |
-| Bio / mail | Tenor Sans | 13px | 400 | 1.4 | 0 | sentence |
-
-Bodoni optical size: `"opsz" 22` on the brand and names, `"opsz" 36` on the heading.
 
 ## Motion
 
@@ -151,6 +97,66 @@ No portrait Ken Burns. No stagger on load. Reduced motion: 1ms durations, no tra
 - [ ] `prefers-reduced-motion: reduce` reveals instantly; content is the same.
 - [ ] No JavaScript, no emoji, no dummy copy.
 - [ ] Demo fills 1280×800 and starts with the piece header comment.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: cream page `#F3EBE3`, 56px nav (italic “Halden” 22px Bodoni, Work / Index / Visit, wine `studio@halden.studio`). Lead: kicker “THE STUDIO · OSLO”, heading “Six people, one room”, right meta “HOVER A PORTRAIT”. Six portraits fill the remaining height. Names visible; role, bio, and email hidden (`max-height:0; opacity:0`).
+2. Hover a card: `.veil` opacity 0 → 1 over 320ms; `.more` max-height 0 → 140px, opacity 0 → 1, translateY 8px → 0 over 320ms / 180ms. The SVG stays put underneath.
+3. Focus-within a card (tab onto the card, then onto the email): same reveal. A 2px wine outline, 3px offset, sits on the card.
+4. Hover the email: colour `--gold`. The underline is gold at rest (`text-decoration-color: var(--gold)`, offset 3px).
+5. Leave the card: veil and `.more` reverse on the same clocks.
+6. Tab order: brand → Work → Index → Visit → studio email → Mira card → Mira mail → Jonas card → Jonas mail → … through Henrik.
+7. Reduced motion: veil and `.more` durations become 1ms; translate is forced to none. Reveal still happens.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f3ebe3;          /* page */
+  --ink: #1a1412;         /* type */
+  --ink-2: #6a5a52;       /* nav links */
+  --ink-3: #9a8a80;       /* meta */
+  --line: #ddd2c6;
+  --wine: #5c2430;        /* kicker, focus, card fallback */
+  --gold: #b8954a;        /* role, mail hover, portrait metal */
+  --cream: #f7f0e8;       /* name + bio on the veil */
+  --veil: rgba(26, 20, 18, .78);
+
+  --serif: "Bodoni Moda", Georgia, serif;
+  --sans: "Tenor Sans", Georgia, serif;
+
+  --nav-h: 56px;
+  --pad: 56px;
+  --gap: 14px;
+
+  --t-fast: 180ms;
+  --t-reveal: 320ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+Tenor Sans is a display sans that sits next to Bodoni; do not substitute Inter.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Body | Tenor Sans | 16px | 400 | 1.4 | 0 | sentence |
+| Brand | Bodoni Moda italic | 22px | 500 | 1 | −0.02em | sentence |
+| Nav links / CTA | Tenor Sans | 13px | 400 | 1 | +0.08–0.1em | UPPERCASE |
+| Kicker | Tenor Sans | 12px | 400 | 1 | +0.16em | UPPERCASE |
+| Heading | Bodoni Moda | 36px | 500 | 1 | −0.02em | sentence |
+| Meta | Tenor Sans | 13px | 400 | 1 | +0.08em | UPPERCASE |
+| Name | Bodoni Moda italic | 22px | 500 | 1 | −0.015em | sentence |
+| Role | Tenor Sans | 12px | 400 | 1 | +0.12em | UPPERCASE |
+| Bio / mail | Tenor Sans | 13px | 400 | 1.4 | 0 | sentence |
+
+Bodoni optical size: `"opsz" 22` on the brand and names, `"opsz" 36` on the heading.
 
 ## Implementation notes
 

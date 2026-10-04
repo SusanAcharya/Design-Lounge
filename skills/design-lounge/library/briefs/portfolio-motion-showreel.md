@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The showreel home of a fictional motion director, Asha V. The page is near-black with one acid pink. A 118px italic Syne wordmark sits above a vertical stack of four cases. Only one case is open at a time. Opening a case is a height morph from 88px to 328px over 420ms (`cubic-bezier(.32, .72, 0, 1)`), shared-element-ish: the header row does not jump, the body fades in 80ms late, and a 320×200 motion still plays on the right. The stills are CSS and SVG, not video. The first case starts open so the first frame already has motion.
-
-## Reference behaviour
-
-1. Initial state: case 01 "Pulse" is `aria-expanded="true"`, height 328px, panel fill `--panel`. Its still (three expanding rings around a 10px acid dot) is playing. Cases 02–04 are 88px, transparent, headers only.
-2. Click any closed header: that case expands to 328px; the previously open case contracts to 88px on the same 420ms clock. Only one case may be open.
-3. Clicking the already-open case does not collapse it to an empty reel. The open case stays open (always one expanded).
-4. The plus icon in the header rotates 45° to a multiply over the same 420ms when that case is open.
-5. The open case's index number is `--acid`; closed numbers are `--ink-2`.
-6. Body copy and still are `opacity: 0` and `translateY(8px)` when closed. When open they go to 1 / 0 over 240ms with an 80ms delay, so type does not appear while the box is still short.
-7. Keyboard: each header is a `<button>`. Tab moves 01→02→03→04. Enter / Space toggles via the button. Focus ring is 2px acid, 3px offset.
-8. Reduced motion: height change is 1ms; all still animations stop and freeze on a readable frame (rings visible at scale 2, type unblurred, streaks static, orbit stopped).
 
 ## Structure
 
@@ -44,45 +35,6 @@ The showreel home of a fictional motion director, Asha V. The page is near-black
 - `<section class="reel" aria-label="Showreel">` — four `<article class="case">`.
   - `<button class="head">` 88px: number, title, meta, year, plus.
   - `.body` grid: spacer + copy/tags + `.still`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0b0b10;          /* page */
-  --panel: #12121a;       /* open case fill */
-  --ink: #f3f0ea;         /* primary text */
-  --ink-2: #8b8896;       /* meta */
-  --line: #23232e;        /* 1px rules */
-  --acid: #ff4ec0;        /* the one accent — not amber, not lime */
-  --acid-ink: #1a0012;    /* unused on text; reserved if a chip fills */
-
-  --display: "Syne", system-ui, sans-serif;
-  --sans: "Manrope", system-ui, sans-serif;
-
-  --pad: 48px;
-  --nav: 52px;
-  --closed: 88px;
-  --open: 328px;
-
-  --t: 180ms;
-  --t-morph: 420ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ios: cubic-bezier(.32, .72, 0, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Wordmark | Syne italic | 118px | 800 | 0.80 | −0.05em | title |
-| Case title | Syne | 28px | 700 | 1 | −0.03em | title |
-| Index number | Syne | 18px | 700 | 1 | 0 | tabular |
-| Nav | Manrope | 12px | 500 | 1 | +0.08em | UPPERCASE |
-| Body / lede | Manrope | 14px | 400 | 1.45 | 0 | sentence |
-| Meta / year | Manrope | 12–13px | 400–600 | 1 | +0.04em | sentence |
-| Tags | Manrope | 11px | 400 | 1 | +0.08em | UPPERCASE |
 
 ## Motion
 
@@ -137,6 +89,60 @@ Reduced motion: height 1ms; still keyframes `animation: none` and a frozen fallb
 - [ ] Keyboard: Tab + Enter/Space opens a case; focus ring is visible.
 - [ ] `prefers-reduced-motion: reduce` freezes stills and makes the height change instant.
 - [ ] No `<video>`, no raster, no emoji, no placeholder copy.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: case 01 "Pulse" is `aria-expanded="true"`, height 328px, panel fill `--panel`. Its still (three expanding rings around a 10px acid dot) is playing. Cases 02–04 are 88px, transparent, headers only.
+2. Click any closed header: that case expands to 328px; the previously open case contracts to 88px on the same 420ms clock. Only one case may be open.
+3. Clicking the already-open case does not collapse it to an empty reel. The open case stays open (always one expanded).
+4. The plus icon in the header rotates 45° to a multiply over the same 420ms when that case is open.
+5. The open case's index number is `--acid`; closed numbers are `--ink-2`.
+6. Body copy and still are `opacity: 0` and `translateY(8px)` when closed. When open they go to 1 / 0 over 240ms with an 80ms delay, so type does not appear while the box is still short.
+7. Keyboard: each header is a `<button>`. Tab moves 01→02→03→04. Enter / Space toggles via the button. Focus ring is 2px acid, 3px offset.
+8. Reduced motion: height change is 1ms; all still animations stop and freeze on a readable frame (rings visible at scale 2, type unblurred, streaks static, orbit stopped).
+
+## Tokens
+
+```css
+:root {
+  --bg: #0b0b10;          /* page */
+  --panel: #12121a;       /* open case fill */
+  --ink: #f3f0ea;         /* primary text */
+  --ink-2: #8b8896;       /* meta */
+  --line: #23232e;        /* 1px rules */
+  --acid: #ff4ec0;        /* the one accent — not amber, not lime */
+  --acid-ink: #1a0012;    /* unused on text; reserved if a chip fills */
+
+  --display: "Syne", system-ui, sans-serif;
+  --sans: "Manrope", system-ui, sans-serif;
+
+  --pad: 48px;
+  --nav: 52px;
+  --closed: 88px;
+  --open: 328px;
+
+  --t: 180ms;
+  --t-morph: 420ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ios: cubic-bezier(.32, .72, 0, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Wordmark | Syne italic | 118px | 800 | 0.80 | −0.05em | title |
+| Case title | Syne | 28px | 700 | 1 | −0.03em | title |
+| Index number | Syne | 18px | 700 | 1 | 0 | tabular |
+| Nav | Manrope | 12px | 500 | 1 | +0.08em | UPPERCASE |
+| Body / lede | Manrope | 14px | 400 | 1.45 | 0 | sentence |
+| Meta / year | Manrope | 12–13px | 400–600 | 1 | +0.04em | sentence |
+| Tags | Manrope | 11px | 400 | 1 | +0.08em | UPPERCASE |
 
 ## Implementation notes
 

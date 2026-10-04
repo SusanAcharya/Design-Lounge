@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens and take buttons from the component grammar. Keep this header, the two tabs, and the side panel.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The detail page for a single yard run, Bay 14. A 48px breadcrumb sits on a white bar. Below it, the title, a warning badge "Waiting on driver", and two actions: Hold (outline) and Confirm load (the only solid primary). Two tabs, Overview and Notes. Overview is a definition list of weight, driver, slot, gate, and reference. Notes is one paragraph. A 300px panel on the right repeats the next step and an outline button with the same verb. Confirming from either button disables both, changes both labels to Confirmed, and turns the badge into a calm green status. One view, one solid button. This is the page you open from a table row. It is not a second dashboard.
-
-## Reference behaviour
-
-1. Initial tab is Overview, `aria-selected="true"`. Notes copy is hidden.
-2. Click Notes: Overview hides, the note paragraph shows, Notes becomes selected. Click Overview to reverse.
-3. The selected tab has a 2px ink underline. The other tab is `--ink-3` with a transparent underline.
-4. Confirm load, in the header or in the panel, sets both buttons to Confirmed, disables both, and changes the badge text to Confirmed with fill `#e7f2ec` and ink `#1f4d3a`.
-5. Only the header button is solid. The panel button is outline. They call the same action. Do not add a second success toast.
-6. Hold does nothing in the demo. It is the outline button beside the one solid primary.
-7. Focus ring is 2px `--focus`, offset 2px.
-8. Meta values use mono. Labels use the text face in `--ink-3`.
 
 ## Structure
 
@@ -32,37 +23,6 @@ grid: main | 300px panel
 - Breadcrumb is text, not a nav of five levels. "Runs / Bay 14".
 - Tabs are `role="tab"`. Overview content is a `dl`. Notes is a paragraph.
 - The panel is an `aside`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #8a847a;
-  --line: #e4dfd4;
-  --primary: #1f4d3a;
-  --primary-ink: #f6f4ef;
-  --warning: #8a5a10;
-  --warning-soft: #f8efd8;
-  --focus: #1f4d3a;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --radius: 2px;
-}
-```
-
-## Typography
-
-- Title: IBM Plex Sans 500, 32px, tracking -0.03em.
-- Breadcrumb: 13px. Current crumb weight 500, ink. Parent `--ink-3`.
-- Badge: 11px, weight 600, height 22px.
-- Buttons: 14px, weight 500, height 36px, radius 2px.
-- Tab: 14px, height 40px. Selected weight 600.
-- Definition labels: 12px `--ink-3`. Values: IBM Plex Mono 13px.
-- Panel heading: 14px weight 600. Panel body: 13px `--ink-2`.
 
 ## Motion
 
@@ -101,6 +61,52 @@ None. Tab changes are instant. Reduced motion changes nothing.
 - [ ] Either confirm changes the badge to Confirmed and disables both confirm buttons. Only the header one is solid.
 - [ ] Radius on buttons is 2px.
 - [ ] No toast, no second typeface, no photo.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial tab is Overview, `aria-selected="true"`. Notes copy is hidden.
+2. Click Notes: Overview hides, the note paragraph shows, Notes becomes selected. Click Overview to reverse.
+3. The selected tab has a 2px ink underline. The other tab is `--ink-3` with a transparent underline.
+4. Confirm load, in the header or in the panel, sets both buttons to Confirmed, disables both, and changes the badge text to Confirmed with fill `#e7f2ec` and ink `#1f4d3a`.
+5. Only the header button is solid. The panel button is outline. They call the same action. Do not add a second success toast.
+6. Hold does nothing in the demo. It is the outline button beside the one solid primary.
+7. Focus ring is 2px `--focus`, offset 2px.
+8. Meta values use mono. Labels use the text face in `--ink-3`.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #8a847a;
+  --line: #e4dfd4;
+  --primary: #1f4d3a;
+  --primary-ink: #f6f4ef;
+  --warning: #8a5a10;
+  --warning-soft: #f8efd8;
+  --focus: #1f4d3a;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius: 2px;
+}
+```
+
+## Typography
+
+- Title: IBM Plex Sans 500, 32px, tracking -0.03em.
+- Breadcrumb: 13px. Current crumb weight 500, ink. Parent `--ink-3`.
+- Badge: 11px, weight 600, height 22px.
+- Buttons: 14px, weight 500, height 36px, radius 2px.
+- Tab: 14px, height 40px. Selected weight 600.
+- Definition labels: 12px `--ink-3`. Values: IBM Plex Mono 13px.
+- Panel heading: 14px weight 600. Panel body: 13px `--ink-2`.
 
 ## Implementation notes
 

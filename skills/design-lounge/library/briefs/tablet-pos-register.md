@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The counter screen of a small cafe ("Chautari Coffee, Jhamsikhel") on a landscape tablet. A barista taps big tiles to build an order, sees it on a ticket on the right, and takes payment without leaving the screen. Three columns: an espresso-brown category rail, a grid of item tiles, and the order ticket. The look is soft and warm: oat paper, espresso ink, 16px corners, one teal for money actions. Every number uses tabular figures so prices line up. The detail worth copying is the two-speed tile: a tap adds the default item at once, a hold (or the small round button) opens a sheet for size, milk and extra shot.
-
-## Reference behaviour
-
-1. First frame: Coffee is the selected category. Eight coffee tiles show in a 3-column grid. The ticket is "Order 0418 · Table 6 · Dine in" with four lines: Flat white (Regular · Oat · +1 shot) Rs 370, Masala chai ×2 Rs 360, Cardamom bun (Warmed) Rs 220, Cold brew Rs 290. Total is Rs 1,240. The big button reads "Charge Rs 1,240". The Flat white tile shows a teal badge "1".
-2. Tap a category in the rail: it turns oat with espresso text. The grid title and the tiles change at once. The hint reads "6 items · tap to add, hold for options".
-3. Tap a tile: the item is added with its default options (Coffee and Tea: "Regular · Whole", Bakery: "As is", Cold: "Regular"). If the same item with the same options is already on the ticket, its quantity goes up by one and that line flashes teal-soft. If not, a new line drops in at the bottom. The tile badge shows the total count of that item on the ticket.
-4. Press and hold a tile for 480ms, or tap its round options button: the modifier sheet slides up from the bottom. The tap that ends a hold does not also add the item.
-5. In the sheet, pick Size (Small −Rs 20, Regular, Large +Rs 40), Milk (Whole, Oat +Rs 40, Almond +Rs 50, None), Extra shot (No, +1 shot +Rs 50, +2 shots +Rs 100) and Quantity (1 to 4). Bakery items show only Serve (As is, Warmed) and Quantity. Tea shows Size and Milk. The Add button shows the live price, for example "Add Rs 370". Add puts the line on the ticket and closes the sheet. Cancel, the scrim, or Escape closes it without adding.
-6. On a ticket line, + adds one. − removes one. When the quantity is 1, the − button becomes a bin icon and removes the line. Totals update on every change.
-7. Prices include 13% VAT. The ticket shows Subtotal (total ÷ 1.13, rounded), "VAT 13% (included)" (total minus subtotal) and Total. With the first-frame order: Rs 1,097, Rs 143, Rs 1,240.
-8. Clear empties the ticket. The empty ticket says "Nothing on the ticket. Tap a tile to start an order." The charge button reads "Charge" and is disabled.
-9. Tap Charge: the ticket panel switches to the tender view. The rail and the menu dim to 45% and stop taking input. The view shows "Amount due Rs 1,240" in large type, three method tiles (Cash, Card, QR) with Cash selected, and a Back button.
-10. Cash shows three quick amounts: Exact, the next Rs 500 note step, and the next Rs 1,000 step above that (for Rs 1,240: Exact, Rs 1,500, Rs 2,000). The middle one starts selected. "Change due" updates (Rs 260). The button reads "Take Rs 1,240 cash".
-11. Card shows a reader hint and the button reads "Card approved". QR shows a 21×21 code drawn as SVG squares and the button reads "Payment received".
-12. Take the payment: the panel shows the done view. A teal circle draws a tick, "Paid", "Rs 1,240 by cash", "Change Rs 260 · receipt printed". New order empties the ticket, moves to Order 0419, clears the note and gives input back to the menu.
-13. Back in the tender view returns to the order view with the ticket unchanged.
 
 ## Structure
 
@@ -66,73 +52,6 @@ The counter screen of a small cafe ("Chautari Coffee, Jhamsikhel") on a landscap
 | Cold | Cold brew 290, Iced latte 300, Lemon soda 150, Lassi 200, Affogato 340, Iced mocha 340 |
 
 Prices are in rupees and formatted with `toLocaleString('en-IN')`, so Rs 1,240 and Rs 1,00,000.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces */
-  --bg: #efe6d8;          /* oat page */
-  --surface: #faf5ec;     /* ticket, sheet */
-  --tile: #fffdf8;        /* item tiles, method tiles */
-  --oat-2: #e6dac7;       /* hover on oat controls, disabled button */
-  --line: #e0d2bd;        /* hairlines and tile borders */
-  /* ink */
-  --ink: #3b2a20;         /* espresso: text and the rail */
-  --ink-2: #6b5444;       /* secondary text */
-  --ink-3: #7d6656;       /* labels, "each" prices */
-  --on-dark: #f6eee2;     /* text on the rail */
-  /* the one accent */
-  --teal: #1f6f68;        /* charge, take, badges, selected options */
-  --teal-ink: #f3fbf9;
-  --teal-soft: #d5e9e5;   /* selected option fill, line flash */
-  /* category bands, muted on purpose */
-  --band-coffee: #8a5a3b;
-  --band-tea: #b4822c;
-  --band-bakery: #c0663a;
-  --band-cold: #5c8592;
-  /* type */
-  --display: "Fraunces", Georgia, serif;
-  --sans: "Source Sans 3", system-ui, sans-serif;
-  /* shape */
-  --r: 16px;
-  --r-sm: 12px;
-  --tap: 56px;
-  --shadow: 0 1px 0 rgba(59,42,32,.06), 0 6px 18px -10px rgba(59,42,32,.35);
-  /* motion */
-  --t-fast: 140ms;
-  --t-mid: 260ms;
-  --t-sheet: 340ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-sheet: cubic-bezier(.32,.72,0,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-}
-```
-
-Spacing runs on 4: 4, 8, 12, 16, 20, 24, 32.
-
-## Typography
-
-Set `font-variant-numeric: tabular-nums` on `body`. Prices must not jitter when a quantity changes.
-
-| Role | Family | Size | Weight | Line-height | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Category title | Fraunces | 34px | 600 | 1 | letter-spacing -0.01em |
-| Brand mark | Fraunces | 15px | 600 | 1.1 | sub-label 11px Source Sans 600, uppercase, 0.08em |
-| Rail label | Source Sans 3 | 14px | 600 | 1.35 | |
-| Tile name | Source Sans 3 | 19px | 700 | 1.15 | |
-| Tile description | Source Sans 3 | 13.5px | 400 | 1.35 | `--ink-2` |
-| Tile price | Source Sans 3 | 19px | 700 | 1.35 | |
-| Ticket title | Fraunces | 20px | 600 | 1.2 | |
-| Line name, line price | Source Sans 3 | 17px | 700 | 1.35 | |
-| Line options | Source Sans 3 | 13.5px | 400 | 1.35 | "each" price in `--ink-3` |
-| Sums | Source Sans 3 | 15px | 400 | 1.35 | Total row 20px 700 `--ink` |
-| Charge button | Source Sans 3 | 22px | 700 | 1 | |
-| Amount due | Fraunces | 52px | 600 | 1.05 | letter-spacing -0.02em |
-| Section labels | Source Sans 3 | 13px | 700 | 1.2 | uppercase, 0.06em, `--ink-3` |
-| Paid | Fraunces | 40px | 600 | 1.1 | |
-
-Fraunces is only for titles and the amount due. Never set prices on tiles or lines in Fraunces.
 
 ## Motion
 
@@ -211,6 +130,93 @@ Reduced motion: set every animation and transition to 1ms and show the tick full
 - [ ] Cash for Rs 1,240 offers Exact, Rs 1,500, Rs 2,000, with Rs 1,500 selected and Rs 260 change.
 - [ ] The rail is `#3b2a20`. The charge button is `#1f6f68`. Corners are 16px.
 - [ ] New order moves to Order 0419.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: Coffee is the selected category. Eight coffee tiles show in a 3-column grid. The ticket is "Order 0418 · Table 6 · Dine in" with four lines: Flat white (Regular · Oat · +1 shot) Rs 370, Masala chai ×2 Rs 360, Cardamom bun (Warmed) Rs 220, Cold brew Rs 290. Total is Rs 1,240. The big button reads "Charge Rs 1,240". The Flat white tile shows a teal badge "1".
+2. Tap a category in the rail: it turns oat with espresso text. The grid title and the tiles change at once. The hint reads "6 items · tap to add, hold for options".
+3. Tap a tile: the item is added with its default options (Coffee and Tea: "Regular · Whole", Bakery: "As is", Cold: "Regular"). If the same item with the same options is already on the ticket, its quantity goes up by one and that line flashes teal-soft. If not, a new line drops in at the bottom. The tile badge shows the total count of that item on the ticket.
+4. Press and hold a tile for 480ms, or tap its round options button: the modifier sheet slides up from the bottom. The tap that ends a hold does not also add the item.
+5. In the sheet, pick Size (Small −Rs 20, Regular, Large +Rs 40), Milk (Whole, Oat +Rs 40, Almond +Rs 50, None), Extra shot (No, +1 shot +Rs 50, +2 shots +Rs 100) and Quantity (1 to 4). Bakery items show only Serve (As is, Warmed) and Quantity. Tea shows Size and Milk. The Add button shows the live price, for example "Add Rs 370". Add puts the line on the ticket and closes the sheet. Cancel, the scrim, or Escape closes it without adding.
+6. On a ticket line, + adds one. − removes one. When the quantity is 1, the − button becomes a bin icon and removes the line. Totals update on every change.
+7. Prices include 13% VAT. The ticket shows Subtotal (total ÷ 1.13, rounded), "VAT 13% (included)" (total minus subtotal) and Total. With the first-frame order: Rs 1,097, Rs 143, Rs 1,240.
+8. Clear empties the ticket. The empty ticket says "Nothing on the ticket. Tap a tile to start an order." The charge button reads "Charge" and is disabled.
+9. Tap Charge: the ticket panel switches to the tender view. The rail and the menu dim to 45% and stop taking input. The view shows "Amount due Rs 1,240" in large type, three method tiles (Cash, Card, QR) with Cash selected, and a Back button.
+10. Cash shows three quick amounts: Exact, the next Rs 500 note step, and the next Rs 1,000 step above that (for Rs 1,240: Exact, Rs 1,500, Rs 2,000). The middle one starts selected. "Change due" updates (Rs 260). The button reads "Take Rs 1,240 cash".
+11. Card shows a reader hint and the button reads "Card approved". QR shows a 21×21 code drawn as SVG squares and the button reads "Payment received".
+12. Take the payment: the panel shows the done view. A teal circle draws a tick, "Paid", "Rs 1,240 by cash", "Change Rs 260 · receipt printed". New order empties the ticket, moves to Order 0419, clears the note and gives input back to the menu.
+13. Back in the tender view returns to the order view with the ticket unchanged.
+
+## Tokens
+
+```css
+:root {
+  /* surfaces */
+  --bg: #efe6d8;          /* oat page */
+  --surface: #faf5ec;     /* ticket, sheet */
+  --tile: #fffdf8;        /* item tiles, method tiles */
+  --oat-2: #e6dac7;       /* hover on oat controls, disabled button */
+  --line: #e0d2bd;        /* hairlines and tile borders */
+  /* ink */
+  --ink: #3b2a20;         /* espresso: text and the rail */
+  --ink-2: #6b5444;       /* secondary text */
+  --ink-3: #7d6656;       /* labels, "each" prices */
+  --on-dark: #f6eee2;     /* text on the rail */
+  /* the one accent */
+  --teal: #1f6f68;        /* charge, take, badges, selected options */
+  --teal-ink: #f3fbf9;
+  --teal-soft: #d5e9e5;   /* selected option fill, line flash */
+  /* category bands, muted on purpose */
+  --band-coffee: #8a5a3b;
+  --band-tea: #b4822c;
+  --band-bakery: #c0663a;
+  --band-cold: #5c8592;
+  /* type */
+  --display: "Fraunces", Georgia, serif;
+  --sans: "Source Sans 3", system-ui, sans-serif;
+  /* shape */
+  --r: 16px;
+  --r-sm: 12px;
+  --tap: 56px;
+  --shadow: 0 1px 0 rgba(59,42,32,.06), 0 6px 18px -10px rgba(59,42,32,.35);
+  /* motion */
+  --t-fast: 140ms;
+  --t-mid: 260ms;
+  --t-sheet: 340ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-sheet: cubic-bezier(.32,.72,0,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+```
+
+Spacing runs on 4: 4, 8, 12, 16, 20, 24, 32.
+
+## Typography
+
+Set `font-variant-numeric: tabular-nums` on `body`. Prices must not jitter when a quantity changes.
+
+| Role | Family | Size | Weight | Line-height | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Category title | Fraunces | 34px | 600 | 1 | letter-spacing -0.01em |
+| Brand mark | Fraunces | 15px | 600 | 1.1 | sub-label 11px Source Sans 600, uppercase, 0.08em |
+| Rail label | Source Sans 3 | 14px | 600 | 1.35 | |
+| Tile name | Source Sans 3 | 19px | 700 | 1.15 | |
+| Tile description | Source Sans 3 | 13.5px | 400 | 1.35 | `--ink-2` |
+| Tile price | Source Sans 3 | 19px | 700 | 1.35 | |
+| Ticket title | Fraunces | 20px | 600 | 1.2 | |
+| Line name, line price | Source Sans 3 | 17px | 700 | 1.35 | |
+| Line options | Source Sans 3 | 13.5px | 400 | 1.35 | "each" price in `--ink-3` |
+| Sums | Source Sans 3 | 15px | 400 | 1.35 | Total row 20px 700 `--ink` |
+| Charge button | Source Sans 3 | 22px | 700 | 1 | |
+| Amount due | Fraunces | 52px | 600 | 1.05 | letter-spacing -0.02em |
+| Section labels | Source Sans 3 | 13px | 700 | 1.2 | uppercase, 0.06em, `--ink-3` |
+| Paid | Fraunces | 40px | 600 | 1.1 | |
+
+Fraunces is only for titles and the amount due. Never set prices on tiles or lines in Fraunces.
 
 ## Implementation notes
 

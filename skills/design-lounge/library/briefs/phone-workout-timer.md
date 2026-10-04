@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The in-workout screen of Brisk, a fictional interval training app. The phone is propped on the floor two metres away, so everything is huge: a 300px countdown ring, 150px ultra-condensed numerals, a 96px pause button. Work is volt green, rest is cyan, and the whole screen changes colour at each switch with a short full-screen flash, so the phase can be read from the corner of an eye. A segmented timeline along the bottom shows every interval, with each segment's width set by its length. The demo runs live with short intervals (8s work, 4s rest, 8 rounds) and starts in the middle of round 3, so it changes while you watch. The detail worth copying is that colour carries the phase everywhere at once: tag, ring, numerals in the last three seconds, the big button, and the timeline.
-
-## Reference behaviour
-
-1. Initial state: round 3 of 8, WORK, Burpees, 5 seconds left, running. Total time reads 00:27 (two finished rounds plus 3 seconds). The ring is about 40% drained.
-2. The ring drains clockwise from 12 o'clock as time passes, updated every animation frame. The numerals change once per second.
-3. In the last 3 seconds of any interval the numerals turn the phase colour and pop from 112% scale back to 100% on each new second.
-4. At 0 the next interval starts. The body flips to the new phase colour, a full-screen flash in that colour peaks at 50% opacity and fades in 450ms, the ring pulses to 104.5% and back, and the live region announces the change. On devices that allow it, the phone vibrates: 70ms for work, 30-40-30ms for rest.
-5. Rest shows "Breathe" in place of the exercise name. Next-up shows the coming exercise and its length.
-6. Pause: the clock stops, the tag reads PAUSED on a white chip, the numerals drop to 40% opacity, and the button turns into a play icon labelled Resume.
-7. Skip moves to the next interval at once. Back restarts the current interval if more than 1.5s has passed, otherwise it goes to the previous interval.
-8. Keyboard: Space toggles pause, Right arrow skips, Left arrow goes back.
-9. After round 8 there is no rest. The finish screen rises 24px into place: DONE in 148px volt, then total time, calories, work time, and rest time in a 2 × 2 grid, the full interval bar, a week strip, and two buttons. Focus moves to Go again.
-10. Go again restarts from round 1, work, 8 seconds, total 00:00.
 
 ## Structure
 
@@ -56,61 +45,6 @@ The in-workout screen of Brisk, a fictional interval training app. The phone is 
 - Flash: a fixed full-screen `div`, `pointer-events: none`, `aria-hidden`.
 - Live region: a visually hidden `p` with `aria-live="assertive"`.
 - Finish: a fixed `section` labelled by its DONE heading, `aria-hidden` until shown.
-
-## Tokens
-
-```css
-:root {
-  --bg: #050505;          /* the floor is black on purpose */
-  --surface: #121310;     /* cards, round buttons */
-  --raise: #20211c;       /* ring track, empty segments */
-  --line: #2a2b26;        /* hairlines, tick ring */
-  --ink: #f3f5ec;
-  --ink2: #a2a797;
-  --ink3: #6c7064;
-  --volt: #d4ff2e;        /* work */
-  --cyan: #2ee6ff;        /* rest */
-  --on-ph: #070806;       /* text on volt or cyan */
-  --ph: var(--volt);      /* current phase; body[data-ph="rest"] sets var(--cyan) */
-
-  --num: "Big Shoulders Display", Impact, sans-serif;
-  --sans: "Archivo", system-ui, sans-serif;
-
-  --ring: min(300px, 78vw, 38vh);
-  --ring-stroke: 16px;
-  --btn-main: 96px;
-  --btn-side: 64px;
-  --seg-h: 22px;
-  --seg-gap: 3px;
-
-  --r-card: 18px; --r-stats: 20px; --r-seg: 4px; --r-pill: 999px;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-7: 28px;
-
-  --snap: cubic-bezier(.16, 1, .3, 1);     /* expo out */
-  --std: cubic-bezier(.2, .7, .2, 1);
-  --dur-flash: 450ms;
-  --dur-pulse: 420ms;
-  --dur-tick: 320ms;
-  --dur-phase: 200ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Width | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Countdown | Big Shoulders Display | min(150px, 40vw, 19vh), line-height 0.82 | 900 | condensed by design | -0.01em | numerals, tabular |
-| Total time | Big Shoulders Display | 26px | 800 | | 0 | tabular |
-| Next-up length | Big Shoulders Display | 26px | 800 | | 0 | |
-| Finish DONE | Big Shoulders Display | clamp(110px, 36vw, 148px), line-height 0.8 | 900 | | -0.01em | upper |
-| Finish stats | Big Shoulders Display | 44px | 800 | | 0 | tabular |
-| Exercise name | Archivo | 20px | 800 | wdth 66 | 0.04em | upper |
-| Phase tag | Archivo | 14px | 800 | wdth 75 | 0.14em | upper |
-| Next exercise | Archivo | 17px | 800 | wdth 75 | 0.03em | upper |
-| Labels (NEXT UP, TOTAL, ROUND) | Archivo | 11 to 13px | 700 to 800 | wdth 88 | 0.12 to 0.14em | upper |
-| Body line | Archivo | 15 to 16px | 500 | wdth 88 | 0 | sentence |
-
-Use Archivo's width axis (62 to 125) for the condensed labels. Do not fake it with `transform: scaleX`.
 
 ## Motion
 
@@ -184,6 +118,78 @@ The ring and segment fills are the clock, not decoration. Linear-in-time is corr
 - [ ] Exercises in order: Jump squats, Mountain climbers, Burpees, Skater hops, High knees, Plank jacks, Lunge switches, Tuck jumps.
 - [ ] Calories are round(work seconds × 0.19 + rest seconds × 0.04), so a full run gives 13 kcal.
 - [ ] The finish heading is DONE, and the week strip reads "4 of 5 sessions".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: round 3 of 8, WORK, Burpees, 5 seconds left, running. Total time reads 00:27 (two finished rounds plus 3 seconds). The ring is about 40% drained.
+2. The ring drains clockwise from 12 o'clock as time passes, updated every animation frame. The numerals change once per second.
+3. In the last 3 seconds of any interval the numerals turn the phase colour and pop from 112% scale back to 100% on each new second.
+4. At 0 the next interval starts. The body flips to the new phase colour, a full-screen flash in that colour peaks at 50% opacity and fades in 450ms, the ring pulses to 104.5% and back, and the live region announces the change. On devices that allow it, the phone vibrates: 70ms for work, 30-40-30ms for rest.
+5. Rest shows "Breathe" in place of the exercise name. Next-up shows the coming exercise and its length.
+6. Pause: the clock stops, the tag reads PAUSED on a white chip, the numerals drop to 40% opacity, and the button turns into a play icon labelled Resume.
+7. Skip moves to the next interval at once. Back restarts the current interval if more than 1.5s has passed, otherwise it goes to the previous interval.
+8. Keyboard: Space toggles pause, Right arrow skips, Left arrow goes back.
+9. After round 8 there is no rest. The finish screen rises 24px into place: DONE in 148px volt, then total time, calories, work time, and rest time in a 2 × 2 grid, the full interval bar, a week strip, and two buttons. Focus moves to Go again.
+10. Go again restarts from round 1, work, 8 seconds, total 00:00.
+
+## Tokens
+
+```css
+:root {
+  --bg: #050505;          /* the floor is black on purpose */
+  --surface: #121310;     /* cards, round buttons */
+  --raise: #20211c;       /* ring track, empty segments */
+  --line: #2a2b26;        /* hairlines, tick ring */
+  --ink: #f3f5ec;
+  --ink2: #a2a797;
+  --ink3: #6c7064;
+  --volt: #d4ff2e;        /* work */
+  --cyan: #2ee6ff;        /* rest */
+  --on-ph: #070806;       /* text on volt or cyan */
+  --ph: var(--volt);      /* current phase; body[data-ph="rest"] sets var(--cyan) */
+
+  --num: "Big Shoulders Display", Impact, sans-serif;
+  --sans: "Archivo", system-ui, sans-serif;
+
+  --ring: min(300px, 78vw, 38vh);
+  --ring-stroke: 16px;
+  --btn-main: 96px;
+  --btn-side: 64px;
+  --seg-h: 22px;
+  --seg-gap: 3px;
+
+  --r-card: 18px; --r-stats: 20px; --r-seg: 4px; --r-pill: 999px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-7: 28px;
+
+  --snap: cubic-bezier(.16, 1, .3, 1);     /* expo out */
+  --std: cubic-bezier(.2, .7, .2, 1);
+  --dur-flash: 450ms;
+  --dur-pulse: 420ms;
+  --dur-tick: 320ms;
+  --dur-phase: 200ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Width | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Countdown | Big Shoulders Display | min(150px, 40vw, 19vh), line-height 0.82 | 900 | condensed by design | -0.01em | numerals, tabular |
+| Total time | Big Shoulders Display | 26px | 800 | | 0 | tabular |
+| Next-up length | Big Shoulders Display | 26px | 800 | | 0 | |
+| Finish DONE | Big Shoulders Display | clamp(110px, 36vw, 148px), line-height 0.8 | 900 | | -0.01em | upper |
+| Finish stats | Big Shoulders Display | 44px | 800 | | 0 | tabular |
+| Exercise name | Archivo | 20px | 800 | wdth 66 | 0.04em | upper |
+| Phase tag | Archivo | 14px | 800 | wdth 75 | 0.14em | upper |
+| Next exercise | Archivo | 17px | 800 | wdth 75 | 0.03em | upper |
+| Labels (NEXT UP, TOTAL, ROUND) | Archivo | 11 to 13px | 700 to 800 | wdth 88 | 0.12 to 0.14em | upper |
+| Body line | Archivo | 15 to 16px | 500 | wdth 88 | 0 | sentence |
+
+Use Archivo's width axis (62 to 125) for the condensed labels. Do not fake it with `transform: scaleX`.
 
 ## Implementation notes
 

@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This page opens from `shop-collection` and its button opens `shop-cart`.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The product page for the ash bowl from the Kiln collection. The frame is a two-column page on fired-clay paper. The left column is a 420px colour field in the bowl's clay, 480px tall, radius 8px. The right column is the decision. A quiet control reads "This firing" and returns to the collection. The name "Ash bowl" is 56px serif, the largest type on the view. The price is Rs 2,400 at 20px. One sentence says what it is. One primary button, "Add to bag", is 44px. There is no size picker, no review stack, and no second product. The fragrance detail is a different shop. Use this page when the collection is the clay firing.
-
-## Reference behaviour
-
-1. The first frame shows the clay field, "This firing", "Ash bowl", "Rs 2,400", the sentence, and "Add to bag".
-2. Clicking "Add to bag" sets the label to "In the bag" and disables the button at opacity 0.55.
-3. The click does not change the price and does not add a second button.
-4. Clicking "This firing" sets that control's label to "Collection opened". In a product it returns to `shop-collection`. It is not a primary button.
-5. There is no animation.
-6. Focus ring is 2px `--focus`, offset 2px.
-7. The colour field is `aria-hidden`. The name carries the product.
 
 ## Structure
 
@@ -35,36 +27,6 @@ right:
 - The page is one product. Do not add a related-products row.
 - The back control is a button with no border and no fill.
 - The sentence max-width is 36ch.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f3e6d4;
-  --ink: #2a1b14;
-  --ink-2: #6a4e3e;
-  --primary: #c45c2a;
-  --primary-ink: #fffdf8;
-  --focus: #c45c2a;
-  --clay: #c45c2a;
-  --serif: "Young Serif", Georgia, serif;
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-}
-```
-
-The clay field uses the same orange as the primary. That is one accent, used for the object and the button. Do not add a gold.
-
-## Typography
-
-| Role | Family | Size | Weight | Tracking | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Back | sans | 16px | 600 | 0 | `--ink-2` |
-| Name | serif | 56px | 400 | -0.03em | `--ink` |
-| Price | sans | 20px | 400 | 0 | `--ink` |
-| Sentence | sans | 16px | 400 | 0 | `--ink-2` |
-| Button | sans | 16px | 600 | 0 | `--primary-ink` |
-
-The name line-height is 1.2. The sentence line-height is 1.45. The price uses tabular numerals.
 
 ## Motion
 
@@ -114,6 +76,50 @@ None. The button changes its label in place. Reduced motion has nothing to remov
 - [ ] There is no second product, no review list, and no size picker.
 - [ ] Focus ring is 2px, offset 2px.
 - [ ] The colour field is `aria-hidden`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the clay field, "This firing", "Ash bowl", "Rs 2,400", the sentence, and "Add to bag".
+2. Clicking "Add to bag" sets the label to "In the bag" and disables the button at opacity 0.55.
+3. The click does not change the price and does not add a second button.
+4. Clicking "This firing" sets that control's label to "Collection opened". In a product it returns to `shop-collection`. It is not a primary button.
+5. There is no animation.
+6. Focus ring is 2px `--focus`, offset 2px.
+7. The colour field is `aria-hidden`. The name carries the product.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f3e6d4;
+  --ink: #2a1b14;
+  --ink-2: #6a4e3e;
+  --primary: #c45c2a;
+  --primary-ink: #fffdf8;
+  --focus: #c45c2a;
+  --clay: #c45c2a;
+  --serif: "Young Serif", Georgia, serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+}
+```
+
+The clay field uses the same orange as the primary. That is one accent, used for the object and the button. Do not add a gold.
+
+## Typography
+
+| Role | Family | Size | Weight | Tracking | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Back | sans | 16px | 600 | 0 | `--ink-2` |
+| Name | serif | 56px | 400 | -0.03em | `--ink` |
+| Price | sans | 20px | 400 | 0 | `--ink` |
+| Sentence | sans | 16px | 400 | 0 | `--ink-2` |
+| Button | sans | 16px | 600 | 0 | `--primary-ink` |
+
+The name line-height is 1.2. The sentence line-height is 1.45. The price uses tabular numerals.
 
 ## Implementation notes
 

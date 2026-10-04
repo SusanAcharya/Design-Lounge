@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The landing page of a fictional four-person Leeds studio, North Yard. The first frame is a huge uppercase lockup — "We show *the* **work.**" — over a 2×2 case wall with 2px black rules and square corners. Hovering or selecting a case inverts it to black with white type. A 56px sticky bar in signal orange sits on the bottom edge of the viewport with the only CTA: "Start a project". This is not a project list and not a marquee. The wall is the work.
-
-## Reference behaviour
-
-1. Initial state: case 01 "Pier Ledger" has `aria-current="true"` and is inverted (black fill, white type, orange outline on its 110×110 mark). The other three cases are white with black type.
-2. Hover any case: invert to black / white over 0ms colour (no fade). The 110px art tile gets a 2px orange outline, 3px offset.
-3. Click a case: it becomes current; the previous current returns to the default (unless hovered). Only one case is current.
-4. Hover "Start a project": the button flips from black-on-orange-bar to white fill / black type over 140ms.
-5. Nav links turn orange on hover. Focus-visible on every control is a 3px orange outline, −3px offset (sits inside the hard edge).
-6. The CTA bar is `position: fixed; bottom: 0; height: 56px`. Body has `padding-bottom: 56px` so the wall is not hidden behind it.
-7. Reduced motion: the 140ms button colour change becomes 1ms. Inversion stays instant.
 
 ## Structure
 
@@ -45,42 +37,6 @@ The landing page of a fictional four-person Leeds studio, North Yard. The first 
 - `<header class="hero">` — 2 columns, `1fr 220px`, 20px side pad. `h1` 88px / 0.84. Aside 13px + a 2px-ruled tag row.
 - `<section class="wall" id="wall" aria-label="Case wall">` — 2×2. Each cell is a `<button class="case">` min-height 248px.
 - `<div class="bar" role="region" aria-label="Start a project">` — 3 columns: name / availability / CTA link.
-
-## Tokens
-
-```css
-:root {
-  --bg: #ffffff;
-  --ink: #000000;
-  --ink-2: #555555;
-  --line: #000000;
-  --orange: #ff4d00;      /* signal — the only accent */
-
-  --display: "Archivo Black", Impact, sans-serif;
-  --sans: "Archivo", Helvetica, Arial, sans-serif;
-
-  --nav: 48px;
-  --cta: 56px;
-  --case-min: 248px;
-  --art: 110px;
-  --rule: 2px;
-
-  --t: 140ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Lockup | Archivo Black | 88px | 400 | 0.84 | −0.03em | UPPERCASE |
-| Case title | Archivo Black | 36px | 400 | 0.90 | −0.02em | UPPERCASE |
-| Wordmark / bar name | Archivo Black | 16px | 400 | 1 | +0.04em | UPPERCASE |
-| Nav / tags / CTA | Archivo | 11–12px | 600 | 1 | +0.08–0.14em | UPPERCASE |
-| Aside / client line | Archivo | 13px | 400 | 1.4 | 0 | sentence |
-
-Lockup treatment: "the" is `color: transparent; -webkit-text-stroke: 2px #000`. "work." is `#FF4D00` with no stroke.
 
 ## Motion
 
@@ -129,6 +85,56 @@ Reduced motion: `--t` to 1ms. Inversion remains a hard cut.
 - [ ] Focus outline is 3px orange, inset.
 - [ ] `prefers-reduced-motion: reduce` does not remove the invert, only the 140ms fade.
 - [ ] No marquee, no project table, no second accent.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: case 01 "Pier Ledger" has `aria-current="true"` and is inverted (black fill, white type, orange outline on its 110×110 mark). The other three cases are white with black type.
+2. Hover any case: invert to black / white over 0ms colour (no fade). The 110px art tile gets a 2px orange outline, 3px offset.
+3. Click a case: it becomes current; the previous current returns to the default (unless hovered). Only one case is current.
+4. Hover "Start a project": the button flips from black-on-orange-bar to white fill / black type over 140ms.
+5. Nav links turn orange on hover. Focus-visible on every control is a 3px orange outline, −3px offset (sits inside the hard edge).
+6. The CTA bar is `position: fixed; bottom: 0; height: 56px`. Body has `padding-bottom: 56px` so the wall is not hidden behind it.
+7. Reduced motion: the 140ms button colour change becomes 1ms. Inversion stays instant.
+
+## Tokens
+
+```css
+:root {
+  --bg: #ffffff;
+  --ink: #000000;
+  --ink-2: #555555;
+  --line: #000000;
+  --orange: #ff4d00;      /* signal — the only accent */
+
+  --display: "Archivo Black", Impact, sans-serif;
+  --sans: "Archivo", Helvetica, Arial, sans-serif;
+
+  --nav: 48px;
+  --cta: 56px;
+  --case-min: 248px;
+  --art: 110px;
+  --rule: 2px;
+
+  --t: 140ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Lockup | Archivo Black | 88px | 400 | 0.84 | −0.03em | UPPERCASE |
+| Case title | Archivo Black | 36px | 400 | 0.90 | −0.02em | UPPERCASE |
+| Wordmark / bar name | Archivo Black | 16px | 400 | 1 | +0.04em | UPPERCASE |
+| Nav / tags / CTA | Archivo | 11–12px | 600 | 1 | +0.08–0.14em | UPPERCASE |
+| Aside / client line | Archivo | 13px | 400 | 1.4 | 0 | sentence |
+
+Lockup treatment: "the" is `color: transparent; -webkit-text-stroke: 2px #000`. "work." is `#FF4D00` with no stroke.
 
 ## Implementation notes
 

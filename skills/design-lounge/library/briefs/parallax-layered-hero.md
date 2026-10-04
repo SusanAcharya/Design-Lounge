@@ -4,25 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The opening screen of an outdoor brand, Tarnwick Outfitters, at dusk. The hero is a full-viewport landscape made of six stacked layers: sky with sun and stars, a far ridge, a mid ridge, the title block, a tree line, and a dark foreground hill with a small lit tent. As you scroll, each layer moves at its own speed, from 0.1x for the sky to 1.0x for the foreground, so the scene gains depth. The title rises at 0.6x and fades out over the first 45vh. The foreground hill is the same colour as the next section, so the hero hands off to normal content with no edge. On desktop the layers also drift up to 12px against the pointer.
 
 The detail worth copying: every colour is one of five tonal steps between slate blue and apricot, and the speed of each layer follows its tone. Light and far moves slow. Dark and near moves fast.
-
-## Reference behaviour
-
-1. First frame (scrollY 0): the full scene fills 100vh. Top-left wordmark "Tarnwick", four nav links in the centre, a "Bag 0" button on the right. The kicker "Tarnwick · Autumn line 2026", the 116px serif headline "Stay out past the light." with "light." in italic apricot, a two-line lede, and two buttons sit in the sky on the left. The sun sits low on the right behind the far ridge. A "Scroll" label with a dripping 1px line sits 28px from the bottom.
-2. Scroll down. Each layer gets `translateY = scrollY × (1 − speed)`. The hero itself scrolls at 1.0x, so a layer with speed 0.1 looks almost fixed and a layer with speed 1.0 moves with the page.
-3. Speeds: sky 0.1, far ridge 0.3, mid ridge 0.5, title 0.6, trees 0.75, foreground 1.0.
-4. The title opacity goes from 1 to 0 linearly over scrollY 0 → 0.45 × viewport height.
-5. The scroll hint fades from 1 to 0 over the first 8% of the viewport height (64px at 800 tall).
-6. The parallax input is capped at 1.1 × viewport height. Past that, the hero is off screen and transforms stop changing.
-7. The foreground hill fills `#222a40` to the bottom of the hero. The content section below has the same background, so the hill becomes the page.
-8. Pointer drift (desktop only, `pointer: fine` and width ≥ 900px): each layer moves opposite the pointer by up to 12px × its depth. Depths: sky 0.15, far 0.3, mid 0.5, title 0.4, trees 0.75, foreground 1.0. The drift eases toward the target at 10% per frame. When the pointer leaves the page, it returns to 0.
-9. Pointer drift stops listening once scrollY passes one viewport height.
-10. Below the hero: a two-column intro "Gear for the hour after." with a paragraph, then three gear columns (Dusk Shell, Ridgeline 28, Lantern Fleece) with weight, rating and price, then a footer line.
-11. Reduced motion: every layer is static at its resting place, the title stays fully visible, and the hint line does not animate.
 
 ## Structure
 
@@ -53,66 +41,6 @@ main, background #222a40, padding 24px 9vw 120px
 - The title layer sits between the mid ridge and the trees in the stack. The trees overlap its lower edge as you scroll.
 - Nav is a `nav` with a list of links and a button. Content is `main` with `section`, `ul`, `dl` and `footer`.
 - Stars are 26 absolutely positioned 2px dots in the top 34% of the sky.
-
-## Tokens
-
-```css
-:root {
-  /* five tonal steps, near to far */
-  --t5: #222a40;      /* foreground hill, page background */
-  --t4: #434c6b;      /* tree line */
-  --t3: #6e6f8e;      /* mid ridge */
-  --t2: #a7899a;      /* far ridge */
-  --t1: #e9a97a;      /* horizon glow, accent */
-  --sky-top: #2f3a5a;
-  --sun: #fbd9a8;     /* sun disc, kicker, italic word */
-  --ink: #f6e7d4;     /* text on dark */
-  --ink-2: #cdbfb4;   /* secondary text */
-  --line: rgba(246, 231, 212, .16);
-
-  --serif: "Fraunces", Georgia, serif;
-  --sans: "Instrument Sans", system-ui, sans-serif;
-
-  --text-hero: clamp(52px, 8.8vw, 116px);
-  --text-h2: 56px;
-  --text-h3: 28px;
-  --text-lede: 18px;
-  --text-body: 16px;
-  --text-small: 13px;
-
-  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px; --space-6: 64px;
-  --gutter: 9vw;
-  --radius: 2px;
-
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --dur-micro: 180ms;
-  --hint-loop: 1800ms;
-
-  --speed-sky: .1; --speed-far: .3; --speed-mid: .5;
-  --speed-title: .6; --speed-trees: .75; --speed-fore: 1;
-  --pointer-max: 12px;
-}
-```
-
-Sky gradient, top to bottom: `#2f3a5a 0%`, `#4b5578 34%`, `#6e6f8e 52%`, `#b98c8c 68%`, `#e9a97a 82%`, `#e9a97a 100%`.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Hero headline | Fraunces, opsz 144 | 116px (clamp 52–116) | 800 | 0.92 | -0.025em | Sentence |
-| Italic word | Fraunces italic | inherits | 600 | inherits | inherits | colour `--sun` |
-| Kicker | Instrument Sans | 13px | 600 | 1.2 | 0.18em | Upper |
-| Lede | Instrument Sans | 18px | 400 | 1.55 | 0 | Sentence, max 40ch |
-| Button | Instrument Sans | 15px | 600 | 1 | 0 | Sentence |
-| Wordmark | Fraunces | 22px | 800 | 1 | -0.01em | Title |
-| Nav link | Instrument Sans | 14px | 500 | 1 | 0 | Title |
-| Section h2 | Fraunces | 56px | 600 | 1.0 | -0.02em | Sentence |
-| Gear h3 | Fraunces | 28px | 600 | 1.2 | -0.01em | Title |
-| Gear index | Instrument Sans | 12px | 600 | 1.2 | 0.16em | colour `--t1` |
-| Scroll hint | Instrument Sans | 11px | 600 | 1 | 0.24em | Upper |
-
-Use the serif only for the wordmark, headlines and product names. Everything else is the sans.
 
 ## Motion
 
@@ -186,6 +114,84 @@ On phones (width ≤ 640px) multiply every scroll offset by 0.6. The scene moves
 - [ ] Palette: `#222a40`, `#434c6b`, `#6e6f8e`, `#a7899a`, `#e9a97a`, with ink `#f6e7d4`.
 - [ ] A small tent with a lit `#e9a97a` door sits on the foreground hill at about x 1050 of 1440.
 - [ ] The three gear items are Dusk Shell £210, Ridgeline 28 £145, and Lantern Fleece £95.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame (scrollY 0): the full scene fills 100vh. Top-left wordmark "Tarnwick", four nav links in the centre, a "Bag 0" button on the right. The kicker "Tarnwick · Autumn line 2026", the 116px serif headline "Stay out past the light." with "light." in italic apricot, a two-line lede, and two buttons sit in the sky on the left. The sun sits low on the right behind the far ridge. A "Scroll" label with a dripping 1px line sits 28px from the bottom.
+2. Scroll down. Each layer gets `translateY = scrollY × (1 − speed)`. The hero itself scrolls at 1.0x, so a layer with speed 0.1 looks almost fixed and a layer with speed 1.0 moves with the page.
+3. Speeds: sky 0.1, far ridge 0.3, mid ridge 0.5, title 0.6, trees 0.75, foreground 1.0.
+4. The title opacity goes from 1 to 0 linearly over scrollY 0 → 0.45 × viewport height.
+5. The scroll hint fades from 1 to 0 over the first 8% of the viewport height (64px at 800 tall).
+6. The parallax input is capped at 1.1 × viewport height. Past that, the hero is off screen and transforms stop changing.
+7. The foreground hill fills `#222a40` to the bottom of the hero. The content section below has the same background, so the hill becomes the page.
+8. Pointer drift (desktop only, `pointer: fine` and width ≥ 900px): each layer moves opposite the pointer by up to 12px × its depth. Depths: sky 0.15, far 0.3, mid 0.5, title 0.4, trees 0.75, foreground 1.0. The drift eases toward the target at 10% per frame. When the pointer leaves the page, it returns to 0.
+9. Pointer drift stops listening once scrollY passes one viewport height.
+10. Below the hero: a two-column intro "Gear for the hour after." with a paragraph, then three gear columns (Dusk Shell, Ridgeline 28, Lantern Fleece) with weight, rating and price, then a footer line.
+11. Reduced motion: every layer is static at its resting place, the title stays fully visible, and the hint line does not animate.
+
+## Tokens
+
+```css
+:root {
+  /* five tonal steps, near to far */
+  --t5: #222a40;      /* foreground hill, page background */
+  --t4: #434c6b;      /* tree line */
+  --t3: #6e6f8e;      /* mid ridge */
+  --t2: #a7899a;      /* far ridge */
+  --t1: #e9a97a;      /* horizon glow, accent */
+  --sky-top: #2f3a5a;
+  --sun: #fbd9a8;     /* sun disc, kicker, italic word */
+  --ink: #f6e7d4;     /* text on dark */
+  --ink-2: #cdbfb4;   /* secondary text */
+  --line: rgba(246, 231, 212, .16);
+
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Instrument Sans", system-ui, sans-serif;
+
+  --text-hero: clamp(52px, 8.8vw, 116px);
+  --text-h2: 56px;
+  --text-h3: 28px;
+  --text-lede: 18px;
+  --text-body: 16px;
+  --text-small: 13px;
+
+  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px; --space-6: 64px;
+  --gutter: 9vw;
+  --radius: 2px;
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --dur-micro: 180ms;
+  --hint-loop: 1800ms;
+
+  --speed-sky: .1; --speed-far: .3; --speed-mid: .5;
+  --speed-title: .6; --speed-trees: .75; --speed-fore: 1;
+  --pointer-max: 12px;
+}
+```
+
+Sky gradient, top to bottom: `#2f3a5a 0%`, `#4b5578 34%`, `#6e6f8e 52%`, `#b98c8c 68%`, `#e9a97a 82%`, `#e9a97a 100%`.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Hero headline | Fraunces, opsz 144 | 116px (clamp 52–116) | 800 | 0.92 | -0.025em | Sentence |
+| Italic word | Fraunces italic | inherits | 600 | inherits | inherits | colour `--sun` |
+| Kicker | Instrument Sans | 13px | 600 | 1.2 | 0.18em | Upper |
+| Lede | Instrument Sans | 18px | 400 | 1.55 | 0 | Sentence, max 40ch |
+| Button | Instrument Sans | 15px | 600 | 1 | 0 | Sentence |
+| Wordmark | Fraunces | 22px | 800 | 1 | -0.01em | Title |
+| Nav link | Instrument Sans | 14px | 500 | 1 | 0 | Title |
+| Section h2 | Fraunces | 56px | 600 | 1.0 | -0.02em | Sentence |
+| Gear h3 | Fraunces | 28px | 600 | 1.2 | -0.01em | Title |
+| Gear index | Instrument Sans | 12px | 600 | 1.2 | 0.16em | colour `--t1` |
+| Scroll hint | Instrument Sans | 11px | 600 | 1 | 0.24em | Upper |
+
+Use the serif only for the wordmark, headlines and product names. Everything else is the sans.
 
 ## Implementation notes
 

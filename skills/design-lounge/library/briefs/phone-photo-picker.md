@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map colours onto the kit tokens. This is the dark media family: flat dark greys, white type, one electric yellow, 6px radii.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A photo picker sheet for a fictional film photography app called Silverline. It lets the user add up to four photos to a new roll post. The sheet rises over a dimmed composer card. A header holds Cancel, an album menu and a `3/4` counter. A 3-column grid starts with a camera tile. Tapping photos marks them with numbered yellow badges in the order picked. A tray at the bottom shows the picks as thumbnails you can remove, and an "Add 3" button.
@@ -11,26 +13,6 @@ A photo picker sheet for a fictional film photography app called Silverline. It 
 The detail worth copying is the order badge. The number is the order the photos will post in. Removing photo 1 renumbers the rest at once, in the grid and in the tray.
 
 This piece follows the iOS 26 photo picker shape, without Liquid Glass. It uses a sheet with a grabber, iOS sheet easing and system-like type, on flat dark surfaces.
-
-## Reference behaviour
-
-1. The first frame shows the sheet already up, with three photos picked: 1, 2 and 3. The counter reads `3/4`. The button reads "Add 3".
-2. Behind the sheet, at the top, a dimmed composer card reads "New roll · Silverline" at 94% scale and 60% opacity.
-3. The sheet rises 40px and fades in over 420ms on load.
-4. The header shows "Cancel" on the left, "Recents" with a chevron in the centre, and the counter on the right. The picked count is yellow.
-5. The grid has 3 columns, 3px gaps and 3px side padding. Cell one is the camera tile. Then twenty photos follow.
-6. Photos are drawn with CSS gradients only: hills at dusk, a sea horizon, a portrait, a cup on a table, a street at night, a leaf close-up. Two tiles are videos with a mono duration in the bottom left, such as `0:22`.
-7. Every photo shows a 26px ring in its top right. The ring is white at 90%, on a 28% black fill.
-8. Tapping an unpicked photo adds it to the end of the order. Its badge fills yellow and shows the number in black mono. The image shrinks to 88% inside the cell, and a 2px yellow inset frame appears.
-9. Tapping a picked photo removes it. Every later number drops by one.
-10. With four picked, tapping a fifth photo does not pick it. The tile shakes 4px for 300ms. A light toast rises above the tray: "You can add up to 4 photos". It hides after 2.4s.
-11. The tray lists the picks as 52px thumbnails with a small yellow order number in the bottom left. Each has a white 20px remove dot on the top right corner, inside a 44px hit area.
-12. Removing from the tray updates the grid. Focus moves to the next remove button, or the previous one, or the Add button if none are left.
-13. With nothing picked, the tray reads "Pick up to 4 for this roll". The button reads "Add" and is disabled in grey.
-14. Tapping the album name opens a menu below it: Recents 248, Favourites 31, Pokhara, March 64, Film scans 112. The current album has a yellow tick. The chevron turns 180deg.
-15. Picking an album swaps the grid and scrolls it to the top. Picks from other albums stay picked and stay in the tray.
-16. The camera tile shows a toast: "Camera opens full screen here". It never counts as a pick.
-17. "Add 3" shows the toast "3 photos added to your roll". "Cancel" clears the picks in this demo. In a product, Cancel closes the sheet.
 
 ## Structure
 
@@ -61,53 +43,6 @@ This piece follows the iOS 26 photo picker shape, without Liquid Glass. It uses 
 - The camera tile is a plain `button`. It has no `aria-pressed`.
 - The tray is a `footer` with a `ul aria-label="Selected photos"` and the Add `button`.
 - The toast is one `div role="status" aria-live="polite"` outside the sheet.
-
-## Tokens
-
-```css
-:root {
-  --backdrop: #0a0a0a;    /* behind the sheet */
-  --sheet: #161616;       /* sheet surface */
-  --raised: #202020;      /* camera tile, menu, disabled button */
-  --tile: #262626;        /* cell behind a shrunken photo */
-  --line: #2c2c2c;        /* sheet top rule, tray rule */
-  --text: #f5f5f5;
-  --text-2: #b3b3b3;      /* Cancel */
-  --text-3: #8c8c8c;      /* counter total, empty tray, menu counts */
-  --accent: #ffe500;      /* electric yellow: badges, count, Add */
-  --on-accent: #111111;
-  --sans: "Inter", system-ui, -apple-system, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --r: 6px;
-  --gap: 3px;
-  --cell-badge: 26px;
-  --thumb: 52px;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --sheet-ease: cubic-bezier(0.32, 0.72, 0, 1);
-  --fast: 160ms;
-  --mid: 280ms;
-}
-```
-
-There is one accent. Yellow marks only what the user picked and the button that commits it. Do not use it for links, the album name or focus on dark grey cells, except the focus ring itself.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Colour |
-| --- | --- | --- | --- | --- | --- |
-| Album name | Inter | 17px | 600 | 1 | `--text` |
-| Cancel | Inter | 16px | 400 | 1 | `--text-2` |
-| Counter | IBM Plex Mono | 13px | 600 | 1 | `--text-3`, picked count `--accent` |
-| Badge number | IBM Plex Mono | 13px | 600 | 1 | `--on-accent` |
-| Tray number | IBM Plex Mono | 11px | 600 | 1 | `--on-accent` |
-| Duration | IBM Plex Mono | 11px | 500 | 1 | `#fff` with a 1px 2px shadow |
-| Camera label | Inter | 13px | 500 | 1 | `--text` |
-| Menu item | Inter | 15px | 400 | 1 | `--text` |
-| Menu count | IBM Plex Mono | 12px | 500 | 1 | `--text-3` |
-| Add button | Inter | 16px | 600 | 1 | `--on-accent` |
-| Toast | Inter | 14px | 500 | 1.4 | `#111` on `#f5f5f5` |
-
-Numbers are mono so `1`, `2`, `3` and `3/4` do not shift width as they change.
 
 ## Motion
 
@@ -184,6 +119,77 @@ The toast stays 2.4s. A new toast resets the timer instead of stacking. Under `p
 - [ ] The accent is `#ffe500` on a `#161616` sheet.
 - [ ] Photos are CSS gradients, with no image files and no external requests.
 - [ ] The composer card behind reads "New roll · Silverline".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The first frame shows the sheet already up, with three photos picked: 1, 2 and 3. The counter reads `3/4`. The button reads "Add 3".
+2. Behind the sheet, at the top, a dimmed composer card reads "New roll · Silverline" at 94% scale and 60% opacity.
+3. The sheet rises 40px and fades in over 420ms on load.
+4. The header shows "Cancel" on the left, "Recents" with a chevron in the centre, and the counter on the right. The picked count is yellow.
+5. The grid has 3 columns, 3px gaps and 3px side padding. Cell one is the camera tile. Then twenty photos follow.
+6. Photos are drawn with CSS gradients only: hills at dusk, a sea horizon, a portrait, a cup on a table, a street at night, a leaf close-up. Two tiles are videos with a mono duration in the bottom left, such as `0:22`.
+7. Every photo shows a 26px ring in its top right. The ring is white at 90%, on a 28% black fill.
+8. Tapping an unpicked photo adds it to the end of the order. Its badge fills yellow and shows the number in black mono. The image shrinks to 88% inside the cell, and a 2px yellow inset frame appears.
+9. Tapping a picked photo removes it. Every later number drops by one.
+10. With four picked, tapping a fifth photo does not pick it. The tile shakes 4px for 300ms. A light toast rises above the tray: "You can add up to 4 photos". It hides after 2.4s.
+11. The tray lists the picks as 52px thumbnails with a small yellow order number in the bottom left. Each has a white 20px remove dot on the top right corner, inside a 44px hit area.
+12. Removing from the tray updates the grid. Focus moves to the next remove button, or the previous one, or the Add button if none are left.
+13. With nothing picked, the tray reads "Pick up to 4 for this roll". The button reads "Add" and is disabled in grey.
+14. Tapping the album name opens a menu below it: Recents 248, Favourites 31, Pokhara, March 64, Film scans 112. The current album has a yellow tick. The chevron turns 180deg.
+15. Picking an album swaps the grid and scrolls it to the top. Picks from other albums stay picked and stay in the tray.
+16. The camera tile shows a toast: "Camera opens full screen here". It never counts as a pick.
+17. "Add 3" shows the toast "3 photos added to your roll". "Cancel" clears the picks in this demo. In a product, Cancel closes the sheet.
+
+## Tokens
+
+```css
+:root {
+  --backdrop: #0a0a0a;    /* behind the sheet */
+  --sheet: #161616;       /* sheet surface */
+  --raised: #202020;      /* camera tile, menu, disabled button */
+  --tile: #262626;        /* cell behind a shrunken photo */
+  --line: #2c2c2c;        /* sheet top rule, tray rule */
+  --text: #f5f5f5;
+  --text-2: #b3b3b3;      /* Cancel */
+  --text-3: #8c8c8c;      /* counter total, empty tray, menu counts */
+  --accent: #ffe500;      /* electric yellow: badges, count, Add */
+  --on-accent: #111111;
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --r: 6px;
+  --gap: 3px;
+  --cell-badge: 26px;
+  --thumb: 52px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --sheet-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --fast: 160ms;
+  --mid: 280ms;
+}
+```
+
+There is one accent. Yellow marks only what the user picked and the button that commits it. Do not use it for links, the album name or focus on dark grey cells, except the focus ring itself.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Colour |
+| --- | --- | --- | --- | --- | --- |
+| Album name | Inter | 17px | 600 | 1 | `--text` |
+| Cancel | Inter | 16px | 400 | 1 | `--text-2` |
+| Counter | IBM Plex Mono | 13px | 600 | 1 | `--text-3`, picked count `--accent` |
+| Badge number | IBM Plex Mono | 13px | 600 | 1 | `--on-accent` |
+| Tray number | IBM Plex Mono | 11px | 600 | 1 | `--on-accent` |
+| Duration | IBM Plex Mono | 11px | 500 | 1 | `#fff` with a 1px 2px shadow |
+| Camera label | Inter | 13px | 500 | 1 | `--text` |
+| Menu item | Inter | 15px | 400 | 1 | `--text` |
+| Menu count | IBM Plex Mono | 12px | 500 | 1 | `--text-3` |
+| Add button | Inter | 16px | 600 | 1 | `--on-accent` |
+| Toast | Inter | 14px | 500 | 1.4 | `#111` on `#f5f5f5` |
+
+Numbers are mono so `1`, `2`, `3` and `3/4` do not shift width as they change.
 
 ## Implementation notes
 

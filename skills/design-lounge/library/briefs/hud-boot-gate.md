@@ -4,6 +4,8 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from sibaldesign.com: the idea is a portfolio that opens as a title card you must "enter", then runs a percent ring with a line-by-line boot log, then lands on a HUD-framed hero with an outlined second headline line. This version is the intro for Quillon, the fictional studio of sound designer Ida Quillon, in phosphor green on a near-black green ground. Act A is a title card (mark, spaced wordmark, three meta lines, "Enter Quillon" with a three-bar level meter, and a slow calibration dial on the right). Act B is a 96px ring that counts 0 to 100 in 2.4s while six log rows tick in. Act C is a 1px-framed panel that opens like an old CRT (a horizontal line that expands to full height), with "I score the" in solid type and "quiet parts" in green outline, both decoding from random glyphs. The detail worth copying is that the gate is honest: nothing autoplays, the visitor chooses to enter, and the "loading" is short and themed rather than a fake wait.
@@ -14,21 +16,6 @@ Studied from sibaldesign.com: the idea is a portfolio that opens as a title card
 2. Show the gate on the first visit only. On repeat visits, open on Act C with no CRT effect. (The demo always starts at A because it runs in a sandbox and must replay.)
 3. Deep links skip the gate entirely.
 4. The gate is one click or one key press. No "hold to enter", no sound that starts on its own.
-
-## Reference behaviour
-
-1. Load: Act A. The page is still apart from the dial (one turn per 90s) and the scanline overlay.
-2. Hovering or focusing "Enter Quillon": the 56px rule before it grows to 88px and turns green (400ms expo). The three meter bars light in sequence, 150ms apart, looping every 900ms.
-3. Click or Enter / Space on the button: Act A fades out (420ms), Act B appears.
-4. Act B: the ring arc and the number go from 0 to 100 over 2400ms with ease-in-out quad. The arc is a `stroke-dashoffset` on a circle of circumference 289. Log rows appear when the value passes 15, 30, 45, 60, 75 and 90: opacity 0 → 1 (200ms), translateY 4px → 0 (300ms expo). Row 5 ("ARM meters.peak −1 dBTP STANDBY") has its status in amber.
-5. At 100, wait 380ms, fade Act B out and show Act C.
-6. Act C: the panel runs `crt` (620ms expo): `scale(1, .004)` at 20% opacity, holds as a line until 45%, then opens to full height. Panel content fades in with stagger: kicker at 500ms, headline 560ms, lede 900ms, tagline 1000ms, waveform 1100ms.
-7. Headline decode: line 1 starts 560ms after Act C opens, line 2 at 760ms. Each runs 640ms. Characters left to right lock to their real letter as progress passes their index; unlocked characters show random glyphs from `A–Z # / = + 0 1`.
-8. Around 700ms in, focus moves to the `h1` (`tabindex="-1"`, no visible ring) so screen readers land on the headline.
-9. Act C extras: three green streaks cross the top area on 7–9s loops, the nav "Room.tone" meter bounces (4 bars), the 48-bar waveform in the panel breathes, the footer clock shows local time and updates every second.
-10. "Room.tone" button toggles: `aria-pressed="true"`, bars freeze at 25% height in grey, label becomes "Room.tone.mute".
-11. "Replay boot" (bottom-left, 40px tall) cancels every timer and frame, returns to Act A, and focuses the Enter button.
-12. Reduced motion: dial, streaks, meters and waveform do not move. Act B runs in 300ms. No CRT open, no decode: text is in place and the panel content fades over 200ms.
 
 ## Structure
 
@@ -67,48 +54,6 @@ Act C
 - Act B: the ring is `role="progressbar"` with `aria-valuenow`. The log `ul` is `aria-hidden` (decorative).
 - Act C: `nav` with links (`aria-current="page"` on Works) and the tone toggle `button`. Side labels, corner brackets and streaks are decorative. The panel holds the `h1` (two spans), lede, tagline, waveform and footer.
 - One polite live region announces "Loading the reel", then the headline.
-
-## Tokens
-
-```css
-:root {
-  --bg: #07100d;        /* near-black green */
-  --panel: #0d1814;     /* panel body */
-  --panel-2: #12201b;   /* panel top of gradient */
-  --line: #1e3029;      /* hairlines, ring track */
-  --line-2: #2c463c;    /* panel border, corners, idle rule */
-  --ink: #ddede4;       /* headline, wordmark */
-  --ink-2: #a9bfb3;     /* body, statuses */
-  --dim: #7e978b;       /* meta, nav idle */
-  --faint: #4a5f55;     /* side labels, copyright */
-  --accent: #5cf2b0;    /* phosphor green: arc, verbs, outline, focus */
-  --warn: #f2c35c;      /* one amber status */
-
-  --disp: "Oxanium", system-ui, sans-serif;
-  --mono: "Martian Mono", ui-monospace, monospace;
-
-  --space: 4px 8px 14px 28px 44px 56px 84px;
-  --ring: 96px; --ring-c: 289;   /* 2πr for r = 46 */
-
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --expo: cubic-bezier(.16,1,.3,1);
-  --boot: 2400ms; --crt: 620ms; --decode: 640ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Wordmark | Oxanium | 40px | 700 | 1 | 0.32em | Upper |
-| Hero headline | Oxanium | 104px | 700 | 0.94 | -0.005em | Upper; line 2 transparent with 1.4px green stroke |
-| Ring number | Oxanium | 22px | 500 | 1 | 0 | Tabular |
-| Labels, nav, meta | Martian Mono | 10.5px | 400 | 1.7 | 0.24em | Upper |
-| Log rows | Martian Mono | 10.5px | 400 | 1.7 | 0.08em (verbs 0.16em) | Upper verbs, lower keys |
-| Lede | Martian Mono | 12.5px | 300–400 | 1.85 | 0 | Sentence |
-| Sub-wordmark | Martian Mono | 9px | 400 | 1 | 1.05em | Upper, spaced letters |
-
-Mono carries everything except the wordmark, the headline and the ring number.
 
 ## Motion
 
@@ -176,6 +121,67 @@ Mono carries everything except the wordmark, the headline and the ring number.
 - [ ] Ring label "QN.BOOT.SEQ"; six rows CALIB, LOAD, SYNC, BIND, ARM (amber STANDBY), OPEN.
 - [ ] Headline "I score the" / "quiet parts" at 104px Oxanium 700.
 - [ ] Panel header "On.air" with a 6px green square and "CH 01 / 02".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Load: Act A. The page is still apart from the dial (one turn per 90s) and the scanline overlay.
+2. Hovering or focusing "Enter Quillon": the 56px rule before it grows to 88px and turns green (400ms expo). The three meter bars light in sequence, 150ms apart, looping every 900ms.
+3. Click or Enter / Space on the button: Act A fades out (420ms), Act B appears.
+4. Act B: the ring arc and the number go from 0 to 100 over 2400ms with ease-in-out quad. The arc is a `stroke-dashoffset` on a circle of circumference 289. Log rows appear when the value passes 15, 30, 45, 60, 75 and 90: opacity 0 → 1 (200ms), translateY 4px → 0 (300ms expo). Row 5 ("ARM meters.peak −1 dBTP STANDBY") has its status in amber.
+5. At 100, wait 380ms, fade Act B out and show Act C.
+6. Act C: the panel runs `crt` (620ms expo): `scale(1, .004)` at 20% opacity, holds as a line until 45%, then opens to full height. Panel content fades in with stagger: kicker at 500ms, headline 560ms, lede 900ms, tagline 1000ms, waveform 1100ms.
+7. Headline decode: line 1 starts 560ms after Act C opens, line 2 at 760ms. Each runs 640ms. Characters left to right lock to their real letter as progress passes their index; unlocked characters show random glyphs from `A–Z # / = + 0 1`.
+8. Around 700ms in, focus moves to the `h1` (`tabindex="-1"`, no visible ring) so screen readers land on the headline.
+9. Act C extras: three green streaks cross the top area on 7–9s loops, the nav "Room.tone" meter bounces (4 bars), the 48-bar waveform in the panel breathes, the footer clock shows local time and updates every second.
+10. "Room.tone" button toggles: `aria-pressed="true"`, bars freeze at 25% height in grey, label becomes "Room.tone.mute".
+11. "Replay boot" (bottom-left, 40px tall) cancels every timer and frame, returns to Act A, and focuses the Enter button.
+12. Reduced motion: dial, streaks, meters and waveform do not move. Act B runs in 300ms. No CRT open, no decode: text is in place and the panel content fades over 200ms.
+
+## Tokens
+
+```css
+:root {
+  --bg: #07100d;        /* near-black green */
+  --panel: #0d1814;     /* panel body */
+  --panel-2: #12201b;   /* panel top of gradient */
+  --line: #1e3029;      /* hairlines, ring track */
+  --line-2: #2c463c;    /* panel border, corners, idle rule */
+  --ink: #ddede4;       /* headline, wordmark */
+  --ink-2: #a9bfb3;     /* body, statuses */
+  --dim: #7e978b;       /* meta, nav idle */
+  --faint: #4a5f55;     /* side labels, copyright */
+  --accent: #5cf2b0;    /* phosphor green: arc, verbs, outline, focus */
+  --warn: #f2c35c;      /* one amber status */
+
+  --disp: "Oxanium", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+
+  --space: 4px 8px 14px 28px 44px 56px 84px;
+  --ring: 96px; --ring-c: 289;   /* 2πr for r = 46 */
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --expo: cubic-bezier(.16,1,.3,1);
+  --boot: 2400ms; --crt: 620ms; --decode: 640ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Wordmark | Oxanium | 40px | 700 | 1 | 0.32em | Upper |
+| Hero headline | Oxanium | 104px | 700 | 0.94 | -0.005em | Upper; line 2 transparent with 1.4px green stroke |
+| Ring number | Oxanium | 22px | 500 | 1 | 0 | Tabular |
+| Labels, nav, meta | Martian Mono | 10.5px | 400 | 1.7 | 0.24em | Upper |
+| Log rows | Martian Mono | 10.5px | 400 | 1.7 | 0.08em (verbs 0.16em) | Upper verbs, lower keys |
+| Lede | Martian Mono | 12.5px | 300–400 | 1.85 | 0 | Sentence |
+| Sub-wordmark | Martian Mono | 9px | 400 | 1 | 1.05em | Upper, spaced letters |
+
+Mono carries everything except the wordmark, the headline and the ring number.
 
 ## Implementation notes
 

@@ -1,6 +1,7 @@
 /* Alpine Clinic · light · no pair
    Cool, washed, trustworthy. Mint air and a precise teal.
    Best for: Health, Clinics, Wellness apps */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
 /* Alpine Clinic · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
    Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
    Free to use. */
@@ -57,14 +58,9 @@
   --accent-ink: var(--primary-ink);
   --positive: var(--success);
 
-  --font-display: "Sora", Georgia, serif;
-  --font-text: "Sora", system-ui, sans-serif;
-  --radius: 12px;
-  --shadow: 0 10px 28px -14px rgba(17,48,42,.28);
 }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-text);
+
 }
-h1, h2, h3, .display { font-family: var(--font-display); }

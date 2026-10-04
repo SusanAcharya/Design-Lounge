@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, map the banner onto `--danger` and `--danger-soft`. Keep the sentence.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A runs page whose first paint is a failure. The header says Runs. Under it, a banner in danger-soft says "Could not load runs. The yard desk did not answer." Retry sits on the right of that banner. The list is not on screen. Retry hides the banner and shows three rows: Bay 14, Bay 3, Bay 9. "Show the failure" brings the banner back and hides the rows, so the state can be checked again. This is not a toast. The failure owns the page until the retry works. Do not use a red toast for a load that never arrived.
-
-## Reference behaviour
-
-1. First frame: banner visible, list hidden, "Show the failure" hidden.
-2. The banner is `role="alert"`.
-3. Retry sets the banner `hidden`, shows the list, and shows "Show the failure".
-4. "Show the failure" reverses that. The list hides. The banner returns.
-5. No spinner. No delay. The demo does not pretend to wait.
-6. Row meta is mono. Bay names are the text face, weight 600.
-7. Focus ring 2px `--focus`, offset 2px.
-8. Do not add a second error colour for the rows. The rows are ordinary.
 
 ## Structure
 
@@ -31,35 +22,6 @@ Show the failure, hidden
 
 - Banner is a flex row, space-between, gap 16px.
 - Each row is min-height 56px.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --surface: #ffffff;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --ink-3: #8a847a;
-  --line: #e4dfd4;
-  --primary: #1f4d3a;
-  --danger: #9b2c2c;
-  --danger-soft: #f8e8e6;
-  --focus: #1f4d3a;
-  --font-text: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --radius: 2px;
-}
-```
-
-## Typography
-
-- Header title: IBM Plex Sans 500, 20px.
-- Banner sentence: 14px, weight 500, colour `#9b2c2c`.
-- Retry: 14px, weight 500, height 36px, transparent fill, 1px currentColor border, radius 2px.
-- Bay name: 14px, weight 600.
-- Meta: IBM Plex Mono 12px, `--ink-2`.
-- "Show the failure": 14px, weight 500, colour `--ink-2`, border `--line`.
 
 ## Motion
 
@@ -96,6 +58,50 @@ None. The swap is instant. Reduced motion changes nothing.
 - [ ] No spinner and no toast.
 - [ ] Radius is 2px on the banner and the list.
 - [ ] Header is 64px and reads Runs.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: banner visible, list hidden, "Show the failure" hidden.
+2. The banner is `role="alert"`.
+3. Retry sets the banner `hidden`, shows the list, and shows "Show the failure".
+4. "Show the failure" reverses that. The list hides. The banner returns.
+5. No spinner. No delay. The demo does not pretend to wait.
+6. Row meta is mono. Bay names are the text face, weight 600.
+7. Focus ring 2px `--focus`, offset 2px.
+8. Do not add a second error colour for the rows. The rows are ordinary.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --ink-3: #8a847a;
+  --line: #e4dfd4;
+  --primary: #1f4d3a;
+  --danger: #9b2c2c;
+  --danger-soft: #f8e8e6;
+  --focus: #1f4d3a;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius: 2px;
+}
+```
+
+## Typography
+
+- Header title: IBM Plex Sans 500, 20px.
+- Banner sentence: 14px, weight 500, colour `#9b2c2c`.
+- Retry: 14px, weight 500, height 36px, transparent fill, 1px currentColor border, radius 2px.
+- Bay name: 14px, weight 600.
+- Meta: IBM Plex Mono 12px, `--ink-2`.
+- "Show the failure": 14px, weight 500, colour `--ink-2`, border `--line`.
 
 ## Implementation notes
 

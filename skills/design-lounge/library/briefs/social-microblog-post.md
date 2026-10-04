@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 One post from a short-form feed, for an invented network called Chirrup. It reads instantly as the familiar format: round avatar, display name with a scalloped verified mark, @handle and age, a few lines of text with a mention, a link and two hashtags picked out in the brand teal, a 16:9 image, a mono timestamp line with a view count, and a four-button action row. The image is an inline SVG transit map, not a photo, so the piece has zero assets. The detail worth copying is the counters: every digit is its own vertical strip of 0–9, so 8,402 becomes 8,403 by rolling only the last digit, and the like fires a ring plus seven particles behind the heart.
-
-## Reference behaviour
-
-1. First frame: the card sits centred on a pale sage stage. Likes 8,402, reposts 1,186, replies 214, nothing pressed. The Baixa interchange stop on the map pulses slowly (scale 1 → 1.35 → 1 over 2.4s).
-2. Hover any action: icon and count turn the action's colour, and a 34px circular tint appears behind the icon. Reply and share use teal, repost green, like pink-red.
-3. Click Like: `aria-pressed` becomes true, the heart fills, pops from scale 0.4 to 1.2 to 1 in 420ms, a ring expands from the heart and fades, seven dots fly outward 26px. The count rolls 8,402 → 8,403. The button label updates to "Like, 8,403 likes".
-4. Click Like again: unfills, count rolls back. No burst on unlike.
-5. Click Repost: icon turns green and spins in from −180°, count rolls up by one, and a dark pill toast says "Reposted to your followers" for 1.8s. Clicking again says "Repost removed".
-6. Click Reply: toast "Replying to @miraokafor". (In a product this opens the composer.)
-7. Click Share: a menu rises from the button (fade + 6px lift, 220ms) with Copy link, Bookmark, Send via message. Focus moves to the first item. Arrow Up/Down move, Escape closes and returns focus to Share, click outside closes. Choosing an item closes the menu and shows a matching toast.
-8. When the digit count of a number changes (999 → 1,000), the counter rebuilds its strips and then rolls.
 
 ## Structure
 
@@ -47,59 +38,6 @@ toast: fixed, centred, 28px from bottom
 - Meta: `p` with a `time datetime`.
 - Actions: `div role="group" aria-label="Post actions"` of four buttons; Share is in a wrapper with its `role="menu"` popover.
 - Toast: `div role="status" aria-live="polite"`.
-
-## Tokens
-
-```css
-:root {
-  /* surfaces */
-  --stage: #eef0ec;        /* page behind the card */
-  --card: #fcfdfb;         /* card */
-  --line: #dfe3dc;         /* card border, media border, meta rule */
-  --line-2: #cfd5cc;       /* menu border */
-  /* ink */
-  --ink: #121614;
-  --ink-2: #4a524d;
-  --ink-3: #6b746e;        /* handle, idle actions, meta */
-  /* roles */
-  --brand: #0b6f6a;        /* links, hashtags, verified, reply/share hover, focus */
-  --brand-soft: rgba(11,111,106,.1);
-  --like: #d92a5b;
-  --like-soft: rgba(217,42,91,.1);
-  --repost: #16834f;
-  --repost-soft: rgba(22,131,79,.1);
-  /* type */
-  --sans: "Hanken Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  /* shape */
-  --r: 18px;               /* card */
-  --r-media: 14px;
-  /* motion */
-  --t-micro: 160ms;
-  --t-roll: 420ms;
-  --t-burst: 600ms;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --ease-pop: cubic-bezier(.34,1.56,.64,1);
-}
-```
-
-Card shadow: `0 1px 0 rgba(18,22,20,.04), 0 18px 40px -28px rgba(18,22,20,.35)`. Spacing runs on 4: 4, 8, 12, 14, 18, 20.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking |
-| --- | --- | --- | --- | --- | --- |
-| Display name | Hanken Grotesk | 15.5px | 700 | 1.2 | 0 |
-| Handle · age | Hanken Grotesk | 14px | 400 | 1.5 | 0, `--ink-3` |
-| Post text | Hanken Grotesk | 17px | 400 | 1.48 | -0.006em |
-| Hashtag | Hanken Grotesk | 17px | 600 | 1.48 | teal |
-| Action count | Hanken Grotesk | 13px | 500 | 20px | tabular-nums |
-| Timestamp line | IBM Plex Mono | 12.5px | 400 | 1.5 | 0.01em, view count 500 `--ink` |
-| Media caption | IBM Plex Mono | 11px | 500 | 1 | 0.04em, light on 72% ink |
-| Menu item | Hanken Grotesk | 14px | 500 | 40px row | 0 |
-
-Mono is only for machine facts (time, views, map caption). Do not set the post text in mono.
 
 ## Motion
 
@@ -168,6 +106,74 @@ Particle angles: 0°, 51°, 103°, 154°, 206°, 257°, 309°. Odd particles are
 - [ ] Liking shows 8,403 and the label "Like, 8,403 likes".
 - [ ] The map caption reads "28 · 14 stops · 9 chimes".
 - [ ] Repost toast reads "Reposted to your followers".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the card sits centred on a pale sage stage. Likes 8,402, reposts 1,186, replies 214, nothing pressed. The Baixa interchange stop on the map pulses slowly (scale 1 → 1.35 → 1 over 2.4s).
+2. Hover any action: icon and count turn the action's colour, and a 34px circular tint appears behind the icon. Reply and share use teal, repost green, like pink-red.
+3. Click Like: `aria-pressed` becomes true, the heart fills, pops from scale 0.4 to 1.2 to 1 in 420ms, a ring expands from the heart and fades, seven dots fly outward 26px. The count rolls 8,402 → 8,403. The button label updates to "Like, 8,403 likes".
+4. Click Like again: unfills, count rolls back. No burst on unlike.
+5. Click Repost: icon turns green and spins in from −180°, count rolls up by one, and a dark pill toast says "Reposted to your followers" for 1.8s. Clicking again says "Repost removed".
+6. Click Reply: toast "Replying to @miraokafor". (In a product this opens the composer.)
+7. Click Share: a menu rises from the button (fade + 6px lift, 220ms) with Copy link, Bookmark, Send via message. Focus moves to the first item. Arrow Up/Down move, Escape closes and returns focus to Share, click outside closes. Choosing an item closes the menu and shows a matching toast.
+8. When the digit count of a number changes (999 → 1,000), the counter rebuilds its strips and then rolls.
+
+## Tokens
+
+```css
+:root {
+  /* surfaces */
+  --stage: #eef0ec;        /* page behind the card */
+  --card: #fcfdfb;         /* card */
+  --line: #dfe3dc;         /* card border, media border, meta rule */
+  --line-2: #cfd5cc;       /* menu border */
+  /* ink */
+  --ink: #121614;
+  --ink-2: #4a524d;
+  --ink-3: #6b746e;        /* handle, idle actions, meta */
+  /* roles */
+  --brand: #0b6f6a;        /* links, hashtags, verified, reply/share hover, focus */
+  --brand-soft: rgba(11,111,106,.1);
+  --like: #d92a5b;
+  --like-soft: rgba(217,42,91,.1);
+  --repost: #16834f;
+  --repost-soft: rgba(22,131,79,.1);
+  /* type */
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* shape */
+  --r: 18px;               /* card */
+  --r-media: 14px;
+  /* motion */
+  --t-micro: 160ms;
+  --t-roll: 420ms;
+  --t-burst: 600ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-pop: cubic-bezier(.34,1.56,.64,1);
+}
+```
+
+Card shadow: `0 1px 0 rgba(18,22,20,.04), 0 18px 40px -28px rgba(18,22,20,.35)`. Spacing runs on 4: 4, 8, 12, 14, 18, 20.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking |
+| --- | --- | --- | --- | --- | --- |
+| Display name | Hanken Grotesk | 15.5px | 700 | 1.2 | 0 |
+| Handle · age | Hanken Grotesk | 14px | 400 | 1.5 | 0, `--ink-3` |
+| Post text | Hanken Grotesk | 17px | 400 | 1.48 | -0.006em |
+| Hashtag | Hanken Grotesk | 17px | 600 | 1.48 | teal |
+| Action count | Hanken Grotesk | 13px | 500 | 20px | tabular-nums |
+| Timestamp line | IBM Plex Mono | 12.5px | 400 | 1.5 | 0.01em, view count 500 `--ink` |
+| Media caption | IBM Plex Mono | 11px | 500 | 1 | 0.04em, light on 72% ink |
+| Menu item | Hanken Grotesk | 14px | 500 | 40px row | 0 |
+
+Mono is only for machine facts (time, views, map caption). Do not set the post text in mono.
 
 ## Implementation notes
 

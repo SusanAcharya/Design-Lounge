@@ -4,25 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A team retro board, "Tackwall", with square sticky notes scattered over dark felt under three chalk column headings: Went well, To change, Try next. Each note sits at a slight angle, has a handwritten face, and peels its bottom-right corner when you hover it. You add notes in one of five colours, drag them anywhere with a little swing, and throw them in a round bin in the corner to delete them, with an Undo toast. The detail worth copying is the peel: a registered `--peel` length drives both the clip-path that cuts the corner and the folded flap drawn in the same square, so the fold is one variable and tweens.
-
-## Reference behaviour
-
-1. First frame: seven notes on the board, rotations between -3.6° and 3.8°, each 196 × 196. The top bar reads "Tackwall · Studio retro · Week 41 · 7 notes". Butter is the selected new-note colour.
-2. Hover or focus inside a note: its bottom-right corner peels 30px in 260ms. The flap is a lighter-to-darker fold of the note colour.
-3. Press anywhere on a note except its text and its colour dot: the note lifts. It comes to the front, the paper scales to 1.04, the shadow deepens and the peel flattens to 0.
-4. While dragging, the note follows the pointer exactly (no easing) and tilts with horizontal speed, up to ±8° on top of its resting angle.
-5. Dragging onto the bin: the bin (always on top) turns solid red `#e8553e`, scales to 1.22, its lid tips open -28°, and the note shrinks to 0.72 at 70% opacity under it. While any note is being dragged the bin outline brightens and scales to 1.08.
-6. Release over the bin: the note scales to 0.2 and fades in 280ms, then is removed. The count drops. A toast slides up: "Note deleted" with an Undo button, for 5 s.
-7. Undo restores the note at the same place, colour and text, with the drop-in animation, and focuses it.
-8. Release anywhere else: the note settles back to its resting angle in 320ms on expo out. Its position is stored as a fraction of the board so it keeps its place when the window resizes.
-9. "Add note" adds a blank note in the selected colour near the middle, with a drop-in (scale 1.15 → 1, fade in, 420ms), and focuses its text so you can type.
-10. The small dot on each note cycles its colour: butter, mint, coral, sky, paper.
-11. Each note's text is a real textarea. Typing updates the note's accessible name.
-12. Keyboard: the note's handle button moves the note 16px per arrow key (Shift 48px). Delete or Backspace on the handle removes it (same toast). Enter jumps into the text.
-13. With reduced motion: no peel tween, no drop-in, no settle or shrink tween; every state still appears.
 
 ## Structure
 
@@ -62,58 +48,6 @@ Seed notes (colour, fractional x, y, text, label):
 | mint | .26 | .30 | Ship onboarding copy by Thursday | Went well |
 
 Rotations cycle through -3, 2.2, -1.4, 3.4, -2.6, 1.2, 3.8, -3.6, 1.8 degrees. New notes are labelled with the date, "Oct 3".
-
-## Tokens
-
-```css
-@property --peel { syntax: "<length>"; inherits: true; initial-value: 0px; }
-
-:root {
-  /* board */
-  --board: #2d2b28;    /* felt */
-  --board-2: #36332f;  /* top bar */
-  --chalk: #d9d2c3;    /* bar text, column headings on hover */
-  --chalk-2: #a49c8d;  /* headings, meta, bin outline */
-  --line: #48443e;     /* hairlines, dashed column rules */
-
-  /* notes */
-  --butter: #f6d365; --mint: #a8ddb5; --coral: #f5a08b; --sky: #9cc9ee; --paper: #f2eee6;
-  --note-ink: #2a2620; /* handwriting and labels on every note */
-
-  /* actions */
-  --danger: #e8553e;   /* hot bin */
-
-  /* type */
-  --hand: "Kalam", cursive;
-  --sans: "Karla", system-ui, sans-serif;
-
-  /* size */
-  --nw: 196px;         /* note side */
-  --peel-on: 30px;
-  --bin: 84px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --expo: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-Felt texture: two dot layers on the board, `radial-gradient(rgba(255,255,255,.035) 1px, transparent 1.2px)` at 6px and `radial-gradient(rgba(0,0,0,.18) 1px, transparent 1.2px)` at 9px offset `3px 4px`. Note sheen: `linear-gradient(rgba(255,255,255,.22), transparent 40%)` over the colour.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Wordmark | Kalam | 24px | 700 | 1 | 0 | title |
-| Bar meta | Karla | 13px | 400 | 1.4 | 0 | sentence |
-| Column heading | Kalam | 22px | 400 | 1 | 0 | sentence |
-| Note label | Karla | 11px | 600 | 1 | 0.06em | UPPER, 62% ink |
-| Note text | Kalam | 19px | 400 | 1.3 | 0 | sentence |
-| Add button | Karla | 14px | 700 | 1 | 0 | sentence |
-| Toast | Karla | 14px | 600 | 1.4 | 0 | sentence |
-| Bin label | Karla | 12px | 400 | 1.4 | 0 | sentence |
-
-Only the handwriting face is on the notes and headings. UI chrome is Karla.
 
 ## Motion
 
@@ -186,6 +120,78 @@ Tilt is smoothed: `tilt = clamp(-8, tilt * .7 + dx * .6, 8)` per pointer move, w
 - [ ] Notes 196px, text Kalam 19px/1.3, labels Karla 11px caps.
 - [ ] Peel 30px in 260ms; bin 84px, scales to 1.22 with the lid at -28°.
 - [ ] Count reads "7 notes" and updates on add, delete and undo.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: seven notes on the board, rotations between -3.6° and 3.8°, each 196 × 196. The top bar reads "Tackwall · Studio retro · Week 41 · 7 notes". Butter is the selected new-note colour.
+2. Hover or focus inside a note: its bottom-right corner peels 30px in 260ms. The flap is a lighter-to-darker fold of the note colour.
+3. Press anywhere on a note except its text and its colour dot: the note lifts. It comes to the front, the paper scales to 1.04, the shadow deepens and the peel flattens to 0.
+4. While dragging, the note follows the pointer exactly (no easing) and tilts with horizontal speed, up to ±8° on top of its resting angle.
+5. Dragging onto the bin: the bin (always on top) turns solid red `#e8553e`, scales to 1.22, its lid tips open -28°, and the note shrinks to 0.72 at 70% opacity under it. While any note is being dragged the bin outline brightens and scales to 1.08.
+6. Release over the bin: the note scales to 0.2 and fades in 280ms, then is removed. The count drops. A toast slides up: "Note deleted" with an Undo button, for 5 s.
+7. Undo restores the note at the same place, colour and text, with the drop-in animation, and focuses it.
+8. Release anywhere else: the note settles back to its resting angle in 320ms on expo out. Its position is stored as a fraction of the board so it keeps its place when the window resizes.
+9. "Add note" adds a blank note in the selected colour near the middle, with a drop-in (scale 1.15 → 1, fade in, 420ms), and focuses its text so you can type.
+10. The small dot on each note cycles its colour: butter, mint, coral, sky, paper.
+11. Each note's text is a real textarea. Typing updates the note's accessible name.
+12. Keyboard: the note's handle button moves the note 16px per arrow key (Shift 48px). Delete or Backspace on the handle removes it (same toast). Enter jumps into the text.
+13. With reduced motion: no peel tween, no drop-in, no settle or shrink tween; every state still appears.
+
+## Tokens
+
+```css
+@property --peel { syntax: "<length>"; inherits: true; initial-value: 0px; }
+
+:root {
+  /* board */
+  --board: #2d2b28;    /* felt */
+  --board-2: #36332f;  /* top bar */
+  --chalk: #d9d2c3;    /* bar text, column headings on hover */
+  --chalk-2: #a49c8d;  /* headings, meta, bin outline */
+  --line: #48443e;     /* hairlines, dashed column rules */
+
+  /* notes */
+  --butter: #f6d365; --mint: #a8ddb5; --coral: #f5a08b; --sky: #9cc9ee; --paper: #f2eee6;
+  --note-ink: #2a2620; /* handwriting and labels on every note */
+
+  /* actions */
+  --danger: #e8553e;   /* hot bin */
+
+  /* type */
+  --hand: "Kalam", cursive;
+  --sans: "Karla", system-ui, sans-serif;
+
+  /* size */
+  --nw: 196px;         /* note side */
+  --peel-on: 30px;
+  --bin: 84px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+Felt texture: two dot layers on the board, `radial-gradient(rgba(255,255,255,.035) 1px, transparent 1.2px)` at 6px and `radial-gradient(rgba(0,0,0,.18) 1px, transparent 1.2px)` at 9px offset `3px 4px`. Note sheen: `linear-gradient(rgba(255,255,255,.22), transparent 40%)` over the colour.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Wordmark | Kalam | 24px | 700 | 1 | 0 | title |
+| Bar meta | Karla | 13px | 400 | 1.4 | 0 | sentence |
+| Column heading | Kalam | 22px | 400 | 1 | 0 | sentence |
+| Note label | Karla | 11px | 600 | 1 | 0.06em | UPPER, 62% ink |
+| Note text | Kalam | 19px | 400 | 1.3 | 0 | sentence |
+| Add button | Karla | 14px | 700 | 1 | 0 | sentence |
+| Toast | Karla | 14px | 600 | 1.4 | 0 | sentence |
+| Bin label | Karla | 12px | 400 | 1.4 | 0 | sentence |
+
+Only the handwriting face is on the notes and headings. UI chrome is Karla.
 
 ## Implementation notes
 

@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A testimonials section for **Pebble**, a notes app. Seven short quotes sit in a 4-column × 8-row CSS grid that reads as masonry: two cards span two columns, the rest occupy single cells of uneven height. Every card has a 28px initials disc, a name, a role, and a tenure (`14 months`, `9 months`, …) that is invisible until hover or focus. One family only — Plus Jakarta Sans at 400 and 600. No serif, no second face. The feeling is a soft noticeboard, not a carousel and not a logo wall.
-
-## Reference behaviour
-
-1. Initial state: cool mist page `#EEF1F3`, 56px nav (irregular 14px pebble mark + Pebble + Notes / Share / Pricing + pill “Start a notebook”). Lead line: kicker “FROM THE NOTEBOOKS”, 28px heading “People who keep notes in Pebble”, right meta “**7 notes** · 4 columns · 2 wide cards”. The wall fills the remaining height. Card 1 (Mina, eucalyptus wash) spans columns 1–2, rows 1–4. Card 5 (Eva, sand wash) spans columns 2–4, rows 5–8. Quote 01 is already the largest type (20px).
-2. Hover a card: it lifts `translateY(-4px)` over 240ms, border becomes `--ink`, a 10px/24px shadow at 8% ink appears. The tenure on the right of the footer fades in and rises 4px over 160ms.
-3. Keyboard-focus a card (`tabindex="0"`): the same lift, border, shadow, and tenure. Outline is none because the ink border is the focus cue; a 2px eucalyptus ring still appears on nav chrome via `:focus-visible`.
-4. Leave the card: lift, border, shadow, and tenure reverse on the same clocks.
-5. Hover “Start a notebook”: fill changes from `--ink` to `--euc` over 0ms (colour only).
-6. No click handler. Cards do not expand, flip, or navigate.
-7. `prefers-reduced-motion: reduce` sets all transition durations to 1ms and cancels the 4px lift; tenure still appears.
 
 ## Structure
 
@@ -58,57 +50,6 @@ Placement and copy:
 | `.c5` | 2/4, 5/9 | `#EFE6D8` | Sunday night is the inbox. Monday morning is an outline I did not have to rebuild. | Eva Solberg · Editor · Field & Desk | 16 months | `#2F4A58` ES |
 | `.c6` | 4/5, 4/7 | card | Offline on the train. Synced at the office door. | Theo Park · Ops · Harbor | 7 months | `#5A6B4A` TP |
 | `.c7` | 4/5, 7/9 | card | Search hit the sentence I half-remembered. | Noor Wade · Counsel · Pine & Co | 10 months | `#7A5348` NW |
-
-## Tokens
-
-```css
-:root {
-  --bg: #eef1f3;          /* page mist */
-  --card: #fffcf8;        /* default card */
-  --ink: #1c2328;         /* text, CTA, hover border */
-  --ink-2: #5c666e;       /* secondary */
-  --ink-3: #8a939a;       /* tenure */
-  --line: #d7dce0;        /* card border */
-  --line-2: #c3c9ce;
-  --euc: #4a7c74;         /* kicker, mark, CTA hover, focus */
-  --euc-soft: #e4ede8;    /* Mina wash */
-  --rose: #c4786a;        /* Asha disc */
-  --sand: #efe6d8;        /* Eva wash */
-  --slate: #3d4a62;       /* Rafi disc */
-
-  --font: "Plus Jakarta Sans", system-ui, sans-serif;
-
-  --nav-h: 56px;
-  --pad: 48px;
-  --r: 14px;
-  --gap: 12px;
-  --av: 28px;
-
-  --t-fast: 160ms;
-  --t-lift: 240ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-One family. Two optical sizes on the quotes (16px single, 20px wide), two weights.
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|------|--------|-----:|-------:|------------:|---------:|------|
-| Body / links | Plus Jakarta Sans | 13–14px | 400 | 1.45 | 0 | sentence |
-| Brand | Plus Jakarta Sans | 15px | 600 | 1 | −0.02em | sentence |
-| CTA | Plus Jakarta Sans | 13px | 600 | 1 | 0 | sentence |
-| Kicker | Plus Jakarta Sans | 11px | 600 | 1 | +0.14em | UPPERCASE |
-| Heading | Plus Jakarta Sans | 28px | 600 | 1.15 | −0.03em | sentence |
-| Meta | Plus Jakarta Sans | 13px | 400 / 600 | 1.4 | 0 | sentence |
-| Quote (single) | Plus Jakarta Sans | 16px | 400 | 1.4 | −0.015em | sentence |
-| Quote (wide) | Plus Jakarta Sans | 20px | 400 | 1.35 | −0.02em | sentence |
-| Author | Plus Jakarta Sans | 12px | 600 | 1.2 | 0 | sentence |
-| Role | Plus Jakarta Sans | 11px | 400 | 1.3 | 0 | sentence |
-| Tenure | Plus Jakarta Sans | 11px | 400 | 1 | +0.02em | sentence |
-| Initials | Plus Jakarta Sans | 10px | 600 | 1 | +0.03em | UPPERCASE |
 
 ## Motion
 
@@ -161,6 +102,71 @@ Reduced motion: `transition-duration: 1ms` on `.card` and `.when`; hover/focus m
 - [ ] `prefers-reduced-motion: reduce` removes the lift; tenure still appears.
 - [ ] No images, no second font family, no emoji, no dummy copy, no JS required.
 - [ ] Demo fills 1280×800 with no page scrollbar and starts with the piece header comment.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: cool mist page `#EEF1F3`, 56px nav (irregular 14px pebble mark + Pebble + Notes / Share / Pricing + pill “Start a notebook”). Lead line: kicker “FROM THE NOTEBOOKS”, 28px heading “People who keep notes in Pebble”, right meta “**7 notes** · 4 columns · 2 wide cards”. The wall fills the remaining height. Card 1 (Mina, eucalyptus wash) spans columns 1–2, rows 1–4. Card 5 (Eva, sand wash) spans columns 2–4, rows 5–8. Quote 01 is already the largest type (20px).
+2. Hover a card: it lifts `translateY(-4px)` over 240ms, border becomes `--ink`, a 10px/24px shadow at 8% ink appears. The tenure on the right of the footer fades in and rises 4px over 160ms.
+3. Keyboard-focus a card (`tabindex="0"`): the same lift, border, shadow, and tenure. Outline is none because the ink border is the focus cue; a 2px eucalyptus ring still appears on nav chrome via `:focus-visible`.
+4. Leave the card: lift, border, shadow, and tenure reverse on the same clocks.
+5. Hover “Start a notebook”: fill changes from `--ink` to `--euc` over 0ms (colour only).
+6. No click handler. Cards do not expand, flip, or navigate.
+7. `prefers-reduced-motion: reduce` sets all transition durations to 1ms and cancels the 4px lift; tenure still appears.
+
+## Tokens
+
+```css
+:root {
+  --bg: #eef1f3;          /* page mist */
+  --card: #fffcf8;        /* default card */
+  --ink: #1c2328;         /* text, CTA, hover border */
+  --ink-2: #5c666e;       /* secondary */
+  --ink-3: #8a939a;       /* tenure */
+  --line: #d7dce0;        /* card border */
+  --line-2: #c3c9ce;
+  --euc: #4a7c74;         /* kicker, mark, CTA hover, focus */
+  --euc-soft: #e4ede8;    /* Mina wash */
+  --rose: #c4786a;        /* Asha disc */
+  --sand: #efe6d8;        /* Eva wash */
+  --slate: #3d4a62;       /* Rafi disc */
+
+  --font: "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --nav-h: 56px;
+  --pad: 48px;
+  --r: 14px;
+  --gap: 12px;
+  --av: 28px;
+
+  --t-fast: 160ms;
+  --t-lift: 240ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+One family. Two optical sizes on the quotes (16px single, 20px wide), two weights.
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|------|--------|-----:|-------:|------------:|---------:|------|
+| Body / links | Plus Jakarta Sans | 13–14px | 400 | 1.45 | 0 | sentence |
+| Brand | Plus Jakarta Sans | 15px | 600 | 1 | −0.02em | sentence |
+| CTA | Plus Jakarta Sans | 13px | 600 | 1 | 0 | sentence |
+| Kicker | Plus Jakarta Sans | 11px | 600 | 1 | +0.14em | UPPERCASE |
+| Heading | Plus Jakarta Sans | 28px | 600 | 1.15 | −0.03em | sentence |
+| Meta | Plus Jakarta Sans | 13px | 400 / 600 | 1.4 | 0 | sentence |
+| Quote (single) | Plus Jakarta Sans | 16px | 400 | 1.4 | −0.015em | sentence |
+| Quote (wide) | Plus Jakarta Sans | 20px | 400 | 1.35 | −0.02em | sentence |
+| Author | Plus Jakarta Sans | 12px | 600 | 1.2 | 0 | sentence |
+| Role | Plus Jakarta Sans | 11px | 400 | 1.3 | 0 | sentence |
+| Tenure | Plus Jakarta Sans | 11px | 400 | 1 | +0.02em | sentence |
+| Initials | Plus Jakarta Sans | 10px | 600 | 1 | +0.03em | UPPERCASE |
 
 ## Implementation notes
 

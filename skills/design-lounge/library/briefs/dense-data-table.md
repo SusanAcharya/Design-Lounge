@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 An invoices table for a billing product ("Tessel"): 32 rows at exactly 40px each, a header that stays pinned while the body scrolls inside a bordered card, tabular mono numerals for IDs, dates and amounts, and status pills with a leading dot. Selecting rows — by checkbox, by shift-click range, or by the tri-state header checkbox — slides a dark action bar up from the bottom centre with the count, the selected total and three actions. Sorting is one click per column with an accent arrow that flips for descending. It should feel like a tool built for people who read 200 rows before lunch: no zebra striping, hairlines only, hover is a 2-step lighter grey.
-
-## Reference behaviour
-
-1. Initial state: header bar (breadcrumb "tessel / billing", h1 "Invoices", mono count "32 invoices", Filter and New invoice buttons). Below, a white card with the table. Column "Invoice" is sorted ascending (accent arrow pointing up). Three rows — INV-2416, INV-2414, INV-2411 — are pre-selected: their checkboxes are filled, their cells are tinted `--sel`, the header checkbox shows the **indeterminate** dash, and the action bar is already visible reading "3 selected · total $X".
-2. Scroll the card: the header row stays at the top with a 1px `--line-2` rule under it; rows pass beneath.
-3. Hover a row: all its cells go `--hover` (`#f3f5f9`). A selected row on hover goes `#dfe8fb`.
-4. Click a row's checkbox: toggles it. `aria-selected` on the `<tr>` follows. The action bar's count and total update in place.
-5. Shift-click a checkbox: selects every row between the last clicked row and this one (inclusive) in the current sort order. Plain click after that starts a new anchor.
-6. Header checkbox: unchecked (none), indeterminate (some), checked (all). Clicking it when unchecked or indeterminate selects all 32; clicking when checked clears all.
-7. When the selection count goes from 0 to ≥ 1, the action bar slides up from below the viewport (240ms, expo-out) to `bottom: 24px`. When it returns to 0 it slides back down. Its `aria-hidden` mirrors visibility.
-8. Action bar contents: "N selected" (600), "total $12,480.25" in mono `#a7afbd`, buttons Mark as paid / Send reminder / Export CSV, and a divider + × clear button. Clear empties the selection and focuses the header checkbox. Esc anywhere also clears.
-9. Click a column header button: sorts ascending; click again: descending. Only one column carries `aria-sort`. The arrow is hidden on unsorted columns, 40% opaque on hover, 100% accent on the sorted one, and rotates 180° for descending. Sorting re-renders rows but keeps the selection (it's keyed by invoice id).
-10. Numeric columns (Items, Amount) are right-aligned in both header and cells.
 
 ## Structure
 
@@ -63,6 +52,80 @@ Data: 32 invoices, ids INV-2418 down to INV-2387; customers cycle through Halden
 - The total in the bar sums raw numeric amounts, then formats; never parse the formatted strings.
 - `aria-hidden` on the bar flips with visibility so its three buttons leave the tab order when off-screen.
 - Row hover has no transition; the checkbox fill has no transition; the only animated thing on the page is the bar.
+
+## Motion
+
+| Element        | Trigger              | Property        | From → To                              | Duration | Easing       |
+|----------------|----------------------|-----------------|----------------------------------------|---------:|--------------|
+| `.actions`     | selection 0 → ≥1     | transform       | `translate(-50%, calc(100% + 32px))` → `translate(-50%, 0)` | 240ms | `--ease-out` |
+| `.actions`     | selection → 0        | transform       | reverse                                | 240ms    | `--ease-out` |
+| `.arr`         | hover header         | opacity         | 0 → .4                                 | 120ms    | linear (default) |
+| `.arr`         | sort desc            | transform       | 0 → `rotate(180deg)`                   | 120ms    | `--ease`     |
+| row background | hover / select       | background      | instant                                | 0        | —            |
+| checkbox       | check                | background, border | instant                             | 0        | —            |
+
+Reduced motion: all durations 1ms. The action bar still appears/disappears; it just doesn't travel.
+
+## States
+
+- **Row hover:** cells `--hover`. **Selected:** `aria-selected="true"`, cells `--sel`. **Selected + hover:** `--sel-hover`.
+- **Checkbox:** custom-drawn 16×16, 1.5px `--line-2` border, 4px radius. Hover border `--ink-3`. Checked: `--accent` fill with a white 9×5 check drawn from two borders rotated −45°. Indeterminate: `--accent` fill with an 8×2 white dash. Focus-visible: 2px accent outline, 2px offset.
+- **Header button:** `--ink-3`; hover `--ink`; sorted `--ink` with accent arrow. Focus-visible: 2px accent outline.
+- **Status pills:** paid `--ok` on `--ok-bg`; due `--due` on `--due-bg`; overdue `--late` on `--late-bg`; draft `--draft` on `--draft-bg`. 6px dot in `currentColor`, 6px gap.
+- **Primary button:** `--accent` fill; hover `--accent-hover`. **Secondary:** white, `--line-2` border; hover `--hover`.
+- **Action bar buttons:** transparent; hover `rgba(255,255,255,.12)`; focus-visible 2px `#8fb3f5` outline inset 2px.
+- **Empty selection:** bar off-screen and `aria-hidden="true"`.
+
+## Accessibility
+
+- The scroll container has `tabindex="0"` and an `aria-label` so keyboard users can scroll the body.
+- Sort headers are real `<button>`s inside `<th>`; the `<th>` carries `aria-sort="ascending|descending"` and only one at a time.
+- Each row checkbox has `aria-label="Select INV-2418"`; header checkbox `aria-label="Select all invoices"` and uses the DOM `indeterminate` property (not an attribute).
+- `<tr aria-selected>` mirrors selection for AT that supports grid selection semantics.
+- Action bar is `role="region" aria-label="Selection actions" aria-live="polite"` so count changes are announced; set `aria-hidden` when off-screen so its buttons drop out of the tab order (or toggle `inert`).
+- Keys: Space toggles a focused checkbox; Shift+click ranges; Esc clears selection; Tab order is header buttons → header checkbox → row checkboxes → action bar.
+- Contrast: `--ink-2` on white 8.9:1; `--ink-3` on white 4.5:1 (header labels are 11px uppercase — keep them ≥ 500 weight); pill text on tints ≥ 4.6:1 for all four.
+- Hit targets: 40px rows; 16px checkbox inside a 44px cell — make the whole cell clickable if you need a 24px minimum.
+
+## Responsive rules
+
+- ≥ 1280: as specified.
+- 1024–1279: unchanged; table scrolls horizontally inside the card once narrower than 1000px.
+- 768–1023: hide the Items column; header buttons drop the arrow gap to 4px; action bar buttons become icon-only with tooltips.
+- < 640: table card margin 8px; the card scrolls horizontally with the checkbox column sticky at `left:0`; action bar becomes full-width at `bottom:0` with 12px radius on top corners only.
+
+## Acceptance checklist
+
+- [ ] Every body row is 40px tall; header row 40px; cell padding 12px horizontal.
+- [ ] Header stays pinned at the top of the scrolling card with a 1px `#cfd4dd` rule that never scrolls away.
+- [ ] Ids, dates and amounts use Chivo Mono with `tabular-nums`; amounts right-aligned with two decimals and thousands separators.
+- [ ] On load, three rows are selected, the header checkbox is indeterminate and the action bar is visible.
+- [ ] Header checkbox cycles none / indeterminate / all correctly, including after sorting.
+- [ ] Shift-click selects the inclusive range in current sort order.
+- [ ] Action bar slides from `calc(100% + 32px)` below to `bottom:24px` over 240ms `cubic-bezier(.16,1,.3,1)`, horizontally centred.
+- [ ] Bar shows "N selected" and "total $…" summing selected amounts; × clears and focuses the header checkbox; Esc clears.
+- [ ] Clicking a header sorts ascending, again descending; arrow rotates 180° and is accent-coloured only on the sorted column.
+- [ ] Sorting preserves selection (keyed by id, not index).
+- [ ] Row hover `#f3f5f9`; selected `#e9f0fd`; selected+hover `#dfe8fb`; no zebra striping.
+- [ ] Focus rings visible on header buttons, checkboxes, toolbar buttons and action bar buttons.
+- [ ] `aria-sort` present on exactly one `<th>`; `aria-selected` on every `<tr>`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header bar (breadcrumb "tessel / billing", h1 "Invoices", mono count "32 invoices", Filter and New invoice buttons). Below, a white card with the table. Column "Invoice" is sorted ascending (accent arrow pointing up). Three rows — INV-2416, INV-2414, INV-2411 — are pre-selected: their checkboxes are filled, their cells are tinted `--sel`, the header checkbox shows the **indeterminate** dash, and the action bar is already visible reading "3 selected · total $X".
+2. Scroll the card: the header row stays at the top with a 1px `--line-2` rule under it; rows pass beneath.
+3. Hover a row: all its cells go `--hover` (`#f3f5f9`). A selected row on hover goes `#dfe8fb`.
+4. Click a row's checkbox: toggles it. `aria-selected` on the `<tr>` follows. The action bar's count and total update in place.
+5. Shift-click a checkbox: selects every row between the last clicked row and this one (inclusive) in the current sort order. Plain click after that starts a new anchor.
+6. Header checkbox: unchecked (none), indeterminate (some), checked (all). Clicking it when unchecked or indeterminate selects all 32; clicking when checked clears all.
+7. When the selection count goes from 0 to ≥ 1, the action bar slides up from below the viewport (240ms, expo-out) to `bottom: 24px`. When it returns to 0 it slides back down. Its `aria-hidden` mirrors visibility.
+8. Action bar contents: "N selected" (600), "total $12,480.25" in mono `#a7afbd`, buttons Mark as paid / Send reminder / Export CSV, and a divider + × clear button. Clear empties the selection and focuses the header checkbox. Esc anywhere also clears.
+9. Click a column header button: sorts ascending; click again: descending. Only one column carries `aria-sort`. The arrow is hidden on unsorted columns, 40% opaque on hover, 100% accent on the sorted one, and rotates 180° for descending. Sorting re-renders rows but keeps the selection (it's keyed by invoice id).
+10. Numeric columns (Items, Amount) are right-aligned in both header and cells.
 
 ## Tokens
 
@@ -125,63 +188,6 @@ Data: 32 invoices, ids INV-2418 down to INV-2387; customers cycle through Halden
 | Buttons          | Chivo      | 13px | 500    | 32px height | 0        | |
 | Action bar count | Chivo      | 13px | 600    | 1           | 0        | |
 | Action bar total | Chivo Mono | 12px | 400    | 1           | 0        | `--bar-muted` |
-
-## Motion
-
-| Element        | Trigger              | Property        | From → To                              | Duration | Easing       |
-|----------------|----------------------|-----------------|----------------------------------------|---------:|--------------|
-| `.actions`     | selection 0 → ≥1     | transform       | `translate(-50%, calc(100% + 32px))` → `translate(-50%, 0)` | 240ms | `--ease-out` |
-| `.actions`     | selection → 0        | transform       | reverse                                | 240ms    | `--ease-out` |
-| `.arr`         | hover header         | opacity         | 0 → .4                                 | 120ms    | linear (default) |
-| `.arr`         | sort desc            | transform       | 0 → `rotate(180deg)`                   | 120ms    | `--ease`     |
-| row background | hover / select       | background      | instant                                | 0        | —            |
-| checkbox       | check                | background, border | instant                             | 0        | —            |
-
-Reduced motion: all durations 1ms. The action bar still appears/disappears; it just doesn't travel.
-
-## States
-
-- **Row hover:** cells `--hover`. **Selected:** `aria-selected="true"`, cells `--sel`. **Selected + hover:** `--sel-hover`.
-- **Checkbox:** custom-drawn 16×16, 1.5px `--line-2` border, 4px radius. Hover border `--ink-3`. Checked: `--accent` fill with a white 9×5 check drawn from two borders rotated −45°. Indeterminate: `--accent` fill with an 8×2 white dash. Focus-visible: 2px accent outline, 2px offset.
-- **Header button:** `--ink-3`; hover `--ink`; sorted `--ink` with accent arrow. Focus-visible: 2px accent outline.
-- **Status pills:** paid `--ok` on `--ok-bg`; due `--due` on `--due-bg`; overdue `--late` on `--late-bg`; draft `--draft` on `--draft-bg`. 6px dot in `currentColor`, 6px gap.
-- **Primary button:** `--accent` fill; hover `--accent-hover`. **Secondary:** white, `--line-2` border; hover `--hover`.
-- **Action bar buttons:** transparent; hover `rgba(255,255,255,.12)`; focus-visible 2px `#8fb3f5` outline inset 2px.
-- **Empty selection:** bar off-screen and `aria-hidden="true"`.
-
-## Accessibility
-
-- The scroll container has `tabindex="0"` and an `aria-label` so keyboard users can scroll the body.
-- Sort headers are real `<button>`s inside `<th>`; the `<th>` carries `aria-sort="ascending|descending"` and only one at a time.
-- Each row checkbox has `aria-label="Select INV-2418"`; header checkbox `aria-label="Select all invoices"` and uses the DOM `indeterminate` property (not an attribute).
-- `<tr aria-selected>` mirrors selection for AT that supports grid selection semantics.
-- Action bar is `role="region" aria-label="Selection actions" aria-live="polite"` so count changes are announced; set `aria-hidden` when off-screen so its buttons drop out of the tab order (or toggle `inert`).
-- Keys: Space toggles a focused checkbox; Shift+click ranges; Esc clears selection; Tab order is header buttons → header checkbox → row checkboxes → action bar.
-- Contrast: `--ink-2` on white 8.9:1; `--ink-3` on white 4.5:1 (header labels are 11px uppercase — keep them ≥ 500 weight); pill text on tints ≥ 4.6:1 for all four.
-- Hit targets: 40px rows; 16px checkbox inside a 44px cell — make the whole cell clickable if you need a 24px minimum.
-
-## Responsive rules
-
-- ≥ 1280: as specified.
-- 1024–1279: unchanged; table scrolls horizontally inside the card once narrower than 1000px.
-- 768–1023: hide the Items column; header buttons drop the arrow gap to 4px; action bar buttons become icon-only with tooltips.
-- < 640: table card margin 8px; the card scrolls horizontally with the checkbox column sticky at `left:0`; action bar becomes full-width at `bottom:0` with 12px radius on top corners only.
-
-## Acceptance checklist
-
-- [ ] Every body row is 40px tall; header row 40px; cell padding 12px horizontal.
-- [ ] Header stays pinned at the top of the scrolling card with a 1px `#cfd4dd` rule that never scrolls away.
-- [ ] Ids, dates and amounts use Chivo Mono with `tabular-nums`; amounts right-aligned with two decimals and thousands separators.
-- [ ] On load, three rows are selected, the header checkbox is indeterminate and the action bar is visible.
-- [ ] Header checkbox cycles none / indeterminate / all correctly, including after sorting.
-- [ ] Shift-click selects the inclusive range in current sort order.
-- [ ] Action bar slides from `calc(100% + 32px)` below to `bottom:24px` over 240ms `cubic-bezier(.16,1,.3,1)`, horizontally centred.
-- [ ] Bar shows "N selected" and "total $…" summing selected amounts; × clears and focuses the header checkbox; Esc clears.
-- [ ] Clicking a header sorts ascending, again descending; arrow rotates 180° and is accent-coloured only on the sorted column.
-- [ ] Sorting preserves selection (keyed by id, not index).
-- [ ] Row hover `#f3f5f9`; selected `#e9f0fd`; selected+hover `#dfe8fb`; no zebra striping.
-- [ ] Focus rings visible on header buttons, checkboxes, toolbar buttons and action bar buttons.
-- [ ] `aria-sort` present on exactly one `<th>`; `aria-selected` on every `<tr>`.
 
 ## Implementation notes
 

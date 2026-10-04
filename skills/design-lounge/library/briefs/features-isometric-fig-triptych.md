@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 Studied from linear.app: the "principles" band under the hero, where three line-only isometric objects sit in hairline-divided columns labelled like figures in a technical manual. This version is for an invented planning tool, Forgeline, in warm olive-black and bone with one amber signal. The drawings are generated from a tiny isometric projection function, so each one can move between a resting and an exploded state: slabs spread, a cap cube lifts off its base, a row of cycle panels re-forms into a wave. It should feel like an engineer's notebook: quiet, exact and slightly proud. The detail worth copying is that the illustrations are geometry, not images, so hover can take them apart.
-
-## Reference behaviour
-
-1. First frame: a mono kicker with an amber 6px square ("HOW FORGELINE IS BUILT"), a 40px two-tone `h2`, then three columns under a 1px top rule, split by 1px vertical rules.
-2. Each column has a mono caption row ("FIG 0.1" left, "LAYERS" right), a 236px-tall drawing, an 18px title, a 14.5px description, and a dashed-rule spec row in mono ("07 LAYERS · 1 RECORD · 0 SYNC JOBS").
-3. On load, the three drawings wipe up from the bottom (clip-path inset 100% → 0, 900ms expo), staggered 120ms.
-4. At rest every stroke is `#4B4C43` on the background: low-contrast, like a blueprint you have to lean into.
-5. Hovering or focusing a column eases its drawing from p = 0 to p = 1 over 650ms (quartic out). Strokes brighten to `#D9D4C3`, the caption number turns amber, and an arrow slides in after the title (4px, 250ms). The other two columns fade to 42% opacity.
-6. FIG 0.1 "One source, many views": seven 104×104 slabs, 6 high. Gaps grow from 9 to 19 units, the top slab lifts a further 12, dashed guides appear from the bottom corners to the top, and four of the 25 dots on the top face turn amber and grow.
-7. FIG 0.2 "Teams as modules": a 2×2 base of 54-unit cubes with a cap cube on top. The base spreads (gap 6 → 36), the cap lifts 36 units with a dashed amber plumb line, and its outline and top face turn amber.
-8. FIG 0.3 "Cycles in rhythm": twelve 92-wide, 3-deep panels in depth order, heights falling from 110 to 30 front to back. On hover they re-form into a sine wave (48 ± 50) and panel nine turns amber, the current cycle.
-9. Leaving the row returns all drawings to rest from wherever they are; interrupting mid-animation never jumps.
-10. With reduced motion, the wipe is skipped and the drawings switch states instantly; the dimming still happens.
 
 ## Structure
 
@@ -47,42 +36,6 @@ Studied from linear.app: the "principles" band under the hero, where three line-
 - Kicker `p`, `h2` with a `span` for the muted continuation.
 - `.figs` is a three-column grid; each column is an `a.fig` (it leads to a detail page) containing caption `div`, `svg[aria-hidden]`, `h3`, `p`, spec `div`.
 - The SVG is rebuilt from code on every animation frame; it has no static children.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0E100D;         /* page, and fill of every face so it hides what's behind */
-  --bg-2: #141611;
-  --bone: #ECE8DC;       /* heading lead, titles */
-  --bone-2: #A19D90;     /* descriptions, active caption number */
-  --bone-3: #6E6B61;     /* heading continuation, captions, specs */
-  --rule: #24261F;       /* column rules, dashed spec rule */
-  --stroke: #4B4C43;     /* drawing at rest */
-  --stroke-on: #D9D4C3;  /* drawing active */
-  --amber: #F2B33D;      /* the one signal per drawing */
-  --amber-fill: #3A2F14; /* lit top faces */
-
-  --sans: "Familjen Grotesk", system-ui, sans-serif;
-  --mono: "Martian Mono", ui-monospace, monospace;
-
-  --col-pad: 28px; --gap-head: 64px;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --t-fig: 650ms; --t-dim: 350ms; --t-wipe: 900ms;
-}
-```
-
-## Typography
-
-| Role | Family | Size / line | Weight | Tracking | Case / colour |
-| --- | --- | --- | --- | --- | --- |
-| Kicker | Martian Mono | 11px | 300 | 0.08em | upper, `--bone-3` |
-| Statement | Familjen Grotesk | 40px / 1.14 | 500 | -0.025em | lead `--bone`, rest `--bone-3` |
-| Caption | Martian Mono | 10px | 300 (number 400) | 0.1em | upper, `--bone-3` / `--bone-2` / amber |
-| Title | Familjen Grotesk | 18px | 500 | -0.01em | `--bone` |
-| Description | Familjen Grotesk | 14.5px / 1.5 | 400 | 0 | `--bone-2`, max 32ch |
-| Spec row | Martian Mono | 10px / 1.4 | 300 | 0.06em | upper, `--bone-3`, tabular |
 
 ## Motion
 
@@ -142,6 +95,59 @@ Interpolate from the current p, not from 0, whenever the target changes, so fast
 - [ ] Figures: "One source, many views" (7 slabs), "Teams as modules" (2×2 + cap cube), "Cycles in rhythm" (12 panels, ninth is amber).
 - [ ] Spec rows: "07 LAYERS 1 RECORD 0 SYNC JOBS", "05 TEAMS OWN STATES SHARED CORE", "12 CYCLES 14 DAYS AUTO ROLL".
 - [ ] Rest stroke `#4B4C43`, active `#D9D4C3`, signal `#F2B33D` on `#0E100D`.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a mono kicker with an amber 6px square ("HOW FORGELINE IS BUILT"), a 40px two-tone `h2`, then three columns under a 1px top rule, split by 1px vertical rules.
+2. Each column has a mono caption row ("FIG 0.1" left, "LAYERS" right), a 236px-tall drawing, an 18px title, a 14.5px description, and a dashed-rule spec row in mono ("07 LAYERS · 1 RECORD · 0 SYNC JOBS").
+3. On load, the three drawings wipe up from the bottom (clip-path inset 100% → 0, 900ms expo), staggered 120ms.
+4. At rest every stroke is `#4B4C43` on the background: low-contrast, like a blueprint you have to lean into.
+5. Hovering or focusing a column eases its drawing from p = 0 to p = 1 over 650ms (quartic out). Strokes brighten to `#D9D4C3`, the caption number turns amber, and an arrow slides in after the title (4px, 250ms). The other two columns fade to 42% opacity.
+6. FIG 0.1 "One source, many views": seven 104×104 slabs, 6 high. Gaps grow from 9 to 19 units, the top slab lifts a further 12, dashed guides appear from the bottom corners to the top, and four of the 25 dots on the top face turn amber and grow.
+7. FIG 0.2 "Teams as modules": a 2×2 base of 54-unit cubes with a cap cube on top. The base spreads (gap 6 → 36), the cap lifts 36 units with a dashed amber plumb line, and its outline and top face turn amber.
+8. FIG 0.3 "Cycles in rhythm": twelve 92-wide, 3-deep panels in depth order, heights falling from 110 to 30 front to back. On hover they re-form into a sine wave (48 ± 50) and panel nine turns amber, the current cycle.
+9. Leaving the row returns all drawings to rest from wherever they are; interrupting mid-animation never jumps.
+10. With reduced motion, the wipe is skipped and the drawings switch states instantly; the dimming still happens.
+
+## Tokens
+
+```css
+:root {
+  --bg: #0E100D;         /* page, and fill of every face so it hides what's behind */
+  --bg-2: #141611;
+  --bone: #ECE8DC;       /* heading lead, titles */
+  --bone-2: #A19D90;     /* descriptions, active caption number */
+  --bone-3: #6E6B61;     /* heading continuation, captions, specs */
+  --rule: #24261F;       /* column rules, dashed spec rule */
+  --stroke: #4B4C43;     /* drawing at rest */
+  --stroke-on: #D9D4C3;  /* drawing active */
+  --amber: #F2B33D;      /* the one signal per drawing */
+  --amber-fill: #3A2F14; /* lit top faces */
+
+  --sans: "Familjen Grotesk", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+
+  --col-pad: 28px; --gap-head: 64px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fig: 650ms; --t-dim: 350ms; --t-wipe: 900ms;
+}
+```
+
+## Typography
+
+| Role | Family | Size / line | Weight | Tracking | Case / colour |
+| --- | --- | --- | --- | --- | --- |
+| Kicker | Martian Mono | 11px | 300 | 0.08em | upper, `--bone-3` |
+| Statement | Familjen Grotesk | 40px / 1.14 | 500 | -0.025em | lead `--bone`, rest `--bone-3` |
+| Caption | Martian Mono | 10px | 300 (number 400) | 0.1em | upper, `--bone-3` / `--bone-2` / amber |
+| Title | Familjen Grotesk | 18px | 500 | -0.01em | `--bone` |
+| Description | Familjen Grotesk | 14.5px / 1.5 | 400 | 0 | `--bone-2`, max 32ch |
+| Spec row | Martian Mono | 10px / 1.4 | 300 | 0.06em | upper, `--bone-3`, tabular |
 
 ## Implementation notes
 

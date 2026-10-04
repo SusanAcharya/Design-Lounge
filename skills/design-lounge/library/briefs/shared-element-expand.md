@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A 3 × 2 grid of project cards for an architecture studio's portfolio page. Clicking a card does not open a new panel: the card *itself* appears to grow into a 1040 × 688 detail dialog using the FLIP technique (First, Last, Invert, Play) — one Web Animations call on `transform` and `border-radius`, 420ms, expo-out. The other five cards and the page header fade to 18 % / 35 % so the expanded element owns the frame. Esc, the close button, or a click outside reverses the same animation back into the grid slot. The palette is warm paper with one terracotta accent; titles are a light-weight serif. The detail worth copying is that the reverse animation is computed from the live rects, so it always lands exactly on the card even if the page has resized.
-
-## Reference behaviour
-
-1. Initial state: header (72px) with brand, four nav links ("Projects" is current), and a right-aligned meta line. Below, an h1 "Houses we *finished*" with a 380px-wide lede, then six cards in a 3-column grid with 20px gaps. Each card: a 172px flat colour swatch with an uppercase tag top-left, then a serif title (21px) and a "location · year" caption.
-2. Hover a card: it lifts 2px (`translateY(-2px)`) and gains a soft shadow, 160ms.
-3. Click a card: the hidden detail dialog is filled with that card's data and its `--c` swatch colour, then shown at its final fixed position (`inset: 56px 120px`). The dialog is immediately transformed to overlay the card's rect (translate + non-uniform scale, radius corrected so it still reads as 14px on screen) and animates to identity over 420ms `cubic-bezier(.16,1,.3,1)`. The source card becomes `visibility: hidden` for the duration.
-4. While the dialog grows: the other five cards fade to opacity 0.18 and the header and lede to 0.35 (320ms). The dialog's body copy (paragraphs, facts list, CTA) fades in over 260ms after a 200ms delay, so text never appears stretched mid-scale.
-5. When the open animation finishes, focus moves to the round close button in the hero's top-right.
-6. Press Esc, click the close button, or click outside the dialog: the body copy fades out in 120ms, the fade-outs on the grid reverse, and the dialog animates from identity back to the card's *current* rect over 420ms with the same easing. On finish the dialog is hidden, the source card is made visible again and refocused.
-7. Clicks during an in-flight animation are ignored (a guard flag), so double-clicks cannot leave the UI half-open.
-8. With `prefers-reduced-motion: reduce`, all durations are 1ms: the dialog appears and disappears in place.
 
 ## Structure
 
@@ -50,6 +41,79 @@ A 3 × 2 grid of project cards for an architecture studio's portfolio page. Clic
 - `.grid` — `<button class="card" style="--c:#…" data-tag data-loc data-year data-area data-mat data-lede data-body>`; inside `.swatch > b` and `.meta > h2 + span`. All copy for the dialog lives on the card's `data-*` attributes.
 - `<section class="detail" role="dialog" aria-modal="true" aria-labelledby="dtitle" hidden>` — `.hero` (tag, `h2#dtitle`, `.close` button) then `.body` (copy column + `<dl>` with four pairs and a `.cta` button).
 - `.hint` — fixed bottom-left helper text with `<kbd>Esc</kbd>`.
+
+## Motion
+
+| Element                 | Trigger      | Property               | From → To                                   | Duration | Easing       | Delay |
+|-------------------------|--------------|------------------------|---------------------------------------------|---------:|--------------|------:|
+| `.detail` (open)        | card click   | transform, border-radius | card rect (translate + scale, radius 14/s) → none, 20px | 420ms | `--ease-out` | 0 |
+| `.detail` (close)       | Esc / close  | transform, border-radius | none, 20px → card rect                    | 420ms    | `--ease-out` | 0 |
+| `.card:not(.src)`       | open / close | opacity                | 1 ↔ 0.18                                    | 320ms    | `--ease`     | 0 |
+| `header`, `.lede`       | open / close | opacity                | 1 ↔ 0.35                                    | 320ms    | `--ease`     | 0 |
+| `.detail .body` (in)    | open         | opacity                | 0 → 1                                       | 260ms    | `--ease`     | 200ms |
+| `.detail .body` (out)   | close        | opacity                | 1 → 0                                       | 120ms    | `--ease`     | 0 |
+| `.card` hover           | hover        | transform, box-shadow  | none → translateY(−2px), `--shadow-hover`   | 160ms    | `--ease`     | 0 |
+| `.close` hover          | hover        | background             | rgba(255,255,255,.9) → #fff                 | 160ms    | `--ease`     | 0 |
+
+Reduced motion: `* { transition-duration: 1ms !important; animation-duration: 1ms !important }` and pass `duration: 1` to the Web Animations call. The state machine (hidden → open → hidden) is unchanged.
+
+## States
+
+- **Card hover:** lifts 2px, shadow `--shadow-hover`. Cursor pointer.
+- **Card focus-visible:** `outline: 2px solid var(--accent); outline-offset: 3px`.
+- **Card `.src` (its dialog is open):** `visibility: hidden` — keeps its grid slot so the layout does not reflow.
+- **Card dimmed (another card open):** opacity 0.18, no pointer feedback needed because the outside-click handler closes the dialog first.
+- **Nav current:** `aria-current="page"`, ink colour, `box-shadow: inset 0 -2px 0 var(--accent)`.
+- **Dialog open:** `body.is-open`; dialog `hidden` removed; `aria-modal="true"`.
+- **Close button:** 40px circle, `rgba(255,255,255,.9)` on the hero colour; hover #fff; focus-visible accent ring.
+- **CTA:** pill, `--accent` background, `--accent-ink` text; focus-visible accent ring offset 3px.
+- **Animating:** a module-level `anim` reference is non-null; clicks and Esc are ignored until `onfinish`.
+
+## Accessibility
+
+- Cards are `<button>` elements (not divs with click handlers), so Enter/Space open them and they appear in the tab order.
+- The dialog is `role="dialog" aria-modal="true" aria-labelledby="dtitle"`. It is `hidden` when closed, so it is out of the accessibility tree.
+- On open-finish, focus moves to the close button; on close-finish, focus returns to the originating card.
+- Esc closes from anywhere in the document. Tab inside the dialog cycles close button → CTA; add a focus trap if your framework has one, otherwise the outside-click handler and Esc are sufficient for this piece.
+- Contrast: `--ink-2` on `--card` is 5.6:1; `--ink-3` is used only at ≥ 11px for meta and hints. Hero text is white over a bottom gradient `rgba(0,0,0,.42)` on every swatch colour — verify ≥ 4.5:1 for the tag (85 % opacity) on the lightest swatch (`#c99a4a`).
+- Hit targets: cards ≈ 381 × 254px; close button 40 × 40px; nav links have 6px vertical padding.
+
+## Responsive rules
+
+- ≥ 1280: as specified (`inset: 56px 120px` dialog; 3-column grid).
+- 1024–1279: dialog `inset: 40px 64px`; grid stays 3 columns; swatch height 148px.
+- 768–1023: grid 2 columns; dialog `inset: 32px`; hero 240px; dialog body becomes one column (copy above facts).
+- < 640: grid 1 column; dialog `inset: 0` with `border-radius: 0` as the "last" state (the FLIP still works — the radius keyframe just ends at 0); hero 200px; hint hidden.
+
+## Acceptance checklist
+
+- [ ] Grid is 3 × 2 with 20px gaps and 48px side padding at 1280px wide; card swatches are 172px tall.
+- [ ] Clicking a card animates the dialog from the card's exact rect to `inset: 56px 120px` over 420ms with `cubic-bezier(.16,1,.3,1)`.
+- [ ] The animated keyframe uses `transform: translate() scale()` with `transform-origin: 0 0` and a corrected `border-radius` (14px ÷ scale) so corners look constant.
+- [ ] The source card is `visibility: hidden` (not `display: none`) while its dialog is open; the grid does not reflow.
+- [ ] Other cards fade to 0.18 and header/lede to 0.35 over 320ms in both directions.
+- [ ] Dialog body copy fades in after a 200ms delay and never shows scaled/stretched text.
+- [ ] Esc, the close button, and clicking outside all reverse the animation into the card's *current* rect (resize the window while open and confirm it still lands).
+- [ ] Focus goes to the close button on open-finish and back to the card on close-finish.
+- [ ] Repeated clicks during the 420ms are ignored; the UI never gets stuck half-open.
+- [ ] Cards, nav links, close and CTA all show a 2px accent focus ring with 3px offset.
+- [ ] `prefers-reduced-motion: reduce` collapses every duration to 1ms with no missing state.
+- [ ] No images are used; each card's colour comes from an inline `--c` custom property that the dialog copies.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: header (72px) with brand, four nav links ("Projects" is current), and a right-aligned meta line. Below, an h1 "Houses we *finished*" with a 380px-wide lede, then six cards in a 3-column grid with 20px gaps. Each card: a 172px flat colour swatch with an uppercase tag top-left, then a serif title (21px) and a "location · year" caption.
+2. Hover a card: it lifts 2px (`translateY(-2px)`) and gains a soft shadow, 160ms.
+3. Click a card: the hidden detail dialog is filled with that card's data and its `--c` swatch colour, then shown at its final fixed position (`inset: 56px 120px`). The dialog is immediately transformed to overlay the card's rect (translate + non-uniform scale, radius corrected so it still reads as 14px on screen) and animates to identity over 420ms `cubic-bezier(.16,1,.3,1)`. The source card becomes `visibility: hidden` for the duration.
+4. While the dialog grows: the other five cards fade to opacity 0.18 and the header and lede to 0.35 (320ms). The dialog's body copy (paragraphs, facts list, CTA) fades in over 260ms after a 200ms delay, so text never appears stretched mid-scale.
+5. When the open animation finishes, focus moves to the round close button in the hero's top-right.
+6. Press Esc, click the close button, or click outside the dialog: the body copy fades out in 120ms, the fade-outs on the grid reverse, and the dialog animates from identity back to the card's *current* rect over 420ms with the same easing. On finish the dialog is hidden, the source card is made visible again and refocused.
+7. Clicks during an in-flight animation are ignored (a guard flag), so double-clicks cannot leave the UI half-open.
+8. With `prefers-reduced-motion: reduce`, all durations are 1ms: the dialog appears and disappears in place.
 
 ## Tokens
 
@@ -115,64 +179,6 @@ A 3 × 2 grid of project cards for an architecture studio's portfolio page. Clic
 | Hint            | Instrument Sans | 12px  | 400    | 1.5         | +0.02em  | sentence  |
 
 Use the Fraunces variable axes `opsz 9..144, wght 300 & 500` from Google Fonts; Instrument Sans at 400/500/600.
-
-## Motion
-
-| Element                 | Trigger      | Property               | From → To                                   | Duration | Easing       | Delay |
-|-------------------------|--------------|------------------------|---------------------------------------------|---------:|--------------|------:|
-| `.detail` (open)        | card click   | transform, border-radius | card rect (translate + scale, radius 14/s) → none, 20px | 420ms | `--ease-out` | 0 |
-| `.detail` (close)       | Esc / close  | transform, border-radius | none, 20px → card rect                    | 420ms    | `--ease-out` | 0 |
-| `.card:not(.src)`       | open / close | opacity                | 1 ↔ 0.18                                    | 320ms    | `--ease`     | 0 |
-| `header`, `.lede`       | open / close | opacity                | 1 ↔ 0.35                                    | 320ms    | `--ease`     | 0 |
-| `.detail .body` (in)    | open         | opacity                | 0 → 1                                       | 260ms    | `--ease`     | 200ms |
-| `.detail .body` (out)   | close        | opacity                | 1 → 0                                       | 120ms    | `--ease`     | 0 |
-| `.card` hover           | hover        | transform, box-shadow  | none → translateY(−2px), `--shadow-hover`   | 160ms    | `--ease`     | 0 |
-| `.close` hover          | hover        | background             | rgba(255,255,255,.9) → #fff                 | 160ms    | `--ease`     | 0 |
-
-Reduced motion: `* { transition-duration: 1ms !important; animation-duration: 1ms !important }` and pass `duration: 1` to the Web Animations call. The state machine (hidden → open → hidden) is unchanged.
-
-## States
-
-- **Card hover:** lifts 2px, shadow `--shadow-hover`. Cursor pointer.
-- **Card focus-visible:** `outline: 2px solid var(--accent); outline-offset: 3px`.
-- **Card `.src` (its dialog is open):** `visibility: hidden` — keeps its grid slot so the layout does not reflow.
-- **Card dimmed (another card open):** opacity 0.18, no pointer feedback needed because the outside-click handler closes the dialog first.
-- **Nav current:** `aria-current="page"`, ink colour, `box-shadow: inset 0 -2px 0 var(--accent)`.
-- **Dialog open:** `body.is-open`; dialog `hidden` removed; `aria-modal="true"`.
-- **Close button:** 40px circle, `rgba(255,255,255,.9)` on the hero colour; hover #fff; focus-visible accent ring.
-- **CTA:** pill, `--accent` background, `--accent-ink` text; focus-visible accent ring offset 3px.
-- **Animating:** a module-level `anim` reference is non-null; clicks and Esc are ignored until `onfinish`.
-
-## Accessibility
-
-- Cards are `<button>` elements (not divs with click handlers), so Enter/Space open them and they appear in the tab order.
-- The dialog is `role="dialog" aria-modal="true" aria-labelledby="dtitle"`. It is `hidden` when closed, so it is out of the accessibility tree.
-- On open-finish, focus moves to the close button; on close-finish, focus returns to the originating card.
-- Esc closes from anywhere in the document. Tab inside the dialog cycles close button → CTA; add a focus trap if your framework has one, otherwise the outside-click handler and Esc are sufficient for this piece.
-- Contrast: `--ink-2` on `--card` is 5.6:1; `--ink-3` is used only at ≥ 11px for meta and hints. Hero text is white over a bottom gradient `rgba(0,0,0,.42)` on every swatch colour — verify ≥ 4.5:1 for the tag (85 % opacity) on the lightest swatch (`#c99a4a`).
-- Hit targets: cards ≈ 381 × 254px; close button 40 × 40px; nav links have 6px vertical padding.
-
-## Responsive rules
-
-- ≥ 1280: as specified (`inset: 56px 120px` dialog; 3-column grid).
-- 1024–1279: dialog `inset: 40px 64px`; grid stays 3 columns; swatch height 148px.
-- 768–1023: grid 2 columns; dialog `inset: 32px`; hero 240px; dialog body becomes one column (copy above facts).
-- < 640: grid 1 column; dialog `inset: 0` with `border-radius: 0` as the "last" state (the FLIP still works — the radius keyframe just ends at 0); hero 200px; hint hidden.
-
-## Acceptance checklist
-
-- [ ] Grid is 3 × 2 with 20px gaps and 48px side padding at 1280px wide; card swatches are 172px tall.
-- [ ] Clicking a card animates the dialog from the card's exact rect to `inset: 56px 120px` over 420ms with `cubic-bezier(.16,1,.3,1)`.
-- [ ] The animated keyframe uses `transform: translate() scale()` with `transform-origin: 0 0` and a corrected `border-radius` (14px ÷ scale) so corners look constant.
-- [ ] The source card is `visibility: hidden` (not `display: none`) while its dialog is open; the grid does not reflow.
-- [ ] Other cards fade to 0.18 and header/lede to 0.35 over 320ms in both directions.
-- [ ] Dialog body copy fades in after a 200ms delay and never shows scaled/stretched text.
-- [ ] Esc, the close button, and clicking outside all reverse the animation into the card's *current* rect (resize the window while open and confirm it still lands).
-- [ ] Focus goes to the close button on open-finish and back to the card on close-finish.
-- [ ] Repeated clicks during the 420ms are ignored; the UI never gets stuck half-open.
-- [ ] Cards, nav links, close and CTA all show a 2px accent focus ring with 3px offset.
-- [ ] `prefers-reduced-motion: reduce` collapses every duration to 1ms with no missing state.
-- [ ] No images are used; each card's colour comes from an inline `--c` custom property that the dialog copies.
 
 ## Implementation notes
 

@@ -4,20 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A generated terrazzo floor as a full-frame background, shown behind the hero of "Casa Brecce", a small studio that hand-casts terrazzo tiles. One inline `<svg>` holds three `<g>` layers of irregular polygon chips (fine flecks, medium chips, a few large shards) generated from a seeded PRNG, so batch 4182 always looks the same and "Reshuffle chips" pours a new batch. Chips reference five colour classes, not hex values, so switching between the Verona, Nero and Palma stones is a pure CSS variable swap that cross-fades in 420ms. Moving the pointer shifts the three layers by 3, 8 and 16px, so the floor gains a little depth. The copy sits on a cream "sample label" card with a hairline border, which is how a stone sample is actually labelled.
-
-## Reference behaviour
-
-1. Initial state: Verona stone (cream `#EFE6D8` with rust, ochre, sage, charcoal and white chips), batch 4182, label "Sample 012 · Verona".
-2. The floor is static until the pointer moves. Pointer position maps to `(-1…1, -1…1)` from the viewport centre; each layer eases toward `offset × depth` (depths 3, 8, 16px) with factor 0.08 per frame, and the loop stops itself once the remaining distance is under 0.002.
-3. "Reshuffle chips" picks a new seed in 1000–9999, updates the readout ("Batch 1806"), the label code ("Sample 061 · …", code = seed mod 97 + 1, three digits) and regenerates all chips. The new layers fade in from 0 with stagger 0 / 90 / 180ms over 420ms. Its icon rotates −120° while pressed.
-4. Stone radios: Verona, Nero (charcoal `#2A2826` base with white, salmon, brass, slate chips), Palma (plaster pink `#F2C9B8` with bottle green, terracotta, cream, marigold). Background, chip fills, button colour and label name update; colours cross-fade 420ms. Chip geometry does not change.
-5. "Pointer parallax" switch (`aria-pressed`, default on) disables the effect; turning it off eases layers back to 0.
-6. Resizing regenerates the same seed for the new size after a 150ms debounce.
-7. Hidden tab cancels any running parallax frame; it resumes on the next pointer move.
-8. `prefers-reduced-motion: reduce`: parallax starts off (switch shows off and can be turned on), reshuffle swaps instantly with no fade, transitions drop to 1ms.
 
 ## Structure
 
@@ -44,64 +35,6 @@ page padding 40px; panel 264px, 40px from right and bottom
 - `.sheen`: fixed radial highlight (white 22% → 0) suggesting a polished surface.
 - `.page`: `<nav aria-label="Main">` card; `<main class="hero">` with `.label` card (`p.code`, `h1`, `p.sub`, `a.btn`).
 - `<form class="ctl" aria-label="Terrazzo controls">`: title + `<output aria-live="polite">`, reshuffle `<button>`, `<fieldset>` "Stone" of three radio cards each with a CSS-drawn mini swatch, parallax switch button labelled by its text.
-
-## Tokens
-
-```css
-:root {
-  /* Verona (default) */
-  --base: #efe6d8;        /* binder */
-  --c0: #b4532a;          /* rust */
-  --c1: #d9a441;          /* ochre */
-  --c2: #8a9a7b;          /* sage */
-  --c3: #2e2a26;          /* charcoal */
-  --c4: #fbf6ee;          /* white marble */
-  --card: #fbf6ee;        /* nav, label, panel */
-  --ink: #2a2420;
-  --ink-2: #5f554c;
-  --line: #d8ccba;        /* hairlines */
-  --accent: #b4532a;      /* primary button */
-  --accent-ink: #fffaf2;
-  --serif: "Young Serif", Georgia, serif;
-  --sans: "Figtree", system-ui, sans-serif;
-  --fs-display: 64px;
-  --fs-sub: 17px;
-  --fs-body: 15px;
-  --fs-code: 11px;
-  --pad: 40px;
-  --r: 2px;               /* everything: cut-stone corners */
-  --bleed: 24px;
-  --depths: 3px 8px 16px;
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --t: 180ms;
-  --t-mix: 420ms;         /* palette cross-fade, reshuffle fade */
-}
-[data-stone="nero"]  { --base: #2a2826; --c0: #f1ece4; --c1: #e59b82; --c2: #b89b5e; --c3: #6f7a80; --c4: #46423e; --accent: #e59b82; --accent-ink: #2a1a14; }
-[data-stone="palma"] { --base: #f2c9b8; --c0: #2f6b4f; --c1: #c4532e; --c2: #fbf3e6; --c3: #e8a33d; --c4: #b98b7a; --accent: #2f6b4f; --accent-ink: #f7f2e8; }
-```
-
-Chip layers (counts scale with area):
-
-| Layer | One chip per | Size (radius) px | Size curve | Parallax depth |
-|---|---:|---|---|---:|
-| L0 flecks | 800 px² | 1.2 – 4 | `min + r^1.8 × range` | 3px |
-| L1 chips | 2,800 px² | 5 – 15 | same | 8px |
-| L2 shards | 13,000 px² | 16 – 42 | same | 16px |
-
-Colour weights (index picked from `[0,0,0,1,1,2,2,3,4,4]`): c0 30%, c1 20%, c2 20%, c3 10%, c4 20%.
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|---|---|---:|---:|---:|---:|---|
-| Headline | Young Serif | 64px | 400 | 1.02 | −0.02em | sentence |
-| Wordmark | Young Serif | 20px | 400 | 1 | −0.01em | Title |
-| Panel title | Young Serif | 18px | 400 | 1 | 0 | Title |
-| Sample code | Figtree | 11px | 600 | 1.5 | +0.14em | UPPERCASE |
-| Sub | Figtree | 17px | 400 | 1.55 | 0 | sentence |
-| Nav links | Figtree | 14px | 500 | 1.5 | 0 | Title |
-| Buttons | Figtree | 15px / 14px | 600 | 1 | 0 | sentence |
-| Panel text | Figtree | 13px | 400/500 | 1.5 | 0 | sentence, tabular batch |
 
 ## Motion
 
@@ -165,6 +98,79 @@ There is no continuous loop. The parallax rAF only runs while layers are still m
 - [ ] Parallax depths 3 / 8 / 16px; densities 800 / 2,800 / 13,000 px² per chip.
 - [ ] Headline "Floors poured by hand, chipped by chance." at 64px Young Serif.
 - [ ] Reshuffle fades layers in with 90ms stagger over 420ms.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: Verona stone (cream `#EFE6D8` with rust, ochre, sage, charcoal and white chips), batch 4182, label "Sample 012 · Verona".
+2. The floor is static until the pointer moves. Pointer position maps to `(-1…1, -1…1)` from the viewport centre; each layer eases toward `offset × depth` (depths 3, 8, 16px) with factor 0.08 per frame, and the loop stops itself once the remaining distance is under 0.002.
+3. "Reshuffle chips" picks a new seed in 1000–9999, updates the readout ("Batch 1806"), the label code ("Sample 061 · …", code = seed mod 97 + 1, three digits) and regenerates all chips. The new layers fade in from 0 with stagger 0 / 90 / 180ms over 420ms. Its icon rotates −120° while pressed.
+4. Stone radios: Verona, Nero (charcoal `#2A2826` base with white, salmon, brass, slate chips), Palma (plaster pink `#F2C9B8` with bottle green, terracotta, cream, marigold). Background, chip fills, button colour and label name update; colours cross-fade 420ms. Chip geometry does not change.
+5. "Pointer parallax" switch (`aria-pressed`, default on) disables the effect; turning it off eases layers back to 0.
+6. Resizing regenerates the same seed for the new size after a 150ms debounce.
+7. Hidden tab cancels any running parallax frame; it resumes on the next pointer move.
+8. `prefers-reduced-motion: reduce`: parallax starts off (switch shows off and can be turned on), reshuffle swaps instantly with no fade, transitions drop to 1ms.
+
+## Tokens
+
+```css
+:root {
+  /* Verona (default) */
+  --base: #efe6d8;        /* binder */
+  --c0: #b4532a;          /* rust */
+  --c1: #d9a441;          /* ochre */
+  --c2: #8a9a7b;          /* sage */
+  --c3: #2e2a26;          /* charcoal */
+  --c4: #fbf6ee;          /* white marble */
+  --card: #fbf6ee;        /* nav, label, panel */
+  --ink: #2a2420;
+  --ink-2: #5f554c;
+  --line: #d8ccba;        /* hairlines */
+  --accent: #b4532a;      /* primary button */
+  --accent-ink: #fffaf2;
+  --serif: "Young Serif", Georgia, serif;
+  --sans: "Figtree", system-ui, sans-serif;
+  --fs-display: 64px;
+  --fs-sub: 17px;
+  --fs-body: 15px;
+  --fs-code: 11px;
+  --pad: 40px;
+  --r: 2px;               /* everything: cut-stone corners */
+  --bleed: 24px;
+  --depths: 3px 8px 16px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --t: 180ms;
+  --t-mix: 420ms;         /* palette cross-fade, reshuffle fade */
+}
+[data-stone="nero"]  { --base: #2a2826; --c0: #f1ece4; --c1: #e59b82; --c2: #b89b5e; --c3: #6f7a80; --c4: #46423e; --accent: #e59b82; --accent-ink: #2a1a14; }
+[data-stone="palma"] { --base: #f2c9b8; --c0: #2f6b4f; --c1: #c4532e; --c2: #fbf3e6; --c3: #e8a33d; --c4: #b98b7a; --accent: #2f6b4f; --accent-ink: #f7f2e8; }
+```
+
+Chip layers (counts scale with area):
+
+| Layer | One chip per | Size (radius) px | Size curve | Parallax depth |
+|---|---:|---|---|---:|
+| L0 flecks | 800 px² | 1.2 – 4 | `min + r^1.8 × range` | 3px |
+| L1 chips | 2,800 px² | 5 – 15 | same | 8px |
+| L2 shards | 13,000 px² | 16 – 42 | same | 16px |
+
+Colour weights (index picked from `[0,0,0,1,1,2,2,3,4,4]`): c0 30%, c1 20%, c2 20%, c3 10%, c4 20%.
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|---|---|---:|---:|---:|---:|---|
+| Headline | Young Serif | 64px | 400 | 1.02 | −0.02em | sentence |
+| Wordmark | Young Serif | 20px | 400 | 1 | −0.01em | Title |
+| Panel title | Young Serif | 18px | 400 | 1 | 0 | Title |
+| Sample code | Figtree | 11px | 600 | 1.5 | +0.14em | UPPERCASE |
+| Sub | Figtree | 17px | 400 | 1.55 | 0 | sentence |
+| Nav links | Figtree | 14px | 500 | 1.5 | 0 | Title |
+| Buttons | Figtree | 15px / 14px | 600 | 1 | 0 | sentence |
+| Panel text | Figtree | 13px | 400/500 | 1.5 | 0 | sentence, tabular batch |
 
 ## Implementation notes
 

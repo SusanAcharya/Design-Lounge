@@ -4,24 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. Use CSS 3D transforms only. No WebGL, no three.js, no model files, no images.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The product viewer on a coffee roaster's product page. Fieldwork Coffee Co. sells Box No. 07, a 250 g single-origin coffee in a kraft paper box. The box is six `div` faces in a `preserve-3d` container, each printed with CSS and inline SVG: a big condensed wordmark, an orange roast stamp, tasting notes, a barcode, a brew guide, a farm sketch, and orange tape on the lid. The user drags the box to spin it, lets go, and it coasts and settles on the nearest face. The detail worth copying is the rest pose: every snapped view sits 24° off square, so a sliver of the next face always shows and the object never flattens into a rectangle.
-
-## Reference behaviour
-
-1. First frame: the box shows its front at rest. It is pitched -14° (seen slightly from above) and turned 24° so the right side shows as a narrow face. The "Front" button is pressed. The readout reads "Front · 000°".
-2. Press on the stage and drag left or right. The box turns 0.5° per pixel of horizontal drag. Vertical drag tilts it 0.25° per pixel, clamped from -34° (looking down) to +6°. The cursor is `grabbing`.
-3. While dragging, the readout updates live with the face name nearest the viewer and the angle 000° to 359°. The pressed button follows the nearest face.
-4. Release. The box keeps the release velocity, coasts, and lands on the nearest multiple of 90° along its path. The coast distance is the velocity × 0.92 / 0.08 (a friction of 0.92 per frame), clamped to ±270°. A spring brings it to rest: stiffness 0.06, damping 0.8 per frame for yaw; stiffness 0.08, damping 0.78 for pitch, which springs back to -14°.
-5. A slow drag with no flick snaps to the nearest face within about 600ms.
-6. Click Front, Side or Back. The box turns the short way to that face with the same spring. Side shows the right side.
-7. Focus the stage (Tab) and press Right or Down arrow: the box turns 90° to show the next face to the right. Left or Up arrow: 90° the other way. Home: back to Front. Key presses stack. Two quick presses turn 180°.
-8. When the box settles, a polite live region says "Showing Back" (or the face name).
-9. The contact shadow is an ellipse under the box. Its width follows the box footprint (front width × |cos| + depth × |sin| of the turn). As the tilt grows it gets taller (scaleY 0.7 to 1.6), softer (blur 4px to 12px) and lighter (opacity 0.95 to 0.6).
-10. The faces shade as they turn: a face is darkest (42% brown overlay) when it faces away from a light 35° to the left, and clear when it faces it.
-11. "Add to bag" toggles to "In your bag" in orange, and the header reads "Bag (1)".
-12. With `prefers-reduced-motion: reduce` there is no coast and no spring. Release, buttons and arrow keys set the angle instantly. Dragging still follows the pointer directly.
 
 ## Structure
 
@@ -62,67 +49,6 @@ Face sizes and placement (box is W 240, H 320, D 140; the `.box` itself is 0 × 
 | Left | 140 × 320 | `rotateY(-90deg) translateZ(120px)` | "The farm", ridge sketch SVG, farm facts, harvest |
 | Top | 240 × 140 | `rotateX(90deg) translateZ(160px)` | orange tape band "This side up" with two arrows |
 | Bottom | 240 × 140 | `rotateX(-90deg) translateZ(160px)` | "Paper 100% · please recycle" |
-
-## Tokens
-
-```css
-:root {
-  /* colour */
-  --paper: #ede4d3;       /* page */
-  --paper-2: #e4d8c3;     /* button hover */
-  --kraft: #c69c6d;       /* box faces */
-  --kraft-top: #cfa778;   /* lid, slightly lighter */
-  --kraft-dark: #a87d50;  /* bottom face */
-  --ink: #1b1611;         /* print, text, primary button */
-  --ink-2: #5a4e40;       /* secondary text */
-  --rule: rgba(27, 22, 17, .16);
-  --orange: #e4571b;      /* stamp, tape, roast bar, pressed dot, focus */
-  --focus: #e4571b;
-  --shade-ink: #2a1a0a;   /* face shading overlay */
-
-  /* type */
-  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --mono: "DM Mono", ui-monospace, monospace;
-
-  /* box */
-  --W: 240px; --H: 320px; --D: 140px;
-  --perspective: 1400px;
-  --rest-pitch: -14deg;
-  --rest-offset: -24deg;
-
-  /* space */
-  --s-1: 8px; --s-2: 16px; --s-3: 24px; --s-4: 40px; --s-5: 48px; --s-6: 56px;
-
-  /* motion */
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --t-micro: 160ms;
-  --drag-yaw: .5;      /* deg per px */
-  --drag-pitch: .25;   /* deg per px */
-  --friction: .92;
-  --spring-k: .06;
-  --spring-damp: .8;
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-| --- | --- | --- | --- | --- | --- | --- |
-| Brand | Barlow Condensed | 20px | 800 | 1 | 0.08em | upper |
-| Nav, bag | DM Mono | 13px | 400 | 1.5 | 0 | sentence |
-| Crumb | DM Mono | 12px | 400 | 1.5 | 0.06em | sentence |
-| Product name | Barlow Condensed | 84px | 800 | 0.86 | -0.01em | upper |
-| Spec rows | DM Mono | 13px | 400 | 1.5 | 0 | sentence |
-| Price | Barlow Condensed | 40px | 700 | 1 | 0 | — |
-| Add button | Barlow Condensed | 18px | 700 | 1 | 0.08em | upper |
-| View buttons | Barlow Condensed | 15px | 700 | 1 | 0.12em | upper |
-| Readout | DM Mono | 12px | 400 / 500 name | 1.5 | 0 | as written |
-| Box wordmark | Barlow Condensed | 70px | 800 | 0.82 | -0.01em | upper |
-| Box labels | DM Mono | 9px | 500 | 1.3 | 0.12em | upper |
-| Box side heads | Barlow Condensed | 20px | 700 | 1 | 0.02em | upper |
-| Box body | DM Mono | 10 to 10.5px | 400 | 1.45 | 0 | sentence |
-
-Every printed face uses a 1.5px ink frame inset 10px from the edge. That frame makes it read as printed packaging.
 
 ## Motion
 
@@ -194,6 +120,86 @@ Every printed face uses a 1.5px ink frame inset 10px from the edge. That frame m
 - [ ] The front reads "FIELD WORK" at 70px with an orange `#e4571b` stamp "ROASTED 21.09 · BATCH 114".
 - [ ] The product name is "Huila Washed" at 84px; the price reads "$24 / box".
 - [ ] The readout reads "Front · 000°" on load and "Right side · 090°" after one Right arrow.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: the box shows its front at rest. It is pitched -14° (seen slightly from above) and turned 24° so the right side shows as a narrow face. The "Front" button is pressed. The readout reads "Front · 000°".
+2. Press on the stage and drag left or right. The box turns 0.5° per pixel of horizontal drag. Vertical drag tilts it 0.25° per pixel, clamped from -34° (looking down) to +6°. The cursor is `grabbing`.
+3. While dragging, the readout updates live with the face name nearest the viewer and the angle 000° to 359°. The pressed button follows the nearest face.
+4. Release. The box keeps the release velocity, coasts, and lands on the nearest multiple of 90° along its path. The coast distance is the velocity × 0.92 / 0.08 (a friction of 0.92 per frame), clamped to ±270°. A spring brings it to rest: stiffness 0.06, damping 0.8 per frame for yaw; stiffness 0.08, damping 0.78 for pitch, which springs back to -14°.
+5. A slow drag with no flick snaps to the nearest face within about 600ms.
+6. Click Front, Side or Back. The box turns the short way to that face with the same spring. Side shows the right side.
+7. Focus the stage (Tab) and press Right or Down arrow: the box turns 90° to show the next face to the right. Left or Up arrow: 90° the other way. Home: back to Front. Key presses stack. Two quick presses turn 180°.
+8. When the box settles, a polite live region says "Showing Back" (or the face name).
+9. The contact shadow is an ellipse under the box. Its width follows the box footprint (front width × |cos| + depth × |sin| of the turn). As the tilt grows it gets taller (scaleY 0.7 to 1.6), softer (blur 4px to 12px) and lighter (opacity 0.95 to 0.6).
+10. The faces shade as they turn: a face is darkest (42% brown overlay) when it faces away from a light 35° to the left, and clear when it faces it.
+11. "Add to bag" toggles to "In your bag" in orange, and the header reads "Bag (1)".
+12. With `prefers-reduced-motion: reduce` there is no coast and no spring. Release, buttons and arrow keys set the angle instantly. Dragging still follows the pointer directly.
+
+## Tokens
+
+```css
+:root {
+  /* colour */
+  --paper: #ede4d3;       /* page */
+  --paper-2: #e4d8c3;     /* button hover */
+  --kraft: #c69c6d;       /* box faces */
+  --kraft-top: #cfa778;   /* lid, slightly lighter */
+  --kraft-dark: #a87d50;  /* bottom face */
+  --ink: #1b1611;         /* print, text, primary button */
+  --ink-2: #5a4e40;       /* secondary text */
+  --rule: rgba(27, 22, 17, .16);
+  --orange: #e4571b;      /* stamp, tape, roast bar, pressed dot, focus */
+  --focus: #e4571b;
+  --shade-ink: #2a1a0a;   /* face shading overlay */
+
+  /* type */
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+
+  /* box */
+  --W: 240px; --H: 320px; --D: 140px;
+  --perspective: 1400px;
+  --rest-pitch: -14deg;
+  --rest-offset: -24deg;
+
+  /* space */
+  --s-1: 8px; --s-2: 16px; --s-3: 24px; --s-4: 40px; --s-5: 48px; --s-6: 56px;
+
+  /* motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-micro: 160ms;
+  --drag-yaw: .5;      /* deg per px */
+  --drag-pitch: .25;   /* deg per px */
+  --friction: .92;
+  --spring-k: .06;
+  --spring-damp: .8;
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+| --- | --- | --- | --- | --- | --- | --- |
+| Brand | Barlow Condensed | 20px | 800 | 1 | 0.08em | upper |
+| Nav, bag | DM Mono | 13px | 400 | 1.5 | 0 | sentence |
+| Crumb | DM Mono | 12px | 400 | 1.5 | 0.06em | sentence |
+| Product name | Barlow Condensed | 84px | 800 | 0.86 | -0.01em | upper |
+| Spec rows | DM Mono | 13px | 400 | 1.5 | 0 | sentence |
+| Price | Barlow Condensed | 40px | 700 | 1 | 0 | — |
+| Add button | Barlow Condensed | 18px | 700 | 1 | 0.08em | upper |
+| View buttons | Barlow Condensed | 15px | 700 | 1 | 0.12em | upper |
+| Readout | DM Mono | 12px | 400 / 500 name | 1.5 | 0 | as written |
+| Box wordmark | Barlow Condensed | 70px | 800 | 0.82 | -0.01em | upper |
+| Box labels | DM Mono | 9px | 500 | 1.3 | 0.12em | upper |
+| Box side heads | Barlow Condensed | 20px | 700 | 1 | 0.02em | upper |
+| Box body | DM Mono | 10 to 10.5px | 400 | 1.45 | 0 | sentence |
+
+Every printed face uses a 1.5px ink frame inset 10px from the edge. That frame makes it read as printed packaging.
 
 ## Implementation notes
 

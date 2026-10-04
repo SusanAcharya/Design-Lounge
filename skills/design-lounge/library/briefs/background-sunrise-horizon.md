@@ -4,23 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A full-frame sunrise for an editorial hero, shown here behind the cover of "Eastlight Almanac", a quarterly journal about first light on far coasts. The sky is nine flat horizontal bands with hard edges (no smooth gradient), the sea is six more, and a 144px sun disc rises from behind a 1px horizon rule at 62% height. Every band's colour is interpolated from five dawn keyframes (05:30 → 08:00), so moving the clock recolours the whole print at once. Scrolling the page moves the clock forward; scrolling back rewinds it. The detail worth copying is the banding: stepped colour reads as a screen-print or a travel poster, which is why dark serif type sits directly on it with no scrim.
-
-## Reference behaviour
-
-1. Initial state: clock 06:12, the sun is half above the horizon at x = 72%, warm orange bands near the horizon, pale slate-blue at the top.
-2. Autoplay runs on load: the clock advances 3.2 minutes per second (06:12 → 08:00 in ~34s). Bands cool toward pale blue and cream, the sun climbs and turns from `#F26B2A` to `#FDE3A0`.
-3. At 08:00 autoplay stops by itself and the button shows play. Pressing play at 08:00 restarts from 05:40.
-4. The time slider (05:30–08:00, step 1 minute) sets the clock directly and live; the large readout ("06:12") and `aria-valuetext` follow.
-5. Scrolling: each pixel of scroll adds `90 / viewportHeight` minutes (one full screen = 90 minutes), clamped to 05:30–08:00. Scrolling up rewinds. Slider and readout update.
-6. The sun's centre sits at `horizonY − altitude × skyHeight × 0.62`, where `altitude = (minutes − 370) / 100`; it is clipped by the sky container so it rises from behind the horizon.
-7. Below the horizon a "glint" column of eight horizontal strokes (3px, widths 100% → 16% of 220px, 9px gaps) mirrors the sun. Its opacity is `clamp((altitude + .25) × 1.6, 0, 1)`; each stroke shimmers with `scaleX(.7 ↔ 1.12)` over 2.6–3.8s.
-8. The nav ink switches to cream `#F7F1E6` when the top band's luminance is below 0.2 (before ~05:45), and back to ink `#221D18` above it. The copy column always stays ink because its bands never go below luminance 0.22.
-9. The page scrolls to an "In this issue" section on paper `#F5EFE4` that slides over the fixed sky.
-10. The loop is cancelled while the tab is hidden; it resumes at the same clock.
-11. Under `prefers-reduced-motion: reduce` autoplay is off (button shows play), shimmer stops, and all transitions drop to 1ms. Scroll and slider still recolour the scene, because they are user-driven.
 
 ## Structure
 
@@ -46,61 +34,6 @@ then: section.issue (paper, 1px top rule): IN THIS ISSUE · 3 columns
 - Band heights are flex ratios: sky `18 15 13 11 10 9 8 8 8`, sea `14 15 16 17 18 20`.
 - `.page`: `<header class="hero">` (100vh, min 620px) with `<nav aria-label="Main">` and `.copy` (`p.kicker`, `h1` with `<em>`, `p.sub`, `a.btn`); then `<section class="issue" aria-labelledby>` with three `<article>`s (`<time>`, `<h3>`, `<p>`).
 - `.ctl` (`role="group" aria-label="Time of day"`): `<label for="time">`, `<output>`, `input[type=range]`, hint span, play/pause button.
-
-## Tokens
-
-```css
-:root {
-  --paper: #f5efe4;       /* issue section, html background */
-  --paper-ink: #221d18;
-  --paper-2: #5e554b;     /* secondary text on paper */
-  --rule: #ddd2c1;        /* hairlines, panel border */
-  --ink: #221d18;         /* copy on the sky */
-  --ink-light: #f7f1e6;   /* nav ink before ~05:45 */
-  --accent: #c4471f;      /* slider thumb, story times */
-  --panel: #fbf7f0;
-  --serif: "Newsreader", Georgia, serif;
-  --sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --horizon: 62%;
-  --sun-size: 144px;
-  --sun-x: 72%;
-  --fs-display: 92px;
-  --fs-sub: 20px;
-  --fs-story: 28px;
-  --fs-clock: 28px;
-  --pad-x: 64px;
-  --r: 2px;               /* button, panel: nearly square, print-like */
-  --ease: cubic-bezier(.2,.7,.2,1);
-  --t: 180ms;
-  --t-ink: 600ms;         /* nav ink swap */
-  --minutes-per-second: 3.2;
-  --minutes-per-screen: 90;
-}
-```
-
-Dawn keyframes (minute of day → top, mid, low/horizon, sun, water):
-
-| Time | min | top | mid | low | sun | water |
-|---|---:|---|---|---|---|---|
-| 05:30 | 330 | `#4F5C76` | `#B9B3B9` | `#EFB08C` | `#E2552A` | `#3E4860` |
-| 05:52 | 352 | `#7487A3` | `#DCC0B6` | `#F6A876` | `#EC5F27` | `#56637C` |
-| 06:10 | 370 | `#9DB0C6` | `#EDCDB9` | `#F9B071` | `#F26B2A` | `#6E8098` |
-| 06:50 | 410 | `#BCCDDC` | `#F3DFCB` | `#FBD496` | `#F8A04A` | `#89A0B3` |
-| 08:00 | 480 | `#D3E0EA` | `#F0F0EA` | `#F7E8C8` | `#FDE3A0` | `#A7BCCB` |
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Case |
-|---|---|---:|---:|---:|---:|---|
-| Masthead | Newsreader italic | 24px | 400 | 1 | −0.01em | Title |
-| Headline | Newsreader (opsz auto) | 92px | 400, em italic | 0.98 | −0.025em | sentence |
-| Sub | Newsreader | 20px | 400 | 1.5 | 0 | sentence |
-| Kicker | Schibsted Grotesk | 12px | 600 | 1.5 | +0.18em | UPPERCASE |
-| Nav / button | Schibsted Grotesk | 14px | 400 / 500 | 1.5 | 0 / +0.02em | sentence |
-| Clock readout | Newsreader | 28px | 400 | 1 | 0 | tabular numerals |
-| Panel label | Schibsted Grotesk | 11px | 600 | 1 | +0.14em | UPPERCASE |
-| Story title | Newsreader | 28px | 400 | 1.15 | −0.01em | sentence |
-| Story time | Schibsted Grotesk | 13px | 500 | 1 | 0 | tabular, accent |
 
 ## Motion
 
@@ -165,6 +98,79 @@ Band colour rule: for sky band `i` of 9, `p = sqrt(i / 8)`; colour = `mix(top, m
 - [ ] Clock range 05:30–08:00; autoplay 3.2 min/s; one screen of scroll = 90 minutes.
 - [ ] Headline "Every morning arrives *in layers.*" at 92px Newsreader.
 - [ ] Panel reads "SUNRISE 06:12" with a 180px slider and "Scroll to move the morning".
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: clock 06:12, the sun is half above the horizon at x = 72%, warm orange bands near the horizon, pale slate-blue at the top.
+2. Autoplay runs on load: the clock advances 3.2 minutes per second (06:12 → 08:00 in ~34s). Bands cool toward pale blue and cream, the sun climbs and turns from `#F26B2A` to `#FDE3A0`.
+3. At 08:00 autoplay stops by itself and the button shows play. Pressing play at 08:00 restarts from 05:40.
+4. The time slider (05:30–08:00, step 1 minute) sets the clock directly and live; the large readout ("06:12") and `aria-valuetext` follow.
+5. Scrolling: each pixel of scroll adds `90 / viewportHeight` minutes (one full screen = 90 minutes), clamped to 05:30–08:00. Scrolling up rewinds. Slider and readout update.
+6. The sun's centre sits at `horizonY − altitude × skyHeight × 0.62`, where `altitude = (minutes − 370) / 100`; it is clipped by the sky container so it rises from behind the horizon.
+7. Below the horizon a "glint" column of eight horizontal strokes (3px, widths 100% → 16% of 220px, 9px gaps) mirrors the sun. Its opacity is `clamp((altitude + .25) × 1.6, 0, 1)`; each stroke shimmers with `scaleX(.7 ↔ 1.12)` over 2.6–3.8s.
+8. The nav ink switches to cream `#F7F1E6` when the top band's luminance is below 0.2 (before ~05:45), and back to ink `#221D18` above it. The copy column always stays ink because its bands never go below luminance 0.22.
+9. The page scrolls to an "In this issue" section on paper `#F5EFE4` that slides over the fixed sky.
+10. The loop is cancelled while the tab is hidden; it resumes at the same clock.
+11. Under `prefers-reduced-motion: reduce` autoplay is off (button shows play), shimmer stops, and all transitions drop to 1ms. Scroll and slider still recolour the scene, because they are user-driven.
+
+## Tokens
+
+```css
+:root {
+  --paper: #f5efe4;       /* issue section, html background */
+  --paper-ink: #221d18;
+  --paper-2: #5e554b;     /* secondary text on paper */
+  --rule: #ddd2c1;        /* hairlines, panel border */
+  --ink: #221d18;         /* copy on the sky */
+  --ink-light: #f7f1e6;   /* nav ink before ~05:45 */
+  --accent: #c4471f;      /* slider thumb, story times */
+  --panel: #fbf7f0;
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --horizon: 62%;
+  --sun-size: 144px;
+  --sun-x: 72%;
+  --fs-display: 92px;
+  --fs-sub: 20px;
+  --fs-story: 28px;
+  --fs-clock: 28px;
+  --pad-x: 64px;
+  --r: 2px;               /* button, panel: nearly square, print-like */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --t: 180ms;
+  --t-ink: 600ms;         /* nav ink swap */
+  --minutes-per-second: 3.2;
+  --minutes-per-screen: 90;
+}
+```
+
+Dawn keyframes (minute of day → top, mid, low/horizon, sun, water):
+
+| Time | min | top | mid | low | sun | water |
+|---|---:|---|---|---|---|---|
+| 05:30 | 330 | `#4F5C76` | `#B9B3B9` | `#EFB08C` | `#E2552A` | `#3E4860` |
+| 05:52 | 352 | `#7487A3` | `#DCC0B6` | `#F6A876` | `#EC5F27` | `#56637C` |
+| 06:10 | 370 | `#9DB0C6` | `#EDCDB9` | `#F9B071` | `#F26B2A` | `#6E8098` |
+| 06:50 | 410 | `#BCCDDC` | `#F3DFCB` | `#FBD496` | `#F8A04A` | `#89A0B3` |
+| 08:00 | 480 | `#D3E0EA` | `#F0F0EA` | `#F7E8C8` | `#FDE3A0` | `#A7BCCB` |
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Case |
+|---|---|---:|---:|---:|---:|---|
+| Masthead | Newsreader italic | 24px | 400 | 1 | −0.01em | Title |
+| Headline | Newsreader (opsz auto) | 92px | 400, em italic | 0.98 | −0.025em | sentence |
+| Sub | Newsreader | 20px | 400 | 1.5 | 0 | sentence |
+| Kicker | Schibsted Grotesk | 12px | 600 | 1.5 | +0.18em | UPPERCASE |
+| Nav / button | Schibsted Grotesk | 14px | 400 / 500 | 1.5 | 0 / +0.02em | sentence |
+| Clock readout | Newsreader | 28px | 400 | 1 | 0 | tabular numerals |
+| Panel label | Schibsted Grotesk | 11px | 600 | 1 | +0.14em | UPPERCASE |
+| Story title | Newsreader | 28px | 400 | 1.15 | −0.01em | sentence |
+| Story time | Schibsted Grotesk | 13px | 500 | 1 | 0 | tabular, accent |
 
 ## Implementation notes
 

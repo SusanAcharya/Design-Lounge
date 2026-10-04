@@ -4,19 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A long-form feature ("Aster Observatory · One night on Skarvfjell") split in two: the left half is four chapters of text, each a full viewport tall, with a numbered rail that tracks progress; the right half is a `position: sticky` illustration of the sky over the observatory — gradient layers, a sun/moon disc, a ridge line, a small dome — that crossfades and moves as each chapter crosses the middle of the viewport. The page's accent colour (kickers, italic phrases, rail marker, disc) shifts with the chapter: ochre at dusk, blue-grey at midnight, apricot at dawn, sage at noon. The mechanism worth copying is that all visual state hangs off one attribute, `data-ch` on `<body>`, set by an IntersectionObserver with a 45 % inset root margin.
-
-## Reference behaviour
-
-1. Initial state (`data-ch="1"`): rail marker on "01", kicker "Chapter one · Dusk" in ochre, headline with an italic ochre phrase, two paragraphs, three serif figures. Right: dusk gradient (violet to copper to ochre), a 180px ochre disc low-right behind the ridge, dome slit tilted −40°, HUD reads "19:42 local" and "Dusk · Sun setting".
-2. Scroll until chapter two's box overlaps the middle 10 % band of the viewport: `data-ch` becomes 2. The dusk layer fades out and the midnight layer fades in (800ms); nine stars fade to 90 %; the disc travels to the upper-left, shrinks to 45 % and turns bone-white (1000ms expo-out); the dome slit rotates to −70°; the accent turns blue-grey; the HUD updates to "00:10 · Midnight · Moon in the west".
-3. Chapter three: dawn gradient, stars fade out, disc returns low-centre at 80 % in apricot with a wider glow, slit −20°, HUD "04:20 · Dawn · Field low in the east".
-4. Chapter four: daylight gradient, small pale disc high-right at 60 %, slit 0°, HUD "12:00 · Noon · Dome closed", accent sage.
-5. Scrolling back up reverses every step; transitions run in both directions.
-6. Click a rail number: the page scrolls smoothly to that chapter and the state is set immediately (so the visual leads the scroll).
-7. The rail (01–04) is sticky at the top-left; the active number is in the current accent with a 2px left bar.
 
 ## Structure
 
@@ -39,6 +31,73 @@ A long-form feature ("Aster Observatory · One night on Skarvfjell") split in tw
 - `<body data-ch="1">` → `.wrap` (`grid-template-columns: 1fr 1fr; min-height: 100%`).
 - `.text`: `.rail` (`position: sticky; top: 0; height: 0`) containing an `<ol>` of four anchor links; `.intro` line; four `<section class="ch" id="cN" data-n="N">` each with `.k` kicker, `<h2>` with `<em>`, two `<p>`, and `.fig` (three figures with `<small>` captions).
 - `<aside class="visual" aria-label="…">` (`position: sticky; top: 0; height: 100vh; overflow: hidden`): four `.layer` gradient divs, `.stars`, `.disc`, `.ground` (clip-path ridge), `.dome` (with `::after` slit), `.hud`.
+
+## Motion
+
+| Element        | Trigger             | Property             | From → To                                    | Duration | Easing       |
+|----------------|---------------------|----------------------|----------------------------------------------|---------:|--------------|
+| `.layer.lN`    | `data-ch` change    | opacity              | 1 → 0 (old) and 0 → 1 (new), simultaneously  | 800ms    | `--ease`     |
+| `.stars`       | ch 2 in / out       | opacity              | 0 ↔ .9                                       | 800ms    | `--ease`     |
+| `.disc`        | `data-ch` change    | transform            | ch1 `translate(120px,150px) scale(1)` → ch2 `translate(−160px,−180px) scale(.45)` → ch3 `translate(−40px,120px) scale(.8)` → ch4 `translate(90px,−220px) scale(.6)` | 1000ms | `--ease-out` |
+| `.disc`        | `data-ch` change    | background, box-shadow | accent ↔ `--moon` ↔ `--sun-noon`; glow 80px/10px → 60/6 → 90/20 → 100/30 | 800ms | `--ease` |
+| `.dome::after` | `data-ch` change    | rotate               | −40° → −70° → −20° → 0°                      | 1000ms   | `--ease`     |
+| `.k`, `h2 em`, rail marker | `data-ch` change | color            | previous accent → new accent                 | 800ms / 160ms (rail) | `--ease` |
+| `body`         | `data-ch` change    | background           | unchanged by default; hook available for tinting | 800ms | `--ease`     |
+| rail click     | click               | scroll               | smooth scroll to chapter (`scroll-behavior: smooth` on `html`) | native | — |
+
+Reduced motion: all transitions 1ms (state still switches), `scroll-behavior: auto`.
+
+## States
+
+- **Chapter active:** determined only by `data-ch`; the text sections themselves do not change style, the rail and visual do.
+- **Rail link rest:** `--ink-3`, transparent 2px left border. **Hover:** `--ink-2`. **Active (`.on`):** `--accent` text and border. **Focus-visible:** 2px `--accent` outline, 2px offset.
+- **Disc per chapter:** see the transform table; behind the ridge in chapters 1 and 3 (DOM order: disc before ground).
+- **HUD:** text swaps instantly at the state change (`<b id="hudTime">`, `<span id="hudLabel">`).
+- No loading, empty or error states.
+
+## Accessibility
+
+- The visual is an `<aside aria-label="Sky above the observatory, changing with each chapter">`; all its children are decorative and carry no text except the HUD, which is real text.
+- Chapters are `<section>`s with `<h2>`; the rail is an `<ol>` of `<a href="#cN">` so it works without JS and appears in the tab order before the chapters.
+- The IntersectionObserver only sets `data-ch`; nothing important is conveyed by colour alone (each chapter's kicker names the time of day, the HUD names it again).
+- Contrast: `--ink-2` on `--bg` 9.6:1; `--ink-3` on `--bg` 4.6:1 (used at 11–12px 500 uppercase); accents on `--bg`: ochre 8.6:1, blue-grey 7.9:1, apricot 7.2:1, sage 7.6:1. HUD uses `mix-blend-mode: screen` so it stays legible on the light noon sky (ink on `#dfe6d0` ≈ 1.2:1 without the blend — if blend modes are unavailable, give the HUD a 60 % `--bg` backdrop pill).
+- Smooth scrolling and all transitions respect `prefers-reduced-motion`.
+
+## Responsive rules
+
+- ≥ 1280: two equal columns; chapters `min-height: 100vh`.
+- 1024–1279: same; headline 44px; left padding 64px.
+- 768–1023: single column; the visual moves to the top (`order: -1`), 44vh tall, sticky; text scrolls beneath it; chapters lose the 100vh minimum and use 64px vertical padding; rail sits at left −36px below the visual.
+- < 640: visual 36vh; headline 34px; figures wrap; rail hidden (chapters still have ids for in-page links).
+
+## Acceptance checklist
+
+- [ ] Layout is a two-column grid; the right column is `position: sticky; top: 0; height: 100vh; overflow: hidden`.
+- [ ] Each chapter section is at least 100vh tall with 96px vertical padding and content vertically centred.
+- [ ] The active chapter is tracked with an IntersectionObserver using `rootMargin: "-45% 0px -45% 0px"` and written to `data-ch` on `<body>`.
+- [ ] Sky gradients crossfade by opacity over 800ms; only one layer is at opacity 1 at rest.
+- [ ] The disc moves and scales between the four listed transforms over 1000ms with `cubic-bezier(.16,1,.3,1)` and changes colour over 800ms.
+- [ ] Stars are visible only in chapter 2 (opacity .9).
+- [ ] The accent custom property changes with `data-ch` and recolours kickers, italic phrases, rail marker, disc and dome slit.
+- [ ] HUD time and label update to the chapter's values.
+- [ ] Rail numbers are links that scroll to their chapter and become active immediately on click.
+- [ ] Scrolling back up restores the previous chapter's visual.
+- [ ] Headline is Cormorant Garamond 52px/1.02 with a max measure of 14ch; body is Karla 16px/1.6 at 44ch.
+- [ ] With reduced motion, chapters still switch the visual, instantly.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state (`data-ch="1"`): rail marker on "01", kicker "Chapter one · Dusk" in ochre, headline with an italic ochre phrase, two paragraphs, three serif figures. Right: dusk gradient (violet to copper to ochre), a 180px ochre disc low-right behind the ridge, dome slit tilted −40°, HUD reads "19:42 local" and "Dusk · Sun setting".
+2. Scroll until chapter two's box overlaps the middle 10 % band of the viewport: `data-ch` becomes 2. The dusk layer fades out and the midnight layer fades in (800ms); nine stars fade to 90 %; the disc travels to the upper-left, shrinks to 45 % and turns bone-white (1000ms expo-out); the dome slit rotates to −70°; the accent turns blue-grey; the HUD updates to "00:10 · Midnight · Moon in the west".
+3. Chapter three: dawn gradient, stars fade out, disc returns low-centre at 80 % in apricot with a wider glow, slit −20°, HUD "04:20 · Dawn · Field low in the east".
+4. Chapter four: daylight gradient, small pale disc high-right at 60 %, slit 0°, HUD "12:00 · Noon · Dome closed", accent sage.
+5. Scrolling back up reverses every step; transitions run in both directions.
+6. Click a rail number: the page scrolls smoothly to that chapter and the state is set immediately (so the visual leads the scroll).
+7. The rail (01–04) is sticky at the top-left; the active number is in the current accent with a 2px left bar.
 
 ## Tokens
 
@@ -94,59 +153,6 @@ A long-form feature ("Aster Observatory · One night on Skarvfjell") split in tw
 | Intro line    | Karla              | 12px | 500        | 1           | +0.12em  | UPPERCASE; product name in `--ink` |
 | Rail number   | Karla              | 12px | 500        | 1           | +0.08em  | "01"–"04" |
 | HUD           | Karla              | 12px | 500        | 1           | +0.10em  | UPPERCASE; time in `--ink`, rest `--ink-2` |
-
-## Motion
-
-| Element        | Trigger             | Property             | From → To                                    | Duration | Easing       |
-|----------------|---------------------|----------------------|----------------------------------------------|---------:|--------------|
-| `.layer.lN`    | `data-ch` change    | opacity              | 1 → 0 (old) and 0 → 1 (new), simultaneously  | 800ms    | `--ease`     |
-| `.stars`       | ch 2 in / out       | opacity              | 0 ↔ .9                                       | 800ms    | `--ease`     |
-| `.disc`        | `data-ch` change    | transform            | ch1 `translate(120px,150px) scale(1)` → ch2 `translate(−160px,−180px) scale(.45)` → ch3 `translate(−40px,120px) scale(.8)` → ch4 `translate(90px,−220px) scale(.6)` | 1000ms | `--ease-out` |
-| `.disc`        | `data-ch` change    | background, box-shadow | accent ↔ `--moon` ↔ `--sun-noon`; glow 80px/10px → 60/6 → 90/20 → 100/30 | 800ms | `--ease` |
-| `.dome::after` | `data-ch` change    | rotate               | −40° → −70° → −20° → 0°                      | 1000ms   | `--ease`     |
-| `.k`, `h2 em`, rail marker | `data-ch` change | color            | previous accent → new accent                 | 800ms / 160ms (rail) | `--ease` |
-| `body`         | `data-ch` change    | background           | unchanged by default; hook available for tinting | 800ms | `--ease`     |
-| rail click     | click               | scroll               | smooth scroll to chapter (`scroll-behavior: smooth` on `html`) | native | — |
-
-Reduced motion: all transitions 1ms (state still switches), `scroll-behavior: auto`.
-
-## States
-
-- **Chapter active:** determined only by `data-ch`; the text sections themselves do not change style, the rail and visual do.
-- **Rail link rest:** `--ink-3`, transparent 2px left border. **Hover:** `--ink-2`. **Active (`.on`):** `--accent` text and border. **Focus-visible:** 2px `--accent` outline, 2px offset.
-- **Disc per chapter:** see the transform table; behind the ridge in chapters 1 and 3 (DOM order: disc before ground).
-- **HUD:** text swaps instantly at the state change (`<b id="hudTime">`, `<span id="hudLabel">`).
-- No loading, empty or error states.
-
-## Accessibility
-
-- The visual is an `<aside aria-label="Sky above the observatory, changing with each chapter">`; all its children are decorative and carry no text except the HUD, which is real text.
-- Chapters are `<section>`s with `<h2>`; the rail is an `<ol>` of `<a href="#cN">` so it works without JS and appears in the tab order before the chapters.
-- The IntersectionObserver only sets `data-ch`; nothing important is conveyed by colour alone (each chapter's kicker names the time of day, the HUD names it again).
-- Contrast: `--ink-2` on `--bg` 9.6:1; `--ink-3` on `--bg` 4.6:1 (used at 11–12px 500 uppercase); accents on `--bg`: ochre 8.6:1, blue-grey 7.9:1, apricot 7.2:1, sage 7.6:1. HUD uses `mix-blend-mode: screen` so it stays legible on the light noon sky (ink on `#dfe6d0` ≈ 1.2:1 without the blend — if blend modes are unavailable, give the HUD a 60 % `--bg` backdrop pill).
-- Smooth scrolling and all transitions respect `prefers-reduced-motion`.
-
-## Responsive rules
-
-- ≥ 1280: two equal columns; chapters `min-height: 100vh`.
-- 1024–1279: same; headline 44px; left padding 64px.
-- 768–1023: single column; the visual moves to the top (`order: -1`), 44vh tall, sticky; text scrolls beneath it; chapters lose the 100vh minimum and use 64px vertical padding; rail sits at left −36px below the visual.
-- < 640: visual 36vh; headline 34px; figures wrap; rail hidden (chapters still have ids for in-page links).
-
-## Acceptance checklist
-
-- [ ] Layout is a two-column grid; the right column is `position: sticky; top: 0; height: 100vh; overflow: hidden`.
-- [ ] Each chapter section is at least 100vh tall with 96px vertical padding and content vertically centred.
-- [ ] The active chapter is tracked with an IntersectionObserver using `rootMargin: "-45% 0px -45% 0px"` and written to `data-ch` on `<body>`.
-- [ ] Sky gradients crossfade by opacity over 800ms; only one layer is at opacity 1 at rest.
-- [ ] The disc moves and scales between the four listed transforms over 1000ms with `cubic-bezier(.16,1,.3,1)` and changes colour over 800ms.
-- [ ] Stars are visible only in chapter 2 (opacity .9).
-- [ ] The accent custom property changes with `data-ch` and recolours kickers, italic phrases, rail marker, disc and dome slit.
-- [ ] HUD time and label update to the chapter's values.
-- [ ] Rail numbers are links that scroll to their chapter and become active immediately on click.
-- [ ] Scrolling back up restores the previous chapter's visual.
-- [ ] Headline is Cormorant Garamond 52px/1.02 with a max measure of 14ch; body is Karla 16px/1.6 at 44ch.
-- [ ] With reduced motion, chapters still switch the visual, instantly.
 
 ## Implementation notes
 

@@ -4,22 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A transactions list for a personal banking account ("Fjord Bank"): 12 rows of date, payee, category tag and a monospaced amount, under a heading and a filter input. On load the rows arrive one after another — each slides up 14px and fades in over 500ms with expo-out easing, 30ms apart, so the whole list lands in about 830ms. Typing in the filter is the interesting part: rows that no longer match fade out and lift 8px over 180ms, *then* the surviving rows re-run the staggered entrance with fresh indices, so the list always reads as one gesture rather than a jump cut. The detail worth copying is the two-phase filter: exit first, wait for it, then hide and re-stagger.
-
-## Reference behaviour
-
-1. Initial state: heading "Transactions" with a subtitle "12 of 12 · September 2026 · Fjord Bank current account", a 300px search input on the right with a `/` keycap hint, and a white card with a column header row (Date / Payee / Category / Amount) and 12 rows. On first paint all rows are at opacity 0, `translateY(14px)`.
-2. t = 0: row *i* (0–11) starts its entrance at `i × 30ms`: opacity 0 → 1, translateY 14px → 0, 500ms, `cubic-bezier(.16,1,.3,1)`, `animation-fill-mode: forwards`. Row 11 completes at 330 + 500 = 830ms.
-3. Hover a row: background changes to `--bg` (the page colour), no motion.
-4. Type in the input (each `input` event): matching is case-insensitive substring over payee, category and the small memo line. Rows currently visible that no longer match get class `out` (opacity → 0, translateY → −8px, 180ms, `cubic-bezier(.2,.7,.2,1)`, forwards). The count in the subtitle updates immediately ("4 of 12").
-5. 180ms later (or immediately if nothing is leaving): non-matching rows get `hidden`; every matching row is re-indexed from 0 in DOM order, its `in` class is removed and re-added after a forced reflow, so the survivors replay the staggered entrance from step 2.
-6. If nothing matches: after the exits, an empty message shows inside the card ("No transactions match “xyz”. Try a payee name or a category like “Groceries”.") with the same 500ms entrance.
-7. Press `/` anywhere (when the input isn't focused): focus the input. Press `Escape` in the input when it has a value: clear it and re-run the filter; all 12 rows re-enter with the stagger.
-8. Fast typing: a pending 180ms timer is cleared on every input so exits never double-fire; rows mid-exit that match again are simply re-revealed.
-9. The footer shows the computed net for the month ("Net +NOK 32,588.40 this month") and a caption; neither animates.
-10. With `prefers-reduced-motion: reduce`: entrance and exit run in 1ms with 0 delay; the filter still goes through the same two phases, so behaviour is unchanged.
 
 ## Structure
 
@@ -66,64 +55,6 @@ Row data (date · payee · category · memo · amount NOK):
 ```
 
 Amounts render as `−NOK 1,240.20` / `+NOK 360.00` (U+2212 minus, `en` locale grouping, two decimals). Initials tile = first two letters of the payee, uppercase.
-
-## Tokens
-
-```css
-:root {
-  /* colour — warm off-white, white card, near-black ink, one blue accent, green credits */
-  --bg: #faf9f6;          /* page + row hover + tag fill */
-  --surface: #ffffff;     /* card, input */
-  --line: #e8e5de;        /* borders */
-  --line-2: #f1efe9;      /* row separators, initials tile */
-  --ink: #1a1917;         /* primary text, debit amounts */
-  --ink-2: #6b675f;       /* dates, tags, subtitle */
-  --ink-3: #9c978d;       /* column headers, memo, placeholder, kbd */
-  --accent: #2a5bd7;      /* focus border */
-  --accent-soft: #e8eefc; /* focus halo */
-  --pos: #1f7a4d;         /* credit amounts */
-
-  /* type */
-  --sans: "Space Grotesk", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  /* layout */
-  --wrap-w: 880px;
-  --row-h: 48px;
-  --cols-h: 40px;
-  --grid: 110px 1fr 160px 130px;
-  --r: 10px;              /* input */
-  --r-card: 12px;
-  --r-tile: 7px;
-
-  /* motion */
-  --t-in: 500ms;
-  --t-out: 180ms;
-  --stagger: 30ms;
-  --t-micro: 140ms;
-  --rise: 14px;           /* entrance offset */
-  --lift: 8px;            /* exit offset */
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --ease: cubic-bezier(.2, .7, .2, 1);
-}
-```
-
-## Typography
-
-| Role            | Family        | Size | Weight | Line-height | Tracking | Case      |
-|-----------------|---------------|-----:|-------:|------------:|---------:|-----------|
-| Heading         | Space Grotesk | 24px | 600    | 1.2         | −0.02em  | sentence  |
-| Subtitle        | Space Grotesk | 13px | 400    | 1.45        | 0        | sentence  |
-| Count           | IBM Plex Mono | 13px | 500    | 1.45        | 0        | numerals  |
-| Input           | Space Grotesk | 14px | 400    | 40px box    | 0        | sentence  |
-| Column header   | IBM Plex Mono | 11px | 500    | 40px box    | +0.08em  | UPPERCASE |
-| Date            | IBM Plex Mono | 13px | 400    | 1.45        | 0        | sentence  |
-| Payee           | Space Grotesk | 14px | 500    | 1.3         | 0        | sentence  |
-| Memo            | Space Grotesk | 12px | 400    | 1.3         | 0        | sentence  |
-| Initials tile   | IBM Plex Mono | 11px | 500    | 28px box    | 0        | UPPERCASE |
-| Tag             | IBM Plex Mono | 11px | 500    | 1.4         | +0.04em  | sentence  |
-| Amount          | IBM Plex Mono | 15px | 500    | 1.45        | −0.01em  | numerals  |
-| Footer          | IBM Plex Mono | 12px | 400    | 1.45        | 0        | sentence  |
 
 ## Motion
 
@@ -188,6 +119,81 @@ Reduced motion: `animation-duration: 1ms; animation-delay: 0ms` on `.in`, `.out`
 - [ ] Amounts are monospaced, right-aligned, with U+2212 minus and thousands grouping; credits are green with `+`.
 - [ ] Rows are 48px tall and the whole list fits in 800px with 32px top padding.
 - [ ] Reduced motion: animations are 1ms with no delay; filtering still works identically.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. Initial state: heading "Transactions" with a subtitle "12 of 12 · September 2026 · Fjord Bank current account", a 300px search input on the right with a `/` keycap hint, and a white card with a column header row (Date / Payee / Category / Amount) and 12 rows. On first paint all rows are at opacity 0, `translateY(14px)`.
+2. t = 0: row *i* (0–11) starts its entrance at `i × 30ms`: opacity 0 → 1, translateY 14px → 0, 500ms, `cubic-bezier(.16,1,.3,1)`, `animation-fill-mode: forwards`. Row 11 completes at 330 + 500 = 830ms.
+3. Hover a row: background changes to `--bg` (the page colour), no motion.
+4. Type in the input (each `input` event): matching is case-insensitive substring over payee, category and the small memo line. Rows currently visible that no longer match get class `out` (opacity → 0, translateY → −8px, 180ms, `cubic-bezier(.2,.7,.2,1)`, forwards). The count in the subtitle updates immediately ("4 of 12").
+5. 180ms later (or immediately if nothing is leaving): non-matching rows get `hidden`; every matching row is re-indexed from 0 in DOM order, its `in` class is removed and re-added after a forced reflow, so the survivors replay the staggered entrance from step 2.
+6. If nothing matches: after the exits, an empty message shows inside the card ("No transactions match “xyz”. Try a payee name or a category like “Groceries”.") with the same 500ms entrance.
+7. Press `/` anywhere (when the input isn't focused): focus the input. Press `Escape` in the input when it has a value: clear it and re-run the filter; all 12 rows re-enter with the stagger.
+8. Fast typing: a pending 180ms timer is cleared on every input so exits never double-fire; rows mid-exit that match again are simply re-revealed.
+9. The footer shows the computed net for the month ("Net +NOK 32,588.40 this month") and a caption; neither animates.
+10. With `prefers-reduced-motion: reduce`: entrance and exit run in 1ms with 0 delay; the filter still goes through the same two phases, so behaviour is unchanged.
+
+## Tokens
+
+```css
+:root {
+  /* colour — warm off-white, white card, near-black ink, one blue accent, green credits */
+  --bg: #faf9f6;          /* page + row hover + tag fill */
+  --surface: #ffffff;     /* card, input */
+  --line: #e8e5de;        /* borders */
+  --line-2: #f1efe9;      /* row separators, initials tile */
+  --ink: #1a1917;         /* primary text, debit amounts */
+  --ink-2: #6b675f;       /* dates, tags, subtitle */
+  --ink-3: #9c978d;       /* column headers, memo, placeholder, kbd */
+  --accent: #2a5bd7;      /* focus border */
+  --accent-soft: #e8eefc; /* focus halo */
+  --pos: #1f7a4d;         /* credit amounts */
+
+  /* type */
+  --sans: "Space Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* layout */
+  --wrap-w: 880px;
+  --row-h: 48px;
+  --cols-h: 40px;
+  --grid: 110px 1fr 160px 130px;
+  --r: 10px;              /* input */
+  --r-card: 12px;
+  --r-tile: 7px;
+
+  /* motion */
+  --t-in: 500ms;
+  --t-out: 180ms;
+  --stagger: 30ms;
+  --t-micro: 140ms;
+  --rise: 14px;           /* entrance offset */
+  --lift: 8px;            /* exit offset */
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+```
+
+## Typography
+
+| Role            | Family        | Size | Weight | Line-height | Tracking | Case      |
+|-----------------|---------------|-----:|-------:|------------:|---------:|-----------|
+| Heading         | Space Grotesk | 24px | 600    | 1.2         | −0.02em  | sentence  |
+| Subtitle        | Space Grotesk | 13px | 400    | 1.45        | 0        | sentence  |
+| Count           | IBM Plex Mono | 13px | 500    | 1.45        | 0        | numerals  |
+| Input           | Space Grotesk | 14px | 400    | 40px box    | 0        | sentence  |
+| Column header   | IBM Plex Mono | 11px | 500    | 40px box    | +0.08em  | UPPERCASE |
+| Date            | IBM Plex Mono | 13px | 400    | 1.45        | 0        | sentence  |
+| Payee           | Space Grotesk | 14px | 500    | 1.3         | 0        | sentence  |
+| Memo            | Space Grotesk | 12px | 400    | 1.3         | 0        | sentence  |
+| Initials tile   | IBM Plex Mono | 11px | 500    | 28px box    | 0        | UPPERCASE |
+| Tag             | IBM Plex Mono | 11px | 500    | 1.4         | +0.04em  | sentence  |
+| Amount          | IBM Plex Mono | 15px | 500    | 1.45        | −0.01em  | numerals  |
+| Footer          | IBM Plex Mono | 12px | 400    | 1.45        | 0        | sentence  |
 
 ## Implementation notes
 

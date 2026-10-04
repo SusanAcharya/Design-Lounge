@@ -4,25 +4,13 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 The release download card for "pocketknife", a fictional command-line task runner, on a near-black grid page. The hero is a 60px acid-lime button, "Download for macOS · arm64 · 18.4 MB". Clicking it turns the same 60px row into a progress bar with a moving stripe. The bar reads "Downloading 41%" on the left and "7.5 / 18.4 MB · 3.3 MB/s · 4s left" on the right. Pause and cancel squares grow out of the right edge. Done fills the bar solid, draws a check and names the file. A dropped connection turns the bar coral and keeps the bytes, and the pause square becomes Retry, which resumes from where it stopped. Below, three asset rows use a 40px progress ring as their button: download, pause, resume, retry, done.
 
 The detail worth copying is the label that **inverts where the fill passes**. The text is drawn twice, light on the track and dark inside the fill, and the fill's `clip-path` reveals the dark copy. Every character stays readable at every percent.
-
-## Reference behaviour
-
-1. First frame: a 680px panel. Header: 36px lime mark, "pocketknife" (24px/700), "v3.2.0" in mono, and a "latest" outline tag. Lede: "A pocket-sized task runner for monorepos. Released 2 Oct 2026."
-2. The hero button is idle: lime fill, a download glyph, "Download for macOS", and "arm64 · 18.4 MB" right-aligned in mono at 75 % opacity. Below it, on the left, "sha256 7c1e4f…09a3b2" in mono. On the right, a switch "Simulate a dropped connection" (off).
-3. "Other assets": linux-x64.tar.gz (17.9 MB) is **already downloading** from 38 % at about 2.2 MB/s, so the page is alive on load. windows-x64.zip (19.2 MB) is idle. checksums.txt (1.2 KB) is done, with a lime disc and a check.
-4. Click the hero: the button fades (160ms) and scales X to .97. The bar fades in under it. The pause and cancel squares grow from width 0 to 60px with an 8px left margin (280ms). Focus moves to Pause.
-5. While running, the fill width is the true fraction. The stripes (−45°, 8px dark at 9 % / 8px clear) slide continuously, 700ms per tile. The left label is "Downloading N%". The right label is "got / total MB · speed MB/s · Ns left". Speed wanders between 70 % and 130 % of 3.4 MB/s and is smoothed, so the number breathes rather than flickers.
-6. **Pause:** the stripes stop, the fill dims to `#a9c447`, the label reads "Paused at N%" and "got / 18.4 MB", and the square shows a play glyph labelled "Resume download". Resume continues from the same byte.
-7. **Cancel:** returns to the idle button at 0 and focuses it. The live region says "Download cancelled."
-8. **Done** (18.4 of 18.4): the fill becomes solid lime with no stripes. A check draws (360ms after 120ms) before "Downloaded", with the file name "pocketknife-3.2.0-macos-arm64.pkg" on the right. The squares collapse to 0. Under the bar, the checksum is replaced by a lime "Download again" text button, which takes focus.
-9. **Error:** with the switch on, the next download stops at exactly 47 %. The track turns `rgba(255,106,77,.14)` with a coral ring, and the fill turns coral with no stripes. The label reads "(!) Connection dropped" and "8.6 / 18.4 MB kept". The pause square becomes a coral Retry glyph and takes focus. Retry resumes from 8.6 MB. Each run fails at most once.
-10. **Ring rows:** click idle to start (the ring arc draws, the meta shows "got / total MB · speed MB/s", the centre shows pause). Click to pause (the arc dims, "Paused · got / total MB", play glyph). Click to resume. windows-x64.zip fails once at 62 % (the arc goes coral, the meta reads "Mirror reset at 62% · tap to retry", retry glyph). Done: a lime disc scales in from 0 behind a drawn dark check, the meta reads "17.9 MB · verified", and the button becomes `aria-disabled`.
-11. One `requestAnimationFrame` loop drives every running job and stops itself when nothing is running.
 
 ## Structure
 
@@ -48,58 +36,6 @@ The detail worth copying is the label that **inverts where the fill passes**. Th
 - `.under` is the checksum or "Download again", plus the switch (`<label>` wrapping `button[role=switch]`).
 - `<h2>` then `ul.rows > li.row`: file icon (32px tile), `.fname` (mono name + mono meta), and `button.ring`. Inside the ring: `.disc`, an SVG with a track and arc circles (r=17, rotated −90°), and an icon SVG.
 - One visually hidden polite live region.
-
-## Tokens
-
-```css
-:root {
-  --bg: #0b0d0a;            /* page, 48px grid lines in --line, radial vignette to --bg at 70% */
-  --surface: #121510;       /* panel */
-  --surface-2: #1a1e17;     /* bar track, control squares, file tiles */
-  --line: #262c22;
-  --ink: #e4e9d8;
-  --ink-2: #a3ac95;
-  --ink-3: #7f8872;
-  --acid: #c8f04a;          /* the one accent: button, fill, ring arc, done disc, focus */
-  --acid-dim: #a9c447;      /* paused fill and arc */
-  --on-acid: #10140a;
-  --err: #ff6a4d;
-  --err-soft: rgba(255, 106, 77, .14);
-
-  --sans: "Epilogue", system-ui, sans-serif;
-  --mono: "Fragment Mono", ui-monospace, monospace;
-
-  --r: 10px;                /* button, bar, squares */
-  --r-panel: 16px;
-  --h: 60px;                /* hero row */
-  --ring: 40px;             /* ring svg; button is 44px */
-  --ring-c: 106.8;          /* 2π·17 */
-
-  --t-micro: 160ms;
-  --t-morph: 280ms;
-  --t-check: 360ms;
-  --t-stripe: 700ms;
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-}
-```
-
-## Typography
-
-| Role | Family | Size | Weight | Line-height | Tracking | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Product name | Epilogue | 24px | 700 | 1 | −0.02em | |
-| Lede | Epilogue | 15px | 500 | 1.5 | 0 | `--ink-2` |
-| Hero label | Epilogue | 16px | 700 | 1 | 0 | `--on-acid` |
-| Bar status | Epilogue | 15px | 600 | 1 | 0 | "Downloading 41%" |
-| Bar meta | Fragment Mono | 13px | 400 | 1 | 0 | bytes · speed · eta, ellipsis |
-| Version, tag, sha | Fragment Mono | 12–13px | 400 | 1.5 | 0 | |
-| Section label | Epilogue | 12px | 600 | 1 | 0.1em | UPPERCASE `--ink-3` |
-| File name | Fragment Mono | 13.5px | 400 | 1.4 | 0 | ellipsis |
-| File meta | Fragment Mono | 12.5px | 400 | 1.4 | 0 | `--ink-3`, error `--err` |
-| Switch label | Epilogue | 13px | 500 | 1 | 0 | `--ink-2` |
-
-Numbers are mono so the bytes and speed don't jitter sideways while ticking.
 
 ## Motion
 
@@ -171,6 +107,76 @@ The stripe is the only loop, and it runs only while bytes are moving. It stops o
 - [ ] linux-x64.tar.gz starts at 38 % on load. windows-x64.zip fails once at 62 %. checksums.txt starts done.
 - [ ] The accent is `#c8f04a`, paused `#a9c447`, error `#ff6a4d`.
 - [ ] Squares are 60px. Ring radius 17, stroke 2.5, circumference 106.8.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. First frame: a 680px panel. Header: 36px lime mark, "pocketknife" (24px/700), "v3.2.0" in mono, and a "latest" outline tag. Lede: "A pocket-sized task runner for monorepos. Released 2 Oct 2026."
+2. The hero button is idle: lime fill, a download glyph, "Download for macOS", and "arm64 · 18.4 MB" right-aligned in mono at 75 % opacity. Below it, on the left, "sha256 7c1e4f…09a3b2" in mono. On the right, a switch "Simulate a dropped connection" (off).
+3. "Other assets": linux-x64.tar.gz (17.9 MB) is **already downloading** from 38 % at about 2.2 MB/s, so the page is alive on load. windows-x64.zip (19.2 MB) is idle. checksums.txt (1.2 KB) is done, with a lime disc and a check.
+4. Click the hero: the button fades (160ms) and scales X to .97. The bar fades in under it. The pause and cancel squares grow from width 0 to 60px with an 8px left margin (280ms). Focus moves to Pause.
+5. While running, the fill width is the true fraction. The stripes (−45°, 8px dark at 9 % / 8px clear) slide continuously, 700ms per tile. The left label is "Downloading N%". The right label is "got / total MB · speed MB/s · Ns left". Speed wanders between 70 % and 130 % of 3.4 MB/s and is smoothed, so the number breathes rather than flickers.
+6. **Pause:** the stripes stop, the fill dims to `#a9c447`, the label reads "Paused at N%" and "got / 18.4 MB", and the square shows a play glyph labelled "Resume download". Resume continues from the same byte.
+7. **Cancel:** returns to the idle button at 0 and focuses it. The live region says "Download cancelled."
+8. **Done** (18.4 of 18.4): the fill becomes solid lime with no stripes. A check draws (360ms after 120ms) before "Downloaded", with the file name "pocketknife-3.2.0-macos-arm64.pkg" on the right. The squares collapse to 0. Under the bar, the checksum is replaced by a lime "Download again" text button, which takes focus.
+9. **Error:** with the switch on, the next download stops at exactly 47 %. The track turns `rgba(255,106,77,.14)` with a coral ring, and the fill turns coral with no stripes. The label reads "(!) Connection dropped" and "8.6 / 18.4 MB kept". The pause square becomes a coral Retry glyph and takes focus. Retry resumes from 8.6 MB. Each run fails at most once.
+10. **Ring rows:** click idle to start (the ring arc draws, the meta shows "got / total MB · speed MB/s", the centre shows pause). Click to pause (the arc dims, "Paused · got / total MB", play glyph). Click to resume. windows-x64.zip fails once at 62 % (the arc goes coral, the meta reads "Mirror reset at 62% · tap to retry", retry glyph). Done: a lime disc scales in from 0 behind a drawn dark check, the meta reads "17.9 MB · verified", and the button becomes `aria-disabled`.
+11. One `requestAnimationFrame` loop drives every running job and stops itself when nothing is running.
+
+## Tokens
+
+```css
+:root {
+  --bg: #0b0d0a;            /* page, 48px grid lines in --line, radial vignette to --bg at 70% */
+  --surface: #121510;       /* panel */
+  --surface-2: #1a1e17;     /* bar track, control squares, file tiles */
+  --line: #262c22;
+  --ink: #e4e9d8;
+  --ink-2: #a3ac95;
+  --ink-3: #7f8872;
+  --acid: #c8f04a;          /* the one accent: button, fill, ring arc, done disc, focus */
+  --acid-dim: #a9c447;      /* paused fill and arc */
+  --on-acid: #10140a;
+  --err: #ff6a4d;
+  --err-soft: rgba(255, 106, 77, .14);
+
+  --sans: "Epilogue", system-ui, sans-serif;
+  --mono: "Fragment Mono", ui-monospace, monospace;
+
+  --r: 10px;                /* button, bar, squares */
+  --r-panel: 16px;
+  --h: 60px;                /* hero row */
+  --ring: 40px;             /* ring svg; button is 44px */
+  --ring-c: 106.8;          /* 2π·17 */
+
+  --t-micro: 160ms;
+  --t-morph: 280ms;
+  --t-check: 360ms;
+  --t-stripe: 700ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+```
+
+## Typography
+
+| Role | Family | Size | Weight | Line-height | Tracking | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Product name | Epilogue | 24px | 700 | 1 | −0.02em | |
+| Lede | Epilogue | 15px | 500 | 1.5 | 0 | `--ink-2` |
+| Hero label | Epilogue | 16px | 700 | 1 | 0 | `--on-acid` |
+| Bar status | Epilogue | 15px | 600 | 1 | 0 | "Downloading 41%" |
+| Bar meta | Fragment Mono | 13px | 400 | 1 | 0 | bytes · speed · eta, ellipsis |
+| Version, tag, sha | Fragment Mono | 12–13px | 400 | 1.5 | 0 | |
+| Section label | Epilogue | 12px | 600 | 1 | 0.1em | UPPERCASE `--ink-3` |
+| File name | Fragment Mono | 13.5px | 400 | 1.4 | 0 | ellipsis |
+| File meta | Fragment Mono | 12.5px | 400 | 1.4 | 0 | `--ink-3`, error `--err` |
+| Switch label | Epilogue | 13px | 500 | 1 | 0 | `--ink-2` |
+
+Numbers are mono so the bytes and speed don't jitter sideways while ticking.
 
 ## Implementation notes
 

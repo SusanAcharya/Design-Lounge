@@ -4,18 +4,11 @@
 
 > **Build brief for a coding agent.** Rebuild this piece in the reader's stack. If they haven't said which stack, ask once, then default to semantic HTML + CSS + a little vanilla JS. Match the numbers below; don't "improve" them. When a kit is locked, the type and colours come from the theme. Do not turn the crumbs into pills.
 
+> Read down to "Optional below this line". Your locked theme, pairing, and family replace this demo's colours and fonts. The Look fails in practice.md and the label limit beat this brief: drop any scroll cue, numbered eyebrow, or extra label it draws.
+
 ## What it is
 
 A path above the page title. Dispatch, then Asar, then Gate 4. Gate 4 is the current page: ink, weight 500, not a link. The earlier crumbs are `--ink-2` links. A 12px chevron sits between them. The title under the path repeats Gate 4 at 40px. Clicking Dispatch or Asar does not leave the frame. It writes "Opened Dispatch." or "Opened Asar." This is the path, not the sidebar. A record page that already includes a path is `record-detail-header`. Use this piece when the path is the thing you are building.
-
-## Reference behaviour
-
-1. The trail is Dispatch / Asar / Gate 4. Only Gate 4 has `aria-current="page"`.
-2. The title is Gate 4.
-3. Clicking Dispatch writes "Opened Dispatch." Clicking Asar writes "Opened Asar."
-4. Gate 4 is not a link. Clicking it does nothing.
-5. Focus ring is 2px `--focus`, offset 3px, on the links.
-6. There is no animation and no dropdown on a crumb.
 
 ## Structure
 
@@ -29,31 +22,6 @@ status                           empty until a click
 - `nav` with `aria-label="Breadcrumb"`.
 - An `ol`. Each crumb is an `li`. Separators are inline SVG, `aria-hidden`, not a character the screen reader speaks as a word if you can avoid it. The chevron is hidden. The list structure is the path.
 - Current page is a `span`, not an `a`.
-
-## Tokens
-
-```css
-:root {
-  --bg: #f6f4ef;
-  --ink: #161513;
-  --ink-2: #5a554c;
-  --focus: #1f4d3a;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-}
-```
-
-No radius. Crumbs are text. A locked family's radius does not wrap each crumb in a chip.
-
-## Typography
-
-| Role | Family | Size | Weight | Colour |
-| --- | --- | --- | --- | --- |
-| Link | sans | 14px | 400 | `--ink-2` |
-| Current | sans | 14px | 500 | `--ink` |
-| Title | sans | 40px | 500 | `--ink` |
-| Status | sans | 14px | 400 | `--ink-2` |
-
-Title letter-spacing is -0.02em in this demo. When a pairing is locked, the title uses that pairing's display tracking, not this number.
 
 ## Motion
 
@@ -103,6 +71,44 @@ None. Reduced motion has nothing to remove. Do not slide the trail in.
 - [ ] Focus ring is 2px, offset 3px.
 - [ ] Crumbs are not pills and not a select.
 - [ ] The click does not navigate the frame away.
+
+---
+
+**Optional below this line.** Open it when you build the motion, get stuck, or want the demo's exact paint.
+
+## Reference behaviour
+
+1. The trail is Dispatch / Asar / Gate 4. Only Gate 4 has `aria-current="page"`.
+2. The title is Gate 4.
+3. Clicking Dispatch writes "Opened Dispatch." Clicking Asar writes "Opened Asar."
+4. Gate 4 is not a link. Clicking it does nothing.
+5. Focus ring is 2px `--focus`, offset 3px, on the links.
+6. There is no animation and no dropdown on a crumb.
+
+## Tokens
+
+```css
+:root {
+  --bg: #f6f4ef;
+  --ink: #161513;
+  --ink-2: #5a554c;
+  --focus: #1f4d3a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+No radius. Crumbs are text. A locked family's radius does not wrap each crumb in a chip.
+
+## Typography
+
+| Role | Family | Size | Weight | Colour |
+| --- | --- | --- | --- | --- |
+| Link | sans | 14px | 400 | `--ink-2` |
+| Current | sans | 14px | 500 | `--ink` |
+| Title | sans | 40px | 500 | `--ink` |
+| Status | sans | 14px | 400 | `--ink-2` |
+
+Title letter-spacing is -0.02em in this demo. When a pairing is locked, the title uses that pairing's display tracking, not this number.
 
 ## Implementation notes
 
