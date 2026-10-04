@@ -13,7 +13,7 @@ const pairing = (id: string) => PAIRINGS.find((p) => p.id === id);
 const theme = (id: string) => THEMES.find((t) => t.id === id);
 const shelf = (id: string) => COLLECTIONS.find((c) => c.slug === id);
 ---
-<Base title="Start a product" description={`Recipes from Design Lounge by ${AUTHOR.name}: a theme, a type pairing, a shelf of pieces — assembled for the thing you are making.`}>
+<Base title="Start a product" description={`Recipes from Design Lounge by ${AUTHOR.name}: a theme, a type pairing, and a shelf of pieces, put together for the thing you are making.`}>
   <PageHead eyebrow="Start" title="Start" count={STARTS.length} countLabel="recipes" blurb="Find what you are making. Each one comes with colours, type, and the screens to open first." />
   <p class="wrap kit-jump"><a href="#web">Websites</a> · <a href="#app">Apps</a> · <a href="/kit">Or build your own kit</a></p>
   <div class="wrap page">

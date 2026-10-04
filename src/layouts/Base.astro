@@ -26,7 +26,7 @@ const json = (o: unknown) => JSON.stringify(o).replace(/</g, '\\u003c');
 const person = { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.site, jobTitle: AUTHOR.role, sameAs: AUTHOR.links.map((l) => l.href) };
 const graph: Record<string, unknown>[] = [
   path === '/'
-    ? { '@type': 'WebSite', name: 'Design Lounge', alternateName: 'Design Lounge UI design skill', url: `${origin}/`, description, author: person, publisher: person }
+    ? { '@type': 'WebSite', '@id': `${origin}/#website`, name: 'Design Lounge', alternateName: ['DesignLounge', 'Design Lounge by Susan Acharya'], url: `${origin}/`, description, inLanguage: 'en', author: person, publisher: person }
     : { '@type': 'WebPage', name: fullTitle, url: canonical, description, isPartOf: { '@type': 'WebSite', name: 'Design Lounge', url: `${origin}/` }, author: person },
 ];
 if (crumbs?.length) graph.push({
@@ -51,7 +51,9 @@ const count = (await getPieces()).length;
   <link rel="canonical" href={canonical} />
   {noindex && <meta name="robots" content="noindex, follow" />}
   <meta name="author" content={AUTHOR.name} />
-  <meta property="og:site_name" content={`Design Lounge by ${AUTHOR.name}`} />
+  <meta property="og:site_name" content="Design Lounge" />
+  <meta name="application-name" content="Design Lounge" />
+  <meta name="apple-mobile-web-app-title" content="Design Lounge" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:creator" content="@n00dlehead" />
   <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
@@ -66,7 +68,12 @@ const count = (await getPieces()).length;
   <meta name="twitter:description" content={description} />
   <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0c0c0e" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
+  <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
