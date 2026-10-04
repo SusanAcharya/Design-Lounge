@@ -27,9 +27,12 @@ Open the brief. Read it down to "Optional below this line". Restyle it onto the 
 On Android, or when the family is Material, use the `m3-` piece when one is named for that job. Otherwise use the phone piece and follow the Android rules in [native.md](native.md): a flat list, a top app bar, a back arrow. Do not put iOS grouped cards on Android, or a Material back arrow on iOS.
 
 - First open: `phone-splash-launch`, under 1.6s, then the primary screen. Not a marketing hero.
-- Sign in: `phone-sign-in`, or `m3-sign-in` on Android. Sign up: `phone-sign-up-steps`. A passkey: `auth-passkey-setup`.
+- Sign in: `phone-sign-in`, or `m3-sign-in` on Android. Sign up: `phone-sign-up-steps`. A passkey: `auth-passkey-setup`. Forgot password: `phone-forgot-password`. A code by text or email: `phone-code-entry`. A lock before private content: `phone-app-lock`.
 - First run: `ios-onboarding-carousel`, then `phone-permission-prompt` before any system prompt. Never on launch.
-- The list: the piece that matches the content (inbox, feed, spend, search, map). Empty is `mobile-list-empty`. A failed load is `mobile-load-failed`. Pull to refresh is `ios-pull-to-refresh`.
+- The list: the piece that matches the content (inbox, feed, spend, search, map). First load is `phone-skeleton-list`, not a spinner. Empty is `mobile-list-empty`. A failed load is `mobile-load-failed`. Pull to refresh is `ios-pull-to-refresh`.
+- Writing something new: `phone-composer`. Photos full screen: `phone-photo-viewer`.
+- A shop on a phone: `phone-product-detail`, `phone-cart`, `phone-checkout`, then `phone-orders` for history and `phone-order-tracking` for one on its way.
+- On Android, a confirm is `m3-dialog`, an undo is `m3-snackbar`, and search is `m3-search-results`.
 - The detail: the piece for that content. On Android, a row that grows into the screen is `m3-list-detail`. On iOS, a large title that collapses is `ios-large-title-collapse`.
 - Settings: `ios-grouped-settings` or `m3-settings-list`. Then only the rows the product has: `phone-account-edit`, `phone-notification-settings`, `phone-privacy-data`, `phone-subscription-manage`.
 - An account the person can create needs `phone-delete-account`. A price needs `phone-paywall-plans` or `phone-subscription-manage`, with the date and the monthly price.

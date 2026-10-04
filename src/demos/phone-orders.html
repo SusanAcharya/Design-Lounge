@@ -1,0 +1,283 @@
+<!-- Design Lounge piece: phone-orders · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orders · Sablecroft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e3e8e2;--surface:#f3f6f2;--ink:#17211c;--ink-2:#3e4a42;--line:#d3dbd4;
+  --moss:#1b4f3e;--amber:#7a4510;--brick:#7c332c;--focus:#1b4f3e;
+  --serif:"Besley",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  position:relative;height:100%;overflow:hidden;
+  font:16px/1.4 var(--serif);color:var(--ink);background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.view{height:100%;overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:column}
+.view.detail{
+  position:absolute;inset:0;z-index:2;background:var(--bg);
+  transform:translateX(100%);
+  transition:transform 320ms var(--ease);
+}
+.view.detail[hidden]{display:none}
+body.is-open .view.detail{transform:translateX(0)}
+header{padding:max(54px,env(safe-area-inset-top)) 20px 0}
+.brand{margin:0;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--moss)}
+#listView h1{margin:4px 0 0;font-size:34px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.lede{margin:8px 0 0;font-size:15px;color:var(--ink-2)}
+#list{list-style:none;margin:14px 0 0;padding:0 16px;display:flex;flex-direction:column;gap:10px}
+.order{
+  width:100%;display:block;text-align:left;background:var(--surface);border-radius:14px;
+  padding:14px 16px;
+}
+.row1{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px}
+.st{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;flex:1 1 8em}
+.st i{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.order[data-status="way"] .st{color:var(--amber)}
+.order[data-status="delivered"] .st{color:var(--moss)}
+.order[data-status="cancelled"] .st{color:var(--brick)}
+.price{margin-left:auto;font-family:var(--mono);font-size:14px;font-weight:500;color:var(--ink)}
+.oid{display:block;margin-top:8px;font-family:var(--mono);font-size:13px;letter-spacing:.02em;color:var(--ink-2)}
+.meta{display:block;margin-top:2px;font-size:14px;color:var(--ink-2)}
+.why{display:block;margin-top:8px;font-size:14px;line-height:1.35;color:var(--brick)}
+.note{margin-top:auto;padding:18px 20px max(34px,env(safe-area-inset-bottom));font-size:13px;color:var(--ink-2)}
+.pad{padding:max(54px,env(safe-area-inset-top)) 16px max(34px,env(safe-area-inset-bottom));min-height:100%}
+.back{display:inline-flex;align-items:center;gap:2px;min-height:44px;margin:0 0 8px -4px;padding:0 10px 0 0;color:var(--moss);font-weight:600;font-size:17px;border-radius:10px}
+.back svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.status{margin:6px 0 0;font-size:14px;font-weight:600}
+.status.way{color:var(--amber)}
+.status.delivered{color:var(--moss)}
+.status.cancelled{color:var(--brick)}
+#dTitle{margin:4px 0 0;font-family:var(--mono);font-weight:500;font-size:26px;letter-spacing:-.03em;line-height:1.1}
+#dMeta{margin:6px 0 0;font-size:14px;color:var(--ink-2)}
+.sentence{margin:14px 0 0;font-style:italic;font-weight:500;font-size:18px;line-height:1.35}
+.detail h2{margin:22px 4px 8px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.card{list-style:none;margin:0;padding:4px 16px;background:var(--surface);border-radius:14px}
+.card li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px;padding:12px 0;border-top:1px solid var(--line)}
+.card li:first-child{border-top:0}
+.in{margin:0;font-size:16px;font-weight:600;flex:1 1 8em;min-width:0}
+.ia{margin:0 0 0 auto;font-family:var(--mono);font-size:14px}
+.iv{margin:2px 0 0;flex:1 1 100%;font-size:13px;color:var(--ink-2)}
+.receipt p{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;margin:0;padding:10px 0;font-size:15px}
+.receipt p span:first-child{flex:1 1 8em}
+.fig{margin-left:auto;font-family:var(--mono);font-size:14px}
+.receipt .grand{border-top:1px solid var(--line);font-weight:600}
+.receipt .grand .fig{font-size:18px}
+button:active{transform:scale(.985)}
+@media(hover:hover){
+  .order:hover{background:#eaf0ea}
+}
+@media(prefers-reduced-motion:reduce){
+  .view.detail{transition:none}
+  button:active{transform:none}
+}
+</style>
+</head>
+<body>
+<section class="view" id="listView">
+  <header>
+    <p class="brand">Sablecroft</p>
+    <h1>Orders</h1>
+    <p class="lede" id="lede"></p>
+  </header>
+  <ul id="list"></ul>
+  <p class="note">Cancelled orders are not charged.</p>
+</section>
+<section class="view detail" id="detail" hidden inert aria-hidden="true">
+  <div class="pad">
+    <button type="button" class="back" id="back" aria-label="Back to orders">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"/></svg>
+      Orders
+    </button>
+    <p class="status" id="dStatus"></p>
+    <h1 id="dTitle" tabindex="-1"></h1>
+    <p id="dMeta"></p>
+    <p class="sentence" id="dSentence"></p>
+    <h2>Items</h2>
+    <ul class="card" id="dItems"></ul>
+    <h2>Receipt</h2>
+    <div class="card receipt" id="dReceipt"></div>
+  </div>
+</section>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+const ORDERS = [
+  {
+    id: 'SC-1904', iso: '2026-10-02', dateLabel: '2 Oct 2026', status: 'way', label: 'On the way',
+    sentence: 'On the way. It left Greyhaven on Thursday and should arrive by Tuesday.',
+    ship: 400,
+    items: [
+      { name: 'Field beanie', variant: 'Moss', cents: 2800, qty: 1 },
+      { name: 'Wool socks', variant: 'Oat, one pair', cents: 1600, qty: 2 }
+    ]
+  },
+  {
+    id: 'SC-1866', iso: '2026-09-18', dateLabel: '18 Sep 2026', status: 'delivered', label: 'Delivered',
+    sentence: 'Delivered on 20 Sep 2026. It was left at the side door.',
+    ship: 600,
+    items: [
+      { name: 'Merino crew', variant: 'Oat', cents: 4200, qty: 1 }
+    ]
+  },
+  {
+    id: 'SC-1791', iso: '2026-09-03', dateLabel: '3 Sep 2026', status: 'cancelled', label: 'Cancelled',
+    sentence: 'The indigo dye lot failed its wash test.',
+    ship: 0,
+    items: [
+      { name: 'Indigo chore coat', variant: 'Indigo', cents: 7200, qty: 1 },
+      { name: 'Wool cap', variant: 'Charcoal', cents: 1250, qty: 1 },
+      { name: 'Twill tape', variant: '5 metres', cents: 700, qty: 1 }
+    ]
+  }
+];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const listEl = document.getElementById('list');
+const listView = document.getElementById('listView');
+const detail = document.getElementById('detail');
+const lede = document.getElementById('lede');
+const dStatus = document.getElementById('dStatus');
+const dTitle = document.getElementById('dTitle');
+const dMeta = document.getElementById('dMeta');
+const dSentence = document.getElementById('dSentence');
+const dItems = document.getElementById('dItems');
+const dReceipt = document.getElementById('dReceipt');
+const back = document.getElementById('back');
+const live = document.getElementById('live');
+let lastBtn = null;
+let closeTimer = 0;
+
+function money(cents) {
+  const n = Math.max(0, Math.round(cents));
+  const whole = Math.floor(n / 100);
+  const frac = String(n % 100).padStart(2, '0');
+  return '$' + whole + '.' + frac;
+}
+function itemsWord(n) { return n === 1 ? '1 item' : n + ' items'; }
+function tally(order) {
+  let sub = 0, count = 0;
+  for (const it of order.items) {
+    sub += it.cents * it.qty;
+    count += it.qty;
+  }
+  return { sub, ship: order.ship, total: sub + order.ship, count };
+}
+function el(tag, cls, text) {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  if (text != null) node.textContent = text;
+  return node;
+}
+function renderList() {
+  const n = ORDERS.length;
+  lede.textContent = (n === 1 ? '1 order' : n + ' orders') + ' from the Greyhaven mill.';
+  listEl.replaceChildren();
+  for (const order of ORDERS) {
+    const sum = tally(order);
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'order';
+    btn.dataset.id = order.id;
+    btn.dataset.status = order.status;
+    const row = el('span', 'row1');
+    const st = el('span', 'st');
+    const dot = document.createElement('i');
+    dot.setAttribute('aria-hidden', 'true');
+    st.append(dot, document.createTextNode(order.label));
+    row.append(st, el('span', 'price', money(sum.total)));
+    const oid = el('span', 'oid', order.id);
+    const meta = el('span', 'meta');
+    const time = document.createElement('time');
+    time.dateTime = order.iso;
+    time.textContent = order.dateLabel;
+    meta.append(time, document.createTextNode(', ' + itemsWord(sum.count)));
+    btn.append(row, oid, meta);
+    if (order.status === 'cancelled') btn.append(el('span', 'why', order.sentence));
+    li.append(btn);
+    listEl.append(li);
+  }
+}
+function addRow(label, cents, grand) {
+  const p = el('p', grand ? 'grand' : '');
+  p.append(el('span', '', label), el('span', 'fig', money(cents)));
+  dReceipt.append(p);
+}
+function openOrder(id) {
+  const order = ORDERS.find(o => o.id === id);
+  if (!order) return;
+  if (closeTimer) { clearTimeout(closeTimer); closeTimer = 0; }
+  const sum = tally(order);
+  dStatus.textContent = order.label;
+  dStatus.className = 'status ' + order.status;
+  dTitle.textContent = order.id;
+  dMeta.textContent = order.dateLabel + ', ' + itemsWord(sum.count);
+  dSentence.textContent = order.sentence;
+  dItems.replaceChildren();
+  for (const it of order.items) {
+    const li = document.createElement('li');
+    const variant = it.qty > 1
+      ? it.variant + '. ' + money(it.cents) + ' each, quantity ' + it.qty + '.'
+      : it.variant;
+    li.append(el('p', 'in', it.name), el('p', 'ia', money(it.cents * it.qty)), el('p', 'iv', variant));
+    dItems.append(li);
+  }
+  dReceipt.replaceChildren();
+  addRow('Subtotal', sum.sub, false);
+  addRow('Delivery', sum.ship, false);
+  addRow('Total', sum.total, true);
+  detail.hidden = false;
+  detail.inert = false;
+  detail.removeAttribute('aria-hidden');
+  listView.inert = true;
+  const show = () => {
+    document.body.classList.add('is-open');
+    back.focus();
+  };
+  if (reduce) show();
+  else requestAnimationFrame(() => requestAnimationFrame(show));
+  live.textContent = 'Opened order ' + order.id + ', ' + order.label + '.';
+}
+function closeOrder() {
+  document.body.classList.remove('is-open');
+  const finish = () => {
+    detail.hidden = true;
+    detail.inert = true;
+    detail.setAttribute('aria-hidden', 'true');
+    listView.inert = false;
+    if (lastBtn) lastBtn.focus();
+    closeTimer = 0;
+  };
+  if (reduce) finish();
+  else closeTimer = setTimeout(finish, 320);
+  live.textContent = 'Back to orders.';
+}
+listEl.addEventListener('click', e => {
+  const btn = e.target.closest('.order');
+  if (!btn) return;
+  lastBtn = btn;
+  openOrder(btn.dataset.id);
+});
+back.addEventListener('click', closeOrder);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.body.classList.contains('is-open')) {
+    e.preventDefault();
+    closeOrder();
+  }
+});
+renderList();
+</script>
+</body>
+</html>

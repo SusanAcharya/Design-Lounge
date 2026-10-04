@@ -1,0 +1,219 @@
+<!-- Design Lounge piece: m3-dialog · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leave this note · Briarnote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#0e4d8b;--on-primary:#fff;--primary-c:#d3e4f8;--on-primary-c:#001c3a;
+  --secondary:#4e6074;--secondary-c:#d3e4f8;--on-secondary-c:#0a2544;
+  --surface:#f5f6f8;--surface-c:#eef0f3;--surface-high:#e8eaee;--surface-highest:#e2e4e9;
+  --on-surface:#1a1c1e;--on-surface-v:#43474e;--outline:#73777f;--outline-v:#c3c6cf;
+  --error:#ba1a1a;--scrim:rgba(0,0,0,.32);
+  --f-head:"Source Serif 4",Georgia,serif;--f-ui:"Sora",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,0,0,1);--ease-decel:cubic-bezier(.05,.7,.1,1);--ease-accel:cubic-bezier(.3,0,.8,.15);
+  --t-ripple:450ms;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{height:100%;margin:0}
+body{background:var(--surface);color:var(--on-surface);font:400 16px/24px var(--f-ui);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer}
+svg{width:24px;height:24px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rp{position:relative;overflow:hidden;isolation:isolate}
+.rp::before{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 150ms linear;pointer-events:none;z-index:-1}
+.rp:hover::before{opacity:.08}
+.rp:focus-visible::before{opacity:.1}
+.rpl{position:absolute;border-radius:50%;background:currentColor;opacity:.12;transform:scale(0);animation:grow var(--t-ripple) var(--ease) forwards;pointer-events:none;z-index:-1}
+.rpl.out{opacity:0;transition:opacity 300ms linear}
+@keyframes grow{to{transform:scale(1)}}
+:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.app{height:100%;display:flex;flex-direction:column}
+.bar{padding-top:54px;background:var(--surface);flex:none;transition:background-color 200ms var(--ease)}
+.bar.scrolled{background:var(--surface-c)}
+.bar-row{min-height:64px;display:flex;align-items:center;padding:0 4px}
+.icon{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:var(--on-surface)}
+h1{flex:1;min-width:0;margin:0 4px;font:400 22px/28px var(--f-head);overflow-wrap:break-word}
+.del{min-width:48px;height:48px;padding:0 12px;border-radius:24px;color:var(--error);font:500 14px/20px var(--f-ui);letter-spacing:.1px}
+main{flex:1;overflow-y:auto;scrollbar-width:none;padding:8px 24px 42px}
+main::-webkit-scrollbar{display:none}
+.kicker{margin:8px 0 0;font:500 12px/16px var(--f-ui);letter-spacing:.5px;color:var(--primary)}
+.lead{margin:12px 0 0;font:400 16px/24px var(--f-ui)}
+h2.sec{margin:28px 0 0;font:500 16px/24px var(--f-head)}
+.meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 16px;min-height:48px;padding:12px 0;border-top:1px solid var(--outline-v)}
+.meta:first-of-type{margin-top:8px}
+.k{font:500 14px/20px var(--f-ui);color:var(--on-surface-v)}
+.v{font:400 16px/24px var(--f-ui)}
+.panel{padding-top:16px}
+.panel h2{margin:0;font:400 24px/32px var(--f-head)}
+.panel p{margin:16px 0 0;max-width:34ch;color:var(--on-surface-v);font:400 16px/24px var(--f-ui)}
+.fill,.tonal{min-height:48px;margin-top:24px;padding:0 24px;border-radius:24px;font:500 14px/20px var(--f-ui);letter-spacing:.1px}
+.fill{background:var(--primary);color:var(--on-primary)}
+.tonal{background:var(--secondary-c);color:var(--on-secondary-c)}
+dialog{position:fixed;inset:0;width:min(312px,calc(100% - 48px));height:fit-content;max-height:calc(100% - 48px);margin:auto;padding:0;border:0;border-radius:28px;background:var(--surface-high);color:var(--on-surface);box-shadow:0 4px 8px 3px rgba(0,0,0,.15),0 1px 3px rgba(0,0,0,.3);overflow:auto}
+dialog[open].anim{animation:dIn 250ms var(--ease-decel)}
+dialog.closing{animation:dOut 150ms var(--ease-accel) forwards}
+dialog::backdrop{background:var(--scrim)}
+dialog.anim[open]::backdrop{animation:fade 250ms linear}
+dialog.closing::backdrop{animation:fade 150ms var(--ease-accel) reverse forwards}
+@keyframes dIn{from{opacity:0;transform:scale(.92)}}
+@keyframes dOut{to{opacity:0;transform:scale(.96)}}
+@keyframes fade{from{opacity:0}}
+dialog h2{margin:0;padding:24px 24px 0;font:400 24px/32px var(--f-head)}
+dialog h2:focus{outline:none}
+dialog p{margin:0;padding:16px 24px 0;font:400 14px/20px var(--f-ui);color:var(--on-surface-v)}
+.acts{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;padding:16px 12px 12px}
+.tbtn{min-width:64px;min-height:48px;padding:0 12px;border-radius:24px;color:var(--primary);font:500 14px/20px var(--f-ui);letter-spacing:.1px}
+.tbtn.danger{color:var(--error)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+  .rpl{animation:none;transform:scale(1);opacity:.1}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="bar" id="bar">
+    <div class="bar-row">
+      <button class="icon rp" id="back" type="button" aria-label="Navigate up" aria-haspopup="dialog" aria-controls="dlg" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4M10 6l-6 6 6 6"/></svg></button>
+      <h1>River bank count</h1>
+      <button class="del rp" id="del" type="button" aria-haspopup="dialog" aria-controls="dlg" aria-expanded="false">Delete</button>
+    </div>
+  </header>
+  <main id="note">
+    <p class="kicker">Briarnote</p>
+    <p class="lead">Counted at low water on 4 Oct 2026, starting at 14:20. The west bank was firm enough to walk the whole bend.</p>
+    <p class="lead">A kingfisher crossed twice between the alder and the bend. Seven banded demoiselles held over the slack. Water vole prints sat in the silt under the footbridge. Yellow flag was still in flower on the inside bend.</p>
+    <h2 class="sec">Record</h2>
+    <div class="meta"><span class="k">Photos</span><span class="v">6 attached</span></div>
+    <div class="meta"><span class="k">Species</span><span class="v">11 noted</span></div>
+    <div class="meta"><span class="k">Weather</span><span class="v">Overcast, 14 C</span></div>
+    <div class="meta"><span class="k">Grid</span><span class="v">TL 184 632</span></div>
+    <h2 class="sec">Next</h2>
+    <p class="lead">Come back after the next rain. The silt under the footbridge is where the vole prints show.</p>
+  </main>
+  <main class="panel" id="left" hidden>
+    <h2>You left this note</h2>
+    <p>The last saved version from 14:20 is still on this phone. Nothing new was written to Briarnote.</p>
+    <button class="fill rp" id="reopen" type="button">Reopen note</button>
+  </main>
+  <main class="panel" id="gone" hidden>
+    <h2>Note deleted</h2>
+    <p>River bank count and its 6 photos are no longer on this phone.</p>
+    <button class="tonal rp" id="restore" type="button">Restore note</button>
+  </main>
+</div>
+<dialog id="dlg" role="alertdialog" aria-modal="true" aria-labelledby="dlgTitle" aria-describedby="dlgText">
+  <h2 id="dlgTitle" tabindex="-1">Leave this note?</h2>
+  <p id="dlgText">Changes to River bank count are still on this phone. Leaving keeps the last saved version from 14:20.</p>
+  <div class="acts">
+    <button class="tbtn rp" id="cancel" type="button">Cancel</button>
+    <button class="tbtn rp" id="confirm" type="button">Leave</button>
+  </div>
+</dialog>
+<script>
+const $=s=>document.querySelector(s);
+const app=$('#app'),bar=$('#bar'),note=$('#note'),left=$('#left'),gone=$('#gone');
+const back=$('#back'),del=$('#del'),dlg=$('#dlg'),title=$('#dlgTitle'),text=$('#dlgText'),confirm=$('#confirm');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+const MODES={
+  basic:{title:'Leave this note?',text:'Changes to River bank count are still on this phone. Leaving keeps the last saved version from 14:20.',confirm:'Leave',danger:false},
+  danger:{title:'Delete this note?',text:'River bank count and its 6 photos are removed from this phone and from Briarnote. This cannot be undone.',confirm:'Delete',danger:true}
+};
+let opener=null,screen='note',booted=false,closing=false;
+
+function ripple(el,x,y){
+  const r=el.getBoundingClientRect();
+  if(x==null){x=r.left+r.width/2;y=r.top+r.height/2}
+  const s=2*Math.hypot(Math.max(x-r.left,r.right-x),Math.max(y-r.top,r.bottom-y));
+  const d=document.createElement('span');d.className='rpl';
+  d.style.cssText=`width:${s}px;height:${s}px;left:${x-r.left-s/2}px;top:${y-r.top-s/2}px`;
+  el.appendChild(d);
+  return()=>{d.classList.add('out');setTimeout(()=>d.remove(),320)};
+}
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.rp');if(!el||e.button>0)return;
+  const end=ripple(el,e.clientX,e.clientY);
+  const up=()=>{end();removeEventListener('pointerup',up);removeEventListener('pointercancel',up)};
+  addEventListener('pointerup',up);addEventListener('pointercancel',up);
+});
+document.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&!e.repeat){const el=e.target.closest('.rp');if(el){const end=ripple(el);setTimeout(end,160)}}
+});
+
+note.addEventListener('scroll',()=>bar.classList.toggle('scrolled',note.scrollTop>0),{passive:true});
+
+function setScreen(next){
+  screen=next;
+  note.hidden=next!=='note';
+  left.hidden=next!=='left';
+  gone.hidden=next!=='gone';
+  del.hidden=next!=='note';
+  if(next==='left')$('#reopen').focus();
+  if(next==='gone')$('#restore').focus();
+  if(next==='note')back.focus();
+}
+function openDlg(mode,from){
+  if(dlg.open)return;
+  opener=from;
+  const m=MODES[mode];
+  title.textContent=m.title;
+  text.textContent=m.text;
+  confirm.textContent=m.confirm;
+  confirm.classList.toggle('danger',m.danger);
+  confirm.dataset.mode=mode;
+  back.setAttribute('aria-expanded',String(from===back));
+  del.setAttribute('aria-expanded',String(from===del));
+  app.inert=true;
+  dlg.classList.remove('closing');
+  dlg.showModal();
+  if(booted)dlg.classList.add('anim');
+  booted=true;
+  title.focus();
+}
+function closeDlg(after){
+  if(!dlg.open||closing)return;
+  const done=()=>{
+    closing=false;
+    dlg.classList.remove('closing','anim');
+    dlg.close();
+    app.inert=false;
+    back.setAttribute('aria-expanded','false');
+    del.setAttribute('aria-expanded','false');
+    if(after)after();
+    else opener?.focus();
+  };
+  if(reduce.matches){done();return}
+  closing=true;
+  dlg.classList.add('closing');
+  dlg.addEventListener('animationend',done,{once:true});
+  setTimeout(()=>{if(closing)done()},220);
+}
+back.addEventListener('click',()=>{if(screen==='note')openDlg('basic',back);else setScreen('note')});
+del.addEventListener('click',()=>openDlg('danger',del));
+$('#cancel').addEventListener('click',()=>closeDlg());
+confirm.addEventListener('click',()=>{
+  const mode=confirm.dataset.mode;
+  closeDlg(()=>setScreen(mode==='danger'?'gone':'left'));
+});
+$('#reopen').addEventListener('click',()=>setScreen('note'));
+$('#restore').addEventListener('click',()=>setScreen('note'));
+dlg.addEventListener('cancel',e=>{e.preventDefault();closeDlg()});
+dlg.addEventListener('keydown',e=>{
+  if(e.key!=='Tab'||!dlg.open)return;
+  const items=[...dlg.querySelectorAll('button:not([disabled])')];
+  if(!items.length)return;
+  const first=items[0],last=items[items.length-1],cur=document.activeElement;
+  if(e.shiftKey&&(cur===first||!items.includes(cur))){e.preventDefault();last.focus()}
+  else if(!e.shiftKey&&(cur===last||!items.includes(cur))){e.preventDefault();first.focus()}
+});
+dlg.addEventListener('click',e=>{if(e.target===dlg)e.stopPropagation()});
+openDlg('basic',back);
+</script>
+</body>
+</html>

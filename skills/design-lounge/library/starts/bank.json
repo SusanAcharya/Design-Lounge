@@ -27,7 +27,9 @@
   "phone-qr-scanner",
   "phone-delete-account",
   "phone-privacy-data",
-  "phone-account-edit"
+  "phone-account-edit",
+  "phone-code-entry",
+  "phone-app-lock"
  ],
  "directions": [
   {

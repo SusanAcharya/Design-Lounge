@@ -1,0 +1,187 @@
+<!-- Design Lounge piece: m3-search-results · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search · Orchardbind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1f5c38;--on-primary:#fff;--primary-c:#b7f0c8;--on-primary-c:#00210e;
+  --surface:#f7f6f0;--surface-c:#f0efe6;--surface-highest:#e6e4d8;
+  --on-surface:#1a1c16;--on-surface-v:#43483e;--outline:#73796c;--outline-v:#c3c8ba;
+  --f-head:"Literata",Georgia,serif;--f-ui:"Manrope",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,0,0,1);--t-ripple:450ms;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{height:100%;margin:0}
+body{background:var(--surface);color:var(--on-surface);font:400 16px/24px var(--f-ui);-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0}
+button{cursor:pointer;text-align:left}
+svg{width:24px;height:24px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;left:0;top:0;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.rp{position:relative;overflow:hidden;isolation:isolate}
+.rp::before{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 150ms linear;pointer-events:none;z-index:-1}
+.rp:hover::before{opacity:.08}
+.rp:focus-visible::before{opacity:.1}
+.rpl{position:absolute;border-radius:50%;background:currentColor;opacity:.12;transform:scale(0);animation:grow var(--t-ripple) var(--ease) forwards;pointer-events:none;z-index:-1}
+.rpl.out{opacity:0;transition:opacity 300ms linear}
+@keyframes grow{to{transform:scale(1)}}
+:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.app{height:100%;display:flex;flex-direction:column}
+.top{padding-top:54px;flex:none;background:var(--surface)}
+.top-row{min-height:64px;display:flex;align-items:center;gap:4px;padding:4px 8px 8px 4px}
+.icon{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:var(--on-surface);flex:none}
+.field{position:relative;flex:1;min-width:0;min-height:56px;background:var(--surface-highest);border-radius:4px 4px 0 0;box-shadow:inset 0 -1px 0 var(--on-surface-v)}
+.field.hot,.field:focus-within{box-shadow:inset 0 -2px 0 var(--primary)}
+.field label{position:absolute;left:16px;top:16px;font:400 16px/24px var(--f-ui);color:var(--on-surface-v);pointer-events:none;transition:top 150ms var(--ease),font-size 150ms var(--ease),line-height 150ms var(--ease),color 150ms linear}
+.field.hot label,.field:focus-within label,.field.has-value label{top:6px;font-size:12px;line-height:16px;letter-spacing:.4px}
+.field.hot label,.field:focus-within label{color:var(--primary)}
+.field input{display:block;width:100%;min-height:56px;padding:22px 16px 6px;outline:none;caret-color:var(--primary);font:400 16px/24px var(--f-ui)}
+.field.has-value input{padding-right:48px}
+#clear{position:absolute;right:0;top:50%;width:48px;height:48px;margin-top:-24px;color:var(--on-surface-v)}
+.grow{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column}
+.grow::-webkit-scrollbar{display:none}
+h2{margin:0;padding:12px 16px 0;font:500 14px/20px var(--f-ui);letter-spacing:.1px;color:var(--on-surface-v)}
+.hint{margin:0;padding:2px 16px 8px;font:400 14px/20px var(--f-ui);color:var(--on-surface-v)}
+ul{list-style:none;margin:0;padding:0}
+.recent{width:100%;min-height:56px;display:flex;align-items:center;gap:16px;padding:8px 16px;color:var(--on-surface);font:400 16px/24px var(--f-ui)}
+.recent svg{color:var(--on-surface-v)}
+.recent span{overflow-wrap:break-word}
+.result{min-height:72px;display:flex;align-items:center;gap:16px;padding:12px 16px;border-bottom:1px solid var(--outline-v)}
+.av{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;background:var(--primary-c);color:var(--on-primary-c);font:600 18px/24px var(--f-head)}
+.txt{flex:1;min-width:0}
+.line{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 12px}
+.name{font:600 16px/24px var(--f-head);overflow-wrap:break-word}
+.when,.sub{font:400 14px/20px var(--f-ui);color:var(--on-surface-v);overflow-wrap:break-word}
+#empty{margin:0;padding:16px 16px 0;font:400 16px/24px var(--f-ui);color:var(--on-surface);overflow-wrap:break-word}
+.foot{margin-top:auto;padding:24px 16px 42px;font:500 12px/16px var(--f-ui);letter-spacing:.4px;color:var(--on-surface-v)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+  .rpl{animation:none;transform:scale(1);opacity:.1}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <h1 class="sr">Search Orchardbind</h1>
+  <search class="top">
+    <div class="top-row">
+      <button class="icon rp" id="back" type="button" aria-label="Navigate up"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4M10 6l-6 6 6 6"/></svg></button>
+      <div class="field hot" id="field">
+        <label for="q">Search varieties</label>
+        <input id="q" type="text" role="searchbox" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-controls="results recent" aria-describedby="live">
+        <button class="icon rp" id="clear" type="button" aria-label="Clear search" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+    </div>
+  </search>
+  <div class="grow" id="grow">
+    <section id="recent" aria-labelledby="recentH">
+      <h2 id="recentH">Recent</h2>
+      <p class="hint">From this week on this phone.</p>
+      <ul>
+        <li><button class="recent rp" type="button" data-q="Bramley"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg><span>Bramley</span></button></li>
+        <li><button class="recent rp" type="button" data-q="Conference"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg><span>Conference</span></button></li>
+        <li><button class="recent rp" type="button" data-q="Egremont"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg><span>Egremont</span></button></li>
+        <li><button class="recent rp" type="button" data-q="Discovery"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg><span>Discovery</span></button></li>
+      </ul>
+    </section>
+    <section id="results" aria-labelledby="resultsH" hidden>
+      <h2 id="resultsH" class="sr">Results</h2>
+      <ul id="resultList"></ul>
+      <p id="empty" hidden></p>
+    </section>
+    <p class="foot" id="foot">12 varieties in the catalogue</p>
+  </div>
+</div>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+const $=s=>document.querySelector(s);
+const q=$('#q'),field=$('#field'),clear=$('#clear'),recent=$('#recent'),results=$('#results');
+const resultList=$('#resultList'),empty=$('#empty'),live=$('#live'),back=$('#back');
+const ITEMS=[
+  ['Bramley\'s Seedling','Cooking apple','Late September','M26'],
+  ['Bramley 20','Cooking apple','Late September','M9'],
+  ['Conference','Pear','October','Quince A'],
+  ['Egremont Russet','Dessert apple','September','M26'],
+  ['Discovery','Early apple','August','MM106'],
+  ['Cox\'s Orange Pippin','Dessert apple','Late September','M9'],
+  ['Worcester Pearmain','Early dessert apple','August','MM106'],
+  ['Doyenne du Comice','Pear','October','Quince A'],
+  ['Pitmaston Pineapple','Russet apple','October','M26'],
+  ['Ashmead\'s Kernel','Late russet','October','MM106'],
+  ['Lord Lambourne','Dessert apple','September','M9'],
+  ['Beth','Compact pear','September','Quince C']
+].map(([name,kind,season,root])=>({name,kind,season,root}));
+let announced=false;
+
+function ripple(el,x,y){
+  const r=el.getBoundingClientRect();
+  if(x==null){x=r.left+r.width/2;y=r.top+r.height/2}
+  const s=2*Math.hypot(Math.max(x-r.left,r.right-x),Math.max(y-r.top,r.bottom-y));
+  const d=document.createElement('span');d.className='rpl';
+  d.style.cssText=`width:${s}px;height:${s}px;left:${x-r.left-s/2}px;top:${y-r.top-s/2}px`;
+  el.appendChild(d);
+  return()=>{d.classList.add('out');setTimeout(()=>d.remove(),320)};
+}
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.rp');if(!el||e.button>0)return;
+  const end=ripple(el,e.clientX,e.clientY);
+  const up=()=>{end();removeEventListener('pointerup',up);removeEventListener('pointercancel',up)};
+  addEventListener('pointerup',up);addEventListener('pointercancel',up);
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(q.value){e.preventDefault();wipe()}return}
+  if((e.key==='Enter'||e.key===' ')&&!e.repeat){const el=e.target.closest('.rp');if(el){const end=ripple(el);setTimeout(end,160)}}
+});
+
+function apply(speak){
+  const raw=q.value;
+  const query=raw.trim();
+  field.classList.toggle('has-value',raw.length>0);
+  clear.hidden=raw.length===0;
+  if(!query){
+    recent.hidden=false;
+    results.hidden=true;
+    empty.hidden=true;
+    resultList.innerHTML='';
+    if(speak&&announced)live.textContent='Recent searches';
+    return;
+  }
+  const ql=query.toLowerCase();
+  const hits=ITEMS.filter(it=>(it.name+' '+it.kind+' '+it.season+' '+it.root).toLowerCase().includes(ql));
+  recent.hidden=true;
+  results.hidden=false;
+  if(!hits.length){
+    resultList.innerHTML='';
+    empty.hidden=false;
+    empty.textContent='No matches for '+query;
+    if(speak)live.textContent='No matches for '+query;
+  }else{
+    empty.hidden=true;
+    resultList.innerHTML=hits.map(it=>`<li><div class="result"><span class="av" aria-hidden="true">${it.name[0]}</span><span class="txt"><span class="line"><span class="name">${it.name}</span><span class="when">${it.season}</span></span><span class="sub">${it.kind}, rootstock ${it.root}</span></span></div></li>`).join('');
+    if(speak)live.textContent=hits.length===1?'1 match':hits.length+' matches';
+  }
+  announced=true;
+}
+function wipe(){q.value='';apply(true);q.focus()}
+q.addEventListener('focus',()=>field.classList.add('hot'));
+q.addEventListener('blur',()=>field.classList.remove('hot'));
+q.addEventListener('input',()=>apply(true));
+clear.addEventListener('click',wipe);
+back.addEventListener('click',()=>{if(q.value)wipe()});
+recent.addEventListener('click',e=>{
+  const btn=e.target.closest('[data-q]');if(!btn)return;
+  q.value=btn.dataset.q;
+  apply(true);
+  q.focus();
+});
+apply(false);
+q.focus();
+</script>
+</body>
+</html>

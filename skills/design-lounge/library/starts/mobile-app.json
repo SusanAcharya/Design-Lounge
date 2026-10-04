@@ -41,7 +41,13 @@
   "phone-notification-settings",
   "phone-large-text-layout",
   "m3-sign-in",
-  "m3-settings-list"
+  "m3-settings-list",
+  "phone-forgot-password",
+  "phone-code-entry",
+  "phone-skeleton-list",
+  "m3-dialog",
+  "m3-snackbar",
+  "m3-search-results"
  ],
  "directions": [
   {

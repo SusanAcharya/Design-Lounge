@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 485 · "M3 list to detail with predictive back" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 491 · "M3 list to detail with predictive back" · designlounge.vercel.app -->
 
 # M3 list to detail with predictive back
 

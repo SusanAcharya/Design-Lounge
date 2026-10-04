@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 490 · "Phone notification settings" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 500 · "Phone notification settings" · designlounge.vercel.app -->
 
 # Phone notification settings
 

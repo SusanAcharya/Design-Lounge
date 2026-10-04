@@ -1,0 +1,187 @@
+<!-- Design Lounge piece: m3-snackbar · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saved trails · Woldwalk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#e6c176;--on-primary:#3f2e00;--primary-c:#5c4300;--on-primary-c:#ffdea0;
+  --surface:#13110e;--surface-c:#201c18;--surface-high:#2b261f;
+  --on-surface:#e8e1d6;--on-surface-v:#d0c6b6;--outline:#998e7c;--outline-v:#7a7164;
+  --inverse:#e8e1d6;--inverse-on:#1c1915;--inverse-primary:#5c4300;
+  --f-head:"Newsreader",Georgia,serif;--f-ui:"Outfit",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,0,0,1);--t-ripple:450ms;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{height:100%;margin:0}
+body{background:var(--surface);color:var(--on-surface);font:400 16px/24px var(--f-ui);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:left}
+.sr{position:absolute;left:0;top:0;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+svg{width:24px;height:24px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rp{position:relative;overflow:hidden;isolation:isolate}
+.rp::before{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 150ms linear;pointer-events:none;z-index:-1}
+.rp:hover::before{opacity:.08}
+.rp:focus-visible::before{opacity:.1}
+.rpl{position:absolute;border-radius:50%;background:currentColor;opacity:.12;transform:scale(0);animation:grow var(--t-ripple) var(--ease) forwards;pointer-events:none;z-index:-1}
+.rpl.out{opacity:0;transition:opacity 300ms linear}
+@keyframes grow{to{transform:scale(1)}}
+:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.app{height:100%;display:flex;flex-direction:column}
+.bar{padding-top:54px;background:var(--surface);flex:none;transition:background-color 200ms var(--ease)}
+.bar.scrolled{background:var(--surface-c)}
+.bar-row{min-height:64px;display:flex;align-items:center;padding:0 16px}
+.brand{margin:0;font:500 12px/16px var(--f-ui);letter-spacing:.5px;color:var(--primary)}
+h1{margin:0;font:500 22px/28px var(--f-head)}
+.count{margin:0;padding:0 16px 8px;font:400 14px/20px var(--f-ui);color:var(--on-surface-v)}
+.list{flex:1;overflow-y:auto;scrollbar-width:none;list-style:none;margin:0;padding:0 0 calc(34px + 64px)}
+.list::-webkit-scrollbar{display:none}
+.row{width:100%;min-height:72px;display:flex;align-items:center;gap:16px;padding:12px 8px 12px 16px;border-bottom:1px solid var(--outline-v);color:var(--on-surface)}
+.av{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--primary-c);color:var(--on-primary-c);font:600 14px/20px var(--f-ui)}
+.txt{flex:1;min-width:0;display:flex;flex-direction:column}
+.t{font:500 16px/24px var(--f-head);overflow-wrap:break-word}
+.s{font:400 14px/20px var(--f-ui);color:var(--on-surface-v);overflow-wrap:break-word}
+.arch{color:var(--on-surface-v);margin-right:4px}
+li{overflow:hidden}
+li.out{opacity:0;transition:height 200ms var(--ease),opacity 150ms linear}
+.empty{margin:0;padding:24px 16px;font:400 16px/24px var(--f-ui);color:var(--on-surface-v)}
+.snack{position:fixed;z-index:5;left:16px;right:16px;bottom:calc(34px + 8px);min-height:48px;display:flex;align-items:center;gap:8px;padding:0 4px 0 16px;border-radius:4px;background:var(--inverse);color:var(--inverse-on);box-shadow:0 4px 8px 3px rgba(0,0,0,.15),0 1px 3px rgba(0,0,0,.3);opacity:0;transform:translateY(16px);visibility:hidden;transition:opacity 200ms var(--ease),transform 200ms var(--ease),visibility 0s linear 200ms}
+.snack.on{opacity:1;transform:none;visibility:visible;transition:opacity 200ms var(--ease),transform 200ms var(--ease),visibility 0s}
+.snack p{flex:1;min-width:0;margin:0;font:400 14px/20px var(--f-ui);overflow-wrap:break-word}
+#undo{flex:none;min-width:48px;min-height:48px;padding:0 12px;border-radius:24px;color:var(--inverse-primary);font:600 14px/20px var(--f-ui);letter-spacing:.1px;text-align:center}
+#undo:focus-visible{outline-color:var(--inverse-primary)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+  .rpl{animation:none;transform:scale(1);opacity:.1}
+  .snack{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="bar" id="bar">
+    <div class="bar-row">
+      <div>
+        <p class="brand">Woldwalk</p>
+        <h1>Saved trails</h1>
+      </div>
+    </div>
+    <p class="count" id="count" aria-live="polite">8 trails on this phone</p>
+  </header>
+  <ul class="list" id="list"></ul>
+  <p class="empty" id="empty" hidden>No trails on this phone.</p>
+</div>
+<div class="snack on" id="snack">
+  <p id="snackMsg">Trail archived</p>
+  <button class="rp" id="undo" type="button">Undo</button>
+</div>
+<p class="sr" id="snackLive" role="status">Trail archived. Mill beck can be undone.</p>
+<script>
+const $=s=>document.querySelector(s);
+const list=$('#list'),bar=$('#bar'),count=$('#count'),empty=$('#empty'),snack=$('#snack'),undo=$('#undo'),snackLive=$('#snackLive');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+const trails=[
+  {id:'harebell',name:'Harebell ridge',km:'6.4 km',place:'Wold edge',mono:'HR'},
+  {id:'kiln',name:'Kiln lane',km:'3.1 km',place:'Clay pits',mono:'KL'},
+  {id:'mill',name:'Mill beck',km:'8.2 km',place:'North wold',mono:'MB',archived:true},
+  {id:'gorse',name:'Gorse common',km:'4.6 km',place:'Open grass',mono:'GC'},
+  {id:'chapel',name:'Chapel stile',km:'2.4 km',place:'Village edge',mono:'CS'},
+  {id:'quarry',name:'Quarry greenway',km:'5.8 km',place:'Old workings',mono:'QG'},
+  {id:'reed',name:'Reed fen',km:'7.1 km',place:'Low wold',mono:'RF'},
+  {id:'beacon',name:'Beacon clough',km:'9.4 km',place:'High edge',mono:'BC'},
+  {id:'priory',name:'Priory lane',km:'1.8 km',place:'Town end',mono:'PL'}
+];
+const icon='<svg class="arch" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18l-2-3H5z"/><path d="M4 8h16v11H4z"/><path d="M12 11v5M9.5 14L12 16.5 14.5 14"/></svg>';
+let undoId='mill',timer=0,gen=0;
+
+function ripple(el,x,y){
+  const r=el.getBoundingClientRect();
+  if(x==null){x=r.left+r.width/2;y=r.top+r.height/2}
+  const s=2*Math.hypot(Math.max(x-r.left,r.right-x),Math.max(y-r.top,r.bottom-y));
+  const d=document.createElement('span');d.className='rpl';
+  d.style.cssText=`width:${s}px;height:${s}px;left:${x-r.left-s/2}px;top:${y-r.top-s/2}px`;
+  el.appendChild(d);
+  return()=>{d.classList.add('out');setTimeout(()=>d.remove(),320)};
+}
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.rp');if(!el||e.button>0)return;
+  const end=ripple(el,e.clientX,e.clientY);
+  const up=()=>{end();removeEventListener('pointerup',up);removeEventListener('pointercancel',up)};
+  addEventListener('pointerup',up);addEventListener('pointercancel',up);
+});
+document.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&!e.repeat){const el=e.target.closest('.rp');if(el){const end=ripple(el);setTimeout(end,160)}}
+});
+
+function visible(){return trails.filter(t=>!t.archived)}
+function render(){
+  const rows=visible();
+  const n=rows.length;
+  count.textContent=n===0?'No trails on this phone':n===1?'1 trail on this phone':n+' trails on this phone';
+  empty.hidden=n!==0;
+  list.hidden=n===0;
+  list.innerHTML=rows.map(t=>`<li data-id="${t.id}"><button class="row rp" type="button" data-id="${t.id}" aria-label="Archive ${t.name}"><span class="av" aria-hidden="true">${t.mono}</span><span class="txt"><span class="t">${t.name}</span><span class="s">${t.km}, ${t.place}</span></span>${icon}</button></li>`).join('');
+}
+function arm(){
+  const g=++gen;
+  clearTimeout(timer);
+  timer=setTimeout(()=>{if(g===gen)dismiss()},4000);
+}
+function showFor(id){
+  undoId=id;
+  const item=trails.find(t=>t.id===id);
+  snackLive.textContent='';
+  snackLive.textContent='Trail archived. '+(item?item.name:'This trail')+' can be undone.';
+  snack.removeAttribute('aria-hidden');
+  if(!reduce.matches&&snack.classList.contains('on')){
+    snack.classList.remove('on');
+    void snack.offsetWidth;
+  }
+  snack.classList.add('on');
+  arm();
+}
+function dismiss(){
+  undoId=null;
+  snack.classList.remove('on');
+  snack.setAttribute('aria-hidden','true');
+}
+function archive(id){
+  const item=trails.find(t=>t.id===id);
+  if(!item||item.archived)return;
+  item.archived=true;
+  const li=list.querySelector(`li[data-id="${id}"]`);
+  let settled=false;
+  const finish=()=>{if(settled)return;settled=true;render();showFor(id)};
+  if(reduce.matches||!li){finish();return}
+  li.style.height=li.offsetHeight+'px';
+  void li.offsetWidth;
+  li.classList.add('out');
+  li.style.height='0px';
+  li.addEventListener('transitionend',e=>{if(e.propertyName==='height')finish()},{once:true});
+  setTimeout(finish,280);
+}
+list.addEventListener('click',e=>{
+  const btn=e.target.closest('.row');if(!btn)return;
+  archive(btn.dataset.id);
+});
+list.addEventListener('scroll',()=>bar.classList.toggle('scrolled',list.scrollTop>0),{passive:true});
+undo.addEventListener('click',()=>{
+  if(!undoId)return;
+  const id=undoId;
+  const item=trails.find(t=>t.id===id);
+  if(item)item.archived=false;
+  dismiss();
+  render();
+  snackLive.textContent=(item?item.name:'Trail')+' restored.';
+  list.querySelector(`button[data-id="${id}"]`)?.focus();
+});
+render();
+arm();
+</script>
+</body>
+</html>

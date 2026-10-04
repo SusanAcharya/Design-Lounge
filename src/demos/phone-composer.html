@@ -1,0 +1,254 @@
+<!-- Design Lounge piece: phone-composer · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New note · Whinchat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3ebdd;--surface:#fff9f1;--ink:#1c2b22;--ink-2:#4a433c;--muted:#5c5148;
+  --line:#e4d5c3;--accent:#9c3b2e;--accent-2:#7d2e24;--off:#8d8072;
+  --serif:"Lora",Georgia,serif;--sans:"Outfit",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);
+  --fast:160ms;--sheet-ms:340ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:16px/1.4 var(--sans);color:var(--ink);background:var(--bg);
+  overflow:clip;-webkit-font-smoothing:antialiased;
+}
+button,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+textarea{border:0;resize:none;background:transparent;width:100%;display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#app{height:100%;display:flex;flex-direction:column;min-height:0}
+.nav{
+  flex:none;display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  padding:max(54px,env(safe-area-inset-top)) 8px 0;
+  background:var(--surface);border-bottom:1px solid var(--line);
+}
+.nav button{min-width:44px;min-height:44px;padding:0 10px;font-size:17px;font-weight:500;border-radius:10px}
+.nav button:hover{background:rgba(28,43,34,.05)}
+.nav button:active{background:rgba(28,43,34,.09)}
+#post{color:var(--off);font-weight:500}
+#post.ready{color:var(--accent);font-weight:700}
+#post.ready:hover{color:var(--accent-2)}
+h1{margin:0;text-align:center;font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:-.01em;min-width:0}
+main{flex:1;min-height:0;display:flex;flex-direction:column;
+  background-color:var(--bg);
+  background-image:radial-gradient(rgba(28,43,34,.05) .65px,transparent .7px);
+  background-size:3px 3px;
+}
+.date{margin:0;padding:14px 20px 0;font-size:13px;font-weight:500;color:var(--muted)}
+#note{
+  flex:1;min-height:120px;padding:10px 20px 8px;overflow-y:auto;
+  font-family:var(--serif);font-size:20px;font-weight:500;line-height:1.45;color:var(--ink);
+}
+#note::placeholder{color:var(--muted);font-style:italic}
+.hint{margin:0;padding:0 20px 14px;font-size:13px;font-weight:500;color:var(--muted)}
+.hint.sent{color:var(--accent);font-weight:700}
+.dock{
+  flex:none;background:var(--surface);border-top:1px solid var(--line);
+  padding:8px 16px max(34px,env(safe-area-inset-bottom));
+}
+.strip{display:grid;grid-template-columns:repeat(4,72px);justify-content:space-between;padding:4px 0 10px}
+.strip[hidden]{display:none}
+.thumb{position:relative;width:72px;height:72px;border-radius:8px;overflow:hidden;background:var(--line)}
+.thumb svg{display:block;width:100%;height:100%}
+.thumb .tick{
+  position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;
+  background:var(--accent);color:var(--surface);display:none;place-items:center;
+}
+.thumb .tick svg{width:14px;height:14px}
+.thumb[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--accent)}
+.thumb[aria-pressed="true"] .tick{display:grid}
+.add{
+  min-height:44px;display:flex;align-items:center;gap:8px;padding:0 4px;
+  font-size:16px;font-weight:600;border-radius:10px;
+}
+.add svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.add:hover{background:rgba(28,43,34,.05)}
+.scrim{position:fixed;inset:0;z-index:2;background:rgba(28,43,34,.46);opacity:0;transition:opacity var(--sheet-ms) var(--ease)}
+.scrim.on{opacity:1}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:3;background:var(--surface);
+  border-radius:20px 20px 0 0;padding:22px 16px max(34px,env(safe-area-inset-bottom));
+  transform:translateY(110%);transition:transform var(--sheet-ms) var(--sheet);
+}
+.sheet.on{transform:none}
+.sheet h2{margin:0 0 6px;font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:-.02em}
+.sheet p{margin:0 0 18px;font-size:15px;line-height:1.4;color:var(--ink-2)}
+.sheet button{display:block;width:100%;min-height:48px;padding:12px 16px;border-radius:12px;font-size:17px;font-weight:600}
+#discard{background:var(--accent);color:var(--surface);margin-bottom:8px}
+#discard:hover{background:var(--accent-2)}
+#keep{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+#keep:hover{background:rgba(28,43,34,.04)}
+@media (prefers-reduced-motion:reduce){
+  .scrim,.sheet{transition:none}
+  .thumb:active,.nav button:active{transform:none}
+}
+@media (max-width:360px){
+  .strip{grid-template-columns:repeat(4,1fr);gap:8px}
+  .thumb{width:100%;height:auto;aspect-ratio:1}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="nav">
+    <button type="button" id="cancel">Cancel</button>
+    <h1>New note</h1>
+    <button type="button" id="post" aria-disabled="true">Post</button>
+  </header>
+  <main>
+    <p class="date">4 Oct 2026</p>
+    <textarea id="note" rows="8" aria-label="Note" placeholder="What did you notice?" autocapitalize="sentences"></textarea>
+    <p class="hint" id="hint">Your Whinchat circle can read this.</p>
+  </main>
+  <div class="dock">
+    <div class="strip" id="photos" hidden>
+      <button type="button" class="thumb" aria-pressed="false" aria-label="Hedge above a stone wall">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><rect width="72" height="30" fill="#b7c7a4"/><rect y="30" width="72" height="14" fill="#d9cbb6"/><rect y="44" width="72" height="28" fill="#8f8b7c"/><path d="M6 50h60M6 60h60" stroke="#6f6b60" stroke-width="1.5"/><circle cx="20" cy="16" r="9" fill="#3f6b45"/><circle cx="36" cy="13" r="11" fill="#2f5a38"/><circle cx="52" cy="18" r="8" fill="#4e7a52"/></svg>
+        <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17l9-10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <button type="button" class="thumb" aria-pressed="false" aria-label="A round pond and reeds">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><rect width="72" height="72" fill="#d5c4a2"/><ellipse cx="36" cy="40" rx="22" ry="14" fill="#6d90a0"/><ellipse cx="31" cy="36" rx="9" ry="4" fill="#d5e3ea"/><path d="M14 62c2-16 1-22 0-32M22 64c1-18 2-22 0-36M52 60c-1-14 1-18 0-26" stroke="#234433" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+        <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17l9-10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <button type="button" class="thumb" aria-pressed="false" aria-label="A red gate in a field">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><rect width="72" height="72" fill="#e4d3b0"/><rect y="48" width="72" height="24" fill="#c4b48a"/><rect x="16" y="22" width="5" height="32" fill="#9c3b2e"/><rect x="51" y="22" width="5" height="32" fill="#9c3b2e"/><rect x="16" y="26" width="40" height="4" fill="#9c3b2e"/><rect x="16" y="36" width="40" height="3" fill="#9c3b2e"/></svg>
+        <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17l9-10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <button type="button" class="thumb" aria-pressed="false" aria-label="A wooden footbridge">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><rect width="72" height="36" fill="#d8e0dc"/><rect y="36" width="72" height="36" fill="#6e8f86"/><path d="M8 28h56" stroke="#4a3428" stroke-width="3" stroke-linecap="round"/><path d="M14 28v12M58 28v12" stroke="#4a3428" stroke-width="2"/><path d="M8 40h56v5H8z" fill="#6a4a34"/><path d="M12 45h7v16h-7zM27 45h7v16h-7zM42 45h7v16h-7zM54 45h7v16h-7z" fill="#7d5a42"/></svg>
+        <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17l9-10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+    </div>
+    <button type="button" class="add" id="add" aria-expanded="false" aria-controls="photos">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m4 16 4.5-3.5L12 15l3-2.5L20 16"/></svg>
+      Add a photo
+    </button>
+  </div>
+</div>
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-describedby="sheetBody" hidden>
+  <h2 id="sheetTitle">Discard this note?</h2>
+  <p id="sheetBody">The words you wrote will be cleared.</p>
+  <button type="button" id="discard">Discard</button>
+  <button type="button" id="keep">Keep editing</button>
+</div>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const app = document.getElementById('app');
+  const note = document.getElementById('note');
+  const post = document.getElementById('post');
+  const hint = document.getElementById('hint');
+  const photos = document.getElementById('photos');
+  const add = document.getElementById('add');
+  const scrim = document.getElementById('scrim');
+  const sheet = document.getElementById('sheet');
+  const live = document.getElementById('live');
+  const keep = document.getElementById('keep');
+  const discard = document.getElementById('discard');
+  const thumbs = [...photos.querySelectorAll('.thumb')];
+  let sentTimer = 0;
+  const dirty = () => note.value.trim().length > 0;
+  function sync(){
+    const on = dirty();
+    post.classList.toggle('ready', on);
+    post.setAttribute('aria-disabled', on ? 'false' : 'true');
+  }
+  function clearPhotos(){
+    thumbs.forEach(t => t.setAttribute('aria-pressed', 'false'));
+  }
+  function hideStrip(){
+    photos.hidden = true;
+    add.setAttribute('aria-expanded', 'false');
+  }
+  function resetDraft(){
+    note.value = '';
+    clearPhotos();
+    hideStrip();
+    sync();
+  }
+  note.addEventListener('input', sync);
+  add.addEventListener('click', () => {
+    const open = photos.hidden;
+    photos.hidden = !open;
+    add.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  thumbs.forEach(t => t.addEventListener('click', () => {
+    const on = t.getAttribute('aria-pressed') === 'true';
+    t.setAttribute('aria-pressed', on ? 'false' : 'true');
+  }));
+  post.addEventListener('click', () => {
+    if (!dirty()){
+      live.textContent = 'Write a note before posting.';
+      return;
+    }
+    resetDraft();
+    hint.textContent = 'Posted to your circle.';
+    hint.classList.add('sent');
+    live.textContent = 'Posted to your circle.';
+    clearTimeout(sentTimer);
+    sentTimer = setTimeout(() => {
+      hint.textContent = 'Your Whinchat circle can read this.';
+      hint.classList.remove('sent');
+    }, 1800);
+  });
+  function openSheet(){
+    scrim.hidden = false;
+    sheet.hidden = false;
+    app.setAttribute('inert', '');
+    const show = () => { scrim.classList.add('on'); sheet.classList.add('on'); keep.focus(); };
+    if (reduce) show();
+    else requestAnimationFrame(show);
+  }
+  function closeSheet(didDiscard){
+    scrim.classList.remove('on');
+    sheet.classList.remove('on');
+    const finish = () => {
+      scrim.hidden = true;
+      sheet.hidden = true;
+      app.removeAttribute('inert');
+      if (didDiscard){
+        resetDraft();
+        live.textContent = 'Note discarded.';
+      } else {
+        live.textContent = 'Back to the note.';
+      }
+      note.focus();
+    };
+    if (reduce) finish();
+    else setTimeout(finish, 340);
+  }
+  document.getElementById('cancel').addEventListener('click', () => {
+    if (dirty()) openSheet();
+    else {
+      clearPhotos();
+      hideStrip();
+      live.textContent = 'Nothing to discard.';
+    }
+  });
+  discard.addEventListener('click', () => closeSheet(true));
+  keep.addEventListener('click', () => closeSheet(false));
+  scrim.addEventListener('click', () => closeSheet(false));
+  sheet.addEventListener('keydown', e => {
+    if (e.key === 'Escape'){ e.preventDefault(); closeSheet(false); return; }
+    if (e.key !== 'Tab') return;
+    const f = [discard, keep];
+    const i = f.indexOf(document.activeElement);
+    if (e.shiftKey && i <= 0){ e.preventDefault(); f[1].focus(); }
+    else if (!e.shiftKey && i === f.length - 1){ e.preventDefault(); f[0].focus(); }
+  });
+})();
+</script>
+</body>
+</html>

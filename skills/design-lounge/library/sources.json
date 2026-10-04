@@ -43,7 +43,12 @@
         "tablet-pos-register",
         "settings-team-members",
         "pricing-usage-slider",
-        "phone-wallet-cards"
+        "phone-wallet-cards",
+        "shot-callout-pins",
+        "m3-dialog",
+        "phone-checkout",
+        "phone-orders",
+        "phone-cart"
       ]
     },
     {
@@ -66,7 +71,11 @@
         "otp-code",
         "phone-comments-sheet",
         "phone-sign-up-steps",
-        "m3-sign-in"
+        "phone-code-entry",
+        "phone-app-lock",
+        "m3-sign-in",
+        "phone-composer",
+        "phone-forgot-password"
       ]
     },
     {
@@ -119,7 +128,8 @@
         "logo-draw-intro",
         "magnetic-buttons",
         "cursor-ink-blob",
-        "preloader-counter-intro"
+        "preloader-counter-intro",
+        "live-cursors-board"
       ]
     },
     {
@@ -189,7 +199,8 @@
         "coverflow-strip",
         "overlap-slider",
         "phone-video-player",
-        "testimonials-masonry-wall"
+        "testimonials-masonry-wall",
+        "phone-photo-viewer"
       ]
     },
     {
@@ -354,7 +365,8 @@
         "tablet-cook-mode",
         "textarea-field",
         "tree-nav",
-        "phone-large-text-layout"
+        "phone-large-text-layout",
+        "m3-search-results"
       ]
     },
     {
@@ -385,7 +397,8 @@
         "split-button",
         "split-flap-board",
         "switch-row",
-        "trail-type"
+        "trail-type",
+        "label-roll-button"
       ]
     },
     {
@@ -588,7 +601,8 @@
         "cta-material-rod-rack",
         "phone-permission-prompt",
         "phone-account-edit",
-        "m3-modal-bottom-sheet"
+        "m3-modal-bottom-sheet",
+        "chart-scrub-readout"
       ]
     },
     {
@@ -735,7 +749,9 @@
         "phone-lesson-quiz",
         "onboarding-workspace-setup",
         "m3-list-detail",
-        "phone-rating-prompt"
+        "m3-snackbar",
+        "phone-rating-prompt",
+        "phone-skeleton-list"
       ]
     },
     {

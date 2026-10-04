@@ -23,7 +23,9 @@
   "phone-notifications-list",
   "phone-search-results",
   "phone-notification-settings",
-  "m3-list-detail"
+  "m3-list-detail",
+  "phone-composer",
+  "phone-skeleton-list"
  ],
  "directions": [
   {

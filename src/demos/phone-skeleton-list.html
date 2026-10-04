@@ -1,0 +1,149 @@
+<!-- Design Lounge piece: phone-skeleton-list · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notices · Reedmark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Petrona:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e6eef2;--surface:#f5f8f9;--ink:#132028;--ink-2:#3d4e58;--muted:#4a5c66;
+  --line:#d3dee4;--bone:#b4c3cb;--accent:#0e5962;
+  --serif:"Petrona",Georgia,serif;--sans:"Manrope",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:16px/1.4 var(--sans);color:var(--ink);background:var(--bg);
+  overflow-x:clip;overflow-y:auto;-webkit-font-smoothing:antialiased;
+  padding-bottom:max(34px,env(safe-area-inset-bottom));
+}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+header{padding:max(54px,env(safe-area-inset-top)) 20px 12px}
+.kicker{margin:0 0 2px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.title-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
+h1{margin:0;font-family:var(--serif);font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.05}
+#replay{
+  min-height:44px;min-width:44px;padding:0 4px;display:inline-flex;align-items:center;gap:6px;
+  color:var(--accent);font-size:16px;font-weight:700;border-radius:10px;flex:none;
+}
+#replay svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#replay:hover{background:rgba(14,89,98,.1)}
+.status{margin:2px 0 0;font-size:13px;font-weight:600;color:var(--ink-2)}
+.card{
+  list-style:none;margin:0 16px;padding:0;background:var(--surface);
+  border:1px solid var(--line);border-radius:16px;overflow:hidden;
+}
+.card li{min-height:96px}
+.card li+li{border-top:1px solid var(--line)}
+.sk,.real{
+  display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;
+  min-height:96px;padding:14px 16px;
+}
+.real{display:none}
+.card.show .sk{display:none}
+.card.show .real{display:grid}
+.av{width:44px;height:44px;border-radius:50%;background:var(--bone)}
+.real .av{display:grid;place-items:center;color:var(--surface);font-size:13px;font-weight:700;letter-spacing:.02em}
+.lines{min-width:0;display:flex;flex-direction:column;gap:6px}
+.t{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.bone{display:block;height:12px;border-radius:4px;background:var(--bone)}
+.bone.title{height:14px;width:58%}
+.bone.when{width:48px;height:12px;flex:none}
+.bone.short{width:72%}
+.real b{font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.when{flex:none;font-size:13px;font-weight:600;color:var(--muted)}
+.real p{margin:0;font-size:14px;line-height:1.35;color:var(--ink-2)}
+.foot{margin:14px 20px 0;font-size:13px;font-weight:500;color:var(--ink-2);max-width:34em}
+@keyframes breathe{
+  from{opacity:1}
+  to{opacity:.52}
+}
+.sk{animation:breathe 1.8s cubic-bezier(.45,0,.55,1) infinite alternate;animation-delay:calc(var(--i) * 160ms)}
+@media (prefers-reduced-motion:reduce){
+  .sk{animation:none}
+}
+@media (max-width:360px){
+  h1{font-size:30px}
+  .title-row{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<header>
+  <p class="kicker">Reedmark</p>
+  <div class="title-row">
+    <h1>Notices</h1>
+    <button type="button" id="replay">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5V9H9"/></svg>
+      Replay
+    </button>
+  </div>
+  <p class="status" id="status" aria-live="polite">Loading notices</p>
+</header>
+<ol class="card" id="list" aria-label="Notices" aria-busy="true" aria-hidden="true">
+  <li style="--i:0">
+    <div class="sk" aria-hidden="true"><span class="av"></span><span class="lines"><span class="t"><i class="bone title"></i><i class="bone when"></i></span><i class="bone"></i><i class="bone short"></i></span></div>
+    <div class="real"><span class="av" style="background:#164e56">AC</span><span class="lines"><span class="t"><b>Bench hours on Thursday</b><span class="when">Today</span></span><p>The oak bench is free from 4 to 7.</p><p>Bring extra clamps if you need them.</p></span></div>
+  </li>
+  <li style="--i:1">
+    <div class="sk" aria-hidden="true"><span class="av"></span><span class="lines"><span class="t"><i class="bone title"></i><i class="bone when"></i></span><i class="bone"></i><i class="bone short"></i></span></div>
+    <div class="real"><span class="av" style="background:#1b3e4c">JP</span><span class="lines"><span class="t"><b>Clay is still drying</b><span class="when">Today</span></span><p>Tuesday's bowls need another night.</p><p>Leave that shelf where it is.</p></span></div>
+  </li>
+  <li style="--i:2">
+    <div class="sk" aria-hidden="true"><span class="av"></span><span class="lines"><span class="t"><i class="bone title"></i><i class="bone when"></i></span><i class="bone"></i><i class="bone short"></i></span></div>
+    <div class="real"><span class="av" style="background:#2f4a40">RO</span><span class="lines"><span class="t"><b>Linen at the side door</b><span class="when">Yesterday</span></span><p>Undyed linen arrives on Friday.</p><p>Sign the slip on the clipboard.</p></span></div>
+  </li>
+  <li style="--i:3">
+    <div class="sk" aria-hidden="true"><span class="av"></span><span class="lines"><span class="t"><i class="bone title"></i><i class="bone when"></i></span><i class="bone"></i><i class="bone short"></i></span></div>
+    <div class="real"><span class="av" style="background:#243848">IL</span><span class="lines"><span class="t"><b>Lathe induction</b><span class="when">Monday</span></span><p>Take the lathe induction first.</p><p>The next slot is Monday at 9.</p></span></div>
+  </li>
+  <li style="--i:4">
+    <div class="sk" aria-hidden="true"><span class="av"></span><span class="lines"><span class="t"><i class="bone title"></i><i class="bone when"></i></span><i class="bone"></i><i class="bone short"></i></span></div>
+    <div class="real"><span class="av" style="background:#3a4a42">SV</span><span class="lines"><span class="t"><b>Annex key</b><span class="when">Monday</span></span><p>The annex key hangs by the kettle.</p><p>It does not live in the till.</p></span></div>
+  </li>
+</ol>
+<p class="foot">These five stay on this phone until the next visit.</p>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const list = document.getElementById('list');
+  const status = document.getElementById('status');
+  let timer = 0, generation = 0, started = false;
+  function toContent(){
+    list.classList.add('show');
+    list.setAttribute('aria-busy', 'false');
+    list.removeAttribute('aria-hidden');
+    status.textContent = '5 notices';
+  }
+  function toBones(delay){
+    const gen = ++generation;
+    clearTimeout(timer);
+    list.classList.remove('show');
+    list.setAttribute('aria-busy', 'true');
+    list.setAttribute('aria-hidden', 'true');
+    status.textContent = 'Loading notices';
+    timer = setTimeout(() => { if (gen === generation) toContent(); }, delay);
+  }
+  function boot(){
+    if (started) return;
+    started = true;
+    toBones(reduce ? 0 : 1400);
+  }
+  if (reduce) boot();
+  else Promise.race([
+    document.fonts.ready,
+    new Promise(r => setTimeout(r, 800))
+  ]).then(boot);
+  document.getElementById('replay').addEventListener('click', () => {
+    started = true;
+    toBones(reduce ? 0 : 1400);
+  });
+})();
+</script>
+</body>
+</html>

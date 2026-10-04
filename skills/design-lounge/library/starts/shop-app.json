@@ -24,7 +24,10 @@
   "phone-wallet-cards",
   "phone-search-results",
   "phone-rating-prompt",
-  "m3-modal-bottom-sheet"
+  "m3-modal-bottom-sheet",
+  "phone-cart",
+  "phone-checkout",
+  "phone-orders"
  ],
  "directions": [
   {

@@ -1,0 +1,235 @@
+<!-- Design Lounge piece: phone-code-entry · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enter the code · Chitthi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,500;0,600;1,500&family=Inconsolata:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e6e8ef;--surface:#f4f6fa;--ink:#172033;--ink-2:#3c4760;--ink-3:#515a70;
+  --line:#cfd4e0;--accent:#9e2b22;--ok:#1d6a42;--error:#9e2b22;--focus:#172033;
+  --serif:"Vollkorn",Georgia,serif;--mono:"Inconsolata",ui-monospace,monospace;
+  --ease:cubic-bezier(0.2,0.7,0.2,1);--fast:160ms;--mid:240ms;--shake:420ms;--radius:10px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  display:flex;flex-direction:column;min-height:100%;
+  font:1rem/1.4 var(--serif);color:var(--ink);background:var(--bg);
+  padding:0 16px max(34px,env(safe-area-inset-bottom));
+  touch-action:pan-y;-webkit-font-smoothing:antialiased;
+}
+p{margin:0}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.nav{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
+  min-height:44px;margin:0 -16px;padding:max(54px,env(safe-area-inset-top)) 16px 10px;
+  border-bottom:1px solid var(--line);
+}
+.brand{font-family:var(--serif);font-weight:600;font-size:1.35rem;letter-spacing:-.02em;line-height:1}
+.desk{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-family:var(--mono);font-size:.75rem;font-weight:600;letter-spacing:.12em;color:var(--ink-2)}
+.swatch{width:8px;height:8px;background:var(--accent);flex:none}
+main{flex:1;display:flex;flex-direction:column;padding-top:22px}
+h1{margin:0;font-family:var(--serif);font-size:2.125rem;font-weight:600;line-height:1.12;letter-spacing:-.02em}
+.dek{margin:8px 0 0;font-size:1.0625rem;color:var(--ink-2)}
+.dek b{font-weight:600;color:var(--ink);font-family:var(--mono);font-size:1rem;letter-spacing:.02em}
+.boxes{
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:22px;
+}
+.digit{
+  width:100%;min-width:0;height:auto;min-height:3.5rem;padding:0.4rem 0;text-align:center;
+  font-family:var(--mono);font-size:1.75rem;font-weight:600;color:var(--ink);
+  background:var(--surface);border:1.5px solid var(--ink);border-radius:var(--radius);
+  -webkit-appearance:none;appearance:none;caret-color:var(--accent);
+}
+.digit:focus,.digit.ready{border-color:var(--accent);box-shadow:inset 0 -3px 0 var(--accent);outline:none}
+.digit:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.boxes.bad .digit{border-color:var(--error);box-shadow:none}
+.boxes.ok .digit{border-color:var(--ok);box-shadow:inset 0 -3px 0 var(--ok)}
+.boxes.shake{animation:shake var(--shake) var(--ease)}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-5px)}
+  80%{transform:translateX(4px)}
+}
+.err{margin:10px 0 0;font-family:var(--serif);font-size:.9375rem;font-weight:600;color:var(--error)}
+.err:empty{display:none}
+.resend{
+  align-self:flex-start;min-height:44px;min-width:44px;margin-top:8px;padding:0;
+  font-family:var(--mono);font-size:1rem;font-weight:600;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+}
+.resend[aria-disabled="false"]{color:var(--accent)}
+.card{margin-top:18px;background:var(--surface);border-radius:12px;padding:14px 16px;border:1px solid var(--line)}
+.card b{display:block;font-size:1.125rem}
+.card span{display:block;margin-top:2px;color:var(--ink-2);font-size:.9375rem}
+.again{align-self:flex-start;min-height:44px;margin-top:8px;font-family:var(--mono);font-size:1rem;font-weight:600;color:var(--ink)}
+.foot{margin:auto 0 0;padding-top:16px;font-family:var(--mono);font-size:.8125rem;color:var(--ink-3)}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <p class="brand">Chitthi</p>
+  <p class="desk"><i class="swatch" aria-hidden="true"></i>DESK 04</p>
+</header>
+<main>
+  <h1 id="title" tabindex="-1">Enter the code</h1>
+  <p class="dek" id="dek">Sent to <b>+977 98****418</b></p>
+  <div class="boxes" id="boxes" role="group" aria-labelledby="title" aria-describedby="err">
+    <input class="digit ready" id="d0" inputmode="numeric" autocomplete="one-time-code" maxlength="1" pattern="[0-9]*" aria-label="Digit 1" autofocus>
+    <input class="digit" id="d1" inputmode="numeric" maxlength="1" pattern="[0-9]*" aria-label="Digit 2">
+    <input class="digit" id="d2" inputmode="numeric" maxlength="1" pattern="[0-9]*" aria-label="Digit 3">
+    <input class="digit" id="d3" inputmode="numeric" maxlength="1" pattern="[0-9]*" aria-label="Digit 4">
+    <input class="digit" id="d4" inputmode="numeric" maxlength="1" pattern="[0-9]*" aria-label="Digit 5">
+    <input class="digit" id="d5" inputmode="numeric" maxlength="1" pattern="[0-9]*" aria-label="Digit 6">
+  </div>
+  <p class="err" id="err" role="alert"></p>
+  <button class="resend" type="button" id="resend" aria-disabled="true">Resend in 30s</button>
+  <div class="card" id="okcard" hidden>
+    <b>Mina Gurung</b>
+    <span>Signed in at the New Road desk.</span>
+  </div>
+  <button class="again" type="button" id="again" hidden>Enter again</button>
+</main>
+<p class="foot">Do not share this code.</p>
+<p class="sr" id="status" role="status"></p>
+<script>
+(function(){
+  var boxes=[].slice.call(document.querySelectorAll('.digit'));
+  var row=document.getElementById('boxes');
+  var err=document.getElementById('err');
+  var resend=document.getElementById('resend');
+  var status=document.getElementById('status');
+  var okcard=document.getElementById('okcard');
+  var again=document.getElementById('again');
+  var title=document.getElementById('title');
+  var left=30,timer=0,lock=false,done=false;
+
+  function code(){return boxes.map(function(b){return b.value;}).join('');}
+  function paint(){
+    if(left>0){
+      resend.textContent='Resend in '+left+'s';
+      resend.setAttribute('aria-disabled','true');
+    }else{
+      resend.textContent='Resend code';
+      resend.setAttribute('aria-disabled','false');
+      if(!done) status.textContent='You can resend the code.';
+    }
+  }
+  function startWait(){
+    left=30; paint();
+    clearInterval(timer);
+    timer=setInterval(function(){
+      left-=1; paint();
+      if(left<=0) clearInterval(timer);
+    },1000);
+  }
+  function clearErrOnType(){
+    if(!err.textContent) return;
+    err.textContent='';
+    row.classList.remove('bad');
+    boxes.forEach(function(b){b.removeAttribute('aria-invalid');});
+  }
+  function fill(text,from){
+    var chars=text.replace(/\D/g,'').slice(0,6);
+    if(!chars) return;
+    clearErrOnType();
+    for(var i=0;i<6;i++) boxes[i].value=chars[i]||'';
+    var n=chars.length;
+    boxes[Math.min(n,5)].focus();
+    if(n===6) judge();
+    return from;
+  }
+  function judge(){
+    if(lock||done) return;
+    if(code().length<6) return;
+    if(code()==='482913'){ succeed(); return; }
+    lock=true;
+    row.classList.remove('shake');
+    void row.offsetWidth;
+    row.classList.add('shake','bad');
+    err.textContent='That code does not match. Try again.';
+    boxes.forEach(function(b){b.setAttribute('aria-invalid','true');});
+    setTimeout(function(){
+      boxes.forEach(function(b){b.value='';});
+      row.classList.remove('shake');
+      boxes[0].focus();
+      lock=false;
+    },420);
+  }
+  function succeed(){
+    done=true;
+    row.classList.add('ok');
+    row.classList.remove('bad','shake');
+    err.textContent='';
+    boxes.forEach(function(b){b.disabled=true;b.removeAttribute('aria-invalid');});
+    title.textContent='Desk open';
+    okcard.hidden=false;
+    again.hidden=false;
+    resend.hidden=true;
+    status.textContent='Code accepted. The desk is open.';
+    title.focus();
+  }
+  function reset(){
+    done=false; lock=false;
+    title.textContent='Enter the code';
+    okcard.hidden=true;
+    again.hidden=true;
+    resend.hidden=false;
+    row.classList.remove('ok','bad','shake');
+    err.textContent='';
+    boxes.forEach(function(b,i){
+      b.disabled=false; b.value=''; b.removeAttribute('aria-invalid');
+      b.classList.toggle('ready',i===0);
+    });
+    boxes[0].focus();
+    status.textContent='';
+  }
+  boxes.forEach(function(box,i){
+    box.addEventListener('focus',function(){boxes.forEach(function(b){b.classList.remove('ready');});});
+    box.addEventListener('keydown',function(e){
+      if(e.key==='Backspace'&&!box.value&&i>0){boxes[i-1].value='';boxes[i-1].focus();}
+      if(e.key==='ArrowLeft'&&i>0){e.preventDefault();boxes[i-1].focus();}
+      if(e.key==='ArrowRight'&&i<5){e.preventDefault();boxes[i+1].focus();}
+      if(e.key.length===1&&!/\d/.test(e.key)) e.preventDefault();
+    });
+    box.addEventListener('input',function(){
+      if(lock||done) return;
+      box.value=box.value.replace(/\D/g,'').slice(-1);
+      clearErrOnType();
+      if(box.value&&i<5) boxes[i+1].focus();
+      if(code().length===6) judge();
+    });
+    box.addEventListener('paste',function(e){
+      e.preventDefault();
+      if(lock||done) return;
+      var text=(e.clipboardData&&e.clipboardData.getData('text'))||'';
+      fill(text);
+    });
+  });
+  resend.addEventListener('click',function(){
+    if(done) return;
+    if(left>0){status.textContent='Wait '+left+' seconds to resend.';return;}
+    startWait();
+    status.textContent='Code sent again.';
+  });
+  again.addEventListener('click',reset);
+  row.addEventListener('animationend',function(){row.classList.remove('shake');});
+  startWait();
+})();
+</script>
+</body>
+</html>

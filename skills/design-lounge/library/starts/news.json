@@ -25,7 +25,8 @@
   "phone-video-player",
   "phone-search-results",
   "phone-subscription-manage",
-  "m3-top-app-bar-scroll"
+  "m3-top-app-bar-scroll",
+  "phone-skeleton-list"
  ],
  "directions": [
   {

@@ -1,0 +1,263 @@
+<!-- Design Lounge piece: phone-checkout · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout · Threadrow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Petrona:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e4eaf0;--surface:#f4f7f8;--ink:#13202b;--ink-2:#3e5160;--line:#d3dde5;
+  --pine:#0c5c48;--pine-soft:#e4f2ec;--pine-ink:#f3fbf7;
+  --disabled:#c5d0d8;--disabled-ink:#243240;--focus:#0c5c48;
+  --serif:"Petrona",Georgia,serif;--sans:"Manrope",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  display:flex;flex-direction:column;overflow:hidden;
+  font:16px/1.4 var(--sans);color:var(--ink);background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#flow{flex:1;min-height:0;overflow-y:auto;transition:opacity 200ms var(--ease)}
+#flow[hidden]{display:none}
+body.is-placing #flow{opacity:.48;pointer-events:none}
+header{padding:max(54px,env(safe-area-inset-top)) 20px 0}
+.brand{margin:0;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--pine)}
+h1{margin:4px 0 0;font-family:var(--serif);font-weight:500;font-size:34px;line-height:1;letter-spacing:-.02em}
+.lede{margin:8px 0 0;font-size:15px;color:var(--ink-2)}
+.label{margin:16px 20px 8px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.card{margin:0 16px;background:var(--surface);border-radius:14px}
+.addr,.pay{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;min-height:72px}
+.pin{width:24px;height:24px;flex:none;margin-top:1px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;color:var(--ink)}
+.glyph{width:44px;height:32px;flex:none;color:var(--ink)}
+.who{margin:0;font-size:16px;font-weight:700;line-height:1.3}
+.where{margin:2px 0 0;font-size:14px;line-height:1.35;color:var(--ink-2)}
+fieldset{border:0;margin:16px 16px 0;padding:0;min-inline-size:0}
+legend{padding:0 4px 8px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.choices{background:var(--surface);border-radius:14px;overflow:hidden}
+.choice{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;column-gap:4px;min-height:72px;padding:10px 14px 10px 6px;cursor:pointer;transition:background 160ms var(--ease)}
+.choice+.choice{box-shadow:inset 0 1px 0 var(--line)}
+.choice input{position:absolute;inset:0;margin:0;opacity:0;width:100%;height:100%;cursor:pointer}
+.radio{width:22px;height:22px;margin-left:11px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center}
+.choice:has(:checked){background:var(--pine-soft)}
+.choice:has(:checked) .radio{border-color:var(--pine);background:var(--pine)}
+.choice:has(:checked) .radio::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--pine-ink)}
+.choice:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:-2px}
+.copy{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ct{font-size:16px;font-weight:700;line-height:1.25}
+.ce{font-size:13px;line-height:1.3;color:var(--ink-2)}
+.cp{font-family:var(--serif);font-size:20px;font-weight:500;padding-left:10px}
+fieldset:disabled .choice{opacity:.5}
+.fine{margin:14px 20px 16px;font-size:13px;line-height:1.4;color:var(--ink-2)}
+.bar{flex:none;display:flex;flex-direction:column;gap:8px;padding:12px 16px max(34px,env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line)}
+.bar[hidden]{display:none}
+.math p{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px;margin:0;font-size:14px;color:var(--ink-2)}
+.math p span:first-child{flex:1 1 8em}
+.math p span:last-child{margin-left:auto;color:var(--ink);font-variant-numeric:tabular-nums}
+.math .grand span:first-child{font-size:15px;font-weight:700;color:var(--ink)}
+.math .grand span:last-child{font-family:var(--serif);font-size:28px;font-weight:500;line-height:1;color:var(--ink)}
+#del.muted{color:var(--ink-2);font-family:var(--sans);font-size:14px;font-weight:600}
+.need{margin:0;font-size:13px;line-height:1.35;color:var(--ink-2)}
+.place{height:50px;width:100%;border-radius:14px;background:var(--pine);color:var(--pine-ink);font-size:16px;font-weight:700}
+.place:disabled{background:var(--disabled);color:var(--disabled-ink);cursor:not-allowed}
+.place[aria-busy="true"]{background:var(--pine);color:var(--pine-ink);cursor:default}
+#done{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:max(54px,env(safe-area-inset-top)) 28px max(34px,env(safe-area-inset-bottom));gap:8px}
+#done[hidden]{display:none}
+.mark{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--pine-soft);color:var(--pine)}
+.mark svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mark.run path{stroke-dasharray:32;stroke-dashoffset:32;animation:draw 420ms cubic-bezier(.16,1,.3,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.kicker{margin:8px 0 0;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pine)}
+#done h1{margin:0;font-family:var(--serif);font-weight:500;font-size:40px;line-height:1;letter-spacing:-.02em}
+#doneBody{margin:8px 0 0;max-width:28ch;font-size:15px;line-height:1.45;color:var(--ink-2)}
+#again{margin-top:16px;min-height:50px;padding:0 22px;border-radius:14px;background:var(--pine);color:var(--pine-ink);font-size:16px;font-weight:700}
+button:active{transform:scale(.98)}
+@media(hover:hover){
+  .place:not(:disabled):hover,#again:hover{background:#0a4e3d}
+}
+@media(prefers-reduced-motion:reduce){
+  #flow,.choice,.mark.run path{transition:none;animation:none}
+  .mark.run path{stroke-dashoffset:0}
+  button:active{transform:none}
+}
+</style>
+</head>
+<body>
+<main id="flow">
+  <header>
+    <p class="brand">Threadrow</p>
+    <h1 id="title" tabindex="-1">Checkout</h1>
+    <p class="lede">Wool overshirt and a merino scarf.</p>
+  </header>
+  <p class="label" id="shipL">Ship to</p>
+  <section class="card" aria-labelledby="shipL">
+    <div class="addr">
+      <svg class="pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10z"/><circle cx="12" cy="11" r="2"/></svg>
+      <div>
+        <p class="who">Nia Voss</p>
+        <p class="where">18 Harbor Lane, Apt 2<br>Port Merrow</p>
+      </div>
+    </div>
+  </section>
+  <fieldset id="speeds">
+    <legend>Delivery</legend>
+    <div class="choices">
+      <label class="choice">
+        <input type="radio" name="delivery" value="post">
+        <span class="radio" aria-hidden="true"></span>
+        <span class="copy"><span class="ct">Workshop post</span><span class="ce">Arrives in 4 to 6 days</span></span>
+        <span class="cp" data-speed="post"></span>
+      </label>
+      <label class="choice">
+        <input type="radio" name="delivery" value="courier">
+        <span class="radio" aria-hidden="true"></span>
+        <span class="copy"><span class="ct">Next-day courier</span><span class="ce">Arrives tomorrow by 6 pm</span></span>
+        <span class="cp" data-speed="courier"></span>
+      </label>
+    </div>
+  </fieldset>
+  <p class="label" id="payL">Pay with</p>
+  <section class="card" aria-labelledby="payL">
+    <div class="pay">
+      <svg class="glyph" viewBox="0 0 44 32" aria-hidden="true"><rect x="1.5" y="1.5" width="41" height="29" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="6" y="8" width="10" height="7" rx="1.5" fill="currentColor"/><path d="M6 22h12M22 22h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div>
+        <p class="who">Card ending 4418</p>
+        <p class="where">Expires 08/28. Saved for Threadrow.</p>
+      </div>
+    </div>
+  </section>
+  <p class="fine">The card ending 4418 is charged when you place the order.</p>
+</main>
+<footer class="bar" id="bar">
+  <div class="math" aria-label="Order total">
+    <p><span>Subtotal</span><span id="sub"></span></p>
+    <p><span>Delivery</span><span id="del" class="muted"></span></p>
+    <p class="grand"><span>Total</span><span id="tot"></span></p>
+  </div>
+  <p class="need" id="need"></p>
+  <button type="button" class="place" id="place" disabled>Place order</button>
+</footer>
+<section id="done" hidden>
+  <div class="mark" id="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 9.2 17 19 7"/></svg></div>
+  <p class="kicker">Order placed</p>
+  <h1 id="doneTitle" tabindex="-1">TR-20481</h1>
+  <p id="doneBody"></p>
+  <button type="button" id="again">Back to the shop</button>
+</section>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+const OVERSHIRT = 6800;
+const SCARF = 1840;
+const SUB = OVERSHIRT + SCARF;
+const ORDER = 'TR-20481';
+const SPEEDS = {
+  post: { label: 'Workshop post', eta: 'Arrives in 4 to 6 days', cents: 650 },
+  courier: { label: 'Next-day courier', eta: 'Arrives tomorrow by 6 pm', cents: 1400 }
+};
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PLACE_MS = reduce ? 160 : 720;
+let speed = null;
+let timer = 0;
+const speeds = document.getElementById('speeds');
+const subEl = document.getElementById('sub');
+const delEl = document.getElementById('del');
+const totEl = document.getElementById('tot');
+const needEl = document.getElementById('need');
+const placeBtn = document.getElementById('place');
+const flow = document.getElementById('flow');
+const bar = document.getElementById('bar');
+const done = document.getElementById('done');
+const doneBody = document.getElementById('doneBody');
+const doneTitle = document.getElementById('doneTitle');
+const mark = document.getElementById('mark');
+const live = document.getElementById('live');
+const title = document.getElementById('title');
+
+function money(cents) {
+  const n = Math.max(0, Math.round(cents));
+  const whole = Math.floor(n / 100);
+  const frac = String(n % 100).padStart(2, '0');
+  return '$' + whole + '.' + frac;
+}
+function deliveryCents() { return speed ? SPEEDS[speed].cents : 0; }
+function totalCents() { return SUB + deliveryCents(); }
+function paint() {
+  subEl.textContent = money(SUB);
+  if (speed) {
+    delEl.textContent = money(SPEEDS[speed].cents);
+    delEl.classList.remove('muted');
+    needEl.textContent = SPEEDS[speed].eta;
+    placeBtn.disabled = false;
+  } else {
+    delEl.textContent = 'Not chosen';
+    delEl.classList.add('muted');
+    needEl.textContent = 'Choose a delivery speed to place the order.';
+    placeBtn.disabled = true;
+  }
+  totEl.textContent = money(totalCents());
+  document.querySelectorAll('[data-speed]').forEach(el => {
+    el.textContent = money(SPEEDS[el.dataset.speed].cents);
+  });
+}
+speeds.addEventListener('change', e => {
+  const input = e.target.closest('input[name="delivery"]');
+  if (!input || !input.checked || speeds.disabled) return;
+  speed = input.value;
+  paint();
+  live.textContent = SPEEDS[speed].label + ', ' + money(SPEEDS[speed].cents) + '. Total ' + money(totalCents()) + '.';
+});
+function showDone() {
+  timer = 0;
+  document.body.classList.remove('is-placing');
+  const s = SPEEDS[speed];
+  doneBody.textContent = s.label + ' to Nia Voss in Port Merrow. ' + s.eta + '.';
+  flow.hidden = true;
+  bar.hidden = true;
+  done.hidden = false;
+  placeBtn.removeAttribute('aria-busy');
+  placeBtn.textContent = 'Place order';
+  mark.classList.remove('run');
+  void mark.offsetWidth;
+  mark.classList.add('run');
+  doneTitle.focus();
+  live.textContent = 'Order ' + ORDER + ' placed.';
+}
+placeBtn.addEventListener('click', () => {
+  if (placeBtn.disabled || timer || !speed) return;
+  document.body.classList.add('is-placing');
+  speeds.disabled = true;
+  placeBtn.disabled = true;
+  placeBtn.setAttribute('aria-busy', 'true');
+  placeBtn.textContent = 'Placing order';
+  live.textContent = 'Placing order.';
+  timer = setTimeout(showDone, PLACE_MS);
+});
+document.getElementById('again').addEventListener('click', () => {
+  if (timer) { clearTimeout(timer); timer = 0; }
+  speed = null;
+  speeds.disabled = false;
+  document.querySelectorAll('input[name="delivery"]').forEach(input => { input.checked = false; });
+  document.body.classList.remove('is-placing');
+  placeBtn.removeAttribute('aria-busy');
+  placeBtn.textContent = 'Place order';
+  done.hidden = true;
+  flow.hidden = false;
+  bar.hidden = false;
+  paint();
+  title.focus();
+  live.textContent = 'Back at checkout. Choose a delivery speed.';
+});
+paint();
+</script>
+</body>
+</html>

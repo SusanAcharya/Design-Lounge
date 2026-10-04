@@ -1,0 +1,202 @@
+<!-- Design Lounge piece: phone-cart · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bag · Wickmere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#efe6d8;--surface:#fbf6ee;--ink:#241c16;--ink-2:#5c5146;--line:#e4d5c3;
+  --chip:#e7dcce;--accent:#9c3412;--accent-ink:#fff6f1;--focus:#9c3412;
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Outfit",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  display:flex;flex-direction:column;overflow:hidden;
+  font:16px/1.4 var(--sans);color:var(--ink);background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+main{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column}
+header{padding:max(54px,env(safe-area-inset-top)) 20px 0}
+.brand{margin:0;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+h1{margin:4px 0 0;font-family:var(--serif);font-weight:500;font-size:40px;line-height:1;letter-spacing:-.02em}
+.lede{margin:6px 0 0;font-size:15px;color:var(--ink-2)}
+.sheet{margin:18px 16px 0;background:var(--surface);border-radius:14px;overflow:hidden}
+.sheet[hidden]{display:none}
+.group{margin:0;list-style:none;padding:0}
+.item{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px;padding:14px;position:relative}
+.item+.item::before{content:"";position:absolute;left:82px;right:14px;top:0;height:1px;background:var(--line)}
+.swatch{width:56px;height:56px;border-radius:12px;overflow:hidden}
+.swatch svg{display:block;width:56px;height:56px}
+.topline{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px;row-gap:2px}
+.name{margin:0;font-size:16px;font-weight:600;line-height:1.25;flex:1 1 8em;min-width:0}
+.unit{margin:0 0 0 auto;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.var{margin:2px 0 0;font-size:13px;line-height:1.3;color:var(--ink-2)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 8px;margin-top:6px}
+.step{display:inline-flex;align-items:center;background:var(--chip);border-radius:12px}
+.step button{width:44px;height:44px;display:grid;place-items:center;border-radius:12px}
+.step button[aria-disabled="true"]{opacity:.35}
+.step svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;pointer-events:none}
+.qty{min-width:22px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.remove{min-height:44px;padding:0 10px;font-size:15px;font-weight:600;color:var(--accent);border-radius:10px}
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 28px 32px;gap:8px}
+.empty[hidden]{display:none}
+.empty-title{margin:0;font-family:var(--serif);font-style:italic;font-weight:500;font-size:32px;line-height:1.05}
+.empty-copy{margin:0 0 10px;max-width:26ch;color:var(--ink-2);font-size:15px}
+#empty-btn{min-height:50px;padding:12px 20px;border-radius:14px;background:var(--accent);color:var(--accent-ink);font-size:16px;font-weight:600}
+.fine{margin:0;padding:12px 14px 14px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+.bar{flex:none;display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 20px max(34px,env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line)}
+.bar[hidden]{display:none}
+.count{margin:0;font-size:15px;font-weight:500}
+.sum{margin:0;font-family:var(--serif);font-style:italic;font-weight:500;font-size:36px;line-height:1;letter-spacing:-.02em;color:var(--accent)}
+button:active{transform:scale(.98)}
+@media(hover:hover){
+  .step button:hover{background:rgba(36,28,22,.06)}
+  .remove:hover{background:rgba(156,52,18,.08)}
+  #empty-btn:hover{background:#872c0f}
+}
+@media(prefers-reduced-motion:reduce){
+  button:active{transform:none}
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="brand">Wickmere</p>
+    <h1>Bag</h1>
+    <p class="lede">Packed in Millford.</p>
+  </header>
+  <div class="sheet" id="sheet">
+    <ul class="group" id="lines"></ul>
+    <p class="fine" id="fine">Ships from Millford in 4 to 6 days.</p>
+  </div>
+  <div class="empty" id="empty" hidden>
+    <p class="empty-title">Your bag is empty.</p>
+    <p class="empty-copy">The beeswax pillar is still on the shelf.</p>
+    <button type="button" id="empty-btn">Add the beeswax pillar</button>
+  </div>
+</main>
+<footer class="bar" id="bar">
+  <p class="count" id="count"></p>
+  <p class="sum" id="sum"></p>
+</footer>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+const GOODS = {
+  pillar: { name: 'Beeswax pillar', variant: 'Amber, 180 mm', cents: 2400 },
+  pot: { name: 'Clay match pot', variant: 'Oxide red', cents: 1650 },
+  snuffer: { name: 'Brass snuffer', variant: 'Polished brass', cents: 2800 }
+};
+const SWATCH = {
+  pillar: '<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#F6E6C4"/><rect x="20" y="7" width="8" height="5" rx="1" fill="#FBF6EE"/><rect x="17" y="12" width="14" height="27" rx="3" fill="#E0A23A"/></svg>',
+  pot: '<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#F3D9D0"/><path d="M14 16h20v4H14z" fill="#C46A52"/><path d="M16 20h16l-2 16H18z" fill="#8C3A2A"/></svg>',
+  snuffer: '<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#F4E7C8"/><path d="M18 33V22a6 6 0 0 1 12 0v11" fill="none" stroke="#A6843E" stroke-width="2.5"/><path d="M15 33h18" stroke="#A6843E" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="15" r="2.5" fill="#C6A15B"/></svg>'
+};
+const MINUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg>';
+const PLUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg>';
+let lines = [
+  { id: 'pillar', qty: 1 },
+  { id: 'pot', qty: 2 },
+  { id: 'snuffer', qty: 1 }
+];
+const linesEl = document.getElementById('lines');
+const sheetEl = document.getElementById('sheet');
+const emptyEl = document.getElementById('empty');
+const barEl = document.getElementById('bar');
+const countEl = document.getElementById('count');
+const sumEl = document.getElementById('sum');
+const live = document.getElementById('live');
+const emptyBtn = document.getElementById('empty-btn');
+
+function money(cents) {
+  const n = Math.max(0, Math.round(cents));
+  const whole = Math.floor(n / 100);
+  const frac = String(n % 100).padStart(2, '0');
+  const grouped = String(whole).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return '$' + grouped + '.' + frac;
+}
+function itemsWord(n) { return n === 1 ? '1 item' : n + ' items'; }
+function totals() {
+  let count = 0, cents = 0;
+  for (const line of lines) {
+    count += line.qty;
+    cents += GOODS[line.id].cents * line.qty;
+  }
+  return { count, cents };
+}
+function render(focusId) {
+  const on = lines.length > 0;
+  sheetEl.hidden = !on;
+  emptyEl.hidden = on;
+  barEl.hidden = !on;
+  if (on) {
+    linesEl.innerHTML = lines.map(line => {
+      const g = GOODS[line.id];
+      const atMin = line.qty <= 1;
+      const atMax = line.qty >= 9;
+      return '<li class="item"><div class="swatch">' + SWATCH[line.id] + '</div><div class="info"><div class="topline"><p class="name">' + g.name + '</p><p class="unit">' + money(g.cents) + '</p></div><p class="var">' + g.variant + '</p><div class="actions"><div class="step" role="group" aria-label="Quantity for ' + g.name + '"><button type="button" id="minus-' + line.id + '" aria-label="Remove one ' + g.name + '"' + (atMin ? ' aria-disabled="true"' : '') + '>' + MINUS + '</button><span class="qty">' + line.qty + '</span><button type="button" id="plus-' + line.id + '" aria-label="Add one ' + g.name + '"' + (atMax ? ' aria-disabled="true"' : '') + '>' + PLUS + '</button></div><button type="button" class="remove" id="remove-' + line.id + '" aria-label="Remove ' + g.name + '">Remove</button></div></div></li>';
+    }).join('');
+    const t = totals();
+    countEl.textContent = itemsWord(t.count);
+    sumEl.textContent = money(t.cents);
+  }
+  if (focusId) {
+    const el = document.getElementById(focusId);
+    if (el) el.focus();
+  }
+}
+function speak(name, extra) {
+  if (!lines.length) {
+    live.textContent = extra + ' Your bag is empty.';
+    return;
+  }
+  const t = totals();
+  live.textContent = extra + ' ' + itemsWord(t.count) + ', total ' + money(t.cents) + '.';
+}
+linesEl.addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn || btn.getAttribute('aria-disabled') === 'true') return;
+  const id = btn.id.replace(/^(minus|plus|remove)-/, '');
+  const name = GOODS[id].name;
+  if (btn.id.startsWith('plus-')) {
+    const line = lines.find(l => l.id === id);
+    if (!line || line.qty >= 9) return;
+    line.qty += 1;
+    render(btn.id);
+    speak(name, name + ', quantity ' + line.qty + '.');
+  } else if (btn.id.startsWith('minus-')) {
+    const line = lines.find(l => l.id === id);
+    if (!line || line.qty <= 1) return;
+    line.qty -= 1;
+    render(btn.id);
+    speak(name, name + ', quantity ' + line.qty + '.');
+  } else if (btn.id.startsWith('remove-')) {
+    const i = lines.findIndex(l => l.id === id);
+    if (i < 0) return;
+    const next = lines[i + 1]?.id || lines[i - 1]?.id || null;
+    lines.splice(i, 1);
+    render(next ? 'remove-' + next : 'empty-btn');
+    speak(name, 'Removed ' + name + '.');
+  }
+});
+emptyBtn.addEventListener('click', () => {
+  lines = [{ id: 'pillar', qty: 1 }];
+  render('plus-pillar');
+  speak('Beeswax pillar', 'Added the beeswax pillar.');
+});
+render(null);
+</script>
+</body>
+</html>

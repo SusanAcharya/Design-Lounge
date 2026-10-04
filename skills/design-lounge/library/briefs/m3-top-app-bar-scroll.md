@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 484 · "M3 collapsing large top app bar" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 490 · "M3 collapsing large top app bar" · designlounge.vercel.app -->
 
 # M3 collapsing large top app bar
 

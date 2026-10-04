@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 486 · "M3 modal bottom sheet with predictive back" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 492 · "M3 modal bottom sheet with predictive back" · designlounge.vercel.app -->
 
 # M3 modal bottom sheet with predictive back
 

@@ -26,7 +26,8 @@
   "phone-booking-slots",
   "phone-subscription-manage",
   "phone-notification-settings",
-  "phone-rating-prompt"
+  "phone-rating-prompt",
+  "phone-app-lock"
  ],
  "directions": [
   {

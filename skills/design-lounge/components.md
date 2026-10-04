@@ -54,7 +54,7 @@ One height per platform: `var(--control)`. Padding 0 14px. Font 13px / 500 on we
 
 Hover: primary darkens by using `--inverse` only when the family is sharp. Otherwise the border becomes `--ink` on outline buttons, and primary buttons stay the fill. Do not invent a third hover colour.
 
-The five roles in one row are `button-roles`. Save is the one solid. A destructive action on that same view stays outline. On a confirm dialog the destructive action is the one solid and cancel is outline. That dialog is `modal-dialog-focus-trap`. A primary action with a menu of sibling actions is `split-button`. A destructive confirm that must be dragged to the end is `drag-to-confirm`. A round menu of three actions on a goo filter is `gooey-menu`. A current link whose pill slides under that filter is `gooey-nav`. A draft that falls into strips is `shred-button`. One gold edge around a button is `edge-light-button`. A button that drops into its well is `press-well`. A short description of a control is `tooltip`. It shows on hover and on focus. Do not put a tooltip on a chart.
+The five roles in one row are `button-roles`. Save is the one solid. A destructive action on that same view stays outline. On a confirm dialog the destructive action is the one solid and cancel is outline. That dialog is `modal-dialog-focus-trap`. A primary action with a menu of sibling actions is `split-button`. A destructive confirm that must be dragged to the end is `drag-to-confirm`. A round menu of three actions on a goo filter is `gooey-menu`. A current link whose pill slides under that filter is `gooey-nav`. A draft that falls into strips is `shred-button`. One gold edge around a button is `edge-light-button`. A button that drops into its well is `press-well`. A short description of a control is `tooltip`. It shows on hover and on focus. Do not put a tooltip on a chart. A full-width row whose label rolls up to a second line, and whose ground inverts, is `label-roll-button`. The second line is a fact about the first, not a second action.
 
 ## Field
 
@@ -165,7 +165,7 @@ A nav item is a row or a 40px pill. The current item uses `--primary-soft` and `
 
 A chart is one series. Bars and sparks use `--primary` for the active mark and `--line` or `--surface-2` for the rest. A line is one stroke in `--primary`, with dots in the same ink. No area fill, no second series, no legend, no pie. The number the person came for is display size above the chart. The line is the evidence under it. Grid lines are `--line`, or omit them. Do not import a chart library's palette, legend, or tooltip.
 
-A stage count that narrows, one colour, is `funnel-chart`. Five named nodes, and only the lines that touch the pressed one, are `node-graph`. The stage the person picks is the display number. Where the money went is a ranked horizontal bar list, `chart-rank-spend`. One colour, longest first, the selected amount at display size. A budget list is `budget-meter`: only the row past its limit uses the warning wash. Do not paint every row amber.
+A stage count that narrows, one colour, is `funnel-chart`. Five named nodes, and only the lines that touch the pressed one, are `node-graph`. The stage the person picks is the display number. Where the money went is a ranked horizontal bar list, `chart-rank-spend`. One colour, longest first, the selected amount at display size. A budget list is `budget-meter`: only the row past its limit uses the warning wash. Do not paint every row amber. A series the person reads by dragging through time is `chart-scrub-readout`. One hairline, one dot, and the value in the display number. Arrow keys move one step. No tooltip on the line.
 
 An amount is one string in one family. If it contains a glyph the mono face lacks, including रु, set the whole amount in the face that contains it. Nepal and India group by lakh: 1,24,000. Letter-spacing comes from the locked pairing. Do not pick a second tracking. Read Locale in [practice.md](practice.md).
 
@@ -214,7 +214,7 @@ Buttons beyond the basic set. A physical key is `button-3d-press`. Soft UI is `b
 
 Inputs and waiting. A code by email or text is `otp-code` or `input-otp-underline`. A phone number is `input-phone-country`. Many spinners are in `loader-spinner-set`. Waiting on AI is `loader-text-shimmer`.
 
-Showing work. A phone, laptop, watch or music player is `mockup-phone-showcase`, `mockup-laptop-browser`, `mockup-watch-faces` or `mockup-ipod-classic`. A desktop dock is `dock-magnify-desktop`. Editor tools are `dock-editor-tools`. Who is here is `dock-presence-bar`. A selection box is `frame-transform-box`. Image frames with shapes are `frame-circle-cut`. Galleries are `gallery-film-strip`, `gallery-photo-album`, `gallery-museum-placard` and `gallery-wall-frames`.
+Showing work. A phone, laptop, watch or music player is `mockup-phone-showcase`, `mockup-laptop-browser`, `mockup-watch-faces` or `mockup-ipod-classic`. A desktop dock is `dock-magnify-desktop`. Editor tools are `dock-editor-tools`. Who is here is `dock-presence-bar`. Several named cursors on one shared board are `live-cursors-board`: yours follows the pointer, the others drift, and only the board hides the system cursor. A selection box is `frame-transform-box`. Notes pinned beside a still, one open at a time, are `shot-callout-pins`. The pin sits off the type, and a line runs to the note. Image frames with shapes are `frame-circle-cut`. Galleries are `gallery-film-strip`, `gallery-photo-album`, `gallery-museum-placard` and `gallery-wall-frames`.
 
 Backgrounds. Soft colour is `background-aurora-mesh` or `background-sunrise-horizon`. Print is `background-halftone-pop` or `background-ink-wash`. Material is `background-terrazzo` or `background-linen-weave`. Technical is `background-graph-paper` or `background-diagonal-boxes`. A background sits behind one section, not the whole site, and text on it passes 4.5:1. Hand-drawn marks on words are `text-annotated-underlines`.
 
@@ -251,6 +251,19 @@ Android versions. When the platform is Android or the family is Material, use th
 - A list that opens a detail: `m3-list-detail` (the row grows into the screen; back shrinks it home).
 - A screen title that collapses: `m3-top-app-bar-scroll`. On iOS this is `ios-large-title-collapse`.
 - A bottom sheet: `m3-modal-bottom-sheet`, with the main button pinned to the bottom.
+- A confirm: `m3-dialog`. Text buttons, the destructive one in the error colour. A tap on the scrim does not dismiss.
+- Undo after an action: `m3-snackbar`. One at a time, above the bottom inset, about 4 seconds.
+- Search: `m3-search-results`. Recent searches first, live results, an empty line that repeats the query.
+
+More phone screens:
+
+- Forgot password: `phone-forgot-password`. The sent state shows the address they typed and a resend that waits.
+- A code: `phone-code-entry`. Paste fills every box. A wrong code shows its error under the boxes.
+- An app lock: `phone-app-lock`. The biometric button first, the keypad as the fallback. No copy of the system lock screen.
+- Bag, checkout, and history: `phone-cart`, `phone-checkout`, `phone-orders`. Totals are computed from the lines.
+- Writing: `phone-composer`. Post stays off until there is text. Leaving with text asks first.
+- Photos: `phone-photo-viewer`. Swipe between them, one zoom step, a close control.
+- First load of a list: `phone-skeleton-list`. Placeholders the shape of the real rows, then the rows.
 
 A single metric is one number at display size, a delta in `--success` or `--danger`, and a caption in `--ink-2`. If the screen has several figures, only one of them is display size. The others step down to the title role. Do not lay four equal numbers in a row.
 

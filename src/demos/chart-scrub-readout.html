@@ -1,0 +1,135 @@
+<!-- Design Lounge piece: chart-scrub-readout · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Scrub a firing curve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141210;--ink:#f3ebe2;--ink-2:#a89b8c;--ink-3:#6f655c;--line:#2c2824;
+  --stroke:#e07a45;--font:"Space Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.4 var(--font);display:flex;flex-direction:column;padding:36px 48px 32px;-webkit-font-smoothing:antialiased}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-top:20px}
+.num{font:500 88px/1 var(--font);letter-spacing:-.045em;margin:0}
+.num sup{font-size:28px;line-height:1;vertical-align:top;position:relative;top:10px;margin-left:2px}
+.sub{margin:10px 0 0;color:var(--ink-2);font-size:16px}
+.side{text-align:right;padding-bottom:8px}
+.side b{display:block;font:500 13px/1 var(--mono);color:var(--ink-2);font-weight:500}
+.side span{display:block;margin-top:6px;font:400 12px/1 var(--mono);color:var(--ink-3)}
+.plot{position:relative;flex:1;margin-top:28px;min-height:0;border-top:1px solid var(--line)}
+svg{display:block;width:100%;height:100%}
+.axis{fill:var(--ink-3);font:11px var(--mono)}
+.hit{position:absolute;left:56px;right:16px;top:18px;bottom:32px;cursor:ew-resize}
+.hit:focus-visible{outline:2px solid var(--stroke);outline-offset:4px}
+@media (prefers-reduced-motion:reduce){
+  .plot path{stroke-dashoffset:0!important}
+}
+</style>
+</head>
+<body>
+<div class="eyebrow">Kiln 4 · Cone 6</div>
+<div class="row">
+  <div>
+    <p class="num" id="num">1,184<sup>°</sup></p>
+    <p class="sub" id="sub">Minute 64 of 90 · hold</p>
+  </div>
+  <div class="side"><b>Peak 1,184°</b><span>Hold from minute 60</span></div>
+</div>
+<div class="plot" id="plot">
+  <svg id="svg" aria-hidden="true"></svg>
+  <div class="hit" id="hit" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="90" aria-valuenow="64" aria-label="Minute on the firing curve" aria-valuetext="Minute 64, 1184 degrees"></div>
+</div>
+<script>
+(function(){
+  var temps = [70,95,140,220,340,500,680,860,1000,1100,1160,1180,1184,1184,1170,1000,780,560,380];
+  var plot = document.getElementById('plot');
+  var svg = document.getElementById('svg');
+  var box = plot.getBoundingClientRect();
+  var W = Math.round(box.width), H = Math.round(box.height), L = 56, R = 16, T = 18, B = 32;
+  var iw = W - L - R, ih = H - T - B;
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  function tempAt(min){
+    var x = min / 5, i = Math.floor(x), f = x - i;
+    if (i >= temps.length - 1) return temps[temps.length - 1];
+    return temps[i] + (temps[i + 1] - temps[i]) * f;
+  }
+  function X(min){ return L + (min / 90) * iw; }
+  function Y(temp){ return T + ih - (temp / 1240) * ih; }
+  var d = '';
+  for (var m = 0; m <= 90; m++) d += (m ? 'L' : 'M') + X(m).toFixed(1) + ' ' + Y(tempAt(m)).toFixed(1);
+  var svg = document.getElementById('svg');
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(name, attrs){
+    var n = document.createElementNS(ns, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  [400,800,1200].forEach(function(v){
+    var y = Y(v);
+    svg.appendChild(el('line', { x1:L, x2:W-R, y1:y, y2:y, stroke:'#2c2824', 'stroke-width':'1' }));
+    svg.appendChild(el('text', { x:8, y:y+4, class:'axis' })).textContent = v;
+  });
+  [0,30,60,90].forEach(function(v){
+    svg.appendChild(el('text', { x:X(v), y:H-8, class:'axis', 'text-anchor':'middle' })).textContent = v + 'm';
+  });
+  var path = el('path', { d:d, fill:'none', stroke:'#e07a45', 'stroke-width':'2.5', 'stroke-linejoin':'round', 'stroke-linecap':'round' });
+  svg.appendChild(path);
+  var hair = el('line', { stroke:'#f3ebe2', 'stroke-width':'1', 'stroke-dasharray':'2 4' });
+  var dot = el('circle', { r:'6', fill:'#141210', stroke:'#e07a45', 'stroke-width':'2.5' });
+  svg.appendChild(hair); svg.appendChild(dot);
+  var len = path.getTotalLength();
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce){
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
+    path.style.transition = 'stroke-dashoffset 800ms cubic-bezier(.2,.7,.2,1)';
+    requestAnimationFrame(function(){ path.style.strokeDashoffset = '0'; });
+  }
+  var minute = 64;
+  var num = document.getElementById('num');
+  var sub = document.getElementById('sub');
+  var hit = document.getElementById('hit');
+  function phase(min){
+    if (min < 30) return 'climb';
+    if (min < 60) return 'approach';
+    if (min <= 70) return 'hold';
+    return 'cool';
+  }
+  function paint(){
+    var temp = Math.round(tempAt(minute));
+    var x = X(minute), y = Y(temp);
+    hair.setAttribute('x1', x); hair.setAttribute('x2', x);
+    hair.setAttribute('y1', T); hair.setAttribute('y2', T + ih);
+    dot.setAttribute('cx', x); dot.setAttribute('cy', y);
+    num.innerHTML = temp.toLocaleString('en-GB') + '<sup>°</sup>';
+    sub.textContent = 'Minute ' + minute + ' of 90 · ' + phase(minute);
+    hit.setAttribute('aria-valuenow', minute);
+    hit.setAttribute('aria-valuetext', 'Minute ' + minute + ', ' + temp + ' degrees');
+  }
+  function fromEvent(e){
+    var r = hit.getBoundingClientRect();
+    var t = (e.clientX - r.left) / r.width;
+    minute = Math.round(Math.max(0, Math.min(1, t)) * 90);
+    paint();
+  }
+  hit.addEventListener('pointerdown', function(e){ hit.setPointerCapture(e.pointerId); fromEvent(e); });
+  hit.addEventListener('pointermove', function(e){ if (e.buttons) fromEvent(e); });
+  hit.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { minute = Math.min(90, minute + 1); paint(); e.preventDefault(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { minute = Math.max(0, minute - 1); paint(); e.preventDefault(); }
+    if (e.key === 'Home') { minute = 0; paint(); e.preventDefault(); }
+    if (e.key === 'End') { minute = 90; paint(); e.preventDefault(); }
+  });
+  paint();
+})();
+</script>
+</body>
+</html>

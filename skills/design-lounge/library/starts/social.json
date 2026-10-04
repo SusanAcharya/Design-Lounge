@@ -27,7 +27,9 @@
   "phone-search-results",
   "phone-account-edit",
   "phone-privacy-data",
-  "phone-delete-account"
+  "phone-delete-account",
+  "phone-composer",
+  "phone-photo-viewer"
  ],
  "directions": [
   {

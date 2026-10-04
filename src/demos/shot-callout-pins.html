@@ -1,0 +1,133 @@
+<!-- Design Lounge piece: shot-callout-pins · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Callouts on a review still</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Literata:opsz,wght@7..72,500;7..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stage:#d7d1c6;--sheet:#f6f3ee;--ink:#1a1814;--ink-2:#5e584e;--line:#cfc6b8;
+  --pin:#8f2d1c;--pin-ink:#f8f1ea;--pay:#1c3a30;--pay-ink:#f3f7f4;
+  --font:"Figtree",system-ui,sans-serif;--serif:"Literata",Georgia,serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--stage);color:var(--ink);font:15px/1.4 var(--font);-webkit-font-smoothing:antialiased}
+.stage{position:relative;height:100%;display:flex;align-items:center;padding:0 56px 0 64px;gap:96px}
+.col{display:flex;flex-direction:column;gap:14px;flex:none}
+.kicker{font:500 12px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.still{width:640px;background:var(--sheet);border:1px solid var(--ink);padding:32px 36px 28px}
+.top{display:flex;align-items:baseline;justify-content:space-between}
+.word{font:600 36px/1 var(--serif);letter-spacing:-.03em}
+.basket{font:500 13px/1 var(--font);color:var(--ink-2)}
+.rule{height:1px;background:var(--line);margin:16px 0}
+.item{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:12px 0;border-bottom:1px solid var(--line)}
+.item b{font:600 18px/1.2 var(--serif)}
+.item span{color:var(--ink-2);font-size:13px}
+.item i{grid-row:1/span 2;grid-column:2;align-self:center;font-style:normal;font:600 18px/1 var(--font)}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0 4px}
+.total span{font:500 13px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.total b{font:600 40px/1 var(--serif);letter-spacing:-.03em}
+.pay{display:block;width:100%;height:56px;margin-top:22px;border:0;background:var(--pay);color:var(--pay-ink);font:600 16px/1 var(--font);cursor:pointer}
+.pay:focus-visible{outline:2px solid var(--pin);outline-offset:3px}
+.ship{margin:14px 0 0;text-align:center;color:var(--ink-2);font-size:13px}
+.pin{position:absolute;width:36px;height:36px;border-radius:50%;border:0;background:var(--pin);color:var(--pin-ink);font:600 14px/36px var(--font);text-align:center;cursor:pointer;z-index:2;padding:0}
+.pin[aria-pressed="true"]{box-shadow:0 0 0 4px var(--stage),0 0 0 6px var(--pin)}
+.pin:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.note{width:360px;background:var(--sheet);border:1px solid var(--ink);padding:22px 22px 20px;align-self:center}
+.note .n{font:600 12px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--pin)}
+.note h2{margin:10px 0 8px;font:600 28px/1.15 var(--serif);letter-spacing:-.02em}
+.note p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.45}
+.leader{position:absolute;height:1px;background:var(--pin);transform-origin:0 0;pointer-events:none;z-index:1}
+@media (prefers-reduced-motion:reduce){.pin{transition:none}}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="col">
+    <div class="kicker">Brine Goods · checkout review</div>
+    <article class="still" aria-label="Checkout still">
+      <div class="top"><div class="word" id="word">Brine</div><div class="basket">2 in the basket</div></div>
+      <div class="rule"></div>
+      <div class="item"><b>Flake salt</b><span>250g tin, Margate</span><i>£14</i></div>
+      <div class="item"><b>Bay leaf jar</b><span>Dried, 40g</span><i>£22</i></div>
+      <div class="total"><span>Total</span><b id="sum">£36</b></div>
+      <button class="pay" id="pay" type="button">Pay £36</button>
+      <p class="ship" id="ship">Ships from Margate in 2 days</p>
+    </article>
+  </div>
+  <aside class="note" id="note" aria-live="polite">
+    <div class="n" id="nk">02 · The amount</div>
+    <h2 id="nt">One total</h2>
+    <p id="nb">Put £36 on the receipt. Do not float a second total in a banner above the button.</p>
+  </aside>
+  <button class="pin" type="button" aria-pressed="false" data-n="1" data-for="word">1</button>
+  <button class="pin" type="button" aria-pressed="true" data-n="2" data-for="sum">2</button>
+  <button class="pin" type="button" aria-pressed="false" data-n="3" data-for="pay">3</button>
+  <button class="pin" type="button" aria-pressed="false" data-n="4" data-for="ship">4</button>
+  <div class="leader" id="leader"></div>
+</div>
+<script>
+(function(){
+  var notes = {
+    1: { k:'01 · The name', t:'Set the word large', b:'The shop name is the title of the still. 36px serif, not a 14px logo in the corner.' },
+    2: { k:'02 · The amount', t:'One total', b:'Put £36 on the receipt. Do not float a second total in a banner above the button.' },
+    3: { k:'03 · The button', t:'One solid action', b:'Pay is the only filled control. Everything else stays type on the paper.' },
+    4: { k:'04 · The promise', t:'Say when it leaves', b:'Two days, and the town. A trust line under the button, not a row of badges.' }
+  };
+  var stage = document.getElementById('stage');
+  var note = document.getElementById('note');
+  var leader = document.getElementById('leader');
+  var pins = [].slice.call(document.querySelectorAll('.pin'));
+  function anchor(){
+    var still = document.querySelector('.still');
+    var sr = stage.getBoundingClientRect();
+    var x = still.getBoundingClientRect().right - sr.left + 18;
+    pins.forEach(function(pin){
+      var target = document.getElementById(pin.getAttribute('data-for'));
+      var tr = target.getBoundingClientRect();
+      var y = tr.top + tr.height / 2 - sr.top - 18;
+      pin.style.left = x + 'px';
+      pin.style.top = y + 'px';
+    });
+  }
+  function place(pin){
+    var n = notes[pin.getAttribute('data-n')];
+    document.getElementById('nk').textContent = n.k;
+    document.getElementById('nt').textContent = n.t;
+    document.getElementById('nb').textContent = n.b;
+    anchor();
+    var sr = stage.getBoundingClientRect();
+    var pr = pin.getBoundingClientRect();
+    var nr = note.getBoundingClientRect();
+    var x1 = pr.right - sr.left, y1 = pr.top + pr.height / 2 - sr.top;
+    var x2 = nr.left - sr.left, y2 = nr.top + 36 - sr.top;
+    var dx = x2 - x1, dy = y2 - y1;
+    var len = Math.max(0, Math.sqrt(dx * dx + dy * dy));
+    leader.style.left = x1 + 'px';
+    leader.style.top = y1 + 'px';
+    leader.style.width = len + 'px';
+    leader.style.transform = 'rotate(' + (Math.atan2(dy, dx) * 180 / Math.PI) + 'deg)';
+  }
+  function open(pin){
+    pins.forEach(function(p){ p.setAttribute('aria-pressed', p === pin ? 'true' : 'false'); });
+    place(pin);
+  }
+  pins.forEach(function(p){ p.addEventListener('click', function(){ open(p); }); });
+  document.addEventListener('keydown', function(e){
+    var i = pins.findIndex(function(p){ return p.getAttribute('aria-pressed') === 'true'; });
+    if (i < 0) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); open(pins[(i + 1) % 4]); pins[(i + 1) % 4].focus(); }
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); open(pins[(i + 3) % 4]); pins[(i + 3) % 4].focus(); }
+  });
+  function boot(){ place(document.querySelector('[data-n="2"]')); }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot);
+  boot();
+})();
+</script>
+</body>
+</html>
