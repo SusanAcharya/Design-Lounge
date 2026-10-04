@@ -2,7 +2,7 @@
  "id": "circuit",
  "name": "Circuit",
  "mode": "dark",
- "pair": null,
+ "pair": "circuit-bench",
  "colors": {
   "bg": "#0e0f12",
   "surface": "#16181d",

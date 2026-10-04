@@ -2,7 +2,7 @@
  "id": "ice-station",
  "name": "Ice Station",
  "mode": "light",
- "pair": null,
+ "pair": "polar-night",
  "colors": {
   "bg": "#e8eef2",
   "surface": "#f7fafc",

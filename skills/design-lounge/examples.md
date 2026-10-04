@@ -114,7 +114,7 @@ User: "Same product, day and night."
 
 1. Lock one theme. Read its `pair`.
 2. Paper & Ink pairs with Night Desk. Use both CSS blocks. Same pairing, same family.
-3. Harbour Ledger pairs with Harbour Night. Lokta pairs with Lokta Night. Use both CSS blocks. If `pair` is null, build the one mode and say it has no twin.
+3. Fog City pairs with Fog Night. Signal Green pairs with Signal Paper. Every theme has a pair. Put the second block under `@media (prefers-color-scheme: dark)` or a `[data-mode]` switch.
 
 ## The screens exist, now look
 

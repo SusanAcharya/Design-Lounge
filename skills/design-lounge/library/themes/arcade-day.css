@@ -1,0 +1,66 @@
+/* Arcade Day · light · pair: neon-alley
+   The arcade with the shutters up. Lilac light, magenta and teal.
+   Best for: Music, Nightlife, Games */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Arcade Day · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #d4207a;
+  --primary-ink: #fffdf8;
+  --primary-soft: #f1d3e8;
+  --secondary: #22937f;
+  --secondary-ink: #141210;
+  --secondary-soft: #d6e2e7;
+  --tertiary: #6a2fe0;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #e2d5f6;
+
+  /* Surface */
+  --bg: #f6f0fa;
+  --surface: #fdfaff;
+  --surface-2: #eadff2;
+  --surface-3: #ddd2e6;
+  --ink: #160c24;
+  --ink-2: #5a4a74;
+  --ink-3: #746a88;
+  --line: #dccdea;
+  --line-strong: #91849f;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #22937f;
+  --success-ink: #141210;
+  --success-soft: #d6e2e7;
+  --success-on-soft: #176457;
+  --warning: #b87400;
+  --warning-ink: #141210;
+  --warning-soft: #eddfd7;
+  --warning-on-soft: #7e4f00;
+  --danger: #d4207a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #f1d3e8;
+  --danger-on-soft: #a5195e;
+  --info: #6a2fe0;
+  --info-ink: #fffdf8;
+  --info-soft: #e2d5f6;
+  --info-on-soft: #6a2fe0;
+
+  /* Chrome */
+  --focus: #d4207a;
+  --link: #bf1d6e;
+  --overlay: #141210;
+  --inverse: #160c24;
+  --inverse-ink: #f6f0fa;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

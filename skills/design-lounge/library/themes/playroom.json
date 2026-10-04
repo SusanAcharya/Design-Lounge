@@ -2,7 +2,7 @@
  "id": "playroom",
  "name": "Playroom",
  "mode": "light",
- "pair": null,
+ "pair": "bedtime",
  "colors": {
   "bg": "#fff4d6",
   "surface": "#fffaf0",

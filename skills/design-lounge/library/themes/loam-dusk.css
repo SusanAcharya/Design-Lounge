@@ -1,0 +1,66 @@
+/* Loam Dusk · dark · pair: loam
+   The garden at dusk. Olive shadows, a rust that glows.
+   Best for: Food, Wellness, Field notes */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Loam Dusk · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #e08a5c;
+  --primary-ink: #141210;
+  --primary-soft: #463525;
+  --secondary: #9cbf84;
+  --secondary-ink: #141210;
+  --secondary-soft: #36422e;
+  --tertiary: #c48a9c;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #403534;
+
+  /* Surface */
+  --bg: #161a13;
+  --surface: #1d2219;
+  --surface-2: #262c21;
+  --surface-3: #3a3f34;
+  --ink: #ecebdf;
+  --ink-2: #b0b5a2;
+  --ink-3: #8e9382;
+  --line: #2f3628;
+  --line-strong: #777b6e;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #9cbf84;
+  --success-ink: #141210;
+  --success-soft: #36422e;
+  --success-on-soft: #9cbf84;
+  --warning: #e0a34b;
+  --warning-ink: #141210;
+  --warning-soft: #463b20;
+  --warning-on-soft: #e0a34b;
+  --danger: #e07060;
+  --danger-ink: #141210;
+  --danger-soft: #462f25;
+  --danger-on-soft: #e48173;
+  --info: #8ab4c8;
+  --info-ink: #141210;
+  --info-soft: #323f3e;
+  --info-on-soft: #8ab4c8;
+
+  /* Chrome */
+  --focus: #e08a5c;
+  --link: #e08a5c;
+  --overlay: #070605;
+  --inverse: #ecebdf;
+  --inverse-ink: #161a13;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

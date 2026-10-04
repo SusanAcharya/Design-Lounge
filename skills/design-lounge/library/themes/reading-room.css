@@ -1,0 +1,66 @@
+/* Reading Room · dark · pair: archive
+   The archive after hours. Manila type on dark oak, a red stamp.
+   Best for: Archives, Legal, Libraries */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Reading Room · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #e06a5a;
+  --primary-ink: #141210;
+  --primary-soft: #472920;
+  --secondary: #8ea4cc;
+  --secondary-ink: #141210;
+  --secondary-soft: #34373c;
+  --tertiary: #d4b87a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #443b28;
+
+  /* Surface */
+  --bg: #17140e;
+  --surface: #1f1b13;
+  --surface-2: #29241a;
+  --surface-3: #3d372b;
+  --ink: #efe4c8;
+  --ink-2: #bfb08c;
+  --ink-3: #998c70;
+  --line: #332c20;
+  --line-strong: #7a7260;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #9cbf84;
+  --success-ink: #141210;
+  --success-soft: #373d2a;
+  --success-on-soft: #9cbf84;
+  --warning: #d4b87a;
+  --warning-ink: #141210;
+  --warning-soft: #443b28;
+  --warning-on-soft: #d4b87a;
+  --danger: #e06a5a;
+  --danger-ink: #141210;
+  --danger-soft: #472920;
+  --danger-on-soft: #e47c6e;
+  --info: #8ea4cc;
+  --info-ink: #141210;
+  --info-soft: #34373c;
+  --info-on-soft: #8ea4cc;
+
+  /* Chrome */
+  --focus: #e06a5a;
+  --link: #e06a5a;
+  --overlay: #070605;
+  --inverse: #efe4c8;
+  --inverse-ink: #17140e;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

@@ -1,0 +1,66 @@
+/* Basalt Hall · dark · pair: marble-hall
+   The hall after closing. Dark stone, the brass plaque lit.
+   Best for: Museums, Law, Universities */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Basalt Hall · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #c9a45a;
+  --primary-ink: #141210;
+  --primary-soft: #3f3623;
+  --secondary: #a3adb8;
+  --secondary-ink: #141210;
+  --secondary-soft: #363839;
+  --tertiary: #c47a7a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #3e2c2a;
+
+  /* Surface */
+  --bg: #141311;
+  --surface: #1c1a17;
+  --surface-2: #25231f;
+  --surface-3: #393733;
+  --ink: #f1ede4;
+  --ink-2: #b8b2a5;
+  --ink-3: #948f83;
+  --line: #2e2b26;
+  --line-strong: #78756e;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #8fbf7a;
+  --success-ink: #141210;
+  --success-soft: #323c2a;
+  --success-on-soft: #8fbf7a;
+  --warning: #e0a34b;
+  --warning-ink: #141210;
+  --warning-soft: #45361f;
+  --warning-on-soft: #e0a34b;
+  --danger: #e07060;
+  --danger-ink: #141210;
+  --danger-soft: #452924;
+  --danger-on-soft: #e48173;
+  --info: #8ea4c4;
+  --info-ink: #141210;
+  --info-soft: #31363c;
+  --info-on-soft: #8ea4c4;
+
+  /* Chrome */
+  --focus: #c9a45a;
+  --link: #c9a45a;
+  --overlay: #070605;
+  --inverse: #f1ede4;
+  --inverse-ink: #141311;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

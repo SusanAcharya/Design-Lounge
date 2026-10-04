@@ -2,7 +2,7 @@
  "id": "velvet-club",
  "name": "Velvet Club",
  "mode": "dark",
- "pair": null,
+ "pair": "matinee",
  "colors": {
   "bg": "#1a0e12",
   "surface": "#26151b",

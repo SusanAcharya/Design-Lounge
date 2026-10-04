@@ -1,0 +1,66 @@
+/* Fog Night · dark · pair: fog-city
+   The city at night. Slate, white type, the same cobalt brighter.
+   Best for: SaaS, Gov, Docs */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Fog Night · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #5a9bff;
+  --primary-ink: #141210;
+  --primary-soft: #21344f;
+  --secondary: #a0aec0;
+  --secondary-ink: #141210;
+  --secondary-soft: #323840;
+  --tertiary: #3cc9a4;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #1a3f39;
+
+  /* Surface */
+  --bg: #0f1317;
+  --surface: #151a1f;
+  --surface-2: #1d232a;
+  --surface-3: #31373e;
+  --ink: #e8edf1;
+  --ink-2: #9aa6b1;
+  --ink-3: #7d8892;
+  --line: #262e36;
+  --line-strong: #70777d;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #4cc28a;
+  --success-ink: #141210;
+  --success-soft: #1e3d33;
+  --success-on-soft: #4cc28a;
+  --warning: #e0a34b;
+  --warning-ink: #141210;
+  --warning-soft: #413623;
+  --warning-on-soft: #e0a34b;
+  --danger: #ff6b6b;
+  --danger-ink: #141210;
+  --danger-soft: #49282b;
+  --danger-on-soft: #ff6b6b;
+  --info: #5a9bff;
+  --info-ink: #141210;
+  --info-soft: #21344f;
+  --info-on-soft: #5a9bff;
+
+  /* Chrome */
+  --focus: #5a9bff;
+  --link: #5a9bff;
+  --overlay: #070605;
+  --inverse: #e8edf1;
+  --inverse-ink: #0f1317;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

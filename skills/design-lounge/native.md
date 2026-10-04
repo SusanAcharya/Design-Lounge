@@ -71,7 +71,7 @@ These apply on every native screen, on top of the Look fails.
 - Safe areas. Nothing under the status bar, the notch, or the home indicator except a background. The tab bar sits above the home indicator.
 - Touch targets are 44pt on iOS and 48dp on Android, even when the brief draws a smaller dot. Pad the hit area, not the drawing.
 - Text size. The app follows the user's text size setting. Do not turn font scaling off. At the largest standard size, nothing is cut off or overlaps: rows grow, and a two-column row stacks. You may cap only the display size, at 1.4 times.
-- Dark mode. If the theme has a `pair`, follow the system setting with both files. If it has none, build the second mode from the same theme's roles and say so in the reply. The status bar text follows the mode.
+- Dark mode. Every theme has a `pair`. Load both files and follow the system setting. The status bar text follows the mode.
 - Reduced motion. React Native `AccessibilityInfo.isReduceMotionEnabled`, Flutter `MediaQuery.disableAnimations`, SwiftUI `accessibilityReduceMotion`, Android's animator scale. Effects become a still frame. Sheets and pushes may still move, shorter.
 - The keyboard never covers the field being typed in, or the button that submits it.
 - Haptics on a real moment only: a confirm, a toggle, a pull-to-refresh catch. Not on every tap.

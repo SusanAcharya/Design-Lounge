@@ -1,0 +1,66 @@
+/* Glacier Night · dark · pair: glacier
+   Ice under moonlight. Slate dark, a glacial blue that glows.
+   Best for: Health, Climate, Architecture */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Glacier Night · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #6ac0dc;
+  --primary-ink: #141210;
+  --primary-soft: #253e49;
+  --secondary: #a0b2c0;
+  --secondary-ink: #141210;
+  --secondary-soft: #323b42;
+  --tertiary: #5ac89a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #214039;
+
+  /* Surface */
+  --bg: #0f151a;
+  --surface: #151d24;
+  --surface-2: #1d2730;
+  --surface-3: #313b44;
+  --ink: #e8f0f4;
+  --ink-2: #a0b2c0;
+  --ink-3: #7f8f9c;
+  --line: #26323c;
+  --line-strong: #707a82;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #5ac89a;
+  --success-ink: #141210;
+  --success-soft: #214039;
+  --success-on-soft: #5ac89a;
+  --warning: #e0b050;
+  --warning-ink: #141210;
+  --warning-soft: #413a27;
+  --warning-on-soft: #e0b050;
+  --danger: #ff7a6e;
+  --danger-ink: #141210;
+  --danger-soft: #492d2e;
+  --danger-on-soft: #ff7a6e;
+  --info: #6ac0dc;
+  --info-ink: #141210;
+  --info-soft: #253e49;
+  --info-on-soft: #6ac0dc;
+
+  /* Chrome */
+  --focus: #6ac0dc;
+  --link: #6ac0dc;
+  --overlay: #070605;
+  --inverse: #e8f0f4;
+  --inverse-ink: #0f151a;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

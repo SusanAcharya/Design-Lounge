@@ -1,0 +1,66 @@
+/* Chambers · dark · pair: courtroom
+   The judge's chambers at night. Green leather dark, a gold rule.
+   Best for: Law, Universities, Foundations */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Chambers · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #e2654a;
+  --primary-ink: #141210;
+  --primary-soft: #422a20;
+  --secondary: #c9c2a8;
+  --secondary-ink: #141210;
+  --secondary-soft: #3c4137;
+  --tertiary: #d4b06a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #3e3c28;
+
+  /* Surface */
+  --bg: #0f1813;
+  --surface: #15211a;
+  --surface-2: #1d2b22;
+  --surface-3: #323f35;
+  --ink: #f3eee2;
+  --ink-2: #b8b6a4;
+  --ink-3: #959683;
+  --line: #26362c;
+  --line-strong: #747c71;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #8fbf8a;
+  --success-ink: #141210;
+  --success-soft: #2e4030;
+  --success-on-soft: #8fbf8a;
+  --warning: #d4b06a;
+  --warning-ink: #141210;
+  --warning-soft: #3e3c28;
+  --warning-on-soft: #d4b06a;
+  --danger: #e2654a;
+  --danger-ink: #141210;
+  --danger-soft: #422a20;
+  --danger-on-soft: #e57760;
+  --info: #8ea4c4;
+  --info-ink: #141210;
+  --info-soft: #2d3a3d;
+  --info-on-soft: #8ea4c4;
+
+  /* Chrome */
+  --focus: #e2654a;
+  --link: #e2654a;
+  --overlay: #070605;
+  --inverse: #f3eee2;
+  --inverse-ink: #0f1813;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

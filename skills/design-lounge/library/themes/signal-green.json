@@ -2,7 +2,7 @@
  "id": "signal-green",
  "name": "Signal Green",
  "mode": "dark",
- "pair": null,
+ "pair": "signal-paper",
  "colors": {
   "bg": "#0b0f0c",
   "surface": "#121814",

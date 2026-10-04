@@ -2,7 +2,7 @@
  "id": "fog-city",
  "name": "Fog City",
  "mode": "light",
- "pair": null,
+ "pair": "fog-night",
  "colors": {
   "bg": "#eef1f3",
   "surface": "#ffffff",

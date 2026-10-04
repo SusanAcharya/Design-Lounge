@@ -2,7 +2,7 @@
  "id": "y2k-chrome",
  "name": "Y2K Chrome",
  "mode": "light",
- "pair": null,
+ "pair": "chrome-midnight",
  "colors": {
   "bg": "#e8ecf2",
   "surface": "#f4f6fa",

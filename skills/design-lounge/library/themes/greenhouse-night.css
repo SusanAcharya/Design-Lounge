@@ -1,0 +1,66 @@
+/* Greenhouse Night · dark · pair: greenhouse
+   Grow lights after dark. Soft green on deep leaf.
+   Best for: Gardens, Kids, Habits */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Greenhouse Night · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #8cc45e;
+  --primary-ink: #141210;
+  --primary-soft: #2f4322;
+  --secondary: #b8d8a0;
+  --secondary-ink: #141210;
+  --secondary-soft: #394832;
+  --tertiary: #e89a9a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #453930;
+
+  /* Surface */
+  --bg: #111a0f;
+  --surface: #172215;
+  --surface-2: #1f2c1c;
+  --surface-3: #33402f;
+  --ink: #e6f0dc;
+  --ink-2: #a8bc98;
+  --ink-3: #87987b;
+  --line: #283a24;
+  --line-strong: #707f6a;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #8cc45e;
+  --success-ink: #141210;
+  --success-soft: #2f4322;
+  --success-on-soft: #8cc45e;
+  --warning: #e0a34b;
+  --warning-ink: #141210;
+  --warning-soft: #433b1d;
+  --warning-on-soft: #e0a34b;
+  --danger: #ff7a6e;
+  --danger-ink: #141210;
+  --danger-soft: #4a3126;
+  --danger-on-soft: #ff7a6e;
+  --info: #7ab8c8;
+  --info-ink: #141210;
+  --info-soft: #2a403b;
+  --info-on-soft: #7ab8c8;
+
+  /* Chrome */
+  --focus: #8cc45e;
+  --link: #8cc45e;
+  --overlay: #070605;
+  --inverse: #e6f0dc;
+  --inverse-ink: #111a0f;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

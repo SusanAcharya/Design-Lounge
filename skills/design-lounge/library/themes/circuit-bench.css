@@ -1,0 +1,66 @@
+/* Circuit Bench · light · pair: circuit
+   The test bench in daylight. Charcoal type, a deep lime.
+   Best for: Hardware, Mobility, Energy */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Circuit Bench · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #4f7d00;
+  --primary-ink: #fffdf8;
+  --primary-soft: #d6dece;
+  --secondary: #1f5fd6;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #cfdaec;
+  --tertiary: #b87400;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #e5ddce;
+
+  /* Surface */
+  --bg: #eceef0;
+  --surface: #f9fafb;
+  --surface-2: #dcdfe3;
+  --surface-3: #d0d3d6;
+  --ink: #0e0f12;
+  --ink-2: #4a515c;
+  --ink-3: #656c76;
+  --line: #c9ced5;
+  --line-strong: #82858b;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2f7a4a;
+  --success-ink: #fffdf8;
+  --success-soft: #d2ded9;
+  --success-on-soft: #296b41;
+  --warning: #b87400;
+  --warning-ink: #141210;
+  --warning-soft: #e5ddce;
+  --warning-on-soft: #7e4f00;
+  --danger: #c4121a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e6cfd2;
+  --danger-on-soft: #ac1017;
+  --info: #1f5fd6;
+  --info-ink: #fffdf8;
+  --info-soft: #cfdaec;
+  --info-on-soft: #1b54bc;
+
+  /* Chrome */
+  --focus: #4f7d00;
+  --link: #477100;
+  --overlay: #141210;
+  --inverse: #0e0f12;
+  --inverse-ink: #eceef0;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

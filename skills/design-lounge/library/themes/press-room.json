@@ -2,7 +2,7 @@
  "id": "press-room",
  "name": "Press Room",
  "mode": "light",
- "pair": null,
+ "pair": "night-edition",
  "colors": {
   "bg": "#f4f1e8",
   "surface": "#fffdf6",

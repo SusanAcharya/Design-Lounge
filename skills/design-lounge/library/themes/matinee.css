@@ -1,0 +1,66 @@
+/* Matinee · light · pair: velvet-club
+   The club in the afternoon. Rose plaster, burgundy, a gold rail.
+   Best for: Nightlife, Wine, Memberships */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Matinee · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #8a2a44;
+  --primary-ink: #fffdf8;
+  --primary-soft: #e7d2cf;
+  --secondary: #a87a2a;
+  --secondary-ink: #141210;
+  --secondary-soft: #ebddcc;
+  --tertiary: #4a6a5a;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #dedbd2;
+
+  /* Surface */
+  --bg: #f6ede6;
+  --surface: #fdf7f2;
+  --surface-2: #ead9ce;
+  --surface-3: #decdc3;
+  --ink: #2a1218;
+  --ink-2: #6a4650;
+  --ink-3: #775d60;
+  --line: #e0c8bd;
+  --line-strong: #9b837e;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3d6b4a;
+  --success-ink: #fffdf8;
+  --success-soft: #dcdbd0;
+  --success-on-soft: #365e41;
+  --warning: #a87a2a;
+  --warning-ink: #141210;
+  --warning-soft: #ebddcc;
+  --warning-on-soft: #72531d;
+  --danger: #9b2c2c;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e9d2cc;
+  --danger-on-soft: #9b2c2c;
+  --info: #3d4f6b;
+  --info-ink: #fffdf8;
+  --info-soft: #dcd7d5;
+  --info-on-soft: #3d4f6b;
+
+  /* Chrome */
+  --focus: #8a2a44;
+  --link: #8a2a44;
+  --overlay: #141210;
+  --inverse: #2a1218;
+  --inverse-ink: #f6ede6;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

@@ -2,7 +2,7 @@
  "id": "sakura-desk",
  "name": "Sakura Desk",
  "mode": "light",
- "pair": null,
+ "pair": "sakura-night",
  "colors": {
   "bg": "#f6ebe8",
   "surface": "#fff7f4",

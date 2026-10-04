@@ -1,0 +1,66 @@
+/* Sakura Night · dark · pair: sakura-desk
+   The desk by lamplight. Blush type on plum ink, the red stamp brighter.
+   Best for: Personal sites, Poetry, Studios */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Sakura Night · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff6b6b;
+  --primary-ink: #141210;
+  --primary-soft: #512728;
+  --secondary: #f6e8e4;
+  --secondary-ink: #141210;
+  --secondary-soft: #4f4545;
+  --tertiary: #d8a8a0;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #483635;
+
+  /* Surface */
+  --bg: #1a1213;
+  --surface: #23191a;
+  --surface-2: #2e2122;
+  --surface-3: #423535;
+  --ink: #f6e8e4;
+  --ink-2: #c8aaa4;
+  --ink-3: #a28881;
+  --line: #3a2a2b;
+  --line-strong: #817271;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #8fbf8a;
+  --success-ink: #141210;
+  --success-soft: #363c30;
+  --success-on-soft: #8fbf8a;
+  --warning: #e0a34b;
+  --warning-ink: #141210;
+  --warning-soft: #4a3520;
+  --warning-on-soft: #e0a34b;
+  --danger: #ff6b6b;
+  --danger-ink: #141210;
+  --danger-soft: #512728;
+  --danger-on-soft: #ff6b6b;
+  --info: #a898cc;
+  --info-ink: #141210;
+  --info-soft: #3c323f;
+  --info-on-soft: #a898cc;
+
+  /* Chrome */
+  --focus: #ff6b6b;
+  --link: #ff6b6b;
+  --overlay: #070605;
+  --inverse: #f6e8e4;
+  --inverse-ink: #1a1213;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

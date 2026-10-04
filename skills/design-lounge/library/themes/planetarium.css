@@ -1,0 +1,66 @@
+/* Planetarium · light · pair: observatory
+   The observatory by day. Pale sky, navy type, a gold chart line.
+   Best for: Science, Maps, Night products */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Planetarium · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #8e650f;
+  --primary-ink: #fffdf8;
+  --primary-soft: #e2dfd6;
+  --secondary: #319374;
+  --secondary-ink: #141210;
+  --secondary-soft: #d1e3e2;
+  --tertiary: #5a4a8a;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #d9dae7;
+
+  /* Surface */
+  --bg: #eef1f6;
+  --surface: #fafbfd;
+  --surface-2: #dde3ec;
+  --surface-3: #d0d6e0;
+  --ink: #0b1220;
+  --ink-2: #44526a;
+  --ink-3: #606c81;
+  --line: #c8d0dc;
+  --line-strong: #808895;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #319374;
+  --success-ink: #141210;
+  --success-soft: #d1e3e2;
+  --success-on-soft: #21644f;
+  --warning: #b07a14;
+  --warning-ink: #141210;
+  --warning-soft: #e5e0d6;
+  --warning-on-soft: #78530e;
+  --danger: #b53838;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e6d7db;
+  --danger-on-soft: #9f3131;
+  --info: #2a5aa8;
+  --info-ink: #fffdf8;
+  --info-soft: #d3dceb;
+  --info-on-soft: #2a5aa8;
+
+  /* Chrome */
+  --focus: #8e650f;
+  --link: #8e650f;
+  --overlay: #141210;
+  --inverse: #0b1220;
+  --inverse-ink: #eef1f6;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

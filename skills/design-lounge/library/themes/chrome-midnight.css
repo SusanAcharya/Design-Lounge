@@ -1,0 +1,66 @@
+/* Chrome Midnight · dark · pair: y2k-chrome
+   The mixtape at midnight. Gunmetal, the same electric blue.
+   Best for: Music drops, Fashion, Nightlife */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Chrome Midnight · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #5a8cff;
+  --primary-ink: #141210;
+  --primary-soft: #1f2c4c;
+  --secondary: #ff6fb4;
+  --secondary-ink: #141210;
+  --secondary-soft: #46253a;
+  --tertiary: #2ac890;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #133b32;
+
+  /* Surface */
+  --bg: #0c0e14;
+  --surface: #13161f;
+  --surface-2: #1b1f2b;
+  --surface-3: #30343f;
+  --ink: #e8ecf2;
+  --ink-2: #a0a8b8;
+  --ink-3: #7f8696;
+  --line: #262b3a;
+  --line-strong: #707480;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2ac890;
+  --success-ink: #141210;
+  --success-soft: #133b32;
+  --success-on-soft: #2ac890;
+  --warning: #e6b020;
+  --warning-ink: #141210;
+  --warning-soft: #403517;
+  --warning-on-soft: #e6b020;
+  --danger: #ff6fb4;
+  --danger-ink: #141210;
+  --danger-soft: #46253a;
+  --danger-on-soft: #ff6fb4;
+  --info: #5a8cff;
+  --info-ink: #141210;
+  --info-soft: #1f2c4c;
+  --info-on-soft: #6e9aff;
+
+  /* Chrome */
+  --focus: #5a8cff;
+  --link: #5a8cff;
+  --overlay: #070605;
+  --inverse: #e8ecf2;
+  --inverse-ink: #0c0e14;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

@@ -2,7 +2,7 @@
  "id": "hud-teal",
  "name": "HUD Teal",
  "mode": "dark",
- "pair": null,
+ "pair": "cockpit-day",
  "colors": {
   "bg": "#07090d",
   "surface": "#0e1218",

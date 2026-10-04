@@ -1,0 +1,66 @@
+/* Festival Night · dark · pair: festival
+   The second night of the festival. Cream ink on indigo, fluoro pink.
+   Best for: Zines, Festivals, Merch */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Festival Night · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff5f97;
+  --primary-ink: #141210;
+  --primary-soft: #4b2647;
+  --secondary: #f6f1ea;
+  --secondary-ink: #141210;
+  --secondary-soft: #49495b;
+  --tertiary: #f0c84a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #473f35;
+
+  /* Surface */
+  --bg: #12142e;
+  --surface: #1a1d3c;
+  --surface-2: #23274c;
+  --surface-3: #383b5c;
+  --ink: #f6f1ea;
+  --ink-2: #c4c0d8;
+  --ink-3: #8c88a8;
+  --line: #2e3258;
+  --line-strong: #7a7b8f;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #6ad4a8;
+  --success-ink: #141210;
+  --success-soft: #27424b;
+  --success-on-soft: #6ad4a8;
+  --warning: #f0c84a;
+  --warning-ink: #141210;
+  --warning-soft: #473f35;
+  --warning-on-soft: #f0c84a;
+  --danger: #ff5f97;
+  --danger-ink: #141210;
+  --danger-soft: #4b2647;
+  --danger-on-soft: #ff72a3;
+  --info: #9aa8ff;
+  --info-ink: #141210;
+  --info-soft: #333860;
+  --info-on-soft: #9aa8ff;
+
+  /* Chrome */
+  --focus: #ff5f97;
+  --link: #ff5f97;
+  --overlay: #070605;
+  --inverse: #f6f1ea;
+  --inverse-ink: #12142e;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

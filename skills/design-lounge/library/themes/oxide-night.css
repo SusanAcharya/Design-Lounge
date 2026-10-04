@@ -1,0 +1,66 @@
+/* Oxide Night · dark · pair: oxide
+   The shed with the door shut. Rust glowing on dark iron.
+   Best for: Outdoor, Tools, Field notes */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Oxide Night · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #d4683e;
+  --primary-ink: #141210;
+  --primary-soft: #44281a;
+  --secondary: #8fb06a;
+  --secondary-ink: #141210;
+  --secondary-soft: #343925;
+  --tertiary: #8ea0b4;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #343637;
+
+  /* Surface */
+  --bg: #17140f;
+  --surface: #1f1b15;
+  --surface-2: #29241c;
+  --surface-3: #3d372e;
+  --ink: #ece4d2;
+  --ink-2: #b8ad96;
+  --ink-3: #948b78;
+  --line: #332d23;
+  --line-strong: #797366;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #8fb06a;
+  --success-ink: #141210;
+  --success-soft: #343925;
+  --success-on-soft: #8fb06a;
+  --warning: #d4a84a;
+  --warning-ink: #141210;
+  --warning-soft: #44381d;
+  --warning-on-soft: #d4a84a;
+  --danger: #e07060;
+  --danger-ink: #141210;
+  --danger-soft: #472a22;
+  --danger-on-soft: #e48173;
+  --info: #8ea0b4;
+  --info-ink: #141210;
+  --info-soft: #343637;
+  --info-on-soft: #8ea0b4;
+
+  /* Chrome */
+  --focus: #d4683e;
+  --link: #d4683e;
+  --overlay: #070605;
+  --inverse: #ece4d2;
+  --inverse-ink: #17140f;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

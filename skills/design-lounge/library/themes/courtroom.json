@@ -2,7 +2,7 @@
  "id": "courtroom",
  "name": "Courtroom",
  "mode": "light",
- "pair": null,
+ "pair": "chambers",
  "colors": {
   "bg": "#f3eee2",
   "surface": "#faf6ec",

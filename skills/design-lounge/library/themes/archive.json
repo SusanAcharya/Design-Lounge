@@ -2,7 +2,7 @@
  "id": "archive",
  "name": "Archive",
  "mode": "light",
- "pair": null,
+ "pair": "reading-room",
  "colors": {
   "bg": "#efe4c8",
   "surface": "#f7eed6",

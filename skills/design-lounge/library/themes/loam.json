@@ -2,7 +2,7 @@
  "id": "loam",
  "name": "Loam",
  "mode": "light",
- "pair": null,
+ "pair": "loam-dusk",
  "colors": {
   "bg": "#eef0e6",
   "surface": "#f7f6ee",

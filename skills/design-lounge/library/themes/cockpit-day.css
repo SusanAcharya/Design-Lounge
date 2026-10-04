@@ -1,0 +1,66 @@
+/* Cockpit Day · light · pair: hud-teal
+   The cockpit in sunlight. Pale glass, ink type, signal teal.
+   Best for: Ops, Security, Games */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Cockpit Day · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #0a8f78;
+  --primary-ink: #141210;
+  --primary-soft: #cee4e3;
+  --secondary: #8a7200;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #e0e0d2;
+  --tertiary: #2a6fae;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #d3e0ea;
+
+  /* Surface */
+  --bg: #eef2f4;
+  --surface: #fafcfd;
+  --surface-2: #dde4e9;
+  --surface-3: #d0d7dc;
+  --ink: #07090d;
+  --ink-2: #3e4e60;
+  --ink-3: #5b6979;
+  --line: #c8d2da;
+  --line-strong: #7f868c;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #0a8f78;
+  --success-ink: #141210;
+  --success-soft: #cee4e3;
+  --success-on-soft: #086f5d;
+  --warning: #8a7200;
+  --warning-ink: #fffdf8;
+  --warning-soft: #e0e0d2;
+  --warning-on-soft: #6a5800;
+  --danger: #c4121a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e8d3d5;
+  --danger-on-soft: #ac1017;
+  --info: #2a6fae;
+  --info-ink: #fffdf8;
+  --info-soft: #d3e0ea;
+  --info-on-soft: #256299;
+
+  /* Chrome */
+  --focus: #0a8f78;
+  --link: #087461;
+  --overlay: #141210;
+  --inverse: #07090d;
+  --inverse-ink: #eef2f4;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

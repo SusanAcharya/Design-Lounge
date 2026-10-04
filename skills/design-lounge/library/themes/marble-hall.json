@@ -2,7 +2,7 @@
  "id": "marble-hall",
  "name": "Marble Hall",
  "mode": "light",
- "pair": null,
+ "pair": "basalt-hall",
  "colors": {
   "bg": "#f3f1ec",
   "surface": "#ffffff",

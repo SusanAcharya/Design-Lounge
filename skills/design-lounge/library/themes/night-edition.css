@@ -1,0 +1,66 @@
+/* Night Edition · dark · pair: press-room
+   The late edition. Newsprint white on press black, the same red.
+   Best for: News, Magazines, Campaigns */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Night Edition · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff4a4f;
+  --primary-ink: #141210;
+  --primary-soft: #4b1f21;
+  --secondary: #9fb0d8;
+  --secondary-ink: #141210;
+  --secondary-soft: #343842;
+  --tertiary: #e0bf5a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #433c23;
+
+  /* Surface */
+  --bg: #121212;
+  --surface: #1a1a1a;
+  --surface-2: #232323;
+  --surface-3: #383736;
+  --ink: #f0ede4;
+  --ink-2: #b5b1a6;
+  --ink-3: #918d83;
+  --line: #2c2c2c;
+  --line-strong: #767572;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #7dba8a;
+  --success-ink: #141210;
+  --success-soft: #2c3a2f;
+  --success-on-soft: #7dba8a;
+  --warning: #e0bf5a;
+  --warning-ink: #141210;
+  --warning-soft: #433c23;
+  --warning-on-soft: #e0bf5a;
+  --danger: #ff4a4f;
+  --danger-ink: #141210;
+  --danger-soft: #4b1f21;
+  --danger-on-soft: #ff6064;
+  --info: #9fb0d8;
+  --info-ink: #141210;
+  --info-soft: #343842;
+  --info-on-soft: #9fb0d8;
+
+  /* Chrome */
+  --focus: #ff4a4f;
+  --link: #ff4a4f;
+  --overlay: #070605;
+  --inverse: #f0ede4;
+  --inverse-ink: #121212;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

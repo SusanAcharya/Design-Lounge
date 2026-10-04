@@ -2,7 +2,7 @@
  "id": "glacier",
  "name": "Glacier",
  "mode": "light",
- "pair": null,
+ "pair": "glacier-night",
  "colors": {
   "bg": "#f2f6f8",
   "surface": "#ffffff",

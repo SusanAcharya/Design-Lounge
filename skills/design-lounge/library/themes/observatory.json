@@ -2,7 +2,7 @@
  "id": "observatory",
  "name": "Observatory",
  "mode": "dark",
- "pair": null,
+ "pair": "planetarium",
  "colors": {
   "bg": "#0b1220",
   "surface": "#121a2c",

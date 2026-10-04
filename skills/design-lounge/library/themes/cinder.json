@@ -2,7 +2,7 @@
  "id": "cinder",
  "name": "Cinder",
  "mode": "light",
- "pair": null,
+ "pair": "night-shift",
  "colors": {
   "bg": "#e7e6e1",
   "surface": "#f4f3ef",

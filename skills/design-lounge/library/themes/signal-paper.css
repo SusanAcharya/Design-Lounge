@@ -1,0 +1,66 @@
+/* Signal Paper · light · pair: signal-green
+   The terminal printed out. Green-black type on pale paper.
+   Best for: CLIs, Infra, Changelogs */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Signal Paper · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #117f42;
+  --primary-ink: #fffdf8;
+  --primary-soft: #cfe4d5;
+  --secondary: #9a7a12;
+  --secondary-ink: #141210;
+  --secondary-soft: #e2e2cd;
+  --tertiary: #2a6f86;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #d3e1de;
+
+  /* Surface */
+  --bg: #eef3ec;
+  --surface: #f8fbf6;
+  --surface-2: #dde6da;
+  --surface-3: #d1dace;
+  --ink: #0f1f14;
+  --ink-2: #3e5a46;
+  --ink-3: #5c7362;
+  --line: #c6d4c6;
+  --line-strong: #808f82;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #117f42;
+  --success-ink: #fffdf8;
+  --success-soft: #cfe4d5;
+  --success-on-soft: #0f703a;
+  --warning: #9a7a12;
+  --warning-ink: #141210;
+  --warning-soft: #e2e2cd;
+  --warning-on-soft: #785e0e;
+  --danger: #c4121a;
+  --danger-ink: #fffdf8;
+  --danger-soft: #e8d4cf;
+  --danger-on-soft: #ac1017;
+  --info: #2a6f86;
+  --info-ink: #fffdf8;
+  --info-soft: #d3e1de;
+  --info-on-soft: #256276;
+
+  /* Chrome */
+  --focus: #117f42;
+  --link: #117f42;
+  --overlay: #141210;
+  --inverse: #0f1f14;
+  --inverse-ink: #eef3ec;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

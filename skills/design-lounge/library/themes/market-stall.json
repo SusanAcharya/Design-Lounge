@@ -2,7 +2,7 @@
  "id": "market-stall",
  "name": "Market Stall",
  "mode": "light",
- "pair": null,
+ "pair": "night-market",
  "colors": {
   "bg": "#f6ead2",
   "surface": "#fff6e4",

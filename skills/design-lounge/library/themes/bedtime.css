@@ -1,0 +1,66 @@
+/* Bedtime · dark · pair: playroom
+   The playroom with the lights low. Butter type on a navy blanket.
+   Best for: Kids, Learning, Consumer apps */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Bedtime · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff7f62;
+  --primary-ink: #141210;
+  --primary-soft: #54313c;
+  --secondary: #fff4d6;
+  --secondary-ink: #141210;
+  --secondary-soft: #544d58;
+  --tertiary: #f0c84a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #504236;
+
+  /* Surface */
+  --bg: #1e1830;
+  --surface: #272040;
+  --surface-2: #31294e;
+  --surface-3: #463d5c;
+  --ink: #fff4d6;
+  --ink-2: #d2c6e0;
+  --ink-3: #9a8eb4;
+  --line: #3a3158;
+  --line-strong: #857b88;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #6ad49a;
+  --success-ink: #141210;
+  --success-soft: #304549;
+  --success-on-soft: #6ad49a;
+  --warning: #f0c84a;
+  --warning-ink: #141210;
+  --warning-soft: #504236;
+  --warning-on-soft: #f0c84a;
+  --danger: #ff7f62;
+  --danger-ink: #141210;
+  --danger-soft: #54313c;
+  --danger-on-soft: #ff8e75;
+  --info: #8aa4ff;
+  --info-ink: #141210;
+  --info-soft: #383a62;
+  --info-on-soft: #8aa4ff;
+
+  /* Chrome */
+  --focus: #ff7f62;
+  --link: #ff7f62;
+  --overlay: #070605;
+  --inverse: #fff4d6;
+  --inverse-ink: #1e1830;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

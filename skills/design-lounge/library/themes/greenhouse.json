@@ -2,7 +2,7 @@
  "id": "greenhouse",
  "name": "Greenhouse",
  "mode": "light",
- "pair": null,
+ "pair": "greenhouse-night",
  "colors": {
   "bg": "#e7f0dc",
   "surface": "#f4f8ec",

@@ -120,9 +120,9 @@ Hover is `--surface-2`. Selected is `--primary-soft`. Selected and hovered is `-
 
 ## Modes
 
-`mode` is `light` or `dark`. `pair` is the other mode of the same palette, or null.
+`mode` is `light` or `dark`. `pair` is the other mode of the same palette. Every theme has one, so a site or app can follow the system setting. The pair keeps the same fonts and the same brand hue, lifted or deepened to read on the other ground.
 
-Twins: Paper & Ink / Night Desk, Linen Shop / Atelier Noir, Kiln / Copper Works, Harbour Ledger / Harbour Night, Lokta / Lokta Night. Fog City and the rest have no twin. Stay in that one mode. The theme's sample radius and shadow lose to the family.
+Use the pair as it is. Do not rebuild the second mode from the first by inverting it. The theme's sample radius and shadow lose to the family.
 
 ## Cautions
 

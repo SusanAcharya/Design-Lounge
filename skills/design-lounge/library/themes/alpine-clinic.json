@@ -2,7 +2,7 @@
  "id": "alpine-clinic",
  "name": "Alpine Clinic",
  "mode": "light",
- "pair": null,
+ "pair": "alpine-night",
  "colors": {
   "bg": "#eef6f3",
   "surface": "#ffffff",

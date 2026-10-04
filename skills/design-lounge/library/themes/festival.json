@@ -2,7 +2,7 @@
  "id": "festival",
  "name": "Festival",
  "mode": "light",
- "pair": null,
+ "pair": "festival-night",
  "colors": {
   "bg": "#f6f1ea",
   "surface": "#fffaf4",

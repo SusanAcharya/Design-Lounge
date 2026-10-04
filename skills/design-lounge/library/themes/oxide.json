@@ -2,7 +2,7 @@
  "id": "oxide",
  "name": "Oxide",
  "mode": "light",
- "pair": null,
+ "pair": "oxide-night",
  "colors": {
   "bg": "#e6dcc8",
   "surface": "#f2ead8",

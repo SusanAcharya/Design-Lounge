@@ -2,7 +2,7 @@
  "id": "neon-alley",
  "name": "Neon Alley",
  "mode": "dark",
- "pair": null,
+ "pair": "arcade-day",
  "colors": {
   "bg": "#0a0612",
   "surface": "#140c20",

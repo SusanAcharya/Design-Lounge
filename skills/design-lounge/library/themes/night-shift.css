@@ -1,0 +1,66 @@
+/* Night Shift · dark · pair: cinder
+   The yard under floodlights. Safety orange on wet asphalt.
+   Best for: Logistics, Manufacturing, Field tools */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Night Shift · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ff6a33;
+  --primary-ink: #141210;
+  --primary-soft: #4c291d;
+  --secondary: #8aa0b8;
+  --secondary-ink: #141210;
+  --secondary-soft: #30363d;
+  --tertiary: #f0c040;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #483d20;
+
+  /* Surface */
+  --bg: #131416;
+  --surface: #1a1c1f;
+  --surface-2: #23262a;
+  --surface-3: #373a3d;
+  --ink: #eceae4;
+  --ink-2: #a8aaad;
+  --ink-3: #87898c;
+  --line: #2c2f33;
+  --line-strong: #757676;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #7dba8a;
+  --success-ink: #141210;
+  --success-soft: #2c3c32;
+  --success-on-soft: #7dba8a;
+  --warning: #f0c040;
+  --warning-ink: #141210;
+  --warning-soft: #483d20;
+  --warning-on-soft: #f0c040;
+  --danger: #ff6a33;
+  --danger-ink: #141210;
+  --danger-soft: #4c291d;
+  --danger-on-soft: #ff7c4b;
+  --info: #8aa0b8;
+  --info-ink: #141210;
+  --info-soft: #30363d;
+  --info-on-soft: #8aa0b8;
+
+  /* Chrome */
+  --focus: #ff6a33;
+  --link: #ff6a33;
+  --overlay: #070605;
+  --inverse: #eceae4;
+  --inverse-ink: #131416;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}
