@@ -35,7 +35,7 @@ The password reset screen of Solander, a fictional specimen club that files pres
 8. Resend starts at "Resend in 30s" with `aria-disabled="true"`. It counts down once a second: 29, 28, and so on, in one-second steps. At 0 the label is "Resend link", `aria-disabled` is false, and a status region says "You can resend the link."
 9. A press while seconds remain does not send. The status region says "Wait N seconds to resend."
 10. A press at 0 sets the status to "Link sent again." and restarts the 30 second wait.
-11. The nav control "Sign in" is present on the reset form and on the sent state. Pressing it shows the sign-in view on this same screen: title "Sign in", dek "Use the password on your sheet.", email and password fields. If an address was typed, the sign-in email is prefilled with it.
+11. The nav control "Sign in" is present on the reset form and on the sent state. Pressing it shows the sign-in view on this same screen: title "Sign in", dek "Use the password on your sheet.", email and password fields. If an address was typed, the sign-in email is prefilled with it. The password placeholder is "At least 8 characters."
 12. On the sign-in view the nav Sign in control hides. "Forgot password" returns to the empty-or-kept reset form and the title "Reset password".
 13. The eye control toggles the password between `password` and `text`. `aria-pressed` and the label switch between "Show password" and "Hide password".
 14. Sign-in submit with an empty email uses "Enter the email on your sheet." A bad shape uses the same format sentence as reset. A password under 8 characters uses "Use at least 8 characters."
@@ -132,7 +132,7 @@ No looping motion. The grain does not move.
 ## States
 
 - Email resting: cream group, no error, empty alert hidden.
-- Email focus: 2px `--focus` outline, offset 2px, from `:focus-visible`.
+- Email focus: the input drops the generic outline and shows a 2px inset accent bar, so the cream group stays one container. Buttons keep the 2px outline, offset 2px.
 - Email format error: alert text, `aria-invalid="true"`, group `box-shadow: inset 0 0 0 1.5px var(--error)`.
 - Send resting: fill `--accent`, label `--on-accent`, min-height 50px, radius 12px.
 - Send hover, fine pointer only: fill `#184a32`.
@@ -246,3 +246,5 @@ Rebuild order:
 9. Keep the foot on the page ground, under a 1px `--line` rule, so the 844px frame has a finish under the button.
 10. The signed sheet is one block, not a list. It names the address and the three waiting sheets.
 11. Grain is a 4px radial dot at low ink. It does not animate and it does not cover the cream group.
+12. The password placeholder is "At least 8 characters." The eye sits in the same row as that input, 44px square, aligned with the email text.
+13. Sign in keeps the wordmark on the right. The back control is hidden on that view, and Forgot password brings the reset form back.

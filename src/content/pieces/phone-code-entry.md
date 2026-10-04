@@ -130,7 +130,7 @@ The shake keyframes are 0% and 100% at 0, 20% at -8px, 40% at 8px, 60% at -5px, 
 ## States
 
 - Box empty: 1.5px navy border, radius 10px, surface fill, min-height 56px.
-- Box focused, and the first box before anyone tabs: vermilion border and `box-shadow: inset 0 -3px 0 var(--accent)`. A 2px navy `:focus-visible` outline sits 2px outside.
+- Box focused, and the first box before anyone tabs: vermilion border and `box-shadow: inset 0 -3px 0 var(--accent)`. No second outline, so the box does not look double. Buttons keep the 2px navy outline.
 - Box filled: the digit is ink, 28px, weight 600.
 - Row wrong: every border `--error`, no foot shadow, alert under the row.
 - Row accepted: every border `--ok`, foot `--ok`, inputs `disabled`.

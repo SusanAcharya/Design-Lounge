@@ -32,9 +32,9 @@ The lock in front of Coffer, a fictional drawer for family papers kept on the ph
 5. The first digit after an error clears the error text and the bad border.
 6. Four digits equal to `2741` open the drawer. Any other four digits shake the slot row for 420ms, set the alert to "That code does not open the drawer.", and clear the four numerals after 420ms. The alert stays until the next digit.
 7. Shake values: translateX 0, -8px, 8px, -5px, 4px, 0. Remove the class on animationend, and force reflow before adding it again.
-8. "Read fingerprint" while locked sets phase to reading, `aria-busy="true"`, and the label "Reading the print". Keypad presses do nothing during the beat. After 800ms the busy state clears and the drawer opens. Reduced motion uses 0ms instead of 800ms.
-9. Opening shows the line "Drawer open." immediately and hides the dek. Status says "Drawer open." The slots, keypad, and fingerprint button stay for 700ms so the line can be read, then they hide.
-10. After that 700ms the title becomes "Coffer", focus moves to the title, and one row appears: "House papers" with "Revised 12 March 2026". A "Lock again" control sits under the row. Reduced motion uses 0ms, so the line and the row appear together.
+8. "Read fingerprint" while locked sets phase to reading, `aria-busy="true"`, and the label "Reading the print". Keypad presses do nothing during the beat. Any wrong-code alert is cleared when the print starts to succeed, so the error never sits next to "Drawer open." After 800ms the busy state clears and the drawer opens. Reduced motion uses 0ms instead of 800ms.
+9. Opening shows the line "Drawer open." immediately and hides the dek. Status says "Drawer open." The slots, keypad, and fingerprint button stay for 700ms so the line can be read, then they hide. The slot borders return to the resting line colour.
+10. After that 700ms the title becomes "Drawer open." and the separate line hides, because the title is that line. Focus moves to the title. One row appears: "House papers" with "Revised 12 March 2026". A "Lock again" control sits under the row. Reduced motion uses 0ms, so the line and the row appear together.
 11. The row is a button. Pressing it toggles `aria-expanded` and the note "Kept on this phone."
 12. "Lock again" restores the first frame: title "Locked", empty slots, fingerprint label "Read fingerprint", keypad visible, line and row hidden. Status says "Coffer is locked."
 13. Do not draw a status bar, a notch, a home indicator, or the system passcode chrome.
@@ -59,8 +59,7 @@ padding inline 16px, top safe 54px, bottom safe 34px
 +--------------------------------------+
 
 After the beat or the right code:
-| Coffer                               |
-| Drawer open.                         |  21.6px Cardo, brass
+| Drawer open.                         |  title takes the line, 34px Cardo
 | +----------------------------------+ |
 | | House papers                     | |
 | | Revised 12 March 2026            | |
@@ -186,7 +185,7 @@ No loop. The grain does not animate.
 
 - [ ] Brand is Coffer. Nav meta is "DRAWER 2". First title is "Locked".
 - [ ] Dek is "Family papers stay on this phone." Fingerprint idle copy is "Read fingerprint". Reading copy is "Reading the print".
-- [ ] The beat is 800ms. The line "Drawer open." shows, then the row appears 700ms later.
+- [ ] The beat is 800ms. The line "Drawer open." shows, then the title becomes that line and the row appears 700ms later.
 - [ ] The only accepted code is `2741`. Other four-digit codes use "That code does not open the drawer."
 - [ ] The 0 key spans two columns. Delete is the remaining cell.
 - [ ] The one row is "House papers", meta "Revised 12 March 2026". The note is "Kept on this phone."
@@ -221,7 +220,8 @@ function openDrawer() {
   setTimeout(function () {
     lockonly.hidden = true;
     home.hidden = false;
-    title.textContent = 'Coffer';
+    title.textContent = 'Drawer open.';
+    openline.hidden = true;
     title.focus();
   }, reduce ? 0 : 700);
 }
