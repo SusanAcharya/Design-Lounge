@@ -17,7 +17,7 @@ const i = COLLECTIONS.findIndex((c) => c.slug === collection.slug);
 const prev = COLLECTIONS[(i - 1 + COLLECTIONS.length) % COLLECTIONS.length];
 const next = COLLECTIONS[(i + 1) % COLLECTIONS.length];
 ---
-<Base title={collection.title} description={collection.blurb}>
+<Base title={`${collection.title} shelf`} description={collection.blurb} crumbs={[{ name: 'Shelves', href: '/collections' }, { name: collection.title, href: `/collections/${collection.slug}` }]}>
   <PageHead eyebrow="Shelf" title={collection.title} count={items.length} />
   <div class="wrap">
     <div class="grid" style="margin-top:32px">

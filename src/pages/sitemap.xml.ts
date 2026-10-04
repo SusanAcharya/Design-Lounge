@@ -17,8 +17,9 @@ export const GET: APIRoute = async ({ site }) => {
     ...COLLECTIONS.map((c) => `/collections/${c.slug}`),
     ...PAIRINGS.map((p) => `/type/${p.id}`),
     ...THEMES.map((t) => `/themes/${t.id}`),
-    ...pieces.flatMap((p) => [`/p/${p.id}`, `/p/${p.id}.md`]),
+    ...pieces.map((p) => `/p/${p.id}`),
   ];
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${base}${u}</loc></url>`).join('\n')}\n</urlset>\n`;
+  const today = new Date().toISOString().slice(0, 10);
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${base}${u}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`;
   return new Response(xml, { headers: { 'Content-Type': 'application/xml' } });
 };

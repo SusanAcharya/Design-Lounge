@@ -11,7 +11,7 @@ const { pairing: p } = Astro.props;
 const css = pairingCss(p);
 const others = PAIRINGS.filter((x) => x.id !== p.id).filter((x) => x.tags.some((t) => p.tags.includes(t))).slice(0, 4);
 ---
-<Base title={`${p.name} pairing`} description={`${p.name}: ${p.mood} A type pairing from Design Lounge by ${AUTHOR.name}.`}>
+<Base title={`${p.name} pairing`} description={`${p.name}: ${p.mood} A type pairing from Design Lounge by ${AUTHOR.name}.`} crumbs={[{ name: 'Type pairings', href: '/type' }, { name: p.name, href: `/type/${p.id}` }]}>
   <link rel="stylesheet" href={fontHref([p.display.spec, p.text.spec])} />
   <PageHead eyebrow="Type" title={p.name} />
   <div class="wrap page">

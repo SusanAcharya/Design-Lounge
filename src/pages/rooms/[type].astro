@@ -13,7 +13,7 @@ const all = await getPieces();
 const pieces = all.filter((p) => p.data.type === type);
 const others = Object.entries(TYPE_META).filter(([k]) => k !== type);
 ---
-<Base title={meta.label} description={`${meta.label} in the Design Lounge: ${meta.blurb}`}>
+<Base title={`${meta.label} room`} description={`${meta.label} in the Design Lounge: ${meta.blurb}`} crumbs={[{ name: 'Rooms', href: '/rooms' }, { name: meta.label, href: `/rooms/${Astro.params.type}` }]}>
   <PageHead eyebrow="Room" title={meta.label} count={pieces.length}>
     <nav class="rooms" aria-label="Other rooms">
       <span class="eyebrow">Other rooms</span>

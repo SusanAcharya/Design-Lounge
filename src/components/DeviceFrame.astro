@@ -22,7 +22,7 @@ const hasWeb = frame === 'web';
 const hasPhone = frame === 'phone' || switchable;
 const hasTablet = frame === 'tablet' || switchable;
 const hasUrlbar = platform === 'mobile-web' || switchable;
-const poster = existsSync(new URL(`../../public/thumbs/${slug}.jpg`, import.meta.url)) ? `/thumbs/${slug}.jpg` : null;
+const poster = existsSync(new URL(`../../public/thumbs/${slug}.webp`, import.meta.url)) ? `/thumbs/${slug}.webp` : null;
 ---
 <lounge-frame
   class:list={['lf', `lf-${frame}`, `lf-${platform}`, { interactive }, cls]}

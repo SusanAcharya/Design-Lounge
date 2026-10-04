@@ -9,6 +9,7 @@ import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
 import { RECIPES } from '../data/motion';
 import { STARTS } from '../data/starts';
+import { AUTHOR } from '../lib/pieces';
 
 const all = await getPieces();
 const newest = [...all].reverse();
@@ -37,12 +38,21 @@ const system = [
   { n: RECIPES.length, label: 'Motion recipes', href: '/motion' },
 ];
 const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
+const faq = [
+  { q: 'What is Design Lounge?', a: `Design Lounge is a free UI design skill for AI coding agents, plus a library of ${all.length} design ideas: website sections, app screens, components and motion. Each one has a live demo and a written brief that an agent can build from.` },
+  { q: 'How do I add the UI design skill to my agent?', a: `Run ${installCmd} in your project. It works with Cursor, Claude Code, Codex and other agents that read skills. Then ask for what you are making, such as a portfolio, a shop or a dashboard.` },
+  { q: 'What does the skill do differently?', a: `It stops the agent from inventing a look. The agent picks a real theme, a font pairing, a radius and motion from the library, builds the screens from piece briefs, then opens the page and checks it for the usual signs of AI-made design.` },
+  { q: 'Is it free to use in my products?', a: 'Yes. The pieces, themes, type pairings and icons are free to use in your own products and client work. A small credit line is appreciated. Please do not republish the library itself as a library.' },
+  { q: 'Where do the design ideas come from?', a: `Every piece is an original design with an invented brand. Some study the craft of public sites, such as Stripe or Linear, and those are listed on the Sources page. No piece copies another site's text, images or logo.` },
+  { q: 'Who made Design Lounge?', a: `${AUTHOR.name}, a ${AUTHOR.role.toLowerCase()} based in ${AUTHOR.city}, Nepal.` },
+];
 ---
-<Base rail={false}>
+<Base rail={false} fullTitle="Design Lounge: a UI design skill and design ideas for AI agents" description={`Design Lounge is a free UI design skill for AI coding agents, with ${all.length} design ideas you can see live: website sections, app screens, palettes, font pairings, icons and motion.`} faq={faq}>
   <section class="hero wrap">
     <div class="hero-text">
+      <p class="eyebrow reveal">Design Lounge</p>
       <h1 class="display h1 reveal">Give your AI agent <i>design taste.</i></h1>
-      <p class="lede reveal" style="--d:80ms">One skill and a library of {all.length} live designs. Your agent picks real type, colour and motion, then builds.</p>
+      <p class="lede reveal" style="--d:80ms">A free UI design skill and a library of {all.length} live design ideas. Your agent picks real type, colour and motion, then builds.</p>
       <div class="hero-cta reveal" style="--d:160ms">
         <span class="cmd big">
           <span class="prompt mono" aria-hidden="true">$</span>
@@ -205,6 +215,31 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
     Real app screens at 390 × 844. Lift a card, run the timer, answer the quiz. Each ships with the brief your agent builds from.
   </Showcase>
 
+  <section class="faq wrap" aria-labelledby="faq-h">
+    <div class="faq-head">
+      <h2 class="display h2" id="faq-h">Questions</h2>
+      <p class="lede">The short version of how the skill and the library work.</p>
+    </div>
+    <div class="faq-list">
+      {faq.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="bio wrap" aria-labelledby="bio-h">
+    <p class="eyebrow">Made by</p>
+    <h2 class="display h3" id="bio-h"><a href="/about">{AUTHOR.name}</a></h2>
+    <p class="bio-text">{AUTHOR.role} in {AUTHOR.city}, Nepal. She builds products end to end and made Design Lounge so AI agents stop shipping the same generic page. Every piece, theme and brief here is hers.</p>
+    <p class="bio-links">
+      <a href="/about">About the Lounge</a>
+      {AUTHOR.links.map((l) => <a href={l.href} target="_blank" rel="noopener me">{l.label} ↗</a>)}
+    </p>
+  </section>
+
   <section class="close wrap" aria-labelledby="close-h">
     <h2 class="display h2" id="close-h">Install once. Ask for anything.</h2>
     <span class="cmd big">
@@ -217,10 +252,29 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
 </Base>
 
 <style>
+  /* faq + bio */
+  .faq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: clamp(24px, 4vw, 64px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
+  .faq-head { display: flex; flex-direction: column; gap: 12px; }
+  .faq-list { border-top: 1px solid var(--line); }
+  .faq-item { border-bottom: 1px solid var(--line); }
+  .faq-item summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; font-size: 17px; font-weight: 500; color: var(--ink); }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: "+"; font-family: var(--mono); color: var(--ink-3); transition: transform var(--t-med) var(--ease-out); }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item p { padding: 0 0 20px; max-width: 62ch; color: var(--ink-2); font-size: 16px; line-height: 1.6; }
+  .bio { display: flex; flex-direction: column; gap: 12px; padding-block: clamp(48px, 6vw, 88px); border-top: 1px solid var(--line); }
+  .bio .h3 a { color: var(--ink); }
+  .bio .h3 a:hover { color: var(--accent); }
+  .bio-text { max-width: 60ch; color: var(--ink-2); font-size: 17px; line-height: 1.6; }
+  .bio-links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; }
+  .bio-links a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+  .bio-links a:hover { color: var(--ink); }
+  @media (max-width: 860px) { .faq { grid-template-columns: 1fr; } }
+
   /* hero */
-  .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 72px); align-items: center; padding: clamp(40px, 6vw, 88px) 0 clamp(48px, 6vw, 96px); min-height: min(calc(100dvh - var(--header-h)), 860px); }
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 4vw, 64px); align-items: center; padding: clamp(40px, 5vw, 72px) 0 clamp(48px, 6vw, 96px); min-height: min(calc(100dvh - var(--header-h)), 820px); }
   .hero-text { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
-  .hero .h1 { max-width: 11ch; }
+  .hero .h1 { font-size: clamp(40px, 4.4vw, 66px); line-height: 1.04; max-width: 15ch; }
   .hero .lede { max-width: 42ch; }
   .hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 6px; }
   .textlink { font-size: 15px; font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--line-2); padding-bottom: 2px; transition: color var(--t-fast), border-color var(--t-fast); }
@@ -347,7 +401,7 @@ const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
     .style-words { justify-content: flex-start; max-width: none; }
     .steps, .fgroup ul { grid-template-columns: minmax(0, 1fr); }
     .agent-cap { flex-direction: column; gap: 4px; }
-    .cmd code { font-size: 12.5px; }
+    .cmd code { font-size: 13px; white-space: normal; overflow-wrap: anywhere; line-height: 1.45; }
     .wall-item.tablet { display: none; }
     .wall-item.web { width: 76%; }
     .wall-item.phone { width: 34%; top: 18%; }

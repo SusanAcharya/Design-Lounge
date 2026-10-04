@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { getPieces } from '../lib/pieces';
 const ids = (await getPieces()).map((p) => p.id);
 ---
-<Base title="Surprise me">
+<Base title="Surprise me" description="Opens a random piece from Design Lounge." noindex>
   <div class="wrap" style="padding:120px 0;text-align:center">
     <p class="eyebrow">Picking a piece</p>
     <h1 class="display h2">One moment.</h1>

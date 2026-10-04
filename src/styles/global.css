@@ -1,5 +1,8 @@
 /* Design Lounge — global styles */
 
+/* Arial scaled to Geist's width, so text does not reflow when Geist arrives. */
+@font-face { font-family: "Geist Fallback"; src: local("Arial"), local("Helvetica"); size-adjust: 91%; ascent-override: 110%; descent-override: 24%; line-gap-override: 0%; }
+
 @view-transition { navigation: auto; }
 .hdr { view-transition-name: lounge-header; }
 .rail { view-transition-name: lounge-rail; }
@@ -27,8 +30,8 @@
   --selection: #f8d5c1;
   --shadow: 0 1px 0 rgba(24, 24, 27, 0.04), 0 12px 32px -14px rgba(24, 24, 27, 0.22);
 
-  --display: "Geist", "Helvetica Neue", Arial, sans-serif;
-  --sans: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --display: "Geist", "Geist Fallback", sans-serif;
+  --sans: "Geist", "Geist Fallback", sans-serif;
   --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --gutter: clamp(16px, 4vw, 48px);

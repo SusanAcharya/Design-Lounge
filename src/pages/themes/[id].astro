@@ -13,7 +13,7 @@ const skip = new Set(['accent', 'accentInk', 'positive']);
 const chips = (Object.entries(t.tokens) as [string, string][]).filter(([k]) => !skip.has(k));
 const others = THEMES.filter((x) => x.id !== t.id && x.tags.some((tag) => t.tags.includes(tag))).slice(0, 4);
 ---
-<Base title={`${t.name} theme`} description={`${t.name}: ${t.mood} A theme from Design Lounge by ${AUTHOR.name}.`}>
+<Base title={`${t.name} theme`} description={`${t.name}: ${t.mood} A theme from Design Lounge by ${AUTHOR.name}.`} crumbs={[{ name: 'Themes', href: '/themes' }, { name: t.name, href: `/themes/${t.id}` }]}>
   <link rel="stylesheet" href={themeFontHref(t)} />
   <PageHead eyebrow="Theme" title={t.name} />
   <div class="wrap page">

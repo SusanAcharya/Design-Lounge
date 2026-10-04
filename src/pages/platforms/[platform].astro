@@ -13,7 +13,7 @@ const all = await getPieces();
 const pieces = all.filter((p) => p.data.platform === platform);
 const others = Object.entries(PLATFORM_META).filter(([k]) => k !== platform);
 ---
-<Base title={meta.label} description={`${meta.label} pieces in the Design Lounge. ${meta.blurb}`}>
+<Base title={`${meta.label} designs`} description={`${meta.label} pieces in the Design Lounge. ${meta.blurb}`} crumbs={[{ name: 'Platforms', href: '/platforms' }, { name: meta.label, href: `/platforms/${Astro.params.platform}` }]}>
   <PageHead eyebrow="Platform" title={meta.label} count={pieces.length}>
     <nav class="rooms" aria-label="Other platforms">
       <span class="eyebrow">Other platforms</span>

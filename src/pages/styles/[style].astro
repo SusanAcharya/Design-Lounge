@@ -13,7 +13,7 @@ const all = await getPieces();
 const pieces = all.filter((p) => (p.data.styles as string[]).includes(style));
 const others = Object.entries(STYLE_META).filter(([k]) => k !== style && all.some((p) => (p.data.styles as string[]).includes(k)));
 ---
-<Base title={`${meta.label} style`} description={`${meta.label} pieces in the Design Lounge. ${meta.blurb}`}>
+<Base title={`${meta.label} style`} description={`${meta.label} pieces in the Design Lounge. ${meta.blurb}`} crumbs={[{ name: 'Styles', href: '/styles' }, { name: meta.label, href: `/styles/${Astro.params.style}` }]}>
   <PageHead eyebrow="Style" title={meta.label} count={pieces.length}>
     <nav class="rooms" aria-label="Other styles">
       <span class="eyebrow">Other styles</span>

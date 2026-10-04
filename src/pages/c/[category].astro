@@ -14,7 +14,7 @@ const pieces = all.filter((p) => p.data.category === category);
 const group = CATEGORY_GROUPS.find((g) => g.items.includes(category))!;
 const siblings = group.items.filter((c) => c !== category).map((c) => ({ c, n: all.filter((p) => p.data.category === c).length })).filter((s) => s.n > 0);
 ---
-<Base title={meta.label} description={`${meta.label} in Design Lounge by Susan Acharya: ${meta.blurb}`}>
+<Base title={`${meta.label}: ${pieces.length} UI design ideas`} description={`${pieces.length} ${meta.label.toLowerCase()} designs with live demos and briefs your AI agent can build. ${meta.blurb}`} crumbs={[{ name: 'Index', href: '/c' }, { name: meta.label, href: `/c/${category}` }]}>
   <PageHead eyebrow={group.label} title={meta.label} count={pieces.length}>
     <nav class="sibs" aria-label={`More ${group.label.toLowerCase()}`}>
       <a class="eyebrow" href="/c">All categories</a>

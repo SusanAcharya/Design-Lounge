@@ -19,7 +19,7 @@ const items = slugs
   .map(({ slug, label }) => {
     const p = all.find((x) => x.id === slug);
     if (!p) return null;
-    const thumb = existsSync(new URL(`../../public/thumbs/${slug}.jpg`, import.meta.url)) ? `/thumbs/${slug}.jpg` : '';
+    const thumb = existsSync(new URL(`../../public/thumbs/${slug}.webp`, import.meta.url)) ? `/thumbs/${slug}.webp` : '';
     return { slug, label, title: p.data.title, summary: p.data.summary, platform: p.data.platform, n: nums.get(slug) ?? '000', thumb };
   })
   .filter((x): x is NonNullable<typeof x> => !!x);

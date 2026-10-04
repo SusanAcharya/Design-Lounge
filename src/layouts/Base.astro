@@ -12,20 +12,32 @@ interface Props {
   ogImage?: string;
   bodyClass?: string;
   rail?: boolean;
+  fullTitle?: string;
+  noindex?: boolean;
+  crumbs?: { name: string; href: string }[];
+  faq?: { q: string; a: string }[];
 }
-const { title, description = `Design Lounge by ${AUTHOR.name}. Pieces, type, themes, icons, motion.`, ogImage, bodyClass, rail = true } = Astro.props;
-const fullTitle = title ? `${title} · Design Lounge` : `Design Lounge`;
+const { title, description = `Design Lounge is a free UI design skill for AI coding agents, with hundreds of design ideas: website sections, app screens, palettes, font pairings, icons and motion.`, ogImage, bodyClass, rail = true, noindex = false, crumbs, faq } = Astro.props;
+const fullTitle = Astro.props.fullTitle ?? (title ? `${title} · Design Lounge` : `Design Lounge`);
 const origin = (Astro.site ?? new URL('https://designlounge.vercel.app')).toString().replace(/\/$/, '');
-const path = Astro.url.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') || '/';
+const path = Astro.url.pathname.replace(/\/index(\.html)?$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
 const canonical = path === '/' ? `${origin}/` : `${origin}${path}`;
-const ld = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Design Lounge',
-  url: `${origin}/`,
-  description,
-  author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.site, jobTitle: AUTHOR.role, sameAs: AUTHOR.links.map((l) => l.href) },
+const json = (o: unknown) => JSON.stringify(o).replace(/</g, '\\u003c');
+const person = { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.site, jobTitle: AUTHOR.role, sameAs: AUTHOR.links.map((l) => l.href) };
+const graph: Record<string, unknown>[] = [
+  path === '/'
+    ? { '@type': 'WebSite', name: 'Design Lounge', alternateName: 'Design Lounge UI design skill', url: `${origin}/`, description, author: person, publisher: person }
+    : { '@type': 'WebPage', name: fullTitle, url: canonical, description, isPartOf: { '@type': 'WebSite', name: 'Design Lounge', url: `${origin}/` }, author: person },
+];
+if (crumbs?.length) graph.push({
+  '@type': 'BreadcrumbList',
+  itemListElement: [{ name: 'Design Lounge', href: '/' }, ...crumbs].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: `${origin}${c.href === '/' ? '/' : c.href}` })),
 });
+if (faq?.length) graph.push({
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const ld = json({ '@context': 'https://schema.org', '@graph': graph });
 const count = (await getPieces()).length;
 ---
 <!doctype html>
@@ -37,6 +49,7 @@ const count = (await getPieces()).length;
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex, follow" />}
   <meta name="author" content={AUTHOR.name} />
   <meta property="og:site_name" content={`Design Lounge by ${AUTHOR.name}`} />
   <meta name="twitter:card" content="summary_large_image" />
@@ -47,7 +60,10 @@ const count = (await getPieces()).length;
   <meta property="og:url" content={canonical} />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
-  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:type" content={path === '/' ? 'website' : 'article'} />
+  <meta property="og:image" content={ogImage ?? `${origin}/og/home.jpg`} />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
   <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0c0c0e" media="(prefers-color-scheme: dark)" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

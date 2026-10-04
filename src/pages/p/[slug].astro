@@ -52,7 +52,7 @@ const isWeb = pm.frame === 'web';
 const og = existsSync(new URL(`../../../public/og/${piece.id}.jpg`, import.meta.url)) ? new URL(`/og/${piece.id}.jpg`, Astro.site).toString() : undefined;
 const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
 ---
-<Base title={d.title} description={d.summary} ogImage={og}>
+<Base title={`${d.title} · ${CATEGORY_META[d.category].label}`} description={d.summary} ogImage={og} crumbs={[{ name: 'Floor', href: '/browse' }, { name: TYPE_META[d.type].label, href: `/rooms/${d.type}` }, { name: CATEGORY_META[d.category].label, href: `/c/${d.category}` }, { name: d.title, href: `/p/${piece.id}` }]}>
   <div class="docs wrap" data-docs>
     <DocsSidebar pieces={all} current={piece.id} />
 
@@ -166,7 +166,6 @@ const json = (s: string) => JSON.stringify(s).replace(/</g, '\\u003c');
   </div>
 
   <script type="application/json" id="brief-src" set:html={json(brief)}></script>
-  <script type="application/json" id="source-src" set:html={json(source)}></script>
 
   <script>
     const docs = document.querySelector<HTMLElement>('[data-docs]');

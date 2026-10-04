@@ -1,14 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Not on the floor">
+<Base title="Not on the floor" description="This page isn't in Design Lounge. Browse the pieces, themes and type pairings instead." noindex>
   <div class="wrap nf">
     <p class="eyebrow">404</p>
     <h1 class="display h1">Not found</h1>
-    <a class="btn primary" href="/">Home</a>
+    <p class="lede">That page isn't here. It may have been renamed. Try one of these.</p>
+    <div class="nf-links">
+      <a class="btn primary" href="/browse">Browse every piece</a>
+      <a class="btn" href="/c">Index by kind</a>
+      <a class="btn" href="/themes">Themes</a>
+      <a class="btn" href="/type">Type pairings</a>
+      <a class="btn ghost" href="/">Home</a>
+    </div>
   </div>
 </Base>
 <style>
   .nf { padding: clamp(64px, 12vw, 160px) 0; display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
-  .acts { display: flex; gap: 10px; margin-top: 12px; }
+  .nf-links { display: flex; flex-wrap: wrap; gap: 10px; }
 </style>

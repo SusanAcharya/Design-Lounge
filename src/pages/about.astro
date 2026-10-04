@@ -6,13 +6,19 @@ import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
 const pieces = await getPieces();
+const desc = `${AUTHOR.name} is a ${AUTHOR.role.toLowerCase()} in ${AUTHOR.city}, Nepal, and the maker of Design Lounge, a free UI design skill and design library for AI agents.`;
 ---
-<Base title="About" description={`Design Lounge by ${AUTHOR.name}.`}>
+<Base title={`About ${AUTHOR.name}`} description={desc} crumbs={[{ name: 'About', href: '/about' }]}>
   <PageHead eyebrow="About" title={AUTHOR.name} />
   <div class="wrap about">
-    <p>{AUTHOR.role}, {AUTHOR.city}.</p>
+    <p class="lead">{AUTHOR.role} in {AUTHOR.city}, Nepal.</p>
+    <p>I build products end to end: the research, the interface, and the code. I made Design Lounge because AI coding agents kept shipping the same page. A purple gradient, three feature cards, and a row of logos. The agents could write code, but they had no taste to draw on.</p>
+    <p>Design Lounge is that taste, written down. It is a skill your agent installs, and a library of {pieces.length} designs it can read: website sections, app screens, components and motion. Each piece has a live demo and a brief with the exact sizes, states and timing. Around them sit {THEMES.length} colour themes, {PAIRINGS.length} font pairings and {ICONS.length} icons that agree with each other.</p>
+    <p>Every piece is an original design with an invented brand. Some study the craft of public sites, and those are named on the <a href="/sources">Sources</a> page. The library is free to use in your own products.</p>
+
+    <h2 class="h4">Find me</h2>
     <ul class="who-links mono">
-      {AUTHOR.links.map((l) => <li><a href={l.href} target="_blank" rel="noopener">{l.label}</a></li>)}
+      {AUTHOR.links.map((l) => <li><a href={l.href} target="_blank" rel="noopener me">{l.label}</a></li>)}
       <li><a href={`mailto:${AUTHOR.email}`}>Email</a></li>
     </ul>
     <p class="mono faint">{pieces.length} pieces · {PAIRINGS.length} pairings · {THEMES.length} themes · {ICONS.length} icons</p>
@@ -20,7 +26,12 @@ const pieces = await getPieces();
 </Base>
 
 <style>
-  .about { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; max-width: 40ch; }
+  .about { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; margin-bottom: clamp(48px, 8vw, 96px); }
+  .about > * { max-width: 640px; }
+  .about p { color: var(--ink-2); font-size: 17px; line-height: 1.65; }
+  .about .lead { color: var(--ink); font-size: 20px; }
+  .about p a { color: var(--ink); border-bottom: 1px solid var(--line-2); }
+  .about .h4 { margin-top: 16px; }
   .who-links { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
   .who-links a { border-bottom: 1px solid var(--line-2); padding-bottom: 2px; }
   .who-links a:hover { border-color: var(--ink); }

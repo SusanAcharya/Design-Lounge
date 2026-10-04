@@ -1,5 +1,4 @@
 ---
-import { Code } from 'astro:components';
 import { briefUrl, demoUrl, bytes } from '../lib/pieces';
 
 interface Props { slug: string; title: string; brief: string; source: string }
@@ -58,11 +57,11 @@ const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" 
 
   <div class="ui-panel" role="tabpanel" id="ui-p-html" aria-labelledby="ui-t-html" data-ui-panel="html" hidden>
     <div class="tools">
-      <button class="btn sm primary" type="button" data-copy="#source-src" data-done-label="Copied"><Fragment set:html={copyIcon} /><span data-label>Copy source</span></button>
+      <button class="btn sm primary" type="button" data-src-copy data-done-label="Copied"><Fragment set:html={copyIcon} /><span data-label>Copy source</span></button>
       <a class="btn sm" href={demoUrl(slug)} download={`${slug}.html`}>Download .html</a>
       <span class="hint mono faint">Single file · {size}</span>
     </div>
-    <div class="src"><Code code={source} lang="html" themes={{ light: 'github-light', dark: 'github-dark-dimmed' }} defaultColor={false} /></div>
+    <div class="src"><pre class="src-plain" tabindex="0" aria-label="Demo source"><code data-src-url={demoUrl(slug)}>Loading the source…</code></pre></div>
   </div>
 </div>
 <script type="application/json" id="ui-install-src" set:html={JSON.stringify(install)}></script>
@@ -72,9 +71,27 @@ const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" 
   if (root) {
     const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-ui-tab]')];
     const panels = [...root.querySelectorAll<HTMLElement>('[data-ui-panel]')];
+    const code = root.querySelector<HTMLElement>('[data-src-url]');
+    let src: Promise<string> | null = null;
+    const loadSource = () => (src ??= fetch(code!.dataset.srcUrl!)
+      .then((r) => (r.ok ? r.text() : Promise.reject()))
+      .then((t) => t.replace(/\n?<!--dl-sig-->[\s\S]*?<!--\/dl-sig-->/, ''))
+      .then((t) => { code!.textContent = t; return t; })
+      .catch(() => { src = null; code!.textContent = 'Could not load the source. Use Download .html instead.'; return ''; }));
+    const copyBtn = root.querySelector<HTMLButtonElement>('[data-src-copy]');
+    copyBtn?.addEventListener('click', async () => {
+      const t = await loadSource();
+      if (!t) return;
+      try { await navigator.clipboard.writeText(t); } catch { return; }
+      const label = copyBtn.querySelector('[data-label]')!;
+      const orig = label.textContent;
+      label.textContent = copyBtn.dataset.doneLabel || 'Copied';
+      setTimeout(() => (label.textContent = orig), 1600);
+    });
     const select = (i: number, focus = false) => {
       tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
       panels.forEach((p) => (p.hidden = p.dataset.uiPanel !== tabs[i].dataset.uiTab));
+      if (tabs[i].dataset.uiTab === 'html' && code) loadSource();
       if (focus) tabs[i].focus();
     };
     tabs.forEach((t, i) => {
@@ -129,6 +146,7 @@ const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" 
   .peek .more { color: var(--ink-3); font-style: italic; }
   .src { min-width: 0; border-radius: var(--r); }
   .src :global(pre) { padding: 14px 16px; max-height: 520px; }
+  .src-plain { height: 520px; font-family: var(--mono); color: var(--ink-2); white-space: pre; tab-size: 2; }
   .src:focus-visible, .peek:focus-visible { outline-offset: 2px; }
 
   @media (max-width: 640px) {

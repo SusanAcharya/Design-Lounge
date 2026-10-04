@@ -93,6 +93,7 @@ const WAYS_IN = [
           {WAYS_IN.map((w) => <a href={w.href}>{w.label}</a>)}
         </nav>
       </div>
+      <button type="button" class="btn primary side-done" data-side-toggle>Show results</button>
     </aside>
   )}
   <div class="cat-main">
@@ -193,7 +194,7 @@ const WAYS_IN = [
     const cards = [...grid.querySelectorAll<HTMLElement>('.card')];
     const chips = [...root.querySelectorAll<HTMLButtonElement>('button[data-f][data-v]')];
     const allBtn = root.querySelector<HTMLButtonElement>('[data-all]');
-    const sideToggle = root.querySelector<HTMLButtonElement>('[data-side-toggle]');
+    const sideToggles = root.querySelectorAll<HTMLButtonElement>('[data-side-toggle]');
     const q = root.querySelector<HTMLInputElement>('[data-q]');
     const sort = root.querySelector<HTMLSelectElement>('[data-sort]');
     const status = root.querySelector<HTMLElement>('[data-status]');
@@ -271,11 +272,13 @@ const WAYS_IN = [
     const clearAll = () => { Object.values(state).forEach((s) => s.clear()); if (q) q.value = ''; apply(); };
     clears.forEach((b) => b.addEventListener('click', clearAll));
     allBtn?.addEventListener('click', clearAll);
-    sideToggle?.addEventListener('click', () => {
+    sideToggles.forEach((t) => t.addEventListener('click', () => {
       const on = !root.classList.contains('side-open');
       root.classList.toggle('side-open', on);
-      sideToggle.setAttribute('aria-expanded', String(on));
-    });
+      document.documentElement.classList.toggle('lock-scroll', on);
+      sideToggles.forEach((x) => x.hasAttribute('aria-controls') && x.setAttribute('aria-expanded', String(on)));
+      if (!on) root.querySelector('[data-filters]')?.scrollIntoView({ block: 'start' });
+    }));
     views.forEach((v) => v.addEventListener('click', () => { view = v.dataset.view!; try { localStorage.setItem('dl-view', view); } catch {} apply(); }));
     const more = root.querySelector<HTMLButtonElement>('[data-more]');
     const panel = root.querySelector<HTMLElement>('[data-panel]');
@@ -287,7 +290,7 @@ const WAYS_IN = [
 </script>
 
 <style>
-  .filters { display: flex; flex-direction: column; gap: 12px; padding: 16px 0 18px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+  .filters { display: flex; flex-direction: column; gap: 12px; padding: 16px 0 18px; border-bottom: 1px solid var(--line); margin-bottom: 28px; scroll-margin-top: var(--header-h); }
   .frow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .filter-btn { height: 40px; }
   .picks { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -321,7 +324,7 @@ const WAYS_IN = [
   .has-side { display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: clamp(24px, 3vw, 48px); align-items: start; }
   .cat-main { min-width: 0; }
   .has-side .filters { position: sticky; top: var(--header-h); z-index: 3; padding-top: 14px; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-  .side-toggle { display: none; }
+  .side-toggle, .side-done { display: none; }
   .side { position: sticky; top: calc(var(--header-h) + 14px); max-height: calc(100dvh - var(--header-h) - 28px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; padding-bottom: 24px; }
   .side-inner { display: flex; flex-direction: column; gap: 4px; }
   .side-all, .sitem { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; padding: 7px 10px; border-radius: var(--r); font-size: 14px; text-align: left; color: var(--ink-2); transition: background-color var(--t-fast), color var(--t-fast); }
@@ -343,8 +346,10 @@ const WAYS_IN = [
   .ways a:hover { background: var(--paper-2); color: var(--ink); }
   @media (max-width: 960px) {
     .has-side { grid-template-columns: minmax(0, 1fr); gap: 0; }
-    .side { display: none; position: static; max-height: none; padding: 8px 0 20px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+    .side { display: none; position: fixed; inset: var(--header-h) 0 0 0; z-index: 45; max-height: none; padding: 16px var(--gutter) 0; background: var(--paper); }
     .has-side.side-open .side { display: block; }
+    .side-done { display: flex; position: sticky; bottom: 0; width: 100%; height: 48px; margin: 16px 0 0; box-shadow: 0 -16px 24px var(--paper); }
+    :global(html.lock-scroll) { overflow: hidden; }
     .side-toggle { display: inline-flex; }
     .has-side .filters { position: static; backdrop-filter: none; }
   }
