@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>KEY-01 · A 75% aluminium mechanical keyboard you can play here</title>
+  <meta name="description" content="KEY-01 is a 75% gasket-mounted aluminium keyboard with hot-swap switches. Press any key on your own keyboard and its twin moves on the page.">
+  <meta name="theme-color" content="#e8eef2">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%232a6f97'/%3E%3Crect x='7' y='6' width='18' height='16' fill='%23fffdf8'/%3E%3Crect x='7' y='22' width='18' height='4' fill='%2314202b'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/built/key-01/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body class="preload">
+
+  <header class="bar" id="bar">
+    <div class="frame bar-in g">
+      <a class="mark" href="#play" aria-label="KEY-01, back to the keyboard">KEY-01</a>
+      <nav class="nav-links" aria-label="Main">
+        <ul>
+          <li><a href="#play" aria-current="page">Play</a></li>
+          <li><a href="#build">Build</a></li>
+          <li><a href="#sound">Sound</a></li>
+          <li><a href="#specs">Specs</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn-cta" href="#reserve">Reserve <span class="num">$189</span></a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="menu" id="menu" aria-label="Main menu">
+    <ul class="menu-links">
+      <li><a href="#play" style="--i:0">Play<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#build" style="--i:1">Build<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#sound" style="--i:2">Sound<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#specs" style="--i:3">Specs<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#reserve" style="--i:4">Reserve<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+    </ul>
+    <div class="menu-foot">
+      <p>KEY-01 costs <span class="num">$189</span>. Reserving is free.</p>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- 1 · Hero: the keyboard you can play -->
+    <section class="hero" id="play" aria-label="KEY-01, playable keyboard">
+      <div class="frame hero-in">
+        <div class="cols" aria-hidden="true">
+          <i><b>01</b></i><i><b>02</b></i><i><b>03</b></i><i><b>04</b></i><i><b>05</b></i><i><b>06</b></i>
+          <i><b>07</b></i><i><b>08</b></i><i><b>09</b></i><i><b>10</b></i><i><b>11</b></i><i><b>12</b></i>
+        </div>
+
+        <h1 class="word g" id="word" aria-label="KEY-01">
+          <span class="cell" aria-hidden="true"><b style="--i:0">K</b></span>
+          <span class="cell" aria-hidden="true"><b style="--i:1">E</b></span>
+          <span class="cell" aria-hidden="true"><b style="--i:2">Y</b></span>
+          <span class="cell" aria-hidden="true"><b style="--i:3">-</b></span>
+          <span class="cell" aria-hidden="true"><b style="--i:4">0</b></span>
+          <span class="cell" aria-hidden="true"><b style="--i:5">1</b></span>
+        </h1>
+        <div class="rule" aria-hidden="true"></div>
+
+        <div class="strip g">
+          <p class="lede">A 75% aluminium keyboard with hot-swap switches. Press any key on yours and its twin goes down here, in the switch you pick.</p>
+
+          <div class="pick" role="radiogroup" aria-labelledby="pick-l">
+            <p class="cap" id="pick-l">Switch</p>
+            <div class="pick-keys">
+              <button class="key ctl" type="button" role="radio" aria-checked="false" data-switch="linear"><span>Linear</span><i class="led" aria-hidden="true"></i></button>
+              <button class="key ctl" type="button" role="radio" aria-checked="true" data-switch="tactile"><span>Tactile</span><i class="led" aria-hidden="true"></i></button>
+              <button class="key ctl" type="button" role="radio" aria-checked="false" data-switch="clicky"><span>Clicky</span><i class="led" aria-hidden="true"></i></button>
+            </div>
+          </div>
+
+          <div class="snd">
+            <button class="key ctl ctl-ico" id="soundKey" type="button" aria-pressed="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4H5z"/><path d="M16 9.5a3.5 3.5 0 010 5"/></svg>
+              <span>Sound</span><i class="led" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="status">
+          <div class="type-line num" aria-hidden="true"><span class="type-out" id="typeOut"></span><span class="caret"></span><span class="type-hint" id="typeHint">Start typing. Your keyboard is wired to this one.</span></div>
+          <p class="readout num" id="readout" aria-live="polite">Last: none yet · 0 presses</p>
+        </div>
+
+        <div class="kb-wrap">
+          <div class="kb" id="kb" role="group" aria-label="KEY-01 keyboard. Press keys on your own keyboard, or tap and click the keys, to hear and see them move."></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · Build: sticky exploded view -->
+    <section class="build" id="build" aria-labelledby="build-h">
+      <div class="frame build-in">
+        <div class="copy">
+          <h2 id="build-h">Built in <em>four layers.</em></h2>
+          <p class="build-lede">Every part between your finger and the desk does one job. Scroll through them, or press a number.</p>
+
+          <ol class="steps">
+            <li class="step on" data-s="1">
+              <button class="num-btn num" type="button" aria-label="Go to step 1" aria-current="step">1</button>
+              <h3>Milled</h3>
+              <p>The case is one block of 6063 aluminium, CNC milled and bead-blasted, with a 6.5° typing angle cut into the shape.</p>
+              <ul class="stats">
+                <li><b class="num">1.62 kg</b><span>weight</span></li>
+                <li><b class="num">6.5°</b><span>typing angle</span></li>
+              </ul>
+            </li>
+            <li class="step" data-s="2">
+              <button class="num-btn num" type="button" aria-label="Go to step 2">2</button>
+              <h3>Cushioned</h3>
+              <p>Twelve Poron gaskets hold a 1.5 mm FR4 plate away from the metal, so each press lands soft and the case does not ring.</p>
+              <ul class="stats">
+                <li><b class="num">12</b><span>gaskets</span></li>
+                <li><b class="num">1.5 mm</b><span>FR4 plate</span></li>
+              </ul>
+            </li>
+            <li class="step" data-s="3">
+              <button class="num-btn num" type="button" aria-label="Go to step 3">3</button>
+              <h3>Switched</h3>
+              <p>A hot-swap board takes any 3 or 5-pin switch. Pull one out with the included tool and push another in. No solder.</p>
+              <ul class="stats">
+                <li><b class="num">84</b><span>sockets</span></li>
+                <li><b class="num">3</b><span>factory switches</span></li>
+              </ul>
+            </li>
+            <li class="step" data-s="4">
+              <button class="num-btn num" type="button" aria-label="Go to step 4">4</button>
+              <h3>Capped</h3>
+              <p>Double-shot PBT keycaps in Cherry profile. Each legend is a second plastic moulded through the cap, so it cannot wear off.</p>
+              <ul class="stats">
+                <li><b class="num">1.5 mm</b><span>cap wall</span></li>
+                <li><b class="num">PBT</b><span>double-shot</span></li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+
+        <div class="aside">
+          <div class="sticky">
+            <figure class="viz" id="viz" data-step="1" aria-label="Exploded view of KEY-01, highlighting the current layer">
+              <div class="stage">
+                <div class="stack">
+                  <div class="layer l-case" style="--z:0"></div>
+                  <div class="layer l-gasket" style="--z:1"></div>
+                  <div class="layer l-plate" style="--z:2"></div>
+                  <div class="layer l-pcb" style="--z:3"></div>
+                  <div class="layer l-switch" style="--z:4"></div>
+                  <div class="layer l-caps" style="--z:5"></div>
+                </div>
+              </div>
+              <figcaption class="foot">
+                <p class="panel p1"><b>Case</b> 6063 aluminium, one piece</p>
+                <p class="panel p2"><b>Gasket and plate</b> Poron on FR4</p>
+                <p class="panel p3"><b>Board and switches</b> hot-swap, 5-pin</p>
+                <p class="panel p4"><b>Keycaps</b> PBT, Cherry profile</p>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · Sound: scroll velocity type on the primary band -->
+    <section class="sound" id="sound" aria-labelledby="sound-h">
+      <div class="sound-bar">
+        <div class="frame"><h2 id="sound-h" class="vel">Three switches. Hear each one.</h2></div>
+      </div>
+      <div class="frame">
+        <div class="sound-col">
+          <article class="sw">
+            <h3>Linear <span class="num">45 gf</span></h3>
+            <p>Smooth from top to bottom with no bump. The quietest of the three, and the one to pick for long sessions or a shared room.</p>
+            <button class="btn btn-on-band" type="button" data-play="linear">Play Linear</button>
+          </article>
+          <article class="sw">
+            <h3>Tactile <span class="num">55 gf</span></h3>
+            <p>A small bump at 2 mm tells your finger the key has registered before it bottoms out. The middle ground, and how KEY-01 ships unless you choose.</p>
+            <button class="btn btn-on-band" type="button" data-play="tactile">Play Tactile</button>
+          </article>
+          <article class="sw">
+            <h3>Clicky <span class="num">60 gf</span></h3>
+            <p>A click jacket snaps at the actuation point. You hear it on the way down and again on the way up. Loud on purpose.</p>
+            <button class="btn btn-on-band" type="button" data-play="clicky">Play Clicky</button>
+          </article>
+          <p class="sound-note">Every sound on this page is synthesised in your browser from these three switch profiles. Your speakers colour it, so treat it as a sketch of the real thing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · Specs -->
+    <section class="specs" id="specs" aria-labelledby="specs-h">
+      <div class="frame specs-in g">
+        <div class="specs-head">
+          <h2 id="specs-h">Specifications</h2>
+          <p class="price num">$189</p>
+          <p class="price-note">Includes the case, plate, your choice of switch, PBT keycaps, a USB-C cable and a switch puller.</p>
+          <a class="btn" href="#reserve">Reserve for <span class="num">$189</span></a>
+        </div>
+        <dl class="plist">
+          <div class="prow"><dt>Layout</dt><dd>75%, 84 keys, ANSI</dd></div>
+          <div class="prow"><dt>Case</dt><dd>6063 aluminium, CNC milled, bead-blasted</dd></div>
+          <div class="prow"><dt>Mount</dt><dd>Gasket, 12 Poron gaskets</dd></div>
+          <div class="prow"><dt>Plate</dt><dd>FR4, <span class="num">1.5 mm</span></dd></div>
+          <div class="prow"><dt>Switches</dt><dd>Hot-swap 5-pin. Linear <span class="num">45 gf</span>, Tactile <span class="num">55 gf</span>, Clicky <span class="num">60 gf</span></dd></div>
+          <div class="prow"><dt>Keycaps</dt><dd>Double-shot PBT, Cherry profile</dd></div>
+          <div class="prow"><dt>Connection</dt><dd>USB-C, Bluetooth 5.1, 2.4 GHz</dd></div>
+          <div class="prow"><dt>Polling</dt><dd><span class="num">1,000 Hz</span> wired and 2.4 GHz</dd></div>
+          <div class="prow"><dt>Battery</dt><dd><span class="num">4,000 mAh</span></dd></div>
+          <div class="prow"><dt>Size</dt><dd><span class="num">327 × 139 × 34 mm</span></dd></div>
+          <div class="prow"><dt>Weight</dt><dd><span class="num">1.62 kg</span></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 5 · Reserve: conversational form -->
+    <section class="reserve" id="reserve" aria-labelledby="res-h">
+      <div class="frame reserve-in">
+        <div class="res-head">
+          <h2 id="res-h" class="cap-h">Reserve KEY-01</h2>
+          <p class="count num" id="count" aria-live="polite">Question 1 of 4</p>
+          <div class="pbar" role="progressbar" aria-label="Reservation progress" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><i id="pfill"></i></div>
+        </div>
+
+        <div class="res-body">
+          <p class="res-side">Free to reserve. Nothing is charged on this page.</p>
+
+          <form class="qstage" id="stage" novalidate>
+            <section class="q on" data-q="0">
+              <h3><label for="f-name">Hello. Who is this <span class="nb">KEY-01</span> for?</label></h3>
+              <input class="inp" id="f-name" name="name" type="text" autocomplete="given-name" placeholder="Your first name" spellcheck="false">
+              <p class="err" aria-live="polite"></p>
+            </section>
+
+            <section class="q" data-q="1" role="radiogroup" aria-labelledby="q1-h">
+              <h3 id="q1-h">Nice to meet you, <em class="who">there</em>. Which switch?</h3>
+              <div class="chs">
+                <button class="ch" type="button" role="radio" aria-checked="false" data-v="Linear, 45 gf" data-switch="linear"><kbd>A</kbd>Linear<span class="num">45 gf</span></button>
+                <button class="ch" type="button" role="radio" aria-checked="false" data-v="Tactile, 55 gf" data-switch="tactile"><kbd>B</kbd>Tactile<span class="num">55 gf</span></button>
+                <button class="ch" type="button" role="radio" aria-checked="false" data-v="Clicky, 60 gf" data-switch="clicky"><kbd>C</kbd>Clicky<span class="num">60 gf</span></button>
+              </div>
+              <p class="err" aria-live="polite"></p>
+            </section>
+
+            <section class="q" data-q="2" role="radiogroup" aria-labelledby="q2-h">
+              <h3 id="q2-h">Which finish for the case?</h3>
+              <div class="chs">
+                <button class="ch" type="button" role="radio" aria-checked="false" data-v="Ink"><kbd>A</kbd>Ink<i class="sw-chip" style="--c:var(--inverse)" aria-hidden="true"></i></button>
+                <button class="ch" type="button" role="radio" aria-checked="false" data-v="Slate"><kbd>B</kbd>Slate<i class="sw-chip" style="--c:var(--secondary)" aria-hidden="true"></i></button>
+                <button class="ch" type="button" role="radio" aria-checked="false" data-v="Ice"><kbd>C</kbd>Ice<i class="sw-chip" style="--c:var(--surface-3)" aria-hidden="true"></i></button>
+              </div>
+              <p class="err" aria-live="polite"></p>
+            </section>
+
+            <section class="q" data-q="3">
+              <h3><label for="f-mail">Where should we write, <em class="who">there</em>?</label></h3>
+              <input class="inp" id="f-mail" name="email" type="email" autocomplete="email" placeholder="you@example.com" spellcheck="false">
+              <p class="err" aria-live="polite"></p>
+            </section>
+
+            <section class="q" data-q="4" aria-labelledby="q4-h">
+              <h3 id="q4-h">Check it over.</h3>
+              <ul class="review" id="review"></ul>
+            </section>
+          </form>
+        </div>
+
+        <div class="res-foot">
+          <button class="btn btn-primary" id="okBtn" type="button">OK<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <p class="hint">or press <kbd>Enter</kbd></p>
+          <button class="btn back" id="backBtn" type="button" aria-label="Previous question" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+        </div>
+
+        <div class="done" id="done" role="status" aria-hidden="true">
+          <div class="done-in">
+            <svg class="done-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>
+            <p class="done-h" id="doneH">Thanks. Your <span class="nb">KEY-01</span> is on hold.</p>
+            <p class="done-p" id="doneP">We will write before your batch is built. Nothing has been charged.</p>
+            <button class="btn btn-on-dark" id="againBtn" type="button">Start a new reservation</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 6 · Footer: centred colophon -->
+  <footer class="colophon">
+    <div class="frame">
+      <span class="c-rule" aria-hidden="true"></span>
+      <p class="c-mark">KEY-01</p>
+      <p class="c-sub">75% aluminium keyboard</p>
+      <ul class="c-links">
+        <li><a href="#build">Build</a></li>
+        <li><a href="#sound">Sound</a></li>
+        <li><a href="#specs">Specs</a></li>
+        <li><a href="#reserve">Reserve</a></li>
+      </ul>
+      <button class="c-top" id="topBtn" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+        <span>Back to the keyboard</span>
+      </button>
+      <p class="credit">Designed using <a href="https://designlounge.vercel.app">Design Lounge</a></p>
+    </div>
+  </footer>
+
+  <script src="/built/key-01/main.js"></script>
+</body>
+</html>

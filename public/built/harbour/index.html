@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en" data-theme="ledger">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4efe4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Harbour">
+<meta name="description" content="Harbour, an example phone banking app built as a web app. Balance first, cards, payments and settings.">
+<title>Harbour · Example bank app</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b08a3e'/%3E%3Ctext x='16' y='22.5' font-family='Plus Jakarta Sans,Arial,sans-serif' font-weight='800' font-size='18' text-anchor='middle' fill='%23141210'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/built/harbour/styles.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <!-- Lounge Icons · Designed using Design Lounge · designlounge.vercel.app -->
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2-7z"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 10.6A3 3 0 0012 15a3 3 0 002.4-4.8M6.1 6.1C3.8 7.8 2 12 2 12s4 7 10 7c2 0 3.8-.6 5.3-1.5M9.9 4.2C10.6 4.1 11.3 4 12 4c6 0 10 8 10 8a16 16 0 01-3.2 3.8"/></symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16h12l-1-7a5 5 0 00-10 0z"/><path d="M10 16v1a2 2 0 004 0v-1"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 8l9 6 9-6"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 8h.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M6 16H5a1 1 0 01-1-1V5a1 1 0 011-1h10a1 1 0 011 1v1"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12M7 12l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M7 3h10v18l-2-1.4-2 1.4-2-1.4-2 1.4-2-1.4z"/><path d="M9 8h6M9 12h6M9 16h4"/></symbol>
+  <!-- Lucide rotate-cw (ISC), stroke 1.75: Lounge Icons has no refresh -->
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><path d="M21 3v5h-5"/></symbol>
+  <!-- Lucide delete (ISC), stroke 1.75: keypad backspace -->
+  <symbol id="i-backspace" viewBox="0 0 24 24"><path d="M10 5h11v14H10l-7-7z"/><path d="M18 9l-6 6M12 9l6 6"/></symbol>
+  <!-- Drawn in the Lounge grammar: contactless -->
+  <symbol id="i-contactless" viewBox="0 0 24 24"><path d="M7.5 9a4.5 4.5 0 010 6M11 7a8 8 0 010 10M14.5 5a11.5 11.5 0 010 14"/></symbol>
+</svg>
+
+<div class="stage">
+  <p class="caption">Harbour: a phone bank account app, running in the browser. Example data. On Home, drag the list down to refresh.</p>
+  <div class="device-wrap" id="deviceWrap">
+    <div class="device" id="device">
+      <div class="app" id="app">
+
+        <!-- HOME · ios-fintech-home + ios-pull-to-refresh -->
+        <section class="screen" id="s-home" data-screen="home" aria-labelledby="home-title">
+          <header class="topbar">
+            <div class="tb-text">
+              <h1 id="home-title" class="tb-title">Harbour</h1>
+              <p class="tb-sub">Personal · NPR</p>
+            </div>
+            <button class="icon-btn" id="refreshBtn" type="button" aria-label="Refresh activity"><svg class="ic" aria-hidden="true"><use href="#i-refresh"/></svg></button>
+            <a class="avatar-btn" href="#/settings" aria-label="Settings, Aarati Shrestha"><span class="av av-0" aria-hidden="true">AS</span></a>
+          </header>
+          <div class="ptr" aria-hidden="true">
+            <svg class="ring" viewBox="0 0 28 28" width="28" height="28"><circle class="track" cx="14" cy="14" r="10"/><circle class="prog" cx="14" cy="14" r="10"/></svg>
+          </div>
+          <main class="scroll home-scroll" id="homeFeed" aria-busy="false">
+            <section class="bal" id="bal" aria-live="polite" aria-label="Everyday account balance">
+              <div class="bal-top">
+                <span class="bal-label">Everyday account</span>
+                <span class="ex-tag">Example</span>
+                <button class="eye" id="eyeBtn" type="button" aria-pressed="false" aria-label="Hide balance">
+                  <svg class="ic on" aria-hidden="true"><use href="#i-eye"/></svg>
+                  <svg class="ic off" aria-hidden="true"><use href="#i-eye-off"/></svg>
+                </button>
+              </div>
+              <p class="amt num" id="balAmt"><span class="cur">Rs</span><span class="int" data-bal-int>1,24,580</span><span class="dec" data-bal-dec>.50</span></p>
+              <p class="acct num">0107 2210 4471 · Lalitpur branch</p>
+              <p class="delta"><svg class="ic" aria-hidden="true"><use href="#i-arrow-up"/></svg><span class="num" id="balDelta">+Rs 0.00</span><span>in October</span></p>
+            </section>
+
+            <div class="qa" role="group" aria-label="Quick actions">
+              <a class="qa-btn primary" href="#/send"><i><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg></i><span>Send</span></a>
+              <button class="qa-btn" type="button" id="requestBtn"><i><svg class="ic" aria-hidden="true"><use href="#i-arrow-down"/></svg></i><span>Request</span></button>
+              <a class="qa-btn" href="#/pay/scheduled"><i><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg></i><span>Scheduled</span></a>
+              <a class="qa-btn" href="#/cards"><i><svg class="ic" aria-hidden="true"><use href="#i-card"/></svg></i><span>Cards</span></a>
+            </div>
+
+            <h2 class="sec-h">Activity</h2>
+            <div id="activity"></div>
+          </main>
+        </section>
+
+        <!-- CARDS · phone-wallet-cards -->
+        <section class="screen" id="s-cards" data-screen="cards" aria-labelledby="cards-title" hidden>
+          <header class="w-head">
+            <h1 id="cards-title" class="w-title">Cards</h1>
+            <button class="pill-btn" id="wDone" type="button" aria-label="Close card" hidden>Done</button>
+          </header>
+          <div class="w-stack" id="wStack" aria-label="Cards">
+            <button class="wcard c-debit" type="button" data-i="0" aria-expanded="false" aria-controls="wDetail" aria-label="Harbour Debit, ending 4471">
+              <span class="w-strip"><span class="w-brand">Harbour Debit</span><span class="w-fig num" data-bal-full>Rs 1,24,580.50</span></span>
+              <span class="w-chip" aria-hidden="true"></span>
+              <span class="w-contact" aria-hidden="true"><svg class="ic"><use href="#i-contactless"/></svg></span>
+              <span class="w-foot"><span class="w-no num">•••• •••• •••• 4471</span><span class="w-meta"><span class="w-lab">Aarati Shrestha</span><span class="w-lab num">09/29</span></span></span>
+            </button>
+            <button class="wcard c-credit" type="button" data-i="1" aria-expanded="false" aria-controls="wDetail" aria-label="Harbour Credit, ending 9032">
+              <span class="w-strip"><span class="w-brand">Harbour Credit</span><span class="w-fig num" id="creditFig">Rs 18,340.00 due</span></span>
+              <span class="w-chip" aria-hidden="true"></span>
+              <span class="w-contact" aria-hidden="true"><svg class="ic"><use href="#i-contactless"/></svg></span>
+              <span class="w-foot"><span class="w-no num">•••• •••• •••• 9032</span><span class="w-meta"><span class="w-lab">Aarati Shrestha</span><span class="w-lab num">03/28</span></span></span>
+            </button>
+            <button class="wcard c-online" type="button" data-i="2" aria-expanded="false" aria-controls="wDetail" aria-label="Online card, ending 7716, Rs 25,000 limit">
+              <span class="w-strip"><span class="w-brand">Online card</span><span class="w-fig num">Rs 25,000.00 limit</span></span>
+              <span class="w-virtual">Virtual · for shopping online</span>
+              <span class="w-foot"><span class="w-no num">•••• •••• •••• 7716</span><span class="w-meta"><span class="w-lab">Aarati Shrestha</span><span class="w-lab num">11/27</span></span></span>
+            </button>
+
+            <section class="w-detail" id="wDetail" aria-live="polite"></section>
+
+            <section class="w-pay" id="wPay" aria-live="assertive" data-s="idle">
+              <div class="w-ring"><svg class="ic glyph" aria-hidden="true"><use href="#i-contactless"/></svg><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg></div>
+              <p class="w-pay-status" id="wPayStatus">Hold near reader</p>
+              <p class="w-pay-sub num" id="wPaySub">Harbour Debit ••4471</p>
+              <button class="btn" type="button" id="wPayBtn">Cancel</button>
+            </section>
+          </div>
+          <div class="w-bar" id="wBar">
+            <div class="w-rows" id="wRows"></div>
+            <p class="w-default">Default card · Harbour Debit ••4471</p>
+            <button class="btn btn-primary btn-block" type="button" id="wPayDefault"><svg class="ic" aria-hidden="true"><use href="#i-contactless"/></svg>Pay with Harbour Debit</button>
+          </div>
+        </section>
+
+        <!-- PAY · ios-large-title-collapse -->
+        <section class="screen lt" id="s-pay" data-screen="pay" aria-labelledby="pay-title" hidden>
+          <header class="lt-bar"><span class="lt-mid" aria-hidden="true">Pay</span></header>
+          <main class="scroll lt-scroll">
+            <div class="lt-head">
+              <h1 class="lt-title" id="pay-title">Pay</h1>
+              <p class="lt-sub">From Everyday ••4471 · <span class="num" data-bal-full>Rs 1,24,580.50</span></p>
+              <label class="search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input type="search" id="payeeSearch" placeholder="Search people" aria-label="Search people" autocomplete="off"></label>
+            </div>
+            <a class="btn btn-primary btn-block" href="#/send"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Send money</a>
+            <div class="group gap-top">
+              <a class="row link" href="#/pay/scheduled"><span class="sq sq-navy" aria-hidden="true"><svg class="ic"><use href="#i-calendar"/></svg></span><span class="row-label">Scheduled payments</span><span class="row-val" data-sched-count>None</span><svg class="chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></a>
+            </div>
+            <h2 class="sec-label">People</h2>
+            <div class="group" id="payeeList"></div>
+            <p class="search-empty" id="payeeEmpty" hidden></p>
+          </main>
+        </section>
+
+        <!-- SCHEDULED · mobile-list-empty -->
+        <section class="screen push" id="s-scheduled" data-screen="scheduled" aria-labelledby="sched-title" hidden>
+          <header class="nav-bar"><a class="bar-btn" href="#/pay"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg>Pay</a></header>
+          <main class="scroll sched-scroll">
+            <p class="where">Scheduled</p>
+            <div class="well" id="schedEmpty">
+              <h1 class="empty-h" id="sched-title">No scheduled payments</h1>
+              <p class="empty-p">Pick a date and Harbour sends it that morning, even if you forget.</p>
+              <a class="btn btn-primary" href="#/send" data-when="later">Schedule a payment</a>
+            </div>
+            <div class="sched-list" id="schedList" hidden>
+              <h1 class="empty-h" id="schedCountH">1 payment coming up</h1>
+              <div class="group" id="schedRows"></div>
+              <a class="btn btn-block gap-top" href="#/send" data-when="later">Schedule another</a>
+            </div>
+          </main>
+        </section>
+
+        <!-- SETTINGS · ios-grouped-settings + ios-large-title-collapse -->
+        <section class="screen lt" id="s-settings" data-screen="settings" aria-labelledby="settings-title" hidden>
+          <header class="lt-bar"><span class="lt-mid" aria-hidden="true">Settings</span></header>
+          <main class="scroll lt-scroll">
+            <div class="lt-head">
+              <h1 class="lt-title" id="settings-title">Settings</h1>
+              <p class="lt-sub">Aarati Shrestha · Everyday ••4471</p>
+            </div>
+
+            <div class="group">
+              <div class="row profile"><span class="av av-0 av-lg" aria-hidden="true">AS</span><span class="row-text"><span class="p-name">Aarati Shrestha</span><span class="p-sub">Customer since 2019 · Lalitpur branch</span></span></div>
+            </div>
+            <p class="foot">Signed in on this phone. Harbour locks after 5 minutes away.</p>
+
+            <h2 class="sec-label">Security</h2>
+            <div class="group">
+              <div class="row"><span class="sq sq-navy" aria-hidden="true"><svg class="ic"><use href="#i-lock"/></svg></span><span class="row-label" id="l-faceid">Unlock with Face ID</span><button class="tog" type="button" role="switch" aria-checked="true" aria-labelledby="l-faceid"></button></div>
+              <div class="row"><span class="sq sq-navy" aria-hidden="true"><svg class="ic"><use href="#i-eye"/></svg></span><span class="row-label" id="l-hide">Hide balance on open</span><button class="tog" type="button" role="switch" aria-checked="false" aria-labelledby="l-hide" data-key="hideOnOpen"></button></div>
+            </div>
+            <p class="foot">Payments over Rs 50,000 always ask for your passcode.</p>
+
+            <h2 class="sec-label">Notifications</h2>
+            <div class="group">
+              <div class="row"><span class="sq sq-brass" aria-hidden="true"><svg class="ic"><use href="#i-bell"/></svg></span><span class="row-label" id="l-alerts">Payment alerts</span><button class="tog" type="button" role="switch" aria-checked="true" aria-labelledby="l-alerts"></button></div>
+              <div class="row"><span class="sq sq-brass" aria-hidden="true"><svg class="ic"><use href="#i-alert"/></svg></span><span class="row-label" id="l-low">Balance under Rs 5,000</span><button class="tog" type="button" role="switch" aria-checked="false" aria-labelledby="l-low"></button></div>
+              <div class="row"><span class="sq sq-brass" aria-hidden="true"><svg class="ic"><use href="#i-mail"/></svg></span><span class="row-label" id="l-stmt">Monthly statement by email</span><button class="tog" type="button" role="switch" aria-checked="true" aria-labelledby="l-stmt"></button></div>
+            </div>
+            <p class="foot">Statements go to aarati.s@example.com on the 1st of each month.</p>
+
+            <h2 class="sec-label">Account</h2>
+            <div class="group">
+              <button class="row link" type="button" id="copyAcct"><span class="sq sq-ox" aria-hidden="true"><svg class="ic"><use href="#i-card"/></svg></span><span class="row-label">Account number</span><span class="row-val num" id="copyAcctVal">0107 2210 4471</span><svg class="chev" aria-hidden="true"><use href="#i-copy"/></svg></button>
+              <div class="row"><span class="sq sq-ox" aria-hidden="true"><svg class="ic"><use href="#i-send"/></svg></span><span class="row-label">Daily send limit</span><span class="row-val num">Rs 2,00,000</span></div>
+              <a class="row link" href="#/pay/scheduled"><span class="sq sq-ox" aria-hidden="true"><svg class="ic"><use href="#i-calendar"/></svg></span><span class="row-label">Scheduled payments</span><span class="row-val" data-sched-count>None</span><svg class="chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></a>
+            </div>
+            <p class="foot">Tap the account number to copy it.</p>
+
+            <h2 class="sec-label">Appearance</h2>
+            <div class="group">
+              <div class="row"><span class="sq sq-grey" aria-hidden="true"><svg class="ic"><use href="#i-moon"/></svg></span><span class="row-label" id="l-dark">Dark appearance</span><button class="tog" type="button" role="switch" aria-checked="false" aria-labelledby="l-dark" id="darkTog"></button></div>
+            </div>
+            <p class="foot">Navy page, cream type, a brighter brass.</p>
+
+            <h2 class="sec-label">About</h2>
+            <div class="group">
+              <div class="row two"><span class="sq sq-grey" aria-hidden="true"><svg class="ic"><use href="#i-info"/></svg></span><span class="row-text"><span class="row-label">Harbour 4.2.0, an example app</span><span class="credit">Designed using <a href="https://designlounge.vercel.app">Design Lounge</a></span></span></div>
+            </div>
+          </main>
+        </section>
+
+        <!-- TAB BAR · phone-tab-plain -->
+        <nav class="tabs" aria-label="Sections">
+          <a class="tab" href="#/home" data-tab="home" aria-current="page"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span>Home</span></a>
+          <a class="tab" href="#/cards" data-tab="cards"><svg class="ic" aria-hidden="true"><use href="#i-card"/></svg><span>Cards</span></a>
+          <a class="tab" href="#/pay" data-tab="pay"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg><span>Pay</span></a>
+          <a class="tab" href="#/settings" data-tab="settings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Settings</span></a>
+        </nav>
+
+        <!-- TRANSACTION DETAIL · shared-element-expand -->
+        <section class="txd" id="txd" role="dialog" aria-modal="true" aria-labelledby="txdName" hidden>
+          <div class="txd-in">
+            <header class="txd-bar">
+              <button class="icon-btn" id="txdClose" type="button" aria-label="Close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+            </header>
+            <div class="txd-scroll">
+              <div class="txd-hero">
+                <span class="av av-lg" id="txdAv" aria-hidden="true"></span>
+                <h2 class="txd-name" id="txdName"></h2>
+                <p class="txd-meta" id="txdMeta"></p>
+                <p class="txd-amt num" id="txdAmt"></p>
+                <p class="flag" id="txdFlag"></p>
+              </div>
+              <dl class="group facts" id="txdFacts"></dl>
+              <div class="txd-actions">
+                <button class="btn btn-primary btn-block" type="button" id="txdPrimary"></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SEND FLOW -->
+        <section class="flow" id="flow" role="dialog" aria-modal="true" aria-labelledby="flowTitle" hidden>
+          <header class="flow-bar">
+            <button class="bar-btn" type="button" id="flowBack"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span id="flowBackLabel">Cancel</span></button>
+            <h2 class="bar-title" id="flowTitle">Send to</h2>
+            <span class="bar-spacer" aria-hidden="true"></span>
+          </header>
+
+          <div class="flow-step" data-step="to" hidden>
+            <div class="flow-scroll">
+              <label class="search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input type="search" id="toSearch" placeholder="Name or account number" aria-label="Search people" autocomplete="off"></label>
+              <h3 class="sec-label">Saved people</h3>
+              <div class="group" id="toList"></div>
+              <p class="search-empty" id="toEmpty" hidden></p>
+            </div>
+          </div>
+
+          <div class="flow-step" data-step="amount" hidden>
+            <div class="amount-wrap">
+              <div class="rcpt">
+                <span class="av" id="amtAv" aria-hidden="true"></span>
+                <span class="rcpt-text"><span class="rcpt-name" id="amtName"></span><span class="rcpt-acct num" id="amtAcct"></span></span>
+                <a class="text-btn" href="#/send">Change</a>
+              </div>
+              <div class="amt-entry">
+                <p class="amt-big num" id="amtBig" aria-live="polite" aria-label="Amount"><span class="cur">Rs</span><span id="amtVal">0</span></p>
+                <p class="amt-hint" id="amtHint"></p>
+                <p class="err" id="amtErr" role="alert" hidden></p>
+              </div>
+              <div class="field">
+                <label for="noteIn">What it is for</label>
+                <input id="noteIn" maxlength="40" autocomplete="off" placeholder="Rent share, October">
+              </div>
+              <div class="keypad" role="group" aria-label="Amount keypad">
+                <button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button>
+                <button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button>
+                <button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button>
+                <button type="button" data-k="." aria-label="Decimal point">.</button><button type="button" data-k="0">0</button><button type="button" data-k="del" aria-label="Delete"><svg class="ic" aria-hidden="true"><use href="#i-backspace"/></svg></button>
+              </div>
+              <button class="btn btn-primary btn-block" type="button" id="toReview">Review</button>
+            </div>
+          </div>
+
+          <div class="flow-step" data-step="review" hidden>
+            <div class="flow-scroll">
+              <p class="where">You are sending</p>
+              <p class="amt-review num" id="revAmt"></p>
+              <dl class="group facts" id="revFacts"></dl>
+              <fieldset class="seg">
+                <legend>When</legend>
+                <label><input type="radio" name="when" value="now" checked><span>Now</span></label>
+                <label><input type="radio" name="when" value="later"><span>On a date</span></label>
+              </fieldset>
+              <div class="field" id="dateField" hidden>
+                <label for="whenDate">Date</label>
+                <input type="date" id="whenDate" min="2026-10-05" max="2027-04-04" aria-describedby="dateErr">
+                <p class="err" id="dateErr" hidden></p>
+              </div>
+              <p class="arrive" id="revArrive">Arrives in a few seconds. No fee.</p>
+              <button class="btn btn-primary btn-block" type="button" id="confirmSend"></button>
+            </div>
+          </div>
+
+          <div class="flow-step" data-step="done" hidden>
+            <div class="flow-scroll done">
+              <p class="flag ok" id="doneFlag">Sent</p>
+              <p class="where num" id="doneRef"></p>
+              <h3 class="amt-done num" id="doneAmt" tabindex="-1"></h3>
+              <p class="lead" id="doneLead"></p>
+              <dl class="group facts" id="doneFacts"></dl>
+              <a class="btn btn-primary btn-block" href="#/home" id="doneHome">Back to Home</a>
+              <button class="btn btn-block" type="button" id="doneReceipt"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>Save receipt</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- REQUEST SHEET -->
+        <div class="scrim" id="scrim" hidden></div>
+        <section class="sheet" id="reqSheet" role="dialog" aria-modal="true" aria-labelledby="reqTitle" hidden>
+          <span class="grab" aria-hidden="true"></span>
+          <div class="sheet-head">
+            <h2 class="sheet-title" id="reqTitle">Request money</h2>
+            <button class="icon-btn" type="button" id="reqClose" aria-label="Close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+          </div>
+          <p class="sheet-p">Share these details. Money sent to them lands in Everyday.</p>
+          <dl class="group facts">
+            <div class="fact"><dt>Name</dt><dd>Aarati Shrestha</dd></div>
+            <div class="fact"><dt>Bank</dt><dd>Harbour Bank</dd></div>
+            <div class="fact"><dt>Account</dt><dd class="num">0107 2210 4471</dd></div>
+            <div class="fact"><dt>Branch</dt><dd>Lalitpur</dd></div>
+          </dl>
+          <button class="btn btn-primary btn-block" type="button" id="reqCopy"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy details</span></button>
+          <p class="sheet-status" id="reqStatus" role="status"></p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/built/harbour/main.js"></script>
+</body>
+</html>

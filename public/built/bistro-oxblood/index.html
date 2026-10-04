@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Bistro Oxblood · Menu, hours and a table tonight</title>
+  <meta name="description" content="A 28-seat corner bistro on Kirk Street, Leeds. Tonight's specials, the printed menu with prices, today's hours and a table request.">
+  <meta name="theme-color" content="#1a0e12">
+  <meta property="og:title" content="Bistro Oxblood">
+  <meta property="og:description" content="Twenty-eight seats, one blackboard, and a printed menu that changes on Thursdays.">
+  <link rel="icon" href="/built/bistro-oxblood/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Rubik:wght@400;600;800&display=swap">
+  <link rel="stylesheet" href="/built/bistro-oxblood/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the menu</a>
+
+  <!-- navbar-split-centered-logo -->
+  <header class="bar" id="bar">
+    <div class="bar-in">
+      <button class="menu-btn" id="menuBtn" type="button" aria-controls="panel" aria-expanded="false" aria-label="Open menu">
+        <svg class="i-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="i-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <nav class="bar-nav bar-left" aria-label="Primary, left">
+        <ul>
+          <li><a href="#tonight" data-spy="tonight">Tonight</a></li>
+          <li><a href="#small-plates" data-spy="menu">Menu</a></li>
+          <li><a href="#drinks" data-spy="wine">Wine</a></li>
+        </ul>
+      </nav>
+      <a class="mark" href="#top" aria-label="Bistro Oxblood, home">
+        <span class="mark-word">Oxblood</span>
+        <span class="mark-sub" aria-hidden="true">Bistro</span>
+      </a>
+      <div class="bar-right">
+        <nav class="bar-nav" aria-label="Primary, right">
+          <ul>
+            <li><a href="#hours" data-spy="hours">Hours</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn-bar" href="#book">Book a table</a>
+      </div>
+    </div>
+  </header>
+  <div class="panel" id="panel" hidden>
+    <ul>
+      <li><a href="#tonight">Tonight</a></li>
+      <li><a href="#small-plates">Menu</a></li>
+      <li><a href="#drinks">Wine</a></li>
+      <li><a href="#hours">Hours</a></li>
+    </ul>
+    <a class="btn btn-primary btn-block" href="#book">Book a table</a>
+  </div>
+
+  <!-- restaurant-menu-page: hero band -->
+  <section class="hero" id="top" aria-labelledby="h1">
+    <div class="hero-in">
+      <div class="hero-text">
+        <p class="kicker">Corner bistro on Kirk Street, Leeds</p>
+        <h1 id="h1"><span>Bistro</span> <span>Oxblood.</span></h1>
+        <p class="lede marks" data-marks="load">
+          <span class="mk ul" style="--d:400ms">Twenty-eight seats<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 5 C 14 2, 26 8, 40 5 S 66 2, 80 5.5 S 94 6, 99 3"/></svg></span>,
+          one blackboard of specials, and a printed menu that changes on
+          <span class="mk ci" style="--d:1000ms">Thursdays<svg viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M62 5 C 24 1, 3 16, 5 32 C 7 50, 46 58, 80 52 C 99 47, 101 22, 86 11 C 72 3, 46 3, 30 9"/></svg></span>.
+        </p>
+      </div>
+      <div class="hero-side">
+        <svg class="riso riso-plate" viewBox="0 0 340 230" role="img" aria-label="Riso print of a bavette with frites, a pot of bearnaise and a glass of red">
+          <defs>
+            <pattern id="dotCream" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="2.5" cy="2.5" r="1.05" class="f-cream"/></pattern>
+            <pattern id="dotGold" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(15)"><circle cx="3" cy="3" r="1.6" class="f-gold"/></pattern>
+          </defs>
+          <g class="plate-cream" transform="translate(3 -2)">
+            <circle cx="132" cy="118" r="100" fill="url(#dotCream)" opacity=".45"/>
+            <circle cx="132" cy="118" r="100" class="s-cream" fill="none" stroke-width="3"/>
+            <circle cx="132" cy="118" r="76" class="s-cream" fill="none" stroke-width="1.5"/>
+            <g class="f-cream">
+              <rect x="150" y="128" width="62" height="11" rx="2" transform="rotate(-18 150 128)"/>
+              <rect x="146" y="146" width="66" height="11" rx="2" transform="rotate(-8 146 146)"/>
+              <rect x="152" y="164" width="56" height="11" rx="2" transform="rotate(6 152 164)"/>
+              <rect x="140" y="178" width="58" height="11" rx="2" transform="rotate(-24 140 178)"/>
+            </g>
+            <path class="s-cream" fill="none" stroke-width="2.4" d="M262 22 L 306 22 C 308 64, 298 90, 284 92 C 270 90, 260 64, 262 22 Z M284 92 L 284 168 M264 172 L 304 172"/>
+            <path class="s-cream" fill="none" stroke-width="2" d="M56 70 C 70 60, 84 58, 96 62 M70 62 C 70 54, 76 48, 84 46 M84 60 C 88 52, 96 48, 104 48"/>
+          </g>
+          <g class="riso-over">
+            <path class="f-gold" d="M66 116 C 72 82, 122 70, 158 82 C 190 92, 198 124, 180 146 C 162 168, 108 172, 84 158 C 70 150, 62 134, 66 116 Z"/>
+            <circle cx="196" cy="66" r="24" fill="url(#dotGold)"/>
+            <circle cx="196" cy="66" r="24" class="s-gold" fill="none" stroke-width="2.4"/>
+            <path d="M263 44 L 305 44 C 304 70, 296 90, 284 92 C 272 90, 264 70, 263 44 Z" fill="url(#dotGold)"/>
+          </g>
+          <g class="s-paper" fill="none" stroke-width="4" stroke-linecap="round">
+            <path d="M92 98 L 120 150 M116 90 L 146 150 M142 88 L 168 136"/>
+          </g>
+        </svg>
+        <div class="today">
+          <p class="today-status"><span class="dot" id="heroDot" aria-hidden="true"></span><span id="heroStatus">Open until 23:00</span></p>
+          <p class="today-line" id="heroToday">Hours change by day. See the table below.</p>
+          <p class="today-line">2 Kirk Street, on the corner of Mill Lane</p>
+          <a class="link" href="#hours">All hours and how to find us
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main id="main">
+    <div class="menu-wrap" id="menu">
+      <!-- restaurant-menu-page: sticky category bar -->
+      <nav class="cats" id="cats" aria-label="Menu sections">
+        <ul>
+          <li><a href="#tonight" aria-current="true">Tonight</a></li>
+          <li><a href="#small-plates" aria-current="false">Small plates</a></li>
+          <li><a href="#mains" aria-current="false">Mains</a></li>
+          <li><a href="#sides" aria-current="false">Sides</a></li>
+          <li><a href="#desserts" aria-current="false">Desserts</a></li>
+          <li><a href="#drinks" aria-current="false">Wine and drinks</a></li>
+        </ul>
+      </nav>
+
+      <div class="card">
+        <!-- Tonight: text-marker-highlight-draw runs here on scroll -->
+        <section class="menu tonight" id="tonight" aria-labelledby="tonight-h">
+          <div class="tonight-head">
+            <div>
+              <h2 id="tonight-h">Tonight</h2>
+              <p class="side-note" id="tonightNote">On the blackboard until it runs out.</p>
+            </div>
+            <svg class="riso riso-fish" viewBox="0 0 300 150" role="img" aria-label="Riso print of a whole plaice with a lemon wedge">
+              <defs>
+                <pattern id="dotOx" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="2.5" cy="2.5" r="1.1" class="f-ox"/></pattern>
+              </defs>
+              <g class="riso-over">
+                <path class="f-gold" d="M24 76 C 64 26, 166 18, 216 56 L 266 30 C 258 58, 258 94, 266 122 L 216 96 C 166 134, 64 126, 24 76 Z"/>
+                <path d="M210 112 A 34 34 0 0 1 278 112 Z" class="f-gold"/>
+              </g>
+              <g class="riso-over" transform="translate(2 -2)">
+                <path class="s-ox" fill="none" stroke-width="2.2" d="M24 76 C 64 26, 166 18, 216 56 L 266 30 C 258 58, 258 94, 266 122 L 216 96 C 166 134, 64 126, 24 76 Z"/>
+                <path class="s-ox" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="0.1 7" d="M40 60 C 80 22, 160 16, 206 46 M40 94 C 80 130, 160 136, 206 106"/>
+                <circle cx="56" cy="66" r="5" class="f-ox"/>
+                <circle cx="96" cy="58" r="6" class="f-ox"/>
+                <circle cx="130" cy="84" r="7" class="f-ox"/>
+                <circle cx="168" cy="62" r="5.5" class="f-ox"/>
+                <circle cx="104" cy="96" r="4.5" class="f-ox"/>
+                <path d="M120 40 C 150 60, 150 96, 120 112" class="s-ox" fill="none" stroke-width="1.6"/>
+                <path d="M210 112 A 34 34 0 0 1 278 112 Z" fill="url(#dotOx)"/>
+                <path class="s-ox" fill="none" stroke-width="1.8" d="M244 112 L 244 80 M244 112 L 222 88 M244 112 L 266 88"/>
+              </g>
+            </svg>
+          </div>
+          <ul class="items items-tonight marks" data-marks="scroll">
+            <li class="it">
+              <div class="row">
+                <h3><span class="mk hl" style="--d:200ms">Mussels<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6 C 25 4.6, 60 5.8, 99 4.2"/></svg></span> in cider and crème fraîche</h3>
+                <span class="lead" aria-hidden="true"></span>
+                <span class="pr num">£14.50</span>
+              </div>
+              <p class="desc">Shallots, thyme, a heel of sourdough for the bowl. <abbr class="tag" title="Gluten free">GF</abbr> without the bread.</p>
+            </li>
+            <li class="it">
+              <div class="row">
+                <h3><span class="mk hl" style="--d:750ms">Whole grilled plaice<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 5.4 C 30 6.2, 64 4.4, 99 5.6"/></svg></span></h3>
+                <span class="lead" aria-hidden="true"></span>
+                <span class="pr num"><span class="mk ci" style="--d:1300ms">£26.00<svg viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M62 5 C 24 1, 3 16, 5 32 C 7 50, 46 58, 80 52 C 99 47, 101 22, 86 11 C 72 3, 46 3, 30 9"/></svg></span></span>
+              </div>
+              <p class="desc">On the bone, brown shrimp and caper butter, new potatoes. <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row">
+                <h3><span class="mk hl" style="--d:1800ms">Prune and armagnac<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 4.8 C 30 5.8, 70 4.2, 99 5.4"/></svg></span> tart</h3>
+                <span class="lead" aria-hidden="true"></span>
+                <span class="pr num">£8.50</span>
+              </div>
+              <p class="desc">Warm, with a spoon of crème fraîche. <abbr class="tag" title="Vegetarian">V</abbr></p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="menu" id="small-plates" aria-labelledby="small-h">
+          <div class="menu-head">
+            <h2 id="small-h">Small plates</h2>
+            <p class="side-note">Two or three each, or share the lot.</p>
+          </div>
+          <ul class="items">
+            <li class="it">
+              <div class="row"><h3>Bread and cultured butter</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£4.00</span></div>
+              <p class="desc">Sourdough from the oven at four. <abbr class="tag" title="Vegetarian">V</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Gildas</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£4.50</span></div>
+              <p class="desc">Anchovy, guindilla pepper and olive on a stick. <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Leeks vinaigrette</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£8.00</span></div>
+              <p class="desc">Soft egg, Dijon, chives. <abbr class="tag" title="Vegetarian">V</abbr> <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Chicken liver parfait</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£8.50</span></div>
+              <p class="desc">Onion jam, toasted brioche.</p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Duck rillettes</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£9.00</span></div>
+              <p class="desc">Cornichons, pickled shallot, toast.</p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Beetroot and goat's curd</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£9.50</span></div>
+              <p class="desc">Roast and raw beetroot, hazelnut, dill. <abbr class="tag" title="Vegetarian">V</abbr> <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="menu" id="mains" aria-labelledby="mains-h">
+          <div class="menu-head">
+            <h2 id="mains-h">Mains</h2>
+            <p class="side-note">From the grill and the pot.</p>
+          </div>
+          <ul class="items">
+            <li class="it pick">
+              <span class="stamp">Chef's pick</span>
+              <div class="row"><h3>Duck leg confit</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£22.00</span></div>
+              <p class="desc">White beans, Toulouse sausage, a crust of breadcrumbs. The dish we would order.</p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Bavette, 250g</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£23.00</span></div>
+              <p class="desc">Frites and béarnaise. Cooked medium rare unless you say. <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Hake and saffron broth</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£24.00</span></div>
+              <p class="desc">Mussels, fennel, aioli on the side. <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Pork chop</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£21.50</span></div>
+              <p class="desc">Choucroute, grain mustard, cider jus. <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Mushroom and Comté pithivier</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£19.00</span></div>
+              <p class="desc">Puff pastry, leaf salad, mustard dressing. <abbr class="tag" title="Vegetarian">V</abbr></p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="menu" id="sides" aria-labelledby="sides-h">
+          <div class="menu-head">
+            <h2 id="sides-h">Sides</h2>
+            <p class="side-note">One between two is plenty.</p>
+          </div>
+          <ul class="items">
+            <li class="it">
+              <div class="row"><h3>Frites</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£4.50</span></div>
+              <p class="desc">Beef dripping or sunflower, ask. <abbr class="tag" title="Vegan">VG</abbr> <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Green salad</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£4.00</span></div>
+              <p class="desc">Soft leaves, shallot dressing. <abbr class="tag" title="Vegan">VG</abbr> <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Hispi cabbage</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£5.00</span></div>
+              <p class="desc">Charred, brown butter, crumbs. <abbr class="tag" title="Vegetarian">V</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Gratin dauphinois</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£5.50</span></div>
+              <p class="desc">Cream, garlic, nutmeg. <abbr class="tag" title="Vegetarian">V</abbr> <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="menu" id="desserts" aria-labelledby="desserts-h">
+          <div class="menu-head">
+            <h2 id="desserts-h">Desserts</h2>
+            <p class="side-note">The tatin takes twenty minutes.</p>
+          </div>
+          <ul class="items">
+            <li class="it">
+              <div class="row"><h3>Crème caramel</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£7.00</span></div>
+              <p class="desc">Dark caramel, set this morning. <abbr class="tag" title="Vegetarian">V</abbr> <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Chocolate mousse</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£7.50</span></div>
+              <p class="desc">Olive oil and sea salt. <abbr class="tag" title="Vegetarian">V</abbr> <abbr class="tag" title="Gluten free">GF</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Comté, 24 months</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£9.00</span></div>
+              <p class="desc">Quince paste, oatcakes. <abbr class="tag" title="Vegetarian">V</abbr></p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Tarte tatin for two</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£14.00</span></div>
+              <p class="desc">Apples, puff pastry, crème fraîche. <abbr class="tag" title="Vegetarian">V</abbr></p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="menu" id="drinks" aria-labelledby="drinks-h">
+          <div class="menu-head">
+            <h2 id="drinks-h">Wine and drinks</h2>
+            <p class="side-note">Glass is 175ml, carafe is 500ml.</p>
+          </div>
+          <ul class="items">
+            <li class="it">
+              <div class="row"><h3>House red, carafe</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£18.00</span></div>
+              <p class="desc">Grenache and syrah from the Ardèche.</p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Côtes du Rhône, glass</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£8.00</span></div>
+              <p class="desc">Plum, pepper, made for the bavette.</p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Picpoul de Pinet, glass</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£7.50</span></div>
+              <p class="desc">Salty, bright, made for the mussels.</p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Crémant de Loire, glass</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£9.00</span></div>
+              <p class="desc">Chenin blanc, fine bubbles.</p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Normandy cider</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£5.50</span></div>
+              <p class="desc">Dry, bottle conditioned, 330ml.</p>
+            </li>
+            <li class="it">
+              <div class="row"><h3>Rhubarb soda</h3><span class="lead" aria-hidden="true"></span><span class="pr num">£3.50</span></div>
+              <p class="desc">Made here, no alcohol. <abbr class="tag" title="Vegan">VG</abbr></p>
+            </li>
+          </ul>
+        </section>
+
+        <aside class="allergy marks" data-marks="scroll" aria-label="Allergies and intolerances">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg>
+          <div>
+            <p>Our kitchen is small and everything shares one pass. If you have an allergy, <span class="mk hl" style="--d:200ms">tell us before you order<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6 C 25 4.6, 60 5.8, 99 4.2"/></svg></span> and we will walk you through every dish.</p>
+            <p class="legend"><abbr class="tag" title="Vegetarian">V</abbr> Vegetarian <abbr class="tag" title="Vegan">VG</abbr> Vegan <abbr class="tag" title="Gluten free">GF</abbr> Gluten free</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- contact-booking-hours -->
+    <section class="visit" aria-label="Hours and booking">
+      <div class="visit-in">
+        <div class="hours" id="hours">
+          <h2 id="hours-h">Hours</h2>
+          <p class="status" aria-live="polite"><span class="dot" id="statusDot" aria-hidden="true"></span><span id="statusText">Open Tuesday to Sunday</span></p>
+          <p class="status-sub" id="statusSub">The kitchen takes last orders 45 minutes before we close.</p>
+          <table class="htable">
+            <caption class="sr">Opening hours, UK time</caption>
+            <thead><tr><th scope="col">Day</th><th scope="col">Open</th></tr></thead>
+            <tbody id="hoursBody">
+              <tr data-dow="1"><th scope="row">Monday</th><td class="closed">Closed</td></tr>
+              <tr data-dow="2"><th scope="row">Tuesday</th><td class="num">17:30-23:00</td></tr>
+              <tr data-dow="3"><th scope="row">Wednesday</th><td class="num">17:30-23:00</td></tr>
+              <tr data-dow="4"><th scope="row">Thursday</th><td class="num">17:30-23:00</td></tr>
+              <tr data-dow="5"><th scope="row">Friday</th><td class="num">12:00-15:00, 17:30-00:00</td></tr>
+              <tr data-dow="6"><th scope="row">Saturday</th><td class="num">12:00-15:00, 17:30-00:00</td></tr>
+              <tr data-dow="0"><th scope="row">Sunday</th><td class="num">12:00-16:00</td></tr>
+            </tbody>
+          </table>
+          <ul class="find">
+            <li>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>
+              <span>2 Kirk Street, Leeds. The red door on the corner of Mill Lane.</span>
+            </li>
+            <li>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h4l1 4-2 2a12 12 0 006 6l2-2 4 1v4c0 1-1 2-2 2C9 20 4 15 4 5c0-1 1-2 3-2z"/></svg>
+              <span><a class="link" href="tel:+441134960412">0113 496 0412</a>. Nine or more, please call.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="book" id="book">
+          <form class="bform" id="bform" novalidate aria-labelledby="book-h">
+            <h2 id="book-h">Ask for a table</h2>
+            <p class="bform-hint">We hold a table for 15 minutes and text to confirm within the hour while we are open.</p>
+
+            <div class="field">
+              <span class="flabel" id="party-l">Party size</span>
+              <div class="stepper" role="group" aria-labelledby="party-l">
+                <button type="button" id="fewer" aria-label="Fewer guests">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg>
+                </button>
+                <output id="party" class="num" aria-live="polite">2</output>
+                <button type="button" id="more" aria-label="More guests">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+              </div>
+              <p class="fnote">Up to 8 online. We have 28 seats in all.</p>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="date">Date</label>
+                <div class="select"><select id="date" name="date" aria-describedby="date-err"></select></div>
+                <p class="ferr" id="date-err" hidden></p>
+              </div>
+              <div class="field">
+                <label for="time">Time</label>
+                <div class="select"><select id="time" name="time" aria-describedby="time-err"></select></div>
+                <p class="ferr" id="time-err" hidden></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="name">Name for the booking</label>
+              <input id="name" name="name" type="text" autocomplete="name" aria-describedby="name-err">
+              <p class="ferr" id="name-err" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="tel">Mobile number</label>
+              <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="tel-err">
+              <p class="ferr" id="tel-err" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="note">Anything we should know <span class="opt">(optional)</span></label>
+              <textarea id="note" name="note" rows="2" placeholder="An allergy, a pram, a birthday"></textarea>
+            </div>
+
+            <button class="btn btn-primary btn-block" type="submit">
+              Request this table
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </form>
+
+          <div class="bdone" id="bdone" role="status" tabindex="-1" hidden>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>
+            <h2>Request sent</h2>
+            <p id="bdoneText">We will text you to confirm.</p>
+            <button class="btn btn-ghost" id="bchange" type="button">Change the request</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- footer-newsletter-split -->
+  <footer class="foot" aria-label="Site footer">
+    <section class="sub" aria-labelledby="sub-h">
+      <h2 id="sub-h">The menu changes on Thursdays.</h2>
+      <p class="sub-p">We send the new one that morning, before it goes on the board.</p>
+      <form class="nl" id="nl" novalidate>
+        <label class="sr" for="email">Email address</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="Email address" aria-describedby="nl-msg">
+        <button type="submit" class="nl-go">Send me Thursday's menu
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+      <p class="nl-msg" id="nl-msg" aria-live="polite">One email a week. Unsubscribe in one click.</p>
+    </section>
+    <div class="side">
+      <nav class="cols" aria-label="Sitemap">
+        <div>
+          <h3>Eat</h3>
+          <ul>
+            <li><a href="#tonight">Tonight</a></li>
+            <li><a href="#small-plates">Menu</a></li>
+            <li><a href="#drinks">Wine and drinks</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Visit</h3>
+          <ul>
+            <li><a href="#hours">Hours</a></li>
+            <li><a href="#book">Book a table</a></li>
+            <li><a href="tel:+441134960412">0113 496 0412</a></li>
+          </ul>
+        </div>
+      </nav>
+      <p class="foot-mark" aria-hidden="true">Oxblood</p>
+    </div>
+    <p class="legal">© 2026 Bistro Oxblood, 2 Kirk Street, Leeds. Set in Rubik Mono One and Rubik. Designed using <a href="https://designlounge.vercel.app">Design Lounge</a></p>
+  </footer>
+
+  <!-- mobile-web-bottom-nav -->
+  <nav class="bnav" id="bnav" aria-label="Site">
+    <ul>
+      <li>
+        <a href="#tonight" data-b="menu" aria-current="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 012-2h12v16H6a2 2 0 00-2 2z"/><path d="M6 3v16"/></svg>
+          <span>Menu</span>
+        </a>
+      </li>
+      <li>
+        <a href="#hours" data-b="hours" aria-current="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>
+          <span>Hours</span>
+        </a>
+      </li>
+      <li>
+        <a class="fab" href="#book" data-b="book" aria-current="false">
+          <span class="pad">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>
+          </span>
+          <span>Book</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <script src="/built/bistro-oxblood/main.js"></script>
+</body>
+</html>

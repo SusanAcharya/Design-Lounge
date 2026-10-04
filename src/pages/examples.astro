@@ -1,0 +1,184 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import DeviceFrame from '../components/DeviceFrame.astro';
+import { EXAMPLES, builtUrl, exampleUrl, type Example } from '../data/examples';
+import { THEMES } from '../data/themes';
+import { PAIRINGS } from '../data/type';
+import { familyById } from '../data/kit';
+import { getPieces } from '../lib/pieces';
+
+const all = await getPieces();
+const titles = new Map(all.map((p) => [p.id, p.data.title]));
+const theme = (id: string) => THEMES.find((t) => t.id === id);
+const pairing = (id: string) => PAIRINGS.find((p) => p.id === id);
+const featured = EXAMPLES.filter((e) => e.featured);
+const range = EXAMPLES.filter((e) => !e.featured);
+const given = (e: Example) => (e.mode === 'one-shot' ? 'One sentence, nothing else' : 'Prompt plus one direction');
+const cover = (e: Example) => `/built/${e.id}/cover.jpg`;
+const phoneShot = (e: Example) => `/built/${e.id}/phone.jpg`;
+const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
+---
+<Base rail={false} title="Examples" description={`Sites an AI agent built in one pass with the Design Lounge skill: ${EXAMPLES.map((e) => e.title).join(', ')}. Each one runs live in the browser.`} crumbs={[{ name: 'Examples', href: '/examples' }]}>
+  <PageHead eyebrow="Examples" title="Built from <i>one prompt.</i>" count={EXAMPLES.length} countLabel="sites" blurb="Every site here was built by an agent with the skill installed, in one pass. No designer touched the pixels. They run live below: scroll inside them, then open one." />
+
+  {featured.length > 0 && (
+    <section class="wrap block" aria-labelledby="os-h">
+      <header class="block-head">
+        <h2 class="display h3" id="os-h">Start with these {featured.length}.</h2>
+        <p class="muted">Each one is marked with what its agent was given. <em>One sentence</em> means the prompt you see, word for word: the agent chose the recipe, the palette, the type and the effects on its own. <em>Plus one direction</em> means it also got a named direction from <a href="/start">Start</a>.</p>
+      </header>
+      <ol class="features">
+        {featured.map((e, i) => {
+          const t = theme(e.theme);
+          const p = pairing(e.pairing);
+          const f = familyById(e.family);
+          return (
+            <li class="feature reveal" style={`--d:${i * 60}ms`}>
+              <div class="f-stage">
+                <div class="f-desk"><DeviceFrame slug={e.id} platform="web" title={e.title} src={builtUrl(e)} poster={cover(e)} path={`examples/${e.id}`} interactive eager={i === 0} /></div>
+                <div class="f-phone"><DeviceFrame slug={e.id} platform="web" only="phone" title={e.title} src={builtUrl(e)} poster={phoneShot(e)} path={`examples/${e.id}`} interactive /></div>
+              </div>
+              <div class="info">
+                <p class="given mono">{given(e)}</p>
+                <p class="prompt"><span class="mono" aria-hidden="true">&gt;</span> {e.prompt}</p>
+                <h3 class="display h3"><a href={exampleUrl(e)}>{e.title}</a></h3>
+                <p class="what">{e.what}</p>
+                <dl class="picks">
+                  {t && <div><dt>Theme</dt><dd><a href={`/themes/${t.id}`}>{t.name}</a><span class="sw" aria-hidden="true"><i style={`background:${t.tokens.bg}`}></i><i style={`background:${t.tokens.ink}`}></i><i style={`background:${t.tokens.primary}`}></i></span></dd></div>}
+                  {p && <div><dt>Type</dt><dd><a href={`/type/${p.id}`}>{p.name}</a></dd></div>}
+                  {f && <div><dt>Family</dt><dd>{f.name} <span class="faint">· {f.radius}</span></dd></div>}
+                  <div><dt>Motion</dt><dd>{e.effects.map((id) => <a href={`/p/${id}`}>{titles.get(id) ?? id}</a>)}</dd></div>
+                </dl>
+                <p class="acts">
+                  <a class="btn primary" href={exampleUrl(e)}>See how it was made</a>
+                  <a class="btn ghost" href={builtUrl(e)} target="_blank" rel="noopener">Full size <span aria-hidden="true">↗</span></a>
+                </p>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+  )}
+
+  <section class="wrap block" aria-labelledby="range-h">
+    <header class="block-head">
+      <h2 class="display h3" id="range-h">One skill, {range.length} different worlds.</h2>
+      <p class="muted">A range test, each built in one pass. Most agents got a short brief and one direction from <a href="/start">Start</a>; the ones marked <em>one sentence</em> got only the prompt.</p>
+    </header>
+    <ol class="grid">
+      {range.map((e, i) => {
+        const t = theme(e.theme);
+        const p = pairing(e.pairing);
+        return (
+          <li class="card-x reveal" style={`--d:${(i % 3) * 50}ms`}>
+            <a class="thumb" href={exampleUrl(e)} aria-label={`${e.title}: see it running`}>
+              <DeviceFrame slug={e.id} platform={e.phone ? 'mobile-app' : 'web'} title={e.title} src={builtUrl(e)} poster={e.phone ? phoneShot(e) : cover(e)} path={`examples/${e.id}`} />
+            </a>
+            <div class="body">
+              <div class="row">
+                <h3 class="name"><a href={exampleUrl(e)}>{e.title}</a></h3>
+                {t && <span class="sw" aria-hidden="true"><i style={`background:${t.tokens.bg}`}></i><i style={`background:${t.tokens.ink}`}></i><i style={`background:${t.tokens.primary}`}></i></span>}
+              </div>
+              <p class="what">{e.what}</p>
+              {e.mode === 'one-shot' && <p class="given mono">One sentence, nothing else</p>}
+              <p class="prompt small"><span class="mono" aria-hidden="true">&gt;</span> {e.prompt}</p>
+              <p class="meta">
+                {t && <a href={`/themes/${t.id}`}>{t.name}</a>}
+                {p && <a href={`/type/${p.id}`}>{p.name}</a>}
+                <a href={`/p/${e.effects[0]}`}>{titles.get(e.effects[0]) ?? e.effects[0]}</a>
+              </p>
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  </section>
+
+  <section class="close wrap" aria-labelledby="close-h">
+    <h2 class="display h2" id="close-h">Your turn. One prompt.</h2>
+    <p class="lede">Install the skill, then ask for the thing you are making in plain words.</p>
+    <span class="cmd">
+      <span class="mono acc" aria-hidden="true">$</span>
+      <code id="ex-cmd">{installCmd}</code>
+      <button class="copy" type="button" data-copy="#ex-cmd"><span data-label>Copy</span></button>
+    </span>
+  </section>
+</Base>
+
+<style>
+  .block { padding-block: clamp(48px, 6vw, 88px) 0; }
+  .block-head { display: flex; flex-direction: column; gap: 10px; max-width: 64ch; margin-bottom: clamp(24px, 3vw, 40px); }
+  .muted { color: var(--ink-2); font-size: 16px; line-height: 1.55; }
+  .muted a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .faint { color: var(--ink-3); }
+
+  .prompt { font-family: var(--mono); font-size: 14px; line-height: 1.55; color: var(--ink); padding: 12px 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r); text-wrap: pretty; }
+  .prompt .mono { color: var(--accent); margin-right: 4px; }
+  .prompt.small { font-size: 12.5px; padding: 10px 12px; color: var(--ink-2); }
+
+  .given { align-self: flex-start; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); padding: 3px 8px; border: 1px solid var(--line-2); border-radius: 999px; }
+  .muted em { font-style: normal; color: var(--ink); }
+
+  .sw { display: inline-flex; }
+  .sw i { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--line-2); }
+  .sw i + i { margin-left: -4px; }
+
+  /* one-shot features */
+  .features { display: flex; flex-direction: column; gap: clamp(56px, 7vw, 112px); }
+  .feature { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+  .f-stage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.3fr); gap: 10px; height: clamp(360px, 46vw, 600px); }
+  .f-desk, .f-phone { position: relative; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; }
+  .f-desk :global(lounge-frame) { position: absolute; inset: 18px; }
+  .f-phone :global(lounge-frame) { position: absolute; inset: 14px 10px; }
+  .info { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .info .h3 a:hover { color: var(--accent); }
+  .what { color: var(--ink-2); font-size: 16px; line-height: 1.55; text-wrap: pretty; }
+  .picks { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; padding-top: 6px; }
+  .picks div:last-child { grid-column: 1 / -1; }
+  dt { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+  dd { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 14.5px; }
+  dd a { text-decoration: underline; text-underline-offset: 3px; }
+  dd a:hover { color: var(--accent); }
+  .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+
+  /* range grid */
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); }
+  .card-x { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper); overflow: hidden; transition: border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease-out), box-shadow var(--t-med) var(--ease); }
+  .card-x:hover { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow); }
+  .thumb { position: relative; display: block; aspect-ratio: 16 / 11; border-bottom: 1px solid var(--line); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; }
+  .thumb :global(lounge-frame) { position: absolute; inset: 14px; }
+  .body { display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 20px; flex: 1; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .name { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; }
+  .name a:hover { color: var(--accent); }
+  .body .what { font-size: 14.5px; }
+  .meta { margin-top: auto; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; color: var(--ink-3); }
+  .meta a { color: var(--ink-2); border-bottom: 1px solid var(--line-2); }
+  .meta a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* close */
+  .close { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; margin-top: clamp(64px, 8vw, 120px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
+  .cmd { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 520px; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); }
+  .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 14px; text-align: left; scrollbar-width: none; }
+  .cmd .acc { color: var(--accent); }
+  .cmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--ink); color: var(--paper); }
+  .cmd .copy[data-done] { background: var(--accent); color: var(--accent-ink); }
+
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .feature { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .f-stage { grid-template-columns: minmax(0, 1fr); height: auto; }
+    .f-desk { height: 62vw; }
+    .f-phone { display: none; }
+  }
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: minmax(0, 1fr); }
+    .picks { grid-template-columns: minmax(0, 1fr); }
+    .cmd code { font-size: 13px; white-space: normal; overflow-wrap: anywhere; }
+  }
+  @media (prefers-reduced-motion: reduce) { .card-x { transition: none; } }
+</style>

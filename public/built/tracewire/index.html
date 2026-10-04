@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tracewire · Follow every request to the slow span</title>
+  <meta name="description" content="Tracewire is an open-source tracing CLI and dashboard. It stitches OpenTelemetry spans into one waterfall and points at the span that cost the most time.">
+  <meta name="theme-color" content="#141311">
+  <meta property="og:title" content="Tracewire · Follow every request to the slow span">
+  <meta property="og:description" content="An open-source tracing CLI and dashboard for backend developers.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23e0a34b'/%3E%3Cpath d='M9 10h14M16 10v13' stroke='%23141210' stroke-width='3.2' stroke-linecap='square'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/built/tracewire/styles.css">
+</head>
+<body class="preload">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- navbar-hide-on-scroll + hamburger-circle-reveal -->
+  <header class="top" id="top">
+    <div class="bar frame">
+      <a class="logo" href="#main" aria-label="Tracewire home">tracewire<span class="logo-dot" aria-hidden="true"></span></a>
+      <nav class="links" aria-label="Primary">
+        <ul>
+          <li><a href="#install" data-link>Install</a></li>
+          <li><a href="#how" data-link>How it works</a></li>
+          <li><a href="#docs" data-link>Docs</a></li>
+          <li><a href="#community" data-link>Community</a></li>
+        </ul>
+      </nav>
+      <div class="actions">
+        <a class="text-link hide-sm" href="#community">GitHub</a>
+        <a class="btn btn-outline btn-sm hide-sm" href="#install">Install</a>
+        <button class="burger" type="button" aria-controls="menu" aria-expanded="false" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="menu" id="menu" aria-label="Main menu">
+    <div class="menu-inner">
+      <p class="label menu-kicker">Tracewire</p>
+      <ul class="menu-links">
+        <li style="--i:0"><a href="#install">Install <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+        <li style="--i:1"><a href="#how">How it works <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+        <li style="--i:2"><a href="#docs">Docs <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+        <li style="--i:3"><a href="#community">Community <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      </ul>
+      <div class="menu-foot">
+        <a class="btn btn-ink btn-block" href="#install">Install the CLI</a>
+        <ul class="menu-social" aria-label="Elsewhere">
+          <li><a href="#community">GitHub</a></li>
+          <li><a href="#community">Discussions</a></li>
+          <li><a href="#community">Changelog</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- landing-devtool-dark (hero structure) + webgl-shader-hero (background) -->
+    <section class="hero" id="trace" data-spy aria-labelledby="hero-title">
+      <div class="fallback" aria-hidden="true"></div>
+      <canvas id="gl" aria-hidden="true"></canvas>
+      <div class="scrim" aria-hidden="true"></div>
+
+      <div class="hero-grid frame">
+        <div class="hero-copy">
+          <p class="label">Open-source tracing</p>
+          <h1 id="hero-title">Every request, followed to <em>the slow span.</em></h1>
+          <p class="lede">Tracewire is a CLI and a dashboard that stitches OpenTelemetry spans into one waterfall, then points at the span that cost you the most time.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#install">Install the CLI
+              <span class="btn-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+            <a class="btn btn-outline" href="#how">See how it works</a>
+          </div>
+          <div class="chip">
+            <code><span class="prompt" aria-hidden="true">$</span> brew install tracewire</code>
+            <button class="chip-copy" type="button" data-copy="brew install tracewire" aria-label="Copy install command">
+              <svg class="ico i-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M6 16H5a1 1 0 01-1-1V5a1 1 0 011-1h10a1 1 0 011 1v1"/></svg>
+              <svg class="ico i-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <figure class="tracecard" aria-label="Tracewire trace waterfall, example data">
+          <div class="tc-head">
+            <div class="tc-tabs" role="tablist" aria-label="Example traces">
+              <button role="tab" id="tt-1" aria-controls="tp-1" aria-selected="true" tabindex="0">POST /checkout</button>
+              <button role="tab" id="tt-2" aria-controls="tp-2" aria-selected="false" tabindex="-1">GET /search</button>
+              <button role="tab" id="tt-3" aria-controls="tp-3" aria-selected="false" tabindex="-1">POST /login</button>
+            </div>
+            <button class="copy-btn" type="button" id="tc-copy" aria-live="polite">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M6 16H5a1 1 0 01-1-1V5a1 1 0 011-1h10a1 1 0 011 1v1"/></svg>
+              <span>Copy</span>
+            </button>
+          </div>
+
+          <div class="tc-panel" role="tabpanel" id="tp-1" aria-labelledby="tt-1" data-cmd="tracewire open 7f3a9c2e">
+            <div class="tc-meta"><span class="num">trace 7f3a9c2e</span><span class="num">412 ms · 6 spans</span></div>
+            <ol class="wf">
+              <li style="--i:0;--s:0%;--w:1"><span class="svc">api-gateway</span><span class="op">POST /checkout</span><span class="track"><i class="c-ink"></i></span><span class="dur num">412</span></li>
+              <li style="--i:1;--s:1.5%;--w:.044"><span class="svc">auth</span><span class="op">verify-token</span><span class="track"><i class="c-ter"></i></span><span class="dur num">18</span></li>
+              <li style="--i:2;--s:6.3%;--w:.109"><span class="svc">cart</span><span class="op">get-cart</span><span class="track"><i class="c-sec"></i></span><span class="dur num">45</span></li>
+              <li style="--i:3;--s:18%;--w:.158"><span class="svc">pricing</span><span class="op">quote</span><span class="track"><i class="c-sec"></i></span><span class="dur num">65</span></li>
+              <li class="slow" style="--i:4;--s:34.2%;--w:.551"><span class="svc">postgres</span><span class="op">SELECT inventory</span><span class="track"><i class="c-pri"></i></span><span class="dur num">227</span></li>
+              <li style="--i:5;--s:89.8%;--w:.083"><span class="svc">payments</span><span class="op">charge</span><span class="track"><i class="c-ter"></i></span><span class="dur num">34</span></li>
+            </ol>
+            <dl class="tc-detail">
+              <div><dt>db.statement</dt><dd class="num">SELECT * FROM inventory WHERE sku = ANY($1)</dd></div>
+              <div><dt>db.rows</dt><dd class="num">1,284</dd></div>
+              <div><dt>hint</dt><dd class="num hint">no index on inventory(sku)</dd></div>
+            </dl>
+          </div>
+
+          <div class="tc-panel" role="tabpanel" id="tp-2" aria-labelledby="tt-2" data-cmd="tracewire open b41d0e77" hidden>
+            <div class="tc-meta"><span class="num">trace b41d0e77</span><span class="num">188 ms · 6 spans</span></div>
+            <ol class="wf">
+              <li style="--i:0;--s:0%;--w:1"><span class="svc">api-gateway</span><span class="op">GET /search</span><span class="track"><i class="c-ink"></i></span><span class="dur num">188</span></li>
+              <li style="--i:1;--s:2.1%;--w:.059"><span class="svc">auth</span><span class="op">verify-token</span><span class="track"><i class="c-ter"></i></span><span class="dur num">11</span></li>
+              <li style="--i:2;--s:9%;--w:.846"><span class="svc">search</span><span class="op">query</span><span class="track"><i class="c-sec"></i></span><span class="dur num">159</span></li>
+              <li style="--i:3;--s:10.1%;--w:.016"><span class="svc">redis</span><span class="op">GET cache</span><span class="track"><i class="c-ter"></i></span><span class="dur num">3</span></li>
+              <li class="slow" style="--i:4;--s:13.3%;--w:.734"><span class="svc">opensearch</span><span class="op">_search</span><span class="track"><i class="c-pri"></i></span><span class="dur num">138</span></li>
+              <li style="--i:5;--s:87.2%;--w:.053"><span class="svc">ranker</span><span class="op">score</span><span class="track"><i class="c-sec"></i></span><span class="dur num">10</span></li>
+            </ol>
+            <dl class="tc-detail">
+              <div><dt>db.statement</dt><dd class="num">match: title^2, body · size 50</dd></div>
+              <div><dt>cache</dt><dd class="num">miss</dd></div>
+              <div><dt>hint</dt><dd class="num hint">cache key ignores the locale</dd></div>
+            </dl>
+          </div>
+
+          <div class="tc-panel" role="tabpanel" id="tp-3" aria-labelledby="tt-3" data-cmd="tracewire open 0c9e5a13" hidden>
+            <div class="tc-meta"><span class="num">trace 0c9e5a13</span><span class="num">96 ms · 5 spans</span></div>
+            <ol class="wf">
+              <li style="--i:0;--s:0%;--w:1"><span class="svc">api-gateway</span><span class="op">POST /login</span><span class="track"><i class="c-ink"></i></span><span class="dur num">96</span></li>
+              <li style="--i:1;--s:3.1%;--w:.917"><span class="svc">auth</span><span class="op">login</span><span class="track"><i class="c-ter"></i></span><span class="dur num">88</span></li>
+              <li style="--i:2;--s:8.3%;--w:.063"><span class="svc">postgres</span><span class="op">SELECT users</span><span class="track"><i class="c-sec"></i></span><span class="dur num">6</span></li>
+              <li class="slow" style="--i:3;--s:16.7%;--w:.708"><span class="svc">auth</span><span class="op">bcrypt.compare</span><span class="track"><i class="c-pri"></i></span><span class="dur num">68</span></li>
+              <li style="--i:4;--s:89.6%;--w:.031"><span class="svc">redis</span><span class="op">SET session</span><span class="track"><i class="c-ter"></i></span><span class="dur num">3</span></li>
+            </ol>
+            <dl class="tc-detail">
+              <div><dt>bcrypt.cost</dt><dd class="num">13</dd></div>
+              <div><dt>thread</dt><dd class="num">event loop</dd></div>
+              <div><dt>hint</dt><dd class="num hint">hashing blocks the request thread</dd></div>
+            </dl>
+          </div>
+
+          <div class="tc-timing" aria-hidden="true">
+            <span class="num">slowest span</span>
+            <span class="tc-bar"><i></i></span>
+            <span class="num tc-slow">227 ms</span>
+          </div>
+          <figcaption class="example">Example trace, made-up data</figcaption>
+        </figure>
+      </div>
+
+      <div class="hero-band frame">
+        <button class="pause" type="button" aria-pressed="false" id="pause">
+          <svg class="ico i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+          <svg class="ico i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l12 6-12 6z"/></svg>
+          <span>Pause motion</span>
+        </button>
+        <span class="fact num">OpenTelemetry native</span>
+        <span class="fact num hide-sm">MIT licensed</span>
+        <span class="fact num hide-sm">Runs on your laptop</span>
+      </div>
+    </section>
+
+    <!-- code-snippet-tabs -->
+    <section class="install" id="install" data-spy aria-labelledby="install-title">
+      <div class="frame install-grid">
+        <div class="install-copy reveal">
+          <p class="label">Install</p>
+          <h2 id="install-title" data-scramble>Three commands from zero to a trace.</h2>
+          <p class="body">Install the binary, point your services at the collector it starts, then ask for the slow requests. The collector speaks OTLP, so the SDKs you already use keep working.</p>
+          <ul class="ticks">
+            <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>macOS, Linux and Docker</li>
+            <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>Traces stay on your machine</li>
+            <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>One YAML file, checked into the repo</li>
+          </ul>
+        </div>
+
+        <div class="deck reveal" id="deck">
+          <div class="deck-head">
+            <div class="deck-tabs" role="tablist" aria-label="Setup step">
+              <button role="tab" id="dt-1" aria-controls="dp-1" aria-selected="true" tabindex="0">Install</button>
+              <button role="tab" id="dt-2" aria-controls="dp-2" aria-selected="false" tabindex="-1">Config</button>
+              <button role="tab" id="dt-3" aria-controls="dp-3" aria-selected="false" tabindex="-1">Query</button>
+            </div>
+            <button class="copy-btn" type="button" id="deck-copy" aria-live="polite">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M6 16H5a1 1 0 01-1-1V5a1 1 0 011-1h10a1 1 0 011 1v1"/></svg>
+              <span>Copy</span>
+            </button>
+          </div>
+          <div class="deck-file num" aria-hidden="true"><span id="deck-file">terminal</span></div>
+<pre class="deck-panel" role="tabpanel" id="dp-1" aria-labelledby="dt-1" tabindex="0" data-file="terminal"><code><span class="k-com"># 1. install the binary</span>
+<span class="k-fn">brew</span> install tracewire
+
+<span class="k-com"># 2. start the collector and the dashboard</span>
+<span class="k-fn">tracewire</span> up <span class="k-key">--service</span> <span class="mark">checkout-api</span>
+
+<span class="k-com">  collector   listening on :4317 (OTLP gRPC)</span>
+<span class="k-com">  dashboard   open localhost:7070</span></code></pre>
+<pre class="deck-panel" role="tabpanel" id="dp-2" aria-labelledby="dt-2" tabindex="0" data-file="tracewire.yaml" hidden><code><span class="k-key">service</span>: <span class="mark">checkout-api</span>
+<span class="k-key">collector</span>:
+  <span class="k-key">endpoint</span>: <span class="k-str">localhost:4317</span>
+<span class="k-key">sample</span>:
+  <span class="k-key">rate</span>: <span class="k-num">0.25</span>
+  <span class="k-key">always</span>: [<span class="k-str">errors</span>, <span class="k-str">slower_than_300ms</span>]
+<span class="k-key">retain</span>: <span class="k-str">7d</span></code></pre>
+<pre class="deck-panel" role="tabpanel" id="dp-3" aria-labelledby="dt-3" tabindex="0" data-file="terminal" hidden><code><span class="k-fn">tracewire</span> query <span class="k-str">'service = "<span class="mark">checkout-api</span>" and duration &gt; 300ms'</span> <span class="k-key">--since</span> 1h
+
+<span class="k-com">  TRACE      ROUTE            DURATION   SLOWEST SPAN</span>
+  7f3a9c2e   POST /checkout   <span class="k-num">412 ms</span>     postgres SELECT inventory
+  2be81f04   POST /checkout   <span class="k-num">389 ms</span>     postgres SELECT inventory
+  91c0d7aa   POST /checkout   <span class="k-num">331 ms</span>     payments charge</code></pre>
+          <p class="example deck-example">Example output, made-up data</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- features-sticky-scroll-steps -->
+    <section class="how" id="how" data-spy aria-labelledby="how-title">
+      <div class="frame how-grid">
+        <div class="how-copy">
+          <div class="how-intro reveal">
+            <p class="label">How it works</p>
+            <h2 id="how-title" data-scramble>From loose spans to the line that slowed you down.</h2>
+            <p class="body">One trace, four views. Scroll and the waterfall on the right changes with each step.</p>
+          </div>
+          <ol class="steps">
+            <li class="step on" data-s="1">
+              <button class="num-btn num" type="button" aria-label="Go to step 1" aria-current="step">1</button>
+              <h3>Instrument</h3>
+              <p>Keep the OpenTelemetry SDK you have, or let the CLI add auto-instrumentation for Node, Go and Python. Spans start arriving the moment a request runs.</p>
+              <ul class="step-facts"><li>OTLP over gRPC and HTTP</li><li>No code change for the auto path</li></ul>
+            </li>
+            <li class="step" data-s="2">
+              <button class="num-btn num" type="button" aria-label="Go to step 2" aria-current="false">2</button>
+              <h3>Stitch</h3>
+              <p>Spans from every service join on their trace and parent ids. Six fragments from four processes become one request you can read top to bottom.</p>
+              <ul class="step-facts"><li>W3C trace context</li><li>Clock skew corrected per host</li></ul>
+            </li>
+            <li class="step" data-s="3">
+              <button class="num-btn num" type="button" aria-label="Go to step 3" aria-current="false">3</button>
+              <h3>Find</h3>
+              <p>Tracewire walks the critical path and dims everything that ran in parallel. What is left is the chain of spans the user actually waited on.</p>
+              <ul class="step-facts"><li>Critical path, not just the longest bar</li><li>Attributes inline</li></ul>
+            </li>
+            <li class="step" data-s="4">
+              <button class="num-btn num" type="button" aria-label="Go to step 4" aria-current="false">4</button>
+              <h3>Compare</h3>
+              <p>Lay this trace over the same route before your last deploy. The span that grew is marked with the commit that shipped it.</p>
+              <ul class="step-facts"><li>Diff by route and deploy</li><li>Links back to the commit</li></ul>
+            </li>
+          </ol>
+        </div>
+
+        <div class="how-aside">
+          <div class="sticky">
+            <figure class="viz" data-step="1" aria-label="Trace waterfall preview, example data">
+              <div class="vh">
+                <span class="vh-title">POST /checkout</span>
+                <span class="num vh-meta">trace 7f3a9c2e</span>
+              </div>
+              <div class="plot">
+                <div class="ruler num" aria-hidden="true"><span>0</span><span>100</span><span>200</span><span>300</span><span>400 ms</span></div>
+                <ol class="vrows">
+                  <li style="--s:0%;--w:1;--x:4%;--k:0" class="crit"><span class="vl"><b>api-gateway</b> POST /checkout</span><span class="vt"><i class="ghost" style="--gs:0%;--gw:.6"></i><i class="bar c-ink"></i></span></li>
+                  <li style="--s:1.5%;--w:.044;--x:62%;--k:1"><span class="vl"><b>auth</b> verify-token</span><span class="vt"><i class="ghost" style="--gs:2.2%;--gw:.064"></i><i class="bar c-ter"></i></span></li>
+                  <li style="--s:6.3%;--w:.109;--x:28%;--k:2"><span class="vl"><b>cart</b> get-cart</span><span class="vt"><i class="ghost" style="--gs:9.2%;--gw:.16"></i><i class="bar c-sec"></i></span></li>
+                  <li style="--s:18%;--w:.158;--x:74%;--k:3" class="crit"><span class="vl"><b>pricing</b> quote</span><span class="vt"><i class="ghost" style="--gs:26.3%;--gw:.23"></i><i class="bar c-sec"></i></span></li>
+                  <li style="--s:34.2%;--w:.551;--x:12%;--k:4" class="crit hot"><span class="vl"><b>postgres</b> SELECT inventory</span><span class="vt"><i class="ghost" style="--gs:50%;--gw:.11"></i><i class="bar c-pri"></i><span class="tag num">227 ms</span><span class="delta num">+182 ms</span></span></li>
+                  <li style="--s:89.8%;--w:.083;--x:48%;--k:5" class="crit"><span class="vl"><b>payments</b> charge</span><span class="vt"><i class="ghost" style="--gs:61.5%;--gw:.12"></i><i class="bar c-ter"></i></span></li>
+                </ol>
+              </div>
+              <div class="foot">
+                <div class="panel p1"><b class="num">6 spans</b><span>4 services, no parent links yet</span></div>
+                <div class="panel p2"><b class="num">412 ms</b><span>one request, read top to bottom</span></div>
+                <div class="panel p3"><b class="num">227 ms</b><span>postgres SELECT inventory, 55% of the wait</span></div>
+                <div class="panel p4"><b class="num">+182 ms</b><span>since deploy a41c9e2 added the inventory query</span></div>
+              </div>
+              <figcaption class="example">Example trace, made-up data</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- footer-sitemap-columns -->
+  <footer class="site-footer" id="community" data-spy aria-label="Site footer">
+    <div class="pre">
+      <div class="frame pre-inner">
+        <p class="pre-statement" data-scramble>Your slowest span has a name. Go and read it.</p>
+        <div class="pre-actions">
+          <a class="btn btn-ink" href="#install">Install the CLI
+            <span class="btn-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="btn btn-ink-outline" href="#docs">Read the quickstart</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="frame foot-body" id="docs">
+      <div class="ftop">
+        <div class="brand">
+          <a class="logo" href="#main" aria-label="Tracewire home">tracewire<span class="logo-dot" aria-hidden="true"></span></a>
+          <p class="mission">Open-source tracing for backend developers who want the answer, not another dashboard.</p>
+          <form class="news" novalidate>
+            <label class="label" for="email">Monthly changelog</label>
+            <div class="news-row">
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@team.dev" aria-describedby="email-hint">
+              <button type="submit" class="btn btn-outline">Subscribe</button>
+            </div>
+            <p class="hint-line" id="email-hint" aria-live="polite">One email a month. Unsubscribe in one click.</p>
+          </form>
+        </div>
+
+        <nav class="col" aria-labelledby="h-product">
+          <h2 id="h-product"><button type="button" aria-controls="c-product">Product<svg class="ico chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+          <div class="panel-wrap" id="c-product"><div><ul>
+            <li><a href="#install">CLI</a></li><li><a href="#trace">Dashboard</a></li><li><a href="#install">Collector</a></li><li><a href="#how">Trace diff</a><span class="badge">New</span></li><li><a href="#docs">Changelog</a></li>
+          </ul></div></div>
+        </nav>
+        <nav class="col" aria-labelledby="h-docs">
+          <h2 id="h-docs"><button type="button" aria-controls="c-docs">Docs<svg class="ico chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+          <div class="panel-wrap" id="c-docs"><div><ul>
+            <li><a href="#docs">Quickstart</a></li><li><a href="#docs">Config file</a></li><li><a href="#docs">Query syntax</a></li><li><a href="#docs">OpenTelemetry</a></li><li><a href="#docs">Self-hosting</a></li>
+          </ul></div></div>
+        </nav>
+        <nav class="col" aria-labelledby="h-comm">
+          <h2 id="h-comm"><button type="button" aria-controls="c-comm">Community<svg class="ico chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+          <div class="panel-wrap" id="c-comm"><div><ul>
+            <li><a href="#community">Discussions</a></li><li><a href="#community">Contributing</a></li><li><a href="#community">Code of conduct</a></li><li><a href="#community">Roadmap</a></li><li><a href="#community">Release notes</a></li>
+          </ul></div></div>
+        </nav>
+        <nav class="col" aria-labelledby="h-proj">
+          <h2 id="h-proj"><button type="button" aria-controls="c-proj">Project<svg class="ico chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+          <div class="panel-wrap" id="c-proj"><div><ul>
+            <li><a href="#community">About</a></li><li><a href="#community">Governance</a></li><li><a href="#community">Security</a></li><li><a href="#community">Brand</a></li><li><a href="#community">Contact</a></li>
+          </ul></div></div>
+        </nav>
+        <nav class="col" aria-labelledby="h-legal">
+          <h2 id="h-legal"><button type="button" aria-controls="c-legal">Legal<svg class="ico chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></h2>
+          <div class="panel-wrap" id="c-legal"><div><ul>
+            <li><a href="#community">MIT licence</a></li><li><a href="#community">Privacy</a></li><li><a href="#community">Terms</a></li><li><a href="#community">Trademark</a></li><li><a href="#community">Cookies</a></li>
+          </ul></div></div>
+        </nav>
+      </div>
+
+      <div class="mid">
+        <a class="status" href="#community"><span class="dot" aria-hidden="true"></span>Docs site normal <span class="num status-meta">checked 2 min ago</span></a>
+        <div class="selects">
+          <label class="sel"><span class="label">Language</span>
+            <select><option>English</option><option>Deutsch</option><option>Français</option><option>Español</option><option>日本語</option></select>
+          </label>
+          <label class="sel"><span class="label">Docs for</span>
+            <select><option>CLI</option><option>Dashboard</option><option>Collector</option></select>
+          </label>
+        </div>
+        <nav class="social" aria-label="Social">
+          <a href="#community">GitHub <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h5"/></svg></a>
+          <a href="#community">Mastodon <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h5"/></svg></a>
+          <a href="#community">Discord <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h5"/></svg></a>
+          <a href="#community">RSS <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h5"/></svg></a>
+        </nav>
+      </div>
+
+      <div class="legal">
+        <p class="num">© 2026 Tracewire contributors. Released under the MIT licence.</p>
+        <p class="credit">Designed using <a href="https://designlounge.vercel.app">Design Lounge</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/built/tracewire/main.js"></script>
+</body>
+</html>

@@ -3,13 +3,14 @@ import { getPieces, TYPE_META, PLATFORM_META, STYLE_META, CATEGORY_META } from '
 import { COLLECTIONS } from '../data/collections';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
+import { EXAMPLES } from '../data/examples';
 
 export const GET: APIRoute = async ({ site }) => {
   const base = (site?.toString() || 'https://designlounge.vercel.app').replace(/\/$/, '');
   const pieces = await getPieces();
   const urls = [
     '/', '/browse', '/collections', '/guide', '/about', '/sources', '/rooms', '/platforms', '/styles',
-    '/type', '/themes', '/icons', '/motion', '/agents', '/c', '/system', '/start', '/kit',
+    '/type', '/themes', '/icons', '/motion', '/agents', '/c', '/system', '/start', '/kit', '/examples',
     ...Object.keys(TYPE_META).map((k) => `/rooms/${k}`),
     ...Object.keys(PLATFORM_META).map((k) => `/platforms/${k}`),
     ...Object.keys(STYLE_META).map((k) => `/styles/${k}`),
@@ -18,6 +19,7 @@ export const GET: APIRoute = async ({ site }) => {
     ...PAIRINGS.map((p) => `/type/${p.id}`),
     ...THEMES.map((t) => `/themes/${t.id}`),
     ...pieces.map((p) => `/p/${p.id}`),
+    ...EXAMPLES.map((e) => `/examples/${e.id}`),
   ];
   const today = new Date().toISOString().slice(0, 10);
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${base}${u}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`;

@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aadhi Raat · Records made after midnight in Kathmandu</title>
+  <meta name="description" content="Aadhi Raat is a Kathmandu record label. Every record is played and taped between midnight and first light, and every sleeve carries the minute the take began.">
+  <meta name="theme-color" content="#0b1220">
+  <meta property="og:title" content="Aadhi Raat · Only after midnight">
+  <meta property="og:description" content="A Kathmandu record label that only releases music recorded after midnight.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23e0b44a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Anton,Impact,sans-serif' font-size='40' fill='%23141210'%3EAR%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="/built/aadhi-raat/styles.css">
+</head>
+<body data-ch="1">
+  <a class="skip" href="#records">Skip to the records</a>
+
+  <!-- Desktop rail: navbar-vertical-rail -->
+  <header class="rail" aria-label="Aadhi Raat">
+    <a class="rail-word" href="#records" aria-label="Aadhi Raat, home">AADHI <em>RAAT</em></a>
+    <nav class="rail-nav" aria-label="Sections">
+      <div class="rail-ind" aria-hidden="true"></div>
+      <ol>
+        <li><a href="#records" aria-current="true"><span class="rn">00:00</span><span class="rl">Records</span></a></li>
+        <li><a href="#rules"><span class="rn">01:00</span><span class="rl">Rules</span></a></li>
+        <li><a href="#night"><span class="rn">03:00</span><span class="rl">The night</span></a></li>
+        <li><a href="#send"><span class="rn">05:00</span><span class="rl">Send</span></a></li>
+      </ol>
+    </nav>
+    <div class="rail-foot">
+      <span class="rf-place">Kathmandu</span>
+      <time class="rf-time num" data-clock datetime="">--:--</time>
+      <span class="rf-dot" data-live-dot aria-hidden="true"></span>
+      <span class="rf-state" data-live-short>Doors 00:00</span>
+    </div>
+  </header>
+
+  <!-- Phone bar + menu: hamburger-circle-reveal -->
+  <header class="bar">
+    <a class="bar-word" href="#records" aria-label="Aadhi Raat, home">AADHI <em>RAAT</em></a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <nav class="menu" id="menu" aria-label="Sections, compact">
+    <div class="menu-kick"><span>Kathmandu</span><span><time class="num" data-clock>--:--</time> NPT</span></div>
+    <ul class="menu-links">
+      <li><a href="#records" style="--i:0" aria-current="page"><span class="mi">00:00</span><span class="mw">Records</span><svg class="ma" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#rules" style="--i:1"><span class="mi">01:00</span><span class="mw">Rules</span><svg class="ma" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#night" style="--i:2"><span class="mi">03:00</span><span class="mw">The night</span><svg class="ma" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#send" style="--i:3"><span class="mi">05:00</span><span class="mw">Send</span><svg class="ma" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+    </ul>
+    <div class="menu-foot">
+      <p class="menu-label" data-live-long>The room locks at 00:00 Kathmandu time.</p>
+    </div>
+  </nav>
+
+  <div class="site">
+    <main id="main">
+
+      <!-- HERO: webgl-shader-hero (lead effect) + portfolio-motion-showreel -->
+      <section class="hero" id="records" aria-labelledby="hero-title">
+        <div class="hero-fallback" aria-hidden="true"></div>
+        <canvas id="gl" aria-hidden="true"></canvas>
+        <div class="hero-scrim" aria-hidden="true"></div>
+
+        <div class="hero-top">
+          <h1 id="hero-title" class="hero-h1">Only after <span>midnight.</span></h1>
+          <div class="hero-side">
+            <p class="hero-lede">Aadhi Raat is a record label in Kathmandu. Every record on it is played and taped between 00:00 and first light, and every sleeve carries <i>the minute the take began.</i></p>
+            <div class="hero-cta">
+              <button class="btn btn-primary" type="button" data-play-hero>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l12 6-12 6z"/></svg>
+                <span>Play AR-004</span>
+              </button>
+              <a class="btn" href="#send">Send a recording</a>
+            </div>
+          </div>
+        </div>
+
+        <svg class="hero-valley" viewBox="0 0 1600 220" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path class="v-far" d="M0 120 L90 96 L170 108 L260 70 L340 92 L430 58 L520 84 L600 66 L700 90 L790 52 L880 80 L980 62 L1080 88 L1170 56 L1270 82 L1360 64 L1460 90 L1540 74 L1600 84 V220 H0 Z"/>
+          <path class="v-near" d="M0 170 L60 164 L60 150 L92 150 L92 160 L140 160 L140 142 L176 142 L176 158 L230 158 L236 136 L262 136 L268 158 L320 158 L320 146 L360 146 L360 162 L430 162 L430 140 L470 140 L470 154 L520 154 L548 112 L556 112 L556 96 L560 84 L564 96 L564 112 L572 112 L600 154 L660 154 L660 138 L700 138 L700 158 L760 158 L760 148 L812 148 L812 164 L880 164 L880 136 L916 136 L916 152 L980 152 L980 144 L1030 144 L1030 160 L1100 160 L1100 132 L1140 132 L1140 150 L1210 150 L1210 140 L1260 140 L1260 162 L1330 162 L1330 146 L1372 146 L1372 156 L1440 156 L1440 138 L1480 138 L1480 160 L1540 160 L1540 150 L1600 150 V220 H0 Z"/>
+          <g class="v-win">
+            <rect x="72" y="156" width="5" height="6"/><rect x="152" y="148" width="5" height="6"/><rect x="246" y="142" width="5" height="6"/>
+            <rect x="446" y="146" width="5" height="6"/><rect x="676" y="144" width="5" height="6"/><rect x="890" y="142" width="5" height="6"/>
+            <rect x="1116" y="138" width="5" height="6"/><rect x="1226" y="146" width="5" height="6"/><rect x="1454" y="144" width="5" height="6"/>
+          </g>
+          <rect class="v-room" x="1346" y="150" width="6" height="7"/>
+        </svg>
+
+        <div class="reel" aria-label="Catalogue">
+          <article class="case" id="rec-1" aria-expanded="true" data-cat="AR-004" data-title="Asan Tole" data-root="110" style="--sleeve: var(--primary); --sleeve-ink: var(--primary-ink)">
+            <button class="case-head" type="button" aria-expanded="true" aria-controls="cb-1">
+              <span class="c-no num">AR-004</span>
+              <span class="c-title">Asan Tole</span>
+              <span class="c-meta">Take began <b class="num">02:14</b> · LP</span>
+              <span class="c-year num">2026</span>
+              <span class="c-plus" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+            </button>
+            <div class="case-body" id="cb-1">
+              <span aria-hidden="true"></span>
+              <div class="c-copy">
+                <p>A harmonium and two field mics in a second-floor room over the bazaar. The take runs until the first vegetable cart rolls past the window.</p>
+                <ul class="tags" aria-label="On the record"><li>Harmonium</li><li>Field mics</li><li>One take</li></ul>
+              </div>
+              <div class="still still-vinyl" aria-hidden="true">
+                <div class="sleeve"><span class="stamp">02:14</span><span class="sl-cat">AR-004</span></div>
+                <div class="disc"><i></i></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="case" id="rec-2" aria-expanded="false" data-cat="AR-003" data-title="Kalimati Bridge" data-root="98" style="--sleeve: var(--secondary); --sleeve-ink: var(--secondary-ink)">
+            <button class="case-head" type="button" aria-expanded="false" aria-controls="cb-2">
+              <span class="c-no num">AR-003</span>
+              <span class="c-title">Kalimati Bridge</span>
+              <span class="c-meta">Take began <b class="num">01:07</b> · 7-inch</span>
+              <span class="c-year num">2026</span>
+              <span class="c-plus" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+            </button>
+            <div class="case-body" id="cb-2">
+              <span aria-hidden="true"></span>
+              <div class="c-copy">
+                <p>A bansuri played against the bridge rail. The river under it, and the last trucks over it, are on the record too.</p>
+                <ul class="tags" aria-label="On the record"><li>Bansuri</li><li>River</li><li>Traffic</li></ul>
+              </div>
+              <div class="still still-bridge" aria-hidden="true">
+                <div class="sleeve"><span class="stamp">01:07</span><span class="sl-cat">AR-003</span></div>
+                <div class="streaks"><i></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="case" id="rec-3" aria-expanded="false" data-cat="AR-002" data-title="Boudha Kora" data-root="123" style="--sleeve: var(--tertiary); --sleeve-ink: var(--tertiary-ink)">
+            <button class="case-head" type="button" aria-expanded="false" aria-controls="cb-3">
+              <span class="c-no num">AR-002</span>
+              <span class="c-title">Boudha Kora</span>
+              <span class="c-meta">Take began <b class="num">03:41</b> · Tape</span>
+              <span class="c-year num">2025</span>
+              <span class="c-plus" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+            </button>
+            <div class="case-body" id="cb-3">
+              <span aria-hidden="true"></span>
+              <div class="c-copy">
+                <p>Voices walking the kora clockwise, taped on a cassette deck carried in a cloth bag. The bells are the stupa's own.</p>
+                <ul class="tags" aria-label="On the record"><li>Voice</li><li>Bells</li><li>Walking</li></ul>
+              </div>
+              <div class="still still-kora" aria-hidden="true">
+                <div class="sleeve"><span class="stamp">03:41</span><span class="sl-cat">AR-002</span></div>
+                <div class="orbit"><b></b><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="case" id="rec-4" aria-expanded="false" data-cat="AR-001" data-title="Jhochhen Rooftop" data-root="82" style="--sleeve: var(--inverse); --sleeve-ink: var(--inverse-ink)">
+            <button class="case-head" type="button" aria-expanded="false" aria-controls="cb-4">
+              <span class="c-no num">AR-001</span>
+              <span class="c-title">Jhochhen Rooftop</span>
+              <span class="c-meta">Take began <b class="num">00:26</b> · LP</span>
+              <span class="c-year num">2025</span>
+              <span class="c-plus" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+            </button>
+            <div class="case-body" id="cb-4">
+              <span aria-hidden="true"></span>
+              <div class="c-copy">
+                <p>A sarangi on a roof beside a black water tank. A neighbour's radio, two houses down, joins in eleven minutes later.</p>
+                <ul class="tags" aria-label="On the record"><li>Sarangi</li><li>Rooftop</li><li>Radio</li></ul>
+              </div>
+              <div class="still still-roof" aria-hidden="true">
+                <div class="sleeve"><span class="stamp">00:26</span><span class="sl-cat">AR-001</span></div>
+                <div class="roof"><span class="tank"></span><span class="mast"></span><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </article>
+          <p class="reel-note">Example catalogue. These four sessions are studies for the label's first pressings.</p>
+        </div>
+
+        <div class="hero-meta">
+          <button class="pause" type="button" aria-pressed="false" data-pause>
+            <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+            <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l12 6-12 6z"/></svg>
+            <span>Pause motion</span>
+          </button>
+          <span class="m-fact hide-sm num">27°42′N 85°19′E</span>
+          <span class="m-fact num">Kathmandu <b data-clock>--:--</b></span>
+          <span class="m-fact hide-sm" data-live-long>The room locks at 00:00</span>
+        </div>
+      </section>
+
+      <!-- RULES: stacking-cards-scroll -->
+      <section class="rules" id="rules" aria-labelledby="rules-title">
+        <div class="rules-head">
+          <h2 id="rules-title" class="title-xl">Five rules. One room.</h2>
+          <p class="rules-intro">Nothing on the label breaks these. Press <b>Hear it</b> on a card and the room makes the sound of that rule.</p>
+        </div>
+        <ol class="stack">
+          <li style="--i:0">
+            <article class="card c-gold" aria-labelledby="r1">
+              <div class="txt">
+                <p class="step-row"><span>Rule one</span><span class="num">00:00</span></p>
+                <h3 id="r1"><span class="kick">The door</span>Lock</h3>
+                <p>At midnight Kathmandu time the door is bolted. Whoever is inside plays. Nobody comes in late, and nobody needs to leave.</p>
+                <dl class="meta"><div><dt>When</dt><dd class="num">00:00</dd></div><div><dt>Who</dt><dd>Whoever is in</dd></div><div><dt>Opens</dt><dd>At first light</dd></div></dl>
+                <button class="hear" type="button" aria-pressed="false" data-sound="lock"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4H5z"/><path d="M16 9.5a3.5 3.5 0 010 5"/></svg><span>Hear it</span></button>
+              </div>
+              <div class="art art-lock" aria-hidden="true">
+                <div class="door"><span class="bolt"></span><span class="knob"></span></div>
+                <span class="art-tag num">00:00</span>
+              </div>
+            </article>
+          </li>
+          <li style="--i:1">
+            <article class="card c-green" aria-labelledby="r2">
+              <div class="txt">
+                <p class="step-row"><span>Rule two</span><span class="num">00:10</span></p>
+                <h3 id="r2"><span class="kick">The city</span>Listen</h3>
+                <p>Ten minutes of nothing before the first note. The mics hear the transformer hum, the dogs and the wind, and they stay on the record.</p>
+                <dl class="meta"><div><dt>Length</dt><dd>Ten minutes</dd></div><div><dt>Mics</dt><dd>Open window</dd></div><div><dt>Kept</dt><dd>Everything</dd></div></dl>
+                <button class="hear" type="button" aria-pressed="false" data-sound="hum"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4H5z"/><path d="M16 9.5a3.5 3.5 0 010 5"/></svg><span>Hear it</span></button>
+              </div>
+              <div class="art art-mic" aria-hidden="true">
+                <div class="mic"><span class="head"></span><span class="stand"></span></div>
+                <span class="arc a1"></span><span class="arc a2"></span><span class="arc a3"></span>
+                <span class="art-tag">Open window</span>
+              </div>
+            </article>
+          </li>
+          <li style="--i:2">
+            <article class="card c-violet" aria-labelledby="r3">
+              <div class="txt">
+                <p class="step-row"><span>Rule three</span><span class="num">00:20</span></p>
+                <h3 id="r3"><span class="kick">The tape</span>One take</h3>
+                <p>The tape runs once. No second pass, no overdubs in the morning. A wrong note at 02:40 is part of what 02:40 sounded like.</p>
+                <dl class="meta"><div><dt>Passes</dt><dd>One</dd></div><div><dt>Edits</dt><dd>None</dd></div><div><dt>Medium</dt><dd>Quarter-inch tape</dd></div></dl>
+                <button class="hear" type="button" aria-pressed="false" data-sound="tape"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4H5z"/><path d="M16 9.5a3.5 3.5 0 010 5"/></svg><span>Hear it</span></button>
+              </div>
+              <div class="art art-tape" aria-hidden="true">
+                <div class="reels"><span class="reel-l"><i></i></span><span class="reel-r"><i></i></span></div>
+                <span class="tape-line"></span>
+                <span class="art-tag">Rolling</span>
+              </div>
+            </article>
+          </li>
+          <li style="--i:3">
+            <article class="card c-moon" aria-labelledby="r4">
+              <div class="txt">
+                <p class="step-row"><span>Rule four</span><span class="num">05:00</span></p>
+                <h3 id="r4"><span class="kick">The bell</span>Stop</h3>
+                <p>The take ends at the first temple bell of the morning, wherever the music is. Some records end mid-phrase. That is the rule working.</p>
+                <dl class="meta"><div><dt>Ends</dt><dd>First bell</dd></div><div><dt>Fade out</dt><dd>Never</dd></div><div><dt>Encore</dt><dd>Next night</dd></div></dl>
+                <button class="hear" type="button" aria-pressed="false" data-sound="bell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4H5z"/><path d="M16 9.5a3.5 3.5 0 010 5"/></svg><span>Hear it</span></button>
+              </div>
+              <div class="art art-bell" aria-hidden="true">
+                <div class="bell"><span class="yoke"></span><span class="body"></span><span class="clap"></span></div>
+                <span class="art-tag">First light</span>
+              </div>
+            </article>
+          </li>
+          <li style="--i:4">
+            <article class="card c-slate" aria-labelledby="r5">
+              <div class="txt">
+                <p class="step-row"><span>Rule five</span><span class="num">05:10</span></p>
+                <h3 id="r5"><span class="kick">The sleeve</span>Stamp</h3>
+                <p>The minute the take began is stamped on the sleeve by hand. That minute is the record's name. No two records share one.</p>
+                <dl class="meta"><div><dt>Name</dt><dd>The minute</dd></div><div><dt>Stamp</dt><dd>By hand</dd></div><div><dt>Repeats</dt><dd>Never</dd></div></dl>
+                <button class="hear" type="button" aria-pressed="false" data-sound="stamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4H5z"/><path d="M16 9.5a3.5 3.5 0 010 5"/></svg><span>Hear it</span></button>
+              </div>
+              <div class="art art-stamp" aria-hidden="true">
+                <div class="sleeve-flat"><span class="ink-mark">03:41</span></div>
+                <div class="stamper"><span class="handle"></span><span class="block"></span></div>
+              </div>
+            </article>
+          </li>
+        </ol>
+        <div class="sum">
+          <p class="sum-h title-xl">The room, stacked.</p>
+          <dl>
+            <div><dt>Rules</dt><dd class="num">5</dd></div>
+            <div><dt>Heard</dt><dd class="num" data-heard>0 of 5</dd></div>
+            <div><dt>Room</dt><dd data-live-state>Locks at 00:00</dd></div>
+          </dl>
+        </div>
+        <nav class="srail" aria-label="Rules"></nav>
+      </section>
+
+      <!-- THE NIGHT: sticky-split-story -->
+      <section class="night" id="night" aria-labelledby="night-title">
+        <div class="night-text">
+          <ol class="ch-rail" aria-label="Chapters">
+            <li><a href="#ch1" data-n="1" class="on">23:58</a></li>
+            <li><a href="#ch2" data-n="2">00:40</a></li>
+            <li><a href="#ch3" data-n="3">03:10</a></li>
+            <li><a href="#ch4" data-n="4">05:20</a></li>
+          </ol>
+          <p class="night-intro"><span id="night-title">One night in Asan</span>, from the shutters to the bell</p>
+
+          <section class="ch" id="ch1" data-n="1" aria-labelledby="ch1-h">
+            <p class="k">23:58 · Shutters down</p>
+            <h2 id="ch1-h">The bazaar closes <em>one shutter</em> at a time.</h2>
+            <p>The spice sellers pull their metal doors down and the street gets louder for a minute, then quieter than it has been all day. A microbus goes past with its door open.</p>
+            <p>Upstairs, someone tunes a harmonium against the sound of the last scooter.</p>
+          </section>
+
+          <section class="ch" id="ch2" data-n="2" aria-labelledby="ch2-h">
+            <p class="k">00:40 · The room is locked</p>
+            <h2 id="ch2-h">After midnight the city <em>has a key</em> of its own.</h2>
+            <p>The transformer on the corner hums under everything. The dogs take the crossroads and pass their news from one tole to the next.</p>
+            <p>The tape has been rolling for twenty-six minutes. Nobody has said a word.</p>
+          </section>
+
+          <section class="ch" id="ch3" data-n="3" aria-labelledby="ch3-h">
+            <p class="k">03:10 · Deep hours</p>
+            <h2 id="ch3-h">One window on the street is <em>still lit.</em></h2>
+            <p>Every other house has gone dark. This is the hour the label exists for: tired hands, slow tempos, nothing left to prove to anyone awake.</p>
+            <p>Across the valley the hills are only a darker line against the sky.</p>
+          </section>
+
+          <section class="ch" id="ch4" data-n="4" aria-labelledby="ch4-h">
+            <p class="k">05:20 · First bell</p>
+            <h2 id="ch4-h">The first temple bell <em>ends the take.</em></h2>
+            <p>Pigeons lift off the temple roof. A tea stall lights its stove. The record stops wherever the music happens to be.</p>
+            <p>The sleeve is stamped before anyone sleeps.</p>
+          </section>
+        </div>
+
+        <aside class="sky" aria-label="The sky over Kathmandu, changing with each chapter">
+          <div class="layer l1"></div><div class="layer l2"></div><div class="layer l3"></div><div class="layer l4"></div>
+          <div class="stars"><i style="left:12%;top:14%"></i><i style="left:28%;top:8%"></i><i style="left:44%;top:22%"></i><i style="left:61%;top:11%"></i><i style="left:74%;top:26%"></i><i style="left:86%;top:9%"></i><i style="left:20%;top:32%"></i><i style="left:53%;top:36%"></i><i style="left:92%;top:34%"></i><i style="left:36%;top:46%"></i><i style="left:68%;top:44%"></i></div>
+          <div class="sky-disc"></div>
+          <div class="hills"></div>
+          <div class="town">
+            <span class="stupa"><b></b></span>
+            <i class="w w1"></i><i class="w w2"></i><i class="w w3"></i><i class="w w4"></i><i class="w w5"></i><i class="w w6"></i><i class="w room"></i>
+          </div>
+          <div class="hud"><b class="num" id="hudTime">23:58</b><span id="hudLabel">Shutters down</span></div>
+        </aside>
+      </section>
+
+      <!-- SEND: contact-project-brief-steps -->
+      <section class="send" id="send" aria-labelledby="send-title">
+        <aside class="send-side">
+          <p class="send-mark">Aadhi Raat / Demos</p>
+          <h2 id="send-title" class="send-h">Send a <span>night.</span></h2>
+          <ol class="send-rail" aria-label="Steps">
+            <li aria-current="step"><span class="sr-box num">1</span>What you taped</li>
+            <li><span class="sr-box num">2</span>The hour</li>
+            <li><span class="sr-box num">3</span>The room</li>
+            <li><span class="sr-box num">4</span>About you</li>
+          </ol>
+          <p class="send-note">We only take recordings made between 00:00 and first light. Anywhere counts, as long as it was after midnight there.</p>
+        </aside>
+
+        <div class="send-card" role="region" aria-labelledby="stepLabel">
+          <div class="send-bar">
+            <p id="stepLabel" aria-live="polite">Step 1 of 4</p>
+            <div class="boxes" aria-hidden="true"><i class="cur"></i><i></i><i></i><i></i></div>
+          </div>
+
+          <form id="brief" novalidate>
+            <div class="step" data-step="1">
+              <fieldset aria-describedby="e-kind">
+                <legend><h3 tabindex="-1">What did you tape?</h3></legend>
+                <p class="hint">Pick everything that was in the room.</p>
+                <div class="chips">
+                  <label class="chip"><input type="checkbox" name="kind" value="Field recording" checked><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>Field recording</span></label>
+                  <label class="chip"><input type="checkbox" name="kind" value="A band, live"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>A band, live</span></label>
+                  <label class="chip"><input type="checkbox" name="kind" value="One instrument" checked><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>One instrument</span></label>
+                  <label class="chip"><input type="checkbox" name="kind" value="Voice"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>Voice</span></label>
+                  <label class="chip"><input type="checkbox" name="kind" value="Electronics"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>Electronics</span></label>
+                  <label class="chip"><input type="checkbox" name="kind" value="A radio"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>A radio</span></label>
+                  <label class="chip"><input type="checkbox" name="kind" value="Bells"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>Bells</span></label>
+                  <label class="chip"><input type="checkbox" name="kind" value="Not sure yet"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>Not sure yet</span></label>
+                </div>
+                <p class="err" id="e-kind"></p>
+              </fieldset>
+            </div>
+
+            <div class="step" data-step="2" hidden>
+              <fieldset aria-describedby="e-hour">
+                <legend><h3 tabindex="-1">When did the take begin?</h3></legend>
+                <p class="hint">Local time where you recorded it.</p>
+                <div class="seg">
+                  <label><input type="radio" name="hour" value="00:00-00:59"><span class="num">00:00-00:59</span></label>
+                  <label><input type="radio" name="hour" value="01:00-01:59"><span class="num">01:00-01:59</span></label>
+                  <label><input type="radio" name="hour" value="02:00-02:59"><span class="num">02:00-02:59</span></label>
+                  <label><input type="radio" name="hour" value="03:00-03:59"><span class="num">03:00-03:59</span></label>
+                  <label><input type="radio" name="hour" value="04:00 to first light"><span class="num">04:00 to first light</span></label>
+                </div>
+                <p class="err" id="e-hour"></p>
+              </fieldset>
+            </div>
+
+            <div class="step" data-step="3" hidden>
+              <fieldset aria-describedby="e-room">
+                <legend><h3 tabindex="-1">Where was the room?</h3></legend>
+                <p class="hint">The place is part of the record.</p>
+                <div class="rcs">
+                  <label class="rc"><input type="radio" name="room" value="Rooftop"><span class="dot"></span><strong>Rooftop</strong><small>Above the street, under the sky</small></label>
+                  <label class="rc"><input type="radio" name="room" value="Courtyard"><span class="dot"></span><strong>Courtyard</strong><small>A bahal, a chowk, a shared yard</small></label>
+                  <label class="rc"><input type="radio" name="room" value="Indoors"><span class="dot"></span><strong>Indoors</strong><small>Four walls, a window open</small></label>
+                  <label class="rc"><input type="radio" name="room" value="Moving"><span class="dot"></span><strong>Moving</strong><small>A bus, a bridge, a walk</small></label>
+                </div>
+                <p class="err" id="e-room"></p>
+              </fieldset>
+            </div>
+
+            <div class="step" data-step="4" hidden>
+              <fieldset>
+                <legend><h3 tabindex="-1">Who are you?</h3></legend>
+                <div class="fields">
+                  <div class="f">
+                    <label for="f-name">Name</label>
+                    <input id="f-name" name="name" autocomplete="name" aria-describedby="e-name">
+                    <p class="err" id="e-name"></p>
+                  </div>
+                  <div class="f">
+                    <label for="f-email">Email</label>
+                    <input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="e-email">
+                    <p class="err" id="e-email"></p>
+                  </div>
+                  <div class="f wide">
+                    <label for="f-link">Link to the recording (optional)</label>
+                    <input id="f-link" name="link" type="url" inputmode="url">
+                  </div>
+                  <div class="f wide">
+                    <label for="f-msg">Tell us about the night</label>
+                    <textarea id="f-msg" name="msg" maxlength="800" aria-describedby="c-msg e-msg"></textarea>
+                    <p class="count num" id="c-msg">0 / 800 · at least 20 characters</p>
+                    <p class="err" id="e-msg"></p>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="step" data-step="5" hidden>
+              <h3 tabindex="-1">Check your night.</h3>
+              <p class="hint">Edit anything before it goes in the box.</p>
+              <dl class="review">
+                <div><dt>What you taped</dt><dd data-r="kind"></dd><button class="edit" type="button" data-edit="1">Edit<span class="vh"> what you taped</span></button></div>
+                <div><dt>The hour</dt><dd data-r="hour"></dd><button class="edit" type="button" data-edit="2">Edit<span class="vh"> the hour</span></button></div>
+                <div><dt>The room</dt><dd data-r="room"></dd><button class="edit" type="button" data-edit="3">Edit<span class="vh"> the room</span></button></div>
+                <div><dt>About you</dt><dd data-r="you"></dd><button class="edit" type="button" data-edit="4">Edit<span class="vh"> about you</span></button></div>
+              </dl>
+            </div>
+
+            <div class="send-nav">
+              <button class="btn" type="button" data-back hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span>Back</span>
+              </button>
+              <button class="btn btn-primary" type="submit" data-next>
+                <span>Next</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </form>
+
+          <div class="sent" hidden>
+            <h3 tabindex="-1">Night <span>received.</span></h3>
+            <p class="sent-lede">We listen after midnight and reply within seven nights.</p>
+            <p>Reference <b class="num" data-ref>AR-0000</b>, stamped with the minute it arrived in Kathmandu. A copy is on its way to <b data-mail></b>.</p>
+            <ol class="sent-next">
+              <li>We play it once, in the dark, start to finish.</li>
+              <li>If it keeps us up, we write back with a date to press it.</li>
+              <li>Either way, you hear from us before the eighth night.</li>
+            </ol>
+            <button class="btn" type="button" data-reset>Send another night</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER: footer-engraved-caravan-strip -->
+    <footer class="foot" aria-labelledby="ft">
+      <h2 id="ft" class="vh">Aadhi Raat, footer</h2>
+      <div class="fgrid">
+        <div class="f-brand">
+          <a class="f-logo" href="#records">AADHI RAAT<span>.</span></a>
+          <p class="f-tag">A Kathmandu label for records that only exist after midnight.</p>
+          <ul class="f-contact">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Asan, Kathmandu</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg><span>Room clock <b class="num" data-clock-blink>--:--</b></span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></svg><span data-live-long>The room locks at 00:00</span></li>
+          </ul>
+        </div>
+        <nav class="f-col" aria-label="Records">
+          <h3>Records</h3>
+          <ul><li><a href="#rec-1" data-open-case="0">Asan Tole</a></li><li><a href="#rec-2" data-open-case="1">Kalimati Bridge</a></li><li><a href="#rec-3" data-open-case="2">Boudha Kora</a></li><li><a href="#rec-4" data-open-case="3">Jhochhen Rooftop</a></li></ul>
+        </nav>
+        <nav class="f-col" aria-label="The room">
+          <h3>The room</h3>
+          <ul><li><a href="#rules">Five rules</a></li><li><a href="#night">One night in Asan</a></li><li><a href="#send">Send a night</a></li></ul>
+        </nav>
+        <nav class="f-col" aria-label="Listen">
+          <h3>Listen</h3>
+          <ul><li><a href="#player" data-open-player>Corner player</a></li><li><a href="#rec-1" data-open-case="0">Latest pressing</a></li></ul>
+        </nav>
+        <div class="f-col f-say">
+          <h3>Night letter</h3>
+          <p>One letter per pressing, sent after midnight.</p>
+          <form class="f-form" id="letter" novalidate>
+            <label class="vh" for="l-email">Your email</label>
+            <input id="l-email" type="email" autocomplete="email" placeholder="Your email">
+            <button class="go" type="submit" aria-label="Subscribe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </form>
+          <p class="f-status" id="l-status" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="legal">
+        <span>© 2026 Aadhi Raat, pressed after midnight.</span>
+        <nav aria-label="Legal"><span>Designed using <a href="https://designlounge.vercel.app">Design Lounge</a></span><span aria-hidden="true">/</span><a href="#records">Back to the top</a></nav>
+      </div>
+
+      <svg class="foot-art" viewBox="0 0 1600 380" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+        <defs>
+          <pattern id="h1" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-62)"><path d="M0 0V5" class="hatch"/></pattern>
+          <pattern id="h2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><path d="M0 0V7" class="hatch"/></pattern>
+          <pattern id="h3" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(18)"><path d="M0 0V9" class="hatch h3"/></pattern>
+          <g id="dog">
+            <g class="bob">
+              <path class="sil" d="M-22 -14 Q-20 -22 -8 -22 L12 -22 Q18 -22 20 -26 L22 -32 L26 -30 L28 -24 L34 -22 L33 -18 L24 -16 Q20 -12 14 -12 L-14 -12 Q-20 -12 -22 -14 Z"/>
+              <path class="sil tail" d="M-22 -18 Q-30 -26 -28 -32 L-25 -31 Q-27 -25 -20 -19 Z"/>
+            </g>
+            <rect class="sil leg" x="-18" y="-14" width="3" height="14"/>
+            <rect class="sil leg b" x="-12" y="-14" width="3" height="14"/>
+            <rect class="sil leg b" x="10" y="-14" width="3" height="14"/>
+            <rect class="sil leg" x="16" y="-14" width="3" height="14"/>
+          </g>
+          <g id="grass">
+            <path class="tuft" d="M0 0 L-4 -9 M0 0 L-1 -11 M0 0 L1 -10 M0 0 L4 -8 M0 0 L6 -5"/>
+          </g>
+        </defs>
+        <g id="fstars"></g>
+        <g class="bat-track t1"><g class="bat"><path class="sil" d="M-9 0 Q-5 -5 0 -1 Q5 -5 9 0 Q5 -2 0 1 Q-5 -2 -9 0 Z"/></g></g>
+        <g class="bat-track t2"><g class="bat"><path class="sil" d="M-9 0 Q-5 -5 0 -1 Q5 -5 9 0 Q5 -2 0 1 Q-5 -2 -9 0 Z"/></g></g>
+        <g id="far"><path class="ridge-far" d="M0 230 L60 200 L120 170 L170 130 L210 150 L260 96 L300 120 L350 90 L410 140 L470 110 L520 150 L600 120 L660 160 L740 128 L800 98 L850 120 L900 86 L960 124 L1030 104 L1090 140 L1160 112 L1220 150 L1300 118 L1360 92 L1420 128 L1500 150 L1560 132 L1600 150 V380 H0 Z"/><path fill="url(#h1)" d="M0 230 L60 200 L120 170 L170 130 L210 150 L260 96 L300 120 L350 90 L410 140 L470 110 L520 150 L600 120 L660 160 L740 128 L800 98 L850 120 L900 86 L960 124 L1030 104 L1090 140 L1160 112 L1220 150 L1300 118 L1360 92 L1420 128 L1500 150 L1560 132 L1600 150 V380 H0 Z"/></g>
+        <g id="mid"><path class="ridge-mid" d="M0 270 Q90 230 180 252 T360 238 T540 256 T720 226 T900 250 T1080 232 T1260 254 T1440 236 T1600 250 V380 H0 Z"/><path fill="url(#h2)" d="M0 270 Q90 230 180 252 T360 238 T540 256 T720 226 T900 250 T1080 232 T1260 254 T1440 236 T1600 250 V380 H0 Z"/></g>
+        <g id="near">
+          <path class="plain" d="M0 312 Q140 300 280 310 T560 306 T840 314 T1120 304 T1400 312 T1600 306 V380 H0 Z"/>
+          <path fill="url(#h3)" d="M0 312 Q140 300 280 310 T560 306 T840 314 T1120 304 T1400 312 T1600 306 V380 H0 Z"/>
+          <g id="tufts"></g>
+          <g class="flags-pole" transform="translate(330 300)">
+            <rect class="sil" x="-2" y="-70" width="3" height="72"/>
+            <rect class="sil" x="158" y="-64" width="3" height="66"/>
+            <path class="rope" d="M0 -66 Q80 -48 160 -60"/>
+            <g id="flags"></g>
+          </g>
+          <g class="walk">
+            <g transform="translate(0 324) scale(1.22)">
+              <g class="porter">
+                <g class="bob">
+                  <path class="sil" d="M-6 -46 L6 -46 L8 -22 L-8 -22 Z"/>
+                  <circle class="sil" cx="2" cy="-52" r="5"/>
+                  <path class="sil" d="M-22 -60 L-6 -60 L-4 -24 L-18 -26 Z"/>
+                  <path class="strap" d="M-14 -60 Q-4 -66 3 -57"/>
+                  <path class="sil" d="M8 -40 L18 -30 L16 -28 L7 -36 Z"/>
+                </g>
+                <rect class="sil leg" x="-5" y="-22" width="4" height="22"/>
+                <rect class="sil leg b" x="2" y="-22" width="4" height="22"/>
+              </g>
+              <g transform="translate(-58 0)"><use href="#dog"/></g>
+              <g transform="translate(-118 1) scale(.86)" style="--dl:-.2s"><use href="#dog"/></g>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </footer>
+  </div>
+
+  <!-- Corner player: corner-player, sound drawn live with Web Audio -->
+  <div class="player" id="player" data-open="false" data-play="false">
+    <div class="p-stage" aria-hidden="true">
+      <div class="p-sleeve"><span class="stamp">02:14</span></div>
+      <canvas class="p-scope"></canvas>
+    </div>
+    <p class="p-title"><span data-p-title>AR-004 · Asan Tole</span> · <span class="num">0:42</span></p>
+    <div class="p-row">
+      <button class="p-btn" type="button" aria-pressed="false" data-p-play>
+        <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l12 6-12 6z"/></svg>
+        <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+        <span>Play</span>
+      </button>
+      <span class="track" aria-hidden="true"><i></i></span>
+      <button class="p-btn" type="button" aria-expanded="false" aria-controls="player" data-p-open><span>Open</span></button>
+    </div>
+  </div>
+
+  <script src="/built/aadhi-raat/main.js"></script>
+</body>
+</html>

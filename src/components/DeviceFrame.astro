@@ -9,24 +9,31 @@ interface Props {
   interactive?: boolean;
   eager?: boolean;
   class?: string;
+  /** Load this URL instead of the piece demo (used by /examples). */
+  src?: string;
+  poster?: string;
+  /** Path shown in the fake address bar. Defaults to the slug. */
+  path?: string;
+  /** Limit the view switcher, e.g. 'phone' to pin a web build to the phone frame. */
+  only?: 'desktop' | 'tablet' | 'phone';
 }
-const { slug, platform, title, interactive = false, eager = false, class: cls } = Astro.props;
+const { slug, platform, title, interactive = false, eager = false, class: cls, src, path = slug, only } = Astro.props;
 const meta = PLATFORM_META[platform];
 const frame = meta.frame;
 const devW = frame === 'web' ? 1280 : frame === 'phone' ? 414 : 1216;
 const devH = frame === 'web' ? 878 : frame === 'phone' ? 868 : 856;
-const nativeView = frame === 'web' ? 'desktop' : frame;
+const nativeView = only ?? (frame === 'web' ? 'desktop' : frame);
 const switchable = platform === 'web';
-const views = switchable ? 'desktop,tablet,phone' : nativeView;
+const views = only ?? (switchable ? 'desktop,tablet,phone' : nativeView);
 const hasWeb = frame === 'web';
 const hasPhone = frame === 'phone' || switchable;
 const hasTablet = frame === 'tablet' || switchable;
 const hasUrlbar = platform === 'mobile-web' || switchable;
-const poster = existsSync(new URL(`../../public/thumbs/${slug}.webp`, import.meta.url)) ? `/thumbs/${slug}.webp` : null;
+const poster = Astro.props.poster ?? (existsSync(new URL(`../../public/thumbs/${slug}.webp`, import.meta.url)) ? `/thumbs/${slug}.webp` : null);
 ---
 <lounge-frame
   class:list={['lf', `lf-${frame}`, `lf-${platform}`, { interactive }, cls]}
-  data-src={demoUrl(slug)}
+  data-src={src ?? demoUrl(slug)}
   data-dw={devW}
   data-dh={devH}
   data-lazy={eager ? 'false' : 'true'}
@@ -53,7 +60,7 @@ const poster = existsSync(new URL(`../../public/thumbs/${slug}.webp`, import.met
           </span>
           <span class="lf-url">
             <svg viewBox="0 0 16 16" class="lock"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>
-            <span class="host">lounge.design/</span><span class="path">{slug}</span>
+            <span class="host">lounge.design/</span><span class="path">{path}</span>
           </span>
           <span class="lf-tools">
             <svg viewBox="0 0 16 16"><path d="M8 2v8M5 5l3-3 3 3"/><path d="M4 9v4h8V9"/></svg>
@@ -77,7 +84,7 @@ const poster = existsSync(new URL(`../../public/thumbs/${slug}.webp`, import.met
         </div>
         <div class="lf-island" data-for="phone" aria-hidden="true"></div>
         {hasUrlbar && (
-          <div class="lf-urlbar" data-for="phone" aria-hidden="true"><div class="field"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg><span><b>lounge.design</b>/{slug}</span></div></div>
+          <div class="lf-urlbar" data-for="phone" aria-hidden="true"><div class="field"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg><span><b>lounge.design</b>/{path}</span></div></div>
         )}
         <div class="lf-home" data-for="phone" aria-hidden="true"></div>
       </>

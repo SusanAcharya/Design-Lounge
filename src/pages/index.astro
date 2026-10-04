@@ -10,6 +10,7 @@ import { ICONS } from '../data/icons';
 import { RECIPES } from '../data/motion';
 import { STARTS } from '../data/starts';
 import { AUTHOR } from '../lib/pieces';
+import { EXAMPLES, exampleUrl } from '../data/examples';
 
 const all = await getPieces();
 const newest = [...all].reverse();
@@ -169,6 +170,26 @@ const faq = [
         )}
       </div>
     </div>
+  </section>
+
+  <section class="built wrap" aria-labelledby="built-h">
+    <header class="built-head">
+      <div>
+        <p class="eyebrow">Examples</p>
+        <h2 class="display h2" id="built-h">Built from one prompt.</h2>
+      </div>
+      <a class="textlink" href="/examples">All {EXAMPLES.length} sites <span aria-hidden="true">→</span></a>
+    </header>
+    <ol class="built-row">
+      {EXAMPLES.filter((e) => !e.phone).slice(0, 3).map((e) => (
+        <li>
+          <a href={exampleUrl(e)} class="built-card">
+            <img src={`/built/${e.id}/cover.jpg`} alt={`${e.title}, built by an agent with the skill`} width="1280" height="800" loading="lazy" />
+            <span class="built-cap"><b>{e.title}</b><span>{e.prompt}</span></span>
+          </a>
+        </li>
+      ))}
+    </ol>
   </section>
 
   <section class="feats wrap" aria-labelledby="feats-h">
@@ -357,6 +378,18 @@ const faq = [
   .agent-cap a { color: var(--ink); font-weight: 500; }
   .agent-cap a:hover { color: var(--accent); }
 
+  /* examples */
+  .built { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
+  .built-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: clamp(24px, 3vw, 40px); }
+  .built-head .eyebrow { margin-bottom: 10px; }
+  .built-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px; }
+  .built-card { display: flex; flex-direction: column; height: 100%; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--paper); transition: border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease-out), box-shadow var(--t-med) var(--ease); }
+  .built-card:hover { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow); }
+  .built-card img { display: block; width: 100%; aspect-ratio: 16 / 10; height: auto; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
+  .built-cap { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 16px; }
+  .built-cap b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
+  .built-cap span { font-family: var(--mono); font-size: 12px; line-height: 1.5; color: var(--ink-3); }
+
   /* features */
   .feats { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
   .feats-head { position: sticky; top: calc(var(--header-h) + 32px); align-self: start; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -399,7 +432,8 @@ const faq = [
     .c-screens { grid-row: auto; }
     .c-styles { flex-direction: column; align-items: flex-start; }
     .style-words { justify-content: flex-start; max-width: none; }
-    .steps, .fgroup ul { grid-template-columns: minmax(0, 1fr); }
+    .steps, .fgroup ul, .built-row { grid-template-columns: minmax(0, 1fr); }
+    .built-head { flex-direction: column; align-items: flex-start; }
     .agent-cap { flex-direction: column; gap: 4px; }
     .cmd code { font-size: 13px; white-space: normal; overflow-wrap: anywhere; line-height: 1.45; }
     .wall-item.tablet { display: none; }

@@ -1,0 +1,244 @@
+---
+import { existsSync, readFileSync } from 'node:fs';
+import Base from '../../layouts/Base.astro';
+import DeviceFrame from '../../components/DeviceFrame.astro';
+import { EXAMPLES, builtUrl, exampleUrl, type Example } from '../../data/examples';
+import { THEMES } from '../../data/themes';
+import { PAIRINGS } from '../../data/type';
+import { STARTS } from '../../data/starts';
+import { familyById } from '../../data/kit';
+import { getPieces } from '../../lib/pieces';
+
+export async function getStaticPaths() {
+  return EXAMPLES.map((e, i) => ({
+    params: { id: e.id },
+    props: { ex: e, prev: EXAMPLES[(i - 1 + EXAMPLES.length) % EXAMPLES.length], next: EXAMPLES[(i + 1) % EXAMPLES.length], n: i + 1 },
+  }));
+}
+const { ex, prev, next, n } = Astro.props as { ex: Example; prev: Example; next: Example; n: number };
+const all = await getPieces();
+const titles = new Map(all.map((p) => [p.id, p.data.title]));
+const t = THEMES.find((x) => x.id === ex.theme);
+const p = PAIRINGS.find((x) => x.id === ex.pairing);
+const f = familyById(ex.family);
+const start = STARTS.find((s) => s.id === ex.recipe);
+const dir = start?.directions.find((d) => d.id === ex.direction);
+const live = builtUrl(ex);
+const poster = (name: string) => (existsSync(new URL(`../../../public/built/${ex.id}/${name}`, import.meta.url)) ? `/built/${ex.id}/${name}` : undefined);
+const mdPath = new URL(`../../../public/built/${ex.id}/DESIGN.md`, import.meta.url);
+const designMd = existsSync(mdPath) ? readFileSync(mdPath, 'utf8') : null;
+const platform = ex.phone ? 'mobile-app' : 'web';
+const og = poster('cover.jpg') ? new URL(`/built/${ex.id}/cover.jpg`, Astro.site).toString() : undefined;
+const pad = (k: number) => String(k).padStart(2, '0');
+---
+<Base rail={false} title={`${ex.title} · Examples`} description={`${ex.what} Built by an agent with the Design Lounge skill from one prompt.`} ogImage={og} crumbs={[{ name: 'Examples', href: '/examples' }, { name: ex.title, href: exampleUrl(ex) }]}>
+  <article class="wrap ex">
+    <header class="head">
+      <div class="toprow">
+        <nav class="crumbs mono" aria-label="Breadcrumb"><a href="/examples">Examples</a><span aria-hidden="true">/</span><span>{ex.title}</span></nav>
+        <div class="pnav">
+          <a class="pn-link" href={exampleUrl(prev)} aria-label={`Previous: ${prev.title}`}><kbd>[</kbd><span>prev</span></a>
+          <a class="pn-link" href={exampleUrl(next)} aria-label={`Next: ${next.title}`}><span>next</span><kbd>]</kbd></a>
+        </div>
+      </div>
+      <p class="mono faint nmark">Example {pad(n)} <span>of {pad(EXAMPLES.length)}</span> · {ex.mode === 'one-shot' ? 'one sentence, nothing else' : 'one direction, one pass'}</p>
+      <h1 class="display title reveal">{ex.title}</h1>
+      <p class="summary reveal" style="--d:60ms">{ex.what}</p>
+      <figure class="prompt reveal" style="--d:120ms">
+        <figcaption class="mono">The prompt</figcaption>
+        <p><span class="mono acc" aria-hidden="true">&gt;</span> {ex.prompt}</p>
+      </figure>
+    </header>
+
+    <section class="sec" id="preview" aria-labelledby="h-preview">
+      <div class="sec-head">
+        <h2 class="sec-title" id="h-preview">Running live</h2>
+        {!ex.phone && (
+          <div class="seg" role="group" aria-label="Preview width" data-views>
+            <button type="button" aria-pressed="true" data-view="desktop">Desktop</button>
+            <button type="button" aria-pressed="false" data-view="tablet">Tablet</button>
+            <button type="button" aria-pressed="false" data-view="phone">Phone</button>
+          </div>
+        )}
+      </div>
+      <div class="stage-bar">
+        <div class="l">
+          <button class="btn sm ghost" type="button" data-replay title="Replay"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg><span>Replay</span></button>
+          <a class="btn sm ghost" href={live} target="_blank" rel="noopener" title="Open full size"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Open full size</span></a>
+        </div>
+        <p class="r mono faint">Scroll and click inside the frame. It is the real build.</p>
+      </div>
+      <div class:list={['stages', { solo: ex.phone }]}>
+        <div class="stage main" data-stage>
+          <DeviceFrame slug={ex.id} platform={platform} title={ex.title} src={live} poster={poster(ex.phone ? 'phone.jpg' : 'cover.jpg')} path={`examples/${ex.id}`} interactive eager />
+        </div>
+        {!ex.phone && (
+          <div class="stage side" aria-label="The same build on a phone">
+            <DeviceFrame slug={ex.id} platform="web" only="phone" title={ex.title} src={live} poster={poster('phone.jpg')} path={`examples/${ex.id}`} interactive />
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="sec" id="system" aria-labelledby="h-system">
+      <div class="sec-head">
+        <h2 class="sec-title" id="h-system">What the agent locked</h2>
+        <span class="mono faint">All from the library</span>
+      </div>
+      <div class="locks">
+        {t && (
+          <a class="lock" href={`/themes/${t.id}`}>
+            <span class="eyebrow">Theme</span>
+            <span class="lk-name">{t.name}</span>
+            <span class="lk-sw" aria-hidden="true">{[t.tokens.bg, t.tokens.surface, t.tokens.ink, t.tokens.primary, t.tokens.secondary, t.tokens.tertiary].map((c) => <i style={`background:${c}`}></i>)}</span>
+            <span class="lk-note">{t.mood}</span>
+          </a>
+        )}
+        {p && (
+          <a class="lock" href={`/type/${p.id}`}>
+            <span class="eyebrow">Type pairing</span>
+            <span class="lk-name">{p.name}</span>
+            <span class="lk-note">{p.display.family} + {p.text.family}</span>
+          </a>
+        )}
+        {f && (
+          <a class="lock" href="/kit">
+            <span class="eyebrow">Family</span>
+            <span class="lk-name">{f.name} <span class="faint">· {f.radius}</span></span>
+            <span class="lk-note">{f.mood}</span>
+          </a>
+        )}
+        {start && (
+          <a class="lock" href={`/start#${start.id}`}>
+            <span class="eyebrow">Recipe</span>
+            <span class="lk-name">{start.title}</span>
+            <span class="lk-note">{dir ? `Direction: ${dir.name}. ${dir.mood}.` : start.blurb}</span>
+          </a>
+        )}
+      </div>
+      <div class="fx">
+        <p class="eyebrow">Motion pieces it built from</p>
+        <ul>
+          {ex.effects.map((id, i) => (
+            <li><a href={`/p/${id}`}><span class="mono faint">{i === 0 ? 'Lead' : 'Support'}</span><span>{titles.get(id) ?? id}</span><span aria-hidden="true">→</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    {designMd && (
+      <section class="sec" id="design-md" aria-labelledby="h-md">
+        <div class="sec-head">
+          <h2 class="sec-title" id="h-md">Its DESIGN.md</h2>
+          <a class="btn sm ghost" href={`/built/${ex.id}/DESIGN.md`} target="_blank" rel="noopener">Open raw</a>
+        </div>
+        <p class="md-note">The agent writes this sheet before it builds: who the page is for, the idea, what it avoids, and every pick with its source.</p>
+        <pre class="md" tabindex="0"><code>{designMd}</code></pre>
+      </section>
+    )}
+
+    <nav class="pn-big" aria-label="Previous and next example">
+      <a href={exampleUrl(prev)}><span class="eyebrow">← Previous</span><span class="display h4">{prev.title}</span></a>
+      <a href={exampleUrl(next)} class="r"><span class="eyebrow">Next →</span><span class="display h4">{next.title}</span></a>
+    </nav>
+  </article>
+
+  <script>
+    type Frame = HTMLElement & { reload?: () => void; setView?: (v: string) => void };
+    const frame = document.querySelector('[data-stage] lounge-frame') as Frame | null;
+    document.querySelector('[data-replay]')?.addEventListener('click', () => {
+      document.querySelectorAll<Frame>('.stages lounge-frame').forEach((f) => f.reload?.());
+    });
+    const views = [...document.querySelectorAll<HTMLButtonElement>('[data-views] [data-view]')];
+    views.forEach((b) => b.addEventListener('click', () => {
+      const v = b.dataset.view!;
+      views.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      if (!frame) return;
+      frame.dataset.view = v;
+      if (typeof frame.setView === 'function') frame.setView(v);
+    }));
+    if (matchMedia('(max-width: 900px)').matches) views.find((b) => b.dataset.view === 'phone')?.click();
+    addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey || (e.target as HTMLElement).closest('input, textarea, [contenteditable]')) return;
+      const a = document.querySelector<HTMLAnchorElement>(e.key === '[' ? '.pn-link:first-child' : e.key === ']' ? '.pn-link:last-child' : '');
+      if (a) location.href = a.href;
+    });
+  </script>
+</Base>
+
+<style>
+  .ex { --max: 1440px; padding-top: 28px; }
+  .head { display: flex; flex-direction: column; gap: 12px; padding-bottom: 36px; }
+  .toprow { display: flex; align-items: center; gap: 14px; min-height: 32px; }
+  .crumbs { display: flex; gap: 8px; color: var(--ink-3); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  .crumbs a:hover { color: var(--ink); }
+  .crumbs span[aria-hidden] { opacity: .6; }
+  .pnav { margin-left: auto; display: flex; gap: 4px; }
+  .pn-link { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); display: inline-flex; gap: 6px; align-items: center; padding: 4px 6px; border-radius: var(--r); }
+  .pn-link:hover { color: var(--ink); background: var(--paper-2); }
+  .nmark { margin-top: 18px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+  .nmark span { opacity: .7; }
+  .title { font-size: clamp(36px, 4.4vw, 64px); }
+  .summary { font-size: 18px; line-height: 1.5; color: var(--ink-2); max-width: 60ch; text-wrap: pretty; }
+  .prompt { margin: 10px 0 0; max-width: 760px; padding: 16px 18px; border: 1px solid var(--line-2); border-radius: var(--r-lg); background: var(--paper); }
+  .prompt figcaption { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+  .prompt p { font-family: var(--mono); font-size: 15px; line-height: 1.6; color: var(--ink); text-wrap: pretty; }
+  .acc { color: var(--accent); margin-right: 4px; }
+
+  .sec { margin-bottom: 72px; }
+  .sec-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--ink); }
+  .sec-title { font-family: var(--display); font-size: 26px; letter-spacing: -0.02em; line-height: 1.1; }
+  .sec-head > .mono { font-size: 11px; }
+  .seg { display: inline-flex; padding: 2px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--paper); }
+  .seg button { height: 26px; padding: 0 12px; border-radius: 999px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); transition: color var(--t-fast), background-color var(--t-fast); }
+  .seg button:hover { color: var(--ink); }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+  .stage-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+  .stage-bar .l { display: flex; gap: 6px; }
+  .stage-bar .r { font-size: 11px; }
+  .stages { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); gap: 12px; }
+  .stages.solo { grid-template-columns: minmax(0, 1fr); }
+  .stage { position: relative; height: min(76vh, 820px); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1px) center / 16px 16px; }
+  .stage :global(lounge-frame) { position: absolute; inset: 24px; }
+  .stage.side :global(lounge-frame) { inset: 20px 16px; }
+
+  .locks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .lock { display: flex; flex-direction: column; gap: 8px; padding: 18px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper); transition: border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease-out); }
+  .lock:hover { border-color: var(--ink); transform: translateY(-2px); }
+  .lk-name { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; }
+  .lk-note { font-size: 14px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+  .lk-sw { display: flex; gap: 0; }
+  .lk-sw i { flex: 1; height: 28px; border: 1px solid var(--line); }
+  .lk-sw i:first-child { border-radius: 6px 0 0 6px; }
+  .lk-sw i:last-child { border-radius: 0 6px 6px 0; }
+  .lk-sw i + i { border-left: 0; }
+  .fx { margin-top: 24px; }
+  .fx .eyebrow { margin-bottom: 10px; }
+  .fx ul { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+  .fx a { display: grid; grid-template-columns: 90px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+  .fx a .mono { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  .fx a:hover { color: var(--accent); }
+
+  .md-note { color: var(--ink-2); font-size: 15px; max-width: 62ch; margin-bottom: 14px; }
+  .md { max-height: 560px; overflow: auto; padding: 20px 22px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2); font-family: var(--mono); font-size: 13px; line-height: 1.65; color: var(--ink-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+
+  .pn-big { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 24px 0 24px; border-top: 1px solid var(--ink); padding-top: 24px; }
+  .pn-big a { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .pn-big a.r { text-align: right; align-items: flex-end; }
+  .pn-big a:hover .h4 { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+
+  @media (max-width: 1100px) { .locks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) {
+    .stages { grid-template-columns: minmax(0, 1fr); }
+    .stage.side { display: none; }
+  }
+  @media (max-width: 640px) {
+    .stage { height: 64vh; }
+    .stage :global(lounge-frame) { inset: 12px; }
+    .stage-bar .r { display: none; }
+    .locks { grid-template-columns: minmax(0, 1fr); }
+    .summary { font-size: 16px; }
+    .prompt p { font-size: 14px; }
+  }
+</style>

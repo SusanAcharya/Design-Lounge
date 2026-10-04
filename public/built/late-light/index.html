@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Late Light · the late show at Corvus Planetarium</title>
+  <meta name="description" content="Late Light is the late show at Corvus Planetarium. Lights out at 22:00, then fifty-five minutes from the Moon to the oldest light there is.">
+  <meta name="theme-color" content="#0a0612">
+  <meta property="og:title" content="Late Light · Corvus Planetarium">
+  <meta property="og:description" content="The late show. From the Moon to the oldest light there is.">
+  <link rel="icon" href="/built/late-light/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Monoton&family=Josefin+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="/built/late-light/styles.css">
+</head>
+<body>
+<a class="skip" href="#book">Skip to tickets</a>
+
+<!-- Desktop header: navbar-floating-pill-shrink -->
+<div class="nav-wrap">
+  <nav class="bar" aria-label="Primary">
+    <a class="logo" href="#show" aria-label="Late Light home">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M11 9v14h10M14 9v11h7" fill="none" stroke="var(--primary)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="word">Late Light</span>
+    </a>
+    <ul class="links">
+      <li><a href="#show" data-spy="show">Show</a></li>
+      <li><a href="#journey" data-spy="journey">Journey</a></li>
+      <li><a href="#visit" data-spy="visit">Visit</a></li>
+      <li><a href="#letter" data-spy="letter">Letter</a></li>
+      <li aria-hidden="true" style="display:contents"><span class="ind"></span></li>
+    </ul>
+    <a class="btn btn-soft cta" href="#book" data-spy="book">Book
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </nav>
+</div>
+
+<main id="main">
+
+  <!-- 1 · Hero: hero-flashlight-reveal -->
+  <section class="hero" id="show" tabindex="0"
+    aria-label="Hero. Move the pointer, tap, or use arrow keys to shine the torch on the star chart."
+    aria-describedby="beam-copy">
+    <div class="layer base">
+      <canvas class="sky" id="sky-base" aria-hidden="true"></canvas>
+      <div class="hero-in">
+        <p class="kicker">Corvus Planetarium · the late show</p>
+        <h1 class="display"><span class="w1">Late</span> <span class="w2">Light</span></h1>
+        <div class="hero-row">
+          <p class="lede">Lights out at 22:00. Then fifty-five minutes in the dome, from the Moon to the oldest light there is.</p>
+          <div class="acts">
+            <a class="btn btn-primary btn-lg" href="#book">Book seats
+              <span class="arr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+            <a class="btn btn-lg" href="#journey">Take the trip</a>
+          </div>
+        </div>
+        <p class="when num">Thursday to Saturday, 22:00 and 23:30. 55 minutes.</p>
+      </div>
+    </div>
+
+    <div class="layer beam" aria-hidden="true">
+      <canvas class="sky" id="sky-chart"></canvas>
+      <div class="hero-in">
+        <p class="kicker">Corvus Planetarium · the late show</p>
+        <p class="display h1-twin"><span class="w1">Old</span> <span class="w2">Light</span></p>
+        <div class="hero-row">
+          <p class="lede">Every star in this torch is the past. Sirius as it was 8.6 years ago. The Pleiades as they were in the late 1500s.</p>
+          <div class="acts">
+            <span class="btn btn-primary btn-lg">Book seats<span class="arr"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
+            <span class="btn btn-lg">Take the trip</span>
+          </div>
+        </div>
+        <p class="when num">Thursday to Saturday, 22:00 and 23:30. 55 minutes.</p>
+      </div>
+      <div class="notes" id="notes"></div>
+    </div>
+
+    <span class="cross" aria-hidden="true"></span>
+    <span class="readout num" aria-hidden="true">RA 05h 35m · DEC −05°</span>
+
+    <div class="hint">
+      <span class="hint-text">Move the torch to read the chart</span>
+      <button class="btn toggle" type="button" aria-pressed="false" id="reveal">Light the whole sky <kbd>R</kbd></button>
+    </div>
+    <p class="vh" id="beam-copy">Under the torch the sky becomes a star chart of Orion, Taurus and Canis Major. Sirius is 8.6 light-years away, Aldebaran about 65, and the Pleiades about 440, so their light left in the late 1500s.</p>
+  </section>
+
+  <!-- 2 · Journey: lead effect, scroll-zoom-portal structure -->
+  <section class="journey" id="journey" aria-labelledby="journey-h">
+    <h2 class="vh" id="journey-h">The journey: from the dome to the oldest light</h2>
+    <div class="j-stage">
+      <canvas id="space" aria-hidden="true"></canvas>
+      <canvas class="still-sky" id="still-sky" aria-hidden="true"></canvas>
+
+      <div class="hud" aria-hidden="true">
+        <p class="hud-k">This light left</p>
+        <p class="hud-v"><span class="display num" id="hud-v">just now</span></p>
+      </div>
+
+      <ol class="stops" id="stops">
+        <li class="stop" data-kind="dome">
+          <p class="stop-k">22:00 · Lights out</p>
+          <h3 class="stop-h">Your seat in the dome</h3>
+          <p class="stop-p">The doors close, the room goes dark, and the projector turns the ceiling into the night above the city. Then we leave.</p>
+          <p class="stop-d num" data-ago="just now">Distance: zero</p>
+        </li>
+        <li class="stop" data-kind="moon">
+          <p class="stop-k">Stop 1</p>
+          <h3 class="stop-h">The Moon</h3>
+          <p class="stop-p">384,400 km away on average. The craters you can see are impact scars, some of them billions of years old.</p>
+          <p class="stop-d num" data-ago="1.3 seconds ago">Light takes 1.3 seconds</p>
+        </li>
+        <li class="stop" data-kind="sun">
+          <p class="stop-k">Stop 2</p>
+          <h3 class="stop-h">The Sun</h3>
+          <p class="stop-p">Its light takes about 8 minutes 20 seconds to reach us. The Sun you see is always a little in the past.</p>
+          <p class="stop-d num" data-ago="8 min 20 s ago">149.6 million km</p>
+        </li>
+        <li class="stop" data-kind="jupiter">
+          <p class="stop-k">Stop 3</p>
+          <h3 class="stop-h">Jupiter</h3>
+          <p class="stop-p">The Great Red Spot is a storm wider than Earth. People have watched it for more than 150 years.</p>
+          <p class="stop-d num" data-ago="33-54 min ago">33 to 54 light-minutes, by season</p>
+        </li>
+        <li class="stop" data-kind="saturn">
+          <p class="stop-k">Stop 4</p>
+          <h3 class="stop-h">Saturn</h3>
+          <p class="stop-p">Its rings are mostly water ice, and in places they are only about 10 metres thick.</p>
+          <p class="stop-d num" data-ago="70-90 min ago">About 70 to 90 light-minutes</p>
+        </li>
+        <li class="stop" data-kind="voyager">
+          <p class="stop-k">Stop 5</p>
+          <h3 class="stop-h">Voyager 1</h3>
+          <p class="stop-p">Launched in 1977, it is the farthest thing people have ever built. Its radio signals now take almost a day to reach Earth.</p>
+          <p class="stop-d num" data-ago="almost a day ago">Almost one light-day</p>
+        </li>
+        <li class="stop" data-kind="proxima">
+          <p class="stop-k">Stop 6</p>
+          <h3 class="stop-h">Proxima Centauri</h3>
+          <p class="stop-p">The nearest star to the Sun. A small red dwarf, too faint to see without a telescope.</p>
+          <p class="stop-d num" data-ago="4.2 years ago">4.2 light-years</p>
+        </li>
+        <li class="stop" data-kind="orion">
+          <p class="stop-k">Stop 7</p>
+          <h3 class="stop-h">The Orion Nebula</h3>
+          <p class="stop-p">A cloud where new stars are forming. On a clear night you can see it with your own eyes, a smudge in Orion's sword.</p>
+          <p class="stop-d num" data-ago="1,340 years ago">About 1,340 light-years</p>
+        </li>
+        <li class="stop" data-kind="core">
+          <p class="stop-k">Stop 8</p>
+          <h3 class="stop-h">The centre of the Milky Way</h3>
+          <p class="stop-p">At the middle of our galaxy sits Sagittarius A*, a black hole about four million times the mass of the Sun.</p>
+          <p class="stop-d num" data-ago="26,000 years ago">About 26,000 light-years</p>
+        </li>
+        <li class="stop" data-kind="andromeda">
+          <p class="stop-k">Stop 9</p>
+          <h3 class="stop-h">Andromeda</h3>
+          <p class="stop-p">The nearest large galaxy. On a dark night it is the farthest thing most people can see without a telescope.</p>
+          <p class="stop-d num" data-ago="2.5 million years ago">2.5 million light-years</p>
+        </li>
+        <li class="stop" data-kind="cmb">
+          <p class="stop-k">Last stop</p>
+          <h3 class="stop-h">The oldest light</h3>
+          <p class="stop-p">The afterglow of the early universe, set free about 380,000 years after the Big Bang. It reaches us from every direction.</p>
+          <p class="stop-d num" data-ago="13.8 billion years ago">About 13.8 billion years</p>
+        </li>
+      </ol>
+
+      <div class="rail" aria-hidden="true"><span class="rail-fill"></span></div>
+
+      <div class="after" aria-hidden="false">
+        <div class="lift">
+          <p class="kicker">Then the lights come up</p>
+          <p class="after-h">That was <span class="after-n">55 minutes.</span> Come and sit under it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Tickets: week-schedule + event-ticket-checkout -->
+  <section class="book" id="book" aria-labelledby="book-h">
+    <div class="frame">
+      <div class="book-head">
+        <h2 class="title" id="book-h">Pick your night</h2>
+        <p class="sub" id="week-line">Late Light · Friday · 22:00</p>
+      </div>
+
+      <div class="week" role="group" aria-label="Week of 5 Oct 2026">
+        <p class="week-label">Week of 5 Oct</p>
+        <div class="days" id="days"></div>
+      </div>
+
+      <div class="checkout">
+        <section class="tix" aria-labelledby="tix-h">
+          <h3 class="col-h" id="tix-h">Tickets</h3>
+          <ul class="types" id="types"></ul>
+          <p class="tix-note">Ages 12 and up. Concession is for students, over-65s and carers.</p>
+        </section>
+
+        <section class="map-col" aria-labelledby="map-h">
+          <div class="map-head">
+            <h3 class="col-h" id="map-h">Choose seats</h3>
+            <p class="left-line" id="left-line" aria-live="polite">Pick 2 seats</p>
+          </div>
+          <div class="map-wrap" id="map-wrap">
+            <svg id="dome" viewBox="0 0 520 520" role="group" aria-label="Seat map of the dome. The projector is in the middle. Rows A to E circle it, the entrance is at the bottom. Use arrow keys to move between seats."></svg>
+          </div>
+          <p class="swipe">Swipe the map to see the whole dome.</p>
+          <ul class="legend" aria-hidden="true">
+            <li><i class="lg lg-free"></i>Free</li>
+            <li><i class="lg lg-rec"></i>Recliner</li>
+            <li><i class="lg lg-mine"></i>Yours</li>
+            <li><i class="lg lg-sold"></i>Sold</li>
+          </ul>
+          <p class="msg" id="msg" role="status"></p>
+        </section>
+
+        <aside class="summary" aria-labelledby="sum-h">
+          <div class="hold" id="hold">
+            <span class="hold-l">Seats held for</span>
+            <span class="clock num" role="timer" id="clock">10:00</span>
+            <span class="hold-bar"><i id="hold-bar"></i></span>
+          </div>
+          <h3 class="col-h" id="sum-h">Your order</h3>
+          <dl class="lines" id="lines"></dl>
+          <p class="seats-line" id="seats-line">No seats picked yet</p>
+          <div class="total"><span>Total</span><output class="num" id="total">€0.00</output></div>
+          <p class="promise">Every fee is shown here. Nothing new is added at payment.</p>
+          <button class="btn btn-primary btn-lg go" id="go" type="button" disabled>Continue</button>
+          <div class="expired" id="expired" role="alert" hidden>
+            <p id="expired-text"></p>
+            <button class="btn" type="button" id="rehold">Start a new 10:00 hold</button>
+          </div>
+          <p class="done" id="done" role="status"></p>
+          <p class="sr-live vh" aria-live="assertive" id="hold-live"></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · Visit: contact-booking-hours -->
+  <section class="visit" id="visit" aria-labelledby="visit-h">
+    <div class="frame visit-in">
+      <div class="v-left">
+        <h2 class="kicker" id="visit-h">Visit the dome</h2>
+        <a class="mail display" href="mailto:late@corvus.space">late@<br>corvus.space</a>
+        <p class="v-hint">Corvus Planetarium, 4 Observatory Road. The late show runs Thursday to Saturday. For a birthday, a class or a whole team, ask about a group night.</p>
+        <button class="btn btn-soft btn-lg" type="button" id="open-dlg">Ask about a group night</button>
+      </div>
+      <div class="v-right">
+        <table class="hours">
+          <caption>Hours this week</caption>
+          <thead><tr><th scope="col">Day</th><th scope="col">Building</th><th scope="col">Late show</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Monday</th><td class="off">Closed</td><td class="off">None</td></tr>
+            <tr><th scope="row">Tuesday</th><td class="num">10:00-18:00</td><td class="off">None</td></tr>
+            <tr><th scope="row">Wednesday</th><td class="num">10:00-18:00</td><td class="off">None</td></tr>
+            <tr><th scope="row">Thursday</th><td class="num">10:00-23:00</td><td class="num">22:00</td></tr>
+            <tr><th scope="row">Friday</th><td class="num">10:00-00:30</td><td class="num">22:00, 23:30</td></tr>
+            <tr><th scope="row">Saturday</th><td class="num">10:00-00:30</td><td class="num">22:00, 23:30</td></tr>
+            <tr><th scope="row">Sunday</th><td class="num">10:00-17:00</td><td class="off">None</td></tr>
+          </tbody>
+        </table>
+        <p class="tz"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Times are local. The dome doors close when the lights go out, so come ten minutes early. Latecomers move to the next show.</p>
+      </div>
+    </div>
+
+    <dialog id="dlg" aria-labelledby="dlg-h">
+      <form class="dlg" method="dialog" id="dlg-form" novalidate>
+        <div class="dlg-top">
+          <h3 id="dlg-h">A group night</h3>
+          <button class="icon-btn" type="button" id="dlg-x" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <p class="dlg-help">Tell us the night and how many. We hold the dome for groups of 20 to 118.</p>
+        <div class="fields">
+          <div class="field"><label for="g-name">Name</label><input id="g-name" name="name" type="text" autocomplete="name" required><span class="error" id="g-name-e"></span></div>
+          <div class="field"><label for="g-mail">Email</label><input id="g-mail" name="email" type="email" autocomplete="email" required><span class="error" id="g-mail-e"></span></div>
+          <div class="field"><label for="g-size">How many people</label><input id="g-size" name="size" type="number" inputmode="numeric" min="20" max="118" value="30"></div>
+          <div class="field"><label for="g-note">Note</label><textarea id="g-note" name="note" rows="3" placeholder="Which night, and what it is for"></textarea></div>
+        </div>
+        <p class="sent" role="status" id="sent"></p>
+        <div class="dlg-acts">
+          <button class="btn" type="button" id="dlg-cancel">Cancel</button>
+          <button class="btn btn-primary" type="submit">Send request</button>
+        </div>
+      </form>
+    </dialog>
+  </section>
+</main>
+
+<!-- 5 · Footer: footer-newsletter-split -->
+<footer class="foot" id="letter" aria-label="Site footer">
+  <section class="sub" aria-labelledby="sub-h">
+    <h2 class="title" id="sub-h">Sky letter</h2>
+    <p class="sub-p">What is up next month, on the first Friday. Free, one-click unsubscribe.</p>
+    <form class="nl" id="nl" novalidate>
+      <label class="vh" for="nl-mail">Email address</label>
+      <input id="nl-mail" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="nl-msg">
+      <button class="go-nl" type="submit">Subscribe <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </form>
+    <p class="nl-msg" id="nl-msg" aria-live="polite">One email a month. No other lists.</p>
+    <div class="issue">
+      <svg class="issue-art" viewBox="0 0 160 110" role="img" aria-label="Line drawing of Saturn and its rings">
+        <ellipse cx="80" cy="56" rx="64" ry="15" fill="none" stroke="var(--primary)" stroke-width="1.75" transform="rotate(-14 80 56)"/>
+        <circle cx="80" cy="56" r="27" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.75"/>
+        <path d="M16 56 A64 15 0 0 0 144 56" fill="none" stroke="var(--primary)" stroke-width="1.75" transform="rotate(-14 80 56)"/>
+      </svg>
+      <div>
+        <p class="issue-k">October letter</p>
+        <a class="issue-t" href="#book">Saturn at opposition on 4 October</a>
+        <p class="issue-d">Up all night and at its brightest for the year. The Orionids, dust from Halley's Comet, peak around 21 October.</p>
+      </div>
+    </div>
+  </section>
+  <div class="side">
+    <nav class="cols" aria-label="Sitemap">
+      <div><h3>The show</h3><ul><li><a href="#journey">Journey</a></li><li><a href="#book">Showtimes</a></li><li><a href="#book">Tickets</a></li></ul></div>
+      <div><h3>Visit</h3><ul><li><a href="#visit">Hours</a></li><li><a href="#visit">Group nights</a></li><li><a href="mailto:late@corvus.space">Email us</a></li></ul></div>
+    </nav>
+    <div class="mast">
+      <p class="wordmark display">Late Light</p>
+      <p class="mast-p">The late show at Corvus Planetarium, Thursday to Saturday.</p>
+    </div>
+  </div>
+  <p class="legal">© 2026 Corvus Planetarium. Set in Monoton and Josefin Sans. Designed using <a href="https://designlounge.vercel.app">Design Lounge</a>.</p>
+</footer>
+
+<!-- Phone nav: mobile-web-bottom-nav -->
+<nav class="tabbar" aria-label="Site">
+  <ul>
+    <li><a href="#show" data-tab="show"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></svg><span>Show</span></a></li>
+    <li><a href="#journey" data-tab="journey"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 6-6 2 2-6z"/></svg><span>Journey</span></a></li>
+    <li><a href="#book" data-tab="book" class="fab"><span class="pad"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg></span><span>Book</span></a></li>
+    <li><a href="#visit" data-tab="visit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Visit</span></a></li>
+    <li><a href="#letter" data-tab="letter"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 8l9 6 9-6"/></svg><span>Letter</span></a></li>
+  </ul>
+</nav>
+
+<script src="/built/late-light/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pocketplan · Your team's week, sorted before Friday lunch</title>
+  <meta name="description" content="Pocketplan is a weekly planner for small teams: tasks on one shared week, and gentle nudges so nothing slips to next Monday.">
+  <meta name="theme-color" content="#fff4d6">
+  <meta property="og:title" content="Pocketplan · Next week, sorted before Friday lunch">
+  <meta property="og:description" content="A weekly planner for small teams. One shared week, gentle nudges.">
+  <meta property="og:image" content="share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/built/pocketplan/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/built/pocketplan/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/built/pocketplan/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/built/pocketplan/styles.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<!-- Lounge Icons · Designed using Design Lounge · designlounge.vercel.app -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16h12l-1-7a5 5 0 00-10 0z"/><path d="M10 16v1a2 2 0 004 0v-1"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 20a7 7 0 0114 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 20a6 6 0 006 0"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 6l12 6-12 6z"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 7h11M9 12h11M9 17h11M5 7h.01M5 12h.01M5 17h.01"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 4l9 5-9 5-9-5z"/><path d="M3 14l9 5 9-5"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6z"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 4v16M6 4h12l-3 4 3 4H6"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- navbar-island-morph -->
+<div class="scrim" id="scrim" aria-hidden="true"></div>
+<header class="island" id="island" data-s="full" aria-label="Site">
+  <a class="island-logo" href="#top" aria-label="Pocketplan, back to top">pocketplan<span>.</span></a>
+
+  <nav class="layer l-full" aria-label="Primary">
+    <ul>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#inside">Inside</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">Questions</a></li>
+    </ul>
+  </nav>
+
+  <div class="layer l-compact" aria-hidden="true">
+    <span class="here" id="here">The week</span>
+  </div>
+
+  <div class="layer l-nudge" role="status" aria-live="polite">
+    <span class="nudge-ic"><svg class="ic"><use href="#i-bell"/></svg></span>
+    <span class="nudge-copy">
+      <b>Gentle nudge · Friday 15:00</b>
+      <span id="nudge-text">Time to plan next week. One coffee is enough.</span>
+    </span>
+    <button class="btn btn-ghost-inv" type="button" id="nudge-ok">Got it</button>
+  </div>
+
+  <nav class="layer l-menu" aria-label="Menu">
+    <ul>
+      <li style="--k:0"><a href="#how">How it works</a></li>
+      <li style="--k:1"><a href="#inside">Inside</a></li>
+      <li style="--k:2"><a href="#pricing">Pricing</a></li>
+      <li style="--k:3"><a href="#faq">Questions</a></li>
+    </ul>
+  </nav>
+
+  <button class="island-toggle" id="island-toggle" type="button" aria-expanded="false" aria-controls="island" aria-label="Open menu">
+    <span></span><span></span>
+  </button>
+</header>
+
+<main id="main">
+  <!-- hero-product-window-tilt -->
+  <section class="hero" id="top" aria-labelledby="hero-h">
+    <div class="frame hero-copy">
+      <h1 id="hero-h" class="hero-h reveal">
+        Next week,
+        <span class="tick-chip" aria-hidden="true"><span class="tick-box"><svg class="ic"><use href="#i-check"/></svg></span>sorted</span><span class="sr">sorted</span>
+        <span class="muted">before Friday lunch.</span>
+      </h1>
+      <div class="hero-row reveal">
+        <p class="hero-sub">Pocketplan puts your team's tasks on one shared week, then sends gentle nudges so nothing slips to next Monday.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg mag" href="#pricing" id="cta">
+            <span class="outline" aria-hidden="true"></span>
+            <span class="label">Plan your first week <span class="btn-orb"><svg class="ic"><use href="#i-arrow-right"/></svg></span></span>
+          </a>
+          <a class="btn btn-outline btn-lg" href="#how">See how a week goes</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage-wrap" id="stage-wrap">
+      <div class="stage" id="stage" role="img" aria-label="Pocketplan app preview: a team's week board with tasks moving between days">
+        <div class="win" id="win">
+          <div class="bezel">
+            <div class="shell">
+              <div class="titlebar">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span class="url">pocketplan.app/moss-and-co/week-40</span>
+                <span class="faces"><i class="f1">P</i><i class="f2">T</i><i class="f3">A</i><i class="f4">K</i></span>
+              </div>
+              <div class="body">
+                <aside class="side">
+                  <div class="team"><span class="team-mark">M</span><span><b>Moss &amp; Co</b><small>4 people</small></span></div>
+                  <div class="side-nav">
+                    <span class="on"><svg class="ic"><use href="#i-calendar"/></svg>This week</span>
+                    <span><svg class="ic"><use href="#i-list"/></svg>Backlog <em>7</em></span>
+                    <span><svg class="ic"><use href="#i-bell"/></svg>Nudges</span>
+                    <span><svg class="ic"><use href="#i-layers"/></svg>Repeats</span>
+                    <span><svg class="ic"><use href="#i-flag"/></svg>Look-back</span>
+                  </div>
+                  <div class="side-group">People</div>
+                  <div class="people">
+                    <span><i class="f1">P</i>Priya</span>
+                    <span><i class="f2">T</i>Tom</span>
+                    <span><i class="f3">A</i>Ana</span>
+                    <span><i class="f4">K</i>Kofi</span>
+                  </div>
+                </aside>
+                <div class="main">
+                  <div class="main-head">
+                    <div>
+                      <h2>Week 40</h2>
+                      <small>Mon 28 Sep to Fri 2 Oct</small>
+                    </div>
+                    <div class="seg"><span class="on">Week</span><span>Month</span></div>
+                    <div class="progress">
+                      <span class="num" id="w-count">5 of 11 done</span>
+                      <span class="bar"><i id="w-bar" style="--p:.4545"></i></span>
+                    </div>
+                  </div>
+                  <div class="board" id="board">
+                    <div class="col" data-day="mon">
+                      <div class="col-h">Mon <b class="num">28</b></div>
+                      <div class="task done"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Open the rota</span><i class="f1">P</i></div>
+                      <div class="task done"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Order oat milk</span><i class="f2">T</i></div>
+                      <div class="task late" id="t-move"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Fix the till printer</span><i class="f4">K</i><span class="flag">Slipped</span></div>
+                    </div>
+                    <div class="col" data-day="tue">
+                      <div class="col-h">Tue <b class="num">29</b></div>
+                      <div class="task done"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Draft the autumn menu</span><i class="f3">A</i></div>
+                      <div class="task done"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Post Thursday's special</span><i class="f2">T</i></div>
+                    </div>
+                    <div class="col today" data-day="wed" id="col-wed">
+                      <div class="col-h">Wed <b class="num">30</b><span class="today-pill">Today</span></div>
+                      <div class="task done"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Deep clean the oven</span><i class="f4">K</i></div>
+                      <div class="task" id="t-tick"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Book the market stall</span><i class="f1">P</i></div>
+                      <div class="task new" id="t-new"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt"><span id="t-new-text"></span><b class="caret"></b></span><i class="f3">A</i></div>
+                    </div>
+                    <div class="col" data-day="thu">
+                      <div class="col-h">Thu <b class="num">1</b></div>
+                      <div class="task"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Taste test: pear tart</span><i class="f3">A</i></div>
+                      <div class="task"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Pay the flour invoice</span><i class="f2">T</i></div>
+                    </div>
+                    <div class="col" data-day="fri">
+                      <div class="col-h">Fri <b class="num">2</b></div>
+                      <div class="task rep"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Friday look-back</span><i class="f1">P</i></div>
+                      <div class="task rep"><span class="cb"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Plan next week</span><i class="f2">T</i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chip" id="chip"><i class="pulse"></i>Shared with 4 people</div>
+          <div class="toast" id="toast">
+            <span class="toast-ic"><svg class="ic"><use href="#i-bell"/></svg></span>
+            <div class="toast-body">
+              <b>Gentle nudge for Kofi</b>
+              <p id="toast-text">"Fix the till printer" slipped from Monday. Move it to today?</p>
+              <div class="toast-actions" id="toast-actions"><span class="tbtn">Later</span><span class="tbtn tbtn-go" id="toast-go">Move to today</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="frame caption">Example week. The team, names and tasks are made up.</p>
+  </section>
+
+  <!-- stacking-cards-scroll (lead effect) -->
+  <section class="how" id="how" aria-labelledby="how-h">
+    <div class="frame how-head reveal">
+      <h2 id="how-h" class="sec-h">One week,<br>three small moves.</h2>
+      <p>Pocketplan is built around the way a small team already works: someone plans on Friday, everyone looks on Monday, and a few reminders keep the middle of the week honest.</p>
+    </div>
+
+    <ol class="stack" id="stack" style="--n:3">
+      <li style="--i:0">
+        <article class="card c-plan" aria-labelledby="c1-h">
+          <div class="txt">
+            <p class="when">Friday afternoon</p>
+            <h3 id="c1-h" class="card-h">Plan</h3>
+            <p>Drag next week's tasks out of the backlog and onto days. Give each one an owner. Repeats drop in by themselves.</p>
+            <dl class="meta">
+              <div><dt>Who</dt><dd>Whoever plans</dd></div>
+              <div><dt>Where</dt><dd>The week board</dd></div>
+              <div><dt>Ends with</dt><dd>A week ready to share</dd></div>
+            </dl>
+          </div>
+          <div class="art" aria-hidden="true">
+            <div class="mini plan-mini">
+              <div class="mini-head"><b>Next week</b><span class="num">Week 41</span></div>
+              <div class="plan-grid">
+                <div class="backlog">
+                  <span class="mini-label">Backlog</span>
+                  <span class="pchip p1">Restock the jars</span>
+                  <span class="pchip p2">Call the egg farm</span>
+                  <span class="pchip p3">Fix the shop sign</span>
+                  <span class="pchip p4">Order paper bags</span>
+                </div>
+                <div class="days">
+                  <div class="day"><span class="mini-label">Mon</span><span class="drop d1"><i class="f1"></i>Restock the jars</span></div>
+                  <div class="day"><span class="mini-label">Tue</span><span class="drop d2"><i class="f3"></i>Call the egg farm</span></div>
+                  <div class="day"><span class="mini-label">Wed</span><span class="drop d3"><i class="f4"></i>Fix the shop sign</span></div>
+                  <div class="day"><span class="mini-label">Thu</span><span class="drop d4"><i class="f2"></i>Order paper bags</span></div>
+                  <div class="day"><span class="mini-label">Fri</span><span class="drop rep-drop"><i class="f1"></i>Plan next week</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </li>
+      <li style="--i:1">
+        <article class="card c-share" aria-labelledby="c2-h">
+          <div class="txt">
+            <p class="when">Monday morning</p>
+            <h3 id="c2-h" class="card-h">Share</h3>
+            <p>Everyone opens the same week. Each person gets a lane, so it is easy to see who has room and who is already full.</p>
+            <dl class="meta">
+              <div><dt>Who</dt><dd>The whole team</dd></div>
+              <div><dt>Where</dt><dd>Lanes, one per person</dd></div>
+              <div><dt>Ends with</dt><dd>No double booking</dd></div>
+            </dl>
+          </div>
+          <div class="art" aria-hidden="true">
+            <div class="mini share-mini">
+              <div class="mini-head"><b>Lanes</b><span class="num">Week 41</span></div>
+              <div class="lanes">
+                <div class="lane-days"><span></span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>Load</span></div>
+                <div class="lane" style="--l:0"><span class="who"><i class="f1">P</i>Priya</span><b class="blk" style="grid-column:2/4"></b><b class="blk" style="grid-column:5/6"></b><span class="load"><i style="--w:.5"></i></span></div>
+                <div class="lane" style="--l:1"><span class="who"><i class="f2">T</i>Tom</span><b class="blk" style="grid-column:2/3"></b><b class="blk" style="grid-column:3/5"></b><b class="blk" style="grid-column:5/7"></b><span class="load full"><i style="--w:1"></i><em>Full</em></span></div>
+                <div class="lane" style="--l:2"><span class="who"><i class="f3">A</i>Ana</span><b class="blk" style="grid-column:3/4"></b><span class="load"><i style="--w:.25"></i></span></div>
+                <div class="lane" style="--l:3"><span class="who"><i class="f4">K</i>Kofi</span><b class="blk" style="grid-column:4/6"></b><b class="blk" style="grid-column:6/7"></b><span class="load"><i style="--w:.6"></i></span></div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </li>
+      <li style="--i:2">
+        <article class="card c-nudge" aria-labelledby="c3-h">
+          <div class="txt">
+            <p class="when">Midweek</p>
+            <h3 id="c3-h" class="card-h">Nudge</h3>
+            <p>When a task is about to slip, its owner gets one friendly note at a sensible hour. Nobody gets pinged at night or on a Sunday.</p>
+            <dl class="meta">
+              <div><dt>Who</dt><dd>The task's owner</dd></div>
+              <div><dt>When</dt><dd>Working hours only</dd></div>
+              <div><dt>Ends with</dt><dd>Fewer Monday surprises</dd></div>
+            </dl>
+          </div>
+          <div class="art" aria-hidden="true">
+            <div class="mini nudge-mini">
+              <div class="mini-head"><b>Nudges</b><span class="num">Kofi</span></div>
+              <div class="nudges">
+                <div class="nd n1"><span class="nd-ic"><svg class="ic"><use href="#i-bell"/></svg></span><span><b>Wed 09:30</b>"Fix the shop sign" is due today.</span></div>
+                <div class="nd n2"><span class="nd-ic"><svg class="ic"><use href="#i-bell"/></svg></span><span><b>Thu 14:00</b>Tom is full this week. Can you take "Order paper bags"?</span></div>
+                <div class="nd n3"><span class="nd-ic"><svg class="ic"><use href="#i-spark"/></svg></span><span><b>Fri 15:00</b>Time to plan next week.</span></div>
+              </div>
+              <div class="quiet"><svg class="ic"><use href="#i-moon"/></svg><span>Quiet hours <b class="num">18:00 to 08:30</b></span><span class="sw on"><i></i></span></div>
+            </div>
+          </div>
+        </article>
+      </li>
+    </ol>
+  </section>
+
+  <!-- features-tabbed-preview (supporting effect) -->
+  <section class="inside" id="inside" aria-labelledby="inside-h">
+    <div class="frame inside-grid" id="tabs-root">
+      <div class="inside-head reveal">
+        <h2 id="inside-h" class="sec-h">Small tools,<br><span class="muted">tucked inside the week.</span></h2>
+        <p>No dashboards to tend. Four quiet helpers that live on the same board your team already opened this morning.</p>
+      </div>
+      <div class="ctrl">
+        <span class="ctrl-label" id="ctrl-label">Autoplay</span>
+        <button class="ctrl-btn" id="ctrl-btn" type="button" aria-pressed="false" aria-label="Pause autoplay">
+          <svg class="ic i-pause"><use href="#i-pause"/></svg><svg class="ic i-play"><use href="#i-play"/></svg>
+        </button>
+      </div>
+
+      <div class="tabs" role="tablist" aria-orientation="vertical" aria-label="Pocketplan tools">
+        <button class="tab" role="tab" id="tab-0" aria-controls="pane-0" aria-selected="true" tabindex="0">
+          <span class="tn num">01</span><h3>Drag tasks between days</h3>
+          <span class="d"><span>Pick a card up and drop it on Thursday. On a keyboard, Alt and an arrow key moves it one day.</span></span>
+          <span class="tbar"><i></i></span>
+        </button>
+        <button class="tab" role="tab" id="tab-1" aria-controls="pane-1" aria-selected="false" tabindex="-1">
+          <span class="tn num">02</span><h3>Chores that come back</h3>
+          <span class="d"><span>Every Monday, every other Friday, the first of the month. The owner can rotate, so the oven is not always Kofi's.</span></span>
+          <span class="tbar"><i></i></span>
+        </button>
+        <button class="tab" role="tab" id="tab-2" aria-controls="pane-2" aria-selected="false" tabindex="-1">
+          <span class="tn num">03</span><h3>Quiet hours for nudges</h3>
+          <span class="d"><span>Each person sets their own hours. A nudge that lands at night waits politely until the morning.</span></span>
+          <span class="tbar"><i></i></span>
+        </button>
+        <button class="tab" role="tab" id="tab-3" aria-controls="pane-3" aria-selected="false" tabindex="-1">
+          <span class="tn num">04</span><h3>A look-back on Friday</h3>
+          <span class="d"><span>What got done, what moved, what to carry over. One click sends the leftovers into next week.</span></span>
+          <span class="tbar"><i></i></span>
+        </button>
+      </div>
+      <div class="big num" id="big" aria-hidden="true">01</div>
+
+      <div class="tstage" aria-live="off">
+        <div class="pane on" role="tabpanel" id="pane-0" aria-labelledby="tab-0">
+          <div class="pwin">
+            <div class="pwin-h"><b>Week 41</b><span class="kbd">Alt + →</span></div>
+            <div class="pboard">
+              <div class="pcol"><span>Mon</span><i class="pc">Restock the jars</i></div>
+              <div class="pcol"><span>Tue</span><i class="pc">Call the egg farm</i><i class="pc hop">Pay the flour invoice</i></div>
+              <div class="pcol"><span>Wed</span><i class="pc">Fix the shop sign</i></div>
+              <div class="pcol"><span>Thu</span><i class="pc">Order paper bags</i><i class="pc ghost"></i></div>
+              <div class="pcol"><span>Fri</span><i class="pc rp">Plan next week</i></div>
+            </div>
+          </div>
+        </div>
+        <div class="pane" role="tabpanel" id="pane-1" aria-labelledby="tab-1">
+          <div class="pwin">
+            <div class="pwin-h"><b>Repeats</b><span class="pill-s">4 active</span></div>
+            <div class="reps">
+              <div class="rp-row"><span class="rp-t">Plan next week</span><span class="rp-rule">Every Friday</span><span class="rot"><i class="f1">P</i><i class="f2">T</i><i class="f3">A</i></span></div>
+              <div class="rp-row"><span class="rp-t">Water the plants</span><span class="rp-rule">Every Monday</span><span class="rot one"><i class="f3">A</i></span></div>
+              <div class="rp-row"><span class="rp-t">Pay the flour invoice</span><span class="rp-rule">1st of the month</span><span class="rot one"><i class="f2">T</i></span></div>
+              <div class="rp-row"><span class="rp-t">Deep clean the oven</span><span class="rp-rule">Every other Wednesday</span><span class="rot"><i class="f4">K</i><i class="f1">P</i></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="pane" role="tabpanel" id="pane-2" aria-labelledby="tab-2">
+          <div class="pwin">
+            <div class="pwin-h"><b>Kofi's day</b><span class="pill-s">Quiet 18:00 to 08:30</span></div>
+            <div class="day-bar">
+              <span class="qz qz-a"></span><span class="qz qz-b"></span>
+              <span class="dot-n" style="--x:39.6%"><em>09:30</em></span>
+              <span class="dot-n" style="--x:58.3%"><em>14:00</em></span>
+              <span class="dot-n held"><em>21:10, held</em></span>
+            </div>
+            <div class="day-ticks num"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+            <div class="sw-rows">
+              <div class="sw-row"><span>Quiet hours</span><span class="sw on"><i></i></span></div>
+              <div class="sw-row"><span>Weekends off</span><span class="sw on"><i></i></span></div>
+              <div class="sw-row"><span>Nudge me about other people's tasks</span><span class="sw"><i></i></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="pane" role="tabpanel" id="pane-3" aria-labelledby="tab-3">
+          <div class="pwin">
+            <div class="pwin-h"><b>Look-back · Week 40</b><span class="pill-s">Friday</span></div>
+            <div class="stats">
+              <div><b class="num">14</b><span>Done</span></div>
+              <div><b class="num">3</b><span>Moved</span></div>
+              <div><b class="num">1</b><span>Dropped</span></div>
+              <div><b class="num">2</b><span>Carry over</span></div>
+            </div>
+            <div class="bars" aria-hidden="true">
+              <span style="--h:.55"><em>M</em></span><span style="--h:.8"><em>T</em></span><span style="--h:.42"><em>W</em></span><span style="--h:.92"><em>T</em></span><span style="--h:.3"><em>F</em></span>
+            </div>
+            <div class="carry">
+              <div class="carry-row"><span>Taste test: pear tart</span><span class="cbtn">Move to next week</span></div>
+              <div class="carry-row"><span>Fix the shop sign</span><span class="cbtn">Move to next week</span></div>
+            </div>
+          </div>
+        </div>
+        <span class="stage-cap">Example data</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- pricing-annual-toggle-roll -->
+  <section class="pricing" id="pricing" aria-labelledby="price-h">
+    <div class="frame price-grid">
+      <div class="intro reveal">
+        <h2 id="price-h" class="sec-h">Pay per team,<br><span class="light">not per</span> head.</h2>
+        <p class="lede">One flat price for the whole team. Add the new hire without asking anyone for budget.</p>
+        <div class="bill">
+          <div class="seg-switch" role="group" aria-label="Billing period" id="bill">
+            <span class="thumb" aria-hidden="true"></span>
+            <button type="button" data-b="m" aria-pressed="true">Monthly</button>
+            <button type="button" data-b="a" aria-pressed="false">Annual</button>
+          </div>
+          <span class="save" aria-hidden="true">2 months free</span>
+        </div>
+        <ul class="perks">
+          <li><svg class="ic"><use href="#i-check"/></svg>14 days free on every plan</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>No card needed to start</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Guests can view the week for free</li>
+        </ul>
+        <p class="fine">Prices in US dollars, per team. Tax is added at checkout where it applies.</p>
+        <p class="sr" aria-live="polite" id="price-live"></p>
+      </div>
+      <div class="plans" aria-label="Plans">
+        <article class="plan" style="--r:0">
+          <div class="plan-copy">
+            <h3>Pocket</h3>
+            <p>For two or three people sharing one week.</p>
+            <span class="seats">Up to 3 people</span>
+          </div>
+          <div class="price">
+            <span class="cur">$</span><span class="odo num" data-m="12" data-a="10" aria-hidden="true"></span>
+            <span class="per"><span>per team / month</span>
+              <span class="billed"><span class="b-m">billed monthly</span><span class="b-a">$120 billed yearly</span></span>
+              <span class="chip-save">save $24 / yr</span>
+            </span>
+          </div>
+          <div class="plan-cta"><a class="btn btn-outline" href="mailto:hello@pocketplan.app?subject=Start%20Pocket">Start Pocket</a><small>14 days free</small></div>
+        </article>
+        <article class="plan featured" style="--r:1">
+          <span class="tag">Our pick</span>
+          <div class="plan-copy">
+            <h3>Team</h3>
+            <p>For a whole small team, with repeats and look-backs.</p>
+            <span class="seats">Up to 12 people</span>
+          </div>
+          <div class="price">
+            <span class="cur">$</span><span class="odo num" data-m="36" data-a="30" aria-hidden="true"></span>
+            <span class="per"><span>per team / month</span>
+              <span class="billed"><span class="b-m">billed monthly</span><span class="b-a">$360 billed yearly</span></span>
+              <span class="chip-save">save $72 / yr</span>
+            </span>
+          </div>
+          <div class="plan-cta"><a class="btn btn-ink" href="mailto:hello@pocketplan.app?subject=Start%20Team">Start Team</a><small>14 days free</small></div>
+        </article>
+        <article class="plan" style="--r:2">
+          <div class="plan-copy">
+            <h3>Studio</h3>
+            <p>For a few teams that plan the same week together.</p>
+            <span class="seats">Up to 40 people</span>
+          </div>
+          <div class="price">
+            <span class="cur">$</span><span class="odo num" data-m="96" data-a="80" aria-hidden="true"></span>
+            <span class="per"><span>per team / month</span>
+              <span class="billed"><span class="b-m">billed monthly</span><span class="b-a">$960 billed yearly</span></span>
+              <span class="chip-save">save $192 / yr</span>
+            </span>
+          </div>
+          <div class="plan-cta"><a class="btn btn-outline" href="mailto:hello@pocketplan.app?subject=Start%20Studio">Start Studio</a><small>14 days free</small></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- faq-two-column-search -->
+  <section class="faq" id="faq" aria-label="Frequently asked questions">
+    <div class="frame">
+      <div class="faq-lead reveal">
+        <h2 class="sec-h faq-h">Questions small teams ask</h2>
+        <div class="search">
+          <label class="sr" for="q">Filter questions</label>
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input id="q" type="search" placeholder="Filter by topic: nudges, repeat, price" autocomplete="off">
+          <span class="count"><b id="shown" class="num">8</b> of 8 topics</span>
+        </div>
+      </div>
+      <div class="faq-grid" id="faq-grid">
+        <div class="faq-col" id="col-a"></div>
+        <div class="faq-col" id="col-b"></div>
+        <div class="empty" id="empty">
+          <h3>No questions match that filter</h3>
+          <p>Try a shorter word, like <b>nudge</b>, <b>repeat</b> or <b>price</b>.</p>
+          <button class="btn btn-outline" type="button" id="clear">Clear filter</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- footer-giant-wordmark-reveal -->
+<footer class="foot" id="foot" aria-label="Site footer">
+  <div class="foot-top">
+    <div>
+      <p class="foot-kick">Say hello</p>
+      <a class="mail" href="mailto:hello@pocketplan.app">hello@pocketplan.app</a>
+    </div>
+    <p class="foot-note">Pocketplan is a made-up product, drawn to test a design library. The planner, the team and the prices on this page are examples.</p>
+  </div>
+  <nav class="foot-cols" aria-label="Sitemap">
+    <div>
+      <h3>On this page</h3>
+      <ul>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#inside">Inside</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">Questions</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>The week</h3>
+      <ul>
+        <li><a href="#top">Back to the top</a></li>
+        <li><a href="mailto:hello@pocketplan.app">Write to us</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="legal">
+    <span>© 2026 Pocketplan</span>
+    <span>Designed using <a href="https://designlounge.vercel.app">Design Lounge</a></span>
+    <button class="replay" type="button" id="replay">Replay reveal</button>
+  </div>
+  <div class="word" id="word" aria-hidden="true"><span style="--i:0">p</span><span style="--i:1">o</span><span style="--i:2">c</span><span style="--i:3">k</span><span style="--i:4">e</span><span style="--i:5">t</span><span style="--i:6">p</span><span style="--i:7">l</span><span style="--i:8">a</span><span style="--i:9">n</span><span class="end" style="--i:10">.</span></div>
+</footer>
+
+<script src="/built/pocketplan/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>VOLT 44 · Spin and HIIT, 44 minutes a class</title>
+  <meta name="description" content="VOLT 44 is a spin and HIIT studio. Every class runs 44 minutes, lights low. Pick a class, pick a time, and your first ride is free.">
+  <meta name="theme-color" content="#0a0612">
+  <meta property="og:title" content="VOLT 44 · Ride hard. Lights low. 44 minutes.">
+  <meta property="og:description" content="A spin and HIIT studio. Every class runs 44 minutes. First ride is free.">
+  <link rel="icon" href="/built/volt-44/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Onest:wght@400;600;800&display=swap">
+  <link rel="stylesheet" href="/built/volt-44/styles.css">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      var rm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var force = /[?&]intro\b/.test(location.search);
+      var seen = false;
+      try { seen = sessionStorage.getItem('volt44-intro') === '1'; } catch (e) {}
+      if (!rm) d.classList.add('motion');
+      if (!rm && (force || !seen)) d.classList.add('intro');
+      setTimeout(function () { d.classList.add('failsafe'); }, 4000);
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Lead effect: preloader-counter-intro. Drawn twice so the split cuts the number. -->
+  <div class="loader" id="loader" role="progressbar" aria-label="Loading VOLT 44" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="half top"><div class="stage"></div></div>
+    <div class="half bot" aria-hidden="true"><div class="stage"></div></div>
+    <button class="skip" type="button" id="skip">Skip intro</button>
+  </div>
+  <template id="stage-tpl">
+    <p class="lbl tl">VOLT 44</p>
+    <p class="lbl tr">Spin + HIIT</p>
+    <p class="lbl bl">Lights going down</p>
+    <div class="pop p1"><span class="art art-spin" aria-hidden="true"><i></i></span><b>Spin</b></div>
+    <div class="pop p2"><span class="art art-hiit" aria-hidden="true"></span><b>HIIT</b></div>
+    <div class="pop p3"><span class="art art-climb" aria-hidden="true"><i></i><i></i><i></i></span><b>Climb</b></div>
+    <div class="pop p4"><span class="art art-recover" aria-hidden="true"><i></i><i></i><i></i></span><b>Recover</b></div>
+    <div class="count" aria-hidden="true"><span class="d"></span><span class="d"></span><span class="d">0</span><sup>%</sup></div>
+    <div class="bar" aria-hidden="true"><i></i></div>
+  </template>
+
+  <div class="site" id="site">
+    <header class="top" id="top">
+      <div class="frame top-in">
+        <a class="wordmark" href="#home" aria-label="VOLT 44, home">VOLT<span>44</span></a>
+        <nav class="mainnav" aria-label="Main">
+          <a href="#ride" data-nav="ride">Ride</a>
+          <a href="#prices" data-nav="prices">Prices</a>
+          <a href="#trial" data-nav="trial">Trial</a>
+          <a class="btn" href="#book" data-nav="book">Book a class</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Hero: gym-membership-home, translated. The picture of the work is the class profile. -->
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <div class="frame hero-grid">
+          <div class="hero-copy">
+            <p class="label kicker rise">Spin and HIIT studio</p>
+            <h1 id="hero-title" class="hero-title" aria-label="Ride hard. Lights low. 44 minutes.">
+              <span class="line" aria-hidden="true"><span class="w">Ride</span> <span class="w">hard.</span></span>
+              <span class="line" aria-hidden="true"><span class="w">Lights</span> <span class="w">low.</span></span>
+              <span class="line hot" aria-hidden="true"><span class="w">44</span> <span class="w">minutes.</span></span>
+            </h1>
+            <p class="lede rise">Every class at VOLT 44 runs 44 minutes on a profile you can read before you clip in. Music loud, room dark, legs done.</p>
+            <div class="actions rise">
+              <a class="btn btn-primary" href="#trial">Claim a free ride <span class="cell" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+              <a class="btn" href="#book">See the timetable</a>
+            </div>
+          </div>
+
+          <aside class="ride-card rise" aria-labelledby="rc-title">
+            <div class="rc-head">
+              <p class="label">Example ride</p>
+              <p class="num rc-time">19:15</p>
+            </div>
+            <h2 class="rc-title" id="rc-title">Climb</h2>
+            <p class="rc-desc">Two long climbs with a flat break between. Heavy gears, slow legs. Weekdays at 19:15.</p>
+            <div class="profile" id="hero-profile" data-class="climb"></div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Supporting effect 1: scroll-velocity-type. Speed and lean follow scroll velocity. -->
+      <section class="ride" id="ride" aria-labelledby="ride-title">
+        <div class="band" id="band" aria-hidden="true">
+          <div class="band-row a"><div class="band-track">
+            <span>Warm up</span><i></i><span>Climb</span><i></i><span>Sprint</span><i></i><span>Recover</span><i></i>
+            <span>Warm up</span><i></i><span>Climb</span><i></i><span>Sprint</span><i></i><span>Recover</span><i></i>
+            <span>Warm up</span><i></i><span>Climb</span><i></i><span>Sprint</span><i></i><span>Recover</span><i></i>
+          </div></div>
+          <div class="band-row b"><div class="band-track">
+            <span>44 minutes</span><i></i><span>Lights low</span><i></i><span>44 minutes</span><i></i><span>Lights low</span><i></i>
+            <span>44 minutes</span><i></i><span>Lights low</span><i></i><span>44 minutes</span><i></i><span>Lights low</span><i></i>
+          </div></div>
+        </div>
+
+        <div class="frame ride-body">
+          <h2 id="ride-title" class="section-title" data-reveal>Four moves.<br>Forty-four minutes.</h2>
+          <ol class="phases">
+            <li data-reveal><span class="zone z-easy" aria-hidden="true"></span><h3>Warm up</h3><p>Six minutes to find your cadence. The lights come down as the room gets going.</p></li>
+            <li data-reveal><span class="zone z-climb" aria-hidden="true"></span><h3>Climb</h3><p>Heavy gear, slow legs, out of the saddle when the coach calls it. Each climb builds in steps you can see on the profile.</p></li>
+            <li data-reveal><span class="zone z-sprint" aria-hidden="true"></span><h3>Sprint</h3><p>Short and flat out. Twenty seconds hard, then a rest you will be glad of, then again.</p></li>
+            <li data-reveal><span class="zone z-easy" aria-hidden="true"></span><h3>Recover</h3><p>The last six minutes bring your heart rate down before you clip out. Lights up, towels out.</p></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Timetable: phone-booking-slots structure. Pick a class, pick a day, pick a time. -->
+      <section class="book" id="book" aria-labelledby="book-title">
+        <div class="frame book-grid">
+          <div class="book-main">
+            <h2 id="book-title" class="section-title" data-reveal>Pick a class.<br>Pick a time.</h2>
+
+            <div class="picker" data-reveal>
+              <h3 class="label" id="cls-label">Class</h3>
+              <div class="classes" role="radiogroup" aria-labelledby="cls-label" id="classes">
+                <button type="button" role="radio" class="cls" data-cls="any" aria-checked="true" tabindex="0"><span class="art art-any" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>Any</b></button>
+                <button type="button" role="radio" class="cls" data-cls="spin" aria-checked="false" tabindex="-1"><span class="art art-spin" aria-hidden="true"><i></i></span><b>Spin</b></button>
+                <button type="button" role="radio" class="cls" data-cls="hiit" aria-checked="false" tabindex="-1"><span class="art art-hiit" aria-hidden="true"></span><b>HIIT</b></button>
+                <button type="button" role="radio" class="cls" data-cls="climb" aria-checked="false" tabindex="-1"><span class="art art-climb" aria-hidden="true"><i></i><i></i><i></i></span><b>Climb</b></button>
+                <button type="button" role="radio" class="cls" data-cls="recover" aria-checked="false" tabindex="-1"><span class="art art-recover" aria-hidden="true"><i></i><i></i><i></i></span><b>Recover</b></button>
+              </div>
+            </div>
+
+            <div class="picker" data-reveal>
+              <div class="pick-head"><h3 class="label" id="date-label">Date</h3><p class="pick-val">October 2026</p></div>
+              <div class="strip" role="group" aria-labelledby="date-label" id="strip"></div>
+            </div>
+
+            <div class="picker" data-reveal>
+              <div class="pick-head"><h3 class="label" id="time-label">Time</h3><p class="pick-val" id="day-name">Tuesday 6</p></div>
+              <div id="groups"></div>
+            </div>
+          </div>
+
+          <aside class="summary" aria-labelledby="sum-title" data-reveal>
+            <div class="sum-in">
+              <h3 class="sum-kicker">Your ride</h3>
+              <div id="sum-filled">
+                <p class="sum-title" id="sum-title">Climb</p>
+                <p class="sum-when num" id="sum-when">Tue 6 Oct, 19:15</p>
+                <div class="profile compact" id="sum-profile" data-class="climb"></div>
+              </div>
+              <div id="sum-empty" hidden>
+                <p class="sum-title">Pick a time</p>
+                <p class="sum-note">Choose a class and a time on the left. Your ride and its profile show up here.</p>
+              </div>
+              <button type="button" class="btn btn-primary btn-block" id="confirm">Book Tue 6 Oct, 19:15</button>
+              <p class="caption">Example timetable. Free to move up to 12 hours before.</p>
+            </div>
+          </aside>
+        </div>
+        <p class="sr-only" aria-live="polite" id="book-live"></p>
+      </section>
+
+      <!-- Supporting effect 2: pricing-annual-toggle-roll. Prices roll digit by digit. -->
+      <section class="prices" id="prices" aria-labelledby="prices-title">
+        <div class="frame prices-grid">
+          <div class="intro" data-reveal>
+            <h2 id="prices-title" class="section-title">Pick how often you ride.</h2>
+            <p class="lede">Every plan gets every class length, which is 44 minutes. Pay by the month, or pay for the year and keep two months.</p>
+            <div class="bill">
+              <div class="seg" role="group" aria-label="Billing period" id="seg">
+                <span class="thumb" aria-hidden="true"></span>
+                <button type="button" data-bill="monthly" aria-pressed="true">Monthly</button>
+                <button type="button" data-bill="annual" aria-pressed="false">Annual</button>
+              </div>
+              <span class="save" aria-hidden="true">2 months free</span>
+            </div>
+            <ul class="perks">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>Book up to 14 days ahead</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>Move a booking up to 12 hours before</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>Shoes and a towel at the desk</li>
+            </ul>
+            <p class="caption">Example prices. Annual is billed once.</p>
+          </div>
+
+          <div class="plans" aria-label="Plans">
+            <article class="plan" style="--r:0" data-reveal>
+              <div class="plan-copy"><h3>Off peak</h3><p>Weekday classes before 16:00, and every weekend class.</p></div>
+              <div class="price"><span class="cur">$</span><span class="odo num" data-m="69" data-a="58" aria-hidden="true"></span>
+                <div class="per"><span>per month</span><span class="billed"><em class="bm">billed monthly</em><em class="ba">$690 billed yearly</em></span><span class="chip">save $138 / yr</span></div></div>
+              <div class="plan-cta"><a class="btn" href="#trial">Start off peak</a></div>
+            </article>
+            <article class="plan" style="--r:1" data-reveal>
+              <div class="plan-copy"><h3>Ten rides</h3><p>Ten classes a month, any time. Unused rides roll over once.</p></div>
+              <div class="price"><span class="cur">$</span><span class="odo num" data-m="89" data-a="74" aria-hidden="true"></span>
+                <div class="per"><span>per month</span><span class="billed"><em class="bm">billed monthly</em><em class="ba">$890 billed yearly</em></span><span class="chip">save $178 / yr</span></div></div>
+              <div class="plan-cta"><a class="btn" href="#trial">Start ten rides</a></div>
+            </article>
+            <article class="plan featured" style="--r:2" data-reveal>
+              <span class="pill">Best for 3+ rides a week</span>
+              <div class="plan-copy"><h3>Unlimited</h3><p>Every class, every day. Bring a friend once a month.</p></div>
+              <div class="price"><span class="cur">$</span><span class="odo num" data-m="139" data-a="116" aria-hidden="true"></span>
+                <div class="per"><span>per month</span><span class="billed"><em class="bm">billed monthly</em><em class="ba">$1,390 billed yearly</em></span><span class="chip">save $278 / yr</span></div></div>
+              <div class="plan-cta"><a class="btn btn-ink" href="#trial">Start unlimited</a></div>
+            </article>
+          </div>
+        </div>
+        <p class="sr-only" aria-live="polite" id="price-live"></p>
+      </section>
+
+      <!-- Free ride form: the trial block from gym-membership-home. -->
+      <section class="trial" id="trial" aria-labelledby="trial-title">
+        <div class="frame trial-grid">
+          <div data-reveal>
+            <h2 id="trial-title" class="trial-title">First ride<br>is free.</h2>
+            <p class="lede">Leave a name and an email. We hold one free ride for you for seven days: any class, any time on the timetable.</p>
+          </div>
+          <form class="form" id="form" novalidate data-reveal>
+            <div class="field">
+              <label for="f-name">First name</label>
+              <input id="f-name" name="first" autocomplete="given-name" required aria-describedby="e-name">
+              <p class="error" id="e-name"></p>
+            </div>
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
+              <p class="error" id="e-email"></p>
+            </div>
+            <div class="field wide">
+              <label for="f-class">Class to try first</label>
+              <select id="f-class" name="cls">
+                <option value="">No preference</option>
+                <option>Spin</option>
+                <option>HIIT</option>
+                <option>Climb</option>
+                <option>Recover</option>
+              </select>
+            </div>
+            <label class="check wide">
+              <input type="checkbox" name="ok" required aria-describedby="e-ok">
+              <span>Send me one email with my free ride. Nothing else.</span>
+            </label>
+            <p class="error wide" id="e-ok"></p>
+            <div class="wide submit-row">
+              <button class="btn btn-primary" type="submit">Claim my free ride <span class="cell" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+            </div>
+            <p class="status wide" role="status" id="status"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer: footer-centered-colophon -->
+    <footer class="foot">
+      <span class="rule" aria-hidden="true"></span>
+      <p class="foot-mark">VOLT<span>44</span></p>
+      <p class="foot-line">Spin and HIIT. Every class 44 minutes.</p>
+      <ul class="foot-links">
+        <li><a href="#book">Timetable</a></li>
+        <li><a href="#prices">Prices</a></li>
+        <li><a href="#trial">First ride</a></li>
+      </ul>
+      <p class="foot-fine">VOLT 44 is a fictional studio. Times and prices are examples.</p>
+      <p class="foot-fine">Designed using <a href="https://designlounge.vercel.app">Design Lounge</a></p>
+      <div class="foot-btns">
+        <button type="button" class="ghost" id="to-top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>Back to top</button>
+        <button type="button" class="ghost" id="replay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l12 6-12 6z"/></svg>Replay intro</button>
+      </div>
+    </footer>
+
+    <!-- Phone nav: mobile-web-bottom-nav -->
+    <nav class="tabbar" id="tabbar" aria-label="Site">
+      <ul>
+        <li><a href="#home" data-nav="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></svg><span>Home</span></a></li>
+        <li><a href="#ride" data-nav="ride"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6z"/></svg><span>Ride</span></a></li>
+        <li><a href="#book" data-nav="book" class="fab"><span class="pad"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg></span><span>Book</span></a></li>
+        <li><a href="#prices" data-nav="prices"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9h8v8l-9 9z"/><circle cx="16" cy="8" r="1.2"/></svg><span>Prices</span></a></li>
+        <li><a href="#trial" data-nav="trial"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="1"/><path d="M4 10h16M12 10v10M12 10c-2-4-6-4-6 0M12 10c2-4 6-4 6 0"/></svg><span>Trial</span></a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <p class="sr-only" role="status" id="intro-status"></p>
+  <script src="/built/volt-44/main.js"></script>
+</body>
+</html>
