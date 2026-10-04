@@ -1,0 +1,244 @@
+<!-- Design Lounge piece: phone-large-text-layout · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en" class="ax">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order 48213 · Wrenfield Pharmacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;600&family=Atkinson+Hyperlegible+Next:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1114;--group:#1a1f25;--raised:#232930;--ink:#eef1ea;--ink-2:#a9b3ad;--ink-3:#7f8a84;--line:#2d343c;
+  --accent:#8fe3b5;--on-accent:#0b1f14;--accent-soft:#183326;
+  --sans:"Atkinson Hyperlegible Next",system-ui,sans-serif;--mono:"Atkinson Hyperlegible Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  /* set by script for each step; these are Accessibility 1 */
+  --f:1.65;--body:28px;--sub:25px;--foot:23px;--title:44px;
+  --tab:calc(11px * min(var(--f), 1.45));
+  --ic:calc(22px * min(var(--f), 2));
+  --pad:calc(11px * min(var(--f), 1.6));
+  --inset:16px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+/* demo control: never scales */
+.ctl{flex:none;padding:max(54px,env(safe-area-inset-top)) 12px 10px;background:var(--bg);border-bottom:1px solid var(--line);font-size:13px;line-height:16px}
+.ctl-row{display:flex;align-items:center;gap:8px}
+.step{width:44px;height:44px;border-radius:22px;background:var(--raised);display:grid;place-items:center;font-weight:700;color:var(--ink);transition:background-color 160ms var(--ease),transform 160ms var(--ease)}
+.step:hover{background:#2c333b}.step:active{transform:scale(.94)}
+.step[disabled]{opacity:.35;cursor:default;transform:none}
+.step span{line-height:1}
+.read{flex:1;min-width:0;text-align:center}
+.read b{display:block;font-size:15px;line-height:20px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.read span{font-family:var(--mono);font-size:12px;line-height:16px;color:var(--ink-2)}
+.read span i{font-style:normal;color:var(--accent)}
+.range{display:block;width:100%;height:24px;margin:6px 0 0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.range::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--fill,60%),var(--line) var(--fill,60%))}
+.range::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;margin-top:-8px;border-radius:50%;background:var(--ink);border:3px solid var(--accent)}
+.range::-moz-range-track{height:4px;border-radius:2px;background:var(--line)}
+.range::-moz-range-progress{height:4px;border-radius:2px;background:var(--accent)}
+.range::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--ink);border:3px solid var(--accent)}
+.ticks{display:flex;justify-content:space-between;padding:0 8px;margin-top:-2px;font-family:var(--mono);font-size:10px;line-height:12px;color:var(--ink-3)}
+.ticks .ax-start{color:var(--accent)}
+
+/* the app screen: every size below reads the step variables */
+main{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding-bottom:24px;hyphens:auto;overflow-wrap:break-word}
+.nav{display:flex;align-items:center;min-height:44px;padding:4px 8px 0}
+.back{min-height:44px;display:inline-flex;align-items:center;gap:2px;padding:0 8px 0 0;color:var(--accent);font-size:var(--body);line-height:1.25}
+.back svg{width:var(--ic);height:var(--ic);flex:none;stroke-width:2.2}
+h1{margin:4px 16px 0;font-size:var(--title);line-height:1.15;font-weight:700;letter-spacing:-.01em}
+.when{margin:4px 16px 0;font-size:var(--sub);line-height:1.3;color:var(--ink-2)}
+
+.group{margin:20px var(--inset) 0;background:var(--group);border-radius:14px;overflow:visible}
+.hdr{margin:28px calc(var(--inset) + 16px) 8px;font-weight:600;font-size:var(--foot);line-height:1.3;color:var(--ink-2);letter-spacing:.02em}
+.hdr+.group{margin-top:0}
+.row{display:flex;align-items:flex-start;gap:12px;min-height:44px;padding:var(--pad) 16px;position:relative}
+.row+.row::before{content:"";position:absolute;top:0;right:0;left:var(--rule-start,16px);height:1px;background:var(--line)}
+.has-ic{--rule-start:calc(16px + var(--ic) + 12px)}
+.ic{flex:none;width:var(--ic);height:calc(var(--body) * 1.3);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.ic svg{width:var(--ic);height:var(--ic)}
+.txt{flex:1;min-width:0}
+.hl{display:block;font-size:var(--body);line-height:1.3;font-weight:600}
+.sup{display:block;margin-top:2px;font-size:var(--sub);line-height:1.3;color:var(--ink-2)}
+.price{flex:none;font-size:var(--body);line-height:1.3;font-variant-numeric:tabular-nums}
+
+.status{background:var(--accent-soft)}
+.status .ic,.status .hl{color:var(--accent)}
+
+/* two-column rows: label left, value right; stack at accessibility sizes */
+dl.group{margin-bottom:0}dd{margin:0}
+.kv{flex-wrap:wrap;column-gap:16px;row-gap:2px;align-items:baseline}
+.kv .k{flex:0 1 auto;font-size:var(--body);line-height:1.3;color:var(--ink-2)}
+.kv .v{flex:0 1 auto;margin-left:auto;text-align:right;font-size:var(--body);line-height:1.3}
+.code{font-family:var(--mono);overflow-wrap:anywhere}
+.total .k,.total .v{color:var(--ink);font-weight:700}
+.ax .kv{flex-direction:column;align-items:stretch}
+.ax .kv .k{font-size:var(--sub)}
+.ax .kv .v{margin-left:0;text-align:left}
+.ax .price{display:block;flex-basis:100%;margin-top:4px}
+.ax .item{flex-wrap:wrap}
+.ax .item .price{padding-left:calc(var(--ic) + 12px)}
+.ax3{--inset:0px}
+.ax3 .group{border-radius:0}
+
+.acts{display:flex;gap:12px;margin:24px 16px 0}
+.btn{flex:1 1 0;min-width:0;min-height:50px;padding:calc(10px * min(var(--f),1.6)) 16px;border-radius:14px;font-size:var(--body);line-height:1.25;font-weight:600;text-align:center;
+  transition:transform 160ms var(--ease),filter 160ms var(--ease)}
+.btn:active{transform:scale(.98)}
+.btn:hover{filter:brightness(1.08)}
+.pri{background:var(--accent);color:var(--on-accent)}
+.sec{background:var(--raised);color:var(--accent)}
+.ax .acts{flex-direction:column}
+.ax .btn{flex:none;width:100%}
+.note{margin:16px 16px 0;font-size:var(--foot);line-height:1.35;color:var(--ink-3)}
+
+/* tab bar: labels scale to a cap, may wrap, never truncate */
+.tabs{flex:none;display:flex;align-items:flex-start;background:#13171b;border-top:1px solid var(--line);padding:0 4px max(34px,env(safe-area-inset-bottom))}
+.tab{flex:1 1 0;min-width:0;min-height:49px;padding:6px 2px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-3);user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.tab svg{width:calc(24px * min(var(--f),1.25));height:calc(24px * min(var(--f),1.25));flex:none}
+.tab span{font-size:var(--tab);line-height:1.15;font-weight:600;text-align:center;white-space:normal;overflow-wrap:normal;hyphens:manual}
+.tab[aria-current="page"]{color:var(--accent)}
+
+.hud{position:fixed;left:50%;top:44%;width:200px;min-height:200px;padding:24px 16px;border-radius:22px;background:#262c33;border:1px solid #3a424b;color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5);
+  transform:translate(-50%,-50%) scale(.92);opacity:0;visibility:hidden;transition:transform 200ms var(--ease),opacity 160ms var(--ease),visibility 0s 200ms;z-index:5}
+.hud.on{transform:translate(-50%,-50%);opacity:1;visibility:visible;transition:transform 200ms var(--ease),opacity 160ms var(--ease)}
+.hud svg{width:64px;height:64px;color:var(--accent)}
+.hud b{font-size:28px;line-height:1.15}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<section class="ctl" aria-label="Demo text size control">
+  <div class="ctl-row">
+    <button class="step" type="button" id="dn" aria-label="Smaller text"><span style="font-size:13px">A</span></button>
+    <div class="read"><b id="name">Accessibility 1</b><span id="meta">AX1 · <i>1.65×</i> · body 28 pt</span></div>
+    <button class="step" type="button" id="up" aria-label="Larger text"><span style="font-size:21px">A</span></button>
+  </div>
+  <input class="range" id="range" type="range" min="0" max="10" step="1" value="6" aria-label="Text size">
+  <div class="ticks" aria-hidden="true"><span>S</span><span>M</span><span>L</span><span>XL</span><span>2X</span><span>3X</span><span class="ax-start">1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+</section>
+
+<main id="main" aria-label="Order 48213">
+  <div class="nav"><button class="back" type="button" aria-label="Back to Orders"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Orders</button></div>
+  <h1>Order 48213</h1>
+  <p class="when">Placed Friday 2 October</p>
+
+  <div class="group status">
+    <div class="row has-ic">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2M9.5 14l2 2 3.5-4"/></svg></span>
+      <span class="txt"><span class="hl">Ready for pickup</span><span class="sup">Collect by 19:00 today at the Mill Lane counter. Bring photo ID for the antibiotic.</span></span>
+    </div>
+  </div>
+
+  <h2 class="hdr" id="h-items">Items</h2>
+  <div class="group" role="list" aria-labelledby="h-items">
+    <div class="row has-ic item" role="listitem">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-45 12 12)"/><path d="M9.2 9.2l5.6 5.6"/></svg></span>
+      <span class="txt"><span class="hl">Amoxicillin 500 mg capsules</span><span class="sup">21 capsules · prescribed by Dr Okafor</span></span>
+      <span class="price">£9.90</span>
+    </div>
+    <div class="row has-ic item" role="listitem">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><path d="M7 12h10"/></svg></span>
+      <span class="txt"><span class="hl">Cetirizine 10 mg tablets</span><span class="sup">30 tablets · over the counter</span></span>
+      <span class="price">£3.40</span>
+    </div>
+    <div class="row has-ic item" role="listitem">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 3h8v4l2 3v11H6V10l2-3z"/><path d="M6 14h12"/></svg></span>
+      <span class="txt"><span class="hl">Saline nasal spray</span><span class="sup">1 bottle, 30 ml</span></span>
+      <span class="price">£1.00</span>
+    </div>
+  </div>
+
+  <h2 class="hdr" id="h-det">Details</h2>
+  <dl class="group" aria-labelledby="h-det">
+    <div class="row kv"><dt class="k">Pickup</dt><dd class="v">Mill Lane, counter 2</dd></div>
+    <div class="row kv"><dt class="k">Ready by</dt><dd class="v">Today, 19:00</dd></div>
+    <div class="row kv"><dt class="k">Paid with</dt><dd class="v">Card ending 4417</dd></div>
+    <div class="row kv"><dt class="k">Order number</dt><dd class="v code">WP-48213-K</dd></div>
+    <div class="row kv total"><dt class="k">Total</dt><dd class="v">£14.30</dd></div>
+  </dl>
+
+  <div class="acts">
+    <button class="btn pri" type="button" id="code" aria-live="polite">Show pickup code</button>
+    <button class="btn sec" type="button" id="dir">Get directions</button>
+  </div>
+  <p class="note" id="note">Questions about this order? Message the pharmacist from the Messages tab.</p>
+</main>
+
+<nav class="tabs" aria-label="Sections" id="tabs">
+  <button class="tab" type="button" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span></button>
+  <button class="tab" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg><span>Refills</span></button>
+  <button class="tab" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5h15v10.5h-9L6 19.5v-4H4.5z"/></svg><span>Messages</span></button>
+  <button class="tab" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.6 3.7-5.5 7-5.5s5.8 1.9 7 5.5"/></svg><span>Account</span></button>
+</nav>
+
+<div class="hud" id="hud" aria-hidden="true"></div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+
+<script>
+const S=[
+ ['Small','S',15,13,12,32],['Medium','M',16,14,12,33],['Large (default)','L',17,15,13,34],['Extra Large','XL',19,17,15,36],
+ ['Extra Extra Large','XXL',21,19,17,38],['Extra Extra Extra Large','XXXL',23,21,19,40],
+ ['Accessibility 1','AX1',28,25,23,44],['Accessibility 2','AX2',33,30,27,48],['Accessibility 3','AX3',40,36,33,52],
+ ['Accessibility 4','AX4',47,42,38,56],['Accessibility 5','AX5',53,49,44,60]
+];
+const $=id=>document.getElementById(id),root=document.documentElement,range=$('range');
+let i=6;
+function set(n){
+  i=Math.max(0,Math.min(S.length-1,n));
+  const [name,ab,body,sub,foot,title]=S[i],f=body/17;
+  const st=root.style;
+  st.setProperty('--f',f.toFixed(3));st.setProperty('--body',body+'px');st.setProperty('--sub',sub+'px');
+  st.setProperty('--foot',foot+'px');st.setProperty('--title',title+'px');
+  root.classList.toggle('ax',i>=6);root.classList.toggle('ax3',i>=8);
+  $('name').textContent=name;
+  $('meta').innerHTML=`${ab} · <i>${f.toFixed(2)}×</i> · body ${body} pt`;
+  range.value=i;range.style.setProperty('--fill',(i/10*100)+'%');
+  range.setAttribute('aria-valuetext',`${name}, ${f.toFixed(2)} times`);
+  $('dn').disabled=i===0;$('up').disabled=i===S.length-1;
+  $('note').textContent=i>=6?'At this size, press and hold a tab to see its label large.':'Questions about this order? Message the pharmacist from the Messages tab.';
+}
+$('dn').addEventListener('click',()=>{set(i-1);$('live').textContent=S[i][0]});
+$('up').addEventListener('click',()=>{set(i+1);$('live').textContent=S[i][0]});
+range.addEventListener('input',()=>set(+range.value));
+set(i);
+
+const tabs=[...document.querySelectorAll('.tab')],hud=$('hud');
+let hold=null,shown=false;
+function pick(t){tabs.forEach(x=>x===t?x.setAttribute('aria-current','page'):x.removeAttribute('aria-current'))}
+tabs.forEach(t=>{
+  t.addEventListener('pointerdown',()=>{
+    if(i<6)return;
+    hold=setTimeout(()=>{hud.innerHTML=t.querySelector('svg').outerHTML+'<b>'+t.textContent.trim()+'</b>';hud.classList.add('on');shown=true},450);
+  });
+  t.addEventListener('pointermove',e=>{
+    if(!shown)return;
+    const over=document.elementFromPoint(e.clientX,e.clientY)?.closest('.tab');
+    if(over&&over!==t)hud.innerHTML=over.querySelector('svg').outerHTML+'<b>'+over.textContent.trim()+'</b>';
+  });
+  t.addEventListener('click',()=>pick(t));
+});
+const endHold=e=>{
+  clearTimeout(hold);
+  if(!shown)return;
+  shown=false;hud.classList.remove('on');
+  const over=document.elementFromPoint(e.clientX,e.clientY)?.closest('.tab');
+  if(over){pick(over);$('live').textContent=over.textContent.trim()+' selected'}
+};
+addEventListener('pointerup',endHold);addEventListener('pointercancel',()=>{clearTimeout(hold);shown=false;hud.classList.remove('on')});
+tabs.forEach(t=>t.addEventListener('contextmenu',e=>e.preventDefault()));
+$('code').addEventListener('click',()=>{$('code').textContent=$('code').textContent==='Show pickup code'?'Code 7 3 1 9':'Show pickup code'});
+$('dir').addEventListener('click',()=>{$('live').textContent='Directions to Mill Lane open next'});
+</script>
+</body>
+</html>

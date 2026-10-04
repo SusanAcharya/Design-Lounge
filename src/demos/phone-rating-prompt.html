@@ -1,0 +1,237 @@
+<!-- Design Lounge piece: phone-rating-prompt · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brindle rating prompt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff3dc;--paper:#fffaf0;--ink:#2a1a12;--ink-2:#6b5244;--ink-3:#a08878;--line:#efdcbc;--dash:#e3caa2;
+  --accent:#bd421c;--accent-ink:#fff6ec;--accent-soft:#fbe0cf;--star:#f0a92e;--star-off:#ead7b8;
+  --sheet:#fffaf0;--scrim:rgba(42,26,18,.38);--sys:#f4f1ec;--sys-line:#dcd6cd;--sys-blue:#2463c7;
+  --serif:"Young Serif",Georgia,serif;--sans:"Figtree",system-ui,sans-serif;
+  --r-sheet:28px;--r-card:20px;--r-btn:16px;--r-chip:12px;
+  --t-micro:160ms;--t-layout:320ms;--t-sheet:480ms;--ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.32,.72,0,1);--pop:cubic-bezier(.34,1.56,.64,1);--exit:cubic-bezier(.4,0,1,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.4 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+button,textarea{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:12px}
+svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+main{position:relative;height:100%;padding:62px 20px 40px;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center}
+.brand{font:400 20px/1 var(--serif);letter-spacing:-.01em}
+.close{width:44px;height:44px;border-radius:22px;display:grid;place-items:center;background:var(--paper);border:1px solid var(--line)}
+.close svg{width:18px;height:18px}
+.hero{text-align:center;margin-top:28px}
+.badge{width:96px;height:96px;margin:0 auto;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;box-shadow:0 0 0 10px var(--accent-soft)}
+.badge svg{width:46px;height:46px;stroke-width:3;stroke-dasharray:30;stroke-dashoffset:0;animation:draw 700ms var(--ease) 200ms backwards}
+@keyframes draw{from{stroke-dashoffset:30}}
+.hero h1{font:400 40px/1.05 var(--serif);letter-spacing:-.02em;margin:22px 0 6px}
+.hero p{margin:0;color:var(--ink-2);font-size:15px}
+.receipt{margin-top:26px;background:var(--paper);border-radius:var(--r-card);padding:16px 18px;border:1px solid var(--line)}
+.receipt h2{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 6px;display:flex;justify-content:space-between}
+.receipt ul{list-style:none;margin:0;padding:0}
+.receipt li{display:flex;justify-content:space-between;padding:9px 0;border-top:1px dashed var(--dash);font-size:15px}
+.receipt li:first-child{border-top:0}
+.receipt li span:last-child{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.receipt .tot{font-weight:700}
+.receipt .tot span:last-child{color:var(--ink)}
+.again{margin:14px auto 0;min-height:44px;padding:0 16px;font-weight:600;color:var(--accent);font-size:15px;opacity:0;pointer-events:none;transition:opacity var(--t-layout) var(--ease)}
+.again.show{opacity:1;pointer-events:auto}
+/* sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity var(--t-sheet) var(--ease);z-index:5}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--sheet);border-radius:var(--r-sheet) var(--r-sheet) 0 0;padding:10px 24px max(34px,env(safe-area-inset-bottom));box-shadow:0 -16px 40px rgba(42,26,18,.16);transform:translateY(110%);visibility:hidden;transition:transform 280ms var(--exit),visibility 0s 280ms}
+.ask .scrim,.fb .scrim{opacity:1;pointer-events:auto}
+.ask .sheet,.fb .sheet{transform:none;visibility:visible;transition:transform var(--t-sheet) var(--spring),visibility 0s}
+.grab{width:36px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 14px}
+.pane[hidden]{display:none}
+.pane{animation:fade 320ms var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.mascot{width:56px;height:56px;border-radius:16px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:14px}
+.mascot svg{width:30px;height:30px}
+.sheet h2{font:400 26px/1.15 var(--serif);margin:0 0 6px;letter-spacing:-.01em}
+.sheet p.sub{margin:0 0 20px;color:var(--ink-2);font-size:15px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{min-height:52px;border-radius:var(--r-btn);font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 14px;transition:transform var(--t-micro) var(--ease),background var(--t-micro),opacity var(--t-micro)}
+.btn:active{transform:scale(.97)}
+.btn.pri{background:var(--accent);color:var(--accent-ink)}
+.btn.sec{background:var(--bg);border:1.5px solid var(--line)}
+.btn[aria-disabled="true"]{opacity:.4}
+.btn svg{width:18px;height:18px}
+.later{display:block;margin:8px auto 0;min-height:44px;padding:0 16px;color:var(--ink-2);font-weight:600;font-size:15px}
+/* feedback */
+fieldset{border:0;margin:0 0 16px;padding:0}
+legend{font-weight:600;font-size:15px;margin-bottom:10px;padding:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 14px;border-radius:var(--r-chip);border:1.5px solid var(--line);background:var(--bg);font-size:15px;font-weight:500;display:flex;align-items:center;gap:6px;transition:background var(--t-micro),border-color var(--t-micro),color var(--t-micro),transform var(--t-micro) var(--ease)}
+.chip:active{transform:scale(.96)}
+.chip svg{width:16px;height:16px;display:none;stroke-width:2.4}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip[aria-pressed="true"] svg{display:block}
+label.t{display:flex;justify-content:space-between;font-weight:600;font-size:15px;margin-bottom:8px}
+label.t span{font-weight:400;color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums}
+textarea{width:100%;height:84px;resize:none;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);padding:12px 14px;font-size:16px;line-height:1.4;margin-bottom:16px}
+textarea:focus-visible{outline:2.5px solid var(--accent);outline-offset:0}
+.done{text-align:center;padding:8px 0 4px}
+.done .mascot{margin:0 auto 14px}
+/* system review mock */
+.sys{position:fixed;inset:0;z-index:8;display:grid;place-items:center;padding:24px;background:rgba(20,14,10,.56);opacity:0;visibility:hidden;transition:opacity 220ms var(--ease),visibility 0s 220ms}
+.store .sys{opacity:1;visibility:visible;transition:opacity 220ms var(--ease),visibility 0s}
+.alert{width:270px;background:var(--sys);border-radius:14px;text-align:center;font-family:-apple-system,system-ui,sans-serif;color:#111;transform:scale(1.12);transition:transform 320ms var(--spring)}
+.store .alert{transform:none}
+.tag{font:600 10px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#f6efe6;background:rgba(20,14,10,.72);width:max-content;margin:0 auto 12px;padding:7px 10px;border-radius:999px}
+.alert .ico{width:56px;height:56px;margin:18px auto 10px;border-radius:13px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center}
+.alert .ico svg{width:30px;height:30px}
+.alert h3{margin:0 16px;font-size:17px;font-weight:600}
+.alert p{margin:4px 16px 12px;font-size:13px;line-height:1.35}
+.stars{display:flex;justify-content:center;gap:2px;padding:0 0 12px;border-bottom:1px solid var(--sys-line)}
+.star{width:44px;height:44px;display:grid;place-items:center;color:var(--sys-blue)}
+.star svg{width:30px;height:30px;stroke-width:1.5;transition:transform 220ms var(--pop)}
+.star.on svg{fill:currentColor;transform:scale(1.1)}
+.star:focus-visible{outline:2px solid var(--sys-blue);outline-offset:-4px;border-radius:10px}
+.alert .act{display:block;width:100%;min-height:44px;font-size:17px;color:var(--sys-blue);font-family:inherit}
+.alert .act.b{font-weight:600}
+.alert .act+.act{border-top:1px solid var(--sys-line)}
+.alert .act[hidden]{display:none}
+.toast{position:fixed;left:50%;bottom:calc(max(34px,env(safe-area-inset-bottom)) + 12px);transform:translate(-50%,24px);opacity:0;z-index:9;background:var(--ink);color:var(--paper);height:46px;padding:0 18px;border-radius:23px;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500;white-space:nowrap;pointer-events:none;transition:opacity 260ms var(--ease),transform 260ms var(--spring)}
+.toast svg{width:18px;height:18px;color:var(--star);stroke-width:2.2}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body class="ask">
+<main id="main">
+  <div class="top"><span class="brand">Brindle</span><button class="close" type="button" aria-label="Close order"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <section class="hero">
+    <div class="badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+    <h1>Delivered</h1>
+    <p>Left at your door at 18:24, six minutes early.</p>
+  </section>
+  <section class="receipt" aria-labelledby="rH">
+    <h2 id="rH"><span>Order 4107</span><span>4 items</span></h2>
+    <ul>
+      <li><span>Sourdough loaf</span><span>$6.40</span></li>
+      <li><span>Oat milk 1 L &times; 2</span><span>$5.80</span></li>
+      <li><span>Vine tomatoes 500 g</span><span>$3.95</span></li>
+      <li><span>Free-range eggs, 6</span><span>$4.25</span></li>
+      <li class="tot"><span>Paid</span><span>$20.40</span></li>
+    </ul>
+  </section>
+  <button class="again" type="button" id="again">Show the prompt again</button>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="askT">
+  <div class="grab" aria-hidden="true"></div>
+  <div class="pane" id="pAsk">
+    <div class="mascot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 9h14l-1.5 10h-11z"/><path d="M9 9V7a3 3 0 0 1 6 0v2"/><path d="M10 14c.6.7 1.2 1 2 1s1.4-.3 2-1"/></svg></div>
+    <h2 id="askT">Enjoying Brindle?</h2>
+    <p class="sub">Your answer goes to the five of us who build it. One tap is plenty.</p>
+    <div class="duo">
+      <button class="btn sec" type="button" id="no">Not really</button>
+      <button class="btn pri" type="button" id="yes">Yes, I like it</button>
+    </div>
+    <button class="later" type="button" id="later">Not now</button>
+  </div>
+  <form class="pane" id="pFb" hidden novalidate>
+    <h2 id="fbT">Sorry it was not great</h2>
+    <p class="sub">Tell us what got in the way. This goes to the team, not to a public review.</p>
+    <fieldset><legend>What went wrong?</legend><div class="chips" id="chips"></div></fieldset>
+    <label class="t" for="more">Anything else? <span id="count" aria-live="polite">0 / 280</span></label>
+    <textarea id="more" maxlength="280" placeholder="The tomatoes were bruised, the app froze at checkout…"></textarea>
+    <div class="duo">
+      <button class="btn sec" type="button" id="skip">Skip</button>
+      <button class="btn pri" type="submit" id="send" aria-disabled="true">Send</button>
+    </div>
+  </form>
+  <div class="pane done" id="pDone" hidden tabindex="-1">
+    <div class="mascot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+    <h2 id="doneT">Thanks, Mira</h2>
+    <p class="sub" id="doneS">Sent to the team. We read every one, and we will not ask you again for a while.</p>
+    <button class="btn pri" type="button" id="closeDone" style="width:100%">Back to my order</button>
+  </div>
+</section>
+
+<div class="sys" id="sys">
+  <div>
+    <p class="tag" aria-hidden="true">System prompt, drawn by the phone</p>
+    <div class="alert" role="alertdialog" aria-modal="true" aria-labelledby="sysT" aria-describedby="sysP">
+      <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 9h14l-1.5 10h-11z"/><path d="M9 9V7a3 3 0 0 1 6 0v2"/></svg></div>
+      <h3 id="sysT">Enjoying Brindle?</h3>
+      <p id="sysP">Tap a star to rate it in the store.</p>
+      <div class="stars" role="radiogroup" aria-label="Rating" id="stars"></div>
+      <button class="act b" type="button" id="submit" hidden>Submit</button>
+      <button class="act" type="button" id="sysLater">Not Now</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"><svg viewBox="0 0 24 24" aria-hidden="true" id="toastI"></svg><span id="toastT"></span></div>
+
+<script>
+const $=id=>document.getElementById(id),B=document.body;
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const STAR='<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/>';
+const TICK='<path d="m5 12.5 4.5 4.5L19 7.5"/>';
+let last=null,toastT;
+function toast(t,ic){$('toastT').textContent=t;$('toastI').innerHTML=ic||TICK;$('toast').classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>$('toast').classList.remove('show'),2800)}
+function pane(id){['pAsk','pFb','pDone'].forEach(p=>$(p).hidden=p!==id);
+  $('sheet').setAttribute('aria-labelledby',{pAsk:'askT',pFb:'fbT',pDone:'doneT'}[id])}
+function open(){B.classList.remove('store');B.classList.add('ask');pane('pAsk');$('main').inert=true;$('again').classList.remove('show');setTimeout(()=>$('yes').focus(),RM?0:200)}
+function close(msg){B.classList.remove('ask','fb','store');$('main').inert=false;$('sys').inert=true;
+  setTimeout(()=>{$('again').classList.add('show');$('again').focus()},RM?0:300);if(msg)toast(...msg)}
+$('later').addEventListener('click',()=>close(['Got it. We will not ask again for a while.']));
+$('scrim').addEventListener('click',()=>close(['Got it. We will not ask again for a while.']));
+$('again').addEventListener('click',open);
+
+/* Not really -> feedback */
+const R=['Missing items','Late delivery','Bruised produce','App is slow','Hard to find things','Something else'];
+$('chips').innerHTML=R.map(r=>`<button type="button" class="chip" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true">${TICK}</svg>${r}</button>`).join('');
+const canSend=()=>!!document.querySelector('.chip[aria-pressed="true"]')||$('more').value.trim().length>0;
+const sync=()=>$('send').setAttribute('aria-disabled',!canSend());
+$('chips').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;c.setAttribute('aria-pressed',c.getAttribute('aria-pressed')!=='true');sync()});
+$('more').addEventListener('input',()=>{$('count').textContent=$('more').value.length+' / 280';sync()});
+$('no').addEventListener('click',()=>{B.classList.add('fb');pane('pFb');setTimeout(()=>$('chips').firstElementChild.focus(),RM?0:120)});
+$('skip').addEventListener('click',()=>close(['Got it. We will not ask again for a while.']));
+$('pFb').addEventListener('submit',e=>{e.preventDefault();if(!canSend()){$('send').animate?.([{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'none'}],{duration:RM?1:260});return}
+  pane('pDone');$('pDone').focus()});
+$('closeDone').addEventListener('click',()=>close());
+
+/* Yes -> system review mock */
+let rating=0;
+$('stars').innerHTML=[1,2,3,4,5].map(n=>`<button type="button" class="star" role="radio" aria-checked="false" aria-label="${n} star${n>1?'s':''}" tabindex="${n===1?0:-1}" data-n="${n}"><svg viewBox="0 0 24 24" aria-hidden="true">${STAR}</svg></button>`).join('');
+const stars=[...$('stars').children];
+function paint(n){stars.forEach((s,i)=>{s.classList.toggle('on',i<n);s.querySelector('svg').style.transitionDelay=RM?'0ms':(i*40)+'ms'})}
+function rate(n,focus){rating=n;paint(n);stars.forEach((s,i)=>{s.setAttribute('aria-checked',i===n-1);s.tabIndex=i===n-1?0:-1});
+  if(focus)stars[n-1].focus();$('submit').hidden=false}
+$('stars').addEventListener('click',e=>{const s=e.target.closest('.star');if(s)rate(+s.dataset.n)});
+$('stars').addEventListener('pointerover',e=>{const s=e.target.closest('.star');if(s&&e.pointerType==='mouse')paint(+s.dataset.n)});
+$('stars').addEventListener('pointerleave',()=>paint(rating));
+$('stars').addEventListener('keydown',e=>{const cur=rating||1,m={ArrowRight:1,ArrowUp:1,ArrowLeft:-1,ArrowDown:-1}[e.key];
+  if(m){e.preventDefault();rate(Math.max(1,Math.min(5,(rating?cur+m:1))),true)}
+  else if(e.key==='Home'){e.preventDefault();rate(1,true)}else if(e.key==='End'){e.preventDefault();rate(5,true)}});
+$('yes').addEventListener('click',()=>{
+  B.classList.remove('ask');B.classList.add('store');$('sys').inert=false;rating=0;paint(0);$('submit').hidden=true;
+  stars.forEach((s,i)=>{s.setAttribute('aria-checked','false');s.tabIndex=i===0?0:-1});
+  setTimeout(()=>stars[0].focus(),RM?0:250);
+});
+$('submit').addEventListener('click',()=>close([`Thanks for the ${rating} star${rating>1?'s':''}`,STAR]));
+$('sysLater').addEventListener('click',()=>close());
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&(B.classList.contains('ask')||B.classList.contains('fb')||B.classList.contains('store')))close(B.classList.contains('store')?null:['Got it. We will not ask again for a while.']);
+  if(e.key!=='Tab')return;
+  const root=B.classList.contains('store')?$('sys'):(B.classList.contains('ask')||B.classList.contains('fb'))?$('sheet'):null;if(!root)return;
+  const f=[...root.querySelectorAll('button:not([hidden]),textarea,[tabindex="0"]')].filter(x=>x.offsetParent&&x.tabIndex>=0);
+  if(!f.length)return;const i=f.indexOf(document.activeElement);
+  if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus()}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus()}
+});
+$('sys').inert=true;$('main').inert=true;$('yes').focus();
+</script>
+</body>
+</html>

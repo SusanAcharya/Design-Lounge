@@ -65,7 +65,8 @@
         "phone-sign-in",
         "otp-code",
         "phone-comments-sheet",
-        "phone-sign-up-steps"
+        "phone-sign-up-steps",
+        "m3-sign-in"
       ]
     },
     {
@@ -98,7 +99,8 @@
         "input-phone-country",
         "chart-rank-spend",
         "select-field",
-        "contact-project-brief-steps"
+        "contact-project-brief-steps",
+        "phone-delete-account"
       ]
     },
     {
@@ -156,7 +158,8 @@
         "card-drop-cap-editorial",
         "blog-issue-index",
         "newsletter-close-band",
-        "pwa-offline-library"
+        "pwa-offline-library",
+        "phone-privacy-data"
       ]
     },
     {
@@ -232,7 +235,8 @@
         "hero-split-ui-stack",
         "crypto-exchange-trade",
         "stage-passes-compare",
-        "widget-pomodoro"
+        "widget-pomodoro",
+        "phone-notification-settings"
       ]
     },
     {
@@ -295,7 +299,8 @@
         "features-thread-to-issue-board",
         "tooltip",
         "input-otp-underline",
-        "chart-bar-week"
+        "chart-bar-week",
+        "m3-settings-list"
       ]
     },
     {
@@ -348,7 +353,8 @@
         "tablet-kiosk-checkin",
         "tablet-cook-mode",
         "textarea-field",
-        "tree-nav"
+        "tree-nav",
+        "phone-large-text-layout"
       ]
     },
     {
@@ -444,7 +450,8 @@
         "stats-tilted-card-stack",
         "token-field",
         "widget-weather-glance",
-        "winding-ribbon-scroll-story"
+        "winding-ribbon-scroll-story",
+        "m3-top-app-bar-scroll"
       ]
     },
     {
@@ -579,7 +586,9 @@
         "cta-split-dark-band",
         "cyber-hud-style",
         "cta-material-rod-rack",
-        "phone-permission-prompt"
+        "phone-permission-prompt",
+        "phone-account-edit",
+        "m3-modal-bottom-sheet"
       ]
     },
     {
@@ -612,7 +621,8 @@
         "logos-outline-name-marquee",
         "social-contribution-graph",
         "spend-list",
-        "features-vertical-label-columns"
+        "features-vertical-label-columns",
+        "phone-subscription-manage"
       ]
     },
     {
@@ -723,7 +733,9 @@
         "undo-toast",
         "dock-editor-tools",
         "phone-lesson-quiz",
-        "onboarding-workspace-setup"
+        "onboarding-workspace-setup",
+        "m3-list-detail",
+        "phone-rating-prompt"
       ]
     },
     {

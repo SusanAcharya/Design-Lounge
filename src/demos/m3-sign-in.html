@@ -1,0 +1,264 @@
+<!-- Design Lounge piece: m3-sign-in · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · Glazeday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#8f4c38;--on-primary:#fff;--primary-c:#ffdbd1;--on-primary-c:#3a0b01;
+  --secondary-c:#f7ded6;--on-secondary-c:#2c150f;
+  --surface:#fff8f6;--surface-c:#fceae5;--surface-ch:#f6e3dd;--on-surface:#231917;--on-surface-v:#53433f;
+  --outline:#85736e;--outline-v:#d8c2bc;--inverse:#392e2b;--on-inverse:#ffede8;--inverse-primary:#ffb5a0;
+  --error:#ba1a1a;--error-c:#ffdad6;
+  --display:"Lexend",system-ui,sans-serif;--body:"Nunito Sans",system-ui,sans-serif;
+  --emph:cubic-bezier(.2,0,0,1);--emph-d:cubic-bezier(.05,.7,.1,1);--std:cubic-bezier(.2,0,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/24px var(--body);color:var(--on-surface);background:var(--surface);-webkit-font-smoothing:antialiased;
+  padding:max(54px,env(safe-area-inset-top)) 0 max(34px,env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow-x:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* state layer + ripple */
+.rp{position:relative;overflow:hidden;isolation:isolate}
+.rp::after{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 150ms linear;z-index:-1;pointer-events:none}
+.rp:hover::after{opacity:.08}
+.rp:focus-visible::after{opacity:.1}
+.rp:active::after{opacity:.1}
+.ink{position:absolute;border-radius:50%;background:currentColor;opacity:.12;pointer-events:none;z-index:-1;transform:scale(0)}
+
+.bar{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 4px}
+.icon-btn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-v)}
+
+main{flex:1;display:flex;flex-direction:column;padding:0 24px}
+.mark{width:64px;height:64px;display:grid;place-items:center;color:var(--on-primary-c);position:relative;margin-top:4px}
+.mark .shape{position:absolute;inset:0;width:64px;height:64px;fill:var(--primary-c);stroke:none;animation:spin 24s linear infinite}
+.mark .glyph{position:relative;width:28px;height:28px;stroke-width:1.8}
+@keyframes spin{to{transform:rotate(360deg)}}
+h1{margin:20px 0 0;font:500 32px/40px var(--display);letter-spacing:-.01em}
+.lede{margin:8px 0 0;color:var(--on-surface-v);max-width:30ch}
+
+form{margin-top:28px;display:flex;flex-direction:column}
+.field+.field{margin-top:12px}
+.tf{position:relative}
+.tf input{width:100%;min-height:56px;border:1px solid var(--outline);border-radius:4px;background:transparent;padding:0 16px;font-size:16px;outline:0;
+  transition:border-color 150ms var(--std),box-shadow 150ms var(--std);caret-color:var(--primary)}
+.tf.trail input{padding-right:52px}
+.tf input:hover{border-color:var(--on-surface)}
+.tf input:focus{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.tf label{position:absolute;left:12px;top:28px;transform:translateY(-50%);padding:0 4px;background:var(--surface);color:var(--on-surface-v);
+  font-size:16px;line-height:20px;pointer-events:none;transition:top 150ms var(--emph),font-size 150ms var(--emph),color 150ms var(--std)}
+.tf input:focus+label,.tf input:not(:placeholder-shown)+label{top:0;font-size:12px;line-height:16px}
+.tf input:focus+label{color:var(--primary)}
+.tf .trail-btn,.tf .err-ic{position:absolute;right:4px;top:4px;width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-v)}
+.tf .err-ic{display:none;color:var(--error);pointer-events:none}
+.support{margin:0;padding:4px 16px 0;min-height:20px;font-size:12px;line-height:16px;letter-spacing:.03em;color:var(--on-surface-v)}
+.support b{font-weight:700;color:var(--on-surface)}
+.field.bad .tf input{border-color:var(--error)}
+.field.bad .tf input:focus{box-shadow:inset 0 0 0 1px var(--error)}
+.field.bad .tf label,.field.bad .support,.field.bad .support b{color:var(--error)}
+.field.bad .err-ic{display:grid}
+.field.bad .tf.trail .trail-btn{color:var(--error)}
+.tf input[readonly]{color:var(--on-surface-v)}
+
+.row{display:flex;justify-content:flex-end;margin-top:4px}
+.text-btn{min-height:48px;padding:0 12px;margin-right:-12px;border-radius:24px;color:var(--primary);font:500 14px/20px var(--display);letter-spacing:.01em}
+.btn{min-height:56px;width:100%;border-radius:28px;display:flex;align-items:center;justify-content:center;gap:8px;font:500 16px/24px var(--display);letter-spacing:.01em;
+  transition:border-radius 200ms var(--emph),background-color 200ms var(--std),color 200ms var(--std)}
+.btn:active{border-radius:16px}
+.filled{margin-top:8px;background:var(--primary);color:var(--on-primary)}
+.filled:hover{box-shadow:0 1px 2px rgba(58,11,1,.3),0 1px 3px 1px rgba(58,11,1,.15)}
+.tonal{background:var(--secondary-c);color:var(--on-secondary-c)}
+.btn svg{width:20px;height:20px}
+.btn[aria-busy="true"],.btn[aria-disabled="true"]{cursor:progress}
+.btn[aria-disabled="true"]:not([aria-busy="true"]):not(.done){opacity:.6}
+.btn.done{background:var(--inverse);color:var(--on-inverse)}
+.spin{display:none;width:20px;height:20px;animation:rot 1000ms linear infinite}
+.spin circle{stroke-dasharray:44 100;stroke-width:2.5;animation:arc 1400ms var(--std) infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+@keyframes arc{0%{stroke-dasharray:6 100;stroke-dashoffset:0}50%{stroke-dasharray:36 100;stroke-dashoffset:-8}100%{stroke-dasharray:6 100;stroke-dashoffset:-50}}
+.btn[aria-busy="true"] .spin{display:block}
+.btn[aria-busy="true"] .ic,.btn.done .ic{display:none}
+.tick{display:none}
+.btn.done .tick{display:block}
+.tick path{stroke-dasharray:24;stroke-dashoffset:24;animation:draw 300ms var(--emph-d) 60ms forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.or{display:flex;align-items:center;gap:16px;height:48px;font-size:12px;letter-spacing:.06em;color:var(--on-surface-v)}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--outline-v)}
+.foot{margin-top:auto;display:flex;align-items:center;justify-content:center;gap:4px;padding-top:12px;font-size:14px;color:var(--on-surface-v)}
+.foot .text-btn{margin-right:0}
+
+.snack{position:fixed;left:16px;right:16px;bottom:calc(max(34px,env(safe-area-inset-bottom)) + 12px);min-height:48px;padding:14px 16px;border-radius:4px;
+  background:var(--inverse);color:var(--on-inverse);font-size:14px;line-height:20px;letter-spacing:.02em;
+  box-shadow:0 2px 6px 2px rgba(35,25,23,.15),0 1px 2px rgba(35,25,23,.3);
+  transform:translateY(16px);opacity:0;visibility:hidden;transition:transform 300ms var(--emph-d),opacity 200ms var(--std),visibility 0s 300ms}
+.snack.on{transform:none;opacity:1;visibility:visible;transition:transform 300ms var(--emph-d),opacity 200ms var(--std)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+  .mark .shape{animation:none}
+  .spin{animation:none}.spin circle{animation:none;stroke-dasharray:28 100}
+  .tick path{stroke-dashoffset:0}
+}
+@media (max-height:780px){h1{margin-top:12px}form{margin-top:20px}.mark{display:none}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <button class="icon-btn rp" type="button" aria-label="Close sign in" data-snack="Sign in stays open in this demo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <button class="icon-btn rp" type="button" aria-label="Help" data-snack="Help: call the studio desk on weekdays">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.4V14M12 17.2v.1"/></svg>
+  </button>
+</header>
+
+<main>
+  <div class="mark" aria-hidden="true">
+    <svg class="shape" viewBox="0 0 64 64"><path d="M32 2l6.2 4.6 7.6-1.3 3.4 6.9 7.3 2.4-.4 7.7 5.4 5.5-4.3 6.4 1.9 7.5-6.8 3.6-1.6 7.6-7.7.3-5 5.9L32 57l-6.9 4.1-5-5.9-7.7-.3-1.6-7.6-6.8-3.6 1.9-7.5L1.6 34l5.4-5.5-.4-7.7 7.3-2.4 3.4-6.9 7.6 1.3z"/></svg>
+    <svg class="glyph" viewBox="0 0 24 24"><path d="M8 4h8M9 4c0 2-3 3.5-3 8.5A6 6 0 0 0 18 12.5C18 7.5 15 6 15 4M6.4 11h11.2"/></svg>
+  </div>
+  <h1 id="t">Sign in</h1>
+  <p class="lede">Book wheel time and firing slots at Glazeday Studio.</p>
+
+  <form id="f" novalidate aria-labelledby="t">
+    <div class="field" id="fe">
+      <div class="tf">
+        <input id="email" type="email" inputmode="email" autocomplete="username" placeholder=" " value="dorje.lama@example.com" aria-describedby="email-s">
+        <label for="email">Email</label>
+        <span class="err-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.4v.1"/></svg></span>
+      </div>
+      <p class="support" id="email-s">The address you booked with</p>
+    </div>
+    <div class="field" id="fp">
+      <div class="tf trail">
+        <input id="pw" type="password" autocomplete="current-password" placeholder=" " aria-describedby="pw-s">
+        <label for="pw">Password</label>
+        <button class="trail-btn rp" type="button" id="eye" aria-controls="pw" aria-pressed="false" aria-label="Show password">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/><path class="x" d="M4 4l16 16" style="display:none"/></svg>
+        </button>
+      </div>
+      <p class="support" id="pw-s" aria-live="polite">Demo password is <b>glaze</b>. Anything else is wrong.</p>
+    </div>
+    <div class="row"><button class="text-btn rp" type="button" id="forgot">Forgot password</button></div>
+    <button class="btn filled rp" type="submit" id="go">
+      <svg class="spin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
+      <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      <span class="lbl">Sign in</span>
+    </button>
+  </form>
+  <div class="or" aria-hidden="true">or</div>
+  <button class="btn tonal rp" type="button" id="pk">
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="9" r="4"/><path d="M3 20c.6-3.2 2.4-5 5-5s3.6.8 4.4 2M16 13a2.5 2.5 0 1 1 2 2.4V21l-1.5-1-1 1"/></svg>
+    <svg class="spin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
+    <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    <span class="lbl">Use a passkey</span>
+  </button>
+  <p class="foot">New to the studio? <button class="text-btn rp" type="button" data-snack="Membership sign up opens next">Create account</button></p>
+</main>
+
+<div class="snack" id="snack" role="status" aria-live="polite"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const email=$('email'),pw=$('pw'),go=$('go'),pk=$('pk'),eye=$('eye'),snack=$('snack');
+const RX=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const HINT=$('pw-s').innerHTML,EHINT=$('email-s').textContent;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+let busy=false,snackT;
+
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.rp');
+  if(!el||reduce.matches||el.getAttribute('aria-disabled')==='true')return;
+  const r=el.getBoundingClientRect(),d=Math.hypot(r.width,r.height)*2;
+  const s=document.createElement('span');s.className='ink';
+  s.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;
+  el.appendChild(s);
+  const grow=s.animate([{transform:'scale(0)'},{transform:'scale(1)'}],{duration:450,easing:'cubic-bezier(.2,0,0,1)',fill:'forwards'});
+  const end=()=>{grow.finished.then(()=>s.animate([{opacity:.12},{opacity:0}],{duration:200,fill:'forwards'}).finished.then(()=>s.remove()));
+    removeEventListener('pointerup',end);removeEventListener('pointercancel',end)};
+  addEventListener('pointerup',end);addEventListener('pointercancel',end);
+});
+
+function toast(msg){
+  clearTimeout(snackT);snack.textContent=msg;snack.classList.add('on');
+  snackT=setTimeout(()=>snack.classList.remove('on'),3200);
+}
+document.querySelectorAll('[data-snack]').forEach(b=>b.addEventListener('click',()=>toast(b.dataset.snack)));
+
+function setErr(input,msg,hint){
+  const field=input.closest('.field'),s=$(input.getAttribute('aria-describedby'));
+  field.classList.toggle('bad',!!msg);
+  if(msg){s.textContent=msg;input.setAttribute('aria-invalid','true')}
+  else{s.innerHTML=hint;input.removeAttribute('aria-invalid')}
+  return !msg;
+}
+function checkEmail(){
+  const v=email.value.trim();
+  return setErr(email,!v?'Enter your email address':!RX.test(v)?'Enter an email like name@example.com':'',EHINT);
+}
+email.addEventListener('blur',()=>{if(email.value)checkEmail()});
+email.addEventListener('input',()=>{if(email.getAttribute('aria-invalid'))checkEmail()});
+pw.addEventListener('input',()=>{if(pw.getAttribute('aria-invalid'))setErr(pw,'',HINT)});
+
+eye.addEventListener('click',()=>{
+  const show=pw.type==='password';
+  pw.type=show?'text':'password';
+  eye.setAttribute('aria-pressed',show);
+  eye.setAttribute('aria-label',show?'Hide password':'Show password');
+  eye.querySelector('.x').style.display=show?'':'none';
+});
+
+function lock(on,btn,label){
+  busy=on;
+  [go,pk].forEach(b=>on?b.setAttribute('aria-disabled','true'):b.removeAttribute('aria-disabled'));
+  [email,pw].forEach(i=>i.readOnly=on);
+  if(btn){on?btn.setAttribute('aria-busy','true'):btn.removeAttribute('aria-busy');btn.querySelector('.lbl').textContent=label}
+}
+function success(btn,idle){
+  lock(false,btn,'Signed in');btn.classList.add('done');
+  [go,pk].forEach(b=>b.setAttribute('aria-disabled','true'));busy=true;
+  const name=email.value.split('@')[0].split(/[._-]/)[0];
+  toast('Welcome back'+(name?', '+name[0].toUpperCase()+name.slice(1):'')+'. Your Thursday wheel slot is held.');
+  setTimeout(()=>{btn.classList.remove('done');btn.querySelector('.lbl').textContent=idle;lock(false);
+    pw.value='';setErr(pw,'',HINT)},3400);
+}
+
+$('f').addEventListener('submit',e=>{
+  e.preventDefault();
+  if(busy)return;
+  if(!checkEmail()){email.focus();return}
+  if(!pw.value){setErr(pw,'Enter your password');pw.focus();return}
+  lock(true,go,'Signing in');
+  setTimeout(()=>{
+    if(pw.value==='glaze'){success(go,'Sign in');return}
+    lock(false,go,'Sign in');
+    setErr(pw,'Wrong password. Try again or reset it.');
+    pw.focus();pw.select();
+  },1400);
+});
+
+pk.addEventListener('click',()=>{
+  if(busy)return;
+  lock(true,pk,'Waiting for screen lock');
+  setTimeout(()=>success(pk,'Use a passkey'),1600);
+});
+
+$('forgot').addEventListener('click',()=>{
+  if(busy)return;
+  if(!checkEmail()){email.focus();return}
+  toast('Reset link sent to '+email.value.trim());
+});
+</script>
+</body>
+</html>

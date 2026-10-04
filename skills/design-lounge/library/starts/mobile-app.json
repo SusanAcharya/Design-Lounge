@@ -36,7 +36,12 @@
   "phone-search-results",
   "phone-feed-posts",
   "phone-calendar-agenda",
-  "phone-booking-slots"
+  "phone-booking-slots",
+  "phone-account-edit",
+  "phone-notification-settings",
+  "phone-large-text-layout",
+  "m3-sign-in",
+  "m3-settings-list"
  ],
  "directions": [
   {

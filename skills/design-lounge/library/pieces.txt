@@ -481,3 +481,15 @@ winding-ribbon-scroll-story | web | scroll | Winding ribbon scroll story | scrol
 phone-lesson-quiz | mobile-app | feedback | Word-bank lesson card | lesson quiz language tiles streak
 onboarding-workspace-setup | web | onboarding | Workspace setup with live preview | onboarding workspace form preview invite
 widget-world-clocks | web | widgets | World clocks meeting planner | clock timezone meeting scheduler slider
+phone-delete-account | mobile-app | settings | Delete account with a 30-day undo | settings account delete destructive confirmation ios
+phone-account-edit | mobile-app | profile | Edit profile with live username check | profile account forms username validation ios
+phone-large-text-layout | mobile-app | utility | Large text layout rules | accessibility dynamic-type layout text-size reflow
+m3-top-app-bar-scroll | mobile-app | scroll | M3 collapsing large top app bar | material android app-bar fab scroll list
+m3-list-detail | mobile-app | transitions | M3 list to detail with predictive back | list detail container-transform back android material
+m3-modal-bottom-sheet | mobile-app | overlays | M3 modal bottom sheet with predictive back | material android bottom-sheet filters gesture spring
+m3-settings-list | mobile-app | settings | M3 settings list | material android settings switch dialog list
+m3-sign-in | mobile-app | auth | M3 sign-in with passkey | sign-in form passkey android material
+phone-subscription-manage | mobile-app | settings | Manage subscription, honest cancel | settings subscription billing pricing cancel ios
+phone-notification-settings | mobile-app | settings | Phone notification settings | settings notifications ios time-picker toggles
+phone-privacy-data | mobile-app | settings | Phone privacy and data | settings privacy permissions export ios
+phone-rating-prompt | mobile-app | feedback | Phone rating prompt | rating review feedback bottom-sheet ios

@@ -22,7 +22,9 @@
   "phone-sign-in",
   "phone-order-tracking",
   "phone-wallet-cards",
-  "phone-search-results"
+  "phone-search-results",
+  "phone-rating-prompt",
+  "m3-modal-bottom-sheet"
  ],
  "directions": [
   {

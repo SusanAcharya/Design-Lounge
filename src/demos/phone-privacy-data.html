@@ -1,0 +1,269 @@
+<!-- Design Lounge piece: phone-privacy-data · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quillpad privacy and data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#101314;--surface:#191e20;--surface-2:#22292c;--line:#2b3336;--ink:#ece8df;--ink-2:#a3acae;--ink-3:#6f797c;
+  --mint:#9adbc0;--mint-ink:#0d2a1f;--mint-soft:rgba(154,219,192,.14);--amber:#e8c26e;--amber-soft:rgba(232,194,110,.14);--red:#ff8b7b;--red-soft:rgba(255,139,123,.12);
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Schibsted Grotesk",system-ui,sans-serif;
+  --r-group:16px;--r-pill:999px;--inset:16px;
+  --t-micro:160ms;--t-layout:320ms;--t-sheet:420ms;--ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.32,.72,0,1);--exit:cubic-bezier(.4,0,1,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.4 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:10px}
+svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.bar{position:fixed;inset:0 0 auto;z-index:5;height:98px;padding:54px 8px 0;display:flex;align-items:center;background:rgba(16,19,20,.86);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.back{display:flex;align-items:center;gap:2px;min-height:44px;padding:0 8px;color:var(--mint);font-weight:500}
+.back svg{width:22px;height:22px;stroke-width:2.2}
+main{position:relative;height:100%;overflow-y:auto;padding:98px var(--inset) 64px}
+h1{font:400 42px/1 var(--serif);letter-spacing:-.01em;margin:6px 4px 10px}
+h1 em{color:var(--mint)}
+.lede{margin:0 4px 6px;font-size:15px;color:var(--ink-2);max-width:32ch}
+h2{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:28px 16px 8px;display:flex;justify-content:space-between;align-items:baseline}
+h2 small{font-size:12px;letter-spacing:0;text-transform:none;color:var(--ink-3);font-weight:400}
+.foot{font-size:13px;color:var(--ink-2);margin:8px 16px 0;line-height:1.45}
+.group{background:var(--surface);border-radius:var(--r-group);overflow:hidden}
+.ic{width:34px;height:34px;border-radius:10px;background:var(--surface-2);display:grid;place-items:center;flex:none;color:var(--ink)}
+.ic svg{width:19px;height:19px}
+/* permissions */
+.perm{border-top:1px solid var(--line)}
+.perm:first-child{border-top:0}
+.prow{display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px var(--inset);transition:background var(--t-micro) var(--ease)}
+.prow:active{background:var(--surface-2)}
+.prow .lbl{flex:1;min-width:0}
+.prow .lbl b{display:block;font-weight:500}
+.prow .lbl small{display:block;font-size:13px;color:var(--ink-2)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:var(--r-pill);font-size:13px;font-weight:500;white-space:nowrap;flex:none}
+.pill i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill.on{background:var(--mint-soft);color:var(--mint)}
+.pill.part{background:var(--amber-soft);color:var(--amber)}
+.pill.part i{background:none;border:1.5px solid currentColor}
+.pill.off{background:var(--surface-2);color:var(--ink-2)}
+.pill.off i{background:none;border:1.5px solid currentColor;position:relative}
+.chev{width:16px;height:16px;color:var(--ink-3);transition:transform var(--t-layout) var(--spring);flex:none}
+.prow[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.collapse{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--t-layout) var(--spring)}
+.collapse>div{overflow:hidden;min-height:0}
+.collapse.open{grid-template-rows:1fr}
+.why{margin:0;padding:0 var(--inset) 14px 62px;font-size:14px;color:var(--ink-2)}
+.why strong{color:var(--ink);font-weight:500}
+.scan .pill{animation:scan 700ms var(--ease)}
+@keyframes scan{40%{opacity:.25;transform:scale(.94)}}
+.deep{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:0 var(--inset);border-top:1px solid var(--line);color:var(--mint);font-weight:500}
+.deep svg{width:18px;height:18px}
+.deep span{flex:1}
+.deep small{color:var(--ink-3);font-weight:400;font-size:13px}
+/* tracking */
+.trow{display:flex;align-items:center;gap:12px;padding:12px var(--inset);min-height:64px}
+.trow .lbl{flex:1}
+.trow .lbl b{display:block;font-weight:500}
+.trow .lbl small{display:block;font-size:13px;color:var(--ink-2);margin-top:2px}
+.tog{position:relative;width:51px;height:31px;border-radius:16px;background:#39413f;flex:none;transition:background var(--t-layout) var(--ease)}
+.tog::before{content:"";position:absolute;inset:-7px -2px}
+.tog::after{content:"";position:absolute;left:2px;top:2px;width:27px;height:27px;border-radius:50%;background:#f4f2ec;transition:transform var(--t-layout) var(--spring),width var(--t-micro) var(--ease)}
+.tog[aria-checked="true"]{background:var(--mint)}
+.tog[aria-checked="true"]::after{transform:translateX(20px);background:var(--mint-ink)}
+.tog:active::after{width:32px}
+.tog[aria-checked="true"]:active::after{transform:translateX(15px)}
+/* export */
+.exp{padding:16px var(--inset) 16px}
+.exp-h{display:flex;gap:12px;align-items:flex-start}
+.exp-h .lbl b{display:block;font-weight:500}
+.exp-h .lbl small{display:block;font-size:13px;color:var(--ink-2);margin-top:2px}
+.exp-h .ic{transition:background var(--t-layout),color var(--t-layout)}
+.exp[data-s="ready"] .exp-h .ic{background:var(--mint);color:var(--mint-ink)}
+.steps{display:flex;gap:6px;margin:14px 0 0 46px;list-style:none;padding:0}
+.steps li{flex:1;font-size:12px;color:var(--ink-3);padding-top:8px;border-top:2px solid var(--line);transition:color var(--t-layout),border-color var(--t-layout)}
+.steps li.done{color:var(--ink-2);border-color:var(--mint)}
+.steps li.now{color:var(--ink);border-color:var(--mint)}
+.meter{margin:14px 0 0 46px;height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden;display:none}
+.meter i{display:block;height:100%;width:0;background:var(--mint);border-radius:3px}
+.exp[data-s="preparing"] .meter{display:block}
+.prog{display:none;margin:8px 0 0 46px;font-size:13px;color:var(--ink-2);justify-content:space-between}
+#progN{font-variant-numeric:tabular-nums}
+.exp[data-s="preparing"] .prog{display:flex}
+.acts{display:flex;gap:8px;margin:16px 0 0 46px;flex-wrap:wrap}
+.btn{min-height:44px;padding:0 18px;border-radius:12px;font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:8px;transition:transform var(--t-micro) var(--ease),background var(--t-micro)}
+.btn svg{width:17px;height:17px}
+.btn:active{transform:scale(.97)}
+.btn.pri{background:var(--mint);color:var(--mint-ink)}
+.btn.sec{background:var(--surface-2);color:var(--ink)}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.exp.flash{animation:flash 900ms var(--ease)}
+@keyframes flash{0%{box-shadow:inset 0 0 0 1px var(--mint)}100%{box-shadow:inset 0 0 0 1px transparent}}
+/* clear history */
+.crow{display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px var(--inset);border-top:1px solid var(--line)}
+.crow .ic{color:var(--red);background:var(--red-soft)}
+.crow .lbl{flex:1}
+.crow .lbl b{display:block;font-weight:500;color:var(--red)}
+.crow .lbl small{display:block;font-size:13px;color:var(--ink-2)}
+.crow[aria-disabled="true"] .lbl b{color:var(--ink-2)}
+.crow[aria-disabled="true"] .ic{color:var(--ink-2);background:var(--surface-2)}
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity var(--t-sheet) var(--ease);z-index:8}
+.sheet{position:fixed;left:8px;right:8px;bottom:max(34px,env(safe-area-inset-bottom));z-index:9;transform:translateY(calc(100% + 60px));visibility:hidden;transition:transform 260ms var(--exit),visibility 0s 260ms}
+.open-sheet .scrim{opacity:1;pointer-events:auto}
+.open-sheet .sheet{transform:none;visibility:visible;transition:transform var(--t-sheet) var(--spring),visibility 0s}
+.card{background:#232a2d;border-radius:18px;overflow:hidden;text-align:center}
+.card h3{font:400 24px/1.15 var(--serif);margin:0;padding:20px 20px 6px}
+.card p{margin:0;padding:0 22px 18px;font-size:14px;color:var(--ink-2)}
+.card button,.cancel{display:block;width:100%;min-height:56px;text-align:center;font-size:17px;border-top:1px solid #343c3f}
+.card .danger{color:var(--red);font-weight:600}
+.cancel{margin-top:8px;background:#232a2d;border-radius:18px;border:0;font-weight:600;color:var(--mint)}
+.toast{position:fixed;left:50%;bottom:calc(max(34px,env(safe-area-inset-bottom)) + 8px);transform:translate(-50%,20px);opacity:0;background:var(--ink);color:var(--bg);font-size:14px;font-weight:500;padding:0 16px;height:44px;border-radius:22px;display:flex;align-items:center;gap:8px;white-space:nowrap;pointer-events:none;z-index:7;transition:opacity 240ms var(--ease),transform 240ms var(--spring)}
+.toast svg{width:18px;height:18px;color:#2e7a5a;stroke-width:2.4}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="bar"><button class="back" type="button" aria-label="Back to Settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Settings</button></header>
+<main id="main">
+  <h1>Privacy <em>&amp;</em> data</h1>
+  <p class="lede">Your journal stays on this phone and in your encrypted backup. Here is everything Quillpad can reach.</p>
+
+  <h2 id="pH">Permissions <small id="stamp">Checked 08:41</small></h2>
+  <div class="group" role="group" aria-labelledby="pH" id="perms"></div>
+  <p class="foot">These come from your phone, not from us. Quillpad cannot change them for you.</p>
+
+  <h2 id="tH">Tracking</h2>
+  <div class="group" role="group" aria-labelledby="tH">
+    <div class="trow"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></span>
+      <span class="lbl"><b id="trL">Usage measurement</b><small id="trS">Off. We record crash reports only, never entry text.</small></span>
+      <button class="tog" type="button" role="switch" aria-checked="false" aria-labelledby="trL" aria-describedby="trS" id="tr"></button></div>
+  </div>
+  <p class="foot">Quillpad never sells data and does not use ad networks.</p>
+
+  <h2 id="dH">Your data</h2>
+  <div class="group" role="group" aria-labelledby="dH">
+    <div class="exp" id="exp" data-s="idle" aria-live="polite">
+      <div class="exp-h"><span class="ic" id="expIc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></span>
+        <span class="lbl"><b id="expT">Download my data</b><small id="expS">A ZIP of every entry, photo and setting. Usually ready in a few minutes.</small></span></div>
+      <ol class="steps" id="steps" hidden><li>Requested</li><li>Preparing</li><li>Ready</li></ol>
+      <div class="meter" role="progressbar" aria-label="Preparing archive" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="meter"><i id="fill"></i></div>
+      <div class="prog"><span id="progT">Collecting entries</span><span id="progN">0%</span></div>
+      <div class="acts" id="acts"></div>
+    </div>
+    <button class="crow" type="button" id="clear" aria-haspopup="dialog"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 7V4h4v3M6 7l1 13h10l1-13"/></svg></span>
+      <span class="lbl"><b id="clT">Clear search history</b><small id="clS">214 searches on this phone and in backup</small></span></button>
+  </div>
+  <p class="foot">Clearing history keeps your entries. Deleting your account lives under Account.</p>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" role="alertdialog" aria-modal="true" aria-labelledby="shT" aria-describedby="shP" id="sheet">
+  <div class="card"><h3 id="shT">Clear search history?</h3><p id="shP">This removes 214 searches from this phone and your backup. Your entries and photos stay.</p>
+    <button type="button" class="danger" id="doClear">Clear history</button></div>
+  <button type="button" class="cancel" id="cancel">Cancel</button>
+</div>
+<div class="toast" id="toast" role="status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg><span id="toastT"></span></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const svg=p=>`<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+const P=[
+  {k:'Camera',use:'Scan a handwritten page',s:'on',v:'Allowed',ic:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+   why:'<strong>Used</strong> only while the scanner is open. Photos you take are stored inside your journal, not in your library.'},
+  {k:'Location',use:'Tag where an entry was written',s:'on',v:'While using',ic:'<path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+   why:'<strong>Only while the app is open.</strong> Rounded to the neighbourhood before it is saved. Never in the background.'},
+  {k:'Photos',use:'Attach pictures to entries',s:'part',v:'Limited',ic:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/>',
+   why:'<strong>12 photos selected.</strong> Quillpad sees only those. Add more from the picker or allow full access in Settings.'},
+  {k:'Contacts',use:'Mention people by name',s:'off',v:'Off',ic:'<circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-3.5 3.6-5.5 7-5.5s6 2 7 5.5"/>',
+   why:'<strong>Not allowed.</strong> You can still type names; they just will not autocomplete.'}];
+$('perms').innerHTML=P.map((p,i)=>`<div class="perm"><button class="prow" type="button" aria-expanded="false" aria-controls="w${i}">
+  <span class="ic">${svg(p.ic)}</span><span class="lbl"><b>${p.k}</b><small>${p.use}</small></span>
+  <span class="pill ${p.s}"><i aria-hidden="true"></i>${p.v}</span>${svg('<path d="m9 6 6 6-6 6"/>').replace('<svg','<svg class="chev"')}</button>
+  <div class="collapse" id="w${i}" inert><div><p class="why">${p.why}</p></div></div></div>`).join('')+
+  `<button class="deep" type="button" id="deep">${svg('<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>')}<span>Change in iPhone Settings</span>${svg('<path d="M7 17 17 7M9 7h8v8"/>')}</button>`;
+$('perms').addEventListener('click',e=>{
+  const r=e.target.closest('.prow');if(!r)return;
+  const open=r.getAttribute('aria-expanded')!=='true',c=$(r.getAttribute('aria-controls'));
+  r.setAttribute('aria-expanded',open);c.classList.toggle('open',open);c.inert=!open;
+});
+let toastT;
+function toast(t){$('toastT').textContent=t;$('toast').classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>$('toast').classList.remove('show'),2600)}
+$('deep').addEventListener('click',()=>{
+  $('deep').querySelector('span').textContent='Opening Settings\u2026';
+  setTimeout(()=>{
+    $('deep').querySelector('span').textContent='Change in iPhone Settings';
+    $('perms').classList.remove('scan');void $('perms').offsetWidth;$('perms').classList.add('scan');
+    $('stamp').textContent='Checked just now';
+    toast('Permissions re-checked. No changes.');
+  },RM?200:1000);
+});
+
+/* tracking */
+$('tr').addEventListener('click',()=>{
+  const on=$('tr').getAttribute('aria-checked')!=='true';$('tr').setAttribute('aria-checked',on);
+  $('trS').textContent=on?'On. Screens opened and features used, no entry text. Kept 90 days.':'Off. We record crash reports only, never entry text.';
+});
+
+/* export state machine */
+const exp=$('exp'),acts=$('acts');let timer,raf;
+const STEPS=[[0,'Collecting 1,284 entries'],[38,'Packing 312 photos'],[82,'Encrypting archive']];
+function setStep(n){const li=$('steps').children;[...li].forEach((l,i)=>{l.className=i<n?'done':i===n?'now':''})}
+function state(s){
+  exp.dataset.s=s;clearTimeout(timer);cancelAnimationFrame(raf);
+  $('steps').hidden=s==='idle';
+  if(s==='idle'){
+    $('expT').textContent='Download my data';$('expS').textContent='A ZIP of every entry, photo and setting. Usually ready in a few minutes.';
+    acts.innerHTML=`<button class="btn pri" type="button" data-a="req">${svg('<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>')}Request download</button>`;
+  }else if(s==='requested'){
+    setStep(0);$('expT').textContent='Request received';$('expS').textContent='Started 08:41. We will also email maya.r@quillpad.mail when it is ready.';
+    acts.innerHTML=`<button class="btn sec" type="button" data-a="cancel">Cancel request</button>`;
+    timer=setTimeout(()=>state('preparing'),RM?400:1400);
+  }else if(s==='preparing'){
+    setStep(1);$('expT').textContent='Preparing your archive';$('expS').textContent='You can leave this screen. It keeps going in the background.';
+    const t0=performance.now(),dur=RM?1500:6000;
+    const tick=now=>{const p=Math.min(100,Math.round((now-t0)/dur*100));
+      $('fill').style.width=p+'%';$('meter').setAttribute('aria-valuenow',p);$('progN').textContent=p+'%';
+      $('progT').textContent=STEPS.filter(x=>p>=x[0]).pop()[1];
+      if(p<100)raf=requestAnimationFrame(tick);else state('ready')};
+    raf=requestAnimationFrame(tick);
+  }else if(s==='ready'){
+    setStep(3);exp.classList.remove('flash');void exp.offsetWidth;exp.classList.add('flash');
+    $('expIc').innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg>';
+    $('expT').textContent='Your archive is ready';$('expS').textContent='quillpad-export.zip, 248 MB. Expires in 7 days, on 11 Oct at 08:47.';
+    acts.innerHTML=`<button class="btn pri" type="button" data-a="save">${svg('<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>')}Save archive</button><button class="btn sec" type="button" data-a="again">Start over</button>`;
+  }
+  if(s!=='ready')$('expIc').innerHTML=svg('<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>');
+}
+acts.addEventListener('click',e=>{
+  const a=e.target.closest('button')?.dataset.a;if(!a)return;
+  if(a==='req'){state('requested');acts.querySelector('button').focus()}
+  if(a==='cancel'){state('idle');acts.querySelector('button').focus();toast('Request cancelled')}
+  if(a==='save')toast('Saved to Files');
+  if(a==='again'){state('idle');acts.querySelector('button').focus()}
+});
+state('idle');
+
+/* clear history with confirm */
+let last;
+function openSheet(){last=document.activeElement;document.body.classList.add('open-sheet');$('main').inert=true;setTimeout(()=>$('cancel').focus(),60)}
+function closeSheet(){document.body.classList.remove('open-sheet');$('main').inert=false;last&&last.focus()}
+$('clear').addEventListener('click',()=>{if($('clear').getAttribute('aria-disabled')!=='true')openSheet()});
+$('cancel').addEventListener('click',closeSheet);$('scrim').addEventListener('click',closeSheet);
+$('doClear').addEventListener('click',()=>{
+  closeSheet();$('clear').setAttribute('aria-disabled','true');
+  $('clT').textContent='Search history cleared';$('clS').textContent='Nothing to clear. New searches start from here.';
+  toast('Cleared 214 searches');
+});
+document.addEventListener('keydown',e=>{
+  if(!document.body.classList.contains('open-sheet'))return;
+  if(e.key==='Escape')closeSheet();
+  if(e.key==='Tab'){const f=[$('doClear'),$('cancel')],i=f.indexOf(document.activeElement);e.preventDefault();f[(i+(e.shiftKey?-1:1)+2)%2].focus()}
+});
+</script>
+</body>
+</html>

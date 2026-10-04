@@ -23,7 +23,10 @@
   "phone-paywall-plans",
   "phone-permission-prompt",
   "phone-workout-timer",
-  "phone-booking-slots"
+  "phone-booking-slots",
+  "phone-subscription-manage",
+  "phone-notification-settings",
+  "phone-rating-prompt"
  ],
  "directions": [
   {

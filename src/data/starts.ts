@@ -538,7 +538,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['navigation', 'overlays', 'media', 'onboarding', 'settings'],
-    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet', 'phone-splash-launch', 'phone-sign-in', 'phone-sign-up-steps', 'phone-profile-header', 'phone-notifications-list', 'phone-permission-prompt', 'm3-navigation-bar', 'phone-form-fields', 'phone-search-results', 'phone-feed-posts', 'phone-calendar-agenda', 'phone-booking-slots'],
+    pieces: ['ios-weather-hourly-scrub', 'ios-glass-tab-bar', 'mobile-inbox-list', 'mobile-run-detail', 'mobile-list-empty', 'mobile-load-failed', 'm3-expressive-home', 'ios-onboarding-carousel', 'pwa-install-sheet', 'phone-splash-launch', 'phone-sign-in', 'phone-sign-up-steps', 'phone-profile-header', 'phone-notifications-list', 'phone-permission-prompt', 'm3-navigation-bar', 'phone-form-fields', 'phone-search-results', 'phone-feed-posts', 'phone-calendar-agenda', 'phone-booking-slots', 'phone-account-edit', 'phone-notification-settings', 'phone-large-text-layout', 'm3-sign-in', 'm3-settings-list'],
   },
   {
     id: 'design-system',
@@ -616,7 +616,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'friendly-saas',
     shelf: 'native-feel',
     categories: ['dashboard', 'navigation', 'settings', 'auth'],
-    pieces: ['ios-fintech-home', 'phone-tab-plain', 'ios-grouped-settings', 'auth-passkey-setup', 'ios-large-title-collapse', 'mobile-list-empty', 'phone-sign-in', 'phone-notifications-list', 'phone-wallet-cards', 'phone-qr-scanner'],
+    pieces: ['ios-fintech-home', 'phone-tab-plain', 'ios-grouped-settings', 'auth-passkey-setup', 'ios-large-title-collapse', 'mobile-list-empty', 'phone-sign-in', 'phone-notifications-list', 'phone-wallet-cards', 'phone-qr-scanner', 'phone-delete-account', 'phone-privacy-data', 'phone-account-edit'],
   },
   {
     id: 'health',
@@ -629,7 +629,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['dashboard', 'navigation', 'settings', 'onboarding'],
-    pieces: ['ios-health-activity-rings', 'phone-tab-plain', 'ios-grouped-settings', 'ios-onboarding-carousel', 'ios-pull-to-refresh', 'phone-paywall-plans', 'phone-permission-prompt', 'phone-workout-timer', 'phone-booking-slots'],
+    pieces: ['ios-health-activity-rings', 'phone-tab-plain', 'ios-grouped-settings', 'ios-onboarding-carousel', 'ios-pull-to-refresh', 'phone-paywall-plans', 'phone-permission-prompt', 'phone-workout-timer', 'phone-booking-slots', 'phone-subscription-manage', 'phone-notification-settings', 'phone-rating-prompt'],
   },
   {
     id: 'messages',
@@ -642,7 +642,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['messaging', 'navigation', 'overlays'],
-    pieces: ['mobile-inbox-list', 'chat-thread', 'ios-swipe-row-actions', 'phone-tab-plain', 'ios-bottom-sheet-detents', 'phone-photo-picker', 'phone-notifications-list', 'phone-search-results'],
+    pieces: ['mobile-inbox-list', 'chat-thread', 'ios-swipe-row-actions', 'phone-tab-plain', 'ios-bottom-sheet-detents', 'phone-photo-picker', 'phone-notifications-list', 'phone-search-results', 'phone-notification-settings', 'm3-list-detail'],
   },
   {
     id: 'music-app',
@@ -655,7 +655,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'y2k-chrome',
     shelf: 'native-feel',
     categories: ['media', 'navigation', 'buttons'],
-    pieces: ['ios-now-playing', 'm3-music-player-expressive', 'ios-glass-tab-bar', 'm3-fab-menu', 'm3-navigation-bar', 'phone-paywall-plans', 'phone-video-player', 'phone-search-results'],
+    pieces: ['ios-now-playing', 'm3-music-player-expressive', 'ios-glass-tab-bar', 'm3-fab-menu', 'm3-navigation-bar', 'phone-paywall-plans', 'phone-video-player', 'phone-search-results', 'phone-subscription-manage', 'm3-modal-bottom-sheet'],
   },
   {
     id: 'news',
@@ -668,7 +668,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'newsroom',
     shelf: 'typography-first',
     categories: ['reading', 'scroll', 'loaders'],
-    pieces: ['pwa-news-reader', 'ios-large-title-collapse', 'pwa-app-shell', 'pwa-update-toast', 'phone-tab-plain', 'phone-comments-sheet', 'phone-paywall-plans', 'pwa-offline-library', 'phone-video-player', 'phone-search-results'],
+    pieces: ['pwa-news-reader', 'ios-large-title-collapse', 'pwa-app-shell', 'pwa-update-toast', 'phone-tab-plain', 'phone-comments-sheet', 'phone-paywall-plans', 'pwa-offline-library', 'phone-video-player', 'phone-search-results', 'phone-subscription-manage', 'm3-top-app-bar-scroll'],
   },
   {
     id: 'shop-app',
@@ -681,7 +681,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'atelier',
     shelf: 'first-impressions',
     categories: ['ecommerce', 'inputs'],
-    pieces: ['mobile-filter-chips-list', 'shop-product', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'phone-product-detail', 'phone-sign-in', 'phone-order-tracking', 'phone-wallet-cards', 'phone-search-results'],
+    pieces: ['mobile-filter-chips-list', 'shop-product', 'qty-stepper', 'mobile-one-page-checkout', 'order-confirmed', 'phone-product-detail', 'phone-sign-in', 'phone-order-tracking', 'phone-wallet-cards', 'phone-search-results', 'phone-rating-prompt', 'm3-modal-bottom-sheet'],
   },
   {
     id: 'social',
@@ -694,7 +694,7 @@ const BASE: Omit<Start, 'directions'>[] = [
     pairing: 'geometric-modern',
     shelf: 'native-feel',
     categories: ['dashboard', 'media', 'navigation'],
-    pieces: ['m3-expressive-home', 'mobile-story-viewer', 'ios-glass-tab-bar', 'm3-fab-menu', 'ios-context-menu-lift', 'phone-profile-header', 'phone-comments-sheet', 'phone-photo-picker', 'phone-notifications-list', 'phone-feed-posts', 'phone-search-results'],
+    pieces: ['m3-expressive-home', 'mobile-story-viewer', 'ios-glass-tab-bar', 'm3-fab-menu', 'ios-context-menu-lift', 'phone-profile-header', 'phone-comments-sheet', 'phone-photo-picker', 'phone-notifications-list', 'phone-feed-posts', 'phone-search-results', 'phone-account-edit', 'phone-privacy-data', 'phone-delete-account'],
   },
   {
     id: 'weather',

@@ -236,6 +236,21 @@ Phone app screens, one piece each. Restyle them onto the locked theme. Do not ke
 - Cards, passes and tickets: `phone-wallet-cards`. Scanning a ticket or code: `phone-qr-scanner`.
 - Picking a time: `phone-booking-slots`. A day or week of plans: `phone-calendar-agenda`.
 - A timer you watch from a distance: `phone-workout-timer`. A lesson or quiz: `phone-lesson-quiz`.
+- Editing a profile: `phone-account-edit`. Save is off until something changes. Leaving with changes asks first.
+- Deleting an account: `phone-delete-account`. Say what goes, offer the export, give a grace period with undo. Both stores require this screen.
+- Changing or cancelling a plan: `phone-subscription-manage`. The end date in plain words, and Keep and Cancel the same size.
+- Notification choices: `phone-notification-settings`. If the system has them off, say so at the top with a way to fix it.
+- Permissions and data: `phone-privacy-data`. Show what the phone allows; do not fake a switch for it.
+- Asking for a rating: `phone-rating-prompt`. Only after a success, never on first launch, then hand off to the system prompt.
+- Large text: `phone-large-text-layout`. At the biggest sizes rows stack and nothing is cut. Test every screen this way.
+
+Android versions. When the platform is Android or the family is Material, use these in place of the iOS piece:
+
+- Sign in: `m3-sign-in` (outlined fields, errors under the field).
+- Settings: `m3-settings-list` (flat list, section titles, no grouped cards).
+- A list that opens a detail: `m3-list-detail` (the row grows into the screen; back shrinks it home).
+- A screen title that collapses: `m3-top-app-bar-scroll`. On iOS this is `ios-large-title-collapse`.
+- A bottom sheet: `m3-modal-bottom-sheet`, with the main button pinned to the bottom.
 
 A single metric is one number at display size, a delta in `--success` or `--danger`, and a caption in `--ink-2`. If the screen has several figures, only one of them is display size. The others step down to the title role. Do not lay four equal numbers in a row.
 

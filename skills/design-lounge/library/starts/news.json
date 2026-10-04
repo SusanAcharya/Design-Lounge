@@ -23,7 +23,9 @@
   "phone-paywall-plans",
   "pwa-offline-library",
   "phone-video-player",
-  "phone-search-results"
+  "phone-search-results",
+  "phone-subscription-manage",
+  "m3-top-app-bar-scroll"
  ],
  "directions": [
   {

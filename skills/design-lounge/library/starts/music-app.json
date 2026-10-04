@@ -21,7 +21,9 @@
   "m3-navigation-bar",
   "phone-paywall-plans",
   "phone-video-player",
-  "phone-search-results"
+  "phone-search-results",
+  "phone-subscription-manage",
+  "m3-modal-bottom-sheet"
  ],
  "directions": [
   {

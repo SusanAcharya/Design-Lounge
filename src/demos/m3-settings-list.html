@@ -1,0 +1,214 @@
+<!-- Design Lounge piece: m3-settings-list · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larchway · Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#2b638b;--on-primary:#fff;--primary-c:#cbe6ff;--on-primary-c:#001e31;
+  --surface:#f7f9ff;--surface-low:#f1f4fa;--surface-c:#ebeef4;--surface-high:#e5e8ee;--surface-highest:#dfe3e8;
+  --on-surface:#181c20;--on-surface-v:#41474d;--outline:#72787e;--outline-v:#c1c7ce;
+  --scrim:rgba(0,0,0,.32);
+  --f-head:"Outfit",system-ui,sans-serif;--f-body:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --r-dialog:28px;--r-full:999px;
+  --ease-std:cubic-bezier(.2,0,0,1);--ease-decel:cubic-bezier(.05,.7,.1,1);--ease-accel:cubic-bezier(.3,0,.8,.15);
+  --t-switch:250ms;--t-enter:400ms;--t-exit:150ms;--t-ripple:450ms;
+  color-scheme:light;
+}
+[data-theme="dark"]{
+  --primary:#98cdf9;--on-primary:#00344f;--primary-c:#0a4b71;--on-primary-c:#cbe6ff;
+  --surface:#101418;--surface-low:#181c20;--surface-c:#1c2024;--surface-high:#262a2f;--surface-highest:#31353a;
+  --on-surface:#e0e2e8;--on-surface-v:#c1c7ce;--outline:#8b9198;--outline-v:#41474d;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--surface);color:var(--on-surface);font:16px/24px var(--f-body);-webkit-font-smoothing:antialiased;overflow:hidden;transition:background-color 300ms var(--ease-std),color 300ms var(--ease-std)}
+svg{width:24px;height:24px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:left}
+
+.rp{position:relative;overflow:hidden;isolation:isolate}
+.rp::before{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 150ms linear;z-index:-1;pointer-events:none}
+.rp:hover::before{opacity:.08}
+.rp:focus-visible::before{opacity:.1}
+.rpl{position:absolute;border-radius:50%;background:currentColor;opacity:.12;transform:scale(0);animation:grow var(--t-ripple) var(--ease-std) forwards;pointer-events:none;z-index:-1}
+.rpl.out{opacity:0;transition:opacity 300ms linear}
+@keyframes grow{to{transform:scale(1)}}
+
+.bar{position:relative;z-index:2;padding-top:54px;background:var(--surface);transition:background-color 200ms var(--ease-std)}
+.bar.scrolled{background:var(--surface-c)}
+.bar-row{height:64px;display:flex;align-items:center;gap:4px;padding:0 16px 0 4px}
+.icon-btn{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:var(--on-surface)}
+.bar h1{margin:0 0 0 0;font:400 22px/28px var(--f-head);letter-spacing:0}
+
+main{height:calc(100% - 118px);overflow-y:auto;scrollbar-width:none;padding-bottom:50px}
+main::-webkit-scrollbar{display:none}
+section+section{border-top:1px solid var(--outline-v);margin-top:8px}
+h2{margin:0;padding:16px 24px 8px 56px;font:500 14px/20px var(--f-head);letter-spacing:.1px;color:var(--primary)}
+ul{list-style:none;margin:0;padding:0}
+.row{width:100%;min-height:72px;display:flex;align-items:center;gap:16px;padding:12px 24px 12px 16px;color:var(--on-surface)}
+.row>svg:first-child{color:var(--on-surface-v)}
+.txt{flex:1;min-width:0;display:flex;flex-direction:column}
+.t{font-size:16px;line-height:24px;letter-spacing:.2px}
+.s{font-size:14px;line-height:20px;letter-spacing:.2px;color:var(--on-surface-v)}
+.row .chev{color:var(--on-surface-v)}
+.row.static{cursor:default}
+.row:focus-visible,.icon-btn:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+
+.sw{position:relative;flex:none;width:52px;height:32px;border-radius:16px;background:var(--surface-highest);border:2px solid var(--outline);transition:background-color var(--t-switch) var(--ease-std),border-color var(--t-switch) var(--ease-std)}
+.sw i{position:absolute;top:50%;left:14px;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--outline);display:grid;place-items:center;transition:left var(--t-switch) var(--ease-std),width var(--t-switch) var(--ease-std),height var(--t-switch) var(--ease-std),margin var(--t-switch) var(--ease-std),background-color var(--t-switch) var(--ease-std)}
+.sw svg{width:16px;height:16px;stroke-width:2.6;color:var(--primary);opacity:0;transform:scale(.4);transition:opacity 150ms linear,transform var(--t-switch) var(--ease-std)}
+[aria-checked="true"] .sw{background:var(--primary);border-color:var(--primary)}
+[aria-checked="true"] .sw i{left:34px;width:24px;height:24px;margin:-12px 0 0 -12px;background:var(--on-primary)}
+[aria-checked="true"] .sw svg{opacity:1;transform:none}
+.row:active .sw i{width:28px;height:28px;margin:-14px 0 0 -14px}
+
+dialog{border:0;padding:0;background:var(--surface-high);color:var(--on-surface);border-radius:var(--r-dialog);width:min(312px,calc(100% - 48px));box-shadow:0 4px 8px 3px rgba(0,0,0,.15),0 1px 3px rgba(0,0,0,.3);transform-origin:50% 0}
+dialog[open]{animation:dIn var(--t-enter) var(--ease-decel)}
+dialog.closing{animation:dOut var(--t-exit) var(--ease-accel) forwards}
+dialog::backdrop{background:var(--scrim);animation:fade var(--t-enter) var(--ease-std)}
+dialog.closing::backdrop{animation:fade var(--t-exit) var(--ease-accel) reverse forwards}
+@keyframes dIn{from{opacity:0;transform:translateY(-16px) scaleY(.85)}}
+@keyframes dOut{to{opacity:0;transform:translateY(-8px) scaleY(.95)}}
+@keyframes fade{from{opacity:0}}
+dialog h3{margin:0;padding:24px 24px 16px;font:400 24px/32px var(--f-head)}
+dialog p{margin:0;padding:0 24px 12px;font-size:14px;line-height:20px;color:var(--on-surface-v)}
+.opts{border-top:1px solid var(--outline-v);border-bottom:1px solid var(--outline-v);padding:4px 0}
+.opt{display:flex;align-items:center;gap:16px;min-height:56px;padding:8px 24px;cursor:pointer}
+.opt input{appearance:none;margin:0;flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--on-surface-v);display:grid;place-items:center;transition:border-color 150ms var(--ease-std);cursor:pointer}
+.opt input::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--primary);transform:scale(0);transition:transform 200ms var(--ease-std)}
+.opt input:checked{border-color:var(--primary)}
+.opt input:checked::after{transform:scale(1)}
+.opt input:focus-visible{outline:none}
+.opt:has(input:focus-visible){outline:2px solid var(--primary);outline-offset:-2px}
+.opt:has(input:focus-visible)::before{opacity:.1}
+.acts{display:flex;justify-content:flex-end;gap:8px;padding:20px 24px 20px}
+.tbtn{height:48px;min-width:64px;padding:0 12px;border-radius:var(--r-full);font:500 14px/20px var(--f-head);letter-spacing:.1px;color:var(--primary);text-align:center}
+.tbtn:focus-visible{outline:2px solid var(--primary);outline-offset:0}
+.tbtn .lbl{display:inline-block}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after,dialog::backdrop{transition-duration:1ms!important;animation-duration:1ms!important}
+  .rpl{animation:none;transform:scale(1);opacity:.1}
+}
+</style>
+</head>
+<body>
+<header class="bar" id="bar">
+  <div class="bar-row">
+    <button class="icon-btn rp" aria-label="Navigate up"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 6l-6 6 6 6"/></svg></button>
+    <h1>Settings</h1>
+  </div>
+</header>
+<main id="list">
+  <section aria-labelledby="h-app">
+    <h2 id="h-app">Appearance</h2>
+    <ul>
+      <li><button class="row rp" id="themeRow" aria-haspopup="dialog" aria-labelledby="t-theme" aria-describedby="s-theme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 010 16z" fill="currentColor"/></svg><span class="txt"><span class="t" id="t-theme">Theme</span><span class="s" id="s-theme">Light</span></span></button></li>
+      <li><button class="row rp" role="switch" aria-checked="true" aria-labelledby="t-dyn" aria-describedby="s-dyn"><svg viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16c.9 0 1.4-.6 1.4-1.4 0-1-.9-1.4-.9-2.4 0-1 .8-1.7 1.8-1.7H16a4 4 0 004-4C20 6.9 16.4 4 12 4z"/><circle cx="8" cy="11" r=".8" fill="currentColor"/><circle cx="11" cy="7.8" r=".8" fill="currentColor"/><circle cx="15" cy="8.6" r=".8" fill="currentColor"/></svg><span class="txt"><span class="t" id="t-dyn">Dynamic colour</span><span class="s" id="s-dyn">Match accents to your wallpaper</span></span><span class="sw" aria-hidden="true"><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i></span></button></li>
+      <li><button class="row rp" aria-labelledby="t-size" aria-describedby="s-size"><svg viewBox="0 0 24 24"><path d="M3 18L8 6l5 12M4.8 14h6.4M14.5 18l3-7 3 7M15.6 15.6h3.8"/></svg><span class="txt"><span class="t" id="t-size">Text size</span><span class="s" id="s-size">Default, 100%</span></span><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></li>
+    </ul>
+  </section>
+  <section aria-labelledby="h-not">
+    <h2 id="h-not">Notifications</h2>
+    <ul>
+      <li><button class="row rp" role="switch" aria-checked="true" aria-labelledby="t-rem" aria-describedby="s-rem" data-on="Every day at 08:30" data-off="Off"><svg viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0112 0v5l1.5 2h-15zM10 20.5h4"/></svg><span class="txt"><span class="t" id="t-rem">Daily writing reminder</span><span class="s" id="s-rem">Every day at 08:30</span></span><span class="sw" aria-hidden="true"><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i></span></button></li>
+      <li><button class="row rp" role="switch" aria-checked="false" aria-labelledby="t-week" aria-describedby="s-week" data-on="Sundays at 18:00, a recap of your week" data-off="Off"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span class="txt"><span class="t" id="t-week">Weekly recap</span><span class="s" id="s-week">Off</span></span><span class="sw" aria-hidden="true"><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i></span></button></li>
+      <li><button class="row rp" aria-labelledby="t-snd" aria-describedby="s-snd"><svg viewBox="0 0 24 24"><path d="M4 10v4h3.5L12 18V6L7.5 10zM16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11"/></svg><span class="txt"><span class="t" id="t-snd">Notification sound</span><span class="s" id="s-snd">Pebble</span></span><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></li>
+    </ul>
+  </section>
+  <section aria-labelledby="h-sync">
+    <h2 id="h-sync">Sync and storage</h2>
+    <ul>
+      <li><button class="row rp" role="switch" aria-checked="false" aria-labelledby="t-data" aria-describedby="s-data" data-on="Photos and entries sync anywhere" data-off="Syncs on Wi-Fi only"><svg viewBox="0 0 24 24"><path d="M5 19v-3M10 19v-6.5M15 19V9M20 19V5"/></svg><span class="txt"><span class="t" id="t-data">Sync on mobile data</span><span class="s" id="s-data">Syncs on Wi-Fi only</span></span><span class="sw" aria-hidden="true"><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i></span></button></li>
+      <li><button class="row rp" aria-labelledby="t-sto" aria-describedby="s-sto"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="2.8"/><path d="M5 6v12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V6M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8"/></svg><span class="txt"><span class="t" id="t-sto">Storage</span><span class="s" id="s-sto">412 MB used on this phone</span></span><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></li>
+      <li><button class="row rp" aria-labelledby="t-exp" aria-describedby="s-exp"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 14v5h14v-5"/></svg><span class="txt"><span class="t" id="t-exp">Export entries</span><span class="s" id="s-exp">Markdown or PDF, 1,284 entries</span></span><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></li>
+    </ul>
+  </section>
+  <section aria-labelledby="h-about">
+    <h2 id="h-about">About</h2>
+    <ul>
+      <li><button class="row rp" aria-labelledby="t-priv" aria-describedby="s-priv"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/></svg><span class="txt"><span class="t" id="t-priv">Privacy</span><span class="s" id="s-priv">Lock with fingerprint, analytics off</span></span><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></li>
+      <li><div class="row static"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg><span class="txt"><span class="t">Version</span><span class="s">Larchway 3.8.2 (build 3820)</span></span></div></li>
+    </ul>
+  </section>
+</main>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <h3 id="dlgTitle">Theme</h3>
+  <p>System default follows your phone's dark theme schedule.</p>
+  <div class="opts" role="radiogroup" aria-labelledby="dlgTitle">
+    <label class="opt rp"><input type="radio" name="theme" value="light" checked><span>Light</span></label>
+    <label class="opt rp"><input type="radio" name="theme" value="dark"><span>Dark</span></label>
+    <label class="opt rp"><input type="radio" name="theme" value="system"><span>System default</span></label>
+  </div>
+  <div class="acts">
+    <button class="tbtn rp" id="cancel">Cancel</button>
+    <button class="tbtn rp" id="ok">OK</button>
+  </div>
+</dialog>
+
+<script>
+const $=s=>document.querySelector(s),root=document.documentElement,list=$('#list'),bar=$('#bar'),dlg=$('#dlg'),themeRow=$('#themeRow');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)'),darkMq=matchMedia('(prefers-color-scheme: dark)');
+const NAMES={light:'Light',dark:'Dark',system:'System default'};
+let theme='light';
+
+function ripple(el,x,y){
+  const r=el.getBoundingClientRect();
+  if(x==null){x=r.left+r.width/2;y=r.top+r.height/2}
+  const s=2*Math.hypot(Math.max(x-r.left,r.right-x),Math.max(y-r.top,r.bottom-y));
+  const d=document.createElement('span');d.className='rpl';
+  d.style.cssText=`width:${s}px;height:${s}px;left:${x-r.left-s/2}px;top:${y-r.top-s/2}px`;
+  el.appendChild(d);
+  return()=>{d.classList.add('out');setTimeout(()=>d.remove(),320)};
+}
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.rp');if(!el||e.button>0)return;
+  const end=ripple(el,e.clientX,e.clientY);
+  const up=()=>{end();removeEventListener('pointerup',up);removeEventListener('pointercancel',up)};
+  addEventListener('pointerup',up);addEventListener('pointercancel',up);
+});
+document.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&!e.repeat){const el=e.target.closest('.rp');if(el){const end=ripple(el);setTimeout(end,160)}}
+});
+
+list.addEventListener('scroll',()=>bar.classList.toggle('scrolled',list.scrollTop>0),{passive:true});
+
+list.addEventListener('click',e=>{
+  const row=e.target.closest('[role="switch"]');if(!row)return;
+  const on=row.getAttribute('aria-checked')!=='true';
+  row.setAttribute('aria-checked',String(on));
+  if(row.dataset.on){row.querySelector('.s').textContent=on?row.dataset.on:row.dataset.off}
+});
+
+function apply(t){
+  theme=t;
+  root.dataset.theme=t==='system'?(darkMq.matches?'dark':'light'):t;
+  $('#s-theme').textContent=NAMES[t];
+}
+darkMq.addEventListener('change',()=>{if(theme==='system')apply('system')});
+
+themeRow.addEventListener('click',()=>{
+  dlg.querySelector(`input[value="${theme}"]`).checked=true;
+  dlg.classList.remove('closing');dlg.showModal();
+  dlg.querySelector('input:checked').focus();
+});
+function close(commit){
+  if(commit)apply(dlg.querySelector('input:checked').value);
+  if(reduce.matches){dlg.close();themeRow.focus();return}
+  dlg.classList.add('closing');
+  dlg.addEventListener('animationend',()=>{dlg.classList.remove('closing');dlg.close();themeRow.focus()},{once:true});
+}
+$('#cancel').addEventListener('click',()=>close(false));
+$('#ok').addEventListener('click',()=>close(true));
+dlg.addEventListener('cancel',e=>{e.preventDefault();close(false)});
+dlg.addEventListener('click',e=>{if(e.target===dlg)close(false)});
+dlg.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('input')){e.preventDefault();close(true)}});
+</script>
+</body>
+</html>

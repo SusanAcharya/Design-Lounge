@@ -86,7 +86,9 @@ One brand, two platforms. The kit (theme, pairing, family) is the same on both. 
 - Navigation and back: native stack transitions and gestures on each.
 - System pieces stay native: date and time pickers, the share sheet, alerts and permission dialogs, the photo picker, keyboards. Style around them, not over them.
 - Tab bar: `phone-tab-plain`, or `ios-glass-tab-bar` when the family is glass, on iOS. `m3-navigation-bar` on Android, or on both when the family is Material or they said Android first. Never two tab bars in one app.
-- Settings: `ios-grouped-settings` on iOS. On Android, the same rows as a flat list with section titles.
+- Settings: `ios-grouped-settings` on iOS, `m3-settings-list` on Android. Sign in: `phone-sign-in` on iOS, `m3-sign-in` on Android. The Android versions of the other screens are listed in components.md.
+- Store rules: an app with accounts needs `phone-delete-account`. Subscriptions need `phone-subscription-manage` with Restore purchases.
+- Large text: check every screen at the largest size (`phone-large-text-layout` shows how rows stack).
 - A floating action button only on Android, and only when there is one main create action (`m3-fab-menu`).
 
 If they ask for one look on both, keep the iOS behaviours on iOS anyway. A Material back arrow on an iPhone is a fail.

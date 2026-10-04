@@ -1,0 +1,304 @@
+<!-- Design Lounge piece: phone-account-edit · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edit profile, Wrenfold</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#efebe3;--surface:#fbf9f4;--fill:#e6e0d5;--ink:#1f1d1a;--ink-2:#4a463f;--ink-3:#6b655b;
+  --line:#ddd6ca;--accent:#1f5c4a;--accent-press:#17473a;--accent-soft:#dce8e1;--on-accent:#f7f5ef;
+  --ok:#2c7346;--warn:#8a5200;--warn-soft:#f4e6cc;--err:#b3261e;--focus:#1f5c4a;
+  --glass:rgba(239,235,227,.78);
+  --serif:"Young Serif",Georgia,serif;--sans:"Rethink Sans",-apple-system,system-ui,sans-serif;
+  --r-s:10px;--r-m:14px;--r-l:22px;--pill:999px;
+  --ease:cubic-bezier(.2,.7,.2,1);--sheet:cubic-bezier(.32,.72,0,1);
+  --micro:160ms;--layout:320ms;
+  --top:max(54px,env(safe-area-inset-top));--bottom:max(34px,env(safe-area-inset-bottom));
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.4 var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+svg{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.nav{position:fixed;inset:0 0 auto;z-index:10;padding:var(--top) 8px 0;background:var(--glass);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid rgba(31,29,26,.07)}
+.nav-row{height:44px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.nav h1{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.back{justify-self:start;display:inline-flex;align-items:center;gap:2px;min-height:44px;padding:0 10px 0 4px;color:var(--accent);font-weight:500;font-size:17px;border-radius:var(--pill)}
+.back svg{width:22px;height:22px;stroke-width:2.2}
+.save{justify-self:end;min-height:36px;min-width:64px;margin:4px 6px;padding:0 16px;border-radius:var(--pill);font-weight:600;font-size:16px;
+  background:var(--accent);color:var(--on-accent);transition:background-color var(--micro) var(--ease),color var(--micro) var(--ease),transform var(--micro) var(--ease);position:relative}
+.save::before{content:"";position:absolute;inset:-4px -2px}
+.save:hover:not([aria-disabled="true"]){background:var(--accent-press)}
+.save:active:not([aria-disabled="true"]){transform:scale(.95)}
+.save[aria-disabled="true"]{background:var(--fill);color:var(--ink-3);cursor:default}
+.save.busy{color:transparent}
+.save.busy::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px;border-radius:50%;border:2px solid rgba(247,245,239,.4);border-top-color:var(--on-accent);animation:spin .8s linear infinite}
+
+main{padding:calc(var(--top) + 44px + 20px) 16px calc(var(--bottom) + 24px)}
+.photo{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:22px}
+.avatar{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;position:relative;overflow:hidden;
+  background:var(--accent-soft);color:var(--accent);font:400 38px/1 var(--serif);letter-spacing:-.02em;box-shadow:0 0 0 1px var(--line)}
+.avatar.has-photo{color:transparent;background:
+  radial-gradient(circle at 70% 30%,#f2d9a4 0 12%,transparent 13%),
+  linear-gradient(180deg,#c9d9cf 0 46%,#7f9f86 46% 64%,#4d6b55 64% 100%)}
+.avatar.has-photo::after{content:"";position:absolute;left:30%;right:30%;bottom:-6%;height:52%;border-radius:50% 50% 0 0;background:#2b3a31}
+.avatar.has-photo::before{content:"";position:absolute;left:39%;top:30%;width:22%;height:22%;border-radius:50%;background:#2b3a31;z-index:1}
+.avatar.pop{animation:pop var(--layout) var(--sheet)}
+.pv{margin:6px 0 0;text-align:center;display:flex;flex-direction:column;gap:2px;max-width:100%}
+.pv b{font:400 24px/1.15 var(--serif);letter-spacing:-.01em;overflow-wrap:anywhere}
+.pv span{font-size:14px;color:var(--ink-3)}
+.link{min-height:44px;padding:0 14px;color:var(--accent);font-weight:600;font-size:15px;border-radius:var(--pill)}
+.link:hover{background:rgba(31,92,74,.07)}
+
+.group-label{margin:0 16px 6px;font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
+.group{background:var(--surface);border-radius:var(--r-m);margin:0 0 8px;box-shadow:0 0 0 1px rgba(31,29,26,.04)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;min-height:52px;padding:6px 16px;position:relative}
+.row+.row::before{content:"";position:absolute;top:0;left:16px;right:0;border-top:1px solid var(--line)}
+.row>label,.row>.k{flex:0 0 92px;font-size:15px;color:var(--ink-2)}
+.field{flex:1 1 180px;display:flex;align-items:center;min-height:40px;gap:6px}
+.field input{flex:1;min-width:0;border:0;background:none;padding:8px 0;font-size:16px;outline:none}
+.field:focus-within{box-shadow:inset 0 -2px 0 var(--accent)}
+.field:has([aria-invalid="true"]){box-shadow:inset 0 -2px 0 var(--err)}
+.field input::placeholder{color:var(--err)}
+.at{color:var(--ink-3)}
+.uicon{width:22px;height:22px;flex:none;display:grid;place-items:center}
+.uicon svg{width:20px;height:20px;stroke-width:2.2}
+.uicon .spin{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--accent);animation:spin .8s linear infinite}
+.bio{align-items:flex-start;padding-top:12px;padding-bottom:10px}
+.bio>label{padding-top:8px}
+.bio .field{flex-direction:column;align-items:stretch}
+.bio textarea{border:0;background:none;resize:none;padding:8px 0;font-size:16px;line-height:1.45;outline:none;min-height:72px}
+.count{align-self:flex-end;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.count.near{color:var(--warn)}.count.over{color:var(--err);font-weight:600}
+.note{margin:0 16px 22px;font-size:13px;line-height:1.4;color:var(--ink-3);min-height:18px}
+.note[data-s="ok"]{color:var(--ok)}.note[data-s="bad"]{color:var(--err)}
+.note button{color:var(--accent);font-weight:600;font-size:13px;min-height:28px;text-decoration:underline;text-underline-offset:3px}
+
+.row.top{align-items:flex-start}
+.row.top>.k{padding-top:12px}
+.email-v{flex:1 1 180px;display:flex;flex-direction:column;gap:6px;padding:6px 0}
+.email-v b{font-weight:500;font-size:16px;word-break:break-all}
+.verify{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:var(--pill);background:var(--warn-soft);color:var(--warn);font-size:12px;font-weight:600}
+.pill svg{width:13px;height:13px;stroke-width:2.4}
+.resend{min-height:44px;padding:0 4px;color:var(--accent);font-weight:600;font-size:14px}
+.resend[aria-disabled="true"]{color:var(--ink-3);cursor:default;font-variant-numeric:tabular-nums}
+.chev{margin-left:auto;color:var(--ink-3);width:18px;height:18px}
+.val{flex:1;color:var(--ink-3);font-size:15px;text-align:right}
+.row.tap{width:100%;text-align:left}
+.row.tap:hover{background:rgba(31,29,26,.03)}
+
+.scrim{position:fixed;inset:0;z-index:20;background:rgba(31,29,26,.34);opacity:0;pointer-events:none;transition:opacity var(--layout) var(--ease)}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:8px;right:8px;bottom:var(--bottom);z-index:21;display:flex;flex-direction:column;gap:8px;
+  transform:translateY(calc(100% + 60px));transition:transform var(--layout) var(--sheet);visibility:hidden}
+.sheet.on{transform:none;visibility:visible}
+.sheet .card{background:var(--surface);border-radius:var(--r-l);overflow:hidden}
+.sheet p{margin:0;padding:16px 20px 12px;text-align:center;font-size:13px;color:var(--ink-3);line-height:1.4}
+.sheet p strong{display:block;color:var(--ink);font-size:15px;font-weight:600;margin-bottom:2px}
+.opt{display:block;width:100%;min-height:56px;font-size:18px;color:var(--accent);border-top:1px solid var(--line)}
+.opt:hover{background:rgba(31,29,26,.03)}
+.opt.danger{color:var(--err)}
+.opt.bold{font-weight:600;border-top:0}
+.opt.first{border-top:0}
+.toast{position:fixed;left:50%;bottom:calc(var(--bottom) + 8px);z-index:30;transform:translate(-50%,20px);opacity:0;
+  display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:var(--pill);background:var(--ink);color:var(--surface);font-size:14px;font-weight:500;white-space:nowrap;
+  transition:transform var(--layout) var(--sheet),opacity var(--micro) var(--ease);pointer-events:none}
+.toast.on{transform:translate(-50%,0);opacity:1}
+.toast svg{width:18px;height:18px;stroke-width:2.2;color:#9fd1b3}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pop{0%{transform:scale(.86)}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+  .uicon .spin,.save.busy::after{animation:none;border-top-color:var(--line)}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-row">
+    <button class="back" id="back" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Account</button>
+    <h1>Edit profile</h1>
+    <button class="save" id="save" type="button" aria-disabled="true">Save</button>
+  </div>
+</header>
+
+<main>
+  <section class="photo" aria-label="Profile photo">
+    <div class="avatar" id="avatar" role="img" aria-label="Initials MO, no photo"><span aria-hidden="true">MO</span></div>
+    <p class="pv" aria-hidden="true"><b id="pvName">Mira Okafor</b><span id="pvUser">@mira.okafor</span></p>
+    <button class="link" id="photoBtn" type="button" aria-haspopup="dialog">Change photo</button>
+  </section>
+
+  <h2 class="group-label" id="g-profile">Profile</h2>
+  <div class="group" role="group" aria-labelledby="g-profile">
+    <div class="row">
+      <label for="name">Name</label>
+      <div class="field"><input id="name" autocomplete="name" value="Mira Okafor" placeholder="Required" required aria-describedby="nameNote"></div>
+    </div>
+    <div class="row">
+      <label for="user">Username</label>
+      <div class="field"><span class="at" aria-hidden="true">@</span><input id="user" value="mira.okafor" autocapitalize="none" autocomplete="username" spellcheck="false" maxlength="20" aria-describedby="userNote"><span class="uicon" id="uicon" aria-hidden="true"></span></div>
+    </div>
+    <div class="row bio">
+      <label for="bio">Bio</label>
+      <div class="field">
+        <textarea id="bio" rows="3" aria-describedby="count">Reading my way through every Booker shortlist since 1990. Currently on 2004.</textarea>
+        <span class="count" id="count" aria-live="polite">76/150</span>
+      </div>
+    </div>
+  </div>
+  <p class="note" id="userNote" aria-live="polite">wrenfold.app/@mira.okafor is your profile link.</p>
+  <p class="sr" id="nameNote">Name is required.</p>
+
+  <h2 class="group-label" id="g-account">Account</h2>
+  <div class="group" role="group" aria-labelledby="g-account">
+    <div class="row top">
+      <span class="k">Email</span>
+      <div class="email-v">
+        <b>mira@okafor.studio</b>
+        <div class="verify">
+          <span class="pill" id="vpill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v5M12 16.5v.01"/><circle cx="12" cy="12" r="9"/></svg>Unverified</span>
+          <button class="resend" id="resend" type="button">Resend link</button>
+        </div>
+      </div>
+    </div>
+    <button class="row tap" type="button"><span class="k">Password</span><span class="val">Changed in July</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+  </div>
+  <p class="note">We send reading reminders and receipts to this address.</p>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="photoSheet" role="dialog" aria-modal="true" aria-label="Change photo">
+  <div class="card">
+    <button class="opt first" type="button" data-p="take">Take photo</button>
+    <button class="opt" type="button" data-p="lib">Choose from library</button>
+    <button class="opt danger" type="button" data-p="remove">Remove photo</button>
+  </div>
+  <div class="card"><button class="opt bold" type="button" data-close>Cancel</button></div>
+</div>
+<div class="sheet" id="leaveSheet" role="alertdialog" aria-modal="true" aria-labelledby="leaveT" aria-describedby="leaveD">
+  <div class="card">
+    <p><strong id="leaveT">Discard changes?</strong><span id="leaveD">Your edits to this profile have not been saved.</span></p>
+    <button class="opt danger" type="button" id="discard">Discard changes</button>
+  </div>
+  <div class="card"><button class="opt bold" type="button" data-close>Keep editing</button></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span id="toastT"></span></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const TAKEN = ['mira','miraokafor','mira.reads','mira_o','reader','wren','okafor','booker'];
+const MAX = 150;
+const ICON = {
+  ok:'<svg viewBox="0 0 24 24" style="color:var(--ok)"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  bad:'<svg viewBox="0 0 24 24" style="color:var(--err)"><path d="M7 7l10 10M17 7L7 17"/></svg>',
+  wait:'<span class="spin"></span>'
+};
+const name = $('name'), user = $('user'), bio = $('bio'), save = $('save');
+let base = {name:name.value, user:user.value, bio:bio.value, photo:false};
+let photo = false, uState = 'same', timer = 0, seq = 0, lastFocus = null;
+
+function dirty(){ return name.value.trim()!==base.name || user.value!==base.user || bio.value!==base.bio || photo!==base.photo; }
+function valid(){ return name.value.trim().length>0 && (uState==='same'||uState==='ok') && bio.value.length<=MAX; }
+function sync(){
+  $('pvName').textContent = name.value.trim() || 'Your name';
+  $('pvUser').textContent = '@' + (user.value || 'username');
+  name.setAttribute('aria-invalid', String(!name.value.trim()));
+  const on = dirty() && valid();
+  save.setAttribute('aria-disabled', String(!on));
+  save.setAttribute('aria-label', on ? 'Save changes' : dirty() ? 'Save, fix the highlighted field first' : 'Save, nothing changed');
+}
+function note(text, s, suggest){
+  const n = $('userNote'); n.dataset.s = s || ''; n.textContent = text;
+  if (suggest){ const b = document.createElement('button'); b.type='button'; b.textContent='Use @'+suggest;
+    b.onclick = () => { user.value = suggest; check(); user.focus(); }; n.append(' ', b); }
+}
+function check(){
+  clearTimeout(timer); const v = user.value.toLowerCase().replace(/\s/g,''); if (v!==user.value) user.value = v;
+  const ic = $('uicon'); const my = ++seq;
+  if (v===base.user){ uState='same'; ic.innerHTML=''; note('wrenfold.app/@'+v+' is your profile link.'); return sync(); }
+  if (v.length<3){ uState='bad'; ic.innerHTML=ICON.bad; note('Usernames need at least 3 characters.','bad'); return sync(); }
+  if (!/^[a-z0-9._]+$/.test(v)){ uState='bad'; ic.innerHTML=ICON.bad; note('Use letters, numbers, full stops and underscores only.','bad'); return sync(); }
+  uState='checking'; ic.innerHTML=ICON.wait; note('Checking @'+v+'...'); sync();
+  timer = setTimeout(() => {
+    if (my!==seq) return;
+    if (TAKEN.includes(v)){ uState='taken'; ic.innerHTML=ICON.bad;
+      const stem = v.replace(/[._][a-z0-9]+$/,'') || v;
+      const s = [stem+'.reads', stem+'.books', stem+'_04'].find(c => c!==v && !TAKEN.includes(c));
+      note('@'+v+' is taken.','bad',s); }
+    else { uState='ok'; ic.innerHTML=ICON.ok; note('@'+v+' is available.','ok'); }
+    sync();
+  }, 450 + 500);
+}
+user.addEventListener('input', check);
+name.addEventListener('input', sync);
+bio.addEventListener('input', () => {
+  const n = bio.value.length, c = $('count');
+  c.textContent = n+'/'+MAX; c.className = 'count'+(n>MAX?' over':n>=MAX-10?' near':'');
+  c.setAttribute('aria-label', n>MAX ? (n-MAX)+' characters over the limit' : (MAX-n)+' characters left');
+  sync();
+});
+
+function open(sheet){ $('toast').classList.remove('on'); lastFocus = document.activeElement; $('scrim').classList.add('on'); sheet.classList.add('on'); sheet.querySelector('button').focus(); }
+function close(){ document.querySelectorAll('.sheet.on').forEach(s => s.classList.remove('on')); $('scrim').classList.remove('on'); if (lastFocus) lastFocus.focus(); }
+$('scrim').onclick = close;
+document.querySelectorAll('[data-close]').forEach(b => b.onclick = close);
+document.addEventListener('keydown', e => {
+  const s = document.querySelector('.sheet.on'); if (!s) return;
+  if (e.key==='Escape'){ e.preventDefault(); close(); }
+  if (e.key==='Tab'){ const f=[...s.querySelectorAll('button')], i=f.indexOf(document.activeElement);
+    if (e.shiftKey && i<=0){ e.preventDefault(); f[f.length-1].focus(); } else if (!e.shiftKey && i===f.length-1){ e.preventDefault(); f[0].focus(); } }
+});
+$('photoBtn').onclick = () => open($('photoSheet'));
+document.querySelectorAll('[data-p]').forEach(b => b.onclick = () => {
+  const a = $('avatar'); photo = b.dataset.p !== 'remove';
+  a.classList.toggle('has-photo', photo); a.setAttribute('aria-label', photo ? 'New profile photo' : 'Initials MO, no photo');
+  a.classList.remove('pop'); void a.offsetWidth; if (!reduce.matches) a.classList.add('pop');
+  close(); sync();
+});
+
+function toast(t){ $('toastT').textContent = t; const el=$('toast'); el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(()=>el.classList.remove('on'), 2400); }
+save.onclick = () => {
+  if (save.getAttribute('aria-disabled')==='true' || save.classList.contains('busy')) return;
+  save.classList.add('busy'); save.setAttribute('aria-label','Saving');
+  setTimeout(() => {
+    name.value = name.value.trim();
+    base = {name:name.value, user:user.value, bio:bio.value, photo};
+    uState='same'; $('uicon').innerHTML=''; note('wrenfold.app/@'+user.value+' is your profile link.');
+    save.classList.remove('busy'); sync(); toast('Profile saved');
+  }, 900);
+};
+$('back').onclick = () => { if (dirty()) open($('leaveSheet')); else toast('Back to Account'); };
+$('discard').onclick = () => {
+  name.value=base.name; user.value=base.user; bio.value=base.bio; photo=base.photo;
+  $('avatar').classList.toggle('has-photo', photo); bio.dispatchEvent(new Event('input')); check(); close(); toast('Changes discarded');
+};
+
+let left = 0, tick = 0;
+$('resend').onclick = () => {
+  const r = $('resend'); if (left>0) return;
+  r.setAttribute('aria-disabled','true'); r.textContent = 'Sending...';
+  setTimeout(() => {
+    left = 30; toast('Link sent to mira@okafor.studio');
+    const step = () => {
+      if (left<=0){ clearInterval(tick); r.textContent='Resend link'; r.removeAttribute('aria-disabled'); return; }
+      r.textContent = 'Resend in '+left+'s'; left--;
+    };
+    step(); tick = setInterval(step, 1000);
+  }, 700);
+};
+sync();
+</script>
+</body>
+</html>

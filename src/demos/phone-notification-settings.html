@@ -1,0 +1,288 @@
+<!-- Design Lounge piece: phone-notification-settings · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larkpost notifications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eeeae0;--surface:#faf8f3;--ink:#1c2420;--ink-2:#535e58;--ink-3:#8a938d;--line:#ddd8cc;
+  --moss:#2f6a4b;--moss-soft:#dce7df;--on-moss:#f4f8f5;--off:#d9d4c8;
+  --amber:#f6e3b4;--amber-ink:#573c05;--amber-line:#e6cd8c;--lock:#18231d;--lock-ink:#eef2ee;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r-group:14px;--r-chip:12px;--inset:16px;--row:44px;--opt:40px;
+  --t-micro:160ms;--t-layout:320ms;--ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/1.35 var(--display);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--moss);outline-offset:2px;border-radius:8px}
+svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bar{position:fixed;inset:0 0 auto;z-index:5;padding:54px 8px 0;height:98px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:rgba(238,234,224,.9);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:border-color var(--t-micro) var(--ease)}
+.bar.stuck{border-bottom-color:var(--line)}
+.back{display:flex;align-items:center;gap:2px;min-height:44px;padding:0 8px;color:var(--moss);font-weight:600;justify-self:start}
+.back svg{width:22px;height:22px;stroke-width:2.2}
+.bar b{font-weight:600;font-size:17px;opacity:0;transition:opacity var(--t-micro) var(--ease)}
+.bar.stuck b{opacity:1}
+main{position:relative;height:100%;overflow-y:auto;padding:98px var(--inset) 60px;scroll-padding-top:110px}
+h1{font-size:34px;font-weight:700;letter-spacing:-.025em;line-height:1.1;margin:4px 4px 16px;font-variation-settings:"opsz" 96}
+h2{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:26px 16px 8px}
+.foot{font-size:13px;color:var(--ink-2);margin:8px 16px 0;line-height:1.45}
+.group{background:var(--surface);border-radius:var(--r-group);overflow:hidden}
+.collapse{display:grid;grid-template-rows:1fr;transition:grid-template-rows var(--t-layout) var(--spring),opacity var(--t-layout) var(--ease)}
+.collapse>div{overflow:hidden;min-height:0}
+.collapse.shut{grid-template-rows:0fr;opacity:0}
+/* banner */
+.banner{background:var(--amber);color:var(--amber-ink);border:1px solid var(--amber-line);border-radius:var(--r-group);padding:14px 14px 14px 16px;display:grid;grid-template-columns:28px 1fr;gap:4px 12px;margin-bottom:4px;transition:background var(--t-layout) var(--ease),color var(--t-layout) var(--ease),border-color var(--t-layout) var(--ease)}
+.banner svg{width:24px;height:24px;margin-top:1px}
+.banner strong{font-weight:600;font-size:16px;display:block}
+.banner p{margin:2px 0 0;font-size:14px;line-height:1.4}
+.banner .go{grid-column:2;justify-self:start;margin-top:10px;min-height:44px;padding:0 18px;border-radius:22px;background:var(--amber-ink);color:var(--amber);font-weight:600;font-size:15px;display:flex;align-items:center;gap:6px;transition:transform var(--t-micro) var(--ease)}
+.banner .go:active{transform:scale(.97)}
+.banner .go svg{width:16px;height:16px;margin:0}
+.banner.ok{background:var(--moss-soft);color:var(--moss);border-color:#bcd1c3}
+.banner.ok .go{display:none}
+/* rows */
+.cat{border-top:1px solid var(--line)}
+.cat:first-child{border-top:0}
+.row{display:flex;align-items:center;gap:12px;min-height:60px;padding:8px var(--inset)}
+.ic{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--moss-soft);color:var(--moss);flex:none;transition:background var(--t-micro),color var(--t-micro)}
+.ic svg{width:18px;height:18px}
+.cat.off .ic{background:#ebe7de;color:var(--ink-3)}
+.lbl{flex:1;min-width:0}
+.lbl span{display:block;font-weight:600}
+.lbl small{display:block;font-size:13px;color:var(--ink-2);margin-top:1px}
+.tog{position:relative;width:51px;height:31px;border-radius:16px;background:var(--off);flex:none;transition:background var(--t-layout) var(--ease)}
+.tog::before{content:"";position:absolute;inset:-7px -2px}
+.tog::after{content:"";position:absolute;left:2px;top:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(28,36,32,.22);transition:transform var(--t-layout) var(--spring),width var(--t-micro) var(--ease)}
+.tog[aria-checked="true"]{background:var(--moss)}
+.tog[aria-checked="true"]::after{transform:translateX(20px)}
+.tog:active::after{width:32px}
+.tog[aria-checked="true"]:active::after{transform:translateX(15px)}
+.chans{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:0 var(--inset) 12px 60px}
+.chans em{font:400 12px/1 var(--mono);font-style:normal;color:var(--ink-2);margin-right:2px}
+.chip{min-height:44px;padding:0 14px;border-radius:var(--r-chip);border:1px solid var(--line);display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2);transition:background var(--t-micro) var(--ease),color var(--t-micro),border-color var(--t-micro),transform var(--t-micro) var(--ease)}
+.chip svg{width:16px;height:16px}
+.chip .tick{display:none}
+.chip[aria-pressed="true"]{background:var(--moss);border-color:var(--moss);color:var(--on-moss)}
+.chip[aria-pressed="true"] .tick{display:block}
+.chip:active{transform:scale(.96)}
+.chip.nope{animation:nope 300ms var(--ease)}
+@keyframes nope{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* quiet hours */
+.time{display:flex;align-items:center;min-height:var(--row);padding:4px var(--inset);border-top:1px solid var(--line);gap:12px}
+.time .lbl{font-weight:500}
+.tbtn{min-height:44px;min-width:84px;padding:0 14px;border-radius:10px;background:#efece4;font:500 17px/1 var(--mono);color:var(--ink);transition:background var(--t-micro),color var(--t-micro)}
+.tbtn[aria-expanded="true"]{background:var(--moss-soft);color:var(--moss)}
+.pick{display:flex;justify-content:center;align-items:center;gap:6px;padding:4px 0 14px;position:relative}
+.pick::before{content:"";position:absolute;left:calc(50% - 86px);width:172px;top:calc(4px + var(--opt)*2);height:var(--opt);border-radius:10px;background:#efece4;z-index:0}
+.pick i{font:500 20px/1 var(--mono);font-style:normal;position:relative;z-index:1;color:var(--ink-2)}
+.wheel{position:relative;z-index:1;width:72px;height:calc(var(--opt)*5);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;padding:calc(var(--opt)*2) 0;-webkit-mask:linear-gradient(transparent,#000 35%,#000 65%,transparent);mask:linear-gradient(transparent,#000 35%,#000 65%,transparent);border-radius:10px}
+.wheel::-webkit-scrollbar{display:none}
+.opt{height:var(--opt);display:grid;place-items:center;scroll-snap-align:center;font:400 20px/1 var(--mono);color:var(--ink-3)}
+.opt.sel{color:var(--ink);font-weight:500}
+.summary{display:flex;gap:10px;align-items:flex-start;padding:12px var(--inset) 14px;border-top:1px solid var(--line);font-size:15px}
+.summary svg{width:20px;height:20px;color:var(--moss);flex:none;margin-top:1px}
+.summary b{font-weight:600}
+.summary small{display:block;font-size:13px;color:var(--ink-2);margin-top:2px}
+.summary.err svg,.summary.err b{color:#9b2c1d}
+/* preview */
+.seg{display:flex;background:#e4dfd3;border-radius:12px;padding:3px;gap:2px}
+.seg button{flex:1;min-height:44px;border-radius:9px;font-size:13px;font-weight:600;color:var(--ink-2);transition:background var(--t-micro),color var(--t-micro)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(28,36,32,.12)}
+.lock{margin-top:10px;background:var(--lock);border-radius:22px;padding:22px 14px 16px;color:var(--lock-ink);min-height:196px;background-image:radial-gradient(circle at 80% 0,rgba(120,170,140,.22),transparent 60%)}
+.clock{font:500 13px/1 var(--mono);text-align:center;opacity:.7;letter-spacing:.06em}
+.note{margin-top:16px;background:rgba(244,248,245,.94);color:var(--ink);border-radius:18px;padding:12px 14px;display:grid;grid-template-columns:34px 1fr;gap:2px 10px;transition:opacity var(--t-layout) var(--ease),transform var(--t-layout) var(--spring)}
+.note.in{animation:drop 420ms var(--spring)}
+@keyframes drop{from{transform:translateY(-12px);opacity:0}}
+.note .app{grid-row:span 3;width:34px;height:34px;border-radius:9px;background:var(--moss);color:var(--on-moss);display:grid;place-items:center}
+.note .app svg{width:18px;height:18px}
+.note .meta{display:flex;justify-content:space-between;font:500 11px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.note b{font-weight:600;font-size:15px}
+.note p{margin:0;font-size:14px;color:#2f3833;line-height:1.35}
+.note.mail{background:#fbf3df}
+.note.mail .app{background:var(--amber-ink);color:var(--amber)}
+.note.dim{opacity:.38;transform:scale(.98)}
+.why{margin:12px 2px 0;font:400 12px/1.5 var(--mono);color:rgba(238,242,238,.78)}
+.reset{display:block;margin:28px auto 0;min-height:44px;padding:0 14px;color:var(--moss);font-weight:600;font-size:15px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="bar" id="bar">
+  <button class="back" type="button" aria-label="Back to Settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Settings</button>
+  <b aria-hidden="true">Notifications</b>
+</header>
+<main id="main">
+  <h1 id="title">Notifications</h1>
+
+  <div class="collapse" id="bannerWrap"><div>
+    <section class="banner" id="banner" aria-labelledby="bT">
+      <svg viewBox="0 0 24 24" aria-hidden="true" id="bIcon"><path d="M6 16V11a6 6 0 0 1 9.5-4.9M18 11v5l2 2H6M10 21h4M3 3l18 18"/></svg>
+      <div><strong id="bT">Notifications are off for Larkpost</strong><p id="bP">Your choices below are saved, but nothing reaches this phone until you allow notifications in Settings.</p></div>
+      <button class="go" type="button" id="openSettings">Open Settings<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></button>
+    </section>
+  </div></div>
+
+  <h2 id="catH">What you hear about</h2>
+  <div class="group" role="group" aria-labelledby="catH" id="cats"></div>
+  <p class="foot">Pick push, email, or both for each one. Product news stays off until you turn it on.</p>
+
+  <h2 id="qH">Quiet hours</h2>
+  <div class="group" role="group" aria-labelledby="qH">
+    <div class="row"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><span class="lbl"><span id="qL">Quiet hours</span><small>Push arrives silently, no sound or light</small></span><button class="tog" type="button" role="switch" aria-checked="true" aria-labelledby="qL" id="qTog"></button></div>
+    <div class="collapse" id="qBody"><div>
+      <div class="time"><span class="lbl" id="fromL">From</span><button class="tbtn" type="button" id="fromBtn" aria-expanded="false" aria-controls="fromPick" aria-describedby="fromL">22:00</button></div>
+      <div class="collapse shut" id="fromPick" inert><div><div class="pick" role="group" aria-label="Start time">
+        <div class="wheel" tabindex="0" role="spinbutton" aria-label="Start hour" data-k="fromH"></div><i aria-hidden="true">:</i>
+        <div class="wheel" tabindex="0" role="spinbutton" aria-label="Start minute" data-k="fromM"></div></div></div></div>
+      <div class="time"><span class="lbl" id="toL">To</span><button class="tbtn" type="button" id="toBtn" aria-expanded="false" aria-controls="toPick" aria-describedby="toL">07:00</button></div>
+      <div class="collapse shut" id="toPick" inert><div><div class="pick" role="group" aria-label="End time">
+        <div class="wheel" tabindex="0" role="spinbutton" aria-label="End hour" data-k="toH"></div><i aria-hidden="true">:</i>
+        <div class="wheel" tabindex="0" role="spinbutton" aria-label="End minute" data-k="toM"></div></div></div></div>
+    </div></div>
+    <div class="summary" id="summary" aria-live="polite"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><b id="sumB">Silent from 22:00 to 07:00</b><small id="sumS">9 hours, overnight. Every day.</small></span></div>
+  </div>
+
+  <h2 id="pH">Preview</h2>
+  <div class="seg" role="group" aria-label="Preview category" id="seg"></div>
+  <div class="lock" role="region" aria-live="polite" aria-labelledby="pH">
+    <div class="clock">TUE 14 OCT · 08:41</div>
+    <div class="note" id="note"></div>
+    <p class="why" id="why"></p>
+  </div>
+  <button class="reset" type="button" id="reset">Show the off state again</button>
+  <p class="sr" aria-live="assertive" id="say"></p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pad=n=>String(n).padStart(2,'0');
+const hm=(h,m)=>pad(h)+':'+pad(m);
+const ICON={
+  replies:'<path d="M4 5h16v11H9l-5 4z"/><path d="M9 10h6"/>',
+  mentions:'<circle cx="12" cy="12" r="3.5"/><path d="M15.5 12v1.5a2.5 2.5 0 0 0 5 0V12a8.5 8.5 0 1 0-3.4 6.8"/>',
+  reminders:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/>',
+  news:'<path d="M4 10v4h3l7 4V6L7 10zM18 9a4 4 0 0 1 0 6"/>',
+  push:'<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/>',
+  email:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  tick:'<path d="m5 12 4 4 10-10"/>'
+};
+const S={sys:false,quiet:true,fromH:22,fromM:0,toH:7,toM:0,view:'replies',cats:[
+  {k:'replies',name:'Replies',sub:'When someone answers your post',on:true,push:true,email:true,
+   t:'Mira Okafor replied',b:'Same here. Let\u2019s move the hill walk to Saturday, 09:00.'},
+  {k:'mentions',name:'Mentions',sub:'When someone writes @you',on:true,push:true,email:false,
+   t:'Dev Raman mentioned you in Trail crew',b:'@you can you bring the spare map on Sunday?'},
+  {k:'reminders',name:'Reminders',sub:'Things you asked us to nudge you about',on:true,push:true,email:false,
+   t:'Hut deposit is due today',b:'Due by 18:00. Tap to mark it paid.'},
+  {k:'news',name:'Product news',sub:'New features, about twice a month',on:false,push:false,email:true,
+   t:'New in Larkpost: pinned threads',b:'Keep the plan at the top of a group.'}]};
+const svg=(p,c='')=>`<svg viewBox="0 0 24 24" aria-hidden="true" class="${c}">${p}</svg>`;
+const say=t=>{$('say').textContent='';setTimeout(()=>$('say').textContent=t,30)};
+const shut=(el,s)=>{el.classList.toggle('shut',s);el.inert=s};
+
+/* categories */
+$('cats').innerHTML=S.cats.map(c=>`<div class="cat${c.on?'':' off'}" data-k="${c.k}">
+  <div class="row"><span class="ic">${svg(ICON[c.k])}</span><span class="lbl"><span id="n-${c.k}">${c.name}</span><small>${c.sub}</small></span>
+  <button class="tog" type="button" role="switch" aria-checked="${c.on}" aria-labelledby="n-${c.k}"></button></div>
+  <div class="collapse${c.on?'':' shut'}"${c.on?'':' inert'}><div><div class="chans" role="group" aria-label="${c.name} channels"><em>VIA</em>
+  ${['push','email'].map(ch=>`<button class="chip" type="button" data-ch="${ch}" aria-pressed="${c[ch]}">${svg(ICON.tick,'tick')}${svg(ICON[ch])}${ch==='push'?'Push':'Email'}</button>`).join('')}
+  </div></div></div></div>`).join('');
+$('cats').addEventListener('click',e=>{
+  const el=e.target.closest('.cat');if(!el)return;
+  const c=S.cats.find(x=>x.k===el.dataset.k);
+  if(e.target.closest('.tog')){
+    c.on=!c.on;e.target.closest('.tog').setAttribute('aria-checked',c.on);
+    el.classList.toggle('off',!c.on);shut(el.querySelector('.collapse'),!c.on);
+    S.view=c.k;renderSeg();preview();return;
+  }
+  const chip=e.target.closest('.chip');if(!chip)return;
+  const ch=chip.dataset.ch,other=ch==='push'?'email':'push';
+  if(c[ch]&&!c[other]){chip.classList.remove('nope');void chip.offsetWidth;chip.classList.add('nope');say(`Keep at least one channel. To stop ${c.name.toLowerCase()}, turn the switch off.`);return}
+  c[ch]=!c[ch];chip.setAttribute('aria-pressed',c[ch]);S.view=c.k;renderSeg();preview();
+});
+
+/* banner */
+$('openSettings').addEventListener('click',()=>{
+  const b=$('banner');$('bT').textContent='Opening Settings\u2026';$('bP').textContent='Allow notifications for Larkpost, then come back here.';
+  setTimeout(()=>{
+    S.sys=true;b.classList.add('ok');
+    $('bIcon').innerHTML='<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/><path d="m9 11 2 2 4-4"/>';
+    $('bT').textContent='Notifications are on';$('bP').textContent='Larkpost can reach this phone again.';
+    say('Notifications are on');preview();
+    setTimeout(()=>shut($('bannerWrap'),true),2400);
+  },RM?200:900);
+});
+$('reset').addEventListener('click',()=>{
+  S.sys=false;const b=$('banner');b.classList.remove('ok');
+  $('bIcon').innerHTML='<path d="M6 16V11a6 6 0 0 1 9.5-4.9M18 11v5l2 2H6M10 21h4M3 3l18 18"/>';
+  $('bT').textContent='Notifications are off for Larkpost';
+  $('bP').textContent='Your choices below are saved, but nothing reaches this phone until you allow notifications in Settings.';
+  shut($('bannerWrap'),false);preview();$('main').scrollTo({top:0,behavior:RM?'auto':'smooth'});$('openSettings').focus({preventScroll:true});
+});
+
+/* quiet hours */
+$('qTog').addEventListener('click',()=>{S.quiet=!S.quiet;$('qTog').setAttribute('aria-checked',S.quiet);shut($('qBody'),!S.quiet);if(!S.quiet)closePickers();summary();preview()});
+function closePickers(except){[['fromBtn','fromPick'],['toBtn','toPick']].forEach(([b,p])=>{if(p!==except){$(b).setAttribute('aria-expanded','false');shut($(p),true)}})}
+[['fromBtn','fromPick'],['toBtn','toPick']].forEach(([b,p])=>$(b).addEventListener('click',()=>{
+  const open=$(b).getAttribute('aria-expanded')!=='true';closePickers(p);
+  $(b).setAttribute('aria-expanded',open);shut($(p),!open);
+  if(open)$(p).querySelectorAll('.wheel').forEach(w=>w.sync());
+}));
+const H=40;
+document.querySelectorAll('.wheel').forEach(w=>{
+  const k=w.dataset.k,isH=k.endsWith('H'),vals=isH?[...Array(24).keys()]:[...Array(12).keys()].map(i=>i*5);
+  w.innerHTML=vals.map(v=>`<div class="opt" aria-hidden="true">${pad(v)}</div>`).join('');
+  w.setAttribute('aria-valuemin',vals[0]);w.setAttribute('aria-valuemax',vals[vals.length-1]);
+  const opts=w.children;let idx=vals.indexOf(S[k]),t;
+  const mark=()=>{[...opts].forEach((o,i)=>o.classList.toggle('sel',i===idx));w.setAttribute('aria-valuenow',vals[idx]);w.setAttribute('aria-valuetext',pad(vals[idx]));S[k]=vals[idx];summary();clearTimeout(t);t=setTimeout(preview,180)};
+  const go=(i,smooth)=>{idx=Math.max(0,Math.min(vals.length-1,i));w.scrollTo({top:idx*H,behavior:smooth&&!RM?'smooth':'auto'});mark()};
+  w.sync=()=>{w.scrollTop=idx*H;mark()};
+  w.addEventListener('scroll',()=>{const i=Math.round(w.scrollTop/H);if(i!==idx&&i>=0&&i<vals.length){idx=i;mark()}},{passive:true});
+  w.addEventListener('click',e=>{const i=[...opts].indexOf(e.target);if(i>-1)go(i,true)});
+  w.addEventListener('keydown',e=>{const m={ArrowUp:-1,ArrowDown:1,PageUp:-3,PageDown:3}[e.key];
+    if(m){e.preventDefault();go(idx+m,true)}else if(e.key==='Home'){e.preventDefault();go(0,true)}else if(e.key==='End'){e.preventDefault();go(vals.length-1,true)}});
+  w.sync();
+});
+function summary(){
+  const f=hm(S.fromH,S.fromM),to=hm(S.toH,S.toM);
+  $('fromBtn').textContent=f;$('toBtn').textContent=to;
+  const box=$('summary');box.classList.remove('err');
+  if(!S.quiet){$('sumB').textContent='Quiet hours are off';$('sumS').textContent='Push can make a sound at any time of day.';return}
+  const a=S.fromH*60+S.fromM,b=S.toH*60+S.toM;
+  if(a===b){box.classList.add('err');$('sumB').textContent='Start and end are both '+f;$('sumS').textContent='Pick a different end time to set a quiet window.';return}
+  const d=(b-a+1440)%1440,h=Math.floor(d/60),m=d%60;
+  $('sumB').textContent=`Silent from ${f} to ${to}`;
+  $('sumS').textContent=`${h?h+(h===1?' hour':' hours'):''}${h&&m?' ':''}${m?m+' min':''}${b<a?', overnight':''}. Every day.`;
+}
+
+/* preview */
+function renderSeg(){$('seg').innerHTML=S.cats.map(c=>`<button type="button" data-k="${c.k}" aria-pressed="${S.view===c.k}">${c.k==='news'?'News':c.name}</button>`).join('')}
+$('seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.view=b.dataset.k;renderSeg();preview()});
+function preview(){
+  const c=S.cats.find(x=>x.k===S.view),n=$('note'),mail=c.on&&!c.push;
+  n.className='note'+(mail?' mail':'')+(c.on?'':' dim');
+  n.innerHTML=`<span class="app">${svg(mail?ICON.email:ICON[c.k])}</span>
+  <span class="meta"><span>${mail?'Email · Larkpost':'Larkpost'}</span><span>${mail?'08:41':'now'}</span></span>
+  <b>${mail?'Subject: ':''}${c.t}</b><p>${c.b}</p>`;
+  if(!RM){void n.offsetWidth;n.classList.add('in')}
+  const q=S.quiet&&S.fromH*60+S.fromM!==S.toH*60+S.toM?` Between ${hm(S.fromH,S.fromM)} and ${hm(S.toH,S.toM)} it arrives silently.`:'';
+  let w;
+  if(!c.on)w=`${c.name} is off. Larkpost will not send these.`;
+  else if(mail)w=`Push is off for ${c.name.toLowerCase()}, so this lands in your inbox instead.`;
+  else if(!S.sys)w=`Held on this phone: system notifications are off.${c.email?' The email copy still goes out.':''}`;
+  else w=`Shown on the lock screen${c.email?' and sent by email':''}.`+q;
+  $('why').textContent=w;
+}
+renderSeg();summary();preview();
+
+/* large title -> bar title */
+new IntersectionObserver(([e])=>$('bar').classList.toggle('stuck',!e.isIntersecting),{root:$('main'),rootMargin:'-98px 0px 0px 0px'}).observe($('title'));
+</script>
+</body>
+</html>

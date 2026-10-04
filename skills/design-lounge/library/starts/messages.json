@@ -21,7 +21,9 @@
   "ios-bottom-sheet-detents",
   "phone-photo-picker",
   "phone-notifications-list",
-  "phone-search-results"
+  "phone-search-results",
+  "phone-notification-settings",
+  "m3-list-detail"
  ],
  "directions": [
   {

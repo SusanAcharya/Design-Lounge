@@ -1,0 +1,294 @@
+<!-- Design Lounge piece: m3-list-detail · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hut mail · Hutpost</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;600;700&family=Red+Hat+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#6c5e10;--on-primary:#fff;--primary-c:#f6e388;--on-primary-c:#221b00;
+  --secondary-c:#efe2bc;--on-secondary-c:#221b04;--tertiary-c:#c5ecce;--on-tertiary-c:#00210f;
+  --error-c:#ffdad6;--on-error-c:#410002;
+  --surface:#fff9ee;--surface-cl:#f9f3e5;--surface-c:#f3ecdc;--surface-ch:#ede6d6;
+  --on-surface:#1e1c13;--on-surface-v:#4b4739;--outline-v:#cdc6b4;--scrim:#000;
+  --display:"Red Hat Display",system-ui,sans-serif;--text:"Red Hat Text",system-ui,sans-serif;
+  --emph:cubic-bezier(.2,0,0,1);--emph-d:cubic-bezier(.05,.7,.1,1);--emph-a:cubic-bezier(.3,0,.8,.15);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:16px/24px var(--text);color:var(--on-surface);background:var(--surface);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0;text-align:left;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.rp{position:relative;overflow:hidden;isolation:isolate}
+.rp::after{content:"";position:absolute;inset:0;background:var(--on-surface);opacity:0;transition:opacity 150ms linear;z-index:-1;pointer-events:none}
+.rp:hover::after{opacity:.08}.rp:focus-visible::after,.rp:active::after{opacity:.1}
+.ink{position:absolute;border-radius:50%;background:var(--on-surface);opacity:.1;pointer-events:none;z-index:-1;transform:scale(0)}
+
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--surface)}
+.topbar{flex:none;padding-top:max(54px,env(safe-area-inset-top));background:var(--surface);transition:background-color 200ms var(--emph)}
+.topbar.lift{background:var(--surface-c)}
+.tb{height:64px;display:flex;align-items:center;gap:4px;padding:0 4px}
+.tb h1,.tb h2{flex:1;min-width:0;margin:0 0 0 4px;font:500 22px/28px var(--display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ib{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-v)}
+.me{width:32px;height:32px;border-radius:16px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font:600 13px/1 var(--display)}
+
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+.sec{margin:12px 32px 8px;font:600 14px/20px var(--display);letter-spacing:.01em;color:var(--primary)}
+ul{list-style:none;margin:0 16px;padding:0;display:flex;flex-direction:column;gap:2px}
+.item{width:100%;min-height:88px;display:flex;align-items:flex-start;gap:16px;padding:12px 16px 12px 16px;background:var(--surface-cl);border-radius:4px;
+  transition:border-radius 200ms var(--emph)}
+li:first-child .item{border-radius:20px 20px 4px 4px}
+li:last-child .item{border-radius:4px 4px 20px 20px}
+li:only-child .item{border-radius:20px}
+.item:active{border-radius:20px}
+.av{width:40px;height:40px;border-radius:20px;display:grid;place-items:center;font:600 16px/1 var(--display);flex:none;margin-top:2px}
+.t1{background:var(--primary-c);color:var(--on-primary-c)}.t2{background:var(--tertiary-c);color:var(--on-tertiary-c)}
+.t3{background:var(--secondary-c);color:var(--on-secondary-c)}.t4{background:var(--error-c);color:var(--on-error-c)}
+.body{flex:1;min-width:0}
+.hl{display:flex;align-items:baseline;gap:8px}
+.hl b{flex:1;min-width:0;font:500 16px/24px var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta{flex:none;font:500 12px/16px var(--text);letter-spacing:.03em;color:var(--on-surface-v)}
+.sub{margin:0;font-size:14px;line-height:20px;letter-spacing:.01em;color:var(--on-surface-v);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sub strong{font-weight:600;color:var(--on-surface)}
+.unread .hl b{font-weight:600}
+.unread .meta{color:var(--primary);font-weight:600}
+.dot{width:8px;height:8px;border-radius:4px;background:var(--primary);flex:none;align-self:center;margin-left:-2px}
+.end{height:120px}
+
+.fab{position:absolute;right:16px;bottom:calc(max(34px,env(safe-area-inset-bottom)) + 16px);height:56px;padding:0 20px 0 16px;border-radius:16px;display:flex;align-items:center;gap:12px;
+  background:var(--primary-c);color:var(--on-primary-c);font:500 16px/24px var(--display);box-shadow:0 3px 6px rgba(34,27,0,.16),0 1px 2px rgba(34,27,0,.22);
+  transition:transform 250ms var(--emph),opacity 200ms var(--emph)}
+.fab.hide{transform:scale(.6);opacity:0;pointer-events:none}
+
+#detail{visibility:hidden;z-index:2;will-change:clip-path,transform;transform-origin:100% 50%}
+#detail.open{visibility:visible}
+.inner{display:flex;flex-direction:column;height:100%}
+.ghost{position:absolute;margin:0;pointer-events:none;z-index:3}
+.subject{margin:8px 24px 0;font:600 28px/36px var(--display);letter-spacing:-.01em}
+.from{display:flex;align-items:center;gap:12px;margin:20px 24px 0}
+.from .who{flex:1;min-width:0}
+.from b{display:block;font:600 16px/24px var(--text)}
+.from span{font-size:14px;line-height:20px;color:var(--on-surface-v)}
+.msg{margin:20px 24px 0;font-size:16px;line-height:26px}
+.msg p{margin:0 0 16px}
+.card{margin:8px 16px 0;padding:20px;border-radius:24px;background:var(--surface-c)}
+.card small{font:600 12px/16px var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--primary)}
+.card p{margin:6px 0 16px;font:500 18px/26px var(--display)}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.btn{height:48px;padding:0 24px;border-radius:24px;display:inline-flex;align-items:center;gap:8px;font:500 15px/20px var(--display);transition:border-radius 200ms var(--emph)}
+.btn:active{border-radius:12px}
+.filled{background:var(--primary);color:var(--on-primary)}.filled::after,.filled .ink{background:var(--on-primary)}
+.tonal{background:var(--secondary-c);color:var(--on-secondary-c)}
+.btn svg{width:18px;height:18px}
+
+#dscroll .sec{margin:28px 32px 8px}
+.facts li{min-height:56px;display:flex;align-items:center;gap:16px;padding:8px 16px;background:var(--surface-cl);border-radius:4px}
+.facts li:first-child{border-radius:20px 20px 4px 4px}.facts li:last-child{border-radius:4px 4px 20px 20px}
+.facts svg{color:var(--on-surface-v)}
+.facts span{flex:1;font-size:16px;line-height:24px}
+.facts em{font:500 14px/20px var(--text);font-style:normal;color:var(--on-surface-v)}
+.edge{position:fixed;left:0;top:0;width:36px;height:36px;border-radius:18px;background:var(--surface-ch);color:var(--on-surface);display:grid;place-items:center;z-index:5;
+  box-shadow:0 1px 3px rgba(0,0,0,.18);transform:translateX(-40px);opacity:0;pointer-events:none}
+.edge svg{width:18px;height:18px}
+.snack{position:fixed;left:16px;right:16px;bottom:calc(max(34px,env(safe-area-inset-bottom)) + 12px);z-index:6;padding:14px 16px;border-radius:4px;background:#33302a;color:#f7f0e2;
+  font-size:14px;line-height:20px;transform:translateY(12px);opacity:0;visibility:hidden;transition:transform 300ms var(--emph-d),opacity 200ms var(--emph),visibility 0s 300ms}
+.snack.on{transform:none;opacity:1;visibility:visible;transition:transform 300ms var(--emph-d),opacity 200ms var(--emph)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<section class="screen" id="list" aria-labelledby="lt">
+  <header class="topbar" id="ltop">
+    <div class="tb">
+      <button class="ib rp" type="button" aria-label="Open menu" data-snack="Folders open from here"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <h1 id="lt">Hut mail</h1>
+      <button class="ib rp" type="button" aria-label="Search mail" data-snack="Search opens from here"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
+      <button class="ib rp" type="button" aria-label="Account, Nima Sherpa" data-snack="Signed in as Nima Sherpa"><span class="me" aria-hidden="true">NS</span></button>
+    </div>
+  </header>
+  <div class="scroll" id="lscroll">
+    <p class="sec" id="s1">Today</p>
+    <ul aria-labelledby="s1" id="today"></ul>
+    <p class="sec" id="s2">Earlier</p>
+    <ul aria-labelledby="s2" id="earlier"></ul>
+    <div class="end"></div>
+  </div>
+  <button class="fab rp" type="button" id="fab" data-snack="Writing to a hut opens next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>Write</button>
+</section>
+
+<section class="screen" id="detail" aria-labelledby="dt" aria-hidden="true">
+  <div class="inner" id="inner">
+    <header class="topbar" id="dtop">
+      <div class="tb">
+        <button class="ib rp" type="button" id="back" aria-label="Back to Hut mail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></button>
+        <h2 id="dt">Upper Ferrow Hut</h2>
+        <button class="ib rp" type="button" aria-label="Archive" data-snack="Archived. It stays in Earlier for this demo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h17v4h-17zM5 9v10h14V9M10 13h4"/></svg></button>
+        <button class="ib rp" type="button" aria-label="More options" data-snack="Mark unread, mute, and report sit here"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.5v.1M12 12v.1M12 18.5v.1" stroke-width="3"/></svg></button>
+      </div>
+    </header>
+    <div class="scroll" id="dscroll">
+      <p class="subject" id="dsub"></p>
+      <div class="from"><span class="av" id="dav"></span><div class="who"><b id="dwho"></b><span id="dwhen"></span></div></div>
+      <div class="msg" id="dmsg"></div>
+      <div class="card" id="dcard"><small id="dck"></small><p id="dcv"></p>
+        <div class="acts">
+          <button class="btn filled rp" type="button" data-snack="Reply opens with the hut address filled in"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 8 5 12l5 4M5 12h9a5 5 0 0 1 5 5v1"/></svg>Reply</button>
+          <button class="btn tonal rp" type="button" id="dcb"></button>
+        </div>
+      </div>
+      <p class="sec" id="s3">About this hut</p>
+      <ul class="facts" aria-labelledby="s3" id="dfacts"></ul>
+      <div class="end"></div>
+    </div>
+  </div>
+</section>
+<div class="edge" id="edge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></div>
+<div class="snack" id="snack" role="status" aria-live="polite"></div>
+<p class="sr" id="live" aria-live="polite"></p>
+
+<script>
+const $=id=>document.getElementById(id);
+const M=[
+ {g:0,hut:'Upper Ferrow Hut',f:['2,640 m','24 bunks','June to October'],who:'Pemba Dolkar',ini:'PD',t:1,when:'09:42',unread:1,subj:'Snow on the col, water still running',
+  msg:['Light snow came in overnight above 2,600 m. The path up from the lake is clear, but the last zigzags under the col are icy before ten.','The spring by the hut is still running, so you do not need to carry water past the bridge. Bring spikes if you plan an early start on Saturday.'],
+  ck:'Your booking',cv:'2 beds · Fri 9 Oct · half board',cb:'View booking'},
+ {g:0,hut:'Tarn Saddle Refuge',f:['2,210 m','38 bunks','All year'],who:'Ilse Varga',ini:'IV',t:2,when:'08:15',unread:1,subj:'Your beds for Friday are confirmed',
+  msg:['Two bunks in the east room are yours for Friday night. Check in from 15:00 at the kitchen hatch.','We take card and cash. The last hot meal goes out at 19:30, so call us from the saddle if you will be late.'],
+  ck:'Check in',cv:'Fri 9 Oct from 15:00',cb:'Add to calendar'},
+ {g:1,hut:'Brackmoor Bothy',f:['610 m','8 sleeping platforms','All year, unstaffed'],who:'Hutpost volunteers',ini:'BB',t:3,when:'Yesterday',subj:'Stove repaired, bring your own kindling',
+  msg:['The flue on the stove has been replaced and the bothy is warm again. The wood store is empty until the next work party.','Please carry in dry kindling and pack out every scrap of rubbish. The nearest bin is at the car park.'],
+  ck:'Next work party',cv:'Sat 17 Oct · 10:00 at the gate',cb:'Join work party'},
+ {g:1,hut:'Hutpost trail desk',f:['Valley office','Phone line 08:00 to 18:00','All year'],who:'Trail desk',ini:'TD',t:4,when:'Yesterday',subj:'Route notice: Ghyll path closed at the footbridge',
+  msg:['The footbridge over Sallow Ghyll was damaged in last week\u2019s storm. The path is closed between the weir and the upper fold.','Use the high diversion via Crag End. It adds about forty minutes and is waymarked with yellow posts.'],
+  ck:'Diversion',cv:'Crag End high route · yellow posts',cb:'Open route map'},
+ {g:1,hut:'Oselle Hut',f:['1,980 m','16 bunks','May to November'],who:'Marta Oselle',ini:'MO',t:1,when:'Mon',subj:'Lost and found: one blue mitten',
+  msg:['A blue wool mitten was left on the drying rack after the weekend. It has a red thumb and a name tag that reads K. Rai.','We will hold it at the hut until the end of October, then pass it to the valley office.'],
+  ck:'Held until',cv:'Sat 31 Oct at Oselle Hut',cb:'It is mine'},
+ {g:1,hut:'Col de Vire Refuge',f:['2,455 m','42 bunks','June to September'],who:'Anouk Bertrand',ini:'AB',t:2,when:'Sun',subj:'Dinner menu for the weekend',
+  msg:['Friday is lentil soup and barley bread. Saturday is polenta with mushrooms from the lower woods, and a plum tart.','Tell us by Thursday if you need a meal without gluten or dairy and we will cook for you separately.'],
+  ck:'Dietary notes by',cv:'Thu 8 Oct, 18:00',cb:'Send dietary note'},
+ {g:1,hut:'Sallow Pike Hut',f:['1,320 m','20 bunks','March to November'],who:'Sallow Pike Hut',ini:'SP',t:3,when:'28 Sep',subj:'Thanks for staying, here is your receipt',
+  msg:['Thank you for staying with us on the 26th. Your receipt is below for two nights in the dormitory with breakfast.','If you left anything behind, reply to this message within a month and we will post it down.'],
+  ck:'Receipt',cv:'2 nights · dormitory · breakfast',cb:'Download receipt'}
+];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+const list=$('list'),detail=$('detail'),inner=$('inner'),edge=$('edge'),fab=$('fab');
+let cur=-1,anim=false,ghost=null,snackT;
+
+M.forEach((m,i)=>{
+  const li=document.createElement('li');
+  li.innerHTML=`<button class="item rp${m.unread?' unread':''}" type="button" data-i="${i}" aria-label="${m.hut}, ${m.subj}, ${m.when}${m.unread?', unread':''}">
+    <span class="av t${m.t}" aria-hidden="true">${m.ini}</span>
+    <span class="body"><span class="hl"><b>${m.hut}</b><span class="meta">${m.when}</span>${m.unread?'<span class="dot"></span>':''}</span>
+    <p class="sub"><strong>${m.subj}.</strong> ${m.msg[0]}</p></span></button>`;
+  $(m.g?'earlier':'today').appendChild(li);
+});
+const items=[...document.querySelectorAll('.item')];
+
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.rp');
+  if(!el||reduce.matches)return;
+  const r=el.getBoundingClientRect(),d=Math.hypot(r.width,r.height)*2,s=document.createElement('span');
+  s.className='ink';s.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;
+  el.appendChild(s);
+  const g=s.animate([{transform:'scale(0)'},{transform:'scale(1)'}],{duration:450,easing:'cubic-bezier(.2,0,0,1)',fill:'forwards'});
+  const end=()=>{g.finished.then(()=>s.animate([{opacity:.1},{opacity:0}],{duration:200,fill:'forwards'}).finished.then(()=>s.remove()));
+    removeEventListener('pointerup',end);removeEventListener('pointercancel',end)};
+  addEventListener('pointerup',end);addEventListener('pointercancel',end);
+});
+function toast(t){clearTimeout(snackT);$('snack').textContent=t;$('snack').classList.add('on');snackT=setTimeout(()=>$('snack').classList.remove('on'),2800)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-snack]');if(b)toast(b.dataset.snack)});
+
+const clipOf=el=>{const r=el.getBoundingClientRect();return `inset(${r.top}px ${innerWidth-r.right}px ${innerHeight-r.bottom}px ${r.left}px round 16px)`};
+const FULL='inset(0px 0px 0px 0px round 0px)';
+
+function fill(m){
+  $('dt').textContent=m.hut;$('dsub').textContent=m.subj;
+  const av=$('dav');av.className='av t'+m.t;av.textContent=m.ini;av.setAttribute('aria-hidden','true');
+  $('dwho').textContent=m.who;$('dwhen').textContent='to you · '+m.when;
+  $('dmsg').innerHTML=m.msg.map(p=>`<p>${p}</p>`).join('');
+  $('dck').textContent=m.ck;$('dcv').textContent=m.cv;$('dcb').textContent=m.cb;$('dcb').dataset.snack=m.cb+' opens next';
+  const ic=['<path d="M3 19l6-10 4 6 2-3 6 7z"/>','<path d="M3 18V7M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.5"/>','<rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/>'],lb=['Altitude','Sleeps','Open'];
+  $('dfacts').innerHTML=m.f.map((v,k)=>`<li><svg viewBox="0 0 24 24" aria-hidden="true">${ic[k]}</svg><span>${v}</span><em>${lb[k]}</em></li>`).join('');
+  $('dscroll').scrollTop=0;$('dtop').classList.remove('lift');
+}
+
+function open(i){
+  if(anim||cur>-1)return;
+  cur=i;const it=items[i],m=M[i];
+  if(m.unread){m.unread=0;it.classList.remove('unread');it.querySelector('.dot')?.remove();it.setAttribute('aria-label',`${m.hut}, ${m.subj}, ${m.when}`)}
+  fill(m);
+  detail.classList.add('open');detail.removeAttribute('aria-hidden');list.setAttribute('aria-hidden','true');list.inert=true;
+  fab.classList.add('hide');
+  $('live').textContent='Opened '+m.subj;
+  if(reduce.matches){detail.animate([{opacity:0},{opacity:1}],{duration:150});$('back').focus();return}
+  anim=true;
+  const r=it.getBoundingClientRect();
+  ghost=it.cloneNode(true);ghost.classList.add('ghost');ghost.removeAttribute('data-i');ghost.setAttribute('aria-hidden','true');ghost.tabIndex=-1;
+  ghost.style.cssText=`left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px`;
+  detail.appendChild(ghost);it.style.visibility='hidden';
+  const o={duration:500,easing:'cubic-bezier(.2,0,0,1)'};
+  detail.animate([{clipPath:clipOf(it),backgroundColor:'#f9f3e5'},{clipPath:FULL,backgroundColor:'#fff9ee'}],o);
+  ghost.animate([{opacity:1},{opacity:0}],{duration:150,easing:'linear',fill:'forwards'});
+  inner.animate([{opacity:0,transform:`translateY(${Math.min(r.top-118,160)*.25}px)`},{opacity:0,offset:.3},{opacity:1,transform:'none'}],o)
+    .finished.then(()=>{anim=false;ghost.remove();ghost=null;$('back').focus()});
+}
+
+function close(fromT=0){
+  if(anim||cur<0)return;
+  const it=items[cur],i=cur;
+  const done=()=>{detail.classList.remove('open');detail.setAttribute('aria-hidden','true');detail.style.transform='';detail.style.clipPath='';
+    list.removeAttribute('aria-hidden');list.inert=false;it.style.visibility='';fab.classList.remove('hide');cur=-1;anim=false;it.focus({preventScroll:true});$('live').textContent='Back to Hut mail'};
+  if(reduce.matches){detail.animate([{opacity:1},{opacity:0}],{duration:150}).finished.then(done);return}
+  anim=true;
+  const r=it.getBoundingClientRect();
+  if(r.bottom<0||r.top>innerHeight)it.scrollIntoView({block:'center'});
+  ghost=it.cloneNode(true);ghost.classList.add('ghost');ghost.setAttribute('aria-hidden','true');
+  const r2=it.getBoundingClientRect();
+  ghost.style.cssText=`left:${r2.left}px;top:${r2.top}px;width:${r2.width}px;height:${r2.height}px;opacity:0`;
+  detail.appendChild(ghost);
+  const o={duration:400,easing:'cubic-bezier(.2,0,0,1)'};
+  const s=1-.1*fromT;
+  detail.animate([{clipPath:`inset(0px 0px 0px 0px round ${32*fromT}px)`,transform:`translateX(${-8*fromT}px) scale(${s})`,backgroundColor:'#fff9ee'},
+    {clipPath:clipOf(it),transform:'none',backgroundColor:'#f9f3e5'}],o);
+  inner.animate([{opacity:1},{opacity:0,offset:.35},{opacity:0}],{...o,fill:'forwards'});
+  ghost.animate([{opacity:0},{opacity:0,offset:.45},{opacity:1}],{...o,fill:'forwards'}).finished.then(()=>{
+    ghost.remove();ghost=null;inner.getAnimations().forEach(a=>a.cancel());done()});
+}
+
+items.forEach((it,i)=>it.addEventListener('click',()=>open(i)));
+$('back').addEventListener('click',()=>close());
+document.addEventListener('keydown',e=>{if(cur>-1&&(e.key==='Escape'||(e.altKey&&e.key==='ArrowLeft'))){e.preventDefault();close()}});
+$('dscroll').addEventListener('scroll',e=>$('dtop').classList.toggle('lift',e.target.scrollTop>4));
+$('lscroll').addEventListener('scroll',e=>$('ltop').classList.toggle('lift',e.target.scrollTop>4));
+
+let drag=null;
+detail.addEventListener('pointerdown',e=>{
+  if(anim||cur<0||e.clientX>32||e.target.closest('button'))return;
+  e.preventDefault();drag={x:e.clientX,p:0};detail.setPointerCapture(e.pointerId);
+});
+detail.addEventListener('pointermove',e=>{
+  if(!drag)return;
+  const p=Math.max(0,Math.min(1,(e.clientX-drag.x)/220));drag.p=p;
+  detail.style.transform=`translateX(${-8*p}px) scale(${1-.1*p})`;
+  detail.style.clipPath=`inset(0px round ${32*p}px)`;
+  list.style.filter=`brightness(${1-.12*p})`;
+  edge.style.cssText=`top:${e.clientY-18}px;transform:translateX(${-40+56*Math.min(1,p*2)}px);opacity:${Math.min(1,p*3)}`;
+});
+const release=()=>{
+  if(!drag)return;
+  const p=drag.p;drag=null;edge.style.cssText='';list.style.filter='';
+  if(p>.3){close(p);return}
+  const a=detail.animate([{transform:detail.style.transform,clipPath:detail.style.clipPath},{transform:'none',clipPath:'inset(0px round 0px)'}],{duration:200,easing:'cubic-bezier(.2,0,0,1)'});
+  detail.style.transform='';detail.style.clipPath='';
+};
+detail.addEventListener('pointerup',release);detail.addEventListener('pointercancel',release);
+</script>
+</body>
+</html>

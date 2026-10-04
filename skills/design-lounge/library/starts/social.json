@@ -24,7 +24,10 @@
   "phone-photo-picker",
   "phone-notifications-list",
   "phone-feed-posts",
-  "phone-search-results"
+  "phone-search-results",
+  "phone-account-edit",
+  "phone-privacy-data",
+  "phone-delete-account"
  ],
  "directions": [
   {

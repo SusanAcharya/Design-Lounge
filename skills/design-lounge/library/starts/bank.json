@@ -24,7 +24,10 @@
   "phone-sign-in",
   "phone-notifications-list",
   "phone-wallet-cards",
-  "phone-qr-scanner"
+  "phone-qr-scanner",
+  "phone-delete-account",
+  "phone-privacy-data",
+  "phone-account-edit"
  ],
  "directions": [
   {
