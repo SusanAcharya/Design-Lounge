@@ -7,6 +7,7 @@ You do not need all of it every time. Read what the job needs:
 - One component or section: Adapting a brief, Components, and the brief itself.
 - A website: Before code, Stand out, Pick a direction, Register, Decide the screen, Look, Finish checklist.
 - An app or a tool: Before code, Match the world, Decide the screen, Minimum screens, Look, Finish checklist.
+- A redesign: Redesign, then the list above for its kind.
 
 Their words beat this file. When they ask for something a default here forbids, such as more motion, a second effect, or skipping a step, do what they asked, and write one line in DESIGN.md saying which default you set aside and why.
 
@@ -103,6 +104,7 @@ Scope:
 Idea: <website only, one picture sentence>
 Avoiding: <website only, the default look this could have become>
 Register: quiet | <one piece id>
+Dials: variance <1-10> · motion <1-10> · density <1-10>
 Kind: website | product | platform
 Mode: new kit | adopt existing
 Recipe: id · Direction: id (why, or the letter count)
@@ -131,6 +133,41 @@ Kept from their system:
 `{site}` is the `site` field in `library/index.json`. One line per piece you actually build. The role is layout, motion, or component: what they should look at if they want to compare. When they ask to change a screen, change that line, then rebuild only that screen.
 
 For a new product, the matching recipe in `starts` names the first pieces, and its chosen direction names the look. Build those before you invent a screen the recipe did not name.
+
+### Dials
+
+Three numbers from 1 to 10 that say how far to push. Set them from their words, then let them pick the pieces.
+
+| They said | Variance | Motion | Density |
+| --- | --- | --- | --- |
+| Calm, clean, minimal, editorial, "like Linear" | 5 | 3 | 3 |
+| Premium, luxury, "like Apple" | 7 | 6 | 3 |
+| Playful, wild, experimental, agency, Awwwards | 9 | 9 | 3 |
+| A landing page or portfolio, nothing more | 8 | 7 | 4 |
+| A daily tool, admin, dashboard | 3 | 2 | 7 |
+| Government, health, money, anything where trust comes first | 3 | 2 | 5 |
+
+- Variance: 1 is centred and even. 10 is off-grid, with sizes that clash on purpose. Above 6, no two sections share a shape.
+- Motion: 1 to 3 is Register quiet. 4 to 7 is one lead effect. 8 to 10 is a lead plus supporting effects, each in its own section.
+- Density: 1 to 3 is air, 4 to 6 is regular, 7 to 10 is dense. It sets the Density line.
+
+When they ask for "more" or "calmer", move a dial two steps and rebuild. Do not swap the theme.
+
+### A DESIGN.md other tools can read
+
+Sometimes they want the file to work in Google Stitch, or in another agent that expects the getdesign.md shape. Keep the sheet above at the top. Below it, add these sections, filled from the locked theme, pairing, and family. No new values.
+
+1. Visual Theme & Atmosphere: the mood in two sentences, plus the dials.
+2. Color Palette & Roles: each token with a plain name, its hex, and its job.
+3. Typography Rules: display, text, and mono faces, the six roles with size and weight, and the fonts not to use.
+4. Component Stylings: buttons, cards, inputs, and nav, each with hover, pressed, focus, and disabled.
+5. Layout Principles: the column, the page padding, the density scale, and the grid.
+6. Depth & Elevation: the family's shadow, or "flat" if it has none.
+7. Do's and Don'ts: five of each, taken from Look.
+8. Responsive Behavior: the breakpoints, 44px touch targets, and how the nav folds.
+9. Agent Prompt Guide: three short prompts that would rebuild a screen in this system.
+
+Use the same sections to read a DESIGN.md they bring. It is their system. Follow Adopt flow.
 
 ## Pick a direction
 
@@ -389,7 +426,7 @@ Feedback colours are for live state only.
 
 ## Look
 
-You can see the finished screen. Open it. A browser at the frame size, or a screenshot of that frame. Web is 1280×800. Phone is 390×844. Tablet is 1180×820. Read the page. A screenshot alone can hide a gap.
+You can see the finished screen. Open it. A browser at the frame size, or a screenshot of that frame. Web is 1280×800. Phone is 390×844. Tablet is 1180×820. Read the page. A screenshot alone can hide a gap. The commands are in Opening the page in [reference.md](reference.md): `playwright-cli` opens the file, resizes it, takes the screenshots, turns on reduced motion, and reads the console.
 
 If the browser cannot paint, cannot animate, or the screenshot repeats content, measure the DOM instead and write the same block with "measured". Check: no horizontal overflow (`scrollWidth` no greater than `clientWidth`), one primary button, that button at least 44px on a phone and 36px on the web, one element at display size, the currency word and the digits sharing one computed `font-family`, and, when the sheet names them, the sidebar width, the panel width, and the content column. Measure the column once with the rail open and once with it closed. If you cannot open it and cannot measure it, say so. The UI is not done.
 
@@ -442,6 +479,15 @@ These are fails. They are the tells of a page that was generated and not designe
 - Two navigation systems. A sidebar, a panel, or a nav list that differs from the sheet. The content column wider because the rail closed. A chart painted in a library's default colours.
 - On a website: one of the default looks in Stand out. A first screen with type and no picture of the work. A portfolio whose work is a text list. A site where half the text is small grey labels. A page you cannot remember after five seconds.
 - An invented client, employer, project, number, or quote.
+- An em dash or en dash in text people read. A version label in the hero, such as BETA or v2.0, when this is not a launch. Numbered eyebrows like `001 · Work` or `01 / 04`.
+- Dots between every word in a strip (`a · b · c · d`). One per line at most. A coloured dot before every nav item or row, when it is not a live status.
+- A "Scroll" cue or an animated mouse. A strip of words along the bottom of the hero, such as `DESIGN / BUILD / SHIP`. A city, clock, or weather strip, unless the place matters to the product.
+- A tag laid over a photo. A made-up photo credit. Poetic labels such as "Field notes", "From the bench", or "Quietly trusted by" where a plain label works.
+- "Step 1, Step 2, Step 3" as the labels. The step's own verb is the label: Install, Connect, Ship.
+- Numbers that look made up: 99.99%, 10x, 50%, $1,000,000. Real numbers are uneven: 47.2%, 1,284. Brand names that sound made up: Nexus, Acme, SmartFlow, Cloudly. Copy words that mean nothing: elevate, seamless, unleash, supercharge, next-gen.
+- Pure `#000` black. A custom cursor on a daily tool. A grey box standing in for the product. Draw the product as a small working screen, as Show the work says, or leave it out.
+
+A piece you locked may use one of these on purpose. For example, a footer piece may show a live clock. Then it is allowed, because you chose it. Do not add one on your own.
 
 Uniform means the column, the page padding, the button, the filter, the field, the radius, the type roles, the sidebar, the panel, and the nav labels match on every screen of this pass, and on the phone form of that nav. Screen two inventing its own card, its own width, or its own rail is a fail.
 
@@ -467,6 +513,29 @@ Left alone: the theme, the pairing, the family, and the other screens
 ```
 
 If the correction makes a look check fail, undo it. A second correction waits until they ask. One change is the pass. Five changes is a new design.
+
+## Redesign
+
+Getting the kind of redesign wrong is the most common way a redesign goes bad. Decide it first.
+
+- Keep the brand: make it better without losing who they are. Their colours, type, and logo stay.
+- Start the look again: a new theme over the same content and pages. Treat the look as a new kit. The content and the page list stay.
+- If you can't tell, ask once: "Keep the current brand, or start the look again?"
+
+Before you change anything, open the site and write this:
+
+```
+Redesign: keep the brand | start the look again
+Brand: <primary colour, fonts, radius, how the logo is used>
+Pages and nav: <the page list and nav labels, in order>
+Keep: <what works, such as a known hero, a signature interaction, the voice>
+Drop: <the Look fails it has now, broken layouts, filler sections>
+Dials now: variance <n> · motion <n> · density <n>
+```
+
+To keep the brand, fix things in this order, and stop once it works: type first, then spacing, then colour (calm the neutrals and keep the brand colour), then motion, then the hero and one key section. Replace a whole section only if it can't be saved.
+
+Never change these without asking: the URLs, the nav labels, the form field names and their order, the logo, and the legal or cookie text. Keep the alt text, the focus styles, and keyboard use at least as good as before.
 
 ## Stack
 
@@ -494,7 +563,8 @@ Put the theme's CSS variables on `:root` once, or in one theme provider. Control
 - Space between groups is the stack gap. Space inside a group is half of that.
 - A list is one state: loading, empty, failed, or populated. The piece you used matches that state.
 - The next action names the screen it opens. That screen is in this pass, or you said it is still open.
-- You opened each finished screen at its frame size and wrote the look notes in the reply.
+- You opened each finished screen at its frame size and wrote the look notes in the reply. Nothing scrolls sideways at 390px, the console has no errors, and the reduced-motion frame is complete.
+- No em dash or en dash in the text on the page.
 - You wrote the Match block. Column, padding, control height, radius, and amount face are the same on every screen. The sidebar, the panel, and the nav labels match the sheet, including after the rail closes and on the phone.
 - Every look check passed. A fail was fixed, and that screen was opened again.
 - The theme matches this product's world, or a recipe matched. The reply names the theme you rejected. You did not lock a palette because it was first.

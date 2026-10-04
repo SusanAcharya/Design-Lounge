@@ -68,6 +68,36 @@ Public sites the screens study are `sources` in `library/index.json`, and again 
 
 Pick one source for a public site. Read its `line` and `take`. The pieces listed on that source are the screens that already study it. Do not blend two sources. Do not copy the site's palette. The locked Lounge theme still wins. A source with `studied: false` is on the list only. No screen claims it yet.
 
+## Brand files
+
+Use these for Brand flow in SKILL.md. Each one is a DESIGN.md that describes a real brand's look: colours, type, radius, spacing, components, and dos and don'ts. They come from [awesome-design-md](https://github.com/VoltAgent/awesome-design-md) (MIT). The site [getdesign.md](https://getdesign.md) shows each file with a preview.
+
+The file is at `https://raw.githubusercontent.com/VoltAgent/awesome-design-md/main/design-md/<slug>/DESIGN.md`. The slugs:
+
+`airbnb`, `airtable`, `apple`, `binance`, `bmw`, `bmw-m`, `bugatti`, `cal`, `claude`, `clay`, `clickhouse`, `cohere`, `coinbase`, `composio`, `cursor`, `dell-1996`, `elevenlabs`, `expo`, `ferrari`, `figma`, `framer`, `hashicorp`, `hp`, `ibm`, `intercom`, `kraken`, `lamborghini`, `linear.app`, `lovable`, `mastercard`, `meta`, `minimax`, `mintlify`, `miro`, `mistral.ai`, `mongodb`, `nike`, `nintendo-2001`, `notion`, `nvidia`, `ollama`, `opencode.ai`, `pinterest`, `playstation`, `posthog`, `raycast`, `renault`, `replicate`, `resend`, `revolut`, `runwayml`, `sanity`, `sentry`, `shopify`, `slack`, `spacex`, `spotify`, `starbucks`, `stripe`, `supabase`, `superhuman`, `tesla`, `theverge`, `together.ai`, `uber`, `vercel`, `vodafone`, `voltagent`, `warp`, `webflow`, `wired`, `wise`, `x.ai`, `zapier`.
+
+If the fetch fails, the list may have moved. Say so, and use the closest Lounge theme.
+
+## Opening the page
+
+Look in [practice.md](practice.md) needs a real browser. Use [playwright-cli](https://github.com/microsoft/playwright-cli). If the `playwright-cli` command is missing, try `npx playwright cli`. If that is missing too, ask before you install it with `npm install -g @playwright/cli@latest`. Installing it is their call.
+
+```bash
+playwright-cli open file:///abs/path/index.html
+playwright-cli resize 1280 800
+playwright-cli screenshot --filename=web.png
+playwright-cli --raw eval "document.documentElement.scrollWidth <= innerWidth"
+playwright-cli console warning
+playwright-cli resize 390 844
+playwright-cli screenshot --filename=phone.png
+playwright-cli set-reduced-motion reduce
+playwright-cli reload
+playwright-cli screenshot --filename=still.png
+playwright-cli close
+```
+
+Look at each screenshot. The `eval` must print `true`, which means nothing scrolls sideways. `console` must show no errors. With reduced motion on, the still frame must show the finished page, not a blank one waiting for an animation.
+
 ## Token roles
 
 Copy the theme `css` block. Do not rename the variables.

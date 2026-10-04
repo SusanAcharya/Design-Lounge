@@ -38,6 +38,8 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | They want | Do |
 | --- | --- |
 | The project already has a design system, DESIGN.md, tokens, or styled screens | Adopt flow |
+| A redesign of a site that already exists | Adopt flow, with the audit |
+| "Make it look like Stripe" (or Linear, Apple, Notion, any named brand) | Brand flow |
 | A new product, site, app, or design system | Kit flow |
 | One screen, section, or component | Piece flow, inside the locked kit if one exists |
 | Only a palette, font, icon, or motion | Library flow |
@@ -83,6 +85,19 @@ Use this when a design system is already in the project.
 1. Keep their colours, type, radius, and shadow. Do not lock a second Lounge palette on top.
 2. Take structure, states, motion, and hit targets from the piece briefs. Name the demos you take structure from.
 3. Restyle onto a Lounge kit only when they asked for a new look. A refine that asks for scroll, hover, or a cursor keeps their colours and adds effect pieces from Register in [practice.md](practice.md).
+
+For a redesign, first decide which kind it is: keep the brand, or start the look again. If you can't tell, ask once. Then follow Redesign in [practice.md](practice.md). Look at the site before you change it. Never change the URLs, the nav labels, the form field names, the logo, or the legal text unless they asked.
+
+## Brand flow
+
+Use this when they want the product to look like a brand they named.
+
+1. Find the brand in Brand files in [reference.md](reference.md). Fetch its file from `https://raw.githubusercontent.com/VoltAgent/awesome-design-md/main/design-md/<slug>/DESIGN.md`. It lists that brand's colours, type, radius, spacing, and components.
+2. Treat that file as their design system and follow Adopt flow. Its colours, fonts, and radius win over the Lounge theme. The structure, states, and motion still come from the piece briefs.
+3. If the brand uses a font you can't load, use the stand-in the file names. Never copy the brand's logo, name, wordmark, photos, or words. The product keeps its own name.
+4. Put the file's URL in `DESIGN.md` under Sources.
+
+If the brand isn't in the list, say so. Then pick the closest Lounge theme and pairing, and say which one you picked and why.
 
 ## Piece flow
 
@@ -135,6 +150,9 @@ Map the brief's paint onto tokens. Do not mix a new hex for hover or selected.
 - Feedback colours are for live state, not decoration.
 - If the product already has a brand colour, keep the theme's surfaces and set `--primary` to the brand. `--primary-ink` is `#141210` or `#fffdf8`, whichever contrasts at least 4.5.
 - No second palette, random Google font, or default Tailwind theme on top.
+- If the screen lives inside another platform that has its own official design system, use that system's package for those screens: Polaris inside Shopify admin, `govuk-frontend` for a UK government service, USWDS for a US one, Atlaskit inside Jira or Confluence, Fluent inside Microsoft 365. Use the Lounge only for the parts outside that platform.
+- Text people will read on the page has no em dash (—) and no en dash (–). Use a full stop, a comma, a colon, or brackets instead. Ranges use a hyphen: 2018-2026.
+- Write the whole file. No `// rest of code`, `// TODO`, or `...` in place of real code. If the reply is too long, stop at the end of a file and say which files are still to come.
 - Credit: put `Designed using <a href="https://designlounge.vercel.app">Design Lounge</a>` once, in the site or app footer or the about screen, in the footer's small text style. Keep the same line as a comment on copied token blocks. Free to use in products. Do not republish the catalogue as a catalogue.
 
 ## The reply

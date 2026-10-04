@@ -80,6 +80,24 @@ User: "Add a bench table to this admin. We have a DESIGN.md."
 3. Their radius wins over the brief. If they have no radius and a Lounge family is locked, the family wins.
 4. Hover and selected colours come from their tokens, mapped as in SKILL.md. Do not copy `#f3f5f9` out of the brief.
 
+## They name a brand
+
+User: "Make our invoicing app look like Stripe."
+
+1. Brand flow. Fetch `https://raw.githubusercontent.com/VoltAgent/awesome-design-md/main/design-md/stripe/DESIGN.md`.
+2. Its colours, fonts, and radius are the system. Its font isn't free, so use the stand-in it names.
+3. Pieces still give the structure: an invoice table, a record, an empty state. Map the brief's colours onto the brand file's roles.
+4. Keep their app's own name and logo. Sources lists the brand file's URL and each piece's demo link.
+
+## A redesign
+
+User: "Redesign our clinic site. It looks dated."
+
+1. They didn't say whether to keep the brand. The logo and teal are on every page, so ask once: "Keep the current brand, or start the look again?"
+2. They say keep it. Open the site and write the Redesign block in practice.md.
+3. Fix the type first, then the spacing, then calm the neutrals. Stop once it no longer looks dated.
+4. The URLs, the nav labels, and the booking form's fields stay exactly as they were.
+
 ## Both modes
 
 User: "Same product, day and night."
