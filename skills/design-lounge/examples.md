@@ -11,6 +11,16 @@ User: "Payroll app for a Kathmandu studio. Next.js and Tailwind."
 3. Put the theme page, the type page, and the demo link for each screen at the top of the reply. Write them into `DESIGN.md` under Sources.
 4. Build in the same turn. Open the screens. Run Look, then One correction. They can still say "swap the palette" or "change the table" after.
 
+## A portfolio with no mood words
+
+User: "Build my portfolio. I'm Sunim, a product engineer. I care about quiet interfaces, clear state, and explicit gates." Plus three projects.
+
+1. Recipe `portfolio-builder`. No mood word like dark or playful, but his own words say a lot. Three words: quiet, explicit, systems.
+2. Compare with the four directions' moods. Cobalt desk is "precise, systems thinker, a visible grid". Lock it. Do not run the name number: there is no tie.
+3. Idea from his habit: the site moves gate by gate, each project opens only when you pass the one before. Signature: the project gates, built only for this site.
+4. Sections by content. Three different projects suit `stacking-cards-scroll` or `case-file-horizontal-scroll`, not a single-figure sticky scroll. A short belief suits `scroll-word-highlight` for about.
+5. Cobalt desk leans on the studio template (grid lines, mono labels, giant wordmark). Keep two of those, not all of them.
+
 ## They want to choose first
 
 User: "Payroll app. Show me a few looks before you build."

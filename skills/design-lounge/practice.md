@@ -37,6 +37,7 @@ Agents with good taste still land on the same few pages. These are fails, unless
 - The dark portfolio. A near-black page, a huge serif italic name, a small mono kicker line, a numbered table of projects, a local clock, an "open to work" dot.
 - The SaaS template. A gradient hero, a centred headline, three feature cards, a row of logos.
 - The quiet paper page. Cream background, a serif headline, and everything else small grey text.
+- The studio template. The 2024-26 look that good agents now all make: hairline grid lines everywhere, small tracked uppercase mono labels, numbered sections ("01 / Work"), a giant wordmark footer, and a sticky scroll section. Each one is fine. All of them together is a template. Use two at most on one site.
 
 If your plan matches one of these, change the theme or the layout before you write code.
 
@@ -48,6 +49,16 @@ Add one line to the sheet: `Idea:`. It says what this site does that only fits t
 - Not an idea: "Bold and minimal." "Clean, modern, premium." "Luxury dark."
 
 The idea decides the hero and the proof block. If you cannot write it, you are not ready to build.
+
+To find it, look in their material, not in the library:
+
+- A thing from their work: the object they make, the screen they are proud of, the tool they built. Can the site be that thing? A ledger designer's work sits in ledger rows. A typeface maker's name is set in their face.
+- A habit: how they work. Someone who writes about explicit gates gets a site you move through gate by gate.
+- A place or a time: their city, their trade, the hour they work.
+
+Write three candidates. Keep the one that changes the hero. An idea that only changes the copy is not the idea.
+
+Then make one signature: one element built only for this site, from the Idea, that no piece in the library has. It uses the locked tokens, so it still belongs. Everything else may come from pieces. Name it on the sheet: `Signature: the project cards open like gates`. This is where the site stops rhyming with every other Lounge site.
 
 ### Show the work
 
@@ -67,7 +78,7 @@ The idea decides the hero and the proof block. If you cannot write it, you are n
 ### Size and contrast
 
 - Body text on a website is 17 to 19px, in `--ink` or `--ink-2`. Never `--ink-3` for a sentence.
-- Small tracked labels: three per view at most. A page where half the text is 11px grey looks unfinished. The labels a piece's brief draws count too. If the hero piece already has three, add none of your own.
+- Small tracked labels: three per view at most. A page where half the text is 11px grey looks unfinished. The labels a piece's brief draws count too. If the hero piece already has three, add none of your own. If a brief draws more than three, cut its labels down to three. The limit wins over the brief.
 - No facts strip, clock, timeline, status dot, or filter chips unless they asked. Each one is a small region that does not serve the four lines.
 
 ### Motion you can see
@@ -105,12 +116,13 @@ Next action:
 Job of this pass:
 Scope:
 Idea: <website only, one picture sentence>
+Signature: <website only, the one element made only for this site>
 Avoiding: <website only, the default look this could have become>
 Register: quiet | <one piece id>
 Dials: variance <1-10> · motion <1-10> · density <1-10>
 Kind: website | product | platform
 Mode: new kit | adopt existing
-Recipe: id · Direction: id (why, or the name number)
+Recipe: id · Direction: id (their three words and the mood it matched, or the name number if it was a tie)
 Theme: id (pair: id or none)
 Why this theme:
 Rejected:
@@ -124,7 +136,7 @@ Panel: none | 300
 Nav:
 Phone nav: drawer | tabs
 Pieces:
-Sections: <website only> work <id> · about <id> · contact <id> · footer <id>, each with its sum
+Sections: <website only> work <id> · about <id> · contact <id> · footer <id>, each with why it fits the content (and its sum if it was a tie)
 Kept from their system:
 
 ## Sources
@@ -179,7 +191,8 @@ Every recipe has three to five `directions`. Each one is a complete look: theme,
 
 1. They named a theme, a pairing, a colour, or a site they like. Lock the direction closest to it, then swap in what they named.
 2. Their words carry a mood, an audience, or a world: dark, light, playful, calm, luxury, technical, for developers, for kids, loud, Nepali, retro, AI. Lock the direction whose `mood` says it.
-3. Nothing to go on. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: kiln-workbench (Sunim = 19+21+14+9+13 = 76, 76 mod 4 = 0)`. This keeps one product consistent and keeps two products apart. Counting letters is not enough, because names of the same length would always land together.
+3. Read the person. Most messages carry more than they say: a bio, a tagline, project names, their job, their own site or GitHub, the way they write. Write three words that describe that material, in their words where you can ("quiet, explicit, systems"). Compare them with each direction's `mood` and lock the closest. Write it on the sheet: `Direction: cobalt-desk (their words: quiet interfaces, clear state, explicit gates; mood: precise, systems thinker)`. A designer starts from the person, not from a number.
+4. Two or more directions fit equally, or there is truly nothing to read (a bare "make me a portfolio"). Only then use the name number, and only among the directions that fit. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: kiln-workbench (Sunim = 19+21+14+9+13 = 76, 76 mod 4 = 0)`. The name number keeps one product consistent and keeps two products apart. It does not know who they are, so it never overrules rule 3. Counting letters is not enough, because names of the same length would always land together.
 
 Do not take the first direction because it is first. Do not mix two directions. If the hero is unset, use the recipe's first piece. If the effect is null, the register stays quiet.
 
@@ -190,9 +203,10 @@ The direction is the start, not the end. The Idea, the copy, the projects, and t
 The direction picks the hero and one effect. It does not pick the other sections. If every site took the recipe's first footer and first work block, two different people would get the same page under different colours. So pick each section on its own.
 
 1. If their words point at one option ("a big email to copy", "a timeline of my work"), take it.
-2. Otherwise use the name number from the direction, plus the section's step: work +1, about +2, contact +3, footer +4. Divide by the number of options in that section's list below. The remainder picks it, counting from 0. Write each on the sheet: `Footer: footer-centered-colophon (76 + 4 = 80, 80 mod 4 = 0)`.
-3. Skip an option that clashes with the locked family, or that needs something they don't have, such as real photos. Move to the next one, and say why.
-4. Never use the same piece for two sections.
+2. Fit the content you have. Work: three projects of different kinds suit cards or a horizontal rail, one product with steps suits a sticky scroll, many small things suit a bento. About: a long story suits a sticky split, a short belief suits a word highlight. Contact: a freelancer who takes briefs suits the brief steps, someone who just wants mail suits the giant email. Drop every option the content does not fit.
+3. Several still fit. Use the name number from the direction, plus the section's step: work +1, about +2, contact +3, footer +4. Divide by the number of options in that section's list below. The remainder picks it, counting from 0. Write each on the sheet: `Footer: footer-centered-colophon (76 + 4 = 80, 80 mod 4 = 0)`.
+4. Skip an option that clashes with the locked family, or that needs something they don't have, such as real photos. Move to the next one, and say why.
+5. Never use the same piece for two sections.
 
 The lists, for a website:
 
@@ -238,6 +252,8 @@ Briefs are written for their demo's palette and mode. Your theme may be the oppo
 - A brief's gradient or sky uses the theme's own colours: `--bg` to `--surface-2`, with `--primary` or `--accent` as the one bright stop. A dusk parallax on a light theme becomes a daylight parallax with the same layers and speeds.
 - A brief's fonts become the pairing's roles. Display stays display, body stays `--font-text`. Where the brief uses mono for labels or numbers and the pairing has no mono, labels use `--font-text` small caps or tracked caps, numbers use `.num` (the text face with even-width digits), and only code uses the system mono. Do not add a Google mono font.
 - Keep from the brief: structure, counts, sizes, motion timing, states, and hit targets.
+
+When the content does not fit the brief's shape, do not force it. A sticky scroll written for one figure that morphs does not suit three unrelated projects. Either keep the shape by giving every step the same frame (one device frame whose screen changes, so the morph still reads), or go back to the section list and take the next option that fits. Say which you did. A crossfade between unrelated pictures is the brief broken, not translated.
 
 If a brief draws the same solid button twice, keep one. The other is outline or a text link with the same verb.
 

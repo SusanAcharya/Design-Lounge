@@ -71,6 +71,21 @@ Ask before building only when:
 
 If they ask for a change after, edit that one Source line and rebuild that screen on the same sheet. Do not open a second palette.
 
+## A website, the short path
+
+The full method is long. For a website, these are the steps that matter, in order. Open the named section only when you reach its step.
+
+1. Read the person: their words, bio, projects, own site. Write three words for them (Pick a direction, rule 3, in [practice.md](practice.md)).
+2. Lock the recipe and the direction whose mood matches those words. The name number only breaks a tie.
+3. Write the Idea and the Signature (Write the idea). Name the default look you are avoiding, including the studio template.
+4. Pick work, about, contact, and footer by what content they have (Sections, one by one).
+5. Open the brief of every piece you build, including the menu and any copy button.
+6. Build with real content only. Links go where they say. Drawn data says "Example".
+7. Screenshot web and phone, then scroll through each effect (Opening the page in [reference.md](reference.md)). Fix what you see. Make one correction.
+8. End with the closing block in The reply.
+
+The rules are the floor, not the design. Passing all of them makes a page correct. The Idea and the Signature make it theirs.
+
 ## Kit flow
 
 1. Pick a kind (`website`, `product`, `platform`, `personal`) with the kind map in [reference.md](reference.md). Then take the matching recipe from `starts` and one of its `directions` (Pick a direction in [practice.md](practice.md)). The same sentence from two people must not give the same site. Do not lock the first palette, pairing, or family because it is first.
@@ -165,10 +180,10 @@ Map the brief's paint onto tokens. Do not mix a new hex for hover or selected.
 
 Keep it short. The pick with links at the top. Then what you built, anything in Say so in [practice.md](practice.md), and only the checks that failed and how you fixed them. Do not paste a checklist of passes.
 
-End every build reply with this block. It is required even when everything passed, because it proves you looked:
+End every build reply with this block. It is required even when everything passed, because it proves you looked. Name the actual screenshot files. If you could not open the page, write "not looked" and say why. Never say you looked when you only read the code.
 
 ```
-Looked at: <screens and sizes> with <tool>
+Looked at: <screenshot file names, with sizes> with <tool>, or "not looked"
 Remember after five seconds: "<one thing>" · could be anyone's: yes | no
 Correction: <the one change>
 Still open: <missing links, assets, effects you never saw run, parts built without a brief, or none>
