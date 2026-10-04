@@ -5,8 +5,10 @@ description: >-
   pairings, component families, icons, motion, and piece briefs. Use when the
   user asks for a design, design system, UI, look and feel, palette, colors,
   fonts, landing page, marketing site, dashboard, admin, mobile app, shop,
-  editorial, or to make an interface look finished. Also use when they mention
-  Design Lounge, a kit, or a piece brief.
+  editorial, or to make an interface look finished. Also covers what the
+  taste-skill pack does: anti-slop pages, minimal, brutalist and high-end
+  looks, redesigns, image-first mockups, logos and brand kits. Also use when
+  they mention Design Lounge, a kit, or a piece brief.
 ---
 
 # Design Lounge
@@ -28,6 +30,7 @@ Everything you need is next to this file. Read only what the job needs.
 3. `library/icons.json` — Lounge Icons, only when the screen needs icons.
 4. [components.md](components.md) — the controls, icons (including what to do when one is missing), the logo and favicon, and which piece to use for which job.
 5. [practice.md](practice.md) — the method. Its first lines say which sections each job needs. Do not read all of it for one component.
+6. [taste.md](taste.md) — the taste-skill pack folded in: named looks (minimal, brutalist, high-end), page shape, craft details, image-first mockups, and brand boards. You do not need those skills installed separately.
 
 Do not run scripts from this skill. If `library/index.json` is missing, the install is broken. Say so. Do not design from memory.
 
@@ -41,6 +44,9 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | A redesign of a site that already exists | Adopt flow, with the audit |
 | "Make it look like Stripe" (or Linear, Apple, Notion, any named brand) | Brand flow |
 | A new product, site, app, or design system | Kit flow |
+| A style by name: minimal, brutalist, Swiss, terminal, high-end, agency, luxury | Kit flow, with Named looks in [taste.md](taste.md) |
+| A brand kit, identity, logo system, or brand board | Kit flow, then Brand board in [taste.md](taste.md) |
+| "Show me first", a concept, or mockup images, and you can make images | Kit flow, then Image first in [taste.md](taste.md) before code |
 | One screen, section, or component | Piece flow, inside the locked kit if one exists |
 | Only a palette, font, icon, or motion | Library flow |
 | "Make it look good" with no kind | Kit flow. Infer the kind, the job, and the register. Say what you assumed. |

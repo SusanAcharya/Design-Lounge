@@ -5,9 +5,10 @@ This is how you design with the library. The catalogue is the material. This fil
 You do not need all of it every time. Read what the job needs:
 
 - One component or section: Adapting a brief, Components, and the brief itself.
-- A website: Before code, Stand out, Pick a direction, Register, Decide the screen, Look, Finish checklist.
+- A website: Before code, Stand out, Pick a direction, Register, Decide the screen, Look, Finish checklist. Then Page shape and Craft in [taste.md](taste.md). If they named a style, Named looks there too.
 - An app or a tool: Before code, Match the world, Decide the screen, Minimum screens, Look, Finish checklist.
 - A redesign: Redesign, then the list above for its kind.
+- A brand kit or logo system: Brand board in [taste.md](taste.md), after the kit is locked.
 
 Their words beat this file. When they ask for something a default here forbids, such as more motion, a second effect, or skipping a step, do what they asked, and write one line in DESIGN.md saying which default you set aside and why.
 

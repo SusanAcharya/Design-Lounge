@@ -82,3 +82,5 @@ Pieces are numbered by publish date, then title. Don’t backdate.
 ## Credit
 
 Susan Acharya · Kathmandu · [acharyasusan.com.np](https://acharyasusan.com.np)
+
+The skill folds in ideas from [taste-skill](https://github.com/Leonxlnx/taste-skill) by Leon Lin (MIT) and brand files from [awesome-design-md](https://github.com/VoltAgent/awesome-design-md) by VoltAgent (MIT), and it uses [playwright-cli](https://github.com/microsoft/playwright-cli) by Microsoft to look at pages. You do not need to install them separately.
