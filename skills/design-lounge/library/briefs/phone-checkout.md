@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 499 · "Phone checkout" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 509 · "Phone checkout" · designlounge.vercel.app -->
 
 # Phone checkout
 

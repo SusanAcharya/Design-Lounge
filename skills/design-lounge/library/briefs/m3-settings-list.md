@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 494 · "M3 settings list" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 502 · "M3 settings list" · designlounge.vercel.app -->
 
 # M3 settings list
 

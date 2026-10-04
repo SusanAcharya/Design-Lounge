@@ -1,0 +1,350 @@
+<!-- Design Lounge piece: three-scroll-world · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Low Field Office · The Long Cut</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,500;0,7..72,600;1,7..72,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3EDE3;--ink:#1C2822;--muted:#4E5E55;--moss:#1F4D38;--clay:#C4622D;
+  --line:rgba(28,40,34,.16);--sky:#D5E2DC;--focus:#1F4D38;
+  --serif:"Literata",Georgia,serif;--sans:"Manrope",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html{height:100%;scroll-behavior:smooth}
+body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font:17px/1.55 var(--sans);overflow-x:hidden}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+header{
+  position:fixed;top:0;left:0;right:0;height:64px;z-index:3;
+  display:flex;align-items:center;gap:28px;padding:0 28px;
+  background:var(--paper);border-bottom:1px solid var(--line);
+}
+.logo{font:600 14px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.logo:hover{color:var(--moss)}
+nav{margin-left:auto;display:flex;gap:8px}
+nav button{
+  height:44px;padding:0 16px;border:1px solid var(--ink);border-radius:999px;
+  background:transparent;color:var(--ink);font:600 13px/1 var(--sans);letter-spacing:.02em;cursor:pointer;
+  transition:background-color .16s var(--ease),color .16s var(--ease);
+}
+nav button:hover{background:rgba(28,40,34,.06)}
+nav button[aria-current="true"]{background:var(--ink);color:var(--paper)}
+.shell{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(0,.72fr);padding-top:64px}
+.stage{position:sticky;top:64px;align-self:start;height:calc(100vh - 64px);background:var(--sky)}
+canvas{display:block;width:100%;height:100%;background:var(--sky)}
+.stamp{
+  position:absolute;left:24px;bottom:22px;margin:0;pointer-events:none;
+  background:var(--paper);color:var(--ink);border:1px solid var(--line);
+  padding:10px 12px;font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+}
+.bar{position:absolute;left:0;right:0;top:0;height:3px;background:rgba(28,40,34,.08);pointer-events:none}
+.bar i{display:block;height:100%;width:100%;background:var(--clay);transform:scaleX(0);transform-origin:0 50%}
+.copy{min-width:0;border-left:1px solid var(--line)}
+article{min-height:calc(100vh - 64px);padding:56px 48px 72px;border-bottom:1px solid var(--line)}
+.idx{margin:0;font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#7A3418}
+h1,h2{margin:14px 0 0;font:600 44px/1.08 var(--serif);letter-spacing:-.02em;text-wrap:balance}
+.deck{margin:18px 0 0;font:italic 500 20px/1.4 var(--serif);color:var(--moss)}
+article p{margin:16px 0 0;max-width:38ch}
+.fact{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font:500 13px/1.4 var(--sans);letter-spacing:.02em;color:var(--muted)}
+.err{position:absolute;left:24px;right:24px;top:24px;color:var(--clay)}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media (max-width:1024px){
+  .shell{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  article{padding:40px 28px 56px}
+  h1,h2{font-size:36px}
+}
+@media (max-width:768px){
+  header{padding:0 16px;gap:12px}
+  nav button{padding:0 12px}
+  .shell{grid-template-columns:1fr}
+  .stage{height:52vh;position:relative;top:0}
+  article{min-height:0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  nav button{transition:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#gate">Low Field Office</a>
+  <nav aria-label="Chapters">
+    <button type="button" data-jump="gate" aria-current="true">The gate</button>
+    <button type="button" data-jump="cistern">The cistern</button>
+    <button type="button" data-jump="belvedere">The belvedere</button>
+  </nav>
+</header>
+<div class="shell">
+  <div class="stage">
+    <canvas id="view" aria-hidden="true"></canvas>
+    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+    <p class="stamp" id="stamp">01 · The gate</p>
+    <p class="err" id="err" hidden></p>
+  </div>
+  <div class="copy">
+    <article id="gate" aria-labelledby="g-title">
+      <p class="idx">01 · Mill Lane</p>
+      <h1 id="g-title">The wicket on Mill Lane</h1>
+      <p class="deck">Where the pavement stops and the cut begins.</p>
+      <p>The Long Cut starts in a gap in the hawthorn. Two oak posts and a lintel make a wicket low enough that a cyclist ducks and a child does not. Low Field Office set new posts in March 2024, after the east post split along the grain. The oak is unfinished, so it silvers with the hedge.</p>
+      <p>From the lane you see the water before you hear it. The cut runs straight for forty metres, then bends toward Hollow Step. The rails are set for a hand, not for a horse. Clear width is 1.16 m. Ned Harrow measured it twice, because the old opening had narrowed as the posts leaned.</p>
+      <p class="fact">Oak posts, 1.45 m · Lintel span 1.50 m · Rebuilt March 2024</p>
+    </article>
+    <article id="cistern" aria-labelledby="c-title">
+      <p class="idx">02 · Hollow Step</p>
+      <h2 id="c-title">The cistern at Hollow Step</h2>
+      <p class="deck">A stone tank the width of a small room, left open.</p>
+      <p>Hollow Step is a gritstone tank set flush with the towpath. Brick barges watered here. The rim is one course, and the water sits 180 mm below it, dark and still. In late summer the surface holds a skin of pollen. A round capstone rests on the near corner, the one the barge hands used as a step.</p>
+      <p>We left the cistern open. A lid would have made it safe and made it nothing. The only addition is the memory of a rail on the towpath side, painted the same clay as the joints at the belvedere. The tank is 1.55 m square. Do not lean on the rim. The stone dusts off on a wool coat.</p>
+      <p class="fact">Gritstone · 1.55 m square · Water 180 mm below the rim</p>
+    </article>
+    <article id="belvedere" aria-labelledby="b-title">
+      <p class="idx">03 · Far Bend</p>
+      <h2 id="b-title">Belvedere Three</h2>
+      <p class="deck">The last lookout, and the only one you can stand on.</p>
+      <p>Belvedere Three is a square shaft of pale limestone with a roof on four posts. From the platform the water reads as one line, the hawthorn as another, and the mill roof at Far Bend as a third. The stair is outside the shaft: twelve treads, no handrail on the water side. A clay rail marks the edge you are meant to trust.</p>
+      <p>Three treads were replaced in 2025. The new stone is a shade warmer and will not match for a decade. That is the point of a path that is still being walked. Platform height is 1.55 m. The roof clears a raised hand. This is the end of the model. The cut goes on. The study stops here.</p>
+      <p class="fact">Limestone · Platform at 1.55 m · Twelve treads · Three replaced in 2025</p>
+    </article>
+  </div>
+</div>
+<p class="sr" id="live" aria-live="polite">Showing the gate</p>
+<script>
+(function () {
+  var canvas = document.getElementById('view');
+  var stamp = document.getElementById('stamp');
+  var bar = document.getElementById('bar');
+  var live = document.getElementById('live');
+  var err = document.getElementById('err');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-jump]'));
+  var names = { gate: '01 · The gate', cistern: '02 · The cistern', belvedere: '03 · The belvedere' };
+  var spoken = { gate: 'Showing the gate', cistern: 'Showing the cistern', belvedere: 'Showing the belvedere' };
+  var gl = canvas.getContext('webgl', { antialias: true, alpha: false, depth: true, preserveDrawingBuffer: true });
+  if (!gl) { err.hidden = false; err.textContent = 'This walk needs WebGL.'; return; }
+
+  var VS = 'attribute vec3 aP;attribute vec3 aN;uniform mat4 uMVP;uniform mat4 uM;varying vec3 vN;varying vec3 vW;void main(){vW=(uM*vec4(aP,1.0)).xyz;vN=mat3(uM[0].xyz,uM[1].xyz,uM[2].xyz)*aN;gl_Position=uMVP*vec4(aP,1.0);}';
+  var FS = 'precision mediump float;varying vec3 vN;varying vec3 vW;uniform vec3 uEye,uCol,uEmit,uKeyD,uKeyC,uFillD,uFillC,uAmb;uniform float uMetal,uRough;void main(){vec3 N=normalize(vN);vec3 V=normalize(uEye-vW);vec3 col=uAmb*uCol+uEmit;vec3 L1=normalize(uKeyD);vec3 L2=normalize(uFillD);float s1=pow(max(dot(N,normalize(V+L1)),0.0),mix(10.0,90.0,1.0-uRough));float s2=pow(max(dot(N,normalize(V+L2)),0.0),mix(10.0,90.0,1.0-uRough));float d1=max(dot(N,L1),0.0);float d2=max(dot(N,L2),0.0);vec3 F0=mix(vec3(0.04),uCol,uMetal);col+=(uCol*(1.0-uMetal)*d1+F0*s1*d1)*uKeyC;col+=(uCol*(1.0-uMetal)*d2+F0*s2*d2)*uFillC;col=col/(col+vec3(1.0));gl_FragColor=vec4(pow(max(col,0.0),vec3(0.4545)),1.0);}';
+
+  function sh(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { err.hidden = false; err.textContent = gl.getShaderInfoLog(s); return null; }
+    return s;
+  }
+  var prog = gl.createProgram();
+  var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS);
+  if (!vs || !fs) return;
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs);
+  gl.bindAttribLocation(prog, 0, 'aP'); gl.bindAttribLocation(prog, 1, 'aN');
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { err.hidden = false; err.textContent = gl.getProgramInfoLog(prog); return; }
+  gl.useProgram(prog);
+  var loc = function (n) { return gl.getUniformLocation(prog, n); };
+  var uMVP = loc('uMVP'), uM = loc('uM'), uEye = loc('uEye'), uCol = loc('uCol'), uEmit = loc('uEmit'), uMetal = loc('uMetal'), uRough = loc('uRough');
+
+  function lin(hex) {
+    var n = parseInt(hex.slice(1), 16);
+    return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255].map(function (c) {
+      return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    });
+  }
+  function mulK(c, k) { return [c[0] * k, c[1] * k, c[2] * k]; }
+  gl.uniform3fv(loc('uKeyD'), [-3.5, 8.2, 4.4]);
+  gl.uniform3fv(loc('uKeyC'), mulK(lin('#FFF6E8'), 3.5));
+  gl.uniform3fv(loc('uFillD'), [4.5, 2.4, -2.2]);
+  gl.uniform3fv(loc('uFillC'), mulK(lin('#C5D6E4'), 0.7));
+  gl.uniform3fv(loc('uAmb'), mulK(lin('#D5E2DC'), 0.42));
+
+  function upload(g) {
+    var bp = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, bp);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(g.p), gl.STATIC_DRAW);
+    var bn = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, bn);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(g.n), gl.STATIC_DRAW);
+    return { bp: bp, bn: bn, count: g.p.length / 3 };
+  }
+  function boxGeo(w, h, d) {
+    var x = w / 2, y = h / 2, z = d / 2, p = [], nv = [];
+    var f = [
+      [[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z],[0,0,1]],
+      [[x,-y,-z],[-x,-y,-z],[-x,y,-z],[x,y,-z],[0,0,-1]],
+      [[x,-y,z],[x,-y,-z],[x,y,-z],[x,y,z],[1,0,0]],
+      [[-x,-y,-z],[-x,-y,z],[-x,y,z],[-x,y,-z],[-1,0,0]],
+      [[-x,y,z],[x,y,z],[x,y,-z],[-x,y,-z],[0,1,0]],
+      [[-x,-y,-z],[x,-y,-z],[x,-y,z],[-x,-y,z],[0,-1,0]]
+    ];
+    for (var i = 0; i < 6; i++) {
+      var face = f[i], N = face[4], q = [0,1,2,0,2,3];
+      for (var k = 0; k < 6; k++) { var v = face[q[k]]; p.push(v[0], v[1], v[2]); nv.push(N[0], N[1], N[2]); }
+    }
+    return { p: p, n: nv };
+  }
+  function icoGeo(r) {
+    var t = (1 + Math.sqrt(5)) / 2;
+    var V = [[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]];
+    for (var i = 0; i < 12; i++) { var l = Math.hypot(V[i][0], V[i][1], V[i][2]); V[i][0] = V[i][0] / l * r; V[i][1] = V[i][1] / l * r; V[i][2] = V[i][2] / l * r; }
+    var F = [[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+    var p = [], nv = [];
+    for (var f = 0; f < F.length; f++) {
+      var a = V[F[f][0]], b = V[F[f][1]], c = V[F[f][2]];
+      var ux = b[0]-a[0], uy = b[1]-a[1], uz = b[2]-a[2];
+      var vx = c[0]-a[0], vy = c[1]-a[1], vz = c[2]-a[2];
+      var nx = uy*vz-uz*vy, ny = uz*vx-ux*vz, nz = ux*vy-uy*vx;
+      var len = Math.hypot(nx, ny, nz) || 1; nx /= len; ny /= len; nz /= len;
+      var cx = (a[0]+b[0]+c[0])/3, cy = (a[1]+b[1]+c[1])/3, cz = (a[2]+b[2]+c[2])/3;
+      if (nx*cx+ny*cy+nz*cz < 0) { nx=-nx; ny=-ny; nz=-nz; var tmp = b; b = c; c = tmp; }
+      var tri = [a, b, c];
+      for (var k = 0; k < 3; k++) { p.push(tri[k][0], tri[k][1], tri[k][2]); nv.push(nx, ny, nz); }
+    }
+    return { p: p, n: nv };
+  }
+  var cache = {};
+  function box(w, h, d) { var k = 'b'+w+'x'+h+'x'+d; if (!cache[k]) cache[k] = upload(boxGeo(w, h, d)); return cache[k]; }
+  var stone = upload(icoGeo(0.22));
+  var meshes = [];
+  function add(g, x, y, z, hex, metal, rough, emit) {
+    meshes.push({ g: g, x: x, y: y, z: z, col: lin(hex), metal: metal, rough: rough, emit: emit || [0,0,0] });
+  }
+  add(box(42, 0.24, 20), 7, -0.12, 0.4, '#C9BBA6', 0.02, 0.95);
+  add(box(30, 0.04, 1.7), 7, 0.02, 1.35, '#E7DCC8', 0, 0.9);
+  add(box(0.16, 1.45, 0.16), -0.58, 0.725, 0, '#7A4E2C', 0.02, 0.74);
+  add(box(0.16, 1.45, 0.16), 0.58, 0.725, 0, '#7A4E2C', 0.02, 0.74);
+  add(box(1.5, 0.12, 0.18), 0, 1.48, 0, '#7A4E2C', 0.02, 0.7);
+  add(box(1.16, 0.08, 0.08), 0, 0.82, 0, '#8C5E38', 0.02, 0.72);
+  add(box(1.16, 0.08, 0.08), 0, 0.4, 0, '#8C5E38', 0.02, 0.72);
+  add(box(1.55, 0.46, 1.55), 7, 0.23, 0, '#8A948F', 0.04, 0.88);
+  add(box(1.18, 0.08, 1.18), 7, 0.42, 0, '#1B6572', 0.42, 0.16);
+  add(stone, 7.72, 0.68, 0.62, '#6E675F', 0.05, 0.86);
+  add(box(1.4, 0.24, 1.4), 14, 0.12, 0, '#D9D2C6', 0.02, 0.86);
+  add(box(0.74, 1.2, 0.74), 14, 0.84, 0, '#E7E1D6', 0.02, 0.8);
+  add(box(1.22, 0.08, 1.22), 14, 1.48, 0, '#E7E1D6', 0.02, 0.78);
+  var posts = [[-0.48,-0.48],[0.48,-0.48],[-0.48,0.48],[0.48,0.48]];
+  for (var i = 0; i < 4; i++) add(box(0.08, 0.5, 0.08), 14 + posts[i][0], 1.77, posts[i][1], '#CDBFAE', 0.02, 0.75);
+  add(box(1.36, 0.07, 1.36), 14, 2.06, 0, '#D9D2C6', 0.03, 0.8);
+  add(box(1.08, 0.06, 0.06), 14, 1.68, 0.52, '#C4622D', 0.08, 0.55);
+
+  var P = new Float32Array(16), V = new Float32Array(16), M = new Float32Array(16), VM = new Float32Array(16), MVP = new Float32Array(16);
+  function mul(a, b, o) {
+    for (var c = 0; c < 4; c++) for (var r = 0; r < 4; r++)
+      o[c*4+r] = a[r]*b[c*4] + a[4+r]*b[c*4+1] + a[8+r]*b[c*4+2] + a[12+r]*b[c*4+3];
+  }
+  function perspective(out, fovy, aspect, near, far) {
+    var f = 1/Math.tan(fovy/2), nf = 1/(near-far);
+    out[0]=f/aspect; out[1]=0; out[2]=0; out[3]=0;
+    out[4]=0; out[5]=f; out[6]=0; out[7]=0;
+    out[8]=0; out[9]=0; out[10]=(far+near)*nf; out[11]=-1;
+    out[12]=0; out[13]=0; out[14]=2*far*near*nf; out[15]=0;
+  }
+  function lookAt(out, ex, ey, ez, cx, cy, cz) {
+    var zx=ex-cx, zy=ey-cy, zz=ez-cz, len=Math.hypot(zx,zy,zz)||1;
+    zx/=len; zy/=len; zz/=len;
+    var xx=zz, xy=0, xz=-zx; len=Math.hypot(xx,xy,xz)||1; xx/=len; xy/=len; xz/=len;
+    var yx=zy*xz-zz*xy, yy=zz*xx-zx*xz, yz=zx*xy-zy*xx;
+    out[0]=xx; out[1]=yx; out[2]=zx; out[3]=0;
+    out[4]=xy; out[5]=yy; out[6]=zy; out[7]=0;
+    out[8]=xz; out[9]=yz; out[10]=zz; out[11]=0;
+    out[12]=-(xx*ex+xy*ey+xz*ez);
+    out[13]=-(yx*ex+yy*ey+yz*ez);
+    out[14]=-(zx*ex+zy*ey+zz*ez);
+    out[15]=1;
+  }
+  function model(out, x, y, z) {
+    out[0]=1; out[1]=0; out[2]=0; out[3]=0;
+    out[4]=0; out[5]=1; out[6]=0; out[7]=0;
+    out[8]=0; out[9]=0; out[10]=1; out[11]=0;
+    out[12]=x; out[13]=y; out[14]=z; out[15]=1;
+  }
+  var poses = [
+    { t: 0, e: [1.35, 1.22, 3.9], a: [0.05, 0.7, 0] },
+    { t: 0.5, e: [8.35, 2.15, 3.7], a: [7, 0.32, 0] },
+    { t: 1, e: [15.55, 2.05, 4.7], a: [14, 1.05, 0] }
+  ];
+  function sample(t, e, a) {
+    var i = 0;
+    if (t >= 0.5) i = 1;
+    var A = poses[i], B = poses[i + 1];
+    var u = (t - A.t) / (B.t - A.t);
+    var s = u * u * (3 - 2 * u);
+    for (var k = 0; k < 3; k++) { e[k] = A.e[k] + (B.e[k] - A.e[k]) * s; a[k] = A.a[k] + (B.a[k] - A.a[k]) * s; }
+  }
+  var eye = [0,0,0], at = [0,0,0], shown = 0, goal = 0, raf = 0, ch = 'gate';
+  function resize() {
+    var dpr = Math.min(devicePixelRatio || 1, 2);
+    var w = canvas.clientWidth || 640, h = canvas.clientHeight || 640;
+    var W = Math.max(1, Math.round(w * dpr)), H = Math.max(1, Math.round(h * dpr));
+    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    perspective(P, 36 * Math.PI / 180, canvas.width / canvas.height, 0.08, 80);
+  }
+  function draw() {
+    sample(shown, eye, at);
+    lookAt(V, eye[0], eye[1], eye[2], at[0], at[1], at[2]);
+    gl.uniform3fv(uEye, eye);
+    gl.clearColor(0.835, 0.886, 0.863, 1);
+    gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.enableVertexAttribArray(0); gl.enableVertexAttribArray(1);
+    for (var i = 0; i < meshes.length; i++) {
+      var m = meshes[i];
+      model(M, m.x, m.y, m.z);
+      mul(V, M, VM); mul(P, VM, MVP);
+      gl.uniformMatrix4fv(uM, false, M);
+      gl.uniformMatrix4fv(uMVP, false, MVP);
+      gl.uniform3fv(uCol, m.col); gl.uniform3fv(uEmit, m.emit);
+      gl.uniform1f(uMetal, m.metal); gl.uniform1f(uRough, m.rough);
+      gl.bindBuffer(gl.ARRAY_BUFFER, m.g.bp); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, m.g.bn); gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 0, 0);
+      gl.drawArrays(gl.TRIANGLES, 0, m.g.count);
+    }
+    canvas.dataset.t = shown.toFixed(3);
+    bar.style.transform = 'scaleX(' + shown + ')';
+  }
+  function chapter() {
+    var line = 64 + 120, id = 'gate', nodes = document.querySelectorAll('article');
+    for (var i = 0; i < nodes.length; i++) if (nodes[i].getBoundingClientRect().top <= line) id = nodes[i].id;
+    return id;
+  }
+  function mark() {
+    var id = chapter();
+    stamp.textContent = names[id];
+    canvas.dataset.ch = id;
+    for (var i = 0; i < buttons.length; i++) {
+      if (buttons[i].dataset.jump === id) buttons[i].setAttribute('aria-current', 'true');
+      else buttons[i].removeAttribute('aria-current');
+    }
+    if (id !== ch) { ch = id; live.textContent = spoken[id]; }
+  }
+  function tick() {
+    raf = 0;
+    var max = document.documentElement.scrollHeight - innerHeight;
+    goal = max > 0 ? Math.max(0, Math.min(1, scrollY / max)) : 0;
+    if (reduce.matches) shown = goal;
+    else shown += (goal - shown) * 0.08;
+    if (Math.abs(goal - shown) < 0.0008) shown = goal;
+    draw(); mark();
+    if (Math.abs(goal - shown) > 0.0004) raf = requestAnimationFrame(tick);
+  }
+  function kick() { if (!raf) raf = requestAnimationFrame(tick); }
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.dataset.jump);
+      var top = el.getBoundingClientRect().top + scrollY - 64;
+      scrollTo({ top: top, behavior: reduce.matches ? 'auto' : 'smooth' });
+    });
+  });
+  addEventListener('scroll', kick, { passive: true });
+  addEventListener('resize', function () { resize(); draw(); mark(); });
+  reduce.addEventListener('change', kick);
+  resize(); draw(); mark();
+})();
+</script>
+</body>
+</html>

@@ -388,6 +388,18 @@ export const THEMES: Theme[] = [
   { id: 'cockpit-day', name: 'Cockpit Day', mood: 'The cockpit in sunlight. Pale glass, ink type, signal teal.', bestFor: ['Ops', 'Security', 'Games'], tags: ['cyber', 'tech', 'light'],
     tokens: paint({ bg: '#eef2f4', surface: '#fafcfd', surface2: '#dde4e9', ink: '#07090d', ink2: '#3e4e60', ink3: '#6a7a8c', line: '#c8d2da', primary: '#0a8f78', secondary: '#8a7200', tertiary: '#2a6fae', success: '#0a8f78', warning: '#8a7200', danger: '#c4121a', info: '#2a6fae' }),
     display: 'Chakra Petch', text: 'Share Tech Mono', radius: '0px', shadow: 'none', specimen: 'Signal acquired' },
+  { id: 'inkwell', name: 'Inkwell', mood: 'A letter on warm paper. Blue-black ink, one red correction.', bestFor: ['Personal sites', 'Cafes', 'Workshops', 'Letters'], tags: ['paper', 'warm', 'light'],
+    tokens: paint({ bg: '#f6f1e4', surface: '#fffaf0', surface2: '#efe6d2', ink: '#1c2430', ink2: '#3d4a5c', ink3: '#6a6256', line: '#e2d5bc', primary: '#1d4e89', secondary: '#b42323', tertiary: '#8a6a2f', success: '#2f6b4a', warning: '#a16207', danger: '#b42323', info: '#1d4e89' }),
+    display: 'Gochi Hand', text: 'Patrick Hand', radius: '2px', shadow: '0 10px 24px -16px rgba(28,36,48,.2)', specimen: 'Come by the shop on Thursday' },
+  { id: 'lamp-desk', name: 'Lamp Desk', mood: 'The same letter after dark. Warm ink on a brown desk.', bestFor: ['Personal sites', 'Journals', 'Night writing'], tags: ['paper', 'warm', 'dark'],
+    tokens: paint({ bg: '#1a1612', surface: '#241e18', surface2: '#2e261e', ink: '#f3ead8', ink2: '#cbbfa8', ink3: '#8d8070', line: '#3a3128', primary: '#9ec0ea', secondary: '#e08080', tertiary: '#e0c27a', success: '#8fbf8a', warning: '#e0b050', danger: '#e08080', info: '#9ec0ea' }),
+    display: 'Gochi Hand', text: 'Patrick Hand', radius: '2px', shadow: '0 16px 36px -18px rgba(0,0,0,.6)', specimen: 'Come by the shop on Thursday' },
+  { id: 'coin-op', name: 'Coin-op', mood: 'A cabinet in a dark arcade. Amber coin light, CRT green.', bestFor: ['Games', 'Arcades', 'High scores'], tags: ['pixel', 'retro', 'dark'],
+    tokens: paint({ bg: '#0c0e12', surface: '#141820', surface2: '#1c2230', ink: '#f4f0e6', ink2: '#b7c0c8', ink3: '#7d8794', line: '#2a3344', primary: '#ffd23f', secondary: '#3dff9a', tertiary: '#ff4d6a', success: '#3dff9a', warning: '#ffd23f', danger: '#ff4d6a', info: '#7ec8ff' }),
+    display: 'Silkscreen', text: 'Space Mono', radius: '0px', shadow: 'none', specimen: 'Insert coin' },
+  { id: 'ticket-booth', name: 'Ticket Booth', mood: 'The arcade in daylight. Cream tickets, a red stamp, green ink.', bestFor: ['Casual games', 'Family arcades', 'Scoreboards'], tags: ['pixel', 'retro', 'light'],
+    tokens: paint({ bg: '#f3efe4', surface: '#fffdf6', surface2: '#e7e0d0', ink: '#16181e', ink2: '#3c4250', ink3: '#6c6458', line: '#d9d0bc', primary: '#c45c12', secondary: '#0d7a45', tertiary: '#1d4e89', success: '#0d7a45', warning: '#a16207', danger: '#b42323', info: '#1d4e89' }),
+    display: 'Silkscreen', text: 'Space Mono', radius: '0px', shadow: 'none', specimen: 'Two credits' },
 ];
 
 export function themeCss(t: Theme) {
@@ -519,6 +531,10 @@ export const THEME_PAIRS: Record<string, { mode: 'light' | 'dark'; pair: string 
   'chrome-midnight': { mode: 'dark', pair: 'y2k-chrome' },
   'hud-teal': { mode: 'dark', pair: 'cockpit-day' },
   'cockpit-day': { mode: 'light', pair: 'hud-teal' },
+  'inkwell': { mode: 'light', pair: 'lamp-desk' },
+  'lamp-desk': { mode: 'dark', pair: 'inkwell' },
+  'coin-op': { mode: 'dark', pair: 'ticket-booth' },
+  'ticket-booth': { mode: 'light', pair: 'coin-op' },
 };
 
 export function themeById(id: string) {

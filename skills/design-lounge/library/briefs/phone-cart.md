@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 504 · "Phone shopping bag" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 514 · "Phone shopping bag" · designlounge.vercel.app -->
 
 # Phone shopping bag
 

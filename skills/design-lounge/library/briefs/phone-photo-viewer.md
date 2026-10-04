@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 486 · "Full-bleed photo viewer" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 488 · "Full-bleed photo viewer" · designlounge.vercel.app -->
 
 # Full-bleed photo viewer
 

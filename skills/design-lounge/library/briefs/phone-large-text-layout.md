@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 487 · "Large text layout rules" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 491 · "Large text layout rules" · designlounge.vercel.app -->
 
 # Large text layout rules
 

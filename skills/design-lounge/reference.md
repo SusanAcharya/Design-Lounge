@@ -53,6 +53,9 @@ Read this only when you need a path or a kind map. The procedure is in SKILL.md.
 | Docs, an API, a guide | `product` | Also recipe `docs` |
 | Music site, a label, a release | `website` | Also recipe `music` |
 | Event, festival, a night | `website` | Also recipe `event` |
+| A game, arcade, web game, card game, lobby, or anything with a score | `website` | Also recipe `game`. Read Games and Three.js in [taste.md](taste.md). |
+| Three.js, WebGL, a 3D scene, a model you orbit | `website` | Also recipe `game`, direction Orbit. The demo is raw WebGL. The brief says how to build it in Three.js. |
+| Handwritten, hand-lettered, a letter, a notebook site | `website` | Also recipe `notebook`. Letter Hand for the whole site. Handwritten Notes only when the notes are the handwritten part. |
 | Museum, gallery, a collection | `website` | Also recipe `museum` |
 | One landing page, and they did not name the world | `website` | Also recipe `landing`. If they named fashion, wellness, fintech, or a tool, use that recipe instead. A tilt or a sticky scroll is one piece from Register. |
 | Phone app, iOS, Android, PWA, and they did not name the world | `product` | Also recipe `mobile-app`. Prefer `platform` `mobile-app` pieces. |

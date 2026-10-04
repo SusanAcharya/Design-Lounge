@@ -1,0 +1,467 @@
+<!-- Design Lounge piece: game-playfield · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Mallow Court</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3e2cc;
+    --court: #fff8f0;
+    --ink: #2a241c;
+    --muted: #4a3b2e;
+    --navy: #2c3a52;
+    --coral: #e07a5f;
+    --apricot: #f0a05a;
+    --butter: #e8b84a;
+    --sage: #6e9a78;
+    --lip: #f2c14e;
+    --spent: #e4d0bc;
+    --line: #ead9c6;
+    --sans: "Fredoka", "Trebuchet MS", sans-serif;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 32px 16px;
+  }
+  header {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .name h1 {
+    margin: 0;
+    font: 600 36px/1 var(--sans);
+    letter-spacing: -0.03em;
+  }
+  .name p {
+    margin: 4px 0 0;
+    font: 500 16px/1 var(--sans);
+    color: var(--muted);
+  }
+  .readout {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .score, .lives-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font: 500 16px/1 var(--sans);
+    color: var(--muted);
+  }
+  .score b {
+    font: 600 32px/1 var(--sans);
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    min-width: 64px;
+  }
+  .lives { display: flex; gap: 8px; }
+  .lives svg { width: 18px; height: 18px; color: var(--coral); display: block; }
+  .lives[data-left="2"] svg:nth-child(3),
+  .lives[data-left="1"] svg:nth-child(n + 2),
+  .lives[data-left="0"] svg { color: var(--spent); }
+  button {
+    font-family: var(--sans);
+    cursor: pointer;
+  }
+  #pause {
+    height: 48px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--navy);
+    color: var(--court);
+    font: 600 16px/1 var(--sans);
+    transition: background 160ms var(--ease);
+  }
+  #pause:hover { background: #243246; }
+  #pause:focus-visible, .card button:focus-visible {
+    outline: 3px solid var(--coral);
+    outline-offset: 3px;
+  }
+  #pause:disabled { opacity: 0.4; cursor: default; }
+  .court {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    background: var(--court);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  canvas { width: 100%; height: 100%; display: block; touch-action: none; }
+  footer p {
+    margin: 0;
+    height: 28px;
+    font: 500 16px/28px var(--sans);
+    color: var(--muted);
+  }
+  .card {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(243, 226, 204, 0.78);
+  }
+  .card[hidden] { display: none; }
+  .card div {
+    width: 360px;
+    padding: 32px 36px 28px;
+    background: var(--court);
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid var(--line);
+    box-shadow: 0 12px 28px rgba(42, 36, 28, 0.12);
+  }
+  .card h2 {
+    margin: 0;
+    font: 600 40px/1.1 var(--sans);
+    letter-spacing: -0.03em;
+  }
+  .card p {
+    margin: 12px 0 24px;
+    font: 600 24px/1 var(--sans);
+    font-variant-numeric: tabular-nums;
+  }
+  .card button {
+    height: 48px;
+    min-width: 160px;
+    padding: 0 24px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--navy);
+    color: var(--court);
+    font: 600 18px/1 var(--sans);
+    transition: background 160ms var(--ease);
+  }
+  .card button:hover { background: #243246; }
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  @media (max-width: 800px) {
+    header { height: auto; min-height: 72px; flex-wrap: wrap; }
+    .readout { margin-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #pause, .card button { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="name">
+      <h1>Mallow Court</h1>
+      <p>Brick rally</p>
+    </div>
+    <div class="readout">
+      <p class="score"><span>Score</span> <b id="score">160</b></p>
+      <div class="lives-wrap">
+        <span>Lives</span>
+        <div class="lives" id="lives" data-left="3" role="img" aria-label="3 lives">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>
+        </div>
+      </div>
+      <button type="button" id="pause" aria-pressed="false">Pause</button>
+    </div>
+  </header>
+  <main class="court">
+    <canvas id="cv" width="1216" height="640" aria-hidden="true"></canvas>
+    <div class="card" id="pause-card" hidden>
+      <div>
+        <h2>Paused</h2>
+        <p id="pause-score">Score 160</p>
+        <button type="button" id="resume">Resume</button>
+      </div>
+    </div>
+    <div class="card" id="end-card" hidden>
+      <div>
+        <h2 id="end-title">Game over</h2>
+        <p id="end-score">Score 160</p>
+        <button type="button" id="again">Play again</button>
+      </div>
+    </div>
+  </main>
+  <footer><p>The bat follows the ball until you move it. Pointer or arrow keys take over. Esc pauses.</p></footer>
+  <p class="sr" id="live" aria-live="polite"></p>
+<script>
+(function () {
+  var cv = document.getElementById("cv");
+  var ctx = cv.getContext("2d");
+  var scoreEl = document.getElementById("score");
+  var livesEl = document.getElementById("lives");
+  var pauseBtn = document.getElementById("pause");
+  var pauseCard = document.getElementById("pause-card");
+  var pauseScore = document.getElementById("pause-score");
+  var endCard = document.getElementById("end-card");
+  var endTitle = document.getElementById("end-title");
+  var endScore = document.getElementById("end-score");
+  var live = document.getElementById("live");
+  var COLS = 8, ROWS = 4, GAP = 8, BH = 26, PW = 168, PH = 16;
+  var COLORS = ["#e07a5f", "#f0a05a", "#e8b84a", "#6e9a78"];
+  var POINTS = [40, 30, 20, 10];
+  var GONE = { "1-3": 1, "1-4": 1, "2-2": 1, "2-3": 1, "2-4": 1, "2-5": 1, "3-3": 1, "3-4": 1 };
+  var W = 1216, H = 640, dpr = 1;
+  var bricks = [], score = 0, lives = 3, px = 0, py = 0;
+  var ball = { x: 0, y: 0, r: 9, vx: 4.2, vy: -4.8 };
+  var paused = false, over = false, handed = false, keys = { left: false, right: false };
+  var last = 0;
+  var BRICK_BOTTOM = 36 + ROWS * (BH + GAP) - GAP;
+
+  function layout() {
+    var rect = cv.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = rect.width;
+    H = rect.height;
+    cv.width = Math.max(1, Math.round(W * dpr));
+    cv.height = Math.max(1, Math.round(H * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    py = H - 52;
+  }
+
+  function place() {
+    var margin = 28;
+    var bw = (W - margin * 2 - GAP * (COLS - 1)) / COLS;
+    bricks = [];
+    for (var r = 0; r < ROWS; r++) {
+      for (var c = 0; c < COLS; c++) {
+        bricks.push({
+          x: margin + c * (bw + GAP),
+          y: 36 + r * (BH + GAP),
+          w: bw,
+          h: BH,
+          color: COLORS[r],
+          points: POINTS[r],
+          alive: !GONE[r + "-" + c]
+        });
+      }
+    }
+  }
+
+  function openingScore() {
+    var n = 0;
+    for (var i = 0; i < bricks.length; i++) if (!bricks[i].alive) n += bricks[i].points;
+    return n;
+  }
+
+  function paintHud() {
+    scoreEl.textContent = String(score);
+    livesEl.dataset.left = String(lives);
+    livesEl.setAttribute("aria-label", lives + (lives === 1 ? " life" : " lives"));
+    pauseScore.textContent = "Score " + score;
+  }
+
+  function serve(fromPaddle) {
+    if (fromPaddle) {
+      ball.x = px + PW / 2;
+      ball.y = py - 20;
+      ball.vx = lives % 2 === 0 ? 4.2 : -4.2;
+    } else {
+      ball.x = W * 0.25;
+      ball.y = H * 0.58;
+      ball.vx = 3.6;
+    }
+    ball.vy = -5.2;
+  }
+
+  function reset() {
+    layout();
+    place();
+    score = openingScore();
+    lives = 3;
+    paused = false;
+    over = false;
+    handed = false;
+    px = (W - PW) / 2;
+    serve(false);
+    pauseCard.hidden = true;
+    endCard.hidden = true;
+    pauseBtn.disabled = false;
+    pauseBtn.textContent = "Pause";
+    pauseBtn.setAttribute("aria-pressed", "false");
+    paintHud();
+  }
+
+  function end(cleared) {
+    over = true;
+    paused = false;
+    pauseCard.hidden = true;
+    endTitle.textContent = cleared ? "Court clear" : "Game over";
+    endScore.textContent = "Score " + score;
+    endCard.hidden = false;
+    pauseBtn.disabled = true;
+    live.textContent = endTitle.textContent + ". Score " + score + ".";
+    document.getElementById("again").focus();
+  }
+
+  function setPaused(next) {
+    if (over) return;
+    paused = next;
+    pauseCard.hidden = !paused;
+    pauseBtn.textContent = paused ? "Resume" : "Pause";
+    pauseBtn.setAttribute("aria-pressed", paused ? "true" : "false");
+    if (paused) {
+      pauseScore.textContent = "Score " + score;
+      live.textContent = "Paused.";
+      document.getElementById("resume").focus();
+    } else {
+      live.textContent = "Playing.";
+      pauseBtn.focus();
+    }
+  }
+
+  function hitBrick() {
+    for (var i = 0; i < bricks.length; i++) {
+      var b = bricks[i];
+      if (!b.alive) continue;
+      if (ball.x + ball.r < b.x || ball.x - ball.r > b.x + b.w || ball.y + ball.r < b.y || ball.y - ball.r > b.y + b.h) continue;
+      b.alive = false;
+      score += b.points;
+      var ol = ball.x + ball.r - b.x;
+      var orr = b.x + b.w - (ball.x - ball.r);
+      var ot = ball.y + ball.r - b.y;
+      var ob = b.y + b.h - (ball.y - ball.r);
+      if (Math.min(ol, orr) < Math.min(ot, ob)) ball.vx *= -1;
+      else ball.vy *= -1;
+      paintHud();
+      var left = 0;
+      for (var j = 0; j < bricks.length; j++) if (bricks[j].alive) left++;
+      if (!left) end(true);
+      return;
+    }
+  }
+
+  function step(dt) {
+    var s = dt / 16.6667;
+    if (!handed) {
+      px = Math.max(0, Math.min(W - PW, ball.x - PW / 2));
+    } else {
+      if (keys.left) px = Math.max(0, px - 8 * s);
+      if (keys.right) px = Math.min(W - PW, px + 8 * s);
+    }
+    ball.x += ball.vx * s;
+    ball.y += ball.vy * s;
+    if (!handed && ball.y < BRICK_BOTTOM + 46 && ball.vy < 0) {
+      ball.y = BRICK_BOTTOM + 46;
+      ball.vy = Math.abs(ball.vy);
+    }
+    if (ball.x < ball.r) { ball.x = ball.r; ball.vx = Math.abs(ball.vx); }
+    if (ball.x > W - ball.r) { ball.x = W - ball.r; ball.vx = -Math.abs(ball.vx); }
+    if (ball.y < ball.r) { ball.y = ball.r; ball.vy = Math.abs(ball.vy); }
+    if (ball.vy > 0 && ball.x + ball.r > px && ball.x - ball.r < px + PW && ball.y + ball.r > py && ball.y - ball.r < py + PH) {
+      var hit = (ball.x - (px + PW / 2)) / (PW / 2);
+      ball.vx = hit * 5.2;
+      if (Math.abs(ball.vx) < 1.5) ball.vx = ball.vx < 0 ? -1.5 : 1.5;
+      ball.vy = -5.2;
+      ball.y = py - ball.r - 0.5;
+    }
+    hitBrick();
+    if (!over && ball.y - ball.r > H) {
+      lives -= 1;
+      paintHud();
+      if (lives <= 0) end(false);
+      else {
+        live.textContent = lives + (lives === 1 ? " life" : " lives") + " left.";
+        serve(true);
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "#fff8f0";
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "#ead9c6";
+    ctx.fillRect(28, H - 28, W - 56, 2);
+    for (var i = 0; i < bricks.length; i++) {
+      var b = bricks[i];
+      if (!b.alive) continue;
+      ctx.beginPath();
+      ctx.roundRect(b.x, b.y, b.w, b.h, 6);
+      ctx.fillStyle = b.color;
+      ctx.fill();
+    }
+    ctx.beginPath();
+    ctx.roundRect(px, py, PW, PH, 8);
+    ctx.fillStyle = "#2c3a52";
+    ctx.fill();
+    ctx.fillStyle = "#f2c14e";
+    ctx.fillRect(px + 14, py, PW - 28, 4);
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+    ctx.fillStyle = "#e07a5f";
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#2c3a52";
+    ctx.stroke();
+  }
+
+  function frame(now) {
+    requestAnimationFrame(frame);
+    var dt = last ? Math.min(32, now - last) : 16.67;
+    last = now;
+    if (!paused && !over) step(dt);
+    draw();
+  }
+
+  document.addEventListener("pointermove", function (e) {
+    if (paused || over) return;
+    handed = true;
+    var rect = cv.getBoundingClientRect();
+    px = Math.max(0, Math.min(W - PW, e.clientX - rect.left - PW / 2));
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") { keys.left = true; handed = true; e.preventDefault(); }
+    else if (e.key === "ArrowRight") { keys.right = true; handed = true; e.preventDefault(); }
+    else if (e.key === "Escape") {
+      e.preventDefault();
+      if (!over) setPaused(!paused);
+    }
+  });
+  document.addEventListener("keyup", function (e) {
+    if (e.key === "ArrowLeft") keys.left = false;
+    if (e.key === "ArrowRight") keys.right = false;
+  });
+  pauseBtn.addEventListener("click", function () { setPaused(!paused); });
+  document.getElementById("resume").addEventListener("click", function () { setPaused(false); });
+  document.getElementById("again").addEventListener("click", function () {
+    reset();
+    live.textContent = "Playing. Score " + score + ".";
+    pauseBtn.focus();
+  });
+
+  reset();
+  draw();
+  requestAnimationFrame(frame);
+  window.addEventListener("resize", function () {
+    if (cv.getBoundingClientRect().width < 8) return;
+    reset();
+  });
+})();
+</script>
+</body>
+</html>

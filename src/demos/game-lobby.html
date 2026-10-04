@@ -1,0 +1,455 @@
+<!-- Design Lounge piece: game-lobby · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Parlour 4 · Bramble</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --plaster: #E8DCC8;
+    --walnut: #3A2E22;
+    --walnut-2: #2A2118;
+    --cream: #F7F1E4;
+    --cream-2: #E7D8C0;
+    --ink: #2C2416;
+    --muted: #6B5E4A;
+    --line: #C9B89A;
+    --brick: #7A2E24;
+    --side-muted: #CDBFA8;
+    --side-text: #F3EADF;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --sit: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    overflow: hidden;
+    color: var(--ink);
+    background: var(--plaster);
+    font-family: Outfit, "Avenir Next", sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus { outline: none; }
+  :focus-visible { outline: 2px solid var(--brick); outline-offset: 3px; }
+  .sr {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+  .room { height: 100%; display: grid; grid-template-columns: 440px 1fr; }
+  .side {
+    background: var(--walnut);
+    color: var(--side-text);
+    padding: 36px 36px 28px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .side :focus-visible { outline-color: var(--cream); }
+  .brand {
+    margin: 0;
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .kicker {
+    margin: 8px 0 0;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--side-muted);
+  }
+  h1 {
+    margin: 36px 0 0;
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-variation-settings: "opsz" 72, "SOFT" 40;
+  }
+  .lede {
+    margin: 12px 0 0;
+    max-width: 28ch;
+    color: var(--side-muted);
+    font-size: 16px;
+    line-height: 1.45;
+  }
+  .lbl {
+    margin: 36px 0 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--side-muted);
+  }
+  .code-row { display: flex; align-items: center; gap: 16px; }
+  .code {
+    margin: 0;
+    font-family: Fraunces, Georgia, serif;
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  #copy {
+    height: 44px;
+    min-width: 112px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid var(--side-muted);
+    background: transparent;
+    color: var(--cream);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  #copy svg { width: 18px; height: 18px; }
+  .host {
+    margin: 28px 0 0;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--side-muted);
+  }
+  .foot { margin-top: auto; padding-top: 24px; }
+  .status {
+    margin: 0 0 12px;
+    min-height: 22px;
+    font-size: 14px;
+    color: var(--side-muted);
+  }
+  .start {
+    height: 52px;
+    width: 100%;
+    border: 1px solid var(--side-muted);
+    background: transparent;
+    color: var(--cream);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .start:not(:disabled) {
+    background: var(--brick);
+    border-color: var(--brick);
+    color: var(--cream);
+  }
+  .start:disabled { cursor: not-allowed; }
+  .stage {
+    min-width: 0;
+    padding: 28px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    background: var(--plaster);
+  }
+  .stage-head {
+    height: 28px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .stage-head h2 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .count { margin: 0; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .seats {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+  }
+  .seat {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    padding: 18px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+  }
+  .seat.open {
+    background: transparent;
+    border-style: dashed;
+    justify-content: center;
+  }
+  .num {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+  }
+  .av {
+    width: 48px;
+    height: 48px;
+    margin: 20px 0 16px;
+    display: grid;
+    place-items: center;
+    background: var(--cream-2);
+    color: var(--walnut);
+    font-family: Fraunces, Georgia, serif;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .seat-name {
+    margin: 0;
+    font-family: Fraunces, Georgia, serif;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .seat.open .seat-name { margin-top: 12px; color: var(--muted); font-size: 28px; }
+  .role { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+  .ready, .flag {
+    margin-top: auto;
+    align-self: flex-start;
+    height: 44px;
+    min-width: 120px;
+    padding: 0 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid var(--brick);
+    background: transparent;
+    color: var(--brick);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .ready .tick { width: 16px; height: 16px; opacity: 0; }
+  .ready[aria-pressed="true"] { background: var(--brick); color: var(--cream); }
+  .ready[aria-pressed="true"] .tick { opacity: 1; }
+  .flag { background: var(--brick); color: var(--cream); }
+  .flag svg { width: 16px; height: 16px; }
+  .seat.guest.in { animation: sit 360ms var(--sit); }
+  @keyframes sit { from { transform: translateY(10px); } to { transform: none; } }
+  .deal {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 22px;
+    text-align: center;
+  }
+  .deal p {
+    margin: 0;
+    font-family: Fraunces, Georgia, serif;
+    font-size: 44px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+  #back {
+    height: 44px;
+    padding: 0 18px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  [hidden] { display: none !important; }
+  svg { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+  @media (max-width: 1100px) {
+    .room { grid-template-columns: 340px 1fr; }
+    h1 { font-size: 40px; }
+    .code { font-size: 28px; }
+    .seat-name { font-size: 26px; }
+  }
+  @media (max-width: 800px) {
+    body { overflow: auto; height: auto; }
+    .room { display: block; min-height: 100%; }
+    .side { min-height: auto; }
+    .stage { min-height: 720px; }
+  }
+  @media (max-width: 640px) {
+    .seats { grid-template-columns: 1fr; grid-template-rows: none; }
+    .seat { min-height: 180px; }
+    .deal p { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<main class="room">
+  <section class="side" aria-labelledby="room-title">
+    <p class="brand">Bramble</p>
+    <p class="kicker">Sunday table</p>
+    <h1 id="room-title">Parlour 4</h1>
+    <p class="lede">Tiles go out when two players are ready.</p>
+    <p class="lbl">Room code</p>
+    <div class="code-row">
+      <p class="code" id="code">BRAM-4821</p>
+      <button type="button" id="copy" aria-label="Copy room code">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="10" height="12"/><path d="M6 16V5h9"/></svg>
+        <span id="copy-label">Copy</span>
+      </button>
+    </div>
+    <p class="host">You are the host. You deal.</p>
+    <div class="foot">
+      <p class="status" id="status">Need two ready players.</p>
+      <button type="button" class="start" id="start" disabled aria-describedby="status">Start</button>
+    </div>
+  </section>
+  <section class="stage" aria-labelledby="seats-title">
+    <div class="stage-head">
+      <h2 id="seats-title">Seats</h2>
+      <p class="count" id="count">1 of 4 seated</p>
+    </div>
+    <div class="seats" id="seats">
+      <article class="seat" aria-label="Seat 1, Mira Cole, host, not ready">
+        <span class="num">01</span>
+        <span class="av" aria-hidden="true">MC</span>
+        <p class="seat-name">Mira Cole</p>
+        <p class="role">Host, you</p>
+        <button type="button" class="ready" id="ready" aria-pressed="false">
+          <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>
+          <span>Ready</span>
+        </button>
+      </article>
+      <article class="seat open" id="seat-guest" aria-label="Seat 2, open">
+        <span class="num">02</span>
+        <p class="seat-name">Open seat</p>
+        <p class="role">Waiting</p>
+      </article>
+      <article class="seat open" aria-label="Seat 3, open">
+        <span class="num">03</span>
+        <p class="seat-name">Open seat</p>
+        <p class="role">Waiting</p>
+      </article>
+      <article class="seat open" aria-label="Seat 4, open">
+        <span class="num">04</span>
+        <p class="seat-name">Open seat</p>
+        <p class="role">Waiting</p>
+      </article>
+    </div>
+    <div class="deal" id="deal" hidden>
+      <p id="deal-line">Dealing eight tiles.</p>
+      <button type="button" id="back" hidden>Return to seats</button>
+    </div>
+  </section>
+</main>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+(function () {
+  var readyBtn = document.getElementById('ready');
+  var startBtn = document.getElementById('start');
+  var status = document.getElementById('status');
+  var count = document.getElementById('count');
+  var live = document.getElementById('live');
+  var seats = document.getElementById('seats');
+  var deal = document.getElementById('deal');
+  var line = document.getElementById('deal-line');
+  var back = document.getElementById('back');
+  var copyBtn = document.getElementById('copy');
+  var copyLabel = document.getElementById('copy-label');
+  var guest = document.getElementById('seat-guest');
+  var youSeat = readyBtn.closest('.seat');
+  var guestIn = false;
+  var copyTimer = 0;
+  var dealTimer = 0;
+  var dealing = false;
+
+  function say(msg) {
+    status.textContent = msg;
+    live.textContent = msg;
+  }
+
+  function sync() {
+    var n = (readyBtn.getAttribute('aria-pressed') === 'true' ? 1 : 0) + (guestIn ? 1 : 0);
+    var seated = 1 + (guestIn ? 1 : 0);
+    count.textContent = seated + ' of 4 seated';
+    youSeat.setAttribute('aria-label', 'Seat 1, Mira Cole, host, ' + (readyBtn.getAttribute('aria-pressed') === 'true' ? 'ready' : 'not ready'));
+    if (dealing) return;
+    var open = n >= 2;
+    startBtn.disabled = !open;
+    status.textContent = open ? 'Two players are ready.' : 'Need two ready players.';
+  }
+
+  readyBtn.addEventListener('click', function () {
+    var on = readyBtn.getAttribute('aria-pressed') !== 'true';
+    readyBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    sync();
+    live.textContent = on ? 'You are ready.' : 'You are not ready.';
+  });
+
+  copyBtn.addEventListener('click', function () {
+    var code = document.getElementById('code').textContent;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).catch(function () {});
+    } catch (err) {}
+    copyLabel.textContent = 'Copied';
+    copyBtn.setAttribute('aria-label', 'Copied');
+    live.textContent = 'Room code copied.';
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(function () {
+      copyLabel.textContent = 'Copy';
+      copyBtn.setAttribute('aria-label', 'Copy room code');
+    }, 1600);
+  });
+
+  startBtn.addEventListener('click', function () {
+    if (startBtn.disabled) return;
+    dealing = true;
+    startBtn.disabled = true;
+    seats.hidden = true;
+    deal.hidden = false;
+    back.hidden = true;
+    line.textContent = 'Dealing eight tiles.';
+    say('Dealing eight tiles.');
+    clearTimeout(dealTimer);
+    dealTimer = setTimeout(function () {
+      line.textContent = 'Dealt. Eight tiles each.';
+      say('Dealt. Eight tiles each.');
+      back.hidden = false;
+    }, 800);
+  });
+
+  back.addEventListener('click', function () {
+    clearTimeout(dealTimer);
+    dealing = false;
+    deal.hidden = true;
+    back.hidden = true;
+    seats.hidden = false;
+    sync();
+    live.textContent = 'Back in the parlour.';
+  });
+
+  setTimeout(function () {
+    guestIn = true;
+    guest.classList.remove('open');
+    guest.classList.add('guest', 'in', 'is-ready');
+    guest.setAttribute('aria-label', 'Seat 2, Jonas Hale, guest, ready');
+    guest.innerHTML = '<span class="num">02</span><span class="av" aria-hidden="true">JH</span><p class="seat-name">Jonas Hale</p><p class="role">Guest</p><span class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Ready</span>';
+    sync();
+    live.textContent = 'Jonas Hale sat down and is ready.';
+  }, 1200);
+})();
+</script>
+</body>
+</html>

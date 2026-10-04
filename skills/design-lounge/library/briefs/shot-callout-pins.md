@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 481 · "Callouts on a review still" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 482 · "Callouts on a review still" · designlounge.vercel.app -->
 
 # Callouts on a review still
 

@@ -117,7 +117,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'Motion with a reason',
     kicker: 'Nº 12',
     blurb: 'Transitions that explain where things went. Every duration and curve here is doing a job: continuity, hierarchy, or feedback.',
-    pieces: ['shared-element-expand', 'm3-container-transform', 'page-transition-curtain', 'logo-draw-intro', 'ios-app-switcher-stack', 'ios-context-menu-lift', 'staggered-list-reveal', 'ios-large-title-collapse', 'm3-search-bar-morph', 'tabs-morphing-underline', 'segmented-control-sliding', 'lamp-theme-toggle', 'optimistic-like-button', 'card-flip-3d', 'gooey-menu', 'folder-reveal', 'split-flap-board', 'book-page-flip', 'coverflow-strip', 'lens-bento', 'polaroid-fan', 'pan-canvas', 'scan-page', 'glitch-text', 'greeting-loader', 'corner-player', 'scroll-velocity-type', 'grow-grid', 'overlap-slider', 'scroll-split', 'trail-type', 'letter-sleeve', 'spring-deck', 'page-transition-tile-wipe', 'preloader-counter-intro', 'webgl-shader-hero', 'object-3d-turntable', 'hero-video-loop'],
+    pieces: ['shared-element-expand', 'm3-container-transform', 'page-transition-curtain', 'logo-draw-intro', 'ios-app-switcher-stack', 'ios-context-menu-lift', 'staggered-list-reveal', 'ios-large-title-collapse', 'm3-search-bar-morph', 'tabs-morphing-underline', 'segmented-control-sliding', 'lamp-theme-toggle', 'optimistic-like-button', 'card-flip-3d', 'gooey-menu', 'folder-reveal', 'split-flap-board', 'book-page-flip', 'coverflow-strip', 'lens-bento', 'polaroid-fan', 'pan-canvas', 'scan-page', 'glitch-text', 'greeting-loader', 'corner-player', 'scroll-velocity-type', 'grow-grid', 'overlap-slider', 'scroll-split', 'trail-type', 'letter-sleeve', 'spring-deck', 'page-transition-tile-wipe', 'preloader-counter-intro', 'webgl-shader-hero', 'object-3d-turntable', 'hero-video-loop', 'three-orbit-object', 'three-scroll-world', 'three-room-look', 'game-title-screen', 'game-playfield', 'game-hud', 'game-card-table', 'game-lobby', 'game-leaderboard', 'handwritten-homepage', 'handwritten-letter'],
   },
   {
     slug: 'typography-first',
@@ -131,7 +131,7 @@ export const COLLECTIONS: Collection[] = [
     title: 'Whole design languages',
     kicker: 'Nº 14',
     blurb: 'Not a component, a dialect. Each of these is a complete visual grammar you can hand to an agent as the style guide for a product.',
-    pieces: ['terminal-ui-style', 'swiss-poster-style', 'paper-ink-style', 'neo-brutalist-style', 'luxe-serif-style', 'bauhaus-style', 'y2k-chrome-style', 'cyber-hud-style', 'organic-garden-style', 'riso-print-style', 'deco-hotel-style', 'pixel-arcade-style', 'clay-soft-style'],
+    pieces: ['terminal-ui-style', 'swiss-poster-style', 'paper-ink-style', 'neo-brutalist-style', 'luxe-serif-style', 'bauhaus-style', 'y2k-chrome-style', 'cyber-hud-style', 'organic-garden-style', 'riso-print-style', 'deco-hotel-style', 'pixel-arcade-style', 'clay-soft-style', 'handwritten-style'],
   },
   {
     slug: 'cursor-play',

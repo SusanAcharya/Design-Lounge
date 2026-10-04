@@ -1,0 +1,57 @@
+{
+ "id": "notebook",
+ "surface": "web",
+ "title": "A handwritten site",
+ "kicker": "Hand",
+ "blurb": "The page is a letter. Titles in a loose script, the reading in a clear hand.",
+ "when": "A personal site, a cafe, a workshop, or a letter. Notes in the margin of a normal site use Handwritten Notes instead.",
+ "theme": "inkwell",
+ "pairing": "letter-hand",
+ "shelf": "typography-first",
+ "categories": [
+  "landing",
+  "reading",
+  "design-language"
+ ],
+ "pieces": [
+  "handwritten-homepage",
+  "handwritten-letter",
+  "handwritten-style",
+  "card-journal-page",
+  "text-annotated-underlines",
+  "graph-paper-homepage",
+  "card-sticky-notepad"
+ ],
+ "directions": [
+  {
+   "id": "inkwell",
+   "name": "Inkwell",
+   "mood": "A letter on warm paper, the whole site in a hand",
+   "theme": "inkwell",
+   "pairing": "letter-hand",
+   "family": "soft",
+   "hero": "handwritten-homepage",
+   "effect": "text-annotated-underlines"
+  },
+  {
+   "id": "lamp-desk",
+   "name": "Lamp desk",
+   "mood": "The same letter after dark",
+   "theme": "lamp-desk",
+   "pairing": "letter-hand",
+   "family": "editorial",
+   "hero": "handwritten-letter",
+   "effect": "text-marker-highlight-draw"
+  },
+  {
+   "id": "margin",
+   "name": "Margin",
+   "mood": "A normal page, with notes in a real hand",
+   "theme": "paper-ink",
+   "pairing": "handwritten-notes",
+   "family": "editorial",
+   "hero": "graph-paper-homepage",
+   "effect": "text-annotated-underlines"
+  }
+ ]
+}

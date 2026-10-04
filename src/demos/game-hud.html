@@ -1,0 +1,423 @@
+<!-- Design Lounge piece: game-hud · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Duskwell</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #070b12;
+    --panel: #101820;
+    --line: #243840;
+    --text: #d5e4ea;
+    --dim: #8aa0ae;
+    --signal: #9fe1c8;
+    --amber: #e2b15a;
+    --moon: #e7d7b4;
+    --display: "Chakra Petch", sans-serif;
+    --mono: "Share Tech Mono", ui-monospace, monospace;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: var(--display);
+    overflow: hidden;
+  }
+  .scene, .brackets { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .brackets { pointer-events: none; }
+  .hud { position: absolute; inset: 0; pointer-events: none; }
+  .panel, #pause, .status { pointer-events: auto; }
+  .panel {
+    position: absolute;
+    background:
+      linear-gradient(var(--signal), var(--signal)) left top / 14px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) left top / 2px 14px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right top / 14px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right top / 2px 14px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) left bottom / 14px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) left bottom / 2px 14px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right bottom / 14px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right bottom / 2px 14px no-repeat,
+      var(--panel);
+    border: 1px solid var(--line);
+  }
+  .scorebox { left: 24px; top: 24px; width: 280px; min-height: 120px; padding: 16px 18px 14px; }
+  .wavebox { right: 24px; top: 24px; width: 240px; min-height: 120px; padding: 14px 18px 16px; text-align: right; }
+  .mapbox { left: 24px; bottom: 24px; width: 212px; padding: 12px; }
+  .brand {
+    margin: 0;
+    font: 600 22px/1 var(--display);
+    letter-spacing: 0.12em;
+  }
+  .label {
+    margin: 12px 0 0;
+    font: 400 13px/1 var(--mono);
+    letter-spacing: 0.14em;
+    color: var(--dim);
+  }
+  .num {
+    margin: 6px 0 0;
+    font: 400 32px/1 var(--mono);
+    color: var(--signal);
+    letter-spacing: 0.04em;
+  }
+  .wavebox .label { margin-top: 0; }
+  .wave {
+    margin: 4px 0 0;
+    font: 400 40px/1 var(--mono);
+    color: var(--amber);
+    letter-spacing: 0.06em;
+  }
+  .life-row {
+    margin-top: 8px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    color: var(--dim);
+    font: 400 13px/1 var(--mono);
+    letter-spacing: 0.14em;
+  }
+  .pips { display: flex; gap: 6px; color: var(--signal); }
+  .pips svg { width: 14px; height: 14px; display: block; }
+  .mapbox .label { margin: 0 0 8px; }
+  .mapbox svg { width: 100%; height: 96px; display: block; background: #0c141c; }
+  .status {
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    font: 400 14px/1 var(--mono);
+    letter-spacing: 0.12em;
+    color: var(--signal);
+  }
+  .pip {
+    width: 8px;
+    height: 8px;
+    background: var(--amber);
+    animation: pip 1.4s steps(2, end) infinite;
+  }
+  @keyframes pip { from { opacity: 1; } to { opacity: 0.25; } }
+  #pause {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    height: 48px;
+    min-width: 148px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background:
+      linear-gradient(var(--signal), var(--signal)) left top / 12px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) left top / 2px 12px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right top / 12px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right top / 2px 12px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) left bottom / 12px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) left bottom / 2px 12px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right bottom / 12px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right bottom / 2px 12px no-repeat,
+      var(--panel);
+    border: 1px solid var(--line);
+    color: var(--signal);
+    font: 600 16px/1 var(--display);
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+  #pause kbd {
+    font: 400 13px/1 var(--mono);
+    border: 1px solid var(--signal);
+    padding: 3px 5px;
+  }
+  #pause:hover, #pause:focus-visible { color: var(--amber); border-color: var(--amber); }
+  #pause:focus-visible, .menu button:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+  .scrim {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(7, 11, 18, 0.72);
+    opacity: 0;
+    transition: opacity 200ms var(--ease);
+  }
+  .scrim[hidden] { display: none; }
+  .scrim.open { opacity: 1; }
+  .menu {
+    width: 420px;
+    padding: 28px 28px 24px;
+    border: 1px solid var(--line);
+    position: relative;
+    background:
+      linear-gradient(var(--signal), var(--signal)) left top / 16px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) left top / 2px 16px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right top / 16px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right top / 2px 16px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) left bottom / 16px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) left bottom / 2px 16px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right bottom / 16px 2px no-repeat,
+      linear-gradient(var(--signal), var(--signal)) right bottom / 2px 16px no-repeat,
+      var(--panel);
+    transform: translateY(8px);
+    opacity: 0;
+    transition: transform 200ms var(--ease), opacity 200ms var(--ease);
+  }
+  .scrim.open .menu { transform: none; opacity: 1; }
+  .kicker {
+    margin: 0;
+    font: 400 13px/1 var(--mono);
+    letter-spacing: 0.16em;
+    color: var(--amber);
+  }
+  .menu h2 {
+    margin: 8px 0 20px;
+    font: 600 36px/1 var(--display);
+    letter-spacing: 0.02em;
+  }
+  .menu button {
+    width: 100%;
+    height: 48px;
+    margin-top: 8px;
+    padding: 0 16px;
+    text-align: left;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text);
+    font: 600 18px/1 var(--display);
+    cursor: pointer;
+    transition: border-color 160ms var(--ease), color 160ms var(--ease);
+  }
+  .menu button:hover { border-color: var(--signal); color: var(--signal); }
+  #help p {
+    margin: 0 0 10px;
+    font: 400 16px/1.45 var(--mono);
+    color: var(--text);
+  }
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  @media (max-width: 720px) {
+    .scorebox, .wavebox { width: calc(50% - 40px); }
+    .mapbox { width: 168px; }
+    .menu { width: calc(100% - 48px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pip { animation: none; opacity: 1; }
+    .scrim, .menu, .menu button, #pause { transition: none; }
+    .menu { transform: none; }
+  }
+</style>
+</head>
+<body>
+  <svg class="scene" viewBox="0 0 1280 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="1280" height="800" fill="#070B12"/>
+    <rect y="300" width="1280" height="500" fill="#101820"/>
+    <g fill="#D5E4EA">
+      <rect x="90" y="64" width="3" height="3"/>
+      <rect x="180" y="120" width="3" height="3"/>
+      <rect x="260" y="48" width="3" height="3"/>
+      <rect x="340" y="96" width="3" height="3"/>
+      <rect x="700" y="56" width="3" height="3"/>
+      <rect x="780" y="108" width="3" height="3"/>
+      <rect x="900" y="44" width="3" height="3"/>
+      <rect x="1040" y="88" width="3" height="3"/>
+      <rect x="1160" y="52" width="3" height="3"/>
+    </g>
+    <circle cx="560" cy="118" r="36" fill="#E7D7B4"/>
+    <polygon points="0,440 90,390 190,430 320,360 470,420 620,348 780,410 940,356 1100,420 1280,370 1280,520 0,520" fill="#182430"/>
+    <polygon points="0,520 140,490 300,540 480,470 680,530 900,480 1100,540 1280,500 1280,800 0,800" fill="#0E161E"/>
+    <polygon points="600,800 690,800 760,540 680,520" fill="#1C2A36"/>
+    <rect x="392" y="390" width="12" height="130" fill="#243646"/>
+    <rect x="376" y="382" width="44" height="10" fill="#9FE1C8"/>
+    <rect x="968" y="410" width="12" height="120" fill="#243646"/>
+    <rect x="952" y="402" width="44" height="10" fill="#E2B15A"/>
+    <ellipse cx="820" cy="575" rx="74" ry="20" fill="#1A2834"/>
+    <ellipse cx="820" cy="562" rx="74" ry="20" fill="#243646"/>
+    <ellipse cx="820" cy="562" rx="34" ry="10" fill="#070B12"/>
+    <circle cx="646" cy="500" r="7" fill="#D5E4EA"/>
+    <rect x="640" y="508" width="12" height="22" rx="1" fill="#D5E4EA"/>
+  </svg>
+  <svg class="brackets" viewBox="0 0 1280 800" aria-hidden="true">
+    <g fill="none" stroke="#9FE1C8" stroke-width="2">
+      <path d="M16 16 H44 M16 16 V44"/>
+      <path d="M1264 16 H1236 M1264 16 V44"/>
+      <path d="M16 784 H44 M16 784 V756"/>
+      <path d="M1264 784 H1236 M1264 784 V756"/>
+    </g>
+  </svg>
+  <header class="hud">
+    <section class="panel scorebox" aria-label="Score">
+      <h1 class="brand">DUSKWELL</h1>
+      <p class="label">SCORE</p>
+      <p class="num" id="score">02480</p>
+    </section>
+    <section class="panel wavebox" aria-label="Wave and lives">
+      <p class="label">WAVE</p>
+      <p class="wave" id="wave">04</p>
+      <div class="life-row">
+        <span>LIVES</span>
+        <div class="pips" role="img" aria-label="3 lives">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L22 12 L12 22 L2 12 Z" fill="currentColor"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L22 12 L12 22 L2 12 Z" fill="currentColor"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L22 12 L12 22 L2 12 Z" fill="currentColor"/></svg>
+        </div>
+      </div>
+    </section>
+    <section class="panel mapbox" aria-label="Minimap">
+      <p class="label">MAP</p>
+      <svg viewBox="0 0 176 96" aria-hidden="true">
+        <polygon points="0,62 28,48 58,58 90,44 124,56 156,46 176,54 176,96 0,96" fill="#182430"/>
+        <polygon points="0,78 40,70 80,82 120,72 176,80 176,96 0,96" fill="#0E161E"/>
+        <rect x="36" y="40" width="3" height="22" fill="#243646"/>
+        <rect x="30" y="38" width="14" height="3" fill="#9FE1C8"/>
+        <rect x="132" y="44" width="3" height="20" fill="#243646"/>
+        <rect x="126" y="42" width="14" height="3" fill="#E2B15A"/>
+        <ellipse cx="118" cy="70" rx="12" ry="4" fill="none" stroke="#9FE1C8" stroke-width="1.5"/>
+        <path d="M78 76 L86 66 L82 76 Z" fill="#D5E4EA"/>
+      </svg>
+    </section>
+    <p class="status"><span>RIDGE 4</span><i class="pip" aria-hidden="true"></i><b id="hold">HOLDING</b></p>
+    <button type="button" id="pause" aria-expanded="false" aria-controls="menu">Pause <kbd>P</kbd></button>
+  </header>
+  <div class="scrim" id="menu" role="dialog" aria-modal="true" aria-labelledby="menu-title" hidden>
+    <div class="menu">
+      <p class="kicker">RIDGE 4</p>
+      <h2 id="menu-title">Paused</h2>
+      <div id="actions">
+        <button type="button" id="resume">Resume</button>
+        <button type="button" id="restart">Restart</button>
+        <button type="button" id="howto">How to play</button>
+      </div>
+      <div id="help" hidden>
+        <p>Arrow keys move along the ridge.</p>
+        <p>The map marks the well and two relays.</p>
+        <p>P, or Pause, opens this menu.</p>
+        <button type="button" id="help-back">Back</button>
+      </div>
+    </div>
+  </div>
+  <p class="sr" id="live" aria-live="polite"></p>
+<script>
+(function () {
+  var menu = document.getElementById("menu");
+  var pauseBtn = document.getElementById("pause");
+  var actions = document.getElementById("actions");
+  var help = document.getElementById("help");
+  var title = document.getElementById("menu-title");
+  var live = document.getElementById("live");
+  var hold = document.getElementById("hold");
+  var open = false;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function wait() { return reduce ? 0 : 200; }
+
+  function showActions() {
+    actions.hidden = false;
+    help.hidden = true;
+    title.textContent = "Paused";
+  }
+
+  function openMenu() {
+    if (open) return;
+    open = true;
+    showActions();
+    menu.hidden = false;
+    pauseBtn.setAttribute("aria-expanded", "true");
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { menu.classList.add("open"); });
+    });
+    live.textContent = "Paused.";
+    document.getElementById("resume").focus();
+  }
+
+  function closeMenu() {
+    if (!open) return;
+    open = false;
+    menu.classList.remove("open");
+    pauseBtn.setAttribute("aria-expanded", "false");
+    pauseBtn.focus();
+    window.setTimeout(function () {
+      if (!open) menu.hidden = true;
+    }, wait());
+  }
+
+  function showHelp() {
+    actions.hidden = true;
+    help.hidden = false;
+    title.textContent = "How to play";
+    live.textContent = "How to play.";
+    document.getElementById("help-back").focus();
+  }
+
+  function restart() {
+    hold.textContent = "RESTARTED";
+    live.textContent = "Wave 04 restarted.";
+    closeMenu();
+  }
+
+  pauseBtn.addEventListener("click", openMenu);
+  document.getElementById("resume").addEventListener("click", function () {
+    live.textContent = "Resumed.";
+    closeMenu();
+  });
+  document.getElementById("restart").addEventListener("click", restart);
+  document.getElementById("howto").addEventListener("click", showHelp);
+  document.getElementById("help-back").addEventListener("click", function () {
+    showActions();
+    document.getElementById("howto").focus();
+  });
+
+  menu.addEventListener("keydown", function (e) {
+    if (e.key !== "Tab" || !open) return;
+    var list = menu.querySelectorAll("button");
+    var vis = [];
+    for (var i = 0; i < list.length; i++) {
+      if (!list[i].closest("[hidden]")) vis.push(list[i]);
+    }
+    if (!vis.length) return;
+    var first = vis[0], last = vis[vis.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "p" || e.key === "P") {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      e.preventDefault();
+      if (open) closeMenu();
+      else openMenu();
+    } else if (e.key === "Escape" && open) {
+      e.preventDefault();
+      live.textContent = "Resumed.";
+      closeMenu();
+    }
+  });
+})();
+</script>
+</body>
+</html>

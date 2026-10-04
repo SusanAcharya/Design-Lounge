@@ -1,0 +1,73 @@
+{
+ "id": "game",
+ "surface": "web",
+ "title": "A game",
+ "kicker": "Play",
+ "blurb": "A title screen, a game you can play, a score list, and a room for friends. Three.js when the world is a scene.",
+ "when": "A game site: arcade, a small web game, a card table, a lobby, or a 3D scene. Not a marketing page with a Play button that goes nowhere.",
+ "theme": "coin-op",
+ "pairing": "arcade",
+ "shelf": "first-impressions",
+ "categories": [
+  "landing",
+  "media",
+  "data",
+  "social"
+ ],
+ "pieces": [
+  "game-title-screen",
+  "game-playfield",
+  "game-hud",
+  "game-card-table",
+  "game-lobby",
+  "game-leaderboard",
+  "pixel-arcade-style",
+  "three-orbit-object",
+  "three-scroll-world",
+  "three-room-look",
+  "webgl-shader-hero",
+  "object-3d-turntable"
+ ],
+ "directions": [
+  {
+   "id": "coin-op",
+   "name": "Coin-op",
+   "mood": "Dark cabinet, amber and CRT green, insert coin",
+   "theme": "coin-op",
+   "pairing": "arcade",
+   "family": "sharp",
+   "hero": "game-title-screen",
+   "effect": "game-playfield"
+  },
+  {
+   "id": "ticket-booth",
+   "name": "Ticket booth",
+   "mood": "Daylight arcade, family scores, a card table",
+   "theme": "ticket-booth",
+   "pairing": "pixel-soft",
+   "family": "soft",
+   "hero": "game-card-table",
+   "effect": "game-leaderboard"
+  },
+  {
+   "id": "cockpit-run",
+   "name": "Cockpit run",
+   "mood": "A mission HUD over a live view",
+   "theme": "hud-teal",
+   "pairing": "hud",
+   "family": "sharp",
+   "hero": "game-hud",
+   "effect": "webgl-shader-hero"
+  },
+  {
+   "id": "orbit",
+   "name": "Orbit",
+   "mood": "A lit object you turn, then a world you scroll through",
+   "theme": "night-desk",
+   "pairing": "wide-tech",
+   "family": "quiet",
+   "hero": "three-orbit-object",
+   "effect": "three-scroll-world"
+  }
+ ]
+}

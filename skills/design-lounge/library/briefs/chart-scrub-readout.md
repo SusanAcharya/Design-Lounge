@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 506 · "Scrub a firing curve" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 518 · "Scrub a firing curve" · designlounge.vercel.app -->
 
 # Scrub a firing curve
 

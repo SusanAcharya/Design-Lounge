@@ -47,7 +47,10 @@ If the open project is the Design Lounge repo itself (`src/demos` and `src/conte
 | A redesign of a site that already exists | Adopt flow, with the audit |
 | "Make it look like Stripe" (or Linear, Apple, Notion, any named brand) | Brand flow |
 | A new product, site, app, or design system | Kit flow |
-| A style by name: minimal, brutalist, Swiss, terminal, high-end, agency, luxury | Kit flow, with Named looks in [taste.md](taste.md) |
+| A style by name: minimal, brutalist, Swiss, terminal, high-end, agency, luxury, handwritten, pixel, arcade | Kit flow, with Named looks in [taste.md](taste.md) |
+| A game site, a web game, a lobby, a scoreboard | Kit flow, recipe `game`, then Games and Three.js in [taste.md](taste.md) |
+| Three.js, a 3D scene, an orbit, a scroll-driven world | Kit flow, recipe `game`, direction Orbit. The Lounge demo is raw WebGL. Build the product in Three.js from the brief. |
+| A handwritten or hand-lettered site | Kit flow, recipe `notebook` |
 | A brand kit, identity, logo system, or brand board | Kit flow, then Brand board in [taste.md](taste.md) |
 | A React Native, Expo, Flutter, SwiftUI, or Compose app, or a PWA | Kit flow, then [native.md](native.md) for tokens, fonts, platform rules, and simulator screenshots |
 | "Show me first", a concept, or mockup images, and you can make images | Kit flow, then Image first in [taste.md](taste.md) before code |

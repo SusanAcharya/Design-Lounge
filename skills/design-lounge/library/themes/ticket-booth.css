@@ -1,0 +1,66 @@
+/* Ticket Booth · light · pair: coin-op
+   The arcade in daylight. Cream tickets, a red stamp, green ink.
+   Best for: Casual games, Family arcades, Scoreboards */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Ticket Booth · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #c96925;
+  --primary-ink: #141210;
+  --primary-soft: #ecdac7;
+  --secondary: #0d7a45;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #d3dfce;
+  --tertiary: #1d4e89;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #d5d8d7;
+
+  /* Surface */
+  --bg: #f3efe4;
+  --surface: #fffdf6;
+  --surface-2: #e7e0d0;
+  --surface-3: #dad4c5;
+  --ink: #16181e;
+  --ink-2: #3c4250;
+  --ink-3: #6c6458;
+  --line: #d9d0bc;
+  --line-strong: #8f8a80;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #0d7a45;
+  --success-ink: #fffdf8;
+  --success-soft: #d3dfce;
+  --success-on-soft: #0b6b3d;
+  --warning: #a16207;
+  --warning-ink: #fffdf8;
+  --warning-soft: #e8dbc5;
+  --warning-on-soft: #7d4c05;
+  --danger: #b42323;
+  --danger-ink: #fffdf8;
+  --danger-soft: #ead2c9;
+  --danger-on-soft: #b42323;
+  --info: #1d4e89;
+  --info-ink: #fffdf8;
+  --info-soft: #d5d8d7;
+  --info-on-soft: #1d4e89;
+
+  /* Chrome */
+  --focus: #c96925;
+  --link: #a3561e;
+  --overlay: #141210;
+  --inverse: #16181e;
+  --inverse-ink: #f3efe4;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

@@ -265,6 +265,12 @@ More phone screens:
 - Photos: `phone-photo-viewer`. Swipe between them, one zoom step, a close control.
 - First load of a list: `phone-skeleton-list`. Placeholders the shape of the real rows, then the rows.
 
+A game. The title is `game-title-screen`. A game you can finish is `game-playfield` or `game-card-table`. The chrome over it is `game-hud`. A room of players is `game-lobby`. Scores are `game-leaderboard`. The pixel kit is `pixel-arcade-style`. Read Games and Three.js in [taste.md](taste.md) before you invent a Play button.
+
+A 3D scene. A shader with no objects is `webgl-shader-hero`. A box of flat faces is `object-3d-turntable`. A lit object you orbit is `three-orbit-object`. A world tied to scroll is `three-scroll-world`. A room you look around is `three-room-look`. Build the product in Three.js from the brief. The demo stays raw WebGL.
+
+A handwritten site. The whole page in a hand is `handwritten-homepage` or `handwritten-letter`, and the kit is `handwritten-style`. Notes on a normal page are `text-annotated-underlines`. Do not set paragraphs in a signature script.
+
 A single metric is one number at display size, a delta in `--success` or `--danger`, and a caption in `--ink-2`. If the screen has several figures, only one of them is display size. The others step down to the title role. Do not lay four equal numbers in a row.
 
 An empty list is a heading, one sentence, and one primary button. The heading is the largest type on that view. No illustration unless the named piece is the illustrated empty. On a phone, use the phone empty piece: the screen name is a label, the empty heading is the answer, and the button is at least 44px tall.

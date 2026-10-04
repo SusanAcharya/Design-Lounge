@@ -1,0 +1,66 @@
+/* Coin-op · dark · pair: ticket-booth
+   A cabinet in a dark arcade. Amber coin light, CRT green.
+   Best for: Games, Arcades, High scores */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Coin-op · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #ffd23f;
+  --primary-ink: #141210;
+  --primary-soft: #463d1d;
+  --secondary: #3dff9a;
+  --secondary-ink: #141210;
+  --secondary-soft: #184833;
+  --tertiary: #ff4d6a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #461d27;
+
+  /* Surface */
+  --bg: #0c0e12;
+  --surface: #141820;
+  --surface-2: #1c2230;
+  --surface-3: #323742;
+  --ink: #f4f0e6;
+  --ink-2: #b7c0c8;
+  --ink-3: #7d8794;
+  --line: #2a3344;
+  --line-strong: #777b82;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #3dff9a;
+  --success-ink: #141210;
+  --success-soft: #184833;
+  --success-on-soft: #3dff9a;
+  --warning: #ffd23f;
+  --warning-ink: #141210;
+  --warning-soft: #463d1d;
+  --warning-on-soft: #ffd23f;
+  --danger: #ff4d6a;
+  --danger-ink: #141210;
+  --danger-soft: #461d27;
+  --danger-on-soft: #ff627c;
+  --info: #7ec8ff;
+  --info-ink: #141210;
+  --info-soft: #273b4b;
+  --info-on-soft: #7ec8ff;
+
+  /* Chrome */
+  --focus: #ffd23f;
+  --link: #ffd23f;
+  --overlay: #070605;
+  --inverse: #f4f0e6;
+  --inverse-ink: #0c0e12;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

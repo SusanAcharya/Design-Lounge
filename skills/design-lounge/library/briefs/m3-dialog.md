@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 489 · "M3 basic and destructive dialogs" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 497 · "M3 basic and destructive dialogs" · designlounge.vercel.app -->
 
 # M3 basic and destructive dialogs
 

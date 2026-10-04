@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 497 · "Manage subscription, honest cancel" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 506 · "Manage subscription, honest cancel" · designlounge.vercel.app -->
 
 # Manage subscription, honest cancel
 

@@ -481,14 +481,22 @@ winding-ribbon-scroll-story | web | scroll | Winding ribbon scroll story | scrol
 phone-lesson-quiz | mobile-app | feedback | Word-bank lesson card | lesson quiz language tiles streak
 onboarding-workspace-setup | web | onboarding | Workspace setup with live preview | onboarding workspace form preview invite
 widget-world-clocks | web | widgets | World clocks meeting planner | clock timezone meeting scheduler slider
+game-lobby | web | social | Bramble parlour lobby | lobby multiplayer ready room
 shot-callout-pins | web | overlays | Callouts on a review still | annotation callout review screenshot
 phone-code-entry | mobile-app | auth | Chitthi code entry | auth otp phone ios
 phone-app-lock | mobile-app | auth | Coffer drawer lock | auth lock biometric phone ios
 phone-delete-account | mobile-app | settings | Delete account with a 30-day undo | settings account delete destructive confirmation ios
+game-hud | web | overlays | Duskwell mission HUD | hud pause minimap overlay wave
 phone-account-edit | mobile-app | profile | Edit profile with live username check | profile account forms username validation ios
 phone-photo-viewer | mobile-app | media | Full-bleed photo viewer | photos viewer swipe zoom phone
+handwritten-homepage | web | landing | Handwritten homepage | letter handwriting landing paper personal
+handwritten-letter | web | reading | Handwritten night letter | letter handwriting reading paper night
 phone-large-text-layout | mobile-app | utility | Large text layout rules | accessibility dynamic-type layout text-size reflow
+handwritten-style | web | design-language | Letter hand kit | handwriting kit paper type buttons
+game-card-table | web | media | Linnet pairs table | cards memory table keyboard
+three-orbit-object | web | mockups | Lit study on a quiet stage | mockup webgl orbit lighting architecture
 live-cursors-board | web | cursor | Live cursors on a board | cursor collaboration board presence
+three-room-look | web | hero | Look around a small room | hero webgl room camera interior
 m3-dialog | mobile-app | overlays | M3 basic and destructive dialogs | material dialog android alert overlay
 m3-top-app-bar-scroll | mobile-app | scroll | M3 collapsing large top app bar | material android app-bar fab scroll list
 m3-list-detail | mobile-app | transitions | M3 list to detail with predictive back | list detail container-transform back android material
@@ -497,15 +505,19 @@ m3-search-results | mobile-app | utility | M3 search results | material search a
 m3-settings-list | mobile-app | settings | M3 settings list | material android settings switch dialog list
 m3-sign-in | mobile-app | auth | M3 sign-in with passkey | sign-in form passkey android material
 m3-snackbar | mobile-app | feedback | M3 snackbar with undo | material snackbar android undo list
+game-playfield | web | media | Mallow Court brick rally | game breakout paddle canvas pause
 phone-subscription-manage | mobile-app | settings | Manage subscription, honest cancel | settings subscription billing pricing cancel ios
 phone-composer | mobile-app | messaging | New note composer | composer notes sheet phone ios
+game-title-screen | web | landing | Pebbleline attract screen | arcade attract pixel title credits
 phone-checkout | mobile-app | ecommerce | Phone checkout | checkout delivery payment phone ios
 phone-notification-settings | mobile-app | settings | Phone notification settings | settings notifications ios time-picker toggles
 phone-orders | mobile-app | ecommerce | Phone past orders | orders receipt shop phone ios
 phone-privacy-data | mobile-app | settings | Phone privacy and data | settings privacy permissions export ios
 phone-rating-prompt | mobile-app | feedback | Phone rating prompt | rating review feedback bottom-sheet ios
 phone-cart | mobile-app | ecommerce | Phone shopping bag | cart shop phone ios quantity
+game-leaderboard | web | data | Quern score ladder | leaderboard ranks tabs scores
 label-roll-button | web | buttons | Rolling label row | buttons motion type menu
+three-scroll-world | web | scroll | Scroll past three path models | scroll webgl camera chapters landscape
 chart-scrub-readout | web | charts | Scrub a firing curve | charts line scrub dashboard
 phone-skeleton-list | mobile-app | loaders | Skeleton list swap | skeleton loading list phone replay
 phone-forgot-password | mobile-app | auth | Solander password reset | auth password email phone ios

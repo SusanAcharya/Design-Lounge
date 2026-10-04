@@ -14,6 +14,8 @@ One rule sits over all of it. The lock wins. When a line below names a hex or a 
 | Any website | Page shape, and Craft |
 | They want a concept, a mockup image, or "show me first", and you can make images | Image first |
 | A brand kit, identity, logo system, or brand board | Brand board |
+| A game, an arcade, a web game, a lobby, or Three.js | Games and Three.js |
+| A handwritten or hand-lettered site | Handwritten |
 
 ## Named looks
 
@@ -134,6 +136,38 @@ The board is a 3 by 3 grid with even gutters and little text:
 Not every panel is loud. Quiet, working, emotional, technical, atmosphere, detail.
 
 With an image tool, generate the board as one 16:10 image, then build the SVG logo and the tokens for real. Without one, build the board as a single HTML page in the locked kit and screenshot it.
+
+## Games and Three.js
+
+A game site is a game. A landing page with a Play button that does nothing is a fail.
+
+Use the `game` recipe. Coin-op is the dark cabinet. Ticket booth is the daylight arcade. Cockpit run is a mission HUD. Orbit is the 3D scene.
+
+- Title, attract mode, credits: `game-title-screen`. The pixel kit is `pixel-arcade-style`.
+- A game you can finish: `game-playfield` for an action game, `game-card-table` for a board or cards. Keyboard and pointer both work. Pause and a game-over state are part of it.
+- Chrome over a running game: `game-hud`. Score, lives, and pause. Not a second game.
+- Friends: `game-lobby`. A room code, ready states, then the table. Script the other players. Do not leave a spinner that never resolves.
+- Scores: `game-leaderboard`. The player's own row is marked. Ranks are computed, not typed in as a picture.
+- Motion snaps. Pixel work uses `steps()`, a 4px grid, and no blur. The Arcade pairing's caution still applies: that mono is for the game, not for a long article.
+
+Three.js is for a scene: a camera, lights, and meshes. It is not for a gradient.
+
+- One full-screen shader, no objects: `webgl-shader-hero`. Raw WebGL. Do not add Three.js.
+- A product you spin, built from flat faces: `object-3d-turntable`. CSS 3D. Do not add Three.js.
+- An object you orbit in a lit scene: `three-orbit-object`.
+- A world the page scrolls through: `three-scroll-world`.
+- A room you look around: `three-room-look`.
+
+The Lounge demo of a `three-` piece is raw WebGL, one file, no library. The brief's Three.js section is how you build it in the product: scene, camera, renderer, lights, meshes, and the control. Use that. Do not paste a CDN script into the demo, and do not rewrite the scene as a stack of CSS divs.
+
+## Handwritten
+
+Two different jobs. Do not mix them.
+
+- The whole site is a letter: recipe `notebook`, pairing `letter-hand`, theme `inkwell` or `lamp-desk`. Pieces: `handwritten-homepage`, `handwritten-letter`, `handwritten-style`. Titles in Gochi Hand. Paragraphs in Patrick Hand. Lines stay short. No letter-spacing on a script. No all-caps script.
+- A normal site with notes in the margin: pairing `handwritten-notes`. The notes are Caveat. Buttons, nav, and paragraphs stay in the sans. Pieces: `text-annotated-underlines`, `graph-paper-homepage`, `card-journal-page`, `card-sticky-notepad`.
+
+A signature script for a paragraph is a fail. So is a handwritten dashboard.
 
 ## Left out on purpose
 

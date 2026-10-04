@@ -1,0 +1,413 @@
+<!-- Design Lounge piece: three-orbit-object · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Orrio · Reed Cut House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#161311;--stage:#5C564F;--plaster:#E7DCCB;--wing:#D4C4AE;--copper:#A85A38;
+  --ink:#F4EFE8;--muted:#C4B5A4;--line:rgba(244,239,232,.16);--accent:#E0A06A;--focus:#F0C9A0;
+  --serif:"Fraunces",Georgia,serif;--sans:"Outfit",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--void);color:var(--ink);font:16px/1.5 var(--sans);overflow:hidden}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.frame{display:grid;grid-template-columns:420px minmax(0,1fr);height:100%}
+.panel{display:flex;flex-direction:column;padding:36px 40px 32px;border-right:1px solid var(--line);min-width:0}
+.brand{margin:0;font:500 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+h1{margin:28px 0 0;font:500 52px/1.02 var(--serif);letter-spacing:-.03em;text-wrap:balance}
+.study{margin:10px 0 0;font:italic 500 22px/1.2 var(--serif);color:var(--muted)}
+.lede{margin:22px 0 0;max-width:34ch;color:var(--muted);font-size:16px;line-height:1.5}
+dl{margin:28px 0 0;display:grid;grid-template-columns:108px 1fr;gap:10px 16px;font-size:14px}
+dt{margin:0;color:var(--muted);letter-spacing:.04em}
+dd{margin:0}
+.grow{flex:1}
+.row{display:flex;align-items:center;gap:16px;margin-top:8px}
+button{
+  height:44px;padding:0 16px;display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--ink);border:1px solid #6E6256;border-radius:2px;
+  font:500 14px/1 var(--sans);letter-spacing:.02em;cursor:pointer;
+  transition:border-color .16s var(--ease),color .16s var(--ease),background-color .16s var(--ease);
+}
+button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button:active{background:rgba(224,160,106,.08)}
+.hint{margin:0;font-size:13px;color:var(--muted)}
+.bearing{margin:14px 0 0;font:500 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.stage{position:relative;min-width:0;background:var(--void)}
+canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:none;background:var(--void)}
+canvas:active{cursor:grabbing}
+.cap{
+  position:absolute;left:28px;bottom:24px;margin:0;
+  font:500 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  pointer-events:none;
+}
+.err{position:absolute;inset:auto 28px 56px 28px;margin:0;color:var(--accent);font-size:14px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media (max-width:1024px){
+  .frame{grid-template-columns:320px minmax(0,1fr)}
+  .panel{padding:28px 24px}
+  h1{font-size:40px}
+}
+@media (max-width:768px){
+  .frame{grid-template-columns:1fr;grid-template-rows:auto minmax(280px,1fr)}
+  .panel{border-right:0;border-bottom:1px solid var(--line)}
+  .grow{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  button{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="frame">
+  <section class="panel" aria-labelledby="title">
+    <p class="brand">Orrio models</p>
+    <h1 id="title">Reed Cut House</h1>
+    <p class="study">Study 03, the massing</p>
+    <p class="lede">A plaster study for Mara Voss. Two volumes, copper roofs, one chimney. North light, and a dim fill so the side goes dark as you turn it.</p>
+    <dl>
+      <dt>Site</dt><dd>Lot 18, Reed Cut</dd>
+      <dt>Width</dt><dd>11.4 m</dd>
+      <dt>To chimney</dt><dd>6.8 m</dd>
+      <dt>Depth</dt><dd>7.2 m</dd>
+      <dt>Shown</dt><dd>Study 03 of 06</dd>
+    </dl>
+    <div class="grow"></div>
+    <div class="row">
+      <button type="button" id="reset">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2-5.1"/><path d="M4 4.5V9h4.5"/></svg>
+        Reset view
+      </button>
+      <p class="hint" id="hint">Drag to orbit. Arrows turn it.</p>
+    </div>
+    <p class="bearing" id="bearing">Home view</p>
+    <p class="sr" id="live" aria-live="polite"></p>
+  </section>
+  <div class="stage">
+    <canvas id="view" tabindex="0" aria-label="Orbit the Reed Cut House study. Drag, or use the arrow keys." aria-describedby="hint"></canvas>
+    <p class="cap">North light · one fill</p>
+    <p class="err" id="err" hidden></p>
+  </div>
+</div>
+<script>
+(function () {
+  var canvas = document.getElementById('view');
+  var bearing = document.getElementById('bearing');
+  var live = document.getElementById('live');
+  var err = document.getElementById('err');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  var gl = canvas.getContext('webgl', { antialias: true, alpha: false, depth: true, preserveDrawingBuffer: true });
+  if (!gl) { err.hidden = false; err.textContent = 'This study needs WebGL.'; return; }
+
+  var VS = [
+    'attribute vec3 aP;',
+    'attribute vec3 aN;',
+    'uniform mat4 uMVP;',
+    'uniform mat4 uM;',
+    'varying vec3 vN;',
+    'varying vec3 vW;',
+    'void main(){',
+    '  vW=(uM*vec4(aP,1.0)).xyz;',
+    '  vN=mat3(uM[0].xyz,uM[1].xyz,uM[2].xyz)*aN;',
+    '  gl_Position=uMVP*vec4(aP,1.0);',
+    '}'
+  ].join('\n');
+  var FS = [
+    'precision mediump float;',
+    'varying vec3 vN;varying vec3 vW;',
+    'uniform vec3 uEye,uCol,uEmit,uKeyD,uKeyC,uFillD,uFillC,uAmb;',
+    'uniform float uMetal,uRough;',
+    'void main(){',
+    '  vec3 N=normalize(vN);',
+    '  vec3 V=normalize(uEye-vW);',
+    '  vec3 col=uAmb*uCol+uEmit;',
+    '  vec3 L1=normalize(uKeyD);',
+    '  vec3 L2=normalize(uFillD);',
+    '  float s1=pow(max(dot(N,normalize(V+L1)),0.0),mix(10.0,90.0,1.0-uRough));',
+    '  float s2=pow(max(dot(N,normalize(V+L2)),0.0),mix(10.0,90.0,1.0-uRough));',
+    '  float d1=max(dot(N,L1),0.0);',
+    '  float d2=max(dot(N,L2),0.0);',
+    '  vec3 F0=mix(vec3(0.04),uCol,uMetal);',
+    '  col+=(uCol*(1.0-uMetal)*d1+F0*s1*d1)*uKeyC;',
+    '  col+=(uCol*(1.0-uMetal)*d2+F0*s2*d2)*uFillC;',
+    '  col=col/(col+vec3(1.0));',
+    '  gl_FragColor=vec4(pow(max(col,0.0),vec3(0.4545)),1.0);',
+    '}'
+  ].join('\n');
+
+  function sh(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      err.hidden = false;
+      err.textContent = gl.getShaderInfoLog(s);
+      return null;
+    }
+    return s;
+  }
+  var prog = gl.createProgram();
+  var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS);
+  if (!vs || !fs) return;
+  gl.attachShader(prog, vs);
+  gl.attachShader(prog, fs);
+  gl.bindAttribLocation(prog, 0, 'aP');
+  gl.bindAttribLocation(prog, 1, 'aN');
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    err.hidden = false;
+    err.textContent = gl.getProgramInfoLog(prog);
+    return;
+  }
+  gl.useProgram(prog);
+  var loc = function (n) { return gl.getUniformLocation(prog, n); };
+  var uMVP = loc('uMVP'), uM = loc('uM'), uEye = loc('uEye'), uCol = loc('uCol');
+  var uEmit = loc('uEmit'), uMetal = loc('uMetal'), uRough = loc('uRough');
+
+  function lin(hex) {
+    var n = parseInt(hex.slice(1), 16);
+    return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255].map(function (c) {
+      return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    });
+  }
+  function mulK(c, k) { return [c[0] * k, c[1] * k, c[2] * k]; }
+
+  gl.uniform3fv(loc('uKeyD'), [-2.2, 5.4, 2.6]);
+  gl.uniform3fv(loc('uKeyC'), mulK(lin('#FFF1DC'), 3.4));
+  gl.uniform3fv(loc('uFillD'), [4.2, 1.4, -1.2]);
+  gl.uniform3fv(loc('uFillC'), mulK(lin('#9BB0C4'), 0.38));
+  gl.uniform3fv(loc('uAmb'), mulK(lin('#3A332C'), 0.55));
+
+  function boxGeo(w, h, d) {
+    var x = w / 2, y = h / 2, z = d / 2;
+    var f = [
+      [[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z],[0,0,1]],
+      [[x,-y,-z],[-x,-y,-z],[-x,y,-z],[x,y,-z],[0,0,-1]],
+      [[x,-y,z],[x,-y,-z],[x,y,-z],[x,y,z],[1,0,0]],
+      [[-x,-y,-z],[-x,-y,z],[-x,y,z],[-x,y,-z],[-1,0,0]],
+      [[-x,y,z],[x,y,z],[x,y,-z],[-x,y,-z],[0,1,0]],
+      [[-x,-y,-z],[x,-y,-z],[x,-y,z],[-x,-y,z],[0,-1,0]]
+    ];
+    var p = [], nv = [];
+    for (var i = 0; i < f.length; i++) {
+      var face = f[i], N = face[4], q = [0,1,2,0,2,3];
+      for (var k = 0; k < 6; k++) {
+        var v = face[q[k]];
+        p.push(v[0], v[1], v[2]);
+        nv.push(N[0], N[1], N[2]);
+      }
+    }
+    return { p: p, n: nv };
+  }
+  var cache = {};
+  function geo(w, h, d) {
+    var key = w + 'x' + h + 'x' + d;
+    if (cache[key]) return cache[key];
+    var g = boxGeo(w, h, d);
+    var bp = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, bp);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(g.p), gl.STATIC_DRAW);
+    var bn = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, bn);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(g.n), gl.STATIC_DRAW);
+    cache[key] = { bp: bp, bn: bn, count: g.p.length / 3 };
+    return cache[key];
+  }
+  var meshes = [];
+  function add(w, h, d, x, y, z, hex, metal, rough) {
+    meshes.push({ g: geo(w, h, d), x: x, y: y, z: z, col: lin(hex), metal: metal, rough: rough, emit: [0, 0, 0] });
+  }
+  add(3.2, 0.1, 2.15, 0, 0.05, 0, '#5C564F', 0.02, 0.92);
+  add(1.7, 0.012, 1.15, 0.05, 0.106, 0.02, '#2A241E', 0, 1);
+  add(1.05, 0.92, 0.68, -0.16, 0.56, 0.02, '#E7DCCB', 0.02, 0.78);
+  add(0.62, 0.5, 0.64, 0.66, 0.35, 0.06, '#D4C4AE', 0.02, 0.82);
+  add(1.2, 0.07, 0.84, -0.16, 1.055, 0.02, '#A85A38', 0.45, 0.38);
+  add(0.74, 0.055, 0.76, 0.66, 0.628, 0.06, '#8E4A30', 0.4, 0.42);
+  add(0.14, 0.34, 0.14, -0.46, 1.26, -0.12, '#C8BBA8', 0.04, 0.7);
+  add(0.18, 0.38, 0.025, -0.34, 0.29, 0.372, '#2C261F', 0.05, 0.6);
+
+  var P = new Float32Array(16), V = new Float32Array(16), M = new Float32Array(16);
+  var VM = new Float32Array(16), MVP = new Float32Array(16);
+  function mul(a, b, o) {
+    for (var c = 0; c < 4; c++) {
+      for (var r = 0; r < 4; r++) {
+        o[c * 4 + r] = a[r] * b[c * 4] + a[4 + r] * b[c * 4 + 1] + a[8 + r] * b[c * 4 + 2] + a[12 + r] * b[c * 4 + 3];
+      }
+    }
+  }
+  function perspective(out, fovy, aspect, near, far) {
+    var f = 1 / Math.tan(fovy / 2), nf = 1 / (near - far);
+    out[0] = f / aspect; out[1] = 0; out[2] = 0; out[3] = 0;
+    out[4] = 0; out[5] = f; out[6] = 0; out[7] = 0;
+    out[8] = 0; out[9] = 0; out[10] = (far + near) * nf; out[11] = -1;
+    out[12] = 0; out[13] = 0; out[14] = 2 * far * near * nf; out[15] = 0;
+  }
+  function lookAt(out, ex, ey, ez, cx, cy, cz) {
+    var zx = ex - cx, zy = ey - cy, zz = ez - cz;
+    var len = Math.hypot(zx, zy, zz) || 1;
+    zx /= len; zy /= len; zz /= len;
+    var xx = zz, xy = 0, xz = -zx;
+    len = Math.hypot(xx, xy, xz) || 1;
+    xx /= len; xy /= len; xz /= len;
+    var yx = zy * xz - zz * xy, yy = zz * xx - zx * xz, yz = zx * xy - zy * xx;
+    out[0] = xx; out[1] = yx; out[2] = zx; out[3] = 0;
+    out[4] = xy; out[5] = yy; out[6] = zy; out[7] = 0;
+    out[8] = xz; out[9] = yz; out[10] = zz; out[11] = 0;
+    out[12] = -(xx * ex + xy * ey + xz * ez);
+    out[13] = -(yx * ex + yy * ey + yz * ez);
+    out[14] = -(zx * ex + zy * ey + zz * ez);
+    out[15] = 1;
+  }
+  function model(out, x, y, z) {
+    out[0] = 1; out[1] = 0; out[2] = 0; out[3] = 0;
+    out[4] = 0; out[5] = 1; out[6] = 0; out[7] = 0;
+    out[8] = 0; out[9] = 0; out[10] = 1; out[11] = 0;
+    out[12] = x; out[13] = y; out[14] = z; out[15] = 1;
+  }
+
+  var TH0 = 0.66, PH0 = 1.08, RAD = 5.15;
+  var TX = 0.12, TY = 0.62, TZ = 0;
+  var PHI_MIN = 0.52, PHI_MAX = 1.32;
+  var theta = TH0, phi = PH0, vT = 0, vP = 0, resetting = false, drag = false, raf = 0, eye = [0, 0, 0];
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function say(polite) {
+    var d = Math.round((theta - TH0) * 180 / Math.PI);
+    d = ((d % 360) + 360) % 360;
+    if (d > 180) d -= 360;
+    var t = Math.abs(d) < 1 ? 'Home view' : Math.abs(d) + '° off home';
+    bearing.textContent = t;
+    canvas.dataset.yaw = String(Math.round(theta * 180 / Math.PI));
+    if (polite) live.textContent = t;
+  }
+  function resize() {
+    var dpr = Math.min(devicePixelRatio || 1, 2);
+    var w = canvas.clientWidth || 800, h = canvas.clientHeight || 800;
+    var W = Math.max(1, Math.round(w * dpr)), H = Math.max(1, Math.round(h * dpr));
+    if (canvas.width !== W || canvas.height !== H) {
+      canvas.width = W; canvas.height = H;
+    }
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    perspective(P, 32 * Math.PI / 180, canvas.width / canvas.height, 0.08, 40);
+  }
+  function draw() {
+    var sp = Math.sin(phi), cp = Math.cos(phi);
+    eye[0] = TX + RAD * sp * Math.sin(theta);
+    eye[1] = TY + RAD * cp;
+    eye[2] = TZ + RAD * sp * Math.cos(theta);
+    lookAt(V, eye[0], eye[1], eye[2], TX, TY, TZ);
+    gl.uniform3fv(uEye, eye);
+    gl.clearColor(0.086, 0.075, 0.067, 1);
+    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.enableVertexAttribArray(0);
+    gl.enableVertexAttribArray(1);
+    for (var i = 0; i < meshes.length; i++) {
+      var m = meshes[i];
+      model(M, m.x, m.y, m.z);
+      mul(V, M, VM);
+      mul(P, VM, MVP);
+      gl.uniformMatrix4fv(uM, false, M);
+      gl.uniformMatrix4fv(uMVP, false, MVP);
+      gl.uniform3fv(uCol, m.col);
+      gl.uniform3fv(uEmit, m.emit);
+      gl.uniform1f(uMetal, m.metal);
+      gl.uniform1f(uRough, m.rough);
+      gl.bindBuffer(gl.ARRAY_BUFFER, m.g.bp);
+      gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, m.g.bn);
+      gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 0, 0);
+      gl.drawArrays(gl.TRIANGLES, 0, m.g.count);
+    }
+    say(false);
+  }
+  function tick() {
+    raf = 0;
+    var moving = false;
+    if (!drag) {
+      if (resetting) {
+        if (reduce.matches) { theta = TH0; phi = PH0; vT = vP = 0; resetting = false; }
+        else {
+          theta += (TH0 - theta) * 0.14;
+          phi += (PH0 - phi) * 0.14;
+          vT = vP = 0;
+          if (Math.abs(TH0 - theta) < 0.001 && Math.abs(PH0 - phi) < 0.001) {
+            theta = TH0; phi = PH0; resetting = false;
+          } else moving = true;
+        }
+      } else if (!reduce.matches) {
+        theta += vT; phi += vP;
+        vT *= 0.92; vP *= 0.92;
+        if (phi < PHI_MIN || phi > PHI_MAX) { phi = clamp(phi, PHI_MIN, PHI_MAX); vP = 0; }
+        if (Math.abs(vT) > 0.00012 || Math.abs(vP) > 0.00012) moving = true;
+        else { vT = vP = 0; }
+      } else { vT = vP = 0; }
+    }
+    phi = clamp(phi, PHI_MIN, PHI_MAX);
+    draw();
+    if (moving || drag) raf = requestAnimationFrame(tick);
+  }
+  function kick() { if (!raf) raf = requestAnimationFrame(tick); }
+
+  canvas.addEventListener('pointerdown', function (e) {
+    drag = true; resetting = false; vT = vP = 0;
+    canvas.setPointerCapture(e.pointerId);
+    canvas.dataset.lx = String(e.clientX);
+    canvas.dataset.ly = String(e.clientY);
+    kick();
+  });
+  canvas.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var lx = +canvas.dataset.lx, ly = +canvas.dataset.ly;
+    var dx = e.clientX - lx, dy = e.clientY - ly;
+    canvas.dataset.lx = String(e.clientX);
+    canvas.dataset.ly = String(e.clientY);
+    theta -= dx * 0.008;
+    phi = clamp(phi + dy * 0.005, PHI_MIN, PHI_MAX);
+    if (!reduce.matches) { vT = -dx * 0.008; vP = dy * 0.005; }
+  });
+  function endDrag() {
+    if (!drag) return;
+    drag = false;
+    say(true);
+    kick();
+  }
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+  canvas.addEventListener('keydown', function (e) {
+    var step = 0.09, used = true;
+    if (e.key === 'ArrowLeft') { theta -= step; vT = reduce.matches ? 0 : -step * 0.35; }
+    else if (e.key === 'ArrowRight') { theta += step; vT = reduce.matches ? 0 : step * 0.35; }
+    else if (e.key === 'ArrowUp') { phi = clamp(phi - step * 0.6, PHI_MIN, PHI_MAX); vP = 0; }
+    else if (e.key === 'ArrowDown') { phi = clamp(phi + step * 0.6, PHI_MIN, PHI_MAX); vP = 0; }
+    else if (e.key === 'Home') { resetting = true; vT = vP = 0; }
+    else used = false;
+    if (!used) return;
+    e.preventDefault();
+    resetting = e.key === 'Home';
+    if (e.key !== 'Home') resetting = false;
+    kick();
+    say(true);
+  });
+  document.getElementById('reset').addEventListener('click', function () {
+    resetting = true; vT = vP = 0;
+    if (reduce.matches) { theta = TH0; phi = PH0; resetting = false; draw(); say(true); }
+    else { kick(); say(true); }
+  });
+  addEventListener('resize', function () { resize(); draw(); });
+  resize();
+  draw();
+  say(true);
+})();
+</script>
+</body>
+</html>

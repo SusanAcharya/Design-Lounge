@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 488 · "Live cursors on a board" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 495 · "Live cursors on a board" · designlounge.vercel.app -->
 
 # Live cursors on a board
 

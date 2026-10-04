@@ -1,0 +1,310 @@
+<!-- Design Lounge piece: three-room-look · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Elver Studio · Room 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#241C16;--paper:#F7F1E8;--muted:#5C5148;--accent:#9C3D24;--line:rgba(36,28,22,.16);
+  --focus:#9C3D24;--sky:#8EB8C8;
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Outfit",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#CDBBA6;color:var(--ink);font:16px/1.5 var(--sans);overflow:hidden}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.room{position:relative;height:100%}
+canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:none;background:var(--sky)}
+canvas:active{cursor:grabbing}
+aside{
+  position:absolute;top:36px;left:40px;width:400px;
+  background:var(--paper);color:var(--ink);padding:28px 28px 24px;
+  border:1px solid var(--line);
+}
+.brand{margin:0;font:500 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+h1{margin:16px 0 0;font:500 46px/0.98 var(--serif);letter-spacing:-.02em;text-wrap:balance}
+.lede{margin:14px 0 0;color:var(--muted);font-size:16px;line-height:1.5}
+.meta{margin:18px 0 0;display:flex;gap:18px;font:500 13px/1.3 var(--sans)}
+.meta b{display:block;font-weight:500;color:var(--ink)}
+.meta span{color:var(--muted);font-weight:400}
+.row{display:flex;align-items:center;gap:14px;margin-top:22px}
+button{
+  height:44px;padding:0 16px;display:inline-flex;align-items:center;gap:8px;
+  background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:2px;
+  font:500 14px/1 var(--sans);cursor:pointer;
+  transition:background-color .16s var(--ease),color .16s var(--ease);
+}
+button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+button:hover{background:#3A2E26}
+button:active{background:#1A1410}
+.hint{margin:0;font-size:13px;color:var(--muted);max-width:18ch}
+.read{margin:16px 0 0;font:500 12px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.err{position:absolute;left:40px;bottom:28px;color:var(--accent);background:var(--paper);padding:8px 12px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media (max-width:900px){
+  aside{top:auto;bottom:16px;left:16px;right:16px;width:auto;padding:20px}
+  h1{font-size:36px}
+}
+@media (prefers-reduced-motion:reduce){
+  button{transition:none}
+}
+</style>
+</head>
+<body>
+<main class="room" id="stay">
+  <canvas id="view" tabindex="0" aria-label="Look around Room 2. Drag, or use the arrow keys. The view stays inside the room." aria-describedby="hint"></canvas>
+  <aside aria-labelledby="title">
+    <p class="brand">Elver Studio</p>
+    <h1 id="title">Room 2 looks onto the cut.</h1>
+    <p class="lede">Four nights above Wick Joinery. One window on the Silt Cut, and a green jar on the stand by the left wall.</p>
+    <div class="meta">
+      <p><b>£186</b><span>four nights</span></p>
+      <p><b>North</b><span>the only window</span></p>
+      <p><b>Stand</b><span>one jar</span></p>
+    </div>
+    <div class="row">
+      <button type="button" id="reset">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2-5.1"/><path d="M4 4.5V9h4.5"/></svg>
+        Reset view
+      </button>
+      <p class="hint" id="hint">Drag to look. The view stays inside the room.</p>
+    </div>
+    <p class="read" id="read">Toward the window</p>
+  </aside>
+  <p class="sr" id="live" aria-live="polite"></p>
+  <p class="err" id="err" hidden></p>
+</main>
+<script>
+(function () {
+  var canvas = document.getElementById('view');
+  var read = document.getElementById('read');
+  var live = document.getElementById('live');
+  var err = document.getElementById('err');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  var gl = canvas.getContext('webgl', { antialias: true, alpha: false, depth: true, preserveDrawingBuffer: true });
+  if (!gl) { err.hidden = false; err.textContent = 'This room needs WebGL.'; return; }
+
+  var VS = 'attribute vec3 aP;attribute vec3 aN;uniform mat4 uMVP;uniform mat4 uM;varying vec3 vN;varying vec3 vW;void main(){vW=(uM*vec4(aP,1.0)).xyz;vN=mat3(uM[0].xyz,uM[1].xyz,uM[2].xyz)*aN;gl_Position=uMVP*vec4(aP,1.0);}';
+  var FS = 'precision mediump float;varying vec3 vN;varying vec3 vW;uniform vec3 uEye,uCol,uEmit,uKeyD,uKeyC,uFillD,uFillC,uAmb;uniform float uMetal,uRough;void main(){vec3 N=normalize(vN);vec3 V=normalize(uEye-vW);vec3 col=uAmb*uCol+uEmit;vec3 L1=normalize(uKeyD);vec3 L2=normalize(uFillD);float s1=pow(max(dot(N,normalize(V+L1)),0.0),mix(8.0,70.0,1.0-uRough));float s2=pow(max(dot(N,normalize(V+L2)),0.0),mix(8.0,70.0,1.0-uRough));float d1=max(dot(N,L1),0.0);float d2=max(dot(N,L2),0.0);vec3 F0=mix(vec3(0.04),uCol,uMetal);col+=(uCol*(1.0-uMetal)*d1+F0*s1*d1)*uKeyC;col+=(uCol*(1.0-uMetal)*d2+F0*s2*d2)*uFillC;col=col/(col+vec3(1.0));gl_FragColor=vec4(pow(max(col,0.0),vec3(0.4545)),1.0);}';
+
+  function sh(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { err.hidden = false; err.textContent = gl.getShaderInfoLog(s); return null; }
+    return s;
+  }
+  var prog = gl.createProgram();
+  var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS);
+  if (!vs || !fs) return;
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs);
+  gl.bindAttribLocation(prog, 0, 'aP'); gl.bindAttribLocation(prog, 1, 'aN');
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { err.hidden = false; err.textContent = gl.getProgramInfoLog(prog); return; }
+  gl.useProgram(prog);
+  var loc = function (n) { return gl.getUniformLocation(prog, n); };
+  var uMVP = loc('uMVP'), uM = loc('uM'), uEye = loc('uEye'), uCol = loc('uCol'), uEmit = loc('uEmit'), uMetal = loc('uMetal'), uRough = loc('uRough');
+  function lin(hex) {
+    var n = parseInt(hex.slice(1), 16);
+    return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255].map(function (c) {
+      return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    });
+  }
+  function mulK(c, k) { return [c[0]*k, c[1]*k, c[2]*k]; }
+  gl.uniform3fv(loc('uKeyD'), [0.35, 0.85, -1.35]);
+  gl.uniform3fv(loc('uKeyC'), mulK(lin('#F7FBFE'), 4.2));
+  gl.uniform3fv(loc('uFillD'), [-0.4, 0.35, 1.1]);
+  gl.uniform3fv(loc('uFillC'), mulK(lin('#E7C7A4'), 0.85));
+  gl.uniform3fv(loc('uAmb'), mulK(lin('#E4D5C3'), 0.38));
+
+  function upload(g) {
+    var bp = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bp);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(g.p), gl.STATIC_DRAW);
+    var bn = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bn);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(g.n), gl.STATIC_DRAW);
+    return { bp: bp, bn: bn, count: g.p.length / 3 };
+  }
+  function boxGeo(w, h, d) {
+    var x=w/2, y=h/2, z=d/2, p=[], nv=[];
+    var f=[
+      [[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z],[0,0,1]],
+      [[x,-y,-z],[-x,-y,-z],[-x,y,-z],[x,y,-z],[0,0,-1]],
+      [[x,-y,z],[x,-y,-z],[x,y,-z],[x,y,z],[1,0,0]],
+      [[-x,-y,-z],[-x,-y,z],[-x,y,z],[-x,y,-z],[-1,0,0]],
+      [[-x,y,z],[x,y,z],[x,y,-z],[-x,y,-z],[0,1,0]],
+      [[-x,-y,-z],[x,-y,-z],[x,-y,z],[-x,-y,z],[0,-1,0]]
+    ];
+    for (var i=0;i<6;i++){var face=f[i], N=face[4], q=[0,1,2,0,2,3]; for(var k=0;k<6;k++){var v=face[q[k]]; p.push(v[0],v[1],v[2]); nv.push(N[0],N[1],N[2]);}}
+    return {p:p,n:nv};
+  }
+  function icoGeo(r) {
+    var t=(1+Math.sqrt(5))/2;
+    var V=[[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]];
+    for (var i=0;i<12;i++){var l=Math.hypot(V[i][0],V[i][1],V[i][2]); V[i][0]=V[i][0]/l*r; V[i][1]=V[i][1]/l*r; V[i][2]=V[i][2]/l*r;}
+    var F=[[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+    var p=[], nv=[];
+    for (var f=0;f<F.length;f++){
+      var a=V[F[f][0]], b=V[F[f][1]], c=V[F[f][2]];
+      var ux=b[0]-a[0], uy=b[1]-a[1], uz=b[2]-a[2], vx=c[0]-a[0], vy=c[1]-a[1], vz=c[2]-a[2];
+      var nx=uy*vz-uz*vy, ny=uz*vx-ux*vz, nz=ux*vy-uy*vx, len=Math.hypot(nx,ny,nz)||1;
+      nx/=len; ny/=len; nz/=len;
+      var cx=(a[0]+b[0]+c[0])/3, cy=(a[1]+b[1]+c[1])/3, cz=(a[2]+b[2]+c[2])/3;
+      if (nx*cx+ny*cy+nz*cz<0){nx=-nx;ny=-ny;nz=-nz; var tmp=b; b=c; c=tmp;}
+      var tri=[a,b,c];
+      for (var k=0;k<3;k++){p.push(tri[k][0],tri[k][1],tri[k][2]); nv.push(nx,ny,nz);}
+    }
+    return {p:p,n:nv};
+  }
+  var cache={};
+  function box(w,h,d){var k=w+'x'+h+'x'+d; if(!cache[k]) cache[k]=upload(boxGeo(w,h,d)); return cache[k];}
+  var jar = upload(icoGeo(0.16));
+  var meshes=[];
+  function add(g,x,y,z,hex,metal,rough,emit){
+    meshes.push({g:g,x:x,y:y,z:z,col:lin(hex),metal:metal,rough:rough,emit:emit||[0,0,0]});
+  }
+  var wall = '#E4D5C3', wood = '#6B4530';
+  add(box(4.2, 0.12, 4.4), 0, -0.06, -0.2, '#7A5234', 0.03, 0.82);
+  add(box(4.2, 0.1, 4.4), 0, 2.6, -0.2, '#EFE6D8', 0, 0.92);
+  add(box(0.12, 2.55, 4.4), -2.06, 1.275, -0.2, wall, 0, 0.9);
+  add(box(0.12, 2.55, 4.4), 2.06, 1.275, -0.2, wall, 0, 0.9);
+  add(box(4.0, 2.55, 0.12), 0, 1.275, 1.96, wall, 0, 0.9);
+  add(box(1.56, 2.55, 0.1), -1.22, 1.275, -2.45, wall, 0, 0.9);
+  add(box(1.08, 2.55, 0.1), 1.46, 1.275, -2.45, wall, 0, 0.9);
+  add(box(1.48, 0.66, 0.1), 0.24, 0.33, -2.45, wall, 0, 0.9);
+  add(box(1.48, 0.64, 0.1), 0.24, 2.23, -2.45, wall, 0, 0.9);
+  add(box(2.4, 2.2, 0.04), 0.24, 1.35, -2.78, '#7EADC0', 0, 1, mulK(lin('#B7D4E2'), 1.15));
+  add(box(2.4, 0.72, 0.04), 0.24, 0.72, -2.74, '#245E6C', 0.2, 0.4, mulK(lin('#2E7584'), 0.55));
+  add(box(0.05, 1.25, 0.06), 0.24, 1.285, -2.36, '#F6F1E8', 0.02, 0.55);
+  add(box(1.42, 0.05, 0.06), 0.24, 1.28, -2.36, '#F6F1E8', 0.02, 0.55);
+  add(box(1.56, 0.07, 0.08), 0.24, 0.68, -2.34, '#F4EFE6', 0.02, 0.6);
+  add(box(0.64, 0.045, 0.42), -1.15, 0.62, -0.35, wood, 0.04, 0.62);
+  add(box(0.045, 0.58, 0.045), -1.4, 0.31, -0.5, wood, 0.04, 0.66);
+  add(box(0.045, 0.58, 0.045), -0.9, 0.31, -0.5, wood, 0.04, 0.66);
+  add(box(0.045, 0.58, 0.045), -1.4, 0.31, -0.2, wood, 0.04, 0.66);
+  add(box(0.045, 0.58, 0.045), -0.9, 0.31, -0.2, wood, 0.04, 0.66);
+  add(jar, -1.15, 0.84, -0.35, '#1C4A42', 0.12, 0.38);
+
+  var P=new Float32Array(16), V=new Float32Array(16), M=new Float32Array(16), VM=new Float32Array(16), MVP=new Float32Array(16);
+  function mul(a,b,o){for(var c=0;c<4;c++)for(var r=0;r<4;r++)o[c*4+r]=a[r]*b[c*4]+a[4+r]*b[c*4+1]+a[8+r]*b[c*4+2]+a[12+r]*b[c*4+3];}
+  function perspective(out,fovy,aspect,near,far){
+    var f=1/Math.tan(fovy/2), nf=1/(near-far);
+    out[0]=f/aspect;out[1]=0;out[2]=0;out[3]=0;out[4]=0;out[5]=f;out[6]=0;out[7]=0;
+    out[8]=0;out[9]=0;out[10]=(far+near)*nf;out[11]=-1;out[12]=0;out[13]=0;out[14]=2*far*near*nf;out[15]=0;
+  }
+  function lookAt(out,ex,ey,ez,cx,cy,cz){
+    var zx=ex-cx,zy=ey-cy,zz=ez-cz,len=Math.hypot(zx,zy,zz)||1; zx/=len;zy/=len;zz/=len;
+    var xx=zz,xy=0,xz=-zx; len=Math.hypot(xx,xy,xz)||1; xx/=len;xy/=len;xz/=len;
+    var yx=zy*xz-zz*xy, yy=zz*xx-zx*xz, yz=zx*xy-zy*xx;
+    out[0]=xx;out[1]=yx;out[2]=zx;out[3]=0;out[4]=xy;out[5]=yy;out[6]=zy;out[7]=0;out[8]=xz;out[9]=yz;out[10]=zz;out[11]=0;
+    out[12]=-(xx*ex+xy*ey+xz*ez);out[13]=-(yx*ex+yy*ey+yz*ez);out[14]=-(zx*ex+zy*ey+zz*ez);out[15]=1;
+  }
+  function model(out,x,y,z){out[0]=1;out[1]=0;out[2]=0;out[3]=0;out[4]=0;out[5]=1;out[6]=0;out[7]=0;out[8]=0;out[9]=0;out[10]=1;out[11]=0;out[12]=x;out[13]=y;out[14]=z;out[15]=1;}
+
+  var EX=0.15, EY=1.42, EZ=0.72;
+  var Y0=0.08, P0=-0.06;
+  var YAW_MAX=1.02, P_MIN=-0.48, P_MAX=0.36;
+  var yaw=Y0, pitch=P0, drag=false, resetting=false, raf=0;
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+  function label(){
+    var near = Math.abs(yaw-Y0)<0.04 && Math.abs(pitch-P0)<0.04;
+    var yd = Math.round(yaw*180/Math.PI), pd = Math.round(pitch*180/Math.PI);
+    read.textContent = near ? 'Toward the window' : ('Yaw '+yd+'° · Pitch '+pd+'°');
+    canvas.dataset.yaw = String(yd);
+    canvas.dataset.pitch = String(pd);
+  }
+  function resize(){
+    var dpr=Math.min(devicePixelRatio||1,2);
+    var w=canvas.clientWidth||1280, h=canvas.clientHeight||800;
+    var W=Math.max(1,Math.round(w*dpr)), H=Math.max(1,Math.round(h*dpr));
+    if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H;}
+    gl.viewport(0,0,canvas.width,canvas.height);
+    perspective(P, 52*Math.PI/180, canvas.width/canvas.height, 0.05, 30);
+  }
+  function draw(){
+    var cp=Math.cos(pitch), sp=Math.sin(pitch), sy=Math.sin(yaw), cy=Math.cos(yaw);
+    var fx=sy*cp, fy=sp, fz=-cy*cp;
+    var eye=[EX,EY,EZ];
+    lookAt(V, EX, EY, EZ, EX+fx, EY+fy, EZ+fz);
+    gl.uniform3fv(uEye, eye);
+    gl.clearColor(0.557,0.722,0.784,1);
+    gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE);
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+    gl.enableVertexAttribArray(0); gl.enableVertexAttribArray(1);
+    for(var i=0;i<meshes.length;i++){
+      var m=meshes[i];
+      model(M,m.x,m.y,m.z);
+      mul(V,M,VM); mul(P,VM,MVP);
+      gl.uniformMatrix4fv(uM,false,M); gl.uniformMatrix4fv(uMVP,false,MVP);
+      gl.uniform3fv(uCol,m.col); gl.uniform3fv(uEmit,m.emit);
+      gl.uniform1f(uMetal,m.metal); gl.uniform1f(uRough,m.rough);
+      gl.bindBuffer(gl.ARRAY_BUFFER,m.g.bp); gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);
+      gl.bindBuffer(gl.ARRAY_BUFFER,m.g.bn); gl.vertexAttribPointer(1,3,gl.FLOAT,false,0,0);
+      gl.drawArrays(gl.TRIANGLES,0,m.g.count);
+    }
+    label();
+  }
+  function tick(){
+    raf=0;
+    var moving=false;
+    if(resetting){
+      if(reduce.matches){yaw=Y0;pitch=P0;resetting=false;}
+      else{
+        yaw+=(Y0-yaw)*0.16; pitch+=(P0-pitch)*0.16;
+        if(Math.abs(Y0-yaw)<0.001&&Math.abs(P0-pitch)<0.001){yaw=Y0;pitch=P0;resetting=false;}
+        else moving=true;
+      }
+    }
+    yaw=clamp(yaw,-YAW_MAX,YAW_MAX); pitch=clamp(pitch,P_MIN,P_MAX);
+    draw();
+    if(moving) raf=requestAnimationFrame(tick);
+  }
+  function kick(){if(!raf) raf=requestAnimationFrame(tick);}
+  canvas.addEventListener('pointerdown', function(e){
+    if(e.target!==canvas) return;
+    drag=true; resetting=false;
+    canvas.setPointerCapture(e.pointerId);
+    canvas.dataset.lx=String(e.clientX); canvas.dataset.ly=String(e.clientY);
+  });
+  canvas.addEventListener('pointermove', function(e){
+    if(!drag) return;
+    var dx=e.clientX-+canvas.dataset.lx, dy=e.clientY-+canvas.dataset.ly;
+    canvas.dataset.lx=String(e.clientX); canvas.dataset.ly=String(e.clientY);
+    yaw=clamp(yaw+dx*0.0045, -YAW_MAX, YAW_MAX);
+    pitch=clamp(pitch-dy*0.0035, P_MIN, P_MAX);
+    draw();
+  });
+  function endDrag(){ if(!drag) return; drag=false; live.textContent=read.textContent; }
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+  canvas.addEventListener('keydown', function(e){
+    var used=true, step=0.08;
+    if(e.key==='ArrowLeft') yaw=clamp(yaw-step,-YAW_MAX,YAW_MAX);
+    else if(e.key==='ArrowRight') yaw=clamp(yaw+step,-YAW_MAX,YAW_MAX);
+    else if(e.key==='ArrowUp') pitch=clamp(pitch+step*0.7,P_MIN,P_MAX);
+    else if(e.key==='ArrowDown') pitch=clamp(pitch-step*0.7,P_MIN,P_MAX);
+    else if(e.key==='Home') resetting=true;
+    else used=false;
+    if(!used) return;
+    e.preventDefault();
+    if(e.key!=='Home') resetting=false;
+    if(e.key==='Home'&&reduce.matches){yaw=Y0;pitch=P0;resetting=false;draw();}
+    else kick();
+    live.textContent=read.textContent;
+  });
+  document.getElementById('reset').addEventListener('click', function(){
+    resetting=true;
+    if(reduce.matches){yaw=Y0;pitch=P0;resetting=false;draw();}
+    else kick();
+    live.textContent='Toward the window';
+  });
+  addEventListener('resize', function(){resize();draw();});
+  resize(); draw();
+})();
+</script>
+</body>
+</html>

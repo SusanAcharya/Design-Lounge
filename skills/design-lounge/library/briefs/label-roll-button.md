@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 505 · "Rolling label row" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 516 · "Rolling label row" · designlounge.vercel.app -->
 
 # Rolling label row
 

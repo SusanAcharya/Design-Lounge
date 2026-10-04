@@ -1,0 +1,66 @@
+/* Lamp Desk · dark · pair: inkwell
+   The same letter after dark. Warm ink on a brown desk.
+   Best for: Personal sites, Journals, Night writing */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Lamp Desk · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #9ec0ea;
+  --primary-ink: #141210;
+  --primary-soft: #3a3f46;
+  --secondary: #e08080;
+  --secondary-ink: #141210;
+  --secondary-soft: #4a2f2c;
+  --tertiary: #e0c27a;
+  --tertiary-ink: #141210;
+  --tertiary-soft: #4a3f2b;
+
+  /* Surface */
+  --bg: #1a1612;
+  --surface: #241e18;
+  --surface-2: #2e261e;
+  --surface-3: #423a31;
+  --ink: #f3ead8;
+  --ink-2: #cbbfa8;
+  --ink-3: #9c9080;
+  --line: #3a3128;
+  --line-strong: #80776b;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #8fbf8a;
+  --success-ink: #141210;
+  --success-soft: #363f2f;
+  --success-on-soft: #8fbf8a;
+  --warning: #e0b050;
+  --warning-ink: #141210;
+  --warning-soft: #4a3b21;
+  --warning-on-soft: #e0b050;
+  --danger: #e08080;
+  --danger-ink: #141210;
+  --danger-soft: #4a2f2c;
+  --danger-on-soft: #e48f8f;
+  --info: #9ec0ea;
+  --info-ink: #141210;
+  --info-soft: #3a3f46;
+  --info-on-soft: #9ec0ea;
+
+  /* Chrome */
+  --focus: #9ec0ea;
+  --link: #9ec0ea;
+  --overlay: #070605;
+  --inverse: #f3ead8;
+  --inverse-ink: #1a1612;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

@@ -1,0 +1,240 @@
+<!-- Design Lounge piece: handwritten-homepage · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Slip room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#efe6d2;
+  --sheet:#fffaf0;
+  --slip:#f6f1e4;
+  --ink:#1c2430;
+  --ink-2:#3d4a5c;
+  --line:#e2d5bc;
+  --blue:#1d4e89;
+  --red:#b42323;
+  --title:"Gochi Hand",cursive;
+  --hand:"Patrick Hand",cursive;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --fast:160ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{background:var(--desk)}
+body{
+  background:var(--desk);
+  color:var(--ink);
+  font:22px/1.45 var(--hand);
+  letter-spacing:0;
+  font-weight:400;
+  font-synthesis:none;
+  text-transform:none;
+}
+button,input{font:inherit;letter-spacing:0;color:inherit}
+::selection{background:var(--blue);color:var(--sheet)}
+.desk{
+  min-height:100%;
+  display:flex;
+  align-items:safe center;
+  justify-content:center;
+  padding:28px 36px;
+}
+.sheet{
+  width:min(1120px,100%);
+  background:var(--sheet);
+  border-radius:2px;
+  box-shadow:0 10px 24px -16px rgba(28,36,48,.2);
+  padding:26px 40px 20px 48px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+.sheet::before{
+  content:"";
+  position:absolute;
+  left:26px;top:78px;bottom:52px;
+  width:1px;
+  background:rgba(29,78,137,.4);
+}
+.head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px 28px;
+  flex-wrap:wrap;
+  border-bottom:1px solid var(--line);
+  padding-bottom:10px;
+  margin:0 0 22px;
+}
+.mark{font:34px/1 var(--title);letter-spacing:0;margin:0}
+nav{display:flex;flex-wrap:wrap;gap:6px 22px}
+nav a{
+  font-family:var(--hand);
+  font-size:20px;
+  letter-spacing:0;
+  color:var(--ink);
+  text-decoration:none;
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  text-transform:none;
+}
+nav a:hover,nav a[aria-current="page"]{color:var(--blue)}
+.split{
+  display:grid;
+  grid-template-columns:minmax(0,520px) 320px;
+  justify-content:space-between;
+  align-items:stretch;
+  gap:32px;
+}
+.date{margin:0 0 8px;font-size:20px;color:var(--blue);letter-spacing:0}
+h1{
+  margin:0 0 14px;
+  max-width:8.2em;
+  font:52px/1.15 var(--title);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+}
+.hello{margin:0 0 10px;font-size:24px;letter-spacing:0}
+.letter p{max-width:34ch;margin:0 0 12px;letter-spacing:0}
+del{color:var(--red);text-decoration:line-through;text-decoration-thickness:2px}
+ins{color:var(--red);text-decoration:none}
+.sign{
+  margin:16px 0 0;
+  font:46px/1 var(--title);
+  letter-spacing:0;
+  text-transform:none;
+}
+.where{margin:2px 0 0;font-size:20px;color:var(--ink-2);letter-spacing:0}
+.notes{display:flex;flex-direction:column;justify-content:space-between;gap:14px;margin:0;padding:0;list-style:none}
+.notes li{margin:0}
+.note{
+  display:block;
+  width:100%;
+  text-align:left;
+  cursor:pointer;
+  background:var(--slip);
+  border:1px solid var(--line);
+  border-radius:2px;
+  padding:14px 16px 15px;
+  letter-spacing:0;
+  text-transform:none;
+  transition:background var(--fast) var(--ease),border-color var(--fast) var(--ease);
+}
+.note:hover{background:var(--sheet);border-color:var(--blue)}
+.note[aria-pressed="true"]{background:var(--sheet);border-color:var(--blue)}
+.note:active{transform:translateY(1px)}
+.tilt{transform:rotate(-1.5deg)}
+.tilt:active{transform:rotate(-1.5deg) translateY(1px)}
+.nt{display:block;font:28px/1.15 var(--title);letter-spacing:0;text-transform:none;margin:0 0 4px}
+.nb,.more{display:block;font:20px/1.35 var(--hand);letter-spacing:0;text-transform:none}
+.more{margin-top:6px;color:var(--ink-2)}
+.more[hidden]{display:none !important}
+.foot{
+  margin-top:22px;
+  border-top:1px solid var(--line);
+  padding-top:12px;
+}
+.foot p{margin:0;font-size:20px;color:var(--ink-2);letter-spacing:0}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+@media (max-width:900px){
+  .desk{display:block;padding:12px}
+  .sheet{padding:18px 16px 16px 22px}
+  .sheet::before{left:12px;top:76px;bottom:48px}
+  .split{display:block}
+  .notes{height:auto;margin-top:22px;gap:12px;justify-content:flex-start}
+  .tilt,.tilt:active{transform:none}
+  h1{font-size:44px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<div class="desk">
+  <article class="sheet">
+    <header class="head">
+      <div class="mark">Slip room</div>
+      <nav aria-label="Shop">
+        <a href="#letter" aria-current="page">Letter</a>
+        <a href="#work">Work</a>
+        <a href="#visit">Visit</a>
+      </nav>
+    </header>
+    <div class="split">
+      <div class="letter" id="letter">
+        <p class="date"><time datetime="2026-10-04">4 October 2026</time></p>
+        <h1>Come by on Thursday</h1>
+        <p class="hello">Dear friend,</p>
+        <p>The kiln is on from <del aria-hidden="true">noon</del> <ins>ten</ins>. Bring the mug you want glazed, and a name for the bottom.</p>
+        <p>I keep tea on until the last cup comes out. Push the door if it sticks.</p>
+        <div class="sign">Tess</div>
+        <p class="where">at the slip room</p>
+      </div>
+      <ul class="notes" id="work">
+        <li>
+          <button type="button" class="note" id="quay" aria-pressed="false">
+            <span class="nt">The quay mug</span>
+            <span class="nb">A white cup with one blue line, promised for the 18th.</span>
+            <span class="more" hidden>The line is cobalt, laid on after the bisque.</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="note tilt" id="hours" aria-pressed="false">
+            <span class="nt">Thursday hours</span>
+            <span class="nb">Ten until four. The door is the blue one on Cedar yard.</span>
+            <span class="more" hidden>If you are late, leave the mug on the stone sill.</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="note" id="letters" aria-pressed="false">
+            <span class="nt">Twelve letters</span>
+            <span class="nb">A folded note for each seat at a winter supper.</span>
+            <span class="more" hidden>The name goes on the outside, in blue ink.</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <footer class="foot" id="visit">
+      <p>Tess Pell, Cedar yard. Written by hand.</p>
+    </footer>
+  </article>
+</div>
+<script>
+(function () {
+  var notes = document.querySelectorAll(".note");
+  function openNote(btn) {
+    var on = btn.getAttribute("aria-pressed") === "true";
+    notes.forEach(function (b) {
+      b.setAttribute("aria-pressed", "false");
+      b.querySelector(".more").hidden = true;
+    });
+    if (!on) {
+      btn.setAttribute("aria-pressed", "true");
+      btn.querySelector(".more").hidden = false;
+    }
+  }
+  notes.forEach(function (btn) {
+    btn.addEventListener("click", function () { openNote(btn); });
+  });
+  document.querySelectorAll("nav a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      document.querySelectorAll("nav a").forEach(function (n) { n.removeAttribute("aria-current"); });
+      a.setAttribute("aria-current", "page");
+      var id = a.getAttribute("href").slice(1);
+      var el = document.getElementById(id);
+      if (el && el.classList.contains("note")) openNote(el);
+    });
+  });
+})();
+</script>
+</body>
+</html>

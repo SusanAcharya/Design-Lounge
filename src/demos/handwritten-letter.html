@@ -1,0 +1,161 @@
+<!-- Design Lounge piece: handwritten-letter · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>A letter to Ada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#1a1612;
+  --sheet:#241e18;
+  --ink:#f3ead8;
+  --ink-2:#cbbfa8;
+  --line:#3a3128;
+  --blue:#9ec0ea;
+  --red:#e08080;
+  --title:"Gochi Hand",cursive;
+  --hand:"Patrick Hand",cursive;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --fast:160ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{background:var(--desk)}
+body{
+  background:var(--desk);
+  color:var(--ink);
+  font:22px/1.5 var(--hand);
+  letter-spacing:0;
+  font-weight:400;
+  font-synthesis:none;
+  text-transform:none;
+}
+button{font:inherit;letter-spacing:0;color:inherit}
+::selection{background:var(--blue);color:var(--desk)}
+.desk{
+  min-height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:safe center;
+  padding:28px 28px 32px;
+}
+.sheet{
+  width:min(760px,100%);
+  background:var(--sheet);
+  border-radius:2px;
+  box-shadow:0 16px 36px -18px rgba(0,0,0,.6);
+  padding:36px 40px 40px 52px;
+  position:relative;
+}
+.sheet::before{
+  content:"";
+  position:absolute;
+  left:28px;top:32px;bottom:32px;
+  width:1px;
+  background:rgba(158,192,234,.5);
+}
+h1{
+  margin:0 0 18px;
+  font:34px/1.1 var(--title);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+}
+.date{margin:0 0 12px;font-size:20px;color:var(--blue);letter-spacing:0}
+.hello{margin:0 0 16px;font-size:28px;line-height:1.25;letter-spacing:0}
+.letter p{max-width:40ch;margin:0 0 16px;letter-spacing:0}
+.with-note{
+  display:grid;
+  grid-template-columns:minmax(0,40ch) 168px;
+  gap:8px 18px;
+  align-items:start;
+  margin:0 0 16px;
+}
+.with-note p{margin:0;max-width:40ch}
+.callout{
+  margin-top:26px;
+  display:flex;
+  align-items:flex-start;
+  gap:6px;
+  width:168px;
+  min-height:44px;
+  padding:8px 2px;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  color:var(--red);
+  font-family:var(--hand);
+  font-size:20px;
+  line-height:1.25;
+  letter-spacing:0;
+  text-align:left;
+  text-transform:none;
+  transform:rotate(-1.5deg);
+  transform-origin:left top;
+}
+.callout svg{flex:0 0 auto;margin-top:1px}
+.callout span{letter-spacing:0}
+#sent.on{box-shadow:inset 0 -2px 0 var(--blue)}
+.callout[aria-pressed="true"]{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.ps{margin-top:4px}
+.sign{
+  margin:8px 0 0;
+  font:48px/1 var(--title);
+  letter-spacing:0;
+  text-transform:none;
+}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+@media (max-width:900px){
+  .desk{padding:16px}
+  .sheet{padding:28px 18px 28px 28px}
+  .sheet::before{left:14px}
+  .with-note{grid-template-columns:minmax(0,1fr)}
+  .callout{transform:none;width:auto;max-width:220px;margin-top:8px}
+  .callout svg{transform:rotate(90deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<div class="desk">
+  <article class="sheet" aria-labelledby="who">
+    <h1 id="who">Slip room</h1>
+    <div class="letter">
+      <p class="date"><time datetime="2026-10-04">4 October 2026</time></p>
+      <p class="hello">Dear Ada,</p>
+      <p>The kiln cooled overnight. The quay mug came out whole.</p>
+      <div class="with-note">
+        <p>The blue line held. <span id="sent">Bring the blue glaze, not the green</span>, on Thursday.</p>
+        <button type="button" class="callout" aria-pressed="false" aria-controls="sent">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path d="M19 12H6M6 12l5-5M6 12l5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>not the green tin</span>
+        </button>
+      </div>
+      <p>A cup with your initial waits on the shelf. Tea is at ten if the bus is kind.</p>
+      <p class="ps">P.S. The door still sticks. Push near the latch.</p>
+      <div class="sign">Tess</div>
+    </div>
+  </article>
+</div>
+<script>
+(function () {
+  var btn = document.querySelector(".callout");
+  var sent = document.getElementById("sent");
+  btn.addEventListener("click", function () {
+    var on = btn.getAttribute("aria-pressed") === "true";
+    btn.setAttribute("aria-pressed", on ? "false" : "true");
+    sent.classList.toggle("on", !on);
+  });
+})();
+</script>
+</body>
+</html>

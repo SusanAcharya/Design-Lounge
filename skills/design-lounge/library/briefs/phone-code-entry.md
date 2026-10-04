@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 482 · "Chitthi code entry" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 483 · "Chitthi code entry" · designlounge.vercel.app -->
 
 # Chitthi code entry
 

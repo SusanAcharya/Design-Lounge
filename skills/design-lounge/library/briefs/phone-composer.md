@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 498 · "New note composer" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 507 · "New note composer" · designlounge.vercel.app -->
 
 # New note composer
 

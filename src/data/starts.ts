@@ -245,6 +245,17 @@ const DIRECTIONS: Record<string, Direction[]> = {
     ['ivory-counsel', 'Ivory counsel', 'Ivory, navy, oxblood, quiet money', 'marble-hall', 'lettera', 'editorial', 'law-firm-home', 'text-mask-line-reveal'],
     ['harbour-advisors', 'Harbour advisors', 'Navy and brass, an accounting or consulting firm', 'harbour-ledger', 'slab-ledger', 'quiet', 'law-firm-home', 'stats-count-up-band'],
   ]),
+  game: d([
+    ['coin-op', 'Coin-op', 'Dark cabinet, amber and CRT green, insert coin', 'coin-op', 'arcade', 'sharp', 'game-title-screen', 'game-playfield'],
+    ['ticket-booth', 'Ticket booth', 'Daylight arcade, family scores, a card table', 'ticket-booth', 'pixel-soft', 'soft', 'game-card-table', 'game-leaderboard'],
+    ['cockpit-run', 'Cockpit run', 'A mission HUD over a live view', 'hud-teal', 'hud', 'sharp', 'game-hud', 'webgl-shader-hero'],
+    ['orbit', 'Orbit', 'A lit object you turn, then a world you scroll through', 'night-desk', 'wide-tech', 'quiet', 'three-orbit-object', 'three-scroll-world'],
+  ]),
+  notebook: d([
+    ['inkwell', 'Inkwell', 'A letter on warm paper, the whole site in a hand', 'inkwell', 'letter-hand', 'soft', 'handwritten-homepage', 'text-annotated-underlines'],
+    ['lamp-desk', 'Lamp desk', 'The same letter after dark', 'lamp-desk', 'letter-hand', 'editorial', 'handwritten-letter', 'text-marker-highlight-draw'],
+    ['margin', 'Margin', 'A normal page, with notes in a real hand', 'paper-ink', 'handwritten-notes', 'editorial', 'graph-paper-homepage', 'text-annotated-underlines'],
+  ]),
 };
 
 export const SURFACES: { id: Surface; title: string; blurb: string }[] = [
@@ -734,6 +745,32 @@ const BASE: Omit<Start, 'directions'>[] = [
     shelf: 'dashboards-and-data',
     categories: ['dashboard', 'charts', 'feedback', 'navigation'],
     pieces: ['spend-list', 'chart-rank-spend', 'budget-meter', 'saved-banner', 'phone-tab-plain', 'mobile-list-empty', 'mobile-load-failed', 'phone-wallet-cards', 'phone-calendar-agenda'],
+  },
+  {
+    id: 'game',
+    surface: 'web',
+    title: 'A game',
+    kicker: 'Play',
+    blurb: 'A title screen, a game you can play, a score list, and a room for friends. Three.js when the world is a scene.',
+    when: 'A game site: arcade, a small web game, a card table, a lobby, or a 3D scene. Not a marketing page with a Play button that goes nowhere.',
+    theme: 'coin-op',
+    pairing: 'arcade',
+    shelf: 'first-impressions',
+    categories: ['landing', 'media', 'data', 'social'],
+    pieces: ['game-title-screen', 'game-playfield', 'game-hud', 'game-card-table', 'game-lobby', 'game-leaderboard', 'pixel-arcade-style', 'three-orbit-object', 'three-scroll-world', 'three-room-look', 'webgl-shader-hero', 'object-3d-turntable'],
+  },
+  {
+    id: 'notebook',
+    surface: 'web',
+    title: 'A handwritten site',
+    kicker: 'Hand',
+    blurb: 'The page is a letter. Titles in a loose script, the reading in a clear hand.',
+    when: 'A personal site, a cafe, a workshop, or a letter. Notes in the margin of a normal site use Handwritten Notes instead.',
+    theme: 'inkwell',
+    pairing: 'letter-hand',
+    shelf: 'typography-first',
+    categories: ['landing', 'reading', 'design-language'],
+    pieces: ['handwritten-homepage', 'handwritten-letter', 'handwritten-style', 'card-journal-page', 'text-annotated-underlines', 'graph-paper-homepage', 'card-sticky-notepad'],
   },
 ];
 

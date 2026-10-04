@@ -1,0 +1,25 @@
+{
+ "id": "letter-hand",
+ "name": "Letter Hand",
+ "display": {
+  "family": "Gochi Hand",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Gochi+Hand",
+  "lineHeight": 1
+ },
+ "text": {
+  "family": "Patrick Hand",
+  "weight": 400,
+  "italic": false,
+  "upper": false,
+  "trackingEm": 0,
+  "google": "Patrick+Hand",
+  "lineHeight": 1.55
+ },
+ "mono": null,
+ "numbers": "text",
+ "caution": "Body text is Patrick Hand. Do not set paragraphs in Gochi Hand, Caveat, or a signature script. Keep lines short. Do not use this pairing for a dashboard, a game, or a form-heavy tool."
+}

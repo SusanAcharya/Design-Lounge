@@ -1,0 +1,394 @@
+<!-- Design Lounge piece: game-leaderboard · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Ladder · Quern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #E7EEF2;
+    --sheet: #F7FBFC;
+    --ink: #14202B;
+    --ink-2: #3E5160;
+    --line: #D3DEE6;
+    --line-2: #E1E8EE;
+    --clay: #C4512C;
+    --you: #F8E8DC;
+    --up: #145C3A;
+    --down: #8C2F28;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    overflow: hidden;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Public Sans", "Avenir Next", sans-serif;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; }
+  :focus { outline: none; }
+  :focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+  .sr {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+  .sheet {
+    width: 840px;
+    height: 100%;
+    margin: 0 auto;
+    background: var(--sheet);
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  header.top {
+    padding: 28px 28px 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    margin: 0 0 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  h1 {
+    margin: 0;
+    font-family: Newsreader, Georgia, serif;
+    font-weight: 600;
+    font-size: 44px;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    font-variation-settings: "opsz" 72;
+  }
+  .where {
+    margin: 0 0 6px;
+    font-size: 14px;
+    color: var(--ink-2);
+    text-align: right;
+  }
+  .lede {
+    margin: 14px 28px 0;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+  [role="tablist"] {
+    display: flex;
+    gap: 4px;
+    margin: 18px 16px 0;
+    border-bottom: 1px solid var(--line);
+    padding: 0 8px;
+  }
+  [role="tabpanel"] {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  [role="tab"] {
+    height: 44px;
+    padding: 0 14px;
+    margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink-2);
+    transition: color 160ms var(--ease), border-color 160ms var(--ease);
+  }
+  [role="tab"][aria-selected="true"] {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom-color: var(--ink);
+  }
+  [role="tab"]:hover { color: var(--ink); }
+  .cols, .row, .pin-row {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr) 88px 112px;
+    align-items: center;
+    column-gap: 8px;
+    padding: 0 28px;
+  }
+  .cols {
+    height: 36px;
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .cols span:last-child, .score { text-align: right; }
+  .scroller {
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  ol { list-style: none; margin: 0; padding: 0; }
+  .row {
+    height: 64px;
+    border-top: 1px solid var(--line-2);
+    background: var(--sheet);
+    transition: background 120ms var(--ease);
+  }
+  .row:hover { background: #F2F6F8; }
+  .rank {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .who { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+  .who b {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .you-tag {
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clay);
+    flex: none;
+  }
+  .delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .delta svg { width: 16px; height: 16px; }
+  .delta.up { color: var(--up); }
+  .delta.down { color: var(--down); }
+  .score {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .row.you, .pin-row {
+    background: var(--you);
+    box-shadow: inset 3px 0 0 var(--clay);
+  }
+  .row.you:hover { background: #F4E0D2; }
+  .pin {
+    flex: none;
+    border-top: 1px solid var(--line);
+    background: var(--you);
+  }
+  .pin-row { height: 64px; }
+  [hidden] { display: none !important; }
+  svg { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+  @media (max-width: 900px) {
+    .sheet { width: 100%; border: 0; }
+  }
+  @media (max-width: 640px) {
+    body { overflow: auto; }
+    .sheet { height: auto; min-height: 100%; }
+    .scroller { overflow: visible; flex: none; }
+    header.top, .lede { padding-left: 16px; padding-right: 16px; }
+    .lede { margin-left: 16px; margin-right: 16px; }
+    .cols, .row, .pin-row { padding: 0 16px; grid-template-columns: 40px minmax(0, 1fr) 64px 80px; }
+    h1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="top">
+    <div>
+      <p class="brand">Quern</p>
+      <h1>Ladder</h1>
+    </div>
+    <p class="where">Mill house<br>Sunday table</p>
+  </header>
+  <p class="lede">Points from finished hands. Your place stays on the sheet.</p>
+  <div role="tablist" aria-label="Period">
+    <button type="button" role="tab" id="tab-today" aria-selected="true" aria-controls="panel" tabindex="0">Today</button>
+    <button type="button" role="tab" id="tab-week" aria-selected="false" aria-controls="panel" tabindex="-1">This week</button>
+    <button type="button" role="tab" id="tab-all" aria-selected="false" aria-controls="panel" tabindex="-1">All</button>
+  </div>
+  <div class="cols" aria-hidden="true"><span>Place</span><span>Player</span><span>Shift</span><span>Score</span></div>
+  <div role="tabpanel" id="panel" aria-labelledby="tab-today">
+    <div class="scroller" id="scroller" tabindex="0" aria-label="Ranked players">
+      <ol id="list"></ol>
+    </div>
+  </div>
+  <div class="pin" id="pin" hidden aria-hidden="true">
+    <div class="pin-row" id="pin-row"></div>
+  </div>
+</main>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+(function () {
+  var YOU = 'Leah Moss';
+  var boards = {
+    today: [
+      ['Tomas Reed', 1840, 2],
+      ['Leah Moss', 1712, 1],
+      ['Anika Shah', 1690, -1],
+      ['Owen Blake', 1544, 0],
+      ['Helen Cho', 1498, 3],
+      ['Idris Lang', 1402, 0],
+      ['Mara Voss', 1388, -2],
+      ['Jules Okada', 1290, 0],
+      ['Jonah Keller', 1214, 0],
+      ['Ellis Quinn', 1096, 0],
+      ['Freya Holm', 980, 0],
+      ['Ned Albright', 864, 0]
+    ],
+    week: [
+      ['Anika Shah', 9420, 1],
+      ['Helen Cho', 9104, 0],
+      ['Owen Blake', 8870, -2],
+      ['Tomas Reed', 8640, 0],
+      ['Idris Lang', 8012, 1],
+      ['Leah Moss', 7644, 3],
+      ['Freya Holm', 7200, 0],
+      ['Mara Voss', 6988, -1],
+      ['Jules Okada', 6540, 0],
+      ['Jonah Keller', 6102, 0],
+      ['Ellis Quinn', 5404, 0],
+      ['Ned Albright', 4980, 0]
+    ],
+    all: [
+      ['Helen Cho', 48210, 0],
+      ['Anika Shah', 45102, 1],
+      ['Owen Blake', 44080, 0],
+      ['Tomas Reed', 39840, -1],
+      ['Mara Voss', 36220, 0],
+      ['Idris Lang', 34110, 0],
+      ['Freya Holm', 31004, 2],
+      ['Jules Okada', 28440, 0],
+      ['Leah Moss', 26118, -1],
+      ['Jonah Keller', 24002, 0],
+      ['Ellis Quinn', 17640, 0],
+      ['Ned Albright', 15420, 0]
+    ]
+  };
+  var labels = { today: 'Today', week: 'This week', all: 'All' };
+  var tabs = [
+    document.getElementById('tab-today'),
+    document.getElementById('tab-week'),
+    document.getElementById('tab-all')
+  ];
+  var keys = ['today', 'week', 'all'];
+  var list = document.getElementById('list');
+  var pin = document.getElementById('pin');
+  var pinRow = document.getElementById('pin-row');
+  var scroller = document.getElementById('scroller');
+  var panel = document.getElementById('panel');
+  var live = document.getElementById('live');
+  var up = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg>';
+  var down = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10l6 6 6-6"/></svg>';
+
+  function fmt(n) { return n.toLocaleString('en-GB'); }
+
+  function shift(d) {
+    if (!d) return '<span class="delta"></span>';
+    var dir = d > 0 ? 'up' : 'down';
+    var n = Math.abs(d);
+    var word = n === 1 ? 'place' : 'places';
+    var label = (d > 0 ? 'Up ' : 'Down ') + n + ' ' + word;
+    return '<span class="delta ' + dir + '" aria-label="' + label + '">' + (d > 0 ? up : down) + n + '</span>';
+  }
+
+  function rowLabel(rank, name, score, d) {
+    var move = !d ? '' : (d > 0 ? ', up ' : ', down ') + Math.abs(d) + (Math.abs(d) === 1 ? ' place' : ' places');
+    return 'Place ' + rank + ', ' + name + move + ', ' + fmt(score) + ' points';
+  }
+
+  function cells(rank, name, score, d, you) {
+    return '<span class="rank">' + rank + '</span>'
+      + '<span class="who"><b>' + name + '</b>' + (you ? '<i class="you-tag">You</i>' : '') + '</span>'
+      + shift(d)
+      + '<span class="score">' + fmt(score) + '</span>';
+  }
+
+  function render(key) {
+    var rows = boards[key].slice().sort(function (a, b) {
+      return b[1] - a[1] || (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
+    });
+    list.innerHTML = '';
+    var youRank = 0;
+    var youScore = 0;
+    var youDelta = 0;
+    rows.forEach(function (r, i) {
+      var rank = i + 1;
+      var you = r[0] === YOU;
+      if (you) { youRank = rank; youScore = r[1]; youDelta = r[2]; }
+      var li = document.createElement('li');
+      li.className = 'row' + (you ? ' you' : '');
+      li.setAttribute('aria-label', rowLabel(rank, r[0], r[1], r[2]) + (you ? ', you' : ''));
+      li.innerHTML = cells(rank, r[0], r[1], r[2], you);
+      list.appendChild(li);
+    });
+    pinRow.innerHTML = cells(youRank, YOU, youScore, youDelta, true);
+    pinRow.setAttribute('aria-label', rowLabel(youRank, YOU, youScore, youDelta) + ', you');
+    scroller.scrollTop = 0;
+    syncPin();
+    live.textContent = labels[key] + '. You are place ' + youRank + ' with ' + fmt(youScore) + '.';
+  }
+
+  function syncPin() {
+    var row = list.querySelector('.you');
+    if (!row) return;
+    var sb = scroller.getBoundingClientRect();
+    var rb = row.getBoundingClientRect();
+    var clipped = rb.bottom > sb.bottom + 1 || rb.top < sb.top - 1;
+    pin.hidden = !clipped;
+  }
+
+  function select(i) {
+    tabs.forEach(function (tab, n) {
+      var on = n === i;
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
+    });
+    panel.setAttribute('aria-labelledby', tabs[i].id);
+    render(keys[i]);
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { select(i); });
+    tab.addEventListener('keydown', function (e) {
+      var n = i;
+      if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') n = (i + tabs.length - 1) % tabs.length;
+      else if (e.key === 'Home') n = 0;
+      else if (e.key === 'End') n = tabs.length - 1;
+      else return;
+      e.preventDefault();
+      select(n);
+      tabs[n].focus();
+    });
+  });
+
+  scroller.addEventListener('scroll', syncPin);
+  window.addEventListener('resize', syncPin);
+  render('today');
+})();
+</script>
+</body>
+</html>

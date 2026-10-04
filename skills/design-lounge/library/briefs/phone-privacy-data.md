@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 502 · "Phone privacy and data" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 512 · "Phone privacy and data" · designlounge.vercel.app -->
 
 # Phone privacy and data
 

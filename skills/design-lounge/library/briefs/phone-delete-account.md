@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 484 · "Delete account with a 30-day undo" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 485 · "Delete account with a 30-day undo" · designlounge.vercel.app -->
 
 # Delete account with a 30-day undo
 

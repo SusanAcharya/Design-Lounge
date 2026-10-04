@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 508 · "Solander password reset" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 520 · "Solander password reset" · designlounge.vercel.app -->
 
 # Solander password reset
 

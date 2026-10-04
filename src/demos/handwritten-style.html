@@ -1,0 +1,257 @@
+<!-- Design Lounge piece: handwritten-style · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Letter hand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e4;
+  --sheet:#fffaf0;
+  --ink:#1c2430;
+  --ink-2:#3d4a5c;
+  --line:#e2d5bc;
+  --blue:#1d4e89;
+  --blue-2:#173f6e;
+  --red:#b42323;
+  --title:"Gochi Hand",cursive;
+  --hand:"Patrick Hand",cursive;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --fast:160ms;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{background:var(--paper)}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font:22px/1.45 var(--hand);
+  letter-spacing:0;
+  font-weight:400;
+  font-synthesis:none;
+  text-transform:none;
+}
+button,input{font:inherit;letter-spacing:0;color:inherit}
+::selection{background:var(--blue);color:var(--sheet)}
+.page{
+  min-height:100%;
+  padding:32px 48px 28px;
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+.head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px 40px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:16px;
+}
+h1{
+  margin:0;
+  flex:0 0 auto;
+  font:48px/1.1 var(--title);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+  white-space:nowrap;
+}
+.rule{margin:0;max-width:36ch;font-size:22px;line-height:1.35;letter-spacing:0}
+.grid{
+  flex:1;
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.85fr);
+  grid-template-rows:auto auto;
+  gap:26px 36px;
+  align-items:start;
+}
+h2{
+  margin:0 0 10px;
+  font:20px/1.2 var(--hand);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--blue);
+}
+.specimen{
+  background:var(--sheet);
+  border:1px solid var(--line);
+  border-radius:2px;
+  padding:18px 22px 16px;
+}
+.sample{
+  margin:0 0 4px;
+  font:56px/1.15 var(--title);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+}
+.cap{margin:0;font-size:18px;line-height:1.3;color:var(--ink-2);letter-spacing:0}
+.bodycopy{
+  margin:16px 0 4px;
+  max-width:34ch;
+  font-size:22px;
+  line-height:1.45;
+  letter-spacing:0;
+}
+.side{display:flex;flex-direction:column;gap:26px;padding-top:4px}
+.btn{
+  min-height:48px;
+  min-width:148px;
+  padding:0 18px;
+  border-radius:2px;
+  border:1.5px solid var(--blue);
+  background:var(--blue);
+  color:var(--paper);
+  font-family:var(--hand);
+  font-size:22px;
+  letter-spacing:0;
+  text-transform:none;
+  cursor:pointer;
+  transition:background var(--fast) var(--ease),border-color var(--fast) var(--ease),color var(--fast) var(--ease);
+}
+.btn:hover{background:var(--blue-2);border-color:var(--blue-2)}
+.btn:active{transform:translateY(1px)}
+.btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn:focus-visible{outline-color:var(--ink)}
+.hint{margin:8px 0 0;font-size:18px;color:var(--ink-2);letter-spacing:0}
+label{display:block;margin:0 0 4px;font-size:20px;letter-spacing:0}
+input{
+  display:block;
+  width:100%;
+  height:48px;
+  border:0;
+  border-bottom:1.5px solid var(--ink);
+  border-radius:0;
+  background:transparent;
+  padding:0 2px 2px;
+  font-family:var(--hand);
+  font-size:22px;
+  letter-spacing:0;
+  color:var(--ink);
+  caret-color:var(--blue);
+}
+input::placeholder{color:var(--ink-2);opacity:1}
+.card{
+  background:var(--sheet);
+  border:1px solid var(--line);
+  border-radius:2px;
+  padding:16px 18px 14px;
+  box-shadow:0 10px 24px -16px rgba(28,36,48,.2);
+  max-width:460px;
+}
+.card h3{
+  margin:0 0 6px;
+  font:32px/1.15 var(--title);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+}
+.card p{margin:0;max-width:36ch;font-size:20px;line-height:1.4;letter-spacing:0}
+.card .hint{margin-top:10px}
+.dont{
+  border-left:3px solid var(--red);
+  padding:2px 0 2px 16px;
+  max-width:420px;
+}
+.dont h2{color:var(--red);margin-bottom:8px}
+.dont ul{margin:0;padding:0;list-style:none}
+.dont li{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  margin:0 0 8px;
+  font-size:22px;
+  line-height:1.3;
+  letter-spacing:0;
+  text-transform:none;
+}
+.dont li:last-child{margin-bottom:0}
+.dont li::before{
+  content:"";
+  flex:0 0 auto;
+  width:14px;
+  height:2px;
+  background:var(--red);
+  transform:translateY(-3px);
+}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+@media (min-width:901px){
+  .page{height:100%}
+  .card{transform:rotate(-1deg);transform-origin:left center}
+}
+@media (max-width:900px){
+  .page{padding:16px;height:auto}
+  .head{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .sample{font-size:44px}
+  h1{font-size:44px;white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="head">
+    <h1>Letter hand</h1>
+    <p class="rule">Titles are Gochi Hand, and every line you read is Patrick Hand.</p>
+  </header>
+  <div class="grid">
+    <section class="specimen" aria-labelledby="type-h">
+      <h2 id="type-h">Type</h2>
+      <h3 class="sample">Come by on Thursday</h3>
+      <p class="cap">Title hand. Gochi Hand, 56px, tracking 0.</p>
+      <p class="bodycopy">The kiln is on from ten. Bring the mug you want glazed, and a name for the bottom.</p>
+      <p class="cap">Body hand. Patrick Hand, 22px, tracking 0.</p>
+    </section>
+    <div class="side">
+      <section aria-labelledby="btn-h">
+        <h2 id="btn-h">Button</h2>
+        <button type="button" class="btn" aria-pressed="false">Write back</button>
+        <p class="hint">48px tall. Patrick Hand. Sentence case.</p>
+      </section>
+      <section aria-labelledby="field-h">
+        <h2 id="field-h">Field</h2>
+        <label for="mug">Name for the bottom</label>
+        <input id="mug" name="mug" type="text" autocomplete="off" spellcheck="false" maxlength="24" placeholder="Tess">
+        <p class="hint">A writing line, not a boxed dashboard field.</p>
+      </section>
+    </div>
+    <section aria-labelledby="card-h">
+      <h2 id="card-h">Card</h2>
+      <article class="card">
+        <h3>Thursday hours</h3>
+        <p>Ten until four. The door sticks, so push near the latch.</p>
+        <p class="hint">One note. Not a row of figures.</p>
+      </article>
+    </section>
+    <section class="dont" aria-labelledby="dont-h">
+      <h2 id="dont-h">Do not</h2>
+      <ul>
+        <li>No tracking on the hand.</li>
+        <li>No paragraph in the script.</li>
+        <li>No handwritten dashboard.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+<script>
+(function () {
+  var btn = document.querySelector(".btn");
+  btn.addEventListener("click", function () {
+    var on = btn.getAttribute("aria-pressed") === "true";
+    btn.setAttribute("aria-pressed", on ? "false" : "true");
+    btn.textContent = on ? "Write back" : "Sent Thursday";
+  });
+})();
+</script>
+</body>
+</html>

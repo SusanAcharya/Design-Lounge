@@ -1,0 +1,66 @@
+/* Inkwell · light · pair: lamp-desk
+   A letter on warm paper. Blue-black ink, one red correction.
+   Best for: Personal sites, Cafes, Workshops, Letters */
+/* Colour only. Fonts come from the locked pairing file. Radius and shadow come from the locked family. */
+/* Inkwell · full palette · Designed using Design Lounge (https://designlounge.vercel.app)
+   Primary / secondary / tertiary + feedback + surfaces. Match the numbers.
+   Free to use. */
+:root {
+  /* Brand */
+  --primary: #1d4e89;
+  --primary-ink: #fffdf8;
+  --primary-soft: #d8dad7;
+  --secondary: #b42323;
+  --secondary-ink: #fffdf8;
+  --secondary-soft: #edd4c9;
+  --tertiary: #8a6a2f;
+  --tertiary-ink: #fffdf8;
+  --tertiary-soft: #e7decb;
+
+  /* Surface */
+  --bg: #f6f1e4;
+  --surface: #fffaf0;
+  --surface-2: #efe6d2;
+  --surface-3: #e2dac8;
+  --ink: #1c2430;
+  --ink-2: #3d4a5c;
+  --ink-3: #6a6256;
+  --line: #e2d5bc;
+  --line-strong: #979287;
+
+  /* Feedback — reserved for live state, never decoration */
+  --success: #2f6b4a;
+  --success-ink: #fffdf8;
+  --success-soft: #dadece;
+  --success-on-soft: #2f6b4a;
+  --warning: #a16207;
+  --warning-ink: #fffdf8;
+  --warning-soft: #eaddc5;
+  --warning-on-soft: #7d4c05;
+  --danger: #b42323;
+  --danger-ink: #fffdf8;
+  --danger-soft: #edd4c9;
+  --danger-on-soft: #b42323;
+  --info: #1d4e89;
+  --info-ink: #fffdf8;
+  --info-soft: #d8dad7;
+  --info-on-soft: #1d4e89;
+
+  /* Chrome */
+  --focus: #1d4e89;
+  --link: #1d4e89;
+  --overlay: #141210;
+  --inverse: #1c2430;
+  --inverse-ink: #f6f1e4;
+
+  /* Aliases */
+  --accent: var(--primary);
+  --accent-ink: var(--primary-ink);
+  --positive: var(--success);
+
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+
+}

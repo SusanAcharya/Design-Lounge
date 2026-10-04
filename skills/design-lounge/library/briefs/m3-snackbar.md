@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 496 · "M3 snackbar with undo" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 504 · "M3 snackbar with undo" · designlounge.vercel.app -->
 
 # M3 snackbar with undo
 
