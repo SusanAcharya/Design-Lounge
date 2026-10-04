@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 377 · "Receipt slip" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 384 · "Receipt slip" · designlounge.vercel.app -->
 
 # Receipt slip
 

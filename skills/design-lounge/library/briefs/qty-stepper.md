@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 371 · "Quantity stepper" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 378 · "Quantity stepper" · designlounge.vercel.app -->
 
 # Quantity stepper
 

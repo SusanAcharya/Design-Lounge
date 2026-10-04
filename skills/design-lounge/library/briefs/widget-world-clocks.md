@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 470 · "World clocks meeting planner" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 480 · "World clocks meeting planner" · designlounge.vercel.app -->
 
 # World clocks meeting planner
 

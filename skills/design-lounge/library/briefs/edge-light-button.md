@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 227 · "Edge light button" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 231 · "Edge light button" · designlounge.vercel.app -->
 
 # Edge light button
 

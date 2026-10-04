@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 315 · "One-time code" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 322 · "One-time code" · designlounge.vercel.app -->
 
 # One-time code
 

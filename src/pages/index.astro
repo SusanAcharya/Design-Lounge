@@ -1,72 +1,62 @@
 ---
 import Base from '../layouts/Base.astro';
 import DeviceFrame from '../components/DeviceFrame.astro';
-import PieceCard from '../components/PieceCard.astro';
 import Showcase from '../components/Showcase.astro';
-import Annotate from '../components/Annotate.astro';
 import AgentTerminal from '../components/AgentTerminal.astro';
-import { COLLECTIONS, SHELF_GROUPS } from '../data/collections';
-import { getPieces, numberMap, CATEGORY_GROUPS, CATEGORY_META, AUTHOR } from '../lib/pieces';
+import { getPieces, CATEGORY_META, STYLE_META } from '../lib/pieces';
 import { PAIRINGS } from '../data/type';
 import { THEMES } from '../data/themes';
 import { ICONS } from '../data/icons';
 import { RECIPES } from '../data/motion';
-import { SURFACES, STARTS, startsOn } from '../data/starts';
-import { SOURCES } from '../data/website-list';
+import { STARTS } from '../data/starts';
 
 const all = await getPieces();
-const nums = numberMap(all);
 const newest = [...all].reverse();
+const byId = new Map(all.map((p) => [p.id, p]));
 const featured = all.filter((p) => p.data.featured);
 const pick = (platform: string) => featured.find((p) => p.data.platform === platform) ?? newest.find((p) => p.data.platform === platform);
 const heroWeb = pick('web') ?? newest[0];
 const heroPhone = pick('mobile-app') ?? pick('pwa') ?? pick('mobile-web');
 const heroTablet = pick('tablet');
-const fresh = newest.slice(0, 4);
+
 const saas = STARTS.find((s) => s.id === 'saas');
 const lime = saas?.directions.find((d) => d.id === 'lime-engine');
-const agentHero = all.find((p) => p.id === (lime?.hero ?? 'hero-split-ui-stack')) ?? all.find((p) => p.id === 'hero-split-ui-stack');
-const byId = new Map(all.map((p) => [p.id, p]));
+const agentHero = byId.get(lime?.hero ?? 'hero-split-ui-stack') ?? byId.get('hero-split-ui-stack');
+
+const typeCount = (t: string) => all.filter((p) => p.data.type === t).length;
 const catCount = (c: string) => all.filter((p) => p.data.category === c).length;
-const indexGroups = CATEGORY_GROUPS.map((g) => ({
-  ...g,
-  items: g.items.map((c) => ({ c, n: catCount(c), label: CATEGORY_META[c].label })).filter((i) => i.n > 0),
-})).filter((g) => g.items.length);
-const groupedShelves = SHELF_GROUPS.map((g) => ({
-  ...g,
-  items: g.slugs.map((s) => COLLECTIONS.find((c) => c.slug === s)).filter(Boolean),
-}));
-const libs = [
-  { href: '/type', title: 'Type', n: PAIRINGS.length },
-  { href: '/themes', title: 'Themes', n: THEMES.length },
-  { href: '/icons', title: 'Icons', n: ICONS.length },
-  { href: '/motion', title: 'Motion', n: RECIPES.length },
+const previewSection = byId.get('hero-search-marketplace') ?? newest.find((p) => p.data.type === 'section');
+const previewScreen = byId.get('phone-wallet-cards') ?? newest.find((p) => p.data.platform === 'mobile-app');
+const previewMotion = byId.get('webgl-shader-hero') ?? newest.find((p) => p.data.type === 'animation');
+const componentCats = (['navigation', 'buttons', 'inputs', 'cards', 'overlays', 'charts', 'pickers', 'feedback'] as const).filter((c) => catCount(c) > 0);
+const styleNames = Object.values(STYLE_META).slice(0, 10).map((s) => s.label);
+const system = [
+  { n: PAIRINGS.length, label: 'Type pairings', href: '/type' },
+  { n: THEMES.length, label: 'Themes', href: '/themes' },
+  { n: ICONS.length, label: 'Icons', href: '/icons' },
+  { n: RECIPES.length, label: 'Motion recipes', href: '/motion' },
 ];
+const installCmd = 'npx skills add SusanAcharya/Design-Lounge';
 ---
-<Base>
+<Base rail={false}>
   <section class="hero wrap">
     <div class="hero-text">
-      <p class="eyebrow reveal">{String(all.length).padStart(3, '0')} live pieces · {PAIRINGS.length} pairings · {THEMES.length} themes</p>
-      <h1 class="display h1"><span class="reveal" style="--d:60ms">Interfaces</span> <span class="reveal" style="--d:140ms">worth</span> <i class="reveal" style="--d:220ms">sitting with.</i></h1>
-      <p class="lede reveal" style="--d:300ms">Add Design Lounge to your AI agent. Ask for a website or an app, and get one that stands out: real type, colour, and motion. Not a template.</p>
-      <div class="install reveal" style="--d:380ms">
+      <h1 class="display h1 reveal">Give your AI agent <i>design taste.</i></h1>
+      <p class="lede reveal" style="--d:80ms">One skill and a library of {all.length} live designs. Your agent picks real type, colour and motion, then builds.</p>
+      <div class="hero-cta reveal" style="--d:160ms">
         <span class="cmd big">
           <span class="prompt mono" aria-hidden="true">$</span>
-          <code id="hero-cmd">npx skills add SusanAcharya/Design-Lounge</code>
+          <code id="hero-cmd">{installCmd}</code>
           <button class="copy" type="button" data-copy="#hero-cmd"><span data-label>Copy</span></button>
         </span>
-        <p class="works mono faint">Cursor · Claude Code · Codex · free · <a href="/agents">How it works</a></p>
-      </div>
-      <div class="acts reveal" style="--d:440ms">
-        <a class="btn ghost" href="/browse">See the designs</a>
-        <a class="btn ghost" href="/start">Pick what you're making</a>
+        <a class="textlink" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
       </div>
     </div>
-    <div class="hero-wall reveal" style="--d:160ms" aria-label="Featured pieces">
+    <div class="hero-wall reveal" style="--d:120ms" aria-label="Featured pieces">
       {heroWeb && (
-      <a class="wall-item web" href={`/p/${heroWeb.id}`} aria-label={heroWeb.data.title}>
-        <DeviceFrame slug={heroWeb.id} platform={heroWeb.data.platform} title={heroWeb.data.title} eager />
-      </a>
+        <a class="wall-item web" href={`/p/${heroWeb.id}`} aria-label={heroWeb.data.title}>
+          <DeviceFrame slug={heroWeb.id} platform={heroWeb.data.platform} title={heroWeb.data.title} eager />
+        </a>
       )}
       {heroPhone && (
         <a class="wall-item phone" href={`/p/${heroPhone.id}`} aria-label={heroPhone.data.title}>
@@ -81,29 +71,89 @@ const libs = [
     </div>
   </section>
 
-  <section class="wrap agent" id="agent" aria-labelledby="agent-h">
-    <div class="agent-head">
-      <p class="sc-n mono"><span>Nº 01</span><span class="rule" aria-hidden="true"></span><span>Agent at work</span></p>
-      <h2 class="display agent-h" id="agent-h">Say what you're making. Get a site that <Annotate type="underline">stands out.</Annotate></h2>
-      <div class="agent-side">
-        <p class="agent-copy">Install once, then ask the way you would ask a designer. The skill picks one recipe, one direction, one palette and one type pairing, then checks its own work for anything generic.</p>
-        <ol class="agent-steps mono">
-          <li><span>01</span>Install once</li>
-          <li><span>02</span>Ask in plain words</li>
-          <li><span>03</span><a href="/start">See what it picks</a></li>
-        </ol>
+  <section class="lib wrap" aria-labelledby="lib-h">
+    <header class="block-head">
+      <h2 class="display h2" id="lib-h">A library your agent can actually use.</h2>
+      <p class="lede">Every piece runs live, comes with a written brief, and is free to use in your products.</p>
+    </header>
+    <div class="bento">
+      <a class="cell c-sections" href="/browse?type=section">
+        <div class="cell-text">
+          <span class="cell-n num">{typeCount('section')}</span>
+          <h3 class="cell-h">Sections</h3>
+          <p>Heroes, pricing, footers, menus. The blocks a website is built from.</p>
+        </div>
+        {previewSection && <div class="cell-stage web"><DeviceFrame slug={previewSection.id} platform={previewSection.data.platform} title={previewSection.data.title} /></div>}
+      </a>
+      <a class="cell c-screens" href="/browse?type=screen">
+        <div class="cell-text">
+          <span class="cell-n num">{typeCount('screen')}</span>
+          <h3 class="cell-h">Screens</h3>
+          <p>Whole pages and app screens, end to end.</p>
+        </div>
+        {previewScreen && <div class="cell-stage phone"><DeviceFrame slug={previewScreen.id} platform={previewScreen.data.platform} title={previewScreen.data.title} /></div>}
+      </a>
+      <a class="cell c-motion" href="/browse?type=animation">
+        <div class="cell-text">
+          <span class="cell-n num">{typeCount('animation')}</span>
+          <h3 class="cell-h">Animations</h3>
+        </div>
+        {previewMotion && <div class="cell-stage web small"><DeviceFrame slug={previewMotion.id} platform={previewMotion.data.platform} title={previewMotion.data.title} /></div>}
+      </a>
+      <a class="cell c-components" href="/browse?type=component">
+        <div class="cell-text">
+          <span class="cell-n num">{typeCount('component')}</span>
+          <h3 class="cell-h">Components</h3>
+        </div>
+        <ul class="tags">
+          {componentCats.map((c) => <li>{CATEGORY_META[c].label}</li>)}
+        </ul>
+      </a>
+      <a class="cell c-styles" href="/browse?type=style">
+        <div class="cell-text">
+          <span class="cell-n num">{typeCount('style')}</span>
+          <h3 class="cell-h">Design languages</h3>
+          <p>Whole visual dialects shown as a kit.</p>
+        </div>
+        <ul class="style-words" aria-label="Some of the styles">
+          {styleNames.map((s) => <li>{s}</li>)}
+        </ul>
+      </a>
+      <div class="cell c-more">
+        <a href="/browse?type=layout"><span class="cell-n num">{typeCount('layout')}</span><span class="cell-h">Layouts</span></a>
+        <a href="/browse?type=pattern"><span class="cell-n num">{typeCount('pattern')}</span><span class="cell-h">Patterns</span></a>
+      </div>
+      <div class="cell c-system">
+        <h3 class="cell-h"><a href="/system">The system underneath <span aria-hidden="true">→</span></a></h3>
+        <ul class="sys">
+          {system.map((s) => (
+            <li><a href={s.href}><span class="cell-n num">{s.n}</span><span>{s.label}</span></a></li>
+          ))}
+        </ul>
       </div>
     </div>
+  </section>
+
+  <section class="skill wrap" id="agent" aria-labelledby="agent-h">
+    <header class="block-head">
+      <p class="eyebrow">The skill</p>
+      <h2 class="display h2" id="agent-h">Say what you're making. It picks the rest.</h2>
+      <p class="lede">Your agent reads the skill, chooses one recipe, one palette and one type pairing from the library, then checks its own work for anything generic.</p>
+    </header>
+    <ol class="steps">
+      <li><b>Install</b><span>One command in Cursor, Claude Code or Codex.</span></li>
+      <li><b>Ask</b><span>"Build me a SaaS landing page." Plain words are enough.</span></li>
+      <li><b>Ship</b><span>Real code with a palette, a pairing and pieces that fit.</span></li>
+    </ol>
     <div class="agent-grid">
       <AgentTerminal pieces={all.length} pairings={PAIRINGS.length} themes={THEMES.length} />
       <div class="agent-result">
         <div class="agent-stage">
-          <span class="sc-live mono" aria-hidden="true"><i></i>The result · live</span>
           {agentHero && <DeviceFrame slug={agentHero.id} platform={agentHero.data.platform} title={agentHero.data.title} interactive />}
         </div>
         {agentHero && (
-          <p class="agent-cap mono faint">
-            <span>Hero: {agentHero.data.title}</span>
+          <p class="agent-cap">
+            <span>The result: {agentHero.data.title}</span>
             <a href={`/p/${agentHero.id}`}>Open piece <span aria-hidden="true">→</span></a>
           </p>
         )}
@@ -111,11 +161,38 @@ const libs = [
     </div>
   </section>
 
+  <section class="feats wrap" aria-labelledby="feats-h">
+    <header class="feats-head">
+      <h2 class="display h2" id="feats-h">More than a gallery.</h2>
+      <p class="lede">Every piece is something you can take. Around them sit the tools that tie a product together.</p>
+      <a class="btn" href="/agents">How it works</a>
+    </header>
+    <div class="feats-body">
+      <div class="fgroup">
+        <h3 class="fgroup-h">In every piece</h3>
+        <ul>
+          <li><b>Live demo</b><span>Every control works, inside a real browser, phone or tablet frame.</span></li>
+          <li><b>Brief</b><span>A written spec your agent builds from. One click to copy.</span></li>
+          <li><b>Source</b><span>The HTML, credited and free to use in your own products.</span></li>
+        </ul>
+      </div>
+      <div class="fgroup">
+        <h3 class="fgroup-h">Around the pieces</h3>
+        <ul>
+          <li><a href="/start"><b>Start</b><span>Pick what you're making. Get a theme, a pairing and the pieces that fit.</span></a></li>
+          <li><a href="/kit"><b>Kit</b><span>Compose a kind, a palette, a pairing and an icon family into one brief.</span></a></li>
+          <li><a href="/system"><b>System</b><span>{PAIRINGS.length} type pairings, {THEMES.length} themes, icons and motion recipes.</span></a></li>
+          <li><button type="button" data-open-palette><b>Search</b><span>Press <kbd>⌘K</kbd> anywhere to jump to any piece.</span></button></li>
+          <li><a href="/llms.txt"><b>For agents</b><span>An llms.txt and a JSON catalogue, so tools can read the library directly.</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <Showcase
     id="phones"
-    n="02"
     kicker="Phone apps"
-    more={{ href: '/platforms/mobile-app', label: 'All phone screens' }}
+    more={{ href: '/browse?platform=mobile-app', label: 'All phone screens' }}
     slugs={[
       { slug: 'phone-wallet-cards', label: 'Wallet cards' },
       { slug: 'phone-workout-timer', label: 'Workout timer' },
@@ -124,313 +201,156 @@ const libs = [
       { slug: 'phone-order-tracking', label: 'Order tracking' },
     ]}
   >
-    <Fragment slot="title">Phone screens you can actually <Annotate type="circle">tap.</Annotate></Fragment>
-    Native-feel app screens at 390 × 844. Lift a card, run the timer, answer the quiz. Each one ships with a brief your agent builds from.
+    <Fragment slot="title">Tap through a few right here.</Fragment>
+    Real app screens at 390 × 844. Lift a card, run the timer, answer the quiz. Each ships with the brief your agent builds from.
   </Showcase>
 
-  <Showcase
-    id="websites"
-    n="03"
-    kicker="Websites"
-    flip
-    more={{ href: '/platforms/web', label: 'All web pieces' }}
-    slugs={[
-      { slug: 'navbar-split-centered-logo', label: 'Split navbar' },
-      { slug: 'hero-search-marketplace', label: 'Marketplace search' },
-      { slug: 'testimonials-masonry-wall', label: 'Testimonial wall' },
-      { slug: 'pricing-usage-slider', label: 'Usage pricing' },
-      { slug: 'restaurant-menu-page', label: 'Restaurant menu' },
-    ]}
-  >
-    <Fragment slot="title">Sections with a <Annotate type="highlight">point of view.</Annotate></Fragment>
-    Navbars, heroes, pricing, menus. Each one commits to a palette and a type pairing, and every control in the frame works.
-  </Showcase>
-
-  <Showcase
-    id="motion"
-    n="04"
-    kicker="Motion"
-    more={{ href: '/motion', label: 'All motion' }}
-    note="Scroll inside the frame"
-    slugs={[
-      { slug: 'webgl-shader-hero', label: 'Shader hero' },
-      { slug: 'scroll-scrub-product-sequence', label: 'Scroll teardown' },
-      { slug: 'parallax-layered-hero', label: 'Layered parallax' },
-      { slug: 'page-transition-tile-wipe', label: 'Tile wipe' },
-      { slug: 'preloader-counter-intro', label: 'Counter preloader' },
-    ]}
-  >
-    <Fragment slot="title">Motion that <Annotate type="scribble">earns its place.</Annotate></Fragment>
-    Shaders, scroll scrubs, parallax, transitions and preloaders. Each moves for a reason and has a reduced-motion fallback.
-  </Showcase>
-
-  <Showcase
-    id="tablets"
-    n="05"
-    kicker="Tablet"
-    flip
-    more={{ href: '/platforms/tablet', label: 'All tablet screens' }}
-    slugs={[
-      { slug: 'tablet-pos-register', label: 'Cafe register' },
-      { slug: 'tablet-cook-mode', label: 'Cook mode' },
-      { slug: 'tablet-kiosk-checkin', label: 'Kiosk check-in' },
-    ]}
-  >
-    <Fragment slot="title">Big screens for <Annotate type="underline">busy hands.</Annotate></Fragment>
-    Registers, kitchens and front desks. Large targets, type you can read at arm's length, and flows that survive a queue.
-  </Showcase>
-
-  <div class="wrap lib-intro">
-    <p class="sc-n mono"><span>Nº 06</span><span class="rule" aria-hidden="true"></span><span>The library</span></p>
-  </div>
-
-  <section class="section wrap needs">
-    <div class="section-head">
-      <div>
-        <h2 class="display h2">Start</h2>
-        <p class="sub">What are you making?</p>
-      </div>
-      <a class="more" href="/start">All</a>
-    </div>
-    {SURFACES.map((group) => (
-      <div class="need-block">
-        <p class="eyebrow"><a href={`/start#${group.id}`}>{group.title}</a></p>
-        <ol class="need-grid">
-          {startsOn(group.id).map((s) => (
-            <li>
-              <a href={`/start#${s.id}`}>
-                <span class="display h4">{s.title}</span>
-              </a>
-            </li>
-          ))}
-        </ol>
-      </div>
-    ))}
+  <section class="close wrap" aria-labelledby="close-h">
+    <h2 class="display h2" id="close-h">Install once. Ask for anything.</h2>
+    <span class="cmd big">
+      <span class="prompt mono" aria-hidden="true">$</span>
+      <code id="close-cmd">{installCmd}</code>
+      <button class="copy" type="button" data-copy="#close-cmd"><span data-label>Copy</span></button>
+    </span>
+    <a class="textlink" href="/browse">Browse the library <span aria-hidden="true">→</span></a>
   </section>
-
-  <section class="section wrap seen">
-    <div class="section-head">
-      <div>
-        <h2 class="display h2">Open one</h2>
-        <p class="sub">Each card is live. Click to see it and copy its brief.</p>
-      </div>
-      <a class="more" href="/c">All</a>
-    </div>
-    <div class="grid">
-      {['hero', 'features', 'pricing', 'portfolio', 'dashboard', 'cursor'].map((c, i) => {
-        const piece = newest.find((p) => p.data.category === c);
-        return piece ? <PieceCard piece={piece} n={nums.get(piece.id) || '000'} index={i} /> : null;
-      })}
-    </div>
-  </section>
-
-  <section class="section wrap libs">
-    <div class="section-head">
-      <div>
-        <h2 class="display h2">System</h2>
-        <p class="sub">The fonts, colours, icons, and motion everything uses.</p>
-      </div>
-      <a class="more" href="/system">All</a>
-    </div>
-    <ol class="lib-grid">
-      {libs.map((l, i) => (
-        <li class="reveal" style={`--d:${i * 50}ms`}>
-          <a href={l.href}>
-            <span class="display h3">{l.title}</span>
-            <span class="n mono num">{String(l.n).padStart(2, '0')}</span>
-          </a>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <section class="section wrap sources-home">
-    <div class="section-head">
-      <div>
-        <h2 class="display h2">Sources</h2>
-        <p class="sub">Real sites the screens learn from.</p>
-      </div>
-      <a class="more" href="/sources">All</a>
-    </div>
-    <ol class="source-row">
-      {SOURCES.map((s) => (
-        <li><a href={`/sources#${s.id}`}><span class="display h4">{s.name}</span></a></li>
-      ))}
-    </ol>
-  </section>
-
-  <section class="section wrap idx">
-    <div class="section-head">
-      <div>
-        <h2 class="display h2">Sections</h2>
-        <p class="sub">Every kind of piece, by name.</p>
-      </div>
-      <a class="more" href="/c">All</a>
-    </div>
-    <div class="idx-cols">
-      {indexGroups.map((g) => (
-        <div>
-          <p class="eyebrow">{g.label}</p>
-          <ol>
-            {g.items.map((i) => (
-              <li><a href={`/c/${i.c}`}><span>{i.label}</span><span class="mono num faint">{String(i.n).padStart(2, '0')}</span></a></li>
-            ))}
-          </ol>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="section wrap shelves-home">
-    <div class="section-head">
-      <div>
-        <h2 class="display h2">Shelves</h2>
-        <p class="sub">Pieces grouped by the problem they solve.</p>
-      </div>
-      <a class="more" href="/collections">All</a>
-    </div>
-    <div class="shelf-groups">
-      {groupedShelves.map((g) => (
-        <div>
-          <p class="eyebrow">{g.label}</p>
-          <ol>
-            {g.items.map((c) => (
-              <li>
-                <a href={`/collections/${c!.slug}`}>
-                  <span class="mono faint">{c!.kicker}</span>
-                  <span class="display h4">{c!.title}</span>
-                  <span class="mono num faint">{String(c!.pieces.filter((s) => byId.has(s)).length).padStart(2, '0')}</span>
-                </a>
-              </li>
-            ))}
-          </ol>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="section wrap fresh">
-    <div class="section-head">
-      <div>
-        <h2 class="display h2">Latest</h2>
-        <p class="sub">Just added.</p>
-      </div>
-      <a class="more" href="/browse">All</a>
-    </div>
-    <div class="grid">
-      {fresh.map((p, i) => <PieceCard piece={p} n={nums.get(p.id) || '000'} index={i} />)}
-    </div>
-  </section>
-
 </Base>
 
 <style>
-  .seen { padding-top: clamp(20px, 3vw, 36px); }
-  .section { padding-block: clamp(28px, 4vw, 48px); }
-  .section-head { margin-bottom: 16px; padding-bottom: 12px; }
-  .section-head .h2 { font-size: clamp(28px, 2.4vw, 40px); }
-  .section-head .sub { margin-top: 6px; color: var(--ink-2); font-size: 15px; }
+  /* hero */
+  .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 72px); align-items: center; padding: clamp(40px, 6vw, 88px) 0 clamp(48px, 6vw, 96px); min-height: min(calc(100dvh - var(--header-h)), 860px); }
+  .hero-text { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+  .hero .h1 { max-width: 11ch; }
+  .hero .lede { max-width: 42ch; }
+  .hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 6px; }
+  .textlink { font-size: 15px; font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--line-2); padding-bottom: 2px; transition: color var(--t-fast), border-color var(--t-fast); }
+  .textlink:hover { color: var(--accent); border-color: var(--accent); }
+  .textlink span { display: inline-block; transition: transform var(--t-med) var(--ease-out); }
+  .textlink:hover span { transform: translateX(3px); }
 
-  .sc-n { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
-  .sc-n .rule { width: 36px; height: 1px; background: var(--ink-3); }
-  .sc-live { position: absolute; left: 14px; top: 6px; z-index: 2; display: inline-flex; align-items: center; gap: 7px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
-  .sc-live i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: live-pulse 2.4s var(--ease) infinite; }
-  @keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+  .cmd { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 520px; min-width: 0; padding: 7px 7px 7px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--paper); box-shadow: 0 1px 2px rgba(24, 24, 27, .04); }
+  .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 14px; color: var(--ink); scrollbar-width: none; }
+  .cmd .prompt { color: var(--accent); font-size: 14px; }
+  .cmd .copy { flex: none; height: 38px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; background: var(--ink); color: var(--paper); transition: opacity var(--t-fast), transform var(--t-fast); }
+  .cmd .copy:hover { opacity: .86; }
+  .cmd .copy:active { transform: scale(.97); }
+  .cmd .copy[data-done] { background: var(--accent); color: var(--accent-ink); }
 
-  .agent { padding-block: clamp(48px, 6.5vw, 96px) clamp(36px, 5vw, 64px); border-top: 1px solid var(--line); }
-  .agent-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px clamp(32px, 5vw, 80px); align-items: end; margin-bottom: clamp(28px, 4vw, 48px); }
-  .agent-head .sc-n { grid-column: 1 / -1; }
-  .agent-h { font-size: clamp(36px, 4.2vw, 64px); line-height: 1.03; letter-spacing: -.02em; text-wrap: balance; max-width: 16ch; }
-  .agent-side { display: flex; flex-direction: column; gap: 18px; padding-bottom: 6px; }
-  .agent-copy { color: var(--ink-2); font-size: 16.5px; line-height: 1.55; max-width: 44ch; text-wrap: pretty; }
-  .agent-steps { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
-  .agent-steps span { margin-right: 8px; color: var(--accent); }
-  .agent-steps a { border-bottom: 1px solid var(--ink-3); }
-  .agent-steps a:hover { color: var(--accent); border-color: var(--accent); }
-  .agent-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(16px, 2vw, 28px); align-items: stretch; }
-  .agent-result { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-  .agent-stage { position: relative; flex: 1; min-height: 420px; aspect-ratio: 1280 / 900; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; overflow: hidden; }
-  .agent-stage :global(lounge-frame) { position: absolute; inset: 26px 22px 20px; }
-  .agent-cap { display: flex; justify-content: space-between; gap: 12px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
-  .agent-cap a { color: var(--ink); border-bottom: 1px solid var(--ink-3); }
-  .agent-cap a:hover { color: var(--accent); border-color: var(--accent); }
-  .lib-intro { padding-top: clamp(40px, 6vw, 72px); border-top: 1px solid var(--line); }
-  .lib-intro + .needs { padding-top: 12px; }
-  @media (prefers-reduced-motion: reduce) { .sc-live i { animation: none; } }
-  .cmd { display: flex; align-items: center; gap: 8px; margin-top: 4px; padding: 6px 6px 6px 12px; border: 1px solid var(--line); border-radius: var(--r); background: var(--paper-2); min-width: 0; }
-  .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font-family: var(--mono); font-size: 12.5px; }
-  .cmd .copy { flex: none; height: 30px; padding: 0 12px; border: 1px solid var(--line-strong, var(--line)); border-radius: var(--r); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); background: var(--paper); }
-  .cmd .copy:hover { border-color: var(--ink); }
-  .install { display: flex; flex-direction: column; gap: 10px; max-width: 520px; min-width: 0; }
-  .cmd.big { padding: 8px 8px 8px 16px; border-color: var(--ink-3); background: var(--paper); }
-  .cmd.big code { font-size: 14.5px; color: var(--ink); }
-  .cmd.big .prompt { color: var(--accent); font-size: 14px; }
-  .cmd.big .copy { height: 38px; padding: 0 16px; background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .cmd.big .copy:hover { opacity: .88; }
-  .works { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
-  .works a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-  .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; padding: clamp(40px, 6vw, 80px) 0 clamp(32px, 5vw, 48px); min-height: calc(100vh - var(--header-h) - 200px); }
-  .hero-text { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
-  .hero .h1 span, .hero .h1 i { display: inline-block; }
-  .hero .acts { display: flex; gap: 10px; flex-wrap: wrap; }
-  .hero-wall { position: relative; aspect-ratio: 1 / 0.96; }
+  .hero-wall { position: relative; aspect-ratio: 1 / 0.92; }
   .wall-item { position: absolute; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2); overflow: hidden; transition: transform var(--t-slow) var(--ease-out), border-color var(--t-med), box-shadow var(--t-med); }
   .wall-item :global(lounge-frame) { position: absolute; inset: 12px; }
-  .wall-item:hover { border-color: var(--ink-3); box-shadow: var(--shadow); z-index: 5; transform: translateY(-6px); }
-  .wall-item.web { left: 0; top: 0; width: 76%; aspect-ratio: 16 / 10.5; }
-  .wall-item.phone { right: 0; top: 16%; width: 28%; aspect-ratio: 9 / 19; }
+  .wall-item:hover { border-color: var(--line-2); box-shadow: var(--shadow); z-index: 5; transform: translateY(-6px); }
+  .wall-item.web { left: 0; top: 0; width: 78%; aspect-ratio: 16 / 10.5; }
+  .wall-item.phone { right: 0; top: 14%; width: 27%; aspect-ratio: 9 / 19; }
   .wall-item.phone :global(lounge-frame) { inset: 6px; }
-  .wall-item.tablet { left: 10%; top: 57%; width: 54%; aspect-ratio: 16 / 11.3; }
+  .wall-item.tablet { left: 12%; top: 56%; width: 54%; aspect-ratio: 16 / 11.3; }
 
-  .map { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
-  .map a { display: flex; align-items: center; padding: 14px 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 0; transition: background-color var(--t-med) var(--ease); }
-  .map .h4, .need-grid .h4 { font-size: 18px; }
-  .map a:hover { background: var(--paper-2); }
-  .need-block { margin-top: 22px; }
-  .need-block .eyebrow { margin-bottom: 8px; }
-  .need-block .eyebrow a { border-bottom: 1px solid transparent; }
-  .need-block .eyebrow a:hover { border-color: var(--ink); }
-  .need-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
-  .need-grid a { display: flex; align-items: center; padding: 12px 16px; min-height: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
-  .need-grid a:hover { background: var(--paper-2); }
+  /* shared block head */
+  .block-head { display: flex; flex-direction: column; gap: 14px; max-width: 760px; margin-bottom: clamp(32px, 4vw, 52px); }
+  .block-head .h2 { max-width: 20ch; }
 
-  .lib-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
-  .lib-grid a { display: flex; flex-direction: row; align-items: baseline; justify-content: space-between; gap: 12px; padding: 16px 18px; min-height: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background-color var(--t-med) var(--ease); }
-  .lib-grid a:hover { background: var(--paper-2); }
-  .lib-grid .n { font-size: 28px; color: var(--ink-3); }
+  /* library bento */
+  .lib { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
+  .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(220px, auto)) auto; gap: 12px; }
+  .cell { position: relative; display: flex; flex-direction: column; gap: 16px; min-width: 0; padding: 22px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper); overflow: hidden; transition: border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease-out), box-shadow var(--t-med) var(--ease); }
+  a.cell:hover { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow); }
+  a.cell:active { transform: translateY(-1px) scale(.995); }
+  .cell-text { display: flex; flex-direction: column; gap: 6px; position: relative; z-index: 1; }
+  .cell-text p { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; max-width: 34ch; }
+  .cell-n { font-family: var(--mono); font-size: 13px; color: var(--ink-3); }
+  .cell-h { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.2; }
+  .cell-stage { position: relative; flex: 1; min-height: 160px; margin: 0 -22px -22px; border-top: 1px solid var(--line); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; }
+  .cell-stage :global(lounge-frame) { position: absolute; inset: 20px 20px 0; }
+  .cell-stage.phone :global(lounge-frame) { inset: 18px 22% -40% 22%; }
+  .cell-stage.small :global(lounge-frame) { inset: 14px 14px 0; }
 
-  .source-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
-  .source-row a { display: flex; align-items: center; padding: 14px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 0; transition: background-color var(--t-med) var(--ease); }
-  .source-row a:hover { background: var(--paper-2); }
-  .source-row .h4 { font-size: 18px; }
-  .idx-cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px 20px; }
-  .idx-cols .eyebrow { padding-bottom: 10px; border-bottom: 1px solid var(--ink); margin-bottom: 8px; }
-  .idx-cols a { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
-  .idx-cols a:hover { color: var(--accent); }
+  .c-sections { grid-column: 1 / 3; grid-row: 1 / 3; }
+  .c-sections .cell-stage { min-height: 320px; }
+  .c-screens { grid-column: 3; grid-row: 1 / 3; }
+  .c-screens .cell-stage { min-height: 300px; }
+  .c-motion { grid-column: 4; grid-row: 1; }
+  .c-components { grid-column: 4; grid-row: 2; background: var(--accent-soft); border-color: transparent; }
+  .c-components .cell-n { color: var(--accent); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+  .tags li { font-size: 12.5px; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--paper) 70%, transparent); color: var(--ink-2); }
+  .c-styles { grid-column: 1 / 3; grid-row: 3; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 24px; }
+  .style-words { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 14px; max-width: 46%; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink-3); }
+  .style-words li:nth-child(3n + 1) { color: var(--ink); }
+  .c-more { grid-column: 3; grid-row: 3; flex-direction: row; padding: 0; gap: 0; }
+  .c-more a { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; padding: 22px; transition: background-color var(--t-med) var(--ease); }
+  .c-more a + a { border-left: 1px solid var(--line); }
+  .c-more a:hover { background: var(--paper-2); }
+  .c-system { grid-column: 4; grid-row: 3; background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .c-system .cell-h { font-size: 16px; }
+  .c-system .cell-h a:hover { color: var(--accent); }
+  .sys { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; margin-top: auto; }
+  .sys a { display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: color-mix(in srgb, var(--paper) 70%, transparent); transition: color var(--t-fast); }
+  .sys a:hover { color: var(--paper); }
+  .sys .cell-n { font-size: 22px; font-family: var(--sans); font-weight: 600; letter-spacing: -0.03em; color: var(--paper); }
 
-  .shelf-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-  .shelf-groups .eyebrow { padding-bottom: 10px; border-bottom: 1px solid var(--ink); margin-bottom: 8px; }
-  .shelf-groups li a { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); }
-  .shelf-groups li a:hover .h4 { text-decoration: underline; text-underline-offset: 4px; }
+  /* skill */
+  .skill { padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 40px; margin-bottom: clamp(28px, 3.5vw, 44px); }
+  .steps li { display: flex; flex-direction: column; gap: 4px; padding-top: 14px; border-top: 2px solid var(--ink); }
+  .steps li + li { border-top-color: var(--line-2); }
+  .steps b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
+  .steps span { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; max-width: 36ch; }
+  .agent-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(16px, 2vw, 24px); align-items: stretch; }
+  .agent-result { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .agent-stage { position: relative; flex: 1; min-height: 420px; aspect-ratio: 1280 / 900; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper-2) radial-gradient(var(--line-2) 1px, transparent 1.2px) center / 16px 16px; overflow: hidden; }
+  .agent-stage :global(lounge-frame) { position: absolute; inset: 22px; }
+  .agent-cap { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; color: var(--ink-2); }
+  .agent-cap a { color: var(--ink); font-weight: 500; }
+  .agent-cap a:hover { color: var(--accent); }
+
+  /* features */
+  .feats { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); padding-block: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
+  .feats-head { position: sticky; top: calc(var(--header-h) + 32px); align-self: start; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .feats-head .lede { max-width: 36ch; }
+  .feats-head .btn { margin-top: 8px; }
+  .feats-body { display: flex; flex-direction: column; gap: clamp(36px, 4vw, 56px); }
+  .fgroup-h { font-size: 14px; font-weight: 500; color: var(--ink-3); margin-bottom: 14px; }
+  .fgroup ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .fgroup li > :is(a, button), .fgroup li:not(:has(a, button)) { display: flex; flex-direction: column; gap: 6px; width: 100%; height: 100%; padding: 18px 20px; text-align: left; border-radius: var(--r-lg); background: var(--paper-2); }
+  .fgroup li > :is(a, button) { transition: background-color var(--t-med) var(--ease), transform var(--t-med) var(--ease-out); }
+  .fgroup li > :is(a, button):hover { background: var(--paper-3); transform: translateY(-2px); }
+  .fgroup li > :is(a, button):active { transform: scale(.99); }
+  .fgroup b { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
+  .fgroup span { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
+  .fgroup li > :is(a, button) b::after { content: " →"; color: var(--ink-3); transition: color var(--t-fast); }
+  .fgroup li > :is(a, button):hover b::after { color: var(--accent); }
+
+  .feats + :global(.sc) { border-top: 1px solid var(--line); padding-block: clamp(64px, 8vw, 120px); }
+
+  /* close */
+  .close { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; padding-block: clamp(72px, 9vw, 140px); border-top: 1px solid var(--line); }
+  .close .h2 { max-width: 18ch; }
+  .close .cmd { margin-top: 6px; }
 
   @media (max-width: 1100px) {
-    .idx-cols { grid-template-columns: repeat(3, 1fr); }
-    .need-grid { grid-template-columns: repeat(2, 1fr); }
+    .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; }
+    .c-sections { grid-column: 1 / -1; grid-row: auto; }
+    .c-screens, .c-motion, .c-components, .c-more, .c-system { grid-column: auto; grid-row: auto; }
+    .c-screens { grid-row: span 2; }
+    .c-styles { grid-column: 1 / -1; grid-row: auto; }
   }
   @media (max-width: 960px) {
-    .agent-head, .agent-grid { grid-template-columns: minmax(0, 1fr); }
-    .agent-stage { min-height: 0; }
-    .agent-cap { flex-direction: column; gap: 6px; }
     .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-    .map, .lib-grid { grid-template-columns: repeat(2, 1fr); }
-    .shelf-groups { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+    .agent-grid, .feats { grid-template-columns: minmax(0, 1fr); }
+    .feats-head { position: static; }
+    .agent-stage { min-height: 0; }
   }
-  @media (max-width: 640px) {
-    .map, .lib-grid, .need-grid, .idx-cols { grid-template-columns: minmax(0, 1fr); }
-    .cmd code { white-space: normal; overflow-wrap: anywhere; line-height: 1.45; }
+  @media (max-width: 760px) {
+    .bento { grid-template-columns: minmax(0, 1fr); }
+    .c-screens { grid-row: auto; }
+    .c-styles { flex-direction: column; align-items: flex-start; }
+    .style-words { justify-content: flex-start; max-width: none; }
+    .steps, .fgroup ul { grid-template-columns: minmax(0, 1fr); }
+    .agent-cap { flex-direction: column; gap: 4px; }
+    .cmd code { font-size: 12.5px; }
     .wall-item.tablet { display: none; }
-    .wall-item.web { width: 74%; top: 0; }
-    .wall-item.phone { width: 34%; top: 20%; }
+    .wall-item.web { width: 76%; }
+    .wall-item.phone { width: 34%; top: 18%; }
     .hero-wall { aspect-ratio: 4 / 3; }
   }
 </style>

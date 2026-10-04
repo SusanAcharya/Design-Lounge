@@ -1,0 +1,165 @@
+<!-- Design Lounge piece: tactile-chip-tabs-stretch · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Basera · Explore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e6e1d6;--chip:#f3efe6;--lip:#cbc3b3;--ink:#2b2a26;--ink-2:#55524a;--ink-3:#6f6b61;--line:#d3ccbe;
+  --brick:#c2412d;--paper:#faf7f0;--skel:#dcd6ca;--skel-hi:#ebe6dc;
+  --sans:"Bricolage Grotesque",system-ui,sans-serif;--serif:"Instrument Serif",Georgia,serif;
+  --spring:cubic-bezier(.34,1.56,.64,1);--soft:cubic-bezier(.34,1.3,.64,1);--out:cubic-bezier(.16,1,.3,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--brick);outline-offset:3px}
+.app{height:100%;display:flex;flex-direction:column;padding-top:max(54px,env(safe-area-inset-top));overflow:hidden}
+.search{margin:6px 20px 0;height:58px;border-radius:999px;background:var(--chip);display:flex;align-items:center;gap:12px;padding:0 8px 0 20px;
+  box-shadow:0 1px 0 #fff inset,0 3px 0 var(--lip),0 14px 24px -14px rgba(43,42,38,.35);font-weight:500;color:var(--ink-2)}
+.search svg,.chip svg,.fav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.search span{flex:1}
+.search b{display:block;font-weight:700;color:var(--ink);font-size:15px}
+.search small{display:block;font-size:12px;color:var(--ink-3)}
+.filter{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--bg);box-shadow:inset 0 2px 3px rgba(43,42,38,.15)}
+.tabs-wrap{overflow-x:auto;scrollbar-width:none;margin-top:18px;padding:4px 20px 12px}
+.tabs-wrap::-webkit-scrollbar{display:none}
+.tabs{position:relative;display:flex;gap:8px;width:max-content}
+.ind{position:absolute;top:0;left:0;height:46px;border-radius:999px;background:var(--ink);
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.4),0 1px 0 rgba(255,255,255,.5);pointer-events:none}
+.ind.go-r{transition:right .3s var(--soft),left .46s var(--soft) .06s}
+.ind.go-l{transition:left .3s var(--soft),right .46s var(--soft) .06s}
+.chip{position:relative;z-index:1;height:46px;padding:0 18px 0 14px;border-radius:999px;display:flex;align-items:center;gap:8px;font-weight:500;font-size:15px;white-space:nowrap;
+  background:var(--chip);box-shadow:0 1px 0 #fff inset,0 3px 0 var(--lip),0 8px 14px -8px rgba(43,42,38,.35);
+  transition:transform .32s var(--spring),box-shadow .32s var(--std),background-color .2s var(--std),color .2s var(--std)}
+.chip.down{transform:translateY(3px) scale(.95);box-shadow:0 1px 0 #fff inset,0 0 0 var(--lip),0 2px 4px -2px rgba(43,42,38,.3);transition-duration:.09s}
+.chip[aria-selected="true"]{background-color:transparent;color:var(--paper);box-shadow:none}
+.chip[aria-selected="true"].down{transform:scale(.95)}
+.chip .count{font-size:12px;color:var(--ink-3);font-weight:400;transition:color .2s}
+.chip[aria-selected="true"] .count{color:#b8b2a5}
+.head{display:flex;justify-content:space-between;align-items:baseline;margin:6px 20px 12px}
+.head h1{margin:0;font:400 30px/1 var(--serif);letter-spacing:-.01em}
+.head span{font-size:13px;color:var(--ink-3)}
+.panel{position:relative;flex:1;overflow:hidden;padding:0 20px max(34px,env(safe-area-inset-bottom))}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;transition:opacity .28s var(--std)}
+.grid.skel{pointer-events:none}
+.card{min-width:0}
+.ph{position:relative;aspect-ratio:4/4.6;border-radius:18px;overflow:hidden;background:var(--skel)}
+.ph svg{display:block;width:100%;height:100%}
+.fav{position:absolute;top:8px;right:8px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(250,247,240,.85);color:var(--ink);transition:transform .3s var(--spring)}
+.fav:active{transform:scale(.86)}
+.fav[aria-pressed="true"]{color:var(--brick)}
+.fav[aria-pressed="true"] svg{fill:currentColor}
+.card h2{margin:10px 0 2px;font:400 20px/1.1 var(--serif)}
+.card p{margin:0;font-size:12px;color:var(--ink-3)}
+.card .price{margin-top:4px;font-size:13px;color:var(--ink)}
+.card .price b{font-weight:700}
+.bone{border-radius:6px;background:var(--skel);margin-top:10px;height:14px}
+.bone.s{width:60%;height:10px;margin-top:8px}
+.skel .ph,.skel .bone{background:linear-gradient(100deg,var(--skel) 30%,var(--skel-hi) 50%,var(--skel) 70%);background-size:300% 100%;animation:shim 1.1s linear infinite}
+@keyframes shim{from{background-position:100% 0}to{background-position:0 0}}
+.grid.real .card{animation:rise .42s var(--out) both}
+.grid.real .card:nth-child(2){animation-delay:.05s}.grid.real .card:nth-child(3){animation-delay:.1s}.grid.real .card:nth-child(4){animation-delay:.15s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  .ind.go-r,.ind.go-l{transition:none}
+  .chip,.chip.down{transition:background-color .1s linear,color .1s linear;transform:none}
+  .skel .ph,.skel .bone{animation:none}
+  .grid.real .card{animation:none}
+  .fav:active{transform:none}
+}
+@media (max-height:720px){.ph{aspect-ratio:4/3.6}}
+</style>
+</head>
+<body>
+<main class="app">
+  <button class="search" type="button" aria-label="Search: Where to next? Any week, 2 guests">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
+    <span><b>Where to next?</b><small>Any week · 2 guests</small></span>
+    <i class="filter" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></i>
+  </button>
+  <div class="tabs-wrap" id="wrap">
+    <div class="tabs" role="tablist" aria-label="Kinds of trip" id="tabs">
+      <span class="ind" id="ind" aria-hidden="true"></span>
+    </div>
+  </div>
+  <div class="head"><h1 id="title">Stays</h1><span id="meta">128 near Pokhara</span></div>
+  <section class="panel" role="tabpanel" id="panel" aria-labelledby="title" aria-busy="false">
+    <div class="grid real" id="grid"></div>
+  </section>
+  <p class="sr" aria-live="polite" id="status"></p>
+</main>
+<script>
+const T=[
+  {id:'stays',name:'Stays',count:128,meta:'128 near Pokhara',icon:'<path d="M4 11 12 5l8 6v8H4z"/><path d="M10 19v-5h4v5"/>',items:[
+    ['Lakeside Loft','Baidam, Pokhara','4,200','night',['#f2c79a','#f7e3c4','#e8833a','#4f6b5c','#2f4a3f']],
+    ['Phewa Glass House','Sedi Bagar','6,800','night',['#bcd3d9','#e6f0ef','#f4d27a','#5b7d84','#2f4b52']],
+    ['Annapurna Rooftop','Khahare','3,100','night',['#f4b8a0','#fbe2d4','#f5f0e6','#7a5d6b','#463645']],
+    ['Old Bazaar Rooms','Bagar','2,400','night',['#e9d6a8','#f6ecd2','#c2412d','#8a7a4f','#4d4430']]]},
+  {id:'homestays',name:'Homestays',count:46,meta:'46 with a family',icon:'<path d="M3 12 12 5l9 7"/><path d="M6 10v9h12v-9"/><circle cx="12" cy="14" r="2"/>',items:[
+    ['Gurung Family Home','Ghandruk','1,800','night',['#cfd9c0','#eef2e4','#f6f1e0','#6e8a5a','#3f5536']],
+    ['Tea Garden Cottage','Ilam','2,200','night',['#bfe0c8','#e9f5ec','#f2d37a','#4f8a5e','#2c5238']],
+    ['Newar Courtyard','Bhaktapur','2,600','night',['#f0c3a6','#faeadf','#c2412d','#8e5b47','#553728']],
+    ['Riverside Farm','Dumre','1,500','night',['#c9d7e2','#eef3f7','#f4c56a','#6b8b72','#3a5644']]]},
+  {id:'treks',name:'Treks',count:31,meta:'31 guided routes',icon:'<path d="M3 19 9 9l4 6 3-4 5 8z"/>',items:[
+    ['Poon Hill Sunrise','4 days · Easy','14,500','person',['#f6c1a0','#fde7d6','#fff4e2','#8b7da3','#4e4766']],
+    ['Mardi Ridge','5 days · Moderate','19,000','person',['#c6d4e8','#ecf1f8','#fafafa','#6a7f9e','#394a63']],
+    ['Khopra Danda','6 days · Moderate','22,800','person',['#e8cfa4','#f6ead2','#fff7e8','#8f7650','#54452d']],
+    ['Mohare Forest','3 days · Easy','11,200','person',['#cfe0c4','#eef5e8','#f3e2a2','#5f8a52','#33522c']]]},
+  {id:'food',name:'Food walks',count:19,meta:'19 hosted tastings',icon:'<path d="M6 3v8a2 2 0 0 0 4 0V3M8 11v10M16 3c-2 1-3 4-3 7h3v11"/>',items:[
+    ['Asan Morning Walk','Kathmandu · 3h','2,900','person',['#f3d0a2','#fbeedd','#e0782f','#9b6a3f','#5a3c22']],
+    ['Thakali Kitchen','Jomsom · 2h','3,400','person',['#e4cdb6','#f5ece2','#c2412d','#7d6656','#4a3a2f']],
+    ['Lakeside Night Market','Pokhara · 2h','2,100','person',['#2f3a55','#4a5677','#f2c45a','#1f283d','#141a29']],
+    ['Juju Dhau Trail','Bhaktapur · 3h','2,500','person',['#f2dcc0','#fbf1e4','#fff7ec','#a07a58','#5f4632']]]}
+];
+const tabs=document.getElementById('tabs'),ind=document.getElementById('ind'),grid=document.getElementById('grid'),panel=document.getElementById('panel'),title=document.getElementById('title'),meta=document.getElementById('meta'),status=document.getElementById('status'),wrap=document.getElementById('wrap');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur=0,timer=0;
+tabs.insertAdjacentHTML('beforeend',T.map((t,i)=>`<button class="chip" role="tab" id="tab-${t.id}" aria-controls="panel" aria-selected="${i===0}" tabindex="${i===0?0:-1}"><svg viewBox="0 0 24 24" aria-hidden="true">${t.icon}</svg>${t.name}<span class="count">${t.count}</span></button>`).join(''));
+const chips=[...tabs.querySelectorAll('.chip')];
+const art=c=>`<svg viewBox="0 0 100 115" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100" height="115" fill="${c[1]}"/><rect width="100" height="60" fill="${c[0]}" opacity=".7"/><circle cx="70" cy="40" r="12" fill="${c[2]}"/><path d="M0 72 22 48l16 14 18-24 24 26 20-12v63H0z" fill="${c[3]}"/><path d="M0 90l30-14 24 10 22-12 24 12v39H0z" fill="${c[4]}"/></svg>`;
+const fav='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+function real(t){return t.items.map(([n,p,pr,u,c])=>`<article class="card"><div class="ph">${art(c)}<button class="fav" type="button" aria-pressed="false" aria-label="Save ${n}">${fav}</button></div><h2>${n}</h2><p>${p}</p><p class="price"><b>Rs ${pr}</b> / ${u}</p></article>`).join('')}
+const skel='<div class="card"><div class="ph"></div><div class="bone"></div><div class="bone s"></div></div>'.repeat(4);
+function place(i,animate){
+  const c=chips[i],w=tabs.offsetWidth,l=c.offsetLeft,r=w-(l+c.offsetWidth);
+  ind.classList.remove('go-r','go-l');
+  if(animate&&!reduce){ind.classList.add(i>cur?'go-r':'go-l')}
+  ind.style.left=l+'px';ind.style.right=r+'px';ind.style.width='auto';
+}
+function select(i,focus){
+  if(i===cur){return}
+  const prev=cur;place(i,true);cur=i;
+  chips.forEach((c,j)=>{c.setAttribute('aria-selected',j===i);c.tabIndex=j===i?0:-1});
+  if(focus)chips[i].focus({preventScroll:true});
+  const c=chips[i];const target=c.offsetLeft-20;
+  if(c.offsetLeft+c.offsetWidth>wrap.scrollLeft+wrap.clientWidth-20||c.offsetLeft<wrap.scrollLeft+20)wrap.scrollTo({left:Math.max(0,target-40),behavior:reduce?'auto':'smooth'});
+  const t=T[i];title.textContent=t.name;meta.textContent=t.meta;
+  clearTimeout(timer);panel.setAttribute('aria-busy','true');
+  grid.className='grid skel';grid.innerHTML=skel;
+  timer=setTimeout(()=>{grid.className='grid real';grid.innerHTML=real(t);panel.setAttribute('aria-busy','false');status.textContent=t.meta},reduce?200:650);
+}
+chips.forEach((c,i)=>{
+  const down=()=>c.classList.add('down'),up=()=>c.classList.remove('down');
+  c.addEventListener('pointerdown',()=>{down();try{navigator.vibrate&&navigator.vibrate(6)}catch(e){}});
+  c.addEventListener('pointerup',up);c.addEventListener('pointerleave',up);c.addEventListener('pointercancel',up);
+  c.addEventListener('click',()=>select(i,false));
+  c.addEventListener('keydown',e=>{
+    let n=null;if(e.key==='ArrowRight')n=(i+1)%chips.length;else if(e.key==='ArrowLeft')n=(i-1+chips.length)%chips.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=chips.length-1;
+    if(e.key===' '||e.key==='Enter'){down();setTimeout(up,120)}
+    if(n!==null){e.preventDefault();select(n,true)}
+  });
+});
+grid.addEventListener('click',e=>{const f=e.target.closest('.fav');if(f)f.setAttribute('aria-pressed',f.getAttribute('aria-pressed')!=='true')});
+grid.innerHTML=real(T[0]);
+document.fonts&&document.fonts.ready.then(()=>place(cur,false));place(0,false);
+addEventListener('resize',()=>place(cur,false));
+</script>
+</body>
+</html>

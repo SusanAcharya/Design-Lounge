@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 363 · "Professional network post" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 370 · "Professional network post" · designlounge.vercel.app -->
 
 # Professional network post
 

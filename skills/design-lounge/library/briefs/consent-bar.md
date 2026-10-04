@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 197 · "Consent bar" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 200 · "Consent bar" · designlounge.vercel.app -->
 
 # Consent bar
 

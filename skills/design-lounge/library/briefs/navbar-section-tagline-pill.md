@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 390 · "Section-tagline nav pill" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 398 · "Section-tagline nav pill" · designlounge.vercel.app -->
 
 # Section-tagline nav pill
 

@@ -147,6 +147,16 @@ The favicon is the monogram on `--primary` with `--primary-ink`, or the monogram
 
 The share image (`og:image`, 1200 × 630) is the wordmark and the page's headline on `--bg`, in the pairing. One per site is enough. Make one per page only for articles or products.
 
+A phone app needs an app icon. It is not the favicon made bigger.
+
+- Draw it on a square 1024 × 1024 canvas with square corners and no transparency. The phone cuts the rounded shape itself.
+- One idea: a single object or mark, kept inside the middle 80% so the corners never cut it. No words or letters. The name already sits under the icon.
+- Light comes from the top: a slightly paler top half, a darker bottom edge, a thin light rim, and a soft shadow under the mark. That is enough depth.
+- Shrink it to 29px early. If the shape and its two main colours can't be read at that size, simplify it.
+- Make a dark version (the mark in its brand colour on a near-black plate) and a tinted version (one hue in three shades). Do not just invert the light one.
+- Export every size from the master with a script: 1024, 180, 120, 60, and 29, plus what the platform asks for now.
+- Use the pieces to check it: `app-icon-spec-sheet` for keylines, real sizes, and light and dark home screens, and `app-icon-home-screen-set` for the three looks side by side.
+
 Client and partner logos in `logos-grid-case-hover` or `logos-mono-marquee` come from the person. If they have none, leave the block out. Never use real company logos they did not give you, and never invent fake ones to fill the row.
 
 A nav item is a row or a 40px pill. The current item uses `--primary-soft` and `aria-current="page"`. One nav system per screen. The shell widths, how main flexes when the rail closes, and how that same list becomes a drawer or phone tabs are in Layout in [practice.md](practice.md).

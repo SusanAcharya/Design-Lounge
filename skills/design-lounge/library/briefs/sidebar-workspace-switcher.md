@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 401 · "Sidebar with workspace switcher" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 409 · "Sidebar with workspace switcher" · designlounge.vercel.app -->
 
 # Sidebar with workspace switcher
 

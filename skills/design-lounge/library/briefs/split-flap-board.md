@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 414 · "Split-flap board" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 422 · "Split-flap board" · designlounge.vercel.app -->
 
 # Split-flap board
 

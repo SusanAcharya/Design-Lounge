@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 287 · "Lens card scroll ticker" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 293 · "Lens card scroll ticker" · designlounge.vercel.app -->
 
 # Lens card scroll ticker
 

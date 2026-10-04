@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 356 · "Postcard with stamp and postmark" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 363 · "Postcard with stamp and postmark" · designlounge.vercel.app -->
 
 # Postcard with stamp and postmark
 

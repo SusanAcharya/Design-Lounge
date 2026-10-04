@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 243 · "Filter toolbar" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 247 · "Filter toolbar" · designlounge.vercel.app -->
 
 # Filter toolbar
 

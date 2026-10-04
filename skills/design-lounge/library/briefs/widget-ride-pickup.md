@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 380 · "Ride pickup live activity" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 387 · "Ride pickup live activity" · designlounge.vercel.app -->
 
 # Ride pickup live activity
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 359 · "Press well" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 366 · "Press well" · designlounge.vercel.app -->
 
 # Press well
 

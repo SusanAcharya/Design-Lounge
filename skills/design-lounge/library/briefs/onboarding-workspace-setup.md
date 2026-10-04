@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 469 · "Workspace setup with live preview" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 479 · "Workspace setup with live preview" · designlounge.vercel.app -->
 
 # Workspace setup with live preview
 

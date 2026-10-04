@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 170 · "Architecture studio index" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 173 · "Architecture studio index" · designlounge.vercel.app -->
 
 # Architecture studio index
 

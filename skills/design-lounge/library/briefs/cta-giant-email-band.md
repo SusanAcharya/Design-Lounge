@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 205 · "CTA giant email band" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 208 · "CTA giant email band" · designlounge.vercel.app -->
 
 # CTA giant email band
 

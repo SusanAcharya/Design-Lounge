@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 397 · "Shop drawer with accordion sections" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 405 · "Shop drawer with accordion sections" · designlounge.vercel.app -->
 
 # Shop drawer with accordion sections
 

@@ -11,8 +11,9 @@ interface Props {
   description?: string;
   ogImage?: string;
   bodyClass?: string;
+  rail?: boolean;
 }
-const { title, description = `Design Lounge by ${AUTHOR.name}. Pieces, type, themes, icons, motion.`, ogImage, bodyClass } = Astro.props;
+const { title, description = `Design Lounge by ${AUTHOR.name}. Pieces, type, themes, icons, motion.`, ogImage, bodyClass, rail = true } = Astro.props;
 const fullTitle = title ? `${title} · Design Lounge` : `Design Lounge`;
 const origin = (Astro.site ?? new URL('https://designlounge.vercel.app')).toString().replace(/\/$/, '');
 const path = Astro.url.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') || '/';
@@ -47,12 +48,12 @@ const count = (await getPieces()).length;
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
   {ogImage && <meta property="og:image" content={ogImage} />}
-  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0c0c0e" media="(prefers-color-scheme: dark)" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <script is:inline>
     (function () {
       try {
@@ -66,7 +67,7 @@ const count = (await getPieces()).length;
 <body class={bodyClass} data-count={count}>
   <a class="skip" href="#main">Skip to content</a>
   <Header />
-  <SectionRail />
+  {rail && <SectionRail />}
   <main id="main">
     <slot />
   </main>

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 410 · "Spinner specimen set" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 418 · "Spinner specimen set" · designlounge.vercel.app -->
 
 # Spinner specimen set
 

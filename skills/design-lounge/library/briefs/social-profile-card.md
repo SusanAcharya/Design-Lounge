@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 229 · "Editorial creator profile card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 233 · "Editorial creator profile card" · designlounge.vercel.app -->
 
 # Editorial creator profile card
 

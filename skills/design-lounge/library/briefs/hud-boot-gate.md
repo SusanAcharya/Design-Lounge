@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 269 · "HUD boot gate" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 275 · "HUD boot gate" · designlounge.vercel.app -->
 
 # HUD boot gate
 

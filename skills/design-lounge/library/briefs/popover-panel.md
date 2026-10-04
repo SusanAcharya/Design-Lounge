@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 355 · "Popover panel" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 362 · "Popover panel" · designlounge.vercel.app -->
 
 # Popover panel
 

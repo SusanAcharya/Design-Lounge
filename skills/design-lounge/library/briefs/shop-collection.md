@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 396 · "Shop collection" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 404 · "Shop collection" · designlounge.vercel.app -->
 
 # Shop collection
 

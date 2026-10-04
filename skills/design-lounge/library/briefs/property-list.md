@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 367 · "Property list" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 374 · "Property list" · designlounge.vercel.app -->
 
 # Property list
 

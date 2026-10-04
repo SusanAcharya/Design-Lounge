@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 372 · "Quarter line chart" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 379 · "Quarter line chart" · designlounge.vercel.app -->
 
 # Quarter line chart
 

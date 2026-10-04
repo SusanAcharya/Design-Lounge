@@ -115,18 +115,18 @@ const transcript = lines
 
 <style>
   .term {
-    --t-bg: #16140f; --t-ink: #ece7dc; --t-dim: #8c867b; --t-acc: #e0a34b; --t-line: #2b2925;
+    --t-bg: #121214; --t-ink: #ececee; --t-dim: #85858e; --t-acc: #ec7a45; --t-line: #27272b;
     display: flex; flex-direction: column; min-width: 0; margin: 0;
     background: var(--t-bg); color: var(--t-ink); border: 1px solid var(--t-line); border-radius: var(--r-lg);
     box-shadow: var(--shadow); overflow: hidden;
   }
-  :global([data-theme="night"]) .term { --t-bg: #0d0c0a; border-color: var(--line-2); }
+  :global([data-theme="night"]) .term { --t-bg: #09090b; border-color: var(--line-2); }
   .term-bar { display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 8px 0 14px; border-bottom: 1px solid var(--t-line); }
   .dots { display: flex; gap: 6px; }
-  .dots i { width: 9px; height: 9px; border-radius: 50%; background: #3a3731; }
+  .dots i { width: 9px; height: 9px; border-radius: 50%; background: #333338; }
   .term-name { flex: 1; min-width: 0; font-size: 11px; letter-spacing: .06em; color: var(--t-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .term-ctl { display: flex; gap: 4px; }
-  .term-btn { height: 26px; padding: 0 10px; border: 1px solid var(--t-line); border-radius: var(--r); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--t-dim); background: transparent; transition: color var(--t-fast), border-color var(--t-fast); }
+  .term-btn { height: 26px; padding: 0 10px; border: 1px solid var(--t-line); border-radius: 6px; font-size: 11.5px; color: var(--t-dim); background: transparent; transition: color var(--t-fast), border-color var(--t-fast); }
   .term-btn:hover, .term-btn:focus-visible { color: var(--t-ink); border-color: var(--t-dim); }
   .term-body { flex: 1; display: flex; flex-direction: column; gap: 3px; padding: 20px 20px 22px; font-family: var(--mono); font-size: 13px; line-height: 1.6; min-height: 380px; }
   .tl { display: flex; gap: 10px; min-width: 0; opacity: 0; transform: translateY(3px); transition: opacity 220ms var(--ease), transform 220ms var(--ease); }
@@ -136,7 +136,7 @@ const transcript = lines
   .tl-ok .p { color: #9bbf7a; }
   .tl-out, .tl-ok { color: var(--t-dim); }
   .tl-ask { margin-top: 2px; }
-  .tl-ask .tx { color: #fff4e0; }
+  .tl-ask .tx { color: #ffffff; }
   .tl-gap { height: 10px; }
   .tl-pick { padding-left: calc(1ch + 10px); }
   .tl-pick .key { flex: none; width: 10ch; color: var(--t-dim); }

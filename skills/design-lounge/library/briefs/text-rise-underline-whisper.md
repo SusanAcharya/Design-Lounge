@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 263 · "Headline rise with drawn underline" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 267 · "Headline rise with drawn underline" · designlounge.vercel.app -->
 
 # Headline rise with drawn underline
 

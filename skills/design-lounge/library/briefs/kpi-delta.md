@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 314 · "One number, with a delta" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 321 · "One number, with a delta" · designlounge.vercel.app -->
 
 # One number, with a delta
 

@@ -1,0 +1,156 @@
+<!-- Design Lounge piece: streak-hold-confetti · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paath · Today</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#10261f;--surface:#173229;--surface-2:#1f3d33;--line:#2a4a3f;
+  --cream:#f6efdf;--cream-2:#c9c2b0;--cream-3:#9fae9f;--gold:#f2c14e;--gold-deep:#a8802a;--sage:#8fb59a;
+  --serif:"Young Serif",Georgia,serif;--sans:"Space Grotesk",system-ui,sans-serif;
+  --spring:cubic-bezier(.34,1.56,.64,1);--out:cubic-bezier(.16,1,.3,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--cream);background:var(--bg);overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.app{position:relative;height:100%;overflow:hidden;display:flex;flex-direction:column;padding:max(54px,env(safe-area-inset-top)) 20px max(34px,env(safe-area-inset-bottom))}
+canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+header{display:flex;justify-content:space-between;align-items:center;height:44px}
+.brand{font:15px/1 var(--serif);letter-spacing:.01em}
+.date{font-size:13px;color:var(--cream-3)}
+.hero{display:flex;flex-direction:column;align-items:center;margin-top:34px}
+.leaf{width:44px;height:44px;color:var(--gold);transition:transform .5s var(--spring)}
+.leaf svg{width:100%;height:100%;fill:currentColor}
+.done .leaf{animation:leaf .7s var(--spring)}
+@keyframes leaf{40%{transform:scale(1.25) rotate(-8deg)}}
+.num{display:flex;height:132px;overflow:hidden;margin-top:6px;font:400 132px/1 var(--serif);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.col{display:flex;flex-direction:column}
+.ready .col{transition:transform .7s var(--spring)}
+.ready .col + .col{transition-delay:.06s}
+.col span{height:132px;line-height:132px;text-align:center}
+.unit{margin-top:4px;font-size:13px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-2)}
+.badge{margin-top:14px;height:30px;padding:0 12px;border-radius:999px;background:var(--gold);color:var(--bg);font-size:12px;font-weight:600;letter-spacing:.04em;display:flex;align-items:center;gap:6px;
+  transform:scale(.4);opacity:0;transition:transform .5s var(--spring),opacity .2s var(--std)}
+.done .badge{transform:none;opacity:1;transition-delay:.45s}
+.week{list-style:none;display:flex;justify-content:space-between;margin:34px 0 0;padding:0}
+.week li{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;color:var(--cream-3);width:40px}
+.week i{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center}
+.week i svg{width:16px;height:16px;fill:none;stroke:var(--bg);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.week .past i{background:var(--cream);border-color:var(--cream)}
+.week .today{color:var(--cream)}
+.week .today i{border:1.5px dashed var(--gold);transition:background .3s var(--std),border-color .3s,transform .5s var(--spring)}
+.week .today svg{opacity:0;transform:scale(.4);transition:opacity .2s,transform .4s var(--spring)}
+.done .week .today i{background:var(--gold);border:1.5px solid var(--gold);transform:scale(1.12);transition-delay:.2s}
+.done .week .today svg{opacity:1;transform:none;transition-delay:.32s}
+.done .week .today i{animation:settle .5s var(--spring) .7s forwards}
+@keyframes settle{to{transform:scale(1)}}
+.goal{margin-top:auto;padding:18px;border-radius:22px;background:var(--surface);border:1px solid var(--line)}
+.goal small{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--cream-3)}
+.goal h2{margin:6px 0 2px;font:400 22px/1.2 var(--serif)}
+.goal p{margin:0;font-size:13px;color:var(--cream-2)}
+.hold{position:relative;margin-top:16px;width:100%;height:64px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;gap:10px;font-weight:600;font-size:16px;touch-action:none;
+  transition:transform .3s var(--spring),box-shadow .3s var(--std),background .3s}
+.hold .bar{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--bg);clip-path:inset(0 100% 0 0);background:linear-gradient(90deg,var(--gold-deep),var(--gold))}
+.hold .lbl{position:relative;display:flex;align-items:center;gap:10px;mix-blend-mode:normal}
+.hold svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hold.held{transform:scale(.97);box-shadow:0 0 0 6px rgba(242,193,78,.14)}
+.done .hold{background:var(--gold);color:var(--bg);border-color:var(--gold);cursor:default}
+.done .hold .bar{opacity:0}
+.undo{display:block;margin:12px auto 0;height:40px;padding:0 14px;font-size:13px;color:var(--cream-3);text-decoration:underline;text-underline-offset:3px;visibility:hidden}
+.done .undo{visibility:visible}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  .ready .col,.badge,.week .today i,.week .today svg,.hold,.leaf{transition:opacity .15s linear!important;transition-delay:0s!important}
+  .done .leaf,.done .week .today i{animation:none}
+  .done .week .today i{transform:none}
+  .hold.held{transform:none}
+}
+@media (max-height:720px){.num{height:100px;font-size:100px}.col span{height:100px;line-height:100px}.hero{margin-top:10px}.week{margin-top:18px}}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <header><span class="brand">Paath</span><span class="date">Sunday, 4 October</span></header>
+  <section class="hero" aria-labelledby="streak-label">
+    <span class="leaf" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2c3 3.4 5 6.6 5 10a5 5 0 0 1-10 0c0-1.6.6-3 1.6-4.2.2 1.6 1 2.6 2.1 3C10.2 8 10.8 5 12 2z"/></svg></span>
+    <div class="num" aria-hidden="true"><div class="col" id="c0"></div><div class="col" id="c1"></div></div>
+    <p class="unit" id="streak-label"><span class="sr" id="streak-sr">11 </span>day reading streak</p>
+    <span class="badge" aria-hidden="true">Longest yet</span>
+  </section>
+  <ol class="week" aria-label="This week">
+    <li class="past"><i><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg></i>Mon</li>
+    <li class="past"><i><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg></i>Tue</li>
+    <li class="past"><i><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg></i>Wed</li>
+    <li class="past"><i><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg></i>Thu</li>
+    <li class="past"><i><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg></i>Fri</li>
+    <li class="past"><i><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg></i>Sat</li>
+    <li class="today" aria-current="date"><i><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg></i>Sun</li>
+  </ol>
+  <section class="goal" aria-label="Today's reading">
+    <small>Today · 10 pages</small>
+    <h2>Seto Bagh, chapter 4</h2>
+    <p>Pages 41 to 50 · about 14 minutes</p>
+    <button class="hold" id="hold" type="button" aria-describedby="hold-help">
+      <span class="lbl" id="lbl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C6.5 4.5 9.5 4.5 12 6c2.5-1.5 5.5-1.5 8-.5v13c-2.5-1-5.5-1-8 .5-2.5-1.5-5.5-1.5-8-.5z"/><path d="M12 6v13"/></svg><span id="lbl-t">Hold to log today</span></span>
+      <span class="bar" id="bar" aria-hidden="true"></span>
+    </button>
+    <span class="sr" id="hold-help">Press and hold for one second. Holding Space or Enter also works.</span>
+    <button class="undo" id="undo" type="button">Undo, I have not read yet</button>
+  </section>
+  <p class="sr" aria-live="polite" id="status"></p>
+</main>
+<script>
+const app=document.getElementById('app'),hold=document.getElementById('hold'),bar=document.getElementById('bar'),lblT=document.getElementById('lbl-t'),undo=document.getElementById('undo'),status=document.getElementById('status'),fx=document.getElementById('fx'),ctx=fx.getContext('2d');
+const c0=document.getElementById('c0'),c1=document.getElementById('c1'),sr=document.getElementById('streak-sr');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const HOLD=1000;const lbl=document.getElementById('lbl');let streak=11,done=false,t0=0,raf=0,p=0,holding=false;
+bar.innerHTML=lbl.innerHTML;bar.querySelector('#lbl-t').removeAttribute('id');
+[c0,c1].forEach(c=>c.innerHTML=[...'0123456789'].map(d=>`<span>${d}</span>`).join(''));
+function showNum(n){const s=String(n).padStart(2,'0'),h=c0.firstElementChild.offsetHeight;c0.style.transform=`translateY(${-s[0]*h}px)`;c1.style.transform=`translateY(${-s[1]*h}px)`;sr.textContent=n+' '}
+function frame(t){
+  if(!holding)return;p=Math.min(1,(t-t0)/HOLD);bar.style.clipPath=`inset(0 ${(1-p)*100}% 0 0)`;
+  if(p>=1){holding=false;complete();return}
+  raf=requestAnimationFrame(frame);
+}
+function start(){if(done||holding)return;holding=true;hold.classList.add('held');bar.style.transition='none';t0=performance.now()-p*HOLD;raf=requestAnimationFrame(frame);try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}}
+function cancel(){if(!holding)return;holding=false;cancelAnimationFrame(raf);hold.classList.remove('held');bar.style.transition=reduce?'none':'clip-path .45s cubic-bezier(.2,.7,.2,1)';p=0;bar.style.clipPath='inset(0 100% 0 0)'}
+function complete(){
+  done=true;hold.classList.remove('held');streak++;app.classList.add('done');
+  showNum(streak);lblT.textContent='Logged · 09:46';hold.setAttribute('aria-disabled','true');
+  status.textContent=`Logged. ${streak} day streak, your longest yet.`;
+  try{navigator.vibrate&&navigator.vibrate([12,40,18])}catch(e){}
+  if(!reduce)burst();
+}
+function reset(){done=false;p=0;streak=11;app.classList.remove('done');bar.style.transition='none';bar.style.clipPath='inset(0 100% 0 0)';showNum(streak);lblT.textContent='Hold to log today';hold.removeAttribute('aria-disabled');status.textContent='Streak back to 11 days.';hold.focus({preventScroll:true})}
+hold.addEventListener('pointerdown',e=>{hold.setPointerCapture(e.pointerId);start()});
+['pointerup','pointercancel','lostpointercapture'].forEach(ev=>hold.addEventListener(ev,cancel));
+hold.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')){e.preventDefault();if(!e.repeat)start()}});
+hold.addEventListener('keyup',e=>{if(e.key===' '||e.key==='Enter')cancel()});
+hold.addEventListener('contextmenu',e=>e.preventDefault());
+undo.addEventListener('click',reset);
+/* restrained confetti: 26 pieces, one burst, about 1.6s */
+function burst(){
+  const dpr=Math.min(2,devicePixelRatio||1),W=fx.clientWidth,H=fx.clientHeight;fx.width=W*dpr;fx.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  const r=document.querySelector('.num').getBoundingClientRect(),ar=app.getBoundingClientRect(),ox=r.left-ar.left+r.width/2,oy=r.top-ar.top+r.height*.45;
+  const cols=['#f2c14e','#f6efdf','#8fb59a','#f2c14e'];
+  const ps=Array.from({length:26},(_,i)=>{const a=-Math.PI/2+(Math.random()-.5)*2.4,v=5+Math.random()*5;return{x:ox,y:oy,vx:Math.cos(a)*v,vy:Math.sin(a)*v,w:5+Math.random()*5,h:3+Math.random()*4,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[i%4],round:i%5===0}});
+  const t1=performance.now();
+  (function step(t){const k=(t-t1)/1600;ctx.clearRect(0,0,W,H);if(k>=1)return;
+    for(const q of ps){q.vy+=.22;q.vx*=.985;q.vy*=.985;q.x+=q.vx;q.y+=q.vy;q.r+=q.vr;
+      ctx.save();ctx.globalAlpha=k<.6?1:1-(k-.6)/.4;ctx.translate(q.x,q.y);ctx.rotate(q.r);ctx.fillStyle=q.c;
+      if(q.round){ctx.beginPath();ctx.arc(0,0,q.h/1.4,0,7);ctx.fill()}else ctx.fillRect(-q.w/2,-q.h/2,q.w,q.h*Math.abs(Math.cos(q.r*2))+1);ctx.restore()}
+    requestAnimationFrame(step)})(t1);
+}
+showNum(streak);requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.add('ready')));document.fonts&&document.fonts.ready.then(()=>showNum(streak));
+addEventListener('resize',()=>showNum(streak));
+</script>
+</body>
+</html>

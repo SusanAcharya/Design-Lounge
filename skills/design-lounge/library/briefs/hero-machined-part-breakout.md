@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 297 · "Machined part breakout hero" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 303 · "Machined part breakout hero" · designlounge.vercel.app -->
 
 # Machined part breakout hero
 

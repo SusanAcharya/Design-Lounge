@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 183 · "Case file horizontal scroll" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 186 · "Case file horizontal scroll" · designlounge.vercel.app -->
 
 # Case file horizontal scroll
 

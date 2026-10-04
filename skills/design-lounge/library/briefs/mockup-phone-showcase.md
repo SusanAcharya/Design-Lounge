@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 346 · "Phone showcase mockup" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 353 · "Phone showcase mockup" · designlounge.vercel.app -->
 
 # Phone showcase mockup
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 276 · "Isometric figure triptych" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 282 · "Isometric figure triptych" · designlounge.vercel.app -->
 
 # Isometric figure triptych
 

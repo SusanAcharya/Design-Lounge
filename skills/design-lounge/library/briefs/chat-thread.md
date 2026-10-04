@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 186 · "Chat thread" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 189 · "Chat thread" · designlounge.vercel.app -->
 
 # Chat thread
 

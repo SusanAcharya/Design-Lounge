@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 233 · "Engraved disc throw loop" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 237 · "Engraved disc throw loop" · designlounge.vercel.app -->
 
 # Engraved disc throw loop
 

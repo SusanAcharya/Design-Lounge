@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 193 · "Code snippet tabs" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 196 · "Code snippet tabs" · designlounge.vercel.app -->
 
 # Code snippet tabs
 

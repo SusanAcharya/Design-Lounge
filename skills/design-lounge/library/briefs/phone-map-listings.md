@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 301 · "Map with price pins and listing sheet" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 307 · "Map with price pins and listing sheet" · designlounge.vercel.app -->
 
 # Map with price pins and listing sheet
 

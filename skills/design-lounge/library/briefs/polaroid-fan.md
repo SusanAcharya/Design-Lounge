@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 353 · "Polaroid fan" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 360 · "Polaroid fan" · designlounge.vercel.app -->
 
 # Polaroid fan
 

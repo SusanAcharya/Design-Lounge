@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 231 · "Editorial staff profile card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 235 · "Editorial staff profile card" · designlounge.vercel.app -->
 
 # Editorial staff profile card
 

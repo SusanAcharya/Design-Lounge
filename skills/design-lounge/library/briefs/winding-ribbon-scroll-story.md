@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 467 · "Winding ribbon scroll story" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 477 · "Winding ribbon scroll story" · designlounge.vercel.app -->
 
 # Winding ribbon scroll story
 

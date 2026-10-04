@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 218 · "Digital business card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 222 · "Digital business card" · designlounge.vercel.app -->
 
 # Digital business card
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 369 · "PWA offline library" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 376 · "PWA offline library" · designlounge.vercel.app -->
 
 # PWA offline library
 

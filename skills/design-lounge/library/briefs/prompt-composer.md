@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 366 · "Prompt composer" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 373 · "Prompt composer" · designlounge.vercel.app -->
 
 # Prompt composer
 

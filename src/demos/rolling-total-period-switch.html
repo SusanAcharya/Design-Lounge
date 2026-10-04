@@ -1,0 +1,172 @@
+<!-- Design Lounge piece: rolling-total-period-switch · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lekha · Spending</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f4;--card:#0f3b3a;--card-2:#175150;--ink:#0e1a26;--ink-2:#3d4a57;--ink-3:#5f6b77;--line:#d6dce2;--white:#fbfcfd;
+  --lime:#c8f25a;--teal-ink:#d7ece9;--teal-3:#8fb8b4;--down:#1f7a52;
+  --sans:"Schibsted Grotesk",system-ui,sans-serif;--mono:"DM Mono",ui-monospace,monospace;
+  --spring:cubic-bezier(.34,1.56,.64,1);--soft:cubic-bezier(.3,1.3,.6,1);--out:cubic-bezier(.16,1,.3,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.4 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.app{height:100%;overflow:hidden;display:flex;flex-direction:column;padding:max(54px,env(safe-area-inset-top)) 20px 0}
+header{display:flex;justify-content:space-between;align-items:center;height:44px}
+.brand{font-weight:800;font-size:17px;letter-spacing:-.02em}
+.me{width:36px;height:36px;border-radius:50%;background:var(--card);color:var(--lime);display:grid;place-items:center;font:500 13px/1 var(--mono)}
+.label{margin:18px 0 0;font-size:13px;color:var(--ink-3);display:flex;gap:6px;align-items:center}
+.label b{color:var(--ink);font-weight:500}
+.total{display:flex;align-items:flex-end;margin-top:6px;height:60px;font-weight:800;font-size:56px;letter-spacing:-.045em;line-height:1}
+.total .cur{font-size:26px;font-weight:700;color:var(--ink-3);margin:0 8px 7px 0;letter-spacing:-.02em}
+.roll{display:flex;overflow:hidden;letter-spacing:0;font-variant-numeric:tabular-nums;height:1.08em;line-height:1.08em}
+.slot{position:relative;width:.57em;overflow:hidden;transition:width .45s var(--out),opacity .3s var(--std)}
+.slot.sep{width:.31em;overflow:visible}
+.slot.sep .strip span{text-align:left;transform:translateX(-.17em)}
+.slot.in{width:0;opacity:0}
+.strip{display:flex;flex-direction:column;transition:transform .7s var(--soft)}
+.strip span{height:1.08em;text-align:center}
+.meta{display:flex;gap:10px;align-items:center;margin-top:12px;font-size:13px}
+.delta{height:26px;padding:0 10px;border-radius:999px;background:#dcefe4;color:var(--down);font-weight:500;display:flex;align-items:center;gap:4px;transition:background .3s,color .3s}
+.delta.up{background:#f6e3d8;color:#9a3d16}
+.delta svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--spring)}
+.delta.up svg{transform:rotate(180deg)}
+.count{display:flex;align-items:baseline;gap:6px;color:var(--ink-3);font:400 13px/1 var(--mono)}
+.count .roll{font-size:13px;color:var(--ink);font-weight:500}
+.card{margin-top:18px;border-radius:24px;background:var(--card);color:var(--teal-ink);padding:18px 18px 14px}
+.card h2{margin:0;font-size:13px;font-weight:500;color:var(--teal-3);display:flex;justify-content:space-between}
+.bars{display:flex;align-items:flex-end;gap:8px;height:96px;margin-top:14px}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.bar i{display:block;width:100%;border-radius:8px 8px 4px 4px;background:var(--card-2);height:10%;transition:height .6s var(--soft),background .3s}
+.bar.hi i{background:var(--lime)}
+.bar small{font:400 10px/1 var(--mono);color:var(--teal-3)}
+.list{margin-top:16px;display:grid;transition:grid-template-rows .5s var(--out)}
+.list>div{overflow:hidden;min-height:0}
+.list h3{margin:0 0 4px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.list ul{list-style:none;margin:0;padding:0}
+.list li{display:flex;align-items:center;gap:12px;height:52px;border-bottom:1px solid var(--line);transition:opacity .3s var(--std),transform .4s var(--out)}
+.list li.off{opacity:0;transform:translateY(-6px)}
+.list li span:first-child{width:34px;height:34px;border-radius:10px;background:var(--white);border:1px solid var(--line);display:grid;place-items:center;font:500 12px/1 var(--mono);color:var(--ink-2);flex:none}
+.list li b{flex:1;font-weight:500;font-size:15px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list li small{font:400 12px/1 var(--mono);color:var(--ink-3);margin-right:8px}
+.list li em{font-style:normal;font-weight:700;font-variant-numeric:tabular-nums}
+.seg-wrap{margin-top:auto;padding:12px 0 max(34px,env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 30%)}
+.seg{position:relative;display:grid;grid-template-columns:repeat(5,1fr);height:52px;padding:4px;border-radius:999px;background:var(--ink)}
+.pill{position:absolute;top:4px;left:4px;bottom:4px;width:calc((100% - 8px)/5);transition:transform .5s var(--spring);pointer-events:none}
+.pill i{display:block;height:100%;border-radius:999px;background:var(--lime);box-shadow:0 4px 12px -4px rgba(200,242,90,.6)}
+.pill i.jelly{animation:jelly .5s var(--std)}
+@keyframes jelly{30%{transform:scaleX(var(--sx,1.25)) scaleY(.84)}65%{transform:scaleX(.96) scaleY(1.04)}}
+.opt{position:relative;z-index:1;border-radius:999px;font-size:13px;font-weight:500;color:#aeb8c2;transition:color .2s var(--std),transform .15s var(--std)}
+.opt:active{transform:scale(.94)}
+.opt[aria-checked="true"]{color:var(--ink)}
+.opt:focus-visible{outline-color:var(--lime);outline-offset:-2px}
+.app:not(.ready) *{transition:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  .slot,.strip,.bar i,.list,.list li,.pill,.delta svg{transition:none!important}
+  .pill i.jelly{animation:none}
+  .opt:active{transform:none}
+}
+@media (max-height:740px){.bars{height:70px}.list li{height:46px}.label{margin-top:8px}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header><span class="brand">Lekha</span><span class="me" aria-hidden="true">SA</span></header>
+  <p class="label">Spent <b id="when">this week</b></p>
+  <div class="total" role="img" id="total-wrap" aria-label="Rs 8,915"><span class="cur">Rs</span><span class="roll" id="total"></span></div>
+  <div class="meta">
+    <span class="delta" id="delta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg><span id="delta-t">12% less</span></span>
+    <span class="count"><span class="roll" id="count" aria-hidden="true"></span><span class="sr" id="count-sr">23</span><span>transactions</span></span>
+  </div>
+  <section class="card" aria-label="Spending by day">
+    <h2><span id="chart-t">Mon to Sun</span><span id="chart-avg">avg Rs 1,274</span></h2>
+    <div class="bars" id="bars"></div>
+  </section>
+  <section class="list" id="list" aria-label="Top places"><div><h3 style="margin-top:4px">Top places</h3><ul id="rows"></ul></div></section>
+  <div class="seg-wrap">
+    <div class="seg" role="radiogroup" aria-label="Period" id="seg"><span class="pill" id="pill" aria-hidden="true"><i id="jelly"></i></span></div>
+  </div>
+  <p class="sr" aria-live="polite" id="status"></p>
+</main>
+<script>
+const P=[
+  {k:'Day',when:'today',total:1240,count:4,delta:-8,ct:'6 am to 10 pm',avg:'avg Rs 155',labels:['6','9','12','3','6','9','10'],bars:[10,35,80,20,55,30,12],hi:2,rows:2},
+  {k:'Week',when:'this week',total:8915,count:23,delta:-12,ct:'Mon to Sun',avg:'avg Rs 1,274',labels:['M','T','W','T','F','S','S'],bars:[40,25,60,30,90,70,35],hi:4,rows:3},
+  {k:'Month',when:'in October',total:48260,count:126,delta:6,ct:'Weeks 1 to 5',avg:'avg Rs 9,652',labels:['W1','W2','W3','W4','W5','',''],bars:[60,85,50,70,40,0,0],hi:1,rows:4},
+  {k:'Quarter',when:'Aug to Oct',total:136480,count:371,delta:3,ct:'Aug, Sep, Oct',avg:'avg Rs 45,493',labels:['Aug','','Sep','','Oct','',''],bars:[70,0,95,0,60,0,0],hi:2,rows:5},
+  {k:'Year',when:'in 2026',total:562905,count:1488,delta:-4,ct:'Jan to Oct',avg:'avg Rs 56,290',labels:['J','M','M','J','S','O',''],bars:[50,65,45,80,60,40,0],hi:3,rows:5}
+];
+const ROWS=[['BK','Bhojan Kitchen','34','Rs 2,140'],['TM','Thamel Mart','12','Rs 1,860'],['SR','Sajha Rides','19','Rs 1,320'],['NP','Nanglo Bakery','9','Rs 940'],['KC','Kapan Chiya','15','Rs 610']];
+const seg=document.getElementById('seg'),pill=document.getElementById('pill'),jelly=document.getElementById('jelly');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur=1;
+seg.insertAdjacentHTML('beforeend',P.map((p,i)=>`<button class="opt" type="button" role="radio" aria-checked="${i===cur}" tabindex="${i===cur?0:-1}">${p.k}</button>`).join(''));
+const opts=[...seg.querySelectorAll('.opt')];
+document.getElementById('bars').innerHTML=Array.from({length:7},()=>'<div class="bar"><i></i><small></small></div>').join('');
+document.getElementById('rows').innerHTML=ROWS.map(r=>`<li><span aria-hidden="true">${r[0]}</span><b>${r[1]}</b><small>${r[2]}×</small><em>${r[3]}</em></li>`).join('');
+const DIG='0123456789';
+function roller(el){
+  return function set(str){
+    const chars=[...str].reverse();let slots=[...el.children].reverse();
+    chars.forEach((ch,i)=>{
+      const isD=DIG.includes(ch);let s=slots[i];
+      if(!s||s.dataset.t!==(isD?'d':'s')){
+        const n=document.createElement('span');n.className='slot in'+(isD?'':' sep');n.dataset.t=isD?'d':'s';
+        n.innerHTML=isD?`<span class="strip">${[...DIG].map(d=>`<span>${d}</span>`).join('')}</span>`:`<span class="strip"><span>${ch}</span></span>`;
+        if(s){s.replaceWith(n)}else{el.prepend(n)}slots[i]=n;s=n;
+        requestAnimationFrame(()=>requestAnimationFrame(()=>n.classList.remove('in')));
+      }
+      if(isD){s.dataset.v=ch;s.firstElementChild.style.transitionDelay=(reduce?0:i*35)+'ms';s.firstElementChild.style.transform=`translateY(${-Number(ch)*1.08}em)`}
+    });
+    slots.slice(chars.length).forEach(s=>{if(s.classList.contains('gone'))return;s.classList.add('in','gone');setTimeout(()=>s.remove(),reduce?0:460)});
+  };
+}
+const setTotal=roller(document.getElementById('total')),setCount=roller(document.getElementById('count'));
+const fmt=n=>n.toLocaleString('en-IN');
+function place(i,animate){
+  const w=(seg.clientWidth-8)/5;pill.style.transform=`translateX(${i*w}px)`;
+  if(animate&&!reduce){const d=Math.abs(i-cur);jelly.style.setProperty('--sx',(1+Math.min(.45,.12*d)).toFixed(2));jelly.classList.remove('jelly');void jelly.offsetWidth;jelly.classList.add('jelly')}
+}
+function render(i,first){
+  const p=P[i];
+  document.getElementById('when').textContent=p.when;
+  setTotal(fmt(p.total));setCount(fmt(p.count));document.getElementById('count-sr').textContent=fmt(p.count);
+  document.getElementById('total-wrap').setAttribute('aria-label','Rs '+fmt(p.total));
+  const d=document.getElementById('delta');d.classList.toggle('up',p.delta>0);document.getElementById('delta-t').textContent=Math.abs(p.delta)+'% '+(p.delta>0?'more':'less');
+  document.getElementById('chart-t').textContent=p.ct;document.getElementById('chart-avg').textContent=p.avg;
+  [...document.querySelectorAll('.bar')].forEach((b,j)=>{const v=p.bars[j];b.querySelector('i').style.height=(v?Math.max(8,v):0)+'%';b.querySelector('i').style.transitionDelay=(reduce?0:j*30)+'ms';b.querySelector('small').textContent=p.labels[j];b.classList.toggle('hi',j===p.hi);b.style.display=v||p.labels[j]?'':'none'});
+  const lis=[...document.querySelectorAll('#rows li')];
+  const h=lis[0].offsetHeight,head=document.querySelector('.list h3').offsetHeight+8;
+  document.getElementById('list').style.gridTemplateRows=(head+p.rows*h)+'px';
+  lis.forEach((li,j)=>{li.classList.toggle('off',j>=p.rows);li.style.transitionDelay=(reduce?0:Math.max(0,j-1)*40)+'ms';li.setAttribute('aria-hidden',j>=p.rows)});
+  if(!first)document.getElementById('status').textContent=`${p.k}: Rs ${fmt(p.total)} spent ${p.when}, ${p.count} transactions`;
+}
+function select(i,focus){
+  if(i===cur)return;place(i,true);cur=i;
+  opts.forEach((o,j)=>{o.setAttribute('aria-checked',j===i);o.tabIndex=j===i?0:-1});
+  if(focus)opts[i].focus();
+  try{navigator.vibrate&&navigator.vibrate(6)}catch(e){}
+  render(i);
+}
+opts.forEach((o,i)=>{
+  o.addEventListener('click',()=>select(i,false));
+  o.addEventListener('keydown',e=>{let n=null;
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')n=(i+1)%5;else if(e.key==='ArrowLeft'||e.key==='ArrowUp')n=(i+4)%5;else if(e.key==='Home')n=0;else if(e.key==='End')n=4;
+    if(n!==null){e.preventDefault();select(n,true)}});
+});
+render(cur,true);place(cur,false);
+setTimeout(()=>document.querySelector('.app').classList.add('ready'),120);
+document.fonts&&document.fonts.ready.then(()=>render(cur,true));
+addEventListener('resize',()=>place(cur,false));
+</script>
+</body>
+</html>

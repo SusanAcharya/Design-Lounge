@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 264 · "Hero with a live browser card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 268 · "Hero with a live browser card" · designlounge.vercel.app -->
 
 # Hero with a live browser card
 

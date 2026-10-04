@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 295 · "Logos grid case hover" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 301 · "Logos grid case hover" · designlounge.vercel.app -->
 
 # Logos grid case hover
 

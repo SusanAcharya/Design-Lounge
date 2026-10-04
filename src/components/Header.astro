@@ -55,8 +55,8 @@ const extra = [
   .wordmark { display: flex; align-items: baseline; gap: 10px; }
   .lamp { align-self: center; color: var(--accent); transition: transform var(--t-med) var(--ease); }
   .wordmark:hover .lamp { transform: rotate(-8deg); }
-  .wm { white-space: nowrap; font-family: var(--display); font-size: 22px; letter-spacing: -0.02em; font-variation-settings: "opsz" 24, "SOFT" 40; }
-  .wm i { font-style: italic; }
+  .wm { white-space: nowrap; font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: -0.03em; }
+  .wm i { font-style: normal; color: var(--ink-3); }
   .nav { display: flex; gap: 2px; }
   .nav a { padding: 8px 12px; border-radius: var(--r); font-size: 14px; color: var(--ink-2); transition: color var(--t-fast), background-color var(--t-fast); }
   .nav a:hover { color: var(--ink); background: var(--paper-2); }
@@ -65,8 +65,7 @@ const extra = [
   .tool { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; border-radius: var(--r); color: var(--ink-2); border: 1px solid transparent; transition: color var(--t-fast), border-color var(--t-fast), background-color var(--t-fast); }
   .tool:hover { color: var(--ink); background: var(--paper-2); }
   .tool svg { stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
-  .start { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; border-color: var(--line); }
-  .start { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .start { font-size: 13.5px; font-weight: 500; padding: 0 14px; background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .start:hover { background: var(--ink); color: var(--paper); opacity: .88; }
   .start[aria-current="page"] { color: var(--paper); border-color: var(--ink); }
   .search { border-color: var(--line); font-size: 13px; padding-right: 8px; }
@@ -83,7 +82,7 @@ const extra = [
     .search { padding: 0 8px; }
     .burger { display: inline-flex; }
     .mobile-nav:not([hidden]) { display: flex; flex-direction: column; padding: 8px var(--gutter) 16px; border-top: 1px solid var(--line); }
-    .mobile-nav a { padding: 12px 0; font-family: var(--display); font-size: 26px; letter-spacing: -0.02em; border-bottom: 1px solid var(--line); }
+    .mobile-nav a { padding: 12px 0; font-family: var(--display); font-size: 22px; font-weight: 550; letter-spacing: -0.025em; border-bottom: 1px solid var(--line); }
     .mobile-nav a:last-child { border-bottom: 0; }
     .mobile-nav a[aria-current="page"] { color: var(--accent); }
   }

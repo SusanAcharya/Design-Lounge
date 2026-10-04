@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 415 · "Spotlight search with preview" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 423 · "Spotlight search with preview" · designlounge.vercel.app -->
 
 # Spotlight search with preview
 

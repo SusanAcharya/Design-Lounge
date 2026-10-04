@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 279 · "Journal page" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 285 · "Journal page" · designlounge.vercel.app -->
 
 # Journal page
 

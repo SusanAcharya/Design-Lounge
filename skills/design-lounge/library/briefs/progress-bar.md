@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 365 · "Progress bar" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 372 · "Progress bar" · designlounge.vercel.app -->
 
 # Progress bar
 

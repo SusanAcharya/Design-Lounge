@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 402 · "Silk ribbon hero with live ticker" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 410 · "Silk ribbon hero with live ticker" · designlounge.vercel.app -->
 
 # Silk ribbon hero with live ticker
 

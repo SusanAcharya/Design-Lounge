@@ -1,0 +1,157 @@
+<!-- Design Lounge piece: app-icon-colour-wall · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Hueboard — the icon wall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0e10;--panel:#1a1a1d;--ink:#edeae3;--ink-2:#a8a49b;--line:#2a2a2e;--accent:#c8f169;--focus:#c8f169;
+  --display:"Syne",system-ui,sans-serif;--mono:"Azeret Mono",ui-monospace,monospace;
+  --tile:64px;--cell:100px;--expo:cubic-bezier(.16,1,.3,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:13px/1.5 var(--mono);overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:14px}
+.top{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;align-items:baseline;gap:18px;padding:18px 32px 40px;
+  background:linear-gradient(var(--bg) 40%,rgba(14,14,16,0));pointer-events:none}
+.top>*{pointer-events:auto}
+h1{margin:0;font:800 26px/1 var(--display);letter-spacing:-.02em}
+h1 span{color:var(--accent)}
+.top p{margin:0;color:var(--ink-2);font-size:12px}
+.wall{display:grid;grid-template-columns:repeat(auto-fill,var(--cell));justify-content:center;padding:76px 24px 130px;row-gap:4px}
+.cell{height:96px;display:grid;place-items:center;position:relative}
+.tile{width:var(--tile);height:var(--tile);position:relative;transition:transform .3s var(--expo),opacity .3s var(--std)}
+.tile svg{width:100%;height:100%;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+.wall:hover .tile{opacity:.5}
+.wall .tile:hover,.wall .tile:focus-visible{opacity:1;transform:translateY(-6px) scale(1.14);z-index:2}
+.tile[aria-pressed="true"]{opacity:1}
+.tile[aria-pressed="true"]::after{content:"";position:absolute;inset:-6px;border-radius:30%;border:2px solid var(--accent)}
+.name{position:absolute;top:calc(100% + 8px);left:50%;transform:translate(-50%,-3px);white-space:nowrap;font-size:11px;color:var(--ink);opacity:0;pointer-events:none;transition:opacity .15s,transform .2s var(--expo)}
+.tile:hover .name,.tile:focus-visible .name{opacity:1;transform:translate(-50%,0)}
+.ic .bg{fill:var(--b)}
+.ic .gl{fill:var(--g)}
+.ic .gl .o{opacity:.55}
+.ic .gl .s{fill:none;stroke:var(--g);stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.bar{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:6;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 16px;
+  background:rgba(26,26,29,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.5);max-width:calc(100vw - 24px)}
+.bar .lbl{color:var(--ink-2);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.seg{display:flex;gap:2px;background:#0e0e10;border-radius:12px;padding:3px}
+.seg button{height:34px;padding:0 14px;border-radius:9px;font-size:12px;color:var(--ink-2);white-space:nowrap;transition:background .15s,color .15s}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#141a06;font-weight:500}
+.pick{display:flex;align-items:center;gap:10px;min-width:190px;padding:0 6px 0 4px;border-left:1px solid var(--line);margin-left:2px}
+.pick svg{width:34px;height:34px;flex:none}
+.pick b{display:block;font:600 13px/1.2 var(--display)}
+.pick span{color:var(--ink-2);font-size:11px}
+.spec{position:fixed;top:66px;left:32px;right:32px;height:3px;border-radius:2px;z-index:5;opacity:0;transition:opacity .4s var(--std);
+  background:linear-gradient(90deg,hsl(0 80% 60%),hsl(45 90% 60%),hsl(100 70% 50%),hsl(170 70% 45%),hsl(220 80% 60%),hsl(275 70% 62%),hsl(330 80% 62%),#e8e6e0,#2c2c30)}
+[data-sort=hue] .spec{opacity:.9}
+@media (max-width:760px){
+  :root{--tile:52px;--cell:82px}
+  .top{padding:14px 16px 30px;flex-direction:column;gap:4px}
+  .wall{padding:84px 8px 170px}
+  .bar{flex-wrap:wrap;justify-content:center;padding:10px;bottom:14px}.bar .lbl{display:none}
+  .seg button{padding:0 9px;font-size:11px}
+  .pick{border-left:0;min-width:0}.spec{top:78px;left:16px;right:16px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}.wall .tile:hover{transform:none}}
+</style>
+</head>
+<body data-sort="shuffle">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="sq"><path d="M31 0H69C92 0 100 8 100 31V69C100 92 92 100 69 100H31C8 100 0 92 0 69V31C0 8 8 0 31 0Z"/></clipPath>
+    <linearGradient id="lit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></linearGradient>
+    <filter id="gs" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#000" flood-opacity=".28"/></filter>
+  </defs>
+</svg>
+<header class="top">
+  <h1>Hue<span>board</span></h1>
+  <p>96 app icons on one wall. Sort them the way your eye already does.</p>
+</header>
+<div class="spec" aria-hidden="true"></div>
+<main class="wall" id="wall" aria-label="Icon wall"></main>
+<div class="bar" role="group" aria-label="Wall controls">
+  <span class="lbl">Sort</span>
+  <div class="seg" id="sort">
+    <button type="button" data-s="shuffle" aria-pressed="true">Shuffled</button>
+    <button type="button" data-s="hue" aria-pressed="false">By hue</button>
+    <button type="button" data-s="light" aria-pressed="false">Light to dark</button>
+    <button type="button" data-s="kind" aria-pressed="false">By shape</button>
+  </div>
+  <div class="pick" id="pick" aria-live="polite"><span>Click an icon to pin it</span></div>
+</div>
+<script>
+const G=[
+['Ring','<circle class="s" style="stroke-width:10" cx="50" cy="50" r="20"/>'],
+['Pair','<circle cx="38" cy="50" r="14"/><circle class="o" cx="62" cy="50" r="14"/>'],
+['Peak','<path d="M50 24 77 72H23z"/>'],
+['Bars','<rect x="25" y="50" width="13" height="25" rx="6.5"/><rect x="43.5" y="35" width="13" height="40" rx="6.5"/><rect x="62" y="25" width="13" height="50" rx="6.5"/>'],
+['Arch','<path class="s" style="stroke-width:10" d="M28 66a22 22 0 0 1 44 0"/><circle cx="50" cy="66" r="6"/>'],
+['Cross','<path d="M43 24h14v19h19v14H57v19H43V57H24V43h19z"/>'],
+['Half','<path d="M50 25a25 25 0 0 1 0 50z"/><circle class="s" style="stroke-width:4" cx="50" cy="50" r="23"/>'],
+['Spark','<path d="M50 20c3 19 11 27 30 30-19 3-27 11-30 30-3-19-11-27-30-30 19-3 27-11 30-30z"/>'],
+['Drop','<path d="M50 20c15 19 23 31 23 41a23 23 0 0 1-46 0c0-10 8-22 23-41z"/>'],
+['Bolt','<path d="M55 18 30 56h18l-5 26 27-40H52z"/>'],
+['Leaf','<path d="M27 73C27 42 46 27 74 27c0 29-17 46-47 46z"/>'],
+['Gem','<rect x="31" y="31" width="38" height="38" rx="9" transform="rotate(45 50 50)"/><rect class="o" x="41" y="41" width="18" height="18" rx="4" transform="rotate(45 50 50)"/>']
+];
+const P=['Saffron','Brook','Copper','Lumen','Fable','Orbit','Moss','Tern','Quarry','Velvet','Cinder','Harbor','Pollen','Slate','Juniper','Ferro'];
+const S=['Post','Notes','Cast','Ledger','Pad','Trail','Deck','Loop','Kit','Room','Mile','Box','Shelf','Desk'];
+const SQ='M31 0H69C92 0 100 8 100 31V69C100 92 92 100 69 100H31C8 100 0 92 0 69V31C0 8 8 0 31 0Z';
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const hsl=(h,s,l)=>`hsl(${h|0} ${s|0}% ${l|0}%)`;
+function hex(h,s,l){s/=100;l/=100;const k=n=>(n+h/30)%12,a=s*Math.min(l,1-l),f=n=>Math.round(255*(l-a*Math.max(-1,Math.min(k(n)-3,9-k(n),1)))).toString(16).padStart(2,'0');return '#'+f(0)+f(8)+f(4)}
+const D=[];
+for(let i=0;i<96;i++){
+  const h=(i*137.508+rnd()*20)%360,s=50+rnd()*32,l=44+rnd()*16,g=(i*5+(rnd()*12|0))%12,r=rnd();
+  const kind=r<.64?'solid':r<.84?'white':'black';
+  const d={i,h,g,kind,n:P[(i*7)%P.length]+' '+S[(i*5+(i>>4))%S.length]};
+  if(kind==='solid'){d.b=hsl(h,s,l);d.gc='#fff';d.lum=l;d.hex=hex(h,s,l);if(l>56&&h>40&&h<190)d.gc='#1b1b1b'}
+  else if(kind==='white'){d.b='#f2f0ea';d.gc=hsl(h,s,l-4);d.lum=94;d.hex=hex(h,s,l-4)}
+  else{d.b='#161618';d.gc=hsl(h,s+5,l+10);d.lum=9;d.hex=hex(h,s+5,l+10)}
+  D.push(d);
+}
+const icon=d=>`<svg class="ic" viewBox="0 0 100 100" aria-hidden="true" style="--b:${d.b};--g:${d.gc}"><g clip-path="url(#sq)"><rect class="bg" width="100" height="100"/><rect width="100" height="100" fill="url(#lit)"/><g class="gl" filter="url(#gs)">${G[d.g][1]}</g><path d="${SQ}" fill="none" stroke="url(#rim)" stroke-width="1.6"/></g></svg>`;
+const wall=document.getElementById('wall');
+wall.innerHTML=D.map(d=>`<div class="cell" data-i="${d.i}"><button class="tile" type="button" aria-pressed="false" aria-label="${d.n}, ${G[d.g][0].toLowerCase()} on ${d.kind==='solid'?'colour':d.kind}">${icon(d)}<span class="name" aria-hidden="true">${d.n}</span></button></div>`).join('');
+const cells=new Map([...wall.children].map(c=>[+c.dataset.i,c]));
+const shuffled=[...D].sort((a,b)=>((a.i*53)%97)-((b.i*53)%97));
+const ORD={
+  shuffle:()=>shuffled,
+  hue:()=>[...D].sort((a,b)=>(a.kind==='solid'?0:a.kind==='white'?1:2)-(b.kind==='solid'?0:b.kind==='white'?1:2)||a.h-b.h),
+  light:()=>[...D].sort((a,b)=>b.lum-a.lum||a.h-b.h),
+  kind:()=>[...D].sort((a,b)=>a.g-b.g||a.h-b.h)
+};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+function sort(k){
+  const order=ORD[k]();
+  const first=new Map();cells.forEach((c,i)=>first.set(i,c.getBoundingClientRect()));
+  order.forEach(d=>wall.appendChild(cells.get(d.i)));
+  document.body.dataset.sort=k;
+  if(reduce.matches)return;
+  order.forEach((d,n)=>{
+    const c=cells.get(d.i),a=first.get(d.i),b=c.getBoundingClientRect();
+    const dx=a.left-b.left,dy=a.top-b.top;if(!dx&&!dy)return;
+    c.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:'none'}],{duration:720,delay:Math.min(n*4,300),easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'});
+  });
+}
+sort('shuffle');
+document.getElementById('sort').onclick=e=>{const b=e.target.closest('[data-s]');if(!b||b.getAttribute('aria-pressed')==='true')return;
+  document.querySelectorAll('[data-s]').forEach(x=>x.setAttribute('aria-pressed',x===b));sort(b.dataset.s)};
+const pick=document.getElementById('pick');
+wall.onclick=e=>{const t=e.target.closest('.tile');if(!t)return;const was=t.getAttribute('aria-pressed')==='true';
+  wall.querySelectorAll('.tile[aria-pressed="true"]').forEach(x=>x.setAttribute('aria-pressed','false'));
+  if(was){pick.innerHTML='<span>Click an icon to pin it</span>';return}
+  t.setAttribute('aria-pressed','true');const d=D[+t.parentElement.dataset.i];
+  pick.innerHTML=`${icon(d)}<div><b>${d.n}</b><span>${d.hex.toUpperCase()} · ${G[d.g][0]}</span></div>`};
+</script>
+</body>
+</html>

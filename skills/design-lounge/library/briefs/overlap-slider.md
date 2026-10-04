@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 321 · "Overlap slider" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 328 · "Overlap slider" · designlounge.vercel.app -->
 
 # Overlap slider
 

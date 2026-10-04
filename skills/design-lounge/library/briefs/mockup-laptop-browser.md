@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 282 · "Laptop browser mockup" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 288 · "Laptop browser mockup" · designlounge.vercel.app -->
 
 # Laptop browser mockup
 

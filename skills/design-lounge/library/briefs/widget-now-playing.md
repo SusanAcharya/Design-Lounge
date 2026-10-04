@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 459 · "Vinyl now-playing widget" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 469 · "Vinyl now-playing widget" · designlounge.vercel.app -->
 
 # Vinyl now-playing widget
 

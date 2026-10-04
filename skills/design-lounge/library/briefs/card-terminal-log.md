@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 293 · "Live terminal log card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 299 · "Live terminal log card" · designlounge.vercel.app -->
 
 # Live terminal log card
 

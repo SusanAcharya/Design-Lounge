@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 392 · "Selection bar" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 400 · "Selection bar" · designlounge.vercel.app -->
 
 # Selection bar
 

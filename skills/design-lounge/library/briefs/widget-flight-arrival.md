@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 244 · "Flight arrival split-flap widget" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 248 · "Flight arrival split-flap widget" · designlounge.vercel.app -->
 
 # Flight arrival split-flap widget
 

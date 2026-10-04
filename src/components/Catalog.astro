@@ -8,8 +8,9 @@ interface Props {
   all: Piece[];             // full catalogue (for numbering)
   lock?: { platform?: string; type?: string; style?: string }; // filters fixed by the page (hidden from UI)
   showFilters?: boolean;
+  sidebar?: boolean;        // full library navigation in a left rail instead of the Filter panel
 }
-const { pieces, all, lock = {}, showFilters = true } = Astro.props;
+const { pieces, all, lock = {}, showFilters = true, sidebar = false } = Astro.props;
 const nums = numberMap(all);
 const list = [...pieces].reverse(); // newest first
 const count = (k: 'platform' | 'type', v: string) => pieces.filter((p) => p.data[k] === v).length;
@@ -26,8 +27,75 @@ const SHORT: Partial<Record<Category, string>> = {
   feedback: 'Status', data: 'Data', pickers: 'Pickers', charts: 'Charts', widgets: 'Widgets', social: 'Social', mockups: 'Mockups', 'text-motion': 'Type', transitions: 'Moves',
   loaders: 'Waiting', micro: 'Micro', backgrounds: 'Ground', 'design-language': 'Kits',
 };
+const MOTION_OPTS = [{ v: 'none', label: 'Static' }, { v: 'subtle', label: 'Subtle' }, { v: 'rich', label: 'Rich' }];
+const motionCount = (m: string) => pieces.filter((p) => p.data.motion === m).length;
+const WAYS_IN = [
+  { href: '/start', label: 'Start from a product' },
+  { href: '/collections', label: 'Shelves' },
+  { href: '/kit', label: 'Compose a kit' },
+  { href: '/system', label: 'Type, themes, icons, motion' },
+  { href: '/sources', label: 'Sources' },
+  { href: '/random', label: 'Surprise me' },
+];
 ---
-<section class="catalog" data-catalog>
+<section class:list={['catalog', { 'has-side': sidebar }]} data-catalog>
+  {sidebar && (
+    <aside class="side" id="lib-side" aria-label="Library navigation" data-side>
+      <div class="side-inner">
+        <button type="button" class="side-all" data-all aria-pressed="true"><span>All pieces</span><span class="c num">{pieces.length}</span></button>
+        <details class="sgroup" open>
+          <summary>Type</summary>
+          <div class="sitems">
+            {Object.entries(TYPE_META).map(([k, v]) => count('type', k) > 0 && (
+              <button type="button" class="sitem" data-f="type" data-v={k} aria-pressed="false"><span>{v.label}</span><span class="c num">{count('type', k)}</span></button>
+            ))}
+          </div>
+        </details>
+        <details class="sgroup" open>
+          <summary>Platform</summary>
+          <div class="sitems">
+            {Object.entries(PLATFORM_META).map(([k, v]) => count('platform', k) > 0 && (
+              <button type="button" class="sitem" data-f="platform" data-v={k} aria-pressed="false"><span>{v.label}</span><span class="c num">{count('platform', k)}</span></button>
+            ))}
+          </div>
+        </details>
+        {CATEGORY_GROUPS.map((g) => {
+          const items = g.items.filter((c) => catCount(c) > 0);
+          return items.length > 0 && (
+            <details class="sgroup">
+              <summary>{g.label}</summary>
+              <div class="sitems">
+                {items.map((c) => (
+                  <button type="button" class="sitem" data-f="category" data-v={c} aria-pressed="false"><span>{CATEGORY_META[c].label}</span><span class="c num">{catCount(c)}</span></button>
+                ))}
+              </div>
+            </details>
+          );
+        })}
+        <details class="sgroup">
+          <summary>Style</summary>
+          <div class="sitems">
+            {Object.entries(STYLE_META).map(([k, v]) => styleCount(k) > 0 && (
+              <button type="button" class="sitem" data-f="style" data-v={k} aria-pressed="false"><span>{v.label}</span><span class="c num">{styleCount(k)}</span></button>
+            ))}
+          </div>
+        </details>
+        <details class="sgroup">
+          <summary>Motion</summary>
+          <div class="sitems">
+            {MOTION_OPTS.map((m) => motionCount(m.v) > 0 && (
+              <button type="button" class="sitem" data-f="motion" data-v={m.v} aria-pressed="false"><span>{m.label}</span><span class="c num">{motionCount(m.v)}</span></button>
+            ))}
+          </div>
+        </details>
+        <nav class="ways" aria-label="Other ways in">
+          <p class="ways-h">Other ways in</p>
+          {WAYS_IN.map((w) => <a href={w.href}>{w.label}</a>)}
+        </nav>
+      </div>
+    </aside>
+  )}
+  <div class="cat-main">
   {showFilters && (
     <div class="filters" data-filters>
       <div class="frow frow-top">
@@ -48,11 +116,14 @@ const SHORT: Partial<Record<Category, string>> = {
           <button type="button" class="vbtn" data-view="grid" aria-pressed="true" aria-label="Grid view"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></button>
           <button type="button" class="vbtn" data-view="list" aria-pressed="false" aria-label="List view"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
         </div>
-        <button type="button" class="chip filter-btn" data-more aria-expanded="false">Filter</button>
+        {sidebar
+          ? <button type="button" class="chip filter-btn side-toggle" data-side-toggle aria-controls="lib-side" aria-expanded="false">Filters</button>
+          : <button type="button" class="chip filter-btn" data-more aria-expanded="false">Filter</button>}
         <span class="status mono faint" data-status aria-live="polite"></span>
-        <button type="button" class="clear mono" data-clear hidden>Clear</button>
+        <button type="button" class="clear" data-clear hidden>Clear</button>
       </div>
       <div class="picks" data-picks hidden></div>
+      {!sidebar && (
       <div class="panel" data-panel hidden>
         <div class="cols">
           {!lock.type && (
@@ -106,19 +177,23 @@ const SHORT: Partial<Record<Category, string>> = {
           </div>
         )}
       </div>
+      )}
     </div>
   )}
   <div class="grid" data-grid>
     {list.map((p, i) => <PieceCard piece={p} n={nums.get(p.id) || '000'} index={i} />)}
   </div>
   <p class="none" data-none hidden>No pieces match those filters. <button type="button" class="linkish" data-clear>Clear them</button> and try again.</p>
+  </div>
 </section>
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-catalog]').forEach((root) => {
     const grid = root.querySelector<HTMLElement>('[data-grid]')!;
     const cards = [...grid.querySelectorAll<HTMLElement>('.card')];
-    const chips = [...root.querySelectorAll<HTMLButtonElement>('.chip[data-f]')];
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('button[data-f][data-v]')];
+    const allBtn = root.querySelector<HTMLButtonElement>('[data-all]');
+    const sideToggle = root.querySelector<HTMLButtonElement>('[data-side-toggle]');
     const q = root.querySelector<HTMLInputElement>('[data-q]');
     const sort = root.querySelector<HTMLSelectElement>('[data-sort]');
     const status = root.querySelector<HTMLElement>('[data-status]');
@@ -161,6 +236,8 @@ const SHORT: Partial<Record<Category, string>> = {
       const active = Object.values(state).some((s) => s.size) || words.length;
       if (status) status.textContent = `${shown} of ${cards.length}`;
       clears.forEach((b) => (b.hidden = !active));
+      allBtn?.setAttribute('aria-pressed', String(!active));
+      chips.forEach((ch) => { if (ch.getAttribute('aria-pressed') === 'true') ch.closest('details')?.setAttribute('open', ''); });
       if (none) none.hidden = shown > 0;
       grid.classList.toggle('list', view === 'list');
       views.forEach((v) => v.setAttribute('aria-pressed', String(v.dataset.view === view)));
@@ -183,7 +260,7 @@ const SHORT: Partial<Record<Category, string>> = {
         const b = document.createElement('button');
         b.type = 'button';
         b.className = 'chip on';
-        b.textContent = (ch.textContent || '').trim();
+        b.textContent = ((ch.classList.contains('sitem') ? ch.querySelector('span')?.textContent : ch.textContent) || '').trim();
         b.addEventListener('click', () => { state[ch.dataset.f!].delete(ch.dataset.v!); apply(); });
         picks.appendChild(b);
       }
@@ -191,7 +268,14 @@ const SHORT: Partial<Record<Category, string>> = {
     chips.forEach((ch) => ch.addEventListener('click', () => { const s = state[ch.dataset.f!]; s.has(ch.dataset.v!) ? s.delete(ch.dataset.v!) : s.add(ch.dataset.v!); apply(); }));
     q?.addEventListener('input', () => apply());
     sort?.addEventListener('change', () => apply());
-    clears.forEach((b) => b.addEventListener('click', () => { Object.values(state).forEach((s) => s.clear()); if (q) q.value = ''; apply(); }));
+    const clearAll = () => { Object.values(state).forEach((s) => s.clear()); if (q) q.value = ''; apply(); };
+    clears.forEach((b) => b.addEventListener('click', clearAll));
+    allBtn?.addEventListener('click', clearAll);
+    sideToggle?.addEventListener('click', () => {
+      const on = !root.classList.contains('side-open');
+      root.classList.toggle('side-open', on);
+      sideToggle.setAttribute('aria-expanded', String(on));
+    });
     views.forEach((v) => v.addEventListener('click', () => { view = v.dataset.view!; try { localStorage.setItem('dl-view', view); } catch {} apply(); }));
     const more = root.querySelector<HTMLButtonElement>('[data-more]');
     const panel = root.querySelector<HTMLElement>('[data-panel]');
@@ -230,7 +314,40 @@ const SHORT: Partial<Record<Category, string>> = {
   .vbtn svg { stroke: currentColor; fill: none; stroke-width: 1.75; }
   .vbtn[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
   .chip .cnt { opacity: .55; margin-left: 2px; }
-  .clear { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 3px; color: var(--ink-2); }
+  .clear { font-size: 13px; text-decoration: underline; text-underline-offset: 3px; color: var(--ink-2); }
+  .clear:hover { color: var(--ink); }
+
+  /* sidebar mode */
+  .has-side { display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: clamp(24px, 3vw, 48px); align-items: start; }
+  .cat-main { min-width: 0; }
+  .has-side .filters { position: sticky; top: var(--header-h); z-index: 3; padding-top: 14px; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .side-toggle { display: none; }
+  .side { position: sticky; top: calc(var(--header-h) + 14px); max-height: calc(100dvh - var(--header-h) - 28px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; padding-bottom: 24px; }
+  .side-inner { display: flex; flex-direction: column; gap: 4px; }
+  .side-all, .sitem { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; padding: 7px 10px; border-radius: var(--r); font-size: 14px; text-align: left; color: var(--ink-2); transition: background-color var(--t-fast), color var(--t-fast); }
+  .side-all { font-weight: 550; color: var(--ink); margin-bottom: 6px; }
+  .side-all:hover, .sitem:hover { background: var(--paper-2); color: var(--ink); }
+  .side-all[aria-pressed="true"], .sitem[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .side .c { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
+  .side [aria-pressed="true"] .c { color: color-mix(in srgb, var(--paper) 65%, transparent); }
+  .sgroup { border-top: 1px solid var(--line); padding: 6px 0; }
+  .sgroup summary { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; font-size: 12.5px; font-weight: 600; color: var(--ink); cursor: pointer; list-style: none; border-radius: var(--r); }
+  .sgroup summary::-webkit-details-marker { display: none; }
+  .sgroup summary::after { content: ""; width: 7px; height: 7px; border-right: 1.5px solid var(--ink-3); border-bottom: 1.5px solid var(--ink-3); transform: rotate(-45deg); transition: transform var(--t-med) var(--ease); }
+  .sgroup[open] summary::after { transform: rotate(45deg); }
+  .sgroup summary:hover { background: var(--paper-2); }
+  .sitems { display: flex; flex-direction: column; gap: 1px; padding-top: 2px; }
+  .ways { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .ways-h { padding: 0 10px 6px; font-size: 12.5px; font-weight: 600; }
+  .ways a { padding: 6px 10px; border-radius: var(--r); font-size: 14px; color: var(--ink-2); transition: background-color var(--t-fast), color var(--t-fast); }
+  .ways a:hover { background: var(--paper-2); color: var(--ink); }
+  @media (max-width: 960px) {
+    .has-side { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .side { display: none; position: static; max-height: none; padding: 8px 0 20px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+    .has-side.side-open .side { display: block; }
+    .side-toggle { display: inline-flex; }
+    .has-side .filters { position: static; backdrop-filter: none; }
+  }
   .none { padding: 48px 0; color: var(--ink-2); text-align: center; }
   .linkish { text-decoration: underline; text-underline-offset: 3px; }
   @media (max-width: 640px) { .frow .eyebrow { width: 100%; } .frow-top .eyebrow { width: auto; } .frow-top .q { flex-basis: 100%; max-width: none; } .fgroup select { width: 150px; } }

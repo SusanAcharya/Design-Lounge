@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 255 · "Graph paper background" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 259 · "Graph paper background" · designlounge.vercel.app -->
 
 # Graph paper background
 

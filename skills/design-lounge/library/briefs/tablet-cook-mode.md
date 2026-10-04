@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 431 · "Tablet recipe cook mode" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 440 · "Tablet recipe cook mode" · designlounge.vercel.app -->
 
 # Tablet recipe cook mode
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 457 · "Vertical label service columns" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 467 · "Vertical label service columns" · designlounge.vercel.app -->
 
 # Vertical label service columns
 

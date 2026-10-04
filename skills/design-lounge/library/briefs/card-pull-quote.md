@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 368 · "Pull-quote testimonial card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 375 · "Pull-quote testimonial card" · designlounge.vercel.app -->
 
 # Pull-quote testimonial card
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 202 · "Corner player" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 205 · "Corner player" · designlounge.vercel.app -->
 
 # Corner player
 

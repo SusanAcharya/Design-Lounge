@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 325 · "Paper contribution heatmap" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 332 · "Paper contribution heatmap" · designlounge.vercel.app -->
 
 # Paper contribution heatmap
 

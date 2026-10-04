@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 220 · "Docs shell with hatched gutters" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 224 · "Docs shell with hatched gutters" · designlounge.vercel.app -->
 
 # Docs shell with hatched gutters
 

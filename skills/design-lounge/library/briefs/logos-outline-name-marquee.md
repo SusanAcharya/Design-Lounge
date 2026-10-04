@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 319 · "Outline name marquee" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 326 · "Outline name marquee" · designlounge.vercel.app -->
 
 # Outline name marquee
 

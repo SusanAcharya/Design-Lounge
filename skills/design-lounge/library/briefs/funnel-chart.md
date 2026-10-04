@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 248 · "Funnel chart" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 252 · "Funnel chart" · designlounge.vercel.app -->
 
 # Funnel chart
 

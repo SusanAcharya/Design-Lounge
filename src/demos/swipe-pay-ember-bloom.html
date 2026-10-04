@@ -1,0 +1,178 @@
+<!-- Design Lounge piece: swipe-pay-ember-bloom · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kosh · Slide to pay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#12100e;--surface:#1c1916;--surface-2:#26221e;--line:#2f2a25;
+  --ink:#f4eee6;--ink-2:#b9afa3;--ink-3:#8a8076;
+  --ember:#ff7a2f;--ember-2:#ffb27a;--ember-deep:#5a2208;
+  --sans:"Manrope",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --track-h:64px;--knob:56px;
+  --spring:cubic-bezier(.34,1.56,.64,1);--out:cubic-bezier(.16,1,.3,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.4 var(--sans);overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ember-2);outline-offset:3px}
+.app{position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;padding:max(54px,env(safe-area-inset-top)) 20px max(34px,env(safe-area-inset-bottom))}
+.top{display:flex;justify-content:space-between;align-items:center;height:44px}
+.icon-btn{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:var(--ink-2)}
+.icon-btn svg,.k svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.payee{display:flex;flex-direction:column;align-items:center;margin-top:18px;gap:6px;transition:opacity .28s var(--std),transform .28s var(--std)}
+.avatar{width:52px;height:52px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-weight:700;font-size:17px;color:var(--ember-2);border:1px solid var(--line)}
+.payee h1{margin:6px 0 0;font-size:16px;font-weight:700;letter-spacing:-.01em}
+.handle{font:12px/1 var(--mono);color:var(--ink-3)}
+.amount{display:flex;align-items:baseline;justify-content:center;gap:6px;margin-top:22px;font-weight:800;letter-spacing:-.04em}
+.amount .cur{font-size:28px;color:var(--ink-2);font-weight:700}
+.amount output{font-size:64px;line-height:1;font-variant-numeric:tabular-nums}
+.note{margin:10px auto 0;font:11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.sheet{margin-top:auto;transition:opacity .28s var(--std),transform .32s var(--out)}
+.src{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-2);padding:0 4px 14px;border-bottom:1px solid var(--line)}
+.src b{color:var(--ink);font-weight:600}
+.src a{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;font-size:12px}
+.track{position:relative;height:var(--track-h);margin:18px 0 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);overflow:hidden;touch-action:none}
+.fill{position:absolute;inset:0 auto 0 0;width:calc(var(--knob) + 8px);border-radius:999px;background:linear-gradient(90deg,rgba(255,122,47,0) 0%,rgba(255,122,47,.35) 55%,var(--ember) 100%)}
+.label{position:absolute;inset:0;display:grid;place-items:center;font-weight:600;font-size:15px;letter-spacing:.01em;color:transparent;
+  background:linear-gradient(90deg,var(--ink-3) 0%,var(--ink-3) 40%,var(--ink) 50%,var(--ink-3) 60%,var(--ink-3) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;animation:sheen 2.6s linear infinite;pointer-events:none;padding-left:40px}
+@keyframes sheen{from{background-position:110% 0}to{background-position:-110% 0}}
+.knob{position:absolute;top:3px;left:3px;width:var(--knob);height:var(--knob);border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;
+  box-shadow:0 2px 0 rgba(0,0,0,.35),0 6px 14px rgba(0,0,0,.35);transition:transform .2s var(--spring),box-shadow .2s var(--std);cursor:grab;touch-action:none}
+.knob svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.knob.held{transform:scale(1.06);box-shadow:0 0 0 6px rgba(255,122,47,.18),0 10px 24px rgba(0,0,0,.5);cursor:grabbing}
+.knob.tick{animation:tick .16s var(--std)}
+@keyframes tick{50%{transform:scale(.94)}}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.k{height:52px;border-radius:14px;font:500 22px/1 var(--sans);color:var(--ink);display:grid;place-items:center;transition:background .12s var(--std),transform .12s var(--std)}
+.k:active{background:var(--surface);transform:scale(.94)}
+.k.muted{color:var(--ink-3)}
+/* success */
+.bloom{position:absolute;left:50%;top:50%;width:900px;height:900px;margin:-450px 0 0 -450px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,122,47,.55) 0%,rgba(255,122,47,.22) 28%,rgba(90,34,8,.25) 46%,rgba(18,16,14,0) 66%);transform:scale(0);opacity:0}
+.done{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;pointer-events:none;opacity:0}
+.ring{width:112px;height:112px}
+.ring circle{fill:none;stroke:var(--ember);stroke-width:4;stroke-linecap:round;stroke-dasharray:327;stroke-dashoffset:327;transform:rotate(-90deg);transform-origin:center}
+.ring path{fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60}
+.done h2{margin:6px 0 0;font-size:30px;font-weight:800;letter-spacing:-.03em}
+.done p{margin:0;font:12px/1.4 var(--mono);color:var(--ink-2);text-align:center}
+.again{margin-top:22px;height:48px;padding:0 26px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);font-weight:600;font-size:15px}
+.toast{position:absolute;left:50%;top:calc(max(54px,env(safe-area-inset-top)) + 5px);transform:translateX(-50%) scaleX(.3);opacity:0;height:34px;padding:0 14px;border-radius:999px;background:#000;color:var(--ink);display:flex;align-items:center;gap:8px;font:600 13px/1 var(--sans);white-space:nowrap}
+.toast i{width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 10px var(--ember)}
+.app.paid .payee,.app.paid .amount,.app.paid .note{opacity:.0;transform:translateY(-16px)}
+.app.paid .sheet{opacity:0;transform:translateY(60px);pointer-events:none}
+.app.paid .bloom{transform:scale(1);opacity:1;transition:transform .7s var(--out) .12s,opacity .5s var(--std) .12s}
+.app.paid .done{opacity:1;pointer-events:auto;transition:opacity .3s var(--std) .3s}
+.app.paid .ring circle{stroke-dashoffset:0;transition:stroke-dashoffset .5s var(--out) .36s}
+.app.paid .ring path{stroke-dashoffset:0;transition:stroke-dashoffset .26s var(--out) .82s}
+.app.paid .toast{opacity:1;transform:translateX(-50%) scaleX(1);transition:transform .45s var(--spring) .5s,opacity .2s var(--std) .5s}
+.amount,.note{transition:opacity .28s var(--std),transform .28s var(--std)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  .label{animation:none;color:var(--ink-2);background:none}
+  .knob,.knob.held{transition:none;transform:none}
+  .knob.tick{animation:none}
+  .app.paid .bloom{transform:scale(1);transition:opacity .2s linear}
+  .bloom{transform:scale(1)}
+  .app.paid .ring circle,.app.paid .ring path{transition:none}
+  .app.paid .toast{transform:translateX(-50%);transition:opacity .2s linear}
+  .payee,.amount,.note,.sheet,.app.paid .done{transition:opacity .15s linear}
+}
+@media (max-height:720px){.k{height:44px}.amount output{font-size:52px}.payee{margin-top:6px}}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <div class="toast" aria-hidden="true"><i></i><span>Paid Rs <span data-amt>1,480</span></span></div>
+  <div class="bloom" aria-hidden="true"></div>
+  <div class="top">
+    <button class="icon-btn" type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <button class="icon-btn" type="button" aria-label="More options"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button>
+  </div>
+  <section class="payee" aria-label="Payee">
+    <div class="avatar" aria-hidden="true">CG</div>
+    <h1>Chiya Ghar, Thamel</h1>
+    <span class="handle">chiyaghar@kosh</span>
+  </section>
+  <div class="amount"><span class="cur">Rs</span><output id="amt" aria-live="polite" aria-label="Amount">1,480</output></div>
+  <p class="note">Two masala, one sel roti</p>
+
+  <section class="sheet" aria-label="Pay">
+    <div class="src"><span>From <b>Kosh Wallet ·· 4410</b></span><a href="#" onclick="return false">Check balance</a></div>
+    <div class="track" id="track">
+      <div class="fill" id="fill"></div>
+      <span class="label" id="label">Slide to pay</span>
+      <div class="knob" id="knob" role="slider" tabindex="0" aria-label="Slide to pay" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Not paid. Press Enter or slide right to pay.">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </div>
+    </div>
+    <div class="keys" id="keys" aria-label="Amount keypad">
+      <button class="k" type="button">1</button><button class="k" type="button">2</button><button class="k" type="button">3</button>
+      <button class="k" type="button">4</button><button class="k" type="button">5</button><button class="k" type="button">6</button>
+      <button class="k" type="button">7</button><button class="k" type="button">8</button><button class="k" type="button">9</button>
+      <button class="k muted" type="button" data-k="00">00</button><button class="k" type="button">0</button>
+      <button class="k muted" type="button" data-k="del" aria-label="Delete digit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11v12H9l-5-6z"/><path d="m12 10 4 4M16 10l-4 4"/></svg></button>
+    </div>
+  </section>
+
+  <section class="done" aria-live="polite">
+    <svg class="ring" viewBox="0 0 112 112" aria-hidden="true"><circle cx="56" cy="56" r="52"/><path d="M38 57l12 12 24-26"/></svg>
+    <h2>Rs <span data-amt>1,480</span> paid</h2>
+    <p>to Chiya Ghar, Thamel<br>Ref KS-20961 · 09:46</p>
+    <button class="again" type="button" id="again" tabindex="-1">Done</button>
+  </section>
+</main>
+<script>
+const app=document.getElementById('app'),track=document.getElementById('track'),knob=document.getElementById('knob'),fill=document.getElementById('fill'),label=document.getElementById('label'),amt=document.getElementById('amt'),again=document.getElementById('again');
+let digits='1480',x=0,max=0,start=0,base=0,drag=false,lastStep=0,paid=false;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt=s=>Number(s||0).toLocaleString('en-IN');
+function showAmt(){amt.textContent=fmt(digits);document.querySelectorAll('[data-amt]').forEach(n=>n.textContent=fmt(digits));knob.setAttribute('aria-label','Slide to pay Rs '+fmt(digits))}
+function measure(){max=track.clientWidth-knob.offsetWidth-6}
+function set(v,anim){
+  x=Math.max(0,Math.min(max,v));const p=max?x/max:0;
+  const t=anim?(reduce?'none':'transform .42s var(--spring), width .42s var(--spring)'):'none';
+  knob.style.transition=anim?(reduce?'none':'transform .42s var(--spring), box-shadow .2s'):'transform .2s var(--spring), box-shadow .2s';
+  knob.style.transform='translateX('+x+'px)'+(drag&&!reduce?' scale(1.06)':'');
+  fill.style.transition=t;fill.style.width=(x+knob.offsetWidth+8)+'px';
+  label.style.opacity=Math.max(0,1-p*1.7);
+  knob.setAttribute('aria-valuenow',Math.round(p*100));
+  const step=Math.floor(p*4);
+  if(drag&&step>lastStep&&step<4){knob.classList.remove('tick');void knob.offsetWidth;knob.classList.add('tick');try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}}
+  lastStep=step;
+}
+function pay(){
+  if(paid||digits==='0'||!digits)return;paid=true;drag=false;knob.classList.remove('held');set(max,true);
+  setTimeout(()=>{app.classList.add('paid');knob.setAttribute('aria-valuetext','Paid');again.tabIndex=0;setTimeout(()=>again.focus({preventScroll:true}),reduce?50:900)},reduce?0:200);
+}
+function reset(){
+  paid=false;app.classList.remove('paid');again.tabIndex=-1;lastStep=0;set(0,true);knob.setAttribute('aria-valuetext','Not paid. Press Enter or slide right to pay.');knob.focus({preventScroll:true});
+}
+knob.addEventListener('pointerdown',e=>{if(paid)return;measure();drag=true;start=e.clientX;base=x;knob.setPointerCapture(e.pointerId);knob.classList.add('held');set(x)});
+knob.addEventListener('pointermove',e=>{if(drag)set(base+e.clientX-start)});
+const up=()=>{if(!drag)return;drag=false;knob.classList.remove('held');if(x/max>.86)pay();else{lastStep=0;set(0,true)}};
+knob.addEventListener('pointerup',up);knob.addEventListener('pointercancel',up);
+knob.addEventListener('keydown',e=>{
+  if(paid)return;measure();
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();pay()}
+  else if(e.key==='ArrowRight'||e.key==='ArrowUp'){e.preventDefault();set(x+max*.25,true);if(x>=max-1)pay()}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowDown'||e.key==='Home'){e.preventDefault();set(e.key==='Home'?0:x-max*.25,true)}
+  else if(e.key==='End'){e.preventDefault();pay()}
+});
+document.getElementById('keys').addEventListener('click',e=>{
+  const b=e.target.closest('.k');if(!b||paid)return;const k=b.dataset.k||b.textContent.trim();
+  if(k==='del')digits=digits.slice(0,-1)||'0';
+  else{if(digits==='0')digits='';digits=(digits+k).slice(0,6).replace(/^0+(?=\d)/,'')||'0'}
+  showAmt();
+});
+again.addEventListener('click',reset);
+addEventListener('resize',()=>{measure();set(paid?max:0)});
+measure();showAmt();
+</script>
+</body>
+</html>

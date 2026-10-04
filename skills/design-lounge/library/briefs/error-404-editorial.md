@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 228 · "Editorial 404 with search" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 232 · "Editorial 404 with search" · designlounge.vercel.app -->
 
 # Editorial 404 with search
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 429 · "Tablet kiosk check-in" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 438 · "Tablet kiosk check-in" · designlounge.vercel.app -->
 
 # Tablet kiosk check-in
 

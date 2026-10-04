@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 172 · "Automation builder with live preview" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 175 · "Automation builder with live preview" · designlounge.vercel.app -->
 
 # Automation builder with live preview
 

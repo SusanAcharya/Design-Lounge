@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 185 · "Chaptered cinema hero" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 188 · "Chaptered cinema hero" · designlounge.vercel.app -->
 
 # Chaptered cinema hero
 

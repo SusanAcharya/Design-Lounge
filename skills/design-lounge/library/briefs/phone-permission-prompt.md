@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 339 · "Phone permission prompt" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 346 · "Phone permission prompt" · designlounge.vercel.app -->
 
 # Phone permission prompt
 

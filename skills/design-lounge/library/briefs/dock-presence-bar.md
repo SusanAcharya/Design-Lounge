@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 358 · "Presence dock with follow mode" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 365 · "Presence dock with follow mode" · designlounge.vercel.app -->
 
 # Presence dock with follow mode
 

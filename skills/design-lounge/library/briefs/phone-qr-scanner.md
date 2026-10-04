@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 343 · "Phone QR ticket scanner" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 350 · "Phone QR ticket scanner" · designlounge.vercel.app -->
 
 # Phone QR ticket scanner
 

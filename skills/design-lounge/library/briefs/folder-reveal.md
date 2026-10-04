@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 246 · "Folder reveal" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 250 · "Folder reveal" · designlounge.vercel.app -->
 
 # Folder reveal
 

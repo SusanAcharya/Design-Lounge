@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 385 · "Scroll split" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 393 · "Scroll split" · designlounge.vercel.app -->
 
 # Scroll split
 

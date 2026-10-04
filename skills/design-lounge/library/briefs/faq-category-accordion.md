@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 238 · "FAQ category accordion" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 242 · "FAQ category accordion" · designlounge.vercel.app -->
 
 # FAQ category accordion
 

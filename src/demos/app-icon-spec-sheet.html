@@ -1,0 +1,205 @@
+<!-- Design Lounge piece: app-icon-spec-sheet · platform: web · 1280x800 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Kitefield — app icon spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e7e8e3;--panel:#f5f5f1;--ink:#121417;--ink-2:#454950;--ink-3:#5f646b;--line:#d3d5ce;
+  --key:#ff2e88;--accent:#ff6b4a;--focus:#121417;
+  --sans:"Manrope",system-ui,sans-serif;--mono:"Martian Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:6px}
+.bar{display:flex;align-items:center;gap:20px;height:60px;padding:0 32px;border-bottom:1px solid var(--line)}
+.crumb{display:flex;gap:8px;align-items:center;font-weight:700;font-size:15px;white-space:nowrap}
+.crumb span{color:var(--ink-3);font-weight:500}
+.ver{font:500 11px var(--mono);background:var(--ink);color:var(--panel);padding:3px 8px;border-radius:6px}
+.tools{margin-left:auto;display:flex;gap:14px;align-items:center}
+.sw{display:flex;align-items:center;gap:10px;font-weight:600;font-size:13px}
+.track{width:38px;height:22px;border-radius:999px;background:#c9cbc4;position:relative;transition:background .2s var(--std)}
+.track::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .25s var(--ease)}
+.sw[aria-checked="true"] .track{background:var(--key)}
+.sw[aria-checked="true"] .track::after{transform:translateX(16px)}
+.seg{display:flex;background:#dcded7;border-radius:9px;padding:3px}
+.seg button{height:30px;padding:0 12px;border-radius:7px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.export{height:34px;padding:0 14px;border-radius:9px;background:var(--ink);color:var(--panel);font-weight:700;font-size:13px}
+main{display:grid;grid-template-columns:440px 1fr;gap:28px;padding:24px 32px 32px;max-width:1280px;margin:0 auto}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px}
+h2{margin:0 0 14px;font:500 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.stage{padding:20px 20px 18px}
+.big{position:relative;width:100%;aspect-ratio:1;max-height:380px;margin:0 auto;max-width:380px;display:grid;place-items:center;border-radius:12px;
+  background:radial-gradient(circle at 50% 40%,#fff,#ecede8 70%)}
+.big .art{width:78%;height:78%;position:relative}
+.big .art>svg{width:100%;height:100%;display:block;filter:drop-shadow(0 24px 28px rgba(18,20,23,.2)) drop-shadow(0 3px 4px rgba(18,20,23,.12))}
+.keys{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity .2s}
+.keys *{fill:none;stroke:var(--key);stroke-width:1;vector-effect:non-scaling-stroke}
+.keys .dash{stroke-dasharray:4 4}
+.on .keys{opacity:1}
+.on .keys .k{stroke-dasharray:420;stroke-dashoffset:420;animation:draw .7s var(--ease) forwards;animation-delay:calc(var(--d)*45ms)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.cap{display:flex;justify-content:space-between;margin-top:12px;font:400 11px var(--mono);color:var(--ink-3)}
+.files{margin:14px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.files li{display:grid;grid-template-columns:1.3fr .9fr 1.2fr;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font:400 11.5px var(--mono);color:var(--ink-2)}
+.files li span:last-child{text-align:right}
+.files b{font-weight:500;color:var(--ink)}
+.right{display:flex;flex-direction:column;gap:20px;min-width:0}
+.sizes{padding:20px 24px 18px}
+.row{display:flex;align-items:flex-end;gap:36px;flex-wrap:wrap}
+.sz{display:flex;flex-direction:column;align-items:center;gap:10px}
+.sz svg{display:block;filter:drop-shadow(0 6px 10px rgba(18,20,23,.16))}
+.sz b{font:500 12px var(--mono)}
+.sz span{font-size:12px;color:var(--ink-3);text-align:center;line-height:1.3}
+.homes{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.home{border-radius:18px;padding:22px 20px 18px;position:relative;overflow:hidden;border:1px solid var(--line)}
+.home h2{margin-bottom:18px}
+.home.light{background:linear-gradient(160deg,#dbe7ef,#f3ede2)}
+.home.dark{background:linear-gradient(160deg,#25313c,#0f1317);border-color:#0f1317}
+.home.dark h2{color:#a9b0b8}
+.apps{display:grid;grid-template-columns:repeat(4,60px);justify-content:space-between}
+.app{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#1b1e22}
+.dark .app{color:#eef1f4}
+.app svg{width:60px;height:60px;display:block;filter:drop-shadow(0 3px 5px rgba(0,0,0,.18))}
+.note{margin:14px 0 0;font-size:12px;color:var(--ink-3)}
+.dark .note{color:#9aa2ab}
+.k-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--ink-3)}
+.k-legend i{display:inline-block;width:14px;height:0;border-top:1px solid var(--key);vertical-align:middle;margin-right:6px}
+.k-legend .d i{border-top-style:dashed}
+.checks{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}
+.checks li{position:relative;padding-left:26px;display:flex;flex-direction:column;font-size:13px;color:var(--ink-3)}
+.checks li::before{content:"";position:absolute;left:0;top:2px;width:16px;height:16px;border-radius:50%;background:var(--ink)}
+.checks li::after{content:"";position:absolute;left:5px;top:6px;width:6px;height:3px;border:solid var(--panel);border-width:0 0 2px 2px;transform:rotate(-45deg)}
+.checks b{color:var(--ink);font-weight:700}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:1100px){main{grid-template-columns:1fr}.stage{max-width:520px}}
+@media (max-width:760px){
+  .checks{grid-template-columns:1fr}
+  .files li{font-size:9.5px;grid-template-columns:1.2fr .9fr 1.3fr}.cap{flex-direction:column;gap:2px}
+  .bar{flex-wrap:wrap;height:auto;padding:12px 16px;gap:10px}.tools{margin-left:0;flex-wrap:wrap}
+  main{padding:16px}.homes{grid-template-columns:1fr}.row{gap:20px}
+  .sz.s180 svg{width:120px;height:120px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.on .keys .k{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="sq"><path d="M31 0H69C92 0 100 8 100 31V69C100 92 92 100 69 100H31C8 100 0 92 0 69V31C0 8 8 0 31 0Z"/></clipPath>
+    <linearGradient id="skyL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9edbff"/><stop offset="1" stop-color="#2f7fd6"/></linearGradient>
+    <linearGradient id="skyD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22303e"/><stop offset="1" stop-color="#0b1016"/></linearGradient>
+    <linearGradient id="lit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>
+    <filter id="gs" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="2.4" stdDeviation="2" flood-color="#06223f" flood-opacity=".32"/></filter>
+    <g id="kite">
+      <g filter="url(#gs)" transform="rotate(-14 50 46)">
+        <path d="M50 66c-5 7 6 11 1 18s-9 7-6 14" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" opacity=".9"/>
+        <path d="M47 75l-6-2 3 6zM50 88l6 1-4 5z" fill="#ffd166"/>
+        <path d="M50 15 28 39h22z" fill="#fff6e6"/><path d="M50 15 72 39H50z" fill="#ff8a66"/>
+        <path d="M28 39 50 67V39z" fill="#f0dcc0"/><path d="M72 39 50 67V39z" fill="#e5533a"/>
+        <path d="M50 15v52M28 39h44" stroke="#7a2b1d" stroke-opacity=".35" stroke-width="1"/>
+      </g>
+    </g>
+  </defs>
+</svg>
+<header class="bar">
+  <div class="crumb">Kitefield <span>/ App icon</span> <em class="ver">v3.2</em></div>
+  <div class="tools">
+    <button class="sw" type="button" role="switch" aria-checked="false" id="grid"><span class="track" aria-hidden="true"></span>Keylines <span class="sr">(press G)</span></button>
+    <div class="seg" role="group" aria-label="Mask">
+      <button type="button" data-mask="sq" aria-pressed="true">Squircle</button>
+      <button type="button" data-mask="bleed" aria-pressed="false">Full bleed</button>
+    </div>
+    <button class="export" type="button" id="exp">Export 5 sizes</button>
+  </div>
+</header>
+<main>
+  <section class="card stage" aria-labelledby="h-master">
+    <h2 id="h-master">Master · 1024 × 1024</h2>
+    <div class="big" id="big">
+      <div class="art" id="art"></div>
+    </div>
+    <div class="cap"><span id="capL">Shown at 29% · OS applies the mask</span><span>sRGB · no alpha</span></div>
+    <div class="k-legend" aria-hidden="true"><span><i></i>Circles 88 / 50 / 26</span><span><i></i>Square 74 · Rects 62×80</span><span class="d"><i></i>Safe zone 80</span></div>
+    <h2 id="h-files" style="margin:20px 0 0">Export set</h2>
+    <ul class="files" id="files" aria-labelledby="h-files"></ul>
+  </section>
+  <div class="right">
+    <section class="card sizes" aria-labelledby="h-sizes">
+      <h2 id="h-sizes">Real sizes · 1 px = 1 px</h2>
+      <div class="row" id="row"></div>
+    </section>
+    <div class="homes">
+      <section class="home light" aria-labelledby="h-l"><h2 id="h-l">Home screen · light</h2><div class="apps" id="appsL"></div><p class="note">Reads first in a row of four at 60 px.</p></section>
+      <section class="home dark" aria-labelledby="h-d"><h2 id="h-d">Home screen · dark</h2><div class="apps" id="appsD"></div><p class="note">Dark variant: night plate, kite keeps its colour.</p></section>
+    </div>
+    <section class="card sizes" aria-labelledby="h-checks">
+      <h2 id="h-checks">Review checks</h2>
+      <ul class="checks">
+        <li><b>One idea</b><span>A kite on open sky. No second object.</span></li>
+        <li><b>No words</b><span>No name, no letters in the artwork.</span></li>
+        <li><b>Light from above</b><span>Upper facets pale, lower facets deep.</span></li>
+        <li><b>Holds at 29 px</b><span>Two colours and a diamond still read.</span></li>
+      </ul>
+    </section>
+  </div>
+</main>
+<p class="sr" id="live" aria-live="polite"></p>
+<script>
+const SQ='M31 0H69C92 0 100 8 100 31V69C100 92 92 100 69 100H31C8 100 0 92 0 69V31C0 8 8 0 31 0Z';
+let mask='sq',grid=false;
+function kite(px,dark,m){
+  const clip=m==='bleed'?'':' clip-path="url(#sq)"';
+  return `<svg viewBox="0 0 100 100" width="${px}" height="${px}" role="img" aria-label="Kitefield icon${dark?', dark':''} at ${px} pixels"><g${clip}><rect width="100" height="100" fill="url(#${dark?'skyD':'skyL'})"/>${dark?'':'<circle cx="80" cy="18" r="22" fill="#fff" opacity=".18"/>'}<rect width="100" height="100" fill="url(#lit)"/><use href="#kite"/>${m==='bleed'?`<path d="${SQ}" fill="none" stroke="#121417" stroke-width=".5" stroke-dasharray="2 2"/>`:`<path d="${SQ}" fill="none" stroke="url(#rim)" stroke-width="1.4"/>`}</g></svg>`;
+}
+const N={
+ Parcel:['#c89b6d','<path d="M28 38 50 28l22 10v26L50 74 28 64z" fill="currentColor"/><path d="M28 38l22 10 22-10M50 48v26" stroke="var(--p)" stroke-width="3" fill="none"/>'],
+ Tram:['#5b6b7a','<rect x="32" y="22" width="36" height="46" rx="10" fill="currentColor"/><rect x="38" y="30" width="24" height="14" rx="3" fill="var(--p)"/><circle cx="41" cy="58" r="3" fill="var(--p)"/><circle cx="59" cy="58" r="3" fill="var(--p)"/><path d="M41 68l-6 9M59 68l6 9" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>'],
+ Lark:['#7a8f4e','<path d="M24 62c10-22 34-30 52-26-8 4-12 10-14 18-6 14-26 16-38 8z" fill="currentColor"/><circle cx="64" cy="43" r="2.6" fill="var(--p)"/>']
+};
+function plain(name,dark){
+  const [c,g]=N[name];
+  const plate=dark?'#1d2228':c,fg=dark?c:'#fff',p=dark?'#1d2228':c;
+  return `<svg viewBox="0 0 100 100" aria-hidden="true" style="color:${fg};--p:${p}"><g clip-path="url(#sq)"><rect width="100" height="100" fill="${plate}"/><rect width="100" height="100" fill="url(#lit)"/>${g}<path d="${SQ}" fill="none" stroke="url(#rim)" stroke-width="1.4"/></g></svg>`;
+}
+const SIZES=[[180,'Home @3x','60 pt'],[120,'Home @2x','Spotlight @3x'],[60,'Notification @3x','20 pt'],[29,'Settings @1x','29 pt']];
+const KEYS=`<svg class="keys" viewBox="0 0 100 100" aria-hidden="true">
+<rect class="k" style="--d:0" x="0" y="0" width="100" height="100"/>
+<path class="k" style="--d:1" d="M0 0 100 100M100 0 0 100M50 0v100M0 50h100"/>
+<circle class="k" style="--d:2" cx="50" cy="50" r="44"/><circle class="k" style="--d:3" cx="50" cy="50" r="25"/><circle class="k" style="--d:4" cx="50" cy="50" r="13"/>
+<rect class="k" style="--d:5" x="13" y="13" width="74" height="74"/>
+<rect class="k" style="--d:6" x="19" y="10" width="62" height="80"/><rect class="k" style="--d:7" x="10" y="19" width="80" height="62"/>
+<rect class="dash" x="10" y="10" width="80" height="80" rx="4"/></svg>`;
+function draw(){
+  document.getElementById('art').innerHTML=kite(1024,false,mask)+KEYS;
+  document.getElementById('art').querySelector('svg').removeAttribute('width');
+  document.getElementById('art').querySelector('svg').removeAttribute('height');
+  document.getElementById('row').innerHTML=SIZES.map(([s,a,b])=>`<div class="sz s${s}">${kite(s,false,'sq')}<b>${s}</b><span>${a}<br>${b}</span></div>`).join('');
+  const apps=d=>['Parcel','Kitefield','Tram','Lark'].map(n=>`<div class="app${n==='Kitefield'?' me':''}">${n==='Kitefield'?kite(60,d,'sq'):plain(n,d)}<span>${n}</span></div>`).join('');
+  document.getElementById('appsL').innerHTML=apps(false);
+  document.getElementById('appsD').innerHTML=apps(true);
+  const pct=Math.round(document.getElementById('art').clientWidth/1024*100);
+  document.getElementById('capL').textContent=mask==='sq'?`Shown at ${pct}% · OS applies the mask`:'Deliver the square · dash = mask';
+}
+addEventListener('resize',()=>{const pct=Math.round(document.getElementById('art').clientWidth/1024*100);if(mask==='sq')document.getElementById('capL').textContent=`Shown at ${pct}% · OS applies the mask`});
+document.getElementById('files').innerHTML=[['icon-1024.png','1024','App Store'],['icon-180.png','180','iPhone home @3x'],['icon-120.png','120','iPhone home @2x'],['icon-60.png','60','Notification @3x'],['icon-29.png','29','Settings @1x']].map(([f,s,u])=>`<li><b>${f}</b><span>${s} × ${s}</span><span>${u}</span></li>`).join('');
+const gridBtn=document.getElementById('grid'),live=document.getElementById('live');
+function setGrid(v){grid=v;gridBtn.setAttribute('aria-checked',v);document.getElementById('big').classList.toggle('on',v);if(v){const k=document.querySelectorAll('.keys .k');k.forEach(e=>{e.style.animation='none';e.offsetWidth;e.style.animation=''})}live.textContent=v?'Keylines shown':'Keylines hidden'}
+gridBtn.onclick=()=>setGrid(!grid);
+document.addEventListener('keydown',e=>{if((e.key==='g'||e.key==='G')&&!e.metaKey&&!e.ctrlKey)setGrid(!grid)});
+document.querySelector('.seg').onclick=e=>{const b=e.target.closest('[data-mask]');if(!b)return;mask=b.dataset.mask;document.querySelectorAll('[data-mask]').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();if(grid)document.getElementById('big').classList.add('on');live.textContent=mask==='sq'?'Squircle mask':'Full bleed artwork'};
+const exp=document.getElementById('exp');
+exp.onclick=()=>{exp.textContent='5 files ready';live.textContent='Export set ready: five PNG files';setTimeout(()=>exp.textContent='Export 5 sizes',1800)};
+draw();
+</script>
+</body>
+</html>

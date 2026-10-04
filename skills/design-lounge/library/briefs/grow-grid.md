@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 258 · "Grow grid" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 262 · "Grow grid" · designlounge.vercel.app -->
 
 # Grow grid
 

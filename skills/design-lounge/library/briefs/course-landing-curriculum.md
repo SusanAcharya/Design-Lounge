@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 203 · "Course landing with curriculum" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 206 · "Course landing with curriculum" · designlounge.vercel.app -->
 
 # Course landing with curriculum
 

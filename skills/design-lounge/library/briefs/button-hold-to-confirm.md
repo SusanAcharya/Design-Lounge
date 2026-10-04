@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 266 · "Hold and slide to confirm" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 270 · "Hold and slide to confirm" · designlounge.vercel.app -->
 
 # Hold and slide to confirm
 

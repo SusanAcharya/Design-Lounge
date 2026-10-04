@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 430 · "Tablet notes in three panes" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 439 · "Tablet notes in three panes" · designlounge.vercel.app -->
 
 # Tablet notes in three panes
 

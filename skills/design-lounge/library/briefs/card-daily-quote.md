@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 208 · "Daily quote card" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 211 · "Daily quote card" · designlounge.vercel.app -->
 
 # Daily quote card
 

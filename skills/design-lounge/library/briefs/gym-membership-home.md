@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 176 · "Boxing gym home with timetable" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 179 · "Boxing gym home with timetable" · designlounge.vercel.app -->
 
 # Boxing gym home with timetable
 

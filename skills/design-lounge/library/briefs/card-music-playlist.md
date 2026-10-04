@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 352 · "Playlist card with now playing" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 359 · "Playlist card with now playing" · designlounge.vercel.app -->
 
 # Playlist card with now playing
 

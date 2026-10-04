@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 433 · "Team members settings" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 443 · "Team members settings" · designlounge.vercel.app -->
 
 # Team members settings
 

@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 412 · "Split hero with UI card stack" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 420 · "Split hero with UI card stack" · designlounge.vercel.app -->
 
 # Split hero with UI card stack
 

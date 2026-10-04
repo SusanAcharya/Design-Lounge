@@ -1,0 +1,157 @@
+<!-- Design Lounge piece: mood-pill-morph-card · platform: mobile-app · 390x844 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mannata · Check in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2eee7;--paper:#fbf8f3;--ink:#1d1a27;--ink-2:#4b4757;--ink-3:#6e6a78;--line:#ddd6ca;
+  --hue:#c9bfae;--hue-ink:#1d1a27;
+  --serif:"Fraunces",Georgia,serif;--sans:"Figtree",system-ui,sans-serif;
+  --spring:cubic-bezier(.34,1.36,.64,1);--out:cubic-bezier(.16,1,.3,1);--std:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--sans);color:var(--ink);background:var(--bg);overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.app{position:relative;height:100%;overflow:hidden;display:flex;flex-direction:column;padding:max(54px,env(safe-area-inset-top)) 20px max(34px,env(safe-area-inset-bottom))}
+.ambient{position:absolute;inset:-20%;pointer-events:none;background:radial-gradient(60% 45% at 50% 52%,var(--hue) 0%,transparent 70%);opacity:.0;transition:opacity .6s var(--std),background .6s var(--std)}
+.app.open .ambient{opacity:.55}
+header{position:relative;display:flex;justify-content:space-between;align-items:center;height:44px}
+.brand{font:600 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.date{font-size:13px;color:var(--ink-3)}
+h1{position:relative;margin:22px 0 0;font:400 34px/1.08 var(--serif);letter-spacing:-.02em;font-variation-settings:"opsz" 96}
+h1 em{font-style:italic;color:var(--ink-2);margin-right:.08em}
+.panel h4{margin:12px 0 6px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.hint{position:relative;margin:10px 0 0;color:var(--ink-3);font-size:14px;transition:opacity .25s var(--std)}
+.app.open .hint{opacity:0}
+.stage{position:relative;flex:1;display:grid;place-items:center}
+.row{display:flex;align-items:center;justify-content:center;gap:10px;height:340px}
+.mood{--c:#ccc;position:relative;width:56px;height:148px;border-radius:28px;background:var(--c);color:var(--hue-ink);overflow:hidden;
+  box-shadow:inset 0 -3px 0 rgba(29,26,39,.08),0 1px 0 rgba(255,255,255,.6) inset,0 6px 16px -8px rgba(29,26,39,.35);
+  transition:width .52s var(--spring),height .52s var(--spring),border-radius .52s var(--spring),opacity .3s var(--std),transform .2s var(--spring),box-shadow .3s var(--std)}
+.mood:has(.face:active){transform:scale(.95)}
+.face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border-radius:inherit}
+.face svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none;transition:transform .52s var(--spring)}
+.face span{font-size:11px;font-weight:600;letter-spacing:.02em;transition:opacity .2s var(--std)}
+.panel{position:absolute;inset:0;padding:22px 18px 18px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .2s var(--std),visibility 0s .2s}
+.panel h2{margin:38px 0 2px;font:600 30px/1 var(--serif);letter-spacing:-.02em;font-variation-settings:"opsz" 72}
+.panel p{margin:0 0 10px;font-size:13px;color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{height:34px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,.55);font-size:13px;font-weight:500;transition:background .15s var(--std),transform .15s var(--spring),color .15s}
+.chip:active{transform:scale(.94)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.panel .send{margin-top:auto;align-self:flex-end;width:52px;height:52px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;box-shadow:0 8px 18px -8px rgba(29,26,39,.6);transition:transform .2s var(--spring)}
+.panel .send:active{transform:scale(.9)}
+.panel .send svg,.close svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.close{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.4)}
+.panel > *{transform:translateY(8px);opacity:0;transition:transform .36s var(--out),opacity .25s var(--std)}
+/* open */
+.row.has-open .mood{width:20px;height:104px;border-radius:10px;opacity:.4}
+.row.has-open .mood .face span{opacity:0}
+.row.has-open .mood .face svg{transform:scale(.7)}
+.row.has-open .mood.open{width:216px;height:340px;border-radius:30px;opacity:1;box-shadow:inset 0 -3px 0 rgba(29,26,39,.08),0 24px 40px -18px rgba(29,26,39,.45)}
+.mood.open .face{pointer-events:none}
+.mood.open .face{justify-content:flex-start;align-items:flex-start;padding:24px 18px}
+.mood.open .face svg{transform:scale(1.25);transform-origin:left top}
+.mood.open .panel{opacity:1;visibility:visible;transition:opacity .2s var(--std) .14s,visibility 0s}
+.mood.open .panel > *{transform:none;opacity:1}
+.mood.open .panel > :nth-child(1){transition-delay:.16s}.mood.open .panel > :nth-child(2){transition-delay:.2s}
+.mood.open .panel > :nth-child(3){transition-delay:.24s}.mood.open .panel > :nth-child(4){transition-delay:.28s}
+.mood.open .panel > :nth-child(5){transition-delay:.3s}.mood.open .panel > :nth-child(n+6){transition-delay:.32s}
+.chip{position:relative}.chip::after{content:"";position:absolute;inset:-3px -2px}
+.mood.done{animation:pop .5s var(--spring)}
+@keyframes pop{30%{transform:scale(1.08)}}
+/* log */
+.log{position:relative;border-top:1px solid var(--line);padding-top:14px}
+.log h3{margin:0 0 10px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.log ol{list-style:none;margin:0;padding:0;display:flex;gap:8px;overflow:hidden}
+.log li{display:flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 8px;border-radius:999px;background:var(--paper);border:1px solid var(--line);font-size:13px;white-space:nowrap;flex:none}
+.log li i{width:18px;height:18px;border-radius:50%;background:var(--c)}
+.log li time{color:var(--ink-3)}
+.log li.new{animation:slidein .5s var(--spring)}
+@keyframes slidein{from{transform:translateX(-24px) scale(.8);opacity:0}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  .mood,.face svg,.panel,.panel > *,.ambient,.chip,.send{transition:opacity .15s linear!important;transition-delay:0s!important}
+  .mood:has(.face:active),.chip:active{transform:none}
+  .mood.done,.log li.new{animation:none}
+}
+@media (max-width:370px){.row{gap:8px}.mood{width:50px}.row.has-open .mood.open{width:196px}.row.has-open .mood{width:16px}}
+@media (max-height:720px){.row{height:300px}.row.has-open .mood.open{height:300px}.panel h2{margin-top:36px}.panel h4,.panel h4 + .chips{display:none}}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <div class="ambient" aria-hidden="true"></div>
+  <header><span class="brand">Mannata</span><span class="date">Sun, 4 Oct · 09:46</span></header>
+  <h1>How does this <em>morning</em> sit with you?</h1>
+  <p class="hint">Tap the one that fits. You can add a word or two.</p>
+  <div class="stage"><div class="row" id="row"></div></div>
+  <section class="log" aria-label="Today's check-ins"><h3>Today</h3><ol id="log" aria-live="polite"></ol></section>
+  <p class="sr" id="status" aria-live="polite"></p>
+</main>
+<script>
+const MOODS=[
+  {id:'heavy',name:'Heavy',c:'#9fb3cf',amb:'#7f9cc6',line:'Slow start. Be gentle with it.',chips:['Tired','Foggy','Sore','Lonely'],icon:'<path d="M12 4v10"/><path d="M8 11l4 4 4-4"/><path d="M5 20h14"/>'},
+  {id:'low',name:'Low',c:'#b9c7c9',amb:'#97b1b4',line:'A bit flat, nothing loud.',chips:['Bored','Restless','Quiet','Meh'],icon:'<path d="M5 14c2-2 4-2 7 0s5 2 7 0"/>'},
+  {id:'steady',name:'Steady',c:'#c4d2ad',amb:'#a9c288',line:'Even keel. Things are fine.',chips:['Calm','Focused','Rested','Ready'],icon:'<path d="M5 12h14"/><circle cx="12" cy="12" r="2.5"/>'},
+  {id:'bright',name:'Bright',c:'#f1cf8a',amb:'#f0b44a',line:'Light on your feet today.',chips:['Hopeful','Social','Curious','Warm'],icon:'<circle cx="12" cy="12" r="3.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/>'},
+  {id:'glowing',name:'Glowing',c:'#f2aa92',amb:'#ee7f5c',line:'Full tank. Spend it well.',chips:['Proud','Excited','Loved','Strong'],icon:'<path d="M12 4l2.2 5 5.3.5-4 3.6 1.2 5.3L12 15.6 7.3 18.4l1.2-5.3-4-3.6 5.3-.5z"/>'}
+];
+const row=document.getElementById('row'),app=document.getElementById('app'),log=document.getElementById('log'),status=document.getElementById('status');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let open=null;
+row.innerHTML=MOODS.map(m=>`<div class="mood" data-id="${m.id}" style="--c:${m.c}">
+  <button class="face" type="button" aria-expanded="false" aria-controls="p-${m.id}"><svg viewBox="0 0 24 24" aria-hidden="true">${m.icon}</svg><span>${m.name}</span></button>
+  <div class="panel" id="p-${m.id}" role="group" aria-label="${m.name} details">
+    <h2>${m.name}</h2><p>${m.line}</p>
+    <div class="chips" role="group" aria-label="Feelings">${m.chips.map(c=>`<button class="chip" type="button" aria-pressed="false">${c}</button>`).join('')}</div>
+    <h4>Where</h4>
+    <div class="chips" role="group" aria-label="Where">${['Home','Work','Out'].map(c=>`<button class="chip" type="button" aria-pressed="false">${c}</button>`).join('')}</div>
+    <button class="send" type="button" aria-label="Log ${m.name}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+    <button class="close" type="button" aria-label="Close ${m.name}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>
+  </div></div>`).join('');
+const els=[...row.querySelectorAll('.mood')];
+function setInert(el,on){el.querySelectorAll('.panel button').forEach(b=>b.tabIndex=on?-1:0)}
+els.forEach(el=>setInert(el,true));
+function expand(el,focus=true){
+  if(open===el)return;open=el;const m=MOODS.find(x=>x.id===el.dataset.id);
+  row.classList.add('has-open');app.classList.add('open');app.style.setProperty('--hue',m.amb);
+  els.forEach(e=>{const on=e===el;e.classList.toggle('open',on);e.querySelector('.face').setAttribute('aria-expanded',on);e.querySelector('.face').tabIndex=on?-1:0;setInert(e,!on)});
+  if(focus)setTimeout(()=>el.querySelector('.chip').focus({preventScroll:true}),reduce?0:260);
+}
+function collapse(focus=true){
+  if(!open)return;const el=open;open=null;row.classList.remove('has-open');app.classList.remove('open');
+  els.forEach(e=>{e.classList.remove('open');e.querySelector('.face').setAttribute('aria-expanded','false');e.querySelector('.face').tabIndex=0;setInert(e,true)});
+  if(focus)el.querySelector('.face').focus({preventScroll:true});return el;
+}
+function submit(el){
+  const m=MOODS.find(x=>x.id===el.dataset.id);const picked=[...el.querySelectorAll('.chip[aria-pressed="true"]')].map(c=>c.textContent);
+  collapse();el.classList.remove('done');void el.offsetWidth;el.classList.add('done');
+  el.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed','false'));
+  const now=new Date();const t=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  const li=document.createElement('li');li.className='new';li.style.setProperty('--c',m.c);
+  li.innerHTML=`<i aria-hidden="true"></i>${m.name}${picked.length?' · '+picked.slice(0,2).join(', '):''} <time>${t}</time>`;
+  log.prepend(li);while(log.children.length>4)log.lastChild.remove();
+  status.textContent=`Logged ${m.name} at ${t}`;
+}
+row.addEventListener('click',e=>{
+  const el=e.target.closest('.mood');if(!el)return;
+  if(e.target.closest('.face'))expand(el);
+  else if(e.target.closest('.chip')){const c=e.target.closest('.chip');c.setAttribute('aria-pressed',c.getAttribute('aria-pressed')!=='true')}
+  else if(e.target.closest('.send'))submit(el);
+  else if(e.target.closest('.close'))collapse();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')collapse()});
+document.addEventListener('pointerdown',e=>{if(open&&!e.target.closest('.mood.open'))collapse(false)});
+[['steady','Calm','08:12'],['low','Foggy','06:40']].forEach(([id,w,t])=>{const m=MOODS.find(x=>x.id===id);const li=document.createElement('li');li.style.setProperty('--c',m.c);li.innerHTML=`<i aria-hidden="true"></i>${m.name} · ${w} <time>${t}</time>`;log.append(li)});
+expand(els[3],false);
+</script>
+</body>
+</html>

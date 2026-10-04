@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 418 · "Stats count-up band" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 426 · "Stats count-up band" · designlounge.vercel.app -->
 
 # Stats count-up band
 

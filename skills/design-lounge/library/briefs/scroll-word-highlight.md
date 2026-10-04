@@ -1,4 +1,4 @@
-<!-- Design Lounge Nº 387 · "Scroll word highlight" · designlounge.vercel.app -->
+<!-- Design Lounge Nº 395 · "Scroll word highlight" · designlounge.vercel.app -->
 
 # Scroll word highlight
 
