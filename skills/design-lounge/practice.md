@@ -66,7 +66,7 @@ The idea decides the hero and the proof block. If you cannot write it, you are n
 ### Size and contrast
 
 - Body text on a website is 17 to 19px, in `--ink` or `--ink-2`. Never `--ink-3` for a sentence.
-- Small tracked labels: three per view at most. A page where half the text is 11px grey looks unfinished.
+- Small tracked labels: three per view at most. A page where half the text is 11px grey looks unfinished. The labels a piece's brief draws count too. If the hero piece already has three, add none of your own.
 - No facts strip, clock, timeline, status dot, or filter chips unless they asked. Each one is a small region that does not serve the four lines.
 
 ### Motion you can see
@@ -79,6 +79,8 @@ A website has one lead motion, from Register. It runs without a hover: on load, 
 - Use what is real and public: a product they named, their GitHub, their own site.
 - If they named no projects, show what they do as two or three labelled studies, such as "Study: a credit ledger for a corner shop". A study is honest. A fake client is not. Say in the reply which slots to replace with real work.
 - If the site is mostly a portfolio and they did not say just build it, ask once for three projects, each with a link or a screenshot.
+- A link goes where its label says. "Live demo" opens the demo. "Paper" opens the paper. If you don't have that URL, drop the link, or label it for where it really goes ("All projects"). List the missing URLs in the reply.
+- A drawn screen with made-up data (file names, logs, numbers) gets a small "Example" caption, so nobody reads it as a real result. A drawn screen that only shows real facts doesn't need one.
 
 ### The five-second test
 
@@ -107,7 +109,7 @@ Register: quiet | <one piece id>
 Dials: variance <1-10> · motion <1-10> · density <1-10>
 Kind: website | product | platform
 Mode: new kit | adopt existing
-Recipe: id · Direction: id (why, or the letter count)
+Recipe: id · Direction: id (why, or the name number)
 Theme: id (pair: id or none)
 Why this theme:
 Rejected:
@@ -121,6 +123,7 @@ Panel: none | 300
 Nav:
 Phone nav: drawer | tabs
 Pieces:
+Sections: <website only> work <id> · about <id> · contact <id> · footer <id>, each with its sum
 Kept from their system:
 
 ## Sources
@@ -175,11 +178,29 @@ Every recipe has three to five `directions`. Each one is a complete look: theme,
 
 1. They named a theme, a pairing, a colour, or a site they like. Lock the direction closest to it, then swap in what they named.
 2. Their words carry a mood, an audience, or a world: dark, light, playful, calm, luxury, technical, for developers, for kids, loud, Nepali, retro, AI. Lock the direction whose `mood` says it.
-3. Nothing to go on. Count the letters in the product or brand name, ignoring spaces. If there is no name, count the words in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: dev-night (Northwind = 9 letters, 9 mod 5 = 4)`. This keeps one product consistent and keeps two products apart.
+3. Nothing to go on. Work out the name number: add up the place of each letter of the product or brand name in the alphabet (a = 1, b = 2, … z = 26), ignoring spaces, digits and punctuation. If there is no name, use the first noun in their message. Divide by the number of directions. The remainder picks it, counting the first direction as 0. Write the sum on the sheet, for example `Direction: kiln-workbench (Sunim = 19+21+14+9+13 = 76, 76 mod 4 = 0)`. This keeps one product consistent and keeps two products apart. Counting letters is not enough, because names of the same length would always land together.
 
 Do not take the first direction because it is first. Do not mix two directions. If the hero is unset, use the recipe's first piece. If the effect is null, the register stays quiet.
 
 The direction is the start, not the end. The Idea, the copy, the projects, and the order of the sections still come from this product.
+
+### Sections, one by one
+
+The direction picks the hero and one effect. It does not pick the other sections. If every site took the recipe's first footer and first work block, two different people would get the same page under different colours. So pick each section on its own.
+
+1. If their words point at one option ("a big email to copy", "a timeline of my work"), take it.
+2. Otherwise use the name number from the direction, plus the section's step: work +1, about +2, contact +3, footer +4. Divide by the number of options in that section's list below. The remainder picks it, counting from 0. Write each on the sheet: `Footer: footer-centered-colophon (76 + 4 = 80, 80 mod 4 = 0)`.
+3. Skip an option that clashes with the locked family, or that needs something they don't have, such as real photos. Move to the next one, and say why.
+4. Never use the same piece for two sections.
+
+The lists, for a website:
+
+- Work (builders, products, case studies): `features-sticky-scroll-steps`, `stacking-cards-scroll`, `bento-feature-grid`, `case-file-horizontal-scroll`, `process-step-dossier`, `scroll-lens-card-ticker`, `features-tabbed-preview`. With real images: `portfolio-index-hover-preview`, `landing-agency-case-wall`, `gallery-film-strip`.
+- About: `profile-creator-masthead`, `sticky-split-story`, `profile-editorial-staff`, `text-rise-underline-whisper`, `scroll-word-highlight`. A team of three or more: `team-hover-portrait-grid`.
+- Contact: `contact-giant-email-copy`, `contact-project-brief-steps`, `profile-contact-card`, `cta-giant-email-band`, `contact-conversational-form`. A place people visit: `contact-split-map-form` or `contact-booking-hours`.
+- Footer: `footer-giant-wordmark-reveal`, `footer-centered-colophon`, `footer-newsletter-split`, `footer-engraved-caravan-strip`. A product with many pages: `footer-sitemap-columns` or `footer-enterprise-sitemap`.
+
+Open the brief for every section you build. A phone menu, a copy-email button, or a drawer is a piece too: `hamburger-circle-reveal`, `contact-giant-email-copy`, `button-copy-share`. If you build a part without opening its brief, say so in the reply.
 
 ## Match the world
 
@@ -485,6 +506,7 @@ These are fails. They are the tells of a page that was generated and not designe
 - A tag laid over a photo. A made-up photo credit. Poetic labels such as "Field notes", "From the bench", or "Quietly trusted by" where a plain label works.
 - "Step 1, Step 2, Step 3" as the labels. The step's own verb is the label: Install, Connect, Ship.
 - Numbers that look made up: 99.99%, 10x, 50%, $1,000,000. Real numbers are uneven: 47.2%, 1,284. Brand names that sound made up: Nexus, Acme, SmartFlow, Cloudly. Copy words that mean nothing: elevate, seamless, unleash, supercharge, next-gen.
+- On a phone, a pinned panel or sticky block that covers more than a third of the screen. Unpin it below 720px and let it scroll with its section.
 - Pure `#000` black. A custom cursor on a daily tool. A grey box standing in for the product. Draw the product as a small working screen, as Show the work says, or leave it out.
 
 A piece you locked may use one of these on purpose. For example, a footer piece may show a live clock. Then it is allowed, because you chose it. Do not add one on your own.
@@ -547,7 +569,8 @@ Put the theme's CSS variables on `:root` once, or in one theme provider. Control
 - One pairing. Display, body, and mono match the sheet.
 - One family. Radius, shadow, button, and density match on every new screen.
 - Icons are Lounge Icons, or follow the missing-icon order in components.md. Brand logos are one colour.
-- A website has a wordmark, a favicon, and a share image. Their logo is used as given.
+- A website has a wordmark, a favicon, and a share image. Their logo is used as given. The files exist: `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` (180 × 180), and the share image at exactly 1200 × 630. Read the image size from the file. Don't trust the size you asked for.
+- Every link label matches where it goes. Missing URLs are listed in the reply.
 - One primary button on each view.
 - Hover and selected use the token map in SKILL.md, not a hex from a brief.
 - Spacing uses the density scale.

@@ -157,7 +157,16 @@ Map the brief's paint onto tokens. Do not mix a new hex for hover or selected.
 
 ## The reply
 
-Keep it short. The pick with links at the top. Then what you built, the look notes from opening the screens, anything in Say so in [practice.md](practice.md), and only the checks that failed and how you fixed them. Do not paste a checklist of passes.
+Keep it short. The pick with links at the top. Then what you built, anything in Say so in [practice.md](practice.md), and only the checks that failed and how you fixed them. Do not paste a checklist of passes.
+
+End every build reply with this block. It is required even when everything passed, because it proves you looked:
+
+```
+Looked at: <screens and sizes> with <tool>
+Remember after five seconds: "<one thing>" · could be anyone's: yes | no
+Correction: <the one change>
+Still open: <missing links, assets, effects you never saw run, parts built without a brief, or none>
+```
 
 ## Examples
 

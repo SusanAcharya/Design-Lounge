@@ -98,6 +98,10 @@ playwright-cli close
 
 Look at each screenshot. The `eval` must print `true`, which means nothing scrolls sideways. `console` must show no errors. With reduced motion on, the still frame must show the finished page, not a blank one waiting for an animation.
 
+To see a scroll effect run, scroll in steps and screenshot each step: `playwright-cli mousewheel 0 400`, wait half a second, then `screenshot`. Five steps through the effect is enough.
+
+If they won't install it, use the browser your editor gives you. Its screenshots can lag behind the scroll, so scroll with a script (`window.scrollTo`), wait about 600ms, then take the shot. Where a shot still looks stale, measure the page instead, as Look in [practice.md](practice.md) says. Say in the reply which tool you used, and which effects you never saw running.
+
 ## Token roles
 
 Copy the theme `css` block. Do not rename the variables.
