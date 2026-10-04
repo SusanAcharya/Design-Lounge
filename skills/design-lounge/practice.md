@@ -16,7 +16,7 @@ The aim is one product that feels designed: same palette, type, icons, radius, s
 
 ## Before code
 
-1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero. For a website, also read Stand out in [website.md](website.md) and write the Idea.
+1. Write the four lines in Decide the screen. If you cannot name the decision, you are not ready to pick a hero. For a website, also read Stand out in [website.md](website.md) and write the Idea. For an app, read The one screen in [app.md](app.md) and write the Idea.
 2. Decide new kit or adopt. Adopt when they already have tokens, a DESIGN.md, or styled screens, unless they asked for a new look.
 3. Match the world, then choose the pieces. Read Match the world. Search before you invent: settings, billing, search, upload, audit, account menu, inbox, table, dialog, toast, form, select, record, people, detail, chart, line, kpi, empty, error, collection, cart. On a phone, search for the phone empty and the phone failed load before you reuse the web ones. On a tablet, use the tablet recipe. Do not stretch a phone screen to 1180px. If `pieces.txt` has no piece, say so, and build only from this sheet and from [components.md](components.md). Do not import another library's look.
 4. Say the pick with links at the top of your reply, then build. Follow Say the pick in [SKILL.md](SKILL.md). Ask first only when two worlds fit and would lock different themes, or when they asked to choose.
@@ -34,9 +34,9 @@ First thing they see:
 Next action:
 Job of this pass:
 Scope:
-Idea: <website only, one picture sentence>
-Signature: <website only, the one element made only for this site>
-Avoiding: <website only, the default look this could have become>
+Idea: <one picture sentence. A website: the page, from website.md. An app: the one screen the product is, from app.md>
+Signature: <the one element made only for this product>
+Avoiding: <the default look this could have become>
 Register: quiet | <one piece id>
 Dials: variance <1-10> · motion <1-10> · density <1-10>
 Kind: website | product | platform

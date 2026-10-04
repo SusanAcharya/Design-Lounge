@@ -90,14 +90,27 @@ The full method is long. For a website, these are the steps that matter, in orde
 
 The rules are the floor, not the design. Passing all of them makes a page correct. The Idea and the Signature make it theirs.
 
+## An app, the short path
+
+The full method is long. For a phone app, a PWA, or a native app, these are the steps. Open the named section only when you reach its step. A website still uses the path above.
+
+1. Read the person. Write three words. Lock the app recipe whose mood matches (bank, health, messages, music, news, shop, social, weather, or the general mobile app). The name number only breaks a tie.
+2. Write the Idea (The one screen in [app.md](app.md)). Name the real tabs, three to five. Do not copy Home, Search, Activity, Profile unless those are the product's sections.
+3. Pick the platform once. iOS uses the `phone-` and `ios-` pieces. Android, or a Material family, uses the `m3-` piece when one exists for that job. One tab bar.
+4. Build the minimum set before you stop: the shell, the primary list, one detail, the empty state, the failed load, and settings or account. Open each brief down to "Optional below this line".
+5. Accounts add sign-in and delete-account. A price adds the paywall or the subscription screen, with real dates. A rating uses `phone-rating-prompt`, after a success, never on first launch.
+6. Restyle every piece onto the locked theme and pairing. The demo's colours and fonts do not come along.
+7. Screenshot light, dark, and the large text size (Looking at the app in [native.md](native.md)). Fix what you see. Make one correction.
+8. End with the closing block in The reply.
+
 ## Kit flow
 
 1. Pick a kind (`website`, `product`, `platform`, `personal`) with the kind map in [reference.md](reference.md). Then take the matching recipe from `starts` in `library/map.json`, open `library/starts/<id>.json`, and lock one of its `directions` (Pick a direction in [practice.md](practice.md)). The same sentence from two people must not give the same site. Do not lock the first palette, pairing, or family because it is first.
-2. For a website, read Stand out in [website.md](website.md) first: name the default look you are avoiding, write the Idea in one picture sentence, show the work as pictures, never invent clients.
+2. For a website, read Stand out in [website.md](website.md) first: name the default look you are avoiding, write the Idea in one picture sentence, show the work as pictures, never invent clients. For an app, read The one screen in [app.md](app.md) and follow An app, the short path.
 3. Write the four lines from Decide the screen: who it is for, the one decision, the first thing they see, and the next action.
 4. The locked system is `library/themes/<id>.css`, `library/pairings/<id>.css`, and the family's `rules`, `radius`, `button`, and `density`. Match those numbers.
 5. If the pairing has a `caution`, say it before you write. Body text uses `--font-text`. Amounts use `.num`. If the pairing has a mono, `.num` and code use it. If `numbers` is `display`, `.num` uses the display face. If the pairing has no mono, `.num` is the text face with even-width digits, code uses the system mono, and you do not add a Google mono font.
-6. A theme is one mode. If the product needs both and `pair` is set, use that theme as the second mode. If `pair` is null, stay in one mode and say so, unless they asked for both. Then build the second mode from the same theme's tokens and say so. The theme CSS includes a sample radius and shadow. Ignore them. The family sets radius and shadow.
+6. A theme is one mode, and every theme has a `pair` for the other. A phone app uses both and follows the system setting. A website uses both when they asked for day and night, or when the product is the kind people leave open. The theme CSS includes a sample radius and shadow. Ignore them. The family sets radius and shadow.
 7. Build the shell first, then the primary screen, then the rest of Minimum screens in [app.md](app.md). Open each brief before you invent a hero, nav, table, or footer.
 8. Open the screens and run Look and One correction in [practice.md](practice.md). Fix every fail.
 
